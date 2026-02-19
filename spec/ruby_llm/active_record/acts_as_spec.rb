@@ -309,6 +309,87 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     end
   end
 
+  describe 'streaming fallback phantom message cleanup' do
+    it 'destroys blank assistant message when persist_new_message is called again' do
+      chat = Chat.create!(model: model)
+      chat.to_llm # initialize @chat and persistence callbacks
+
+      # Simulate first streaming attempt: on_new_message creates a blank assistant row
+      chat.send(:persist_new_message)
+      orphaned_message = chat.instance_variable_get(:@message)
+      expect(orphaned_message).to be_persisted
+      expect(orphaned_message.content).to eq('')
+
+      orphaned_id = orphaned_message.id
+
+      # Simulate fallback streaming attempt: on_new_message fires again
+      chat.send(:persist_new_message)
+      new_message = chat.instance_variable_get(:@message)
+
+      # The orphaned blank message should be destroyed
+      expect(Message.exists?(orphaned_id)).to be false
+
+      # A new blank assistant message should exist for the fallback attempt
+      expect(new_message).to be_persisted
+      expect(new_message.content).to eq('')
+      expect(new_message.id).not_to eq(orphaned_id)
+    end
+
+    it 'does not destroy a blank assistant message that has tool calls' do
+      chat = Chat.create!(model: model)
+      chat.to_llm
+
+      chat.send(:persist_new_message)
+      tool_call_message = chat.instance_variable_get(:@message)
+      # Simulate a tool call response: blank content but has tool_call records
+      tool_call_message.tool_calls.create!(
+        tool_call_id: 'call_123',
+        name: 'test_tool',
+        arguments: { foo: 'bar' }
+      )
+      tool_call_id = tool_call_message.id
+
+      # Next on_new_message should NOT destroy this message
+      chat.send(:persist_new_message)
+
+      expect(Message.exists?(tool_call_id)).to be true
+    end
+
+    it 'does not destroy a blank assistant message that has content_raw' do
+      chat = Chat.create!(model: model)
+      chat.to_llm
+
+      chat.send(:persist_new_message)
+      structured_message = chat.instance_variable_get(:@message)
+      # Simulate structured output: blank content but content_raw is set
+      structured_message.update!(content: nil, content_raw: { 'name' => 'Alice', 'age' => 25 })
+      structured_id = structured_message.id
+
+      # Next on_new_message should NOT destroy this message
+      chat.send(:persist_new_message)
+
+      expect(Message.exists?(structured_id)).to be true
+    end
+
+    it 'does not destroy a populated assistant message when persist_new_message is called' do
+      chat = Chat.create!(model: model)
+      chat.to_llm
+
+      # Simulate normal flow: on_new_message creates row, on_end_message populates it
+      chat.send(:persist_new_message)
+      populated_message = chat.instance_variable_get(:@message)
+      populated_message.update!(content: 'Hello, I am the assistant response')
+
+      populated_id = populated_message.id
+
+      # Next on_new_message (e.g., for a tool call follow-up) should NOT destroy the populated message
+      chat.send(:persist_new_message)
+
+      expect(Message.exists?(populated_id)).to be true
+      expect(chat.instance_variable_get(:@message).id).not_to eq(populated_id)
+    end
+  end
+
   # Custom configuration tests with inline models
   describe 'custom configurations' do
     before(:all) do # rubocop:disable RSpec/BeforeAfterAll

@@ -22,6 +22,7 @@ module RubyLLM
         subclass.instance_variable_set(:@context, @context)
         subclass.instance_variable_set(:@chat_model, @chat_model)
         subclass.instance_variable_set(:@input_names, (@input_names || []).dup)
+        subclass.instance_variable_set(:@fallback, @fallback&.dup)
       end
 
       def model(model_id = nil, **options)
@@ -72,6 +73,12 @@ module RubyLLM
         return @schema if value.nil? && !block_given?
 
         @schema = block_given? ? block : value
+      end
+
+      def fallback(model_id = nil, provider: nil)
+        return @fallback if model_id.nil?
+
+        @fallback = { model: model_id, provider: provider }
       end
 
       def context(value = nil)
@@ -165,6 +172,7 @@ module RubyLLM
         apply_params(llm_chat, runtime)
         apply_headers(llm_chat, runtime)
         apply_schema(llm_chat, runtime)
+        apply_fallback(llm_chat)
       end
 
       def apply_context(llm_chat)
@@ -204,6 +212,10 @@ module RubyLLM
       def apply_schema(llm_chat, runtime)
         value = evaluate(schema, runtime)
         llm_chat.with_schema(value) if value
+      end
+
+      def apply_fallback(llm_chat)
+        llm_chat.with_fallback(fallback[:model], provider: fallback[:provider]) if fallback
       end
 
       def llm_chat_for(chat_object)

@@ -11,7 +11,9 @@ module RubyLLM
       RateLimitError,
       ServerError,
       ServiceUnavailableError,
-      OverloadedError
+      OverloadedError,
+      Faraday::TimeoutError,
+      Faraday::ConnectionFailed
     ].freeze
 
     def initialize(model: nil, provider: nil, assume_model_exists: false, context: nil)
@@ -157,13 +159,14 @@ module RubyLLM
       original_provider = @provider
       original_connection = @connection
 
-      RubyLLM.logger.warn "RubyLLM: #{e.class} on #{original_model.id}, falling back to #{@fallback[:model]}"
+      RubyLLM.logger.warn "RubyLLM: #{e.class} on #{sanitize_for_log(original_model.id)}, falling back to #{sanitize_for_log(@fallback[:model])}"
 
       begin
         @in_fallback = true
         with_model(@fallback[:model], provider: @fallback[:provider])
         call_provider(&)
-      rescue *FALLBACK_ERRORS
+      rescue *FALLBACK_ERRORS => fallback_error
+        RubyLLM.logger.warn "RubyLLM: Fallback to #{sanitize_for_log(@fallback[:model])} also failed: #{fallback_error.class} - #{sanitize_for_log(fallback_error.message)}"
         raise e
       ensure
         @in_fallback = false
@@ -284,6 +287,10 @@ module RubyLLM
       end
 
       @messages = system_messages + non_system_messages
+    end
+
+    def sanitize_for_log(value)
+      value.to_s.gsub(/[\x00-\x1f\x7f]/, '')
     end
   end
 end

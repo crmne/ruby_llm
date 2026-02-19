@@ -206,7 +206,7 @@ module RubyLLM
 
       def complete(...)
         to_llm.complete(...)
-      rescue RubyLLM::Error => e
+      rescue RubyLLM::Error, Faraday::TimeoutError, Faraday::ConnectionFailed => e
         cleanup_failed_messages if @message&.persisted? && @message.content.blank?
         cleanup_orphaned_tool_results
         raise e
@@ -284,6 +284,11 @@ module RubyLLM
       end
 
       def persist_new_message
+        if @message&.persisted? && @message.content.blank? &&
+           !@message.tool_calls_association.exists? &&
+           (!@message.respond_to?(:content_raw) || @message.content_raw.blank?)
+          @message.destroy
+        end
         @message = messages_association.create!(role: :assistant, content: '')
       end
 
