@@ -39,6 +39,12 @@ RSpec.describe RubyLLM::Model::Info do
       expect(info.knowledge_cutoff).to be_a(Date)
     end
 
+    it 'normalizes time to UTC' do
+      info = described_class.new(created_at: '2026-02-20 00:00:00 +0700')
+      expect(info.created_at).to be_utc
+      expect(info.created_at).to eq Time.new(2026, 2, 19, 17, 0, 0, '+00:00')
+    end
+
     it 'builds modalities' do
       expect(info.modalities).to be_a(RubyLLM::Model::Modalities)
       expect(info.modalities.input).to eq(%w[text image])
