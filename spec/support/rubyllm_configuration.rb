@@ -18,7 +18,8 @@ RSpec.shared_context 'with configured RubyLLM' do
       config.gemini_api_key = ENV.fetch('GEMINI_API_KEY', 'test')
       config.gpustack_api_base = ENV.fetch('GPUSTACK_API_BASE', 'http://localhost:11444/v1')
       config.gpustack_api_key = ENV.fetch('GPUSTACK_API_KEY', nil)
-      config.max_retries = 10
+      # Keep retries short in tests to avoid long backoff sleeps.
+      config.max_retries = 2
       config.mistral_api_key = ENV.fetch('MISTRAL_API_KEY', 'test')
       config.model_registry_class = 'Model'
       config.ollama_api_base = ENV.fetch('OLLAMA_API_BASE', 'http://localhost:11434/v1')
@@ -26,9 +27,9 @@ RSpec.shared_context 'with configured RubyLLM' do
       config.openrouter_api_key = ENV.fetch('OPENROUTER_API_KEY', 'test')
       config.perplexity_api_key = ENV.fetch('PERPLEXITY_API_KEY', 'test')
       config.request_timeout = 600
-      config.retry_backoff_factor = 3
-      config.retry_interval = 1
-      config.retry_interval_randomness = 0.5
+      config.retry_backoff_factor = 0.1
+      config.retry_interval = 0.01
+      config.retry_interval_randomness = 0.01
       config.vertexai_location = ENV.fetch('GOOGLE_CLOUD_LOCATION', 'global')
       config.vertexai_project_id = ENV.fetch('GOOGLE_CLOUD_PROJECT', 'test-project')
       config.xai_api_key = ENV.fetch('XAI_API_KEY', 'test')
