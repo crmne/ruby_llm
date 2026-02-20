@@ -41,9 +41,10 @@ RubyLLM::Error                    # Base error class for API/network issues
     RubyLLM::UnauthorizedError    # 401: API key issues
     RubyLLM::PaymentRequiredError # 402: Billing issues
     RubyLLM::ForbiddenError       # 403: Permission issues
+    RubyLLM::ContextLengthExceededError # Context/token limits exceeded (provider-specific)
     RubyLLM::RateLimitError       # 429: Rate limit exceeded
     RubyLLM::ServerError          # 500: Provider server error
-    RubyLLM::ServiceUnavailableError # 502/503: Service unavailable
+    RubyLLM::ServiceUnavailableError # 502/503/504: Service unavailable
     RubyLLM::OverloadedError      # 529: Service overloaded (Specific providers)
 
 # Non-API Errors (inherit from StandardError)
@@ -90,6 +91,9 @@ rescue RubyLLM::PaymentRequiredError
 rescue RubyLLM::RateLimitError
   puts "Rate limit hit. Please wait a moment before trying again."
   # Implement backoff/retry logic (though RubyLLM has some built-in retries)
+rescue RubyLLM::ContextLengthExceededError
+  puts "Your prompt/conversation is too large for this model."
+  # Reduce prompt size or use a model with a larger context window
 rescue RubyLLM::ServiceUnavailableError
   puts "The AI service is temporarily unavailable. Please try again later."
   # Maybe offer a fallback or notify user
@@ -191,13 +195,16 @@ Distinguishing between these helps the LLM work effectively with recoverable iss
 ## Automatic Retries
 
 RubyLLM automatically retries requests that fail due to transient network or server issues using Faraday's retry middleware.
+Retries are driven by error classification (exception types), not raw HTTP status codes alone.
 
 Retries are attempted for:
 
 *   Network timeouts (`Timeout::Error`, `Faraday::TimeoutError`, `Errno::ETIMEDOUT`)
 *   Connection failures (`Faraday::ConnectionFailed`)
-*   Rate limit errors (`RubyLLM::RateLimitError` / HTTP 429)
+*   Rate limit errors (`RubyLLM::RateLimitError`, often HTTP 429)
 *   Server-side errors (`RubyLLM::ServerError`, `RubyLLM::ServiceUnavailableError`, `RubyLLM::OverloadedError` / HTTP 500, 502, 503, 504, 529)
+
+`RubyLLM::ContextLengthExceededError` is not retried.
 
 You can configure retry behavior via `RubyLLM.configure`:
 
