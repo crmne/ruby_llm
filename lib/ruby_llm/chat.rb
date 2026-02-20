@@ -37,6 +37,7 @@ module RubyLLM
     end
 
     alias say ask
+    alias prompt ask
 
     def with_instructions(instructions, append: false, replace: nil)
       append ||= (replace == false) unless replace.nil?

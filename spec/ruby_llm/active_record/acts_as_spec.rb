@@ -798,7 +798,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       expect(chat.provider).to eq('bedrock')
     end
   end
-
+  
   describe 'extended thinking persistence' do
     def thinking_config_for(provider)
       case provider
@@ -847,6 +847,97 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
         if response.thinking&.signature
           expect(replayed_messages.filter_map { |msg| msg.thinking&.signature }).to include(response.thinking.signature)
         end
+      end
+    end
+  end
+
+  describe 'prompt method' do
+    describe 'integration behavior' do
+      let(:chat) { Chat.create!(model: model) }
+
+      it 'returns a response without persisting messages' do
+        response = chat.prompt('Say hello from prompt specs')
+
+        expect(response).to be_a(RubyLLM::Message)
+        expect(response.content).to be_present
+        expect(chat.messages.count).to eq(0)
+
+        roles = response.prompt_messages.map(&:role)
+        expect(roles).to include(:user, :assistant)
+      end
+
+      it 'works with existing message records' do
+        message = chat.messages.create!(role: :user, content: 'Use the persisted message for prompt')
+
+        response = chat.prompt(message)
+
+        expect(response.content).to be_present
+        expect(chat.messages.count).to eq(1)
+        expect(response.prompt_messages.first.role).to eq(:user)
+        expect(response.prompt_messages.last.role).to eq(:assistant)
+      end
+
+      it 'captures tool calls inside prompt_messages' do
+        chat.with_tool(Calculator)
+
+        response = chat.prompt('What is 7 * 8?')
+
+        expect(response.prompt_messages.any?(&:tool_call?)).to be true
+        expect(response.prompt_messages.map(&:role)).to include(:tool)
+        expect(chat.messages.count).to eq(0)
+      end
+
+      it 'supports streaming blocks' do
+        collected_chunks = []
+
+        response = chat.prompt('List three gemstones') do |chunk|
+          collected_chunks << chunk.content if chunk.content
+        end
+
+        expect(response.content).to be_present
+        expect(collected_chunks.join).to be_present
+        expect(chat.messages.count).to eq(0)
+      end
+    end
+
+    describe 'error handling' do
+      it 'does not leave orphaned messages on error' do
+        # This test doesn't need API calls - just checks behavior
+        chat = Chat.create!(model: model)
+        initial_count = chat.messages.count
+
+        # Mock the complete call to avoid API
+        llm_chat = chat.to_llm
+        allow(llm_chat).to receive(:complete).and_raise(StandardError, 'Simulated error')
+        allow(chat).to receive(:to_llm).and_return(llm_chat)
+
+        expect do
+          chat.prompt('Test')
+        end.to raise_error(StandardError)
+
+        # No messages should be persisted
+        expect(chat.messages.reload.count).to eq(initial_count)
+      end
+
+      it 'restores callbacks after exception' do
+        chat = Chat.create!(model: model)
+
+        # Mock to avoid API call
+        llm_chat = chat.to_llm
+        allow(llm_chat).to receive(:complete).and_raise(StandardError, 'Error')
+        allow(chat).to receive(:to_llm).and_return(llm_chat)
+
+        begin
+          chat.prompt('Test')
+        rescue StandardError
+          # Callbacks should be restored
+        end
+
+        # The key test: callbacks are restored (we can check this without API call)
+        llm_chat_after = chat.to_llm
+        on_hash = llm_chat_after.instance_variable_get(:@on)
+        expect(on_hash[:new_message]).not_to be_nil
+        expect(on_hash[:end_message]).not_to be_nil
       end
     end
   end

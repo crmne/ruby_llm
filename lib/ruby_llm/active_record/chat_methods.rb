@@ -209,6 +209,19 @@ module RubyLLM
 
       alias say ask
 
+      def prompt(message, with: nil, &)
+        llm_chat = to_llm
+        messages_before_count = llm_chat.messages.count
+
+        with_persistence_disabled(llm_chat) do
+          add_prompt_message(llm_chat, message, with)
+          response = llm_chat.complete(&)
+          prompt_messages = llm_chat.messages[messages_before_count..].dup.freeze
+          response.define_singleton_method(:prompt_messages) { prompt_messages }
+          response
+        end
+      end
+
       def complete(...)
         to_llm.complete(...)
       rescue RubyLLM::Error => e
@@ -218,6 +231,22 @@ module RubyLLM
       end
 
       private
+
+      def add_prompt_message(llm_chat, message, with)
+        if message.is_a?(::ActiveRecord::Base) && message.respond_to?(:to_llm)
+          llm_chat.add_message(message.to_llm)
+        else
+          content = prepare_prompt_content(message, with)
+          llm_chat.add_message role: :user, content: content
+        end
+      end
+
+      def prepare_prompt_content(message, with)
+        return message if message.is_a?(RubyLLM::Content) || message.is_a?(RubyLLM::Content::Raw)
+        return RubyLLM::Content.new(message, with) if with
+
+        message
+      end
 
       def cleanup_failed_messages
         RubyLLM.logger.warn "RubyLLM: API call failed, destroying message: #{@message.id}"
@@ -252,6 +281,20 @@ module RubyLLM
 
         @chat.instance_variable_set(:@_persistence_callbacks_setup, true)
         @chat
+      end
+      
+      def with_persistence_disabled(llm_chat)
+        on_hash = llm_chat.instance_variable_get(:@on)
+        original_new_message = on_hash[:new_message]
+        original_end_message = on_hash[:end_message]
+
+        on_hash[:new_message] = nil
+        on_hash[:end_message] = nil
+
+        yield
+      ensure
+        on_hash[:new_message] = original_new_message if on_hash
+        on_hash[:end_message] = original_end_message if on_hash
       end
 
       def replace_persisted_system_instructions(instructions)
