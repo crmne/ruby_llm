@@ -77,8 +77,9 @@ module RubyLLM
       parse_moderation_response(response, model:)
     end
 
-    def paint(prompt, model:, size:)
-      payload = render_image_payload(prompt, model:, size:)
+    def paint(prompt, model:, size:, with: nil)
+      attachments = normalize_attachments(with)
+      payload = render_image_payload(prompt, model:, size:, with: attachments)
       response = @connection.post images_url, payload
       parse_image_response(response, model:)
     end
@@ -215,6 +216,12 @@ module RubyLLM
     end
 
     private
+
+    def normalize_attachments(with)
+      return [] if with.nil?
+
+      Array(with).flatten.compact
+    end
 
     def build_audio_file_part(file_path)
       expanded_path = File.expand_path(file_path)
