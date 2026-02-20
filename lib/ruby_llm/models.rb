@@ -29,6 +29,7 @@ module RubyLLM
       xai
       azure
       ollama
+      ollama_cloud
       gpustack
     ].freeze
 
