@@ -60,6 +60,13 @@ end
 ```
 
 ```ruby
+# Automatic failover when a model is overloaded
+chat = RubyLLM.chat(model: "gemini-2.5-flash-lite")
+  .with_fallback("gemini-2.5-flash")
+  .ask("Classify this email")
+```
+
+```ruby
 # Generate images
 RubyLLM.paint "a sunset over mountains in watercolor style"
 ```
@@ -131,6 +138,7 @@ response = chat.with_schema(ProductSchema).ask "Analyze this product", with: "pr
 * **Tools:** Let AI call your Ruby methods
 * **Agents:** Reusable assistants with `RubyLLM::Agent`
 * **Structured output:** JSON schemas that just work
+* **Fallback:** Automatic model failover with `with_fallback`
 * **Streaming:** Real-time responses with blocks
 * **Rails:** ActiveRecord integration with `acts_as_chat`
 * **Async:** Fiber-based concurrency

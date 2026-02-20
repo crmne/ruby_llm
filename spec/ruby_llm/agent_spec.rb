@@ -136,4 +136,83 @@ RSpec.describe RubyLLM::Agent do
     agent = Class.new(described_class).new(chat: fake_chat)
     expect(agent.map(&:upcase)).to eq(%w[FIRST SECOND])
   end
+
+  describe 'fallback' do
+    it 'stores and retrieves fallback config via class macro' do
+      agent_class = Class.new(RubyLLM::Agent) do
+        model 'gpt-4.1-nano'
+        fallback 'claude-haiku-4-5-20251001', provider: :anthropic
+      end
+
+      expect(agent_class.fallback).to eq({ model: 'claude-haiku-4-5-20251001', provider: :anthropic })
+    end
+
+    it 'returns nil when no fallback is configured' do
+      agent_class = Class.new(RubyLLM::Agent) do
+        model 'gpt-4.1-nano'
+      end
+
+      expect(agent_class.fallback).to be_nil
+    end
+
+    it 'inherits fallback config to subclasses' do
+      parent_class = Class.new(RubyLLM::Agent) do
+        model 'gpt-4.1-nano'
+        fallback 'claude-haiku-4-5-20251001', provider: :anthropic
+      end
+
+      child_class = Class.new(parent_class)
+
+      expect(child_class.fallback).to eq({ model: 'claude-haiku-4-5-20251001', provider: :anthropic })
+    end
+
+    it 'does not affect parent when child overrides fallback' do
+      parent_class = Class.new(RubyLLM::Agent) do
+        model 'gpt-4.1-nano'
+        fallback 'claude-haiku-4-5-20251001', provider: :anthropic
+      end
+
+      child_class = Class.new(parent_class) do
+        fallback 'gpt-4.1-mini'
+      end
+
+      expect(parent_class.fallback).to eq({ model: 'claude-haiku-4-5-20251001', provider: :anthropic })
+      expect(child_class.fallback).to eq({ model: 'gpt-4.1-mini', provider: nil })
+    end
+
+    it 'applies fallback to the underlying chat via .chat' do
+      agent_class = Class.new(RubyLLM::Agent) do
+        model 'gpt-4.1-nano'
+        fallback 'claude-haiku-4-5-20251001', provider: :anthropic
+      end
+
+      chat = agent_class.chat
+      fallback_config = chat.instance_variable_get(:@fallback)
+
+      expect(fallback_config).to eq({ model: 'claude-haiku-4-5-20251001', provider: :anthropic })
+    end
+
+    it 'applies fallback to the underlying chat via .new' do
+      agent_class = Class.new(RubyLLM::Agent) do
+        model 'gpt-4.1-nano'
+        fallback 'claude-haiku-4-5-20251001', provider: :anthropic
+      end
+
+      agent = agent_class.new
+      fallback_config = agent.chat.instance_variable_get(:@fallback)
+
+      expect(fallback_config).to eq({ model: 'claude-haiku-4-5-20251001', provider: :anthropic })
+    end
+
+    it 'does not apply fallback when none is configured' do
+      agent_class = Class.new(RubyLLM::Agent) do
+        model 'gpt-4.1-nano'
+      end
+
+      chat = agent_class.chat
+      fallback_config = chat.instance_variable_get(:@fallback)
+
+      expect(fallback_config).to be_nil
+    end
+  end
 end

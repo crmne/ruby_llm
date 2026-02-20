@@ -4,6 +4,7 @@ module RubyLLM
   # Represents a conversation with an AI model
   class Chat
     include Enumerable
+    include Fallback
 
     attr_reader :model, :messages, :tools, :params, :headers, :schema
 
@@ -23,6 +24,8 @@ module RubyLLM
       @headers = {}
       @schema = nil
       @thinking = nil
+      @fallback = nil
+      @in_fallback = false
       @on = {
         new_message: nil,
         end_message: nil,
@@ -135,35 +138,37 @@ module RubyLLM
     end
 
     def complete(&) # rubocop:disable Metrics/PerceivedComplexity
-      response = @provider.complete(
-        messages,
-        tools: @tools,
-        temperature: @temperature,
-        model: @model,
-        params: @params,
-        headers: @headers,
-        schema: @schema,
-        thinking: @thinking,
-        &wrap_streaming_block(&)
-      )
+      with_fallback_protection do
+        response = @provider.complete(
+          messages,
+          tools: @tools,
+          temperature: @temperature,
+          model: @model,
+          params: @params,
+          headers: @headers,
+          schema: @schema,
+          thinking: @thinking,
+          &wrap_streaming_block(&)
+        )
 
-      @on[:new_message]&.call unless block_given?
+        @on[:new_message]&.call unless block_given?
 
-      if @schema && response.content.is_a?(String)
-        begin
-          response.content = JSON.parse(response.content)
-        rescue JSON::ParserError
-          # If parsing fails, keep content as string
+        if @schema && response.content.is_a?(String)
+          begin
+            response.content = JSON.parse(response.content)
+          rescue JSON::ParserError
+            # If parsing fails, keep content as string
+          end
         end
-      end
 
-      add_message response
-      @on[:end_message]&.call(response)
+        add_message response
+        @on[:end_message]&.call(response)
 
-      if response.tool_call?
-        handle_tool_calls(response, &)
-      else
-        response
+        if response.tool_call?
+          handle_tool_calls(response, &)
+        else
+          response
+        end
       end
     end
 
