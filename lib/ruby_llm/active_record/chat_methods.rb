@@ -144,6 +144,11 @@ module RubyLLM
         self
       end
 
+      def with_messages(...)
+        to_llm.with_messages(...)
+        self
+      end
+
       def on_new_message(&block)
         to_llm
 
