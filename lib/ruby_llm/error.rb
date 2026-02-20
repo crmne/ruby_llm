@@ -21,6 +21,7 @@ module RubyLLM
   # Error classes for different HTTP status codes
   class BadRequestError < Error; end
   class ForbiddenError < Error; end
+  class ContextLengthExceededError < Error; end
   class OverloadedError < Error; end
   class PaymentRequiredError < Error; end
   class RateLimitError < Error; end
@@ -42,6 +43,18 @@ module RubyLLM
     end
 
     class << self
+      CONTEXT_LENGTH_PATTERNS = [
+        /context length/i,
+        /context window/i,
+        /maximum context/i,
+        /request too large/i,
+        /too many tokens/i,
+        /token count exceeds/i,
+        /input[_\s-]?token/i,
+        /input or output tokens? must be reduced/i,
+        /reduce the length of messages/i
+      ].freeze
+
       def parse_error(provider:, response:) # rubocop:disable Metrics/PerceivedComplexity
         message = provider&.parse_error(response)
 
@@ -58,6 +71,10 @@ module RubyLLM
           raise ForbiddenError.new(response,
                                    message || 'Forbidden - you do not have permission to access this resource')
         when 429
+          if context_length_exceeded?(message)
+            raise ContextLengthExceededError.new(response, message || 'Context length exceeded')
+          end
+
           raise RateLimitError.new(response, message || 'Rate limit exceeded - please wait a moment')
         when 500
           raise ServerError.new(response, message || 'API server error - please try again')
@@ -68,6 +85,14 @@ module RubyLLM
         else
           raise Error.new(response, message || 'An unknown error occurred')
         end
+      end
+
+      private
+
+      def context_length_exceeded?(message)
+        return false if message.to_s.empty?
+
+        CONTEXT_LENGTH_PATTERNS.any? { |pattern| message.match?(pattern) }
       end
     end
   end
