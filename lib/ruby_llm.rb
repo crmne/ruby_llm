@@ -23,6 +23,7 @@ loader.inflector.inflect(
   'gpustack' => 'GPUStack',
   'llm' => 'LLM',
   'mistral' => 'Mistral',
+  'modelslab' => 'ModelsLab',
   'openai' => 'OpenAI',
   'openrouter' => 'OpenRouter',
   'pdf' => 'PDF',
@@ -100,6 +101,7 @@ RubyLLM::Provider.register :deepseek, RubyLLM::Providers::DeepSeek
 RubyLLM::Provider.register :gemini, RubyLLM::Providers::Gemini
 RubyLLM::Provider.register :gpustack, RubyLLM::Providers::GPUStack
 RubyLLM::Provider.register :mistral, RubyLLM::Providers::Mistral
+RubyLLM::Provider.register :modelslab, RubyLLM::Providers::ModelsLab
 RubyLLM::Provider.register :ollama, RubyLLM::Providers::Ollama
 RubyLLM::Provider.register :openai, RubyLLM::Providers::OpenAI
 RubyLLM::Provider.register :openrouter, RubyLLM::Providers::OpenRouter
