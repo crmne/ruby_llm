@@ -26,7 +26,7 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 ## Last Updated
 {: .d-inline-block }
 
-2026-02-23
+2026-02-25
 {: .label .label-green }
 
 ## Models by Provider
@@ -60,7 +60,7 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | claude-sonnet-4-6 | anthropic | 200000 | 64000 | In: $3.00, Out: $15.00, Cache: $0.30 |
 
 
-### Azure (265)
+### Azure (266)
 
 | Model | Provider | Context | Max Output | Standard Pricing (per 1M tokens) |
 | :-- | :-- | --: | --: | :-- |
@@ -176,6 +176,7 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | gpt-5.1-codex-mini-2025-11-13 | azure | 128000 | 400000 | In: $1.25, Out: $10.00, Cache: $0.12 |
 | gpt-5.2-chat-2025-12-11 | azure | 128000 | 400000 | In: $1.25, Out: $10.00, Cache: $0.12 |
 | gpt-5.2-chat-2026-02-10 | azure | 128000 | 400000 | In: $1.25, Out: $10.00, Cache: $0.12 |
+| gpt-5.3-codex-2026-02-20 | azure | 128000 | 400000 | In: $1.25, Out: $10.00, Cache: $0.12 |
 | gpt-audio-2025-08-28 | azure | 4096 | 16384 | In: $0.50, Out: $1.50 |
 | gpt-audio-mini-2025-10-06 | azure | 4096 | 16384 | In: $0.50, Out: $1.50 |
 | gpt-oss-120b | azure | 4096 | 16384 | In: $0.50, Out: $1.50 |
@@ -331,16 +332,12 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | text-embedding-ada-002-2 | azure | - | - | In: $0.10, Out: $0.10 |
 
 
-### Bedrock (180)
+### Bedrock (175)
 
 | Model | Provider | Context | Max Output | Standard Pricing (per 1M tokens) |
 | :-- | :-- | --: | --: | :-- |
-| anthropic.claude-v2:0:100k | bedrock | - | - | - |
-| anthropic.claude-v2:0:18k | bedrock | - | - | - |
 | anthropic.claude-v2 | bedrock | 100000 | 4096 | In: $8.00, Out: $24.00 |
 | anthropic.claude-v2:1 | bedrock | 200000 | 4096 | In: $8.00, Out: $24.00 |
-| anthropic.claude-v2:1:18k | bedrock | 18000 | 4096 | In: $8.00, Out: $24.00 |
-| anthropic.claude-v2:1:200k | bedrock | 200000 | 4096 | In: $8.00, Out: $24.00 |
 | anthropic.claude-3-haiku-20240307-v1:0 | bedrock | 200000 | 4096 | In: $0.25, Out: $1.25 |
 | anthropic.claude-3-haiku-20240307-v1:0:200k | bedrock | 200000 | 4096 | In: $0.25, Out: $1.25 |
 | anthropic.claude-3-haiku-20240307-v1:0:48k | bedrock | 48000 | 4096 | In: $0.25, Out: $1.25 |
@@ -350,7 +347,6 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | global.anthropic.claude-haiku-4-5-20251001-v1:0 | bedrock | 200000 | 64000 | In: $1.00, Out: $5.00, Cache: $0.10 |
 | us.anthropic.claude-haiku-4-5-20251001-v1:0 | bedrock | 200000 | 64000 | In: $1.00, Out: $5.00, Cache: $0.10 |
 | anthropic.claude-instant-v1 | bedrock | 100000 | 4096 | In: $0.80, Out: $2.40 |
-| anthropic.claude-instant-v1:2:100k | bedrock | - | - | - |
 | anthropic.claude-3-opus-20240229-v1:0 | bedrock | 200000 | 4096 | In: $15.00, Out: $75.00 |
 | anthropic.claude-opus-4-20250514-v1:0 | bedrock | 200000 | 32000 | In: $15.00, Out: $75.00, Cache: $1.50 |
 | us.anthropic.claude-opus-4-20250514-v1:0 | bedrock | 200000 | 32000 | In: $15.00, Out: $75.00, Cache: $1.50 |
@@ -653,7 +649,7 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | voxtral-small-latest | mistral | 32768 | 8192 | - |
 
 
-### OpenAI (122)
+### OpenAI (124)
 
 | Model | Provider | Context | Max Output | Standard Pricing (per 1M tokens) |
 | :-- | :-- | --: | --: | :-- |
@@ -737,6 +733,7 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | gpt-5.3-codex | openai | 400000 | 128000 | In: $1.75, Out: $14.00, Cache: $0.18 |
 | gpt-5.3-codex-spark | openai | 128000 | 32000 | In: $1.75, Out: $14.00, Cache: $0.18 |
 | gpt-audio | openai | 4096 | 16384 | In: $0.50, Out: $1.50 |
+| gpt-audio-1.5 | openai | 4096 | 16384 | In: $0.50, Out: $1.50 |
 | gpt-audio-2025-08-28 | openai | 4096 | 16384 | In: $0.50, Out: $1.50 |
 | gpt-audio-mini | openai | 4096 | 16384 | In: $0.50, Out: $1.50 |
 | gpt-audio-mini-2025-10-06 | openai | 4096 | 16384 | In: $0.50, Out: $1.50 |
@@ -745,6 +742,7 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | gpt-image-1-mini | openai | 4096 | 16384 | In: $0.50, Out: $1.50 |
 | gpt-image-1.5 | openai | 4096 | 16384 | In: $0.50, Out: $1.50 |
 | gpt-realtime | openai | 4096 | 16384 | In: $0.50, Out: $1.50 |
+| gpt-realtime-1.5 | openai | 4096 | 16384 | In: $0.50, Out: $1.50 |
 | gpt-realtime-2025-08-28 | openai | 4096 | 16384 | In: $0.50, Out: $1.50 |
 | gpt-realtime-mini | openai | 4096 | 16384 | In: $0.50, Out: $1.50 |
 | gpt-realtime-mini-2025-10-06 | openai | 4096 | 16384 | In: $0.50, Out: $1.50 |
@@ -781,13 +779,14 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | text-embedding-ada-002 | openai | 8192 | 1536 | In: $0.10 |
 
 
-### OpenRouter (390)
+### OpenRouter (391)
 
 | Model | Provider | Context | Max Output | Standard Pricing (per 1M tokens) |
 | :-- | :-- | --: | --: | :-- |
 | ai21/jamba-large-1.7 | openrouter | 256000 | 4096 | In: $2.00, Out: $8.00 |
 | aion-labs/aion-1.0 | openrouter | 131072 | 32768 | In: $4.00, Out: $8.00 |
 | aion-labs/aion-1.0-mini | openrouter | 131072 | 32768 | In: $0.70, Out: $1.40 |
+| aion-labs/aion-2.0 | openrouter | 131072 | 32768 | In: $0.80, Out: $1.60 |
 | aion-labs/aion-rp-llama-3.1-8b | openrouter | 32768 | 32768 | In: $0.80, Out: $1.60 |
 | alfredpros/codellama-7b-instruct-solidity | openrouter | 4096 | 4096 | In: $0.80, Out: $1.20 |
 | allenai/molmo-2-8b | openrouter | 36864 | 36864 | In: $0.20, Out: $0.20 |
@@ -1025,7 +1024,6 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | morph/morph-v3-large | openrouter | 262144 | 131072 | In: $0.90, Out: $1.90 |
 | gryphe/mythomax-l2-13b | openrouter | 4096 | 4096 | In: $0.06, Out: $0.06 |
 | nvidia/llama-3.1-nemotron-70b-instruct | openrouter | 131072 | 16384 | In: $1.20, Out: $1.20 |
-| nvidia/llama-3.1-nemotron-ultra-253b-v1 | openrouter | 131072 | - | In: $0.60, Out: $1.80 |
 | nvidia/llama-3.3-nemotron-super-49b-v1.5 | openrouter | 131072 | - | In: $0.10, Out: $0.40 |
 | nvidia/nemotron-3-nano-30b-a3b | openrouter | 262144 | - | In: $0.05, Out: $0.20 |
 | nvidia/nemotron-nano-12b-v2-vl | openrouter | 131072 | - | In: $0.07, Out: $0.20 |
@@ -1060,6 +1058,7 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | openai/gpt-4o-mini-2024-07-18 | openrouter | 128000 | 16384 | In: $0.15, Out: $0.60, Cache: $0.08 |
 | openai/gpt-4o-mini-search-preview | openrouter | 128000 | 16384 | In: $0.15, Out: $0.60 |
 | openai/gpt-5-image-mini | openrouter | 400000 | 128000 | In: $2.50, Out: $2.00, Cache: $0.25 |
+| openai/gpt-5.3-codex | openrouter | 400000 | 128000 | In: $1.75, Out: $14.00, Cache: $0.18 |
 | openai/o1 | openrouter | 200000 | 100000 | In: $15.00, Out: $60.00, Cache: $7.50 |
 | openai/o1-pro | openrouter | 200000 | 100000 | In: $150.00, Out: $600.00 |
 | openai/o3 | openrouter | 200000 | 100000 | In: $2.00, Out: $8.00, Cache: $0.50 |
@@ -1259,7 +1258,7 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 
 ## Models by Capability
 
-### Function Calling (697)
+### Function Calling (694)
 
 | Model | Provider | Context | Max Output | Standard Pricing (per 1M tokens) |
 | :-- | :-- | --: | --: | :-- |
@@ -1314,6 +1313,7 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | gpt-5.1-codex-mini-2025-11-13 | azure | 128000 | 400000 | In: $1.25, Out: $10.00, Cache: $0.12 |
 | gpt-5.2-chat-2025-12-11 | azure | 128000 | 400000 | In: $1.25, Out: $10.00, Cache: $0.12 |
 | gpt-5.2-chat-2026-02-10 | azure | 128000 | 400000 | In: $1.25, Out: $10.00, Cache: $0.12 |
+| gpt-5.3-codex-2026-02-20 | azure | 128000 | 400000 | In: $1.25, Out: $10.00, Cache: $0.12 |
 | o1-2024-12-17 | azure | 200000 | 100000 | In: $15.00, Out: $60.00 |
 | o1-pro | azure | 200000 | 100000 | In: $150.00, Out: $600.00 |
 | o1-pro-2025-03-19 | azure | 200000 | 100000 | In: $150.00, Out: $600.00 |
@@ -1321,10 +1321,6 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | o3-mini-2025-01-31 | azure | 200000 | 100000 | In: $1.10, Out: $4.40 |
 | o3-mini-alpha | azure | 200000 | 100000 | In: $1.10, Out: $4.40 |
 | o3-mini-alpha-2024-12-17 | azure | 200000 | 100000 | In: $1.10, Out: $4.40 |
-| anthropic.claude-v2:0:100k | bedrock | - | - | - |
-| anthropic.claude-v2:0:18k | bedrock | - | - | - |
-| anthropic.claude-v2:1:18k | bedrock | 18000 | 4096 | In: $8.00, Out: $24.00 |
-| anthropic.claude-v2:1:200k | bedrock | 200000 | 4096 | In: $8.00, Out: $24.00 |
 | anthropic.claude-3-haiku-20240307-v1:0 | bedrock | 200000 | 4096 | In: $0.25, Out: $1.25 |
 | anthropic.claude-3-haiku-20240307-v1:0:200k | bedrock | 200000 | 4096 | In: $0.25, Out: $1.25 |
 | anthropic.claude-3-haiku-20240307-v1:0:48k | bedrock | 48000 | 4096 | In: $0.25, Out: $1.25 |
@@ -1333,7 +1329,6 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | eu.anthropic.claude-haiku-4-5-20251001-v1:0 | bedrock | 200000 | 64000 | In: $1.00, Out: $5.00, Cache: $0.10 |
 | global.anthropic.claude-haiku-4-5-20251001-v1:0 | bedrock | 200000 | 64000 | In: $1.00, Out: $5.00, Cache: $0.10 |
 | us.anthropic.claude-haiku-4-5-20251001-v1:0 | bedrock | 200000 | 64000 | In: $1.00, Out: $5.00, Cache: $0.10 |
-| anthropic.claude-instant-v1:2:100k | bedrock | - | - | - |
 | anthropic.claude-3-opus-20240229-v1:0 | bedrock | 200000 | 4096 | In: $15.00, Out: $75.00 |
 | anthropic.claude-opus-4-20250514-v1:0 | bedrock | 200000 | 32000 | In: $15.00, Out: $75.00, Cache: $1.50 |
 | us.anthropic.claude-opus-4-20250514-v1:0 | bedrock | 200000 | 32000 | In: $15.00, Out: $75.00, Cache: $1.50 |
@@ -1821,6 +1816,7 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | openai/gpt-4o-audio-preview | openrouter | 128000 | 16384 | In: $2.50, Out: $10.00 |
 | openai/gpt-4o-mini-2024-07-18 | openrouter | 128000 | 16384 | In: $0.15, Out: $0.60, Cache: $0.08 |
 | openai/gpt-5-image-mini | openrouter | 400000 | 128000 | In: $2.50, Out: $2.00, Cache: $0.25 |
+| openai/gpt-5.3-codex | openrouter | 400000 | 128000 | In: $1.75, Out: $14.00, Cache: $0.18 |
 | openai/o1 | openrouter | 200000 | 100000 | In: $15.00, Out: $60.00, Cache: $7.50 |
 | openai/o3 | openrouter | 200000 | 100000 | In: $2.00, Out: $8.00, Cache: $0.50 |
 | openai/o3-deep-research | openrouter | 200000 | 100000 | In: $10.00, Out: $40.00, Cache: $2.50 |
@@ -1962,7 +1958,7 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | grok-imagine-video | xai | - | - | - |
 
 
-### Structured Output (449)
+### Structured Output (450)
 
 | Model | Provider | Context | Max Output | Standard Pricing (per 1M tokens) |
 | :-- | :-- | --: | --: | :-- |
@@ -1991,6 +1987,7 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | gpt-5.1-codex-mini-2025-11-13 | azure | 128000 | 400000 | In: $1.25, Out: $10.00, Cache: $0.12 |
 | gpt-5.2-chat-2025-12-11 | azure | 128000 | 400000 | In: $1.25, Out: $10.00, Cache: $0.12 |
 | gpt-5.2-chat-2026-02-10 | azure | 128000 | 400000 | In: $1.25, Out: $10.00, Cache: $0.12 |
+| gpt-5.3-codex-2026-02-20 | azure | 128000 | 400000 | In: $1.25, Out: $10.00, Cache: $0.12 |
 | o1-2024-12-17 | azure | 200000 | 100000 | In: $15.00, Out: $60.00 |
 | o1-pro | azure | 200000 | 100000 | In: $150.00, Out: $600.00 |
 | o1-pro-2025-03-19 | azure | 200000 | 100000 | In: $150.00, Out: $600.00 |
@@ -2280,7 +2277,6 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | mistralai/voxtral-small-24b-2507 | openrouter | 32000 | - | In: $0.10, Out: $0.30 |
 | gryphe/mythomax-l2-13b | openrouter | 4096 | 4096 | In: $0.06, Out: $0.06 |
 | nvidia/llama-3.1-nemotron-70b-instruct | openrouter | 131072 | 16384 | In: $1.20, Out: $1.20 |
-| nvidia/llama-3.1-nemotron-ultra-253b-v1 | openrouter | 131072 | - | In: $0.60, Out: $1.80 |
 | nvidia/llama-3.3-nemotron-super-49b-v1.5 | openrouter | 131072 | - | In: $0.10, Out: $0.40 |
 | nvidia/nemotron-3-nano-30b-a3b | openrouter | 262144 | - | In: $0.05, Out: $0.20 |
 | nvidia/nemotron-nano-12b-v2-vl | openrouter | 131072 | - | In: $0.07, Out: $0.20 |
@@ -2314,6 +2310,7 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | openai/gpt-4o-mini-2024-07-18 | openrouter | 128000 | 16384 | In: $0.15, Out: $0.60, Cache: $0.08 |
 | openai/gpt-4o-mini-search-preview | openrouter | 128000 | 16384 | In: $0.15, Out: $0.60 |
 | openai/gpt-5-image-mini | openrouter | 400000 | 128000 | In: $2.50, Out: $2.00, Cache: $0.25 |
+| openai/gpt-5.3-codex | openrouter | 400000 | 128000 | In: $1.75, Out: $14.00, Cache: $0.18 |
 | openai/o1 | openrouter | 200000 | 100000 | In: $15.00, Out: $60.00, Cache: $7.50 |
 | openai/o1-pro | openrouter | 200000 | 100000 | In: $150.00, Out: $600.00 |
 | openai/o3 | openrouter | 200000 | 100000 | In: $2.00, Out: $8.00, Cache: $0.50 |
@@ -2417,7 +2414,7 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | grok-imagine-video | xai | - | - | - |
 
 
-### Streaming (949)
+### Streaming (948)
 
 | Model | Provider | Context | Max Output | Standard Pricing (per 1M tokens) |
 | :-- | :-- | --: | --: | :-- |
@@ -2542,6 +2539,7 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | gpt-5.1-codex-mini-2025-11-13 | azure | 128000 | 400000 | In: $1.25, Out: $10.00, Cache: $0.12 |
 | gpt-5.2-chat-2025-12-11 | azure | 128000 | 400000 | In: $1.25, Out: $10.00, Cache: $0.12 |
 | gpt-5.2-chat-2026-02-10 | azure | 128000 | 400000 | In: $1.25, Out: $10.00, Cache: $0.12 |
+| gpt-5.3-codex-2026-02-20 | azure | 128000 | 400000 | In: $1.25, Out: $10.00, Cache: $0.12 |
 | gpt-audio-2025-08-28 | azure | 4096 | 16384 | In: $0.50, Out: $1.50 |
 | gpt-audio-mini-2025-10-06 | azure | 4096 | 16384 | In: $0.50, Out: $1.50 |
 | gpt-oss-120b | azure | 4096 | 16384 | In: $0.50, Out: $1.50 |
@@ -2691,16 +2689,11 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | text-similarity-davinci-001 | azure | 4096 | 16384 | In: $0.50, Out: $1.50 |
 | whisper | azure | - | - | In: $0.01, Out: $0.01 |
 | whisper-001 | azure | - | - | In: $0.01, Out: $0.01 |
-| anthropic.claude-v2:0:100k | bedrock | - | - | - |
-| anthropic.claude-v2:0:18k | bedrock | - | - | - |
-| anthropic.claude-v2:1:18k | bedrock | 18000 | 4096 | In: $8.00, Out: $24.00 |
-| anthropic.claude-v2:1:200k | bedrock | 200000 | 4096 | In: $8.00, Out: $24.00 |
 | anthropic.claude-3-haiku-20240307-v1:0 | bedrock | 200000 | 4096 | In: $0.25, Out: $1.25 |
 | anthropic.claude-3-haiku-20240307-v1:0:200k | bedrock | 200000 | 4096 | In: $0.25, Out: $1.25 |
 | anthropic.claude-3-haiku-20240307-v1:0:48k | bedrock | 48000 | 4096 | In: $0.25, Out: $1.25 |
 | anthropic.claude-3-5-haiku-20241022-v1:0 | bedrock | 200000 | 8192 | In: $0.80, Out: $4.00, Cache: $0.08 |
 | us.anthropic.claude-haiku-4-5-20251001-v1:0 | bedrock | 200000 | 64000 | In: $1.00, Out: $5.00, Cache: $0.10 |
-| anthropic.claude-instant-v1:2:100k | bedrock | - | - | - |
 | us.anthropic.claude-opus-4-20250514-v1:0 | bedrock | 200000 | 32000 | In: $15.00, Out: $75.00, Cache: $1.50 |
 | us.anthropic.claude-opus-4-1-20250805-v1:0 | bedrock | 200000 | 32000 | In: $15.00, Out: $75.00, Cache: $1.50 |
 | us.anthropic.claude-opus-4-5-20251101-v1:0 | bedrock | 200000 | 64000 | In: $5.00, Out: $25.00, Cache: $0.50 |
@@ -2957,7 +2950,9 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | gpt-5.2-codex | openai | 400000 | 128000 | In: $1.75, Out: $14.00, Cache: $0.18 |
 | gpt-5.2-pro | openai | 400000 | 128000 | In: $21.00, Out: $168.00 |
 | gpt-5.2-pro-2025-12-11 | openai | 128000 | 400000 | In: $1.25, Out: $10.00, Cache: $0.12 |
+| gpt-5.3-codex | openai | 400000 | 128000 | In: $1.75, Out: $14.00, Cache: $0.18 |
 | gpt-audio | openai | 4096 | 16384 | In: $0.50, Out: $1.50 |
+| gpt-audio-1.5 | openai | 4096 | 16384 | In: $0.50, Out: $1.50 |
 | gpt-audio-2025-08-28 | openai | 4096 | 16384 | In: $0.50, Out: $1.50 |
 | gpt-audio-mini | openai | 4096 | 16384 | In: $0.50, Out: $1.50 |
 | gpt-audio-mini-2025-10-06 | openai | 4096 | 16384 | In: $0.50, Out: $1.50 |
@@ -2966,6 +2961,7 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | gpt-image-1-mini | openai | 4096 | 16384 | In: $0.50, Out: $1.50 |
 | gpt-image-1.5 | openai | 4096 | 16384 | In: $0.50, Out: $1.50 |
 | gpt-realtime | openai | 4096 | 16384 | In: $0.50, Out: $1.50 |
+| gpt-realtime-1.5 | openai | 4096 | 16384 | In: $0.50, Out: $1.50 |
 | gpt-realtime-2025-08-28 | openai | 4096 | 16384 | In: $0.50, Out: $1.50 |
 | gpt-realtime-mini | openai | 4096 | 16384 | In: $0.50, Out: $1.50 |
 | gpt-realtime-mini-2025-10-06 | openai | 4096 | 16384 | In: $0.50, Out: $1.50 |
@@ -2996,6 +2992,7 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | ai21/jamba-large-1.7 | openrouter | 256000 | 4096 | In: $2.00, Out: $8.00 |
 | aion-labs/aion-1.0 | openrouter | 131072 | 32768 | In: $4.00, Out: $8.00 |
 | aion-labs/aion-1.0-mini | openrouter | 131072 | 32768 | In: $0.70, Out: $1.40 |
+| aion-labs/aion-2.0 | openrouter | 131072 | 32768 | In: $0.80, Out: $1.60 |
 | aion-labs/aion-rp-llama-3.1-8b | openrouter | 32768 | 32768 | In: $0.80, Out: $1.60 |
 | alfredpros/codellama-7b-instruct-solidity | openrouter | 4096 | 4096 | In: $0.80, Out: $1.20 |
 | allenai/molmo-2-8b | openrouter | 36864 | 36864 | In: $0.20, Out: $0.20 |
@@ -3202,7 +3199,6 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | morph/morph-v3-large | openrouter | 262144 | 131072 | In: $0.90, Out: $1.90 |
 | gryphe/mythomax-l2-13b | openrouter | 4096 | 4096 | In: $0.06, Out: $0.06 |
 | nvidia/llama-3.1-nemotron-70b-instruct | openrouter | 131072 | 16384 | In: $1.20, Out: $1.20 |
-| nvidia/llama-3.1-nemotron-ultra-253b-v1 | openrouter | 131072 | - | In: $0.60, Out: $1.80 |
 | nvidia/llama-3.3-nemotron-super-49b-v1.5 | openrouter | 131072 | - | In: $0.10, Out: $0.40 |
 | nvidia/nemotron-3-nano-30b-a3b | openrouter | 262144 | - | In: $0.05, Out: $0.20 |
 | nvidia/nemotron-nano-12b-v2-vl | openrouter | 131072 | - | In: $0.07, Out: $0.20 |
@@ -3237,6 +3233,7 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | openai/gpt-4o-mini-2024-07-18 | openrouter | 128000 | 16384 | In: $0.15, Out: $0.60, Cache: $0.08 |
 | openai/gpt-4o-mini-search-preview | openrouter | 128000 | 16384 | In: $0.15, Out: $0.60 |
 | openai/gpt-5-image-mini | openrouter | 400000 | 128000 | In: $2.50, Out: $2.00, Cache: $0.25 |
+| openai/gpt-5.3-codex | openrouter | 400000 | 128000 | In: $1.75, Out: $14.00, Cache: $0.18 |
 | openai/o1 | openrouter | 200000 | 100000 | In: $15.00, Out: $60.00, Cache: $7.50 |
 | openai/o1-pro | openrouter | 200000 | 100000 | In: $150.00, Out: $600.00 |
 | openai/o3 | openrouter | 200000 | 100000 | In: $2.00, Out: $8.00, Cache: $0.50 |
@@ -3298,7 +3295,6 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 | qwen/qwen3-vl-32b-instruct | openrouter | 131072 | 32768 | In: $0.10, Out: $0.42 |
 | qwen/qwen3-vl-8b-instruct | openrouter | 131072 | 32768 | In: $0.08, Out: $0.50 |
 | qwen/qwen3-vl-8b-thinking | openrouter | 131072 | 32768 | In: $0.12, Out: $1.36 |
-| deepseek/deepseek-r1-0528:free | openrouter | 163840 | 163840 | - |
 | undi95/remm-slerp-l2-13b | openrouter | 6144 | 4096 | In: $0.45, Out: $0.65 |
 | relace/relace-apply-3 | openrouter | 256000 | 128000 | In: $0.85, Out: $1.25 |
 | relace/relace-search | openrouter | 256000 | 128000 | In: $1.00, Out: $3.00 |
@@ -3443,7 +3439,7 @@ _Model information enriched by [models.dev](https://models.dev) and our custom c
 
 ## Models by Modality
 
-### Vision Models (426)
+### Vision Models (428)
 
 Models that can process images:
 
@@ -3500,6 +3496,7 @@ Models that can process images:
 | gpt-5.1-codex-mini-2025-11-13 | azure | 128000 | 400000 | In: $1.25, Out: $10.00, Cache: $0.12 |
 | gpt-5.2-chat-2025-12-11 | azure | 128000 | 400000 | In: $1.25, Out: $10.00, Cache: $0.12 |
 | gpt-5.2-chat-2026-02-10 | azure | 128000 | 400000 | In: $1.25, Out: $10.00, Cache: $0.12 |
+| gpt-5.3-codex-2026-02-20 | azure | 128000 | 400000 | In: $1.25, Out: $10.00, Cache: $0.12 |
 | o1-2024-12-17 | azure | 200000 | 100000 | In: $15.00, Out: $60.00 |
 | o1-pro | azure | 200000 | 100000 | In: $150.00, Out: $600.00 |
 | o1-pro-2025-03-19 | azure | 200000 | 100000 | In: $150.00, Out: $600.00 |
@@ -3808,6 +3805,7 @@ Models that can process images:
 | openai/gpt-4o:extended | openrouter | 128000 | 64000 | In: $6.00, Out: $18.00 |
 | openai/gpt-4o-mini-2024-07-18 | openrouter | 128000 | 16384 | In: $0.15, Out: $0.60, Cache: $0.08 |
 | openai/gpt-5-image-mini | openrouter | 400000 | 128000 | In: $2.50, Out: $2.00, Cache: $0.25 |
+| openai/gpt-5.3-codex | openrouter | 400000 | 128000 | In: $1.75, Out: $14.00, Cache: $0.18 |
 | openai/o1 | openrouter | 200000 | 100000 | In: $15.00, Out: $60.00, Cache: $7.50 |
 | openai/o1-pro | openrouter | 200000 | 100000 | In: $150.00, Out: $600.00 |
 | openai/o3 | openrouter | 200000 | 100000 | In: $2.00, Out: $8.00, Cache: $0.50 |
@@ -3877,7 +3875,7 @@ Models that can process images:
 | grok-4-fast-reasoning | xai | - | - | - |
 
 
-### Audio Input Models (110)
+### Audio Input Models (111)
 
 Models that can process audio:
 
@@ -3945,6 +3943,7 @@ Models that can process audio:
 | gpt-4o-transcribe | openai | 128000 | 16384 | In: $2.50, Out: $10.00 |
 | gpt-4o-transcribe-diarize | openai | 128000 | 16384 | In: $2.50, Out: $10.00 |
 | gpt-audio | openai | 4096 | 16384 | In: $0.50, Out: $1.50 |
+| gpt-audio-1.5 | openai | 4096 | 16384 | In: $0.50, Out: $1.50 |
 | gpt-audio-2025-08-28 | openai | 4096 | 16384 | In: $0.50, Out: $1.50 |
 | gpt-audio-mini | openai | 4096 | 16384 | In: $0.50, Out: $1.50 |
 | gpt-audio-mini-2025-10-06 | openai | 4096 | 16384 | In: $0.50, Out: $1.50 |
@@ -3995,7 +3994,7 @@ Models that can process audio:
 | gemini-flash-lite-latest | vertexai | 1048576 | 65536 | In: $0.10, Out: $0.40, Cache: $0.02 |
 
 
-### PDF Models (197)
+### PDF Models (198)
 
 Models that can process PDF documents:
 
@@ -4052,6 +4051,7 @@ Models that can process PDF documents:
 | gpt-5.1-codex-mini-2025-11-13 | azure | 128000 | 400000 | In: $1.25, Out: $10.00, Cache: $0.12 |
 | gpt-5.2-chat-2025-12-11 | azure | 128000 | 400000 | In: $1.25, Out: $10.00, Cache: $0.12 |
 | gpt-5.2-chat-2026-02-10 | azure | 128000 | 400000 | In: $1.25, Out: $10.00, Cache: $0.12 |
+| gpt-5.3-codex-2026-02-20 | azure | 128000 | 400000 | In: $1.25, Out: $10.00, Cache: $0.12 |
 | o1-2024-12-17 | azure | 200000 | 100000 | In: $15.00, Out: $60.00 |
 | o1-pro | azure | 200000 | 100000 | In: $150.00, Out: $600.00 |
 | o1-pro-2025-03-19 | azure | 200000 | 100000 | In: $150.00, Out: $600.00 |
