@@ -99,6 +99,23 @@ For example, `model` maps to `RubyLLM.chat(model:, provider:, ...)`, `tools` map
 * `chat_model` (Rails-backed mode)
 * `inputs` (declared runtime inputs)
 
+`schema` supports:
+
+* A schema class (for example `PersonSchema`) - same as `with_schema`
+* A JSON schema hash - same as `with_schema`
+* An inline DSL block with `schema do ... end` - agent-specific convenience
+
+Inline DSL example:
+
+```ruby
+class CriticAgent < RubyLLM::Agent
+  schema do
+    string :verdict, enum: ["pass", "revise"]
+    string :feedback
+  end
+end
+```
+
 ## Runtime Context and Inputs
 
 Agents support runtime-evaluated values using blocks and lambdas.

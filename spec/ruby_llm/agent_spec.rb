@@ -46,6 +46,45 @@ RSpec.describe RubyLLM::Agent do
     expect(chat.messages).to be_empty
   end
 
+  it 'supports inline schema DSL via schema do ... end' do
+    agent_class = Class.new(RubyLLM::Agent) do
+      model 'gpt-4.1-nano'
+      schema do
+        string :verdict, enum: %w[pass revise]
+        string :feedback
+      end
+    end
+
+    chat = agent_class.chat
+
+    expect(chat.schema).to include(type: 'object')
+    expect(chat.schema[:properties]).to include(verdict: include(type: 'string'), feedback: include(type: 'string'))
+  end
+
+  it 'supports runtime-evaluated schema blocks that return a schema value' do
+    agent_class = Class.new(RubyLLM::Agent) do
+      model 'gpt-4.1-nano'
+      inputs :strict
+
+      schema do
+        if strict
+          {
+            type: 'object',
+            properties: { answer: { type: 'string' } },
+            required: ['answer'],
+            additionalProperties: false
+          }
+        end
+      end
+    end
+
+    strict_chat = agent_class.chat(strict: true)
+    loose_chat = agent_class.chat(strict: false)
+
+    expect(strict_chat.schema).to include(type: 'object')
+    expect(loose_chat.schema).to be_nil
+  end
+
   it 'can ask using the first configured chat model' do
     model_info = CHAT_MODELS.first
 

@@ -3,6 +3,7 @@
 require 'erb'
 require 'forwardable'
 require 'pathname'
+require 'ruby_llm/schema'
 
 module RubyLLM
   # Base class for simple, class-configured agents.
@@ -204,8 +205,19 @@ module RubyLLM
       end
 
       def apply_schema(llm_chat, runtime)
-        value = evaluate(schema, runtime)
+        value = resolved_schema_value(runtime)
         llm_chat.with_schema(value) if value
+      end
+
+      def resolved_schema_value(runtime)
+        value = schema
+        return value unless value.is_a?(Proc)
+
+        evaluate(value, runtime)
+      rescue NoMethodError => e
+        raise unless e.receiver.equal?(runtime)
+
+        RubyLLM::Schema.create(&value)
       end
 
       def llm_chat_for(chat_object)
