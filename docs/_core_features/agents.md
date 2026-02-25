@@ -99,6 +99,23 @@ For example, `model` maps to `RubyLLM.chat(model:, provider:, ...)`, `tools` map
 * `chat_model` (Rails-backed mode)
 * `inputs` (declared runtime inputs)
 
+`schema` supports:
+
+* A schema class (for example `PersonSchema`) - same as `with_schema`
+* A JSON schema hash - same as `with_schema`
+* An inline DSL block with `schema do ... end` - agent-specific convenience
+
+Inline DSL example:
+
+```ruby
+class CriticAgent < RubyLLM::Agent
+  schema do
+    string :verdict, enum: ["pass", "revise"]
+    string :feedback
+  end
+end
+```
+
 ## Runtime Context and Inputs
 
 Agents support runtime-evaluated values using blocks and lambdas.
@@ -161,7 +178,7 @@ RubyLLM looks for:
 
 * `app/prompts/work_assistant/instructions.txt.erb`
 
-If the file exists, it is rendered and used as instructions. If it does not exist, instructions are simply omitted.
+If the file exists, it is rendered and used as instructions. If it does not exist, RubyLLM raises `RubyLLM::PromptNotFoundError`.
 
 ### Prompt shorthand with locals
 
@@ -215,12 +232,20 @@ agent = WorkAssistant.new
 agent.ask("Hello")
 ```
 
-Agent instances delegate core chat operations to the underlying `Chat` object (or Rails chat record), including:
+Agent instances delegate the full `RubyLLM::Chat` instance API to the underlying chat object
+(or to `to_llm` when using a Rails-backed chat model).
 
+Delegated methods include:
+
+* `model`, `messages`, `tools`, `params`, `headers`, `schema`
 * `ask`, `say`, `complete`
-* `add_message`, `messages`, `each`
-* `on_new_message`, `on_end_message`
-* `on_tool_call`, `on_tool_result`
+* `add_message`, `reset_messages!`, `each`
+* `with_tool`, `with_tools`
+* `with_model`, `with_temperature`, `with_thinking`, `with_context`
+* `with_params`, `with_headers`, `with_schema`
+* `on_new_message`, `on_end_message`, `on_tool_call`, `on_tool_result`
+
+You can always access the wrapped chat object directly via `agent.chat`.
 
 ## Rails-Backed Agents
 

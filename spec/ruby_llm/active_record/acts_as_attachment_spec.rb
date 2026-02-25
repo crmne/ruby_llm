@@ -71,6 +71,18 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       expect(user_message.attachments.count).to eq(1)
       expect(response.content).to be_present
     end
+
+    it 'ignores leading blank multipart attachment entries for create_user_message' do
+      chat = Chat.create!(model: model)
+      image_upload = uploaded_file(image_path, 'image/png')
+
+      expect do
+        chat.create_user_message('What do you see?', with: ['', image_upload])
+      end.not_to raise_error
+
+      user_message = chat.messages.find_by(role: 'user')
+      expect(user_message.attachments.count).to eq(1)
+    end
   end
 
   describe 'attachment types' do
