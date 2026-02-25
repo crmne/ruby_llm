@@ -11,6 +11,7 @@ module RubyLLM
       include OpenAI::Streaming
       include OpenAI::Tools
       include OpenAI::Images
+      include OpenAI::Speech
       include OpenAI::Media
       include OpenAI::Transcription
 
