@@ -14,6 +14,7 @@ module RubyLLM
 
   # Error classes for non-HTTP errors
   class ConfigurationError < StandardError; end
+  class PromptNotFoundError < StandardError; end
   class InvalidRoleError < StandardError; end
   class ModelNotFoundError < StandardError; end
   class UnsupportedAttachmentError < StandardError; end

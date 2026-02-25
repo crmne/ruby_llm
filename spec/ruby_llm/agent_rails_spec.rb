@@ -56,6 +56,16 @@ RSpec.describe RubyLLM::Agent do
     FileUtils.rm_rf(prompt_dir) if prompt_dir
   end
 
+  it 'raises when instructions prompt shorthand file is missing' do
+    agent_class = Class.new(RubyLLM::Agent) do
+      chat_model Chat
+      model 'gpt-4.1-nano'
+      instructions
+    end
+
+    expect { agent_class.create! }.to raise_error(RubyLLM::PromptNotFoundError, /Prompt file not found/)
+  end
+
   it 'exposes chat_model record as chat in execution context for .create! and .find' do
     agent_class = Class.new(RubyLLM::Agent) do
       chat_model Chat

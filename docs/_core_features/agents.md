@@ -178,7 +178,7 @@ RubyLLM looks for:
 
 * `app/prompts/work_assistant/instructions.txt.erb`
 
-If the file exists, it is rendered and used as instructions. If it does not exist, instructions are simply omitted.
+If the file exists, it is rendered and used as instructions. If it does not exist, RubyLLM raises `RubyLLM::PromptNotFoundError`.
 
 ### Prompt shorthand with locals
 

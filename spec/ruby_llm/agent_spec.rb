@@ -36,14 +36,13 @@ RSpec.describe RubyLLM::Agent do
     expect(chat.messages.first.content).to eq('RubyLLM::Chat')
   end
 
-  it 'supports instructions with no args even when no default prompt exists' do
+  it 'raises when instructions default prompt is missing' do
     agent_class = Class.new(RubyLLM::Agent) do
       model 'gpt-4.1-nano'
       instructions
     end
 
-    chat = agent_class.chat
-    expect(chat.messages).to be_empty
+    expect { agent_class.chat }.to raise_error(RubyLLM::PromptNotFoundError, /Prompt file not found/)
   end
 
   it 'supports inline schema DSL via schema do ... end' do

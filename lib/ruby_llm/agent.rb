@@ -139,7 +139,10 @@ module RubyLLM
 
       def render_prompt(name, chat:, inputs:, locals:)
         path = prompt_path_for(name)
-        return nil unless File.exist?(path)
+        unless File.exist?(path)
+          raise RubyLLM::PromptNotFoundError,
+                "Prompt file not found for #{self}: #{path}. Create the file or use inline instructions."
+        end
 
         resolved_locals = resolve_prompt_locals(locals, runtime: runtime_context(chat:, inputs:), chat:, inputs:)
         ERB.new(File.read(path)).result_with_hash(resolved_locals)
@@ -229,7 +232,7 @@ module RubyLLM
       end
 
       def resolved_instructions_value(chat_object, runtime, inputs:)
-        value = evaluate(instructions, runtime)
+        value = evaluate(@instructions, runtime)
         return value unless prompt_instruction?(value)
 
         runtime.prompt(
