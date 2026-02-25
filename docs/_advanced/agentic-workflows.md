@@ -316,7 +316,7 @@ class DocumentSearch < RubyLLM::Tool
 end
 ```
 
-### Answering Agent and Workflow
+### Answering Agent
 
 ```ruby
 class SupportWithDocsAgent < RubyLLM::Agent
@@ -324,15 +324,9 @@ class SupportWithDocsAgent < RubyLLM::Agent
   instructions "Search for context before answering. Cite sources."
 end
 
-class SupportAnswerWorkflow
-  def answer(question)
-    SupportWithDocsAgent.new.ask(question).content
-  end
-end
-
 # Usage
-workflow = SupportAnswerWorkflow.new
-response = workflow.answer("What is our refund policy?")
+agent = SupportWithDocsAgent.new
+response = agent.ask("What is our refund policy?").content
 ```
 
 ## Error Handling
