@@ -181,7 +181,10 @@ module RubyLLM
         value = resolved_instructions_value(chat_object, runtime, inputs:)
         return if value.nil?
 
-        instruction_target(chat_object, persist:).with_instructions(value)
+        target = instruction_target(chat_object, persist:)
+        return target.with_runtime_instructions(value) if use_runtime_instructions?(target, persist:)
+
+        target.with_instructions(value)
       end
 
       def apply_tools(llm_chat, runtime)
@@ -249,8 +252,18 @@ module RubyLLM
         if persist || !chat_object.respond_to?(:to_llm)
           chat_object
         else
-          chat_object.to_llm
+          runtime_instruction_target(chat_object)
         end
+      end
+
+      def runtime_instruction_target(chat_object)
+        return chat_object if chat_object.respond_to?(:with_runtime_instructions)
+
+        chat_object.to_llm
+      end
+
+      def use_runtime_instructions?(target, persist:)
+        !persist && target.respond_to?(:with_runtime_instructions)
       end
 
       def resolve_prompt_locals(locals, runtime:, chat:, inputs:)

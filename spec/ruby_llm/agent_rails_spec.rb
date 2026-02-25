@@ -111,6 +111,30 @@ RSpec.describe RubyLLM::Agent do
     FileUtils.rm_rf(prompt_dir) if prompt_dir
   end
 
+  it 'keeps runtime instructions on repeated to_llm calls after find' do
+    prompt_dir = write_prompt(
+      'spec_runtime_reuse_agent',
+      'System for <%= display_name %> on chat <%= chat.id %>'
+    )
+
+    agent_class = Class.new(RubyLLM::Agent) do
+      chat_model Chat
+      model 'gpt-4.1-nano'
+      inputs :display_name
+      instructions display_name: -> { display_name }
+    end
+
+    stub_const('SpecRuntimeReuseAgent', agent_class)
+
+    chat = SpecRuntimeReuseAgent.create!(display_name: 'Ava')
+    loaded = SpecRuntimeReuseAgent.find(chat.id, display_name: 'Bea')
+
+    expect(loaded.to_llm.messages.first.content).to eq("System for Bea on chat #{chat.id}")
+    expect(loaded.to_llm.messages.first.content).to eq("System for Bea on chat #{chat.id}")
+  ensure
+    FileUtils.rm_rf(prompt_dir) if prompt_dir
+  end
+
   it 'syncs instructions explicitly via .sync_instructions!' do
     prompt_dir = write_prompt(
       'spec_sync_agent',
