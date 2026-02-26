@@ -14,10 +14,12 @@ RSpec.describe RubyLLM::Providers::VoyageAI do
 
       expect(ids).to include(
         'voyage-4-large',
+        'voyage-4-nano',
         'voyage-context-3',
         'voyage-multimodal-3.5',
         'rerank-2.5'
       )
+      expect(ids).not_to include('voyage-multilingual-2')
     end
 
     it 'sets rerank models to rerank type instead of chat' do

@@ -106,20 +106,6 @@ module RubyLLM
               available_dimensions: [1024]
             }
           },
-          'voyage-multilingual-2' => {
-            name: 'Voyage Multilingual 2',
-            family: 'voyage-multilingual',
-            context_window: 32_000,
-            modalities: { input: ['text'], output: ['embeddings'] },
-            capabilities: [],
-            pricing: { text_tokens: { standard: { input_per_million: 0.12 } } },
-            release_date: '2024-01-01',
-            metadata: {
-              dimensions: 1024,
-              supports_custom_dimensions: true,
-              available_dimensions: [256, 512, 1024, 2048]
-            }
-          },
           'voyage-3-large' => {
             name: 'Voyage 3 Large',
             family: 'voyage-3',

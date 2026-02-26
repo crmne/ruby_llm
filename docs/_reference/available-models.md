@@ -2,7 +2,7 @@
 layout: default
 title: Available Models
 nav_order: 1
-description: Browse 1178 AI models across 12 providers (not including local providers). Updated 2026-02-26.
+description: Browse 1177 AI models across 12 providers (not including local providers). Updated 2026-02-26.
 redirect_from:
   - /guides/available-models
 ---
@@ -1243,7 +1243,7 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | text-multilingual-embedding-002 | vertexai | In: -; Out: - | streaming, function_calling | - | - | - |
 
 
-### VoyageAI (19)
+### VoyageAI (18)
 
 | Model | Provider | I/O | Capabilities | Context | Max Output | Standard Pricing (per 1M tokens) |
 | :-- | :-- | :-- | :-- | --: | --: | :-- |
@@ -1263,7 +1263,6 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | voyage-context-3 | voyage | In: text; Out: embeddings | - | 32000 | - | In: $0.18 |
 | voyage-finance-2 | voyage | In: text; Out: embeddings | - | 32000 | - | In: $0.12 |
 | voyage-law-2 | voyage | In: text; Out: embeddings | - | 16000 | - | In: $0.12 |
-| voyage-multilingual-2 | voyage | In: text; Out: embeddings | - | 32000 | - | In: $0.12 |
 | voyage-multimodal-3 | voyage | In: text, image; Out: embeddings | - | 32000 | - | In: $0.12 |
 | voyage-multimodal-3.5 | voyage | In: text, image, video; Out: embeddings | - | 32000 | - | In: $0.12 |
 
@@ -4233,7 +4232,7 @@ Models that can process PDF documents:
 | gemini-flash-lite-latest | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, reasoning, vision | 1048576 | 65536 | In: $0.10, Out: $0.40, Cache: $0.02 |
 
 
-### Embedding Models (38)
+### Embedding Models (37)
 
 Models that generate embeddings:
 
@@ -4274,7 +4273,6 @@ Models that generate embeddings:
 | voyage-context-3 | voyage | In: text; Out: embeddings | - | 32000 | - | In: $0.18 |
 | voyage-finance-2 | voyage | In: text; Out: embeddings | - | 32000 | - | In: $0.12 |
 | voyage-law-2 | voyage | In: text; Out: embeddings | - | 16000 | - | In: $0.12 |
-| voyage-multilingual-2 | voyage | In: text; Out: embeddings | - | 32000 | - | In: $0.12 |
 | voyage-multimodal-3 | voyage | In: text, image; Out: embeddings | - | 32000 | - | In: $0.12 |
 | voyage-multimodal-3.5 | voyage | In: text, image, video; Out: embeddings | - | 32000 | - | In: $0.12 |
 
