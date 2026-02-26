@@ -7,7 +7,7 @@ module RubyLLM
       include VoyageAI::Embeddings
 
       def api_base
-        @config.voyage_api_base || 'https://api.voyageai.com/v1'
+        @config.voyage_api_base || 'https://ai.mongodb.com/v1'
       end
 
       def headers

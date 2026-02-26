@@ -80,7 +80,7 @@ EMBEDDING_MODELS = [
   { provider: :mistral, model: 'mistral-embed' },
   { provider: :openai, model: 'text-embedding-3-small' },
   { provider: :vertexai, model: 'text-embedding-004' },
-  { provider: :voyage, model: 'voyage-4-nano' }
+  { provider: :voyage, model: 'voyage-4-lite' }
 ].freeze
 
 TRANSCRIPTION_MODELS = [
