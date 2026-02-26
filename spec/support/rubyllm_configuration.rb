@@ -32,6 +32,7 @@ RSpec.shared_context 'with configured RubyLLM' do
       config.retry_interval_randomness = 0.01
       config.vertexai_location = ENV.fetch('GOOGLE_CLOUD_LOCATION', 'global')
       config.vertexai_project_id = ENV.fetch('GOOGLE_CLOUD_PROJECT', 'test-project')
+      config.voyage_api_key = ENV.fetch('VOYAGE_API_KEY', 'test')
       config.xai_api_key = ENV.fetch('XAI_API_KEY', 'test')
     end
   end

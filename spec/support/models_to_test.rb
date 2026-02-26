@@ -79,7 +79,8 @@ EMBEDDING_MODELS = [
   { provider: :gemini, model: 'gemini-embedding-001' },
   { provider: :mistral, model: 'mistral-embed' },
   { provider: :openai, model: 'text-embedding-3-small' },
-  { provider: :vertexai, model: 'text-embedding-004' }
+  { provider: :vertexai, model: 'text-embedding-004' },
+  { provider: :voyage, model: 'voyage-4-nano' }
 ].freeze
 
 TRANSCRIPTION_MODELS = [

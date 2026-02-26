@@ -29,6 +29,7 @@ loader.inflector.inflect(
   'perplexity' => 'Perplexity',
   'ruby_llm' => 'RubyLLM',
   'vertexai' => 'VertexAI',
+  'voyage_ai' => 'VoyageAI',
   'xai' => 'XAI'
 )
 loader.ignore("#{__dir__}/tasks")
@@ -105,6 +106,7 @@ RubyLLM::Provider.register :openai, RubyLLM::Providers::OpenAI
 RubyLLM::Provider.register :openrouter, RubyLLM::Providers::OpenRouter
 RubyLLM::Provider.register :perplexity, RubyLLM::Providers::Perplexity
 RubyLLM::Provider.register :vertexai, RubyLLM::Providers::VertexAI
+RubyLLM::Provider.register :voyage, RubyLLM::Providers::VoyageAI
 RubyLLM::Provider.register :xai, RubyLLM::Providers::XAI
 
 if defined?(Rails::Railtie)
