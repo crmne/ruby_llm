@@ -9,6 +9,16 @@ RSpec.describe RubyLLM::Embedding do
   let(:test_texts) { %w[Ruby Python JavaScript] }
   let(:test_dimensions) { 768 }
 
+  def supported_custom_dimensions(provider, model)
+    model_info = RubyLLM.models.find(model, provider.to_s)
+    metadata = model_info.metadata || {}
+    available = Array(metadata[:available_dimensions] || metadata['available_dimensions'])
+    default_dimension = metadata[:dimensions] || metadata['dimensions']
+    available.find { |dimension| dimension != default_dimension }
+  rescue RubyLLM::ModelNotFoundError
+    nil
+  end
+
   describe 'basic functionality' do
     EMBEDDING_MODELS.each do |config|
       provider = config[:provider]
@@ -25,9 +35,10 @@ RSpec.describe RubyLLM::Embedding do
         skip 'Mistral does not support custom dimensions' if provider == :mistral
         skip 'Azure Cohere embeddings do not support custom dimensions' if provider == :azure
 
-        embedding = RubyLLM.embed(test_text, model: model, provider: provider, dimensions: test_dimensions)
+        dimensions = supported_custom_dimensions(provider, model) || test_dimensions
+        embedding = RubyLLM.embed(test_text, model: model, provider: provider, dimensions: dimensions)
         expect(embedding.vectors).to be_an(Array)
-        expect(embedding.vectors.length).to eq(test_dimensions)
+        expect(embedding.vectors.length).to eq(dimensions)
       end
 
       it "#{provider}/#{model} can handle multiple texts" do
@@ -43,10 +54,11 @@ RSpec.describe RubyLLM::Embedding do
         skip 'Mistral does not support custom dimensions' if provider == :mistral
         skip 'Azure Cohere embeddings do not support custom dimensions' if provider == :azure
 
-        embeddings = RubyLLM.embed(test_texts, model: model, provider: provider, dimensions: test_dimensions)
+        dimensions = supported_custom_dimensions(provider, model) || test_dimensions
+        embeddings = RubyLLM.embed(test_texts, model: model, provider: provider, dimensions: dimensions)
         expect(embeddings.vectors).to be_an(Array)
         embeddings.vectors.each do |vector|
-          expect(vector.length).to eq(test_dimensions)
+          expect(vector.length).to eq(dimensions)
         end
       end
 
