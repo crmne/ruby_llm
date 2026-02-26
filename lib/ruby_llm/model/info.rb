@@ -83,6 +83,8 @@ module RubyLLM
           'image'
         elsif modalities.output.include?('audio') && !modalities.output.include?('text')
           'audio'
+        elsif modalities.output.include?('rerank') && !modalities.output.include?('text')
+          'rerank'
         elsif modalities.output.include?('moderation')
           'moderation'
         else

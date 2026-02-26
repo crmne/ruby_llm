@@ -5,6 +5,7 @@ module RubyLLM
     # Voyage AI API integration for embeddings.
     class VoyageAI < Provider
       include VoyageAI::Embeddings
+      include VoyageAI::Models
 
       def api_base
         @config.voyage_api_base || 'https://ai.mongodb.com/v1'

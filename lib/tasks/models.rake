@@ -50,6 +50,7 @@ def configure_from_env
     config.perplexity_api_key = ENV.fetch('PERPLEXITY_API_KEY', nil)
     config.vertexai_location = ENV.fetch('GOOGLE_CLOUD_LOCATION', nil)
     config.vertexai_project_id = ENV.fetch('GOOGLE_CLOUD_PROJECT', nil)
+    config.voyage_api_key = ENV.fetch('VOYAGE_API_KEY', nil)
     config.xai_api_key = ENV.fetch('XAI_API_KEY', nil)
     configure_bedrock(config)
     config.request_timeout = 30
