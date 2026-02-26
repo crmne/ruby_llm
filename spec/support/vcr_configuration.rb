@@ -36,6 +36,7 @@ VCR.configure do |config|
   config.filter_sensitive_data('<OPENAI_API_KEY>') { ENV.fetch('OPENAI_API_KEY', nil) }
   config.filter_sensitive_data('<OPENROUTER_API_KEY>') { ENV.fetch('OPENROUTER_API_KEY', nil) }
   config.filter_sensitive_data('<PERPLEXITY_API_KEY>') { ENV.fetch('PERPLEXITY_API_KEY', nil) }
+  config.filter_sensitive_data('<VOYAGE_API_KEY>') { ENV.fetch('VOYAGE_API_KEY', nil) }
   config.filter_sensitive_data('<XAI_API_KEY>') { ENV.fetch('XAI_API_KEY', nil) }
 
   # Filter Google OAuth tokens and credentials
