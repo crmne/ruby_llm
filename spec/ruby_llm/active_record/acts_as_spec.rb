@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+require 'stringio'
 
 RSpec.describe RubyLLM::ActiveRecord::ActsAs do
   include_context 'with configured RubyLLM'
@@ -20,6 +21,15 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
 
   # Basic functionality tests using dummy app models
   describe 'basic chat functionality' do
+    it 'persists generic add_message calls' do
+      chat = Chat.create!(model: model)
+      message = chat.add_message(role: :system, content: 'Be concise')
+
+      expect(message.role).to eq('system')
+      expect(chat.messages.count).to eq(1)
+      expect(chat.messages.first.content).to eq('Be concise')
+    end
+
     it 'persists chat history' do
       chat = Chat.create!(model: model)
       chat.ask("What's your favorite Ruby feature?")
@@ -245,7 +255,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       chat = Chat.create!(model: anthropic_model)
       raw_block = RubyLLM::Providers::Anthropic::Content.new('Cache me once', cache: true)
 
-      message = chat.create_user_message(raw_block)
+      message = chat.add_message(role: :user, content: raw_block)
 
       expect(message.content).to be_nil
       expect(message.content_raw).to eq(JSON.parse(raw_block.value.to_json))
@@ -264,6 +274,14 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
 
       expect(llm_message.cached_tokens).to eq(42)
       expect(llm_message.cache_creation_tokens).to eq(7)
+    end
+
+    it 'keeps create_user_message as a deprecated compatibility wrapper' do
+      chat = Chat.create!(model: anthropic_model)
+
+      message = chat.create_user_message('hello')
+      expect(message.role).to eq('user')
+      expect(message.content).to eq('hello')
     end
   end
 
@@ -524,6 +542,10 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     let(:image_path) { File.expand_path('../../fixtures/ruby.png', __dir__) }
     let(:pdf_path) { File.expand_path('../../fixtures/sample.pdf', __dir__) }
 
+    def attachment_io(path)
+      StringIO.new(File.binread(path))
+    end
+
     def uploaded_file(path, type)
       filename = File.basename(path)
       extension = File.extname(filename)
@@ -551,7 +573,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
 
       message = chat.messages.create!(role: 'user', content: 'Check this out')
       message.attachments.attach(
-        io: File.open(image_path),
+        io: attachment_io(image_path),
         filename: 'ruby.png',
         content_type: 'image/png'
       )
@@ -592,7 +614,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
         message = chat.messages.create!(role: 'user', content: 'Image test')
 
         message.attachments.attach(
-          io: File.open(image_path),
+          io: attachment_io(image_path),
           filename: 'test.png',
           content_type: 'image/png'
         )
@@ -607,7 +629,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
         message = chat.messages.create!(role: 'user', content: 'PDF test')
 
         message.attachments.attach(
-          io: File.open(pdf_path),
+          io: attachment_io(pdf_path),
           filename: 'test.pdf',
           content_type: 'application/pdf'
         )

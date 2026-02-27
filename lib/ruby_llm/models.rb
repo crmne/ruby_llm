@@ -266,8 +266,8 @@ module RubyLLM
       end
 
       def index_by_key(models)
-        models.each_with_object({}) do |model, hash|
-          hash["#{model.provider}:#{model.id}"] = model
+        models.to_h do |model|
+          ["#{model.provider}:#{model.id}", model]
         end
       end
 

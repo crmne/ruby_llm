@@ -35,8 +35,14 @@ module RubyLLM
 
     def process_attachments_array_or_string(attachments)
       Utils.to_safe_array(attachments).each do |file|
+        next if blank_attachment_entry?(file)
+
         add_attachment(file)
       end
+    end
+
+    def blank_attachment_entry?(file)
+      file.nil? || (file.is_a?(String) && file.strip.empty?)
     end
 
     def process_attachments(attachments)
@@ -47,9 +53,7 @@ module RubyLLM
       end
     end
   end
-end
 
-module RubyLLM
   class Content
     # Represents provider-specific payloads that should bypass RubyLLM formatting.
     class Raw
