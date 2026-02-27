@@ -56,6 +56,16 @@ RSpec.describe RubyLLM::Agent do
     FileUtils.rm_rf(prompt_dir) if prompt_dir
   end
 
+  it 'raises when instructions prompt shorthand file is missing' do
+    agent_class = Class.new(RubyLLM::Agent) do
+      chat_model Chat
+      model 'gpt-4.1-nano'
+      instructions
+    end
+
+    expect { agent_class.create! }.to raise_error(RubyLLM::PromptNotFoundError, /Prompt file not found/)
+  end
+
   it 'exposes chat_model record as chat in execution context for .create! and .find' do
     agent_class = Class.new(RubyLLM::Agent) do
       chat_model Chat
@@ -97,6 +107,30 @@ RSpec.describe RubyLLM::Agent do
     expect(loaded.messages.where(role: 'system').count).to eq(1)
     expect(loaded.messages.find_by(role: 'system').content).to eq(persisted_system)
     expect(runtime_chat.messages.first.content).to eq("System for Bea on chat #{chat.id}")
+  ensure
+    FileUtils.rm_rf(prompt_dir) if prompt_dir
+  end
+
+  it 'keeps runtime instructions on repeated to_llm calls after find' do
+    prompt_dir = write_prompt(
+      'spec_runtime_reuse_agent',
+      'System for <%= display_name %> on chat <%= chat.id %>'
+    )
+
+    agent_class = Class.new(RubyLLM::Agent) do
+      chat_model Chat
+      model 'gpt-4.1-nano'
+      inputs :display_name
+      instructions display_name: -> { display_name }
+    end
+
+    stub_const('SpecRuntimeReuseAgent', agent_class)
+
+    chat = SpecRuntimeReuseAgent.create!(display_name: 'Ava')
+    loaded = SpecRuntimeReuseAgent.find(chat.id, display_name: 'Bea')
+
+    expect(loaded.to_llm.messages.first.content).to eq("System for Bea on chat #{chat.id}")
+    expect(loaded.to_llm.messages.first.content).to eq("System for Bea on chat #{chat.id}")
   ensure
     FileUtils.rm_rf(prompt_dir) if prompt_dir
   end

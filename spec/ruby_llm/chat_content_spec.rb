@@ -268,16 +268,14 @@ RSpec.describe RubyLLM::Chat do # rubocop:disable RSpec/MultipleMemoizedHelpers
     end
 
     it 'handles File objects' do
-      file = File.open(text_path, 'r')
+      File.open(text_path, 'r') do |file|
+        attachment = RubyLLM::Attachment.new(file)
 
-      attachment = RubyLLM::Attachment.new(file)
-
-      expect(attachment.io_like?).to be true
-      expect(attachment.content).to be_present
-      expect(attachment.filename).to eq('ruby.txt')
-      expect(attachment.mime_type).to eq('text/plain')
-
-      file.close
+        expect(attachment.io_like?).to be true
+        expect(attachment.content).to be_present
+        expect(attachment.filename).to eq('ruby.txt')
+        expect(attachment.mime_type).to eq('text/plain')
+      end
     end
 
     it 'handles ActionDispatch::Http::UploadedFile' do
