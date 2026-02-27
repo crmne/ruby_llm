@@ -53,9 +53,7 @@ module RubyLLM
       end
     end
   end
-end
 
-module RubyLLM
   class Content
     # Represents provider-specific payloads that should bypass RubyLLM formatting.
     class Raw
