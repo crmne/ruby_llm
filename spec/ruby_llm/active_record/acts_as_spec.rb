@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+require 'stringio'
 
 RSpec.describe RubyLLM::ActiveRecord::ActsAs do
   include_context 'with configured RubyLLM'
@@ -541,6 +542,10 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     let(:image_path) { File.expand_path('../../fixtures/ruby.png', __dir__) }
     let(:pdf_path) { File.expand_path('../../fixtures/sample.pdf', __dir__) }
 
+    def attachment_io(path)
+      StringIO.new(File.binread(path))
+    end
+
     def uploaded_file(path, type)
       filename = File.basename(path)
       extension = File.extname(filename)
@@ -568,7 +573,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
 
       message = chat.messages.create!(role: 'user', content: 'Check this out')
       message.attachments.attach(
-        io: File.open(image_path),
+        io: attachment_io(image_path),
         filename: 'ruby.png',
         content_type: 'image/png'
       )
@@ -609,7 +614,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
         message = chat.messages.create!(role: 'user', content: 'Image test')
 
         message.attachments.attach(
-          io: File.open(image_path),
+          io: attachment_io(image_path),
           filename: 'test.png',
           content_type: 'image/png'
         )
@@ -624,7 +629,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
         message = chat.messages.create!(role: 'user', content: 'PDF test')
 
         message.attachments.attach(
-          io: File.open(pdf_path),
+          io: attachment_io(pdf_path),
           filename: 'test.pdf',
           content_type: 'application/pdf'
         )

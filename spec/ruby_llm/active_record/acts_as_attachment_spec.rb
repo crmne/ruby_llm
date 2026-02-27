@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+require 'stringio'
 
 RSpec.describe RubyLLM::ActiveRecord::ActsAs do
   include_context 'with configured RubyLLM'
@@ -31,13 +32,17 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     )
   end
 
+  def attachment_io(path)
+    StringIO.new(File.binread(path))
+  end
+
   describe 'attachment handling' do
     it 'converts ActiveStorage attachments to RubyLLM Content' do
       chat = Chat.create!(model: model)
 
       message = chat.messages.create!(role: 'user', content: 'Check this out')
       message.attachments.attach(
-        io: File.open(image_path),
+        io: attachment_io(image_path),
         filename: 'ruby.png',
         content_type: 'image/png'
       )
@@ -91,7 +96,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       message = chat.messages.create!(role: 'user', content: 'Image test')
 
       message.attachments.attach(
-        io: File.open(image_path),
+        io: attachment_io(image_path),
         filename: 'test.png',
         content_type: 'image/png'
       )
@@ -107,7 +112,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       message = chat.messages.create!(role: 'user', content: 'Video test')
 
       message.attachments.attach(
-        io: File.open(video_path),
+        io: attachment_io(video_path),
         filename: 'test.mp4',
         content_type: 'video/mp4'
       )
@@ -122,7 +127,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       message = chat.messages.create!(role: 'user', content: 'PDF test')
 
       message.attachments.attach(
-        io: File.open(pdf_path),
+        io: attachment_io(pdf_path),
         filename: 'test.pdf',
         content_type: 'application/pdf'
       )
