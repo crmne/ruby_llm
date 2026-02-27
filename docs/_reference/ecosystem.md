@@ -2,28 +2,29 @@
 layout: default
 title: RubyLLM Ecosystem
 nav_order: 3
-description: Extend RubyLLM with MCP servers, structured schemas, and community-built tools for production AI apps.
+description: Extend RubyLLM with MCP servers, structured schemas, LLM evaluation, and community-built tools for production AI apps.
 ---
 
 # {{ page.title }}
+
 {: .no_toc }
 
-{{ page.description }}
-{: .fs-6 .fw-300 }
+{{ page.description }} {: .fs-6 .fw-300 }
 
 ## Table of contents
+
 {: .no_toc .text-delta }
 
-1. TOC
-{:toc}
+1. TOC {:toc}
 
 ---
 
 After reading this guide, you will know:
 
-* What the Model Context Protocol (MCP) is and how ruby_llm-mcp brings it to Ruby
-* How RubyLLM::Schema simplifies structured data definition for AI applications
-* Where to find community projects and how to contribute your own
+- What the Model Context Protocol (MCP) is and how ruby_llm-mcp brings it to Ruby
+- How RubyLLM::Schema simplifies structured data definition for AI applications
+- How RubyLLM::Tribunal helps evaluate and test LLM outputs
+- Where to find community projects and how to contribute your own
 
 ## RubyLLM::MCP
 
@@ -89,6 +90,42 @@ gem install ruby_llm-schema
 ```
 
 For detailed documentation and examples, visit the [RubyLLM::Schema repository](https://github.com/danielfriis/ruby_llm-schema).
+
+---
+
+## RubyLLM::Tribunal
+
+**LLM Evaluation Framework for Ruby**
+
+[RubyLLM::Tribunal](https://github.com/Alqemist-labs/ruby_llm-tribunal) provides comprehensive tools for evaluating and testing LLM outputs, detecting hallucinations, measuring response quality, and ensuring safety. Perfect for RAG systems, chatbots, and any LLM-powered application.
+
+### Why Use RubyLLM::Tribunal?
+
+When building LLM applications, you need to validate that your outputs are:
+
+- Faithful to source documents (no hallucinations)
+- Safe and appropriate (no toxic or harmful content)
+- Accurate and relevant to user queries
+- Resistant to jailbreak attempts
+
+RubyLLM::Tribunal makes this easy with assertions you can use in your test suite.
+
+### Key Features
+
+- 🎯 Deterministic assertions for fast, free evaluations (contains, regex, JSON validation)
+- 🤖 LLM-as-Judge for AI-powered quality assessment (faithfulness, relevance, hallucination)
+- 🔐 Safety testing for toxicity, bias, jailbreak, and PII detection
+- 🎭 Red Team attacks to generate adversarial prompts and test defenses
+- 📊 Multiple reporters (Console, JSON, HTML, JUnit, GitHub Actions)
+- 🧪 Test integration with RSpec and Minitest
+
+### Installation
+
+```bash
+gem install ruby_llm-tribunal
+```
+
+For detailed documentation and examples, visit the [RubyLLM::Tribunal repository](https://github.com/Alqemist-labs/ruby_llm-tribunal).
 
 ---
 
