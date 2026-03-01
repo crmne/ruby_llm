@@ -8,7 +8,7 @@ http_interactions:
       string: '{"model":"mistral-small-latest","messages":[{"role":"user","content":"Hello"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer invalid-key
       Content-Type:
@@ -23,7 +23,7 @@ http_interactions:
       message: Unauthorized
     headers:
       Date:
-      - Fri, 16 Jan 2026 16:48:13 GMT
+      - Tue, 10 Feb 2026 08:55:18 GMT
       Content-Type:
       - application/json; charset=utf-8
       Content-Length:
@@ -33,13 +33,13 @@ http_interactions:
       Cf-Ray:
       - "<CF_RAY>"
       Mistral-Correlation-Id:
-      - '019bc7b5-1b3b-7355-9cb2-6361925ae2e1'
+      - '019c46c3-1d3c-76d2-9c6a-b20da514e4a8'
       X-Kong-Request-Id:
-      - '019bc7b5-1b3b-7355-9cb2-6361925ae2e1'
+      - '019c46c3-1d3c-76d2-9c6a-b20da514e4a8'
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Response-Latency:
-      - '8'
+      - '5'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -56,5 +56,5 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"detail":"Unauthorized"}'
-  recorded_at: Fri, 16 Jan 2026 16:48:13 GMT
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 recorded_with: VCR 6.4.0

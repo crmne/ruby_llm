@@ -95,7 +95,7 @@ module StreamingErrorHelpers
       expected_error: RubyLLM::ServerError
     },
     bedrock: {
-      url: 'https://bedrock-runtime.us-west-2.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/invoke-with-response-stream',
+      url: %r{\Ahttps://bedrock-runtime\.us-west-2\.amazonaws\.com/model/.+/converse-stream\z},
       error_response: {
         error: {
           message: 'Service overloaded - please try again later',
@@ -161,6 +161,27 @@ module StreamingErrorHelpers
       },
       chunk_status: 529,
       expected_error: RubyLLM::OverloadedError
+    },
+    azure: {
+      url: lambda {
+        provider = RubyLLM::Providers::Azure.new(RubyLLM.config)
+        base = provider.api_base.to_s.sub(/\?.*\z/, '').sub(%r{/+\z}, '')
+        path = provider.completion_url
+        next path if path.start_with?('http')
+        next base if path.empty?
+
+        "#{base}/#{path}"
+      },
+      error_response: {
+        error: {
+          message: 'The server is temporarily overloaded. Please try again later.',
+          type: 'server_error',
+          param: nil,
+          code: nil
+        }
+      },
+      chunk_status: 500,
+      expected_error: RubyLLM::ServerError
     }
   }.freeze
 

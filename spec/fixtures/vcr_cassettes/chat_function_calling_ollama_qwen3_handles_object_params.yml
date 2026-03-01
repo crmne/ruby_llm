@@ -13,7 +13,7 @@ http_interactions:
         window to schedule"}},"required":["window"],"additionalProperties":false,"strict":true}}}],"enable_thinking":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -28,20 +28,22 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Fri, 16 Jan 2026 17:11:01 GMT
+      - Tue, 10 Feb 2026 14:06:00 GMT
       Content-Length:
-      - '971'
+      - '1151'
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-2","object":"chat.completion","created":1768583461,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
-        the user wants me to call the object_params function with a window that starts
-        on 2025-01-01 and ends on 2025-01-02. Let me check the function''s parameters.
-        The function requires a \"window\" object with \"start\" and \"end\" as ISO
-        strings. The dates provided are in the correct format, so I''ll structure
-        the arguments accordingly. I''ll make sure to include both parameters within
-        the window object. Then, I''ll return the tool call in the specified JSON
-        format inside the XML tags.\n","tool_calls":[{"id":"call_bcyfc0uf","index":0,"type":"function","function":{"name":"object_params","arguments":"{\"window\":{\"end\":\"2025-01-02\",\"start\":\"2025-01-01\"}}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":204,"completion_tokens":172,"total_tokens":376}}
+      string: '{"id":"chatcmpl-183","object":"chat.completion","created":1770732360,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
+        the user wants me to call the object params tool with a specific window start
+        and end date. Let me check the function definition again. The function is
+        called \"object_params\" and it takes a window object with start and end as
+        ISO strings. The user provided start as 2025-01-01 and end as 2025-01-02.
+        I need to structure the arguments correctly. Let me make sure the dates are
+        in the right format, like YYYY-MM-DD. Also, the parameters should be within
+        a window object. So the JSON should have the name as \"object_params\" and
+        the arguments as a JSON object with window containing start and end. I think
+        that''s all. Let me put that into the tool_call format.\n","tool_calls":[{"id":"call_jiavonlm","index":0,"type":"function","function":{"name":"object_params","arguments":"{\"window\":{\"end\":\"2025-01-02\",\"start\":\"2025-01-01\"}}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":198,"completion_tokens":212,"total_tokens":410}}
 
         '
-  recorded_at: Fri, 16 Jan 2026 17:11:01 GMT
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 recorded_with: VCR 6.4.0

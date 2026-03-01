@@ -102,6 +102,10 @@ module RubyLLM
       self.class.remote?
     end
 
+    def assume_models_exist?
+      self.class.assume_models_exist?
+    end
+
     def parse_error(response)
       return if response.body.empty?
 
@@ -162,6 +166,10 @@ module RubyLLM
 
       def remote?
         !local?
+      end
+
+      def assume_models_exist?
+        false
       end
 
       def configured?(config)

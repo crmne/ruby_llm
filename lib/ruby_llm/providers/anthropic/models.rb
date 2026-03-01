@@ -8,7 +8,7 @@ module RubyLLM
         module_function
 
         def models_url
-          '/v1/models'
+          'v1/models'
         end
 
         def parse_list_models_response(response, slug, capabilities)

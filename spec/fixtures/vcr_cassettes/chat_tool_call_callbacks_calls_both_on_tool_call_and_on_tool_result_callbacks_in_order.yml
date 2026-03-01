@@ -10,7 +10,7 @@ http_interactions:
         a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer <OPENAI_API_KEY>
       Content-Type:
@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 16 Jan 2026 17:11:31 GMT
+      - Tue, 10 Feb 2026 09:30:54 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -37,13 +37,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '2182'
+      - '2953'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
       - '2020-10-01'
-      X-Envoy-Upstream-Service-Time:
-      - '2216'
+      Server:
+      - cloudflare
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -64,13 +64,10 @@ http_interactions:
       - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
-      - "<COOKIE>"
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
-      Server:
-      - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
@@ -79,9 +76,9 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-Cyhe5CQx2xdGINkx3xgR513a1WC35",
+          "id": "chatcmpl-D7eN1Dxuzmfhhf7reV4v9PMeH1jEO",
           "object": "chat.completion",
-          "created": 1768583489,
+          "created": 1770715851,
           "model": "gpt-5-nano-2025-08-07",
           "choices": [
             {
@@ -91,7 +88,7 @@ http_interactions:
                 "content": null,
                 "tool_calls": [
                   {
-                    "id": "call_Sdxe0S5kDRacAx6Xa3g7Y0G2",
+                    "id": "call_umknZXr1dhtE0O2dob9DCSHi",
                     "type": "function",
                     "function": {
                       "name": "dice_roll",
@@ -107,14 +104,14 @@ http_interactions:
           ],
           "usage": {
             "prompt_tokens": 128,
-            "completion_tokens": 148,
-            "total_tokens": 276,
+            "completion_tokens": 276,
+            "total_tokens": 404,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
             },
             "completion_tokens_details": {
-              "reasoning_tokens": 128,
+              "reasoning_tokens": 256,
               "audio_tokens": 0,
               "accepted_prediction_tokens": 0,
               "rejected_prediction_tokens": 0
@@ -123,19 +120,19 @@ http_interactions:
           "service_tier": "default",
           "system_fingerprint": null
         }
-  recorded_at: Fri, 16 Jan 2026 17:11:31 GMT
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"gpt-5-nano","messages":[{"role":"user","content":"Roll a
-        die for me"},{"role":"assistant","tool_calls":[{"id":"call_Sdxe0S5kDRacAx6Xa3g7Y0G2","type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},{"role":"tool","content":"{roll:
-        1}","tool_call_id":"call_Sdxe0S5kDRacAx6Xa3g7Y0G2"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
+        die for me"},{"role":"assistant","tool_calls":[{"id":"call_umknZXr1dhtE0O2dob9DCSHi","type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},{"role":"tool","content":"{roll:
+        1}","tool_call_id":"call_umknZXr1dhtE0O2dob9DCSHi"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
         a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer <OPENAI_API_KEY>
       Content-Type:
@@ -150,7 +147,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 16 Jan 2026 17:11:34 GMT
+      - Tue, 10 Feb 2026 09:30:56 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -162,13 +159,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '2767'
+      - '2113'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
       - '2020-10-01'
-      X-Envoy-Upstream-Service-Time:
-      - '3042'
+      Server:
+      - cloudflare
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -189,13 +186,10 @@ http_interactions:
       - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
-      - "<COOKIE>"
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
-      Server:
-      - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
@@ -204,16 +198,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-Cyhe8w8GLs8VGBqKIDKmudxixltFM",
+          "id": "chatcmpl-D7eN4nZ9DDhWnphrRUKkoxFaz5TaQ",
           "object": "chat.completion",
-          "created": 1768583492,
+          "created": 1770715854,
           "model": "gpt-5-nano-2025-08-07",
           "choices": [
             {
               "index": 0,
               "message": {
                 "role": "assistant",
-                "content": "You rolled a 1 on a 6-sided die. Want to roll again, or roll multiple dice?",
+                "content": "You rolled a 1.\n\nWant me to roll again or roll multiple dice (e.g., 2d6, 1d20)?",
                 "refusal": null,
                 "annotations": []
               },
@@ -222,14 +216,14 @@ http_interactions:
           ],
           "usage": {
             "prompt_tokens": 159,
-            "completion_tokens": 287,
-            "total_tokens": 446,
+            "completion_tokens": 230,
+            "total_tokens": 389,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
             },
             "completion_tokens_details": {
-              "reasoning_tokens": 256,
+              "reasoning_tokens": 192,
               "audio_tokens": 0,
               "accepted_prediction_tokens": 0,
               "rejected_prediction_tokens": 0
@@ -238,5 +232,5 @@ http_interactions:
           "service_tier": "default",
           "system_fingerprint": null
         }
-  recorded_at: Fri, 16 Jan 2026 17:11:34 GMT
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 recorded_with: VCR 6.4.0

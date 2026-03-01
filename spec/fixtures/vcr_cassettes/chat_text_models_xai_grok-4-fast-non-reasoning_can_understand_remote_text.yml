@@ -8,7 +8,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -26,40 +26,42 @@ http_interactions:
       - GitHub.com
       Content-Type:
       - text/plain; charset=utf-8
+      X-Origin-Cache:
+      - HIT
       Last-Modified:
-      - Fri, 16 Jan 2026 00:22:16 GMT
+      - Mon, 09 Feb 2026 23:48:37 GMT
       Access-Control-Allow-Origin:
       - "*"
       Etag:
-      - W/"696984b8-9c6"
+      - W/"698a7255-9c6"
       Expires:
-      - Fri, 16 Jan 2026 16:34:17 GMT
+      - Tue, 10 Feb 2026 05:41:29 GMT
       Cache-Control:
       - max-age=600
       X-Proxy-Cache:
       - MISS
       X-Github-Request-Id:
-      - CAA8:CA0BF:61D6EC:632DE0:696A6631
+      - DA8F:2A47E2:A980F3:B16D78:698AC2B0
       Accept-Ranges:
       - bytes
-      Age:
-      - '0'
       Date:
-      - Fri, 16 Jan 2026 16:24:17 GMT
+      - Tue, 10 Feb 2026 08:48:29 GMT
       Via:
       - 1.1 varnish
+      Age:
+      - '132'
       X-Served-By:
-      - cache-fra-etou8220179-FRA
+      - cache-bkk2310020-BKK
       X-Cache:
-      - MISS
+      - HIT
       X-Cache-Hits:
-      - '0'
+      - '8'
       X-Timer:
-      - S1768580658.675552,VS0,VE106
+      - S1770713309.252700,VS0,VE1
       Vary:
       - Accept-Encoding
       X-Fastly-Request-Id:
-      - 6505bb589b5441fbcb0c3eb6ffba5f0a8e7e802d
+      - 3fc7ec87e4ed7afcbfef719acf34b4fb0fcfbc26
     body:
       encoding: ASCII-8BIT
       string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
@@ -95,7 +97,7 @@ http_interactions:
         \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
         WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
         FOR A PARTICULAR\n     PURPOSE.\n"
-  recorded_at: Fri, 16 Jan 2026 16:24:17 GMT
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 - request:
     method: post
     uri: https://api.x.ai/v1/chat/completions
@@ -138,7 +140,7 @@ http_interactions:
         A PARTICULAR\n     PURPOSE.\n</file>"}]}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer <XAI_API_KEY>
       Content-Type:
@@ -153,7 +155,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 16 Jan 2026 16:24:20 GMT
+      - Tue, 10 Feb 2026 08:48:31 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -163,13 +165,13 @@ http_interactions:
       X-Ratelimit-Limit-Tokens:
       - '4000000'
       X-Ratelimit-Remaining-Tokens:
-      - '3999490'
+      - '4000000'
       X-Zero-Data-Retention:
       - 'false'
       X-Ratelimit-Limit-Requests:
       - '480'
       X-Ratelimit-Remaining-Requests:
-      - '477'
+      - '480'
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Vary:
@@ -190,7 +192,23 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        eyJpZCI6ImY0NjIwNzAwLTFkMmItMmVkMy1kOGQyLTZlNWYzOTY4NjUwMyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3Njg1ODA2NTcsIm1vZGVsIjoiZ3Jvay00LWZhc3Qtbm9uLXJlYXNvbmluZyIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiVGhpcyBmaWxlLCBuYW1lZCBgbGljZW5zZS50eHRgLCBjb250YWlucyB0aGUgUnVieSBMaWNlbnNlIChhbHNvIGtub3duIGFzIHRoZSBSdWJ5IEJTREwgb3IgMi1jbGF1c2UgQlNELWxpa2UgbGljZW5zZSkuIEl0J3MgYSBwZXJtaXNzaXZlIG9wZW4tc291cmNlIGxpY2Vuc2UgZm9yIHRoZSBSdWJ5IHByb2dyYW1taW5nIGxhbmd1YWdlLCBvcmlnaW5hbGx5IHdyaXR0ZW4gYnkgWXVraWhpcm8gTWF0c3Vtb3RvIChNYXR6KS4gXG5cbktleSBwb2ludHMgZnJvbSB0aGUgbGljZW5zZTpcbi0gKipSZWRpc3RyaWJ1dGlvbioqOiBZb3UgY2FuIGZyZWVseSByZWRpc3RyaWJ1dGUgdmVyYmF0aW0gY29waWVzIG9mIHRoZSBzb3VyY2UgY29kZSwgYXMgbG9uZyBhcyB5b3UgaW5jbHVkZSBhbGwgb3JpZ2luYWwgY29weXJpZ2h0IG5vdGljZXMgYW5kIGRpc2NsYWltZXJzLlxuLSAqKk1vZGlmaWNhdGlvbioqOiBZb3UgY2FuIG1vZGlmeSB0aGUgc29mdHdhcmUsIGJ1dCB5b3UgbXVzdCBlaXRoZXIgbWFrZSB5b3VyIGNoYW5nZXMgcHVibGljbHkgYXZhaWxhYmxlIChlLmcuLCB2aWEgUHVibGljIERvbWFpbiBvciBwb3N0aW5nIHRvIFVzZW5ldCksIGxpbWl0IHVzZSB0byB5b3VyIG9yZ2FuaXphdGlvbiwgdXNlIG5vbi1zdGFuZGFyZCBuYW1lcyBmb3IgYmluYXJpZXMgd2l0aCBwb2ludGVycyB0byB0aGUgb3JpZ2luYWwsIG9yIGFycmFuZ2UgZGlyZWN0bHkgd2l0aCB0aGUgYXV0aG9yLlxuLSAqKkJpbmFyeSBEaXN0cmlidXRpb24qKjogU2ltaWxhciBydWxlcyBhcHBseSBmb3Igb2JqZWN0IGNvZGUgb3IgYmluYXJpZXPigJR5b3UgbXVzdCBwcm92aWRlIGFjY2VzcyB0byB0aGUgb3JpZ2luYWwgc291cmNlIG9yIG1ha2Ugb3RoZXIgYXJyYW5nZW1lbnRzLlxuLSAqKkludGVncmF0aW9uKio6IFlvdSBjYW4gaW5jb3Jwb3JhdGUgcGFydHMgb2YgUnVieSBpbnRvIG90aGVyIHNvZnR3YXJlIChldmVuIGNvbW1lcmNpYWwpLCBidXQgc29tZSB0aGlyZC1wYXJ0eSBmaWxlcyBoYXZlIHNlcGFyYXRlIHRlcm1zIChzZWUgdGhlIGBMRUdBTGAgZmlsZSBmb3IgZGV0YWlscykuXG4tICoqU2NyaXB0cyBhbmQgT3V0cHV0cyoqOiBHZW5lcmF0ZWQgc2NyaXB0cyBvciBsaWJyYXJpZXMgYXJlbid0IGF1dG9tYXRpY2FsbHkgY29weXJpZ2h0ZWQgYnkgUnVieSBhbmQgY2FuIGJlIHNvbGQgb3IgYWdncmVnYXRlZCBjb21tZXJjaWFsbHkuXG4tICoqRGlzY2xhaW1lcioqOiBUaGUgc29mdHdhcmUgaXMgcHJvdmlkZWQgXCJBUyBJU1wiIHdpdGggbm8gd2FycmFudGllcy5cblxuVGhpcyBsaWNlbnNlIGFsbG93cyBicm9hZCB1c2UsIG1vZGlmaWNhdGlvbiwgYW5kIGRpc3RyaWJ1dGlvbiBvZiBSdWJ5IHdoaWxlIHByb3RlY3RpbmcgdGhlIG9yaWdpbmFsIGF1dGhvcidzIHJpZ2h0cy4gRm9yIHRoZSBmdWxsIDItY2xhdXNlIEJTREwgaXQgcmVmZXJlbmNlcywgeW91J2QgdHlwaWNhbGx5IGZpbmQgdGhhdCBpbiBhIHNlcGFyYXRlIGBCU0RMYCBmaWxlIGluIFJ1YnkgZGlzdHJpYnV0aW9ucy4gSWYgeW91IG5lZWQgbGVnYWwgYWR2aWNlLCBjb25zdWx0IGEgcHJvZmVzc2lvbmFsLiIsInJlZnVzYWwiOm51bGx9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6NjkyLCJjb21wbGV0aW9uX3Rva2VucyI6Mjk4LCJ0b3RhbF90b2tlbnMiOjk5MCwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7InRleHRfdG9rZW5zIjo2OTIsImF1ZGlvX3Rva2VucyI6MCwiaW1hZ2VfdG9rZW5zIjowLCJjYWNoZWRfdG9rZW5zIjoxNjF9LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjAsImF1ZGlvX3Rva2VucyI6MCwiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjAsInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowfSwibnVtX3NvdXJjZXNfdXNlZCI6MCwiY29zdF9pbl91c2RfdGlja3MiOjI2MzI1MDB9LCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF80NjE2ZTc2NDEzIn0=
-  recorded_at: Fri, 16 Jan 2026 16:24:20 GMT
+      string: '{"id":"66c576ea-b79f-c356-a4a8-30bbf4d81d17","object":"chat.completion","created":1770713309,"model":"grok-4-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"This
+        file, named `license.txt`, contains the Ruby License (a permissive open-source
+        license for the Ruby programming language, originally authored by Yukihiro
+        Matsumoto). It outlines the terms for redistributing, modifying, and distributing
+        Ruby software in source, binary, or modified forms. Key points include:\n\n-
+        **Redistribution**: You can freely make and share verbatim copies of the source
+        code, as long as you preserve original copyright notices and disclaimers.\n-
+        **Modification**: Allowed, but you must either make changes public domain/available,
+        limit use to your organization, use non-standard names for binaries, or arrange
+        directly with the author.\n- **Binary Distribution**: Permitted if you include
+        instructions to obtain the original source, provide the source code, use non-standard
+        names, or make other arrangements with the author.\n- **Integration**: You
+        can incorporate parts into other software (even commercial), but some files
+        have separate terms (see the `LEGAL` file).\n- **Scripts/Libraries**: Generated
+        content isn''t automatically copyrighted by Ruby and can be sold or aggregated
+        commercially.\n- **Disclaimer**: Provided \"AS IS\" with no warranties.\n\nThis
+        is a variant of the BSD license, emphasizing freedom with minimal restrictions.
+        For full details, refer to the 2-clause BSDL mentioned in the text.","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":692,"completion_tokens":253,"total_tokens":945,"prompt_tokens_details":{"text_tokens":692,"audio_tokens":0,"image_tokens":0,"cached_tokens":161},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":2407500},"system_fingerprint":"fp_f7a6b84626"}'
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 recorded_with: VCR 6.4.0

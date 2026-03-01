@@ -1,0 +1,125 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://rubyllm.cognitiveservices.azure.com/openai/deployments/gpt-5-nano/chat/completions?api-version=2025-01-01-preview
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-5-nano","messages":[{"role":"user","content":"Generate
+        a person named Bob"}],"stream":false,"response_format":{"type":"json_schema","json_schema":{"name":"response","schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"integer"}},"required":["name","age"],"additionalProperties":false},"strict":true}}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Api-Key:
+      - "<AZURE_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Length:
+      - '1232'
+      Content-Type:
+      - application/json
+      Apim-Request-Id:
+      - 9152bc06-9e73-4076-96e4-b58a28328960
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Region:
+      - West Europe
+      X-Ratelimit-Remaining-Requests:
+      - '248'
+      X-Ratelimit-Limit-Requests:
+      - '250'
+      X-Ratelimit-Remaining-Tokens:
+      - '249870'
+      X-Ratelimit-Limit-Tokens:
+      - '250000'
+      Azureml-Model-Session:
+      - d20260228011659-7569556d7947
+      X-Accel-Buffering:
+      - 'no'
+      X-Ms-Rai-Invoked:
+      - 'true'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      X-Ms-Deployment-Name:
+      - gpt-5-nano
+      Date:
+      - Sun, 01 Mar 2026 14:38:22 GMT
+    body:
+      encoding: UTF-8
+      string: '{"choices":[{"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"protected_material_code":{"filtered":false,"detected":false},"protected_material_text":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}},"finish_reason":"stop","index":0,"logprobs":null,"message":{"annotations":[],"content":"{\"name\":\"Bob\",\"age\":30}","refusal":null,"role":"assistant"}}],"created":1772375896,"id":"chatcmpl-DEcDwsck79hq3XKxZ6zC8RfVFSPB8","model":"gpt-5-nano-2025-08-07","object":"chat.completion","prompt_filter_results":[{"prompt_index":0,"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"jailbreak":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}}}],"system_fingerprint":null,"usage":{"completion_tokens":534,"completion_tokens_details":{"accepted_prediction_tokens":0,"audio_tokens":0,"reasoning_tokens":512,"rejected_prediction_tokens":0},"prompt_tokens":43,"prompt_tokens_details":{"audio_tokens":0,"cached_tokens":0},"total_tokens":577}}
+
+        '
+  recorded_at: Sun, 01 Mar 2026 14:38:23 GMT
+- request:
+    method: post
+    uri: https://rubyllm.cognitiveservices.azure.com/openai/deployments/gpt-5-nano/chat/completions?api-version=2025-01-01-preview
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-5-nano","messages":[{"role":"user","content":"Generate
+        a person named Bob"},{"role":"assistant","content":"{\"name\":\"Bob\",\"age\":30}"},{"role":"user","content":"Now
+        just tell me about Ruby"}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Api-Key:
+      - "<AZURE_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Length:
+      - '3066'
+      Content-Type:
+      - application/json
+      Apim-Request-Id:
+      - 7483670c-2749-493a-8d2b-39abffc89ef2
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Region:
+      - West Europe
+      X-Ratelimit-Remaining-Requests:
+      - '247'
+      X-Ratelimit-Limit-Requests:
+      - '250'
+      X-Ratelimit-Remaining-Tokens:
+      - '249850'
+      X-Ratelimit-Limit-Tokens:
+      - '250000'
+      Azureml-Model-Session:
+      - d20260228011659-7569556d7947
+      X-Accel-Buffering:
+      - 'no'
+      X-Ms-Rai-Invoked:
+      - 'true'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      X-Ms-Deployment-Name:
+      - gpt-5-nano
+      Date:
+      - Sun, 01 Mar 2026 14:38:44 GMT
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJjaG9pY2VzIjpbeyJjb250ZW50X2ZpbHRlcl9yZXN1bHRzIjp7ImhhdGUiOnsiZmlsdGVyZWQiOmZhbHNlLCJzZXZlcml0eSI6InNhZmUifSwicHJvdGVjdGVkX21hdGVyaWFsX2NvZGUiOnsiZmlsdGVyZWQiOmZhbHNlLCJkZXRlY3RlZCI6ZmFsc2V9LCJwcm90ZWN0ZWRfbWF0ZXJpYWxfdGV4dCI6eyJmaWx0ZXJlZCI6ZmFsc2UsImRldGVjdGVkIjpmYWxzZX0sInNlbGZfaGFybSI6eyJmaWx0ZXJlZCI6ZmFsc2UsInNldmVyaXR5Ijoic2FmZSJ9LCJzZXh1YWwiOnsiZmlsdGVyZWQiOmZhbHNlLCJzZXZlcml0eSI6InNhZmUifSwidmlvbGVuY2UiOnsiZmlsdGVyZWQiOmZhbHNlLCJzZXZlcml0eSI6InNhZmUifX0sImZpbmlzaF9yZWFzb24iOiJzdG9wIiwiaW5kZXgiOjAsImxvZ3Byb2JzIjpudWxsLCJtZXNzYWdlIjp7ImFubm90YXRpb25zIjpbXSwiY29udGVudCI6IlJ1YnkgaXMgYSBkeW5hbWljLCBvcGVuLXNvdXJjZSBwcm9ncmFtbWluZyBsYW5ndWFnZSBkZXNpZ25lZCBmb3IgcHJvZ3JhbW1lciBoYXBwaW5lc3MgYW5kIHByb2R1Y3Rpdml0eS5cblxuS2V5IHBvaW50czpcbi0gQ3JlYXRlZCBieSBZdWtpaGlybyBNYXRzdW1vdG8gKE1hdHopOyBmaXJzdCByZWxlYXNlZCBpbiAxOTk1LiBJbmZsdWVuY2VzIGluY2x1ZGUgUGVybCwgU21hbGx0YWxrLCBFaWZmZWwsIEFkYSwgYW5kIExpc3AuXG4tIERlc2lnbiBnb2FsczogcmVhZGFibGUsIGV4cHJlc3NpdmUgY29kZSB0aGF04oCZcyBlbmpveWFibGUgdG8gd3JpdGU7IGV2ZXJ5dGhpbmcgaXMgYW4gb2JqZWN0LCBhbmQgdGhlIGxhbmd1YWdlIGVtcGhhc2l6ZXMgaHVtYW4tZnJpZW5kbHkgc3ludGF4LlxuLSBDb3JlIGZlYXR1cmVzOiBvYmplY3Qtb3JpZW50ZWQgZnJvbSB0aGUgZ3JvdW5kIHVwIChldmVuIG51bWJlcnMgYXJlIG9iamVjdHMpLCBibG9ja3MgYW5kIGNsb3N1cmVzLCByaWNoIHN0YW5kYXJkIGxpYnJhcnksIGdhcmJhZ2UgY29sbGVjdGlvbiwgYW5kIHBvd2VyZnVsIG1ldGFwcm9ncmFtbWluZyBjYXBhYmlsaXRpZXMgdXNpbmcgbW9kdWxlcyBhbmQgbWl4aW5zLlxuLSBTeW50YXggYW5kIGZlZWw6IGNsZWFuLCBmbGV4aWJsZSBzeW50YXggd2l0aCBmZWF0dXJlcyBsaWtlIHN0cmluZyBpbnRlcnBvbGF0aW9uLCB5aWVsZCBmb3IgYmxvY2tzLCBhbmQgZW51bWVyYWJsZSB1dGlsaXRpZXMgdGhhdCBtYWtlIGRhdGEgcHJvY2Vzc2luZyBjb25jaXNlLlxuLSBJbXBsZW1lbnRhdGlvbnM6IE1SSSAoQ1J1YnkpIGlzIHRoZSBzdGFuZGFyZDsgYWxzbyBKUnVieSAob24gdGhlIEpWTSksIFRydWZmbGVSdWJ5LCBSdWJpbml1cywgYW5kIG90aGVycy5cbi0gRWNvc3lzdGVtOiBSdWJ5R2VtcyBpcyB0aGUgcGFja2FnZSBtYW5hZ2VyLCB3aXRoIEJ1bmRsZXIgZm9yIGRlcGVuZGVuY3kgbWFuYWdlbWVudDsgY29tbW9uIHRvb2xzIGluY2x1ZGUgUlZNIG9yIHJiZW52IGZvciBtYW5hZ2luZyBSdWJ5IHZlcnNpb25zLlxuLSBQb3B1bGFyIGZyYW1ld29ya3M6IFJhaWxzICh0aGUgYmlnIG9uZSBmb3Igd2ViIGFwcHMpLCBhbG9uZyB3aXRoIFNpbmF0cmEsIEhhbmFtaSwgYW5kIG90aGVycyBmb3Igd2ViIG9yIERTTHMuXG4tIFVzZSBjYXNlczogZ3JlYXQgZm9yIHdlYiBhcHBsaWNhdGlvbnMsIHNjcmlwdGluZywgYXV0b21hdGlvbiwgRGV2T3BzIHRhc2tzLCBhbmQgYnVpbGRpbmcgZG9tYWluLXNwZWNpZmljIGxhbmd1YWdlcyAoRFNMcykgdGhhbmtzIHRvIGl0cyBtZXRhcHJvZ3JhbW1pbmcgY2FwYWJpbGl0aWVzLlxuLSBQZXJmb3JtYW5jZSBhbmQgY29uY3VycmVuY3k6IFJ1YnkgaXMgdHlwaWNhbGx5IHNsb3dlciB0aGFuIGNvbXBpbGVkIGxhbmd1YWdlcywgYnV0IGhhcyBldm9sdmVkIHdpdGggUnVieSAzIChmb2N1c2luZyBvbiBzcGVlZCBhbmQgZGV2ZWxvcGVyIGhhcHBpbmVzcykuIENvbmN1cnJlbmN5IGlzIHBvc3NpYmxlIHZpYSB0aHJlYWRzLCBidXQgdGhlcmXigJlzIGEgPEdPT0dMRV9DTE9VRF9MT0NBVElPTj4gVk0gbG9jazsgUmFjdG9ycyBwcm92aWRlIHNhZmVyIHBhcmFsbGVsaXNtIGZvciBzb21lIHdvcmtsb2Fkcy5cbi0gd2hlbiB0byBjaG9vc2UgUnVieTogZmFzdCBwcm90b3R5cGluZywgd2ViIGFwcHMgd2l0aCBSYWlscywgYW5kIHByb2plY3RzIHdoZXJlIGRldmVsb3BlciBleHBlcmllbmNlIGFuZCBtYWludGFpbmFiaWxpdHkgbWF0dGVyLlxuXG5JZiB5b3XigJlkIGxpa2UsIEkgY2FuIGdpdmUgYSBxdWljayBleGFtcGxlLCBjb21wYXJlIFJ1YnkgdG8gYW5vdGhlciBsYW5ndWFnZSAobGlrZSBQeXRob24pLCBvciBwb2ludCB5b3UgdG8gYmVnaW5uZXIgcmVzb3VyY2VzIGFuZCB0dXRvcmlhbHMuIiwicmVmdXNhbCI6bnVsbCwicm9sZSI6ImFzc2lzdGFudCJ9fV0sImNyZWF0ZWQiOjE3NzIzNzU5MDMsImlkIjoiY2hhdGNtcGwtREVjRTN0MHRiR0lYYzZxckFHU2JqdU9STDZaQVAiLCJtb2RlbCI6ImdwdC01LW5hbm8tMjAyNS0wOC0wNyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsInByb21wdF9maWx0ZXJfcmVzdWx0cyI6W3sicHJvbXB0X2luZGV4IjowLCJjb250ZW50X2ZpbHRlcl9yZXN1bHRzIjp7ImhhdGUiOnsiZmlsdGVyZWQiOmZhbHNlLCJzZXZlcml0eSI6InNhZmUifSwiamFpbGJyZWFrIjp7ImZpbHRlcmVkIjpmYWxzZSwiZGV0ZWN0ZWQiOmZhbHNlfSwic2VsZl9oYXJtIjp7ImZpbHRlcmVkIjpmYWxzZSwic2V2ZXJpdHkiOiJzYWZlIn0sInNleHVhbCI6eyJmaWx0ZXJlZCI6ZmFsc2UsInNldmVyaXR5Ijoic2FmZSJ9LCJ2aW9sZW5jZSI6eyJmaWx0ZXJlZCI6ZmFsc2UsInNldmVyaXR5Ijoic2FmZSJ9fX1dLCJzeXN0ZW1fZmluZ2VycHJpbnQiOm51bGwsInVzYWdlIjp7ImNvbXBsZXRpb25fdG9rZW5zIjoxODA0LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7ImFjY2VwdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowLCJhdWRpb190b2tlbnMiOjAsInJlYXNvbmluZ190b2tlbnMiOjE0MDgsInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowfSwicHJvbXB0X3Rva2VucyI6MzYsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJhdWRpb190b2tlbnMiOjAsImNhY2hlZF90b2tlbnMiOjB9LCJ0b3RhbF90b2tlbnMiOjE4NDB9fQo=
+  recorded_at: Sun, 01 Mar 2026 14:38:45 GMT
+recorded_with: VCR 6.4.0

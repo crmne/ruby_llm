@@ -1,0 +1,121 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
+    body:
+      encoding: UTF-8
+      string: '{"model":"Kimi-K2.5","messages":[{"role":"user","content":"Reply with
+        exactly: FOUR"}],"stream":false,"temperature":0.0}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Api-Key:
+      - "<AZURE_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json
+      Vary:
+      - Accept-Encoding
+      Request-Context:
+      - appId=
+      Prompt-Token-Len:
+      - '14'
+      Sampling-Token-Len:
+      - '137'
+      Apim-Request-Id:
+      - 51ee814a-8138-41a7-a3f7-6d59d21f0f4b
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Region:
+      - West Europe
+      X-Ratelimit-Remaining-Requests:
+      - '18'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Ratelimit-Limit-Requests:
+      - '20'
+      X-Ratelimit-Remaining-Tokens:
+      - '19968'
+      X-Ratelimit-Limit-Tokens:
+      - '20000'
+      Date:
+      - Tue, 10 Feb 2026 09:03:50 GMT
+    body:
+      encoding: ASCII-8BIT
+      string: '{"choices":[{"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"protected_material_code":{"filtered":false,"detected":false},"protected_material_text":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}},"finish_reason":"stop","index":0,"logprobs":null,"message":{"content":"FOUR","reasoning_content":"The
+        user wants me to reply with exactly: FOUR\n\nThis is a simple instruction.
+        I need to output just the word \"FOUR\" exactly as specified. No extra text,
+        no punctuation, just the four letters F-O-U-R in uppercase.\n\nLet me check
+        if there are any tricks:\n- \"Reply with exactly: FOUR\"\n- This means the
+        output should be just the string \"FOUR\"\n- No quotes, no extra spaces, no
+        newlines if possible (though a newline at the end is usually acceptable but
+        I''ll try to avoid it if the system allows)\n\nThe user is testing if I can
+        follow simple formatting instructions.\n\nOutput: FOUR ","role":"assistant","tool_calls":null},"stop_reason":null}],"created":1770714231,"id":"4292ccdb21194df187c7fafa5529ec4d","model":"Kimi-K2.5","object":"chat.completion","prompt_filter_results":[{"prompt_index":0,"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"jailbreak":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}}}],"usage":{"audio_prompt_tokens":0,"completion_tokens":137,"prompt_tokens":14,"prompt_tokens_details":null,"reasoning_tokens":0,"total_tokens":151}}
+
+        '
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+- request:
+    method: post
+    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.amazon.nova-2-lite-v1:0/converse
+    body:
+      encoding: UTF-8
+      string: '{"messages":[{"role":"user","content":[{"text":"Reply with exactly:
+        FOUR"}]},{"role":"assistant","content":[{"reasoningContent":{"reasoningText":{"text":"The
+        user wants me to reply with exactly: FOUR\n\nThis is a simple instruction.
+        I need to output just the word \"FOUR\" exactly as specified. No extra text,
+        no punctuation, just the four letters F-O-U-R in uppercase.\n\nLet me check
+        if there are any tricks:\n- \"Reply with exactly: FOUR\"\n- This means the
+        output should be just the string \"FOUR\"\n- No quotes, no extra spaces, no
+        newlines if possible (though a newline at the end is usually acceptable but
+        I''ll try to avoid it if the system allows)\n\nThe user is testing if I can
+        follow simple formatting instructions.\n\nOutput: FOUR "}}},{"text":"FOUR"}]},{"role":"user","content":[{"text":"Reply
+        with exactly: EIGHT"}]}],"inferenceConfig":{"temperature":0.0}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      X-Amz-Date:
+      - 20260210T090351Z
+      X-Amz-Content-Sha256:
+      - c7653b96537a4684037c18a6b199116b637f8bec9a28b92733945788142cd8f5
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20260210/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=5c159022bbdd00edfe90ff5fec89b4d7a5982363e5a4a667892b3f5991a1796a
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 10 Feb 2026 09:03:52 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '206'
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - e2310ef6-99e0-4ffe-bc61-de63c5b4bd47
+    body:
+      encoding: UTF-8
+      string: '{"metrics":{"latencyMs":414},"output":{"message":{"content":[{"text":"EIGHT"}],"role":"assistant"}},"stopReason":"end_turn","usage":{"inputTokens":64,"outputTokens":5,"serverToolUsage":{},"totalTokens":69}}'
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+recorded_with: VCR 6.4.0
