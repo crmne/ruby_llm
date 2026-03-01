@@ -747,6 +747,102 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
         chat.send(:cleanup_orphaned_tool_results)
       end.to change { chat.messages.count }.by(-1)
     end
+
+    context 'with custom configurations' do
+      before(:all) do # rubocop:disable RSpec/BeforeAfterAll
+        # Create additional tables for testing edge cases
+        ActiveRecord::Migration.suppress_messages do
+          ActiveRecord::Migration.create_table :clanker_chats, force: true do |t|
+            t.string :model_id
+            t.timestamps
+          end
+          ActiveRecord::Migration.create_table :clanker_messages, force: true do |t|
+            t.references :clanker_chat
+            t.string :role
+            t.text :content
+            t.json :content_raw
+            t.string :model_id
+            t.integer :input_tokens
+            t.integer :output_tokens
+            t.integer :cached_tokens
+            t.integer :cache_creation_tokens
+            t.references :clanker_tool_call
+            t.timestamps
+          end
+
+          ActiveRecord::Migration.create_table :clanker_tool_calls, force: true do |t|
+            t.references :clanker_message
+            t.string :tool_call_id
+            t.string :name
+            t.json :arguments
+            t.timestamps
+          end
+        end
+      end
+
+      after(:all) do # rubocop:disable RSpec/BeforeAfterAll
+        ActiveRecord::Migration.suppress_messages do
+          if ActiveRecord::Base.connection.table_exists?(:clanker_tool_calls)
+            ActiveRecord::Migration.drop_table :clanker_tool_calls
+          end
+          if ActiveRecord::Base.connection.table_exists?(:clanker_messages)
+            ActiveRecord::Migration.drop_table :clanker_messages
+          end
+          if ActiveRecord::Base.connection.table_exists?(:clanker_chats)
+            ActiveRecord::Migration.drop_table :clanker_chats
+          end
+        end
+      end
+
+      module Clanker # rubocop:disable RSpec/LeakyConstantDeclaration,Lint/ConstantDefinitionInBlock
+        class Chat < ActiveRecord::Base # rubocop:disable RSpec/LeakyConstantDeclaration
+          acts_as_chat messages: :clanker_messages, message_class: 'Clanker::Message',
+                       messages_foreign_key: 'clanker_chat_id'
+          alias messages clanker_messages
+          self.table_name = 'clanker_chats'
+        end
+
+        class Message < ActiveRecord::Base # rubocop:disable RSpec/LeakyConstantDeclaration
+          acts_as_message chat: :clanker_chat, chat_class: 'Clanker::Chat', chat_foreign_key: 'clanker_chat_id',
+                          tool_calls: :clanker_tool_calls, tool_call_class: 'Clanker::ToolCall',
+                          tool_calls_foreign_key: 'clanker_message_id'
+          alias tool_calls clanker_tool_calls
+
+          self.table_name = 'clanker_messages'
+        end
+
+        class ToolCall < ActiveRecord::Base # rubocop:disable RSpec/LeakyConstantDeclaration
+          acts_as_tool_call message: :clanker_message, message_class: 'Clanker::Message',
+                            message_foreign_key: 'clanker_message_id', result: :result, result_class: 'Clanker::Message',
+                            result_foreign_key: 'clanker_tool_call_id'
+          alias message clanker_message
+
+          self.table_name = 'clanker_tool_calls'
+        end
+      end
+
+      it 'does not clean up complete tool interactions when error occurs after tool execution' do
+        chat = Clanker::Chat.create!(model: model)
+        chat.clanker_messages.create!(role: 'user', content: 'What is 5 + 5?')
+
+        tool_call_msg = chat.messages.create!(role: 'assistant', content: nil)
+        tool_call = tool_call_msg.tool_calls.create!(
+          tool_call_id: 'call_123',
+          name: 'calculator',
+          arguments: { expression: '5 + 5' }.to_json
+        )
+
+        chat.messages.create!(
+          role: 'tool',
+          content: '10',
+          parent_tool_call: tool_call
+        )
+
+        expect do
+          chat.send(:cleanup_orphaned_tool_results)
+        end.not_to(change { chat.messages.count })
+      end
+    end
   end
 
   describe 'assume_model_exists' do

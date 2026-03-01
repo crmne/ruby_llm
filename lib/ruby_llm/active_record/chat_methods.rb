@@ -244,7 +244,8 @@ module RubyLLM
         elsif last.tool_result?
           tool_call_message = last.parent_tool_call.message
           expected_results = tool_call_message.tool_calls.pluck(:id)
-          actual_results = tool_call_message.tool_results.pluck(:tool_call_id)
+          fk_column = tool_call_message.class.reflections['tool_results'].foreign_key
+          actual_results = tool_call_message.tool_results.pluck(fk_column)
 
           if expected_results.sort != actual_results.sort
             tool_call_message.tool_results.each(&:destroy)
