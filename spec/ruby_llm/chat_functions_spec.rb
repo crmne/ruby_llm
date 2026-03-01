@@ -111,6 +111,39 @@ RSpec.describe RubyLLM::Chat do
     end
   end
 
+  describe '#with_instructions' do
+    it 'replaces existing system instructions by default' do
+      chat = described_class.new
+
+      chat.with_instructions('Be helpful')
+      chat.with_instructions('Be concise')
+
+      system_messages = chat.messages.select { |msg| msg.role == :system }
+      expect(system_messages.size).to eq(1)
+      expect(system_messages.first.content).to eq('Be concise')
+    end
+
+    it 'appends system instructions when append: true' do
+      chat = described_class.new
+
+      chat.with_instructions('Be helpful')
+      chat.with_instructions('Be concise', append: true)
+
+      system_messages = chat.messages.select { |msg| msg.role == :system }
+      expect(system_messages.map(&:content)).to eq(['Be helpful', 'Be concise'])
+    end
+
+    it 'keeps system instructions at the top of message history' do
+      chat = described_class.new
+
+      chat.add_message(role: :user, content: 'Hi')
+      chat.add_message(role: :assistant, content: 'Hello')
+      chat.with_instructions('System')
+
+      expect(chat.messages.map(&:role)).to eq(%i[system user assistant])
+    end
+  end
+
   describe '#with_temperature' do
     it 'sets the temperature and returns self' do
       chat = described_class.new

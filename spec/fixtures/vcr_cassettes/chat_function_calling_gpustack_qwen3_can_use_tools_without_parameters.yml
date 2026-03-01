@@ -10,7 +10,7 @@ http_interactions:
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}],"enable_thinking":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer <GPUSTACK_API_KEY>
       Content-Type:
@@ -25,59 +25,73 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 16 Jan 2026 17:07:16 GMT
-      - Fri, 16 Jan 2026 17:07:16 GMT
+      - Tue, 10 Feb 2026 15:52:55 GMT
       Server:
-      - uvicorn
-      - uvicorn
-      Keep-Alive:
-      - timeout=15, max=100
-      Content-Length:
-      - '1320'
+      - istio-envoy
       Content-Type:
-      - application/json
-      X-Request-Accepted-At:
-      - "<X_REQUEST_ID>"
-      X-Request-Id:
-      - "<X_REQUEST_ID>"
+      - application/json; charset=utf-8
       Access-Control-Allow-Origin:
-      - "*"
+      - ''
+      Req-Cost-Time:
+      - '18558'
+      Req-Arrive-Time:
+      - '1770738775751'
+      Resp-Start-Time:
+      - '1770738794310'
+      X-Envoy-Upstream-Service-Time:
+      - '18552'
+      Vary:
+      - Accept-Encoding
+      Transfer-Encoding:
+      - chunked
     body:
-      encoding: UTF-8
-      string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"content":null,"reasoning_content":"\nOkay,
+      encoding: ASCII-8BIT
+      string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"role":"assistant","content":"","reasoning_content":"Okay,
         the user is asking, \"What''s the best language to learn?\" I need to figure
-        out how to respond. Let me check the tools provided. There''s a function called
-        best_language_to_learn with no parameters required. Since the user is asking
-        for the best language, the function is designed to get that information. I
-        should call the function without any arguments because the parameters are
-        empty. The answer will be the result from the function. I don''t need to explain
-        anything here; just make the tool call.\n","role":"assistant","tool_calls":[{"function":{"arguments":"{}","name":"best_language_to_learn"},"id":"call-Cz0ue3ehEr9POn0RLOSbo9uHcyDKNTOx","type":"function"}]}}],"created":1768583237,"id":"chatcmpl-2qMKuS2YXHJCFUuFKNAXuaMXQ6xTvA7A","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":125,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":106,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":209,"prompt_tokens_details":{"cached_tokens":66},"prompt_tokens_per_second":4666.741096349224,"time_per_output_token_ms":8.027112,"time_to_first_token_ms":44.785,"tokens_per_second":124.57780581608927,"total_tokens":334}}'
-  recorded_at: Fri, 16 Jan 2026 17:07:17 GMT
+        out which function to use here. Let me check the tools provided.\n\nLooking
+        at the tools section, there''s a function called best_language_to_learn. Its
+        description says it gets the best language to learn, and it doesn''t require
+        any parameters. So, the user''s question directly matches this function. \n\nSince
+        the function doesn''t need any arguments, I should call it without any parameters.
+        The user probably wants a straightforward answer, so invoking this function
+        makes sense. I don''t see any other functions available, so this is the right
+        choice. \n\nI''ll generate the tool call with the function name and an empty
+        arguments object as specified. No need for extra parameters here. Let me make
+        sure the JSON is correctly formatted.","tool_calls":[{"type":"function","function":{"name":"best_language_to_learn","arguments":"{}"},"id":"cA0Er1w0jPwItvYqQ0Tdvse8NwHg8PWd"}]}}],"created":1770738794,"model":"qwen3","system_fingerprint":"b7981-98e57ca42","object":"chat.completion","usage":{"completion_tokens":187,"prompt_tokens":156,"total_tokens":343,"time_to_first_token_ms":18559,"time_per_output_token_ms":0,"tokens_per_second":0},"id":"chatcmpl-2VDVCNxWuMrYmK6rhNmS5MmJDDsENBhH","timings":{"cache_n":51,"prompt_n":105,"prompt_ms":2191.292,"prompt_per_token_ms":20.86944761904762,"prompt_per_second":47.9169366748019,"predicted_n":187,"predicted_ms":16316.301,"predicted_per_token_ms":87.25294652406417,"predicted_per_second":11.4609310039083}}'
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 - request:
     method: post
     uri: "<GPUSTACK_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
       string: '{"model":"qwen3","messages":[{"role":"user","content":"What''s the
-        best language to learn?"},{"role":"assistant","tool_calls":[{"id":"call-Cz0ue3ehEr9POn0RLOSbo9uHcyDKNTOx","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning":"\nOkay,
+        best language to learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"cA0Er1w0jPwItvYqQ0Tdvse8NwHg8PWd","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning":"Okay,
         the user is asking, \"What''s the best language to learn?\" I need to figure
-        out how to respond. Let me check the tools provided. There''s a function called
-        best_language_to_learn with no parameters required. Since the user is asking
-        for the best language, the function is designed to get that information. I
-        should call the function without any arguments because the parameters are
-        empty. The answer will be the result from the function. I don''t need to explain
-        anything here; just make the tool call.\n","reasoning_content":"\nOkay, the
-        user is asking, \"What''s the best language to learn?\" I need to figure out
-        how to respond. Let me check the tools provided. There''s a function called
-        best_language_to_learn with no parameters required. Since the user is asking
-        for the best language, the function is designed to get that information. I
-        should call the function without any arguments because the parameters are
-        empty. The answer will be the result from the function. I don''t need to explain
-        anything here; just make the tool call.\n"},{"role":"tool","content":"Ruby","tool_call_id":"call-Cz0ue3ehEr9POn0RLOSbo9uHcyDKNTOx"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        out which function to use here. Let me check the tools provided.\n\nLooking
+        at the tools section, there''s a function called best_language_to_learn. Its
+        description says it gets the best language to learn, and it doesn''t require
+        any parameters. So, the user''s question directly matches this function. \n\nSince
+        the function doesn''t need any arguments, I should call it without any parameters.
+        The user probably wants a straightforward answer, so invoking this function
+        makes sense. I don''t see any other functions available, so this is the right
+        choice. \n\nI''ll generate the tool call with the function name and an empty
+        arguments object as specified. No need for extra parameters here. Let me make
+        sure the JSON is correctly formatted.","reasoning_content":"Okay, the user
+        is asking, \"What''s the best language to learn?\" I need to figure out which
+        function to use here. Let me check the tools provided.\n\nLooking at the tools
+        section, there''s a function called best_language_to_learn. Its description
+        says it gets the best language to learn, and it doesn''t require any parameters.
+        So, the user''s question directly matches this function. \n\nSince the function
+        doesn''t need any arguments, I should call it without any parameters. The
+        user probably wants a straightforward answer, so invoking this function makes
+        sense. I don''t see any other functions available, so this is the right choice.
+        \n\nI''ll generate the tool call with the function name and an empty arguments
+        object as specified. No need for extra parameters here. Let me make sure the
+        JSON is correctly formatted."},{"role":"tool","content":"Ruby","tool_call_id":"cA0Er1w0jPwItvYqQ0Tdvse8NwHg8PWd"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}],"enable_thinking":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer <GPUSTACK_API_KEY>
       Content-Type:
@@ -92,32 +106,34 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 16 Jan 2026 17:07:17 GMT
-      - Fri, 16 Jan 2026 17:07:17 GMT
+      - Tue, 10 Feb 2026 15:53:13 GMT
       Server:
-      - uvicorn
-      - uvicorn
-      Keep-Alive:
-      - timeout=15, max=100
-      Content-Length:
-      - '1185'
+      - istio-envoy
       Content-Type:
-      - application/json
-      X-Request-Accepted-At:
-      - "<X_REQUEST_ID>"
-      X-Request-Id:
-      - "<X_REQUEST_ID>"
+      - application/json; charset=utf-8
       Access-Control-Allow-Origin:
-      - "*"
+      - ''
+      Req-Cost-Time:
+      - '9489'
+      Req-Arrive-Time:
+      - '1770738794318'
+      Resp-Start-Time:
+      - '1770738803808'
+      X-Envoy-Upstream-Service-Time:
+      - '9484'
+      Vary:
+      - Accept-Encoding
+      Transfer-Encoding:
+      - chunked
     body:
-      encoding: UTF-8
-      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"\n\nThe
-        best language to learn is Ruby.","reasoning_content":"\nOkay, the user asked,
-        \"What''s the best language to learn?\" I called the function best_language_to_learn,
-        which doesn''t require any parameters. The response from the tool was \"Ruby\".
-        Now I need to present this answer. Since the function provided a specific
-        answer, I should just state that Ruby is the best language to learn. No need
-        for extra explanations unless the user asks for more details. Let me make
-        sure to format the response correctly as per the instructions.\n","role":"assistant"}}],"created":1768583238,"id":"chatcmpl-mOCpcj4P4sQ0jorX1V1q0IWoppeGK8pG","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":109,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":98,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":235,"prompt_tokens_details":{"cached_tokens":208},"prompt_tokens_per_second":14649.04625358434,"time_per_output_token_ms":8.055678899082569,"time_to_first_token_ms":16.042,"tokens_per_second":124.13603031196865,"total_tokens":344}}'
-  recorded_at: Fri, 16 Jan 2026 17:07:18 GMT
+      encoding: ASCII-8BIT
+      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"role":"assistant","content":"The
+        best language to learn is Ruby. It is known for its simplicity and productivity,
+        making it a great choice for beginners and experienced developers alike. Ruby''s
+        syntax is clean and easy to read, which helps in writing code that is both
+        efficient and maintainable. Additionally, Ruby has a strong community support
+        and is widely used in web development through frameworks like Ruby on Rails.
+        Whether you''re just starting out or looking to expand your skills, Ruby offers
+        a welcoming environment for learning and growth."}}],"created":1770738803,"model":"qwen3","system_fingerprint":"b7981-98e57ca42","object":"chat.completion","usage":{"completion_tokens":102,"prompt_tokens":357,"total_tokens":459,"tokens_per_second":0,"time_to_first_token_ms":9490,"time_per_output_token_ms":0},"id":"chatcmpl-KFkFpzEnpgYZHBSzC9F7aYb7DohsuxuS","timings":{"cache_n":342,"prompt_n":15,"prompt_ms":417.412,"prompt_per_token_ms":27.827466666666666,"prompt_per_second":35.93571818730655,"predicted_n":102,"predicted_ms":9049.935,"predicted_per_token_ms":88.72485294117647,"predicted_per_second":11.270799182535566}}'
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 recorded_with: VCR 6.4.0

@@ -12,7 +12,7 @@ http_interactions:
         description"},"status":{"description":"Optional task status","anyOf":[{"type":"string","enum":["pending","done"]},{"type":"null"}]}},"required":["task","status"],"additionalProperties":false,"strict":true}}}],"enable_thinking":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer <GPUSTACK_API_KEY>
       Content-Type:
@@ -27,33 +27,37 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 16 Jan 2026 17:10:40 GMT
-      - Fri, 16 Jan 2026 17:10:41 GMT
+      - Tue, 10 Feb 2026 15:53:44 GMT
       Server:
-      - uvicorn
-      - uvicorn
-      Keep-Alive:
-      - timeout=15, max=100
-      Content-Length:
-      - '1332'
+      - istio-envoy
       Content-Type:
-      - application/json
-      X-Request-Accepted-At:
-      - "<X_REQUEST_ID>"
-      X-Request-Id:
-      - "<X_REQUEST_ID>"
+      - application/json; charset=utf-8
       Access-Control-Allow-Origin:
-      - "*"
+      - ''
+      Req-Cost-Time:
+      - '20086'
+      Req-Arrive-Time:
+      - '1770738825642'
+      Resp-Start-Time:
+      - '1770738845729'
+      X-Envoy-Upstream-Service-Time:
+      - '20081'
+      Vary:
+      - Accept-Encoding
+      Transfer-Encoding:
+      - chunked
     body:
-      encoding: UTF-8
-      string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"content":null,"reasoning_content":"\nOkay,
+      encoding: ASCII-8BIT
+      string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"role":"assistant","content":"","reasoning_content":"Okay,
         the user wants me to call the any_of_params function for a task called \"Review
         PR\" with status \"pending\". Let me check the function''s parameters. The
-        function requires both task and status. The status can be either \"pending\",
-        \"done\", or null. Since the user specified \"pending\", that''s valid. So
-        I need to structure the JSON with task as \"Review PR\" and status as \"pending\".
-        I''ll make sure to use the correct syntax and enclose it in the tool_call
-        tags.\n","role":"assistant","tool_calls":[{"function":{"arguments":"{\"status\":\"pending\",\"task\":\"Review
-        PR\"}","name":"any_of_params"},"id":"call-b2gnVc232qwjvQTNTrFVc2FMABeC1e7Q","type":"function"}]}}],"created":1768583442,"id":"chatcmpl-AAFz9ug1BfM9xchIGHjq9OkG33P4lm5k","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":137,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":108,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":261,"prompt_tokens_details":{"cached_tokens":66},"prompt_tokens_per_second":5159.020379118816,"time_per_output_token_ms":8.151153284671533,"time_to_first_token_ms":50.591,"tokens_per_second":122.68202609813844,"total_tokens":398}}'
-  recorded_at: Fri, 16 Jan 2026 17:10:42 GMT
+        function requires \"task\" and \"status\". The \"task\" is a string, and \"status\"
+        can be either \"pending\", \"done\", or null. Since the user specified \"pending\",
+        that''s valid. I need to structure the JSON arguments correctly. The task
+        is \"Review PR\" and status is \"pending\". So the tool call should include
+        these parameters. Let me make sure there are no additional properties allowed.
+        The function has additionalProperties set to false, so only task and status
+        are allowed. Alright, that''s all. I''ll format the tool call accordingly.","tool_calls":[{"type":"function","function":{"name":"any_of_params","arguments":"{\"task\":\"Review
+        PR\",\"status\":\"pending\"}"},"id":"tcZsXphkGMVONqlqU6TtL5u45jZTQoD7"}]}}],"created":1770738845,"model":"qwen3","system_fingerprint":"b7981-98e57ca42","object":"chat.completion","usage":{"completion_tokens":184,"prompt_tokens":228,"total_tokens":412,"time_to_first_token_ms":20087,"time_per_output_token_ms":0,"tokens_per_second":0},"id":"chatcmpl-7tV4uGgo8PDJdoXWlEgSZ7CO2eJOF6ut","timings":{"cache_n":51,"prompt_n":177,"prompt_ms":3678.615,"prompt_per_token_ms":20.783135593220337,"prompt_per_second":48.115934937469675,"predicted_n":184,"predicted_ms":16344.031,"predicted_per_token_ms":88.82625543478261,"predicted_per_second":11.2579326360798}}'
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 recorded_with: VCR 6.4.0

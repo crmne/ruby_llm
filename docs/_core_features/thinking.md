@@ -115,13 +115,14 @@ end
 ## Provider Notes
 
 - Claude uses a thinking budget and can return both text and signature.
-- Anthropic and Bedrock require a thinking budget; effort is optional.
+- Anthropic requires a thinking budget.
+- Bedrock thinking params are model-dependent; models may accept budget, effort, or provider-specific fields.
 - Gemini 2.5 uses a token budget; Gemini 3 uses effort levels.
 - OpenAI reasoning models accept `effort` but may not return thinking text or signatures.
 - Perplexity sonar reasoning models stream `<think>` blocks inside content; RubyLLM extracts them after the response completes.
 - Mistral Magistral models always think and ignore `with_thinking` params. Non-magistral models warn if you pass them.
 - Ollama's Qwen3 models think by default and only accept `effort: :none` to disable thinking.
-- Anthropic, Bedrock's Claude, and Ollama integrations currently do not report thinking token counts.
+- Anthropic and Ollama integrations currently do not report thinking token counts.
 
 ## Next Steps
 
