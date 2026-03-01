@@ -2,6 +2,8 @@
 
 unless ENV['SKIP_COVERAGE']
   SimpleCov.start do
+    track_files 'lib/**/*.rb'
+
     add_filter '/spec/'
     add_filter '/vendor/'
     add_filter 'acts_as_legacy.rb'
@@ -12,7 +14,6 @@ unless ENV['SKIP_COVERAGE']
     formatter SimpleCov::Formatter::MultiFormatter.new(
       [
         SimpleCov::Formatter::SimpleFormatter,
-        (SimpleCov::Formatter::Codecov if ENV['CODECOV_TOKEN']),
         SimpleCov::Formatter::CoberturaFormatter
       ].compact
     )

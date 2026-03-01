@@ -9,7 +9,9 @@ http_interactions:
         capital of France?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
+      Authorization:
+      - Bearer <GPUSTACK_API_KEY>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -22,42 +24,38 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 03 Nov 2025 13:56:38 GMT
-      - Mon, 03 Nov 2025 13:56:39 GMT
+      - Tue, 10 Feb 2026 15:36:33 GMT
       Server:
-      - uvicorn
-      - uvicorn
-      Keep-Alive:
-      - timeout=15, max=100
-      Content-Length:
-      - '1894'
+      - istio-envoy
       Content-Type:
-      - application/json
-      X-Request-Accepted-At:
-      - "<X_REQUEST_ID>"
-      X-Request-Id:
-      - "<X_REQUEST_ID>"
+      - application/json; charset=utf-8
       Access-Control-Allow-Origin:
-      - "*"
+      - ''
+      Req-Cost-Time:
+      - '16196'
+      Req-Arrive-Time:
+      - '1770737793836'
+      Resp-Start-Time:
+      - '1770737810033'
+      X-Envoy-Upstream-Service-Time:
+      - '16185'
+      Vary:
+      - Accept-Encoding
+      Transfer-Encoding:
+      - chunked
     body:
-      encoding: UTF-8
-      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"\n\nThe
+      encoding: ASCII-8BIT
+      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"role":"assistant","content":"The
         capital of France is **Paris**. It is a major cultural, economic, and political
-        center in Europe, renowned for landmarks such as the Eiffel Tower, the Louvre
-        Museum, and the Seine River.","reasoning_content":"\nOkay, the user is asking
-        for the capital of France. Let me think. I know that France is a country in
-        Europe, and the capital is a well-known city. I remember that Paris is the
-        capital of France. But wait, I should make sure I''m not confusing it with
-        another country. For example, the capital of Italy is Rome, and the capital
-        of Spain is Madrid. So, France''s capital is definitely Paris. I should also
-        confirm that there are no other cities that might be considered as capitals.
-        Sometimes, countries have multiple capitals, but France is a single country,
-        so it has one capital. Paris is the political, economic, and cultural center
-        of France. I think that''s right. Maybe I can mention that Paris is also known
-        for its landmarks like the Eiffel Tower and the Louvre Museum. But the user
-        just asked for the capital, so the answer should be straightforward. Let me
-        double-check by recalling some geography facts. Yes, Paris is the capital.
-        I don''t think there''s any other city that''s considered the capital. So
-        the answer is Paris.\n","role":"assistant"}}],"created":1762178201,"id":"chatcmpl-mTjuO2sBreGeUQG4LjimRtla42FKdfpz","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":272,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":224,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":15,"prompt_tokens_details":{"cached_tokens":3},"prompt_tokens_per_second":1039.9334442595675,"time_per_output_token_ms":8.04039705882353,"time_to_first_token_ms":14.424,"tokens_per_second":124.37196729017262,"total_tokens":287}}'
-  recorded_at: Mon, 03 Nov 2025 13:56:41 GMT
-recorded_with: VCR 6.3.1
+        center in Europe and is renowned for its landmarks such as the Eiffel Tower,
+        Louvre Museum, and Notre-Dame Cathedral.","reasoning_content":"Okay, the user
+        is asking for the capital of France. Let me think. I know that France is a
+        country in Europe, and I remember that the capital is a city that''s important
+        for government. Wait, the main city that comes to mind is Paris. But I should
+        make sure. Let me recall: France''s capital is Paris. Yes, that''s right.
+        Other cities like Lyon or Marseille are major cities, but they aren''t the
+        capital. The government is based in Paris. So the answer should be Paris.
+        I don''t think there''s any confusion here. Let me double-check in my mind.
+        France''s capital is definitely Paris. I can confidently say that."}}],"created":1770737810,"model":"qwen3","system_fingerprint":"b7981-98e57ca42","object":"chat.completion","usage":{"completion_tokens":188,"prompt_tokens":15,"total_tokens":203,"time_to_first_token_ms":16196,"time_per_output_token_ms":0,"tokens_per_second":0},"id":"chatcmpl-CaYKjoz2VK8aOXTBQ2Ltob0zesB7XT0k","timings":{"cache_n":4,"prompt_n":11,"prompt_ms":295.703,"prompt_per_token_ms":26.882090909090905,"prompt_per_second":37.19948732342925,"predicted_n":188,"predicted_ms":15877.0,"predicted_per_token_ms":84.45212765957447,"predicted_per_second":11.841027901996599}}'
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+recorded_with: VCR 6.4.0

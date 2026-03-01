@@ -10,7 +10,7 @@ module RubyLLM
         end
 
         def render_image_payload(prompt, model:, size:)
-          RubyLLM.logger.debug "Ignoring size #{size}. Gemini does not support image size customization."
+          RubyLLM.logger.debug { "Ignoring size #{size}. Gemini does not support image size customization." }
           @model = model
           {
             instances: [

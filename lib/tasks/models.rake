@@ -39,15 +39,18 @@ end
 
 def configure_from_env
   RubyLLM.configure do |config|
-    config.openai_api_key = ENV.fetch('OPENAI_API_KEY', nil)
     config.anthropic_api_key = ENV.fetch('ANTHROPIC_API_KEY', nil)
-    config.gemini_api_key = ENV.fetch('GEMINI_API_KEY', nil)
+    config.azure_api_base = ENV.fetch('AZURE_API_BASE', nil)
+    config.azure_api_key = ENV.fetch('AZURE_API_KEY', nil)
     config.deepseek_api_key = ENV.fetch('DEEPSEEK_API_KEY', nil)
-    config.perplexity_api_key = ENV.fetch('PERPLEXITY_API_KEY', nil)
-    config.openrouter_api_key = ENV.fetch('OPENROUTER_API_KEY', nil)
+    config.gemini_api_key = ENV.fetch('GEMINI_API_KEY', nil)
     config.mistral_api_key = ENV.fetch('MISTRAL_API_KEY', nil)
+    config.openai_api_key = ENV.fetch('OPENAI_API_KEY', nil)
+    config.openrouter_api_key = ENV.fetch('OPENROUTER_API_KEY', nil)
+    config.perplexity_api_key = ENV.fetch('PERPLEXITY_API_KEY', nil)
     config.vertexai_location = ENV.fetch('GOOGLE_CLOUD_LOCATION', nil)
     config.vertexai_project_id = ENV.fetch('GOOGLE_CLOUD_PROJECT', nil)
+    config.xai_api_key = ENV.fetch('XAI_API_KEY', nil)
     configure_bedrock(config)
     config.request_timeout = 30
   end
@@ -61,7 +64,8 @@ def configure_bedrock(config)
 end
 
 def refresh_models
-  initial_count = RubyLLM.models.all.size
+  existing_models = RubyLLM::Models.read_from_json
+  initial_count = existing_models.size
   puts "Refreshing models (#{initial_count} cached)..."
 
   models = RubyLLM.models.refresh!
@@ -69,17 +73,27 @@ def refresh_models
   if models.all.empty? && initial_count.zero?
     puts 'Error: Failed to fetch models.'
     exit(1)
-  elsif models.all.size == initial_count && initial_count.positive?
-    puts 'Warning: Model list unchanged.'
   else
-    puts 'Validating models...'
-    validate_models!(models)
+    existing_data = sorted_models_data(existing_models)
+    new_data = sorted_models_data(models.all)
 
-    puts "Saving models.json (#{models.all.size} models)"
-    models.save_to_json
+    if new_data == existing_data && initial_count.positive?
+      puts 'Warning: Model list unchanged.'
+    else
+      puts 'Validating models...'
+      validate_models!(models)
+
+      puts "Saving models.json (#{models.all.size} models)"
+      models.save_to_json
+    end
   end
 
   @models = models
+end
+
+def sorted_models_data(models)
+  models.map(&:to_h)
+        .sort_by { |model| [model[:provider].to_s, model[:id].to_s] }
 end
 
 def validate_models!(models)
@@ -130,12 +144,17 @@ def status(provider_sym)
 end
 
 def generate_models_markdown
+  models = RubyLLM.models.all
+  total_models = models.count
+  provider_count = models.map(&:provider).uniq.count
+  generated_on = Time.now.utc.strftime('%Y-%m-%d')
+
   <<~MARKDOWN
     ---
     layout: default
     title: Available Models
     nav_order: 1
-    description: Browse hundreds of AI models from every major provider. Always up-to-date, automatically generated.
+    description: Browse #{total_models} AI models across #{provider_count} providers (not including local providers). Updated #{generated_on}.
     redirect_from:
       - /guides/available-models
     ---
@@ -154,17 +173,19 @@ def generate_models_markdown
 
     ---
 
-    ## Model Data Sources
+    _Model information enriched by [models.dev](https://models.dev) and our custom code._
 
-    - **OpenAI, Anthropic, DeepSeek, Gemini, VertexAI**: Enriched by [🚀 Parsera](https://parsera.org/) *([free LLM metadata API](https://api.parsera.org/v1/llm-specs) - [go say thanks!](https://github.com/parsera-labs/api-llm-specs))*
-    - **OpenRouter**: Direct API
-    - **Others**: Local capabilities files
+    Can't find a newly released model? Refresh your registry:
 
-    ## Last Updated
-    {: .d-inline-block }
+    ```ruby
+    # Plain Ruby
+    RubyLLM.models.refresh!
 
-    #{Time.now.utc.strftime('%Y-%m-%d')}
-    {: .label .label-green }
+    # Rails
+    Model.refresh!
+    ```
+
+    See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#refreshing-the-registry).
 
     ## Models by Provider
 
@@ -265,8 +286,8 @@ end
 def models_table(models)
   return '*No models found*' if models.none?
 
-  headers = ['Model', 'Provider', 'Context', 'Max Output', 'Standard Pricing (per 1M tokens)']
-  alignment = [':--', ':--', '--:', '--:', ':--']
+  headers = ['Model', 'Provider', 'I/O', 'Capabilities', 'Context', 'Max Output', 'Standard Pricing (per 1M tokens)']
+  alignment = [':--', ':--', ':--', ':--', '--:', '--:', ':--']
 
   rows = models.sort_by { |m| [m.provider, m.name] }.map do |model|
     pricing = standard_pricing_display(model)
@@ -274,6 +295,8 @@ def models_table(models)
     [
       model.id,
       model.provider,
+      modalities_display(model),
+      list_display(model.capabilities),
       model.context_window || '-',
       model.max_output_tokens || '-',
       pricing
@@ -289,6 +312,19 @@ def models_table(models)
   end
 
   table.join("\n")
+end
+
+def modalities_display(model)
+  input_modalities = list_display(model.modalities.input)
+  output_modalities = list_display(model.modalities.output)
+  "In: #{input_modalities}; Out: #{output_modalities}"
+end
+
+def list_display(values)
+  items = Array(values).compact.map(&:to_s).reject(&:empty?)
+  return '-' if items.empty?
+
+  items.join(', ')
 end
 
 def standard_pricing_display(model)
@@ -323,6 +359,7 @@ def generate_aliases # rubocop:disable Metrics/PerceivedComplexity
   # OpenAI models
   models['openai'].each do |model|
     openrouter_model = "openai/#{model}"
+    azure_model = models['azure'].include?(model) ? model : nil
     next unless models['openrouter'].include?(openrouter_model)
 
     alias_key = model.gsub('-latest', '')
@@ -330,6 +367,7 @@ def generate_aliases # rubocop:disable Metrics/PerceivedComplexity
       'openai' => model,
       'openrouter' => openrouter_model
     }
+    aliases[alias_key]['azure'] = azure_model if azure_model
   end
 
   anthropic_latest = group_anthropic_models_by_base_name(models['anthropic'])
@@ -350,11 +388,12 @@ def generate_aliases # rubocop:disable Metrics/PerceivedComplexity
     aliases[base_name] = { 'anthropic' => latest_model }
     aliases[base_name]['openrouter'] = openrouter_model if openrouter_model
     aliases[base_name]['bedrock'] = bedrock_model if bedrock_model
+    aliases[base_name]['azure'] = latest_model if models['azure'].include?(latest_model)
   end
 
   models['bedrock'].each do |bedrock_model|
     next unless bedrock_model.start_with?('anthropic.')
-    next unless bedrock_model =~ /anthropic\.(claude-[\d.]+-[a-z]+)/
+    next unless bedrock_model =~ /anthropic\.(claude-[a-z0-9.-]+)-\d{8}/
 
     base_name = Regexp.last_match(1)
     anthropic_name = base_name.tr('.', '-')
