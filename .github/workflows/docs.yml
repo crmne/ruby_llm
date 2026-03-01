@@ -23,7 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup Ruby for models guide generation (root Gemfile)
         uses: ruby/setup-ruby@v1
@@ -41,7 +41,7 @@ jobs:
           sudo apt-get install -y --no-install-recommends libvips-dev
 
       - name: Cache fonts
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         id: cache-fonts
         with:
           path: |
@@ -81,7 +81,7 @@ jobs:
           cache-version: 3
       - name: Setup Pages
         id: pages
-        uses: actions/configure-pages@v4
+        uses: actions/configure-pages@v5
 
       - name: Build with Jekyll
         working-directory: docs
@@ -90,7 +90,7 @@ jobs:
           JEKYLL_ENV: production
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
           path: docs/_site
 
