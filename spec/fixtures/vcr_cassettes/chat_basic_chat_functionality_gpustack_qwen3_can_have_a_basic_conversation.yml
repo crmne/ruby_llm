@@ -9,7 +9,7 @@ http_interactions:
         2?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer <GPUSTACK_API_KEY>
       Content-Type:
@@ -24,41 +24,28 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 16 Jan 2026 16:51:19 GMT
-      - Fri, 16 Jan 2026 16:51:19 GMT
+      - Tue, 10 Feb 2026 15:36:15 GMT
       Server:
-      - uvicorn
-      - uvicorn
-      Keep-Alive:
-      - timeout=15, max=100
-      Content-Length:
-      - '1918'
+      - istio-envoy
       Content-Type:
-      - application/json
-      X-Request-Accepted-At:
-      - "<X_REQUEST_ID>"
-      X-Request-Id:
-      - "<X_REQUEST_ID>"
+      - application/json; charset=utf-8
       Access-Control-Allow-Origin:
-      - "*"
+      - ''
+      Req-Cost-Time:
+      - '16996'
+      Req-Arrive-Time:
+      - '1770737776821'
+      Resp-Start-Time:
+      - '1770737793818'
+      X-Envoy-Upstream-Service-Time:
+      - '16963'
+      Vary:
+      - Accept-Encoding
+      Transfer-Encoding:
+      - chunked
     body:
-      encoding: UTF-8
-      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"\n\nThe
-        sum of 2 and 2 is **4**. \n\nIn basic arithmetic, adding two numbers means
-        combining their quantities. So, 2 + 2 equals 4. This is a fundamental concept
-        in mathematics and applies in standard base-10 numbering systems unless specified
-        otherwise (e.g., modular arithmetic or other contexts). \n\n**Answer:** 4.","reasoning_content":"\nOkay,
-        let''s see. The user is asking \"What''s 2 + 2?\" That seems straightforward.
-        I know that 2 plus 2 is 4. But wait, maybe they want a more detailed explanation?
-        Let me think. Sometimes people might be testing if I understand basic arithmetic,
-        or they might be looking for a different answer. But in standard math, 2 +
-        2 equals 4. Is there any context where this might not be the case? Like in
-        modular arithmetic or some other system? For example, in modulo 3, 2 + 2 would
-        be 1, but the question doesn''t specify that. So I should assume it''s in
-        the usual base 10 system. Also, the user might just be checking if I can answer
-        a simple question. I should make sure to explain it clearly, maybe even break
-        it down. Let me confirm: 2 plus 2 is 4. Yes, that''s correct. I should also
-        consider if there''s any trick or if they''re using a different notation.
-        But no, the question is pretty direct. So the answer is 4. I''ll go with that.\n","role":"assistant"}}],"created":1768582282,"id":"chatcmpl-hS26r6wouAPJnrWiFLXGP6wvrNWqbQre","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":316,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":239,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":16,"prompt_tokens_details":{"cached_tokens":0},"prompt_tokens_per_second":223.38880822070817,"time_per_output_token_ms":7.893575949367088,"time_to_first_token_ms":71.624,"tokens_per_second":126.68529528498179,"total_tokens":332}}'
-  recorded_at: Fri, 16 Jan 2026 16:51:22 GMT
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiMiArIDIgZXF1YWxzICoqNCoqLiBJdCdzIGEgYmFzaWMgYXJpdGhtZXRpYyBvcGVyYXRpb24gd2hlcmUgYWRkaW5nIHR3byBudW1iZXJzIHRvZ2V0aGVyIGdpdmVzIHRoZWlyIHN1bS4gTGV0IG1lIGtub3cgaWYgeW91IG5lZWQgaGVscCB3aXRoIGFueXRoaW5nIG1vcmUgY29tcGxleCEg8J+YiiIsInJlYXNvbmluZ19jb250ZW50IjoiT2theSwgdGhlIHVzZXIgaXMgYXNraW5nIFwiV2hhdCdzIDIgKyAyP1wiIFRoYXQncyBhIGJhc2ljIG1hdGggcXVlc3Rpb24uIExldCBtZSB0aGluay4gSSBuZWVkIHRvIG1ha2Ugc3VyZSBJIGFuc3dlciBjb3JyZWN0bHkuIDIgcGx1cyAyIGlzIHN0cmFpZ2h0Zm9yd2FyZC4gMiArIDIgZXF1YWxzIDQuIEJ1dCB3YWl0LCBtYXliZSB0aGV5IHdhbnQgYSBtb3JlIGRldGFpbGVkIGV4cGxhbmF0aW9uPyBPciBpcyBpdCBqdXN0IGEgc2ltcGxlIGFuc3dlcj8gU2luY2UgdGhlIHF1ZXN0aW9uIGlzIHNvIGJhc2ljLCBtYXliZSB0aGV5J3JlIHRlc3RpbmcgaWYgSSBrbm93IHRoZSBhbnN3ZXIgb3IgaWYgdGhleSdyZSBhIGJlZ2lubmVyLiBJIHNob3VsZCBjb25maXJtIHRoZSBhbnN3ZXIgY2xlYXJseS4gTGV0IG1lIGNoZWNrIGlmIHRoZXJlJ3MgYW55IHRyaWNrIGhlcmUuIE5vLCBpdCdzIGp1c3QgYSBzaW1wbGUgYWRkaXRpb24uIFNvIHRoZSBhbnN3ZXIgaXMgNC4gSSBzaG91bGQgcHJlc2VudCBpdCBpbiBhIGZyaWVuZGx5IG1hbm5lci4gTWF5YmUgYWRkIGEgbm90ZSB0aGF0IGl0J3MgYSBiYXNpYyBtYXRoIHByb2JsZW0uIEFscmlnaHQsIHRoYXQncyBpdC4ifX1dLCJjcmVhdGVkIjoxNzcwNzM3NzkzLCJtb2RlbCI6InF3ZW4zIiwic3lzdGVtX2ZpbmdlcnByaW50IjoiYjc5ODEtOThlNTdjYTQyIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwidXNhZ2UiOnsiY29tcGxldGlvbl90b2tlbnMiOjE5NywicHJvbXB0X3Rva2VucyI6MTYsInRvdGFsX3Rva2VucyI6MjEzLCJ0aW1lX3RvX2ZpcnN0X3Rva2VuX21zIjoxNjk5NywidGltZV9wZXJfb3V0cHV0X3Rva2VuX21zIjowLCJ0b2tlbnNfcGVyX3NlY29uZCI6MH0sImlkIjoiY2hhdGNtcGwtS0ZsWWZkVklBcUVmWGJYMTBRN0lySUYwUW1wa25pOXYiLCJ0aW1pbmdzIjp7ImNhY2hlX24iOjUsInByb21wdF9uIjoxMSwicHJvbXB0X21zIjoyNzQuMjUxLCJwcm9tcHRfcGVyX3Rva2VuX21zIjoyNC45MzE5MDkwOTA5MDkwODcsInByb21wdF9wZXJfc2Vjb25kIjo0MC4xMDkyNDI5OTI3MzI5NCwicHJlZGljdGVkX24iOjE5NywicHJlZGljdGVkX21zIjoxNjYxMi41MTYsInByZWRpY3RlZF9wZXJfdG9rZW5fbXMiOjg0LjMyNzQ5MjM4NTc4NjgsInByZWRpY3RlZF9wZXJfc2Vjb25kIjoxMS44NTg1Mjg4MzQ1MjQ1MjR9fQ==
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 recorded_with: VCR 6.4.0

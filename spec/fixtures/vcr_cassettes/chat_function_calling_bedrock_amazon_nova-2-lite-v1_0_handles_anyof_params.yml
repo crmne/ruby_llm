@@ -1,0 +1,48 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.amazon.nova-2-lite-v1:0/converse
+    body:
+      encoding: UTF-8
+      string: '{"messages":[{"role":"user","content":[{"text":"Call the any-of params
+        tool for task \"Review PR\" with status \"pending\" and report the result."}]}],"inferenceConfig":{},"toolConfig":{"tools":[{"toolSpec":{"name":"any_of_params","description":"Uses
+        params DSL any_of support","inputSchema":{"json":{"type":"object","properties":{"task":{"type":"string","description":"Task
+        description"},"status":{"description":"Optional task status","anyOf":[{"type":"string","enum":["pending","done"]},{"type":"null"}]}},"required":["task","status"],"additionalProperties":false,"strict":true}}}}]}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      X-Amz-Date:
+      - 20260210T092945Z
+      X-Amz-Content-Sha256:
+      - cc32dde93a2baf52b1abfc50fbd1cef53f31649e30baf13286bdd54d367188be
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20260210/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=15eab07229fea9163ce42b0831a50db2e9d0acfb8077f359fea95b4b8392330d
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 10 Feb 2026 09:29:46 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '323'
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - b31f7217-1435-484f-b6f6-3116c8e8dab1
+    body:
+      encoding: UTF-8
+      string: '{"metrics":{"latencyMs":492},"output":{"message":{"content":[{"toolUse":{"input":{"task":"Review
+        PR","status":"pending"},"name":"any_of_params","toolUseId":"tooluse_CNRfbAme8kYwf9HePQHe1o"}}],"role":"assistant"}},"stopReason":"tool_use","usage":{"inputTokens":995,"outputTokens":38,"serverToolUsage":{},"totalTokens":1033}}'
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+recorded_with: VCR 6.4.0

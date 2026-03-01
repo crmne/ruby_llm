@@ -53,8 +53,6 @@ module RubyLLM
                      foreign_key: model_foreign_key,
                      optional: true
 
-          delegate :add_message, to: :to_llm
-
           define_method :messages_association do
             send(messages_association_name)
           end

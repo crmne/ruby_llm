@@ -9,7 +9,7 @@ http_interactions:
         is 5 + 3?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer <MISTRAL_API_KEY>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 16 Jan 2026 17:01:33 GMT
+      - Tue, 10 Feb 2026 09:17:47 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -32,31 +32,31 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '019bc7c1-4ca3-7987-8df0-d025b59e413b'
+      - '019c46d7-ae44-7b30-bb4c-ad2a3348cdce'
       X-Kong-Request-Id:
-      - '019bc7c1-4ca3-7987-8df0-d025b59e413b'
+      - '019c46d7-ae44-7b30-bb4c-ad2a3348cdce'
       X-Ratelimit-Limit-Tokens-Minute:
       - '75000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '71807'
+      - '71474'
       X-Ratelimit-Limit-Tokens-Month:
       - '50000000000'
       X-Ratelimit-Remaining-Tokens-Month:
-      - '49999907512'
+      - '49999899846'
       X-Ratelimit-Tokens-Query-Cost:
-      - '130'
+      - '174'
       X-Ratelimit-Limit-Req-Minute:
       - '100'
       X-Ratelimit-Remaining-Req-Minute:
       - '97'
       X-Envoy-Upstream-Service-Time:
-      - '997'
+      - '1179'
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '998'
+      - '1180'
       X-Kong-Proxy-Latency:
-      - '15'
+      - '10'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -74,14 +74,16 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"2bd1817f7aba41128ce745cb0657582a","created":1768582892,"model":"magistral-small-latest","usage":{"prompt_tokens":11,"total_tokens":130,"completion_tokens":119},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":[{"type":"thinking","thinking":[{"type":"text","text":"The
-        question is asking for the sum of 5 and 3. Let me recall basic arithmetic.\n\n5
-        + 3 is a simple addition problem. The numbers are 5 and 3, and their sum is
-        the total when you add them together.\n\nLet me count: 5 plus 1 is 6, plus
-        another 2 is 8. So, 5 + 3 equals 8.\n\nIs there any trick or deeper meaning
-        here? It seems straightforward, so the answer should be 8."}]},{"type":"text","text":"The
-        sum of 5 and 3 is 8."}]}}]}'
-  recorded_at: Fri, 16 Jan 2026 17:01:33 GMT
+      string: '{"id":"0493bf7bc0c646e4b6bf1c64ef20c5de","created":1770715065,"model":"magistral-small-latest","usage":{"prompt_tokens":11,"total_tokens":174,"completion_tokens":163,"num_cached_tokens":64},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":[{"type":"thinking","thinking":[{"type":"text","text":"The
+        user is asking for the sum of 5 and 3. In mathematics, addition is the process
+        of combining two numbers to get their total. The plus sign (+) indicates that
+        we need to add the two numbers together.\n\nLet me break this down:\n- The
+        first number is 5.\n- The second number is 3.\n\nNow, adding these together:
+        5 + 3.\n\nI know that 5 + 3 is the same as 3 + 5 because addition is commutative.
+        Let me count up from 5: 5 + 1 = 6, 6 + 2 = 8.\n\nSo, 5 + 3 = 8.\n\nNow, to
+        present the answer clearly."}]},{"type":"text","text":"The answer to 5 + 3
+        is 8."}]}}]}'
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 - request:
     method: post
     uri: https://api.mistral.ai/v1/chat/completions
@@ -89,15 +91,17 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"magistral-small-latest","messages":[{"role":"user","content":"What
         is 5 + 3?"},{"role":"assistant","content":[{"type":"thinking","thinking":[{"type":"text","text":"The
-        question is asking for the sum of 5 and 3. Let me recall basic arithmetic.\n\n5
-        + 3 is a simple addition problem. The numbers are 5 and 3, and their sum is
-        the total when you add them together.\n\nLet me count: 5 plus 1 is 6, plus
-        another 2 is 8. So, 5 + 3 equals 8.\n\nIs there any trick or deeper meaning
-        here? It seems straightforward, so the answer should be 8."}]},{"type":"text","text":"The
-        sum of 5 and 3 is 8."}]},{"role":"user","content":"Now multiply that by 2"}],"stream":false}'
+        user is asking for the sum of 5 and 3. In mathematics, addition is the process
+        of combining two numbers to get their total. The plus sign (+) indicates that
+        we need to add the two numbers together.\n\nLet me break this down:\n- The
+        first number is 5.\n- The second number is 3.\n\nNow, adding these together:
+        5 + 3.\n\nI know that 5 + 3 is the same as 3 + 5 because addition is commutative.
+        Let me count up from 5: 5 + 1 = 6, 6 + 2 = 8.\n\nSo, 5 + 3 = 8.\n\nNow, to
+        present the answer clearly."}]},{"type":"text","text":"The answer to 5 + 3
+        is 8."}]},{"role":"user","content":"Now multiply that by 2"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer <MISTRAL_API_KEY>
       Content-Type:
@@ -112,7 +116,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 16 Jan 2026 17:01:34 GMT
+      - Tue, 10 Feb 2026 09:17:48 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -120,31 +124,31 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '019bc7c1-5179-7fa8-93fa-0ef914cdafb7'
+      - '019c46d7-b479-79c1-a9c7-e8ca6b451904'
       X-Kong-Request-Id:
-      - '019bc7c1-5179-7fa8-93fa-0ef914cdafb7'
+      - '019c46d7-b479-79c1-a9c7-e8ca6b451904'
       X-Ratelimit-Limit-Tokens-Minute:
       - '75000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '71578'
+      - '71173'
       X-Ratelimit-Limit-Tokens-Month:
       - '50000000000'
       X-Ratelimit-Remaining-Tokens-Month:
-      - '49999907283'
+      - '49999899545'
       X-Ratelimit-Tokens-Query-Cost:
-      - '229'
+      - '301'
       X-Ratelimit-Limit-Req-Minute:
       - '100'
       X-Ratelimit-Remaining-Req-Minute:
       - '96'
       X-Envoy-Upstream-Service-Time:
-      - '703'
+      - '726'
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '704'
+      - '727'
       X-Kong-Proxy-Latency:
-      - '6'
+      - '9'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -162,10 +166,7 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"8c82e6dfa78b4f16830f4f55c62d98b3","created":1768582894,"model":"magistral-small-latest","usage":{"prompt_tokens":138,"total_tokens":229,"completion_tokens":91},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":[{"type":"thinking","thinking":[{"type":"text","text":"The
-        previous answer was 8. Now, the question is asking to multiply that result
-        by 2.\n\nSo, 8 multiplied by 2 is 16 because 8 + 8 = 16.\n\nIs that correct?
-        Let me double-check: 8 times 2 is indeed 16.\n\nSo, the answer should be 16."}]},{"type":"text","text":"The
-        result of multiplying 8 by 2 is 16."}]}}]}'
-  recorded_at: Fri, 16 Jan 2026 17:01:34 GMT
+      string: !binary |-
+        eyJpZCI6ImExNGYxZWFhMTJhMDRkNzc5OGQxZTA4YjRlODNmZmNiIiwiY3JlYXRlZCI6MTc3MDcxNTA2NywibW9kZWwiOiJtYWdpc3RyYWwtc21hbGwtbGF0ZXN0IiwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6MTgyLCJ0b3RhbF90b2tlbnMiOjMwMSwiY29tcGxldGlvbl90b2tlbnMiOjExOSwibnVtX2NhY2hlZF90b2tlbnMiOjI1Nn0sIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNob2ljZXMiOlt7ImluZGV4IjowLCJmaW5pc2hfcmVhc29uIjoic3RvcCIsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsInRvb2xfY2FsbHMiOm51bGwsImNvbnRlbnQiOlt7InR5cGUiOiJ0aGlua2luZyIsInRoaW5raW5nIjpbeyJ0eXBlIjoidGV4dCIsInRleHQiOiJPa2F5LCB0aGUgdXNlciBoYXMgYXNrZWQgdG8gbXVsdGlwbHkgdGhlIHByZXZpb3VzIHJlc3VsdCAod2hpY2ggd2FzIDgpIGJ5IDIuXG5cbkZpcnN0LCBsZXQncyByZWNhbGwgdGhlIHByZXZpb3VzIHJlc3VsdDogOC5cblxuTm93LCB3ZSBuZWVkIHRvIG11bHRpcGx5IDggYnkgMi4gTXVsdGlwbGljYXRpb24gaXMgcmVwZWF0ZWQgYWRkaXRpb24uIFNvLCA4IG11bHRpcGxpZWQgYnkgMiBtZWFucyBhZGRpbmcgOCB0byBpdHNlbGYgb25jZSBtb3JlLlxuXG5MZXQgbWUgY2FsY3VsYXRlIHRoYXQ6XG44ICsgOCA9IDE2XG5cblNvLCA4IMOXIDIgPSAxNi5cblxuTm93LCB0byBwcmVzZW50IHRoZSBhbnN3ZXIgY2xlYXJseS4ifV19LHsidHlwZSI6InRleHQiLCJ0ZXh0IjoiVGhlIGFuc3dlciB0byBtdWx0aXBseWluZyA4IGJ5IDIgaXMgMTYuIn1dfX1dfQ==
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 recorded_with: VCR 6.4.0

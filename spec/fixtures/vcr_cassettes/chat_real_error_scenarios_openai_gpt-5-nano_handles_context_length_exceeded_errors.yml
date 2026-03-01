@@ -8,7 +8,7 @@ http_interactions:
       string: '{"model":"gpt-5-nano","messages":[{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"Hi"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer <OPENAI_API_KEY>
       Content-Type:
@@ -23,7 +23,7 @@ http_interactions:
       message: Too Many Requests
     headers:
       Date:
-      - Fri, 16 Jan 2026 16:49:08 GMT
+      - Tue, 10 Feb 2026 08:57:09 GMT
       Content-Type:
       - application/json; charset=utf-8
       Content-Length:
@@ -46,10 +46,10 @@ http_interactions:
       - 0s
       X-Request-Id:
       - "<X_REQUEST_ID>"
-      X-Envoy-Upstream-Service-Time:
-      - '221'
       X-Openai-Proxy-Wasm:
       - v0.1
+      Server:
+      - cloudflare
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -59,8 +59,6 @@ http_interactions:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
-      Server:
-      - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
@@ -76,5 +74,5 @@ http_interactions:
                 "code": "rate_limit_exceeded"
             }
         }
-  recorded_at: Fri, 16 Jan 2026 16:49:08 GMT
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 recorded_with: VCR 6.4.0

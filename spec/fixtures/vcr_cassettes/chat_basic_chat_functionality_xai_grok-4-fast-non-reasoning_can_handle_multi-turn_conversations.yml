@@ -9,7 +9,7 @@ http_interactions:
         is the creator of the programming language Ruby?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer <XAI_API_KEY>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 16 Jan 2026 16:25:39 GMT
+      - Tue, 10 Feb 2026 09:03:34 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -61,12 +61,14 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"51a832bd-99af-c592-86c8-18dfaf3cb1a4","object":"chat.completion","created":1768580738,"model":"grok-4-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"**Matzuda
-        Yukihiro** (often called \"Matz\") is the creator of the Ruby programming
-        language. He developed it in the mid-1990s in Japan, releasing the first version
-        in 1995, with the goal of making programming more enjoyable and object-oriented.
-        Ruby is known for its elegant syntax and powers frameworks like Ruby on Rails.","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":178,"completion_tokens":72,"total_tokens":250,"prompt_tokens_details":{"text_tokens":178,"audio_tokens":0,"image_tokens":0,"cached_tokens":161},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":474500},"system_fingerprint":"fp_4616e76413"}'
-  recorded_at: Fri, 16 Jan 2026 16:25:39 GMT
+      string: '{"id":"96faf946-2f91-7062-4bbf-e06bee97157e","object":"chat.completion","created":1770714213,"model":"grok-4-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"**Matzuda
+        Yukihiro**, commonly known as **Matz**, created the programming language Ruby.
+        He developed it in the mid-1990s in Japan, with the first version released
+        in 1995. Ruby is designed for simplicity and productivity, drawing inspiration
+        from languages like Perl, Smalltalk, and Lisp. Matz has remained actively
+        involved in its evolution through the Ruby community and organizations like
+        RubyKaigi.","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":178,"completion_tokens":84,"total_tokens":262,"prompt_tokens_details":{"text_tokens":178,"audio_tokens":0,"image_tokens":0,"cached_tokens":161},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":534500},"system_fingerprint":"fp_f7a6b84626"}'
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 - request:
     method: post
     uri: https://api.x.ai/v1/chat/completions
@@ -74,14 +76,15 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"grok-4-fast-non-reasoning","messages":[{"role":"user","content":"Who
         is the creator of the programming language Ruby?"},{"role":"assistant","content":"**Matzuda
-        Yukihiro** (often called \"Matz\") is the creator of the Ruby programming
-        language. He developed it in the mid-1990s in Japan, releasing the first version
-        in 1995, with the goal of making programming more enjoyable and object-oriented.
-        Ruby is known for its elegant syntax and powers frameworks like Ruby on Rails."},{"role":"user","content":"What
-        year did he create Ruby?"}],"stream":false}'
+        Yukihiro**, commonly known as **Matz**, created the programming language Ruby.
+        He developed it in the mid-1990s in Japan, with the first version released
+        in 1995. Ruby is designed for simplicity and productivity, drawing inspiration
+        from languages like Perl, Smalltalk, and Lisp. Matz has remained actively
+        involved in its evolution through the Ruby community and organizations like
+        RubyKaigi."},{"role":"user","content":"What year did he create Ruby?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer <XAI_API_KEY>
       Content-Type:
@@ -96,7 +99,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 16 Jan 2026 16:25:39 GMT
+      - Tue, 10 Feb 2026 09:03:35 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -106,13 +109,13 @@ http_interactions:
       X-Ratelimit-Limit-Tokens:
       - '4000000'
       X-Ratelimit-Remaining-Tokens:
-      - '3374402'
+      - '4000000'
       X-Zero-Data-Retention:
       - 'false'
       X-Ratelimit-Limit-Requests:
       - '480'
       X-Ratelimit-Remaining-Requests:
-      - '476'
+      - '480'
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Vary:
@@ -133,8 +136,10 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"8212bb2b-c83c-4791-8316-7a5356689ff1","object":"chat.completion","created":1768580739,"model":"grok-4-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"Ruby
-        was first created and released by Yukihiro Matsumoto in **1995**. Development
-        began in 1993, but the initial public release occurred on December 21, 1995.","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":268,"completion_tokens":37,"total_tokens":305,"prompt_tokens_details":{"text_tokens":268,"audio_tokens":0,"image_tokens":0,"cached_tokens":250},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":346000},"system_fingerprint":"fp_4616e76413"}'
-  recorded_at: Fri, 16 Jan 2026 16:25:39 GMT
+      string: '{"id":"19e6dfdf-a1ce-3a68-1332-41422868023b","object":"chat.completion","created":1770714215,"model":"grok-4-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"Ruby
+        was first created and released by Yukihiro Matsumoto (Matz) in **1995**. Development
+        began in 1993, but the initial public release occurred on December 21, 1995.
+        This marked the birth of the language, which has since become popular for
+        web development (e.g., via Ruby on Rails) and scripting.","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":280,"completion_tokens":69,"total_tokens":349,"prompt_tokens_details":{"text_tokens":280,"audio_tokens":0,"image_tokens":0,"cached_tokens":161},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":663500},"system_fingerprint":"fp_f7a6b84626"}'
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 recorded_with: VCR 6.4.0

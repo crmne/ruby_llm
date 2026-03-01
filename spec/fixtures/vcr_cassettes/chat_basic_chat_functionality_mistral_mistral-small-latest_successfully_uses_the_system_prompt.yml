@@ -10,7 +10,7 @@ http_interactions:
         me about the weather."}],"stream":false,"temperature":0.0}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer <MISTRAL_API_KEY>
       Content-Type:
@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 16 Jan 2026 16:51:49 GMT
+      - Tue, 10 Feb 2026 09:01:25 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -33,31 +33,27 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '019bc7b8-61a0-7690-ba4f-7876f88a5a41'
+      - '019c46c8-b46d-7c8b-982d-2eacd3c4bc7b'
       X-Kong-Request-Id:
-      - '019bc7b8-61a0-7690-ba4f-7876f88a5a41'
+      - '019c46c8-b46d-7c8b-982d-2eacd3c4bc7b'
       X-Ratelimit-Limit-Tokens-Minute:
       - '2000000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '1999319'
-      X-Ratelimit-Limit-Tokens-Month:
-      - '10000000000'
-      X-Ratelimit-Remaining-Tokens-Month:
-      - '9999981134'
+      - '1999316'
       X-Ratelimit-Tokens-Query-Cost:
-      - '147'
-      X-Ratelimit-Limit-Req-60-Second:
+      - '145'
+      X-Ratelimit-Limit-Req-Minute:
       - '360'
-      X-Ratelimit-Remaining-Req-60-Second:
+      X-Ratelimit-Remaining-Req-Minute:
       - '355'
       X-Envoy-Upstream-Service-Time:
-      - '1339'
+      - '967'
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '1340'
+      - '968'
       X-Kong-Proxy-Latency:
-      - '7'
+      - '140'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -75,14 +71,14 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"be08b90830a9464c8dae730e21c294f7","created":1768582308,"model":"mistral-small-latest","usage":{"prompt_tokens":31,"total_tokens":147,"completion_tokens":116},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"I''m
+      string: '{"id":"8e383acdd432471f9f40135ac068bde3","created":1770714084,"model":"mistral-small-latest","usage":{"prompt_tokens":31,"total_tokens":145,"completion_tokens":114,"num_cached_tokens":0},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"I''m
         an AI and I don''t have real-time data access or the ability to browse the
         internet, so I can''t provide current weather information. However, I can
         tell you that weather typically refers to the atmospheric conditions in a
         specific place at a specific time, such as temperature, humidity, precipitation,
         and wind. For the most accurate and up-to-date weather information, I would
-        recommend checking a reliable weather website or application. And remember,
-        as XKCD7392 humorously points out, weather predictions can sometimes be as
-        unpredictable as a cat''s behavior."}}]}'
-  recorded_at: Fri, 16 Jan 2026 16:51:49 GMT
+        recommend checking a reliable weather website or application. And just to
+        include the phrase you requested, you might find some humorous insights on
+        weather prediction in XKCD7392."}}]}'
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 recorded_with: VCR 6.4.0
