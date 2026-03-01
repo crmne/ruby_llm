@@ -26,6 +26,7 @@ module RubyLLM
                   :openrouter_api_key,
                   :xai_api_key,
                   :ollama_api_base,
+                  :ollama_api_key,
                   :gpustack_api_base,
                   :gpustack_api_key,
                   :mistral_api_key,
