@@ -14,6 +14,7 @@ RSpec.shared_context 'with configured RubyLLM' do
       config.bedrock_region = 'us-west-2'
       config.bedrock_secret_key = ENV.fetch('AWS_SECRET_ACCESS_KEY', 'test')
       config.bedrock_session_token = ENV.fetch('AWS_SESSION_TOKEN', nil)
+      config.deepseek_api_base = ENV.fetch('DEEPSEEK_API_BASE', nil)
       config.deepseek_api_key = ENV.fetch('DEEPSEEK_API_KEY', 'test')
       config.gemini_api_key = ENV.fetch('GEMINI_API_KEY', 'test')
       config.gpustack_api_base = ENV.fetch('GPUSTACK_API_BASE', 'http://localhost:11444/v1')
