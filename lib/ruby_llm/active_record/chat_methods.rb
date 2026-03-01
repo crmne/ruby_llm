@@ -243,8 +243,8 @@ module RubyLLM
         if last.tool_call?
           last.destroy
         elsif last.tool_result?
-          tool_call_message = last.parent_tool_call.message
-          expected_results = tool_call_message.tool_calls.pluck(:id)
+          tool_call_message = last.parent_tool_call.message_association
+          expected_results = tool_call_message.tool_calls_association.pluck(:id)
           fk_column = tool_call_message.class.reflections['tool_results'].foreign_key
           actual_results = tool_call_message.tool_results.pluck(fk_column)
 

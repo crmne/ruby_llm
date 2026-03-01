@@ -450,6 +450,34 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
         bot_chat.with_model('claude-3-5-haiku-20241022')
         expect(bot_chat.reload.model_id).to eq('claude-3-5-haiku-20241022')
       end
+
+      it 'cleans up incomplete tool interactions with custom message association name' do
+        bot_chat = Assistants::BotChat.create!(model: model)
+
+        bot_chat.bot_messages.create!(role: 'user', content: 'Do multiple calculations')
+
+        tool_call_msg = bot_chat.bot_messages.create!(role: 'assistant', content: nil)
+        tool_call1 = tool_call_msg.bot_tool_calls.create!(
+          tool_call_id: 'call_custom_1',
+          name: 'calculator',
+          arguments: { expression: '2 + 2' }.to_json
+        )
+        tool_call_msg.bot_tool_calls.create!(
+          tool_call_id: 'call_custom_2',
+          name: 'calculator',
+          arguments: { expression: '3 + 3' }.to_json
+        )
+
+        bot_chat.bot_messages.create!(
+          role: 'tool',
+          content: '4',
+          parent_tool_call: tool_call1
+        )
+
+        expect do
+          bot_chat.send(:cleanup_orphaned_tool_results)
+        end.to change { bot_chat.bot_messages.count }.by(-2)
+      end
     end
 
     describe 'namespaced chat models with custom foreign keys' do
