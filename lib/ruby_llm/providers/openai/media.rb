@@ -10,7 +10,7 @@ module RubyLLM
         def format_content(content) # rubocop:disable Metrics/PerceivedComplexity
           if content.is_a?(RubyLLM::Content::Raw)
             value = content.value
-            return (value.is_a?(Hash) || value.is_a?(Array)) ? value.to_json : value
+            return value.is_a?(Hash) ? value.to_json : value
           end
           return content.to_json if content.is_a?(Hash) || content.is_a?(Array)
           return content unless content.is_a?(Content)
