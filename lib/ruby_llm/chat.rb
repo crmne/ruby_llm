@@ -214,6 +214,13 @@ module RubyLLM
 
     def execute_tool(tool_call)
       tool = tools[tool_call.name.to_sym]
+      if tool.nil?
+        return {
+          error: "Model tried to call unavailable tool `#{tool_call.name}`. " \
+                 "Available tools: #{tools.keys.to_json}."
+        }
+      end
+
       args = tool_call.arguments
       tool.call(args)
     end
