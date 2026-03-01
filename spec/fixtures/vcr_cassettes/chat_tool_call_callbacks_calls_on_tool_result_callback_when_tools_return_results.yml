@@ -12,7 +12,7 @@ http_interactions:
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer <OPENAI_API_KEY>
       Content-Type:
@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 13 Jan 2026 15:44:57 GMT
+      - Tue, 10 Feb 2026 09:30:47 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -39,13 +39,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '1849'
+      - '2976'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
       - '2020-10-01'
-      X-Envoy-Upstream-Service-Time:
-      - '1869'
+      Server:
+      - cloudflare
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -66,13 +66,10 @@ http_interactions:
       - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
-      - "<COOKIE>"
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
-      Server:
-      - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
@@ -81,9 +78,9 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-CxarfgG74BYqzZ4AjpcjRqmf1OTZQ",
+          "id": "chatcmpl-D7eMuiN3z3jlq6TQcs9GilXvFfbOK",
           "object": "chat.completion",
-          "created": 1768319095,
+          "created": 1770715844,
           "model": "gpt-5-nano-2025-08-07",
           "choices": [
             {
@@ -93,7 +90,7 @@ http_interactions:
                 "content": null,
                 "tool_calls": [
                   {
-                    "id": "call_sLxSMyKql3ug7SsP6mnr06pp",
+                    "id": "call_TT3w7t1jcxHMDmIQUDhTsAqj",
                     "type": "function",
                     "function": {
                       "name": "weather",
@@ -125,21 +122,21 @@ http_interactions:
           "service_tier": "default",
           "system_fingerprint": null
         }
-  recorded_at: Tue, 13 Jan 2026 15:44:57 GMT
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"gpt-5-nano","messages":[{"role":"user","content":"What''s
-        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","tool_calls":[{"id":"call_sLxSMyKql3ug7SsP6mnr06pp","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_sLxSMyKql3ug7SsP6mnr06pp"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","tool_calls":[{"id":"call_TT3w7t1jcxHMDmIQUDhTsAqj","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_TT3w7t1jcxHMDmIQUDhTsAqj"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer <OPENAI_API_KEY>
       Content-Type:
@@ -154,7 +151,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 13 Jan 2026 15:44:59 GMT
+      - Tue, 10 Feb 2026 09:30:50 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -166,13 +163,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '2429'
+      - '3246'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
       - '2020-10-01'
-      X-Envoy-Upstream-Service-Time:
-      - '2448'
+      Server:
+      - cloudflare
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -193,13 +190,10 @@ http_interactions:
       - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
-      - "<COOKIE>"
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
-      Server:
-      - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
@@ -207,6 +201,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        ewogICJpZCI6ICJjaGF0Y21wbC1DeGFyaHBDNnhwWkVFbUtXNEgxeWlsV242ekVlNCIsCiAgIm9iamVjdCI6ICJjaGF0LmNvbXBsZXRpb24iLAogICJjcmVhdGVkIjogMTc2ODMxOTA5NywKICAibW9kZWwiOiAiZ3B0LTUtbmFuby0yMDI1LTA4LTA3IiwKICAiY2hvaWNlcyI6IFsKICAgIHsKICAgICAgImluZGV4IjogMCwKICAgICAgIm1lc3NhZ2UiOiB7CiAgICAgICAgInJvbGUiOiAiYXNzaXN0YW50IiwKICAgICAgICAiY29udGVudCI6ICJCZXJsaW4gKDUyLjUyMDAsIDEzLjQwNTApIOKAlCBjdXJyZW50IHdlYXRoZXI6IDE1wrBDIHdpdGggd2luZHMgYXJvdW5kIDEwIGttL2guIFdhbnQgYSBmb3JlY2FzdCBvciBhIEZhaHJlbmhlaXQgY29udmVyc2lvbj8iLAogICAgICAgICJyZWZ1c2FsIjogbnVsbCwKICAgICAgICAiYW5ub3RhdGlvbnMiOiBbXQogICAgICB9LAogICAgICAiZmluaXNoX3JlYXNvbiI6ICJzdG9wIgogICAgfQogIF0sCiAgInVzYWdlIjogewogICAgInByb21wdF90b2tlbnMiOiAyMzAsCiAgICAiY29tcGxldGlvbl90b2tlbnMiOiAzMDEsCiAgICAidG90YWxfdG9rZW5zIjogNTMxLAogICAgInByb21wdF90b2tlbnNfZGV0YWlscyI6IHsKICAgICAgImNhY2hlZF90b2tlbnMiOiAwLAogICAgICAiYXVkaW9fdG9rZW5zIjogMAogICAgfSwKICAgICJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjogewogICAgICAicmVhc29uaW5nX3Rva2VucyI6IDI1NiwKICAgICAgImF1ZGlvX3Rva2VucyI6IDAsCiAgICAgICJhY2NlcHRlZF9wcmVkaWN0aW9uX3Rva2VucyI6IDAsCiAgICAgICJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6IDAKICAgIH0KICB9LAogICJzZXJ2aWNlX3RpZXIiOiAiZGVmYXVsdCIsCiAgInN5c3RlbV9maW5nZXJwcmludCI6IG51bGwKfQo=
-  recorded_at: Tue, 13 Jan 2026 15:44:59 GMT
+        ewogICJpZCI6ICJjaGF0Y21wbC1EN2VNeFJwOFpMaERINlMydjNBU2tnM0ZBazkyciIsCiAgIm9iamVjdCI6ICJjaGF0LmNvbXBsZXRpb24iLAogICJjcmVhdGVkIjogMTc3MDcxNTg0NywKICAibW9kZWwiOiAiZ3B0LTUtbmFuby0yMDI1LTA4LTA3IiwKICAiY2hvaWNlcyI6IFsKICAgIHsKICAgICAgImluZGV4IjogMCwKICAgICAgIm1lc3NhZ2UiOiB7CiAgICAgICAgInJvbGUiOiAiYXNzaXN0YW50IiwKICAgICAgICAiY29udGVudCI6ICJCZXJsaW4gKDUyLjUyMDAsIDEzLjQwNTApOiAxNcKwQywgd2luZCAxMCBrbS9oLiBXYW50IGEgZm9yZWNhc3Qgb3IgbW9yZSBkZXRhaWxzIChodW1pZGl0eSwgcHJlY2lwaXRhdGlvbik/IiwKICAgICAgICAicmVmdXNhbCI6IG51bGwsCiAgICAgICAgImFubm90YXRpb25zIjogW10KICAgICAgfSwKICAgICAgImZpbmlzaF9yZWFzb24iOiAic3RvcCIKICAgIH0KICBdLAogICJ1c2FnZSI6IHsKICAgICJwcm9tcHRfdG9rZW5zIjogMjMwLAogICAgImNvbXBsZXRpb25fdG9rZW5zIjogMzYzLAogICAgInRvdGFsX3Rva2VucyI6IDU5MywKICAgICJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOiB7CiAgICAgICJjYWNoZWRfdG9rZW5zIjogMCwKICAgICAgImF1ZGlvX3Rva2VucyI6IDAKICAgIH0sCiAgICAiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6IHsKICAgICAgInJlYXNvbmluZ190b2tlbnMiOiAzMjAsCiAgICAgICJhdWRpb190b2tlbnMiOiAwLAogICAgICAiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOiAwLAogICAgICAicmVqZWN0ZWRfcHJlZGljdGlvbl90b2tlbnMiOiAwCiAgICB9CiAgfSwKICAic2VydmljZV90aWVyIjogImRlZmF1bHQiLAogICJzeXN0ZW1fZmluZ2VycHJpbnQiOiBudWxsCn0K
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 recorded_with: VCR 6.4.0

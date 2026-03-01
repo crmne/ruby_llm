@@ -12,7 +12,7 @@ http_interactions:
         description"},"status":{"description":"Optional task status","anyOf":[{"type":"string","enum":["pending","done"]},{"type":"null"}]}},"required":["task","status"],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer <OPENAI_API_KEY>
       Content-Type:
@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 12 Jan 2026 09:47:47 GMT
+      - Tue, 10 Feb 2026 09:29:54 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -39,13 +39,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '5876'
+      - '1840'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
       - '2020-10-01'
-      X-Envoy-Upstream-Service-Time:
-      - '5891'
+      Server:
+      - cloudflare
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -66,13 +66,10 @@ http_interactions:
       - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
-      - "<COOKIE>"
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
-      Server:
-      - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
@@ -81,9 +78,9 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-Cx8oPUiGplDJkmzTvNTH7IiTMSHSd",
+          "id": "chatcmpl-D7eM4P7yAziVrC3uBHB3rWi0qQODj",
           "object": "chat.completion",
-          "created": 1768211261,
+          "created": 1770715792,
           "model": "gpt-5-nano-2025-08-07",
           "choices": [
             {
@@ -93,7 +90,7 @@ http_interactions:
                 "content": null,
                 "tool_calls": [
                   {
-                    "id": "call_vyCJhYt2Tp9jl8OPeIXxEPny",
+                    "id": "call_24parUhXnB84gri2Tbu1EZ0a",
                     "type": "function",
                     "function": {
                       "name": "any_of_params",
@@ -125,5 +122,5 @@ http_interactions:
           "service_tier": "default",
           "system_fingerprint": null
         }
-  recorded_at: Mon, 12 Jan 2026 09:47:47 GMT
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 recorded_with: VCR 6.4.0

@@ -171,6 +171,40 @@ RSpec.describe RubyLLM::Chat do
         expect(response.content).to include('15')
         expect(response.content).to include('10')
       end
+
+      it "#{provider}/#{model} deals with non-existent tool calls" do
+        hallucinated_tool_call = RubyLLM::ToolCall.new(
+          id: 'call_1',
+          name: 'list_tools',
+          arguments: {}
+        )
+
+        tool_results_received = []
+
+        chat = RubyLLM.chat(model: model, provider: provider)
+                      .with_tool(Weather)
+                      .on_tool_result { |result| tool_results_received << result }
+
+        final_answer = 'The `list_tools` tool is not supported, but I see you have the `weather` tool.'
+        allow(chat.instance_variable_get(:@provider)).to receive(:complete).and_return(
+          RubyLLM::Message.new(
+            role: :assistant,
+            content: '',
+            tool_calls: { hallucinated_tool_call.id => hallucinated_tool_call }
+          ),
+          RubyLLM::Message.new(
+            role: :assistant,
+            content: final_answer
+          )
+        )
+
+        response = chat.ask('What tools do you support?')
+        expect(response.content).to eq(final_answer)
+        expect(tool_results_received).to eq([
+                                              { error: 'Model tried to call unavailable tool `list_tools`. ' \
+                                                       'Available tools: ["weather"].' }
+                                            ])
+      end
     end
 
     describe 'thought signatures' do

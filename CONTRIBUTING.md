@@ -30,7 +30,16 @@
   - Testing frameworks
   - Anything you can implement in 5-10 lines of application code
 
-* Start by opening an issue to discuss the feature and its design. We want to keep RubyLLM simple and focused.
+* **You must open an issue first** and wait for maintainer feedback before writing code. PRs for new features without an approved issue will be closed without review.
+
+* **Keep PRs focused and reasonably sized.** Large features should be discussed in the issue and potentially broken into smaller, reviewable PRs. Dropping thousands of lines of code without prior discussion is not helpful.
+
+* **If you use AI tools**, you must understand every single line of code you submit. AI-generated code often requires more review time from maintainers, which may delay your PR.
+
+### Provider contributions
+
+* **Core providers have a high acceptance bar.**
+* **For smaller or emerging providers, the preferred path is a community gem** rather than RubyLLM core.
 
 ## Quick Start
 

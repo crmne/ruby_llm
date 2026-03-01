@@ -10,7 +10,7 @@ http_interactions:
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer <DEEPSEEK_API_KEY>
       Content-Type:
@@ -31,7 +31,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Tue, 13 Jan 2026 15:42:08 GMT
+      - Tue, 10 Feb 2026 09:25:21 GMT
       Server:
       - elb
       Vary:
@@ -39,7 +39,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 29cba0ce78ae94083343c531f3986cb7
+      - 0d6b4ceb1dc88185562d8e98b9449ad2
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -47,17 +47,17 @@ http_interactions:
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 11928875e072fa46f6185840ed222a20.cloudfront.net (CloudFront)
+      - 1.1 d7711de0b5cdcac3069cefe672b43d52.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - TXL50-P1
+      - BKK50-P1
       X-Amz-Cf-Id:
-      - inJqvtG6mzre1P9oHByFwdGqlVSGqYcg6W3rtV6KPsEmVOzEqMwkhg==
+      - IO9pwQOIDmE4_KSugdYgtFADqUfOHIviqVht2431f2jksW4zVrR71Q==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"4114ad5c-32fc-416f-8469-338618ec30e2","object":"chat.completion","created":1768318928,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"I
-        can help you find the best language to learn! Let me get that information
-        for you.","tool_calls":[{"index":0,"id":"call_00_m92vkUrWwz0aO1KbxFKCRoZ2","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":309,"completion_tokens":49,"total_tokens":358,"prompt_tokens_details":{"cached_tokens":192},"prompt_cache_hit_tokens":192,"prompt_cache_miss_tokens":117},"system_fingerprint":"fp_eaab8d114b_prod0820_fp8_kvcache"}'
-  recorded_at: Tue, 13 Jan 2026 15:42:10 GMT
+      string: '{"id":"a801cdb1-88a1-49c5-81df-28a26328af74","object":"chat.completion","created":1770715521,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"I
+        can help you find the best language to learn! Let me check that information
+        for you.","tool_calls":[{"index":0,"id":"call_00_h6Ch0DIZBoBgGpCZAOfpML0S","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":309,"completion_tokens":49,"total_tokens":358,"prompt_tokens_details":{"cached_tokens":192},"prompt_cache_hit_tokens":192,"prompt_cache_miss_tokens":117},"system_fingerprint":"fp_eaab8d114b_prod0820_fp8_kvcache"}'
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/chat/completions
@@ -65,11 +65,11 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"deepseek-chat","messages":[{"role":"user","content":"What''s
         the best language to learn?"},{"role":"assistant","content":"I can help you
-        find the best language to learn! Let me get that information for you.","tool_calls":[{"id":"call_00_m92vkUrWwz0aO1KbxFKCRoZ2","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call_00_m92vkUrWwz0aO1KbxFKCRoZ2"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        find the best language to learn! Let me check that information for you.","tool_calls":[{"id":"call_00_h6Ch0DIZBoBgGpCZAOfpML0S","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call_00_h6Ch0DIZBoBgGpCZAOfpML0S"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer <DEEPSEEK_API_KEY>
       Content-Type:
@@ -90,7 +90,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Tue, 13 Jan 2026 15:42:11 GMT
+      - Tue, 10 Feb 2026 09:25:23 GMT
       Server:
       - elb
       Vary:
@@ -98,7 +98,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 28865627edb16368f9139a6d815957bf
+      - f5f8ba5bc7a399609d7a5e7561ebbf0e
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -106,23 +106,24 @@ http_interactions:
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 a2255db944717fedb0da0026622f7e7a.cloudfront.net (CloudFront)
+      - 1.1 f1cd76601f9045c7ca0ba2f73ae1bc06.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - TXL50-P1
+      - BKK50-P4
       X-Amz-Cf-Id:
-      - YymxEKixILlO8WTErbD0d7VlRNnC6IXDtuHTsrEKirz4W7GwOyPqpw==
+      - UvmCniK74TtYZWe0Sc1JjCJgBWSJsHmEj1ncpZZv1ENRGHFCfRFdOQ==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"9acdd2bf-b547-4e79-aaec-ac0a05aebe25","object":"chat.completion","created":1768318930,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"Based
-        on the information I retrieved, **Ruby** is considered the best language to
-        learn. \n\nRuby is a dynamic, open-source programming language that''s known
-        for its simplicity and productivity. It has an elegant syntax that''s natural
-        to read and easy to write. Ruby is particularly popular for web development
-        (especially with the Ruby on Rails framework), scripting, and automation tasks.\n\nSome
-        key advantages of learning Ruby include:\n- Beginner-friendly syntax\n- Strong
-        community support\n- Excellent for rapid prototyping\n- Widely used in web
-        development\n- Great for learning programming concepts\n\nWould you like to
-        know more about why Ruby might be a good choice or have questions about getting
-        started with it?"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":376,"completion_tokens":136,"total_tokens":512,"prompt_tokens_details":{"cached_tokens":320},"prompt_cache_hit_tokens":320,"prompt_cache_miss_tokens":56},"system_fingerprint":"fp_eaab8d114b_prod0820_fp8_kvcache"}'
-  recorded_at: Tue, 13 Jan 2026 15:42:16 GMT
+      string: '{"id":"65bb43cf-9a9b-4d50-89fd-5eb9ff518102","object":"chat.completion","created":1770715523,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"According
+        to the information I retrieved, **Ruby** is considered the best language to
+        learn. \n\nRuby is a dynamic, open-source programming language that focuses
+        on simplicity and productivity. It has an elegant syntax that is natural to
+        read and easy to write. Ruby is particularly well-known for being the language
+        behind the Ruby on Rails web framework, which has been used to build many
+        popular websites and applications.\n\nSome key advantages of learning Ruby
+        include:\n- Clean, readable syntax that''s beginner-friendly\n- Strong community
+        support and extensive documentation\n- Excellent for web development with
+        Ruby on Rails\n- Great for rapid prototyping and development\n- Used by many
+        startups and established companies\n\nWould you like to know more about why
+        Ruby might be a good choice or have specific questions about learning it?"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":376,"completion_tokens":154,"total_tokens":530,"prompt_tokens_details":{"cached_tokens":320},"prompt_cache_hit_tokens":320,"prompt_cache_miss_tokens":56},"system_fingerprint":"fp_eaab8d114b_prod0820_fp8_kvcache"}'
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 recorded_with: VCR 6.4.0

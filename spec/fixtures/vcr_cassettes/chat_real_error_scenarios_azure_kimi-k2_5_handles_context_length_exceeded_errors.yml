@@ -1,0 +1,56 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
+    body:
+      encoding: UTF-8
+      string: '{"model":"Kimi-K2.5","messages":[{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"Hi"}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Api-Key:
+      - "<AZURE_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 408
+      message: Request Timeout
+    headers:
+      Content-Length:
+      - '220'
+      Content-Type:
+      - text/plain
+      Request-Context:
+      - appId=
+      Apim-Request-Id:
+      - 57ab771b-b379-487d-ad0c-9345eb1bbb6b
+      X-Ratelimit-Limit-Tokens:
+      - '20000'
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Region:
+      - West Europe
+      Skip-Error-Remapping:
+      - 'true'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Ratelimit-Remaining-Requests:
+      - '19'
+      X-Ratelimit-Limit-Requests:
+      - '20'
+      X-Ratelimit-Remaining-Tokens:
+      - '19984'
+      Date:
+      - Tue, 10 Feb 2026 08:56:29 GMT
+    body:
+      encoding: UTF-8
+      string: "upstream request timeout\nPlease check this guide to understand why
+        this error code might have been returned \nhttps://docs.microsoft.com/en-us/azure/machine-learning/how-to-troubleshoot-online-endpoints#http-status-codes\n"
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+recorded_with: VCR 6.4.0

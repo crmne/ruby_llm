@@ -21,13 +21,13 @@ module RubyLLM
     end
 
     def add(chunk)
-      RubyLLM.logger.debug chunk.inspect if RubyLLM.config.log_stream_debug
+      RubyLLM.logger.debug { chunk.inspect } if RubyLLM.config.log_stream_debug
       @model_id ||= chunk.model_id
 
       handle_chunk_content(chunk)
       append_thinking_from_chunk(chunk)
       count_tokens chunk
-      RubyLLM.logger.debug inspect if RubyLLM.config.log_stream_debug
+      RubyLLM.logger.debug { inspect } if RubyLLM.config.log_stream_debug
     end
 
     def to_message(response)
@@ -73,11 +73,14 @@ module RubyLLM
     end
 
     def accumulate_tool_calls(new_tool_calls) # rubocop:disable Metrics/PerceivedComplexity
-      RubyLLM.logger.debug "Accumulating tool calls: #{new_tool_calls}" if RubyLLM.config.log_stream_debug
+      RubyLLM.logger.debug { "Accumulating tool calls: #{new_tool_calls}" } if RubyLLM.config.log_stream_debug
       new_tool_calls.each_value do |tool_call|
         if tool_call.id
           tool_call_id = tool_call.id.empty? ? SecureRandom.uuid : tool_call.id
-          tool_call_arguments = tool_call.arguments.empty? ? +'' : tool_call.arguments
+          tool_call_arguments = tool_call.arguments
+          if tool_call_arguments.nil? || (tool_call_arguments.respond_to?(:empty?) && tool_call_arguments.empty?)
+            tool_call_arguments = +''
+          end
           @tool_calls[tool_call.id] = ToolCall.new(
             id: tool_call_id,
             name: tool_call.name,
@@ -88,7 +91,9 @@ module RubyLLM
         else
           existing = @tool_calls[@latest_tool_call_id]
           if existing
-            existing.arguments << tool_call.arguments
+            fragment = tool_call.arguments
+            fragment = '' if fragment.nil?
+            existing.arguments << fragment
             if tool_call.thought_signature && existing.thought_signature.nil?
               existing.thought_signature = tool_call.thought_signature
             end

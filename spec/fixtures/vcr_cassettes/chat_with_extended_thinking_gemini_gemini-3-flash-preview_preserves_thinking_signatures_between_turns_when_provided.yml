@@ -8,7 +8,7 @@ http_interactions:
       string: '{"contents":[{"role":"user","parts":[{"text":"What is 5 + 3?"}]}],"generationConfig":{"thinkingConfig":{"includeThoughts":true,"thinkingLevel":"low"}}}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       X-Goog-Api-Key:
       - "<GEMINI_API_KEY>"
       Content-Type:
@@ -29,7 +29,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 12 Jan 2026 21:40:47 GMT
+      - Tue, 10 Feb 2026 09:17:18 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -39,7 +39,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=1515
+      - gfet4t7; dur=1844
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -53,8 +53,12 @@ http_interactions:
               "content": {
                 "parts": [
                   {
+                    "text": "Here's my thought process, distilled:\n\n**Calculating a Simple Sum**\n\nOkay, the user wants the sum of 5 and 3. That's straightforward. I'll just use the standard addition operation: 5 + 3. The answer is obviously 8. Done.\n\n\n",
+                    "thought": true
+                  },
+                  {
                     "text": "5 + 3 = 8",
-                    "thoughtSignature": "EmkKZwFyyNp8d2+nrnnevamxhLyTwVPef6JKTeLY/ZBCGIctO6a7p4m+FVl0yGlNS3JZq2ib3Td/FOhULIy7VU5XrcpnB26CRZZ2qsoUUQ3zjh1N2URWa4HYt7PS/cW0J9lTyYfquLKQh2U="
+                    "thoughtSignature": "EmkKZwG+Pvb7yX1Txk6njShNArX0fQpWFeVR50GLMa8YyMICQdyzw9q8355pVkLQTDb3pYm07MHYP2b9jMo5N5zrOLfLCYtQJW/yq2xc7o3IwXuRpCJXr5bp+6JMtgKsanAs2mlGV+fTrxs="
                   }
                 ],
                 "role": "model"
@@ -76,19 +80,22 @@ http_interactions:
             "thoughtsTokenCount": 23
           },
           "modelVersion": "gemini-3-flash-preview",
-          "responseId": "X2plac_ENO-MvdIPpMyBmQ0"
+          "responseId": "nveKade_JKCy4-EP6qeV-AY"
         }
-  recorded_at: Mon, 12 Jan 2026 21:40:48 GMT
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 - request:
     method: post
     uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent
     body:
       encoding: UTF-8
-      string: '{"contents":[{"role":"user","parts":[{"text":"What is 5 + 3?"}]},{"role":"model","parts":[{"thought":true,"thoughtSignature":"EmkKZwFyyNp8d2+nrnnevamxhLyTwVPef6JKTeLY/ZBCGIctO6a7p4m+FVl0yGlNS3JZq2ib3Td/FOhULIy7VU5XrcpnB26CRZZ2qsoUUQ3zjh1N2URWa4HYt7PS/cW0J9lTyYfquLKQh2U="},{"text":"5
+      string: '{"contents":[{"role":"user","parts":[{"text":"What is 5 + 3?"}]},{"role":"model","parts":[{"thought":true,"text":"Here''s
+        my thought process, distilled:\n\n**Calculating a Simple Sum**\n\nOkay, the
+        user wants the sum of 5 and 3. That''s straightforward. I''ll just use the
+        standard addition operation: 5 + 3. The answer is obviously 8. Done.\n\n\n","thoughtSignature":"EmkKZwG+Pvb7yX1Txk6njShNArX0fQpWFeVR50GLMa8YyMICQdyzw9q8355pVkLQTDb3pYm07MHYP2b9jMo5N5zrOLfLCYtQJW/yq2xc7o3IwXuRpCJXr5bp+6JMtgKsanAs2mlGV+fTrxs="},{"text":"5
         + 3 = 8"}]},{"role":"user","parts":[{"text":"Now multiply that by 2"}]}],"generationConfig":{"thinkingConfig":{"includeThoughts":true,"thinkingLevel":"low"}}}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       X-Goog-Api-Key:
       - "<GEMINI_API_KEY>"
       Content-Type:
@@ -109,7 +116,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 12 Jan 2026 21:40:49 GMT
+      - Tue, 10 Feb 2026 09:17:21 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -119,7 +126,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=1591
+      - gfet4t7; dur=2867
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -127,6 +134,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicGFydHMiOiBbCiAgICAgICAgICB7CiAgICAgICAgICAgICJ0ZXh0IjogIjggw5cgMiA9IDE2IiwKICAgICAgICAgICAgInRob3VnaHRTaWduYXR1cmUiOiAiRXVRQkN1RUJBWExJMm54SmhHMUhKamNrU3BVa2dWb0ZlWTZCSkpPS3pkQ1EzMi9yNUNwTnhwcDFCZFBKeDBJVkZFYWpmb3VWYVA1ZVdKQzdJUUJ3TzFtcEdPQzE4bnE4NlkxUkdyNEZDSWY3b0FXNHlXc0NhQ0RWNEhFa3NiMDFaVFJLcGo4SGxRdWxDanFJR2wrd28yZXdJcmx4RCtHRVhwY3d5Ujg5cWsvR2ZlRjVzUmI2UjY3MWFuT3lFd1RBdVZDd0lpR0toWXh6Q08rcmZIY2c4REwyelFhVUsxMWdrQTl1TkNYc01BM1RscEZvWkoyOVBzd1diSVZnWGhmYzVjeHZLUEkzWDVuMUZmVGoxYmpqdEh1c2ZVMnlOVDdSOUFtZlZCWGVSclNFZXNCSExsbE0iCiAgICAgICAgICB9CiAgICAgICAgXSwKICAgICAgICAicm9sZSI6ICJtb2RlbCIKICAgICAgfSwKICAgICAgImZpbmlzaFJlYXNvbiI6ICJTVE9QIiwKICAgICAgImluZGV4IjogMAogICAgfQogIF0sCiAgInVzYWdlTWV0YWRhdGEiOiB7CiAgICAicHJvbXB0VG9rZW5Db3VudCI6IDI0LAogICAgImNhbmRpZGF0ZXNUb2tlbkNvdW50IjogOCwKICAgICJ0b3RhbFRva2VuQ291bnQiOiA4NiwKICAgICJwcm9tcHRUb2tlbnNEZXRhaWxzIjogWwogICAgICB7CiAgICAgICAgIm1vZGFsaXR5IjogIlRFWFQiLAogICAgICAgICJ0b2tlbkNvdW50IjogMjQKICAgICAgfQogICAgXSwKICAgICJ0aG91Z2h0c1Rva2VuQ291bnQiOiA1NAogIH0sCiAgIm1vZGVsVmVyc2lvbiI6ICJnZW1pbmktMy1mbGFzaC1wcmV2aWV3IiwKICAicmVzcG9uc2VJZCI6ICJZV3BsYWRHckl2cld2ZElQbkl1VThBMCIKfQo=
-  recorded_at: Mon, 12 Jan 2026 21:40:49 GMT
+        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicGFydHMiOiBbCiAgICAgICAgICB7CiAgICAgICAgICAgICJ0ZXh0IjogIioqQ2FsY3VsYXRpbmcgdGhlIE5leHQgU3RlcCoqXG5cbk9rYXksIHNvIHRoZSBsYXN0IGNhbGN1bGF0aW9uIHlpZWxkZWQgYSByZXN1bHQgb2YgOC4gTm93LCBJIG5lZWQgdG8gdGFrZSB0aGF0IGFuZCBwZXJmb3JtIGFub3RoZXIgb3BlcmF0aW9uLiBUaGUgcHJvbXB0IHNwZWNpZmllcyBtdWx0aXBsaWNhdGlvbiB0aGlzIHRpbWUuIEknbSBiZWluZyBhc2tlZCB0byBtdWx0aXBseSB0aGUgcHJldmlvdXMgcmVzdWx0LCA4LCBieSAyLiBUaGlzIGlzIHN0cmFpZ2h0Zm9yd2FyZDogOCBtdWx0aXBsaWVkIGJ5IDIuIFRoYXQgZ2l2ZXMgbWUgMTYuIFNvIHRoZSBuZXh0IHN0ZXAgaXMgMTYuXG5cblxuIiwKICAgICAgICAgICAgInRob3VnaHQiOiB0cnVlCiAgICAgICAgICB9LAogICAgICAgICAgewogICAgICAgICAgICAidGV4dCI6ICI4IMOXIDIgPSAxNiIsCiAgICAgICAgICAgICJ0aG91Z2h0U2lnbmF0dXJlIjogIkV1UUJDdUVCQWI0Kzl2dS8weUxLOWhsVndaWGpuMHNPaHkvcnB5dCtpQTBtVnc5UWE0WUlkcUJDcUdyLzlZNEZySmJHWGV5QVgxRkp5WUtlQ2x3MWJta3FxL0lJTHpMRUU4ZjQ2UWhGQ2JPYUpTdjF3WjBHNGFVeWVlRWYwOSt3RnZDSFNGdXZsWXJNVW5NbXFtanIxVENxMVNSSC9OYXpoems4alMzdXJvb1Y4aGFTdEttQTBKNnJpazNxUk1zWkoxdWx2anhISXNlb1puR0RmSTkwdERqUWoxekp1ZzQ5bi8yRlhOU1ZYM05uRXE3VGs1SnlXQVZNN1BGVjhkQnhPRVlSOXNHd0lFUzMzOEc4YUx1S09OaFNUOGx6QTJzVnF3Y2t6Z3VoMVhmWkZXQUxlQjdUIgogICAgICAgICAgfQogICAgICAgIF0sCiAgICAgICAgInJvbGUiOiAibW9kZWwiCiAgICAgIH0sCiAgICAgICJmaW5pc2hSZWFzb24iOiAiU1RPUCIsCiAgICAgICJpbmRleCI6IDAKICAgIH0KICBdLAogICJ1c2FnZU1ldGFkYXRhIjogewogICAgInByb21wdFRva2VuQ291bnQiOiA4NiwKICAgICJjYW5kaWRhdGVzVG9rZW5Db3VudCI6IDgsCiAgICAidG90YWxUb2tlbkNvdW50IjogMTQ4LAogICAgInByb21wdFRva2Vuc0RldGFpbHMiOiBbCiAgICAgIHsKICAgICAgICAibW9kYWxpdHkiOiAiVEVYVCIsCiAgICAgICAgInRva2VuQ291bnQiOiA4NgogICAgICB9CiAgICBdLAogICAgInRob3VnaHRzVG9rZW5Db3VudCI6IDU0CiAgfSwKICAibW9kZWxWZXJzaW9uIjogImdlbWluaS0zLWZsYXNoLXByZXZpZXciLAogICJyZXNwb25zZUlkIjogIm9mZUthWTdXSnZ1c2p1TVA1TXZPOFFjIgp9Cg==
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 recorded_with: VCR 6.4.0

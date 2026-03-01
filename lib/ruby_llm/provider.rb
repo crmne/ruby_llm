@@ -102,16 +102,24 @@ module RubyLLM
       self.class.remote?
     end
 
+    def assume_models_exist?
+      self.class.assume_models_exist?
+    end
+
     def parse_error(response)
       return if response.body.empty?
 
       body = try_parse_json(response.body)
       case body
       when Hash
+        error = body['error']
+        return error if error.is_a?(String)
+
         body.dig('error', 'message')
       when Array
         body.map do |part|
-          part.dig('error', 'message')
+          error = part['error']
+          error.is_a?(String) ? error : part.dig('error', 'message')
         end.join('. ')
       else
         body
@@ -158,6 +166,10 @@ module RubyLLM
 
       def remote?
         !local?
+      end
+
+      def assume_models_exist?
+        false
       end
 
       def configured?(config)

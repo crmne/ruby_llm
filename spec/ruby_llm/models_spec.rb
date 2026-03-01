@@ -84,11 +84,42 @@ RSpec.describe RubyLLM::Models do
       chat_model = RubyLLM.chat(model: 'claude-3-5-haiku')
       expect(chat_model.model.id).to eq('claude-3-5-haiku-20241022')
     end
+
+    it 'prefers bedrock region-resolved inference profile IDs over exact unprefixed IDs' do
+      unprefixed = RubyLLM::Model::Info.new(
+        id: 'meta.llama4-maverick-17b-instruct-v1:0',
+        name: 'Llama 4 Maverick',
+        provider: 'bedrock',
+        metadata: {}
+      )
+      prefixed = RubyLLM::Model::Info.new(
+        id: 'us.meta.llama4-maverick-17b-instruct-v1:0',
+        name: 'Llama 4 Maverick',
+        provider: 'bedrock',
+        metadata: { inference_types: ['INFERENCE_PROFILE'] }
+      )
+
+      models = described_class.new([unprefixed, prefixed])
+      allow(RubyLLM).to receive(:config).and_return(
+        instance_double(RubyLLM::Configuration, bedrock_region: 'us-west-2')
+      )
+
+      found = models.find('meta.llama4-maverick-17b-instruct-v1:0', 'bedrock')
+      expect(found.id).to eq('us.meta.llama4-maverick-17b-instruct-v1:0')
+    end
   end
 
   describe '#refresh!' do
     before do
-      allow(described_class).to receive(:fetch_from_models_dev).and_return([])
+      allow(described_class).to receive_messages(
+        fetch_provider_models: {
+          models: [],
+          fetched_providers: [],
+          configured_names: [],
+          failed: []
+        },
+        fetch_models_dev_models: { models: [], fetched: true }
+      )
     end
 
     it 'updates models and returns a chainable Models instance' do
@@ -109,6 +140,79 @@ RSpec.describe RubyLLM::Models do
 
       # Verify singleton instance was updated
       expect(RubyLLM.models.all.size).to be_positive
+    end
+  end
+
+  describe '.models_dev_model_to_info' do
+    let(:model_data) do
+      {
+        id: 'gpt-test-1',
+        name: 'GPT Test 1',
+        family: 'gpt-test',
+        last_updated: '2025-02-01',
+        knowledge: '2024-01-01',
+        modalities: { input: %w[text image], output: ['text'] },
+        tool_call: true,
+        structured_output: true,
+        reasoning: false,
+        cost: {
+          input: 1.25,
+          output: 5.0,
+          cache_read: 0.5,
+          reasoning: 10.0
+        },
+        limit: {
+          context: 128_000,
+          output: 4096
+        }
+      }
+    end
+
+    it 'converts models.dev payload into a Model::Info-compatible hash' do
+      data = described_class.models_dev_model_to_info(model_data, 'openai', 'openai')
+
+      expect(data).to include(
+        id: 'gpt-test-1',
+        name: 'GPT Test 1',
+        provider: 'openai',
+        family: 'gpt-test',
+        context_window: 128_000,
+        max_output_tokens: 4096,
+        knowledge_cutoff: Date.parse('2024-01-01')
+      )
+
+      expect(data[:modalities]).to eq(input: %w[text image], output: ['text'])
+      expect(data[:capabilities]).to match_array(%w[function_calling structured_output vision])
+      expect(data[:pricing]).to eq(
+        text_tokens: {
+          standard: {
+            input_per_million: 1.25,
+            output_per_million: 5.0,
+            cached_input_per_million: 0.5,
+            reasoning_output_per_million: 10.0
+          }
+        }
+      )
+      expect(data[:metadata]).to include(
+        source: 'models.dev',
+        provider_id: 'openai',
+        last_updated: '2025-02-01'
+      )
+      expect(data[:metadata][:cost]).to eq(model_data[:cost])
+      expect(data[:metadata][:limit]).to eq(model_data[:limit])
+      expect(data[:metadata][:knowledge]).to eq(model_data[:knowledge])
+    end
+
+    it 'uses release_date cast to midnight as created_at' do
+      model_data_with_release_date = model_data.merge(release_date: '2025-03-01')
+      data = described_class.models_dev_model_to_info(model_data_with_release_date, 'openai', 'openai')
+      expect(data[:created_at]).to eq('2025-03-01 00:00:00 UTC')
+    end
+
+    it 'falls back to last_updated cast to midnight as created_at when release_date is missing' do
+      model_data_with_release_date = model_data.merge(release_date: nil, last_updated: '2025-03-01')
+      data = described_class.models_dev_model_to_info(model_data_with_release_date, 'openai', 'openai')
+      expect(data[:created_at]).to eq('2025-03-01 00:00:00 UTC')
     end
   end
 
