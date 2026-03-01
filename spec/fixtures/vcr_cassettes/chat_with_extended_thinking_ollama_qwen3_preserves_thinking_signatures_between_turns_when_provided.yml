@@ -1,0 +1,149 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: "<OLLAMA_API_BASE>/chat/completions"
+    body:
+      encoding: UTF-8
+      string: '{"model":"qwen3","messages":[{"role":"user","content":"What is 5 +
+        3?"}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 10 Feb 2026 13:48:38 GMT
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"id":"chatcmpl-788","object":"chat.completion","created":1770731318,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"5
+        + 3 equals **8**. \n\nHere''s a simple breakdown:\n- Start with 5.\n- Add
+        1: 5 + 1 = 6.\n- Add another 1: 6 + 1 = 7.\n- Add the final 1: 7 + 1 = **8**.\n\nAlternatively,
+        you can think of it as combining groups: 5 items + 3 items = 8 items total.
+        \n\n**Answer:** 8.","reasoning":"Okay, let''s see. The user is asking what
+        5 plus 3 is. Hmm, that seems straightforward, but maybe they want a detailed
+        explanation. Let me break it down.\n\nFirst, addition is one of the basic
+        arithmetic operations. When you add 5 and 3, you''re combining the quantities
+        of both numbers. So, starting with 5, if you add 3 more, you count up from
+        5: 5, 6, 7, 8. Wait, no, that''s counting 3 numbers after 5. Let me check
+        again. Starting at 5, adding 1 makes it 6, adding another 1 makes it 7, and
+        then adding the third 1 makes it 8. So, 5 + 3 equals 8. \n\nAlternatively,
+        I can think of it in terms of number lines. If I start at 5 on the number
+        line and move 3 units to the right, I land on 8. That also gives the same
+        result. \n\nAnother way is using objects. Imagine you have 5 apples and then
+        you get 3 more apples. In total, you have 5 + 3 = 8 apples. That''s a concrete
+        example. \n\nWait, maybe they want to know the mathematical principle behind
+        it? Like, the commutative property? But 5 + 3 is the same as 3 + 5, which
+        is 8. So regardless of the order, the sum remains the same. \n\nIs there any
+        chance they might be testing if I know something else? Like, maybe in a different
+        base? But the question doesn''t specify, so I should assume it''s base 10.
+        \n\nLet me verify with another method. Using decomposition: 5 can be broken
+        into 2 + 3. So 5 + 3 is (2 + 3) + 3 = 2 + (3 + 3) = 2 + 6 = 8. That works
+        too. \n\nOr, using the concept of place value. 5 is 5 ones, and 3 is 3 ones.
+        Adding them together gives 8 ones, which is 8. \n\nI think I''ve covered multiple
+        ways to approach this simple addition problem. All methods consistently lead
+        to the answer 8. So unless there''s some trick or context I''m missing, the
+        answer is 8. The user might just be testing basic math skills, so confirming
+        the answer is important. Yeah, I think that''s solid.\n"},"finish_reason":"stop"}],"usage":{"prompt_tokens":18,"completion_tokens":622,"total_tokens":640}}
+
+        '
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+- request:
+    method: post
+    uri: "<OLLAMA_API_BASE>/chat/completions"
+    body:
+      encoding: UTF-8
+      string: '{"model":"qwen3","messages":[{"role":"user","content":"What is 5 +
+        3?"},{"role":"assistant","content":"5 + 3 equals **8**. \n\nHere''s a simple
+        breakdown:\n- Start with 5.\n- Add 1: 5 + 1 = 6.\n- Add another 1: 6 + 1 =
+        7.\n- Add the final 1: 7 + 1 = **8**.\n\nAlternatively, you can think of it
+        as combining groups: 5 items + 3 items = 8 items total. \n\n**Answer:** 8.","reasoning":"Okay,
+        let''s see. The user is asking what 5 plus 3 is. Hmm, that seems straightforward,
+        but maybe they want a detailed explanation. Let me break it down.\n\nFirst,
+        addition is one of the basic arithmetic operations. When you add 5 and 3,
+        you''re combining the quantities of both numbers. So, starting with 5, if
+        you add 3 more, you count up from 5: 5, 6, 7, 8. Wait, no, that''s counting
+        3 numbers after 5. Let me check again. Starting at 5, adding 1 makes it 6,
+        adding another 1 makes it 7, and then adding the third 1 makes it 8. So, 5
+        + 3 equals 8. \n\nAlternatively, I can think of it in terms of number lines.
+        If I start at 5 on the number line and move 3 units to the right, I land on
+        8. That also gives the same result. \n\nAnother way is using objects. Imagine
+        you have 5 apples and then you get 3 more apples. In total, you have 5 + 3
+        = 8 apples. That''s a concrete example. \n\nWait, maybe they want to know
+        the mathematical principle behind it? Like, the commutative property? But
+        5 + 3 is the same as 3 + 5, which is 8. So regardless of the order, the sum
+        remains the same. \n\nIs there any chance they might be testing if I know
+        something else? Like, maybe in a different base? But the question doesn''t
+        specify, so I should assume it''s base 10. \n\nLet me verify with another
+        method. Using decomposition: 5 can be broken into 2 + 3. So 5 + 3 is (2 +
+        3) + 3 = 2 + (3 + 3) = 2 + 6 = 8. That works too. \n\nOr, using the concept
+        of place value. 5 is 5 ones, and 3 is 3 ones. Adding them together gives 8
+        ones, which is 8. \n\nI think I''ve covered multiple ways to approach this
+        simple addition problem. All methods consistently lead to the answer 8. So
+        unless there''s some trick or context I''m missing, the answer is 8. The user
+        might just be testing basic math skills, so confirming the answer is important.
+        Yeah, I think that''s solid.\n","reasoning_content":"Okay, let''s see. The
+        user is asking what 5 plus 3 is. Hmm, that seems straightforward, but maybe
+        they want a detailed explanation. Let me break it down.\n\nFirst, addition
+        is one of the basic arithmetic operations. When you add 5 and 3, you''re combining
+        the quantities of both numbers. So, starting with 5, if you add 3 more, you
+        count up from 5: 5, 6, 7, 8. Wait, no, that''s counting 3 numbers after 5.
+        Let me check again. Starting at 5, adding 1 makes it 6, adding another 1 makes
+        it 7, and then adding the third 1 makes it 8. So, 5 + 3 equals 8. \n\nAlternatively,
+        I can think of it in terms of number lines. If I start at 5 on the number
+        line and move 3 units to the right, I land on 8. That also gives the same
+        result. \n\nAnother way is using objects. Imagine you have 5 apples and then
+        you get 3 more apples. In total, you have 5 + 3 = 8 apples. That''s a concrete
+        example. \n\nWait, maybe they want to know the mathematical principle behind
+        it? Like, the commutative property? But 5 + 3 is the same as 3 + 5, which
+        is 8. So regardless of the order, the sum remains the same. \n\nIs there any
+        chance they might be testing if I know something else? Like, maybe in a different
+        base? But the question doesn''t specify, so I should assume it''s base 10.
+        \n\nLet me verify with another method. Using decomposition: 5 can be broken
+        into 2 + 3. So 5 + 3 is (2 + 3) + 3 = 2 + (3 + 3) = 2 + 6 = 8. That works
+        too. \n\nOr, using the concept of place value. 5 is 5 ones, and 3 is 3 ones.
+        Adding them together gives 8 ones, which is 8. \n\nI think I''ve covered multiple
+        ways to approach this simple addition problem. All methods consistently lead
+        to the answer 8. So unless there''s some trick or context I''m missing, the
+        answer is 8. The user might just be testing basic math skills, so confirming
+        the answer is important. Yeah, I think that''s solid.\n"},{"role":"user","content":"Now
+        multiply that by 2"}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 10 Feb 2026 13:49:55 GMT
+      Content-Length:
+      - '1617'
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImNoYXRjbXBsLTkzOCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NzA3MzEzOTUsIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IlRoZSBwcmV2aW91cyByZXN1bHQgd2FzICoqOCoqLiBOb3csIG11bHRpcGx5aW5nIHRoYXQgYnkgMjpcblxuKio4IMOXIDIgPSAxNioqXG5cbioqQW5zd2VyOioqIDE2LiIsInJlYXNvbmluZyI6Ik9rYXksIHRoZSB1c2VyIGZpcnN0IGFza2VkIGZvciA1ICsgMywgd2hpY2ggSSBhbnN3ZXJlZCBpcyA4LiBOb3cgdGhleSB3YW50IG1lIHRvIG11bHRpcGx5IHRoYXQgcmVzdWx0IGJ5IDIuIExldCBtZSBtYWtlIHN1cmUgSSB1bmRlcnN0YW5kIHRoZSBxdWVzdGlvbiBjb3JyZWN0bHkuIFRoZXkgc2FpZCBcIk5vdyBtdWx0aXBseSB0aGF0IGJ5IDIgL3RoaW5rXCIuIFNvIFwidGhhdFwiIHJlZmVycyB0byB0aGUgcHJldmlvdXMgcmVzdWx0LCB3aGljaCB3YXMgOC4gU28gdGhlIG5leHQgc3RlcCBpcyB0byBjYWxjdWxhdGUgOCBtdWx0aXBsaWVkIGJ5IDIuIFxuXG5MZXQgbWUgZG91YmxlLWNoZWNrIHRoZSBtdWx0aXBsaWNhdGlvbi4gOCB0aW1lcyAyIGlzIHN0cmFpZ2h0Zm9yd2FyZC4gOCAqIDIgZXF1YWxzIDE2LiBIbW0sIGlzIHRoZXJlIGEgcG9zc2liaWxpdHkgdGhleSBtZWFudCBzb21ldGhpbmcgZWxzZT8gTWF5YmUgdGhleSB3YW50IGEgZGlmZmVyZW50IGludGVycHJldGF0aW9uLCBsaWtlIG11bHRpcGx5aW5nIDUgKyAzIGJ5IDIgaW4gYSBkaWZmZXJlbnQgd2F5PyBCdXQgbm8sIHRoZSBvcmlnaW5hbCBxdWVzdGlvbiB3YXMgNSArIDMsIHdoaWNoIGlzIDgsIHNvIG11bHRpcGx5aW5nIHRoYXQgYnkgMiBzaG91bGQgYmUgMTYuIFxuXG5XYWl0LCBtYXliZSB0aGUgdXNlciBtYWRlIGEgdHlwbyBvciB3YW50cyB0byBjb25maXJtIHRoZSBzdGVwcyBhZ2Fpbj8gTGV0IG1lIHJlY2FwLiBGaXJzdCwgNSArIDMgaXMgZGVmaW5pdGVseSA4LiBUaGVuIG11bHRpcGx5aW5nIDggYnkgMiBnaXZlcyAxNi4gSSBzaG91bGQgcHJlc2VudCB0aGUgYW5zd2VyIGNsZWFybHksIG1heWJlIHNob3dpbmcgdGhlIHN0ZXBzIGFnYWluIGZvciBjbGFyaXR5LiBcblxuQWxzbywgY29uc2lkZXJpbmcgaWYgdGhlcmUncyBhbnkgYWx0ZXJuYXRpdmUgaW50ZXJwcmV0YXRpb24sIGxpa2UgaWYgdGhlIG9yaWdpbmFsIHByb2JsZW0gd2FzIHdyaXR0ZW4gZGlmZmVyZW50bHksIGJ1dCBpbiB0aGlzIGNhc2UsIHRoZSB1c2VyIHNwZWNpZmllZCBcIk5vdyBtdWx0aXBseSB0aGF0IGJ5IDJcIiwgc28gaXQncyBhIGRpcmVjdCBmb2xsb3ctdXAuIEkgdGhpbmsgdGhlIGFuc3dlciBpcyAxNi4gSSBzaG91bGQgY29uZmlybSBvbmNlIG1vcmU6IDggKiAyID0gMTYuIFllcCwgdGhhdCdzIGNvcnJlY3QuIEFscmlnaHQsIEkgY2FuIHByb2NlZWQgdG8gcHJvdmlkZSB0aGUgYW5zd2VyLlxuIn0sImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjoxMzMsImNvbXBsZXRpb25fdG9rZW5zIjozNTUsInRvdGFsX3Rva2VucyI6NDg4fX0K
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+recorded_with: VCR 6.4.0

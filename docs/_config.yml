@@ -92,6 +92,9 @@ enable_copy_code_button: true
 
 heading_anchors: true
 
+# Base URL for raw markdown source files (used by "Copy page Markdown" button)
+markdown_source_base_url: "https://raw.githubusercontent.com/crmne/ruby_llm/main/docs"
+
 color_scheme: light
 
 callouts:
@@ -148,25 +151,25 @@ og_image:
 # and make it easy to update model names in one place
 models:
   # Default models for basic examples
-  default_chat: "gpt-4.1-nano"
+  default_chat: "gpt-5-nano"
   default_embedding: "text-embedding-3-small"
   default_image: "gpt-image-1"
 
   # OpenAI models
-  openai_latest: "gpt-5"
-  openai_current: "gpt-4.1-nano"
-  openai_vision: "gpt-4.1"
-  openai_tools: "gpt-4.1"
-  openai_mini: "gpt-4.1-mini"
+  openai_latest: "gpt-5.2"
+  openai_current: "gpt-5-nano"
+  openai_vision: "gpt-5.2"
+  openai_tools: "gpt-5.2"
+  openai_mini: "gpt-5-mini"
   openai_audio: "gpt-4o-audio-preview"
   openai_legacy: "gpt-3.5-turbo" # schema unsupported
-  openai_standard: "gpt-4.1"
+  openai_standard: "gpt-5.2"
 
   # Anthropic models
-  anthropic_latest: "claude-sonnet-4"
-  anthropic_current: "claude-sonnet-4"
-  anthropic_newest: "claude-sonnet-4"
-  anthropic_opus: "claude-opus-4"
+  anthropic_latest: "claude-sonnet-4-5"
+  anthropic_current: "claude-sonnet-4-5"
+  anthropic_newest: "claude-sonnet-4-5"
+  anthropic_opus: "claude-opus-4-5"
 
   # Google models
   gemini_latest: "gemini-2.5-pro"

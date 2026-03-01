@@ -59,9 +59,11 @@ RubyLLM.configure do |config|
   config.mistral_api_key = ENV['MISTRAL_API_KEY']
   config.perplexity_api_key = ENV['PERPLEXITY_API_KEY']
   config.openrouter_api_key = ENV['OPENROUTER_API_KEY']
+  config.xai_api_key = ENV['XAI_API_KEY'] # Available in v1.11.0+
 
   # Local providers
   config.ollama_api_base = 'http://localhost:11434/v1'
+  config.ollama_api_key = ENV['OLLAMA_API_KEY'] # Available in v1.13.0+ (optional for authenticated/remote Ollama endpoints)
   config.gpustack_api_base = ENV['GPUSTACK_API_BASE']
   config.gpustack_api_key = ENV['GPUSTACK_API_KEY']
 
@@ -70,6 +72,11 @@ RubyLLM.configure do |config|
   config.bedrock_secret_key = ENV['AWS_SECRET_ACCESS_KEY']
   config.bedrock_region = ENV['AWS_REGION'] # Required for Bedrock
   config.bedrock_session_token = ENV['AWS_SESSION_TOKEN'] # For temporary credentials
+
+  # Azure - Available in v1.12.0+
+  config.azure_api_base = ENV['AZURE_API_BASE'] # Microsoft Foundry project endpoint
+  config.azure_api_key = ENV['AZURE_API_KEY'] # use this or
+  config.azure_ai_auth_token = ENV['AZURE_AI_AUTH_TOKEN'] # this
 end
 ```
 
@@ -278,16 +285,16 @@ RubyLLM.configure do |config|
   config.openai_api_key = ENV['OPENAI_PROD_KEY']
 end
 
-# Create isolated context for Azure
-azure_context = RubyLLM.context do |config|
-  config.openai_api_key = ENV['AZURE_KEY']
-  config.openai_api_base = "https://azure.openai.azure.com"
+# Create isolated context
+ctx = RubyLLM.context do |config|
+  config.openai_api_key = ENV['ANOTHER_PROVIDER_KEY']
+  config.openai_api_base = "https://another-provider.com"
   config.request_timeout = 180
 end
 
 # Use Azure for this specific task
-azure_chat = azure_context.chat(model: '{{ site.models.openai_standard }}')
-response = azure_chat.ask("Process this with Azure...")
+ctx_chat = ctx.chat(model: '{{ site.models.openai_standard }}')
+response = ctx_chat.ask("Process this with another provider...")
 
 # Global config unchanged
 regular_chat = RubyLLM.chat  # Still uses production OpenAI
@@ -331,6 +338,8 @@ RubyLLM.configure do |config|
   # Use Rails credentials
   config.openai_api_key = Rails.application.credentials.openai_api_key
   config.anthropic_api_key = Rails.application.credentials.anthropic_api_key
+  config.anthropic_api_base = ENV['ANTHROPIC_API_BASE'] # Available in v1.13.0+ (optional custom Anthropic endpoint)
+  config.ollama_api_key = ENV['OLLAMA_API_KEY'] # Available in v1.13.0+ (optional for remote/authenticated Ollama)
 
   # Use Rails logger
   config.logger = Rails.logger
@@ -387,9 +396,15 @@ RubyLLM.configure do |config|
   config.mistral_api_key = String
   config.perplexity_api_key = String
   config.openrouter_api_key = String
+  config.ollama_api_key = String  # v1.13.0+
   config.gpustack_api_key = String
+  config.xai_api_key = String
+  config.azure_api_key = String  # v1.12.0+
+  config.azure_ai_auth_token = String  # v1.12.0+
 
   # Provider Endpoints
+  config.azure_api_base = String  # v1.12.0+
+  config.anthropic_api_base = String  # v1.13.0+
   config.openai_api_base = String
   config.gemini_api_base = String  # v1.9.0+
   config.ollama_api_base = String
@@ -411,9 +426,11 @@ RubyLLM.configure do |config|
   config.default_embedding_model = String
   config.default_image_model = String
   config.default_moderation_model = String
+  config.default_transcription_model = String
 
   # Model Registry
   config.model_registry_file = String  # Path to model registry JSON file (v1.9.0+)
+  config.model_registry_class = String
 
   # Connection Settings
   config.request_timeout = Integer
@@ -428,6 +445,9 @@ RubyLLM.configure do |config|
   config.log_file = String
   config.log_level = Symbol
   config.log_stream_debug = Boolean
+
+  # Rails integration
+  config.use_new_acts_as = Boolean
 end
 ```
 

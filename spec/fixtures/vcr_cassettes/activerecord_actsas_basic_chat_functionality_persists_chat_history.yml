@@ -9,7 +9,7 @@ http_interactions:
         your favorite Ruby feature?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer <OPENAI_API_KEY>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 09 Jan 2026 14:00:27 GMT
+      - Tue, 10 Feb 2026 08:33:57 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -36,13 +36,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '926'
+      - '1323'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
       - '2020-10-01'
-      X-Envoy-Upstream-Service-Time:
-      - '947'
+      Server:
+      - cloudflare
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -63,13 +63,10 @@ http_interactions:
       - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
-      - "<COOKIE>"
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
-      Server:
-      - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
@@ -78,16 +75,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-Cw7KMIAjnlMZkcNbT9Inx3OKRdxnv",
+          "id": "chatcmpl-D7dTvcqecw5fgkAStPI1rDrIPnEYO",
           "object": "chat.completion",
-          "created": 1767967226,
+          "created": 1770712435,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
               "index": 0,
               "message": {
                 "role": "assistant",
-                "content": "One of my favorite Ruby features is its expressive and elegant syntax, especially the way it handles blocks and iterators. Ruby's blocks allow for highly readable and concise code, making it easy to perform operations like iterating over collections, defining custom methods that accept blocks, and creating DSLs. For example, methods like `each`, `map`, and `select` leverage blocks seamlessly, enabling developers to write code that closely resembles natural language. This combination of flexibility and readability makes Ruby a joy to work with.",
+                "content": "One of my favorite Ruby features is its elegant and expressive syntax, especially the use of blocks and iterators. Ruby's blocks allow for concise and readable code when working with collections, making operations like iteration, filtering, and mapping straightforward and intuitive. For example, methods like `each`, `map`, and `select` seamlessly incorporate blocks, enabling developers to write expressive code that closely mirrors natural language. This feature promotes clear, maintainable, and flexible coding styles, which is part of what makes Ruby so enjoyable to work with.",
                 "refusal": null,
                 "annotations": []
               },
@@ -97,8 +94,8 @@ http_interactions:
           ],
           "usage": {
             "prompt_tokens": 13,
-            "completion_tokens": 102,
-            "total_tokens": 115,
+            "completion_tokens": 106,
+            "total_tokens": 119,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
@@ -111,7 +108,7 @@ http_interactions:
             }
           },
           "service_tier": "default",
-          "system_fingerprint": "fp_7f8eb7d1f9"
+          "system_fingerprint": "fp_de604bd877"
         }
-  recorded_at: Fri, 09 Jan 2026 14:00:27 GMT
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 recorded_with: VCR 6.4.0

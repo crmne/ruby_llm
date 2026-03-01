@@ -8,7 +8,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -29,39 +29,39 @@ http_interactions:
       X-Origin-Cache:
       - HIT
       Last-Modified:
-      - Tue, 06 Jan 2026 22:18:04 GMT
+      - Mon, 09 Feb 2026 23:48:37 GMT
       Access-Control-Allow-Origin:
       - "*"
       Etag:
-      - W/"695d8a1c-9c6"
+      - W/"698a7255-9c6"
       Expires:
-      - Fri, 09 Jan 2026 10:09:04 GMT
+      - Tue, 10 Feb 2026 05:41:29 GMT
       Cache-Control:
       - max-age=600
       X-Proxy-Cache:
       - MISS
       X-Github-Request-Id:
-      - 0CCA:2847CC:59B0FD:5BA24F:6960D167
+      - DA8F:2A47E2:A980F3:B16D78:698AC2B0
       Accept-Ranges:
       - bytes
       Date:
-      - Fri, 09 Jan 2026 14:01:22 GMT
+      - Tue, 10 Feb 2026 08:47:16 GMT
       Via:
       - 1.1 varnish
       Age:
-      - '522'
+      - '59'
       X-Served-By:
-      - cache-fra-etou8220053-FRA
+      - cache-bkk2310026-BKK
       X-Cache:
       - HIT
       X-Cache-Hits:
       - '1'
       X-Timer:
-      - S1767967283.902107,VS0,VE5
+      - S1770713237.823247,VS0,VE1
       Vary:
       - Accept-Encoding
       X-Fastly-Request-Id:
-      - 59ea2cd9f46b3799ac071ece0473c55396cbc40f
+      - 7a0098ffd56c68b50f39081f779aa8d300b3368c
     body:
       encoding: ASCII-8BIT
       string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
@@ -97,7 +97,7 @@ http_interactions:
         \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
         WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
         FOR A PARTICULAR\n     PURPOSE.\n"
-  recorded_at: Fri, 09 Jan 2026 14:01:22 GMT
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 - request:
     method: post
     uri: https://api.mistral.ai/v1/chat/completions
@@ -140,7 +140,7 @@ http_interactions:
         A PARTICULAR\n     PURPOSE.\n</file>"}]}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer <MISTRAL_API_KEY>
       Content-Type:
@@ -155,7 +155,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 09 Jan 2026 14:01:28 GMT
+      - Tue, 10 Feb 2026 08:47:24 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -163,31 +163,27 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '019ba30f-d728-70ec-8fca-bddac4164472'
+      - '019c46bb-c644-7824-a37c-7c7bb7780287'
       X-Kong-Request-Id:
-      - '019ba30f-d728-70ec-8fca-bddac4164472'
+      - '019c46bb-c644-7824-a37c-7c7bb7780287'
       X-Ratelimit-Limit-Tokens-Minute:
       - '2000000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '1998605'
-      X-Ratelimit-Limit-Tokens-Month:
-      - '10000000000'
-      X-Ratelimit-Remaining-Tokens-Month:
-      - '9999996755'
+      - '1998761'
       X-Ratelimit-Tokens-Query-Cost:
-      - '1088'
-      X-Ratelimit-Limit-Req-60-Second:
+      - '934'
+      X-Ratelimit-Limit-Req-Minute:
       - '360'
-      X-Ratelimit-Remaining-Req-60-Second:
+      X-Ratelimit-Remaining-Req-Minute:
       - '357'
       X-Envoy-Upstream-Service-Time:
-      - '5982'
+      - '7045'
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '5983'
+      - '7045'
       X-Kong-Proxy-Latency:
-      - '8'
+      - '7'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -205,37 +201,7 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"b86e11e8c399413bbb6e8941dd5868d2","created":1767967283,"model":"mistral-small-latest","usage":{"prompt_tokens":577,"total_tokens":1088,"completion_tokens":511},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"This
-        file (`license.txt`) contains the **Ruby License**, a permissive open-source
-        software license created by Yukihiro Matsumoto (Matz), the creator of the
-        Ruby programming language. The license allows users to freely redistribute,
-        modify, and use Ruby under certain conditions.\n\n### Key Points of the License:\n1.
-        **Copyright Notice**: Ruby is copyrighted by Yukihiro Matsumoto.\n2. **Dual
-        Licensing**: Users can choose between:\n   - The **2-clause BSD License**
-        (referenced as \"BSDL\" in the file).\n   - The **Ruby License** (the conditions
-        listed in the file).\n3. **Permissions**:\n   - **Redistribution**: You can
-        freely distribute verbatim copies of Ruby, provided original copyright notices
-        are included.\n   - **Modification**: You can modify Ruby, but you must either:\n     -
-        Release modifications publicly (e.g., on Usenet or equivalent).\n     - Use
-        modifications only within your organization.\n     - Give modified binaries
-        non-standard names with instructions on where to get the original.\n     -
-        Make other distribution arrangements with the author.\n   - **Binary Distribution**:
-        You can distribute Ruby in binary form, but you must either:\n     - Include
-        instructions on where to get the original source.\n     - Provide the machine-readable
-        source.\n     - Give non-standard binaries non-standard names with instructions.\n     -
-        Make other distribution arrangements with the author.\n   - **Commercial Use**:
-        You can include Ruby in other software (even commercial), but some files in
-        the distribution may have different licensing terms (check the `LEGAL` file).\n   -
-        **Generated Output**: Scripts or files generated by Ruby are not automatically
-        under Ruby''s copyright and can be sold or aggregated with Ruby.\n4. **Disclaimer**:
-        Ruby is provided **\"as is\"** with no warranties, including merchantability
-        or fitness for a particular purpose.\n\n### Comparison to BSD License:\n-
-        The Ruby License is similar to the **2-clause BSD License** but includes additional
-        clauses (e.g., allowing modifications to be used internally within an organization).\n-
-        The BSD License is referenced but not the default; users can choose either.\n\n###
-        Files Referenced:\n- `BSDL` (likely a copy of the 2-clause BSD License).\n-
-        `LEGAL` (contains details about files with different licensing terms).\n\nThis
-        license is permissive, allowing broad use, modification, and redistribution
-        while requiring attribution and some conditions for modifications."}}]}'
-  recorded_at: Fri, 09 Jan 2026 14:01:28 GMT
+      string: !binary |-
+        eyJpZCI6Ijc1N2U2YzE1ZjZiODQ4ZDFhYWRiNjdhYWI4ZmE5Yjk5IiwiY3JlYXRlZCI6MTc3MDcxMzIzNywibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsInVzYWdlIjp7InByb21wdF90b2tlbnMiOjU3NywidG90YWxfdG9rZW5zIjo5MzQsImNvbXBsZXRpb25fdG9rZW5zIjozNTcsIm51bV9jYWNoZWRfdG9rZW5zIjowfSwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImZpbmlzaF9yZWFzb24iOiJzdG9wIiwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwidG9vbF9jYWxscyI6bnVsbCwiY29udGVudCI6IlRoaXMgZmlsZSAoYGxpY2Vuc2UudHh0YCkgY29udGFpbnMgdGhlICoqUnVieSBMaWNlbnNlKiosIHdoaWNoIGlzIGEgcGVybWlzc2l2ZSBvcGVuLXNvdXJjZSBsaWNlbnNlIGNyZWF0ZWQgYnkgWXVraWhpcm8gTWF0c3Vtb3RvIChNYXR6KSwgdGhlIGNyZWF0b3Igb2YgdGhlIFJ1YnkgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UuIEhlcmXigJlzIGEgYnJlYWtkb3duIG9mIGl0cyBrZXkgcG9pbnRzOlxuXG4jIyMgKipLZXkgVGVybXMgb2YgdGhlIFJ1YnkgTGljZW5zZToqKlxuMS4gKipSZWRpc3RyaWJ1dGlvbiAmIE1vZGlmaWNhdGlvbiBQZXJtaXNzaW9uczoqKlxuICAgLSBZb3UgY2FuIGZyZWVseSByZWRpc3RyaWJ1dGUgdGhlIG9yaWdpbmFsIHNvdXJjZSBjb2RlICh3aXRoIGNvcHlyaWdodCBub3RpY2VzIGludGFjdCkuXG4gICAtIFlvdSBjYW4gbW9kaWZ5IHRoZSBzb2Z0d2FyZSB1bmRlciBjZXJ0YWluIGNvbmRpdGlvbnMgKGUuZy4sIHJlbGVhc2luZyBtb2RpZmljYXRpb25zIHB1YmxpY2x5LCB1c2luZyB0aGVtIGludGVybmFsbHksIG9yIHJlbmFtaW5nIG5vbi1zdGFuZGFyZCBiaW5hcmllcykuXG5cbjIuICoqQmluYXJ5IERpc3RyaWJ1dGlvbiBSdWxlczoqKlxuICAgLSBJZiBkaXN0cmlidXRpbmcgY29tcGlsZWQgYmluYXJpZXMsIHlvdSBtdXN0IGVpdGhlcjpcbiAgICAgLSBJbmNsdWRlIGluc3RydWN0aW9ucyBvbiB3aGVyZSB0byBnZXQgdGhlIG9yaWdpbmFsIHNvdXJjZS5cbiAgICAgLSBQcm92aWRlIHRoZSBtYWNoaW5lLXJlYWRhYmxlIHNvdXJjZSBjb2RlLlxuICAgICAtIFJlbmFtZSBub24tc3RhbmRhcmQgYmluYXJpZXMgYW5kIHBvaW50IHVzZXJzIHRvIHRoZSBvcmlnaW5hbC5cblxuMy4gKipJbmNsdXNpb24gaW4gT3RoZXIgU29mdHdhcmU6KipcbiAgIC0gWW91IGNhbiBtb2RpZnkgYW5kIGluY2x1ZGUgUnVieSBpbiBvdGhlciBzb2Z0d2FyZSAoZXZlbiBjb21tZXJjaWFsKSwgYnV0IHNvbWUgZmlsZXMgaW4gdGhlIGRpc3RyaWJ1dGlvbiBtYXkgaGF2ZSBkaWZmZXJlbnQgbGljZW5zZXMgKGNoZWNrIGBMRUdBTGAgZm9yIGRldGFpbHMpLlxuXG40LiAqKk5vIFdhcnJhbnR5OioqXG4gICAtIFRoZSBzb2Z0d2FyZSBpcyBwcm92aWRlZCBcImFzIGlzXCIgd2l0aCBubyB3YXJyYW50aWVzIChleHByZXNzIG9yIGltcGxpZWQpLlxuXG4jIyMgKipDb21wYXJpc29uIHRvIE90aGVyIExpY2Vuc2VzOioqXG4tIFNpbWlsYXIgdG8gdGhlICoqMi1jbGF1c2UgQlNEIExpY2Vuc2UqKiAoYnV0IHdpdGggYWRkaXRpb25hbCBjbGF1c2VzKS5cbi0gTW9yZSBwZXJtaXNzaXZlIHRoYW4gdGhlICoqR1BMKiogKG5vIGNvcHlsZWZ0IHJlcXVpcmVtZW50cykuXG4tIEFsbG93cyBjb21tZXJjaWFsIHVzZSBhbmQgbW9kaWZpY2F0aW9uIHdpdGggbWluaW1hbCByZXN0cmljdGlvbnMuXG5cbiMjIyAqKkltcG9ydGFudCBOb3RlczoqKlxuLSBTb21lIGZpbGVzIGluIHRoZSBSdWJ5IGRpc3RyaWJ1dGlvbiBtYXkgaGF2ZSBkaWZmZXJlbnQgbGljZW5zZXMgKGNoZWNrIGBMRUdBTGApLlxuLSBTY3JpcHRzL291dHB1dCBnZW5lcmF0ZWQgYnkgUnVieSBhcmUgbm90IGF1dG9tYXRpY2FsbHkgdW5kZXIgUnVieeKAmXMgY29weXJpZ2h0LlxuXG5UaGlzIGxpY2Vuc2UgaXMgKip2ZXJ5IHBlcm1pc3NpdmUqKiwgbWFraW5nIFJ1Ynkgd2lkZWx5IHVzYWJsZSBpbiBib3RoIG9wZW4tc291cmNlIGFuZCBwcm9wcmlldGFyeSBwcm9qZWN0cy4ifX1dfQ==
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 recorded_with: VCR 6.4.0
