@@ -63,6 +63,7 @@ RubyLLM.configure do |config|
 
   # Local providers
   config.ollama_api_base = 'http://localhost:11434/v1'
+  config.ollama_api_key = ENV['OLLAMA_API_KEY'] # Available in v1.13.0+ (optional for authenticated/remote Ollama endpoints)
   config.gpustack_api_base = ENV['GPUSTACK_API_BASE']
   config.gpustack_api_key = ENV['GPUSTACK_API_KEY']
 
@@ -337,6 +338,8 @@ RubyLLM.configure do |config|
   # Use Rails credentials
   config.openai_api_key = Rails.application.credentials.openai_api_key
   config.anthropic_api_key = Rails.application.credentials.anthropic_api_key
+  config.anthropic_api_base = ENV['ANTHROPIC_API_BASE'] # Available in v1.13.0+ (optional custom Anthropic endpoint)
+  config.ollama_api_key = ENV['OLLAMA_API_KEY'] # Available in v1.13.0+ (optional for remote/authenticated Ollama)
 
   # Use Rails logger
   config.logger = Rails.logger
@@ -393,6 +396,7 @@ RubyLLM.configure do |config|
   config.mistral_api_key = String
   config.perplexity_api_key = String
   config.openrouter_api_key = String
+  config.ollama_api_key = String  # v1.13.0+
   config.gpustack_api_key = String
   config.xai_api_key = String
   config.azure_api_key = String  # v1.12.0+
@@ -400,6 +404,7 @@ RubyLLM.configure do |config|
 
   # Provider Endpoints
   config.azure_api_base = String  # v1.12.0+
+  config.anthropic_api_base = String  # v1.13.0+
   config.openai_api_base = String
   config.gemini_api_base = String  # v1.9.0+
   config.ollama_api_base = String

@@ -1,11 +1,14 @@
 # frozen_string_literal: true
 
 require 'erb'
+require 'forwardable'
 require 'pathname'
+require 'ruby_llm/schema'
 
 module RubyLLM
   # Base class for simple, class-configured agents.
   class Agent
+    extend Forwardable
     include Enumerable
 
     class << self
@@ -136,7 +139,10 @@ module RubyLLM
 
       def render_prompt(name, chat:, inputs:, locals:)
         path = prompt_path_for(name)
-        return nil unless File.exist?(path)
+        unless File.exist?(path)
+          raise RubyLLM::PromptNotFoundError,
+                "Prompt file not found for #{self}: #{path}. Create the file or use inline instructions."
+        end
 
         resolved_locals = resolve_prompt_locals(locals, runtime: runtime_context(chat:, inputs:), chat:, inputs:)
         ERB.new(File.read(path)).result_with_hash(resolved_locals)
@@ -175,7 +181,10 @@ module RubyLLM
         value = resolved_instructions_value(chat_object, runtime, inputs:)
         return if value.nil?
 
-        instruction_target(chat_object, persist:).with_instructions(value)
+        target = instruction_target(chat_object, persist:)
+        return target.with_runtime_instructions(value) if use_runtime_instructions?(target, persist:)
+
+        target.with_instructions(value)
       end
 
       def apply_tools(llm_chat, runtime)
@@ -202,8 +211,19 @@ module RubyLLM
       end
 
       def apply_schema(llm_chat, runtime)
-        value = evaluate(schema, runtime)
+        value = resolved_schema_value(runtime)
         llm_chat.with_schema(value) if value
+      end
+
+      def resolved_schema_value(runtime)
+        value = schema
+        return value unless value.is_a?(Proc)
+
+        evaluate(value, runtime)
+      rescue NoMethodError => e
+        raise unless e.receiver.equal?(runtime)
+
+        RubyLLM::Schema.create(&value)
       end
 
       def llm_chat_for(chat_object)
@@ -215,7 +235,7 @@ module RubyLLM
       end
 
       def resolved_instructions_value(chat_object, runtime, inputs:)
-        value = evaluate(instructions, runtime)
+        value = evaluate(@instructions, runtime)
         return value unless prompt_instruction?(value)
 
         runtime.prompt(
@@ -232,8 +252,18 @@ module RubyLLM
         if persist || !chat_object.respond_to?(:to_llm)
           chat_object
         else
-          chat_object.to_llm
+          runtime_instruction_target(chat_object)
         end
+      end
+
+      def runtime_instruction_target(chat_object)
+        return chat_object if chat_object.respond_to?(:with_runtime_instructions)
+
+        chat_object.to_llm
+      end
+
+      def use_runtime_instructions?(target, persist:)
+        !persist && target.respond_to?(:with_runtime_instructions)
       end
 
       def resolve_prompt_locals(locals, runtime:, chat:, inputs:)
@@ -316,8 +346,9 @@ module RubyLLM
 
     attr_reader :chat
 
-    delegate :ask, :say, :complete, :add_message, :messages,
-             :on_new_message, :on_end_message, :on_tool_call, :on_tool_result, :each,
-             to: :chat
+    def_delegators :chat, :model, :messages, :tools, :params, :headers, :schema, :ask, :say, :with_tool, :with_tools,
+                   :with_model, :with_temperature, :with_thinking, :with_context, :with_params, :with_headers,
+                   :with_schema, :on_new_message, :on_end_message, :on_tool_call, :on_tool_result, :each, :complete,
+                   :add_message, :reset_messages!
   end
 end

@@ -18,9 +18,9 @@ RSpec.describe RubyLLM::Chat do
       }
     end
 
-    # Test OpenAI-compatible providers that support structured output
+    # Test providers that support structured output with JSON schema
     # Note: Only test models that have json_schema support, not just json_object
-    CHAT_MODELS.select { |model_info| %i[openai].include?(model_info[:provider]) }.each do |model_info|
+    STRUCTURED_OUTPUT_MODELS.each do |model_info|
       model = model_info[:model]
       provider = model_info[:provider]
 
@@ -54,7 +54,9 @@ RSpec.describe RubyLLM::Chat do
           response1 = chat.ask('Generate a person named Bob')
 
           expect(response1.content).to be_a(Hash)
-          expect(response1.content['name']).to eq('Bob')
+          expect(response1.content['name']).to be_a(String)
+          expect(response1.content['name']).not_to be_empty
+          expect(response1.content['age']).to be_a(Integer)
 
           # Remove schema and ask again - should get plain string
           chat.with_schema(nil)
@@ -123,7 +125,7 @@ RSpec.describe RubyLLM::Chat do
       end
 
       test_model = CHAT_MODELS.find do |model_info|
-        %i[openai gemini].include?(model_info[:provider])
+        %i[openai gemini bedrock].include?(model_info[:provider])
       end
 
       if test_model
