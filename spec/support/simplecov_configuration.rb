@@ -14,7 +14,6 @@ unless ENV['SKIP_COVERAGE']
     formatter SimpleCov::Formatter::MultiFormatter.new(
       [
         SimpleCov::Formatter::SimpleFormatter,
-        (SimpleCov::Formatter::Codecov if ENV['CODECOV_TOKEN']),
         SimpleCov::Formatter::CoberturaFormatter
       ].compact
     )

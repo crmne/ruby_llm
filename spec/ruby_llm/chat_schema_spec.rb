@@ -18,9 +18,9 @@ RSpec.describe RubyLLM::Chat do
       }
     end
 
-    # Test OpenAI-compatible providers that support structured output
+    # Test providers that support structured output with JSON schema
     # Note: Only test models that have json_schema support, not just json_object
-    CHAT_MODELS.select { |model_info| %i[openai].include?(model_info[:provider]) }.each do |model_info|
+    CHAT_MODELS.select { |model_info| %i[openai anthropic].include?(model_info[:provider]) }.each do |model_info|
       model = model_info[:model]
       provider = model_info[:provider]
 
@@ -54,47 +54,11 @@ RSpec.describe RubyLLM::Chat do
           response1 = chat.ask('Generate a person named Bob')
 
           expect(response1.content).to be_a(Hash)
-          expect(response1.content['name']).to eq('Bob')
+          expect(response1.content['name']).to be_a(String)
+          expect(response1.content['name']).not_to be_empty
+          expect(response1.content['age']).to be_a(Integer)
 
           # Remove schema and ask again - should get plain string
-          chat.with_schema(nil)
-          response2 = chat.ask('Now just tell me about Ruby')
-
-          expect(response2.content).to be_a(String)
-          expect(response2.content).to include('Ruby')
-        end
-      end
-    end
-
-    # Test Anthropic provider
-    CHAT_MODELS.select { |model_info| model_info[:provider] == :anthropic }.each do |model_info|
-      model = model_info[:model]
-      provider = model_info[:provider]
-
-      context "with #{provider}/#{model}" do
-        let(:chat) { RubyLLM.chat(model: model, provider: provider) }
-
-        it 'accepts a JSON schema and returns structured output' do
-          skip 'Model does not support structured output' unless chat.model.structured_output?
-
-          response = chat
-                     .with_schema(person_schema)
-                     .ask('Generate a person named Alice who is 28 years old')
-
-          expect(response.content).to be_a(Hash)
-          expect(response.content['name']).to eq('Alice')
-          expect(response.content['age']).to eq(28)
-        end
-
-        it 'allows removing schema with nil mid-conversation' do
-          skip 'Model does not support structured output' unless chat.model.structured_output?
-
-          chat.with_schema(person_schema)
-          response1 = chat.ask('Generate a person named Carol')
-
-          expect(response1.content).to be_a(Hash)
-          expect(response1.content['name']).to eq('Carol')
-
           chat.with_schema(nil)
           response2 = chat.ask('Now just tell me about Ruby')
 

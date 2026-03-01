@@ -3,7 +3,6 @@
 require 'dotenv/load'
 require 'simplecov'
 require 'simplecov-cobertura'
-require 'codecov'
 require_relative 'support/simplecov_configuration'
 require 'vcr'
 require 'bundler/setup'
