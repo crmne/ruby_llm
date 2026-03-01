@@ -14,7 +14,7 @@ module RubyLLM
           def self.load_models
             read_from_database
           rescue StandardError => e
-            RubyLLM.logger.debug "Failed to load models from database: #{e.message}, falling back to JSON"
+            RubyLLM.logger.debug { "Failed to load models from database: #{e.message}, falling back to JSON" }
             read_from_json
           end
 
