@@ -11,6 +11,7 @@ module RubyLLM
                   :azure_api_base,
                   :azure_api_key,
                   :azure_ai_auth_token,
+                  :anthropic_api_base,
                   :anthropic_api_key,
                   :gemini_api_key,
                   :gemini_api_base,
