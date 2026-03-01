@@ -77,7 +77,10 @@ module RubyLLM
       new_tool_calls.each_value do |tool_call|
         if tool_call.id
           tool_call_id = tool_call.id.empty? ? SecureRandom.uuid : tool_call.id
-          tool_call_arguments = tool_call.arguments.empty? ? +'' : tool_call.arguments
+          tool_call_arguments = tool_call.arguments
+          if tool_call_arguments.nil? || (tool_call_arguments.respond_to?(:empty?) && tool_call_arguments.empty?)
+            tool_call_arguments = +''
+          end
           @tool_calls[tool_call.id] = ToolCall.new(
             id: tool_call_id,
             name: tool_call.name,
@@ -88,7 +91,9 @@ module RubyLLM
         else
           existing = @tool_calls[@latest_tool_call_id]
           if existing
-            existing.arguments << tool_call.arguments
+            fragment = tool_call.arguments
+            fragment = '' if fragment.nil?
+            existing.arguments << fragment
             if tool_call.thought_signature && existing.thought_signature.nil?
               existing.thought_signature = tool_call.thought_signature
             end
