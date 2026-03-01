@@ -535,6 +535,14 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
         expect(llm_tool_call.name).to eq('calculator')
         expect(llm_tool_call.arguments).to eq({ 'expression' => '2 + 2' })
       end
+
+      it 'correctly preserves custom model' do
+        custom_model = 'my-custom-model'
+        bot_chat = Assistants::BotChat.create!(model: custom_model, assume_model_exists: true, provider: 'openrouter')
+        bot_chat.save!
+        llm_chat = bot_chat.to_llm
+        expect(llm_chat.model.id).to eq(custom_model)
+      end
     end
   end
 
