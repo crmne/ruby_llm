@@ -10,9 +10,9 @@ module RubyLLM
 
     def initialize(options = {})
       @role = options.fetch(:role).to_sym
-      @content = normalize_content(options.fetch(:content))
-      @model_id = options[:model_id]
       @tool_calls = options[:tool_calls]
+      @content = normalize_content(options.fetch(:content), role: @role, tool_calls: @tool_calls)
+      @model_id = options[:model_id]
       @tool_call_id = options[:tool_call_id]
       @tokens = options[:tokens] || Tokens.build(
         input: options[:input_tokens],
@@ -90,7 +90,9 @@ module RubyLLM
 
     private
 
-    def normalize_content(content)
+    def normalize_content(content, role:, tool_calls:)
+      return '' if role == :assistant && content.nil? && tool_calls && !tool_calls.empty?
+
       case content
       when String then Content.new(content)
       when Hash then Content.new(content[:text], content)
