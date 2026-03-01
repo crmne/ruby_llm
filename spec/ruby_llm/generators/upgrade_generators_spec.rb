@@ -6,7 +6,7 @@ require 'generators/ruby_llm/upgrade_to_v1_7/upgrade_to_v1_7_generator'
 require 'generators/ruby_llm/upgrade_to_v1_9/upgrade_to_v1_9_generator'
 require_relative '../../support/generator_test_helpers'
 
-RSpec.describe 'RubyLLM upgrade generators', :generator, type: :generator do
+RSpec.describe 'RubyLLM upgrade generators', :generator, type: :generator do # rubocop:disable RSpec/DescribeClass
   include GeneratorTestHelpers
 
   let(:template_path) { File.expand_path('../../fixtures/templates', __dir__) }
@@ -150,4 +150,3 @@ RSpec.describe 'RubyLLM upgrade generators', :generator, type: :generator do
     end
   end
 end
-

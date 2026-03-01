@@ -70,4 +70,3 @@ after_bundle do
   generate 'ruby_llm:upgrade_to_v1_7'
   generate 'ruby_llm:upgrade_to_v1_9'
 end
-
