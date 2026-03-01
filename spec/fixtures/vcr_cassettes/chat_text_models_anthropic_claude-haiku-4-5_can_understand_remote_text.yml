@@ -29,39 +29,39 @@ http_interactions:
       X-Origin-Cache:
       - HIT
       Last-Modified:
-      - Mon, 09 Feb 2026 23:48:37 GMT
+      - Sun, 01 Mar 2026 07:36:57 GMT
       Access-Control-Allow-Origin:
       - "*"
       Etag:
-      - W/"698a7255-9c6"
+      - W/"69a3ec99-9c6"
       Expires:
-      - Tue, 10 Feb 2026 05:41:29 GMT
+      - Sun, 01 Mar 2026 13:55:20 GMT
       Cache-Control:
       - max-age=600
       X-Proxy-Cache:
       - MISS
       X-Github-Request-Id:
-      - DA8F:2A47E2:A980F3:B16D78:698AC2B0
+      - 48B8:275B2D:899CCA:8AED86:69A442F0
       Accept-Ranges:
       - bytes
-      Date:
-      - Tue, 10 Feb 2026 08:46:17 GMT
-      Via:
-      - 1.1 varnish
       Age:
       - '0'
+      Date:
+      - Sun, 01 Mar 2026 13:45:20 GMT
+      Via:
+      - 1.1 varnish
       X-Served-By:
-      - cache-bkk2310020-BKK
+      - cache-fra-etou8220038-FRA
       X-Cache:
-      - HIT
+      - MISS
       X-Cache-Hits:
       - '0'
       X-Timer:
-      - S1770713177.447929,VS0,VE283
+      - S1772372720.347203,VS0,VE102
       Vary:
       - Accept-Encoding
       X-Fastly-Request-Id:
-      - e4efb838d323e8b0a5f4e527b2dc806d38dc1c4c
+      - 0030d94fa472211516640afde6452ecd25f343d9
     body:
       encoding: ASCII-8BIT
       string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
@@ -97,7 +97,7 @@ http_interactions:
         \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
         WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
         FOR A PARTICULAR\n     PURPOSE.\n"
-  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+  recorded_at: Sun, 01 Mar 2026 13:45:20 GMT
 - request:
     method: post
     uri: https://api.anthropic.com/v1/messages
@@ -157,7 +157,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Feb 2026 08:46:21 GMT
+      - Sun, 01 Mar 2026 13:45:24 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -169,25 +169,25 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '450000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-02-10T08:46:18Z'
+      - '2026-03-01T13:45:20Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '90000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '90000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-02-10T08:46:21Z'
+      - '2026-03-01T13:45:24Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '1000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-02-10T08:46:18Z'
+      - '2026-03-01T13:45:20Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '540000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '540000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-02-10T08:46:18Z'
+      - '2026-03-01T13:45:20Z'
       Request-Id:
       - "<REQUEST_ID>"
       Strict-Transport-Security:
@@ -197,32 +197,37 @@ http_interactions:
       Server:
       - cloudflare
       X-Envoy-Upstream-Service-Time:
-      - '3200'
-      Cf-Cache-Status:
-      - DYNAMIC
+      - '3851'
+      Vary:
+      - Accept-Encoding
       X-Robots-Tag:
       - none
       Content-Security-Policy:
       - default-src 'none'; frame-ancestors 'none'
+      Cf-Cache-Status:
+      - DYNAMIC
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_01HeZP6nUTKW5bdEsEtz5UU6","type":"message","role":"assistant","content":[{"type":"text","text":"#
-        Ruby License File\n\nThis is the **license agreement for the Ruby programming
-        language**, copyrighted by Yukihiro Matsumoto (Ruby''s creator).\n\n## Key
-        Points:\n\n**License Options:**\n- You can use either the 2-clause BSD License
-        (BSDL) OR the custom terms listed in this file\n\n**What You Can Do:**\n1.
-        **Redistribute** the source code freely with original copyright notices\n2.
-        **Modify** the software if you:\n   - Release modifications publicly, OR\n   -
-        Use them only internally, OR\n   - Distribute with clear instructions on getting
-        the original, OR\n   - Make other arrangements with the author\n\n3. **Distribute
-        binaries** if you provide source code or instructions to get it\n4. **Include
-        Ruby in other software** (even commercial), though some files may have different
-        terms (see LEGAL file)\n5. **Scripts/outputs** you create aren''t automatically
-        under Ruby''s copyright\n\n**Important Disclaimers:**\n- The software is provided
-        \"AS IS\" with **no warranties** (including fitness for a particular purpose)\n\nThis
-        is a relatively **permissive open-source license** that allows commercial
-        use with few restrictions."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":588,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":264,"service_tier":"standard","inference_geo":"not_available"}}'
-  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_01XcZwysEirZk5tjSxu4Nkar","type":"message","role":"assistant","content":[{"type":"text","text":"#
+        Ruby License Summary\n\nThis file contains the **license for the Ruby programming
+        language**, created by Yukihiro Matsumoto (matz).\n\n## Key Points:\n\n**License
+        Options:**\n- You can choose between the 2-clause BSD License (BSDL) OR the
+        custom terms outlined in this file\n\n**Main Permissions:**\n1. **Free distribution**
+        - You can copy and redistribute the source code freely (with copyright notices
+        intact)\n2. **Modifications allowed** - You can modify it, with conditions
+        like:\n   - Making modifications freely available to the public, OR\n   -
+        Using modified versions only internally, OR\n   - Distributing with clear
+        attribution to original sources\n3. **Binary distribution** - You can distribute
+        compiled/binary versions if you either include source code or clear instructions
+        on where to get it\n4. **Commercial use** - You can incorporate Ruby into
+        commercial software\n5. **Generated code is yours** - Scripts or programs
+        you create using Ruby belong to you, not Ruby''s copyright\n\n**Important:**\n-
+        This is a **permissive open-source license**\n- The software comes with **no
+        warranties** (\"AS IS\")\n- Some files may have different licensing terms
+        (see LEGAL file)\n\nOverall, it''s a flexible license that permits most uses
+        while requiring attribution and offering reasonable freedom for modifications
+        and commercial applications."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":588,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":293,"service_tier":"standard","inference_geo":"not_available"}}'
+  recorded_at: Sun, 01 Mar 2026 13:45:24 GMT
 recorded_with: VCR 6.4.0

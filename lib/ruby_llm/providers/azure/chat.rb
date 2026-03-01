@@ -6,7 +6,7 @@ module RubyLLM
       # Chat methods of the Azure AI Foundry API integration
       module Chat
         def completion_url
-          'models/chat/completions?api-version=2024-05-01-preview'
+          azure_endpoint(:chat)
         end
 
         def format_messages(messages)

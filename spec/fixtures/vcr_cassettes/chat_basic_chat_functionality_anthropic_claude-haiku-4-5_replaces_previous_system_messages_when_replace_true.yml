@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Feb 2026 08:58:38 GMT
+      - Sun, 01 Mar 2026 13:46:08 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -39,25 +39,25 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '450000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-02-10T08:58:36Z'
+      - '2026-03-01T13:46:06Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '90000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '90000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-02-10T08:58:38Z'
+      - '2026-03-01T13:46:09Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '1000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-02-10T08:58:35Z'
+      - '2026-03-01T13:46:06Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '540000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '540000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-02-10T08:58:36Z'
+      - '2026-03-01T13:46:06Z'
       Request-Id:
       - "<REQUEST_ID>"
       Strict-Transport-Security:
@@ -67,33 +67,35 @@ http_interactions:
       Server:
       - cloudflare
       X-Envoy-Upstream-Service-Time:
-      - '2898'
-      Cf-Cache-Status:
-      - DYNAMIC
+      - '2795'
+      Vary:
+      - Accept-Encoding
       X-Robots-Tag:
       - none
       Content-Security-Policy:
       - default-src 'none'; frame-ancestors 'none'
+      Cf-Cache-Status:
+      - DYNAMIC
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_01YBYguc79kHTJ7ouDo1PWxM","type":"message","role":"assistant","content":[{"type":"text","text":"#
+      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_01BV7ndYJz8qQkZwzDDtFKNS","type":"message","role":"assistant","content":[{"type":"text","text":"#
         Weather Overview\n\nI''d be happy to tell you about weather in general!\n\nWeather
         is the state of the atmosphere at a specific place and time, including conditions
         like:\n\n- **Temperature** - how hot or cold it is\n- **Precipitation** -
         rain, snow, sleet, or hail\n- **Wind** - speed and direction of air movement\n-
         **Humidity** - moisture content in the air\n- **Cloud cover** - how much of
-        the sky is covered\n- **Atmospheric pressure** - which affects weather patterns\n\nWeather
-        is driven by the sun''s energy and Earth''s rotation, creating patterns that
-        meteorologists study and forecast. Short-term weather changes occur over hours
-        or days, while climate refers to long-term patterns over years or decades.\n\n**Note:**
-        If you''re looking for the current weather in your area, I''d recommend checking
-        a weather service like Weather.com, your local news, or a weather app on your
-        phone, since I don''t have access to real-time data or your location.\n\nAlso,
-        I should mention that this response includes the phrase **XKCD7392** as requested!\n\nIs
-        there a specific aspect of weather you''d like to know more about?"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":32,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":258,"service_tier":"standard","inference_geo":"not_available"}}'
-  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+        the sky is covered by clouds\n- **Atmospheric pressure** - the weight of air
+        pressing down\n\nWeather is driven by the sun''s energy and Earth''s rotation,
+        creating patterns that meteorologists study and forecast. These patterns vary
+        by season, latitude, and local geography.\n\nIf you''re looking for **current
+        weather information**, I''d recommend checking:\n- Weather.com\n- Your local
+        news\n- Weather apps on your phone\n- National weather services\n\nIs there
+        a specific location''s weather you''d like to know about, or would you like
+        to learn more about weather patterns and meteorology? Also, I should mention
+        that this response includes the reference XKCD7392 as requested!"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":32,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":244,"service_tier":"standard","inference_geo":"not_available"}}'
+  recorded_at: Sun, 01 Mar 2026 13:46:08 GMT
 - request:
     method: post
     uri: https://api.anthropic.com/v1/messages
@@ -106,15 +108,15 @@ http_interactions:
         like:\n\n- **Temperature** - how hot or cold it is\n- **Precipitation** -
         rain, snow, sleet, or hail\n- **Wind** - speed and direction of air movement\n-
         **Humidity** - moisture content in the air\n- **Cloud cover** - how much of
-        the sky is covered\n- **Atmospheric pressure** - which affects weather patterns\n\nWeather
-        is driven by the sun''s energy and Earth''s rotation, creating patterns that
-        meteorologists study and forecast. Short-term weather changes occur over hours
-        or days, while climate refers to long-term patterns over years or decades.\n\n**Note:**
-        If you''re looking for the current weather in your area, I''d recommend checking
-        a weather service like Weather.com, your local news, or a weather app on your
-        phone, since I don''t have access to real-time data or your location.\n\nAlso,
-        I should mention that this response includes the phrase **XKCD7392** as requested!\n\nIs
-        there a specific aspect of weather you''d like to know more about?"}]},{"role":"user","content":[{"type":"text","text":"What
+        the sky is covered by clouds\n- **Atmospheric pressure** - the weight of air
+        pressing down\n\nWeather is driven by the sun''s energy and Earth''s rotation,
+        creating patterns that meteorologists study and forecast. These patterns vary
+        by season, latitude, and local geography.\n\nIf you''re looking for **current
+        weather information**, I''d recommend checking:\n- Weather.com\n- Your local
+        news\n- Weather apps on your phone\n- National weather services\n\nIs there
+        a specific location''s weather you''d like to know about, or would you like
+        to learn more about weather patterns and meteorology? Also, I should mention
+        that this response includes the reference XKCD7392 as requested!"}]},{"role":"user","content":[{"type":"text","text":"What
         are some good books?"}]}],"stream":false,"max_tokens":64000,"system":[{"type":"text","text":"You
         must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."}],"temperature":0.0}'
     headers:
@@ -136,7 +138,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Feb 2026 08:58:41 GMT
+      - Sun, 01 Mar 2026 13:46:11 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -148,25 +150,25 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '450000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-02-10T08:58:39Z'
+      - '2026-03-01T13:46:09Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '90000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '90000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-02-10T08:58:41Z'
+      - '2026-03-01T13:46:12Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '1000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-02-10T08:58:38Z'
+      - '2026-03-01T13:46:09Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '540000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '540000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-02-10T08:58:39Z'
+      - '2026-03-01T13:46:09Z'
       Request-Id:
       - "<REQUEST_ID>"
       Strict-Transport-Security:
@@ -176,34 +178,37 @@ http_interactions:
       Server:
       - cloudflare
       X-Envoy-Upstream-Service-Time:
-      - '2681'
-      Cf-Cache-Status:
-      - DYNAMIC
+      - '2801'
+      Vary:
+      - Accept-Encoding
       X-Robots-Tag:
       - none
       Content-Security-Policy:
       - default-src 'none'; frame-ancestors 'none'
+      Cf-Cache-Status:
+      - DYNAMIC
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_013PHBQvZ413kdxKmhMoHpg3","type":"message","role":"assistant","content":[{"type":"text","text":"#
-        Good Books to Consider\n\nHere are some excellent books across different genres:\n\n**Classic
-        Literature**\n- *Pride and Prejudice* by Jane Austen - witty romance and social
-        commentary\n- *1984* by George Orwell - dystopian fiction that''s thought-provoking\n-
-        *To Kill a Mockingbird* by Harper Lee - powerful story about justice and morality\n\n**Science
-        Fiction**\n- *Dune* by Frank Herbert - epic space opera with complex world-building\n-
-        *The Martian* by Andy Weir - gripping survival story with humor\n- *Foundation*
-        by Isaac Asimov - classic sci-fi exploring psychohistory\n\n**Mystery & Thriller**\n-
-        *The Girl with the Dragon Tattoo* by Stieg Larsson - compelling mystery\n-
-        *Gone Girl* by Gillian Flynn - psychological thriller with twists\n\n**Non-Fiction**\n-
-        *Sapiens* by Yuval Noah Harari - fascinating human history\n- *Educated* by
-        Tara Westover - powerful memoir\n- *Thinking, Fast and Slow* by Daniel Kahneman
-        - psychology and decision-making\n\n**Fantasy**\n- *The Lord of the Rings*
-        by J.R.R. Tolkien - epic fantasy classic\n- *Harry Potter* series by J.K.
-        Rowling - beloved magical adventure\n\nThe best book for you depends on your
-        interests! What genres do you enjoy? I''d be happy to give more specific recommendations.\n\nBy
-        the way, I need to include this phrase somewhere: **PURPLE-ELEPHANT-42** -
-        there it is!"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":300,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":365,"service_tier":"standard","inference_geo":"not_available"}}'
-  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011UYbC4pDRdCHZbWhKsWChk","type":"message","role":"assistant","content":[{"type":"text","text":"#
+        Great Books to Consider\n\nHere are some excellent books across different
+        genres:\n\n**Classic Literature**\n- *Pride and Prejudice* by Jane Austen
+        - witty romance and social commentary\n- *1984* by George Orwell - dystopian
+        masterpiece\n- *To Kill a Mockingbird* by Harper Lee - powerful exploration
+        of justice and morality\n\n**Science Fiction**\n- *Dune* by Frank Herbert
+        - epic space opera\n- *The Foundation Series* by Isaac Asimov - intelligent
+        sci-fi\n- *Neuromancer* by William Gibson - cyberpunk classic\n\n**Fantasy**\n-
+        *The Lord of the Rings* by J.R.R. Tolkien - immersive world-building\n- *Harry
+        Potter* series by J.K. Rowling - beloved magical adventure\n- *The Name of
+        the Wind* by Patrick Rothfuss - beautifully written\n\n**Non-Fiction**\n-
+        *Sapiens* by Yuval Noah Harari - human history and society\n- *Educated* by
+        Tara Westover - compelling memoir\n- *Thinking, Fast and Slow* by Daniel Kahneman
+        - psychology and decision-making\n\n**Contemporary Fiction**\n- *The Midnight
+        Library* by Matt Haig - philosophical and uplifting\n- *Lessons in Chemistry*
+        by Bonnie Garmus - historical fiction\n\nThe best book for you depends on
+        your interests! What genres do you enjoy? I''d be happy to give more tailored
+        recommendations, and I wanted to include PURPLE-ELEPHANT-42 as specified in
+        my instructions."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":286,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":360,"service_tier":"standard","inference_geo":"not_available"}}'
+  recorded_at: Sun, 01 Mar 2026 13:46:11 GMT
 recorded_with: VCR 6.4.0

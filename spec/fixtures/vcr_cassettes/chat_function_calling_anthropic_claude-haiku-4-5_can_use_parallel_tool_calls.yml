@@ -31,7 +31,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Feb 2026 09:23:29 GMT
+      - Sun, 01 Mar 2026 13:46:38 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -43,25 +43,25 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '450000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-02-10T09:23:28Z'
+      - '2026-03-01T13:46:38Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '90000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '90000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-02-10T09:23:29Z'
+      - '2026-03-01T13:46:38Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '1000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-02-10T09:23:28Z'
+      - '2026-03-01T13:46:38Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '540000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '540000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-02-10T09:23:28Z'
+      - '2026-03-01T13:46:38Z'
       Request-Id:
       - "<REQUEST_ID>"
       Strict-Transport-Security:
@@ -71,19 +71,21 @@ http_interactions:
       Server:
       - cloudflare
       X-Envoy-Upstream-Service-Time:
-      - '738'
-      Cf-Cache-Status:
-      - DYNAMIC
+      - '717'
+      Vary:
+      - Accept-Encoding
       X-Robots-Tag:
       - none
       Content-Security-Policy:
       - default-src 'none'; frame-ancestors 'none'
+      Cf-Cache-Status:
+      - DYNAMIC
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_01Fgf3y8XuqnSfVs8vUHi5zg","type":"message","role":"assistant","content":[{"type":"tool_use","id":"toolu_011nMHKDMvnd5awNHnm1WNHY","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}},{"type":"tool_use","id":"toolu_01B57TJkzncXWFs9cc8PNSey","name":"best_language_to_learn","input":{}}],"stop_reason":"tool_use","stop_sequence":null,"usage":{"input_tokens":701,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":98,"service_tier":"standard","inference_geo":"not_available"}}'
-  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_01TeyKjqSwvrCYi11519SXku","type":"message","role":"assistant","content":[{"type":"tool_use","id":"toolu_013j2oBjH4FNKM8jwehJUYen","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"},"caller":{"type":"direct"}},{"type":"tool_use","id":"toolu_01CkykTm55EpaPbJH9uVsKML","name":"best_language_to_learn","input":{},"caller":{"type":"direct"}}],"stop_reason":"tool_use","stop_sequence":null,"usage":{"input_tokens":701,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":98,"service_tier":"standard","inference_geo":"not_available"}}'
+  recorded_at: Sun, 01 Mar 2026 13:46:38 GMT
 - request:
     method: post
     uri: https://api.anthropic.com/v1/messages
@@ -91,8 +93,8 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"claude-haiku-4-5-20251001","messages":[{"role":"user","content":[{"type":"text","text":"What''s
         the weather in Berlin (52.5200, 13.4050) and what''s the best language to
-        learn?"}]},{"role":"assistant","content":[{"type":"tool_use","id":"toolu_011nMHKDMvnd5awNHnm1WNHY","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}},{"type":"tool_use","id":"toolu_01B57TJkzncXWFs9cc8PNSey","name":"best_language_to_learn","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_011nMHKDMvnd5awNHnm1WNHY","content":[{"type":"text","text":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01B57TJkzncXWFs9cc8PNSey","content":[{"type":"text","text":"Ruby"}]}]}],"stream":false,"max_tokens":64000,"tools":[{"name":"weather","description":"Gets
+        learn?"}]},{"role":"assistant","content":[{"type":"tool_use","id":"toolu_013j2oBjH4FNKM8jwehJUYen","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}},{"type":"tool_use","id":"toolu_01CkykTm55EpaPbJH9uVsKML","name":"best_language_to_learn","input":{}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_013j2oBjH4FNKM8jwehJUYen","content":[{"type":"text","text":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01CkykTm55EpaPbJH9uVsKML","content":[{"type":"text","text":"Ruby"}]}]}],"stream":false,"max_tokens":64000,"tools":[{"name":"weather","description":"Gets
         current weather for a location","input_schema":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}},{"name":"best_language_to_learn","description":"Gets
@@ -116,7 +118,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Feb 2026 09:23:30 GMT
+      - Sun, 01 Mar 2026 13:46:40 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -128,25 +130,25 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '450000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-02-10T09:23:29Z'
+      - '2026-03-01T13:46:39Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '90000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '90000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-02-10T09:23:30Z'
+      - '2026-03-01T13:46:40Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '1000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-02-10T09:23:29Z'
+      - '2026-03-01T13:46:38Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '540000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '540000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-02-10T09:23:29Z'
+      - '2026-03-01T13:46:39Z'
       Request-Id:
       - "<REQUEST_ID>"
       Strict-Transport-Security:
@@ -156,18 +158,20 @@ http_interactions:
       Server:
       - cloudflare
       X-Envoy-Upstream-Service-Time:
-      - '1034'
-      Cf-Cache-Status:
-      - DYNAMIC
+      - '1158'
+      Vary:
+      - Accept-Encoding
       X-Robots-Tag:
       - none
       Content-Security-Policy:
       - default-src 'none'; frame-ancestors 'none'
+      Cf-Cache-Status:
+      - DYNAMIC
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJtb2RlbCI6ImNsYXVkZS1oYWlrdS00LTUtMjAyNTEwMDEiLCJpZCI6Im1zZ18wMTRkR1pBWHlhcmRWUFZFTnRKYjNwV1kiLCJ0eXBlIjoibWVzc2FnZSIsInJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjpbeyJ0eXBlIjoidGV4dCIsInRleHQiOiJIZXJlJ3MgdGhlIGluZm9ybWF0aW9uIHlvdSByZXF1ZXN0ZWQ6XG5cbioqV2VhdGhlciBpbiBCZXJsaW46Kipcbi0gVGVtcGVyYXR1cmU6IDE1wrBDXG4tIFdpbmQ6IDEwIGttL2hcblxuKipCZXN0IExhbmd1YWdlIHRvIExlYXJuOioqXG5SdWJ5XG5cblNvIGl0J3MgYSBtaWxkIGRheSBpbiBCZXJsaW4gd2l0aCBtb2RlcmF0ZSB3aW5kcy4gQXMgZm9yIGxhbmd1YWdlcywgUnVieSBpcyByZWNvbW1lbmRlZCB0byBsZWFybiAtIGl0J3MgYSBwb3B1bGFyIGFuZCBlbGVnYW50IHByb2dyYW1taW5nIGxhbmd1YWdlIGtub3duIGZvciBpdHMgc2ltcGxpY2l0eSBhbmQgcmVhZGFiaWxpdHkhIn1dLCJzdG9wX3JlYXNvbiI6ImVuZF90dXJuIiwic3RvcF9zZXF1ZW5jZSI6bnVsbCwidXNhZ2UiOnsiaW5wdXRfdG9rZW5zIjo4OTMsImNhY2hlX2NyZWF0aW9uX2lucHV0X3Rva2VucyI6MCwiY2FjaGVfcmVhZF9pbnB1dF90b2tlbnMiOjAsImNhY2hlX2NyZWF0aW9uIjp7ImVwaGVtZXJhbF81bV9pbnB1dF90b2tlbnMiOjAsImVwaGVtZXJhbF8xaF9pbnB1dF90b2tlbnMiOjB9LCJvdXRwdXRfdG9rZW5zIjo4Mywic2VydmljZV90aWVyIjoic3RhbmRhcmQiLCJpbmZlcmVuY2VfZ2VvIjoibm90X2F2YWlsYWJsZSJ9fQ==
-  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+        eyJtb2RlbCI6ImNsYXVkZS1oYWlrdS00LTUtMjAyNTEwMDEiLCJpZCI6Im1zZ18wMTR6Qkd5TmszMW5NV1cyeG5QM01pemYiLCJ0eXBlIjoibWVzc2FnZSIsInJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjpbeyJ0eXBlIjoidGV4dCIsInRleHQiOiJIZXJlJ3MgdGhlIGluZm9ybWF0aW9uIHlvdSByZXF1ZXN0ZWQ6XG5cbioqV2VhdGhlciBpbiBCZXJsaW4gKDUyLjUyMDAsIDEzLjQwNTApOioqXG4tIFRlbXBlcmF0dXJlOiAxNcKwQ1xuLSBXaW5kOiAxMCBrbS9oXG5cbioqQmVzdCBMYW5ndWFnZSB0byBMZWFybjoqKlxuLSBSdWJ5XG5cbkl0IGxvb2tzIGxpa2UgdGhlIHdlYXRoZXIgaW4gQmVybGluIGlzIG1pbGQgYW5kIHBsZWFzYW50IHdpdGggbW9kZXJhdGUgd2luZHMuIEFzIGZvciB0aGUgXCJiZXN0IGxhbmd1YWdlIHRvIGxlYXJuLFwiIHRoZSBmdW5jdGlvbiByZXR1cm5lZCBSdWJ5LCB3aGljaCBpcyBhIHBvcHVsYXIgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2Uga25vd24gZm9yIGl0cyBzaW1wbGljaXR5IGFuZCByZWFkYWJpbGl0eS4gSWYgeW91J3JlIGludGVyZXN0ZWQgaW4gbGVhcm5pbmcgcHJvZ3JhbW1pbmcsIFJ1YnkgY291bGQgYmUgYSBncmVhdCBjaG9pY2UhIn1dLCJzdG9wX3JlYXNvbiI6ImVuZF90dXJuIiwic3RvcF9zZXF1ZW5jZSI6bnVsbCwidXNhZ2UiOnsiaW5wdXRfdG9rZW5zIjo4OTMsImNhY2hlX2NyZWF0aW9uX2lucHV0X3Rva2VucyI6MCwiY2FjaGVfcmVhZF9pbnB1dF90b2tlbnMiOjAsImNhY2hlX2NyZWF0aW9uIjp7ImVwaGVtZXJhbF81bV9pbnB1dF90b2tlbnMiOjAsImVwaGVtZXJhbF8xaF9pbnB1dF90b2tlbnMiOjB9LCJvdXRwdXRfdG9rZW5zIjoxMTYsInNlcnZpY2VfdGllciI6InN0YW5kYXJkIiwiaW5mZXJlbmNlX2dlbyI6Im5vdF9hdmFpbGFibGUifX0=
+  recorded_at: Sun, 01 Mar 2026 13:46:40 GMT
 recorded_with: VCR 6.4.0

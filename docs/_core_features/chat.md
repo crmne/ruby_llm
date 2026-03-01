@@ -534,7 +534,7 @@ end
 
 Not all models support structured output. Currently supported:
 - **OpenAI**: GPT-4o, GPT-4o-mini, and newer models
-- **Anthropic**: No native structured output support. You can simulate it with tool definitions or careful prompting
+- **Anthropic**: Claude 4.5+ models (Haiku, Sonnet, Opus)
 - **Gemini**: Gemini 1.5 Pro/Flash and newer
 
 Models that don't support structured output:

@@ -34,6 +34,9 @@ module RubyLLM
           additional_fields = render_additional_model_request_fields(thinking)
           payload[:additionalModelRequestFields] = additional_fields if additional_fields
 
+          output_config = build_output_config(schema)
+          payload[:outputConfig] = output_config if output_config
+
           payload
         end
 
@@ -236,6 +239,26 @@ module RubyLLM
           fields = RubyLLM::Utils.deep_merge(fields, reasoning_fields) if reasoning_fields
 
           fields.empty? ? nil : fields
+        end
+
+        def build_output_config(schema)
+          return nil unless schema
+
+          cleaned = RubyLLM::Utils.deep_dup(schema)
+          cleaned.delete(:strict)
+          cleaned.delete('strict')
+
+          {
+            textFormat: {
+              type: 'json_schema',
+              structure: {
+                jsonSchema: {
+                  schema: JSON.generate(cleaned),
+                  name: 'response'
+                }
+              }
+            }
+          }
         end
 
         def render_reasoning_fields(thinking)

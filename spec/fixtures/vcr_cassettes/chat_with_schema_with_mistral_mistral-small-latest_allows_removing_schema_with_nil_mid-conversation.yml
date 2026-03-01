@@ -1,0 +1,150 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.mistral.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"mistral-small-latest","messages":[{"role":"user","content":"Generate
+        a person named Bob"}],"stream":false,"response_format":{"type":"json_schema","json_schema":{"name":"response","schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"integer"}},"required":["name","age"],"additionalProperties":false},"strict":true}}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Authorization:
+      - Bearer <MISTRAL_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sun, 01 Mar 2026 14:17:41 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Mistral-Correlation-Id:
+      - '019ca9c3-18e1-779e-a1c7-7dfb9d7f52eb'
+      X-Kong-Request-Id:
+      - '019ca9c3-18e1-779e-a1c7-7dfb9d7f52eb'
+      X-Ratelimit-Limit-Tokens-Minute:
+      - '2000000'
+      X-Ratelimit-Remaining-Tokens-Minute:
+      - '1999941'
+      X-Ratelimit-Tokens-Query-Cost:
+      - '26'
+      X-Ratelimit-Limit-Req-Minute:
+      - '360'
+      X-Ratelimit-Remaining-Req-Minute:
+      - '358'
+      X-Envoy-Upstream-Service-Time:
+      - '195'
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Kong-Upstream-Latency:
+      - '196'
+      X-Kong-Proxy-Latency:
+      - '10'
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"1d61c0496e584b0d96eaf4a5ac955d18","created":1772374661,"model":"mistral-small-latest","usage":{"prompt_tokens":8,"total_tokens":26,"completion_tokens":18,"prompt_tokens_details":{"cached_tokens":0}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"{\n  \"name\":
+        \"Bob\",\n  \"age\": 30\n}"}}]}'
+  recorded_at: Sun, 01 Mar 2026 14:17:41 GMT
+- request:
+    method: post
+    uri: https://api.mistral.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"mistral-small-latest","messages":[{"role":"user","content":"Generate
+        a person named Bob"},{"role":"assistant","content":"{\"name\":\"Bob\",\"age\":30}"},{"role":"user","content":"Now
+        just tell me about Ruby"}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Authorization:
+      - Bearer <MISTRAL_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sun, 01 Mar 2026 14:17:44 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Mistral-Correlation-Id:
+      - '019ca9c3-19f7-7efe-bb44-e8b8ad3f28d3'
+      X-Kong-Request-Id:
+      - '019ca9c3-19f7-7efe-bb44-e8b8ad3f28d3'
+      X-Ratelimit-Limit-Tokens-Minute:
+      - '2000000'
+      X-Ratelimit-Remaining-Tokens-Minute:
+      - '1999564'
+      X-Ratelimit-Tokens-Query-Cost:
+      - '377'
+      X-Ratelimit-Limit-Req-Minute:
+      - '360'
+      X-Ratelimit-Remaining-Req-Minute:
+      - '357'
+      X-Envoy-Upstream-Service-Time:
+      - '2871'
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Kong-Upstream-Latency:
+      - '2872'
+      X-Kong-Proxy-Latency:
+      - '7'
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImFjMjMzMDUyMGY4ZjRlMjg5MzMyMmU3Mzg1ZThkNzc4IiwiY3JlYXRlZCI6MTc3MjM3NDY2MSwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsInVzYWdlIjp7InByb21wdF90b2tlbnMiOjI3LCJ0b3RhbF90b2tlbnMiOjM3NywiY29tcGxldGlvbl90b2tlbnMiOjM1MCwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjB9fSwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImZpbmlzaF9yZWFzb24iOiJzdG9wIiwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwidG9vbF9jYWxscyI6bnVsbCwiY29udGVudCI6IlJ1YnkgaXMgYSBkeW5hbWljLCBvcGVuLXNvdXJjZSBwcm9ncmFtbWluZyBsYW5ndWFnZSBrbm93biBmb3IgaXRzIHNpbXBsaWNpdHkgYW5kIHByb2R1Y3Rpdml0eS4gQ3JlYXRlZCBieSAqKll1a2loaXJvIFwiTWF0elwiIE1hdHN1bW90byoqIGluIHRoZSBtaWQtMTk5MHMsIFJ1YnkgZW1waGFzaXplcyBkZXZlbG9wZXIgaGFwcGluZXNzIHdpdGggYSBjbGVhbiwgcmVhZGFibGUgc3ludGF4IGluc3BpcmVkIGJ5IGxhbmd1YWdlcyBsaWtlIFBlcmwsIFNtYWxsdGFsaywgYW5kIExpc3AuXG5cbiMjIyAqKktleSBGZWF0dXJlcyBvZiBSdWJ5OioqXG4xLiAqKk9iamVjdC1PcmllbnRlZCoqIOKAkyBFdmVyeXRoaW5nIGluIFJ1YnkgaXMgYW4gb2JqZWN0LCBtYWtpbmcgaXQgaW50dWl0aXZlIGZvciBPT1AgZGV2ZWxvcG1lbnQuXG4yLiAqKkR5bmFtaWMgVHlwaW5nKiog4oCTIFZhcmlhYmxlcyBkb27igJl0IG5lZWQgZXhwbGljaXQgdHlwZSBkZWNsYXJhdGlvbnMuXG4zLiAqKk1ldGFwcm9ncmFtbWluZyoqIOKAkyBSdWJ5IGFsbG93cyBjb2RlIHRvIG1vZGlmeSBpdHNlbGYgYXQgcnVudGltZSwgZW5hYmxpbmcgcG93ZXJmdWwgYWJzdHJhY3Rpb25zLlxuNC4gKipHZW1zIChQYWNrYWdlIE1hbmFnZXIpKiog4oCTIFJ1YnlHZW1zIGlzIGEgcmljaCBlY29zeXN0ZW0gb2YgbGlicmFyaWVzIGZvciBhbG1vc3QgYW55IHRhc2suXG41LiAqKlJ1Ynkgb24gUmFpbHMqKiDigJMgQSBwb3B1bGFyIHdlYiBmcmFtZXdvcmsgYnVpbHQgb24gUnVieSwga25vd24gZm9yIHJhcGlkIGRldmVsb3BtZW50IChlLmcuLCBHaXRIdWIsIFNob3BpZnkpLlxuXG4jIyMgKipFeGFtcGxlIENvZGU6KipcbmBgYHJ1YnlcbiMgU2ltcGxlIFJ1YnkgZXhhbXBsZVxucHV0cyBcIkhlbGxvLCBXb3JsZCFcIlxuXG4jIERlZmluZSBhIGNsYXNzXG5jbGFzcyBQZXJzb25cbiAgYXR0cl9hY2Nlc3NvciA6bmFtZSwgOmFnZVxuXG4gIGRlZiBpbml0aWFsaXplKG5hbWUsIGFnZSlcbiAgICBAbmFtZSA9IG5hbWVcbiAgICBAYWdlID0gYWdlXG4gIGVuZFxuXG4gIGRlZiBncmVldFxuICAgIHB1dHMgXCJIaSwgSSdtICN7QG5hbWV9IGFuZCBJJ20gI3tAYWdlfSB5ZWFycyBvbGQuXCJcbiAgZW5kXG5lbmRcblxuIyBDcmVhdGUgYW4gaW5zdGFuY2VcbmJvYiA9IFBlcnNvbi5uZXcoXCJCb2JcIiwgMzApXG5ib2IuZ3JlZXRcbmBgYFxuXG4jIyMgKipXaHkgVXNlIFJ1Ynk/Kipcbi0gR3JlYXQgZm9yICoqd2ViIGRldmVsb3BtZW50KiogKFJhaWxzKSwgc2NyaXB0aW5nLCBhbmQgYXV0b21hdGlvbi5cbi0gU3Ryb25nIGNvbW11bml0eSBhbmQgZG9jdW1lbnRhdGlvbi5cbi0gRmxleGlibGUgYW5kIGV4cHJlc3NpdmUgc3ludGF4LlxuXG5Xb3VsZCB5b3UgbGlrZSBhIGRlZXBlciBkaXZlIGludG8gYW55IHNwZWNpZmljIGFzcGVjdCBvZiBSdWJ5PyJ9fV19
+  recorded_at: Sun, 01 Mar 2026 14:17:44 GMT
+recorded_with: VCR 6.4.0

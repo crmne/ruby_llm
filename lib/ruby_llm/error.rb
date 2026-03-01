@@ -14,6 +14,7 @@ module RubyLLM
 
   # Error classes for non-HTTP errors
   class ConfigurationError < StandardError; end
+  class PromptNotFoundError < StandardError; end
   class InvalidRoleError < StandardError; end
   class ModelNotFoundError < StandardError; end
   class UnsupportedAttachmentError < StandardError; end
@@ -62,6 +63,10 @@ module RubyLLM
         when 200..399
           message
         when 400
+          if context_length_exceeded?(message)
+            raise ContextLengthExceededError.new(response, message || 'Context length exceeded')
+          end
+
           raise BadRequestError.new(response, message || 'Invalid request - please check your input')
         when 401
           raise UnauthorizedError.new(response, message || 'Invalid API key - check your credentials')
