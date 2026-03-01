@@ -656,7 +656,7 @@ class MessagesController < ApplicationController
     @chat = Chat.find(params[:chat_id])
 
     # Create and persist the user message immediately
-    @chat.create_user_message(params[:content])
+    @chat.add_message(role: :user, content: params[:content])
 
     # Process AI response in background
     ChatStreamJob.perform_later(@chat.id)
@@ -669,7 +669,7 @@ class MessagesController < ApplicationController
 end
 ```
 
-The `create_user_message` method provides instant feedback while processing continues in the background.
+The `add_message` method provides instant feedback while processing continues in the background.
 
 ### Full Streaming Implementation
 
