@@ -20,7 +20,7 @@ RSpec.describe RubyLLM::Chat do
 
     # Test providers that support structured output with JSON schema
     # Note: Only test models that have json_schema support, not just json_object
-    CHAT_MODELS.select { |model_info| %i[openai anthropic].include?(model_info[:provider]) }.each do |model_info|
+    STRUCTURED_OUTPUT_MODELS.each do |model_info|
       model = model_info[:model]
       provider = model_info[:provider]
 
@@ -65,23 +65,6 @@ RSpec.describe RubyLLM::Chat do
           expect(response2.content).to be_a(String)
           expect(response2.content).to include('Ruby')
         end
-      end
-    end
-
-    # Test Bedrock provider with Claude model
-    context 'with bedrock/claude-haiku-4-5' do
-      let(:chat) { RubyLLM.chat(model: 'claude-haiku-4-5', provider: :bedrock) }
-
-      it 'accepts a JSON schema and returns structured output' do
-        skip 'Model does not support structured output' unless chat.model.structured_output?
-
-        response = chat
-                   .with_schema(person_schema)
-                   .ask('Generate a person named Bob who is 35 years old')
-
-        expect(response.content).to be_a(Hash)
-        expect(response.content['name']).to eq('Bob')
-        expect(response.content['age']).to eq(35)
       end
     end
 

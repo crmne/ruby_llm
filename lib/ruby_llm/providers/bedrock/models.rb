@@ -7,7 +7,7 @@ module RubyLLM
       module Models
         module_function
 
-        REGION_PREFIXES = %w[us eu ap sa ca me af il].freeze
+        REGION_PREFIXES = %w[global us eu ap sa ca me af il].freeze
 
         def models_api_base
           "https://bedrock.#{bedrock_region}.amazonaws.com"

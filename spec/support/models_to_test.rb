@@ -24,6 +24,13 @@ chat_models = [
 ].freeze
 CHAT_MODELS = filter_local_providers(chat_models).freeze
 
+structured_output_models = [
+  { provider: :openai, model: 'gpt-5-nano' },
+  { provider: :anthropic, model: 'claude-haiku-4-5' },
+  { provider: :bedrock, model: 'claude-haiku-4-5' }
+]
+STRUCTURED_OUTPUT_MODELS = structured_output_models.freeze
+
 thinking_models = [
   { provider: :anthropic, model: 'claude-haiku-4-5' },
   { provider: :azure, model: 'Kimi-K2.5' },
