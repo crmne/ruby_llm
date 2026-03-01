@@ -171,9 +171,68 @@ RSpec.describe RubyLLM::Chat do
         expect(response.content).to include('15')
         expect(response.content).to include('10')
       end
+
+      it "#{provider}/#{model} deals with non-existent tool calls" do
+        hallucinated_tool_call = RubyLLM::ToolCall.new(
+          id: 'call_1',
+          name: 'list_tools',
+          arguments: {}
+        )
+
+        tool_results_received = []
+
+        chat = RubyLLM.chat(model: model, provider: provider)
+                      .with_tool(Weather)
+                      .on_tool_result { |result| tool_results_received << result }
+
+        final_answer = 'The `list_tools` tool is not supported, but I see you have the `weather` tool.'
+        allow(chat.instance_variable_get(:@provider)).to receive(:complete).and_return(
+          RubyLLM::Message.new(
+            role: :assistant,
+            content: '',
+            tool_calls: { hallucinated_tool_call.id => hallucinated_tool_call }
+          ),
+          RubyLLM::Message.new(
+            role: :assistant,
+            content: final_answer
+          )
+        )
+
+        response = chat.ask('What tools do you support?')
+        expect(response.content).to eq(final_answer)
+        expect(tool_results_received).to eq([
+                                              { error: 'Model tried to call unavailable tool `list_tools`. ' \
+                                                       'Available tools: ["weather"].' }
+                                            ])
+      end
     end
 
-    CHAT_MODELS.each do |model_info| # rubocop:disable Style/CombinableLoops
+    describe 'thought signatures' do
+      [
+        { provider: :gemini, model: 'gemini-3-pro-preview' },
+        { provider: :vertexai, model: 'gemini-3-pro-preview' }
+      ].each do |model_info|
+        provider = model_info[:provider]
+        model = model_info[:model]
+
+        it "#{provider}/#{model} includes thought signatures for tool calls" do
+          supports_functions? provider, model
+
+          chat = RubyLLM.chat(model: model, provider: provider)
+                        .with_thinking(effort: :low)
+                        .with_tool(Weather)
+
+          response = chat.ask("What's the weather in Berlin? (52.5200, 13.4050)")
+          expect(response.content).to include('15')
+
+          tool_message = chat.messages.find { |message| message.tool_calls&.any? }
+          tool_call = tool_message&.tool_calls&.values&.first # rubocop:disable Style/SafeNavigationChainLength
+          expect(tool_call&.thought_signature).to be_present
+        end
+      end
+    end
+
+    CHAT_MODELS.each do |model_info|
       model = model_info[:model]
       provider = model_info[:provider]
       model = 'claude-sonnet-4' if provider == :bedrock # haiku can't do parallel tool calls
@@ -557,6 +616,21 @@ RSpec.describe RubyLLM::Chat do
 
     it 'returns sub-agent result through halt' do
       chat = RubyLLM.chat.with_tool(HandoffTool)
+      provider = chat.instance_variable_get(:@provider)
+      tool_call = RubyLLM::ToolCall.new(
+        id: 'call_1',
+        name: 'handoff',
+        arguments: { 'query' => 'Please handle this query: What is Ruby?' }
+      )
+
+      allow(provider).to receive(:complete).and_return(
+        RubyLLM::Message.new(
+          role: :assistant,
+          content: '',
+          tool_calls: { tool_call.id => tool_call }
+        )
+      )
+
       response = chat.ask('Please handle this query: What is Ruby?')
 
       expect(response).to be_a(RubyLLM::Tool::Halt)

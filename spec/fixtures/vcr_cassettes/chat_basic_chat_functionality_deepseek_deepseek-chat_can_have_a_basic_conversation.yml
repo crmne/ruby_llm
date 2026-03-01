@@ -9,7 +9,7 @@ http_interactions:
         2 + 2?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer <DEEPSEEK_API_KEY>
       Content-Type:
@@ -23,35 +23,37 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Date:
-      - Mon, 03 Nov 2025 13:55:48 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Date:
+      - Tue, 10 Feb 2026 09:00:01 GMT
+      Server:
+      - elb
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 3351a7d2b43800949c7919a4f1f3e7d5
+      - 7fab8a2e723ff41ec49eadc786e87d8d
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Server:
-      - cloudflare
-      Cf-Ray:
-      - "<CF_RAY>"
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 0b4755ff9e0187d49a360cf152712652.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - BKK50-P3
+      X-Amz-Cf-Id:
+      - LlT_PL4QnUW2qNuZCf95nzKwY8f7DyP3LAghFUOPWH2OBDjPoTYHhA==
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6ImJjY2UyODY5LWFlZTgtNGQ2NS05YzQyLTg4MjNkYWM3MDVmZSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NjIxNzgxNDgsIm1vZGVsIjoiZGVlcHNlZWstY2hhdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiVGhhdOKAmXMgYSBjbGFzc2ljISAgXG5cbioqMiArIDIgPSA0KiogIFxuXG5JdOKAmXMgb25lIG9mIHRoZSBmaXJzdCBtYXRoIGZhY3RzIG1hbnkgb2YgdXMgbGVhcm4uIPCfmIoifSwibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjoxMiwiY29tcGxldGlvbl90b2tlbnMiOjMzLCJ0b3RhbF90b2tlbnMiOjQ1LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MH0sInByb21wdF9jYWNoZV9oaXRfdG9rZW5zIjowLCJwcm9tcHRfY2FjaGVfbWlzc190b2tlbnMiOjEyfSwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfZmZjNzI4MWQ0OF9wcm9kMDgyMF9mcDhfa3ZjYWNoZSJ9
-  recorded_at: Mon, 03 Nov 2025 13:55:50 GMT
-recorded_with: VCR 6.3.1
+        eyJpZCI6Ijk0MjhlYTYxLTY2NjUtNGQzNC1hZTZmLTI3ZjgzOTI1NzMwOSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NzA3MTQwMDEsIm1vZGVsIjoiZGVlcHNlZWstY2hhdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiVGhhdOKAmXMgYSBjbGFzc2ljISAgXG5cblxcW1xuMiArIDIgPSA0XG5cXF1cblxuSWYgeW914oCZcmUgYXNraW5nIGluIGEgbW9yZSBwbGF5ZnVsIG9yIHBoaWxvc29waGljYWwgY29udGV4dCDigJQgbGlrZSBpbiBjZXJ0YWluIGludGVybmV0IG1lbWVzIOKAlCBzb21lIG1pZ2h0IGpva2UgYWJvdXQgaXQgYmVpbmcg4oCcMjLigJ0gb3Ig4oCcNeKAnSAow6AgbGEgKjE5ODQqKSwgYnV0IG1hdGhlbWF0aWNhbGx5LCB0aGUgYW5zd2VyIGlzICoqNCoqLiDwn5iKIn0sImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6MTIsImNvbXBsZXRpb25fdG9rZW5zIjo3MCwidG90YWxfdG9rZW5zIjo4MiwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjB9LCJwcm9tcHRfY2FjaGVfaGl0X3Rva2VucyI6MCwicHJvbXB0X2NhY2hlX21pc3NfdG9rZW5zIjoxMn0sInN5c3RlbV9maW5nZXJwcmludCI6ImZwX2VhYWI4ZDExNGJfcHJvZDA4MjBfZnA4X2t2Y2FjaGUifQ==
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+recorded_with: VCR 6.4.0
