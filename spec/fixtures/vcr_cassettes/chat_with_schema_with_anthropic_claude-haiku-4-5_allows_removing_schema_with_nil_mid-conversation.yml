@@ -5,8 +5,8 @@ http_interactions:
     uri: https://api.anthropic.com/v1/messages
     body:
       encoding: UTF-8
-      string: '{"model":"claude-haiku-4-5-20251001","messages":[{"role":"user","content":[{"type":"text","text":"Count
-        from 1 to 3"}]}],"stream":true,"max_tokens":64000,"temperature":0.0}'
+      string: '{"model":"claude-haiku-4-5-20251001","messages":[{"role":"user","content":[{"type":"text","text":"Generate
+        a person named Bob"}]}],"stream":false,"max_tokens":64000,"output_config":{"format":{"type":"json_schema","schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"integer"}},"required":["name","age"],"additionalProperties":false}}}}'
     headers:
       User-Agent:
       - Faraday v2.14.1
@@ -26,39 +26,37 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 01 Mar 2026 13:46:14 GMT
+      - Sun, 01 Mar 2026 13:47:11 GMT
       Content-Type:
-      - text/event-stream; charset=utf-8
+      - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Cache-Control:
-      - no-cache
       Anthropic-Ratelimit-Input-Tokens-Limit:
       - '450000'
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '450000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-03-01T13:46:13Z'
+      - '2026-03-01T13:47:11Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '90000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '90000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-03-01T13:46:13Z'
+      - '2026-03-01T13:47:11Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '1000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-03-01T13:46:13Z'
+      - '2026-03-01T13:47:09Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '540000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '540000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-03-01T13:46:13Z'
+      - '2026-03-01T13:47:11Z'
       Request-Id:
       - "<REQUEST_ID>"
       Strict-Transport-Security:
@@ -68,7 +66,7 @@ http_interactions:
       Server:
       - cloudflare
       X-Envoy-Upstream-Service-Time:
-      - '312'
+      - '2205'
       Vary:
       - Accept-Encoding
       X-Robots-Tag:
@@ -81,36 +79,16 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: |+
-        event: message_start
-        data: {"type":"message_start","message":{"model":"claude-haiku-4-5-20251001","id":"msg_01DzhMuVepS7vZyzioufoDAD","type":"message","role":"assistant","content":[],"stop_reason":null,"stop_sequence":null,"usage":{"input_tokens":15,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":1,"service_tier":"standard","inference_geo":"not_available"}}     }
-
-        event: content_block_start
-        data: {"type":"content_block_start","index":0,"content_block":{"type":"text","text":""} }
-
-        event: ping
-        data: {"type": "ping"}
-
-        event: content_block_delta
-        data: {"type":"content_block_delta","index":0,"delta":{"type":"text_delta","text":"1\n2\n3"}               }
-
-        event: content_block_stop
-        data: {"type":"content_block_stop","index":0     }
-
-        event: message_delta
-        data: {"type":"message_delta","delta":{"stop_reason":"end_turn","stop_sequence":null},"usage":{"input_tokens":15,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":9}      }
-
-        event: message_stop
-        data: {"type":"message_stop"    }
-
-  recorded_at: Sun, 01 Mar 2026 13:46:14 GMT
+      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_01Ho1oQQn9h62dtfTB3QPjX4","type":"message","role":"assistant","content":[{"type":"text","text":"{\"name\":\"Bob\",\"age\":30}"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":174,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":12,"service_tier":"standard","inference_geo":"not_available"}}'
+  recorded_at: Sun, 01 Mar 2026 13:47:11 GMT
 - request:
     method: post
     uri: https://api.anthropic.com/v1/messages
     body:
       encoding: UTF-8
-      string: '{"model":"claude-haiku-4-5-20251001","messages":[{"role":"user","content":[{"type":"text","text":"Count
-        from 1 to 3"}]}],"stream":false,"max_tokens":64000,"temperature":0.0}'
+      string: '{"model":"claude-haiku-4-5-20251001","messages":[{"role":"user","content":[{"type":"text","text":"Generate
+        a person named Bob"}]},{"role":"assistant","content":[{"type":"text","text":"{\"name\":\"Bob\",\"age\":30}"}]},{"role":"user","content":[{"type":"text","text":"Now
+        just tell me about Ruby"}]}],"stream":false,"max_tokens":64000}'
     headers:
       User-Agent:
       - Faraday v2.14.1
@@ -130,7 +108,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 01 Mar 2026 13:46:14 GMT
+      - Sun, 01 Mar 2026 13:47:13 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -142,25 +120,25 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '450000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-03-01T13:46:14Z'
+      - '2026-03-01T13:47:11Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '90000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '90000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-03-01T13:46:14Z'
+      - '2026-03-01T13:47:13Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '1000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-03-01T13:46:14Z'
+      - '2026-03-01T13:47:11Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '540000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '540000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-03-01T13:46:14Z'
+      - '2026-03-01T13:47:11Z'
       Request-Id:
       - "<REQUEST_ID>"
       Strict-Transport-Security:
@@ -170,7 +148,7 @@ http_interactions:
       Server:
       - cloudflare
       X-Envoy-Upstream-Service-Time:
-      - '554'
+      - '2415'
       Vary:
       - Accept-Encoding
       X-Robots-Tag:
@@ -183,7 +161,20 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_015Ax9LZFxwiyA8xfoR3gBq2","type":"message","role":"assistant","content":[{"type":"text","text":"1\n2\n3"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":15,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":9,"service_tier":"standard","inference_geo":"not_available"}}'
-  recorded_at: Sun, 01 Mar 2026 13:46:14 GMT
+      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_015xVPDVhZ8BTcNiMLD7qPiz","type":"message","role":"assistant","content":[{"type":"text","text":"Ruby
+        is a dynamic, open-source programming language known for its simplicity and
+        elegance. Here are some key points about it:\n\n**Key Characteristics:**\n-
+        **Readable syntax** - Ruby prioritizes clean, human-readable code\n- **Object-oriented**
+        - Everything is an object in Ruby\n- **Dynamically typed** - Types are determined
+        at runtime\n- **Flexible** - Supports multiple programming paradigms\n\n**Popular
+        Uses:**\n- Web development (especially with Ruby on Rails framework)\n- Scripting
+        and automation\n- Data processing\n- DevOps tools\n\n**Ruby on Rails:**\n-
+        A powerful web framework built with Ruby\n- Follows conventions like MVC (Model-View-Controller)\n-
+        Used by companies like GitHub, Airbnb, and Shopify\n\n**Advantages:**\n- Quick
+        to learn and write\n- Strong community and extensive libraries (gems)\n- Great
+        for rapid development and prototyping\n\n**Disadvantages:**\n- Generally slower
+        performance than compiled languages\n- Less suitable for performance-critical
+        applications\n\nRuby remains popular for startups and web development due
+        to its productivity and developer-friendly nature."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":33,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":250,"service_tier":"standard","inference_geo":"not_available"}}'
+  recorded_at: Sun, 01 Mar 2026 13:47:13 GMT
 recorded_with: VCR 6.4.0
-...
