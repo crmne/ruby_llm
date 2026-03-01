@@ -12,7 +12,7 @@ http_interactions:
         description"},"status":{"description":"Optional task status","anyOf":[{"type":"string","enum":["pending","done"]},{"type":"null"}]}},"required":["task","status"],"additionalProperties":false,"strict":true}}}],"enable_thinking":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -27,26 +27,38 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Fri, 09 Jan 2026 16:04:46 GMT
-      Content-Length:
-      - '1392'
+      - Tue, 10 Feb 2026 14:05:27 GMT
+      Transfer-Encoding:
+      - chunked
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-731","object":"chat.completion","created":1767974686,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
-        let''s see. The user wants me to call the any_of_params function for the task
+      string: '{"id":"chatcmpl-216","object":"chat.completion","created":1770732327,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
+        let me see. The user wants me to call the any-of params tool for the task
         \"Review PR\" with status \"pending\" and report the result.\n\nFirst, I need
-        to check the function''s parameters. The function requires \"task\" and \"status\".
-        The status has an anyOf condition: it can be a string from the enum [\"pending\",
-        \"done\"] or null. Since the user provided \"pending\", which is valid, that''s
-        acceptable.\n\nSo, the arguments should be task: \"Review PR\" and status:
-        \"pending\". I need to structure this into a JSON object. Let me make sure
-        there are no typos. The function name is any_of_params. \n\nWait, the parameters
-        are in a properties object, and both task and status are required. The status''s
-        anyOf allows the enum values or null. Since the user specified \"pending\",
-        which is in the enum, it''s valid. \n\nI think that''s all. Just need to format
-        the tool_call correctly with the name and arguments.\n","tool_calls":[{"id":"call_sr0p2q1f","index":0,"type":"function","function":{"name":"any_of_params","arguments":"{\"status\":\"pending\",\"task\":\"Review
-        PR\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":193,"completion_tokens":242,"total_tokens":435}}
+        to understand the tool''s structure. The function provided has parameters
+        that use the anyOf DSL. The parameters are status and task. The status can
+        be either a string from the enum [\"pending\", \"done\"] or null. The task
+        is a string.\n\nSo, the user is specifying the task as \"Review PR\" and the
+        status as \"pending\". Both are valid because \"pending\" is in the enum.
+        I need to construct the function call with these parameters.\n\nWait, the
+        function''s parameters are under any_of_params. The function name might be
+        something like any_of_params, but looking back, the tool''s function is described
+        as any_of_params with the parameters status and task. But the actual function
+        name isn''t clear. Wait, the tools section says \"any_of_params Uses params
+        DSL any_of support {object \u003cnil\u003e \u003cnil\u003e [task status] ...}\".
+        Hmm, maybe the function is named \"any_of_params\" or perhaps the parameters
+        are part of a function. Wait, the initial tool description might be a bit
+        confusing. Let me parse it again.\n\nThe tools section has a function with
+        parameters that use anyOf. The parameters are status and task. The function''s
+        name isn''t explicitly given, but the user mentioned \"call the any-of params
+        tool\", so the function name is likely \"any_of_params\". \n\nSo, the arguments
+        should be a JSON object with \"task\" set to \"Review PR\" and \"status\"
+        set to \"pending\". Since both are valid, the function call should include
+        both. Then, the tool will process this and return a result, which I need to
+        report.\n\nTherefore, the correct tool call is to use the any_of_params function
+        with those arguments. I''ll structure the JSON accordingly.\n","tool_calls":[{"id":"call_069rtz9a","index":0,"type":"function","function":{"name":"any_of_params","arguments":"{\"status\":\"pending\",\"task\":\"Review
+        PR\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":186,"completion_tokens":423,"total_tokens":609}}
 
         '
-  recorded_at: Fri, 09 Jan 2026 16:04:46 GMT
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 recorded_with: VCR 6.4.0

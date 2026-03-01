@@ -18,8 +18,6 @@ module RubyLLM
                    class_name: @message_class,
                    inverse_of: :chat,
                    dependent: :destroy
-
-          delegate :add_message, to: :to_llm
         end
 
         def acts_as_message(chat_class: 'Chat',
@@ -95,19 +93,28 @@ module RubyLLM
                   end
         @chat.reset_messages!
 
-        messages.each do |msg|
+        ordered_messages = order_messages_for_llm(messages.to_a)
+        ordered_messages.each do |msg|
           @chat.add_message(msg.to_llm)
         end
+        reapply_runtime_instructions(@chat)
 
         setup_persistence_callbacks
       end
 
-      def with_instructions(instructions, replace: false)
-        transaction do
-          messages.where(role: :system).destroy_all if replace
-          messages.create!(role: :system, content: instructions)
-        end
-        to_llm.with_instructions(instructions)
+      def with_instructions(instructions, append: false, replace: nil)
+        append = append_instructions?(append:, replace:)
+        persist_system_instruction(instructions, append:)
+
+        to_llm.with_instructions(instructions, append:, replace:)
+        self
+      end
+
+      def with_runtime_instructions(instructions, append: false, replace: nil)
+        append = append_instructions?(append:, replace:)
+        store_runtime_instruction(instructions, append:)
+
+        to_llm.with_instructions(instructions, append:, replace:)
         self
       end
 
@@ -185,14 +192,34 @@ module RubyLLM
         self
       end
 
-      def create_user_message(content, with: nil)
-        message_record = messages.create!(role: :user, content: content)
-        persist_content(message_record, with) if with.present?
+      def add_message(message_or_attributes)
+        llm_message = message_or_attributes.is_a?(RubyLLM::Message) ? message_or_attributes : RubyLLM::Message.new(message_or_attributes)
+        content, attachments_to_persist = prepare_content_for_storage(llm_message.content)
+
+        attrs = { role: llm_message.role, content: }
+        tool_call_foreign_key = messages.klass.tool_call_foreign_key
+        if llm_message.tool_call_id && tool_call_foreign_key
+          tool_call_id = find_tool_call_id(llm_message.tool_call_id)
+          attrs[tool_call_foreign_key] = tool_call_id if tool_call_id
+        end
+
+        message_record = messages.create!(attrs)
+        persist_content(message_record, attachments_to_persist) if attachments_to_persist.present?
+        persist_tool_calls(llm_message.tool_calls, message_record:) if llm_message.tool_calls.present?
+
         message_record
       end
 
-      def ask(message, with: nil, &)
-        create_user_message(message, with:)
+      def create_user_message(content, with: nil)
+        RubyLLM.logger.warn(
+          '`create_user_message` is deprecated and will be removed in RubyLLM 2.0. ' \
+          'Use `add_message(role: :user, content: ...)` instead.'
+        )
+        add_message(role: :user, content: build_content(content, with))
+      end
+
+      def ask(message = nil, with: nil, &)
+        add_message(role: :user, content: build_content(message, with))
         complete(&)
       end
 
@@ -233,6 +260,60 @@ module RubyLLM
         end
       end
 
+      def replace_persisted_system_instructions(instructions)
+        system_messages = messages.where(role: :system).order(:id).to_a
+
+        if system_messages.empty?
+          messages.create!(role: :system, content: instructions)
+          return
+        end
+
+        primary_message = system_messages.shift
+        primary_message.update!(content: instructions) if primary_message.content != instructions
+        system_messages.each(&:destroy!)
+      end
+
+      def append_instructions?(append:, replace:)
+        return append if replace.nil?
+
+        append || (replace == false)
+      end
+
+      def persist_system_instruction(instructions, append:)
+        transaction do
+          if append
+            messages.create!(role: :system, content: instructions)
+          else
+            replace_persisted_system_instructions(instructions)
+          end
+        end
+      end
+
+      def order_messages_for_llm(messages)
+        system_messages, non_system_messages = messages.partition { |msg| msg.role.to_s == 'system' }
+        system_messages + non_system_messages
+      end
+
+      def runtime_instructions
+        @runtime_instructions ||= []
+      end
+
+      def store_runtime_instruction(instructions, append:)
+        if append
+          runtime_instructions << instructions
+        else
+          @runtime_instructions = [instructions]
+        end
+      end
+
+      def reapply_runtime_instructions(chat)
+        return if runtime_instructions.empty?
+
+        first, *rest = runtime_instructions
+        chat.with_instructions(first)
+        rest.each { |instruction| chat.with_instructions(instruction, append: true) }
+      end
+
       def setup_persistence_callbacks
         return @chat if @chat.instance_variable_get(:@_persistence_callbacks_setup)
 
@@ -247,21 +328,13 @@ module RubyLLM
         @message = messages.create!(role: :assistant, content: '')
       end
 
-      def persist_message_completion(message) # rubocop:disable Metrics/PerceivedComplexity
+      def persist_message_completion(message)
         return unless message
 
         tool_call_id = find_tool_call_id(message.tool_call_id) if message.tool_call_id
 
         transaction do
-          content = message.content
-          attachments_to_persist = nil
-
-          if content.is_a?(RubyLLM::Content)
-            attachments_to_persist = content.attachments if content.attachments.any?
-            content = content.text
-          elsif content.is_a?(Hash) || content.is_a?(Array)
-            content = content.to_json
-          end
+          content, attachments_to_persist = prepare_content_for_storage(message.content)
 
           @message.update!(
             role: message.role,
@@ -278,11 +351,17 @@ module RubyLLM
         end
       end
 
-      def persist_tool_calls(tool_calls)
+      def persist_tool_calls(tool_calls, message_record: @message)
+        tool_call_assoc = message_record.respond_to?(:tool_calls) ? message_record.tool_calls : nil
+        return unless tool_call_assoc
+
+        supports_thought_signature = tool_call_assoc.klass.column_names.include?('thought_signature')
+
         tool_calls.each_value do |tool_call|
           attributes = tool_call.to_h
+          attributes.delete(:thought_signature) unless supports_thought_signature
           attributes[:tool_call_id] = attributes.delete(:id)
-          @message.tool_calls.create!(**attributes)
+          tool_call_assoc.create!(**attributes)
         end
       end
 
@@ -326,6 +405,29 @@ module RubyLLM
         RubyLLM.logger.warn "Failed to process attachment #{source}: #{e.message}"
         nil
       end
+
+      def build_content(message, attachments)
+        return message if content_like?(message)
+
+        RubyLLM::Content.new(message, attachments)
+      end
+
+      def content_like?(object)
+        object.is_a?(RubyLLM::Content) || object.is_a?(RubyLLM::Content::Raw)
+      end
+
+      def prepare_content_for_storage(content)
+        attachments = nil
+
+        if content.is_a?(RubyLLM::Content)
+          attachments = content.attachments if content.attachments.any?
+          [content.text, attachments]
+        elsif content.is_a?(Hash) || content.is_a?(Array)
+          [content.to_json, attachments]
+        else
+          [content, attachments]
+        end
+      end
     end
 
     # Methods mixed into message models.
@@ -357,7 +459,8 @@ module RubyLLM
             RubyLLM::ToolCall.new(
               id: tool_call.tool_call_id,
               name: tool_call.name,
-              arguments: tool_call.arguments
+              arguments: tool_call.arguments,
+              thought_signature: tool_call.try(:thought_signature)
             )
           ]
         end

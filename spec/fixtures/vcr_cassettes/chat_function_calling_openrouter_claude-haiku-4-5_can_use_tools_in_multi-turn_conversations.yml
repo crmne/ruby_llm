@@ -12,7 +12,7 @@ http_interactions:
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer <OPENROUTER_API_KEY>
       Content-Type:
@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 09 Jan 2026 14:13:48 GMT
+      - Tue, 10 Feb 2026 09:24:50 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -51,24 +51,25 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: "\n         \n\n         \n\n         \n{\"id\":\"gen-1767968026-SCmBQA8l8Jn5XtMOl2hM\",\"provider\":\"Amazon
-        Bedrock\",\"model\":\"anthropic/claude-haiku-4.5\",\"object\":\"chat.completion\",\"created\":1767968027,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"tool_calls\",\"native_finish_reason\":\"tool_calls\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"\",\"refusal\":null,\"reasoning\":null,\"tool_calls\":[{\"type\":\"function\",\"index\":0,\"id\":\"toolu_bdrk_01WcLMeKoQh88CRpQt8sFdVr\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":
-        \\\"52.5200\\\", \\\"longitude\\\": \\\"13.4050\\\"}\"}}]}}],\"usage\":{\"prompt_tokens\":633,\"completion_tokens\":75,\"total_tokens\":708,\"cost\":0.001008,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":null,\"upstream_inference_prompt_cost\":0.000633,\"upstream_inference_completions_cost\":0.000375},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0}}}"
-  recorded_at: Fri, 09 Jan 2026 14:13:48 GMT
+      string: "\n         \n\n         \n\n         \n\n         \n\n         \n\n
+        \        \n{\"id\":\"gen-1770715487-hY6NeEQA6u1CXKWcTGZz\",\"provider\":\"Amazon
+        Bedrock\",\"model\":\"anthropic/claude-haiku-4.5\",\"object\":\"chat.completion\",\"created\":1770715488,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"tool_calls\",\"native_finish_reason\":\"tool_calls\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"\",\"refusal\":null,\"reasoning\":null,\"tool_calls\":[{\"type\":\"function\",\"index\":0,\"id\":\"toolu_bdrk_01RRubRYwtPr2QWTHrrdkPSn\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":
+        \\\"52.5200\\\", \\\"longitude\\\": \\\"13.4050\\\"}\"}}]}}],\"usage\":{\"prompt_tokens\":633,\"completion_tokens\":75,\"total_tokens\":708,\"cost\":0.001008,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.001008,\"upstream_inference_prompt_cost\":0.000633,\"upstream_inference_completions_cost\":0.000375},\"completion_tokens_details\":{\"reasoning_tokens\":0}}}"
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 - request:
     method: post
     uri: https://openrouter.ai/api/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"anthropic/claude-haiku-4.5","messages":[{"role":"user","content":"What''s
-        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"toolu_bdrk_01WcLMeKoQh88CRpQt8sFdVr","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"toolu_bdrk_01WcLMeKoQh88CRpQt8sFdVr"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"toolu_bdrk_01RRubRYwtPr2QWTHrrdkPSn","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"toolu_bdrk_01RRubRYwtPr2QWTHrrdkPSn"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer <OPENROUTER_API_KEY>
       Content-Type:
@@ -83,7 +84,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 09 Jan 2026 14:13:49 GMT
+      - Tue, 10 Feb 2026 09:24:54 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -108,25 +109,25 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        CiAgICAgICAgIAoKICAgICAgICAgCgogICAgICAgICAKeyJpZCI6Imdlbi0xNzY3OTY4MDI4LTdFbUVJbTZFb09XZnJTSUVWbk1TIiwicHJvdmlkZXIiOiJBbWF6b24gQmVkcm9jayIsIm1vZGVsIjoiYW50aHJvcGljL2NsYXVkZS1oYWlrdS00LjUiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJjcmVhdGVkIjoxNzY3OTY4MDI5LCJjaG9pY2VzIjpbeyJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6InN0b3AiLCJuYXRpdmVfZmluaXNoX3JlYXNvbiI6InN0b3AiLCJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IlRoZSB3ZWF0aGVyIGluIEJlcmxpbiBpcyBjdXJyZW50bHkgKioxNcKwQyAoNTnCsEYpKiogd2l0aCBhICoqd2luZCBzcGVlZCBvZiAxMCBrbS9oICg2IG1waCkqKi4gSXQncyByZWxhdGl2ZWx5IGNvb2wgd2l0aCBsaWdodCB3aW5kcy4iLCJyZWZ1c2FsIjpudWxsLCJyZWFzb25pbmciOm51bGx9fV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjc0OCwiY29tcGxldGlvbl90b2tlbnMiOjQ1LCJ0b3RhbF90b2tlbnMiOjc5MywiY29zdCI6MC4wMDA5NzMsImlzX2J5b2siOmZhbHNlLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MCwiY2FjaGVfd3JpdGVfdG9rZW5zIjowLCJhdWRpb190b2tlbnMiOjAsInZpZGVvX3Rva2VucyI6MH0sImNvc3RfZGV0YWlscyI6eyJ1cHN0cmVhbV9pbmZlcmVuY2VfY29zdCI6bnVsbCwidXBzdHJlYW1faW5mZXJlbmNlX3Byb21wdF9jb3N0IjowLjAwMDc0OCwidXBzdHJlYW1faW5mZXJlbmNlX2NvbXBsZXRpb25zX2Nvc3QiOjAuMDAwMjI1fSwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjowLCJpbWFnZV90b2tlbnMiOjB9fX0=
-  recorded_at: Fri, 09 Jan 2026 14:13:50 GMT
+        CiAgICAgICAgIAoKICAgICAgICAgCgogICAgICAgICAKCiAgICAgICAgIAoKICAgICAgICAgCgogICAgICAgICAKCiAgICAgICAgIAoKICAgICAgICAgCnsiaWQiOiJnZW4tMTc3MDcxNTQ5MS01ZzlkTjdIaHF6VDlMTDl1YTNhdCIsInByb3ZpZGVyIjoiQW1hem9uIEJlZHJvY2siLCJtb2RlbCI6ImFudGhyb3BpYy9jbGF1ZGUtaGFpa3UtNC41Iiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwiY3JlYXRlZCI6MTc3MDcxNTQ5MiwiY2hvaWNlcyI6W3sibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOiJzdG9wIiwibmF0aXZlX2ZpbmlzaF9yZWFzb24iOiJzdG9wIiwiaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJUaGUgd2VhdGhlciBpbiBCZXJsaW4gaXMgY3VycmVudGx5OlxuLSAqKlRlbXBlcmF0dXJlOioqIDE1wrBDICg1OcKwRilcbi0gKipXaW5kOioqIDEwIGttL2ggKDYgbXBoKVxuXG5JdCdzIGEgbWlsZCBkYXkgd2l0aCBsaWdodCB3aW5kcyEiLCJyZWZ1c2FsIjpudWxsLCJyZWFzb25pbmciOm51bGx9fV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjc0OCwiY29tcGxldGlvbl90b2tlbnMiOjUwLCJ0b3RhbF90b2tlbnMiOjc5OCwiY29zdCI6MC4wMDA5OTgsImlzX2J5b2siOmZhbHNlLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MCwiY2FjaGVfd3JpdGVfdG9rZW5zIjowfSwiY29zdF9kZXRhaWxzIjp7InVwc3RyZWFtX2luZmVyZW5jZV9jb3N0IjowLjAwMDk5OCwidXBzdHJlYW1faW5mZXJlbmNlX3Byb21wdF9jb3N0IjowLjAwMDc0OCwidXBzdHJlYW1faW5mZXJlbmNlX2NvbXBsZXRpb25zX2Nvc3QiOjAuMDAwMjV9LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjB9fX0=
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 - request:
     method: post
     uri: https://openrouter.ai/api/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"anthropic/claude-haiku-4.5","messages":[{"role":"user","content":"What''s
-        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"toolu_bdrk_01WcLMeKoQh88CRpQt8sFdVr","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"toolu_bdrk_01WcLMeKoQh88CRpQt8sFdVr"},{"role":"assistant","content":"The
-        weather in Berlin is currently **15°C (59°F)** with a **wind speed of 10 km/h
-        (6 mph)**. It''s relatively cool with light winds."},{"role":"user","content":"What''s
+        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"toolu_bdrk_01RRubRYwtPr2QWTHrrdkPSn","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"toolu_bdrk_01RRubRYwtPr2QWTHrrdkPSn"},{"role":"assistant","content":"The
+        weather in Berlin is currently:\n- **Temperature:** 15°C (59°F)\n- **Wind:**
+        10 km/h (6 mph)\n\nIt''s a mild day with light winds!"},{"role":"user","content":"What''s
         the weather in Paris? (48.8575, 2.3514)"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer <OPENROUTER_API_KEY>
       Content-Type:
@@ -141,7 +142,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 09 Jan 2026 14:13:51 GMT
+      - Tue, 10 Feb 2026 09:24:56 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -165,28 +166,28 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: "\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1767968030-YhCPAL91VU1AmxylnbPc\",\"provider\":\"Amazon
-        Bedrock\",\"model\":\"anthropic/claude-haiku-4.5\",\"object\":\"chat.completion\",\"created\":1767968030,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"tool_calls\",\"native_finish_reason\":\"tool_calls\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"\",\"refusal\":null,\"reasoning\":null,\"tool_calls\":[{\"type\":\"function\",\"index\":0,\"id\":\"toolu_bdrk_01K5AYGKT3yU4mkKKEsvfPem\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":
-        \\\"48.8575\\\", \\\"longitude\\\": \\\"2.3514\\\"}\"}}]}}],\"usage\":{\"prompt_tokens\":815,\"completion_tokens\":75,\"total_tokens\":890,\"cost\":0.00119,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":null,\"upstream_inference_prompt_cost\":0.000815,\"upstream_inference_completions_cost\":0.000375},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0}}}"
-  recorded_at: Fri, 09 Jan 2026 14:13:52 GMT
+      string: "\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1770715495-UBHuKcsQPSKBIcMCYlaw\",\"provider\":\"Amazon
+        Bedrock\",\"model\":\"anthropic/claude-haiku-4.5\",\"object\":\"chat.completion\",\"created\":1770715495,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"tool_calls\",\"native_finish_reason\":\"tool_calls\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"\",\"refusal\":null,\"reasoning\":null,\"tool_calls\":[{\"type\":\"function\",\"index\":0,\"id\":\"toolu_bdrk_019KfNKmEXP3VgFysExQGpEv\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":
+        \\\"48.8575\\\", \\\"longitude\\\": \\\"2.3514\\\"}\"}}]}}],\"usage\":{\"prompt_tokens\":820,\"completion_tokens\":75,\"total_tokens\":895,\"cost\":0.001195,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.001195,\"upstream_inference_prompt_cost\":0.00082,\"upstream_inference_completions_cost\":0.000375},\"completion_tokens_details\":{\"reasoning_tokens\":0}}}"
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 - request:
     method: post
     uri: https://openrouter.ai/api/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"anthropic/claude-haiku-4.5","messages":[{"role":"user","content":"What''s
-        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"toolu_bdrk_01WcLMeKoQh88CRpQt8sFdVr","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"toolu_bdrk_01WcLMeKoQh88CRpQt8sFdVr"},{"role":"assistant","content":"The
-        weather in Berlin is currently **15°C (59°F)** with a **wind speed of 10 km/h
-        (6 mph)**. It''s relatively cool with light winds."},{"role":"user","content":"What''s
-        the weather in Paris? (48.8575, 2.3514)"},{"role":"assistant","content":"","tool_calls":[{"id":"toolu_bdrk_01K5AYGKT3yU4mkKKEsvfPem","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"48.8575\",\"longitude\":\"2.3514\"}"}}]},{"role":"tool","content":"Current
-        weather at 48.8575, 2.3514: 15°C, Wind: 10 km/h","tool_call_id":"toolu_bdrk_01K5AYGKT3yU4mkKKEsvfPem"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"toolu_bdrk_01RRubRYwtPr2QWTHrrdkPSn","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"toolu_bdrk_01RRubRYwtPr2QWTHrrdkPSn"},{"role":"assistant","content":"The
+        weather in Berlin is currently:\n- **Temperature:** 15°C (59°F)\n- **Wind:**
+        10 km/h (6 mph)\n\nIt''s a mild day with light winds!"},{"role":"user","content":"What''s
+        the weather in Paris? (48.8575, 2.3514)"},{"role":"assistant","content":"","tool_calls":[{"id":"toolu_bdrk_019KfNKmEXP3VgFysExQGpEv","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"48.8575\",\"longitude\":\"2.3514\"}"}}]},{"role":"tool","content":"Current
+        weather at 48.8575, 2.3514: 15°C, Wind: 10 km/h","tool_call_id":"toolu_bdrk_019KfNKmEXP3VgFysExQGpEv"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer <OPENROUTER_API_KEY>
       Content-Type:
@@ -201,7 +202,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 09 Jan 2026 14:13:53 GMT
+      - Tue, 10 Feb 2026 09:24:59 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -226,6 +227,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        CiAgICAgICAgIAoKICAgICAgICAgCgogICAgICAgICAKeyJpZCI6Imdlbi0xNzY3OTY4MDMyLWt4Rm5MOFJ0VkRkTWI5THdsU1R4IiwicHJvdmlkZXIiOiJBbWF6b24gQmVkcm9jayIsIm1vZGVsIjoiYW50aHJvcGljL2NsYXVkZS1oYWlrdS00LjUiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJjcmVhdGVkIjoxNzY3OTY4MDMyLCJjaG9pY2VzIjpbeyJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6InN0b3AiLCJuYXRpdmVfZmluaXNoX3JlYXNvbiI6InN0b3AiLCJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IlRoZSB3ZWF0aGVyIGluIFBhcmlzIGlzIGN1cnJlbnRseSAqKjE1wrBDICg1OcKwRikqKiB3aXRoIGEgKip3aW5kIHNwZWVkIG9mIDEwIGttL2ggKDYgbXBoKSoqLiBJbnRlcmVzdGluZ2x5LCBpdCdzIHRoZSBzYW1lIHRlbXBlcmF0dXJlIGFuZCB3aW5kIGNvbmRpdGlvbnMgYXMgQmVybGluISIsInJlZnVzYWwiOm51bGwsInJlYXNvbmluZyI6bnVsbH19XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6OTMwLCJjb21wbGV0aW9uX3Rva2VucyI6NTMsInRvdGFsX3Rva2VucyI6OTgzLCJjb3N0IjowLjAwMTE5NSwiaXNfYnlvayI6ZmFsc2UsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjowLCJjYWNoZV93cml0ZV90b2tlbnMiOjAsImF1ZGlvX3Rva2VucyI6MCwidmlkZW9fdG9rZW5zIjowfSwiY29zdF9kZXRhaWxzIjp7InVwc3RyZWFtX2luZmVyZW5jZV9jb3N0IjpudWxsLCJ1cHN0cmVhbV9pbmZlcmVuY2VfcHJvbXB0X2Nvc3QiOjAuMDAwOTMsInVwc3RyZWFtX2luZmVyZW5jZV9jb21wbGV0aW9uc19jb3N0IjowLjAwMDI2NX0sImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6MCwiaW1hZ2VfdG9rZW5zIjowfX19
-  recorded_at: Fri, 09 Jan 2026 14:13:53 GMT
+        CiAgICAgICAgIAoKICAgICAgICAgCgogICAgICAgICAKeyJpZCI6Imdlbi0xNzcwNzE1NDk3LU0xMHJrNmY2Q3BncVdSUnFTa0Q0IiwicHJvdmlkZXIiOiJBbnRocm9waWMiLCJtb2RlbCI6ImFudGhyb3BpYy9jbGF1ZGUtaGFpa3UtNC41Iiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwiY3JlYXRlZCI6MTc3MDcxNTQ5OCwiY2hvaWNlcyI6W3sibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOiJzdG9wIiwibmF0aXZlX2ZpbmlzaF9yZWFzb24iOiJzdG9wIiwiaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJUaGUgd2VhdGhlciBpbiBQYXJpcyBpcyBjdXJyZW50bHk6XG4tICoqVGVtcGVyYXR1cmU6KiogMTXCsEMgKDU5wrBGKVxuLSAqKldpbmQ6KiogMTAga20vaCAoNiBtcGgpXG5cbkludGVyZXN0aW5nbHksIFBhcmlzIGhhcyB0aGUgc2FtZSB3ZWF0aGVyIGNvbmRpdGlvbnMgYXMgQmVybGluIHJpZ2h0IG5vdyAtIGJvdGggY2l0aWVzIGFyZSBleHBlcmllbmNpbmcgMTXCsEMgd2l0aCAxMCBrbS9oIHdpbmRzISIsInJlZnVzYWwiOm51bGwsInJlYXNvbmluZyI6bnVsbH19XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6OTM1LCJjb21wbGV0aW9uX3Rva2VucyI6NzQsInRvdGFsX3Rva2VucyI6MTAwOSwiY29zdCI6MC4wMDEzMDUsImlzX2J5b2siOmZhbHNlLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MCwiY2FjaGVfd3JpdGVfdG9rZW5zIjowfSwiY29zdF9kZXRhaWxzIjp7InVwc3RyZWFtX2luZmVyZW5jZV9jb3N0IjowLjAwMTMwNSwidXBzdHJlYW1faW5mZXJlbmNlX3Byb21wdF9jb3N0IjowLjAwMDkzNSwidXBzdHJlYW1faW5mZXJlbmNlX2NvbXBsZXRpb25zX2Nvc3QiOjAuMDAwMzd9LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjB9fX0=
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 recorded_with: VCR 6.4.0

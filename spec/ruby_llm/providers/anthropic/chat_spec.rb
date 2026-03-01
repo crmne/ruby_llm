@@ -27,6 +27,73 @@ RSpec.describe RubyLLM::Providers::Anthropic::Chat do
       expect(payload[:system]).to eq(system_raw.value)
       expect(payload[:messages].first[:content]).to eq([{ type: 'text', text: 'Hello there' }])
     end
+
+    it 'includes output_config when schema is provided' do
+      schema = { type: 'object', properties: { name: { type: 'string' } } }
+      user_message = RubyLLM::Message.new(role: :user, content: 'Hello')
+
+      payload = described_class.render_payload(
+        [user_message],
+        tools: {},
+        temperature: nil,
+        model: model,
+        stream: false,
+        schema: schema
+      )
+
+      expect(payload[:output_config]).to eq(
+        format: { type: 'json_schema', schema: { type: 'object', properties: { name: { type: 'string' } } } }
+      )
+    end
+
+    it 'strips strict key from schema' do
+      schema = { type: 'object', strict: true, 'strict' => true, properties: { name: { type: 'string' } } }
+      user_message = RubyLLM::Message.new(role: :user, content: 'Hello')
+
+      payload = described_class.render_payload(
+        [user_message],
+        tools: {},
+        temperature: nil,
+        model: model,
+        stream: false,
+        schema: schema
+      )
+
+      inner_schema = payload.dig(:output_config, :format, :schema)
+      expect(inner_schema).not_to have_key(:strict)
+      expect(inner_schema).not_to have_key('strict')
+    end
+
+    it 'does not include output_config when schema is nil' do
+      user_message = RubyLLM::Message.new(role: :user, content: 'Hello')
+
+      payload = described_class.render_payload(
+        [user_message],
+        tools: {},
+        temperature: nil,
+        model: model,
+        stream: false,
+        schema: nil
+      )
+
+      expect(payload).not_to have_key(:output_config)
+    end
+
+    it 'does not mutate the original schema' do
+      schema = { type: 'object', strict: true, properties: { name: { type: 'string' } } }
+      user_message = RubyLLM::Message.new(role: :user, content: 'Hello')
+
+      described_class.render_payload(
+        [user_message],
+        tools: {},
+        temperature: nil,
+        model: model,
+        stream: false,
+        schema: schema
+      )
+
+      expect(schema).to have_key(:strict)
+    end
   end
 
   describe '.parse_completion_response' do

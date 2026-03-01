@@ -8,7 +8,7 @@ http_interactions:
       string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Content-Type:
       - application/x-www-form-urlencoded
       Accept-Encoding:
@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
-      Pragma:
-      - no-cache
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
+      Pragma:
+      - no-cache
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
       Date:
-      - Fri, 09 Jan 2026 14:18:21 GMT
+      - Tue, 10 Feb 2026 09:30:14 GMT
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,14 +52,14 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid",
+          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email openid",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Fri, 09 Jan 2026 14:18:21 GMT
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 - request:
     method: post
-    uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"Call the object params
@@ -69,7 +69,7 @@ http_interactions:
         start"},"end":{"type":"STRING","description":"ISO end"}},"required":["start","end"]}},"required":["window"]}}]}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer <GOOGLE_BEARER_TOKEN>
       Content-Type:
@@ -90,7 +90,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Fri, 09 Jan 2026 14:18:23 GMT
+      - Tue, 10 Feb 2026 09:30:16 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -117,23 +117,23 @@ http_interactions:
                       "name": "object_params",
                       "args": {
                         "window": {
-                          "start": "2025-01-01",
-                          "end": "2025-01-02"
+                          "end": "2025-01-02",
+                          "start": "2025-01-01"
                         }
                       }
                     },
-                    "thoughtSignature": "CrUDAY89a19zvIe4ZUxjFhcq/pCWS0n8V8JFeAzlsdSeILQrPzz7paiooRV8jQo0SBrvLB1On/mMUOY2byMfhnONlSZEubbsBaA9qiQCdYOK0PyZj8CaxWnw4gsGf017kwUhqC5VGUN4f+qS50oKVUO/OaW2FKECZUfOdcQGLfmTWFwOpPXviMHABwIEgt01dl5c1kfVonWuqcKSaMOFYj+haxI6Km/ruBQkZnLpxIlT/gR3LwQLjrYzWG+0stapZjGHFFATeA5vTOV4DRFJfuyxW+v6t9HOCPBa6mBTZBELzOrAI+UvbIK2N1kgFt2gdH7zn47CEtB/E8QgO80uhE6flF7Nm7gx0sftD3S3dioP5+VuFio807g6TOFvTogfIn3QvnHmEIif8Qs2p5tUvgI4p2YYLf315cwVc6TxqJaL5zxnU+BZCjctiuEmuDN9G4XIqS2hCgaMATFBtN+7VXxYPoQDCWtnYwipJlEGpaQoixE8YxrpPBZ47htlTrlAHVL/sX9Rxo4ELWr3pgZLwiDaJF/dBMEwEQtLqCum5JzhXRwQq9N34OSsslX14r259NH0cXzKr14="
+                    "thoughtSignature": "CoIDAY89a18kkX2KYQnK75aggCGnipvLYydnv5ETmOoCgKAo3H/zEXeaRtsvTDVqtbyxiMkrm8USzz1pdLbxe8/eNKApATvT+JLr5NRv3NaUtk0khFI4ZTYZSKoHhe7qjpncU+wINcIl2AIoduXHw4EOg8mF76s+dUXJQ11d4h8JSl5khl/TN3XGgjpzoLVGiyd9OD9Ws/TYl2NtvC6VCqb9goITu01kkjh4/dy5QOL6PPLY4pYqkuHeY1529cBET0BoSiRuPFZy8++ElK3VpqXG4ymJQp0SSUniJpeTKhx9Blb0gMxFIktv03PI6AB3hSF6oRKgtVyxF04XPkROFen4XHBv1Dpr5zHrCfLfmur5guTeOS7wnxo9svEEUP75Dgki1yMpf9475JuWhVHlv6SfF1vxgChn/OZfzDQoBdBMKHsmMlhlptEo6U3IKzK9/6TBmQPqdsy57gszpxroeCQHfTrt47poTb9JVmq9iOsyHWFwNQaQF0fKzah2PR6eVjFp1OM="
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.2588311708890475
+              "avgLogprobs": -0.48641806382399339
             }
           ],
           "usageMetadata": {
             "promptTokenCount": 63,
             "candidatesTokenCount": 26,
-            "totalTokenCount": 209,
+            "totalTokenCount": 198,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -147,11 +147,11 @@ http_interactions:
                 "tokenCount": 26
               }
             ],
-            "thoughtsTokenCount": 120
+            "thoughtsTokenCount": 109
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-01-09T14:18:21.839923Z",
-          "responseId": "LQ5hafOhM_aGhcIPm76s2Ac"
+          "createTime": "2026-02-10T09:30:14.939683Z",
+          "responseId": "pvqKaaOtOY_Ek7QPvsCAmQI"
         }
-  recorded_at: Fri, 09 Jan 2026 14:18:23 GMT
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 recorded_with: VCR 6.4.0

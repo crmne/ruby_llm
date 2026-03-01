@@ -22,6 +22,7 @@ module RubyLLM
       @params = {}
       @headers = {}
       @schema = nil
+      @thinking = nil
       @on = {
         new_message: nil,
         end_message: nil,
@@ -37,10 +38,15 @@ module RubyLLM
 
     alias say ask
 
-    def with_instructions(instructions, replace: false)
-      @messages = @messages.reject { |msg| msg.role == :system } if replace
+    def with_instructions(instructions, append: false, replace: nil)
+      append ||= (replace == false) unless replace.nil?
 
-      add_message role: :system, content: instructions
+      if append
+        append_system_instruction(instructions)
+      else
+        replace_system_instruction(instructions)
+      end
+
       self
     end
 
@@ -64,6 +70,13 @@ module RubyLLM
 
     def with_temperature(temperature)
       @temperature = temperature
+      self
+    end
+
+    def with_thinking(effort: nil, budget: nil)
+      raise ArgumentError, 'with_thinking requires :effort or :budget' if effort.nil? && budget.nil?
+
+      @thinking = Thinking::Config.new(effort: effort, budget: budget)
       self
     end
 
@@ -130,6 +143,7 @@ module RubyLLM
         params: @params,
         headers: @headers,
         schema: @schema,
+        thinking: @thinking,
         &wrap_streaming_block(&)
       )
 
@@ -172,15 +186,9 @@ module RubyLLM
     def wrap_streaming_block(&block)
       return nil unless block_given?
 
-      first_chunk_received = false
+      @on[:new_message]&.call
 
       proc do |chunk|
-        # Create message on first content chunk
-        unless first_chunk_received
-          first_chunk_received = true
-          @on[:new_message]&.call
-        end
-
         block.call chunk
       end
     end
@@ -206,6 +214,13 @@ module RubyLLM
 
     def execute_tool(tool_call)
       tool = tools[tool_call.name.to_sym]
+      if tool.nil?
+        return {
+          error: "Model tried to call unavailable tool `#{tool_call.name}`. " \
+                 "Available tools: #{tools.keys.to_json}."
+        }
+      end
+
       args = tool_call.arguments
       tool.call(args)
     end
@@ -218,6 +233,25 @@ module RubyLLM
 
     def content_like?(object)
       object.is_a?(Content) || object.is_a?(Content::Raw)
+    end
+
+    def append_system_instruction(instructions)
+      system_messages, non_system_messages = @messages.partition { |msg| msg.role == :system }
+      system_messages << Message.new(role: :system, content: instructions)
+      @messages = system_messages + non_system_messages
+    end
+
+    def replace_system_instruction(instructions)
+      system_messages, non_system_messages = @messages.partition { |msg| msg.role == :system }
+
+      if system_messages.empty?
+        system_messages = [Message.new(role: :system, content: instructions)]
+      else
+        system_messages.first.content = instructions
+        system_messages = [system_messages.first]
+      end
+
+      @messages = system_messages + non_system_messages
     end
   end
 end

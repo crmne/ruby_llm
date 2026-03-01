@@ -14,7 +14,7 @@ module RubyLLM
           "models/#{@model}:generateContent"
         end
 
-        def render_payload(messages, tools:, temperature:, model:, stream: false, schema: nil) # rubocop:disable Metrics/ParameterLists,Lint/UnusedMethodArgument
+        def render_payload(messages, tools:, temperature:, model:, stream: false, schema: nil, thinking: nil) # rubocop:disable Metrics/ParameterLists,Lint/UnusedMethodArgument
           @model = model.id
           payload = {
             contents: format_messages(messages),
@@ -24,9 +24,28 @@ module RubyLLM
           payload[:generationConfig][:temperature] = temperature unless temperature.nil?
 
           payload[:generationConfig].merge!(structured_output_config(schema, model)) if schema
+          payload[:generationConfig][:thinkingConfig] = build_thinking_config(model, thinking) if thinking&.enabled?
 
           payload[:tools] = format_tools(tools) if tools.any?
           payload
+        end
+
+        def build_thinking_config(_model, thinking)
+          config = { includeThoughts: true }
+
+          config[:thinkingLevel] = resolve_effort_level(thinking) if thinking&.effort
+          config[:thinkingBudget] = resolve_budget(thinking) if thinking&.budget
+
+          config
+        end
+
+        def resolve_effort_level(thinking)
+          thinking.respond_to?(:effort) ? thinking.effort : thinking
+        end
+
+        def resolve_budget(thinking)
+          budget = thinking.respond_to?(:budget) ? thinking.budget : thinking
+          budget.is_a?(Integer) ? budget : nil
         end
 
         private
@@ -56,20 +75,43 @@ module RubyLLM
           elsif msg.tool_result?
             format_tool_result(msg)
           else
-            Media.format_content(msg.content)
+            format_message_parts(msg)
           end
+        end
+
+        def format_message_parts(msg)
+          parts = []
+
+          parts << build_thought_part(msg.thinking) if msg.role == :assistant && msg.thinking
+
+          content_parts = Media.format_content(msg.content)
+          parts.concat(content_parts.is_a?(Array) ? content_parts : [content_parts])
+          parts
+        end
+
+        def build_thought_part(thinking)
+          part = { thought: true }
+          part[:text] = thinking.text if thinking.text
+          part[:thoughtSignature] = thinking.signature if thinking.signature
+          part
         end
 
         def parse_completion_response(response)
           data = response.body
+          parts = data.dig('candidates', 0, 'content', 'parts') || []
           tool_calls = extract_tool_calls(data)
 
           Message.new(
             role: :assistant,
-            content: parse_content(data),
+            content: extract_text_parts(parts) || parse_content(data),
+            thinking: Thinking.build(
+              text: extract_thought_parts(parts),
+              signature: extract_thought_signature(parts)
+            ),
             tool_calls: tool_calls,
             input_tokens: data.dig('usageMetadata', 'promptTokenCount'),
             output_tokens: calculate_output_tokens(data),
+            thinking_tokens: data.dig('usageMetadata', 'thoughtsTokenCount'),
             model_id: data['modelVersion'] || response.env.url.path.split('/')[3].split(':')[0],
             raw: response
           )
@@ -91,6 +133,30 @@ module RubyLLM
           return '' unless parts&.any?
 
           build_response_content(parts)
+        end
+
+        def extract_text_parts(parts)
+          text_parts = parts.reject { |p| p['thought'] }
+          content = text_parts.filter_map { |p| p['text'] }.join
+          content.empty? ? nil : content
+        end
+
+        def extract_thought_parts(parts)
+          thought_parts = parts.select { |p| p['thought'] }
+          thoughts = thought_parts.filter_map { |p| p['text'] }.join
+          thoughts.empty? ? nil : thoughts
+        end
+
+        def extract_thought_signature(parts)
+          parts.each do |part|
+            signature = part['thoughtSignature'] ||
+                        part['thought_signature'] ||
+                        part.dig('functionCall', 'thoughtSignature') ||
+                        part.dig('functionCall', 'thought_signature')
+            return signature if signature
+          end
+
+          nil
         end
 
         def function_call?(candidate)

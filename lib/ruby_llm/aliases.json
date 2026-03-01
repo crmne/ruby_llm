@@ -1,8 +1,4 @@
 {
-  "chatgpt-4o": {
-    "openai": "chatgpt-4o-latest",
-    "openrouter": "openai/chatgpt-4o-latest"
-  },
   "claude-3-5-haiku": {
     "anthropic": "claude-3-5-haiku-20241022",
     "openrouter": "anthropic/claude-3.5-haiku",
@@ -31,7 +27,7 @@
   },
   "claude-3-opus": {
     "anthropic": "claude-3-opus-20240229",
-    "bedrock": "anthropic.claude-3-opus-20240229-v1:0:200k"
+    "bedrock": "anthropic.claude-3-opus-20240229-v1:0"
   },
   "claude-3-sonnet": {
     "anthropic": "claude-3-sonnet-20240229",
@@ -40,7 +36,8 @@
   "claude-haiku-4-5": {
     "anthropic": "claude-haiku-4-5-20251001",
     "openrouter": "anthropic/claude-haiku-4.5",
-    "bedrock": "anthropic.claude-haiku-4-5-20251001-v1:0"
+    "bedrock": "anthropic.claude-haiku-4-5-20251001-v1:0",
+    "azure": "claude-haiku-4-5-20251001"
   },
   "claude-opus-4": {
     "anthropic": "claude-opus-4-20250514",
@@ -53,12 +50,19 @@
   "claude-opus-4-1": {
     "anthropic": "claude-opus-4-1-20250805",
     "openrouter": "anthropic/claude-opus-4.1",
-    "bedrock": "anthropic.claude-opus-4-1-20250805-v1:0"
+    "bedrock": "anthropic.claude-opus-4-1-20250805-v1:0",
+    "azure": "claude-opus-4-1-20250805"
   },
   "claude-opus-4-5": {
     "anthropic": "claude-opus-4-5-20251101",
     "openrouter": "anthropic/claude-opus-4.5",
-    "bedrock": "anthropic.claude-opus-4-5-20251101-v1:0"
+    "bedrock": "anthropic.claude-opus-4-5-20251101-v1:0",
+    "azure": "claude-opus-4-5-20251101"
+  },
+  "claude-opus-4-6": {
+    "anthropic": "claude-opus-4-6",
+    "openrouter": "anthropic/claude-opus-4.6",
+    "bedrock": "anthropic.claude-opus-4-6-v1"
   },
   "claude-sonnet-4": {
     "anthropic": "claude-sonnet-4-20250514",
@@ -71,7 +75,13 @@
   "claude-sonnet-4-5": {
     "anthropic": "claude-sonnet-4-5-20250929",
     "openrouter": "anthropic/claude-sonnet-4.5",
-    "bedrock": "anthropic.claude-sonnet-4-5-20250929-v1:0"
+    "bedrock": "anthropic.claude-sonnet-4-5-20250929-v1:0",
+    "azure": "claude-sonnet-4-5-20250929"
+  },
+  "claude-sonnet-4-6": {
+    "anthropic": "claude-sonnet-4-6",
+    "openrouter": "anthropic/claude-sonnet-4.6",
+    "bedrock": "anthropic.claude-sonnet-4-6"
   },
   "deepseek-chat": {
     "deepseek": "deepseek-chat",
@@ -98,10 +108,6 @@
     "openrouter": "google/gemini-2.0-flash-001",
     "vertexai": "gemini-2.0-flash-001"
   },
-  "gemini-2.0-flash-exp": {
-    "gemini": "gemini-2.0-flash-exp",
-    "vertexai": "gemini-2.0-flash-exp"
-  },
   "gemini-2.0-flash-lite": {
     "gemini": "gemini-2.0-flash-lite",
     "vertexai": "gemini-2.0-flash-lite"
@@ -119,10 +125,6 @@
   "gemini-2.5-flash-image": {
     "gemini": "gemini-2.5-flash-image",
     "openrouter": "google/gemini-2.5-flash-image"
-  },
-  "gemini-2.5-flash-image-preview": {
-    "gemini": "gemini-2.5-flash-image-preview",
-    "openrouter": "google/gemini-2.5-flash-image-preview"
   },
   "gemini-2.5-flash-lite": {
     "gemini": "gemini-2.5-flash-lite",
@@ -180,13 +182,18 @@
     "openrouter": "google/gemini-3-pro-preview",
     "vertexai": "gemini-3-pro-preview"
   },
+  "gemini-3.1-pro-preview": {
+    "gemini": "gemini-3.1-pro-preview",
+    "openrouter": "google/gemini-3.1-pro-preview",
+    "vertexai": "gemini-3.1-pro-preview"
+  },
+  "gemini-3.1-pro-preview-customtools": {
+    "gemini": "gemini-3.1-pro-preview-customtools",
+    "vertexai": "gemini-3.1-pro-preview-customtools"
+  },
   "gemini-embedding-001": {
     "gemini": "gemini-embedding-001",
     "vertexai": "gemini-embedding-001"
-  },
-  "gemini-exp-1206": {
-    "gemini": "gemini-exp-1206",
-    "vertexai": "gemini-exp-1206"
   },
   "gemini-flash": {
     "gemini": "gemini-flash-latest",
@@ -226,7 +233,8 @@
   },
   "gpt-4": {
     "openai": "gpt-4",
-    "openrouter": "openai/gpt-4"
+    "openrouter": "openai/gpt-4",
+    "azure": "gpt-4"
   },
   "gpt-4-1106-preview": {
     "openai": "gpt-4-1106-preview",
@@ -242,31 +250,38 @@
   },
   "gpt-4.1": {
     "openai": "gpt-4.1",
-    "openrouter": "openai/gpt-4.1"
+    "openrouter": "openai/gpt-4.1",
+    "azure": "gpt-4.1"
   },
   "gpt-4.1-mini": {
     "openai": "gpt-4.1-mini",
-    "openrouter": "openai/gpt-4.1-mini"
+    "openrouter": "openai/gpt-4.1-mini",
+    "azure": "gpt-4.1-mini"
   },
   "gpt-4.1-nano": {
     "openai": "gpt-4.1-nano",
-    "openrouter": "openai/gpt-4.1-nano"
+    "openrouter": "openai/gpt-4.1-nano",
+    "azure": "gpt-4.1-nano"
   },
   "gpt-4o": {
     "openai": "gpt-4o",
-    "openrouter": "openai/gpt-4o"
+    "openrouter": "openai/gpt-4o",
+    "azure": "gpt-4o"
   },
   "gpt-4o-2024-05-13": {
     "openai": "gpt-4o-2024-05-13",
-    "openrouter": "openai/gpt-4o-2024-05-13"
+    "openrouter": "openai/gpt-4o-2024-05-13",
+    "azure": "gpt-4o-2024-05-13"
   },
   "gpt-4o-2024-08-06": {
     "openai": "gpt-4o-2024-08-06",
-    "openrouter": "openai/gpt-4o-2024-08-06"
+    "openrouter": "openai/gpt-4o-2024-08-06",
+    "azure": "gpt-4o-2024-08-06"
   },
   "gpt-4o-2024-11-20": {
     "openai": "gpt-4o-2024-11-20",
-    "openrouter": "openai/gpt-4o-2024-11-20"
+    "openrouter": "openai/gpt-4o-2024-11-20",
+    "azure": "gpt-4o-2024-11-20"
   },
   "gpt-4o-audio-preview": {
     "openai": "gpt-4o-audio-preview",
@@ -274,11 +289,13 @@
   },
   "gpt-4o-mini": {
     "openai": "gpt-4o-mini",
-    "openrouter": "openai/gpt-4o-mini"
+    "openrouter": "openai/gpt-4o-mini",
+    "azure": "gpt-4o-mini"
   },
   "gpt-4o-mini-2024-07-18": {
     "openai": "gpt-4o-mini-2024-07-18",
-    "openrouter": "openai/gpt-4o-mini-2024-07-18"
+    "openrouter": "openai/gpt-4o-mini-2024-07-18",
+    "azure": "gpt-4o-mini-2024-07-18"
   },
   "gpt-4o-mini-search-preview": {
     "openai": "gpt-4o-mini-search-preview",
@@ -328,25 +345,25 @@
     "openai": "gpt-5.2",
     "openrouter": "openai/gpt-5.2"
   },
-  "gpt-5.2-chat": {
-    "openai": "gpt-5.2-chat-latest",
-    "openrouter": "openai/gpt-5.2-chat-latest"
+  "gpt-5.2-codex": {
+    "openai": "gpt-5.2-codex",
+    "openrouter": "openai/gpt-5.2-codex"
   },
   "gpt-5.2-pro": {
     "openai": "gpt-5.2-pro",
     "openrouter": "openai/gpt-5.2-pro"
   },
-  "imagen-4.0-fast-generate-001": {
-    "gemini": "imagen-4.0-fast-generate-001",
-    "vertexai": "imagen-4.0-fast-generate-001"
+  "gpt-5.3-codex": {
+    "openai": "gpt-5.3-codex",
+    "openrouter": "openai/gpt-5.3-codex"
   },
-  "imagen-4.0-generate-001": {
-    "gemini": "imagen-4.0-generate-001",
-    "vertexai": "imagen-4.0-generate-001"
+  "gpt-audio": {
+    "openai": "gpt-audio",
+    "openrouter": "openai/gpt-audio"
   },
-  "imagen-4.0-ultra-generate-001": {
-    "gemini": "imagen-4.0-ultra-generate-001",
-    "vertexai": "imagen-4.0-ultra-generate-001"
+  "gpt-audio-mini": {
+    "openai": "gpt-audio-mini",
+    "openrouter": "openai/gpt-audio-mini"
   },
   "o1": {
     "openai": "o1",
@@ -354,7 +371,8 @@
   },
   "o1-pro": {
     "openai": "o1-pro",
-    "openrouter": "openai/o1-pro"
+    "openrouter": "openai/o1-pro",
+    "azure": "o1-pro"
   },
   "o3": {
     "openai": "o3",
@@ -366,7 +384,8 @@
   },
   "o3-mini": {
     "openai": "o3-mini",
-    "openrouter": "openai/o3-mini"
+    "openrouter": "openai/o3-mini",
+    "azure": "o3-mini"
   },
   "o3-pro": {
     "openai": "o3-pro",
@@ -374,14 +393,11 @@
   },
   "o4-mini": {
     "openai": "o4-mini",
-    "openrouter": "openai/o4-mini"
+    "openrouter": "openai/o4-mini",
+    "azure": "o4-mini"
   },
   "o4-mini-deep-research": {
     "openai": "o4-mini-deep-research",
     "openrouter": "openai/o4-mini-deep-research"
-  },
-  "text-embedding-004": {
-    "gemini": "text-embedding-004",
-    "vertexai": "text-embedding-004"
   }
 }

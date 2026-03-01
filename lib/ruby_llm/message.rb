@@ -5,21 +5,25 @@ module RubyLLM
   class Message
     ROLES = %i[system user assistant tool].freeze
 
-    attr_reader :role, :model_id, :tool_calls, :tool_call_id, :input_tokens, :output_tokens,
-                :cached_tokens, :cache_creation_tokens, :raw
+    attr_reader :role, :model_id, :tool_calls, :tool_call_id, :raw, :thinking, :tokens
     attr_writer :content
 
     def initialize(options = {})
       @role = options.fetch(:role).to_sym
-      @content = normalize_content(options.fetch(:content))
-      @model_id = options[:model_id]
       @tool_calls = options[:tool_calls]
+      @content = normalize_content(options.fetch(:content), role: @role, tool_calls: @tool_calls)
+      @model_id = options[:model_id]
       @tool_call_id = options[:tool_call_id]
-      @input_tokens = options[:input_tokens]
-      @output_tokens = options[:output_tokens]
-      @cached_tokens = options[:cached_tokens]
-      @cache_creation_tokens = options[:cache_creation_tokens]
+      @tokens = options[:tokens] || Tokens.build(
+        input: options[:input_tokens],
+        output: options[:output_tokens],
+        cached: options[:cached_tokens],
+        cache_creation: options[:cache_creation_tokens],
+        thinking: options[:thinking_tokens],
+        reasoning: options[:reasoning_tokens]
+      )
       @raw = options[:raw]
+      @thinking = options[:thinking]
 
       ensure_valid_role
     end
@@ -44,6 +48,30 @@ module RubyLLM
       content if tool_result?
     end
 
+    def input_tokens
+      tokens&.input
+    end
+
+    def output_tokens
+      tokens&.output
+    end
+
+    def cached_tokens
+      tokens&.cached
+    end
+
+    def cache_creation_tokens
+      tokens&.cache_creation
+    end
+
+    def thinking_tokens
+      tokens&.thinking
+    end
+
+    def reasoning_tokens
+      tokens&.thinking
+    end
+
     def to_h
       {
         role: role,
@@ -51,11 +79,9 @@ module RubyLLM
         model_id: model_id,
         tool_calls: tool_calls,
         tool_call_id: tool_call_id,
-        input_tokens: input_tokens,
-        output_tokens: output_tokens,
-        cached_tokens: cached_tokens,
-        cache_creation_tokens: cache_creation_tokens
-      }.compact
+        thinking: thinking&.text,
+        thinking_signature: thinking&.signature
+      }.merge(tokens ? tokens.to_h : {}).compact
     end
 
     def instance_variables
@@ -64,7 +90,9 @@ module RubyLLM
 
     private
 
-    def normalize_content(content)
+    def normalize_content(content, role:, tool_calls:)
+      return '' if role == :assistant && content.nil? && tool_calls && !tool_calls.empty?
+
       case content
       when String then Content.new(content)
       when Hash then Content.new(content[:text], content)

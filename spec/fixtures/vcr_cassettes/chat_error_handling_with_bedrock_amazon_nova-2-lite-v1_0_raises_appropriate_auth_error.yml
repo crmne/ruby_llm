@@ -1,0 +1,46 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.amazon.nova-2-lite-v1:0/converse
+    body:
+      encoding: UTF-8
+      string: '{"messages":[{"role":"user","content":[{"text":"Hello"}]}],"inferenceConfig":{}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      X-Amz-Date:
+      - 20260210T085516Z
+      X-Amz-Content-Sha256:
+      - 011a5fda23d037906520eb46f0b03de19befe113b1faad6be1c4aec97bb86fee
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=invalid-key/20260210/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=f15990b07c113c68f7499163422245186a5c192bc44e8df05a0924bd530d793d
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 403
+      message: Forbidden
+    headers:
+      Date:
+      - Tue, 10 Feb 2026 08:55:17 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '68'
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - 85434522-8f35-478d-9e0b-041e34571802
+      X-Amzn-Errortype:
+      - UnrecognizedClientException:http://internal.amazon.com/coral/com.amazon.coral.service/
+    body:
+      encoding: UTF-8
+      string: '{"message":"The security token included in the request is invalid."}'
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+recorded_with: VCR 6.4.0

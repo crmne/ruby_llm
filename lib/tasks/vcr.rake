@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'dotenv/load'
+require 'time'
 
 def record_all_cassettes(cassette_dir)
   FileUtils.rm_rf(cassette_dir)
@@ -73,6 +74,31 @@ def run_tests
   system('bundle exec rspec') || abort('Tests failed')
 end
 
+def retimestamp_cassettes(cassette_dir)
+  timestamp = Time.now.utc.httpdate
+  updated_files = 0
+  updated_entries = 0
+
+  Dir.glob("#{cassette_dir}/**/*.yml").each do |file|
+    content = File.read(file)
+    replacements = 0
+
+    updated = content.gsub(/^(\s*recorded_at:\s*).+$/) do
+      replacements += 1
+      "#{Regexp.last_match(1)}#{timestamp}"
+    end
+
+    next if replacements.zero?
+
+    File.write(file, updated)
+    updated_files += 1
+    updated_entries += replacements
+  end
+
+  puts "Updated #{updated_entries} recorded_at entries in #{updated_files} cassette files."
+  puts "New recorded_at value: #{timestamp}"
+end
+
 namespace :vcr do
   desc 'Record VCR cassettes (rake vcr:record[all] or vcr:record[openai,anthropic])'
   task :record, :providers do |_, args|
@@ -88,5 +114,11 @@ namespace :vcr do
     else
       record_for_providers(providers, cassette_dir)
     end
+  end
+
+  desc 'Update recorded_at timestamps for all cassette entries'
+  task :retimestamp do
+    cassette_dir = 'spec/fixtures/vcr_cassettes'
+    retimestamp_cassettes(cassette_dir)
   end
 end

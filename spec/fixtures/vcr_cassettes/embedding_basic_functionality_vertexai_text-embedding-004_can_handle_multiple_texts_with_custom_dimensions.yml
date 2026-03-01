@@ -8,7 +8,7 @@ http_interactions:
       string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Content-Type:
       - application/x-www-form-urlencoded
       Accept-Encoding:
@@ -22,12 +22,12 @@ http_interactions:
     headers:
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
-      Pragma:
-      - no-cache
+      Date:
+      - Tue, 10 Feb 2026 09:32:12 GMT
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
-      Date:
-      - Fri, 09 Jan 2026 14:18:54 GMT
+      Pragma:
+      - no-cache
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,20 +52,20 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/sqlservice.login",
+          "scope": "openid https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Fri, 09 Jan 2026 14:18:54 GMT
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 - request:
     method: post
-    uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/text-embedding-004:predict
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/text-embedding-004:predict
     body:
       encoding: UTF-8
       string: '{"instances":[{"content":"Ruby"},{"content":"Python"},{"content":"JavaScript"}],"parameters":{"outputDimensionality":768}}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer <GOOGLE_BEARER_TOKEN>
       Content-Type:
@@ -86,7 +86,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Fri, 09 Jan 2026 14:18:54 GMT
+      - Tue, 10 Feb 2026 09:32:23 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -106,6 +106,10 @@ http_interactions:
           "predictions": [
             {
               "embeddings": {
+                "statistics": {
+                  "truncated": false,
+                  "token_count": 1
+                },
                 "values": [
                   -0.0071573383174836636,
                   0.01143405307084322,
@@ -875,18 +879,14 @@ http_interactions:
                   0.02526424266397953,
                   0.0099949613213539124,
                   -0.016448808833956718
-                ],
-                "statistics": {
-                  "truncated": false,
-                  "token_count": 1
-                }
+                ]
               }
             },
             {
               "embeddings": {
                 "statistics": {
-                  "token_count": 1,
-                  "truncated": false
+                  "truncated": false,
+                  "token_count": 1
                 },
                 "values": [
                   0.020355613902211189,
@@ -1663,8 +1663,8 @@ http_interactions:
             {
               "embeddings": {
                 "statistics": {
-                  "token_count": 2,
-                  "truncated": false
+                  "truncated": false,
+                  "token_count": 2
                 },
                 "values": [
                   -0.0097851529717445374,
@@ -2443,5 +2443,5 @@ http_interactions:
             "billableCharacterCount": 20
           }
         }
-  recorded_at: Fri, 09 Jan 2026 14:18:54 GMT
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 recorded_with: VCR 6.4.0
