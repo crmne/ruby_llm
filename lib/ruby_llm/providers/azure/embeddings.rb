@@ -8,7 +8,7 @@ module RubyLLM
         module_function
 
         def embedding_url(...)
-          'openai/v1/embeddings'
+          azure_endpoint(:embeddings)
         end
 
         def render_embedding_payload(text, model:, dimensions:)

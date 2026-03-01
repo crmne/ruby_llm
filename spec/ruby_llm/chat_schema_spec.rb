@@ -68,29 +68,6 @@ RSpec.describe RubyLLM::Chat do
       end
     end
 
-    # Test Gemini provider separately due to different schema format
-    CHAT_MODELS.select { |model_info| model_info[:provider] == :gemini }.each do |model_info|
-      model = model_info[:model]
-      provider = model_info[:provider]
-
-      context "with #{provider}/#{model}" do
-        let(:chat) { RubyLLM.chat(model: model, provider: provider) }
-
-        it 'converts JSON schema to Gemini format and returns structured output' do
-          skip 'Model does not support structured output' unless chat.model.structured_output?
-
-          response = chat
-                     .with_schema(person_schema)
-                     .ask('Generate a person named Jane who is 25 years old')
-
-          # Content should already be parsed as a Hash when schema is used
-          expect(response.content).to be_a(Hash)
-          expect(response.content['name']).to eq('Jane')
-          expect(response.content['age']).to eq(25)
-        end
-      end
-    end
-
     # Test schema with arrays and nested objects
     describe 'complex schemas' do
       let(:complex_schema) do

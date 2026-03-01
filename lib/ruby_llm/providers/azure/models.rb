@@ -6,7 +6,7 @@ module RubyLLM
       # Models methods of the Azure AI Foundry API integration
       module Models
         def models_url
-          'openai/v1/models?api-version=preview'
+          azure_endpoint(:models)
         end
       end
     end
