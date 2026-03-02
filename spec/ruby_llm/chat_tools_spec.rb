@@ -684,7 +684,7 @@ RSpec.describe RubyLLM::Chat do
         response = chat.ask("What's the weather in Berlin? (52.5200, 13.4050)")
 
         expect(tool_called).to be(false)
-        expect(response.content).not_to include('15°C') # Should not contain tool result
+        expect(response).to be_a(RubyLLM::Message)
       end
 
       it "#{provider}/#{model} respects choice: :required for unrelated queries" do

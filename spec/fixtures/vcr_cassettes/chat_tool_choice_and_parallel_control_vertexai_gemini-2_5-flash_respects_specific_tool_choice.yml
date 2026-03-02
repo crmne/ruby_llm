@@ -8,7 +8,7 @@ http_interactions:
       string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.1
       Content-Type:
       - application/x-www-form-urlencoded
       Accept-Encoding:
@@ -23,7 +23,7 @@ http_interactions:
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
       Date:
-      - Tue, 23 Sep 2025 23:40:19 GMT
+      - Mon, 02 Mar 2026 09:46:17 GMT
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
       Pragma:
@@ -52,14 +52,14 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/sqlservice.login openid https://www.googleapis.com/auth/cloud-platform",
+          "scope": "https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Tue, 23 Sep 2025 23:40:19 GMT
+  recorded_at: Mon, 02 Mar 2026 09:46:17 GMT
 - request:
     method: post
-    uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"What''s the fall of Rome?"}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"weather","description":"Gets
@@ -68,7 +68,7 @@ http_interactions:
         13.4050)"}},"required":["latitude","longitude"]}}]}],"toolConfig":{"functionCallingConfig":{"mode":"any","allowedFunctionNames":["weather"]}}}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.1
       Authorization:
       - Bearer <GOOGLE_BEARER_TOKEN>
       Content-Type:
@@ -89,7 +89,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Tue, 23 Sep 2025 23:40:20 GMT
+      - Mon, 02 Mar 2026 09:46:18 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -115,22 +115,22 @@ http_interactions:
                     "functionCall": {
                       "name": "weather",
                       "args": {
-                        "longitude": "13.4050",
-                        "latitude": "52.5200"
+                        "longitude": "123",
+                        "latitude": "123"
                       }
                     },
-                    "thoughtSignature": "Ct8CAR/MhbYiyJv/zjhmLZKv3KGwS6Ub8a+VgkWbOiqAiqZni0RcbOZKsBRaWAqO7ZujffAeNN2DlLr25BnU624oQINT98/UFUA9rTnslQAcUqnlMd5psNjzf2nv1SvGrMH4/Naac1L0pAbn2NpecBYfJxVuy1yHRK4W2qe4V77sZMT5ktzY0NC6n9QyNrR/9QhyJKRwfMTK9NAoENRzb5smcBcM/ZTRxGswltsr3BW2tGespKhqhn8CqUxl3+Ll6VZl1GO3C9ARsSqXAJUBI1SXHQ2ayIgHtGy38xDIy578N3hpbr9TqMV5E32HRjxVT03MuoGnK+5zZPQsZLouC6FrZ+KotfEfympgmUjFOKA35bsFUJ/+tP4rr3TR/rmAXdkje/g/rRqfuoiahiwN8/HMpo/CWhhmjCI9TszGjPXByZuwuytP5CxTs+oSO5kT98z8TcDkMQILHR85oyQtzU1x"
+                    "thoughtSignature": "CqgCAY89a1+6FbN1NYpyrayK+LCTlQ680jMTelqvMEEg1vWOFdOOVZSCO5pRg/UsJrAl5bWfxlP/i9ySOcjf3UFfgXWeZfNxXn9EGjMotYwtt5jxChk5DZjfWvVWkcpIaRZ5+1IQ7vKCr3GLenSyQi2bGvZUEBpu/NH1/ofbxOwmvI+Vw/lvRahpeCX+hFU/vka7U9ZwbhT9HhDdC7pmk98VWotVYosiQI7KSaNfUboSQzfgXVEmZtUj91ERnLLszzyV007A88H80ojh6T0SNmoWZEKs9M5nbEkKevHdSGgQSlv2A4soij35/2jVmwwTXAhsZ5w2UahJXONR6PyE2oLlsIqiNM/XceLg6UcHNGi2BSkqojFBwZxoUEtP4RjnI7BRErdTWAtbxds="
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.73671425090116616
+              "avgLogprobs": -1.8139055040147569
             }
           ],
           "usageMetadata": {
             "promptTokenCount": 52,
-            "candidatesTokenCount": 17,
-            "totalTokenCount": 133,
+            "candidatesTokenCount": 9,
+            "totalTokenCount": 111,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -141,86 +141,29 @@ http_interactions:
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 17
+                "tokenCount": 9
               }
             ],
-            "thoughtsTokenCount": 64
+            "thoughtsTokenCount": 50
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2025-09-23T23:40:19.403263Z",
-          "responseId": "4y_TaL_OGIL9ld8PqbTR0Qo"
+          "createTime": "2026-03-02T09:46:17.558082Z",
+          "responseId": "aVylaYKIIovKtfAP6vrb4QU"
         }
-  recorded_at: Tue, 23 Sep 2025 23:40:20 GMT
+  recorded_at: Mon, 02 Mar 2026 09:46:18 GMT
 - request:
     method: post
-    uri: https://oauth2.googleapis.com/token
-    body:
-      encoding: ASCII-8BIT
-      string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
-    headers:
-      User-Agent:
-      - Faraday v2.13.4
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Pragma:
-      - no-cache
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
-      Date:
-      - Tue, 23 Sep 2025 23:40:20 GMT
-      Expires:
-      - Mon, 01 Jan 1990 00:00:00 GMT
-      Content-Type:
-      - application/json; charset=utf-8
-      Vary:
-      - Origin
-      - Referer
-      - X-Origin
-      Server:
-      - scaffolding on HTTPServer2
-      X-Xss-Protection:
-      - '0'
-      X-Frame-Options:
-      - SAMEORIGIN
-      X-Content-Type-Options:
-      - nosniff
-      Alt-Svc:
-      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
-      Transfer-Encoding:
-      - chunked
-    body:
-      encoding: ASCII-8BIT
-      string: |-
-        {
-          "access_token": "<GOOGLE_ACCESS_TOKEN>",
-          "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/cloud-platform openid https://www.googleapis.com/auth/sqlservice.login",
-          "token_type": "Bearer",
-          "id_token": "<GOOGLE_ID_TOKEN>"
-        }
-  recorded_at: Tue, 23 Sep 2025 23:40:20 GMT
-- request:
-    method: post
-    uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
-      string: '{"contents":[{"role":"user","parts":[{"text":"What''s the fall of Rome?"}]},{"role":"model","parts":[{"functionCall":{"name":"weather","args":{"longitude":"13.4050","latitude":"52.5200"}}}]},{"role":"user","parts":[{"functionResponse":{"name":"3ec84e41-bb7b-4578-a062-a92cf3e3e4bb","response":{"name":"3ec84e41-bb7b-4578-a062-a92cf3e3e4bb","content":[{"text":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"weather","description":"Gets
+      string: '{"contents":[{"role":"user","parts":[{"text":"What''s the fall of Rome?"}]},{"role":"model","parts":[{"functionCall":{"name":"weather","args":{"longitude":"123","latitude":"123"}},"thoughtSignature":"CqgCAY89a1+6FbN1NYpyrayK+LCTlQ680jMTelqvMEEg1vWOFdOOVZSCO5pRg/UsJrAl5bWfxlP/i9ySOcjf3UFfgXWeZfNxXn9EGjMotYwtt5jxChk5DZjfWvVWkcpIaRZ5+1IQ7vKCr3GLenSyQi2bGvZUEBpu/NH1/ofbxOwmvI+Vw/lvRahpeCX+hFU/vka7U9ZwbhT9HhDdC7pmk98VWotVYosiQI7KSaNfUboSQzfgXVEmZtUj91ERnLLszzyV007A88H80ojh6T0SNmoWZEKs9M5nbEkKevHdSGgQSlv2A4soij35/2jVmwwTXAhsZ5w2UahJXONR6PyE2oLlsIqiNM/XceLg6UcHNGi2BSkqojFBwZxoUEtP4RjnI7BRErdTWAtbxds="}]},{"role":"function","parts":[{"functionResponse":{"name":"weather","response":{"name":"weather","content":[{"text":"Current
+        weather at 123, 123: 15°C, Wind: 10 km/h"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"OBJECT","properties":{"latitude":{"type":"STRING","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"STRING","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"]}}]}]}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.1
       Authorization:
       - Bearer <GOOGLE_BEARER_TOKEN>
       Content-Type:
@@ -241,7 +184,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Tue, 23 Sep 2025 23:40:21 GMT
+      - Mon, 02 Mar 2026 09:46:19 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -264,37 +207,35 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "I am sorry, I cannot tell you about the fall of Rome with the available tools.",
-                    "thoughtSignature": "CtsCAR/Mhba7U8MzvRalU8+ez57BrQ9yzdjTG/Tohpkadsnk013vgS3b0W3Wu5eY2smCrhDTbOaExj/r7qAXy81icgO29x0NIA96DH3T8MMqH7Xm/WSv8wQnibCAP6P8fc8seZG9ARBYbAw+GstPfHx/thiAyy6ToFZDTyGbi2JevJhsyxaKgomxaFgFm/0NreyjJ46abAYHVdd6zpro4R9KnFKQZiOQ1iWR34d9cst8QUsRll6rub+LyTwuhS9kco4PKbtoP+PHWs62df6v3XLbyBnv2sUu8GiI2bAe7Mzty5jZgotW4NDtWW1oWusv6eL8T4U8/uU8IG9kHKyrbm0QSHwdZREbNy6h6vtodi08W6K8jfJa8A2c6JUSsUzraYpv72jzOttTfNwwSEYgnkafLBZGcywDbG5L2CaFKK8xuk1M/aESDDTGdnp71IqnlOme5xSOaTY9OjATMfk="
+                    "text": "I cannot answer historical questions about the fall of Rome. My capabilities are limited to providing current weather information."
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -1.2237757576836481
+              "avgLogprobs": -0.38861583528064547
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 171,
-            "candidatesTokenCount": 18,
-            "totalTokenCount": 253,
+            "promptTokenCount": 143,
+            "candidatesTokenCount": 21,
+            "totalTokenCount": 164,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 171
+                "tokenCount": 143
               }
             ],
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 18
+                "tokenCount": 21
               }
-            ],
-            "thoughtsTokenCount": 64
+            ]
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2025-09-23T23:40:20.524965Z",
-          "responseId": "5C_TaKWFIIL9ld8PqbTR0Qo"
+          "createTime": "2026-03-02T09:46:18.491643Z",
+          "responseId": "alylafuAHomjz_IP9uTu8Q0"
         }
-  recorded_at: Tue, 23 Sep 2025 23:40:21 GMT
-recorded_with: VCR 6.3.1
+  recorded_at: Mon, 02 Mar 2026 09:46:19 GMT
+recorded_with: VCR 6.4.0
