@@ -11,6 +11,9 @@ description: Extend RubyLLM with MCP servers, structured schemas, OpenTelemetry 
 {{ page.description }}
 {: .fs-6 .fw-300 }
 
+> Ecosystem projects are maintained by their respective authors. We list projects for discoverability, but we cannot guarantee the quality, security, maintenance status, or fitness of every listed project.
+{: .note }
+
 ## Table of contents
 {: .no_toc .text-delta }
 
@@ -21,9 +24,9 @@ description: Extend RubyLLM with MCP servers, structured schemas, OpenTelemetry 
 
 After reading this guide, you will know:
 
-* What the Model Context Protocol (MCP) is and how ruby_llm-mcp brings it to Ruby
-* How RubyLLM::Schema simplifies structured data definition for AI applications
-* How RubyLLM::RedCandle enables local model execution from Ruby
+* What the Model Context Protocol (MCP) is and how `RubyLLM::MCP` brings it to Ruby
+* How `RubyLLM::Schema` simplifies structured data definition for AI applications
+* How `RubyLLM::RedCandle` enables local model execution from Ruby
 * How OpenTelemetry instrumentation for RubyLLM provides observability into your LLM applications
 * Where to find community projects and how to contribute your own
 
@@ -31,7 +34,7 @@ After reading this guide, you will know:
 
 **Model Context Protocol Support for Ruby**
 
-[RubyLLM::MCP](https://github.com/patvice/ruby_llm-mcp) brings the [Model Context Protocol](https://modelcontextprotocol.io/) to Ruby, enabling your applications to connect to MCP servers and use their tools, resources, and prompts as part of LLM conversations.
+[`RubyLLM::MCP`](https://github.com/patvice/ruby_llm-mcp) brings the [Model Context Protocol](https://modelcontextprotocol.io/) to Ruby, enabling your applications to connect to MCP servers and use their tools, resources, and prompts as part of LLM conversations.
 
 ### What is MCP?
 
@@ -63,7 +66,7 @@ For detailed documentation, examples, and usage guides, visit the [RubyLLM::MCP 
 
 **Ruby DSL for JSON Schema Creation**
 
-[RubyLLM::Schema](https://github.com/danielfriis/ruby_llm-schema) provides a clean, Rails-inspired DSL for creating JSON schemas. It's designed specifically for defining structured data schemas for LLM function calling and structured outputs.
+[`RubyLLM::Schema`](https://github.com/danielfriis/ruby_llm-schema) provides a clean, Rails-inspired DSL for creating JSON schemas. It's designed specifically for defining structured data schemas for LLM function calling and structured outputs.
 
 ### Why Use RubyLLM::Schema?
 
@@ -74,7 +77,7 @@ When working with LLMs, you often need to define precise data structures for:
 - Data validation schemas
 - API response formats
 
-RubyLLM::Schema makes this easy with a familiar Ruby syntax.
+`RubyLLM::Schema` makes this easy with a familiar Ruby syntax.
 
 ### Key Features
 
@@ -98,7 +101,7 @@ For detailed documentation and examples, visit the [RubyLLM::Schema repository](
 
 **Local LLM Execution with Quantized Models**
 
-[RubyLLM::RedCandle](https://github.com/scientist-labs/ruby_llm-red_candle) enables local LLM execution using quantized GGUF models through the [Red Candle](https://github.com/scientist-labs/red-candle) gem. Unlike other RubyLLM providers that communicate via HTTP APIs, RedCandle runs models directly in your Ruby process using Rust's Candle library.
+[`RubyLLM::RedCandle`](https://github.com/scientist-labs/ruby_llm-red_candle) enables local LLM execution using quantized GGUF models through the [Red Candle](https://github.com/scientist-labs/red-candle) gem. Unlike other RubyLLM providers that communicate via HTTP APIs, `RubyLLM::RedCandle` runs models directly in your Ruby process using Rust's Candle library.
 
 ### Why Run Models Locally?
 
@@ -127,7 +130,7 @@ gem install ruby_llm-red_candle
 
 ### Supported Models
 
-RedCandle supports various quantized models including TinyLlama, Qwen2.5, Gemma-3, Phi-3, and Mistral-7B. Models are automatically downloaded from HuggingFace on first use.
+`RubyLLM::RedCandle` supports various quantized models including TinyLlama, Qwen2.5, Gemma-3, Phi-3, and Mistral-7B. Models are automatically downloaded from HuggingFace on first use.
 
 For detailed documentation and examples, visit the [RubyLLM::RedCandle repository](https://github.com/scientist-labs/ruby_llm-red_candle).
 
@@ -186,8 +189,5 @@ The RubyLLM ecosystem is growing! If you've built a library or tool that extends
 - Opening a PR to add your project to this page
 - Sharing it in our GitHub Discussions
 - Using the `ruby_llm` topic on your GitHub repository
-
-> Ecosystem projects are maintained by their respective authors. We list projects for discoverability, but we cannot guarantee the quality, security, maintenance status, or fitness of every listed project.
-{: .note }
 
 Together, we're building a comprehensive ecosystem for LLM-powered Ruby applications.
