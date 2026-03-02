@@ -24,45 +24,13 @@ description: Extend RubyLLM with MCP servers, structured schemas, instrumentatio
 
 After reading this guide, you will know:
 
-* What the Model Context Protocol (MCP) is and how `RubyLLM::MCP` brings it to Ruby
 * How `RubyLLM::Schema` simplifies structured data definition for AI applications
+* What the Model Context Protocol (MCP) is and how `RubyLLM::MCP` brings it to Ruby
 * How `RubyLLM::Instrumentation` exposes RubyLLM events through ActiveSupport notifications
 * How `RubyLLM::Monitoring` provides dashboards and alerts for RubyLLM activity
 * How `RubyLLM::RedCandle` enables local model execution from Ruby
 * How OpenTelemetry instrumentation for RubyLLM provides observability into your LLM applications
 * Where to find community projects and how to contribute your own
-
-## RubyLLM::MCP
-
-**Model Context Protocol Support for Ruby**
-
-[`RubyLLM::MCP`](https://github.com/patvice/ruby_llm-mcp) brings the [Model Context Protocol](https://modelcontextprotocol.io/) to Ruby, enabling your applications to connect to MCP servers and use their tools, resources, and prompts as part of LLM conversations.
-
-### What is MCP?
-
-The Model Context Protocol is an open standard that allows AI applications to integrate with external data sources and tools. MCP servers can expose:
-
-- **Tools**: Functions that LLMs can call to perform actions
-- **Resources**: Structured data that can be included in conversations
-- **Prompts**: Predefined prompt templates with parameters
-
-### Key Features
-
-- Multiple transport types (HTTP streaming, STDIO, SSE)
-- Automatic tool integration with RubyLLM
-- Resource management for files and data
-- Prompt templates with arguments
-- Support for multiple simultaneous MCP connections
-
-### Installation
-
-```bash
-gem install ruby_llm-mcp
-```
-
-For detailed documentation, examples, and usage guides, visit the [RubyLLM::MCP documentation](https://rubyllm-mcp.com/).
-
----
 
 ## RubyLLM::Schema
 
@@ -96,6 +64,38 @@ gem install ruby_llm-schema
 ```
 
 For detailed documentation and examples, visit the [RubyLLM::Schema repository](https://github.com/danielfriis/ruby_llm-schema).
+
+---
+
+## RubyLLM::MCP
+
+**Model Context Protocol Support for Ruby**
+
+[`RubyLLM::MCP`](https://github.com/patvice/ruby_llm-mcp) brings the [Model Context Protocol](https://modelcontextprotocol.io/) to Ruby, enabling your applications to connect to MCP servers and use their tools, resources, and prompts as part of LLM conversations.
+
+### What is MCP?
+
+The Model Context Protocol is an open standard that allows AI applications to integrate with external data sources and tools. MCP servers can expose:
+
+- **Tools**: Functions that LLMs can call to perform actions
+- **Resources**: Structured data that can be included in conversations
+- **Prompts**: Predefined prompt templates with parameters
+
+### Key Features
+
+- Multiple transport types (HTTP streaming, STDIO, SSE)
+- Automatic tool integration with RubyLLM
+- Resource management for files and data
+- Prompt templates with arguments
+- Support for multiple simultaneous MCP connections
+
+### Installation
+
+```bash
+gem install ruby_llm-mcp
+```
+
+For detailed documentation, examples, and usage guides, visit the [RubyLLM::MCP documentation](https://rubyllm-mcp.com/).
 
 ---
 
