@@ -30,6 +30,7 @@ RSpec.describe RubyLLM::Providers::VertexAI do
       ]
 
       allow(Google::Auth).to receive(:get_application_default).and_return(mock_credentials)
+      RubyLLM.config.vertexai_service_account_key = nil
 
       provider.headers
 
