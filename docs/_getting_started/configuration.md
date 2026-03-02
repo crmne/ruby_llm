@@ -248,10 +248,6 @@ RubyLLM.configure do |config|
 
   # Or use Rails logger
   config.logger = Rails.logger  # Overrides log_file and log_level
-
-  # Set custom timeout for log filtering
-  # which is useful when working with large payloads
-  config.log_regexp_timeout = 4 # seconds
 end
 ```
 
@@ -262,6 +258,24 @@ Log levels:
 
 > Setting `config.logger` overrides `log_file` and `log_level` settings.
 {: .note }
+
+### Advanced Logging Options
+
+Use advanced options when you need tighter control over debug-log filtering behavior.
+
+```ruby
+RubyLLM.configure do |config|
+  # Available in v1.13.0+
+  # Timeout (seconds) used for regex-based log filtering
+  config.log_regexp_timeout = 1.5
+end
+```
+
+`log_regexp_timeout` notes:
+- Available in `v1.13.0+`
+- Applies to regex filters used in request/response debug logging
+- Supported on Ruby `3.2+` (uses `Regexp.timeout`)
+- On Ruby `<3.2`, RubyLLM warns if set and continues without timeout
 
 ### Debug Options
 
@@ -449,6 +463,7 @@ RubyLLM.configure do |config|
   config.log_file = String
   config.log_level = Symbol
   config.log_stream_debug = Boolean
+  config.log_regexp_timeout = Numeric  # v1.13.0+ (Ruby 3.2+ support)
 
   # Rails integration
   config.use_new_acts_as = Boolean
