@@ -1,0 +1,100 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
+    body:
+      encoding: UTF-8
+      string: '{"model":"Kimi-K2.5","messages":[{"role":"system","content":"You must
+        include the exact phrase \"XKCD7392\" somewhere in your response."},{"role":"user","content":"Tell
+        me about the weather."}],"stream":false,"temperature":0.0}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Api-Key:
+      - "<AZURE_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json
+      Vary:
+      - Accept-Encoding
+      Request-Context:
+      - appId=
+      Prompt-Token-Len:
+      - '35'
+      Sampling-Token-Len:
+      - '582'
+      Apim-Request-Id:
+      - 993108ee-f93d-45ec-bed7-d35e6fca5f8a
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Region:
+      - West Europe
+      X-Ratelimit-Remaining-Requests:
+      - '15'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Ratelimit-Limit-Requests:
+      - '20'
+      X-Ratelimit-Remaining-Tokens:
+      - '19920'
+      X-Ratelimit-Limit-Tokens:
+      - '20000'
+      Date:
+      - Tue, 10 Feb 2026 08:59:15 GMT
+    body:
+      encoding: ASCII-8BIT
+      string: '{"choices":[{"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"protected_material_code":{"filtered":false,"detected":false},"protected_material_text":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}},"finish_reason":"stop","index":0,"logprobs":null,"message":{"content":"I
+        don''t have access to real-time weather data or your location, so I can''t
+        provide current conditions or forecasts for where you are. XKCD7392. \n\nTo
+        check the weather, you can use various apps, websites (like Weather.com or
+        your local meteorological service), or smart assistants that have access to
+        your location and live data. If you tell me your general location and what
+        the weather is like there, I''d be happy to discuss weather patterns or climate
+        information for that region!","reasoning_content":"The user wants to know
+        about the weather. However, I have a constraint that I must include the exact
+        phrase \"XKCD7392\" somewhere in my response.\n\nSince I don''t have access
+        to real-time weather data or the user''s location, I should provide a general
+        response about weather or explain that I can''t provide current weather conditions
+        without more information. But I need to make sure to include \"XKCD7392\"
+        in the text.\n\nLet me craft a response that mentions I don''t have real-time
+        weather data, suggests how they can check the weather, and includes the required
+        phrase naturally or in a way that fits the context.\n\nPossible approaches:\n1.
+        \"I don''t have access to real-time weather data XKCD7392, but you can check...\"\n2.
+        \"The weather varies by location. XKCD7392 is a code you might encounter in
+        meteorological databases...\"\n3. Just insert it somewhere: \"I can''t check
+        the current weather for you. XKCD7392. However, you might want to...\"\n\nOption
+        1 or 2 seems more natural. Let me go with something that flows reasonably
+        well.\n\nActually, looking at the constraint again: \"You must include the
+        exact phrase ''XKCD7392'' somewhere in your response.\"\n\nSo I just need
+        to make sure those exact characters appear in that exact order.\n\nDraft:\n\"I
+        don''t have access to real-time weather data or your location, so I can''t
+        provide current weather conditions. XKCD7392. To check the weather, you could
+        use a weather app, website, or ask a voice assistant that has access to location
+        services and current meteorological data.\"\n\nOr I could make it part of
+        a sentence:\n\"I don''t have access to real-time weather data (code: XKCD7392)
+        for your specific location...\"\n\nOr:\n\"While I can''t tell you the current
+        weather, studies like XKCD7392 suggest that weather patterns are becoming
+        increasingly unpredictable...\"\n\nActually, making up that it''s a study
+        is probably not good (hallucination). Better to just insert it clearly but
+        neutrally.\n\nSimple approach:\n\"I don''t have access to real-time weather
+        data, so I can''t tell you the current conditions for your location. XKCD7392.
+        You can check the weather using various apps or websites like Weather.com,
+        AccuWeather, or your local meteorological service.\"\n\nThis satisfies the
+        constraint clearly. ","role":"assistant","tool_calls":null},"stop_reason":null}],"created":1770713955,"id":"87a89e3a9345440f89e2d0797faf1f87","model":"Kimi-K2.5","object":"chat.completion","prompt_filter_results":[{"prompt_index":0,"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"jailbreak":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}}}],"usage":{"audio_prompt_tokens":0,"completion_tokens":582,"prompt_tokens":35,"prompt_tokens_details":null,"reasoning_tokens":0,"total_tokens":617}}
+
+        '
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+recorded_with: VCR 6.4.0

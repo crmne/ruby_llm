@@ -85,6 +85,15 @@ end
 > ```
 {: .note }
 
+> If a model attempts to call a tool that doesn't exist (sometimes called "tool hallucination"), RubyLLM handles this gracefully by:
+>
+> 1. Returning an error message to the model indicating which tool it tried to call
+> 2. Listing the actually available tools
+> 3. Allowing the conversation to continue so the model can correct itself
+>
+> This prevents crashes and gives the model a chance to use the correct tool or respond appropriately.
+{: .note }
+
 ## Declaring Parameters
 
 RubyLLM ships with two complementary approaches:
@@ -275,6 +284,48 @@ response = chat.ask "What's the current weather like in Berlin? (Lat: 52.52, Lon
 puts response.content
 # => "Current weather at 52.52, 13.4: Temperature: 12.5°C, Wind Speed: 8.3 km/h, Conditions: Mainly clear, partly cloudy, and overcast."
 ```
+
+### Tool Choice Control
+{: .d-inline-block }
+
+v1.13.0+
+{: .label .label-green }
+
+Control when and how tools are called using `choice` and `parallel` options.
+
+```ruby
+chat = RubyLLM.chat(model: '{{ site.models.openai_tools }}')
+
+# Basic usage with defaults
+chat.with_tools(Weather, Calculator)  # uses provider defaults
+
+# Force tool usage, one at a time
+chat.with_tools(Weather, Calculator, choice: :required, parallel: false)
+
+# Force a specific tool by name
+chat.with_tool(Weather, choice: :weather, parallel: true)
+
+# Force a specific tool by class
+chat.with_tool(Weather, choice: Weather, parallel: true)
+```
+
+**Parameter Values:**
+- **`choice`**: Controls tool choice behavior
+  - `:auto` - Model decides whether to use any tools
+  - `:required` - Model must use one of the provided tools
+  - `:none` - Disable all tools
+  - `:tool_name` or `ToolClass` - Force a specific tool (e.g., `:weather` or `Weather`)
+- **`parallel`**: Controls parallel tool calls
+  - `true` - Allow multiple tool calls in one response
+  - `false` - One at a time
+
+If not provided, RubyLLM will use the provider's default behavior for tool choice and parallel tool calls.
+
+> With `:required` or specific tool choices, the tool_choice is automatically reset to `nil` after tool execution to prevent infinite loops.
+{: .note }
+
+> Tool choice and parallel controls are provider/model dependent.
+{: .note }
 
 ### Model Compatibility
 

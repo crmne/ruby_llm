@@ -8,7 +8,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -26,40 +26,42 @@ http_interactions:
       - GitHub.com
       Content-Type:
       - text/plain; charset=utf-8
+      X-Origin-Cache:
+      - HIT
       Last-Modified:
-      - Tue, 28 Oct 2025 04:56:13 GMT
+      - Mon, 09 Feb 2026 23:48:37 GMT
       Access-Control-Allow-Origin:
       - "*"
       Etag:
-      - W/"69004ced-9c6"
+      - W/"698a7255-9c6"
       Expires:
-      - Mon, 03 Nov 2025 09:55:43 GMT
+      - Tue, 10 Feb 2026 13:29:51 GMT
       Cache-Control:
       - max-age=600
       X-Proxy-Cache:
       - MISS
       X-Github-Request-Id:
-      - 5FE6:2C85A1:1EDEB8E:1F598A8:690879C5
+      - 34BD:22EB14:BE290F:C6DDC3:698B3076
       Accept-Ranges:
       - bytes
+      Age:
+      - '0'
       Date:
-      - Mon, 03 Nov 2025 13:47:49 GMT
+      - Tue, 10 Feb 2026 13:21:55 GMT
       Via:
       - 1.1 varnish
-      Age:
-      - '52'
       X-Served-By:
-      - cache-fra-etou8220118-FRA
+      - cache-bkk2310027-BKK
       X-Cache:
       - HIT
       X-Cache-Hits:
-      - '1'
+      - '0'
       X-Timer:
-      - S1762177670.612409,VS0,VE2
+      - S1770729715.350161,VS0,VE277
       Vary:
       - Accept-Encoding
       X-Fastly-Request-Id:
-      - 6a044be278d3cacd5265298e9b47a29df1bbd057
+      - 4aaca4318849e968ddd6936b42e2e285c5d46735
     body:
       encoding: ASCII-8BIT
       string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
@@ -95,7 +97,7 @@ http_interactions:
         \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
         WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
         FOR A PARTICULAR\n     PURPOSE.\n"
-  recorded_at: Mon, 03 Nov 2025 13:47:49 GMT
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 - request:
     method: post
     uri: "<OLLAMA_API_BASE>/chat/completions"
@@ -138,7 +140,7 @@ http_interactions:
         A PARTICULAR\n     PURPOSE.\n</file>"}]}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -153,80 +155,81 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 03 Nov 2025 13:47:58 GMT
+      - Tue, 10 Feb 2026 13:25:51 GMT
       Transfer-Encoding:
       - chunked
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-821","object":"chat.completion","created":1762177678,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"The
-        file `license.txt` contains the **license terms** for **Ruby**, a programming
-        language created by Yukihiro Matsumoto (Matz). It outlines the conditions
-        under which Ruby can be used, modified, and distributed. Here''s a summary
-        of the key points:\n\n---\n\n### **License Summary**\n1. **Redistribution**  \n   -
-        You can freely redistribute **source code** (verbatim copies) as long as you
-        retain original copyright notices and disclaimers.\n\n2. **Modification**  \n   -
-        You may modify the software, but you **must** do **at least one** of the following:\n     -
-        Place modified code in the **Public Domain** or make it freely available (e.g.,
-        via Usenet).\n     - Use the modified software **only within your organization**.\n     -
-        Name non-standard binaries with instructions on where to get the original
-        software.\n     - Make other distribution arrangements with the author.\n\n3.
-        **Binary Distribution**  \n   - If distributing in **binary/object form**,
-        you must do **at least one** of:\n     - Include instructions to obtain the
-        original source.\n     - Provide machine-readable source code.\n     - Use
-        non-standard binary names with instructions to the original source.\n     -
-        Make other arrangements with the author.\n\n4. **Inclusion in Other Software**  \n   -
-        You can modify and include Ruby in **other software** (even commercial), but
-        some files in the distribution are not under these terms. See the `LEGAL`
-        file for details on exceptions.\n\n5. **Generated Files**  \n   - Scripts
-        or library files generated as input/output by Ruby **do not fall under the
-        license**. They belong to the creator and may be sold or aggregated with Ruby.\n\n6.
-        **Warranty Disclaimer**  \n   - The software is provided **\"AS IS\"** with
-        **no warranties** (explicit or implied), including fitness for a particular
-        purpose.\n\n---\n\n### **Key Notes**\n- The license combines elements of the
-        **BSD license** with custom conditions.\n- References to files like `BSDL`
-        (2-clause BSD license) and `LEGAL` (lists exceptions) are critical for full
-        compliance.\n- Not all files in the Ruby distribution are covered by these
-        terms (e.g., some third-party libraries or tools).\n\n---\n\n### **When to
-        Use This**\nThis license allows **free use, modification, and redistribution**
-        of Ruby, but requires proper attribution and adherence to specific conditions.
-        If you''re using Ruby in a project, ensure you comply with these terms and
-        check the `LEGAL` file for file-specific exceptions.","reasoning":"Okay, the
-        user is asking what''s in the file called license.txt. Let me look at the
-        content they provided. \n\nFirst, the file starts by mentioning Ruby is copyrighted
-        free software by Yukihiro Matsumoto, also known as matz. Then there are several
-        conditions listed from 1 to 6. Let me parse each section.\n\nCondition 1 allows
-        redistribution of the source code without restriction, but you need to keep
-        the original copyright notices and disclaimers. That''s standard for open-source
-        licenses.\n\nCondition 2 talks about modifying the software. The user can
-        modify it but must do one of the four options: place modifications in the
-        public domain, use them only within their company, name non-standard binaries
-        with instructions, or make other arrangements with the author. This seems
-        similar to the BSD license''s requirements for modified code.\n\nCondition
-        3 covers distributing in binary form. Again, similar to BSD, you have to do
-        one of the four things: include instructions to get the original source, provide
-        machine-readable source, use non-standard names with instructions, or make
-        other arrangements. This is a bit more detailed than the standard BSD, maybe
-        to address different distribution scenarios.\n\nCondition 4 allows modifying
-        and including parts of Ruby in other software, even commercial, but notes
-        that some files aren''t under these terms and refers to a LEGAL file for details.
-        This is important because not all files in the distribution might be covered
-        by this license.\n\nCondition 5 states that scripts and library files generated
-        by the software aren''t automatically under the copyright, so they belong
-        to the creator and can be sold. This is a common provision to clarify that
-        generated files aren''t part of the license.\n\nCondition 6 is the standard
-        \"AS IS\" clause with no warranties. That''s typical in many open-source licenses
-        to limit liability.\n\nPutting this all together, the license seems to be
-        a combination of BSD and some custom terms. The mention of BSDL and LEGAL
-        files suggests there are additional legal documents referenced. The user might
-        be trying to understand the licensing terms for Ruby, possibly for using or
-        contributing to the project. They might need to know if they can redistribute
-        modified versions, how to handle binary distributions, and what files are
-        covered. Since the user provided the content, they might be looking for a
-        summary or clarification of the license terms. I should explain each section
-        clearly, note the references to other files, and mention that it''s a mix
-        of BSD-like terms with specific conditions. Also, highlight the key points
-        like redistribution, modification, and the exceptions for certain files.\n"},"finish_reason":"stop"}],"usage":{"prompt_tokens":546,"completion_tokens":1041,"total_tokens":1587}}
+      string: '{"id":"chatcmpl-798","object":"chat.completion","created":1770729951,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        file `license.txt` contains the **license terms for Ruby**, a programming
+        language created by Yukihiro Matsumoto (Matz). Here''s a breakdown of its
+        key provisions:\n\n---\n\n### **Summary of Key Points**\n1. **License Scope**:\n   -
+        Ruby is free software, but its license combines **custom terms** with the
+        **2-clause BSDL** (Berkeley Software Distribution License). The BSDL is a
+        permissive open-source license, but Ruby''s terms add specific restrictions.\n\n2.
+        **Redistribution and Modification**:\n   - **Verbatim Copies** (unchanged
+        source code):  \n     You can freely redistribute Ruby''s source code, but
+        you **must retain all original copyright notices and disclaimers**.\n   -
+        **Modified Code**:  \n     If you alter the software, you **must** do **one**
+        of these:  \n     - Publish your changes in the Public Domain or freely share
+        them (e.g., via Usenet).  \n     - Restrict use to your organization.  \n     -
+        Label non-standard binaries with instructions to find the original source.  \n     -
+        Make special arrangements with the author (Matz).\n\n3. **Binary Distribution**:\n   -
+        If distributing **compiled binaries** or libraries, you **must** do **one**
+        of:  \n     - Include instructions to get the original source.  \n     - Provide
+        the source code alongside the binaries.  \n     - Label non-standard binaries
+        with source instructions.  \n     - Make other arrangements with the author.\n\n4.
+        **Integration into Other Software**:\n   - You can **modify and include Ruby
+        code** in other software (even commercial), but **some files** in the Ruby
+        distribution are **not under these terms**.  \n   - For details on these exceptions,
+        see the `LEGAL` file.\n\n5. **Scripts and Library Files**:\n   - Scripts or
+        files generated as input/output **do not inherit Ruby''s copyright**. They
+        belong to their creators and can be used commercially or aggregated with Ruby.\n\n6.
+        **Disclaimer**:\n   - The software is provided **\"as is\"** with **no warranties**
+        (explicit or implied), including no guarantees of merchantability or fitness
+        for a specific purpose.\n\n---\n\n### **Key Takeaways**\n- **Permissive but
+        with caveats**: Ruby''s license is open-source but includes specific requirements
+        for modifications, redistribution, and attribution.\n- **Exceptions exist**:
+        Some files (e.g., third-party libraries) may have different licensing terms
+        (see `LEGAL`).\n- **Commercial use**: Allowed, but with conditions on how
+        modified code or binaries are shared.\n\nThis license balances flexibility
+        for users while ensuring proper attribution and restrictions on derivative
+        works. If you''re using Ruby, you should review the full license and any `LEGAL`
+        file included in the distribution for exact terms.","reasoning":"Okay, let
+        me try to figure out what''s in this license.txt file. The user provided the
+        content, so I''ll start by reading through it carefully.\n\nFirst, it mentions
+        that Ruby is copyrighted free software by Yukihiro Matsumoto, also known as
+        Matz. The license allows redistribution and modification under either the
+        2-clause BSDL or these conditions. The BSDL is probably the Berkeley Software
+        Distribution License, which is a common open-source license. \n\nLooking at
+        the conditions:\n\n1. Verbatim copies: You can copy the source code freely
+        as long as you keep the original copyright notices and disclaimers. That''s
+        standard for many open-source licenses.\n\n2. Modification conditions: If
+        you change the software, you must do one of the four options. Option a is
+        placing modifications in the Public Domain or making them freely available.
+        Option b restricts use to within your company. Option c requires non-standard
+        names for binaries with instructions on where to get the original. Option
+        d allows other arrangements with the author. This seems to give flexibility
+        but with some restrictions.\n\n3. Distribution in binary form: Similar to
+        condition 2, but here it''s about distributing binaries. You need to do one
+        of the four options again, like including instructions on where to get the
+        source or providing the source code. This is to ensure that users can access
+        the source if they need to.\n\n4. Modifying and including in other software:
+        You can include parts of Ruby in other software, even commercial, but some
+        files aren''t under these terms. They mention a LEGAL file for those files''
+        conditions. So not all parts of the distribution are covered by this license.\n\n5.
+        Scripts and library files: These aren''t automatically under the software''s
+        copyright. They belong to the creator and can be sold commercially. So if
+        you generate these files, you own them, but they can be used with Ruby''s
+        software.\n\n6. Disclaimer: The software is provided \"as is\" with no warranties.
+        This is common in open-source licenses to limit liability.\n\nPutting this
+        all together, the license.txt is the Ruby license, allowing redistribution
+        and modification under specific conditions. It combines elements of the BSDL
+        and custom terms. The key points are about preserving copyright notices, handling
+        modifications, distribution requirements, and some exceptions for certain
+        files. The user might want to know the terms for using Ruby, so explaining
+        each section''s implications would be helpful.\n"},"finish_reason":"stop"}],"usage":{"prompt_tokens":546,"completion_tokens":1064,"total_tokens":1610}}
 
         '
-  recorded_at: Mon, 03 Nov 2025 13:47:58 GMT
-recorded_with: VCR 6.3.1
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+recorded_with: VCR 6.4.0

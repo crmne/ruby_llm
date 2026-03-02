@@ -28,6 +28,10 @@ module RubyLLM
         def configuration_requirements
           %i[gpustack_api_base]
         end
+
+        def capabilities
+          GPUStack::Capabilities
+        end
       end
     end
   end

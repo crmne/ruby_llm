@@ -2,7 +2,7 @@
 layout: default
 title: RubyLLM Ecosystem
 nav_order: 3
-description: Extend RubyLLM with MCP servers, structured schemas, and community-built tools for production AI apps.
+description: Extend RubyLLM with MCP servers, structured schemas, OpenTelemetry instrumentation and community-built tools for production AI apps.
 ---
 
 # {{ page.title }}
@@ -23,6 +23,8 @@ After reading this guide, you will know:
 
 * What the Model Context Protocol (MCP) is and how ruby_llm-mcp brings it to Ruby
 * How RubyLLM::Schema simplifies structured data definition for AI applications
+* How RubyLLM::RedCandle enables local model execution from Ruby
+* How OpenTelemetry instrumentation for RubyLLM provides observability into your LLM applications
 * Where to find community projects and how to contribute your own
 
 ## RubyLLM::MCP
@@ -41,11 +43,11 @@ The Model Context Protocol is an open standard that allows AI applications to in
 
 ### Key Features
 
-- 🔌 Multiple transport types (HTTP streaming, STDIO, SSE)
-- 🛠️ Automatic tool integration with RubyLLM
-- 📄 Resource management for files and data
-- 🎯 Prompt templates with arguments
-- 🔄 Support for multiple simultaneous MCP connections
+- Multiple transport types (HTTP streaming, STDIO, SSE)
+- Automatic tool integration with RubyLLM
+- Resource management for files and data
+- Prompt templates with arguments
+- Support for multiple simultaneous MCP connections
 
 ### Installation
 
@@ -76,11 +78,11 @@ RubyLLM::Schema makes this easy with a familiar Ruby syntax.
 
 ### Key Features
 
-- 📝 Rails-inspired DSL for intuitive schema creation
-- 🎯 Full JSON Schema compatibility
-- 🔧 Support for all primitive types, objects, and arrays
-- 🔄 Union types with `any_of`
-- 📦 Schema definitions and references for reusability
+- Rails-inspired DSL for intuitive schema creation
+- Full JSON Schema compatibility
+- Support for primitive types, objects, and arrays
+- Union types with `any_of`
+- Schema definitions and references for reusability
 
 ### Installation
 
@@ -109,11 +111,11 @@ Running LLMs locally offers several advantages:
 
 ### Key Features
 
-- 🚀 Local inference with hardware acceleration (Metal on macOS, CUDA for NVIDIA GPUs, or CPU fallback)
-- 📦 Automatic model downloading from HuggingFace
-- 🔄 Streaming support for token-by-token output
-- 🎯 Structured JSON output with grammar-constrained generation
-- 💬 Multi-turn conversation support with automatic history management
+- Local inference with hardware acceleration (Metal on macOS, CUDA for NVIDIA GPUs, or CPU fallback)
+- Automatic model downloading from HuggingFace
+- Streaming support for token-by-token output
+- Structured JSON output with grammar-constrained generation
+- Multi-turn conversation support with automatic history management
 
 ### Installation
 
@@ -131,6 +133,52 @@ For detailed documentation and examples, visit the [RubyLLM::RedCandle repositor
 
 ---
 
+## OpenTelemetry RubyLLM Instrumentation
+
+**Observability for RubyLLM Applications**
+
+[opentelemetry-instrumentation-ruby_llm](https://github.com/thoughtbot/opentelemetry-instrumentation-ruby_llm) adds OpenTelemetry tracing to RubyLLM, enabling you to send traces to any compatible backend (Langfuse, Datadog, Honeycomb, Jaeger, Arize Phoenix and more).
+
+### Why Use OpenTelemetry Instrumentation?
+
+When running LLM applications in production, you need visibility into:
+
+- Which models are being called and how they perform
+- The flow of conversations and tool calls
+- How long each step takes and where time is spent
+- Token usage for cost tracking and optimization
+- Tool call selection, execution, and results
+- Error rates and failure modes
+
+This gem provides all of this automatically, with minimal setup and without having to manually add tracing code to your application.
+
+### Key Features
+
+- Automatic tracing for chat completions and tool calls
+- Token usage tracking (input and output)
+- Tool call spans with arguments and results
+- Error recording with exception details
+- Works with any OpenTelemetry-compatible backend
+- Follows the [OpenTelemetry GenAI Semantic Conventions](https://opentelemetry.io/docs/specs/semconv/gen-ai/gen-ai-spans/)
+
+### Installation
+
+```bash
+gem install opentelemetry-instrumentation-ruby_llm
+```
+
+### Usage
+
+```ruby
+OpenTelemetry::SDK.configure do |c|
+  c.use 'OpenTelemetry::Instrumentation::RubyLLM'
+end
+```
+
+For detailed documentation, setup instructions, and examples, visit the [OpenTelemetry RubyLLM Instrumentation repository](https://github.com/thoughtbot/opentelemetry-instrumentation-ruby_llm).
+
+---
+
 ## Community Projects
 
 The RubyLLM ecosystem is growing! If you've built a library or tool that extends RubyLLM, we'd love to hear about it. Consider:
@@ -138,5 +186,7 @@ The RubyLLM ecosystem is growing! If you've built a library or tool that extends
 - Opening a PR to add your project to this page
 - Sharing it in our GitHub Discussions
 - Using the `ruby_llm` topic on your GitHub repository
+
+Ecosystem projects are maintained by their respective authors. We list projects for discoverability, but we cannot guarantee the quality, security, maintenance status, or fitness of every listed project.
 
 Together, we're building a comprehensive ecosystem for LLM-powered Ruby applications.

@@ -121,6 +121,10 @@ module RubyLLM
         "[#{Rails::VERSION::MAJOR}.#{Rails::VERSION::MINOR}]"
       end
 
+      def create_migration_class_name(table_name)
+        "create_#{table_name}".camelize
+      end
+
       def postgresql?
         ::ActiveRecord::Base.connection.adapter_name.downcase.include?('postgresql')
       rescue StandardError

@@ -38,13 +38,88 @@
   gap: 0.2em;
 }
 
+.main-content {
+  position: relative;
+}
+
+.page-actions {
+  position: absolute;
+  top: 0.2rem;
+  right: 0;
+  z-index: 2;
+}
+
+.page-copy-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.7rem;
+  border: 1px solid rgba(20, 20, 20, 0.15);
+  border-radius: 999px;
+  background: transparent;
+  color: rgba(20, 20, 20, 0.85);
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  transition: background 120ms ease, border-color 120ms ease, color 120ms ease, transform 120ms ease;
+}
+
+.page-copy-button:hover {
+  background: rgba(20, 20, 20, 0.06);
+  border-color: rgba(20, 20, 20, 0.25);
+}
+
+.page-copy-button:active {
+  transform: scale(0.97);
+}
+
+.page-copy-button:focus-visible {
+  outline: 2px solid rgba(20, 20, 20, 0.35);
+  outline-offset: 2px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .page-copy-button {
+    border-color: rgba(255, 255, 255, 0.25);
+    color: rgba(255, 255, 255, 0.9);
+    background: transparent;
+  }
+
+  .page-copy-button:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.35);
+  }
+
+  .page-copy-button:focus-visible {
+    outline-color: rgba(255, 255, 255, 0.5);
+  }
+}
+
+@media (max-width: 50rem) {
+  .page-actions {
+    position: static;
+    margin-bottom: 0.75rem;
+    display: flex;
+    justify-content: flex-end;
+  }
+}
+
+@media (min-width: 50rem) {
+  .site-nav {
+    padding-top: 0;
+  }
+}
+
 // Dark mode fixes
-[data-color-scheme="dark"] {
+@media (prefers-color-scheme: dark) {
   // Invert text versions and specific black/dark provider logos
   .provider-logo img[src*="-text.svg"],
   .provider-icons img[src*="-text.svg"],
   .provider-logo img[src*="/ollama.svg"],
   .provider-logo img[src*="/openai.svg"],
+  .provider-logo img[src*="/xai.svg"],
   .provider-logo img[src*="/openrouter.svg"],
   .chatwithwork-logo {
     filter: invert(1);
