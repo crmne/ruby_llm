@@ -45,6 +45,17 @@ RSpec.describe RubyLLM::Generators::InstallGenerator, :generator, type: :generat
       end
     end
 
+    it 'keeps create_models migration schema-only' do
+      within_test_app(app_path) do
+        migration = Dir.glob('db/migrate/*create_models.rb').first
+        expect(migration).to be_present
+
+        content = File.read(migration)
+        expect(content).not_to include('Loading models from models.json')
+        expect(content).not_to include('save_to_database')
+      end
+    end
+
     it 'creates initializer file' do
       within_test_app(app_path) do
         expect(File.exist?('config/initializers/ruby_llm.rb')).to be true
@@ -79,8 +90,8 @@ RSpec.describe RubyLLM::Generators::InstallGenerator, :generator, type: :generat
           message = chat.messages.create!(role: :user, content: 'Test')
           exit(message.chat_id == chat.id ? 0 : 1)
         RUBY
-        result = system("bundle exec rails runner \"#{test_script.gsub('"', '\"')}\" 2>&1")
-        expect(result).to be true
+        success, output = run_rails_runner(test_script)
+        expect(success).to be(true), output
       end
     end
   end
@@ -162,8 +173,8 @@ RSpec.describe RubyLLM::Generators::InstallGenerator, :generator, type: :generat
           message = chat.llm_messages.create!(role: :user, content: 'Test')
           exit(message.llm_chat_id == chat.id ? 0 : 1)
         RUBY
-        result = system("bundle exec rails runner \"#{test_script.gsub('"', '\"')}\" 2>&1")
-        expect(result).to be true
+        success, output = run_rails_runner(test_script)
+        expect(success).to be(true), output
       end
     end
   end

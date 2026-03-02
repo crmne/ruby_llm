@@ -56,7 +56,7 @@ module RubyLLM
 
           all_models
         rescue StandardError => e
-          RubyLLM.logger.debug "Error fetching Vertex AI models: #{e.message}"
+          RubyLLM.logger.debug { "Error fetching Vertex AI models: #{e.message}" }
           build_known_models
         end
 

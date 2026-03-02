@@ -59,6 +59,7 @@ Key attributes of a `Chunk`:
 *   `chunk.tool_calls`: A hash containing partial or complete tool call information if the model is invoking a [Tool]({% link _core_features/tools.md %}). The arguments might be streamed incrementally.
 *   `chunk.input_tokens`: Total input tokens for the request (often `nil` until the final chunk).
 *   `chunk.output_tokens`: Cumulative output tokens *up to this chunk* (behavior varies by provider, often only accurate in the final chunk).
+*   `chunk.thinking`: Optional thinking output when providers stream it.
 
 > Do not rely on token counts being present or accurate in every chunk. They are typically finalized only in the last chunk or the final returned message.
 {: .warning }

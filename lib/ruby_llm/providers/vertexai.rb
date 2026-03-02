@@ -16,7 +16,11 @@ module RubyLLM
       end
 
       def api_base
-        "https://#{@config.vertexai_location}-aiplatform.googleapis.com/v1beta1"
+        if @config.vertexai_location.to_s == 'global'
+          'https://aiplatform.googleapis.com/v1beta1'
+        else
+          "https://#{@config.vertexai_location}-aiplatform.googleapis.com/v1beta1"
+        end
       end
 
       def headers

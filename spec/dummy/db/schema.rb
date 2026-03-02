@@ -86,6 +86,9 @@ ActiveRecord::Schema[7.1].define(version: 20_251_021_170_000) do
     t.datetime 'updated_at', null: false
     t.integer 'cached_tokens'
     t.integer 'cache_creation_tokens'
+    t.text 'thinking_signature'
+    t.text 'thinking_text'
+    t.integer 'thinking_tokens'
     t.json 'content_raw'
     t.index ['chat_id'], name: 'index_messages_on_chat_id'
     t.index ['model_id'], name: 'index_messages_on_model_id'
@@ -116,6 +119,7 @@ ActiveRecord::Schema[7.1].define(version: 20_251_021_170_000) do
     t.integer 'message_id'
     t.string 'tool_call_id'
     t.string 'name'
+    t.string 'thought_signature'
     t.json 'arguments'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false

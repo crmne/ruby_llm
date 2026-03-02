@@ -1,0 +1,75 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
+    body:
+      encoding: UTF-8
+      string: '{"model":"Kimi-K2.5","messages":[{"role":"user","content":"What''s
+        2 + 2?"}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Api-Key:
+      - "<AZURE_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json
+      Vary:
+      - Accept-Encoding
+      Request-Context:
+      - appId=
+      Prompt-Token-Len:
+      - '15'
+      Sampling-Token-Len:
+      - '236'
+      Apim-Request-Id:
+      - 464f9590-d71f-4c6d-abe6-a1084a002200
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Region:
+      - West Europe
+      X-Ratelimit-Remaining-Requests:
+      - '19'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Ratelimit-Limit-Requests:
+      - '20'
+      X-Ratelimit-Remaining-Tokens:
+      - '19984'
+      X-Ratelimit-Limit-Tokens:
+      - '20000'
+      Date:
+      - Tue, 10 Feb 2026 08:58:47 GMT
+    body:
+      encoding: ASCII-8BIT
+      string: '{"choices":[{"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"protected_material_code":{"filtered":false,"detected":false},"protected_material_text":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}},"finish_reason":"stop","index":0,"logprobs":null,"message":{"content":"2
+        + 2 = **4**","reasoning_content":"The user is asking a simple math question:
+        \"What''s 2 + 2?\" This is a straightforward arithmetic problem. The answer
+        is obviously 4.\n\nHowever, I should consider if there''s any trick or nuance
+        here:\n1. It could be a test to see if I''ll answer a simple question\n2.
+        It could be a reference to the \"2 + 2 = 5\" from Orwell''s 1984 (though that''s
+        usually phrased as \"2 + 2 = 5\")\n3. It could be base-related (e.g., in base
+        3, 2 + 2 = 11, but that''s overcomplicating it)\n4. It could be asking about
+        string concatenation (though that would usually be specified)\n\nGiven no
+        additional context, the most helpful and correct answer is simply 4. I should
+        provide the answer clearly without overcomplicating it, though I could briefly
+        mention that this assumes standard base-10 arithmetic if I want to be thorough.\n\nActually,
+        looking at this again, it''s most likely just a simple test question. I''ll
+        provide the straightforward answer: 4. ","role":"assistant","tool_calls":null},"stop_reason":null}],"created":1770713928,"id":"a36b48d87b27425695548939700fa6ab","model":"Kimi-K2.5","object":"chat.completion","prompt_filter_results":[{"prompt_index":0,"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"jailbreak":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}}}],"usage":{"audio_prompt_tokens":0,"completion_tokens":236,"prompt_tokens":15,"prompt_tokens_details":null,"reasoning_tokens":0,"total_tokens":251}}
+
+        '
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+recorded_with: VCR 6.4.0

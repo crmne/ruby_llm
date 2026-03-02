@@ -14,7 +14,7 @@ module RubyLLM
               content: GPUStack::Media.format_content(msg.content),
               tool_calls: format_tool_calls(msg.tool_calls),
               tool_call_id: msg.tool_call_id
-            }.compact
+            }.compact.merge(OpenAI::Chat.format_thinking(msg))
           end
         end
 

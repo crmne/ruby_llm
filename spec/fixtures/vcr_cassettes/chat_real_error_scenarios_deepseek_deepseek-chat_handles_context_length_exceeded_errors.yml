@@ -8,7 +8,7 @@ http_interactions:
       string: '{"model":"deepseek-chat","messages":[{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"Hi"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer <DEEPSEEK_API_KEY>
       Content-Type:
@@ -22,36 +22,38 @@ http_interactions:
       code: 400
       message: Bad Request
     headers:
-      Date:
-      - Mon, 03 Nov 2025 13:54:25 GMT
       Content-Type:
       - application/json
       Content-Length:
       - '294'
       Connection:
       - keep-alive
-      Cf-Ray:
-      - "<CF_RAY>"
+      Date:
+      - Tue, 10 Feb 2026 08:56:50 GMT
+      Server:
+      - elb
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 266d988aebc684f41e540264042e5b24
+      - f94f932ea02acdc9235e062199f076fe
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Server:
-      - cloudflare
+      X-Cache:
+      - Error from cloudfront
+      Via:
+      - 1.1 541d8d99839ff70597a7fd1a52d127ea.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - BKK50-P3
+      X-Amz-Cf-Id:
+      - XvYBhVeSRZowDJOCzsc172PodjaapYWWQi7uXiquxNMfeYO8k9Y1HQ==
     body:
       encoding: UTF-8
       string: '{"error":{"message":"This model''s maximum context length is 131072
         tokens. However, you requested 1250025 tokens (1250025 in the messages, 0
         in the completion). Please reduce the length of the messages or completion.","type":"invalid_request_error","param":null,"code":"invalid_request_error"}}'
-  recorded_at: Mon, 03 Nov 2025 13:54:25 GMT
-recorded_with: VCR 6.3.1
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+recorded_with: VCR 6.4.0

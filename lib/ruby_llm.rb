@@ -9,23 +9,27 @@ require 'json'
 require 'logger'
 require 'marcel'
 require 'securerandom'
+require 'date'
+require 'time'
 require 'zeitwerk'
 
 loader = Zeitwerk::Loader.for_gem
 loader.inflector.inflect(
-  'ruby_llm' => 'RubyLLM',
-  'llm' => 'LLM',
-  'openai' => 'OpenAI',
+  'azure' => 'Azure',
+  'UI' => 'UI',
   'api' => 'API',
-  'deepseek' => 'DeepSeek',
-  'perplexity' => 'Perplexity',
   'bedrock' => 'Bedrock',
-  'openrouter' => 'OpenRouter',
+  'deepseek' => 'DeepSeek',
   'gpustack' => 'GPUStack',
+  'llm' => 'LLM',
   'mistral' => 'Mistral',
-  'vertexai' => 'VertexAI',
+  'openai' => 'OpenAI',
+  'openrouter' => 'OpenRouter',
   'pdf' => 'PDF',
-  'UI' => 'UI'
+  'perplexity' => 'Perplexity',
+  'ruby_llm' => 'RubyLLM',
+  'vertexai' => 'VertexAI',
+  'xai' => 'XAI'
 )
 loader.ignore("#{__dir__}/tasks")
 loader.ignore("#{__dir__}/generators")
@@ -90,6 +94,7 @@ module RubyLLM
 end
 
 RubyLLM::Provider.register :anthropic, RubyLLM::Providers::Anthropic
+RubyLLM::Provider.register :azure, RubyLLM::Providers::Azure
 RubyLLM::Provider.register :bedrock, RubyLLM::Providers::Bedrock
 RubyLLM::Provider.register :deepseek, RubyLLM::Providers::DeepSeek
 RubyLLM::Provider.register :gemini, RubyLLM::Providers::Gemini
@@ -100,6 +105,7 @@ RubyLLM::Provider.register :openai, RubyLLM::Providers::OpenAI
 RubyLLM::Provider.register :openrouter, RubyLLM::Providers::OpenRouter
 RubyLLM::Provider.register :perplexity, RubyLLM::Providers::Perplexity
 RubyLLM::Provider.register :vertexai, RubyLLM::Providers::VertexAI
+RubyLLM::Provider.register :xai, RubyLLM::Providers::XAI
 
 if defined?(Rails::Railtie)
   require 'ruby_llm/railtie'

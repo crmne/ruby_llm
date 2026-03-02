@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+require 'tempfile'
 
 RSpec.describe RubyLLM::ActiveRecord::ActsAs do
   include_context 'with configured RubyLLM'
@@ -190,6 +191,22 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
         expect(found.id).to eq('test-model')
         expect(found.provider).to eq('openai')
       end
+
+      it 'falls back to JSON registry when model table is empty' do
+        with_temp_model_registry_file do
+          models = RubyLLM::Models.new
+          expect(models.find('json-fallback-model', 'openai').name).to eq('JSON Fallback Model')
+        end
+      end
+
+      it 'falls back to JSON registry when model table does not exist' do
+        allow(model_class).to receive(:table_exists?).and_return(false)
+
+        with_temp_model_registry_file do
+          models = RubyLLM::Models.new
+          expect(models.find('json-fallback-model', 'openai').name).to eq('JSON Fallback Model')
+        end
+      end
     end
 
     describe 'chat integration with model association' do
@@ -255,7 +272,8 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
         # Mock the chat creation to verify parameters
         expect(RubyLLM).to receive(:chat).with( # rubocop:disable RSpec/MessageSpies,RSpec/StubbedMock
           model: 'test-gpt',
-          provider: :openai
+          provider: :openai,
+          assume_model_exists: false
         ).and_return(
           instance_double(RubyLLM::Chat, reset_messages!: nil, add_message: nil,
                                          instance_variable_get: {}, on_new_message: nil, on_end_message: nil,
@@ -272,7 +290,8 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
 
         expect(RubyLLM).to receive(:chat).with( # rubocop:disable RSpec/MessageSpies,RSpec/StubbedMock
           model: 'test-claude',
-          provider: :anthropic
+          provider: :anthropic,
+          assume_model_exists: false
         ).and_return(
           instance_double(RubyLLM::Chat, reset_messages!: nil, add_message: nil,
                                          instance_variable_get: {}, on_new_message: nil, on_end_message: nil,
@@ -318,5 +337,28 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
         expect { chat.save! }.to raise_error(ArgumentError, /Provider must be specified/)
       end
     end
+  end
+
+  def with_temp_model_registry_file
+    original_file = RubyLLM.config.model_registry_file
+    temp_file = Tempfile.new(['ruby_llm_models', '.json'])
+    temp_file.write(
+      [
+        {
+          id: 'json-fallback-model',
+          name: 'JSON Fallback Model',
+          provider: 'openai',
+          modalities: { input: ['text'], output: ['text'] },
+          capabilities: ['streaming']
+        }
+      ].to_json
+    )
+    temp_file.flush
+
+    RubyLLM.configure { |config| config.model_registry_file = temp_file.path }
+    yield
+  ensure
+    RubyLLM.configure { |config| config.model_registry_file = original_file }
+    temp_file&.close!
   end
 end

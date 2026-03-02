@@ -6,12 +6,12 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"model":"claude-3-5-haiku-20241022","messages":[{"role":"user","content":[{"type":"text","text":"Say
-        \"beta headers work\""}]}],"stream":false,"max_tokens":8000}'
+        \"beta headers work\""}]}],"stream":false,"max_tokens":8192}'
     headers:
       Anthropic-Beta:
       - fine-grained-tool-streaming-2025-05-14
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       X-Api-Key:
       - "<ANTHROPIC_API_KEY>"
       Anthropic-Version:
@@ -28,7 +28,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 03 Nov 2025 13:55:42 GMT
+      - Tue, 10 Feb 2026 08:57:39 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -40,46 +40,46 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '100000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2025-11-03T13:55:42Z'
+      - '2026-02-10T08:57:39Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '20000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '20000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2025-11-03T13:55:42Z'
+      - '2026-02-10T08:57:39Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '1000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2025-11-03T13:55:41Z'
-      Retry-After:
-      - '19'
+      - '2026-02-10T08:57:39Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '120000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '120000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2025-11-03T13:55:42Z'
+      - '2026-02-10T08:57:39Z'
       Request-Id:
       - "<REQUEST_ID>"
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
+      Server:
+      - cloudflare
       X-Envoy-Upstream-Service-Time:
-      - '619'
+      - '669'
       Cf-Cache-Status:
       - DYNAMIC
       X-Robots-Tag:
       - none
-      Server:
-      - cloudflare
+      Content-Security-Policy:
+      - default-src 'none'; frame-ancestors 'none'
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"model":"claude-3-5-haiku-20241022","id":"msg_01DNktyUTmVqDdmAoZ2FoMCP","type":"message","role":"assistant","content":[{"type":"text","text":"beta
-        headers work"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":13,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":6,"service_tier":"standard"}}'
-  recorded_at: Mon, 03 Nov 2025 13:55:42 GMT
-recorded_with: VCR 6.3.1
+      string: '{"model":"claude-3-5-haiku-20241022","id":"msg_01FhBKo4XWsfvHEUEHPw12jD","type":"message","role":"assistant","content":[{"type":"text","text":"beta
+        headers work"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":13,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":6,"service_tier":"standard","inference_geo":"not_available"}}'
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+recorded_with: VCR 6.4.0

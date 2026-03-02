@@ -24,7 +24,7 @@ module RubyLLM
         @name = data[:name]
         @provider = data[:provider]
         @family = data[:family]
-        @created_at = Utils.to_time(data[:created_at])
+        @created_at = Utils.to_time(data[:created_at])&.utc
         @context_window = data[:context_window]
         @max_output_tokens = data[:max_output_tokens]
         @knowledge_cutoff = Utils.to_date(data[:knowledge_cutoff])
