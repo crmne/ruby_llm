@@ -62,6 +62,14 @@ module RubyLLM
           model_id.match?(/gemini|pro|flash/)
         end
 
+        def supports_tool_choice?(_model_id)
+          true
+        end
+
+        def supports_tool_parallel_control?(_model_id)
+          false
+        end
+
         def supports_json_mode?(model_id)
           if model_id.match?(/text-embedding|embedding-001|aqa|imagen|gemini-2\.0-flash-lite|gemini-2\.5-pro-exp-03-25/)
             return false

@@ -297,7 +297,7 @@ Route models through different providers dynamically:
 # Use a model through a different provider
 chat = Chat.create!(
   model: '{{ site.models.anthropic_current }}',
-  provider: 'bedrock'  # Use AWS Bedrock instead of Anthropic
+  provider: 'bedrock'  # Route this model through AWS Bedrock
 )
 
 # The model registry handles the routing automatically
@@ -460,8 +460,11 @@ chat_record = Chat.create!(model: '{{ site.models.default_chat }}')
 # This creates and saves a Message record with role: :system
 chat_record.with_instructions("You are a Ruby expert.")
 
-# Replace all system messages with a new one
-chat_record.with_instructions("You are a concise Ruby expert.", replace: true)
+# By default, with_instructions replaces the active system instruction
+chat_record.with_instructions("You are a concise Ruby expert.")
+
+# Append only when you intentionally want multiple system prompts
+chat_record.with_instructions("Use short bullet points.", append: true)
 
 system_message = chat_record.messages.find_by(role: :system)
 puts system_message.content # => "You are a concise Ruby expert."
@@ -653,7 +656,7 @@ class MessagesController < ApplicationController
     @chat = Chat.find(params[:chat_id])
 
     # Create and persist the user message immediately
-    @chat.create_user_message(params[:content])
+    @chat.add_message(role: :user, content: params[:content])
 
     # Process AI response in background
     ChatStreamJob.perform_later(@chat.id)
@@ -666,7 +669,7 @@ class MessagesController < ApplicationController
 end
 ```
 
-The `create_user_message` method provides instant feedback while processing continues in the background.
+The `add_message` method provides instant feedback while processing continues in the background.
 
 ### Full Streaming Implementation
 

@@ -8,7 +8,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -26,40 +26,42 @@ http_interactions:
       - GitHub.com
       Content-Type:
       - text/plain; charset=utf-8
+      X-Origin-Cache:
+      - HIT
       Last-Modified:
-      - Mon, 20 Oct 2025 16:24:03 GMT
+      - Mon, 09 Feb 2026 23:48:37 GMT
       Access-Control-Allow-Origin:
       - "*"
       Etag:
-      - W/"68f66223-9c6"
+      - W/"698a7255-9c6"
       Expires:
-      - Mon, 20 Oct 2025 19:30:47 GMT
+      - Tue, 10 Feb 2026 05:41:29 GMT
       Cache-Control:
       - max-age=600
       X-Proxy-Cache:
       - MISS
       X-Github-Request-Id:
-      - 7DDE:15966E:15990C3:15E418A:68F68B8E
+      - DA8F:2A47E2:A980F3:B16D78:698AC2B0
       Accept-Ranges:
       - bytes
-      Age:
-      - '0'
       Date:
-      - Mon, 20 Oct 2025 19:20:47 GMT
+      - Tue, 10 Feb 2026 08:48:14 GMT
       Via:
       - 1.1 varnish
+      Age:
+      - '116'
       X-Served-By:
-      - cache-fra-etou8220076-FRA
+      - cache-bkk2310026-BKK
       X-Cache:
-      - MISS
+      - HIT
       X-Cache-Hits:
-      - '0'
+      - '2'
       X-Timer:
-      - S1760988047.058923,VS0,VE105
+      - S1770713294.171933,VS0,VE0
       Vary:
       - Accept-Encoding
       X-Fastly-Request-Id:
-      - 3d56172d59bb2aa81f1b519321ad95d1ae2598ea
+      - '039305e377896e2b1a880070606aa96021c0fbc9'
     body:
       encoding: ASCII-8BIT
       string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
@@ -95,7 +97,7 @@ http_interactions:
         \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
         WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
         FOR A PARTICULAR\n     PURPOSE.\n"
-  recorded_at: Mon, 20 Oct 2025 19:20:47 GMT
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 - request:
     method: post
     uri: https://oauth2.googleapis.com/token
@@ -104,7 +106,7 @@ http_interactions:
       string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Content-Type:
       - application/x-www-form-urlencoded
       Accept-Encoding:
@@ -116,14 +118,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
-      Expires:
-      - Mon, 01 Jan 1990 00:00:00 GMT
       Pragma:
       - no-cache
       Date:
-      - Mon, 20 Oct 2025 19:20:47 GMT
+      - Tue, 10 Feb 2026 08:48:15 GMT
+      Expires:
+      - Mon, 01 Jan 1990 00:00:00 GMT
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -148,14 +150,14 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/cloud-platform openid",
+          "scope": "openid https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/cloud-platform",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Mon, 20 Oct 2025 19:20:47 GMT
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 - request:
     method: post
-    uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"What''s in this file?"},{"text":"<file
@@ -194,7 +196,7 @@ http_interactions:
         MERCHANTABILITY AND FITNESS FOR A PARTICULAR\n     PURPOSE.\n</file>"}]}],"generationConfig":{}}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer <GOOGLE_BEARER_TOKEN>
       Content-Type:
@@ -215,7 +217,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 20 Oct 2025 19:20:50 GMT
+      - Tue, 10 Feb 2026 08:48:26 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -238,36 +240,36 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "This file contains the **Ruby programming language license**.\n\nHere's a summary of its key points:\n\n*   **Copyright:** Ruby is copyrighted free software by Yukihiro Matsumoto (matz).\n*   **Dual Licensing:** You can redistribute and/or modify it under either the terms of the 2-clause BSDL (BSD License) or the specific conditions outlined in this document.\n*   **Conditions for Source Distribution:**\n    *   Verbatim copies can be made and given away freely, provided original copyright notices and disclaimers are duplicated.\n    *   Modified copies require you to either: place modifications in the Public Domain/make them freely available, use them only within your organization, give non-standard binaries non-standard names with original distribution instructions, or make other arrangements with the author.\n*   **Conditions for Object Code/Binary Distribution:**\n    *   Distribute binaries/libraries with instructions on where to get the original distribution.\n    *   Accompany the distribution with machine-readable source.\n    *   Give non-standard binaries non-standard names with original distribution instructions.\n    *   Make other arrangements with the author.\n*   **Integration with Other Software:** You may modify and include parts of Ruby into other software (including commercial), but note that some files in the distribution may have different licenses (refer to the `LEGAL` file).\n*   **Generated Content:** Scripts and library files generated from the software do not automatically fall under this copyright; they belong to whoever generated them and can be sold commercially.\n*   **Disclaimer:** The software is provided \"AS IS\" without any express or implied warranties, including merchantability and fitness for a particular purpose."
+                    "text": "This file, `license.txt`, contains the license terms for the **Ruby** programming language, copyrighted by **Yukihiro Matsumoto (matz)**.\n\nIt states that Ruby is \"copyrighted free software\" and offers a dual licensing model:\n1.  Under the terms of the **2-clause BSDL** (referencing a separate file named `BSDL`), **OR**\n2.  Under the specific conditions outlined within this `license.txt` file.\n\nHere's a summary of the conditions listed in this file:\n\n*   **Verbatim Redistribution (Source Form):** You can freely copy and give away the source code, provided you keep all original copyright notices and disclaimers.\n*   **Modifications:** You can modify the software, but you must do *one* of the following:\n    *   Make your modifications public/freely available.\n    *   Use the modified software only within your organization.\n    *   Give non-standard binaries non-standard names with instructions on how to get the original.\n    *   Make other arrangements with the author.\n*   **Binary/Object Code Distribution:** You can distribute the software in compiled form, provided you do *one* of the following:\n    *   Distribute the binaries with instructions on where to get the original source.\n    *   Accompany the distribution with the machine-readable source code.\n    *   Give non-standard binaries non-standard names with instructions on how to get the original.\n    *   Make other arrangements with the author.\n*   **Inclusion in Other Software:** You can modify and include parts of Ruby into any other software (including commercial), **but** you must be aware that some files in the Ruby distribution are *not* under these terms. For a list of those files and their specific conditions, you must consult the `LEGAL` file.\n*   **User-Generated Content:** Scripts and library files supplied to or produced by Ruby do not automatically fall under Ruby's copyright; they belong to their creators, can be sold commercially, and can be aggregated with Ruby.\n*   **No Warranties:** The software is provided \"AS IS\" without any express or implied warranties, including MERCHANTABILITY and FITNESS FOR A PARTICULAR PURPOSE.\n\nIn essence, it's a permissive open-source license that allows for broad use, modification, and distribution of Ruby, with specific conditions for how modified or binary versions are handled, and a crucial note about checking the `LEGAL` file for components not covered by this license."
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.25392105232956064
+              "avgLogprobs": -0.8484905307333197
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 564,
-            "candidatesTokenCount": 351,
-            "totalTokenCount": 1083,
+            "promptTokenCount": 567,
+            "candidatesTokenCount": 533,
+            "totalTokenCount": 2586,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 564
+                "tokenCount": 567
               }
             ],
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 351
+                "tokenCount": 533
               }
             ],
-            "thoughtsTokenCount": 168
+            "thoughtsTokenCount": 1486
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2025-10-20T19:20:47.657943Z",
-          "responseId": "j4v2aJeUKPGtmLAPuMHFuAM"
+          "createTime": "2026-02-10T08:48:15.567017Z",
+          "responseId": "z_CKaenNIuKuwcsP74CW6Aw"
         }
-  recorded_at: Mon, 20 Oct 2025 19:20:50 GMT
-recorded_with: VCR 6.3.1
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+recorded_with: VCR 6.4.0

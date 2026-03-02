@@ -38,6 +38,9 @@ class CreateTables < ActiveRecord::Migration[7.0]
       t.integer :output_tokens
       t.integer :cached_tokens
       t.integer :cache_creation_tokens
+      t.text :thinking_signature
+      t.text :thinking_text
+      t.integer :thinking_tokens
       t.references :tool_call
       t.timestamps
     end
@@ -46,6 +49,7 @@ class CreateTables < ActiveRecord::Migration[7.0]
       t.references :message
       t.string :tool_call_id
       t.string :name
+      t.string :thought_signature
       t.json :arguments
       t.timestamps
     end

@@ -32,6 +32,10 @@ redirect_from:
     <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/anthropic-text.svg" alt="Anthropic" class="logo-small">
   </div>
   <div class="provider-logo">
+    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/azureai-color.svg" alt="AzureAI" class="logo-medium">
+    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/azureai-text.svg" alt="AzureAI" class="logo-small">
+  </div>
+  <div class="provider-logo">
     <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/bedrock-color.svg" alt="Bedrock" class="logo-medium">
     <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/bedrock-text.svg" alt="Bedrock" class="logo-small">
   </div>
@@ -70,6 +74,10 @@ redirect_from:
     <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/vertexai-color.svg" alt="VertexAI" class="logo-medium">
     <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/vertexai-text.svg" alt="VertexAI" class="logo-small">
   </div>
+  <div class="provider-logo">
+    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/xai.svg" alt="xAI" class="logo-medium">
+    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/xai-text.svg" alt="xAI" class="logo-medium">
+  </div>
 </div>
 
 <div class="badge-container">
@@ -81,7 +89,7 @@ redirect_from:
 
 <a href="https://trendshift.io/repositories/13640" target="_blank"><img src="https://trendshift.io/api/badge/repositories/13640" alt="crmne%2Fruby_llm | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
 
-Battle tested at [<img src="https://chatwithwork.com/logotype.svg" alt="Chat with Work" class="chatwithwork-logo" style="height: 2em; vertical-align: middle;">](https://chatwithwork.com) — *Claude Code for your documents*
+Battle tested at [<img src="https://chatwithwork.com/logotype.svg" alt="Chat with Work" class="chatwithwork-logo" style="height: 2em; vertical-align: middle;">](https://chatwithwork.com) — *Your AI coworker*
 
 Using RubyLLM? [Share your story](https://tally.so/r/3Na02p)! Takes 5 minutes.
 {: .note }
@@ -160,6 +168,17 @@ chat.with_tool(Weather).ask "What's the weather in Berlin?"
 ```
 
 ```ruby
+# Define an agent with instructions + tools
+class WeatherAssistant < RubyLLM::Agent
+  model "gpt-4.1-nano"
+  instructions "Be concise and always use tools for weather."
+  tools Weather
+end
+
+WeatherAssistant.new.ask "What's the weather in Berlin?"
+```
+
+```ruby
 # Get structured output
 class ProductSchema < RubyLLM::Schema
   string :name
@@ -182,12 +201,14 @@ response = chat.with_schema(ProductSchema).ask "Analyze this product", with: "pr
 * **Embeddings:** Generate embeddings with `RubyLLM.embed`
 * **Moderation:** Content safety with `RubyLLM.moderate`
 * **Tools:** Let AI call your Ruby methods
+* **Agents:** Reusable assistants with `RubyLLM::Agent`
 * **Structured output:** JSON schemas that just work
 * **Streaming:** Real-time responses with blocks
 * **Rails:** ActiveRecord integration with `acts_as_chat`
 * **Async:** Fiber-based concurrency
-* **Model registry:** 500+ models with capability detection and pricing
-* **Providers:** OpenAI, Anthropic, Gemini, VertexAI, Bedrock, DeepSeek, Mistral, Ollama, OpenRouter, Perplexity, GPUStack, and any OpenAI-compatible API
+* **Model registry:** 800+ models with capability detection and pricing
+* **Extended thinking:** Control, view, and persist model deliberation
+* **Providers:** OpenAI, xAI, Anthropic, Gemini, VertexAI, Bedrock, DeepSeek, Mistral, Ollama, OpenRouter, Perplexity, GPUStack, and any OpenAI-compatible API
 
 ## Installation
 
@@ -225,4 +246,3 @@ chat.ask "What's in this file?", with: "report.pdf"
 ```
 
 Visit `http://localhost:3000/chats` for a ready-to-use chat interface!
-

@@ -10,7 +10,7 @@ module RubyLLM
         def format_content(content) # rubocop:disable Metrics/PerceivedComplexity
           return content.value if content.is_a?(RubyLLM::Content::Raw)
           return [format_text(content.to_json)] if content.is_a?(Hash) || content.is_a?(Array)
-          return [format_text(content)] unless content.is_a?(Content)
+          return [format_text(content)] unless content.is_a?(RubyLLM::Content)
 
           parts = []
           parts << format_text(content.text) if content.text
@@ -44,7 +44,7 @@ module RubyLLM
               type: 'image',
               source: {
                 type: 'url',
-                url: image.source
+                url: image.source.to_s
               }
             }
           else
@@ -65,7 +65,7 @@ module RubyLLM
               type: 'document',
               source: {
                 type: 'url',
-                url: pdf.source
+                url: pdf.source.to_s
               }
             }
           else

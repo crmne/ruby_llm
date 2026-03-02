@@ -65,9 +65,15 @@ module RubyLLM
                        errors: true,
                        headers: false,
                        log_level: :debug do |logger|
-        logger.filter(%r{[A-Za-z0-9+/=]{100,}}, '[BASE64 DATA]')
-        logger.filter(/[-\d.e,\s]{100,}/, '[EMBEDDINGS ARRAY]')
+        logger.filter(logging_regexp('[A-Za-z0-9+/=]{100,}'), '[BASE64 DATA]')
+        logger.filter(logging_regexp('[-\\d.e,\\s]{100,}'), '[EMBEDDINGS ARRAY]')
       end
+    end
+
+    def logging_regexp(pattern)
+      return Regexp.new(pattern) if @config.log_regexp_timeout.nil? || !Regexp.respond_to?(:timeout)
+
+      Regexp.new(pattern, timeout: @config.log_regexp_timeout)
     end
 
     def setup_retry(faraday)
@@ -76,8 +82,8 @@ module RubyLLM
         interval: @config.retry_interval,
         interval_randomness: @config.retry_interval_randomness,
         backoff_factor: @config.retry_backoff_factor,
-        exceptions: retry_exceptions,
-        retry_statuses: [429, 500, 502, 503, 504, 529]
+        methods: Faraday::Retry::Middleware::IDEMPOTENT_METHODS + [:post],
+        exceptions: retry_exceptions
       }
     end
 
