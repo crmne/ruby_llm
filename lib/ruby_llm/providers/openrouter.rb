@@ -43,7 +43,7 @@ module RubyLLM
         return message unless raw.is_a?(Hash)
 
         raw_message = raw.dig('error', 'message')
-        return [message, raw_message].join(' - ') if raw_message
+        return [message, raw_message].compact.join(' - ') if raw_message
 
         message
       end
