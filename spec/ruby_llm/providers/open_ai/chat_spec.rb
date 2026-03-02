@@ -33,4 +33,94 @@ RSpec.describe RubyLLM::Providers::OpenAI::Chat do
       expect(message.cache_creation_tokens).to eq(0)
     end
   end
+
+  describe '.render_payload' do
+    let(:model) { instance_double(RubyLLM::Model::Info, id: 'gpt-4o') }
+    let(:messages) { [RubyLLM::Message.new(role: :user, content: 'Hello')] }
+
+    before do
+      allow(described_class).to receive(:format_messages).and_return([{ role: 'user', content: 'Hello' }])
+    end
+
+    context 'with schema' do
+      it 'uses canonical wrapped schema payload' do
+        schema = {
+          name: 'response',
+          schema: {
+            type: 'object',
+            properties: {
+              name: { type: 'string' },
+              age: { type: 'integer' }
+            }
+          },
+          strict: true
+        }
+
+        payload = described_class.render_payload(
+          messages,
+          tools: {},
+          temperature: nil,
+          model: model,
+          stream: false,
+          schema: schema
+        )
+
+        expect(payload[:response_format][:json_schema][:name]).to eq('response')
+        expect(payload[:response_format][:json_schema][:schema]).to eq(schema[:schema])
+        expect(payload[:response_format][:json_schema][:strict]).to be(true)
+      end
+
+      it 'uses custom schema name when provided in full format' do
+        schema = {
+          name: 'PersonSchema',
+          schema: {
+            type: 'object',
+            properties: {
+              name: { type: 'string' },
+              age: { type: 'integer' }
+            }
+          },
+          strict: true
+        }
+
+        payload = described_class.render_payload(
+          messages,
+          tools: {},
+          temperature: nil,
+          model: model,
+          stream: false,
+          schema: schema
+        )
+
+        expect(payload[:response_format][:json_schema][:name]).to eq('PersonSchema')
+        expect(payload[:response_format][:json_schema][:schema]).to eq(schema[:schema])
+        expect(payload[:response_format][:json_schema][:strict]).to be(true)
+      end
+
+      it 'respects explicit strict: false' do
+        schema = {
+          name: 'PersonSchema',
+          schema: {
+            type: 'object',
+            properties: {
+              name: { type: 'string' },
+              age: { type: 'integer' }
+            }
+          },
+          strict: false
+        }
+
+        payload = described_class.render_payload(
+          messages,
+          tools: {},
+          temperature: nil,
+          model: model,
+          stream: false,
+          schema: schema
+        )
+
+        expect(payload[:response_format][:json_schema][:strict]).to be(false)
+      end
+    end
+  end
 end

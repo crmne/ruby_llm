@@ -144,12 +144,17 @@ def status(provider_sym)
 end
 
 def generate_models_markdown
+  models = RubyLLM.models.all
+  total_models = models.count
+  provider_count = models.map(&:provider).uniq.count
+  generated_on = Time.now.utc.strftime('%Y-%m-%d')
+
   <<~MARKDOWN
     ---
     layout: default
     title: Available Models
     nav_order: 1
-    description: Browse hundreds of AI models from every major provider. Always up-to-date, automatically generated.
+    description: Browse #{total_models} AI models across #{provider_count} providers (not including local providers). Updated #{generated_on}.
     redirect_from:
       - /guides/available-models
     ---
@@ -170,11 +175,17 @@ def generate_models_markdown
 
     _Model information enriched by [models.dev](https://models.dev) and our custom code._
 
-    ## Last Updated
-    {: .d-inline-block }
+    Can't find a newly released model? Refresh your registry:
 
-    #{Time.now.utc.strftime('%Y-%m-%d')}
-    {: .label .label-green }
+    ```ruby
+    # Plain Ruby
+    RubyLLM.models.refresh!
+
+    # Rails
+    Model.refresh!
+    ```
+
+    See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#refreshing-the-registry).
 
     ## Models by Provider
 
@@ -275,8 +286,8 @@ end
 def models_table(models)
   return '*No models found*' if models.none?
 
-  headers = ['Model', 'Provider', 'Context', 'Max Output', 'Standard Pricing (per 1M tokens)']
-  alignment = [':--', ':--', '--:', '--:', ':--']
+  headers = ['Model', 'Provider', 'I/O', 'Capabilities', 'Context', 'Max Output', 'Standard Pricing (per 1M tokens)']
+  alignment = [':--', ':--', ':--', ':--', '--:', '--:', ':--']
 
   rows = models.sort_by { |m| [m.provider, m.name] }.map do |model|
     pricing = standard_pricing_display(model)
@@ -284,6 +295,8 @@ def models_table(models)
     [
       model.id,
       model.provider,
+      modalities_display(model),
+      list_display(model.capabilities),
       model.context_window || '-',
       model.max_output_tokens || '-',
       pricing
@@ -299,6 +312,19 @@ def models_table(models)
   end
 
   table.join("\n")
+end
+
+def modalities_display(model)
+  input_modalities = list_display(model.modalities.input)
+  output_modalities = list_display(model.modalities.output)
+  "In: #{input_modalities}; Out: #{output_modalities}"
+end
+
+def list_display(values)
+  items = Array(values).compact.map(&:to_s).reject(&:empty?)
+  return '-' if items.empty?
+
+  items.join(', ')
 end
 
 def standard_pricing_display(model)

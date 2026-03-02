@@ -1,4 +1,4 @@
-class Create<%= message_model_name.gsub('::', '').pluralize %> < ActiveRecord::Migration<%= migration_version %>
+class <%= create_migration_class_name(message_table_name) %> < ActiveRecord::Migration<%= migration_version %>
   def change
     create_table :<%= message_table_name %> do |t|
       t.string :role, null: false

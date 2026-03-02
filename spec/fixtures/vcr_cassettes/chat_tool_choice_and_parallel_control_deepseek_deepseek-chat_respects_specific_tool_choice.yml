@@ -1,0 +1,118 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.deepseek.com/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"deepseek-chat","messages":[{"role":"user","content":"What''s
+        the fall of Rome?"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}}],"tool_choice":{"type":"function","function":{"name":"weather"}}}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      Authorization:
+      - Bearer <DEEPSEEK_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 23 Sep 2025 22:59:42 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Credentials:
+      - 'true'
+      X-Ds-Trace-Id:
+      - 9e22bd9c6077d046ba52cd1a060732d2
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"566a245a-8558-464d-8be2-f486e2f020d7","object":"chat.completion","created":1758668382,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"index":0,"id":"call_00_hzYLUVzdK8NEwJpnuz12K84v","type":"function","function":{"name":"weather","arguments":"{\"latitude\":
+        \"41.9028\", \"longitude\": \"12.4964\"}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":199,"completion_tokens":24,"total_tokens":223,"prompt_tokens_details":{"cached_tokens":128},"prompt_cache_hit_tokens":128,"prompt_cache_miss_tokens":71},"system_fingerprint":"fp_f253fc19d1_prod0820_fp8_kvcache"}'
+  recorded_at: Tue, 23 Sep 2025 22:59:47 GMT
+- request:
+    method: post
+    uri: https://api.deepseek.com/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"deepseek-chat","messages":[{"role":"user","content":"What''s
+        the fall of Rome?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_00_hzYLUVzdK8NEwJpnuz12K84v","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}"}}]},{"role":"tool","content":"Current
+        weather at 41.9028, 12.4964: 15°C, Wind: 10 km/h","tool_call_id":"call_00_hzYLUVzdK8NEwJpnuz12K84v"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      Authorization:
+      - Bearer <DEEPSEEK_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 23 Sep 2025 22:59:47 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Credentials:
+      - 'true'
+      X-Ds-Trace-Id:
+      - d0196137441cea60b95a08fcf48a0880
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImFmZDhjMjFiLWM1ZjMtNGUzNC1iMDI1LTkzZTMxNTdhYjlmYSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NTg2NjgzODcsIm1vZGVsIjoiZGVlcHNlZWstY2hhdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiSSBub3RpY2UgeW91J3JlIGFza2luZyBhYm91dCB0aGUgZmFsbCBvZiBSb21lLCBidXQgSSBvbmx5IGhhdmUgYWNjZXNzIHRvIHdlYXRoZXIgaW5mb3JtYXRpb24gdG9vbHMuIFRoZSB3ZWF0aGVyIGluIFJvbWUgKGJhc2VkIG9uIHRoZSBjb29yZGluYXRlcyBmb3IgUm9tZSwgSXRhbHkpIGlzIGN1cnJlbnRseSAxNcKwQyB3aXRoIDEwIGttL2ggd2luZHMuXG5cbkZvciBoaXN0b3JpY2FsIGluZm9ybWF0aW9uIGFib3V0IHRoZSBmYWxsIG9mIFJvbWUsIEknZCByZWNvbW1lbmQgY29uc3VsdGluZyBoaXN0b3JpY2FsIHJlc291cmNlcywgZW5jeWNsb3BlZGlhcywgb3IgYWNhZGVtaWMgc291cmNlcyB0aGF0IGNhbiBwcm92aWRlIHlvdSB3aXRoIGRldGFpbGVkIGluZm9ybWF0aW9uIGFib3V0IHRoaXMgc2lnbmlmaWNhbnQgaGlzdG9yaWNhbCBldmVudCwgaW5jbHVkaW5nIGl0cyBjYXVzZXMsIHRpbWVsaW5lLCBhbmQgY29uc2VxdWVuY2VzLlxuXG5UaGUgZmFsbCBvZiBSb21lIHR5cGljYWxseSByZWZlcnMgdG8gdGhlIGRlY2xpbmUgYW5kIGV2ZW50dWFsIGNvbGxhcHNlIG9mIHRoZSBXZXN0ZXJuIFJvbWFuIEVtcGlyZSBpbiB0aGUgNXRoIGNlbnR1cnkgQUQsIGJ1dCB0aGVyZSdzIG11Y2ggbW9yZSB0byBleHBsb3JlIGFib3V0IHRoaXMgY29tcGxleCBoaXN0b3JpY2FsIHBlcmlvZC4ifSwibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjoyNDksImNvbXBsZXRpb25fdG9rZW5zIjoxMzIsInRvdGFsX3Rva2VucyI6MzgxLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MTkyfSwicHJvbXB0X2NhY2hlX2hpdF90b2tlbnMiOjE5MiwicHJvbXB0X2NhY2hlX21pc3NfdG9rZW5zIjo1N30sInN5c3RlbV9maW5nZXJwcmludCI6ImZwX2YyNTNmYzE5ZDFfcHJvZDA4MjBfZnA4X2t2Y2FjaGUifQ==
+  recorded_at: Tue, 23 Sep 2025 22:59:56 GMT
+recorded_with: VCR 6.3.1

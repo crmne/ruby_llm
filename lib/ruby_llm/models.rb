@@ -266,8 +266,8 @@ module RubyLLM
       end
 
       def index_by_key(models)
-        models.each_with_object({}) do |model, hash|
-          hash["#{model.provider}:#{model.id}"] = model
+        models.to_h do |model|
+          ["#{model.provider}:#{model.id}", model]
         end
       end
 
@@ -312,12 +312,14 @@ module RubyLLM
         modalities = normalize_models_dev_modalities(model_data[:modalities])
         capabilities = models_dev_capabilities(model_data, modalities)
 
+        created_date = model_data[:release_date] || model_data[:last_updated]
+
         data = {
           id: model_data[:id],
           name: model_data[:name] || model_data[:id],
           provider: provider_slug,
           family: model_data[:family],
-          created_at: model_data[:release_date] || model_data[:last_updated],
+          created_at: "#{created_date} 00:00:00 UTC",
           context_window: model_data.dig(:limit, :context),
           max_output_tokens: model_data.dig(:limit, :output),
           knowledge_cutoff: normalize_models_dev_knowledge(model_data[:knowledge]),

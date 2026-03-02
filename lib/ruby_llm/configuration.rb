@@ -11,6 +11,7 @@ module RubyLLM
                   :azure_api_base,
                   :azure_api_key,
                   :azure_ai_auth_token,
+                  :anthropic_api_base,
                   :anthropic_api_key,
                   :gemini_api_key,
                   :gemini_api_base,
@@ -18,14 +19,17 @@ module RubyLLM
                   :vertexai_location,
                   :vertexai_service_account_key,
                   :deepseek_api_key,
+                  :deepseek_api_base,
                   :perplexity_api_key,
                   :bedrock_api_key,
                   :bedrock_secret_key,
                   :bedrock_region,
                   :bedrock_session_token,
+                  :openrouter_api_base,
                   :openrouter_api_key,
                   :xai_api_key,
                   :ollama_api_base,
+                  :ollama_api_key,
                   :gpustack_api_base,
                   :gpustack_api_key,
                   :mistral_api_key,
@@ -52,6 +56,7 @@ module RubyLLM
                   :log_file,
                   :log_level,
                   :log_stream_debug
+    attr_reader :log_regexp_timeout
 
     def initialize
       @request_timeout = 300
@@ -74,10 +79,22 @@ module RubyLLM
       @log_file = $stdout
       @log_level = ENV['RUBYLLM_DEBUG'] ? Logger::DEBUG : Logger::INFO
       @log_stream_debug = ENV['RUBYLLM_STREAM_DEBUG'] == 'true'
+      self.log_regexp_timeout = Regexp.respond_to?(:timeout) ? (Regexp.timeout || 1.0) : nil
     end
 
     def instance_variables
       super.reject { |ivar| ivar.to_s.match?(/_id|_key|_secret|_token$/) }
+    end
+
+    def log_regexp_timeout=(value)
+      if value.nil?
+        @log_regexp_timeout = nil
+      elsif Regexp.respond_to?(:timeout)
+        @log_regexp_timeout = value
+      else
+        RubyLLM.logger.warn("log_regexp_timeout is not supported on Ruby #{RUBY_VERSION}")
+        @log_regexp_timeout = value
+      end
     end
   end
 end

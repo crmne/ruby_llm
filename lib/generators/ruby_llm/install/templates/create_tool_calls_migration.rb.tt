@@ -1,5 +1,5 @@
 <%#- # Migration for creating tool_calls table with database-specific JSON handling -%>
-class Create<%= tool_call_model_name.gsub('::', '').pluralize %> < ActiveRecord::Migration<%= migration_version %>
+class <%= create_migration_class_name(tool_call_table_name) %> < ActiveRecord::Migration<%= migration_version %>
   def change
     create_table :<%= tool_call_table_name %> do |t|
       t.string :tool_call_id, null: false
