@@ -54,8 +54,8 @@ module RubyLLM
                   :logger,
                   :log_file,
                   :log_level,
-                  :log_stream_debug,
-                  :log_regexp_timeout
+                  :log_stream_debug
+    attr_reader :log_regexp_timeout
 
     def initialize
       @request_timeout = 300
@@ -78,11 +78,22 @@ module RubyLLM
       @log_file = $stdout
       @log_level = ENV['RUBYLLM_DEBUG'] ? Logger::DEBUG : Logger::INFO
       @log_stream_debug = ENV['RUBYLLM_STREAM_DEBUG'] == 'true'
-      @log_regexp_timeout = Regexp.respond_to?(:timeout) ? (Regexp.timeout || 1.0) : nil
+      self.log_regexp_timeout = Regexp.respond_to?(:timeout) ? (Regexp.timeout || 1.0) : nil
     end
 
     def instance_variables
       super.reject { |ivar| ivar.to_s.match?(/_id|_key|_secret|_token$/) }
+    end
+
+    def log_regexp_timeout=(value)
+      if value.nil?
+        @log_regexp_timeout = nil
+      elsif Regexp.respond_to?(:timeout)
+        @log_regexp_timeout = value
+      else
+        RubyLLM.logger.warn("log_regexp_timeout is not supported on Ruby #{RUBY_VERSION}")
+        @log_regexp_timeout = nil
+      end
     end
   end
 end

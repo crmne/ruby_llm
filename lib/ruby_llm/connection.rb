@@ -65,26 +65,15 @@ module RubyLLM
                        errors: true,
                        headers: false,
                        log_level: :debug do |logger|
-        logger.filter(build_logging_regexp('[A-Za-z0-9+/=]{100,}'), '[BASE64 DATA]')
-        logger.filter(build_logging_regexp('[-\\d.e,\\s]{100,}'), '[EMBEDDINGS ARRAY]')
+        logger.filter(logging_regexp('[A-Za-z0-9+/=]{100,}'), '[BASE64 DATA]')
+        logger.filter(logging_regexp('[-\\d.e,\\s]{100,}'), '[EMBEDDINGS ARRAY]')
       end
     end
 
-    def build_logging_regexp(pattern)
-      return Regexp.new(pattern, timeout: @config.log_regexp_timeout) if regexp_timeout_supported?
+    def logging_regexp(pattern)
+      return Regexp.new(pattern) if @config.log_regexp_timeout.nil?
 
-      warn_log_regexp_timeout_unsupported
-      Regexp.new(pattern)
-    end
-
-    def regexp_timeout_supported?
-      Regexp.respond_to?(:timeout) && !@config.log_regexp_timeout.nil?
-    end
-
-    def warn_log_regexp_timeout_unsupported
-      return unless !@config.log_regexp_timeout.nil? && !Regexp.respond_to?(:timeout)
-
-      RubyLLM.logger.warn("log_regexp_timeout is not supported on Ruby #{RUBY_VERSION}")
+      Regexp.new(pattern, timeout: @config.log_regexp_timeout)
     end
 
     def setup_retry(faraday)
