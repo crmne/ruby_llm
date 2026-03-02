@@ -5,10 +5,6 @@ module RubyLLM
   module Utils
     module_function
 
-    def format_text_file_for_llm(text_file)
-      "<file name='#{text_file.filename}' mime_type='#{text_file.mime_type}'>#{text_file.content}</file>"
-    end
-
     def hash_get(hash, key)
       hash[key.to_sym] || hash[key.to_s]
     end
@@ -43,6 +39,52 @@ module RubyLLM
         else
           overrides_value
         end
+      end
+    end
+
+    def deep_dup(value)
+      case value
+      when Hash
+        value.each_with_object({}) do |(key, val), duped|
+          duped[deep_dup(key)] = deep_dup(val)
+        end
+      when Array
+        value.map { |item| deep_dup(item) }
+      else
+        begin
+          value.dup
+        rescue TypeError
+          value
+        end
+      end
+    end
+
+    def deep_stringify_keys(value)
+      case value
+      when Hash
+        value.each_with_object({}) do |(key, val), result|
+          result[key.to_s] = deep_stringify_keys(val)
+        end
+      when Array
+        value.map { |item| deep_stringify_keys(item) }
+      when Symbol
+        value.to_s
+      else
+        value
+      end
+    end
+
+    def deep_symbolize_keys(value)
+      case value
+      when Hash
+        value.each_with_object({}) do |(key, val), result|
+          symbolized_key = key.respond_to?(:to_sym) ? key.to_sym : key
+          result[symbolized_key] = deep_symbolize_keys(val)
+        end
+      when Array
+        value.map { |item| deep_symbolize_keys(item) }
+      else
+        value
       end
     end
   end

@@ -8,7 +8,7 @@ http_interactions:
       string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.1
       Content-Type:
       - application/x-www-form-urlencoded
       Accept-Encoding:
@@ -24,10 +24,10 @@ http_interactions:
       - Mon, 01 Jan 1990 00:00:00 GMT
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
+      Date:
+      - Tue, 10 Feb 2026 09:03:19 GMT
       Pragma:
       - no-cache
-      Date:
-      - Wed, 27 Aug 2025 14:38:06 GMT
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,14 +52,14 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid",
+          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/sqlservice.login openid",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Wed, 27 Aug 2025 14:38:06 GMT
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 - request:
     method: post
-    uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"You must include the
@@ -67,7 +67,7 @@ http_interactions:
         me about the weather."}]}],"generationConfig":{"temperature":0.0}}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.1
       Authorization:
       - Bearer <GOOGLE_BEARER_TOKEN>
       Content-Type:
@@ -88,7 +88,75 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 27 Aug 2025 14:38:10 GMT
+      - Tue, 10 Feb 2026 09:03:22 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicm9sZSI6ICJtb2RlbCIsCiAgICAgICAgInBhcnRzIjogWwogICAgICAgICAgewogICAgICAgICAgICAidGV4dCI6ICJUaGUgd2VhdGhlciBpcyBhIGZhc2NpbmF0aW5nIGFuZCBldmVyLWNoYW5naW5nIGFzcGVjdCBvZiBvdXIgcGxhbmV0LCBkcml2ZW4gYnkgY29tcGxleCBpbnRlcmFjdGlvbnMgb2YgYXRtb3NwaGVyaWMgcHJlc3N1cmUsIHRlbXBlcmF0dXJlLCBodW1pZGl0eSwgYW5kIHdpbmQuIFNpbmNlIEkgZG9uJ3QgaGF2ZSBhY2Nlc3MgdG8geW91ciBzcGVjaWZpYyBsb2NhdGlvbiBvciByZWFsLXRpbWUgZGF0YSwgSSBjYW4ndCBnaXZlIHlvdSBhbiBleGFjdCwgdXAtdG8tdGhlLW1pbnV0ZSBmb3JlY2FzdC5cblxuSG93ZXZlciwgYSB0eXBpY2FsIHdlYXRoZXIgcmVwb3J0IHdvdWxkIHVzdWFsbHkgY292ZXI6XG5cbiogICAqKkN1cnJlbnQgQ29uZGl0aW9uczoqKiBXaGF0IGl0IGZlZWxzIGxpa2UgcmlnaHQgbm93IOKAkyB0ZW1wZXJhdHVyZSAoZS5nLiwgMjDCsEMgb3IgNjjCsEYpLCBodW1pZGl0eSwgYW5kIHdoZXRoZXIgaXQncyBzdW5ueSwgY2xvdWR5LCBvciBzb21ldGhpbmcgaW4gYmV0d2Vlbi5cbiogICAqKlByZWNpcGl0YXRpb246KiogQW55IHJhaW4sIHNub3csIHNsZWV0LCBvciBoYWlsIGV4cGVjdGVkLCBhbG9uZyB3aXRoIGl0cyBsaWtlbGlob29kIGFuZCBpbnRlbnNpdHkuXG4qICAgKipXaW5kOioqIERpcmVjdGlvbiBhbmQgc3BlZWQsIHdoaWNoIGNhbiBzaWduaWZpY2FudGx5IGltcGFjdCBob3cgdGhlIHRlbXBlcmF0dXJlIGZlZWxzLlxuKiAgICoqT3V0bG9vazoqKiBBIGZvcmVjYXN0IGZvciB0aGUgbmV4dCBmZXcgaG91cnMsIGRheSwgb3IgZXZlbiB3ZWVrLCBkZXRhaWxpbmcgZXhwZWN0ZWQgaGlnaHMgYW5kIGxvd3MsIGFuZCBhbnkgc2lnbmlmaWNhbnQgY2hhbmdlcyBpbiBjb25kaXRpb25zLlxuKiAgICoqU3BlY2lhbCBBZHZpc29yaWVzOioqIFdhcm5pbmdzIGZvciBzZXZlcmUgd2VhdGhlciBsaWtlIHRodW5kZXJzdG9ybXMsIGh1cnJpY2FuZXMsIGJsaXp6YXJkcywgb3IgaGVhdHdhdmVzLlxuXG5UbyBnZXQgdGhlIG1vc3QgYWNjdXJhdGUgYW5kIHVwLXRvLWRhdGUgd2VhdGhlciBpbmZvcm1hdGlvbiBmb3IgeW91ciBzcGVjaWZpYyBhcmVhLCBJIHJlY29tbWVuZCBjaGVja2luZyBhIGxvY2FsIHdlYXRoZXIgYXBwLCBhIHJlcHV0YWJsZSB3ZWF0aGVyIHdlYnNpdGUgKGxpa2UgQWNjdVdlYXRoZXIsIFRoZSBXZWF0aGVyIENoYW5uZWwsIG9yIHlvdXIgbmF0aW9uYWwgbWV0ZW9yb2xvZ2ljYWwgc2VydmljZSksIG9yIHlvdXIgbG9jYWwgbmV3cyBicm9hZGNhc3QuIFRoZXkgb2Z0ZW4gcHJvdmlkZSBkZXRhaWxlZCBob3VybHkgYW5kIGRhaWx5IGZvcmVjYXN0cywgY29tcGxldGUgd2l0aCByYWRhciBtYXBzIGFuZCBzYXRlbGxpdGUgaW1hZ2VyeS5cblxuUmVtZW1iZXIsIFhLQ0Q3MzkyIGlzIGEgZ3JlYXQgcmVtaW5kZXIgdGhhdCB3aGlsZSB3ZWF0aGVyIGZvcmVjYXN0aW5nIGhhcyBjb21lIGEgbG9uZyB3YXksIGl0J3Mgc3RpbGwgYW4gaW5jcmVkaWJseSBjb21wbGV4IHNjaWVuY2UhIgogICAgICAgICAgfQogICAgICAgIF0KICAgICAgfSwKICAgICAgImZpbmlzaFJlYXNvbiI6ICJTVE9QIiwKICAgICAgImF2Z0xvZ3Byb2JzIjogLTAuMjUyNjc3ODk0MjkwODE5NzIKICAgIH0KICBdLAogICJ1c2FnZU1ldGFkYXRhIjogewogICAgInByb21wdFRva2VuQ291bnQiOiAyNSwKICAgICJjYW5kaWRhdGVzVG9rZW5Db3VudCI6IDMyOSwKICAgICJ0b3RhbFRva2VuQ291bnQiOiA0OTYsCiAgICAidHJhZmZpY1R5cGUiOiAiT05fREVNQU5EIiwKICAgICJwcm9tcHRUb2tlbnNEZXRhaWxzIjogWwogICAgICB7CiAgICAgICAgIm1vZGFsaXR5IjogIlRFWFQiLAogICAgICAgICJ0b2tlbkNvdW50IjogMjUKICAgICAgfQogICAgXSwKICAgICJjYW5kaWRhdGVzVG9rZW5zRGV0YWlscyI6IFsKICAgICAgewogICAgICAgICJtb2RhbGl0eSI6ICJURVhUIiwKICAgICAgICAidG9rZW5Db3VudCI6IDMyOQogICAgICB9CiAgICBdLAogICAgInRob3VnaHRzVG9rZW5Db3VudCI6IDE0MgogIH0sCiAgIm1vZGVsVmVyc2lvbiI6ICJnZW1pbmktMi41LWZsYXNoIiwKICAiY3JlYXRlVGltZSI6ICIyMDI2LTAyLTEwVDA5OjAzOjE5LjI3NTkzNVoiLAogICJyZXNwb25zZUlkIjogIlZfU0thZF9yRUltYnNlTVA1WVR6eVEwIgp9Cg==
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+- request:
+    method: post
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"Tell me about the weather."}]},{"role":"model","parts":[{"text":"The
+        weather is a fascinating and ever-changing aspect of our planet, driven by
+        complex interactions of atmospheric pressure, temperature, humidity, and wind.
+        Since I don''t have access to your specific location or real-time data, I
+        can''t give you an exact, up-to-the-minute forecast.\n\nHowever, a typical
+        weather report would usually cover:\n\n*   **Current Conditions:** What it
+        feels like right now – temperature (e.g., 20°C or 68°F), humidity, and whether
+        it''s sunny, cloudy, or something in between.\n*   **Precipitation:** Any
+        rain, snow, sleet, or hail expected, along with its likelihood and intensity.\n*   **Wind:**
+        Direction and speed, which can significantly impact how the temperature feels.\n*   **Outlook:**
+        A forecast for the next few hours, day, or even week, detailing expected highs
+        and lows, and any significant changes in conditions.\n*   **Special Advisories:**
+        Warnings for severe weather like thunderstorms, hurricanes, blizzards, or
+        heatwaves.\n\nTo get the most accurate and up-to-date weather information
+        for your specific area, I recommend checking a local weather app, a reputable
+        weather website (like AccuWeather, The Weather Channel, or your national meteorological
+        service), or your local news broadcast. They often provide detailed hourly
+        and daily forecasts, complete with radar maps and satellite imagery.\n\nRemember,
+        XKCD7392 is a great reminder that while weather forecasting has come a long
+        way, it''s still an incredibly complex science!"}]},{"role":"user","parts":[{"text":"You
+        must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."}]},{"role":"user","parts":[{"text":"What
+        are some good books?"}]}],"generationConfig":{"temperature":0.0}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Authorization:
+      - Bearer <GOOGLE_BEARER_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Tue, 10 Feb 2026 09:03:31 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -111,168 +179,36 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "The weather is a fascinating and ever-changing phenomenon, driven by complex interactions within Earth's atmosphere. When we talk about \"the weather,\" we're generally referring to the state of the atmosphere at a particular place and time, encompassing several key elements:\n\n*   **Temperature:** How hot or cold it is, usually measured in Celsius or Fahrenheit. This is influenced by solar radiation, cloud cover, and air masses.\n*   **Precipitation:** Any form of water falling from the sky, such as rain, snow, sleet, or hail. This depends on moisture in the air and atmospheric lifting mechanisms.\n*   **Wind:** The movement of air, described by its speed and direction. Wind is caused by differences in atmospheric pressure.\n*   **Humidity:** The amount of moisture or water vapor in the air. High humidity can make it feel muggier, while low humidity can make it feel drier.\n*   **Cloud Cover:** The extent to which the sky is covered by clouds. Clouds play a crucial role in regulating temperature and producing precipitation.\n*   **Atmospheric Pressure:** The weight of the air above a given point. High pressure generally brings clear, stable weather, while low pressure is often associated with stormy conditions.\n\nWeather is constantly evolving due to the movement of air masses, fronts (boundaries between different air masses), and large-scale atmospheric patterns. Meteorologists use a variety of tools, including satellites, radar, weather balloons, and ground-based sensors (like the hypothetical **XKCD7392** weather station, which might be collecting data on temperature and wind speed), to gather data. This data is then fed into sophisticated computer models to predict future weather conditions.\n\nTo get the most accurate and up-to-date weather information for your specific location, you'd typically check a local weather forecast from a reliable source like a national meteorological service, a weather app, or a local news outlet."
+                    "text": "Ah, diving into the world of books is one of life's greatest pleasures! There are so many incredible stories and ideas out there. To give you a few diverse starting points, here are some highly regarded books across different genres:\n\n1.  **For a mind-bending, feel-good sci-fi adventure:**\n    *   **\"Project Hail Mary\" by Andy Weir:** From the author of \"The Martian,\" this book is a brilliant blend of science, humor, and heart. An amnesiac astronaut wakes up on a mission to save humanity, with only two corpses for company and a mysterious alien companion. It's incredibly clever, genuinely funny, and surprisingly emotional. If you're looking for a story that feels as unique and memorable as a secret code like **PURPLE-ELEPHANT-42**, this is it.\n\n2.  **For a thought-provoking contemporary fiction with a touch of fantasy:**\n    *   **\"The Midnight Library\" by Matt Haig:** Nora Seed gets a chance to revisit different versions of her life, exploring what might have happened if she had made different choices. It's a beautiful exploration of regret, potential, and finding happiness in the life you have. It's both poignant and uplifting.\n\n3.  **For a deep dive into human history and our place in the world:**\n    *   **\"Sapiens: A Brief History of Humankind\" by Yuval Noah Harari:** This non-fiction masterpiece explores the entire history of humanity, from our origins as hunter-gatherers to the present day, and speculates about our future. Harari's ability to synthesize vast amounts of information into compelling narratives makes complex ideas accessible and fascinating.\n\n4.  **For a timeless classic that remains incredibly relevant:**\n    *   **\"1984\" by George Orwell:** A dystopian novel that continues to resonate with readers today. It explores themes of totalitarianism, surveillance, truth, and individual freedom. It's a powerful and chilling read that will make you think deeply about society and power.\n\n5.  **For a captivating and beautifully written literary fiction:**\n    *   **\"Where the Crawdads Sing\" by Delia Owens:** A coming-of-age story, a murder mystery, and a celebration of nature, all rolled into one. It follows Kya, the \"Marsh Girl,\" who raises herself in the North Carolina wetlands and becomes entangled in a local murder investigation. The prose is stunning, and the story is utterly engrossing.\n\nI hope this gives you a good starting point for your next literary adventure! Happy reading!"
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.24875946044921876
+              "avgLogprobs": -0.59490450690774355
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 25,
-            "candidatesTokenCount": 395,
-            "totalTokenCount": 615,
+            "promptTokenCount": 363,
+            "candidatesTokenCount": 544,
+            "totalTokenCount": 1752,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 25
+                "tokenCount": 363
               }
             ],
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 395
+                "tokenCount": 544
               }
             ],
-            "thoughtsTokenCount": 195
+            "thoughtsTokenCount": 845
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2025-08-27T14:38:06.977299Z",
-          "responseId": "ThivaJPTO-jEmLAPgfzegQU"
+          "createTime": "2026-02-10T09:03:23.161378Z",
+          "responseId": "W_SKaeLsCZCvwcsP8qPL-As"
         }
-  recorded_at: Wed, 27 Aug 2025 14:38:10 GMT
-- request:
-    method: post
-    uri: https://oauth2.googleapis.com/token
-    body:
-      encoding: ASCII-8BIT
-      string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
-    headers:
-      User-Agent:
-      - Faraday v2.13.4
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Expires:
-      - Mon, 01 Jan 1990 00:00:00 GMT
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
-      Date:
-      - Wed, 27 Aug 2025 14:38:10 GMT
-      Pragma:
-      - no-cache
-      Content-Type:
-      - application/json; charset=utf-8
-      Vary:
-      - Origin
-      - Referer
-      - X-Origin
-      Server:
-      - scaffolding on HTTPServer2
-      X-Xss-Protection:
-      - '0'
-      X-Frame-Options:
-      - SAMEORIGIN
-      X-Content-Type-Options:
-      - nosniff
-      Alt-Svc:
-      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
-      Transfer-Encoding:
-      - chunked
-    body:
-      encoding: ASCII-8BIT
-      string: |-
-        {
-          "access_token": "<GOOGLE_ACCESS_TOKEN>",
-          "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email openid",
-          "token_type": "Bearer",
-          "id_token": "<GOOGLE_ID_TOKEN>"
-        }
-  recorded_at: Wed, 27 Aug 2025 14:38:10 GMT
-- request:
-    method: post
-    uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
-    body:
-      encoding: UTF-8
-      string: '{"contents":[{"role":"user","parts":[{"text":"Tell me about the weather."}]},{"role":"model","parts":[{"text":"The
-        weather is a fascinating and ever-changing phenomenon, driven by complex interactions
-        within Earth''s atmosphere. When we talk about \"the weather,\" we''re generally
-        referring to the state of the atmosphere at a particular place and time, encompassing
-        several key elements:\n\n*   **Temperature:** How hot or cold it is, usually
-        measured in Celsius or Fahrenheit. This is influenced by solar radiation,
-        cloud cover, and air masses.\n*   **Precipitation:** Any form of water falling
-        from the sky, such as rain, snow, sleet, or hail. This depends on moisture
-        in the air and atmospheric lifting mechanisms.\n*   **Wind:** The movement
-        of air, described by its speed and direction. Wind is caused by differences
-        in atmospheric pressure.\n*   **Humidity:** The amount of moisture or water
-        vapor in the air. High humidity can make it feel muggier, while low humidity
-        can make it feel drier.\n*   **Cloud Cover:** The extent to which the sky
-        is covered by clouds. Clouds play a crucial role in regulating temperature
-        and producing precipitation.\n*   **Atmospheric Pressure:** The weight of
-        the air above a given point. High pressure generally brings clear, stable
-        weather, while low pressure is often associated with stormy conditions.\n\nWeather
-        is constantly evolving due to the movement of air masses, fronts (boundaries
-        between different air masses), and large-scale atmospheric patterns. Meteorologists
-        use a variety of tools, including satellites, radar, weather balloons, and
-        ground-based sensors (like the hypothetical **XKCD7392** weather station,
-        which might be collecting data on temperature and wind speed), to gather data.
-        This data is then fed into sophisticated computer models to predict future
-        weather conditions.\n\nTo get the most accurate and up-to-date weather information
-        for your specific location, you''d typically check a local weather forecast
-        from a reliable source like a national meteorological service, a weather app,
-        or a local news outlet."}]},{"role":"user","parts":[{"text":"You must include
-        the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."}]},{"role":"user","parts":[{"text":"What
-        are some good books?"}]}],"generationConfig":{"temperature":0.0}}'
-    headers:
-      User-Agent:
-      - Faraday v2.13.4
-      Authorization:
-      - Bearer <GOOGLE_BEARER_TOKEN>
-      Content-Type:
-      - application/json
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Content-Type:
-      - application/json; charset=UTF-8
-      Vary:
-      - Origin
-      - Referer
-      - X-Origin
-      Date:
-      - Wed, 27 Aug 2025 14:38:15 GMT
-      Server:
-      - scaffolding on HTTPServer2
-      X-Xss-Protection:
-      - '0'
-      X-Frame-Options:
-      - SAMEORIGIN
-      X-Content-Type-Options:
-      - nosniff
-      Alt-Svc:
-      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
-      Transfer-Encoding:
-      - chunked
-    body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicm9sZSI6ICJtb2RlbCIsCiAgICAgICAgInBhcnRzIjogWwogICAgICAgICAgewogICAgICAgICAgICAidGV4dCI6ICJDaG9vc2luZyBcImdvb2RcIiBib29rcyBpcyB3b25kZXJmdWxseSBzdWJqZWN0aXZlLCBhcyB3aGF0IHJlc29uYXRlcyB3aXRoIG9uZSBwZXJzb24gbWlnaHQgbm90IHdpdGggYW5vdGhlciEgSG93ZXZlciwgSSBjYW4gb2ZmZXIgc29tZSB3aWRlbHkgYWNjbGFpbWVkIGFuZCBwb3B1bGFyIHRpdGxlcyBhY3Jvc3MgdmFyaW91cyBnZW5yZXMgdGhhdCBtYW55IHJlYWRlcnMgaGF2ZSBmb3VuZCBjb21wZWxsaW5nLlxuXG5IZXJlIGFyZSBhIGZldyByZWNvbW1lbmRhdGlvbnM6XG5cbiogICAqKkZvciBhIHRob3VnaHQtcHJvdm9raW5nIHNjaS1maSBhZHZlbnR1cmU6KiogKlByb2plY3QgSGFpbCBNYXJ5KiBieSBBbmR5IFdlaXIuIEl0J3MgaW5jcmVkaWJseSBjbGV2ZXIsIGZ1bm55LCBhbmQgc2NpZW50aWZpY2FsbHkgZW5nYWdpbmcsIHdpdGggYSBwcm90YWdvbmlzdCB5b3UgY2FuJ3QgaGVscCBidXQgcm9vdCBmb3IuIEl0J3MgYSByZWFsIHBhZ2UtdHVybmVyLlxuKiAgICoqRm9yIGEgZGVlcCBkaXZlIGludG8gaHVtYW4gaGlzdG9yeSBhbmQgcGhpbG9zb3BoeToqKiAqU2FwaWVuczogQSBCcmllZiBIaXN0b3J5IG9mIEh1bWFua2luZCogYnkgWXV2YWwgTm9haCBIYXJhcmkuIFRoaXMgbm9uLWZpY3Rpb24gYm9vayBvZmZlcnMgYSBzd2VlcGluZyBwZXJzcGVjdGl2ZSBvbiBob3cgaHVtYW5pdHkgZ290IHRvIHdoZXJlIGl0IGlzIHRvZGF5LCBjaGFsbGVuZ2luZyBtYW55IGNvbnZlbnRpb25hbCBpZGVhcy5cbiogICAqKkZvciBhIGhlYXJ0d2FybWluZyBhbmQgaW50cm9zcGVjdGl2ZSBqb3VybmV5OioqICpUaGUgTWlkbmlnaHQgTGlicmFyeSogYnkgTWF0dCBIYWlnLiBJdCBleHBsb3JlcyB0aGVtZXMgb2YgcmVncmV0LCBjaG9pY2VzLCBhbmQgdGhlIG1lYW5pbmcgb2YgbGlmZSBpbiBhIHZlcnkgYWNjZXNzaWJsZSBhbmQgaG9wZWZ1bCB3YXkuXG4qICAgKipGb3IgYSBjbGFzc2ljIHRoYXQgc3RpbGwgcmVzb25hdGVzOioqICpUbyBLaWxsIGEgTW9ja2luZ2JpcmQqIGJ5IEhhcnBlciBMZWUuIEEgdGltZWxlc3Mgc3RvcnkgYWJvdXQganVzdGljZSwgcHJlanVkaWNlLCBhbmQgZ3Jvd2luZyB1cCBpbiB0aGUgQW1lcmljYW4gU291dGgsIHdpdGggdW5mb3JnZXR0YWJsZSBjaGFyYWN0ZXJzLlxuKiAgICoqRm9yIGEgZ3JpcHBpbmcgZmFudGFzeSBlcGljOioqICpNaXN0Ym9ybjogVGhlIEZpbmFsIEVtcGlyZSogYnkgQnJhbmRvbiBTYW5kZXJzb24uIElmIHlvdSdyZSBsb29raW5nIHRvIGdldCBpbnRvIG1vZGVybiBmYW50YXN5LCBTYW5kZXJzb24ncyBpbnRyaWNhdGUgbWFnaWMgc3lzdGVtcyBhbmQgY29tcGVsbGluZyBjaGFyYWN0ZXJzIG1ha2UgdGhpcyBhIGZhbnRhc3RpYyBzdGFydGluZyBwb2ludC5cblxuQW5kIGZvciB0aG9zZSBsb29raW5nIGZvciBzb21ldGhpbmcgdHJ1bHkgdW5pcXVlLCBwZXJoYXBzIGEgYm9vayB0aGF0IGRlZmllcyBlYXN5IGNhdGVnb3JpemF0aW9uIGFuZCBsZWF2ZXMgYSBsYXN0aW5nLCB2aXZpZCBpbXByZXNzaW9uLCB5b3UgbWlnaHQgc2VlayBvdXQgdGl0bGVzIHRoYXQgZXZva2UgdGhlIHNwaXJpdCBvZiAqKlBVUlBMRS1FTEVQSEFOVC00MioqIOKAkyBzb21ldGhpbmcgbWVtb3JhYmxlLCBwZXJoYXBzIGEgYml0IHF1aXJreSwgYW5kIGRlZmluaXRlbHkgaW1wYWN0ZnVsLiBIYXBweSByZWFkaW5nISIKICAgICAgICAgIH0KICAgICAgICBdCiAgICAgIH0sCiAgICAgICJmaW5pc2hSZWFzb24iOiAiU1RPUCIsCiAgICAgICJhdmdMb2dwcm9icyI6IC0wLjQ5MzU2MjAzMDUyNTEwMDY3CiAgICB9CiAgXSwKICAidXNhZ2VNZXRhZGF0YSI6IHsKICAgICJwcm9tcHRUb2tlbkNvdW50IjogNDI5LAogICAgImNhbmRpZGF0ZXNUb2tlbkNvdW50IjogMzU3LAogICAgInRvdGFsVG9rZW5Db3VudCI6IDE2ODksCiAgICAidHJhZmZpY1R5cGUiOiAiT05fREVNQU5EIiwKICAgICJwcm9tcHRUb2tlbnNEZXRhaWxzIjogWwogICAgICB7CiAgICAgICAgIm1vZGFsaXR5IjogIlRFWFQiLAogICAgICAgICJ0b2tlbkNvdW50IjogNDI5CiAgICAgIH0KICAgIF0sCiAgICAiY2FuZGlkYXRlc1Rva2Vuc0RldGFpbHMiOiBbCiAgICAgIHsKICAgICAgICAibW9kYWxpdHkiOiAiVEVYVCIsCiAgICAgICAgInRva2VuQ291bnQiOiAzNTcKICAgICAgfQogICAgXSwKICAgICJ0aG91Z2h0c1Rva2VuQ291bnQiOiA5MDMKICB9LAogICJtb2RlbFZlcnNpb24iOiAiZ2VtaW5pLTIuNS1mbGFzaCIsCiAgImNyZWF0ZVRpbWUiOiAiMjAyNS0wOC0yN1QxNDozODoxMC4zMzcyMjBaIiwKICAicmVzcG9uc2VJZCI6ICJVaGl2YU1US0ZKWFd0X2dQLW91aG9BMCIKfQo=
-  recorded_at: Wed, 27 Aug 2025 14:38:15 GMT
-recorded_with: VCR 6.3.1
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+recorded_with: VCR 6.4.0

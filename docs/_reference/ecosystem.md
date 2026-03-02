@@ -2,7 +2,7 @@
 layout: default
 title: RubyLLM Ecosystem
 nav_order: 3
-description: Extend RubyLLM with MCP servers, structured schemas, and community-built tools for production AI apps.
+description: Extend RubyLLM with MCP servers, structured schemas, OpenTelemetry instrumentation and community-built tools for production AI apps.
 ---
 
 # {{ page.title }}
@@ -23,6 +23,7 @@ After reading this guide, you will know:
 
 * What the Model Context Protocol (MCP) is and how ruby_llm-mcp brings it to Ruby
 * How RubyLLM::Schema simplifies structured data definition for AI applications
+* How OpenTelemetry instrumentation for RubyLLM provides observability into your LLM applications
 * Where to find community projects and how to contribute your own
 
 ## RubyLLM::MCP
@@ -89,6 +90,52 @@ gem install ruby_llm-schema
 ```
 
 For detailed documentation and examples, visit the [RubyLLM::Schema repository](https://github.com/danielfriis/ruby_llm-schema).
+
+---
+
+## OpenTelemetry RubyLLM Instrumentation
+
+**Observability for RubyLLM Applications**
+
+[opentelemetry-instrumentation-ruby_llm](https://github.com/thoughtbot/opentelemetry-instrumentation-ruby_llm) adds OpenTelemetry tracing to RubyLLM, enabling you to send traces to any compatible backend (Langfuse, Datadog, Honeycomb, Jaeger, Arize Phoenix and more).
+
+### Why Use OpenTelemetry Instrumentation?
+
+When running LLM applications in production, you need visibility into:
+
+- Which models are being called and how they perform
+- The flow of conversations and tool calls
+- How long each step takes and where time is spent
+- Token usage for cost tracking and optimization
+- Tool call selection, execution, and results
+- Error rates and failure modes
+
+This gem provides all of this automatically, with minimal setup and without having to manually add tracing code to your application.
+
+### Key Features
+
+- 🔭 Automatic tracing for chat completions and tool calls
+- 📊 Token usage tracking (input and output)
+- 🛠️ Tool call spans with arguments and results
+- ❌ Error recording with exception details
+- 🔌 Works with any OpenTelemetry-compatible backend
+- 📐 Follows the [OpenTelemetry GenAI Semantic Conventions](https://opentelemetry.io/docs/specs/semconv/gen-ai/gen-ai-spans/)
+
+### Installation
+
+```bash
+gem install opentelemetry-instrumentation-ruby_llm
+```
+
+### Usage
+
+```ruby
+OpenTelemetry::SDK.configure do |c|
+  c.use 'OpenTelemetry::Instrumentation::RubyLLM'
+end
+```
+
+For detailed documentation, setup instructions, and examples, visit the [OpenTelemetry RubyLLM Instrumentation repository](https://github.com/thoughtbot/opentelemetry-instrumentation-ruby_llm).
 
 ---
 

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+require 'stringio'
 
 RSpec.describe RubyLLM::ActiveRecord::ActsAs do
   include_context 'with configured RubyLLM'
@@ -20,6 +21,15 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
 
   # Basic functionality tests using dummy app models
   describe 'basic chat functionality' do
+    it 'persists generic add_message calls' do
+      chat = Chat.create!(model: model)
+      message = chat.add_message(role: :system, content: 'Be concise')
+
+      expect(message.role).to eq('system')
+      expect(chat.messages.count).to eq(1)
+      expect(chat.messages.first.content).to eq('Be concise')
+    end
+
     it 'persists chat history' do
       chat = Chat.create!(model: model)
       chat.ask("What's your favorite Ruby feature?")
@@ -28,9 +38,6 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       expect(chat.messages.first.role).to eq('user')
       expect(chat.messages.last.role).to eq('assistant')
       expect(chat.messages.last.content).to be_present
-      # Update the chat to simulate a change
-      chat.touch
-      expect(chat.updated_at).to eq(chat.messages.last.chat.updated_at)
     end
 
     it 'tracks token usage' do
@@ -52,11 +59,28 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       expect(chat.messages.first.content).to eq('You are a Ruby expert')
     end
 
-    it 'replaces system messages when requested' do
+    it 'replaces system messages by default' do
       chat = Chat.create!(model: model)
 
       chat.with_instructions('Be helpful')
       chat.with_instructions('Be concise')
+      expect(chat.messages.where(role: 'system').count).to eq(1)
+      expect(chat.messages.find_by(role: 'system').content).to eq('Be concise')
+    end
+
+    it 'appends system messages when append: true' do
+      chat = Chat.create!(model: model)
+
+      chat.with_instructions('Be helpful')
+      chat.with_instructions('Be concise', append: true)
+      expect(chat.messages.where(role: 'system').count).to eq(2)
+    end
+
+    it 'replaces system messages when requested' do
+      chat = Chat.create!(model: model)
+
+      chat.with_instructions('Be helpful', append: true)
+      chat.with_instructions('Be concise', append: true)
       expect(chat.messages.where(role: 'system').count).to eq(2)
 
       chat.with_instructions('Be awesome', replace: true)
@@ -94,6 +118,16 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     end
   end
 
+  describe 'default model' do
+    it 'uses config default when no model specified' do
+      chat = Chat.create!
+      chat.ask('Hello')
+
+      expect(chat.reload.model_id).to eq(RubyLLM.config.default_model)
+      expect(chat.messages.count).to eq(2)
+    end
+  end
+
   describe 'model associations' do
     context 'when model registry is configured' do
       before do
@@ -108,7 +142,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
 
         chat = Chat.create!(model: 'gpt-4.1-nano')
         expect(chat).to respond_to(:model)
-        expect(chat.model&.name).to eq('GPT-4.1 nano') if chat.model
+        expect(chat.model&.name).to match(/^GPT-4.1 [Nn]ano$/) if chat.model
       end
 
       it 'associates messages with model' do
@@ -150,13 +184,31 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       # Check that the message is saved in ActiveRecord with valid JSON
       saved_message = chat.messages.last
       expect(saved_message.role).to eq('assistant')
-      expect(saved_message.content).to be_a(String)
+      expect(saved_message.content_raw).to eq({ 'name' => 'Alice', 'age' => 25 })
+    end
 
-      # The saved content should be parseable JSON
-      parsed_saved_content = JSON.parse(saved_message.content)
-      expect(parsed_saved_content).to be_a(Hash)
-      expect(parsed_saved_content['name']).to eq('Alice')
-      expect(parsed_saved_content['age']).to eq(25)
+    it 'supports multi-turn conversations with structured responses' do
+      chat = Chat.create!(model: model)
+
+      schema = {
+        type: 'object',
+        properties: {
+          country: { type: 'string' }
+        },
+        required: %w[country],
+        additionalProperties: false
+      }
+
+      chat.with_schema(schema)
+
+      # First turn
+      chat.ask('What country is Paris in?')
+
+      # Second turn - this should not raise an error
+      response = chat.ask('What about Berlin?')
+
+      expect(response.content).to be_a(Hash)
+      expect(response.content['country']).to eq('Germany')
     end
   end
 
@@ -220,6 +272,43 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     end
   end
 
+  describe 'raw content support' do
+    let(:anthropic_model) { 'claude-3-5-haiku-20241022' }
+
+    it 'persists raw content blocks separately from plain text' do
+      chat = Chat.create!(model: anthropic_model)
+      raw_block = RubyLLM::Providers::Anthropic::Content.new('Cache me once', cache: true)
+
+      message = chat.add_message(role: :user, content: raw_block)
+
+      expect(message.content).to be_nil
+      expect(message.content_raw).to eq(JSON.parse(raw_block.value.to_json))
+
+      reconstructed = message.to_llm
+      expect(reconstructed.content).to be_a(RubyLLM::Content::Raw)
+      expect(reconstructed.content.value).to eq(JSON.parse(raw_block.value.to_json))
+    end
+
+    it 'round-trips cached token metrics through ActiveRecord models' do
+      chat = Chat.create!(model: anthropic_model)
+      message = chat.messages.create!(role: 'assistant', content: 'Hi there',
+                                      cached_tokens: 42, cache_creation_tokens: 7)
+
+      llm_message = message.to_llm
+
+      expect(llm_message.cached_tokens).to eq(42)
+      expect(llm_message.cache_creation_tokens).to eq(7)
+    end
+
+    it 'keeps create_user_message as a deprecated compatibility wrapper' do
+      chat = Chat.create!(model: anthropic_model)
+
+      message = chat.create_user_message('hello')
+      expect(message.role).to eq('user')
+      expect(message.content).to eq('hello')
+    end
+  end
+
   describe 'custom headers' do
     it 'supports with_headers for custom HTTP headers' do
       chat = Chat.create!(model: model)
@@ -276,9 +365,12 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
           t.references :bot_chat
           t.string :role
           t.text :content
+          t.json :content_raw
           t.string :model_id
           t.integer :input_tokens
           t.integer :output_tokens
+          t.integer :cached_tokens
+          t.integer :cache_creation_tokens
           t.references :bot_tool_call
           t.timestamps
         end
@@ -306,17 +398,16 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     # Define test models inline
     module Assistants # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
       class BotChat < ActiveRecord::Base # rubocop:disable RSpec/LeakyConstantDeclaration
-        self.table_name = 'bot_chats'
-        acts_as_chat message_class: 'BotMessage', tool_call_class: 'BotToolCall'
+        acts_as_chat messages: :bot_messages
       end
     end
 
     class BotMessage < ActiveRecord::Base # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
-      acts_as_message chat_class: 'Assistants::BotChat', tool_call_class: 'BotToolCall'
+      acts_as_message chat: :bot_chat, chat_class: 'Assistants::BotChat', tool_calls: :bot_tool_calls
     end
 
     class BotToolCall < ActiveRecord::Base # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
-      acts_as_tool_call message_class: 'BotMessage'
+      acts_as_tool_call message: :bot_message
     end
 
     describe 'namespaced chat models' do
@@ -324,11 +415,11 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
         bot_chat = Assistants::BotChat.create!(model: model)
         bot_chat.ask("What's 2 + 2?")
 
-        expect(bot_chat.messages.count).to eq(2)
-        expect(bot_chat.messages.first).to be_a(BotMessage)
-        expect(bot_chat.messages.first.role).to eq('user')
-        expect(bot_chat.messages.last.role).to eq('assistant')
-        expect(bot_chat.messages.last.content).to be_present
+        expect(bot_chat.bot_messages.count).to eq(2)
+        expect(bot_chat.bot_messages.first).to be_a(BotMessage)
+        expect(bot_chat.bot_messages.first.role).to eq('user')
+        expect(bot_chat.bot_messages.last.role).to eq('assistant')
+        expect(bot_chat.bot_messages.last.content).to be_present
       end
 
       it 'persists tool calls with custom classes' do
@@ -337,19 +428,19 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
 
         bot_chat.ask("What's 123 * 456?")
 
-        expect(bot_chat.messages.count).to be >= 3
-        tool_call_message = bot_chat.messages.find { |m| m.tool_calls.any? }
+        expect(bot_chat.bot_messages.count).to be >= 3
+        tool_call_message = bot_chat.bot_messages.find { |m| m.bot_tool_calls.any? }
         expect(tool_call_message).to be_present
-        expect(tool_call_message.tool_calls.first).to be_a(BotToolCall)
+        expect(tool_call_message.bot_tool_calls.first).to be_a(BotToolCall)
       end
 
       it 'handles system messages correctly' do
         bot_chat = Assistants::BotChat.create!(model: model)
         bot_chat.with_instructions('You are a helpful bot')
 
-        expect(bot_chat.messages.first.role).to eq('system')
-        expect(bot_chat.messages.first.content).to eq('You are a helpful bot')
-        expect(bot_chat.messages.first).to be_a(BotMessage)
+        expect(bot_chat.bot_messages.first.role).to eq('system')
+        expect(bot_chat.bot_messages.first.content).to eq('You are a helpful bot')
+        expect(bot_chat.bot_messages.first).to be_a(BotMessage)
       end
 
       it 'allows model switching' do
@@ -359,12 +450,110 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
         bot_chat.with_model('claude-3-5-haiku-20241022')
         expect(bot_chat.reload.model_id).to eq('claude-3-5-haiku-20241022')
       end
+
+      it 'cleans up incomplete tool interactions with custom message association name' do
+        bot_chat = Assistants::BotChat.create!(model: model)
+
+        bot_chat.bot_messages.create!(role: 'user', content: 'Do multiple calculations')
+
+        tool_call_msg = bot_chat.bot_messages.create!(role: 'assistant', content: nil)
+        tool_call1 = tool_call_msg.bot_tool_calls.create!(
+          tool_call_id: 'call_custom_1',
+          name: 'calculator',
+          arguments: { expression: '2 + 2' }.to_json
+        )
+        tool_call_msg.bot_tool_calls.create!(
+          tool_call_id: 'call_custom_2',
+          name: 'calculator',
+          arguments: { expression: '3 + 3' }.to_json
+        )
+
+        bot_chat.bot_messages.create!(
+          role: 'tool',
+          content: '4',
+          parent_tool_call: tool_call1
+        )
+
+        expect do
+          bot_chat.send(:cleanup_orphaned_tool_results)
+        end.to change { bot_chat.bot_messages.count }.by(-2)
+      end
+    end
+
+    describe 'namespaced chat models with custom foreign keys' do
+      before(:all) do # rubocop:disable RSpec/BeforeAfterAll
+        # Create additional tables for testing edge cases
+        ActiveRecord::Migration.suppress_messages do
+          ActiveRecord::Migration.create_table :support_conversations, force: true do |t|
+            t.string :model_id
+            t.timestamps
+          end
+
+          ActiveRecord::Migration.create_table :support_messages, force: true do |t|
+            t.references :conversation, foreign_key: { to_table: :support_conversations }
+            t.string :role
+            t.text :content
+            t.string :model_id
+            t.integer :input_tokens
+            t.integer :output_tokens
+            t.references :tool_call, foreign_key: { to_table: :support_tool_calls }
+            t.timestamps
+          end
+
+          ActiveRecord::Migration.create_table :support_tool_calls, force: true do |t|
+            t.references :message, foreign_key: { to_table: :support_messages }
+            t.string :tool_call_id
+            t.string :name
+            t.json :arguments
+            t.timestamps
+          end
+        end
+      end
+
+      after(:all) do # rubocop:disable RSpec/BeforeAfterAll
+        ActiveRecord::Migration.suppress_messages do
+          if ActiveRecord::Base.connection.table_exists?(:support_tool_calls)
+            ActiveRecord::Migration.drop_table :support_tool_calls
+          end
+          if ActiveRecord::Base.connection.table_exists?(:support_messages)
+            ActiveRecord::Migration.drop_table :support_messages
+          end
+          if ActiveRecord::Base.connection.table_exists?(:support_conversations)
+            ActiveRecord::Migration.drop_table :support_conversations
+          end
+        end
+      end
+
+      module Support # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
+        def self.table_name_prefix
+          'support_'
+        end
+
+        class Conversation < ActiveRecord::Base # rubocop:disable RSpec/LeakyConstantDeclaration
+          acts_as_chat message_class: 'Support::Message'
+        end
+
+        class Message < ActiveRecord::Base # rubocop:disable RSpec/LeakyConstantDeclaration
+          acts_as_message chat: :conversation, chat_class: 'Support::Conversation', tool_call_class: 'Support::ToolCall'
+        end
+
+        class ToolCall < ActiveRecord::Base # rubocop:disable RSpec/LeakyConstantDeclaration
+          acts_as_tool_call message_class: 'Support::Message'
+        end
+      end
+
+      it 'creates messages successfully' do
+        conversation = Support::Conversation.create!(model: model)
+
+        expect { conversation.messages.create!(role: 'user', content: 'Test') }.not_to raise_error
+        expect(conversation.messages.count).to eq(1)
+      end
     end
 
     describe 'to_llm conversion' do
       it 'correctly converts custom messages to RubyLLM format' do
         bot_chat = Assistants::BotChat.create!(model: model)
-        bot_message = bot_chat.messages.create!(
+        bot_message = bot_chat.bot_messages.create!(
           role: 'user',
           content: 'Test message',
           input_tokens: 10,
@@ -381,9 +570,9 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
 
       it 'correctly converts tool calls' do
         bot_chat = Assistants::BotChat.create!(model: model)
-        bot_message = bot_chat.messages.create!(role: 'assistant', content: 'I need to calculate something')
+        bot_message = bot_chat.bot_messages.create!(role: 'assistant', content: 'I need to calculate something')
 
-        bot_message.tool_calls.create!(
+        bot_message.bot_tool_calls.create!(
           tool_call_id: 'call_123',
           name: 'calculator',
           arguments: { expression: '2 + 2' }
@@ -398,12 +587,24 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
         expect(llm_tool_call.name).to eq('calculator')
         expect(llm_tool_call.arguments).to eq({ 'expression' => '2 + 2' })
       end
+
+      it 'correctly preserves custom model' do
+        custom_model = 'my-custom-model'
+        bot_chat = Assistants::BotChat.create!(model: custom_model, assume_model_exists: true, provider: 'openrouter')
+        bot_chat.save!
+        llm_chat = bot_chat.to_llm
+        expect(llm_chat.model.id).to eq(custom_model)
+      end
     end
   end
 
   describe 'attachment handling' do
     let(:image_path) { File.expand_path('../../fixtures/ruby.png', __dir__) }
     let(:pdf_path) { File.expand_path('../../fixtures/sample.pdf', __dir__) }
+
+    def attachment_io(path)
+      StringIO.new(File.binread(path))
+    end
 
     def uploaded_file(path, type)
       filename = File.basename(path)
@@ -432,7 +633,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
 
       message = chat.messages.create!(role: 'user', content: 'Check this out')
       message.attachments.attach(
-        io: File.open(image_path),
+        io: attachment_io(image_path),
         filename: 'ruby.png',
         content_type: 'image/png'
       )
@@ -473,7 +674,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
         message = chat.messages.create!(role: 'user', content: 'Image test')
 
         message.attachments.attach(
-          io: File.open(image_path),
+          io: attachment_io(image_path),
           filename: 'test.png',
           content_type: 'image/png'
         )
@@ -488,7 +689,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
         message = chat.messages.create!(role: 'user', content: 'PDF test')
 
         message.attachments.attach(
-          io: File.open(pdf_path),
+          io: attachment_io(pdf_path),
           filename: 'test.pdf',
           content_type: 'application/pdf'
         )
@@ -606,6 +807,102 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
         chat.send(:cleanup_orphaned_tool_results)
       end.to change { chat.messages.count }.by(-1)
     end
+
+    context 'with custom configurations' do
+      before(:all) do # rubocop:disable RSpec/BeforeAfterAll
+        # Create additional tables for testing edge cases
+        ActiveRecord::Migration.suppress_messages do
+          ActiveRecord::Migration.create_table :clanker_chats, force: true do |t|
+            t.string :model_id
+            t.timestamps
+          end
+          ActiveRecord::Migration.create_table :clanker_messages, force: true do |t|
+            t.references :clanker_chat
+            t.string :role
+            t.text :content
+            t.json :content_raw
+            t.string :model_id
+            t.integer :input_tokens
+            t.integer :output_tokens
+            t.integer :cached_tokens
+            t.integer :cache_creation_tokens
+            t.references :clanker_tool_call
+            t.timestamps
+          end
+
+          ActiveRecord::Migration.create_table :clanker_tool_calls, force: true do |t|
+            t.references :clanker_message
+            t.string :tool_call_id
+            t.string :name
+            t.json :arguments
+            t.timestamps
+          end
+        end
+      end
+
+      after(:all) do # rubocop:disable RSpec/BeforeAfterAll
+        ActiveRecord::Migration.suppress_messages do
+          if ActiveRecord::Base.connection.table_exists?(:clanker_tool_calls)
+            ActiveRecord::Migration.drop_table :clanker_tool_calls
+          end
+          if ActiveRecord::Base.connection.table_exists?(:clanker_messages)
+            ActiveRecord::Migration.drop_table :clanker_messages
+          end
+          if ActiveRecord::Base.connection.table_exists?(:clanker_chats)
+            ActiveRecord::Migration.drop_table :clanker_chats
+          end
+        end
+      end
+
+      module Clanker # rubocop:disable RSpec/LeakyConstantDeclaration,Lint/ConstantDefinitionInBlock
+        class Chat < ActiveRecord::Base # rubocop:disable RSpec/LeakyConstantDeclaration
+          acts_as_chat messages: :clanker_messages, message_class: 'Clanker::Message',
+                       messages_foreign_key: 'clanker_chat_id'
+          alias messages clanker_messages
+          self.table_name = 'clanker_chats'
+        end
+
+        class Message < ActiveRecord::Base # rubocop:disable RSpec/LeakyConstantDeclaration
+          acts_as_message chat: :clanker_chat, chat_class: 'Clanker::Chat', chat_foreign_key: 'clanker_chat_id',
+                          tool_calls: :clanker_tool_calls, tool_call_class: 'Clanker::ToolCall',
+                          tool_calls_foreign_key: 'clanker_message_id'
+          alias tool_calls clanker_tool_calls
+
+          self.table_name = 'clanker_messages'
+        end
+
+        class ToolCall < ActiveRecord::Base # rubocop:disable RSpec/LeakyConstantDeclaration
+          acts_as_tool_call message: :clanker_message, message_class: 'Clanker::Message',
+                            message_foreign_key: 'clanker_message_id', result: :result, result_class: 'Clanker::Message',
+                            result_foreign_key: 'clanker_tool_call_id'
+          alias message clanker_message
+
+          self.table_name = 'clanker_tool_calls'
+        end
+      end
+
+      it 'does not clean up complete tool interactions when error occurs after tool execution' do
+        chat = Clanker::Chat.create!(model: model)
+        chat.clanker_messages.create!(role: 'user', content: 'What is 5 + 5?')
+
+        tool_call_msg = chat.messages.create!(role: 'assistant', content: nil)
+        tool_call = tool_call_msg.tool_calls.create!(
+          tool_call_id: 'call_123',
+          name: 'calculator',
+          arguments: { expression: '5 + 5' }.to_json
+        )
+
+        chat.messages.create!(
+          role: 'tool',
+          content: '10',
+          parent_tool_call: tool_call
+        )
+
+        expect do
+          chat.send(:cleanup_orphaned_tool_results)
+        end.not_to(change { chat.messages.count })
+      end
+    end
   end
 
   describe 'assume_model_exists' do
@@ -656,10 +953,62 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     end
 
     it 'respects aliases' do
-      chat = Chat.create!(model: 'claude-3-5-sonnet', provider: 'bedrock')
+      chat = Chat.create!(model: 'claude-haiku-4-5', provider: 'bedrock')
 
-      expect(chat.model_id).to eq('anthropic.claude-3-5-sonnet-20240620-v1:0:200k')
+      expect(chat.model_id).to eq('us.anthropic.claude-haiku-4-5-20251001-v1:0')
       expect(chat.provider).to eq('bedrock')
+    end
+  end
+
+  describe 'extended thinking persistence' do
+    def thinking_config_for(provider)
+      case provider
+      when :anthropic, :bedrock
+        { budget: 1024 }
+      when :gemini
+        { effort: :low }
+      when :ollama, :mistral
+        nil
+      else
+        { effort: :medium }
+      end
+    end
+
+    question = <<~QUESTION.strip
+      If a magic mirror shows your future self, but only if you ask a question it cannot answer truthfully, what question do you ask to see your future, and what would the mirror reveal about the answer it gives?
+    QUESTION
+
+    THINKING_MODELS.each do |model_info|
+      provider = model_info[:provider]
+      model = model_info[:model]
+
+      it "#{provider}/#{model} persists thinking data and replays it across turns" do
+        chat = Chat.create!(model: model, provider: provider)
+        config = thinking_config_for(provider)
+        chat = chat.with_thinking(**config) if config
+
+        chunks = []
+        response = chat.ask(question) { |chunk| chunks << chunk }
+
+        expect(response.content).to be_present
+        expect(chunks).not_to be_empty
+
+        message_record = chat.messages.order(:id).last
+        expect(message_record.thinking_text).to eq(response.thinking.text) if response.thinking&.text
+        expect(message_record.thinking_signature).to eq(response.thinking.signature) if response.thinking&.signature
+        expect(message_record.thinking_tokens).to eq(response.thinking_tokens) if response.thinking_tokens
+
+        followup = chat.ask('tell me more')
+        expect(followup.content).to be_present
+
+        replayed_messages = chat.to_llm.messages
+        if response.thinking&.text
+          expect(replayed_messages.filter_map { |msg| msg.thinking&.text }).to include(response.thinking.text)
+        end
+        if response.thinking&.signature
+          expect(replayed_messages.filter_map { |msg| msg.thinking&.signature }).to include(response.thinking.signature)
+        end
+      end
     end
   end
 end

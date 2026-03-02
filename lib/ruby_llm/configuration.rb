@@ -8,28 +8,41 @@ module RubyLLM
                   :openai_organization_id,
                   :openai_project_id,
                   :openai_use_system_role,
+                  :azure_api_base,
+                  :azure_api_key,
+                  :azure_ai_auth_token,
+                  :anthropic_api_base,
                   :anthropic_api_key,
                   :gemini_api_key,
+                  :gemini_api_base,
                   :vertexai_project_id,
                   :vertexai_location,
                   :deepseek_api_key,
+                  :deepseek_api_base,
                   :perplexity_api_key,
                   :bedrock_api_key,
                   :bedrock_secret_key,
                   :bedrock_region,
                   :bedrock_session_token,
-                  :openrouter_api_key,
                   :openrouter_api_base,
+                  :openrouter_api_key,
+                  :xai_api_key,
                   :ollama_api_base,
+                  :ollama_api_key,
                   :gpustack_api_base,
                   :gpustack_api_key,
                   :mistral_api_key,
                   # Default models
                   :default_model,
                   :default_embedding_model,
+                  :default_moderation_model,
                   :default_image_model,
+                  :default_transcription_model,
                   # Model registry
+                  :model_registry_file,
                   :model_registry_class,
+                  # Rails integration
+                  :use_new_acts_as,
                   # Connection configuration
                   :request_timeout,
                   :max_retries,
@@ -44,16 +57,22 @@ module RubyLLM
                   :log_stream_debug
 
     def initialize
-      @request_timeout = 120
+      @request_timeout = 300
       @max_retries = 3
       @retry_interval = 0.1
       @retry_backoff_factor = 2
       @retry_interval_randomness = 0.5
       @http_proxy = nil
 
-      @default_model = 'gpt-4.1-nano'
+      @default_model = 'gpt-5-nano'
       @default_embedding_model = 'text-embedding-3-small'
+      @default_moderation_model = 'omni-moderation-latest'
       @default_image_model = 'gpt-image-1'
+      @default_transcription_model = 'whisper-1'
+
+      @model_registry_file = File.expand_path('models.json', __dir__)
+      @model_registry_class = 'Model'
+      @use_new_acts_as = false
 
       @log_file = $stdout
       @log_level = ENV['RUBYLLM_DEBUG'] ? Logger::DEBUG : Logger::INFO

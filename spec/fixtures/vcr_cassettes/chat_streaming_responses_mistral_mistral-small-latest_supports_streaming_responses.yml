@@ -9,7 +9,7 @@ http_interactions:
         from 1 to 3"}],"stream":true}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.1
       Authorization:
       - Bearer <MISTRAL_API_KEY>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 20 Aug 2025 17:12:52 GMT
+      - Tue, 10 Feb 2026 09:04:13 GMT
       Content-Type:
       - text/event-stream; charset=utf-8
       Transfer-Encoding:
@@ -34,24 +34,26 @@ http_interactions:
       Cf-Ray:
       - "<CF_RAY>"
       Mistral-Correlation-Id:
-      - '0198c878-1ea1-7fac-8a43-c25e0cd7fe7c'
+      - '019c46cb-3e5d-7425-a94c-4e512715891b'
       X-Kong-Request-Id:
-      - '0198c878-1ea1-7fac-8a43-c25e0cd7fe7c'
+      - '019c46cb-3e5d-7425-a94c-4e512715891b'
       X-Envoy-Upstream-Service-Time:
-      - '44'
+      - '2686'
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '45'
+      - '2687'
       X-Kong-Proxy-Latency:
-      - '7'
+      - '8'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
       Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains
+      - max-age=15552000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
       Server:
       - cloudflare
       Alt-Svc:
@@ -59,44 +61,12 @@ http_interactions:
     body:
       encoding: UTF-8
       string: |+
-        data: {"id":"ddc81b9bf457471cb366dcf55a29d67a","object":"chat.completion.chunk","created":1755709972,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null}]}
+        data: {"id":"4cde31313f074db08bc62d1e5b9b813c","object":"chat.completion.chunk","created":1770714250,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null}]}
 
-        data: {"id":"ddc81b9bf457471cb366dcf55a29d67a","object":"chat.completion.chunk","created":1755709972,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":"Here"},"finish_reason":null}]}
-
-        data: {"id":"ddc81b9bf457471cb366dcf55a29d67a","object":"chat.completion.chunk","created":1755709972,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":"'s"},"finish_reason":null}]}
-
-        data: {"id":"ddc81b9bf457471cb366dcf55a29d67a","object":"chat.completion.chunk","created":1755709972,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":" the"},"finish_reason":null}]}
-
-        data: {"id":"ddc81b9bf457471cb366dcf55a29d67a","object":"chat.completion.chunk","created":1755709972,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":" count"},"finish_reason":null}]}
-
-        data: {"id":"ddc81b9bf457471cb366dcf55a29d67a","object":"chat.completion.chunk","created":1755709972,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":" from"},"finish_reason":null}]}
-
-        data: {"id":"ddc81b9bf457471cb366dcf55a29d67a","object":"chat.completion.chunk","created":1755709972,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":" "},"finish_reason":null}]}
-
-        data: {"id":"ddc81b9bf457471cb366dcf55a29d67a","object":"chat.completion.chunk","created":1755709972,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":"1"},"finish_reason":null}]}
-
-        data: {"id":"ddc81b9bf457471cb366dcf55a29d67a","object":"chat.completion.chunk","created":1755709972,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":" to"},"finish_reason":null}]}
-
-        data: {"id":"ddc81b9bf457471cb366dcf55a29d67a","object":"chat.completion.chunk","created":1755709972,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":" "},"finish_reason":null}]}
-
-        data: {"id":"ddc81b9bf457471cb366dcf55a29d67a","object":"chat.completion.chunk","created":1755709972,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":"3"},"finish_reason":null}]}
-
-        data: {"id":"ddc81b9bf457471cb366dcf55a29d67a","object":"chat.completion.chunk","created":1755709972,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":":\n\n"},"finish_reason":null}]}
-
-        data: {"id":"ddc81b9bf457471cb366dcf55a29d67a","object":"chat.completion.chunk","created":1755709972,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":"1"},"finish_reason":null}]}
-
-        data: {"id":"ddc81b9bf457471cb366dcf55a29d67a","object":"chat.completion.chunk","created":1755709972,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":"\n"},"finish_reason":null}]}
-
-        data: {"id":"ddc81b9bf457471cb366dcf55a29d67a","object":"chat.completion.chunk","created":1755709972,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":"2"},"finish_reason":null}]}
-
-        data: {"id":"ddc81b9bf457471cb366dcf55a29d67a","object":"chat.completion.chunk","created":1755709972,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":"\n"},"finish_reason":null}]}
-
-        data: {"id":"ddc81b9bf457471cb366dcf55a29d67a","object":"chat.completion.chunk","created":1755709972,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":"3"},"finish_reason":null}]}
-
-        data: {"id":"ddc81b9bf457471cb366dcf55a29d67a","object":"chat.completion.chunk","created":1755709972,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":""},"finish_reason":"stop"}],"usage":{"prompt_tokens":10,"total_tokens":27,"completion_tokens":17}}
+        data: {"id":"4cde31313f074db08bc62d1e5b9b813c","object":"chat.completion.chunk","created":1770714250,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":"Here's the count from 1 to 3:\n\n1\n2\n3"},"finish_reason":"stop"}],"usage":{"prompt_tokens":10,"total_tokens":27,"completion_tokens":17,"num_cached_tokens":0},"p":"abcdefghijklmnopqrstuvwxyz01"}
 
         data: [DONE]
 
-  recorded_at: Wed, 20 Aug 2025 17:12:52 GMT
-recorded_with: VCR 6.3.1
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+recorded_with: VCR 6.4.0
 ...

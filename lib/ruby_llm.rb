@@ -3,29 +3,37 @@
 require 'base64'
 require 'event_stream_parser'
 require 'faraday'
+require 'faraday/multipart'
 require 'faraday/retry'
 require 'json'
 require 'logger'
+require 'marcel'
 require 'securerandom'
+require 'date'
+require 'time'
 require 'zeitwerk'
 
 loader = Zeitwerk::Loader.for_gem
 loader.inflector.inflect(
-  'ruby_llm' => 'RubyLLM',
-  'llm' => 'LLM',
-  'openai' => 'OpenAI',
+  'azure' => 'Azure',
+  'UI' => 'UI',
   'api' => 'API',
-  'deepseek' => 'DeepSeek',
-  'perplexity' => 'Perplexity',
   'bedrock' => 'Bedrock',
-  'openrouter' => 'OpenRouter',
+  'deepseek' => 'DeepSeek',
   'gpustack' => 'GPUStack',
+  'llm' => 'LLM',
   'mistral' => 'Mistral',
+  'openai' => 'OpenAI',
+  'openrouter' => 'OpenRouter',
+  'pdf' => 'PDF',
+  'perplexity' => 'Perplexity',
+  'ruby_llm' => 'RubyLLM',
   'vertexai' => 'VertexAI',
-  'pdf' => 'PDF'
+  'xai' => 'XAI'
 )
 loader.ignore("#{__dir__}/tasks")
 loader.ignore("#{__dir__}/generators")
+loader.ignore("#{__dir__}/ruby_llm/railtie.rb")
 loader.setup
 
 # A delightful Ruby interface to modern AI language models.
@@ -47,8 +55,16 @@ module RubyLLM
       Embedding.embed(...)
     end
 
+    def moderate(...)
+      Moderation.moderate(...)
+    end
+
     def paint(...)
       Image.paint(...)
+    end
+
+    def transcribe(...)
+      Transcription.transcribe(...)
     end
 
     def models
@@ -78,6 +94,7 @@ module RubyLLM
 end
 
 RubyLLM::Provider.register :anthropic, RubyLLM::Providers::Anthropic
+RubyLLM::Provider.register :azure, RubyLLM::Providers::Azure
 RubyLLM::Provider.register :bedrock, RubyLLM::Providers::Bedrock
 RubyLLM::Provider.register :deepseek, RubyLLM::Providers::DeepSeek
 RubyLLM::Provider.register :gemini, RubyLLM::Providers::Gemini
@@ -88,6 +105,7 @@ RubyLLM::Provider.register :openai, RubyLLM::Providers::OpenAI
 RubyLLM::Provider.register :openrouter, RubyLLM::Providers::OpenRouter
 RubyLLM::Provider.register :perplexity, RubyLLM::Providers::Perplexity
 RubyLLM::Provider.register :vertexai, RubyLLM::Providers::VertexAI
+RubyLLM::Provider.register :xai, RubyLLM::Providers::XAI
 
 if defined?(Rails::Railtie)
   require 'ruby_llm/railtie'

@@ -9,7 +9,7 @@ http_interactions:
         2 + 2?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.1
       Authorization:
       - Bearer <MISTRAL_API_KEY>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 20 Aug 2025 17:11:59 GMT
+      - Tue, 10 Feb 2026 09:01:12 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -32,38 +32,36 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '0198c877-5124-7699-be56-93c3eb8d53ff'
+      - '019c46c8-787f-7fc9-b306-c08cccf53254'
       X-Kong-Request-Id:
-      - '0198c877-5124-7699-be56-93c3eb8d53ff'
-      X-Envoy-Upstream-Service-Time:
-      - '279'
+      - '019c46c8-787f-7fc9-b306-c08cccf53254'
       X-Ratelimit-Limit-Tokens-Minute:
-      - '500000'
+      - '2000000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '499954'
-      X-Ratelimit-Limit-Tokens-Month:
-      - '1000000000'
-      X-Ratelimit-Remaining-Tokens-Month:
-      - '999548013'
+      - '1999912'
       X-Ratelimit-Tokens-Query-Cost:
-      - '46'
+      - '88'
       X-Ratelimit-Limit-Req-Minute:
-      - '60'
+      - '360'
       X-Ratelimit-Remaining-Req-Minute:
-      - '59'
+      - '359'
+      X-Envoy-Upstream-Service-Time:
+      - '3111'
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '280'
+      - '3111'
       X-Kong-Proxy-Latency:
-      - '7'
+      - '8'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
       Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains
+      - max-age=15552000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
       Server:
       - cloudflare
       Cf-Ray:
@@ -72,8 +70,10 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"dbbde2e8122741efac19267abdb2db9a","created":1755709919,"model":"mistral-small-latest","usage":{"prompt_tokens":11,"total_tokens":46,"completion_tokens":35},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
+      string: '{"id":"db742394d24849459a9ba269b8d0c3e5","created":1770714069,"model":"mistral-small-latest","usage":{"prompt_tokens":11,"total_tokens":88,"completion_tokens":77,"num_cached_tokens":0},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
         sum of 2 + 2 is **4**.\n\nThis is a basic arithmetic operation where you add
-        the two numbers together:\n\n2\n+2\n----\n4"}}]}'
-  recorded_at: Wed, 20 Aug 2025 17:11:59 GMT
-recorded_with: VCR 6.3.1
+        two numbers together. Here''s the breakdown:\n\n- 2 (the first number)\n-
+        + (the addition operation)\n- 2 (the second number)\n- = (equals)\n- 4 (the
+        result)\n\nSo, 2 + 2 = 4."}}]}'
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+recorded_with: VCR 6.4.0

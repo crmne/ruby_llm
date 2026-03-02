@@ -10,6 +10,7 @@ AllCops:
     - docs/**/*
     - vendor/**/*
     - gemfiles/**/*
+    - lib/generators/**/templates/**/*
   SuggestExtensions: false
 
 Metrics/ClassLength:
@@ -36,4 +37,6 @@ Performance/UnfreezeString:
 RSpec/ExampleLength:
   Enabled: false
 RSpec/MultipleExpectations:
+  Enabled: false
+RSpec/LeakyLocalVariable:
   Enabled: false

@@ -1,6 +1,6 @@
-class Create<%= options[:model_model_name].pluralize %> < ActiveRecord::Migration<%= migration_version %>
+class <%= create_migration_class_name(model_table_name) %> < ActiveRecord::Migration<%= migration_version %>
   def change
-    create_table :<%= options[:model_model_name].tableize %> do |t|
+    create_table :<%= model_table_name %> do |t|
       t.string :model_id, null: false
       t.string :name, null: false
       t.string :provider, null: false
@@ -14,6 +14,11 @@ class Create<%= options[:model_model_name].pluralize %> < ActiveRecord::Migratio
       t.jsonb :capabilities, default: []
       t.jsonb :pricing, default: {}
       t.jsonb :metadata, default: {}
+<% elsif mysql? %>
+      t.json :modalities
+      t.json :capabilities
+      t.json :pricing
+      t.json :metadata
 <% else %>
       t.json :modalities, default: {}
       t.json :capabilities, default: []
@@ -34,10 +39,7 @@ class Create<%= options[:model_model_name].pluralize %> < ActiveRecord::Migratio
     # Load models from JSON
     say_with_time "Loading models from models.json" do
       RubyLLM.models.load_from_json!
-      model_class = '<%= options[:model_model_name] %>'.constantize
-      model_class.save_to_database
-
-      "Loaded #{model_class.count} models"
+      <%= model_model_name %>.save_to_database
     end
   end
 end

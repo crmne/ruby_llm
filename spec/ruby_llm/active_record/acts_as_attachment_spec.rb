@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+require 'stringio'
 
 RSpec.describe RubyLLM::ActiveRecord::ActsAs do
   include_context 'with configured RubyLLM'
@@ -31,13 +32,17 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     )
   end
 
+  def attachment_io(path)
+    StringIO.new(File.binread(path))
+  end
+
   describe 'attachment handling' do
     it 'converts ActiveStorage attachments to RubyLLM Content' do
       chat = Chat.create!(model: model)
 
       message = chat.messages.create!(role: 'user', content: 'Check this out')
       message.attachments.attach(
-        io: File.open(image_path),
+        io: attachment_io(image_path),
         filename: 'ruby.png',
         content_type: 'image/png'
       )
@@ -71,6 +76,18 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       expect(user_message.attachments.count).to eq(1)
       expect(response.content).to be_present
     end
+
+    it 'ignores leading blank multipart attachment entries for create_user_message' do
+      chat = Chat.create!(model: model)
+      image_upload = uploaded_file(image_path, 'image/png')
+
+      expect do
+        chat.create_user_message('What do you see?', with: ['', image_upload])
+      end.not_to raise_error
+
+      user_message = chat.messages.find_by(role: 'user')
+      expect(user_message.attachments.count).to eq(1)
+    end
   end
 
   describe 'attachment types' do
@@ -79,7 +96,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       message = chat.messages.create!(role: 'user', content: 'Image test')
 
       message.attachments.attach(
-        io: File.open(image_path),
+        io: attachment_io(image_path),
         filename: 'test.png',
         content_type: 'image/png'
       )
@@ -89,12 +106,28 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       expect(attachment.type).to eq(:image)
     end
 
+    it 'handles videos' do
+      video_path = File.expand_path('../../fixtures/ruby.mp4', __dir__)
+      chat = Chat.create!(model: model)
+      message = chat.messages.create!(role: 'user', content: 'Video test')
+
+      message.attachments.attach(
+        io: attachment_io(video_path),
+        filename: 'test.mp4',
+        content_type: 'video/mp4'
+      )
+
+      llm_message = message.to_llm
+      attachment = llm_message.content.attachments.first
+      expect(attachment.type).to eq(:video)
+    end
+
     it 'handles PDFs' do
       chat = Chat.create!(model: model)
       message = chat.messages.create!(role: 'user', content: 'PDF test')
 
       message.attachments.attach(
-        io: File.open(pdf_path),
+        io: attachment_io(pdf_path),
         filename: 'test.pdf',
         content_type: 'application/pdf'
       )

@@ -1,81 +1,90 @@
 # frozen_string_literal: true
 
-require 'openssl'
-require 'time'
-
 module RubyLLM
   module Providers
-    # AWS Bedrock API integration.
+    # AWS Bedrock Converse API integration.
     class Bedrock < Provider
+      include Bedrock::Auth
       include Bedrock::Chat
-      include Bedrock::Streaming
-      include Bedrock::Models
-      include Bedrock::Signing
       include Bedrock::Media
-      include Anthropic::Tools
+      include Bedrock::Models
+      include Bedrock::Streaming
 
       def api_base
-        "https://bedrock-runtime.#{@config.bedrock_region}.amazonaws.com"
+        "https://bedrock-runtime.#{bedrock_region}.amazonaws.com"
       end
 
-      def parse_error(response)
-        return if response.body.empty?
-
-        body = try_parse_json(response.body)
-        case body
-        when Hash
-          body['message']
-        when Array
-          body.map do |part|
-            part['message']
-          end.join('. ')
-        else
-          body
-        end
+      def headers
+        {}
       end
 
-      def sign_request(url, method: :post, payload: nil)
-        signer = create_signer
-        request = build_request(url, method:, payload:)
-        signer.sign_request(request)
-      end
+      def complete(messages, tools:, temperature:, model:, params: {}, headers: {}, schema: nil, thinking: nil, &) # rubocop:disable Metrics/ParameterLists
+        normalized_params = normalize_params(params, model:)
 
-      def create_signer
-        Signing::Signer.new({
-                              access_key_id: @config.bedrock_api_key,
-                              secret_access_key: @config.bedrock_secret_key,
-                              session_token: @config.bedrock_session_token,
-                              region: @config.bedrock_region,
-                              service: 'bedrock'
-                            })
-      end
-
-      def build_request(url, method: :post, payload: nil)
-        {
-          connection: @connection,
-          http_method: method,
-          url: url || completion_url,
-          body: payload ? JSON.generate(payload, ascii_only: false) : nil
-        }
-      end
-
-      def build_headers(signature_headers, streaming: false)
-        accept_header = streaming ? 'application/vnd.amazon.eventstream' : 'application/json'
-
-        signature_headers.merge(
-          'Content-Type' => 'application/json',
-          'Accept' => accept_header
+        super(
+          messages,
+          tools: tools,
+          temperature: temperature,
+          model: model,
+          params: normalized_params,
+          headers: headers,
+          schema: schema,
+          thinking: thinking,
+          &
         )
       end
 
-      class << self
-        def capabilities
-          Bedrock::Capabilities
-        end
+      def parse_error(response)
+        return if response.body.nil? || response.body.empty?
 
+        body = try_parse_json(response.body)
+        return body if body.is_a?(String)
+
+        body['message'] || body['Message'] || body['error'] || body['__type'] || super
+      end
+
+      def list_models
+        response = signed_get(models_api_base, models_url)
+        parse_list_models_response(response, slug, capabilities)
+      end
+
+      class << self
         def configuration_requirements
           %i[bedrock_api_key bedrock_secret_key bedrock_region]
         end
+      end
+
+      private
+
+      def bedrock_region
+        @config.bedrock_region
+      end
+
+      def sync_response(connection, payload, additional_headers = {})
+        signed_post(connection, completion_url, payload, additional_headers)
+      end
+
+      def normalize_params(params, model:)
+        normalized = RubyLLM::Utils.deep_symbolize_keys(params || {})
+        additional_fields = normalized[:additionalModelRequestFields] || {}
+
+        top_k = normalized.delete(:top_k)
+        if !top_k.nil? && model_supports_top_k?(model)
+          additional_fields = RubyLLM::Utils.deep_merge(additional_fields, { top_k: top_k })
+        end
+
+        normalized[:additionalModelRequestFields] = additional_fields unless additional_fields.empty?
+        normalized
+      end
+
+      def model_supports_top_k?(model)
+        Bedrock::Models.reasoning_embedded?(model)
+      end
+
+      def api_payload(payload)
+        cleaned = RubyLLM::Utils.deep_symbolize_keys(RubyLLM::Utils.deep_dup(payload))
+        cleaned.delete(:tools)
+        cleaned
       end
     end
   end

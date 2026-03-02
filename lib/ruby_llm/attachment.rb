@@ -7,17 +7,8 @@ module RubyLLM
 
     def initialize(source, filename: nil)
       @source = source
-      if url?
-        @source = URI source
-        @filename = filename || File.basename(@source.path).to_s
-      elsif path?
-        @source = Pathname.new source
-        @filename = filename || @source.basename.to_s
-      elsif active_storage?
-        @filename = filename || extract_filename_from_active_storage
-      else
-        @filename = filename
-      end
+      @source = source_type_cast
+      @filename = filename || source_filename
 
       determine_mime_type
     end
@@ -65,8 +56,26 @@ module RubyLLM
       Base64.strict_encode64(content)
     end
 
+    def save(path)
+      return unless io_like?
+
+      File.open(path, 'w') do |f|
+        f.puts(@source.read)
+      end
+    end
+
+    def for_llm
+      case type
+      when :text
+        "<file name='#{filename}' mime_type='#{mime_type}'>#{content}</file>"
+      else
+        "data:#{mime_type};base64,#{encoded}"
+      end
+    end
+
     def type
       return :image if image?
+      return :video if video?
       return :audio if audio?
       return :pdf if pdf?
       return :text if text?
@@ -78,8 +87,23 @@ module RubyLLM
       RubyLLM::MimeType.image? mime_type
     end
 
+    def video?
+      RubyLLM::MimeType.video? mime_type
+    end
+
     def audio?
       RubyLLM::MimeType.audio? mime_type
+    end
+
+    def format
+      case mime_type
+      when 'audio/mpeg'
+        'mp3'
+      when 'audio/wav', 'audio/wave', 'audio/x-wav'
+        'wav'
+      else
+        mime_type.split('/').last
+      end
     end
 
     def pdf?
@@ -131,6 +155,38 @@ module RubyLLM
                    # This maintains the single-attachment interface
                    @source.blobs.first&.download
                  end
+    end
+
+    def source_type_cast
+      if url?
+        URI(@source)
+      elsif path?
+        Pathname.new(@source)
+      else
+        @source
+      end
+    end
+
+    def source_filename
+      if url?
+        File.basename(@source.path).to_s
+      elsif path?
+        @source.basename.to_s
+      elsif io_like?
+        extract_filename_from_io
+      elsif active_storage?
+        extract_filename_from_active_storage
+      end
+    end
+
+    def extract_filename_from_io
+      if defined?(ActionDispatch::Http::UploadedFile) && @source.is_a?(ActionDispatch::Http::UploadedFile)
+        @source.original_filename.to_s
+      elsif @source.respond_to?(:path)
+        File.basename(@source.path).to_s
+      else
+        'attachment'
+      end
     end
 
     def extract_filename_from_active_storage # rubocop:disable Metrics/PerceivedComplexity

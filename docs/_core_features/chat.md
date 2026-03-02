@@ -49,6 +49,8 @@ puts response.content
 # The response object contains metadata
 puts "Model Used: #{response.model_id}"
 puts "Tokens Used: #{response.input_tokens} input, #{response.output_tokens} output"
+puts "Cached Prompt Tokens: #{response.cached_tokens}" # v1.9.0+
+puts "Cache Writes: #{response.cache_creation_tokens}" # v1.9.0+
 ```
 
 The `ask` method adds your message to the conversation history with the `:user` role, sends the entire conversation history to the AI provider, and returns a `RubyLLM::Message` object containing the assistant's response.
@@ -75,7 +77,7 @@ end
 # => [ASSISTANT] Certainly! A classic example is database table naming...
 ```
 
-Each time you call `ask`, RubyLLM sends the entire conversation history to the AI provider. This allows the model to understand the full context of your conversation, enabling natural follow-up questions and maintaining coherent dialogue. The framework automatically manages context window limits, truncating older messages if necessary to stay within the model's constraints.
+Each time you call `ask`, RubyLLM sends the entire conversation history to the AI provider. This allows the model to understand the full context of your conversation, enabling natural follow-up questions and maintaining coherent dialogue.
 
 ## Guiding AI Behavior with System Prompts
 
@@ -91,12 +93,15 @@ response = chat.ask "What is a variable?"
 puts response.content
 # => "Imagine you have a special box, and you can put things in it..."
 
-# Use replace: true to ensure only the latest instruction is active
-chat.with_instructions "Always end your response with 'Got it?'", replace: true
+# By default, with_instructions replaces the active system instruction
+chat.with_instructions "Always end your response with 'Got it?'"
 
 response = chat.ask "What is a loop?"
 puts response.content
 # => "A loop is like singing your favorite song over and over again... Got it?"
+
+# Append an additional system instruction only when needed
+chat.with_instructions "Use exactly one short paragraph.", append: true
 ```
 
 System prompts are added to the conversation as messages with the `:system` role and are sent with every request to the AI provider. This ensures the model always considers your instructions when generating responses.
@@ -106,18 +111,18 @@ System prompts are added to the conversation as messages with the `:system` role
 
 ## Working with Different Models
 
-RubyLLM supports over 500 models from various providers. While `RubyLLM.chat` uses your configured default model, you can specify different models:
+RubyLLM supports over 600 models from various providers. While `RubyLLM.chat` uses your configured default model, you can specify different models:
 
 ```ruby
 # Use a specific model via ID or alias
-chat_claude = RubyLLM.chat(model: 'claude-3-5-sonnet')
-chat_gemini = RubyLLM.chat(model: 'gemini-1.5-pro-latest')
+chat_claude = RubyLLM.chat(model: '{{ site.models.anthropic_current }}')
+chat_gemini = RubyLLM.chat(model: '{{ site.models.gemini_current_latest }}')
 
 # Change the model on an existing chat instance
-chat = RubyLLM.chat(model: 'gpt-4.1-nano')
+chat = RubyLLM.chat(model: '{{ site.models.default_chat }}')
 response1 = chat.ask "Initial question..."
 
-chat.with_model('claude-3-opus-20240229')
+chat.with_model('{{ site.models.anthropic_latest }}')
 response2 = chat.ask "Follow-up question..."
 ```
 
@@ -129,11 +134,11 @@ Many modern AI models can process multiple types of input beyond just text. Ruby
 
 ### Working with Images
 
-Vision-capable models can analyze images, answer questions about visual content, and even compare multiple images. Common vision models include `gpt-4o`, `claude-3-opus`, and `gemini-1.5-pro`.
+Vision-capable models can analyze images, answer questions about visual content, and even compare multiple images.
 
 ```ruby
 # Ensure you select a vision-capable model
-chat = RubyLLM.chat(model: 'gpt-4o')
+chat = RubyLLM.chat(model: '{{ site.models.openai_vision }}')
 
 # Ask about a local image file
 response = chat.ask "Describe this logo.", with: "path/to/ruby_logo.png"
@@ -148,14 +153,40 @@ response = chat.ask "Compare the user interfaces in these two screenshots.", wit
 puts response.content
 ```
 
+### Working with Videos
+
+You can also analyze video files or URLs with video-capable models. RubyLLM will automatically detect video files and handle them appropriately.
+
+```ruby
+# Ask about a local video file
+chat = RubyLLM.chat(model: 'gemini-2.5-flash')
+response = chat.ask "What happens in this video?", with: "path/to/demo.mp4"
+puts response.content
+
+# Ask about a video from a URL
+response = chat.ask "Summarize the main events in this video.", with: "https://example.com/demo_video.mp4"
+puts response.content
+
+# Combine videos with other file types
+response = chat.ask "Analyze these files for visual content.", with: ["diagram.png", "demo.mp4", "notes.txt"]
+puts response.content
+```
+
+> Supported video formats include .mp4, .mov, .avi, .webm, and others (provider-dependent).
+>
+> Only Google Gemini and VertexAI models currently support video input.
+>
+> Large video files may be subject to size or duration limits imposed by the provider.
+{: .note }
+
 RubyLLM automatically handles image encoding and formatting for each provider's API. Local images are read and encoded as needed, while URLs are passed directly when supported by the provider.
 
 ### Working with Audio
 
-Audio-capable models can transcribe speech, analyze audio content, and answer questions about what they hear. Currently, models like `gpt-4o-audio-preview` support audio input.
+Audio-capable models can transcribe speech, analyze audio content, and answer questions about what they hear. Currently, models like `{{ site.models.openai_audio }}` and Google's `gemini-2.5` series of models support audio input.
 
 ```ruby
-chat = RubyLLM.chat(model: 'gpt-4o-audio-preview') # Use an audio-capable model
+chat = RubyLLM.chat(model: '{{ site.models.openai_audio }}') # Use an audio-capable model
 
 # Transcribe or ask questions about audio content
 response = chat.ask "Please transcribe this meeting recording.", with: "path/to/meeting.mp3"
@@ -164,6 +195,11 @@ puts response.content
 # Ask follow-up questions based on the audio context
 response = chat.ask "What were the main action items discussed?"
 puts response.content
+
+# Gemini example
+gemini_chat = RubyLLM.chat(model: 'gemini-2.5-flash')
+response = gemini_chat.ask "Summarize this podcast.", with: "path/to/podcast.mp3"
+puts response.content
 ```
 
 ### Working with Text Files
@@ -171,7 +207,7 @@ puts response.content
 You can provide text files directly to models for analysis, summarization, or question answering. This works with any text-based format including plain text, code files, CSV, JSON, and more.
 
 ```ruby
-chat = RubyLLM.chat(model: 'claude-3-5-sonnet')
+chat = RubyLLM.chat(model: '{{ site.models.anthropic_current }}')
 
 # Analyze a text file
 response = chat.ask "Summarize the key points in this document.", with: "path/to/document.txt"
@@ -188,7 +224,7 @@ PDF support allows models to analyze complex documents including reports, manual
 
 ```ruby
 # Use a model that supports PDFs
-chat = RubyLLM.chat(model: 'claude-3-7-sonnet')
+chat = RubyLLM.chat(model: '{{ site.models.anthropic_newest }}')
 
 # Ask about a local PDF
 response = chat.ask "Summarize the key findings in this research paper.", with: "path/to/paper.pdf"
@@ -211,7 +247,7 @@ puts response.content
 RubyLLM automatically detects file types based on extensions and content, so you can pass files directly without specifying the type:
 
 ```ruby
-chat = RubyLLM.chat(model: 'claude-3-5-sonnet')
+chat = RubyLLM.chat(model: '{{ site.models.anthropic_current }}')
 
 # Single file - type automatically detected
 response = chat.ask "What's in this file?", with: "path/to/document.pdf"
@@ -230,6 +266,7 @@ response = chat.ask "What's in this image?", with: { image: "photo.jpg" }
 
 **Supported file types:**
 - **Images:** .jpg, .jpeg, .png, .gif, .webp, .bmp
+- **Videos:** .mp4, .mov, .avi, .webm
 - **Audio:** .mp3, .wav, .m4a, .ogg, .flac
 - **Documents:** .pdf, .txt, .md, .csv, .json, .xml
 - **Code:** .rb, .py, .js, .html, .css (and many others)
@@ -275,17 +312,90 @@ puts JSON.parse(response.content)
 > Available parameters vary by provider and model. Always consult the provider's documentation for supported features. RubyLLM passes these parameters through without validation, so incorrect parameters may cause API errors. Parameters from `with_params` take precedence over RubyLLM's defaults, allowing you to override any aspect of the request payload.
 {: .warning }
 
-### Custom HTTP Headers
+## Raw Content Blocks
 {: .d-inline-block }
 
-Available in v1.6.0+
+v1.9.0+
 {: .label .label-green }
+
+Most of the time you can rely on RubyLLM to format messages for each provider. When you need to send a custom payload as content,  wrap it in `RubyLLM::Content::Raw`. The block is forwarded verbatim, with no additional processing.
+
+```ruby
+raw_block = RubyLLM::Content::Raw.new([
+  { type: 'text', text: 'Reusable analysis prompt' },
+  { type: 'text', text: "Today's request: #{summary}" }
+])
+
+chat = RubyLLM.chat
+chat.add_message(role: :system, content: raw_block)
+chat.ask(raw_block)
+```
+
+Use raw blocks sparingly: they bypass cross-provider safeguards, so it is your responsibility to ensure the payload matches the provider's expectations. `Chat#ask`, `Chat#add_message`, tool results, and streaming accumulators all understand `Content::Raw` values.
+
+### Anthropic Prompt Caching
+{: .d-inline-block }
+
+v1.9.0+
+{: .label .label-green }
+
+One use case for Raw Content Blocks is Anthropic Prompt Caching.
+
+Anthropic lets you mark individual prompt blocks for caching, which can dramatically reduce costs on long conversations. RubyLLM provides a convenience builder that returns a `Content::Raw` instance with the proper structure:
+
+```ruby
+system_block = RubyLLM::Providers::Anthropic::Content.new(
+  "You are a release-notes assistant. Always group changes by subsystem.",
+  cache: true # shorthand for cache_control: { type: 'ephemeral' }
+)
+
+chat = RubyLLM.chat(model: '{{ site.models.anthropic_latest }}')
+chat.add_message(role: :system, content: system_block)
+
+response = chat.ask(
+  RubyLLM::Providers::Anthropic::Content.new(
+    "Summarize the API changes in this diff.",
+    cache_control: { type: 'ephemeral', ttl: '1h' }
+  )
+)
+```
+
+Need something even more custom? Build the payload manually and wrap it in `Content::Raw`:
+
+```ruby
+raw_prompt = RubyLLM::Content::Raw.new([
+  { type: 'text', text: File.read('/a/large/file'), cache_control: { type: 'ephemeral' } },
+  { type: 'text', text: "Today's request: #{summary}" }
+])
+
+chat.ask(raw_prompt)
+```
+
+The same idea applies to tool definitions:
+
+```ruby
+class ChangelogTool < RubyLLM::Tool
+  description "Formats commits into human-readable changelog entries."
+  param :commits, type: :array, desc: "List of commits to summarize"
+
+  with_params cache_control: { type: 'ephemeral' }
+
+  def execute(commits:)
+    # ...
+  end
+end
+```
+
+Providers that do not understand these extra fields silently ignore them, so you can reuse the same tools across models.
+See the [Tool Provider Parameters]({% link _core_features/tools.md %}#provider-specific-parameters) section for more detail.
+
+### Custom HTTP Headers
 
 Some providers offer beta features or special capabilities through custom HTTP headers. The `with_headers` method lets you add these headers to your API requests while maintaining RubyLLM's security model.
 
 ```ruby
 # Enable Anthropic's beta features
-chat = RubyLLM.chat(model: 'claude-3-5-sonnet')
+chat = RubyLLM.chat(model: '{{ site.models.anthropic_current }}')
       .with_headers('anthropic-beta' => 'fine-grained-tool-streaming-2025-05-14')
 
 response = chat.ask "Tell me about the weather"
@@ -424,19 +534,16 @@ end
 
 Not all models support structured output. Currently supported:
 - **OpenAI**: GPT-4o, GPT-4o-mini, and newer models
-- **Anthropic**: No native structured output support. You can simulate it with tool definitions or careful prompting
+- **Anthropic**: Claude 4.5+ models (Haiku, Sonnet, Opus)
 - **Gemini**: Gemini 1.5 Pro/Flash and newer
 
 Models that don't support structured output:
 
 ```ruby
-# RubyLLM 1.6.2+ will attempt to use schemas with any model
-chat = RubyLLM.chat(model: 'gpt-3.5-turbo')
+chat = RubyLLM.chat(model: '{{ site.models.openai_legacy }}')
 chat.with_schema(schema)
 response = chat.ask('Generate a person')
 # Provider will return an error if unsupported
-
-# Prior to 1.6.2, with_schema would raise UnsupportedStructuredOutputError
 ```
 
 ### Multi-turn Conversations with Schemas
@@ -477,9 +584,15 @@ response = chat.ask "Explain the Ruby Global Interpreter Lock (GIL)."
 
 input_tokens = response.input_tokens   # Tokens in the prompt sent TO the model
 output_tokens = response.output_tokens # Tokens in the response FROM the model
+cached_tokens = response.cached_tokens # Tokens served from the provider's prompt cache (if supported) - v1.9.0+
+cache_creation_tokens = response.cache_creation_tokens # Tokens written to cache (Anthropic/some Bedrock models) - v1.9.0+
+thinking_tokens = response.thinking_tokens # Thinking tokens when providers report them - v1.10.0+
 
 puts "Input Tokens: #{input_tokens}"
 puts "Output Tokens: #{output_tokens}"
+puts "Cached Prompt Tokens: #{cached_tokens}" # v1.9.0+
+puts "Cache Creation Tokens: #{cache_creation_tokens}" # v1.9.0+
+puts "Thinking Tokens: #{thinking_tokens}" # v1.10.0+
 puts "Total Tokens for this turn: #{input_tokens + output_tokens}"
 
 # Estimate cost for this turn
@@ -497,6 +610,10 @@ end
 total_conversation_tokens = chat.messages.sum { |msg| (msg.input_tokens || 0) + (msg.output_tokens || 0) }
 puts "Total Conversation Tokens: #{total_conversation_tokens}"
 ```
+
+`cached_tokens` captures the portion of the prompt served from the provider's cache. OpenAI reports this value automatically for prompts over 1024 tokens, while Anthropic and some Bedrock models expose both cache hits and cache writes. When the provider does not send cache data the attributes remain `nil`, so the example above falls back to zero for display. Available from v1.9+
+
+Thinking token usage is available via `response.thinking_tokens` and `response.tokens.thinking` when providers report it. For providers that do not include thinking token counts, these values remain `nil`.
 
 Refer to the [Working with Models Guide]({% link _advanced/models.md %}) for details on accessing model-specific pricing.
 
@@ -530,7 +647,7 @@ chat.on_tool_call do |tool_call|
   puts "AI is calling tool: #{tool_call.name} with arguments: #{tool_call.arguments}"
 end
 
-# Called after a tool returns its result (v1.6.0+)
+# Called after a tool returns its result
 chat.on_tool_result do |result|
   puts "Tool returned: #{result}"
 end

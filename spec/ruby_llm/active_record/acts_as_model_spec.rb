@@ -196,7 +196,12 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       let(:chat_class) do
         stub_const('TestChat', Class.new(ActiveRecord::Base) do
           self.table_name = 'chats'
-          acts_as_chat(model_class: 'TestModel', model_foreign_key: 'model_id')
+          acts_as_chat(model: :model, model_class: 'TestModel')
+
+          # Mock the messages association since we're only testing model association
+          def messages
+            []
+          end
         end)
       end
 
@@ -250,7 +255,8 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
         # Mock the chat creation to verify parameters
         expect(RubyLLM).to receive(:chat).with( # rubocop:disable RSpec/MessageSpies,RSpec/StubbedMock
           model: 'test-gpt',
-          provider: :openai
+          provider: :openai,
+          assume_model_exists: false
         ).and_return(
           instance_double(RubyLLM::Chat, reset_messages!: nil, add_message: nil,
                                          instance_variable_get: {}, on_new_message: nil, on_end_message: nil,
@@ -267,7 +273,8 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
 
         expect(RubyLLM).to receive(:chat).with( # rubocop:disable RSpec/MessageSpies,RSpec/StubbedMock
           model: 'test-claude',
-          provider: :anthropic
+          provider: :anthropic,
+          assume_model_exists: false
         ).and_return(
           instance_double(RubyLLM::Chat, reset_messages!: nil, add_message: nil,
                                          instance_variable_get: {}, on_new_message: nil, on_end_message: nil,

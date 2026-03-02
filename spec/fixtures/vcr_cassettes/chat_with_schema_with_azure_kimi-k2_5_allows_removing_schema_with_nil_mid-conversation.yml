@@ -1,0 +1,239 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
+    body:
+      encoding: UTF-8
+      string: '{"model":"Kimi-K2.5","messages":[{"role":"user","content":"Generate
+        a person named Bob"}],"stream":false,"response_format":{"type":"json_schema","json_schema":{"name":"response","schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"integer"}},"required":["name","age"],"additionalProperties":false},"strict":true}}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Api-Key:
+      - "<AZURE_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json
+      Vary:
+      - Accept-Encoding
+      Request-Context:
+      - appId=
+      Prompt-Token-Len:
+      - '13'
+      Sampling-Token-Len:
+      - '319'
+      Apim-Request-Id:
+      - 9d789d00-2ad2-4260-8ba5-a11898c50c47
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Region:
+      - West Europe
+      X-Ratelimit-Remaining-Requests:
+      - '18'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Ratelimit-Limit-Requests:
+      - '20'
+      X-Ratelimit-Remaining-Tokens:
+      - '19968'
+      X-Ratelimit-Limit-Tokens:
+      - '20000'
+      Date:
+      - Sun, 01 Mar 2026 14:17:28 GMT
+    body:
+      encoding: ASCII-8BIT
+      string: '{"choices":[{"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"protected_material_code":{"filtered":false,"detected":false},"protected_material_text":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}},"finish_reason":"stop","index":0,"logprobs":null,"message":{"content":"{\"name\":\":
+        \",\"age\":42}","reasoning_content":"The user wants me to generate a person
+        named Bob. This is a creative writing/character generation task. I should
+        create a fictional character profile with various details that bring \"Bob\"
+        to life.\n\nI''ll include:\n- Full name\n- Age\n- Physical description\n-
+        Personality traits\n- Background/occupation\n- Some quirks or interesting
+        details\n- Maybe a brief backstory snippet\n\nI''ll make him somewhat realistic
+        but interesting - not too generic, but relatable. Maybe mid-30s to 40s, with
+        a mix of ordinary and unique characteristics.\n\nLet me construct a well-rounded
+        character:\n\nName: Robert \"Bob\" Henderson (or something similar)\nAge:
+        42\nOccupation: Maybe something unexpected - like a librarian who used to
+        be in a punk band, or a bakery owner, or a high school physics teacher. Let''s
+        go with high school physics teacher who restores vintage motorcycles on weekends.\n\nPhysical:
+        Average height, slightly graying at the temples, wears corduroy jackets with
+        elbow patches (classic teacher vibes but ironically), has a scar on his left
+        eyebrow from a skateboarding accident in his 20s.\n\nPersonality: Patient
+        but sarcastic, loves bad puns, collects vintage calculators, terrible at remembering
+        birthdays but remembers every student''s favorite hobby.\n\nHometown: Portland,
+        Oregon or somewhere in the Midwest. Let''s say Columbus, Ohio.\n\nQuirk: Communicates
+        primarily through physics metaphors when explaining emotions.\n\nThis should
+        give a vivid picture of Bob without making him too caricatured. ","role":"assistant","tool_calls":null},"stop_reason":null}],"created":1772374648,"id":"de26c35a8a2f49e48c25729ac5b59ccb","model":"Kimi-K2.5","object":"chat.completion","prompt_filter_results":[{"prompt_index":0,"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"jailbreak":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}}}],"usage":{"audio_prompt_tokens":0,"completion_tokens":319,"prompt_tokens":13,"prompt_tokens_details":null,"reasoning_tokens":0,"total_tokens":332}}
+
+        '
+  recorded_at: Sun, 01 Mar 2026 14:17:29 GMT
+- request:
+    method: post
+    uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
+    body:
+      encoding: UTF-8
+      string: '{"model":"Kimi-K2.5","messages":[{"role":"user","content":"Generate
+        a person named Bob"},{"role":"assistant","content":"{\"name\":\": \",\"age\":42}","reasoning":"The
+        user wants me to generate a person named Bob. This is a creative writing/character
+        generation task. I should create a fictional character profile with various
+        details that bring \"Bob\" to life.\n\nI''ll include:\n- Full name\n- Age\n-
+        Physical description\n- Personality traits\n- Background/occupation\n- Some
+        quirks or interesting details\n- Maybe a brief backstory snippet\n\nI''ll
+        make him somewhat realistic but interesting - not too generic, but relatable.
+        Maybe mid-30s to 40s, with a mix of ordinary and unique characteristics.\n\nLet
+        me construct a well-rounded character:\n\nName: Robert \"Bob\" Henderson (or
+        something similar)\nAge: 42\nOccupation: Maybe something unexpected - like
+        a librarian who used to be in a punk band, or a bakery owner, or a high school
+        physics teacher. Let''s go with high school physics teacher who restores vintage
+        motorcycles on weekends.\n\nPhysical: Average height, slightly graying at
+        the temples, wears corduroy jackets with elbow patches (classic teacher vibes
+        but ironically), has a scar on his left eyebrow from a skateboarding accident
+        in his 20s.\n\nPersonality: Patient but sarcastic, loves bad puns, collects
+        vintage calculators, terrible at remembering birthdays but remembers every
+        student''s favorite hobby.\n\nHometown: Portland, Oregon or somewhere in the
+        Midwest. Let''s say Columbus, Ohio.\n\nQuirk: Communicates primarily through
+        physics metaphors when explaining emotions.\n\nThis should give a vivid picture
+        of Bob without making him too caricatured. ","reasoning_content":"The user
+        wants me to generate a person named Bob. This is a creative writing/character
+        generation task. I should create a fictional character profile with various
+        details that bring \"Bob\" to life.\n\nI''ll include:\n- Full name\n- Age\n-
+        Physical description\n- Personality traits\n- Background/occupation\n- Some
+        quirks or interesting details\n- Maybe a brief backstory snippet\n\nI''ll
+        make him somewhat realistic but interesting - not too generic, but relatable.
+        Maybe mid-30s to 40s, with a mix of ordinary and unique characteristics.\n\nLet
+        me construct a well-rounded character:\n\nName: Robert \"Bob\" Henderson (or
+        something similar)\nAge: 42\nOccupation: Maybe something unexpected - like
+        a librarian who used to be in a punk band, or a bakery owner, or a high school
+        physics teacher. Let''s go with high school physics teacher who restores vintage
+        motorcycles on weekends.\n\nPhysical: Average height, slightly graying at
+        the temples, wears corduroy jackets with elbow patches (classic teacher vibes
+        but ironically), has a scar on his left eyebrow from a skateboarding accident
+        in his 20s.\n\nPersonality: Patient but sarcastic, loves bad puns, collects
+        vintage calculators, terrible at remembering birthdays but remembers every
+        student''s favorite hobby.\n\nHometown: Portland, Oregon or somewhere in the
+        Midwest. Let''s say Columbus, Ohio.\n\nQuirk: Communicates primarily through
+        physics metaphors when explaining emotions.\n\nThis should give a vivid picture
+        of Bob without making him too caricatured. "},{"role":"user","content":"Now
+        just tell me about Ruby"}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Api-Key:
+      - "<AZURE_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json
+      Vary:
+      - Accept-Encoding
+      Request-Context:
+      - appId=
+      Prompt-Token-Len:
+      - '38'
+      Sampling-Token-Len:
+      - '868'
+      Apim-Request-Id:
+      - 62990e94-033a-4cdf-a78a-68aa23339434
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Region:
+      - West Europe
+      X-Ratelimit-Remaining-Requests:
+      - '17'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Ratelimit-Limit-Requests:
+      - '20'
+      X-Ratelimit-Remaining-Tokens:
+      - '19952'
+      X-Ratelimit-Limit-Tokens:
+      - '20000'
+      Date:
+      - Sun, 01 Mar 2026 14:17:39 GMT
+    body:
+      encoding: ASCII-8BIT
+      string: '{"choices":[{"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"protected_material_code":{"filtered":false,"detected":false},"protected_material_text":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}},"finish_reason":"stop","index":0,"logprobs":null,"message":{"content":"Ruby
+        Chen is a 34-year-old marine biologist who spends six months of the year researching
+        coral reef restoration in the Philippines and the other six teaching at a
+        university in Oregon. She has a distinctive scar above her left eyebrow from
+        a childhood encounter with a bicycle chain, wears exclusively vintage band
+        t-shirts under her lab coat, and maintains a popular but anonymous podcast
+        about deep-sea creatures that sounds like ASMR poetry.\n\nShe speaks three
+        languages fluently (English, Mandarin, and Tagalog), has a photographic memory
+        for tide patterns but consistently forgets where she parked her car, and recently
+        adopted a one-eyed cat named Galileo who travels with her in a specially designed
+        backpack. Ruby is allergic to bananas, plays competitive chess online under
+        the username \" abyssalqueen,\" and has been trying to perfect a sourdough
+        starter for three years despite rarely being home long enough to feed it properly.\n\nShe
+        met Bob once at a conference in Seattle when he accidentally spilled coffee
+        on her presentation notes, though whether this makes them friends, enemies,
+        or just two people who shared an awkward moment depends on who you ask.","reasoning_content":"The
+        user is asking \"Now just tell me about Ruby\" after previously asking to
+        generate a person named Bob. \n\nThere are two possible interpretations:\n1.
+        They want to know about Ruby the programming language\n2. They want to know
+        about Ruby as a person (perhaps the person Bob knows someone named Ruby, or
+        this is a follow-up to generate another person)\n\nGiven the context of \"Generate
+        a person named Bob\" followed by \"Now just tell me about Ruby\", and the
+        fact that I didn''t actually provide details about Bob (just output a JSON
+        fragment in the thinking block that the user didn''t see), the user might
+        be:\n- Asking about the programming language Ruby\n- Asking me to generate
+        a person named Ruby (following the pattern of the first request)\n- Asking
+        about a person named Ruby who might be related to Bob (though no relationship
+        was established)\n\nHowever, since the previous request was to \"Generate
+        a person named Bob\" and now they say \"tell me about Ruby\", the most natural
+        interpretation in a conversation flow would be that they want me to generate/describe
+        a person named Ruby, similar to what they asked for Bob.\n\nBut I should be
+        careful - if they meant the programming language, I should cover that. But
+        given the phrasing \"tell me about\" following \"Generate a person\", it''s
+        more likely they want a character description.\n\nActually, looking at the
+        previous turn, I generated:\n```\n{\"name\":\": \",\"age\":42}\n```\nThis
+        seems to be a corrupted/placeholder response. The user saw... wait, no, the
+        user sees the final output, not the thinking block. But there was no final
+        output provided to the user in the previous turn - just the thinking block
+        content. This looks like an error in the previous response.\n\nGiven that
+        the previous response failed to actually generate a person named Bob properly
+        (it output malformed JSON in the thinking but nothing in the actual response),
+        and now the user is asking about Ruby, they might be:\n1. Asking about the
+        programming language\n2. Asking for a person named Ruby (since Bob didn''t
+        get a proper response)\n\nI should probably provide information about Ruby
+        as a person, since that fits the pattern of the conversation better (generating
+        people), but I could also mention the programming language ambiguity briefly,
+        or just pick one and go with it.\n\nActually, looking at the conversation
+        structure:\n- User: Generate a person named Bob\n- Assistant: [thinking block
+        with broken JSON, no actual output]\n- User: Now just tell me about Ruby\n\nThe
+        user probably expected a description of Bob but got nothing, so they moved
+        on to Ruby. Or they are referring to a Ruby related to Bob.\n\nI''ll provide
+        a character profile for Ruby as a person, keeping it open enough that it could
+        connect to Bob or stand alone. I''ll make her an interesting character with
+        details.\n\nActually, to be safe and helpful, I should acknowledge both possibilities
+        briefly but focus on Ruby as a person since that matches the pattern of the
+        first request. Or I could ask which Ruby they mean, but that''s less helpful
+        than providing the likely intended content.\n\nI''ll go with Ruby as a person
+        - a detailed character description. ","role":"assistant","tool_calls":null},"stop_reason":null}],"created":1772374660,"id":"d0e0f69228ff4ea182a62a2614873967","model":"Kimi-K2.5","object":"chat.completion","prompt_filter_results":[{"prompt_index":0,"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"jailbreak":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}}}],"usage":{"audio_prompt_tokens":0,"completion_tokens":868,"prompt_tokens":38,"prompt_tokens_details":null,"reasoning_tokens":0,"total_tokens":906}}
+
+        '
+  recorded_at: Sun, 01 Mar 2026 14:17:40 GMT
+recorded_with: VCR 6.4.0

@@ -8,12 +8,13 @@ module RubyLLM
       include Gemini::Embeddings
       include Gemini::Images
       include Gemini::Models
+      include Gemini::Transcription
       include Gemini::Streaming
       include Gemini::Tools
       include Gemini::Media
 
       def api_base
-        'https://generativelanguage.googleapis.com/v1beta'
+        @config.gemini_api_base || 'https://generativelanguage.googleapis.com/v1beta'
       end
 
       def headers

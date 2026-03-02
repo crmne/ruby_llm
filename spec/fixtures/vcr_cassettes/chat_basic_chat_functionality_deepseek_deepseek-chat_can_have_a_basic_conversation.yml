@@ -9,7 +9,7 @@ http_interactions:
         2 + 2?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.1
       Authorization:
       - Bearer <DEEPSEEK_API_KEY>
       Content-Type:
@@ -23,38 +23,37 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Date:
-      - Wed, 20 Aug 2025 17:09:12 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Date:
+      - Tue, 10 Feb 2026 09:00:01 GMT
+      Server:
+      - elb
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 0c0dfccdcccf1472a99c4c0435b30563
+      - 7fab8a2e723ff41ec49eadc786e87d8d
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Server:
-      - cloudflare
-      Cf-Ray:
-      - "<CF_RAY>"
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 0b4755ff9e0187d49a360cf152712652.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - BKK50-P3
+      X-Amz-Cf-Id:
+      - LlT_PL4QnUW2qNuZCf95nzKwY8f7DyP3LAghFUOPWH2OBDjPoTYHhA==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"be05b5ff-a407-4aba-85b9-5683d6dfe186","object":"chat.completion","created":1755709752,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"That''s
-        a fundamental math question! **2 + 2 equals 4.**\n\nIt''s often used as a
-        simple test or even a joke in pop culture (like in the movie *Animal House*
-        or the TV show *The IT Crowd*), implying something is so obvious it shouldn''t
-        need to be asked."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":12,"completion_tokens":64,"total_tokens":76,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":12},"system_fingerprint":"fp_baeac5aaa3_prod0820_fp8_kvcache"}'
-  recorded_at: Wed, 20 Aug 2025 17:09:19 GMT
-recorded_with: VCR 6.3.1
+      string: !binary |-
+        eyJpZCI6Ijk0MjhlYTYxLTY2NjUtNGQzNC1hZTZmLTI3ZjgzOTI1NzMwOSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NzA3MTQwMDEsIm1vZGVsIjoiZGVlcHNlZWstY2hhdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiVGhhdOKAmXMgYSBjbGFzc2ljISAgXG5cblxcW1xuMiArIDIgPSA0XG5cXF1cblxuSWYgeW914oCZcmUgYXNraW5nIGluIGEgbW9yZSBwbGF5ZnVsIG9yIHBoaWxvc29waGljYWwgY29udGV4dCDigJQgbGlrZSBpbiBjZXJ0YWluIGludGVybmV0IG1lbWVzIOKAlCBzb21lIG1pZ2h0IGpva2UgYWJvdXQgaXQgYmVpbmcg4oCcMjLigJ0gb3Ig4oCcNeKAnSAow6AgbGEgKjE5ODQqKSwgYnV0IG1hdGhlbWF0aWNhbGx5LCB0aGUgYW5zd2VyIGlzICoqNCoqLiDwn5iKIn0sImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6MTIsImNvbXBsZXRpb25fdG9rZW5zIjo3MCwidG90YWxfdG9rZW5zIjo4MiwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjB9LCJwcm9tcHRfY2FjaGVfaGl0X3Rva2VucyI6MCwicHJvbXB0X2NhY2hlX21pc3NfdG9rZW5zIjoxMn0sInN5c3RlbV9maW5nZXJwcmludCI6ImZwX2VhYWI4ZDExNGJfcHJvZDA4MjBfZnA4X2t2Y2FjaGUifQ==
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+recorded_with: VCR 6.4.0

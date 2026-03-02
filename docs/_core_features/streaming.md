@@ -59,6 +59,7 @@ Key attributes of a `Chunk`:
 *   `chunk.tool_calls`: A hash containing partial or complete tool call information if the model is invoking a [Tool]({% link _core_features/tools.md %}). The arguments might be streamed incrementally.
 *   `chunk.input_tokens`: Total input tokens for the request (often `nil` until the final chunk).
 *   `chunk.output_tokens`: Cumulative output tokens *up to this chunk* (behavior varies by provider, often only accurate in the final chunk).
+*   `chunk.thinking`: Optional thinking output when providers stream it.
 
 > Do not rely on token counts being present or accurate in every chunk. They are typically finalized only in the last chunk or the final returned message.
 {: .warning }
@@ -203,7 +204,7 @@ When a chat interaction involves [Tools]({% link _core_features/tools.md %}), th
 4.  **Resumed Response Stream:** After the tool result is sent back to the model, streaming resumes, yielding chunks containing the model's final response incorporating the tool's output.
 
 ```ruby
-chat = RubyLLM.chat(model: 'gpt-4o').with_tool(Weather) # Assumes Weather tool is defined
+chat = RubyLLM.chat(model: '{{ site.models.openai_tools }}').with_tool(Weather) # Assumes Weather tool is defined
 
 puts "Assistant:"
 chat.ask("What's the weather in Berlin (52.52, 13.40)?") do |chunk|
