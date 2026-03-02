@@ -11,8 +11,10 @@ module RubyLLM
           "/model/#{@model.id}/converse"
         end
 
-        def render_payload(messages, tools:, tool_prefs:, temperature:, model:, stream: false,
-                           schema: nil, thinking: nil) # rubocop:disable Metrics/ParameterLists,Lint/UnusedMethodArgument
+        # rubocop:disable Metrics/ParameterLists,Lint/UnusedMethodArgument
+        def render_payload(messages, tools:, temperature:, model:, stream: false,
+                           schema: nil, thinking: nil, tool_prefs: nil)
+          tool_prefs ||= {}
           @model = model
           @used_document_names = {}
           system_messages, chat_messages = messages.partition { |msg| msg.role == :system }
@@ -39,6 +41,7 @@ module RubyLLM
 
           payload
         end
+        # rubocop:enable Metrics/ParameterLists,Lint/UnusedMethodArgument
 
         def parse_completion_response(response)
           data = response.body

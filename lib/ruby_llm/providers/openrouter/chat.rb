@@ -8,8 +8,9 @@ module RubyLLM
         module_function
 
         # rubocop:disable Metrics/ParameterLists,Complexity/PerceivedComplexity
-        def render_payload(messages, tools:, tool_prefs:, temperature:, model:, stream: false, schema: nil,
-                           thinking: nil)
+        def render_payload(messages, tools:, temperature:, model:, stream: false, schema: nil,
+                           thinking: nil, tool_prefs: nil)
+          tool_prefs ||= {}
           payload = {
             model: model.id,
             messages: format_messages(messages),

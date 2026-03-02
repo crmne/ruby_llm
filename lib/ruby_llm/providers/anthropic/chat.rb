@@ -12,8 +12,9 @@ module RubyLLM
         end
 
         # rubocop:disable Metrics/ParameterLists
-        def render_payload(messages, tools:, tool_prefs:, temperature:, model:, stream: false,
-                           schema: nil, thinking: nil)
+        def render_payload(messages, tools:, temperature:, model:, stream: false,
+                           schema: nil, thinking: nil, tool_prefs: nil)
+          tool_prefs ||= {}
           system_messages, chat_messages = separate_messages(messages)
           system_content = build_system_content(system_messages)
 
@@ -65,7 +66,9 @@ module RubyLLM
         def add_optional_fields(payload, system_content:, tools:, tool_prefs:, temperature:, schema: nil) # rubocop:disable Metrics/ParameterLists
           if tools.any?
             payload[:tools] = tools.values.map { |t| Tools.function_for(t) }
-            payload[:tool_choice] = Tools.build_tool_choice(tool_prefs) unless tool_prefs[:choice].nil?
+            unless tool_prefs[:choice].nil? && tool_prefs[:parallel].nil?
+              payload[:tool_choice] = Tools.build_tool_choice(tool_prefs)
+            end
           end
           payload[:system] = system_content unless system_content.empty?
           payload[:temperature] = temperature unless temperature.nil?

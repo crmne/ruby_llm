@@ -107,6 +107,7 @@ module RubyLLM
         def build_tool_choice(tool_prefs)
           tool_choice = tool_prefs[:choice]
           parallel_tool_calls = tool_prefs[:parallel]
+          tool_choice = :auto if tool_choice.nil?
 
           {
             type: case tool_choice
