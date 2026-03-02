@@ -187,6 +187,7 @@ The RubyLLM ecosystem is growing! If you've built a library or tool that extends
 - Sharing it in our GitHub Discussions
 - Using the `ruby_llm` topic on your GitHub repository
 
-Ecosystem projects are maintained by their respective authors. We list projects for discoverability, but we cannot guarantee the quality, security, maintenance status, or fitness of every listed project.
+> Ecosystem projects are maintained by their respective authors. We list projects for discoverability, but we cannot guarantee the quality, security, maintenance status, or fitness of every listed project.
+{: .note }
 
 Together, we're building a comprehensive ecosystem for LLM-powered Ruby applications.
