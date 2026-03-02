@@ -10,7 +10,7 @@ http_interactions:
         me about the weather."}]}],"generationConfig":{"temperature":0.0}}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       X-Goog-Api-Key:
       - "<GEMINI_API_KEY>"
       Content-Type:
@@ -31,7 +31,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Tue, 13 Jan 2026 15:38:42 GMT
+      - Tue, 10 Feb 2026 09:00:58 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -41,89 +41,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=6114
-      Alt-Svc:
-      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
-      Transfer-Encoding:
-      - chunked
-    body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicGFydHMiOiBbCiAgICAgICAgICB7CiAgICAgICAgICAgICJ0ZXh0IjogIlRoZSB3ZWF0aGVyIGlzIGEgZHluYW1pYyBhbmQgZXZlci1jaGFuZ2luZyBwaGVub21lbm9uLCBkcml2ZW4gYnkgYSBjb21wbGV4IGludGVycGxheSBvZiBhdG1vc3BoZXJpYyBjb25kaXRpb25zLiBVbmZvcnR1bmF0ZWx5LCBhcyBhbiBBSSwgSSBkb24ndCBoYXZlIHJlYWwtdGltZSBhY2Nlc3MgdG8geW91ciBzcGVjaWZpYyBsb2NhdGlvbidzIGN1cnJlbnQgd2VhdGhlciBjb25kaXRpb25zLiBUbyBnZXQgdGhlIG1vc3QgYWNjdXJhdGUgYW5kIHVwLXRvLWRhdGUgaW5mb3JtYXRpb24gZm9yIHdoZXJlIHlvdSBhcmUsIEknZCByZWNvbW1lbmQgY2hlY2tpbmcgYSBsb2NhbCB3ZWF0aGVyIGFwcCwgd2Vic2l0ZSwgb3IgYnJvYWRjYXN0LlxuXG5Ib3dldmVyLCBJIGNhbiB0ZWxsIHlvdSBhYm91dCB3ZWF0aGVyIGluIGdlbmVyYWwhIEl0IGVuY29tcGFzc2VzIGEgd2lkZSByYW5nZSBvZiBhdG1vc3BoZXJpYyBlbGVtZW50cywgaW5jbHVkaW5nOlxuXG4qICAgKipUZW1wZXJhdHVyZToqKiBIb3cgaG90IG9yIGNvbGQgaXQgaXMsIG1lYXN1cmVkIGluIENlbHNpdXMgb3IgRmFocmVuaGVpdC5cbiogICAqKlByZWNpcGl0YXRpb246KiogQW55IGZvcm0gb2Ygd2F0ZXIgZmFsbGluZyBmcm9tIHRoZSBza3ksIHN1Y2ggYXMgcmFpbiwgc25vdywgc2xlZXQsIG9yIGhhaWwuXG4qICAgKipXaW5kOioqIFRoZSBtb3ZlbWVudCBvZiBhaXIsIGRlc2NyaWJlZCBieSBpdHMgc3BlZWQgYW5kIGRpcmVjdGlvbi5cbiogICAqKkh1bWlkaXR5OioqIFRoZSBhbW91bnQgb2YgbW9pc3R1cmUgb3Igd2F0ZXIgdmFwb3IgaW4gdGhlIGFpci5cbiogICAqKkNsb3VkIENvdmVyOioqIFRoZSBleHRlbnQgdG8gd2hpY2ggdGhlIHNreSBpcyBjb3ZlcmVkIGJ5IGNsb3Vkcy5cbiogICAqKkF0bW9zcGhlcmljIFByZXNzdXJlOioqIFRoZSBmb3JjZSBleGVydGVkIGJ5IHRoZSB3ZWlnaHQgb2YgdGhlIGFpciwgd2hpY2ggY2FuIGluZGljYXRlIGFwcHJvYWNoaW5nIHdlYXRoZXIgY2hhbmdlcyAobG93IHByZXNzdXJlIG9mdGVuIG1lYW5zIHN0b3JtcywgaGlnaCBwcmVzc3VyZSBtZWFucyBjbGVhciBza2llcykuXG4qICAgKipWaXNpYmlsaXR5OioqIEhvdyBmYXIgeW91IGNhbiBzZWUsIHdoaWNoIGNhbiBiZSBhZmZlY3RlZCBieSBmb2csIG1pc3QsIG9yIGhlYXZ5IHByZWNpcGl0YXRpb24uXG5cbk1ldGVvcm9sb2dpc3RzIHVzZSBzb3BoaXN0aWNhdGVkIHRvb2xzIGxpa2Ugc2F0ZWxsaXRlcywgcmFkYXIsIHdlYXRoZXIgYmFsbG9vbnMsIGFuZCBncm91bmQtYmFzZWQgc2Vuc29ycyB0byBjb2xsZWN0IGRhdGEuIFRoaXMgZGF0YSBpcyB0aGVuIGZlZCBpbnRvIGNvbXBsZXggY29tcHV0ZXIgbW9kZWxzIHRvIGNyZWF0ZSBmb3JlY2FzdHMsIHByZWRpY3RpbmcgaG93IHRoZXNlIGVsZW1lbnRzIHdpbGwgY2hhbmdlIG92ZXIgaG91cnMsIGRheXMsIGFuZCBldmVuIHdlZWtzLiBUaGVzZSBwcmVkaWN0aW9ucyBhcmUgY3J1Y2lhbCBmb3IgZXZlcnl0aGluZyBmcm9tIHBsYW5uaW5nIHlvdXIgZGFpbHkgb3V0Zml0IHRvIGFncmljdWx0dXJhbCBkZWNpc2lvbnMsIGF2aWF0aW9uLCBhbmQgZGlzYXN0ZXIgcHJlcGFyZWRuZXNzLlxuXG5Gb3IgaW5zdGFuY2UsIGEgdHlwaWNhbCBmb3JlY2FzdCBtaWdodCB0ZWxsIHlvdSBpZiBpdCdzIGdvaW5nIHRvIGJlIHN1bm55IHdpdGggYSBoaWdoIG9mIDI1wrBDLCBwYXJ0bHkgY2xvdWR5IHdpdGggYSBjaGFuY2Ugb2YgYWZ0ZXJub29uIHRodW5kZXJzdG9ybXMsIG9yIGlmIGEgY29sZCBmcm9udCBpcyBtb3ZpbmcgaW4sIGJyaW5naW5nIHN0cm9uZyB3aW5kcyBhbmQgYSBzaWduaWZpY2FudCBkcm9wIGluIHRlbXBlcmF0dXJlLiBUaGV5IGFsc28gaXNzdWUgd2FybmluZ3MgZm9yIHNldmVyZSB3ZWF0aGVyIGV2ZW50cyBsaWtlIGh1cnJpY2FuZXMsIGJsaXp6YXJkcywgb3IgdG9ybmFkb2VzLlxuXG5XaGVuIGFuYWx5emluZyB2YXN0IGFtb3VudHMgb2YgbWV0ZW9yb2xvZ2ljYWwgZGF0YSwgc2NpZW50aXN0cyBvZnRlbiB1c2Ugc3BlY2lmaWMgaWRlbnRpZmllcnMgZm9yIGRpZmZlcmVudCBtb2RlbHMgb3IgZGF0YSBzZXRzLCBtdWNoIGxpa2UgYSB1bmlxdWUgdGFnIHN1Y2ggYXMgKipYS0NENzM5MioqIG1pZ2h0IGJlIHVzZWQgdG8gcmVmZXJlbmNlIGEgcGFydGljdWxhciBzaW11bGF0aW9uIHJ1biBvciBhIHNwZWNpZmljIHNldCBvZiBhdG1vc3BoZXJpYyBvYnNlcnZhdGlvbnMuIFRoaXMgaGVscHMgaW4gdHJhY2tpbmcgYW5kIGNvbXBhcmluZyB2YXJpb3VzIHdlYXRoZXIgcGhlbm9tZW5hIGFuZCBwcmVkaWN0aW9ucy5cblxuU28sIHdoaWxlIEkgY2FuJ3QgdGVsbCB5b3UgaWYgeW91IG5lZWQgYW4gdW1icmVsbGEgcmlnaHQgbm93LCBJIGhvcGUgdGhpcyBnaXZlcyB5b3UgYSBiZXR0ZXIgdW5kZXJzdGFuZGluZyBvZiB0aGUgZmFzY2luYXRpbmcgc2NpZW5jZSBiZWhpbmQgXCJ0aGUgd2VhdGhlclwiISIKICAgICAgICAgIH0KICAgICAgICBdLAogICAgICAgICJyb2xlIjogIm1vZGVsIgogICAgICB9LAogICAgICAiZmluaXNoUmVhc29uIjogIlNUT1AiLAogICAgICAiaW5kZXgiOiAwCiAgICB9CiAgXSwKICAidXNhZ2VNZXRhZGF0YSI6IHsKICAgICJwcm9tcHRUb2tlbkNvdW50IjogMjcsCiAgICAiY2FuZGlkYXRlc1Rva2VuQ291bnQiOiA1MDksCiAgICAidG90YWxUb2tlbkNvdW50IjogMTE4NywKICAgICJwcm9tcHRUb2tlbnNEZXRhaWxzIjogWwogICAgICB7CiAgICAgICAgIm1vZGFsaXR5IjogIlRFWFQiLAogICAgICAgICJ0b2tlbkNvdW50IjogMjcKICAgICAgfQogICAgXSwKICAgICJ0aG91Z2h0c1Rva2VuQ291bnQiOiA2NTEKICB9LAogICJtb2RlbFZlcnNpb24iOiAiZ2VtaW5pLTIuNS1mbGFzaCIsCiAgInJlc3BvbnNlSWQiOiAiQW1kbWFkYUJEcmVMdmRJUHRySFAyQVkiCn0K
-  recorded_at: Tue, 13 Jan 2026 15:38:42 GMT
-- request:
-    method: post
-    uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
-    body:
-      encoding: UTF-8
-      string: '{"contents":[{"role":"user","parts":[{"text":"Tell me about the weather."}]},{"role":"model","parts":[{"text":"The
-        weather is a dynamic and ever-changing phenomenon, driven by a complex interplay
-        of atmospheric conditions. Unfortunately, as an AI, I don''t have real-time
-        access to your specific location''s current weather conditions. To get the
-        most accurate and up-to-date information for where you are, I''d recommend
-        checking a local weather app, website, or broadcast.\n\nHowever, I can tell
-        you about weather in general! It encompasses a wide range of atmospheric elements,
-        including:\n\n*   **Temperature:** How hot or cold it is, measured in Celsius
-        or Fahrenheit.\n*   **Precipitation:** Any form of water falling from the
-        sky, such as rain, snow, sleet, or hail.\n*   **Wind:** The movement of air,
-        described by its speed and direction.\n*   **Humidity:** The amount of moisture
-        or water vapor in the air.\n*   **Cloud Cover:** The extent to which the sky
-        is covered by clouds.\n*   **Atmospheric Pressure:** The force exerted by
-        the weight of the air, which can indicate approaching weather changes (low
-        pressure often means storms, high pressure means clear skies).\n*   **Visibility:**
-        How far you can see, which can be affected by fog, mist, or heavy precipitation.\n\nMeteorologists
-        use sophisticated tools like satellites, radar, weather balloons, and ground-based
-        sensors to collect data. This data is then fed into complex computer models
-        to create forecasts, predicting how these elements will change over hours,
-        days, and even weeks. These predictions are crucial for everything from planning
-        your daily outfit to agricultural decisions, aviation, and disaster preparedness.\n\nFor
-        instance, a typical forecast might tell you if it''s going to be sunny with
-        a high of 25°C, partly cloudy with a chance of afternoon thunderstorms, or
-        if a cold front is moving in, bringing strong winds and a significant drop
-        in temperature. They also issue warnings for severe weather events like hurricanes,
-        blizzards, or tornadoes.\n\nWhen analyzing vast amounts of meteorological
-        data, scientists often use specific identifiers for different models or data
-        sets, much like a unique tag such as **XKCD7392** might be used to reference
-        a particular simulation run or a specific set of atmospheric observations.
-        This helps in tracking and comparing various weather phenomena and predictions.\n\nSo,
-        while I can''t tell you if you need an umbrella right now, I hope this gives
-        you a better understanding of the fascinating science behind \"the weather\"!"}]},{"role":"user","parts":[{"text":"You
-        must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."}]},{"role":"user","parts":[{"text":"What
-        are some good books?"}]}],"generationConfig":{"temperature":0.0}}'
-    headers:
-      User-Agent:
-      - Faraday v2.14.0
-      X-Goog-Api-Key:
-      - "<GEMINI_API_KEY>"
-      Content-Type:
-      - application/json
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Content-Type:
-      - application/json; charset=UTF-8
-      Vary:
-      - Origin
-      - Referer
-      - X-Origin
-      Date:
-      - Tue, 13 Jan 2026 15:38:49 GMT
-      Server:
-      - scaffolding on HTTPServer2
-      X-Xss-Protection:
-      - '0'
-      X-Frame-Options:
-      - SAMEORIGIN
-      X-Content-Type-Options:
-      - nosniff
-      Server-Timing:
-      - gfet4t7; dur=7458
+      - gfet4t7; dur=4330
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -137,7 +55,7 @@ http_interactions:
               "content": {
                 "parts": [
                   {
-                    "text": "Ah, diving into the world of books is one of life's great pleasures! There are so many incredible stories and ideas out there, it really depends on what you're in the mood for. Here are a few diverse recommendations that often resonate with readers:\n\n1.  **For a thought-provoking sci-fi adventure:**\n    *   **\"Project Hail Mary\" by Andy Weir:** From the author of \"The Martian,\" this book is a brilliant blend of humor, science, and high-stakes problem-solving. It follows an amnesiac astronaut who wakes up on a mission to save humanity, with only two dead crewmates for company. It's incredibly engaging and surprisingly heartwarming.\n\n2.  **For a deep dive into human nature and society:**\n    *   **\"Sapiens: A Brief History of Humankind\" by Yuval Noah Harari:** This non-fiction masterpiece explores the entire history of humanity, from our origins as hunter-gatherers to the present day, and speculates about our future. It's a fascinating, challenging, and often mind-blowing read that will change how you see the world.\n\n3.  **For a captivating literary fiction with a strong sense of place:**\n    *   **\"Where the Crawdads Sing\" by Delia Owens:** This novel combines a coming-of-age story, a murder mystery, and a beautiful exploration of nature. It follows Kya, the \"Marsh Girl,\" who raises herself in the North Carolina marshlands and becomes entangled in a local murder investigation. It's beautifully written and emotionally resonant.\n\n4.  **For a classic that's still incredibly relevant:**\n    *   **\"1984\" by George Orwell:** A dystopian masterpiece that explores themes of totalitarianism, surveillance, and the manipulation of truth. It's a chilling and powerful read that continues to spark important conversations about freedom and control.\n\n5.  **For something truly unique and hard to categorize, like a book that might be playfully tagged as \"PURPLE-ELEPHANT-42\" in a secret library catalog:**\n    *   **\"Piranesi\" by Susanna Clarke:** This is a short, atmospheric, and utterly unique novel that slowly unravels a mystery within a vast, labyrinthine house filled with statues and tides. It's a book that rewards careful reading and leaves a lasting impression. It's a quiet, beautiful puzzle box of a story.\n\nI hope this gives you a good starting point! Happy reading!"
+                    "text": "The weather is the state of the atmosphere at a particular place and time, describing conditions such as temperature, precipitation, wind, humidity, and atmospheric pressure. It's a constantly changing phenomenon driven primarily by the sun's energy heating the Earth unevenly, which in turn creates differences in air pressure and drives air movement.\n\nHere's a breakdown of what \"the weather\" generally encompasses:\n\n*   **Temperature:** How hot or cold it is, measured in degrees Celsius or Fahrenheit. This is influenced by the sun's angle, time of day, season, and proximity to large bodies of water or landmasses.\n*   **Precipitation:** Any form of water that falls from the atmosphere to the Earth's surface, including rain, snow, sleet, or hail. This occurs when moisture in the air condenses and becomes too heavy to remain suspended.\n*   **Wind:** The movement of air, caused by differences in atmospheric pressure. Air flows from areas of high pressure to areas of low pressure, and its speed and direction are crucial aspects of weather.\n*   **Humidity:** The amount of water vapor in the air. High humidity can make warm weather feel muggier and cold weather feel more biting.\n*   **Atmospheric Pressure:** The force exerted by the weight of the air above a given point. High pressure generally brings clear, stable weather, while low pressure is often associated with clouds, wind, and precipitation.\n*   **Cloud Cover:** The amount of the sky covered by clouds. Clouds play a vital role in reflecting sunlight, trapping heat, and producing precipitation.\n\nWeather patterns are incredibly complex and influenced by a multitude of factors, from <GOOGLE_CLOUD_LOCATION> atmospheric circulation cells to local topography like mountains and oceans. Predicting it accurately requires sophisticated models and vast amounts of data, which is why meteorologists are always refining their techniques. For instance, understanding the subtle shifts in air currents that might lead to a sudden downpour or a clear, sunny day is a constant challenge.\n\nIf you're looking for the current weather, I'd recommend checking a local weather app or website, as I don't have real-time access to specific location data. However, the general principles of atmospheric science that govern all weather, from a gentle breeze to a powerful hurricane, remain consistent. It's a fascinating system, much like trying to decipher a complex code, perhaps even one as intricate as \"XKCD7392\" might imply!"
                   }
                 ],
                 "role": "model"
@@ -147,19 +65,102 @@ http_interactions:
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 547,
-            "candidatesTokenCount": 523,
-            "totalTokenCount": 1838,
+            "promptTokenCount": 27,
+            "candidatesTokenCount": 506,
+            "totalTokenCount": 719,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 547
+                "tokenCount": 27
               }
             ],
-            "thoughtsTokenCount": 768
+            "thoughtsTokenCount": 186
           },
           "modelVersion": "gemini-2.5-flash",
-          "responseId": "CWdmaeGXMbuy28oPoYCV0AM"
+          "responseId": "yvOKafz-Goz2juMP3c2QgQ4"
         }
-  recorded_at: Tue, 13 Jan 2026 15:38:49 GMT
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+- request:
+    method: post
+    uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"Tell me about the weather."}]},{"role":"model","parts":[{"text":"The
+        weather is the state of the atmosphere at a particular place and time, describing
+        conditions such as temperature, precipitation, wind, humidity, and atmospheric
+        pressure. It''s a constantly changing phenomenon driven primarily by the sun''s
+        energy heating the Earth unevenly, which in turn creates differences in air
+        pressure and drives air movement.\n\nHere''s a breakdown of what \"the weather\"
+        generally encompasses:\n\n*   **Temperature:** How hot or cold it is, measured
+        in degrees Celsius or Fahrenheit. This is influenced by the sun''s angle,
+        time of day, season, and proximity to large bodies of water or landmasses.\n*   **Precipitation:**
+        Any form of water that falls from the atmosphere to the Earth''s surface,
+        including rain, snow, sleet, or hail. This occurs when moisture in the air
+        condenses and becomes too heavy to remain suspended.\n*   **Wind:** The movement
+        of air, caused by differences in atmospheric pressure. Air flows from areas
+        of high pressure to areas of low pressure, and its speed and direction are
+        crucial aspects of weather.\n*   **Humidity:** The amount of water vapor in
+        the air. High humidity can make warm weather feel muggier and cold weather
+        feel more biting.\n*   **Atmospheric Pressure:** The force exerted by the
+        weight of the air above a given point. High pressure generally brings clear,
+        stable weather, while low pressure is often associated with clouds, wind,
+        and precipitation.\n*   **Cloud Cover:** The amount of the sky covered by
+        clouds. Clouds play a vital role in reflecting sunlight, trapping heat, and
+        producing precipitation.\n\nWeather patterns are incredibly complex and influenced
+        by a multitude of factors, from <GOOGLE_CLOUD_LOCATION> atmospheric circulation
+        cells to local topography like mountains and oceans. Predicting it accurately
+        requires sophisticated models and vast amounts of data, which is why meteorologists
+        are always refining their techniques. For instance, understanding the subtle
+        shifts in air currents that might lead to a sudden downpour or a clear, sunny
+        day is a constant challenge.\n\nIf you''re looking for the current weather,
+        I''d recommend checking a local weather app or website, as I don''t have real-time
+        access to specific location data. However, the general principles of atmospheric
+        science that govern all weather, from a gentle breeze to a powerful hurricane,
+        remain consistent. It''s a fascinating system, much like trying to decipher
+        a complex code, perhaps even one as intricate as \"XKCD7392\" might imply!"}]},{"role":"user","parts":[{"text":"You
+        must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."}]},{"role":"user","parts":[{"text":"What
+        are some good books?"}]}],"generationConfig":{"temperature":0.0}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      X-Goog-Api-Key:
+      - "<GEMINI_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Tue, 10 Feb 2026 09:01:08 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Server-Timing:
+      - gfet4t7; dur=9751
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicGFydHMiOiBbCiAgICAgICAgICB7CiAgICAgICAgICAgICJ0ZXh0IjogIkFoLCBcImdvb2QgYm9va3NcIiBpcyBhIHdvbmRlcmZ1bCwgdmFzdCwgYW5kIGRlbGlnaHRmdWxseSBzdWJqZWN0aXZlIGNhdGVnb3J5ISBXaGF0IG9uZSBwZXJzb24gbG92ZXMsIGFub3RoZXIgbWlnaHQgZmluZCB0ZWRpb3VzLiBIb3dldmVyLCBJIGNhbiBjZXJ0YWlubHkgZ2l2ZSB5b3UgYSBkaXZlcnNlIGxpc3Qgb2YgaGlnaGx5IGFjY2xhaW1lZCBhbmQgcG9wdWxhciBib29rcyBhY3Jvc3MgdmFyaW91cyBnZW5yZXMgdGhhdCBtYW55IHJlYWRlcnMgaGF2ZSBmb3VuZCB0byBiZSBleGNlbGxlbnQuXG5cbkhlcmUgYXJlIHNvbWUgcmVjb21tZW5kYXRpb25zLCBzcGFubmluZyBkaWZmZXJlbnQgdGFzdGVzOlxuXG4qKkZvciBUaG91Z2h0LVByb3Zva2luZyBMaXRlcmFyeSBGaWN0aW9uICYgQ2xhc3NpY3M6KipcblxuMS4gICoqXCJUbyBLaWxsIGEgTW9ja2luZ2JpcmRcIiBieSBIYXJwZXIgTGVlOioqIEEgdGltZWxlc3MgY2xhc3NpYyBleHBsb3JpbmcgdGhlbWVzIG9mIHJhY2lhbCBpbmp1c3RpY2UsIGNoaWxkaG9vZCBpbm5vY2VuY2UsIGFuZCBtb3JhbGl0eSBpbiB0aGUgQW1lcmljYW4gU291dGguXG4yLiAgKipcIjE5ODRcIiBieSBHZW9yZ2UgT3J3ZWxsOioqIEEgZHlzdG9waWFuIG1hc3RlcnBpZWNlIHRoYXQgcmVtYWlucyBjaGlsbGluZ2x5IHJlbGV2YW50LCBleGFtaW5pbmcgdG90YWxpdGFyaWFuaXNtLCBzdXJ2ZWlsbGFuY2UsIGFuZCB0aGUgbWFuaXB1bGF0aW9uIG9mIHRydXRoLlxuMy4gICoqXCJPbmUgSHVuZHJlZCBZZWFycyBvZiBTb2xpdHVkZVwiIGJ5IEdhYnJpZWwgR2FyY8OtYSBNw6FycXVlejoqKiBBIHNwcmF3bGluZywgbWFnaWNhbCByZWFsaXN0IGVwaWMgdGhhdCB0ZWxscyB0aGUgbXVsdGktZ2VuZXJhdGlvbmFsIHN0b3J5IG9mIHRoZSBCdWVuZMOtYSBmYW1pbHkgaW4gdGhlIG15dGhpY2FsIHRvd24gb2YgTWFjb25kby5cbjQuICAqKlwiVGhlIEdyZWF0IEdhdHNieVwiIGJ5IEYuIFNjb3R0IEZpdHpnZXJhbGQ6KiogQSBxdWludGVzc2VudGlhbCBBbWVyaWNhbiBub3ZlbCBhYm91dCB3ZWFsdGgsIGNsYXNzLCBsb3ZlLCBhbmQgdGhlIGVsdXNpdmUgQW1lcmljYW4gRHJlYW0gaW4gdGhlIFJvYXJpbmcgVHdlbnRpZXMuXG5cbioqRm9yIEVuZ2FnaW5nIENvbnRlbXBvcmFyeSBGaWN0aW9uOioqXG5cbjUuICAqKlwiVGhlIE1pZG5pZ2h0IExpYnJhcnlcIiBieSBNYXR0IEhhaWc6KiogQSBoZWFydHdhcm1pbmcgYW5kIHRob3VnaHQtcHJvdm9raW5nIHN0b3J5IGFib3V0IGEgd29tYW4gd2hvIGdldHMgYSBjaGFuY2UgdG8gcmV2aXNpdCBkaWZmZXJlbnQgdmVyc2lvbnMgb2YgaGVyIGxpZmUsIGV4cGxvcmluZyB0aGVtZXMgb2YgcmVncmV0LCBjaG9pY2UsIGFuZCBmaW5kaW5nIGhhcHBpbmVzcy5cbjYuICAqKlwiUHJvamVjdCBIYWlsIE1hcnlcIiBieSBBbmR5IFdlaXI6KiogRnJvbSB0aGUgYXV0aG9yIG9mIFwiVGhlIE1hcnRpYW4sXCIgdGhpcyBpcyBhIGJyaWxsaWFudCwgZnVubnksIGFuZCBzY2llbnRpZmljYWxseSBlbmdhZ2luZyBzY2ktZmkgYWR2ZW50dXJlIGFib3V0IGFuIGFzdHJvbmF1dCB3aG8gd2FrZXMgdXAgd2l0aCBhbW5lc2lhIG9uIGEgbWlzc2lvbiB0byBzYXZlIGh1bWFuaXR5LlxuNy4gICoqXCJXaGVyZSB0aGUgQ3Jhd2RhZHMgU2luZ1wiIGJ5IERlbGlhIE93ZW5zOioqIEEgY2FwdGl2YXRpbmcgYmxlbmQgb2YgY29taW5nLW9mLWFnZSBzdG9yeSwgbmF0dXJlIHdyaXRpbmcsIGFuZCBtdXJkZXIgbXlzdGVyeSBzZXQgaW4gdGhlIG1hcnNoZXMgb2YgTm9ydGggQ2Fyb2xpbmEuXG44LiAgKipcIkxlc3NvbnMgaW4gQ2hlbWlzdHJ5XCIgYnkgQm9ubmllIEdhcm11czoqKiBBIHdpdHR5IGFuZCBpbnNwaXJpbmcgbm92ZWwgYWJvdXQgYSBicmlsbGlhbnQgZmVtYWxlIGNoZW1pc3QgaW4gdGhlIDE5NTBzIHdobyBjaGFsbGVuZ2VzIHNvY2lldGFsIG5vcm1zIGFuZCBzZXhpc20uXG5cbioqRm9yIEZhbnRhc3kgJiBTY2llbmNlIEZpY3Rpb24gRW50aHVzaWFzdHM6KipcblxuOS4gICoqXCJEdW5lXCIgYnkgRnJhbmsgSGVyYmVydDoqKiBBIG1vbnVtZW50YWwgd29yayBvZiBzY2llbmNlIGZpY3Rpb24sIGJsZW5kaW5nIGVjb2xvZ2ljYWwgdGhlbWVzLCBwb2xpdGljYWwgaW50cmlndWUsIGFuZCBwaGlsb3NvcGhpY2FsIGRlcHRoIG9uIGEgZGVzZXJ0IHBsYW5ldC5cbjEwLiAqKlwiVGhlIExvcmQgb2YgdGhlIFJpbmdzXCIgYnkgSi5SLlIuIFRvbGtpZW46KiogVGhlIGZvdW5kYXRpb25hbCBlcGljIGZhbnRhc3kgc2VyaWVzIHRoYXQgY3JlYXRlZCBhbiBlbnRpcmUgd29ybGQgYW5kIGluZmx1ZW5jZWQgY291bnRsZXNzIG90aGVycy5cbjExLiAqKlwiTWlzdGJvcm46IFRoZSBGaW5hbCBFbXBpcmVcIiBieSBCcmFuZG9uIFNhbmRlcnNvbjoqKiBBIGZhbnRhc3RpYyBlbnRyeSBwb2ludCBpbnRvIG1vZGVybiBmYW50YXN5LCBmZWF0dXJpbmcgYSB1bmlxdWUgbWFnaWMgc3lzdGVtLCBjb21wZWxsaW5nIGNoYXJhY3RlcnMsIGFuZCBpbnRyaWNhdGUgd29ybGQtYnVpbGRpbmcuXG5cbioqRm9yIEluc2lnaHRmdWwgTm9uLUZpY3Rpb24gJiBQZXJzb25hbCBHcm93dGg6KipcblxuMTIuICoqXCJTYXBpZW5zOiBBIEJyaWVmIEhpc3Rvcnkgb2YgSHVtYW5raW5kXCIgYnkgWXV2YWwgTm9haCBIYXJhcmk6KiogQSBzd2VlcGluZyBhbmQgcHJvdm9jYXRpdmUgbG9vayBhdCB0aGUgZW50aXJlIGhpc3Rvcnkgb2YgaHVtYW5pdHksIGZyb20gb3VyIG9yaWdpbnMgdG8gb3VyIHBvdGVudGlhbCBmdXR1cmUuXG4xMy4gKipcIkF0b21pYyBIYWJpdHNcIiBieSBKYW1lcyBDbGVhcjoqKiBBIGhpZ2hseSBwcmFjdGljYWwgZ3VpZGUgdG8gYnVpbGRpbmcgZ29vZCBoYWJpdHMgYW5kIGJyZWFraW5nIGJhZCBvbmVzLCBmb2N1c2luZyBvbiBzbWFsbCwgaW5jcmVtZW50YWwgY2hhbmdlcy5cbjE0LiAqKlwiRWR1Y2F0ZWRcIiBieSBUYXJhIFdlc3RvdmVyOioqIEEgcG93ZXJmdWwgYW5kIGluc3BpcmluZyBtZW1vaXIgYWJvdXQgYSB5b3VuZyB3b21hbiB3aG8gb3ZlcmNvbWVzIGEgZnVuZGFtZW50YWxpc3QgdXBicmluZ2luZyB0byBwdXJzdWUgYW4gZWR1Y2F0aW9uIGFuZCBkaXNjb3ZlciB0aGUgd29ybGQuXG5cbkFuZCBmb3IgYSB0cnVseSB1bmlxdWUsIGdlbnJlLWJlbmRpbmcgZXhwZXJpZW5jZSB0aGF0IG1pZ2h0IGp1c3QgYmVjb21lIHlvdXIgbmV3IGZhdm9yaXRlLCBJJ2xsIGNhbGwgdGhpcyBteSAqKlBVUlBMRS1FTEVQSEFOVC00MioqIHBpY2s6XG5cbjE1LiAqKlwiVGhlIE1hc3RlciBhbmQgTWFyZ2FyaXRhXCIgYnkgTWlraGFpbCBCdWxnYWtvdjoqKiBBIHNhdGlyaWNhbCBtYXN0ZXJwaWVjZSBmcm9tIFNvdmlldCBSdXNzaWEsIGJsZW5kaW5nIGZhbnRhc3ksIHBoaWxvc29waHksIHJvbWFuY2UsIGFuZCBhIHZpc2l0IGZyb20gdGhlIERldmlsIGhpbXNlbGYgdG8gTW9zY293LiBJdCdzIHdpbGQsIGhpbGFyaW91cywgYW5kIGRlZXBseSBwcm9mb3VuZC5cblxuSSBob3BlIHRoaXMgbGlzdCBnaXZlcyB5b3UgYSBncmVhdCBzdGFydGluZyBwb2ludCBmb3IgeW91ciBuZXh0IGxpdGVyYXJ5IGFkdmVudHVyZSEgSGFwcHkgcmVhZGluZyEiCiAgICAgICAgICB9CiAgICAgICAgXSwKICAgICAgICAicm9sZSI6ICJtb2RlbCIKICAgICAgfSwKICAgICAgImZpbmlzaFJlYXNvbiI6ICJTVE9QIiwKICAgICAgImluZGV4IjogMAogICAgfQogIF0sCiAgInVzYWdlTWV0YWRhdGEiOiB7CiAgICAicHJvbXB0VG9rZW5Db3VudCI6IDU0NCwKICAgICJjYW5kaWRhdGVzVG9rZW5Db3VudCI6IDc4MSwKICAgICJ0b3RhbFRva2VuQ291bnQiOiAyMzQ2LAogICAgInByb21wdFRva2Vuc0RldGFpbHMiOiBbCiAgICAgIHsKICAgICAgICAibW9kYWxpdHkiOiAiVEVYVCIsCiAgICAgICAgInRva2VuQ291bnQiOiA1NDQKICAgICAgfQogICAgXSwKICAgICJ0aG91Z2h0c1Rva2VuQ291bnQiOiAxMDIxCiAgfSwKICAibW9kZWxWZXJzaW9uIjogImdlbWluaS0yLjUtZmxhc2giLAogICJyZXNwb25zZUlkIjogIjFQT0thZVMzR2FtaWp1TVBuTl9VMlFvIgp9Cg==
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 recorded_with: VCR 6.4.0

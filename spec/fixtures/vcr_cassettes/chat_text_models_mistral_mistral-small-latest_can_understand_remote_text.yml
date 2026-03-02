@@ -8,7 +8,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -26,40 +26,42 @@ http_interactions:
       - GitHub.com
       Content-Type:
       - text/plain; charset=utf-8
+      X-Origin-Cache:
+      - HIT
       Last-Modified:
-      - Tue, 13 Jan 2026 10:37:11 GMT
+      - Mon, 09 Feb 2026 23:48:37 GMT
       Access-Control-Allow-Origin:
       - "*"
       Etag:
-      - W/"69662057-9c6"
+      - W/"698a7255-9c6"
       Expires:
-      - Tue, 13 Jan 2026 15:16:27 GMT
+      - Tue, 10 Feb 2026 05:41:29 GMT
       Cache-Control:
       - max-age=600
       X-Proxy-Cache:
       - MISS
       X-Github-Request-Id:
-      - 4B29:3536C2:3E98C4:3F58FE:69665F73
+      - DA8F:2A47E2:A980F3:B16D78:698AC2B0
       Accept-Ranges:
       - bytes
       Date:
-      - Tue, 13 Jan 2026 15:34:06 GMT
+      - Tue, 10 Feb 2026 08:47:16 GMT
       Via:
       - 1.1 varnish
       Age:
-      - '29'
+      - '59'
       X-Served-By:
-      - cache-fra-etou8220174-FRA
+      - cache-bkk2310026-BKK
       X-Cache:
       - HIT
       X-Cache-Hits:
       - '1'
       X-Timer:
-      - S1768318446.265539,VS0,VE2
+      - S1770713237.823247,VS0,VE1
       Vary:
       - Accept-Encoding
       X-Fastly-Request-Id:
-      - 26d37a931bb4bec904e25b0d436ff5cbbd18ccd0
+      - 7a0098ffd56c68b50f39081f779aa8d300b3368c
     body:
       encoding: ASCII-8BIT
       string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
@@ -95,7 +97,7 @@ http_interactions:
         \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
         WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
         FOR A PARTICULAR\n     PURPOSE.\n"
-  recorded_at: Tue, 13 Jan 2026 15:34:06 GMT
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 - request:
     method: post
     uri: https://api.mistral.ai/v1/chat/completions
@@ -138,7 +140,7 @@ http_interactions:
         A PARTICULAR\n     PURPOSE.\n</file>"}]}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer <MISTRAL_API_KEY>
       Content-Type:
@@ -153,7 +155,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 13 Jan 2026 15:34:15 GMT
+      - Tue, 10 Feb 2026 08:47:24 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -161,31 +163,27 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '019bb7fe-2b01-70dd-99dd-3a1d3dbf5ed6'
+      - '019c46bb-c644-7824-a37c-7c7bb7780287'
       X-Kong-Request-Id:
-      - '019bb7fe-2b01-70dd-99dd-3a1d3dbf5ed6'
+      - '019c46bb-c644-7824-a37c-7c7bb7780287'
       X-Ratelimit-Limit-Tokens-Minute:
       - '2000000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '1998670'
-      X-Ratelimit-Limit-Tokens-Month:
-      - '10000000000'
-      X-Ratelimit-Remaining-Tokens-Month:
-      - '9999989581'
+      - '1998761'
       X-Ratelimit-Tokens-Query-Cost:
-      - '1044'
-      X-Ratelimit-Limit-Req-60-Second:
+      - '934'
+      X-Ratelimit-Limit-Req-Minute:
       - '360'
-      X-Ratelimit-Remaining-Req-60-Second:
+      X-Ratelimit-Remaining-Req-Minute:
       - '357'
       X-Envoy-Upstream-Service-Time:
-      - '9206'
+      - '7045'
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '9206'
+      - '7045'
       X-Kong-Proxy-Latency:
-      - '9'
+      - '7'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -204,6 +202,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6Ijg0YjUzZmI2YzRiZDQ5MmY4NmE1NGE3M2FkNTUzNWQ0IiwiY3JlYXRlZCI6MTc2ODMxODQ0NiwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsInVzYWdlIjp7InByb21wdF90b2tlbnMiOjU3NywidG90YWxfdG9rZW5zIjoxMDQ0LCJjb21wbGV0aW9uX3Rva2VucyI6NDY3fSwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImZpbmlzaF9yZWFzb24iOiJzdG9wIiwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwidG9vbF9jYWxscyI6bnVsbCwiY29udGVudCI6IlRoaXMgZmlsZSAoYGxpY2Vuc2UudHh0YCkgY29udGFpbnMgdGhlICoqUnVieSBMaWNlbnNlKiosIHdoaWNoIGlzIGEgcGVybWlzc2l2ZSBvcGVuLXNvdXJjZSBsaWNlbnNlIGNyZWF0ZWQgYnkgWXVraWhpcm8gTWF0c3Vtb3RvIChNYXR6KSwgdGhlIGNyZWF0b3Igb2YgdGhlIFJ1YnkgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UuIEhlcmXigJlzIGEgYnJlYWtkb3duIG9mIGl0cyBrZXkgcG9pbnRzOlxuXG4jIyMgKipTdW1tYXJ5IG9mIHRoZSBMaWNlbnNlIFRlcm1zOioqXG4xLiAqKlJlZGlzdHJpYnV0aW9uICYgTW9kaWZpY2F0aW9uIFBlcm1pc3Npb25zOioqXG4gICAtIFlvdSBjYW4gZnJlZWx5IGNvcHkgYW5kIGRpc3RyaWJ1dGUgdGhlIG9yaWdpbmFsIHNvdXJjZSBjb2RlICh3aXRoIGNvcHlyaWdodCBub3RpY2VzIGludGFjdCkuXG4gICAtIFlvdSBjYW4gbW9kaWZ5IHRoZSBzb2Z0d2FyZSB1bmRlciB0aGUgZm9sbG93aW5nIGNvbmRpdGlvbnMgKHlvdSBtdXN0IHNhdGlzZnkgKiphdCBsZWFzdCBvbmUqKiBvZiB0aGVzZSk6XG4gICAgIC0gUmVsZWFzZSBtb2RpZmljYXRpb25zIHRvIHRoZSBwdWJsaWMgKGUuZy4sIHZpYSBVc2VuZXQsIEdpdEh1YiwgZXRjLikuXG4gICAgIC0gVXNlIG1vZGlmaWVkIHZlcnNpb25zIG9ubHkgd2l0aGluIHlvdXIgb3JnYW5pemF0aW9uLlxuICAgICAtIEdpdmUgbW9kaWZpZWQgYmluYXJpZXMgdW5pcXVlIG5hbWVzIGFuZCBwcm92aWRlIGluc3RydWN0aW9ucyB0byBnZXQgdGhlIG9yaWdpbmFsLlxuICAgICAtIE1ha2Ugc3BlY2lhbCBkaXN0cmlidXRpb24gYXJyYW5nZW1lbnRzIHdpdGggdGhlIGF1dGhvci5cblxuMi4gKipCaW5hcnkgRGlzdHJpYnV0aW9uOioqXG4gICAtIFlvdSBjYW4gZGlzdHJpYnV0ZSBjb21waWxlZCBiaW5hcmllcywgYnV0IHlvdSBtdXN0OlxuICAgICAtIEluY2x1ZGUgaW5zdHJ1Y3Rpb25zIG9uIHdoZXJlIHRvIGdldCB0aGUgb3JpZ2luYWwgc291cmNlLlxuICAgICAtIFByb3ZpZGUgdGhlIHNvdXJjZSBjb2RlIChtYWNoaW5lLXJlYWRhYmxlKS5cbiAgICAgLSBHaXZlIG1vZGlmaWVkIGJpbmFyaWVzIHVuaXF1ZSBuYW1lcyB3aXRoIGluc3RydWN0aW9ucyB0byBnZXQgdGhlIG9yaWdpbmFsLlxuICAgICAtIE1ha2Ugc3BlY2lhbCBkaXN0cmlidXRpb24gYXJyYW5nZW1lbnRzIHdpdGggdGhlIGF1dGhvci5cblxuMy4gKipJbmNsdXNpb24gaW4gT3RoZXIgU29mdHdhcmU6KipcbiAgIC0gWW91IGNhbiBtb2RpZnkgYW5kIGluY2x1ZGUgUnVieSBpbiBvdGhlciBzb2Z0d2FyZSAoZXZlbiBjb21tZXJjaWFsKSwgYnV0OlxuICAgLSBTb21lIGZpbGVzIGluIHRoZSBkaXN0cmlidXRpb24gbWF5IGhhdmUgZGlmZmVyZW50IGxpY2Vuc2VzIChjaGVjayBgTEVHQUxgIGZvciBkZXRhaWxzKS5cblxuNC4gKipTY3JpcHRzICYgT3V0cHV0czoqKlxuICAgLSBTY3JpcHRzIG9yIGZpbGVzIGdlbmVyYXRlZCBieSBSdWJ5IChlLmcuLCBvdXRwdXQgZmlsZXMpIGFyZSAqKm5vdCoqIGF1dG9tYXRpY2FsbHkgdW5kZXIgUnVieeKAmXMgY29weXJpZ2h0IGFuZCBjYW4gYmUgc29sZCBvciBkaXN0cmlidXRlZCBmcmVlbHkuXG5cbjUuICoqTm8gV2FycmFudHk6KipcbiAgIC0gVGhlIHNvZnR3YXJlIGlzIHByb3ZpZGVkICoqXCJhcyBpc1wiKiogd2l0aCBubyBndWFyYW50ZWVzIG9mIGZpdG5lc3MgZm9yIGFueSBwdXJwb3NlLlxuXG4jIyMgKipDb21wYXJpc29uIHRvIE90aGVyIExpY2Vuc2VzOioqXG4tIFNpbWlsYXIgdG8gdGhlICoqMi1jbGF1c2UgQlNEIExpY2Vuc2UqKiAobWVudGlvbmVkIGluIHRoZSBmaWxlKSBidXQgd2l0aCBhZGRpdGlvbmFsIGNsYXVzZXMuXG4tIE1vcmUgcGVybWlzc2l2ZSB0aGFuIEdQTCAobm8gY29weWxlZnQgcmVxdWlyZW1lbnRzKS5cbi0gQWxsb3dzIGNvbW1lcmNpYWwgdXNlIGFuZCBtb2RpZmljYXRpb24gd2l0aCBtaW5pbWFsIHJlc3RyaWN0aW9ucy5cblxuIyMjICoqS2V5IEZpbGVzIFJlZmVyZW5jZWQ6Kipcbi0gKipgQlNETGAqKjogTGlrZWx5IGEgY29weSBvZiB0aGUgMi1jbGF1c2UgQlNEIExpY2Vuc2UuXG4tICoqYExFR0FMYCoqOiBMaXN0cyBmaWxlcyB3aXRoIGRpZmZlcmVudCBsaWNlbnNpbmcgdGVybXMuXG5cblRoaXMgbGljZW5zZSBpcyAqKnZlcnkgcGVybWlzc2l2ZSoqLCBtYWtpbmcgUnVieSB3aWRlbHkgdXNhYmxlIGluIGJvdGggb3Blbi1zb3VyY2UgYW5kIHByb3ByaWV0YXJ5IHByb2plY3RzLiJ9fV19
-  recorded_at: Tue, 13 Jan 2026 15:34:15 GMT
+        eyJpZCI6Ijc1N2U2YzE1ZjZiODQ4ZDFhYWRiNjdhYWI4ZmE5Yjk5IiwiY3JlYXRlZCI6MTc3MDcxMzIzNywibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsInVzYWdlIjp7InByb21wdF90b2tlbnMiOjU3NywidG90YWxfdG9rZW5zIjo5MzQsImNvbXBsZXRpb25fdG9rZW5zIjozNTcsIm51bV9jYWNoZWRfdG9rZW5zIjowfSwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImZpbmlzaF9yZWFzb24iOiJzdG9wIiwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwidG9vbF9jYWxscyI6bnVsbCwiY29udGVudCI6IlRoaXMgZmlsZSAoYGxpY2Vuc2UudHh0YCkgY29udGFpbnMgdGhlICoqUnVieSBMaWNlbnNlKiosIHdoaWNoIGlzIGEgcGVybWlzc2l2ZSBvcGVuLXNvdXJjZSBsaWNlbnNlIGNyZWF0ZWQgYnkgWXVraWhpcm8gTWF0c3Vtb3RvIChNYXR6KSwgdGhlIGNyZWF0b3Igb2YgdGhlIFJ1YnkgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UuIEhlcmXigJlzIGEgYnJlYWtkb3duIG9mIGl0cyBrZXkgcG9pbnRzOlxuXG4jIyMgKipLZXkgVGVybXMgb2YgdGhlIFJ1YnkgTGljZW5zZToqKlxuMS4gKipSZWRpc3RyaWJ1dGlvbiAmIE1vZGlmaWNhdGlvbiBQZXJtaXNzaW9uczoqKlxuICAgLSBZb3UgY2FuIGZyZWVseSByZWRpc3RyaWJ1dGUgdGhlIG9yaWdpbmFsIHNvdXJjZSBjb2RlICh3aXRoIGNvcHlyaWdodCBub3RpY2VzIGludGFjdCkuXG4gICAtIFlvdSBjYW4gbW9kaWZ5IHRoZSBzb2Z0d2FyZSB1bmRlciBjZXJ0YWluIGNvbmRpdGlvbnMgKGUuZy4sIHJlbGVhc2luZyBtb2RpZmljYXRpb25zIHB1YmxpY2x5LCB1c2luZyB0aGVtIGludGVybmFsbHksIG9yIHJlbmFtaW5nIG5vbi1zdGFuZGFyZCBiaW5hcmllcykuXG5cbjIuICoqQmluYXJ5IERpc3RyaWJ1dGlvbiBSdWxlczoqKlxuICAgLSBJZiBkaXN0cmlidXRpbmcgY29tcGlsZWQgYmluYXJpZXMsIHlvdSBtdXN0IGVpdGhlcjpcbiAgICAgLSBJbmNsdWRlIGluc3RydWN0aW9ucyBvbiB3aGVyZSB0byBnZXQgdGhlIG9yaWdpbmFsIHNvdXJjZS5cbiAgICAgLSBQcm92aWRlIHRoZSBtYWNoaW5lLXJlYWRhYmxlIHNvdXJjZSBjb2RlLlxuICAgICAtIFJlbmFtZSBub24tc3RhbmRhcmQgYmluYXJpZXMgYW5kIHBvaW50IHVzZXJzIHRvIHRoZSBvcmlnaW5hbC5cblxuMy4gKipJbmNsdXNpb24gaW4gT3RoZXIgU29mdHdhcmU6KipcbiAgIC0gWW91IGNhbiBtb2RpZnkgYW5kIGluY2x1ZGUgUnVieSBpbiBvdGhlciBzb2Z0d2FyZSAoZXZlbiBjb21tZXJjaWFsKSwgYnV0IHNvbWUgZmlsZXMgaW4gdGhlIGRpc3RyaWJ1dGlvbiBtYXkgaGF2ZSBkaWZmZXJlbnQgbGljZW5zZXMgKGNoZWNrIGBMRUdBTGAgZm9yIGRldGFpbHMpLlxuXG40LiAqKk5vIFdhcnJhbnR5OioqXG4gICAtIFRoZSBzb2Z0d2FyZSBpcyBwcm92aWRlZCBcImFzIGlzXCIgd2l0aCBubyB3YXJyYW50aWVzIChleHByZXNzIG9yIGltcGxpZWQpLlxuXG4jIyMgKipDb21wYXJpc29uIHRvIE90aGVyIExpY2Vuc2VzOioqXG4tIFNpbWlsYXIgdG8gdGhlICoqMi1jbGF1c2UgQlNEIExpY2Vuc2UqKiAoYnV0IHdpdGggYWRkaXRpb25hbCBjbGF1c2VzKS5cbi0gTW9yZSBwZXJtaXNzaXZlIHRoYW4gdGhlICoqR1BMKiogKG5vIGNvcHlsZWZ0IHJlcXVpcmVtZW50cykuXG4tIEFsbG93cyBjb21tZXJjaWFsIHVzZSBhbmQgbW9kaWZpY2F0aW9uIHdpdGggbWluaW1hbCByZXN0cmljdGlvbnMuXG5cbiMjIyAqKkltcG9ydGFudCBOb3RlczoqKlxuLSBTb21lIGZpbGVzIGluIHRoZSBSdWJ5IGRpc3RyaWJ1dGlvbiBtYXkgaGF2ZSBkaWZmZXJlbnQgbGljZW5zZXMgKGNoZWNrIGBMRUdBTGApLlxuLSBTY3JpcHRzL291dHB1dCBnZW5lcmF0ZWQgYnkgUnVieSBhcmUgbm90IGF1dG9tYXRpY2FsbHkgdW5kZXIgUnVieeKAmXMgY29weXJpZ2h0LlxuXG5UaGlzIGxpY2Vuc2UgaXMgKip2ZXJ5IHBlcm1pc3NpdmUqKiwgbWFraW5nIFJ1Ynkgd2lkZWx5IHVzYWJsZSBpbiBib3RoIG9wZW4tc291cmNlIGFuZCBwcm9wcmlldGFyeSBwcm9qZWN0cy4ifX1dfQ==
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 recorded_with: VCR 6.4.0

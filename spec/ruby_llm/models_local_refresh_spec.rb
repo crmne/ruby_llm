@@ -4,13 +4,16 @@ require 'spec_helper'
 
 RSpec.describe RubyLLM::Models do
   include_context 'with configured RubyLLM'
+  before do
+    skip 'Local provider specs disabled via SKIP_LOCAL_PROVIDER_TESTS' if ENV['SKIP_LOCAL_PROVIDER_TESTS']
+  end
 
   describe 'local provider model fetching' do
     describe '.refresh!' do
       context 'with default parameters' do # rubocop:disable RSpec/NestedGroups
         it 'includes local providers' do
-          allow(described_class).to receive(:fetch_from_models_dev).and_return([])
-          allow(RubyLLM::Provider).to receive(:configured_providers).and_return([])
+          allow(described_class).to receive(:fetch_models_dev_models).and_return({ models: [], fetched: true })
+          allow(RubyLLM::Provider).to receive_messages(providers: {}, configured_providers: [])
 
           described_class.refresh!
 
@@ -20,8 +23,8 @@ RSpec.describe RubyLLM::Models do
 
       context 'with remote_only: true' do # rubocop:disable RSpec/NestedGroups
         it 'excludes local providers' do
-          allow(described_class).to receive(:fetch_from_models_dev).and_return([])
-          allow(RubyLLM::Provider).to receive(:configured_remote_providers).and_return([])
+          allow(described_class).to receive(:fetch_models_dev_models).and_return({ models: [], fetched: true })
+          allow(RubyLLM::Provider).to receive_messages(remote_providers: {}, configured_remote_providers: [])
 
           described_class.refresh!(remote_only: true)
 
@@ -32,7 +35,7 @@ RSpec.describe RubyLLM::Models do
 
     describe '.fetch_from_providers' do
       it 'defaults to remote_only: true' do
-        allow(RubyLLM::Provider).to receive(:configured_remote_providers).and_return([])
+        allow(RubyLLM::Provider).to receive_messages(remote_providers: {}, configured_remote_providers: [])
 
         described_class.fetch_from_providers
 
@@ -40,7 +43,7 @@ RSpec.describe RubyLLM::Models do
       end
 
       it 'can include local providers with remote_only: false' do
-        allow(RubyLLM::Provider).to receive(:configured_providers).and_return([])
+        allow(RubyLLM::Provider).to receive_messages(providers: {}, configured_providers: [])
 
         described_class.fetch_from_providers(remote_only: false)
 
@@ -88,6 +91,13 @@ RSpec.describe RubyLLM::Models do
 
     describe 'local provider model resolution' do
       it 'assumes model exists for Ollama without warning after refresh' do
+        allow(described_class).to receive_messages(fetch_provider_models: {
+                                                     models: [],
+                                                     fetched_providers: [],
+                                                     configured_names: [],
+                                                     failed: []
+                                                   }, fetch_models_dev_models: { models: [], fetched: true })
+
         allow_any_instance_of(RubyLLM::Providers::Ollama).to( # rubocop:disable RSpec/AnyInstance
           receive(:list_models).and_return([
                                              RubyLLM::Model::Info.new(

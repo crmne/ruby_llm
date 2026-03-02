@@ -15,6 +15,27 @@ RSpec.describe RubyLLM::Providers::Gemini::Chat do
   end
 
   describe '#convert_schema_to_gemini' do
+    it 'extracts inner schema from wrapper format' do
+      # Simulate what RubyLLM::Schema.to_json_schema returns
+      schema = {
+        name: 'PersonSchema',
+        schema: {
+          type: 'object',
+          properties: {
+            name: { type: 'string' },
+            age: { type: 'integer' }
+          }
+        }
+      }
+
+      result = test_obj.send(:convert_schema_to_gemini, schema)
+
+      # Should extract the inner schema and convert it
+      expect(result[:type]).to eq('OBJECT')
+      expect(result[:properties][:name][:type]).to eq('STRING')
+      expect(result[:properties][:age][:type]).to eq('INTEGER')
+    end
+
     it 'converts simple string schema' do
       schema = { type: 'string' }
       result = test_obj.send(:convert_schema_to_gemini, schema)
@@ -374,9 +395,12 @@ RSpec.describe RubyLLM::Providers::Gemini::Chat do
     let(:tools) { {} }
     let(:schema) do
       {
-        type: 'object',
-        properties: {
-          result: { type: 'string' }
+        name: 'response',
+        schema: {
+          type: 'object',
+          properties: {
+            result: { type: 'string' }
+          }
         },
         strict: true
       }
@@ -395,6 +419,29 @@ RSpec.describe RubyLLM::Providers::Gemini::Chat do
       )
       expect(payload[:generationConfig]).not_to have_key(:responseSchema)
       expect(payload[:generationConfig]).not_to have_key('responseSchema')
+    end
+
+    it 'unwraps wrapper schemas for responseJsonSchema' do
+      model = instance_double(RubyLLM::Model::Info, id: 'gemini-3.0-pro', metadata: {})
+      wrapped_schema = {
+        name: 'PersonSchema',
+        schema: {
+          type: 'object',
+          properties: {
+            result: { type: 'string' }
+          },
+          strict: true
+        }
+      }
+
+      payload = test_obj.send(:render_payload, messages, tools:, temperature: nil, model:, schema: wrapped_schema)
+
+      expect(payload[:generationConfig][:responseJsonSchema]).to eq(
+        'type' => 'object',
+        'properties' => {
+          'result' => { 'type' => 'string' }
+        }
+      )
     end
 
     it 'falls back to responseSchema for non-2.5 models' do

@@ -8,7 +8,7 @@ http_interactions:
       string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Content-Type:
       - application/x-www-form-urlencoded
       Accept-Encoding:
@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Pragma:
-      - no-cache
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
-      Date:
-      - Mon, 12 Jan 2026 10:38:36 GMT
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
+      Date:
+      - Tue, 10 Feb 2026 09:29:58 GMT
+      Pragma:
+      - no-cache
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/cloud-platform openid https://www.googleapis.com/auth/userinfo.email",
+          "scope": "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/cloud-platform openid https://www.googleapis.com/auth/sqlservice.login",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Mon, 12 Jan 2026 10:38:36 GMT
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -68,7 +68,7 @@ http_interactions:
         description"},"status":{"type":"STRING","description":"Optional task status","enum":["pending","done"],"nullable":true}},"required":["task","status"]}}]}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer <GOOGLE_BEARER_TOKEN>
       Content-Type:
@@ -89,7 +89,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 12 Jan 2026 10:38:37 GMT
+      - Tue, 10 Feb 2026 09:29:59 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -119,18 +119,18 @@ http_interactions:
                         "status": "pending"
                       }
                     },
-                    "thoughtSignature": "CuMBAY89a1+LAWswZ+WFRMEvecx37KO+oJJK4X2nEeVzwo0/EjqUzw1QjH+52ofJG+0myBmk8iF186Y+oHd8mOsrH9AB9nJl7s0Ml+d2e5vrY14XYEWNb/FyahrcklGfnGkkb4/4rm56VEgecDvRJAIjmdYHbP7HK20BTkWIhLCtedGH+EOTO8/LXw4LNJ48/QnMEB2PUaWdWv4+rY1ZAueVdUB8Vd7CgaKx9CYYhyxqGThn8XZ/MBIYj8V9Q6TwGtU+/H+dtfJHS15+a0ROMr/LzrvulBO3DHggsSNE0/jha1gNqlA="
+                    "thoughtSignature": "CucBAY89a18Ya1ba7nnzQJS76rA5tVuER7HQ6Mjkl+3jxJ2drYFKEedMF7i+JAcuNA+AdI+G8K8a86ycnsKpdhzCQq7f7eSwGPMD6EG+3AzgPfMTeerkq0eK77cv32OvNLqeRZG2an+UEPd6Wg+/BYdDr2+IXHBEvdgt5jFU5quFwAZxwaMCF5cAmFB7fwQ5ulkHo4Y5zlRxr+Foqco+OsMNKNByWmYTnxVQ0tNYF6FMRHSHWcV+reo6ljKWyzLUKYaC3H30MX/ZogBgd6WzoXnryUP6N9ZxSZ5O5G58W3qmaDkHoFEkRRj2"
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.82695646286010738
+              "avgLogprobs": -0.53046808242797849
             }
           ],
           "usageMetadata": {
             "promptTokenCount": 50,
             "candidatesTokenCount": 10,
-            "totalTokenCount": 115,
+            "totalTokenCount": 119,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -144,11 +144,11 @@ http_interactions:
                 "tokenCount": 10
               }
             ],
-            "thoughtsTokenCount": 55
+            "thoughtsTokenCount": 59
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-01-12T10:38:36.825532Z",
-          "responseId": "LM9kabyxMrOB2fMPjcrW4Q4"
+          "createTime": "2026-02-10T09:29:58.460756Z",
+          "responseId": "lvqKadSPHNfNseMPm4O7sQ4"
         }
-  recorded_at: Mon, 12 Jan 2026 10:38:37 GMT
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 recorded_with: VCR 6.4.0
