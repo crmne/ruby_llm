@@ -56,8 +56,11 @@ RSpec.describe RubyLLM::Agent do
 
     chat = agent_class.chat
 
-    expect(chat.schema).to include(type: 'object')
-    expect(chat.schema[:properties]).to include(verdict: include(type: 'string'), feedback: include(type: 'string'))
+    expect(chat.schema).to include(name: 'Schema', strict: true, schema: include(type: 'object'))
+    expect(chat.schema.dig(:schema, :properties)).to include(
+      verdict: include(type: 'string'),
+      feedback: include(type: 'string')
+    )
   end
 
   it 'supports runtime-evaluated schema blocks that return a schema value' do
@@ -80,7 +83,7 @@ RSpec.describe RubyLLM::Agent do
     strict_chat = agent_class.chat(strict: true)
     loose_chat = agent_class.chat(strict: false)
 
-    expect(strict_chat.schema).to include(type: 'object')
+    expect(strict_chat.schema).to include(name: 'response', strict: true, schema: include(type: 'object'))
     expect(loose_chat.schema).to be_nil
   end
 

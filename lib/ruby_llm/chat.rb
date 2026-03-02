@@ -105,12 +105,9 @@ module RubyLLM
     def with_schema(schema)
       schema_instance = schema.is_a?(Class) ? schema.new : schema
 
-      # Accept both RubyLLM::Schema instances and plain JSON schemas
-      @schema = if schema_instance.respond_to?(:to_json_schema)
-                  schema_instance.to_json_schema[:schema]
-                else
-                  schema_instance
-                end
+      @schema = normalize_schema_payload(
+        schema_instance.respond_to?(:to_json_schema) ? schema_instance.to_json_schema : schema_instance
+      )
 
       self
     end
@@ -188,6 +185,36 @@ module RubyLLM
     end
 
     private
+
+    def normalize_schema_payload(raw_schema)
+      return nil if raw_schema.nil?
+      return raw_schema unless raw_schema.is_a?(Hash)
+
+      schema = RubyLLM::Utils.deep_symbolize_keys(raw_schema)
+      schema_def = extract_schema_definition(schema)
+      strict = extract_schema_strict(schema, schema_def)
+      build_schema_payload(schema, schema_def, strict)
+    end
+
+    def extract_schema_definition(schema)
+      RubyLLM::Utils.deep_dup(schema[:schema] || schema)
+    end
+
+    def extract_schema_strict(schema, schema_def)
+      return schema[:strict] if schema.key?(:strict)
+      return schema_def.delete(:strict) if schema_def.is_a?(Hash)
+
+      nil
+    end
+
+    def build_schema_payload(schema, schema_def, strict)
+      {
+        name: schema[:name] || 'response',
+        schema: schema_def,
+        strict: strict.nil? || strict,
+        description: schema[:description]
+      }.compact
+    end
 
     def wrap_streaming_block(&block)
       return nil unless block_given?
