@@ -10,6 +10,11 @@ module RubyLLM
       include VertexAI::Models
       include VertexAI::Transcription
 
+      SCOPES = [
+        'https://www.googleapis.com/auth/cloud-platform',
+        'https://www.googleapis.com/auth/generative-language.retriever'
+      ].freeze
+
       def initialize(config)
         super
         @authorizer = nil
@@ -44,12 +49,15 @@ module RubyLLM
 
       def initialize_authorizer
         require 'googleauth'
-        @authorizer = ::Google::Auth.get_application_default(
-          [
-            'https://www.googleapis.com/auth/cloud-platform',
-            'https://www.googleapis.com/auth/generative-language.retriever'
-          ]
-        )
+        @authorizer =
+          if @config.vertexai_service_account_key
+            ::Google::Auth::ServiceAccountCredentials.make_creds(
+              json_key_io: StringIO.new(@config.vertexai_service_account_key),
+              scope: SCOPES
+            )
+          else
+            ::Google::Auth.get_application_default(SCOPES)
+          end
       rescue LoadError
         raise Error,
               'The googleauth gem ~> 1.15 is required for Vertex AI. Please add it to your Gemfile: gem "googleauth"'

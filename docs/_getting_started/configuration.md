@@ -55,6 +55,7 @@ RubyLLM.configure do |config|
   config.gemini_api_key = ENV['GEMINI_API_KEY']
   config.vertexai_project_id = ENV['GOOGLE_CLOUD_PROJECT'] # Available in v1.7.0+
   config.vertexai_location = ENV['GOOGLE_CLOUD_LOCATION']
+  config.vertexai_service_account_key = ENV['VERTEXAI_SERVICE_ACCOUNT_KEY'] # Optional: service account JSON key
   config.deepseek_api_key = ENV['DEEPSEEK_API_KEY']
   config.mistral_api_key = ENV['MISTRAL_API_KEY']
   config.perplexity_api_key = ENV['PERPLEXITY_API_KEY']
@@ -96,6 +97,15 @@ end
 ```
 
 These headers are optional and only needed for organization-specific billing or project tracking.
+
+### Vertex AI Authentication Configuration
+
+RubyLLM supports both Vertex AI authentication methods:
+
+- Application Default Credentials (ADC)
+- Service Account JSON key via `config.vertexai_service_account_key`
+
+If `vertexai_service_account_key` is not set, RubyLLM uses ADC.
 
 ## Custom Endpoints
 
@@ -423,6 +433,7 @@ RubyLLM.configure do |config|
   config.gemini_api_key = String
   config.vertexai_project_id = String  # GCP project ID
   config.vertexai_location = String     # e.g., 'us-central1'
+  config.vertexai_service_account_key = String # Optional: service account JSON key (ADC used when unset)
   config.deepseek_api_key = String
   config.mistral_api_key = String
   config.perplexity_api_key = String

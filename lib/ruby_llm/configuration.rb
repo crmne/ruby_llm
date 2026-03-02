@@ -17,6 +17,7 @@ module RubyLLM
                   :gemini_api_base,
                   :vertexai_project_id,
                   :vertexai_location,
+                  :vertexai_service_account_key,
                   :deepseek_api_key,
                   :deepseek_api_base,
                   :perplexity_api_key,
