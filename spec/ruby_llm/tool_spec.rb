@@ -64,7 +64,12 @@ RSpec.describe RubyLLM::Tool do
 
       result = RequiredTool.new.call({})
 
-      expect(result).to eq({ error: 'Invalid tool arguments: missing keyword: :questions' })
+      expected_error = if RUBY_ENGINE == 'jruby'
+        'Invalid tool arguments: missing keyword: questions'
+      else
+        'Invalid tool arguments: missing keyword: :questions'
+      end
+      expect(result).to eq({ error: expected_error })
     end
 
     it 'allows extra keyword arguments when execute accepts keyrest' do
