@@ -24,6 +24,7 @@ module RubyLLM
                   :bedrock_secret_key,
                   :bedrock_region,
                   :bedrock_session_token,
+                  :openrouter_api_base,
                   :openrouter_api_key,
                   :xai_api_key,
                   :ollama_api_base,
