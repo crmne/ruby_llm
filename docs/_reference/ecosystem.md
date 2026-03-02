@@ -2,7 +2,7 @@
 layout: default
 title: RubyLLM Ecosystem
 nav_order: 3
-description: Extend RubyLLM with MCP servers, structured schemas, OpenTelemetry instrumentation and community-built tools for production AI apps.
+description: Extend RubyLLM with MCP servers, structured schemas, instrumentation, monitoring and community-built tools for production AI apps.
 ---
 
 # {{ page.title }}
@@ -26,6 +26,8 @@ After reading this guide, you will know:
 
 * What the Model Context Protocol (MCP) is and how `RubyLLM::MCP` brings it to Ruby
 * How `RubyLLM::Schema` simplifies structured data definition for AI applications
+* How `RubyLLM::Instrumentation` exposes RubyLLM events through ActiveSupport notifications
+* How `RubyLLM::Monitoring` provides dashboards and alerts for RubyLLM activity
 * How `RubyLLM::RedCandle` enables local model execution from Ruby
 * How OpenTelemetry instrumentation for RubyLLM provides observability into your LLM applications
 * Where to find community projects and how to contribute your own
@@ -95,24 +97,33 @@ gem install ruby_llm-schema
 
 For detailed documentation and examples, visit the [RubyLLM::Schema repository](https://github.com/danielfriis/ruby_llm-schema).
 
+---
+
 ## RubyLLM::Instrumentation
 
 **ActiveSupport::Notifications instrumentation for RubyLLM**
 
-[RubyLLM::Instrumentation](https://github.com/sinaptia/ruby_llm-instrumentation) is a Rails plugin that instruments RubyLLM events with the built-in [ActiveSupport::Notifications](https://api.rubyonrails.org/classes/ActiveSupport/Notifications.html) instrumentation API.
+[`RubyLLM::Instrumentation`](https://github.com/sinaptia/ruby_llm-instrumentation) is a Rails plugin that instruments RubyLLM events with the built-in [ActiveSupport::Notifications](https://api.rubyonrails.org/classes/ActiveSupport/Notifications.html) API.
 
-### Why instrumenting RubyLLM?
+### Why Use RubyLLM::Instrumentation?
 
-You might need to build custom monitoring, analytics, or logging from your RubyLLM calls (see below).
+When building LLM applications, you may need custom monitoring, analytics, or logging pipelines based on your RubyLLM activity.
 
-### Supported events
+### Key Features
 
-- `complete_chat.ruby_llm`: Triggered when `RubyLLM::Chat#ask` is called.
-- `execute_tool.ruby_llm`: Triggered when a tool call is executed.
-- `embed_text.ruby_llm`: Triggered when `RubyLLM::Embedding.embed` is called.
-- `paint_image.ruby_llm`: Triggered when `RubyLLM::Image.paint` is called.
-- `moderate_text.ruby_llm`: Triggered when `RubyLLM::Moderation.moderate` is called.
-- `transcribe_audio.ruby_llm`: Triggered when `RubyLLM::Transcription.transcribe` is called.
+- Event instrumentation for key RubyLLM operations
+- Native integration with `ActiveSupport::Notifications`
+- Event hooks for chat completion, tools, embeddings, images, moderation, and transcription
+- Easy integration with existing Rails observability stacks
+
+### Supported Events
+
+- `complete_chat.ruby_llm` when `RubyLLM::Chat#ask` is called
+- `execute_tool.ruby_llm` when a tool call is executed
+- `embed_text.ruby_llm` when `RubyLLM::Embedding.embed` is called
+- `paint_image.ruby_llm` when `RubyLLM::Image.paint` is called
+- `moderate_text.ruby_llm` when `RubyLLM::Moderation.moderate` is called
+- `transcribe_audio.ruby_llm` when `RubyLLM::Transcription.transcribe` is called
 
 ### Installation
 
@@ -122,17 +133,23 @@ gem install ruby_llm-instrumentation
 
 For detailed documentation and examples, visit the [RubyLLM::Instrumentation repository](https://github.com/sinaptia/ruby_llm-instrumentation).
 
+---
+
 ## RubyLLM::Monitoring
 
 **RubyLLM monitoring within your Rails application**
 
-[RubyLLM::Monitoring](https://github.com/sinaptia/ruby_llm-monitoring) is a Rails engine that provides a dashboard where you can see cost, throughput, response time, and error aggregations. On top of it, you can set up alerts so that when something interesting to you happens, you receive an email or a Slack notification.
+[`RubyLLM::Monitoring`](https://github.com/sinaptia/ruby_llm-monitoring) is a Rails engine that provides a dashboard for cost, throughput, response time, and error aggregations. It also supports configurable alerts through channels such as email or Slack.
 
-### Features
+### Why Use RubyLLM::Monitoring?
 
-- Captures events with RubyLLM::Instrumentation
-- Dashboard with metrics: cost, throughput, response time, error rate
-- Alert system: configurable, rule-based
+When running RubyLLM-powered features in production, you need ongoing visibility into performance, cost, and failure patterns.
+
+### Key Features
+
+- Captures events from `RubyLLM::Instrumentation`
+- Dashboard metrics for cost, throughput, latency, and error rates
+- Rule-based alerting for operational thresholds and regressions
 
 ### Installation
 
