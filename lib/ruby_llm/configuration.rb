@@ -92,7 +92,7 @@ module RubyLLM
         @log_regexp_timeout = value
       else
         RubyLLM.logger.warn("log_regexp_timeout is not supported on Ruby #{RUBY_VERSION}")
-        @log_regexp_timeout = nil
+        @log_regexp_timeout = value
       end
     end
   end

@@ -29,6 +29,18 @@ RSpec.describe RubyLLM::Context do
       expect(context.config.openai_api_key).to eq('modified-key')
       expect(context.config.log_regexp_timeout).to eq(5.0)
     end
+
+    it 'preserves log_regexp_timeout when Regexp timeout is unavailable' do
+      allow(Regexp).to receive(:respond_to?).and_call_original
+      allow(Regexp).to receive(:respond_to?).with(:timeout).and_return(false)
+      allow(RubyLLM.logger).to receive(:warn)
+
+      context = RubyLLM.context do |config|
+        config.log_regexp_timeout = 5.0
+      end
+
+      expect(context.config.log_regexp_timeout).to eq(5.0)
+    end
   end
 
   describe 'context chat operations' do

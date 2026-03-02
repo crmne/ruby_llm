@@ -71,7 +71,7 @@ module RubyLLM
     end
 
     def logging_regexp(pattern)
-      return Regexp.new(pattern) if @config.log_regexp_timeout.nil?
+      return Regexp.new(pattern) if @config.log_regexp_timeout.nil? || !Regexp.respond_to?(:timeout)
 
       Regexp.new(pattern, timeout: @config.log_regexp_timeout)
     end
