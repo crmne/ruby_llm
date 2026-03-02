@@ -23,6 +23,7 @@ After reading this guide, you will know:
 
 * What the Model Context Protocol (MCP) is and how ruby_llm-mcp brings it to Ruby
 * How RubyLLM::Schema simplifies structured data definition for AI applications
+* How RubyLLM::RedCandle enables local model execution from Ruby
 * How OpenTelemetry instrumentation for RubyLLM provides observability into your LLM applications
 * Where to find community projects and how to contribute your own
 
@@ -42,11 +43,11 @@ The Model Context Protocol is an open standard that allows AI applications to in
 
 ### Key Features
 
-- 🔌 Multiple transport types (HTTP streaming, STDIO, SSE)
-- 🛠️ Automatic tool integration with RubyLLM
-- 📄 Resource management for files and data
-- 🎯 Prompt templates with arguments
-- 🔄 Support for multiple simultaneous MCP connections
+- Multiple transport types (HTTP streaming, STDIO, SSE)
+- Automatic tool integration with RubyLLM
+- Resource management for files and data
+- Prompt templates with arguments
+- Support for multiple simultaneous MCP connections
 
 ### Installation
 
@@ -77,11 +78,11 @@ RubyLLM::Schema makes this easy with a familiar Ruby syntax.
 
 ### Key Features
 
-- 📝 Rails-inspired DSL for intuitive schema creation
-- 🎯 Full JSON Schema compatibility
-- 🔧 Support for all primitive types, objects, and arrays
-- 🔄 Union types with `any_of`
-- 📦 Schema definitions and references for reusability
+- Rails-inspired DSL for intuitive schema creation
+- Full JSON Schema compatibility
+- Support for primitive types, objects, and arrays
+- Union types with `any_of`
+- Schema definitions and references for reusability
 
 ### Installation
 
@@ -90,6 +91,45 @@ gem install ruby_llm-schema
 ```
 
 For detailed documentation and examples, visit the [RubyLLM::Schema repository](https://github.com/danielfriis/ruby_llm-schema).
+
+---
+
+## RubyLLM::RedCandle
+
+**Local LLM Execution with Quantized Models**
+
+[RubyLLM::RedCandle](https://github.com/scientist-labs/ruby_llm-red_candle) enables local LLM execution using quantized GGUF models through the [Red Candle](https://github.com/scientist-labs/red-candle) gem. Unlike other RubyLLM providers that communicate via HTTP APIs, RedCandle runs models directly in your Ruby process using Rust's Candle library.
+
+### Why Run Models Locally?
+
+Running LLMs locally offers several advantages:
+
+- **Zero latency**: No network round-trips to external APIs
+- **No API costs**: Run unlimited inferences without usage fees
+- **Complete privacy**: Your data never leaves your machine
+- **Offline capable**: Works without an internet connection
+
+### Key Features
+
+- Local inference with hardware acceleration (Metal on macOS, CUDA for NVIDIA GPUs, or CPU fallback)
+- Automatic model downloading from HuggingFace
+- Streaming support for token-by-token output
+- Structured JSON output with grammar-constrained generation
+- Multi-turn conversation support with automatic history management
+
+### Installation
+
+```bash
+gem install ruby_llm-red_candle
+```
+
+**Note**: The underlying red-candle gem requires a Rust toolchain for compiling native extensions.
+
+### Supported Models
+
+RedCandle supports various quantized models including TinyLlama, Qwen2.5, Gemma-3, Phi-3, and Mistral-7B. Models are automatically downloaded from HuggingFace on first use.
+
+For detailed documentation and examples, visit the [RubyLLM::RedCandle repository](https://github.com/scientist-labs/ruby_llm-red_candle).
 
 ---
 
@@ -114,12 +154,12 @@ This gem provides all of this automatically, with minimal setup and without havi
 
 ### Key Features
 
-- 🔭 Automatic tracing for chat completions and tool calls
-- 📊 Token usage tracking (input and output)
-- 🛠️ Tool call spans with arguments and results
-- ❌ Error recording with exception details
-- 🔌 Works with any OpenTelemetry-compatible backend
-- 📐 Follows the [OpenTelemetry GenAI Semantic Conventions](https://opentelemetry.io/docs/specs/semconv/gen-ai/gen-ai-spans/)
+- Automatic tracing for chat completions and tool calls
+- Token usage tracking (input and output)
+- Tool call spans with arguments and results
+- Error recording with exception details
+- Works with any OpenTelemetry-compatible backend
+- Follows the [OpenTelemetry GenAI Semantic Conventions](https://opentelemetry.io/docs/specs/semconv/gen-ai/gen-ai-spans/)
 
 ### Installation
 
@@ -146,5 +186,8 @@ The RubyLLM ecosystem is growing! If you've built a library or tool that extends
 - Opening a PR to add your project to this page
 - Sharing it in our GitHub Discussions
 - Using the `ruby_llm` topic on your GitHub repository
+
+> Ecosystem projects are maintained by their respective authors. We list projects for discoverability, but we cannot guarantee the quality, security, maintenance status, or fitness of every listed project.
+{: .note }
 
 Together, we're building a comprehensive ecosystem for LLM-powered Ruby applications.
