@@ -68,7 +68,7 @@ RubyLLM.configure do |config|
   config.gpustack_api_base = ENV['GPUSTACK_API_BASE']
   config.gpustack_api_key = ENV['GPUSTACK_API_KEY']
 
-  # AWS Bedrock (uses standard AWS credential chain if not set)
+  # AWS Bedrock (requires explicit credentials)
   config.bedrock_api_key = ENV['AWS_ACCESS_KEY_ID']
   config.bedrock_secret_key = ENV['AWS_SECRET_ACCESS_KEY']
   config.bedrock_region = ENV['AWS_REGION'] # Required for Bedrock
