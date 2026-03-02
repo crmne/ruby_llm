@@ -8,7 +8,7 @@ http_interactions:
       string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Content-Type:
       - application/x-www-form-urlencoded
       Accept-Encoding:
@@ -20,10 +20,10 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Date:
+      - Tue, 10 Feb 2026 09:22:08 GMT
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
-      Date:
-      - Fri, 16 Jan 2026 15:18:50 GMT
       Pragma:
       - no-cache
       Cache-Control:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/sqlservice.login",
+          "scope": "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login openid",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Fri, 16 Jan 2026 15:18:50 GMT
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-3-flash-preview:generateContent
@@ -65,7 +65,7 @@ http_interactions:
       string: '{"contents":[{"role":"user","parts":[{"text":"What is 5 + 3?"}]}],"generationConfig":{"thinkingConfig":{"includeThoughts":true,"thinkingLevel":"medium"}}}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer <GOOGLE_BEARER_TOKEN>
       Content-Type:
@@ -86,7 +86,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Fri, 16 Jan 2026 15:18:52 GMT
+      - Tue, 10 Feb 2026 09:22:10 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -109,12 +109,12 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "**Analyzing the Summation**\n\nI've successfully identified the task as a simple addition problem. The user is indeed requesting the sum. I've calculated the answer by adding 5 and 3, and the result, of course, is 8.\n\n\n",
+                    "text": "**Calculating a Simple Sum**\n\nI've quickly determined the answer to the user's query: 5 + 3 equals 8. It was a straightforward calculation, and the result is now readily available.\n\n\n",
                     "thought": true
                   },
                   {
                     "text": "5 + 3 = 8",
-                    "thoughtSignature": "CmABjz1rX28vyJCW+8b/Mj7oj/ZYrL5Hc8O8Ykkde1eskpGTMTQX8TdjzUNf+DoaqMG2hMQAnbseMP8UCZBX0/rOZpHR4C7mvmzbEpbqSbcp9RDMOSxmBdg57FEU+y1i/cY="
+                    "thoughtSignature": "ClgBjz1rX9UXlmnsK4sI3acjVmVn6i/lVM4oD9qbnqvFcPlOR7EPOjo0w6Ki3WYFu5w8ZtjE5uvCo3Bj4lXe+GJ3nyjZK7h8pOtfP2wQtTtQOWqvo2ugMfcY"
                   }
                 ]
               },
@@ -124,7 +124,7 @@ http_interactions:
           "usageMetadata": {
             "promptTokenCount": 8,
             "candidatesTokenCount": 7,
-            "totalTokenCount": 41,
+            "totalTokenCount": 39,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -138,26 +138,26 @@ http_interactions:
                 "tokenCount": 7
               }
             ],
-            "thoughtsTokenCount": 26
+            "thoughtsTokenCount": 24
           },
           "modelVersion": "gemini-3-flash-preview",
-          "createTime": "2026-01-16T15:18:50.325784Z",
-          "responseId": "2lZqaZjxE7me7PIPwMKb0Ac"
+          "createTime": "2026-02-10T09:22:08.455164Z",
+          "responseId": "wPiKafzjG7m2k7QPmujN0A0"
         }
-  recorded_at: Fri, 16 Jan 2026 15:18:52 GMT
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-3-flash-preview:generateContent
     body:
       encoding: UTF-8
-      string: '{"contents":[{"role":"user","parts":[{"text":"What is 5 + 3?"}]},{"role":"model","parts":[{"thought":true,"text":"**Analyzing
-        the Summation**\n\nI''ve successfully identified the task as a simple addition
-        problem. The user is indeed requesting the sum. I''ve calculated the answer
-        by adding 5 and 3, and the result, of course, is 8.\n\n\n","thoughtSignature":"CmABjz1rX28vyJCW+8b/Mj7oj/ZYrL5Hc8O8Ykkde1eskpGTMTQX8TdjzUNf+DoaqMG2hMQAnbseMP8UCZBX0/rOZpHR4C7mvmzbEpbqSbcp9RDMOSxmBdg57FEU+y1i/cY="},{"text":"5
+      string: '{"contents":[{"role":"user","parts":[{"text":"What is 5 + 3?"}]},{"role":"model","parts":[{"thought":true,"text":"**Calculating
+        a Simple Sum**\n\nI''ve quickly determined the answer to the user''s query:
+        5 + 3 equals 8. It was a straightforward calculation, and the result is now
+        readily available.\n\n\n","thoughtSignature":"ClgBjz1rX9UXlmnsK4sI3acjVmVn6i/lVM4oD9qbnqvFcPlOR7EPOjo0w6Ki3WYFu5w8ZtjE5uvCo3Bj4lXe+GJ3nyjZK7h8pOtfP2wQtTtQOWqvo2ugMfcY"},{"text":"5
         + 3 = 8"}]},{"role":"user","parts":[{"text":"Now multiply that by 2"}]}],"generationConfig":{"thinkingConfig":{"includeThoughts":true,"thinkingLevel":"medium"}}}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer <GOOGLE_BEARER_TOKEN>
       Content-Type:
@@ -178,7 +178,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Fri, 16 Jan 2026 15:18:54 GMT
+      - Tue, 10 Feb 2026 09:22:12 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -194,6 +194,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicm9sZSI6ICJtb2RlbCIsCiAgICAgICAgInBhcnRzIjogWwogICAgICAgICAgewogICAgICAgICAgICAidGV4dCI6ICIqKkNhbGN1bGF0aW5nIHRoZSBOZXh0IFN0ZXAqKlxuXG5JJ3ZlIGdvdCB0aGUgcHJldmlvdXMgcmVzdWx0IOKAkyA4IOKAkyBhbmQgbm93IEkgbmVlZCB0byBtdWx0aXBseSBpdCBieSAyLiBUaGlzIGlzIHN0cmFpZ2h0Zm9yd2FyZDsgdGhlIG1hdGggaXMgc2ltcGxlLiBUaGUgY2FsY3VsYXRpb24gaXMgOCB0aW1lcyAyLCBhbmQgdGhlIGV4cGVjdGVkIHJlc3VsdCBpcyAxNi5cblxuXG4iLAogICAgICAgICAgICAidGhvdWdodCI6IHRydWUKICAgICAgICAgIH0sCiAgICAgICAgICB7CiAgICAgICAgICAgICJ0ZXh0IjogIjggw5cgMiA9IDE2IiwKICAgICAgICAgICAgInRob3VnaHRTaWduYXR1cmUiOiAiQ29nQkFZODlhMStGMG1YM2dxbXR4dVFOQlhKNkk2Z21ja1kzZ1JxVGVBZHFQZDZqanY2bytyWDVjTlBJM1I1ZHhzK0JQMS9oSXcrejJFVXZIVnFEZWlvazFvOFhPZ0R3Z1JJR3pZNXdCRmZ5MTIzWGJ0Q3BqN1RYb0tUbXE2ZmdrSGlkMEFYbnNISC9LRzJmTitHVG1QR3lDc1RaS3lJNk02MXZqc3JDWmttamZhaGVQUHRDNWNhWmVRPT0iCiAgICAgICAgICB9CiAgICAgICAgXQogICAgICB9LAogICAgICAiZmluaXNoUmVhc29uIjogIlNUT1AiCiAgICB9CiAgXSwKICAidXNhZ2VNZXRhZGF0YSI6IHsKICAgICJwcm9tcHRUb2tlbkNvdW50IjogNzUsCiAgICAiY2FuZGlkYXRlc1Rva2VuQ291bnQiOiA4LAogICAgInRvdGFsVG9rZW5Db3VudCI6IDExOCwKICAgICJ0cmFmZmljVHlwZSI6ICJPTl9ERU1BTkQiLAogICAgInByb21wdFRva2Vuc0RldGFpbHMiOiBbCiAgICAgIHsKICAgICAgICAibW9kYWxpdHkiOiAiVEVYVCIsCiAgICAgICAgInRva2VuQ291bnQiOiA3NQogICAgICB9CiAgICBdLAogICAgImNhbmRpZGF0ZXNUb2tlbnNEZXRhaWxzIjogWwogICAgICB7CiAgICAgICAgIm1vZGFsaXR5IjogIlRFWFQiLAogICAgICAgICJ0b2tlbkNvdW50IjogOAogICAgICB9CiAgICBdLAogICAgInRob3VnaHRzVG9rZW5Db3VudCI6IDM1CiAgfSwKICAibW9kZWxWZXJzaW9uIjogImdlbWluaS0zLWZsYXNoLXByZXZpZXciLAogICJjcmVhdGVUaW1lIjogIjIwMjYtMDEtMTZUMTU6MTg6NTIuODA4NzQ5WiIsCiAgInJlc3BvbnNlSWQiOiAiM0ZacWFhMnVNYlhFaHUwUHRyT1MyUVkiCn0K
-  recorded_at: Fri, 16 Jan 2026 15:18:54 GMT
+        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicm9sZSI6ICJtb2RlbCIsCiAgICAgICAgInBhcnRzIjogWwogICAgICAgICAgewogICAgICAgICAgICAidGV4dCI6ICIqKkNhbGN1bGF0aW5nIHRoZSBuZXh0IHN0ZXAqKlxuXG5JJ20gbm93IHRhc2tlZCB3aXRoIG11bHRpcGx5aW5nIHRoZSBwcmV2aW91cyByZXN1bHQsIHdoaWNoIHdhcyA4LCBieSAyLiBUaGlzIGlzIGEgc3RyYWlnaHRmb3J3YXJkIG11bHRpcGxpY2F0aW9uIG9wZXJhdGlvbi4gSSd2ZSBzZXQgdXAgdGhlIGNhbGN1bGF0aW9uOiA4IG11bHRpcGxpZWQgYnkgMi4gVGhlIHJlc3VsdCwgSSBiZWxpZXZlLCB3aWxsIGJlIDE2LlxuXG5cbiIsCiAgICAgICAgICAgICJ0aG91Z2h0IjogdHJ1ZQogICAgICAgICAgfSwKICAgICAgICAgIHsKICAgICAgICAgICAgInRleHQiOiAiOCDDlyAyID0gMTYiLAogICAgICAgICAgICAidGhvdWdodFNpZ25hdHVyZSI6ICJDc3dCQVk4OWExKzFQMlNzUGhFV3g3bnZCV0J2dEpTdXdaNk9nRTh3S3lLWkFrN1hINjF3ako3WlMzeWhZaUE4WDM5MmRtcTQ0ZzdJUm55MStQazZCNVBoS3JGNXlMUUlEVEd6Q2xiRDBmb0xGQzF5aC9iZGlwZGs1ZC9BbERiVTRWb0ZVRlJ3VTVoMW9TSVhZenNiV01VczVmSFpWR044aEUvcURXVUlHaVBDNythN3ZlbEhlOHgxakFLY1R6MHA3U3ZleFFncDVGZWU2eEdQNU5tc0RCTW1DZUV4di94L29yVkFZbnRIVWVhMzhhTEFZK3YyYWJXMExhZDlQL3NnR01hWUpOU2NyOHZTenBGRUdiVmoiCiAgICAgICAgICB9CiAgICAgICAgXQogICAgICB9LAogICAgICAiZmluaXNoUmVhc29uIjogIlNUT1AiCiAgICB9CiAgXSwKICAidXNhZ2VNZXRhZGF0YSI6IHsKICAgICJwcm9tcHRUb2tlbkNvdW50IjogNjYsCiAgICAiY2FuZGlkYXRlc1Rva2VuQ291bnQiOiA4LAogICAgInRvdGFsVG9rZW5Db3VudCI6IDEyOCwKICAgICJ0cmFmZmljVHlwZSI6ICJPTl9ERU1BTkQiLAogICAgInByb21wdFRva2Vuc0RldGFpbHMiOiBbCiAgICAgIHsKICAgICAgICAibW9kYWxpdHkiOiAiVEVYVCIsCiAgICAgICAgInRva2VuQ291bnQiOiA2NgogICAgICB9CiAgICBdLAogICAgImNhbmRpZGF0ZXNUb2tlbnNEZXRhaWxzIjogWwogICAgICB7CiAgICAgICAgIm1vZGFsaXR5IjogIlRFWFQiLAogICAgICAgICJ0b2tlbkNvdW50IjogOAogICAgICB9CiAgICBdLAogICAgInRob3VnaHRzVG9rZW5Db3VudCI6IDU0CiAgfSwKICAibW9kZWxWZXJzaW9uIjogImdlbWluaS0zLWZsYXNoLXByZXZpZXciLAogICJjcmVhdGVUaW1lIjogIjIwMjYtMDItMTBUMDk6MjI6MTAuNDI3NjA5WiIsCiAgInJlc3BvbnNlSWQiOiAid3ZpS2FkbU1HcXVSNjk0UG9wZmFpQVEiCn0K
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 recorded_with: VCR 6.4.0

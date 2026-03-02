@@ -9,7 +9,7 @@ http_interactions:
         a person named Bob"}],"stream":false,"response_format":{"type":"json_schema","json_schema":{"name":"response","schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"integer"}},"required":["name","age"],"additionalProperties":false},"strict":true}}}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer <OPENAI_API_KEY>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 16 Jan 2026 16:49:42 GMT
+      - Tue, 10 Feb 2026 08:57:58 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -36,13 +36,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '3691'
+      - '3995'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
       - '2020-10-01'
-      X-Envoy-Upstream-Service-Time:
-      - '3714'
+      Server:
+      - cloudflare
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -63,13 +63,10 @@ http_interactions:
       - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
-      - "<COOKIE>"
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
-      Server:
-      - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
@@ -78,9 +75,9 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-CyhIw1QmURGzOzaA1am5d9AzpTlUq",
+          "id": "chatcmpl-D7dr8DfPVFGj9t1CI1TJAp6mELAzC",
           "object": "chat.completion",
-          "created": 1768582178,
+          "created": 1770713874,
           "model": "gpt-5-nano-2025-08-07",
           "choices": [
             {
@@ -96,14 +93,14 @@ http_interactions:
           ],
           "usage": {
             "prompt_tokens": 43,
-            "completion_tokens": 341,
-            "total_tokens": 384,
+            "completion_tokens": 405,
+            "total_tokens": 448,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
             },
             "completion_tokens_details": {
-              "reasoning_tokens": 320,
+              "reasoning_tokens": 384,
               "audio_tokens": 0,
               "accepted_prediction_tokens": 0,
               "rejected_prediction_tokens": 0
@@ -112,7 +109,7 @@ http_interactions:
           "service_tier": "default",
           "system_fingerprint": null
         }
-  recorded_at: Fri, 16 Jan 2026 16:49:42 GMT
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/chat/completions
@@ -123,7 +120,7 @@ http_interactions:
         just tell me about Ruby"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer <OPENAI_API_KEY>
       Content-Type:
@@ -138,7 +135,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 16 Jan 2026 16:49:58 GMT
+      - Tue, 10 Feb 2026 08:58:23 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -150,13 +147,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '15870'
+      - '24470'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
       - '2020-10-01'
-      X-Envoy-Upstream-Service-Time:
-      - '15888'
+      Server:
+      - cloudflare
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -177,20 +174,51 @@ http_interactions:
       - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
-      - "<COOKIE>"
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
-      Server:
-      - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        ewogICJpZCI6ICJjaGF0Y21wbC1DeWhKMEo0T0pnbTZxdG5iNWpPY1piV2lnUk00aCIsCiAgIm9iamVjdCI6ICJjaGF0LmNvbXBsZXRpb24iLAogICJjcmVhdGVkIjogMTc2ODU4MjE4MiwKICAibW9kZWwiOiAiZ3B0LTUtbmFuby0yMDI1LTA4LTA3IiwKICAiY2hvaWNlcyI6IFsKICAgIHsKICAgICAgImluZGV4IjogMCwKICAgICAgIm1lc3NhZ2UiOiB7CiAgICAgICAgInJvbGUiOiAiYXNzaXN0YW50IiwKICAgICAgICAiY29udGVudCI6ICJSdWJ5IGlzIGEgZHluYW1pYywgaW50ZXJwcmV0ZWQgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UgZGVzaWduZWQgZm9yIHByb2dyYW1tZXIgaGFwcGluZXNzLiBJdCB3YXMgY3JlYXRlZCBieSBZdWtpaGlybyBNYXRzdW1vdG8gKE1hdHopIGluIHRoZSBtaWTigJExOTkwcyBhbmQgZW1waGFzaXplcyByZWFkYWJpbGl0eSBhbmQgcHJvZHVjdGl2aXR5LlxuXG5LZXkgcG9pbnRzOlxuLSBFdmVyeXRoaW5nIGlzIGFuIG9iamVjdC4gRXZlbiBudW1iZXJzIGFuZCBib29sZWFucyBhcmUgb2JqZWN0cy5cbi0gQ2xlYW4sIHJlYWRhYmxlIHN5bnRheCB3aXRoIGEgZm9jdXMgb24gbmF0dXJhbCBsYW5ndWFnZS1saWtlIGNvZGUuXG4tIENvcmUgZmVhdHVyZXMgaW5jbHVkZSBibG9ja3MvcHJvY3MvbGFtYmRhcywgbWl4aW5zIHZpYSBtb2R1bGVzLCBhbmQgZHluYW1pYyB0eXBpbmcgd2l0aCBkdWNrIHR5cGluZy5cbi0gUmljaCBzdGFuZGFyZCBsaWJyYXJ5IGFuZCBhIGxhcmdlIGVjb3N5c3RlbSBidWlsdCBhcm91bmQgUnVieUdlbXMgKHRoZSBwYWNrYWdlIG1hbmFnZXIpIGFuZCBCdW5kbGVyIGZvciBkZXBlbmRlbmN5IG1hbmFnZW1lbnQuXG4tIFBvcHVsYXIgd2ViIGZyYW1ld29yazogUnVieSBvbiBSYWlscywgd2hpY2ggaGVscGVkIG1ha2UgUnVieSBmYW1vdXMgZm9yIHdlYiBkZXZlbG9wbWVudC4gT3RoZXIgZnJhbWV3b3JrcyBpbmNsdWRlIFNpbmF0cmEgYW5kIEhhbmFtaS5cblxuUGVyZm9ybWFuY2UgYW5kIGNvbmN1cnJlbmN5OlxuLSBSdWJ5IGlzIGdlbmVyYWxseSBzbG93ZXIgdGhhbiBjb21waWxlZCBsYW5ndWFnZXMsIHRob3VnaCB0aGVyZSBoYXZlIGJlZW4gb25nb2luZyBwZXJmb3JtYW5jZSBpbXByb3ZlbWVudHMgKEpJVHMgYW5kIGFsdGVybmF0aXZlcyBsaWtlIFlKSVQgaW4gbmV3ZXIgdmVyc2lvbnMpLlxuLSBNUkkgKHRoZSBzdGFuZGFyZCBSdWJ5IGludGVycHJldGVyKSB1c2VzIGEgR2xvYmFsIFZNIExvY2sgKEdWTCksIHdoaWNoIGFmZmVjdHMgdHJ1ZSBwYXJhbGxlbCB0aHJlYWRzLiBSdWJ5IDMgaW50cm9kdWNlZCBmZWF0dXJlcyBsaWtlIFJhY3RvciBmb3IgcGFyYWxsZWwgZXhlY3V0aW9uLCBhbmQgb3RoZXIgcnVudGltZXMgKGUuZy4sIEpSdWJ5KSBjYW4gb2ZmZXIgZGlmZmVyZW50IGNvbmN1cnJlbmN5IG1vZGVscy5cblxuQ29tbW9uIHVzZSBjYXNlczpcbi0gV2ViIGFwcGxpY2F0aW9ucyAoZXNwZWNpYWxseSB3aXRoIFJhaWxzKVxuLSBTY3JpcHRpbmcgYW5kIGF1dG9tYXRpb25cbi0gUHJvdG90eXBpbmcgYW5kIHJhcGlkIGRldmVsb3BtZW50XG5cbklmIHlvdeKAmWQgbGlrZSwgSSBjYW4gc2hhcmUgYSB0aW55IGV4YW1wbGUgb3IgcG9pbnQgeW91IHRvIGJlZ2lubmVyIHJlc291cmNlcyB0YWlsb3JlZCB0byB3ZWIgZGV2ZWxvcG1lbnQgd2l0aCBSdWJ5IG9uIFJhaWxzLiIsCiAgICAgICAgInJlZnVzYWwiOiBudWxsLAogICAgICAgICJhbm5vdGF0aW9ucyI6IFtdCiAgICAgIH0sCiAgICAgICJmaW5pc2hfcmVhc29uIjogInN0b3AiCiAgICB9CiAgXSwKICAidXNhZ2UiOiB7CiAgICAicHJvbXB0X3Rva2VucyI6IDM2LAogICAgImNvbXBsZXRpb25fdG9rZW5zIjogMjE1MCwKICAgICJ0b3RhbF90b2tlbnMiOiAyMTg2LAogICAgInByb21wdF90b2tlbnNfZGV0YWlscyI6IHsKICAgICAgImNhY2hlZF90b2tlbnMiOiAwLAogICAgICAiYXVkaW9fdG9rZW5zIjogMAogICAgfSwKICAgICJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjogewogICAgICAicmVhc29uaW5nX3Rva2VucyI6IDE4NTYsCiAgICAgICJhdWRpb190b2tlbnMiOiAwLAogICAgICAiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOiAwLAogICAgICAicmVqZWN0ZWRfcHJlZGljdGlvbl90b2tlbnMiOiAwCiAgICB9CiAgfSwKICAic2VydmljZV90aWVyIjogImRlZmF1bHQiLAogICJzeXN0ZW1fZmluZ2VycHJpbnQiOiBudWxsCn0K
-  recorded_at: Fri, 16 Jan 2026 16:49:58 GMT
+      string: |
+        {
+          "id": "chatcmpl-D7drCIfcyujfLfvsaJp6C6UhoWmuy",
+          "object": "chat.completion",
+          "created": 1770713878,
+          "model": "gpt-5-nano-2025-08-07",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "Ruby is a dynamic, interpreted programming language designed for developer happiness. It emphasizes readability and productivity, with a clean and expressive syntax.\n\nKey points:\n- Everything is an object, and it supports strong object-oriented features with modules for mixins.\n- It has powerful metaprogramming capabilities, allowing you to define behavior at runtime.\n- Blocks, iterators, and first-class functions (procs/lambdas) make common tasks concise and expressive.\n- Garbage-collected memory management helps reduce manual memory handling.\n\nEcosystem and popular uses:\n- The Ruby on Rails web framework is its most famous ecosystem, enabling rapid web app development.\n- Other frameworks include Sinatra (lighter weight) and RSpec for testing.\n- RubyGems is the package manager, with Bundler for dependency management.\n- Widely used for scripting, automation, DevOps tasks, and building DSLs (domain-specific languages).\n\nPerformance and concurrency:\n- Ruby is dynamic and typically slower than compiled languages, but recent versions focus on speed improvements.\n- Parallelism has traditionally been tricky due to a <GOOGLE_CLOUD_LOCATION> interpreter lock in common implementations; newer features like Ractor (in Ruby 3.x) aim to enable safer parallelism.\n- Projects like the Ruby 3x3 initiative target faster performance and improved productivity.\n\nGetting started quickly:\n- Install Ruby (via rbenv, rvm, or a system package).\n- Check version with: ruby -v\n- Create a file, e.g., hello.rb, with: puts \"Hello, Ruby!\"\n- Run it with: ruby hello.rb\n\nQuick example:\ndef greet(name)\n  puts \"Hello, #{name}!\"\nend\ngreet(\"Ruby\")\n\nIf you want, tell me your goal (web app, scripting, data tasks, etc.) and I can tailor a more focusedRuby overview or a quick-start guide.",
+                "refusal": null,
+                "annotations": []
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 36,
+            "completion_tokens": 1981,
+            "total_tokens": 2017,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 1600,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": null
+        }
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 recorded_with: VCR 6.4.0

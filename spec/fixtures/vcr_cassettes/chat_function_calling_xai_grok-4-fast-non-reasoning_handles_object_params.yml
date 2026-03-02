@@ -13,7 +13,7 @@ http_interactions:
         window to schedule"}},"required":["window"],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer <XAI_API_KEY>
       Content-Type:
@@ -28,7 +28,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 16 Jan 2026 16:26:16 GMT
+      - Tue, 10 Feb 2026 09:30:17 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -38,13 +38,13 @@ http_interactions:
       X-Ratelimit-Limit-Tokens:
       - '4000000'
       X-Ratelimit-Remaining-Tokens:
-      - '3362584'
+      - '4000000'
       X-Zero-Data-Retention:
       - 'false'
       X-Ratelimit-Limit-Requests:
       - '480'
       X-Ratelimit-Remaining-Requests:
-      - '449'
+      - '480'
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Vary:
@@ -65,6 +65,6 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"91f32569-6b3e-5319-89ee-7cd61c287d03","object":"chat.completion","created":1768580775,"model":"grok-4-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"call_77997110","function":{"name":"object_params","arguments":"{\"window\":{\"start\":\"2025-01-01\",\"end\":\"2025-01-02\"}}"},"type":"function"}],"refusal":null},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":434,"completion_tokens":42,"total_tokens":476,"prompt_tokens_details":{"text_tokens":434,"audio_tokens":0,"image_tokens":0,"cached_tokens":158},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":841000},"system_fingerprint":"fp_4616e76413"}'
-  recorded_at: Fri, 16 Jan 2026 16:26:16 GMT
+      string: '{"id":"8b203be5-44b7-75c5-ea72-dfedf89c1cc0","object":"chat.completion","created":1770715816,"model":"grok-4-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"call_68737827","function":{"name":"object_params","arguments":"{\"window\":{\"start\":\"2025-01-01\",\"end\":\"2025-01-02\"}}"},"type":"function"}],"refusal":null},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":434,"completion_tokens":42,"total_tokens":476,"prompt_tokens_details":{"text_tokens":434,"audio_tokens":0,"image_tokens":0,"cached_tokens":158},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":841000},"system_fingerprint":"fp_f7a6b84626"}'
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 recorded_with: VCR 6.4.0

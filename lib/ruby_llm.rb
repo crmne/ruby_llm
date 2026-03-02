@@ -9,10 +9,13 @@ require 'json'
 require 'logger'
 require 'marcel'
 require 'securerandom'
+require 'date'
+require 'time'
 require 'zeitwerk'
 
 loader = Zeitwerk::Loader.for_gem
 loader.inflector.inflect(
+  'azure' => 'Azure',
   'UI' => 'UI',
   'api' => 'API',
   'bedrock' => 'Bedrock',
@@ -91,6 +94,7 @@ module RubyLLM
 end
 
 RubyLLM::Provider.register :anthropic, RubyLLM::Providers::Anthropic
+RubyLLM::Provider.register :azure, RubyLLM::Providers::Azure
 RubyLLM::Provider.register :bedrock, RubyLLM::Providers::Bedrock
 RubyLLM::Provider.register :deepseek, RubyLLM::Providers::DeepSeek
 RubyLLM::Provider.register :gemini, RubyLLM::Providers::Gemini

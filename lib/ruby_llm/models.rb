@@ -16,6 +16,21 @@ module RubyLLM
       'openrouter' => 'openrouter',
       'perplexity' => 'perplexity'
     }.freeze
+    PROVIDER_PREFERENCE = %w[
+      openai
+      anthropic
+      gemini
+      vertexai
+      bedrock
+      openrouter
+      deepseek
+      mistral
+      perplexity
+      xai
+      azure
+      ollama
+      gpustack
+    ].freeze
 
     class << self
       def instance
@@ -93,7 +108,7 @@ module RubyLLM
 
         if provider_class
           temp_instance = provider_class.new(config)
-          assume_exists = true if temp_instance.local?
+          assume_exists = true if temp_instance.local? || temp_instance.assume_models_exist?
         end
 
         if assume_exists
@@ -251,8 +266,8 @@ module RubyLLM
       end
 
       def index_by_key(models)
-        models.each_with_object({}) do |model, hash|
-          hash["#{model.provider}:#{model.id}"] = model
+        models.to_h do |model|
+          ["#{model.provider}:#{model.id}", model]
         end
       end
 
@@ -297,12 +312,14 @@ module RubyLLM
         modalities = normalize_models_dev_modalities(model_data[:modalities])
         capabilities = models_dev_capabilities(model_data, modalities)
 
+        created_date = model_data[:release_date] || model_data[:last_updated]
+
         data = {
           id: model_data[:id],
           name: model_data[:name] || model_data[:id],
           provider: provider_slug,
           family: model_data[:family],
-          created_at: model_data[:release_date] || model_data[:last_updated],
+          created_at: "#{created_date} 00:00:00 UTC",
           context_window: model_data.dig(:limit, :context),
           max_output_tokens: model_data.dig(:limit, :output),
           knowledge_cutoff: normalize_models_dev_knowledge(model_data[:knowledge]),
@@ -447,8 +464,8 @@ module RubyLLM
     def find_with_provider(model_id, provider)
       resolved_id = Aliases.resolve(model_id, provider)
       resolved_id = resolve_bedrock_region_id(resolved_id) if provider.to_s == 'bedrock'
-      all.find { |m| m.id == model_id && m.provider == provider.to_s } ||
-        all.find { |m| m.id == resolved_id && m.provider == provider.to_s } ||
+      all.find { |m| m.id == resolved_id && m.provider == provider.to_s } ||
+        all.find { |m| m.id == model_id && m.provider == provider.to_s } ||
         raise(ModelNotFoundError, "Unknown model: #{model_id} for provider: #{provider}")
     end
 
@@ -467,9 +484,23 @@ module RubyLLM
     end
 
     def find_without_provider(model_id)
-      all.find { |m| m.id == model_id } ||
-        all.find { |m| m.id == Aliases.resolve(model_id) } ||
-        raise(ModelNotFoundError, "Unknown model: #{model_id}")
+      exact_matches = all.select { |m| m.id == model_id }
+      return preferred_match(exact_matches) if exact_matches.any?
+
+      resolved_id = Aliases.resolve(model_id)
+      alias_matches = all.select { |m| m.id == resolved_id }
+      return preferred_match(alias_matches) if alias_matches.any?
+
+      raise(ModelNotFoundError, "Unknown model: #{model_id}")
+    end
+
+    def preferred_match(candidates)
+      return candidates.first if candidates.size == 1
+
+      candidates.min_by do |model|
+        index = PROVIDER_PREFERENCE.index(model.provider)
+        index || PROVIDER_PREFERENCE.length
+      end
     end
   end
 end

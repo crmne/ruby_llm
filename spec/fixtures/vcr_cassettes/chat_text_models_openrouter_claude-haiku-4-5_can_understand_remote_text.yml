@@ -8,7 +8,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -26,40 +26,42 @@ http_interactions:
       - GitHub.com
       Content-Type:
       - text/plain; charset=utf-8
+      X-Origin-Cache:
+      - HIT
       Last-Modified:
-      - Fri, 16 Jan 2026 00:22:16 GMT
+      - Mon, 09 Feb 2026 23:48:37 GMT
       Access-Control-Allow-Origin:
       - "*"
       Etag:
-      - W/"696984b8-9c6"
+      - W/"698a7255-9c6"
       Expires:
-      - Fri, 16 Jan 2026 16:34:17 GMT
+      - Tue, 10 Feb 2026 05:41:29 GMT
       Cache-Control:
       - max-age=600
       X-Proxy-Cache:
       - MISS
       X-Github-Request-Id:
-      - CAA8:CA0BF:61D6EC:632DE0:696A6631
+      - DA8F:2A47E2:A980F3:B16D78:698AC2B0
       Accept-Ranges:
       - bytes
       Date:
-      - Fri, 16 Jan 2026 16:43:42 GMT
+      - Tue, 10 Feb 2026 08:47:56 GMT
       Via:
       - 1.1 varnish
       Age:
-      - '68'
+      - '99'
       X-Served-By:
-      - cache-fra-etou8220040-FRA
+      - cache-bkk2310024-BKK
       X-Cache:
       - HIT
       X-Cache-Hits:
       - '1'
       X-Timer:
-      - S1768581823.574109,VS0,VE4
+      - S1770713276.359652,VS0,VE1
       Vary:
       - Accept-Encoding
       X-Fastly-Request-Id:
-      - b83a000710a2490d5e26d0c5b2e2378375138c59
+      - b149bf34977846fbf5e571916b862bc0008c45d3
     body:
       encoding: ASCII-8BIT
       string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
@@ -95,7 +97,7 @@ http_interactions:
         \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
         WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
         FOR A PARTICULAR\n     PURPOSE.\n"
-  recorded_at: Fri, 16 Jan 2026 16:43:42 GMT
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 - request:
     method: post
     uri: https://openrouter.ai/api/v1/chat/completions
@@ -138,7 +140,7 @@ http_interactions:
         A PARTICULAR\n     PURPOSE.\n</file>"}]}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer <OPENROUTER_API_KEY>
       Content-Type:
@@ -153,7 +155,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 16 Jan 2026 16:43:44 GMT
+      - Tue, 10 Feb 2026 08:47:57 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -178,25 +180,24 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: "\n         \n\n         \n\n         \n\n         \n\n         \n\n
-        \        \n\n         \n\n         \n\n         \n\n         \n\n         \n\n
-        \        \n{\"id\":\"gen-1768581822-RtriihUutz50MVonXHqB\",\"provider\":\"Amazon
-        Bedrock\",\"model\":\"anthropic/claude-haiku-4.5\",\"object\":\"chat.completion\",\"created\":1768581823,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"#
+        \        \n\n         \n\n         \n\n         \n{\"id\":\"gen-1770713276-4MrqKf6C9a8GTIcLjKPR\",\"provider\":\"Anthropic\",\"model\":\"anthropic/claude-haiku-4.5\",\"object\":\"chat.completion\",\"created\":1770713276,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"#
         License File Contents\\n\\nThis is the **Ruby programming language license**
-        file. It outlines the licensing terms for Ruby, which is copyrighted free
-        software created by Yukihiro Matsumoto.\\n\\n## Key Points:\\n\\n**License
-        Options:**\\n- Ruby can be used under either the 2-clause BSD License (BSDL)
-        OR the custom conditions listed in this file\\n\\n**Main Permissions:**\\n1.
-        **Source distribution** - Can freely copy the original source code\\n2. **Modifications**
-        - Can modify Ruby if you either:\\n   - Release modifications publicly\\n
-        \  - Use them only within your organization\\n   - Rename non-standard binaries\\n
-        \  - Make other arrangements with the author\\n\\n3. **Binary distribution**
-        - Can distribute compiled versions if you:\\n   - Include instructions on
-        getting the original source\\n   - Provide the source code with the binaries\\n
-        \  - Use non-standard names\\n   - Arrange with the author\\n\\n4. **Incorporation**
-        - Can include Ruby in other software (even commercial)\\n\\n5. **Scripts/Output**
-        - Programs you write using Ruby belong to you, not the Ruby copyright holder\\n\\n6.
-        **Disclaimer** - The software comes \\\"AS IS\\\" with no warranties\\n\\nThis
-        is a fairly permissive open-source license that allows commercial use while
-        maintaining attribution to the original author.\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":588,\"completion_tokens\":291,\"total_tokens\":879,\"cost\":0.002043,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":null,\"upstream_inference_prompt_cost\":0.000588,\"upstream_inference_completions_cost\":0.001455},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0}}}"
-  recorded_at: Fri, 16 Jan 2026 16:43:48 GMT
+        file. It outlines the terms under which Ruby can be used, modified, and distributed.\\n\\n##
+        Key Points:\\n\\n- **Copyright holder**: Yukihiro Matsumoto (Matz)\\n- **License
+        options**: Either the 2-clause BSD License (BSDL) OR the custom conditions
+        listed below\\n\\n## Main Permissions:\\n\\n1. **Source distribution**: You
+        can freely copy and redistribute the source code as long as you keep original
+        copyright notices\\n\\n2. **Modifications**: You can modify the software if
+        you:\\n   - Put modifications in the public domain, OR\\n   - Use them only
+        internally within your organization, OR\\n   - Rename and clearly label modified
+        binaries, OR\\n   - Make other arrangements with the author\\n\\n3. **Binary
+        distribution**: You can distribute compiled binaries if you provide source
+        code access or clear instructions on where to get the original\\n\\n4. **Integration**:
+        You can include Ruby or parts of it in other software (including commercial)\\n\\n5.
+        **Generated code**: Scripts and files created by Ruby belong to whoever created
+        them, not Ruby itself\\n\\n6. **Disclaimer**: The software is provided \\\"as-is\\\"
+        with no warranties\\n\\nThis is a relatively **permissive open-source license**
+        that allows commercial use while requiring attribution and source code availability
+        in certain distribution scenarios.\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":588,\"completion_tokens\":296,\"total_tokens\":884,\"cost\":0.002068,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.002068,\"upstream_inference_prompt_cost\":0.000588,\"upstream_inference_completions_cost\":0.00148},\"completion_tokens_details\":{\"reasoning_tokens\":0}}}"
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 recorded_with: VCR 6.4.0

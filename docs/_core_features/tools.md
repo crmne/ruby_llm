@@ -85,6 +85,15 @@ end
 > ```
 {: .note }
 
+> If a model attempts to call a tool that doesn't exist (sometimes called "tool hallucination"), RubyLLM handles this gracefully by:
+>
+> 1. Returning an error message to the model indicating which tool it tried to call
+> 2. Listing the actually available tools
+> 3. Allowing the conversation to continue so the model can correct itself
+>
+> This prevents crashes and gives the model a chance to use the correct tool or respond appropriately.
+{: .note }
+
 ## Declaring Parameters
 
 RubyLLM ships with two complementary approaches:
@@ -298,7 +307,7 @@ chat.with_tool(Weather, choice: :weather, parallel: true)
   - `:auto` Model decides whether to use any tools
   - `:required` - Model must use one of the provided tools
   - `:none` - Disable all tools
-  - `"tool_name"` - Force a specific tool (e.g., `:weather` for `Weather` tool)
+  - `"tool_name"` or tool class - Force a specific tool (e.g., `:weather` or `Weather`)
 - **`parallel`**: Controls parallel tool calls
   - `true` Allow multiple tool calls simultaneously
   - `false` - One at a time

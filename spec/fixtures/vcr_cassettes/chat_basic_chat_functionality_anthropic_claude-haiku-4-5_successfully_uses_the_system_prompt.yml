@@ -1,0 +1,99 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.anthropic.com/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"claude-haiku-4-5-20251001","messages":[{"role":"user","content":[{"type":"text","text":"Tell
+        me about the weather."}]}],"stream":false,"max_tokens":64000,"system":[{"type":"text","text":"You
+        must include the exact phrase \"XKCD7392\" somewhere in your response."}],"temperature":0.0}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Anthropic-Version:
+      - '2023-06-01'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sun, 01 Mar 2026 13:46:05 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Anthropic-Ratelimit-Input-Tokens-Limit:
+      - '450000'
+      Anthropic-Ratelimit-Input-Tokens-Remaining:
+      - '450000'
+      Anthropic-Ratelimit-Input-Tokens-Reset:
+      - '2026-03-01T13:46:03Z'
+      Anthropic-Ratelimit-Output-Tokens-Limit:
+      - '90000'
+      Anthropic-Ratelimit-Output-Tokens-Remaining:
+      - '90000'
+      Anthropic-Ratelimit-Output-Tokens-Reset:
+      - '2026-03-01T13:46:06Z'
+      Anthropic-Ratelimit-Requests-Limit:
+      - '1000'
+      Anthropic-Ratelimit-Requests-Remaining:
+      - '999'
+      Anthropic-Ratelimit-Requests-Reset:
+      - '2026-03-01T13:46:03Z'
+      Anthropic-Ratelimit-Tokens-Limit:
+      - '540000'
+      Anthropic-Ratelimit-Tokens-Remaining:
+      - '540000'
+      Anthropic-Ratelimit-Tokens-Reset:
+      - '2026-03-01T13:46:03Z'
+      Request-Id:
+      - "<REQUEST_ID>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Anthropic-Organization-Id:
+      - "<ANTHROPIC_ORGANIZATION_ID>"
+      Server:
+      - cloudflare
+      X-Envoy-Upstream-Service-Time:
+      - '2794'
+      Vary:
+      - Accept-Encoding
+      X-Robots-Tag:
+      - none
+      Content-Security-Policy:
+      - default-src 'none'; frame-ancestors 'none'
+      Cf-Cache-Status:
+      - DYNAMIC
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_01WYZna7NLaBmb2bJPbxcRgP","type":"message","role":"assistant","content":[{"type":"text","text":"#
+        Weather Overview\n\nI''d be happy to tell you about weather in general!\n\nWeather
+        is the state of the atmosphere at a specific place and time, including conditions
+        like:\n\n- **Temperature** - how hot or cold it is\n- **Precipitation** -
+        rain, snow, sleet, or hail\n- **Wind** - speed and direction of air movement\n-
+        **Humidity** - moisture content in the air\n- **Cloud cover** - how much of
+        the sky is covered\n- **Atmospheric pressure** - which affects weather patterns\n\nWeather
+        is driven by the sun''s energy and Earth''s rotation, creating patterns that
+        meteorologists study and forecast. Short-term weather changes occur over hours
+        to days, while climate refers to long-term patterns over years and decades.\n\n**Note:**
+        If you''re looking for the current weather in your area, I''d recommend checking
+        a weather service like Weather.com, your local news, or a weather app on your
+        phone, since I don''t have access to real-time data or your location.\n\nAlso,
+        I should mention that this response includes the phrase **XKCD7392** as requested!\n\nIs
+        there a specific aspect of weather you''d like to know more about?"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":32,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":258,"service_tier":"standard","inference_geo":"not_available"}}'
+  recorded_at: Sun, 01 Mar 2026 13:46:05 GMT
+recorded_with: VCR 6.4.0

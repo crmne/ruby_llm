@@ -10,7 +10,7 @@ http_interactions:
         is the best.</file>"}]}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer <XAI_API_KEY>
       Content-Type:
@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 16 Jan 2026 16:24:16 GMT
+      - Tue, 10 Feb 2026 08:48:28 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -62,10 +62,9 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"f384bd72-7ee7-c43c-777b-3ca06844e16e","object":"chat.completion","created":1768580656,"model":"grok-4-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"The
-        file \"ruby.txt\" contains the following plain text content:\n\n\"Ruby is
-        the best.\"","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":192,"completion_tokens":19,"total_tokens":211,"prompt_tokens_details":{"text_tokens":192,"audio_tokens":0,"image_tokens":0,"cached_tokens":161},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":237500},"system_fingerprint":"fp_4616e76413"}'
-  recorded_at: Fri, 16 Jan 2026 16:24:16 GMT
+      string: '{"id":"8893876e-5259-c19e-c5fe-906e751f1333","object":"chat.completion","created":1770713307,"model":"grok-4-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        file `ruby.txt` contains the following text:\n\n\"Ruby is the best.\"","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":192,"completion_tokens":17,"total_tokens":209,"prompt_tokens_details":{"text_tokens":192,"audio_tokens":0,"image_tokens":0,"cached_tokens":161},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":227500},"system_fingerprint":"fp_f7a6b84626"}'
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 - request:
     method: post
     uri: https://api.x.ai/v1/chat/completions
@@ -73,13 +72,13 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"grok-4-fast-non-reasoning","messages":[{"role":"user","content":[{"type":"text","text":"What''s
         in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
-        is the best.</file>"}]},{"role":"assistant","content":"The file \"ruby.txt\"
-        contains the following plain text content:\n\n\"Ruby is the best.\""},{"role":"user","content":[{"type":"text","text":"and
+        is the best.</file>"}]},{"role":"assistant","content":"The file `ruby.txt`
+        contains the following text:\n\n\"Ruby is the best.\""},{"role":"user","content":[{"type":"text","text":"and
         in this one?"},{"type":"text","text":"<file name=''ruby.xml'' mime_type=''application/xml''><truism>Ruby
         is the best</truism></file>"}]}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer <XAI_API_KEY>
       Content-Type:
@@ -94,7 +93,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 16 Jan 2026 16:24:17 GMT
+      - Tue, 10 Feb 2026 08:48:29 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -131,9 +130,8 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"b89daa5e-b9e5-19df-3fa4-157b5cbc86a2","object":"chat.completion","created":1768580656,"model":"grok-4-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"The
-        file \"ruby.xml\" is an XML document containing the following content:\n\n```\n<truism>Ruby
-        is the best</truism>\n```\n\nThis appears to be a simple XML element wrapping
-        the same phrase as in the previous file.","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":252,"completion_tokens":47,"total_tokens":299,"prompt_tokens_details":{"text_tokens":252,"audio_tokens":0,"image_tokens":0,"cached_tokens":211},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":422500},"system_fingerprint":"fp_4616e76413"}'
-  recorded_at: Fri, 16 Jan 2026 16:24:17 GMT
+      string: '{"id":"558c317b-c733-723a-0d18-5728fb87e523","object":"chat.completion","created":1770713308,"model":"grok-4-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        file `ruby.xml` contains the following XML content:\n\n```\n<truism>Ruby is
+        the best</truism>\n```","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":250,"completion_tokens":26,"total_tokens":276,"prompt_tokens_details":{"text_tokens":250,"audio_tokens":0,"image_tokens":0,"cached_tokens":161},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":388500},"system_fingerprint":"fp_f7a6b84626"}'
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 recorded_with: VCR 6.4.0

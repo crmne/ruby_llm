@@ -12,7 +12,7 @@ http_interactions:
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}],"enable_thinking":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -27,50 +27,50 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Fri, 16 Jan 2026 17:06:37 GMT
+      - Tue, 10 Feb 2026 13:54:20 GMT
       Content-Length:
-      - '1027'
+      - '967'
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-487","object":"chat.completion","created":1768583197,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
+      string: '{"id":"chatcmpl-933","object":"chat.completion","created":1770731660,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
         the user is asking for the weather in Berlin, and they provided the coordinates
-        52.5200 latitude and 13.4050 longitude. I need to use the weather function
-        to get the current weather for that location. The function requires both latitude
-        and longitude as parameters, and they''re given here. I''ll format the tool
-        call with those values. Let me make sure the parameters are strings as specified.
-        Yep, the example uses strings, so I''ll input them as strings. No other functions
-        are needed here. Just call the weather function with the provided coordinates.\n","tool_calls":[{"id":"call_i168mzu9","index":0,"type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":202,"completion_tokens":163,"total_tokens":365}}
+        (52.5200, 13.4050). I need to use the weather function to get the current
+        weather for that location. Let me check the function parameters. The function
+        requires latitude and longitude as strings. The user provided both, so I''ll
+        format them into the tool call. Make sure the JSON keys are correct and the
+        values are strings. Let me structure the tool_call with the name \"weather\"
+        and the arguments as specified.\n","tool_calls":[{"id":"call_gpdfowp1","index":0,"type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":195,"completion_tokens":154,"total_tokens":349}}
 
         '
-  recorded_at: Fri, 16 Jan 2026 17:06:37 GMT
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 - request:
     method: post
     uri: "<OLLAMA_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
       string: '{"model":"qwen3","messages":[{"role":"user","content":"What''s the
-        weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"call_i168mzu9","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}],"reasoning":"Okay,
+        weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"call_gpdfowp1","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}],"reasoning":"Okay,
         the user is asking for the weather in Berlin, and they provided the coordinates
-        52.5200 latitude and 13.4050 longitude. I need to use the weather function
-        to get the current weather for that location. The function requires both latitude
-        and longitude as parameters, and they''re given here. I''ll format the tool
-        call with those values. Let me make sure the parameters are strings as specified.
-        Yep, the example uses strings, so I''ll input them as strings. No other functions
-        are needed here. Just call the weather function with the provided coordinates.\n","reasoning_content":"Okay,
-        the user is asking for the weather in Berlin, and they provided the coordinates
-        52.5200 latitude and 13.4050 longitude. I need to use the weather function
-        to get the current weather for that location. The function requires both latitude
-        and longitude as parameters, and they''re given here. I''ll format the tool
-        call with those values. Let me make sure the parameters are strings as specified.
-        Yep, the example uses strings, so I''ll input them as strings. No other functions
-        are needed here. Just call the weather function with the provided coordinates.\n"},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_i168mzu9"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        (52.5200, 13.4050). I need to use the weather function to get the current
+        weather for that location. Let me check the function parameters. The function
+        requires latitude and longitude as strings. The user provided both, so I''ll
+        format them into the tool call. Make sure the JSON keys are correct and the
+        values are strings. Let me structure the tool_call with the name \"weather\"
+        and the arguments as specified.\n","reasoning_content":"Okay, the user is
+        asking for the weather in Berlin, and they provided the coordinates (52.5200,
+        13.4050). I need to use the weather function to get the current weather for
+        that location. Let me check the function parameters. The function requires
+        latitude and longitude as strings. The user provided both, so I''ll format
+        them into the tool call. Make sure the JSON keys are correct and the values
+        are strings. Let me structure the tool_call with the name \"weather\" and
+        the arguments as specified.\n"},{"role":"tool","content":"Current weather
+        at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_gpdfowp1"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}],"enable_thinking":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -85,59 +85,64 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Fri, 16 Jan 2026 17:06:38 GMT
+      - Tue, 10 Feb 2026 13:55:09 GMT
       Content-Length:
-      - '938'
+      - '1155'
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6ImNoYXRjbXBsLTYzMiIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3Njg1ODMxOTgsIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IlRoZSBjdXJyZW50IHdlYXRoZXIgaW4gQmVybGluICg1Mi41MjAwLCAxMy40MDUwKSBpcyAqKjE1wrBDKiogd2l0aCB3aW5kcyBhdCAqKjEwIGttL2gqKi4g4piB77iP8J+MrO+4jyBMZXQgbWUga25vdyBpZiB5b3UgbmVlZCBtb3JlIGRldGFpbHMhIiwicmVhc29uaW5nIjoiT2theSwgdGhlIHVzZXIgYXNrZWQgZm9yIHRoZSB3ZWF0aGVyIGluIEJlcmxpbiB3aXRoIHRoZSBjb29yZGluYXRlcyBwcm92aWRlZC4gSSBjYWxsZWQgdGhlIHdlYXRoZXIgZnVuY3Rpb24gd2l0aCB0aG9zZSBjb29yZGluYXRlcyBhbmQgZ290IHRoZSByZXNwb25zZTogMTXCsEMgYW5kIFdpbmQgYXQgMTAga20vaC4gTm93IEkgbmVlZCB0byBwcmVzZW50IHRoaXMgaW5mb3JtYXRpb24gY2xlYXJseS4gTGV0IG1lIGNoZWNrIGlmIHRoZXJlJ3MgYW55IGFkZGl0aW9uYWwgZGV0YWlscyBuZWVkZWQsIGJ1dCB0aGUgdXNlciBqdXN0IHdhbnRlZCB0aGUgY3VycmVudCB3ZWF0aGVyLiBUaGUgcmVzcG9uc2Ugc2VlbXMgc3RyYWlnaHRmb3J3YXJkLiBJJ2xsIG1lbnRpb24gdGhlIHRlbXBlcmF0dXJlIGFuZCB3aW5kIHNwZWVkLCBtYXliZSBhZGQgYSBub3RlIGFib3V0IHRoZSBsb2NhdGlvbiB0byBjb25maXJtIGl0J3MgQmVybGluLiBLZWVwIGl0IHNpbXBsZSBhbmQgZnJpZW5kbHkuXG4ifSwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjQwNywiY29tcGxldGlvbl90b2tlbnMiOjE2MSwidG90YWxfdG9rZW5zIjo1Njh9fQo=
-  recorded_at: Fri, 16 Jan 2026 17:06:38 GMT
+        eyJpZCI6ImNoYXRjbXBsLTczMCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NzA3MzE3MDksIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IkN1cnJlbnQgd2VhdGhlciBpbiBCZXJsaW4gKDUyLjUyMDAsIDEzLjQwNTApOiAgXG7wn4yh77iPICoqMTXCsEMqKiB8IPCfjKzvuI8gV2luZDogKioxMCBrbS9oKiogIFxuXG5UaGUgd2VhdGhlciBhcHBlYXJzIG1pbGQgYW5kIGNvbWZvcnRhYmxlISBMZXQgbWUga25vdyBpZiB5b3UnZCBsaWtlIGFkZGl0aW9uYWwgZGV0YWlscy4iLCJyZWFzb25pbmciOiJPa2F5LCB0aGUgdXNlciBhc2tlZCBmb3IgdGhlIHdlYXRoZXIgaW4gQmVybGluIHdpdGggdGhlIGNvb3JkaW5hdGVzIHByb3ZpZGVkLiBJIGNhbGxlZCB0aGUgd2VhdGhlciBmdW5jdGlvbiB3aXRoIHRob3NlIGNvb3JkaW5hdGVzIGFuZCBnb3QgdGhlIHJlc3BvbnNlOiAxNcKwQyBhbmQgd2luZCBhdCAxMCBrbS9oLiBOb3cgSSBuZWVkIHRvIHByZXNlbnQgdGhpcyBpbmZvcm1hdGlvbiBjbGVhcmx5LiBMZXQgbWUgc3RhcnQgYnkgc3RhdGluZyB0aGUgY3VycmVudCB3ZWF0aGVyIGluIEJlcmxpbi4gSSBzaG91bGQgbWVudGlvbiB0aGUgdGVtcGVyYXR1cmUgZmlyc3QsIHRoZW4gdGhlIHdpbmQgc3BlZWQuIEtlZXAgaXQgc3RyYWlnaHRmb3J3YXJkIGFuZCBmcmllbmRseS4gTWF5YmUgYWRkIGEgbm90ZSBhYm91dCB0aGUgd2VhdGhlciBiZWluZyBtaWxkIG9yIGNvbWZvcnRhYmxlIGJhc2VkIG9uIHRoZSB0ZW1wZXJhdHVyZS4gTWFrZSBzdXJlIHRvIGZvcm1hdCBpdCBuZWF0bHkgYW5kIGNvbmZpcm0gdGhlIGxvY2F0aW9uIHRvIGF2b2lkIGFueSBjb25mdXNpb24uIExldCBtZSBjaGVjayBpZiB0aGVyZSdzIGFueSBhZGRpdGlvbmFsIGluZm8gbmVlZGVkLCBidXQgc2luY2UgdGhlIHVzZXIganVzdCBhc2tlZCBmb3IgdGhlIHdlYXRoZXIsIHRoaXMgc2hvdWxkIGNvdmVyIGl0LlxuIn0sImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjozOTEsImNvbXBsZXRpb25fdG9rZW5zIjoyMDIsInRvdGFsX3Rva2VucyI6NTkzfX0K
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 - request:
     method: post
     uri: "<OLLAMA_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
       string: "{\"model\":\"qwen3\",\"messages\":[{\"role\":\"user\",\"content\":\"What's
-        the weather in Berlin? (52.5200, 13.4050)\"},{\"role\":\"assistant\",\"content\":\"\",\"tool_calls\":[{\"id\":\"call_i168mzu9\",\"type\":\"function\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":\\\"52.5200\\\",\\\"longitude\\\":\\\"13.4050\\\"}\"}}],\"reasoning\":\"Okay,
+        the weather in Berlin? (52.5200, 13.4050)\"},{\"role\":\"assistant\",\"content\":\"\",\"tool_calls\":[{\"id\":\"call_gpdfowp1\",\"type\":\"function\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":\\\"52.5200\\\",\\\"longitude\\\":\\\"13.4050\\\"}\"}}],\"reasoning\":\"Okay,
         the user is asking for the weather in Berlin, and they provided the coordinates
-        52.5200 latitude and 13.4050 longitude. I need to use the weather function
-        to get the current weather for that location. The function requires both latitude
-        and longitude as parameters, and they're given here. I'll format the tool
-        call with those values. Let me make sure the parameters are strings as specified.
-        Yep, the example uses strings, so I'll input them as strings. No other functions
-        are needed here. Just call the weather function with the provided coordinates.\\n\",\"reasoning_content\":\"Okay,
-        the user is asking for the weather in Berlin, and they provided the coordinates
-        52.5200 latitude and 13.4050 longitude. I need to use the weather function
-        to get the current weather for that location. The function requires both latitude
-        and longitude as parameters, and they're given here. I'll format the tool
-        call with those values. Let me make sure the parameters are strings as specified.
-        Yep, the example uses strings, so I'll input them as strings. No other functions
-        are needed here. Just call the weather function with the provided coordinates.\\n\"},{\"role\":\"tool\",\"content\":\"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h\",\"tool_call_id\":\"call_i168mzu9\"},{\"role\":\"assistant\",\"content\":\"The
-        current weather in Berlin (52.5200, 13.4050) is **15°C** with winds at **10
-        km/h**. ☁️\U0001F32C️ Let me know if you need more details!\",\"reasoning\":\"Okay,
+        (52.5200, 13.4050). I need to use the weather function to get the current
+        weather for that location. Let me check the function parameters. The function
+        requires latitude and longitude as strings. The user provided both, so I'll
+        format them into the tool call. Make sure the JSON keys are correct and the
+        values are strings. Let me structure the tool_call with the name \\\"weather\\\"
+        and the arguments as specified.\\n\",\"reasoning_content\":\"Okay, the user
+        is asking for the weather in Berlin, and they provided the coordinates (52.5200,
+        13.4050). I need to use the weather function to get the current weather for
+        that location. Let me check the function parameters. The function requires
+        latitude and longitude as strings. The user provided both, so I'll format
+        them into the tool call. Make sure the JSON keys are correct and the values
+        are strings. Let me structure the tool_call with the name \\\"weather\\\"
+        and the arguments as specified.\\n\"},{\"role\":\"tool\",\"content\":\"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h\",\"tool_call_id\":\"call_gpdfowp1\"},{\"role\":\"assistant\",\"content\":\"Current
+        weather in Berlin (52.5200, 13.4050):  \\n\U0001F321️ **15°C** | \U0001F32C️
+        Wind: **10 km/h**  \\n\\nThe weather appears mild and comfortable! Let me
+        know if you'd like additional details.\",\"reasoning\":\"Okay, the user asked
+        for the weather in Berlin with the coordinates provided. I called the weather
+        function with those coordinates and got the response: 15°C and wind at 10
+        km/h. Now I need to present this information clearly. Let me start by stating
+        the current weather in Berlin. I should mention the temperature first, then
+        the wind speed. Keep it straightforward and friendly. Maybe add a note about
+        the weather being mild or comfortable based on the temperature. Make sure
+        to format it neatly and confirm the location to avoid any confusion. Let me
+        check if there's any additional info needed, but since the user just asked
+        for the weather, this should cover it.\\n\",\"reasoning_content\":\"Okay,
         the user asked for the weather in Berlin with the coordinates provided. I
         called the weather function with those coordinates and got the response: 15°C
-        and Wind at 10 km/h. Now I need to present this information clearly. Let me
-        check if there's any additional details needed, but the user just wanted the
-        current weather. The response seems straightforward. I'll mention the temperature
-        and wind speed, maybe add a note about the location to confirm it's Berlin.
-        Keep it simple and friendly.\\n\",\"reasoning_content\":\"Okay, the user asked
-        for the weather in Berlin with the coordinates provided. I called the weather
-        function with those coordinates and got the response: 15°C and Wind at 10
-        km/h. Now I need to present this information clearly. Let me check if there's
-        any additional details needed, but the user just wanted the current weather.
-        The response seems straightforward. I'll mention the temperature and wind
-        speed, maybe add a note about the location to confirm it's Berlin. Keep it
-        simple and friendly.\\n\"},{\"role\":\"user\",\"content\":\"What's the weather
-        in Paris? (48.8575, 2.3514)\"}],\"stream\":false,\"tools\":[{\"type\":\"function\",\"function\":{\"name\":\"weather\",\"description\":\"Gets
+        and wind at 10 km/h. Now I need to present this information clearly. Let me
+        start by stating the current weather in Berlin. I should mention the temperature
+        first, then the wind speed. Keep it straightforward and friendly. Maybe add
+        a note about the weather being mild or comfortable based on the temperature.
+        Make sure to format it neatly and confirm the location to avoid any confusion.
+        Let me check if there's any additional info needed, but since the user just
+        asked for the weather, this should cover it.\\n\"},{\"role\":\"user\",\"content\":\"What's
+        the weather in Paris? (48.8575, 2.3514)\"}],\"stream\":false,\"tools\":[{\"type\":\"function\",\"function\":{\"name\":\"weather\",\"description\":\"Gets
         current weather for a location\",\"parameters\":{\"type\":\"object\",\"properties\":{\"latitude\":{\"type\":\"string\",\"description\":\"Latitude
         (e.g., 52.5200)\"},\"longitude\":{\"type\":\"string\",\"description\":\"Longitude
         (e.g., 13.4050)\"}},\"required\":[\"latitude\",\"longitude\"],\"additionalProperties\":false,\"strict\":true}}}],\"enable_thinking\":false}"
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -152,85 +157,84 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Fri, 16 Jan 2026 17:06:40 GMT
+      - Tue, 10 Feb 2026 13:55:42 GMT
       Content-Length:
-      - '1079'
+      - '888'
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-685","object":"chat.completion","created":1768583200,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
+      string: '{"id":"chatcmpl-964","object":"chat.completion","created":1770731742,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
         the user is asking for the weather in Paris with the coordinates 48.8575,
-        2.3514. Let me check the tools available.\n\nThe available function is the
-        weather function, which requires latitude and longitude. The user provided
-        both coordinates, so I need to call the weather function with those values.\n\nI
-        should format the tool call correctly, making sure the latitude and longitude
-        are strings in the arguments. Let me double-check the parameters to avoid
-        any mistakes. Once the function is called, the response will give the weather
-        details, which I can then relay back to the user in a friendly manner.\n","tool_calls":[{"id":"call_yazd8zhu","index":0,"type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"48.8575\",\"longitude\":\"2.3514\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":369,"completion_tokens":166,"total_tokens":535}}
+        2.3514. I need to use the weather function again. Let me check the function
+        parameters. The function requires latitude and longitude as strings. The user
+        provided both, so I should format the tool call correctly. Make sure the JSON
+        keys are \"latitude\" and \"longitude\" with the given values. No typos in
+        the numbers. Alright, that''s all.\n","tool_calls":[{"id":"call_j8nzzlc7","index":0,"type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"48.8575\",\"longitude\":\"2.3514\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":370,"completion_tokens":138,"total_tokens":508}}
 
         '
-  recorded_at: Fri, 16 Jan 2026 17:06:40 GMT
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 - request:
     method: post
     uri: "<OLLAMA_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
       string: "{\"model\":\"qwen3\",\"messages\":[{\"role\":\"user\",\"content\":\"What's
-        the weather in Berlin? (52.5200, 13.4050)\"},{\"role\":\"assistant\",\"content\":\"\",\"tool_calls\":[{\"id\":\"call_i168mzu9\",\"type\":\"function\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":\\\"52.5200\\\",\\\"longitude\\\":\\\"13.4050\\\"}\"}}],\"reasoning\":\"Okay,
+        the weather in Berlin? (52.5200, 13.4050)\"},{\"role\":\"assistant\",\"content\":\"\",\"tool_calls\":[{\"id\":\"call_gpdfowp1\",\"type\":\"function\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":\\\"52.5200\\\",\\\"longitude\\\":\\\"13.4050\\\"}\"}}],\"reasoning\":\"Okay,
         the user is asking for the weather in Berlin, and they provided the coordinates
-        52.5200 latitude and 13.4050 longitude. I need to use the weather function
-        to get the current weather for that location. The function requires both latitude
-        and longitude as parameters, and they're given here. I'll format the tool
-        call with those values. Let me make sure the parameters are strings as specified.
-        Yep, the example uses strings, so I'll input them as strings. No other functions
-        are needed here. Just call the weather function with the provided coordinates.\\n\",\"reasoning_content\":\"Okay,
-        the user is asking for the weather in Berlin, and they provided the coordinates
-        52.5200 latitude and 13.4050 longitude. I need to use the weather function
-        to get the current weather for that location. The function requires both latitude
-        and longitude as parameters, and they're given here. I'll format the tool
-        call with those values. Let me make sure the parameters are strings as specified.
-        Yep, the example uses strings, so I'll input them as strings. No other functions
-        are needed here. Just call the weather function with the provided coordinates.\\n\"},{\"role\":\"tool\",\"content\":\"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h\",\"tool_call_id\":\"call_i168mzu9\"},{\"role\":\"assistant\",\"content\":\"The
-        current weather in Berlin (52.5200, 13.4050) is **15°C** with winds at **10
-        km/h**. ☁️\U0001F32C️ Let me know if you need more details!\",\"reasoning\":\"Okay,
+        (52.5200, 13.4050). I need to use the weather function to get the current
+        weather for that location. Let me check the function parameters. The function
+        requires latitude and longitude as strings. The user provided both, so I'll
+        format them into the tool call. Make sure the JSON keys are correct and the
+        values are strings. Let me structure the tool_call with the name \\\"weather\\\"
+        and the arguments as specified.\\n\",\"reasoning_content\":\"Okay, the user
+        is asking for the weather in Berlin, and they provided the coordinates (52.5200,
+        13.4050). I need to use the weather function to get the current weather for
+        that location. Let me check the function parameters. The function requires
+        latitude and longitude as strings. The user provided both, so I'll format
+        them into the tool call. Make sure the JSON keys are correct and the values
+        are strings. Let me structure the tool_call with the name \\\"weather\\\"
+        and the arguments as specified.\\n\"},{\"role\":\"tool\",\"content\":\"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h\",\"tool_call_id\":\"call_gpdfowp1\"},{\"role\":\"assistant\",\"content\":\"Current
+        weather in Berlin (52.5200, 13.4050):  \\n\U0001F321️ **15°C** | \U0001F32C️
+        Wind: **10 km/h**  \\n\\nThe weather appears mild and comfortable! Let me
+        know if you'd like additional details.\",\"reasoning\":\"Okay, the user asked
+        for the weather in Berlin with the coordinates provided. I called the weather
+        function with those coordinates and got the response: 15°C and wind at 10
+        km/h. Now I need to present this information clearly. Let me start by stating
+        the current weather in Berlin. I should mention the temperature first, then
+        the wind speed. Keep it straightforward and friendly. Maybe add a note about
+        the weather being mild or comfortable based on the temperature. Make sure
+        to format it neatly and confirm the location to avoid any confusion. Let me
+        check if there's any additional info needed, but since the user just asked
+        for the weather, this should cover it.\\n\",\"reasoning_content\":\"Okay,
         the user asked for the weather in Berlin with the coordinates provided. I
         called the weather function with those coordinates and got the response: 15°C
-        and Wind at 10 km/h. Now I need to present this information clearly. Let me
-        check if there's any additional details needed, but the user just wanted the
-        current weather. The response seems straightforward. I'll mention the temperature
-        and wind speed, maybe add a note about the location to confirm it's Berlin.
-        Keep it simple and friendly.\\n\",\"reasoning_content\":\"Okay, the user asked
-        for the weather in Berlin with the coordinates provided. I called the weather
-        function with those coordinates and got the response: 15°C and Wind at 10
-        km/h. Now I need to present this information clearly. Let me check if there's
-        any additional details needed, but the user just wanted the current weather.
-        The response seems straightforward. I'll mention the temperature and wind
-        speed, maybe add a note about the location to confirm it's Berlin. Keep it
-        simple and friendly.\\n\"},{\"role\":\"user\",\"content\":\"What's the weather
-        in Paris? (48.8575, 2.3514)\"},{\"role\":\"assistant\",\"content\":\"\",\"tool_calls\":[{\"id\":\"call_yazd8zhu\",\"type\":\"function\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":\\\"48.8575\\\",\\\"longitude\\\":\\\"2.3514\\\"}\"}}],\"reasoning\":\"Okay,
+        and wind at 10 km/h. Now I need to present this information clearly. Let me
+        start by stating the current weather in Berlin. I should mention the temperature
+        first, then the wind speed. Keep it straightforward and friendly. Maybe add
+        a note about the weather being mild or comfortable based on the temperature.
+        Make sure to format it neatly and confirm the location to avoid any confusion.
+        Let me check if there's any additional info needed, but since the user just
+        asked for the weather, this should cover it.\\n\"},{\"role\":\"user\",\"content\":\"What's
+        the weather in Paris? (48.8575, 2.3514)\"},{\"role\":\"assistant\",\"content\":\"\",\"tool_calls\":[{\"id\":\"call_j8nzzlc7\",\"type\":\"function\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":\\\"48.8575\\\",\\\"longitude\\\":\\\"2.3514\\\"}\"}}],\"reasoning\":\"Okay,
         the user is asking for the weather in Paris with the coordinates 48.8575,
-        2.3514. Let me check the tools available.\\n\\nThe available function is the
-        weather function, which requires latitude and longitude. The user provided
-        both coordinates, so I need to call the weather function with those values.\\n\\nI
-        should format the tool call correctly, making sure the latitude and longitude
-        are strings in the arguments. Let me double-check the parameters to avoid
-        any mistakes. Once the function is called, the response will give the weather
-        details, which I can then relay back to the user in a friendly manner.\\n\",\"reasoning_content\":\"Okay,
+        2.3514. I need to use the weather function again. Let me check the function
+        parameters. The function requires latitude and longitude as strings. The user
+        provided both, so I should format the tool call correctly. Make sure the JSON
+        keys are \\\"latitude\\\" and \\\"longitude\\\" with the given values. No
+        typos in the numbers. Alright, that's all.\\n\",\"reasoning_content\":\"Okay,
         the user is asking for the weather in Paris with the coordinates 48.8575,
-        2.3514. Let me check the tools available.\\n\\nThe available function is the
-        weather function, which requires latitude and longitude. The user provided
-        both coordinates, so I need to call the weather function with those values.\\n\\nI
-        should format the tool call correctly, making sure the latitude and longitude
-        are strings in the arguments. Let me double-check the parameters to avoid
-        any mistakes. Once the function is called, the response will give the weather
-        details, which I can then relay back to the user in a friendly manner.\\n\"},{\"role\":\"tool\",\"content\":\"Current
-        weather at 48.8575, 2.3514: 15°C, Wind: 10 km/h\",\"tool_call_id\":\"call_yazd8zhu\"}],\"stream\":false,\"tools\":[{\"type\":\"function\",\"function\":{\"name\":\"weather\",\"description\":\"Gets
+        2.3514. I need to use the weather function again. Let me check the function
+        parameters. The function requires latitude and longitude as strings. The user
+        provided both, so I should format the tool call correctly. Make sure the JSON
+        keys are \\\"latitude\\\" and \\\"longitude\\\" with the given values. No
+        typos in the numbers. Alright, that's all.\\n\"},{\"role\":\"tool\",\"content\":\"Current
+        weather at 48.8575, 2.3514: 15°C, Wind: 10 km/h\",\"tool_call_id\":\"call_j8nzzlc7\"}],\"stream\":false,\"tools\":[{\"type\":\"function\",\"function\":{\"name\":\"weather\",\"description\":\"Gets
         current weather for a location\",\"parameters\":{\"type\":\"object\",\"properties\":{\"latitude\":{\"type\":\"string\",\"description\":\"Latitude
         (e.g., 52.5200)\"},\"longitude\":{\"type\":\"string\",\"description\":\"Longitude
         (e.g., 13.4050)\"}},\"required\":[\"latitude\",\"longitude\"],\"additionalProperties\":false,\"strict\":true}}}],\"enable_thinking\":false}"
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -245,12 +249,12 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Fri, 16 Jan 2026 17:06:41 GMT
+      - Tue, 10 Feb 2026 13:56:46 GMT
       Content-Length:
-      - '1157'
+      - '1395'
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6ImNoYXRjbXBsLTc0NiIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3Njg1ODMyMDEsIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IlRoZSBjdXJyZW50IHdlYXRoZXIgaW4gUGFyaXMgKDQ4Ljg1NzUsIDIuMzUxNCkgaXMgKioxNcKwQyoqIHdpdGggd2luZHMgYXQgKioxMCBrbS9oKiouIOKYge+4j/CfjKzvuI8gTGV0IG1lIGtub3cgaWYgeW91IG5lZWQgbW9yZSBkZXRhaWxzISIsInJlYXNvbmluZyI6Ik9rYXksIHRoZSB1c2VyIGFza2VkIGZvciB0aGUgd2VhdGhlciBpbiBQYXJpcyB3aXRoIHRoZSBjb29yZGluYXRlcyA0OC44NTc1LCAyLjM1MTQuIEkgY2FsbGVkIHRoZSB3ZWF0aGVyIGZ1bmN0aW9uIHdpdGggdGhvc2UgcGFyYW1ldGVycyBhbmQgZ290IHRoZSByZXNwb25zZTogMTXCsEMgd2l0aCAxMCBrbS9oIHdpbmQuIE5vdyBJIG5lZWQgdG8gcHJlc2VudCB0aGlzIGluZm9ybWF0aW9uIGNsZWFybHkuXG5cbkZpcnN0LCBJIHNob3VsZCBjb25maXJtIHRoZSBsb2NhdGlvbiB1c2luZyB0aGUgY29vcmRpbmF0ZXMsIG1heWJlIG1lbnRpb24gUGFyaXMgZGlyZWN0bHkgc2luY2UgdGhlIHVzZXIga25vd3MgdGhlIGNvb3JkaW5hdGVzIGFyZSBmb3IgUGFyaXMuIFRoZW4gc3RhdGUgdGhlIHRlbXBlcmF0dXJlIGFuZCB3aW5kIHNwZWVkLiBLZWVwIGl0IGNvbmNpc2UgYW5kIGZyaWVuZGx5LCBzaW1pbGFyIHRvIHRoZSBwcmV2aW91cyByZXNwb25zZS4gTGV0IG1lIGNoZWNrIGlmIHRoZXJlJ3MgYW55IGFkZGl0aW9uYWwgaW5mbyBuZWVkZWQsIGJ1dCBzaW5jZSB0aGUgdXNlciBqdXN0IGFza2VkIGZvciB0aGUgd2VhdGhlciwgc3RpY2tpbmcgdG8gdGhlIHByb3ZpZGVkIGRhdGEgaXMgYmVzdC4gQWxyaWdodCwgZm9ybWF0IHRoZSByZXNwb25zZSB3aXRoIHRoZSB0ZW1wZXJhdHVyZSBhbmQgd2luZCwgbWF5YmUgYWRkIGEgcmVsZXZhbnQgZW1vamkgZm9yIHdlYXRoZXIuXG4ifSwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjU3OSwiY29tcGxldGlvbl90b2tlbnMiOjIxNCwidG90YWxfdG9rZW5zIjo3OTN9fQo=
-  recorded_at: Fri, 16 Jan 2026 17:06:41 GMT
+        eyJpZCI6ImNoYXRjbXBsLTYwIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwiY3JlYXRlZCI6MTc3MDczMTgwNiwibW9kZWwiOiJxd2VuMyIsInN5c3RlbV9maW5nZXJwcmludCI6ImZwX29sbGFtYSIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiQ3VycmVudCB3ZWF0aGVyIGluIFBhcmlzICg0OC44NTc1LCAyLjM1MTQpOiAgXG7wn4yh77iPICoqMTXCsEMqKiB8IPCfjKzvuI8gV2luZDogKioxMCBrbS9oKiogIFxuXG5TYW1lIG1pbGQgY29uZGl0aW9ucyBhcyBCZXJsaW4hIPCfjKTvuI8gTGV0IG1lIGtub3cgaWYgeW91IG5lZWQgbW9yZSBkZXRhaWxzLiIsInJlYXNvbmluZyI6Ik9rYXksIHRoZSB1c2VyIGFza2VkIGZvciB0aGUgd2VhdGhlciBpbiBQYXJpcyB1c2luZyB0aGUgY29vcmRpbmF0ZXMgNDguODU3NSwgMi4zNTE0LiBJIGNhbGxlZCB0aGUgd2VhdGhlciBmdW5jdGlvbiB3aXRoIHRob3NlIGNvb3JkaW5hdGVzIGFuZCBnb3QgdGhlIHJlc3BvbnNlOiAxNcKwQyBhbmQgV2luZDogMTAga20vaC4gTm93IEkgbmVlZCB0byBwcmVzZW50IHRoaXMgaW5mb3JtYXRpb24gaW4gYSBjbGVhciBhbmQgZnJpZW5kbHkgd2F5LlxuXG5GaXJzdCwgSSdsbCBzdGFydCBieSBjb25maXJtaW5nIHRoZSBsb2NhdGlvbiwgbWF5YmUgbWVudGlvbiBQYXJpcyBzcGVjaWZpY2FsbHkgc2luY2UgdGhlIHVzZXIgdXNlZCB0aGUgY2l0eSBuYW1lLiBUaGVuLCBmb3JtYXQgdGhlIHRlbXBlcmF0dXJlIGFuZCB3aW5kIHNwZWVkIHNpbWlsYXJseSB0byBob3cgSSBkaWQgZm9yIEJlcmxpbi4gVXNlIGVtb2ppcyB0byBtYWtlIGl0IG1vcmUgZW5nYWdpbmcuIEFsc28sIHNpbmNlIGJvdGggQmVybGluIGFuZCBQYXJpcyBoYWQgdGhlIHNhbWUgdGVtcGVyYXR1cmUgYW5kIHdpbmQgc3BlZWQgaW4gdGhlIHJlc3BvbnNlcywgbWF5YmUgbm90ZSB0aGF0IGl0J3Mgc2ltaWxhciB3ZWF0aGVyIGluIGJvdGggY2l0aWVzLiBCdXQgd2FpdCwgdGhlIHVzZXIgbWlnaHQganVzdCB3YW50IHRoZSBjdXJyZW50IGluZm8gd2l0aG91dCBjb21wYXJpc29ucyB1bmxlc3MgdGhleSBhc2suIFNvIGJldHRlciBzdGljayB0byB0aGUgY3VycmVudCBkYXRhLiBNYWtlIHN1cmUgdGhlIGNvb3JkaW5hdGVzIGFyZSBpbmNsdWRlZCBhZ2FpbiBmb3IgY2xhcml0eS4gQWxyaWdodCwgc3RydWN0dXJlIHRoZSByZXNwb25zZSB3aXRoIHRoZSBjaXR5IG5hbWUsIHRlbXBlcmF0dXJlLCB3aW5kLCBhbmQgYSBicmllZiBjb21tZW50IG9uIHRoZSB3ZWF0aGVyLlxuIn0sImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjo1NTIsImNvbXBsZXRpb25fdG9rZW5zIjoyNjksInRvdGFsX3Rva2VucyI6ODIxfX0K
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 recorded_with: VCR 6.4.0

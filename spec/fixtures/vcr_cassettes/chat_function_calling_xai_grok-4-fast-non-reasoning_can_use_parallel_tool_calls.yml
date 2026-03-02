@@ -14,7 +14,7 @@ http_interactions:
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer <XAI_API_KEY>
       Content-Type:
@@ -29,7 +29,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 16 Jan 2026 15:41:34 GMT
+      - Tue, 10 Feb 2026 09:24:10 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -45,7 +45,7 @@ http_interactions:
       X-Ratelimit-Limit-Requests:
       - '480'
       X-Ratelimit-Remaining-Requests:
-      - '479'
+      - '480'
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Vary:
@@ -66,8 +66,8 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"72e72fd7-386c-bca1-674f-618e646b4e82","object":"chat.completion","created":1768578092,"model":"grok-4-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"call_59012208","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"},"type":"function"},{"id":"call_17092318","function":{"name":"best_language_to_learn","arguments":"{}"},"type":"function"}],"refusal":null},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":461,"completion_tokens":58,"total_tokens":519,"prompt_tokens_details":{"text_tokens":461,"audio_tokens":0,"image_tokens":0,"cached_tokens":314},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":741000},"system_fingerprint":"fp_4616e76413"}'
-  recorded_at: Fri, 16 Jan 2026 15:41:34 GMT
+      string: '{"id":"9bbdb23f-3174-5e39-d5e2-ed0786899464","object":"chat.completion","created":1770715449,"model":"grok-4-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"call_08615372","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"},"type":"function"},{"id":"call_25302600","function":{"name":"best_language_to_learn","arguments":"{}"},"type":"function"}],"refusal":null},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":461,"completion_tokens":58,"total_tokens":519,"prompt_tokens_details":{"text_tokens":461,"audio_tokens":0,"image_tokens":0,"cached_tokens":158},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":975000},"system_fingerprint":"fp_f7a6b84626"}'
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 - request:
     method: post
     uri: https://api.x.ai/v1/chat/completions
@@ -75,15 +75,15 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"grok-4-fast-non-reasoning","messages":[{"role":"user","content":"What''s
         the weather in Berlin (52.5200, 13.4050) and what''s the best language to
-        learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_59012208","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}},{"id":"call_17092318","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_59012208"},{"role":"tool","content":"Ruby","tool_call_id":"call_17092318"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_08615372","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}},{"id":"call_25302600","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_08615372"},{"role":"tool","content":"Ruby","tool_call_id":"call_25302600"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}},{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer <XAI_API_KEY>
       Content-Type:
@@ -98,7 +98,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 16 Jan 2026 15:41:44 GMT
+      - Tue, 10 Feb 2026 09:24:12 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -108,13 +108,13 @@ http_interactions:
       X-Ratelimit-Limit-Tokens:
       - '4000000'
       X-Ratelimit-Remaining-Tokens:
-      - '3999481'
+      - '4000000'
       X-Zero-Data-Retention:
       - 'false'
       X-Ratelimit-Limit-Requests:
       - '480'
       X-Ratelimit-Remaining-Requests:
-      - '478'
+      - '480'
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Vary:
@@ -136,6 +136,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6ImQzZmIxOTgyLWE4YjItNDQwZS02YTRjLTI3MTg3MzgzYzUwNyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3Njg1NzgwOTQsIm1vZGVsIjoiZ3Jvay00LWZhc3Qtbm9uLXJlYXNvbmluZyIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiVGhlIGN1cnJlbnQgd2VhdGhlciBpbiBCZXJsaW4gaXMgMTXCsEMgd2l0aCB3aW5kcyBvZiAxMCBrbS9oLlxuXG5UaGUgYmVzdCBsYW5ndWFnZSB0byBsZWFybiBpcyBSdWJ5LiIsInJlZnVzYWwiOm51bGx9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6NTYwLCJjb21wbGV0aW9uX3Rva2VucyI6MjUsInRvdGFsX3Rva2VucyI6NTg1LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsidGV4dF90b2tlbnMiOjU2MCwiYXVkaW9fdG9rZW5zIjowLCJpbWFnZV90b2tlbnMiOjAsImNhY2hlZF90b2tlbnMiOjUwMH0sImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6MCwiYXVkaW9fdG9rZW5zIjowLCJhY2NlcHRlZF9wcmVkaWN0aW9uX3Rva2VucyI6MCwicmVqZWN0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjB9LCJudW1fc291cmNlc191c2VkIjowLCJjb3N0X2luX3VzZF90aWNrcyI6NDk1MDAwfSwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfNDYxNmU3NjQxMyJ9
-  recorded_at: Fri, 16 Jan 2026 15:41:44 GMT
+        eyJpZCI6ImUzYWYyMDhlLWU2ODEtNGIxYi0xZGViLTFjY2UwNjVlM2Q1MCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NzA3MTU0NTEsIm1vZGVsIjoiZ3Jvay00LWZhc3Qtbm9uLXJlYXNvbmluZyIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiVGhlIGN1cnJlbnQgd2VhdGhlciBpbiBCZXJsaW4gaXMgMTXCsEMgd2l0aCB3aW5kcyBhdCAxMCBrbS9oLlxuXG5UaGUgYmVzdCBsYW5ndWFnZSB0byBsZWFybiBpcyBSdWJ5LiIsInJlZnVzYWwiOm51bGx9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6NTYwLCJjb21wbGV0aW9uX3Rva2VucyI6MjUsInRvdGFsX3Rva2VucyI6NTg1LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsidGV4dF90b2tlbnMiOjU2MCwiYXVkaW9fdG9rZW5zIjowLCJpbWFnZV90b2tlbnMiOjAsImNhY2hlZF90b2tlbnMiOjE1OH0sImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6MCwiYXVkaW9fdG9rZW5zIjowLCJhY2NlcHRlZF9wcmVkaWN0aW9uX3Rva2VucyI6MCwicmVqZWN0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjB9LCJudW1fc291cmNlc191c2VkIjowLCJjb3N0X2luX3VzZF90aWNrcyI6MTAwODAwMH0sInN5c3RlbV9maW5nZXJwcmludCI6ImZwX2Y3YTZiODQ2MjYifQ==
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 recorded_with: VCR 6.4.0

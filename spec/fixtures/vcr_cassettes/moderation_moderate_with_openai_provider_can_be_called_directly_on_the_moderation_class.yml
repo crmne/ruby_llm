@@ -8,7 +8,7 @@ http_interactions:
       string: '{"model":"omni-moderation-latest","input":"This is a safe message"}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer <OPENAI_API_KEY>
       Content-Type:
@@ -23,13 +23,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 16 Jan 2026 17:16:00 GMT
+      - Tue, 10 Feb 2026 09:45:53 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Server:
+      - cloudflare
       Openai-Version:
       - '2020-10-01'
       Openai-Organization:
@@ -39,22 +41,17 @@ http_interactions:
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Openai-Processing-Ms:
-      - '119'
-      X-Envoy-Upstream-Service-Time:
-      - '123'
+      - '357'
       X-Openai-Proxy-Wasm:
       - v0.1
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
-      - "<COOKIE>"
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
-      Server:
-      - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
@@ -63,7 +60,7 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "modr-4461",
+          "id": "modr-364",
           "model": "omni-moderation-latest",
           "results": [
             {
@@ -142,5 +139,5 @@ http_interactions:
             }
           ]
         }
-  recorded_at: Fri, 16 Jan 2026 17:16:00 GMT
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 recorded_with: VCR 6.4.0

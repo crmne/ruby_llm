@@ -11,7 +11,7 @@ http_interactions:
         a single six-sided die and returns the result"}]}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       X-Goog-Api-Key:
       - "<GEMINI_API_KEY>"
       Content-Type:
@@ -32,7 +32,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Fri, 16 Jan 2026 17:09:57 GMT
+      - Tue, 10 Feb 2026 09:28:45 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -42,7 +42,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=624
+      - gfet4t7; dur=1119
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -60,7 +60,7 @@ http_interactions:
                       "name": "dice_roll",
                       "args": {}
                     },
-                    "thoughtSignature": "Cr8BAXLI2nxUqCfMNuNbsQjZOrOy44rIJTK9hpXIXoF6s/paYZ21xjEJs0VVeB6eKOPpZAru90dzON60qrX5iEJA4uJGAOD9U0Drmu6lyTy2BTFFnAkhiCslrE3q5GJvHno066nNXKaSo+aeST4Qo42qHmLpofDqqJ79tjgOf9VyLW5lVNnmaz/gsLB4seMyr9NNNEOq08+o12Cnm5YSgz4uX2p7IJPfxJkNueATrks4VdszOMUz7h18GUAZk4m32YI="
+                    "thoughtSignature": "Cn4Bvj72++QLHTepDt3BzzuW/wK4Sop5gEbvU4dWaglZ45XQFvpV4TEAVw81ztSb3i0ZpwdE8cJ6a2AH2XLsIYLq7MYkAstxhJkFCIVn2bGrH01u0XXNJiSML7WkFStKb30QtcZS5v10cHplYJ78l9NLhQ/nrrOutE+tyrntxCs="
                   }
                 ],
                 "role": "model"
@@ -73,19 +73,19 @@ http_interactions:
           "usageMetadata": {
             "promptTokenCount": 62,
             "candidatesTokenCount": 10,
-            "totalTokenCount": 115,
+            "totalTokenCount": 99,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
                 "tokenCount": 62
               }
             ],
-            "thoughtsTokenCount": 43
+            "thoughtsTokenCount": 27
           },
           "modelVersion": "gemini-2.5-flash",
-          "responseId": "5XBqaYnVAtih28oP1qWgmA4"
+          "responseId": "TfqKaYa7Ioz2juMP3c2QgQ4"
         }
-  recorded_at: Fri, 16 Jan 2026 17:09:57 GMT
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 - request:
     method: post
     uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
@@ -93,12 +93,12 @@ http_interactions:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"You must call the dice_roll
         tool exactly 3 times when asked to roll dice 3 times."}]},{"role":"user","parts":[{"text":"Roll
-        the dice 3 times"}]},{"role":"model","parts":[{"functionCall":{"name":"dice_roll","args":{}},"thoughtSignature":"Cr8BAXLI2nxUqCfMNuNbsQjZOrOy44rIJTK9hpXIXoF6s/paYZ21xjEJs0VVeB6eKOPpZAru90dzON60qrX5iEJA4uJGAOD9U0Drmu6lyTy2BTFFnAkhiCslrE3q5GJvHno066nNXKaSo+aeST4Qo42qHmLpofDqqJ79tjgOf9VyLW5lVNnmaz/gsLB4seMyr9NNNEOq08+o12Cnm5YSgz4uX2p7IJPfxJkNueATrks4VdszOMUz7h18GUAZk4m32YI="}]},{"role":"function","parts":[{"functionResponse":{"name":"dice_roll","response":{"name":"dice_roll","content":[{"text":"{roll:
+        the dice 3 times"}]},{"role":"model","parts":[{"functionCall":{"name":"dice_roll","args":{}},"thoughtSignature":"Cn4Bvj72++QLHTepDt3BzzuW/wK4Sop5gEbvU4dWaglZ45XQFvpV4TEAVw81ztSb3i0ZpwdE8cJ6a2AH2XLsIYLq7MYkAstxhJkFCIVn2bGrH01u0XXNJiSML7WkFStKb30QtcZS5v10cHplYJ78l9NLhQ/nrrOutE+tyrntxCs="}]},{"role":"function","parts":[{"functionResponse":{"name":"dice_roll","response":{"name":"dice_roll","content":[{"text":"{roll:
         1}"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"dice_roll","description":"Rolls
         a single six-sided die and returns the result"}]}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       X-Goog-Api-Key:
       - "<GEMINI_API_KEY>"
       Content-Type:
@@ -119,7 +119,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Fri, 16 Jan 2026 17:09:57 GMT
+      - Tue, 10 Feb 2026 09:28:46 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -129,7 +129,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=438
+      - gfet4t7; dur=947
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -168,9 +168,9 @@ http_interactions:
             ]
           },
           "modelVersion": "gemini-2.5-flash",
-          "responseId": "5XBqaf-aJemYvdIPoeiciAc"
+          "responseId": "TvqKabzyKuyfjuMP_umMiA4"
         }
-  recorded_at: Fri, 16 Jan 2026 17:09:57 GMT
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 - request:
     method: post
     uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
@@ -178,13 +178,13 @@ http_interactions:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"You must call the dice_roll
         tool exactly 3 times when asked to roll dice 3 times."}]},{"role":"user","parts":[{"text":"Roll
-        the dice 3 times"}]},{"role":"model","parts":[{"functionCall":{"name":"dice_roll","args":{}},"thoughtSignature":"Cr8BAXLI2nxUqCfMNuNbsQjZOrOy44rIJTK9hpXIXoF6s/paYZ21xjEJs0VVeB6eKOPpZAru90dzON60qrX5iEJA4uJGAOD9U0Drmu6lyTy2BTFFnAkhiCslrE3q5GJvHno066nNXKaSo+aeST4Qo42qHmLpofDqqJ79tjgOf9VyLW5lVNnmaz/gsLB4seMyr9NNNEOq08+o12Cnm5YSgz4uX2p7IJPfxJkNueATrks4VdszOMUz7h18GUAZk4m32YI="}]},{"role":"function","parts":[{"functionResponse":{"name":"dice_roll","response":{"name":"dice_roll","content":[{"text":"{roll:
+        the dice 3 times"}]},{"role":"model","parts":[{"functionCall":{"name":"dice_roll","args":{}},"thoughtSignature":"Cn4Bvj72++QLHTepDt3BzzuW/wK4Sop5gEbvU4dWaglZ45XQFvpV4TEAVw81ztSb3i0ZpwdE8cJ6a2AH2XLsIYLq7MYkAstxhJkFCIVn2bGrH01u0XXNJiSML7WkFStKb30QtcZS5v10cHplYJ78l9NLhQ/nrrOutE+tyrntxCs="}]},{"role":"function","parts":[{"functionResponse":{"name":"dice_roll","response":{"name":"dice_roll","content":[{"text":"{roll:
         1}"}]}}}]},{"role":"model","parts":[{"functionCall":{"name":"dice_roll","args":{}}}]},{"role":"function","parts":[{"functionResponse":{"name":"dice_roll","response":{"name":"dice_roll","content":[{"text":"{roll:
         2}"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"dice_roll","description":"Rolls
         a single six-sided die and returns the result"}]}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       X-Goog-Api-Key:
       - "<GEMINI_API_KEY>"
       Content-Type:
@@ -205,7 +205,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Fri, 16 Jan 2026 17:09:58 GMT
+      - Tue, 10 Feb 2026 09:28:47 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -215,7 +215,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=366
+      - gfet4t7; dur=980
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -254,9 +254,9 @@ http_interactions:
             ]
           },
           "modelVersion": "gemini-2.5-flash",
-          "responseId": "5nBqaZShAuzevdIPxZvo2Qc"
+          "responseId": "T_qKaeTIK6KIjuMPsrasiAY"
         }
-  recorded_at: Fri, 16 Jan 2026 17:09:58 GMT
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 - request:
     method: post
     uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
@@ -264,14 +264,14 @@ http_interactions:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"You must call the dice_roll
         tool exactly 3 times when asked to roll dice 3 times."}]},{"role":"user","parts":[{"text":"Roll
-        the dice 3 times"}]},{"role":"model","parts":[{"functionCall":{"name":"dice_roll","args":{}},"thoughtSignature":"Cr8BAXLI2nxUqCfMNuNbsQjZOrOy44rIJTK9hpXIXoF6s/paYZ21xjEJs0VVeB6eKOPpZAru90dzON60qrX5iEJA4uJGAOD9U0Drmu6lyTy2BTFFnAkhiCslrE3q5GJvHno066nNXKaSo+aeST4Qo42qHmLpofDqqJ79tjgOf9VyLW5lVNnmaz/gsLB4seMyr9NNNEOq08+o12Cnm5YSgz4uX2p7IJPfxJkNueATrks4VdszOMUz7h18GUAZk4m32YI="}]},{"role":"function","parts":[{"functionResponse":{"name":"dice_roll","response":{"name":"dice_roll","content":[{"text":"{roll:
+        the dice 3 times"}]},{"role":"model","parts":[{"functionCall":{"name":"dice_roll","args":{}},"thoughtSignature":"Cn4Bvj72++QLHTepDt3BzzuW/wK4Sop5gEbvU4dWaglZ45XQFvpV4TEAVw81ztSb3i0ZpwdE8cJ6a2AH2XLsIYLq7MYkAstxhJkFCIVn2bGrH01u0XXNJiSML7WkFStKb30QtcZS5v10cHplYJ78l9NLhQ/nrrOutE+tyrntxCs="}]},{"role":"function","parts":[{"functionResponse":{"name":"dice_roll","response":{"name":"dice_roll","content":[{"text":"{roll:
         1}"}]}}}]},{"role":"model","parts":[{"functionCall":{"name":"dice_roll","args":{}}}]},{"role":"function","parts":[{"functionResponse":{"name":"dice_roll","response":{"name":"dice_roll","content":[{"text":"{roll:
         2}"}]}}}]},{"role":"model","parts":[{"functionCall":{"name":"dice_roll","args":{}}}]},{"role":"function","parts":[{"functionResponse":{"name":"dice_roll","response":{"name":"dice_roll","content":[{"text":"{roll:
         3}"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"dice_roll","description":"Rolls
         a single six-sided die and returns the result"}]}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       X-Goog-Api-Key:
       - "<GEMINI_API_KEY>"
       Content-Type:
@@ -292,7 +292,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Fri, 16 Jan 2026 17:09:59 GMT
+      - Tue, 10 Feb 2026 09:28:49 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -302,7 +302,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=1575
+      - gfet4t7; dur=978
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -337,7 +337,7 @@ http_interactions:
             ]
           },
           "modelVersion": "gemini-2.5-flash",
-          "responseId": "53BqafXmK8SevdIPxev7yAc"
+          "responseId": "UPqKaZnHO8bYg8UPp4S9iA0"
         }
-  recorded_at: Fri, 16 Jan 2026 17:09:59 GMT
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 recorded_with: VCR 6.4.0

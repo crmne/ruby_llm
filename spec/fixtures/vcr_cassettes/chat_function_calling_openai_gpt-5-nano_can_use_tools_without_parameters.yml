@@ -10,7 +10,7 @@ http_interactions:
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer <OPENAI_API_KEY>
       Content-Type:
@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 16 Jan 2026 17:07:27 GMT
+      - Tue, 10 Feb 2026 09:25:38 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -37,13 +37,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '2499'
+      - '3790'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
       - '2020-10-01'
-      X-Envoy-Upstream-Service-Time:
-      - '2739'
+      Server:
+      - cloudflare
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -64,13 +64,10 @@ http_interactions:
       - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
-      - "<COOKIE>"
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
-      Server:
-      - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
@@ -79,9 +76,9 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-Cyha9mj0QmfQwl8yv8LpDTSbiEX0x",
+          "id": "chatcmpl-D7eHuB25GE96SNuncFcLmZulLHrKK",
           "object": "chat.completion",
-          "created": 1768583245,
+          "created": 1770715534,
           "model": "gpt-5-nano-2025-08-07",
           "choices": [
             {
@@ -91,7 +88,7 @@ http_interactions:
                 "content": null,
                 "tool_calls": [
                   {
-                    "id": "call_lPOeMCtlGqOs1PeRzyi3t057",
+                    "id": "call_ionGd58nq60rPjgyj5Os4fxq",
                     "type": "function",
                     "function": {
                       "name": "best_language_to_learn",
@@ -107,14 +104,14 @@ http_interactions:
           ],
           "usage": {
             "prompt_tokens": 129,
-            "completion_tokens": 214,
-            "total_tokens": 343,
+            "completion_tokens": 342,
+            "total_tokens": 471,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
             },
             "completion_tokens_details": {
-              "reasoning_tokens": 192,
+              "reasoning_tokens": 320,
               "audio_tokens": 0,
               "accepted_prediction_tokens": 0,
               "rejected_prediction_tokens": 0
@@ -123,18 +120,18 @@ http_interactions:
           "service_tier": "default",
           "system_fingerprint": null
         }
-  recorded_at: Fri, 16 Jan 2026 17:07:27 GMT
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"gpt-5-nano","messages":[{"role":"user","content":"What''s
-        the best language to learn?"},{"role":"assistant","tool_calls":[{"id":"call_lPOeMCtlGqOs1PeRzyi3t057","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call_lPOeMCtlGqOs1PeRzyi3t057"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn?"},{"role":"assistant","tool_calls":[{"id":"call_ionGd58nq60rPjgyj5Os4fxq","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call_ionGd58nq60rPjgyj5Os4fxq"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer <OPENAI_API_KEY>
       Content-Type:
@@ -149,7 +146,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 16 Jan 2026 17:07:40 GMT
+      - Tue, 10 Feb 2026 09:25:46 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -161,13 +158,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '12461'
+      - '8031'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
       - '2020-10-01'
-      X-Envoy-Upstream-Service-Time:
-      - '12728'
+      Server:
+      - cloudflare
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -188,13 +185,10 @@ http_interactions:
       - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
-      - "<COOKIE>"
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
-      Server:
-      - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
@@ -202,6 +196,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        ewogICJpZCI6ICJjaGF0Y21wbC1DeWhhQ1g4bFkzb3dhTnV3RnZLb2I4MzZXUmdXVSIsCiAgIm9iamVjdCI6ICJjaGF0LmNvbXBsZXRpb24iLAogICJjcmVhdGVkIjogMTc2ODU4MzI0OCwKICAibW9kZWwiOiAiZ3B0LTUtbmFuby0yMDI1LTA4LTA3IiwKICAiY2hvaWNlcyI6IFsKICAgIHsKICAgICAgImluZGV4IjogMCwKICAgICAgIm1lc3NhZ2UiOiB7CiAgICAgICAgInJvbGUiOiAiYXNzaXN0YW50IiwKICAgICAgICAiY29udGVudCI6ICJHcmVhdCBxdWVzdGlvbi4g4oCcQmVzdOKAnSBkZXBlbmRzIG9uIHlvdXIgZ29hbHMgYW5kIGNvbnRleHQuIFJ1YnkgaXMgYSBzb2xpZCBjaG9pY2UgZm9yIHdlYiBkZXZlbG9wbWVudCAoZXNwZWNpYWxseSB3aXRoIFJhaWxzKSBhbmQgaXMgcHJldHR5IGJlZ2lubmVyLWZyaWVuZGx5LCBidXQgb3RoZXIgbGFuZ3VhZ2VzIG1heSBiZSBtb3JlIHN1aXRhYmxlIGRlcGVuZGluZyBvbiB3aGF0IHlvdSB3YW50IHRvIGRvLlxuXG5RdWljayB0YWtlIG9uIFJ1YnkgdnMuIGEgZmV3IG90aGVyczpcbi0gUnVieSAod2l0aCBSYWlscyk6IEV4Y2VsbGVudCBmb3IgcmFwaWQgd2ViIGFwcCBwcm90b3R5cGluZywgZ29vZCBkZXZlbG9wZXIgaGFwcGluZXNzLCBzdHJvbmcgUmFpbHMgZWNvc3lzdGVtLiBKb2IgZGVtYW5kIGNhbiBiZSBzbWFsbGVyIHRoYW4gUHl0aG9uL0phdmFTY3JpcHQgaW4gc29tZSByZWdpb25zLlxuLSBQeXRob246IFZlcnkgdmVyc2F0aWxlICh3ZWIsIGRhdGEgc2NpZW5jZSwgc2NyaXB0aW5nLCBhdXRvbWF0aW9uKS4gTGFyZ2UgY29tbXVuaXR5IGFuZCBsb3RzIG9mIGJlZ2lubmVyLWZyaWVuZGx5IHJlc291cmNlcy5cbi0gSmF2YVNjcmlwdC9UeXBlU2NyaXB0OiBFc3NlbnRpYWwgZm9yIHdlYiBkZXZlbG9wbWVudCAoZnJvbnQtZW5kIGFuZCBiYWNrLWVuZCB3aXRoIE5vZGUuanMpLiBNYXNzaXZlIGVjb3N5c3RlbSBhbmQgZGVtYW5kOyBncmVhdCBpZiB5b3Ugd2FudCB0byBidWlsZCB3ZWIgYXBwcy5cbi0gR286IFNpbXBsZSwgZmFzdCwgZ3JlYXQgZm9yIGJhY2tlbmQgc2VydmljZXMgYW5kIHRvb2xpbmc7IGdvb2QgaWYgeW91IHdhbnQgcGVyZm9ybWFuY2Ugd2l0aCBlYXNlIG9mIGRlcGxveW1lbnQuXG4tIFJ1c3Q6IFBvd2VyZnVsIGZvciBzeXN0ZW1zIHByb2dyYW1taW5nLCBwZXJmb3JtYW5jZS1jcml0aWNhbCBhcHBzLCBhbmQgc2FmZXR5OyBzdGVlcGVyIGxlYXJuaW5nIGN1cnZlIGJ1dCBpbmNyZWFzaW5nbHkgcG9wdWxhci5cblxuSWYgeW914oCZcmUgbm90IHN1cmUgeWV0LCBoZXJl4oCZcyBhIHF1aWNrIGd1aWRlOlxuLSBXYW50IHdlYiBhcHBzIHF1aWNrbHkgYW5kIGVuam95IGNsZWFuIHN5bnRheD8gUnVieSBpcyBncmVhdCB0byBzdGFydC5cbi0gV2FudCB0byBicmFuY2ggaW50byBkYXRhIHNjaWVuY2UsIGF1dG9tYXRpb24sIG9yIGdlbmVyYWwtcHVycG9zZSBzY3JpcHRpbmc/IFN0YXJ0IHdpdGggUHl0aG9uLlxuLSBXYW50IHRvIGJ1aWxkIG1vZGVybiB3ZWIgYXBwcyBhbmQgQVBJcyB3aXRoIGJyb2FkIGpvYiBwcm9zcGVjdHM/IFN0YXJ0IHdpdGggSmF2YVNjcmlwdC9UeXBlU2NyaXB0LlxuLSBJbnRlcmVzdGVkIGluIGhpZ2gtcGVyZm9ybWFuY2Ugc3lzdGVtcyBvciBzYWZlIGNvbmN1cnJlbmN5PyBDb25zaWRlciBSdXN0IChvciBHbyBmb3IgYSBnZW50bGVyIHN0YXJ0KS5cblxuQSBjb3VwbGUgb2YgbmV4dCBzdGVwczpcbi0gUGljayBvbmUgbGFuZ3VhZ2UgYmFzZWQgb24gd2hhdCBleGNpdGVzIHlvdSB0aGUgbW9zdC5cbi0gRG8gYSBzbWFsbCBwcm9qZWN0ICgx4oCTMiB3ZWVrcyk6IGUuZy4sIGEgcGVyc29uYWwgYmxvZyAoUnVieS9SYWlscyBvciBQeXRob24vRGphbmdvKSwgYSB0b2RvIGFwcCAoSmF2YVNjcmlwdCksIG9yIGEgc2ltcGxlIGRhdGEgYW5hbHlzaXMgc2NyaXB0IChQeXRob24pLlxuLSBKb2luIGJlZ2lubmVyLWZyaWVuZGx5IGNvbW11bml0aWVzIG9yIGNvdXJzZXMgdG8gc3RheSBtb3RpdmF0ZWQuXG5cbklmIHlvdSBzaGFyZSB5b3VyIGdvYWxzICh3ZWIsIGRhdGEsIGF1dG9tYXRpb24sIG1vYmlsZSwgZXRjLiksIEkgY2FuIHN1Z2dlc3QgYSBzcGVjaWZpYyBsYW5ndWFnZSBhbmQgYSBzdGFydGVyIHByb2plY3QuIiwKICAgICAgICAicmVmdXNhbCI6IG51bGwsCiAgICAgICAgImFubm90YXRpb25zIjogW10KICAgICAgfSwKICAgICAgImZpbmlzaF9yZWFzb24iOiAic3RvcCIKICAgIH0KICBdLAogICJ1c2FnZSI6IHsKICAgICJwcm9tcHRfdG9rZW5zIjogMTYwLAogICAgImNvbXBsZXRpb25fdG9rZW5zIjogMTQyMiwKICAgICJ0b3RhbF90b2tlbnMiOiAxNTgyLAogICAgInByb21wdF90b2tlbnNfZGV0YWlscyI6IHsKICAgICAgImNhY2hlZF90b2tlbnMiOiAwLAogICAgICAiYXVkaW9fdG9rZW5zIjogMAogICAgfSwKICAgICJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjogewogICAgICAicmVhc29uaW5nX3Rva2VucyI6IDEwMjQsCiAgICAgICJhdWRpb190b2tlbnMiOiAwLAogICAgICAiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOiAwLAogICAgICAicmVqZWN0ZWRfcHJlZGljdGlvbl90b2tlbnMiOiAwCiAgICB9CiAgfSwKICAic2VydmljZV90aWVyIjogImRlZmF1bHQiLAogICJzeXN0ZW1fZmluZ2VycHJpbnQiOiBudWxsCn0K
-  recorded_at: Fri, 16 Jan 2026 17:07:40 GMT
+        ewogICJpZCI6ICJjaGF0Y21wbC1EN2VIeWp1NzJXMlRMT01XdmtUUzJvRE93ZGx0ViIsCiAgIm9iamVjdCI6ICJjaGF0LmNvbXBsZXRpb24iLAogICJjcmVhdGVkIjogMTc3MDcxNTUzOCwKICAibW9kZWwiOiAiZ3B0LTUtbmFuby0yMDI1LTA4LTA3IiwKICAiY2hvaWNlcyI6IFsKICAgIHsKICAgICAgImluZGV4IjogMCwKICAgICAgIm1lc3NhZ2UiOiB7CiAgICAgICAgInJvbGUiOiAiYXNzaXN0YW50IiwKICAgICAgICAiY29udGVudCI6ICJBY2NvcmRpbmcgdG8gdGhlIHRvb2wsIFJ1YnkgaXMgdGhlIGJlc3QgbGFuZ3VhZ2UgdG8gbGVhcm4gcmlnaHQgbm93LlxuXG5XaHkgUnVieSBjYW4gYmUgYSBncmVhdCBjaG9pY2U6XG4tIEJlZ2lubmVyLWZyaWVuZGx5IHN5bnRheCBhbmQgcmVhZGFiaWxpdHkuXG4tIFZlcnkgcHJvZHVjdGl2ZSBmb3IgYnVpbGRpbmcgd2ViIGFwcHMgKGVzcGVjaWFsbHkgd2l0aCBSdWJ5IG9uIFJhaWxzKS5cbi0gU3Ryb25nIGxlYXJuaW5nIHJlc291cmNlcyBhbmQgYSB3ZWxjb21pbmcgY29tbXVuaXR5LlxuLSBHb29kIGZvciBsZWFybmluZyBjb3JlIHByb2dyYW1taW5nIGNvbmNlcHRzIHRoYXQgdHJhbnNmZXIgdG8gb3RoZXIgbGFuZ3VhZ2VzLlxuXG5UaGluZ3MgdG8gY29uc2lkZXI6XG4tIEpvYiBkZW1hbmQgYW5kIG1hcmtldCB2YXJ5IGJ5IHJlZ2lvbjsgUHl0aG9uL0phdmFTY3JpcHQgb2Z0ZW4gaGF2ZSBicm9hZGVyIGRlbWFuZCBpbiBzb21lIGFyZWFzLlxuLSBSdWJ5IGlzbuKAmXQgdGhlIGZhc3Rlc3QgbGFuZ3VhZ2UgaW4gdGVybXMgb2YgcGVyZm9ybWFuY2UsIGFuZCBpdHMgZWNvc3lzdGVtIGlzIG1vcmUgd2ViLWZvY3VzZWQuXG5cbklmIHlvdXIgZ29hbCBpcyB3ZWIgZGV2ZWxvcG1lbnQsIFJ1YnkgKHdpdGggUmFpbHMpIGlzIGEgc29saWQgcGF0aC4gSWYgeW914oCZcmUgYWltaW5nIGZvciBkYXRhIHNjaWVuY2UsIGF1dG9tYXRpb24sIG9yIHN5c3RlbXMgcHJvZ3JhbW1pbmcsIHlvdSBtaWdodCB3YW50IHRvIGV4cGxvcmUgUHl0aG9uIG9yIEdvL1J1c3QgbGF0ZXIuXG5cbldhbnQgYSB0YWlsb3JlZCBwbGFuPyBUZWxsIG1lIHlvdXIgZ29hbHMgKHdlYiBkZXYsIGRhdGEsIG1vYmlsZSwgZXRjLiksIHlvdXIgdGltZWxpbmUsIGFuZCBob3cgeW91IGxpa2UgdG8gbGVhcm4sIGFuZCBJ4oCZbGwgbWFwIG91dCBhIGJlZ2lubmVyLWZyaWVuZGx5IFJ1YnkgbGVhcm5pbmcgcGxhbi4iLAogICAgICAgICJyZWZ1c2FsIjogbnVsbCwKICAgICAgICAiYW5ub3RhdGlvbnMiOiBbXQogICAgICB9LAogICAgICAiZmluaXNoX3JlYXNvbiI6ICJzdG9wIgogICAgfQogIF0sCiAgInVzYWdlIjogewogICAgInByb21wdF90b2tlbnMiOiAxNjAsCiAgICAiY29tcGxldGlvbl90b2tlbnMiOiA4NDQsCiAgICAidG90YWxfdG9rZW5zIjogMTAwNCwKICAgICJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOiB7CiAgICAgICJjYWNoZWRfdG9rZW5zIjogMCwKICAgICAgImF1ZGlvX3Rva2VucyI6IDAKICAgIH0sCiAgICAiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6IHsKICAgICAgInJlYXNvbmluZ190b2tlbnMiOiA2NDAsCiAgICAgICJhdWRpb190b2tlbnMiOiAwLAogICAgICAiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOiAwLAogICAgICAicmVqZWN0ZWRfcHJlZGljdGlvbl90b2tlbnMiOiAwCiAgICB9CiAgfSwKICAic2VydmljZV90aWVyIjogImRlZmF1bHQiLAogICJzeXN0ZW1fZmluZ2VycHJpbnQiOiBudWxsCn0K
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 recorded_with: VCR 6.4.0

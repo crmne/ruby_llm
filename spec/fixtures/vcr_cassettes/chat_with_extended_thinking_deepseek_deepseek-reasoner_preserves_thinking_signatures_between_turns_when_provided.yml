@@ -9,7 +9,7 @@ http_interactions:
         is 5 + 3?"}],"stream":false,"reasoning_effort":"medium"}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer <DEEPSEEK_API_KEY>
       Content-Type:
@@ -30,7 +30,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Fri, 16 Jan 2026 16:59:55 GMT
+      - Tue, 10 Feb 2026 09:16:40 GMT
       Server:
       - elb
       Vary:
@@ -38,7 +38,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 6e185a42f008523742aaaa4133d6e2f7
+      - 721f765852a7ce21936d808145f4efc5
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -46,43 +46,39 @@ http_interactions:
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 cb643617ee4bca09492409ac12401bfc.cloudfront.net (CloudFront)
+      - 1.1 516a3ac5d0e98bbe98276f3f09d7e22c.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - TXL50-P4
+      - BKK50-P4
       X-Amz-Cf-Id:
-      - ah4wRiBdQl-nOmCGIN-55E3hetNTj5xFLqMjGBUhU8cdJvWlu4iOSw==
+      - qybTtl9iRFKanxzv1loByrBsg4BzgviNRMVSHoJZGdh1m1KDQZ3PvA==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"7f0968ca-fe07-4be6-8369-af1a5a522ed5","object":"chat.completion","created":1768582795,"model":"deepseek-reasoner","choices":[{"index":0,"message":{"role":"assistant","content":"5
-        + 3 = 8.","reasoning_content":"We are asked: \"What is 5 + 3?\" This is a
-        simple arithmetic addition. 5 plus 3 equals 8. So the answer is 8.\n\nWe should
-        respond in a helpful manner. Since it''s a straightforward question, we can
-        just answer: 8.\n\nHowever, the user might expect a response that is not just
-        the number but perhaps a sentence. But the instruction is to be helpful, so
-        we can answer directly.\n\nLet''s output: 5 + 3 = 8."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":12,"completion_tokens":114,"total_tokens":126,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":105},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":12},"system_fingerprint":"fp_eaab8d114b_prod0820_fp8_kvcache"}'
-  recorded_at: Fri, 16 Jan 2026 16:59:59 GMT
+      string: '{"id":"c78682c5-6baa-4681-9fe7-262d240317df","object":"chat.completion","created":1770715000,"model":"deepseek-reasoner","choices":[{"index":0,"message":{"role":"assistant","content":"5
+        + 3 = 8","reasoning_content":"We are asked: \"What is 5 + 3?\" This is a simple
+        arithmetic question. The answer is 8.\n\nThe user likely expects a direct
+        answer. However, we should provide a step-by-step explanation as per typical
+        instruction following. So, we can show: 5 + 3 = 8.\n\nThus, the final answer
+        is 8."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":12,"completion_tokens":82,"total_tokens":94,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":74},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":12},"system_fingerprint":"fp_eaab8d114b_prod0820_fp8_kvcache"}'
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"deepseek-reasoner","messages":[{"role":"user","content":"What
-        is 5 + 3?"},{"role":"assistant","content":"5 + 3 = 8.","reasoning":"We are
-        asked: \"What is 5 + 3?\" This is a simple arithmetic addition. 5 plus 3 equals
-        8. So the answer is 8.\n\nWe should respond in a helpful manner. Since it''s
-        a straightforward question, we can just answer: 8.\n\nHowever, the user might
-        expect a response that is not just the number but perhaps a sentence. But
-        the instruction is to be helpful, so we can answer directly.\n\nLet''s output:
-        5 + 3 = 8.","reasoning_content":"We are asked: \"What is 5 + 3?\" This is
-        a simple arithmetic addition. 5 plus 3 equals 8. So the answer is 8.\n\nWe
-        should respond in a helpful manner. Since it''s a straightforward question,
-        we can just answer: 8.\n\nHowever, the user might expect a response that is
-        not just the number but perhaps a sentence. But the instruction is to be helpful,
-        so we can answer directly.\n\nLet''s output: 5 + 3 = 8."},{"role":"user","content":"Now
+        is 5 + 3?"},{"role":"assistant","content":"5 + 3 = 8","reasoning":"We are
+        asked: \"What is 5 + 3?\" This is a simple arithmetic question. The answer
+        is 8.\n\nThe user likely expects a direct answer. However, we should provide
+        a step-by-step explanation as per typical instruction following. So, we can
+        show: 5 + 3 = 8.\n\nThus, the final answer is 8.","reasoning_content":"We
+        are asked: \"What is 5 + 3?\" This is a simple arithmetic question. The answer
+        is 8.\n\nThe user likely expects a direct answer. However, we should provide
+        a step-by-step explanation as per typical instruction following. So, we can
+        show: 5 + 3 = 8.\n\nThus, the final answer is 8."},{"role":"user","content":"Now
         multiply that by 2"}],"stream":false,"reasoning_effort":"medium"}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer <DEEPSEEK_API_KEY>
       Content-Type:
@@ -103,7 +99,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Fri, 16 Jan 2026 16:59:59 GMT
+      - Tue, 10 Feb 2026 09:16:44 GMT
       Server:
       - elb
       Vary:
@@ -111,7 +107,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 3463c5312375fa07a8611ea94c9947ed
+      - b74de521400ff04e7ea5dac21865fab7
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -119,14 +115,17 @@ http_interactions:
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 d2182626bf7a31d463bb4b9335724f24.cloudfront.net (CloudFront)
+      - 1.1 f69c75668a6cafac330abf2b8a8626f8.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - TXL50-P3
+      - BKK50-P2
       X-Amz-Cf-Id:
-      - ynxoVZflUaoIfT2HcKPyOqtG2PjVzj2A-2faFSDY0eFiCYxFMVO1Lg==
+      - OdVWfdmlrwYameyYzVCACMsWXFZQwUXnYUO7bx2dKg_oqjnez-nuqQ==
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        eyJpZCI6ImU4OWM0MGYwLTg2NzktNDQ3NS04MDA2LTYxN2FhOWQzYjI2OSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3Njg1ODI3OTksIm1vZGVsIjoiZGVlcHNlZWstcmVhc29uZXIiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IlRoZSBwcmV2aW91cyByZXN1bHQgd2FzIDguIE11bHRpcGx5aW5nIHRoYXQgYnkgMiBnaXZlczpcblxuOCDDlyAyID0gMTYiLCJyZWFzb25pbmdfY29udGVudCI6IldlIGFyZSBhc2tlZDogXCJOb3cgbXVsdGlwbHkgdGhhdCBieSAyXCIuIFwiVGhhdFwiIHJlZmVycyB0byB0aGUgcHJldmlvdXMgYW5zd2VyLCB3aGljaCB3YXMgOC5cbiBTbyB3ZSBtdWx0aXBseSA4IGJ5IDI6IDggKiAyID0gMTYuXG5cbiBGaW5hbCBhbnN3ZXI6IDE2LiJ9LCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjMwLCJjb21wbGV0aW9uX3Rva2VucyI6NzIsInRvdGFsX3Rva2VucyI6MTAyLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MH0sImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6NTB9LCJwcm9tcHRfY2FjaGVfaGl0X3Rva2VucyI6MCwicHJvbXB0X2NhY2hlX21pc3NfdG9rZW5zIjozMH0sInN5c3RlbV9maW5nZXJwcmludCI6ImZwX2VhYWI4ZDExNGJfcHJvZDA4MjBfZnA4X2t2Y2FjaGUifQ==
-  recorded_at: Fri, 16 Jan 2026 17:00:02 GMT
+      string: '{"id":"8ce10622-339b-4300-b111-1afeb6a4d243","object":"chat.completion","created":1770715004,"model":"deepseek-reasoner","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        result of 5 + 3 is 8. Multiplying that by 2 gives **16**.","reasoning_content":"We
+        are asked: \"What is 5 + 3?\" The answer is 8. Then: \"Now multiply that by
+        2.\" So we take the previous answer (8) and multiply by 2: 8 * 2 = 16. So
+        the final answer is 16."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":29,"completion_tokens":83,"total_tokens":112,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":61},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":29},"system_fingerprint":"fp_eaab8d114b_prod0820_fp8_kvcache"}'
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 recorded_with: VCR 6.4.0

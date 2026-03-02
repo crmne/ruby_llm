@@ -2,7 +2,7 @@
 layout: default
 title: Agentic Workflows
 nav_order: 5
-description: Build intelligent agents that route between models, implement RAG, and coordinate multiple AI systems
+description: Build workflow-oriented AI systems with plain Ruby orchestration, from routing and parallelization to RAG
 ---
 
 # {{ page.title }}
@@ -21,52 +21,234 @@ description: Build intelligent agents that route between models, implement RAG, 
 
 After reading this guide, you will know:
 
-* How to build a model router that selects the best AI for each task
-* How to implement RAG with PostgreSQL and pgvector
-* How to run multiple agents in parallel with async
-* How to create multi-agent systems with specialized roles
+* How to implement common workflow patterns with plain Ruby classes
+* How to compose sequential, routing, parallel, and fan-in workflows
+* How to use evaluator loops when output quality needs iteration
+* How to implement RAG as part of a workflow
 
-## Model Routing
+## Workflow Patterns
 
-Different models excel at different tasks. A router can analyze requests and delegate to the most appropriate model.
+A workflow is just orchestration code that coordinates one or more agents. In practice, this is often a small Ruby class with a single public method.
+
+### Sequential Workflow
+
+Use this pattern when each step depends on the previous one.
 
 ```ruby
-class ModelRouter < RubyLLM::Tool
-  description "Routes requests to the optimal model"
-  param :query, desc: "The user's request"
+class ResearchAgent < RubyLLM::Agent
+  model "{{ site.models.gemini_current }}"
+  instructions "Given a topic, return concise, reliable key facts."
+end
 
-  def execute(query:)
-    task_type = classify_task(query)
+class WriterAgent < RubyLLM::Agent
+  model "{{ site.models.anthropic_current }}"
+  instructions "Given research notes, write a clear article."
+end
 
-    case task_type
-    when :code
-      RubyLLM.chat(model: '{{ site.models.best_for_code }}').ask(query).content
-    when :creative
-      RubyLLM.chat(model: '{{ site.models.best_for_creative }}').ask(query).content
-    when :factual
-      RubyLLM.chat(model: '{{ site.models.best_for_factual }}').ask(query).content
-    else
-      RubyLLM.chat.ask(query).content
-    end
-  end
-
-  private
-
-  def classify_task(query)
-    classifier = RubyLLM.chat(model: '{{ site.models.openai_mini }}')
-                     .with_instructions("Classify: code, creative, or factual. One word only.")
-    classifier.ask(query).content.downcase.to_sym
+class ResearchWriterWorkflow
+  def create_article(topic)
+    research = ResearchAgent.new.ask(topic).content
+    WriterAgent.new.ask(research).content
   end
 end
 
 # Usage
-chat = RubyLLM.chat.with_tool(ModelRouter)
-response = chat.ask "Write a Ruby function to parse JSON"
+workflow = ResearchWriterWorkflow.new
+article = workflow.create_article("Ruby 3.3 features")
 ```
 
-## RAG with PostgreSQL
+### Routing Workflow
 
-Use pgvector and the neighbor gem for production-ready RAG implementations.
+Use this pattern when requests fall into clear categories that benefit from specialized agents or models.
+
+```ruby
+class CodeAgent < RubyLLM::Agent
+  model "{{ site.models.best_for_code }}"
+  instructions "You are a coding assistant. Be precise and practical."
+end
+
+class CreativeAgent < RubyLLM::Agent
+  model "{{ site.models.best_for_creative }}"
+  instructions "You are a creative writing assistant."
+end
+
+class FactualAgent < RubyLLM::Agent
+  model "{{ site.models.best_for_factual }}"
+  instructions "You are a factual assistant. Prioritize accuracy."
+end
+
+class TaskClassifierAgent < RubyLLM::Agent
+  model "{{ site.models.openai_mini }}"
+  instructions "Classify the request as one word only: code, creative, or factual."
+end
+
+class ModelRouterWorkflow
+  def call(query)
+    agent_for(query).new.ask(query).content
+  end
+
+  private
+
+  def agent_for(query)
+    case classify(query)
+    when :code then CodeAgent
+    when :creative then CreativeAgent
+    when :factual then FactualAgent
+    else FactualAgent
+    end
+  end
+
+  def classify(query)
+    TaskClassifierAgent.new.ask(query).content.downcase.to_sym
+  end
+end
+
+# Usage
+workflow = ModelRouterWorkflow.new
+response = workflow.call("Write a Ruby function to parse JSON")
+```
+
+### Parallel Workflow
+
+Use this pattern when independent analyses can run at the same time.
+
+```ruby
+require 'async'
+
+class SentimentAgent < RubyLLM::Agent
+  instructions "Given text, return one word sentiment: positive, negative, or neutral."
+end
+
+class SummaryAgent < RubyLLM::Agent
+  instructions "Given text, summarize it in one concise sentence."
+end
+
+class KeywordAgent < RubyLLM::Agent
+  instructions "Given text, extract exactly 5 relevant keywords."
+end
+
+class ParallelAnalyzer
+  def analyze(text)
+    Async do |task|
+      sentiment = task.async { SentimentAgent.new.ask(text).content }
+      summary = task.async { SummaryAgent.new.ask(text).content }
+      keywords = task.async { KeywordAgent.new.ask(text).content }
+
+      {
+        sentiment: sentiment.wait,
+        summary: summary.wait,
+        keywords: keywords.wait
+      }
+    end.wait
+  end
+end
+
+# Usage
+analyzer = ParallelAnalyzer.new
+insights = analyzer.analyze("Your text here...")
+# All three analyses run concurrently
+```
+
+### Fan-Out/Fan-In Workflow
+
+Use this pattern when multiple specialists produce outputs that are later synthesized.
+
+```ruby
+require 'async'
+
+class SecurityReviewAgent < RubyLLM::Agent
+  model "{{ site.models.anthropic_current }}"
+  instructions "Given code, review it for security issues."
+end
+
+class PerformanceReviewAgent < RubyLLM::Agent
+  model "{{ site.models.openai_tools }}"
+  instructions "Given code, review it for performance issues."
+end
+
+class StyleReviewAgent < RubyLLM::Agent
+  model "{{ site.models.openai_mini }}"
+  instructions "Given code, review style against Ruby conventions."
+end
+
+class ReviewSynthesizerAgent < RubyLLM::Agent
+  instructions "Given multiple code review reports, summarize prioritized findings."
+end
+
+class CodeReviewSystem
+  def review_code(code)
+    Async do |task|
+      security = task.async { SecurityReviewAgent.new.ask(code).content }
+      performance = task.async { PerformanceReviewAgent.new.ask(code).content }
+      style = task.async { StyleReviewAgent.new.ask(code).content }
+
+      ReviewSynthesizerAgent.new.ask(
+        "security: #{security.wait}\n\n" \
+        "performance: #{performance.wait}\n\n" \
+        "style: #{style.wait}"
+      ).content
+    end.wait
+  end
+end
+
+# Usage
+reviewer = CodeReviewSystem.new
+summary = reviewer.review_code("def calculate(x); x * 2; end")
+```
+
+### Evaluation Loop (Evaluator-Optimizer)
+
+Use this pattern when you have clear quality criteria and want iterative refinement.
+
+```ruby
+class DraftAgent < RubyLLM::Agent
+  instructions "Given a task, produce the best possible draft response."
+end
+
+class CriticAgent < RubyLLM::Agent
+  schema do
+    string :verdict, enum: ["pass", "revise"], description: "Whether the draft passes or needs changes"
+    string :feedback, description: "Specific feedback for improvement"
+  end
+  instructions "Review the draft against the task and return a verdict and specific feedback."
+end
+
+class EvaluatorOptimizerWorkflow
+  MAX_ROUNDS = 3
+
+  def call(task)
+    draft = DraftAgent.new.ask(task).content
+
+    MAX_ROUNDS.times do
+      verdict, feedback = review(task:, draft:)
+      return draft if verdict == "pass"
+
+      draft = revise(task:, draft:, feedback:)
+    end
+
+    draft
+  end
+
+  private
+
+  def review(task:, draft:)
+    result = CriticAgent.new.ask("Task:\n#{task}\n\nDraft:\n#{draft}").content
+    [result.fetch("verdict"), result.fetch("feedback")]
+  end
+
+  def revise(task:, draft:, feedback:)
+    DraftAgent.new.ask("Task:\n#{task}\n\nCurrent draft:\n#{draft}\n\nFeedback:\n#{feedback}").content
+  end
+end
+
+# Usage
+workflow = EvaluatorOptimizerWorkflow.new
+final = workflow.call("Write a concise onboarding email for a new API customer")
+```
+
+## RAG as a Workflow Step
+
+RAG is often just one step in a larger workflow: retrieve relevant context, then answer with that context.
 
 ### Setup
 
@@ -111,7 +293,7 @@ class Document < ApplicationRecord
 end
 ```
 
-### RAG Tool
+### Retrieval Tool
 
 ```ruby
 class DocumentSearch < RubyLLM::Tool
@@ -119,149 +301,37 @@ class DocumentSearch < RubyLLM::Tool
   param :query, desc: "Search query"
 
   def execute(query:)
-    # Generate embedding for query
     embedding = RubyLLM.embed(query).vectors
 
-    # Find similar documents using neighbor
     documents = Document.nearest_neighbors(
       :embedding,
       embedding,
       distance: "euclidean"
     ).limit(3)
 
-    # Return formatted context
-    documents.map { |doc|
+    documents.map do |doc|
       "#{doc.title}: #{doc.content.truncate(500)}"
-    }.join("\n\n---\n\n")
+    end.join("\n\n---\n\n")
   end
+end
+```
+
+### Answering Agent
+
+```ruby
+class SupportWithDocsAgent < RubyLLM::Agent
+  tools DocumentSearch
+  instructions "Search for context before answering. Cite sources."
 end
 
 # Usage
-chat = RubyLLM.chat
-      .with_tool(DocumentSearch)
-      .with_instructions("Search for context before answering. Cite sources.")
-
-response = chat.ask "What is our refund policy?"
-```
-
-## Multi-Agent Systems
-
-### Researcher and Writer Team
-
-```ruby
-class ResearchAgent < RubyLLM::Tool
-  description "Researches topics"
-  param :topic, desc: "Topic to research"
-
-  def execute(topic:)
-    RubyLLM.chat(model: '{{ site.models.gemini_current }}')
-           .ask("Research #{topic}. List key facts.")
-           .content
-  end
-end
-
-class WriterAgent < RubyLLM::Tool
-  description "Writes content based on research"
-  param :research, desc: "Research findings"
-
-  def execute(research:)
-    RubyLLM.chat(model: '{{ site.models.anthropic_current }}')
-           .ask("Write an article:\n#{research}")
-           .content
-  end
-end
-
-# Coordinator uses both tools
-coordinator = RubyLLM.chat.with_tools(ResearchAgent, WriterAgent)
-article = coordinator.ask("Create an article about Ruby 3.3 features")
-```
-
-### Parallel Agent Execution with Async
-
-```ruby
-require 'async'
-
-class ParallelAnalyzer
-  def analyze(text)
-    results = {}
-
-    Async do |task|
-      task.async do
-        results[:sentiment] = RubyLLM.chat
-          .ask("Sentiment of: #{text}. One word: positive/negative/neutral")
-          .content
-      end
-
-      task.async do
-        results[:summary] = RubyLLM.chat
-          .ask("Summarize in one sentence: #{text}")
-          .content
-      end
-
-      task.async do
-        results[:keywords] = RubyLLM.chat
-          .ask("Extract 5 keywords: #{text}")
-          .content
-      end
-    end
-
-    results
-  end
-end
-
-# Usage
-analyzer = ParallelAnalyzer.new
-insights = analyzer.analyze("Your text here...")
-# All three analyses run concurrently
-```
-
-### Supervisor Pattern
-
-```ruby
-require 'async'
-
-class CodeReviewSystem
-  def review_code(code)
-    reviews = {}
-
-    Async do |task|
-      # Run reviews in parallel
-      task.async do
-        reviews[:security] = RubyLLM.chat(model: '{{ site.models.anthropic_current }}')
-          .ask("Security review:\n#{code}")
-          .content
-      end
-
-      task.async do
-        reviews[:performance] = RubyLLM.chat(model: '{{ site.models.openai_tools }}')
-          .ask("Performance review:\n#{code}")
-          .content
-      end
-
-      task.async do
-        reviews[:style] = RubyLLM.chat(model: '{{ site.models.openai_mini }}')
-          .ask("Style review (Ruby conventions):\n#{code}")
-          .content
-      end
-    end.wait # Block automatically waits for all child tasks
-
-    # Synthesize findings after all reviews complete
-    RubyLLM.chat.ask(
-      "Summarize these code reviews:\n" +
-      reviews.map { |type, review| "#{type}: #{review}" }.join("\n\n")
-    ).content
-  end
-end
-
-# Usage
-reviewer = CodeReviewSystem.new
-summary = reviewer.review_code("def calculate(x); x * 2; end")
-# All three reviews run concurrently, then synthesized
+agent = SupportWithDocsAgent.new
+response = agent.ask("What is our refund policy?").content
 ```
 
 ## Error Handling
 
-For robust error handling in agent workflows, leverage the patterns from the Tools guide:
+For robust error handling in workflow code, leverage the patterns from the Tools guide:
 
 * Return `{ error: "description" }` for recoverable errors the LLM might fix
 * Raise exceptions for unrecoverable errors (missing config, service down)
@@ -271,7 +341,7 @@ See the [Error Handling section in Tools]({% link _core_features/tools.md %}#err
 
 ## Next Steps
 
-* [Using Tools]({% link _core_features/tools.md %}) - Learn the fundamentals of tool usage
-* [Rails Integration]({% link _advanced/rails.md %}) - Build agent workflows in Rails
-* [Scale with Async]({% link _advanced/async.md %}) - Deep dive into async patterns
+* [Agents]({% link _core_features/agents.md %}) - Define reusable agent classes
+* [Using Tools]({% link _core_features/tools.md %}) - Add capabilities and external actions
+* [Scale with Async]({% link _advanced/async.md %}) - Run concurrent workflow steps
 * [Error Handling]({% link _advanced/error-handling.md %}) - Build resilient systems

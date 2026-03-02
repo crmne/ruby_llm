@@ -12,7 +12,7 @@ http_interactions:
         of tags to combine","items":{"type":"string"}}},"required":["tags"],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer <MISTRAL_API_KEY>
       Content-Type:
@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 16 Jan 2026 17:10:29 GMT
+      - Tue, 10 Feb 2026 09:29:33 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -35,29 +35,25 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '019bc7c9-7b9b-70ae-af40-735d0eeb76d1'
+      - '019c46e2-7828-7ddd-9c2b-70ba2b48fa65'
       X-Kong-Request-Id:
-      - '019bc7c9-7b9b-70ae-af40-735d0eeb76d1'
+      - '019c46e2-7828-7ddd-9c2b-70ba2b48fa65'
       X-Ratelimit-Limit-Tokens-Minute:
       - '2000000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '1998682'
-      X-Ratelimit-Limit-Tokens-Month:
-      - '10000000000'
-      X-Ratelimit-Remaining-Tokens-Month:
-      - '9999977125'
+      - '1999291'
       X-Ratelimit-Tokens-Query-Cost:
       - '126'
-      X-Ratelimit-Limit-Req-60-Second:
+      X-Ratelimit-Limit-Req-Minute:
       - '360'
-      X-Ratelimit-Remaining-Req-60-Second:
-      - '355'
+      X-Ratelimit-Remaining-Req-Minute:
+      - '357'
       X-Envoy-Upstream-Service-Time:
-      - '194'
+      - '297'
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '195'
+      - '297'
       X-Kong-Proxy-Latency:
       - '12'
       Cf-Cache-Status:
@@ -77,7 +73,7 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"1da6cfc05ffe49af8e10cee0f08147a9","created":1768583429,"model":"mistral-small-latest","usage":{"prompt_tokens":111,"total_tokens":126,"completion_tokens":15},"object":"chat.completion","choices":[{"index":0,"finish_reason":"tool_calls","message":{"role":"assistant","tool_calls":[{"id":"ViNzVv7c6","function":{"name":"array_params","arguments":"{\"tags\":
+      string: '{"id":"402ebd0b5658448b9ba62c7c946b86d5","created":1770715772,"model":"mistral-small-latest","usage":{"prompt_tokens":111,"total_tokens":126,"completion_tokens":15,"num_cached_tokens":0},"object":"chat.completion","choices":[{"index":0,"finish_reason":"tool_calls","message":{"role":"assistant","tool_calls":[{"id":"XEpr4QXgk","function":{"name":"array_params","arguments":"{\"tags\":
         [\"red\", \"blue\"]}"},"index":0}],"content":""}}]}'
-  recorded_at: Fri, 16 Jan 2026 17:10:29 GMT
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 recorded_with: VCR 6.4.0

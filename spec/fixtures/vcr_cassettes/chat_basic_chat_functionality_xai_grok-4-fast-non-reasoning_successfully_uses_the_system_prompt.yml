@@ -10,7 +10,7 @@ http_interactions:
         me about the weather."}],"stream":false,"temperature":0.0}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer <XAI_API_KEY>
       Content-Type:
@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 16 Jan 2026 16:25:42 GMT
+      - Tue, 10 Feb 2026 10:03:30 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -35,13 +35,13 @@ http_interactions:
       X-Ratelimit-Limit-Tokens:
       - '4000000'
       X-Ratelimit-Remaining-Tokens:
-      - '3373847'
+      - '4000000'
       X-Zero-Data-Retention:
       - 'false'
       X-Ratelimit-Limit-Requests:
       - '480'
       X-Ratelimit-Remaining-Requests:
-      - '474'
+      - '480'
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Vary:
@@ -62,7 +62,10 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        eyJpZCI6IjRhNGJlYWU3LTM3NjctMzNmNi1lODc3LTE5NmQ4NzM4Yjk5NSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3Njg1ODA3MzksIm1vZGVsIjoiZ3Jvay00LWZhc3Qtbm9uLXJlYXNvbmluZyIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiSSdtIGFmcmFpZCBJIGRvbid0IGhhdmUgcmVhbC10aW1lIGFjY2VzcyB0byB3ZWF0aGVyIGRhdGEsIGJ1dCBpZiB5b3UgdGVsbCBtZSB5b3VyIGxvY2F0aW9uLCBJIGNhbiBnaXZlIHlvdSBhIGdlbmVyYWwgb3ZlcnZpZXcgYmFzZWQgb24gdHlwaWNhbCBwYXR0ZXJucyBvciBzdWdnZXN0IGNoZWNraW5nIGEgcmVsaWFibGUgc291cmNlIGxpa2UgYSB3ZWF0aGVyIGFwcC4gRm9yIGV4YW1wbGUsIHJpZ2h0IG5vdyBpbiBtYW55IHBhcnRzIG9mIHRoZSB3b3JsZCwgaXQncyBhdXR1bW4gaW4gdGhlIE5vcnRoZXJuIEhlbWlzcGhlcmUsIHNvIGV4cGVjdCBjb29sZXIgdGVtcHMgYW5kIGNoYW5naW5nIGxlYXZlc+KAlFhLQ0Q3MzkyIHN0eWxlLCBwZXJoYXBzIHdpdGggYSBjb21pYyBhYm91dCBlbnRyb3B5IGluIHRoZSBjbG91ZHMuIFdoYXQncyB5b3VyIHNwb3Q/IiwicmVmdXNhbCI6bnVsbH0sImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjoxOTEsImNvbXBsZXRpb25fdG9rZW5zIjo4OSwidG90YWxfdG9rZW5zIjoyODAsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJ0ZXh0X3Rva2VucyI6MTkxLCJhdWRpb190b2tlbnMiOjAsImltYWdlX3Rva2VucyI6MCwiY2FjaGVkX3Rva2VucyI6MTU4fSwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjowLCJhdWRpb190b2tlbnMiOjAsImFjY2VwdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowLCJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6MH0sIm51bV9zb3VyY2VzX3VzZWQiOjAsImNvc3RfaW5fdXNkX3RpY2tzIjo1OTAwMDB9LCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF80NjE2ZTc2NDEzIn0=
-  recorded_at: Fri, 16 Jan 2026 16:25:42 GMT
+      string: '{"id":"8747de20-135b-0d8c-3ae3-f90feae41f9f","object":"chat.completion","created":1770717809,"model":"grok-4-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"I''m
+        afraid I don''t have real-time access to weather data, but if you tell me
+        your location, I can give you a general overview based on typical patterns
+        or suggest checking a reliable source like a weather app. What''s your city
+        or region? \n\nXKCD7392","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":191,"completion_tokens":53,"total_tokens":244,"prompt_tokens_details":{"text_tokens":191,"audio_tokens":0,"image_tokens":0,"cached_tokens":158},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":410000},"system_fingerprint":"fp_f7a6b84626"}'
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 recorded_with: VCR 6.4.0

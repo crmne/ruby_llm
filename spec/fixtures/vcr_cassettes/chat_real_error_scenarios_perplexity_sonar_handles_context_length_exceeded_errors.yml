@@ -8,7 +8,7 @@ http_interactions:
       string: '{"model":"sonar","messages":[{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"Hi"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer <PERPLEXITY_API_KEY>
       Content-Type:
@@ -23,11 +23,11 @@ http_interactions:
       message: Bad Request
     headers:
       Date:
-      - Fri, 16 Jan 2026 16:49:23 GMT
+      - Tue, 10 Feb 2026 08:57:18 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '107'
+      - '112'
       Connection:
       - keep-alive
       Cf-Ray:
@@ -42,6 +42,6 @@ http_interactions:
       - cloudflare
     body:
       encoding: UTF-8
-      string: '{"error":{"message":"User input tokens exceeds 200000 tokens.","type":"too_many_prompt_tokens","code":400}}'
-  recorded_at: Fri, 16 Jan 2026 16:49:23 GMT
+      string: '{"error":{"message":"The total length of all messages is too long.","type":"too_many_prompt_tokens","code":400}}'
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 recorded_with: VCR 6.4.0

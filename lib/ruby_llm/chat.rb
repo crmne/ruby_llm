@@ -39,10 +39,15 @@ module RubyLLM
 
     alias say ask
 
-    def with_instructions(instructions, replace: false)
-      @messages = @messages.reject { |msg| msg.role == :system } if replace
+    def with_instructions(instructions, append: false, replace: nil)
+      append ||= (replace == false) unless replace.nil?
 
-      add_message role: :system, content: instructions
+      if append
+        append_system_instruction(instructions)
+      else
+        replace_system_instruction(instructions)
+      end
+
       self
     end
 
@@ -216,22 +221,51 @@ module RubyLLM
 
     def execute_tool(tool_call)
       tool = tools[tool_call.name.to_sym]
+      if tool.nil?
+        return {
+          error: "Model tried to call unavailable tool `#{tool_call.name}`. " \
+                 "Available tools: #{tools.keys.to_json}."
+        }
+      end
+
       args = tool_call.arguments
       tool.call(args)
     end
 
     def update_tool_options(choice:, parallel:)
       unless choice.nil?
+        normalized_choice = normalize_tool_choice(choice)
         valid_tool_choices = %i[auto none required] + tools.keys
-        unless valid_tool_choices.include?(choice.to_sym)
+        unless valid_tool_choices.include?(normalized_choice)
           raise InvalidToolChoiceError,
                 "Invalid tool choice: #{choice}. Valid choices are: #{valid_tool_choices.join(', ')}"
         end
 
-        @tool_prefs[:choice] = choice.to_sym
+        @tool_prefs[:choice] = normalized_choice
       end
 
       @tool_prefs[:parallel] = !!parallel unless parallel.nil?
+    end
+
+    def normalize_tool_choice(choice)
+      return choice.to_sym if choice.is_a?(String) || choice.is_a?(Symbol)
+      return tool_name_for_choice_class(choice) if choice.is_a?(Class)
+
+      choice.respond_to?(:name) ? choice.name.to_sym : choice.to_sym
+    end
+
+    def tool_name_for_choice_class(tool_class)
+      matched_tool_name = tools.find { |_name, tool| tool.is_a?(tool_class) }&.first
+      return matched_tool_name if matched_tool_name
+
+      classify_tool_name(tool_class.name)
+    end
+
+    def classify_tool_name(class_name)
+      class_name.split('::').last
+                .gsub(/([a-z\d])([A-Z])/, '\1_\2')
+                .downcase
+                .to_sym
     end
 
     def forced_tool_choice?
@@ -250,6 +284,25 @@ module RubyLLM
 
     def content_like?(object)
       object.is_a?(Content) || object.is_a?(Content::Raw)
+    end
+
+    def append_system_instruction(instructions)
+      system_messages, non_system_messages = @messages.partition { |msg| msg.role == :system }
+      system_messages << Message.new(role: :system, content: instructions)
+      @messages = system_messages + non_system_messages
+    end
+
+    def replace_system_instruction(instructions)
+      system_messages, non_system_messages = @messages.partition { |msg| msg.role == :system }
+
+      if system_messages.empty?
+        system_messages = [Message.new(role: :system, content: instructions)]
+      else
+        system_messages.first.content = instructions
+        system_messages = [system_messages.first]
+      end
+
+      @messages = system_messages + non_system_messages
     end
   end
 end

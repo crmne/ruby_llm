@@ -153,6 +153,14 @@ RSpec.describe RubyLLM::Chat do
     end
   end
 
+  describe 'tool choice normalization' do
+    it 'accepts a tool class for choice' do
+      chat = RubyLLM.chat.with_tool(Weather, choice: Weather)
+
+      expect(chat.tool_prefs[:choice]).to eq(:weather)
+    end
+  end
+
   describe 'function calling' do
     CHAT_MODELS.each do |model_info|
       model = model_info[:model]
@@ -170,6 +178,40 @@ RSpec.describe RubyLLM::Chat do
         response = chat.ask("What's the weather in Berlin? (52.5200, 13.4050)")
         expect(response.content).to include('15')
         expect(response.content).to include('10')
+      end
+
+      it "#{provider}/#{model} deals with non-existent tool calls" do
+        hallucinated_tool_call = RubyLLM::ToolCall.new(
+          id: 'call_1',
+          name: 'list_tools',
+          arguments: {}
+        )
+
+        tool_results_received = []
+
+        chat = RubyLLM.chat(model: model, provider: provider)
+                      .with_tool(Weather)
+                      .on_tool_result { |result| tool_results_received << result }
+
+        final_answer = 'The `list_tools` tool is not supported, but I see you have the `weather` tool.'
+        allow(chat.instance_variable_get(:@provider)).to receive(:complete).and_return(
+          RubyLLM::Message.new(
+            role: :assistant,
+            content: '',
+            tool_calls: { hallucinated_tool_call.id => hallucinated_tool_call }
+          ),
+          RubyLLM::Message.new(
+            role: :assistant,
+            content: final_answer
+          )
+        )
+
+        response = chat.ask('What tools do you support?')
+        expect(response.content).to eq(final_answer)
+        expect(tool_results_received).to eq([
+                                              { error: 'Model tried to call unavailable tool `list_tools`. ' \
+                                                       'Available tools: ["weather"].' }
+                                            ])
       end
     end
 

@@ -7,9 +7,10 @@ module RubyLLM
       include OpenRouter::Chat
       include OpenRouter::Models
       include OpenRouter::Streaming
+      include OpenRouter::Images
 
       def api_base
-        'https://openrouter.ai/api/v1'
+        @config.openrouter_api_base || 'https://openrouter.ai/api/v1'
       end
 
       def headers

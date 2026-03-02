@@ -1,0 +1,70 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
+    body:
+      encoding: UTF-8
+      string: '{"model":"Kimi-K2.5","messages":[{"role":"user","content":"What is
+        the capital of France?"}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Api-Key:
+      - "<AZURE_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json
+      Vary:
+      - Accept-Encoding
+      Request-Context:
+      - appId=
+      Prompt-Token-Len:
+      - '15'
+      Sampling-Token-Len:
+      - '113'
+      Apim-Request-Id:
+      - dce7835c-4e65-4288-ba94-71fc7266bfc9
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Region:
+      - West Europe
+      X-Ratelimit-Remaining-Requests:
+      - '18'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Ratelimit-Limit-Requests:
+      - '20'
+      X-Ratelimit-Remaining-Tokens:
+      - '19968'
+      X-Ratelimit-Limit-Tokens:
+      - '20000'
+      Date:
+      - Tue, 10 Feb 2026 08:58:52 GMT
+    body:
+      encoding: ASCII-8BIT
+      string: '{"choices":[{"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"protected_material_code":{"filtered":false,"detected":false},"protected_material_text":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}},"finish_reason":"stop","index":0,"logprobs":null,"message":{"content":"The
+        capital of France is **Paris**.","reasoning_content":"The user is asking for
+        the capital of France. This is a straightforward factual question. The capital
+        of France is Paris. I should provide a direct, clear answer. There''s no need
+        for extensive elaboration unless helpful context is warranted, but the question
+        is simple enough that a direct answer is best.\n\nLet me verify: France is
+        a country in Western Europe. Its capital and largest city is Paris. This is
+        common knowledge and factually correct.\n\nI will provide a concise answer
+        stating that Paris is the capital of France. ","role":"assistant","tool_calls":null},"stop_reason":null}],"created":1770713932,"id":"5a0fa62da35d40c7bdecb3b0ebb80aff","model":"Kimi-K2.5","object":"chat.completion","prompt_filter_results":[{"prompt_index":0,"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"jailbreak":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}}}],"usage":{"audio_prompt_tokens":0,"completion_tokens":113,"prompt_tokens":15,"prompt_tokens_details":null,"reasoning_tokens":0,"total_tokens":128}}
+
+        '
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+recorded_with: VCR 6.4.0

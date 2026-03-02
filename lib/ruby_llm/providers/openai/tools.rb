@@ -53,7 +53,7 @@ module RubyLLM
           return nil unless tool_calls&.any?
 
           tool_calls.map do |_, tc|
-            {
+            call = {
               id: tc.id,
               type: 'function',
               function: {
@@ -61,6 +61,12 @@ module RubyLLM
                 arguments: JSON.generate(tc.arguments)
               }
             }
+            if tc.thought_signature
+              call[:extra_content] = {
+                google: { thought_signature: tc.thought_signature }
+              }
+            end
+            call
           end
         end
 
@@ -87,7 +93,8 @@ module RubyLLM
                              parse_tool_call_arguments(tc)
                            else
                              tc.dig('function', 'arguments')
-                           end
+                           end,
+                thought_signature: extract_tool_call_thought_signature(tc)
               )
             ]
           end
@@ -105,6 +112,10 @@ module RubyLLM
               }
             }
           end
+        end
+
+        def extract_tool_call_thought_signature(tool_call)
+          tool_call.dig('extra_content', 'google', 'thought_signature')
         end
       end
     end

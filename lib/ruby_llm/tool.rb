@@ -99,9 +99,9 @@ module RubyLLM
     end
 
     def call(args)
-      RubyLLM.logger.debug "Tool #{name} called with: #{args.inspect}"
+      RubyLLM.logger.debug { "Tool #{name} called with: #{args.inspect}" }
       result = execute(**args.transform_keys(&:to_sym))
-      RubyLLM.logger.debug "Tool #{name} returned: #{result.inspect}"
+      RubyLLM.logger.debug { "Tool #{name} returned: #{result.inspect}" }
       result
     end
 

@@ -19,6 +19,8 @@ VCR.configure do |config|
 
   # Filter out API keys from the recorded cassettes
   config.filter_sensitive_data('<ANTHROPIC_API_KEY>') { ENV.fetch('ANTHROPIC_API_KEY', nil) }
+  config.filter_sensitive_data('<AZURE_API_KEY>') { ENV.fetch('AZURE_API_KEY', nil) }
+  config.filter_sensitive_data('<AZURE_AI_AUTH_KEY>') { ENV.fetch('AZURE_AI_AUTH_KEY', nil) }
   config.filter_sensitive_data('<AWS_ACCESS_KEY_ID>') { ENV.fetch('AWS_ACCESS_KEY_ID', nil) }
   config.filter_sensitive_data('<AWS_REGION>') { ENV.fetch('AWS_REGION', 'us-west-2') }
   config.filter_sensitive_data('<AWS_SECRET_ACCESS_KEY>') { ENV.fetch('AWS_SECRET_ACCESS_KEY', nil) }

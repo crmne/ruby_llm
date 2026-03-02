@@ -10,7 +10,7 @@ http_interactions:
         me about the weather."}]}],"generationConfig":{"temperature":0.0}}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       X-Goog-Api-Key:
       - "<GEMINI_API_KEY>"
       Content-Type:
@@ -31,7 +31,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Fri, 16 Jan 2026 16:51:05 GMT
+      - Tue, 10 Feb 2026 09:00:54 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -41,43 +41,14 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=4063
+      - gfet4t7; dur=6352
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: |
-        {
-          "candidates": [
-            {
-              "content": {
-                "parts": [
-                  {
-                    "text": "The weather is the state of the atmosphere at a particular place and time, describing conditions such as temperature, precipitation, wind, humidity, and atmospheric pressure. It's a constantly changing phenomenon driven primarily by the sun's energy heating the Earth unevenly, which in turn creates differences in air pressure and drives air movement.\n\nHere's a breakdown of what \"the weather\" generally encompasses:\n\n*   **Temperature:** How hot or cold it is, measured in degrees Celsius or Fahrenheit. This is influenced by the sun's angle, time of day, season, and proximity to large bodies of water or landmasses.\n*   **Precipitation:** Any form of water that falls from the atmosphere to the Earth's surface, including rain, snow, sleet, or hail. This occurs when moisture in the air condenses and becomes too heavy to remain suspended.\n*   **Wind:** The movement of air, caused by differences in atmospheric pressure. Air flows from areas of high pressure to areas of low pressure, and its speed and direction are crucial aspects of weather.\n*   **Humidity:** The amount of water vapor in the air. High humidity can make warm weather feel muggier and cold weather feel more biting.\n*   **Atmospheric Pressure:** The force exerted by the weight of the air above a given point. High pressure generally brings clear, stable weather, while low pressure is often associated with clouds, wind, and precipitation.\n*   **Cloud Cover:** The amount of the sky covered by clouds. Clouds play a vital role in reflecting sunlight, trapping heat, and producing precipitation.\n\nWeather patterns are incredibly complex and influenced by a multitude of factors, from <GOOGLE_CLOUD_LOCATION> atmospheric circulation cells to local topography like mountains and oceans. Predicting it accurately requires sophisticated models and vast amounts of data, which is why meteorologists are always refining their techniques. For instance, understanding the subtle shifts in air currents that might lead to a sudden downpour or a clear, sunny day is a constant challenge.\n\nIf you're looking for the current weather, I'd recommend checking a local weather app or website, as I don't have real-time access to specific location data. However, the general principles of atmospheric science that govern all weather, from a gentle breeze to a powerful hurricane, remain consistent. It's a fascinating system, much like trying to decipher a complex code, perhaps even one as intricate as \"XKCD7392\" might imply!"
-                  }
-                ],
-                "role": "model"
-              },
-              "finishReason": "STOP",
-              "index": 0
-            }
-          ],
-          "usageMetadata": {
-            "promptTokenCount": 27,
-            "candidatesTokenCount": 506,
-            "totalTokenCount": 719,
-            "promptTokensDetails": [
-              {
-                "modality": "TEXT",
-                "tokenCount": 27
-              }
-            ],
-            "thoughtsTokenCount": 186
-          },
-          "modelVersion": "gemini-2.5-flash",
-          "responseId": "eWxqaZWsNubxnsEPw_WZmAM"
-        }
-  recorded_at: Fri, 16 Jan 2026 16:51:06 GMT
+      string: !binary |-
+        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicGFydHMiOiBbCiAgICAgICAgICB7CiAgICAgICAgICAgICJ0ZXh0IjogIlRoZSB3ZWF0aGVyIGlzIGEgZHluYW1pYyBhbmQgZXZlci1jaGFuZ2luZyBwaGVub21lbm9uLCBkcml2ZW4gYnkgYSBjb21wbGV4IGludGVycGxheSBvZiBhdG1vc3BoZXJpYyBjb25kaXRpb25zLiBVbmZvcnR1bmF0ZWx5LCBhcyBhbiBBSSwgSSBkb24ndCBoYXZlIHJlYWwtdGltZSBhY2Nlc3MgdG8geW91ciBzcGVjaWZpYyBsb2NhdGlvbidzIGN1cnJlbnQgd2VhdGhlciBjb25kaXRpb25zLiBUbyBnZXQgdGhlIG1vc3QgYWNjdXJhdGUgYW5kIHVwLXRvLWRhdGUgaW5mb3JtYXRpb24gZm9yIHdoZXJlIHlvdSBhcmUsIEknZCByZWNvbW1lbmQgY2hlY2tpbmcgYSBsb2NhbCB3ZWF0aGVyIGFwcCwgd2Vic2l0ZSwgb3IgYnJvYWRjYXN0LlxuXG5Ib3dldmVyLCBJIGNhbiB0ZWxsIHlvdSBhYm91dCB3ZWF0aGVyIGluIGdlbmVyYWwhIEl0IGVuY29tcGFzc2VzIGEgd2lkZSByYW5nZSBvZiBhdG1vc3BoZXJpYyBlbGVtZW50cywgaW5jbHVkaW5nOlxuXG4qICAgKipUZW1wZXJhdHVyZToqKiBIb3cgaG90IG9yIGNvbGQgaXQgaXMsIG1lYXN1cmVkIGluIENlbHNpdXMgb3IgRmFocmVuaGVpdC5cbiogICAqKlByZWNpcGl0YXRpb246KiogQW55IGZvcm0gb2Ygd2F0ZXIgZmFsbGluZyBmcm9tIHRoZSBza3ksIHN1Y2ggYXMgcmFpbiwgc25vdywgc2xlZXQsIG9yIGhhaWwuXG4qICAgKipXaW5kOioqIFRoZSBtb3ZlbWVudCBvZiBhaXIsIGRlc2NyaWJlZCBieSBpdHMgc3BlZWQgYW5kIGRpcmVjdGlvbi5cbiogICAqKkh1bWlkaXR5OioqIFRoZSBhbW91bnQgb2YgbW9pc3R1cmUgb3Igd2F0ZXIgdmFwb3IgaW4gdGhlIGFpci5cbiogICAqKkNsb3VkIENvdmVyOioqIFRoZSBleHRlbnQgdG8gd2hpY2ggdGhlIHNreSBpcyBjb3ZlcmVkIGJ5IGNsb3Vkcy5cbiogICAqKkF0bW9zcGhlcmljIFByZXNzdXJlOioqIFRoZSBmb3JjZSBleGVydGVkIGJ5IHRoZSB3ZWlnaHQgb2YgdGhlIGFpciwgd2hpY2ggY2FuIGluZGljYXRlIGFwcHJvYWNoaW5nIHdlYXRoZXIgY2hhbmdlcyAobG93IHByZXNzdXJlIG9mdGVuIG1lYW5zIHN0b3JtcywgaGlnaCBwcmVzc3VyZSBtZWFucyBjbGVhciBza2llcykuXG4qICAgKipWaXNpYmlsaXR5OioqIEhvdyBmYXIgeW91IGNhbiBzZWUsIHdoaWNoIGNhbiBiZSBhZmZlY3RlZCBieSBmb2csIG1pc3QsIG9yIGhlYXZ5IHByZWNpcGl0YXRpb24uXG5cbk1ldGVvcm9sb2dpc3RzIHVzZSBzb3BoaXN0aWNhdGVkIHRvb2xzIGxpa2Ugc2F0ZWxsaXRlcywgcmFkYXIsIHdlYXRoZXIgYmFsbG9vbnMsIGFuZCBncm91bmQtYmFzZWQgc2Vuc29ycyB0byBjb2xsZWN0IGRhdGEuIFRoaXMgZGF0YSBpcyB0aGVuIGZlZCBpbnRvIGNvbXBsZXggY29tcHV0ZXIgbW9kZWxzIHRvIGNyZWF0ZSBmb3JlY2FzdHMsIHByZWRpY3RpbmcgaG93IHRoZXNlIGVsZW1lbnRzIHdpbGwgY2hhbmdlIG92ZXIgaG91cnMsIGRheXMsIGFuZCBldmVuIHdlZWtzLiBUaGVzZSBwcmVkaWN0aW9ucyBhcmUgY3J1Y2lhbCBmb3IgZXZlcnl0aGluZyBmcm9tIHBsYW5uaW5nIHlvdXIgZGFpbHkgb3V0Zml0IHRvIGFncmljdWx0dXJhbCBkZWNpc2lvbnMsIGF2aWF0aW9uLCBhbmQgZGlzYXN0ZXIgcHJlcGFyZWRuZXNzLlxuXG5Gb3IgaW5zdGFuY2UsIGEgdHlwaWNhbCBmb3JlY2FzdCBtaWdodCB0ZWxsIHlvdSBpZiBpdCdzIGdvaW5nIHRvIGJlIHN1bm55IHdpdGggYSBoaWdoIG9mIDI1wrBDLCBwYXJ0bHkgY2xvdWR5IHdpdGggYSBjaGFuY2Ugb2YgYWZ0ZXJub29uIHRodW5kZXJzdG9ybXMsIG9yIGlmIGEgY29sZCBmcm9udCBpcyBtb3ZpbmcgaW4sIGJyaW5naW5nIHN0cm9uZyB3aW5kcyBhbmQgYSBzaWduaWZpY2FudCBkcm9wIGluIHRlbXBlcmF0dXJlLiBUaGV5IGFsc28gaXNzdWUgd2FybmluZ3MgZm9yIHNldmVyZSB3ZWF0aGVyIGV2ZW50cyBsaWtlIGh1cnJpY2FuZXMsIGJsaXp6YXJkcywgb3IgdG9ybmFkb2VzLlxuXG5XaGVuIGFuYWx5emluZyB2YXN0IGFtb3VudHMgb2YgbWV0ZW9yb2xvZ2ljYWwgZGF0YSwgc2NpZW50aXN0cyBvZnRlbiB1c2Ugc3BlY2lmaWMgaWRlbnRpZmllcnMgZm9yIGRpZmZlcmVudCBtb2RlbHMgb3IgZGF0YSBzZXRzLCBtdWNoIGxpa2UgYSB1bmlxdWUgdGFnIHN1Y2ggYXMgKipYS0NENzM5MioqIG1pZ2h0IGJlIHVzZWQgdG8gcmVmZXJlbmNlIGEgcGFydGljdWxhciBzaW11bGF0aW9uIHJ1biBvciBhIHNwZWNpZmljIHNldCBvZiBhdG1vc3BoZXJpYyBvYnNlcnZhdGlvbnMuIFRoaXMgaGVscHMgaW4gdHJhY2tpbmcgYW5kIGNvbXBhcmluZyB2YXJpb3VzIHdlYXRoZXIgcGhlbm9tZW5hIGFuZCBwcmVkaWN0aW9ucy5cblxuU28sIHdoaWxlIEkgY2FuJ3QgdGVsbCB5b3UgaWYgeW91IG5lZWQgYW4gdW1icmVsbGEgcmlnaHQgbm93LCBJIGhvcGUgdGhpcyBnaXZlcyB5b3UgYSBiZXR0ZXIgdW5kZXJzdGFuZGluZyBvZiB0aGUgZmFzY2luYXRpbmcgc2NpZW5jZSBiZWhpbmQgXCJ0aGUgd2VhdGhlclwiISIKICAgICAgICAgIH0KICAgICAgICBdLAogICAgICAgICJyb2xlIjogIm1vZGVsIgogICAgICB9LAogICAgICAiZmluaXNoUmVhc29uIjogIlNUT1AiLAogICAgICAiaW5kZXgiOiAwCiAgICB9CiAgXSwKICAidXNhZ2VNZXRhZGF0YSI6IHsKICAgICJwcm9tcHRUb2tlbkNvdW50IjogMjcsCiAgICAiY2FuZGlkYXRlc1Rva2VuQ291bnQiOiA1MDksCiAgICAidG90YWxUb2tlbkNvdW50IjogMTE4NywKICAgICJwcm9tcHRUb2tlbnNEZXRhaWxzIjogWwogICAgICB7CiAgICAgICAgIm1vZGFsaXR5IjogIlRFWFQiLAogICAgICAgICJ0b2tlbkNvdW50IjogMjcKICAgICAgfQogICAgXSwKICAgICJ0aG91Z2h0c1Rva2VuQ291bnQiOiA2NTEKICB9LAogICJtb2RlbFZlcnNpb24iOiAiZ2VtaW5pLTIuNS1mbGFzaCIsCiAgInJlc3BvbnNlSWQiOiAieGZPS2FmV1hPSkNlanVNUHRzYmJ5UVUiCn0K
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 recorded_with: VCR 6.4.0

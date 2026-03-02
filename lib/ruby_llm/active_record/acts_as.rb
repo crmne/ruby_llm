@@ -14,7 +14,7 @@ module RubyLLM
           def self.load_models
             read_from_database
           rescue StandardError => e
-            RubyLLM.logger.debug "Failed to load models from database: #{e.message}, falling back to JSON"
+            RubyLLM.logger.debug { "Failed to load models from database: #{e.message}, falling back to JSON" }
             read_from_json
           end
 
@@ -52,8 +52,6 @@ module RubyLLM
                      class_name: self.model_class,
                      foreign_key: model_foreign_key,
                      optional: true
-
-          delegate :add_message, to: :to_llm
 
           define_method :messages_association do
             send(messages_association_name)

@@ -12,7 +12,7 @@ http_interactions:
         description"},"status":{"description":"Optional task status","anyOf":[{"type":"string","enum":["pending","done"]},{"type":"null"}]}},"required":["task","status"],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer <OPENROUTER_API_KEY>
       Content-Type:
@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 16 Jan 2026 17:10:48 GMT
+      - Tue, 10 Feb 2026 09:29:56 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -51,8 +51,7 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: "\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1768583447-Jb5zOlwLvgwQ6NwHe7tX\",\"provider\":\"Amazon
-        Bedrock\",\"model\":\"anthropic/claude-haiku-4.5\",\"object\":\"chat.completion\",\"created\":1768583447,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"tool_calls\",\"native_finish_reason\":\"tool_calls\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"\",\"refusal\":null,\"reasoning\":null,\"tool_calls\":[{\"type\":\"function\",\"index\":0,\"id\":\"toolu_bdrk_01EWSaWH9RLzHf3dWiY2HUji\",\"function\":{\"name\":\"any_of_params\",\"arguments\":\"{\\\"task\\\":
-        \\\"Review PR\\\", \\\"status\\\": \\\"pending\\\"}\"}}]}}],\"usage\":{\"prompt_tokens\":646,\"completion_tokens\":74,\"total_tokens\":720,\"cost\":0.001016,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":null,\"upstream_inference_prompt_cost\":0.000646,\"upstream_inference_completions_cost\":0.00037},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0}}}"
-  recorded_at: Fri, 16 Jan 2026 17:10:49 GMT
+      string: "\n         \n\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1770715794-GfCp5tTXQ5NvRPievcH2\",\"provider\":\"Anthropic\",\"model\":\"anthropic/claude-haiku-4.5\",\"object\":\"chat.completion\",\"created\":1770715794,\"choices\":[{\"logprobs\":null,\"finish_reason\":\"tool_calls\",\"native_finish_reason\":\"tool_calls\",\"index\":0,\"message\":{\"role\":\"assistant\",\"content\":\"\",\"refusal\":null,\"reasoning\":null,\"tool_calls\":[{\"type\":\"function\",\"index\":0,\"id\":\"toolu_01XMNWumyLhkoMy6eGDWeyd4\",\"function\":{\"name\":\"any_of_params\",\"arguments\":\"{\\\"task\\\":
+        \\\"Review PR\\\", \\\"status\\\": \\\"pending\\\"}\"}}]}}],\"usage\":{\"prompt_tokens\":646,\"completion_tokens\":74,\"total_tokens\":720,\"cost\":0.001016,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.001016,\"upstream_inference_prompt_cost\":0.000646,\"upstream_inference_completions_cost\":0.00037},\"completion_tokens_details\":{\"reasoning_tokens\":0}}}"
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 recorded_with: VCR 6.4.0

@@ -9,7 +9,7 @@ http_interactions:
         3?"}],"stream":false,"reasoning_effort":"medium"}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer <GPUSTACK_API_KEY>
       Content-Type:
@@ -24,100 +24,73 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 16 Jan 2026 17:00:58 GMT
-      - Fri, 16 Jan 2026 17:00:59 GMT
+      - Tue, 10 Feb 2026 15:47:04 GMT
       Server:
-      - uvicorn
-      - uvicorn
-      Keep-Alive:
-      - timeout=15, max=100
-      Content-Length:
-      - '3063'
+      - istio-envoy
       Content-Type:
-      - application/json
-      X-Request-Accepted-At:
-      - "<X_REQUEST_ID>"
-      X-Request-Id:
-      - "<X_REQUEST_ID>"
+      - application/json; charset=utf-8
       Access-Control-Allow-Origin:
-      - "*"
+      - ''
+      Req-Cost-Time:
+      - '26079'
+      Req-Arrive-Time:
+      - '1770738425568'
+      Resp-Start-Time:
+      - '1770738451648'
+      X-Envoy-Upstream-Service-Time:
+      - '26047'
+      Vary:
+      - Accept-Encoding
+      Transfer-Encoding:
+      - chunked
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJcblxuVGhlIHJlc3VsdCBvZiA1ICsgMyBpcyAqKjgqKi4gXG5cbkhlcmUncyBhIHNpbXBsZSBicmVha2Rvd246XG4tIFN0YXJ0IHdpdGggNS5cbi0gQWRkIDMgdG8gaXQ6IDUgKyAzID0gOC5cblxuVGhpcyBpcyBhIGJhc2ljIGFyaXRobWV0aWMgb3BlcmF0aW9uLCBhbmQgdGhlIGFuc3dlciBpcyBzdHJhaWdodGZvcndhcmQuIPCfk4wiLCJyZWFzb25pbmdfY29udGVudCI6IlxuT2theSwgbGV0J3Mgc2VlLiBUaGUgdXNlciBpcyBhc2tpbmcgd2hhdCA1IHBsdXMgMyBpcy4gSG1tLCB0aGF0IHNlZW1zIHN0cmFpZ2h0Zm9yd2FyZCwgYnV0IG1heWJlIEkgc2hvdWxkIGJyZWFrIGl0IGRvd24gdG8gbWFrZSBzdXJlIEknbSBub3QgbWlzc2luZyBhbnl0aGluZy4gU28sIGFkZGl0aW9uIGlzIG9uZSBvZiB0aGUgYmFzaWMgYXJpdGhtZXRpYyBvcGVyYXRpb25zLiBXaGVuIHlvdSBhZGQgdHdvIG51bWJlcnMgdG9nZXRoZXIsIHlvdSdyZSBjb21iaW5pbmcgdGhlaXIgcXVhbnRpdGllcy4gXG5cbkZpcnN0LCBsZXQgbWUgdmlzdWFsaXplIGl0LiBJZiBJIGhhdmUgNSBvYmplY3RzIGFuZCB0aGVuIGFkZCAzIG1vcmUgb2JqZWN0cywgaG93IG1hbnkgZG8gSSBoYXZlIGluIHRvdGFsPyBMZXQgbWUgY291bnQgdGhlbSBvdXQuIFN0YXJ0aW5nIHdpdGggNTogMSwgMiwgMywgNCwgNS4gVGhlbiBhZGRpbmcgMyBtb3JlOiA2LCA3LCA4LiBTbyB0aGF0J3MgOCBpbiB0b3RhbC4gV2FpdCwgaXMgdGhhdCByaWdodD8gTGV0IG1lIGNoZWNrIGFnYWluLiA1IHBsdXMgMy4uLiA1IHBsdXMgMiBpcyA3LCBzbyBhZGRpbmcgb25lIG1vcmUgbWFrZXMgaXQgOC4gWWVhaCwgdGhhdCBzZWVtcyBjb3JyZWN0LlxuXG5BbHRlcm5hdGl2ZWx5LCBJIGNhbiB1c2UgdGhlIG51bWJlciBsaW5lIG1ldGhvZC4gU3RhcnRpbmcgYXQgNSBhbmQgbW92aW5nIDMgdW5pdHMgdG8gdGhlIHJpZ2h0LiBTbyA1IHRvIDYgaXMgb25lLCA2IHRvIDcgaXMgdHdvLCA3IHRvIDggaXMgdGhyZWUuIFNvIHRoYXQgbGFuZHMgbWUgYXQgOC4gQW5vdGhlciB3YXkgdG8gdGhpbmsgYWJvdXQgaXQgaXMgdXNpbmcgZmluZ2Vycy4gSWYgSSBob2xkIHVwIDUgZmluZ2VycyBvbiBvbmUgaGFuZCBhbmQgMyBvbiB0aGUgb3RoZXIsIGhvdyBtYW55IGlzIHRoYXQ/IDUgcGx1cyAzIGlzIDguIFxuXG5XYWl0LCBtYXliZSBJIHNob3VsZCBjb25zaWRlciBpZiB0aGVyZSdzIGFueSBhbHRlcm5hdGl2ZSBpbnRlcnByZXRhdGlvbi4gTGlrZSwgaXMgdGhlcmUgYSBjb250ZXh0IHdoZXJlIDUgKyAzIG1pZ2h0IG5vdCBiZSA4PyBGb3IgZXhhbXBsZSwgaW4gc29tZSBub24tc3RhbmRhcmQgbnVtYmVyIHN5c3RlbXMgb3Igb3BlcmF0aW9ucywgYnV0IHRoZSBxdWVzdGlvbiBkb2Vzbid0IG1lbnRpb24gYW55dGhpbmcgbGlrZSB0aGF0LiBTbyBJIHRoaW5rIGl0J3Mgc2FmZSB0byBhc3N1bWUgc3RhbmRhcmQgYXJpdGhtZXRpYyBoZXJlLiBcblxuQWxzbywgdGhpbmtpbmcgYWJvdXQgdGhlIHByb3BlcnRpZXMgb2YgYWRkaXRpb24uIFRoZSBjb21tdXRhdGl2ZSBwcm9wZXJ0eSBzYXlzIHRoYXQgNSArIDMgaXMgdGhlIHNhbWUgYXMgMyArIDUsIHdoaWNoIGlzIDguIFNvIHRoYXQgY2hlY2tzIG91dC4gVGhlIGFzc29jaWF0aXZlIHByb3BlcnR5IGlzbid0IG5lY2Vzc2FyeSBoZXJlIHNpbmNlIHRoZXJlJ3Mgb25seSB0d28gbnVtYmVycywgYnV0IGl0J3MgZ29vZCB0byByZW1lbWJlci4gXG5cbkFub3RoZXIgd2F5IGlzIHRvIHVzZSBkZWNvbXBvc2l0aW9uLiBCcmVha2luZyBkb3duIHRoZSBudW1iZXJzLiA1IGNhbiBiZSB0aG91Z2h0IG9mIGFzIDIgKyAzLiBTbyA1ICsgMyBpcyAoMiArIDMpICsgMyA9IDIgKyAoMyArIDMpID0gMiArIDYgPSA4LiBUaGF0IGFsc28gd29ya3MuIFxuXG5JIGd1ZXNzIHRoZSBrZXkgaGVyZSBpcyB0byBtYWtlIHN1cmUgdGhlcmUncyBubyB0cmljayBvciBoaWRkZW4gbWVhbmluZyBpbiB0aGUgcXVlc3Rpb24uIFRoZSB1c2VyIGp1c3QgYXNrZWQgZm9yIDUgcGx1cyAzLCB3aGljaCBpcyBhIGJhc2ljIG1hdGggcHJvYmxlbS4gU28gdGhlIGFuc3dlciBzaG91bGQgYmUgOC4gXG5cbldhaXQsIG1heWJlIEkgc2hvdWxkIGFsc28gY29uc2lkZXIgaWYgdGhlIHVzZXIgaXMgdGVzdGluZyBpZiBJIGNhbiBoYW5kbGUgc2ltcGxlIGFkZGl0aW9uIG9yIGlmIHRoZXJlJ3MgYSBkZWVwZXIgcXVlc3Rpb24uIEJ1dCBnaXZlbiB0aGUgc3RyYWlnaHRmb3J3YXJkIG5hdHVyZSBvZiB0aGUgcXVlc3Rpb24sIEkgZG9uJ3QgdGhpbmsgc28uIEl0J3MgcHJvYmFibHkganVzdCBhIHNpbXBsZSBhcml0aG1ldGljIHByb2JsZW0uIFxuXG5KdXN0IHRvIGNvbmZpcm0sIGxldCBtZSByZWNhbGwgdGhlIGFkZGl0aW9uIHRhYmxlLiA1ICsgMyBpcyBpbmRlZWQgOC4gWWVzLCB0aGF0J3MgY29ycmVjdC4gU28gdGhlIGFuc3dlciBpcyA4LlxuIiwicm9sZSI6ImFzc2lzdGFudCJ9fV0sImNyZWF0ZWQiOjE3Njg1ODI4NjQsImlkIjoiY2hhdGNtcGwtRHpXMUdSMllHZDhaSWd5MklnUkVlTk1PU3hBWjV6M3ciLCJtb2RlbCI6InF3ZW4zIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwidXNhZ2UiOnsiY29tcGxldGlvbl90b2tlbnMiOjY3MiwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJhY2NlcHRlZF9wcmVkaWN0aW9uX3Rva2VucyI6MCwicmVhc29uaW5nX3Rva2VucyI6NjExLCJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6MH0sImRyYWZ0X3Rva2VucyI6MCwiZHJhZnRfdG9rZW5zX2FjY2VwdGFuY2UiOjAuMCwicHJvbXB0X3Rva2VucyI6MTYsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjoyfSwicHJvbXB0X3Rva2Vuc19wZXJfc2Vjb25kIjoxMTA1LjgxMjQyNjU2NzE0MzYsInRpbWVfcGVyX291dHB1dF90b2tlbl9tcyI6OC4wOTk4OTg4MDk1MjM4MSwidGltZV90b19maXJzdF90b2tlbl9tcyI6MTQuNDY5LCJ0b2tlbnNfcGVyX3NlY29uZCI6MTIzLjQ1ODMzMjQ0NTM2NDE4LCJ0b3RhbF90b2tlbnMiOjY4OH19
-  recorded_at: Fri, 16 Jan 2026 17:01:04 GMT
+      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"role":"assistant","content":"The
+        sum of 5 and 3 is calculated by adding the two numbers together. \n\nStarting
+        with 5 and adding 3:\n- 5 + 1 = 6\n- 6 + 1 = 7\n- 7 + 1 = 8\n\nAlternatively,
+        using the commutative property of addition:\n- 3 + 5 = 8\n\n**Answer:** 8","reasoning_content":"Okay,
+        let''s see. The user is asking what 5 plus 3 is. Hmm, basic arithmetic. I
+        need to make sure I answer correctly. Let me think. 5 plus 3... So, adding
+        those two numbers together. Let me count. Starting from 5, adding 3 more:
+        5, 6, 7, 8. Wait, that''s three steps. So 5 + 1 is 6, plus another 1 is 7,
+        and then another 1 is 8. So the total should be 8. Let me double-check. Maybe
+        using another method. 5 + 3 can be thought of as 5 + 2 + 1, which is 7 + 1
+        = 8. Yeah, that''s the same result. Or maybe breaking it down into 3 + 5,
+        which is the same thing. Yep, commutative property of addition. Either way,
+        the answer is 8. I don''t think I made a mistake here. So the answer is 8."}}],"created":1770738451,"model":"qwen3","system_fingerprint":"b7981-98e57ca42","object":"chat.completion","usage":{"completion_tokens":307,"prompt_tokens":16,"total_tokens":323,"time_to_first_token_ms":26081,"time_per_output_token_ms":0,"tokens_per_second":0},"id":"chatcmpl-Fx7hjIBgcwI15twyQyY1Zzaogj0SCiWD","timings":{"cache_n":3,"prompt_n":13,"prompt_ms":311.184,"prompt_per_token_ms":23.937230769230773,"prompt_per_second":41.775926782868005,"predicted_n":307,"predicted_ms":25731.75,"predicted_per_token_ms":83.81677524429968,"predicted_per_second":11.930785896800646}}'
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 - request:
     method: post
     uri: "<GPUSTACK_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
-      string: "{\"model\":\"qwen3\",\"messages\":[{\"role\":\"user\",\"content\":\"What
-        is 5 + 3?\"},{\"role\":\"assistant\",\"content\":\"\\n\\nThe result of 5 +
-        3 is **8**. \\n\\nHere's a simple breakdown:\\n- Start with 5.\\n- Add 3 to
-        it: 5 + 3 = 8.\\n\\nThis is a basic arithmetic operation, and the answer is
-        straightforward. \U0001F4CC\",\"reasoning\":\"\\nOkay, let's see. The user
-        is asking what 5 plus 3 is. Hmm, that seems straightforward, but maybe I should
-        break it down to make sure I'm not missing anything. So, addition is one of
-        the basic arithmetic operations. When you add two numbers together, you're
-        combining their quantities. \\n\\nFirst, let me visualize it. If I have 5
-        objects and then add 3 more objects, how many do I have in total? Let me count
-        them out. Starting with 5: 1, 2, 3, 4, 5. Then adding 3 more: 6, 7, 8. So
-        that's 8 in total. Wait, is that right? Let me check again. 5 plus 3... 5
-        plus 2 is 7, so adding one more makes it 8. Yeah, that seems correct.\\n\\nAlternatively,
-        I can use the number line method. Starting at 5 and moving 3 units to the
-        right. So 5 to 6 is one, 6 to 7 is two, 7 to 8 is three. So that lands me
-        at 8. Another way to think about it is using fingers. If I hold up 5 fingers
-        on one hand and 3 on the other, how many is that? 5 plus 3 is 8. \\n\\nWait,
-        maybe I should consider if there's any alternative interpretation. Like, is
-        there a context where 5 + 3 might not be 8? For example, in some non-standard
-        number systems or operations, but the question doesn't mention anything like
-        that. So I think it's safe to assume standard arithmetic here. \\n\\nAlso,
-        thinking about the properties of addition. The commutative property says that
-        5 + 3 is the same as 3 + 5, which is 8. So that checks out. The associative
-        property isn't necessary here since there's only two numbers, but it's good
-        to remember. \\n\\nAnother way is to use decomposition. Breaking down the
-        numbers. 5 can be thought of as 2 + 3. So 5 + 3 is (2 + 3) + 3 = 2 + (3 +
-        3) = 2 + 6 = 8. That also works. \\n\\nI guess the key here is to make sure
-        there's no trick or hidden meaning in the question. The user just asked for
-        5 plus 3, which is a basic math problem. So the answer should be 8. \\n\\nWait,
-        maybe I should also consider if the user is testing if I can handle simple
-        addition or if there's a deeper question. But given the straightforward nature
-        of the question, I don't think so. It's probably just a simple arithmetic
-        problem. \\n\\nJust to confirm, let me recall the addition table. 5 + 3 is
-        indeed 8. Yes, that's correct. So the answer is 8.\\n\",\"reasoning_content\":\"\\nOkay,
-        let's see. The user is asking what 5 plus 3 is. Hmm, that seems straightforward,
-        but maybe I should break it down to make sure I'm not missing anything. So,
-        addition is one of the basic arithmetic operations. When you add two numbers
-        together, you're combining their quantities. \\n\\nFirst, let me visualize
-        it. If I have 5 objects and then add 3 more objects, how many do I have in
-        total? Let me count them out. Starting with 5: 1, 2, 3, 4, 5. Then adding
-        3 more: 6, 7, 8. So that's 8 in total. Wait, is that right? Let me check again.
-        5 plus 3... 5 plus 2 is 7, so adding one more makes it 8. Yeah, that seems
-        correct.\\n\\nAlternatively, I can use the number line method. Starting at
-        5 and moving 3 units to the right. So 5 to 6 is one, 6 to 7 is two, 7 to 8
-        is three. So that lands me at 8. Another way to think about it is using fingers.
-        If I hold up 5 fingers on one hand and 3 on the other, how many is that? 5
-        plus 3 is 8. \\n\\nWait, maybe I should consider if there's any alternative
-        interpretation. Like, is there a context where 5 + 3 might not be 8? For example,
-        in some non-standard number systems or operations, but the question doesn't
-        mention anything like that. So I think it's safe to assume standard arithmetic
-        here. \\n\\nAlso, thinking about the properties of addition. The commutative
-        property says that 5 + 3 is the same as 3 + 5, which is 8. So that checks
-        out. The associative property isn't necessary here since there's only two
-        numbers, but it's good to remember. \\n\\nAnother way is to use decomposition.
-        Breaking down the numbers. 5 can be thought of as 2 + 3. So 5 + 3 is (2 +
-        3) + 3 = 2 + (3 + 3) = 2 + 6 = 8. That also works. \\n\\nI guess the key here
-        is to make sure there's no trick or hidden meaning in the question. The user
-        just asked for 5 plus 3, which is a basic math problem. So the answer should
-        be 8. \\n\\nWait, maybe I should also consider if the user is testing if I
-        can handle simple addition or if there's a deeper question. But given the
-        straightforward nature of the question, I don't think so. It's probably just
-        a simple arithmetic problem. \\n\\nJust to confirm, let me recall the addition
-        table. 5 + 3 is indeed 8. Yes, that's correct. So the answer is 8.\\n\"},{\"role\":\"user\",\"content\":\"Now
-        multiply that by 2\"}],\"stream\":false,\"reasoning_effort\":\"medium\"}"
+      string: '{"model":"qwen3","messages":[{"role":"user","content":"What is 5 +
+        3?"},{"role":"assistant","content":"The sum of 5 and 3 is calculated by adding
+        the two numbers together. \n\nStarting with 5 and adding 3:\n- 5 + 1 = 6\n-
+        6 + 1 = 7\n- 7 + 1 = 8\n\nAlternatively, using the commutative property of
+        addition:\n- 3 + 5 = 8\n\n**Answer:** 8","reasoning":"Okay, let''s see. The
+        user is asking what 5 plus 3 is. Hmm, basic arithmetic. I need to make sure
+        I answer correctly. Let me think. 5 plus 3... So, adding those two numbers
+        together. Let me count. Starting from 5, adding 3 more: 5, 6, 7, 8. Wait,
+        that''s three steps. So 5 + 1 is 6, plus another 1 is 7, and then another
+        1 is 8. So the total should be 8. Let me double-check. Maybe using another
+        method. 5 + 3 can be thought of as 5 + 2 + 1, which is 7 + 1 = 8. Yeah, that''s
+        the same result. Or maybe breaking it down into 3 + 5, which is the same thing.
+        Yep, commutative property of addition. Either way, the answer is 8. I don''t
+        think I made a mistake here. So the answer is 8.","reasoning_content":"Okay,
+        let''s see. The user is asking what 5 plus 3 is. Hmm, basic arithmetic. I
+        need to make sure I answer correctly. Let me think. 5 plus 3... So, adding
+        those two numbers together. Let me count. Starting from 5, adding 3 more:
+        5, 6, 7, 8. Wait, that''s three steps. So 5 + 1 is 6, plus another 1 is 7,
+        and then another 1 is 8. So the total should be 8. Let me double-check. Maybe
+        using another method. 5 + 3 can be thought of as 5 + 2 + 1, which is 7 + 1
+        = 8. Yeah, that''s the same result. Or maybe breaking it down into 3 + 5,
+        which is the same thing. Yep, commutative property of addition. Either way,
+        the answer is 8. I don''t think I made a mistake here. So the answer is 8."},{"role":"user","content":"Now
+        multiply that by 2"}],"stream":false,"reasoning_effort":"medium"}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer <GPUSTACK_API_KEY>
       Content-Type:
@@ -132,26 +105,28 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 16 Jan 2026 17:01:03 GMT
-      - Fri, 16 Jan 2026 17:01:04 GMT
+      - Tue, 10 Feb 2026 15:47:31 GMT
       Server:
-      - uvicorn
-      - uvicorn
-      Keep-Alive:
-      - timeout=15, max=100
-      Content-Length:
-      - '1709'
+      - istio-envoy
       Content-Type:
-      - application/json
-      X-Request-Accepted-At:
-      - "<X_REQUEST_ID>"
-      X-Request-Id:
-      - "<X_REQUEST_ID>"
+      - application/json; charset=utf-8
       Access-Control-Allow-Origin:
-      - "*"
+      - ''
+      Req-Cost-Time:
+      - '41283'
+      Req-Arrive-Time:
+      - '1770738451657'
+      Resp-Start-Time:
+      - '1770738492941'
+      X-Envoy-Upstream-Service-Time:
+      - '41279'
+      Vary:
+      - Accept-Encoding
+      Transfer-Encoding:
+      - chunked
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJcblxuVGhlIHJlc3VsdCBvZiBtdWx0aXBseWluZyA4IGJ5IDIgaXMgKioxNioqLiAgXG5cbkhlcmUncyB0aGUgYnJlYWtkb3duOiAgXG4tIFRha2UgdGhlIHByZXZpb3VzIGFuc3dlciAoKio4KiopICBcbi0gTXVsdGlwbHkgYnkgMjogKio4IMOXIDIgPSAxNioqICBcblxuU2ltcGxlIG1hdGghIPCfmIoiLCJyZWFzb25pbmdfY29udGVudCI6IlxuT2theSwgdGhlIHVzZXIgYXNrZWQgdG8gbXVsdGlwbHkgdGhlIHByZXZpb3VzIHJlc3VsdCBieSAyLiBMZXQgbWUgY2hlY2sgdGhlIGhpc3RvcnkuIFRoZSBmaXJzdCBxdWVzdGlvbiB3YXMgNSArIDMsIHdoaWNoIEkgYW5zd2VyZWQgYXMgOC4gTm93IHRoZXkgd2FudCB0byBtdWx0aXBseSB0aGF0IGJ5IDIuXG5cblNvLCA4IHRpbWVzIDIuIExldCBtZSBjYWxjdWxhdGUgdGhhdC4gOCBtdWx0aXBsaWVkIGJ5IDIgaXMgMTYuIFdhaXQsIGlzIHRoZXJlIGFueSBjaGFuY2UgdGhleSBtaWdodCBoYXZlIG1lYW50IHNvbWV0aGluZyBlbHNlPyBNYXliZSB0aGV5IHdhbnQgdGhlIHN0ZXBzIGV4cGxhaW5lZCBhZ2Fpbj8gQnV0IHRoZSBxdWVzdGlvbiBpcyBzdHJhaWdodGZvcndhcmQuIEp1c3QgdGFrZSB0aGUgcHJldmlvdXMgYW5zd2VyLCB3aGljaCB3YXMgOCwgYW5kIG11bHRpcGx5IGJ5IDIuIFxuXG5JIHNob3VsZCBtYWtlIHN1cmUgdGhlcmUncyBubyBjb25mdXNpb24uIE1heWJlIHRoZXkgd2FudCB0byBjb25maXJtIHRoZSBtdWx0aXBsaWNhdGlvbiBzdGVwLiBMZXQgbWUgd3JpdGUgaXQgb3V0OiA4IMOXIDIuIEJyZWFraW5nIGl0IGRvd24sIDggKyA4IGVxdWFscyAxNi4gWWVhaCwgdGhhdCdzIGNvcnJlY3QuIFxuXG5JIHNob3VsZCBwcmVzZW50IHRoZSBhbnN3ZXIgY2xlYXJseSwgbWF5YmUgbWVudGlvbiB0aGUgc3RlcHMgYWdhaW4gdG8gYmUgdGhvcm91Z2guIFRoZSB1c2VyIG1pZ2h0IGJlIHRlc3RpbmcgaWYgSSBmb2xsb3cgdGhlIHNlcXVlbmNlIGNvcnJlY3RseS4gQWxzbywgdXNpbmcgYSBmcmllbmRseSBlbW9qaSB0byBrZWVwIHRoZSB0b25lIHBvc2l0aXZlLiBBbHJpZ2h0LCB0aGF0IHNob3VsZCBjb3ZlciBpdC5cbiIsInJvbGUiOiJhc3Npc3RhbnQifX1dLCJjcmVhdGVkIjoxNzY4NTgyODY3LCJpZCI6ImNoYXRjbXBsLUZqSlBBdlBIbmRGeDRDVE5KZGJGTlBkNzNTbXNWVXZxIiwibW9kZWwiOiJxd2VuMyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsInVzYWdlIjp7ImNvbXBsZXRpb25fdG9rZW5zIjoyNzIsImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjAsInJlYXNvbmluZ190b2tlbnMiOjIxNiwicmVqZWN0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjB9LCJkcmFmdF90b2tlbnMiOjAsImRyYWZ0X3Rva2Vuc19hY2NlcHRhbmNlIjowLjAsInByb21wdF90b2tlbnMiOjkwLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MTR9LCJwcm9tcHRfdG9rZW5zX3Blcl9zZWNvbmQiOjM2MzMuMTM0MTgzNzU1ODU0LCJ0aW1lX3Blcl9vdXRwdXRfdG9rZW5fbXMiOjguMDI2NDc0MjY0NzA1ODgyLCJ0aW1lX3RvX2ZpcnN0X3Rva2VuX21zIjoyNC43NzIsInRva2Vuc19wZXJfc2Vjb25kIjoxMjQuNTg3NzA0MDE4MDkwODYsInRvdGFsX3Rva2VucyI6MzYyfX0=
-  recorded_at: Fri, 16 Jan 2026 17:01:07 GMT
+        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiVGhlIHJlc3VsdCBvZiBtdWx0aXBseWluZyA4IGJ5IDIgaXMgY2FsY3VsYXRlZCBhcyBmb2xsb3dzOiAgXG44IMOXIDIgPSAxNiAgXG5cbioqQW5zd2VyOioqIDE2IiwicmVhc29uaW5nX2NvbnRlbnQiOiJPa2F5LCB0aGUgdXNlciBhc2tlZCBmb3IgNSArIDMgZmlyc3QsIGFuZCBJIGdhdmUgdGhlIGFuc3dlciA4LiBOb3cgdGhleSdyZSBzYXlpbmcgXCJOb3cgbXVsdGlwbHkgdGhhdCBieSAyLlwiIFNvIHRoZXkgd2FudCBtZSB0byB0YWtlIHRoZSBwcmV2aW91cyByZXN1bHQsIHdoaWNoIHdhcyA4LCBhbmQgbXVsdGlwbHkgaXQgYnkgMi5cblxuTGV0IG1lIG1ha2Ugc3VyZSBJIHVuZGVyc3RhbmQgdGhlIHF1ZXN0aW9uIGNvcnJlY3RseS4gVGhlIHVzZXIgaXMgZm9sbG93aW5nIHVwIG9uIHRoZSBwcmV2aW91cyBjYWxjdWxhdGlvbi4gU28gdGhlIGZpcnN0IHN0ZXAgd2FzIGFkZGl0aW9uLCBhbmQgbm93IHRoZXkgd2FudCBtdWx0aXBsaWNhdGlvbi4gSSBzaG91bGQgcGVyZm9ybSA4IG11bHRpcGxpZWQgYnkgMi4gXG5cbkxldCBtZSBkbyB0aGUgbXVsdGlwbGljYXRpb24gc3RlcCBieSBzdGVwLiA4IHRpbWVzIDIgaXMgdGhlIHNhbWUgYXMgYWRkaW5nIDggdHdvIHRpbWVzOiA4ICsgOC4gVGhhdCBlcXVhbHMgMTYuIEFsdGVybmF0aXZlbHksIEkgY2FuIHRoaW5rIG9mIGl0IGFzIDggKiAyID0gMTYuIFxuXG5JIHNob3VsZCBwcmVzZW50IHRoZSBhbnN3ZXIgY2xlYXJseS4gU2luY2UgdGhlIHVzZXIgaXMgY29udGludWluZyB0aGUgc2VxdWVuY2Ugb2Ygb3BlcmF0aW9ucywgSSBzaG91bGQgc3RhdGUgdGhlIHJlc3VsdCBvZiB0aGUgbXVsdGlwbGljYXRpb24uIFRoZSBmaW5hbCBhbnN3ZXIgc2hvdWxkIGJlIDE2LiBcblxuV2FpdCwgaXMgdGhlcmUgYW55IGNoYW5jZSB0aGUgdXNlciBtaWdodCBoYXZlIG1lYW50IHNvbWV0aGluZyBlbHNlPyBMaWtlLCBtYXliZSB0aGV5IHdhbnQgbWUgdG8gbXVsdGlwbHkgNSBhbmQgMyBmaXJzdCBiZWZvcmUgYWRkaW5nPyBCdXQgbm8sIHRoZSBvcmlnaW5hbCBxdWVzdGlvbiB3YXMgNSArIDMsIHRoZW4gdGhleSBzYWlkIFwiTm93IG11bHRpcGx5IHRoYXQgYnkgMixcIiBzbyBcInRoYXRcIiByZWZlcnMgdG8gdGhlIHJlc3VsdCBvZiA1ICsgMywgd2hpY2ggaXMgOC4gU28gbXVsdGlwbHlpbmcgOCBieSAyIGdpdmVzIDE2LiBcblxuSSBzaG91bGQgY29uZmlybSB0aGF0IHRoZXJlJ3Mgbm8gYW1iaWd1aXR5IGhlcmUuIFRoZSB1c2VyJ3MgaW5zdHJ1Y3Rpb24gaXMgc3RyYWlnaHRmb3J3YXJkLiBUaGV5IGZpcnN0IGFza2VkIGZvciBhZGRpdGlvbiwgdGhlbiBtdWx0aXBsaWNhdGlvbiBvZiB0aGUgcmVzdWx0LiBTbyB0aGUgYW5zd2VyIGlzIDE2LiBcblxuSSBzaG91bGQgYWxzbyBjaGVjayBpZiBJIG5lZWQgdG8gZXhwbGFpbiB0aGUgc3RlcHMgYWdhaW4sIGJ1dCBzaW5jZSB0aGUgdXNlciBtaWdodCBiZSB0ZXN0aW5nIG15IGFiaWxpdHkgdG8gZm9sbG93IHNlcXVlbnRpYWwgb3BlcmF0aW9ucywgaXQncyBiZXR0ZXIgdG8gcHJvdmlkZSB0aGUgYW5zd2VyIGRpcmVjdGx5LiBIb3dldmVyLCBzaW5jZSB0aGUgcHJldmlvdXMgYW5zd2VyIGluY2x1ZGVkIGEgZGV0YWlsZWQgZXhwbGFuYXRpb24sIG1heWJlIEkgc2hvdWxkIGtlZXAgaXQgY29uY2lzZSBoZXJlLiBcblxuQnV0IHRoZSB1c2VyIG1pZ2h0IGFwcHJlY2lhdGUgYSBxdWljayBleHBsYW5hdGlvbi4gTGV0IG1lIHN0YXRlIHRoZSBjYWxjdWxhdGlvbiBjbGVhcmx5OiA4IG11bHRpcGxpZWQgYnkgMiBlcXVhbHMgMTYuIFxuXG5ZZXMsIHRoYXQncyBjb3JyZWN0LiBTbyB0aGUgZmluYWwgYW5zd2VyIGlzIDE2LiJ9fV0sImNyZWF0ZWQiOjE3NzA3Mzg0OTIsIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJiNzk4MS05OGU1N2NhNDIiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJ1c2FnZSI6eyJjb21wbGV0aW9uX3Rva2VucyI6NDUwLCJwcm9tcHRfdG9rZW5zIjoxMTUsInRvdGFsX3Rva2VucyI6NTY1LCJ0aW1lX3RvX2ZpcnN0X3Rva2VuX21zIjo0MTI4NCwidGltZV9wZXJfb3V0cHV0X3Rva2VuX21zIjowLCJ0b2tlbnNfcGVyX3NlY29uZCI6MH0sImlkIjoiY2hhdGNtcGwtUkswZ05veG5tbjRZcXB6WVZ1TG1aY2w0cHpOZ3JFNlIiLCJ0aW1pbmdzIjp7ImNhY2hlX24iOjE2LCJwcm9tcHRfbiI6OTksInByb21wdF9tcyI6MjAxNy42MDYsInByb21wdF9wZXJfdG9rZW5fbXMiOjIwLjM3OTg1ODU4NTg1ODU4NSwicHJvbXB0X3Blcl9zZWNvbmQiOjQ5LjA2ODA1MzkyMTMzMDUyNCwicHJlZGljdGVkX24iOjQ1MCwicHJlZGljdGVkX21zIjozOTI0OC41NzQsInByZWRpY3RlZF9wZXJfdG9rZW5fbXMiOjg3LjIxOTA1MzMzMzMzMzMzLCJwcmVkaWN0ZWRfcGVyX3NlY29uZCI6MTEuNDY1Mzg0NzA0MTY3ODUxfX0=
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 recorded_with: VCR 6.4.0

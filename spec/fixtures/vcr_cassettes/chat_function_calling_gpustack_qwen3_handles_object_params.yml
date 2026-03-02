@@ -13,7 +13,7 @@ http_interactions:
         window to schedule"}},"required":["window"],"additionalProperties":false,"strict":true}}}],"enable_thinking":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer <GPUSTACK_API_KEY>
       Content-Type:
@@ -28,33 +28,35 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 16 Jan 2026 17:10:56 GMT
-      - Fri, 16 Jan 2026 17:10:57 GMT
+      - Tue, 10 Feb 2026 15:54:04 GMT
       Server:
-      - uvicorn
-      - uvicorn
-      Keep-Alive:
-      - timeout=15, max=100
-      Content-Length:
-      - '1487'
+      - istio-envoy
       Content-Type:
-      - application/json
-      X-Request-Accepted-At:
-      - "<X_REQUEST_ID>"
-      X-Request-Id:
-      - "<X_REQUEST_ID>"
+      - application/json; charset=utf-8
       Access-Control-Allow-Origin:
-      - "*"
+      - ''
+      Req-Cost-Time:
+      - '21258'
+      Req-Arrive-Time:
+      - '1770738845745'
+      Resp-Start-Time:
+      - '1770738867003'
+      X-Envoy-Upstream-Service-Time:
+      - '21227'
+      Vary:
+      - Accept-Encoding
+      Transfer-Encoding:
+      - chunked
     body:
-      encoding: UTF-8
-      string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"content":null,"reasoning_content":"\nOkay,
-        the user wants me to call the object_params function with a window starting
-        on 2025-01-01 and ending on 2025-01-02. Let me check the function''s parameters.
-        The function requires a \"window\" object with \"start\" and \"end\" as required
-        fields. Both should be ISO strings. The user provided the dates in the correct
-        format, so I''ll structure the JSON accordingly. I need to make sure the parameters
-        are correctly nested under \"window\". No additional properties are allowed,
-        so I''ll keep it simple. Alright, the tool call should include the name \"object_params\"
-        and the arguments with the window details.\n","role":"assistant","tool_calls":[{"function":{"arguments":"{\"window\":{\"end\":\"2025-01-02\",\"start\":\"2025-01-01\"}}","name":"object_params"},"id":"call-BXIjcVltGvmpx33n9RjzW9bwjVvAluRj","type":"function"}]}}],"created":1768583459,"id":"chatcmpl-itiGacVIklwliNuMHd2rTv2CAGmuwn93","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":194,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":145,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":284,"prompt_tokens_details":{"cached_tokens":66},"prompt_tokens_per_second":5453.044296384478,"time_per_output_token_ms":8.261726804123711,"time_to_first_token_ms":52.081,"tokens_per_second":121.04007112663973,"total_tokens":478}}'
-  recorded_at: Fri, 16 Jan 2026 17:10:59 GMT
+      encoding: ASCII-8BIT
+      string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"role":"assistant","content":"","reasoning_content":"Okay,
+        the user wants me to call the object_params tool with a specific window start
+        and end. Let me check the function definition again. The function requires
+        a window object with start and end in ISO format. The parameters are strict,
+        so I need to make sure the keys are exactly as specified. The start is 2025-01-01
+        and end is 2025-01-02. I''ll structure the JSON with the window containing
+        those dates. No additional properties allowed, so I''ll keep it minimal. Let
+        me verify the required fields are present. Yep, start and end are required.
+        Alright, that should work.","tool_calls":[{"type":"function","function":{"name":"object_params","arguments":"{\"window\":{\"start\":\"2025-01-01\",\"end\":\"2025-01-02\"}}"},"id":"aWKaVUu9iM0uCjn4pzj53B3CcRBMlkg0"}]}}],"created":1770738867,"model":"qwen3","system_fingerprint":"b7981-98e57ca42","object":"chat.completion","usage":{"completion_tokens":188,"prompt_tokens":253,"total_tokens":441,"time_to_first_token_ms":21259,"time_per_output_token_ms":0,"tokens_per_second":0},"id":"chatcmpl-vyzZURfikZ44yyRsj75DEyVxZLZCDiMi","timings":{"cache_n":51,"prompt_n":202,"prompt_ms":4112.983,"prompt_per_token_ms":20.36130198019802,"prompt_per_second":49.11277289500102,"predicted_n":188,"predicted_ms":17083.924,"predicted_per_token_ms":90.87193617021276,"predicted_per_second":11.004497561567238}}'
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 recorded_with: VCR 6.4.0

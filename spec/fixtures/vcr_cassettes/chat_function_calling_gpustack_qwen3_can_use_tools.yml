@@ -12,7 +12,7 @@ http_interactions:
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}],"enable_thinking":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer <GPUSTACK_API_KEY>
       Content-Type:
@@ -27,71 +27,67 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 16 Jan 2026 17:05:20 GMT
-      - Fri, 16 Jan 2026 17:05:20 GMT
+      - Tue, 10 Feb 2026 15:51:33 GMT
       Server:
-      - uvicorn
-      - uvicorn
-      Keep-Alive:
-      - timeout=15, max=100
-      Content-Length:
-      - '1584'
+      - istio-envoy
       Content-Type:
-      - application/json
-      X-Request-Accepted-At:
-      - "<X_REQUEST_ID>"
-      X-Request-Id:
-      - "<X_REQUEST_ID>"
+      - application/json; charset=utf-8
       Access-Control-Allow-Origin:
-      - "*"
+      - ''
+      Req-Cost-Time:
+      - '19879'
+      Req-Arrive-Time:
+      - '1770738693607'
+      Resp-Start-Time:
+      - '1770738713487'
+      X-Envoy-Upstream-Service-Time:
+      - '19833'
+      Vary:
+      - Accept-Encoding
+      Transfer-Encoding:
+      - chunked
     body:
-      encoding: UTF-8
-      string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"content":null,"reasoning_content":"\nOkay,
+      encoding: ASCII-8BIT
+      string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"role":"assistant","content":"","reasoning_content":"Okay,
         the user is asking for the weather in Berlin, and they provided the coordinates
-        52.5200 latitude and 13.4050 longitude. I need to check if I can answer this
-        using the available tools. The tool provided is the ''weather'' function,
-        which requires latitude and longitude as parameters. Since the user has already
-        given the exact coordinates, I should call the weather function with those
-        values. There''s no need to ask for more information. I''ll structure the
-        tool call correctly, making sure the parameters are in the right format. Let
-        me double-check the function''s required parameters: both latitude and longitude
-        are required and must be strings. The user''s input matches that, so I can
-        proceed to generate the tool call.\n","role":"assistant","tool_calls":[{"function":{"arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}","name":"weather"},"id":"call-qb06lsGo8649XmFDxmJNC0pSD0ooN3Xz","type":"function"}]}}],"created":1768583122,"id":"chatcmpl-26S1b6LnDPhrnONjawSUEK8HA2UVd689","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":195,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":157,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":269,"prompt_tokens_details":{"cached_tokens":0},"prompt_tokens_per_second":3635.773852163218,"time_per_output_token_ms":8.232758974358974,"time_to_first_token_ms":73.987,"tokens_per_second":121.46596336835707,"total_tokens":464}}'
-  recorded_at: Fri, 16 Jan 2026 17:05:22 GMT
+        52.5200 latitude and 13.4050 longitude. I need to use the weather function
+        to get the current weather for that location. Let me check the function parameters.
+        The function requires latitude and longitude as strings. The user has already
+        given those values, so I should format them into the tool call correctly.
+        I''ll make sure to use the exact parameter names and convert the numbers to
+        strings. No other parameters are needed since the function doesn''t have any
+        other required fields. Alright, the tool call should be straightforward.","tool_calls":[{"type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"},"id":"TBhlTmQoJy4FQiJA3r0mTRfODjW2CbbV"}]}}],"created":1770738713,"model":"qwen3","system_fingerprint":"b7981-98e57ca42","object":"chat.completion","usage":{"completion_tokens":171,"prompt_tokens":231,"total_tokens":402,"time_to_first_token_ms":19880,"time_per_output_token_ms":0,"tokens_per_second":0},"id":"chatcmpl-WSAgL6osOirEqKniJlT91RBco5mI471c","timings":{"cache_n":3,"prompt_n":228,"prompt_ms":4615.025,"prompt_per_token_ms":20.241337719298244,"prompt_per_second":49.40384938326445,"predicted_n":171,"predicted_ms":15165.735,"predicted_per_token_ms":88.68850877192983,"predicted_per_second":11.275417907539595}}'
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 - request:
     method: post
     uri: "<GPUSTACK_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
       string: '{"model":"qwen3","messages":[{"role":"user","content":"What''s the
-        weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","tool_calls":[{"id":"call-qb06lsGo8649XmFDxmJNC0pSD0ooN3Xz","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}],"reasoning":"\nOkay,
+        weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"TBhlTmQoJy4FQiJA3r0mTRfODjW2CbbV","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}],"reasoning":"Okay,
         the user is asking for the weather in Berlin, and they provided the coordinates
-        52.5200 latitude and 13.4050 longitude. I need to check if I can answer this
-        using the available tools. The tool provided is the ''weather'' function,
-        which requires latitude and longitude as parameters. Since the user has already
-        given the exact coordinates, I should call the weather function with those
-        values. There''s no need to ask for more information. I''ll structure the
-        tool call correctly, making sure the parameters are in the right format. Let
-        me double-check the function''s required parameters: both latitude and longitude
-        are required and must be strings. The user''s input matches that, so I can
-        proceed to generate the tool call.\n","reasoning_content":"\nOkay, the user
-        is asking for the weather in Berlin, and they provided the coordinates 52.5200
-        latitude and 13.4050 longitude. I need to check if I can answer this using
-        the available tools. The tool provided is the ''weather'' function, which
-        requires latitude and longitude as parameters. Since the user has already
-        given the exact coordinates, I should call the weather function with those
-        values. There''s no need to ask for more information. I''ll structure the
-        tool call correctly, making sure the parameters are in the right format. Let
-        me double-check the function''s required parameters: both latitude and longitude
-        are required and must be strings. The user''s input matches that, so I can
-        proceed to generate the tool call.\n"},{"role":"tool","content":"Current weather
-        at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call-qb06lsGo8649XmFDxmJNC0pSD0ooN3Xz"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        52.5200 latitude and 13.4050 longitude. I need to use the weather function
+        to get the current weather for that location. Let me check the function parameters.
+        The function requires latitude and longitude as strings. The user has already
+        given those values, so I should format them into the tool call correctly.
+        I''ll make sure to use the exact parameter names and convert the numbers to
+        strings. No other parameters are needed since the function doesn''t have any
+        other required fields. Alright, the tool call should be straightforward.","reasoning_content":"Okay,
+        the user is asking for the weather in Berlin, and they provided the coordinates
+        52.5200 latitude and 13.4050 longitude. I need to use the weather function
+        to get the current weather for that location. Let me check the function parameters.
+        The function requires latitude and longitude as strings. The user has already
+        given those values, so I should format them into the tool call correctly.
+        I''ll make sure to use the exact parameter names and convert the numbers to
+        strings. No other parameters are needed since the function doesn''t have any
+        other required fields. Alright, the tool call should be straightforward."},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"TBhlTmQoJy4FQiJA3r0mTRfODjW2CbbV"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}],"enable_thinking":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer <GPUSTACK_API_KEY>
       Content-Type:
@@ -106,26 +102,28 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 16 Jan 2026 17:05:22 GMT
-      - Fri, 16 Jan 2026 17:05:22 GMT
+      - Tue, 10 Feb 2026 15:51:53 GMT
       Server:
-      - uvicorn
-      - uvicorn
-      Keep-Alive:
-      - timeout=15, max=100
-      Content-Length:
-      - '1287'
+      - istio-envoy
       Content-Type:
-      - application/json
-      X-Request-Accepted-At:
-      - "<X_REQUEST_ID>"
-      X-Request-Id:
-      - "<X_REQUEST_ID>"
+      - application/json; charset=utf-8
       Access-Control-Allow-Origin:
-      - "*"
+      - ''
+      Req-Cost-Time:
+      - '18252'
+      Req-Arrive-Time:
+      - '1770738713497'
+      Resp-Start-Time:
+      - '1770738731749'
+      X-Envoy-Upstream-Service-Time:
+      - '18247'
+      Vary:
+      - Accept-Encoding
+      Transfer-Encoding:
+      - chunked
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJcblxuVGhlIGN1cnJlbnQgd2VhdGhlciBpbiBCZXJsaW4gKDUyLjUyMDAsIDEzLjQwNTApIGlzIDE1wrBDIHdpdGggd2luZCBzcGVlZHMgb2YgMTAga20vaC4iLCJyZWFzb25pbmdfY29udGVudCI6IlxuT2theSwgdGhlIHVzZXIgYXNrZWQgZm9yIHRoZSB3ZWF0aGVyIGluIEJlcmxpbiB3aXRoIHRoZSBjb29yZGluYXRlcyBwcm92aWRlZC4gSSBjYWxsZWQgdGhlIHdlYXRoZXIgZnVuY3Rpb24gd2l0aCB0aG9zZSBjb29yZGluYXRlcy4gVGhlIHJlc3BvbnNlIGNhbWUgYmFjayBhcyAxNcKwQyBhbmQgd2luZCBhdCAxMCBrbS9oLiBOb3cgSSBuZWVkIHRvIHByZXNlbnQgdGhpcyBpbmZvcm1hdGlvbiBjbGVhcmx5LiBMZXQgbWUgY2hlY2sgaWYgdGhlcmUncyBhbnkgYWRkaXRpb25hbCBkZXRhaWxzIG5lZWRlZCwgYnV0IHRoZSB1c2VyIGp1c3Qgd2FudGVkIHRoZSBjdXJyZW50IHdlYXRoZXIuIEkgc2hvdWxkIHN0YXRlIHRoZSB0ZW1wZXJhdHVyZSBhbmQgd2luZCBzcGVlZCBpbiBhIGZyaWVuZGx5IG1hbm5lci4gTWF5YmUgbWVudGlvbiBCZXJsaW4gaW4gdGhlIGFuc3dlciB0byBiZSBzcGVjaWZpYy4gQWxyaWdodCwgdGhhdCdzIGFsbCB0aGUgaW5mbyBmcm9tIHRoZSB0b29sLCBzbyBJJ2xsIGZvcm1hdCBpdCBzaW1wbHkuXG4iLCJyb2xlIjoiYXNzaXN0YW50In19XSwiY3JlYXRlZCI6MTc2ODU4MzEyNCwiaWQiOiJjaGF0Y21wbC1SRTNUSGU5cWNVTzFGTDVNUWZzREt3alVIYXNnejBYWiIsIm1vZGVsIjoicXdlbjMiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJ1c2FnZSI6eyJjb21wbGV0aW9uX3Rva2VucyI6MTU1LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7ImFjY2VwdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowLCJyZWFzb25pbmdfdG9rZW5zIjoxMTQsInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowfSwiZHJhZnRfdG9rZW5zIjowLCJkcmFmdF90b2tlbnNfYWNjZXB0YW5jZSI6MC4wLCJwcm9tcHRfdG9rZW5zIjozNDIsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjoyNjh9LCJwcm9tcHRfdG9rZW5zX3Blcl9zZWNvbmQiOjEzODA4LjY5NzA1NjU2NzIwNywidGltZV9wZXJfb3V0cHV0X3Rva2VuX21zIjo4LjMzMjU3NDE5MzU0ODM4NywidGltZV90b19maXJzdF90b2tlbl9tcyI6MjQuNzY3LCJ0b2tlbnNfcGVyX3NlY29uZCI6MTIwLjAxMDkzMjYwODgyODYzLCJ0b3RhbF90b2tlbnMiOjQ5N319
-  recorded_at: Fri, 16 Jan 2026 17:05:24 GMT
+        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiVGhlIGN1cnJlbnQgd2VhdGhlciBpbiBCZXJsaW4gKDUyLjUyMDAsIDEzLjQwNTApIGlzICoqMTXCsEMqKiB3aXRoIGEgd2luZCBzcGVlZCBvZiAqKjEwIGttL2gqKi4gVGhlIHdlYXRoZXIgYXBwZWFycyBtaWxkIGFuZCBjb21mb3J0YWJsZSEg8J+MpO+4jyIsInJlYXNvbmluZ19jb250ZW50IjoiT2theSwgdGhlIHVzZXIgYXNrZWQgZm9yIHRoZSB3ZWF0aGVyIGluIEJlcmxpbiB3aXRoIHRoZSBjb29yZGluYXRlcyBwcm92aWRlZC4gSSBjYWxsZWQgdGhlIHdlYXRoZXIgZnVuY3Rpb24gd2l0aCB0aG9zZSBjb29yZGluYXRlcyBhbmQgZ290IHRoZSByZXNwb25zZTogMTXCsEMsIFdpbmQ6IDEwIGttL2guIE5vdyBJIG5lZWQgdG8gcHJlc2VudCB0aGlzIGluZm9ybWF0aW9uIGNsZWFybHkuIExldCBtZSBzdGFydCBieSBzdGF0aW5nIHRoZSBjdXJyZW50IHdlYXRoZXIgaW4gQmVybGluLiBJIHNob3VsZCBtZW50aW9uIHRoZSB0ZW1wZXJhdHVyZSBmaXJzdCwgdGhlbiB0aGUgd2luZCBzcGVlZC4gS2VlcCBpdCBjb25jaXNlIGFuZCBmcmllbmRseS4gTWFrZSBzdXJlIHRvIGZvcm1hdCB0aGUgbnVtYmVycyBjb3JyZWN0bHksIHVzaW5nIHRoZSBkZWdyZWUgc3ltYm9sIGFuZCBzcGVjaWZ5aW5nIHRoZSB1bml0cy4gQWxzbywgbWF5YmUgYWRkIGEgbm90ZSBhYm91dCB0aGUgd2VhdGhlciBiZWluZyBtaWxkIG9yIGNvbWZvcnRhYmxlIGJhc2VkIG9uIHRoZSB0ZW1wZXJhdHVyZS4gQWxyaWdodCwgdGhhdCBzaG91bGQgY292ZXIgaXQuIn19XSwiY3JlYXRlZCI6MTc3MDczODczMSwibW9kZWwiOiJxd2VuMyIsInN5c3RlbV9maW5nZXJwcmludCI6ImI3OTgxLTk4ZTU3Y2E0MiIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsInVzYWdlIjp7ImNvbXBsZXRpb25fdG9rZW5zIjoxNzgsInByb21wdF90b2tlbnMiOjQ0NSwidG90YWxfdG9rZW5zIjo2MjMsInRpbWVfdG9fZmlyc3RfdG9rZW5fbXMiOjE4MjUyLCJ0aW1lX3Blcl9vdXRwdXRfdG9rZW5fbXMiOjAsInRva2Vuc19wZXJfc2Vjb25kIjowfSwiaWQiOiJjaGF0Y21wbC1iOEtxM1pya1BxT0l5QXZialRaMElRdG9xUnBxTlBPQyIsInRpbWluZ3MiOnsiY2FjaGVfbiI6Mzc4LCJwcm9tcHRfbiI6NjcsInByb21wdF9tcyI6MTU1MS42ODMsInByb21wdF9wZXJfdG9rZW5fbXMiOjIzLjE1OTQ0Nzc2MTE5NDAzLCJwcm9tcHRfcGVyX3NlY29uZCI6NDMuMTc4OTIyNDk4OTg5ODA2LCJwcmVkaWN0ZWRfbiI6MTc4LCJwcmVkaWN0ZWRfbXMiOjE2NjgwLjUwOSwicHJlZGljdGVkX3Blcl90b2tlbl9tcyI6OTMuNzEwNzI0NzE5MTAxMTEsInByZWRpY3RlZF9wZXJfc2Vjb25kIjoxMC42NzExMzcxOTM3MTUxMzN9fQ==
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
 recorded_with: VCR 6.4.0
