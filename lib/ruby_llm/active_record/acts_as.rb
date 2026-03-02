@@ -12,7 +12,11 @@ module RubyLLM
         # Monkey-patch Models to use database when ActsAs is active
         RubyLLM::Models.class_eval do
           def self.load_models
-            read_from_database
+            database_models = read_from_database
+            return database_models if database_models.any?
+
+            RubyLLM.logger.debug { 'Model registry is empty in database, falling back to JSON registry' }
+            read_from_json
           rescue StandardError => e
             RubyLLM.logger.debug { "Failed to load models from database: #{e.message}, falling back to JSON" }
             read_from_json
@@ -21,6 +25,8 @@ module RubyLLM
           def self.read_from_database
             model_class = RubyLLM.config.model_registry_class
             model_class = model_class.constantize if model_class.is_a?(String)
+            return [] unless model_class.table_exists?
+
             model_class.all.map(&:to_llm)
           end
 

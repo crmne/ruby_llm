@@ -45,6 +45,17 @@ RSpec.describe RubyLLM::Generators::InstallGenerator, :generator, type: :generat
       end
     end
 
+    it 'keeps create_models migration schema-only' do
+      within_test_app(app_path) do
+        migration = Dir.glob('db/migrate/*create_models.rb').first
+        expect(migration).to be_present
+
+        content = File.read(migration)
+        expect(content).not_to include('Loading models from models.json')
+        expect(content).not_to include('save_to_database')
+      end
+    end
+
     it 'creates initializer file' do
       within_test_app(app_path) do
         expect(File.exist?('config/initializers/ruby_llm.rb')).to be true

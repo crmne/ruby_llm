@@ -84,6 +84,7 @@ After running the generator:
 
 ```bash
 rails db:migrate
+rails ruby_llm:load_models # v1.13+
 ```
 
 Your Rails app is now AI-ready!
@@ -438,7 +439,7 @@ chat.model.name # => "GPT-4"
 chat.model.context_window # => 128000
 chat.model.supports_vision # => true
 
-# Populate/refresh models from models.json
+# Populate/refresh models from models.json (v1.13+)
 rails ruby_llm:load_models
 
 # Query based on model attributes
@@ -449,6 +450,8 @@ Model.left_joins(:chats).group(:id).order('COUNT(chats.id) DESC')
 Model.where(supports_functions: true)
 Model.where(supports_vision: true)
 ```
+
+If the model registry table is empty (or not available yet), RubyLLM falls back to `models.json` for lookups (v1.13+).
 
 ### System Instructions
 

@@ -231,6 +231,8 @@ end
 ```bash
 # Install Rails Integration
 rails generate ruby_llm:install
+rails db:migrate
+rails ruby_llm:load_models # v1.13+
 
 # Add Chat UI (optional)
 rails generate ruby_llm:chat_ui

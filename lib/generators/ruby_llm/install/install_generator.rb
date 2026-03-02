@@ -77,12 +77,13 @@ module RubyLLM
 
         say "\n  Next steps:", :yellow
         say '     1. Run: rails db:migrate'
-        say '     2. Set your API keys in config/initializers/ruby_llm.rb'
+        say '     2. Run: rails ruby_llm:load_models'
+        say '     3. Set your API keys in config/initializers/ruby_llm.rb'
 
-        say "     3. Start chatting: #{chat_model_name}.create!(model: 'gpt-4.1-nano').ask('Hello!')"
+        say "     4. Start chatting: #{chat_model_name}.create!(model: 'gpt-4.1-nano').ask('Hello!')"
 
-        say "\n  🚀 Model registry is database-backed!", :cyan
-        say '     Models automatically load from the database'
+        say "\n  🚀 Model registry supports database + JSON fallback!", :cyan
+        say '     Models load from database when present, otherwise from models.json'
         say '     Pass model names as strings - RubyLLM handles the rest!'
         say "     Specify provider when needed: Chat.create!(model: 'gemini-2.5-flash', provider: 'vertexai')"
 

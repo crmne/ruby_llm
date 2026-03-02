@@ -36,10 +36,5 @@ class <%= create_migration_class_name(model_table_name) %> < ActiveRecord::Migra
 <% end %>
     end
 
-    # Load models from JSON
-    say_with_time "Loading models from models.json" do
-      RubyLLM.models.load_from_json!
-      <%= model_model_name %>.save_to_database
-    end
   end
 end
