@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
+require 'googleauth'
 
 RSpec.describe RubyLLM::Providers::VertexAI do
   include_context 'with configured RubyLLM'
@@ -28,11 +29,11 @@ RSpec.describe RubyLLM::Providers::VertexAI do
         'https://www.googleapis.com/auth/generative-language.retriever'
       ]
 
-      expect(Google::Auth).to receive(:get_application_default)
-        .with(expected_scopes)
-        .and_return(mock_credentials)
+      allow(Google::Auth).to receive(:get_application_default).and_return(mock_credentials)
 
       provider.headers
+
+      expect(Google::Auth).to have_received(:get_application_default).with(expected_scopes)
     end
   end
 end
