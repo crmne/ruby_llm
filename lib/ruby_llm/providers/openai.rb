@@ -12,6 +12,7 @@ module RubyLLM
       include OpenAI::Tools
       include OpenAI::Images
       include OpenAI::Media
+      include OpenAI::Transcription
 
       def api_base
         @config.openai_api_base || 'https://api.openai.com/v1'
@@ -26,7 +27,7 @@ module RubyLLM
       end
 
       def maybe_normalize_temperature(temperature, model)
-        OpenAI::Capabilities.normalize_temperature(temperature, model.id)
+        OpenAI::Temperature.normalize(temperature, model.id)
       end
 
       class << self

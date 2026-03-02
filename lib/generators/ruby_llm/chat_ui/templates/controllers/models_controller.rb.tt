@@ -1,14 +1,14 @@
-class <%= model_model_name.pluralize %>Controller < ApplicationController
+class <%= model_controller_class_name %> < ApplicationController
   def index
-    @<%= model_model_name.tableize %> = <%= model_model_name %>.all.group_by(&:provider)
+    @<%= model_table_name %> = <%= model_model_name %>.all
   end
 
   def show
-    @<%= model_model_name.underscore %> = <%= model_model_name %>.find(params[:id])
+    @<%= model_variable_name %> = <%= model_model_name %>.find(params[:id])
   end
 
   def refresh
     <%= model_model_name %>.refresh!
-    redirect_to <%= model_model_name.tableize %>_path, notice: "<%= model_model_name.pluralize %> refreshed successfully"
+    redirect_to <%= model_table_name %>_path, notice: "<%= model_model_name.pluralize %> refreshed successfully"
   end
 end

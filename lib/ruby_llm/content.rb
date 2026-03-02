@@ -35,8 +35,14 @@ module RubyLLM
 
     def process_attachments_array_or_string(attachments)
       Utils.to_safe_array(attachments).each do |file|
+        next if blank_attachment_entry?(file)
+
         add_attachment(file)
       end
+    end
+
+    def blank_attachment_entry?(file)
+      file.nil? || (file.is_a?(String) && file.strip.empty?)
     end
 
     def process_attachments(attachments)
@@ -44,6 +50,27 @@ module RubyLLM
         attachments.each_value { |attachment| process_attachments_array_or_string(attachment) }
       else
         process_attachments_array_or_string attachments
+      end
+    end
+  end
+
+  class Content
+    # Represents provider-specific payloads that should bypass RubyLLM formatting.
+    class Raw
+      attr_reader :value
+
+      def initialize(value)
+        raise ArgumentError, 'Raw content payload cannot be nil' if value.nil?
+
+        @value = value
+      end
+
+      def format
+        @value
+      end
+
+      def to_h
+        @value
       end
     end
   end

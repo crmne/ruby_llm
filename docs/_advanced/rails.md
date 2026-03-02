@@ -28,6 +28,7 @@ After reading this guide, you will know:
 *   How to use `acts_as_chat` and `acts_as_message` with your models
 *   How to persist AI model metadata in your database with `acts_as_model`
 *   How to send file attachments to AI models with ActiveStorage
+*   How to store raw provider payloads (Anthropic prompt caching, etc.)
 *   How to integrate streaming responses with Hotwire/Turbo Streams
 *   How to customize the persistence behavior for validation-focused scenarios
 
@@ -86,6 +87,7 @@ rails db:migrate
 ```
 
 Your Rails app is now AI-ready!
+
 
 ### Adding a Chat UI
 
@@ -147,6 +149,29 @@ class Message < ApplicationRecord
   has_many_attached :attachments  # Required for file attachments
 end
 ```
+
+### Working with Raw Provider Payloads, Anthropic Prompt Caching
+{: .d-inline-block }
+
+v1.9.0+
+{: .label .label-green }
+
+Providers like Anthropic expose advanced features (prompt caching, fine-grained metadata) by embedding rich structures inside each prompt block. Use `RubyLLM::Content::Raw` to persist those blocks alongside your conversation history:
+
+```ruby
+raw_block = RubyLLM::Content::Raw.new([
+  { type: 'text', text: 'Reusable analysis prompt', cache_control: { type: 'ephemeral' } },
+  { type: 'text', text: "Today's request: #{summary}" }
+])
+
+chat = Chat.create!(model: 'claude-sonnet-4-5')
+chat.ask(raw_block)
+```
+
+The v1.9 schema adds a `content_raw` column so raw payloads live alongside the plain-text `content` field. When you load messages via `acts_as_message`, RubyLLM reconstructs the original `Content::Raw` automatically.
+
+> Existing apps: run `rails generate ruby_llm:upgrade_to_v1_9` to add cached-token tracking and raw content storage columns introduced in v1.9.0. New apps will get the proper columns from the install generator.
+{: .note }
 
 ### Configuring RubyLLM
 
@@ -272,7 +297,7 @@ Route models through different providers dynamically:
 # Use a model through a different provider
 chat = Chat.create!(
   model: '{{ site.models.anthropic_current }}',
-  provider: 'bedrock'  # Use AWS Bedrock instead of Anthropic
+  provider: 'bedrock'  # Route this model through AWS Bedrock
 )
 
 # The model registry handles the routing automatically
@@ -435,8 +460,11 @@ chat_record = Chat.create!(model: '{{ site.models.default_chat }}')
 # This creates and saves a Message record with role: :system
 chat_record.with_instructions("You are a Ruby expert.")
 
-# Replace all system messages with a new one
-chat_record.with_instructions("You are a concise Ruby expert.", replace: true)
+# By default, with_instructions replaces the active system instruction
+chat_record.with_instructions("You are a concise Ruby expert.")
+
+# Append only when you intentionally want multiple system prompts
+chat_record.with_instructions("Use short bullet points.", append: true)
 
 system_message = chat_record.messages.find_by(role: :system)
 puts system_message.content # => "You are a concise Ruby expert."
@@ -628,7 +656,7 @@ class MessagesController < ApplicationController
     @chat = Chat.find(params[:chat_id])
 
     # Create and persist the user message immediately
-    @chat.create_user_message(params[:content])
+    @chat.add_message(role: :user, content: params[:content])
 
     # Process AI response in background
     ChatStreamJob.perform_later(@chat.id)
@@ -641,7 +669,7 @@ class MessagesController < ApplicationController
 end
 ```
 
-The `create_user_message` method provides instant feedback while processing continues in the background.
+The `add_message` method provides instant feedback while processing continues in the background.
 
 ### Full Streaming Implementation
 

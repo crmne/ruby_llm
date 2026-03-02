@@ -37,17 +37,21 @@ module RubyLLM
       self.class.configuration_requirements
     end
 
-    def complete(messages, tools:, temperature:, model:, params: {}, headers: {}, schema: nil, &) # rubocop:disable Metrics/ParameterLists
+    # rubocop:disable Metrics/ParameterLists
+    def complete(messages, tools:, temperature:, model:, params: {}, headers: {}, schema: nil, thinking: nil,
+                 tool_prefs: nil, &)
       normalized_temperature = maybe_normalize_temperature(temperature, model)
 
       payload = Utils.deep_merge(
         render_payload(
           messages,
           tools: tools,
+          tool_prefs: tool_prefs,
           temperature: normalized_temperature,
           model: model,
           stream: block_given?,
-          schema: schema
+          schema: schema,
+          thinking: thinking
         ),
         params
       )
@@ -58,6 +62,7 @@ module RubyLLM
         sync_response @connection, payload, headers
       end
     end
+    # rubocop:enable Metrics/ParameterLists
 
     def list_models
       response = @connection.get models_url
@@ -82,6 +87,13 @@ module RubyLLM
       parse_image_response(response, model:)
     end
 
+    def transcribe(audio_file, model:, language:, **options)
+      file_part = build_audio_file_part(audio_file)
+      payload = render_transcription_payload(file_part, model:, language:, **options)
+      response = @connection.post transcription_url, payload
+      parse_transcription_response(response, model:)
+    end
+
     def configured?
       configuration_requirements.all? { |req| @config.send(req) }
     end
@@ -94,16 +106,24 @@ module RubyLLM
       self.class.remote?
     end
 
+    def assume_models_exist?
+      self.class.assume_models_exist?
+    end
+
     def parse_error(response)
       return if response.body.empty?
 
       body = try_parse_json(response.body)
       case body
       when Hash
+        error = body['error']
+        return error if error.is_a?(String)
+
         body.dig('error', 'message')
       when Array
         body.map do |part|
-          part.dig('error', 'message')
+          error = part['error']
+          error.is_a?(String) ? error : part.dig('error', 'message')
         end.join('. ')
       else
         body
@@ -137,7 +157,7 @@ module RubyLLM
       end
 
       def capabilities
-        raise NotImplementedError
+        nil
       end
 
       def configuration_requirements
@@ -152,6 +172,10 @@ module RubyLLM
         !local?
       end
 
+      def assume_models_exist?
+        false
+      end
+
       def configured?(config)
         configuration_requirements.all? { |req| config.send(req) }
       end
@@ -160,9 +184,13 @@ module RubyLLM
         providers[name.to_sym] = provider_class
       end
 
+      def resolve(name)
+        providers[name.to_sym]
+      end
+
       def for(model)
         model_info = Models.find(model)
-        providers[model_info.provider.to_sym]
+        resolve model_info.provider
       end
 
       def providers
@@ -191,6 +219,17 @@ module RubyLLM
     end
 
     private
+
+    def build_audio_file_part(file_path)
+      expanded_path = File.expand_path(file_path)
+      mime_type = Marcel::MimeType.for(Pathname.new(expanded_path))
+
+      Faraday::Multipart::FilePart.new(
+        expanded_path,
+        mime_type,
+        File.basename(expanded_path)
+      )
+    end
 
     def try_parse_json(maybe_json)
       return maybe_json unless maybe_json.is_a?(String)

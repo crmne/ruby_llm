@@ -12,6 +12,8 @@ module RubyLLM
         end
 
         def format_tool_call(msg)
+          return { role: 'assistant', content: msg.content.value } if msg.content.is_a?(RubyLLM::Content::Raw)
+
           content = []
 
           content << Media.format_text(msg.content) unless msg.content.nil? || msg.content.empty?
@@ -29,7 +31,7 @@ module RubyLLM
         def format_tool_result(msg)
           {
             role: 'user',
-            content: [format_tool_result_block(msg)]
+            content: msg.content.is_a?(RubyLLM::Content::Raw) ? msg.content.value : [format_tool_result_block(msg)]
           }
         end
 
@@ -51,15 +53,18 @@ module RubyLLM
         end
 
         def function_for(tool)
-          {
+          input_schema = tool.params_schema ||
+                         RubyLLM::Tool::SchemaDefinition.from_parameters(tool.parameters)&.json_schema
+
+          declaration = {
             name: tool.name,
             description: tool.description,
-            input_schema: {
-              type: 'object',
-              properties: clean_parameters(tool.parameters),
-              required: required_parameters(tool.parameters)
-            }
+            input_schema: input_schema || default_input_schema
           }
+
+          return declaration if tool.provider_params.empty?
+
+          RubyLLM::Utils.deep_merge(declaration, tool.provider_params)
         end
 
         def extract_tool_calls(data)
@@ -89,17 +94,34 @@ module RubyLLM
           tool_calls.empty? ? nil : tool_calls
         end
 
-        def clean_parameters(parameters)
-          parameters.transform_values do |param|
-            {
-              type: param.type,
-              description: param.description
-            }.compact
-          end
+        def default_input_schema
+          {
+            'type' => 'object',
+            'properties' => {},
+            'required' => [],
+            'additionalProperties' => false,
+            'strict' => true
+          }
         end
 
-        def required_parameters(parameters)
-          parameters.select { |_, param| param.required }.keys
+        def build_tool_choice(tool_prefs)
+          tool_choice = tool_prefs[:choice]
+          parallel_tool_calls = tool_prefs[:parallel]
+          tool_choice = :auto if tool_choice.nil?
+
+          {
+            type: case tool_choice
+                  when :auto, :none
+                    tool_choice
+                  when :required
+                    :any
+                  else
+                    :tool
+                  end
+          }.tap do |tc|
+            tc[:name] = tool_choice if tc[:type] == :tool
+            tc[:disable_parallel_tool_use] = !parallel_tool_calls unless tc[:type] == :none || parallel_tool_calls.nil?
+          end
         end
       end
     end

@@ -1,0 +1,80 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.openai.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-5-nano","messages":[{"role":"developer","content":"You
+        must include the exact phrase \"XKCD7392\" somewhere in your response."},{"role":"user","content":"Tell
+        me about the weather."}],"stream":false,"temperature":1.0}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 10 Feb 2026 09:01:55 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Expose-Headers:
+      - X-Request-ID
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '13975'
+      Openai-Project:
+      - proj_61L3Oqt640dKU0CASS2iOj8Q
+      Openai-Version:
+      - '2020-10-01'
+      Server:
+      - cloudflare
+      X-Ratelimit-Limit-Requests:
+      - '500'
+      X-Ratelimit-Limit-Tokens:
+      - '200000'
+      X-Ratelimit-Remaining-Requests:
+      - '499'
+      X-Ratelimit-Remaining-Tokens:
+      - '199972'
+      X-Ratelimit-Reset-Requests:
+      - 120ms
+      X-Ratelimit-Reset-Tokens:
+      - 8ms
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      X-Openai-Proxy-Wasm:
+      - v0.1
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        ewogICJpZCI6ICJjaGF0Y21wbC1EN2R1bjNGcG9ZbEpIZklBcDZyelZUZjRWUGU3TCIsCiAgIm9iamVjdCI6ICJjaGF0LmNvbXBsZXRpb24iLAogICJjcmVhdGVkIjogMTc3MDcxNDEwMSwKICAibW9kZWwiOiAiZ3B0LTUtbmFuby0yMDI1LTA4LTA3IiwKICAiY2hvaWNlcyI6IFsKICAgIHsKICAgICAgImluZGV4IjogMCwKICAgICAgIm1lc3NhZ2UiOiB7CiAgICAgICAgInJvbGUiOiAiYXNzaXN0YW50IiwKICAgICAgICAiY29udGVudCI6ICJJIGNhbiBoZWxwIHdpdGggd2VhdGhlciwgYnV0IEkgbmVlZCBhIGxvY2F0aW9uIGFuZCB0aW1lZnJhbWUgdG8gZ2l2ZSB5b3Ugc29tZXRoaW5nIHJlYWwuXG5cbldoYXQgSSBjYW4gcHJvdmlkZTpcbi0gQ3VycmVudCBjb25kaXRpb25zICh0ZW1wLCB3aW5kLCBodW1pZGl0eSwgY29uZGl0aW9ucyBsaWtlIHN1bm55L2Nsb3VkeSlcbi0gSG91cmx5IGZvcmVjYXN0IChuZXh0IDI0IGhvdXJzKSBhbmQvb3IgYSA3LWRheSBvdXRsb29rXG4tIFdlYXRoZXIgYWxlcnRzIG9yIGFkdmlzb3JpZXMgaWYgYW55XG4tIFRpcHMgZm9yIHdoYXQgdG8gd2VhciBvciBob3cgdG8gcHJlcGFyZVxuXG5XaGF0IEkgbmVlZCBmcm9tIHlvdTpcbi0gWW91ciBsb2NhdGlvbiAoY2l0eSBhbmQgY291bnRyeSlcbi0gV2hldGhlciB5b3Ugd2FudCBjdXJyZW50IGNvbmRpdGlvbnMsIGFuIGhvdXJseSBmb3JlY2FzdCwgb3IgYSA3LWRheSBmb3JlY2FzdFxuLSBZb3VyIHByZWZlcnJlZCB0ZW1wZXJhdHVyZSB1bml0IChDZWxzaXVzIG9yIEZhaHJlbmhlaXQpXG5cbkEgcXVpY2sgcHJpbWVyIG9uIGZvcmVjYXN0IHRlcm1zOlxuLSBUZW1wZXJhdHVyZSBpcyB0aGUgaGlnaC9sb3cgZm9yIHRoZSBkYXkgb3IgdGhlIGN1cnJlbnQgcmVhZGluZ1xuLSBQb1AgKHByb2JhYmlsaXR5IG9mIHByZWNpcGl0YXRpb24pIGluZGljYXRlcyBob3cgbGlrZWx5IHJhaW4vc25vdyBpc1xuLSBXaW5kcyBhcmUgbGlzdGVkIGJ5IHNwZWVkIGFuZCBkaXJlY3Rpb25cbi0gSHVtaWRpdHkgYW5kIGRldyBwb2ludCB0ZWxsIHlvdSBob3cgbW9pc3QgdGhlIGFpciBmZWVsc1xuLSBGcm9udHMgYW5kIHByZXNzdXJlIGNoYW5nZXMgY2FuIHNpZ25hbCBjaGFuZ2luZyB3ZWF0aGVyXG5cbklmIHlvdSBzaGFyZSB5b3VyIGNpdHkgKGFuZCBjb3VudHJ5KSBhbmQgdGhlIHRpbWVmcmFtZSB5b3Ugd2FudCwgSeKAmWxsIHN1bW1hcml6ZSB0aGUgbGF0ZXN0IHdlYXRoZXIgZm9yIHlvdS4gUC5TLiBYS0NENzM5MiIsCiAgICAgICAgInJlZnVzYWwiOiBudWxsLAogICAgICAgICJhbm5vdGF0aW9ucyI6IFtdCiAgICAgIH0sCiAgICAgICJmaW5pc2hfcmVhc29uIjogInN0b3AiCiAgICB9CiAgXSwKICAidXNhZ2UiOiB7CiAgICAicHJvbXB0X3Rva2VucyI6IDM0LAogICAgImNvbXBsZXRpb25fdG9rZW5zIjogMTc3MiwKICAgICJ0b3RhbF90b2tlbnMiOiAxODA2LAogICAgInByb21wdF90b2tlbnNfZGV0YWlscyI6IHsKICAgICAgImNhY2hlZF90b2tlbnMiOiAwLAogICAgICAiYXVkaW9fdG9rZW5zIjogMAogICAgfSwKICAgICJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjogewogICAgICAicmVhc29uaW5nX3Rva2VucyI6IDE1MzYsCiAgICAgICJhdWRpb190b2tlbnMiOiAwLAogICAgICAiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOiAwLAogICAgICAicmVqZWN0ZWRfcHJlZGljdGlvbl90b2tlbnMiOiAwCiAgICB9CiAgfSwKICAic2VydmljZV90aWVyIjogImRlZmF1bHQiLAogICJzeXN0ZW1fZmluZ2VycHJpbnQiOiBudWxsCn0K
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+recorded_with: VCR 6.4.0

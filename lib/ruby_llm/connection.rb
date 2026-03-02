@@ -34,8 +34,7 @@ module RubyLLM
     end
 
     def post(url, payload, &)
-      body = payload.is_a?(Hash) ? JSON.generate(payload, ascii_only: false) : payload
-      @connection.post url, body do |req|
+      @connection.post url, payload do |req|
         req.headers.merge! @provider.headers if @provider.respond_to?(:headers)
         yield req if block_given?
       end
@@ -66,20 +65,26 @@ module RubyLLM
                        errors: true,
                        headers: false,
                        log_level: :debug do |logger|
-        if Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('3.2.0')
-          logger.filter(
-            Regexp.new('[A-Za-z0-9+/=]{100,}', timeout: @config.log_regexp_timeout),
-            'data":"[BASE64 DATA]"'
-          )
-          logger.filter(Regexp.new('[-\\d.e,\\s]{100,}', timeout: @config.log_regexp_timeout), '[EMBEDDINGS ARRAY]')
-        else
-          if @config.log_regexp_timeout
-            RubyLLM.logger.warn("log_regexp_timeout is not supported on Ruby #{RUBY_VERSION}")
-          end
-          logger.filter(Regexp.new('[A-Za-z0-9+/=]{100,}'), 'data":"[BASE64 DATA]"')
-          logger.filter(Regexp.new('[-\\d.e,\\s]{100,}'), '[EMBEDDINGS ARRAY]')
-        end
+        logger.filter(build_logging_regexp('[A-Za-z0-9+/=]{100,}'), '[BASE64 DATA]')
+        logger.filter(build_logging_regexp('[-\\d.e,\\s]{100,}'), '[EMBEDDINGS ARRAY]')
       end
+    end
+
+    def build_logging_regexp(pattern)
+      return Regexp.new(pattern, timeout: @config.log_regexp_timeout) if regexp_timeout_supported?
+
+      warn_log_regexp_timeout_unsupported
+      Regexp.new(pattern)
+    end
+
+    def regexp_timeout_supported?
+      Regexp.respond_to?(:timeout) && !@config.log_regexp_timeout.nil?
+    end
+
+    def warn_log_regexp_timeout_unsupported
+      return unless !@config.log_regexp_timeout.nil? && !Regexp.respond_to?(:timeout)
+
+      RubyLLM.logger.warn("log_regexp_timeout is not supported on Ruby #{RUBY_VERSION}")
     end
 
     def setup_retry(faraday)
@@ -88,15 +93,16 @@ module RubyLLM
         interval: @config.retry_interval,
         interval_randomness: @config.retry_interval_randomness,
         backoff_factor: @config.retry_backoff_factor,
-        exceptions: retry_exceptions,
-        retry_statuses: [429, 500, 502, 503, 504, 529]
+        methods: Faraday::Retry::Middleware::IDEMPOTENT_METHODS + [:post],
+        exceptions: retry_exceptions
       }
     end
 
     def setup_middleware(faraday)
+      faraday.request :multipart
       faraday.request :json
       faraday.response :json
-      faraday.adapter Faraday.default_adapter
+      faraday.adapter :net_http
       faraday.use :llm_errors, provider: @provider
     end
 

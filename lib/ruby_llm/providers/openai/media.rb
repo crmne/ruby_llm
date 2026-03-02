@@ -7,7 +7,11 @@ module RubyLLM
       module Media
         module_function
 
-        def format_content(content)
+        def format_content(content) # rubocop:disable Metrics/PerceivedComplexity
+          if content.is_a?(RubyLLM::Content::Raw)
+            value = content.value
+            return value.is_a?(Hash) ? value.to_json : value
+          end
           return content.to_json if content.is_a?(Hash) || content.is_a?(Array)
           return content unless content.is_a?(Content)
 
@@ -36,7 +40,7 @@ module RubyLLM
           {
             type: 'image_url',
             image_url: {
-              url: image.url? ? image.source : image.for_llm
+              url: image.url? ? image.source.to_s : image.for_llm
             }
           }
         end

@@ -9,7 +9,7 @@ http_interactions:
         is the capital of France?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.1
       Authorization:
       - Bearer <MISTRAL_API_KEY>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 14 Sep 2025 10:01:42 GMT
+      - Tue, 10 Feb 2026 09:01:13 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -32,38 +32,36 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '019947ac-5c4b-741f-835d-53dcacebaf8f'
+      - '019c46c8-877e-72be-b125-e73d6025867a'
       X-Kong-Request-Id:
-      - '019947ac-5c4b-741f-835d-53dcacebaf8f'
-      X-Envoy-Upstream-Service-Time:
-      - '666'
+      - '019c46c8-877e-72be-b125-e73d6025867a'
       X-Ratelimit-Limit-Tokens-Minute:
-      - '500000'
+      - '2000000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '499854'
-      X-Ratelimit-Limit-Tokens-Month:
-      - '1000000000'
-      X-Ratelimit-Remaining-Tokens-Month:
-      - '999984858'
+      - '1999824'
       X-Ratelimit-Tokens-Query-Cost:
-      - '96'
+      - '88'
       X-Ratelimit-Limit-Req-Minute:
-      - '60'
+      - '360'
       X-Ratelimit-Remaining-Req-Minute:
-      - '58'
+      - '358'
+      X-Envoy-Upstream-Service-Time:
+      - '553'
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '666'
+      - '553'
       X-Kong-Proxy-Latency:
-      - '8'
+      - '10'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
       Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains
+      - max-age=15552000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
       Server:
       - cloudflare
       Cf-Ray:
@@ -73,6 +71,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6IjM2ZjFlMzRkOWQ4ZDQ0ZThiMzg2YzhlY2YyNjhlNzMyIiwiY3JlYXRlZCI6MTc1Nzg0NDEwMiwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsInVzYWdlIjp7InByb21wdF90b2tlbnMiOjEwLCJ0b3RhbF90b2tlbnMiOjk2LCJjb21wbGV0aW9uX3Rva2VucyI6ODZ9LCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZmluaXNoX3JlYXNvbiI6InN0b3AiLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJ0b29sX2NhbGxzIjpudWxsLCJjb250ZW50IjoiVGhlIGNhcGl0YWwgb2YgRnJhbmNlIGlzICoqUGFyaXMqKi5cblxuUGFyaXMgaXMga25vd24gZm9yIGl0cyBpY29uaWMgbGFuZG1hcmtzIHN1Y2ggYXMgdGhlICoqRWlmZmVsIFRvd2VyKiosICoqTG91dnJlIE11c2V1bSoqLCBhbmQgKipOb3RyZS1EYW1lIENhdGhlZHJhbCoqLCBhcyB3ZWxsIGFzIGl0cyByaWNoIGhpc3RvcnksIGN1bHR1cmUsIGFuZCBpbmZsdWVuY2UgaW4gYXJ0LCBmYXNoaW9uLCBhbmQgY3Vpc2luZS4gSXQgaXMgYWxzbyBhIG1ham9yIGdsb2JhbCBjaXR5IGZvciBidXNpbmVzcywgZGlwbG9tYWN5LCBhbmQgdG91cmlzbS5cblxuV291bGQgeW91IGxpa2UgdG8ga25vdyBtb3JlIGFib3V0IFBhcmlzIG9yIEZyYW5jZT8g8J+YiiJ9fV19
-  recorded_at: Sun, 14 Sep 2025 10:01:42 GMT
-recorded_with: VCR 6.3.1
+        eyJpZCI6ImNjMGE0OWFiMzc5OTQzOGM5YTM0YmI3ZjM2YWViMWM1IiwiY3JlYXRlZCI6MTc3MDcxNDA3MiwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsInVzYWdlIjp7InByb21wdF90b2tlbnMiOjEwLCJ0b3RhbF90b2tlbnMiOjg4LCJjb21wbGV0aW9uX3Rva2VucyI6NzgsIm51bV9jYWNoZWRfdG9rZW5zIjowfSwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImZpbmlzaF9yZWFzb24iOiJzdG9wIiwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwidG9vbF9jYWxscyI6bnVsbCwiY29udGVudCI6IlRoZSBjYXBpdGFsIG9mIEZyYW5jZSBpcyAqKlBhcmlzKiouXG5cblBhcmlzIGlzIGtub3duIGZvciBpdHMgaWNvbmljIGxhbmRtYXJrcyBzdWNoIGFzIHRoZSBFaWZmZWwgVG93ZXIsIHRoZSBMb3V2cmUgTXVzZXVtLCBhbmQgTm90cmUtRGFtZSBDYXRoZWRyYWwsIGFzIHdlbGwgYXMgaXRzIHJpY2ggaGlzdG9yeSwgY3VsdHVyZSwgYW5kIGluZmx1ZW5jZSBpbiBhcnQsIGZhc2hpb24sIGFuZCBjdWlzaW5lLiBJdCBpcyBvbmUgb2YgdGhlIG1vc3QgdmlzaXRlZCBjaXRpZXMgaW4gdGhlIHdvcmxkLlxuXG5Xb3VsZCB5b3UgbGlrZSB0byBrbm93IG1vcmUgYWJvdXQgUGFyaXMgb3IgRnJhbmNlPyDwn5iKIn19XX0=
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+recorded_with: VCR 6.4.0

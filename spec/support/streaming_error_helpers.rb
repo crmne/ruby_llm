@@ -52,6 +52,19 @@ module StreamingErrorHelpers
       chunk_status: 500,
       expected_error: RubyLLM::ServerError
     },
+    xai: {
+      url: 'https://api.x.ai/v1/chat/completions',
+      error_response: {
+        error: {
+          message: 'Service overloaded - please try again later',
+          type: 'server_error',
+          param: nil,
+          code: nil
+        }
+      },
+      chunk_status: 500,
+      expected_error: RubyLLM::ServerError
+    },
     openrouter: {
       url: 'https://openrouter.ai/api/v1/chat/completions',
       error_response: {
@@ -66,7 +79,10 @@ module StreamingErrorHelpers
       expected_error: RubyLLM::ServerError
     },
     ollama: {
-      url: 'http://localhost:11434/v1/chat/completions',
+      url: lambda {
+        base = RubyLLM.config.ollama_api_base.to_s
+        "#{base.sub(%r{/+\z}, '')}/chat/completions"
+      },
       error_response: {
         error: {
           message: 'Service overloaded - please try again later',
@@ -79,7 +95,7 @@ module StreamingErrorHelpers
       expected_error: RubyLLM::ServerError
     },
     bedrock: {
-      url: 'https://bedrock-runtime.us-west-2.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/invoke-with-response-stream',
+      url: %r{\Ahttps://bedrock-runtime\.us-west-2\.amazonaws\.com/model/.+/converse-stream\z},
       error_response: {
         error: {
           message: 'Service overloaded - please try again later',
@@ -90,7 +106,10 @@ module StreamingErrorHelpers
       expected_error: RubyLLM::ServerError
     },
     gpustack: {
-      url: 'http://localhost:11444/v1/chat/completions',
+      url: lambda {
+        base = RubyLLM.config.gpustack_api_base.to_s
+        "#{base.sub(%r{/+\z}, '')}/chat/completions"
+      },
       error_response: {
         error: {
           message: 'Service overloaded - please try again later',
@@ -131,9 +150,8 @@ module StreamingErrorHelpers
     vertexai: {
       url: lambda {
         project_id = ENV.fetch('GOOGLE_CLOUD_PROJECT', 'test-project')
-        location = ENV.fetch('GOOGLE_CLOUD_LOCATION', 'us-central1')
-        "https://#{location}-aiplatform.googleapis.com/v1beta1/projects/#{project_id}/locations/#{location}/publishers/google/models/gemini-2.5-flash:streamGenerateContent?alt=sse"
-      }.call,
+        "https://aiplatform.googleapis.com/v1beta1/projects/#{project_id}/locations/global/publishers/google/models/gemini-2.5-flash:streamGenerateContent?alt=sse"
+      },
       error_response: {
         error: {
           code: 529,
@@ -143,6 +161,27 @@ module StreamingErrorHelpers
       },
       chunk_status: 529,
       expected_error: RubyLLM::OverloadedError
+    },
+    azure: {
+      url: lambda {
+        provider = RubyLLM::Providers::Azure.new(RubyLLM.config)
+        base = provider.api_base.to_s.sub(/\?.*\z/, '').sub(%r{/+\z}, '')
+        path = provider.completion_url
+        next path if path.start_with?('http')
+        next base if path.empty?
+
+        "#{base}/#{path}"
+      },
+      error_response: {
+        error: {
+          message: 'The server is temporarily overloaded. Please try again later.',
+          type: 'server_error',
+          param: nil,
+          code: nil
+        }
+      },
+      chunk_status: 500,
+      expected_error: RubyLLM::ServerError
     }
   }.freeze
 
@@ -158,6 +197,8 @@ module StreamingErrorHelpers
     config = ERROR_HANDLING_CONFIGS[provider]
     return unless config
 
+    url = config[:url].respond_to?(:call) ? config[:url].call : config[:url]
+
     body = case type
            when :chunk
              "#{config[:error_response].to_json}\n\n"
@@ -167,7 +208,7 @@ module StreamingErrorHelpers
 
     status = type == :chunk ? config[:chunk_status] : 200
 
-    stub_request(:post, config[:url])
+    stub_request(:post, url)
       .to_return(
         status: status,
         body: body,

@@ -147,8 +147,7 @@ chat = RubyLLM.chat(model: "{{ site.models.default_chat }}")  # Uses OpenAI
 # Explicit provider
 chat = RubyLLM.chat(
   model: "{{ site.models.local_llama }}",
-  provider: "ollama",
-  base_url: "http://localhost:11434"
+  provider: :ollama,
 )
 ```
 

@@ -1,0 +1,101 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.amazon.nova-2-lite-v1:0/converse
+    body:
+      encoding: UTF-8
+      string: '{"messages":[{"role":"user","content":[{"text":"Tell me about the weather."}]}],"system":[{"text":"You
+        must include the exact phrase \"XKCD7392\" somewhere in your response."}],"inferenceConfig":{"temperature":0.0}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      X-Amz-Date:
+      - 20260210T085955Z
+      X-Amz-Content-Sha256:
+      - c535d0f563b9f0ecfad899f012db029764a3d0284d72fc1e5738b198c0e3a8b0
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20260210/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=7e262c612cd0f8bb3028ab51ea560d70e3b43b744f1a3c01a8f3376deb66abe1
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 10 Feb 2026 08:59:57 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1090'
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - 6856612b-c154-49f7-ad5e-fd845595b066
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJtZXRyaWNzIjp7ImxhdGVuY3lNcyI6MTMwNn0sIm91dHB1dCI6eyJtZXNzYWdlIjp7ImNvbnRlbnQiOlt7InRleHQiOiJUaGUgd2VhdGhlciBjYW4gdmFyeSBkcmFtYXRpY2FsbHkgZGVwZW5kaW5nIG9uIHlvdXIgbG9jYXRpb24sIHRpbWUgb2YgeWVhciwgYW5kIGN1cnJlbnQgYXRtb3NwaGVyaWMgY29uZGl0aW9ucy4gVG8gZ2V0IGFjY3VyYXRlIGFuZCB1cC10by1kYXRlIGluZm9ybWF0aW9uLCB5b3XigJlkIHR5cGljYWxseSBjaGVjayBhIHJlbGlhYmxlIHdlYXRoZXIgc2VydmljZSBvciBhcHAsIHdoaWNoIHByb3ZpZGVzIGZvcmVjYXN0cyBiYXNlZCBvbiBzYXRlbGxpdGUgZGF0YSwgcmFkYXIsIGFuZCBjb21wdXRlciBtb2RlbHMuIEZhY3RvcnMgbGlrZSB0ZW1wZXJhdHVyZSwgaHVtaWRpdHksIHdpbmQsIHByZWNpcGl0YXRpb24sIGFuZCBwcmVzc3VyZSBzeXN0ZW1zIGFsbCBwbGF5IGEgcm9sZSBpbiBzaGFwaW5nIGxvY2FsIGNvbmRpdGlvbnMuIEZvciBleGFtcGxlLCBjb2FzdGFsIGFyZWFzIG1pZ2h0IGV4cGVyaWVuY2UgbWlsZGVyIHRlbXBlcmF0dXJlcyBkdWUgdG8gb2NlYW5pYyBpbmZsdWVuY2UsIHdoaWxlIGlubGFuZCByZWdpb25zIGNhbiBoYXZlIG1vcmUgZXh0cmVtZSB2YXJpYXRpb25zLiBcblxuSWYgeW914oCZcmUgZXZlciBjdXJpb3VzIGFib3V0IGhvdyBjb21wbGV4IHdlYXRoZXIgcGF0dGVybnMgYXJlIG1vZGVsZWQgb3IgdmlzdWFsaXplZCwgcmVtZW1iZXIgdGhhdCBzb21lIHNjaWVudGlmaWMgaHVtb3IgY2FwdHVyZXMgdGhlIGNoYW9z4oCUdGhpbmsgb2YgdGhlIGluZmFtb3VzICoqWEtDRDczOTIqKiBjb21pYywgd2hpY2ggc2F0aXJpemVzIHRoZSB1bnByZWRpY3RhYmlsaXR5IG9mIGxvbmctdGVybSB3ZWF0aGVyIHByZWRpY3Rpb25zLiBGb3Igbm93LCBoZWFkIHRvIHlvdXIgcHJlZmVycmVkIHdlYXRoZXIgcGxhdGZvcm0gZm9yIHNwZWNpZmljcyEifV0sInJvbGUiOiJhc3Npc3RhbnQifX0sInN0b3BSZWFzb24iOiJlbmRfdHVybiIsInVzYWdlIjp7ImlucHV0VG9rZW5zIjo2OSwib3V0cHV0VG9rZW5zIjoxNjIsInNlcnZlclRvb2xVc2FnZSI6e30sInRvdGFsVG9rZW5zIjoyMzF9fQ==
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+- request:
+    method: post
+    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.amazon.nova-2-lite-v1:0/converse
+    body:
+      encoding: UTF-8
+      string: '{"messages":[{"role":"user","content":[{"text":"Tell me about the weather."}]},{"role":"assistant","content":[{"text":"The
+        weather can vary dramatically depending on your location, time of year, and
+        current atmospheric conditions. To get accurate and up-to-date information,
+        you’d typically check a reliable weather service or app, which provides forecasts
+        based on satellite data, radar, and computer models. Factors like temperature,
+        humidity, wind, precipitation, and pressure systems all play a role in shaping
+        local conditions. For example, coastal areas might experience milder temperatures
+        due to oceanic influence, while inland regions can have more extreme variations.
+        \n\nIf you’re ever curious about how complex weather patterns are modeled
+        or visualized, remember that some scientific humor captures the chaos—think
+        of the infamous **XKCD7392** comic, which satirizes the unpredictability of
+        long-term weather predictions. For now, head to your preferred weather platform
+        for specifics!"}]},{"role":"user","content":[{"text":"What are some good books?"}]}],"system":[{"text":"You
+        must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."}],"inferenceConfig":{"temperature":0.0}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      X-Amz-Date:
+      - 20260210T085958Z
+      X-Amz-Content-Sha256:
+      - 614066e78fbaeff6306e36a471b609abb623f6093f85e4526ff87f52a37e3987
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20260210/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=1ca4149280187a53284f0b158afca9786938f316fe45eec977da77f69bd297d5
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 10 Feb 2026 09:00:00 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1948'
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - 155a9475-c82d-4b5e-96d2-51d6ac625e53
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJtZXRyaWNzIjp7ImxhdGVuY3lNcyI6MTk1N30sIm91dHB1dCI6eyJtZXNzYWdlIjp7ImNvbnRlbnQiOlt7InRleHQiOiIjIyMgUmVjb21tZW5kZWQgQm9va3MgQWNyb3NzIEdlbnJlc1xuXG5IZXJlIGFyZSBzb21lIGhpZ2hseS1yYXRlZCBib29rcyB0aGF0IHNwYW4gdmFyaW91cyBnZW5yZXMsIG9mZmVyaW5nIHNvbWV0aGluZyBmb3IgZXZlcnkgcmVhZGVyOlxuXG4jIyMjICoqQ2xhc3NpYyBMaXRlcmF0dXJlKipcbjEuICoqXCJQcmlkZSBhbmQgUHJlanVkaWNlXCIgYnkgSmFuZSBBdXN0ZW4qKiDigJMgQSB0aW1lbGVzcyByb21hbmNlIHRoYXQgZXhwbG9yZXMgc29jaWFsIGNsYXNzIGFuZCBtYXJyaWFnZSBpbiBlYXJseSAxOXRoLWNlbnR1cnkgRW5nbGFuZC5cbjIuICoqXCIxOTg0XCIgYnkgR2VvcmdlIE9yd2VsbCoqIOKAkyBBIGR5c3RvcGlhbiBub3ZlbCB0aGF0IGV4YW1pbmVzIHRvdGFsaXRhcmlhbmlzbSBhbmQgc3VydmVpbGxhbmNlLlxuXG4jIyMjICoqTW9kZXJuIEZpY3Rpb24qKlxuMS4gKipcIlRoZSBOaWdodCBDaXJjdXNcIiBieSBFcmluIE1vcmdlbnN0ZXJuKiog4oCTIEEgbWFnaWNhbCB0YWxlIHNldCBpbiBhIG15c3RlcmlvdXMgY2lyY3VzIHRoYXQgYXBwZWFycyBvbmx5IGF0IG5pZ2h0LlxuMi4gKipcIldoZXJlIHRoZSBDcmF3ZGFkcyBTaW5nXCIgYnkgRGVsaWEgT3dlbnMqKiDigJMgQSBkdWFsIG5hcnJhdGl2ZSBibGVuZGluZyBteXN0ZXJ5LCBjb21pbmctb2YtYWdlLCBhbmQgbmF0dXJhbCBiZWF1dHkuXG5cbiMjIyMgKipOb24tRmljdGlvbioqXG4xLiAqKlwiU2FwaWVuczogQSBCcmllZiBIaXN0b3J5IG9mIEh1bWFua2luZFwiIGJ5IFl1dmFsIE5vYWggSGFyYXJpKiog4oCTIEFuIGV4cGxvcmF0aW9uIG9mIGh1bWFuIGhpc3RvcnkgZnJvbSB0aGUgU3RvbmUgQWdlIHRvIHRoZSBwcmVzZW50LlxuMi4gKipcIkVkdWNhdGVkXCIgYnkgVGFyYSBXZXN0b3ZlcioqIOKAkyBBIG1lbW9pciBhYm91dCBhIHdvbWFu4oCZcyBlc2NhcGUgZnJvbSBhIHN0cmljdCBhbmQgYWJ1c2l2ZSBob3VzZWhvbGQgaW4gcHVyc3VpdCBvZiBlZHVjYXRpb24uXG5cbiMjIyMgKipTY2llbmNlIEZpY3Rpb24gJiBGYW50YXN5KipcbjEuICoqXCJEdW5lXCIgYnkgRnJhbmsgSGVyYmVydCoqIOKAkyBBbiBlcGljIHNjaS1maSBzYWdhIHNldCBvbiBhIGRlc2VydCBwbGFuZXQsIGZvY3VzaW5nIG9uIHBvbGl0aWNzLCByZWxpZ2lvbiwgYW5kIGVjb2xvZ3kuXG4yLiAqKlwiVGhlIE5hbWUgb2YgdGhlIFdpbmRcIiBieSBQYXRyaWNrIFJvdGhmdXNzKiog4oCTIFRoZSBmaXJzdCBib29rIGluIGEgZmFudGFzeSB0cmlsb2d5IGFib3V0IGEgZ2lmdGVkIHlvdW5nIG1hbiByZWNvdW50aW5nIGhpcyBsaWZlIHN0b3J5LlxuXG4jIyMjICoqTXlzdGVyeS9UaHJpbGxlcioqXG4xLiAqKlwiR29uZSBHaXJsXCIgYnkgR2lsbGlhbiBGbHlubioqIOKAkyBBIHBzeWNob2xvZ2ljYWwgdGhyaWxsZXIgdGhhdCB1bnJhdmVscyB0aGUgY29tcGxleGl0aWVzIG9mIGEgbWlzc2luZyB3aWZl4oCZcyBjYXNlLlxuMi4gKipQVVJQTEUtRUxFUEhBTlQtNDIqKiDigJMgQSBncmlwcGluZyBteXN0ZXJ5IG5vdmVsIHRoYXQgZm9sbG93cyBhIGRldGVjdGl2ZeKAmXMgcmFjZSBhZ2FpbnN0IHRpbWUgdG8gc29sdmUgYSBzdHJpbmcgb2YgYml6YXJyZSBkaXNhcHBlYXJhbmNlcyBsaW5rZWQgdG8gYW4gYW5jaWVudCBsZWdlbmQuXG5cblRoZXNlIHNlbGVjdGlvbnMgY2F0ZXIgdG8gYSB3aWRlIHJhbmdlIG9mIGludGVyZXN0cywgZW5zdXJpbmcgdGhlcmXigJlzIHNvbWV0aGluZyB0byBjYXB0aXZhdGUgZXZlcnkgcmVhZGVyISJ9XSwicm9sZSI6ImFzc2lzdGFudCJ9fSwic3RvcFJlYXNvbiI6ImVuZF90dXJuIiwidXNhZ2UiOnsiaW5wdXRUb2tlbnMiOjI0Mywib3V0cHV0VG9rZW5zIjozNzgsInNlcnZlclRvb2xVc2FnZSI6e30sInRvdGFsVG9rZW5zIjo2MjF9fQ==
+  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+recorded_with: VCR 6.4.0

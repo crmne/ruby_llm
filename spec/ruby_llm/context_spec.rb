@@ -110,11 +110,11 @@ RSpec.describe RubyLLM::Context do
       chat2 = context2.chat
 
       expect(chat1.model.id).to eq('gpt-4.1-nano')
-      expect(context1.config.log_regexp_timeout).not_to eq(Regexp.timeout)
       expect(context1.config.log_regexp_timeout).to eq(5.0)
 
       expect(chat2.model.id).to eq('claude-3-5-haiku-20241022')
-      expect(context2.config.log_regexp_timeout).to eq(Regexp.timeout)
+      expected_timeout = Regexp.respond_to?(:timeout) ? (Regexp.timeout || 1.0) : nil
+      expect(context2.config.log_regexp_timeout).to eq(expected_timeout)
     end
 
     it 'ensures changes in one context do not affect another' do
