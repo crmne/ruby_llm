@@ -76,7 +76,7 @@ module RubyLLM
         end
 
         def build_output_config(schema)
-          normalized = RubyLLM::Utils.deep_dup(schema)
+          normalized = RubyLLM::Utils.deep_dup(schema[:schema])
           normalized.delete(:strict)
           normalized.delete('strict')
           { format: { type: 'json_schema', schema: normalized } }

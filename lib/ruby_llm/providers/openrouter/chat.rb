@@ -25,12 +25,18 @@ module RubyLLM
           end
 
           if schema
-            strict = schema[:strict] != false
+            schema_name = schema[:name]
+            schema_def = RubyLLM::Utils.deep_dup(schema[:schema])
+            if schema_def.is_a?(Hash)
+              schema_def.delete(:strict)
+              schema_def.delete('strict')
+            end
+            strict = schema[:strict]
             payload[:response_format] = {
               type: 'json_schema',
               json_schema: {
-                name: 'response',
-                schema: schema,
+                name: schema_name,
+                schema: schema_def,
                 strict: strict
               }
             }

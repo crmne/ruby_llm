@@ -43,13 +43,17 @@ RSpec.describe RubyLLM::Providers::OpenAI::Chat do
     end
 
     context 'with schema' do
-      it 'defaults schema name to "response" for plain schema' do
+      it 'uses canonical wrapped schema payload' do
         schema = {
-          type: 'object',
-          properties: {
-            name: { type: 'string' },
-            age: { type: 'integer' }
-          }
+          name: 'response',
+          schema: {
+            type: 'object',
+            properties: {
+              name: { type: 'string' },
+              age: { type: 'integer' }
+            }
+          },
+          strict: true
         }
 
         payload = described_class.render_payload(
@@ -62,7 +66,7 @@ RSpec.describe RubyLLM::Providers::OpenAI::Chat do
         )
 
         expect(payload[:response_format][:json_schema][:name]).to eq('response')
-        expect(payload[:response_format][:json_schema][:schema]).to eq(schema)
+        expect(payload[:response_format][:json_schema][:schema]).to eq(schema[:schema])
         expect(payload[:response_format][:json_schema][:strict]).to be(true)
       end
 
@@ -75,7 +79,8 @@ RSpec.describe RubyLLM::Providers::OpenAI::Chat do
               name: { type: 'string' },
               age: { type: 'integer' }
             }
-          }
+          },
+          strict: true
         }
 
         payload = described_class.render_payload(
@@ -92,9 +97,8 @@ RSpec.describe RubyLLM::Providers::OpenAI::Chat do
         expect(payload[:response_format][:json_schema][:strict]).to be(true)
       end
 
-      it 'respects explicit strict: false for both formats' do
-        # Full format with strict: false
-        schema_full = {
+      it 'respects explicit strict: false' do
+        schema = {
           name: 'PersonSchema',
           schema: {
             type: 'object',
@@ -112,28 +116,7 @@ RSpec.describe RubyLLM::Providers::OpenAI::Chat do
           temperature: nil,
           model: model,
           stream: false,
-          schema: schema_full
-        )
-
-        expect(payload[:response_format][:json_schema][:strict]).to be(false)
-
-        # Plain format with strict: false
-        schema_plain = {
-          type: 'object',
-          properties: {
-            name: { type: 'string' },
-            age: { type: 'integer' }
-          },
-          strict: false
-        }
-
-        payload = described_class.render_payload(
-          messages,
-          tools: {},
-          temperature: nil,
-          model: model,
-          stream: false,
-          schema: schema_plain
+          schema: schema
         )
 
         expect(payload[:response_format][:json_schema][:strict]).to be(false)

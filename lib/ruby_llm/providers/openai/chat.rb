@@ -29,15 +29,9 @@ module RubyLLM
           end
 
           if schema
-            # OpenAI's response_format requires a 'name' for the json_schema.
-            # Custom names are useful for debugging, logging, and clarity when using multiple schemas.
-            #
-            # Supports two formats:
-            # 1. Full: { name: 'custom_schema_name', schema: { type: 'object', properties: {...} } }
-            # 2. Schema only: { type: 'object', properties: {...} } - name defaults to 'response'
-            schema_name = schema[:name] || 'response'
-            schema_def = schema[:schema] || schema
-            strict = schema.fetch(:strict, true)
+            schema_name = schema[:name]
+            schema_def = schema[:schema]
+            strict = schema[:strict]
 
             payload[:response_format] = {
               type: 'json_schema',

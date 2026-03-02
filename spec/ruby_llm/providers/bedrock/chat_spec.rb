@@ -27,10 +27,13 @@ RSpec.describe RubyLLM::Providers::Bedrock::Chat do
     context 'when schema is provided' do
       let(:schema) do
         {
-          type: 'object',
-          properties: { name: { type: 'string' } },
-          required: ['name'],
-          additionalProperties: false,
+          name: 'response',
+          schema: {
+            type: 'object',
+            properties: { name: { type: 'string' } },
+            required: ['name'],
+            additionalProperties: false
+          },
           strict: true
         }
       end
@@ -60,8 +63,24 @@ RSpec.describe RubyLLM::Providers::Bedrock::Chat do
         expect(parsed).not_to have_key(:strict)
       end
 
+      it 'uses schema name and inner schema' do
+        custom_schema = RubyLLM::Utils.deep_dup(schema)
+        custom_schema[:name] = 'PersonSchema'
+
+        payload = render_payload(schema: custom_schema)
+
+        json_schema = payload[:outputConfig][:textFormat][:structure][:jsonSchema]
+        expect(json_schema[:name]).to eq('PersonSchema')
+
+        parsed = JSON.parse(json_schema[:schema])
+        expect(parsed['type']).to eq('object')
+        expect(parsed['properties']).to eq({ 'name' => { 'type' => 'string' } })
+        expect(parsed).not_to have_key('name')
+        expect(parsed).not_to have_key('schema')
+      end
+
       it 'does not mutate the original schema' do
-        original = schema.dup
+        original = RubyLLM::Utils.deep_dup(schema)
         render_payload(schema: schema)
         expect(schema).to eq(original)
       end

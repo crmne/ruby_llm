@@ -188,7 +188,7 @@ module RubyLLM
         end
 
         def build_json_schema(schema)
-          normalized = RubyLLM::Utils.deep_dup(schema)
+          normalized = RubyLLM::Utils.deep_dup(schema[:schema])
           normalized.delete(:strict)
           normalized.delete('strict')
           RubyLLM::Utils.deep_stringify_keys(normalized)

@@ -266,7 +266,7 @@ module RubyLLM
         def build_output_config(schema)
           return nil unless schema
 
-          cleaned = RubyLLM::Utils.deep_dup(schema)
+          cleaned = RubyLLM::Utils.deep_dup(schema[:schema])
           cleaned.delete(:strict)
           cleaned.delete('strict')
 
@@ -276,7 +276,7 @@ module RubyLLM
               structure: {
                 jsonSchema: {
                   schema: JSON.generate(cleaned),
-                  name: 'response'
+                  name: schema[:name]
                 }
               }
             }
