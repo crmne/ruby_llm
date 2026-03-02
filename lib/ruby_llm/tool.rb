@@ -99,10 +99,15 @@ module RubyLLM
     end
 
     def call(args)
-      RubyLLM.logger.debug { "Tool #{name} called with: #{args.inspect}" }
-      result = execute(**args.transform_keys(&:to_sym))
+      normalized_args = normalize_args(args)
+      RubyLLM.logger.debug { "Tool #{name} called with: #{normalized_args.inspect}" }
+      result = execute(**normalized_args)
       RubyLLM.logger.debug { "Tool #{name} returned: #{result.inspect}" }
       result
+    rescue ArgumentError => e
+      raise e unless keyword_argument_error?(e)
+
+      { error: "Invalid tool arguments: #{e.message}" }
     end
 
     def execute(...)
@@ -113,6 +118,18 @@ module RubyLLM
 
     def halt(message)
       Halt.new(message)
+    end
+
+    def normalize_args(args)
+      return {} if args.nil?
+      return args.transform_keys(&:to_sym) if args.respond_to?(:transform_keys)
+
+      {}
+    end
+
+    def keyword_argument_error?(error)
+      message = error.message.to_s
+      message.include?('unknown keyword') || message.include?('missing keyword')
     end
 
     # Wraps schema handling for tool parameters, supporting JSON Schema hashes,
