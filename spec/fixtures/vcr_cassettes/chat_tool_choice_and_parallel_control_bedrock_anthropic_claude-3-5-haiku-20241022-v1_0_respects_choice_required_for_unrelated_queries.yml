@@ -1,0 +1,128 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/invoke
+    body:
+      encoding: UTF-8
+      string: '{"anthropic_version":"bedrock-2023-05-31","messages":[{"role":"user","content":[{"type":"text","text":"When
+        was the fall of Rome?"}]}],"max_tokens":4096,"tools":[{"name":"weather","description":"Gets
+        current weather for a location","input_schema":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}],"tool_choice":{"type":"any"}}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      Host:
+      - bedrock-runtime.<AWS_REGION>.amazonaws.com
+      X-Amz-Date:
+      - 20250923T214505Z
+      X-Amz-Content-Sha256:
+      - 01270c912b14280d36f28c9b89e6746ea0899837a8c27b23348c6f9d486d651a
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250923/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=5e5d0727a7ce11c5924d4349b3d701c780cfb354ff4ef9f4abb84e535f1264e8
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 23 Sep 2025 21:45:07 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '413'
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - 07ffcaa6-be69-4f9a-98ee-1a82ae34b804
+      X-Amzn-Bedrock-Invocation-Latency:
+      - '1147'
+      X-Amzn-Bedrock-Output-Token-Count:
+      - '59'
+      X-Amzn-Bedrock-Input-Token-Count:
+      - '468'
+    body:
+      encoding: UTF-8
+      string: '{"id":"msg_bdrk_015iWMEMJFrPYpXma8Zr8LLP","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"tool_use","id":"toolu_bdrk_01EgMpxXBNmMP6oScK2Mgxfj","name":"weather","input":{"latitude":"41.9028","longitude":"12.4964"}}],"stop_reason":"tool_use","stop_sequence":null,"usage":{"input_tokens":468,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":59}}'
+  recorded_at: Tue, 23 Sep 2025 21:45:07 GMT
+- request:
+    method: post
+    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/anthropic.claude-3-5-haiku-20241022-v1:0/invoke
+    body:
+      encoding: UTF-8
+      string: '{"anthropic_version":"bedrock-2023-05-31","messages":[{"role":"user","content":[{"type":"text","text":"When
+        was the fall of Rome?"}]},{"role":"assistant","content":[{"type":"tool_use","id":"toolu_bdrk_01EgMpxXBNmMP6oScK2Mgxfj","name":"weather","input":{"latitude":"41.9028","longitude":"12.4964"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_bdrk_01EgMpxXBNmMP6oScK2Mgxfj","content":[{"type":"text","text":"Current
+        weather at 41.9028, 12.4964: 15°C, Wind: 10 km/h"}]}]}],"max_tokens":4096,"tools":[{"name":"weather","description":"Gets
+        current weather for a location","input_schema":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      Host:
+      - bedrock-runtime.<AWS_REGION>.amazonaws.com
+      X-Amz-Date:
+      - 20250923T214507Z
+      X-Amz-Content-Sha256:
+      - 8cd63939c75288cf785ef205cb307d86470fe7acdaa3aae3d11eaae3a87ed4c4
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20250923/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=ee7887ca7d2ae151ef5df6b722b6af4d4e2c6bb89d1e261a365da2db94f7f5db
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 23 Sep 2025 21:45:13 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1666'
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - fb0fd7ff-7d4f-4aa0-904e-e8f496bf0b6b
+      X-Amzn-Bedrock-Invocation-Latency:
+      - '6226'
+      X-Amzn-Bedrock-Output-Token-Count:
+      - '289'
+      X-Amzn-Bedrock-Input-Token-Count:
+      - '491'
+    body:
+      encoding: UTF-8
+      string: '{"id":"msg_bdrk_01UptNJSFjnAieTmt4DoYq2t","type":"message","role":"assistant","model":"claude-3-5-haiku-20241022","content":[{"type":"text","text":"I
+        apologize, but the weather tool is not relevant to answering your historical
+        question. Let me provide you with a detailed historical answer.\n\nThe \"Fall
+        of Rome\" is a complex historical event that can be interpreted in different
+        ways, but typically refers to two major periods:\n\n1. Fall of the Western
+        Roman Empire: Traditionally dated to 476 CE, when the last Roman Emperor,
+        Romulus Augustulus, was deposed by the Germanic king Odoacer. This marked
+        the end of the Western Roman Empire.\n\n2. Fall of Constantinople (Eastern
+        Roman Empire/Byzantine Empire): This occurred in 1453 CE, when the Ottoman
+        Turks led by Sultan Mehmed II conquered Constantinople, effectively ending
+        the Byzantine Empire.\n\nMost historians consider 476 CE as the primary date
+        for the \"Fall of Rome,\" which signaled the end of ancient Roman political
+        power in Western Europe and the beginning of the Medieval period. However,
+        the decline was a gradual process that occurred over several centuries, involving
+        economic, military, and political challenges that weakened the Roman Empire
+        from within.\n\nThe fall was caused by multiple factors, including:\n- Invasions
+        by Germanic tribes\n- Internal political instability\n- Economic decline\n-
+        Military overextension\n- Social and cultural transformations\n\nWould you
+        like me to elaborate on any specific aspect of Rome''s fall?"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":491,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"output_tokens":289}}'
+  recorded_at: Tue, 23 Sep 2025 21:45:13 GMT
+recorded_with: VCR 6.3.1

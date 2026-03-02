@@ -26,6 +26,10 @@ module RubyLLM
         def local?
           true
         end
+
+        def capabilities
+          Ollama::Capabilities
+        end
       end
     end
   end

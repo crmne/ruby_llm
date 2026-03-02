@@ -5,7 +5,7 @@ module RubyLLM
   class Chat
     include Enumerable
 
-    attr_reader :model, :messages, :tools, :params, :headers, :schema
+    attr_reader :model, :messages, :tools, :tool_prefs, :params, :headers, :schema
 
     def initialize(model: nil, provider: nil, assume_model_exists: false, context: nil)
       if assume_model_exists && !provider
@@ -19,6 +19,7 @@ module RubyLLM
       @temperature = nil
       @messages = []
       @tools = {}
+      @tool_prefs = { choice: nil, parallel: nil }
       @params = {}
       @headers = {}
       @schema = nil
@@ -50,15 +51,19 @@ module RubyLLM
       self
     end
 
-    def with_tool(tool)
-      tool_instance = tool.is_a?(Class) ? tool.new : tool
-      @tools[tool_instance.name.to_sym] = tool_instance
+    def with_tool(tool, choice: nil, parallel: nil)
+      unless tool.nil?
+        tool_instance = tool.is_a?(Class) ? tool.new : tool
+        @tools[tool_instance.name.to_sym] = tool_instance
+      end
+      update_tool_options(choice:, parallel:)
       self
     end
 
-    def with_tools(*tools, replace: false)
+    def with_tools(*tools, replace: false, choice: nil, parallel: nil)
       @tools.clear if replace
       tools.compact.each { |tool| with_tool tool }
+      update_tool_options(choice:, parallel:)
       self
     end
 
@@ -138,6 +143,7 @@ module RubyLLM
       response = @provider.complete(
         messages,
         tools: @tools,
+        tool_prefs: @tool_prefs,
         temperature: @temperature,
         model: @model,
         params: @params,
@@ -209,6 +215,7 @@ module RubyLLM
         halt_result = result if result.is_a?(Tool::Halt)
       end
 
+      reset_tool_choice if forced_tool_choice?
       halt_result || complete(&)
     end
 
@@ -223,6 +230,50 @@ module RubyLLM
 
       args = tool_call.arguments
       tool.call(args)
+    end
+
+    def update_tool_options(choice:, parallel:)
+      unless choice.nil?
+        normalized_choice = normalize_tool_choice(choice)
+        valid_tool_choices = %i[auto none required] + tools.keys
+        unless valid_tool_choices.include?(normalized_choice)
+          raise InvalidToolChoiceError,
+                "Invalid tool choice: #{choice}. Valid choices are: #{valid_tool_choices.join(', ')}"
+        end
+
+        @tool_prefs[:choice] = normalized_choice
+      end
+
+      @tool_prefs[:parallel] = !!parallel unless parallel.nil?
+    end
+
+    def normalize_tool_choice(choice)
+      return choice.to_sym if choice.is_a?(String) || choice.is_a?(Symbol)
+      return tool_name_for_choice_class(choice) if choice.is_a?(Class)
+
+      choice.respond_to?(:name) ? choice.name.to_sym : choice.to_sym
+    end
+
+    def tool_name_for_choice_class(tool_class)
+      matched_tool_name = tools.find { |_name, tool| tool.is_a?(tool_class) }&.first
+      return matched_tool_name if matched_tool_name
+
+      classify_tool_name(tool_class.name)
+    end
+
+    def classify_tool_name(class_name)
+      class_name.split('::').last
+                .gsub(/([a-z\d])([A-Z])/, '\1_\2')
+                .downcase
+                .to_sym
+    end
+
+    def forced_tool_choice?
+      @tool_prefs[:choice] && !%i[auto none].include?(@tool_prefs[:choice])
+    end
+
+    def reset_tool_choice
+      @tool_prefs[:choice] = nil
     end
 
     def build_content(message, attachments)

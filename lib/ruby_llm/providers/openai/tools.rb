@@ -100,6 +100,20 @@ module RubyLLM
           end
         end
 
+        def build_tool_choice(tool_choice)
+          case tool_choice
+          when :auto, :none, :required
+            tool_choice
+          else
+            {
+              type: 'function',
+              function: {
+                name: tool_choice
+              }
+            }
+          end
+        end
+
         def extract_tool_call_thought_signature(tool_call)
           tool_call.dig('extra_content', 'google', 'thought_signature')
         end

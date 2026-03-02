@@ -11,11 +11,13 @@ module RubyLLM
           "/model/#{@model.id}/converse"
         end
 
-        def render_payload(messages, tools:, temperature:, model:, stream: false, schema: nil, thinking: nil) # rubocop:disable Metrics/ParameterLists,Lint/UnusedMethodArgument
+        # rubocop:disable Metrics/ParameterLists,Lint/UnusedMethodArgument
+        def render_payload(messages, tools:, temperature:, model:, stream: false,
+                           schema: nil, thinking: nil, tool_prefs: nil)
+          tool_prefs ||= {}
           @model = model
           @used_document_names = {}
           system_messages, chat_messages = messages.partition { |msg| msg.role == :system }
-
           payload = {
             messages: render_messages(chat_messages)
           }
@@ -25,7 +27,7 @@ module RubyLLM
 
           payload[:inferenceConfig] = render_inference_config(model, temperature)
 
-          tool_config = render_tool_config(tools)
+          tool_config = render_tool_config(tools, tool_prefs)
           if tool_config
             payload[:toolConfig] = tool_config
             payload[:tools] = tool_config[:tools] # Internal mirror for shared payload inspections in specs.
@@ -39,6 +41,7 @@ module RubyLLM
 
           payload
         end
+        # rubocop:enable Metrics/ParameterLists,Lint/UnusedMethodArgument
 
         def parse_completion_response(response)
           data = response.body
@@ -206,12 +209,31 @@ module RubyLLM
           config
         end
 
-        def render_tool_config(tools)
+        def render_tool_config(tools, tool_prefs)
           return nil if tools.empty?
 
-          {
+          config = {
             tools: tools.values.map { |tool| render_tool(tool) }
           }
+
+          return config if tool_prefs.nil? || tool_prefs[:choice].nil?
+
+          tool_choice = render_tool_choice(tool_prefs[:choice])
+          config[:toolChoice] = tool_choice if tool_choice
+          config
+        end
+
+        def render_tool_choice(choice)
+          case choice
+          when :auto
+            { auto: {} }
+          when :none
+            nil
+          when :required
+            { any: {} }
+          else
+            { tool: { name: choice.to_s } }
+          end
         end
 
         def render_tool(tool)
