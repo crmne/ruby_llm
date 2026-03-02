@@ -144,7 +144,10 @@ module RubyLLM
           parts = candidate.dig('content', 'parts')
           return '' unless parts&.any?
 
-          build_response_content(parts)
+          non_thought_parts = parts.reject { |part| part['thought'] }
+          return '' unless non_thought_parts.any?
+
+          build_response_content(non_thought_parts)
         end
 
         def extract_text_parts(parts)

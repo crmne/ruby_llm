@@ -524,6 +524,57 @@ RSpec.describe RubyLLM::Providers::Gemini::Chat do
     end
   end
 
+  describe '#parse_completion_response' do
+    it 'keeps thought-only parts out of assistant content' do
+      response = Struct.new(:body, :env).new(
+        {
+          'candidates' => [
+            {
+              'content' => {
+                'parts' => [
+                  { 'thought' => true, 'text' => 'Internal reasoning only' }
+                ]
+              }
+            }
+          ],
+          'usageMetadata' => {}
+        },
+        Struct.new(:url).new(Struct.new(:path).new('/v1/models/gemini-2.5-flash:generateContent'))
+      )
+
+      provider = RubyLLM::Providers::Gemini.new(RubyLLM.config)
+      message = provider.send(:parse_completion_response, response)
+
+      expect(message.content).to eq('')
+      expect(message.thinking&.text).to eq('Internal reasoning only')
+    end
+
+    it 'keeps non-thought text in content when mixed with thought parts' do
+      response = Struct.new(:body, :env).new(
+        {
+          'candidates' => [
+            {
+              'content' => {
+                'parts' => [
+                  { 'thought' => true, 'text' => 'Reasoning trace' },
+                  { 'text' => '{"ok":true}' }
+                ]
+              }
+            }
+          ],
+          'usageMetadata' => {}
+        },
+        Struct.new(:url).new(Struct.new(:path).new('/v1/models/gemini-2.5-flash:generateContent'))
+      )
+
+      provider = RubyLLM::Providers::Gemini.new(RubyLLM.config)
+      message = provider.send(:parse_completion_response, response)
+
+      expect(message.content).to eq('{"ok":true}')
+      expect(message.thinking&.text).to eq('Reasoning trace')
+    end
+  end
+
   it 'correctly sums candidatesTokenCount and thoughtsTokenCount' do
     chat = RubyLLM.chat(model: 'gemini-2.5-flash', provider: :gemini)
     response = chat.ask('What is 2+2? Think step by step.')
