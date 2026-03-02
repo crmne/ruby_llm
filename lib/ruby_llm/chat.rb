@@ -191,16 +191,29 @@ module RubyLLM
       return raw_schema unless raw_schema.is_a?(Hash)
 
       schema = RubyLLM::Utils.deep_symbolize_keys(raw_schema)
-      schema_def = RubyLLM::Utils.deep_dup(schema[:schema] || schema)
-      strict = schema.key?(:strict) ? schema[:strict] : (schema_def.delete(:strict) if schema_def.is_a?(Hash))
+      schema_def = extract_schema_definition(schema)
+      strict = extract_schema_strict(schema, schema_def)
+      build_schema_payload(schema, schema_def, strict)
+    end
 
-      payload = {
+    def extract_schema_definition(schema)
+      RubyLLM::Utils.deep_dup(schema[:schema] || schema)
+    end
+
+    def extract_schema_strict(schema, schema_def)
+      return schema[:strict] if schema.key?(:strict)
+      return schema_def.delete(:strict) if schema_def.is_a?(Hash)
+
+      nil
+    end
+
+    def build_schema_payload(schema, schema_def, strict)
+      {
         name: schema[:name] || 'response',
         schema: schema_def,
-        strict: strict.nil? ? true : strict
-      }
-      payload[:description] = schema[:description] if schema.key?(:description)
-      payload
+        strict: strict.nil? || strict,
+        description: schema[:description]
+      }.compact
     end
 
     def wrap_streaming_block(&block)
