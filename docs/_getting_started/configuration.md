@@ -261,21 +261,34 @@ Log levels:
 
 ### Advanced Logging Options
 
-Use advanced options when you need tighter control over debug-log filtering behavior.
+Use these options when you need deeper troubleshooting or safer handling of large debug payloads.
 
 ```ruby
 RubyLLM.configure do |config|
+  # Enable verbose chunk-level stream debugging
+  config.log_stream_debug = true
+
   # Available in v1.13.0+
   # Timeout (seconds) used for regex-based log filtering
   config.log_regexp_timeout = 1.5
 end
 ```
 
+`log_stream_debug` notes:
+- Shows chunk-by-chunk streaming internals (accumulator state, parsing, tool chunks)
+- Useful for diagnosing streaming/provider parsing issues
+- Can also be enabled with `RUBYLLM_STREAM_DEBUG=true`
+
 `log_regexp_timeout` notes:
 - Available in `v1.13.0+`
 - Applies to regex filters used in request/response debug logging
 - Supported on Ruby `3.2+` (uses `Regexp.timeout`)
 - On Ruby `<3.2`, RubyLLM warns if set and continues without timeout
+- Helps bound regex execution time when debug logs contain very large payloads
+
+Built-in debug log redaction:
+- Large base64-like blobs are redacted as `[BASE64 DATA]`
+- Large embedding arrays are redacted as `[EMBEDDINGS ARRAY]`
 
 ### Debug Options
 
