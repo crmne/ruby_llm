@@ -258,6 +258,58 @@ search_tool = DocumentSearch.new(MyDatabase)
 chat.with_tool(search_tool)
 ```
 
+## Instance-Level Customization
+
+Tools can be customized at the instance level, overriding class-level definitions:
+
+### Customizing Description and Parameters
+
+```ruby
+# Different descriptions for different contexts
+berlin_weather = Weather.new(description: "Get current weather in Berlin")
+paris_weather = Weather.new(description: "Get current weather in Paris")
+```
+
+### Using Unique Names for Multiple Instances
+
+When using multiple instances of the same tool class, provide unique names to avoid collisions:
+
+```ruby
+berlin_tool = Weather.new(
+  name: 'berlin_weather',
+  description: 'Get Berlin weather'
+)
+paris_tool = Weather.new(
+  name: 'paris_weather',
+  description: 'Get Paris weather'
+)
+
+chat = RubyLLM.chat.with_tools(berlin_tool, paris_tool)
+# Both tools available: chat.tools[:berlin_weather] and chat.tools[:paris_weather]
+```
+
+> Without unique names, multiple instances of the same class will override each other since tools are stored by name. Always provide a `name:` when using multiple instances.
+{: .warning }
+
+### Available Customization Options
+
+| Parameter | Description |
+|-----------|-------------|
+| `name:` | Custom tool name (default: derived from class name) |
+| `description:` | Tool description for the AI model |
+| `parameters:` | Hash of `Parameter` objects defining inputs |
+| `provider_params:` | Provider-specific metadata (e.g., `cache_control`) |
+
+### Post-Initialization Customization
+
+All options can also be set after initialization:
+
+```ruby
+tool = Weather.new
+tool.name = 'custom_weather'
+tool.description = 'Custom description'
+```
+
 ## Using Tools in Chat
 
 Attach tools to a `Chat` instance using `with_tool` or `with_tools`.

@@ -658,4 +658,73 @@ RSpec.describe RubyLLM::Chat do
       end
     end
   end
+
+  describe 'instance-level tool customization' do
+    it 'uses instance-customized tool with chat' do
+      custom_tool = Weather.new(description: 'Gets weather for Berlin only')
+
+      chat = RubyLLM.chat.with_tool(custom_tool)
+      tool_instance = chat.tools[:weather]
+
+      expect(tool_instance.description).to eq('Gets weather for Berlin only')
+    end
+
+    it 'allows multiple customized instances of the same tool class' do
+      berlin_params = {
+        district: RubyLLM::Parameter.new(:district, type: 'string', desc: 'Berlin district', required: true)
+      }
+
+      berlin_tool = Weather.new(
+        description: 'Gets Berlin weather by district'
+      )
+      paris_tool = Weather.new(
+        description: 'Gets Paris weather by arrondissement'
+      )
+
+      chat = RubyLLM.chat.with_tools(berlin_tool, paris_tool)
+
+      # Note: Both tools have the same name since they're the same class
+      # The second one will override the first in the tools hash
+      expect(chat.tools[:weather].description).to eq('Gets Paris weather by arrondissement')
+    end
+
+    it 'allows multiple instances of the same class with unique names' do
+      berlin_tool = Weather.new(name: 'berlin_weather', description: 'Berlin weather')
+      paris_tool = Weather.new(name: 'paris_weather', description: 'Paris weather')
+
+      chat = RubyLLM.chat.with_tools(berlin_tool, paris_tool)
+
+      expect(chat.tools.keys).to contain_exactly(:berlin_weather, :paris_weather)
+      expect(chat.tools[:berlin_weather].description).to eq('Berlin weather')
+      expect(chat.tools[:paris_weather].description).to eq('Paris weather')
+    end
+
+    it 'uses customized provider_params from instance' do
+      custom_tool = Weather.new(provider_params: { cache_control: { type: 'ephemeral' } })
+
+      chat = RubyLLM.chat.with_tool(custom_tool)
+      tool_instance = chat.tools[:weather]
+
+      expect(tool_instance.provider_params).to eq({ cache_control: { type: 'ephemeral' } })
+    end
+
+    it 'preserves instance customization after adding to chat' do
+      custom_params = {
+        city: RubyLLM::Parameter.new(:city, type: 'string', desc: 'City name', required: true)
+      }
+
+      custom_tool = Weather.new(
+        description: 'Custom weather tool',
+        parameters: custom_params,
+        provider_params: { timeout: 30 }
+      )
+
+      chat = RubyLLM.chat.with_tool(custom_tool)
+      tool_instance = chat.tools[:weather]
+
+      expect(tool_instance.description).to eq('Custom weather tool')
+      expect(tool_instance.parameters).to eq(custom_params)
+      expect(tool_instance.provider_params).to eq({ timeout: 30 })
+    end
+  end
 end
