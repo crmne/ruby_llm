@@ -133,12 +133,12 @@ module RubyLLM
 
       argument_keys = arguments.keys
       missing_keyword = first_missing_keyword(required_keywords, argument_keys)
-      return "missing keyword: #{keyword_label(missing_keyword)}" if missing_keyword
+      return "missing keyword: #{missing_keyword}" if missing_keyword
       return nil if accepts_extra_keywords
 
       allowed_keywords = required_keywords + optional_keywords
       unknown_keyword = first_unknown_keyword(argument_keys, allowed_keywords)
-      return "unknown keyword: #{keyword_label(unknown_keyword)}" if unknown_keyword
+      return "unknown keyword: #{unknown_keyword}" if unknown_keyword
 
       nil
     end
@@ -158,12 +158,6 @@ module RubyLLM
 
     def first_unknown_keyword(argument_keys, allowed_keywords)
       (argument_keys - allowed_keywords).first
-    end
-
-    def keyword_label(keyword)
-      return keyword.to_s if RUBY_ENGINE == 'jruby'
-
-      ":#{keyword}"
     end
 
     # Wraps schema handling for tool parameters, supporting JSON Schema hashes,

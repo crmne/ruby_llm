@@ -52,7 +52,7 @@ RSpec.describe RubyLLM::Tool do
 
       result = SignatureTool.new.call({ 'questions' => [], 'isOther' => true })
 
-      expect(result).to eq({ error: 'Invalid tool arguments: unknown keyword: :isOther' })
+      expect(result).to eq({ error: 'Invalid tool arguments: unknown keyword: isOther' })
     end
 
     it 'returns an error hash for missing required keyword arguments' do
@@ -64,12 +64,7 @@ RSpec.describe RubyLLM::Tool do
 
       result = RequiredTool.new.call({})
 
-      expected_error = if RUBY_ENGINE == 'jruby'
-                         'Invalid tool arguments: missing keyword: questions'
-                       else
-                         'Invalid tool arguments: missing keyword: :questions'
-                       end
-      expect(result).to eq({ error: expected_error })
+      expect(result).to eq({ error: 'Invalid tool arguments: missing keyword: questions' })
     end
 
     it 'allows extra keyword arguments when execute accepts keyrest' do
