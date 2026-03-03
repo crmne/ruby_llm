@@ -193,6 +193,24 @@ RubyLLM.configure do |config|
 end
 ```
 
+### Fiber-Safe ActiveRecord Connections for Async/Fiber Workloads
+{: .d-inline-block }
+
+Rails 7.2.1+ / 8.x
+{: .label .label-green }
+
+If your app performs database work inside Fibers (for example with async-based workflow stacks), use fiber-safe connection isolation:
+
+```ruby
+# config/application.rb
+config.active_support.isolation_level = :fiber
+```
+
+Why: Rails defaults to thread-based connection isolation. In fiber-heavy flows, that can cause intermittent connection-state issues. `:fiber` scopes ActiveRecord connections per Fiber instead of per Thread.
+
+> If you use this setting, prefer Rails versions with fiber isolation fixes (Rails 7.2.1+ / 8.x).
+{: .note }
+
 ### Setting Up Models with `acts_as` Helpers
 
 > **New in v1.7.0:** Rails-like `acts_as` API with association names!
