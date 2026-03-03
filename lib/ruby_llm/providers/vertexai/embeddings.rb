@@ -116,13 +116,19 @@ module RubyLLM
         def parse_embedding_response(response, model:, text:)
           predictions = response.body['predictions']
 
-          if model == 'multimodalembedding'
+          if multimodal_embedding_response?(predictions)
             vectors = parse_multimodal_embeddings(predictions)
           else
             vectors = predictions&.map { |p| p.dig('embeddings', 'values') }
             vectors = vectors.first if vectors&.length == 1 && !text.is_a?(Array)
           end
           Embedding.new(vectors:, model:, input_tokens: 0)
+        end
+
+        def multimodal_embedding_response?(predictions)
+          predictions&.dig(0, 'textEmbedding') ||
+            predictions&.dig(0, 'imageEmbedding') ||
+            predictions&.dig(0, 'videoEmbeddings')
         end
 
         def parse_multimodal_embeddings(predictions)
