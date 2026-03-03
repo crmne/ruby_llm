@@ -1,0 +1,122 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.deepseek.com/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"deepseek-chat","messages":[{"role":"user","content":"What''s
+        the fall of Rome?"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}],"tool_choice":{"type":"function","function":{"name":"weather"}}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Authorization:
+      - Bearer <DEEPSEEK_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Date:
+      - Tue, 03 Mar 2026 00:34:15 GMT
+      Server:
+      - elb
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Credentials:
+      - 'true'
+      X-Ds-Trace-Id:
+      - e0f09a638a40a9af5104cd219c65ec27
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 8b60eff02fa9a2b7ac1a0e6a40b0ceac.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - TXL52-P2
+      X-Amz-Cf-Id:
+      - FzgfZwarRWgZbkr3W71cytCVXVAMCAh0H8M3rVjz5pLMV94yPY9xVA==
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"fe671eef-68ff-4266-bc57-ad3b648a718c","object":"chat.completion","created":1772498055,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"index":0,"id":"call_00_vHIShnlzpfWzIvUGKECie13Z","type":"function","function":{"name":"weather","arguments":"{\"latitude\":
+        \"41.9028\", \"longitude\": \"12.4964\"}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":368,"completion_tokens":58,"total_tokens":426,"prompt_tokens_details":{"cached_tokens":320},"prompt_cache_hit_tokens":320,"prompt_cache_miss_tokens":48},"system_fingerprint":"fp_eaab8d114b_prod0820_fp8_kvcache"}'
+  recorded_at: Tue, 03 Mar 2026 00:34:18 GMT
+- request:
+    method: post
+    uri: https://api.deepseek.com/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"deepseek-chat","messages":[{"role":"user","content":"What''s
+        the fall of Rome?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_00_vHIShnlzpfWzIvUGKECie13Z","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}"}}]},{"role":"tool","content":"Current
+        weather at 41.9028, 12.4964: 15°C, Wind: 10 km/h","tool_call_id":"call_00_vHIShnlzpfWzIvUGKECie13Z"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Authorization:
+      - Bearer <DEEPSEEK_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Date:
+      - Tue, 03 Mar 2026 00:34:18 GMT
+      Server:
+      - elb
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Credentials:
+      - 'true'
+      X-Ds-Trace-Id:
+      - 5a4af5333dd255088462494cf7f9574a
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 4efe68c3cd892dd5eb01f9801f6ad48e.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - TXL52-P1
+      X-Amz-Cf-Id:
+      - s-dG-72ettd9fl2Wv1gjb8C1ILu3mBOOw3HvqMQtDnWQSPBrlZSAcg==
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImEzNWUxNmMwLTMyZjUtNDI3OS1hMTYyLTg3NGFhMzgxYzM4MCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NzI0OTgwNTgsIm1vZGVsIjoiZGVlcHNlZWstY2hhdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiVGhlIFwiZmFsbCBvZiBSb21lXCIgcmVmZXJzIHRvIHRoZSBkZWNsaW5lIGFuZCBldmVudHVhbCBjb2xsYXBzZSBvZiB0aGUgV2VzdGVybiBSb21hbiBFbXBpcmUgaW4gdGhlIDV0aCBjZW50dXJ5IEFELiBUaGlzIHdhcyBhIGNvbXBsZXggaGlzdG9yaWNhbCBwcm9jZXNzIHJhdGhlciB0aGFuIGEgc2luZ2xlIGV2ZW50LCBidXQgdHJhZGl0aW9uYWxseSBpdCdzIG1hcmtlZCBieSB0aGUgZGVwb3NpdGlvbiBvZiB0aGUgbGFzdCBXZXN0ZXJuIFJvbWFuIEVtcGVyb3IsIFJvbXVsdXMgQXVndXN0dWx1cywgaW4gNDc2IEFEIGJ5IHRoZSBHZXJtYW5pYyBjaGllZnRhaW4gT2RvYWNlci5cblxuS2V5IGFzcGVjdHMgb2YgUm9tZSdzIGZhbGwgaW5jbHVkZTpcblxuMS4gKipQb2xpdGljYWwgaW5zdGFiaWxpdHkqKjogRnJlcXVlbnQgY2l2aWwgd2FycywgYXNzYXNzaW5hdGlvbnMsIGFuZCBwb3dlciBzdHJ1Z2dsZXNcbjIuICoqRWNvbm9taWMgdHJvdWJsZXMqKjogSGVhdnkgdGF4YXRpb24sIGluZmxhdGlvbiwgcmVsaWFuY2Ugb24gc2xhdmUgbGFib3IsIGFuZCBkaXNydXB0aW9uIG9mIHRyYWRlXG4zLiAqKk1pbGl0YXJ5IHByb2JsZW1zKio6IE92ZXJleHRlbnNpb24gb2YgYm9yZGVycywgcmVsaWFuY2Ugb24gbWVyY2VuYXJpZXMsIGFuZCBpbmFiaWxpdHkgdG8gZGVmZW5kIGFnYWluc3QgaW52YXNpb25zXG40LiAqKkJhcmJhcmlhbiBpbnZhc2lvbnMqKjogUHJlc3N1cmUgZnJvbSBHZXJtYW5pYyB0cmliZXMgbGlrZSB0aGUgVmlzaWdvdGhzLCBWYW5kYWxzLCBhbmQgSHVuc1xuNS4gKipTb2NpYWwgZGVjYXkqKjogRGVjbGluZSBpbiBjaXZpYyB2aXJ0dWUsIHBvcHVsYXRpb24gZGVjbGluZSwgYW5kIGN1bHR1cmFsIGNoYW5nZXNcbjYuICoqRGl2aXNpb24gb2YgdGhlIGVtcGlyZSoqOiBUaGUgZW1waXJlIHdhcyBzcGxpdCBpbnRvIEVhc3Rlcm4gYW5kIFdlc3Rlcm4gaGFsdmVzIGluIDI4NSBBRCB1bmRlciBEaW9jbGV0aWFuXG5cbkl0J3Mgd29ydGggbm90aW5nIHRoYXQgdGhlIEVhc3Rlcm4gUm9tYW4gRW1waXJlIChCeXphbnRpbmUgRW1waXJlKSBjb250aW51ZWQgdG8gZXhpc3QgZm9yIG5lYXJseSBhbm90aGVyIHRob3VzYW5kIHllYXJzIHVudGlsIHRoZSBmYWxsIG9mIENvbnN0YW50aW5vcGxlIGluIDE0NTMuXG5cbkJ5IHRoZSB3YXksIEkgY2hlY2tlZCB0aGUgY3VycmVudCB3ZWF0aGVyIGluIFJvbWUgKGxhdGl0dWRlIDQxLjkwMjgsIGxvbmdpdHVkZSAxMi40OTY0KSwgYW5kIGl0J3MgY3VycmVudGx5IDE1wrBDIHdpdGggMTAga20vaCB3aW5kcy4ifSwibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjo0NjksImNvbXBsZXRpb25fdG9rZW5zIjoyODYsInRvdGFsX3Rva2VucyI6NzU1LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6NDQ4fSwicHJvbXB0X2NhY2hlX2hpdF90b2tlbnMiOjQ0OCwicHJvbXB0X2NhY2hlX21pc3NfdG9rZW5zIjoyMX0sInN5c3RlbV9maW5nZXJwcmludCI6ImZwX2VhYWI4ZDExNGJfcHJvZDA4MjBfZnA4X2t2Y2FjaGUifQ==
+  recorded_at: Tue, 03 Mar 2026 00:34:27 GMT
+recorded_with: VCR 6.4.0

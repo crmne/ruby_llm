@@ -19,7 +19,7 @@ module RubyLLM
       @temperature = nil
       @messages = []
       @tools = {}
-      @tool_prefs = { choice: nil, parallel: nil }
+      @tool_prefs = { choice: nil, calls: nil }
       @params = {}
       @headers = {}
       @schema = nil
@@ -51,19 +51,19 @@ module RubyLLM
       self
     end
 
-    def with_tool(tool, choice: nil, parallel: nil)
+    def with_tool(tool, choice: nil, calls: nil)
       unless tool.nil?
         tool_instance = tool.is_a?(Class) ? tool.new : tool
         @tools[tool_instance.name.to_sym] = tool_instance
       end
-      update_tool_options(choice:, parallel:)
+      update_tool_options(choice:, calls:)
       self
     end
 
-    def with_tools(*tools, replace: false, choice: nil, parallel: nil)
+    def with_tools(*tools, replace: false, choice: nil, calls: nil)
       @tools.clear if replace
       tools.compact.each { |tool| with_tool tool }
-      update_tool_options(choice:, parallel:)
+      update_tool_options(choice:, calls:)
       self
     end
 
@@ -259,7 +259,7 @@ module RubyLLM
       tool.call(args)
     end
 
-    def update_tool_options(choice:, parallel:)
+    def update_tool_options(choice:, calls:)
       unless choice.nil?
         normalized_choice = normalize_tool_choice(choice)
         valid_tool_choices = %i[auto none required] + tools.keys
@@ -271,7 +271,18 @@ module RubyLLM
         @tool_prefs[:choice] = normalized_choice
       end
 
-      @tool_prefs[:parallel] = !!parallel unless parallel.nil?
+      @tool_prefs[:calls] = normalize_calls(calls) unless calls.nil?
+    end
+
+    def normalize_calls(calls)
+      case calls
+      when :many, 'many'
+        :many
+      when :one, 'one', 1
+        :one
+      else
+        raise ArgumentError, "Invalid calls value: #{calls.inspect}. Valid values are: :many, :one, or 1"
+      end
     end
 
     def normalize_tool_choice(choice)

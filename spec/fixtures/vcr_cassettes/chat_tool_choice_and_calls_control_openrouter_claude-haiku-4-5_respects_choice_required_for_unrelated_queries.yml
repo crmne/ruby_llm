@@ -1,0 +1,123 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://openrouter.ai/api/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"anthropic/claude-haiku-4.5","messages":[{"role":"user","content":"When
+        was the fall of Rome?"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}],"tool_choice":"required"}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Authorization:
+      - Bearer <OPENROUTER_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 03 Mar 2026 00:35:32 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      Permissions-Policy:
+      - payment=(self "https://checkout.stripe.com" "https://connect-js.stripe.com"
+        "https://js.stripe.com" "https://*.js.stripe.com" "https://hooks.stripe.com")
+      Referrer-Policy:
+      - no-referrer, strict-origin-when-cross-origin
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: "\n         \n{\"id\":\"gen-1772498132-WHpOKBVC6vdriglFGxqb\",\"object\":\"chat.completion\",\"created\":1772498132,\"model\":\"anthropic/claude-4.5-haiku-20251001\",\"provider\":\"Google\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"tool_calls\",\"native_finish_reason\":\"tool_calls\",\"message\":{\"role\":\"assistant\",\"content\":null,\"refusal\":null,\"reasoning\":null,\"tool_calls\":[{\"type\":\"function\",\"index\":0,\"id\":\"toolu_vrtx_012Mt3Cp4tYCn36AxMa1BHmP\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":
+        \\\"<UNKNOWN>\\\", \\\"longitude\\\": \\\"<UNKNOWN>\\\"}\"}}]}}],\"usage\":{\"prompt_tokens\":713,\"completion_tokens\":55,\"total_tokens\":768,\"cost\":0.000988,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.000988,\"upstream_inference_prompt_cost\":0.000713,\"upstream_inference_completions_cost\":0.000275},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}}}"
+  recorded_at: Tue, 03 Mar 2026 00:35:33 GMT
+- request:
+    method: post
+    uri: https://openrouter.ai/api/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"anthropic/claude-haiku-4.5","messages":[{"role":"user","content":"When
+        was the fall of Rome?"},{"role":"assistant","content":"","tool_calls":[{"id":"toolu_vrtx_012Mt3Cp4tYCn36AxMa1BHmP","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"<UNKNOWN>\",\"longitude\":\"<UNKNOWN>\"}"}}]},{"role":"tool","content":"Current
+        weather at <UNKNOWN>, <UNKNOWN>: 15°C, Wind: 10 km/h","tool_call_id":"toolu_vrtx_012Mt3Cp4tYCn36AxMa1BHmP"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Authorization:
+      - Bearer <OPENROUTER_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 03 Mar 2026 00:35:33 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      Permissions-Policy:
+      - payment=(self "https://checkout.stripe.com" "https://connect-js.stripe.com"
+        "https://js.stripe.com" "https://*.js.stripe.com" "https://hooks.stripe.com")
+      Referrer-Policy:
+      - no-referrer, strict-origin-when-cross-origin
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: "\n         \n\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1772498133-7VjGl4yrLjNSPayi1uvJ\",\"object\":\"chat.completion\",\"created\":1772498133,\"model\":\"anthropic/claude-4.5-haiku-20251001\",\"provider\":\"Google\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"message\":{\"role\":\"assistant\",\"content\":\"I
+        apologize, but I don't need the weather tool to answer your question. Let
+        me provide you with a direct answer:\\n\\n**The Fall of Rome** is generally
+        dated to **476 CE (AD)**, when the last Roman Emperor of the Western Roman
+        Empire, Romulus Augustulus, was deposed by the Germanic chieftain Odoacer.\\n\\nHowever,
+        it's important to note that the \\\"fall\\\" of Rome was a complex, gradual
+        process rather than a single event:\\n\\n- **Western Roman Empire**: Traditionally
+        fell in 476 CE\\n- **Eastern Roman Empire (Byzantine Empire)**: Continued
+        for nearly another thousand years until 1453 CE, when Constantinople fell
+        to the Ottoman Turks\\n\\nThe decline of the Western Roman Empire involved
+        many factors, including:\\n- Political instability and civil wars\\n- Economic
+        troubles\\n- Military pressure from Germanic tribes\\n- Administrative challenges
+        of governing such a vast territory\\n- The spread of Christianity and changes
+        in Roman society\\n\\nSo while 476 CE is the conventional date marking the
+        end of the Western Roman Empire, historians debate whether this represents
+        a \\\"fall\\\" or simply a transformation of classical civilization into the
+        medieval period.\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":729,\"completion_tokens\":252,\"total_tokens\":981,\"cost\":0.001989,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.001989,\"upstream_inference_prompt_cost\":0.000729,\"upstream_inference_completions_cost\":0.00126},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}}}"
+  recorded_at: Tue, 03 Mar 2026 00:35:35 GMT
+recorded_with: VCR 6.4.0

@@ -106,7 +106,7 @@ module RubyLLM
 
         def build_tool_choice(tool_prefs)
           tool_choice = tool_prefs[:choice]
-          parallel_tool_calls = tool_prefs[:parallel]
+          calls_in_response = tool_prefs[:calls]
           tool_choice = :auto if tool_choice.nil?
 
           {
@@ -120,7 +120,7 @@ module RubyLLM
                   end
           }.tap do |tc|
             tc[:name] = tool_choice if tc[:type] == :tool
-            tc[:disable_parallel_tool_use] = !parallel_tool_calls unless tc[:type] == :none || parallel_tool_calls.nil?
+            tc[:disable_parallel_tool_use] = calls_in_response == :one if tc[:type] != :none && !calls_in_response.nil?
           end
         end
       end

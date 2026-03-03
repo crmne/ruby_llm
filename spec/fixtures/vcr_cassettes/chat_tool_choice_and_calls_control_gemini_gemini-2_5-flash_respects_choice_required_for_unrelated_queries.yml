@@ -1,0 +1,175 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"When was the fall of
+        Rome?"}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"OBJECT","properties":{"latitude":{"type":"STRING","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"STRING","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}]}],"toolConfig":{"functionCallingConfig":{"mode":"any"}}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      X-Goog-Api-Key:
+      - "<GEMINI_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Tue, 03 Mar 2026 00:34:32 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Server-Timing:
+      - gfet4t7; dur=1231
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "candidates": [
+            {
+              "content": {
+                "parts": [
+                  {
+                    "functionCall": {
+                      "name": "weather",
+                      "args": {
+                        "latitude": "52.5200",
+                        "longitude": "13.4050"
+                      }
+                    },
+                    "thoughtSignature": "CqsGAb4+9vuzKfXC0qygj96eJfEPPEanjE/wfu2TNCsYBy1eD4awlCn4y4RYjHN/8zuRFiOpb+P+BoqPAiuT12KMBxoBQeGc/Hz+6HLCl9jTKQ5Y1cXmbyRYYpMAb3Op28zM4efeXw9aaJDoiXHvih7LK460z8ymm4/vhUhrFJjnPgkGyqGUsWwuL4jkzK+5BtiSkgkLoDld2p0/zynGA0PwLfMN0v9u9Nk8K7H4KWsRazk3p8U52E/kVgc2SEtmzUxhnp+XOZ4NGbzIH4Pbnty2PInOsbYxs8n9pqRo0sENGf5LwCvKlLeiqTkNFg5xAsi0YOgPTRjkjS/EmLI1a/lK36Db+KeuOdxRuVEph53KQ3b7bJ79dMpza4ncAs2+KhGzXMAiMFUrqoxdtTREL/wUrn2guT8v2qJB2a3mtbTEEl9IIEevgXLJDMwwr8JM05FEit+VMndtEOdbpCQ2MLv3LZWfzLn/0YYXtFmVNpCFTo/DG5X8U1H0rFJN+XG+MzOMWDgR3yoanG/JJJRfONWquZ5FoxjKd5+b3rpGnaH2Cjl8UPNINzC8bYeARjfAfcSTWPCP/QUSQpcnRdNT0tGHozn2rP0MeRI/zvMvblmavn3DKt0sf70S4ra/EwvmUxpsg8DiJ+9ceUNkcFkH6TYghYtxDHuqjdpar1pdeJW5Brnfp4RTpCecW9lky4nNnHpFfSTy741pc9EITXPoeaTBvuP5cdt6gHo8tb/Y1Mq4rmF2T8Ej9jurGEbuGrKP9kcsRxc7drPAySlroga+RpgfV4KWDZv5JVzqUhfjotstbLaKiIjDAw1C/2JRZBSyRZY4HmIxRa1mZ7ecXPCmoBhf8DsqI8yIBqXIeSR7M2fEeYarVhEeGptTE7wvNVg/QAC8f0ucpkbWU8lM/ZFe2ZcPSkshBeq5QZosGfRKGMmD0tPbF41O2KpfmtgfQwr6Rfvfvfa0uc88RirLoVS4SLkNafwbg04B0Nk68ZgrW3muT/esXE1hlbp/3ijhcjDWEumxA2qTbKRhTZ06gzXTH27mQv4V4YkUqLmWJf//8FSUdkUUABXYJZz/gyBmow=="
+                  }
+                ],
+                "role": "model"
+              },
+              "finishReason": "STOP",
+              "index": 0,
+              "finishMessage": "Model generated function call(s)."
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 84,
+            "candidatesTokenCount": 30,
+            "totalTokenCount": 263,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 84
+              }
+            ],
+            "thoughtsTokenCount": 149
+          },
+          "modelVersion": "gemini-2.5-flash",
+          "responseId": "lyymaZ_qH4iqkdUP69a4WA"
+        }
+  recorded_at: Tue, 03 Mar 2026 00:34:32 GMT
+- request:
+    method: post
+    uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"When was the fall of
+        Rome?"}]},{"role":"model","parts":[{"functionCall":{"name":"weather","args":{"latitude":"52.5200","longitude":"13.4050"}},"thoughtSignature":"CqsGAb4+9vuzKfXC0qygj96eJfEPPEanjE/wfu2TNCsYBy1eD4awlCn4y4RYjHN/8zuRFiOpb+P+BoqPAiuT12KMBxoBQeGc/Hz+6HLCl9jTKQ5Y1cXmbyRYYpMAb3Op28zM4efeXw9aaJDoiXHvih7LK460z8ymm4/vhUhrFJjnPgkGyqGUsWwuL4jkzK+5BtiSkgkLoDld2p0/zynGA0PwLfMN0v9u9Nk8K7H4KWsRazk3p8U52E/kVgc2SEtmzUxhnp+XOZ4NGbzIH4Pbnty2PInOsbYxs8n9pqRo0sENGf5LwCvKlLeiqTkNFg5xAsi0YOgPTRjkjS/EmLI1a/lK36Db+KeuOdxRuVEph53KQ3b7bJ79dMpza4ncAs2+KhGzXMAiMFUrqoxdtTREL/wUrn2guT8v2qJB2a3mtbTEEl9IIEevgXLJDMwwr8JM05FEit+VMndtEOdbpCQ2MLv3LZWfzLn/0YYXtFmVNpCFTo/DG5X8U1H0rFJN+XG+MzOMWDgR3yoanG/JJJRfONWquZ5FoxjKd5+b3rpGnaH2Cjl8UPNINzC8bYeARjfAfcSTWPCP/QUSQpcnRdNT0tGHozn2rP0MeRI/zvMvblmavn3DKt0sf70S4ra/EwvmUxpsg8DiJ+9ceUNkcFkH6TYghYtxDHuqjdpar1pdeJW5Brnfp4RTpCecW9lky4nNnHpFfSTy741pc9EITXPoeaTBvuP5cdt6gHo8tb/Y1Mq4rmF2T8Ej9jurGEbuGrKP9kcsRxc7drPAySlroga+RpgfV4KWDZv5JVzqUhfjotstbLaKiIjDAw1C/2JRZBSyRZY4HmIxRa1mZ7ecXPCmoBhf8DsqI8yIBqXIeSR7M2fEeYarVhEeGptTE7wvNVg/QAC8f0ucpkbWU8lM/ZFe2ZcPSkshBeq5QZosGfRKGMmD0tPbF41O2KpfmtgfQwr6Rfvfvfa0uc88RirLoVS4SLkNafwbg04B0Nk68ZgrW3muT/esXE1hlbp/3ijhcjDWEumxA2qTbKRhTZ06gzXTH27mQv4V4YkUqLmWJf//8FSUdkUUABXYJZz/gyBmow=="}]},{"role":"function","parts":[{"functionResponse":{"name":"weather","response":{"name":"weather","content":[{"text":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"OBJECT","properties":{"latitude":{"type":"STRING","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"STRING","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}]}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      X-Goog-Api-Key:
+      - "<GEMINI_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Tue, 03 Mar 2026 00:34:33 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Server-Timing:
+      - gfet4t7; dur=393
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "candidates": [
+            {
+              "content": {
+                "parts": [
+                  {
+                    "text": "The fall of the Western Roman Empire is traditionally dated to 476 CE."
+                  }
+                ],
+                "role": "model"
+              },
+              "finishReason": "STOP",
+              "index": 0
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 171,
+            "candidatesTokenCount": 17,
+            "totalTokenCount": 188,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 171
+              }
+            ]
+          },
+          "modelVersion": "gemini-2.5-flash",
+          "responseId": "mCymabyVMuGhnsEPjLLh2Qo"
+        }
+  recorded_at: Tue, 03 Mar 2026 00:34:33 GMT
+recorded_with: VCR 6.4.0

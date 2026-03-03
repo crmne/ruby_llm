@@ -1,0 +1,116 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://openrouter.ai/api/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"anthropic/claude-haiku-4.5","messages":[{"role":"developer","content":"You
+        must use both the weather tool for Berlin (52.5200, 13.4050) and the best
+        language tool."},{"role":"user","content":"What''s the weather in Berlin and
+        what''s the best programming language?"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}},{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}],"parallel_tool_calls":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Authorization:
+      - Bearer <OPENROUTER_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 03 Mar 2026 00:35:41 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      Permissions-Policy:
+      - payment=(self "https://checkout.stripe.com" "https://connect-js.stripe.com"
+        "https://js.stripe.com" "https://*.js.stripe.com" "https://hooks.stripe.com")
+      Referrer-Policy:
+      - no-referrer, strict-origin-when-cross-origin
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: "\n         \n\n         \n{\"id\":\"gen-1772498140-TKx3GyGv7VdjlSuSWWdQ\",\"object\":\"chat.completion\",\"created\":1772498140,\"model\":\"anthropic/claude-4.5-haiku-20251001\",\"provider\":\"Google\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"tool_calls\",\"native_finish_reason\":\"tool_calls\",\"message\":{\"role\":\"assistant\",\"content\":\"I'll
+        get the weather in Berlin and find out the best language to learn for you.\",\"refusal\":null,\"reasoning\":null,\"tool_calls\":[{\"type\":\"function\",\"index\":0,\"id\":\"toolu_vrtx_01BZ5k2XrrwUuDreMUKqEpqb\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":
+        \\\"52.5200\\\", \\\"longitude\\\": \\\"13.4050\\\"}\"}}]}}],\"usage\":{\"prompt_tokens\":508,\"completion_tokens\":84,\"total_tokens\":592,\"cost\":0.000928,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.000928,\"upstream_inference_prompt_cost\":0.000508,\"upstream_inference_completions_cost\":0.00042},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}}}"
+  recorded_at: Tue, 03 Mar 2026 00:35:41 GMT
+- request:
+    method: post
+    uri: https://openrouter.ai/api/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"anthropic/claude-haiku-4.5","messages":[{"role":"developer","content":"You
+        must use both the weather tool for Berlin (52.5200, 13.4050) and the best
+        language tool."},{"role":"user","content":"What''s the weather in Berlin and
+        what''s the best programming language?"},{"role":"assistant","content":"I''ll
+        get the weather in Berlin and find out the best language to learn for you.","tool_calls":[{"id":"toolu_vrtx_01BZ5k2XrrwUuDreMUKqEpqb","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"toolu_vrtx_01BZ5k2XrrwUuDreMUKqEpqb"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}},{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}],"parallel_tool_calls":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Authorization:
+      - Bearer <OPENROUTER_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 03 Mar 2026 00:35:42 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      Permissions-Policy:
+      - payment=(self "https://checkout.stripe.com" "https://connect-js.stripe.com"
+        "https://js.stripe.com" "https://*.js.stripe.com" "https://hooks.stripe.com")
+      Referrer-Policy:
+      - no-referrer, strict-origin-when-cross-origin
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        CiAgICAgICAgIAoKICAgICAgICAgCgogICAgICAgICAKCiAgICAgICAgIAoKICAgICAgICAgCnsiaWQiOiJnZW4tMTc3MjQ5ODE0MS1kekZJWHRlajhTMDNWWENXQmU4OCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NzI0OTgxNDEsIm1vZGVsIjoiYW50aHJvcGljL2NsYXVkZS00LjUtaGFpa3UtMjAyNTEwMDEiLCJwcm92aWRlciI6IkFudGhyb3BpYyIsImNob2ljZXMiOlt7ImluZGV4IjowLCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6InN0b3AiLCJuYXRpdmVfZmluaXNoX3JlYXNvbiI6InN0b3AiLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiVGhlIHdlYXRoZXIgaW4gQmVybGluIGlzIGN1cnJlbnRseSAqKjE1wrBDIHdpdGggYSB3aW5kIHNwZWVkIG9mIDEwIGttL2gqKi4gSXQncyByZWxhdGl2ZWx5IG1pbGQgYW5kIHNsaWdodGx5IGJyZWV6eS5cblxuUmVnYXJkaW5nIHRoZSBiZXN0IHByb2dyYW1taW5nIGxhbmd1YWdlIC0gSSBzaG91bGQgbm90ZSB0aGF0IHRoZSBhdmFpbGFibGUgdG9vbCBhc2tzIGFib3V0IHRoZSBiZXN0ICoqbGFuZ3VhZ2UgdG8gbGVhcm4qKiBpbiBnZW5lcmFsIHJhdGhlciB0aGFuIHByb2dyYW1taW5nIGxhbmd1YWdlcyBzcGVjaWZpY2FsbHkuIFRoZSBjaG9pY2Ugb2YgYmVzdCBwcm9ncmFtbWluZyBsYW5ndWFnZSByZWFsbHkgZGVwZW5kcyBvbiB5b3VyIGdvYWxzIGFuZCB1c2UgY2FzZTpcblxuLSAqKlB5dGhvbioqOiBHcmVhdCBmb3IgYmVnaW5uZXJzLCBkYXRhIHNjaWVuY2UsIEFJLCBhbmQgd2ViIGRldmVsb3BtZW50XG4tICoqSmF2YVNjcmlwdCoqOiBFc3NlbnRpYWwgZm9yIHdlYiBkZXZlbG9wbWVudCAoZnJvbnRlbmQgYW5kIGJhY2tlbmQpXG4tICoqSmF2YSoqOiBQb3B1bGFyIGZvciBlbnRlcnByaXNlIGFwcGxpY2F0aW9ucyBhbmQgbGFyZ2Utc2NhbGUgc3lzdGVtc1xuLSAqKkMrKyoqOiBCZXN0IGZvciBwZXJmb3JtYW5jZS1jcml0aWNhbCBhcHBsaWNhdGlvbnMgYW5kIHN5c3RlbXMgcHJvZ3JhbW1pbmdcbi0gKipHbyoqOiBFeGNlbGxlbnQgZm9yIGNsb3VkIGluZnJhc3RydWN0dXJlIGFuZCBjb25jdXJyZW50IHN5c3RlbXNcbi0gKipSdXN0Kio6IE1vZGVybiBsYW5ndWFnZSBmb3Igc3lzdGVtcyBwcm9ncmFtbWluZyB3aXRoIG1lbW9yeSBzYWZldHlcblxuV2hhdCB0eXBlIG9mIHByb2dyYW1taW5nIGFyZSB5b3UgbW9zdCBpbnRlcmVzdGVkIGluPyBUaGF0IHdvdWxkIGhlbHAgbWUgZ2l2ZSB5b3UgYSBtb3JlIHNwZWNpZmljIHJlY29tbWVuZGF0aW9uISIsInJlZnVzYWwiOm51bGwsInJlYXNvbmluZyI6bnVsbH19XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6NjQxLCJjb21wbGV0aW9uX3Rva2VucyI6MTkzLCJ0b3RhbF90b2tlbnMiOjgzNCwiY29zdCI6MC4wMDE2MDYsImlzX2J5b2siOmZhbHNlLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MCwiY2FjaGVfd3JpdGVfdG9rZW5zIjowLCJhdWRpb190b2tlbnMiOjAsInZpZGVvX3Rva2VucyI6MH0sImNvc3RfZGV0YWlscyI6eyJ1cHN0cmVhbV9pbmZlcmVuY2VfY29zdCI6MC4wMDE2MDYsInVwc3RyZWFtX2luZmVyZW5jZV9wcm9tcHRfY29zdCI6MC4wMDA2NDEsInVwc3RyZWFtX2luZmVyZW5jZV9jb21wbGV0aW9uc19jb3N0IjowLjAwMDk2NX0sImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6MCwiaW1hZ2VfdG9rZW5zIjowLCJhdWRpb190b2tlbnMiOjB9fX0=
+  recorded_at: Tue, 03 Mar 2026 00:35:44 GMT
+recorded_with: VCR 6.4.0

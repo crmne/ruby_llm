@@ -1,0 +1,162 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.mistral.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"mistral-small-latest","messages":[{"role":"system","content":"You
+        must use both the weather tool for Berlin (52.5200, 13.4050) and the best
+        language tool."},{"role":"user","content":"What''s the weather in Berlin and
+        what''s the best programming language?"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}},{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}],"parallel_tool_calls":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Authorization:
+      - Bearer <MISTRAL_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 03 Mar 2026 00:34:44 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Mistral-Correlation-Id:
+      - '019cb11e-613a-7b86-bf79-113d556e9929'
+      X-Kong-Request-Id:
+      - '019cb11e-613a-7b86-bf79-113d556e9929'
+      X-Ratelimit-Limit-Tokens-Minute:
+      - '2000000'
+      X-Ratelimit-Remaining-Tokens-Minute:
+      - '1998260'
+      X-Ratelimit-Tokens-Query-Cost:
+      - '259'
+      X-Ratelimit-Limit-Req-Minute:
+      - '360'
+      X-Ratelimit-Remaining-Req-Minute:
+      - '354'
+      X-Envoy-Upstream-Service-Time:
+      - '261'
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Kong-Upstream-Latency:
+      - '262'
+      X-Kong-Proxy-Latency:
+      - '8'
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"168163cf41f845ed82bec7317c7f09bc","created":1772498084,"model":"mistral-small-latest","usage":{"prompt_tokens":231,"total_tokens":259,"completion_tokens":28,"prompt_tokens_details":{"cached_tokens":0}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"tool_calls","message":{"role":"assistant","tool_calls":[{"id":"LuKeoDM9a","function":{"name":"weather","arguments":"{\"latitude\":
+        \"52.5200\", \"longitude\": \"13.4050\"}"},"index":0}],"content":""}}]}'
+  recorded_at: Tue, 03 Mar 2026 00:34:44 GMT
+- request:
+    method: post
+    uri: https://api.mistral.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"mistral-small-latest","messages":[{"role":"system","content":"You
+        must use both the weather tool for Berlin (52.5200, 13.4050) and the best
+        language tool."},{"role":"user","content":"What''s the weather in Berlin and
+        what''s the best programming language?"},{"role":"assistant","content":"","tool_calls":[{"id":"LuKeoDM9a","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"LuKeoDM9a"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}},{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}],"parallel_tool_calls":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Authorization:
+      - Bearer <MISTRAL_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 03 Mar 2026 00:34:46 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Mistral-Correlation-Id:
+      - '019cb11e-628d-7087-92ca-bfa296141c26'
+      X-Kong-Request-Id:
+      - '019cb11e-628d-7087-92ca-bfa296141c26'
+      X-Ratelimit-Limit-Tokens-Minute:
+      - '2000000'
+      X-Ratelimit-Remaining-Tokens-Minute:
+      - '1997614'
+      X-Ratelimit-Tokens-Query-Cost:
+      - '646'
+      X-Ratelimit-Limit-Req-Minute:
+      - '360'
+      X-Ratelimit-Remaining-Req-Minute:
+      - '353'
+      X-Envoy-Upstream-Service-Time:
+      - '2272'
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Kong-Upstream-Latency:
+      - '2273'
+      X-Kong-Proxy-Latency:
+      - '10'
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6IjYzZDA3OWVjNjI0YzQyNDViNmViNWVmMmQwMTZlMjNjIiwiY3JlYXRlZCI6MTc3MjQ5ODA4NCwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsInVzYWdlIjp7InByb21wdF90b2tlbnMiOjMwOCwidG90YWxfdG9rZW5zIjo2NDYsImNvbXBsZXRpb25fdG9rZW5zIjozMzgsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjowfX0sIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNob2ljZXMiOlt7ImluZGV4IjowLCJmaW5pc2hfcmVhc29uIjoic3RvcCIsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsInRvb2xfY2FsbHMiOm51bGwsImNvbnRlbnQiOiJUaGUgY3VycmVudCB3ZWF0aGVyIGluIEJlcmxpbiBpcyAxNcKwQyB3aXRoIGEgd2luZCBzcGVlZCBvZiAxMCBrbS9oLlxuXG5SZWdhcmRpbmcgdGhlIGJlc3QgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UsIGl0IGRlcGVuZHMgb24gdmFyaW91cyBmYWN0b3JzIHN1Y2ggYXMgeW91ciBnb2FscywgaW50ZXJlc3RzLCBhbmQgdGhlIHNwZWNpZmljIGRvbWFpbiB5b3Ugd2FudCB0byB3b3JrIGluLiBIZXJlIGFyZSBhIGZldyBwb3B1bGFyIHByb2dyYW1taW5nIGxhbmd1YWdlcyBhbmQgdGhlaXIgdXNlIGNhc2VzOlxuXG4xLiAqKlB5dGhvbioqOiBLbm93biBmb3IgaXRzIHNpbXBsaWNpdHkgYW5kIHJlYWRhYmlsaXR5LCBQeXRob24gaXMgd2lkZWx5IHVzZWQgaW4gd2ViIGRldmVsb3BtZW50LCBkYXRhIGFuYWx5c2lzLCBhcnRpZmljaWFsIGludGVsbGlnZW5jZSwgYW5kIHNjaWVudGlmaWMgY29tcHV0aW5nLlxuXG4yLiAqKkphdmFTY3JpcHQqKjogRXNzZW50aWFsIGZvciB3ZWIgZGV2ZWxvcG1lbnQsIEphdmFTY3JpcHQgaXMgdXNlZCB0byBjcmVhdGUgaW50ZXJhY3RpdmUgYW5kIGR5bmFtaWMgd2ViIHBhZ2VzLiBJdCdzIGFsc28gdXNlZCBpbiBzZXJ2ZXItc2lkZSBwcm9ncmFtbWluZyB3aXRoIE5vZGUuanMuXG5cbjMuICoqSmF2YSoqOiBBIHZlcnNhdGlsZSBsYW5ndWFnZSB1c2VkIGluIGVudGVycHJpc2UtbGV2ZWwgYXBwbGljYXRpb25zLCBBbmRyb2lkIGFwcCBkZXZlbG9wbWVudCwgYW5kIGxhcmdlLXNjYWxlIHN5c3RlbXMuXG5cbjQuICoqQyMqKjogUHJpbWFyaWx5IHVzZWQgZm9yIFdpbmRvd3MgYXBwbGljYXRpb24gZGV2ZWxvcG1lbnQsIGdhbWUgZGV2ZWxvcG1lbnQgd2l0aCBVbml0eSwgYW5kIGVudGVycHJpc2Ugc29mdHdhcmUuXG5cbjUuICoqQysrKio6IEtub3duIGZvciBpdHMgcGVyZm9ybWFuY2UgYW5kIGNvbnRyb2wgb3ZlciBzeXN0ZW0gcmVzb3VyY2VzLCBDKysgaXMgdXNlZCBpbiBnYW1lIGRldmVsb3BtZW50LCByZWFsLXRpbWUgc2ltdWxhdGlvbiwgYW5kIG9wZXJhdGluZyBzeXN0ZW1zLlxuXG42LiAqKlJ1YnkqKjogS25vd24gZm9yIGl0cyBlbGVnYW50IHN5bnRheCwgUnVieSBpcyBvZnRlbiB1c2VkIGluIHdlYiBkZXZlbG9wbWVudCB3aXRoIHRoZSBSdWJ5IG9uIFJhaWxzIGZyYW1ld29yay5cblxuNy4gKipTd2lmdCoqOiBVc2VkIGZvciBpT1MgYW5kIG1hY09TIGFwcGxpY2F0aW9uIGRldmVsb3BtZW50LlxuXG44LiAqKkdvIChHb2xhbmcpKio6IEtub3duIGZvciBpdHMgc2ltcGxpY2l0eSBhbmQgZWZmaWNpZW5jeSwgR28gaXMgdXNlZCBpbiBjbG91ZCBzZXJ2aWNlcywgbmV0d29ya2luZyB0b29scywgYW5kIGRpc3RyaWJ1dGVkIHN5c3RlbXMuXG5cbjkuICoqUnVzdCoqOiBLbm93biBmb3IgaXRzIGZvY3VzIG9uIHNhZmV0eSBhbmQgcGVyZm9ybWFuY2UsIFJ1c3QgaXMgdXNlZCBpbiBzeXN0ZW1zIHByb2dyYW1taW5nLCBnYW1lIGVuZ2luZXMsIGFuZCBlbWJlZGRlZCBzeXN0ZW1zLlxuXG4xMC4gKipQSFAqKjogV2lkZWx5IHVzZWQgZm9yIHNlcnZlci1zaWRlIHdlYiBkZXZlbG9wbWVudC5cblxuSWYgeW91IGhhdmUgYSBzcGVjaWZpYyBnb2FsIG9yIGludGVyZXN0IGluIG1pbmQsIEkgY2FuIHByb3ZpZGUgYSBtb3JlIHRhaWxvcmVkIHJlY29tbWVuZGF0aW9uLiJ9fV19
+  recorded_at: Tue, 03 Mar 2026 00:34:46 GMT
+recorded_with: VCR 6.4.0

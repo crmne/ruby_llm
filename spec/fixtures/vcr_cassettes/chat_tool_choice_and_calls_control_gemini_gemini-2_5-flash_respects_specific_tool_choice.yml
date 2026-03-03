@@ -1,0 +1,173 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"What''s the fall of Rome?"}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"OBJECT","properties":{"latitude":{"type":"STRING","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"STRING","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}]}],"toolConfig":{"functionCallingConfig":{"mode":"any","allowedFunctionNames":["weather"]}}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      X-Goog-Api-Key:
+      - "<GEMINI_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Tue, 03 Mar 2026 00:34:34 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Server-Timing:
+      - gfet4t7; dur=782
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "candidates": [
+            {
+              "content": {
+                "parts": [
+                  {
+                    "functionCall": {
+                      "name": "weather",
+                      "args": {
+                        "latitude": "123",
+                        "longitude": "123"
+                      }
+                    },
+                    "thoughtSignature": "Cr8CAb4+9vtc5JtrVOn5cvaayRP+01sp287/mZz/FYqNnxwKJzbHEuZBHe/R084LS5v1DQzcl2Ftc2CDJ501UssGnRKF3D++PSFoqJlnICjd7T6+P1wZ134E1rzs4wMKsMFjmFuDBbn8T6JkGbhN5hCw+ppIfL4Vovyl9/5Y5+OuHKgQXhqv6cCzE/+s1rybj4UJ58PBI7A8aZpZak3YGBKf3l2/2hpkL+7UbE3KzdNHfYYBDFzrOk9sBplq8+DYBnz1/goHIpFBbO2pDZU0YqsAX+E1zuv+lGYBMvBOsb02nTwlKNDVR5W/GdCDpR6OO8xTmXOAf/EI/JmHG83UOnOvD03fOK8ossRAqEvrXmdDzi/6Xm/CcgGPsjdJuVAmoRtjl6AHSdRUHvs2cHDzAsvNnBS1zx/bsYvvgC88v/bBjw=="
+                  }
+                ],
+                "role": "model"
+              },
+              "finishReason": "STOP",
+              "index": 0,
+              "finishMessage": "Model generated function call(s)."
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 85,
+            "candidatesTokenCount": 22,
+            "totalTokenCount": 164,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 85
+              }
+            ],
+            "thoughtsTokenCount": 57
+          },
+          "modelVersion": "gemini-2.5-flash",
+          "responseId": "mSymafK5EqOqnsEP8-TZ8Qs"
+        }
+  recorded_at: Tue, 03 Mar 2026 00:34:34 GMT
+- request:
+    method: post
+    uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"What''s the fall of Rome?"}]},{"role":"model","parts":[{"functionCall":{"name":"weather","args":{"latitude":"123","longitude":"123"}},"thoughtSignature":"Cr8CAb4+9vtc5JtrVOn5cvaayRP+01sp287/mZz/FYqNnxwKJzbHEuZBHe/R084LS5v1DQzcl2Ftc2CDJ501UssGnRKF3D++PSFoqJlnICjd7T6+P1wZ134E1rzs4wMKsMFjmFuDBbn8T6JkGbhN5hCw+ppIfL4Vovyl9/5Y5+OuHKgQXhqv6cCzE/+s1rybj4UJ58PBI7A8aZpZak3YGBKf3l2/2hpkL+7UbE3KzdNHfYYBDFzrOk9sBplq8+DYBnz1/goHIpFBbO2pDZU0YqsAX+E1zuv+lGYBMvBOsb02nTwlKNDVR5W/GdCDpR6OO8xTmXOAf/EI/JmHG83UOnOvD03fOK8ossRAqEvrXmdDzi/6Xm/CcgGPsjdJuVAmoRtjl6AHSdRUHvs2cHDzAsvNnBS1zx/bsYvvgC88v/bBjw=="}]},{"role":"function","parts":[{"functionResponse":{"name":"weather","response":{"name":"weather","content":[{"text":"Current
+        weather at 123, 123: 15°C, Wind: 10 km/h"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"OBJECT","properties":{"latitude":{"type":"STRING","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"STRING","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}]}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      X-Goog-Api-Key:
+      - "<GEMINI_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Tue, 03 Mar 2026 00:34:36 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Server-Timing:
+      - gfet4t7; dur=2399
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "candidates": [
+            {
+              "content": {
+                "parts": [
+                  {
+                    "text": "The fall of Rome is a complex historical event that refers to the decline and collapse of the Western Roman Empire. There isn't one single cause, but rather a combination of factors that contributed to its demise over several centuries.\n\nHere are some of the key contributing factors:\n\n*   **Economic Problems:** Inflation, heavy taxation, and a decline in trade weakened the Roman economy. The empire also struggled with the cost of maintaining its vast army.\n*   **Political Instability:** Frequent changes in emperors, corruption, and power struggles within the government led to instability and weakened central authority.\n*   **Military Overstretch and Invasions:** The empire became too large to effectively defend. Constant pressure from barbarian tribes along its borders, such as the Goths, Vandals, and Huns, led to costly wars and ultimately successful invasions.\n*   **Social Decay:** A decline in civic virtue, increasing social inequality, and a reliance on slave labor contributed to internal weaknesses.\n*   **Division of the Empire:** The empire was eventually divided into Western and Eastern halves. The Western Roman Empire, with its capital eventually moving from Rome to Ravenna, was more vulnerable and ultimately fell, while the Eastern Roman (Byzantine) Empire continued for another thousand years.\n*   **Over-reliance on Mercenaries:** The Roman army increasingly relied on non-Roman soldiers, including barbarians, who sometimes had divided loyalties.\n\nThe traditional date for the \"fall\" of the Western Roman Empire is 476 CE, when the last Western Roman Emperor, Romulus Augustulus, was deposed by the Germanic chieftain Odoacer. However, this was more of a culmination of a long process rather than a sudden event. The Eastern Roman Empire, also known as the Byzantine Empire, continued to thrive for many centuries after this date."
+                  }
+                ],
+                "role": "model"
+              },
+              "finishReason": "STOP",
+              "index": 0
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 156,
+            "candidatesTokenCount": 372,
+            "totalTokenCount": 528,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 156
+              }
+            ]
+          },
+          "modelVersion": "gemini-2.5-flash",
+          "responseId": "miymacTmCaKckdUP7rDk0Q8"
+        }
+  recorded_at: Tue, 03 Mar 2026 00:34:36 GMT
+recorded_with: VCR 6.4.0

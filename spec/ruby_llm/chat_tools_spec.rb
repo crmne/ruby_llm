@@ -657,7 +657,7 @@ RSpec.describe RubyLLM::Chat do
     end
   end
 
-  describe 'tool choice and parallel control' do
+  describe 'tool choice and calls control' do
     CHAT_MODELS.each do |model_info|
       model = model_info[:model]
       provider = model_info[:provider]
@@ -733,7 +733,7 @@ RSpec.describe RubyLLM::Chat do
         expect(tool_called).to be(true)
       end
 
-      it "#{provider}/#{model} respects parallel: false for sequential execution" do
+      it "#{provider}/#{model} respects calls: :one for sequential execution" do
         unless RubyLLM::Provider.providers[provider]&.local?
           model_info = RubyLLM.models.find(model)
           skip "#{model} doesn't support function calling" unless model_info&.supports_functions?
@@ -745,7 +745,7 @@ RSpec.describe RubyLLM::Chat do
         end
 
         chat = RubyLLM.chat(model: model, provider: provider)
-                      .with_tools(Weather, BestLanguageToLearn, parallel: false)
+                      .with_tools(Weather, BestLanguageToLearn, calls: :one)
                       .with_instructions(
                         'You must use both the weather tool for Berlin (52.5200, 13.4050) and the best language tool.'
                       )

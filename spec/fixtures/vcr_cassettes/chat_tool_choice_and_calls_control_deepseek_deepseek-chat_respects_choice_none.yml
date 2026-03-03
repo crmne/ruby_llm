@@ -1,0 +1,62 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.deepseek.com/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"deepseek-chat","messages":[{"role":"user","content":"What''s
+        the weather in Berlin? (52.5200, 13.4050)"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}],"tool_choice":"none"}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Authorization:
+      - Bearer <DEEPSEEK_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Date:
+      - Tue, 03 Mar 2026 00:34:01 GMT
+      Server:
+      - elb
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Credentials:
+      - 'true'
+      X-Ds-Trace-Id:
+      - 687018cac8ee2e567952c42085e8495e
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 a78f8078f85de402de93ba5387c94df8.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - TXL52-P1
+      X-Amz-Cf-Id:
+      - F0VrgO20dBaZaZEM5RW3K1_1vtddFfLvEmhPrGlo057FS6eBDjRlmQ==
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6IjViMGEyM2Y3LWMxN2EtNDdhNC1iMmFlLTIxNDFkNzVlZTVkYSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NzI0OTgwNDEsIm1vZGVsIjoiZGVlcHNlZWstY2hhdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiSSBjYW4ndCBwcm92aWRlIHJlYWwtdGltZSB3ZWF0aGVyIHVwZGF0ZXMsIGJ1dCBJIGNhbiBzdWdnZXN0IGEgZmV3IHdheXMgdG8gY2hlY2sgdGhlIGN1cnJlbnQgd2VhdGhlciBpbiBCZXJsaW46XG5cbjEuICoqV2VhdGhlciB3ZWJzaXRlcy9hcHBzKio6IFRyeSBzZXJ2aWNlcyBsaWtlIFdlYXRoZXIuY29tLCBBY2N1V2VhdGhlciwgb3IgV2VhdGhlciBVbmRlcmdyb3VuZFxuMi4gKipTZWFyY2ggZW5naW5lKio6IFNpbXBseSBzZWFyY2ggXCJ3ZWF0aGVyIEJlcmxpblwiIGluIHlvdXIgcHJlZmVycmVkIHNlYXJjaCBlbmdpbmVcbjMuICoqRGVkaWNhdGVkIHdlYXRoZXIgYXBwcyoqOiBNYW55IHNtYXJ0cGhvbmVzIGhhdmUgYnVpbHQtaW4gd2VhdGhlciBhcHBzXG40LiAqKkdlcm1hbiB3ZWF0aGVyIHNlcnZpY2UqKjogVGhlIG9mZmljaWFsIERldXRzY2hlciBXZXR0ZXJkaWVuc3QgKERXRCkgd2Vic2l0ZSBwcm92aWRlcyBkZXRhaWxlZCBmb3JlY2FzdHNcblxuV2l0aCB0aGUgY29vcmRpbmF0ZXMgeW91IHByb3ZpZGVkICg1Mi41MjAwwrAgTiwgMTMuNDA1MMKwIEUpLCB5b3UncmUgbG9va2luZyBhdCBjZW50cmFsIEJlcmxpbiwgbmVhciB0aGUgQnJhbmRlbmJ1cmcgR2F0ZSBhcmVhLiBUaGUgd2VhdGhlciBpbiBCZXJsaW4gaXMgdHlwaWNhbGx5IHRlbXBlcmF0ZSB3aXRoIHdhcm0gc3VtbWVycyBhbmQgY29sZCB3aW50ZXJzLCBidXQgY29uZGl0aW9ucyBjYW4gdmFyeSB0aHJvdWdob3V0IHRoZSBkYXkuXG5cbldvdWxkIHlvdSBsaWtlIG1lIHRvIGhlbHAgeW91IGludGVycHJldCBhIHdlYXRoZXIgZm9yZWNhc3Qgb25jZSB5b3UndmUgbG9va2VkIGl0IHVwPyJ9LCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjIzLCJjb21wbGV0aW9uX3Rva2VucyI6MTc4LCJ0b3RhbF90b2tlbnMiOjIwMSwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjB9LCJwcm9tcHRfY2FjaGVfaGl0X3Rva2VucyI6MCwicHJvbXB0X2NhY2hlX21pc3NfdG9rZW5zIjoyM30sInN5c3RlbV9maW5nZXJwcmludCI6ImZwX2VhYWI4ZDExNGJfcHJvZDA4MjBfZnA4X2t2Y2FjaGUifQ==
+  recorded_at: Tue, 03 Mar 2026 00:34:07 GMT
+recorded_with: VCR 6.4.0

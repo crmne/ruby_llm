@@ -285,46 +285,69 @@ puts response.content
 # => "Current weather at 52.52, 13.4: Temperature: 12.5°C, Wind Speed: 8.3 km/h, Conditions: Mainly clear, partly cloudy, and overcast."
 ```
 
-### Tool Choice Control
+### Tool Call Controls
 {: .d-inline-block }
 
 v1.13.0+
 {: .label .label-green }
 
-Control when and how tools are called using `choice` and `parallel` options.
+Control tool behavior with two options:
+- `choice` controls which tools the model is allowed/required to use.
+- `calls` controls how many tool calls can appear in one assistant response.
+
+#### Tool Choice (`choice`)
+
+Use `choice` to control whether the model can call tools and which one it can call.
 
 ```ruby
-chat = RubyLLM.chat(model: '{{ site.models.openai_tools }}')
+# Model decides if a tool is needed
+chat.with_tools(Weather, Calculator, choice: :auto)
 
-# Basic usage with defaults
-chat.with_tools(Weather, Calculator)  # uses provider defaults
+# Model must call a tool
+chat.with_tools(Weather, Calculator, choice: :required)
 
-# Force tool usage, one at a time
-chat.with_tools(Weather, Calculator, choice: :required, parallel: false)
+# Disable tool calls
+chat.with_tools(Weather, Calculator, choice: :none)
 
-# Force a specific tool by name
-chat.with_tool(Weather, choice: :weather, parallel: true)
-
-# Force a specific tool by class
-chat.with_tool(Weather, choice: Weather, parallel: true)
+# Force one specific tool (symbol or class)
+chat.with_tools(Weather, Calculator, choice: :weather)
+chat.with_tools(Weather, Calculator, choice: Weather)
 ```
 
-**Parameter Values:**
-- **`choice`**: Controls tool choice behavior
-  - `:auto` - Model decides whether to use any tools
-  - `:required` - Model must use one of the provided tools
-  - `:none` - Disable all tools
-  - `:tool_name` or `ToolClass` - Force a specific tool (e.g., `:weather` or `Weather`)
-- **`parallel`**: Controls parallel tool calls
-  - `true` - Allow multiple tool calls in one response
-  - `false` - One at a time
+Valid values:
+- `:auto`
+- `:required`
+- `:none`
+- tool name symbol/string or `ToolClass`
 
-If not provided, RubyLLM will use the provider's default behavior for tool choice and parallel tool calls.
-
-> With `:required` or specific tool choices, the tool_choice is automatically reset to `nil` after tool execution to prevent infinite loops.
+> With `:required` or specific tool choices, `tool_choice` is automatically reset to `nil` after tool execution to prevent infinite loops.
 {: .note }
 
-> Tool choice and parallel controls are provider/model dependent.
+#### "Parallel" Tool Calling (`calls`)
+
+> Providers usually call this **parallel tool calling**. We call it `calls` because "parallel" can be misleading: tools are not executed in parallel unless the tool executor itself is parallelized. `calls` describes the actual behavior directly: `:many` means multiple tool calls in one assistant response, `:one` means one tool call in one assistant response.
+{: .note }
+
+Use `calls` to control how many tool calls the model may return in a single assistant response.
+
+```ruby
+# Allow multiple tool calls in one response
+chat.with_tools(Weather, Calculator, calls: :many)
+
+# Allow one tool call in one response
+chat.with_tools(Weather, Calculator, calls: :one)
+# equivalent:
+chat.with_tools(Weather, Calculator, calls: 1)
+```
+
+Valid values:
+- `:many`
+- `:one`
+- `1`
+
+If `calls` is not provided, RubyLLM uses provider/model defaults, which are usually equivalent to `calls: :many`.
+
+> Tool choice and call-count controls are provider/model dependent.
 {: .note }
 
 ### Model Compatibility

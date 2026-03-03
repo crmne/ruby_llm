@@ -21,7 +21,7 @@ module RubyLLM
           if tools.any?
             payload[:tools] = tools.map { |_, tool| OpenAI::Tools.tool_for(tool) }
             payload[:tool_choice] = OpenAI::Tools.build_tool_choice(tool_prefs[:choice]) unless tool_prefs[:choice].nil?
-            payload[:parallel_tool_calls] = tool_prefs[:parallel] unless tool_prefs[:parallel].nil?
+            payload[:parallel_tool_calls] = tool_prefs[:calls] == :many unless tool_prefs[:calls].nil?
           end
 
           if schema

@@ -66,7 +66,7 @@ module RubyLLM
         def add_optional_fields(payload, system_content:, tools:, tool_prefs:, temperature:, schema: nil) # rubocop:disable Metrics/ParameterLists
           if tools.any?
             payload[:tools] = tools.values.map { |t| Tools.function_for(t) }
-            unless tool_prefs[:choice].nil? && tool_prefs[:parallel].nil?
+            unless tool_prefs[:choice].nil? && tool_prefs[:calls].nil?
               payload[:tool_choice] = Tools.build_tool_choice(tool_prefs)
             end
           end
