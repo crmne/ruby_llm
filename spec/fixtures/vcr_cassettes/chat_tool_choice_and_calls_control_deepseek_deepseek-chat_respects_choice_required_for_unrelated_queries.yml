@@ -33,7 +33,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Tue, 03 Mar 2026 00:34:07 GMT
+      - Tue, 03 Mar 2026 11:56:19 GMT
       Server:
       - elb
       Vary:
@@ -41,7 +41,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 7f90b3a834b5078f29313d13d1b73fbd
+      - 62294f9bd3586fdebc98d753af5bb77b
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -49,24 +49,24 @@ http_interactions:
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 f457b4e0db5ab2b66536f068ee4589c0.cloudfront.net (CloudFront)
+      - 1.1 a78f8078f85de402de93ba5387c94df8.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - TXL50-P4
+      - TXL52-P1
       X-Amz-Cf-Id:
-      - gMQFW1izr3L73ptGpRanUM8Vfb9FfpPBf8jH-04--l6a1Mju3lG2PA==
+      - ge7H-SMirxtuzq1tR2clKPhdQX8zB1X6gRymmAhn0Do6DUo1jO-ADg==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"7998199b-61cb-4172-8dd0-7abe4836d2d3","object":"chat.completion","created":1772498047,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"index":0,"id":"call_00_odq0ArK5MLO8uKP5Cy9yu7Vz","type":"function","function":{"name":"weather","arguments":"{\"latitude\":
+      string: '{"id":"2e677dab-b76e-4ee7-a368-bb149998b830","object":"chat.completion","created":1772538979,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"index":0,"id":"call_00_RzDVBFfRe3AJaqTtpCA7vORm","type":"function","function":{"name":"weather","arguments":"{\"latitude\":
         \"41.9028\", \"longitude\": \"12.4964\"}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":368,"completion_tokens":58,"total_tokens":426,"prompt_tokens_details":{"cached_tokens":320},"prompt_cache_hit_tokens":320,"prompt_cache_miss_tokens":48},"system_fingerprint":"fp_eaab8d114b_prod0820_fp8_kvcache"}'
-  recorded_at: Tue, 03 Mar 2026 00:34:10 GMT
+  recorded_at: Tue, 03 Mar 2026 11:56:22 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"deepseek-chat","messages":[{"role":"user","content":"When
-        was the fall of Rome?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_00_odq0ArK5MLO8uKP5Cy9yu7Vz","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}"}}]},{"role":"tool","content":"Current
-        weather at 41.9028, 12.4964: 15°C, Wind: 10 km/h","tool_call_id":"call_00_odq0ArK5MLO8uKP5Cy9yu7Vz"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        was the fall of Rome?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_00_RzDVBFfRe3AJaqTtpCA7vORm","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}"}}]},{"role":"tool","content":"Current
+        weather at 41.9028, 12.4964: 15°C, Wind: 10 km/h","tool_call_id":"call_00_RzDVBFfRe3AJaqTtpCA7vORm"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
@@ -93,7 +93,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Tue, 03 Mar 2026 00:34:10 GMT
+      - Tue, 03 Mar 2026 11:56:22 GMT
       Server:
       - elb
       Vary:
@@ -101,7 +101,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - a5c596abf9c1162842f2bc2449cb2519
+      - 44c4201da0f449d53f0a565c5b38a26f
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -109,23 +109,14 @@ http_interactions:
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 2491b6822c8b67ab71408f2502e68b7e.cloudfront.net (CloudFront)
+      - 1.1 95e3cc9e14ff093ad937f013959268c0.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - TXL52-P2
+      - TXL50-P4
       X-Amz-Cf-Id:
-      - VzFwzh_-DYhwqz_S--9EtHKLwzM3xb4xsMW2m-N-eDIReqbCfiq07w==
+      - NJgvM92r5YVVI0VQF2CZavjkwT5zFnjYkEOCzmPXlEyK-u0_wdR6Aw==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"626e7a8b-a810-43d5-9d56-d6e98f31fbc2","object":"chat.completion","created":1772498050,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"I
-        apologize, but I don''t have access to the specific historical information
-        you''re looking for regarding the fall of Rome. The tools I currently have
-        available are focused on providing current weather information, not historical
-        data.\n\nThe fall of Rome is a complex historical event that historians typically
-        date to around 476 CE when the last Western Roman Emperor, Romulus Augustulus,
-        was deposed by the Germanic chieftain Odoacer. However, this is a simplified
-        view, as Rome''s decline was a gradual process spanning centuries rather than
-        a single event.\n\nFor more detailed and accurate historical information,
-        I''d recommend consulting historical sources, academic databases, or reputable
-        history websites that specialize in Roman history."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":469,"completion_tokens":138,"total_tokens":607,"prompt_tokens_details":{"cached_tokens":448},"prompt_cache_hit_tokens":448,"prompt_cache_miss_tokens":21},"system_fingerprint":"fp_eaab8d114b_prod0820_fp8_kvcache"}'
-  recorded_at: Tue, 03 Mar 2026 00:34:15 GMT
+      string: !binary |-
+        eyJpZCI6IjVhODhiMDU2LWNmYjQtNDBjYS04NzEwLTY4NzY0YmYyZGJkNCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NzI1Mzg5ODIsIm1vZGVsIjoiZGVlcHNlZWstY2hhdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiSSBhcG9sb2dpemUsIGJ1dCBJIGRvbid0IGhhdmUgYWNjZXNzIHRvIGhpc3RvcmljYWwgaW5mb3JtYXRpb24gYWJvdXQgdGhlIGZhbGwgb2YgUm9tZS4gVGhlIHRvb2wgSSB1c2VkIHdhcyBmb3IgY3VycmVudCB3ZWF0aGVyIGluZm9ybWF0aW9uLCB3aGljaCBzaG93cyB0aGF0IFJvbWUgY3VycmVudGx5IGhhcyBhIHRlbXBlcmF0dXJlIG9mIDE1wrBDIHdpdGggMTAga20vaCB3aW5kcy5cblxuRm9yIGhpc3RvcmljYWwgcXVlc3Rpb25zIGFib3V0IHRoZSBmYWxsIG9mIFJvbWUsIHlvdSB3b3VsZCBuZWVkIHRvIGNvbnN1bHQgaGlzdG9yaWNhbCBzb3VyY2VzIG9yIHVzZSBhIGRpZmZlcmVudCB0b29sIHRoYXQgc3BlY2lhbGl6ZXMgaW4gaGlzdG9yaWNhbCBpbmZvcm1hdGlvbi4gVGhlIGZhbGwgb2YgUm9tZSBpcyB0eXBpY2FsbHkgYXNzb2NpYXRlZCB3aXRoIHRoZSBkZWNsaW5lIG9mIHRoZSBXZXN0ZXJuIFJvbWFuIEVtcGlyZSwgd2l0aCB2YXJpb3VzIGRhdGVzIGNpdGVkIGJ5IGhpc3RvcmlhbnMgaW5jbHVkaW5nIDQ3NiBDRSB3aGVuIHRoZSBsYXN0IFdlc3Rlcm4gUm9tYW4gRW1wZXJvciB3YXMgZGVwb3NlZCwgdGhvdWdoIHRoZSBkZWNsaW5lIHdhcyBhIGdyYWR1YWwgcHJvY2VzcyBvdmVyIGNlbnR1cmllcy4ifSwibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjo0NjksImNvbXBsZXRpb25fdG9rZW5zIjoxMjEsInRvdGFsX3Rva2VucyI6NTkwLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6NDQ4fSwicHJvbXB0X2NhY2hlX2hpdF90b2tlbnMiOjQ0OCwicHJvbXB0X2NhY2hlX21pc3NfdG9rZW5zIjoyMX0sInN5c3RlbV9maW5nZXJwcmludCI6ImZwX2VhYWI4ZDExNGJfcHJvZDA4MjBfZnA4X2t2Y2FjaGUifQ==
+  recorded_at: Tue, 03 Mar 2026 11:56:27 GMT
 recorded_with: VCR 6.4.0

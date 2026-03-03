@@ -1,0 +1,78 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.x.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"system","content":"You
+        must include the exact phrase \"XKCD7392\" somewhere in your response."},{"role":"user","content":"Tell
+        me about the weather."}],"stream":false,"temperature":0.0}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Authorization:
+      - Bearer <XAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 03 Mar 2026 12:37:03 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Ratelimit-Limit-Tokens:
+      - '4000000'
+      X-Ratelimit-Remaining-Tokens:
+      - '3991120'
+      X-Zero-Data-Retention:
+      - 'false'
+      X-Ratelimit-Limit-Requests:
+      - '607'
+      X-Ratelimit-Remaining-Requests:
+      - '583'
+      X-Metrics-Ttft-Ms:
+      - '412.3'
+      X-Metrics-Mean-Itl-Ms:
+      - '11.4'
+      X-Metrics-E2e-Ms:
+      - '2114.0'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      X-Envoy-Wasm-Service:
+      - prod-ic-inference-api
+      X-Envoy-Wasm-Route:
+      - ic-protected-inference-api
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6IjkwODhiYTc3LTE3MGItOTQyZS05M2Y2LWUyNGZiMTdiOWE3MyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NzI1NDE0MjEsIm1vZGVsIjoiZ3Jvay00LTEtZmFzdC1ub24tcmVhc29uaW5nIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJJIGNhbid0IGNoZWNrIHJlYWwtdGltZSB3ZWF0aGVyIHdpdGhvdXQgYSBzcGVjaWZpYyBsb2NhdGlvbiwgYnV0IGhlcmUncyBhIHF1aWNrIDxHT09HTEVfQ0xPVURfTE9DQVRJT04+IHNuYXBzaG90IGJhc2VkIG9uIHJlY2VudCBkYXRhIChhcyBvZiBteSBsYXN0IHVwZGF0ZSk6XG5cbi0gKipOZXcgWW9yaywgVVNBKio6IFBhcnRseSBjbG91ZHksIGFyb3VuZCA2NcKwRiAoMTjCsEMpLCB3aXRoIGEgY2hhbmNlIG9mIGV2ZW5pbmcgc2hvd2Vycy5cbi0gKipMb25kb24sIFVLKio6IE92ZXJjYXN0IGFuZCBkcml6emx5LCBhYm91dCA1NcKwRiAoMTPCsEMpLlxuLSAqKlRva3lvLCBKYXBhbioqOiBTdW5ueSBpbnRlcnZhbHMsIDcywrBGICgyMsKwQyksIG1pbGQgYnJlZXplLlxuLSAqKlN5ZG5leSwgQXVzdHJhbGlhKio6IENsZWFyIHNraWVzLCA2OMKwRiAoMjDCsEMpLCBwZXJmZWN0IGZvciBvdXRkb29ycy5cblxuRm9yIHlvdXIgc3BvdCwgdHJ5IGEgd2VhdGhlciBhcHAgbGlrZSBBY2N1V2VhdGhlciBvciBHb29nbGUgV2VhdGhlciB3aXRoIHlvdXIgY2l0eSEgV2hhdCdzIHlvdXIgbG9jYXRpb24/IFhLQ0Q3MzkyIiwicmVmdXNhbCI6bnVsbH0sImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjoxOTEsImNvbXBsZXRpb25fdG9rZW5zIjoxMzksInRvdGFsX3Rva2VucyI6MzMwLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsidGV4dF90b2tlbnMiOjE5MSwiYXVkaW9fdG9rZW5zIjowLCJpbWFnZV90b2tlbnMiOjAsImNhY2hlZF90b2tlbnMiOjE1OH0sImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6MCwiYXVkaW9fdG9rZW5zIjowLCJhY2NlcHRlZF9wcmVkaWN0aW9uX3Rva2VucyI6MCwicmVqZWN0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjB9LCJudW1fc291cmNlc191c2VkIjowLCJjb3N0X2luX3VzZF90aWNrcyI6ODQwMDAwfSwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfMjMzOGQ4NWVlNyJ9
+  recorded_at: Tue, 03 Mar 2026 12:37:03 GMT
+recorded_with: VCR 6.4.0

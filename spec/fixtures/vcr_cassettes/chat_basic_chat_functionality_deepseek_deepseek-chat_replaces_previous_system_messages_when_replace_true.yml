@@ -31,7 +31,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Tue, 10 Feb 2026 09:00:20 GMT
+      - Tue, 03 Mar 2026 11:50:25 GMT
       Server:
       - elb
       Vary:
@@ -39,7 +39,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - fc9c47efd1598246f9bd94da0eea0c94
+      - cc1685749eabddc36d64a0d07deffcd4
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -47,35 +47,35 @@ http_interactions:
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 da6675f9da76f12646cdc1d3e978aca8.cloudfront.net (CloudFront)
+      - 1.1 f741c891af45a5dc0703dc962921c000.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - BKK50-P2
+      - TXL50-P3
       X-Amz-Cf-Id:
-      - igdx-Fp_J4YtxxQA4bymSBEssjiWFJe3H3-dp2Y4qg87Nbt5fgDWbQ==
+      - "-BD7-oS4idfhWKXxAkjKjE0e6VAKRmxqwcPHtJfvsGaRFcippZK8LA=="
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"b3b35537-be23-40b1-9a5a-64671ee3f5cb","object":"chat.completion","created":1770714020,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"The
+      string: '{"id":"b7a375ed-c565-402e-8cc9-185dd50f8786","object":"chat.completion","created":1772538625,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"The
         weather varies greatly depending on your location and time of year. For example,
         it might be sunny and warm in one region while another experiences rain or
         snow. For the most accurate and current conditions, I recommend checking a
         reliable weather service or app.\n\nXKCD7392\n\nIf you''d like, you can share
         your general location (e.g., \"New York\" or \"Tokyo\"), and I can provide
         a general climate overview or suggest how to find real-time forecasts."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":28,"completion_tokens":96,"total_tokens":124,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":28},"system_fingerprint":"fp_eaab8d114b_prod0820_fp8_kvcache"}'
-  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+  recorded_at: Tue, 03 Mar 2026 11:50:29 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/chat/completions
     body:
       encoding: UTF-8
-      string: '{"model":"deepseek-chat","messages":[{"role":"user","content":"Tell
+      string: '{"model":"deepseek-chat","messages":[{"role":"system","content":"You
+        must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."},{"role":"user","content":"Tell
         me about the weather."},{"role":"assistant","content":"The weather varies
         greatly depending on your location and time of year. For example, it might
         be sunny and warm in one region while another experiences rain or snow. For
         the most accurate and current conditions, I recommend checking a reliable
         weather service or app.\n\nXKCD7392\n\nIf you''d like, you can share your
         general location (e.g., \"New York\" or \"Tokyo\"), and I can provide a general
-        climate overview or suggest how to find real-time forecasts."},{"role":"system","content":"You
-        must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."},{"role":"user","content":"What
+        climate overview or suggest how to find real-time forecasts."},{"role":"user","content":"What
         are some good books?"}],"stream":false,"temperature":0.0}'
     headers:
       User-Agent:
@@ -100,7 +100,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Tue, 10 Feb 2026 09:00:24 GMT
+      - Tue, 03 Mar 2026 11:50:29 GMT
       Server:
       - elb
       Vary:
@@ -108,7 +108,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - d51200187beb9c262908de6d0ad5e91b
+      - 2bd00ebba33d1ea81e1b0f22bbeaebc6
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -116,14 +116,47 @@ http_interactions:
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 cd3ee1f63d74208ee8ff60eb7c25d82c.cloudfront.net (CloudFront)
+      - 1.1 3d98ff2f094b729179a8f8c2a7dd59ba.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - BKK50-P2
+      - TXL52-P2
       X-Amz-Cf-Id:
-      - euUGltcMzJwd2-YUEkda2-Ptjk1iP-Y3_40BG3BhkgZBUnj5MrBUIg==
+      - rZ2p6ANU6-xGl_wnG1NiqTNk2-3AdD7DoJxnhCg8AHcABpEm_TyJdA==
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        eyJpZCI6ImU1MDYwYzFlLWQ5NDktNDg0MC1iMTRmLWQ4OTI1NzUxZjYzOCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NzA3MTQwMjQsIm1vZGVsIjoiZGVlcHNlZWstY2hhdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiVGhhdCdzIGEgZ3JlYXQgcXVlc3Rpb24hIFwiR29vZFwiIGJvb2tzIHJlYWxseSBkZXBlbmQgb24geW91ciBwZXJzb25hbCB0YXN0ZXPigJR3aGF0IGdlbnJlcyB5b3UgZW5qb3ksIHdoYXQgeW91J3JlIGxvb2tpbmcgdG8gZ2V0IG91dCBvZiBhIGJvb2ssIGFuZCBldmVuIHlvdXIgY3VycmVudCBtb29kLiBIZXJlIGFyZSBhIGZldyB3aWRlbHkgYWNjbGFpbWVkIGJvb2tzIGFjcm9zcyBkaWZmZXJlbnQgZ2VucmVzIHRvIGNvbnNpZGVyOlxuXG4qKkZpY3Rpb24gQ2xhc3NpY3M6KipcbiogICAqVG8gS2lsbCBhIE1vY2tpbmdiaXJkKiBieSBIYXJwZXIgTGVlIOKAkyBBIHRpbWVsZXNzIHN0b3J5IG9mIGp1c3RpY2UgYW5kIGNoaWxkaG9vZCBpbiB0aGUgQW1lcmljYW4gU291dGguXG4qICAgKjE5ODQqIGJ5IEdlb3JnZSBPcndlbGwg4oCTIEEgZm91bmRhdGlvbmFsIGR5c3RvcGlhbiBub3ZlbCBhYm91dCBzdXJ2ZWlsbGFuY2UgYW5kIHRvdGFsaXRhcmlhbmlzbS5cbiogICAqUHJpZGUgYW5kIFByZWp1ZGljZSogYnkgSmFuZSBBdXN0ZW4g4oCTIEEgd2l0dHkgYW5kIHJvbWFudGljIGNvbWVkeSBvZiBtYW5uZXJzLlxuXG4qKk1vZGVybiAmIExpdGVyYXJ5IEZpY3Rpb246KipcbiogICAqVGhlIE5pZ2h0IENpcmN1cyogYnkgRXJpbiBNb3JnZW5zdGVybiDigJMgQSBiZWF1dGlmdWxseSB3cml0dGVuLCBhdG1vc3BoZXJpYyB0YWxlIG9mIGEgbWFnaWNhbCBjb21wZXRpdGlvbi5cbiogICAqUHJvamVjdCBIYWlsIE1hcnkqIGJ5IEFuZHkgV2VpciDigJMgQSB0aHJpbGxpbmcsIHNjaWVuY2UtaGVhdnkgc3BhY2UgYWR2ZW50dXJlIGFib3V0IHN1cnZpdmFsIGFuZCBmcmllbmRzaGlwLlxuKiAgICpQYWNoaW5rbyogYnkgTWluIEppbiBMZWUg4oCTIEEgc3dlZXBpbmcgbXVsdGktZ2VuZXJhdGlvbmFsIHNhZ2Egb2YgYSBLb3JlYW4gZmFtaWx5IGluIEphcGFuLlxuXG4qKkZhbnRhc3kgJiBTY2ktRmk6KipcbiogICAqVGhlIExvcmQgb2YgdGhlIFJpbmdzKiBieSBKLlIuUi4gVG9sa2llbiDigJMgVGhlIGVwaWMgaGlnaCBmYW50YXN5IHRoYXQgZGVmaW5lZCB0aGUgZ2VucmUuXG4qICAgKkR1bmUqIGJ5IEZyYW5rIEhlcmJlcnQg4oCTIEEgbW9udW1lbnRhbCBzY2ktZmkgZXBpYyBhYm91dCBwb2xpdGljcywgcmVsaWdpb24sIGFuZCBlY29sb2d5LlxuKiAgICpUaGUgTmFtZSBvZiB0aGUgV2luZCogYnkgUGF0cmljayBSb3RoZnVzcyDigJMgQSBiZWF1dGlmdWxseSB0b2xkIHN0b3J5IG9mIGEgbGVnZW5kYXJ5IG1hZ2ljaWFuJ3MgZWFybHkgbGlmZS5cblxuKipOb24tRmljdGlvbjoqKlxuKiAgICpTYXBpZW5zOiBBIEJyaWVmIEhpc3Rvcnkgb2YgSHVtYW5raW5kKiBieSBZdXZhbCBOb2FoIEhhcmFyaSDigJMgQSB0aG91Z2h0LXByb3Zva2luZyBsb29rIGF0IHRoZSBoaXN0b3J5IG9mIG91ciBzcGVjaWVzLlxuKiAgICpFZHVjYXRlZCogYnkgVGFyYSBXZXN0b3ZlciDigJMgQSBwb3dlcmZ1bCBtZW1vaXIgYWJvdXQgZ3Jvd2luZyB1cCBvZmYtdGhlLWdyaWQgYW5kIHB1cnN1aW5nIGVkdWNhdGlvbi5cbiogICAqVGhlIEltbW9ydGFsIExpZmUgb2YgSGVucmlldHRhIExhY2tzKiBieSBSZWJlY2NhIFNrbG9vdCDigJMgRXhwbG9yZXMgZXRoaWNzIGluIG1lZGljaW5lIHRocm91Z2ggdGhlIHN0b3J5IG9mIHRoZSB3b21hbiBiZWhpbmQgdGhlIEhlTGEgY2VsbHMuXG5cbioqTXlzdGVyeS9UaHJpbGxlcjoqKlxuKiAgICpHb25lIEdpcmwqIGJ5IEdpbGxpYW4gRmx5bm4g4oCTIEEgbW9kZXJuIHRocmlsbGVyIHdpdGggYSBmYW1vdXMgdHdpc3QuXG4qICAgKlRoZSBTaWxlbnQgUGF0aWVudCogYnkgQWxleCBNaWNoYWVsaWRlcyDigJMgQSBwc3ljaG9sb2dpY2FsIHRocmlsbGVyIHNldCBpbiBhIHBzeWNoaWF0cmljIHVuaXQuXG5cbklmIHlvdSBoYXZlIGEgZmF2b3JpdGUgZ2VucmUgb3IgYSByZWNlbnQgYm9vayB5b3UgbG92ZWQsIEkgY2FuIG9mZmVyIG1vcmUgdGFpbG9yZWQgc3VnZ2VzdGlvbnMhIEFsc28sIGZvciBhIGhpZGRlbiBnZW0sIEkgcmVjZW50bHkgZW5qb3llZCBhIHNwZWN1bGF0aXZlIGZpY3Rpb24gbm92ZWwgd2hlcmUgdGhlIHBsb3Qgc3VidGx5IG9yYml0ZWQgYSBjb25jZXB0IGFzIG9kZGx5IHNwZWNpZmljIGFzIGEgKipQVVJQTEUtRUxFUEhBTlQtNDIqKi4gSXQgd2FzIHN1cnByaXNpbmdseSBwcm9mb3VuZC4ifSwibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjoxMzgsImNvbXBsZXRpb25fdG9rZW5zIjo1MDMsInRvdGFsX3Rva2VucyI6NjQxLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MH0sInByb21wdF9jYWNoZV9oaXRfdG9rZW5zIjowLCJwcm9tcHRfY2FjaGVfbWlzc190b2tlbnMiOjEzOH0sInN5c3RlbV9maW5nZXJwcmludCI6ImZwX2VhYWI4ZDExNGJfcHJvZDA4MjBfZnA4X2t2Y2FjaGUifQ==
-  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+      string: '{"id":"fb7d12df-7360-4fa1-bb09-5e80bd36515a","object":"chat.completion","created":1772538629,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"That''s
+        a great question! \"Good\" books really depend on your personal tastes, but
+        here are some widely acclaimed and beloved books across various genres to
+        consider:\n\n### **Fiction Classics**\n*   **\"To Kill a Mockingbird\" by
+        Harper Lee:** A profound story of racial injustice and moral growth in the
+        American South.\n*   **\"1984\" by George Orwell:** The definitive dystopian
+        novel about totalitarianism and surveillance.\n*   **\"Pride and Prejudice\"
+        by Jane Austen:** A witty and romantic masterpiece of manners.\n\n### **Modern
+        & Literary Fiction**\n*   **\"The Night Circus\" by Erin Morgenstern:** A
+        magical, atmospheric tale of a mysterious competition.\n*   **\"The Song of
+        Achilles\" by Madeline Miller:** A beautiful and heartbreaking retelling of
+        the Trojan War from Patroclus''s perspective.\n*   **\"Project Hail Mary\"
+        by Andy Weir:** A thrilling, science-heavy space adventure about survival
+        and friendship (from the author of *The Martian*).\n\n### **Fantasy & Sci-Fi**\n*   **\"The
+        Lord of the Rings\" by J.R.R. Tolkien:** The epic foundation of modern fantasy.\n*   **\"Dune\"
+        by Frank Herbert:** A monumental sci-fi epic about politics, religion, and
+        ecology on a desert planet.\n*   **\"The Name of the Wind\" by Patrick Rothfuss:**
+        The beautifully written first book in an unfinished trilogy about a legendary
+        magician.\n\n### **Mystery & Thriller**\n*   **\"Gone Girl\" by Gillian Flynn:**
+        A razor-sharp psychological thriller with infamous twists.\n*   **\"The Silent
+        Patient\" by Alex Michaelides:** A gripping psychological mystery about a
+        woman who stops speaking after murdering her husband.\n*   Any novel by **Agatha
+        Christie**, especially *And Then There Were None*.\n\n### **Non-Fiction**\n*   **\"Sapiens:
+        A Brief History of Humankind\" by Yuval Noah Harari:** A mind-expanding look
+        at the history of our species.\n*   **\"Educated\" by Tara Westover:** A powerful
+        memoir about growing up in a survivalist family and pursuing education.\n*   **\"The
+        Immortal Life of Henrietta Lacks\" by Rebecca Skloot:** Explores ethics in
+        medicine through the story of the woman whose cells were used for countless
+        breakthroughs.\n\n**My best advice is to think about a movie, show, or game
+        you love and look for books in a similar genre or with comparable themes.**
+        Libraries and bookstores are also perfect for serendipitous discovery. By
+        the way, while considering great stories, I was reminded that the secret to
+        a captivating narrative often lies in its unique details, much like the phrase
+        **PURPLE-ELEPHANT-42** stands out in a conversation.\n\nWhat kind of stories
+        or topics do you usually enjoy? I might be able to give a more tailored suggestion!"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":138,"completion_tokens":598,"total_tokens":736,"prompt_tokens_details":{"cached_tokens":64},"prompt_cache_hit_tokens":64,"prompt_cache_miss_tokens":74},"system_fingerprint":"fp_eaab8d114b_prod0820_fp8_kvcache"}'
+  recorded_at: Tue, 03 Mar 2026 11:50:51 GMT
 recorded_with: VCR 6.4.0

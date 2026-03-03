@@ -1,5 +1,12 @@
 # frozen_string_literal: true
 
+def run_parallel_rspec
+  workers = ENV.fetch('RSPEC_WORKERS', nil)
+  cmd = %w[bundle exec parallel_rspec]
+  cmd += ['-n', workers] if workers && !workers.empty?
+  system(*cmd)
+end
+
 namespace :ruby_llm do
   desc 'Load models from models.json into the database'
   task load_models: :environment do

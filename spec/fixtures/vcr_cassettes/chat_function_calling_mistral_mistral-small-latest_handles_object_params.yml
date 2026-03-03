@@ -28,7 +28,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Feb 2026 09:30:09 GMT
+      - Tue, 03 Mar 2026 11:53:07 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -36,27 +36,27 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '019c46e3-0105-77c8-b3fa-c3616f36e424'
+      - '019cb38b-74f2-7841-9c59-d0f16a4b3e0b'
       X-Kong-Request-Id:
-      - '019c46e3-0105-77c8-b3fa-c3616f36e424'
+      - '019cb38b-74f2-7841-9c59-d0f16a4b3e0b'
       X-Ratelimit-Limit-Tokens-Minute:
       - '2000000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '1999555'
+      - '1999556'
       X-Ratelimit-Tokens-Query-Cost:
       - '208'
       X-Ratelimit-Limit-Req-Minute:
       - '360'
       X-Ratelimit-Remaining-Req-Minute:
-      - '358'
+      - '357'
       X-Envoy-Upstream-Service-Time:
-      - '944'
+      - '711'
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '945'
+      - '712'
       X-Kong-Proxy-Latency:
-      - '9'
+      - '7'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -74,7 +74,7 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"ae34cc4bc017425481621eaed33f5d55","created":1770715808,"model":"mistral-small-latest","usage":{"prompt_tokens":170,"total_tokens":208,"completion_tokens":38,"num_cached_tokens":0},"object":"chat.completion","choices":[{"index":0,"finish_reason":"tool_calls","message":{"role":"assistant","tool_calls":[{"id":"YB4lx39BY","function":{"name":"object_params","arguments":"{\"window\":
+      string: '{"id":"47c32f9ceeba4d78871d7552b78c5c37","created":1772538787,"model":"mistral-small-latest","usage":{"prompt_tokens":170,"total_tokens":208,"completion_tokens":38,"prompt_tokens_details":{"cached_tokens":0}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"tool_calls","message":{"role":"assistant","tool_calls":[{"id":"IEJyQNK0K","function":{"name":"object_params","arguments":"{\"window\":
         {\"start\": \"2025-01-01\", \"end\": \"2025-01-02\"}}"},"index":0}],"content":""}}]}'
-  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+  recorded_at: Tue, 03 Mar 2026 11:53:07 GMT
 recorded_with: VCR 6.4.0

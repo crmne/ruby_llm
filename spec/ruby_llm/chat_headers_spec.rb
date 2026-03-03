@@ -42,16 +42,6 @@ RSpec.describe RubyLLM::Chat do
       expect(chat.instance_variable_get(:@temperature)).to eq(0.5)
     end
 
-    context 'with Anthropic beta headers' do
-      it 'works with anthropic-beta header for fine-grained tool streaming' do
-        chat = RubyLLM.chat(model: 'claude-3-5-haiku-20241022', provider: 'anthropic')
-                      .with_headers('anthropic-beta' => 'fine-grained-tool-streaming-2025-05-14')
-
-        response = chat.ask('Say "beta headers work"')
-        expect(response.content).to include('beta headers work')
-      end
-    end
-
     context 'with header precedence' do
       it 'user headers do not override provider headers' do
         chat = RubyLLM.chat

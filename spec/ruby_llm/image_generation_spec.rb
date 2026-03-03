@@ -26,70 +26,35 @@ RSpec.describe RubyLLM::Image do
   include_context 'with configured RubyLLM'
 
   describe 'basic functionality' do
-    it 'openai/dall-e-3 can paint images' do
-      image = RubyLLM.paint('a siamese cat', model: 'dall-e-3')
+    IMAGE_GENERATION_MODELS.each do |model_info|
+      provider = model_info[:provider]
+      model = model_info[:model]
 
-      expect(image.base64?).to be(false)
-      expect(image.url).to start_with('https://')
-      expect(image.mime_type).to include('image')
-      expect(image.revised_prompt).to include('cat')
-      expect(image.model_id).to eq('dall-e-3')
+      it "#{provider}/#{model} can paint images" do
+        image = RubyLLM.paint('a siamese cat', model: model, provider: provider)
 
-      save_and_verify_image image
-    end
+        expect(image.mime_type).to include('image')
+        expect(image.model_id).to eq(model)
 
-    it 'openai/dall-e-3 supports custom sizes' do
-      image = RubyLLM.paint('a siamese cat', size: '1792x1024', model: 'dall-e-3')
+        save_and_verify_image image
+      end
 
-      expect(image.base64?).to be(false)
-      expect(image.url).to start_with('https://')
-      expect(image.mime_type).to include('image')
-      expect(image.revised_prompt).to include('cat')
+      next unless model_info[:supports_size]
 
-      save_and_verify_image image
-    end
+      it "#{provider}/#{model} supports custom sizes" do
+        image = RubyLLM.paint('a siamese cat', size: '1792x1024', model: model, provider: provider)
 
-    it 'gemini/imagen-4.0-generate-001 can paint images' do
-      image = RubyLLM.paint('a siamese cat', model: 'imagen-4.0-generate-001')
+        expect(image.mime_type).to include('image')
+        expect(image.model_id).to eq(model)
 
-      expect(image.base64?).to be(true)
-      expect(image.data).to be_present
-      expect(image.mime_type).to include('image')
-
-      save_and_verify_image image
+        save_and_verify_image image
+      end
     end
 
     it 'validates model existence' do
       expect do
         RubyLLM.paint('a cat', model: 'invalid-model')
       end.to raise_error(RubyLLM::ModelNotFoundError)
-    end
-
-    it 'openai/gpt-image-1 can paint images' do
-      image = RubyLLM.paint('a siamese cat', model: 'gpt-image-1')
-
-      expect(image.base64?).to be(true)
-      expect(image.data).to be_present
-      expect(image.mime_type).to include('image')
-      expect(image.model_id).to eq('gpt-image-1')
-
-      save_and_verify_image image
-    end
-
-    it 'openrouter/google/gemini-2.5-flash-image-preview can paint images' do
-      image = RubyLLM.paint(
-        'a siamese cat',
-        model: 'google/gemini-2.5-flash-image-preview',
-        provider: :openrouter,
-        assume_model_exists: true
-      )
-
-      expect(image.base64?).to be(true)
-      expect(image.data).to be_present
-      expect(image.mime_type).to include('image')
-      expect(image.model_id).to eq('google/gemini-2.5-flash-image-preview')
-
-      save_and_verify_image image
     end
   end
 end

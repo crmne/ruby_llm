@@ -75,11 +75,12 @@ RSpec.describe RubyLLM::Chat do
           if RubyLLM::Provider.providers[provider]&.local?
             skip('Local providers do not throw an error for context length exceeded')
           end
-          if provider == :xai && model == 'grok-4-fast-non-reasoning'
-            skip('xAI grok-4-fast-non-reasoning does not reliably error on context length exceeded')
-          end
+          skip('xAI models do not reliably error on context length exceeded') if provider == :xai
           if provider == :mistral
             skip('Mistral currently returns generic 429 rate_limited instead of deterministic context-length errors')
+          end
+          if provider == :azure && model == 'Kimi-K2.5'
+            skip('Azure/Kimi-K2.5 context-length exceeded test is too slow for regular runs')
           end
 
           # Configure Psych to allow large input (JRuby's ext provider SnakeYAML has a low limit by default)

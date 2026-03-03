@@ -22,12 +22,12 @@ http_interactions:
     headers:
       Pragma:
       - no-cache
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
-      Date:
-      - Tue, 10 Feb 2026 09:25:51 GMT
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
+      Date:
+      - Tue, 03 Mar 2026 11:49:33 GMT
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email openid",
+          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+  recorded_at: Tue, 03 Mar 2026 11:49:33 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -88,7 +88,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Tue, 10 Feb 2026 09:25:52 GMT
+      - Tue, 03 Mar 2026 11:49:34 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -115,18 +115,18 @@ http_interactions:
                       "name": "best_language_to_learn",
                       "args": {}
                     },
-                    "thoughtSignature": "Ct0BAY89a1+yWcAq4KSTz5cnLiwcl2APKfkT3JNmnNrskhNEcGYl2K/CksHWf/nzYskWyQ+lApuxVeeXNNmsvnOuXa1DiD/Uo0pPcaFLI8JEybIOQ0/HvwZI110WRMkE3I7qsNlfwpT9vrc/XbDQq0lPj0DNWMF8Tf3VrJQNDZklY1ZlIj5Fs+uGMAkVUu70cMe9rqN8dmgRBR/NuHJogSV5CCjHywpC0QMoYAdXkDbKrw/7xbsewxJeVJ9Byam0H+2ut9/46svvhoVjLsHh61gafOQk7VsTfq2XPomyeNY="
+                    "thoughtSignature": "CtgBAY89a18vp7ya64eMwYiJQNh8C/bkABr8aF0Qv9LJ61kM45mTfBSyF69Is0ypJjKXZ3UFEPwLDvRxdeskFxRD962tGcQuTGGpLRvVDlHd0ZTcukGWBAXOM/NUkr2IvhGLrJe8rVhyn3ZtF1LKqPsngLFfrOdI56k59EfAuOlTjo3SDN9xRjg+HLXrLTxQvnaedy+GJzKqohzYl+3PkHjCFij0ta0/JW5AS9lTdidoamY0ur9K3z6pi99Q8swTPdvSxwU0Ix1DspuRMKfpbOilb6tBlYuVK1Ho"
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.557297945022583
+              "avgLogprobs": -1.1371799196515764
             }
           ],
           "usageMetadata": {
             "promptTokenCount": 22,
             "candidatesTokenCount": 7,
-            "totalTokenCount": 72,
+            "totalTokenCount": 70,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -140,20 +140,20 @@ http_interactions:
                 "tokenCount": 7
               }
             ],
-            "thoughtsTokenCount": 43
+            "thoughtsTokenCount": 41
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-02-10T09:25:52.018224Z",
-          "responseId": "oPmKabCOAYmbseMP5YTzyQ0"
+          "createTime": "2026-03-03T11:49:33.792062Z",
+          "responseId": "zcqmaf6rMKunur4Pm-_CuAI"
         }
-  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+  recorded_at: Tue, 03 Mar 2026 11:49:34 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"What''s the best language
-        to learn?"}]},{"role":"model","parts":[{"functionCall":{"name":"best_language_to_learn","args":{}},"thoughtSignature":"Ct0BAY89a1+yWcAq4KSTz5cnLiwcl2APKfkT3JNmnNrskhNEcGYl2K/CksHWf/nzYskWyQ+lApuxVeeXNNmsvnOuXa1DiD/Uo0pPcaFLI8JEybIOQ0/HvwZI110WRMkE3I7qsNlfwpT9vrc/XbDQq0lPj0DNWMF8Tf3VrJQNDZklY1ZlIj5Fs+uGMAkVUu70cMe9rqN8dmgRBR/NuHJogSV5CCjHywpC0QMoYAdXkDbKrw/7xbsewxJeVJ9Byam0H+2ut9/46svvhoVjLsHh61gafOQk7VsTfq2XPomyeNY="}]},{"role":"function","parts":[{"functionResponse":{"name":"best_language_to_learn","response":{"name":"best_language_to_learn","content":[{"text":"Ruby"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"best_language_to_learn","description":"Gets
+        to learn?"}]},{"role":"model","parts":[{"functionCall":{"name":"best_language_to_learn","args":{}},"thoughtSignature":"CtgBAY89a18vp7ya64eMwYiJQNh8C/bkABr8aF0Qv9LJ61kM45mTfBSyF69Is0ypJjKXZ3UFEPwLDvRxdeskFxRD962tGcQuTGGpLRvVDlHd0ZTcukGWBAXOM/NUkr2IvhGLrJe8rVhyn3ZtF1LKqPsngLFfrOdI56k59EfAuOlTjo3SDN9xRjg+HLXrLTxQvnaedy+GJzKqohzYl+3PkHjCFij0ta0/JW5AS9lTdidoamY0ur9K3z6pi99Q8swTPdvSxwU0Ix1DspuRMKfpbOilb6tBlYuVK1Ho"}]},{"role":"function","parts":[{"functionResponse":{"name":"best_language_to_learn","response":{"name":"best_language_to_learn","content":[{"text":"Ruby"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"best_language_to_learn","description":"Gets
         the best language to learn"}]}]}'
     headers:
       User-Agent:
@@ -178,7 +178,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Tue, 10 Feb 2026 09:25:54 GMT
+      - Tue, 03 Mar 2026 11:49:34 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -201,23 +201,23 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "Ruby is a great language to learn!"
+                    "text": "Ruby is the best language to learn."
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.31278765201568604
+              "avgLogprobs": -0.26965892314910889
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 90,
+            "promptTokenCount": 88,
             "candidatesTokenCount": 8,
-            "totalTokenCount": 98,
+            "totalTokenCount": 96,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 90
+                "tokenCount": 88
               }
             ],
             "candidatesTokensDetails": [
@@ -228,8 +228,8 @@ http_interactions:
             ]
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-02-10T09:25:53.344739Z",
-          "responseId": "ofmKaaOFFa290r4P05TJ2QQ"
+          "createTime": "2026-03-03T11:49:34.512259Z",
+          "responseId": "zsqmaYOiH67pkbwPnJTzYA"
         }
-  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+  recorded_at: Tue, 03 Mar 2026 11:49:34 GMT
 recorded_with: VCR 6.4.0

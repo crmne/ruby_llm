@@ -29,7 +29,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Feb 2026 09:23:56 GMT
+      - Tue, 03 Mar 2026 11:47:43 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -41,7 +41,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '3441'
+      - '2152'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
@@ -80,9 +80,9 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-D7eGGBM5K7aS3i67e8ZQqWM8QzfHt",
+          "id": "chatcmpl-DFIVwVeELObo8OH0nPqGFVWzKixme",
           "object": "chat.completion",
-          "created": 1770715432,
+          "created": 1772538460,
           "model": "gpt-5-nano-2025-08-07",
           "choices": [
             {
@@ -92,7 +92,7 @@ http_interactions:
                 "content": null,
                 "tool_calls": [
                   {
-                    "id": "call_fuX24zrDGATHmY7TOF0ks6Oe",
+                    "id": "call_x23vToBkHsWlgbP0CjQJv2Bd",
                     "type": "function",
                     "function": {
                       "name": "weather",
@@ -100,7 +100,7 @@ http_interactions:
                     }
                   },
                   {
-                    "id": "call_j7Ib9HmUFNdWM1fNxV3NQrPC",
+                    "id": "call_b653iqoSvJKiEmm4IbL9YCyW",
                     "type": "function",
                     "function": {
                       "name": "best_language_to_learn",
@@ -132,7 +132,7 @@ http_interactions:
           "service_tier": "default",
           "system_fingerprint": null
         }
-  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+  recorded_at: Tue, 03 Mar 2026 11:47:43 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/chat/completions
@@ -140,8 +140,8 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"gpt-5-nano","messages":[{"role":"user","content":"What''s
         the weather in Berlin (52.5200, 13.4050) and what''s the best language to
-        learn?"},{"role":"assistant","tool_calls":[{"id":"call_fuX24zrDGATHmY7TOF0ks6Oe","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}},{"id":"call_j7Ib9HmUFNdWM1fNxV3NQrPC","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_fuX24zrDGATHmY7TOF0ks6Oe"},{"role":"tool","content":"Ruby","tool_call_id":"call_j7Ib9HmUFNdWM1fNxV3NQrPC"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_x23vToBkHsWlgbP0CjQJv2Bd","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}},{"id":"call_b653iqoSvJKiEmm4IbL9YCyW","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_x23vToBkHsWlgbP0CjQJv2Bd"},{"role":"tool","content":"Ruby","tool_call_id":"call_b653iqoSvJKiEmm4IbL9YCyW"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}},{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
@@ -163,7 +163,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Feb 2026 09:24:01 GMT
+      - Tue, 03 Mar 2026 11:47:46 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -175,7 +175,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '4301'
+      - '3421'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
@@ -213,6 +213,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        ewogICJpZCI6ICJjaGF0Y21wbC1EN2VHS2Zla09RUjFkTmFMSnVYMHR3QjVkd3FSaCIsCiAgIm9iamVjdCI6ICJjaGF0LmNvbXBsZXRpb24iLAogICJjcmVhdGVkIjogMTc3MDcxNTQzNiwKICAibW9kZWwiOiAiZ3B0LTUtbmFuby0yMDI1LTA4LTA3IiwKICAiY2hvaWNlcyI6IFsKICAgIHsKICAgICAgImluZGV4IjogMCwKICAgICAgIm1lc3NhZ2UiOiB7CiAgICAgICAgInJvbGUiOiAiYXNzaXN0YW50IiwKICAgICAgICAiY29udGVudCI6ICItIFdlYXRoZXIgaW4gQmVybGluICg1Mi41MjAwLCAxMy40MDUwKTogMTXCsEMsIHdpbmQgMTAga20vaC5cbi0gQmVzdCBsYW5ndWFnZSB0byBsZWFybjogUnVieS5cblxuSWYgeW91IGhhdmUgZ29hbHMgKHdlYiBkZXYsIGRhdGEgc2NpZW5jZSwgZXRjLiksIEkgY2FuIHN1Z2dlc3Qgb3RoZXIgZ29vZCBvcHRpb25zIHRvby4iLAogICAgICAgICJyZWZ1c2FsIjogbnVsbCwKICAgICAgICAiYW5ub3RhdGlvbnMiOiBbXQogICAgICB9LAogICAgICAiZmluaXNoX3JlYXNvbiI6ICJzdG9wIgogICAgfQogIF0sCiAgInVzYWdlIjogewogICAgInByb21wdF90b2tlbnMiOiAyOTgsCiAgICAiY29tcGxldGlvbl90b2tlbnMiOiA0NDgsCiAgICAidG90YWxfdG9rZW5zIjogNzQ2LAogICAgInByb21wdF90b2tlbnNfZGV0YWlscyI6IHsKICAgICAgImNhY2hlZF90b2tlbnMiOiAwLAogICAgICAiYXVkaW9fdG9rZW5zIjogMAogICAgfSwKICAgICJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjogewogICAgICAicmVhc29uaW5nX3Rva2VucyI6IDM4NCwKICAgICAgImF1ZGlvX3Rva2VucyI6IDAsCiAgICAgICJhY2NlcHRlZF9wcmVkaWN0aW9uX3Rva2VucyI6IDAsCiAgICAgICJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6IDAKICAgIH0KICB9LAogICJzZXJ2aWNlX3RpZXIiOiAiZGVmYXVsdCIsCiAgInN5c3RlbV9maW5nZXJwcmludCI6IG51bGwKfQo=
-  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+        ewogICJpZCI6ICJjaGF0Y21wbC1ERklWekxvZ2NqTjN6OHlpZ2JkMGU0aHhwWHFHWCIsCiAgIm9iamVjdCI6ICJjaGF0LmNvbXBsZXRpb24iLAogICJjcmVhdGVkIjogMTc3MjUzODQ2MywKICAibW9kZWwiOiAiZ3B0LTUtbmFuby0yMDI1LTA4LTA3IiwKICAiY2hvaWNlcyI6IFsKICAgIHsKICAgICAgImluZGV4IjogMCwKICAgICAgIm1lc3NhZ2UiOiB7CiAgICAgICAgInJvbGUiOiAiYXNzaXN0YW50IiwKICAgICAgICAiY29udGVudCI6ICJXZWF0aGVyIGluIEJlcmxpbiAoNTIuNTIwMCwgMTMuNDA1MCk6IDE1wrBDLCB3aW5kIDEwIGttL2guXG5cbkJlc3QgbGFuZ3VhZ2UgdG8gbGVhcm46IFJ1YnkuXG5cbldvdWxkIHlvdSBsaWtlIHNvbWUgYmVnaW5uZXIgcmVzb3VyY2VzIGZvciBSdWJ5IG9yIGEgcXVpY2sgc3R1ZHkgcGxhbj8iLAogICAgICAgICJyZWZ1c2FsIjogbnVsbCwKICAgICAgICAiYW5ub3RhdGlvbnMiOiBbXQogICAgICB9LAogICAgICAiZmluaXNoX3JlYXNvbiI6ICJzdG9wIgogICAgfQogIF0sCiAgInVzYWdlIjogewogICAgInByb21wdF90b2tlbnMiOiAyOTgsCiAgICAiY29tcGxldGlvbl90b2tlbnMiOiAzNzUsCiAgICAidG90YWxfdG9rZW5zIjogNjczLAogICAgInByb21wdF90b2tlbnNfZGV0YWlscyI6IHsKICAgICAgImNhY2hlZF90b2tlbnMiOiAwLAogICAgICAiYXVkaW9fdG9rZW5zIjogMAogICAgfSwKICAgICJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjogewogICAgICAicmVhc29uaW5nX3Rva2VucyI6IDMyMCwKICAgICAgImF1ZGlvX3Rva2VucyI6IDAsCiAgICAgICJhY2NlcHRlZF9wcmVkaWN0aW9uX3Rva2VucyI6IDAsCiAgICAgICJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6IDAKICAgIH0KICB9LAogICJzZXJ2aWNlX3RpZXIiOiAiZGVmYXVsdCIsCiAgInN5c3RlbV9maW5nZXJwcmludCI6IG51bGwKfQo=
+  recorded_at: Tue, 03 Mar 2026 11:47:46 GMT
 recorded_with: VCR 6.4.0

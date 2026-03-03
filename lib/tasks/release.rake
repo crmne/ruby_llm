@@ -26,7 +26,7 @@ namespace :release do # rubocop:disable Metrics/BlockLength
     if stale_count.positive?
       puts "\n🗑️  Removed #{stale_count} stale cassettes"
       puts '🔄 Re-recording cassettes...'
-      system('bundle exec rspec') || exit(1)
+      run_parallel_rspec || exit(1)
       puts '✅ Cassettes refreshed!'
     else
       puts '✅ No stale cassettes found'

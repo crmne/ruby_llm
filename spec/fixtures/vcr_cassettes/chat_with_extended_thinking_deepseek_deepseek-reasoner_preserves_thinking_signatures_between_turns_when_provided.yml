@@ -30,7 +30,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Tue, 10 Feb 2026 09:16:40 GMT
+      - Tue, 03 Mar 2026 11:53:17 GMT
       Server:
       - elb
       Vary:
@@ -38,7 +38,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 721f765852a7ce21936d808145f4efc5
+      - '08bb77ca47ad8b1e73180faca23aa3af'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -46,35 +46,27 @@ http_interactions:
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 516a3ac5d0e98bbe98276f3f09d7e22c.cloudfront.net (CloudFront)
+      - 1.1 6705fde62c89246795b7b0fe68d664cc.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - BKK50-P4
+      - TXL50-P3
       X-Amz-Cf-Id:
-      - qybTtl9iRFKanxzv1loByrBsg4BzgviNRMVSHoJZGdh1m1KDQZ3PvA==
+      - 2Br8UYd_hutrXYOAj0I5a_bQI_BUWXj9ffG6b7SJjKT1U_A-FBKtpg==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"c78682c5-6baa-4681-9fe7-262d240317df","object":"chat.completion","created":1770715000,"model":"deepseek-reasoner","choices":[{"index":0,"message":{"role":"assistant","content":"5
-        + 3 = 8","reasoning_content":"We are asked: \"What is 5 + 3?\" This is a simple
-        arithmetic question. The answer is 8.\n\nThe user likely expects a direct
-        answer. However, we should provide a step-by-step explanation as per typical
-        instruction following. So, we can show: 5 + 3 = 8.\n\nThus, the final answer
-        is 8."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":12,"completion_tokens":82,"total_tokens":94,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":74},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":12},"system_fingerprint":"fp_eaab8d114b_prod0820_fp8_kvcache"}'
-  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+      string: '{"id":"61055e75-38d2-4163-b438-15a52c5bb202","object":"chat.completion","created":1772538797,"model":"deepseek-reasoner","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        result of 5 + 3 is 8.","reasoning_content":"We are asked: \"What is 5 + 3?\"
+        This is a simple arithmetic addition. 5 + 3 = 8. So the answer is 8."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":12,"completion_tokens":49,"total_tokens":61,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":36},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":12},"system_fingerprint":"fp_eaab8d114b_prod0820_fp8_kvcache"}'
+  recorded_at: Tue, 03 Mar 2026 11:53:20 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"deepseek-reasoner","messages":[{"role":"user","content":"What
-        is 5 + 3?"},{"role":"assistant","content":"5 + 3 = 8","reasoning":"We are
-        asked: \"What is 5 + 3?\" This is a simple arithmetic question. The answer
-        is 8.\n\nThe user likely expects a direct answer. However, we should provide
-        a step-by-step explanation as per typical instruction following. So, we can
-        show: 5 + 3 = 8.\n\nThus, the final answer is 8.","reasoning_content":"We
-        are asked: \"What is 5 + 3?\" This is a simple arithmetic question. The answer
-        is 8.\n\nThe user likely expects a direct answer. However, we should provide
-        a step-by-step explanation as per typical instruction following. So, we can
-        show: 5 + 3 = 8.\n\nThus, the final answer is 8."},{"role":"user","content":"Now
+        is 5 + 3?"},{"role":"assistant","content":"The result of 5 + 3 is 8.","reasoning":"We
+        are asked: \"What is 5 + 3?\" This is a simple arithmetic addition. 5 + 3
+        = 8. So the answer is 8.","reasoning_content":"We are asked: \"What is 5 +
+        3?\" This is a simple arithmetic addition. 5 + 3 = 8. So the answer is 8."},{"role":"user","content":"Now
         multiply that by 2"}],"stream":false,"reasoning_effort":"medium"}'
     headers:
       User-Agent:
@@ -99,7 +91,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Tue, 10 Feb 2026 09:16:44 GMT
+      - Tue, 03 Mar 2026 11:53:20 GMT
       Server:
       - elb
       Vary:
@@ -107,7 +99,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - b74de521400ff04e7ea5dac21865fab7
+      - 57539e6bb9aff54f4bac1eac3d555bd5
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -115,17 +107,14 @@ http_interactions:
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 f69c75668a6cafac330abf2b8a8626f8.cloudfront.net (CloudFront)
+      - 1.1 55c4cb6ad29c7bbcd0c8f2d8b906a83e.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - BKK50-P2
+      - TXL50-P4
       X-Amz-Cf-Id:
-      - OdVWfdmlrwYameyYzVCACMsWXFZQwUXnYUO7bx2dKg_oqjnez-nuqQ==
+      - WFeCRLI71ig_zUp_X8H14UcNjnk1mQBx0zsAU6GEL8epze-lRNmgXw==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"8ce10622-339b-4300-b111-1afeb6a4d243","object":"chat.completion","created":1770715004,"model":"deepseek-reasoner","choices":[{"index":0,"message":{"role":"assistant","content":"The
-        result of 5 + 3 is 8. Multiplying that by 2 gives **16**.","reasoning_content":"We
-        are asked: \"What is 5 + 3?\" The answer is 8. Then: \"Now multiply that by
-        2.\" So we take the previous answer (8) and multiply by 2: 8 * 2 = 16. So
-        the final answer is 16."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":29,"completion_tokens":83,"total_tokens":112,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":61},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":29},"system_fingerprint":"fp_eaab8d114b_prod0820_fp8_kvcache"}'
-  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+      string: !binary |-
+        eyJpZCI6IjhhOGIzYWY5LWFjNTUtNDIxMi05MjEwLWYwMzhkYzViOGViYSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NzI1Mzg4MDAsIm1vZGVsIjoiZGVlcHNlZWstcmVhc29uZXIiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IllvdSBmaXJzdCBjYWxjdWxhdGVkIFxcKDUgKyAzID0gOFxcKS4gIFxuXG5NdWx0aXBseWluZyB0aGF0IHJlc3VsdCBieSBcXCgyXFwpIGdpdmVzOiAgXG5cblxcW1xuOCBcXHRpbWVzIDIgPSAxNlxuXFxdXG5cblNvIHRoZSBmaW5hbCBhbnN3ZXIgaXMgKioxNioqLiIsInJlYXNvbmluZ19jb250ZW50IjoiQWxyaWdodCwgdGhlIHVzZXIgYXNrZWQ6IFwiV2hhdCBpcyA1ICsgMz9cIiBhbmQgdGhlbiBcIk5vdyBtdWx0aXBseSB0aGF0IGJ5IDIuXCIgTGV0IG1lIHN0YXJ0IGJ5IGJyZWFraW5nIHRoaXMgZG93bi5cblxuRmlyc3QsIHRoZSBpbml0aWFsIHF1ZXN0aW9uIGlzIHNpbXBsZSBhZGRpdGlvbjogNSArIDMgZXF1YWxzIDguIFRoZSB1c2VyIHRoZW4gd2FudHMgdG8gbXVsdGlwbHkgXCJ0aGF0XCIgYnkgMi4gXCJUaGF0XCIgcmVmZXJzIHRvIHRoZSBwcmV2aW91cyByZXN1bHQsIHNvIGl04oCZcyA4IHRpbWVzIDIuXG5cbkNhbGN1bGF0aW5nIDggw5cgMiBnaXZlcyAxNi4gSSBzaG91bGQgbWFrZSBzdXJlIHRvIGFja25vd2xlZGdlIGJvdGggc3RlcHMgY2xlYXJseSwgc2hvd2luZyB0aGUgc3RlcC1ieS1zdGVwIHByb2Nlc3Mgc28gdGhlIHVzZXIgdW5kZXJzdGFuZHMgaG93IEkgYXJyaXZlZCBhdCB0aGUgZmluYWwgYW5zd2VyLiJ9LCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjM0LCJjb21wbGV0aW9uX3Rva2VucyI6MTY4LCJ0b3RhbF90b2tlbnMiOjIwMiwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjB9LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjEyMn0sInByb21wdF9jYWNoZV9oaXRfdG9rZW5zIjowLCJwcm9tcHRfY2FjaGVfbWlzc190b2tlbnMiOjM0fSwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfZWFhYjhkMTE0Yl9wcm9kMDgyMF9mcDhfa3ZjYWNoZSJ9
+  recorded_at: Tue, 03 Mar 2026 11:53:27 GMT
 recorded_with: VCR 6.4.0

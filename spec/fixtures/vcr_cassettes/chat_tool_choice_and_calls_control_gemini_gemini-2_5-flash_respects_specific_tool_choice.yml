@@ -32,7 +32,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Tue, 03 Mar 2026 00:34:34 GMT
+      - Tue, 03 Mar 2026 11:56:48 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -42,7 +42,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=782
+      - gfet4t7; dur=1119
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -59,11 +59,11 @@ http_interactions:
                     "functionCall": {
                       "name": "weather",
                       "args": {
-                        "latitude": "123",
-                        "longitude": "123"
+                        "latitude": "41.9028",
+                        "longitude": "12.4964"
                       }
                     },
-                    "thoughtSignature": "Cr8CAb4+9vtc5JtrVOn5cvaayRP+01sp287/mZz/FYqNnxwKJzbHEuZBHe/R084LS5v1DQzcl2Ftc2CDJ501UssGnRKF3D++PSFoqJlnICjd7T6+P1wZ134E1rzs4wMKsMFjmFuDBbn8T6JkGbhN5hCw+ppIfL4Vovyl9/5Y5+OuHKgQXhqv6cCzE/+s1rybj4UJ58PBI7A8aZpZak3YGBKf3l2/2hpkL+7UbE3KzdNHfYYBDFzrOk9sBplq8+DYBnz1/goHIpFBbO2pDZU0YqsAX+E1zuv+lGYBMvBOsb02nTwlKNDVR5W/GdCDpR6OO8xTmXOAf/EI/JmHG83UOnOvD03fOK8ossRAqEvrXmdDzi/6Xm/CcgGPsjdJuVAmoRtjl6AHSdRUHvs2cHDzAsvNnBS1zx/bsYvvgC88v/bBjw=="
+                    "thoughtSignature": "CtcCAb4+9vve3p39vPmoPO6dWj4+GFUO5EAuNUk3uDTq8zLWg7zeyEBtX6Zvmipa/M07dkpCKZfcnHMFACCGxuPKgKTbasgjyBLVAALa6EYGvJP9hw7LPS6wOh+9IIocDYYbV/CZkC3xqzS8hZZ5/9BKtZsmmDkg+VHsalc7sH9N36uBVerTT+Vo0tJGVxdt8P05rC9v3nVtCTk4Gd1MJ+LWWarhgoKf7swhgYYGqwmDYaX9EqsdQtulS4gahjzrtumH9VRSOXGdj9PcBXX9jpg2gSoygW6j+jwaxe4rC4OegXnGZ5mnJnCMqC5JOzST/c7o+34Tu9XmWbJaNNdpNRQk7k9AAzwmMTLpTF0dAd0ZtkcuJzG+nHw4BWSZOHblF7FUSlwgujnCJczZre6l/KJgsTfAuYyuYWk0NeIGVN8rWIVQtyS3RNyM3ifldTnFcEpsUWaeoWkF2w=="
                   }
                 ],
                 "role": "model"
@@ -75,8 +75,8 @@ http_interactions:
           ],
           "usageMetadata": {
             "promptTokenCount": 85,
-            "candidatesTokenCount": 22,
-            "totalTokenCount": 164,
+            "candidatesTokenCount": 30,
+            "totalTokenCount": 172,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
@@ -86,16 +86,16 @@ http_interactions:
             "thoughtsTokenCount": 57
           },
           "modelVersion": "gemini-2.5-flash",
-          "responseId": "mSymafK5EqOqnsEP8-TZ8Qs"
+          "responseId": "f8ymadGkLOvqkdUP_8C_uA8"
         }
-  recorded_at: Tue, 03 Mar 2026 00:34:34 GMT
+  recorded_at: Tue, 03 Mar 2026 11:56:48 GMT
 - request:
     method: post
     uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
-      string: '{"contents":[{"role":"user","parts":[{"text":"What''s the fall of Rome?"}]},{"role":"model","parts":[{"functionCall":{"name":"weather","args":{"latitude":"123","longitude":"123"}},"thoughtSignature":"Cr8CAb4+9vtc5JtrVOn5cvaayRP+01sp287/mZz/FYqNnxwKJzbHEuZBHe/R084LS5v1DQzcl2Ftc2CDJ501UssGnRKF3D++PSFoqJlnICjd7T6+P1wZ134E1rzs4wMKsMFjmFuDBbn8T6JkGbhN5hCw+ppIfL4Vovyl9/5Y5+OuHKgQXhqv6cCzE/+s1rybj4UJ58PBI7A8aZpZak3YGBKf3l2/2hpkL+7UbE3KzdNHfYYBDFzrOk9sBplq8+DYBnz1/goHIpFBbO2pDZU0YqsAX+E1zuv+lGYBMvBOsb02nTwlKNDVR5W/GdCDpR6OO8xTmXOAf/EI/JmHG83UOnOvD03fOK8ossRAqEvrXmdDzi/6Xm/CcgGPsjdJuVAmoRtjl6AHSdRUHvs2cHDzAsvNnBS1zx/bsYvvgC88v/bBjw=="}]},{"role":"function","parts":[{"functionResponse":{"name":"weather","response":{"name":"weather","content":[{"text":"Current
-        weather at 123, 123: 15°C, Wind: 10 km/h"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"weather","description":"Gets
+      string: '{"contents":[{"role":"user","parts":[{"text":"What''s the fall of Rome?"}]},{"role":"model","parts":[{"functionCall":{"name":"weather","args":{"latitude":"41.9028","longitude":"12.4964"}},"thoughtSignature":"CtcCAb4+9vve3p39vPmoPO6dWj4+GFUO5EAuNUk3uDTq8zLWg7zeyEBtX6Zvmipa/M07dkpCKZfcnHMFACCGxuPKgKTbasgjyBLVAALa6EYGvJP9hw7LPS6wOh+9IIocDYYbV/CZkC3xqzS8hZZ5/9BKtZsmmDkg+VHsalc7sH9N36uBVerTT+Vo0tJGVxdt8P05rC9v3nVtCTk4Gd1MJ+LWWarhgoKf7swhgYYGqwmDYaX9EqsdQtulS4gahjzrtumH9VRSOXGdj9PcBXX9jpg2gSoygW6j+jwaxe4rC4OegXnGZ5mnJnCMqC5JOzST/c7o+34Tu9XmWbJaNNdpNRQk7k9AAzwmMTLpTF0dAd0ZtkcuJzG+nHw4BWSZOHblF7FUSlwgujnCJczZre6l/KJgsTfAuYyuYWk0NeIGVN8rWIVQtyS3RNyM3ifldTnFcEpsUWaeoWkF2w=="}]},{"role":"function","parts":[{"functionResponse":{"name":"weather","response":{"name":"weather","content":[{"text":"Current
+        weather at 41.9028, 12.4964: 15°C, Wind: 10 km/h"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"OBJECT","properties":{"latitude":{"type":"STRING","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"STRING","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"]}}]}]}'
@@ -122,7 +122,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Tue, 03 Mar 2026 00:34:36 GMT
+      - Tue, 03 Mar 2026 11:56:50 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -132,7 +132,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=2399
+      - gfet4t7; dur=1940
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -146,7 +146,7 @@ http_interactions:
               "content": {
                 "parts": [
                   {
-                    "text": "The fall of Rome is a complex historical event that refers to the decline and collapse of the Western Roman Empire. There isn't one single cause, but rather a combination of factors that contributed to its demise over several centuries.\n\nHere are some of the key contributing factors:\n\n*   **Economic Problems:** Inflation, heavy taxation, and a decline in trade weakened the Roman economy. The empire also struggled with the cost of maintaining its vast army.\n*   **Political Instability:** Frequent changes in emperors, corruption, and power struggles within the government led to instability and weakened central authority.\n*   **Military Overstretch and Invasions:** The empire became too large to effectively defend. Constant pressure from barbarian tribes along its borders, such as the Goths, Vandals, and Huns, led to costly wars and ultimately successful invasions.\n*   **Social Decay:** A decline in civic virtue, increasing social inequality, and a reliance on slave labor contributed to internal weaknesses.\n*   **Division of the Empire:** The empire was eventually divided into Western and Eastern halves. The Western Roman Empire, with its capital eventually moving from Rome to Ravenna, was more vulnerable and ultimately fell, while the Eastern Roman (Byzantine) Empire continued for another thousand years.\n*   **Over-reliance on Mercenaries:** The Roman army increasingly relied on non-Roman soldiers, including barbarians, who sometimes had divided loyalties.\n\nThe traditional date for the \"fall\" of the Western Roman Empire is 476 CE, when the last Western Roman Emperor, Romulus Augustulus, was deposed by the Germanic chieftain Odoacer. However, this was more of a culmination of a long process rather than a sudden event. The Eastern Roman Empire, also known as the Byzantine Empire, continued to thrive for many centuries after this date."
+                    "text": "The fall of Rome is a complex historical event that refers to the decline and collapse of the Western Roman Empire. There isn't a single agreed-upon date for its \"fall,\" but it's generally considered to have happened in 476 CE when the last Western Roman Emperor, Romulus Augustulus, was deposed by the Germanic chieftain Odoacer.\n\nMany factors contributed to the fall, including:\n\n*   **Economic problems:** Inflation, heavy taxation, and disruption of trade routes weakened the empire's economy.\n*   **Political instability:** Frequent changes in emperors, corruption, and power struggles within the government created instability.\n*   **Military overstretch and barbarian invasions:** The empire became too large to defend effectively, and constant pressure from Germanic tribes along its borders led to significant territorial losses and military defeats.\n*   **Social and cultural decline:** A decline in civic virtue, increasing inequality, and a loss of traditional Roman values are also cited as contributing factors.\n*   **Division of the empire:** The split into Eastern and Western Roman Empires in 395 CE weakened the West, as resources were often diverted to the wealthier East.\n\nIt's important to note that the Eastern Roman Empire, also known as the Byzantine Empire, continued to thrive for another thousand years after the fall of the West. The \"fall of Rome\" primarily refers to the Western half."
                   }
                 ],
                 "role": "model"
@@ -156,18 +156,18 @@ http_interactions:
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 156,
-            "candidatesTokenCount": 372,
-            "totalTokenCount": 528,
+            "promptTokenCount": 172,
+            "candidatesTokenCount": 285,
+            "totalTokenCount": 457,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 156
+                "tokenCount": 172
               }
             ]
           },
           "modelVersion": "gemini-2.5-flash",
-          "responseId": "miymacTmCaKckdUP7rDk0Q8"
+          "responseId": "gMymaaGJONCgvdIP9eLNgQs"
         }
-  recorded_at: Tue, 03 Mar 2026 00:34:36 GMT
+  recorded_at: Tue, 03 Mar 2026 11:56:50 GMT
 recorded_with: VCR 6.4.0

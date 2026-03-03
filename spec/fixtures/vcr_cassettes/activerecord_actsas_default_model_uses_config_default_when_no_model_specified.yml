@@ -23,7 +23,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Feb 2026 08:34:05 GMT
+      - Tue, 03 Mar 2026 11:46:55 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -35,7 +35,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '3001'
+      - '3359'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
@@ -72,7 +72,41 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        ewogICJpZCI6ICJjaGF0Y21wbC1EN2RVMXJrMUN3ckZxbFAxdkhhdzI2UDRKZ3dXcSIsCiAgIm9iamVjdCI6ICJjaGF0LmNvbXBsZXRpb24iLAogICJjcmVhdGVkIjogMTc3MDcxMjQ0MSwKICAibW9kZWwiOiAiZ3B0LTUtbmFuby0yMDI1LTA4LTA3IiwKICAiY2hvaWNlcyI6IFsKICAgIHsKICAgICAgImluZGV4IjogMCwKICAgICAgIm1lc3NhZ2UiOiB7CiAgICAgICAgInJvbGUiOiAiYXNzaXN0YW50IiwKICAgICAgICAiY29udGVudCI6ICJIZWxsbyEgSG93IGNhbiBJIGhlbHAgdG9kYXk/IEkgY2FuIGFuc3dlciBxdWVzdGlvbnMsIGV4cGxhaW4gY29uY2VwdHMsIGRyYWZ0IG9yIGVkaXQgdGV4dCwgaGVscCB3aXRoIHByb2dyYW1taW5nIG9yIG1hdGgsIHBsYW4gcHJvamVjdHMsIG9yIGp1c3QgY2hhdC4gV2hhdCB3b3VsZCB5b3UgbGlrZSB0byBkbz8gSWYgeW914oCZcmUgbm90IHN1cmUsIHRlbGwgbWUgeW91ciBnb2FsIGFuZCBhbnkgY29uc3RyYWludHMgYW5kIEnigJlsbCBzdWdnZXN0IG9wdGlvbnMuIiwKICAgICAgICAicmVmdXNhbCI6IG51bGwsCiAgICAgICAgImFubm90YXRpb25zIjogW10KICAgICAgfSwKICAgICAgImZpbmlzaF9yZWFzb24iOiAic3RvcCIKICAgIH0KICBdLAogICJ1c2FnZSI6IHsKICAgICJwcm9tcHRfdG9rZW5zIjogNywKICAgICJjb21wbGV0aW9uX3Rva2VucyI6IDMyNSwKICAgICJ0b3RhbF90b2tlbnMiOiAzMzIsCiAgICAicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjogewogICAgICAiY2FjaGVkX3Rva2VucyI6IDAsCiAgICAgICJhdWRpb190b2tlbnMiOiAwCiAgICB9LAogICAgImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOiB7CiAgICAgICJyZWFzb25pbmdfdG9rZW5zIjogMjU2LAogICAgICAiYXVkaW9fdG9rZW5zIjogMCwKICAgICAgImFjY2VwdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjogMCwKICAgICAgInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjogMAogICAgfQogIH0sCiAgInNlcnZpY2VfdGllciI6ICJkZWZhdWx0IiwKICAic3lzdGVtX2ZpbmdlcnByaW50IjogbnVsbAp9Cg==
-  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+      string: |
+        {
+          "id": "chatcmpl-DFIVAUQjFxCLHzt7o3pEXOVmeLSFt",
+          "object": "chat.completion",
+          "created": 1772538412,
+          "model": "gpt-5-nano-2025-08-07",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "Hi! How can I help today? I can explain concepts, help with writing or editing, solve math or coding problems, brainstorm ideas, plan a project, translate text, summarize information, or just chat. What would you like to do?",
+                "refusal": null,
+                "annotations": []
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 7,
+            "completion_tokens": 378,
+            "total_tokens": 385,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 320,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": null
+        }
+  recorded_at: Tue, 03 Mar 2026 11:46:55 GMT
 recorded_with: VCR 6.4.0

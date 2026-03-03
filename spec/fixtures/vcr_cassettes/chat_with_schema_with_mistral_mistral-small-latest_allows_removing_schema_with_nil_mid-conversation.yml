@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 01 Mar 2026 14:17:41 GMT
+      - Tue, 03 Mar 2026 11:47:23 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -32,25 +32,25 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '019ca9c3-18e1-779e-a1c7-7dfb9d7f52eb'
+      - '019cb386-36c8-7734-8f96-3dcdf95ece44'
       X-Kong-Request-Id:
-      - '019ca9c3-18e1-779e-a1c7-7dfb9d7f52eb'
+      - '019cb386-36c8-7734-8f96-3dcdf95ece44'
       X-Ratelimit-Limit-Tokens-Minute:
       - '2000000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '1999941'
+      - '1999439'
       X-Ratelimit-Tokens-Query-Cost:
       - '26'
       X-Ratelimit-Limit-Req-Minute:
       - '360'
       X-Ratelimit-Remaining-Req-Minute:
-      - '358'
+      - '347'
       X-Envoy-Upstream-Service-Time:
-      - '195'
+      - '192'
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '196'
+      - '192'
       X-Kong-Proxy-Latency:
       - '10'
       Cf-Cache-Status:
@@ -70,9 +70,9 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"1d61c0496e584b0d96eaf4a5ac955d18","created":1772374661,"model":"mistral-small-latest","usage":{"prompt_tokens":8,"total_tokens":26,"completion_tokens":18,"prompt_tokens_details":{"cached_tokens":0}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"{\n  \"name\":
+      string: '{"id":"a215d3f09496445bab9b45981bfd7bc7","created":1772538443,"model":"mistral-small-latest","usage":{"prompt_tokens":8,"total_tokens":26,"completion_tokens":18,"prompt_tokens_details":{"cached_tokens":0}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"{\n  \"name\":
         \"Bob\",\n  \"age\": 30\n}"}}]}'
-  recorded_at: Sun, 01 Mar 2026 14:17:41 GMT
+  recorded_at: Tue, 03 Mar 2026 11:47:23 GMT
 - request:
     method: post
     uri: https://api.mistral.ai/v1/chat/completions
@@ -98,7 +98,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 01 Mar 2026 14:17:44 GMT
+      - Tue, 03 Mar 2026 11:47:26 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -106,27 +106,27 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '019ca9c3-19f7-7efe-bb44-e8b8ad3f28d3'
+      - '019cb386-37dc-73b7-9235-8e3cae2bb3bb'
       X-Kong-Request-Id:
-      - '019ca9c3-19f7-7efe-bb44-e8b8ad3f28d3'
+      - '019cb386-37dc-73b7-9235-8e3cae2bb3bb'
       X-Ratelimit-Limit-Tokens-Minute:
       - '2000000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '1999564'
+      - '1999103'
       X-Ratelimit-Tokens-Query-Cost:
-      - '377'
+      - '336'
       X-Ratelimit-Limit-Req-Minute:
       - '360'
       X-Ratelimit-Remaining-Req-Minute:
-      - '357'
+      - '346'
       X-Envoy-Upstream-Service-Time:
-      - '2871'
+      - '2441'
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '2872'
+      - '2442'
       X-Kong-Proxy-Latency:
-      - '7'
+      - '9'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -145,6 +145,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6ImFjMjMzMDUyMGY4ZjRlMjg5MzMyMmU3Mzg1ZThkNzc4IiwiY3JlYXRlZCI6MTc3MjM3NDY2MSwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsInVzYWdlIjp7InByb21wdF90b2tlbnMiOjI3LCJ0b3RhbF90b2tlbnMiOjM3NywiY29tcGxldGlvbl90b2tlbnMiOjM1MCwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjB9fSwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImZpbmlzaF9yZWFzb24iOiJzdG9wIiwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwidG9vbF9jYWxscyI6bnVsbCwiY29udGVudCI6IlJ1YnkgaXMgYSBkeW5hbWljLCBvcGVuLXNvdXJjZSBwcm9ncmFtbWluZyBsYW5ndWFnZSBrbm93biBmb3IgaXRzIHNpbXBsaWNpdHkgYW5kIHByb2R1Y3Rpdml0eS4gQ3JlYXRlZCBieSAqKll1a2loaXJvIFwiTWF0elwiIE1hdHN1bW90byoqIGluIHRoZSBtaWQtMTk5MHMsIFJ1YnkgZW1waGFzaXplcyBkZXZlbG9wZXIgaGFwcGluZXNzIHdpdGggYSBjbGVhbiwgcmVhZGFibGUgc3ludGF4IGluc3BpcmVkIGJ5IGxhbmd1YWdlcyBsaWtlIFBlcmwsIFNtYWxsdGFsaywgYW5kIExpc3AuXG5cbiMjIyAqKktleSBGZWF0dXJlcyBvZiBSdWJ5OioqXG4xLiAqKk9iamVjdC1PcmllbnRlZCoqIOKAkyBFdmVyeXRoaW5nIGluIFJ1YnkgaXMgYW4gb2JqZWN0LCBtYWtpbmcgaXQgaW50dWl0aXZlIGZvciBPT1AgZGV2ZWxvcG1lbnQuXG4yLiAqKkR5bmFtaWMgVHlwaW5nKiog4oCTIFZhcmlhYmxlcyBkb27igJl0IG5lZWQgZXhwbGljaXQgdHlwZSBkZWNsYXJhdGlvbnMuXG4zLiAqKk1ldGFwcm9ncmFtbWluZyoqIOKAkyBSdWJ5IGFsbG93cyBjb2RlIHRvIG1vZGlmeSBpdHNlbGYgYXQgcnVudGltZSwgZW5hYmxpbmcgcG93ZXJmdWwgYWJzdHJhY3Rpb25zLlxuNC4gKipHZW1zIChQYWNrYWdlIE1hbmFnZXIpKiog4oCTIFJ1YnlHZW1zIGlzIGEgcmljaCBlY29zeXN0ZW0gb2YgbGlicmFyaWVzIGZvciBhbG1vc3QgYW55IHRhc2suXG41LiAqKlJ1Ynkgb24gUmFpbHMqKiDigJMgQSBwb3B1bGFyIHdlYiBmcmFtZXdvcmsgYnVpbHQgb24gUnVieSwga25vd24gZm9yIHJhcGlkIGRldmVsb3BtZW50IChlLmcuLCBHaXRIdWIsIFNob3BpZnkpLlxuXG4jIyMgKipFeGFtcGxlIENvZGU6KipcbmBgYHJ1YnlcbiMgU2ltcGxlIFJ1YnkgZXhhbXBsZVxucHV0cyBcIkhlbGxvLCBXb3JsZCFcIlxuXG4jIERlZmluZSBhIGNsYXNzXG5jbGFzcyBQZXJzb25cbiAgYXR0cl9hY2Nlc3NvciA6bmFtZSwgOmFnZVxuXG4gIGRlZiBpbml0aWFsaXplKG5hbWUsIGFnZSlcbiAgICBAbmFtZSA9IG5hbWVcbiAgICBAYWdlID0gYWdlXG4gIGVuZFxuXG4gIGRlZiBncmVldFxuICAgIHB1dHMgXCJIaSwgSSdtICN7QG5hbWV9IGFuZCBJJ20gI3tAYWdlfSB5ZWFycyBvbGQuXCJcbiAgZW5kXG5lbmRcblxuIyBDcmVhdGUgYW4gaW5zdGFuY2VcbmJvYiA9IFBlcnNvbi5uZXcoXCJCb2JcIiwgMzApXG5ib2IuZ3JlZXRcbmBgYFxuXG4jIyMgKipXaHkgVXNlIFJ1Ynk/Kipcbi0gR3JlYXQgZm9yICoqd2ViIGRldmVsb3BtZW50KiogKFJhaWxzKSwgc2NyaXB0aW5nLCBhbmQgYXV0b21hdGlvbi5cbi0gU3Ryb25nIGNvbW11bml0eSBhbmQgZG9jdW1lbnRhdGlvbi5cbi0gRmxleGlibGUgYW5kIGV4cHJlc3NpdmUgc3ludGF4LlxuXG5Xb3VsZCB5b3UgbGlrZSBhIGRlZXBlciBkaXZlIGludG8gYW55IHNwZWNpZmljIGFzcGVjdCBvZiBSdWJ5PyJ9fV19
-  recorded_at: Sun, 01 Mar 2026 14:17:44 GMT
+        eyJpZCI6ImExNDgxMzA3ZWY2ODRlNDNhODdlMjZkYmFlZTYwNjIzIiwiY3JlYXRlZCI6MTc3MjUzODQ0MywibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsInVzYWdlIjp7InByb21wdF90b2tlbnMiOjI3LCJ0b3RhbF90b2tlbnMiOjMzNiwiY29tcGxldGlvbl90b2tlbnMiOjMwOSwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjB9fSwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImZpbmlzaF9yZWFzb24iOiJzdG9wIiwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwidG9vbF9jYWxscyI6bnVsbCwiY29udGVudCI6IlJ1YnkgaXMgYSBkeW5hbWljLCBvcGVuLXNvdXJjZSBwcm9ncmFtbWluZyBsYW5ndWFnZSBrbm93biBmb3IgaXRzIHNpbXBsaWNpdHkgYW5kIHByb2R1Y3Rpdml0eS4gQ3JlYXRlZCBieSAqKll1a2loaXJvIFwiTWF0elwiIE1hdHN1bW90byoqIGluIHRoZSBtaWQtMTk5MHMsIFJ1YnkgZW1waGFzaXplcyBkZXZlbG9wZXIgaGFwcGluZXNzIHdpdGggYSBjbGVhbiwgcmVhZGFibGUgc3ludGF4IGFuZCBwb3dlcmZ1bCBmZWF0dXJlcyBsaWtlICoqYmxvY2tzLCBtaXhpbnMsIGFuZCBtZXRhcHJvZ3JhbW1pbmcqKi5cblxuIyMjICoqS2V5IEZlYXR1cmVzIG9mIFJ1Ynk6KipcbjEuICoqT2JqZWN0LU9yaWVudGVkKiog4oCTIEV2ZXJ5dGhpbmcgaXMgYW4gb2JqZWN0LCBpbmNsdWRpbmcgcHJpbWl0aXZlcyBsaWtlIG51bWJlcnMgYW5kIGJvb2xlYW5zLlxuMi4gKipEeW5hbWljIFR5cGluZyoqIOKAkyBObyBuZWVkIHRvIGRlY2xhcmUgdmFyaWFibGUgdHlwZXMgZXhwbGljaXRseS5cbjMuICoqTWV0YXByb2dyYW1taW5nKiog4oCTIEFsbG93cyBjb2RlIHRvIHdyaXRlIGFuZCBtb2RpZnkgaXRzZWxmIGF0IHJ1bnRpbWUuXG40LiAqKkJsb2NrcyAmIEl0ZXJhdG9ycyoqIOKAkyBGbGV4aWJsZSBjb250cm9sIHN0cnVjdHVyZXMgZm9yIGNsZWFuLCBleHByZXNzaXZlIGNvZGUuXG41LiAqKkdlbXMgKFBhY2thZ2UgTWFuYWdlcikqKiDigJMgUnVieUdlbXMgbWFrZXMgaXQgZWFzeSB0byBpbnN0YWxsIGFuZCBtYW5hZ2UgbGlicmFyaWVzLlxuNi4gKipSYWlscyBGcmFtZXdvcmsqKiDigJMgUnVieSBvbiBSYWlscyBpcyBhIHBvcHVsYXIgd2ViIGZyYW1ld29yayBidWlsdCBvbiBSdWJ5LCBwb3dlcmluZyBzaXRlcyBsaWtlIEdpdEh1YiwgU2hvcGlmeSwgYW5kIEFpcmJuYi5cblxuIyMjICoqRXhhbXBsZSBDb2RlOioqXG5gYGBydWJ5XG4jIEEgc2ltcGxlIFJ1YnkgcHJvZ3JhbVxuZGVmIGdyZWV0KG5hbWUpXG4gIFwiSGVsbG8sICN7bmFtZX0hXCJcbmVuZFxuXG5wdXRzIGdyZWV0KFwiQWxpY2VcIikgICMgT3V0cHV0OiBIZWxsbywgQWxpY2UhXG5gYGBcblxuIyMjICoqV2h5IFVzZSBSdWJ5PyoqXG4tIEdyZWF0IGZvciAqKndlYiBkZXZlbG9wbWVudCoqIChSYWlscyksIHNjcmlwdGluZywgYW5kIGF1dG9tYXRpb24uXG4tIFN0cm9uZyBjb21tdW5pdHkgYW5kIGV4dGVuc2l2ZSBsaWJyYXJpZXMuXG4tIEJlZ2lubmVyLWZyaWVuZGx5IHN5bnRheCB0aGF0IHJlYWRzIGxpa2UgcGxhaW4gRW5nbGlzaC5cblxuV291bGQgeW91IGxpa2UgYSBkZWVwZXIgZGl2ZSBpbnRvIGFueSBzcGVjaWZpYyBhc3BlY3Qgb2YgUnVieT8g8J+YiiJ9fV19
+  recorded_at: Tue, 03 Mar 2026 11:47:26 GMT
 recorded_with: VCR 6.4.0

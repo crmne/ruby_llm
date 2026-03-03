@@ -17,6 +17,7 @@ group :development do # rubocop:disable Metrics/BlockLength
   gem 'json-schema'
   gem 'nokogiri'
   gem 'overcommit', '>= 0.66'
+  gem 'parallel_tests'
   gem 'pry', '>= 0.14'
   gem 'rails'
   gem 'rake', '>= 13.0'

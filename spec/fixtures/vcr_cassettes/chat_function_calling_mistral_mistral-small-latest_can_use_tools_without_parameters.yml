@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Feb 2026 09:25:32 GMT
+      - Tue, 03 Mar 2026 11:49:18 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -33,13 +33,13 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '019c46de-ca11-73f6-85ea-149b2dd25c7c'
+      - '019cb387-f6cb-7717-8f53-41d904927234'
       X-Kong-Request-Id:
-      - '019c46de-ca11-73f6-85ea-149b2dd25c7c'
+      - '019cb387-f6cb-7717-8f53-41d904927234'
       X-Ratelimit-Limit-Tokens-Minute:
       - '2000000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '1999276'
+      - '1998434'
       X-Ratelimit-Tokens-Query-Cost:
       - '83'
       X-Ratelimit-Limit-Req-Minute:
@@ -47,13 +47,13 @@ http_interactions:
       X-Ratelimit-Remaining-Req-Minute:
       - '357'
       X-Envoy-Upstream-Service-Time:
-      - '663'
+      - '117'
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '664'
+      - '119'
       X-Kong-Proxy-Latency:
-      - '7'
+      - '8'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -71,15 +71,15 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"4775540082c3468ba485b729ae5d7439","created":1770715531,"model":"mistral-small-latest","usage":{"prompt_tokens":74,"total_tokens":83,"completion_tokens":9,"num_cached_tokens":0},"object":"chat.completion","choices":[{"index":0,"finish_reason":"tool_calls","message":{"role":"assistant","tool_calls":[{"id":"juV6ffJQe","function":{"name":"best_language_to_learn","arguments":"{}"},"index":0}],"content":""}}]}'
-  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+      string: '{"id":"4f94da084be545d5931523d63eb0ddf5","created":1772538558,"model":"mistral-small-latest","usage":{"prompt_tokens":74,"total_tokens":83,"completion_tokens":9,"prompt_tokens_details":{"cached_tokens":0}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"tool_calls","message":{"role":"assistant","tool_calls":[{"id":"N8LP8Pyue","function":{"name":"best_language_to_learn","arguments":"{}"},"index":0}],"content":""}}]}'
+  recorded_at: Tue, 03 Mar 2026 11:49:18 GMT
 - request:
     method: post
     uri: https://api.mistral.ai/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"mistral-small-latest","messages":[{"role":"user","content":"What''s
-        the best language to learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"juV6ffJQe","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"juV6ffJQe"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"N8LP8Pyue","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"N8LP8Pyue"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
@@ -98,7 +98,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Feb 2026 09:25:33 GMT
+      - Tue, 03 Mar 2026 11:49:18 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -106,27 +106,27 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '019c46de-cfa1-7580-843d-4b36591045db'
+      - '019cb387-f78c-7f11-bfbb-cf82bed425a9'
       X-Kong-Request-Id:
-      - '019c46de-cfa1-7580-843d-4b36591045db'
+      - '019cb387-f78c-7f11-bfbb-cf82bed425a9'
       X-Ratelimit-Limit-Tokens-Minute:
       - '2000000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '1999120'
+      - '1998336'
       X-Ratelimit-Tokens-Query-Cost:
-      - '182'
+      - '109'
       X-Ratelimit-Limit-Req-Minute:
       - '360'
       X-Ratelimit-Remaining-Req-Minute:
       - '356'
       X-Envoy-Upstream-Service-Time:
-      - '665'
+      - '188'
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '665'
+      - '189'
       X-Kong-Proxy-Latency:
-      - '18'
+      - '10'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -144,12 +144,7 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"df6bdf51108f46cc8b66a3f7fc59877f","created":1770715533,"model":"mistral-small-latest","usage":{"prompt_tokens":102,"total_tokens":182,"completion_tokens":80,"num_cached_tokens":0},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
-        best language to learn is Ruby. It is a dynamic, open-source programming language
-        with a focus on simplicity and productivity. It has an elegant syntax that
-        makes it easy to read and write. Ruby is also known for its powerful frameworks
-        like Ruby on Rails, which is widely used for web development. Learning Ruby
-        can open up many opportunities in the tech industry, especially in web development
-        and scripting."}}]}'
-  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+      string: '{"id":"1a0ab277ca504bf1bd566e78e249f70d","created":1772538558,"model":"mistral-small-latest","usage":{"prompt_tokens":100,"total_tokens":109,"completion_tokens":9,"prompt_tokens_details":{"cached_tokens":0}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
+        best language to learn is Ruby."}}]}'
+  recorded_at: Tue, 03 Mar 2026 11:49:18 GMT
 recorded_with: VCR 6.4.0

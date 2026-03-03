@@ -26,7 +26,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 01 Mar 2026 13:47:11 GMT
+      - Tue, 03 Mar 2026 11:46:48 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -38,25 +38,25 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '450000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-03-01T13:47:11Z'
+      - '2026-03-03T11:46:48Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '90000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '90000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-03-01T13:47:11Z'
+      - '2026-03-03T11:46:48Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '1000'
       Anthropic-Ratelimit-Requests-Remaining:
-      - '999'
+      - '997'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-03-01T13:47:09Z'
+      - '2026-03-03T11:46:47Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '540000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '540000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-03-01T13:47:11Z'
+      - '2026-03-03T11:46:48Z'
       Request-Id:
       - "<REQUEST_ID>"
       Strict-Transport-Security:
@@ -66,21 +66,21 @@ http_interactions:
       Server:
       - cloudflare
       X-Envoy-Upstream-Service-Time:
-      - '2205'
+      - '706'
       Vary:
       - Accept-Encoding
+      Cf-Cache-Status:
+      - DYNAMIC
       X-Robots-Tag:
       - none
       Content-Security-Policy:
       - default-src 'none'; frame-ancestors 'none'
-      Cf-Cache-Status:
-      - DYNAMIC
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_01Ho1oQQn9h62dtfTB3QPjX4","type":"message","role":"assistant","content":[{"type":"text","text":"{\"name\":\"Bob\",\"age\":30}"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":174,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":12,"service_tier":"standard","inference_geo":"not_available"}}'
-  recorded_at: Sun, 01 Mar 2026 13:47:11 GMT
+      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_01WBPY9BGzMQFFZCXmdX8MM9","type":"message","role":"assistant","content":[{"type":"text","text":"{\"name\":\"Bob\",\"age\":30}"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":174,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":12,"service_tier":"standard","inference_geo":"not_available"}}'
+  recorded_at: Tue, 03 Mar 2026 11:46:48 GMT
 - request:
     method: post
     uri: https://api.anthropic.com/v1/messages
@@ -108,7 +108,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sun, 01 Mar 2026 13:47:13 GMT
+      - Tue, 03 Mar 2026 11:46:51 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -120,25 +120,25 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '450000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-03-01T13:47:11Z'
+      - '2026-03-03T11:46:48Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '90000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '90000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-03-01T13:47:13Z'
+      - '2026-03-03T11:46:51Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '1000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-03-01T13:47:11Z'
+      - '2026-03-03T11:46:48Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '540000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '540000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-03-01T13:47:11Z'
+      - '2026-03-03T11:46:48Z'
       Request-Id:
       - "<REQUEST_ID>"
       Strict-Transport-Security:
@@ -148,33 +148,36 @@ http_interactions:
       Server:
       - cloudflare
       X-Envoy-Upstream-Service-Time:
-      - '2415'
+      - '3057'
       Vary:
       - Accept-Encoding
+      Cf-Cache-Status:
+      - DYNAMIC
       X-Robots-Tag:
       - none
       Content-Security-Policy:
       - default-src 'none'; frame-ancestors 'none'
-      Cf-Cache-Status:
-      - DYNAMIC
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_015xVPDVhZ8BTcNiMLD7qPiz","type":"message","role":"assistant","content":[{"type":"text","text":"Ruby
+      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_01UHGjTZoo65ufu4RUjzkGVM","type":"message","role":"assistant","content":[{"type":"text","text":"Ruby
         is a dynamic, open-source programming language known for its simplicity and
-        elegance. Here are some key points about it:\n\n**Key Characteristics:**\n-
-        **Readable syntax** - Ruby prioritizes clean, human-readable code\n- **Object-oriented**
-        - Everything is an object in Ruby\n- **Dynamically typed** - Types are determined
-        at runtime\n- **Flexible** - Supports multiple programming paradigms\n\n**Popular
-        Uses:**\n- Web development (especially with Ruby on Rails framework)\n- Scripting
-        and automation\n- Data processing\n- DevOps tools\n\n**Ruby on Rails:**\n-
-        A powerful web framework built with Ruby\n- Follows conventions like MVC (Model-View-Controller)\n-
-        Used by companies like GitHub, Airbnb, and Shopify\n\n**Advantages:**\n- Quick
-        to learn and write\n- Strong community and extensive libraries (gems)\n- Great
-        for rapid development and prototyping\n\n**Disadvantages:**\n- Generally slower
-        performance than compiled languages\n- Less suitable for performance-critical
-        applications\n\nRuby remains popular for startups and web development due
-        to its productivity and developer-friendly nature."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":33,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":250,"service_tier":"standard","inference_geo":"not_available"}}'
-  recorded_at: Sun, 01 Mar 2026 13:47:13 GMT
+        readability. Here are some key points about it:\n\n**Key Features:**\n- **Elegant
+        Syntax** - Ruby emphasizes clean, intuitive code that''s easy to read and
+        write\n- **Object-Oriented** - Everything in Ruby is an object\n- **Dynamic
+        Typing** - Types are determined at runtime\n- **Interpreted Language** - Code
+        is executed directly without compilation\n\n**Common Uses:**\n- Web development
+        (especially with the Ruby on Rails framework)\n- Scripting and automation\n-
+        Data processing\n- Build tools and DevOps\n\n**Popular Framework:**\n- **Ruby
+        on Rails** - A full-featured web development framework that follows the MVC
+        (Model-View-Controller) pattern\n\n**Community:**\n- Active and welcoming
+        developer community\n- Rich ecosystem of gems (libraries/packages)\n- Strong
+        emphasis on testing and best practices\n\n**Strengths:**\n- Fast development
+        cycle\n- Great for rapid prototyping\n- Excellent documentation\n- High productivity
+        language\n\n**Considerations:**\n- Slower execution speed compared to compiled
+        languages\n- Not ideal for performance-critical applications\n- Smaller job
+        market than languages like Python or JavaScript\n\nRuby remains popular for
+        startups and web development projects where developer productivity is a priority."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":33,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":286,"service_tier":"standard","inference_geo":"not_available"}}'
+  recorded_at: Tue, 03 Mar 2026 11:46:51 GMT
 recorded_with: VCR 6.4.0

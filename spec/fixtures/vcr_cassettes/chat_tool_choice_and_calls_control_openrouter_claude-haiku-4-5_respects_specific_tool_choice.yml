@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 03 Mar 2026 00:35:36 GMT
+      - Tue, 03 Mar 2026 11:57:43 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -49,17 +49,17 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: "\n         \n{\"id\":\"gen-1772498135-vmpmU5nrKmjodUnIbNBc\",\"object\":\"chat.completion\",\"created\":1772498135,\"model\":\"anthropic/claude-4.5-haiku-20251001\",\"provider\":\"Google\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"tool_calls\",\"native_finish_reason\":\"tool_calls\",\"message\":{\"role\":\"assistant\",\"content\":null,\"refusal\":null,\"reasoning\":null,\"tool_calls\":[{\"type\":\"function\",\"index\":0,\"id\":\"toolu_vrtx_017Y3EJ5SXoJ1EyPvSyPXx7t\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":
+      string: "\n         \n{\"id\":\"gen-1772539063-cuAHxwfsA8cvW2dERmwH\",\"object\":\"chat.completion\",\"created\":1772539063,\"model\":\"anthropic/claude-4.5-haiku-20251001\",\"provider\":\"Google\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"tool_calls\",\"native_finish_reason\":\"tool_calls\",\"message\":{\"role\":\"assistant\",\"content\":null,\"refusal\":null,\"reasoning\":null,\"tool_calls\":[{\"type\":\"function\",\"index\":0,\"id\":\"toolu_vrtx_01GVaTX11jnXa9F4QfFh19gh\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":
         \\\"41.9028\\\", \\\"longitude\\\": \\\"12.4964\\\"}\"}}]}}],\"usage\":{\"prompt_tokens\":716,\"completion_tokens\":56,\"total_tokens\":772,\"cost\":0.000996,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.000996,\"upstream_inference_prompt_cost\":0.000716,\"upstream_inference_completions_cost\":0.00028},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}}}"
-  recorded_at: Tue, 03 Mar 2026 00:35:36 GMT
+  recorded_at: Tue, 03 Mar 2026 11:57:44 GMT
 - request:
     method: post
     uri: https://openrouter.ai/api/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"anthropic/claude-haiku-4.5","messages":[{"role":"user","content":"What''s
-        the fall of Rome?"},{"role":"assistant","content":"","tool_calls":[{"id":"toolu_vrtx_017Y3EJ5SXoJ1EyPvSyPXx7t","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}"}}]},{"role":"tool","content":"Current
-        weather at 41.9028, 12.4964: 15°C, Wind: 10 km/h","tool_call_id":"toolu_vrtx_017Y3EJ5SXoJ1EyPvSyPXx7t"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        the fall of Rome?"},{"role":"assistant","content":"","tool_calls":[{"id":"toolu_vrtx_01GVaTX11jnXa9F4QfFh19gh","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}"}}]},{"role":"tool","content":"Current
+        weather at 41.9028, 12.4964: 15°C, Wind: 10 km/h","tool_call_id":"toolu_vrtx_01GVaTX11jnXa9F4QfFh19gh"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
@@ -80,7 +80,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 03 Mar 2026 00:35:37 GMT
+      - Tue, 03 Mar 2026 11:57:44 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -102,7 +102,28 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        CiAgICAgICAgIAoKICAgICAgICAgCgogICAgICAgICAKCiAgICAgICAgIAoKICAgICAgICAgCgogICAgICAgICAKCiAgICAgICAgIAoKICAgICAgICAgCgogICAgICAgICAKeyJpZCI6Imdlbi0xNzcyNDk4MTM2LVFLU2p3SzcxM2FuZjZXSzAwWGZRIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwiY3JlYXRlZCI6MTc3MjQ5ODEzNiwibW9kZWwiOiJhbnRocm9waWMvY2xhdWRlLTQuNS1oYWlrdS0yMDI1MTAwMSIsInByb3ZpZGVyIjoiQW50aHJvcGljIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjoic3RvcCIsIm5hdGl2ZV9maW5pc2hfcmVhc29uIjoic3RvcCIsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJJIGFwb2xvZ2l6ZSBmb3IgdGhhdOKAlEkgbWlzdGFrZW5seSBjYWxsZWQgdGhlIHdlYXRoZXIgZnVuY3Rpb24hIExldCBtZSBhbnN3ZXIgeW91ciBxdWVzdGlvbiBwcm9wZXJseS5cblxuKipUaGUgRmFsbCBvZiBSb21lKiogcmVmZXJzIHRvIHRoZSBjb2xsYXBzZSBvZiB0aGUgV2VzdGVybiBSb21hbiBFbXBpcmUsIHdoaWNoIG9jY3VycmVkIGdyYWR1YWxseSBvdmVyIHNldmVyYWwgY2VudHVyaWVzIGFuZCBpcyB0cmFkaXRpb25hbGx5IGRhdGVkIHRvICoqNDc2IENFKiosIHdoZW4gdGhlIGxhc3QgV2VzdGVybiBSb21hbiBFbXBlcm9yLCBSb211bHVzIEF1Z3VzdHVsdXMsIHdhcyBkZXBvc2VkLlxuXG4jIyBLZXkgYXNwZWN0cyBpbmNsdWRlOlxuXG4qKkdyYWR1YWwgRGVjbGluZSAoM3JkLTV0aCBjZW50dXJpZXMpOioqXG4tIFRoZSBlbXBpcmUgZmFjZWQgbWlsaXRhcnkgcHJlc3N1cmVzIGZyb20gR2VybWFuaWMgdHJpYmVzIGFuZCBvdGhlciBncm91cHMgYWxvbmcgaXRzIGJvcmRlcnNcbi0gRWNvbm9taWMgdHJvdWJsZXMsIGluY2x1ZGluZyBpbmZsYXRpb24gYW5kIGRlY2xpbmluZyB0cmFkZVxuLSBQb2xpdGljYWwgaW5zdGFiaWxpdHkgd2l0aCBmcmVxdWVudCBjaXZpbCB3YXJzIGFuZCBjb21wZXRpbmcgY2xhaW1zIHRvIHRoZSB0aHJvbmVcbi0gVGhlIGVtcGlyZSBiZWNhbWUgdG9vIGxhcmdlIHRvIGdvdmVybiBlZmZlY3RpdmVseSBmcm9tIGEgc2luZ2xlIGNlbnRlclxuXG4qKkNvbnRyaWJ1dGluZyBGYWN0b3JzOioqXG4tICoqQmFyYmFyaWFuIGludmFzaW9ucyoqIC0gVmlzaWdvdGhzLCBWYW5kYWxzLCBPc3Ryb2dvdGhzLCBhbmQgb3RoZXIgZ3JvdXBzIG1pZ3JhdGVkIGludG8gUm9tYW4gdGVycml0b3J5XG4tICoqTWlsaXRhcnkgb3ZlcnN0cmV0Y2hpbmcqKiAtIFRoZSBhcm15IGNvdWxkbid0IGFkZXF1YXRlbHkgZGVmZW5kIGFsbCBmcm9udGllcnNcbi0gKipEaXZpc2lvbiBvZiB0aGUgZW1waXJlKiogLSBEaW9jbGV0aWFuIGFuZCBsYXRlciBydWxlcnMgZGl2aWRlZCBpdCBpbnRvIEVhc3Rlcm4gYW5kIFdlc3Rlcm4gaGFsdmVzOyB0aGUgRWFzdGVybiAoQnl6YW50aW5lKSBFbXBpcmUgc3Vydml2ZWQgbXVjaCBsb25nZXJcbi0gKipMb3NzIG9mIGNpdmljIHZpcnR1ZSoqIC0gU29tZSBhcmd1ZSBtb3JhbCBhbmQgY3VsdHVyYWwgZGVjbGluZSBjb250cmlidXRlZFxuLSAqKlJpc2Ugb2YgQ2hyaXN0aWFuaXR5KiogLSBTb21lIHNjaG9sYXJzIGRlYmF0ZSBpdHMgcm9sZSwgdGhvdWdoIG90aGVycyBjb250ZXN0IHRoaXMgdmlld1xuXG4qKlRoZSBFYXN0ZXJuIFJvbWFuIEVtcGlyZSAoQnl6YW50aW5lIEVtcGlyZSkqKiBjb250aW51ZWQgZm9yIGFub3RoZXIgMSwwMDAgeWVhcnMgdW50aWwgMTQ1MyBDRS5cblxuKipMZWdhY3k6KiogVGhlIGZhbGwgb2YgUm9tZSBtYXJrZWQgdGhlIGVuZCBvZiBjbGFzc2ljYWwgYW50aXF1aXR5IGFuZCB0aGUgYmVnaW5uaW5nIG9mIHRoZSBNaWRkbGUgQWdlcyBpbiBXZXN0ZXJuIEV1cm9wZSwgd2l0aCBtYWpvciBpbXBhY3RzIG9uIGN1bHR1cmUsIGdvdmVybm1lbnQsIGFuZCBzb2NpZXR5LlxuXG5Xb3VsZCB5b3UgbGlrZSB0byBrbm93IG1vcmUgYWJvdXQgYW55IHNwZWNpZmljIGFzcGVjdD8iLCJyZWZ1c2FsIjpudWxsLCJyZWFzb25pbmciOm51bGx9fV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjczNiwiY29tcGxldGlvbl90b2tlbnMiOjM1OSwidG90YWxfdG9rZW5zIjoxMDk1LCJjb3N0IjowLjAwMjUzMSwiaXNfYnlvayI6ZmFsc2UsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjowLCJjYWNoZV93cml0ZV90b2tlbnMiOjAsImF1ZGlvX3Rva2VucyI6MCwidmlkZW9fdG9rZW5zIjowfSwiY29zdF9kZXRhaWxzIjp7InVwc3RyZWFtX2luZmVyZW5jZV9jb3N0IjowLjAwMjUzMSwidXBzdHJlYW1faW5mZXJlbmNlX3Byb21wdF9jb3N0IjowLjAwMDczNiwidXBzdHJlYW1faW5mZXJlbmNlX2NvbXBsZXRpb25zX2Nvc3QiOjAuMDAxNzk1fSwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjowLCJpbWFnZV90b2tlbnMiOjAsImF1ZGlvX3Rva2VucyI6MH19fQ==
-  recorded_at: Tue, 03 Mar 2026 00:35:40 GMT
+      string: "\n         \n\n         \n\n         \n\n         \n\n         \n\n
+        \        \n\n         \n\n         \n{\"id\":\"gen-1772539064-LxZTzTVwy8pF5u1akTqz\",\"object\":\"chat.completion\",\"created\":1772539064,\"model\":\"anthropic/claude-4.5-haiku-20251001\",\"provider\":\"Anthropic\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"message\":{\"role\":\"assistant\",\"content\":\"I
+        appreciate the question, but I think there might be a misunderstanding! You're
+        asking about the **Fall of Rome**, which is a historical topic, not a weather-related
+        query. My available tools only allow me to check weather conditions, so I
+        can't directly help with history questions using those tools.\\n\\nHowever,
+        I'm happy to explain the Fall of Rome:\\n\\n## The Fall of Rome\\n\\nThe **Fall
+        of the Roman Empire** (or Western Roman Empire) is one of the most significant
+        events in world history, occurring in the 5th century CE.\\n\\n### Key Factors:\\n\\n1.
+        **Political Instability** - Constant civil wars, corruption, and weak leadership
+        weakened central authority\\n\\n2. **Economic Decline** - Debasement of currency,
+        inflation, heavy taxation, and disruption of trade routes\\n\\n3. **Military
+        Pressure** - Invasions by Germanic tribes (Visigoths, Vandals, Ostrogoths,
+        etc.) and other barbarian groups\\n\\n4. **Division of the Empire** - The
+        empire split into Western and Eastern (Byzantine) halves; the West was more
+        vulnerable\\n\\n5. **Loss of Civic Values** - Decline in Roman culture, education,
+        and civic participation\\n\\n6. **Infrastructure Decline** - Deterioration
+        of roads, aqueducts, and public services\\n\\n### Timeline:\\n- **410 CE**
+        - Visigoths sack Rome under Alaric\\n- **455 CE** - Vandals plunder Rome\\n-
+        **476 CE** - The last Western Roman Emperor (Romulus Augustulus) is deposed,
+        officially marking the end of the Western Roman Empire\\n\\nThe **Eastern
+        Roman (Byzantine) Empire** continued for another thousand years until 1453.\\n\\nWould
+        you like to know more about any specific aspect of Rome's fall?\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":736,\"completion_tokens\":397,\"total_tokens\":1133,\"cost\":0.002721,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.002721,\"upstream_inference_prompt_cost\":0.000736,\"upstream_inference_completions_cost\":0.001985},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}}}"
+  recorded_at: Tue, 03 Mar 2026 11:57:47 GMT
 recorded_with: VCR 6.4.0

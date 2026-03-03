@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Feb 2026 09:29:52 GMT
+      - Tue, 03 Mar 2026 11:52:49 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -35,27 +35,27 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '019c46e2-c1eb-78fe-8aed-d8f9619959e9'
+      - '019cb38b-2e46-7cfb-9e90-b1af1d730a6e'
       X-Kong-Request-Id:
-      - '019c46e2-c1eb-78fe-8aed-d8f9619959e9'
+      - '019cb38b-2e46-7cfb-9e90-b1af1d730a6e'
       X-Ratelimit-Limit-Tokens-Minute:
       - '2000000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '1999569'
+      - '1999456'
       X-Ratelimit-Tokens-Query-Cost:
       - '165'
       X-Ratelimit-Limit-Req-Minute:
       - '360'
       X-Ratelimit-Remaining-Req-Minute:
-      - '358'
+      - '357'
       X-Envoy-Upstream-Service-Time:
-      - '207'
+      - '336'
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '208'
+      - '337'
       X-Kong-Proxy-Latency:
-      - '15'
+      - '10'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -73,7 +73,7 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"c82ff7636e2d475399a930fc640906ea","created":1770715791,"model":"mistral-small-latest","usage":{"prompt_tokens":146,"total_tokens":165,"completion_tokens":19,"num_cached_tokens":0},"object":"chat.completion","choices":[{"index":0,"finish_reason":"tool_calls","message":{"role":"assistant","tool_calls":[{"id":"tGPlTRdOb","function":{"name":"any_of_params","arguments":"{\"task\":
+      string: '{"id":"04fe66925d51439cabd66419c1a764ee","created":1772538768,"model":"mistral-small-latest","usage":{"prompt_tokens":146,"total_tokens":165,"completion_tokens":19,"prompt_tokens_details":{"cached_tokens":0}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"tool_calls","message":{"role":"assistant","tool_calls":[{"id":"4hYmlP53u","function":{"name":"any_of_params","arguments":"{\"task\":
         \"Review PR\", \"status\": \"pending\"}"},"index":0}],"content":""}}]}'
-  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+  recorded_at: Tue, 03 Mar 2026 11:52:49 GMT
 recorded_with: VCR 6.4.0

@@ -6,7 +6,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"model":"mistral-small-latest","messages":[{"role":"user","content":"Generate
-        a person named Alice who is 28 years old"}],"stream":false,"response_format":{"type":"json_schema","json_schema":{"name":"PersonSchemaClass","schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"number"}},"required":["name","age"],"additionalProperties":false,"strict":true},"strict":true}}}'
+        a person named Alice who is 28 years old"}],"stream":false,"response_format":{"type":"json_schema","json_schema":{"name":"PersonSchemaClass","schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"number"}},"required":["name","age"],"additionalProperties":false},"strict":true}}}'
     headers:
       User-Agent:
       - Faraday v2.14.1
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 02 Mar 2026 11:28:45 GMT
+      - Tue, 03 Mar 2026 11:47:26 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -32,27 +32,27 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '019cae4e-cc94-771a-8429-a8853e5fa1ec'
+      - '019cb386-41ce-7268-ac3e-32f0ff645e4f'
       X-Kong-Request-Id:
-      - '019cae4e-cc94-771a-8429-a8853e5fa1ec'
+      - '019cb386-41ce-7268-ac3e-32f0ff645e4f'
       X-Ratelimit-Limit-Tokens-Minute:
       - '2000000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '1999967'
+      - '1999070'
       X-Ratelimit-Tokens-Query-Cost:
       - '33'
       X-Ratelimit-Limit-Req-Minute:
       - '360'
       X-Ratelimit-Remaining-Req-Minute:
-      - '359'
+      - '345'
       X-Envoy-Upstream-Service-Time:
-      - '214'
+      - '156'
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '215'
+      - '157'
       X-Kong-Proxy-Latency:
-      - '8'
+      - '7'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -70,7 +70,7 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"3ce8b74da5e54f2ab3d57b6424f39c99","created":1772450925,"model":"mistral-small-latest","usage":{"prompt_tokens":15,"total_tokens":33,"completion_tokens":18,"prompt_tokens_details":{"cached_tokens":0}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"{\n  \"name\":
+      string: '{"id":"2fd1674b65544c4199809345f8e507f9","created":1772538446,"model":"mistral-small-latest","usage":{"prompt_tokens":15,"total_tokens":33,"completion_tokens":18,"prompt_tokens_details":{"cached_tokens":0}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"{\n  \"name\":
         \"Alice\",\n  \"age\": 28\n}"}}]}'
-  recorded_at: Mon, 02 Mar 2026 11:28:45 GMT
+  recorded_at: Tue, 03 Mar 2026 11:47:26 GMT
 recorded_with: VCR 6.4.0

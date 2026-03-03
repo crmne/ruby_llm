@@ -23,19 +23,15 @@ http_interactions:
       message: Unauthorized
     headers:
       Date:
-      - Tue, 10 Feb 2026 08:55:18 GMT
+      - Tue, 03 Mar 2026 11:55:12 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Cf-Ray:
-      - "<CF_RAY>"
       Access-Control-Allow-Origin:
       - "*"
-      Vary:
-      - Accept-Encoding
       Permissions-Policy:
       - payment=(self "https://checkout.stripe.com" "https://connect-js.stripe.com"
         "https://js.stripe.com" "https://*.js.stripe.com" "https://hooks.stripe.com")
@@ -45,8 +41,10 @@ http_interactions:
       - nosniff
       Server:
       - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
     body:
       encoding: UTF-8
-      string: '{"error":{"message":"No cookie auth credentials found","code":401}}'
-  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+      string: '{"error":{"message":"Missing Authentication header","code":401}}'
+  recorded_at: Tue, 03 Mar 2026 11:55:12 GMT
 recorded_with: VCR 6.4.0

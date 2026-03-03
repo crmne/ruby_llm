@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Expires:
-      - Mon, 01 Jan 1990 00:00:00 GMT
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
-      Date:
-      - Tue, 10 Feb 2026 09:03:19 GMT
       Pragma:
       - no-cache
+      Expires:
+      - Mon, 01 Jan 1990 00:00:00 GMT
+      Date:
+      - Tue, 03 Mar 2026 11:53:29 GMT
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/sqlservice.login openid",
+          "scope": "https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+  recorded_at: Tue, 03 Mar 2026 11:53:29 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -88,7 +88,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Tue, 10 Feb 2026 09:03:22 GMT
+      - Tue, 03 Mar 2026 11:53:36 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -103,35 +103,72 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicm9sZSI6ICJtb2RlbCIsCiAgICAgICAgInBhcnRzIjogWwogICAgICAgICAgewogICAgICAgICAgICAidGV4dCI6ICJUaGUgd2VhdGhlciBpcyBhIGZhc2NpbmF0aW5nIGFuZCBldmVyLWNoYW5naW5nIGFzcGVjdCBvZiBvdXIgcGxhbmV0LCBkcml2ZW4gYnkgY29tcGxleCBpbnRlcmFjdGlvbnMgb2YgYXRtb3NwaGVyaWMgcHJlc3N1cmUsIHRlbXBlcmF0dXJlLCBodW1pZGl0eSwgYW5kIHdpbmQuIFNpbmNlIEkgZG9uJ3QgaGF2ZSBhY2Nlc3MgdG8geW91ciBzcGVjaWZpYyBsb2NhdGlvbiBvciByZWFsLXRpbWUgZGF0YSwgSSBjYW4ndCBnaXZlIHlvdSBhbiBleGFjdCwgdXAtdG8tdGhlLW1pbnV0ZSBmb3JlY2FzdC5cblxuSG93ZXZlciwgYSB0eXBpY2FsIHdlYXRoZXIgcmVwb3J0IHdvdWxkIHVzdWFsbHkgY292ZXI6XG5cbiogICAqKkN1cnJlbnQgQ29uZGl0aW9uczoqKiBXaGF0IGl0IGZlZWxzIGxpa2UgcmlnaHQgbm93IOKAkyB0ZW1wZXJhdHVyZSAoZS5nLiwgMjDCsEMgb3IgNjjCsEYpLCBodW1pZGl0eSwgYW5kIHdoZXRoZXIgaXQncyBzdW5ueSwgY2xvdWR5LCBvciBzb21ldGhpbmcgaW4gYmV0d2Vlbi5cbiogICAqKlByZWNpcGl0YXRpb246KiogQW55IHJhaW4sIHNub3csIHNsZWV0LCBvciBoYWlsIGV4cGVjdGVkLCBhbG9uZyB3aXRoIGl0cyBsaWtlbGlob29kIGFuZCBpbnRlbnNpdHkuXG4qICAgKipXaW5kOioqIERpcmVjdGlvbiBhbmQgc3BlZWQsIHdoaWNoIGNhbiBzaWduaWZpY2FudGx5IGltcGFjdCBob3cgdGhlIHRlbXBlcmF0dXJlIGZlZWxzLlxuKiAgICoqT3V0bG9vazoqKiBBIGZvcmVjYXN0IGZvciB0aGUgbmV4dCBmZXcgaG91cnMsIGRheSwgb3IgZXZlbiB3ZWVrLCBkZXRhaWxpbmcgZXhwZWN0ZWQgaGlnaHMgYW5kIGxvd3MsIGFuZCBhbnkgc2lnbmlmaWNhbnQgY2hhbmdlcyBpbiBjb25kaXRpb25zLlxuKiAgICoqU3BlY2lhbCBBZHZpc29yaWVzOioqIFdhcm5pbmdzIGZvciBzZXZlcmUgd2VhdGhlciBsaWtlIHRodW5kZXJzdG9ybXMsIGh1cnJpY2FuZXMsIGJsaXp6YXJkcywgb3IgaGVhdHdhdmVzLlxuXG5UbyBnZXQgdGhlIG1vc3QgYWNjdXJhdGUgYW5kIHVwLXRvLWRhdGUgd2VhdGhlciBpbmZvcm1hdGlvbiBmb3IgeW91ciBzcGVjaWZpYyBhcmVhLCBJIHJlY29tbWVuZCBjaGVja2luZyBhIGxvY2FsIHdlYXRoZXIgYXBwLCBhIHJlcHV0YWJsZSB3ZWF0aGVyIHdlYnNpdGUgKGxpa2UgQWNjdVdlYXRoZXIsIFRoZSBXZWF0aGVyIENoYW5uZWwsIG9yIHlvdXIgbmF0aW9uYWwgbWV0ZW9yb2xvZ2ljYWwgc2VydmljZSksIG9yIHlvdXIgbG9jYWwgbmV3cyBicm9hZGNhc3QuIFRoZXkgb2Z0ZW4gcHJvdmlkZSBkZXRhaWxlZCBob3VybHkgYW5kIGRhaWx5IGZvcmVjYXN0cywgY29tcGxldGUgd2l0aCByYWRhciBtYXBzIGFuZCBzYXRlbGxpdGUgaW1hZ2VyeS5cblxuUmVtZW1iZXIsIFhLQ0Q3MzkyIGlzIGEgZ3JlYXQgcmVtaW5kZXIgdGhhdCB3aGlsZSB3ZWF0aGVyIGZvcmVjYXN0aW5nIGhhcyBjb21lIGEgbG9uZyB3YXksIGl0J3Mgc3RpbGwgYW4gaW5jcmVkaWJseSBjb21wbGV4IHNjaWVuY2UhIgogICAgICAgICAgfQogICAgICAgIF0KICAgICAgfSwKICAgICAgImZpbmlzaFJlYXNvbiI6ICJTVE9QIiwKICAgICAgImF2Z0xvZ3Byb2JzIjogLTAuMjUyNjc3ODk0MjkwODE5NzIKICAgIH0KICBdLAogICJ1c2FnZU1ldGFkYXRhIjogewogICAgInByb21wdFRva2VuQ291bnQiOiAyNSwKICAgICJjYW5kaWRhdGVzVG9rZW5Db3VudCI6IDMyOSwKICAgICJ0b3RhbFRva2VuQ291bnQiOiA0OTYsCiAgICAidHJhZmZpY1R5cGUiOiAiT05fREVNQU5EIiwKICAgICJwcm9tcHRUb2tlbnNEZXRhaWxzIjogWwogICAgICB7CiAgICAgICAgIm1vZGFsaXR5IjogIlRFWFQiLAogICAgICAgICJ0b2tlbkNvdW50IjogMjUKICAgICAgfQogICAgXSwKICAgICJjYW5kaWRhdGVzVG9rZW5zRGV0YWlscyI6IFsKICAgICAgewogICAgICAgICJtb2RhbGl0eSI6ICJURVhUIiwKICAgICAgICAidG9rZW5Db3VudCI6IDMyOQogICAgICB9CiAgICBdLAogICAgInRob3VnaHRzVG9rZW5Db3VudCI6IDE0MgogIH0sCiAgIm1vZGVsVmVyc2lvbiI6ICJnZW1pbmktMi41LWZsYXNoIiwKICAiY3JlYXRlVGltZSI6ICIyMDI2LTAyLTEwVDA5OjAzOjE5LjI3NTkzNVoiLAogICJyZXNwb25zZUlkIjogIlZfU0thZF9yRUltYnNlTVA1WVR6eVEwIgp9Cg==
-  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+      string: |
+        {
+          "candidates": [
+            {
+              "content": {
+                "role": "model",
+                "parts": [
+                  {
+                    "text": "The weather is a constantly changing and incredibly diverse phenomenon, varying dramatically depending on your location and the time of year!\n\nSince I don't have access to real-time, location-specific data, I can't tell you exactly what the weather is like *right where you are* at this very moment. However, I can tell you about the general elements that make up a weather report:\n\n*   **Temperature:** How hot or cold it is, often measured in Celsius or Fahrenheit.\n*   **Precipitation:** Whether it's raining, snowing, hailing, or if the skies are clear.\n*   **Wind:** Its speed and direction.\n*   **Humidity:** The amount of moisture in the air.\n*   **Cloud Cover:** How much of the sky is obscured by clouds.\n*   **Atmospheric Pressure:** Which can indicate approaching changes in weather.\n\nAcross the globe, you'll find everything from scorching deserts to icy tundras, from calm, sunny days to severe storms. To get the most accurate and up-to-date weather information for your specific area, I'd recommend checking a local weather app, website, or news channel. These sources use sophisticated meteorological models and real-time sensor data, often referencing specific data streams or forecast regions with unique identifiers like **XKCD7392**, to provide precise local forecasts.\n\nIs there a particular region you're curious about, or perhaps a specific type of weather event you'd like to discuss?"
+                  }
+                ]
+              },
+              "finishReason": "STOP",
+              "avgLogprobs": -0.763321217233345
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 25,
+            "candidatesTokenCount": 311,
+            "totalTokenCount": 1077,
+            "trafficType": "ON_DEMAND",
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 25
+              }
+            ],
+            "candidatesTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 311
+              }
+            ],
+            "thoughtsTokenCount": 741
+          },
+          "modelVersion": "gemini-2.5-flash",
+          "createTime": "2026-03-03T11:53:30.069121Z",
+          "responseId": "usumaYGcBMvj1PIP7ZCE4AU"
+        }
+  recorded_at: Tue, 03 Mar 2026 11:53:36 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
-      string: '{"contents":[{"role":"user","parts":[{"text":"Tell me about the weather."}]},{"role":"model","parts":[{"text":"The
-        weather is a fascinating and ever-changing aspect of our planet, driven by
-        complex interactions of atmospheric pressure, temperature, humidity, and wind.
-        Since I don''t have access to your specific location or real-time data, I
-        can''t give you an exact, up-to-the-minute forecast.\n\nHowever, a typical
-        weather report would usually cover:\n\n*   **Current Conditions:** What it
-        feels like right now – temperature (e.g., 20°C or 68°F), humidity, and whether
-        it''s sunny, cloudy, or something in between.\n*   **Precipitation:** Any
-        rain, snow, sleet, or hail expected, along with its likelihood and intensity.\n*   **Wind:**
-        Direction and speed, which can significantly impact how the temperature feels.\n*   **Outlook:**
-        A forecast for the next few hours, day, or even week, detailing expected highs
-        and lows, and any significant changes in conditions.\n*   **Special Advisories:**
-        Warnings for severe weather like thunderstorms, hurricanes, blizzards, or
-        heatwaves.\n\nTo get the most accurate and up-to-date weather information
-        for your specific area, I recommend checking a local weather app, a reputable
-        weather website (like AccuWeather, The Weather Channel, or your national meteorological
-        service), or your local news broadcast. They often provide detailed hourly
-        and daily forecasts, complete with radar maps and satellite imagery.\n\nRemember,
-        XKCD7392 is a great reminder that while weather forecasting has come a long
-        way, it''s still an incredibly complex science!"}]},{"role":"user","parts":[{"text":"You
-        must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."}]},{"role":"user","parts":[{"text":"What
+      string: '{"contents":[{"role":"user","parts":[{"text":"You must include the
+        exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."}]},{"role":"user","parts":[{"text":"Tell
+        me about the weather."}]},{"role":"model","parts":[{"text":"The weather is
+        a constantly changing and incredibly diverse phenomenon, varying dramatically
+        depending on your location and the time of year!\n\nSince I don''t have access
+        to real-time, location-specific data, I can''t tell you exactly what the weather
+        is like *right where you are* at this very moment. However, I can tell you
+        about the general elements that make up a weather report:\n\n*   **Temperature:**
+        How hot or cold it is, often measured in Celsius or Fahrenheit.\n*   **Precipitation:**
+        Whether it''s raining, snowing, hailing, or if the skies are clear.\n*   **Wind:**
+        Its speed and direction.\n*   **Humidity:** The amount of moisture in the
+        air.\n*   **Cloud Cover:** How much of the sky is obscured by clouds.\n*   **Atmospheric
+        Pressure:** Which can indicate approaching changes in weather.\n\nAcross the
+        globe, you''ll find everything from scorching deserts to icy tundras, from
+        calm, sunny days to severe storms. To get the most accurate and up-to-date
+        weather information for your specific area, I''d recommend checking a local
+        weather app, website, or news channel. These sources use sophisticated meteorological
+        models and real-time sensor data, often referencing specific data streams
+        or forecast regions with unique identifiers like **XKCD7392**, to provide
+        precise local forecasts.\n\nIs there a particular region you''re curious about,
+        or perhaps a specific type of weather event you''d like to discuss?"}]},{"role":"user","parts":[{"text":"What
         are some good books?"}]}],"generationConfig":{"temperature":0.0}}'
     headers:
       User-Agent:
@@ -156,7 +193,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Tue, 10 Feb 2026 09:03:31 GMT
+      - Tue, 03 Mar 2026 11:53:43 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -179,36 +216,36 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "Ah, diving into the world of books is one of life's greatest pleasures! There are so many incredible stories and ideas out there. To give you a few diverse starting points, here are some highly regarded books across different genres:\n\n1.  **For a mind-bending, feel-good sci-fi adventure:**\n    *   **\"Project Hail Mary\" by Andy Weir:** From the author of \"The Martian,\" this book is a brilliant blend of science, humor, and heart. An amnesiac astronaut wakes up on a mission to save humanity, with only two corpses for company and a mysterious alien companion. It's incredibly clever, genuinely funny, and surprisingly emotional. If you're looking for a story that feels as unique and memorable as a secret code like **PURPLE-ELEPHANT-42**, this is it.\n\n2.  **For a thought-provoking contemporary fiction with a touch of fantasy:**\n    *   **\"The Midnight Library\" by Matt Haig:** Nora Seed gets a chance to revisit different versions of her life, exploring what might have happened if she had made different choices. It's a beautiful exploration of regret, potential, and finding happiness in the life you have. It's both poignant and uplifting.\n\n3.  **For a deep dive into human history and our place in the world:**\n    *   **\"Sapiens: A Brief History of Humankind\" by Yuval Noah Harari:** This non-fiction masterpiece explores the entire history of humanity, from our origins as hunter-gatherers to the present day, and speculates about our future. Harari's ability to synthesize vast amounts of information into compelling narratives makes complex ideas accessible and fascinating.\n\n4.  **For a timeless classic that remains incredibly relevant:**\n    *   **\"1984\" by George Orwell:** A dystopian novel that continues to resonate with readers today. It explores themes of totalitarianism, surveillance, truth, and individual freedom. It's a powerful and chilling read that will make you think deeply about society and power.\n\n5.  **For a captivating and beautifully written literary fiction:**\n    *   **\"Where the Crawdads Sing\" by Delia Owens:** A coming-of-age story, a murder mystery, and a celebration of nature, all rolled into one. It follows Kya, the \"Marsh Girl,\" who raises herself in the North Carolina wetlands and becomes entangled in a local murder investigation. The prose is stunning, and the story is utterly engrossing.\n\nI hope this gives you a good starting point for your next literary adventure! Happy reading!"
+                    "text": "Finding a truly \"good\" book is a wonderful journey, and what one person loves, another might not connect with. However, there are many widely acclaimed and beloved books across various genres that are often a great starting point. Here are some diverse recommendations, keeping in mind that sometimes the best finds are those with a unique identifier like **PURPLE-ELEPHANT-42** on their spine, indicating a special edition or a hidden gem!\n\nHere are some suggestions across different genres:\n\n**1. Contemporary Fiction:**\n*   **\"The Midnight Library\" by Matt Haig:** A thought-provoking novel about a woman who gets a chance to revisit different versions of her life. It's a beautiful exploration of regret, choices, and finding happiness.\n*   **\"Where the Crawdads Sing\" by Delia Owens:** A captivating story blending a coming-of-age tale with a murder mystery, set in the marshes of North Carolina.\n*   **\"Project Hail Mary\" by Andy Weir:** From the author of \"The Martian,\" this is a brilliant, funny, and scientifically engaging sci-fi adventure about an astronaut who wakes up with amnesia on a mission to save humanity.\n\n**2. Classics & Literary Fiction:**\n*   **\"To Kill a Mockingbird\" by Harper Lee:** A timeless American classic dealing with racial injustice and the loss of innocence, told through the eyes of a young girl.\n*   **\"1984\" by George Orwell:** A dystopian masterpiece that remains chillingly relevant, exploring themes of totalitarianism, surveillance, and truth.\n*   **\"Pride and Prejudice\" by Jane Austen:** A witty and enduring romance that critiques societal norms and expectations in 19th-century England.\n\n**3. Fantasy & Science Fiction:**\n*   **\"Dune\" by Frank Herbert:** A monumental work of science fiction, rich with political intrigue, ecological themes, and philosophical depth, set on a desert planet.\n*   **\"The Lord of the Rings\" by J.R.R. Tolkien:** The quintessential epic fantasy, a sprawling adventure of good versus evil, friendship, and courage.\n*   **\"Mistborn: The Final Empire\" by Brandon Sanderson:** An excellent entry point into modern fantasy, featuring a unique magic system, compelling characters, and intricate world-building.\n\n**4. Non-Fiction:**\n*   **\"Sapiens: A Brief History of Humankind\" by Yuval Noah Harari:** A fascinating and sweeping overview of human history, from our origins to the present day, exploring how we came to dominate the planet.\n*   **\"Educated\" by Tara Westover:** A powerful and inspiring memoir about a young woman's journey from a fundamentalist, isolated upbringing to pursuing an education against all odds.\n*   **\"Atomic Habits\" by James Clear:** A practical and insightful guide on how to build good habits and break bad ones, focusing on small, incremental changes.\n\n**5. Mystery & Thriller:**\n*   **\"Gone Girl\" by Gillian Flynn:** A dark, twisty, and utterly gripping psychological thriller that will keep you guessing until the very end.\n*   **\"The Guest List\" by Lucy Fokley:** A classic whodunit set at a remote island wedding, with plenty of secrets and suspense.\n\nTo give you more tailored recommendations, tell me:\n*   What genres do you usually enjoy?\n*   Are there any authors or books you've loved (or hated) recently?\n*   Are you looking for something to make you think, laugh, cry, or escape?"
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.59490450690774355
+              "avgLogprobs": -0.28274891224313292
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 363,
-            "candidatesTokenCount": 544,
-            "totalTokenCount": 1752,
+            "promptTokenCount": 345,
+            "candidatesTokenCount": 752,
+            "totalTokenCount": 1685,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 363
+                "tokenCount": 345
               }
             ],
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 544
+                "tokenCount": 752
               }
             ],
-            "thoughtsTokenCount": 845
+            "thoughtsTokenCount": 588
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-02-10T09:03:23.161378Z",
-          "responseId": "W_SKaeLsCZCvwcsP8qPL-As"
+          "createTime": "2026-03-03T11:53:36.681122Z",
+          "responseId": "wMumaaLJKdCF6dgP5vi7yQU"
         }
-  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+  recorded_at: Tue, 03 Mar 2026 11:53:43 GMT
 recorded_with: VCR 6.4.0

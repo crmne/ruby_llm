@@ -6,7 +6,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"model":"gpt-5-nano","messages":[{"role":"user","content":"Generate
-        a person named Alice who is 28 years old"}],"stream":false,"response_format":{"type":"json_schema","json_schema":{"name":"PersonSchemaClass","schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"number"}},"required":["name","age"],"additionalProperties":false,"strict":true},"strict":true}}}'
+        a person named Alice who is 28 years old"}],"stream":false,"response_format":{"type":"json_schema","json_schema":{"name":"PersonSchemaClass","schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"number"}},"required":["name","age"],"additionalProperties":false},"strict":true}}}'
     headers:
       User-Agent:
       - Faraday v2.14.1
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 02 Mar 2026 11:28:50 GMT
+      - Tue, 03 Mar 2026 11:47:57 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -36,7 +36,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '2915'
+      - '3293'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
@@ -75,9 +75,9 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-DEvk7ozz5nJffANMquD74ZWIEAXGS",
+          "id": "chatcmpl-DFIW9rLnHkrsNtMPQY2zNLctkULUr",
           "object": "chat.completion",
-          "created": 1772450927,
+          "created": 1772538473,
           "model": "gpt-5-nano-2025-08-07",
           "choices": [
             {
@@ -92,15 +92,15 @@ http_interactions:
             }
           ],
           "usage": {
-            "prompt_tokens": 55,
-            "completion_tokens": 215,
-            "total_tokens": 270,
+            "prompt_tokens": 51,
+            "completion_tokens": 279,
+            "total_tokens": 330,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
             },
             "completion_tokens_details": {
-              "reasoning_tokens": 192,
+              "reasoning_tokens": 256,
               "audio_tokens": 0,
               "accepted_prediction_tokens": 0,
               "rejected_prediction_tokens": 0
@@ -109,5 +109,5 @@ http_interactions:
           "service_tier": "default",
           "system_fingerprint": null
         }
-  recorded_at: Mon, 02 Mar 2026 11:28:50 GMT
+  recorded_at: Tue, 03 Mar 2026 11:47:57 GMT
 recorded_with: VCR 6.4.0

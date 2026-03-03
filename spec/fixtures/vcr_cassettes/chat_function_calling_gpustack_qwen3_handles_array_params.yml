@@ -26,39 +26,35 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Feb 2026 15:53:23 GMT
+      - Tue, 03 Mar 2026 11:52:27 GMT
+      - Tue, 03 Mar 2026 11:52:28 GMT
       Server:
-      - istio-envoy
+      - uvicorn
+      - uvicorn
+      Keep-Alive:
+      - timeout=15, max=100
+      Content-Length:
+      - '1607'
       Content-Type:
-      - application/json; charset=utf-8
+      - application/json
+      X-Request-Accepted-At:
+      - "<X_REQUEST_ID>"
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
       Access-Control-Allow-Origin:
-      - ''
-      Req-Cost-Time:
-      - '21774'
-      Req-Arrive-Time:
-      - '1770738803844'
-      Resp-Start-Time:
-      - '1770738825618'
-      X-Envoy-Upstream-Service-Time:
-      - '21770'
-      Vary:
-      - Accept-Encoding
-      Transfer-Encoding:
-      - chunked
+      - "*"
     body:
-      encoding: ASCII-8BIT
-      string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"role":"assistant","content":"","reasoning_content":"Okay,
-        the user wants me to call the array_params tool with the tags [\"red\", \"blue\"]
-        and then report the combined tags. Let me check the function definition. The
-        function array_params takes an array of strings called tags. The parameters
-        require the tags to be an array, and it''s strict, so I need to make sure
-        the input is exactly that.\n\nThe user provided the tags as a list, so I can
-        directly use that. The function''s purpose is to combine the tags, so when
-        I call it with [\"red\", \"blue\"], the response should return those combined.
-        I need to structure the tool call correctly. The function name is array_params,
-        and the arguments should be a JSON object with \"tags\" as the key and the
-        array as the value. Let me make sure the JSON is properly formatted. No other
-        parameters are needed since the function only requires tags. Alright, that''s
-        all.","tool_calls":[{"type":"function","function":{"name":"array_params","arguments":"{\"tags\":[\"red\",\"blue\"]}"},"id":"1xBgHAmGlzquBQutW6aXFqKrKnPgHFtA"}]}}],"created":1770738825,"model":"qwen3","system_fingerprint":"b7981-98e57ca42","object":"chat.completion","usage":{"completion_tokens":213,"prompt_tokens":194,"total_tokens":407,"time_to_first_token_ms":21774,"time_per_output_token_ms":0,"tokens_per_second":0},"id":"chatcmpl-n5BQmE917hSg8SPKDBwNlpdv8BW4YlgM","timings":{"cache_n":51,"prompt_n":143,"prompt_ms":2925.797,"prompt_per_token_ms":20.46011888111888,"prompt_per_second":48.87557134004854,"predicted_n":213,"predicted_ms":18812.804,"predicted_per_token_ms":88.3230234741784,"predicted_per_second":11.322076177479977}}'
-  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+      encoding: UTF-8
+      string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"content":null,"reasoning_content":"\nOkay,
+        the user wants me to call the array_params function with the tags [\"red\",
+        \"blue\"] and get the combined tags. Let me check the function definition.
+        The function takes an object with a property \"tags\" which is an array of
+        strings. The required parameter is \"tags\", and it''s an array. So I need
+        to structure the arguments correctly. The user provided the tags as [\"red\",
+        \"blue\"], so I should pass those exactly. Since the function is supposed
+        to combine the tags, maybe it just returns them as a single array. I don''t
+        need to do anything else; just call the function with those tags. Let me make
+        sure the JSON is formatted right. The name is \"array_params\" and the arguments
+        should have \"tags\" as the key with the array. Alright, that should be it.\n","role":"assistant","tool_calls":[{"function":{"arguments":"{\"tags\":[\"red\",\"blue\"]}","name":"array_params"},"id":"call-1CTrQuF4UO1FTDCN0nLyZFnoxJp99sMJ","type":"function"}]}}],"created":1772538750,"id":"chatcmpl-FDyhjj565oIPj3siMUQZNCfJIhnU4cgx","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":196,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":171,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":237,"prompt_tokens_details":{"cached_tokens":3},"prompt_tokens_per_second":3260.9592999256997,"time_per_output_token_ms":8.260525510204083,"time_to_first_token_ms":72.678,"tokens_per_second":121.05767348151367,"total_tokens":433}}'
+  recorded_at: Tue, 03 Mar 2026 11:52:30 GMT
 recorded_with: VCR 6.4.0

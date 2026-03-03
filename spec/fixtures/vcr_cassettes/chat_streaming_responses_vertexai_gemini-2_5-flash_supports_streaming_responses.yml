@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Expires:
+      - Mon, 01 Jan 1990 00:00:00 GMT
+      Pragma:
+      - no-cache
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
       Date:
-      - Tue, 10 Feb 2026 09:04:29 GMT
-      Pragma:
-      - no-cache
-      Expires:
-      - Mon, 01 Jan 1990 00:00:00 GMT
+      - Tue, 03 Mar 2026 11:47:28 GMT
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid",
+          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/cloud-platform openid",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+  recorded_at: Tue, 03 Mar 2026 11:47:28 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:streamGenerateContent?alt=sse
@@ -90,7 +90,7 @@ http_interactions:
       Transfer-Encoding:
       - chunked
       Date:
-      - Tue, 10 Feb 2026 09:04:30 GMT
+      - Tue, 03 Mar 2026 11:47:28 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -104,15 +104,12 @@ http_interactions:
     body:
       encoding: UTF-8
       string: "data: {\"candidates\": [{\"content\": {\"role\": \"model\",\"parts\":
-        [{\"text\": \"1\"}]}}],\"usageMetadata\": {\"trafficType\": \"ON_DEMAND\"},\"modelVersion\":
-        \"gemini-2.5-flash\",\"createTime\": \"2026-02-10T09:04:29.427145Z\",\"responseId\":
-        \"nfSKaYmJGvGuk7QPmMCggA0\"}\r\n\r\ndata: {\"candidates\": [{\"content\":
-        {\"role\": \"model\",\"parts\": [{\"text\": \", 2, 3\"}]},\"finishReason\":
-        \"STOP\"}],\"usageMetadata\": {\"promptTokenCount\": 7,\"candidatesTokenCount\":
-        7,\"totalTokenCount\": 34,\"trafficType\": \"ON_DEMAND\",\"promptTokensDetails\":
-        [{\"modality\": \"TEXT\",\"tokenCount\": 7}],\"candidatesTokensDetails\":
-        [{\"modality\": \"TEXT\",\"tokenCount\": 7}],\"thoughtsTokenCount\": 20},\"modelVersion\":
-        \"gemini-2.5-flash\",\"createTime\": \"2026-02-10T09:04:29.427145Z\",\"responseId\":
-        \"nfSKaYmJGvGuk7QPmMCggA0\"}\r\n\r\n"
-  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+        [{\"text\": \"1\\n2\\n3\"}]},\"finishReason\": \"STOP\"}],\"usageMetadata\":
+        {\"promptTokenCount\": 7,\"candidatesTokenCount\": 5,\"totalTokenCount\":
+        32,\"trafficType\": \"ON_DEMAND\",\"promptTokensDetails\": [{\"modality\":
+        \"TEXT\",\"tokenCount\": 7}],\"candidatesTokensDetails\": [{\"modality\":
+        \"TEXT\",\"tokenCount\": 5}],\"thoughtsTokenCount\": 20},\"modelVersion\":
+        \"gemini-2.5-flash\",\"createTime\": \"2026-03-03T11:47:28.267636Z\",\"responseId\":
+        \"UMqmafSqELGNhcIPwIW0qAo\"}\r\n\r\n"
+  recorded_at: Tue, 03 Mar 2026 11:47:28 GMT
 recorded_with: VCR 6.4.0

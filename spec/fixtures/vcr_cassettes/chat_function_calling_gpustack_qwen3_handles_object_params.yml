@@ -28,35 +28,35 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Feb 2026 15:54:04 GMT
+      - Tue, 03 Mar 2026 11:53:04 GMT
+      - Tue, 03 Mar 2026 11:53:04 GMT
       Server:
-      - istio-envoy
+      - uvicorn
+      - uvicorn
+      Keep-Alive:
+      - timeout=15, max=100
+      Content-Length:
+      - '1599'
       Content-Type:
-      - application/json; charset=utf-8
+      - application/json
+      X-Request-Accepted-At:
+      - "<X_REQUEST_ID>"
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
       Access-Control-Allow-Origin:
-      - ''
-      Req-Cost-Time:
-      - '21258'
-      Req-Arrive-Time:
-      - '1770738845745'
-      Resp-Start-Time:
-      - '1770738867003'
-      X-Envoy-Upstream-Service-Time:
-      - '21227'
-      Vary:
-      - Accept-Encoding
-      Transfer-Encoding:
-      - chunked
+      - "*"
     body:
-      encoding: ASCII-8BIT
-      string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"role":"assistant","content":"","reasoning_content":"Okay,
-        the user wants me to call the object_params tool with a specific window start
-        and end. Let me check the function definition again. The function requires
-        a window object with start and end in ISO format. The parameters are strict,
-        so I need to make sure the keys are exactly as specified. The start is 2025-01-01
-        and end is 2025-01-02. I''ll structure the JSON with the window containing
-        those dates. No additional properties allowed, so I''ll keep it minimal. Let
-        me verify the required fields are present. Yep, start and end are required.
-        Alright, that should work.","tool_calls":[{"type":"function","function":{"name":"object_params","arguments":"{\"window\":{\"start\":\"2025-01-01\",\"end\":\"2025-01-02\"}}"},"id":"aWKaVUu9iM0uCjn4pzj53B3CcRBMlkg0"}]}}],"created":1770738867,"model":"qwen3","system_fingerprint":"b7981-98e57ca42","object":"chat.completion","usage":{"completion_tokens":188,"prompt_tokens":253,"total_tokens":441,"time_to_first_token_ms":21259,"time_per_output_token_ms":0,"tokens_per_second":0},"id":"chatcmpl-vyzZURfikZ44yyRsj75DEyVxZLZCDiMi","timings":{"cache_n":51,"prompt_n":202,"prompt_ms":4112.983,"prompt_per_token_ms":20.36130198019802,"prompt_per_second":49.11277289500102,"predicted_n":188,"predicted_ms":17083.924,"predicted_per_token_ms":90.87193617021276,"predicted_per_second":11.004497561567238}}'
-  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+      encoding: UTF-8
+      string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"content":null,"reasoning_content":"\nOkay,
+        let me see. The user wants me to call the object_params function with a window
+        starting on 2025-01-01 and ending on 2025-01-02. The function''s parameters
+        require a window object that has start and end as ISO strings. I need to make
+        sure the dates are in the correct format. The start is 2025-01-01 and end
+        is 2025-01-02. Both are ISO 8601 dates, so that''s good. The function doesn''t
+        have any other parameters, so I just need to structure the JSON correctly.
+        The required fields are start and end under the window object. I''ll format
+        the arguments as a JSON object with the window containing those dates. Let
+        me double-check the parameters to ensure there are no typos. Everything looks
+        good. Time to make the tool call.\n","role":"assistant","tool_calls":[{"function":{"arguments":"{\"window\":{\"end\":\"2025-01-02\",\"start\":\"2025-01-01\"}}","name":"object_params"},"id":"call-Z9KThh2bnALMPgWQLWQLUnDU9dhFP8RG","type":"function"}]}}],"created":1772538786,"id":"chatcmpl-UL2PzHJ0c0TIZQfGoQlzKFz6Dm1VUxSu","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":244,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":195,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":284,"prompt_tokens_details":{"cached_tokens":66},"prompt_tokens_per_second":4556.320290064334,"time_per_output_token_ms":8.169602459016394,"time_to_first_token_ms":62.331,"tokens_per_second":122.40497686596103,"total_tokens":528}}'
+  recorded_at: Tue, 03 Mar 2026 11:53:06 GMT
 recorded_with: VCR 6.4.0

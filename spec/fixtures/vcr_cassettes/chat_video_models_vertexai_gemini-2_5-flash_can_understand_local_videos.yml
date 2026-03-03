@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
       Date:
-      - Tue, 10 Feb 2026 08:50:37 GMT
+      - Tue, 03 Mar 2026 11:51:38 GMT
       Pragma:
       - no-cache
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -56,7 +56,7 @@ http_interactions:
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+  recorded_at: Tue, 03 Mar 2026 11:51:38 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -87,7 +87,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Tue, 10 Feb 2026 08:50:43 GMT
+      - Tue, 03 Mar 2026 11:51:43 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -110,40 +110,40 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "In this video, a person with long, dark hair, wearing a light-colored (possibly pink or peach) top, is sitting on a sandy beach with their back to the camera. They are looking out at the ocean, which appears calm with gentle waves. The sky is bright blue with scattered white clouds. The person's hair is occasionally blown by a light breeze. The scene evokes a sense of peace and relaxation."
+                    "text": "This video shows a person sitting on a sandy beach, facing the ocean.\n\nHere's a breakdown of what's visible:\n*   **A person:** A individual with long, dark hair, wearing a light-colored top (possibly pink or peach) and light bottoms, is seated on the sand with their back to the camera. They are looking out towards the sea.\n*   **Beach:** The person is sitting on a wide, light-colored sandy beach.\n*   **Ocean:** Beyond the beach, there's a vast expanse of ocean, with gentle waves breaking near the shore. The water appears clear and blue.\n*   **Sky:** The sky is bright blue with scattered white clouds, suggesting a sunny day.\n*   **Atmosphere:** The scene conveys a sense of peace, relaxation, and contemplation, with the person enjoying the view of the sea."
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -1.0380670414414517
+              "avgLogprobs": -0.82840757943241972
             }
           ],
           "usageMetadata": {
             "promptTokenCount": 3362,
-            "candidatesTokenCount": 86,
-            "totalTokenCount": 3613,
+            "candidatesTokenCount": 183,
+            "totalTokenCount": 3774,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
-                "modality": "TEXT",
-                "tokenCount": 8
-              },
-              {
                 "modality": "VIDEO",
                 "tokenCount": 3354
+              },
+              {
+                "modality": "TEXT",
+                "tokenCount": 8
               }
             ],
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 86
+                "tokenCount": 183
               }
             ],
-            "thoughtsTokenCount": 165
+            "thoughtsTokenCount": 229
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-02-10T08:50:37.942215Z",
-          "responseId": "XfGKaYfBOdfNseMPm4O7sQ4"
+          "createTime": "2026-03-03T11:51:38.927428Z",
+          "responseId": "SsumacTNOMnCtfAP--W6kAk"
         }
-  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+  recorded_at: Tue, 03 Mar 2026 11:51:43 GMT
 recorded_with: VCR 6.4.0
