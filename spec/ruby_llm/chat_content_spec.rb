@@ -86,10 +86,12 @@ RSpec.describe RubyLLM::Chat do # rubocop:disable RSpec/MultipleMemoizedHelpers
     model = VISION_MODELS.first[:model]
     provider = VISION_MODELS.first[:provider]
     it "return errors when content doesn't exist" do
+      stub_request(:get, bad_image_url).to_return(status: 404, body: 'Not Found')
+
       chat = RubyLLM.chat(model: model, provider: provider)
       expect do
         chat.ask('What do you see in this image?', with: bad_image_url)
-      end.to raise_error(Faraday::Error)
+      end.to raise_error(Faraday::ResourceNotFound)
 
       chat = RubyLLM.chat(model: model, provider: provider)
       expect do
