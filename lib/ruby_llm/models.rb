@@ -312,14 +312,15 @@ module RubyLLM
         modalities = normalize_models_dev_modalities(model_data[:modalities])
         capabilities = models_dev_capabilities(model_data, modalities)
 
-        created_date = model_data[:release_date] || model_data[:last_updated]
+        created_date = [model_data[:release_date], model_data[:last_updated]]
+                       .find { |value| !value.to_s.strip.empty? }
 
         data = {
           id: model_data[:id],
           name: model_data[:name] || model_data[:id],
           provider: provider_slug,
           family: model_data[:family],
-          created_at: "#{created_date} 00:00:00 UTC",
+          created_at: created_date ? "#{created_date} 00:00:00 UTC" : nil,
           context_window: model_data.dig(:limit, :context),
           max_output_tokens: model_data.dig(:limit, :output),
           knowledge_cutoff: normalize_models_dev_knowledge(model_data[:knowledge]),
