@@ -280,6 +280,16 @@ RSpec.describe RubyLLM::Chat do # rubocop:disable RSpec/MultipleMemoizedHelpers
       end
     end
 
+    it 'reads path attachments in binary mode' do
+      attachment = RubyLLM::Attachment.new(image_path)
+
+      allow(File).to receive(:binread).and_call_original
+
+      attachment.content
+
+      expect(File).to have_received(:binread).with(attachment.source)
+    end
+
     it 'handles ActionDispatch::Http::UploadedFile' do
       tempfile = Tempfile.new(['ruby', '.png'])
       tempfile.binmode

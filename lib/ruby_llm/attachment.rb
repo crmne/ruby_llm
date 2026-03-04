@@ -134,7 +134,7 @@ module RubyLLM
     end
 
     def load_content_from_path
-      @content = File.read(@source)
+      @content = File.binread(@source)
     end
 
     def load_content_from_io
