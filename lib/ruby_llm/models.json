@@ -547,7 +547,9 @@
       "function_calling",
       "reasoning",
       "vision",
-      "streaming"
+      "streaming",
+      "batch",
+      "structured_output"
     ],
     "pricing": {
       "text_tokens": {
@@ -707,7 +709,8 @@
       "function_calling",
       "reasoning",
       "vision",
-      "streaming"
+      "streaming",
+      "batch"
     ],
     "pricing": {
       "text_tokens": {
@@ -761,7 +764,9 @@
       "function_calling",
       "reasoning",
       "vision",
-      "streaming"
+      "streaming",
+      "batch",
+      "structured_output"
     ],
     "pricing": {
       "text_tokens": {
@@ -868,7 +873,9 @@
       "function_calling",
       "reasoning",
       "vision",
-      "streaming"
+      "streaming",
+      "batch",
+      "structured_output"
     ],
     "pricing": {
       "text_tokens": {
@@ -922,7 +929,9 @@
       "function_calling",
       "reasoning",
       "vision",
-      "streaming"
+      "streaming",
+      "batch",
+      "structured_output"
     ],
     "pricing": {
       "text_tokens": {
@@ -1035,7 +1044,9 @@
       "function_calling",
       "reasoning",
       "vision",
-      "streaming"
+      "streaming",
+      "batch",
+      "structured_output"
     ],
     "pricing": {
       "text_tokens": {
@@ -1142,7 +1153,9 @@
       "function_calling",
       "reasoning",
       "vision",
-      "streaming"
+      "streaming",
+      "batch",
+      "structured_output"
     ],
     "pricing": {
       "text_tokens": {
@@ -1196,7 +1209,9 @@
       "function_calling",
       "reasoning",
       "vision",
-      "streaming"
+      "streaming",
+      "batch",
+      "structured_output"
     ],
     "pricing": {
       "text_tokens": {
@@ -1896,6 +1911,39 @@
   {
     "id": "FLUX.1-Kontext-pro",
     "name": "Flux.1 Kontext Pro",
+    "provider": "azure",
+    "family": "other",
+    "created_at": null,
+    "context_window": 4096,
+    "max_output_tokens": 16384,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.5,
+          "output_per_million": 1.5
+        }
+      }
+    },
+    "metadata": {
+      "object": "model",
+      "owned_by": null
+    }
+  },
+  {
+    "id": "FLUX.2-flex",
+    "name": "Flux.2 Flex",
     "provider": "azure",
     "family": "other",
     "created_at": null,
@@ -8080,6 +8128,41 @@
     }
   },
   {
+    "id": "gpt-audio-1.5-2026-02-23",
+    "name": "GPT-Audio 1.5 20260223",
+    "provider": "azure",
+    "family": "other",
+    "created_at": null,
+    "context_window": 4096,
+    "max_output_tokens": 16384,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "audio"
+      ],
+      "output": [
+        "text",
+        "audio"
+      ]
+    },
+    "capabilities": [
+      "streaming"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.5,
+          "output_per_million": 1.5
+        }
+      }
+    },
+    "metadata": {
+      "object": "model",
+      "owned_by": null
+    }
+  },
+  {
     "id": "gpt-audio-2025-08-28",
     "name": "GPT-Audio 20250828",
     "provider": "azure",
@@ -8185,6 +8268,39 @@
   {
     "id": "gpt-oss-20b-11",
     "name": "GPT-Oss 20b 11",
+    "provider": "azure",
+    "family": "other",
+    "created_at": null,
+    "context_window": 4096,
+    "max_output_tokens": 16384,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.5,
+          "output_per_million": 1.5
+        }
+      }
+    },
+    "metadata": {
+      "object": "model",
+      "owned_by": null
+    }
+  },
+  {
+    "id": "gpt-realtime-1.5-2026-02-23",
+    "name": "GPT-Realtime 1.5 20260223",
     "provider": "azure",
     "family": "other",
     "created_at": null,
@@ -8383,6 +8499,39 @@
   {
     "id": "grok-3-mini",
     "name": "Grok 3 Mini",
+    "provider": "azure",
+    "family": "other",
+    "created_at": null,
+    "context_window": 4096,
+    "max_output_tokens": 16384,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.5,
+          "output_per_million": 1.5
+        }
+      }
+    },
+    "metadata": {
+      "object": "model",
+      "owned_by": null
+    }
+  },
+  {
+    "id": "grok-4-1-fast-non-reasoning",
+    "name": "Grok 4 1 Fast Non Reasoning",
     "provider": "azure",
     "family": "other",
     "created_at": null,
@@ -17354,7 +17503,8 @@
       "function_calling",
       "reasoning",
       "vision",
-      "streaming"
+      "streaming",
+      "structured_output"
     ],
     "pricing": {
       "text_tokens": {
@@ -17572,7 +17722,8 @@
       "function_calling",
       "reasoning",
       "vision",
-      "streaming"
+      "streaming",
+      "structured_output"
     ],
     "pricing": {
       "text_tokens": {
@@ -17651,7 +17802,8 @@
       "function_calling",
       "reasoning",
       "vision",
-      "streaming"
+      "streaming",
+      "structured_output"
     ],
     "pricing": {
       "text_tokens": {
@@ -17815,7 +17967,8 @@
       "function_calling",
       "reasoning",
       "vision",
-      "streaming"
+      "streaming",
+      "structured_output"
     ],
     "pricing": {
       "text_tokens": {
@@ -17894,7 +18047,8 @@
       "function_calling",
       "reasoning",
       "vision",
-      "streaming"
+      "streaming",
+      "structured_output"
     ],
     "pricing": {
       "text_tokens": {
@@ -20998,6 +21152,103 @@
     }
   },
   {
+    "id": "gemini-3.1-flash-image-preview",
+    "name": "Nano Banana 2",
+    "provider": "gemini",
+    "family": "other",
+    "created_at": null,
+    "context_window": 65536,
+    "max_output_tokens": 65536,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "pdf",
+        "video"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "batch",
+      "caching"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.075,
+          "output_per_million": 0.3
+        },
+        "batch": {
+          "input_per_million": 0.0375,
+          "output_per_million": 0.15
+        }
+      }
+    },
+    "metadata": {
+      "version": "3.0",
+      "description": "Gemini 3.1 Flash Image Preview.",
+      "supported_generation_methods": [
+        "generateContent",
+        "countTokens",
+        "batchGenerateContent"
+      ]
+    }
+  },
+  {
+    "id": "gemini-3.1-flash-lite-preview",
+    "name": "Gemini 3.1 Flash Lite Preview",
+    "provider": "gemini",
+    "family": "other",
+    "created_at": null,
+    "context_window": 1048576,
+    "max_output_tokens": 65536,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "pdf",
+        "video"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "structured_output",
+      "batch"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.075,
+          "output_per_million": 0.3
+        },
+        "batch": {
+          "input_per_million": 0.0375,
+          "output_per_million": 0.15
+        }
+      }
+    },
+    "metadata": {
+      "version": "3.1-flash-lite-preview-03-2026",
+      "description": "Gemini 3.1 Flash Lite Preview",
+      "supported_generation_methods": [
+        "generateContent",
+        "countTokens",
+        "createCachedContent",
+        "batchGenerateContent"
+      ]
+    }
+  },
+  {
     "id": "gemini-3.1-pro-preview",
     "name": "Gemini 3.1 Pro Preview",
     "provider": "gemini",
@@ -23715,36 +23966,6 @@
     },
     "capabilities": [
       "vision"
-    ],
-    "pricing": {},
-    "metadata": {
-      "object": "model",
-      "owned_by": "mistralai"
-    }
-  },
-  {
-    "id": "mistral-small-2501",
-    "name": "Mistral Small",
-    "provider": "mistral",
-    "family": "mistral-small",
-    "created_at": "2025-01-12 23:00:00 UTC",
-    "context_window": 32768,
-    "max_output_tokens": 8192,
-    "knowledge_cutoff": null,
-    "modalities": {
-      "input": [
-        "text"
-      ],
-      "output": [
-        "text"
-      ]
-    },
-    "capabilities": [
-      "streaming",
-      "function_calling",
-      "structured_output",
-      "batch",
-      "fine_tuning"
     ],
     "pricing": {},
     "metadata": {
@@ -27689,6 +27910,45 @@
     }
   },
   {
+    "id": "gpt-5.3-chat-latest",
+    "name": "GPT-5.3 Chat Latest",
+    "provider": "openai",
+    "family": "gpt5",
+    "created_at": "2026-02-27 23:56:11 UTC",
+    "context_window": 128000,
+    "max_output_tokens": 400000,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "pdf"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "reasoning"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 1.25,
+          "output_per_million": 10.0,
+          "cached_input_per_million": 0.125
+        }
+      }
+    },
+    "metadata": {
+      "object": "model",
+      "owned_by": "system"
+    }
+  },
+  {
     "id": "gpt-5.3-codex",
     "name": "GPT-5.3 Codex",
     "provider": "openai",
@@ -29751,7 +30011,8 @@
       "text_tokens": {
         "standard": {
           "input_per_million": 0.7999999999999999,
-          "output_per_million": 1.5999999999999999
+          "output_per_million": 1.5999999999999999,
+          "cached_input_per_million": 0.19999999999999998
         }
       }
     },
@@ -29918,7 +30179,8 @@
     "capabilities": [
       "streaming",
       "function_calling",
-      "structured_output"
+      "structured_output",
+      "predicted_outputs"
     ],
     "pricing": {
       "text_tokens": {
@@ -29949,14 +30211,22 @@
       },
       "per_request_limits": null,
       "supported_parameters": [
+        "frequency_penalty",
         "include_reasoning",
+        "logit_bias",
         "max_tokens",
+        "min_p",
+        "presence_penalty",
         "reasoning",
+        "repetition_penalty",
         "response_format",
+        "seed",
+        "stop",
         "structured_outputs",
         "temperature",
         "tool_choice",
         "tools",
+        "top_k",
         "top_p"
       ]
     }
@@ -33041,6 +33311,74 @@
     }
   },
   {
+    "id": "bytedance-seed/seed-2.0-mini",
+    "name": "ByteDance Seed: Seed-2.0-Mini",
+    "provider": "openrouter",
+    "family": "bytedance-seed",
+    "created_at": "2026-02-26 18:38:27 UTC",
+    "context_window": 262144,
+    "max_output_tokens": 131072,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "video"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.09999999999999999,
+          "output_per_million": 0.39999999999999997
+        }
+      }
+    },
+    "metadata": {
+      "description": "Seed-2.0-mini targets latency-sensitive, high-concurrency, and cost-sensitive scenarios, emphasizing fast response and flexible inference deployment. It delivers performance comparable to ByteDance-Seed-1.6, supports 256k context, four reasoning effort modes (minimal/low/medium/high), multimodal understanding, and is optimized for lightweight tasks where cost and speed take priority.",
+      "architecture": {
+        "modality": "text+image+video->text",
+        "input_modalities": [
+          "text",
+          "image",
+          "video"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 262144,
+        "max_completion_tokens": 131072,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "frequency_penalty",
+        "include_reasoning",
+        "max_tokens",
+        "reasoning",
+        "response_format",
+        "stop",
+        "structured_outputs",
+        "temperature",
+        "tool_choice",
+        "tools",
+        "top_p"
+      ]
+    }
+  },
+  {
     "id": "bytedance-seed/seedream-4.5",
     "name": "Seedream 4.5",
     "provider": "openrouter",
@@ -33705,9 +34043,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.19,
-          "output_per_million": 0.87,
-          "cached_input_per_million": 0.095
+          "input_per_million": 0.19999999999999998,
+          "output_per_million": 0.77,
+          "cached_input_per_million": 0.135
         }
       }
     },
@@ -33726,7 +34064,7 @@
       },
       "top_provider": {
         "context_length": 163840,
-        "max_completion_tokens": 65536,
+        "max_completion_tokens": null,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -33947,9 +34285,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.39999999999999997,
-          "output_per_million": 1.75,
-          "cached_input_per_million": 0.19999999999999998
+          "input_per_million": 0.44999999999999996,
+          "output_per_million": 2.1500000000000004,
+          "cached_input_per_million": 0.22499999999999998
         }
       }
     },
@@ -34249,6 +34587,7 @@
       "supported_parameters": [
         "frequency_penalty",
         "include_reasoning",
+        "logprobs",
         "max_tokens",
         "presence_penalty",
         "reasoning",
@@ -34259,6 +34598,7 @@
         "structured_outputs",
         "temperature",
         "top_k",
+        "top_logprobs",
         "top_p"
       ]
     }
@@ -34361,7 +34701,8 @@
       "function_calling",
       "structured_output",
       "reasoning",
-      "streaming"
+      "streaming",
+      "predicted_outputs"
     ],
     "pricing": {
       "text_tokens": {
@@ -34393,6 +34734,7 @@
       "supported_parameters": [
         "frequency_penalty",
         "include_reasoning",
+        "logit_bias",
         "max_tokens",
         "min_p",
         "presence_penalty",
@@ -34557,7 +34899,7 @@
       },
       "top_provider": {
         "context_length": 163840,
-        "max_completion_tokens": 163840,
+        "max_completion_tokens": 65536,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -34619,7 +34961,8 @@
     "capabilities": [
       "streaming",
       "function_calling",
-      "structured_output"
+      "structured_output",
+      "predicted_outputs"
     ],
     "pricing": {
       "text_tokens": {
@@ -34651,7 +34994,9 @@
       "supported_parameters": [
         "frequency_penalty",
         "include_reasoning",
+        "logit_bias",
         "max_tokens",
+        "min_p",
         "presence_penalty",
         "reasoning",
         "repetition_penalty",
@@ -34688,7 +35033,8 @@
       "function_calling",
       "structured_output",
       "reasoning",
-      "streaming"
+      "streaming",
+      "predicted_outputs"
     ],
     "pricing": {
       "text_tokens": {
@@ -34713,15 +35059,25 @@
       },
       "top_provider": {
         "context_length": 163840,
-        "max_completion_tokens": 65536,
+        "max_completion_tokens": 163840,
         "is_moderated": false
       },
       "per_request_limits": null,
       "supported_parameters": [
+        "frequency_penalty",
         "include_reasoning",
+        "logit_bias",
         "max_tokens",
+        "min_p",
+        "presence_penalty",
         "reasoning",
+        "repetition_penalty",
+        "response_format",
+        "seed",
+        "stop",
+        "structured_outputs",
         "temperature",
+        "top_k",
         "top_p"
       ],
       "source": "models.dev",
@@ -34821,6 +35177,7 @@
     },
     "capabilities": [
       "streaming",
+      "function_calling",
       "structured_output",
       "predicted_outputs"
     ],
@@ -34862,6 +35219,8 @@
         "stop",
         "structured_outputs",
         "temperature",
+        "tool_choice",
+        "tools",
         "top_k",
         "top_p"
       ]
@@ -35197,7 +35556,7 @@
   },
   {
     "id": "google/gemini-2.5-flash-image",
-    "name": "Google: Gemini 2.5 Flash Image (Nano Banana)",
+    "name": "Google: Nano Banana (Gemini 2.5 Flash Image)",
     "provider": "openrouter",
     "family": "google",
     "created_at": "2025-10-07 20:53:51 UTC",
@@ -35253,6 +35612,7 @@
         "max_tokens",
         "response_format",
         "seed",
+        "stop",
         "structured_outputs",
         "temperature",
         "top_p"
@@ -35406,7 +35766,7 @@
       },
       "top_provider": {
         "context_length": 1048576,
-        "max_completion_tokens": 65535,
+        "max_completion_tokens": 65536,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -35861,7 +36221,7 @@
       },
       "top_provider": {
         "context_length": 1048576,
-        "max_completion_tokens": 65535,
+        "max_completion_tokens": 65536,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -36059,6 +36419,145 @@
     }
   },
   {
+    "id": "google/gemini-3.1-flash-image-preview",
+    "name": "Google: Nano Banana 2 (Gemini 3.1 Flash Image Preview)",
+    "provider": "openrouter",
+    "family": "google",
+    "created_at": "2026-02-26 15:25:58 UTC",
+    "context_window": 65536,
+    "max_output_tokens": 65536,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "image",
+        "text"
+      ],
+      "output": [
+        "image",
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "structured_output"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.5,
+          "output_per_million": 3.0
+        }
+      }
+    },
+    "metadata": {
+      "description": "Gemini 3.1 Flash Image Preview, a.k.a. \"Nano Banana 2,\" is Google’s latest state of the art image generation and editing model, delivering Pro-level visual quality at Flash speed. It combines advanced contextual understanding with fast, cost-efficient inference, making complex image generation and iterative edits significantly more accessible. Aspect ratios can be controlled with the [image_config API Parameter](https://openrouter.ai/docs/features/multimodal/image-generation#image-aspect-ratio-configuration)",
+      "architecture": {
+        "modality": "text+image->text+image",
+        "input_modalities": [
+          "image",
+          "text"
+        ],
+        "output_modalities": [
+          "image",
+          "text"
+        ],
+        "tokenizer": "Gemini",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 65536,
+        "max_completion_tokens": 65536,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "include_reasoning",
+        "max_tokens",
+        "reasoning",
+        "response_format",
+        "seed",
+        "stop",
+        "structured_outputs",
+        "temperature",
+        "top_p"
+      ]
+    }
+  },
+  {
+    "id": "google/gemini-3.1-flash-lite-preview",
+    "name": "Google: Gemini 3.1 Flash Lite Preview",
+    "provider": "openrouter",
+    "family": "google",
+    "created_at": "2026-03-03 04:37:53 UTC",
+    "context_window": 1048576,
+    "max_output_tokens": 65536,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "video",
+        "file",
+        "audio"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.25,
+          "output_per_million": 1.5,
+          "cached_input_per_million": 0.024999999999999998,
+          "reasoning_output_per_million": 1.5
+        }
+      }
+    },
+    "metadata": {
+      "description": "Gemini 3.1 Flash Lite Preview is Google's high-efficiency model optimized for high-volume use cases. It outperforms Gemini 2.5 Flash Lite on overall quality and approaches Gemini 2.5 Flash performance across key capabilities. Improvements span audio input/ASR, RAG snippet ranking, translation, data extraction, and code completion. Supports full thinking levels (minimal, low, medium, high) for fine-grained cost/performance trade-offs. Priced at half the cost of Gemini 3 Flash.",
+      "architecture": {
+        "modality": "text+image+file+audio+video->text",
+        "input_modalities": [
+          "text",
+          "image",
+          "video",
+          "file",
+          "audio"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "tokenizer": "Gemini",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 1048576,
+        "max_completion_tokens": 65536,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "include_reasoning",
+        "max_tokens",
+        "reasoning",
+        "response_format",
+        "seed",
+        "stop",
+        "structured_outputs",
+        "temperature",
+        "tool_choice",
+        "tools",
+        "top_p"
+      ]
+    }
+  },
+  {
     "id": "google/gemini-3.1-pro-preview",
     "name": "Gemini 3.1 Pro Preview",
     "provider": "openrouter",
@@ -36105,6 +36604,105 @@
           "image",
           "text",
           "video"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "tokenizer": "Gemini",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 1048576,
+        "max_completion_tokens": 65536,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "include_reasoning",
+        "max_tokens",
+        "reasoning",
+        "response_format",
+        "seed",
+        "stop",
+        "structured_outputs",
+        "temperature",
+        "tool_choice",
+        "tools",
+        "top_p"
+      ],
+      "source": "models.dev",
+      "provider_id": "openrouter",
+      "open_weights": false,
+      "attachment": true,
+      "temperature": true,
+      "last_updated": "2026-02-19",
+      "interleaved": {
+        "field": "reasoning_details"
+      },
+      "cost": {
+        "input": 2,
+        "output": 12,
+        "reasoning": 12,
+        "context_over_200k": {
+          "input": 4,
+          "output": 18,
+          "cache_read": 0.4
+        }
+      },
+      "limit": {
+        "context": 1048576,
+        "output": 65536
+      },
+      "knowledge": "2025-01"
+    }
+  },
+  {
+    "id": "google/gemini-3.1-pro-preview-customtools",
+    "name": "Gemini 3.1 Pro Preview Custom Tools",
+    "provider": "openrouter",
+    "family": "gemini-pro",
+    "created_at": "2026-02-19 00:00:00 UTC",
+    "context_window": 1048576,
+    "max_output_tokens": 65536,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "audio",
+        "video",
+        "pdf"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "structured_output",
+      "reasoning",
+      "vision",
+      "streaming"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 2,
+          "output_per_million": 12,
+          "reasoning_output_per_million": 12
+        }
+      }
+    },
+    "metadata": {
+      "description": "Gemini 3.1 Pro Preview Custom Tools is a variant of Gemini 3.1 Pro that improves tool selection behavior by preventing overuse of a general bash tool when more efficient third-party or user-defined functions are available. This specialized preview endpoint significantly increases function calling reliability and ensures the model selects the most appropriate tool in coding agents and complex, multi-tool workflows.\n\nIt retains the core strengths of Gemini 3.1 Pro, including multimodal reasoning across text, image, video, audio, and code, a 1M-token context window, and strong software engineering performance.",
+      "architecture": {
+        "modality": "text+image+file+audio+video->text",
+        "input_modalities": [
+          "text",
+          "audio",
+          "image",
+          "video",
+          "file"
         ],
         "output_modalities": [
           "text"
@@ -36792,12 +37390,9 @@
       },
       "per_request_limits": null,
       "supported_parameters": [
-        "frequency_penalty",
         "max_tokens",
-        "presence_penalty",
         "response_format",
         "seed",
-        "stop",
         "temperature",
         "top_p"
       ],
@@ -36937,12 +37532,9 @@
       },
       "per_request_limits": null,
       "supported_parameters": [
-        "frequency_penalty",
         "max_tokens",
-        "presence_penalty",
         "response_format",
         "seed",
-        "stop",
         "temperature",
         "top_p"
       ],
@@ -37117,7 +37709,8 @@
       "text_tokens": {
         "standard": {
           "input_per_million": 0.25,
-          "output_per_million": 1.0
+          "output_per_million": 0.75,
+          "cached_input_per_million": 0.024999999999999998
         }
       }
     },
@@ -37181,7 +37774,8 @@
       "text_tokens": {
         "standard": {
           "input_per_million": 0.25,
-          "output_per_million": 1.0
+          "output_per_million": 0.75,
+          "cached_input_per_million": 0.024999999999999998
         }
       }
     },
@@ -37349,7 +37943,8 @@
     "capabilities": [
       "streaming",
       "function_calling",
-      "structured_output"
+      "structured_output",
+      "predicted_outputs"
     ],
     "pricing": {
       "text_tokens": {
@@ -37381,7 +37976,9 @@
       "per_request_limits": null,
       "supported_parameters": [
         "frequency_penalty",
+        "logit_bias",
         "max_tokens",
+        "min_p",
         "presence_penalty",
         "repetition_penalty",
         "response_format",
@@ -37434,6 +38031,68 @@
         "output": 65536
       },
       "knowledge": "2025-11"
+    }
+  },
+  {
+    "id": "liquid/lfm-2-24b-a2b",
+    "name": "LiquidAI: LFM2-24B-A2B",
+    "provider": "openrouter",
+    "family": "liquid",
+    "created_at": "2026-02-25 19:45:11 UTC",
+    "context_window": 32768,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "predicted_outputs"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.03,
+          "output_per_million": 0.12
+        }
+      }
+    },
+    "metadata": {
+      "description": "LFM2-24B-A2B is the largest model in the LFM2 family of hybrid architectures designed for efficient on-device deployment. Built as a 24B parameter Mixture-of-Experts model with only 2B active parameters per token, it delivers high-quality generation while maintaining low inference costs. The model fits within 32 GB of RAM, making it practical to run on consumer laptops and desktops without sacrificing capability.",
+      "architecture": {
+        "modality": "text->text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 32768,
+        "max_completion_tokens": null,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "frequency_penalty",
+        "logit_bias",
+        "max_tokens",
+        "min_p",
+        "presence_penalty",
+        "repetition_penalty",
+        "stop",
+        "temperature",
+        "top_k",
+        "top_p"
+      ]
     }
   },
   {
@@ -37774,7 +38433,7 @@
     "family": "meituan",
     "created_at": "2025-09-09 14:20:58 UTC",
     "context_window": 131072,
-    "max_output_tokens": 32768,
+    "max_output_tokens": 131072,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -37785,7 +38444,10 @@
       ]
     },
     "capabilities": [
-      "streaming"
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "predicted_outputs"
     ],
     "pricing": {
       "text_tokens": {
@@ -37811,13 +38473,25 @@
       },
       "top_provider": {
         "context_length": 131072,
-        "max_completion_tokens": 32768,
+        "max_completion_tokens": 131072,
         "is_moderated": false
       },
       "per_request_limits": null,
       "supported_parameters": [
+        "frequency_penalty",
+        "logit_bias",
         "max_tokens",
+        "min_p",
+        "presence_penalty",
+        "repetition_penalty",
+        "response_format",
+        "seed",
+        "stop",
+        "structured_outputs",
         "temperature",
+        "tool_choice",
+        "tools",
+        "top_k",
         "top_p"
       ]
     }
@@ -38284,8 +38958,7 @@
     "capabilities": [
       "vision",
       "streaming",
-      "structured_output",
-      "predicted_outputs"
+      "structured_output"
     ],
     "pricing": {
       "text_tokens": {
@@ -38317,7 +38990,6 @@
       "per_request_limits": null,
       "supported_parameters": [
         "frequency_penalty",
-        "logit_bias",
         "max_tokens",
         "min_p",
         "presence_penalty",
@@ -38411,8 +39083,8 @@
     "provider": "openrouter",
     "family": "meta-llama",
     "created_at": "2024-09-25 00:00:00 UTC",
-    "context_window": 131072,
-    "max_output_tokens": 16384,
+    "context_window": 80000,
+    "max_output_tokens": null,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -38424,14 +39096,13 @@
     },
     "capabilities": [
       "streaming",
-      "structured_output",
       "predicted_outputs"
     ],
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.02,
-          "output_per_million": 0.02
+          "input_per_million": 0.051,
+          "output_per_million": 0.33999999999999997
         }
       }
     },
@@ -38449,8 +39120,8 @@
         "instruct_type": "llama3"
       },
       "top_provider": {
-        "context_length": 131072,
-        "max_completion_tokens": 16384,
+        "context_length": 80000,
+        "max_completion_tokens": null,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -38461,7 +39132,6 @@
         "min_p",
         "presence_penalty",
         "repetition_penalty",
-        "response_format",
         "seed",
         "stop",
         "temperature",
@@ -39140,6 +39810,7 @@
       "per_request_limits": null,
       "supported_parameters": [
         "frequency_penalty",
+        "logprobs",
         "max_tokens",
         "min_p",
         "presence_penalty",
@@ -39150,6 +39821,7 @@
         "structured_outputs",
         "temperature",
         "top_k",
+        "top_logprobs",
         "top_p"
       ]
     }
@@ -39388,7 +40060,8 @@
       "function_calling",
       "structured_output",
       "reasoning",
-      "streaming"
+      "streaming",
+      "predicted_outputs"
     ],
     "pricing": {
       "text_tokens": {
@@ -39414,14 +40087,16 @@
       },
       "top_provider": {
         "context_length": 196608,
-        "max_completion_tokens": 65536,
+        "max_completion_tokens": 196608,
         "is_moderated": false
       },
       "per_request_limits": null,
       "supported_parameters": [
         "frequency_penalty",
         "include_reasoning",
+        "logit_bias",
         "max_tokens",
+        "min_p",
         "presence_penalty",
         "reasoning",
         "repetition_penalty",
@@ -39650,7 +40325,7 @@
       },
       "top_provider": {
         "context_length": 196608,
-        "max_completion_tokens": 65536,
+        "max_completion_tokens": 196608,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -40222,8 +40897,7 @@
     "capabilities": [
       "streaming",
       "function_calling",
-      "structured_output",
-      "predicted_outputs"
+      "structured_output"
     ],
     "pricing": {
       "text_tokens": {
@@ -40255,11 +40929,8 @@
       "per_request_limits": null,
       "supported_parameters": [
         "frequency_penalty",
-        "logit_bias",
         "max_tokens",
-        "min_p",
         "presence_penalty",
-        "repetition_penalty",
         "response_format",
         "seed",
         "stop",
@@ -40267,7 +40938,6 @@
         "temperature",
         "tool_choice",
         "tools",
-        "top_k",
         "top_p"
       ]
     }
@@ -40405,68 +41075,6 @@
     }
   },
   {
-    "id": "mistralai/mistral-7b-instruct",
-    "name": "Mistral: Mistral 7B Instruct",
-    "provider": "openrouter",
-    "family": "mistralai",
-    "created_at": "2024-05-27 00:00:00 UTC",
-    "context_window": 32768,
-    "max_output_tokens": 4096,
-    "knowledge_cutoff": null,
-    "modalities": {
-      "input": [
-        "text"
-      ],
-      "output": [
-        "text"
-      ]
-    },
-    "capabilities": [
-      "streaming",
-      "predicted_outputs"
-    ],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "input_per_million": 0.19999999999999998,
-          "output_per_million": 0.19999999999999998
-        }
-      }
-    },
-    "metadata": {
-      "description": "A high-performing, industry-standard 7.3B parameter model, with optimizations for speed and context length.\n\n*Mistral 7B Instruct has multiple version variants, and this is intended to be the latest version.*",
-      "architecture": {
-        "modality": "text->text",
-        "input_modalities": [
-          "text"
-        ],
-        "output_modalities": [
-          "text"
-        ],
-        "tokenizer": "Mistral",
-        "instruct_type": "mistral"
-      },
-      "top_provider": {
-        "context_length": 32768,
-        "max_completion_tokens": 4096,
-        "is_moderated": false
-      },
-      "per_request_limits": null,
-      "supported_parameters": [
-        "frequency_penalty",
-        "logit_bias",
-        "max_tokens",
-        "min_p",
-        "presence_penalty",
-        "repetition_penalty",
-        "stop",
-        "temperature",
-        "top_k",
-        "top_p"
-      ]
-    }
-  },
-  {
     "id": "mistralai/mistral-7b-instruct-v0.1",
     "name": "Mistral: Mistral 7B Instruct v0.1",
     "provider": "openrouter",
@@ -40519,130 +41127,6 @@
         "presence_penalty",
         "repetition_penalty",
         "seed",
-        "temperature",
-        "top_k",
-        "top_p"
-      ]
-    }
-  },
-  {
-    "id": "mistralai/mistral-7b-instruct-v0.2",
-    "name": "Mistral: Mistral 7B Instruct v0.2",
-    "provider": "openrouter",
-    "family": "mistralai",
-    "created_at": "2023-12-28 00:00:00 UTC",
-    "context_window": 32768,
-    "max_output_tokens": null,
-    "knowledge_cutoff": null,
-    "modalities": {
-      "input": [
-        "text"
-      ],
-      "output": [
-        "text"
-      ]
-    },
-    "capabilities": [
-      "streaming",
-      "predicted_outputs"
-    ],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "input_per_million": 0.19999999999999998,
-          "output_per_million": 0.19999999999999998
-        }
-      }
-    },
-    "metadata": {
-      "description": "A high-performing, industry-standard 7.3B parameter model, with optimizations for speed and context length.\n\nAn improved version of [Mistral 7B Instruct](/modelsmistralai/mistral-7b-instruct-v0.1), with the following changes:\n\n- 32k context window (vs 8k context in v0.1)\n- Rope-theta = 1e6\n- No Sliding-Window Attention",
-      "architecture": {
-        "modality": "text->text",
-        "input_modalities": [
-          "text"
-        ],
-        "output_modalities": [
-          "text"
-        ],
-        "tokenizer": "Mistral",
-        "instruct_type": "mistral"
-      },
-      "top_provider": {
-        "context_length": 32768,
-        "max_completion_tokens": null,
-        "is_moderated": false
-      },
-      "per_request_limits": null,
-      "supported_parameters": [
-        "frequency_penalty",
-        "logit_bias",
-        "max_tokens",
-        "min_p",
-        "presence_penalty",
-        "repetition_penalty",
-        "stop",
-        "temperature",
-        "top_k",
-        "top_p"
-      ]
-    }
-  },
-  {
-    "id": "mistralai/mistral-7b-instruct-v0.3",
-    "name": "Mistral: Mistral 7B Instruct v0.3",
-    "provider": "openrouter",
-    "family": "mistralai",
-    "created_at": "2024-05-27 00:00:00 UTC",
-    "context_window": 32768,
-    "max_output_tokens": 4096,
-    "knowledge_cutoff": null,
-    "modalities": {
-      "input": [
-        "text"
-      ],
-      "output": [
-        "text"
-      ]
-    },
-    "capabilities": [
-      "streaming",
-      "predicted_outputs"
-    ],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "input_per_million": 0.19999999999999998,
-          "output_per_million": 0.19999999999999998
-        }
-      }
-    },
-    "metadata": {
-      "description": "A high-performing, industry-standard 7.3B parameter model, with optimizations for speed and context length.\n\nAn improved version of [Mistral 7B Instruct v0.2](/models/mistralai/mistral-7b-instruct-v0.2), with the following changes:\n\n- Extended vocabulary to 32768\n- Supports v3 Tokenizer\n- Supports function calling\n\nNOTE: Support for function calling depends on the provider.",
-      "architecture": {
-        "modality": "text->text",
-        "input_modalities": [
-          "text"
-        ],
-        "output_modalities": [
-          "text"
-        ],
-        "tokenizer": "Mistral",
-        "instruct_type": "mistral"
-      },
-      "top_provider": {
-        "context_length": 32768,
-        "max_completion_tokens": 4096,
-        "is_moderated": false
-      },
-      "per_request_limits": null,
-      "supported_parameters": [
-        "frequency_penalty",
-        "logit_bias",
-        "max_tokens",
-        "min_p",
-        "presence_penalty",
-        "repetition_penalty",
-        "stop",
         "temperature",
         "top_k",
         "top_p"
@@ -42018,7 +42502,7 @@
         "instruct_type": null
       },
       "top_provider": {
-        "context_length": 131072,
+        "context_length": 131000,
         "max_completion_tokens": null,
         "is_moderated": false
       },
@@ -42378,8 +42862,10 @@
         "logprobs",
         "max_tokens",
         "min_p",
+        "parallel_tool_calls",
         "presence_penalty",
         "reasoning",
+        "reasoning_effort",
         "repetition_penalty",
         "response_format",
         "seed",
@@ -42610,12 +43096,14 @@
       "per_request_limits": null,
       "supported_parameters": [
         "frequency_penalty",
+        "logprobs",
         "max_tokens",
         "presence_penalty",
         "response_format",
         "stop",
         "structured_outputs",
         "temperature",
+        "top_logprobs",
         "top_p"
       ]
     }
@@ -43024,6 +43512,7 @@
       "per_request_limits": null,
       "supported_parameters": [
         "frequency_penalty",
+        "logprobs",
         "max_tokens",
         "min_p",
         "presence_penalty",
@@ -43034,6 +43523,7 @@
         "structured_outputs",
         "temperature",
         "top_k",
+        "top_logprobs",
         "top_p"
       ]
     }
@@ -43361,7 +43851,7 @@
       }
     },
     "metadata": {
-      "description": "NVIDIA Nemotron 3 Nano 30B A3B is a small language MoE model with highest compute efficiency and accuracy for developers to build specialized agentic AI systems.\n\nThe model is fully open with open-weights, datasets and recipes so developers can easily\ncustomize, optimize, and deploy the model on their infrastructure for maximum privacy and\nsecurity.\n\nNote: For the free endpoint, all prompts and output are logged to improve the provider's model and its product and services. Please do not upload any personal, confidential, or otherwise sensitive information. This is a trial use only. Do not use for production or business-critical systems.",
+      "description": "NVIDIA Nemotron 3 Nano 30B A3B is a small language MoE model with highest compute efficiency and accuracy for developers to build specialized agentic AI systems.\n\nThe model is fully open with open-weights, datasets and recipes so developers can easily\ncustomize, optimize, and deploy the model on their infrastructure for maximum privacy and\nsecurity.",
       "architecture": {
         "modality": "text->text",
         "input_modalities": [
@@ -43423,7 +43913,7 @@
     ],
     "pricing": {},
     "metadata": {
-      "description": "NVIDIA Nemotron 3 Nano 30B A3B is a small language MoE model with highest compute efficiency and accuracy for developers to build specialized agentic AI systems.\n\nThe model is fully open with open-weights, datasets and recipes so developers can easily\ncustomize, optimize, and deploy the model on their infrastructure for maximum privacy and\nsecurity.\n\nNote: For the free endpoint, all prompts and output are logged to improve the provider's model and its product and services. Please do not upload any personal, confidential, or otherwise sensitive information. This is a trial use only. Do not use for production or business-critical systems.",
+      "description": "NVIDIA Nemotron 3 Nano 30B A3B is a small language MoE model with highest compute efficiency and accuracy for developers to build specialized agentic AI systems.\n\nThe model is fully open with open-weights, datasets and recipes so developers can easily\ncustomize, optimize, and deploy the model on their infrastructure for maximum privacy and\nsecurity.",
       "architecture": {
         "modality": "text->text",
         "input_modalities": [
@@ -43494,8 +43984,8 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.07,
-          "output_per_million": 0.19999999999999998
+          "input_per_million": 0.19999999999999998,
+          "output_per_million": 0.6
         }
       }
     },
@@ -46698,6 +47188,76 @@
     }
   },
   {
+    "id": "openai/gpt-5.3-chat",
+    "name": "OpenAI: GPT-5.3 Chat",
+    "provider": "openrouter",
+    "family": "openai",
+    "created_at": "2026-03-03 18:54:21 UTC",
+    "context_window": 128000,
+    "max_output_tokens": 16384,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "file"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 1.75,
+          "output_per_million": 14.0,
+          "cached_input_per_million": 0.175
+        }
+      }
+    },
+    "metadata": {
+      "description": "GPT-5.3 Chat is an update to ChatGPT's most-used model that makes everyday conversations smoother, more useful, and more directly helpful. It delivers more accurate answers with better contextualization and significantly reduces unnecessary refusals, caveats, and overly cautious phrasing that can interrupt conversational flow.",
+      "architecture": {
+        "modality": "text+image+file->text",
+        "input_modalities": [
+          "text",
+          "image",
+          "file"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "tokenizer": "GPT",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 128000,
+        "max_completion_tokens": 16384,
+        "is_moderated": true
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "frequency_penalty",
+        "logit_bias",
+        "logprobs",
+        "max_tokens",
+        "presence_penalty",
+        "response_format",
+        "seed",
+        "stop",
+        "structured_outputs",
+        "tool_choice",
+        "tools",
+        "top_logprobs"
+      ]
+    }
+  },
+  {
     "id": "openai/gpt-5.3-codex",
     "name": "OpenAI: GPT-5.3-Codex",
     "provider": "openrouter",
@@ -48050,72 +48610,6 @@
     }
   },
   {
-    "id": "opengvlab/internvl3-78b",
-    "name": "OpenGVLab: InternVL3 78B",
-    "provider": "openrouter",
-    "family": "opengvlab",
-    "created_at": "2025-09-15 18:55:55 UTC",
-    "context_window": 32768,
-    "max_output_tokens": 32768,
-    "knowledge_cutoff": null,
-    "modalities": {
-      "input": [
-        "image",
-        "text"
-      ],
-      "output": [
-        "text"
-      ]
-    },
-    "capabilities": [
-      "streaming",
-      "structured_output"
-    ],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "input_per_million": 0.15,
-          "output_per_million": 0.6,
-          "cached_input_per_million": 0.075
-        }
-      }
-    },
-    "metadata": {
-      "description": "The InternVL3 series is an advanced multimodal large language model (MLLM). Compared to InternVL 2.5, InternVL3 demonstrates stronger multimodal perception and reasoning capabilities. \n\nIn addition, InternVL3 is benchmarked against the Qwen2.5 Chat models, whose pre-trained base models serve as the initialization for its language component. Benefiting from Native Multimodal Pre-Training, the InternVL3 series surpasses the Qwen2.5 series in overall text performance.",
-      "architecture": {
-        "modality": "text+image->text",
-        "input_modalities": [
-          "image",
-          "text"
-        ],
-        "output_modalities": [
-          "text"
-        ],
-        "tokenizer": "Other",
-        "instruct_type": null
-      },
-      "top_provider": {
-        "context_length": 32768,
-        "max_completion_tokens": 32768,
-        "is_moderated": false
-      },
-      "per_request_limits": null,
-      "supported_parameters": [
-        "frequency_penalty",
-        "max_tokens",
-        "presence_penalty",
-        "repetition_penalty",
-        "response_format",
-        "seed",
-        "stop",
-        "structured_outputs",
-        "temperature",
-        "top_k",
-        "top_p"
-      ]
-    }
-  },
-  {
     "id": "openrouter/aurora-alpha",
     "name": "Aurora Alpha",
     "provider": "openrouter",
@@ -48185,7 +48679,7 @@
     ],
     "pricing": {},
     "metadata": {
-      "description": "Your prompt will be processed by a meta-model and routed to one of dozens of models (see below), optimizing for the best possible output.\n\nTo see which model was used, visit [Activity](/activity), or read the `model` attribute of the response. Your response will be priced at the same rate as the routed model.\n\nLearn more, including how to customize the models for routing, in our [docs](/docs/guides/routing/routers/auto-router).\n\nRequests will be routed to the following models:\n- [anthropic/claude-haiku-4.5](/anthropic/claude-haiku-4.5)\n- [anthropic/claude-opus-4.6](/anthropic/claude-opus-4.6)\n- [anthropic/claude-sonnet-4.5](/anthropic/claude-sonnet-4.5)\n- [deepseek/deepseek-r1](/deepseek/deepseek-r1)\n- [google/gemini-2.5-flash-lite](/google/gemini-2.5-flash-lite)\n- [google/gemini-3-flash-preview](/google/gemini-3-flash-preview)\n- [google/gemini-3-pro-preview](/google/gemini-3-pro-preview)\n- [meta-llama/llama-3.3-70b-instruct](/meta-llama/llama-3.3-70b-instruct)\n- [mistralai/codestral-2508](/mistralai/codestral-2508)\n- [mistralai/mistral-large](/mistralai/mistral-large)\n- [mistralai/mistral-medium-3.1](/mistralai/mistral-medium-3.1)\n- [mistralai/mistral-small-3.2-24b-instruct-2506](/mistralai/mistral-small-3.2-24b-instruct-2506)\n- [moonshotai/kimi-k2-thinking](/moonshotai/kimi-k2-thinking)\n- [moonshotai/kimi-k2.5](/moonshotai/kimi-k2.5)\n- [openai/gpt-5](/openai/gpt-5)\n- [openai/gpt-5-mini](/openai/gpt-5-mini)\n- [openai/gpt-5-nano](/openai/gpt-5-nano)\n- [openai/gpt-5.1](/openai/gpt-5.1)\n- [openai/gpt-5.2](/openai/gpt-5.2)\n- [openai/gpt-5.2-pro](/openai/gpt-5.2-pro)\n- [openai/gpt-oss-120b](/openai/gpt-oss-120b)\n- [perplexity/sonar](/perplexity/sonar)\n- [qwen/qwen3-235b-a22b](/qwen/qwen3-235b-a22b)\n- [x-ai/grok-3](/x-ai/grok-3)\n- [x-ai/grok-3-mini](/x-ai/grok-3-mini)\n- [x-ai/grok-4](/x-ai/grok-4)",
+      "description": "Your prompt will be processed by a meta-model and routed to one of dozens of models (see below), optimizing for the best possible output.\n\nTo see which model was used, visit [Activity](/activity), or read the `model` attribute of the response. Your response will be priced at the same rate as the routed model.\n\nLearn more, including how to customize the models for routing, in our [docs](/docs/guides/routing/routers/auto-router).\n\nRequests will be routed to the following models:\n- [anthropic/claude-haiku-4.5](/anthropic/claude-haiku-4.5)\n- [anthropic/claude-opus-4.6](/anthropic/claude-opus-4.6)\n- [anthropic/claude-sonnet-4.5](/anthropic/claude-sonnet-4.5)\n- [anthropic/claude-sonnet-4.6](/anthropic/claude-sonnet-4.6)\n- [deepseek/deepseek-r1](/deepseek/deepseek-r1)\n- [google/gemini-2.5-flash-lite](/google/gemini-2.5-flash-lite)\n- [google/gemini-3-flash-preview](/google/gemini-3-flash-preview)\n- [google/gemini-3-pro-preview](/google/gemini-3-pro-preview)\n- [google/gemini-3.1-pro-preview](/google/gemini-3.1-pro-preview)\n- [meta-llama/llama-3.3-70b-instruct](/meta-llama/llama-3.3-70b-instruct)\n- [minimax/minimax-m2.5](/minimax/minimax-m2.5)\n- [mistralai/codestral-2508](/mistralai/codestral-2508)\n- [mistralai/mistral-large](/mistralai/mistral-large)\n- [mistralai/mistral-medium-3.1](/mistralai/mistral-medium-3.1)\n- [mistralai/mistral-small-3.2-24b-instruct-2506](/mistralai/mistral-small-3.2-24b-instruct-2506)\n- [moonshotai/kimi-k2-thinking](/moonshotai/kimi-k2-thinking)\n- [moonshotai/kimi-k2.5](/moonshotai/kimi-k2.5)\n- [openai/gpt-5](/openai/gpt-5)\n- [openai/gpt-5-mini](/openai/gpt-5-mini)\n- [openai/gpt-5-nano](/openai/gpt-5-nano)\n- [openai/gpt-5.1](/openai/gpt-5.1)\n- [openai/gpt-5.2](/openai/gpt-5.2)\n- [openai/gpt-5.2-pro](/openai/gpt-5.2-pro)\n- [openai/gpt-oss-120b](/openai/gpt-oss-120b)\n- [perplexity/sonar](/perplexity/sonar)\n- [qwen/qwen3-235b-a22b](/qwen/qwen3-235b-a22b)\n- [x-ai/grok-3](/x-ai/grok-3)\n- [x-ai/grok-3-mini](/x-ai/grok-3-mini)\n- [x-ai/grok-4](/x-ai/grok-4)\n- [z-ai/glm-5](/z-ai/glm-5)",
       "architecture": {
         "modality": "text+image+file+audio+video->text+image",
         "input_modalities": [
@@ -48902,6 +49396,7 @@
     "capabilities": [
       "streaming",
       "function_calling",
+      "structured_output",
       "predicted_outputs"
     ],
     "pricing": {
@@ -48938,6 +49433,7 @@
         "min_p",
         "presence_penalty",
         "repetition_penalty",
+        "response_format",
         "seed",
         "stop",
         "temperature",
@@ -48973,8 +49469,8 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.19999999999999998,
-          "output_per_million": 0.19999999999999998
+          "input_per_million": 0.2,
+          "output_per_million": 0.2
         }
       }
     },
@@ -49052,8 +49548,8 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.19999999999999998,
-          "output_per_million": 0.19999999999999998
+          "input_per_million": 0.2,
+          "output_per_million": 0.2
         }
       }
     },
@@ -49158,9 +49654,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 1.5999999999999999,
-          "output_per_million": 6.3999999999999995,
-          "cached_input_per_million": 0.32
+          "input_per_million": 1.04,
+          "output_per_million": 4.16,
+          "cached_input_per_million": 0.20800000000000002
         }
       }
     },
@@ -49282,8 +49778,8 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.39999999999999997,
-          "output_per_million": 1.2
+          "input_per_million": 0.26,
+          "output_per_million": 0.78
         }
       }
     },
@@ -49344,8 +49840,8 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.39999999999999997,
-          "output_per_million": 1.2
+          "input_per_million": 0.26,
+          "output_per_million": 0.78
         }
       }
     },
@@ -49408,9 +49904,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.049999999999999996,
-          "output_per_million": 0.19999999999999998,
-          "cached_input_per_million": 0.01
+          "input_per_million": 0.0325,
+          "output_per_million": 0.13,
+          "cached_input_per_million": 0.006500000000000001
         }
       }
     },
@@ -49533,9 +50029,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.21,
-          "output_per_million": 0.63,
-          "cached_input_per_million": 0.041999999999999996
+          "input_per_million": 0.1365,
+          "output_per_million": 0.40950000000000003,
+          "cached_input_per_million": 0.027299999999999998
         }
       }
     },
@@ -49914,6 +50410,7 @@
       "supported_parameters": [
         "frequency_penalty",
         "include_reasoning",
+        "logprobs",
         "max_tokens",
         "min_p",
         "presence_penalty",
@@ -49927,6 +50424,7 @@
         "tool_choice",
         "tools",
         "top_k",
+        "top_logprobs",
         "top_p"
       ]
     }
@@ -50412,7 +50910,8 @@
     "capabilities": [
       "function_calling",
       "structured_output",
-      "streaming"
+      "streaming",
+      "predicted_outputs"
     ],
     "pricing": {
       "text_tokens": {
@@ -50443,11 +50942,14 @@
       "per_request_limits": null,
       "supported_parameters": [
         "frequency_penalty",
+        "logit_bias",
         "max_tokens",
+        "min_p",
         "presence_penalty",
         "repetition_penalty",
         "response_format",
         "seed",
+        "stop",
         "structured_outputs",
         "temperature",
         "tool_choice",
@@ -50493,7 +50995,8 @@
       "function_calling",
       "structured_output",
       "reasoning",
-      "streaming"
+      "streaming",
+      "predicted_outputs"
     ],
     "pricing": {
       "text_tokens": {
@@ -50525,12 +51028,15 @@
       "supported_parameters": [
         "frequency_penalty",
         "include_reasoning",
+        "logit_bias",
         "max_tokens",
+        "min_p",
         "presence_penalty",
         "reasoning",
         "repetition_penalty",
         "response_format",
         "seed",
+        "stop",
         "structured_outputs",
         "temperature",
         "tool_choice",
@@ -50788,7 +51294,7 @@
     "provider": "openrouter",
     "family": "qwen",
     "created_at": "2025-04-28 21:43:52 UTC",
-    "context_window": 32000,
+    "context_window": 40960,
     "max_output_tokens": 8192,
     "knowledge_cutoff": null,
     "modalities": {
@@ -50802,7 +51308,8 @@
     "capabilities": [
       "streaming",
       "function_calling",
-      "structured_output"
+      "structured_output",
+      "predicted_outputs"
     ],
     "pricing": {
       "text_tokens": {
@@ -50827,22 +51334,28 @@
         "instruct_type": "qwen3"
       },
       "top_provider": {
-        "context_length": 32000,
+        "context_length": 40960,
         "max_completion_tokens": 8192,
         "is_moderated": false
       },
       "per_request_limits": null,
       "supported_parameters": [
+        "frequency_penalty",
         "include_reasoning",
+        "logit_bias",
         "max_tokens",
+        "min_p",
         "presence_penalty",
         "reasoning",
+        "repetition_penalty",
         "response_format",
         "seed",
+        "stop",
         "structured_outputs",
         "temperature",
         "tool_choice",
         "tools",
+        "top_k",
         "top_p"
       ]
     }
@@ -51224,9 +51737,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 1.0,
-          "output_per_million": 5.0,
-          "cached_input_per_million": 0.19999999999999998
+          "input_per_million": 0.65,
+          "output_per_million": 3.25,
+          "cached_input_per_million": 0.13
         }
       }
     },
@@ -51312,13 +51825,10 @@
       },
       "per_request_limits": null,
       "supported_parameters": [
-        "frequency_penalty",
         "max_tokens",
-        "presence_penalty",
         "repetition_penalty",
         "response_format",
         "seed",
-        "stop",
         "structured_outputs",
         "temperature",
         "tool_choice",
@@ -51513,8 +52023,8 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 1.2,
-          "output_per_million": 6.0
+          "input_per_million": 0.78,
+          "output_per_million": 3.9
         }
       }
     },
@@ -52271,6 +52781,237 @@
     }
   },
   {
+    "id": "qwen/qwen3.5-122b-a10b",
+    "name": "Qwen: Qwen3.5-122B-A10B",
+    "provider": "openrouter",
+    "family": "qwen",
+    "created_at": "2026-02-25 21:09:49 UTC",
+    "context_window": 262144,
+    "max_output_tokens": 65536,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "video"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "predicted_outputs"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.26,
+          "output_per_million": 2.08
+        }
+      }
+    },
+    "metadata": {
+      "description": "The Qwen3.5 122B-A10B native vision-language model is built on a hybrid architecture that integrates a linear attention mechanism with a sparse mixture-of-experts model, achieving higher inference efficiency. In terms of overall performance, this model is second only to Qwen3.5-397B-A17B. Its text capabilities significantly outperform those of Qwen3-235B-2507, and its visual capabilities surpass those of Qwen3-VL-235B.",
+      "architecture": {
+        "modality": "text+image+video->text",
+        "input_modalities": [
+          "text",
+          "image",
+          "video"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "tokenizer": "Qwen3",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 262144,
+        "max_completion_tokens": 65536,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "frequency_penalty",
+        "include_reasoning",
+        "logit_bias",
+        "logprobs",
+        "max_tokens",
+        "min_p",
+        "presence_penalty",
+        "reasoning",
+        "repetition_penalty",
+        "response_format",
+        "seed",
+        "stop",
+        "structured_outputs",
+        "temperature",
+        "tool_choice",
+        "tools",
+        "top_k",
+        "top_logprobs",
+        "top_p"
+      ]
+    }
+  },
+  {
+    "id": "qwen/qwen3.5-27b",
+    "name": "Qwen: Qwen3.5-27B",
+    "provider": "openrouter",
+    "family": "qwen",
+    "created_at": "2026-02-25 21:10:10 UTC",
+    "context_window": 262144,
+    "max_output_tokens": 65536,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "video"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "predicted_outputs"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.195,
+          "output_per_million": 1.56
+        }
+      }
+    },
+    "metadata": {
+      "description": "The Qwen3.5 27B native vision-language Dense model incorporates a linear attention mechanism, delivering fast response times while balancing inference speed and performance. Its overall capabilities are comparable to those of the Qwen3.5-122B-A10B.",
+      "architecture": {
+        "modality": "text+image+video->text",
+        "input_modalities": [
+          "text",
+          "image",
+          "video"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "tokenizer": "Qwen3",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 262144,
+        "max_completion_tokens": 65536,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "frequency_penalty",
+        "include_reasoning",
+        "logit_bias",
+        "logprobs",
+        "max_tokens",
+        "min_p",
+        "presence_penalty",
+        "reasoning",
+        "repetition_penalty",
+        "response_format",
+        "seed",
+        "stop",
+        "structured_outputs",
+        "temperature",
+        "tool_choice",
+        "tools",
+        "top_k",
+        "top_logprobs",
+        "top_p"
+      ]
+    }
+  },
+  {
+    "id": "qwen/qwen3.5-35b-a3b",
+    "name": "Qwen: Qwen3.5-35B-A3B",
+    "provider": "openrouter",
+    "family": "qwen",
+    "created_at": "2026-02-25 21:10:22 UTC",
+    "context_window": 262144,
+    "max_output_tokens": 65536,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "video"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "predicted_outputs"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.1625,
+          "output_per_million": 1.3
+        }
+      }
+    },
+    "metadata": {
+      "description": "The Qwen3.5 Series 35B-A3B is a native vision-language model designed with a hybrid architecture that integrates linear attention mechanisms and a sparse mixture-of-experts model, achieving higher inference efficiency. Its overall performance is comparable to that of the Qwen3.5-27B.",
+      "architecture": {
+        "modality": "text+image+video->text",
+        "input_modalities": [
+          "text",
+          "image",
+          "video"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "tokenizer": "Qwen3",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 262144,
+        "max_completion_tokens": 65536,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "frequency_penalty",
+        "include_reasoning",
+        "logit_bias",
+        "logprobs",
+        "max_tokens",
+        "min_p",
+        "presence_penalty",
+        "reasoning",
+        "repetition_penalty",
+        "response_format",
+        "seed",
+        "stop",
+        "structured_outputs",
+        "temperature",
+        "tool_choice",
+        "tools",
+        "top_k",
+        "top_logprobs",
+        "top_p"
+      ]
+    }
+  },
+  {
     "id": "qwen/qwen3.5-397b-a17b",
     "name": "Qwen3.5 397B A17B",
     "provider": "openrouter",
@@ -52360,6 +53101,74 @@
         "output": 65536
       },
       "knowledge": "2025-04"
+    }
+  },
+  {
+    "id": "qwen/qwen3.5-flash-02-23",
+    "name": "Qwen: Qwen3.5-Flash",
+    "provider": "openrouter",
+    "family": "qwen",
+    "created_at": "2026-02-25 21:09:36 UTC",
+    "context_window": 1000000,
+    "max_output_tokens": 65536,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "video"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.09999999999999999,
+          "output_per_million": 0.39999999999999997
+        }
+      }
+    },
+    "metadata": {
+      "description": "The Qwen3.5 native vision-language Flash models are built on a hybrid architecture that integrates a linear attention mechanism with a sparse mixture-of-experts model, achieving higher inference efficiency. Compared to the 3 series, these models deliver a leap forward in performance for both pure text and multimodal tasks, offering fast response times while balancing inference speed and overall performance.",
+      "architecture": {
+        "modality": "text+image+video->text",
+        "input_modalities": [
+          "text",
+          "image",
+          "video"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "tokenizer": "Qwen3",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 1000000,
+        "max_completion_tokens": 65536,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "include_reasoning",
+        "max_tokens",
+        "presence_penalty",
+        "reasoning",
+        "response_format",
+        "seed",
+        "structured_outputs",
+        "temperature",
+        "tool_choice",
+        "tools",
+        "top_p"
+      ]
     }
   },
   {
@@ -52499,6 +53308,7 @@
       "supported_parameters": [
         "frequency_penalty",
         "include_reasoning",
+        "logprobs",
         "max_tokens",
         "presence_penalty",
         "reasoning",
@@ -52509,6 +53319,7 @@
         "tool_choice",
         "tools",
         "top_k",
+        "top_logprobs",
         "top_p"
       ]
     }
@@ -53011,6 +53822,7 @@
       "per_request_limits": null,
       "supported_parameters": [
         "frequency_penalty",
+        "logprobs",
         "max_tokens",
         "min_p",
         "presence_penalty",
@@ -53023,6 +53835,7 @@
         "tool_choice",
         "tools",
         "top_k",
+        "top_logprobs",
         "top_p"
       ]
     }
@@ -53077,6 +53890,7 @@
       "per_request_limits": null,
       "supported_parameters": [
         "frequency_penalty",
+        "logprobs",
         "max_tokens",
         "min_p",
         "presence_penalty",
@@ -53087,6 +53901,7 @@
         "structured_outputs",
         "temperature",
         "top_k",
+        "top_logprobs",
         "top_p"
       ]
     }
@@ -53635,6 +54450,7 @@
       "supported_parameters": [
         "frequency_penalty",
         "logit_bias",
+        "logprobs",
         "max_tokens",
         "min_p",
         "presence_penalty",
@@ -53647,6 +54463,7 @@
         "tool_choice",
         "tools",
         "top_k",
+        "top_logprobs",
         "top_p"
       ]
     }
@@ -53764,14 +54581,18 @@
       "per_request_limits": null,
       "supported_parameters": [
         "frequency_penalty",
+        "logprobs",
         "max_tokens",
         "presence_penalty",
+        "repetition_penalty",
         "response_format",
+        "seed",
         "stop",
         "structured_outputs",
         "temperature",
         "tool_choice",
         "tools",
+        "top_logprobs",
         "top_p"
       ]
     }
@@ -54036,8 +54857,8 @@
     }
   },
   {
-    "id": "upstage/solar-pro-3:free",
-    "name": "Upstage: Solar Pro 3 (free)",
+    "id": "upstage/solar-pro-3",
+    "name": "Upstage: Solar Pro 3",
     "provider": "openrouter",
     "family": "upstage",
     "created_at": "2026-01-27 02:33:20 UTC",
@@ -54057,7 +54878,15 @@
       "function_calling",
       "structured_output"
     ],
-    "pricing": {},
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.15,
+          "output_per_million": 0.6,
+          "cached_input_per_million": 0.015
+        }
+      }
+    },
     "metadata": {
       "description": "Solar Pro 3 is Upstage's powerful Mixture-of-Experts (MoE) language model. With 102B total parameters and 12B active parameters per forward pass, it delivers exceptional performance while maintaining computational efficiency. Optimized for Korean with English and Japanese support.",
       "architecture": {
@@ -55765,8 +56594,8 @@
         "instruct_type": null
       },
       "top_provider": {
-        "context_length": 204800,
-        "max_completion_tokens": 131072,
+        "context_length": 202752,
+        "max_completion_tokens": null,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -55964,7 +56793,7 @@
     "name": "Sonar Reasoning",
     "provider": "perplexity",
     "family": "sonar_reasoning",
-    "created_at": "2026-02-25 13:11:46 UTC",
+    "created_at": "2026-03-04 16:11:17 UTC",
     "context_window": 128000,
     "max_output_tokens": 4096,
     "knowledge_cutoff": null,
@@ -57396,6 +58225,32 @@
     }
   },
   {
+    "id": "gemini-3.1-flash-image-preview",
+    "name": "gemini-3.1-flash-image-preview",
+    "provider": "vertexai",
+    "family": "gemini",
+    "created_at": null,
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [],
+      "output": []
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling"
+    ],
+    "pricing": {},
+    "metadata": {
+      "version_id": "default",
+      "open_source_category": null,
+      "launch_stage": "PUBLIC_PREVIEW",
+      "supported_actions": null,
+      "publisher_model_template": "projects/{project}/locations/{location}/publishers/google/models/gemini-3.1-flash-image-preview@default"
+    }
+  },
+  {
     "id": "gemini-3.1-pro-preview",
     "name": "Gemini 3.1 Pro Preview",
     "provider": "vertexai",
@@ -58161,60 +59016,6 @@
         "context": 204800,
         "output": 131072
       }
-    }
-  },
-  {
-    "id": "grok-2-image-1212",
-    "name": "Grok 2 Image 1212",
-    "provider": "xai",
-    "family": "grok",
-    "created_at": "2025-01-13 00:00:00 UTC",
-    "context_window": null,
-    "max_output_tokens": null,
-    "knowledge_cutoff": null,
-    "modalities": {
-      "input": [
-        "text"
-      ],
-      "output": [
-        "image"
-      ]
-    },
-    "capabilities": [],
-    "pricing": {},
-    "metadata": {
-      "object": "model",
-      "owned_by": "xai"
-    }
-  },
-  {
-    "id": "grok-2-vision-1212",
-    "name": "Grok 2 Vision 1212",
-    "provider": "xai",
-    "family": "grok",
-    "created_at": "2024-12-12 00:00:00 UTC",
-    "context_window": null,
-    "max_output_tokens": null,
-    "knowledge_cutoff": null,
-    "modalities": {
-      "input": [
-        "text",
-        "image"
-      ],
-      "output": [
-        "text"
-      ]
-    },
-    "capabilities": [
-      "streaming",
-      "function_calling",
-      "structured_output",
-      "vision"
-    ],
-    "pricing": {},
-    "metadata": {
-      "object": "model",
-      "owned_by": "xai"
     }
   },
   {
