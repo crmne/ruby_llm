@@ -93,16 +93,16 @@ RSpec.describe RubyLLM::Chat do
     # on the next API call because the Hash gets serialized as
     # { type: "text", text: <Hash> } instead of a plain string.
     describe 'schema with tool calls' do
-      tool_class = Class.new(RubyLLM::Tool) do
-        description 'Gets current weather for a location'
-        param :location, desc: 'City name'
+      before do
+        stub_const('SchemaToolTestWeather', Class.new(RubyLLM::Tool) do
+          description 'Gets current weather for a location'
+          param :location, desc: 'City name'
 
-        def execute(location:)
-          "Weather in #{location}: 20°C"
-        end
+          def execute(location:)
+            "Weather in #{location}: 20°C"
+          end
+        end)
       end
-      # Register with a stable name for tool lookup
-      Object.const_set(:SchemaToolTestWeather, tool_class) unless defined?(SchemaToolTestWeather)
 
       it 'does not parse tool-call response content as JSON when schema is set' do
         chat = RubyLLM.chat.with_tool(SchemaToolTestWeather).with_schema(person_schema)
