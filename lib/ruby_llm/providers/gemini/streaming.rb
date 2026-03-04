@@ -22,6 +22,7 @@ module RubyLLM
             ),
             input_tokens: extract_input_tokens(data),
             output_tokens: extract_output_tokens(data),
+            cached_tokens: data.dig('usageMetadata', 'cachedContentTokenCount'),
             thinking_tokens: data.dig('usageMetadata', 'thoughtsTokenCount'),
             tool_calls: extract_tool_calls(data)
           )

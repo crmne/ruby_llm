@@ -573,6 +573,33 @@ RSpec.describe RubyLLM::Providers::Gemini::Chat do
       expect(message.content).to eq('{"ok":true}')
       expect(message.thinking&.text).to eq('Reasoning trace')
     end
+
+    it 'captures cached token usage when present' do
+      response = Struct.new(:body, :env).new(
+        {
+          'candidates' => [
+            {
+              'content' => {
+                'parts' => [{ 'text' => 'Hi' }]
+              }
+            }
+          ],
+          'usageMetadata' => {
+            'promptTokenCount' => 42,
+            'candidatesTokenCount' => 8,
+            'cachedContentTokenCount' => 21
+          }
+        },
+        Struct.new(:url).new(Struct.new(:path).new('/v1/models/gemini-2.5-flash:generateContent'))
+      )
+
+      provider = RubyLLM::Providers::Gemini.new(RubyLLM.config)
+      message = provider.send(:parse_completion_response, response)
+
+      expect(message.input_tokens).to eq(42)
+      expect(message.output_tokens).to eq(8)
+      expect(message.cached_tokens).to eq(21)
+    end
   end
 
   it 'correctly sums candidatesTokenCount and thoughtsTokenCount' do
