@@ -18,17 +18,14 @@
 
 ## Do you intend to add a new feature or change an existing one?
 
-* **First check if this belongs in RubyLLM or your application:**
-  - ✅ Core LLM communication (provider integrations, streaming, cost tracking)
-  - ❌ Application architecture (RAG, agents, prompt templates, testing helpers)
+* **First check if this belongs in RubyLLM or your application.**
+  RubyLLM already provides chat, agents, tools, embeddings, and the building blocks for workflows and RAG. Before proposing a new feature, ask: *can this be built with what RubyLLM already offers?* If so, it belongs in your application code, not in the gem.
 
 * Features we'll reject:
-  - Multi-agent orchestration
-  - RAG pipelines
-  - Prompt management systems
-  - Vector database integrations
+  - Anything you can build in a few lines of application code using existing RubyLLM features
+  - Opinionated abstractions over patterns that are already straightforward (e.g., specific RAG pipeline frameworks, workflow orchestration DSLs)
+  - Integrations with specific external services (vector databases, search engines, etc.) — these work great as separate gems
   - Testing frameworks
-  - Anything you can implement in 5-10 lines of application code
 
 * **You must open an issue first** and wait for maintainer feedback before writing code. PRs for new features without an approved issue will be closed without review.
 
