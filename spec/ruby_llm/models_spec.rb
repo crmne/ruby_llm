@@ -214,6 +214,13 @@ RSpec.describe RubyLLM::Models do
       data = described_class.models_dev_model_to_info(model_data_with_release_date, 'openai', 'openai')
       expect(data[:created_at]).to eq('2025-03-01 00:00:00 UTC')
     end
+
+    it 'keeps created_at nil when both release_date and last_updated are missing' do
+      model_data_without_dates = model_data.merge(release_date: nil, last_updated: nil)
+      data = described_class.models_dev_model_to_info(model_data_without_dates, 'openai', 'openai')
+
+      expect(data[:created_at]).to be_nil
+    end
   end
 
   describe '#embedding_models' do
