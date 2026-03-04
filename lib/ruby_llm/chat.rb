@@ -152,7 +152,7 @@ module RubyLLM
 
       @on[:new_message]&.call unless block_given?
 
-      if @schema && response.content.is_a?(String)
+      if @schema && response.content.is_a?(String) && !response.tool_call?
         begin
           response.content = JSON.parse(response.content)
         rescue JSON::ParserError

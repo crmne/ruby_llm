@@ -87,6 +87,60 @@ RSpec.describe RubyLLM::Chat do
       end
     end
 
+    # Regression test for schema + tool calls interaction
+    # When both schema and tools are used, intermediate tool-call responses
+    # may contain text content. Parsing that text into a Hash causes errors
+    # on the next API call because the Hash gets serialized as
+    # { type: "text", text: <Hash> } instead of a plain string.
+    describe 'schema with tool calls' do
+      tool_class = Class.new(RubyLLM::Tool) do
+        description 'Gets current weather for a location'
+        param :location, desc: 'City name'
+
+        def execute(location:)
+          "Weather in #{location}: 20°C"
+        end
+      end
+      # Register with a stable name for tool lookup
+      Object.const_set(:SchemaToolTestWeather, tool_class) unless defined?(SchemaToolTestWeather)
+
+      it 'does not parse tool-call response content as JSON when schema is set' do
+        chat = RubyLLM.chat.with_tool(SchemaToolTestWeather).with_schema(person_schema)
+        provider = chat.instance_variable_get(:@provider)
+
+        tool_call = RubyLLM::ToolCall.new(
+          id: 'call_1',
+          name: 'schema_tool_test_weather',
+          arguments: { 'location' => 'Berlin' }
+        )
+
+        # First response: tool call with JSON-like text content
+        # Second response: final answer with valid JSON matching the schema
+        allow(provider).to receive(:complete).and_return(
+          RubyLLM::Message.new(
+            role: :assistant,
+            content: '{"name": "partial"}',
+            tool_calls: { tool_call.id => tool_call }
+          ),
+          RubyLLM::Message.new(
+            role: :assistant,
+            content: '{"name": "John", "age": 30}'
+          )
+        )
+
+        response = chat.ask('What is the weather and generate a person named John who is 30?')
+
+        # The intermediate tool-call message should have kept content as String
+        tool_call_msg = chat.messages.find { |m| m.role == :assistant && m.tool_call? }
+        expect(tool_call_msg.content).to be_a(String)
+
+        # The final response should have parsed content as Hash
+        expect(response.content).to be_a(Hash)
+        expect(response.content['name']).to eq('John')
+        expect(response.content['age']).to eq(30)
+      end
+    end
+
     # Test schema with arrays and nested objects
     describe 'complex schemas' do
       let(:complex_schema) do
