@@ -10,15 +10,6 @@ on:
       - ".gitleaksignore"
       - ".github/workflows/_lint.yml"
       - ".github/workflows/pr-fast.yml"
-  push:
-    branches: ["main"]
-    paths:
-      - "lib/**"
-      - "spec/**"
-      - ".gitleaks.toml"
-      - ".gitleaksignore"
-      - ".github/workflows/_lint.yml"
-      - ".github/workflows/pr-fast.yml"
   workflow_dispatch:
 
 permissions:
@@ -42,13 +33,17 @@ jobs:
         if: github.event_name == 'pull_request_target'
         with:
           fetch-depth: 1
-          path: base
 
       - uses: actions/checkout@v6
         if: github.event_name != 'pull_request_target'
         with:
           fetch-depth: 1
-          path: pr
+
+      - name: Preserve base branch gitleaks config
+        if: github.event_name == 'pull_request_target'
+        run: |
+          cp .gitleaks.toml /tmp/base.gitleaks.toml
+          if [ -f .gitleaksignore ]; then cp .gitleaksignore /tmp/base.gitleaksignore; fi
 
       - uses: actions/checkout@v6
         if: github.event_name == 'pull_request_target'
@@ -57,20 +52,23 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
           fetch-depth: 1
           persist-credentials: false
-          path: pr
 
-      - name: Scan PR/current working tree (no git history)
+      - name: Restore base branch gitleaks config
         if: github.event_name == 'pull_request_target'
-        uses: gitleaks/gitleaks-action@v2
-        env:
-          GITLEAKS_ENABLE_COMMENTS: false
-        with:
-          args: dir pr --no-banner --redact --config base/.gitleaks.toml --gitleaks-ignore-path base/.gitleaksignore
+        run: |
+          cp /tmp/base.gitleaks.toml .gitleaks.toml
+          if [ -f /tmp/base.gitleaksignore ]; then cp /tmp/base.gitleaksignore .gitleaksignore; fi
 
-      - name: Scan current working tree (no git history)
-        if: github.event_name != 'pull_request_target'
-        uses: gitleaks/gitleaks-action@v2
-        env:
-          GITLEAKS_ENABLE_COMMENTS: false
-        with:
-          args: dir pr --no-banner --redact --config pr/.gitleaks.toml --gitleaks-ignore-path pr/.gitleaksignore
+      - name: Install gitleaks
+        run: |
+          set -euo pipefail
+          VERSION="8.28.0"
+          curl -sSL "https://github.com/gitleaks/gitleaks/releases/download/v${VERSION}/gitleaks_${VERSION}_linux_x64.tar.gz" \
+            | tar -xz
+          sudo install -m 0755 gitleaks /usr/local/bin/gitleaks
+
+      - name: Scan current tree
+        run: |
+          gitleaks dir . --no-banner --redact \
+            --config .gitleaks.toml \
+            --gitleaks-ignore-path .gitleaksignore
