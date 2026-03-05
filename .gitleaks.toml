@@ -1,0 +1,21 @@
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "Model pagination tokens in test fixtures"
+paths = [
+  '''spec/fixtures/vcr_cassettes/.*\.yml$'''
+]
+regexes = [
+  '''"nextPageToken":\s*"[A-Za-z0-9+/=]{12,}"'''
+]
+
+[[allowlists]]
+description = "OpenRouter resource keys in generated model metadata"
+paths = [
+  '''lib/ruby_llm/models\.json$''',
+  '''spec/fixtures/vcr_cassettes/.*\.yml$'''
+]
+regexes = [
+  '''resourcekey=0-[A-Za-z0-9_-]+'''
+]
