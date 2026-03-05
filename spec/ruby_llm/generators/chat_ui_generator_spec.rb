@@ -47,6 +47,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         # Message views
         expect(File.exist?('app/views/messages/_message.html.erb')).to be true
         expect(File.exist?('app/views/messages/_content.html.erb')).to be true
+        expect(File.exist?('app/views/messages/_content_raw.html.erb')).to be true
         expect(File.exist?('app/views/messages/_form.html.erb')).to be true
         expect(File.exist?('app/views/messages/create.turbo_stream.erb')).to be true
 
@@ -168,6 +169,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         # Message views
         expect(File.exist?('app/views/llm/messages/_message.html.erb')).to be true
         expect(File.exist?('app/views/llm/messages/_content.html.erb')).to be true
+        expect(File.exist?('app/views/llm/messages/_content_raw.html.erb')).to be true
         expect(File.exist?('app/views/llm/messages/_form.html.erb')).to be true
         expect(File.exist?('app/views/llm/messages/create.turbo_stream.erb')).to be true
 
