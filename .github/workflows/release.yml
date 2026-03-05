@@ -1,9 +1,7 @@
 name: Release
 
 on:
-  workflow_run:
-    workflows: ["Main CI"]
-    types: [completed]
+  workflow_call:
   workflow_dispatch:
 
 permissions:
@@ -13,11 +11,6 @@ permissions:
 jobs:
   publish:
     name: Build + Publish
-    if: >
-      github.event_name == 'workflow_dispatch' ||
-      (github.event_name == 'workflow_run' &&
-       github.event.workflow_run.conclusion == 'success' &&
-       github.event.workflow_run.head_branch == 'main')
     runs-on: ubuntu-latest
     env:
       BUNDLE_PATH: vendor/bundle
@@ -25,12 +18,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v6
-        if: github.event_name == 'workflow_dispatch'
-
-      - uses: actions/checkout@v6
-        if: github.event_name == 'workflow_run'
-        with:
-          ref: ${{ github.event.workflow_run.head_sha }}
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1

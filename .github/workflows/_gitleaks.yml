@@ -40,17 +40,19 @@ jobs:
       - uses: actions/checkout@v6
         if: inputs.preserve-base-config == true
         with:
+          path: base
           fetch-depth: 1
 
       - name: Preserve base branch gitleaks config
         if: inputs.preserve-base-config == true
         run: |
-          cp .gitleaks.toml /tmp/base.gitleaks.toml
-          if [ -f .gitleaksignore ]; then cp .gitleaksignore /tmp/base.gitleaksignore; fi
+          cp base/.gitleaks.toml /tmp/base.gitleaks.toml
+          if [ -f base/.gitleaksignore ]; then cp base/.gitleaksignore /tmp/base.gitleaksignore; fi
 
       - uses: actions/checkout@v6
         if: inputs.preserve-base-config == false && inputs.checkout-repository == ''
         with:
+          path: repo
           fetch-depth: 1
 
       - uses: actions/checkout@v6
@@ -58,6 +60,7 @@ jobs:
         with:
           repository: ${{ inputs.checkout-repository }}
           ref: ${{ inputs.checkout-ref }}
+          path: repo
           fetch-depth: 1
           persist-credentials: false
 
@@ -66,14 +69,9 @@ jobs:
         with:
           repository: ${{ inputs.checkout-repository }}
           ref: ${{ inputs.checkout-ref }}
+          path: repo
           fetch-depth: 1
           persist-credentials: false
-
-      - name: Restore base branch gitleaks config
-        if: inputs.preserve-base-config == true
-        run: |
-          cp /tmp/base.gitleaks.toml .gitleaks.toml
-          if [ -f /tmp/base.gitleaksignore ]; then cp /tmp/base.gitleaksignore .gitleaksignore; fi
 
       - name: Install gitleaks
         run: |
@@ -85,6 +83,18 @@ jobs:
 
       - name: Scan current tree
         run: |
-          gitleaks dir . --no-banner --redact -v \
-            --config "${{ inputs.config-path }}" \
-            --gitleaks-ignore-path "${{ inputs.ignore-path }}"
+          set -euo pipefail
+          CONFIG_PATH="repo/${{ inputs.config-path }}"
+          IGNORE_PATH="repo/${{ inputs.ignore-path }}"
+
+          if [ "${{ inputs.preserve-base-config }}" = "true" ]; then
+            CONFIG_PATH="/tmp/base.gitleaks.toml"
+            IGNORE_PATH="/tmp/base.gitleaksignore"
+          fi
+
+          cmd=(gitleaks dir repo --no-banner --redact -v --config "$CONFIG_PATH")
+          if [ -f "$IGNORE_PATH" ]; then
+            cmd+=(--gitleaks-ignore-path "$IGNORE_PATH")
+          fi
+
+          "${cmd[@]}"
