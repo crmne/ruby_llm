@@ -8,6 +8,7 @@ on:
       - "spec/**"
       - ".gitleaks.toml"
       - ".gitleaksignore"
+      - ".github/workflows/_gitleaks.yml"
       - ".github/workflows/_lint.yml"
       - ".github/workflows/pr-fast.yml"
   workflow_dispatch:
@@ -26,49 +27,10 @@ jobs:
       checkout-ref: ${{ github.event_name == 'pull_request_target' && github.event.pull_request.head.sha || '' }}
 
   gitleaks:
-    name: Gitleaks (Current Tree)
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v6
-        if: github.event_name == 'pull_request_target'
-        with:
-          fetch-depth: 1
-
-      - uses: actions/checkout@v6
-        if: github.event_name != 'pull_request_target'
-        with:
-          fetch-depth: 1
-
-      - name: Preserve base branch gitleaks config
-        if: github.event_name == 'pull_request_target'
-        run: |
-          cp .gitleaks.toml /tmp/base.gitleaks.toml
-          if [ -f .gitleaksignore ]; then cp .gitleaksignore /tmp/base.gitleaksignore; fi
-
-      - uses: actions/checkout@v6
-        if: github.event_name == 'pull_request_target'
-        with:
-          repository: ${{ github.event.pull_request.head.repo.full_name }}
-          ref: ${{ github.event.pull_request.head.sha }}
-          fetch-depth: 1
-          persist-credentials: false
-
-      - name: Restore base branch gitleaks config
-        if: github.event_name == 'pull_request_target'
-        run: |
-          cp /tmp/base.gitleaks.toml .gitleaks.toml
-          if [ -f /tmp/base.gitleaksignore ]; then cp /tmp/base.gitleaksignore .gitleaksignore; fi
-
-      - name: Install gitleaks
-        run: |
-          set -euo pipefail
-          VERSION="8.28.0"
-          curl -sSL "https://github.com/gitleaks/gitleaks/releases/download/v${VERSION}/gitleaks_${VERSION}_linux_x64.tar.gz" \
-            | tar -xz
-          sudo install -m 0755 gitleaks /usr/local/bin/gitleaks
-
-      - name: Scan current tree
-        run: |
-          gitleaks dir . --no-banner --redact \
-            --config .gitleaks.toml \
-            --gitleaks-ignore-path .gitleaksignore
+    uses: ./.github/workflows/_gitleaks.yml
+    with:
+      checkout-repository: ${{ github.event_name == 'pull_request_target' && github.event.pull_request.head.repo.full_name || '' }}
+      checkout-ref: ${{ github.event_name == 'pull_request_target' && github.event.pull_request.head.sha || '' }}
+      preserve-base-config: ${{ github.event_name == 'pull_request_target' }}
+      config-path: ".gitleaks.toml"
+      ignore-path: ".gitleaksignore"

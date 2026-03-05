@@ -13,6 +13,11 @@ on:
         required: false
         type: string
         default: ""
+      preserve-base-config:
+        description: Preserve base branch gitleaks config before checking out target ref
+        required: false
+        type: boolean
+        default: false
       config-path:
         description: Path to gitleaks config file
         required: false
@@ -33,17 +38,42 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-        if: inputs.checkout-repository == ''
+        if: inputs.preserve-base-config == true
+        with:
+          fetch-depth: 1
+
+      - name: Preserve base branch gitleaks config
+        if: inputs.preserve-base-config == true
+        run: |
+          cp .gitleaks.toml /tmp/base.gitleaks.toml
+          if [ -f .gitleaksignore ]; then cp .gitleaksignore /tmp/base.gitleaksignore; fi
+
+      - uses: actions/checkout@v6
+        if: inputs.preserve-base-config == false && inputs.checkout-repository == ''
         with:
           fetch-depth: 1
 
       - uses: actions/checkout@v6
-        if: inputs.checkout-repository != ''
+        if: inputs.preserve-base-config == false && inputs.checkout-repository != ''
         with:
           repository: ${{ inputs.checkout-repository }}
           ref: ${{ inputs.checkout-ref }}
           fetch-depth: 1
           persist-credentials: false
+
+      - uses: actions/checkout@v6
+        if: inputs.preserve-base-config == true
+        with:
+          repository: ${{ inputs.checkout-repository }}
+          ref: ${{ inputs.checkout-ref }}
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Restore base branch gitleaks config
+        if: inputs.preserve-base-config == true
+        run: |
+          cp /tmp/base.gitleaks.toml .gitleaks.toml
+          if [ -f /tmp/base.gitleaksignore ]; then cp /tmp/base.gitleaksignore .gitleaksignore; fi
 
       - name: Install gitleaks
         run: |
@@ -55,6 +85,6 @@ jobs:
 
       - name: Scan current tree
         run: |
-          gitleaks dir . --no-banner --redact \
+          gitleaks dir . --no-banner --redact -v \
             --config "${{ inputs.config-path }}" \
             --gitleaks-ignore-path "${{ inputs.ignore-path }}"

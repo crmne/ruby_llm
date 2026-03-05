@@ -2,6 +2,12 @@
 useDefault = true
 
 [[allowlists]]
+description = "Ignore dummy app artifacts and logs"
+paths = [
+  '''spec/dummy/.*'''
+]
+
+[[allowlists]]
 description = "Model pagination nextPageToken fields in model-refresh fixtures"
 regexTarget = "match"
 paths = [
