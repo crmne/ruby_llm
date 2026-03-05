@@ -1,0 +1,64 @@
+name: _Lint
+
+on:
+  workflow_call:
+    inputs:
+      ruby-version:
+        description: Ruby version for linting
+        required: false
+        type: string
+        default: "4.0"
+      checkout-repository:
+        description: Optional repository to checkout (owner/repo)
+        required: false
+        type: string
+        default: ""
+      checkout-ref:
+        description: Optional ref/SHA to checkout
+        required: false
+        type: string
+        default: ""
+      working-directory:
+        description: Directory to run bundler/rubocop in
+        required: false
+        type: string
+        default: "."
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    name: Lint (RuboCop)
+    runs-on: ubuntu-latest
+    env:
+      BUNDLE_PATH: vendor/bundle
+      BUNDLE_DISABLE_SHARED_GEMS: "true"
+    steps:
+      - uses: actions/checkout@v6
+        if: inputs.checkout-repository == ''
+        with:
+          fetch-depth: 1
+
+      - uses: actions/checkout@v6
+        if: inputs.checkout-repository != ''
+        with:
+          repository: ${{ inputs.checkout-repository }}
+          ref: ${{ inputs.checkout-ref }}
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ inputs.ruby-version }}
+          bundler-cache: true
+          working-directory: ${{ inputs.working-directory }}
+
+      - name: Install dependencies
+        working-directory: ${{ inputs.working-directory }}
+        run: bundle install
+
+      - name: Run RuboCop
+        working-directory: ${{ inputs.working-directory }}
+        run: bundle exec rubocop

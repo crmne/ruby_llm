@@ -1,0 +1,76 @@
+name: PR Fast
+
+on:
+  pull_request_target:
+    branches: ["main"]
+    paths:
+      - "lib/**"
+      - "spec/**"
+      - ".gitleaks.toml"
+      - ".gitleaksignore"
+      - ".github/workflows/_lint.yml"
+      - ".github/workflows/pr-fast.yml"
+  push:
+    branches: ["main"]
+    paths:
+      - "lib/**"
+      - "spec/**"
+      - ".gitleaks.toml"
+      - ".gitleaksignore"
+      - ".github/workflows/_lint.yml"
+      - ".github/workflows/pr-fast.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  rubocop:
+    name: RuboCop (Fast)
+    uses: ./.github/workflows/_lint.yml
+    with:
+      ruby-version: "4.0"
+      checkout-repository: ${{ github.event_name == 'pull_request_target' && github.event.pull_request.head.repo.full_name || '' }}
+      checkout-ref: ${{ github.event_name == 'pull_request_target' && github.event.pull_request.head.sha || '' }}
+
+  gitleaks:
+    name: Gitleaks (Current Tree)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        if: github.event_name == 'pull_request_target'
+        with:
+          fetch-depth: 1
+          path: base
+
+      - uses: actions/checkout@v6
+        if: github.event_name != 'pull_request_target'
+        with:
+          fetch-depth: 1
+          path: pr
+
+      - uses: actions/checkout@v6
+        if: github.event_name == 'pull_request_target'
+        with:
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 1
+          persist-credentials: false
+          path: pr
+
+      - name: Scan PR/current working tree (no git history)
+        if: github.event_name == 'pull_request_target'
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITLEAKS_ENABLE_COMMENTS: false
+        with:
+          args: dir pr --no-banner --redact --config base/.gitleaks.toml --gitleaks-ignore-path base/.gitleaksignore
+
+      - name: Scan current working tree (no git history)
+        if: github.event_name != 'pull_request_target'
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITLEAKS_ENABLE_COMMENTS: false
+        with:
+          args: dir pr --no-banner --redact --config pr/.gitleaks.toml --gitleaks-ignore-path pr/.gitleaksignore

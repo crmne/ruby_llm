@@ -1,0 +1,59 @@
+name: _Gitleaks
+
+on:
+  workflow_call:
+    inputs:
+      checkout-repository:
+        description: Optional repository to checkout (owner/repo)
+        required: false
+        type: string
+        default: ""
+      checkout-ref:
+        description: Optional ref/SHA to checkout
+        required: false
+        type: string
+        default: ""
+      scan-directory:
+        description: Directory to scan
+        required: false
+        type: string
+        default: "."
+      config-path:
+        description: Path to gitleaks config file
+        required: false
+        type: string
+        default: ".gitleaks.toml"
+      ignore-path:
+        description: Path to gitleaks ignore file
+        required: false
+        type: string
+        default: ".gitleaksignore"
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  gitleaks:
+    name: Gitleaks (Current Tree)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        if: inputs.checkout-repository == ''
+        with:
+          fetch-depth: 1
+
+      - uses: actions/checkout@v6
+        if: inputs.checkout-repository != ''
+        with:
+          repository: ${{ inputs.checkout-repository }}
+          ref: ${{ inputs.checkout-ref }}
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Scan working tree (no git history)
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITLEAKS_ENABLE_COMMENTS: false
+        with:
+          args: dir ${{ inputs.scan-directory }} --no-banner --redact --config ${{ inputs.config-path }} --gitleaks-ignore-path ${{ inputs.ignore-path }}

@@ -1,0 +1,40 @@
+name: Main CI
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "lib/**"
+      - "spec/**"
+      - "gemfiles/**"
+      - "Gemfile"
+      - "Rakefile"
+      - "Appraisals"
+      - "ruby_llm.gemspec"
+      - ".gitleaks.toml"
+      - ".gitleaksignore"
+      - ".github/workflows/_gitleaks.yml"
+      - ".github/workflows/_lint.yml"
+      - ".github/workflows/_test-matrix.yml"
+      - ".github/workflows/main.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: main-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  gitleaks:
+    uses: ./.github/workflows/_gitleaks.yml
+
+  lint:
+    uses: ./.github/workflows/_lint.yml
+    with:
+      ruby-version: "4.0"
+
+  test:
+    needs: [gitleaks, lint]
+    uses: ./.github/workflows/_test-matrix.yml
+    secrets: inherit

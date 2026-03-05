@@ -1,0 +1,124 @@
+name: Release
+
+on:
+  workflow_run:
+    workflows: ["Main CI"]
+    types: [completed]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  publish:
+    name: Build + Publish
+    if: >
+      github.event_name == 'workflow_dispatch' ||
+      (github.event_name == 'workflow_run' &&
+       github.event.workflow_run.conclusion == 'success' &&
+       github.event.workflow_run.head_branch == 'main')
+    runs-on: ubuntu-latest
+    env:
+      BUNDLE_PATH: vendor/bundle
+      BUNDLE_DISABLE_SHARED_GEMS: "true"
+
+    steps:
+      - uses: actions/checkout@v6
+        if: github.event_name == 'workflow_dispatch'
+
+      - uses: actions/checkout@v6
+        if: github.event_name == 'workflow_run'
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "4.0"
+          bundler-cache: true
+
+      - name: Check if version needs publishing
+        id: check_version
+        run: |
+          VERSION_FILE="./lib/ruby_llm/version.rb"
+          VERSION=$(ruby -r $VERSION_FILE -e "puts RubyLLM::VERSION" 2>/dev/null)
+
+          if [ -z "$VERSION" ]; then
+            echo "Error: Could not extract VERSION from $VERSION_FILE" >&2
+            exit 1
+          fi
+          echo "Local version: $VERSION"
+
+          GEM_NAME="ruby_llm"
+          echo "Fetching published versions for '$GEM_NAME'..."
+
+          ALL_PUBLISHED_VERSIONS=$(( \
+            gem list ^${GEM_NAME}$ -r --all 2>/dev/null || true; \
+            gem list ^${GEM_NAME}$ -r --prerelease 2>/dev/null || true; \
+          ) | sed -n 's/.*(\(.*\)).*/\1/p' \
+            | tr ',' '\n' \
+            | sed 's/^[[:space:]]*//;s/[[:space:]]*$//' \
+            | grep . \
+            | sort -u )
+
+          echo "Checking against published versions:"
+          if [ -n "$ALL_PUBLISHED_VERSIONS" ]; then
+              echo "$ALL_PUBLISHED_VERSIONS" | sed 's/^/  /'
+          else
+              echo "  (none found)"
+          fi
+
+          if echo "$ALL_PUBLISHED_VERSIONS" | grep -Fxq "$VERSION"; then
+            echo "Verdict: Version $VERSION already published."
+            echo "version_changed=false" >> $GITHUB_OUTPUT
+          else
+            echo "Verdict: Version $VERSION is new."
+            echo "version_changed=true" >> $GITHUB_OUTPUT
+          fi
+        shell: bash
+
+      - name: Verify cassettes are fresh
+        if: steps.check_version.outputs.version_changed == 'true'
+        run: bundle exec rake release:verify_cassettes
+
+      - name: Publish to GPR
+        if: steps.check_version.outputs.version_changed == 'true'
+        run: |
+          mkdir -p $HOME/.gem
+          touch $HOME/.gem/credentials
+          chmod 0600 $HOME/.gem/credentials
+          printf -- "---\n:github: ${GEM_HOST_API_KEY}\n" > $HOME/.gem/credentials
+          gem build *.gemspec
+          output=$(gem push --KEY github --host https://rubygems.pkg.github.com/${OWNER} *.gem 2>&1) || {
+            echo "$output"
+            if echo "$output" | grep -q "already been pushed"; then
+              echo "Version already exists, skipping"
+              exit 0
+            else
+              exit 1
+            fi
+          }
+        env:
+          GEM_HOST_API_KEY: "Bearer ${{ secrets.GITHUB_TOKEN }}"
+          OWNER: ${{ github.repository_owner }}
+
+      - name: Publish to RubyGems
+        if: steps.check_version.outputs.version_changed == 'true'
+        run: |
+          mkdir -p $HOME/.gem
+          touch $HOME/.gem/credentials
+          chmod 0600 $HOME/.gem/credentials
+          printf -- "---\n:rubygems_api_key: ${GEM_HOST_API_KEY}\n" > $HOME/.gem/credentials
+          gem build *.gemspec
+          output=$(gem push *.gem 2>&1) || {
+            echo "$output"
+            if echo "$output" | grep -q "Repushing of gem versions is not allowed"; then
+              echo "Version already exists, skipping"
+              exit 0
+            else
+              exit 1
+            fi
+          }
+        env:
+          GEM_HOST_API_KEY: "${{ secrets.RUBYGEMS_AUTH_TOKEN }}"

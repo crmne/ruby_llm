@@ -2,20 +2,11 @@
 useDefault = true
 
 [[allowlists]]
-description = "Model pagination tokens in test fixtures"
+description = "Model pagination nextPageToken fields in model-refresh fixtures"
+regexTarget = "match"
 paths = [
-  '''spec/fixtures/vcr_cassettes/.*\.yml$'''
+  '''spec/fixtures/vcr_cassettes/models_.*\.yml$'''
 ]
 regexes = [
-  '''"nextPageToken":\s*"[A-Za-z0-9+/=]{12,}"'''
-]
-
-[[allowlists]]
-description = "OpenRouter resource keys in generated model metadata"
-paths = [
-  '''lib/ruby_llm/models\.json$''',
-  '''spec/fixtures/vcr_cassettes/.*\.yml$'''
-]
-regexes = [
-  '''resourcekey=0-[A-Za-z0-9_-]+'''
+  '''"nextPageToken":\s*"[^"]+"'''
 ]
