@@ -131,6 +131,8 @@ rails generate ruby_llm:install --skip-active-storage
 
 The `name:ClassName` syntax follows Rails conventions - specify only what you want to customize.
 
+For most apps, keep the default behavior (install ActiveStorage) so file attachments work out of the box. Use `--skip-active-storage` only when you're sure you won't send files to models.
+
 
 ### Setting Up ActiveStorage
 

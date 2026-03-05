@@ -40,6 +40,10 @@ module RubyLLM
       end
 
       class << self
+        def configuration_options
+          %i[vertexai_project_id vertexai_location vertexai_service_account_key]
+        end
+
         def configuration_requirements
           %i[vertexai_project_id vertexai_location]
         end

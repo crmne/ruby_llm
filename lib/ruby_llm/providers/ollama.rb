@@ -19,6 +19,10 @@ module RubyLLM
       end
 
       class << self
+        def configuration_options
+          %i[ollama_api_base ollama_api_key]
+        end
+
         def configuration_requirements
           %i[ollama_api_base]
         end

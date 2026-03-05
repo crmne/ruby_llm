@@ -44,6 +44,10 @@ module RubyLLM
       end
 
       class << self
+        def configuration_options
+          %i[azure_api_base azure_api_key azure_ai_auth_token]
+        end
+
         def configuration_requirements
           %i[azure_api_base]
         end
