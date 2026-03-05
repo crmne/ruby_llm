@@ -147,19 +147,32 @@ module RubyLLM
 
       def add_association_params(params, default_assoc, table_name, model_name, owner_table:, plural: false) # rubocop:disable Metrics/ParameterLists
         assoc = plural ? table_name.to_sym : table_name.singularize.to_sym
-
-        default_foreign_key = "#{default_assoc}_id"
-        # has_many/has_one: foreign key is on the associated table pointing back to owner
-        # belongs_to:       foreign key is on the owner table pointing to associated table
-        foreign_key = if plural || default_assoc.to_s.pluralize == default_assoc.to_s # has_many or has_one
-                        "#{owner_table.singularize}_id"
-                      else # belongs_to
-                        "#{table_name.singularize}_id"
-                      end
+        collection_association = collection_association?(default_assoc, plural)
+        foreign_key = inferred_foreign_key(table_name, owner_table, collection_association)
+        default_foreign_key = default_inferred_foreign_key(default_assoc, owner_table, collection_association)
 
         params << "#{default_assoc}: :#{assoc}" if assoc != default_assoc
         params << "#{default_assoc.to_s.singularize}_class: '#{model_name}'" if model_name != assoc.to_s.classify
         params << "#{default_assoc}_foreign_key: :#{foreign_key}" if foreign_key != default_foreign_key
+      end
+
+      def collection_association?(default_assoc, plural)
+        plural || default_assoc.to_s.pluralize == default_assoc.to_s
+      end
+
+      def inferred_foreign_key(table_name, owner_table, collection_association)
+        return "#{table_name.singularize}_id" unless collection_association
+
+        "#{owner_table.singularize}_id"
+      end
+
+      # Rails default inference:
+      # belongs_to :assoc    -> assoc_id
+      # has_many/has_one     -> owner demodulized model name + _id
+      def default_inferred_foreign_key(default_assoc, owner_table, collection_association)
+        return "#{default_assoc}_id" unless collection_association
+
+        "#{owner_table.singularize.split('_').last}_id"
       end
 
       # Convert namespaced model names to proper table names

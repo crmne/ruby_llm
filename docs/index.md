@@ -170,7 +170,7 @@ chat.with_tool(Weather).ask "What's the weather in Berlin?"
 ```ruby
 # Define an agent with instructions + tools
 class WeatherAssistant < RubyLLM::Agent
-  model "gpt-4.1-nano"
+  model "gpt-5-nano"
   instructions "Be concise and always use tools for weather."
   tools Weather
 end

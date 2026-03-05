@@ -1,0 +1,23 @@
+<%%= form_with(model: <%= message_variable_name %>, url: <%= chat_model_name.include?('::') ? "#{chat_model_name.split('::').first.underscore}_#{chat_model_name.demodulize.underscore}_#{message_model_name.demodulize.underscore.pluralize}_path(@#{chat_variable_name})" : "[@#{chat_variable_name}, #{message_variable_name}]" %>, id: "new_<%= message_variable_name %>", class: "contents") do |form| %>
+  <%% if <%= message_variable_name %>.errors.any? %>
+    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-md mt-3">
+      <h2><%%= pluralize(<%= message_variable_name %>.errors.count, "error") %> prohibited this <%= message_table_name.singularize.humanize.downcase %> from being saved:</h2>
+
+      <ul class="list-disc ml-6">
+        <%% <%= message_variable_name %>.errors.each do |error| %>
+          <li><%%= error.full_message %></li>
+        <%% end %>
+      </ul>
+    </div>
+  <%% end %>
+
+  <div class="my-5">
+    <%%= form.label :content, "Message" %>
+    <%%= form.text_area :content, rows: 4, placeholder: "Message...", autofocus: true,
+        class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": <%= message_variable_name %>.errors[:content].none?, "border-red-400 focus:outline-red-600": <%= message_variable_name %>.errors[:content].any?}] %>
+  </div>
+
+  <div class="inline">
+    <%%= form.submit "Send <%= message_table_name.singularize.humanize.downcase %>", class: "w-full sm:w-auto rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer" %>
+  </div>
+<%% end %>

@@ -14,6 +14,8 @@ module RubyLLM
       namespace 'ruby_llm:chat_ui'
 
       argument :model_mappings, type: :array, default: [], banner: 'chat:ChatName message:MessageName ...'
+      class_option :ui, type: :string, default: 'auto', enum: %w[scaffold tailwind auto],
+                        desc: 'UI template style (scaffold, tailwind, auto)'
 
       desc 'Creates a chat UI scaffold with Turbo streaming\n' \
            'Usage: rails g ruby_llm:chat_ui [chat:ChatName] [message:MessageName] ...'
@@ -42,32 +44,37 @@ module RubyLLM
       end
 
       def create_views
+        # Design contract:
+        # - `scaffold` should stay close to Rails scaffold ERB output.
+        # - `tailwind` should stay close to tailwindcss-rails scaffold output.
+        # - Only small chat-specific affordances should be layered on top.
         # For namespaced models, use the proper Rails convention path
         chat_view_path = chat_model_name.underscore.pluralize
         message_view_path = message_model_name.underscore.pluralize
         model_view_path = model_model_name.underscore.pluralize
 
         # Chat views
-        template 'views/chats/index.html.erb', "app/views/#{chat_view_path}/index.html.erb"
-        template 'views/chats/new.html.erb', "app/views/#{chat_view_path}/new.html.erb"
-        template 'views/chats/show.html.erb', "app/views/#{chat_view_path}/show.html.erb"
-        template 'views/chats/_chat.html.erb',
+        template ui_template('views/chats/index.html.erb'), "app/views/#{chat_view_path}/index.html.erb"
+        template ui_template('views/chats/new.html.erb'), "app/views/#{chat_view_path}/new.html.erb"
+        template ui_template('views/chats/show.html.erb'), "app/views/#{chat_view_path}/show.html.erb"
+        template ui_template('views/chats/_chat.html.erb'),
                  "app/views/#{chat_view_path}/_#{chat_model_name.demodulize.underscore}.html.erb"
-        template 'views/chats/_form.html.erb', "app/views/#{chat_view_path}/_form.html.erb"
+        template ui_template('views/chats/_form.html.erb'), "app/views/#{chat_view_path}/_form.html.erb"
 
         # Message views
-        template 'views/messages/_message.html.erb',
+        template ui_template('views/messages/_message.html.erb'),
                  "app/views/#{message_view_path}/_#{message_model_name.demodulize.underscore}.html.erb"
-        template 'views/messages/_tool_calls.html.erb',
+        template ui_template('views/messages/_tool_calls.html.erb'),
                  "app/views/#{message_view_path}/_tool_calls.html.erb"
-        template 'views/messages/_content.html.erb', "app/views/#{message_view_path}/_content.html.erb"
-        template 'views/messages/_form.html.erb', "app/views/#{message_view_path}/_form.html.erb"
-        template 'views/messages/create.turbo_stream.erb', "app/views/#{message_view_path}/create.turbo_stream.erb"
+        template ui_template('views/messages/_content.html.erb'), "app/views/#{message_view_path}/_content.html.erb"
+        template ui_template('views/messages/_form.html.erb'), "app/views/#{message_view_path}/_form.html.erb"
+        template ui_template('views/messages/create.turbo_stream.erb'),
+                 "app/views/#{message_view_path}/create.turbo_stream.erb"
 
         # Model views
-        template 'views/models/index.html.erb', "app/views/#{model_view_path}/index.html.erb"
-        template 'views/models/show.html.erb', "app/views/#{model_view_path}/show.html.erb"
-        template 'views/models/_model.html.erb',
+        template ui_template('views/models/index.html.erb'), "app/views/#{model_view_path}/index.html.erb"
+        template ui_template('views/models/show.html.erb'), "app/views/#{model_view_path}/show.html.erb"
+        template ui_template('views/models/_model.html.erb'),
                  "app/views/#{model_view_path}/_#{model_model_name.demodulize.underscore}.html.erb"
       end
 
@@ -179,8 +186,47 @@ module RubyLLM
                    end
 
         say "\n  ✅ Chat UI installed!", :green
+        say "  UI template: #{ui_variant}", :cyan
         say "\n  Start your server and visit http://localhost:3000/#{url_path}", :cyan
         say "\n"
+      end
+
+      private
+
+      def ui_variant
+        @ui_variant ||= case options[:ui]
+                        when 'tailwind'
+                          :tailwind
+                        when 'auto'
+                          tailwind_available? ? :tailwind : :scaffold
+                        else
+                          :scaffold
+                        end
+      end
+
+      def ui_template(template_path)
+        return template_path unless ui_variant == :tailwind
+
+        # Keep Tailwind templates as a separate set so we can mirror Rails/Tailwind
+        # scaffold conventions without complicating scaffold templates.
+        tailwind_template = "tailwind/#{template_path}"
+        File.exist?(File.join(self.class.source_root, "#{tailwind_template}.tt")) ? tailwind_template : template_path
+      end
+
+      def tailwind_available?
+        Rails.root.join('app/assets/tailwind/application.css').exist? ||
+          Rails.root.join('config/tailwind.config.js').exist? ||
+          gem_in_bundle?('tailwindcss-rails') ||
+          gem_in_bundle?('cssbundling-rails')
+      end
+
+      def gem_in_bundle?(gem_name)
+        gemfile_path = Rails.root.join('Gemfile')
+        lockfile_path = Rails.root.join('Gemfile.lock')
+
+        [gemfile_path, lockfile_path].any? do |path|
+          path.exist? && path.read.include?(gem_name)
+        end
       end
     end
   end

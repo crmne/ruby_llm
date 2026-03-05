@@ -1,0 +1,20 @@
+<%# Intentional minimal domain tweak over scaffold: role + streamed content readability. -%>
+<div id="<%= message_variable_name %>_<%%= <%= message_model_name.demodulize.underscore %>.id %>" class="w-full sm:w-auto my-5 space-y-3 rounded-md px-3 py-2 <%%= <%= message_model_name.demodulize.underscore %>.role == 'user' ? 'bg-blue-50' : 'bg-green-50' %>">
+  <div>
+    <span class="inline-block rounded px-2 py-0.5 text-xs font-medium <%%= <%= message_model_name.demodulize.underscore %>.role == 'user' ? 'bg-blue-100 text-blue-700' : 'bg-green-100 text-green-700' %>">
+      <%%= <%= message_model_name.demodulize.underscore %>.role&.capitalize %>
+    </span>
+  </div>
+
+  <div>
+    <div id="<%= message_variable_name %>_<%%= <%= message_model_name.demodulize.underscore %>.id %>_content" class="whitespace-pre-wrap"><%%= <%= message_model_name.demodulize.underscore %>.content %></div>
+  </div>
+
+  <%% if <%= message_model_name.demodulize.underscore %>.tool_call? %>
+    <%%= render "<%= message_model_name.underscore.pluralize %>/tool_calls", <%= message_model_name.demodulize.underscore %>: <%= message_model_name.demodulize.underscore %> %>
+  <%% end %>
+
+  <div>
+    <span class="text-sm text-gray-600"><%%= <%= message_model_name.demodulize.underscore %>.created_at&.strftime("%I:%M %p") %></span>
+  </div>
+</div>
