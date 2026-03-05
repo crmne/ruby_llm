@@ -7,7 +7,10 @@
 
   <div class="flex justify-between items-center">
     <h1 class="font-bold text-4xl"><%= model_model_name.pluralize %></h1>
-    <%%= button_to "Refresh <%= model_model_name.pluralize %>", refresh_<%= model_table_name %>_path, method: :post, class: "rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white block font-medium cursor-pointer" %>
+    <div class="flex items-center gap-2">
+      <%%= link_to "<%= chat_model_name.pluralize %>", <%= chat_table_name %>_path, class: "rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 text-gray-900 block font-medium" %>
+      <%%= button_to "Refresh <%= model_model_name.pluralize %>", refresh_<%= model_table_name %>_path, method: :post, class: "rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white block font-medium cursor-pointer" %>
+    </div>
   </div>
 
   <div id="<%= model_table_name %>" class="mt-5 overflow-x-auto">
@@ -31,5 +34,4 @@
     <%% end %>
   </div>
 
-  <%%= link_to "Back to <%= chat_table_name.humanize.downcase %>", <%= chat_table_name %>_path, class: "w-full sm:w-auto text-center mt-2 sm:mt-0 sm:ml-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
 </div>
