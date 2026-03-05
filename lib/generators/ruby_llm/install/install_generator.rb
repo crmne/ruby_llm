@@ -30,20 +30,12 @@ module RubyLLM
       def create_migration_files
         migration_template 'create_chats_migration.rb.tt',
                            "db/migrate/create_#{chat_table_name}.rb"
-
-        sleep 1 # Ensure different timestamp
         migration_template 'create_messages_migration.rb.tt',
                            "db/migrate/create_#{message_table_name}.rb"
-
-        sleep 1 # Ensure different timestamp
         migration_template 'create_tool_calls_migration.rb.tt',
                            "db/migrate/create_#{tool_call_table_name}.rb"
-
-        sleep 1 # Ensure different timestamp
         migration_template 'create_models_migration.rb.tt',
                            "db/migrate/create_#{model_table_name}.rb"
-
-        sleep 1 # Ensure different timestamp
         migration_template 'add_references_to_chats_tool_calls_and_messages_migration.rb.tt',
                            'db/migrate/add_references_to_' \
                            "#{chat_table_name}_#{tool_call_table_name}_and_#{message_table_name}.rb"
