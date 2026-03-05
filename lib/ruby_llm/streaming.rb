@@ -30,7 +30,7 @@ module RubyLLM
 
     def handle_stream(&block)
       build_on_data_handler do |data|
-        block.call(build_chunk(data)) if data
+        block.call(build_chunk(data)) if data.is_a?(Hash)
       end
     end
 
