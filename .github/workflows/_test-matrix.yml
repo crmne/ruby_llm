@@ -2,6 +2,12 @@ name: _Test Matrix
 
 on:
   workflow_call:
+    inputs:
+      bundler-cache:
+        description: Enable Bundler cache
+        required: false
+        type: boolean
+        default: false
     secrets:
       CODECOV_TOKEN:
         required: false
@@ -39,7 +45,7 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby-version }}
-          bundler-cache: true
+          bundler-cache: ${{ inputs.bundler-cache }}
 
       - name: Install dependencies
         run: |

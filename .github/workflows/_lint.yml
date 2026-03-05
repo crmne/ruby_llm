@@ -23,6 +23,11 @@ on:
         required: false
         type: string
         default: "."
+      bundler-cache:
+        description: Enable Bundler cache
+        required: false
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -52,7 +57,7 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ inputs.ruby-version }}
-          bundler-cache: true
+          bundler-cache: ${{ inputs.bundler-cache }}
           working-directory: ${{ inputs.working-directory }}
 
       - name: Install dependencies

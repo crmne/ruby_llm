@@ -23,6 +23,7 @@ jobs:
     uses: ./.github/workflows/_lint.yml
     with:
       ruby-version: "4.0"
+      bundler-cache: false
       checkout-repository: ${{ github.event_name == 'pull_request_target' && github.event.pull_request.head.repo.full_name || '' }}
       checkout-ref: ${{ github.event_name == 'pull_request_target' && github.event.pull_request.head.sha || '' }}
 

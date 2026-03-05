@@ -35,10 +35,13 @@ jobs:
     uses: ./.github/workflows/_lint.yml
     with:
       ruby-version: "4.0"
+      bundler-cache: true
 
   test:
     needs: [gitleaks, lint]
     uses: ./.github/workflows/_test-matrix.yml
+    with:
+      bundler-cache: true
     secrets: inherit
 
   release_needed:
