@@ -209,11 +209,16 @@ module RubyLLM
 
     def build_schema_payload(schema, schema_def, strict)
       {
-        name: schema[:name] || 'response',
+        name: sanitize_schema_name(schema[:name] || 'response'),
         schema: schema_def,
         strict: strict.nil? || strict,
         description: schema[:description]
       }.compact
+    end
+
+    def sanitize_schema_name(name)
+      sanitized = name.to_s.gsub(/[^a-zA-Z0-9_-]/, '_')
+      sanitized.empty? ? 'response' : sanitized
     end
 
     def wrap_streaming_block(&block)
