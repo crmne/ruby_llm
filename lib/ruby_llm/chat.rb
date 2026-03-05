@@ -217,7 +217,8 @@ module RubyLLM
     end
 
     def sanitize_schema_name(name)
-      name.to_s.gsub(/[^a-zA-Z0-9_-]/, '_')
+      sanitized = name.to_s.gsub(/[^a-zA-Z0-9_-]/, '_')
+      sanitized.empty? ? 'response' : sanitized
     end
 
     def wrap_streaming_block(&block)

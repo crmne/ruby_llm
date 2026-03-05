@@ -117,6 +117,16 @@ RSpec.describe RubyLLM::Chat do
 
         expect(chat.schema[:name]).to eq('response')
       end
+
+      it 'uses response as default name when provided name is empty' do
+        chat = RubyLLM.chat
+        chat.with_schema({
+                           name: '',
+                           schema: { type: 'object', properties: {} }
+                         })
+
+        expect(chat.schema[:name]).to eq('response')
+      end
     end
 
     # Regression test for schema + tool calls interaction
