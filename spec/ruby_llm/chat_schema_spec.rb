@@ -87,6 +87,38 @@ RSpec.describe RubyLLM::Chat do
       end
     end
 
+    describe 'schema name sanitization' do
+      it 'sanitizes :: from namespaced RubyLLM::Schema class names' do
+        namespaced_schema = stub_const('MyApp::Nested::TestSchema', Class.new(RubyLLM::Schema) do
+          string :name
+        end)
+
+        chat = RubyLLM.chat
+        chat.with_schema(namespaced_schema)
+        schema = chat.schema
+
+        expect(schema[:name]).to eq('MyApp__Nested__TestSchema')
+        expect(schema[:name]).to match(/\A[a-zA-Z0-9_-]+\z/)
+      end
+
+      it 'sanitizes :: from plain hash schema names' do
+        chat = RubyLLM.chat
+        chat.with_schema({
+                           name: 'Some::Namespaced::Schema',
+                           schema: { type: 'object', properties: {} }
+                         })
+
+        expect(chat.schema[:name]).to eq('Some__Namespaced__Schema')
+      end
+
+      it 'uses response as default name when no name is provided' do
+        chat = RubyLLM.chat
+        chat.with_schema({ type: 'object', properties: {} })
+
+        expect(chat.schema[:name]).to eq('response')
+      end
+    end
+
     # Regression test for schema + tool calls interaction
     # When both schema and tools are used, intermediate tool-call responses
     # may contain text content. Parsing that text into a Hash causes errors
