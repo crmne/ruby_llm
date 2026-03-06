@@ -7,6 +7,11 @@ module RubyLLM
     attr_reader :response
 
     def initialize(response = nil, message = nil)
+      if response.is_a?(String)
+        message = response
+        response = nil
+      end
+
       @response = response
       super(message || response&.body)
     end
