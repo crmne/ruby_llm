@@ -164,6 +164,10 @@ module RubyLLM
         []
       end
 
+      def configuration_options
+        []
+      end
+
       def local?
         false
       end
@@ -182,6 +186,7 @@ module RubyLLM
 
       def register(name, provider_class)
         providers[name.to_sym] = provider_class
+        RubyLLM::Configuration.register_provider_options(provider_class.configuration_options)
       end
 
       def resolve(name)

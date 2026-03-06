@@ -30,20 +30,12 @@ module RubyLLM
       def create_migration_files
         migration_template 'create_chats_migration.rb.tt',
                            "db/migrate/create_#{chat_table_name}.rb"
-
-        sleep 1 # Ensure different timestamp
         migration_template 'create_messages_migration.rb.tt',
                            "db/migrate/create_#{message_table_name}.rb"
-
-        sleep 1 # Ensure different timestamp
         migration_template 'create_tool_calls_migration.rb.tt',
                            "db/migrate/create_#{tool_call_table_name}.rb"
-
-        sleep 1 # Ensure different timestamp
         migration_template 'create_models_migration.rb.tt',
                            "db/migrate/create_#{model_table_name}.rb"
-
-        sleep 1 # Ensure different timestamp
         migration_template 'add_references_to_chats_tool_calls_and_messages_migration.rb.tt',
                            'db/migrate/add_references_to_' \
                            "#{chat_table_name}_#{tool_call_table_name}_and_#{message_table_name}.rb"
@@ -80,12 +72,8 @@ module RubyLLM
         say '     2. Run: rails ruby_llm:load_models'
         say '     3. Set your API keys in config/initializers/ruby_llm.rb'
 
-        say "     4. Start chatting: #{chat_model_name}.create!(model: 'gpt-4.1-nano').ask('Hello!')"
-
-        say "\n  🚀 Model registry supports database + JSON fallback!", :cyan
-        say '     Models load from database when present, otherwise from models.json'
-        say '     Pass model names as strings - RubyLLM handles the rest!'
-        say "     Specify provider when needed: Chat.create!(model: 'gemini-2.5-flash', provider: 'vertexai')"
+        say "     4. Start chatting: #{chat_model_name}.create!(model: 'gpt-5-nano').ask('Hello!')"
+        say "     5. Optional UI: #{chat_ui_generator_command}"
 
         if options[:skip_active_storage]
           say "\n  📎 Note: ActiveStorage was skipped", :yellow
@@ -101,6 +89,14 @@ module RubyLLM
         say '     • ⭐ Star on GitHub: https://github.com/crmne/ruby_llm'
         say '     • 🐦 Follow for updates: https://x.com/paolino'
         say "\n"
+      end
+
+      private
+
+      def chat_ui_generator_command
+        mappings = model_mappings.join(' ')
+        mappings = " #{mappings}" unless mappings.empty?
+        "rails generate ruby_llm:chat_ui#{mappings}"
       end
     end
   end

@@ -21,6 +21,10 @@ module RubyLLM
           DeepSeek::Capabilities
         end
 
+        def configuration_options
+          %i[deepseek_api_key deepseek_api_base]
+        end
+
         def configuration_requirements
           %i[deepseek_api_key]
         end

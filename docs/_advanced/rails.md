@@ -131,6 +131,8 @@ rails generate ruby_llm:install --skip-active-storage
 
 The `name:ClassName` syntax follows Rails conventions - specify only what you want to customize.
 
+For most apps, keep the default behavior (install ActiveStorage) so file attachments work out of the box. Use `--skip-active-storage` only when you're sure you won't send files to models.
+
 
 ### Setting Up ActiveStorage
 
@@ -700,19 +702,19 @@ Complete example with background jobs and Turbo Streams:
 # app/models/chat.rb
 class Chat < ApplicationRecord
   acts_as_chat
-  broadcasts_to ->(chat) { [chat, "messages"] }
 end
 
 # app/models/message.rb
 class Message < ApplicationRecord
   acts_as_message
-  broadcasts_to ->(message) { [message.chat, "messages"] }
+  broadcasts_to ->(message) { "chat_#{message.chat_id}" }
 
   # Helper to broadcast chunks during streaming
   def broadcast_append_chunk(chunk_content)
-    broadcast_append_to [ chat, "messages" ], # Target the stream
-      target: dom_id(self, "content"), # Target the content div inside the message frame
-      html: chunk_content # Append the raw chunk
+    broadcast_append_to "chat_#{chat_id}",
+      target: "message_#{id}_content",
+      partial: "messages/content",
+      locals: { content: chunk_content }
   end
 end
 
@@ -739,7 +741,7 @@ end
 
 ```erb
 <%# app/views/chats/show.html.erb %>
-<%= turbo_stream_from [@chat, "messages"] %>
+<%= turbo_stream_from "chat_#{@chat.id}" %>
 <h1>Chat <%= @chat.id %></h1>
 <div id="messages">
   <%= render @chat.messages %>
@@ -751,17 +753,15 @@ end
 <% end %>
 
 <%# app/views/messages/_message.html.erb %>
-<%= turbo_frame_tag message do %>
-  <div class="message <%= message.role %>">
-    <strong><%= message.role.capitalize %>:</strong>
-    <%# Target div for streaming content %>
-    <div id="<%= dom_id(message, "content") %>" style="display: inline;">
-      <%# Render initial content if not streaming, otherwise job appends here %>
-      <%= message.content.present? ? simple_format(message.content) : '<span class="thinking">...</span>'.html_safe %>
-    </div>
+<div id="message_<%= message.id %>" class="message">
+  <strong><%= message.role.capitalize %>:</strong>
+  <div id="message_<%= message.id %>_content" style="white-space: pre-wrap;">
+    <%= message.content %>
   </div>
-<% end %>
+</div>
 ```
+
+This helper intentionally lives in your app model (via generator) rather than core RubyLLM methods, so streaming behavior stays explicit and customizable.
 
 
 This implementation provides:

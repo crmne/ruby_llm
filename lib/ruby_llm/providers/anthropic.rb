@@ -27,6 +27,10 @@ module RubyLLM
           Anthropic::Capabilities
         end
 
+        def configuration_options
+          %i[anthropic_api_key anthropic_api_base]
+        end
+
         def configuration_requirements
           %i[anthropic_api_key]
         end

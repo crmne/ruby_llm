@@ -57,6 +57,14 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       end
     end
 
+    it 'uses scaffold-style inline styles by default' do
+      within_test_app(app_path) do
+        index_view = File.read('app/views/chats/index.html.erb')
+        expect(index_view).to include('<p style="color: green">')
+        expect(index_view).not_to include('text-green-700')
+      end
+    end
+
     it 'creates job file with default name' do
       within_test_app(app_path) do
         expect(File.exist?('app/jobs/chat_response_job.rb')).to be true
@@ -274,6 +282,58 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         RUBY
         success, output = run_rails_runner(test_script)
         expect(success).to be(true), output
+      end
+    end
+  end
+
+  describe 'with tailwind ui option' do
+    let(:app_name) { 'test_app_tailwind_ui' }
+    let(:app_path) { File.join(Dir.tmpdir, app_name) }
+
+    before(:all) do # rubocop:disable RSpec/BeforeAfterAll
+      template_path = File.expand_path('../../fixtures/templates', __dir__)
+      GeneratorTestHelpers.cleanup_test_app(File.join(Dir.tmpdir, 'test_app_tailwind_ui'))
+      GeneratorTestHelpers.create_test_app('test_app_tailwind_ui',
+                                           template: 'default_models_tailwind_ui_template.rb',
+                                           template_path: template_path)
+    end
+
+    after(:all) do # rubocop:disable RSpec/BeforeAfterAll
+      GeneratorTestHelpers.cleanup_test_app(File.join(Dir.tmpdir, 'test_app_tailwind_ui'))
+    end
+
+    it 'creates tailwind-styled views' do
+      within_test_app(app_path) do
+        index_view = File.read('app/views/chats/index.html.erb')
+        expect(index_view).to include('bg-green-50')
+        expect(index_view).to include('class="w-full"')
+        expect(index_view).not_to include('<p style="color: green">')
+      end
+    end
+  end
+
+  describe 'with auto ui option and tailwind marker present' do
+    let(:app_name) { 'test_app_auto_tailwind_ui' }
+    let(:app_path) { File.join(Dir.tmpdir, app_name) }
+
+    before(:all) do # rubocop:disable RSpec/BeforeAfterAll
+      template_path = File.expand_path('../../fixtures/templates', __dir__)
+      GeneratorTestHelpers.cleanup_test_app(File.join(Dir.tmpdir, 'test_app_auto_tailwind_ui'))
+      GeneratorTestHelpers.create_test_app('test_app_auto_tailwind_ui',
+                                           template: 'default_models_auto_tailwind_ui_template.rb',
+                                           template_path: template_path)
+    end
+
+    after(:all) do # rubocop:disable RSpec/BeforeAfterAll
+      GeneratorTestHelpers.cleanup_test_app(File.join(Dir.tmpdir, 'test_app_auto_tailwind_ui'))
+    end
+
+    it 'selects tailwind templates automatically' do
+      within_test_app(app_path) do
+        index_view = File.read('app/views/chats/index.html.erb')
+        expect(index_view).to include('bg-green-50')
+        expect(index_view).to include('class="w-full"')
+        expect(index_view).not_to include('<p style="color: green">')
       end
     end
   end

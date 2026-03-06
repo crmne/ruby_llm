@@ -21,6 +21,10 @@ module RubyLLM
       end
 
       class << self
+        def configuration_options
+          %i[gpustack_api_base gpustack_api_key]
+        end
+
         def local?
           true
         end

@@ -1,0 +1,36 @@
+name: PR Fast
+
+on:
+  pull_request_target:
+    branches: ["main"]
+    paths:
+      - "lib/**"
+      - "spec/**"
+      - ".gitleaks.toml"
+      - ".gitleaksignore"
+      - ".github/workflows/_gitleaks.yml"
+      - ".github/workflows/_lint.yml"
+      - ".github/workflows/pr-fast.yml"
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  rubocop:
+    name: RuboCop (Fast)
+    uses: ./.github/workflows/_lint.yml
+    with:
+      ruby-version: "4.0"
+      bundler-cache: false
+      checkout-repository: ${{ github.event_name == 'pull_request_target' && github.event.pull_request.head.repo.full_name || '' }}
+      checkout-ref: ${{ github.event_name == 'pull_request_target' && github.event.pull_request.head.sha || '' }}
+
+  gitleaks:
+    uses: ./.github/workflows/_gitleaks.yml
+    with:
+      checkout-repository: ${{ github.event_name == 'pull_request_target' && github.event.pull_request.head.repo.full_name || '' }}
+      checkout-ref: ${{ github.event_name == 'pull_request_target' && github.event.pull_request.head.sha || '' }}
+      preserve-base-config: ${{ github.event_name == 'pull_request_target' }}
+      config-path: ".gitleaks.toml"
+      ignore-path: ".gitleaksignore"

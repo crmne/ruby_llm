@@ -1,28 +1,35 @@
-<p style="color: green"><%%= notice %></p>
+<%% if notice.present? %>
+  <p style="color: green"><%%= notice %></p>
+<%% end %>
 
 <%% content_for :title, "<%= model_model_name.pluralize %>" %>
 
 <h1><%= model_model_name.pluralize %></h1>
+<p>
+  <%%= link_to "<%= chat_model_name.pluralize %>", <%= chat_table_name %>_path %>
+</p>
 
 <p>
   <%%= button_to "Refresh <%= model_model_name.pluralize %>", refresh_<%= model_table_name %>_path, method: :post %>
 </p>
 
 <div id="<%= model_table_name %>">
-  <table>
-    <thead>
-      <tr>
-        <th>Provider</th>
-        <th>Model</th>
-        <th>Context Window</th>
-        <th>$/1M tokens (In/Out)</th>
-        <th colspan="2"></th>
-      </tr>
-    </thead>
-    <tbody>
-      <%%= render @<%= model_variable_name.pluralize %> %>
-    </tbody>
-  </table>
+  <%% if @<%= model_variable_name.pluralize %>.any? %>
+    <table>
+      <thead>
+        <tr>
+          <th>Provider</th>
+          <th>Model</th>
+          <th>Context Window</th>
+          <th>$/1M tokens (In/Out)</th>
+          <th colspan="2"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <%%= render @<%= model_variable_name.pluralize %> %>
+      </tbody>
+    </table>
+  <%% else %>
+    <p>No <%= model_table_name.humanize.downcase %> found.</p>
+  <%% end %>
 </div>
-
-<%%= link_to "Back to <%= chat_table_name.humanize.downcase %>", <%= chat_table_name %>_path %>

@@ -40,8 +40,6 @@ module RubyLLM
                              "db/migrate/create_#{table_name_for(model_model_name)}.rb",
                              migration_version: migration_version,
                              model_model_name: model_model_name
-
-          sleep 1 # Ensure different timestamp
         end
 
         migration_template 'migration.rb.tt',

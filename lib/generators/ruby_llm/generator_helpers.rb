@@ -53,9 +53,9 @@ module RubyLLM
         params = []
 
         add_association_params(params, :messages, message_table_name, message_model_name,
-                               owner_table: chat_table_name, plural: true)
+                               owner_table: chat_table_name, owner_model_name: chat_model_name, plural: true)
         add_association_params(params, :model, model_table_name, model_model_name,
-                               owner_table: chat_table_name)
+                               owner_table: chat_table_name, owner_model_name: chat_model_name)
 
         "acts_as_chat#{" #{params.join(', ')}" if params.any?}"
       end
@@ -64,11 +64,11 @@ module RubyLLM
         params = []
 
         add_association_params(params, :chat, chat_table_name, chat_model_name,
-                               owner_table: message_table_name)
+                               owner_table: message_table_name, owner_model_name: message_model_name)
         add_association_params(params, :tool_calls, tool_call_table_name, tool_call_model_name,
-                               owner_table: message_table_name, plural: true)
+                               owner_table: message_table_name, owner_model_name: message_model_name, plural: true)
         add_association_params(params, :model, model_table_name, model_model_name,
-                               owner_table: message_table_name)
+                               owner_table: message_table_name, owner_model_name: message_model_name)
 
         "acts_as_message#{" #{params.join(', ')}" if params.any?}"
       end
@@ -77,7 +77,7 @@ module RubyLLM
         params = []
 
         add_association_params(params, :chats, chat_table_name, chat_model_name,
-                               owner_table: model_table_name, plural: true)
+                               owner_table: model_table_name, owner_model_name: model_model_name, plural: true)
 
         "acts_as_model#{" #{params.join(', ')}" if params.any?}"
       end
@@ -86,7 +86,7 @@ module RubyLLM
         params = []
 
         add_association_params(params, :message, message_table_name, message_model_name,
-                               owner_table: tool_call_table_name)
+                               owner_table: tool_call_table_name, owner_model_name: tool_call_model_name)
 
         "acts_as_tool_call#{" #{params.join(', ')}" if params.any?}"
       end
@@ -145,21 +145,37 @@ module RubyLLM
 
       private
 
-      def add_association_params(params, default_assoc, table_name, model_name, owner_table:, plural: false) # rubocop:disable Metrics/ParameterLists
+      # rubocop:disable Metrics/ParameterLists
+      def add_association_params(params, default_assoc, table_name, model_name,
+                                 owner_table:, owner_model_name:, plural: false)
         assoc = plural ? table_name.to_sym : table_name.singularize.to_sym
-
-        default_foreign_key = "#{default_assoc}_id"
-        # has_many/has_one: foreign key is on the associated table pointing back to owner
-        # belongs_to:       foreign key is on the owner table pointing to associated table
-        foreign_key = if plural || default_assoc.to_s.pluralize == default_assoc.to_s # has_many or has_one
-                        "#{owner_table.singularize}_id"
-                      else # belongs_to
-                        "#{table_name.singularize}_id"
-                      end
+        collection_association = collection_association?(default_assoc, plural)
+        foreign_key = inferred_foreign_key(table_name, owner_table, collection_association)
+        default_foreign_key = default_inferred_foreign_key(assoc, owner_model_name, collection_association)
 
         params << "#{default_assoc}: :#{assoc}" if assoc != default_assoc
         params << "#{default_assoc.to_s.singularize}_class: '#{model_name}'" if model_name != assoc.to_s.classify
         params << "#{default_assoc}_foreign_key: :#{foreign_key}" if foreign_key != default_foreign_key
+      end
+      # rubocop:enable Metrics/ParameterLists
+
+      def collection_association?(default_assoc, plural)
+        plural || default_assoc.to_s.pluralize == default_assoc.to_s
+      end
+
+      def inferred_foreign_key(table_name, owner_table, collection_association)
+        return "#{table_name.singularize}_id" unless collection_association
+
+        "#{owner_table.singularize}_id"
+      end
+
+      # Rails default inference:
+      # belongs_to :assoc    -> assoc_id
+      # has_many/has_one     -> owner demodulized model name + _id
+      def default_inferred_foreign_key(association_name, owner_model_name, collection_association)
+        return "#{association_name}_id" unless collection_association
+
+        "#{owner_model_name.demodulize.underscore}_id"
       end
 
       # Convert namespaced model names to proper table names

@@ -1,0 +1,100 @@
+name: Main CI
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "lib/**"
+      - "spec/**"
+      - "gemfiles/**"
+      - "Gemfile"
+      - "Rakefile"
+      - "Appraisals"
+      - "ruby_llm.gemspec"
+      - ".gitleaks.toml"
+      - ".gitleaksignore"
+      - ".github/workflows/_gitleaks.yml"
+      - ".github/workflows/_lint.yml"
+      - ".github/workflows/_test-matrix.yml"
+      - ".github/workflows/main.yml"
+      - ".github/workflows/release.yml"
+      - "lib/ruby_llm/version.rb"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: main-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  gitleaks:
+    uses: ./.github/workflows/_gitleaks.yml
+
+  lint:
+    uses: ./.github/workflows/_lint.yml
+    with:
+      ruby-version: "4.0"
+      bundler-cache: true
+
+  test:
+    needs: [gitleaks, lint]
+    uses: ./.github/workflows/_test-matrix.yml
+    with:
+      bundler-cache: true
+    secrets: inherit
+
+  release_needed:
+    name: Release Gate
+    needs: [test]
+    runs-on: ubuntu-latest
+    outputs:
+      should_release: ${{ steps.check_version.outputs.version_changed }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 1
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "4.0"
+
+      - name: Check if version needs publishing
+        id: check_version
+        run: |
+          set -euo pipefail
+          VERSION_FILE="./lib/ruby_llm/version.rb"
+          VERSION=$(ruby -r "$VERSION_FILE" -e "puts RubyLLM::VERSION" 2>/dev/null)
+
+          if [ -z "$VERSION" ]; then
+            echo "Error: Could not extract VERSION from $VERSION_FILE" >&2
+            exit 1
+          fi
+          echo "Local version: $VERSION"
+
+          GEM_NAME="ruby_llm"
+          ALL_PUBLISHED_VERSIONS=$(( \
+            gem list ^${GEM_NAME}$ -r --all 2>/dev/null || true; \
+            gem list ^${GEM_NAME}$ -r --prerelease 2>/dev/null || true; \
+          ) | sed -n 's/.*(\(.*\)).*/\1/p' \
+            | tr ',' '\n' \
+            | sed 's/^[[:space:]]*//;s/[[:space:]]*$//' \
+            | grep . \
+            | sort -u )
+
+          if echo "$ALL_PUBLISHED_VERSIONS" | grep -Fxq "$VERSION"; then
+            echo "version_changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "version_changed=true" >> "$GITHUB_OUTPUT"
+          fi
+        shell: bash
+
+  release:
+    if: needs.release_needed.outputs.should_release == 'true'
+    needs: [release_needed]
+    uses: ./.github/workflows/release.yml
+    permissions:
+      contents: read
+      packages: write
+    secrets: inherit

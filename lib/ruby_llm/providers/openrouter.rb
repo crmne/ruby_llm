@@ -49,6 +49,10 @@ module RubyLLM
       end
 
       class << self
+        def configuration_options
+          %i[openrouter_api_key openrouter_api_base]
+        end
+
         def configuration_requirements
           %i[openrouter_api_key]
         end

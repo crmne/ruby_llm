@@ -53,6 +53,10 @@ module RubyLLM
       end
 
       class << self
+        def configuration_options
+          %i[bedrock_api_key bedrock_secret_key bedrock_region bedrock_session_token]
+        end
+
         def configuration_requirements
           %i[bedrock_api_key bedrock_secret_key bedrock_region]
         end

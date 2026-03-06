@@ -44,11 +44,11 @@ RSpec.describe 'RubyLLM upgrade generators', :generator, type: :generator do # r
       within_test_app(app_path) do
         chat_model = File.read('app/models/chat.rb')
         expect(chat_model).to include('acts_as_chat')
-        expect(chat_model).to include('messages_foreign_key')
+        expect(chat_model).not_to include('messages_foreign_key')
 
         message_model = File.read('app/models/message.rb')
         expect(message_model).to include('acts_as_message')
-        expect(message_model).to include('tool_calls_foreign_key')
+        expect(message_model).not_to include('tool_calls_foreign_key')
 
         tool_call_model = File.read('app/models/tool_call.rb')
         expect(tool_call_model).to include('acts_as_tool_call')
@@ -122,18 +122,18 @@ RSpec.describe 'RubyLLM upgrade generators', :generator, type: :generator do # r
         conversation_model = File.read('app/models/conversation.rb')
         expect(conversation_model).to include('acts_as_chat')
         expect(conversation_model).to include('messages: :chat_messages')
-        expect(conversation_model).to include('messages_foreign_key: :conversation_id')
+        expect(conversation_model).not_to include('messages_foreign_key')
 
         chat_message_model = File.read('app/models/chat_message.rb')
         expect(chat_message_model).to include('acts_as_message')
         expect(chat_message_model).to include('chat: :conversation')
-        expect(chat_message_model).to include('chat_foreign_key: :conversation_id')
-        expect(chat_message_model).to include('tool_calls_foreign_key: :chat_message_id')
+        expect(chat_message_model).not_to include('chat_foreign_key')
+        expect(chat_message_model).not_to include('tool_calls_foreign_key')
 
         tool_call_model = File.read('app/models/tool_call.rb')
         expect(tool_call_model).to include('acts_as_tool_call')
         expect(tool_call_model).to include('message: :chat_message')
-        expect(tool_call_model).to include('message_foreign_key: :chat_message_id')
+        expect(tool_call_model).not_to include('message_foreign_key')
       end
     end
 
