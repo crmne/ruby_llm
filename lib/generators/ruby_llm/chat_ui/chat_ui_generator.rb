@@ -103,20 +103,20 @@ module RubyLLM
 
           routes_content = <<~ROUTES.strip
             namespace :#{namespace} do
-              resources :#{model_resource}, only: [:index, :show] do
+              resources :#{model_resource}, only: [ :index, :show ] do
                 collection do
                   post :refresh
                 end
               end
               resources :#{chat_resource} do
-                resources :#{message_resource}, only: [:create]
+                resources :#{message_resource}, only: [ :create ]
               end
             end
           ROUTES
           route routes_content
         else
           model_routes = <<~ROUTES.strip
-            resources :#{model_table_name}, only: [:index, :show] do
+            resources :#{model_table_name}, only: [ :index, :show ] do
               collection do
                 post :refresh
               end
@@ -125,7 +125,7 @@ module RubyLLM
           route model_routes
           chat_routes = <<~ROUTES.strip
             resources :#{chat_table_name} do
-              resources :#{message_table_name}, only: [:create]
+              resources :#{message_table_name}, only: [ :create ]
             end
           ROUTES
           route chat_routes

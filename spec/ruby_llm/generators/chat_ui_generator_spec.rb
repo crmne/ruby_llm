@@ -75,8 +75,8 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       within_test_app(app_path) do
         routes_content = File.read('config/routes.rb')
         expect(routes_content).to include('resources :chats')
-        expect(routes_content).to include('resources :messages, only: [:create]')
-        expect(routes_content).to include('resources :models, only: [:index, :show]')
+        expect(routes_content).to include('resources :messages, only: [ :create ]')
+        expect(routes_content).to include('resources :models, only: [ :index, :show ]')
       end
     end
 
@@ -197,8 +197,8 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         routes_content = File.read('config/routes.rb')
         expect(routes_content).to include('namespace :llm')
         expect(routes_content).to include('resources :chats')
-        expect(routes_content).to include('resources :messages, only: [:create]')
-        expect(routes_content).to include('resources :models, only: [:index, :show]')
+        expect(routes_content).to include('resources :messages, only: [ :create ]')
+        expect(routes_content).to include('resources :models, only: [ :index, :show ]')
       end
     end
 

@@ -16,6 +16,9 @@
       <p>
         <%%= link_to "Show this <%= chat_table_name.singularize.humanize.downcase %>", <%= chat_variable_name %> %>
       </p>
+      <p>
+        <%%= link_to "Destroy this <%= chat_table_name.singularize.humanize.downcase %>", <%= chat_variable_name %>, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %>
+      </p>
     <%% end %>
   <%% else %>
     <p>No <%= chat_table_name.humanize.downcase %> found.</p>
