@@ -82,7 +82,7 @@ module RubyLLM
       def extract_content
         return RubyLLM::Content::Raw.new(content_raw) if has_attribute?(:content_raw) && content_raw.present?
 
-        content_value = self[:content]
+        content_value = self[:content].respond_to?(:to_plain_text) ? self[:content].to_plain_text : self[:content].to_s
 
         return content_value unless respond_to?(:attachments) && attachments.attached?
 
