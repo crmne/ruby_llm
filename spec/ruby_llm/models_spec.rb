@@ -12,6 +12,19 @@ RSpec.describe RubyLLM::Models do
   end
 
   describe 'filtering and chaining' do
+    it 'excludes slash-based vertexai models from the registry' do
+      models = described_class.new(
+        [
+          RubyLLM::Model::Info.new(id: 'deepseek-ai/deepseek-v3.1-maas', name: 'DeepSeek', provider: 'vertexai'),
+          RubyLLM::Model::Info.new(id: 'gemini-2.5-flash', name: 'Gemini', provider: 'vertexai'),
+          RubyLLM::Model::Info.new(id: 'deepseek-ai/deepseek-v3.1-maas', name: 'DeepSeek', provider: 'openrouter')
+        ]
+      )
+
+      expect(models.by_provider('vertexai').map(&:id)).to eq(['gemini-2.5-flash'])
+      expect(models.by_provider('openrouter').map(&:id)).to eq(['deepseek-ai/deepseek-v3.1-maas'])
+    end
+
     it 'filters models by provider' do
       openai_models = RubyLLM.models.by_provider('openai')
       expect(openai_models.all).to all(have_attributes(provider: 'openai'))

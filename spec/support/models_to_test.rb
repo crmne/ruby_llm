@@ -45,7 +45,7 @@ thinking_models = [
   { provider: :gpustack, model: 'qwen3' },
   { provider: :mistral, model: 'magistral-small-latest' },
   { provider: :ollama, model: 'qwen3' },
-  { provider: :openai, model: 'gpt-5' },
+  { provider: :openai, model: 'gpt-5.4' },
   { provider: :openrouter, model: 'claude-haiku-4-5' },
   { provider: :perplexity, model: 'sonar-reasoning-pro' },
   { provider: :vertexai, model: 'gemini-3-flash-preview' },

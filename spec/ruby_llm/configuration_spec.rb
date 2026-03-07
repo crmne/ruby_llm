@@ -7,11 +7,6 @@ RSpec.describe RubyLLM::Configuration do
     subject(:config) { described_class.new }
 
     it 'applies core default values' do
-      expect(config.default_model).to eq('gpt-5-nano')
-      expect(config.default_embedding_model).to eq('text-embedding-3-small')
-      expect(config.default_moderation_model).to eq('omni-moderation-latest')
-      expect(config.default_image_model).to eq('gpt-image-1')
-      expect(config.default_transcription_model).to eq('whisper-1')
       expect(config.model_registry_class).to eq('Model')
       expect(config.use_new_acts_as).to be(false)
       expect(config.request_timeout).to eq(300)

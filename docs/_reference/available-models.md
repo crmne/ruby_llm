@@ -2,7 +2,7 @@
 layout: default
 title: Available Models
 nav_order: 1
-description: Browse 1170 AI models across 11 providers (not including local providers). Updated 2026-03-04.
+description: Browse 1170 AI models across 11 providers (not including local providers). Updated 2026-03-07.
 redirect_from:
   - /guides/available-models
 ---
@@ -66,7 +66,7 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | claude-sonnet-4-6 | anthropic | In: text, image, pdf; Out: text | function_calling, reasoning, vision, streaming, batch, structured_output | 200000 | 64000 | In: $3.00, Out: $15.00, Cache: $0.30 |
 
 
-### Azure (270)
+### Azure (271)
 
 | Model | Provider | I/O | Capabilities | Context | Max Output | Standard Pricing (per 1M tokens) |
 | :-- | :-- | :-- | :-- | --: | --: | :-- |
@@ -197,6 +197,7 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | grok-3 | azure | In: text; Out: text | streaming | 4096 | 16384 | In: $0.50, Out: $1.50 |
 | grok-3-mini | azure | In: text; Out: text | streaming | 4096 | 16384 | In: $0.50, Out: $1.50 |
 | grok-4-1-fast-non-reasoning | azure | In: text; Out: text | streaming | 4096 | 16384 | In: $0.50, Out: $1.50 |
+| grok-4-1-fast-reasoning | azure | In: text; Out: text | streaming | 4096 | 16384 | In: $0.50, Out: $1.50 |
 | grok-4-fast-non-reasoning | azure | In: text; Out: text | streaming | 4096 | 16384 | In: $0.50, Out: $1.50 |
 | grok-4-fast-reasoning | azure | In: text; Out: text | streaming | 4096 | 16384 | In: $0.50, Out: $1.50 |
 | jais-30b-chat | azure | In: text; Out: text | streaming | 4096 | 16384 | In: $0.50, Out: $1.50 |
@@ -366,10 +367,10 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | eu.anthropic.claude-opus-4-5-20251101-v1:0 | bedrock | In: text, image, pdf; Out: text | function_calling, reasoning, vision | 200000 | 64000 | In: $5.00, Out: $25.00, Cache: $0.50 |
 | global.anthropic.claude-opus-4-5-20251101-v1:0 | bedrock | In: text, image, pdf; Out: text | function_calling, reasoning, vision | 200000 | 64000 | In: $5.00, Out: $25.00, Cache: $0.50 |
 | us.anthropic.claude-opus-4-5-20251101-v1:0 | bedrock | In: text, image, pdf; Out: text | function_calling, reasoning, vision, streaming, structured_output | 200000 | 64000 | In: $5.00, Out: $25.00, Cache: $0.50 |
-| anthropic.claude-opus-4-6-v1 | bedrock | In: text, image, pdf; Out: text | function_calling, reasoning, vision | 1000000 | 128000 | In: $5.00, Out: $25.00, Cache: $0.50 |
-| eu.anthropic.claude-opus-4-6-v1 | bedrock | In: text, image, pdf; Out: text | function_calling, reasoning, vision | 1000000 | 128000 | In: $5.00, Out: $25.00, Cache: $0.50 |
-| global.anthropic.claude-opus-4-6-v1 | bedrock | In: text, image, pdf; Out: text | function_calling, reasoning, vision | 1000000 | 128000 | In: $5.00, Out: $25.00, Cache: $0.50 |
-| us.anthropic.claude-opus-4-6-v1 | bedrock | In: text, image, pdf; Out: text | function_calling, reasoning, vision, streaming, structured_output | 1000000 | 128000 | In: $5.00, Out: $25.00, Cache: $0.50 |
+| anthropic.claude-opus-4-6-v1 | bedrock | In: text, image, pdf; Out: text | function_calling, reasoning, vision | 200000 | 128000 | In: $5.00, Out: $25.00, Cache: $0.50 |
+| eu.anthropic.claude-opus-4-6-v1 | bedrock | In: text, image, pdf; Out: text | function_calling, reasoning, vision | 200000 | 128000 | In: $5.00, Out: $25.00, Cache: $0.50 |
+| global.anthropic.claude-opus-4-6-v1 | bedrock | In: text, image, pdf; Out: text | function_calling, reasoning, vision | 200000 | 128000 | In: $5.00, Out: $25.00, Cache: $0.50 |
+| us.anthropic.claude-opus-4-6-v1 | bedrock | In: text, image, pdf; Out: text | function_calling, reasoning, vision, streaming, structured_output | 200000 | 128000 | In: $5.00, Out: $25.00, Cache: $0.50 |
 | anthropic.claude-3-sonnet-20240229-v1:0 | bedrock | In: text, image, pdf; Out: text | function_calling, vision, streaming | 200000 | 4096 | In: $3.00, Out: $15.00 |
 | anthropic.claude-3-sonnet-20240229-v1:0:200k | bedrock | In: text, image, pdf; Out: text | function_calling, vision, streaming | 200000 | 4096 | In: $3.00, Out: $15.00 |
 | anthropic.claude-3-sonnet-20240229-v1:0:28k | bedrock | In: text, image, pdf; Out: text | function_calling, vision, streaming | 28000 | 4096 | In: $3.00, Out: $15.00 |
@@ -623,8 +624,8 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | open-mistral-7b | mistral | In: text; Out: text | function_calling | 8000 | 8000 | In: $0.25, Out: $0.25 |
 | mistral-embed | mistral | In: text; Out: text | - | 8000 | 3072 | In: $0.10 |
 | mistral-embed-2312 | mistral | In: text; Out: embeddings | - | 32768 | 8192 | - |
-| mistral-large-latest | mistral | In: text, image; Out: text | function_calling, vision, streaming, structured_output, batch, fine_tuning | 262144 | 262144 | In: $0.50, Out: $1.50 |
 | mistral-large-pixtral-2411 | mistral | In: text, image; Out: text | streaming, function_calling, structured_output, vision, batch, fine_tuning | 32768 | 8192 | - |
+| mistral-large-latest | mistral | In: text, image; Out: text | function_calling, vision, streaming, structured_output, batch, fine_tuning | 262144 | 262144 | In: $0.50, Out: $1.50 |
 | mistral-large-2411 | mistral | In: text; Out: text | function_calling, streaming, structured_output, batch, fine_tuning | 131072 | 16384 | In: $2.00, Out: $6.00 |
 | mistral-large-2512 | mistral | In: text, image; Out: text | function_calling, vision, streaming, structured_output, batch, fine_tuning | 262144 | 262144 | In: $0.50, Out: $1.50 |
 | mistral-medium | mistral | In: text; Out: text | streaming, function_calling, structured_output, vision, batch, fine_tuning | 32768 | 8192 | - |
@@ -660,7 +661,7 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | voxtral-small-latest | mistral | In: text; Out: text | streaming | 32768 | 8192 | - |
 
 
-### OpenAI (125)
+### OpenAI (129)
 
 | Model | Provider | I/O | Capabilities | Context | Max Output | Standard Pricing (per 1M tokens) |
 | :-- | :-- | :-- | :-- | --: | --: | :-- |
@@ -744,6 +745,10 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | gpt-5.3-chat-latest | openai | In: text, image, pdf; Out: text | streaming, function_calling, structured_output, reasoning | 128000 | 400000 | In: $1.25, Out: $10.00, Cache: $0.12 |
 | gpt-5.3-codex | openai | In: text, image, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming | 400000 | 128000 | In: $1.75, Out: $14.00, Cache: $0.18 |
 | gpt-5.3-codex-spark | openai | In: text, image, pdf; Out: text | function_calling, structured_output, reasoning, vision | 128000 | 32000 | In: $1.75, Out: $14.00, Cache: $0.18 |
+| gpt-5.4 | openai | In: text, image; Out: text | function_calling, structured_output, reasoning, vision, streaming | 1050000 | 128000 | In: $2.50, Out: $15.00, Cache: $0.25 |
+| gpt-5.4-2026-03-05 | openai | In: text, image, pdf; Out: text | streaming, function_calling, structured_output, reasoning | 128000 | 400000 | In: $1.25, Out: $10.00, Cache: $0.12 |
+| gpt-5.4-pro | openai | In: text, image; Out: text | function_calling, reasoning, vision, streaming, structured_output | 1050000 | 128000 | In: $30.00, Out: $180.00 |
+| gpt-5.4-pro-2026-03-05 | openai | In: text, image, pdf; Out: text | streaming, function_calling, structured_output, reasoning | 128000 | 400000 | In: $1.25, Out: $10.00, Cache: $0.12 |
 | gpt-audio | openai | In: text, audio; Out: text, audio | streaming | 4096 | 16384 | In: $0.50, Out: $1.50 |
 | gpt-audio-1.5 | openai | In: text, audio; Out: text, audio | streaming | 4096 | 16384 | In: $0.50, Out: $1.50 |
 | gpt-audio-2025-08-28 | openai | In: text, audio; Out: text, audio | streaming | 4096 | 16384 | In: $0.50, Out: $1.50 |
@@ -791,7 +796,7 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | text-embedding-ada-002 | openai | In: text; Out: embeddings | batch | 8192 | 1536 | In: $0.10 |
 
 
-### OpenRouter (397)
+### OpenRouter (400)
 
 | Model | Provider | I/O | Capabilities | Context | Max Output | Standard Pricing (per 1M tokens) |
 | :-- | :-- | :-- | :-- | --: | --: | :-- |
@@ -850,10 +855,10 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | cohere/command-r7b-12-2024 | openrouter | In: text; Out: text | streaming, structured_output | 128000 | 4000 | In: $0.04, Out: $0.15 |
 | deepcogito/cogito-v2.1-671b | openrouter | In: text; Out: text | streaming, structured_output, predicted_outputs | 128000 | - | In: $1.25, Out: $1.25 |
 | nousresearch/deephermes-3-llama-3-8b-preview | openrouter | In: text; Out: text | function_calling, reasoning | 131072 | 8192 | - |
-| deepseek/deepseek-r1-distill-llama-70b | openrouter | In: text; Out: text | structured_output, reasoning, streaming, predicted_outputs | 8192 | 8192 | In: $0.70, Out: $0.80 |
+| deepseek/deepseek-r1-distill-llama-70b | openrouter | In: text; Out: text | structured_output, reasoning, streaming | 8192 | 8192 | In: $0.70, Out: $0.80 |
 | deepseek/deepseek-r1-distill-qwen-14b | openrouter | In: text; Out: text | reasoning | 64000 | 8192 | - |
 | tngtech/deepseek-r1t2-chimera:free | openrouter | In: text; Out: text | structured_output, reasoning | 163840 | 163840 | - |
-| deepseek/deepseek-chat-v3-0324 | openrouter | In: text; Out: text | structured_output, streaming, function_calling, predicted_outputs | 16384 | 8192 | In: $0.20, Out: $0.77, Cache: $0.14 |
+| deepseek/deepseek-chat-v3-0324 | openrouter | In: text; Out: text | structured_output, streaming, function_calling, predicted_outputs | 16384 | 8192 | In: $0.20, Out: $0.77, Cache: $0.13 |
 | deepseek/deepseek-v3-base:free | openrouter | In: text; Out: text | - | 163840 | 163840 | - |
 | deepseek/deepseek-v3.1-terminus | openrouter | In: text; Out: text | function_calling, structured_output, reasoning, streaming, predicted_outputs | 131072 | 65536 | In: $0.27, Out: $1.00 |
 | deepseek/deepseek-v3.1-terminus:exacto | openrouter | In: text; Out: text | function_calling, structured_output, reasoning, streaming | 131072 | 65536 | In: $0.27, Out: $1.00 |
@@ -914,6 +919,9 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | openai/gpt-5.2-chat | openrouter | In: text, image; Out: text | function_calling, structured_output, reasoning, vision, streaming | 128000 | 16384 | In: $1.75, Out: $14.00, Cache: $0.18 |
 | openai/gpt-5.2-pro | openrouter | In: text, image; Out: text | function_calling, structured_output, reasoning, vision, streaming | 400000 | 128000 | In: $21.00, Out: $168.00 |
 | openai/gpt-5.2-codex | openrouter | In: text, image; Out: text | function_calling, structured_output, reasoning, vision, streaming | 400000 | 128000 | In: $1.75, Out: $14.00, Cache: $0.18 |
+| openai/gpt-5.3-codex | openrouter | In: text, image, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming | 400000 | 128000 | In: $1.75, Out: $14.00, Cache: $0.18 |
+| openai/gpt-5.4 | openrouter | In: text, image, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming | 1050000 | 128000 | In: $2.50, Out: $15.00, Cache: $0.25 |
+| openai/gpt-5.4-pro | openrouter | In: text, image, pdf; Out: text | function_calling, reasoning, vision, streaming, structured_output | 1050000 | 128000 | In: $30.00, Out: $180.00, Cache: $30.00 |
 | google/gemini-2.0-flash-001 | openrouter | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, vision, streaming | 1048576 | 8192 | In: $0.10, Out: $0.40, Cache: $0.02 |
 | google/gemini-2.0-flash-exp:free | openrouter | In: text, image; Out: text | function_calling, vision | 1048576 | 1048576 | - |
 | google/gemini-2.5-flash | openrouter | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache: $0.04 |
@@ -957,8 +965,9 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | nousresearch/hermes-4-405b | openrouter | In: text; Out: text | function_calling, reasoning, streaming, structured_output | 131072 | 131072 | In: $1.00, Out: $3.00 |
 | nousresearch/hermes-4-70b | openrouter | In: text; Out: text | function_calling, structured_output, reasoning, streaming | 131072 | 131072 | In: $0.13, Out: $0.40 |
 | ibm-granite/granite-4.0-h-micro | openrouter | In: text; Out: text | streaming | 131000 | - | In: $0.02, Out: $0.11 |
-| inception/mercury | openrouter | In: text; Out: text | streaming, function_calling, structured_output | 128000 | 16384 | In: $0.25, Out: $0.75, Cache: $0.02 |
-| inception/mercury-coder | openrouter | In: text; Out: text | streaming, function_calling, structured_output | 128000 | 16384 | In: $0.25, Out: $0.75, Cache: $0.02 |
+| inception/mercury | openrouter | In: text; Out: text | streaming, function_calling, structured_output | 128000 | 32000 | In: $0.25, Out: $0.75, Cache: $0.02 |
+| inception/mercury-2 | openrouter | In: text; Out: text | streaming, function_calling, structured_output | 128000 | 50000 | In: $0.25, Out: $0.75, Cache: $0.02 |
+| inception/mercury-coder | openrouter | In: text; Out: text | streaming, function_calling, structured_output | 128000 | 32000 | In: $0.25, Out: $0.75, Cache: $0.02 |
 | inflection/inflection-3-pi | openrouter | In: text; Out: text | streaming | 8000 | 1024 | In: $2.50, Out: $10.00 |
 | inflection/inflection-3-productivity | openrouter | In: text; Out: text | streaming | 8000 | 1024 | In: $2.50, Out: $10.00 |
 | prime-intellect/intellect-3 | openrouter | In: text; Out: text | function_calling, structured_output, reasoning, streaming, predicted_outputs | 131072 | 8192 | In: $0.20, Out: $1.10 |
@@ -990,7 +999,7 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | meta-llama/llama-3-8b-instruct | openrouter | In: text; Out: text | streaming, function_calling, structured_output, predicted_outputs | 8192 | 16384 | In: $0.03, Out: $0.04 |
 | meta-llama/llama-3.1-405b | openrouter | In: text; Out: text | streaming, predicted_outputs | 32768 | 32768 | In: $4.00, Out: $4.00 |
 | meta-llama/llama-3.1-405b-instruct | openrouter | In: text; Out: text | streaming, function_calling, structured_output, predicted_outputs | 131000 | - | In: $4.00, Out: $4.00 |
-| meta-llama/llama-3.1-70b-instruct | openrouter | In: text; Out: text | streaming, function_calling, structured_output, predicted_outputs | 131072 | - | In: $0.40, Out: $0.40 |
+| meta-llama/llama-3.1-70b-instruct | openrouter | In: text; Out: text | streaming, function_calling, structured_output | 131072 | - | In: $0.40, Out: $0.40 |
 | meta-llama/llama-3.1-8b-instruct | openrouter | In: text; Out: text | streaming, function_calling, structured_output, predicted_outputs | 16384 | 16384 | In: $0.02, Out: $0.05 |
 | meta-llama/llama-3.2-1b-instruct | openrouter | In: text; Out: text | streaming | 60000 | - | In: $0.03, Out: $0.20 |
 | meta-llama/llama-3.2-3b-instruct | openrouter | In: text; Out: text | streaming, predicted_outputs | 80000 | - | In: $0.05, Out: $0.34 |
@@ -1073,7 +1082,6 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | openai/gpt-4o-mini-search-preview | openrouter | In: text; Out: text | streaming, structured_output | 128000 | 16384 | In: $0.15, Out: $0.60 |
 | openai/gpt-5-image-mini | openrouter | In: file, image, text; Out: image, text | streaming, function_calling, structured_output | 400000 | 128000 | In: $2.50, Out: $2.00, Cache: $0.25 |
 | openai/gpt-5.3-chat | openrouter | In: text, image, file; Out: text | streaming, function_calling, structured_output | 128000 | 16384 | In: $1.75, Out: $14.00, Cache: $0.18 |
-| openai/gpt-5.3-codex | openrouter | In: text, image; Out: text | streaming, function_calling, structured_output | 400000 | 128000 | In: $1.75, Out: $14.00, Cache: $0.18 |
 | openai/o1 | openrouter | In: text, image, file; Out: text | streaming, function_calling, structured_output | 200000 | 100000 | In: $15.00, Out: $60.00, Cache: $7.50 |
 | openai/o1-pro | openrouter | In: text, image, file; Out: text | streaming, structured_output | 200000 | 100000 | In: $150.00, Out: $600.00 |
 | openai/o3 | openrouter | In: image, text, file; Out: text | streaming, function_calling, structured_output | 200000 | 100000 | In: $2.00, Out: $8.00, Cache: $0.50 |
@@ -1142,7 +1150,7 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | qwen/qwen3-vl-235b-a22b-thinking | openrouter | In: text, image; Out: text | streaming, function_calling, structured_output | 131072 | 32768 | - |
 | qwen/qwen3-vl-30b-a3b-instruct | openrouter | In: text, image; Out: text | streaming, function_calling, structured_output | 131072 | 32768 | In: $0.13, Out: $0.52 |
 | qwen/qwen3-vl-30b-a3b-thinking | openrouter | In: text, image; Out: text | streaming, function_calling, structured_output | 131072 | 32768 | - |
-| qwen/qwen3-vl-32b-instruct | openrouter | In: text, image; Out: text | streaming, function_calling, structured_output, predicted_outputs | 131072 | 32768 | In: $0.10, Out: $0.42 |
+| qwen/qwen3-vl-32b-instruct | openrouter | In: text, image; Out: text | streaming, function_calling, structured_output | 131072 | 32768 | In: $0.10, Out: $0.42 |
 | qwen/qwen3-vl-8b-instruct | openrouter | In: image, text; Out: text | streaming, function_calling, structured_output, predicted_outputs | 131072 | 32768 | In: $0.08, Out: $0.50 |
 | qwen/qwen3-vl-8b-thinking | openrouter | In: image, text; Out: text | streaming, function_calling, structured_output | 131072 | 32768 | In: $0.12, Out: $1.36 |
 | qwen/qwen3.5-122b-a10b | openrouter | In: text, image, video; Out: text | streaming, function_calling, structured_output, predicted_outputs | 262144 | 65536 | In: $0.26, Out: $2.08 |
@@ -1190,7 +1198,7 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | z-ai/glm-4.6v | openrouter | In: image, text, video; Out: text | streaming, function_calling, structured_output | 131072 | 131072 | In: $0.30, Out: $0.90 |
 | openai/gpt-oss-120b:free | openrouter | In: text; Out: text | function_calling, reasoning, streaming | 131072 | 32768 | - |
 | openai/gpt-oss-20b:free | openrouter | In: text; Out: text | function_calling, reasoning, streaming | 131072 | 32768 | - |
-| nvidia/nemotron-nano-9b-v2 | openrouter | In: text; Out: text | function_calling, reasoning, streaming, structured_output, predicted_outputs | 131072 | 131072 | In: $0.04, Out: $0.16 |
+| nvidia/nemotron-nano-9b-v2 | openrouter | In: text; Out: text | function_calling, reasoning, streaming, structured_output | 131072 | 131072 | In: $0.04, Out: $0.16 |
 | openai/o4-mini | openrouter | In: text, image; Out: text | function_calling, structured_output, reasoning, vision, streaming | 200000 | 100000 | In: $1.10, Out: $4.40, Cache: $0.28 |
 
 
@@ -1205,15 +1213,10 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | sonar-reasoning-pro | perplexity | In: text, image; Out: text | reasoning, vision, streaming, json_mode | 128000 | 4096 | In: $2.00, Out: $8.00 |
 
 
-### VertexAI (45)
+### VertexAI (37)
 
 | Model | Provider | I/O | Capabilities | Context | Max Output | Standard Pricing (per 1M tokens) |
 | :-- | :-- | :-- | :-- | --: | --: | :-- |
-| deepseek-ai/deepseek-v3.1-maas | vertexai | In: text, pdf; Out: text | function_calling, structured_output, reasoning, vision | 163840 | 32768 | In: $0.60, Out: $1.70 |
-| zai-org/glm-4.7-maas | vertexai | In: text, pdf; Out: text | function_calling, structured_output, reasoning, vision | 200000 | 128000 | In: $0.60, Out: $2.20 |
-| zai-org/glm-5-maas | vertexai | In: text; Out: text | function_calling, reasoning | 204800 | 131072 | In: $1.00, Out: $3.20, Cache: $0.10 |
-| openai/gpt-oss-120b-maas | vertexai | In: text; Out: text | function_calling, reasoning | 131072 | 32768 | In: $0.09, Out: $0.36 |
-| openai/gpt-oss-20b-maas | vertexai | In: text; Out: text | function_calling, reasoning | 131072 | 32768 | In: $0.07, Out: $0.25 |
 | gemini-1.5-flash | vertexai | In: text, image, audio, video; Out: text | function_calling, vision, streaming | 1000000 | 8192 | In: $0.08, Out: $0.30, Cache: $0.02 |
 | gemini-1.5-flash-8b | vertexai | In: text, image, audio, video; Out: text | function_calling, vision, streaming | 1000000 | 8192 | In: $0.04, Out: $0.15, Cache: $0.01 |
 | gemini-1.5-pro | vertexai | In: text, image, audio, video; Out: text | function_calling, vision, streaming | 1000000 | 8192 | In: $1.25, Out: $5.00, Cache: $0.31 |
@@ -1236,9 +1239,6 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | gemini-embedding-001 | vertexai | In: text; Out: embeddings | streaming, function_calling | 2048 | 3072 | In: $0.15 |
 | gemini-flash-latest | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, reasoning, vision | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache: $0.08 |
 | gemini-flash-lite-latest | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, reasoning, vision | 1048576 | 65536 | In: $0.10, Out: $0.40, Cache: $0.02 |
-| meta/llama-3.3-70b-instruct-maas | vertexai | In: text; Out: text | function_calling, structured_output | 128000 | 8192 | In: $0.72, Out: $0.72 |
-| meta/llama-4-maverick-17b-128e-instruct-maas | vertexai | In: text, image; Out: text | function_calling, structured_output, vision | 524288 | 8192 | In: $0.35, Out: $1.15 |
-| qwen/qwen3-235b-a22b-instruct-2507-maas | vertexai | In: text; Out: text | function_calling, structured_output, reasoning | 262144 | 16384 | In: $0.22, Out: $0.88 |
 | gemini-1.5-flash-002 | vertexai | In: -; Out: - | streaming, function_calling | - | - | - |
 | gemini-1.5-pro-002 | vertexai | In: -; Out: - | streaming, function_calling | - | - | - |
 | gemini-2.0-flash-001 | vertexai | In: -; Out: - | streaming, function_calling | - | - | - |
@@ -1275,7 +1275,7 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 
 ## Models by Capability
 
-### Function Calling (705)
+### Function Calling (704)
 
 | Model | Provider | I/O | Capabilities | Context | Max Output | Standard Pricing (per 1M tokens) |
 | :-- | :-- | :-- | :-- | --: | --: | :-- |
@@ -1355,10 +1355,10 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | eu.anthropic.claude-opus-4-5-20251101-v1:0 | bedrock | In: text, image, pdf; Out: text | function_calling, reasoning, vision | 200000 | 64000 | In: $5.00, Out: $25.00, Cache: $0.50 |
 | global.anthropic.claude-opus-4-5-20251101-v1:0 | bedrock | In: text, image, pdf; Out: text | function_calling, reasoning, vision | 200000 | 64000 | In: $5.00, Out: $25.00, Cache: $0.50 |
 | us.anthropic.claude-opus-4-5-20251101-v1:0 | bedrock | In: text, image, pdf; Out: text | function_calling, reasoning, vision, streaming, structured_output | 200000 | 64000 | In: $5.00, Out: $25.00, Cache: $0.50 |
-| anthropic.claude-opus-4-6-v1 | bedrock | In: text, image, pdf; Out: text | function_calling, reasoning, vision | 1000000 | 128000 | In: $5.00, Out: $25.00, Cache: $0.50 |
-| eu.anthropic.claude-opus-4-6-v1 | bedrock | In: text, image, pdf; Out: text | function_calling, reasoning, vision | 1000000 | 128000 | In: $5.00, Out: $25.00, Cache: $0.50 |
-| global.anthropic.claude-opus-4-6-v1 | bedrock | In: text, image, pdf; Out: text | function_calling, reasoning, vision | 1000000 | 128000 | In: $5.00, Out: $25.00, Cache: $0.50 |
-| us.anthropic.claude-opus-4-6-v1 | bedrock | In: text, image, pdf; Out: text | function_calling, reasoning, vision, streaming, structured_output | 1000000 | 128000 | In: $5.00, Out: $25.00, Cache: $0.50 |
+| anthropic.claude-opus-4-6-v1 | bedrock | In: text, image, pdf; Out: text | function_calling, reasoning, vision | 200000 | 128000 | In: $5.00, Out: $25.00, Cache: $0.50 |
+| eu.anthropic.claude-opus-4-6-v1 | bedrock | In: text, image, pdf; Out: text | function_calling, reasoning, vision | 200000 | 128000 | In: $5.00, Out: $25.00, Cache: $0.50 |
+| global.anthropic.claude-opus-4-6-v1 | bedrock | In: text, image, pdf; Out: text | function_calling, reasoning, vision | 200000 | 128000 | In: $5.00, Out: $25.00, Cache: $0.50 |
+| us.anthropic.claude-opus-4-6-v1 | bedrock | In: text, image, pdf; Out: text | function_calling, reasoning, vision, streaming, structured_output | 200000 | 128000 | In: $5.00, Out: $25.00, Cache: $0.50 |
 | anthropic.claude-3-sonnet-20240229-v1:0 | bedrock | In: text, image, pdf; Out: text | function_calling, vision, streaming | 200000 | 4096 | In: $3.00, Out: $15.00 |
 | anthropic.claude-3-sonnet-20240229-v1:0:200k | bedrock | In: text, image, pdf; Out: text | function_calling, vision, streaming | 200000 | 4096 | In: $3.00, Out: $15.00 |
 | anthropic.claude-3-sonnet-20240229-v1:0:28k | bedrock | In: text, image, pdf; Out: text | function_calling, vision, streaming | 28000 | 4096 | In: $3.00, Out: $15.00 |
@@ -1569,8 +1569,8 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | ministral-8b-2512 | mistral | In: text; Out: text | streaming, function_calling, structured_output, batch, distillation | 32768 | 8192 | - |
 | ministral-8b-latest | mistral | In: text; Out: text | function_calling, streaming, structured_output, batch, distillation | 128000 | 128000 | In: $0.10, Out: $0.10 |
 | open-mistral-7b | mistral | In: text; Out: text | function_calling | 8000 | 8000 | In: $0.25, Out: $0.25 |
-| mistral-large-latest | mistral | In: text, image; Out: text | function_calling, vision, streaming, structured_output, batch, fine_tuning | 262144 | 262144 | In: $0.50, Out: $1.50 |
 | mistral-large-pixtral-2411 | mistral | In: text, image; Out: text | streaming, function_calling, structured_output, vision, batch, fine_tuning | 32768 | 8192 | - |
+| mistral-large-latest | mistral | In: text, image; Out: text | function_calling, vision, streaming, structured_output, batch, fine_tuning | 262144 | 262144 | In: $0.50, Out: $1.50 |
 | mistral-large-2411 | mistral | In: text; Out: text | function_calling, streaming, structured_output, batch, fine_tuning | 131072 | 16384 | In: $2.00, Out: $6.00 |
 | mistral-large-2512 | mistral | In: text, image; Out: text | function_calling, vision, streaming, structured_output, batch, fine_tuning | 262144 | 262144 | In: $0.50, Out: $1.50 |
 | mistral-medium | mistral | In: text; Out: text | streaming, function_calling, structured_output, vision, batch, fine_tuning | 32768 | 8192 | - |
@@ -1636,6 +1636,10 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | gpt-5.3-chat-latest | openai | In: text, image, pdf; Out: text | streaming, function_calling, structured_output, reasoning | 128000 | 400000 | In: $1.25, Out: $10.00, Cache: $0.12 |
 | gpt-5.3-codex | openai | In: text, image, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming | 400000 | 128000 | In: $1.75, Out: $14.00, Cache: $0.18 |
 | gpt-5.3-codex-spark | openai | In: text, image, pdf; Out: text | function_calling, structured_output, reasoning, vision | 128000 | 32000 | In: $1.75, Out: $14.00, Cache: $0.18 |
+| gpt-5.4 | openai | In: text, image; Out: text | function_calling, structured_output, reasoning, vision, streaming | 1050000 | 128000 | In: $2.50, Out: $15.00, Cache: $0.25 |
+| gpt-5.4-2026-03-05 | openai | In: text, image, pdf; Out: text | streaming, function_calling, structured_output, reasoning | 128000 | 400000 | In: $1.25, Out: $10.00, Cache: $0.12 |
+| gpt-5.4-pro | openai | In: text, image; Out: text | function_calling, reasoning, vision, streaming, structured_output | 1050000 | 128000 | In: $30.00, Out: $180.00 |
+| gpt-5.4-pro-2026-03-05 | openai | In: text, image, pdf; Out: text | streaming, function_calling, structured_output, reasoning | 128000 | 400000 | In: $1.25, Out: $10.00, Cache: $0.12 |
 | o1-2024-12-17 | openai | In: text, image, pdf; Out: text | streaming, function_calling, structured_output, reasoning | 200000 | 100000 | In: $15.00, Out: $60.00 |
 | o1-pro-2025-03-19 | openai | In: text, image, pdf; Out: text | streaming, function_calling, structured_output, reasoning | 200000 | 100000 | In: $150.00, Out: $600.00 |
 | o3-mini-2025-01-31 | openai | In: text; Out: text | streaming, function_calling, structured_output, reasoning | 200000 | 100000 | In: $1.10, Out: $4.40 |
@@ -1680,7 +1684,7 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | cohere/command-r-08-2024 | openrouter | In: text; Out: text | streaming, function_calling, structured_output | 128000 | 4000 | In: $0.15, Out: $0.60 |
 | cohere/command-r-plus-08-2024 | openrouter | In: text; Out: text | streaming, function_calling, structured_output | 128000 | 4000 | In: $2.50, Out: $10.00 |
 | nousresearch/deephermes-3-llama-3-8b-preview | openrouter | In: text; Out: text | function_calling, reasoning | 131072 | 8192 | - |
-| deepseek/deepseek-chat-v3-0324 | openrouter | In: text; Out: text | structured_output, streaming, function_calling, predicted_outputs | 16384 | 8192 | In: $0.20, Out: $0.77, Cache: $0.14 |
+| deepseek/deepseek-chat-v3-0324 | openrouter | In: text; Out: text | structured_output, streaming, function_calling, predicted_outputs | 16384 | 8192 | In: $0.20, Out: $0.77, Cache: $0.13 |
 | deepseek/deepseek-v3.1-terminus | openrouter | In: text; Out: text | function_calling, structured_output, reasoning, streaming, predicted_outputs | 131072 | 65536 | In: $0.27, Out: $1.00 |
 | deepseek/deepseek-v3.1-terminus:exacto | openrouter | In: text; Out: text | function_calling, structured_output, reasoning, streaming | 131072 | 65536 | In: $0.27, Out: $1.00 |
 | deepseek/deepseek-v3.2 | openrouter | In: text; Out: text | function_calling, structured_output, reasoning, streaming, predicted_outputs | 163840 | 65536 | In: $0.28, Out: $0.40 |
@@ -1733,6 +1737,9 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | openai/gpt-5.2-chat | openrouter | In: text, image; Out: text | function_calling, structured_output, reasoning, vision, streaming | 128000 | 16384 | In: $1.75, Out: $14.00, Cache: $0.18 |
 | openai/gpt-5.2-pro | openrouter | In: text, image; Out: text | function_calling, structured_output, reasoning, vision, streaming | 400000 | 128000 | In: $21.00, Out: $168.00 |
 | openai/gpt-5.2-codex | openrouter | In: text, image; Out: text | function_calling, structured_output, reasoning, vision, streaming | 400000 | 128000 | In: $1.75, Out: $14.00, Cache: $0.18 |
+| openai/gpt-5.3-codex | openrouter | In: text, image, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming | 400000 | 128000 | In: $1.75, Out: $14.00, Cache: $0.18 |
+| openai/gpt-5.4 | openrouter | In: text, image, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming | 1050000 | 128000 | In: $2.50, Out: $15.00, Cache: $0.25 |
+| openai/gpt-5.4-pro | openrouter | In: text, image, pdf; Out: text | function_calling, reasoning, vision, streaming, structured_output | 1050000 | 128000 | In: $30.00, Out: $180.00, Cache: $30.00 |
 | google/gemini-2.0-flash-001 | openrouter | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, vision, streaming | 1048576 | 8192 | In: $0.10, Out: $0.40, Cache: $0.02 |
 | google/gemini-2.0-flash-exp:free | openrouter | In: text, image; Out: text | function_calling, vision | 1048576 | 1048576 | - |
 | google/gemini-2.5-flash | openrouter | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache: $0.04 |
@@ -1761,8 +1768,9 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | x-ai/grok-code-fast-1 | openrouter | In: text; Out: text | function_calling, structured_output, reasoning, streaming | 256000 | 10000 | In: $0.20, Out: $1.50, Cache: $0.02 |
 | nousresearch/hermes-4-405b | openrouter | In: text; Out: text | function_calling, reasoning, streaming, structured_output | 131072 | 131072 | In: $1.00, Out: $3.00 |
 | nousresearch/hermes-4-70b | openrouter | In: text; Out: text | function_calling, structured_output, reasoning, streaming | 131072 | 131072 | In: $0.13, Out: $0.40 |
-| inception/mercury | openrouter | In: text; Out: text | streaming, function_calling, structured_output | 128000 | 16384 | In: $0.25, Out: $0.75, Cache: $0.02 |
-| inception/mercury-coder | openrouter | In: text; Out: text | streaming, function_calling, structured_output | 128000 | 16384 | In: $0.25, Out: $0.75, Cache: $0.02 |
+| inception/mercury | openrouter | In: text; Out: text | streaming, function_calling, structured_output | 128000 | 32000 | In: $0.25, Out: $0.75, Cache: $0.02 |
+| inception/mercury-2 | openrouter | In: text; Out: text | streaming, function_calling, structured_output | 128000 | 50000 | In: $0.25, Out: $0.75, Cache: $0.02 |
+| inception/mercury-coder | openrouter | In: text; Out: text | streaming, function_calling, structured_output | 128000 | 32000 | In: $0.25, Out: $0.75, Cache: $0.02 |
 | prime-intellect/intellect-3 | openrouter | In: text; Out: text | function_calling, structured_output, reasoning, streaming, predicted_outputs | 131072 | 8192 | In: $0.20, Out: $1.10 |
 | kwaipilot/kat-coder-pro:free | openrouter | In: text; Out: text | function_calling, structured_output | 256000 | 65536 | - |
 | moonshotai/kimi-dev-72b:free | openrouter | In: text; Out: text | function_calling | 131072 | 131072 | - |
@@ -1779,7 +1787,7 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | meituan/longcat-flash-chat | openrouter | In: text; Out: text | streaming, function_calling, structured_output, predicted_outputs | 131072 | 131072 | In: $0.20, Out: $0.80, Cache: $0.20 |
 | meta-llama/llama-3-8b-instruct | openrouter | In: text; Out: text | streaming, function_calling, structured_output, predicted_outputs | 8192 | 16384 | In: $0.03, Out: $0.04 |
 | meta-llama/llama-3.1-405b-instruct | openrouter | In: text; Out: text | streaming, function_calling, structured_output, predicted_outputs | 131000 | - | In: $4.00, Out: $4.00 |
-| meta-llama/llama-3.1-70b-instruct | openrouter | In: text; Out: text | streaming, function_calling, structured_output, predicted_outputs | 131072 | - | In: $0.40, Out: $0.40 |
+| meta-llama/llama-3.1-70b-instruct | openrouter | In: text; Out: text | streaming, function_calling, structured_output | 131072 | - | In: $0.40, Out: $0.40 |
 | meta-llama/llama-3.1-8b-instruct | openrouter | In: text; Out: text | streaming, function_calling, structured_output, predicted_outputs | 16384 | 16384 | In: $0.02, Out: $0.05 |
 | meta-llama/llama-3.3-70b-instruct | openrouter | In: text; Out: text | streaming, function_calling, structured_output, predicted_outputs | 131072 | 16384 | In: $0.10, Out: $0.32 |
 | meta-llama/llama-4-maverick | openrouter | In: text, image; Out: text | streaming, function_calling, structured_output, predicted_outputs | 1048576 | 16384 | In: $0.15, Out: $0.60 |
@@ -1840,7 +1848,6 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | openai/gpt-4o-mini-2024-07-18 | openrouter | In: text, image, file; Out: text | streaming, function_calling, structured_output | 128000 | 16384 | In: $0.15, Out: $0.60, Cache: $0.08 |
 | openai/gpt-5-image-mini | openrouter | In: file, image, text; Out: image, text | streaming, function_calling, structured_output | 400000 | 128000 | In: $2.50, Out: $2.00, Cache: $0.25 |
 | openai/gpt-5.3-chat | openrouter | In: text, image, file; Out: text | streaming, function_calling, structured_output | 128000 | 16384 | In: $1.75, Out: $14.00, Cache: $0.18 |
-| openai/gpt-5.3-codex | openrouter | In: text, image; Out: text | streaming, function_calling, structured_output | 400000 | 128000 | In: $1.75, Out: $14.00, Cache: $0.18 |
 | openai/o1 | openrouter | In: text, image, file; Out: text | streaming, function_calling, structured_output | 200000 | 100000 | In: $15.00, Out: $60.00, Cache: $7.50 |
 | openai/o3 | openrouter | In: image, text, file; Out: text | streaming, function_calling, structured_output | 200000 | 100000 | In: $2.00, Out: $8.00, Cache: $0.50 |
 | openai/o3-deep-research | openrouter | In: image, text, file; Out: text | streaming, function_calling, structured_output | 200000 | 100000 | In: $10.00, Out: $40.00, Cache: $2.50 |
@@ -1897,7 +1904,7 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | qwen/qwen3-vl-235b-a22b-thinking | openrouter | In: text, image; Out: text | streaming, function_calling, structured_output | 131072 | 32768 | - |
 | qwen/qwen3-vl-30b-a3b-instruct | openrouter | In: text, image; Out: text | streaming, function_calling, structured_output | 131072 | 32768 | In: $0.13, Out: $0.52 |
 | qwen/qwen3-vl-30b-a3b-thinking | openrouter | In: text, image; Out: text | streaming, function_calling, structured_output | 131072 | 32768 | - |
-| qwen/qwen3-vl-32b-instruct | openrouter | In: text, image; Out: text | streaming, function_calling, structured_output, predicted_outputs | 131072 | 32768 | In: $0.10, Out: $0.42 |
+| qwen/qwen3-vl-32b-instruct | openrouter | In: text, image; Out: text | streaming, function_calling, structured_output | 131072 | 32768 | In: $0.10, Out: $0.42 |
 | qwen/qwen3-vl-8b-instruct | openrouter | In: image, text; Out: text | streaming, function_calling, structured_output, predicted_outputs | 131072 | 32768 | In: $0.08, Out: $0.50 |
 | qwen/qwen3-vl-8b-thinking | openrouter | In: image, text; Out: text | streaming, function_calling, structured_output | 131072 | 32768 | In: $0.12, Out: $1.36 |
 | qwen/qwen3.5-122b-a10b | openrouter | In: text, image, video; Out: text | streaming, function_calling, structured_output, predicted_outputs | 262144 | 65536 | In: $0.26, Out: $2.08 |
@@ -1926,13 +1933,8 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | z-ai/glm-4.6v | openrouter | In: image, text, video; Out: text | streaming, function_calling, structured_output | 131072 | 131072 | In: $0.30, Out: $0.90 |
 | openai/gpt-oss-120b:free | openrouter | In: text; Out: text | function_calling, reasoning, streaming | 131072 | 32768 | - |
 | openai/gpt-oss-20b:free | openrouter | In: text; Out: text | function_calling, reasoning, streaming | 131072 | 32768 | - |
-| nvidia/nemotron-nano-9b-v2 | openrouter | In: text; Out: text | function_calling, reasoning, streaming, structured_output, predicted_outputs | 131072 | 131072 | In: $0.04, Out: $0.16 |
+| nvidia/nemotron-nano-9b-v2 | openrouter | In: text; Out: text | function_calling, reasoning, streaming, structured_output | 131072 | 131072 | In: $0.04, Out: $0.16 |
 | openai/o4-mini | openrouter | In: text, image; Out: text | function_calling, structured_output, reasoning, vision, streaming | 200000 | 100000 | In: $1.10, Out: $4.40, Cache: $0.28 |
-| deepseek-ai/deepseek-v3.1-maas | vertexai | In: text, pdf; Out: text | function_calling, structured_output, reasoning, vision | 163840 | 32768 | In: $0.60, Out: $1.70 |
-| zai-org/glm-4.7-maas | vertexai | In: text, pdf; Out: text | function_calling, structured_output, reasoning, vision | 200000 | 128000 | In: $0.60, Out: $2.20 |
-| zai-org/glm-5-maas | vertexai | In: text; Out: text | function_calling, reasoning | 204800 | 131072 | In: $1.00, Out: $3.20, Cache: $0.10 |
-| openai/gpt-oss-120b-maas | vertexai | In: text; Out: text | function_calling, reasoning | 131072 | 32768 | In: $0.09, Out: $0.36 |
-| openai/gpt-oss-20b-maas | vertexai | In: text; Out: text | function_calling, reasoning | 131072 | 32768 | In: $0.07, Out: $0.25 |
 | gemini-1.5-flash | vertexai | In: text, image, audio, video; Out: text | function_calling, vision, streaming | 1000000 | 8192 | In: $0.08, Out: $0.30, Cache: $0.02 |
 | gemini-1.5-flash-8b | vertexai | In: text, image, audio, video; Out: text | function_calling, vision, streaming | 1000000 | 8192 | In: $0.04, Out: $0.15, Cache: $0.01 |
 | gemini-1.5-pro | vertexai | In: text, image, audio, video; Out: text | function_calling, vision, streaming | 1000000 | 8192 | In: $1.25, Out: $5.00, Cache: $0.31 |
@@ -1955,9 +1957,6 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | gemini-embedding-001 | vertexai | In: text; Out: embeddings | streaming, function_calling | 2048 | 3072 | In: $0.15 |
 | gemini-flash-latest | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, reasoning, vision | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache: $0.08 |
 | gemini-flash-lite-latest | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, reasoning, vision | 1048576 | 65536 | In: $0.10, Out: $0.40, Cache: $0.02 |
-| meta/llama-3.3-70b-instruct-maas | vertexai | In: text; Out: text | function_calling, structured_output | 128000 | 8192 | In: $0.72, Out: $0.72 |
-| meta/llama-4-maverick-17b-128e-instruct-maas | vertexai | In: text, image; Out: text | function_calling, structured_output, vision | 524288 | 8192 | In: $0.35, Out: $1.15 |
-| qwen/qwen3-235b-a22b-instruct-2507-maas | vertexai | In: text; Out: text | function_calling, structured_output, reasoning | 262144 | 16384 | In: $0.22, Out: $0.88 |
 | gemini-1.5-flash-002 | vertexai | In: -; Out: - | streaming, function_calling | - | - | - |
 | gemini-1.5-pro-002 | vertexai | In: -; Out: - | streaming, function_calling | - | - | - |
 | gemini-2.0-flash-001 | vertexai | In: -; Out: - | streaming, function_calling | - | - | - |
@@ -1986,7 +1985,7 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | grok-imagine-video | xai | In: text; Out: text | streaming, function_calling, structured_output | - | - | - |
 
 
-### Structured Output (472)
+### Structured Output (474)
 
 | Model | Provider | I/O | Capabilities | Context | Max Output | Standard Pricing (per 1M tokens) |
 | :-- | :-- | :-- | :-- | --: | --: | :-- |
@@ -2032,7 +2031,7 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | o3-mini-alpha-2024-12-17 | azure | In: text; Out: text | streaming, function_calling, structured_output, reasoning | 200000 | 100000 | In: $1.10, Out: $4.40 |
 | us.anthropic.claude-haiku-4-5-20251001-v1:0 | bedrock | In: text, image, pdf; Out: text | function_calling, reasoning, vision, streaming, structured_output | 200000 | 64000 | In: $1.00, Out: $5.00, Cache: $0.10 |
 | us.anthropic.claude-opus-4-5-20251101-v1:0 | bedrock | In: text, image, pdf; Out: text | function_calling, reasoning, vision, streaming, structured_output | 200000 | 64000 | In: $5.00, Out: $25.00, Cache: $0.50 |
-| us.anthropic.claude-opus-4-6-v1 | bedrock | In: text, image, pdf; Out: text | function_calling, reasoning, vision, streaming, structured_output | 1000000 | 128000 | In: $5.00, Out: $25.00, Cache: $0.50 |
+| us.anthropic.claude-opus-4-6-v1 | bedrock | In: text, image, pdf; Out: text | function_calling, reasoning, vision, streaming, structured_output | 200000 | 128000 | In: $5.00, Out: $25.00, Cache: $0.50 |
 | us.anthropic.claude-sonnet-4-5-20250929-v1:0 | bedrock | In: text, image, pdf; Out: text | function_calling, reasoning, vision, streaming, structured_output | 200000 | 64000 | In: $3.00, Out: $15.00, Cache: $0.30 |
 | us.anthropic.claude-sonnet-4-6 | bedrock | In: text, image, pdf; Out: text | function_calling, reasoning, vision, streaming, structured_output | 200000 | 64000 | In: $3.00, Out: $15.00, Cache: $0.30 |
 | mistral.mistral-7b-instruct-v0:2 | bedrock | In: text; Out: text | function_calling, structured_output, streaming | 127000 | 127000 | In: $0.11, Out: $0.11 |
@@ -2089,8 +2088,8 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | ministral-3b-latest | mistral | In: text; Out: text | function_calling, streaming, structured_output, batch, distillation | 128000 | 128000 | In: $0.04, Out: $0.04 |
 | ministral-8b-2512 | mistral | In: text; Out: text | streaming, function_calling, structured_output, batch, distillation | 32768 | 8192 | - |
 | ministral-8b-latest | mistral | In: text; Out: text | function_calling, streaming, structured_output, batch, distillation | 128000 | 128000 | In: $0.10, Out: $0.10 |
-| mistral-large-latest | mistral | In: text, image; Out: text | function_calling, vision, streaming, structured_output, batch, fine_tuning | 262144 | 262144 | In: $0.50, Out: $1.50 |
 | mistral-large-pixtral-2411 | mistral | In: text, image; Out: text | streaming, function_calling, structured_output, vision, batch, fine_tuning | 32768 | 8192 | - |
+| mistral-large-latest | mistral | In: text, image; Out: text | function_calling, vision, streaming, structured_output, batch, fine_tuning | 262144 | 262144 | In: $0.50, Out: $1.50 |
 | mistral-large-2411 | mistral | In: text; Out: text | function_calling, streaming, structured_output, batch, fine_tuning | 131072 | 16384 | In: $2.00, Out: $6.00 |
 | mistral-large-2512 | mistral | In: text, image; Out: text | function_calling, vision, streaming, structured_output, batch, fine_tuning | 262144 | 262144 | In: $0.50, Out: $1.50 |
 | mistral-medium | mistral | In: text; Out: text | streaming, function_calling, structured_output, vision, batch, fine_tuning | 32768 | 8192 | - |
@@ -2147,6 +2146,10 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | gpt-5.3-chat-latest | openai | In: text, image, pdf; Out: text | streaming, function_calling, structured_output, reasoning | 128000 | 400000 | In: $1.25, Out: $10.00, Cache: $0.12 |
 | gpt-5.3-codex | openai | In: text, image, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming | 400000 | 128000 | In: $1.75, Out: $14.00, Cache: $0.18 |
 | gpt-5.3-codex-spark | openai | In: text, image, pdf; Out: text | function_calling, structured_output, reasoning, vision | 128000 | 32000 | In: $1.75, Out: $14.00, Cache: $0.18 |
+| gpt-5.4 | openai | In: text, image; Out: text | function_calling, structured_output, reasoning, vision, streaming | 1050000 | 128000 | In: $2.50, Out: $15.00, Cache: $0.25 |
+| gpt-5.4-2026-03-05 | openai | In: text, image, pdf; Out: text | streaming, function_calling, structured_output, reasoning | 128000 | 400000 | In: $1.25, Out: $10.00, Cache: $0.12 |
+| gpt-5.4-pro | openai | In: text, image; Out: text | function_calling, reasoning, vision, streaming, structured_output | 1050000 | 128000 | In: $30.00, Out: $180.00 |
+| gpt-5.4-pro-2026-03-05 | openai | In: text, image, pdf; Out: text | streaming, function_calling, structured_output, reasoning | 128000 | 400000 | In: $1.25, Out: $10.00, Cache: $0.12 |
 | o1-2024-12-17 | openai | In: text, image, pdf; Out: text | streaming, function_calling, structured_output, reasoning | 200000 | 100000 | In: $15.00, Out: $60.00 |
 | o1-pro-2025-03-19 | openai | In: text, image, pdf; Out: text | streaming, function_calling, structured_output, reasoning | 200000 | 100000 | In: $150.00, Out: $600.00 |
 | o3-mini-2025-01-31 | openai | In: text; Out: text | streaming, function_calling, structured_output, reasoning | 200000 | 100000 | In: $1.10, Out: $4.40 |
@@ -2182,9 +2185,9 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | cohere/command-r-plus-08-2024 | openrouter | In: text; Out: text | streaming, function_calling, structured_output | 128000 | 4000 | In: $2.50, Out: $10.00 |
 | cohere/command-r7b-12-2024 | openrouter | In: text; Out: text | streaming, structured_output | 128000 | 4000 | In: $0.04, Out: $0.15 |
 | deepcogito/cogito-v2.1-671b | openrouter | In: text; Out: text | streaming, structured_output, predicted_outputs | 128000 | - | In: $1.25, Out: $1.25 |
-| deepseek/deepseek-r1-distill-llama-70b | openrouter | In: text; Out: text | structured_output, reasoning, streaming, predicted_outputs | 8192 | 8192 | In: $0.70, Out: $0.80 |
+| deepseek/deepseek-r1-distill-llama-70b | openrouter | In: text; Out: text | structured_output, reasoning, streaming | 8192 | 8192 | In: $0.70, Out: $0.80 |
 | tngtech/deepseek-r1t2-chimera:free | openrouter | In: text; Out: text | structured_output, reasoning | 163840 | 163840 | - |
-| deepseek/deepseek-chat-v3-0324 | openrouter | In: text; Out: text | structured_output, streaming, function_calling, predicted_outputs | 16384 | 8192 | In: $0.20, Out: $0.77, Cache: $0.14 |
+| deepseek/deepseek-chat-v3-0324 | openrouter | In: text; Out: text | structured_output, streaming, function_calling, predicted_outputs | 16384 | 8192 | In: $0.20, Out: $0.77, Cache: $0.13 |
 | deepseek/deepseek-v3.1-terminus | openrouter | In: text; Out: text | function_calling, structured_output, reasoning, streaming, predicted_outputs | 131072 | 65536 | In: $0.27, Out: $1.00 |
 | deepseek/deepseek-v3.1-terminus:exacto | openrouter | In: text; Out: text | function_calling, structured_output, reasoning, streaming | 131072 | 65536 | In: $0.27, Out: $1.00 |
 | deepseek/deepseek-v3.2 | openrouter | In: text; Out: text | function_calling, structured_output, reasoning, streaming, predicted_outputs | 163840 | 65536 | In: $0.28, Out: $0.40 |
@@ -2230,6 +2233,9 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | openai/gpt-5.2-chat | openrouter | In: text, image; Out: text | function_calling, structured_output, reasoning, vision, streaming | 128000 | 16384 | In: $1.75, Out: $14.00, Cache: $0.18 |
 | openai/gpt-5.2-pro | openrouter | In: text, image; Out: text | function_calling, structured_output, reasoning, vision, streaming | 400000 | 128000 | In: $21.00, Out: $168.00 |
 | openai/gpt-5.2-codex | openrouter | In: text, image; Out: text | function_calling, structured_output, reasoning, vision, streaming | 400000 | 128000 | In: $1.75, Out: $14.00, Cache: $0.18 |
+| openai/gpt-5.3-codex | openrouter | In: text, image, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming | 400000 | 128000 | In: $1.75, Out: $14.00, Cache: $0.18 |
+| openai/gpt-5.4 | openrouter | In: text, image, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming | 1050000 | 128000 | In: $2.50, Out: $15.00, Cache: $0.25 |
+| openai/gpt-5.4-pro | openrouter | In: text, image, pdf; Out: text | function_calling, reasoning, vision, streaming, structured_output | 1050000 | 128000 | In: $30.00, Out: $180.00, Cache: $30.00 |
 | google/gemini-2.0-flash-001 | openrouter | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, vision, streaming | 1048576 | 8192 | In: $0.10, Out: $0.40, Cache: $0.02 |
 | google/gemini-2.5-flash | openrouter | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache: $0.04 |
 | google/gemini-2.5-flash-lite | openrouter | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming | 1048576 | 65536 | In: $0.10, Out: $0.40, Cache: $0.02 |
@@ -2267,8 +2273,9 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | x-ai/grok-code-fast-1 | openrouter | In: text; Out: text | function_calling, structured_output, reasoning, streaming | 256000 | 10000 | In: $0.20, Out: $1.50, Cache: $0.02 |
 | nousresearch/hermes-4-405b | openrouter | In: text; Out: text | function_calling, reasoning, streaming, structured_output | 131072 | 131072 | In: $1.00, Out: $3.00 |
 | nousresearch/hermes-4-70b | openrouter | In: text; Out: text | function_calling, structured_output, reasoning, streaming | 131072 | 131072 | In: $0.13, Out: $0.40 |
-| inception/mercury | openrouter | In: text; Out: text | streaming, function_calling, structured_output | 128000 | 16384 | In: $0.25, Out: $0.75, Cache: $0.02 |
-| inception/mercury-coder | openrouter | In: text; Out: text | streaming, function_calling, structured_output | 128000 | 16384 | In: $0.25, Out: $0.75, Cache: $0.02 |
+| inception/mercury | openrouter | In: text; Out: text | streaming, function_calling, structured_output | 128000 | 32000 | In: $0.25, Out: $0.75, Cache: $0.02 |
+| inception/mercury-2 | openrouter | In: text; Out: text | streaming, function_calling, structured_output | 128000 | 50000 | In: $0.25, Out: $0.75, Cache: $0.02 |
+| inception/mercury-coder | openrouter | In: text; Out: text | streaming, function_calling, structured_output | 128000 | 32000 | In: $0.25, Out: $0.75, Cache: $0.02 |
 | prime-intellect/intellect-3 | openrouter | In: text; Out: text | function_calling, structured_output, reasoning, streaming, predicted_outputs | 131072 | 8192 | In: $0.20, Out: $1.10 |
 | kwaipilot/kat-coder-pro:free | openrouter | In: text; Out: text | function_calling, structured_output | 256000 | 65536 | - |
 | moonshotai/kimi-k2 | openrouter | In: text; Out: text | function_calling, streaming, structured_output | 131072 | 32768 | In: $0.55, Out: $2.20 |
@@ -2287,7 +2294,7 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | meta-llama/llama-3-70b-instruct | openrouter | In: text; Out: text | streaming, structured_output | 8192 | 8000 | In: $0.51, Out: $0.74 |
 | meta-llama/llama-3-8b-instruct | openrouter | In: text; Out: text | streaming, function_calling, structured_output, predicted_outputs | 8192 | 16384 | In: $0.03, Out: $0.04 |
 | meta-llama/llama-3.1-405b-instruct | openrouter | In: text; Out: text | streaming, function_calling, structured_output, predicted_outputs | 131000 | - | In: $4.00, Out: $4.00 |
-| meta-llama/llama-3.1-70b-instruct | openrouter | In: text; Out: text | streaming, function_calling, structured_output, predicted_outputs | 131072 | - | In: $0.40, Out: $0.40 |
+| meta-llama/llama-3.1-70b-instruct | openrouter | In: text; Out: text | streaming, function_calling, structured_output | 131072 | - | In: $0.40, Out: $0.40 |
 | meta-llama/llama-3.1-8b-instruct | openrouter | In: text; Out: text | streaming, function_calling, structured_output, predicted_outputs | 16384 | 16384 | In: $0.02, Out: $0.05 |
 | meta-llama/llama-3.3-70b-instruct | openrouter | In: text; Out: text | streaming, function_calling, structured_output, predicted_outputs | 131072 | 16384 | In: $0.10, Out: $0.32 |
 | meta-llama/llama-4-maverick | openrouter | In: text, image; Out: text | streaming, function_calling, structured_output, predicted_outputs | 1048576 | 16384 | In: $0.15, Out: $0.60 |
@@ -2357,7 +2364,6 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | openai/gpt-4o-mini-search-preview | openrouter | In: text; Out: text | streaming, structured_output | 128000 | 16384 | In: $0.15, Out: $0.60 |
 | openai/gpt-5-image-mini | openrouter | In: file, image, text; Out: image, text | streaming, function_calling, structured_output | 400000 | 128000 | In: $2.50, Out: $2.00, Cache: $0.25 |
 | openai/gpt-5.3-chat | openrouter | In: text, image, file; Out: text | streaming, function_calling, structured_output | 128000 | 16384 | In: $1.75, Out: $14.00, Cache: $0.18 |
-| openai/gpt-5.3-codex | openrouter | In: text, image; Out: text | streaming, function_calling, structured_output | 400000 | 128000 | In: $1.75, Out: $14.00, Cache: $0.18 |
 | openai/o1 | openrouter | In: text, image, file; Out: text | streaming, function_calling, structured_output | 200000 | 100000 | In: $15.00, Out: $60.00, Cache: $7.50 |
 | openai/o1-pro | openrouter | In: text, image, file; Out: text | streaming, structured_output | 200000 | 100000 | In: $150.00, Out: $600.00 |
 | openai/o3 | openrouter | In: image, text, file; Out: text | streaming, function_calling, structured_output | 200000 | 100000 | In: $2.00, Out: $8.00, Cache: $0.50 |
@@ -2416,7 +2422,7 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | qwen/qwen3-vl-235b-a22b-thinking | openrouter | In: text, image; Out: text | streaming, function_calling, structured_output | 131072 | 32768 | - |
 | qwen/qwen3-vl-30b-a3b-instruct | openrouter | In: text, image; Out: text | streaming, function_calling, structured_output | 131072 | 32768 | In: $0.13, Out: $0.52 |
 | qwen/qwen3-vl-30b-a3b-thinking | openrouter | In: text, image; Out: text | streaming, function_calling, structured_output | 131072 | 32768 | - |
-| qwen/qwen3-vl-32b-instruct | openrouter | In: text, image; Out: text | streaming, function_calling, structured_output, predicted_outputs | 131072 | 32768 | In: $0.10, Out: $0.42 |
+| qwen/qwen3-vl-32b-instruct | openrouter | In: text, image; Out: text | streaming, function_calling, structured_output | 131072 | 32768 | In: $0.10, Out: $0.42 |
 | qwen/qwen3-vl-8b-instruct | openrouter | In: image, text; Out: text | streaming, function_calling, structured_output, predicted_outputs | 131072 | 32768 | In: $0.08, Out: $0.50 |
 | qwen/qwen3-vl-8b-thinking | openrouter | In: image, text; Out: text | streaming, function_calling, structured_output | 131072 | 32768 | In: $0.12, Out: $1.36 |
 | qwen/qwen3.5-122b-a10b | openrouter | In: text, image, video; Out: text | streaming, function_calling, structured_output, predicted_outputs | 262144 | 65536 | In: $0.26, Out: $2.08 |
@@ -2440,17 +2446,12 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | cognitivecomputations/dolphin-mistral-24b-venice-edition:free | openrouter | In: text; Out: text | structured_output, streaming | 32768 | 32768 | - |
 | upstage/solar-pro-3 | openrouter | In: text; Out: text | streaming, function_calling, structured_output | 128000 | - | In: $0.15, Out: $0.60, Cache: $0.02 |
 | z-ai/glm-4.6v | openrouter | In: image, text, video; Out: text | streaming, function_calling, structured_output | 131072 | 131072 | In: $0.30, Out: $0.90 |
-| nvidia/nemotron-nano-9b-v2 | openrouter | In: text; Out: text | function_calling, reasoning, streaming, structured_output, predicted_outputs | 131072 | 131072 | In: $0.04, Out: $0.16 |
+| nvidia/nemotron-nano-9b-v2 | openrouter | In: text; Out: text | function_calling, reasoning, streaming, structured_output | 131072 | 131072 | In: $0.04, Out: $0.16 |
 | openai/o4-mini | openrouter | In: text, image; Out: text | function_calling, structured_output, reasoning, vision, streaming | 200000 | 100000 | In: $1.10, Out: $4.40, Cache: $0.28 |
-| deepseek-ai/deepseek-v3.1-maas | vertexai | In: text, pdf; Out: text | function_calling, structured_output, reasoning, vision | 163840 | 32768 | In: $0.60, Out: $1.70 |
-| zai-org/glm-4.7-maas | vertexai | In: text, pdf; Out: text | function_calling, structured_output, reasoning, vision | 200000 | 128000 | In: $0.60, Out: $2.20 |
 | gemini-3-flash-preview | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision | 1048576 | 65536 | In: $0.50, Out: $3.00, Cache: $0.05 |
 | gemini-3-pro-preview | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision | 1048576 | 65536 | In: $2.00, Out: $12.00, Cache: $0.20 |
 | gemini-3.1-pro-preview | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision | 1048576 | 65536 | In: $2.00, Out: $12.00, Cache: $0.20 |
 | gemini-3.1-pro-preview-customtools | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision | 1048576 | 65536 | In: $2.00, Out: $12.00, Cache: $0.20 |
-| meta/llama-3.3-70b-instruct-maas | vertexai | In: text; Out: text | function_calling, structured_output | 128000 | 8192 | In: $0.72, Out: $0.72 |
-| meta/llama-4-maverick-17b-128e-instruct-maas | vertexai | In: text, image; Out: text | function_calling, structured_output, vision | 524288 | 8192 | In: $0.35, Out: $1.15 |
-| qwen/qwen3-235b-a22b-instruct-2507-maas | vertexai | In: text; Out: text | function_calling, structured_output, reasoning | 262144 | 16384 | In: $0.22, Out: $0.88 |
 | grok-3 | xai | In: text; Out: text | streaming, function_calling, structured_output | - | - | - |
 | grok-3-mini | xai | In: text; Out: text | streaming, function_calling, structured_output, reasoning | - | - | - |
 | grok-4-0709 | xai | In: text, image; Out: text | streaming, function_calling, structured_output, reasoning, vision | - | - | - |
@@ -2464,7 +2465,7 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | grok-imagine-video | xai | In: text; Out: text | streaming, function_calling, structured_output | - | - | - |
 
 
-### Streaming (960)
+### Streaming (968)
 
 | Model | Provider | I/O | Capabilities | Context | Max Output | Standard Pricing (per 1M tokens) |
 | :-- | :-- | :-- | :-- | --: | --: | :-- |
@@ -2604,6 +2605,7 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | grok-3 | azure | In: text; Out: text | streaming | 4096 | 16384 | In: $0.50, Out: $1.50 |
 | grok-3-mini | azure | In: text; Out: text | streaming | 4096 | 16384 | In: $0.50, Out: $1.50 |
 | grok-4-1-fast-non-reasoning | azure | In: text; Out: text | streaming | 4096 | 16384 | In: $0.50, Out: $1.50 |
+| grok-4-1-fast-reasoning | azure | In: text; Out: text | streaming | 4096 | 16384 | In: $0.50, Out: $1.50 |
 | grok-4-fast-non-reasoning | azure | In: text; Out: text | streaming | 4096 | 16384 | In: $0.50, Out: $1.50 |
 | grok-4-fast-reasoning | azure | In: text; Out: text | streaming | 4096 | 16384 | In: $0.50, Out: $1.50 |
 | jais-30b-chat | azure | In: text; Out: text | streaming | 4096 | 16384 | In: $0.50, Out: $1.50 |
@@ -2751,7 +2753,7 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | us.anthropic.claude-opus-4-20250514-v1:0 | bedrock | In: text, image, pdf; Out: text | function_calling, reasoning, vision, streaming | 200000 | 32000 | In: $15.00, Out: $75.00, Cache: $1.50 |
 | us.anthropic.claude-opus-4-1-20250805-v1:0 | bedrock | In: text, image, pdf; Out: text | function_calling, reasoning, vision, streaming | 200000 | 32000 | In: $15.00, Out: $75.00, Cache: $1.50 |
 | us.anthropic.claude-opus-4-5-20251101-v1:0 | bedrock | In: text, image, pdf; Out: text | function_calling, reasoning, vision, streaming, structured_output | 200000 | 64000 | In: $5.00, Out: $25.00, Cache: $0.50 |
-| us.anthropic.claude-opus-4-6-v1 | bedrock | In: text, image, pdf; Out: text | function_calling, reasoning, vision, streaming, structured_output | 1000000 | 128000 | In: $5.00, Out: $25.00, Cache: $0.50 |
+| us.anthropic.claude-opus-4-6-v1 | bedrock | In: text, image, pdf; Out: text | function_calling, reasoning, vision, streaming, structured_output | 200000 | 128000 | In: $5.00, Out: $25.00, Cache: $0.50 |
 | anthropic.claude-3-sonnet-20240229-v1:0 | bedrock | In: text, image, pdf; Out: text | function_calling, vision, streaming | 200000 | 4096 | In: $3.00, Out: $15.00 |
 | anthropic.claude-3-sonnet-20240229-v1:0:200k | bedrock | In: text, image, pdf; Out: text | function_calling, vision, streaming | 200000 | 4096 | In: $3.00, Out: $15.00 |
 | anthropic.claude-3-sonnet-20240229-v1:0:28k | bedrock | In: text, image, pdf; Out: text | function_calling, vision, streaming | 28000 | 4096 | In: $3.00, Out: $15.00 |
@@ -2905,8 +2907,8 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | ministral-3b-latest | mistral | In: text; Out: text | function_calling, streaming, structured_output, batch, distillation | 128000 | 128000 | In: $0.04, Out: $0.04 |
 | ministral-8b-2512 | mistral | In: text; Out: text | streaming, function_calling, structured_output, batch, distillation | 32768 | 8192 | - |
 | ministral-8b-latest | mistral | In: text; Out: text | function_calling, streaming, structured_output, batch, distillation | 128000 | 128000 | In: $0.10, Out: $0.10 |
-| mistral-large-latest | mistral | In: text, image; Out: text | function_calling, vision, streaming, structured_output, batch, fine_tuning | 262144 | 262144 | In: $0.50, Out: $1.50 |
 | mistral-large-pixtral-2411 | mistral | In: text, image; Out: text | streaming, function_calling, structured_output, vision, batch, fine_tuning | 32768 | 8192 | - |
+| mistral-large-latest | mistral | In: text, image; Out: text | function_calling, vision, streaming, structured_output, batch, fine_tuning | 262144 | 262144 | In: $0.50, Out: $1.50 |
 | mistral-large-2411 | mistral | In: text; Out: text | function_calling, streaming, structured_output, batch, fine_tuning | 131072 | 16384 | In: $2.00, Out: $6.00 |
 | mistral-large-2512 | mistral | In: text, image; Out: text | function_calling, vision, streaming, structured_output, batch, fine_tuning | 262144 | 262144 | In: $0.50, Out: $1.50 |
 | mistral-medium | mistral | In: text; Out: text | streaming, function_calling, structured_output, vision, batch, fine_tuning | 32768 | 8192 | - |
@@ -3007,6 +3009,10 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | gpt-5.2-pro-2025-12-11 | openai | In: text, image, pdf; Out: text | streaming, function_calling, structured_output, reasoning | 128000 | 400000 | In: $1.25, Out: $10.00, Cache: $0.12 |
 | gpt-5.3-chat-latest | openai | In: text, image, pdf; Out: text | streaming, function_calling, structured_output, reasoning | 128000 | 400000 | In: $1.25, Out: $10.00, Cache: $0.12 |
 | gpt-5.3-codex | openai | In: text, image, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming | 400000 | 128000 | In: $1.75, Out: $14.00, Cache: $0.18 |
+| gpt-5.4 | openai | In: text, image; Out: text | function_calling, structured_output, reasoning, vision, streaming | 1050000 | 128000 | In: $2.50, Out: $15.00, Cache: $0.25 |
+| gpt-5.4-2026-03-05 | openai | In: text, image, pdf; Out: text | streaming, function_calling, structured_output, reasoning | 128000 | 400000 | In: $1.25, Out: $10.00, Cache: $0.12 |
+| gpt-5.4-pro | openai | In: text, image; Out: text | function_calling, reasoning, vision, streaming, structured_output | 1050000 | 128000 | In: $30.00, Out: $180.00 |
+| gpt-5.4-pro-2026-03-05 | openai | In: text, image, pdf; Out: text | streaming, function_calling, structured_output, reasoning | 128000 | 400000 | In: $1.25, Out: $10.00, Cache: $0.12 |
 | gpt-audio | openai | In: text, audio; Out: text, audio | streaming | 4096 | 16384 | In: $0.50, Out: $1.50 |
 | gpt-audio-1.5 | openai | In: text, audio; Out: text, audio | streaming | 4096 | 16384 | In: $0.50, Out: $1.50 |
 | gpt-audio-2025-08-28 | openai | In: text, audio; Out: text, audio | streaming | 4096 | 16384 | In: $0.50, Out: $1.50 |
@@ -3098,8 +3104,8 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | cohere/command-r-plus-08-2024 | openrouter | In: text; Out: text | streaming, function_calling, structured_output | 128000 | 4000 | In: $2.50, Out: $10.00 |
 | cohere/command-r7b-12-2024 | openrouter | In: text; Out: text | streaming, structured_output | 128000 | 4000 | In: $0.04, Out: $0.15 |
 | deepcogito/cogito-v2.1-671b | openrouter | In: text; Out: text | streaming, structured_output, predicted_outputs | 128000 | - | In: $1.25, Out: $1.25 |
-| deepseek/deepseek-r1-distill-llama-70b | openrouter | In: text; Out: text | structured_output, reasoning, streaming, predicted_outputs | 8192 | 8192 | In: $0.70, Out: $0.80 |
-| deepseek/deepseek-chat-v3-0324 | openrouter | In: text; Out: text | structured_output, streaming, function_calling, predicted_outputs | 16384 | 8192 | In: $0.20, Out: $0.77, Cache: $0.14 |
+| deepseek/deepseek-r1-distill-llama-70b | openrouter | In: text; Out: text | structured_output, reasoning, streaming | 8192 | 8192 | In: $0.70, Out: $0.80 |
+| deepseek/deepseek-chat-v3-0324 | openrouter | In: text; Out: text | structured_output, streaming, function_calling, predicted_outputs | 16384 | 8192 | In: $0.20, Out: $0.77, Cache: $0.13 |
 | deepseek/deepseek-v3.1-terminus | openrouter | In: text; Out: text | function_calling, structured_output, reasoning, streaming, predicted_outputs | 131072 | 65536 | In: $0.27, Out: $1.00 |
 | deepseek/deepseek-v3.1-terminus:exacto | openrouter | In: text; Out: text | function_calling, structured_output, reasoning, streaming | 131072 | 65536 | In: $0.27, Out: $1.00 |
 | deepseek/deepseek-v3.2 | openrouter | In: text; Out: text | function_calling, structured_output, reasoning, streaming, predicted_outputs | 163840 | 65536 | In: $0.28, Out: $0.40 |
@@ -3146,6 +3152,9 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | openai/gpt-5.2-chat | openrouter | In: text, image; Out: text | function_calling, structured_output, reasoning, vision, streaming | 128000 | 16384 | In: $1.75, Out: $14.00, Cache: $0.18 |
 | openai/gpt-5.2-pro | openrouter | In: text, image; Out: text | function_calling, structured_output, reasoning, vision, streaming | 400000 | 128000 | In: $21.00, Out: $168.00 |
 | openai/gpt-5.2-codex | openrouter | In: text, image; Out: text | function_calling, structured_output, reasoning, vision, streaming | 400000 | 128000 | In: $1.75, Out: $14.00, Cache: $0.18 |
+| openai/gpt-5.3-codex | openrouter | In: text, image, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming | 400000 | 128000 | In: $1.75, Out: $14.00, Cache: $0.18 |
+| openai/gpt-5.4 | openrouter | In: text, image, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming | 1050000 | 128000 | In: $2.50, Out: $15.00, Cache: $0.25 |
+| openai/gpt-5.4-pro | openrouter | In: text, image, pdf; Out: text | function_calling, reasoning, vision, streaming, structured_output | 1050000 | 128000 | In: $30.00, Out: $180.00, Cache: $30.00 |
 | google/gemini-2.0-flash-001 | openrouter | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, vision, streaming | 1048576 | 8192 | In: $0.10, Out: $0.40, Cache: $0.02 |
 | google/gemini-2.5-flash | openrouter | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache: $0.04 |
 | google/gemini-2.5-flash-lite | openrouter | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming | 1048576 | 65536 | In: $0.10, Out: $0.40, Cache: $0.02 |
@@ -3186,8 +3195,9 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | nousresearch/hermes-4-405b | openrouter | In: text; Out: text | function_calling, reasoning, streaming, structured_output | 131072 | 131072 | In: $1.00, Out: $3.00 |
 | nousresearch/hermes-4-70b | openrouter | In: text; Out: text | function_calling, structured_output, reasoning, streaming | 131072 | 131072 | In: $0.13, Out: $0.40 |
 | ibm-granite/granite-4.0-h-micro | openrouter | In: text; Out: text | streaming | 131000 | - | In: $0.02, Out: $0.11 |
-| inception/mercury | openrouter | In: text; Out: text | streaming, function_calling, structured_output | 128000 | 16384 | In: $0.25, Out: $0.75, Cache: $0.02 |
-| inception/mercury-coder | openrouter | In: text; Out: text | streaming, function_calling, structured_output | 128000 | 16384 | In: $0.25, Out: $0.75, Cache: $0.02 |
+| inception/mercury | openrouter | In: text; Out: text | streaming, function_calling, structured_output | 128000 | 32000 | In: $0.25, Out: $0.75, Cache: $0.02 |
+| inception/mercury-2 | openrouter | In: text; Out: text | streaming, function_calling, structured_output | 128000 | 50000 | In: $0.25, Out: $0.75, Cache: $0.02 |
+| inception/mercury-coder | openrouter | In: text; Out: text | streaming, function_calling, structured_output | 128000 | 32000 | In: $0.25, Out: $0.75, Cache: $0.02 |
 | inflection/inflection-3-pi | openrouter | In: text; Out: text | streaming | 8000 | 1024 | In: $2.50, Out: $10.00 |
 | inflection/inflection-3-productivity | openrouter | In: text; Out: text | streaming | 8000 | 1024 | In: $2.50, Out: $10.00 |
 | prime-intellect/intellect-3 | openrouter | In: text; Out: text | function_calling, structured_output, reasoning, streaming, predicted_outputs | 131072 | 8192 | In: $0.20, Out: $1.10 |
@@ -3213,7 +3223,7 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | meta-llama/llama-3-8b-instruct | openrouter | In: text; Out: text | streaming, function_calling, structured_output, predicted_outputs | 8192 | 16384 | In: $0.03, Out: $0.04 |
 | meta-llama/llama-3.1-405b | openrouter | In: text; Out: text | streaming, predicted_outputs | 32768 | 32768 | In: $4.00, Out: $4.00 |
 | meta-llama/llama-3.1-405b-instruct | openrouter | In: text; Out: text | streaming, function_calling, structured_output, predicted_outputs | 131000 | - | In: $4.00, Out: $4.00 |
-| meta-llama/llama-3.1-70b-instruct | openrouter | In: text; Out: text | streaming, function_calling, structured_output, predicted_outputs | 131072 | - | In: $0.40, Out: $0.40 |
+| meta-llama/llama-3.1-70b-instruct | openrouter | In: text; Out: text | streaming, function_calling, structured_output | 131072 | - | In: $0.40, Out: $0.40 |
 | meta-llama/llama-3.1-8b-instruct | openrouter | In: text; Out: text | streaming, function_calling, structured_output, predicted_outputs | 16384 | 16384 | In: $0.02, Out: $0.05 |
 | meta-llama/llama-3.2-1b-instruct | openrouter | In: text; Out: text | streaming | 60000 | - | In: $0.03, Out: $0.20 |
 | meta-llama/llama-3.2-3b-instruct | openrouter | In: text; Out: text | streaming, predicted_outputs | 80000 | - | In: $0.05, Out: $0.34 |
@@ -3292,7 +3302,6 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | openai/gpt-4o-mini-search-preview | openrouter | In: text; Out: text | streaming, structured_output | 128000 | 16384 | In: $0.15, Out: $0.60 |
 | openai/gpt-5-image-mini | openrouter | In: file, image, text; Out: image, text | streaming, function_calling, structured_output | 400000 | 128000 | In: $2.50, Out: $2.00, Cache: $0.25 |
 | openai/gpt-5.3-chat | openrouter | In: text, image, file; Out: text | streaming, function_calling, structured_output | 128000 | 16384 | In: $1.75, Out: $14.00, Cache: $0.18 |
-| openai/gpt-5.3-codex | openrouter | In: text, image; Out: text | streaming, function_calling, structured_output | 400000 | 128000 | In: $1.75, Out: $14.00, Cache: $0.18 |
 | openai/o1 | openrouter | In: text, image, file; Out: text | streaming, function_calling, structured_output | 200000 | 100000 | In: $15.00, Out: $60.00, Cache: $7.50 |
 | openai/o1-pro | openrouter | In: text, image, file; Out: text | streaming, structured_output | 200000 | 100000 | In: $150.00, Out: $600.00 |
 | openai/o3 | openrouter | In: image, text, file; Out: text | streaming, function_calling, structured_output | 200000 | 100000 | In: $2.00, Out: $8.00, Cache: $0.50 |
@@ -3350,7 +3359,7 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | qwen/qwen3-vl-235b-a22b-thinking | openrouter | In: text, image; Out: text | streaming, function_calling, structured_output | 131072 | 32768 | - |
 | qwen/qwen3-vl-30b-a3b-instruct | openrouter | In: text, image; Out: text | streaming, function_calling, structured_output | 131072 | 32768 | In: $0.13, Out: $0.52 |
 | qwen/qwen3-vl-30b-a3b-thinking | openrouter | In: text, image; Out: text | streaming, function_calling, structured_output | 131072 | 32768 | - |
-| qwen/qwen3-vl-32b-instruct | openrouter | In: text, image; Out: text | streaming, function_calling, structured_output, predicted_outputs | 131072 | 32768 | In: $0.10, Out: $0.42 |
+| qwen/qwen3-vl-32b-instruct | openrouter | In: text, image; Out: text | streaming, function_calling, structured_output | 131072 | 32768 | In: $0.10, Out: $0.42 |
 | qwen/qwen3-vl-8b-instruct | openrouter | In: image, text; Out: text | streaming, function_calling, structured_output, predicted_outputs | 131072 | 32768 | In: $0.08, Out: $0.50 |
 | qwen/qwen3-vl-8b-thinking | openrouter | In: image, text; Out: text | streaming, function_calling, structured_output | 131072 | 32768 | In: $0.12, Out: $1.36 |
 | qwen/qwen3.5-122b-a10b | openrouter | In: text, image, video; Out: text | streaming, function_calling, structured_output, predicted_outputs | 262144 | 65536 | In: $0.26, Out: $2.08 |
@@ -3386,7 +3395,7 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | z-ai/glm-4.6v | openrouter | In: image, text, video; Out: text | streaming, function_calling, structured_output | 131072 | 131072 | In: $0.30, Out: $0.90 |
 | openai/gpt-oss-120b:free | openrouter | In: text; Out: text | function_calling, reasoning, streaming | 131072 | 32768 | - |
 | openai/gpt-oss-20b:free | openrouter | In: text; Out: text | function_calling, reasoning, streaming | 131072 | 32768 | - |
-| nvidia/nemotron-nano-9b-v2 | openrouter | In: text; Out: text | function_calling, reasoning, streaming, structured_output, predicted_outputs | 131072 | 131072 | In: $0.04, Out: $0.16 |
+| nvidia/nemotron-nano-9b-v2 | openrouter | In: text; Out: text | function_calling, reasoning, streaming, structured_output | 131072 | 131072 | In: $0.04, Out: $0.16 |
 | openai/o4-mini | openrouter | In: text, image; Out: text | function_calling, structured_output, reasoning, vision, streaming | 200000 | 100000 | In: $1.10, Out: $4.40, Cache: $0.28 |
 | sonar-deep-research | perplexity | In: text; Out: text | reasoning, streaming, json_mode, vision | 128000 | 32768 | In: $2.00, Out: $8.00 |
 | sonar | perplexity | In: text; Out: text | streaming, json_mode, vision | 128000 | 4096 | In: $1.00, Out: $1.00 |
@@ -3484,8 +3493,8 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | ministral-3b-latest | mistral | In: text; Out: text | function_calling, streaming, structured_output, batch, distillation | 128000 | 128000 | In: $0.04, Out: $0.04 |
 | ministral-8b-2512 | mistral | In: text; Out: text | streaming, function_calling, structured_output, batch, distillation | 32768 | 8192 | - |
 | ministral-8b-latest | mistral | In: text; Out: text | function_calling, streaming, structured_output, batch, distillation | 128000 | 128000 | In: $0.10, Out: $0.10 |
-| mistral-large-latest | mistral | In: text, image; Out: text | function_calling, vision, streaming, structured_output, batch, fine_tuning | 262144 | 262144 | In: $0.50, Out: $1.50 |
 | mistral-large-pixtral-2411 | mistral | In: text, image; Out: text | streaming, function_calling, structured_output, vision, batch, fine_tuning | 32768 | 8192 | - |
+| mistral-large-latest | mistral | In: text, image; Out: text | function_calling, vision, streaming, structured_output, batch, fine_tuning | 262144 | 262144 | In: $0.50, Out: $1.50 |
 | mistral-large-2411 | mistral | In: text; Out: text | function_calling, streaming, structured_output, batch, fine_tuning | 131072 | 16384 | In: $2.00, Out: $6.00 |
 | mistral-large-2512 | mistral | In: text, image; Out: text | function_calling, vision, streaming, structured_output, batch, fine_tuning | 262144 | 262144 | In: $0.50, Out: $1.50 |
 | mistral-medium | mistral | In: text; Out: text | streaming, function_calling, structured_output, vision, batch, fine_tuning | 32768 | 8192 | - |
@@ -3510,7 +3519,7 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 
 ## Models by Modality
 
-### Vision Models (438)
+### Vision Models (443)
 
 Models that can process images:
 
@@ -3588,10 +3597,10 @@ Models that can process images:
 | eu.anthropic.claude-opus-4-5-20251101-v1:0 | bedrock | In: text, image, pdf; Out: text | function_calling, reasoning, vision | 200000 | 64000 | In: $5.00, Out: $25.00, Cache: $0.50 |
 | global.anthropic.claude-opus-4-5-20251101-v1:0 | bedrock | In: text, image, pdf; Out: text | function_calling, reasoning, vision | 200000 | 64000 | In: $5.00, Out: $25.00, Cache: $0.50 |
 | us.anthropic.claude-opus-4-5-20251101-v1:0 | bedrock | In: text, image, pdf; Out: text | function_calling, reasoning, vision, streaming, structured_output | 200000 | 64000 | In: $5.00, Out: $25.00, Cache: $0.50 |
-| anthropic.claude-opus-4-6-v1 | bedrock | In: text, image, pdf; Out: text | function_calling, reasoning, vision | 1000000 | 128000 | In: $5.00, Out: $25.00, Cache: $0.50 |
-| eu.anthropic.claude-opus-4-6-v1 | bedrock | In: text, image, pdf; Out: text | function_calling, reasoning, vision | 1000000 | 128000 | In: $5.00, Out: $25.00, Cache: $0.50 |
-| global.anthropic.claude-opus-4-6-v1 | bedrock | In: text, image, pdf; Out: text | function_calling, reasoning, vision | 1000000 | 128000 | In: $5.00, Out: $25.00, Cache: $0.50 |
-| us.anthropic.claude-opus-4-6-v1 | bedrock | In: text, image, pdf; Out: text | function_calling, reasoning, vision, streaming, structured_output | 1000000 | 128000 | In: $5.00, Out: $25.00, Cache: $0.50 |
+| anthropic.claude-opus-4-6-v1 | bedrock | In: text, image, pdf; Out: text | function_calling, reasoning, vision | 200000 | 128000 | In: $5.00, Out: $25.00, Cache: $0.50 |
+| eu.anthropic.claude-opus-4-6-v1 | bedrock | In: text, image, pdf; Out: text | function_calling, reasoning, vision | 200000 | 128000 | In: $5.00, Out: $25.00, Cache: $0.50 |
+| global.anthropic.claude-opus-4-6-v1 | bedrock | In: text, image, pdf; Out: text | function_calling, reasoning, vision | 200000 | 128000 | In: $5.00, Out: $25.00, Cache: $0.50 |
+| us.anthropic.claude-opus-4-6-v1 | bedrock | In: text, image, pdf; Out: text | function_calling, reasoning, vision, streaming, structured_output | 200000 | 128000 | In: $5.00, Out: $25.00, Cache: $0.50 |
 | anthropic.claude-3-sonnet-20240229-v1:0 | bedrock | In: text, image, pdf; Out: text | function_calling, vision, streaming | 200000 | 4096 | In: $3.00, Out: $15.00 |
 | anthropic.claude-3-sonnet-20240229-v1:0:200k | bedrock | In: text, image, pdf; Out: text | function_calling, vision, streaming | 200000 | 4096 | In: $3.00, Out: $15.00 |
 | anthropic.claude-3-sonnet-20240229-v1:0:28k | bedrock | In: text, image, pdf; Out: text | function_calling, vision, streaming | 28000 | 4096 | In: $3.00, Out: $15.00 |
@@ -3708,8 +3717,8 @@ Models that can process images:
 | gemini-3-pro-image-preview | gemini | In: text, image, pdf, video; Out: text | streaming, function_calling, structured_output, caching | 131072 | 32768 | In: $0.08, Out: $0.30 |
 | nano-banana-pro-preview | gemini | In: text, image, pdf; Out: text | streaming, function_calling, structured_output, caching | 131072 | 32768 | In: $0.08, Out: $0.30 |
 | labs-devstral-small-2512 | mistral | In: text, image; Out: text | function_calling, vision, streaming, structured_output, batch, fine_tuning | 256000 | 256000 | - |
-| mistral-large-latest | mistral | In: text, image; Out: text | function_calling, vision, streaming, structured_output, batch, fine_tuning | 262144 | 262144 | In: $0.50, Out: $1.50 |
 | mistral-large-pixtral-2411 | mistral | In: text, image; Out: text | streaming, function_calling, structured_output, vision, batch, fine_tuning | 32768 | 8192 | - |
+| mistral-large-latest | mistral | In: text, image; Out: text | function_calling, vision, streaming, structured_output, batch, fine_tuning | 262144 | 262144 | In: $0.50, Out: $1.50 |
 | mistral-large-2512 | mistral | In: text, image; Out: text | function_calling, vision, streaming, structured_output, batch, fine_tuning | 262144 | 262144 | In: $0.50, Out: $1.50 |
 | mistral-medium-latest | mistral | In: text, image; Out: text | function_calling, vision, streaming, structured_output, batch, fine_tuning | 128000 | 16384 | In: $0.40, Out: $2.00 |
 | mistral-medium-2505 | mistral | In: text, image; Out: text | function_calling, vision, streaming, structured_output, batch, fine_tuning | 131072 | 131072 | In: $0.40, Out: $2.00 |
@@ -3763,6 +3772,10 @@ Models that can process images:
 | gpt-5.3-chat-latest | openai | In: text, image, pdf; Out: text | streaming, function_calling, structured_output, reasoning | 128000 | 400000 | In: $1.25, Out: $10.00, Cache: $0.12 |
 | gpt-5.3-codex | openai | In: text, image, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming | 400000 | 128000 | In: $1.75, Out: $14.00, Cache: $0.18 |
 | gpt-5.3-codex-spark | openai | In: text, image, pdf; Out: text | function_calling, structured_output, reasoning, vision | 128000 | 32000 | In: $1.75, Out: $14.00, Cache: $0.18 |
+| gpt-5.4 | openai | In: text, image; Out: text | function_calling, structured_output, reasoning, vision, streaming | 1050000 | 128000 | In: $2.50, Out: $15.00, Cache: $0.25 |
+| gpt-5.4-2026-03-05 | openai | In: text, image, pdf; Out: text | streaming, function_calling, structured_output, reasoning | 128000 | 400000 | In: $1.25, Out: $10.00, Cache: $0.12 |
+| gpt-5.4-pro | openai | In: text, image; Out: text | function_calling, reasoning, vision, streaming, structured_output | 1050000 | 128000 | In: $30.00, Out: $180.00 |
+| gpt-5.4-pro-2026-03-05 | openai | In: text, image, pdf; Out: text | streaming, function_calling, structured_output, reasoning | 128000 | 400000 | In: $1.25, Out: $10.00, Cache: $0.12 |
 | o1-2024-12-17 | openai | In: text, image, pdf; Out: text | streaming, function_calling, structured_output, reasoning | 200000 | 100000 | In: $15.00, Out: $60.00 |
 | o1-pro-2025-03-19 | openai | In: text, image, pdf; Out: text | streaming, function_calling, structured_output, reasoning | 200000 | 100000 | In: $150.00, Out: $600.00 |
 | omni-moderation-2024-09-26 | openai | In: text, image, pdf; Out: text, moderation | - | - | - | - |
@@ -3825,6 +3838,9 @@ Models that can process images:
 | openai/gpt-5.2-chat | openrouter | In: text, image; Out: text | function_calling, structured_output, reasoning, vision, streaming | 128000 | 16384 | In: $1.75, Out: $14.00, Cache: $0.18 |
 | openai/gpt-5.2-pro | openrouter | In: text, image; Out: text | function_calling, structured_output, reasoning, vision, streaming | 400000 | 128000 | In: $21.00, Out: $168.00 |
 | openai/gpt-5.2-codex | openrouter | In: text, image; Out: text | function_calling, structured_output, reasoning, vision, streaming | 400000 | 128000 | In: $1.75, Out: $14.00, Cache: $0.18 |
+| openai/gpt-5.3-codex | openrouter | In: text, image, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming | 400000 | 128000 | In: $1.75, Out: $14.00, Cache: $0.18 |
+| openai/gpt-5.4 | openrouter | In: text, image, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming | 1050000 | 128000 | In: $2.50, Out: $15.00, Cache: $0.25 |
+| openai/gpt-5.4-pro | openrouter | In: text, image, pdf; Out: text | function_calling, reasoning, vision, streaming, structured_output | 1050000 | 128000 | In: $30.00, Out: $180.00, Cache: $30.00 |
 | google/gemini-2.0-flash-001 | openrouter | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, vision, streaming | 1048576 | 8192 | In: $0.10, Out: $0.40, Cache: $0.02 |
 | google/gemini-2.0-flash-exp:free | openrouter | In: text, image; Out: text | function_calling, vision | 1048576 | 1048576 | - |
 | google/gemini-2.5-flash | openrouter | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache: $0.04 |
@@ -3884,7 +3900,6 @@ Models that can process images:
 | openai/gpt-4o-mini-2024-07-18 | openrouter | In: text, image, file; Out: text | streaming, function_calling, structured_output | 128000 | 16384 | In: $0.15, Out: $0.60, Cache: $0.08 |
 | openai/gpt-5-image-mini | openrouter | In: file, image, text; Out: image, text | streaming, function_calling, structured_output | 400000 | 128000 | In: $2.50, Out: $2.00, Cache: $0.25 |
 | openai/gpt-5.3-chat | openrouter | In: text, image, file; Out: text | streaming, function_calling, structured_output | 128000 | 16384 | In: $1.75, Out: $14.00, Cache: $0.18 |
-| openai/gpt-5.3-codex | openrouter | In: text, image; Out: text | streaming, function_calling, structured_output | 400000 | 128000 | In: $1.75, Out: $14.00, Cache: $0.18 |
 | openai/o1 | openrouter | In: text, image, file; Out: text | streaming, function_calling, structured_output | 200000 | 100000 | In: $15.00, Out: $60.00, Cache: $7.50 |
 | openai/o1-pro | openrouter | In: text, image, file; Out: text | streaming, structured_output | 200000 | 100000 | In: $150.00, Out: $600.00 |
 | openai/o3 | openrouter | In: image, text, file; Out: text | streaming, function_calling, structured_output | 200000 | 100000 | In: $2.00, Out: $8.00, Cache: $0.50 |
@@ -3910,7 +3925,7 @@ Models that can process images:
 | qwen/qwen3-vl-235b-a22b-thinking | openrouter | In: text, image; Out: text | streaming, function_calling, structured_output | 131072 | 32768 | - |
 | qwen/qwen3-vl-30b-a3b-instruct | openrouter | In: text, image; Out: text | streaming, function_calling, structured_output | 131072 | 32768 | In: $0.13, Out: $0.52 |
 | qwen/qwen3-vl-30b-a3b-thinking | openrouter | In: text, image; Out: text | streaming, function_calling, structured_output | 131072 | 32768 | - |
-| qwen/qwen3-vl-32b-instruct | openrouter | In: text, image; Out: text | streaming, function_calling, structured_output, predicted_outputs | 131072 | 32768 | In: $0.10, Out: $0.42 |
+| qwen/qwen3-vl-32b-instruct | openrouter | In: text, image; Out: text | streaming, function_calling, structured_output | 131072 | 32768 | In: $0.10, Out: $0.42 |
 | qwen/qwen3-vl-8b-instruct | openrouter | In: image, text; Out: text | streaming, function_calling, structured_output, predicted_outputs | 131072 | 32768 | In: $0.08, Out: $0.50 |
 | qwen/qwen3-vl-8b-thinking | openrouter | In: image, text; Out: text | streaming, function_calling, structured_output | 131072 | 32768 | In: $0.12, Out: $1.36 |
 | qwen/qwen3.5-122b-a10b | openrouter | In: text, image, video; Out: text | streaming, function_calling, structured_output, predicted_outputs | 262144 | 65536 | In: $0.26, Out: $2.08 |
@@ -3948,7 +3963,6 @@ Models that can process images:
 | gemini-3.1-pro-preview-customtools | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision | 1048576 | 65536 | In: $2.00, Out: $12.00, Cache: $0.20 |
 | gemini-flash-latest | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, reasoning, vision | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache: $0.08 |
 | gemini-flash-lite-latest | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, reasoning, vision | 1048576 | 65536 | In: $0.10, Out: $0.40, Cache: $0.02 |
-| meta/llama-4-maverick-17b-128e-instruct-maas | vertexai | In: text, image; Out: text | function_calling, structured_output, vision | 524288 | 8192 | In: $0.35, Out: $1.15 |
 | grok-4-0709 | xai | In: text, image; Out: text | streaming, function_calling, structured_output, reasoning, vision | - | - | - |
 | grok-4-1-fast-non-reasoning | xai | In: text, image; Out: text | streaming, function_calling, structured_output, vision | - | - | - |
 | grok-4-1-fast-reasoning | xai | In: text, image; Out: text | streaming, function_calling, structured_output, reasoning, vision | - | - | - |
@@ -4078,7 +4092,7 @@ Models that can process audio:
 | gemini-flash-lite-latest | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, reasoning, vision | 1048576 | 65536 | In: $0.10, Out: $0.40, Cache: $0.02 |
 
 
-### PDF Models (202)
+### PDF Models (205)
 
 Models that can process PDF documents:
 
@@ -4156,10 +4170,10 @@ Models that can process PDF documents:
 | eu.anthropic.claude-opus-4-5-20251101-v1:0 | bedrock | In: text, image, pdf; Out: text | function_calling, reasoning, vision | 200000 | 64000 | In: $5.00, Out: $25.00, Cache: $0.50 |
 | global.anthropic.claude-opus-4-5-20251101-v1:0 | bedrock | In: text, image, pdf; Out: text | function_calling, reasoning, vision | 200000 | 64000 | In: $5.00, Out: $25.00, Cache: $0.50 |
 | us.anthropic.claude-opus-4-5-20251101-v1:0 | bedrock | In: text, image, pdf; Out: text | function_calling, reasoning, vision, streaming, structured_output | 200000 | 64000 | In: $5.00, Out: $25.00, Cache: $0.50 |
-| anthropic.claude-opus-4-6-v1 | bedrock | In: text, image, pdf; Out: text | function_calling, reasoning, vision | 1000000 | 128000 | In: $5.00, Out: $25.00, Cache: $0.50 |
-| eu.anthropic.claude-opus-4-6-v1 | bedrock | In: text, image, pdf; Out: text | function_calling, reasoning, vision | 1000000 | 128000 | In: $5.00, Out: $25.00, Cache: $0.50 |
-| global.anthropic.claude-opus-4-6-v1 | bedrock | In: text, image, pdf; Out: text | function_calling, reasoning, vision | 1000000 | 128000 | In: $5.00, Out: $25.00, Cache: $0.50 |
-| us.anthropic.claude-opus-4-6-v1 | bedrock | In: text, image, pdf; Out: text | function_calling, reasoning, vision, streaming, structured_output | 1000000 | 128000 | In: $5.00, Out: $25.00, Cache: $0.50 |
+| anthropic.claude-opus-4-6-v1 | bedrock | In: text, image, pdf; Out: text | function_calling, reasoning, vision | 200000 | 128000 | In: $5.00, Out: $25.00, Cache: $0.50 |
+| eu.anthropic.claude-opus-4-6-v1 | bedrock | In: text, image, pdf; Out: text | function_calling, reasoning, vision | 200000 | 128000 | In: $5.00, Out: $25.00, Cache: $0.50 |
+| global.anthropic.claude-opus-4-6-v1 | bedrock | In: text, image, pdf; Out: text | function_calling, reasoning, vision | 200000 | 128000 | In: $5.00, Out: $25.00, Cache: $0.50 |
+| us.anthropic.claude-opus-4-6-v1 | bedrock | In: text, image, pdf; Out: text | function_calling, reasoning, vision, streaming, structured_output | 200000 | 128000 | In: $5.00, Out: $25.00, Cache: $0.50 |
 | anthropic.claude-3-sonnet-20240229-v1:0 | bedrock | In: text, image, pdf; Out: text | function_calling, vision, streaming | 200000 | 4096 | In: $3.00, Out: $15.00 |
 | anthropic.claude-3-sonnet-20240229-v1:0:200k | bedrock | In: text, image, pdf; Out: text | function_calling, vision, streaming | 200000 | 4096 | In: $3.00, Out: $15.00 |
 | anthropic.claude-3-sonnet-20240229-v1:0:28k | bedrock | In: text, image, pdf; Out: text | function_calling, vision, streaming | 28000 | 4096 | In: $3.00, Out: $15.00 |
@@ -4240,6 +4254,8 @@ Models that can process PDF documents:
 | gpt-5.3-chat-latest | openai | In: text, image, pdf; Out: text | streaming, function_calling, structured_output, reasoning | 128000 | 400000 | In: $1.25, Out: $10.00, Cache: $0.12 |
 | gpt-5.3-codex | openai | In: text, image, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming | 400000 | 128000 | In: $1.75, Out: $14.00, Cache: $0.18 |
 | gpt-5.3-codex-spark | openai | In: text, image, pdf; Out: text | function_calling, structured_output, reasoning, vision | 128000 | 32000 | In: $1.75, Out: $14.00, Cache: $0.18 |
+| gpt-5.4-2026-03-05 | openai | In: text, image, pdf; Out: text | streaming, function_calling, structured_output, reasoning | 128000 | 400000 | In: $1.25, Out: $10.00, Cache: $0.12 |
+| gpt-5.4-pro-2026-03-05 | openai | In: text, image, pdf; Out: text | streaming, function_calling, structured_output, reasoning | 128000 | 400000 | In: $1.25, Out: $10.00, Cache: $0.12 |
 | o1-2024-12-17 | openai | In: text, image, pdf; Out: text | streaming, function_calling, structured_output, reasoning | 200000 | 100000 | In: $15.00, Out: $60.00 |
 | o1-pro-2025-03-19 | openai | In: text, image, pdf; Out: text | streaming, function_calling, structured_output, reasoning | 200000 | 100000 | In: $150.00, Out: $600.00 |
 | omni-moderation-2024-09-26 | openai | In: text, image, pdf; Out: text, moderation | - | - | - | - |
@@ -4254,6 +4270,9 @@ Models that can process PDF documents:
 | anthropic/claude-sonnet-4 | openrouter | In: text, image, pdf; Out: text | function_calling, reasoning, vision, streaming | 200000 | 64000 | In: $3.00, Out: $15.00, Cache: $0.30 |
 | anthropic/claude-sonnet-4.5 | openrouter | In: text, image, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming | 1000000 | 64000 | In: $3.00, Out: $15.00, Cache: $0.30 |
 | openai/gpt-5-image | openrouter | In: text, image, pdf; Out: text, image | function_calling, structured_output, reasoning, vision, streaming | 400000 | 128000 | In: $5.00, Out: $10.00, Cache: $1.25 |
+| openai/gpt-5.3-codex | openrouter | In: text, image, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming | 400000 | 128000 | In: $1.75, Out: $14.00, Cache: $0.18 |
+| openai/gpt-5.4 | openrouter | In: text, image, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming | 1050000 | 128000 | In: $2.50, Out: $15.00, Cache: $0.25 |
+| openai/gpt-5.4-pro | openrouter | In: text, image, pdf; Out: text | function_calling, reasoning, vision, streaming, structured_output | 1050000 | 128000 | In: $30.00, Out: $180.00, Cache: $30.00 |
 | google/gemini-2.0-flash-001 | openrouter | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, vision, streaming | 1048576 | 8192 | In: $0.10, Out: $0.40, Cache: $0.02 |
 | google/gemini-2.5-flash | openrouter | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache: $0.04 |
 | google/gemini-2.5-flash-lite | openrouter | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming | 1048576 | 65536 | In: $0.10, Out: $0.40, Cache: $0.02 |
@@ -4266,8 +4285,6 @@ Models that can process PDF documents:
 | google/gemini-3-pro-preview | openrouter | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming | 1050000 | 66000 | In: $2.00, Out: $12.00 |
 | google/gemini-3.1-pro-preview | openrouter | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming | 1048576 | 65536 | In: $2.00, Out: $12.00 |
 | google/gemini-3.1-pro-preview-customtools | openrouter | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming | 1048576 | 65536 | In: $2.00, Out: $12.00 |
-| deepseek-ai/deepseek-v3.1-maas | vertexai | In: text, pdf; Out: text | function_calling, structured_output, reasoning, vision | 163840 | 32768 | In: $0.60, Out: $1.70 |
-| zai-org/glm-4.7-maas | vertexai | In: text, pdf; Out: text | function_calling, structured_output, reasoning, vision | 200000 | 128000 | In: $0.60, Out: $2.20 |
 | gemini-2.0-flash | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, vision, streaming | 1048576 | 8192 | In: $0.15, Out: $0.60, Cache: $0.02 |
 | gemini-2.0-flash-lite | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, vision | 1048576 | 8192 | In: $0.08, Out: $0.30 |
 | gemini-2.5-flash | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, reasoning, vision, streaming | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache: $0.08 |

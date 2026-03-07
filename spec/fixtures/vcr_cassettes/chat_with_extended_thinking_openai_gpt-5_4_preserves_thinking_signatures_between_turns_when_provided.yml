@@ -5,13 +5,13 @@ http_interactions:
     uri: https://api.openai.com/v1/chat/completions
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-5","messages":[{"role":"user","content":"What is 5 +
-        3?"}],"stream":false,"reasoning_effort":"medium"}'
+      string: '{"model":"gpt-5.4","messages":[{"role":"user","content":"What is 5
+        + 3?"}],"stream":false,"reasoning_effort":"medium"}'
     headers:
       User-Agent:
       - Faraday v2.14.1
       Authorization:
-      - Bearer <OPENAI_API_KEY>
+      - Bearer <AUTH_TOKEN>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 03 Mar 2026 11:58:04 GMT
+      - Sat, 07 Mar 2026 16:17:53 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -36,7 +36,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '1507'
+      - '385'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
@@ -44,17 +44,17 @@ http_interactions:
       Server:
       - cloudflare
       X-Ratelimit-Limit-Requests:
-      - '500'
+      - '5000'
       X-Ratelimit-Limit-Tokens:
-      - '500000'
+      - '1000000'
       X-Ratelimit-Remaining-Requests:
-      - '499'
+      - '4999'
       X-Ratelimit-Remaining-Tokens:
-      - '498414'
+      - '999994'
       X-Ratelimit-Reset-Requests:
-      - 120ms
+      - 12ms
       X-Ratelimit-Reset-Tokens:
-      - 190ms
+      - 0s
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Openai-Proxy-Wasm:
@@ -75,10 +75,10 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-DFIfyo1OUEjpkY7APb1IK5cXKBZz6",
+          "id": "chatcmpl-DGoddr6oPTFhRZIDAJFLBLhQYPu2e",
           "object": "chat.completion",
-          "created": 1772539082,
-          "model": "gpt-5-2025-08-07",
+          "created": 1772900273,
+          "model": "gpt-5.4-2026-03-05",
           "choices": [
             {
               "index": 0,
@@ -93,8 +93,8 @@ http_interactions:
           ],
           "usage": {
             "prompt_tokens": 14,
-            "completion_tokens": 10,
-            "total_tokens": 24,
+            "completion_tokens": 4,
+            "total_tokens": 18,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
@@ -109,20 +109,20 @@ http_interactions:
           "service_tier": "default",
           "system_fingerprint": null
         }
-  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+  recorded_at: Sat, 07 Mar 2026 16:17:53 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/chat/completions
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-5","messages":[{"role":"user","content":"What is 5 +
-        3?"},{"role":"assistant","content":"8"},{"role":"user","content":"Now multiply
+      string: '{"model":"gpt-5.4","messages":[{"role":"user","content":"What is 5
+        + 3?"},{"role":"assistant","content":"8"},{"role":"user","content":"Now multiply
         that by 2"}],"stream":false,"reasoning_effort":"medium"}'
     headers:
       User-Agent:
       - Faraday v2.14.1
       Authorization:
-      - Bearer <OPENAI_API_KEY>
+      - Bearer <AUTH_TOKEN>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -135,7 +135,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 03 Mar 2026 11:58:06 GMT
+      - Sat, 07 Mar 2026 16:17:55 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -147,7 +147,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '2280'
+      - '807'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
@@ -155,17 +155,17 @@ http_interactions:
       Server:
       - cloudflare
       X-Ratelimit-Limit-Requests:
-      - '500'
+      - '5000'
       X-Ratelimit-Limit-Tokens:
-      - '500000'
+      - '1000000'
       X-Ratelimit-Remaining-Requests:
-      - '499'
+      - '4999'
       X-Ratelimit-Remaining-Tokens:
-      - '499986'
+      - '999986'
       X-Ratelimit-Reset-Requests:
-      - 120ms
+      - 12ms
       X-Ratelimit-Reset-Tokens:
-      - 1ms
+      - 0s
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Openai-Proxy-Wasm:
@@ -186,10 +186,10 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-DFIg0nydXAh8X7r0IzK0fJZxquD28",
+          "id": "chatcmpl-DGodeOGHmxWbmxEhVyH6iOCeUzQhy",
           "object": "chat.completion",
-          "created": 1772539084,
-          "model": "gpt-5-2025-08-07",
+          "created": 1772900274,
+          "model": "gpt-5.4-2026-03-05",
           "choices": [
             {
               "index": 0,
@@ -204,14 +204,14 @@ http_interactions:
           ],
           "usage": {
             "prompt_tokens": 31,
-            "completion_tokens": 74,
-            "total_tokens": 105,
+            "completion_tokens": 15,
+            "total_tokens": 46,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
             },
             "completion_tokens_details": {
-              "reasoning_tokens": 64,
+              "reasoning_tokens": 5,
               "audio_tokens": 0,
               "accepted_prediction_tokens": 0,
               "rejected_prediction_tokens": 0
@@ -220,5 +220,5 @@ http_interactions:
           "service_tier": "default",
           "system_fingerprint": null
         }
-  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+  recorded_at: Sat, 07 Mar 2026 16:17:55 GMT
 recorded_with: VCR 6.4.0
