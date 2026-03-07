@@ -8563,6 +8563,39 @@
     }
   },
   {
+    "id": "grok-4-1-fast-reasoning",
+    "name": "Grok 4 1 Fast Reasoning",
+    "provider": "azure",
+    "family": "other",
+    "created_at": null,
+    "context_window": 4096,
+    "max_output_tokens": 16384,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.5,
+          "output_per_million": 1.5
+        }
+      }
+    },
+    "metadata": {
+      "object": "model",
+      "owned_by": null
+    }
+  },
+  {
     "id": "grok-4-fast-non-reasoning",
     "name": "Grok 4 Fast Non Reasoning",
     "provider": "azure",
@@ -12562,7 +12595,7 @@
     "provider": "bedrock",
     "family": "claude-opus",
     "created_at": "2026-02-05 00:00:00 UTC",
-    "context_window": 1000000,
+    "context_window": 200000,
     "max_output_tokens": 128000,
     "knowledge_cutoff": null,
     "modalities": {
@@ -12609,7 +12642,7 @@
         }
       },
       "limit": {
-        "context": 1000000,
+        "context": 200000,
         "output": 128000
       },
       "knowledge": "2025-05"
@@ -13527,7 +13560,7 @@
     "provider": "bedrock",
     "family": "claude-opus",
     "created_at": "2026-02-05 00:00:00 UTC",
-    "context_window": 1000000,
+    "context_window": 200000,
     "max_output_tokens": 128000,
     "knowledge_cutoff": null,
     "modalities": {
@@ -13574,7 +13607,7 @@
         }
       },
       "limit": {
-        "context": 1000000,
+        "context": 200000,
         "output": 128000
       },
       "knowledge": "2025-05"
@@ -13857,7 +13890,7 @@
     "provider": "bedrock",
     "family": "claude-opus",
     "created_at": "2026-02-05 00:00:00 UTC",
-    "context_window": 1000000,
+    "context_window": 200000,
     "max_output_tokens": 128000,
     "knowledge_cutoff": null,
     "modalities": {
@@ -13904,7 +13937,7 @@
         }
       },
       "limit": {
-        "context": 1000000,
+        "context": 200000,
         "output": 128000
       },
       "knowledge": "2025-05"
@@ -17785,7 +17818,7 @@
     "provider": "bedrock",
     "family": "claude-opus",
     "created_at": "2026-02-05 00:00:00 UTC",
-    "context_window": 1000000,
+    "context_window": 200000,
     "max_output_tokens": 128000,
     "knowledge_cutoff": null,
     "modalities": {
@@ -17859,7 +17892,7 @@
         }
       },
       "limit": {
-        "context": 1000000,
+        "context": 200000,
         "output": 128000
       },
       "knowledge": "2025-05"
@@ -22464,7 +22497,7 @@
   },
   {
     "id": "codestral-latest",
-    "name": "Codestral",
+    "name": "Codestral (latest)",
     "provider": "mistral",
     "family": "codestral",
     "created_at": "2024-05-29 00:00:00 UTC",
@@ -22650,7 +22683,7 @@
   },
   {
     "id": "devstral-medium-latest",
-    "name": "Devstral 2",
+    "name": "Devstral 2 (latest)",
     "provider": "mistral",
     "family": "devstral",
     "created_at": "2025-12-02 00:00:00 UTC",
@@ -22937,7 +22970,7 @@
   },
   {
     "id": "magistral-medium-latest",
-    "name": "Magistral Medium",
+    "name": "Magistral Medium (latest)",
     "provider": "mistral",
     "family": "magistral-medium",
     "created_at": "2025-03-17 00:00:00 UTC",
@@ -23186,7 +23219,7 @@
   },
   {
     "id": "ministral-3b-latest",
-    "name": "Ministral 3B",
+    "name": "Ministral 3B (latest)",
     "provider": "mistral",
     "family": "ministral",
     "created_at": "2024-10-01 00:00:00 UTC",
@@ -23268,7 +23301,7 @@
   },
   {
     "id": "ministral-8b-latest",
-    "name": "Ministral 8B",
+    "name": "Ministral 8B (latest)",
     "provider": "mistral",
     "family": "ministral",
     "created_at": "2024-10-01 00:00:00 UTC",
@@ -23494,7 +23527,7 @@
   },
   {
     "id": "mistral-large-latest",
-    "name": "Mistral Large",
+    "name": "Mistral Large (latest)",
     "provider": "mistral",
     "family": "mistral-large",
     "created_at": "2024-11-01 00:00:00 UTC",
@@ -23719,7 +23752,7 @@
   },
   {
     "id": "mistral-medium-latest",
-    "name": "Mistral Medium",
+    "name": "Mistral Medium (latest)",
     "provider": "mistral",
     "family": "mistral-medium",
     "created_at": "2025-05-07 00:00:00 UTC",
@@ -24029,7 +24062,7 @@
   },
   {
     "id": "mistral-small-latest",
-    "name": "Mistral Small",
+    "name": "Mistral Small (latest)",
     "provider": "mistral",
     "family": "mistral-small",
     "created_at": "2024-09-01 00:00:00 UTC",
@@ -24474,7 +24507,7 @@
   },
   {
     "id": "pixtral-large-latest",
-    "name": "Pixtral Large",
+    "name": "Pixtral Large (latest)",
     "provider": "mistral",
     "family": "pixtral",
     "created_at": "2024-11-01 00:00:00 UTC",
@@ -28057,6 +28090,203 @@
         "output": 32000
       },
       "knowledge": "2025-08-31"
+    }
+  },
+  {
+    "id": "gpt-5.4",
+    "name": "GPT-5.4",
+    "provider": "openai",
+    "family": "gpt",
+    "created_at": "2026-03-05 00:00:00 UTC",
+    "context_window": 1050000,
+    "max_output_tokens": 128000,
+    "knowledge_cutoff": "2025-08-31",
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "structured_output",
+      "reasoning",
+      "vision",
+      "streaming"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 2.5,
+          "output_per_million": 15,
+          "cached_input_per_million": 0.25
+        }
+      }
+    },
+    "metadata": {
+      "object": "model",
+      "owned_by": "system",
+      "source": "models.dev",
+      "provider_id": "openai",
+      "open_weights": false,
+      "attachment": true,
+      "temperature": false,
+      "last_updated": "2026-03-05",
+      "cost": {
+        "input": 2.5,
+        "output": 15,
+        "cache_read": 0.25,
+        "context_over_200k": {
+          "input": 5,
+          "output": 22.5,
+          "cache_read": 0.5
+        }
+      },
+      "limit": {
+        "context": 1050000,
+        "input": 272000,
+        "output": 128000
+      },
+      "knowledge": "2025-08-31"
+    }
+  },
+  {
+    "id": "gpt-5.4-2026-03-05",
+    "name": "GPT-5.4 20260305",
+    "provider": "openai",
+    "family": "gpt5",
+    "created_at": "2026-03-04 19:54:22 UTC",
+    "context_window": 128000,
+    "max_output_tokens": 400000,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "pdf"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "reasoning"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 1.25,
+          "output_per_million": 10.0,
+          "cached_input_per_million": 0.125
+        }
+      }
+    },
+    "metadata": {
+      "object": "model",
+      "owned_by": "system"
+    }
+  },
+  {
+    "id": "gpt-5.4-pro",
+    "name": "GPT-5.4 Pro",
+    "provider": "openai",
+    "family": "gpt-pro",
+    "created_at": "2026-03-05 00:00:00 UTC",
+    "context_window": 1050000,
+    "max_output_tokens": 128000,
+    "knowledge_cutoff": "2025-08-31",
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "reasoning",
+      "vision",
+      "streaming",
+      "structured_output"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 30,
+          "output_per_million": 180
+        }
+      }
+    },
+    "metadata": {
+      "object": "model",
+      "owned_by": "system",
+      "source": "models.dev",
+      "provider_id": "openai",
+      "open_weights": false,
+      "attachment": true,
+      "temperature": false,
+      "last_updated": "2026-03-05",
+      "cost": {
+        "input": 30,
+        "output": 180,
+        "context_over_200k": {
+          "input": 60,
+          "output": 270
+        }
+      },
+      "limit": {
+        "context": 1050000,
+        "input": 272000,
+        "output": 128000
+      },
+      "knowledge": "2025-08-31"
+    }
+  },
+  {
+    "id": "gpt-5.4-pro-2026-03-05",
+    "name": "GPT-5.4 Pro 20260305",
+    "provider": "openai",
+    "family": "gpt5",
+    "created_at": "2026-03-04 21:27:37 UTC",
+    "context_window": 128000,
+    "max_output_tokens": 400000,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "pdf"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "reasoning"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 1.25,
+          "output_per_million": 10.0,
+          "cached_input_per_million": 0.125
+        }
+      }
+    },
+    "metadata": {
+      "object": "model",
+      "owned_by": "system"
     }
   },
   {
@@ -32013,9 +32243,9 @@
         "instruct_type": null
       },
       "top_provider": {
-        "context_length": 1000000,
+        "context_length": 200000,
         "max_completion_tokens": 64000,
-        "is_moderated": false
+        "is_moderated": true
       },
       "per_request_limits": null,
       "supported_parameters": [
@@ -34045,7 +34275,7 @@
         "standard": {
           "input_per_million": 0.19999999999999998,
           "output_per_million": 0.77,
-          "cached_input_per_million": 0.135
+          "cached_input_per_million": 0.13
         }
       }
     },
@@ -34064,7 +34294,7 @@
       },
       "top_provider": {
         "context_length": 163840,
-        "max_completion_tokens": null,
+        "max_completion_tokens": 163840,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -34314,7 +34544,6 @@
         "frequency_penalty",
         "include_reasoning",
         "logit_bias",
-        "logprobs",
         "max_tokens",
         "min_p",
         "presence_penalty",
@@ -34328,7 +34557,6 @@
         "tool_choice",
         "tools",
         "top_k",
-        "top_logprobs",
         "top_p"
       ]
     }
@@ -34433,8 +34661,7 @@
     "capabilities": [
       "structured_output",
       "reasoning",
-      "streaming",
-      "predicted_outputs"
+      "streaming"
     ],
     "pricing": {
       "text_tokens": {
@@ -34466,7 +34693,6 @@
       "supported_parameters": [
         "frequency_penalty",
         "include_reasoning",
-        "logit_bias",
         "max_tokens",
         "min_p",
         "presence_penalty",
@@ -37690,7 +37916,7 @@
     "family": "inception",
     "created_at": "2025-06-26 21:23:46 UTC",
     "context_window": 128000,
-    "max_output_tokens": 16384,
+    "max_output_tokens": 32000,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -37729,22 +37955,81 @@
       },
       "top_provider": {
         "context_length": 128000,
-        "max_completion_tokens": 16384,
+        "max_completion_tokens": 32000,
         "is_moderated": false
       },
       "per_request_limits": null,
       "supported_parameters": [
-        "frequency_penalty",
         "max_tokens",
-        "presence_penalty",
         "response_format",
         "stop",
         "structured_outputs",
         "temperature",
         "tool_choice",
-        "tools",
-        "top_k",
-        "top_p"
+        "tools"
+      ]
+    }
+  },
+  {
+    "id": "inception/mercury-2",
+    "name": "Inception: Mercury 2",
+    "provider": "openrouter",
+    "family": "inception",
+    "created_at": "2026-03-04 14:57:55 UTC",
+    "context_window": 128000,
+    "max_output_tokens": 50000,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.25,
+          "output_per_million": 0.75,
+          "cached_input_per_million": 0.024999999999999998
+        }
+      }
+    },
+    "metadata": {
+      "description": "Mercury 2 is an extremely fast reasoning LLM, and the first reasoning diffusion LLM (dLLM).\nInstead of generating tokens sequentially, Mercury 2 produces and refines multiple tokens in parallel, achieving >1,000 tokens/sec on standard GPUs. Mercury 2 is 5x+ faster than leading speed-optimized LLMs like Claude 4.5 Haiku and GPT 5 Mini, at a fraction of the cost. \nMercury 2 supports tunable reasoning levels, 128K context, native tool use, and schema-aligned JSON output. Built for coding workflows where latency compounds, real-time voice/search, and agent loops. OpenAI API compatible. Read more in the [blog post](https://www.inceptionlabs.ai/blog/introducing-mercury-2).",
+      "architecture": {
+        "modality": "text->text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 128000,
+        "max_completion_tokens": 50000,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "include_reasoning",
+        "max_tokens",
+        "reasoning",
+        "response_format",
+        "stop",
+        "structured_outputs",
+        "temperature",
+        "tool_choice",
+        "tools"
       ]
     }
   },
@@ -37755,7 +38040,7 @@
     "family": "inception",
     "created_at": "2025-04-30 17:24:40 UTC",
     "context_window": 128000,
-    "max_output_tokens": 16384,
+    "max_output_tokens": 32000,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -37794,22 +38079,18 @@
       },
       "top_provider": {
         "context_length": 128000,
-        "max_completion_tokens": 16384,
+        "max_completion_tokens": 32000,
         "is_moderated": false
       },
       "per_request_limits": null,
       "supported_parameters": [
-        "frequency_penalty",
         "max_tokens",
-        "presence_penalty",
         "response_format",
         "stop",
         "structured_outputs",
         "temperature",
         "tool_choice",
-        "tools",
-        "top_k",
-        "top_p"
+        "tools"
       ]
     }
   },
@@ -38818,8 +39099,7 @@
     "capabilities": [
       "streaming",
       "function_calling",
-      "structured_output",
-      "predicted_outputs"
+      "structured_output"
     ],
     "pricing": {
       "text_tokens": {
@@ -38850,7 +39130,6 @@
       "per_request_limits": null,
       "supported_parameters": [
         "frequency_penalty",
-        "logit_bias",
         "max_tokens",
         "min_p",
         "presence_penalty",
@@ -44121,8 +44400,7 @@
       "function_calling",
       "reasoning",
       "streaming",
-      "structured_output",
-      "predicted_outputs"
+      "structured_output"
     ],
     "pricing": {
       "text_tokens": {
@@ -44154,7 +44432,6 @@
       "supported_parameters": [
         "frequency_penalty",
         "include_reasoning",
-        "logit_bias",
         "max_tokens",
         "min_p",
         "presence_penalty",
@@ -47259,32 +47536,35 @@
   },
   {
     "id": "openai/gpt-5.3-codex",
-    "name": "OpenAI: GPT-5.3-Codex",
+    "name": "GPT-5.3-Codex",
     "provider": "openrouter",
-    "family": "openai",
-    "created_at": "2026-02-24 18:52:44 UTC",
+    "family": "gpt-codex",
+    "created_at": "2026-02-24 00:00:00 UTC",
     "context_window": 400000,
     "max_output_tokens": 128000,
-    "knowledge_cutoff": null,
+    "knowledge_cutoff": "2025-08-31",
     "modalities": {
       "input": [
         "text",
-        "image"
+        "image",
+        "pdf"
       ],
       "output": [
         "text"
       ]
     },
     "capabilities": [
-      "streaming",
       "function_calling",
-      "structured_output"
+      "structured_output",
+      "reasoning",
+      "vision",
+      "streaming"
     ],
     "pricing": {
       "text_tokens": {
         "standard": {
           "input_per_million": 1.75,
-          "output_per_million": 14.0,
+          "output_per_million": 14,
           "cached_input_per_million": 0.175
         }
       }
@@ -47318,7 +47598,210 @@
         "structured_outputs",
         "tool_choice",
         "tools"
+      ],
+      "source": "models.dev",
+      "provider_id": "openrouter",
+      "open_weights": false,
+      "attachment": true,
+      "temperature": false,
+      "last_updated": "2026-02-24",
+      "cost": {
+        "input": 1.75,
+        "output": 14,
+        "cache_read": 0.175
+      },
+      "limit": {
+        "context": 400000,
+        "output": 128000
+      },
+      "knowledge": "2025-08-31"
+    }
+  },
+  {
+    "id": "openai/gpt-5.4",
+    "name": "GPT-5.4",
+    "provider": "openrouter",
+    "family": "gpt",
+    "created_at": "2026-03-05 00:00:00 UTC",
+    "context_window": 1050000,
+    "max_output_tokens": 128000,
+    "knowledge_cutoff": "2025-08-31",
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "pdf"
+      ],
+      "output": [
+        "text"
       ]
+    },
+    "capabilities": [
+      "function_calling",
+      "structured_output",
+      "reasoning",
+      "vision",
+      "streaming"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 2.5,
+          "output_per_million": 15,
+          "cached_input_per_million": 0.25
+        }
+      }
+    },
+    "metadata": {
+      "description": "GPT-5.4 is OpenAI’s latest frontier model, unifying the Codex and GPT lines into a single system. It features a 1M+ token context window (922K input, 128K output) with support for text and image inputs, enabling high-context reasoning, coding, and multimodal analysis within the same workflow.\n\nThe model delivers improved performance in coding, document understanding, tool use, and instruction following. It is designed as a strong default for both general-purpose tasks and software engineering, capable of generating production-quality code, synthesizing information across multiple sources, and executing complex multi-step workflows with fewer iterations and greater token efficiency.",
+      "architecture": {
+        "modality": "text+image+file->text",
+        "input_modalities": [
+          "text",
+          "image",
+          "file"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "tokenizer": "GPT",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 1050000,
+        "max_completion_tokens": 128000,
+        "is_moderated": true
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "frequency_penalty",
+        "include_reasoning",
+        "logit_bias",
+        "logprobs",
+        "max_tokens",
+        "presence_penalty",
+        "reasoning",
+        "response_format",
+        "seed",
+        "stop",
+        "structured_outputs",
+        "tool_choice",
+        "tools",
+        "top_logprobs"
+      ],
+      "source": "models.dev",
+      "provider_id": "openrouter",
+      "open_weights": false,
+      "attachment": true,
+      "temperature": false,
+      "last_updated": "2026-03-05",
+      "cost": {
+        "input": 2.5,
+        "output": 15,
+        "cache_read": 0.25,
+        "context_over_200k": {
+          "input": 5,
+          "output": 22.5,
+          "cache_read": 0.5
+        }
+      },
+      "limit": {
+        "context": 1050000,
+        "input": 922000,
+        "output": 128000
+      },
+      "knowledge": "2025-08-31"
+    }
+  },
+  {
+    "id": "openai/gpt-5.4-pro",
+    "name": "GPT-5.4 Pro",
+    "provider": "openrouter",
+    "family": "gpt-pro",
+    "created_at": "2026-03-05 00:00:00 UTC",
+    "context_window": 1050000,
+    "max_output_tokens": 128000,
+    "knowledge_cutoff": "2025-08-31",
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "pdf"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "reasoning",
+      "vision",
+      "streaming",
+      "structured_output"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 30,
+          "output_per_million": 180,
+          "cached_input_per_million": 30
+        }
+      }
+    },
+    "metadata": {
+      "description": "GPT-5.4 Pro is OpenAI's most advanced model, building on GPT-5.4's unified architecture with enhanced reasoning capabilities for complex, high-stakes tasks. It features a 1M+ token context window (922K input, 128K output) with support for text and image inputs. Optimized for step-by-step reasoning, instruction following, and accuracy, GPT-5.4 Pro excels at agentic coding, long-context workflows, and multi-step problem solving.",
+      "architecture": {
+        "modality": "text+image+file->text",
+        "input_modalities": [
+          "text",
+          "image",
+          "file"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "tokenizer": "GPT",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 1050000,
+        "max_completion_tokens": 128000,
+        "is_moderated": true
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "frequency_penalty",
+        "include_reasoning",
+        "logit_bias",
+        "logprobs",
+        "max_tokens",
+        "presence_penalty",
+        "reasoning",
+        "response_format",
+        "seed",
+        "stop",
+        "structured_outputs",
+        "tool_choice",
+        "tools",
+        "top_logprobs"
+      ],
+      "source": "models.dev",
+      "provider_id": "openrouter",
+      "open_weights": false,
+      "attachment": true,
+      "temperature": false,
+      "last_updated": "2026-03-05",
+      "cost": {
+        "input": 30,
+        "output": 180,
+        "cache_read": 30
+      },
+      "limit": {
+        "context": 1050000,
+        "input": 272000,
+        "output": 128000
+      },
+      "knowledge": "2025-08-31"
     }
   },
   {
@@ -50688,7 +51171,6 @@
         "tool_choice",
         "tools",
         "top_k",
-        "top_logprobs",
         "top_p"
       ]
     }
@@ -50739,8 +51221,8 @@
         "instruct_type": "qwen3"
       },
       "top_provider": {
-        "context_length": 131072,
-        "max_completion_tokens": null,
+        "context_length": 262144,
+        "max_completion_tokens": 262144,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -52593,8 +53075,7 @@
     "capabilities": [
       "streaming",
       "function_calling",
-      "structured_output",
-      "predicted_outputs"
+      "structured_output"
     ],
     "pricing": {
       "text_tokens": {
@@ -52625,20 +53106,13 @@
       },
       "per_request_limits": null,
       "supported_parameters": [
-        "frequency_penalty",
-        "logit_bias",
         "max_tokens",
-        "min_p",
         "presence_penalty",
-        "repetition_penalty",
         "response_format",
         "seed",
-        "stop",
-        "structured_outputs",
         "temperature",
         "tool_choice",
         "tools",
-        "top_k",
         "top_p"
       ]
     }
@@ -55841,8 +56315,8 @@
         "instruct_type": null
       },
       "top_provider": {
-        "context_length": 131000,
-        "max_completion_tokens": 131000,
+        "context_length": 131072,
+        "max_completion_tokens": 98304,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -56167,8 +56641,8 @@
         "instruct_type": null
       },
       "top_provider": {
-        "context_length": 202752,
-        "max_completion_tokens": 131072,
+        "context_length": 204800,
+        "max_completion_tokens": 204800,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -56793,7 +57267,7 @@
     "name": "Sonar Reasoning",
     "provider": "perplexity",
     "family": "sonar_reasoning",
-    "created_at": "2026-03-04 16:13:43 UTC",
+    "created_at": "2026-03-07 16:09:55 UTC",
     "context_window": 128000,
     "max_output_tokens": 4096,
     "knowledge_cutoff": null,
@@ -56871,55 +57345,6 @@
     }
   },
   {
-    "id": "deepseek-ai/deepseek-v3.1-maas",
-    "name": "DeepSeek V3.1",
-    "provider": "vertexai",
-    "family": "deepseek",
-    "created_at": "2025-08-28 00:00:00 UTC",
-    "context_window": 163840,
-    "max_output_tokens": 32768,
-    "knowledge_cutoff": null,
-    "modalities": {
-      "input": [
-        "text",
-        "pdf"
-      ],
-      "output": [
-        "text"
-      ]
-    },
-    "capabilities": [
-      "function_calling",
-      "structured_output",
-      "reasoning",
-      "vision"
-    ],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "input_per_million": 0.6,
-          "output_per_million": 1.7
-        }
-      }
-    },
-    "metadata": {
-      "source": "models.dev",
-      "provider_id": "google-vertex",
-      "open_weights": true,
-      "attachment": false,
-      "temperature": true,
-      "last_updated": "2025-08-28",
-      "cost": {
-        "input": 0.6,
-        "output": 1.7
-      },
-      "limit": {
-        "context": 163840,
-        "output": 32768
-      }
-    }
-  },
-  {
     "id": "gemini-1.5-flash",
     "name": "Gemini 1.5 Flash",
     "provider": "vertexai",
@@ -56991,55 +57416,7 @@
     ],
     "pricing": {},
     "metadata": {
-      "version_id": "default",
-      "open_source_category": "PROPRIETARY",
-      "launch_stage": "GA",
-      "supported_actions": {
-        "openNotebook": {
-          "references": {
-            "global": {
-              "uri": "https://colab.research.google.com/github/GoogleCloudPlatform/generative-ai/blob/main/gemini/getting-started/intro_gemini_1_5_flash.ipynb"
-            }
-          },
-          "title": "Open Notebook"
-        },
-        "openGenerationAiStudio": {
-          "references": {
-            "global": {
-              "uri": "https://console.cloud.google.com/vertex-ai/studio/freeform?model=gemini-1.5-flash-002"
-            }
-          }
-        },
-        "openEvaluationPipeline": {
-          "references": {
-            "global": {
-              "uri": "https://console.cloud.google.com/vertex-ai/pipelines/vertex-ai-templates/autosxs-template"
-            }
-          },
-          "title": "Evaluate"
-        },
-        "openNotebooks": {
-          "notebooks": [
-            {
-              "references": {
-                "global": {
-                  "uri": "https://colab.research.google.com/github/GoogleCloudPlatform/generative-ai/blob/main/gemini/getting-started/intro_gemini_1_5_flash.ipynb"
-                }
-              },
-              "title": "Open Notebook"
-            },
-            {
-              "references": {
-                "global": {
-                  "uri": "https://colab.research.google.com/github/GoogleCloudPlatform/generative-ai/blob/main/gemini/getting-started/intro_gemini_1_5_flash.ipynb"
-                }
-              },
-              "title": "Open Notebook"
-            }
-          ]
-        }
-      },
-      "publisher_model_template": "projects/{project}/locations/{location}/publishers/google/models/gemini-1.5-flash-002@default"
+      "source": "known_models"
     }
   },
   {
@@ -58614,241 +58991,6 @@
     }
   },
   {
-    "id": "meta/llama-3.3-70b-instruct-maas",
-    "name": "Llama 3.3 70B Instruct",
-    "provider": "vertexai",
-    "family": "llama",
-    "created_at": "2025-04-29 00:00:00 UTC",
-    "context_window": 128000,
-    "max_output_tokens": 8192,
-    "knowledge_cutoff": null,
-    "modalities": {
-      "input": [
-        "text"
-      ],
-      "output": [
-        "text"
-      ]
-    },
-    "capabilities": [
-      "function_calling",
-      "structured_output"
-    ],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "input_per_million": 0.72,
-          "output_per_million": 0.72
-        }
-      }
-    },
-    "metadata": {
-      "source": "models.dev",
-      "provider_id": "google-vertex",
-      "open_weights": true,
-      "attachment": false,
-      "temperature": true,
-      "last_updated": "2025-04-29",
-      "cost": {
-        "input": 0.72,
-        "output": 0.72
-      },
-      "limit": {
-        "context": 128000,
-        "output": 8192
-      },
-      "knowledge": "2023-12"
-    }
-  },
-  {
-    "id": "meta/llama-4-maverick-17b-128e-instruct-maas",
-    "name": "Llama 4 Maverick 17B 128E Instruct",
-    "provider": "vertexai",
-    "family": "llama",
-    "created_at": "2025-04-29 00:00:00 UTC",
-    "context_window": 524288,
-    "max_output_tokens": 8192,
-    "knowledge_cutoff": null,
-    "modalities": {
-      "input": [
-        "text",
-        "image"
-      ],
-      "output": [
-        "text"
-      ]
-    },
-    "capabilities": [
-      "function_calling",
-      "structured_output",
-      "vision"
-    ],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "input_per_million": 0.35,
-          "output_per_million": 1.15
-        }
-      }
-    },
-    "metadata": {
-      "source": "models.dev",
-      "provider_id": "google-vertex",
-      "open_weights": true,
-      "attachment": true,
-      "temperature": true,
-      "last_updated": "2025-04-29",
-      "cost": {
-        "input": 0.35,
-        "output": 1.15
-      },
-      "limit": {
-        "context": 524288,
-        "output": 8192
-      },
-      "knowledge": "2024-08"
-    }
-  },
-  {
-    "id": "openai/gpt-oss-120b-maas",
-    "name": "GPT OSS 120B",
-    "provider": "vertexai",
-    "family": "gpt-oss",
-    "created_at": "2025-08-05 00:00:00 UTC",
-    "context_window": 131072,
-    "max_output_tokens": 32768,
-    "knowledge_cutoff": null,
-    "modalities": {
-      "input": [
-        "text"
-      ],
-      "output": [
-        "text"
-      ]
-    },
-    "capabilities": [
-      "function_calling",
-      "reasoning"
-    ],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "input_per_million": 0.09,
-          "output_per_million": 0.36
-        }
-      }
-    },
-    "metadata": {
-      "source": "models.dev",
-      "provider_id": "google-vertex",
-      "open_weights": true,
-      "attachment": false,
-      "temperature": true,
-      "last_updated": "2025-08-05",
-      "cost": {
-        "input": 0.09,
-        "output": 0.36
-      },
-      "limit": {
-        "context": 131072,
-        "output": 32768
-      }
-    }
-  },
-  {
-    "id": "openai/gpt-oss-20b-maas",
-    "name": "GPT OSS 20B",
-    "provider": "vertexai",
-    "family": "gpt-oss",
-    "created_at": "2025-08-05 00:00:00 UTC",
-    "context_window": 131072,
-    "max_output_tokens": 32768,
-    "knowledge_cutoff": null,
-    "modalities": {
-      "input": [
-        "text"
-      ],
-      "output": [
-        "text"
-      ]
-    },
-    "capabilities": [
-      "function_calling",
-      "reasoning"
-    ],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "input_per_million": 0.07,
-          "output_per_million": 0.25
-        }
-      }
-    },
-    "metadata": {
-      "source": "models.dev",
-      "provider_id": "google-vertex",
-      "open_weights": true,
-      "attachment": false,
-      "temperature": true,
-      "last_updated": "2025-08-05",
-      "cost": {
-        "input": 0.07,
-        "output": 0.25
-      },
-      "limit": {
-        "context": 131072,
-        "output": 32768
-      }
-    }
-  },
-  {
-    "id": "qwen/qwen3-235b-a22b-instruct-2507-maas",
-    "name": "Qwen3 235B A22B Instruct",
-    "provider": "vertexai",
-    "family": "qwen",
-    "created_at": "2025-08-13 00:00:00 UTC",
-    "context_window": 262144,
-    "max_output_tokens": 16384,
-    "knowledge_cutoff": null,
-    "modalities": {
-      "input": [
-        "text"
-      ],
-      "output": [
-        "text"
-      ]
-    },
-    "capabilities": [
-      "function_calling",
-      "structured_output",
-      "reasoning"
-    ],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "input_per_million": 0.22,
-          "output_per_million": 0.88
-        }
-      }
-    },
-    "metadata": {
-      "source": "models.dev",
-      "provider_id": "google-vertex",
-      "open_weights": true,
-      "attachment": false,
-      "temperature": true,
-      "last_updated": "2025-08-13",
-      "cost": {
-        "input": 0.22,
-        "output": 0.88
-      },
-      "limit": {
-        "context": 262144,
-        "output": 16384
-      }
-    }
-  },
-  {
     "id": "text-embedding-004",
     "name": "text-embedding-004",
     "provider": "vertexai",
@@ -58912,110 +59054,6 @@
     "pricing": {},
     "metadata": {
       "source": "known_models"
-    }
-  },
-  {
-    "id": "zai-org/glm-4.7-maas",
-    "name": "GLM-4.7",
-    "provider": "vertexai",
-    "family": "glm",
-    "created_at": "2026-01-06 00:00:00 UTC",
-    "context_window": 200000,
-    "max_output_tokens": 128000,
-    "knowledge_cutoff": null,
-    "modalities": {
-      "input": [
-        "text",
-        "pdf"
-      ],
-      "output": [
-        "text"
-      ]
-    },
-    "capabilities": [
-      "function_calling",
-      "structured_output",
-      "reasoning",
-      "vision"
-    ],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "input_per_million": 0.6,
-          "output_per_million": 2.2
-        }
-      }
-    },
-    "metadata": {
-      "source": "models.dev",
-      "provider_id": "google-vertex",
-      "open_weights": true,
-      "attachment": false,
-      "temperature": true,
-      "last_updated": "2026-01-06",
-      "interleaved": {
-        "field": "reasoning_content"
-      },
-      "cost": {
-        "input": 0.6,
-        "output": 2.2
-      },
-      "limit": {
-        "context": 200000,
-        "output": 128000
-      },
-      "knowledge": "2025-04"
-    }
-  },
-  {
-    "id": "zai-org/glm-5-maas",
-    "name": "GLM-5",
-    "provider": "vertexai",
-    "family": "glm",
-    "created_at": "2026-02-11 00:00:00 UTC",
-    "context_window": 204800,
-    "max_output_tokens": 131072,
-    "knowledge_cutoff": null,
-    "modalities": {
-      "input": [
-        "text"
-      ],
-      "output": [
-        "text"
-      ]
-    },
-    "capabilities": [
-      "function_calling",
-      "reasoning"
-    ],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "input_per_million": 1,
-          "output_per_million": 3.2,
-          "cached_input_per_million": 0.1
-        }
-      }
-    },
-    "metadata": {
-      "source": "models.dev",
-      "provider_id": "google-vertex",
-      "open_weights": true,
-      "attachment": false,
-      "temperature": true,
-      "last_updated": "2026-02-11",
-      "interleaved": {
-        "field": "reasoning_content"
-      },
-      "cost": {
-        "input": 1,
-        "output": 3.2,
-        "cache_read": 0.1
-      },
-      "limit": {
-        "context": 204800,
-        "output": 131072
-      }
     }
   },
   {

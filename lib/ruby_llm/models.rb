@@ -47,7 +47,8 @@ module RubyLLM
 
       def read_from_json(file = RubyLLM.config.model_registry_file)
         data = File.exist?(file) ? File.read(file) : '[]'
-        JSON.parse(data, symbolize_names: true).map { |model| Model::Info.new(model) }
+        models = JSON.parse(data, symbolize_names: true).map { |model| Model::Info.new(model) }
+        filter_models(models)
       rescue JSON::ParserError
         []
       end
@@ -232,7 +233,13 @@ module RubyLLM
           end
         end
 
-        models.sort_by { |m| [m.provider, m.id] }
+        filter_models(models).sort_by { |m| [m.provider, m.id] }
+      end
+
+      def filter_models(models)
+        models.reject do |model|
+          model.provider.to_s == 'vertexai' && model.id.to_s.include?('/')
+        end
       end
 
       def find_models_dev_model(key, models_dev_by_key)
@@ -401,7 +408,7 @@ module RubyLLM
     end
 
     def initialize(models = nil)
-      @models = models || self.class.load_models
+      @models = self.class.filter_models(models || self.class.load_models)
     end
 
     def load_from_json!(file = RubyLLM.config.model_registry_file)
