@@ -14,7 +14,7 @@ module RubyLLM
         end
 
         def render_image_payload(prompt, model:, size:)
-          RubyLLM.logger.debug "Ignoring size #{size}. OpenRouter image generation does not support size parameter."
+          RubyLLM.logger.debug { "Ignoring size #{size}. OpenRouter image generation does not support size parameter." }
           {
             model: model,
             messages: [

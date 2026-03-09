@@ -21,9 +21,9 @@ RSpec.describe RubyLLM::Providers::OpenRouter::Images do
     end
 
     it 'ignores size parameter and logs debug message' do
-      allow(RubyLLM.logger).to receive(:debug)
+      allow(RubyLLM.logger).to receive(:debug).and_yield
       images_module.render_image_payload('a cute cat', model: 'test-model', size: '512x512')
-      expect(RubyLLM.logger).to have_received(:debug).with(/Ignoring size/)
+      expect(RubyLLM.logger).to have_received(:debug)
     end
   end
 
