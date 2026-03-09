@@ -61,7 +61,6 @@ module RubyLLM
       faraday.response :logger,
                        RubyLLM.logger,
                        bodies: RubyLLM.logger.debug?,
-                       response: true,
                        errors: true,
                        headers: false,
                        log_level: :debug do |logger|
