@@ -10,7 +10,6 @@ module RubyLLM
         f.response :logger,
                    RubyLLM.logger,
                    bodies: false,
-                   response: false,
                    errors: true,
                    headers: false,
                    log_level: :debug
