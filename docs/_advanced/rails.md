@@ -70,7 +70,7 @@ This approach optimizes for real-time experiences:
 The easiest way to get started is using the provided Rails generator:
 
 ```bash
-rails generate ruby_llm:install
+bin/rails generate ruby_llm:install
 ```
 
 The generator:
@@ -83,8 +83,8 @@ The generator:
 After running the generator:
 
 ```bash
-rails db:migrate
-rails ruby_llm:load_models # v1.13+
+bin/rails db:migrate
+bin/rails ruby_llm:load_models # v1.13+
 ```
 
 Your Rails app is now AI-ready!
@@ -95,7 +95,7 @@ Your Rails app is now AI-ready!
 Want a ready-to-use chat interface? Run the chat UI generator:
 
 ```bash
-rails generate ruby_llm:chat_ui
+bin/rails generate ruby_llm:chat_ui
 ```
 
 This creates a complete chat interface with:
@@ -110,7 +110,7 @@ The UI generator also supports custom model names:
 
 ```bash
 # Use your custom model names from the install generator
-rails generate ruby_llm:chat_ui chat:Conversation message:ChatMessage model:AIModel
+bin/rails generate ruby_llm:chat_ui chat:Conversation message:ChatMessage model:AIModel
 ```
 
 #### Generator Options
@@ -119,14 +119,14 @@ The generator uses Rails-like syntax for custom model names:
 
 ```bash
 # Default - creates Chat, Message, ToolCall, Model
-rails generate ruby_llm:install
+bin/rails generate ruby_llm:install
 
 # Custom model names using Rails conventions
-rails generate ruby_llm:install chat:Conversation message:ChatMessage
-rails generate ruby_llm:install chat:Discussion message:DiscussionMessage tool_call:FunctionCall model:AIModel
+bin/rails generate ruby_llm:install chat:Conversation message:ChatMessage
+bin/rails generate ruby_llm:install chat:Discussion message:DiscussionMessage tool_call:FunctionCall model:AIModel
 
 # Skip ActiveStorage if you don't need file attachments
-rails generate ruby_llm:install --skip-active-storage
+bin/rails generate ruby_llm:install --skip-active-storage
 ```
 
 The `name:ClassName` syntax follows Rails conventions - specify only what you want to customize.
@@ -139,8 +139,8 @@ For most apps, keep the default behavior (install ActiveStorage) so file attachm
 The generator automatically configures ActiveStorage for file attachments. If you skipped it during generation, add it manually:
 
 ```bash
-rails active_storage:install
-rails db:migrate
+bin/rails active_storage:install
+bin/rails db:migrate
 ```
 
 Then add to your Message model:
@@ -173,7 +173,7 @@ chat.ask(raw_block)
 
 The v1.9 schema adds a `content_raw` column so raw payloads live alongside the plain-text `content` field. When you load messages via `acts_as_message`, RubyLLM reconstructs the original `Content::Raw` automatically.
 
-> Existing apps: run `rails generate ruby_llm:upgrade_to_v1_9` to add cached-token tracking and raw content storage columns introduced in v1.9.0. New apps will get the proper columns from the install generator.
+> Existing apps: run `bin/rails generate ruby_llm:upgrade_to_v1_9` to add cached-token tracking and raw content storage columns introduced in v1.9.0. New apps will get the proper columns from the install generator.
 {: .note }
 
 ### Configuring RubyLLM
@@ -460,7 +460,7 @@ chat.model.context_window # => 128000
 chat.model.supports_vision # => true
 
 # Populate/refresh models from models.json (v1.13+)
-rails ruby_llm:load_models
+bin/rails ruby_llm:load_models
 
 # Query based on model attributes
 Chat.joins(:model).where(models: { provider: 'anthropic' })

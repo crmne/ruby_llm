@@ -258,8 +258,8 @@ gem 'neighbor'
 gem 'ruby_llm'
 
 # Generate migration for pgvector
-rails generate neighbor:vector
-rails db:migrate
+bin/rails generate neighbor:vector
+bin/rails db:migrate
 
 # Create documents table
 class CreateDocuments < ActiveRecord::Migration[7.1]

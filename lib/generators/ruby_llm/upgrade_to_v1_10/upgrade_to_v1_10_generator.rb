@@ -38,7 +38,7 @@ module RubyLLM
 
           Next steps:
           1. Review the generated migration
-          2. Run: rails db:migrate
+          2. Run: bin/rails db:migrate
           3. Restart your application server
 
           📚 See the v1.10.0 release notes for details on extended thinking support.

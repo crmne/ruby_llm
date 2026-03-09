@@ -16,7 +16,7 @@ namespace :ruby_llm do
       model_class.save_to_database
       puts "✅ Loaded #{model_class.count} models into database"
     else
-      puts 'Model registry not configured. Run rails generate ruby_llm:install'
+      puts 'Model registry not configured. Run bin/rails generate ruby_llm:install'
     end
   end
 end

@@ -18,7 +18,7 @@ module RubyLLM
                         desc: 'UI template style (scaffold, tailwind, auto)'
 
       desc 'Creates a chat UI scaffold with Turbo streaming\n' \
-           'Usage: rails g ruby_llm:chat_ui [chat:ChatName] [message:MessageName] ...'
+           'Usage: bin/rails g ruby_llm:chat_ui [chat:ChatName] [message:MessageName] ...'
 
       def check_model_exists
         model_path = "app/models/#{message_model_name.underscore}.rb"
@@ -36,10 +36,10 @@ module RubyLLM
           Model file not found: #{model_path}
 
           Please run the install generator first:
-            rails generate ruby_llm:install#{arg_string}
+            bin/rails generate ruby_llm:install#{arg_string}
 
           Or if upgrading from <= 1.6.x, run the upgrade generator:
-            rails generate ruby_llm:upgrade_to_v1_7#{arg_string}
+            bin/rails generate ruby_llm:upgrade_to_v1_7#{arg_string}
         ERROR
       end
 

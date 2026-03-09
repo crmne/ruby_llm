@@ -120,8 +120,8 @@ This task is not intended for Rails applications as it writes to gem directories
 For Rails applications, the install generator sets up everything automatically:
 
 ```bash
-rails generate ruby_llm:install
-rails db:migrate
+bin/rails generate ruby_llm:install
+bin/rails db:migrate
 ```
 
 This creates the Model table and loads model data from the gem's registry.

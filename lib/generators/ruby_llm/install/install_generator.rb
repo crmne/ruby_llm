@@ -21,7 +21,7 @@ module RubyLLM
                                          desc: 'Skip ActiveStorage installation and attachment setup'
 
       desc 'Creates models and migrations for RubyLLM Rails integration\n' \
-           'Usage: rails g ruby_llm:install [chat:ChatName] [message:MessageName] ...'
+           'Usage: bin/rails g ruby_llm:install [chat:ChatName] [message:MessageName] ...'
 
       def self.next_migration_number(dirname)
         ::ActiveRecord::Generators::Base.next_migration_number(dirname)
@@ -68,8 +68,8 @@ module RubyLLM
         say '  ✅ ActiveStorage configured for file attachments support', :green unless options[:skip_active_storage]
 
         say "\n  Next steps:", :yellow
-        say '     1. Run: rails db:migrate'
-        say '     2. Run: rails ruby_llm:load_models'
+        say '     1. Run: bin/rails db:migrate'
+        say '     2. Run: bin/rails ruby_llm:load_models'
         say '     3. Set your API keys in config/initializers/ruby_llm.rb'
 
         say "     4. Start chatting: #{chat_model_name}.create!(model: 'gpt-5-nano').ask('Hello!')"
@@ -79,7 +79,7 @@ module RubyLLM
           say "\n  📎 Note: ActiveStorage was skipped", :yellow
           say '     File attachments won\'t work without ActiveStorage.'
           say '     To enable later:'
-          say '       1. Run: rails active_storage:install && rails db:migrate'
+          say '       1. Run: bin/rails active_storage:install && bin/rails db:migrate'
           say "       2. Add to your #{message_model_name} model: has_many_attached :attachments"
         end
 
@@ -96,7 +96,7 @@ module RubyLLM
       def chat_ui_generator_command
         mappings = model_mappings.join(' ')
         mappings = " #{mappings}" unless mappings.empty?
-        "rails generate ruby_llm:chat_ui#{mappings}"
+        "bin/rails generate ruby_llm:chat_ui#{mappings}"
       end
     end
   end
