@@ -21,6 +21,28 @@ redirect_from:
 {:toc}
 
 ---
+# Upgrade to 1.14
+
+## How to Upgrade
+
+```bash
+# Run the upgrade generator
+bin/rails generate ruby_llm:upgrade_to_v1_14
+
+# Run migrations
+bin/rails db:migrate
+```
+
+That's it! The generator:
+- Changes `thought_signature` on tool calls from `string` to `text`
+- Prevents thought signature truncation issues on MySQL/MariaDB
+
+## What's New in 1.14
+
+Among other features:
+
+- Safer Gemini thought signature persistence for Rails apps using ActiveRecord
+
 # Upgrade to 1.10
 
 ## How to Upgrade

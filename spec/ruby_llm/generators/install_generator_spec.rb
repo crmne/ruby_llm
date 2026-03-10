@@ -49,6 +49,16 @@ RSpec.describe RubyLLM::Generators::InstallGenerator, :generator, type: :generat
       end
     end
 
+    it 'uses text for tool call thought signatures' do
+      within_test_app(app_path) do
+        migration = Dir.glob('db/migrate/*create_tool_calls.rb').first
+        expect(migration).to be_present
+
+        content = File.read(migration)
+        expect(content).to include('t.text :thought_signature')
+      end
+    end
+
     it 'keeps create_models migration schema-only' do
       within_test_app(app_path) do
         migration = Dir.glob('db/migrate/*create_models.rb').first
