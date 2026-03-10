@@ -39,6 +39,18 @@ module RubyLLM
         )
       end
 
+      def to_partial_path
+        partial_prefix = self.class.name.underscore.pluralize
+        role_partial = if to_llm.tool_call?
+                         "tool_calls"
+                       elsif role.to_s == "tool"
+                         "tool"
+                       else
+                         role.to_s.presence || "assistant"
+                       end
+        "#{partial_prefix}/#{role_partial}"
+      end
+
       private
 
       def thinking_text_value

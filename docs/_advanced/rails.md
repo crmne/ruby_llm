@@ -79,6 +79,7 @@ The generator:
 - Installs ActiveStorage for file attachments
 - Configures the database model registry
 - Creates an initializer with sensible defaults
+- Creates conventional AI app directories (`v1.14.0+`)
 
 After running the generator:
 
@@ -112,6 +113,84 @@ The UI generator also supports custom model names:
 # Use your custom model names from the install generator
 bin/rails generate ruby_llm:chat_ui chat:Conversation message:ChatMessage model:AIModel
 ```
+
+### Conventional Directory Structure
+{: .d-inline-block }
+
+v1.14.0+
+{: .label .label-green }
+
+RubyLLM's Rails generators now establish a default app structure:
+
+```text
+app/
+|-- agents/
+|-- prompts/
+|-- schemas/
+`-- tools/
+```
+
+The install generator creates these directories with `.gitkeep` files so teams start from one shared convention.
+
+These are conventions, not hard requirements:
+
+- Agents, tools, and schemas can live anywhere in your app autoload paths.
+- Prompt lookup convention: the `instructions` class macro resolves `instructions.txt.erb` from the agent class name.
+
+For prompt lookup, RubyLLM uses class name conventions:
+
+- `WorkAssistant` -> `app/prompts/work_assistant/instructions.txt.erb`
+- `Admin::SupportAgent` -> `app/prompts/admin/support_agent/instructions.txt.erb`
+
+See the [Agents guide]({% link _core_features/agents.md %}#default-instructions-prompt) for how `instructions` rendering works.
+
+### Rails Generators for Agents, Tools, and Schemas
+{: .d-inline-block }
+
+v1.14.0+
+{: .label .label-green }
+
+Alongside `ruby_llm:install` and `ruby_llm:chat_ui`, Rails apps can generate starter classes for common AI building blocks:
+
+```bash
+bin/rails generate ruby_llm:agent Support
+bin/rails generate ruby_llm:tool Weather
+bin/rails generate ruby_llm:schema Product
+```
+
+What each generator creates:
+
+- `ruby_llm:agent`: `app/agents/support_agent.rb` and `app/prompts/support_agent/instructions.txt.erb`
+- `ruby_llm:tool`: `app/tools/weather_tool.rb` plus tool-specific chat UI partials under `app/views/messages/tool_calls` and `app/views/messages/tool_results`
+- `ruby_llm:schema`: `app/schemas/product_schema.rb`
+
+### Chat UI View Conventions
+{: .d-inline-block }
+
+v1.14.0+
+{: .label .label-green }
+
+The generated chat UI follows one convention: each message partial uses the local that matches its partial name.
+
+- `messages/_user.html.erb` gets `user`
+- `messages/_assistant.html.erb` gets `assistant`
+- `messages/_system.html.erb` gets `system`
+- `messages/_tool.html.erb` gets `tool`
+- `messages/_tool_calls.html.erb` gets `tool_calls`
+
+This comes from Rails partial rendering: `render @chat.messages` calls `to_partial_path`, and Rails injects a local named after that partial.
+
+Tool-specific partials follow the same convention:
+
+- `messages/tool_calls/_your_tool.html.erb` gets `tool_calls` and `tool_call`
+- `messages/tool_results/_your_tool.html.erb` gets `tool`
+
+Using fixed locals keeps the templates dumb and predictable.
+
+Turbo Stream templates used by the generated chat UI:
+
+- `messages/create.turbo_stream.erb` resets the message form for `MessagesController#create` and appends a rendered message when invoked from model create broadcasts.
+- `messages/update.turbo_stream.erb` is used by model update broadcasts to re-render the message row.
 
 #### Generator Options
 

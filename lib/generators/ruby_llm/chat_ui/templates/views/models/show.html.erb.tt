@@ -3,7 +3,7 @@
 <h1><%%= @<%= model_variable_name %>.name %></h1>
 
 <p><strong>ID:</strong> <%%= @<%= model_variable_name %>.model_id %></p>
-<p><strong>Provider:</strong> <%%= @<%= model_variable_name %>.provider %></p>
+<p><strong>Provider:</strong> <%%= @<%= model_variable_name %>.provider_class&.name || @<%= model_variable_name %>.provider %></p>
 <p><strong>Context Window:</strong> <%%= number_with_delimiter(@<%= model_variable_name %>.context_window) %> tokens</p>
 <p><strong>Max Output:</strong> <%%= number_with_delimiter(@<%= model_variable_name %>.max_output_tokens) %> tokens</p>
 

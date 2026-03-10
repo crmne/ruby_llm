@@ -32,6 +32,13 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         expect(File.exist?('app/controllers/chats_controller.rb')).to be true
         expect(File.exist?('app/controllers/messages_controller.rb')).to be true
         expect(File.exist?('app/controllers/models_controller.rb')).to be true
+        expect(File.exist?('app/helpers/messages_helper.rb')).to be true
+
+        messages_helper = File.read('app/helpers/messages_helper.rb')
+        expect(messages_helper).to include('def default_model_display_name')
+        expect(messages_helper).to include('def llm_model_label(model)')
+        expect(messages_helper).not_to include('def model_display_name(model)')
+        expect(messages_helper).not_to include('def provider_display_name(model_or_provider)')
       end
     end
 
@@ -45,15 +52,48 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         expect(File.exist?('app/views/chats/_form.html.erb')).to be true
 
         # Message views
-        expect(File.exist?('app/views/messages/_message.html.erb')).to be true
+        expect(File.exist?('app/views/messages/_assistant.html.erb')).to be true
+        expect(File.exist?('app/views/messages/_user.html.erb')).to be true
+        expect(File.exist?('app/views/messages/_system.html.erb')).to be true
+        expect(File.exist?('app/views/messages/_tool.html.erb')).to be true
+        expect(File.exist?('app/views/messages/_error.html.erb')).to be true
         expect(File.exist?('app/views/messages/_content.html.erb')).to be true
-        expect(File.exist?('app/views/messages/_form.html.erb')).to be true
+        expect(File.exist?('app/views/messages/_tool_calls.html.erb')).to be true
+        expect(File.exist?('app/views/messages/tool_calls/_default.html.erb')).to be true
+        expect(File.exist?('app/views/messages/tool_results/_default.html.erb')).to be true
         expect(File.exist?('app/views/messages/create.turbo_stream.erb')).to be true
+        expect(File.exist?('app/views/messages/update.turbo_stream.erb')).to be true
+        expect(File.exist?('app/views/messages/_form.html.erb')).to be true
+
+        user_partial = File.read('app/views/messages/_user.html.erb')
+        expect(user_partial).to include('user.content')
+        expect(user_partial).not_to include('local_assigns[')
+        assistant_partial = File.read('app/views/messages/_assistant.html.erb')
+        expect(assistant_partial).to include('assistant.content')
+        expect(assistant_partial).not_to include('local_assigns[')
+        system_partial = File.read('app/views/messages/_system.html.erb')
+        expect(system_partial).to include('system.content')
+        expect(system_partial).not_to include('local_assigns[')
+        tool_partial = File.read('app/views/messages/_tool.html.erb')
+        expect(tool_partial).to include('render tool_result_partial(tool), tool: tool')
+        tool_calls_partial = File.read('app/views/messages/_tool_calls.html.erb')
+        expect(tool_calls_partial).to include('tool_calls: tool_calls, tool_call: tool_call')
+        expect(tool_calls_partial).not_to include('local_assigns[')
+        chat_form = File.read('app/views/chats/_form.html.erb')
+        expect(chat_form).to include('@chat_models.map')
+        expect(chat_form).to include('llm_model_label(model)')
+        expect(chat_form).to include('default_model_display_name')
+        create_stream = File.read('app/views/messages/create.turbo_stream.erb')
+        expect(create_stream).to include('turbo_stream.replace "new_message"')
+        expect(create_stream).to include('render "messages/form"')
 
         # Model views
         expect(File.exist?('app/views/models/index.html.erb')).to be true
         expect(File.exist?('app/views/models/show.html.erb')).to be true
         expect(File.exist?('app/views/models/_model.html.erb')).to be true
+        models_index = File.read('app/views/models/index.html.erb')
+        expect(models_index).to include('@models.each do |model_info|')
+        expect(models_index).to include('render "models/model",')
       end
     end
 
@@ -88,13 +128,18 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         expect(message_content).to include('acts_as_message')
 
         # Check broadcasting setup
-        expect(message_content).to include(%q(broadcasts_to ->(message) { "chat_#{message.chat_id}" }))
+        expect(message_content).to include('after_create_commit :broadcast_message_created')
+        expect(message_content).to include('after_update_commit :broadcast_message_updated')
+        expect(message_content).to include('after_destroy_commit :broadcast_message_removed')
+        expect(message_content).to include('template: "messages/create"')
+        expect(message_content).to include('template: "messages/update"')
+        expect(message_content).to include('locals: { message: self }')
 
         # Check broadcast_append_chunk method
         expect(message_content).to include('def broadcast_append_chunk(content)')
         expect(message_content).to include(%q(broadcast_append_to "chat_#{chat_id}"))
         expect(message_content).to include(%q(target: "message_#{id}_content"))
-        expect(message_content).to include('partial: "messages/content"')
+        expect(message_content).to include('content: ERB::Util.html_escape(content.to_s)')
       end
     end
 
@@ -104,16 +149,18 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         expect(chats_controller).to include('class ChatsController')
         expect(chats_controller).to include('Chat.find')
         expect(chats_controller).to include('@chat = Chat.new')
+        expect(chats_controller).to include('@chat_models = RubyLLM.models.chat_models.all')
         expect(chats_controller).to include('@chat = Chat.create!(model: model)')
 
         messages_controller = File.read('app/controllers/messages_controller.rb')
         expect(messages_controller).to include('class MessagesController')
         expect(messages_controller).to include('@chat = Chat.find(params[:chat_id])')
         expect(messages_controller).to include('ChatResponseJob.perform_later')
+        expect(messages_controller).to include('format.turbo_stream')
 
         models_controller = File.read('app/controllers/models_controller.rb')
         expect(models_controller).to include('class ModelsController')
-        expect(models_controller).to include('@models = Model.all')
+        expect(models_controller).to include('@models = RubyLLM.models.chat_models.all')
       end
     end
 
@@ -161,6 +208,13 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         expect(File.exist?('app/controllers/llm/chats_controller.rb')).to be true
         expect(File.exist?('app/controllers/llm/messages_controller.rb')).to be true
         expect(File.exist?('app/controllers/llm/models_controller.rb')).to be true
+        expect(File.exist?('app/helpers/llm/messages_helper.rb')).to be true
+
+        messages_helper = File.read('app/helpers/llm/messages_helper.rb')
+        expect(messages_helper).to include('def default_model_display_name')
+        expect(messages_helper).to include('def llm_model_label(model)')
+        expect(messages_helper).not_to include('def model_display_name(model)')
+        expect(messages_helper).not_to include('def provider_display_name(model_or_provider)')
       end
     end
 
@@ -174,15 +228,48 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         expect(File.exist?('app/views/llm/chats/_form.html.erb')).to be true
 
         # Message views
-        expect(File.exist?('app/views/llm/messages/_message.html.erb')).to be true
+        expect(File.exist?('app/views/llm/messages/_assistant.html.erb')).to be true
+        expect(File.exist?('app/views/llm/messages/_user.html.erb')).to be true
+        expect(File.exist?('app/views/llm/messages/_system.html.erb')).to be true
+        expect(File.exist?('app/views/llm/messages/_tool.html.erb')).to be true
+        expect(File.exist?('app/views/llm/messages/_error.html.erb')).to be true
         expect(File.exist?('app/views/llm/messages/_content.html.erb')).to be true
-        expect(File.exist?('app/views/llm/messages/_form.html.erb')).to be true
+        expect(File.exist?('app/views/llm/messages/_tool_calls.html.erb')).to be true
+        expect(File.exist?('app/views/llm/messages/tool_calls/_default.html.erb')).to be true
+        expect(File.exist?('app/views/llm/messages/tool_results/_default.html.erb')).to be true
         expect(File.exist?('app/views/llm/messages/create.turbo_stream.erb')).to be true
+        expect(File.exist?('app/views/llm/messages/update.turbo_stream.erb')).to be true
+        expect(File.exist?('app/views/llm/messages/_form.html.erb')).to be true
+
+        user_partial = File.read('app/views/llm/messages/_user.html.erb')
+        expect(user_partial).to include('user.content')
+        expect(user_partial).not_to include('local_assigns[')
+        assistant_partial = File.read('app/views/llm/messages/_assistant.html.erb')
+        expect(assistant_partial).to include('assistant.content')
+        expect(assistant_partial).not_to include('local_assigns[')
+        system_partial = File.read('app/views/llm/messages/_system.html.erb')
+        expect(system_partial).to include('system.content')
+        expect(system_partial).not_to include('local_assigns[')
+        tool_partial = File.read('app/views/llm/messages/_tool.html.erb')
+        expect(tool_partial).to include('render tool_result_partial(tool), tool: tool')
+        tool_calls_partial = File.read('app/views/llm/messages/_tool_calls.html.erb')
+        expect(tool_calls_partial).to include('tool_calls: tool_calls, tool_call: tool_call')
+        expect(tool_calls_partial).not_to include('local_assigns[')
+        chat_form = File.read('app/views/llm/chats/_form.html.erb')
+        expect(chat_form).to include('@chat_models.map')
+        expect(chat_form).to include('llm_model_label(model)')
+        expect(chat_form).to include('default_model_display_name')
+        create_stream = File.read('app/views/llm/messages/create.turbo_stream.erb')
+        expect(create_stream).to include('turbo_stream.replace "new_llm_message"')
+        expect(create_stream).to include('render "llm/messages/form"')
 
         # Model views
         expect(File.exist?('app/views/llm/models/index.html.erb')).to be true
         expect(File.exist?('app/views/llm/models/show.html.erb')).to be true
         expect(File.exist?('app/views/llm/models/_model.html.erb')).to be true
+        models_index = File.read('app/views/llm/models/index.html.erb')
+        expect(models_index).to include('@llm_models.each do |model_info|')
+        expect(models_index).to include('render "llm/models/model",')
       end
     end
 
@@ -212,15 +299,18 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         expect(message_content).to include("model: :llm_model, model_class: 'Llm::Model'")
 
         # Check broadcasting setup
-        expect(message_content).to include(%q(broadcasts_to ->(llm_message) { "llm_chat_#{llm_message.llm_chat_id}" }))
-        expect(message_content).to include('partial: "llm/messages/message"')
-        # Broadcasting with namespaced models uses partial path without explicit locals
+        expect(message_content).to include('after_create_commit :broadcast_message_created')
+        expect(message_content).to include('after_update_commit :broadcast_message_updated')
+        expect(message_content).to include('after_destroy_commit :broadcast_message_removed')
+        expect(message_content).to include('template: "llm/messages/create"')
+        expect(message_content).to include('template: "llm/messages/update"')
+        expect(message_content).to include('locals: { llm_message: self }')
 
         # Check broadcast_append_chunk method
         expect(message_content).to include('def broadcast_append_chunk(content)')
         expect(message_content).to include(%q(broadcast_append_to "llm_chat_#{llm_chat_id}"))
         expect(message_content).to include(%q(target: "llm_message_#{id}_content"))
-        expect(message_content).to include('partial: "llm/messages/content"')
+        expect(message_content).to include('content: ERB::Util.html_escape(content.to_s)')
       end
     end
 
@@ -230,16 +320,18 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         expect(chats_controller).to include('class Llm::ChatsController')
         expect(chats_controller).to include('Llm::Chat.find')
         expect(chats_controller).to include('@llm_chat = Llm::Chat.new')
+        expect(chats_controller).to include('@chat_models = RubyLLM.models.chat_models.all')
         expect(chats_controller).to include('@llm_chat = Llm::Chat.create!(model: model)')
 
         messages_controller = File.read('app/controllers/llm/messages_controller.rb')
         expect(messages_controller).to include('class Llm::MessagesController')
         expect(messages_controller).to include('@llm_chat = Llm::Chat.find(params[:chat_id])')
         expect(messages_controller).to include('LlmChatResponseJob.perform_later')
+        expect(messages_controller).to include('format.turbo_stream')
 
         models_controller = File.read('app/controllers/llm/models_controller.rb')
         expect(models_controller).to include('class Llm::ModelsController')
-        expect(models_controller).to include('@llm_models = Llm::Model.all')
+        expect(models_controller).to include('@llm_models = RubyLLM.models.chat_models.all')
       end
     end
 

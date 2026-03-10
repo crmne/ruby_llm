@@ -31,6 +31,10 @@ RSpec.describe RubyLLM::Generators::InstallGenerator, :generator, type: :generat
         expect(File.exist?('app/models/message.rb')).to be true
         expect(File.exist?('app/models/model.rb')).to be true
         expect(File.exist?('app/models/tool_call.rb')).to be true
+        expect(File.exist?('app/agents/.gitkeep')).to be true
+        expect(File.exist?('app/tools/.gitkeep')).to be true
+        expect(File.exist?('app/schemas/.gitkeep')).to be true
+        expect(File.exist?('app/prompts/.gitkeep')).to be true
       end
     end
 

@@ -27,14 +27,13 @@ class <%= create_migration_class_name(model_table_name) %> < ActiveRecord::Migra
 <% end %>
       t.timestamps
 
-      t.index [:provider, :model_id], unique: true
+      t.index [ :provider, :model_id ], unique: true
       t.index :provider
       t.index :family
-<% if postgresql? %>
+<% if postgresql? -%>
       t.index :capabilities, using: :gin
       t.index :modalities, using: :gin
-<% end %>
+<% end -%>
     end
-
   end
 end

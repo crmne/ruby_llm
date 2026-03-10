@@ -55,6 +55,13 @@ module RubyLLM
         template 'initializer.rb.tt', 'config/initializers/ruby_llm.rb'
       end
 
+      def create_convention_directories
+        %w[agents tools schemas prompts].each do |name|
+          empty_directory "app/#{name}"
+          create_file "app/#{name}/.gitkeep" unless File.exist?(Rails.root.join("app/#{name}/.gitkeep"))
+        end
+      end
+
       def install_active_storage
         return if options[:skip_active_storage]
 

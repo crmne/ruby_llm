@@ -62,14 +62,25 @@ module RubyLLM
         template ui_template('views/chats/_form.html.erb'), "app/views/#{chat_view_path}/_form.html.erb"
 
         # Message views
-        template ui_template('views/messages/_message.html.erb'),
-                 "app/views/#{message_view_path}/_#{message_model_name.demodulize.underscore}.html.erb"
+        template ui_template('views/messages/_assistant.html.erb'), "app/views/#{message_view_path}/_assistant.html.erb"
+        template ui_template('views/messages/_user.html.erb'), "app/views/#{message_view_path}/_user.html.erb"
+        template ui_template('views/messages/_system.html.erb'), "app/views/#{message_view_path}/_system.html.erb"
+        template ui_template('views/messages/_tool.html.erb'), "app/views/#{message_view_path}/_tool.html.erb"
+        template ui_template('views/messages/_error.html.erb'), "app/views/#{message_view_path}/_error.html.erb"
         template ui_template('views/messages/_tool_calls.html.erb'),
                  "app/views/#{message_view_path}/_tool_calls.html.erb"
-        template ui_template('views/messages/_content.html.erb'), "app/views/#{message_view_path}/_content.html.erb"
-        template ui_template('views/messages/_form.html.erb'), "app/views/#{message_view_path}/_form.html.erb"
+        empty_directory "app/views/#{message_view_path}/tool_calls"
+        template ui_template('views/messages/tool_calls/_default.html.erb'),
+                 "app/views/#{message_view_path}/tool_calls/_default.html.erb"
+        empty_directory "app/views/#{message_view_path}/tool_results"
+        template ui_template('views/messages/tool_results/_default.html.erb'),
+                 "app/views/#{message_view_path}/tool_results/_default.html.erb"
         template ui_template('views/messages/create.turbo_stream.erb'),
                  "app/views/#{message_view_path}/create.turbo_stream.erb"
+        template ui_template('views/messages/update.turbo_stream.erb'),
+                 "app/views/#{message_view_path}/update.turbo_stream.erb"
+        template ui_template('views/messages/_content.html.erb'), "app/views/#{message_view_path}/_content.html.erb"
+        template ui_template('views/messages/_form.html.erb'), "app/views/#{message_view_path}/_form.html.erb"
 
         # Model views
         template ui_template('views/models/index.html.erb'), "app/views/#{model_view_path}/index.html.erb"
@@ -91,6 +102,10 @@ module RubyLLM
 
       def create_jobs
         template 'jobs/chat_response_job.rb', "app/jobs/#{variable_name_for(chat_model_name)}_response_job.rb"
+      end
+
+      def create_helpers
+        template 'helpers/messages_helper.rb', "app/helpers/#{message_model_name.underscore.pluralize}_helper.rb"
       end
 
       def add_routes
@@ -141,38 +156,43 @@ module RubyLLM
         # e.g., for LLM::Message, the chat association might be :llm_chat
         chat_association = chat_table_name.singularize
 
-        # Use Rails convention paths for partials
         partial_path = message_model_name.underscore.pluralize
 
-        # For broadcasts, we need to explicitly set the partial path
-        # Turbo will pass the record with the demodulized name (e.g. 'message' for Llm::Message)
-        broadcasting_code = if message_model_name.include?('::')
-                              partial_name = "#{partial_path}/#{message_model_name.demodulize.underscore}"
-                              <<~RUBY.strip
-                                broadcasts_to ->(#{msg_var}) { "#{chat_var}_\#{#{msg_var}.#{chat_association}_id}" },
-                                  partial: "#{partial_name}"
-                              RUBY
-                            else
-                              "broadcasts_to ->(#{msg_var}) { \"#{chat_var}_\#{#{msg_var}.#{chat_association}_id}\" }"
-                            end
+        broadcasting_callbacks = <<-RUBY
 
-        broadcast_append_chunk_method = <<-RUBY
+  after_create_commit :broadcast_message_created
+  after_update_commit :broadcast_message_updated
+  after_destroy_commit :broadcast_message_removed
+
+  def broadcast_message_created
+    broadcast_render_later_to "#{chat_var}_\#{#{chat_association}_id}",
+      template: "#{partial_path}/create",
+      locals: { #{msg_var}: self }
+  end
+
+  def broadcast_message_updated
+    broadcast_render_later_to "#{chat_var}_\#{#{chat_association}_id}",
+      template: "#{partial_path}/update",
+      locals: { #{msg_var}: self }
+  end
+
+  def broadcast_message_removed
+    broadcast_remove_to "#{chat_var}_\#{#{chat_association}_id}"
+  end
 
   def broadcast_append_chunk(content)
     broadcast_append_to "#{chat_var}_\#{#{chat_association}_id}",
       target: "#{msg_var}_\#{id}_content",
-      partial: "#{partial_path}/content",
-      locals: { content: content }
+      content: ERB::Util.html_escape(content.to_s)
   end
         RUBY
 
         inject_into_file "app/models/#{msg_path}.rb", before: "end\n" do
-          "  #{broadcasting_code}\n#{broadcast_append_chunk_method}"
+          broadcasting_callbacks
         end
       rescue Errno::ENOENT
         say "#{message_model_name} model not found. Add broadcasting code to your model.", :yellow
-        say "  #{broadcasting_code}", :yellow
-        say broadcast_append_chunk_method, :yellow
+        say broadcasting_callbacks, :yellow
       end
 
       def display_post_install_message
@@ -211,6 +231,14 @@ module RubyLLM
         # scaffold conventions without complicating scaffold templates.
         tailwind_template = "tailwind/#{template_path}"
         File.exist?(File.join(self.class.source_root, "#{tailwind_template}.tt")) ? tailwind_template : template_path
+      end
+
+      def message_helper_module_name
+        if message_model_name.include?('::')
+          "#{message_model_name.deconstantize}::#{message_model_name.demodulize.pluralize}Helper"
+        else
+          "#{message_model_name.pluralize}Helper"
+        end
       end
 
       def tailwind_available?

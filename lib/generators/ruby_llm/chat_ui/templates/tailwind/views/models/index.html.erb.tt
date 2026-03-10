@@ -22,15 +22,18 @@
             <th class="px-3 py-2 text-left text-sm font-semibold text-gray-900">Model</th>
             <th class="px-3 py-2 text-left text-sm font-semibold text-gray-900">Context Window</th>
             <th class="px-3 py-2 text-left text-sm font-semibold text-gray-900">$/1M tokens (In/Out)</th>
-            <th class="px-3 py-2 text-left text-sm font-semibold text-gray-900" colspan="2"></th>
+            <th class="px-3 py-2 text-left text-sm font-semibold text-gray-900"></th>
           </tr>
         </thead>
         <tbody class="divide-y divide-gray-200 bg-white">
-          <%%= render @<%= model_variable_name.pluralize %> %>
+          <%% @<%= model_variable_name.pluralize %>.each do |model_info| %>
+            <%%= render "<%= model_model_name.underscore.pluralize %>/<%= model_model_name.demodulize.underscore %>",
+              <%= model_model_name.demodulize.underscore %>: model_info %>
+          <%% end %>
         </tbody>
       </table>
     <%% else %>
-      <p class="text-center my-10">No <%= model_table_name.humanize.downcase %> found.</p>
+      <p class="text-center my-10">No chat models found.</p>
     <%% end %>
   </div>
 

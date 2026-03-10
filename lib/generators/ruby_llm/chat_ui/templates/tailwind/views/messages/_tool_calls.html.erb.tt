@@ -1,8 +1,3 @@
-<div class="w-full sm:w-auto my-3 space-y-2">
-  <strong class="block font-medium mb-1">Tool calls:</strong>
-  <%% <%= message_model_name.demodulize.underscore %>.<%= tool_call_variable_name.pluralize %>.each do |tool_call| %>
-    <div class="py-2 px-3 bg-gray-50 text-gray-700 rounded-md inline-block">
-      <%%= tool_call.name %>(<%%= tool_call.arguments.map { |k, v| "#{k}: #{v.inspect}" }.join(", ") %>)
-    </div>
-  <%% end %>
-</div>
+<%% tool_calls.<%= tool_call_variable_name.pluralize %>.each do |tool_call| %>
+  <%%= render tool_call_partial(tool_call), tool_calls: tool_calls, tool_call: tool_call %>
+<%% end %>

@@ -22,14 +22,17 @@
           <th>Model</th>
           <th>Context Window</th>
           <th>$/1M tokens (In/Out)</th>
-          <th colspan="2"></th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
-        <%%= render @<%= model_variable_name.pluralize %> %>
+        <%% @<%= model_variable_name.pluralize %>.each do |model_info| %>
+          <%%= render "<%= model_model_name.underscore.pluralize %>/<%= model_model_name.demodulize.underscore %>",
+            <%= model_model_name.demodulize.underscore %>: model_info %>
+        <%% end %>
       </tbody>
     </table>
   <%% else %>
-    <p>No <%= model_table_name.humanize.downcase %> found.</p>
+    <p>No chat models found.</p>
   <%% end %>
 </div>

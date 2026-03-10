@@ -8,7 +8,7 @@
 
 <h1><%= chat_model_name %> <%%= @<%= chat_variable_name %>.id %></h1>
 
-<p>Using <strong><%%= @<%= chat_variable_name %>.<%= model_table_name.singularize %>&.name || "Default" %></strong></p>
+<p>Using <strong><%%= llm_model_label(@<%= chat_variable_name %>.<%= model_table_name.singularize %>) %></strong></p>
 
 <div id="<%= message_table_name %>">
   <%% @<%= chat_variable_name %>.<%= message_table_name %>.where.not(id: nil).each do |<%= message_variable_name %>| %>
