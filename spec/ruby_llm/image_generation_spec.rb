@@ -26,6 +26,8 @@ RSpec.describe RubyLLM::Image do
   include_context 'with configured RubyLLM'
 
   describe 'basic functionality' do
+    attachment_path = File.expand_path('../fixtures/ruby.png', __dir__)
+
     IMAGE_GENERATION_MODELS.each do |model_info|
       provider = model_info[:provider]
       model = model_info[:model]
@@ -39,74 +41,49 @@ RSpec.describe RubyLLM::Image do
         save_and_verify_image image
       end
 
-      next unless model_info[:supports_size]
+      if model_info[:supports_size]
+        it "#{provider}/#{model} supports custom sizes" do
+          image = RubyLLM.paint('a siamese cat', size: '1792x1024', model: model, provider: provider)
 
-      it "#{provider}/#{model} supports custom sizes" do
-        image = RubyLLM.paint('a siamese cat', size: '1792x1024', model: model, provider: provider)
+          expect(image.mime_type).to include('image')
+          expect(image.model_id).to eq(model)
 
-        expect(image.mime_type).to include('image')
-        expect(image.model_id).to eq(model)
-
-        save_and_verify_image image
+          save_and_verify_image image
+        end
       end
-    end
 
-    it 'gemini/gemini-2.5-flash-image can paint images' do
-      image = RubyLLM.paint('a siamese cat', model: 'gemini-2.5-flash-image')
+      if model_info[:supports_edit]
+        it "#{provider}/#{model} can edit images with source image" do
+          image = RubyLLM.paint(
+            'make the background blue',
+            model: model,
+            provider: provider,
+            with: attachment_path
+          )
 
-      expect(image.base64?).to be(true)
-      expect(image.data).to be_present
-      expect(image.mime_type).to include('image')
+          expect(image.mime_type).to include('image')
+          expect(image.model_id).to eq(model)
 
-      save_and_verify_image image
-    end
-
-    it 'gemini/gemini-2.5-flash-image can edit images with source image' do
-      attachment_path = File.expand_path('../fixtures/ruby.png', __dir__)
-      image = RubyLLM.paint(
-        'make the background blue',
-        model: 'gemini-2.5-flash-image',
-        with: attachment_path
-      )
-
-      expect(image.base64?).to be(true)
-      expect(image.data).to be_present
-      expect(image.mime_type).to include('image')
-
-      save_and_verify_image image
+          save_and_verify_image image
+        end
+      else
+        it "#{provider}/#{model} does not support editing images with source image" do
+          expect do
+            RubyLLM.paint(
+              'make the background blue',
+              model: model,
+              provider: provider,
+              with: attachment_path
+            )
+          end.to raise_error(RubyLLM::Error, /Image editing is/)
+        end
+      end
     end
 
     it 'validates model existence' do
       expect do
         RubyLLM.paint('a cat', model: 'invalid-model')
       end.to raise_error(RubyLLM::ModelNotFoundError)
-    end
-
-    it 'openai/gpt-image-1 can paint images' do
-      image = RubyLLM.paint('a siamese cat', model: 'gpt-image-1')
-
-      expect(image.base64?).to be(true)
-      expect(image.data).to be_present
-      expect(image.mime_type).to include('image')
-      expect(image.model_id).to eq('gpt-image-1')
-
-      save_and_verify_image image
-    end
-
-    it 'openai/gpt-image-1 can edit images with source image' do
-      attachment_path = File.expand_path('../fixtures/ruby.png', __dir__)
-      image = RubyLLM.paint(
-        'make the background blue',
-        model: 'gpt-image-1',
-        with: attachment_path
-      )
-
-      expect(image.base64?).to be(true)
-      expect(image.data).to be_present
-      expect(image.mime_type).to include('image')
-      expect(image.model_id).to eq('gpt-image-1')
-
-      save_and_verify_image image
     end
   end
 end

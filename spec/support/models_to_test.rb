@@ -102,9 +102,9 @@ TRANSCRIPTION_MODELS = [
 ].freeze
 
 image_generation_models = [
-  { provider: :openai, model: 'dall-e-3', supports_size: true },
-  { provider: :openai, model: 'gpt-image-1', supports_size: false },
-  { provider: :gemini, model: 'imagen-4.0-generate-001', supports_size: false },
-  { provider: :openrouter, model: 'google/gemini-2.5-flash-image', supports_size: false }
+  { provider: :openai, model: 'dall-e-3', supports_size: true, supports_edit: false },
+  { provider: :openai, model: 'gpt-image-1', supports_size: false, supports_edit: true },
+  { provider: :gemini, model: 'imagen-4.0-generate-001', supports_size: false, supports_edit: false },
+  { provider: :openrouter, model: 'google/gemini-2.5-flash-image', supports_size: false, supports_edit: false }
 ].freeze
 IMAGE_GENERATION_MODELS = filter_local_providers(image_generation_models).freeze
