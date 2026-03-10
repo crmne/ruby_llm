@@ -5,32 +5,34 @@ module RubyLLM
   class Models
     include Enumerable
 
-    MODELS_DEV_PROVIDER_MAP = {
-      'openai' => 'openai',
-      'anthropic' => 'anthropic',
-      'google' => 'gemini',
-      'google-vertex' => 'vertexai',
-      'amazon-bedrock' => 'bedrock',
-      'deepseek' => 'deepseek',
-      'mistral' => 'mistral',
-      'openrouter' => 'openrouter',
-      'perplexity' => 'perplexity'
-    }.freeze
-    PROVIDER_PREFERENCE = %w[
-      openai
-      anthropic
-      gemini
-      vertexai
-      bedrock
-      openrouter
-      deepseek
-      mistral
-      perplexity
-      xai
-      azure
-      ollama
-      gpustack
-    ].freeze
+  MODELS_DEV_PROVIDER_MAP = {
+    'openai' => 'openai',
+    'anthropic' => 'anthropic',
+    'google' => 'gemini',
+    'google-vertex' => 'vertexai',
+    'amazon-bedrock' => 'bedrock',
+    'deepseek' => 'deepseek',
+    'mistral' => 'mistral',
+    'novita' => 'novita',
+    'openrouter' => 'openrouter',
+    'perplexity' => 'perplexity'
+  }.freeze
+  PROVIDER_PREFERENCE = %w[
+    openai
+    anthropic
+    gemini
+    vertexai
+    bedrock
+    openrouter
+    deepseek
+    mistral
+    novita
+    perplexity
+    xai
+    azure
+    ollama
+    gpustack
+  ].freeze
 
     class << self
       def instance
