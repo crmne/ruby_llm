@@ -16,6 +16,7 @@ require 'zeitwerk'
 loader = Zeitwerk::Loader.for_gem
 loader.inflector.inflect(
   'azure' => 'Azure',
+  'novita' => 'Novita',
   'UI' => 'UI',
   'api' => 'API',
   'bedrock' => 'Bedrock',
