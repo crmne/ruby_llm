@@ -125,7 +125,7 @@ module RubyLLM
         self.assume_model_exists = assume_exists
         resolve_model_from_strings
         save!
-        to_llm.with_model(model.model_id, provider: model.provider.to_sym, assume_exists:)
+        to_llm.with_model(model_association.model_id, provider: model_association.provider.to_sym, assume_exists:)
         self
       end
 
