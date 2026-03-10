@@ -16,11 +16,23 @@ RSpec.describe RubyLLM::Providers::OpenAI::Images do
       expect(payload).not_to have_key(:'image[]')
     end
 
-    it 'uses an array for multiple attachments to emit repeated `image[]` fields' do
+    it 'uses an array under the image key for multiple attachments' do
       payload = described_class.render_image_payload(prompt, model:, size:, with: [attachment_path, attachment_path])
 
       expect(payload[:image]).to all(be_a(Faraday::Multipart::FilePart))
       expect(payload[:image].size).to eq(2)
+    end
+
+    it 'raises a clear error when an attachment file is missing' do
+      expect do
+        described_class.render_image_payload(prompt, model:, size:, with: ['missing.png'])
+      end.to raise_error(ArgumentError, /File not found: missing\.png/)
+    end
+
+    it 'raises an error when attachments are used with unsupported models' do
+      expect do
+        described_class.render_image_payload(prompt, model: 'dall-e-3', size:, with: [attachment_path])
+      end.to raise_error(RubyLLM::Error, /Image editing is only supported for/)
     end
   end
 end

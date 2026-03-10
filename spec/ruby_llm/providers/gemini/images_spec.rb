@@ -45,7 +45,9 @@ RSpec.describe RubyLLM::Providers::Gemini::Images do
     end
 
     it 'uses predict for imagen models' do
-      expect(test_obj.images_url(model: 'imagen-4.0-generate-001')).to eq('models/imagen-4.0-generate-001:predict')
+      expect(test_obj.images_url(model: 'imagen-4.0-generate-001')).to eq(
+        'models/imagen-4.0-generate-001:predict'
+      )
     end
   end
 end

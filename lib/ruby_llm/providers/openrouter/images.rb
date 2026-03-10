@@ -9,7 +9,10 @@ module RubyLLM
       module Images
         module_function
 
-        def images_url
+        def images_url(model: nil, with: [])
+          _model = model
+          _with = with
+
           'chat/completions'
         end
 

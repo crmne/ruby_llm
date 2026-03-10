@@ -5,7 +5,9 @@ module RubyLLM
     class Gemini
       # Image generation methods for the Gemini API implementation
       module Images
-        def images_url(model: @model)
+        def images_url(model:, with: [])
+          _with = with
+
           if uses_generate_content?(model)
             "models/#{model}:generateContent"
           else
@@ -15,7 +17,6 @@ module RubyLLM
 
         def render_image_payload(prompt, model:, size:, with: [])
           RubyLLM.logger.debug { "Ignoring size #{size}. Gemini does not support image size customization." }
-          @model = model
 
           if uses_generate_content?(model)
             # Use generateContent format for Gemini image-native models
@@ -64,7 +65,7 @@ module RubyLLM
         def validate_edit_support!(model, attachments)
           return unless attachments.any?
 
-          raise Error, "Image editing is only supported for gemini*image models. Got: #{model}"
+          raise Error, "Image editing is only supported for Gemini image models. Got: #{model}"
         end
 
         def validate_attachment_exists!(file_path)

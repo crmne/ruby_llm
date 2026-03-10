@@ -84,7 +84,7 @@ module RubyLLM
     def paint(prompt, model:, size:, with: nil)
       attachments = normalize_attachments(with)
       payload = render_image_payload(prompt, model:, size:, with: attachments)
-      response = @connection.post images_url, payload
+      response = @connection.post images_url(model:, with: attachments), payload
       parse_image_response(response, model:)
     end
 

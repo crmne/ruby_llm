@@ -7,34 +7,30 @@ module RubyLLM
       module Images
         module_function
 
-        def images_url
-          attachments_present? ? 'images/edits' : 'images/generations'
+        def images_url(model: nil, with: [])
+          _model = model
+
+          with.any? ? 'images/edits' : 'images/generations'
         end
 
         def render_image_payload(prompt, model:, size:, with: [])
-          @attachments = with
-
-          if attachments_present?
+          if with.any?
             validate_edit_support!(model)
             default_generation_payload(prompt, model:, size:)
-              .merge(image_attachments_payload)
+              .merge(image_attachments_payload(with))
               .compact
           else
             default_generation_payload(prompt, model:, size:)
           end
         end
 
-        def attachments_present?
-          @attachments&.any?
-        end
+        def image_attachments_payload(attachments)
+          return {} unless attachments.any?
 
-        def image_attachments_payload
-          return {} unless attachments_present?
-
-          if @attachments.one?
-            { image: build_image_file_part(@attachments.first) }
+          if attachments.one?
+            { image: build_image_file_part(attachments.first) }
           else
-            { image: @attachments.map { |attachment| build_image_file_part(attachment) } }
+            { image: attachments.map { |attachment| build_image_file_part(attachment) } }
           end
         end
 
@@ -55,6 +51,8 @@ module RubyLLM
 
         def build_image_file_part(file_path)
           expanded_path = File.expand_path(file_path)
+          raise ArgumentError, "File not found: #{file_path}" unless File.exist?(expanded_path)
+
           mime_type = Marcel::MimeType.for(Pathname.new(expanded_path))
 
           Faraday::Multipart::FilePart.new(
