@@ -9,20 +9,14 @@ module RubyLLM
       module Images
         module_function
 
-        def images_url(model: nil, with: [])
-          _model = model
-          _with = with
-
+        def images_url(**)
           'chat/completions'
         end
 
         def render_image_payload(prompt, model:, size:, with: [])
           RubyLLM.logger.debug { "Ignoring size #{size}. OpenRouter image generation does not support size parameter." }
-          if with.any?
-            RubyLLM.logger.debug do
-              'Ignoring attachments. OpenRouter image generation does not support image editing.'
-            end
-          end
+          validate_edit_support!(model, with)
+
           {
             model: model,
             messages: [
@@ -33,6 +27,12 @@ module RubyLLM
             ],
             modalities: %w[image text]
           }
+        end
+
+        def validate_edit_support!(model, attachments)
+          return unless attachments.any?
+
+          raise Error, "Image editing is not supported for OpenRouter image generation models. Got: #{model}"
         end
 
         def parse_image_response(response, model:)

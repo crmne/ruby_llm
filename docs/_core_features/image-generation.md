@@ -89,11 +89,12 @@ edited_image = RubyLLM.paint(
 **Supported Models for Image Editing:**
 
 *   **OpenAI:** `gpt-image-*` models (gpt-image-1, gpt-image-1.5, etc.) and `dall-e-2`
-*   **Gemini:** `gemini-*-flash-image` models (gemini-2.5-flash-image, etc.)
+*   **Gemini:** Gemini image models matching `gemini*image` (for example `gemini-2.5-flash-image` and `gemini-3-pro-image-preview`)
+*   **OpenRouter:** image generation does not support `with:` attachments; passing attachments raises an error
 
 OpenAI image edits accept multiple attachments—pass an array to `with:` and RubyLLM will send repeated `image[]` fields for each file.
 
-> **Note:** Attempting to use `with:` attachments with unsupported models (like `dall-e-3` or `imagen-*`) will raise an error.
+> **Note:** Attempting to use `with:` attachments with unsupported models (like `dall-e-3` or `imagen-*`) raises `RubyLLM::Error`. Missing local files raise `ArgumentError` with `File not found: ...`.
 {: .warning }
 
 ## Choosing Models

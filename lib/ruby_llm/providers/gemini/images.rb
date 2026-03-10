@@ -5,9 +5,7 @@ module RubyLLM
     class Gemini
       # Image generation methods for the Gemini API implementation
       module Images
-        def images_url(model:, with: [])
-          _with = with
-
+        def images_url(model:, **)
           if uses_generate_content?(model)
             "models/#{model}:generateContent"
           else

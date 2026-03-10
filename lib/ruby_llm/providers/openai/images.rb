@@ -7,9 +7,7 @@ module RubyLLM
       module Images
         module_function
 
-        def images_url(model: nil, with: [])
-          _model = model
-
+        def images_url(with: [], **)
           with.any? ? 'images/edits' : 'images/generations'
         end
 
