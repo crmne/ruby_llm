@@ -55,9 +55,8 @@ module RubyLLM
 
         def format_display_name(model_id)
           case model_id
-          when 'deepseek-chat' then 'DeepSeek V3'
+          when 'deepseek-chat', /deepseek-v3/ then 'DeepSeek V3'
           when 'deepseek-reasoner' then 'DeepSeek R1'
-          when /deepseek-v3/ then 'DeepSeek V3'
           else
             model_id.split('-')
                     .map(&:capitalize)
@@ -70,11 +69,9 @@ module RubyLLM
         end
 
         def model_family(model_id)
-          case model_id
-          when /deepseek-reasoner/ then :reasoner
-          when /deepseek-v3/ then :chat
-          else :chat
-          end
+          return :reasoner if model_id.match?(/deepseek-reasoner/)
+
+          :chat
         end
 
         PRICES = {
