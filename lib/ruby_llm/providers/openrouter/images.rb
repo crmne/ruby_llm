@@ -13,8 +13,13 @@ module RubyLLM
           'chat/completions'
         end
 
-        def render_image_payload(prompt, model:, size:)
+        def render_image_payload(prompt, model:, size:, with: [])
           RubyLLM.logger.debug { "Ignoring size #{size}. OpenRouter image generation does not support size parameter." }
+          if with.any?
+            RubyLLM.logger.debug do
+              'Ignoring attachments. OpenRouter image generation does not support image editing.'
+            end
+          end
           {
             model: model,
             messages: [
