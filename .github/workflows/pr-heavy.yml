@@ -11,10 +11,6 @@ on:
       - "Rakefile"
       - "Appraisals"
       - "ruby_llm.gemspec"
-      - ".gitleaks.toml"
-      - ".gitleaksignore"
-      - ".github/workflows/_gitleaks.yml"
-      - ".github/workflows/_lint.yml"
       - ".github/workflows/_test-matrix.yml"
       - ".github/workflows/pr-heavy.yml"
 
@@ -26,17 +22,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  gitleaks:
-    uses: ./.github/workflows/_gitleaks.yml
-
-  lint:
-    uses: ./.github/workflows/_lint.yml
-    with:
-      ruby-version: "4.0"
-      bundler-cache: false
-
   test:
-    needs: [gitleaks, lint]
     uses: ./.github/workflows/_test-matrix.yml
     with:
       bundler-cache: false
