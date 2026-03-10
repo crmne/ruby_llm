@@ -251,6 +251,19 @@ RSpec.describe RubyLLM::Models do
     end
   end
 
+  describe '#chat_models' do
+    it 'excludes models with non-text output modalities' do
+      chat_models = RubyLLM.models.chat_models
+
+      expect(chat_models).to be_a(described_class)
+      expect(chat_models.all).to all(
+        satisfy('has no non-text output modality') { |m|
+          !Array(m.modalities&.output).intersect?(%w[embeddings moderation image audio video])
+        }
+      )
+    end
+  end
+
   describe '#audio_models' do
     it 'filters to models that are audio-capable' do
       audio_models = RubyLLM.models.audio_models

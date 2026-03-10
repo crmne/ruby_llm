@@ -76,18 +76,15 @@ module RubyLLM
         RubyLLM::Provider.resolve provider
       end
 
-      def type # rubocop:disable Metrics/PerceivedComplexity
-        if modalities.output.include?('embeddings') && !modalities.output.include?('text')
-          'embedding'
-        elsif modalities.output.include?('image') && !modalities.output.include?('text')
-          'image'
-        elsif modalities.output.include?('audio') && !modalities.output.include?('text')
-          'audio'
-        elsif modalities.output.include?('moderation')
-          'moderation'
-        else
-          'chat'
-        end
+      def type
+        output = modalities.output
+        return 'embedding' if output.include?('embeddings')
+        return 'moderation' if output.include?('moderation')
+        return 'image' if output.include?('image')
+        return 'audio' if output.include?('audio')
+        return 'video' if output.include?('video')
+
+        'chat'
       end
 
       def to_h

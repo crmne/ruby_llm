@@ -114,14 +114,39 @@ RSpec.describe RubyLLM::Model::Info do
       expect(info.type).to eq('chat')
     end
 
-    it 'returns embedding for embedding-only output models' do
+    it 'returns embedding for output models that include embeddings' do
       embedding = described_class.new(data.merge(modalities: { input: %w[text], output: %w[embeddings] }))
       expect(embedding.type).to eq('embedding')
     end
 
-    it 'returns image for image-only output models' do
+    it 'returns image for output models that include image' do
       image = described_class.new(data.merge(modalities: { input: %w[text], output: %w[image] }))
       expect(image.type).to eq('image')
+    end
+
+    it 'returns image for mixed text+image output models' do
+      image = described_class.new(data.merge(modalities: { input: %w[text], output: %w[text image] }))
+      expect(image.type).to eq('image')
+    end
+
+    it 'returns audio for mixed text+audio output models' do
+      audio = described_class.new(data.merge(modalities: { input: %w[text], output: %w[text audio] }))
+      expect(audio.type).to eq('audio')
+    end
+
+    it 'returns embedding for mixed text+embeddings output models' do
+      embedding = described_class.new(data.merge(modalities: { input: %w[text], output: %w[text embeddings] }))
+      expect(embedding.type).to eq('embedding')
+    end
+
+    it 'returns moderation for mixed text+moderation output models' do
+      moderation = described_class.new(data.merge(modalities: { input: %w[text], output: %w[text moderation] }))
+      expect(moderation.type).to eq('moderation')
+    end
+
+    it 'returns video for video output models' do
+      video = described_class.new(data.merge(modalities: { input: %w[text], output: %w[video] }))
+      expect(video.type).to eq('video')
     end
   end
 
