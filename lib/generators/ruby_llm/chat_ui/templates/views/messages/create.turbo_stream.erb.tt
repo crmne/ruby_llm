@@ -1,9 +1,3 @@
-<%% if defined?(<%= message_variable_name %>) && <%= message_variable_name %>.present? %>
-  <%%= turbo_stream.append "<%= message_table_name %>" do %>
-    <%%= render <%= message_variable_name %> %>
-  <%% end %>
-<%% end %>
-
 <%% if defined?(@<%= chat_variable_name %>) && @<%= chat_variable_name %>.present? %>
   <%%= turbo_stream.replace "new_<%= message_variable_name %>" do %>
     <%%= render "<%= message_model_name.underscore.pluralize %>/form",

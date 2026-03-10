@@ -62,23 +62,22 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         expect(File.exist?('app/views/messages/tool_calls/_default.html.erb')).to be true
         expect(File.exist?('app/views/messages/tool_results/_default.html.erb')).to be true
         expect(File.exist?('app/views/messages/create.turbo_stream.erb')).to be true
-        expect(File.exist?('app/views/messages/update.turbo_stream.erb')).to be true
         expect(File.exist?('app/views/messages/_form.html.erb')).to be true
 
         user_partial = File.read('app/views/messages/_user.html.erb')
         expect(user_partial).to include('user.content')
-        expect(user_partial).not_to include('local_assigns[')
+        expect(user_partial).to include('local_assigns[:message]')
         assistant_partial = File.read('app/views/messages/_assistant.html.erb')
         expect(assistant_partial).to include('assistant.content')
-        expect(assistant_partial).not_to include('local_assigns[')
+        expect(assistant_partial).to include('local_assigns[:message]')
         system_partial = File.read('app/views/messages/_system.html.erb')
         expect(system_partial).to include('system.content')
-        expect(system_partial).not_to include('local_assigns[')
+        expect(system_partial).to include('local_assigns[:message]')
         tool_partial = File.read('app/views/messages/_tool.html.erb')
         expect(tool_partial).to include('render tool_result_partial(tool), tool: tool')
         tool_calls_partial = File.read('app/views/messages/_tool_calls.html.erb')
         expect(tool_calls_partial).to include('tool_calls: tool_calls, tool_call: tool_call')
-        expect(tool_calls_partial).not_to include('local_assigns[')
+        expect(tool_calls_partial).to include('local_assigns[:message]')
         chat_form = File.read('app/views/chats/_form.html.erb')
         expect(chat_form).to include('@chat_models.map')
         expect(chat_form).to include('llm_model_label(model)')
@@ -128,12 +127,8 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         expect(message_content).to include('acts_as_message')
 
         # Check broadcasting setup
-        expect(message_content).to include('after_create_commit :broadcast_message_created')
-        expect(message_content).to include('after_update_commit :broadcast_message_updated')
-        expect(message_content).to include('after_destroy_commit :broadcast_message_removed')
-        expect(message_content).to include('template: "messages/create"')
-        expect(message_content).to include('template: "messages/update"')
-        expect(message_content).to include('locals: { message: self }')
+        expect(message_content).to include(%q(broadcasts_to ->(message) { "chat_#{message.chat_id}" }))
+        expect(message_content).to include('inserts_by: :append')
 
         # Check broadcast_append_chunk method
         expect(message_content).to include('def broadcast_append_chunk(content)')
@@ -238,23 +233,22 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         expect(File.exist?('app/views/llm/messages/tool_calls/_default.html.erb')).to be true
         expect(File.exist?('app/views/llm/messages/tool_results/_default.html.erb')).to be true
         expect(File.exist?('app/views/llm/messages/create.turbo_stream.erb')).to be true
-        expect(File.exist?('app/views/llm/messages/update.turbo_stream.erb')).to be true
         expect(File.exist?('app/views/llm/messages/_form.html.erb')).to be true
 
         user_partial = File.read('app/views/llm/messages/_user.html.erb')
         expect(user_partial).to include('user.content')
-        expect(user_partial).not_to include('local_assigns[')
+        expect(user_partial).to include('local_assigns[:message]')
         assistant_partial = File.read('app/views/llm/messages/_assistant.html.erb')
         expect(assistant_partial).to include('assistant.content')
-        expect(assistant_partial).not_to include('local_assigns[')
+        expect(assistant_partial).to include('local_assigns[:message]')
         system_partial = File.read('app/views/llm/messages/_system.html.erb')
         expect(system_partial).to include('system.content')
-        expect(system_partial).not_to include('local_assigns[')
+        expect(system_partial).to include('local_assigns[:message]')
         tool_partial = File.read('app/views/llm/messages/_tool.html.erb')
         expect(tool_partial).to include('render tool_result_partial(tool), tool: tool')
         tool_calls_partial = File.read('app/views/llm/messages/_tool_calls.html.erb')
         expect(tool_calls_partial).to include('tool_calls: tool_calls, tool_call: tool_call')
-        expect(tool_calls_partial).not_to include('local_assigns[')
+        expect(tool_calls_partial).to include('local_assigns[:message]')
         chat_form = File.read('app/views/llm/chats/_form.html.erb')
         expect(chat_form).to include('@chat_models.map')
         expect(chat_form).to include('llm_model_label(model)')
@@ -299,12 +293,8 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         expect(message_content).to include("model: :llm_model, model_class: 'Llm::Model'")
 
         # Check broadcasting setup
-        expect(message_content).to include('after_create_commit :broadcast_message_created')
-        expect(message_content).to include('after_update_commit :broadcast_message_updated')
-        expect(message_content).to include('after_destroy_commit :broadcast_message_removed')
-        expect(message_content).to include('template: "llm/messages/create"')
-        expect(message_content).to include('template: "llm/messages/update"')
-        expect(message_content).to include('locals: { llm_message: self }')
+        expect(message_content).to include(%q(broadcasts_to ->(llm_message) { "llm_chat_#{llm_message.llm_chat_id}" }))
+        expect(message_content).to include('inserts_by: :append')
 
         # Check broadcast_append_chunk method
         expect(message_content).to include('def broadcast_append_chunk(content)')

@@ -180,6 +180,8 @@ The generated chat UI follows one convention: each message partial uses the loca
 
 This comes from Rails partial rendering: `render @chat.messages` calls `to_partial_path`, and Rails injects a local named after that partial.
 
+For compatibility with model broadcasts (`broadcasts_to`), generated message partials also accept a `message` local as a fallback.
+
 #### Tool Call and Tool Result Partials
 
 Tool-specific partials are generated under `app/views/messages/tool_calls` and `app/views/messages/tool_results`:
@@ -205,8 +207,7 @@ Using fixed locals keeps the templates dumb and predictable.
 
 Turbo Stream templates used by the generated chat UI:
 
-- `messages/create.turbo_stream.erb` resets the message form for `MessagesController#create` and appends a rendered message when invoked from model create broadcasts.
-- `messages/update.turbo_stream.erb` is used by model update broadcasts to re-render the message row.
+- `messages/create.turbo_stream.erb` resets the message form for `MessagesController#create`.
 
 #### Generator Options
 

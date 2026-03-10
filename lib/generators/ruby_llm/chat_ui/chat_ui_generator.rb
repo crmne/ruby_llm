@@ -77,8 +77,6 @@ module RubyLLM
                  "app/views/#{message_view_path}/tool_results/_default.html.erb"
         template ui_template('views/messages/create.turbo_stream.erb'),
                  "app/views/#{message_view_path}/create.turbo_stream.erb"
-        template ui_template('views/messages/update.turbo_stream.erb'),
-                 "app/views/#{message_view_path}/update.turbo_stream.erb"
         template ui_template('views/messages/_content.html.erb'), "app/views/#{message_view_path}/_content.html.erb"
         template ui_template('views/messages/_form.html.erb'), "app/views/#{message_view_path}/_form.html.erb"
 
@@ -156,29 +154,9 @@ module RubyLLM
         # e.g., for LLM::Message, the chat association might be :llm_chat
         chat_association = chat_table_name.singularize
 
-        partial_path = message_model_name.underscore.pluralize
-
         broadcasting_callbacks = <<-RUBY
 
-  after_create_commit :broadcast_message_created
-  after_update_commit :broadcast_message_updated
-  after_destroy_commit :broadcast_message_removed
-
-  def broadcast_message_created
-    broadcast_render_later_to "#{chat_var}_\#{#{chat_association}_id}",
-      template: "#{partial_path}/create",
-      locals: { #{msg_var}: self }
-  end
-
-  def broadcast_message_updated
-    broadcast_render_later_to "#{chat_var}_\#{#{chat_association}_id}",
-      template: "#{partial_path}/update",
-      locals: { #{msg_var}: self }
-  end
-
-  def broadcast_message_removed
-    broadcast_remove_to "#{chat_var}_\#{#{chat_association}_id}"
-  end
+  broadcasts_to ->(#{msg_var}) { "#{chat_var}_\#{#{msg_var}.#{chat_association}_id}" }, inserts_by: :append
 
   def broadcast_append_chunk(content)
     broadcast_append_to "#{chat_var}_\#{#{chat_association}_id}",
