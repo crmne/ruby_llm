@@ -19514,6 +19514,57 @@
     }
   },
   {
+    "id": "deepseek-v3.2",
+    "name": "DeepSeek V3.2",
+    "provider": "deepseek",
+    "family": "deepseek",
+    "created_at": "2025-12-01 00:00:00 UTC",
+    "context_window": 64000,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "streaming"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.28,
+          "output_per_million": 0.42,
+          "cached_input_per_million": 0.028
+        }
+      }
+    },
+    "metadata": {
+      "object": "model",
+      "owned_by": "deepseek",
+      "source": "models.dev",
+      "provider_id": "deepseek",
+      "open_weights": false,
+      "attachment": true,
+      "temperature": true,
+      "last_updated": "2025-12-01",
+      "cost": {
+        "input": 0.28,
+        "output": 0.42,
+        "cache_read": 0.028
+      },
+      "limit": {
+        "context": 64000,
+        "output": 8192
+      },
+      "knowledge": "2024-07"
+    }
+  },
+  {
     "id": "aqa",
     "name": "Model that performs Attributed Question Answering.",
     "provider": "gemini",
