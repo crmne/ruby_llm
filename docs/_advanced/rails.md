@@ -180,10 +180,26 @@ The generated chat UI follows one convention: each message partial uses the loca
 
 This comes from Rails partial rendering: `render @chat.messages` calls `to_partial_path`, and Rails injects a local named after that partial.
 
-Tool-specific partials follow the same convention:
+#### Tool Call and Tool Result Partials
 
-- `messages/tool_calls/_your_tool.html.erb` gets `tool_calls` and `tool_call`
-- `messages/tool_results/_your_tool.html.erb` gets `tool`
+Tool-specific partials are generated under `app/views/messages/tool_calls` and `app/views/messages/tool_results`:
+
+```text
+app/views/messages/
+|-- tool_calls/
+|   |-- _default.html.erb
+|   `-- _your_tool.html.erb
+`-- tool_results/
+    |-- _default.html.erb
+    `-- _your_tool.html.erb
+```
+
+Locals passed to those partials:
+
+- `messages/tool_calls/_your_tool.html.erb` receives `tool_calls` and `tool_call`
+- `messages/tool_results/_your_tool.html.erb` receives `tool`
+
+`ruby_llm:tool` creates `_your_tool.html.erb` files with the correct names so custom rendering hooks up automatically.
 
 Using fixed locals keeps the templates dumb and predictable.
 
