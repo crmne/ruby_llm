@@ -1,6 +1,6 @@
 module <%= message_helper_module_name %>
   def default_model_display_name
-    "Default - #{RubyLLM.models.find(RubyLLM.config.default_model).label}"
+    "Default: #{RubyLLM.models.find(RubyLLM.config.default_model).label}"
   end
 
   def tool_result_partial(message)
