@@ -12,8 +12,10 @@ class <%= chat_controller_class_name %> < ApplicationController
   end
 
   def create
+    prompt = params.dig(:<%= chat_variable_name %>, :prompt)
     return unless prompt.present?
 
+    model = params.dig(:<%= chat_variable_name %>, :model).presence
     @<%= chat_variable_name %> = <%= chat_model_name %>.create!(model: model)
     <%= chat_job_class_name %>.perform_later(@<%= chat_variable_name %>.id, prompt)
 
@@ -33,13 +35,5 @@ class <%= chat_controller_class_name %> < ApplicationController
 
   def set_<%= chat_variable_name %>
     @<%= chat_variable_name %> = <%= chat_model_name %>.find(params[:id])
-  end
-
-  def model
-    params[:<%= chat_variable_name %>][:model].presence
-  end
-
-  def prompt
-    params[:<%= chat_variable_name %>][:prompt]
   end
 end

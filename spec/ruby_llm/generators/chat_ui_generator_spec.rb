@@ -152,7 +152,11 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         expect(chats_controller).to include('Chat.find')
         expect(chats_controller).to include('@chat = Chat.new')
         expect(chats_controller).to include('@chat_models = available_chat_models')
+        expect(chats_controller).to include('prompt = params.dig(:chat, :prompt)')
+        expect(chats_controller).to include('model = params.dig(:chat, :model).presence')
         expect(chats_controller).to include('@chat = Chat.create!(model: model)')
+        expect(chats_controller).not_to include('def model')
+        expect(chats_controller).not_to include('def prompt')
 
         messages_controller = File.read('app/controllers/messages_controller.rb')
         expect(messages_controller).to include('class MessagesController')
@@ -329,7 +333,11 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         expect(chats_controller).to include('Llm::Chat.find')
         expect(chats_controller).to include('@llm_chat = Llm::Chat.new')
         expect(chats_controller).to include('@chat_models = available_chat_models')
+        expect(chats_controller).to include('prompt = params.dig(:llm_chat, :prompt)')
+        expect(chats_controller).to include('model = params.dig(:llm_chat, :model).presence')
         expect(chats_controller).to include('@llm_chat = Llm::Chat.create!(model: model)')
+        expect(chats_controller).not_to include('def model')
+        expect(chats_controller).not_to include('def prompt')
 
         messages_controller = File.read('app/controllers/llm/messages_controller.rb')
         expect(messages_controller).to include('class Llm::MessagesController')
