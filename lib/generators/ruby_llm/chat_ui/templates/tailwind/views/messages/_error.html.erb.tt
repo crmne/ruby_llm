@@ -1,0 +1,13 @@
+<div id="<%= message_variable_name %>_<%%= <%= message_model_name.demodulize.underscore %>.id %>" class="w-full sm:w-auto my-5 space-y-3 rounded-md px-3 py-2 bg-red-50 border border-red-200">
+  <div>
+    <span class="inline-block rounded px-2 py-0.5 text-xs font-medium bg-red-100 text-red-700">
+      <%%= title.presence || "Error" %>
+    </span>
+  </div>
+
+  <pre class="whitespace-pre-wrap text-red-900 text-sm overflow-x-auto"><%%= error_message %></pre>
+
+  <div>
+    <span class="text-sm text-red-700"><%%= <%= message_model_name.demodulize.underscore %>.created_at&.strftime("%I:%M %p") %></span>
+  </div>
+</div>

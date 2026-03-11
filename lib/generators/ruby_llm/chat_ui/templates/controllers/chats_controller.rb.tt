@@ -1,5 +1,5 @@
 class <%= chat_controller_class_name %> < ApplicationController
-  before_action :set_<%= chat_variable_name %>, only: [:show]
+  before_action :set_<%= chat_variable_name %>, only: [ :show, :destroy ]
 
   def index
     @<%= chat_table_name %> = <%= chat_model_name %>.order(created_at: :desc)
@@ -8,6 +8,8 @@ class <%= chat_controller_class_name %> < ApplicationController
   def new
     @<%= chat_variable_name %> = <%= chat_model_name %>.new
     @selected_model = params[:model]
+    @chat_models = RubyLLM.models.chat_models.all
+                           .sort_by { |model| [model.provider.to_s, model.name.to_s] }
   end
 
   def create
@@ -16,11 +18,16 @@ class <%= chat_controller_class_name %> < ApplicationController
     @<%= chat_variable_name %> = <%= chat_model_name %>.create!(model: model)
     <%= chat_job_class_name %>.perform_later(@<%= chat_variable_name %>.id, prompt)
 
-    redirect_to @<%= chat_variable_name %>, notice: '<%= chat_model_name.humanize %> was successfully created.'
+    redirect_to @<%= chat_variable_name %>, notice: "<%= chat_model_name.humanize %> was successfully created."
   end
 
   def show
     @<%= message_variable_name %> = @<%= chat_variable_name %>.<%= message_table_name %>.build
+  end
+
+  def destroy
+    @<%= chat_variable_name %>.destroy!
+    redirect_to <%= chat_table_name %>_path, notice: "<%= chat_model_name.humanize %> was successfully destroyed.", status: :see_other
   end
 
   private

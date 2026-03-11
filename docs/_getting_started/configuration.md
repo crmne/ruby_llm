@@ -49,27 +49,58 @@ Configure API keys only for the providers you use. RubyLLM won't complain about 
 
 ```ruby
 RubyLLM.configure do |config|
-  # Remote providers
-  config.openai_api_key = ENV['OPENAI_API_KEY']
+  # Anthropic
   config.anthropic_api_key = ENV['ANTHROPIC_API_KEY']
-  config.gemini_api_key = ENV['GEMINI_API_KEY']
-  config.vertexai_project_id = ENV['GOOGLE_CLOUD_PROJECT'] # Available in v1.7.0+
-  config.vertexai_location = ENV['GOOGLE_CLOUD_LOCATION']
-  config.deepseek_api_key = ENV['DEEPSEEK_API_KEY']
-  config.mistral_api_key = ENV['MISTRAL_API_KEY']
-  config.perplexity_api_key = ENV['PERPLEXITY_API_KEY']
-  config.openrouter_api_key = ENV['OPENROUTER_API_KEY']
+  config.anthropic_api_base = ENV['ANTHROPIC_API_BASE'] # Available in v1.13.0+ (optional custom Anthropic endpoint)
 
-  # Local providers
-  config.ollama_api_base = 'http://localhost:11434/v1'
-  config.gpustack_api_base = ENV['GPUSTACK_API_BASE']
-  config.gpustack_api_key = ENV['GPUSTACK_API_KEY']
+  # Azure
+  config.azure_api_base = ENV['AZURE_API_BASE'] # Microsoft Foundry project endpoint
+  config.azure_api_key = ENV['AZURE_API_KEY'] # use this or
+  config.azure_ai_auth_token = ENV['AZURE_AI_AUTH_TOKEN'] # this
 
-  # AWS Bedrock (uses standard AWS credential chain if not set)
+  # Bedrock
   config.bedrock_api_key = ENV['AWS_ACCESS_KEY_ID']
   config.bedrock_secret_key = ENV['AWS_SECRET_ACCESS_KEY']
   config.bedrock_region = ENV['AWS_REGION'] # Required for Bedrock
   config.bedrock_session_token = ENV['AWS_SESSION_TOKEN'] # For temporary credentials
+
+  # DeepSeek
+  config.deepseek_api_key = ENV['DEEPSEEK_API_KEY']
+  config.deepseek_api_base = ENV['DEEPSEEK_API_BASE'] # Available in v1.13.0+ (optional custom DeepSeek endpoint)
+
+  # Gemini
+  config.gemini_api_key = ENV['GEMINI_API_KEY']
+  config.gemini_api_base = ENV['GEMINI_API_BASE'] # Available in v1.9.0+ (optional API version override)
+
+  # GPUStack
+  config.gpustack_api_base = ENV['GPUSTACK_API_BASE']
+  config.gpustack_api_key = ENV['GPUSTACK_API_KEY']
+
+  # Mistral
+  config.mistral_api_key = ENV['MISTRAL_API_KEY']
+
+  # Ollama
+  config.ollama_api_base = 'http://localhost:11434/v1'
+  config.ollama_api_key = ENV['OLLAMA_API_KEY'] # Available in v1.13.0+ (optional for authenticated/remote Ollama endpoints)
+
+  # OpenAI
+  config.openai_api_key = ENV['OPENAI_API_KEY']
+  config.openai_api_base = ENV['OPENAI_API_BASE'] # Optional custom OpenAI-compatible endpoint
+
+  # OpenRouter
+  config.openrouter_api_key = ENV['OPENROUTER_API_KEY']
+  config.openrouter_api_base = ENV['OPENROUTER_API_BASE'] # Available in v1.13.0+ (optional custom OpenRouter endpoint)
+
+  # Perplexity
+  config.perplexity_api_key = ENV['PERPLEXITY_API_KEY']
+
+  # Vertex AI
+  config.vertexai_project_id = ENV['GOOGLE_CLOUD_PROJECT'] # Available in v1.7.0+
+  config.vertexai_location = ENV['GOOGLE_CLOUD_LOCATION']
+  config.vertexai_service_account_key = ENV['VERTEXAI_SERVICE_ACCOUNT_KEY'] # Optional: service account JSON key
+
+  # xAI
+  config.xai_api_key = ENV['XAI_API_KEY'] # Available in v1.11.0+
 end
 ```
 
@@ -89,6 +120,15 @@ end
 ```
 
 These headers are optional and only needed for organization-specific billing or project tracking.
+
+### Vertex AI Authentication Configuration
+
+RubyLLM supports both Vertex AI authentication methods:
+
+- Application Default Credentials (ADC)
+- Service Account JSON key via `config.vertexai_service_account_key`
+
+If `vertexai_service_account_key` is not set, RubyLLM uses ADC.
 
 ## Custom Endpoints
 
@@ -191,7 +231,7 @@ Fine-tune how RubyLLM handles network connections:
 ```ruby
 RubyLLM.configure do |config|
   # Basic settings
-  config.request_timeout = 120        # Seconds to wait for response (default: 120)
+  config.request_timeout = 120        # Seconds to wait for response (default: 300)
   config.max_retries = 3              # Retry attempts on failure (default: 3)
 
   # Advanced retry behavior
@@ -252,6 +292,37 @@ Log levels:
 > Setting `config.logger` overrides `log_file` and `log_level` settings.
 {: .note }
 
+### Advanced Logging Options
+
+Use these options when you need deeper troubleshooting or safer handling of large debug payloads.
+
+```ruby
+RubyLLM.configure do |config|
+  # Enable verbose chunk-level stream debugging
+  config.log_stream_debug = true
+
+  # Available in v1.13.0+
+  # Timeout (seconds) used for regex-based log filtering
+  config.log_regexp_timeout = 1.5
+end
+```
+
+`log_stream_debug` notes:
+- Shows chunk-by-chunk streaming internals (accumulator state, parsing, tool chunks)
+- Useful for diagnosing streaming/provider parsing issues
+- Can also be enabled with `RUBYLLM_STREAM_DEBUG=true`
+
+`log_regexp_timeout` notes:
+- Available in `v1.13.0+`
+- Applies to regex filters used in request/response debug logging
+- Supported on Ruby `3.2+` (uses `Regexp.timeout`)
+- On Ruby `<3.2`, RubyLLM warns if set and continues without timeout
+- Helps bound regex execution time when debug logs contain very large payloads
+
+Built-in debug log redaction:
+- Large base64-like blobs are redacted as `[BASE64 DATA]`
+- Large embedding arrays are redacted as `[EMBEDDINGS ARRAY]`
+
 ### Debug Options
 
 ```ruby
@@ -278,16 +349,16 @@ RubyLLM.configure do |config|
   config.openai_api_key = ENV['OPENAI_PROD_KEY']
 end
 
-# Create isolated context for Azure
-azure_context = RubyLLM.context do |config|
-  config.openai_api_key = ENV['AZURE_KEY']
-  config.openai_api_base = "https://azure.openai.azure.com"
+# Create isolated context
+ctx = RubyLLM.context do |config|
+  config.openai_api_key = ENV['ANOTHER_PROVIDER_KEY']
+  config.openai_api_base = "https://another-provider.com"
   config.request_timeout = 180
 end
 
 # Use Azure for this specific task
-azure_chat = azure_context.chat(model: '{{ site.models.openai_standard }}')
-response = azure_chat.ask("Process this with Azure...")
+ctx_chat = ctx.chat(model: '{{ site.models.openai_standard }}')
+response = ctx_chat.ask("Process this with another provider...")
 
 # Global config unchanged
 regular_chat = RubyLLM.chat  # Still uses production OpenAI
@@ -331,6 +402,8 @@ RubyLLM.configure do |config|
   # Use Rails credentials
   config.openai_api_key = Rails.application.credentials.openai_api_key
   config.anthropic_api_key = Rails.application.credentials.anthropic_api_key
+  config.anthropic_api_base = ENV['ANTHROPIC_API_BASE'] # Available in v1.13.0+ (optional custom Anthropic endpoint)
+  config.ollama_api_key = ENV['OLLAMA_API_KEY'] # Available in v1.13.0+ (optional for remote/authenticated Ollama)
 
   # Use Rails logger
   config.logger = Rails.logger
@@ -377,43 +450,72 @@ Here's a complete reference of all configuration options:
 
 ```ruby
 RubyLLM.configure do |config|
-  # Provider API Keys
-  config.openai_api_key = String
+  # Anthropic
   config.anthropic_api_key = String
-  config.gemini_api_key = String
-  config.vertexai_project_id = String  # GCP project ID
-  config.vertexai_location = String     # e.g., 'us-central1'
-  config.deepseek_api_key = String
-  config.mistral_api_key = String
-  config.perplexity_api_key = String
-  config.openrouter_api_key = String
-  config.gpustack_api_key = String
+  config.anthropic_api_base = String  # v1.13.0+
 
-  # Provider Endpoints
-  config.openai_api_base = String
-  config.gemini_api_base = String  # v1.9.0+
-  config.ollama_api_base = String
-  config.gpustack_api_base = String
+  # Azure
+  config.azure_api_base = String  # v1.12.0+
+  config.azure_api_key = String  # v1.12.0+
+  config.azure_ai_auth_token = String  # v1.12.0+
 
-  # OpenAI Options
-  config.openai_organization_id = String
-  config.openai_project_id = String
-  config.openai_use_system_role = Boolean
-
-  # AWS Bedrock
+  # Bedrock
   config.bedrock_api_key = String
   config.bedrock_secret_key = String
   config.bedrock_region = String
   config.bedrock_session_token = String
+
+  # DeepSeek
+  config.deepseek_api_key = String
+  config.deepseek_api_base = String  # v1.13.0+
+
+  # Gemini
+  config.gemini_api_key = String
+  config.gemini_api_base = String  # v1.9.0+
+
+  # GPUStack
+  config.gpustack_api_base = String
+  config.gpustack_api_key = String
+
+  # Mistral
+  config.mistral_api_key = String
+
+  # Ollama
+  config.ollama_api_base = String
+  config.ollama_api_key = String  # v1.13.0+
+
+  # OpenAI
+  config.openai_api_key = String
+  config.openai_api_base = String
+  config.openai_organization_id = String
+  config.openai_project_id = String
+  config.openai_use_system_role = Boolean
+
+  # OpenRouter
+  config.openrouter_api_key = String
+  config.openrouter_api_base = String  # v1.13.0+
+
+  # Perplexity
+  config.perplexity_api_key = String
+
+  # Vertex AI
+  config.vertexai_project_id = String  # GCP project ID
+  config.vertexai_location = String     # e.g., 'us-central1'
+  config.vertexai_service_account_key = String # Optional: service account JSON key (ADC used when unset)
+
+  # xAI
+  config.xai_api_key = String
 
   # Default Models
   config.default_model = String
   config.default_embedding_model = String
   config.default_image_model = String
   config.default_moderation_model = String
+  config.default_transcription_model = String
 
   # Model Registry
   config.model_registry_file = String  # Path to model registry JSON file (v1.9.0+)
+  config.model_registry_class = String
 
   # Connection Settings
   config.request_timeout = Integer
@@ -428,6 +530,10 @@ RubyLLM.configure do |config|
   config.log_file = String
   config.log_level = Symbol
   config.log_stream_debug = Boolean
+  config.log_regexp_timeout = Numeric  # v1.13.0+ (Ruby 3.2+ support)
+
+  # Rails integration
+  config.use_new_acts_as = Boolean
 end
 ```
 

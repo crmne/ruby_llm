@@ -1,0 +1,151 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-3-pro-preview:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"What''s the weather in
+        Berlin? (52.5200, 13.4050)"}]}],"generationConfig":{"thinkingConfig":{"includeThoughts":true,"thinkingLevel":"low"}},"tools":[{"functionDeclarations":[{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"OBJECT","properties":{"latitude":{"type":"STRING","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"STRING","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}]}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      X-Goog-Api-Key:
+      - "<GEMINI_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Tue, 03 Mar 2026 12:34:12 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Server-Timing:
+      - gfet4t7; dur=13698
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "candidates": [
+            {
+              "content": {
+                "parts": [
+                  {
+                    "text": "**My Approach to the Berlin Weather Query**\n\nOkay, here's the situation: the user wants the weather conditions for Berlin. They've helpfully given me the exact coordinates: latitude 52.5200 and longitude 13.4050. My brain immediately jumps to the available tools. I know I have a `weather` tool that's perfectly suited for this type of request.\n\nThe crucial part is extracting the information I need to feed into that tool. The `weather` tool is pretty straightforward; it expects `latitude` and `longitude` as parameters. So, I will extract \"52.5200\" as the latitude and \"13.4050\" as the longitude. Now, I have all the pieces I need to make the call to the weather tool and get the information the user is seeking.\n\n\n",
+                    "thought": true
+                  },
+                  {
+                    "functionCall": {
+                      "name": "weather",
+                      "args": {
+                        "latitude": "52.5200",
+                        "longitude": "13.4050"
+                      }
+                    },
+                    "thoughtSignature": "Ep0DCpoDAb4+9vsxLEW79M7BSj1xOLI+W89lH6w0TIWQKCJoBZo9ZznFXZUD09glIJWZcvvHe3/aF9b/q84BPvyDSVSsS67IqlhFeqfeSXMw17xpqQbIqY37QLAivVCuE3v69gfpCZAg3FlvqHQjdnWAQq5ert3lb5ozwNZBLpGLlRAST9+gE8JULID+g//k537ELqlBVLcbN7JxjD1z9lanosO87LV4OLUwc36JEepycPrR+C3qOTgmO4fWV2pJcWxmwbDHUVn9zP7B1TcvPizFtaK+fMXtDra2lGATK+o9ZESf6zizGOkoENeJHgcS58aTBfVyJY8+eDa+y7x9kRkwqWWNi3YZ76bbi7EBXgs/gGPLL+kuXP8qYyniDIcJmrkhGnEBwlNVjir9jChfjBhXESgWeXyIQs05+edNY5pp8zmmHW28sl/l8C3ULJVHWVbiboExJo0QMfbed7IhPQooxlJ3HoBWvpTLrn0d6brbcC6vx/swg8gQdQ7Cv8gb5gom4oixbVPIkz5vokHhfbBPJ72D1jiezjIaJS/aLDI="
+                  }
+                ],
+                "role": "model"
+              },
+              "finishReason": "STOP",
+              "index": 0,
+              "finishMessage": "Model generated function call(s)."
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 120,
+            "candidatesTokenCount": 32,
+            "totalTokenCount": 256,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 120
+              }
+            ],
+            "thoughtsTokenCount": 104
+          },
+          "modelVersion": "gemini-3-pro-preview",
+          "responseId": "RNWmafmxM4eynsEPiZnKsQ8"
+        }
+  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+- request:
+    method: post
+    uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-3-pro-preview:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"What''s the weather in
+        Berlin? (52.5200, 13.4050)"}]},{"role":"model","parts":[{"functionCall":{"name":"weather","args":{"latitude":"52.5200","longitude":"13.4050"}},"thoughtSignature":"Ep0DCpoDAb4+9vsxLEW79M7BSj1xOLI+W89lH6w0TIWQKCJoBZo9ZznFXZUD09glIJWZcvvHe3/aF9b/q84BPvyDSVSsS67IqlhFeqfeSXMw17xpqQbIqY37QLAivVCuE3v69gfpCZAg3FlvqHQjdnWAQq5ert3lb5ozwNZBLpGLlRAST9+gE8JULID+g//k537ELqlBVLcbN7JxjD1z9lanosO87LV4OLUwc36JEepycPrR+C3qOTgmO4fWV2pJcWxmwbDHUVn9zP7B1TcvPizFtaK+fMXtDra2lGATK+o9ZESf6zizGOkoENeJHgcS58aTBfVyJY8+eDa+y7x9kRkwqWWNi3YZ76bbi7EBXgs/gGPLL+kuXP8qYyniDIcJmrkhGnEBwlNVjir9jChfjBhXESgWeXyIQs05+edNY5pp8zmmHW28sl/l8C3ULJVHWVbiboExJo0QMfbed7IhPQooxlJ3HoBWvpTLrn0d6brbcC6vx/swg8gQdQ7Cv8gb5gom4oixbVPIkz5vokHhfbBPJ72D1jiezjIaJS/aLDI="}]},{"role":"function","parts":[{"functionResponse":{"name":"weather","response":{"name":"weather","content":[{"text":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}}}]}],"generationConfig":{"thinkingConfig":{"includeThoughts":true,"thinkingLevel":"low"}},"tools":[{"functionDeclarations":[{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"OBJECT","properties":{"latitude":{"type":"STRING","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"STRING","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}]}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      X-Goog-Api-Key:
+      - "<GEMINI_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Tue, 03 Mar 2026 12:34:19 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Server-Timing:
+      - gfet4t7; dur=6406
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicGFydHMiOiBbCiAgICAgICAgICB7CiAgICAgICAgICAgICJ0ZXh0IjogIlRoZSBjdXJyZW50IHdlYXRoZXIgaW4gQmVybGluIChhdCBjb29yZGluYXRlcyA1Mi41MjAwLCAxMy40MDUwKSBpcyAxNcKwQyB3aXRoIGEgd2luZCBzcGVlZCBvZiAxMCBrbS9oLiIKICAgICAgICAgIH0KICAgICAgICBdLAogICAgICAgICJyb2xlIjogIm1vZGVsIgogICAgICB9LAogICAgICAiZmluaXNoUmVhc29uIjogIlNUT1AiLAogICAgICAiaW5kZXgiOiAwCiAgICB9CiAgXSwKICAidXNhZ2VNZXRhZGF0YSI6IHsKICAgICJwcm9tcHRUb2tlbkNvdW50IjogMzExLAogICAgImNhbmRpZGF0ZXNUb2tlbkNvdW50IjogNDQsCiAgICAidG90YWxUb2tlbkNvdW50IjogMzU1LAogICAgInByb21wdFRva2Vuc0RldGFpbHMiOiBbCiAgICAgIHsKICAgICAgICAibW9kYWxpdHkiOiAiVEVYVCIsCiAgICAgICAgInRva2VuQ291bnQiOiAzMTEKICAgICAgfQogICAgXQogIH0sCiAgIm1vZGVsVmVyc2lvbiI6ICJnZW1pbmktMy1wcm8tcHJldmlldyIsCiAgInJlc3BvbnNlSWQiOiAiUzlXbWFaLXdFYnV6bnNFUC12UEJ5QTQiCn0K
+  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+recorded_with: VCR 6.4.0

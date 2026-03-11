@@ -25,7 +25,7 @@ module RubyLLM
       argument :model_mappings, type: :array, default: [], banner: 'chat:ChatName message:MessageName ...'
 
       desc 'Upgrades existing RubyLLM apps to v1.7 with new Rails-like API\n' \
-           'Usage: rails g ruby_llm:upgrade_to_v1_7 [chat:ChatName] [message:MessageName] ...'
+           'Usage: bin/rails g ruby_llm:upgrade_to_v1_7 [chat:ChatName] [message:MessageName] ...'
 
       def self.next_migration_number(dirname)
         ::ActiveRecord::Generators::Base.next_migration_number(dirname)
@@ -40,8 +40,6 @@ module RubyLLM
                              "db/migrate/create_#{table_name_for(model_model_name)}.rb",
                              migration_version: migration_version,
                              model_model_name: model_model_name
-
-          sleep 1 # Ensure different timestamp
         end
 
         migration_template 'migration.rb.tt',
@@ -93,7 +91,7 @@ module RubyLLM
 
           Next steps:
           1. Review the generated migrations
-          2. Run: rails db:migrate
+          2. Run: bin/rails db:migrate
           3. Update your code to use the new API: #{chat_model_name}.create! now has the same signature as RubyLLM.chat
 
           ⚠️  If you get "undefined method 'acts_as_model'" during migration:

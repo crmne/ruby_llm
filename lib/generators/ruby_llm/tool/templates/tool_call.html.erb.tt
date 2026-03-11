@@ -1,0 +1,6 @@
+<%% tool_call_error = tool_call_error_message(tool_call) %>
+<%% if tool_call_error.present? %>
+  <%%= render "messages/error", message: tool_calls, title: "Tool Call Error", error_message: tool_call_error %>
+<%% else %>
+  <%%= render "messages/tool_calls/default", tool_calls: tool_calls, tool_call: tool_call %>
+<%% end %>

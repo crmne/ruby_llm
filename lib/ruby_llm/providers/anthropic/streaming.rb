@@ -12,16 +12,40 @@ module RubyLLM
         end
 
         def build_chunk(data)
+          delta_type = data.dig('delta', 'type')
+
           Chunk.new(
             role: :assistant,
             model_id: extract_model_id(data),
-            content: data.dig('delta', 'text'),
+            content: extract_content_delta(data, delta_type),
+            thinking: Thinking.build(
+              text: extract_thinking_delta(data, delta_type),
+              signature: extract_signature_delta(data, delta_type)
+            ),
             input_tokens: extract_input_tokens(data),
             output_tokens: extract_output_tokens(data),
             cached_tokens: extract_cached_tokens(data),
             cache_creation_tokens: extract_cache_creation_tokens(data),
             tool_calls: extract_tool_calls(data)
           )
+        end
+
+        def extract_content_delta(data, delta_type)
+          return data.dig('delta', 'text') if delta_type == 'text_delta'
+
+          nil
+        end
+
+        def extract_thinking_delta(data, delta_type)
+          return data.dig('delta', 'thinking') if delta_type == 'thinking_delta'
+
+          nil
+        end
+
+        def extract_signature_delta(data, delta_type)
+          return data.dig('delta', 'signature') if delta_type == 'signature_delta'
+
+          nil
         end
 
         def json_delta?(data)

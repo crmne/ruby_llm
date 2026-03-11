@@ -1,0 +1,173 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.anthropic.com/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"claude-haiku-4-5-20251001","messages":[{"role":"user","content":[{"type":"text","text":"What''s
+        the fall of Rome?"}]}],"stream":false,"max_tokens":64000,"tools":[{"name":"weather","description":"Gets
+        current weather for a location","input_schema":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}],"tool_choice":{"type":"tool","name":"weather"}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Anthropic-Version:
+      - '2023-06-01'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 03 Mar 2026 11:56:05 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Anthropic-Ratelimit-Input-Tokens-Limit:
+      - '450000'
+      Anthropic-Ratelimit-Input-Tokens-Remaining:
+      - '450000'
+      Anthropic-Ratelimit-Input-Tokens-Reset:
+      - '2026-03-03T11:56:05Z'
+      Anthropic-Ratelimit-Output-Tokens-Limit:
+      - '90000'
+      Anthropic-Ratelimit-Output-Tokens-Remaining:
+      - '90000'
+      Anthropic-Ratelimit-Output-Tokens-Reset:
+      - '2026-03-03T11:56:05Z'
+      Anthropic-Ratelimit-Requests-Limit:
+      - '1000'
+      Anthropic-Ratelimit-Requests-Remaining:
+      - '999'
+      Anthropic-Ratelimit-Requests-Reset:
+      - '2026-03-03T11:56:04Z'
+      Anthropic-Ratelimit-Tokens-Limit:
+      - '540000'
+      Anthropic-Ratelimit-Tokens-Remaining:
+      - '540000'
+      Anthropic-Ratelimit-Tokens-Reset:
+      - '2026-03-03T11:56:05Z'
+      Request-Id:
+      - "<REQUEST_ID>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Anthropic-Organization-Id:
+      - "<ANTHROPIC_ORGANIZATION_ID>"
+      Server:
+      - cloudflare
+      X-Envoy-Upstream-Service-Time:
+      - '505'
+      Vary:
+      - Accept-Encoding
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Robots-Tag:
+      - none
+      Content-Security-Policy:
+      - default-src 'none'; frame-ancestors 'none'
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_012GjbsSZfwubPRyrMmtBUZ5","type":"message","role":"assistant","content":[{"type":"tool_use","id":"toolu_01XGLWwdcTVeHScUugH7jpDf","name":"weather","input":{"latitude":"41.9028","longitude":"12.4964"},"caller":{"type":"direct"}}],"stop_reason":"tool_use","stop_sequence":null,"usage":{"input_tokens":716,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":56,"service_tier":"standard","inference_geo":"not_available"}}'
+  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+- request:
+    method: post
+    uri: https://api.anthropic.com/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"claude-haiku-4-5-20251001","messages":[{"role":"user","content":[{"type":"text","text":"What''s
+        the fall of Rome?"}]},{"role":"assistant","content":[{"type":"tool_use","id":"toolu_01XGLWwdcTVeHScUugH7jpDf","name":"weather","input":{"latitude":"41.9028","longitude":"12.4964"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01XGLWwdcTVeHScUugH7jpDf","content":[{"type":"text","text":"Current
+        weather at 41.9028, 12.4964: 15°C, Wind: 10 km/h"}]}]}],"stream":false,"max_tokens":64000,"tools":[{"name":"weather","description":"Gets
+        current weather for a location","input_schema":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Anthropic-Version:
+      - '2023-06-01'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 03 Mar 2026 11:56:09 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Anthropic-Ratelimit-Input-Tokens-Limit:
+      - '450000'
+      Anthropic-Ratelimit-Input-Tokens-Remaining:
+      - '450000'
+      Anthropic-Ratelimit-Input-Tokens-Reset:
+      - '2026-03-03T11:56:05Z'
+      Anthropic-Ratelimit-Output-Tokens-Limit:
+      - '90000'
+      Anthropic-Ratelimit-Output-Tokens-Remaining:
+      - '90000'
+      Anthropic-Ratelimit-Output-Tokens-Reset:
+      - '2026-03-03T11:56:09Z'
+      Anthropic-Ratelimit-Requests-Limit:
+      - '1000'
+      Anthropic-Ratelimit-Requests-Remaining:
+      - '999'
+      Anthropic-Ratelimit-Requests-Reset:
+      - '2026-03-03T11:56:05Z'
+      Anthropic-Ratelimit-Tokens-Limit:
+      - '540000'
+      Anthropic-Ratelimit-Tokens-Remaining:
+      - '540000'
+      Anthropic-Ratelimit-Tokens-Reset:
+      - '2026-03-03T11:56:05Z'
+      Request-Id:
+      - "<REQUEST_ID>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Anthropic-Organization-Id:
+      - "<ANTHROPIC_ORGANIZATION_ID>"
+      Server:
+      - cloudflare
+      X-Envoy-Upstream-Service-Time:
+      - '3491'
+      Vary:
+      - Accept-Encoding
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Robots-Tag:
+      - none
+      Content-Security-Policy:
+      - default-src 'none'; frame-ancestors 'none'
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJtb2RlbCI6ImNsYXVkZS1oYWlrdS00LTUtMjAyNTEwMDEiLCJpZCI6Im1zZ18wMUI3c0NXMTlWZEZ2WDF4NlA2NW1iQmQiLCJ0eXBlIjoibWVzc2FnZSIsInJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjpbeyJ0eXBlIjoidGV4dCIsInRleHQiOiJJIGFwb2xvZ2l6ZeKAlEkgdGhpbmsgSSBtaXN1bmRlcnN0b29kIHlvdXIgcXVlc3Rpb24hIFlvdSdyZSBhc2tpbmcgYWJvdXQgdGhlIGhpc3RvcmljYWwgKipGYWxsIG9mIFJvbWUqKiwgbm90IHRoZSBjdXJyZW50IHdlYXRoZXIgaW4gUm9tZS4gTGV0IG1lIGdpdmUgeW91IGEgcHJvcGVyIGFuc3dlci5cblxuIyMgVGhlIEZhbGwgb2YgUm9tZVxuXG5UaGUgKipGYWxsIG9mIFJvbWUqKiByZWZlcnMgdG8gdGhlIGRlY2xpbmUgYW5kIGNvbGxhcHNlIG9mIHRoZSAqKlJvbWFuIEVtcGlyZSoqLCBwYXJ0aWN1bGFybHkgdGhlIFdlc3Rlcm4gUm9tYW4gRW1waXJlLCB3aGljaCBvY2N1cnJlZCBvdmVyIHNldmVyYWwgY2VudHVyaWVzIGFuZCBjdWxtaW5hdGVkIGFyb3VuZCAqKjQ3NiBDRSoqLlxuXG4jIyMgS2V5IGZhY3RvcnMgdGhhdCBsZWQgdG8gdGhlIGZhbGw6XG5cbjEuICoqUG9saXRpY2FsIEluc3RhYmlsaXR5Kio6IEZyZXF1ZW50IGNpdmlsIHdhcnMsIGNvcnJ1cHQgbGVhZGVyc2hpcCwgYW5kIHdlYWsgZW1wZXJvcnMgZGVzdGFiaWxpemVkIHRoZSBnb3Zlcm5tZW50LlxuXG4yLiAqKkVjb25vbWljIERlY2xpbmUqKjogSGVhdnkgdGF4YXRpb24sIGluZmxhdGlvbiwgdHJhZGUgZGlzcnVwdGlvbiwgYW5kIHJlZHVjZWQgbWlsaXRhcnkgZWZmaWNpZW5jeSB3ZWFrZW5lZCB0aGUgZWNvbm9teS5cblxuMy4gKipNaWxpdGFyeSBQcmVzc3VyZSoqOiBJbnZhc2lvbnMgYnkgR2VybWFuaWMgdHJpYmVzIChWaXNpZ290aHMsIFZhbmRhbHMsIE9zdHJvZ290aHMpIGFuZCBvdGhlciBiYXJiYXJpYW4gZ3JvdXBzIG92ZXJ3aGVsbWVkIFJvbWFuIGRlZmVuc2VzLlxuXG40LiAqKkRpc2Vhc2UgYW5kIFBvcHVsYXRpb24gTG9zcyoqOiBFcGlkZW1pY3MgYW5kIHdhcnMgcmVkdWNlZCB0aGUgcG9wdWxhdGlvbiBhbmQgbWlsaXRhcnkgc3RyZW5ndGguXG5cbjUuICoqU3ByZWFkIG9mIENocmlzdGlhbml0eSoqOiBTb21lIGFyZ3VlIHRoZSBzaGlmdCB0b3dhcmQgQ2hyaXN0aWFuaXR5IHdlYWtlbmVkIHRyYWRpdGlvbmFsIFJvbWFuIG1pbGl0YXJ5IHZhbHVlcywgdGhvdWdoIHRoaXMgaXMgZGViYXRlZC5cblxuNi4gKipBZG1pbmlzdHJhdGl2ZSBEaXZpc2lvbioqOiBUaGUgZW1waXJlIGJlY2FtZSB0b28gbGFyZ2UgdG8gZ292ZXJuIGVmZmVjdGl2ZWx5LCBlc3BlY2lhbGx5IGFmdGVyIGRpdmlzaW9uIGludG8gRWFzdGVybiBhbmQgV2VzdGVybiBlbXBpcmVzLlxuXG43LiAqKkluZnJhc3RydWN0dXJlIERldGVyaW9yYXRpb24qKjogUm9hZHMsIGFxdWVkdWN0cywgYW5kIG90aGVyIGluZnJhc3RydWN0dXJlIGZlbGwgaW50byBkaXNyZXBhaXIuXG5cbiMjIyBUaGUgRW5kOlxuSW4gKio0NzYgQ0UqKiwgdGhlIEdlcm1hbmljIGxlYWRlciBPZG9hY2VyIGRlcG9zZWQgdGhlIGxhc3QgV2VzdGVybiBSb21hbiBFbXBlcm9yLCBSb211bHVzIEF1Z3VzdHVsdXMsIG1hcmtpbmcgdGhlIHRyYWRpdGlvbmFsIGVuZHBvaW50LiBIb3dldmVyLCB0aGUgRWFzdGVybiBSb21hbiAoQnl6YW50aW5lKSBFbXBpcmUgY29udGludWVkIGZvciBhbm90aGVyIHRob3VzYW5kIHllYXJzIHVudGlsIDE0NTMuXG5cbldvdWxkIHlvdSBsaWtlIHRvIGtub3cgbW9yZSBhYm91dCBhbnkgc3BlY2lmaWMgYXNwZWN0IG9mIFJvbWUncyBkZWNsaW5lPyJ9XSwic3RvcF9yZWFzb24iOiJlbmRfdHVybiIsInN0b3Bfc2VxdWVuY2UiOm51bGwsInVzYWdlIjp7ImlucHV0X3Rva2VucyI6NzM2LCJjYWNoZV9jcmVhdGlvbl9pbnB1dF90b2tlbnMiOjAsImNhY2hlX3JlYWRfaW5wdXRfdG9rZW5zIjowLCJjYWNoZV9jcmVhdGlvbiI6eyJlcGhlbWVyYWxfNW1faW5wdXRfdG9rZW5zIjowLCJlcGhlbWVyYWxfMWhfaW5wdXRfdG9rZW5zIjowfSwib3V0cHV0X3Rva2VucyI6MzY4LCJzZXJ2aWNlX3RpZXIiOiJzdGFuZGFyZCIsImluZmVyZW5jZV9nZW8iOiJub3RfYXZhaWxhYmxlIn19
+  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+recorded_with: VCR 6.4.0

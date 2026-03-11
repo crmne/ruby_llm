@@ -9,7 +9,7 @@ http_interactions:
         capital of France?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer <PERPLEXITY_API_KEY>
       Content-Type:
@@ -24,13 +24,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 03 Nov 2025 13:57:15 GMT
+      - Tue, 03 Mar 2026 11:53:03 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      X-Ppl-Region:
+      - us-east-1
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -43,60 +45,7 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id": "b361d488-da61-4759-8413-746171060c5d", "model": "sonar", "created":
-        1762178235, "usage": {"prompt_tokens": 7, "completion_tokens": 160, "total_tokens":
-        167, "search_context_size": "low", "cost": {"input_tokens_cost": 0.0, "output_tokens_cost":
-        0.0, "request_cost": 0.005, "total_cost": 0.005}}, "citations": ["https://www.britannica.com/place/Paris",
-        "https://home.adelphi.edu/~ca19535/page%204.html", "https://en.wikipedia.org/wiki/Paris",
-        "https://www.britannica.com/place/France", "https://www.welcometofrance.com/en/fiche/overview-of-france",
-        "https://en.wikipedia.org/wiki/List_of_capitals_of_France", "https://www.cia-france.com/french-kids-teenage-courses/paris-school/visit-paris",
-        "http://www.paris-city.fr/GB/paris-city/au-fil-du-temps/histoire.php"], "search_results":
-        [{"title": "Paris | Definition, Map, Population, Facts, & History - Britannica",
-        "url": "https://www.britannica.com/place/Paris", "date": "2025-11-02", "last_updated":
-        "2025-11-03", "snippet": "Paris, city and capital of France, located along
-        the Seine River, in the north-central part of the country. Paris is one of
-        the world''s most important and ...", "source": "web"}, {"title": "Paris facts:
-        the capital of France in history", "url": "https://home.adelphi.edu/~ca19535/page%204.html",
-        "date": "2000-01-01", "last_updated": "2025-11-02", "snippet": "Paris is the
-        capital of France, the largest country of Europe with 550 000 km2 (65 millions
-        inhabitants). Paris has 2.234 million inhabitants end 2011.", "source": "web"},
-        {"title": "Paris - Wikipedia", "url": "https://en.wikipedia.org/wiki/Paris",
-        "date": "2001-11-06", "last_updated": "2025-11-03", "snippet": "Paris is the
-        capital and largest city of France, with an estimated city population of 2,048,472
-        in an area of 105.4 km2 (40.7 sq mi), and a metropolitan ...", "source": "web"},
-        {"title": "France | History, Maps, Flag, Population, Cities, Capital, & Facts",
-        "url": "https://www.britannica.com/place/France", "date": "2025-11-02", "last_updated":
-        "2025-11-03", "snippet": "The capital and by far the most important city of
-        France is Paris, one of the world''s preeminent cultural and commercial centres.",
-        "source": "web"}, {"title": "Overview of France", "url": "https://www.welcometofrance.com/en/fiche/overview-of-france",
-        "date": "2019-12-17", "last_updated": "2025-10-17", "snippet": "Surface area:
-        633,186 sq. km. \u00b7 Population 66.6 million \u00b7 Capital city: Paris
-        \u00b7 Official language: French \u00b7 Currency: Euro (EUR) \u00b7 System
-        of ...", "source": "web"}, {"title": "List of capitals of France - Wikipedia",
-        "url": "https://en.wikipedia.org/wiki/List_of_capitals_of_France", "date":
-        "2003-01-15", "last_updated": "2025-11-01", "snippet": "This is a chronological
-        list of capitals of France. The capital of France has been Paris since its
-        liberation in 1944.", "source": "web"}, {"title": "Discover the city of Paris
-        | Paris the capital city of France", "url": "https://www.cia-france.com/french-kids-teenage-courses/paris-school/visit-paris",
-        "date": "2022-12-01", "last_updated": "2025-08-29", "snippet": "Paris is the
-        city of romance par excellence, the fashion capital and the best example of
-        French art de vivre. Exploring Paris is an essential rite of passage ...",
-        "source": "web"}, {"title": "The birth of the french capital - History of
-        Paris city", "url": "http://www.paris-city.fr/GB/paris-city/au-fil-du-temps/histoire.php",
-        "date": "2006-01-01", "last_updated": "2025-10-30", "snippet": "Paris was
-        founded by Celts in the 3rd century BC, later became the capital of France
-        in the Middle Ages, and was made capital of the Kingdom of the Francs in ...",
-        "source": "web"}], "object": "chat.completion", "choices": [{"index": 0, "finish_reason":
-        "stop", "message": {"role": "assistant", "content": "The capital of France
-        is **Paris**. \n\nParis is located in the north-central part of France along
-        the Seine River. It is the largest city in the country and an important cultural,
-        commercial, and political center[1][2][3][4][5]. Historically, Paris became
-        the capital as early as 508 under King Clovis and has mostly retained that
-        status, except during the German occupation in World War II when the capital
-        was temporarily moved[2][6].\n\nParis is well known for its rich history,
-        iconic landmarks, and role as a global center for finance, culture, fashion,
-        and gastronomy[3][4]. It is part of the \u00cele-de-France region and has
-        a metropolitan population of over 13 million as of 2025[3]."}, "delta": {"role":
-        "assistant", "content": ""}}]}'
-  recorded_at: Mon, 03 Nov 2025 13:57:15 GMT
-recorded_with: VCR 6.3.1
+      string: !binary |-
+        eyJpZCI6IjY1MGMwNzM3LWY5YzctNDI5OC1hMTJhLTBjNjA0MGUwM2E3YSIsIm1vZGVsIjoic29uYXIiLCJjcmVhdGVkIjoxNzcyNTM4NzgzLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjo4LCJjb21wbGV0aW9uX3Rva2VucyI6MTM5LCJ0b3RhbF90b2tlbnMiOjE0Nywic2VhcmNoX2NvbnRleHRfc2l6ZSI6ImxvdyIsImNvc3QiOnsiaW5wdXRfdG9rZW5zX2Nvc3QiOjAuMDAwMDEsIm91dHB1dF90b2tlbnNfY29zdCI6MC4wMDAxNCwicmVxdWVzdF9jb3N0IjowLjAwNSwidG90YWxfY29zdCI6MC4wMDUxNX19LCJjaXRhdGlvbnMiOlsiaHR0cHM6Ly93d3cuYnJpdGFubmljYS5jb20vcGxhY2UvUGFyaXMiLCJodHRwczovL2VuLndpa2lwZWRpYS5vcmcvd2lraS9GcmFuY2UiLCJodHRwczovL2VuLndpa2lwZWRpYS5vcmcvd2lraS9QYXJpcyIsImh0dHBzOi8vd3d3LmNpYS1mcmFuY2UuY29tL2ZyZW5jaC1raWRzLXRlZW5hZ2UtY291cnNlcy9wYXJpcy1zY2hvb2wvdmlzaXQtcGFyaXMiLCJodHRwczovL3N0dWR5LmNvbS9hY2FkZW15L2xlc3Nvbi9mYWN0cy1hYm91dC1mcmFuY2UtbG9jYXRpb24tcG9wdWxhdGlvbi1oaXN0b3J5Lmh0bWwiLCJodHRwczovL3d3dy55b3V0dWJlLmNvbS9zaG9ydHMvZmFQX3RtZXRZajgiXSwic2VhcmNoX3Jlc3VsdHMiOlt7InRpdGxlIjoiUGFyaXMgfCBEZWZpbml0aW9uLCBNYXAsIFBvcHVsYXRpb24sIEZhY3RzLCAmIEhpc3RvcnkgLSBCcml0YW5uaWNhIiwidXJsIjoiaHR0cHM6Ly93d3cuYnJpdGFubmljYS5jb20vcGxhY2UvUGFyaXMiLCJkYXRlIjoiMjAyNi0wMi0yNCIsImxhc3RfdXBkYXRlZCI6IjIwMjYtMDMtMDIiLCJzbmlwcGV0IjoiUGFyaXMsIGNpdHkgYW5kIGNhcGl0YWwgb2YgRnJhbmNlLCBsb2NhdGVkIGFsb25nIHRoZSBTZWluZSBSaXZlciwgaW4gdGhlIG5vcnRoLWNlbnRyYWwgcGFydCBvZiB0aGUgY291bnRyeS4gUGFyaXMgaXMgb25lIG9mIHRoZSB3b3JsZCdzIG1vc3QgLi4uIiwic291cmNlIjoid2ViIn0seyJ0aXRsZSI6IkZyYW5jZSAtIFdpa2lwZWRpYSIsInVybCI6Imh0dHBzOi8vZW4ud2lraXBlZGlhLm9yZy93aWtpL0ZyYW5jZSIsImRhdGUiOiIyMDAxLTExLTA0IiwibGFzdF91cGRhdGVkIjoiMjAyNi0wMy0wMiIsInNuaXBwZXQiOiJJdHMgY2FwaXRhbCwgbGFyZ2VzdCBjaXR5IGFuZCBtYWluIGN1bHR1cmFsIGFuZCBlY29ub21pYyBjZW50cmUgaXMgUGFyaXMuIE1ldHJvcG9saXRhbiBGcmFuY2Ugd2FzIHNldHRsZWQgZHVyaW5nIHRoZSBJcm9uIEFnZSBieSBDZWx0aWMgdHJpYmVzIGtub3duIGFzIEdhdWxzIC4uLiIsInNvdXJjZSI6IndlYiJ9LHsidGl0bGUiOiJQYXJpcyAtIFdpa2lwZWRpYSIsInVybCI6Imh0dHBzOi8vZW4ud2lraXBlZGlhLm9yZy93aWtpL1BhcmlzIiwiZGF0ZSI6IjIwMDEtMTEtMDYiLCJsYXN0X3VwZGF0ZWQiOiIyMDI2LTAzLTAyIiwic25pcHBldCI6IlBhcmlzIGlzIHRoZSBjYXBpdGFsIGFuZCBsYXJnZXN0IGNpdHkgb2YgRnJhbmNlLCB3aXRoIGFuIGVzdGltYXRlZCBjaXR5IHBvcHVsYXRpb24gb2YgMi4wNCBtaWxsaW9uIGluIGFuIGFyZWEgb2YgMTA1LjQga20yICg0MC43IHNxIG1pKSwgYW5kIGEgbWV0cm9wb2xpdGFuIC4uLiIsInNvdXJjZSI6IndlYiJ9LHsidGl0bGUiOiJEaXNjb3ZlciB0aGUgY2l0eSBvZiBQYXJpcyB8IFBhcmlzIHRoZSBjYXBpdGFsIGNpdHkgb2YgRnJhbmNlIiwidXJsIjoiaHR0cHM6Ly93d3cuY2lhLWZyYW5jZS5jb20vZnJlbmNoLWtpZHMtdGVlbmFnZS1jb3Vyc2VzL3BhcmlzLXNjaG9vbC92aXNpdC1wYXJpcyIsImRhdGUiOiIyMDIyLTEyLTAxIiwibGFzdF91cGRhdGVkIjoiMjAyNi0wMi0yNCIsInNuaXBwZXQiOiJQYXJpcyBpcyB0aGUgY2l0eSBvZiByb21hbmNlIHBhciBleGNlbGxlbmNlLCB0aGUgZmFzaGlvbiBjYXBpdGFsIGFuZCB0aGUgYmVzdCBleGFtcGxlIG9mIEZyZW5jaCBhcnQgZGUgdml2cmUuIEV4cGxvcmluZyBQYXJpcyBpcyBhbiBlc3NlbnRpYWwgcml0ZSBvZiBwYXNzYWdlIC4uLiIsInNvdXJjZSI6IndlYiJ9LHsidGl0bGUiOiJGYWN0cyBBYm91dCBGcmFuY2UgfCBNYXAsIFBvcHVsYXRpb24gJiBDYXBpdGFsIC0gU3R1ZHkuY29tIiwidXJsIjoiaHR0cHM6Ly9zdHVkeS5jb20vYWNhZGVteS9sZXNzb24vZmFjdHMtYWJvdXQtZnJhbmNlLWxvY2F0aW9uLXBvcHVsYXRpb24taGlzdG9yeS5odG1sIiwiZGF0ZSI6IjIwMjYtMDEtMDEiLCJsYXN0X3VwZGF0ZWQiOiIyMDI2LTAzLTAyIiwic25pcHBldCI6IkZyYW5jZSdzIGNhcGl0YWwgaXMgUGFyaXMuIEZyYW5jZSBoYXMgYSBwb3B1bGF0aW9uIG9mIDY4IG1pbGxpb24uIFRoZSBsYW5ndWFnZSBvZiBGcmFuY2UgKEZyZW5jaCkgaXMgc3Bva2VuIGJ5IG1hbnkgbW9yZSBtaWxsaW9ucyBvZiBwZW9wbGUgYWNyb3NzIHRoZSB3b3JsZC4iLCJzb3VyY2UiOiJ3ZWIifSx7InRpdGxlIjoiV2hhdCdzIHRoZSBDYXBpdGFsIG9mIEZyYW5jZT8gRmluZCBPdXQgd2l0aCBGdW4gRmFjdHMgLi4uIC0gWW91VHViZSIsInVybCI6Imh0dHBzOi8vd3d3LnlvdXR1YmUuY29tL3Nob3J0cy9mYVBfdG1ldFlqOCIsImRhdGUiOiIyMDI1LTAxLTEwIiwibGFzdF91cGRhdGVkIjoiMjAyNS0wNS0yNCIsInNuaXBwZXQiOiJEbyB5b3Uga25vdyB3aGF0IGNpdHkgaXMgY2FsbGVkIHRoZSAnQ2l0eSBvZiBMaWdodCc/IEpvaW4gdXMgZm9yIHRoaXMgZXhjaXRpbmcgcXVpeiB3aGVyZSB3ZSB1bmNvdmVyIHRoZSBjYXBpdGFsIG9mIEZyYW5jZSEiLCJzb3VyY2UiOiJ3ZWIifV0sIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiKipQYXJpcyBpcyB0aGUgY2FwaXRhbCBvZiBGcmFuY2UuKipbMV1bMl1bM11bNV1cblxuVGhpcyBpcyBjb25maXJtZWQgYWNyb3NzIG11bHRpcGxlIGF1dGhvcml0YXRpdmUgc291cmNlczogQnJpdGFubmljYSBkZXNjcmliZXMgUGFyaXMgYXMgdGhlIFwiY2l0eSBhbmQgY2FwaXRhbCBvZiBGcmFuY2UsIGxvY2F0ZWQgYWxvbmcgdGhlIFNlaW5lIFJpdmVyXCIgaW4gbm9ydGgtY2VudHJhbCBGcmFuY2UuWzFdIFdpa2lwZWRpYSBzdGF0ZXMgaXQgaXMgRnJhbmNlJ3MgXCJjYXBpdGFsLCBsYXJnZXN0IGNpdHkgYW5kIG1haW4gY3VsdHVyYWwgYW5kIGVjb25vbWljIGNlbnRyZS5cIlsyXVszXSBBZGRpdGlvbmFsIGRldGFpbHMgaW5jbHVkZSBQYXJpcydzIHBvcHVsYXRpb24gb2YgYWJvdXQgMi4xIG1pbGxpb24gaW4gdGhlIGNpdHkgcHJvcGVyIGFuZCAxMC0xMyBtaWxsaW9uIGluIHRoZSBtZXRyb3BvbGl0YW4gYXJlYSwgaXRzIHJvbGUgYXMgdGhlIHNlYXQgb2YgRnJhbmNlJ3MgbmF0aW9uYWwgZ292ZXJubWVudCAoZS5nLiwgw4lseXPDqWUgUGFsYWNlLCBOYXRpb25hbCBBc3NlbWJseSksIGFuZCBpdHMgaGlzdG9yaWNhbCBzaWduaWZpY2FuY2UgZGF0aW5nIGJhY2sgdG8gUm9tYW4gdGltZXMuWzFdWzNdIn0sImRlbHRhIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiIn0sImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dfQ==
+  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+recorded_with: VCR 6.4.0

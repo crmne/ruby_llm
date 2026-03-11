@@ -12,7 +12,9 @@ http_interactions:
         description"},"status":{"description":"Optional task status","anyOf":[{"type":"string","enum":["pending","done"]},{"type":"null"}]}},"required":["task","status"],"additionalProperties":false,"strict":true}}}],"enable_thinking":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
+      Authorization:
+      - Bearer <GPUSTACK_API_KEY>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -25,15 +27,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 03 Nov 2025 14:00:29 GMT
-      - Mon, 03 Nov 2025 14:00:30 GMT
+      - Tue, 03 Mar 2026 11:52:46 GMT
+      - Tue, 03 Mar 2026 11:52:47 GMT
       Server:
       - uvicorn
       - uvicorn
       Keep-Alive:
       - timeout=15, max=100
       Content-Length:
-      - '1434'
+      - '1342'
       Content-Type:
       - application/json
       X-Request-Accepted-At:
@@ -47,12 +49,11 @@ http_interactions:
       string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"content":null,"reasoning_content":"\nOkay,
         the user wants me to call the any_of_params function for a task called \"Review
         PR\" with status \"pending\". Let me check the function''s parameters. The
-        function requires both task and status. The status can be either \"pending\",
-        \"done\", or null. Since the user provided \"pending\", which is valid, I
-        can use that. I need to structure the JSON arguments correctly. The task is
-        \"Review PR\" and status is \"pending\". So the tool call should include these
-        parameters. Let me make sure there are no typos. Everything seems in order.
-        I''ll generate the tool call now.\n","role":"assistant","tool_calls":[{"function":{"arguments":"{\"status\":\"pending\",\"task\":\"Review
-        PR\"}","name":"any_of_params"},"id":"call-3g4ENkE7kOFpm8hWkboiK8E8ICmnPZJD","type":"function"}]}}],"created":1762178432,"id":"chatcmpl-OyXGbG5STDZiBUm6za4OP6HACQa6qa5s","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":157,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":128,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":261,"prompt_tokens_details":{"cached_tokens":66},"prompt_tokens_per_second":5111.333059162211,"time_per_output_token_ms":8.458885350318472,"time_to_first_token_ms":51.063,"tokens_per_second":118.21888565523004,"total_tokens":418}}'
-  recorded_at: Mon, 03 Nov 2025 14:00:32 GMT
-recorded_with: VCR 6.3.1
+        function requires both task and status. The status can be \"pending\", \"done\",
+        or null. Since the user provided \"pending\", that''s valid. I need to structure
+        the JSON with task as \"Review PR\" and status as \"pending\". No other parameters
+        are needed. I''ll make sure to use the correct syntax within the tool_call
+        tags.\n","role":"assistant","tool_calls":[{"function":{"arguments":"{\"status\":\"pending\",\"task\":\"Review
+        PR\"}","name":"any_of_params"},"id":"call-HtGR4d7nkZe2V0tIL2iAylU75IiJM4mE","type":"function"}]}}],"created":1772538768,"id":"chatcmpl-4fXgXk5rHYhUq3aWAy8b4eMooJgyImJj","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":137,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":108,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":261,"prompt_tokens_details":{"cached_tokens":66},"prompt_tokens_per_second":4340.523191032911,"time_per_output_token_ms":8.149554744525547,"time_to_first_token_ms":60.131,"tokens_per_second":122.70609025256853,"total_tokens":398}}'
+  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+recorded_with: VCR 6.4.0

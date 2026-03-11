@@ -1,0 +1,10 @@
+<%% system ||= local_assigns[:message] %>
+<div id="<%= message_variable_name %>_<%%= system.id %>" class="w-full sm:w-auto my-5 space-y-3 rounded-md px-3 py-2 bg-gray-50 border border-gray-200">
+  <div>
+    <span class="inline-block rounded px-2 py-0.5 text-xs font-medium bg-gray-200 text-gray-700">
+      System
+    </span>
+  </div>
+
+  <div class="whitespace-pre-wrap text-gray-700"><%%= system.content %></div>
+</div>

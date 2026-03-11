@@ -1,0 +1,17 @@
+<%% model_id = <%= model_model_name.demodulize.underscore %>.respond_to?(:model_id) ? <%= model_model_name.demodulize.underscore %>.model_id : <%= model_model_name.demodulize.underscore %>.id %>
+<%% row_id = [<%= model_model_name.demodulize.underscore %>.provider, model_id].join("_").parameterize(separator: "_") %>
+<tr id="model_<%%= row_id %>">
+  <td class="px-3 py-2 text-sm text-gray-700"><%%= <%= model_model_name.demodulize.underscore %>.provider_class&.name || <%= model_model_name.demodulize.underscore %>.provider %></td>
+  <td class="px-3 py-2 text-sm text-gray-900"><%%= <%= model_model_name.demodulize.underscore %>.respond_to?(:display_name) ? <%= model_model_name.demodulize.underscore %>.display_name : <%= model_model_name.demodulize.underscore %>.name %></td>
+  <td class="px-3 py-2 text-sm text-gray-700"><%%= number_with_delimiter(<%= model_model_name.demodulize.underscore %>.context_window) if <%= model_model_name.demodulize.underscore %>.context_window %></td>
+  <td class="px-3 py-2 text-sm text-gray-700">
+    <%% input = <%= model_model_name.demodulize.underscore %>.input_price_per_million %>
+    <%% output = <%= model_model_name.demodulize.underscore %>.output_price_per_million %>
+    <%% if input && output %>
+      $<%%= "%.2f" % input %> / $<%%= "%.2f" % output %>
+    <%% end %>
+  </td>
+  <td class="px-3 py-2 text-sm">
+    <%%= link_to "Start <%= chat_table_name.singularize.humanize.downcase %>", new_<%= chat_variable_name %>_path(model: model_id), class: "text-blue-600 hover:text-blue-500" %>
+  </td>
+</tr>

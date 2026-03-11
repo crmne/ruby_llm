@@ -9,7 +9,7 @@ http_interactions:
         is the creator of the programming language Ruby?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer <DEEPSEEK_API_KEY>
       Content-Type:
@@ -23,37 +23,39 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Date:
-      - Sun, 02 Nov 2025 20:02:10 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Date:
+      - Tue, 03 Mar 2026 11:50:07 GMT
+      Server:
+      - elb
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 51eb693537ae95cedd733f6999ea9a23
+      - 21d48ae5f8df1e7d100dcceb8dbe3083
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Server:
-      - cloudflare
-      Cf-Ray:
-      - "<CF_RAY>"
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 136293f2894c59a2f91cf08997c7140a.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - TXL50-P4
+      X-Amz-Cf-Id:
+      - U-NegsKzGrgSaHrsBUsSNDGC1X785cGtuXo0ilGhRAFWnn_XL4JSMQ==
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6ImJkYjk0MjdhLTFiN2YtNDE1Zi1iYzQ1LTNjNDJkM2MzZjBlNiIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NjIxMTM3MzAsIm1vZGVsIjoiZGVlcHNlZWstY2hhdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiVGhlIGNyZWF0b3Igb2YgdGhlIHByb2dyYW1taW5nIGxhbmd1YWdlICoqUnVieSoqIGlzICoqWXVraWhpcm8gXCJNYXR6XCIgTWF0c3Vtb3RvKiouXG5cbkhlcmUgYXJlIHNvbWUga2V5IGRldGFpbHMgYWJvdXQgaGltIGFuZCB0aGUgbGFuZ3VhZ2UncyBjcmVhdGlvbjpcblxuKiAgICoqTmFtZToqKiBZdWtpaGlybyBNYXRzdW1vdG8gKOadvuacrCDooYzlvJgpXG4qICAgKipOaWNrbmFtZToqKiBNYXR6XG4qICAgKipDb3VudHJ5OioqIEphcGFuXG4qICAgKipJbml0aWFsIFJlbGVhc2U6KiogMTk5NVxuXG5NYXR6IGRlc2lnbmVkIFJ1YnkgaW4gdGhlIG1pZC0xOTkwcyB3aXRoIHRoZSBwcmltYXJ5IGdvYWwgb2YgbWFraW5nIHByb2dyYW1tZXJzIGhhcHB5IGFuZCBwcm9kdWN0aXZlLiBIZSBibGVuZGVkIHBhcnRzIG9mIGhpcyBmYXZvcml0ZSBsYW5ndWFnZXMgKGxpa2UgUGVybCwgU21hbGx0YWxrLCBFaWZmZWwsIEFkYSwgYW5kIExpc3ApIHRvIGNyZWF0ZSBhIG5ldyBsYW5ndWFnZSB0aGF0IHdhcyBib3RoICoqbmF0dXJhbCB0byByZWFkKiogYW5kICoqZWFzeSB0byB3cml0ZSoqLlxuXG5IZSBpcyBvZnRlbiBxdW90ZWQgZm9yIGhpcyBndWlkaW5nIHBoaWxvc29waHkgZm9yIFJ1YnkncyBkZXNpZ246XG5cbj4gXCJSdWJ5IGlzIGRlc2lnbmVkIHRvIG1ha2UgcHJvZ3JhbW1lcnMgaGFwcHkuXCJcblxuVGhpcyBwcmluY2lwbGUgb2YgcHJpb3JpdGl6aW5nIGh1bWFuIG5lZWRzIG92ZXIgdGhvc2Ugb2YgdGhlIG1hY2hpbmUgaXMgYSBjb3JuZXJzdG9uZSBvZiB0aGUgbGFuZ3VhZ2UgYW5kIGlzIG9mdGVuIHJlZmVycmVkIHRvIGFzIHRoZSAqKlwiUHJpbmNpcGxlIG9mIExlYXN0IEFzdG9uaXNobWVudFwiKiogKFBPTEEpLCBtZWFuaW5nIHRoZSBsYW5ndWFnZSBzaG91bGQgYmVoYXZlIGluIGEgd2F5IHRoYXQgbWluaW1pemVzIGNvbmZ1c2lvbiBmb3IgZXhwZXJpZW5jZWQgdXNlcnMuIn0sImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6MTQsImNvbXBsZXRpb25fdG9rZW5zIjoyMjEsInRvdGFsX3Rva2VucyI6MjM1LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MH0sInByb21wdF9jYWNoZV9oaXRfdG9rZW5zIjowLCJwcm9tcHRfY2FjaGVfbWlzc190b2tlbnMiOjE0fSwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfZmZjNzI4MWQ0OF9wcm9kMDgyMF9mcDhfa3ZjYWNoZSJ9
-  recorded_at: Sun, 02 Nov 2025 20:02:18 GMT
+        eyJpZCI6ImViMTYyNzI5LWNjMGQtNGE4Zi05ODA0LTUxNmUzN2FhOTVhYyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NzI1Mzg2MDcsIm1vZGVsIjoiZGVlcHNlZWstY2hhdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiVGhlIGNyZWF0b3Igb2YgdGhlIHByb2dyYW1taW5nIGxhbmd1YWdlICoqUnVieSoqIGlzICoqWXVraWhpcm8gXCJNYXR6XCIgTWF0c3Vtb3RvKiogKG9mdGVuIHJlZmVycmVkIHRvIHNpbXBseSBhcyAqKk1hdHoqKikuXG5cbkhlIGJlZ2FuIGRldmVsb3BpbmcgUnVieSBpbiBKYXBhbiBpbiB0aGUgbWlkLTE5OTBzLCB3aXRoIHRoZSBmaXJzdCBwdWJsaWMgcmVsZWFzZSAoUnVieSAwLjk1KSBhbm5vdW5jZWQgaW4gRGVjZW1iZXIgMTk5NS5cblxuTWF0eidzIGtleSBkZXNpZ24gcGhpbG9zb3BoeSBmb3IgUnVieSB3YXMgdG8gcHJpb3JpdGl6ZSAqKmRldmVsb3BlciBoYXBwaW5lc3MgYW5kIHByb2R1Y3Rpdml0eSoqLiBIZSBibGVuZGVkIHBhcnRzIG9mIGhpcyBmYXZvcml0ZSBsYW5ndWFnZXMgKGxpa2UgUGVybCwgU21hbGx0YWxrLCBFaWZmZWwsIEFkYSwgYW5kIExpc3ApIHRvIGNyZWF0ZSBhIGxhbmd1YWdlIHRoYXQgd2FzICoqbmF0dXJhbCB0byByZWFkIGFuZCBlYXN5IHRvIHdyaXRlKiosIGZvbGxvd2luZyB0aGUgcHJpbmNpcGxlIG9mICoqXCJsZWFzdCBzdXJwcmlzZVwiKiog4oCUIG1lYW5pbmcgdGhlIGxhbmd1YWdlIHNob3VsZCBiZWhhdmUgaW4gYSB3YXkgdGhhdCBtaW5pbWl6ZXMgY29uZnVzaW9uIGZvciBleHBlcmllbmNlZCB1c2Vycy5cblxuTWF0eiByZW1haW5zIHRoZSBjaGllZiBkZXNpZ25lciBvZiBSdWJ5IGFuZCBpcyBzdGlsbCBhY3RpdmVseSBpbnZvbHZlZCBpbiBpdHMgZGV2ZWxvcG1lbnQuIn0sImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6MTQsImNvbXBsZXRpb25fdG9rZW5zIjoxNjYsInRvdGFsX3Rva2VucyI6MTgwLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MH0sInByb21wdF9jYWNoZV9oaXRfdG9rZW5zIjowLCJwcm9tcHRfY2FjaGVfbWlzc190b2tlbnMiOjE0fSwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfZWFhYjhkMTE0Yl9wcm9kMDgyMF9mcDhfa3ZjYWNoZSJ9
+  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/chat/completions
@@ -61,22 +63,20 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"deepseek-chat","messages":[{"role":"user","content":"Who
         is the creator of the programming language Ruby?"},{"role":"assistant","content":"The
-        creator of the programming language **Ruby** is **Yukihiro \"Matz\" Matsumoto**.\n\nHere
-        are some key details about him and the language''s creation:\n\n*   **Name:**
-        Yukihiro Matsumoto (松本 行弘)\n*   **Nickname:** Matz\n*   **Country:** Japan\n*   **Initial
-        Release:** 1995\n\nMatz designed Ruby in the mid-1990s with the primary goal
-        of making programmers happy and productive. He blended parts of his favorite
-        languages (like Perl, Smalltalk, Eiffel, Ada, and Lisp) to create a new language
-        that was both **natural to read** and **easy to write**.\n\nHe is often quoted
-        for his guiding philosophy for Ruby''s design:\n\n> \"Ruby is designed to
-        make programmers happy.\"\n\nThis principle of prioritizing human needs over
-        those of the machine is a cornerstone of the language and is often referred
-        to as the **\"Principle of Least Astonishment\"** (POLA), meaning the language
-        should behave in a way that minimizes confusion for experienced users."},{"role":"user","content":"What
-        year did he create Ruby?"}],"stream":false}'
+        creator of the programming language **Ruby** is **Yukihiro \"Matz\" Matsumoto**
+        (often referred to simply as **Matz**).\n\nHe began developing Ruby in Japan
+        in the mid-1990s, with the first public release (Ruby 0.95) announced in December
+        1995.\n\nMatz''s key design philosophy for Ruby was to prioritize **developer
+        happiness and productivity**. He blended parts of his favorite languages (like
+        Perl, Smalltalk, Eiffel, Ada, and Lisp) to create a language that was **natural
+        to read and easy to write**, following the principle of **\"least surprise\"**
+        — meaning the language should behave in a way that minimizes confusion for
+        experienced users.\n\nMatz remains the chief designer of Ruby and is still
+        actively involved in its development."},{"role":"user","content":"What year
+        did he create Ruby?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer <DEEPSEEK_API_KEY>
       Content-Type:
@@ -90,38 +90,44 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Date:
-      - Sun, 02 Nov 2025 20:02:18 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Date:
+      - Tue, 03 Mar 2026 11:50:14 GMT
+      Server:
+      - elb
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - fad7a3c9b8f63d6ec28992420a479480
+      - '039689c18ec2e3a30845bc732eeecc4f'
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Server:
-      - cloudflare
-      Cf-Ray:
-      - "<CF_RAY>"
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 3ee0a52a6fdc977d833d7647d462c266.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - TXL52-P2
+      X-Amz-Cf-Id:
+      - 71mTudRBdxlSwZb7cqAyrULBaeYHRMnykZgMknAoIw2oL5wa5CDEkw==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"b886ec45-79f9-4c96-83b6-8ad7801a5c62","object":"chat.completion","created":1762113738,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"Yukihiro
-        \"Matz\" Matsumoto began working on Ruby in **1993** and released the first
-        public version, **Ruby 0.95**, in **1995**.\n\nSo, while he started the project
-        in 1993, the creation of Ruby is officially marked by its first public release
-        in **1995**."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":246,"completion_tokens":68,"total_tokens":314,"prompt_tokens_details":{"cached_tokens":128},"prompt_cache_hit_tokens":128,"prompt_cache_miss_tokens":118},"system_fingerprint":"fp_ffc7281d48_prod0820_fp8_kvcache"}'
-  recorded_at: Sun, 02 Nov 2025 20:02:22 GMT
-recorded_with: VCR 6.3.1
+      string: '{"id":"08c1825b-46e2-4af3-9913-e007402b9cee","object":"chat.completion","created":1772538614,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"**Yukihiro
+        \"Matz\" Matsumoto began working on Ruby in 1993, and the first public release
+        (version 0.95) was in December 1995.**\n\nHere''s a brief timeline:\n\n*   **1993:**
+        Matz starts designing and developing Ruby.\n*   **1994:** He writes the initial
+        code and the core of the language.\n*   **December 21, 1995:** He announces
+        the first public release, **Ruby 0.95**, to Japanese domestic newsgroups.
+        This is the date generally celebrated as Ruby''s \"birthday.\"\n\nTherefore,
+        while the development started in **1993**, the language was officially born
+        and released to the world in **1995**."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":191,"completion_tokens":148,"total_tokens":339,"prompt_tokens_details":{"cached_tokens":128},"prompt_cache_hit_tokens":128,"prompt_cache_miss_tokens":63},"system_fingerprint":"fp_eaab8d114b_prod0820_fp8_kvcache"}'
+  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+recorded_with: VCR 6.4.0

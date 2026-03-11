@@ -7,6 +7,7 @@
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
+  config.secret_key_base = ENV.fetch('SECRET_KEY_BASE', 'dummy_test_secret_key_base_for_specs')
 
   # While tests run files are not watched, reloading is not necessary.
   config.enable_reloading = false

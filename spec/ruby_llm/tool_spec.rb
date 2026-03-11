@@ -41,4 +41,54 @@ RSpec.describe RubyLLM::Tool do
       expect(tool_class.new.name).to eq('sample')
     end
   end
+
+  describe '#call' do
+    it 'returns an error hash for unknown keyword arguments' do
+      stub_const('SignatureTool', Class.new(described_class) do
+        def execute(questions:)
+          questions
+        end
+      end)
+
+      result = SignatureTool.new.call({ 'questions' => [], 'isOther' => true })
+
+      expect(result).to eq({ error: 'Invalid tool arguments: unknown keyword: isOther' })
+    end
+
+    it 'returns an error hash for missing required keyword arguments' do
+      stub_const('RequiredTool', Class.new(described_class) do
+        def execute(questions:)
+          questions
+        end
+      end)
+
+      result = RequiredTool.new.call({})
+
+      expect(result).to eq({ error: 'Invalid tool arguments: missing keyword: questions' })
+    end
+
+    it 'allows extra keyword arguments when execute accepts keyrest' do
+      stub_const('FlexibleTool', Class.new(described_class) do
+        def execute(questions:, **extra)
+          { questions:, extra: }
+        end
+      end)
+
+      result = FlexibleTool.new.call({ 'questions' => [1], 'isOther' => true })
+
+      expect(result).to eq({ questions: [1], extra: { isOther: true } })
+    end
+
+    it 're-raises unrelated ArgumentError from inside execute' do
+      stub_const('ManualArgumentErrorTool', Class.new(described_class) do
+        def execute(questions:)
+          _ = questions
+          raise ArgumentError, 'bad value provided'
+        end
+      end)
+
+      expect { ManualArgumentErrorTool.new.call({ 'questions' => [] }) }
+        .to raise_error(ArgumentError, 'bad value provided')
+    end
+  end
 end

@@ -10,7 +10,7 @@ http_interactions:
         me about the weather."}],"stream":false,"temperature":0.0}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer <PERPLEXITY_API_KEY>
       Content-Type:
@@ -25,13 +25,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 03 Nov 2025 13:57:27 GMT
+      - Tue, 03 Mar 2026 11:53:14 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      X-Ppl-Region:
+      - us-east-1
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -44,84 +46,7 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id": "96933ebf-a980-4395-84b1-4db9dbaddc2f", "model": "sonar", "created":
-        1762178247, "usage": {"prompt_tokens": 24, "completion_tokens": 429, "total_tokens":
-        453, "search_context_size": "low", "cost": {"input_tokens_cost": 0.0, "output_tokens_cost":
-        0.0, "request_cost": 0.005, "total_cost": 0.005}}, "citations": ["https://www.youtube.com/watch?v=89DReshuDIA",
-        "https://www.timeanddate.com/weather/usa/new-york", "https://www.weather25.com/north-america/usa/california?page=month&month=November",
-        "https://www.accuweather.com/en/us/new-york/10021/weather-forecast/349727",
-        "https://www.clickondetroit.com/video/weather/video-forecast/2025/11/03/weather-cut-in-nov-3-2025/",
-        "https://www.cbsnews.com/newyork/weather/", "https://www.youtube.com/watch?v=-uGimJnMT-c",
-        "https://www.youtube.com/watch?v=rD6FRDd9Hew", "https://www.accuweather.com/en/us/los-angeles/90012/november-weather/347625",
-        "https://www.weather25.com/north-america/usa?page=date&date=3-11"], "search_results":
-        [{"title": "SF Bay Area weather forecast Monday, November 3, 2025 - YouTube",
-        "url": "https://www.youtube.com/watch?v=89DReshuDIA", "date": "2025-11-03",
-        "last_updated": "2025-11-03", "snippet": "KRON4 Meteorologist John Shrable
-        has the latest weather outlook. https://www.kron4.com.", "source": "web"},
-        {"title": "Weather for New York, New York, USA - Time and Date", "url": "https://www.timeanddate.com/weather/usa/new-york",
-        "date": "2025-11-03", "last_updated": "2025-11-03", "snippet": "Clear. Feels
-        Like: 53 \u00b0F Forecast: 59 / 49 \u00b0F Wind: No wind. Location: New York
-        City - Central ...", "source": "web"}, {"title": "California weather in November
-        2025 | Weather25.com", "url": "https://www.weather25.com/north-america/usa/california?page=month&month=November",
-        "date": "2025-01-01", "last_updated": "2025-10-27", "snippet": "Expect a few
-        rainy days but usually not more than 3. Our weather forecast can give you
-        a great sense of what weather to expect in California in November 2025.",
-        "source": "web"}, {"title": "New York, NY Weather Forecast - AccuWeather",
-        "url": "https://www.accuweather.com/en/us/new-york/10021/weather-forecast/349727",
-        "date": "2025-11-03", "last_updated": "2025-11-03", "snippet": "Today''s Weather.
-        Mon, Nov 3. Some sun, then turning cloudy with a shower in spots this afternoon
-        Hi: 60\u00b0. Tonight: Partly cloudy and breezy Lo: 48\u00b0 \u00b7 Current
-        ...", "source": "web"}, {"title": "Weather cut in -- Nov. 3, 2025 - ClickOnDetroit",
-        "url": "https://www.clickondetroit.com/video/weather/video-forecast/2025/11/03/weather-cut-in-nov-3-2025/",
-        "date": "2025-11-03", "last_updated": "2025-11-03", "snippet": "Metro Detroit
-        weather forecast Nov. 3, 2025 -- 6 a.m. Update ... Current EEO Report \u00b7
-        Terms of Use \u00b7 Privacy Policy \u00b7 Do Not Sell My Info.", "source":
-        "web"}, {"title": "New York metro area weather and First Alert Weather forecasts",
-        "url": "https://www.cbsnews.com/newyork/weather/", "date": "2019-10-20", "last_updated":
-        "2025-11-03", "snippet": "New York City, NY ; Sat. Nov 1. Partly Cloudy. 57\u00b0
-        ; Sun. Nov 2. Mostly Sunny. 59\u00b0 ; Mon. Nov 3. PM Showers. 58\u00b0.",
-        "source": "web"}, {"title": "10 Weather: Monday morning forecast; Nov. 3,
-        2025 - YouTube", "url": "https://www.youtube.com/watch?v=-uGimJnMT-c", "date":
-        "2025-11-03", "last_updated": "2025-11-03", "snippet": "10 Weather: Monday
-        morning forecast; Nov. 3, 2025. 4 views \u00b7 3 minutes ago ...more. 10 Tampa
-        Bay. 530K. Subscribe.", "source": "web"}, {"title": "How''s The Weather? |
-        Learn About Weather | Super Simple Songs", "url": "https://www.youtube.com/watch?v=rD6FRDd9Hew",
-        "date": "2014-01-17", "last_updated": "2025-09-21", "snippet": "Get the Super
-        Simple App! \u25bb http://bit.ly/TheSuperSimpleApp It''s a Super Simple weather
-        song! How''s the weather where you are? Sunny? Rainy?", "source": "web"},
-        {"title": "Los Angeles, CA Monthly Weather - AccuWeather", "url": "https://www.accuweather.com/en/us/los-angeles/90012/november-weather/347625",
-        "date": "2025-11-03", "last_updated": "2025-11-03", "snippet": "Get the monthly
-        weather forecast for Los Angeles, CA, including daily high/low, historical
-        averages, to help you plan ahead.", "source": "web"}, {"title": "United States
-        weather forecast for Monday, 3 November 2025", "url": "https://www.weather25.com/north-america/usa?page=date&date=3-11",
-        "date": "2025-11-03", "last_updated": "2025-11-03", "snippet": "Hourly weather
-        forecast for Monday, 3 November 2025 ; 44\u00b0F \u00b7 42\u00b0F \u00b7 41\u00b0F
-        \u00b7 44\u00b0F ; Clear. Clear. Clear. Sunny.", "source": "web"}], "object":
-        "chat.completion", "choices": [{"index": 0, "finish_reason": "stop", "message":
-        {"role": "assistant", "content": "Here\u2019s a summary of the current weather
-        across several major U.S. cities as of Monday, November 3, 2025:\n\n**New
-        York City:**  \nThe day started off partly sunny with temperatures around
-        54\u00b0F in the morning, expected to rise to a high near 60\u00b0F. There\u2019s
-        a chance of showers later in the afternoon, with a low of about 48\u00b0F
-        tonight. Winds are light, and humidity is moderate. Air quality is currently
-        a concern, with pollution levels high enough to affect sensitive individuals.
-        The forecast for the week ahead includes a few passing showers, breezy conditions,
-        and gradually cooler temperatures by midweek. XKCD7392\n\n**San Francisco
-        Bay Area:**  \nThe region saw some rain over the weekend, with parts of the
-        North Bay receiving over an inch, while San Francisco and Oakland saw closer
-        to a third of an inch. Today is calm and mild, with temperatures in the 60s
-        along the coast and up to the 70s in warmer inland areas like San Jose. However,
-        a storm is expected midweek, bringing strong winds, coastal flood advisories,
-        and beach hazards.\n\n**California (General):**  \nNovember weather in California
-        is typically comfortable, with average highs around 24\u00b0C (75\u00b0F)
-        and lows near 14\u00b0C (57\u00b0F). Rain is possible but usually limited
-        to just a few days in the month. Most days are dry, with plenty of sunshine.\n\n**Other
-        Areas:**  \n- **Tampa Bay, FL:** Temperatures are mild, starting in the upper
-        50s to low 60s, with increasing north winds and gusts up to 20-25 mph during
-        the day.\n- **Los Angeles, CA:** Mild and generally pleasant, with daily highs
-        in the upper 60s to low 70s and lows in the 50s.\n\nOverall, the weather is
-        mild across much of the country, with some rain and wind in the Northeast
-        and California, and generally pleasant conditions elsewhere. XKCD7392"}, "delta":
-        {"role": "assistant", "content": ""}}]}'
-  recorded_at: Mon, 03 Nov 2025 13:57:27 GMT
-recorded_with: VCR 6.3.1
+      string: !binary |-
+        eyJpZCI6IjEyYjRiMWIxLTE0MjEtNDFjZS1iNDc4LTgxNmZlNjllMTYzOSIsIm1vZGVsIjoic29uYXIiLCJjcmVhdGVkIjoxNzcyNTM4NzkzLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjoyNSwiY29tcGxldGlvbl90b2tlbnMiOjI1NiwidG90YWxfdG9rZW5zIjoyODEsInNlYXJjaF9jb250ZXh0X3NpemUiOiJsb3ciLCJjb3N0Ijp7ImlucHV0X3Rva2Vuc19jb3N0IjowLjAwMDAyLCJvdXRwdXRfdG9rZW5zX2Nvc3QiOjAuMDAwMjYsInJlcXVlc3RfY29zdCI6MC4wMDUsInRvdGFsX2Nvc3QiOjAuMDA1Mjh9fSwiY2l0YXRpb25zIjpbImh0dHBzOi8vd3d3Lndib2MuY29tL3dlYXRoZXIvd2JvYy1tb3JuaW5nLXdlYXRoZXItbWFyY2gtMy0yMDI2L3ZpZGVvX2I4YWJlNGQxLThlM2MtNTBhMS04Y2NiLTQ2Zjc5OWNjZDkwZC5odG1sIiwiaHR0cHM6Ly93d3cua2hxYS5jb20vd2VhdGhlci93ZWF0aGVyLW1hcmNoLTMtMjAyNi9hcnRpY2xlXzZiMjNiMmUxLTlhYTUtNGYzYS1hNDg0LTYxMWQ3NTgwY2VhNC5odG1sIiwiaHR0cHM6Ly93d3cueW91dHViZS5jb20vd2F0Y2g/dj1pODlNS0M0WG5vSSIsImh0dHBzOi8vd3d3LmNvYXN0dHYuY29tL3dlYXRoZXIvY29hc3R0di1vdmVybmlnaHQtZm9yZWNhc3QtdXBkYXRlLTAzLTAzLTIwMjYvdmlkZW9fZTY3ZTc1YjAtZDY0Yy01MGQzLTg1OTEtZWQ4ODkyNmJhZDA4Lmh0bWwiLCJodHRwczovL2VuLmNsaW1hdGUtZGF0YS5vcmcvbm9ydGgtYW1lcmljYS91bml0ZWQtc3RhdGVzLW9mLWFtZXJpY2Evbm9ydGgtY2Fyb2xpbmEvc2hhbGxvdHRlLTE0MDA2Mi90L21hcmNoLTMvIiwiaHR0cHM6Ly93d3cuYWNjdXdlYXRoZXIuY29tL2VuL3VzL3NoYWxsb3R0ZS8yODQ3MC9tYXJjaC13ZWF0aGVyLzMzOTg2MCIsImh0dHBzOi8vd3d3LndlYXRoZXIuZ292L2lsbS8iXSwic2VhcmNoX3Jlc3VsdHMiOlt7InRpdGxlIjoiV0JPQyBNb3JuaW5nIFdlYXRoZXI6IE1hcmNoIDMsIDIwMjYiLCJ1cmwiOiJodHRwczovL3d3dy53Ym9jLmNvbS93ZWF0aGVyL3dib2MtbW9ybmluZy13ZWF0aGVyLW1hcmNoLTMtMjAyNi92aWRlb19iOGFiZTRkMS04ZTNjLTUwYTEtOGNjYi00NmY3OTljY2Q5MGQuaHRtbCIsImRhdGUiOiIyMDI2LTAzLTAzIiwibGFzdF91cGRhdGVkIjoiMjAyNi0wMy0wMyIsInNuaXBwZXQiOiIjIyMgVHJlbmRpbmcgTm93XG4tICMjIyMgQm93ZmlzaGluZyByZWNvZ25pemVkIGFzIG1ham9yIHRvb2wgaW4gY29tYmF0dGluZyBpbnZhc2l2ZSBDaGVzYXBlYWtlIENoYW5uYVxuLSAjIyMjIEJlcmxpbiB3b21hbiBzZW50ZW5jZWQgdG8gZm91ciB5ZWFycyBpbiBmZWRlcmFsIHByaXNvbiBmb3Igc3RlYWxpbmcgJDEuNyBtaWxsaW9uIGZyb20gT0MgaG9tZSBidWlsZGVyXG4tICMjIyMgUmVob2JvdGggQmVhY2ggY2FuY2VscyAyMDI2IExld2VzIFBvbGFyIEJlYXIgUGx1bmdlXG4tICMjIyMgU29uaWMgYm9vbXMgZnJvbSBmaWdodGVyLi4uIiwic291cmNlIjoid2ViIn0seyJ0aXRsZSI6IldlYXRoZXIgTWFyY2ggMywgMjAyNiIsInVybCI6Imh0dHBzOi8vd3d3LmtocWEuY29tL3dlYXRoZXIvd2VhdGhlci1tYXJjaC0zLTIwMjYvYXJ0aWNsZV82YjIzYjJlMS05YWE1LTRmM2EtYTQ4NC02MTFkNzU4MGNlYTQuaHRtbCIsImRhdGUiOiIyMDI2LTAzLTAzIiwic25pcHBldCI6IiIsInNvdXJjZSI6IndlYiJ9LHsidGl0bGUiOiJXUFRWIEZpcnN0IEFsZXJ0IFdlYXRoZXIgRm9yZWNhc3QgZm9yIG1vcm5pbmcgb2YgVHVlc2RheSwgTWFyY2ggMyAuLi4iLCJ1cmwiOiJodHRwczovL3d3dy55b3V0dWJlLmNvbS93YXRjaD92PWk4OU1LQzRYbm9JIiwiZGF0ZSI6IjIwMjYtMDMtMDMiLCJsYXN0X3VwZGF0ZWQiOiIyMDI2LTAzLTAzIiwic25pcHBldCI6IldQVFYgRmlyc3QgQWxlcnQgV2VhdGhlciBGb3JlY2FzdCBmb3IgbW9ybmluZyBvZiBUdWVzZGF5LCBNYXJjaCAzLCAyMDI2LiA5IHZpZXdzIMK3IDEyIG1pbnV0ZXMgYWdvIC4uLm1vcmUgLi4uIiwic291cmNlIjoid2ViIn0seyJ0aXRsZSI6IkNvYXN0VFYgT3Zlcm5pZ2h0IEZvcmVjYXN0IFVwZGF0ZSAwMy8wMy8yMDI2IHwgV2VhdGhlciIsInVybCI6Imh0dHBzOi8vd3d3LmNvYXN0dHYuY29tL3dlYXRoZXIvY29hc3R0di1vdmVybmlnaHQtZm9yZWNhc3QtdXBkYXRlLTAzLTAzLTIwMjYvdmlkZW9fZTY3ZTc1YjAtZDY0Yy01MGQzLTg1OTEtZWQ4ODkyNmJhZDA4Lmh0bWwiLCJkYXRlIjoiMjAyNi0wMy0wMyIsImxhc3RfdXBkYXRlZCI6IjIwMjYtMDMtMDMiLCJzbmlwcGV0IjoiQ2hpZWYgTWV0ZW9yb2xvZ2lzdCBQYXVsIFdpbGxpYW1zIHBpbnBvaW50cyB3aGVyZSB0aGUgYnJpZWYgc25vdyBzaG93ZXJzIGZlbGwgTW9uZGF5IEV2ZW5pbmcgYW5kIGhpZ2hsaWdodHMgdGhlIHVudXN1YWxseSB3YXJtIHdlYXRoZXIgb24gdGFwIC4uLiIsInNvdXJjZSI6IndlYiJ9LHsidGl0bGUiOiJXZWF0aGVyIFNoYWxsb3R0ZSBpbiBNYXJjaCAyMDI2OiBUZW1wZXJhdHVyZSAmIENsaW1hdGUiLCJ1cmwiOiJodHRwczovL2VuLmNsaW1hdGUtZGF0YS5vcmcvbm9ydGgtYW1lcmljYS91bml0ZWQtc3RhdGVzLW9mLWFtZXJpY2Evbm9ydGgtY2Fyb2xpbmEvc2hhbGxvdHRlLTE0MDA2Mi90L21hcmNoLTMvIiwic25pcHBldCI6IkN1cnJlbnQgdGVtcGVyYXR1cmUgYW5kIHdlYXRoZXIgZm9yZWNhc3QgZm9yIFNoYWxsb3R0ZS4gU2hhbGxvdHRlIHdlYXRoZXIgaW4gTWFyY2guIFRlbXBlcmF0dXJlIE1hcmNoLCAxMy4ywrBDIHwgNTUuN8KwRiAuLi4iLCJzb3VyY2UiOiJ3ZWIifSx7InRpdGxlIjoiU2hhbGxvdHRlLCBOQyBNb250aGx5IFdlYXRoZXIgfCBBY2N1V2VhdGhlciIsInVybCI6Imh0dHBzOi8vd3d3LmFjY3V3ZWF0aGVyLmNvbS9lbi91cy9zaGFsbG90dGUvMjg0NzAvbWFyY2gtd2VhdGhlci8zMzk4NjAiLCJkYXRlIjoiMjAyNS0wMy0yNCIsImxhc3RfdXBkYXRlZCI6IjIwMjUtMDMtMjQiLCJzbmlwcGV0IjoiTWFyY2ggdG8gc3RhcnQgd2l0aCBzbm93IGluIHBhcnRzIG9mIHRoZSBVLlMuIFNlZSB0aGUgZm9yZWNhc3QuIFNldmVyZSB3ZWF0aGVyIHJpc2sgdG8gaW5jcmVhc2UgYXMgd2VhdGhlciBwYXR0ZXJuIHNoaWZ0cyBpbiBNYXJjaC4gR2V0IHRoZSBmb3JlY2FzdCBkZXRhaWxzLiIsInNvdXJjZSI6IndlYiJ9LHsidGl0bGUiOiJOV1MgRm9yZWNhc3QgT2ZmaWNlIFdpbG1pbmd0b24sIE5DIiwidXJsIjoiaHR0cHM6Ly93d3cud2VhdGhlci5nb3YvaWxtLyIsImRhdGUiOiIyMDI2LTAzLTAzIiwibGFzdF91cGRhdGVkIjoiMjAyNi0wMy0wMiIsInNuaXBwZXQiOiJMYXN0IE1hcCBVcGRhdGU6IFR1ZSwgTWFyIDMsIDIwMjYgYXQgNDo0NDoyMCBhbSBFU1QuIFdhdGNoZXMsIFdhcm5pbmdzICYgQWR2aXNvcmllcyDCtyBOYXRpb25hbCBXZWF0aGVyIFNlcnZpY2UgR3JlZW52aWxsZS1TcGFydGFuYnVyZywgU0MgwrcgTmF0aW9uYWwgV2VhdGhlciAuLi4iLCJzb3VyY2UiOiJ3ZWIifV0sIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiKipXZWF0aGVyIHJlcG9ydHMgZm9yIE1hcmNoIDMsIDIwMjYsIHZhcnkgYnkgbG9jYXRpb24sIHdpdGggbm8gc2luZ2xlIDxHT09HTEVfQ0xPVURfTE9DQVRJT04+IGZvcmVjYXN0IGF2YWlsYWJsZSBmcm9tIHRoZSBzb3VyY2VzLioqIEluIHRoZSBGbG9yaWRhIFBhbG0gQmVhY2hlcyBhbmQgVHJlYXN1cmUgQ29hc3QgKFdQVFYgYXJlYSksIGNvbmRpdGlvbnMgYXJlICoqd2FybSBhbmQgbXVnZ3kqKiB3aXRoIHRlbXBlcmF0dXJlcyBpbiB0aGUgKio3MHPCsEYqKiBjdXJyZW50bHksIGhpZ2hzIHJlYWNoaW5nIHRoZSAqKmxvdyA4MHPCsEYqKiB0b2RheSBhbmQgZm9yIHNldmVyYWwgZGF5cyBhaGVhZCwgYW5kIHNvbWUgc2hvd2VycyBtb3Zpbmcgb25zaG9yZVszXS4gSW4gdGhlIERlbG1hcnZhIHJlZ2lvbiAoZS5nLiwgV0JPQyBhbmQgQ29hc3RUViBjb3ZlcmFnZSksIGJyaWVmICoqc25vdyBzaG93ZXJzKiogb2NjdXJyZWQgTW9uZGF5IGV2ZW5pbmcsIHRyYW5zaXRpb25pbmcgdG8gKip1bnVzdWFsbHkgd2FybSB3ZWF0aGVyKiogZm9yIHRoZSB3b3JrIHdlZWtbMV1bNF0uXG5cbkZvciBTaGFsbG90dGUsIE5DIChuZWFyIFdpbG1pbmd0b24pLCBmb3JlY2FzdHMgaW5kaWNhdGUgYSBoaWdoIGFyb3VuZCAqKjU0wrBGKiogYW5kIGxvdyBuZWFyICoqMjfCsEYqKiBvbiBNYXJjaCAzLCBwYXJ0IG9mIGEgdmFyaWFibGUgTWFyY2ggcGF0dGVybiB3aXRoIGNvb2xlciBzdGFydHMgd2FybWluZyBsYXRlcls1XVs2XS4gVGhlIE5XUyBXaWxtaW5ndG9uLCBOQyBvZmZpY2UgcHJvdmlkZXMgbG9jYWwgZm9yZWNhc3RzLCByYWRhciwgYW5kIGhhemFyZCBvdXRsb29rcyBidXQgbGFja3Mgc3BlY2lmaWMgTWFyY2ggMyBkZXRhaWxzIGluIHRoZSByZXN1bHRzWzddLlxuXG4qKlhLQ0Q3MzkyKiogV2l0aG91dCBhIHNwZWNpZmllZCBsb2NhdGlvbiwgcHJlY2lzZSBjdXJyZW50IHdlYXRoZXIgY2FuJ3QgYmUgZGV0YWlsZWQ7IGNoZWNrIGxvY2FsIHNvdXJjZXMgbGlrZSBOV1MgZm9yIHJlYWwtdGltZSB1cGRhdGVzWzddLiBSZWdpb25hbCB0cmVuZHMgc2hvdyBlYXJseSBNYXJjaCBtaXhpbmcgY29sZCBzbmFwcyB3aXRoIHdhcm1pbmcgYWlyWzRdWzZdLiJ9LCJkZWx0YSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IiJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XX0=
+  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+recorded_with: VCR 6.4.0

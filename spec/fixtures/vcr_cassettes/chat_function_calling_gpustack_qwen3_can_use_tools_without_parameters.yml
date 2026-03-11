@@ -10,7 +10,9 @@ http_interactions:
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}],"enable_thinking":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
+      Authorization:
+      - Bearer <GPUSTACK_API_KEY>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -23,15 +25,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 03 Nov 2025 13:59:16 GMT
-      - Mon, 03 Nov 2025 13:59:16 GMT
+      - Tue, 03 Mar 2026 11:49:03 GMT
+      - Tue, 03 Mar 2026 11:49:03 GMT
       Server:
       - uvicorn
       - uvicorn
       Keep-Alive:
       - timeout=15, max=100
       Content-Length:
-      - '1243'
+      - '1245'
       Content-Type:
       - application/json
       X-Request-Accepted-At:
@@ -48,19 +50,33 @@ http_interactions:
         best_language_to_learn with no parameters required. Since the user is asking
         for the best language, the function is designed to get that information. I
         should call the function to retrieve the answer. No parameters are needed,
-        so I''ll just trigger the function.\n","role":"assistant","tool_calls":[{"function":{"arguments":"{}","name":"best_language_to_learn"},"id":"call-EkU5TEijtmFNUwg5jkEE7zFv8sG8oHQh","type":"function"}]}}],"created":1762178358,"id":"chatcmpl-L77bTCmQ4Yw2SJh13P7CRyZr8bm5r7iN","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":109,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":90,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":209,"prompt_tokens_details":{"cached_tokens":66},"prompt_tokens_per_second":4998.923676720324,"time_per_output_token_ms":8.92054128440367,"time_to_first_token_ms":41.809,"tokens_per_second":112.10082080426682,"total_tokens":318}}'
-  recorded_at: Mon, 03 Nov 2025 13:59:18 GMT
+        so I''ll just trigger the function.\n","role":"assistant","tool_calls":[{"function":{"arguments":"{}","name":"best_language_to_learn"},"id":"call-OMyABjW8mbQsLvcZ290R092HfWEtlbpP","type":"function"}]}}],"created":1772538544,"id":"chatcmpl-Kqf78oM165HRdfKJyJZNjtciKeoQVSnI","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":109,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":90,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":209,"prompt_tokens_details":{"cached_tokens":66},"prompt_tokens_per_second":3710.2128490529194,"time_per_output_token_ms":8.340100917431194,"time_to_first_token_ms":56.331,"tokens_per_second":119.90262586750649,"total_tokens":318}}'
+  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
 - request:
     method: post
     uri: "<GPUSTACK_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
       string: '{"model":"qwen3","messages":[{"role":"user","content":"What''s the
-        best language to learn?"},{"role":"assistant","tool_calls":[{"id":"call-EkU5TEijtmFNUwg5jkEE7zFv8sG8oHQh","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call-EkU5TEijtmFNUwg5jkEE7zFv8sG8oHQh"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        best language to learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"call-OMyABjW8mbQsLvcZ290R092HfWEtlbpP","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning":"\nOkay,
+        the user is asking, \"What''s the best language to learn?\" I need to figure
+        out how to respond. Let me check the tools provided. There''s a function called
+        best_language_to_learn with no parameters required. Since the user is asking
+        for the best language, the function is designed to get that information. I
+        should call the function to retrieve the answer. No parameters are needed,
+        so I''ll just trigger the function.\n","reasoning_content":"\nOkay, the user
+        is asking, \"What''s the best language to learn?\" I need to figure out how
+        to respond. Let me check the tools provided. There''s a function called best_language_to_learn
+        with no parameters required. Since the user is asking for the best language,
+        the function is designed to get that information. I should call the function
+        to retrieve the answer. No parameters are needed, so I''ll just trigger the
+        function.\n"},{"role":"tool","content":"Ruby","tool_call_id":"call-OMyABjW8mbQsLvcZ290R092HfWEtlbpP"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}],"enable_thinking":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
+      Authorization:
+      - Bearer <GPUSTACK_API_KEY>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -73,15 +89,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 03 Nov 2025 13:59:17 GMT
-      - Mon, 03 Nov 2025 13:59:17 GMT
+      - Tue, 03 Mar 2026 11:49:04 GMT
+      - Tue, 03 Mar 2026 11:49:04 GMT
       Server:
       - uvicorn
       - uvicorn
       Keep-Alive:
       - timeout=15, max=100
       Content-Length:
-      - '1279'
+      - '3462'
       Content-Type:
       - application/json
       X-Request-Accepted-At:
@@ -92,15 +108,231 @@ http_interactions:
       - "*"
     body:
       encoding: UTF-8
-      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"\n\nThe
-        best language to learn is Ruby.","reasoning_content":"\nOkay, the user asked,
-        \"What''s the best language to learn?\" I called the function best_language_to_learn,
-        which doesn''t require any parameters. The response from the function was
-        \"Ruby\". Now I need to present this answer. Since the function provided a
-        specific answer, I should just state that Ruby is the best language to learn.
-        No need for extra explanations unless the user asks for more details. Let
-        me make sure to format the response correctly as per the instructions. The
-        user might be looking for a straightforward answer, so keeping it simple is
-        better.\n","role":"assistant"}}],"created":1762178359,"id":"chatcmpl-ZNXBZSapbVYeyimYL2YqTLtlzQSAdVHf","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":126,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":115,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":235,"prompt_tokens_details":{"cached_tokens":208},"prompt_tokens_per_second":14098.026276321316,"time_per_output_token_ms":9.018904761904762,"time_to_first_token_ms":16.669,"tokens_per_second":110.87820820815536,"total_tokens":361}}'
-  recorded_at: Mon, 03 Nov 2025 13:59:19 GMT
-recorded_with: VCR 6.3.1
+      string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"content":null,"reasoning_content":"\nOkay,
+        the user asked, \"What''s the best language to learn?\" and I need to provide
+        an answer. Let me think about how to approach this.\n\nFirst, the user might
+        be looking for a recommendation on which programming language would be most
+        beneficial for them. But the question is a bit broad because the \"best\"
+        language can depend on various factors like the user''s goals, existing skills,
+        and the specific applications they want to develop. For example, if they''re
+        interested in web development, JavaScript might be a good choice. For data
+        science, Python is often recommended. If they''re into mobile apps, Swift
+        or Kotlin could be better. \n\nHowever, the user hasn''t provided any specific
+        details about their interests or goals. In such cases, it''s important to
+        consider the most versatile or widely used languages. Languages like Python,
+        JavaScript, and Java are often highlighted for their broad applicability.
+        \n\nWait, the user''s previous response was \"Ruby.\" Maybe they are asking
+        for a follow-up or clarification. But in the initial query, they asked for
+        the best language, and I need to answer based on available information. \n\nLooking
+        at the tools provided, there''s a function called best_language_to_learn with
+        no parameters. Since the user hasn''t provided specific details, the function
+        might be designed to return a general recommendation. However, without any
+        parameters, the function''s output could be a default answer. \n\nBut the
+        user might expect a more tailored response. Since the function doesn''t take
+        any parameters, I can''t adjust the answer based on their specific needs.
+        Therefore, the best approach is to use the function to get a general recommendation.
+        \n\nAlternatively, if the function is meant to be used when there''s no specific
+        context, maybe the answer is Ruby. But why would the function return Ruby?
+        Maybe the function is designed to return a default value. \n\nWait, the user''s
+        previous message was \"Ruby\" after the initial question. Maybe they are testing
+        if I can recognize that. But in the initial interaction, the user asked the
+        question, and I need to respond. \n\nSince the function exists, I should call
+        it. The function''s description says it gets the best language to learn, and
+        it has no parameters. So, I should invoke the function to get the answer.
+        \n\nTherefore, the correct step is to call the best_language_to_learn function
+        without any arguments. The response from the function would then be the answer.
+        \n\nBut the user might be expecting a direct answer. However, according to
+        the instructions, if a function is available, I should call it. So, I need
+        to generate the tool call.\n","role":"assistant","tool_calls":[{"function":{"arguments":"{}","name":"best_language_to_learn"},"id":"call-ognlWicCcKWviHle6BbRr17ClRsA7PR4","type":"function"}]}}],"created":1772538549,"id":"chatcmpl-TRGTOG44ETfPtoa6jmymxCcf3S7TLM9t","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":551,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":532,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":220,"prompt_tokens_details":{"cached_tokens":208},"prompt_tokens_per_second":12691.8195454021,"time_per_output_token_ms":8.478105263157895,"time_to_first_token_ms":17.334,"tokens_per_second":117.95088276923842,"total_tokens":771}}'
+  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+- request:
+    method: post
+    uri: "<GPUSTACK_API_BASE>/chat/completions"
+    body:
+      encoding: UTF-8
+      string: '{"model":"qwen3","messages":[{"role":"user","content":"What''s the
+        best language to learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"call-OMyABjW8mbQsLvcZ290R092HfWEtlbpP","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning":"\nOkay,
+        the user is asking, \"What''s the best language to learn?\" I need to figure
+        out how to respond. Let me check the tools provided. There''s a function called
+        best_language_to_learn with no parameters required. Since the user is asking
+        for the best language, the function is designed to get that information. I
+        should call the function to retrieve the answer. No parameters are needed,
+        so I''ll just trigger the function.\n","reasoning_content":"\nOkay, the user
+        is asking, \"What''s the best language to learn?\" I need to figure out how
+        to respond. Let me check the tools provided. There''s a function called best_language_to_learn
+        with no parameters required. Since the user is asking for the best language,
+        the function is designed to get that information. I should call the function
+        to retrieve the answer. No parameters are needed, so I''ll just trigger the
+        function.\n"},{"role":"tool","content":"Ruby","tool_call_id":"call-OMyABjW8mbQsLvcZ290R092HfWEtlbpP"},{"role":"assistant","content":"","tool_calls":[{"id":"call-ognlWicCcKWviHle6BbRr17ClRsA7PR4","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning":"\nOkay,
+        the user asked, \"What''s the best language to learn?\" and I need to provide
+        an answer. Let me think about how to approach this.\n\nFirst, the user might
+        be looking for a recommendation on which programming language would be most
+        beneficial for them. But the question is a bit broad because the \"best\"
+        language can depend on various factors like the user''s goals, existing skills,
+        and the specific applications they want to develop. For example, if they''re
+        interested in web development, JavaScript might be a good choice. For data
+        science, Python is often recommended. If they''re into mobile apps, Swift
+        or Kotlin could be better. \n\nHowever, the user hasn''t provided any specific
+        details about their interests or goals. In such cases, it''s important to
+        consider the most versatile or widely used languages. Languages like Python,
+        JavaScript, and Java are often highlighted for their broad applicability.
+        \n\nWait, the user''s previous response was \"Ruby.\" Maybe they are asking
+        for a follow-up or clarification. But in the initial query, they asked for
+        the best language, and I need to answer based on available information. \n\nLooking
+        at the tools provided, there''s a function called best_language_to_learn with
+        no parameters. Since the user hasn''t provided specific details, the function
+        might be designed to return a general recommendation. However, without any
+        parameters, the function''s output could be a default answer. \n\nBut the
+        user might expect a more tailored response. Since the function doesn''t take
+        any parameters, I can''t adjust the answer based on their specific needs.
+        Therefore, the best approach is to use the function to get a general recommendation.
+        \n\nAlternatively, if the function is meant to be used when there''s no specific
+        context, maybe the answer is Ruby. But why would the function return Ruby?
+        Maybe the function is designed to return a default value. \n\nWait, the user''s
+        previous message was \"Ruby\" after the initial question. Maybe they are testing
+        if I can recognize that. But in the initial interaction, the user asked the
+        question, and I need to respond. \n\nSince the function exists, I should call
+        it. The function''s description says it gets the best language to learn, and
+        it has no parameters. So, I should invoke the function to get the answer.
+        \n\nTherefore, the correct step is to call the best_language_to_learn function
+        without any arguments. The response from the function would then be the answer.
+        \n\nBut the user might be expecting a direct answer. However, according to
+        the instructions, if a function is available, I should call it. So, I need
+        to generate the tool call.\n","reasoning_content":"\nOkay, the user asked,
+        \"What''s the best language to learn?\" and I need to provide an answer. Let
+        me think about how to approach this.\n\nFirst, the user might be looking for
+        a recommendation on which programming language would be most beneficial for
+        them. But the question is a bit broad because the \"best\" language can depend
+        on various factors like the user''s goals, existing skills, and the specific
+        applications they want to develop. For example, if they''re interested in
+        web development, JavaScript might be a good choice. For data science, Python
+        is often recommended. If they''re into mobile apps, Swift or Kotlin could
+        be better. \n\nHowever, the user hasn''t provided any specific details about
+        their interests or goals. In such cases, it''s important to consider the most
+        versatile or widely used languages. Languages like Python, JavaScript, and
+        Java are often highlighted for their broad applicability. \n\nWait, the user''s
+        previous response was \"Ruby.\" Maybe they are asking for a follow-up or clarification.
+        But in the initial query, they asked for the best language, and I need to
+        answer based on available information. \n\nLooking at the tools provided,
+        there''s a function called best_language_to_learn with no parameters. Since
+        the user hasn''t provided specific details, the function might be designed
+        to return a general recommendation. However, without any parameters, the function''s
+        output could be a default answer. \n\nBut the user might expect a more tailored
+        response. Since the function doesn''t take any parameters, I can''t adjust
+        the answer based on their specific needs. Therefore, the best approach is
+        to use the function to get a general recommendation. \n\nAlternatively, if
+        the function is meant to be used when there''s no specific context, maybe
+        the answer is Ruby. But why would the function return Ruby? Maybe the function
+        is designed to return a default value. \n\nWait, the user''s previous message
+        was \"Ruby\" after the initial question. Maybe they are testing if I can recognize
+        that. But in the initial interaction, the user asked the question, and I need
+        to respond. \n\nSince the function exists, I should call it. The function''s
+        description says it gets the best language to learn, and it has no parameters.
+        So, I should invoke the function to get the answer. \n\nTherefore, the correct
+        step is to call the best_language_to_learn function without any arguments.
+        The response from the function would then be the answer. \n\nBut the user
+        might be expecting a direct answer. However, according to the instructions,
+        if a function is available, I should call it. So, I need to generate the tool
+        call.\n"},{"role":"tool","content":"Ruby","tool_call_id":"call-ognlWicCcKWviHle6BbRr17ClRsA7PR4"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}],"enable_thinking":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Authorization:
+      - Bearer <GPUSTACK_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 03 Mar 2026 11:49:08 GMT
+      - Tue, 03 Mar 2026 11:49:09 GMT
+      Server:
+      - uvicorn
+      - uvicorn
+      Keep-Alive:
+      - timeout=15, max=100
+      Content-Length:
+      - '5404'
+      Content-Type:
+      - application/json
+      X-Request-Accepted-At:
+      - "<X_REQUEST_ID>"
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Access-Control-Allow-Origin:
+      - "*"
+    body:
+      encoding: UTF-8
+      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"\n\nRuby
+        is a great choice! It''s known for its simplicity and productivity, making
+        it ideal for web development, scripting, and more. Would you like to know
+        more about it?","reasoning_content":"\nOkay, the user asked, \"What''s the
+        best language to learn?\" and I didn''t have any functions to call back then.
+        So I just responded with Ruby. Now the user is replying with \"Ruby\" again.
+        Wait, maybe they''re confirming or asking for more info about Ruby?\n\nLet
+        me check the tools again. The only function available is best_language_to_learn,
+        which doesn''t require any parameters. Since the user is just saying \"Ruby,\"
+        maybe they want to know more about why Ruby is considered the best. But according
+        to the tools, I can only call that function again. However, since the function
+        doesn''t take any arguments, I can''t provide specific details. The user might
+        be expecting an explanation, but the tools don''t allow that. So I should
+        probably just call the function again to get the same response. But wait,
+        the function is supposed to return the best language, which is Ruby. Since
+        the user is repeating Ruby, maybe they are testing if I can handle that. But
+        I need to follow the rules: if I can reply with internal knowledge, do so.
+        Otherwise, call the function. Since the function is already called once and
+        the user is repeating, maybe I should just acknowledge their input. Wait,
+        the instructions say if the user''s query can be answered with internal knowledge,
+        reply directly. Otherwise, call the function. Since I already provided Ruby
+        as the answer, and the user is just repeating it, maybe there''s no need to
+        call the function again. But the user might be asking for more details. However,
+        the tools don''t allow for detailed explanations. So the correct approach
+        is to call the function again, but since the function doesn''t take parameters,
+        it''s redundant. Alternatively, maybe the user is trying to trigger a different
+        response. But according to the rules, I should just reply with the function
+        call if needed. Wait, the user''s last message is \"Ruby,\" which is a single
+        word. It''s possible they are confirming the answer or maybe there''s a mistake.
+        Since the function is already called once, and the user is repeating, perhaps
+        I should just respond with Ruby again. But the assistant''s role is to call
+        the function if needed. However, since the user''s message doesn''t ask a
+        question, maybe there''s no need. This is a bit confusing. Let me recheck
+        the instructions. The user''s query is \"What''s the best language to learn?\"
+        and the function returns Ruby. Then the user replies with \"Ruby.\" Since
+        the user isn''t asking a question anymore, but just stating the language,
+        the assistant should respond accordingly. But the tools don''t have a function
+        for that. So the assistant should use internal knowledge to reply. Since the
+        function already provided Ruby, maybe the assistant can explain why Ruby is
+        considered the best. But according to the tools, the assistant can''t do that.
+        Therefore, the correct action is to call the function again, but since the
+        function doesn''t take parameters, it''s redundant. Alternatively, the assistant
+        should just respond with Ruby again. But the user might be expecting a different
+        answer. However, the function''s response is fixed. So the correct answer
+        is to call the function again, but since the user is not asking a question,
+        maybe the assistant should just acknowledge. This is a bit tricky. Based on
+        the initial setup, the assistant should call the function when the user asks
+        a question. Since the user is now just stating \"Ruby,\" there''s no need
+        for a function call. Therefore, the assistant can respond with an explanation
+        using internal knowledge. But the tools don''t allow that. Wait, the initial
+        instruction says: When you can reply with your internal knowledge, reply directly
+        without any function calls. Otherwise, try to do function calls. Since the
+        user is not asking a question, but just repeating the answer, the assistant
+        can use internal knowledge to reply. However, the assistant''s previous response
+        was Ruby, so maybe the user is confirming. The assistant should respond with
+        a confirmation. But since the tools don''t allow for that, perhaps the assistant
+        should just say \"Ruby\" again. But the user already got that. I think the
+        correct approach here is to recognize that the user''s message is not a question,
+        so no function call is needed. The assistant can respond with a message like
+        \"Ruby is a great choice!\" But since the tools don''t allow for that, the
+        assistant should just reply with Ruby again. However, the user might be expecting
+        more. But according to the given tools, the assistant can''t provide more
+        details. Therefore, the assistant should just respond with Ruby again.\n","role":"assistant"}}],"created":1772538558,"id":"chatcmpl-LVWjHzZn4GTQZfxhxBRYERljRfa2yyNa","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":974,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":935,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":231,"prompt_tokens_details":{"cached_tokens":219},"prompt_tokens_per_second":13132.461625923821,"time_per_output_token_ms":8.578187885010268,"time_to_first_token_ms":17.59,"tokens_per_second":116.57473739266356,"total_tokens":1205}}'
+  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+recorded_with: VCR 6.4.0

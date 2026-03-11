@@ -99,6 +99,28 @@ RSpec.describe RubyLLM::Chat do
 
       expect(chat.tools).to be_empty
     end
+
+    it 'stores calls preference as :many or :one' do
+      chat = described_class.new
+
+      chat.with_tools(calls: :many)
+      expect(chat.tool_prefs[:calls]).to eq(:many)
+
+      chat.with_tools(calls: :one)
+      expect(chat.tool_prefs[:calls]).to eq(:one)
+
+      chat.with_tools(calls: 1)
+      expect(chat.tool_prefs[:calls]).to eq(:one)
+    end
+
+    it 'raises for invalid calls values' do
+      chat = described_class.new
+
+      expect { chat.with_tools(calls: :single) }.to raise_error(
+        ArgumentError,
+        /Invalid calls value/
+      )
+    end
   end
 
   describe '#with_model' do
@@ -108,6 +130,39 @@ RSpec.describe RubyLLM::Chat do
 
       expect(chat.model.id).to eq('claude-3-5-haiku-20241022')
       expect(result).to eq(chat) # Should return self for chaining
+    end
+  end
+
+  describe '#with_instructions' do
+    it 'replaces existing system instructions by default' do
+      chat = described_class.new
+
+      chat.with_instructions('Be helpful')
+      chat.with_instructions('Be concise')
+
+      system_messages = chat.messages.select { |msg| msg.role == :system }
+      expect(system_messages.size).to eq(1)
+      expect(system_messages.first.content).to eq('Be concise')
+    end
+
+    it 'appends system instructions when append: true' do
+      chat = described_class.new
+
+      chat.with_instructions('Be helpful')
+      chat.with_instructions('Be concise', append: true)
+
+      system_messages = chat.messages.select { |msg| msg.role == :system }
+      expect(system_messages.map(&:content)).to eq(['Be helpful', 'Be concise'])
+    end
+
+    it 'keeps system instructions at the top of message history' do
+      chat = described_class.new
+
+      chat.add_message(role: :user, content: 'Hi')
+      chat.add_message(role: :assistant, content: 'Hello')
+      chat.with_instructions('System')
+
+      expect(chat.messages.map(&:role)).to eq(%i[system user assistant])
     end
   end
 

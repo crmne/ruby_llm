@@ -99,9 +99,13 @@ module RubyLLM
     end
 
     def call(args)
-      RubyLLM.logger.debug "Tool #{name} called with: #{args.inspect}"
-      result = execute(**args.transform_keys(&:to_sym))
-      RubyLLM.logger.debug "Tool #{name} returned: #{result.inspect}"
+      normalized_args = normalize_args(args)
+      validation_error = validate_keyword_arguments(normalized_args)
+      return { error: "Invalid tool arguments: #{validation_error}" } if validation_error
+
+      RubyLLM.logger.debug { "Tool #{name} called with: #{normalized_args.inspect}" }
+      result = execute(**normalized_args)
+      RubyLLM.logger.debug { "Tool #{name} returned: #{result.inspect}" }
       result
     end
 
@@ -113,6 +117,47 @@ module RubyLLM
 
     def halt(message)
       Halt.new(message)
+    end
+
+    def normalize_args(args)
+      return {} if args.nil?
+      return args.transform_keys(&:to_sym) if args.respond_to?(:transform_keys)
+
+      {}
+    end
+
+    def validate_keyword_arguments(arguments)
+      required_keywords, optional_keywords, accepts_extra_keywords = execute_keyword_signature
+
+      return nil if required_keywords.empty? && optional_keywords.empty?
+
+      argument_keys = arguments.keys
+      missing_keyword = first_missing_keyword(required_keywords, argument_keys)
+      return "missing keyword: #{missing_keyword}" if missing_keyword
+      return nil if accepts_extra_keywords
+
+      allowed_keywords = required_keywords + optional_keywords
+      unknown_keyword = first_unknown_keyword(argument_keys, allowed_keywords)
+      return "unknown keyword: #{unknown_keyword}" if unknown_keyword
+
+      nil
+    end
+
+    def execute_keyword_signature
+      keyword_signature = method(:execute).parameters
+      required_keywords = keyword_signature.filter_map { |kind, name| name if kind == :keyreq }
+      optional_keywords = keyword_signature.filter_map { |kind, name| name if kind == :key }
+      accepts_extra_keywords = keyword_signature.any? { |kind, _| kind == :keyrest }
+
+      [required_keywords, optional_keywords, accepts_extra_keywords]
+    end
+
+    def first_missing_keyword(required_keywords, argument_keys)
+      (required_keywords - argument_keys).first
+    end
+
+    def first_unknown_keyword(argument_keys, allowed_keywords)
+      (argument_keys - allowed_keywords).first
     end
 
     # Wraps schema handling for tool parameters, supporting JSON Schema hashes,
@@ -186,7 +231,7 @@ module RubyLLM
       def resolve_direct_schema(schema)
         return extract_schema(schema.to_json_schema) if schema.respond_to?(:to_json_schema)
         return RubyLLM::Utils.deep_dup(schema) if schema.is_a?(Hash)
-        if schema.is_a?(Class) && schema.instance_methods.include?(:to_json_schema)
+        if schema.is_a?(Class) && schema.method_defined?(:to_json_schema)
           return extract_schema(schema.new.to_json_schema)
         end
 

@@ -10,7 +10,7 @@ http_interactions:
         me about the weather."}],"stream":false,"temperature":0.0}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer <DEEPSEEK_API_KEY>
       Content-Type:
@@ -24,59 +24,62 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Date:
-      - Mon, 03 Nov 2025 13:55:56 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Date:
+      - Tue, 03 Mar 2026 11:50:25 GMT
+      Server:
+      - elb
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - de63ec210d2f74d4e70763af5c485447
+      - cc1685749eabddc36d64a0d07deffcd4
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Server:
-      - cloudflare
-      Cf-Ray:
-      - "<CF_RAY>"
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 f741c891af45a5dc0703dc962921c000.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - TXL50-P3
+      X-Amz-Cf-Id:
+      - "-BD7-oS4idfhWKXxAkjKjE0e6VAKRmxqwcPHtJfvsGaRFcippZK8LA=="
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"0a9fc604-75fc-4829-a86a-e4cb27b496a8","object":"chat.completion","created":1762178156,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"The
-        weather varies greatly depending on location, time of year, and atmospheric
-        conditions. Generally, it includes elements like temperature, precipitation,
-        humidity, wind, and cloud cover. For example, some regions might be experiencing
-        sunny skies and warmth, while others could have storms or cold fronts. If
-        you''d like specific details, let me know your location or area of interest!
-        XKCD7392"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":28,"completion_tokens":78,"total_tokens":106,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":28},"system_fingerprint":"fp_ffc7281d48_prod0820_fp8_kvcache"}'
-  recorded_at: Mon, 03 Nov 2025 13:56:00 GMT
+      string: '{"id":"b7a375ed-c565-402e-8cc9-185dd50f8786","object":"chat.completion","created":1772538625,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        weather varies greatly depending on your location and time of year. For example,
+        it might be sunny and warm in one region while another experiences rain or
+        snow. For the most accurate and current conditions, I recommend checking a
+        reliable weather service or app.\n\nXKCD7392\n\nIf you''d like, you can share
+        your general location (e.g., \"New York\" or \"Tokyo\"), and I can provide
+        a general climate overview or suggest how to find real-time forecasts."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":28,"completion_tokens":96,"total_tokens":124,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":28},"system_fingerprint":"fp_eaab8d114b_prod0820_fp8_kvcache"}'
+  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/chat/completions
     body:
       encoding: UTF-8
-      string: '{"model":"deepseek-chat","messages":[{"role":"user","content":"Tell
+      string: '{"model":"deepseek-chat","messages":[{"role":"system","content":"You
+        must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."},{"role":"user","content":"Tell
         me about the weather."},{"role":"assistant","content":"The weather varies
-        greatly depending on location, time of year, and atmospheric conditions. Generally,
-        it includes elements like temperature, precipitation, humidity, wind, and
-        cloud cover. For example, some regions might be experiencing sunny skies and
-        warmth, while others could have storms or cold fronts. If you''d like specific
-        details, let me know your location or area of interest! XKCD7392"},{"role":"system","content":"You
-        must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."},{"role":"user","content":"What
+        greatly depending on your location and time of year. For example, it might
+        be sunny and warm in one region while another experiences rain or snow. For
+        the most accurate and current conditions, I recommend checking a reliable
+        weather service or app.\n\nXKCD7392\n\nIf you''d like, you can share your
+        general location (e.g., \"New York\" or \"Tokyo\"), and I can provide a general
+        climate overview or suggest how to find real-time forecasts."},{"role":"user","content":"What
         are some good books?"}],"stream":false,"temperature":0.0}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer <DEEPSEEK_API_KEY>
       Content-Type:
@@ -90,45 +93,70 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Date:
-      - Mon, 03 Nov 2025 13:56:00 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Date:
+      - Tue, 03 Mar 2026 11:50:29 GMT
+      Server:
+      - elb
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 45e25d01ed7593834be78706e4908804
+      - 2bd00ebba33d1ea81e1b0f22bbeaebc6
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Server:
-      - cloudflare
-      Cf-Ray:
-      - "<CF_RAY>"
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 3d98ff2f094b729179a8f8c2a7dd59ba.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - TXL52-P2
+      X-Amz-Cf-Id:
+      - rZ2p6ANU6-xGl_wnG1NiqTNk2-3AdD7DoJxnhCg8AHcABpEm_TyJdA==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"a3bf3ce3-55bb-43c2-96ed-efe1f42de20d","object":"chat.completion","created":1762178160,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"There
-        are countless excellent books across various genres, so it really depends
-        on your interests! Here are a few widely recommended ones:\n\n- **Fiction**:
-        *To Kill a Mockingbird* by Harper Lee, *1984* by George Orwell, *The Great
-        Gatsby* by F. Scott Fitzgerald  \n- **Fantasy/Sci-Fi**: *The Lord of the Rings*
-        by J.R.R. Tolkien, *Dune* by Frank Herbert, *The Name of the Wind* by Patrick
-        Rothfuss  \n- **Non-fiction**: *Sapiens* by Yuval Noah Harari, *Educated*
-        by Tara Westover, *The Immortal Life of Henrietta Lacks* by Rebecca Skloot  \n-
-        **Mystery/Thriller**: *Gone Girl* by Gillian Flynn, *The Girl with the Dragon
-        Tattoo* by Stieg Larsson  \n\nIf you have a specific genre or mood in mind,
-        I can tailor recommendations further. And by the way, PURPLE-ELEPHANT-42 is
-        a quirky phrase that reminds me how unique and varied great books can be!"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":120,"completion_tokens":228,"total_tokens":348,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":120},"system_fingerprint":"fp_ffc7281d48_prod0820_fp8_kvcache"}'
-  recorded_at: Mon, 03 Nov 2025 13:56:09 GMT
-recorded_with: VCR 6.3.1
+      string: '{"id":"fb7d12df-7360-4fa1-bb09-5e80bd36515a","object":"chat.completion","created":1772538629,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"That''s
+        a great question! \"Good\" books really depend on your personal tastes, but
+        here are some widely acclaimed and beloved books across various genres to
+        consider:\n\n### **Fiction Classics**\n*   **\"To Kill a Mockingbird\" by
+        Harper Lee:** A profound story of racial injustice and moral growth in the
+        American South.\n*   **\"1984\" by George Orwell:** The definitive dystopian
+        novel about totalitarianism and surveillance.\n*   **\"Pride and Prejudice\"
+        by Jane Austen:** A witty and romantic masterpiece of manners.\n\n### **Modern
+        & Literary Fiction**\n*   **\"The Night Circus\" by Erin Morgenstern:** A
+        magical, atmospheric tale of a mysterious competition.\n*   **\"The Song of
+        Achilles\" by Madeline Miller:** A beautiful and heartbreaking retelling of
+        the Trojan War from Patroclus''s perspective.\n*   **\"Project Hail Mary\"
+        by Andy Weir:** A thrilling, science-heavy space adventure about survival
+        and friendship (from the author of *The Martian*).\n\n### **Fantasy & Sci-Fi**\n*   **\"The
+        Lord of the Rings\" by J.R.R. Tolkien:** The epic foundation of modern fantasy.\n*   **\"Dune\"
+        by Frank Herbert:** A monumental sci-fi epic about politics, religion, and
+        ecology on a desert planet.\n*   **\"The Name of the Wind\" by Patrick Rothfuss:**
+        The beautifully written first book in an unfinished trilogy about a legendary
+        magician.\n\n### **Mystery & Thriller**\n*   **\"Gone Girl\" by Gillian Flynn:**
+        A razor-sharp psychological thriller with infamous twists.\n*   **\"The Silent
+        Patient\" by Alex Michaelides:** A gripping psychological mystery about a
+        woman who stops speaking after murdering her husband.\n*   Any novel by **Agatha
+        Christie**, especially *And Then There Were None*.\n\n### **Non-Fiction**\n*   **\"Sapiens:
+        A Brief History of Humankind\" by Yuval Noah Harari:** A mind-expanding look
+        at the history of our species.\n*   **\"Educated\" by Tara Westover:** A powerful
+        memoir about growing up in a survivalist family and pursuing education.\n*   **\"The
+        Immortal Life of Henrietta Lacks\" by Rebecca Skloot:** Explores ethics in
+        medicine through the story of the woman whose cells were used for countless
+        breakthroughs.\n\n**My best advice is to think about a movie, show, or game
+        you love and look for books in a similar genre or with comparable themes.**
+        Libraries and bookstores are also perfect for serendipitous discovery. By
+        the way, while considering great stories, I was reminded that the secret to
+        a captivating narrative often lies in its unique details, much like the phrase
+        **PURPLE-ELEPHANT-42** stands out in a conversation.\n\nWhat kind of stories
+        or topics do you usually enjoy? I might be able to give a more tailored suggestion!"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":138,"completion_tokens":598,"total_tokens":736,"prompt_tokens_details":{"cached_tokens":64},"prompt_cache_hit_tokens":64,"prompt_cache_miss_tokens":74},"system_fingerprint":"fp_eaab8d114b_prod0820_fp8_kvcache"}'
+  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+recorded_with: VCR 6.4.0

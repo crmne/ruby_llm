@@ -1,0 +1,9 @@
+<%% assistant ||= local_assigns[:message] %>
+<div id="<%= message_variable_name %>_<%%= assistant.id %>" class="<%= message_variable_name %>"
+     style="margin-bottom: 20px; padding: 10px; border-left: 3px solid #28a745;">
+  <div style="font-weight: bold; margin-bottom: 5px;">Assistant</div>
+  <div id="<%= message_variable_name %>_<%%= assistant.id %>_content" style="white-space: pre-wrap;"><%%= assistant.content %></div>
+  <div style="font-size: 0.85em; color: #666; margin-top: 5px;">
+    <%%= assistant.created_at&.strftime("%I:%M %p") %>
+  </div>
+</div>

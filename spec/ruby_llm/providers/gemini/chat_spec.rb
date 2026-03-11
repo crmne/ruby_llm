@@ -15,6 +15,27 @@ RSpec.describe RubyLLM::Providers::Gemini::Chat do
   end
 
   describe '#convert_schema_to_gemini' do
+    it 'extracts inner schema from wrapper format' do
+      # Simulate what RubyLLM::Schema.to_json_schema returns
+      schema = {
+        name: 'PersonSchema',
+        schema: {
+          type: 'object',
+          properties: {
+            name: { type: 'string' },
+            age: { type: 'integer' }
+          }
+        }
+      }
+
+      result = test_obj.send(:convert_schema_to_gemini, schema)
+
+      # Should extract the inner schema and convert it
+      expect(result[:type]).to eq('OBJECT')
+      expect(result[:properties][:name][:type]).to eq('STRING')
+      expect(result[:properties][:age][:type]).to eq('INTEGER')
+    end
+
     it 'converts simple string schema' do
       schema = { type: 'string' }
       result = test_obj.send(:convert_schema_to_gemini, schema)
@@ -374,9 +395,12 @@ RSpec.describe RubyLLM::Providers::Gemini::Chat do
     let(:tools) { {} }
     let(:schema) do
       {
-        type: 'object',
-        properties: {
-          result: { type: 'string' }
+        name: 'response',
+        schema: {
+          type: 'object',
+          properties: {
+            result: { type: 'string' }
+          }
         },
         strict: true
       }
@@ -395,6 +419,29 @@ RSpec.describe RubyLLM::Providers::Gemini::Chat do
       )
       expect(payload[:generationConfig]).not_to have_key(:responseSchema)
       expect(payload[:generationConfig]).not_to have_key('responseSchema')
+    end
+
+    it 'unwraps wrapper schemas for responseJsonSchema' do
+      model = instance_double(RubyLLM::Model::Info, id: 'gemini-3.0-pro', metadata: {})
+      wrapped_schema = {
+        name: 'PersonSchema',
+        schema: {
+          type: 'object',
+          properties: {
+            result: { type: 'string' }
+          },
+          strict: true
+        }
+      }
+
+      payload = test_obj.send(:render_payload, messages, tools:, temperature: nil, model:, schema: wrapped_schema)
+
+      expect(payload[:generationConfig][:responseJsonSchema]).to eq(
+        'type' => 'object',
+        'properties' => {
+          'result' => { 'type' => 'string' }
+        }
+      )
     end
 
     it 'falls back to responseSchema for non-2.5 models' do
@@ -474,6 +521,84 @@ RSpec.describe RubyLLM::Providers::Gemini::Chat do
       expect(tool_response[:parts].length).to eq(2)
       expect(tool_response[:parts][0][:functionResponse][:name]).to eq('weather')
       expect(tool_response[:parts][1][:functionResponse][:name]).to eq('best_language_to_learn')
+    end
+  end
+
+  describe '#parse_completion_response' do
+    it 'keeps thought-only parts out of assistant content' do
+      response = Struct.new(:body, :env).new(
+        {
+          'candidates' => [
+            {
+              'content' => {
+                'parts' => [
+                  { 'thought' => true, 'text' => 'Internal reasoning only' }
+                ]
+              }
+            }
+          ],
+          'usageMetadata' => {}
+        },
+        Struct.new(:url).new(Struct.new(:path).new('/v1/models/gemini-2.5-flash:generateContent'))
+      )
+
+      provider = RubyLLM::Providers::Gemini.new(RubyLLM.config)
+      message = provider.send(:parse_completion_response, response)
+
+      expect(message.content).to eq('')
+      expect(message.thinking&.text).to eq('Internal reasoning only')
+    end
+
+    it 'keeps non-thought text in content when mixed with thought parts' do
+      response = Struct.new(:body, :env).new(
+        {
+          'candidates' => [
+            {
+              'content' => {
+                'parts' => [
+                  { 'thought' => true, 'text' => 'Reasoning trace' },
+                  { 'text' => '{"ok":true}' }
+                ]
+              }
+            }
+          ],
+          'usageMetadata' => {}
+        },
+        Struct.new(:url).new(Struct.new(:path).new('/v1/models/gemini-2.5-flash:generateContent'))
+      )
+
+      provider = RubyLLM::Providers::Gemini.new(RubyLLM.config)
+      message = provider.send(:parse_completion_response, response)
+
+      expect(message.content).to eq('{"ok":true}')
+      expect(message.thinking&.text).to eq('Reasoning trace')
+    end
+
+    it 'captures cached token usage when present' do
+      response = Struct.new(:body, :env).new(
+        {
+          'candidates' => [
+            {
+              'content' => {
+                'parts' => [{ 'text' => 'Hi' }]
+              }
+            }
+          ],
+          'usageMetadata' => {
+            'promptTokenCount' => 42,
+            'candidatesTokenCount' => 8,
+            'cachedContentTokenCount' => 21
+          }
+        },
+        Struct.new(:url).new(Struct.new(:path).new('/v1/models/gemini-2.5-flash:generateContent'))
+      )
+
+      provider = RubyLLM::Providers::Gemini.new(RubyLLM.config)
+      message = provider.send(:parse_completion_response, response)
+
+      expect(message.input_tokens).to eq(42)
+      expect(message.output_tokens).to eq(8)
+      expect(message.cached_tokens).to eq(21)
     end
   end
 

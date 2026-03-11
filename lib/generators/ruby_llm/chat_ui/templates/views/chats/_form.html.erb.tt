@@ -14,7 +14,7 @@
   <div>
     <%%= form.label :model, "Select AI model:", style: "display: block" %>
     <%%= form.select :model,
-        options_for_select(<%= model_model_name %>.pluck(:name, :model_id).unshift(["Default (#{RubyLLM.config.default_model})", nil]), @selected_model),
+        options_for_select(@chat_models.map { |model| [llm_model_label(model), model.id] }.unshift([default_model_display_name, nil]), @selected_model),
         {},
         style: "width: 100%; max-width: 600px; padding: 5px;" %>
   </div>
