@@ -13,13 +13,12 @@ class <%= chat_controller_class_name %> < ApplicationController
 
   def create
     prompt = params.dig(:<%= chat_variable_name %>, :prompt)
-    return unless prompt.present?
+    if prompt.present?
+      @<%= chat_variable_name %> = <%= chat_model_name %>.create!(model: params.dig(:<%= chat_variable_name %>, :model).presence)
+      <%= chat_job_class_name %>.perform_later(@<%= chat_variable_name %>.id, prompt)
 
-    model = params.dig(:<%= chat_variable_name %>, :model).presence
-    @<%= chat_variable_name %> = <%= chat_model_name %>.create!(model: model)
-    <%= chat_job_class_name %>.perform_later(@<%= chat_variable_name %>.id, prompt)
-
-    redirect_to @<%= chat_variable_name %>, notice: "<%= chat_model_name.humanize %> was successfully created."
+      redirect_to @<%= chat_variable_name %>, notice: "<%= chat_model_name.humanize %> was successfully created."
+    end
   end
 
   def show
