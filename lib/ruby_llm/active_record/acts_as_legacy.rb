@@ -58,6 +58,8 @@ module RubyLLM
         end
 
         def acts_as_tool_call(message_class: 'Message', message_foreign_key: nil, result_foreign_key: nil)
+          include RubyLLM::ActiveRecord::ToolCallMethods
+
           @message_class = message_class.to_s
           @message_foreign_key = message_foreign_key || ActiveSupport::Inflector.foreign_key(@message_class)
           @result_foreign_key = result_foreign_key || ActiveSupport::Inflector.foreign_key(name)

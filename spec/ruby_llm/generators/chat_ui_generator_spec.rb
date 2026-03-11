@@ -36,9 +36,14 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
 
         messages_helper = File.read('app/helpers/messages_helper.rb')
         expect(messages_helper).to include('def default_model_display_name')
-        expect(messages_helper).to include('def llm_model_label(model)')
+        expect(messages_helper).not_to include('def llm_model_label(model)')
+        expect(messages_helper).to include('RubyLLM.models.find(RubyLLM.config.default_model).label')
+        expect(messages_helper).to include('def tool_result_partial(message)')
+        expect(messages_helper).to include('def tool_call_partial(tool_call)')
         expect(messages_helper).not_to include('def model_display_name(model)')
         expect(messages_helper).not_to include('def provider_display_name(model_or_provider)')
+        expect(messages_helper).not_to include('def parse_tool_payload(content)')
+        expect(messages_helper).not_to include('def llm_model_info(model)')
       end
     end
 
@@ -78,9 +83,11 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         tool_calls_partial = File.read('app/views/messages/_tool_calls.html.erb')
         expect(tool_calls_partial).to include('tool_calls: tool_calls, tool_call: tool_call')
         expect(tool_calls_partial).to include('local_assigns[:message]')
+        tool_results_default = File.read('app/views/messages/tool_results/_default.html.erb')
+        expect(tool_results_default).to include('tool.tool_error_message')
         chat_form = File.read('app/views/chats/_form.html.erb')
         expect(chat_form).to include('@chat_models.map')
-        expect(chat_form).to include('llm_model_label(model)')
+        expect(chat_form).to include('[model.label, model.id]')
         expect(chat_form).to include('default_model_display_name')
         create_stream = File.read('app/views/messages/create.turbo_stream.erb')
         expect(create_stream).to include('turbo_stream.replace "new_message"')
@@ -144,7 +151,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         expect(chats_controller).to include('class ChatsController')
         expect(chats_controller).to include('Chat.find')
         expect(chats_controller).to include('@chat = Chat.new')
-        expect(chats_controller).to include('@chat_models = RubyLLM.models.chat_models.all')
+        expect(chats_controller).to include('@chat_models = available_chat_models')
         expect(chats_controller).to include('@chat = Chat.create!(model: model)')
 
         messages_controller = File.read('app/controllers/messages_controller.rb')
@@ -155,7 +162,11 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
 
         models_controller = File.read('app/controllers/models_controller.rb')
         expect(models_controller).to include('class ModelsController')
-        expect(models_controller).to include('@models = RubyLLM.models.chat_models.all')
+        expect(models_controller).to include('@models = available_chat_models')
+
+        application_controller = File.read('app/controllers/application_controller.rb')
+        expect(application_controller).to include('def available_chat_models')
+        expect(application_controller).to include('sort_by { |model| [ model.provider.to_s, model.name.to_s ] }')
       end
     end
 
@@ -207,9 +218,14 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
 
         messages_helper = File.read('app/helpers/llm/messages_helper.rb')
         expect(messages_helper).to include('def default_model_display_name')
-        expect(messages_helper).to include('def llm_model_label(model)')
+        expect(messages_helper).not_to include('def llm_model_label(model)')
+        expect(messages_helper).to include('RubyLLM.models.find(RubyLLM.config.default_model).label')
+        expect(messages_helper).to include('def tool_result_partial(message)')
+        expect(messages_helper).to include('def tool_call_partial(tool_call)')
         expect(messages_helper).not_to include('def model_display_name(model)')
         expect(messages_helper).not_to include('def provider_display_name(model_or_provider)')
+        expect(messages_helper).not_to include('def parse_tool_payload(content)')
+        expect(messages_helper).not_to include('def llm_model_info(model)')
       end
     end
 
@@ -249,9 +265,11 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         tool_calls_partial = File.read('app/views/llm/messages/_tool_calls.html.erb')
         expect(tool_calls_partial).to include('tool_calls: tool_calls, tool_call: tool_call')
         expect(tool_calls_partial).to include('local_assigns[:message]')
+        tool_results_default = File.read('app/views/llm/messages/tool_results/_default.html.erb')
+        expect(tool_results_default).to include('tool.tool_error_message')
         chat_form = File.read('app/views/llm/chats/_form.html.erb')
         expect(chat_form).to include('@chat_models.map')
-        expect(chat_form).to include('llm_model_label(model)')
+        expect(chat_form).to include('[model.label, model.id]')
         expect(chat_form).to include('default_model_display_name')
         create_stream = File.read('app/views/llm/messages/create.turbo_stream.erb')
         expect(create_stream).to include('turbo_stream.replace "new_llm_message"')
@@ -310,7 +328,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         expect(chats_controller).to include('class Llm::ChatsController')
         expect(chats_controller).to include('Llm::Chat.find')
         expect(chats_controller).to include('@llm_chat = Llm::Chat.new')
-        expect(chats_controller).to include('@chat_models = RubyLLM.models.chat_models.all')
+        expect(chats_controller).to include('@chat_models = available_chat_models')
         expect(chats_controller).to include('@llm_chat = Llm::Chat.create!(model: model)')
 
         messages_controller = File.read('app/controllers/llm/messages_controller.rb')
@@ -321,7 +339,11 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
 
         models_controller = File.read('app/controllers/llm/models_controller.rb')
         expect(models_controller).to include('class Llm::ModelsController')
-        expect(models_controller).to include('@llm_models = RubyLLM.models.chat_models.all')
+        expect(models_controller).to include('@llm_models = available_chat_models')
+
+        application_controller = File.read('app/controllers/application_controller.rb')
+        expect(application_controller).to include('def available_chat_models')
+        expect(application_controller).to include('sort_by { |model| [ model.provider.to_s, model.name.to_s ] }')
       end
     end
 

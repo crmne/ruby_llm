@@ -1,100 +1,25 @@
 module <%= message_helper_module_name %>
   def default_model_display_name
-    "Default (#{RubyLLM.config.default_model})"
-  end
-
-  def llm_model_label(model)
-    model_info = llm_model_info(model)
-    return default_model_display_name if model_info.blank?
-
-    provider = model_info.provider_class&.name || model_info.provider
-    "#{provider} - #{model_info.display_name}"
-  end
-
-  def parse_tool_payload(content)
-    return content if content.is_a?(Hash) || content.is_a?(Array)
-    return if content.blank?
-
-    JSON.parse(content)
-  rescue JSON::ParserError
-    nil
-  end
-
-  def tool_result_error_message(message)
-    payload = parse_tool_payload(message.content)
-    return unless payload.is_a?(Hash)
-
-    payload["error"] || payload[:error]
-  end
-
-  def tool_result_name(message)
-    payload = parse_tool_payload(message.content)
-    name = extract_tool_name_from_payload(payload)
-    return name if name.present?
-
-    raw_payload = parse_tool_payload(message.content_raw) if message.respond_to?(:content_raw)
-    extract_tool_name_from_payload(raw_payload)
-  end
-
-  def tool_call_error_message(tool_call)
-    payload = tool_call.arguments
-    payload = parse_tool_payload(payload) if payload.is_a?(String)
-    return unless payload.is_a?(Hash)
-
-    payload["error"] || payload[:error]
+    "Default - #{RubyLLM.models.find(RubyLLM.config.default_model).label}"
   end
 
   def tool_result_partial(message)
-    name = tool_result_name(message).to_s
+    name = message.respond_to?(:parent_tool_call) ? message.parent_tool_call&.name.to_s : ""
     partial_for(prefix: "<%= message_model_name.underscore.pluralize %>/tool_results", name: name)
   end
 
   def tool_call_partial(tool_call)
-    name = tool_call.name.to_s
-    partial_for(prefix: "<%= message_model_name.underscore.pluralize %>/tool_calls", name: name)
+    partial_for(prefix: "<%= message_model_name.underscore.pluralize %>/tool_calls", name: tool_call.name.to_s)
   end
 
   private
 
-  def llm_model_info(model)
-    return if model.blank?
-
-    model.respond_to?(:to_llm) ? model.to_llm : model
-  end
-
   def partial_for(prefix:, name:)
-    normalized = name.underscore.tr("-", "_")
+    normalized = name.to_s.underscore.tr("-", "_")
     if normalized.present? && lookup_context.exists?(normalized, [ prefix ], true)
       "#{prefix}/#{normalized}"
     else
       "#{prefix}/default"
     end
-  end
-
-  def extract_tool_name_from_payload(payload)
-    case payload
-    when Hash
-      direct_name = payload["tool_name"] || payload[:tool_name] || payload["name"] || payload[:name]
-      return direct_name.to_s if direct_name.present?
-
-      nested_tool = payload["tool"] || payload[:tool]
-      if nested_tool.is_a?(Hash)
-        nested_name = nested_tool["name"] || nested_tool[:name]
-        return nested_name.to_s if nested_name.present?
-      end
-
-      function_response = payload["functionResponse"] || payload[:functionResponse]
-      if function_response.is_a?(Hash)
-        function_name = function_response["name"] || function_response[:name]
-        return function_name.to_s if function_name.present?
-      end
-    when Array
-      payload.each do |item|
-        name = extract_tool_name_from_payload(item)
-        return name if name.present?
-      end
-    end
-
-    nil
   end
 end

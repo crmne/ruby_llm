@@ -156,6 +156,12 @@ RSpec.describe RubyLLM::Model::Info do
     end
   end
 
+  describe '#label' do
+    it 'returns provider and display name' do
+      expect(info.label).to eq('OpenAI - GPT-5')
+    end
+  end
+
   describe '#max_tokens' do
     it 'returns max_output_tokens' do
       expect(info.max_tokens).to eq(128_000)

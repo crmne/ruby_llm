@@ -51,6 +51,13 @@ module RubyLLM
         "#{partial_prefix}/#{role_partial}"
       end
 
+      def tool_error_message
+        payload = parse_payload(content)
+        return unless payload.is_a?(Hash)
+
+        payload['error'] || payload[:error]
+      end
+
       private
 
       def thinking_text_value
@@ -120,6 +127,15 @@ module RubyLLM
         tempfile.rewind
         @_tempfiles << tempfile
         tempfile
+      end
+
+      def parse_payload(value)
+        return value if value.is_a?(Hash) || value.is_a?(Array)
+        return if value.blank?
+
+        JSON.parse(value)
+      rescue JSON::ParserError
+        nil
       end
     end
   end

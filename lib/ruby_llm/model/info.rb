@@ -48,6 +48,11 @@ module RubyLLM
         name
       end
 
+      def label
+        provider_name = provider_class&.name || provider
+        "#{provider_name} - #{display_name}"
+      end
+
       def max_tokens
         max_output_tokens
       end
