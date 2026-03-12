@@ -109,5 +109,4 @@ RubyLLM::Provider.register :xai, RubyLLM::Providers::XAI
 
 if defined?(Rails::Railtie)
   require 'ruby_llm/railtie'
-  require 'ruby_llm/active_record/acts_as'
 end
