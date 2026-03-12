@@ -138,14 +138,8 @@ module RubyLLM
       end
 
       def render_prompt(name, chat:, inputs:, locals:)
-        path = prompt_path_for(name)
-        unless File.exist?(path)
-          raise RubyLLM::PromptNotFoundError,
-                "Prompt file not found for #{self}: #{path}. Create the file or use inline instructions."
-        end
-
         resolved_locals = resolve_prompt_locals(locals, runtime: runtime_context(chat:, inputs:), chat:, inputs:)
-        ERB.new(File.read(path)).result_with_hash(resolved_locals)
+        Prompt.new("#{prompt_agent_path}/#{name}").render(**resolved_locals)
       end
 
       private
@@ -304,12 +298,6 @@ module RubyLLM
         end
       end
 
-      def prompt_path_for(name)
-        filename = name.to_s
-        filename += '.txt.erb' unless filename.end_with?('.txt.erb')
-        prompt_root.join(prompt_agent_path, filename)
-      end
-
       def prompt_agent_path
         class_name = name || 'agent'
         class_name.gsub('::', '/')
@@ -317,14 +305,6 @@ module RubyLLM
                   .gsub(/([a-z\d])([A-Z])/, '\1_\2')
                   .tr('-', '_')
                   .downcase
-      end
-
-      def prompt_root
-        if defined?(Rails) && Rails.respond_to?(:root) && Rails.root
-          Rails.root.join('app/prompts')
-        else
-          Pathname.new(Dir.pwd).join('app/prompts')
-        end
       end
 
       def resolved_chat_model
