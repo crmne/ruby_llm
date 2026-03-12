@@ -88,6 +88,7 @@ AUDIO_MODELS = [
 
 EMBEDDING_MODELS = [
   { provider: :azure, model: 'Cohere-embed-v3-english' },
+  { provider: :bedrock, model: 'amazon.titan-embed-text-v2:0' },
   { provider: :gemini, model: 'gemini-embedding-001' },
   { provider: :mistral, model: 'mistral-embed' },
   { provider: :openai, model: 'text-embedding-3-small' },
