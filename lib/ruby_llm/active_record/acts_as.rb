@@ -12,15 +12,21 @@ module RubyLLM
         # Monkey-patch Models to use database when ActsAs is active
         RubyLLM::Models.class_eval do
           def self.load_models
-            read_from_database
+            database_models = read_from_database
+            return database_models if database_models.any?
+
+            RubyLLM.logger.debug { 'Model registry is empty in database, falling back to JSON registry' }
+            read_from_json
           rescue StandardError => e
-            RubyLLM.logger.debug "Failed to load models from database: #{e.message}, falling back to JSON"
+            RubyLLM.logger.debug { "Failed to load models from database: #{e.message}, falling back to JSON" }
             read_from_json
           end
 
           def self.read_from_database
             model_class = RubyLLM.config.model_registry_class
             model_class = model_class.constantize if model_class.is_a?(String)
+            return [] unless model_class.table_exists?
+
             model_class.all.map(&:to_llm)
           end
 
@@ -52,8 +58,6 @@ module RubyLLM
                      class_name: self.model_class,
                      foreign_key: model_foreign_key,
                      optional: true
-
-          delegate :add_message, to: :to_llm
 
           define_method :messages_association do
             send(messages_association_name)
@@ -144,6 +148,8 @@ module RubyLLM
 
         def acts_as_tool_call(message: :message, message_class: nil, message_foreign_key: nil, # rubocop:disable Metrics/ParameterLists
                               result: :result, result_class: nil, result_foreign_key: nil)
+          include RubyLLM::ActiveRecord::ToolCallMethods
+
           class_attribute :message_association_name, :result_association_name, :message_class, :result_class
 
           self.message_association_name = message

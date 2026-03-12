@@ -10,7 +10,7 @@ http_interactions:
         me about the weather."}],"stream":false,"temperature":0.0}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer <DEEPSEEK_API_KEY>
       Content-Type:
@@ -31,7 +31,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Tue, 13 Jan 2026 15:38:04 GMT
+      - Tue, 03 Mar 2026 11:50:21 GMT
       Server:
       - elb
       Vary:
@@ -39,7 +39,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 35be70198cdc1cf69ec1aeef03885a7d
+      - 5a0feba29f6cc0b55c8003703df9bc64
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -47,19 +47,18 @@ http_interactions:
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 5259a7202dc0eff585f32647cd652b24.cloudfront.net (CloudFront)
+      - 1.1 e245f8b9af3dc3d1896ca714ebe230f4.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - TXL50-P5
+      - TXL52-P2
       X-Amz-Cf-Id:
-      - JMbNnje8_j6yZ_PlCONH3Fx1-77Yx_mOLMF_OMPL464t4fp2j8w9Eg==
+      - lLmJcq8naOshF_m1HRx6CpxXxcJd9Nvb8NGMiH7JVs3ErV1zvwi3fQ==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"b8604047-1490-4b53-9c53-8bb40c151d7d","object":"chat.completion","created":1768318684,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"The
-        weather varies greatly depending on your location and time of year. For example,
-        it might be sunny and warm in one region while another experiences rain or
-        snow. For the most accurate and current conditions, I recommend checking a
-        reliable weather service or app.\n\nXKCD7392\n\nIf you''d like, you can share
-        your general location (e.g., \"New York\" or \"Tokyo\"), and I can provide
-        a general climate overview or suggest how to find real-time forecasts."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":28,"completion_tokens":96,"total_tokens":124,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":28},"system_fingerprint":"fp_eaab8d114b_prod0820_fp8_kvcache"}'
-  recorded_at: Tue, 13 Jan 2026 15:38:08 GMT
+      string: '{"id":"e250adcb-64d4-4db8-bc28-36faec6d7c57","object":"chat.completion","created":1772538621,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        weather varies greatly depending on your location and time of year. In general,
+        it includes conditions like temperature, precipitation, humidity, and wind.
+        For accurate, real-time information, I recommend checking a reliable weather
+        service or app. XKCD7392\n\nWould you like me to help you find a current forecast
+        for a specific area?"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":28,"completion_tokens":68,"total_tokens":96,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":28},"system_fingerprint":"fp_eaab8d114b_prod0820_fp8_kvcache"}'
+  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
 recorded_with: VCR 6.4.0

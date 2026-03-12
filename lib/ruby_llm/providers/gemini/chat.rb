@@ -14,7 +14,10 @@ module RubyLLM
           "models/#{@model}:generateContent"
         end
 
-        def render_payload(messages, tools:, temperature:, model:, stream: false, schema: nil, thinking: nil) # rubocop:disable Metrics/ParameterLists,Lint/UnusedMethodArgument
+        # rubocop:disable Metrics/ParameterLists,Lint/UnusedMethodArgument
+        def render_payload(messages, tools:, temperature:, model:, stream: false, schema: nil,
+                           thinking: nil, tool_prefs: nil)
+          tool_prefs ||= {}
           @model = model.id
           payload = {
             contents: format_messages(messages),
@@ -26,9 +29,15 @@ module RubyLLM
           payload[:generationConfig].merge!(structured_output_config(schema, model)) if schema
           payload[:generationConfig][:thinkingConfig] = build_thinking_config(model, thinking) if thinking&.enabled?
 
-          payload[:tools] = format_tools(tools) if tools.any?
+          if tools.any?
+            payload[:tools] = format_tools(tools)
+            # Gemini doesn't support controlling parallel tool calls
+            payload[:toolConfig] = build_tool_config(tool_prefs[:choice]) unless tool_prefs[:choice].nil?
+          end
+
           payload
         end
+        # rubocop:enable Metrics/ParameterLists,Lint/UnusedMethodArgument
 
         def build_thinking_config(_model, thinking)
           config = { includeThoughts: true }
@@ -111,6 +120,7 @@ module RubyLLM
             tool_calls: tool_calls,
             input_tokens: data.dig('usageMetadata', 'promptTokenCount'),
             output_tokens: calculate_output_tokens(data),
+            cached_tokens: data.dig('usageMetadata', 'cachedContentTokenCount'),
             thinking_tokens: data.dig('usageMetadata', 'thoughtsTokenCount'),
             model_id: data['modelVersion'] || response.env.url.path.split('/')[3].split(':')[0],
             raw: response
@@ -119,6 +129,9 @@ module RubyLLM
 
         def convert_schema_to_gemini(schema)
           return nil unless schema
+
+          # Extract inner schema if wrapper format (e.g., from RubyLLM::Schema.to_json_schema)
+          schema = schema[:schema] || schema
 
           GeminiSchema.new(schema).to_h
         end
@@ -132,7 +145,10 @@ module RubyLLM
           parts = candidate.dig('content', 'parts')
           return '' unless parts&.any?
 
-          build_response_content(parts)
+          non_thought_parts = parts.reject { |part| part['thought'] }
+          return '' unless non_thought_parts.any?
+
+          build_response_content(non_thought_parts)
         end
 
         def extract_text_parts(parts)
@@ -176,7 +192,7 @@ module RubyLLM
         end
 
         def build_json_schema(schema)
-          normalized = RubyLLM::Utils.deep_dup(schema)
+          normalized = RubyLLM::Utils.deep_dup(schema[:schema])
           normalized.delete(:strict)
           normalized.delete('strict')
           RubyLLM::Utils.deep_stringify_keys(normalized)

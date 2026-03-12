@@ -1,0 +1,179 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.mistral.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"mistral-small-latest","messages":[{"role":"user","content":"What''s
+        the fall of Rome?"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}],"tool_choice":{"type":"function","function":{"name":"weather"}}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Authorization:
+      - Bearer <MISTRAL_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 03 Mar 2026 11:56:52 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Mistral-Correlation-Id:
+      - '019cb38e-e560-722a-a82b-29cd7c95f764'
+      X-Kong-Request-Id:
+      - '019cb38e-e560-722a-a82b-29cd7c95f764'
+      X-Ratelimit-Limit-Tokens-Minute:
+      - '2000000'
+      X-Ratelimit-Remaining-Tokens-Minute:
+      - '1999181'
+      X-Ratelimit-Tokens-Query-Cost:
+      - '160'
+      X-Ratelimit-Limit-Req-Minute:
+      - '360'
+      X-Ratelimit-Remaining-Req-Minute:
+      - '356'
+      X-Envoy-Upstream-Service-Time:
+      - '232'
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Kong-Upstream-Latency:
+      - '234'
+      X-Kong-Proxy-Latency:
+      - '8'
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"747326dad158453fa793f87cf2d287e7","created":1772539012,"model":"mistral-small-latest","usage":{"prompt_tokens":132,"total_tokens":160,"completion_tokens":28,"prompt_tokens_details":{"cached_tokens":0}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"tool_calls","message":{"role":"assistant","tool_calls":[{"id":"rhwkTwvl8","function":{"name":"weather","arguments":"{\"latitude\":
+        \"41.9028\", \"longitude\": \"12.4964\"}"},"index":0}],"content":""}}]}'
+  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+- request:
+    method: post
+    uri: https://api.mistral.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"mistral-small-latest","messages":[{"role":"user","content":"What''s
+        the fall of Rome?"},{"role":"assistant","content":"","tool_calls":[{"id":"rhwkTwvl8","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}"}}]},{"role":"tool","content":"Current
+        weather at 41.9028, 12.4964: 15°C, Wind: 10 km/h","tool_call_id":"rhwkTwvl8"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Authorization:
+      - Bearer <MISTRAL_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 03 Mar 2026 11:56:54 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Mistral-Correlation-Id:
+      - '019cb38e-e68f-7871-91af-e44c8a6983f8'
+      X-Kong-Request-Id:
+      - '019cb38e-e68f-7871-91af-e44c8a6983f8'
+      X-Ratelimit-Limit-Tokens-Minute:
+      - '2000000'
+      X-Ratelimit-Remaining-Tokens-Minute:
+      - '1998618'
+      X-Ratelimit-Tokens-Query-Cost:
+      - '574'
+      X-Ratelimit-Limit-Req-Minute:
+      - '360'
+      X-Ratelimit-Remaining-Req-Minute:
+      - '355'
+      X-Envoy-Upstream-Service-Time:
+      - '2194'
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Kong-Upstream-Latency:
+      - '2195'
+      X-Kong-Proxy-Latency:
+      - '5'
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"8a9b0dee4aeb4e078a1f5a4a60ce9569","created":1772539012,"model":"mistral-small-latest","usage":{"prompt_tokens":206,"total_tokens":574,"completion_tokens":368,"prompt_tokens_details":{"cached_tokens":0}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
+        fall of Rome typically refers to the fall of the Western Roman Empire, which
+        occurred in 476 AD. This event marked the end of the ancient Roman state and
+        the beginning of the Middle Ages in Western Europe. The fall of Rome is often
+        attributed to a combination of internal and external factors, including:\n\n1.
+        **Internal Factors:**\n   - **Political Corruption and Instability:** The
+        Roman Empire experienced significant political corruption and instability,
+        with frequent changes in leadership and power struggles.\n   - **Economic
+        Decline:** Economic issues, including heavy taxation, inflation, and a reliance
+        on slave labor, weakened the empire''s economic foundation.\n   - **Military
+        Overspending:** The empire''s extensive military expenditures drained its
+        resources, making it difficult to maintain and defend its vast territories.\n   -
+        **Social Unrest:** Social and economic inequalities led to unrest and dissatisfaction
+        among the population.\n\n2. **External Factors:**\n   - **Barbarian Invasions:**
+        Various Germanic tribes, such as the Visigoths, Vandals, and Ostrogoths, invaded
+        Roman territories, weakening the empire''s defenses.\n   - **Military Oversight:**
+        The Roman military, once a formidable force, became less effective due to
+        a lack of resources and leadership.\n   - **Loss of Territorial Integrity:**
+        The empire''s vast territories became increasingly difficult to defend and
+        govern effectively.\n\nThe fall of Rome is often symbolized by the deposition
+        of the last Western Roman Emperor, Romulus Augustulus, by the Germanic chieftain
+        Odoacer in 476 AD. This event marked the end of the Western Roman Empire,
+        although the Eastern Roman Empire (Byzantine Empire) continued to exist for
+        nearly another thousand years.\n\nWould you like more detailed information
+        on any specific aspect of the fall of Rome?"}}]}'
+  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+recorded_with: VCR 6.4.0

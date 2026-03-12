@@ -1,0 +1,27 @@
+<%% content_for :title, "Showing <%= chat_table_name.singularize.humanize.downcase %>" %>
+
+<%%= turbo_stream_from "<%= chat_variable_name %>_#{@<%= chat_variable_name %>.id}" %>
+
+<%# Keep layout conventions aligned with tailwindcss-rails scaffold (top-left, md:w-2/3). -%>
+<div class="md:w-2/3 w-full">
+  <%% if notice.present? %>
+    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-md inline-block" id="notice"><%%= notice %></p>
+  <%% end %>
+
+  <h1 class="font-bold text-4xl">Showing <%= chat_table_name.singularize.humanize.downcase %> #<%%= @<%= chat_variable_name %>.id %></h1>
+
+  <div class="my-5">
+    <strong class="block font-medium mb-1">Model:</strong>
+    <%%= @<%= chat_variable_name %>.<%= model_table_name.singularize %>&.label || default_model_display_name %>
+  </div>
+
+  <div id="<%= message_table_name %>" class="min-w-full divide-y divide-gray-200 space-y-5 my-5">
+    <%% @<%= chat_variable_name %>.<%= message_table_name %>.where.not(id: nil).each do |<%= message_variable_name %>| %>
+      <%%= render <%= message_variable_name %> %>
+    <%% end %>
+  </div>
+
+  <%%= render "<%= message_model_name.underscore.pluralize %>/form", <%= chat_variable_name %>: @<%= chat_variable_name %>, <%= message_variable_name %>: @<%= message_variable_name %> %>
+
+  <%%= link_to "Back to <%= chat_table_name.humanize.downcase %>", <%= chat_table_name %>_path, class: "w-full sm:w-auto text-center mt-2 sm:mt-0 sm:ml-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
+</div>

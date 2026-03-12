@@ -31,7 +31,7 @@ Gem::Specification.new do |spec|
 
   # Post-install message for upgrading users
   spec.post_install_message = <<~MESSAGE
-    Upgrading from RubyLLM < 1.10.x? Check the upgrade guide for new features and migration instructions
+    Upgrading from RubyLLM < 1.14.x? Check the upgrade guide for new features and migration instructions
     --> https://rubyllm.com/upgrading/
   MESSAGE
 
@@ -51,7 +51,7 @@ Gem::Specification.new do |spec|
   end
   spec.add_dependency 'faraday-multipart', '>= 1'
   spec.add_dependency 'faraday-net_http', '>= 1'
-  spec.add_dependency 'marcel', '~> 1.0'
-  spec.add_dependency 'ruby_llm-schema', '~> 0.2.1'
+  spec.add_dependency 'marcel', '~> 1'
+  spec.add_dependency 'ruby_llm-schema', '~> 0'
   spec.add_dependency 'zeitwerk', '~> 2'
 end

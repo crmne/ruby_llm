@@ -1,0 +1,122 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.deepseek.com/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"deepseek-chat","messages":[{"role":"user","content":"When
+        was the fall of Rome?"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}],"tool_choice":"required"}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Authorization:
+      - Bearer <DEEPSEEK_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Date:
+      - Tue, 03 Mar 2026 11:56:19 GMT
+      Server:
+      - elb
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Credentials:
+      - 'true'
+      X-Ds-Trace-Id:
+      - 62294f9bd3586fdebc98d753af5bb77b
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 a78f8078f85de402de93ba5387c94df8.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - TXL52-P1
+      X-Amz-Cf-Id:
+      - ge7H-SMirxtuzq1tR2clKPhdQX8zB1X6gRymmAhn0Do6DUo1jO-ADg==
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"2e677dab-b76e-4ee7-a368-bb149998b830","object":"chat.completion","created":1772538979,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"index":0,"id":"call_00_RzDVBFfRe3AJaqTtpCA7vORm","type":"function","function":{"name":"weather","arguments":"{\"latitude\":
+        \"41.9028\", \"longitude\": \"12.4964\"}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":368,"completion_tokens":58,"total_tokens":426,"prompt_tokens_details":{"cached_tokens":320},"prompt_cache_hit_tokens":320,"prompt_cache_miss_tokens":48},"system_fingerprint":"fp_eaab8d114b_prod0820_fp8_kvcache"}'
+  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+- request:
+    method: post
+    uri: https://api.deepseek.com/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"deepseek-chat","messages":[{"role":"user","content":"When
+        was the fall of Rome?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_00_RzDVBFfRe3AJaqTtpCA7vORm","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}"}}]},{"role":"tool","content":"Current
+        weather at 41.9028, 12.4964: 15°C, Wind: 10 km/h","tool_call_id":"call_00_RzDVBFfRe3AJaqTtpCA7vORm"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Authorization:
+      - Bearer <DEEPSEEK_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Date:
+      - Tue, 03 Mar 2026 11:56:22 GMT
+      Server:
+      - elb
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Credentials:
+      - 'true'
+      X-Ds-Trace-Id:
+      - 44c4201da0f449d53f0a565c5b38a26f
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 95e3cc9e14ff093ad937f013959268c0.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - TXL50-P4
+      X-Amz-Cf-Id:
+      - NJgvM92r5YVVI0VQF2CZavjkwT5zFnjYkEOCzmPXlEyK-u0_wdR6Aw==
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6IjVhODhiMDU2LWNmYjQtNDBjYS04NzEwLTY4NzY0YmYyZGJkNCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NzI1Mzg5ODIsIm1vZGVsIjoiZGVlcHNlZWstY2hhdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiSSBhcG9sb2dpemUsIGJ1dCBJIGRvbid0IGhhdmUgYWNjZXNzIHRvIGhpc3RvcmljYWwgaW5mb3JtYXRpb24gYWJvdXQgdGhlIGZhbGwgb2YgUm9tZS4gVGhlIHRvb2wgSSB1c2VkIHdhcyBmb3IgY3VycmVudCB3ZWF0aGVyIGluZm9ybWF0aW9uLCB3aGljaCBzaG93cyB0aGF0IFJvbWUgY3VycmVudGx5IGhhcyBhIHRlbXBlcmF0dXJlIG9mIDE1wrBDIHdpdGggMTAga20vaCB3aW5kcy5cblxuRm9yIGhpc3RvcmljYWwgcXVlc3Rpb25zIGFib3V0IHRoZSBmYWxsIG9mIFJvbWUsIHlvdSB3b3VsZCBuZWVkIHRvIGNvbnN1bHQgaGlzdG9yaWNhbCBzb3VyY2VzIG9yIHVzZSBhIGRpZmZlcmVudCB0b29sIHRoYXQgc3BlY2lhbGl6ZXMgaW4gaGlzdG9yaWNhbCBpbmZvcm1hdGlvbi4gVGhlIGZhbGwgb2YgUm9tZSBpcyB0eXBpY2FsbHkgYXNzb2NpYXRlZCB3aXRoIHRoZSBkZWNsaW5lIG9mIHRoZSBXZXN0ZXJuIFJvbWFuIEVtcGlyZSwgd2l0aCB2YXJpb3VzIGRhdGVzIGNpdGVkIGJ5IGhpc3RvcmlhbnMgaW5jbHVkaW5nIDQ3NiBDRSB3aGVuIHRoZSBsYXN0IFdlc3Rlcm4gUm9tYW4gRW1wZXJvciB3YXMgZGVwb3NlZCwgdGhvdWdoIHRoZSBkZWNsaW5lIHdhcyBhIGdyYWR1YWwgcHJvY2VzcyBvdmVyIGNlbnR1cmllcy4ifSwibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjo0NjksImNvbXBsZXRpb25fdG9rZW5zIjoxMjEsInRvdGFsX3Rva2VucyI6NTkwLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6NDQ4fSwicHJvbXB0X2NhY2hlX2hpdF90b2tlbnMiOjQ0OCwicHJvbXB0X2NhY2hlX21pc3NfdG9rZW5zIjoyMX0sInN5c3RlbV9maW5nZXJwcmludCI6ImZwX2VhYWI4ZDExNGJfcHJvZDA4MjBfZnA4X2t2Y2FjaGUifQ==
+  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+recorded_with: VCR 6.4.0

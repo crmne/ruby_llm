@@ -12,7 +12,7 @@ module RubyLLM
       include Anthropic::Tools
 
       def api_base
-        'https://api.anthropic.com'
+        @config.anthropic_api_base || 'https://api.anthropic.com'
       end
 
       def headers
@@ -25,6 +25,10 @@ module RubyLLM
       class << self
         def capabilities
           Anthropic::Capabilities
+        end
+
+        def configuration_options
+          %i[anthropic_api_key anthropic_api_base]
         end
 
         def configuration_requirements

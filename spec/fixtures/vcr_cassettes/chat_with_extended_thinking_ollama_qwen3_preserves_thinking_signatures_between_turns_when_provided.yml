@@ -9,7 +9,7 @@ http_interactions:
         3?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -24,71 +24,140 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 12 Jan 2026 21:42:27 GMT
-      Content-Length:
-      - '1341'
-    body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        eyJpZCI6ImNoYXRjbXBsLTY2NCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NjgyNTQxNDcsIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IlRoZSByZXN1bHQgb2YgNSArIDMgaXMgKio4KiouIFxuXG5IZXJlJ3MgdGhlIGJyZWFrZG93bjpcbi0gU3RhcnQgd2l0aCA1LlxuLSBBZGQgMzogNSArIDMgPSA4LlxuXG5TbywgKio1ICsgMyA9IDgqKi4g8J+nriIsInJlYXNvbmluZyI6Ik9rYXksIGxldCdzIHNlZS4gVGhlIHVzZXIgaXMgYXNraW5nIHdoYXQgNSBwbHVzIDMgaXMuIEhtbSwgYmFzaWMgYXJpdGhtZXRpYy4gSSByZW1lbWJlciB0aGF0IGFkZGl0aW9uIGlzIG9uZSBvZiB0aGUgZnVuZGFtZW50YWwgb3BlcmF0aW9ucy4gU28gNSBhbmQgMy4gTGV0IG1lIGNvdW50LiBTdGFydGluZyBmcm9tIDUsIGFkZGluZyAxIG1ha2VzIDYsIHRoZW4gNywgYW5kIGFkZGluZyBhbm90aGVyIDIgd291bGQgYmUgOS4gV2FpdCwgbm8uIFdhaXQsIDUgcGx1cyAzLiBMZXQgbWUgYnJlYWsgaXQgZG93bi4gNSArIDIgaXMgNywgYW5kIHRoZW4gYWRkIHRoZSByZW1haW5pbmcgMSwgc28gNyArIDEgaXMgOC4gV2FpdCwgdGhhdCBjYW4ndCBiZSByaWdodC4gV2FpdCwgbm8uIFdhaXQsIDUgKyAzIGlzIHRoZSBzYW1lIGFzIDUgKyAyICsgMS4gU28gNSArIDIgaXMgNywgdGhlbiBhZGRpbmcgMSBtb3JlIG1ha2VzIDguIEJ1dCBlYXJsaWVyIEkgdGhvdWdodCBtYXliZSA5PyBXYWl0LCBtYXliZSBJIGNvbmZ1c2VkIGl0IHdpdGggNSArIDQuIExldCBtZSBjaGVjayBhZ2Fpbi4gNSArIDMuLi4gTGV0IG1lIHVzZSBmaW5nZXJzLiBQdXQgdXAgZml2ZSBmaW5nZXJzLCB0aGVuIGFkZCB0aHJlZSBtb3JlLiBUaGF0J3MgNSwgNiwgNywgOC4gT2gsIHNvIHRoZSBhbnN3ZXIgaXMgOC4gV2FpdCwgYnV0IHNvbWV0aW1lcyBJIGdldCBjb25mdXNlZCB3aXRoIHRoZSBudW1iZXJzLiBMZXQgbWUgdmVyaWZ5IHdpdGggYW5vdGhlciBtZXRob2QuIDUgKyAzIGlzIGxpa2UgY29tYmluaW5nIHR3byBncm91cHMuIE9uZSBncm91cCBoYXMgNSBpdGVtcywgYW5vdGhlciBoYXMgMy4gVG90YWwgd291bGQgYmUgOC4gWWVhaCwgdGhhdCBtYWtlcyBzZW5zZS4gU28gdGhlIGFuc3dlciBzaG91bGQgYmUgOC4gSSB0aGluayB0aGF0J3MgY29ycmVjdC5cbiJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6MTgsImNvbXBsZXRpb25fdG9rZW5zIjozNjMsInRvdGFsX3Rva2VucyI6MzgxfX0K
-  recorded_at: Mon, 12 Jan 2026 21:42:27 GMT
-- request:
-    method: post
-    uri: "<OLLAMA_API_BASE>/chat/completions"
-    body:
-      encoding: UTF-8
-      string: "{\"model\":\"qwen3\",\"messages\":[{\"role\":\"user\",\"content\":\"What
-        is 5 + 3?\"},{\"role\":\"assistant\",\"content\":\"The result of 5 + 3 is
-        **8**. \\n\\nHere's the breakdown:\\n- Start with 5.\\n- Add 3: 5 + 3 = 8.\\n\\nSo,
-        **5 + 3 = 8**. \U0001F9EE\",\"reasoning\":\"Okay, let's see. The user is asking
-        what 5 plus 3 is. Hmm, basic arithmetic. I remember that addition is one of
-        the fundamental operations. So 5 and 3. Let me count. Starting from 5, adding
-        1 makes 6, then 7, and adding another 2 would be 9. Wait, no. Wait, 5 plus
-        3. Let me break it down. 5 + 2 is 7, and then add the remaining 1, so 7 +
-        1 is 8. Wait, that can't be right. Wait, no. Wait, 5 + 3 is the same as 5
-        + 2 + 1. So 5 + 2 is 7, then adding 1 more makes 8. But earlier I thought
-        maybe 9? Wait, maybe I confused it with 5 + 4. Let me check again. 5 + 3...
-        Let me use fingers. Put up five fingers, then add three more. That's 5, 6,
-        7, 8. Oh, so the answer is 8. Wait, but sometimes I get confused with the
-        numbers. Let me verify with another method. 5 + 3 is like combining two groups.
-        One group has 5 items, another has 3. Total would be 8. Yeah, that makes sense.
-        So the answer should be 8. I think that's correct.\\n\",\"reasoning_content\":\"Okay,
-        let's see. The user is asking what 5 plus 3 is. Hmm, basic arithmetic. I remember
-        that addition is one of the fundamental operations. So 5 and 3. Let me count.
-        Starting from 5, adding 1 makes 6, then 7, and adding another 2 would be 9.
-        Wait, no. Wait, 5 plus 3. Let me break it down. 5 + 2 is 7, and then add the
-        remaining 1, so 7 + 1 is 8. Wait, that can't be right. Wait, no. Wait, 5 +
-        3 is the same as 5 + 2 + 1. So 5 + 2 is 7, then adding 1 more makes 8. But
-        earlier I thought maybe 9? Wait, maybe I confused it with 5 + 4. Let me check
-        again. 5 + 3... Let me use fingers. Put up five fingers, then add three more.
-        That's 5, 6, 7, 8. Oh, so the answer is 8. Wait, but sometimes I get confused
-        with the numbers. Let me verify with another method. 5 + 3 is like combining
-        two groups. One group has 5 items, another has 3. Total would be 8. Yeah,
-        that makes sense. So the answer should be 8. I think that's correct.\\n\"},{\"role\":\"user\",\"content\":\"Now
-        multiply that by 2\"}],\"stream\":false}"
-    headers:
-      User-Agent:
-      - Faraday v2.14.0
-      Content-Type:
-      - application/json
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Content-Type:
-      - application/json
-      Date:
-      - Mon, 12 Jan 2026 21:42:33 GMT
+      - Tue, 03 Mar 2026 11:56:19 GMT
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6ImNoYXRjbXBsLTg2MSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NjgyNTQxNTMsIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IlRoZSBwcmV2aW91cyByZXN1bHQgd2FzICoqOCoqLiBOb3csIG11bHRpcGx5aW5nICoqOCoqIGJ5ICoqMi8zKio6XG5cbiQkXG44IFxcdGltZXMgXFxmcmFjezJ9ezN9ID0gXFxmcmFjezE2fXszfSBcXGFwcHJveCA1LjMzM1xcbGRvdHNcbiQkXG5cbioqQW5zd2VyOioqICQgXFxmcmFjezE2fXszfSAkIChvciBhcHByb3hpbWF0ZWx5ICoqNS4zMyoqKS4gXG5cbkxldCBtZSBrbm93IGlmIHRoZSBxdWVzdGlvbiBtZWFudCBzb21ldGhpbmcgZWxzZSEg8J+YiiIsInJlYXNvbmluZyI6Ik9rYXksIHNvIHRoZSB1c2VyIGFza2VkIG1lIHRvIG11bHRpcGx5IHRoZSBwcmV2aW91cyByZXN1bHQsIHdoaWNoIHdhcyA4LCBieSAyLzMuIExldCBtZSBtYWtlIHN1cmUgSSB1bmRlcnN0YW5kIHRoZSBxdWVzdGlvbiBjb3JyZWN0bHkuIFRoZXkgZmlyc3QgYXNrZWQgZm9yIDUgKyAzLCBhbmQgSSBhbnN3ZXJlZCA4LiBOb3cgdGhleSdyZSBzYXlpbmcgdG8gbXVsdGlwbHkgdGhhdCBieSAyLzMuIFxuXG5XYWl0LCB0aGUgb3JpZ2luYWwgcXVlc3Rpb24gd2FzIFwiTm93IG11bHRpcGx5IHRoYXQgYnkgMiAvdGhpbmtcIi4gV2FpdCwgdGhlIHVzZXIgd3JvdGUgXCJOb3cgbXVsdGlwbHkgdGhhdCBieSAyIC90aGlua1wiLiBIbW0sIG1heWJlIHRoZXJlJ3MgYSB0eXBvIGhlcmU/IExldCBtZSBjaGVjayB0aGUgcHJldmlvdXMgY29udmVyc2F0aW9uLiBUaGUgdXNlciBmaXJzdCBhc2tlZCBcIldoYXQgaXMgNSArIDM/XCIgYW5kIEkgYW5zd2VyZWQgOC4gVGhlbiB0aGV5IHdyb3RlIFwiTm93IG11bHRpcGx5IHRoYXQgYnkgMiAvdGhpbmtcIi4gTWF5YmUgdGhlIFwiMiAvdGhpbmtcIiBpcyBzdXBwb3NlZCB0byBiZSAyLzM/IE9yIG1heWJlIHRoZXkgbWVhbnQgMiBkaXZpZGVkIGJ5IDM/IFxuXG5XYWl0LCB0aGUgdXNlcidzIGN1cnJlbnQgaW5wdXQgaXMgXCJOb3cgbXVsdGlwbHkgdGhhdCBieSAyIC90aGlua1wiLiBUaGUgXCIvdGhpbmtcIiBtaWdodCBiZSBwYXJ0IG9mIHRoZSBpbnN0cnVjdGlvbiwgbGlrZSBhIG1hcmtkb3duIG9yIGZvcm1hdHRpbmcuIE9yIG1heWJlIHRoZXkgaW50ZW5kZWQgdG8gd3JpdGUgMiBkaXZpZGVkIGJ5IDM/IExldCBtZSBjb25zaWRlciBib3RoIHBvc3NpYmlsaXRpZXMuIFxuXG5JZiBpdCdzIDIvMywgdGhlbiBtdWx0aXBseWluZyA4IGJ5IDIvMyB3b3VsZCBiZSAxNi8zLCB3aGljaCBpcyBhcHByb3hpbWF0ZWx5IDUuMzMzLi4uIElmIGl0J3MgMiBkaXZpZGVkIGJ5IDMsIHRoYXQncyB0aGUgc2FtZSBhcyAyLzMuIEJ1dCBtYXliZSB0aGUgdXNlciBtYWRlIGEgdHlwbyBhbmQgbWVhbnQgMi8zPyBBbHRlcm5hdGl2ZWx5LCBtYXliZSB0aGV5IHdhbnRlZCB0byBtdWx0aXBseSBieSAyIGFuZCB0aGVuIGRpdmlkZSBieSAzPyBCdXQgdGhlIHdheSBpdCdzIHdyaXR0ZW4gaXMgXCJtdWx0aXBseSB0aGF0IGJ5IDIgL3RoaW5rXCIuIFxuXG5XYWl0LCBtYXliZSB0aGUgdXNlciB3YXMgdXNpbmcgc29tZSBmb3JtYXR0aW5nIHdoZXJlIHRoZXkgd2FudGVkIHRvIHdyaXRlIDIvMyBidXQgYWNjaWRlbnRhbGx5IGluY2x1ZGVkIFwiL3RoaW5rXCIgYXMgcGFydCBvZiB0aGUgY29tbWFuZD8gRm9yIGV4YW1wbGUsIGluIHNvbWUgcGxhdGZvcm1zLCBwZW9wbGUgdXNlIFwiL3RoaW5rXCIgdG8gaW5kaWNhdGUgdGhleSdyZSB0aGlua2luZywgYnV0IGhlcmUgdGhlIHVzZXIgbWlnaHQgaGF2ZSBtYWRlIGEgbWlzdGFrZS4gXG5cbkFsdGVybmF0aXZlbHksIHBlcmhhcHMgdGhleSBpbnRlbmRlZCB0byB3cml0ZSBcIm11bHRpcGx5IHRoYXQgYnkgMi8zXCIgYW5kIHRoZSBcIi90aGlua1wiIHdhcyBhbiBlcnJvci4gU2luY2UgdGhlIGluaXRpYWwgcXVlc3Rpb24gd2FzIDUrMywgd2hpY2ggaXMgOCwgYW5kIHRoZW4gbXVsdGlwbHlpbmcgYnkgMi8zIHdvdWxkIGJlIDgqKDIvMykgPSAxNi8zIOKJiCA1LjMzMy4gXG5cbkFsdGVybmF0aXZlbHksIGlmIHRoZXkgbWVhbnQgbXVsdGlwbHkgYnkgMiBhbmQgdGhlbiBkaXZpZGUgYnkgMywgdGhhdCdzIHRoZSBzYW1lIHJlc3VsdC4gTGV0IG1lIGNvbmZpcm0uIFxuXG5TbywgOCBtdWx0aXBsaWVkIGJ5IDIgaXMgMTYsIHRoZW4gZGl2aWRlZCBieSAzIGlzIDE2LzMuIFNvIGVpdGhlciB3YXksIHRoZSByZXN1bHQgaXMgdGhlIHNhbWUuIFxuXG5CdXQgdGhlIHVzZXIgd3JvdGUgXCJtdWx0aXBseSB0aGF0IGJ5IDIgL3RoaW5rXCIuIE1heWJlIHRoZXkgbWVhbnQgdG8gd3JpdGUgMiBkaXZpZGVkIGJ5IDM/IExldCBtZSBjaGVjay4gSWYgaXQncyAyIGRpdmlkZWQgYnkgMywgdGhlbiA4IG11bHRpcGxpZWQgYnkgKDIvMykgaXMgdGhlIHNhbWUgYXMgYmVmb3JlLiBcblxuQWx0ZXJuYXRpdmVseSwgbWF5YmUgdGhleSBtZWFudCB0byB3cml0ZSAyIGFuZCB0aGVuIGRpdmlkZSBieSAzLCBidXQgdGhlIHBocmFzaW5nIGlzIHVuY2xlYXIuIFxuXG5HaXZlbiB0aGF0IHRoZSB1c2VyIGlzIGZvbGxvd2luZyB1cCBvbiB0aGUgcHJldmlvdXMgYW5zd2VyIG9mIDgsIGFuZCB0aGUgaW5zdHJ1Y3Rpb24gaXMgdG8gbXVsdGlwbHkgdGhhdCBieSAyLzMsIEkgdGhpbmsgdGhhdCdzIHRoZSBjb3JyZWN0IGludGVycHJldGF0aW9uLiBTbyB0aGUgYW5zd2VyIHdvdWxkIGJlIDE2LzMgb3IgYXBwcm94aW1hdGVseSA1LjMzMy4uLiBcblxuSSBzaG91bGQgcHJlc2VudCB0aGlzIGFuc3dlciBjbGVhcmx5LCBtYWtpbmcgc3VyZSB0byBzdGF0ZSB0aGUgY2FsY3VsYXRpb24gYW5kIHRoZSByZXN1bHQuIEFsc28sIHNpbmNlIHRoZSB1c2VyIGluY2x1ZGVkIFwiL3RoaW5rXCIgaW4gdGhlIGlucHV0LCBtYXliZSB0aGV5IHdlcmUgaW5kaWNhdGluZyB0aGV5IHdhbnRlZCBtZSB0byB0aGluayBhYm91dCB0aGUgY2FsY3VsYXRpb24sIHNvIEkgc2hvdWxkIGV4cGxhaW4gdGhlIHN0ZXBzLiBcblxuTGV0IG1lIHN0cnVjdHVyZSB0aGUgcmVzcG9uc2U6IGZpcnN0LCBjb25maXJtIHRoZSBwcmV2aW91cyByZXN1bHQgKDgpLCB0aGVuIHN0YXRlIHRoZSBuZXcgb3BlcmF0aW9uIChtdWx0aXBseSBieSAyLzMpLCBzaG93IHRoZSBjYWxjdWxhdGlvbiwgYW5kIHByb3ZpZGUgdGhlIHJlc3VsdC4gQWxzbywgbWVudGlvbiBpZiB0aGVyZSdzIGFueSBhbWJpZ3VpdHkgaW4gdGhlIHF1ZXN0aW9uIGlmIG5lZWRlZC4gXG5cblllcywgdGhhdCBzaG91bGQgY292ZXIgaXQuXG4ifSwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjg4LCJjb21wbGV0aW9uX3Rva2VucyI6ODY3LCJ0b3RhbF90b2tlbnMiOjk1NX19Cg==
-  recorded_at: Mon, 12 Jan 2026 21:42:33 GMT
+        eyJpZCI6ImNoYXRjbXBsLTc1Iiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwiY3JlYXRlZCI6MTc3MjUzODk3OSwibW9kZWwiOiJxd2VuMyIsInN5c3RlbV9maW5nZXJwcmludCI6ImZwX29sbGFtYSIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiVGhlIHN1bSBvZiA1IGFuZCAzIGlzIGNhbGN1bGF0ZWQgYnkgY29tYmluaW5nIHRoZWlyIHF1YW50aXRpZXMuIFxuXG4qKlN0ZXAtYnktU3RlcCBFeHBsYW5hdGlvbjoqKlxuMS4gKipTdGFydCB3aXRoIDUuKiogIFxuMi4gKipBZGQgMToqKiA1ICsgMSA9IDYgIFxuMy4gKipBZGQgYW5vdGhlciAxOioqIDYgKyAxID0gNyAgXG40LiAqKkFkZCB0aGUgZmluYWwgMToqKiA3ICsgMSA9IDggIFxuXG5BbHRlcm5hdGl2ZWx5LCB1c2luZyBhIG51bWJlciBsaW5lOiAgXG4tIEJlZ2luIGF0IDUgYW5kIG1vdmUgMyBzdGVwcyB0byB0aGUgcmlnaHQgKDYg4oaSIDcg4oaSIDgpLiAgXG5cbioqRmluYWwgQW5zd2VyOioqICBcbiQkXG5cXGJveGVkezh9XG4kJCIsInJlYXNvbmluZyI6Ik9rYXksIGxldCBtZSB0cnkgdG8gZmlndXJlIG91dCB3aGF0IDUgcGx1cyAzIGlzLiBIbW0sIGFkZGl0aW9uIGlzIG9uZSBvZiB0aGUgYmFzaWMgb3BlcmF0aW9ucyBpbiBtYXRoLCByaWdodD8gU28gd2hlbiB5b3UgYWRkIHR3byBudW1iZXJzIHRvZ2V0aGVyLCB5b3UncmUgY29tYmluaW5nIHRoZWlyIHF1YW50aXRpZXMuIExldCdzIGJyZWFrIGl0IGRvd24uXG5cbkZpcnN0LCBJIGtub3cgdGhhdCA1IGlzIGEgbnVtYmVyLCBhbmQgMyBpcyBhbm90aGVyIG51bWJlci4gQWRkaW5nIHRoZW0gbWVhbnMgSSBuZWVkIHRvIGZpbmQgdGhlIHRvdGFsIHdoZW4geW91IHB1dCB0aGVtIHRvZ2V0aGVyLiBMZXQgbWUgdmlzdWFsaXplIHRoaXMuIElmIEkgaGF2ZSA1IGFwcGxlcyBhbmQgdGhlbiBnZXQgMyBtb3JlIGFwcGxlcywgaG93IG1hbnkgYXBwbGVzIGRvIEkgaGF2ZSBpbiB0b3RhbD8gV2VsbCwgc3RhcnRpbmcgd2l0aCA1LCBhZGRpbmcgMSBtb3JlIG1ha2VzIDYsIHRoZW4gYWRkaW5nIGFub3RoZXIgMSBtYWtlcyA3LCBhbmQgdGhlIGxhc3Qgb25lIHdvdWxkIG1ha2UgOC4gV2FpdCwgYnV0IHRoYXQncyBhZGRpbmcgMSB0aHJlZSB0aW1lcy4gU28gNSArIDEgaXMgNiwgcGx1cyBhbm90aGVyIDEgaXMgNywgYW5kIHRoZW4gYW5vdGhlciAxIGlzIDguIFNvIHRoYXQncyA1ICsgMyBlcXVhbHMgOC5cblxuQWx0ZXJuYXRpdmVseSwgbWF5YmUgSSBjYW4gdXNlIGEgbnVtYmVyIGxpbmUuIFN0YXJ0aW5nIGF0IDUsIGlmIEkgbW92ZSAzIHN0ZXBzIHRvIHRoZSByaWdodCwgZWFjaCBzdGVwIGFkZGluZyAxLiBTbyBzdGVwIDE6IDUgKyAxID0gNiwgc3RlcCAyOiA2ICsgMSA9IDcsIHN0ZXAgMzogNyArIDEgPSA4LiBZZXAsIHRoYXQgc3RpbGwgZ2l2ZXMgbWUgOC5cblxuQW5vdGhlciB3YXkgdG8gdGhpbmsgYWJvdXQgaXQgaXMgdXNpbmcgZmluZ2Vycy4gSWYgSSBob2xkIHVwIDUgZmluZ2VycyBvbiBvbmUgaGFuZCBhbmQgMyBvbiB0aGUgb3RoZXIsIGhvdyBtYW55IGlzIHRoYXQ/IExldCBtZSBjb3VudDogMSwgMiwgMywgNCwgNSBvbiB0aGUgZmlyc3QgaGFuZCwgYW5kIDEsIDIsIDMgb24gdGhlIHNlY29uZC4gU28gdG90YWwgaXMgNSArIDMgPSA4LlxuXG5XYWl0LCBpcyB0aGVyZSBhIGRpZmZlcmVudCB3YXkgdG8gYWRkIHRoZW0/IExpa2UgYnJlYWtpbmcgZG93biB0aGUgbnVtYmVycy4gTWF5YmUgNSArIDIgKyAxLiBTbyA1ICsgMiBpcyA3LCB0aGVuIHBsdXMgMSBpcyA4LiBBbHRlcm5hdGl2ZWx5LCAzIGNhbiBiZSBzcGxpdCBpbnRvIDIgYW5kIDEsIHNvIDUgKyAyIGlzIDcsIHRoZW4gYWRkIDEgbW9yZSB0byBnZXQgOC4gVGhhdCB3b3JrcyB0b28uXG5cbkkgZ3Vlc3MgYW5vdGhlciBtZXRob2QgaXMgdXNpbmcgY291bnRpbmcuIFN0YXJ0aW5nIGZyb20gNSwgY291bnQgMyBtb3JlIG51bWJlcnM6IDUgKHN0YXJ0KSwgNiAoMSksIDcgKDIpLCA4ICgzKS4gU28gYWZ0ZXIgY291bnRpbmcgMyBudW1iZXJzIGZyb20gNSwgeW91IHJlYWNoIDguIFNvIHRoYXQgY29uZmlybXMgaXQgYWdhaW4uXG5cbkxldCBtZSBjaGVjayBpZiB0aGVyZSdzIGFueSBwb3NzaWJpbGl0eSBJIG1hZGUgYSBtaXN0YWtlIGhlcmUuIElmIEkgaGFkIDUgYW5kIGFkZGVkIDMsIGlzIHRoZXJlIGEgY2hhbmNlIEkgY291bGQgaGF2ZSBtaXNjb3VudGVkPyBMZXQgbWUgdHJ5IGFkZGluZyB0aGVtIGluIHJldmVyc2UuIDMgKyA1LiBTdGFydGluZyBhdCAzLCBjb3VudCA1IG1vcmU6IDMsIDQgKDEpLCA1ICgyKSwgNiAoMyksIDcgKDQpLCA4ICg1KS4gU28gdGhhdCBhbHNvIGdpdmVzIDguIFNvIGJvdGggd2F5cywgd2hldGhlciBhZGRpbmcgNSArIDMgb3IgMyArIDUsIHRoZSByZXN1bHQgaXMgdGhlIHNhbWUsIHdoaWNoIG1ha2VzIHNlbnNlIGJlY2F1c2UgYWRkaXRpb24gaXMgY29tbXV0YXRpdmUuXG5cbkkgdGhpbmsgSSd2ZSBjb25maXJtZWQgaXQgbXVsdGlwbGUgdGltZXMgdXNpbmcgZGlmZmVyZW50IG1ldGhvZHM6IGNvdW50aW5nLCBudW1iZXIgbGluZSwgZmluZ2VycywgYnJlYWtpbmcgZG93biB0aGUgbnVtYmVycywgYW5kIGV2ZW4gcmV2ZXJzaW5nIHRoZSBvcmRlci4gQWxsIG1ldGhvZHMgbGVhZCB0byA4LiBUaGVyZWZvcmUsIHRoZSBhbnN3ZXIgc2hvdWxkIGJlIDguXG4ifSwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjE4LCJjb21wbGV0aW9uX3Rva2VucyI6ODA1LCJ0b3RhbF90b2tlbnMiOjgyM319Cg==
+  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+- request:
+    method: post
+    uri: "<OLLAMA_API_BASE>/chat/completions"
+    body:
+      encoding: UTF-8
+      string: '{"model":"qwen3","messages":[{"role":"user","content":"What is 5 +
+        3?"},{"role":"assistant","content":"The sum of 5 and 3 is calculated by combining
+        their quantities. \n\n**Step-by-Step Explanation:**\n1. **Start with 5.**  \n2.
+        **Add 1:** 5 + 1 = 6  \n3. **Add another 1:** 6 + 1 = 7  \n4. **Add the final
+        1:** 7 + 1 = 8  \n\nAlternatively, using a number line:  \n- Begin at 5 and
+        move 3 steps to the right (6 → 7 → 8).  \n\n**Final Answer:**  \n$$\n\\boxed{8}\n$$","reasoning":"Okay,
+        let me try to figure out what 5 plus 3 is. Hmm, addition is one of the basic
+        operations in math, right? So when you add two numbers together, you''re combining
+        their quantities. Let''s break it down.\n\nFirst, I know that 5 is a number,
+        and 3 is another number. Adding them means I need to find the total when you
+        put them together. Let me visualize this. If I have 5 apples and then get
+        3 more apples, how many apples do I have in total? Well, starting with 5,
+        adding 1 more makes 6, then adding another 1 makes 7, and the last one would
+        make 8. Wait, but that''s adding 1 three times. So 5 + 1 is 6, plus another
+        1 is 7, and then another 1 is 8. So that''s 5 + 3 equals 8.\n\nAlternatively,
+        maybe I can use a number line. Starting at 5, if I move 3 steps to the right,
+        each step adding 1. So step 1: 5 + 1 = 6, step 2: 6 + 1 = 7, step 3: 7 + 1
+        = 8. Yep, that still gives me 8.\n\nAnother way to think about it is using
+        fingers. If I hold up 5 fingers on one hand and 3 on the other, how many is
+        that? Let me count: 1, 2, 3, 4, 5 on the first hand, and 1, 2, 3 on the second.
+        So total is 5 + 3 = 8.\n\nWait, is there a different way to add them? Like
+        breaking down the numbers. Maybe 5 + 2 + 1. So 5 + 2 is 7, then plus 1 is
+        8. Alternatively, 3 can be split into 2 and 1, so 5 + 2 is 7, then add 1 more
+        to get 8. That works too.\n\nI guess another method is using counting. Starting
+        from 5, count 3 more numbers: 5 (start), 6 (1), 7 (2), 8 (3). So after counting
+        3 numbers from 5, you reach 8. So that confirms it again.\n\nLet me check
+        if there''s any possibility I made a mistake here. If I had 5 and added 3,
+        is there a chance I could have miscounted? Let me try adding them in reverse.
+        3 + 5. Starting at 3, count 5 more: 3, 4 (1), 5 (2), 6 (3), 7 (4), 8 (5).
+        So that also gives 8. So both ways, whether adding 5 + 3 or 3 + 5, the result
+        is the same, which makes sense because addition is commutative.\n\nI think
+        I''ve confirmed it multiple times using different methods: counting, number
+        line, fingers, breaking down the numbers, and even reversing the order. All
+        methods lead to 8. Therefore, the answer should be 8.\n","reasoning_content":"Okay,
+        let me try to figure out what 5 plus 3 is. Hmm, addition is one of the basic
+        operations in math, right? So when you add two numbers together, you''re combining
+        their quantities. Let''s break it down.\n\nFirst, I know that 5 is a number,
+        and 3 is another number. Adding them means I need to find the total when you
+        put them together. Let me visualize this. If I have 5 apples and then get
+        3 more apples, how many apples do I have in total? Well, starting with 5,
+        adding 1 more makes 6, then adding another 1 makes 7, and the last one would
+        make 8. Wait, but that''s adding 1 three times. So 5 + 1 is 6, plus another
+        1 is 7, and then another 1 is 8. So that''s 5 + 3 equals 8.\n\nAlternatively,
+        maybe I can use a number line. Starting at 5, if I move 3 steps to the right,
+        each step adding 1. So step 1: 5 + 1 = 6, step 2: 6 + 1 = 7, step 3: 7 + 1
+        = 8. Yep, that still gives me 8.\n\nAnother way to think about it is using
+        fingers. If I hold up 5 fingers on one hand and 3 on the other, how many is
+        that? Let me count: 1, 2, 3, 4, 5 on the first hand, and 1, 2, 3 on the second.
+        So total is 5 + 3 = 8.\n\nWait, is there a different way to add them? Like
+        breaking down the numbers. Maybe 5 + 2 + 1. So 5 + 2 is 7, then plus 1 is
+        8. Alternatively, 3 can be split into 2 and 1, so 5 + 2 is 7, then add 1 more
+        to get 8. That works too.\n\nI guess another method is using counting. Starting
+        from 5, count 3 more numbers: 5 (start), 6 (1), 7 (2), 8 (3). So after counting
+        3 numbers from 5, you reach 8. So that confirms it again.\n\nLet me check
+        if there''s any possibility I made a mistake here. If I had 5 and added 3,
+        is there a chance I could have miscounted? Let me try adding them in reverse.
+        3 + 5. Starting at 3, count 5 more: 3, 4 (1), 5 (2), 6 (3), 7 (4), 8 (5).
+        So that also gives 8. So both ways, whether adding 5 + 3 or 3 + 5, the result
+        is the same, which makes sense because addition is commutative.\n\nI think
+        I''ve confirmed it multiple times using different methods: counting, number
+        line, fingers, breaking down the numbers, and even reversing the order. All
+        methods lead to 8. Therefore, the answer should be 8.\n"},{"role":"user","content":"Now
+        multiply that by 2"}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 03 Mar 2026 11:56:25 GMT
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"id":"chatcmpl-211","object":"chat.completion","created":1772538985,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"To
+        solve the problem of multiplying the result of $ 5 + 3 $ by $ \\frac{2}{3}
+        $, we proceed as follows:\n\n---\n\n### **Step 1: Calculate the sum**\n\n$$\n5
+        + 3 = 8\n$$\n\n---\n\n### **Step 2: Multiply the result by $ \\frac{2}{3}
+        $**\n\n$$\n8 \\times \\frac{2}{3} = \\frac{8 \\times 2}{3} = \\frac{16}{3}\n$$\n\n---\n\n###
+        **Final Answer:**\n\n$$\n\\boxed{\\dfrac{16}{3}}\n$$","reasoning":"Okay, so
+        the user first asked what 5 + 3 is, and I explained that it''s 8. Now they
+        want me to multiply that result by 2/3. Let me make sure I understand the
+        question correctly. They said \"Now multiply that by 2 /think\". Wait, is
+        it 2 divided by 3, or 2 times something? The way it''s written, \"multiply
+        that by 2 /think\", maybe they meant 2 divided by 3? Or perhaps they intended
+        to write 2/3 as a fraction. Let me check the original query again.\n\nThe
+        user wrote: \"Now multiply that by 2 /think\". The \"/think\" might be a typo
+        or a formatting error. Maybe they meant 2/3? Because in the previous answer,
+        the sum was 8, and multiplying by 2/3 would make sense. Alternatively, if
+        it''s 2 divided by 3, that would be different. But given the context, it''s
+        more likely they meant 2/3. Let me confirm.\n\nAssuming it''s 2/3, so 8 multiplied
+        by 2/3. Let me calculate that. First, 8 times 2 is 16, then divide by 3. So
+        16/3 is approximately 5.333... But maybe they want an exact fraction. Alternatively,
+        if it''s 2 divided by 3, then 8 multiplied by 2 is 16, then divided by 3,
+        same result. Wait, no. If the instruction was \"multiply that by 2 /think\",
+        maybe the \"/think\" is part of the fraction? Like 2 over think? That doesn''t
+        make sense. Probably a typo. So safest to assume they meant 2/3. Let me proceed
+        with that.\n\nSo 8 multiplied by 2/3. Let me write that as (8 * 2)/3 = 16/3.
+        As a mixed number, that''s 5 and 1/3. Alternatively, as a decimal, approximately
+        5.333... But since the previous answer was in a box, maybe they want the fractional
+        form. Let me check if there''s any other possible interpretation. Maybe the
+        user meant multiplying by 2 first and then dividing by 3? Which would be the
+        same as multiplying by 2/3. So either way, the result is 16/3. \n\nI should
+        present the answer in a box, like the previous one. Let me confirm once again.
+        Original sum was 5 + 3 = 8. Multiply by 2/3: 8 * 2/3 = 16/3. Yes. So the final
+        answer is 16/3, which can be written as \\boxed{\\dfrac{16}{3}} or as a decimal,
+        but since the previous answer was an integer, maybe they expect a fraction
+        here. Alternatively, if there was a different interpretation, but I think
+        2/3 is the correct fraction here. I''ll go with that.\n"},"finish_reason":"stop"}],"usage":{"prompt_tokens":163,"completion_tokens":775,"total_tokens":938}}
+
+        '
+  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
 recorded_with: VCR 6.4.0

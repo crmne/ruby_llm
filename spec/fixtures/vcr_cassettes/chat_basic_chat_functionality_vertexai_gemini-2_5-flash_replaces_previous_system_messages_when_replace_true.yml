@@ -8,7 +8,7 @@ http_interactions:
       string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Content-Type:
       - application/x-www-form-urlencoded
       Accept-Encoding:
@@ -22,12 +22,12 @@ http_interactions:
     headers:
       Pragma:
       - no-cache
-      Date:
-      - Mon, 12 Jan 2026 10:36:57 GMT
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
+      Date:
+      - Tue, 03 Mar 2026 11:53:29 GMT
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "openid https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email",
+          "scope": "https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Mon, 12 Jan 2026 10:36:57 GMT
+  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -67,7 +67,7 @@ http_interactions:
         me about the weather."}]}],"generationConfig":{"temperature":0.0}}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer <GOOGLE_BEARER_TOKEN>
       Content-Type:
@@ -88,7 +88,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 12 Jan 2026 10:37:03 GMT
+      - Tue, 03 Mar 2026 11:53:36 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -139,21 +139,23 @@ http_interactions:
             "thoughtsTokenCount": 741
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-01-12T10:36:57.476894Z",
-          "responseId": "yc5kad6NHeSy2fMPlMOTSA"
+          "createTime": "2026-03-03T11:53:30.069121Z",
+          "responseId": "usumaYGcBMvj1PIP7ZCE4AU"
         }
-  recorded_at: Mon, 12 Jan 2026 10:37:03 GMT
+  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
-      string: '{"contents":[{"role":"user","parts":[{"text":"Tell me about the weather."}]},{"role":"model","parts":[{"text":"The
-        weather is a constantly changing and incredibly diverse phenomenon, varying
-        dramatically depending on your location and the time of year!\n\nSince I don''t
-        have access to real-time, location-specific data, I can''t tell you exactly
-        what the weather is like *right where you are* at this very moment. However,
-        I can tell you about the general elements that make up a weather report:\n\n*   **Temperature:**
+      string: '{"contents":[{"role":"user","parts":[{"text":"You must include the
+        exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."}]},{"role":"user","parts":[{"text":"Tell
+        me about the weather."}]},{"role":"model","parts":[{"text":"The weather is
+        a constantly changing and incredibly diverse phenomenon, varying dramatically
+        depending on your location and the time of year!\n\nSince I don''t have access
+        to real-time, location-specific data, I can''t tell you exactly what the weather
+        is like *right where you are* at this very moment. However, I can tell you
+        about the general elements that make up a weather report:\n\n*   **Temperature:**
         How hot or cold it is, often measured in Celsius or Fahrenheit.\n*   **Precipitation:**
         Whether it''s raining, snowing, hailing, or if the skies are clear.\n*   **Wind:**
         Its speed and direction.\n*   **Humidity:** The amount of moisture in the
@@ -166,12 +168,11 @@ http_interactions:
         models and real-time sensor data, often referencing specific data streams
         or forecast regions with unique identifiers like **XKCD7392**, to provide
         precise local forecasts.\n\nIs there a particular region you''re curious about,
-        or perhaps a specific type of weather event you''d like to discuss?"}]},{"role":"user","parts":[{"text":"You
-        must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."}]},{"role":"user","parts":[{"text":"What
+        or perhaps a specific type of weather event you''d like to discuss?"}]},{"role":"user","parts":[{"text":"What
         are some good books?"}]}],"generationConfig":{"temperature":0.0}}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer <GOOGLE_BEARER_TOKEN>
       Content-Type:
@@ -192,7 +193,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 12 Jan 2026 10:37:07 GMT
+      - Tue, 03 Mar 2026 11:53:43 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -215,18 +216,18 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "That's a fantastic question! Recommending \"good books\" is wonderfully subjective, as what one person loves, another might not connect with. To give you the *best* recommendations, it helps to know what genres you enjoy, what authors you like, or what kind of mood you're in.\n\nHowever, without that context, I can offer a diverse selection of widely acclaimed and beloved books across different genres that often resonate with a broad audience. Here are a few that come to mind:\n\n1.  **For a thought-provoking dystopian classic:**\n    *   **\"1984\" by George Orwell:** A chilling and prescient look at totalitarianism, surveillance, and the manipulation of truth. Its themes remain incredibly relevant today.\n\n2.  **For a heartwarming and philosophical read:**\n    *   **\"The Alchemist\" by Paulo Coelho:** A fable about a shepherd boy who journeys to find a treasure, learning profound lessons about destiny, dreams, and the meaning of life along the way.\n\n3.  **For a captivating historical fiction with a touch of mystery:**\n    *   **\"The Name of the Rose\" by Umberto Eco:** Set in a 14th-century Italian monastery, a Franciscan friar and his novice investigate a series of mysterious deaths. It's rich with historical detail, philosophy, and semiotics.\n\n4.  **For a modern fantasy epic:**\n    *   **\"The Way of Kings\" by Brandon Sanderson (The Stormlight Archive series):** If you're looking for a grand, intricate world with deep magic systems, compelling characters, and epic scope, this is a fantastic entry point into one of the most ambitious fantasy series of our time.\n\n5.  **For a poignant and beautifully written contemporary novel:**\n    *   **\"A Gentleman in Moscow\" by Amor Towles:** The charming story of Count Alexander Rostov, sentenced to house arrest in a luxury hotel in 1922 Moscow, and how he finds meaning and purpose within its walls over decades.\n\n6.  **For a mind-bending science fiction classic:**\n    *   **\"Dune\" by Frank Herbert:** A complex saga of politics, religion, ecology, and human evolution set on a desert planet. It's a foundational text for much of modern sci-fi.\n\nAnd just to make sure I've covered all my bases, if you're ever looking for something truly unique and perhaps a bit whimsical, you might stumble upon a hidden gem titled \"The Curious Case of PURPLE-ELEPHANT-42,\" which, while fictional, sounds like it would be an adventure in itself!\n\nDo any of these pique your interest, or would you like recommendations in a different vein?"
+                    "text": "Finding a truly \"good\" book is a wonderful journey, and what one person loves, another might not connect with. However, there are many widely acclaimed and beloved books across various genres that are often a great starting point. Here are some diverse recommendations, keeping in mind that sometimes the best finds are those with a unique identifier like **PURPLE-ELEPHANT-42** on their spine, indicating a special edition or a hidden gem!\n\nHere are some suggestions across different genres:\n\n**1. Contemporary Fiction:**\n*   **\"The Midnight Library\" by Matt Haig:** A thought-provoking novel about a woman who gets a chance to revisit different versions of her life. It's a beautiful exploration of regret, choices, and finding happiness.\n*   **\"Where the Crawdads Sing\" by Delia Owens:** A captivating story blending a coming-of-age tale with a murder mystery, set in the marshes of North Carolina.\n*   **\"Project Hail Mary\" by Andy Weir:** From the author of \"The Martian,\" this is a brilliant, funny, and scientifically engaging sci-fi adventure about an astronaut who wakes up with amnesia on a mission to save humanity.\n\n**2. Classics & Literary Fiction:**\n*   **\"To Kill a Mockingbird\" by Harper Lee:** A timeless American classic dealing with racial injustice and the loss of innocence, told through the eyes of a young girl.\n*   **\"1984\" by George Orwell:** A dystopian masterpiece that remains chillingly relevant, exploring themes of totalitarianism, surveillance, and truth.\n*   **\"Pride and Prejudice\" by Jane Austen:** A witty and enduring romance that critiques societal norms and expectations in 19th-century England.\n\n**3. Fantasy & Science Fiction:**\n*   **\"Dune\" by Frank Herbert:** A monumental work of science fiction, rich with political intrigue, ecological themes, and philosophical depth, set on a desert planet.\n*   **\"The Lord of the Rings\" by J.R.R. Tolkien:** The quintessential epic fantasy, a sprawling adventure of good versus evil, friendship, and courage.\n*   **\"Mistborn: The Final Empire\" by Brandon Sanderson:** An excellent entry point into modern fantasy, featuring a unique magic system, compelling characters, and intricate world-building.\n\n**4. Non-Fiction:**\n*   **\"Sapiens: A Brief History of Humankind\" by Yuval Noah Harari:** A fascinating and sweeping overview of human history, from our origins to the present day, exploring how we came to dominate the planet.\n*   **\"Educated\" by Tara Westover:** A powerful and inspiring memoir about a young woman's journey from a fundamentalist, isolated upbringing to pursuing an education against all odds.\n*   **\"Atomic Habits\" by James Clear:** A practical and insightful guide on how to build good habits and break bad ones, focusing on small, incremental changes.\n\n**5. Mystery & Thriller:**\n*   **\"Gone Girl\" by Gillian Flynn:** A dark, twisty, and utterly gripping psychological thriller that will keep you guessing until the very end.\n*   **\"The Guest List\" by Lucy Fokley:** A classic whodunit set at a remote island wedding, with plenty of secrets and suspense.\n\nTo give you more tailored recommendations, tell me:\n*   What genres do you usually enjoy?\n*   Are there any authors or books you've loved (or hated) recently?\n*   Are you looking for something to make you think, laugh, cry, or escape?"
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.25140855695817854
+              "avgLogprobs": -0.28274891224313292
             }
           ],
           "usageMetadata": {
             "promptTokenCount": 345,
-            "candidatesTokenCount": 572,
-            "totalTokenCount": 1053,
+            "candidatesTokenCount": 752,
+            "totalTokenCount": 1685,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -237,14 +238,14 @@ http_interactions:
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 572
+                "tokenCount": 752
               }
             ],
-            "thoughtsTokenCount": 136
+            "thoughtsTokenCount": 588
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-01-12T10:37:03.337374Z",
-          "responseId": "z85kad7LFOSy2fMPlMOTSA"
+          "createTime": "2026-03-03T11:53:36.681122Z",
+          "responseId": "wMumaaLJKdCF6dgP5vi7yQU"
         }
-  recorded_at: Mon, 12 Jan 2026 10:37:07 GMT
+  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
 recorded_with: VCR 6.4.0

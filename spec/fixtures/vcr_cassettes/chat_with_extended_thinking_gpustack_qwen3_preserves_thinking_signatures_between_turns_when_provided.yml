@@ -9,7 +9,7 @@ http_interactions:
         3?"}],"stream":false,"reasoning_effort":"medium"}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer <GPUSTACK_API_KEY>
       Content-Type:
@@ -24,15 +24,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 12 Jan 2026 21:41:22 GMT
-      - Mon, 12 Jan 2026 21:41:23 GMT
+      - Tue, 03 Mar 2026 11:54:38 GMT
+      - Tue, 03 Mar 2026 11:54:38 GMT
       Server:
       - uvicorn
       - uvicorn
       Keep-Alive:
       - timeout=15, max=100
       Content-Length:
-      - '2403'
+      - '3968'
       Content-Type:
       - application/json
       X-Request-Accepted-At:
@@ -44,30 +44,51 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"\n\nThe
-        sum of 5 and 3 is calculated by adding the two numbers together. \n\n**Step-by-Step
-        Explanation:**\n1. Start with the number 5.\n2. Add 3 to it:  \n   $ 5 + 3
-        = 8 $.\n\n**Answer:**  \n$ \\boxed{8} $","reasoning_content":"\nOkay, so the
-        user is asking \"What is 5 + 3?\" Hmm, that seems straightforward. Let me
-        make sure I understand the question correctly. They want to know the sum of
-        5 and 3. Alright, basic arithmetic. Let me recall how addition works.\n\nStarting
-        with 5, adding 3 means I need to count 3 more numbers after 5. So 5 plus 1
-        is 6, then 6 plus 1 is 7, and 7 plus 1 is 8. So that should be 8. Wait, is
-        there another way to check this? Maybe using fingers or a number line. If
-        I start at 5 and move 3 steps forward, I land on 8. That confirms it.\n\nAlternatively,
-        I can think of it in terms of number properties. 5 is a number, and adding
-        3 to it. If I break down 3 into 2 and 1, then 5 + 2 is 7, and then 7 + 1 is
-        8. Same result. Maybe using a different method, like counting objects. If
-        I have 5 apples and add 3 more apples, I have 8 apples total. That makes sense.\n\nI
-        should also consider if there''s any possibility of a trick question here.
-        Sometimes people might phrase things in a way that''s not straightforward,
-        but in this case, \"5 + 3\" is a direct arithmetic problem. There''s no mention
-        of different number bases or anything like that. So assuming standard base
-        10, the answer is definitely 8.\n\nWait, maybe the user is testing if I can
-        handle simple addition. But I think I''ve covered all the bases here. Different
-        methods of addition all lead to the same answer. I don''t see any errors in
-        my reasoning. Let me just verify once more. 5 + 3 equals 8. Yes, that''s correct.
-        I think that''s the answer they''re looking for.\n","role":"assistant"}}],"created":1768254086,"id":"chatcmpl-xkoWvgCjrUS69h6I7JgOGunP5gHJ6Xu2","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":477,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":407,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":16,"prompt_tokens_details":{"cached_tokens":2},"prompt_tokens_per_second":1124.701251230142,"time_per_output_token_ms":8.070505241090146,"time_to_first_token_ms":14.226,"tokens_per_second":123.90797975182556,"total_tokens":493}}'
-  recorded_at: Mon, 12 Jan 2026 21:41:26 GMT
+        sum of 5 and 3 is calculated by combining their quantities. Here''s a step-by-step
+        breakdown:\n\n1. **Basic Addition**:  \n   Start with 5 and add 3 to it:  \n   $
+        5 + 3 = 8 $.\n\n2. **Counting Method**:  \n   Begin at 5 and count 3 more
+        numbers:  \n   $ 5 \\rightarrow 6 \\rightarrow 7 \\rightarrow 8 $.\n\n3. **Number
+        Line Visualization**:  \n   Start at 5 on a number line and move 3 units to
+        the right, landing on 8.\n\n4. **Verification**:  \n   All methods (counting,
+        number lines, algebraic confirmation) consistently result in **8**.\n\n**Final
+        Answer**:  \n$ \\boxed{8} $","reasoning_content":"\nOkay, let''s see. The
+        user is asking \"What is 5 + 3?\" Hmm, that seems straightforward, but maybe
+        they want a detailed explanation. Let me break it down step by step.\n\nFirst,
+        I know that addition is one of the basic arithmetic operations. When you add
+        two numbers, you''re combining their quantities. So 5 and 3 are both numbers,
+        and adding them together means you''re putting them together to find the total.\n\nLet
+        me visualize it. If I have 5 apples and then I get 3 more apples, how many
+        apples do I have in total? Well, starting with 5, adding 1 makes it 6, then
+        adding another 1 makes 7, and the last one would make it 8. Wait, no, that''s
+        adding 3 ones. So 5 + 1 is 6, 6 + 1 is 7, 7 + 1 is 8. So that''s 3 steps,
+        which totals 8. So the answer should be 8.\n\nAlternatively, maybe I can think
+        of it as counting. Starting from 5, count 3 more numbers: 5 (start), 6 (1),
+        7 (2), 8 (3). Yep, that''s three counts, so 8. That makes sense.\n\nAnother
+        way is using number lines. If I start at 5 on a number line and move 3 units
+        to the right, I land on 8. That''s another visual method.\n\nOr maybe using
+        fingers. If I hold up 5 fingers and then add 3 more, I can count them all.
+        Let''s see, 5 fingers, then add 3 more. 1, 2, 3. Total is 8. That''s a physical
+        way to check.\n\nWait, is there any chance that the user is testing if I can
+        recognize a simple question or if there''s a trick? Like, maybe they want
+        the answer in a different form, like Roman numerals? 5 is V and 3 is III,
+        so V + III would be VIII, which is 8. But that seems unnecessary. Probably
+        not, since the question is straightforward.\n\nAlternatively, could there
+        be a misunderstanding in the question? Like, maybe they meant 5 plus 3 in
+        a different context, such as vectors or something else? But the question is
+        written as \"5 + 3\", which is standard arithmetic. Unless specified otherwise,
+        it''s safe to assume it''s basic addition.\n\nI should also consider if there''s
+        any cultural or language context where the symbols might mean something else.
+        But in most contexts, + is the addition operator, and numbers are in base
+        10. So 5 + 3 = 8.\n\nLet me verify with another method. Using the concept
+        of place value. 5 is 5 ones, 3 is 3 ones. Adding them together gives 8 ones,
+        which is 8. That''s simple.\n\nOr using algebra. Let''s say x = 5 + 3. Then
+        x = 8. That''s straightforward.\n\nI think I''ve covered multiple ways to
+        approach this. All methods lead to the same answer, 8. There''s no ambiguity
+        here. The user might just be testing if I can answer a simple question, or
+        maybe they want a detailed explanation. Either way, the answer is 8. I should
+        make sure to explain it clearly, maybe using a couple of different methods
+        to confirm the result.\n","role":"assistant"}}],"created":1772538891,"id":"chatcmpl-6Qc0Faj2f7eR1oPCDwCNsaGLASvH4blq","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":883,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":716,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":16,"prompt_tokens_details":{"cached_tokens":2},"prompt_tokens_per_second":1049.5932826029914,"time_per_output_token_ms":13.835484711211778,"time_to_first_token_ms":15.244,"tokens_per_second":72.27791587161641,"total_tokens":899}}'
+  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
 - request:
     method: post
     uri: "<GPUSTACK_API_BASE>/chat/completions"
@@ -75,53 +96,89 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"qwen3","messages":[{"role":"user","content":"What is 5 +
         3?"},{"role":"assistant","content":"\n\nThe sum of 5 and 3 is calculated by
-        adding the two numbers together. \n\n**Step-by-Step Explanation:**\n1. Start
-        with the number 5.\n2. Add 3 to it:  \n   $ 5 + 3 = 8 $.\n\n**Answer:**  \n$
-        \\boxed{8} $","reasoning":"\nOkay, so the user is asking \"What is 5 + 3?\"
-        Hmm, that seems straightforward. Let me make sure I understand the question
-        correctly. They want to know the sum of 5 and 3. Alright, basic arithmetic.
-        Let me recall how addition works.\n\nStarting with 5, adding 3 means I need
-        to count 3 more numbers after 5. So 5 plus 1 is 6, then 6 plus 1 is 7, and
-        7 plus 1 is 8. So that should be 8. Wait, is there another way to check this?
-        Maybe using fingers or a number line. If I start at 5 and move 3 steps forward,
-        I land on 8. That confirms it.\n\nAlternatively, I can think of it in terms
-        of number properties. 5 is a number, and adding 3 to it. If I break down 3
-        into 2 and 1, then 5 + 2 is 7, and then 7 + 1 is 8. Same result. Maybe using
-        a different method, like counting objects. If I have 5 apples and add 3 more
-        apples, I have 8 apples total. That makes sense.\n\nI should also consider
-        if there''s any possibility of a trick question here. Sometimes people might
-        phrase things in a way that''s not straightforward, but in this case, \"5
-        + 3\" is a direct arithmetic problem. There''s no mention of different number
-        bases or anything like that. So assuming standard base 10, the answer is definitely
-        8.\n\nWait, maybe the user is testing if I can handle simple addition. But
-        I think I''ve covered all the bases here. Different methods of addition all
-        lead to the same answer. I don''t see any errors in my reasoning. Let me just
-        verify once more. 5 + 3 equals 8. Yes, that''s correct. I think that''s the
-        answer they''re looking for.\n","reasoning_content":"\nOkay, so the user is
-        asking \"What is 5 + 3?\" Hmm, that seems straightforward. Let me make sure
-        I understand the question correctly. They want to know the sum of 5 and 3.
-        Alright, basic arithmetic. Let me recall how addition works.\n\nStarting with
-        5, adding 3 means I need to count 3 more numbers after 5. So 5 plus 1 is 6,
-        then 6 plus 1 is 7, and 7 plus 1 is 8. So that should be 8. Wait, is there
-        another way to check this? Maybe using fingers or a number line. If I start
-        at 5 and move 3 steps forward, I land on 8. That confirms it.\n\nAlternatively,
-        I can think of it in terms of number properties. 5 is a number, and adding
-        3 to it. If I break down 3 into 2 and 1, then 5 + 2 is 7, and then 7 + 1 is
-        8. Same result. Maybe using a different method, like counting objects. If
-        I have 5 apples and add 3 more apples, I have 8 apples total. That makes sense.\n\nI
-        should also consider if there''s any possibility of a trick question here.
-        Sometimes people might phrase things in a way that''s not straightforward,
-        but in this case, \"5 + 3\" is a direct arithmetic problem. There''s no mention
-        of different number bases or anything like that. So assuming standard base
-        10, the answer is definitely 8.\n\nWait, maybe the user is testing if I can
-        handle simple addition. But I think I''ve covered all the bases here. Different
-        methods of addition all lead to the same answer. I don''t see any errors in
-        my reasoning. Let me just verify once more. 5 + 3 equals 8. Yes, that''s correct.
-        I think that''s the answer they''re looking for.\n"},{"role":"user","content":"Now
-        multiply that by 2"}],"stream":false,"reasoning_effort":"medium"}'
+        combining their quantities. Here''s a step-by-step breakdown:\n\n1. **Basic
+        Addition**:  \n   Start with 5 and add 3 to it:  \n   $ 5 + 3 = 8 $.\n\n2.
+        **Counting Method**:  \n   Begin at 5 and count 3 more numbers:  \n   $ 5
+        \\rightarrow 6 \\rightarrow 7 \\rightarrow 8 $.\n\n3. **Number Line Visualization**:  \n   Start
+        at 5 on a number line and move 3 units to the right, landing on 8.\n\n4. **Verification**:  \n   All
+        methods (counting, number lines, algebraic confirmation) consistently result
+        in **8**.\n\n**Final Answer**:  \n$ \\boxed{8} $","reasoning":"\nOkay, let''s
+        see. The user is asking \"What is 5 + 3?\" Hmm, that seems straightforward,
+        but maybe they want a detailed explanation. Let me break it down step by step.\n\nFirst,
+        I know that addition is one of the basic arithmetic operations. When you add
+        two numbers, you''re combining their quantities. So 5 and 3 are both numbers,
+        and adding them together means you''re putting them together to find the total.\n\nLet
+        me visualize it. If I have 5 apples and then I get 3 more apples, how many
+        apples do I have in total? Well, starting with 5, adding 1 makes it 6, then
+        adding another 1 makes 7, and the last one would make it 8. Wait, no, that''s
+        adding 3 ones. So 5 + 1 is 6, 6 + 1 is 7, 7 + 1 is 8. So that''s 3 steps,
+        which totals 8. So the answer should be 8.\n\nAlternatively, maybe I can think
+        of it as counting. Starting from 5, count 3 more numbers: 5 (start), 6 (1),
+        7 (2), 8 (3). Yep, that''s three counts, so 8. That makes sense.\n\nAnother
+        way is using number lines. If I start at 5 on a number line and move 3 units
+        to the right, I land on 8. That''s another visual method.\n\nOr maybe using
+        fingers. If I hold up 5 fingers and then add 3 more, I can count them all.
+        Let''s see, 5 fingers, then add 3 more. 1, 2, 3. Total is 8. That''s a physical
+        way to check.\n\nWait, is there any chance that the user is testing if I can
+        recognize a simple question or if there''s a trick? Like, maybe they want
+        the answer in a different form, like Roman numerals? 5 is V and 3 is III,
+        so V + III would be VIII, which is 8. But that seems unnecessary. Probably
+        not, since the question is straightforward.\n\nAlternatively, could there
+        be a misunderstanding in the question? Like, maybe they meant 5 plus 3 in
+        a different context, such as vectors or something else? But the question is
+        written as \"5 + 3\", which is standard arithmetic. Unless specified otherwise,
+        it''s safe to assume it''s basic addition.\n\nI should also consider if there''s
+        any cultural or language context where the symbols might mean something else.
+        But in most contexts, + is the addition operator, and numbers are in base
+        10. So 5 + 3 = 8.\n\nLet me verify with another method. Using the concept
+        of place value. 5 is 5 ones, 3 is 3 ones. Adding them together gives 8 ones,
+        which is 8. That''s simple.\n\nOr using algebra. Let''s say x = 5 + 3. Then
+        x = 8. That''s straightforward.\n\nI think I''ve covered multiple ways to
+        approach this. All methods lead to the same answer, 8. There''s no ambiguity
+        here. The user might just be testing if I can answer a simple question, or
+        maybe they want a detailed explanation. Either way, the answer is 8. I should
+        make sure to explain it clearly, maybe using a couple of different methods
+        to confirm the result.\n","reasoning_content":"\nOkay, let''s see. The user
+        is asking \"What is 5 + 3?\" Hmm, that seems straightforward, but maybe they
+        want a detailed explanation. Let me break it down step by step.\n\nFirst,
+        I know that addition is one of the basic arithmetic operations. When you add
+        two numbers, you''re combining their quantities. So 5 and 3 are both numbers,
+        and adding them together means you''re putting them together to find the total.\n\nLet
+        me visualize it. If I have 5 apples and then I get 3 more apples, how many
+        apples do I have in total? Well, starting with 5, adding 1 makes it 6, then
+        adding another 1 makes 7, and the last one would make it 8. Wait, no, that''s
+        adding 3 ones. So 5 + 1 is 6, 6 + 1 is 7, 7 + 1 is 8. So that''s 3 steps,
+        which totals 8. So the answer should be 8.\n\nAlternatively, maybe I can think
+        of it as counting. Starting from 5, count 3 more numbers: 5 (start), 6 (1),
+        7 (2), 8 (3). Yep, that''s three counts, so 8. That makes sense.\n\nAnother
+        way is using number lines. If I start at 5 on a number line and move 3 units
+        to the right, I land on 8. That''s another visual method.\n\nOr maybe using
+        fingers. If I hold up 5 fingers and then add 3 more, I can count them all.
+        Let''s see, 5 fingers, then add 3 more. 1, 2, 3. Total is 8. That''s a physical
+        way to check.\n\nWait, is there any chance that the user is testing if I can
+        recognize a simple question or if there''s a trick? Like, maybe they want
+        the answer in a different form, like Roman numerals? 5 is V and 3 is III,
+        so V + III would be VIII, which is 8. But that seems unnecessary. Probably
+        not, since the question is straightforward.\n\nAlternatively, could there
+        be a misunderstanding in the question? Like, maybe they meant 5 plus 3 in
+        a different context, such as vectors or something else? But the question is
+        written as \"5 + 3\", which is standard arithmetic. Unless specified otherwise,
+        it''s safe to assume it''s basic addition.\n\nI should also consider if there''s
+        any cultural or language context where the symbols might mean something else.
+        But in most contexts, + is the addition operator, and numbers are in base
+        10. So 5 + 3 = 8.\n\nLet me verify with another method. Using the concept
+        of place value. 5 is 5 ones, 3 is 3 ones. Adding them together gives 8 ones,
+        which is 8. That''s simple.\n\nOr using algebra. Let''s say x = 5 + 3. Then
+        x = 8. That''s straightforward.\n\nI think I''ve covered multiple ways to
+        approach this. All methods lead to the same answer, 8. There''s no ambiguity
+        here. The user might just be testing if I can answer a simple question, or
+        maybe they want a detailed explanation. Either way, the answer is 8. I should
+        make sure to explain it clearly, maybe using a couple of different methods
+        to confirm the result.\n"},{"role":"user","content":"Now multiply that by
+        2"}],"stream":false,"reasoning_effort":"medium"}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer <GPUSTACK_API_KEY>
       Content-Type:
@@ -136,15 +193,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 12 Jan 2026 21:41:26 GMT
-      - Mon, 12 Jan 2026 21:41:26 GMT
+      - Tue, 03 Mar 2026 11:54:50 GMT
+      - Tue, 03 Mar 2026 11:54:50 GMT
       Server:
       - uvicorn
       - uvicorn
       Keep-Alive:
       - timeout=15, max=100
       Content-Length:
-      - '1569'
+      - '1878'
       Content-Type:
       - application/json
       X-Request-Accepted-At:
@@ -156,17 +213,21 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"\n\nThe
-        previous result was 8. To multiply this by 2:  \n\n**Step-by-Step Explanation:**  \n1.
-        Take the number 8.  \n2. Multiply it by 2:  \n   $ 8 \\times 2 = 16 $.  \n\n**Answer:**  \n$
-        \\boxed{16} $","reasoning_content":"\nOkay, the user just asked to multiply
-        the previous result by 2. Let me check the history. The first question was
-        5 + 3, which I answered as 8. Now they want that result multiplied by 2. So,
-        8 times 2. Let me make sure I do the multiplication correctly. 8 times 2 is
-        16. I should present the answer clearly, maybe box it like the last time.
-        Wait, the user might be testing if I follow the steps correctly. Let me confirm
-        again: 5 + 3 is 8, then 8 * 2 equals 16. Yep, that''s right. I should state
-        the steps again for clarity, even though it''s a simple calculation. Maybe
-        they want to ensure the process is understood. Alright, I''ll explain the
-        multiplication step and then give the answer in a box.\n","role":"assistant"}}],"created":1768254089,"id":"chatcmpl-yfajygZw9oTKGu6uJQ6AFVWZ6jce3od0","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":252,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":182,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":99,"prompt_tokens_details":{"cached_tokens":14},"prompt_tokens_per_second":3739.2355340685904,"time_per_output_token_ms":8.004103174603175,"time_to_first_token_ms":26.476,"tokens_per_second":124.9359207628627,"total_tokens":351}}'
-  recorded_at: Mon, 12 Jan 2026 21:41:29 GMT
+        result of multiplying 8 by 2 is calculated as follows:  \n$ 8 \\times 2 =
+        16 $.  \n\n**Final Answer**:  \n$ \\boxed{16} $","reasoning_content":"\nOkay,
+        the user just asked to multiply the previous result by 2. Let me check the
+        history.\n\nEarlier, they asked \"What is 5 + 3?\" and I answered 8. Now they
+        want to multiply that by 2. So 8 times 2. Let me make sure I do that right.
+        8 multiplied by 2 is 16. \n\nWait, should I explain the steps again? The user
+        might be testing if I follow through. Let me confirm the calculation. 8 *
+        2 equals 16. Yep, that''s straightforward. \n\nMaybe they want to see the
+        process again, like breaking it down. Let me think. If I explain it step by
+        step, it might help. For example, 8 + 8 is 16. Or using a number line, starting
+        at 8 and adding 8 more. But since it''s a simple multiplication, maybe just
+        state the result clearly. \n\nI should also make sure there''s no confusion.
+        The previous answer was 8, so multiplying by 2 gives 16. No need for extra
+        steps unless the user asks for a detailed explanation. Since they just said
+        \"Now multiply that by 2,\" a direct answer with the boxed result should suffice.
+        \n\nDouble-checking the math: 8 * 2 = 16. Correct. Alright, time to respond.\n","role":"assistant"}}],"created":1772538896,"id":"chatcmpl-zPPGd9UzqAnEi5AKbCypXWzVu5pIGb66","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":329,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":285,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":196,"prompt_tokens_details":{"cached_tokens":14},"prompt_tokens_per_second":2746.6367713004483,"time_per_output_token_ms":17.619930091185413,"time_to_first_token_ms":71.36,"tokens_per_second":56.75391416565622,"total_tokens":525}}'
+  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
 recorded_with: VCR 6.4.0

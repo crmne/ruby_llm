@@ -153,6 +153,14 @@ RSpec.describe RubyLLM::Chat do
     end
   end
 
+  describe 'tool choice normalization' do
+    it 'accepts a tool class for choice' do
+      chat = RubyLLM.chat.with_tool(Weather, choice: Weather)
+
+      expect(chat.tool_prefs[:choice]).to eq(:weather)
+    end
+  end
+
   describe 'function calling' do
     CHAT_MODELS.each do |model_info|
       model = model_info[:model]
@@ -170,6 +178,40 @@ RSpec.describe RubyLLM::Chat do
         response = chat.ask("What's the weather in Berlin? (52.5200, 13.4050)")
         expect(response.content).to include('15')
         expect(response.content).to include('10')
+      end
+
+      it "#{provider}/#{model} deals with non-existent tool calls" do
+        hallucinated_tool_call = RubyLLM::ToolCall.new(
+          id: 'call_1',
+          name: 'list_tools',
+          arguments: {}
+        )
+
+        tool_results_received = []
+
+        chat = RubyLLM.chat(model: model, provider: provider)
+                      .with_tool(Weather)
+                      .on_tool_result { |result| tool_results_received << result }
+
+        final_answer = 'The `list_tools` tool is not supported, but I see you have the `weather` tool.'
+        allow(chat.instance_variable_get(:@provider)).to receive(:complete).and_return(
+          RubyLLM::Message.new(
+            role: :assistant,
+            content: '',
+            tool_calls: { hallucinated_tool_call.id => hallucinated_tool_call }
+          ),
+          RubyLLM::Message.new(
+            role: :assistant,
+            content: final_answer
+          )
+        )
+
+        response = chat.ask('What tools do you support?')
+        expect(response.content).to eq(final_answer)
+        expect(tool_results_received).to eq([
+                                              { error: 'Model tried to call unavailable tool `list_tools`. ' \
+                                                       'Available tools: ["weather"].' }
+                                            ])
       end
     end
 
@@ -612,6 +654,108 @@ RSpec.describe RubyLLM::Chat do
       tool_message = chat.messages.find { |m| m.role == :tool }
       expect(tool_message).not_to be_nil
       expect(tool_message.content).to eq('Task completed successfully')
+    end
+  end
+
+  describe 'tool choice and calls control' do
+    CHAT_MODELS.each do |model_info|
+      model = model_info[:model]
+      provider = model_info[:provider]
+
+      it "#{provider}/#{model} respects choice: :none" do
+        unless RubyLLM::Provider.providers[provider]&.local?
+          model_info = RubyLLM.models.find(model)
+          skip "#{model} doesn't support function calling" unless model_info&.supports_functions?
+        end
+
+        provider_class = provider ? RubyLLM::Provider.providers[provider.to_sym] : nil
+        skip "#{provider} doesn't support tool choice" unless provider_class&.capabilities&.supports_tool_choice?(model)
+
+        skip "Bedrock doesn't support :none tool choice" if provider == :bedrock
+
+        chat = RubyLLM.chat(model: model, provider: provider)
+                      .with_tool(Weather, choice: :none)
+
+        tool_called = false
+        chat.on_tool_call do |_tool_call|
+          tool_called = true
+        end
+
+        response = chat.ask("What's the weather in Berlin? (52.5200, 13.4050)")
+
+        expect(tool_called).to be(false)
+        expect(response).to be_a(RubyLLM::Message)
+      end
+
+      it "#{provider}/#{model} respects choice: :required for unrelated queries" do
+        unless RubyLLM::Provider.providers[provider]&.local?
+          model_info = RubyLLM.models.find(model)
+          skip "#{model} doesn't support function calling" unless model_info&.supports_functions?
+        end
+
+        provider_class = provider ? RubyLLM::Provider.providers[provider.to_sym] : nil
+        skip "#{provider} doesn't support tool choice" unless provider_class&.capabilities&.supports_tool_choice?(model)
+
+        chat = RubyLLM.chat(model: model, provider: provider)
+                      .with_tool(Weather, choice: :required)
+
+        tool_called = false
+        chat.on_tool_call do |_tool_call|
+          tool_called = true
+        end
+
+        # Ask about Roman history - completely unrelated to weather
+        chat.ask('When was the fall of Rome?')
+
+        expect(tool_called).to be(true) # Tool should be forced to run
+      end
+
+      it "#{provider}/#{model} respects specific tool choice" do
+        unless RubyLLM::Provider.providers[provider]&.local?
+          model_info = RubyLLM.models.find(model)
+          skip "#{model} doesn't support function calling" unless model_info&.supports_functions?
+        end
+
+        provider_class = provider ? RubyLLM::Provider.providers[provider.to_sym] : nil
+        skip "#{provider} doesn't support tool choice" unless provider_class&.capabilities&.supports_tool_choice?(model)
+
+        chat = RubyLLM.chat(model: model, provider: provider)
+                      .with_tool(Weather, choice: :weather)
+
+        tool_called = false
+        chat.on_tool_call do |_tool_call|
+          tool_called = true
+        end
+
+        # Ask about Roman history - completely unrelated to weather
+        chat.ask("What's the fall of Rome?")
+
+        expect(tool_called).to be(true)
+      end
+
+      it "#{provider}/#{model} respects calls: :one for sequential execution" do
+        unless RubyLLM::Provider.providers[provider]&.local?
+          model_info = RubyLLM.models.find(model)
+          skip "#{model} doesn't support function calling" unless model_info&.supports_functions?
+        end
+
+        provider_class = provider ? RubyLLM::Provider.providers[provider.to_sym] : nil
+        unless provider_class&.capabilities&.supports_tool_parallel_control?(model)
+          skip "#{provider} doesn't support tool parallel control"
+        end
+
+        chat = RubyLLM.chat(model: model, provider: provider)
+                      .with_tools(Weather, BestLanguageToLearn, calls: :one)
+                      .with_instructions(
+                        'You must use both the weather tool for Berlin (52.5200, 13.4050) and the best language tool.'
+                      )
+
+        chat.on_end_message do |message|
+          expect(message.tool_calls.length).to eq(1) if message.tool_call?
+        end
+
+        chat.ask("What's the weather in Berlin and what's the best programming language?")
+      end
     end
   end
 

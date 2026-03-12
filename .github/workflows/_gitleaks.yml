@@ -1,0 +1,100 @@
+name: _Gitleaks
+
+on:
+  workflow_call:
+    inputs:
+      checkout-repository:
+        description: Optional repository to checkout (owner/repo)
+        required: false
+        type: string
+        default: ""
+      checkout-ref:
+        description: Optional ref/SHA to checkout
+        required: false
+        type: string
+        default: ""
+      preserve-base-config:
+        description: Preserve base branch gitleaks config before checking out target ref
+        required: false
+        type: boolean
+        default: false
+      config-path:
+        description: Path to gitleaks config file
+        required: false
+        type: string
+        default: ".gitleaks.toml"
+      ignore-path:
+        description: Path to gitleaks ignore file
+        required: false
+        type: string
+        default: ".gitleaksignore"
+
+permissions:
+  contents: read
+
+jobs:
+  gitleaks:
+    name: Gitleaks (Current Tree)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        if: inputs.preserve-base-config == true
+        with:
+          path: base
+          fetch-depth: 1
+
+      - name: Preserve base branch gitleaks config
+        if: inputs.preserve-base-config == true
+        run: |
+          cp base/.gitleaks.toml /tmp/base.gitleaks.toml
+          if [ -f base/.gitleaksignore ]; then cp base/.gitleaksignore /tmp/base.gitleaksignore; fi
+
+      - uses: actions/checkout@v6
+        if: inputs.preserve-base-config == false && inputs.checkout-repository == ''
+        with:
+          path: repo
+          fetch-depth: 1
+
+      - uses: actions/checkout@v6
+        if: inputs.preserve-base-config == false && inputs.checkout-repository != ''
+        with:
+          repository: ${{ inputs.checkout-repository }}
+          ref: ${{ inputs.checkout-ref }}
+          path: repo
+          fetch-depth: 1
+          persist-credentials: false
+
+      - uses: actions/checkout@v6
+        if: inputs.preserve-base-config == true
+        with:
+          repository: ${{ inputs.checkout-repository }}
+          ref: ${{ inputs.checkout-ref }}
+          path: repo
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Install gitleaks
+        run: |
+          set -euo pipefail
+          VERSION="8.28.0"
+          curl -sSL "https://github.com/gitleaks/gitleaks/releases/download/v${VERSION}/gitleaks_${VERSION}_linux_x64.tar.gz" \
+            | tar -xz
+          sudo install -m 0755 gitleaks /usr/local/bin/gitleaks
+
+      - name: Scan current tree
+        run: |
+          set -euo pipefail
+          CONFIG_PATH="repo/${{ inputs.config-path }}"
+          IGNORE_PATH="repo/${{ inputs.ignore-path }}"
+
+          if [ "${{ inputs.preserve-base-config }}" = "true" ]; then
+            CONFIG_PATH="/tmp/base.gitleaks.toml"
+            IGNORE_PATH="/tmp/base.gitleaksignore"
+          fi
+
+          cmd=(gitleaks dir repo --no-banner --redact -v --config "$CONFIG_PATH")
+          if [ -f "$IGNORE_PATH" ]; then
+            cmd+=(--gitleaks-ignore-path "$IGNORE_PATH")
+          fi
+
+          "${cmd[@]}"

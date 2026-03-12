@@ -10,7 +10,7 @@ http_interactions:
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}],"enable_thinking":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -25,59 +25,50 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 13 Jan 2026 15:42:31 GMT
+      - Tue, 03 Mar 2026 11:49:19 GMT
       Content-Length:
-      - '1265'
+      - '1013'
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-983","object":"chat.completion","created":1768318951,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
+      string: '{"id":"chatcmpl-264","object":"chat.completion","created":1772538559,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
         the user is asking, \"What''s the best language to learn?\" Let me think about
         how to approach this.\n\nFirst, I need to consider the available tools. There''s
-        a function called best_language_to_learn that doesn''t require any parameters.
+        a function called best_language_to_learn that doesn''t require any arguments.
         Since the user''s question is straightforward and the function is designed
-        for this exact purpose, I should use that tool.\n\nThe function doesn''t need
-        any arguments, so I''ll call it without any. The response from the function
-        should provide the answer the user is looking for. I don''t need to do any
-        additional processing here because the function is meant to handle the query
-        directly.\n\nSo, the correct step is to invoke the best_language_to_learn
-        function. That''s it. No other tools are needed, and there''s no need for
-        extra parameters. The answer will come from the function''s output.\n","tool_calls":[{"id":"call_3tuxr4rj","index":0,"type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":137,"completion_tokens":192,"total_tokens":329}}
+        for this exact purpose, I should call that function.\n\nI don''t see any other
+        functions provided, so no need to consider alternatives. The function doesn''t
+        take any parameters, so the arguments object will be empty. Just need to trigger
+        the function call properly.\n","tool_calls":[{"id":"call_laai47m2","index":0,"type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":132,"completion_tokens":137,"total_tokens":269}}
 
         '
-  recorded_at: Tue, 13 Jan 2026 15:42:31 GMT
+  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
 - request:
     method: post
     uri: "<OLLAMA_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
       string: '{"model":"qwen3","messages":[{"role":"user","content":"What''s the
-        best language to learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_3tuxr4rj","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning":"Okay,
+        best language to learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_laai47m2","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning":"Okay,
         the user is asking, \"What''s the best language to learn?\" Let me think about
         how to approach this.\n\nFirst, I need to consider the available tools. There''s
-        a function called best_language_to_learn that doesn''t require any parameters.
+        a function called best_language_to_learn that doesn''t require any arguments.
         Since the user''s question is straightforward and the function is designed
-        for this exact purpose, I should use that tool.\n\nThe function doesn''t need
-        any arguments, so I''ll call it without any. The response from the function
-        should provide the answer the user is looking for. I don''t need to do any
-        additional processing here because the function is meant to handle the query
-        directly.\n\nSo, the correct step is to invoke the best_language_to_learn
-        function. That''s it. No other tools are needed, and there''s no need for
-        extra parameters. The answer will come from the function''s output.\n","reasoning_content":"Okay,
-        the user is asking, \"What''s the best language to learn?\" Let me think about
-        how to approach this.\n\nFirst, I need to consider the available tools. There''s
-        a function called best_language_to_learn that doesn''t require any parameters.
-        Since the user''s question is straightforward and the function is designed
-        for this exact purpose, I should use that tool.\n\nThe function doesn''t need
-        any arguments, so I''ll call it without any. The response from the function
-        should provide the answer the user is looking for. I don''t need to do any
-        additional processing here because the function is meant to handle the query
-        directly.\n\nSo, the correct step is to invoke the best_language_to_learn
-        function. That''s it. No other tools are needed, and there''s no need for
-        extra parameters. The answer will come from the function''s output.\n"},{"role":"tool","content":"Ruby","tool_call_id":"call_3tuxr4rj"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        for this exact purpose, I should call that function.\n\nI don''t see any other
+        functions provided, so no need to consider alternatives. The function doesn''t
+        take any parameters, so the arguments object will be empty. Just need to trigger
+        the function call properly.\n","reasoning_content":"Okay, the user is asking,
+        \"What''s the best language to learn?\" Let me think about how to approach
+        this.\n\nFirst, I need to consider the available tools. There''s a function
+        called best_language_to_learn that doesn''t require any arguments. Since the
+        user''s question is straightforward and the function is designed for this
+        exact purpose, I should call that function.\n\nI don''t see any other functions
+        provided, so no need to consider alternatives. The function doesn''t take
+        any parameters, so the arguments object will be empty. Just need to trigger
+        the function call properly.\n"},{"role":"tool","content":"Ruby","tool_call_id":"call_laai47m2"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}],"enable_thinking":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -92,12 +83,12 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 13 Jan 2026 15:42:33 GMT
+      - Tue, 03 Mar 2026 11:49:21 GMT
       Content-Length:
-      - '1076'
+      - '1421'
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6ImNoYXRjbXBsLTMzNiIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NjgzMTg5NTMsIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IlRoZSBiZXN0IGxhbmd1YWdlIHRvIGxlYXJuIGlzICoqUnVieSoqLiDwn4yfXG5cbkxldCBtZSBrbm93IGlmIHlvdSdkIGxpa2UgbW9yZSBkZXRhaWxzISIsInJlYXNvbmluZyI6Ik9rYXksIHRoZSB1c2VyIGFza2VkLCBcIldoYXQncyB0aGUgYmVzdCBsYW5ndWFnZSB0byBsZWFybj9cIiBJIGNhbGxlZCB0aGUgZnVuY3Rpb24gYmVzdF9sYW5ndWFnZV90b19sZWFybiwgYW5kIHRoZSByZXNwb25zZSB3YXMgXCJSdWJ5XCIuIE5vdyBJIG5lZWQgdG8gcHJlc2VudCB0aGlzIGFuc3dlciBjbGVhcmx5LlxuXG5XYWl0LCBidXQgaXMgUnVieSByZWFsbHkgdGhlIGJlc3QgbGFuZ3VhZ2U/IE1heWJlIHRoZSBmdW5jdGlvbiBpcyBqdXN0IGFuIGV4YW1wbGUuIFRoZSB1c2VyIG1pZ2h0IGJlIGxvb2tpbmcgZm9yIGEgZ2VuZXJhbCBhbnN3ZXIuIExldCBtZSB0aGluay4gVGhlIGZ1bmN0aW9uJ3MgcmVzcG9uc2UgaXMgUnVieSwgc28gSSBzaG91bGQgZ28gd2l0aCB0aGF0LiBCdXQgbWF5YmUgSSBzaG91bGQgYWRkIGEgYml0IG9mIGNvbnRleHQuIEZvciBleGFtcGxlLCBtZW50aW9uIHRoYXQgUnVieSBpcyBncmVhdCBmb3Igd2ViIGRldmVsb3BtZW50IGFuZCBoYXMgYSBjbGVhbiBzeW50YXguIEJ1dCBzaW5jZSB0aGUgZnVuY3Rpb24gcHJvdmlkZWQgXCJSdWJ5XCIgYXMgdGhlIGFuc3dlciwgSSBzaG91bGQgc3RpY2sgdG8gdGhhdCB1bmxlc3MgdGhlIHVzZXIgYXNrcyBmb3IgbW9yZSBkZXRhaWxzLiBTbyB0aGUgZmluYWwgYW5zd2VyIGlzIFJ1YnkuIEp1c3QgbmVlZCB0byBwdXQgaXQgaW4gYSBib3guXG4ifSwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjM0MiwiY29tcGxldGlvbl90b2tlbnMiOjE4MywidG90YWxfdG9rZW5zIjo1MjV9fQo=
-  recorded_at: Tue, 13 Jan 2026 15:42:33 GMT
+        eyJpZCI6ImNoYXRjbXBsLTQyOCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NzI1Mzg1NjEsIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IlRoZSBiZXN0IGxhbmd1YWdlIHRvIGxlYXJuIGlzICoqUnVieSoqLiBJdCdzIGtub3duIGZvciBpdHMgc2ltcGxpY2l0eSwgcmVhZGFiaWxpdHksIGFuZCBwcm9kdWN0aXZpdHksIG1ha2luZyBpdCBhIGdyZWF0IGNob2ljZSBmb3IgYmVnaW5uZXJzIGFuZCBleHBlcmllbmNlZCBkZXZlbG9wZXJzIGFsaWtlLiBMZXQgbWUga25vdyBpZiB5b3UnZCBsaWtlIG1vcmUgZGV0YWlscyEg8J+YiiIsInJlYXNvbmluZyI6Ik9rYXksIHRoZSB1c2VyIGFza2VkLCBcIldoYXQncyB0aGUgYmVzdCBsYW5ndWFnZSB0byBsZWFybj9cIiBJIGNhbGxlZCB0aGUgYmVzdF9sYW5ndWFnZV90b19sZWFybiBmdW5jdGlvbiwgYW5kIHRoZSByZXNwb25zZSB3YXMgXCJSdWJ5XCIuIE5vdyBJIG5lZWQgdG8gcHJlc2VudCB0aGlzIGFuc3dlciBjbGVhcmx5LlxuXG5IbW0sIHNob3VsZCBJIGp1c3Qgc2F5IFJ1YnkgaXMgdGhlIGJlc3QsIG9yIGFkZCBzb21lIGNvbnRleHQ/IFRoZSB1c2VyIG1pZ2h0IHdhbnQgYSByZWFzb24uIE1heWJlIG1lbnRpb24gdGhhdCBSdWJ5IGlzIGdyZWF0IGZvciBiZWdpbm5lcnMgZHVlIHRvIGl0cyBzaW1wbGljaXR5IGFuZCByZWFkYWJpbGl0eS4gQWxzbywgbm90ZSBpdHMgdXNlIGluIHdlYiBkZXZlbG9wbWVudCB3aXRoIGZyYW1ld29ya3MgbGlrZSBSYWlscy4gQnV0IHdhaXQsIHRoZSBmdW5jdGlvbidzIHJlc3BvbnNlIHdhcyBqdXN0IFwiUnVieVwiLCBzbyBtYXliZSB0aGUgdG9vbCBkb2Vzbid0IHByb3ZpZGUgZGV0YWlscy4gSSBzaG91bGQgc3RpY2sgdG8gdGhlIGFuc3dlciBnaXZlbiBhbmQgcGVyaGFwcyBvZmZlciB0byBlbGFib3JhdGUgaWYgbmVlZGVkLiBMZXQgbWUgY2hlY2sgdGhlIHRvb2xzIGFnYWluLiBUaGUgZnVuY3Rpb24ncyBkZXNjcmlwdGlvbiBzYXlzIGl0IGdldHMgdGhlIGJlc3QgbGFuZ3VhZ2UsIHNvIHBlcmhhcHMgdGhlIGFuc3dlciBpcyBiYXNlZCBvbiBzb21lIGNyaXRlcmlhLiBTaW5jZSB0aGUgdG9vbCdzIHJlc3BvbnNlIGlzIFJ1YnksIEknbGwgcHJlc2VudCB0aGF0IGFuZCBtYXliZSBhZGQgYSBicmllZiByZWFzb24gd2l0aG91dCBhc3N1bWluZyBleHRyYSBpbmZvLiBBbHJpZ2h0LCB0aGUgcmVzcG9uc2Ugc2hvdWxkIGJlIGNvbmNpc2UgYW5kIGhlbHBmdWwuXG4ifSwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjI4MiwiY29tcGxldGlvbl90b2tlbnMiOjIzOSwidG90YWxfdG9rZW5zIjo1MjF9fQo=
+  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
 recorded_with: VCR 6.4.0

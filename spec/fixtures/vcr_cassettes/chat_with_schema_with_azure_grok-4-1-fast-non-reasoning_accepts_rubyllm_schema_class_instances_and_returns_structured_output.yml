@@ -1,0 +1,62 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
+    body:
+      encoding: UTF-8
+      string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"user","content":"Generate
+        a person named Alice who is 28 years old"}],"stream":false,"response_format":{"type":"json_schema","json_schema":{"name":"PersonSchemaClass","schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"number"}},"required":["name","age"],"additionalProperties":false},"strict":true}}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Api-Key:
+      - "<AZURE_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json
+      Vary:
+      - Accept-Encoding
+      Request-Context:
+      - appId=
+      Apim-Request-Id:
+      - e51b7be6-dda3-4241-8bd3-5df49fca89aa
+      Sampling-Token-Len:
+      - '9'
+      Prompt-Token-Len:
+      - '84'
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Region:
+      - West Europe
+      X-Ratelimit-Remaining-Requests:
+      - '46'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Ratelimit-Limit-Requests:
+      - '50'
+      X-Ratelimit-Remaining-Tokens:
+      - '49936'
+      X-Ratelimit-Limit-Tokens:
+      - '50000'
+      Date:
+      - Tue, 03 Mar 2026 12:53:53 GMT
+    body:
+      encoding: ASCII-8BIT
+      string: '{"choices":[{"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"protected_material_code":{"filtered":false,"detected":false},"protected_material_text":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}},"finish_reason":"stop","index":0,"logprobs":null,"message":{"content":"{\"age\":28,\"name\":\"Alice\"}","refusal":null,"role":"assistant","tool_calls":null},"stop_reason":null}],"created":1772542433,"id":"bec247fe-43e8-40d9-89bd-4b949e06a300","model":"grok-4-1-fast-non-reasoning","object":"chat.completion","prompt_filter_results":[{"prompt_index":0,"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"jailbreak":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}}}],"usage":{"audio_prompt_tokens":0,"completion_tokens":9,"completion_tokens_details":{"accepted_prediction_tokens":0,"audio_tokens":0,"reasoning_tokens":0,"rejected_prediction_tokens":0},"cost_in_usd_ticks":0,"num_sources_used":0,"prompt_tokens":84,"prompt_tokens_details":{"audio_tokens":0,"cached_tokens":0,"image_tokens":0,"text_tokens":84},"total_tokens":93}}
+
+        '
+  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+recorded_with: VCR 6.4.0

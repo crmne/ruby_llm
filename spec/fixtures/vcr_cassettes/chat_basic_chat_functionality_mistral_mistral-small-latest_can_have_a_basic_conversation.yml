@@ -9,7 +9,7 @@ http_interactions:
         2 + 2?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer <MISTRAL_API_KEY>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 13 Jan 2026 15:39:12 GMT
+      - Tue, 03 Mar 2026 11:51:38 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -32,31 +32,27 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '019bb802-d156-75d9-a7b7-bf664f0c27d9'
+      - '019cb38a-1b34-73b0-83c7-e80484522ab5'
       X-Kong-Request-Id:
-      - '019bb802-d156-75d9-a7b7-bf664f0c27d9'
+      - '019cb38a-1b34-73b0-83c7-e80484522ab5'
       X-Ratelimit-Limit-Tokens-Minute:
       - '2000000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '1999921'
-      X-Ratelimit-Limit-Tokens-Month:
-      - '10000000000'
-      X-Ratelimit-Remaining-Tokens-Month:
-      - '9999989045'
+      - '1998773'
       X-Ratelimit-Tokens-Query-Cost:
-      - '79'
-      X-Ratelimit-Limit-Req-60-Second:
+      - '65'
+      X-Ratelimit-Limit-Req-Minute:
       - '360'
-      X-Ratelimit-Remaining-Req-60-Second:
-      - '359'
+      X-Ratelimit-Remaining-Req-Minute:
+      - '353'
       X-Envoy-Upstream-Service-Time:
-      - '1035'
+      - '414'
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '1036'
+      - '415'
       X-Kong-Proxy-Latency:
-      - '8'
+      - '7'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -74,9 +70,7 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"a3a367dea8034d0589dea0552f23bcb5","created":1768318751,"model":"mistral-small-latest","usage":{"prompt_tokens":11,"total_tokens":79,"completion_tokens":68},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
-        sum of 2 + 2 is **4**.\n\nThis is a basic arithmetic operation where you add
-        two numbers together. Here''s the breakdown:\n\n- **2** (first number)\n-
-        **+ 2** (second number)\n- **= 4** (result)\n\nSo, 2 + 2 = 4."}}]}'
-  recorded_at: Tue, 13 Jan 2026 15:39:12 GMT
+      string: !binary |-
+        eyJpZCI6ImM0MjExYTJiYzc4ZTRmOTU5OWJmOTA3MzM3MDZmYmZmIiwiY3JlYXRlZCI6MTc3MjUzODY5OCwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsInVzYWdlIjp7InByb21wdF90b2tlbnMiOjExLCJ0b3RhbF90b2tlbnMiOjY1LCJjb21wbGV0aW9uX3Rva2VucyI6NTQsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjowfX0sIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNob2ljZXMiOlt7ImluZGV4IjowLCJmaW5pc2hfcmVhc29uIjoic3RvcCIsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsInRvb2xfY2FsbHMiOm51bGwsImNvbnRlbnQiOiJUaGUgc3VtIG9mIDIgKyAyIGlzICoqNCoqLlxuXG5UaGlzIGlzIGEgYmFzaWMgYXJpdGhtZXRpYyBvcGVyYXRpb24gd2hlcmUgeW91IGFkZCB0d28gbnVtYmVycyB0b2dldGhlci4gSW4gdGhpcyBjYXNlLCBhZGRpbmcgMiBhbmQgMiBnaXZlcyB5b3UgNC5cblxuV291bGQgeW91IGxpa2UgaGVscCB3aXRoIGFueSBvdGhlciBtYXRoIHByb2JsZW1zPyDwn5iKIn19XX0=
+  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
 recorded_with: VCR 6.4.0

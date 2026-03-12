@@ -10,7 +10,7 @@ http_interactions:
         is the best.</file>"}]}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer <GPUSTACK_API_KEY>
       Content-Type:
@@ -25,15 +25,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 13 Jan 2026 15:49:43 GMT
-      - Tue, 13 Jan 2026 15:49:44 GMT
+      - Tue, 03 Mar 2026 11:47:57 GMT
+      - Tue, 03 Mar 2026 11:47:57 GMT
       Server:
       - uvicorn
       - uvicorn
       Keep-Alive:
       - timeout=15, max=100
       Content-Length:
-      - '1564'
+      - '1538'
       Content-Type:
       - application/json
       X-Request-Accepted-At:
@@ -46,18 +46,18 @@ http_interactions:
       encoding: UTF-8
       string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"\n\nThe
         file `ruby.txt` contains the following text:\n\n```\nRuby is the best.\n```\n\nIt
-        is a plain text file ( MIME type `text/plain` ), so there are no additional
-        formatting or structural elements beyond this single sentence.","reasoning_content":"\nOkay,
-        the user is asking what''s in the file named ruby.txt. Let me check the information
-        provided. The file has a mime type of text/plain, which means it''s a plain
-        text file. The content given is \"Ruby is the best.\" So, the file is a simple
-        text file containing that exact sentence. I should confirm that there''s no
-        additional content beyond that. Since the user provided the file details directly,
-        I can state that the file contains the sentence \"Ruby is the best.\" and
-        mention the mime type. I should also note that there''s no further information
-        or structure in the file. Make sure the response is clear and concise, addressing
-        the user''s question directly.\n","role":"assistant"}}],"created":1768319385,"id":"chatcmpl-XcpJcuVlrbqCa3CD0jsFzLwlJv2rIrUb","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":192,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":141,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":34,"prompt_tokens_details":{"cached_tokens":0},"prompt_tokens_per_second":1274.6494713953662,"time_per_output_token_ms":7.795104166666667,"time_to_first_token_ms":26.674,"tokens_per_second":128.28564937928454,"total_tokens":226}}'
-  recorded_at: Tue, 13 Jan 2026 15:49:45 GMT
+        is a plain text file ( MIME type: `text/plain` ), so there are no special
+        formatting or binary data included. The content is simply the sentence \"Ruby
+        is the best.\"","reasoning_content":"\nOkay, the user is asking what''s in
+        the file named ruby.txt. Let me check the information provided. The file has
+        a mime type of text/plain, which means it''s a plain text file. The content
+        given is \"Ruby is the best.\" So, the file is a simple text file containing
+        that exact sentence. I should confirm that there''s no additional information
+        or hidden content. Since the user provided the file details directly, I can
+        state that the file contains the text \"Ruby is the best.\" and mention the
+        mime type. I should keep the answer straightforward and clear, making sure
+        to highlight the content and the file type.\n","role":"assistant"}}],"created":1772538479,"id":"chatcmpl-BIoOqq1FiELHgng02GVXFySKDbPCZgKM","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":191,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":130,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":34,"prompt_tokens_details":{"cached_tokens":2},"prompt_tokens_per_second":1506.6247175078654,"time_per_output_token_ms":7.896303664921466,"time_to_first_token_ms":22.567,"tokens_per_second":126.6415328532006,"total_tokens":225}}'
+  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
 - request:
     method: post
     uri: "<GPUSTACK_API_BASE>/chat/completions"
@@ -67,31 +67,30 @@ http_interactions:
         in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
         is the best.</file>"}]},{"role":"assistant","content":"\n\nThe file `ruby.txt`
         contains the following text:\n\n```\nRuby is the best.\n```\n\nIt is a plain
-        text file ( MIME type `text/plain` ), so there are no additional formatting
-        or structural elements beyond this single sentence.","reasoning":"\nOkay,
-        the user is asking what''s in the file named ruby.txt. Let me check the information
-        provided. The file has a mime type of text/plain, which means it''s a plain
-        text file. The content given is \"Ruby is the best.\" So, the file is a simple
-        text file containing that exact sentence. I should confirm that there''s no
-        additional content beyond that. Since the user provided the file details directly,
-        I can state that the file contains the sentence \"Ruby is the best.\" and
-        mention the mime type. I should also note that there''s no further information
-        or structure in the file. Make sure the response is clear and concise, addressing
-        the user''s question directly.\n","reasoning_content":"\nOkay, the user is
-        asking what''s in the file named ruby.txt. Let me check the information provided.
-        The file has a mime type of text/plain, which means it''s a plain text file.
-        The content given is \"Ruby is the best.\" So, the file is a simple text file
-        containing that exact sentence. I should confirm that there''s no additional
-        content beyond that. Since the user provided the file details directly, I
-        can state that the file contains the sentence \"Ruby is the best.\" and mention
-        the mime type. I should also note that there''s no further information or
-        structure in the file. Make sure the response is clear and concise, addressing
-        the user''s question directly.\n"},{"role":"user","content":[{"type":"text","text":"and
+        text file ( MIME type: `text/plain` ), so there are no special formatting
+        or binary data included. The content is simply the sentence \"Ruby is the
+        best.\"","reasoning":"\nOkay, the user is asking what''s in the file named
+        ruby.txt. Let me check the information provided. The file has a mime type
+        of text/plain, which means it''s a plain text file. The content given is \"Ruby
+        is the best.\" So, the file is a simple text file containing that exact sentence.
+        I should confirm that there''s no additional information or hidden content.
+        Since the user provided the file details directly, I can state that the file
+        contains the text \"Ruby is the best.\" and mention the mime type. I should
+        keep the answer straightforward and clear, making sure to highlight the content
+        and the file type.\n","reasoning_content":"\nOkay, the user is asking what''s
+        in the file named ruby.txt. Let me check the information provided. The file
+        has a mime type of text/plain, which means it''s a plain text file. The content
+        given is \"Ruby is the best.\" So, the file is a simple text file containing
+        that exact sentence. I should confirm that there''s no additional information
+        or hidden content. Since the user provided the file details directly, I can
+        state that the file contains the text \"Ruby is the best.\" and mention the
+        mime type. I should keep the answer straightforward and clear, making sure
+        to highlight the content and the file type.\n"},{"role":"user","content":[{"type":"text","text":"and
         in this one?"},{"type":"text","text":"<file name=''ruby.xml'' mime_type=''application/xml''><truism>Ruby
         is the best</truism></file>"}]}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer <GPUSTACK_API_KEY>
       Content-Type:
@@ -106,15 +105,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 13 Jan 2026 15:49:45 GMT
-      - Tue, 13 Jan 2026 15:49:45 GMT
+      - Tue, 03 Mar 2026 11:47:59 GMT
+      - Tue, 03 Mar 2026 11:47:59 GMT
       Server:
       - uvicorn
       - uvicorn
       Keep-Alive:
       - timeout=15, max=100
       Content-Length:
-      - '2799'
+      - '3656'
       Content-Type:
       - application/json
       X-Request-Accepted-At:
@@ -126,33 +125,44 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"\n\nThe
-        file `ruby.xml` contains a simple XML document with the following structure:\n\n```xml\n<truism>Ruby
-        is the best</truism>\n```\n\n### Details:\n- **MIME Type**: `application/xml`
-        (indicating it''s an XML file).\n- **Content**: A single XML element `<truism>`
-        with the text `\"Ruby is the best\"` as its value.\n- **Structure**: \n  -
-        The root element is `<truism>`, which is a custom tag (not a standard XML
-        element).\n  - The text `\"Ruby is the best\"` is enclosed within the `<truism>`
-        tags.\n- **Validation**: The XML is well-formed (properly opened and closed
-        tags).\n\nThis file essentially encodes the same statement as `ruby.txt`,
-        but in an XML format.","reasoning_content":"\nOkay, let me look at this. The
-        user provided another file named ''ruby.xml'' with MIME type application/xml.
-        The content is a <truism> tag containing \"Ruby is the best\". \n\nFirst,
-        I need to figure out what''s in this file. The MIME type is XML, so it''s
-        structured data. The file has a single <truism> element with the text \"Ruby
-        is the best\". \n\nI should explain the structure. The XML starts with the
-        root element <truism>, which is self-closing? Wait, no, the content is inside.
-        Wait, the user wrote <truism>Ruby is the best</truism>, so it''s an element
-        with text content. \n\nI need to mention that it''s an XML file, so it''s
-        structured. The <truism> tag is the root element. The text inside is the same
-        as the previous file but enclosed in XML tags. \n\nI should note that XML
-        requires proper syntax, like closing tags. Here, the <truism> tag is properly
-        closed with </truism>. The content is a simple statement. \n\nAlso, the user
-        might be testing if I can recognize XML structure. Maybe they want to know
-        if there''s any hidden meaning or if the XML is valid. But the content is
-        straightforward. \n\nI should point out that the XML is valid, with the root
-        element and the text. No other elements or attributes. So the file is a simple
-        XML document stating that Ruby is the best. \n\nI need to make sure I explain
-        the structure clearly, mention the MIME type, and the content. Also, compare
-        it to the previous text file to show the difference in format.\n","role":"assistant"}}],"created":1768319390,"id":"chatcmpl-PWCmJs24LjlskW4nEbmlRuMlRGun6NLP","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":510,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":343,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":123,"prompt_tokens_details":{"cached_tokens":32},"prompt_tokens_per_second":4541.762055978141,"time_per_output_token_ms":8.140792156862746,"time_to_first_token_ms":27.082,"tokens_per_second":122.83816866114103,"total_tokens":633}}'
-  recorded_at: Tue, 13 Jan 2026 15:49:49 GMT
+        file `ruby.xml` contains an **XML document** with the following structure:\n\n```xml\n<truism>Ruby
+        is the best</truism>\n```\n\n### Key Details:\n1. **MIME Type**: `application/xml`
+        (indicating it''s an XML file).\n2. **Content**: A single XML element `<truism>`
+        with the text `\"Ruby is the best\"` inside it.\n3. **XML Structure**: \n   -
+        The `<truism>` tag is a custom element (not a standard XML tag).\n   - The
+        content is enclosed within the opening `<truism>` and closing `</truism>`
+        tags.\n   - XML requires proper syntax (e.g., closing tags), which this example
+        follows.\n\n### Comparison to the Previous File:\n- **`ruby.txt`**: Plain
+        text with no markup.\n- **`ruby.xml`**: Structured XML with a single element
+        containing the same text.\n\nThis XML file could be part of a larger document
+        or used in a context where custom tags are meaningful (e.g., a specific application
+        or data format).","reasoning_content":"\nOkay, the user is asking what''s
+        in the second file, which is named ruby.xml with MIME type application/xml.
+        The content is a tag <truism>Ruby is the best</truism>. \n\nFirst, I need
+        to confirm the MIME type. Since it''s XML, the structure is expected to be
+        well-formed. The user might be testing if I can recognize XML elements. The
+        tag <truism> isn''t a standard XML tag, so maybe it''s a custom element. \n\nI
+        should explain that the file is an XML document with a single element called
+        \"truism\" containing the text \"Ruby is the best.\" I should mention that
+        XML requires proper syntax, like closing tags, but in this case, the tag is
+        self-closing? Wait, no, the content is inside the tag. Wait, the user wrote
+        <truism>Ruby is the best</truism>, which is a start tag, content, and end
+        tag. That''s correct. \n\nBut the user might not know if this is valid XML.
+        I should note that while the structure is correct, the element name \"truism\"
+        isn''t standard. Also, the content is the same as the previous file but wrapped
+        in XML tags. \n\nI should compare it to the previous file to show the difference.
+        The first was plain text, this one is XML. Maybe the user is checking if I
+        can differentiate between text and XML files. \n\nI should also mention that
+        the XML file could be part of a larger document, but in this case, it''s just
+        a single element. Also, the MIME type is application/xml, so it''s intended
+        to be parsed as XML. \n\nI need to make sure I explain the structure clearly,
+        pointing out the tags and the content. Maybe the user is learning about file
+        formats or XML structure. They might be looking for validation or understanding
+        how XML works. \n\nI should avoid technical jargon but still be accurate.
+        Also, check if there''s any hidden meaning, like the use of \"truism\" as
+        a tag. Maybe it''s a placeholder or a specific application''s tag. \n\nIn
+        summary, the answer should state the MIME type, the structure of the XML,
+        the presence of the truism element, and note that it''s a simple XML document.
+        Compare it to the previous text file to highlight the difference.\n","role":"assistant"}}],"created":1772538485,"id":"chatcmpl-J21SPSYQBKA9u0vj7z0ttqKk7nqvOS5Y","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":699,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":477,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":133,"prompt_tokens_details":{"cached_tokens":32},"prompt_tokens_per_second":4228.128179043743,"time_per_output_token_ms":8.244991416309013,"time_to_first_token_ms":31.456,"tokens_per_second":121.28575392109556,"total_tokens":832}}'
+  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
 recorded_with: VCR 6.4.0

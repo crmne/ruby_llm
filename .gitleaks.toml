@@ -1,0 +1,18 @@
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "Ignore dummy app artifacts and logs"
+paths = [
+  '''spec/dummy/.*'''
+]
+
+[[allowlists]]
+description = "Model pagination nextPageToken fields in model-refresh fixtures"
+regexTarget = "match"
+paths = [
+  '''spec/fixtures/vcr_cassettes/models_.*\.yml$'''
+]
+regexes = [
+  '''"nextPageToken":\s*"[^"]+"'''
+]

@@ -1,0 +1,129 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://openrouter.ai/api/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"anthropic/claude-haiku-4.5","messages":[{"role":"user","content":"What''s
+        the fall of Rome?"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}],"tool_choice":{"type":"function","function":{"name":"weather"}}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Authorization:
+      - Bearer <OPENROUTER_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 03 Mar 2026 11:57:43 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      Permissions-Policy:
+      - payment=(self "https://checkout.stripe.com" "https://connect-js.stripe.com"
+        "https://js.stripe.com" "https://*.js.stripe.com" "https://hooks.stripe.com")
+      Referrer-Policy:
+      - no-referrer, strict-origin-when-cross-origin
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: "\n         \n{\"id\":\"gen-1772539063-cuAHxwfsA8cvW2dERmwH\",\"object\":\"chat.completion\",\"created\":1772539063,\"model\":\"anthropic/claude-4.5-haiku-20251001\",\"provider\":\"Google\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"tool_calls\",\"native_finish_reason\":\"tool_calls\",\"message\":{\"role\":\"assistant\",\"content\":null,\"refusal\":null,\"reasoning\":null,\"tool_calls\":[{\"type\":\"function\",\"index\":0,\"id\":\"toolu_vrtx_01GVaTX11jnXa9F4QfFh19gh\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":
+        \\\"41.9028\\\", \\\"longitude\\\": \\\"12.4964\\\"}\"}}]}}],\"usage\":{\"prompt_tokens\":716,\"completion_tokens\":56,\"total_tokens\":772,\"cost\":0.000996,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.000996,\"upstream_inference_prompt_cost\":0.000716,\"upstream_inference_completions_cost\":0.00028},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}}}"
+  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+- request:
+    method: post
+    uri: https://openrouter.ai/api/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"anthropic/claude-haiku-4.5","messages":[{"role":"user","content":"What''s
+        the fall of Rome?"},{"role":"assistant","content":"","tool_calls":[{"id":"toolu_vrtx_01GVaTX11jnXa9F4QfFh19gh","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}"}}]},{"role":"tool","content":"Current
+        weather at 41.9028, 12.4964: 15°C, Wind: 10 km/h","tool_call_id":"toolu_vrtx_01GVaTX11jnXa9F4QfFh19gh"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Authorization:
+      - Bearer <OPENROUTER_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 03 Mar 2026 11:57:44 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      Permissions-Policy:
+      - payment=(self "https://checkout.stripe.com" "https://connect-js.stripe.com"
+        "https://js.stripe.com" "https://*.js.stripe.com" "https://hooks.stripe.com")
+      Referrer-Policy:
+      - no-referrer, strict-origin-when-cross-origin
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: "\n         \n\n         \n\n         \n\n         \n\n         \n\n
+        \        \n\n         \n\n         \n{\"id\":\"gen-1772539064-LxZTzTVwy8pF5u1akTqz\",\"object\":\"chat.completion\",\"created\":1772539064,\"model\":\"anthropic/claude-4.5-haiku-20251001\",\"provider\":\"Anthropic\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"message\":{\"role\":\"assistant\",\"content\":\"I
+        appreciate the question, but I think there might be a misunderstanding! You're
+        asking about the **Fall of Rome**, which is a historical topic, not a weather-related
+        query. My available tools only allow me to check weather conditions, so I
+        can't directly help with history questions using those tools.\\n\\nHowever,
+        I'm happy to explain the Fall of Rome:\\n\\n## The Fall of Rome\\n\\nThe **Fall
+        of the Roman Empire** (or Western Roman Empire) is one of the most significant
+        events in world history, occurring in the 5th century CE.\\n\\n### Key Factors:\\n\\n1.
+        **Political Instability** - Constant civil wars, corruption, and weak leadership
+        weakened central authority\\n\\n2. **Economic Decline** - Debasement of currency,
+        inflation, heavy taxation, and disruption of trade routes\\n\\n3. **Military
+        Pressure** - Invasions by Germanic tribes (Visigoths, Vandals, Ostrogoths,
+        etc.) and other barbarian groups\\n\\n4. **Division of the Empire** - The
+        empire split into Western and Eastern (Byzantine) halves; the West was more
+        vulnerable\\n\\n5. **Loss of Civic Values** - Decline in Roman culture, education,
+        and civic participation\\n\\n6. **Infrastructure Decline** - Deterioration
+        of roads, aqueducts, and public services\\n\\n### Timeline:\\n- **410 CE**
+        - Visigoths sack Rome under Alaric\\n- **455 CE** - Vandals plunder Rome\\n-
+        **476 CE** - The last Western Roman Emperor (Romulus Augustulus) is deposed,
+        officially marking the end of the Western Roman Empire\\n\\nThe **Eastern
+        Roman (Byzantine) Empire** continued for another thousand years until 1453.\\n\\nWould
+        you like to know more about any specific aspect of Rome's fall?\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":736,\"completion_tokens\":397,\"total_tokens\":1133,\"cost\":0.002721,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.002721,\"upstream_inference_prompt_cost\":0.000736,\"upstream_inference_completions_cost\":0.001985},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}}}"
+  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+recorded_with: VCR 6.4.0

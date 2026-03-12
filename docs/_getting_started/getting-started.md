@@ -43,7 +43,7 @@ bundle add ruby_llm
 For Rails applications, you can use the generator to set up database-backed conversations:
 
 ```bash
-rails generate ruby_llm:install
+bin/rails generate ruby_llm:install
 ```
 
 This creates Chat and Message models with ActiveRecord persistence. Your conversations will be automatically saved to the database.
@@ -53,7 +53,7 @@ This creates Chat and Message models with ActiveRecord persistence. Your convers
 After running the install generator, you can optionally add a ready-to-use chat interface:
 
 ```bash
-rails generate ruby_llm:chat_ui
+bin/rails generate ruby_llm:chat_ui
 ```
 
 This creates:

@@ -7,7 +7,10 @@ module RubyLLM
       module Chat
         module_function
 
-        def render_payload(messages, tools:, temperature:, model:, stream: false, schema: nil, thinking: nil) # rubocop:disable Metrics/ParameterLists
+        # rubocop:disable Metrics/ParameterLists,Metrics/PerceivedComplexity
+        def render_payload(messages, tools:, temperature:, model:, stream: false, schema: nil,
+                           thinking: nil, tool_prefs: nil)
+          tool_prefs ||= {}
           payload = {
             model: model.id,
             messages: format_messages(messages),
@@ -15,15 +18,25 @@ module RubyLLM
           }
 
           payload[:temperature] = temperature unless temperature.nil?
-          payload[:tools] = tools.map { |_, tool| OpenAI::Tools.tool_for(tool) } if tools.any?
+          if tools.any?
+            payload[:tools] = tools.map { |_, tool| OpenAI::Tools.tool_for(tool) }
+            payload[:tool_choice] = OpenAI::Tools.build_tool_choice(tool_prefs[:choice]) unless tool_prefs[:choice].nil?
+            payload[:parallel_tool_calls] = tool_prefs[:calls] == :many unless tool_prefs[:calls].nil?
+          end
 
           if schema
-            strict = schema[:strict] != false
+            schema_name = schema[:name]
+            schema_def = RubyLLM::Utils.deep_dup(schema[:schema])
+            if schema_def.is_a?(Hash)
+              schema_def.delete(:strict)
+              schema_def.delete('strict')
+            end
+            strict = schema[:strict]
             payload[:response_format] = {
               type: 'json_schema',
               json_schema: {
-                name: 'response',
-                schema: schema,
+                name: schema_name,
+                schema: schema_def,
                 strict: strict
               }
             }
@@ -35,6 +48,7 @@ module RubyLLM
           payload[:stream_options] = { include_usage: true } if stream
           payload
         end
+        # rubocop:enable Metrics/ParameterLists,Metrics/PerceivedComplexity
 
         def parse_completion_response(response)
           data = response.body

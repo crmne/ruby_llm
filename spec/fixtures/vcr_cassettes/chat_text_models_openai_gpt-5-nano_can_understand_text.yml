@@ -10,7 +10,7 @@ http_interactions:
         is the best.</file>"}]}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer <OPENAI_API_KEY>
       Content-Type:
@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 12 Jan 2026 09:41:59 GMT
+      - Tue, 03 Mar 2026 11:48:46 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -37,13 +37,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '3944'
+      - '3026'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
       - '2020-10-01'
-      X-Envoy-Upstream-Service-Time:
-      - '3965'
+      Server:
+      - cloudflare
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -64,13 +64,10 @@ http_interactions:
       - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
-      - "<COOKIE>"
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
-      Server:
-      - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
@@ -79,16 +76,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-Cx8ip8FjK2YaHYMnqkkACYGuvbeL2",
+          "id": "chatcmpl-DFIWxkMTIwet9I3prW9iHVoGYzWw2",
           "object": "chat.completion",
-          "created": 1768210915,
+          "created": 1772538523,
           "model": "gpt-5-nano-2025-08-07",
           "choices": [
             {
               "index": 0,
               "message": {
                 "role": "assistant",
-                "content": "The file ruby.txt contains the plain text: \"Ruby is the best.\"\n\n- One line\n- 17 characters total (including the period)",
+                "content": "The file ruby.txt contains the plain text: \"Ruby is the best.\" (a single line).",
                 "refusal": null,
                 "annotations": []
               },
@@ -97,14 +94,14 @@ http_interactions:
           ],
           "usage": {
             "prompt_tokens": 30,
-            "completion_tokens": 422,
-            "total_tokens": 452,
+            "completion_tokens": 349,
+            "total_tokens": 379,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
             },
             "completion_tokens_details": {
-              "reasoning_tokens": 384,
+              "reasoning_tokens": 320,
               "audio_tokens": 0,
               "accepted_prediction_tokens": 0,
               "rejected_prediction_tokens": 0
@@ -113,7 +110,7 @@ http_interactions:
           "service_tier": "default",
           "system_fingerprint": null
         }
-  recorded_at: Mon, 12 Jan 2026 09:41:59 GMT
+  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/chat/completions
@@ -122,13 +119,12 @@ http_interactions:
       string: '{"model":"gpt-5-nano","messages":[{"role":"user","content":[{"type":"text","text":"What''s
         in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
         is the best.</file>"}]},{"role":"assistant","content":"The file ruby.txt contains
-        the plain text: \"Ruby is the best.\"\n\n- One line\n- 17 characters total
-        (including the period)"},{"role":"user","content":[{"type":"text","text":"and
+        the plain text: \"Ruby is the best.\" (a single line)."},{"role":"user","content":[{"type":"text","text":"and
         in this one?"},{"type":"text","text":"<file name=''ruby.xml'' mime_type=''application/xml''><truism>Ruby
         is the best</truism></file>"}]}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer <OPENAI_API_KEY>
       Content-Type:
@@ -143,7 +139,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 12 Jan 2026 09:42:09 GMT
+      - Tue, 03 Mar 2026 11:48:50 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -155,13 +151,13 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '10320'
+      - '3491'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
       - '2020-10-01'
-      X-Envoy-Upstream-Service-Time:
-      - '10337'
+      Server:
+      - cloudflare
       X-Ratelimit-Limit-Requests:
       - '500'
       X-Ratelimit-Limit-Tokens:
@@ -169,11 +165,11 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '499'
       X-Ratelimit-Remaining-Tokens:
-      - '199917'
+      - '199927'
       X-Ratelimit-Reset-Requests:
       - 120ms
       X-Ratelimit-Reset-Tokens:
-      - 24ms
+      - 21ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Openai-Proxy-Wasm:
@@ -182,13 +178,10 @@ http_interactions:
       - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
-      - "<COOKIE>"
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
-      Server:
-      - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
@@ -197,16 +190,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-Cx8itUEPhmu9ET09NCNbVntN0jkep",
+          "id": "chatcmpl-DFIX0EC2wfy41rmcx6aXPifMNJag3",
           "object": "chat.completion",
-          "created": 1768210919,
+          "created": 1772538526,
           "model": "gpt-5-nano-2025-08-07",
           "choices": [
             {
               "index": 0,
               "message": {
                 "role": "assistant",
-                "content": "The file ruby.xml contains a small XML snippet:\n- Content: a single element <truism>Ruby is the best</truism>\n- Inner text: \"Ruby is the best\" (16 characters)\n- One line\n- Total file length (including tags): 33 characters\n- No XML declaration present",
+                "content": "The file ruby.xml contains an XML document with a single element: <truism>Ruby is the best</truism>. The inner text is \"Ruby is the best\".",
                 "refusal": null,
                 "annotations": []
               },
@@ -214,15 +207,15 @@ http_interactions:
             }
           ],
           "usage": {
-            "prompt_tokens": 99,
-            "completion_tokens": 1032,
-            "total_tokens": 1131,
+            "prompt_tokens": 90,
+            "completion_tokens": 428,
+            "total_tokens": 518,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
             },
             "completion_tokens_details": {
-              "reasoning_tokens": 960,
+              "reasoning_tokens": 384,
               "audio_tokens": 0,
               "accepted_prediction_tokens": 0,
               "rejected_prediction_tokens": 0
@@ -231,5 +224,5 @@ http_interactions:
           "service_tier": "default",
           "system_fingerprint": null
         }
-  recorded_at: Mon, 12 Jan 2026 09:42:09 GMT
+  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
 recorded_with: VCR 6.4.0

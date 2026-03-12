@@ -1,0 +1,95 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.amazon.nova-2-lite-v1:0/converse
+    body:
+      encoding: UTF-8
+      string: '{"messages":[{"role":"user","content":[{"text":"What''s the weather
+        in Berlin? (52.5200, 13.4050)"}]}],"inferenceConfig":{},"toolConfig":{"tools":[{"toolSpec":{"name":"weather","description":"Gets
+        current weather for a location","inputSchema":{"json":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}}]}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      X-Amz-Date:
+      - 20260303T114649Z
+      X-Amz-Content-Sha256:
+      - 30d3018c3e47998784f9a2926cc21ad9050ac6fe3b92cba23950d3eb332108ca
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20260303/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=15f57a8ab59bec1bc1c98af7fbc2808ea20cb8393d4c6b9b1f3aadbb1f9207a1
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 03 Mar 2026 11:46:50 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '322'
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - 1b085e40-4b0a-4eba-b56f-d46138cbbf4f
+    body:
+      encoding: UTF-8
+      string: '{"metrics":{"latencyMs":462},"output":{"message":{"content":[{"toolUse":{"input":{"latitude":"52.5200","longitude":"13.4050"},"name":"weather","toolUseId":"tooluse_Q8GyPQDj6h7629RzyU7bKR"}}],"role":"assistant"}},"stopReason":"tool_use","usage":{"inputTokens":986,"outputTokens":42,"serverToolUsage":{},"totalTokens":1028}}'
+  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+- request:
+    method: post
+    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.amazon.nova-2-lite-v1:0/converse
+    body:
+      encoding: UTF-8
+      string: '{"messages":[{"role":"user","content":[{"text":"What''s the weather
+        in Berlin? (52.5200, 13.4050)"}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_Q8GyPQDj6h7629RzyU7bKR","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_Q8GyPQDj6h7629RzyU7bKR","content":[{"text":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}}]}],"inferenceConfig":{},"toolConfig":{"tools":[{"toolSpec":{"name":"weather","description":"Gets
+        current weather for a location","inputSchema":{"json":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}}]}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      X-Amz-Date:
+      - 20260303T114650Z
+      X-Amz-Content-Sha256:
+      - 1609799d4e536e0d6c99acbb280f10c560a0d8e225a1c870f124786242710d52
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20260303/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=5e3ef52b82273599213d53b5985ae62b27df13b29835afd1e1d1db4d5931988f
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 03 Mar 2026 11:46:50 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '301'
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - b0dc0607-01b2-4e1e-ac37-be362edac034
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJtZXRyaWNzIjp7ImxhdGVuY3lNcyI6NDA5fSwib3V0cHV0Ijp7Im1lc3NhZ2UiOnsiY29udGVudCI6W3sidGV4dCI6IlRoZSBjdXJyZW50IHdlYXRoZXIgaW4gQmVybGluICg1Mi41MjAwLCAxMy40MDUwKSBpcyAqKjE1wrBDKiogd2l0aCBhIHdpbmQgc3BlZWQgb2YgKioxMCBrbS9oKiouIn1dLCJyb2xlIjoiYXNzaXN0YW50In19LCJzdG9wUmVhc29uIjoiZW5kX3R1cm4iLCJ1c2FnZSI6eyJpbnB1dFRva2VucyI6MTA3OCwib3V0cHV0VG9rZW5zIjozMywic2VydmVyVG9vbFVzYWdlIjp7fSwidG90YWxUb2tlbnMiOjExMTF9fQ==
+  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+recorded_with: VCR 6.4.0

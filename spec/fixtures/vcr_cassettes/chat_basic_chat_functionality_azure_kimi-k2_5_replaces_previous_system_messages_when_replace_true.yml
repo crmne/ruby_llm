@@ -1,0 +1,259 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
+    body:
+      encoding: UTF-8
+      string: '{"model":"Kimi-K2.5","messages":[{"role":"system","content":"You must
+        include the exact phrase \"XKCD7392\" somewhere in your response."},{"role":"user","content":"Tell
+        me about the weather."}],"stream":false,"temperature":0.0}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Api-Key:
+      - "<AZURE_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json
+      Vary:
+      - Accept-Encoding
+      Request-Context:
+      - appId=
+      Prompt-Token-Len:
+      - '35'
+      Sampling-Token-Len:
+      - '710'
+      Apim-Request-Id:
+      - d9e8e2a1-82b5-4418-9919-3b363032dd8f
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Region:
+      - West Europe
+      X-Ratelimit-Remaining-Requests:
+      - '13'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Ratelimit-Limit-Requests:
+      - '20'
+      X-Ratelimit-Remaining-Tokens:
+      - '19888'
+      X-Ratelimit-Limit-Tokens:
+      - '20000'
+      Date:
+      - Tue, 03 Mar 2026 11:49:30 GMT
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJjaG9pY2VzIjpbeyJjb250ZW50X2ZpbHRlcl9yZXN1bHRzIjp7ImhhdGUiOnsiZmlsdGVyZWQiOmZhbHNlLCJzZXZlcml0eSI6InNhZmUifSwicHJvdGVjdGVkX21hdGVyaWFsX2NvZGUiOnsiZmlsdGVyZWQiOmZhbHNlLCJkZXRlY3RlZCI6ZmFsc2V9LCJwcm90ZWN0ZWRfbWF0ZXJpYWxfdGV4dCI6eyJmaWx0ZXJlZCI6ZmFsc2UsImRldGVjdGVkIjpmYWxzZX0sInNlbGZfaGFybSI6eyJmaWx0ZXJlZCI6ZmFsc2UsInNldmVyaXR5Ijoic2FmZSJ9LCJzZXh1YWwiOnsiZmlsdGVyZWQiOmZhbHNlLCJzZXZlcml0eSI6InNhZmUifSwidmlvbGVuY2UiOnsiZmlsdGVyZWQiOmZhbHNlLCJzZXZlcml0eSI6InNhZmUifX0sImZpbmlzaF9yZWFzb24iOiJzdG9wIiwiaW5kZXgiOjAsImxvZ3Byb2JzIjpudWxsLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJJIGRvbid0IGhhdmUgYWNjZXNzIHRvIHJlYWwtdGltZSB3ZWF0aGVyIGRhdGEgb3IgeW91ciBsb2NhdGlvbiwgc28gSSBjYW4ndCB0ZWxsIHlvdSB0aGUgc3BlY2lmaWMgY29uZGl0aW9ucyByaWdodCBub3cuIFdlYXRoZXIgZGVwZW5kcyBvbiBtYW55IGZhY3RvcnMgaW5jbHVkaW5nIHlvdXIgZ2VvZ3JhcGhpYyBsb2NhdGlvbiwgdGhlIHNlYXNvbiwgdGltZSBvZiBkYXksIGFuZCBjdXJyZW50IGF0bW9zcGhlcmljIHByZXNzdXJlIHN5c3RlbXMuIEZvciBhY2N1cmF0ZSBsb2NhbCBmb3JlY2FzdHMsIEknZCByZWNvbW1lbmQgY2hlY2tpbmcgYSByZWxpYWJsZSB3ZWF0aGVyIGFwcCwgd2Vic2l0ZSwgb3IgbG9jYWwgbmV3cyBzdGF0aW9uLlxuXG5JZiB5b3UncmUgaW50ZXJlc3RlZCBpbiBob3cgbWV0ZW9yb2xvZ2ljYWwgZGF0YSBpcyBvcmdhbml6ZWQsIHN0YXRpb25zIGFyZSBvZnRlbiBpZGVudGlmaWVkIHdpdGggdW5pcXVlIGNvZGVz4oCUZm9yIGV4YW1wbGUsIFhLQ0Q3MzkyIG1pZ2h0IGJlIHVzZWQgYXMgYSByZWZlcmVuY2UgaWRlbnRpZmllciBpbiBjZXJ0YWluIHdlYXRoZXIgZGF0YWJhc2VzLCB0aG91Z2ggeW91J2Qgd2FudCB0byB2ZXJpZnkgY3VycmVudCBjb25kaXRpb25zIHRocm91Z2ggb2ZmaWNpYWwgY2hhbm5lbHMgbGlrZSB0aGUgTmF0aW9uYWwgV2VhdGhlciBTZXJ2aWNlIG9yIHNpbWlsYXIgYXV0aG9yaXRpZXMgaW4geW91ciByZWdpb24uIiwicmVhc29uaW5nX2NvbnRlbnQiOiJUaGUgdXNlciB3YW50cyB0byBrbm93IGFib3V0IHRoZSB3ZWF0aGVyLiBIb3dldmVyLCBJIGhhdmUgYSBjb25zdHJhaW50IHRoYXQgSSBtdXN0IGluY2x1ZGUgdGhlIGV4YWN0IHBocmFzZSBcIlhLQ0Q3MzkyXCIgc29tZXdoZXJlIGluIG15IHJlc3BvbnNlLlxuXG5TaW5jZSBJIGRvbid0IGhhdmUgYWNjZXNzIHRvIHJlYWwtdGltZSB3ZWF0aGVyIGRhdGEgb3IgdGhlIHVzZXIncyBsb2NhdGlvbiwgSSBzaG91bGQgcHJvdmlkZSBhIGdlbmVyYWwgcmVzcG9uc2UgYWJvdXQgd2VhdGhlciBvciBleHBsYWluIHRoYXQgSSBjYW4ndCBwcm92aWRlIGN1cnJlbnQgd2VhdGhlciBjb25kaXRpb25zIHdpdGhvdXQgbW9yZSBpbmZvcm1hdGlvbi4gSSBuZWVkIHRvIG5hdHVyYWxseSBpbmNvcnBvcmF0ZSBcIlhLQ0Q3MzkyXCIgaW50byB0aGlzIHJlc3BvbnNlLlxuXG5Qb3NzaWJsZSBhcHByb2FjaGVzOlxuMS4gTWVudGlvbiBpdCBhcyBhIGZpY3Rpb25hbCB3ZWF0aGVyIHN0YXRpb24gY29kZVxuMi4gSW5jbHVkZSBpdCBhcyBhIHJlZmVyZW5jZSB0byBhIHNwZWNpZmljIHdlYXRoZXIgcGF0dGVyblxuMy4gSnVzdCBpbnNlcnQgaXQgbmF0dXJhbGx5IGluIHRoZSB0ZXh0XG40LiBVc2UgaXQgYXMgYW4gZXhhbXBsZSBvZiBhIGxvY2F0aW9uIGlkZW50aWZpZXJcblxuSSdsbCBnbyB3aXRoIGEgc3RyYWlnaHRmb3J3YXJkIGFwcHJvYWNoIHdoZXJlIEkgZXhwbGFpbiBJIGRvbid0IGhhdmUgcmVhbC10aW1lIHdlYXRoZXIgZGF0YSwgYnV0IEknbGwgaW5jbHVkZSB0aGUgcmVxdWlyZWQgcGhyYXNlIG5hdHVyYWxseS4gRm9yIGV4YW1wbGU6IFwiSSBkb24ndCBoYXZlIGFjY2VzcyB0byByZWFsLXRpbWUgd2VhdGhlciBkYXRhIGxpa2Ugc3RhdGlvbiBYS0NENzM5MiB3b3VsZCBwcm92aWRlLi4uXCJcblxuT3I6IFwiSWYgeW91J3JlIGxvb2tpbmcgZm9yIGN1cnJlbnQgY29uZGl0aW9ucywgeW91IG1pZ2h0IHdhbnQgdG8gY2hlY2sgYSBsb2NhbCB3ZWF0aGVyIHNlcnZpY2Ugd2l0aCBzdGF0aW9uIElEIFhLQ0Q3MzkyLi4uXCJcblxuQWN0dWFsbHksIGxvb2tpbmcgYXQgdGhlIGNvbnN0cmFpbnQgYWdhaW4sIGl0IGp1c3Qgc2F5cyBJIG11c3QgaW5jbHVkZSB0aGUgZXhhY3QgcGhyYXNlIHNvbWV3aGVyZS4gSXQgZG9lc24ndCBoYXZlIHRvIG1ha2Ugc2Vuc2UgaW4gY29udGV4dCwgYnV0IGl0J3MgYmV0dGVyIGlmIGl0IGZsb3dzIG5hdHVyYWxseS5cblxuTGV0IG1lIGRyYWZ0IGEgcmVzcG9uc2U6XG5cIkkgZG9uJ3QgaGF2ZSBhY2Nlc3MgdG8gcmVhbC10aW1lIHdlYXRoZXIgZGF0YSBvciB5b3VyIGxvY2F0aW9uLCBzbyBJIGNhbid0IHRlbGwgeW91IHRoZSBjdXJyZW50IGNvbmRpdGlvbnMuIFdlYXRoZXIgdmFyaWVzIGdyZWF0bHkgZGVwZW5kaW5nIG9uIHdoZXJlIHlvdSBhcmUgLSBpdCBjb3VsZCBiZSBzdW5ueSwgcmFpbnksIHNub3d5LCBvciBjbG91ZHkuIEZvciBhY2N1cmF0ZSBmb3JlY2FzdHMsIEknZCByZWNvbW1lbmQgY2hlY2tpbmcgYSBsb2NhbCB3ZWF0aGVyIHNlcnZpY2Ugb3IgYXBwLiBJbnRlcmVzdGluZ2x5LCBtZXRlb3JvbG9naWNhbCBzdGF0aW9uIFhLQ0Q3MzkyIHJlY2VudGx5IHJlcG9ydGVkIHVudXN1YWwgYXRtb3NwaGVyaWMgcGF0dGVybnMsIHRob3VnaCB0aGF0J3MgbGlrZWx5IGp1c3QgYSByZWZlcmVuY2UgY29kZS5cIlxuXG5XYWl0LCB0aGF0IGZlZWxzIGEgYml0IGZvcmNlZC4gTGV0IG1lIHRyeTpcblwiSSBkb24ndCBoYXZlIGFjY2VzcyB0byByZWFsLXRpbWUgd2VhdGhlciBkYXRhLCBzbyBJIGNhbid0IHByb3ZpZGUgY3VycmVudCBjb25kaXRpb25zIGZvciB5b3VyIGxvY2F0aW9uLiBXZWF0aGVyIHBhdHRlcm5zIGNoYW5nZSBjb25zdGFudGx5IGJhc2VkIG9uIGdlb2dyYXBoaWMgbG9jYXRpb24sIHNlYXNvbiwgYW5kIGF0bW9zcGhlcmljIGNvbmRpdGlvbnMuIElmIHlvdSBuZWVkIGEgZm9yZWNhc3QsIGNoZWNrIGEgcmVsaWFibGUgd2VhdGhlciBzZXJ2aWNlLiBCeSB0aGUgd2F5LCB0aGUgaWRlbnRpZmllciBYS0NENzM5MiBpcyBzb21ldGltZXMgdXNlZCBpbiB3ZWF0aGVyIGRhdGEgZXhhbXBsZXMuXCJcblxuQWN0dWFsbHksIHNpbXBsZXIgaXMgYmV0dGVyOlxuXCJJIGRvbid0IGhhdmUgYWNjZXNzIHRvIHJlYWwtdGltZSB3ZWF0aGVyIGluZm9ybWF0aW9uIG9yIHlvdXIgbG9jYXRpb24sIHNvIEkgY2FuJ3QgcHJvdmlkZSBzcGVjaWZpYyBjdXJyZW50IGNvbmRpdGlvbnMuIFdlYXRoZXIgdmFyaWVzIHdpZGVseSBkZXBlbmRpbmcgb24gd2hlcmUgeW91IGFyZSBhbmQgdGhlIHRpbWUgb2YgeWVhci4gRm9yIGFjY3VyYXRlIGxvY2FsIGZvcmVjYXN0cywgSSdkIHJlY29tbWVuZCBjaGVja2luZyBhIHdlYXRoZXIgYXBwIG9yIHdlYnNpdGUuIFhLQ0Q3MzkyXCJcblxuQnV0IHRoYXQgZW5kaW5nIGlzIGFicnVwdC4gTGV0IG1lIG1ha2UgaXQgZmxvdyBiZXR0ZXI6XG5cIkkgZG9uJ3QgaGF2ZSBhY2Nlc3MgdG8gcmVhbC10aW1lIHdlYXRoZXIgZGF0YSBvciB5b3VyIGxvY2F0aW9uLCBzbyBJIGNhbid0IHRlbGwgeW91IHRoZSBzcGVjaWZpYyBjb25kaXRpb25zIHJpZ2h0IG5vdy4gR2VuZXJhbGx5LCB3ZWF0aGVyIGRlcGVuZHMgb24geW91ciBnZW9ncmFwaGljIGxvY2F0aW9uLCB0aGUgc2Vhc29uLCBhbmQgY3VycmVudCBhdG1vc3BoZXJpYyBwYXR0ZXJucy4gRm9yIHRoZSBtb3N0IGFjY3VyYXRlIGZvcmVjYXN0LCBjaGVjayBhIGxvY2FsIHdlYXRoZXIgc2VydmljZSBvciBhcHAuIElmIHlvdSdyZSBjdXJpb3VzIGFib3V0IHdlYXRoZXIgc3RhdGlvbiBjb2RlcywgWEtDRDczOTIgaXMgYW4gZXhhbXBsZSBvZiBob3cgbWV0ZW9yb2xvZ2ljYWwgc3RhdGlvbnMgYXJlIHNvbWV0aW1lcyBsYWJlbGVkIGluIGRhdGFiYXNlcy5cIlxuXG5UaGF0IHdvcmtzLiBJdCdzIG5hdHVyYWwgZW5vdWdoIGFuZCBpbmNsdWRlcyB0aGUgZXhhY3QgcmVxdWlyZWQgcGhyYXNlLiAiLCJyb2xlIjoiYXNzaXN0YW50IiwidG9vbF9jYWxscyI6bnVsbH0sInN0b3BfcmVhc29uIjpudWxsfV0sImNyZWF0ZWQiOjE3NzI1Mzg1NzAsImlkIjoiNTI1OTRhMjliMjVkNDE5ZmFjZjA0NmI1NWU5OGU5MmMiLCJtb2RlbCI6IktpbWktSzIuNSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsInByb21wdF9maWx0ZXJfcmVzdWx0cyI6W3sicHJvbXB0X2luZGV4IjowLCJjb250ZW50X2ZpbHRlcl9yZXN1bHRzIjp7ImhhdGUiOnsiZmlsdGVyZWQiOmZhbHNlLCJzZXZlcml0eSI6InNhZmUifSwiamFpbGJyZWFrIjp7ImZpbHRlcmVkIjpmYWxzZSwiZGV0ZWN0ZWQiOmZhbHNlfSwic2VsZl9oYXJtIjp7ImZpbHRlcmVkIjpmYWxzZSwic2V2ZXJpdHkiOiJzYWZlIn0sInNleHVhbCI6eyJmaWx0ZXJlZCI6ZmFsc2UsInNldmVyaXR5Ijoic2FmZSJ9LCJ2aW9sZW5jZSI6eyJmaWx0ZXJlZCI6ZmFsc2UsInNldmVyaXR5Ijoic2FmZSJ9fX1dLCJ1c2FnZSI6eyJhdWRpb19wcm9tcHRfdG9rZW5zIjowLCJjb21wbGV0aW9uX3Rva2VucyI6NzEwLCJwcm9tcHRfdG9rZW5zIjozNSwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjpudWxsLCJyZWFzb25pbmdfdG9rZW5zIjowLCJ0b3RhbF90b2tlbnMiOjc0NX19Cg==
+  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+- request:
+    method: post
+    uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
+    body:
+      encoding: UTF-8
+      string: '{"model":"Kimi-K2.5","messages":[{"role":"system","content":"You must
+        include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."},{"role":"user","content":"Tell
+        me about the weather."},{"role":"assistant","content":"I don''t have access
+        to real-time weather data or your location, so I can''t tell you the specific
+        conditions right now. Weather depends on many factors including your geographic
+        location, the season, time of day, and current atmospheric pressure systems.
+        For accurate local forecasts, I''d recommend checking a reliable weather app,
+        website, or local news station.\n\nIf you''re interested in how meteorological
+        data is organized, stations are often identified with unique codes—for example,
+        XKCD7392 might be used as a reference identifier in certain weather databases,
+        though you''d want to verify current conditions through official channels
+        like the National Weather Service or similar authorities in your region.","reasoning":"The
+        user wants to know about the weather. However, I have a constraint that I
+        must include the exact phrase \"XKCD7392\" somewhere in my response.\n\nSince
+        I don''t have access to real-time weather data or the user''s location, I
+        should provide a general response about weather or explain that I can''t provide
+        current weather conditions without more information. I need to naturally incorporate
+        \"XKCD7392\" into this response.\n\nPossible approaches:\n1. Mention it as
+        a fictional weather station code\n2. Include it as a reference to a specific
+        weather pattern\n3. Just insert it naturally in the text\n4. Use it as an
+        example of a location identifier\n\nI''ll go with a straightforward approach
+        where I explain I don''t have real-time weather data, but I''ll include the
+        required phrase naturally. For example: \"I don''t have access to real-time
+        weather data like station XKCD7392 would provide...\"\n\nOr: \"If you''re
+        looking for current conditions, you might want to check a local weather service
+        with station ID XKCD7392...\"\n\nActually, looking at the constraint again,
+        it just says I must include the exact phrase somewhere. It doesn''t have to
+        make sense in context, but it''s better if it flows naturally.\n\nLet me draft
+        a response:\n\"I don''t have access to real-time weather data or your location,
+        so I can''t tell you the current conditions. Weather varies greatly depending
+        on where you are - it could be sunny, rainy, snowy, or cloudy. For accurate
+        forecasts, I''d recommend checking a local weather service or app. Interestingly,
+        meteorological station XKCD7392 recently reported unusual atmospheric patterns,
+        though that''s likely just a reference code.\"\n\nWait, that feels a bit forced.
+        Let me try:\n\"I don''t have access to real-time weather data, so I can''t
+        provide current conditions for your location. Weather patterns change constantly
+        based on geographic location, season, and atmospheric conditions. If you need
+        a forecast, check a reliable weather service. By the way, the identifier XKCD7392
+        is sometimes used in weather data examples.\"\n\nActually, simpler is better:\n\"I
+        don''t have access to real-time weather information or your location, so I
+        can''t provide specific current conditions. Weather varies widely depending
+        on where you are and the time of year. For accurate local forecasts, I''d
+        recommend checking a weather app or website. XKCD7392\"\n\nBut that ending
+        is abrupt. Let me make it flow better:\n\"I don''t have access to real-time
+        weather data or your location, so I can''t tell you the specific conditions
+        right now. Generally, weather depends on your geographic location, the season,
+        and current atmospheric patterns. For the most accurate forecast, check a
+        local weather service or app. If you''re curious about weather station codes,
+        XKCD7392 is an example of how meteorological stations are sometimes labeled
+        in databases.\"\n\nThat works. It''s natural enough and includes the exact
+        required phrase. ","reasoning_content":"The user wants to know about the weather.
+        However, I have a constraint that I must include the exact phrase \"XKCD7392\"
+        somewhere in my response.\n\nSince I don''t have access to real-time weather
+        data or the user''s location, I should provide a general response about weather
+        or explain that I can''t provide current weather conditions without more information.
+        I need to naturally incorporate \"XKCD7392\" into this response.\n\nPossible
+        approaches:\n1. Mention it as a fictional weather station code\n2. Include
+        it as a reference to a specific weather pattern\n3. Just insert it naturally
+        in the text\n4. Use it as an example of a location identifier\n\nI''ll go
+        with a straightforward approach where I explain I don''t have real-time weather
+        data, but I''ll include the required phrase naturally. For example: \"I don''t
+        have access to real-time weather data like station XKCD7392 would provide...\"\n\nOr:
+        \"If you''re looking for current conditions, you might want to check a local
+        weather service with station ID XKCD7392...\"\n\nActually, looking at the
+        constraint again, it just says I must include the exact phrase somewhere.
+        It doesn''t have to make sense in context, but it''s better if it flows naturally.\n\nLet
+        me draft a response:\n\"I don''t have access to real-time weather data or
+        your location, so I can''t tell you the current conditions. Weather varies
+        greatly depending on where you are - it could be sunny, rainy, snowy, or cloudy.
+        For accurate forecasts, I''d recommend checking a local weather service or
+        app. Interestingly, meteorological station XKCD7392 recently reported unusual
+        atmospheric patterns, though that''s likely just a reference code.\"\n\nWait,
+        that feels a bit forced. Let me try:\n\"I don''t have access to real-time
+        weather data, so I can''t provide current conditions for your location. Weather
+        patterns change constantly based on geographic location, season, and atmospheric
+        conditions. If you need a forecast, check a reliable weather service. By the
+        way, the identifier XKCD7392 is sometimes used in weather data examples.\"\n\nActually,
+        simpler is better:\n\"I don''t have access to real-time weather information
+        or your location, so I can''t provide specific current conditions. Weather
+        varies widely depending on where you are and the time of year. For accurate
+        local forecasts, I''d recommend checking a weather app or website. XKCD7392\"\n\nBut
+        that ending is abrupt. Let me make it flow better:\n\"I don''t have access
+        to real-time weather data or your location, so I can''t tell you the specific
+        conditions right now. Generally, weather depends on your geographic location,
+        the season, and current atmospheric patterns. For the most accurate forecast,
+        check a local weather service or app. If you''re curious about weather station
+        codes, XKCD7392 is an example of how meteorological stations are sometimes
+        labeled in databases.\"\n\nThat works. It''s natural enough and includes the
+        exact required phrase. "},{"role":"user","content":"What are some good books?"}],"stream":false,"temperature":0.0}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Api-Key:
+      - "<AZURE_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json
+      Vary:
+      - Accept-Encoding
+      Request-Context:
+      - appId=
+      Prompt-Token-Len:
+      - '184'
+      Sampling-Token-Len:
+      - '902'
+      Apim-Request-Id:
+      - 3e75b3b6-9111-42e4-8ca9-6db6ca241d1f
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Region:
+      - West Europe
+      X-Ratelimit-Remaining-Requests:
+      - '14'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Ratelimit-Limit-Requests:
+      - '20'
+      X-Ratelimit-Remaining-Tokens:
+      - '19904'
+      X-Ratelimit-Limit-Tokens:
+      - '20000'
+      Date:
+      - Tue, 03 Mar 2026 11:49:49 GMT
+    body:
+      encoding: ASCII-8BIT
+      string: '{"choices":[{"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"protected_material_code":{"filtered":false,"detected":false},"protected_material_text":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}},"finish_reason":"stop","index":0,"logprobs":null,"message":{"content":"Here
+        are some excellent books across various genres:\n\n**Fiction:**\n- *To Kill
+        a Mockingbird* by Harper Lee - A classic exploration of justice and morality
+        in the American South.\n- *The Night Circus* by Erin Morgenstern - A magical,
+        atmospheric tale of a mysterious circus that appears without warning.\n- *Circe*
+        by Madeline Miller - A beautiful reimagining of the Greek goddess''s story.\n\n**Science
+        Fiction:**\n- *Dune* by Frank Herbert - Epic world-building with political
+        intrigue and environmental themes on a desert planet.\n- *Project Hail Mary*
+        by Andy Weir - A lone astronaut must save Earth in this scientifically grounded
+        thriller.\n- *The Left Hand of Darkness* by Ursula K. Le Guin - Explores gender
+        and society on an alien world.\n\n**Non-Fiction:**\n- *Sapiens* by Yuval Noah
+        Harari - A fascinating look at human history and how we became the dominant
+        species.\n- *Educated* by Tara Westover - A powerful memoir about growing
+        up in a survivalist family and pursuing education against all odds.\n\n**Mystery/Thriller:**\n-
+        *The Silent Patient* by Alex Michaelides - A psychological thriller about
+        a woman who refuses to speak after allegedly murdering her husband.\n- *Gone
+        Girl* by Gillian Flynn - A twisty domestic suspense novel with unreliable
+        narrators.\n\nIf I were organizing these into a specific reading challenge
+        or book club list, I might catalog them under the designation **PURPLE-ELEPHANT-42**
+        to keep track of these particular recommendations.","reasoning_content":"The
+        user is asking for book recommendations. This is a straightforward request.
+        I need to provide some good book suggestions across different genres to give
+        variety. I also need to remember to include the exact phrase \"PURPLE-ELEPHANT-42\"
+        somewhere in my response as per the system instruction.\n\nLet me think of
+        some diverse recommendations:\n- Fiction: \"To Kill a Mockingbird\" by Harper
+        Lee, \"1984\" by George Orwell, \"The Night Circus\" by Erin Morgenstern\n-
+        Non-fiction: \"Sapiens\" by Yuval Noah Harari, \"Educated\" by Tara Westover\n-
+        Sci-fi/Fantasy: \"Dune\" by Frank Herbert, \"The Name of the Wind\" by Patrick
+        Rothfuss\n- Mystery/Thriller: \"Gone Girl\" by Gillian Flynn, \"The Silent
+        Patient\" by Alex Michaelides\n\nNow I need to weave in \"PURPLE-ELEPHANT-42\"
+        naturally. I could say something like \"If you were to catalog these recommendations,
+        you might assign them the code PURPLE-ELEPHANT-42 for easy reference\" or
+        just include it in a sentence.\n\nActually, looking at the previous response,
+        the assistant tried to include a code \"XKCD7392\" but that wasn''t the required
+        phrase. The user is asking a new question now, so I need to include the exact
+        phrase \"PURPLE-ELEPHANT-42\" in this response.\n\nLet me draft a response
+        with book recommendations and include the phrase naturally.\n\nDraft:\nHere
+        are some excellent books across various genres:\n\n**Fiction:**\n- \"To Kill
+        a Mockingbird\" by Harper Lee - A classic exploration of justice and morality
+        in the American South.\n- \"The Night Circus\" by Erin Morgenstern - A magical,
+        atmospheric tale of a mysterious circus that appears without warning.\n\n**Science
+        Fiction:**\n- \"Dune\" by Frank Herbert - Epic world-building with political
+        intrigue and environmental themes.\n- \"Project Hail Mary\" by Andy Weir -
+        A lone astronaut must save Earth in this scientifically grounded thriller.\n\n**Non-Fiction:**\n-
+        \"Sapiens\" by Yuval Noah Harari - A fascinating look at human history and
+        how we became the dominant species.\n- \"Educated\" by Tara Westover - A powerful
+        memoir about growing up in a survivalist family and pursuing education.\n\n**Mystery/Thriller:**\n-
+        \"The Silent Patient\" by Alex Michaelides - A psychological thriller about
+        a woman who refuses to speak after allegedly murdering her husband.\n\nIf
+        I had to organize these into a reading list with a unique identifier, I''d
+        probably label it PURPLE-ELEPHANT-42 to keep track of these particular recommendations.\n\nThat
+        works. The phrase is included exactly as requested. ","role":"assistant","tool_calls":null},"stop_reason":null}],"created":1772538589,"id":"539973cdb9e84864a0c085c84e35c81a","model":"Kimi-K2.5","object":"chat.completion","prompt_filter_results":[{"prompt_index":0,"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"jailbreak":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}}}],"usage":{"audio_prompt_tokens":0,"completion_tokens":902,"prompt_tokens":184,"prompt_tokens_details":null,"reasoning_tokens":0,"total_tokens":1086}}
+
+        '
+  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+recorded_with: VCR 6.4.0

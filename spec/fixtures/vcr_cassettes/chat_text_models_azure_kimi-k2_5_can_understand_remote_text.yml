@@ -1,0 +1,192 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://www.ruby-lang.org/en/about/license.txt
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2502'
+      Server:
+      - GitHub.com
+      Content-Type:
+      - text/plain; charset=utf-8
+      X-Origin-Cache:
+      - HIT
+      Last-Modified:
+      - Tue, 03 Mar 2026 02:28:42 GMT
+      Access-Control-Allow-Origin:
+      - "*"
+      Etag:
+      - W/"69a6475a-9c6"
+      Expires:
+      - Tue, 03 Mar 2026 10:01:39 GMT
+      Cache-Control:
+      - max-age=600
+      X-Proxy-Cache:
+      - MISS
+      X-Github-Request-Id:
+      - 85DC:1F9395:1E82256:1EB6375:69A6AF2B
+      Accept-Ranges:
+      - bytes
+      Date:
+      - Tue, 03 Mar 2026 11:47:01 GMT
+      Via:
+      - 1.1 varnish
+      Age:
+      - '20'
+      X-Served-By:
+      - cache-fra-etou8220074-FRA
+      X-Cache:
+      - HIT
+      X-Cache-Hits:
+      - '1'
+      X-Timer:
+      - S1772538421.031730,VS0,VE1
+      Vary:
+      - Accept-Encoding
+      X-Fastly-Request-Id:
+      - 60b78ebee99d7c8d9495f95f712b2b425b1eb7fb
+    body:
+      encoding: ASCII-8BIT
+      string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
+        can redistribute it and/or modify it under either the terms of the\n2-clause
+        BSDL (see the file BSDL), or the conditions below:\n\n  1. You may make and
+        give away verbatim copies of the source form of the\n     software without
+        restriction, provided that you duplicate all of the\n     original copyright
+        notices and associated disclaimers.\n\n  2. You may modify your copy of the
+        software in any way, provided that\n     you do at least ONE of the following:\n\n
+        \      a) place your modifications in the Public Domain or otherwise\n          make
+        them Freely Available, such as by posting said\n\t  modifications to Usenet
+        or an equivalent medium, or by allowing\n\t  the author to include your modifications
+        in the software.\n\n       b) use the modified software only within your corporation
+        or\n          organization.\n\n       c) give non-standard binaries non-standard
+        names, with\n          instructions on where to get the original software
+        distribution.\n\n       d) make other distribution arrangements with the author.\n\n
+        \ 3. You may distribute the software in object code or binary form,\n     provided
+        that you do at least ONE of the following:\n\n       a) distribute the binaries
+        and library files of the software,\n\t  together with instructions (in the
+        manual page or equivalent)\n\t  on where to get the original distribution.\n\n
+        \      b) accompany the distribution with the machine-readable source of\n\t
+        \ the software.\n\n       c) give non-standard binaries non-standard names,
+        with\n          instructions on where to get the original software distribution.\n\n
+        \      d) make other distribution arrangements with the author.\n\n  4. You
+        may modify and include the part of the software into any other\n     software
+        (possibly commercial).  But some files in the distribution\n     are not written
+        by the author, so that they are not under these terms.\n\n     For the list
+        of those files and their copying conditions, see the\n     file LEGAL.\n\n
+        \ 5. The scripts and library files supplied as input to or produced as\n     output
+        from the software do not automatically fall under the\n     copyright of the
+        software, but belong to whomever generated them,\n     and may be sold commercially,
+        and may be aggregated with this\n     software.\n\n  6. THIS SOFTWARE IS PROVIDED
+        \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
+        WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
+        FOR A PARTICULAR\n     PURPOSE.\n"
+  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+- request:
+    method: post
+    uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
+    body:
+      encoding: UTF-8
+      string: '{"model":"Kimi-K2.5","messages":[{"role":"user","content":[{"type":"text","text":"What''s
+        in this file?"},{"type":"text","text":"<file name=''license.txt'' mime_type=''text/plain''>Ruby
+        is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
+        can redistribute it and/or modify it under either the terms of the\n2-clause
+        BSDL (see the file BSDL), or the conditions below:\n\n  1. You may make and
+        give away verbatim copies of the source form of the\n     software without
+        restriction, provided that you duplicate all of the\n     original copyright
+        notices and associated disclaimers.\n\n  2. You may modify your copy of the
+        software in any way, provided that\n     you do at least ONE of the following:\n\n       a)
+        place your modifications in the Public Domain or otherwise\n          make
+        them Freely Available, such as by posting said\n\t  modifications to Usenet
+        or an equivalent medium, or by allowing\n\t  the author to include your modifications
+        in the software.\n\n       b) use the modified software only within your corporation
+        or\n          organization.\n\n       c) give non-standard binaries non-standard
+        names, with\n          instructions on where to get the original software
+        distribution.\n\n       d) make other distribution arrangements with the author.\n\n  3.
+        You may distribute the software in object code or binary form,\n     provided
+        that you do at least ONE of the following:\n\n       a) distribute the binaries
+        and library files of the software,\n\t  together with instructions (in the
+        manual page or equivalent)\n\t  on where to get the original distribution.\n\n       b)
+        accompany the distribution with the machine-readable source of\n\t  the software.\n\n       c)
+        give non-standard binaries non-standard names, with\n          instructions
+        on where to get the original software distribution.\n\n       d) make other
+        distribution arrangements with the author.\n\n  4. You may modify and include
+        the part of the software into any other\n     software (possibly commercial).  But
+        some files in the distribution\n     are not written by the author, so that
+        they are not under these terms.\n\n     For the list of those files and their
+        copying conditions, see the\n     file LEGAL.\n\n  5. The scripts and library
+        files supplied as input to or produced as\n     output from the software do
+        not automatically fall under the\n     copyright of the software, but belong
+        to whomever generated them,\n     and may be sold commercially, and may be
+        aggregated with this\n     software.\n\n  6. THIS SOFTWARE IS PROVIDED \"AS
+        IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING, WITHOUT
+        LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+        A PARTICULAR\n     PURPOSE.\n</file>"}]}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Api-Key:
+      - "<AZURE_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json
+      Vary:
+      - Accept-Encoding
+      Request-Context:
+      - appId=
+      Prompt-Token-Len:
+      - '539'
+      Sampling-Token-Len:
+      - '710'
+      Apim-Request-Id:
+      - c5d95822-e0cf-4f60-8b40-f84013ed9d3c
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Region:
+      - West Europe
+      X-Ratelimit-Remaining-Requests:
+      - '15'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Ratelimit-Limit-Requests:
+      - '20'
+      X-Ratelimit-Remaining-Tokens:
+      - '19920'
+      X-Ratelimit-Limit-Tokens:
+      - '20000'
+      Date:
+      - Tue, 03 Mar 2026 11:47:23 GMT
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJjaG9pY2VzIjpbeyJjb250ZW50X2ZpbHRlcl9yZXN1bHRzIjp7ImhhdGUiOnsiZmlsdGVyZWQiOmZhbHNlLCJzZXZlcml0eSI6InNhZmUifSwicHJvdGVjdGVkX21hdGVyaWFsX2NvZGUiOnsiZmlsdGVyZWQiOmZhbHNlLCJkZXRlY3RlZCI6ZmFsc2V9LCJwcm90ZWN0ZWRfbWF0ZXJpYWxfdGV4dCI6eyJmaWx0ZXJlZCI6ZmFsc2UsImRldGVjdGVkIjpmYWxzZX0sInNlbGZfaGFybSI6eyJmaWx0ZXJlZCI6ZmFsc2UsInNldmVyaXR5Ijoic2FmZSJ9LCJzZXh1YWwiOnsiZmlsdGVyZWQiOmZhbHNlLCJzZXZlcml0eSI6InNhZmUifSwidmlvbGVuY2UiOnsiZmlsdGVyZWQiOmZhbHNlLCJzZXZlcml0eSI6InNhZmUifX0sImZpbmlzaF9yZWFzb24iOiJzdG9wIiwiaW5kZXgiOjAsImxvZ3Byb2JzIjpudWxsLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJUaGlzIGlzIHRoZSAqKlJ1YnkgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UgbGljZW5zZSoqIChzcGVjaWZpY2FsbHkgdGhlIHRyYWRpdGlvbmFsIFJ1YnkgTGljZW5zZSB0ZXJtcykuXG5cbktleSBkZXRhaWxzOlxuXG4qKkNvcHlyaWdodDoqKiBZdWtpaGlybyBNYXRzdW1vdG8gKHRoZSBjcmVhdG9yIG9mIFJ1YnkpXG5cbioqTGljZW5zaW5nIHN0cnVjdHVyZToqKiBEdWFsLWxpY2Vuc2VkIHVuZGVyIGVpdGhlcjpcbi0gVGhlIDItY2xhdXNlIEJTRCBMaWNlbnNlIChCU0RMKSwgT1IgIFxuLSBUaGUgY3VzdG9tIHRlcm1zIGxpc3RlZCBpbiB0aGUgZmlsZSAodGhlIFJ1YnkgTGljZW5zZSBjb25kaXRpb25zKVxuXG4qKk1haW4gcHJvdmlzaW9ucyBvZiB0aGUgUnVieSBMaWNlbnNlIHRlcm1zOioqXG5cbjEuICoqU291cmNlIGRpc3RyaWJ1dGlvbjoqKiBZb3UgY2FuIHJlZGlzdHJpYnV0ZSB2ZXJiYXRpbSBjb3BpZXMgb2YgdGhlIHNvdXJjZSBmcmVlbHksIHByb3ZpZGVkIHlvdSBrZWVwIGFsbCBjb3B5cmlnaHQgbm90aWNlcyBhbmQgZGlzY2xhaW1lcnMuXG5cbjIuICoqTW9kaWZpY2F0aW9uczoqKiBJZiB5b3UgbW9kaWZ5IHRoZSBzb2Z0d2FyZSwgeW91IG11c3QgZG8gYXQgbGVhc3Qgb25lIG9mOlxuICAgLSBSZWxlYXNlIG1vZGlmaWNhdGlvbnMgdG8gdGhlIHB1YmxpYyBkb21haW4gb3IgbWFrZSB0aGVtIGZyZWVseSBhdmFpbGFibGVcbiAgIC0gVXNlIG1vZGlmaWVkIHZlcnNpb25zIG9ubHkgaW50ZXJuYWxseSB3aXRoaW4geW91ciBvcmdhbml6YXRpb25cbiAgIC0gR2l2ZSBub24tc3RhbmRhcmQgYmluYXJpZXMgbm9uLXN0YW5kYXJkIG5hbWVzIHdpdGggaW5zdHJ1Y3Rpb25zIHRvIGdldCB0aGUgb3JpZ2luYWxcbiAgIC0gTWFrZSBzcGVjaWFsIGFycmFuZ2VtZW50cyB3aXRoIHRoZSBhdXRob3JcblxuMy4gKipCaW5hcnkgZGlzdHJpYnV0aW9uOioqIFNpbWlsYXIgb3B0aW9ucyBhcHBseSB3aGVuIGRpc3RyaWJ1dGluZyBjb21waWxlZC9vYmplY3QgY29kZSB2ZXJzaW9ucy5cblxuNC4gKipFbWJlZGRpbmc6KiogWW91IGNhbiBpbmNvcnBvcmF0ZSBwYXJ0cyBvZiBSdWJ5IGludG8gb3RoZXIgc29mdHdhcmUgKGluY2x1ZGluZyBjb21tZXJjaWFsIHByb2R1Y3RzKSwgdGhvdWdoIHNvbWUgZmlsZXMgaW4gdGhlIGRpc3RyaWJ1dGlvbiBoYXZlIGRpZmZlcmVudCBsaWNlbnNpbmcgdGVybXMgKGxpc3RlZCBpbiBhIHNlcGFyYXRlIGBMRUdBTGAgZmlsZSkuXG5cbjUuICoqR2VuZXJhdGVkIGNvbnRlbnQ6KiogU2NyaXB0cyBhbmQgbGlicmFyaWVzIHByb2R1Y2VkIGFzIGlucHV0L291dHB1dCBmcm9tIFJ1YnkgZG9uJ3QgYXV0b21hdGljYWxseSBmYWxsIHVuZGVyIHRoaXMgY29weXJpZ2h04oCUdGhleSBiZWxvbmcgdG8gd2hvZXZlciBjcmVhdGVkIHRoZW0gYW5kIGNhbiBiZSBzb2xkIGNvbW1lcmNpYWxseS5cblxuNi4gKipEaXNjbGFpbWVyOioqIFN0YW5kYXJkIFwiQVMgSVNcIiB3YXJyYW50eSBkaXNjbGFpbWVyIHdpdGggbm8gbGlhYmlsaXR5LlxuXG5UaGlzIGxpY2Vuc2UgaXMgbm90YWJsZSBmb3IgYmVpbmcgcmVsYXRpdmVseSBwZXJtaXNzaXZlIHdoaWxlIHJlcXVpcmluZyB0aGF0IG1vZGlmaWNhdGlvbnMgZWl0aGVyIGJlIHNoYXJlZCBwdWJsaWNseSBvciBrZXB0IHN0cmljdGx5IGludGVybmFsIChvcHRpb24gMmIpLCBvciBmb2xsb3cgc3BlY2lmaWMgbmFtaW5nL2Rpc3RyaWJ1dGlvbiByZXF1aXJlbWVudHMuIiwicmVhc29uaW5nX2NvbnRlbnQiOiJUaGUgdXNlciBpcyBhc2tpbmcgd2hhdCdzIGluIHRoZSBmaWxlIGBsaWNlbnNlLnR4dGAuIEkgbmVlZCB0byBhbmFseXplIHRoZSBjb250ZW50IHByb3ZpZGVkIGFuZCBkZXNjcmliZSBpdCBhY2N1cmF0ZWx5LlxuXG5UaGUgY29udGVudCBhcHBlYXJzIHRvIGJlIHRoZSBSdWJ5IHByb2dyYW1taW5nIGxhbmd1YWdlJ3MgbGljZW5zZSB0ZXh0LiBLZXkgb2JzZXJ2YXRpb25zOlxuXG4xLiBJdCdzIHRoZSBSdWJ5IExpY2Vuc2UgKHRoZSBkdWFsIGxpY2Vuc2UgdGV4dClcbjIuIENvcHlyaWdodCBob2xkZXI6IFl1a2loaXJvIE1hdHN1bW90byAodGhlIGNyZWF0b3Igb2YgUnVieSlcbjMuIEl0IG1lbnRpb25zIGl0J3MgY29weXJpZ2h0ZWQgZnJlZSBzb2Z0d2FyZVxuNC4gSXQgb2ZmZXJzIGR1YWwgbGljZW5zaW5nIG9wdGlvbnM6XG4gICAtIDItY2xhdXNlIEJTREwgKEJTRCBMaWNlbnNlKVxuICAgLSBPciB0aGUgY3VzdG9tIGNvbmRpdGlvbnMgbGlzdGVkIGJlbG93ICh0aGUgUnVieSBMaWNlbnNlIHRlcm1zKVxuXG5UaGUgc3BlY2lmaWMgY29uZGl0aW9ucyBsaXN0ZWQgaW5jbHVkZTpcbi0gUmVxdWlyZW1lbnQgMTogVmVyYmF0aW0gY29waWVzIGFsbG93ZWQgd2l0aCBjb3B5cmlnaHQgbm90aWNlc1xuLSBSZXF1aXJlbWVudCAyOiBNb2RpZmljYXRpb25zIGFsbG93ZWQgd2l0aCBhdCBsZWFzdCBvbmUgb2YgNCBvcHRpb25zIChwdWJsaWMgZG9tYWluL2ZyZWVseSBhdmFpbGFibGUsIGludGVybmFsIHVzZSBvbmx5LCBub24tc3RhbmRhcmQgbmFtZXMgZm9yIG5vbi1zdGFuZGFyZCBiaW5hcmllcywgb3IgYXJyYW5nZSB3aXRoIGF1dGhvcilcbi0gUmVxdWlyZW1lbnQgMzogQmluYXJ5L29iamVjdCBjb2RlIGRpc3RyaWJ1dGlvbiB3aXRoIGF0IGxlYXN0IG9uZSBvZiA0IHNpbWlsYXIgb3B0aW9uc1xuLSBSZXF1aXJlbWVudCA0OiBDYW4gaW5jbHVkZSBwYXJ0cyBpbiBvdGhlciBzb2Z0d2FyZSAocG9zc2libHkgY29tbWVyY2lhbCksIGJ1dCBub3RlcyBzb21lIGZpbGVzIGhhdmUgZGlmZmVyZW50IHRlcm1zIChyZWZlcmVuY2luZyBMRUdBTCBmaWxlKVxuLSBSZXF1aXJlbWVudCA1OiBTY3JpcHRzL2xpYnJhcnkgZmlsZXMgZ2VuZXJhdGVkIGFzIEkvTyBkb24ndCBhdXRvbWF0aWNhbGx5IGZhbGwgdW5kZXIgdGhpcyBjb3B5cmlnaHRcbi0gUmVxdWlyZW1lbnQgNjogU3RhbmRhcmQgZGlzY2xhaW1lciBhYm91dCBcIkFTIElTXCIgd2FycmFudHlcblxuVGhpcyBpcyBoaXN0b3JpY2FsbHkga25vd24gYXMgdGhlIFwiUnVieSBMaWNlbnNlXCIgYmVmb3JlIFJ1Ynkgc3dpdGNoZWQgdG8gdXNpbmcgQlNELTItQ2xhdXNlICsgUnVieSBMaWNlbnNlIGR1YWwgbGljZW5zaW5nLCBvciBpdCdzIHRoZSBzcGVjaWZpYyB0ZXJtcyBvZiB0aGUgUnVieSBMaWNlbnNlIGl0c2VsZi5cblxuSSBzaG91bGQgaWRlbnRpZnkgdGhpcyBjbGVhcmx5IGFzIHRoZSBSdWJ5IHByb2dyYW1taW5nIGxhbmd1YWdlIGxpY2Vuc2UsIHNwZWNpZnkgdGhlIGNvcHlyaWdodCBob2xkZXIgKFl1a2loaXJvIE1hdHN1bW90byksIGFuZCBzdW1tYXJpemUgdGhlIGtleSBwcm92aXNpb25zIHdoaWxlIG5vdGluZyB0aGUgZHVhbCBsaWNlbnNpbmcgbmF0dXJlIChCU0RMIG9yIHRoZXNlIHRlcm1zKS5cblxuU3RydWN0dXJlIG9mIHJlc3BvbnNlOlxuMS4gSWRlbnRpZnkgd2hhdCBpdCBpcyAoUnVieSBMaWNlbnNlL2NvcHlyaWdodCBub3RpY2UpXG4yLiBLZXkgZGV0YWlscyAoY29weXJpZ2h0IGhvbGRlciwgZHVhbCBsaWNlbnNlIHN0cnVjdHVyZSlcbjMuIFN1bW1hcnkgb2YgbWFpbiBjb25kaXRpb25zICh0aGUgNiBudW1iZXJlZCBwb2ludHMpXG40LiBOb3RhYmxlIGZlYXR1cmVzIChzY3JpcHRzIG5vdCBhdXRvbWF0aWNhbGx5IGNvdmVyZWQsIHNvbWUgZmlsZXMgaGF2ZSBkaWZmZXJlbnQgdGVybXMpICIsInJvbGUiOiJhc3Npc3RhbnQiLCJ0b29sX2NhbGxzIjpudWxsfSwic3RvcF9yZWFzb24iOm51bGx9XSwiY3JlYXRlZCI6MTc3MjUzODQ0MywiaWQiOiI1MzllMmYzY2VmNTY0OGE0ODBlNzIwMjEzNzAzYzUxYyIsIm1vZGVsIjoiS2ltaS1LMi41Iiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwicHJvbXB0X2ZpbHRlcl9yZXN1bHRzIjpbeyJwcm9tcHRfaW5kZXgiOjAsImNvbnRlbnRfZmlsdGVyX3Jlc3VsdHMiOnsiaGF0ZSI6eyJmaWx0ZXJlZCI6ZmFsc2UsInNldmVyaXR5Ijoic2FmZSJ9LCJqYWlsYnJlYWsiOnsiZmlsdGVyZWQiOmZhbHNlLCJkZXRlY3RlZCI6ZmFsc2V9LCJzZWxmX2hhcm0iOnsiZmlsdGVyZWQiOmZhbHNlLCJzZXZlcml0eSI6InNhZmUifSwic2V4dWFsIjp7ImZpbHRlcmVkIjpmYWxzZSwic2V2ZXJpdHkiOiJzYWZlIn0sInZpb2xlbmNlIjp7ImZpbHRlcmVkIjpmYWxzZSwic2V2ZXJpdHkiOiJzYWZlIn19fV0sInVzYWdlIjp7ImF1ZGlvX3Byb21wdF90b2tlbnMiOjAsImNvbXBsZXRpb25fdG9rZW5zIjo3MTAsInByb21wdF90b2tlbnMiOjUzOSwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjpudWxsLCJyZWFzb25pbmdfdG9rZW5zIjowLCJ0b3RhbF90b2tlbnMiOjEyNDl9fQo=
+  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+recorded_with: VCR 6.4.0

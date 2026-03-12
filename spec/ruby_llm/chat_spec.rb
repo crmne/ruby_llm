@@ -83,18 +83,18 @@ RSpec.describe RubyLLM::Chat do
   describe 'change model on the fly' do
     CHAT_MODELS.first(3).combination(2).each do |first, second|
       it "between #{first[:provider]}/#{first[:model]} and #{second[:provider]}/#{second[:model]}" do
-        chat = RubyLLM.chat(model: first[:model], provider: first[:provider])
-        response = chat.ask("What's 2 + 2?")
+        chat = RubyLLM.chat(model: first[:model], provider: first[:provider]).with_temperature(0.0)
+        response = chat.ask('Reply with exactly: FOUR')
 
-        expect(response.content).to include('4')
+        expect(response.content).to match(/four/i)
         expect(response.role).to eq(:assistant)
         expect(response.input_tokens).to be_positive
         expect(response.output_tokens).to be_positive
 
         chat.with_model(second[:model], provider: second[:provider])
-        response = chat.ask('and 4 + 4?')
+        response = chat.ask('Reply with exactly: EIGHT')
 
-        expect(response.content).to include('8')
+        expect(response.content).to match(/eight/i)
         expect(response.role).to eq(:assistant)
         expect(response.input_tokens).to be_positive
         expect(response.output_tokens).to be_positive

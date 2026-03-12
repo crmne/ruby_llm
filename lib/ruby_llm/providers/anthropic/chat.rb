@@ -8,17 +8,21 @@ module RubyLLM
         module_function
 
         def completion_url
-          '/v1/messages'
+          'v1/messages'
         end
 
-        def render_payload(messages, tools:, temperature:, model:, stream: false, schema: nil, thinking: nil) # rubocop:disable Metrics/ParameterLists,Lint/UnusedMethodArgument
+        # rubocop:disable Metrics/ParameterLists
+        def render_payload(messages, tools:, temperature:, model:, stream: false,
+                           schema: nil, thinking: nil, tool_prefs: nil)
+          tool_prefs ||= {}
           system_messages, chat_messages = separate_messages(messages)
           system_content = build_system_content(system_messages)
 
           build_base_payload(chat_messages, model, stream, thinking).tap do |payload|
-            add_optional_fields(payload, system_content:, tools:, temperature:)
+            add_optional_fields(payload, system_content:, tools:, tool_prefs:, temperature:, schema:)
           end
         end
+        # rubocop:enable Metrics/ParameterLists
 
         def separate_messages(messages)
           messages.partition { |msg| msg.role == :system }
@@ -59,10 +63,23 @@ module RubyLLM
           payload
         end
 
-        def add_optional_fields(payload, system_content:, tools:, temperature:)
-          payload[:tools] = tools.values.map { |t| Tools.function_for(t) } if tools.any?
+        def add_optional_fields(payload, system_content:, tools:, tool_prefs:, temperature:, schema: nil) # rubocop:disable Metrics/ParameterLists
+          if tools.any?
+            payload[:tools] = tools.values.map { |t| Tools.function_for(t) }
+            unless tool_prefs[:choice].nil? && tool_prefs[:calls].nil?
+              payload[:tool_choice] = Tools.build_tool_choice(tool_prefs)
+            end
+          end
           payload[:system] = system_content unless system_content.empty?
           payload[:temperature] = temperature unless temperature.nil?
+          payload[:output_config] = build_output_config(schema) if schema
+        end
+
+        def build_output_config(schema)
+          normalized = RubyLLM::Utils.deep_dup(schema[:schema])
+          normalized.delete(:strict)
+          normalized.delete('strict')
+          { format: { type: 'json_schema', schema: normalized } }
         end
 
         def parse_completion_response(response)

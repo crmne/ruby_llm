@@ -9,7 +9,7 @@ http_interactions:
         is 5 + 3?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer <MISTRAL_API_KEY>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 12 Jan 2026 21:41:51 GMT
+      - Tue, 03 Mar 2026 11:55:32 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -32,31 +32,27 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '019bb428-7e75-7603-a2be-b2be180a9733'
+      - '019cb38d-a746-7ce1-8038-b813913bfa78'
       X-Kong-Request-Id:
-      - '019bb428-7e75-7603-a2be-b2be180a9733'
+      - '019cb38d-a746-7ce1-8038-b813913bfa78'
       X-Ratelimit-Limit-Tokens-Minute:
-      - '75000'
+      - '120000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '71897'
-      X-Ratelimit-Limit-Tokens-Month:
-      - '50000000000'
-      X-Ratelimit-Remaining-Tokens-Month:
-      - '49999952752'
+      - '105278'
       X-Ratelimit-Tokens-Query-Cost:
-      - '87'
+      - '168'
       X-Ratelimit-Limit-Req-Minute:
-      - '100'
+      - '10'
       X-Ratelimit-Remaining-Req-Minute:
-      - '97'
+      - '7'
       X-Envoy-Upstream-Service-Time:
-      - '624'
+      - '1109'
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '625'
+      - '1110'
       X-Kong-Proxy-Latency:
-      - '7'
+      - '11'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -74,26 +70,32 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"e971132e65b8428a9d641920e5d50cbe","created":1768254111,"model":"magistral-small-latest","usage":{"prompt_tokens":11,"total_tokens":87,"completion_tokens":76},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":[{"type":"thinking","thinking":[{"type":"text","text":"The
-        question is asking for the sum of 5 and 3. Let me recall the basic addition
-        facts. 5 plus 3 is the same as 3 plus 5, and I remember that 5 + 3 equals
-        8.\n\nNow, to present the answer clearly, I''ll write it in a simple format."}]},{"type":"text","text":"The
-        answer is 8."}]}}]}'
-  recorded_at: Mon, 12 Jan 2026 21:41:52 GMT
+      string: '{"id":"6b9018ce9f43448e9a81f2c875097ba4","created":1772538931,"model":"magistral-small-latest","usage":{"prompt_tokens":11,"total_tokens":168,"completion_tokens":157,"prompt_tokens_details":{"cached_tokens":128}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":[{"type":"thinking","thinking":[{"type":"text","text":"Okay,
+        the question is asking for the sum of 5 and 3. Let me double-check that.\n\nFirst,
+        confirm the numbers: 5 and 3.\n\nNow, add them together. 5 + 3.\n\nLet me
+        do this step by step:\n\n- Start with 5.\n- Add 3 to it. 5 + 3 = 8.\n\nNow,
+        make sure there are no mistakes. Is 5 + 3 really 8? Yes, because 5 + 2 is
+        7, and adding 1 more makes it 8.\n\nSo, the answer should be 8.\n\nNow, format
+        the response in Markdown.\n\nThe response will be the answer, which is 8."}]},{"type":"text","text":"5
+        + 3 = 8"}]}}]}'
+  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
 - request:
     method: post
     uri: https://api.mistral.ai/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"magistral-small-latest","messages":[{"role":"user","content":"What
-        is 5 + 3?"},{"role":"assistant","content":[{"type":"thinking","thinking":[{"type":"text","text":"The
-        question is asking for the sum of 5 and 3. Let me recall the basic addition
-        facts. 5 plus 3 is the same as 3 plus 5, and I remember that 5 + 3 equals
-        8.\n\nNow, to present the answer clearly, I''ll write it in a simple format."}]},{"type":"text","text":"The
-        answer is 8."}]},{"role":"user","content":"Now multiply that by 2"}],"stream":false}'
+        is 5 + 3?"},{"role":"assistant","content":[{"type":"thinking","thinking":[{"type":"text","text":"Okay,
+        the question is asking for the sum of 5 and 3. Let me double-check that.\n\nFirst,
+        confirm the numbers: 5 and 3.\n\nNow, add them together. 5 + 3.\n\nLet me
+        do this step by step:\n\n- Start with 5.\n- Add 3 to it. 5 + 3 = 8.\n\nNow,
+        make sure there are no mistakes. Is 5 + 3 really 8? Yes, because 5 + 2 is
+        7, and adding 1 more makes it 8.\n\nSo, the answer should be 8.\n\nNow, format
+        the response in Markdown.\n\nThe response will be the answer, which is 8."}]},{"type":"text","text":"5
+        + 3 = 8"}]},{"role":"user","content":"Now multiply that by 2"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
       - Bearer <MISTRAL_API_KEY>
       Content-Type:
@@ -108,7 +110,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 12 Jan 2026 21:41:52 GMT
+      - Tue, 03 Mar 2026 11:55:32 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -116,31 +118,27 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '019bb428-81bb-7a65-8379-f6bc1bb20227'
+      - '019cb38d-abea-7110-a5ab-a19a350a2b32'
       X-Kong-Request-Id:
-      - '019bb428-81bb-7a65-8379-f6bc1bb20227'
+      - '019cb38d-abea-7110-a5ab-a19a350a2b32'
       X-Ratelimit-Limit-Tokens-Minute:
-      - '75000'
+      - '120000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '71742'
-      X-Ratelimit-Limit-Tokens-Month:
-      - '50000000000'
-      X-Ratelimit-Remaining-Tokens-Month:
-      - '49999952597'
+      - '104991'
       X-Ratelimit-Tokens-Query-Cost:
-      - '155'
+      - '287'
       X-Ratelimit-Limit-Req-Minute:
-      - '100'
+      - '10'
       X-Ratelimit-Remaining-Req-Minute:
-      - '96'
+      - '6'
       X-Envoy-Upstream-Service-Time:
-      - '434'
+      - '661'
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '435'
+      - '662'
       X-Kong-Proxy-Latency:
-      - '9'
+      - '11'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -158,9 +156,11 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"ac077316a6e0492aa4b9b5790813d2f6","created":1768254112,"model":"magistral-small-latest","usage":{"prompt_tokens":95,"total_tokens":155,"completion_tokens":60},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":[{"type":"thinking","thinking":[{"type":"text","text":"Okay,
-        the previous answer was 8. Now we need to multiply that by 2. Let me recall
-        that 8 times 2 is 16.\n\nNow, to present the answer clearly, I''ll write it
-        in a simple format."}]},{"type":"text","text":"The answer is 16."}]}}]}'
-  recorded_at: Mon, 12 Jan 2026 21:41:52 GMT
+      string: '{"id":"65ea5ddfac91462bb5b1f144c860df0d","created":1772538932,"model":"magistral-small-latest","usage":{"prompt_tokens":176,"total_tokens":287,"completion_tokens":111,"prompt_tokens_details":{"cached_tokens":256}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":[{"type":"thinking","thinking":[{"type":"text","text":"Okay,
+        the previous answer was 8. Now the question is to multiply that by 2.\n\nSo,
+        the calculation is 8 * 2.\n\nLet me do that:\n\n- 8 * 2 = 16.\n\nNow, make
+        sure it''s correct. 8 + 8 = 16, which is correct.\n\nSo, the answer is 16.\n\nNow,
+        format the response in Markdown.\n\nThe response will be the answer, which
+        is 16."}]},{"type":"text","text":"8 * 2 = 16"}]}}]}'
+  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
 recorded_with: VCR 6.4.0

@@ -13,16 +13,26 @@ module RubyLLM
       end
 
       def headers
-        {}
+        return {} unless @config.ollama_api_key
+
+        { 'Authorization' => "Bearer #{@config.ollama_api_key}" }
       end
 
       class << self
+        def configuration_options
+          %i[ollama_api_base ollama_api_key]
+        end
+
         def configuration_requirements
           %i[ollama_api_base]
         end
 
         def local?
           true
+        end
+
+        def capabilities
+          Ollama::Capabilities
         end
       end
     end

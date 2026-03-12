@@ -1,0 +1,160 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.x.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"grok-3-mini","messages":[{"role":"user","content":"What is
+        5 + 3?"}],"stream":false,"reasoning_effort":"medium"}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Authorization:
+      - Bearer <XAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 03 Mar 2026 12:31:08 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Ratelimit-Limit-Tokens:
+      - '9223372036854775807'
+      X-Ratelimit-Remaining-Tokens:
+      - '9223372036854767211'
+      X-Zero-Data-Retention:
+      - 'false'
+      X-Ratelimit-Limit-Requests:
+      - '800'
+      X-Ratelimit-Remaining-Requests:
+      - '796'
+      X-Metrics-E2e-Ms:
+      - '1310.0'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      X-Envoy-Wasm-Service:
+      - prod-ic-inference-api
+      X-Envoy-Wasm-Route:
+      - ic-protected-inference-api
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6IjRmNzY1NTI1LTdlNzMtOTJiMS1iODRhLTFjYThmYWRjZmMwZSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NzI1NDEwNjYsIm1vZGVsIjoiZ3Jvay0zLW1pbmktaGlnaCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiNSArIDMgZXF1YWxzIDguIFRoYXQncyBhIHNpbXBsZSBvbmUhIPCfmIoiLCJyZWFzb25pbmdfY29udGVudCI6IkZpcnN0LCB0aGUgdXNlciBhc2tlZCwgXCJXaGF0IGlzIDUgKyAzP1wiIFRoYXQncyBhIHNpbXBsZSBhcml0aG1ldGljIHF1ZXN0aW9uLiBJIG5lZWQgdG8gcmVzcG9uZCBhY2N1cmF0ZWx5IGFuZCBoZWxwZnVsbHkgYXMgYW4gQUkgYXNzaXN0YW50LlxuXG5UaGUgc3VtIG9mIDUgYW5kIDMgaXMgOC4gVGhhdCdzIHN0cmFpZ2h0Zm9yd2FyZC5cblxuU2luY2UgdGhpcyBpcyBhIGJhc2ljIHF1ZXN0aW9uLCBJIHNob3VsZCBrZWVwIG15IHJlc3BvbnNlIGNsZWFyIGFuZCBjb25jaXNlLiBNYXliZSBhZGQgYSBiaXQgb2YgZnJpZW5kbGluZXNzIHRvIG1ha2UgaXQgZW5nYWdpbmcsIGFzIEknbSBHcm9rLlxuXG5Qb3NzaWJsZSByZXNwb25zZTogXCI1ICsgMyBlcXVhbHMgOC4gVGhhdCdzIHByZXR0eSBzdHJhaWdodGZvcndhcmQhXCJcblxuSSBzaG91bGQgZW5zdXJlIEknbSBub3Qgb3ZlcmNvbXBsaWNhdGluZyBpdC4gVGhlIHVzZXIgbWlnaHQgYmUgdGVzdGluZyBtZSBvciBqdXN0IGN1cmlvdXMsIHNvIGFjY3VyYWN5IGlzIGtleS5cblxuRmluYWxseSwgZW5kIHdpdGggdGhlIGFuc3dlciBjbGVhcmx5IHN0YXRlZC4iLCJyZWZ1c2FsIjpudWxsfSwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjE1LCJjb21wbGV0aW9uX3Rva2VucyI6MTUsInRvdGFsX3Rva2VucyI6MTYxLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsidGV4dF90b2tlbnMiOjE1LCJhdWRpb190b2tlbnMiOjAsImltYWdlX3Rva2VucyI6MCwiY2FjaGVkX3Rva2VucyI6NX0sImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6MTMxLCJhdWRpb190b2tlbnMiOjAsImFjY2VwdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowLCJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6MH0sIm51bV9zb3VyY2VzX3VzZWQiOjAsImNvc3RfaW5fdXNkX3RpY2tzIjo3NjM3NTB9LCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF8yMmE4NTQyMzNiIn0=
+  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+- request:
+    method: post
+    uri: https://api.x.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: "{\"model\":\"grok-3-mini\",\"messages\":[{\"role\":\"user\",\"content\":\"What
+        is 5 + 3?\"},{\"role\":\"assistant\",\"content\":\"5 + 3 equals 8. That's
+        a simple one! \U0001F60A\",\"reasoning\":\"First, the user asked, \\\"What
+        is 5 + 3?\\\" That's a simple arithmetic question. I need to respond accurately
+        and helpfully as an AI assistant.\\n\\nThe sum of 5 and 3 is 8. That's straightforward.\\n\\nSince
+        this is a basic question, I should keep my response clear and concise. Maybe
+        add a bit of friendliness to make it engaging, as I'm Grok.\\n\\nPossible
+        response: \\\"5 + 3 equals 8. That's pretty straightforward!\\\"\\n\\nI should
+        ensure I'm not overcomplicating it. The user might be testing me or just curious,
+        so accuracy is key.\\n\\nFinally, end with the answer clearly stated.\",\"reasoning_content\":\"First,
+        the user asked, \\\"What is 5 + 3?\\\" That's a simple arithmetic question.
+        I need to respond accurately and helpfully as an AI assistant.\\n\\nThe sum
+        of 5 and 3 is 8. That's straightforward.\\n\\nSince this is a basic question,
+        I should keep my response clear and concise. Maybe add a bit of friendliness
+        to make it engaging, as I'm Grok.\\n\\nPossible response: \\\"5 + 3 equals
+        8. That's pretty straightforward!\\\"\\n\\nI should ensure I'm not overcomplicating
+        it. The user might be testing me or just curious, so accuracy is key.\\n\\nFinally,
+        end with the answer clearly stated.\"},{\"role\":\"user\",\"content\":\"Now
+        multiply that by 2\"}],\"stream\":false,\"reasoning_effort\":\"medium\"}"
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Authorization:
+      - Bearer <XAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 03 Mar 2026 12:31:09 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Ratelimit-Limit-Tokens:
+      - '9223372036854775807'
+      X-Ratelimit-Remaining-Tokens:
+      - '9223372036854767211'
+      X-Zero-Data-Retention:
+      - 'false'
+      X-Ratelimit-Limit-Requests:
+      - '800'
+      X-Ratelimit-Remaining-Requests:
+      - '794'
+      X-Metrics-E2e-Ms:
+      - '1258.5'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      X-Envoy-Wasm-Service:
+      - prod-ic-inference-api
+      X-Envoy-Wasm-Route:
+      - ic-protected-inference-api
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6IjVlMDQ0YWY2LTZlMTAtOTVjZi1iNTQxLTUyOTIxNDZmODMyYSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NzI1NDEwNjgsIm1vZGVsIjoiZ3Jvay0zLW1pbmktaGlnaCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiOCBtdWx0aXBsaWVkIGJ5IDIgZXF1YWxzIDE2LiDwn5iKIiwicmVhc29uaW5nX2NvbnRlbnQiOiJGaXJzdCwgdGhlIHVzZXIgc2FpZCBcIm11bHRpcGx5IHRoYXQgYnkgMi5cIiBcIlRoYXRcIiByZWZlcnMgdG8gdGhlIHJlc3VsdCBvZiB0aGUgcHJldmlvdXMgcXVlc3Rpb24sIHdoaWNoIHdhcyA1ICsgMyA9IDguXG5cblNvLCBJIG5lZWQgdG8gbXVsdGlwbHkgOCBieSAyLlxuXG44IMOXIDIgPSAxNi5cblxuTm93LCBJIHNob3VsZCByZXNwb25kIGluIGEgY2xlYXIgYW5kIGhlbHBmdWwgd2F5LCBqdXN0IGxpa2UgYmVmb3JlLiBLZWVwIGl0IGZyaWVuZGx5IGFuZCBjb25jaXNlLlxuXG5NeSByZXNwb25zZSBjb3VsZCBiZTogXCI4IG11bHRpcGxpZWQgYnkgMiBlcXVhbHMgMTYuXCJcblxuU2luY2UgdGhlIHVzZXIgaXMgcmVmZXJyaW5nIHRvIHRoZSBwcmV2aW91cyByZXN1bHQsIEkgc2hvdWxkIG1ha2Ugc3VyZSBpdCdzIGNsZWFyIHdoYXQgSSdtIGRvaW5nLlxuXG5GaW5hbCByZXNwb25zZTogXCI4IG11bHRpcGxpZWQgYnkgMiBlcXVhbHMgMTYuXCIiLCJyZWZ1c2FsIjpudWxsfSwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjQ1LCJjb21wbGV0aW9uX3Rva2VucyI6MTEsInRvdGFsX3Rva2VucyI6MTgxLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsidGV4dF90b2tlbnMiOjQ1LCJhdWRpb190b2tlbnMiOjAsImltYWdlX3Rva2VucyI6MCwiY2FjaGVkX3Rva2VucyI6NX0sImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6MTI1LCJhdWRpb190b2tlbnMiOjAsImFjY2VwdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowLCJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6MH0sIm51bV9zb3VyY2VzX3VzZWQiOjAsImNvc3RfaW5fdXNkX3RpY2tzIjo4MDM3NTB9LCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF8yMmE4NTQyMzNiIn0=
+  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+recorded_with: VCR 6.4.0

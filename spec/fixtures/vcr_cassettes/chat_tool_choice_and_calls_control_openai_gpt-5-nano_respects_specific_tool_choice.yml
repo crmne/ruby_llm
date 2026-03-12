@@ -1,0 +1,206 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.openai.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-5-nano","messages":[{"role":"user","content":"What''s
+        the fall of Rome?"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}],"tool_choice":{"type":"function","function":{"name":"weather"}}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 03 Mar 2026 11:57:18 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Expose-Headers:
+      - X-Request-ID
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '3796'
+      Openai-Project:
+      - proj_61L3Oqt640dKU0CASS2iOj8Q
+      Openai-Version:
+      - '2020-10-01'
+      Server:
+      - cloudflare
+      X-Ratelimit-Limit-Requests:
+      - '500'
+      X-Ratelimit-Limit-Tokens:
+      - '200000'
+      X-Ratelimit-Remaining-Requests:
+      - '499'
+      X-Ratelimit-Remaining-Tokens:
+      - '199582'
+      X-Ratelimit-Reset-Requests:
+      - 120ms
+      X-Ratelimit-Reset-Tokens:
+      - 125ms
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      X-Openai-Proxy-Wasm:
+      - v0.1
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "id": "chatcmpl-DFIfCZajmhCaLOKb3qHk7DJffH19g",
+          "object": "chat.completion",
+          "created": 1772539034,
+          "model": "gpt-5-nano-2025-08-07",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": null,
+                "tool_calls": [
+                  {
+                    "id": "call_2AeYVghQeU51uNvkSzuQVrtn",
+                    "type": "function",
+                    "function": {
+                      "name": "weather",
+                      "arguments": "{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}"
+                    }
+                  }
+                ],
+                "refusal": null,
+                "annotations": []
+              },
+              "finish_reason": "tool_calls"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 157,
+            "completion_tokens": 416,
+            "total_tokens": 573,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 384,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "service_tier": "default",
+          "system_fingerprint": null
+        }
+  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+- request:
+    method: post
+    uri: https://api.openai.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-5-nano","messages":[{"role":"user","content":"What''s
+        the fall of Rome?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_2AeYVghQeU51uNvkSzuQVrtn","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}"}}]},{"role":"tool","content":"Current
+        weather at 41.9028, 12.4964: 15°C, Wind: 10 km/h","tool_call_id":"call_2AeYVghQeU51uNvkSzuQVrtn"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 03 Mar 2026 11:57:27 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Expose-Headers:
+      - X-Request-ID
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '9123'
+      Openai-Project:
+      - proj_61L3Oqt640dKU0CASS2iOj8Q
+      Openai-Version:
+      - '2020-10-01'
+      Server:
+      - cloudflare
+      X-Ratelimit-Limit-Requests:
+      - '500'
+      X-Ratelimit-Limit-Tokens:
+      - '200000'
+      X-Ratelimit-Remaining-Requests:
+      - '499'
+      X-Ratelimit-Remaining-Tokens:
+      - '199927'
+      X-Ratelimit-Reset-Requests:
+      - 120ms
+      X-Ratelimit-Reset-Tokens:
+      - 21ms
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      X-Openai-Proxy-Wasm:
+      - v0.1
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        ewogICJpZCI6ICJjaGF0Y21wbC1ERklmR1ZyS0ZNRzl6ZUxkTm5jNTEyUmNtak9pRSIsCiAgIm9iamVjdCI6ICJjaGF0LmNvbXBsZXRpb24iLAogICJjcmVhdGVkIjogMTc3MjUzOTAzOCwKICAibW9kZWwiOiAiZ3B0LTUtbmFuby0yMDI1LTA4LTA3IiwKICAiY2hvaWNlcyI6IFsKICAgIHsKICAgICAgImluZGV4IjogMCwKICAgICAgIm1lc3NhZ2UiOiB7CiAgICAgICAgInJvbGUiOiAiYXNzaXN0YW50IiwKICAgICAgICAiY29udGVudCI6ICJTaG9ydCBhbnN3ZXI6IHRoZSDigJxmYWxsIG9mIFJvbWXigJ0gdXN1YWxseSByZWZlcnMgdG8gdGhlIGVuZCBvZiB0aGUgV2VzdGVybiBSb21hbiBFbXBpcmUgYXJvdW5kIDQ3NiBDRSwgdGhvdWdoIGl04oCZcyBhIGRlYmF0ZWQsIGdyYWR1YWwgcHJvY2VzcyByYXRoZXIgdGhhbiBhIHNpbmdsZSBtb21lbnQuXG5cbktleSBwb2ludHM6XG4tIFRyYWRpdGlvbmFsIGRhdGU6IDQ3NiBDRSDigJQgdGhlIGxhc3QgV2VzdGVybiBFbXBlcm9yLCBSb211bHVzIEF1Z3VzdHVsdXMsIHdhcyBkZXBvc2VkIGJ5IE9kb2FjZXIuXG4tIEVhcmxpZXIgc2lnbnM6IHRoZSBWaXNpZ290aHMgc2Fja2VkIFJvbWUgaW4gNDEwIENFOyB0aGUgVmFuZGFscyBpbiA0NTUgQ0Ugc2hvd2VkIHRoZSBlbXBpcmXigJlzIHdlYWtlbmluZyBncmlwLlxuLSBBZnRlcm1hdGg6IHRoZSBFYXN0ZXJuIFJvbWFuIEVtcGlyZSAoQnl6YW50aW5lIEVtcGlyZSkgY29udGludWVkIGZvciBuZWFybHkgYSB0aG91c2FuZCB5ZWFycywgdW50aWwgMTQ1My4gVGhlIFdlc3QgZnJhZ21lbnRlZCBpbnRvIHN1Y2Nlc3NvciBraW5nZG9tcyAoYW5kIGxhdGVyIHRoZSBIb2x5IFJvbWFuIEVtcGlyZSBpcyBhIGRpc3RpbmN0LCBsYXRlciBkZXZlbG9wbWVudCkuXG4tIENhdXNlcyBvZnRlbiBjaXRlZDogZWNvbm9taWMgdHJvdWJsZXMsIG92ZXJleHRlbnNpb24gYW5kIG1pbGl0YXJ5IHByZXNzdXJlcyBmcm9tIGJhcmJhcmlhbiBncm91cHMsIHBvbGl0aWNhbCBpbnN0YWJpbGl0eSBhbmQgY29ycnVwdGlvbiwgcmVsaWFuY2Ugb24gbWVyY2VuYXJpZXMsIHBsYWd1ZXMsIGFuZCBkZWNsaW5pbmcgdXJiYW4gbGlmZS5cbi0gTm90ZSBvbiB0ZXJtaW5vbG9neTogc29tZSBoaXN0b3JpYW5zIHNlZSB0aGUgZmFsbCBhcyBhIGxvbmcgdHJhbnNmb3JtYXRpb24gb2YgdGhlIGVtcGlyZSBhbmQgaXRzIGluc3RpdHV0aW9ucyByYXRoZXIgdGhhbiBhIHNpbmdsZSBldmVudC5cblxuSWYgeW91IHdhbnQsIEkgY2FuIGdvIGludG8gbW9yZSBkZXRhaWwgb24gYSBzcGVjaWZpYyBjYXVzZSwgZGF0ZSwgb3Igb24gaG93IHRoZSBFYXN0ZXJuIEVtcGlyZSBkaWZmZXJlZCBmcm9tIHRoZSBXZXN0LiIsCiAgICAgICAgInJlZnVzYWwiOiBudWxsLAogICAgICAgICJhbm5vdGF0aW9ucyI6IFtdCiAgICAgIH0sCiAgICAgICJmaW5pc2hfcmVhc29uIjogInN0b3AiCiAgICB9CiAgXSwKICAidXNhZ2UiOiB7CiAgICAicHJvbXB0X3Rva2VucyI6IDIxOCwKICAgICJjb21wbGV0aW9uX3Rva2VucyI6IDEyNjcsCiAgICAidG90YWxfdG9rZW5zIjogMTQ4NSwKICAgICJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOiB7CiAgICAgICJjYWNoZWRfdG9rZW5zIjogMCwKICAgICAgImF1ZGlvX3Rva2VucyI6IDAKICAgIH0sCiAgICAiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6IHsKICAgICAgInJlYXNvbmluZ190b2tlbnMiOiAxMDI0LAogICAgICAiYXVkaW9fdG9rZW5zIjogMCwKICAgICAgImFjY2VwdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjogMCwKICAgICAgInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjogMAogICAgfQogIH0sCiAgInNlcnZpY2VfdGllciI6ICJkZWZhdWx0IiwKICAic3lzdGVtX2ZpbmdlcnByaW50IjogbnVsbAp9Cg==
+  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+recorded_with: VCR 6.4.0

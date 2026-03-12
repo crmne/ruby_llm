@@ -8,7 +8,6 @@ group :development do # rubocop:disable Metrics/BlockLength
   gem 'appraisal'
   gem 'async', platform: :mri
   gem 'bundler', '>= 2.0'
-  gem 'codecov'
   gem 'colorize'
   gem 'dotenv'
   gem 'ferrum'
@@ -18,6 +17,7 @@ group :development do # rubocop:disable Metrics/BlockLength
   gem 'json-schema'
   gem 'nokogiri'
   gem 'overcommit', '>= 0.66'
+  gem 'parallel_tests'
   gem 'pry', '>= 0.14'
   gem 'rails'
   gem 'rake', '>= 13.0'
@@ -40,4 +40,11 @@ group :development do # rubocop:disable Metrics/BlockLength
 
   # Optional dependency for Vertex AI
   gem 'googleauth'
+
+  # Optional dependency for Bedrock
+  gem 'aws-eventstream'
+end
+
+group :development, :test do
+  gem 'turbo-rails'
 end

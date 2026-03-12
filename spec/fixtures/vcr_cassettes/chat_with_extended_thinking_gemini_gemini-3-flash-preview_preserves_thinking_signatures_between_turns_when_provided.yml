@@ -8,7 +8,7 @@ http_interactions:
       string: '{"contents":[{"role":"user","parts":[{"text":"What is 5 + 3?"}]}],"generationConfig":{"thinkingConfig":{"includeThoughts":true,"thinkingLevel":"low"}}}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       X-Goog-Api-Key:
       - "<GEMINI_API_KEY>"
       Content-Type:
@@ -29,7 +29,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 12 Jan 2026 21:40:47 GMT
+      - Tue, 03 Mar 2026 11:53:58 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -39,7 +39,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=1515
+      - gfet4t7; dur=2445
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -53,8 +53,12 @@ http_interactions:
               "content": {
                 "parts": [
                   {
+                    "text": "**Calculating the Sum**\n\nOkay, so the user wants the sum of two integers, specifically 5 and 3. My primary function here is to perform calculations, so this is straightforward. The task is to execute a basic addition operation. I'll simply add 5 and 3. The addition operation is $5 + 3$, which results in 8. Therefore, the answer is 8. I will state the result clearly.\n\n\n",
+                    "thought": true
+                  },
+                  {
                     "text": "5 + 3 = 8",
-                    "thoughtSignature": "EmkKZwFyyNp8d2+nrnnevamxhLyTwVPef6JKTeLY/ZBCGIctO6a7p4m+FVl0yGlNS3JZq2ib3Td/FOhULIy7VU5XrcpnB26CRZZ2qsoUUQ3zjh1N2URWa4HYt7PS/cW0J9lTyYfquLKQh2U="
+                    "thoughtSignature": "Ep4BCpsBAb4+9vsMM0zWZpPul8UGxN16PUGnDJXtahV/xjYJuSdVsBvTKgg+pabzlgO1MCM3WGKMGlUfgdELx/+gISOU48lqHOApLCHaOcDkwUvQSH0XK7y1BheAkObbBuEeXZStyJG0FNA6OEC4rXu6sKcbwTknXuh+G+S9gV0ToOCfg0rpH5hSu88zZuTxRkxq5kTsTXwD6FB6Cps6gB0="
                   }
                 ],
                 "role": "model"
@@ -66,29 +70,34 @@ http_interactions:
           "usageMetadata": {
             "promptTokenCount": 9,
             "candidatesTokenCount": 7,
-            "totalTokenCount": 39,
+            "totalTokenCount": 51,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
                 "tokenCount": 9
               }
             ],
-            "thoughtsTokenCount": 23
+            "thoughtsTokenCount": 35
           },
           "modelVersion": "gemini-3-flash-preview",
-          "responseId": "X2plac_ENO-MvdIPpMyBmQ0"
+          "responseId": "1sumae6iN6SQ28oP5MzWyAc"
         }
-  recorded_at: Mon, 12 Jan 2026 21:40:48 GMT
+  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
 - request:
     method: post
     uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent
     body:
       encoding: UTF-8
-      string: '{"contents":[{"role":"user","parts":[{"text":"What is 5 + 3?"}]},{"role":"model","parts":[{"thought":true,"thoughtSignature":"EmkKZwFyyNp8d2+nrnnevamxhLyTwVPef6JKTeLY/ZBCGIctO6a7p4m+FVl0yGlNS3JZq2ib3Td/FOhULIy7VU5XrcpnB26CRZZ2qsoUUQ3zjh1N2URWa4HYt7PS/cW0J9lTyYfquLKQh2U="},{"text":"5
+      string: '{"contents":[{"role":"user","parts":[{"text":"What is 5 + 3?"}]},{"role":"model","parts":[{"thought":true,"text":"**Calculating
+        the Sum**\n\nOkay, so the user wants the sum of two integers, specifically
+        5 and 3. My primary function here is to perform calculations, so this is straightforward.
+        The task is to execute a basic addition operation. I''ll simply add 5 and
+        3. The addition operation is $5 + 3$, which results in 8. Therefore, the answer
+        is 8. I will state the result clearly.\n\n\n","thoughtSignature":"Ep4BCpsBAb4+9vsMM0zWZpPul8UGxN16PUGnDJXtahV/xjYJuSdVsBvTKgg+pabzlgO1MCM3WGKMGlUfgdELx/+gISOU48lqHOApLCHaOcDkwUvQSH0XK7y1BheAkObbBuEeXZStyJG0FNA6OEC4rXu6sKcbwTknXuh+G+S9gV0ToOCfg0rpH5hSu88zZuTxRkxq5kTsTXwD6FB6Cps6gB0="},{"text":"5
         + 3 = 8"}]},{"role":"user","parts":[{"text":"Now multiply that by 2"}]}],"generationConfig":{"thinkingConfig":{"includeThoughts":true,"thinkingLevel":"low"}}}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       X-Goog-Api-Key:
       - "<GEMINI_API_KEY>"
       Content-Type:
@@ -109,7 +118,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 12 Jan 2026 21:40:49 GMT
+      - Tue, 03 Mar 2026 11:54:01 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -119,7 +128,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=1591
+      - gfet4t7; dur=2512
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -127,6 +136,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicGFydHMiOiBbCiAgICAgICAgICB7CiAgICAgICAgICAgICJ0ZXh0IjogIjggw5cgMiA9IDE2IiwKICAgICAgICAgICAgInRob3VnaHRTaWduYXR1cmUiOiAiRXVRQkN1RUJBWExJMm54SmhHMUhKamNrU3BVa2dWb0ZlWTZCSkpPS3pkQ1EzMi9yNUNwTnhwcDFCZFBKeDBJVkZFYWpmb3VWYVA1ZVdKQzdJUUJ3TzFtcEdPQzE4bnE4NlkxUkdyNEZDSWY3b0FXNHlXc0NhQ0RWNEhFa3NiMDFaVFJLcGo4SGxRdWxDanFJR2wrd28yZXdJcmx4RCtHRVhwY3d5Ujg5cWsvR2ZlRjVzUmI2UjY3MWFuT3lFd1RBdVZDd0lpR0toWXh6Q08rcmZIY2c4REwyelFhVUsxMWdrQTl1TkNYc01BM1RscEZvWkoyOVBzd1diSVZnWGhmYzVjeHZLUEkzWDVuMUZmVGoxYmpqdEh1c2ZVMnlOVDdSOUFtZlZCWGVSclNFZXNCSExsbE0iCiAgICAgICAgICB9CiAgICAgICAgXSwKICAgICAgICAicm9sZSI6ICJtb2RlbCIKICAgICAgfSwKICAgICAgImZpbmlzaFJlYXNvbiI6ICJTVE9QIiwKICAgICAgImluZGV4IjogMAogICAgfQogIF0sCiAgInVzYWdlTWV0YWRhdGEiOiB7CiAgICAicHJvbXB0VG9rZW5Db3VudCI6IDI0LAogICAgImNhbmRpZGF0ZXNUb2tlbkNvdW50IjogOCwKICAgICJ0b3RhbFRva2VuQ291bnQiOiA4NiwKICAgICJwcm9tcHRUb2tlbnNEZXRhaWxzIjogWwogICAgICB7CiAgICAgICAgIm1vZGFsaXR5IjogIlRFWFQiLAogICAgICAgICJ0b2tlbkNvdW50IjogMjQKICAgICAgfQogICAgXSwKICAgICJ0aG91Z2h0c1Rva2VuQ291bnQiOiA1NAogIH0sCiAgIm1vZGVsVmVyc2lvbiI6ICJnZW1pbmktMy1mbGFzaC1wcmV2aWV3IiwKICAicmVzcG9uc2VJZCI6ICJZV3BsYWRHckl2cld2ZElQbkl1VThBMCIKfQo=
-  recorded_at: Mon, 12 Jan 2026 21:40:49 GMT
+        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicGFydHMiOiBbCiAgICAgICAgICB7CiAgICAgICAgICAgICJ0ZXh0IjogIkhlcmUncyBteSB0YWtlIG9uIHRoZSBzaXR1YXRpb246XG5cbioqU2ltcGxlIE11bHRpcGxpY2F0aW9uKipcblxuQWxyaWdodCwgbGV0J3Mga2VlcCB0aGlzIG1vdmluZy4gTXkgY3VycmVudCB0YXNrIGlzIHN0cmFpZ2h0Zm9yd2FyZDogdGFrZSB0aGF0IGxhc3QgdmFsdWUg4oCTIHdoaWNoLCBpZiBJIHJlY2FsbCBjb3JyZWN0bHksIHdhcyA4IOKAkyBhbmQgZG91YmxlIGl0LiBJdCdzIGEgc2ltcGxlIG11bHRpcGxpY2F0aW9uLCA4ICogMi4gVGhlIGNhbGN1bGF0aW9uIGl0c2VsZiBpcyB0cml2aWFsLCBvZiBjb3Vyc2UuIFRoZSByZXN1bHQgaXMgMTYuIERvbmUuXG5cblxuIiwKICAgICAgICAgICAgInRob3VnaHQiOiB0cnVlCiAgICAgICAgICB9LAogICAgICAgICAgewogICAgICAgICAgICAidGV4dCI6ICI4IMOXIDIgPSAxNiIsCiAgICAgICAgICAgICJ0aG91Z2h0U2lnbmF0dXJlIjogIkVyMEJDcm9CQWI0Kzl2dHpWbk5mV3VFRFJqemQyblRTK2tneWpHNnorc1RSZVJZUGR0U3RQOXcvRVdwLzBiN1ZaeHRjRDVYSVRFT1RPdDJGalZtVytxVEhyTHF1MG90elA2SlRHYVJ1NHUvdjNDN1M0TzdrZVRiZGZUbXczVTIzZ3I0cS9nQzRkczhFVTJFRXo4cTRCb3duSm9va2s4MmNINVNwZy9Ddml3VlJNeUgvcUplT05DOWJPekw3a2JSOFBnd3dtVERRR2lybzJpQ0NXSHU3ZUtKYTV4WGdTV2c2R0U5bXd4ZUNiai9mMDFLUEx4Z1dENmtSYmtlVjdTeWkiCiAgICAgICAgICB9CiAgICAgICAgXSwKICAgICAgICAicm9sZSI6ICJtb2RlbCIKICAgICAgfSwKICAgICAgImZpbmlzaFJlYXNvbiI6ICJTVE9QIiwKICAgICAgImluZGV4IjogMAogICAgfQogIF0sCiAgInVzYWdlTWV0YWRhdGEiOiB7CiAgICAicHJvbXB0VG9rZW5Db3VudCI6IDExNiwKICAgICJjYW5kaWRhdGVzVG9rZW5Db3VudCI6IDgsCiAgICAidG90YWxUb2tlbkNvdW50IjogMTY4LAogICAgInByb21wdFRva2Vuc0RldGFpbHMiOiBbCiAgICAgIHsKICAgICAgICAibW9kYWxpdHkiOiAiVEVYVCIsCiAgICAgICAgInRva2VuQ291bnQiOiAxMTYKICAgICAgfQogICAgXSwKICAgICJ0aG91Z2h0c1Rva2VuQ291bnQiOiA0NAogIH0sCiAgIm1vZGVsVmVyc2lvbiI6ICJnZW1pbmktMy1mbGFzaC1wcmV2aWV3IiwKICAicmVzcG9uc2VJZCI6ICIyY3VtYWF2RUhhVDJ4TjhQb2V1VzhRUSIKfQo=
+  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
 recorded_with: VCR 6.4.0

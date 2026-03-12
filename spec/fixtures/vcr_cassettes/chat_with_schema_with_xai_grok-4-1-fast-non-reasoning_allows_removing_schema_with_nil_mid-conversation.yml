@@ -1,0 +1,152 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.x.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"user","content":"Generate
+        a person named Bob"}],"stream":false,"response_format":{"type":"json_schema","json_schema":{"name":"response","schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"integer"}},"required":["name","age"],"additionalProperties":false},"strict":true}}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Authorization:
+      - Bearer <XAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 03 Mar 2026 12:36:52 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Ratelimit-Limit-Tokens:
+      - '4000000'
+      X-Ratelimit-Remaining-Tokens:
+      - '3999609'
+      X-Zero-Data-Retention:
+      - 'false'
+      X-Ratelimit-Limit-Requests:
+      - '607'
+      X-Ratelimit-Remaining-Requests:
+      - '603'
+      X-Metrics-Ttft-Ms:
+      - '176.0'
+      X-Metrics-Mean-Itl-Ms:
+      - '7.7'
+      X-Metrics-E2e-Ms:
+      - '420.0'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      X-Envoy-Wasm-Service:
+      - prod-ic-inference-api
+      X-Envoy-Wasm-Route:
+      - ic-protected-inference-api
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"d171bc97-df50-97ef-bf74-2e0d953e049f","object":"chat.completion","created":1772541411,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"{\"name\":\"Bob\",\"age\":30}","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":246,"completion_tokens":9,"total_tokens":255,"prompt_tokens_details":{"text_tokens":246,"audio_tokens":0,"image_tokens":0,"cached_tokens":169},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":283500},"system_fingerprint":"fp_2338d85ee7"}'
+  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+- request:
+    method: post
+    uri: https://api.x.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"user","content":"Generate
+        a person named Bob"},{"role":"assistant","content":"{\"name\":\"Bob\",\"age\":30}"},{"role":"user","content":"Now
+        just tell me about Ruby"}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Authorization:
+      - Bearer <XAI_API_KEY>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 03 Mar 2026 12:36:53 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Ratelimit-Limit-Tokens:
+      - '4000000'
+      X-Ratelimit-Remaining-Tokens:
+      - '3998615'
+      X-Zero-Data-Retention:
+      - 'false'
+      X-Ratelimit-Limit-Requests:
+      - '607'
+      X-Ratelimit-Remaining-Requests:
+      - '598'
+      X-Metrics-Ttft-Ms:
+      - '143.2'
+      X-Metrics-Mean-Itl-Ms:
+      - '13.5'
+      X-Metrics-E2e-Ms:
+      - '793.9'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      X-Envoy-Wasm-Service:
+      - prod-ic-inference-api
+      X-Envoy-Wasm-Route:
+      - ic-protected-inference-api
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"c61352cb-e1e7-9558-9351-9548af20300b","object":"chat.completion","created":1772541412,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"{\"name\":\"Ruby\",\"age\":28,\"occupation\":\"Software
+        Developer\",\"hobbies\":[\"Coding\",\"Hiking\",\"Reading Sci-Fi\"],\"personality\":\"Curious,
+        witty, and adventurous\"}","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":199,"completion_tokens":37,"total_tokens":236,"prompt_tokens_details":{"text_tokens":199,"audio_tokens":0,"image_tokens":0,"cached_tokens":161},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":341500},"system_fingerprint":"fp_2338d85ee7"}'
+  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+recorded_with: VCR 6.4.0

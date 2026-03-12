@@ -97,6 +97,14 @@ module RubyLLM
           end
         end
 
+        def supports_tool_choice?(_model_id)
+          true
+        end
+
+        def supports_tool_parallel_control?(_model_id)
+          true
+        end
+
         def supports_structured_output?(model_id)
           case model_family(model_id)
           when 'gpt5', 'gpt5_mini', 'gpt5_nano', 'gpt41', 'gpt41_mini', 'gpt41_nano', 'chatgpt4o', 'gpt4o',
@@ -225,10 +233,10 @@ module RubyLLM
 
         def self.normalize_temperature(temperature, model_id)
           if model_id.match?(/^(o\d|gpt-5)/) && !temperature.nil? && !temperature_close_to_one?(temperature)
-            RubyLLM.logger.debug "Model #{model_id} requires temperature=1.0, setting that instead."
+            RubyLLM.logger.debug { "Model #{model_id} requires temperature=1.0, setting that instead." }
             1.0
           elsif model_id.match?(/-search/)
-            RubyLLM.logger.debug "Model #{model_id} does not accept temperature parameter, removing"
+            RubyLLM.logger.debug { "Model #{model_id} does not accept temperature parameter, removing" }
             nil
           else
             temperature
