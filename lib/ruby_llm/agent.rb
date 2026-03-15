@@ -120,7 +120,9 @@ module RubyLLM
 
         input_values, = partition_inputs(kwargs)
         record = resolved_chat_model.find(id)
+        record.assume_model_exists = chat_kwargs[:assume_model_exists] if record.respond_to?(:assume_model_exists=)
         apply_configuration(record, input_values:, persist_instructions: false)
+
         record
       end
 
