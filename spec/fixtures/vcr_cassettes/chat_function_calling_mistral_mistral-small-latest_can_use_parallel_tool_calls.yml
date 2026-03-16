@@ -16,7 +16,7 @@ http_interactions:
       User-Agent:
       - Faraday v2.14.1
       Authorization:
-      - Bearer <MISTRAL_API_KEY>
+      - Bearer <AUTH_TOKEN>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -29,7 +29,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 03 Mar 2026 11:47:36 GMT
+      - Mon, 16 Mar 2026 19:11:33 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -37,47 +37,47 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '019cb386-6776-76a7-a368-67b2289cb6a4'
+      - '019cf80f-8911-72d6-a3b0-efbce36a22c3'
       X-Kong-Request-Id:
-      - '019cb386-6776-76a7-a368-67b2289cb6a4'
+      - '019cf80f-8911-72d6-a3b0-efbce36a22c3'
       X-Ratelimit-Limit-Tokens-Minute:
       - '2000000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '1998819'
+      - '1999245'
       X-Ratelimit-Tokens-Query-Cost:
       - '251'
       X-Ratelimit-Limit-Req-Minute:
       - '360'
       X-Ratelimit-Remaining-Req-Minute:
-      - '344'
+      - '351'
       X-Envoy-Upstream-Service-Time:
-      - '485'
+      - '303'
+      Server:
+      - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '486'
+      - '304'
       X-Kong-Proxy-Latency:
       - '9'
-      Cf-Cache-Status:
-      - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
-      Server:
-      - cloudflare
+      Cf-Cache-Status:
+      - DYNAMIC
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"ea9ce9ba2af94871b42677da40dd9d65","created":1772538455,"model":"mistral-small-latest","usage":{"prompt_tokens":215,"total_tokens":251,"completion_tokens":36,"prompt_tokens_details":{"cached_tokens":0}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"tool_calls","message":{"role":"assistant","tool_calls":[{"id":"R5jFIsF3F","function":{"name":"weather","arguments":"{\"latitude\":
-        \"52.5200\", \"longitude\": \"13.4050\"}"},"index":0},{"id":"QUWiDmcNw","function":{"name":"best_language_to_learn","arguments":"{}"},"index":1}],"content":""}}]}'
-  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+      string: '{"id":"8dacf19d9174439e943b481576cf472b","created":1773688293,"model":"mistral-small-latest","usage":{"prompt_tokens":215,"total_tokens":251,"completion_tokens":36,"prompt_tokens_details":{"cached_tokens":0}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"tool_calls","message":{"role":"assistant","tool_calls":[{"id":"IuzjCb1QE","function":{"name":"weather","arguments":"{\"latitude\":
+        \"52.5200\", \"longitude\": \"13.4050\"}"},"index":0},{"id":"u4aFrdZMe","function":{"name":"best_language_to_learn","arguments":"{}"},"index":1}],"content":""}}]}'
+  recorded_at: Mon, 16 Mar 2026 19:11:33 GMT
 - request:
     method: post
     uri: https://api.mistral.ai/v1/chat/completions
@@ -85,8 +85,8 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"mistral-small-latest","messages":[{"role":"user","content":"What''s
         the weather in Berlin (52.5200, 13.4050) and what''s the best language to
-        learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"R5jFIsF3F","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}},{"id":"QUWiDmcNw","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"R5jFIsF3F"},{"role":"tool","content":"Ruby","tool_call_id":"QUWiDmcNw"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"IuzjCb1QE","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}},{"id":"u4aFrdZMe","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"IuzjCb1QE"},{"role":"tool","content":"Ruby","tool_call_id":"u4aFrdZMe"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}},{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
@@ -95,7 +95,7 @@ http_interactions:
       User-Agent:
       - Faraday v2.14.1
       Authorization:
-      - Bearer <MISTRAL_API_KEY>
+      - Bearer <AUTH_TOKEN>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -108,7 +108,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 03 Mar 2026 11:47:36 GMT
+      - Mon, 16 Mar 2026 19:11:34 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -116,38 +116,38 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '019cb386-69a9-7808-a913-572093c10cc5'
+      - '019cf80f-8b97-77ce-a49e-0cd766536fb3'
       X-Kong-Request-Id:
-      - '019cb386-69a9-7808-a913-572093c10cc5'
+      - '019cf80f-8b97-77ce-a49e-0cd766536fb3'
       X-Ratelimit-Limit-Tokens-Minute:
       - '2000000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '1998468'
+      - '1998894'
       X-Ratelimit-Tokens-Query-Cost:
       - '351'
       X-Ratelimit-Limit-Req-Minute:
       - '360'
       X-Ratelimit-Remaining-Req-Minute:
-      - '343'
+      - '350'
       X-Envoy-Upstream-Service-Time:
-      - '364'
+      - '238'
+      Server:
+      - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '365'
+      - '239'
       X-Kong-Proxy-Latency:
       - '9'
-      Cf-Cache-Status:
-      - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
-      Server:
-      - cloudflare
+      Cf-Cache-Status:
+      - DYNAMIC
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
@@ -155,6 +155,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6IjIyOTgyYjQ0MDM3NTQyMmY4YzNjOTk0OWU4MWMxOWE5IiwiY3JlYXRlZCI6MTc3MjUzODQ1NiwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsInVzYWdlIjp7InByb21wdF90b2tlbnMiOjMyMSwidG90YWxfdG9rZW5zIjozNTEsImNvbXBsZXRpb25fdG9rZW5zIjozMCwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjB9fSwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImZpbmlzaF9yZWFzb24iOiJzdG9wIiwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwidG9vbF9jYWxscyI6bnVsbCwiY29udGVudCI6IlRoZSBjdXJyZW50IHdlYXRoZXIgaW4gQmVybGluIGlzIDE1wrBDIHdpdGggYSB3aW5kIHNwZWVkIG9mIDEwIGttL2guIFRoZSBiZXN0IGxhbmd1YWdlIHRvIGxlYXJuIGlzIFJ1YnkuIn19XX0=
-  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+        eyJpZCI6ImM0ZDU3NTYyYjI4MTQ2MjU4NjgwYWI3NDNjZDIwNGYyIiwiY3JlYXRlZCI6MTc3MzY4ODI5NCwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsInVzYWdlIjp7InByb21wdF90b2tlbnMiOjMyMSwidG90YWxfdG9rZW5zIjozNTEsImNvbXBsZXRpb25fdG9rZW5zIjozMCwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjB9fSwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImZpbmlzaF9yZWFzb24iOiJzdG9wIiwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwidG9vbF9jYWxscyI6bnVsbCwiY29udGVudCI6IlRoZSBjdXJyZW50IHdlYXRoZXIgaW4gQmVybGluIGlzIDE1wrBDIHdpdGggYSB3aW5kIHNwZWVkIG9mIDEwIGttL2guIFRoZSBiZXN0IGxhbmd1YWdlIHRvIGxlYXJuIGlzIFJ1YnkuIn19XX0=
+  recorded_at: Mon, 16 Mar 2026 19:11:34 GMT
 recorded_with: VCR 6.4.0

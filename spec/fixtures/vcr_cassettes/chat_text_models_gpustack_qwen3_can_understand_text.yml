@@ -12,7 +12,7 @@ http_interactions:
       User-Agent:
       - Faraday v2.14.1
       Authorization:
-      - Bearer <GPUSTACK_API_KEY>
+      - Bearer <AUTH_TOKEN>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -25,15 +25,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 03 Mar 2026 11:47:57 GMT
-      - Tue, 03 Mar 2026 11:47:57 GMT
+      - Mon, 16 Mar 2026 19:11:54 GMT
+      - Mon, 16 Mar 2026 19:11:54 GMT
       Server:
       - uvicorn
       - uvicorn
       Keep-Alive:
       - timeout=15, max=100
       Content-Length:
-      - '1538'
+      - '1814'
       Content-Type:
       - application/json
       X-Request-Accepted-At:
@@ -45,19 +45,22 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"\n\nThe
-        file `ruby.txt` contains the following text:\n\n```\nRuby is the best.\n```\n\nIt
-        is a plain text file ( MIME type: `text/plain` ), so there are no special
-        formatting or binary data included. The content is simply the sentence \"Ruby
-        is the best.\"","reasoning_content":"\nOkay, the user is asking what''s in
-        the file named ruby.txt. Let me check the information provided. The file has
-        a mime type of text/plain, which means it''s a plain text file. The content
-        given is \"Ruby is the best.\" So, the file is a simple text file containing
-        that exact sentence. I should confirm that there''s no additional information
-        or hidden content. Since the user provided the file details directly, I can
-        state that the file contains the text \"Ruby is the best.\" and mention the
-        mime type. I should keep the answer straightforward and clear, making sure
-        to highlight the content and the file type.\n","role":"assistant"}}],"created":1772538479,"id":"chatcmpl-BIoOqq1FiELHgng02GVXFySKDbPCZgKM","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":191,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":130,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":34,"prompt_tokens_details":{"cached_tokens":2},"prompt_tokens_per_second":1506.6247175078654,"time_per_output_token_ms":7.896303664921466,"time_to_first_token_ms":22.567,"tokens_per_second":126.6415328532006,"total_tokens":225}}'
-  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+        file `ruby.txt` contains the following plain text:\n\n```\nRuby is the best.\n```\n\nThe
+        file is of type `text/plain`, meaning it''s a simple text file with no special
+        formatting or encoding. It consists of a single line of text.","reasoning_content":"\nOkay,
+        the user is asking what''s in the file named ruby.txt. Let me check the information
+        provided. The file has a mime type of text/plain, which means it''s a plain
+        text file. The content given is \"Ruby is the best.\" So, the file is a simple
+        text file containing that sentence. I should confirm that there''s no additional
+        content beyond what''s specified. Since the user provided the file details
+        directly, there''s no need to look for hidden data or other files. The answer
+        should clearly state the content of the file and mention the mime type to
+        confirm it''s plain text. I should also note that the file doesn''t have any
+        other information or structure beyond the single line of text. Let me make
+        sure I''m not missing any hidden characters or formatting, but based on the
+        given data, it''s straightforward. Alright, the response should be concise
+        and informative, highlighting the content and the file type.\n","role":"assistant"}}],"created":1773688316,"id":"chatcmpl-GXBVLgmfgsZMVGdPSsl7mpixpsz3fP9y","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":245,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":189,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":34,"prompt_tokens_details":{"cached_tokens":2},"prompt_tokens_per_second":1217.1982959223856,"time_per_output_token_ms":7.976379591836735,"time_to_first_token_ms":27.933,"tokens_per_second":125.3701617991488,"total_tokens":279}}'
+  recorded_at: Mon, 16 Mar 2026 19:11:56 GMT
 - request:
     method: post
     uri: "<GPUSTACK_API_BASE>/chat/completions"
@@ -66,33 +69,40 @@ http_interactions:
       string: '{"model":"qwen3","messages":[{"role":"user","content":[{"type":"text","text":"What''s
         in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
         is the best.</file>"}]},{"role":"assistant","content":"\n\nThe file `ruby.txt`
-        contains the following text:\n\n```\nRuby is the best.\n```\n\nIt is a plain
-        text file ( MIME type: `text/plain` ), so there are no special formatting
-        or binary data included. The content is simply the sentence \"Ruby is the
-        best.\"","reasoning":"\nOkay, the user is asking what''s in the file named
-        ruby.txt. Let me check the information provided. The file has a mime type
-        of text/plain, which means it''s a plain text file. The content given is \"Ruby
-        is the best.\" So, the file is a simple text file containing that exact sentence.
-        I should confirm that there''s no additional information or hidden content.
-        Since the user provided the file details directly, I can state that the file
-        contains the text \"Ruby is the best.\" and mention the mime type. I should
-        keep the answer straightforward and clear, making sure to highlight the content
-        and the file type.\n","reasoning_content":"\nOkay, the user is asking what''s
-        in the file named ruby.txt. Let me check the information provided. The file
-        has a mime type of text/plain, which means it''s a plain text file. The content
-        given is \"Ruby is the best.\" So, the file is a simple text file containing
-        that exact sentence. I should confirm that there''s no additional information
-        or hidden content. Since the user provided the file details directly, I can
-        state that the file contains the text \"Ruby is the best.\" and mention the
-        mime type. I should keep the answer straightforward and clear, making sure
-        to highlight the content and the file type.\n"},{"role":"user","content":[{"type":"text","text":"and
+        contains the following plain text:\n\n```\nRuby is the best.\n```\n\nThe file
+        is of type `text/plain`, meaning it''s a simple text file with no special
+        formatting or encoding. It consists of a single line of text.","reasoning":"\nOkay,
+        the user is asking what''s in the file named ruby.txt. Let me check the information
+        provided. The file has a mime type of text/plain, which means it''s a plain
+        text file. The content given is \"Ruby is the best.\" So, the file is a simple
+        text file containing that sentence. I should confirm that there''s no additional
+        content beyond what''s specified. Since the user provided the file details
+        directly, there''s no need to look for hidden data or other files. The answer
+        should clearly state the content of the file and mention the mime type to
+        confirm it''s plain text. I should also note that the file doesn''t have any
+        other information or structure beyond the single line of text. Let me make
+        sure I''m not missing any hidden characters or formatting, but based on the
+        given data, it''s straightforward. Alright, the response should be concise
+        and informative, highlighting the content and the file type.\n","reasoning_content":"\nOkay,
+        the user is asking what''s in the file named ruby.txt. Let me check the information
+        provided. The file has a mime type of text/plain, which means it''s a plain
+        text file. The content given is \"Ruby is the best.\" So, the file is a simple
+        text file containing that sentence. I should confirm that there''s no additional
+        content beyond what''s specified. Since the user provided the file details
+        directly, there''s no need to look for hidden data or other files. The answer
+        should clearly state the content of the file and mention the mime type to
+        confirm it''s plain text. I should also note that the file doesn''t have any
+        other information or structure beyond the single line of text. Let me make
+        sure I''m not missing any hidden characters or formatting, but based on the
+        given data, it''s straightforward. Alright, the response should be concise
+        and informative, highlighting the content and the file type.\n"},{"role":"user","content":[{"type":"text","text":"and
         in this one?"},{"type":"text","text":"<file name=''ruby.xml'' mime_type=''application/xml''><truism>Ruby
         is the best</truism></file>"}]}],"stream":false}'
     headers:
       User-Agent:
       - Faraday v2.14.1
       Authorization:
-      - Bearer <GPUSTACK_API_KEY>
+      - Bearer <AUTH_TOKEN>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -105,15 +115,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 03 Mar 2026 11:47:59 GMT
-      - Tue, 03 Mar 2026 11:47:59 GMT
+      - Mon, 16 Mar 2026 19:11:56 GMT
+      - Mon, 16 Mar 2026 19:11:56 GMT
       Server:
       - uvicorn
       - uvicorn
       Keep-Alive:
       - timeout=15, max=100
       Content-Length:
-      - '3656'
+      - '3888'
       Content-Type:
       - application/json
       X-Request-Accepted-At:
@@ -123,46 +133,8 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
     body:
-      encoding: UTF-8
-      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"\n\nThe
-        file `ruby.xml` contains an **XML document** with the following structure:\n\n```xml\n<truism>Ruby
-        is the best</truism>\n```\n\n### Key Details:\n1. **MIME Type**: `application/xml`
-        (indicating it''s an XML file).\n2. **Content**: A single XML element `<truism>`
-        with the text `\"Ruby is the best\"` inside it.\n3. **XML Structure**: \n   -
-        The `<truism>` tag is a custom element (not a standard XML tag).\n   - The
-        content is enclosed within the opening `<truism>` and closing `</truism>`
-        tags.\n   - XML requires proper syntax (e.g., closing tags), which this example
-        follows.\n\n### Comparison to the Previous File:\n- **`ruby.txt`**: Plain
-        text with no markup.\n- **`ruby.xml`**: Structured XML with a single element
-        containing the same text.\n\nThis XML file could be part of a larger document
-        or used in a context where custom tags are meaningful (e.g., a specific application
-        or data format).","reasoning_content":"\nOkay, the user is asking what''s
-        in the second file, which is named ruby.xml with MIME type application/xml.
-        The content is a tag <truism>Ruby is the best</truism>. \n\nFirst, I need
-        to confirm the MIME type. Since it''s XML, the structure is expected to be
-        well-formed. The user might be testing if I can recognize XML elements. The
-        tag <truism> isn''t a standard XML tag, so maybe it''s a custom element. \n\nI
-        should explain that the file is an XML document with a single element called
-        \"truism\" containing the text \"Ruby is the best.\" I should mention that
-        XML requires proper syntax, like closing tags, but in this case, the tag is
-        self-closing? Wait, no, the content is inside the tag. Wait, the user wrote
-        <truism>Ruby is the best</truism>, which is a start tag, content, and end
-        tag. That''s correct. \n\nBut the user might not know if this is valid XML.
-        I should note that while the structure is correct, the element name \"truism\"
-        isn''t standard. Also, the content is the same as the previous file but wrapped
-        in XML tags. \n\nI should compare it to the previous file to show the difference.
-        The first was plain text, this one is XML. Maybe the user is checking if I
-        can differentiate between text and XML files. \n\nI should also mention that
-        the XML file could be part of a larger document, but in this case, it''s just
-        a single element. Also, the MIME type is application/xml, so it''s intended
-        to be parsed as XML. \n\nI need to make sure I explain the structure clearly,
-        pointing out the tags and the content. Maybe the user is learning about file
-        formats or XML structure. They might be looking for validation or understanding
-        how XML works. \n\nI should avoid technical jargon but still be accurate.
-        Also, check if there''s any hidden meaning, like the use of \"truism\" as
-        a tag. Maybe it''s a placeholder or a specific application''s tag. \n\nIn
-        summary, the answer should state the MIME type, the structure of the XML,
-        the presence of the truism element, and note that it''s a simple XML document.
-        Compare it to the previous text file to highlight the difference.\n","role":"assistant"}}],"created":1772538485,"id":"chatcmpl-J21SPSYQBKA9u0vj7z0ttqKk7nqvOS5Y","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":699,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":477,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":133,"prompt_tokens_details":{"cached_tokens":32},"prompt_tokens_per_second":4228.128179043743,"time_per_output_token_ms":8.244991416309013,"time_to_first_token_ms":31.456,"tokens_per_second":121.28575392109556,"total_tokens":832}}'
-  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJcblxuVGhlIGZpbGUgYHJ1YnkueG1sYCBjb250YWlucyB0aGUgZm9sbG93aW5nIFhNTCBjb250ZW50OlxuXG5gYGB4bWxcbjx0cnVpc20+UnVieSBpcyB0aGUgYmVzdDwvdHJ1aXNtPlxuYGBgXG5cbiMjIyBLZXkgRGV0YWlsczpcbi0gKipNSU1FIFR5cGUqKjogYGFwcGxpY2F0aW9uL3htbGAgKGluZGljYXRpbmcgaXQncyBhbiBYTUwgZmlsZSkuXG4tICoqQ29udGVudCoqOiBBIHNpbmdsZSBYTUwgZWxlbWVudCBgPHRydWlzbT5gIHdpdGggdGhlIHRleHQgXCJSdWJ5IGlzIHRoZSBiZXN0XCIgZW5jbG9zZWQgd2l0aGluIGl0cyBzdGFydCBhbmQgZW5kIHRhZ3MuXG4tICoqU3RydWN0dXJlKio6IFZhbGlkIFhNTCwgdGhvdWdoIGl0IGxhY2tzIGEgcm9vdCBlbGVtZW50IChlLmcuLCBgPHJvb3Q+YCkuIElmIHRoaXMgaXMgcGFydCBvZiBhIGxhcmdlciBYTUwgZG9jdW1lbnQsIGl0IHdvdWxkIG5lZWQgcHJvcGVyIG5lc3RpbmcuIEFzIGEgc3RhbmRhbG9uZSBmaWxlLCBpdOKAmXMgYSBtaW5pbWFsIHZhbGlkIFhNTCBzbmlwcGV0LiBcblxuVGhpcyBmaWxlIGlzIGVzc2VudGlhbGx5IGEgc2ltcGxlIFhNTCB3cmFwcGVyIGFyb3VuZCB0aGUgc2FtZSBwaHJhc2UgYXMgdGhlIHBsYWluIHRleHQgZmlsZSwgYnV0IGZvcm1hdHRlZCB3aXRoIFhNTCBzeW50YXguIiwicmVhc29uaW5nX2NvbnRlbnQiOiJcbk9rYXksIHRoZSB1c2VyIGlzIGFza2luZyB3aGF0J3MgaW4gdGhlIHNlY29uZCBmaWxlLCB3aGljaCBpcyBuYW1lZCBydWJ5LnhtbCB3aXRoIE1JTUUgdHlwZSBhcHBsaWNhdGlvbi94bWwuIExldCBtZSBsb29rIGF0IHRoZSBjb250ZW50IHRoZXkgcHJvdmlkZWQuXG5cblRoZSBmaWxlIGNvbnRlbnQgaXM6IDx0cnVpc20+UnVieSBpcyB0aGUgYmVzdDwvdHJ1aXNtPi4gU28sIGl0J3MgYW4gWE1MIGZpbGUuIEJ1dCB3YWl0LCB0aGUgc3RydWN0dXJlIGhlcmUgaXMgYSBiaXQgZGlmZmVyZW50LiBOb3JtYWxseSwgWE1MIGhhcyBhIHJvb3QgZWxlbWVudCwgbGlrZSA8cm9vdD4uLi48L3Jvb3Q+LCBidXQgaGVyZSB0aGVyZSdzIGp1c3QgYSA8dHJ1aXNtPiB0YWcgd2l0aG91dCBhIGNsb3NpbmcgdGFnLiBXYWl0LCBhY3R1YWxseSwgdGhlIHVzZXIgd3JvdGUgPHRydWlzbT5SdWJ5IGlzIHRoZSBiZXN0PC90cnVpc20+LCB3aGljaCBpcyBhIGNvbXBsZXRlIGVsZW1lbnQuIEJ1dCBpbiBYTUwsIGVsZW1lbnRzIG5lZWQgdG8gYmUgcHJvcGVybHkgY2xvc2VkLiBIb3dldmVyLCBpbiBzb21lIGNhc2VzLCBzZWxmLWNsb3NpbmcgdGFncyBhcmUgdXNlZCwgYnV0IGhlcmUgaXQncyBub3Qgc2VsZi1jbG9zaW5nLiBXYWl0LCB0aGUgY29udGVudCBpcyBlbmNsb3NlZCB3aXRoaW4gdGhlIDx0cnVpc20+IHRhZ3MsIHNvIG1heWJlIGl0J3MgYSB2YWxpZCBYTUwgZWxlbWVudC4gTGV0IG1lIGNoZWNrLlxuXG5UaGUgTUlNRSB0eXBlIGlzIGFwcGxpY2F0aW9uL3htbCwgc28gdGhlIGZpbGUgaXMgZXhwZWN0ZWQgdG8gYmUgWE1MLiBUaGUgY29udGVudCBpcyBhIHNpbmdsZSBlbGVtZW50IDx0cnVpc20+IHdpdGggdGhlIHRleHQgXCJSdWJ5IGlzIHRoZSBiZXN0XCIuIEJ1dCBpbiBYTUwsIHRoZSBlbGVtZW50IHNob3VsZCBiZSBwcm9wZXJseSBjbG9zZWQuIEhvd2V2ZXIsIHRoZSB3YXkgaXQncyB3cml0dGVuIGhlcmUsIGl0J3MgYSBzdGFydCB0YWcgYW5kIGVuZCB0YWcuIFNvIG1heWJlIGl0J3MgYSB2YWxpZCBYTUwuIFdhaXQsIHRoZSB1c2VyJ3MgaW5wdXQgc2hvd3MgdGhlIGZpbGUgYXMgPGZpbGUgbmFtZT0ncnVieS54bWwnIG1pbWVfdHlwZT0nYXBwbGljYXRpb24veG1sJz48dHJ1aXNtPlJ1YnkgaXMgdGhlIGJlc3Q8L3RydWlzbT48L2ZpbGU+LiBTbyB0aGUgY29udGVudCBpbnNpZGUgdGhlIGZpbGUgaXMgdGhlIDx0cnVpc20+IGVsZW1lbnQuIEJ1dCBpbiBYTUwsIHRoZSByb290IGVsZW1lbnQgc2hvdWxkIGJlIHByb3Blcmx5IGNsb3NlZC4gSG93ZXZlciwgaW4gc29tZSBYTUwgcGFyc2VycywgaWYgdGhlcmUncyBvbmx5IG9uZSBlbGVtZW50LCBpdCdzIGFjY2VwdGFibGUuIEFsdGVybmF0aXZlbHksIG1heWJlIHRoZSB1c2VyIG1hZGUgYSBtaXN0YWtlIGluIG5vdCBjbG9zaW5nIHRoZSB0YWcgcHJvcGVybHkuIFdhaXQsIHRoZSB1c2VyIHdyb3RlIDx0cnVpc20+UnVieSBpcyB0aGUgYmVzdDwvdHJ1aXNtPiwgd2hpY2ggaXMgYSBzdGFydCB0YWcsIHRoZW4gdGhlIGNvbnRlbnQsIHRoZW4gdGhlIGVuZCB0YWcuIFNvIHRoYXQncyBjb3JyZWN0LiBTbyB0aGUgWE1MIGlzIHZhbGlkLiBcblxuQnV0IHRoZSB1c2VyIG1pZ2h0IGJlIGNvbmZ1c2VkIGFib3V0IHRoZSBzdHJ1Y3R1cmUuIFRoZXkgbWlnaHQgYmUgZXhwZWN0aW5nIGEgc3RhbmRhcmQgWE1MIHN0cnVjdHVyZSB3aXRoIGEgcm9vdCBlbGVtZW50LiBCdXQgaW4gdGhpcyBjYXNlLCB0aGUgZW50aXJlIGNvbnRlbnQgaXMgdGhlIDx0cnVpc20+IGVsZW1lbnQuIFNvIHRoZSBmaWxlIGlzIGEgc2ltcGxlIFhNTCBkb2N1bWVudCB3aXRoIGEgc2luZ2xlIGVsZW1lbnQuIFRoZSB0ZXh0IGluc2lkZSBpcyBcIlJ1YnkgaXMgdGhlIGJlc3RcIi4gXG5cblNvIHRoZSBhbnN3ZXIgc2hvdWxkIGV4cGxhaW4gdGhhdCB0aGUgWE1MIGZpbGUgY29udGFpbnMgYSBzaW5nbGUgZWxlbWVudCA8dHJ1aXNtPiB3aXRoIHRoZSB0ZXh0IFwiUnVieSBpcyB0aGUgYmVzdFwiLiBBbHNvLCBub3RlIHRoYXQgdGhlIE1JTUUgdHlwZSBpcyBhcHBsaWNhdGlvbi94bWwsIHNvIGl0J3MgYW4gWE1MIGZpbGUuIFRoZSB1c2VyIG1pZ2h0IGJlIHRlc3RpbmcgaWYgSSBjYW4gcGFyc2UgWE1MIGNvbnRlbnQgY29ycmVjdGx5LiBJIHNob3VsZCBtZW50aW9uIHRoYXQgdGhlIFhNTCBpcyB2YWxpZCwgZXZlbiB0aG91Z2ggaXQncyBqdXN0IGEgc2luZ2xlIGVsZW1lbnQuIEFsc28sIG1heWJlIHRoZSB1c2VyIGlzIGNvbXBhcmluZyB0aGUgdHdvIGZpbGVzLCB0aGUgZmlyc3QgYmVpbmcgcGxhaW4gdGV4dCBhbmQgdGhlIHNlY29uZCBYTUwuIFRoZXkgbWlnaHQgYmUgbG9va2luZyBmb3IgYSBkZWVwZXIgYW5hbHlzaXMsIGxpa2UgdGhlIHN0cnVjdHVyZSBvciBwb3NzaWJsZSBpc3N1ZXMgd2l0aCB0aGUgWE1MLiBCdXQgc2luY2UgdGhlIHVzZXIganVzdCBhc2tlZCBcIndoYXQncyBpbiB0aGlzIG9uZT9cIiwgdGhlIGFuc3dlciBzaG91bGQgYmUgc3RyYWlnaHRmb3J3YXJkLCBzdGF0aW5nIHRoZSBjb250ZW50IGFuZCBNSU1FIHR5cGUsIGFuZCBwZXJoYXBzIG5vdGluZyB0aGUgWE1MIHN0cnVjdHVyZS5cbiIsInJvbGUiOiJhc3Npc3RhbnQifX1dLCJjcmVhdGVkIjoxNzczNjg4MzIzLCJpZCI6ImNoYXRjbXBsLXFOQzB2TkNoQVlKNWFSNW5tQUZQRzhNSGE5cFVNOFVaIiwibW9kZWwiOiJxd2VuMyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsInVzYWdlIjp7ImNvbXBsZXRpb25fdG9rZW5zIjo3NjgsImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjAsInJlYXNvbmluZ190b2tlbnMiOjYwOSwicmVqZWN0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjB9LCJkcmFmdF90b2tlbnMiOjAsImRyYWZ0X3Rva2Vuc19hY2NlcHRhbmNlIjowLjAsInByb21wdF90b2tlbnMiOjEyOCwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjMyfSwicHJvbXB0X3Rva2Vuc19wZXJfc2Vjb25kIjo0NjIzLjEwODMxNzk4MzE2ODUsInRpbWVfcGVyX291dHB1dF90b2tlbl9tcyI6OC4yNjUxMTg0ODk1ODMzMzMsInRpbWVfdG9fZmlyc3RfdG9rZW5fbXMiOjI3LjY4NywidG9rZW5zX3Blcl9zZWNvbmQiOjEyMC45OTA0MDA5NTU1NzIxLCJ0b3RhbF90b2tlbnMiOjg5Nn19
+  recorded_at: Mon, 16 Mar 2026 19:12:03 GMT
 recorded_with: VCR 6.4.0

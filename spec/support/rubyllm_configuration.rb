@@ -12,7 +12,10 @@ RSpec.shared_context 'with configured RubyLLM' do
   before do
     RubyLLM.configure do |config|
       config.anthropic_api_key = ENV.fetch('ANTHROPIC_API_KEY', 'test')
-      config.azure_api_base = ENV.fetch('AZURE_API_BASE', 'https://rubyllm.services.ai.azure.com/')
+      config.azure_api_base = ENV.fetch(
+        'AZURE_API_BASE',
+        'https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview'
+      )
       config.azure_api_key = ENV.fetch('AZURE_API_KEY', 'test')
       config.bedrock_api_key = ENV.fetch('AWS_ACCESS_KEY_ID', 'test')
       config.bedrock_region = 'us-west-2'

@@ -15,7 +15,7 @@ http_interactions:
       User-Agent:
       - Faraday v2.14.1
       Authorization:
-      - Bearer <XAI_API_KEY>
+      - Bearer <AUTH_TOKEN>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -28,51 +28,47 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 03 Mar 2026 12:37:27 GMT
+      - Mon, 16 Mar 2026 19:19:05 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Strict-Transport-Security:
+      - max-age=31536000
+      Access-Control-Expose-Headers:
+      - "*"
+      Set-Cookie:
+      - "<COOKIE>"
       X-Ratelimit-Limit-Tokens:
       - '4000000'
       X-Ratelimit-Remaining-Tokens:
-      - '3982427'
+      - '4000000'
       X-Zero-Data-Retention:
       - 'false'
       X-Ratelimit-Limit-Requests:
       - '607'
       X-Ratelimit-Remaining-Requests:
-      - '564'
+      - '607'
       X-Metrics-Mean-Itl-Ms:
-      - '38.7'
+      - '24.8'
       X-Metrics-E2e-Ms:
-      - '1094.6'
+      - '920.8'
       X-Request-Id:
       - "<X_REQUEST_ID>"
+      Cf-Cache-Status:
+      - DYNAMIC
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
       - "*"
-      Access-Control-Expose-Headers:
-      - "*"
-      X-Envoy-Wasm-Service:
-      - prod-ic-inference-api
-      X-Envoy-Wasm-Route:
-      - ic-protected-inference-api
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=31536000
       Server:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"26881ea4-11e6-9d09-a118-6f0aabc08c21","object":"chat.completion","created":1772541445,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"call_72272456","function":{"name":"object_params","arguments":"{\"window\":{\"start\":\"2025-01-01\",\"end\":\"2025-01-02\"}}"},"type":"function"}],"refusal":null},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":434,"completion_tokens":46,"total_tokens":480,"prompt_tokens_details":{"text_tokens":434,"audio_tokens":0,"image_tokens":0,"cached_tokens":158},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":861000},"system_fingerprint":"fp_2338d85ee7"}'
-  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+      string: '{"id":"c15bb8b3-cbe5-2344-a0a4-4952e066e49f","object":"chat.completion","created":1773688744,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"call_19139058","function":{"name":"object_params","arguments":"{\"window\":{\"start\":\"2025-01-01\",\"end\":\"2025-01-02\"}}"},"type":"function"}],"refusal":null},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":434,"completion_tokens":46,"total_tokens":480,"prompt_tokens_details":{"text_tokens":434,"audio_tokens":0,"image_tokens":0,"cached_tokens":158},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":861000},"system_fingerprint":"fp_48319fcb08"}'
+  recorded_at: Mon, 16 Mar 2026 19:19:05 GMT
 recorded_with: VCR 6.4.0

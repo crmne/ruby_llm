@@ -14,7 +14,7 @@ http_interactions:
       User-Agent:
       - Faraday v2.14.1
       Authorization:
-      - Bearer <OPENAI_API_KEY>
+      - Bearer <AUTH_TOKEN>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -27,60 +27,60 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 03 Mar 2026 11:57:07 GMT
+      - Mon, 16 Mar 2026 19:21:33 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Cf-Ray:
+      - "<CF_RAY>"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
       Access-Control-Expose-Headers:
       - X-Request-ID
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '3871'
+      - '7421'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
       - '2020-10-01'
-      Server:
-      - cloudflare
-      X-Ratelimit-Limit-Requests:
-      - '500'
-      X-Ratelimit-Limit-Tokens:
-      - '200000'
-      X-Ratelimit-Remaining-Requests:
-      - '499'
-      X-Ratelimit-Remaining-Tokens:
-      - '199657'
-      X-Ratelimit-Reset-Requests:
-      - 120ms
-      X-Ratelimit-Reset-Tokens:
-      - 102ms
-      X-Request-Id:
-      - "<X_REQUEST_ID>"
       X-Openai-Proxy-Wasm:
       - v0.1
-      Cf-Cache-Status:
-      - DYNAMIC
+      X-Ratelimit-Limit-Requests:
+      - '5000'
+      X-Ratelimit-Limit-Tokens:
+      - '2000000'
+      X-Ratelimit-Remaining-Requests:
+      - '4999'
+      X-Ratelimit-Remaining-Tokens:
+      - '1999991'
+      X-Ratelimit-Reset-Requests:
+      - 12ms
+      X-Ratelimit-Reset-Tokens:
+      - 0s
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
       Set-Cookie:
       - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
-      X-Content-Type-Options:
-      - nosniff
-      Cf-Ray:
-      - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-DFIf1gkKbZZHN4sC8nEc709mqvkNf",
+          "id": "chatcmpl-DK7nC7s9PhU5sK6rPxM4vyTJ4DNfe",
           "object": "chat.completion",
-          "created": 1772539023,
+          "created": 1773688886,
           "model": "gpt-5-nano-2025-08-07",
           "choices": [
             {
@@ -90,7 +90,7 @@ http_interactions:
                 "content": null,
                 "tool_calls": [
                   {
-                    "id": "call_yB3x7txhIqho72kinSvRjaJG",
+                    "id": "call_YYQGMrxkbs33pHoIB1Ognnrx",
                     "type": "function",
                     "function": {
                       "name": "weather",
@@ -106,14 +106,14 @@ http_interactions:
           ],
           "usage": {
             "prompt_tokens": 158,
-            "completion_tokens": 416,
-            "total_tokens": 574,
+            "completion_tokens": 928,
+            "total_tokens": 1086,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
             },
             "completion_tokens_details": {
-              "reasoning_tokens": 384,
+              "reasoning_tokens": 896,
               "audio_tokens": 0,
               "accepted_prediction_tokens": 0,
               "rejected_prediction_tokens": 0
@@ -122,15 +122,15 @@ http_interactions:
           "service_tier": "default",
           "system_fingerprint": null
         }
-  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+  recorded_at: Mon, 16 Mar 2026 19:21:33 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"gpt-5-nano","messages":[{"role":"user","content":"When was
-        the fall of Rome?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_yB3x7txhIqho72kinSvRjaJG","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}"}}]},{"role":"tool","content":"Current
-        weather at 41.9028, 12.4964: 15°C, Wind: 10 km/h","tool_call_id":"call_yB3x7txhIqho72kinSvRjaJG"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        the fall of Rome?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_YYQGMrxkbs33pHoIB1Ognnrx","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}"}}]},{"role":"tool","content":"Current
+        weather at 41.9028, 12.4964: 15°C, Wind: 10 km/h","tool_call_id":"call_YYQGMrxkbs33pHoIB1Ognnrx"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
@@ -138,7 +138,7 @@ http_interactions:
       User-Agent:
       - Faraday v2.14.1
       Authorization:
-      - Bearer <OPENAI_API_KEY>
+      - Bearer <AUTH_TOKEN>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -151,67 +151,67 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 03 Mar 2026 11:57:14 GMT
+      - Mon, 16 Mar 2026 19:21:38 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Cf-Ray:
+      - "<CF_RAY>"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
       Access-Control-Expose-Headers:
       - X-Request-ID
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '6114'
+      - '4326'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
       - '2020-10-01'
-      Server:
-      - cloudflare
-      X-Ratelimit-Limit-Requests:
-      - '500'
-      X-Ratelimit-Limit-Tokens:
-      - '200000'
-      X-Ratelimit-Remaining-Requests:
-      - '499'
-      X-Ratelimit-Remaining-Tokens:
-      - '199975'
-      X-Ratelimit-Reset-Requests:
-      - 120ms
-      X-Ratelimit-Reset-Tokens:
-      - 7ms
-      X-Request-Id:
-      - "<X_REQUEST_ID>"
       X-Openai-Proxy-Wasm:
       - v0.1
-      Cf-Cache-Status:
-      - DYNAMIC
+      X-Ratelimit-Limit-Requests:
+      - '5000'
+      X-Ratelimit-Limit-Tokens:
+      - '2000000'
+      X-Ratelimit-Remaining-Requests:
+      - '4999'
+      X-Ratelimit-Remaining-Tokens:
+      - '1999975'
+      X-Ratelimit-Reset-Requests:
+      - 12ms
+      X-Ratelimit-Reset-Tokens:
+      - 0s
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
       Set-Cookie:
       - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
-      X-Content-Type-Options:
-      - nosniff
-      Cf-Ray:
-      - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-DFIf57JdCwQfz3E9lFg3vJGjttEah",
+          "id": "chatcmpl-DK7nKI1O7XSEZMSjtgnxRoze1BS7h",
           "object": "chat.completion",
-          "created": 1772539027,
+          "created": 1773688894,
           "model": "gpt-5-nano-2025-08-07",
           "choices": [
             {
               "index": 0,
               "message": {
                 "role": "assistant",
-                "content": "The conventional date is 476 CE, when the last Western Roman Emperor, Romulus Augustulus, was deposed by Odoacer. The Western Empire is considered to have fallen then, though the decline was a long process.\n\nThe Eastern Roman Empire (the Byzantine Empire) continued for nearly another thousand years, until 1453 CE, when Constantinople fell to the Ottoman Turks.",
+                "content": "The fall of Rome is usually dated as follows:\n\n- Western Roman Empire: 476 CE, when Odoacer deposed Emperor Romulus Augustulus.\n- Eastern Roman Empire (Byzantine Empire): 1453 CE, when Constantinople fell to the Ottoman Turks.\n\nNote: some historians view the decline as a gradual process rather than a single date.",
                 "refusal": null,
                 "annotations": []
               },
@@ -220,14 +220,14 @@ http_interactions:
           ],
           "usage": {
             "prompt_tokens": 219,
-            "completion_tokens": 790,
-            "total_tokens": 1009,
+            "completion_tokens": 658,
+            "total_tokens": 877,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
             },
             "completion_tokens_details": {
-              "reasoning_tokens": 704,
+              "reasoning_tokens": 576,
               "audio_tokens": 0,
               "accepted_prediction_tokens": 0,
               "rejected_prediction_tokens": 0
@@ -236,5 +236,5 @@ http_interactions:
           "service_tier": "default",
           "system_fingerprint": null
         }
-  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+  recorded_at: Mon, 16 Mar 2026 19:21:38 GMT
 recorded_with: VCR 6.4.0

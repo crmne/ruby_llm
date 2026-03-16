@@ -26,42 +26,40 @@ http_interactions:
       - GitHub.com
       Content-Type:
       - text/plain; charset=utf-8
-      X-Origin-Cache:
-      - HIT
       Last-Modified:
-      - Tue, 03 Mar 2026 02:28:41 GMT
+      - Mon, 16 Mar 2026 01:54:03 GMT
       Access-Control-Allow-Origin:
       - "*"
       Etag:
-      - W/"69a64759-9c6"
+      - W/"69b762bb-9c6"
       Expires:
-      - Tue, 03 Mar 2026 12:46:52 GMT
+      - Mon, 16 Mar 2026 19:20:40 GMT
       Cache-Control:
       - max-age=600
       X-Proxy-Cache:
       - MISS
       X-Github-Request-Id:
-      - BD4C:12CEB3:22B399A:22EFAE9:69A6D5E4
+      - 2E30:38D72F:D7B24:DA007:69B855AE
       Accept-Ranges:
       - bytes
-      Age:
-      - '0'
       Date:
-      - Tue, 03 Mar 2026 12:36:52 GMT
+      - Mon, 16 Mar 2026 19:14:09 GMT
       Via:
       - 1.1 varnish
+      Age:
+      - '167'
       X-Served-By:
-      - cache-fra-etou8220061-FRA
+      - cache-fra-etou8220112-FRA
       X-Cache:
-      - MISS
+      - HIT
       X-Cache-Hits:
-      - '0'
+      - '1'
       X-Timer:
-      - S1772541412.261125,VS0,VE107
+      - S1773688450.625594,VS0,VE2
       Vary:
       - Accept-Encoding
       X-Fastly-Request-Id:
-      - c853fc15b7f1c97879183044664f0fedf8730944
+      - 88b8b6770af0fa71746d82403d7444d9b2b3c76b
     body:
       encoding: ASCII-8BIT
       string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
@@ -97,7 +95,7 @@ http_interactions:
         \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
         WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
         FOR A PARTICULAR\n     PURPOSE.\n"
-  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+  recorded_at: Mon, 16 Mar 2026 19:14:09 GMT
 - request:
     method: post
     uri: https://api.x.ai/v1/chat/completions
@@ -142,7 +140,7 @@ http_interactions:
       User-Agent:
       - Faraday v2.14.1
       Authorization:
-      - Bearer <XAI_API_KEY>
+      - Bearer <AUTH_TOKEN>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -155,69 +153,62 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 03 Mar 2026 12:36:54 GMT
+      - Mon, 16 Mar 2026 19:14:12 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Strict-Transport-Security:
+      - max-age=31536000
+      Access-Control-Expose-Headers:
+      - "*"
+      Set-Cookie:
+      - "<COOKIE>"
       X-Ratelimit-Limit-Tokens:
       - '4000000'
       X-Ratelimit-Remaining-Tokens:
-      - '3996975'
+      - '4000000'
       X-Zero-Data-Retention:
       - 'false'
       X-Ratelimit-Limit-Requests:
       - '607'
       X-Ratelimit-Remaining-Requests:
-      - '594'
+      - '607'
       X-Metrics-Ttft-Ms:
-      - '350.2'
+      - '114.0'
       X-Metrics-Mean-Itl-Ms:
-      - '7.2'
+      - '10.2'
       X-Metrics-E2e-Ms:
-      - '2218.1'
+      - '2278.1'
       X-Request-Id:
       - "<X_REQUEST_ID>"
+      Cf-Cache-Status:
+      - DYNAMIC
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
       - "*"
-      Access-Control-Expose-Headers:
-      - "*"
-      X-Envoy-Wasm-Service:
-      - prod-ic-inference-api
-      X-Envoy-Wasm-Route:
-      - ic-protected-inference-api
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=31536000
       Server:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"47969235-5531-9d62-8374-e14762e36e82","object":"chat.completion","created":1772541412,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"This
+      string: '{"id":"3e4ea5bc-60c9-5466-3c77-39957286e202","object":"chat.completion","created":1773688449,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"This
         is the **Ruby License** (also known as the Ruby License or matz''s license),
         a permissive open-source license for the Ruby programming language, authored
-        by Yukihiro Matsumoto (matz).\n\n### Key Points:\n- **Permissive terms**:
-        Allows free redistribution, modification, and commercial use of Ruby source
-        code, binaries, and derivatives.\n- **Conditions**:\n  1. Verbatim copies
-        must preserve original copyright notices.\n  2. Modifications require at least
-        one of: public domain release, internal corporate use only, non-standard binary
-        names with source instructions, or author arrangements.\n  3. Binaries must
-        include source access instructions or the source itself.\n  4. Parts can be
-        integrated into other software (even commercial), but check `LEGAL` file for
-        exceptions.\n  5. Generated scripts/libraries aren''t automatically copyrighted
-        by Ruby.\n- **No warranty**: Provided \"AS IS\" with no guarantees.\n- **Alternatives**:
-        Ruby can also use the 2-clause BSD license (BSDL).\n\nIt''s similar to MIT/BSD
-        but with unique modification/distribution rules to promote openness while
-        protecting the original work. This file is commonly found in Ruby distributions
-        (e.g., MRI Ruby).","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":692,"completion_tokens":241,"total_tokens":933,"prompt_tokens_details":{"text_tokens":692,"audio_tokens":0,"image_tokens":0,"cached_tokens":128},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":2397000},"system_fingerprint":"fp_2338d85ee7"}'
-  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+        by Yukihiro Matsumoto (matz).\n\n### Key Points:\n- **Permissive**: Allows
+        redistribution, modification, and commercial use with minimal restrictions.\n-
+        **Dual-licensing option**: You can use either this license **or** the 2-clause
+        BSD License (BSDL).\n- **Main allowances**:\n  1. Free verbatim copying (with
+        notices preserved).\n  2. Modifications for public domain, internal corporate
+        use, non-standard binaries, or with author arrangements.\n  3. Binary distribution
+        with source access instructions.\n  4. Inclusion in other software (even commercial),
+        excluding certain third-party files (see `LEGAL` file).\n- **No warranty**:
+        Provided \"AS IS\" without guarantees.\n\nThis license has been used in early
+        Ruby versions (pre-2.0) and is OSI-approved. Modern Ruby uses the 2-clause
+        BSD license exclusively.","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":692,"completion_tokens":207,"total_tokens":899,"prompt_tokens_details":{"text_tokens":692,"audio_tokens":0,"image_tokens":0,"cached_tokens":161},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":2177500},"system_fingerprint":"fp_48319fcb08"}'
+  recorded_at: Mon, 16 Mar 2026 19:14:12 GMT
 recorded_with: VCR 6.4.0

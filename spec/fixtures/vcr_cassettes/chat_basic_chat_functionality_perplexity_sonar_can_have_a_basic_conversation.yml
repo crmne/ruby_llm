@@ -11,7 +11,7 @@ http_interactions:
       User-Agent:
       - Faraday v2.14.1
       Authorization:
-      - Bearer <PERPLEXITY_API_KEY>
+      - Bearer <AUTH_TOKEN>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 03 Mar 2026 11:53:01 GMT
+      - Mon, 16 Mar 2026 19:15:16 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -37,6 +37,7 @@ http_interactions:
       - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
+      - "<COOKIE>"
       Strict-Transport-Security:
       - max-age=15552000; includeSubDomains; preload
       Server:
@@ -45,20 +46,7 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"6fcb3139-aa85-4de3-993a-dfde20892d27","model":"sonar","created":1772538781,"usage":{"prompt_tokens":9,"completion_tokens":40,"total_tokens":49,"search_context_size":"low","cost":{"input_tokens_cost":0.00001,"output_tokens_cost":0.00004,"request_cost":0.005,"total_cost":0.00505}},"citations":["https://www.atlas.org/solution/cd1f55a8-bc57-4f67-ab29-65f242773b88/2-plus-2","https://math.answers.com/other-math/What_is_2plus_2","https://www.youtube.com/watch?v=tY46Kmm0LOo","https://www.youtube.com/watch?v=TulGFOA-Bn8"],"search_results":[{"title":"Solved:
-        2 plus 2 - Atlas","url":"https://www.atlas.org/solution/cd1f55a8-bc57-4f67-ab29-65f242773b88/2-plus-2","date":"2024-12-10","last_updated":"2026-03-02","snippet":"First,
-        let''s understand the arithmetic operation presented in the question: \"2
-        plus 2.\" This is a simple addition problem where we are asked to find the
-        sum ...","source":"web"},{"title":"What is 2plus 2? - Answers","url":"https://math.answers.com/other-math/What_is_2plus_2","date":"2012-06-30","last_updated":"2026-02-21","snippet":"2
-        plus 2 equals 4plus1 equals 5minus 1 equals 4divided by 2 equals 2plus 8 equals
-        1010 minus 6 equals 4so it all equals to +_____29so its 29 !!!","source":"web"},{"title":"What
-        is half of 2 plus 2? The \"correct\" answer explained - YouTube","url":"https://www.youtube.com/watch?v=tY46Kmm0LOo","date":"2024-11-04","last_updated":"2026-03-03","snippet":"...
-        2+plus+2 Wolframalpha https://www.wolframalpha.com/input?i=half+of+2+plus+2
-        Math StackExchange https://math.stackexchange.com/questions ...","source":"web"},{"title":"2
-        + 2 divided 2 =? MANY will get this BASIC Math Problem WRONG!","url":"https://www.youtube.com/watch?v=TulGFOA-Bn8","date":"2024-04-11","last_updated":"2026-03-03","snippet":"Basic
-        math problem many will get wrong - number operations and PEMDAS. Learn more
-        math at https://TCMathAcademy.com/.","source":"web"}],"object":"chat.completion","choices":[{"index":0,"message":{"role":"assistant","content":"The
-        answer to 2 + 2 is **4**[1]. This is a basic arithmetic addition problem where
-        you combine two quantities of 2 to get a sum of 4[1]."},"delta":{"role":"assistant","content":""},"finish_reason":"stop"}]}'
-  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+      string: !binary |-
+        eyJpZCI6IjRkOGZhMDZhLTBiZDktNDhkYS1hZjhmLTM1YzAyM2U0MjA2OCIsIm1vZGVsIjoic29uYXIiLCJjcmVhdGVkIjoxNzczNjg4NTE2LCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjo5LCJjb21wbGV0aW9uX3Rva2VucyI6NDEsInRvdGFsX3Rva2VucyI6NTAsInNlYXJjaF9jb250ZXh0X3NpemUiOiJsb3ciLCJjb3N0Ijp7ImlucHV0X3Rva2Vuc19jb3N0IjowLjAwMDAxLCJvdXRwdXRfdG9rZW5zX2Nvc3QiOjAuMDAwMDQsInJlcXVlc3RfY29zdCI6MC4wMDUsInRvdGFsX2Nvc3QiOjAuMDA1MDV9fSwiY2l0YXRpb25zIjpbImh0dHBzOi8vd3d3LmF0bGFzLm9yZy9zb2x1dGlvbi9jNjNiMjVkOS0xOWJjLTQ1N2EtOGVmMi0wYzViZTAwMWY4NmYvMi1wbHVzLTIiLCJodHRwczovL21hdGguYW5zd2Vycy5jb20vbWF0aC1hbmQtYXJpdGhtZXRpYy9XaGF0X2lzX3RoZV9zY2llbnRpZmljX2Fuc3dlcl9mb3JfMl9wbHVzXzIiLCJodHRwczovL3d3dy55b3V0dWJlLmNvbS93YXRjaD92PXRZNDZLbW0wTE9vIiwiaHR0cHM6Ly93d3cuYWxsb3Byb2YucWMuY2Evem9uZWRlbnRyYWlkZS9kaXNjdXNzaW9uLzIwODIyL3F1ZXN0aW9uIiwiaHR0cHM6Ly93d3cueW91dHViZS5jb20vd2F0Y2g/dj1FcllKaEQ1Vjc3MCIsImh0dHBzOi8vd3d3Lm9yZWF0ZWFpLmNvbS9ibG9nL3RoZS1zaW1wbGUtdHJ1dGgtd2hhdC1pcy0yLXBsdXMtMi9jMjc5OGY2ZDFjNDFjZTRhNTI1NTk4YmYzNWMzODgxNCJdLCJzZWFyY2hfcmVzdWx0cyI6W3sidGl0bGUiOiJTb2x2ZWQ6IDIgcGx1cyAyIiwidXJsIjoiaHR0cHM6Ly93d3cuYXRsYXMub3JnL3NvbHV0aW9uL2M2M2IyNWQ5LTE5YmMtNDU3YS04ZWYyLTBjNWJlMDAxZjg2Zi8yLXBsdXMtMiIsImRhdGUiOiIyMDI1LTA0LTAzIiwibGFzdF91cGRhdGVkIjoiMjAyNi0wMy0xNiIsInNuaXBwZXQiOiI0LiBUaGUgcmVzdWx0IG9mIHRoZSBhZGRpdGlvbiBjb25maXJtcyB0aGF0IDIgcGx1cyAyIGVxdWFscyA0LCB3aGljaCBpcyBhIHdlbGwta25vd24gbWF0aGVtYXRpY2FsIGZhY3Qgc3VwcG9ydGVkIGJ5IHN0YW5kYXJkIGFyaXRobWV0aWMgcnVsZXMuIiwic291cmNlIjoid2ViIn0seyJ0aXRsZSI6IldoYXQgaXMgdGhlIHNjaWVudGlmaWMgYW5zd2VyIGZvciAyIHBsdXMgMj8iLCJ1cmwiOiJodHRwczovL21hdGguYW5zd2Vycy5jb20vbWF0aC1hbmQtYXJpdGhtZXRpYy9XaGF0X2lzX3RoZV9zY2llbnRpZmljX2Fuc3dlcl9mb3JfMl9wbHVzXzIiLCJkYXRlIjoiMjAxMS0wNC0wMyIsImxhc3RfdXBkYXRlZCI6IjIwMjYtMDMtMDYiLCJzbmlwcGV0IjoiSXQgaXMgbm90IHNjaWVuY2UsIGJ1dCBhcml0aG1ldGljIHRoYXQgdGVsbHMgdXMgdGhhdCAyKzIgaXMgNC4iLCJzb3VyY2UiOiJ3ZWIifSx7InRpdGxlIjoiV2hhdCBpcyBoYWxmIG9mIDIgcGx1cyAyPyBUaGUgXCJjb3JyZWN0XCIgYW5zd2VyIGV4cGxhaW5lZCIsInVybCI6Imh0dHBzOi8vd3d3LnlvdXR1YmUuY29tL3dhdGNoP3Y9dFk0NkttbTBMT28iLCJkYXRlIjoiMjAyNC0xMS0wNCIsImxhc3RfdXBkYXRlZCI6IjIwMjYtMDMtMTYiLCJzbmlwcGV0IjoiV2hhdCBpcyBoYWxmIG9mIDIgcGx1cyAyPyBUaGUgXCJjb3JyZWN0XCIgYW5zd2VyIGV4cGxhaW5lZCDCtyBDb21tZW50cy4iLCJzb3VyY2UiOiJ3ZWIifSx7InRpdGxlIjoiMisyPyDDp2EgZmFpcyBjb21iaWVuIiwidXJsIjoiaHR0cHM6Ly93d3cuYWxsb3Byb2YucWMuY2Evem9uZWRlbnRyYWlkZS9kaXNjdXNzaW9uLzIwODIyL3F1ZXN0aW9uIiwibGFzdF91cGRhdGVkIjoiMjAyNi0wMy0xMSIsInNuaXBwZXQiOiIyKzIgZmFpdCA0LiBMYSBwcm9jaGFpbmUgZm9pcywgc2kgdHUgdmV1eCBmYWlyZSBjZXR0ZSBhZGRpdGlvbiBzZXVsKGUpLCB0dSBwZXV4IHV0aWxpc2VyIHRlcyBkb2lndHMgcG91ciBjb21wdGVyIGNvbWJpZW4gZm9udCBjZXMgbm9tYnJlcyBlbnNlbWJsZS4gRW4gLi4uIiwic291cmNlIjoid2ViIn0seyJ0aXRsZSI6IlBPVVJRVU9JIDIrMiA9IDJ4MiA9IDLCsiIsInVybCI6Imh0dHBzOi8vd3d3LnlvdXR1YmUuY29tL3dhdGNoP3Y9RXJZSmhENVY3NzAiLCJkYXRlIjoiMjAyMi0xMS0wMiIsImxhc3RfdXBkYXRlZCI6IjIwMjYtMDMtMTYiLCJzbmlwcGV0IjoiUVVFTExFIEVTVCBMQSBESUZGw4lSRU5DRSBFTlRSRSBVTiBMRU1NRSwgVU4gVEjDiU9Sw4hNRSBFVCBVTiBDT1JPTExBSVJFID8hIMK3IFRoZSBCaWdnZXN0IFBpdGZhbGwgb2YgdGhlIE1hdGggT2x5bXBpYWQgwrcgMigxICsgMSDDtyAyKSA9ID8gwrcgVEhFQVRSSUNBTCAuLi4iLCJzb3VyY2UiOiJ3ZWIifSx7InRpdGxlIjoiVGhlIFNpbXBsZSBUcnV0aDogV2hhdCBJcyAyIFBsdXMgMj8iLCJ1cmwiOiJodHRwczovL3d3dy5vcmVhdGVhaS5jb20vYmxvZy90aGUtc2ltcGxlLXRydXRoLXdoYXQtaXMtMi1wbHVzLTIvYzI3OThmNmQxYzQxY2U0YTUyNTU5OGJmMzVjMzg4MTQiLCJkYXRlIjoiMjAyNi0wMS0xNiIsImxhc3RfdXBkYXRlZCI6IjIwMjYtMDMtMTQiLCJzbmlwcGV0IjoiVGhpcyBleGVyY2lzZSB0ZWFjaGVzIHBhdGllbmNlIGFuZCBwcmVjaXNpb247IGVhY2ggbnVtYmVyIGhhcyBpdHMgcGxhY2UgYW5kIHB1cnBvc2Ugd2l0aGluIGVxdWF0aW9ucyBhcyB3ZWxsIGFzIHJlYWwtd29ybGQgYXBwbGljYXRpb25z4oCUZnJvbSAuLi4iLCJzb3VyY2UiOiJ3ZWIifV0sIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiKioyIHBsdXMgMiBlcXVhbHMgNC4qKlsxXVsyXSBUaGlzIGlzIGEgZnVuZGFtZW50YWwgYXJpdGhtZXRpYyBvcGVyYXRpb24gd2hlcmUgdHdvIHVuaXRzIGFyZSBjb21iaW5lZCB3aXRoIHR3byBtb3JlIHVuaXRzLCByZXN1bHRpbmcgaW4gYSB0b3RhbCBvZiBmb3VyIHVuaXRzLlsxXSJ9LCJkZWx0YSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IiJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XX0=
+  recorded_at: Mon, 16 Mar 2026 19:15:16 GMT
 recorded_with: VCR 6.4.0

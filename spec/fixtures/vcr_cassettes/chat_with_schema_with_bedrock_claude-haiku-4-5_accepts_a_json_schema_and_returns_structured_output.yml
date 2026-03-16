@@ -11,12 +11,12 @@ http_interactions:
       User-Agent:
       - Faraday v2.14.1
       X-Amz-Date:
-      - 20260304T161208Z
+      - 20260316T191119Z
       X-Amz-Content-Sha256:
       - a87561e69b895503dafa53c61a295cf180506dc3c52d59b07ffd858994574c4b
       Authorization:
-      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20260304/<AWS_REGION>/bedrock/aws4_request,
-        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=5a20f9e9a485efe183da7b115404bda04fafc832e83f777c55a9c4944be1555d
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -29,7 +29,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 04 Mar 2026 16:12:11 GMT
+      - Mon, 16 Mar 2026 19:11:22 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -37,9 +37,9 @@ http_interactions:
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 5e76c0c6-b7cb-4a0f-ba50-35f1295fd8a4
+      - 4befb665-78da-4811-bdea-d9269ccc6f63
     body:
       encoding: UTF-8
-      string: '{"metrics":{"latencyMs":3241},"output":{"message":{"content":[{"text":"{\"name\":\"John\",\"age\":30}"}],"role":"assistant"}},"stopReason":"end_turn","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":181,"outputTokens":12,"serverToolUsage":{},"totalTokens":193}}'
-  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+      string: '{"metrics":{"latencyMs":2285},"output":{"message":{"content":[{"text":"{\"name\":\"John\",\"age\":30}"}],"role":"assistant"}},"stopReason":"end_turn","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":181,"outputTokens":12,"serverToolUsage":{},"totalTokens":193}}'
+  recorded_at: Mon, 16 Mar 2026 19:11:22 GMT
 recorded_with: VCR 6.4.0

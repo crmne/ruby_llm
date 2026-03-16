@@ -5,7 +5,7 @@ http_interactions:
     uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
     body:
       encoding: UTF-8
-      string: '{"model":"Kimi-K2.5","messages":[{"role":"user","content":"Hello"}],"stream":false}'
+      string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"user","content":"Hello"}],"stream":false}'
     headers:
       User-Agent:
       - Faraday v2.14.1
@@ -27,13 +27,13 @@ http_interactions:
       Content-Type:
       - application/json
       Apim-Request-Id:
-      - 315029cb-574c-4278-88e6-fc9c23cd4c74
+      - 4152e5d7-e2b3-41a7-a2d2-c21dd84b5cc6
       Date:
-      - Tue, 03 Mar 2026 11:55:10 GMT
+      - Mon, 16 Mar 2026 20:26:50 GMT
     body:
       encoding: UTF-8
       string: '{"error":{"code":"401","message":"Access denied due to invalid subscription
         key or wrong API endpoint. Make sure to provide a valid key for an active
         subscription and use a correct regional API endpoint for your resource."}}'
-  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+  recorded_at: Mon, 16 Mar 2026 20:26:50 GMT
 recorded_with: VCR 6.4.0
