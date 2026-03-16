@@ -121,6 +121,7 @@ module RubyLLM
         input_values, = partition_inputs(kwargs)
         record = resolved_chat_model.find(id)
         apply_configuration(record, input_values:, persist_instructions: false)
+
         record
       end
 
@@ -129,6 +130,7 @@ module RubyLLM
 
         input_values, = partition_inputs(kwargs)
         record = chat_or_id.is_a?(resolved_chat_model) ? chat_or_id : resolved_chat_model.find(chat_or_id)
+        apply_assume_model_exists(record)
         runtime = runtime_context(chat: record, inputs: input_values)
         instructions_value = resolved_instructions_value(record, runtime, inputs: input_values)
         return record if instructions_value.nil?
@@ -227,7 +229,16 @@ module RubyLLM
       end
 
       def llm_chat_for(chat_object)
+        apply_assume_model_exists(chat_object)
         chat_object.respond_to?(:to_llm) ? chat_object.to_llm : chat_object
+      end
+
+      def apply_assume_model_exists(chat_object)
+        return unless chat_kwargs.key?(:assume_model_exists) &&
+                      resolved_chat_model &&
+                      chat_object.is_a?(resolved_chat_model)
+
+        chat_object.assume_model_exists = chat_kwargs[:assume_model_exists]
       end
 
       def evaluate(value, runtime)
