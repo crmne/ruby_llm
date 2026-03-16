@@ -8,6 +8,13 @@ require 'test_queue'
 require 'test_queue/runner/rspec'
 require 'simplecov'
 
+# test-queue depends on fork(2), which JRuby does not implement.
+# Fall back to regular RSpec for JRuby jobs.
+if RUBY_ENGINE == 'jruby'
+  warn 'JRuby detected: falling back to plain rspec because test-queue requires fork.'
+  exit(RSpec::Core::Runner.run(ARGV))
+end
+
 # Wraps test-queue RSpec to isolate DBs per worker and emit merged coverage.
 class RubyLLMRSpecQueueRunner < TestQueue::Runner::RSpec
   def after_fork(num)
