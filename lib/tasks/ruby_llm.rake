@@ -5,7 +5,7 @@ def run_test_queue_rspec
   env = {}
   env['TEST_QUEUE_WORKERS'] = workers if workers && !workers.empty? && ENV.fetch('TEST_QUEUE_WORKERS', '').empty?
 
-  system(env, 'bundle', 'exec', 'rspec-queue')
+  system(env, 'bundle', 'exec', 'bin/rspec-queue')
 end
 
 namespace :ruby_llm do

@@ -1,0 +1,36 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+ENV['TEST_ENV_NUMBER'] = '0' if ENV.fetch('TEST_ENV_NUMBER', '').empty?
+
+require 'bundler/setup'
+require 'test_queue'
+require 'test_queue/runner/rspec'
+require 'simplecov'
+
+class RubyLLMRSpecQueueRunner < TestQueue::Runner::RSpec
+  def after_fork(num)
+    super
+    ENV['TEST_ENV_NUMBER'] = num.to_s
+    return if ENV['SKIP_COVERAGE']
+    return unless defined?(SimpleCov) && SimpleCov.running
+
+    SimpleCov.command_name("RSpec worker #{num}")
+  end
+
+  def cleanup_worker
+    return unless defined?(SimpleCov) && SimpleCov.running
+
+    SimpleCov.result
+  end
+end
+
+runner = RubyLLMRSpecQueueRunner.new
+runner.exit_when_done = false
+exit_status = runner.execute
+
+if !ENV['SKIP_COVERAGE'] && defined?(SimpleCov) && SimpleCov.running
+  SimpleCov.result.format!
+end
+
+exit exit_status

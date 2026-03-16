@@ -10,7 +10,7 @@ PreCommit:
   RSpec:
     enabled: true
     command: [
-      'bundle', 'exec', 'rspec-queue',
+      'bundle', 'exec', 'bin/rspec-queue',
       '--tag', '~generator'
     ]
     on_warn: fail
