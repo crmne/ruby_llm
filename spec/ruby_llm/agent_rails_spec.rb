@@ -188,6 +188,33 @@ RSpec.describe RubyLLM::Agent do
     expect { SpecAssumeExistsAgent.find(created.id) }.not_to raise_error
   end
 
+  it 'propagates assume_model_exists from class config when using sync_instructions! with id' do
+    agent_class = Class.new(RubyLLM::Agent) do
+      chat_model Chat
+      model 'not-a-real-model', provider: :openai, assume_model_exists: true
+      instructions 'Hello'
+    end
+
+    stub_const('SpecAssumeExistsSyncAgent', agent_class)
+
+    created = SpecAssumeExistsSyncAgent.create!
+    expect { SpecAssumeExistsSyncAgent.sync_instructions!(created.id) }.not_to raise_error
+  end
+
+  it 'propagates assume_model_exists from class config when initializing with a reloaded chat record' do
+    agent_class = Class.new(RubyLLM::Agent) do
+      chat_model Chat
+      model 'not-a-real-model', provider: :openai, assume_model_exists: true
+      instructions 'Hello'
+    end
+
+    stub_const('SpecAssumeExistsInitAgent', agent_class)
+
+    created = SpecAssumeExistsInitAgent.create!
+    reloaded = Chat.find(created.id)
+    expect { SpecAssumeExistsInitAgent.new(chat: reloaded) }.not_to raise_error
+  end
+
   it 'raises when .sync_instructions! is used without chat_model' do
     agent_class = Class.new(RubyLLM::Agent) do
       model 'gpt-4.1-nano'
