@@ -29,54 +29,54 @@ redirect_from:
 
 <div class="provider-icons">
   <div class="provider-logo">
-    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/anthropic-text.svg" alt="Anthropic" class="logo-small">
+    <img src="/assets/images/external/providers/anthropic-text.svg" alt="Anthropic" class="logo-small">
   </div>
   <div class="provider-logo">
-    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/azureai-color.svg" alt="AzureAI" class="logo-medium">
-    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/azureai-text.svg" alt="AzureAI" class="logo-small">
+    <img src="/assets/images/external/providers/azureai-color.svg" alt="AzureAI" class="logo-medium">
+    <img src="/assets/images/external/providers/azureai-text.svg" alt="AzureAI" class="logo-small">
   </div>
   <div class="provider-logo">
-    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/bedrock-color.svg" alt="Bedrock" class="logo-medium">
-    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/bedrock-text.svg" alt="Bedrock" class="logo-small">
+    <img src="/assets/images/external/providers/bedrock-color.svg" alt="Bedrock" class="logo-medium">
+    <img src="/assets/images/external/providers/bedrock-text.svg" alt="Bedrock" class="logo-small">
   </div>
   <div class="provider-logo">
-    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/deepseek-color.svg" alt="DeepSeek" class="logo-medium">
-    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/deepseek-text.svg" alt="DeepSeek" class="logo-small">
+    <img src="/assets/images/external/providers/deepseek-color.svg" alt="DeepSeek" class="logo-medium">
+    <img src="/assets/images/external/providers/deepseek-text.svg" alt="DeepSeek" class="logo-small">
   </div>
   <div class="provider-logo">
-    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/gemini-color.svg" alt="Gemini" class="logo-medium">
-    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/gemini-text.svg" alt="Gemini" class="logo-small">
+    <img src="/assets/images/external/providers/gemini-color.svg" alt="Gemini" class="logo-medium">
+    <img src="/assets/images/external/providers/gemini-text.svg" alt="Gemini" class="logo-small">
   </div>
   <div class="provider-logo">
-    <img src="https://raw.githubusercontent.com/gpustack/gpustack/main/docs/assets/gpustack-logo.png" alt="GPUStack" class="logo-medium">
+    <img src="/assets/images/external/providers/gpustack-logo.png" alt="GPUStack" class="logo-medium">
   </div>
   <div class="provider-logo">
-    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/mistral-color.svg" alt="Mistral" class="logo-medium">
-    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/mistral-text.svg" alt="Mistral" class="logo-small">
+    <img src="/assets/images/external/providers/mistral-color.svg" alt="Mistral" class="logo-medium">
+    <img src="/assets/images/external/providers/mistral-text.svg" alt="Mistral" class="logo-small">
   </div>
   <div class="provider-logo">
-    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/ollama.svg" alt="Ollama" class="logo-medium">
-    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/ollama-text.svg" alt="Ollama" class="logo-medium">
+    <img src="/assets/images/external/providers/ollama.svg" alt="Ollama" class="logo-medium">
+    <img src="/assets/images/external/providers/ollama-text.svg" alt="Ollama" class="logo-medium">
   </div>
   <div class="provider-logo">
-    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/openai.svg" alt="OpenAI" class="logo-medium">
-    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/openai-text.svg" alt="OpenAI" class="logo-medium">
+    <img src="/assets/images/external/providers/openai.svg" alt="OpenAI" class="logo-medium">
+    <img src="/assets/images/external/providers/openai-text.svg" alt="OpenAI" class="logo-medium">
   </div>
   <div class="provider-logo">
-    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/openrouter.svg" alt="OpenRouter" class="logo-medium">
-    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/openrouter-text.svg" alt="OpenRouter" class="logo-small">
+    <img src="/assets/images/external/providers/openrouter.svg" alt="OpenRouter" class="logo-medium">
+    <img src="/assets/images/external/providers/openrouter-text.svg" alt="OpenRouter" class="logo-small">
   </div>
   <div class="provider-logo">
-    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/perplexity-color.svg" alt="Perplexity" class="logo-medium">
-    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/perplexity-text.svg" alt="Perplexity" class="logo-small">
+    <img src="/assets/images/external/providers/perplexity-color.svg" alt="Perplexity" class="logo-medium">
+    <img src="/assets/images/external/providers/perplexity-text.svg" alt="Perplexity" class="logo-small">
   </div>
   <div class="provider-logo">
-    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/vertexai-color.svg" alt="VertexAI" class="logo-medium">
-    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/vertexai-text.svg" alt="VertexAI" class="logo-small">
+    <img src="/assets/images/external/providers/vertexai-color.svg" alt="VertexAI" class="logo-medium">
+    <img src="/assets/images/external/providers/vertexai-text.svg" alt="VertexAI" class="logo-small">
   </div>
   <div class="provider-logo">
-    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/xai.svg" alt="xAI" class="logo-medium">
-    <img src="https://registry.npmmirror.com/@lobehub/icons-static-svg/latest/files/icons/xai-text.svg" alt="xAI" class="logo-medium">
+    <img src="/assets/images/external/providers/xai.svg" alt="xAI" class="logo-medium">
+    <img src="/assets/images/external/providers/xai-text.svg" alt="xAI" class="logo-medium">
   </div>
 </div>
 
@@ -89,7 +89,7 @@ redirect_from:
 
 <a href="https://trendshift.io/repositories/13640" target="_blank"><img src="https://trendshift.io/api/badge/repositories/13640" alt="crmne%2Fruby_llm | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
 
-Battle tested at [<img src="https://chatwithwork.com/logotype.svg" alt="Chat with Work" class="chatwithwork-logo" style="height: 2em; vertical-align: middle;">](https://chatwithwork.com) — *Your AI coworker*
+Battle tested at [<img src="/assets/images/external/partners/chatwithwork-logotype.svg" alt="Chat with Work" class="chatwithwork-logo" style="height: 2em; vertical-align: middle;">](https://chatwithwork.com) — *Your AI coworker*
 
 Using RubyLLM? [Share your story](https://tally.so/r/3Na02p)! Takes 5 minutes.
 {: .note }
