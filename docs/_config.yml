@@ -115,6 +115,14 @@ plugins:
   - jekyll-og-image
   - jekyll-redirect-from
 
+# Jekyll uses Dart Sass; suppress deprecations emitted by upstream theme styles.
+sass:
+  quiet_deps: true
+  silence_deprecations:
+    - import
+    - global-builtin
+    - color-functions
+
 og_image:
   output_dir: "assets/images/og"
   force: true
