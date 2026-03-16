@@ -10,11 +10,8 @@ PreCommit:
   RSpec:
     enabled: true
     command: [
-      'bundle', 'exec', 'parallel_rspec',
-      '--serialize-stdout',
-      '--prefix-output-with-test-env-number',
-      '--verbose-rerun-command',
-      '--test-options', '--tag ~generator'
+      'bundle', 'exec', 'rspec-queue',
+      '--tag', '~generator'
     ]
     on_warn: fail
 

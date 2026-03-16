@@ -17,7 +17,6 @@ group :development do # rubocop:disable Metrics/BlockLength
   gem 'json-schema'
   gem 'nokogiri'
   gem 'overcommit', '>= 0.66'
-  gem 'parallel_tests'
   gem 'pry', '>= 0.14'
   gem 'rails'
   gem 'rake', '>= 13.0'
@@ -29,6 +28,7 @@ group :development do # rubocop:disable Metrics/BlockLength
   gem 'rubocop-rspec'
   gem 'simplecov', '>= 0.21'
   gem 'simplecov-cobertura'
+  gem 'test-queue'
 
   # database drivers for MRI and JRuby
   gem 'activerecord-jdbcsqlite3-adapter', platform: 'jruby'

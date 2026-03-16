@@ -54,14 +54,14 @@ jobs:
 
       - name: Run tests
         if: matrix.ruby-version != '4.0' || matrix.rails-version != 'rails-8.1'
-        run: bundle exec appraisal ${{ matrix.rails-version }} parallel_rspec
+        run: bundle exec appraisal ${{ matrix.rails-version }} rspec-queue
         env:
           SPEC_OPTS: --tag ~generator
           SKIP_COVERAGE: true
 
       - name: Run full test suite with coverage (latest Ruby/Rails)
         if: matrix.ruby-version == '4.0' && matrix.rails-version == 'rails-8.1'
-        run: bundle exec appraisal ${{ matrix.rails-version }} parallel_rspec
+        run: bundle exec appraisal ${{ matrix.rails-version }} rspec
 
       - name: Upload coverage to Codecov
         if: matrix.ruby-version == '4.0' && matrix.rails-version == 'rails-8.1'
@@ -77,7 +77,7 @@ jobs:
         run: |
           FARADAY_VERSION=1.10.3 bundle install
           bundle exec appraisal ${{ matrix.rails-version }} bundle install
-          bundle exec appraisal ${{ matrix.rails-version }} parallel_rspec
+          bundle exec appraisal ${{ matrix.rails-version }} rspec-queue
         env:
           SPEC_OPTS: --tag ~generator
           SKIP_COVERAGE: true
