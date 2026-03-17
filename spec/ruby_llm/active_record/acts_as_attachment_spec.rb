@@ -88,6 +88,24 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       user_message = chat.messages.find_by(role: 'user')
       expect(user_message.attachments.count).to eq(1)
     end
+
+    it 'reuses an existing ActiveStorage::Blob without re-uploading' do
+      chat = Chat.create!(model: model)
+
+      existing_blob = ActiveStorage::Blob.create_and_upload!(
+        io: attachment_io(image_path),
+        filename: 'ruby.png',
+        content_type: 'image/png'
+      )
+
+      expect do
+        chat.create_user_message('What do you see?', with: existing_blob)
+      end.not_to change(ActiveStorage::Blob, :count)
+
+      user_message = chat.messages.find_by(role: 'user')
+      expect(user_message.attachments.count).to eq(1)
+      expect(user_message.attachments.first.blob_id).to eq(existing_blob.id)
+    end
   end
 
   describe 'attachment types' do

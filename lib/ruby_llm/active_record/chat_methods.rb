@@ -417,11 +417,18 @@ module RubyLLM
 
         attachment = source.is_a?(RubyLLM::Attachment) ? source : RubyLLM::Attachment.new(source)
 
-        {
-          io: StringIO.new(attachment.content),
-          filename: attachment.filename,
-          content_type: attachment.mime_type
-        }
+        if attachment.active_storage?
+          case attachment.source
+          when ActiveStorage::Blob then attachment.source
+          when ActiveStorage::Attached::One, ActiveStorage::Attached::Many then attachment.source.blobs
+          end
+        else
+          {
+            io: StringIO.new(attachment.content),
+            filename: attachment.filename,
+            content_type: attachment.mime_type
+          }
+        end
       rescue StandardError => e
         RubyLLM.logger.warn "Failed to process attachment #{source}: #{e.message}"
         nil
