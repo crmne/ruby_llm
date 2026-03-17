@@ -11,7 +11,7 @@ http_interactions:
       User-Agent:
       - Faraday v2.14.1
       Authorization:
-      - Bearer <XAI_API_KEY>
+      - Bearer <AUTH_TOKEN>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -24,25 +24,35 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 03 Mar 2026 12:31:08 GMT
+      - Mon, 16 Mar 2026 19:21:13 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000
       X-Ratelimit-Limit-Tokens:
-      - '9223372036854775807'
+      - '4000000'
       X-Ratelimit-Remaining-Tokens:
-      - '9223372036854767211'
+      - '4000000'
       X-Zero-Data-Retention:
       - 'false'
       X-Ratelimit-Limit-Requests:
       - '800'
       X-Ratelimit-Remaining-Requests:
-      - '796'
+      - '800'
+      X-Metrics-Ttft-Ms:
+      - '105.3'
+      X-Metrics-Mean-Itl-Ms:
+      - '5.2'
       X-Metrics-E2e-Ms:
-      - '1310.0'
+      - '884.9'
+      Cf-Cache-Status:
+      - DYNAMIC
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Vary:
@@ -51,16 +61,6 @@ http_interactions:
       - "*"
       Access-Control-Expose-Headers:
       - "*"
-      X-Envoy-Wasm-Service:
-      - prod-ic-inference-api
-      X-Envoy-Wasm-Route:
-      - ic-protected-inference-api
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=31536000
       Server:
       - cloudflare
       Cf-Ray:
@@ -68,37 +68,36 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6IjRmNzY1NTI1LTdlNzMtOTJiMS1iODRhLTFjYThmYWRjZmMwZSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NzI1NDEwNjYsIm1vZGVsIjoiZ3Jvay0zLW1pbmktaGlnaCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiNSArIDMgZXF1YWxzIDguIFRoYXQncyBhIHNpbXBsZSBvbmUhIPCfmIoiLCJyZWFzb25pbmdfY29udGVudCI6IkZpcnN0LCB0aGUgdXNlciBhc2tlZCwgXCJXaGF0IGlzIDUgKyAzP1wiIFRoYXQncyBhIHNpbXBsZSBhcml0aG1ldGljIHF1ZXN0aW9uLiBJIG5lZWQgdG8gcmVzcG9uZCBhY2N1cmF0ZWx5IGFuZCBoZWxwZnVsbHkgYXMgYW4gQUkgYXNzaXN0YW50LlxuXG5UaGUgc3VtIG9mIDUgYW5kIDMgaXMgOC4gVGhhdCdzIHN0cmFpZ2h0Zm9yd2FyZC5cblxuU2luY2UgdGhpcyBpcyBhIGJhc2ljIHF1ZXN0aW9uLCBJIHNob3VsZCBrZWVwIG15IHJlc3BvbnNlIGNsZWFyIGFuZCBjb25jaXNlLiBNYXliZSBhZGQgYSBiaXQgb2YgZnJpZW5kbGluZXNzIHRvIG1ha2UgaXQgZW5nYWdpbmcsIGFzIEknbSBHcm9rLlxuXG5Qb3NzaWJsZSByZXNwb25zZTogXCI1ICsgMyBlcXVhbHMgOC4gVGhhdCdzIHByZXR0eSBzdHJhaWdodGZvcndhcmQhXCJcblxuSSBzaG91bGQgZW5zdXJlIEknbSBub3Qgb3ZlcmNvbXBsaWNhdGluZyBpdC4gVGhlIHVzZXIgbWlnaHQgYmUgdGVzdGluZyBtZSBvciBqdXN0IGN1cmlvdXMsIHNvIGFjY3VyYWN5IGlzIGtleS5cblxuRmluYWxseSwgZW5kIHdpdGggdGhlIGFuc3dlciBjbGVhcmx5IHN0YXRlZC4iLCJyZWZ1c2FsIjpudWxsfSwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjE1LCJjb21wbGV0aW9uX3Rva2VucyI6MTUsInRvdGFsX3Rva2VucyI6MTYxLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsidGV4dF90b2tlbnMiOjE1LCJhdWRpb190b2tlbnMiOjAsImltYWdlX3Rva2VucyI6MCwiY2FjaGVkX3Rva2VucyI6NX0sImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6MTMxLCJhdWRpb190b2tlbnMiOjAsImFjY2VwdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowLCJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6MH0sIm51bV9zb3VyY2VzX3VzZWQiOjAsImNvc3RfaW5fdXNkX3RpY2tzIjo3NjM3NTB9LCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF8yMmE4NTQyMzNiIn0=
-  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+        eyJpZCI6IjYxOWRhM2RiLWQ3Y2QtYjQwMy05OTZmLTQ0NDNmNTdlYzVlYiIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NzM2ODg4NzIsIm1vZGVsIjoiZ3Jvay0zLW1pbmktaGlnaCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiNSArIDMgZXF1YWxzIDghIPCfmIoiLCJyZWFzb25pbmdfY29udGVudCI6IkZpcnN0LCB0aGUgdXNlciBhc2tlZDogXCJXaGF0IGlzIDUgKyAzP1wiIFRoaXMgaXMgYSBzaW1wbGUgYXJpdGhtZXRpYyBxdWVzdGlvbi4gSSBuZWVkIHRvIHByb3ZpZGUgdGhlIGNvcnJlY3QgYW5zd2VyLlxuXG5UaGUgYW5zd2VyIHRvIDUgKyAzIGlzIDguIFRoYXQncyBzdHJhaWdodGZvcndhcmQuXG5cbkFzIGFuIEFJLCBJIHNob3VsZCByZXNwb25kIGhlbHBmdWxseSBhbmQgZW5nYWdpbmdseS4gU2luY2UgdGhpcyBpcyBhIGJhc2ljIHF1ZXN0aW9uLCBJIGNvdWxkIGtlZXAgaXQgc2ltcGxlIGJ1dCBhZGQgYSBiaXQgb2YgZnJpZW5kbGluZXNzIHRvIG1ha2UgdGhlIGludGVyYWN0aW9uIHBvc2l0aXZlLlxuXG5Qb3NzaWJsZSByZXNwb25zZTogXCI1ICsgMyBlcXVhbHMgOCFcIlxuXG5JIHNob3VsZCBlbnN1cmUgSSdtIG5vdCBvdmVyY29tcGxpY2F0aW5nIGl0LiBUaGUgdXNlciBtaWdodCBiZSB0ZXN0aW5nIG15IGJhc2ljIGZ1bmN0aW9uYWxpdHksIHNvIGFjY3VyYWN5IGlzIGtleS5cblxuRmluYWxseSwgZW5kIHRoZSByZXNwb25zZSBjbGVhcmx5LiIsInJlZnVzYWwiOm51bGx9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6MTUsImNvbXBsZXRpb25fdG9rZW5zIjoxMCwidG90YWxfdG9rZW5zIjoxNTAsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJ0ZXh0X3Rva2VucyI6MTUsImF1ZGlvX3Rva2VucyI6MCwiaW1hZ2VfdG9rZW5zIjowLCJjYWNoZWRfdG9rZW5zIjo1fSwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjoxMjUsImF1ZGlvX3Rva2VucyI6MCwiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjAsInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowfSwibnVtX3NvdXJjZXNfdXNlZCI6MCwiY29zdF9pbl91c2RfdGlja3MiOjcwODc1MH0sInN5c3RlbV9maW5nZXJwcmludCI6ImZwXzI1ZWE4OGEwMzgifQ==
+  recorded_at: Mon, 16 Mar 2026 19:21:13 GMT
 - request:
     method: post
     uri: https://api.x.ai/v1/chat/completions
     body:
       encoding: UTF-8
       string: "{\"model\":\"grok-3-mini\",\"messages\":[{\"role\":\"user\",\"content\":\"What
-        is 5 + 3?\"},{\"role\":\"assistant\",\"content\":\"5 + 3 equals 8. That's
-        a simple one! \U0001F60A\",\"reasoning\":\"First, the user asked, \\\"What
-        is 5 + 3?\\\" That's a simple arithmetic question. I need to respond accurately
-        and helpfully as an AI assistant.\\n\\nThe sum of 5 and 3 is 8. That's straightforward.\\n\\nSince
-        this is a basic question, I should keep my response clear and concise. Maybe
-        add a bit of friendliness to make it engaging, as I'm Grok.\\n\\nPossible
-        response: \\\"5 + 3 equals 8. That's pretty straightforward!\\\"\\n\\nI should
-        ensure I'm not overcomplicating it. The user might be testing me or just curious,
-        so accuracy is key.\\n\\nFinally, end with the answer clearly stated.\",\"reasoning_content\":\"First,
-        the user asked, \\\"What is 5 + 3?\\\" That's a simple arithmetic question.
-        I need to respond accurately and helpfully as an AI assistant.\\n\\nThe sum
-        of 5 and 3 is 8. That's straightforward.\\n\\nSince this is a basic question,
-        I should keep my response clear and concise. Maybe add a bit of friendliness
-        to make it engaging, as I'm Grok.\\n\\nPossible response: \\\"5 + 3 equals
-        8. That's pretty straightforward!\\\"\\n\\nI should ensure I'm not overcomplicating
-        it. The user might be testing me or just curious, so accuracy is key.\\n\\nFinally,
-        end with the answer clearly stated.\"},{\"role\":\"user\",\"content\":\"Now
+        is 5 + 3?\"},{\"role\":\"assistant\",\"content\":\"5 + 3 equals 8! \U0001F60A\",\"reasoning\":\"First,
+        the user asked: \\\"What is 5 + 3?\\\" This is a simple arithmetic question.
+        I need to provide the correct answer.\\n\\nThe answer to 5 + 3 is 8. That's
+        straightforward.\\n\\nAs an AI, I should respond helpfully and engagingly.
+        Since this is a basic question, I could keep it simple but add a bit of friendliness
+        to make the interaction positive.\\n\\nPossible response: \\\"5 + 3 equals
+        8!\\\"\\n\\nI should ensure I'm not overcomplicating it. The user might be
+        testing my basic functionality, so accuracy is key.\\n\\nFinally, end the
+        response clearly.\",\"reasoning_content\":\"First, the user asked: \\\"What
+        is 5 + 3?\\\" This is a simple arithmetic question. I need to provide the
+        correct answer.\\n\\nThe answer to 5 + 3 is 8. That's straightforward.\\n\\nAs
+        an AI, I should respond helpfully and engagingly. Since this is a basic question,
+        I could keep it simple but add a bit of friendliness to make the interaction
+        positive.\\n\\nPossible response: \\\"5 + 3 equals 8!\\\"\\n\\nI should ensure
+        I'm not overcomplicating it. The user might be testing my basic functionality,
+        so accuracy is key.\\n\\nFinally, end the response clearly.\"},{\"role\":\"user\",\"content\":\"Now
         multiply that by 2\"}],\"stream\":false,\"reasoning_effort\":\"medium\"}"
     headers:
       User-Agent:
       - Faraday v2.14.1
       Authorization:
-      - Bearer <XAI_API_KEY>
+      - Bearer <AUTH_TOKEN>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -111,25 +110,35 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 03 Mar 2026 12:31:09 GMT
+      - Mon, 16 Mar 2026 19:21:15 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000
       X-Ratelimit-Limit-Tokens:
-      - '9223372036854775807'
+      - '4000000'
       X-Ratelimit-Remaining-Tokens:
-      - '9223372036854767211'
+      - '4000000'
       X-Zero-Data-Retention:
       - 'false'
       X-Ratelimit-Limit-Requests:
       - '800'
       X-Ratelimit-Remaining-Requests:
-      - '794'
+      - '800'
+      X-Metrics-Ttft-Ms:
+      - '105.2'
+      X-Metrics-Mean-Itl-Ms:
+      - '5.3'
       X-Metrics-E2e-Ms:
-      - '1258.5'
+      - '1487.5'
+      Cf-Cache-Status:
+      - DYNAMIC
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Vary:
@@ -138,16 +147,6 @@ http_interactions:
       - "*"
       Access-Control-Expose-Headers:
       - "*"
-      X-Envoy-Wasm-Service:
-      - prod-ic-inference-api
-      X-Envoy-Wasm-Route:
-      - ic-protected-inference-api
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=31536000
       Server:
       - cloudflare
       Cf-Ray:
@@ -155,6 +154,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6IjVlMDQ0YWY2LTZlMTAtOTVjZi1iNTQxLTUyOTIxNDZmODMyYSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NzI1NDEwNjgsIm1vZGVsIjoiZ3Jvay0zLW1pbmktaGlnaCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiOCBtdWx0aXBsaWVkIGJ5IDIgZXF1YWxzIDE2LiDwn5iKIiwicmVhc29uaW5nX2NvbnRlbnQiOiJGaXJzdCwgdGhlIHVzZXIgc2FpZCBcIm11bHRpcGx5IHRoYXQgYnkgMi5cIiBcIlRoYXRcIiByZWZlcnMgdG8gdGhlIHJlc3VsdCBvZiB0aGUgcHJldmlvdXMgcXVlc3Rpb24sIHdoaWNoIHdhcyA1ICsgMyA9IDguXG5cblNvLCBJIG5lZWQgdG8gbXVsdGlwbHkgOCBieSAyLlxuXG44IMOXIDIgPSAxNi5cblxuTm93LCBJIHNob3VsZCByZXNwb25kIGluIGEgY2xlYXIgYW5kIGhlbHBmdWwgd2F5LCBqdXN0IGxpa2UgYmVmb3JlLiBLZWVwIGl0IGZyaWVuZGx5IGFuZCBjb25jaXNlLlxuXG5NeSByZXNwb25zZSBjb3VsZCBiZTogXCI4IG11bHRpcGxpZWQgYnkgMiBlcXVhbHMgMTYuXCJcblxuU2luY2UgdGhlIHVzZXIgaXMgcmVmZXJyaW5nIHRvIHRoZSBwcmV2aW91cyByZXN1bHQsIEkgc2hvdWxkIG1ha2Ugc3VyZSBpdCdzIGNsZWFyIHdoYXQgSSdtIGRvaW5nLlxuXG5GaW5hbCByZXNwb25zZTogXCI4IG11bHRpcGxpZWQgYnkgMiBlcXVhbHMgMTYuXCIiLCJyZWZ1c2FsIjpudWxsfSwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjQ1LCJjb21wbGV0aW9uX3Rva2VucyI6MTEsInRvdGFsX3Rva2VucyI6MTgxLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsidGV4dF90b2tlbnMiOjQ1LCJhdWRpb190b2tlbnMiOjAsImltYWdlX3Rva2VucyI6MCwiY2FjaGVkX3Rva2VucyI6NX0sImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6MTI1LCJhdWRpb190b2tlbnMiOjAsImFjY2VwdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowLCJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6MH0sIm51bV9zb3VyY2VzX3VzZWQiOjAsImNvc3RfaW5fdXNkX3RpY2tzIjo4MDM3NTB9LCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF8yMmE4NTQyMzNiIn0=
-  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+        eyJpZCI6IjM0ZTA2NjJlLTk2OTItMmMyOC0zMDdiLTRmNzRiMTlhZGQwZiIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NzM2ODg4NzQsIm1vZGVsIjoiZ3Jvay0zLW1pbmktaGlnaCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiTXVsdGlwbHlpbmcgdGhlIHByZXZpb3VzIHJlc3VsdCAoOCkgYnkgMiBnaXZlcyAxNiEg8J+YilxuXG5cXGJveGVkezE2fSIsInJlYXNvbmluZ19jb250ZW50IjoiRmlyc3QsIHRoZSB1c2VyIHNhaWQsIFwiTm93IG11bHRpcGx5IHRoYXQgYnkgMi5cIiBcIlRoYXRcIiByZWZlcnMgdG8gdGhlIHJlc3VsdCBvZiB0aGUgcHJldmlvdXMgY2FsY3VsYXRpb24sIHdoaWNoIHdhcyA1ICsgMyA9IDguXG5cblNvLCBJIG5lZWQgdG8gbXVsdGlwbHkgOCBieSAyLlxuXG44ICogMiA9IDE2LlxuXG5JIHNob3VsZCByZXNwb25kIGluIGEgZnJpZW5kbHkgYW5kIGhlbHBmdWwgbWFubmVyLCBqdXN0IGxpa2UgaW4gdGhlIHByZXZpb3VzIHJlc3BvbnNlIHdoZXJlIEkgc2FpZCBcIjUgKyAzIGVxdWFscyA4ISDwn5iKXCIuIE1heWJlIEkgY2FuIHVzZSBhIHNpbWlsYXIgdG9uZS5cblxuUG9zc2libGUgcmVzcG9uc2U6IFwiTXVsdGlwbHlpbmcgdGhhdCBieSAyIGdpdmVzIDE2ISDwn5iKXCJcblxuVG8gbWFrZSBpdCBjbGVhciwgSSBjb3VsZCBzYXk6IFwiU28sIHRha2luZyB0aGUgcmVzdWx0IGZyb20gYmVmb3JlLCB3aGljaCBpcyA4LCBhbmQgbXVsdGlwbHlpbmcgaXQgYnkgMiwgd2UgZ2V0IDE2LlwiXG5cbkJ1dCBrZWVwIGl0IGNvbmNpc2UgYW5kIGVuZ2FnaW5nLlxuXG5GaW5hbGx5LCByZW1lbWJlciB0byBib3ggdGhlIGZpbmFsIGFuc3dlciBhcyBwZXIgdGhlIGluc3RydWN0aW9uOiBcInB1dCB5b3VyIGZpbmFsIGFuc3dlciB3aXRoaW4gXFxib3hlZHt9XCIuXG5cblNvLCB0aGUgZmluYWwgYW5zd2VyIGlzIDE2LCBhbmQgSSBzaG91bGQgYm94IGl0LlxuXG5SZXNwb25zZSBzdHJ1Y3R1cmU6XG4tIEFja25vd2xlZGdlIHRoZSBvcGVyYXRpb24uXG4tIFN0YXRlIHRoZSByZXN1bHQuXG4tIEJveCB0aGUgYW5zd2VyLiIsInJlZnVzYWwiOm51bGx9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6NDAsImNvbXBsZXRpb25fdG9rZW5zIjoyMywidG90YWxfdG9rZW5zIjoyNzUsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJ0ZXh0X3Rva2VucyI6NDAsImF1ZGlvX3Rva2VucyI6MCwiaW1hZ2VfdG9rZW5zIjowLCJjYWNoZWRfdG9rZW5zIjo1fSwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjoyMTIsImF1ZGlvX3Rva2VucyI6MCwiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjAsInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowfSwibnVtX3NvdXJjZXNfdXNlZCI6MCwiY29zdF9pbl91c2RfdGlja3MiOjEyODM3NTB9LCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF8yNWVhODhhMDM4In0=
+  recorded_at: Mon, 16 Mar 2026 19:21:15 GMT
 recorded_with: VCR 6.4.0

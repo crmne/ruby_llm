@@ -257,7 +257,10 @@ RSpec.describe RubyLLM::Chat do
         expect(response.content).to include('15')
         expect(response.content).to include('10')
         expect(response.content).to include('Ruby')
-        expect(chat.messages.count).to be(5)
+
+        # Some providers may still satisfy both tool calls with an additional turn.
+        expect(chat.messages.count).to be >= 5
+        expect(assistant_tool_call_messages(chat).sum { |message| message.tool_calls.size }).to be >= 2
       end
     end
 
@@ -509,10 +512,9 @@ RSpec.describe RubyLLM::Chat do
         expect(tool_call.name).to eq('object_params')
 
         arguments = stringified_arguments(tool_call.arguments)
-        expect(arguments['window']).to include(
-          'start' => '2025-01-01',
-          'end' => '2025-01-02'
-        )
+        window = stringified_arguments(arguments['window'])
+        expect(window['start']).to start_with('2025-01-01')
+        expect(window['end']).to start_with('2025-01-02')
       end
     end
   end

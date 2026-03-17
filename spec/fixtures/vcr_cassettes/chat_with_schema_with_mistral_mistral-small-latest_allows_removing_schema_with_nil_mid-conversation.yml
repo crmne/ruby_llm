@@ -11,7 +11,7 @@ http_interactions:
       User-Agent:
       - Faraday v2.14.1
       Authorization:
-      - Bearer <MISTRAL_API_KEY>
+      - Bearer <AUTH_TOKEN>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 03 Mar 2026 11:47:23 GMT
+      - Mon, 16 Mar 2026 19:11:50 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -32,27 +32,29 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '019cb386-36c8-7734-8f96-3dcdf95ece44'
+      - '019cf80f-cab3-7548-9a82-8c520dcd041f'
       X-Kong-Request-Id:
-      - '019cb386-36c8-7734-8f96-3dcdf95ece44'
+      - '019cf80f-cab3-7548-9a82-8c520dcd041f'
       X-Ratelimit-Limit-Tokens-Minute:
       - '2000000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '1999439'
+      - '1998881'
       X-Ratelimit-Tokens-Query-Cost:
       - '26'
       X-Ratelimit-Limit-Req-Minute:
       - '360'
       X-Ratelimit-Remaining-Req-Minute:
-      - '347'
+      - '349'
       X-Envoy-Upstream-Service-Time:
-      - '192'
+      - '150'
+      Server:
+      - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '192'
+      - '151'
       X-Kong-Proxy-Latency:
-      - '10'
+      - '9'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -62,17 +64,15 @@ http_interactions:
       - max-age=15552000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
-      Server:
-      - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"a215d3f09496445bab9b45981bfd7bc7","created":1772538443,"model":"mistral-small-latest","usage":{"prompt_tokens":8,"total_tokens":26,"completion_tokens":18,"prompt_tokens_details":{"cached_tokens":0}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"{\n  \"name\":
+      string: '{"id":"0fabdf00f03a4307b2fd9f966d0ef737","created":1773688310,"model":"mistral-small-latest","usage":{"prompt_tokens":8,"total_tokens":26,"completion_tokens":18,"prompt_tokens_details":{"cached_tokens":0}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"{\n  \"name\":
         \"Bob\",\n  \"age\": 30\n}"}}]}'
-  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+  recorded_at: Mon, 16 Mar 2026 19:11:50 GMT
 - request:
     method: post
     uri: https://api.mistral.ai/v1/chat/completions
@@ -85,7 +85,7 @@ http_interactions:
       User-Agent:
       - Faraday v2.14.1
       Authorization:
-      - Bearer <MISTRAL_API_KEY>
+      - Bearer <AUTH_TOKEN>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -98,7 +98,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 03 Mar 2026 11:47:26 GMT
+      - Mon, 16 Mar 2026 19:11:52 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -106,38 +106,38 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '019cb386-37dc-73b7-9235-8e3cae2bb3bb'
+      - '019cf80f-cbc5-79c8-aeb3-b6ef91529d8a'
       X-Kong-Request-Id:
-      - '019cb386-37dc-73b7-9235-8e3cae2bb3bb'
+      - '019cf80f-cbc5-79c8-aeb3-b6ef91529d8a'
       X-Ratelimit-Limit-Tokens-Minute:
       - '2000000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '1999103'
+      - '1998539'
       X-Ratelimit-Tokens-Query-Cost:
-      - '336'
+      - '383'
       X-Ratelimit-Limit-Req-Minute:
       - '360'
       X-Ratelimit-Remaining-Req-Minute:
-      - '346'
+      - '348'
       X-Envoy-Upstream-Service-Time:
-      - '2441'
+      - '2092'
+      Server:
+      - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '2442'
+      - '2092'
       X-Kong-Proxy-Latency:
-      - '9'
-      Cf-Cache-Status:
-      - DYNAMIC
+      - '10'
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
-      Server:
-      - cloudflare
+      Cf-Cache-Status:
+      - DYNAMIC
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
@@ -145,6 +145,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6ImExNDgxMzA3ZWY2ODRlNDNhODdlMjZkYmFlZTYwNjIzIiwiY3JlYXRlZCI6MTc3MjUzODQ0MywibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsInVzYWdlIjp7InByb21wdF90b2tlbnMiOjI3LCJ0b3RhbF90b2tlbnMiOjMzNiwiY29tcGxldGlvbl90b2tlbnMiOjMwOSwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjB9fSwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImZpbmlzaF9yZWFzb24iOiJzdG9wIiwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwidG9vbF9jYWxscyI6bnVsbCwiY29udGVudCI6IlJ1YnkgaXMgYSBkeW5hbWljLCBvcGVuLXNvdXJjZSBwcm9ncmFtbWluZyBsYW5ndWFnZSBrbm93biBmb3IgaXRzIHNpbXBsaWNpdHkgYW5kIHByb2R1Y3Rpdml0eS4gQ3JlYXRlZCBieSAqKll1a2loaXJvIFwiTWF0elwiIE1hdHN1bW90byoqIGluIHRoZSBtaWQtMTk5MHMsIFJ1YnkgZW1waGFzaXplcyBkZXZlbG9wZXIgaGFwcGluZXNzIHdpdGggYSBjbGVhbiwgcmVhZGFibGUgc3ludGF4IGFuZCBwb3dlcmZ1bCBmZWF0dXJlcyBsaWtlICoqYmxvY2tzLCBtaXhpbnMsIGFuZCBtZXRhcHJvZ3JhbW1pbmcqKi5cblxuIyMjICoqS2V5IEZlYXR1cmVzIG9mIFJ1Ynk6KipcbjEuICoqT2JqZWN0LU9yaWVudGVkKiog4oCTIEV2ZXJ5dGhpbmcgaXMgYW4gb2JqZWN0LCBpbmNsdWRpbmcgcHJpbWl0aXZlcyBsaWtlIG51bWJlcnMgYW5kIGJvb2xlYW5zLlxuMi4gKipEeW5hbWljIFR5cGluZyoqIOKAkyBObyBuZWVkIHRvIGRlY2xhcmUgdmFyaWFibGUgdHlwZXMgZXhwbGljaXRseS5cbjMuICoqTWV0YXByb2dyYW1taW5nKiog4oCTIEFsbG93cyBjb2RlIHRvIHdyaXRlIGFuZCBtb2RpZnkgaXRzZWxmIGF0IHJ1bnRpbWUuXG40LiAqKkJsb2NrcyAmIEl0ZXJhdG9ycyoqIOKAkyBGbGV4aWJsZSBjb250cm9sIHN0cnVjdHVyZXMgZm9yIGNsZWFuLCBleHByZXNzaXZlIGNvZGUuXG41LiAqKkdlbXMgKFBhY2thZ2UgTWFuYWdlcikqKiDigJMgUnVieUdlbXMgbWFrZXMgaXQgZWFzeSB0byBpbnN0YWxsIGFuZCBtYW5hZ2UgbGlicmFyaWVzLlxuNi4gKipSYWlscyBGcmFtZXdvcmsqKiDigJMgUnVieSBvbiBSYWlscyBpcyBhIHBvcHVsYXIgd2ViIGZyYW1ld29yayBidWlsdCBvbiBSdWJ5LCBwb3dlcmluZyBzaXRlcyBsaWtlIEdpdEh1YiwgU2hvcGlmeSwgYW5kIEFpcmJuYi5cblxuIyMjICoqRXhhbXBsZSBDb2RlOioqXG5gYGBydWJ5XG4jIEEgc2ltcGxlIFJ1YnkgcHJvZ3JhbVxuZGVmIGdyZWV0KG5hbWUpXG4gIFwiSGVsbG8sICN7bmFtZX0hXCJcbmVuZFxuXG5wdXRzIGdyZWV0KFwiQWxpY2VcIikgICMgT3V0cHV0OiBIZWxsbywgQWxpY2UhXG5gYGBcblxuIyMjICoqV2h5IFVzZSBSdWJ5PyoqXG4tIEdyZWF0IGZvciAqKndlYiBkZXZlbG9wbWVudCoqIChSYWlscyksIHNjcmlwdGluZywgYW5kIGF1dG9tYXRpb24uXG4tIFN0cm9uZyBjb21tdW5pdHkgYW5kIGV4dGVuc2l2ZSBsaWJyYXJpZXMuXG4tIEJlZ2lubmVyLWZyaWVuZGx5IHN5bnRheCB0aGF0IHJlYWRzIGxpa2UgcGxhaW4gRW5nbGlzaC5cblxuV291bGQgeW91IGxpa2UgYSBkZWVwZXIgZGl2ZSBpbnRvIGFueSBzcGVjaWZpYyBhc3BlY3Qgb2YgUnVieT8g8J+YiiJ9fV19
-  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+        eyJpZCI6IjcwMzE1OTNhNjE1ZDRlNmY4MTRhZmI3MjZiNzE5NzljIiwiY3JlYXRlZCI6MTc3MzY4ODMxMCwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsInVzYWdlIjp7InByb21wdF90b2tlbnMiOjI3LCJ0b3RhbF90b2tlbnMiOjM4MywiY29tcGxldGlvbl90b2tlbnMiOjM1NiwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjB9fSwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImZpbmlzaF9yZWFzb24iOiJzdG9wIiwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwidG9vbF9jYWxscyI6bnVsbCwiY29udGVudCI6IlJ1YnkgaXMgYSBkeW5hbWljLCBvcGVuLXNvdXJjZSBwcm9ncmFtbWluZyBsYW5ndWFnZSB3aXRoIGEgZm9jdXMgb24gc2ltcGxpY2l0eSBhbmQgcHJvZHVjdGl2aXR5LiBJdCB3YXMgY3JlYXRlZCBieSAqKll1a2loaXJvIFwiTWF0elwiIE1hdHN1bW90byoqIGluIHRoZSBtaWQtMTk5MHMgYW5kIGlzIGtub3duIGZvciBpdHMgZWxlZ2FudCBzeW50YXggYW5kIGRldmVsb3Blci1mcmllbmRseSBmZWF0dXJlcy5cblxuIyMjICoqS2V5IEZlYXR1cmVzIG9mIFJ1Ynk6KipcbjEuICoqT2JqZWN0LU9yaWVudGVkKiog4oCTIEV2ZXJ5dGhpbmcgaW4gUnVieSBpcyBhbiBvYmplY3QsIG1ha2luZyBpdCBpbnR1aXRpdmUgZm9yIE9PUCBkZXZlbG9wbWVudC5cbjIuICoqRHluYW1pYyBUeXBpbmcqKiDigJMgVmFyaWFibGVzIGRvbuKAmXQgbmVlZCBleHBsaWNpdCB0eXBlIGRlY2xhcmF0aW9ucy5cbjMuICoqTWV0YXByb2dyYW1taW5nKiog4oCTIFJ1YnkgYWxsb3dzIGNvZGUgdG8gd3JpdGUgYW5kIG1vZGlmeSBpdHNlbGYgYXQgcnVudGltZS5cbjQuICoqR2VtcyAoTGlicmFyaWVzKSoqIOKAkyBBIHZhc3QgZWNvc3lzdGVtIG9mIHJldXNhYmxlIGNvZGUgcGFja2FnZXMgKGUuZy4sIFJhaWxzLCBTaW5hdHJhKS5cbjUuICoqUnVieSBvbiBSYWlscyoqIOKAkyBBIHBvcHVsYXIgd2ViIGZyYW1ld29yayBidWlsdCB3aXRoIFJ1YnksIGtub3duIGZvciByYXBpZCBkZXZlbG9wbWVudC5cblxuIyMjICoqRXhhbXBsZSBDb2RlOioqXG5gYGBydWJ5XG4jIEEgc2ltcGxlIFJ1YnkgcHJvZ3JhbVxucHV0cyBcIkhlbGxvLCBXb3JsZCFcIlxuXG4jIERlZmluZSBhIGNsYXNzXG5jbGFzcyBQZXJzb25cbiAgYXR0cl9hY2Nlc3NvciA6bmFtZSwgOmFnZVxuXG4gIGRlZiBpbml0aWFsaXplKG5hbWUsIGFnZSlcbiAgICBAbmFtZSA9IG5hbWVcbiAgICBAYWdlID0gYWdlXG4gIGVuZFxuXG4gIGRlZiBncmVldFxuICAgIHB1dHMgXCJIaSwgSSdtICN7QG5hbWV9IGFuZCBJJ20gI3tAYWdlfSB5ZWFycyBvbGQuXCJcbiAgZW5kXG5lbmRcblxuIyBDcmVhdGUgYW4gaW5zdGFuY2VcbmJvYiA9IFBlcnNvbi5uZXcoXCJCb2JcIiwgMzApXG5ib2IuZ3JlZXQgICMgT3V0cHV0OiBcIkhpLCBJJ20gQm9iIGFuZCBJJ20gMzAgeWVhcnMgb2xkLlwiXG5gYGBcblxuIyMjICoqV2h5IFVzZSBSdWJ5PyoqXG4tIEdyZWF0IGZvciAqKndlYiBkZXZlbG9wbWVudCoqIChSYWlscywgU2luYXRyYSkuXG4tIFVzZWQgYnkgY29tcGFuaWVzIGxpa2UgKipHaXRIdWIsIFNob3BpZnksIGFuZCBBaXJibmIqKi5cbi0gU3Ryb25nIGNvbW11bml0eSBhbmQgZG9jdW1lbnRhdGlvbi5cblxuV291bGQgeW91IGxpa2UgYSBkZWVwZXIgZGl2ZSBpbnRvIGFueSBzcGVjaWZpYyBhc3BlY3Qgb2YgUnVieT8ifX1dfQ==
+  recorded_at: Mon, 16 Mar 2026 19:11:52 GMT
 recorded_with: VCR 6.4.0

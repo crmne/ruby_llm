@@ -912,7 +912,7 @@
     "provider": "anthropic",
     "family": "claude-opus",
     "created_at": "2026-02-05 00:00:00 UTC",
-    "context_window": 200000,
+    "context_window": 1000000,
     "max_output_tokens": 128000,
     "knowledge_cutoff": null,
     "modalities": {
@@ -948,21 +948,15 @@
       "open_weights": false,
       "attachment": true,
       "temperature": true,
-      "last_updated": "2026-02-05",
+      "last_updated": "2026-03-13",
       "cost": {
         "input": 5,
         "output": 25,
         "cache_read": 0.5,
-        "cache_write": 6.25,
-        "context_over_200k": {
-          "input": 10,
-          "output": 37.5,
-          "cache_read": 1,
-          "cache_write": 12.5
-        }
+        "cache_write": 6.25
       },
       "limit": {
-        "context": 200000,
+        "context": 1000000,
         "output": 128000
       },
       "knowledge": "2025-05"
@@ -1192,7 +1186,7 @@
     "provider": "anthropic",
     "family": "claude-sonnet",
     "created_at": "2026-02-17 00:00:00 UTC",
-    "context_window": 200000,
+    "context_window": 1000000,
     "max_output_tokens": 64000,
     "knowledge_cutoff": null,
     "modalities": {
@@ -1228,21 +1222,15 @@
       "open_weights": false,
       "attachment": true,
       "temperature": true,
-      "last_updated": "2026-02-17",
+      "last_updated": "2026-03-13",
       "cost": {
         "input": 3,
         "output": 15,
         "cache_read": 0.3,
-        "cache_write": 3.75,
-        "context_over_200k": {
-          "input": 6,
-          "output": 22.5,
-          "cache_read": 0.6,
-          "cache_write": 7.5
-        }
+        "cache_write": 3.75
       },
       "limit": {
-        "context": 200000,
+        "context": 1000000,
         "output": 64000
       },
       "knowledge": "2025-08"
@@ -5176,8 +5164,74 @@
     }
   },
   {
+    "id": "claude-opus-4-6",
+    "name": "Claude Opus 4 6",
+    "provider": "azure",
+    "family": "other",
+    "created_at": null,
+    "context_window": 4096,
+    "max_output_tokens": 16384,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.5,
+          "output_per_million": 1.5
+        }
+      }
+    },
+    "metadata": {
+      "object": "model",
+      "owned_by": null
+    }
+  },
+  {
     "id": "claude-sonnet-4-5-20250929",
     "name": "Claude Sonnet 4 5 20250929",
+    "provider": "azure",
+    "family": "other",
+    "created_at": null,
+    "context_window": 4096,
+    "max_output_tokens": 16384,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.5,
+          "output_per_million": 1.5
+        }
+      }
+    },
+    "metadata": {
+      "object": "model",
+      "owned_by": null
+    }
+  },
+  {
+    "id": "claude-sonnet-4-6",
+    "name": "Claude Sonnet 4 6",
     "provider": "azure",
     "family": "other",
     "created_at": null,
@@ -7660,6 +7714,45 @@
     }
   },
   {
+    "id": "gpt-5-2025-08-07",
+    "name": "GPT-5 20250807",
+    "provider": "azure",
+    "family": "gpt5",
+    "created_at": null,
+    "context_window": 128000,
+    "max_output_tokens": 400000,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "pdf"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "reasoning"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 1.25,
+          "output_per_million": 10.0,
+          "cached_input_per_million": 0.125
+        }
+      }
+    },
+    "metadata": {
+      "object": "model",
+      "owned_by": null
+    }
+  },
+  {
     "id": "gpt-5-chat-2025-08-07",
     "name": "GPT-5 Chat 20250807",
     "provider": "azure",
@@ -7933,8 +8026,203 @@
     }
   },
   {
+    "id": "gpt-5-pro-2025-10-06",
+    "name": "GPT-5 Pro 20251006",
+    "provider": "azure",
+    "family": "gpt5",
+    "created_at": null,
+    "context_window": 128000,
+    "max_output_tokens": 400000,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "pdf"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "reasoning"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 1.25,
+          "output_per_million": 10.0,
+          "cached_input_per_million": 0.125
+        }
+      }
+    },
+    "metadata": {
+      "object": "model",
+      "owned_by": null
+    }
+  },
+  {
+    "id": "gpt-5.1",
+    "name": "GPT-5.1",
+    "provider": "azure",
+    "family": "gpt5",
+    "created_at": null,
+    "context_window": 128000,
+    "max_output_tokens": 400000,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "pdf"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "reasoning"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 1.25,
+          "output_per_million": 10.0,
+          "cached_input_per_million": 0.125
+        }
+      }
+    },
+    "metadata": {
+      "object": "model",
+      "owned_by": null
+    }
+  },
+  {
+    "id": "gpt-5.1-2025-11-13",
+    "name": "GPT-5.1 20251113",
+    "provider": "azure",
+    "family": "gpt5",
+    "created_at": null,
+    "context_window": 128000,
+    "max_output_tokens": 400000,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "pdf"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "reasoning"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 1.25,
+          "output_per_million": 10.0,
+          "cached_input_per_million": 0.125
+        }
+      }
+    },
+    "metadata": {
+      "object": "model",
+      "owned_by": null
+    }
+  },
+  {
     "id": "gpt-5.1-chat-2025-11-13",
     "name": "GPT-5.1 Chat 20251113",
+    "provider": "azure",
+    "family": "gpt5",
+    "created_at": null,
+    "context_window": 128000,
+    "max_output_tokens": 400000,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "pdf"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "reasoning"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 1.25,
+          "output_per_million": 10.0,
+          "cached_input_per_million": 0.125
+        }
+      }
+    },
+    "metadata": {
+      "object": "model",
+      "owned_by": null
+    }
+  },
+  {
+    "id": "gpt-5.1-codex-2025-11-13",
+    "name": "GPT-5.1 Codex 20251113",
+    "provider": "azure",
+    "family": "gpt5",
+    "created_at": null,
+    "context_window": 128000,
+    "max_output_tokens": 400000,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "pdf"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "reasoning"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 1.25,
+          "output_per_million": 10.0,
+          "cached_input_per_million": 0.125
+        }
+      }
+    },
+    "metadata": {
+      "object": "model",
+      "owned_by": null
+    }
+  },
+  {
+    "id": "gpt-5.1-codex-max-2025-12-04",
+    "name": "GPT-5.1 Codex Max 20251204",
     "provider": "azure",
     "family": "gpt5",
     "created_at": null,
@@ -8052,6 +8340,45 @@
   {
     "id": "gpt-5.2-chat-2026-02-10",
     "name": "GPT-5.2 Chat 20260210",
+    "provider": "azure",
+    "family": "gpt5",
+    "created_at": null,
+    "context_window": 128000,
+    "max_output_tokens": 400000,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "pdf"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "reasoning"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 1.25,
+          "output_per_million": 10.0,
+          "cached_input_per_million": 0.125
+        }
+      }
+    },
+    "metadata": {
+      "object": "model",
+      "owned_by": null
+    }
+  },
+  {
+    "id": "gpt-5.3-chat-2026-03-03",
+    "name": "GPT-5.3 Chat 20260303",
     "provider": "azure",
     "family": "gpt5",
     "created_at": null,
@@ -10432,98 +10759,6 @@
     }
   },
   {
-    "id": "ai21.jamba-1-5-large-v1:0",
-    "name": "Jamba 1.5 Large",
-    "provider": "bedrock",
-    "family": "jamba",
-    "created_at": "2024-08-15 00:00:00 UTC",
-    "context_window": 256000,
-    "max_output_tokens": 4096,
-    "knowledge_cutoff": null,
-    "modalities": {
-      "input": [
-        "text"
-      ],
-      "output": [
-        "text"
-      ]
-    },
-    "capabilities": [
-      "function_calling"
-    ],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "input_per_million": 2,
-          "output_per_million": 8
-        }
-      }
-    },
-    "metadata": {
-      "source": "models.dev",
-      "provider_id": "amazon-bedrock",
-      "open_weights": true,
-      "attachment": false,
-      "temperature": true,
-      "last_updated": "2024-08-15",
-      "cost": {
-        "input": 2,
-        "output": 8
-      },
-      "limit": {
-        "context": 256000,
-        "output": 4096
-      },
-      "knowledge": "2024-08"
-    }
-  },
-  {
-    "id": "ai21.jamba-1-5-mini-v1:0",
-    "name": "Jamba 1.5 Mini",
-    "provider": "bedrock",
-    "family": "jamba",
-    "created_at": "2024-08-15 00:00:00 UTC",
-    "context_window": 256000,
-    "max_output_tokens": 4096,
-    "knowledge_cutoff": null,
-    "modalities": {
-      "input": [
-        "text"
-      ],
-      "output": [
-        "text"
-      ]
-    },
-    "capabilities": [
-      "function_calling"
-    ],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "input_per_million": 0.2,
-          "output_per_million": 0.4
-        }
-      }
-    },
-    "metadata": {
-      "source": "models.dev",
-      "provider_id": "amazon-bedrock",
-      "open_weights": true,
-      "attachment": false,
-      "temperature": true,
-      "last_updated": "2024-08-15",
-      "cost": {
-        "input": 0.2,
-        "output": 0.4
-      },
-      "limit": {
-        "context": 256000,
-        "output": 4096
-      },
-      "knowledge": "2024-08"
-    }
-  },
-  {
     "id": "amazon.nova-2-lite-v1:0",
     "name": "Nova 2 Lite",
     "provider": "bedrock",
@@ -11241,96 +11476,6 @@
         "ON_DEMAND"
       ],
       "converse": {}
-    }
-  },
-  {
-    "id": "amazon.titan-text-express-v1",
-    "name": "Titan Text G1 - Express",
-    "provider": "bedrock",
-    "family": "titan",
-    "created_at": "2024-12-01 00:00:00 UTC",
-    "context_window": 128000,
-    "max_output_tokens": 4096,
-    "knowledge_cutoff": null,
-    "modalities": {
-      "input": [
-        "text"
-      ],
-      "output": [
-        "text"
-      ]
-    },
-    "capabilities": [
-      "function_calling"
-    ],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "input_per_million": 0.2,
-          "output_per_million": 0.6
-        }
-      }
-    },
-    "metadata": {
-      "source": "models.dev",
-      "provider_id": "amazon-bedrock",
-      "open_weights": false,
-      "attachment": false,
-      "temperature": true,
-      "last_updated": "2024-12-01",
-      "cost": {
-        "input": 0.2,
-        "output": 0.6
-      },
-      "limit": {
-        "context": 128000,
-        "output": 4096
-      }
-    }
-  },
-  {
-    "id": "amazon.titan-text-express-v1:0:8k",
-    "name": "Titan Text G1 - Express",
-    "provider": "bedrock",
-    "family": "titan",
-    "created_at": "2024-12-01 00:00:00 UTC",
-    "context_window": 128000,
-    "max_output_tokens": 4096,
-    "knowledge_cutoff": null,
-    "modalities": {
-      "input": [
-        "text"
-      ],
-      "output": [
-        "text"
-      ]
-    },
-    "capabilities": [
-      "function_calling"
-    ],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "input_per_million": 0.2,
-          "output_per_million": 0.6
-        }
-      }
-    },
-    "metadata": {
-      "source": "models.dev",
-      "provider_id": "amazon-bedrock",
-      "open_weights": false,
-      "attachment": false,
-      "temperature": true,
-      "last_updated": "2024-12-01",
-      "cost": {
-        "input": 0.2,
-        "output": 0.6
-      },
-      "limit": {
-        "context": 128000,
-        "output": 4096
-      }
     }
   },
   {
@@ -12117,220 +12262,99 @@
     }
   },
   {
-    "id": "anthropic.claude-3-opus-20240229-v1:0",
-    "name": "Claude Opus 3",
-    "provider": "bedrock",
-    "family": "claude-opus",
-    "created_at": "2024-02-29 00:00:00 UTC",
-    "context_window": 200000,
-    "max_output_tokens": 4096,
-    "knowledge_cutoff": null,
-    "modalities": {
-      "input": [
-        "text",
-        "image",
-        "pdf"
-      ],
-      "output": [
-        "text"
-      ]
-    },
-    "capabilities": [
-      "function_calling",
-      "vision"
-    ],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "input_per_million": 15,
-          "output_per_million": 75
-        }
-      }
-    },
-    "metadata": {
-      "source": "models.dev",
-      "provider_id": "amazon-bedrock",
-      "open_weights": false,
-      "attachment": true,
-      "temperature": true,
-      "last_updated": "2024-02-29",
-      "cost": {
-        "input": 15,
-        "output": 75
-      },
-      "limit": {
-        "context": 200000,
-        "output": 4096
-      },
-      "knowledge": "2023-08"
-    }
-  },
-  {
     "id": "anthropic.claude-3-sonnet-20240229-v1:0",
-    "name": "Claude Sonnet 3",
+    "name": "Claude 3 Sonnet",
     "provider": "bedrock",
-    "family": "claude-sonnet",
-    "created_at": "2024-03-04 00:00:00 UTC",
-    "context_window": 200000,
-    "max_output_tokens": 4096,
+    "family": "anthropic",
+    "created_at": null,
+    "context_window": null,
+    "max_output_tokens": null,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
         "text",
-        "image",
-        "pdf"
+        "image"
       ],
       "output": [
         "text"
       ]
     },
     "capabilities": [
-      "function_calling",
-      "vision",
-      "streaming"
+      "streaming",
+      "function_calling"
     ],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "input_per_million": 3,
-          "output_per_million": 15
-        }
-      }
-    },
+    "pricing": {},
     "metadata": {
       "provider_name": "Anthropic",
       "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/anthropic.claude-3-sonnet-20240229-v1:0",
       "inference_types": [
         "ON_DEMAND"
       ],
-      "converse": {},
-      "source": "models.dev",
-      "provider_id": "amazon-bedrock",
-      "open_weights": false,
-      "attachment": true,
-      "temperature": true,
-      "last_updated": "2024-03-04",
-      "cost": {
-        "input": 3,
-        "output": 15
-      },
-      "limit": {
-        "context": 200000,
-        "output": 4096
-      },
-      "knowledge": "2023-08"
+      "converse": {}
     }
   },
   {
     "id": "anthropic.claude-3-sonnet-20240229-v1:0:200k",
-    "name": "Claude Sonnet 3",
+    "name": "Claude 3 Sonnet",
     "provider": "bedrock",
-    "family": "claude-sonnet",
-    "created_at": "2024-03-04 00:00:00 UTC",
-    "context_window": 200000,
-    "max_output_tokens": 4096,
+    "family": "anthropic",
+    "created_at": null,
+    "context_window": null,
+    "max_output_tokens": null,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
         "text",
-        "image",
-        "pdf"
+        "image"
       ],
       "output": [
         "text"
       ]
     },
     "capabilities": [
-      "function_calling",
-      "vision",
-      "streaming"
+      "streaming",
+      "function_calling"
     ],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "input_per_million": 3,
-          "output_per_million": 15
-        }
-      }
-    },
+    "pricing": {},
     "metadata": {
       "provider_name": "Anthropic",
       "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/anthropic.claude-3-sonnet-20240229-v1:0:200k",
       "inference_types": [
         "PROVISIONED"
       ],
-      "converse": {},
-      "source": "models.dev",
-      "provider_id": "amazon-bedrock",
-      "open_weights": false,
-      "attachment": true,
-      "temperature": true,
-      "last_updated": "2024-03-04",
-      "cost": {
-        "input": 3,
-        "output": 15
-      },
-      "limit": {
-        "context": 200000,
-        "output": 4096
-      },
-      "knowledge": "2023-08"
+      "converse": {}
     }
   },
   {
     "id": "anthropic.claude-3-sonnet-20240229-v1:0:28k",
-    "name": "Claude Sonnet 3",
+    "name": "Claude 3 Sonnet",
     "provider": "bedrock",
-    "family": "claude-sonnet",
-    "created_at": "2024-03-04 00:00:00 UTC",
-    "context_window": 28000,
-    "max_output_tokens": 4096,
+    "family": "anthropic",
+    "created_at": null,
+    "context_window": null,
+    "max_output_tokens": null,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
         "text",
-        "image",
-        "pdf"
+        "image"
       ],
       "output": [
         "text"
       ]
     },
     "capabilities": [
-      "function_calling",
-      "vision",
-      "streaming"
+      "streaming",
+      "function_calling"
     ],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "input_per_million": 3,
-          "output_per_million": 15
-        }
-      }
-    },
+    "pricing": {},
     "metadata": {
       "provider_name": "Anthropic",
       "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/anthropic.claude-3-sonnet-20240229-v1:0:28k",
       "inference_types": [
         "PROVISIONED"
       ],
-      "converse": {},
-      "source": "models.dev",
-      "provider_id": "amazon-bedrock",
-      "open_weights": false,
-      "attachment": true,
-      "temperature": true,
-      "last_updated": "2024-03-04",
-      "cost": {
-        "input": 3,
-        "output": 15
-      },
-      "limit": {
-        "context": 200000,
-        "output": 4096
-      },
-      "knowledge": "2023-08"
+      "converse": {}
     }
   },
   {
@@ -12384,50 +12408,6 @@
         "output": 64000
       },
       "knowledge": "2025-02-28"
-    }
-  },
-  {
-    "id": "anthropic.claude-instant-v1",
-    "name": "Claude Instant",
-    "provider": "bedrock",
-    "family": "claude",
-    "created_at": "2023-03-01 00:00:00 UTC",
-    "context_window": 100000,
-    "max_output_tokens": 4096,
-    "knowledge_cutoff": null,
-    "modalities": {
-      "input": [
-        "text"
-      ],
-      "output": [
-        "text"
-      ]
-    },
-    "capabilities": [],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "input_per_million": 0.8,
-          "output_per_million": 2.4
-        }
-      }
-    },
-    "metadata": {
-      "source": "models.dev",
-      "provider_id": "amazon-bedrock",
-      "open_weights": false,
-      "attachment": false,
-      "temperature": true,
-      "last_updated": "2023-03-01",
-      "cost": {
-        "input": 0.8,
-        "output": 2.4
-      },
-      "limit": {
-        "context": 100000,
-        "output": 4096
-      },
-      "knowledge": "2023-08"
     }
   },
   {
@@ -12814,145 +12794,13 @@
     }
   },
   {
-    "id": "anthropic.claude-v2",
-    "name": "Claude 2",
-    "provider": "bedrock",
-    "family": "claude",
-    "created_at": "2023-07-11 00:00:00 UTC",
-    "context_window": 100000,
-    "max_output_tokens": 4096,
-    "knowledge_cutoff": null,
-    "modalities": {
-      "input": [
-        "text"
-      ],
-      "output": [
-        "text"
-      ]
-    },
-    "capabilities": [],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "input_per_million": 8,
-          "output_per_million": 24
-        }
-      }
-    },
-    "metadata": {
-      "source": "models.dev",
-      "provider_id": "amazon-bedrock",
-      "open_weights": false,
-      "attachment": false,
-      "temperature": true,
-      "last_updated": "2023-07-11",
-      "cost": {
-        "input": 8,
-        "output": 24
-      },
-      "limit": {
-        "context": 100000,
-        "output": 4096
-      },
-      "knowledge": "2023-08"
-    }
-  },
-  {
-    "id": "anthropic.claude-v2:1",
-    "name": "Claude 2.1",
-    "provider": "bedrock",
-    "family": "claude",
-    "created_at": "2023-11-21 00:00:00 UTC",
-    "context_window": 200000,
-    "max_output_tokens": 4096,
-    "knowledge_cutoff": null,
-    "modalities": {
-      "input": [
-        "text"
-      ],
-      "output": [
-        "text"
-      ]
-    },
-    "capabilities": [],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "input_per_million": 8,
-          "output_per_million": 24
-        }
-      }
-    },
-    "metadata": {
-      "source": "models.dev",
-      "provider_id": "amazon-bedrock",
-      "open_weights": false,
-      "attachment": false,
-      "temperature": true,
-      "last_updated": "2023-11-21",
-      "cost": {
-        "input": 8,
-        "output": 24
-      },
-      "limit": {
-        "context": 200000,
-        "output": 4096
-      },
-      "knowledge": "2023-08"
-    }
-  },
-  {
-    "id": "cohere.command-light-text-v14",
-    "name": "Command Light",
-    "provider": "bedrock",
-    "family": "command-light",
-    "created_at": "2023-11-01 00:00:00 UTC",
-    "context_window": 4096,
-    "max_output_tokens": 4096,
-    "knowledge_cutoff": null,
-    "modalities": {
-      "input": [
-        "text"
-      ],
-      "output": [
-        "text"
-      ]
-    },
-    "capabilities": [],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "input_per_million": 0.3,
-          "output_per_million": 0.6
-        }
-      }
-    },
-    "metadata": {
-      "source": "models.dev",
-      "provider_id": "amazon-bedrock",
-      "open_weights": true,
-      "attachment": false,
-      "temperature": true,
-      "last_updated": "2023-11-01",
-      "cost": {
-        "input": 0.3,
-        "output": 0.6
-      },
-      "limit": {
-        "context": 4096,
-        "output": 4096
-      },
-      "knowledge": "2023-08"
-    }
-  },
-  {
     "id": "cohere.command-r-plus-v1:0",
     "name": "Command R+",
     "provider": "bedrock",
-    "family": "command-r",
-    "created_at": "2024-04-04 00:00:00 UTC",
-    "context_window": 128000,
-    "max_output_tokens": 4096,
+    "family": "cohere",
+    "created_at": null,
+    "context_window": null,
+    "max_output_tokens": null,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -12963,49 +12811,27 @@
       ]
     },
     "capabilities": [
-      "function_calling",
-      "streaming"
+      "streaming",
+      "function_calling"
     ],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "input_per_million": 3,
-          "output_per_million": 15
-        }
-      }
-    },
+    "pricing": {},
     "metadata": {
       "provider_name": "Cohere",
       "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/cohere.command-r-plus-v1:0",
       "inference_types": [
         "ON_DEMAND"
       ],
-      "converse": {},
-      "source": "models.dev",
-      "provider_id": "amazon-bedrock",
-      "open_weights": true,
-      "attachment": false,
-      "temperature": true,
-      "last_updated": "2024-04-04",
-      "cost": {
-        "input": 3,
-        "output": 15
-      },
-      "limit": {
-        "context": 128000,
-        "output": 4096
-      },
-      "knowledge": "2024-04"
+      "converse": {}
     }
   },
   {
     "id": "cohere.command-r-v1:0",
     "name": "Command R",
     "provider": "bedrock",
-    "family": "command-r",
-    "created_at": "2024-03-11 00:00:00 UTC",
-    "context_window": 128000,
-    "max_output_tokens": 4096,
+    "family": "cohere",
+    "created_at": null,
+    "context_window": null,
+    "max_output_tokens": null,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -13016,83 +12842,17 @@
       ]
     },
     "capabilities": [
-      "function_calling",
-      "streaming"
+      "streaming",
+      "function_calling"
     ],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "input_per_million": 0.5,
-          "output_per_million": 1.5
-        }
-      }
-    },
+    "pricing": {},
     "metadata": {
       "provider_name": "Cohere",
       "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/cohere.command-r-v1:0",
       "inference_types": [
         "ON_DEMAND"
       ],
-      "converse": {},
-      "source": "models.dev",
-      "provider_id": "amazon-bedrock",
-      "open_weights": true,
-      "attachment": false,
-      "temperature": true,
-      "last_updated": "2024-03-11",
-      "cost": {
-        "input": 0.5,
-        "output": 1.5
-      },
-      "limit": {
-        "context": 128000,
-        "output": 4096
-      },
-      "knowledge": "2024-04"
-    }
-  },
-  {
-    "id": "cohere.command-text-v14",
-    "name": "Command",
-    "provider": "bedrock",
-    "family": "command",
-    "created_at": "2023-11-01 00:00:00 UTC",
-    "context_window": 4096,
-    "max_output_tokens": 4096,
-    "knowledge_cutoff": null,
-    "modalities": {
-      "input": [
-        "text"
-      ],
-      "output": [
-        "text"
-      ]
-    },
-    "capabilities": [],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "input_per_million": 1.5,
-          "output_per_million": 2
-        }
-      }
-    },
-    "metadata": {
-      "source": "models.dev",
-      "provider_id": "amazon-bedrock",
-      "open_weights": true,
-      "attachment": false,
-      "temperature": true,
-      "last_updated": "2023-11-01",
-      "cost": {
-        "input": 1.5,
-        "output": 2
-      },
-      "limit": {
-        "context": 4096,
-        "output": 4096
-      },
-      "knowledge": "2023-08"
+      "converse": {}
     }
   },
   {
@@ -13360,12 +13120,12 @@
   },
   {
     "id": "deepseek.v3.2",
-    "name": "DeepSeek V3.2",
+    "name": "DeepSeek-V3.2",
     "provider": "bedrock",
-    "family": "DeepSeek V3.2",
-    "created_at": null,
-    "context_window": null,
-    "max_output_tokens": 163840,
+    "family": "deepseek",
+    "created_at": "2026-02-06 00:00:00 UTC",
+    "context_window": 163840,
+    "max_output_tokens": 81920,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -13376,10 +13136,18 @@
       ]
     },
     "capabilities": [
-      "streaming",
-      "function_calling"
+      "function_calling",
+      "reasoning",
+      "streaming"
     ],
-    "pricing": {},
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.62,
+          "output_per_million": 1.85
+        }
+      }
+    },
     "metadata": {
       "provider_name": "DeepSeek",
       "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/deepseek.v3.2",
@@ -13398,45 +13166,13 @@
         "userDocumentTypesSupported": [],
         "userImageTypesSupported": [],
         "userVideoTypesSupported": []
-      }
-    }
-  },
-  {
-    "id": "deepseek.v3.2-v1:0",
-    "name": "DeepSeek-V3.2",
-    "provider": "bedrock",
-    "family": "deepseek",
-    "created_at": "2026-02-15 00:00:00 UTC",
-    "context_window": 163840,
-    "max_output_tokens": 81920,
-    "knowledge_cutoff": null,
-    "modalities": {
-      "input": [
-        "text"
-      ],
-      "output": [
-        "text"
-      ]
-    },
-    "capabilities": [
-      "function_calling",
-      "reasoning"
-    ],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "input_per_million": 0.62,
-          "output_per_million": 1.85
-        }
-      }
-    },
-    "metadata": {
+      },
       "source": "models.dev",
       "provider_id": "amazon-bedrock",
       "open_weights": true,
       "attachment": false,
       "temperature": true,
-      "last_updated": "2026-02-15",
+      "last_updated": "2026-02-06",
       "cost": {
         "input": 0.62,
         "output": 1.85
@@ -14351,10 +14087,10 @@
     "id": "meta.llama3-1-405b-instruct-v1:0",
     "name": "Llama 3.1 405B Instruct",
     "provider": "bedrock",
-    "family": "meta",
-    "created_at": null,
-    "context_window": null,
-    "max_output_tokens": null,
+    "family": "llama",
+    "created_at": "2024-07-23 00:00:00 UTC",
+    "context_window": 128000,
+    "max_output_tokens": 4096,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -14365,17 +14101,39 @@
       ]
     },
     "capabilities": [
-      "streaming",
-      "function_calling"
+      "function_calling",
+      "streaming"
     ],
-    "pricing": {},
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 2.4,
+          "output_per_million": 2.4
+        }
+      }
+    },
     "metadata": {
       "provider_name": "Meta",
       "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/meta.llama3-1-405b-instruct-v1:0",
       "inference_types": [
         "ON_DEMAND"
       ],
-      "converse": {}
+      "converse": {},
+      "source": "models.dev",
+      "provider_id": "amazon-bedrock",
+      "open_weights": true,
+      "attachment": false,
+      "temperature": true,
+      "last_updated": "2024-07-23",
+      "cost": {
+        "input": 2.4,
+        "output": 2.4
+      },
+      "limit": {
+        "context": 128000,
+        "output": 4096
+      },
+      "knowledge": "2023-12"
     }
   },
   {
@@ -15097,10 +14855,10 @@
     "id": "meta.llama3-70b-instruct-v1:0",
     "name": "Llama 3 70B Instruct",
     "provider": "bedrock",
-    "family": "llama",
-    "created_at": "2024-07-23 00:00:00 UTC",
-    "context_window": 8192,
-    "max_output_tokens": 2048,
+    "family": "meta",
+    "created_at": null,
+    "context_window": null,
+    "max_output_tokens": null,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -15114,46 +14872,24 @@
       "streaming",
       "function_calling"
     ],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "input_per_million": 2.65,
-          "output_per_million": 3.5
-        }
-      }
-    },
+    "pricing": {},
     "metadata": {
       "provider_name": "Meta",
       "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/meta.llama3-70b-instruct-v1:0",
       "inference_types": [
         "ON_DEMAND"
       ],
-      "converse": {},
-      "source": "models.dev",
-      "provider_id": "amazon-bedrock",
-      "open_weights": true,
-      "attachment": false,
-      "temperature": true,
-      "last_updated": "2024-07-23",
-      "cost": {
-        "input": 2.65,
-        "output": 3.5
-      },
-      "limit": {
-        "context": 8192,
-        "output": 2048
-      },
-      "knowledge": "2023-12"
+      "converse": {}
     }
   },
   {
     "id": "meta.llama3-8b-instruct-v1:0",
     "name": "Llama 3 8B Instruct",
     "provider": "bedrock",
-    "family": "llama",
-    "created_at": "2024-07-23 00:00:00 UTC",
-    "context_window": 8192,
-    "max_output_tokens": 2048,
+    "family": "meta",
+    "created_at": null,
+    "context_window": null,
+    "max_output_tokens": null,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -15167,36 +14903,14 @@
       "streaming",
       "function_calling"
     ],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "input_per_million": 0.3,
-          "output_per_million": 0.6
-        }
-      }
-    },
+    "pricing": {},
     "metadata": {
       "provider_name": "Meta",
       "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/meta.llama3-8b-instruct-v1:0",
       "inference_types": [
         "ON_DEMAND"
       ],
-      "converse": {},
-      "source": "models.dev",
-      "provider_id": "amazon-bedrock",
-      "open_weights": true,
-      "attachment": false,
-      "temperature": true,
-      "last_updated": "2024-07-23",
-      "cost": {
-        "input": 0.3,
-        "output": 0.6
-      },
-      "limit": {
-        "context": 8192,
-        "output": 2048
-      },
-      "knowledge": "2023-03"
+      "converse": {}
     }
   },
   {
@@ -15429,10 +15143,10 @@
     "id": "mistral.devstral-2-123b",
     "name": "Devstral 2 123B",
     "provider": "bedrock",
-    "family": "Devstral 2",
-    "created_at": null,
-    "context_window": null,
-    "max_output_tokens": 262144,
+    "family": "devstral",
+    "created_at": "2026-02-17 00:00:00 UTC",
+    "context_window": 256000,
+    "max_output_tokens": 8192,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -15443,10 +15157,17 @@
       ]
     },
     "capabilities": [
-      "streaming",
-      "function_calling"
+      "function_calling",
+      "streaming"
     ],
-    "pricing": {},
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.4,
+          "output_per_million": 2
+        }
+      }
+    },
     "metadata": {
       "provider_name": "Mistral AI",
       "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/mistral.devstral-2-123b",
@@ -15463,17 +15184,31 @@
         "userDocumentTypesSupported": [],
         "userImageTypesSupported": [],
         "userVideoTypesSupported": []
+      },
+      "source": "models.dev",
+      "provider_id": "amazon-bedrock",
+      "open_weights": true,
+      "attachment": false,
+      "temperature": true,
+      "last_updated": "2026-02-17",
+      "cost": {
+        "input": 0.4,
+        "output": 2
+      },
+      "limit": {
+        "context": 256000,
+        "output": 8192
       }
     }
   },
   {
     "id": "mistral.magistral-small-2509",
-    "name": "Magistral Small 2509",
+    "name": "Magistral Small 1.2",
     "provider": "bedrock",
-    "family": "Magistral",
-    "created_at": null,
-    "context_window": null,
-    "max_output_tokens": 131072,
+    "family": "magistral",
+    "created_at": "2025-12-02 00:00:00 UTC",
+    "context_window": 128000,
+    "max_output_tokens": 40000,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -15485,11 +15220,19 @@
       ]
     },
     "capabilities": [
-      "streaming",
       "function_calling",
-      "reasoning"
+      "reasoning",
+      "vision",
+      "streaming"
     ],
-    "pricing": {},
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.5,
+          "output_per_million": 1.5
+        }
+      }
+    },
     "metadata": {
       "provider_name": "Mistral AI",
       "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/mistral.magistral-small-2509",
@@ -15513,6 +15256,20 @@
           "webp"
         ],
         "userVideoTypesSupported": []
+      },
+      "source": "models.dev",
+      "provider_id": "amazon-bedrock",
+      "open_weights": true,
+      "attachment": false,
+      "temperature": true,
+      "last_updated": "2025-12-02",
+      "cost": {
+        "input": 0.5,
+        "output": 1.5
+      },
+      "limit": {
+        "context": 128000,
+        "output": 40000
       }
     }
   },
@@ -15585,12 +15342,12 @@
   },
   {
     "id": "mistral.ministral-3-3b-instruct",
-    "name": "Ministral 3B",
+    "name": "Ministral 3 3B",
     "provider": "bedrock",
-    "family": "Ministral 3",
-    "created_at": null,
-    "context_window": null,
-    "max_output_tokens": 262144,
+    "family": "ministral",
+    "created_at": "2025-12-02 00:00:00 UTC",
+    "context_window": 256000,
+    "max_output_tokens": 8192,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -15602,10 +15359,18 @@
       ]
     },
     "capabilities": [
-      "streaming",
-      "function_calling"
+      "function_calling",
+      "vision",
+      "streaming"
     ],
-    "pricing": {},
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.1,
+          "output_per_million": 0.1
+        }
+      }
+    },
     "metadata": {
       "provider_name": "Mistral AI",
       "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/mistral.ministral-3-3b-instruct",
@@ -15627,6 +15392,20 @@
           "webp"
         ],
         "userVideoTypesSupported": []
+      },
+      "source": "models.dev",
+      "provider_id": "amazon-bedrock",
+      "open_weights": true,
+      "attachment": false,
+      "temperature": true,
+      "last_updated": "2025-12-02",
+      "cost": {
+        "input": 0.1,
+        "output": 0.1
+      },
+      "limit": {
+        "context": 256000,
+        "output": 8192
       }
     }
   },
@@ -15699,12 +15478,12 @@
   },
   {
     "id": "mistral.mistral-7b-instruct-v0:2",
-    "name": "Mistral-7B-Instruct-v0.3",
+    "name": "Mistral 7B Instruct",
     "provider": "bedrock",
-    "family": "mistral",
-    "created_at": "2025-04-01 00:00:00 UTC",
-    "context_window": 127000,
-    "max_output_tokens": 127000,
+    "family": "mistral ai",
+    "created_at": null,
+    "context_window": null,
+    "max_output_tokens": null,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -15715,49 +15494,27 @@
       ]
     },
     "capabilities": [
-      "function_calling",
-      "structured_output",
-      "streaming"
+      "streaming",
+      "function_calling"
     ],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "input_per_million": 0.11,
-          "output_per_million": 0.11
-        }
-      }
-    },
+    "pricing": {},
     "metadata": {
       "provider_name": "Mistral AI",
       "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/mistral.mistral-7b-instruct-v0:2",
       "inference_types": [
         "ON_DEMAND"
       ],
-      "converse": {},
-      "source": "models.dev",
-      "provider_id": "amazon-bedrock",
-      "open_weights": true,
-      "attachment": false,
-      "temperature": true,
-      "last_updated": "2025-04-01",
-      "cost": {
-        "input": 0.11,
-        "output": 0.11
-      },
-      "limit": {
-        "context": 127000,
-        "output": 127000
-      }
+      "converse": {}
     }
   },
   {
     "id": "mistral.mistral-large-2402-v1:0",
     "name": "Mistral Large (24.02)",
     "provider": "bedrock",
-    "family": "mistral-large",
-    "created_at": "2024-12-01 00:00:00 UTC",
-    "context_window": 128000,
-    "max_output_tokens": 4096,
+    "family": "mistral ai",
+    "created_at": null,
+    "context_window": null,
+    "max_output_tokens": null,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -15768,38 +15525,17 @@
       ]
     },
     "capabilities": [
-      "function_calling",
-      "streaming"
+      "streaming",
+      "function_calling"
     ],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "input_per_million": 0.5,
-          "output_per_million": 1.5
-        }
-      }
-    },
+    "pricing": {},
     "metadata": {
       "provider_name": "Mistral AI",
       "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/mistral.mistral-large-2402-v1:0",
       "inference_types": [
         "ON_DEMAND"
       ],
-      "converse": {},
-      "source": "models.dev",
-      "provider_id": "amazon-bedrock",
-      "open_weights": false,
-      "attachment": false,
-      "temperature": true,
-      "last_updated": "2024-12-01",
-      "cost": {
-        "input": 0.5,
-        "output": 1.5
-      },
-      "limit": {
-        "context": 128000,
-        "output": 4096
-      }
+      "converse": {}
     }
   },
   {
@@ -15837,10 +15573,10 @@
     "id": "mistral.mistral-large-3-675b-instruct",
     "name": "Mistral Large 3",
     "provider": "bedrock",
-    "family": "Ministral 3",
-    "created_at": null,
-    "context_window": null,
-    "max_output_tokens": 262144,
+    "family": "mistral",
+    "created_at": "2025-12-02 00:00:00 UTC",
+    "context_window": 256000,
+    "max_output_tokens": 8192,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -15852,10 +15588,18 @@
       ]
     },
     "capabilities": [
-      "streaming",
-      "function_calling"
+      "function_calling",
+      "vision",
+      "streaming"
     ],
-    "pricing": {},
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.5,
+          "output_per_million": 1.5
+        }
+      }
+    },
     "metadata": {
       "provider_name": "Mistral AI",
       "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/mistral.mistral-large-3-675b-instruct",
@@ -15877,17 +15621,31 @@
           "webp"
         ],
         "userVideoTypesSupported": []
+      },
+      "source": "models.dev",
+      "provider_id": "amazon-bedrock",
+      "open_weights": true,
+      "attachment": false,
+      "temperature": true,
+      "last_updated": "2025-12-02",
+      "cost": {
+        "input": 0.5,
+        "output": 1.5
+      },
+      "limit": {
+        "context": 256000,
+        "output": 8192
       }
     }
   },
   {
     "id": "mistral.mixtral-8x7b-instruct-v0:1",
-    "name": "Mixtral-8x7B-Instruct-v0.1",
+    "name": "Mixtral 8x7B Instruct",
     "provider": "bedrock",
-    "family": "mixtral",
-    "created_at": "2025-04-01 00:00:00 UTC",
-    "context_window": 32000,
-    "max_output_tokens": 32000,
+    "family": "mistral ai",
+    "created_at": null,
+    "context_window": null,
+    "max_output_tokens": null,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -15898,38 +15656,63 @@
       ]
     },
     "capabilities": [
-      "structured_output",
       "streaming",
       "function_calling"
     ],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "input_per_million": 0.7,
-          "output_per_million": 0.7
-        }
-      }
-    },
+    "pricing": {},
     "metadata": {
       "provider_name": "Mistral AI",
       "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/mistral.mixtral-8x7b-instruct-v0:1",
       "inference_types": [
         "ON_DEMAND"
       ],
-      "converse": {},
+      "converse": {}
+    }
+  },
+  {
+    "id": "mistral.pixtral-large-2502-v1:0",
+    "name": "Pixtral Large (25.02)",
+    "provider": "bedrock",
+    "family": "mistral",
+    "created_at": "2025-04-08 00:00:00 UTC",
+    "context_window": 128000,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "vision"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 2,
+          "output_per_million": 6
+        }
+      }
+    },
+    "metadata": {
       "source": "models.dev",
       "provider_id": "amazon-bedrock",
-      "open_weights": true,
+      "open_weights": false,
       "attachment": false,
       "temperature": true,
-      "last_updated": "2025-04-01",
+      "last_updated": "2025-04-08",
       "cost": {
-        "input": 0.7,
-        "output": 0.7
+        "input": 2,
+        "output": 6
       },
       "limit": {
-        "context": 32000,
-        "output": 32000
+        "context": 128000,
+        "output": 8192
       }
     }
   },
@@ -16063,7 +15846,7 @@
     "id": "moonshot.kimi-k2-thinking",
     "name": "Kimi K2 Thinking",
     "provider": "bedrock",
-    "family": "Kimi K2",
+    "family": "kimi-thinking",
     "created_at": "2025-12-02 00:00:00 UTC",
     "context_window": 256000,
     "max_output_tokens": 256000,
@@ -16129,7 +15912,7 @@
     "id": "moonshotai.kimi-k2.5",
     "name": "Kimi K2.5",
     "provider": "bedrock",
-    "family": "Kimi K2.5",
+    "family": "kimi",
     "created_at": "2026-02-06 00:00:00 UTC",
     "context_window": 256000,
     "max_output_tokens": 256000,
@@ -16269,12 +16052,12 @@
   },
   {
     "id": "nvidia.nemotron-nano-3-30b",
-    "name": "Nemotron Nano 3 30B",
+    "name": "NVIDIA Nemotron Nano 3 30B",
     "provider": "bedrock",
-    "family": "Nemotron",
-    "created_at": null,
-    "context_window": null,
-    "max_output_tokens": 262144,
+    "family": "nemotron",
+    "created_at": "2025-12-23 00:00:00 UTC",
+    "context_window": 128000,
+    "max_output_tokens": 4096,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -16285,10 +16068,18 @@
       ]
     },
     "capabilities": [
-      "streaming",
-      "function_calling"
+      "function_calling",
+      "reasoning",
+      "streaming"
     ],
-    "pricing": {},
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.06,
+          "output_per_million": 0.24
+        }
+      }
+    },
     "metadata": {
       "provider_name": "NVIDIA",
       "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/nvidia.nemotron-nano-3-30b",
@@ -16307,6 +16098,20 @@
         "userDocumentTypesSupported": [],
         "userImageTypesSupported": [],
         "userVideoTypesSupported": []
+      },
+      "source": "models.dev",
+      "provider_id": "amazon-bedrock",
+      "open_weights": true,
+      "attachment": false,
+      "temperature": true,
+      "last_updated": "2025-12-23",
+      "cost": {
+        "input": 0.06,
+        "output": 0.24
+      },
+      "limit": {
+        "context": 128000,
+        "output": 4096
       }
     }
   },
@@ -18611,10 +18416,10 @@
     "id": "us.mistral.pixtral-large-2502-v1:0",
     "name": "Pixtral Large (25.02)",
     "provider": "bedrock",
-    "family": "mistral ai",
-    "created_at": null,
-    "context_window": null,
-    "max_output_tokens": null,
+    "family": "mistral",
+    "created_at": "2025-04-08 00:00:00 UTC",
+    "context_window": 128000,
+    "max_output_tokens": 8192,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -18626,17 +18431,39 @@
       ]
     },
     "capabilities": [
-      "streaming",
-      "function_calling"
+      "function_calling",
+      "vision",
+      "streaming"
     ],
-    "pricing": {},
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 2,
+          "output_per_million": 6
+        }
+      }
+    },
     "metadata": {
       "provider_name": "Mistral AI",
       "model_arn": "arn:aws:bedrock:us-west-2::foundation-model/mistral.pixtral-large-2502-v1:0",
       "inference_types": [
         "INFERENCE_PROFILE"
       ],
-      "converse": {}
+      "converse": {},
+      "source": "models.dev",
+      "provider_id": "amazon-bedrock",
+      "open_weights": false,
+      "attachment": false,
+      "temperature": true,
+      "last_updated": "2025-04-08",
+      "cost": {
+        "input": 2,
+        "output": 6
+      },
+      "limit": {
+        "context": 128000,
+        "output": 8192
+      }
     }
   },
   {
@@ -19412,7 +19239,7 @@
     "name": "DeepSeek Chat",
     "provider": "deepseek",
     "family": "deepseek",
-    "created_at": "2024-12-26 00:00:00 UTC",
+    "created_at": "2025-12-01 00:00:00 UTC",
     "context_window": 128000,
     "max_output_tokens": 8192,
     "knowledge_cutoff": null,
@@ -19442,10 +19269,10 @@
       "owned_by": "deepseek",
       "source": "models.dev",
       "provider_id": "deepseek",
-      "open_weights": false,
+      "open_weights": true,
       "attachment": true,
       "temperature": true,
-      "last_updated": "2025-09-29",
+      "last_updated": "2026-02-28",
       "cost": {
         "input": 0.28,
         "output": 0.42,
@@ -19455,7 +19282,7 @@
         "context": 128000,
         "output": 8192
       },
-      "knowledge": "2024-07"
+      "knowledge": "2025-09"
     }
   },
   {
@@ -19463,9 +19290,9 @@
     "name": "DeepSeek Reasoner",
     "provider": "deepseek",
     "family": "deepseek-thinking",
-    "created_at": "2025-01-20 00:00:00 UTC",
+    "created_at": "2025-12-01 00:00:00 UTC",
     "context_window": 128000,
-    "max_output_tokens": 128000,
+    "max_output_tokens": 64000,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -19494,10 +19321,10 @@
       "owned_by": "deepseek",
       "source": "models.dev",
       "provider_id": "deepseek",
-      "open_weights": false,
+      "open_weights": true,
       "attachment": true,
       "temperature": true,
-      "last_updated": "2025-09-29",
+      "last_updated": "2026-02-28",
       "interleaved": {
         "field": "reasoning_content"
       },
@@ -19508,9 +19335,9 @@
       },
       "limit": {
         "context": 128000,
-        "output": 128000
+        "output": 64000
       },
-      "knowledge": "2024-07"
+      "knowledge": "2025-09"
     }
   },
   {
@@ -21186,25 +21013,27 @@
   },
   {
     "id": "gemini-3.1-flash-image-preview",
-    "name": "Nano Banana 2",
+    "name": "Gemini 3.1 Flash Image (Preview)",
     "provider": "gemini",
-    "family": "other",
-    "created_at": null,
-    "context_window": 65536,
-    "max_output_tokens": 65536,
+    "family": "gemini-flash",
+    "created_at": "2026-02-26 00:00:00 UTC",
+    "context_window": 131072,
+    "max_output_tokens": 32768,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
         "text",
         "image",
-        "pdf",
-        "video"
+        "pdf"
       ],
       "output": [
-        "text"
+        "text",
+        "image"
       ]
     },
     "capabilities": [
+      "reasoning",
+      "vision",
       "streaming",
       "function_calling",
       "structured_output",
@@ -21214,12 +21043,8 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.075,
-          "output_per_million": 0.3
-        },
-        "batch": {
-          "input_per_million": 0.0375,
-          "output_per_million": 0.15
+          "input_per_million": 0.25,
+          "output_per_million": 60
         }
       }
     },
@@ -21230,15 +21055,30 @@
         "generateContent",
         "countTokens",
         "batchGenerateContent"
-      ]
+      ],
+      "source": "models.dev",
+      "provider_id": "google",
+      "open_weights": false,
+      "attachment": true,
+      "temperature": true,
+      "last_updated": "2026-02-26",
+      "cost": {
+        "input": 0.25,
+        "output": 60
+      },
+      "limit": {
+        "context": 131072,
+        "output": 32768
+      },
+      "knowledge": "2025-01"
     }
   },
   {
     "id": "gemini-3.1-flash-lite-preview",
     "name": "Gemini 3.1 Flash Lite Preview",
     "provider": "gemini",
-    "family": "other",
-    "created_at": null,
+    "family": "gemini-flash-lite",
+    "created_at": "2026-03-03 00:00:00 UTC",
     "context_window": 1048576,
     "max_output_tokens": 65536,
     "knowledge_cutoff": null,
@@ -21246,27 +21086,28 @@
       "input": [
         "text",
         "image",
-        "pdf",
-        "video"
+        "video",
+        "audio",
+        "pdf"
       ],
       "output": [
         "text"
       ]
     },
     "capabilities": [
-      "streaming",
+      "function_calling",
       "structured_output",
+      "reasoning",
+      "vision",
+      "streaming",
       "batch"
     ],
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.075,
-          "output_per_million": 0.3
-        },
-        "batch": {
-          "input_per_million": 0.0375,
-          "output_per_million": 0.15
+          "input_per_million": 0.25,
+          "output_per_million": 1.5,
+          "cached_input_per_million": 0.025
         }
       }
     },
@@ -21278,7 +21119,24 @@
         "countTokens",
         "createCachedContent",
         "batchGenerateContent"
-      ]
+      ],
+      "source": "models.dev",
+      "provider_id": "google",
+      "open_weights": false,
+      "attachment": true,
+      "temperature": true,
+      "last_updated": "2026-03-03",
+      "cost": {
+        "input": 0.25,
+        "output": 1.5,
+        "cache_read": 0.025,
+        "cache_write": 1
+      },
+      "limit": {
+        "context": 1048576,
+        "output": 65536
+      },
+      "knowledge": "2025-01"
     }
   },
   {
@@ -21473,6 +21331,52 @@
         "output": 3072
       },
       "knowledge": "2025-05"
+    }
+  },
+  {
+    "id": "gemini-embedding-2-preview",
+    "name": "Gemini Embedding 2 Preview",
+    "provider": "gemini",
+    "family": "other",
+    "created_at": null,
+    "context_window": 8192,
+    "max_output_tokens": 1,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "pdf",
+        "video"
+      ],
+      "output": [
+        "text",
+        "embeddings"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "batch",
+      "caching"
+    ],
+    "pricing": {
+      "embeddings": {
+        "standard": {
+          "input_per_million": 0.002
+        }
+      }
+    },
+    "metadata": {
+      "version": "2",
+      "description": "Obtain a distributed representation of multimodal content.",
+      "supported_generation_methods": [
+        "embedContent",
+        "countTextTokens",
+        "countTokens",
+        "asyncBatchEmbedContent"
+      ]
     }
   },
   {
@@ -22909,6 +22813,35 @@
     }
   },
   {
+    "id": "labs-leanstral-2603",
+    "name": "Labs Leanstral 2603",
+    "provider": "mistral",
+    "family": "mistral",
+    "created_at": null,
+    "context_window": 32768,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "batch"
+    ],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "owned_by": "mistralai"
+    }
+  },
+  {
     "id": "labs-mistral-small-creative",
     "name": "Mistral Small",
     "provider": "mistral",
@@ -24061,6 +23994,36 @@
     }
   },
   {
+    "id": "mistral-small-2603",
+    "name": "Mistral Small",
+    "provider": "mistral",
+    "family": "mistral-small",
+    "created_at": null,
+    "context_window": 32768,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "batch",
+      "fine_tuning"
+    ],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "owned_by": "mistralai"
+    }
+  },
+  {
     "id": "mistral-small-latest",
     "name": "Mistral Small (latest)",
     "provider": "mistral",
@@ -24112,6 +24075,35 @@
         "output": 16384
       },
       "knowledge": "2025-03"
+    }
+  },
+  {
+    "id": "mistral-squarepoint-2602",
+    "name": "Mistral Squarepoint 2602",
+    "provider": "mistral",
+    "family": "mistral",
+    "created_at": null,
+    "context_window": 32768,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "batch"
+    ],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "owned_by": "mistralai"
     }
   },
   {
@@ -24637,6 +24629,58 @@
     }
   },
   {
+    "id": "voxtral-mini-realtime-2602",
+    "name": "Voxtral Mini Realtime 2602",
+    "provider": "mistral",
+    "family": "mistral",
+    "created_at": null,
+    "context_window": 32768,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming"
+    ],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "owned_by": "mistralai"
+    }
+  },
+  {
+    "id": "voxtral-mini-realtime-latest",
+    "name": "Voxtral Mini Realtime Latest",
+    "provider": "mistral",
+    "family": "mistral",
+    "created_at": null,
+    "context_window": 32768,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming"
+    ],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "owned_by": "mistralai"
+    }
+  },
+  {
     "id": "voxtral-mini-transcribe-2507",
     "name": "Voxtral Mini Transcribe 2507",
     "provider": "mistral",
@@ -24655,6 +24699,58 @@
     },
     "capabilities": [
       "transcription"
+    ],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "owned_by": "mistralai"
+    }
+  },
+  {
+    "id": "voxtral-mini-transcribe-realtime-2602",
+    "name": "Voxtral Mini Transcribe Realtime 2602",
+    "provider": "mistral",
+    "family": "mistral",
+    "created_at": null,
+    "context_window": 32768,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "transcription"
+    ],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "owned_by": "mistralai"
+    }
+  },
+  {
+    "id": "voxtral-mini-tts-260213",
+    "name": "Voxtral Mini Tts 260213",
+    "provider": "mistral",
+    "family": "mistral",
+    "created_at": null,
+    "context_window": 32768,
+    "max_output_tokens": 8192,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming"
     ],
     "pricing": {},
     "metadata": {
@@ -28104,7 +28200,8 @@
     "modalities": {
       "input": [
         "text",
-        "image"
+        "image",
+        "pdf"
       ],
       "output": [
         "text"
@@ -28147,7 +28244,7 @@
       },
       "limit": {
         "context": 1050000,
-        "input": 272000,
+        "input": 922000,
         "output": 128000
       },
       "knowledge": "2025-08-31"
@@ -28244,7 +28341,7 @@
       },
       "limit": {
         "context": 1050000,
-        "input": 272000,
+        "input": 922000,
         "output": 128000
       },
       "knowledge": "2025-08-31"
@@ -33541,6 +33638,74 @@
     }
   },
   {
+    "id": "bytedance-seed/seed-2.0-lite",
+    "name": "ByteDance Seed: Seed-2.0-Lite",
+    "provider": "openrouter",
+    "family": "bytedance-seed",
+    "created_at": "2026-03-10 15:40:31 UTC",
+    "context_window": 262144,
+    "max_output_tokens": 131072,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "video"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.25,
+          "output_per_million": 2.0
+        }
+      }
+    },
+    "metadata": {
+      "description": "Seed-2.0-Lite is a versatile, cost‑efficient enterprise workhorse that delivers strong multimodal and agent capabilities while offering noticeably lower latency, making it a practical default choice for most production workloads across text, vision, and tools. Engineered for high-frequency visual understanding and agentic workflows, it's an ideal choice for deployment at scale with minimal latency.",
+      "architecture": {
+        "modality": "text+image+video->text",
+        "input_modalities": [
+          "text",
+          "image",
+          "video"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 262144,
+        "max_completion_tokens": 131072,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "frequency_penalty",
+        "include_reasoning",
+        "max_tokens",
+        "reasoning",
+        "response_format",
+        "stop",
+        "structured_outputs",
+        "temperature",
+        "tool_choice",
+        "tools",
+        "top_p"
+      ]
+    }
+  },
+  {
     "id": "bytedance-seed/seed-2.0-mini",
     "name": "ByteDance Seed: Seed-2.0-Mini",
     "provider": "openrouter",
@@ -34275,7 +34440,7 @@
         "standard": {
           "input_per_million": 0.19999999999999998,
           "output_per_million": 0.77,
-          "cached_input_per_million": 0.13
+          "cached_input_per_million": 0.135
         }
       }
     },
@@ -34294,7 +34459,7 @@
       },
       "top_provider": {
         "context_length": 163840,
-        "max_completion_tokens": 163840,
+        "max_completion_tokens": null,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -35013,8 +35178,7 @@
     "capabilities": [
       "function_calling",
       "structured_output",
-      "reasoning",
-      "streaming"
+      "reasoning"
     ],
     "pricing": {
       "text_tokens": {
@@ -35025,42 +35189,6 @@
       }
     },
     "metadata": {
-      "description": "DeepSeek-V3.1 Terminus is an update to [DeepSeek V3.1](/deepseek/deepseek-chat-v3.1) that maintains the model's original capabilities while addressing issues reported by users, including language consistency and agent capabilities, further optimizing the model's performance in coding and search agents. It is a large hybrid reasoning model (671B parameters, 37B active) that supports both thinking and non-thinking modes. It extends the DeepSeek-V3 base with a two-phase long-context training process, reaching up to 128K tokens, and uses FP8 microscaling for efficient inference. Users can control the reasoning behaviour with the `reasoning` `enabled` boolean. [Learn more in our docs](https://openrouter.ai/docs/use-cases/reasoning-tokens#enable-reasoning-with-default-config)\n\nThe model improves tool use, code generation, and reasoning efficiency, achieving performance comparable to DeepSeek-R1 on difficult benchmarks while responding more quickly. It supports structured tool calling, code agents, and search agents, making it suitable for research, coding, and agentic workflows. ",
-      "architecture": {
-        "modality": "text->text",
-        "input_modalities": [
-          "text"
-        ],
-        "output_modalities": [
-          "text"
-        ],
-        "tokenizer": "DeepSeek",
-        "instruct_type": "deepseek-v3.1"
-      },
-      "top_provider": {
-        "context_length": 163840,
-        "max_completion_tokens": null,
-        "is_moderated": false
-      },
-      "per_request_limits": null,
-      "supported_parameters": [
-        "frequency_penalty",
-        "include_reasoning",
-        "max_tokens",
-        "min_p",
-        "presence_penalty",
-        "reasoning",
-        "repetition_penalty",
-        "response_format",
-        "seed",
-        "stop",
-        "structured_outputs",
-        "temperature",
-        "tool_choice",
-        "tools",
-        "top_k",
-        "top_p"
-      ],
       "source": "models.dev",
       "provider_id": "openrouter",
       "open_weights": true,
@@ -35125,7 +35253,7 @@
       },
       "top_provider": {
         "context_length": 163840,
-        "max_completion_tokens": 65536,
+        "max_completion_tokens": null,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -36711,10 +36839,10 @@
   },
   {
     "id": "google/gemini-3.1-flash-lite-preview",
-    "name": "Google: Gemini 3.1 Flash Lite Preview",
+    "name": "Gemini 3.1 Flash Lite Preview",
     "provider": "openrouter",
-    "family": "google",
-    "created_at": "2026-03-03 04:37:53 UTC",
+    "family": "gemini-flash-lite",
+    "created_at": "2026-03-03 00:00:00 UTC",
     "context_window": 1048576,
     "max_output_tokens": 65536,
     "knowledge_cutoff": null,
@@ -36723,7 +36851,7 @@
         "text",
         "image",
         "video",
-        "file",
+        "pdf",
         "audio"
       ],
       "output": [
@@ -36731,17 +36859,25 @@
       ]
     },
     "capabilities": [
-      "streaming",
       "function_calling",
-      "structured_output"
+      "structured_output",
+      "reasoning",
+      "vision",
+      "streaming"
     ],
     "pricing": {
       "text_tokens": {
         "standard": {
           "input_per_million": 0.25,
           "output_per_million": 1.5,
-          "cached_input_per_million": 0.024999999999999998,
+          "cached_input_per_million": 0.025,
           "reasoning_output_per_million": 1.5
+        }
+      },
+      "audio_tokens": {
+        "standard": {
+          "input_per_million": 0.5,
+          "output_per_million": 0.5
         }
       }
     },
@@ -36780,7 +36916,26 @@
         "tool_choice",
         "tools",
         "top_p"
-      ]
+      ],
+      "source": "models.dev",
+      "provider_id": "openrouter",
+      "open_weights": false,
+      "attachment": true,
+      "temperature": true,
+      "last_updated": "2026-03-03",
+      "cost": {
+        "input": 0.25,
+        "output": 1.5,
+        "reasoning": 1.5,
+        "cache_read": 0.025,
+        "cache_write": 0.083,
+        "input_audio": 0.5,
+        "output_audio": 0.5
+      },
+      "limit": {
+        "context": 1048576,
+        "output": 65536
+      }
     }
   },
   {
@@ -37911,10 +38066,10 @@
   },
   {
     "id": "inception/mercury",
-    "name": "Inception: Mercury",
+    "name": "Mercury",
     "provider": "openrouter",
-    "family": "inception",
-    "created_at": "2025-06-26 21:23:46 UTC",
+    "family": "mercury",
+    "created_at": "2025-06-26 00:00:00 UTC",
     "context_window": 128000,
     "max_output_tokens": 32000,
     "knowledge_cutoff": null,
@@ -37927,16 +38082,16 @@
       ]
     },
     "capabilities": [
-      "streaming",
       "function_calling",
-      "structured_output"
+      "structured_output",
+      "streaming"
     ],
     "pricing": {
       "text_tokens": {
         "standard": {
           "input_per_million": 0.25,
           "output_per_million": 0.75,
-          "cached_input_per_million": 0.024999999999999998
+          "cached_input_per_million": 0.025
         }
       }
     },
@@ -37967,15 +38122,30 @@
         "temperature",
         "tool_choice",
         "tools"
-      ]
+      ],
+      "source": "models.dev",
+      "provider_id": "openrouter",
+      "open_weights": false,
+      "attachment": false,
+      "temperature": true,
+      "last_updated": "2025-06-26",
+      "cost": {
+        "input": 0.25,
+        "output": 0.75,
+        "cache_read": 0.025
+      },
+      "limit": {
+        "context": 128000,
+        "output": 32000
+      }
     }
   },
   {
     "id": "inception/mercury-2",
-    "name": "Inception: Mercury 2",
+    "name": "Mercury 2",
     "provider": "openrouter",
-    "family": "inception",
-    "created_at": "2026-03-04 14:57:55 UTC",
+    "family": "mercury",
+    "created_at": "2026-03-04 00:00:00 UTC",
     "context_window": 128000,
     "max_output_tokens": 50000,
     "knowledge_cutoff": null,
@@ -37988,16 +38158,17 @@
       ]
     },
     "capabilities": [
-      "streaming",
       "function_calling",
-      "structured_output"
+      "structured_output",
+      "reasoning",
+      "streaming"
     ],
     "pricing": {
       "text_tokens": {
         "standard": {
           "input_per_million": 0.25,
           "output_per_million": 0.75,
-          "cached_input_per_million": 0.024999999999999998
+          "cached_input_per_million": 0.025
         }
       }
     },
@@ -38030,15 +38201,30 @@
         "temperature",
         "tool_choice",
         "tools"
-      ]
+      ],
+      "source": "models.dev",
+      "provider_id": "openrouter",
+      "open_weights": false,
+      "attachment": false,
+      "temperature": true,
+      "last_updated": "2026-03-04",
+      "cost": {
+        "input": 0.25,
+        "output": 0.75,
+        "cache_read": 0.025
+      },
+      "limit": {
+        "context": 128000,
+        "output": 50000
+      }
     }
   },
   {
     "id": "inception/mercury-coder",
-    "name": "Inception: Mercury Coder",
+    "name": "Mercury Coder",
     "provider": "openrouter",
-    "family": "inception",
-    "created_at": "2025-04-30 17:24:40 UTC",
+    "family": "mercury",
+    "created_at": "2025-04-30 00:00:00 UTC",
     "context_window": 128000,
     "max_output_tokens": 32000,
     "knowledge_cutoff": null,
@@ -38051,16 +38237,16 @@
       ]
     },
     "capabilities": [
-      "streaming",
       "function_calling",
-      "structured_output"
+      "structured_output",
+      "streaming"
     ],
     "pricing": {
       "text_tokens": {
         "standard": {
           "input_per_million": 0.25,
           "output_per_million": 0.75,
-          "cached_input_per_million": 0.024999999999999998
+          "cached_input_per_million": 0.025
         }
       }
     },
@@ -38091,7 +38277,22 @@
         "temperature",
         "tool_choice",
         "tools"
-      ]
+      ],
+      "source": "models.dev",
+      "provider_id": "openrouter",
+      "open_weights": false,
+      "attachment": false,
+      "temperature": true,
+      "last_updated": "2025-04-30",
+      "cost": {
+        "input": 0.25,
+        "output": 0.75,
+        "cache_read": 0.025
+      },
+      "limit": {
+        "context": 128000,
+        "output": 32000
+      }
     }
   },
   {
@@ -38972,75 +39173,6 @@
     }
   },
   {
-    "id": "meta-llama/llama-3.1-405b-instruct",
-    "name": "Meta: Llama 3.1 405B Instruct",
-    "provider": "openrouter",
-    "family": "meta-llama",
-    "created_at": "2024-07-23 00:00:00 UTC",
-    "context_window": 131000,
-    "max_output_tokens": null,
-    "knowledge_cutoff": null,
-    "modalities": {
-      "input": [
-        "text"
-      ],
-      "output": [
-        "text"
-      ]
-    },
-    "capabilities": [
-      "streaming",
-      "function_calling",
-      "structured_output",
-      "predicted_outputs"
-    ],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "input_per_million": 4.0,
-          "output_per_million": 4.0
-        }
-      }
-    },
-    "metadata": {
-      "description": "The highly anticipated 400B class of Llama3 is here! Clocking in at 128k context with impressive eval scores, the Meta AI team continues to push the frontier of open-source LLMs.\n\nMeta's latest class of model (Llama 3.1) launched with a variety of sizes & flavors. This 405B instruct-tuned version is optimized for high quality dialogue usecases.\n\nIt has demonstrated strong performance compared to leading closed-source models including GPT-4o and Claude 3.5 Sonnet in evaluations.\n\nTo read more about the model release, [click here](https://ai.meta.com/blog/meta-llama-3-1/). Usage of this model is subject to [Meta's Acceptable Use Policy](https://llama.meta.com/llama3/use-policy/).",
-      "architecture": {
-        "modality": "text->text",
-        "input_modalities": [
-          "text"
-        ],
-        "output_modalities": [
-          "text"
-        ],
-        "tokenizer": "Llama3",
-        "instruct_type": "llama3"
-      },
-      "top_provider": {
-        "context_length": 131000,
-        "max_completion_tokens": null,
-        "is_moderated": false
-      },
-      "per_request_limits": null,
-      "supported_parameters": [
-        "frequency_penalty",
-        "logit_bias",
-        "max_tokens",
-        "min_p",
-        "presence_penalty",
-        "repetition_penalty",
-        "response_format",
-        "seed",
-        "stop",
-        "structured_outputs",
-        "temperature",
-        "tool_choice",
-        "tools",
-        "top_k",
-        "top_p"
-      ]
-    }
-  },
-  {
     "id": "meta-llama/llama-3.1-405b-instruct:free",
     "name": "Llama 3.1 405B Instruct (free)",
     "provider": "openrouter",
@@ -39165,8 +39297,7 @@
     "capabilities": [
       "streaming",
       "function_calling",
-      "structured_output",
-      "predicted_outputs"
+      "structured_output"
     ],
     "pricing": {
       "text_tokens": {
@@ -39197,7 +39328,6 @@
       "per_request_limits": null,
       "supported_parameters": [
         "frequency_penalty",
-        "logit_bias",
         "logprobs",
         "max_tokens",
         "min_p",
@@ -39374,8 +39504,7 @@
       ]
     },
     "capabilities": [
-      "streaming",
-      "predicted_outputs"
+      "streaming"
     ],
     "pricing": {
       "text_tokens": {
@@ -39406,13 +39535,10 @@
       "per_request_limits": null,
       "supported_parameters": [
         "frequency_penalty",
-        "logit_bias",
         "max_tokens",
-        "min_p",
         "presence_penalty",
         "repetition_penalty",
         "seed",
-        "stop",
         "temperature",
         "top_k",
         "top_p"
@@ -39809,68 +39935,6 @@
         "output": 64000
       },
       "knowledge": "2024-08"
-    }
-  },
-  {
-    "id": "meta-llama/llama-guard-2-8b",
-    "name": "Meta: LlamaGuard 2 8B",
-    "provider": "openrouter",
-    "family": "meta-llama",
-    "created_at": "2024-05-13 00:00:00 UTC",
-    "context_window": 8192,
-    "max_output_tokens": null,
-    "knowledge_cutoff": null,
-    "modalities": {
-      "input": [
-        "text"
-      ],
-      "output": [
-        "text"
-      ]
-    },
-    "capabilities": [
-      "streaming",
-      "predicted_outputs"
-    ],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "input_per_million": 0.19999999999999998,
-          "output_per_million": 0.19999999999999998
-        }
-      }
-    },
-    "metadata": {
-      "description": "This safeguard model has 8B parameters and is based on the Llama 3 family. Just like is predecessor, [LlamaGuard 1](https://huggingface.co/meta-llama/LlamaGuard-7b), it can do both prompt and response classification.\n\nLlamaGuard 2 acts as a normal LLM would, generating text that indicates whether the given input/output is safe/unsafe. If deemed unsafe, it will also share the content categories violated.\n\nFor best results, please use raw prompt input or the `/completions` endpoint, instead of the chat API.\n\nIt has demonstrated strong performance compared to leading closed-source models in human evaluations.\n\nTo read more about the model release, [click here](https://ai.meta.com/blog/meta-llama-3/). Usage of this model is subject to [Meta's Acceptable Use Policy](https://llama.meta.com/llama3/use-policy/).",
-      "architecture": {
-        "modality": "text->text",
-        "input_modalities": [
-          "text"
-        ],
-        "output_modalities": [
-          "text"
-        ],
-        "tokenizer": "Llama3",
-        "instruct_type": "none"
-      },
-      "top_provider": {
-        "context_length": 8192,
-        "max_completion_tokens": null,
-        "is_moderated": false
-      },
-      "per_request_limits": null,
-      "supported_parameters": [
-        "frequency_penalty",
-        "logit_bias",
-        "max_tokens",
-        "min_p",
-        "presence_penalty",
-        "repetition_penalty",
-        "stop",
-        "temperature",
-        "top_k",
-        "top_p"
-      ]
     }
   },
   {
@@ -40652,6 +40716,60 @@
     }
   },
   {
+    "id": "minimax/minimax-m2.5:free",
+    "name": "MiniMax: MiniMax M2.5 (free)",
+    "provider": "openrouter",
+    "family": "minimax",
+    "created_at": "2026-02-12 15:01:42 UTC",
+    "context_window": 196608,
+    "max_output_tokens": 196608,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output"
+    ],
+    "pricing": {},
+    "metadata": {
+      "description": "MiniMax-M2.5 is a SOTA large language model designed for real-world productivity. Trained in a diverse range of complex real-world digital working environments, M2.5 builds upon the coding expertise of M2.1 to extend into general office work, reaching fluency in generating and operating Word, Excel, and Powerpoint files, context switching between diverse software environments, and working across different agent and human teams. Scoring 80.2% on SWE-Bench Verified, 51.3% on Multi-SWE-Bench, and 76.3% on BrowseComp, M2.5 is also more token efficient than previous generations, having been trained to optimize its actions and output through planning.",
+      "architecture": {
+        "modality": "text->text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 196608,
+        "max_completion_tokens": 196608,
+        "is_moderated": true
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "include_reasoning",
+        "max_tokens",
+        "reasoning",
+        "response_format",
+        "seed",
+        "stop",
+        "temperature",
+        "tools"
+      ]
+    }
+  },
+  {
     "id": "mistralai/codestral-2508",
     "name": "Codestral 2508",
     "provider": "openrouter",
@@ -41208,8 +41326,10 @@
       "per_request_limits": null,
       "supported_parameters": [
         "frequency_penalty",
+        "logprobs",
         "max_tokens",
         "presence_penalty",
+        "repetition_penalty",
         "response_format",
         "seed",
         "stop",
@@ -41217,6 +41337,7 @@
         "temperature",
         "tool_choice",
         "tools",
+        "top_logprobs",
         "top_p"
       ]
     }
@@ -41274,8 +41395,10 @@
       "per_request_limits": null,
       "supported_parameters": [
         "frequency_penalty",
+        "logprobs",
         "max_tokens",
         "presence_penalty",
+        "repetition_penalty",
         "response_format",
         "seed",
         "stop",
@@ -41283,6 +41406,7 @@
         "temperature",
         "tool_choice",
         "tools",
+        "top_logprobs",
         "top_p"
       ]
     }
@@ -41340,8 +41464,10 @@
       "per_request_limits": null,
       "supported_parameters": [
         "frequency_penalty",
+        "logprobs",
         "max_tokens",
         "presence_penalty",
+        "repetition_penalty",
         "response_format",
         "seed",
         "stop",
@@ -41349,6 +41475,7 @@
         "temperature",
         "tool_choice",
         "tools",
+        "top_logprobs",
         "top_p"
       ]
     }
@@ -42926,8 +43053,7 @@
     },
     "capabilities": [
       "function_calling",
-      "structured_output",
-      "streaming"
+      "structured_output"
     ],
     "pricing": {
       "text_tokens": {
@@ -42938,37 +43064,6 @@
       }
     },
     "metadata": {
-      "description": "Kimi K2 0905 is the September update of [Kimi K2 0711](moonshotai/kimi-k2). It is a large-scale Mixture-of-Experts (MoE) language model developed by Moonshot AI, featuring 1 trillion total parameters with 32 billion active per forward pass. It supports long-context inference up to 256k tokens, extended from the previous 128k.\n\nThis update improves agentic coding with higher accuracy and better generalization across scaffolds, and enhances frontend coding with more aesthetic and functional outputs for web, 3D, and related tasks. Kimi K2 is optimized for agentic capabilities, including advanced tool use, reasoning, and code synthesis. It excels across coding (LiveCodeBench, SWE-bench), reasoning (ZebraLogic, GPQA), and tool-use (Tau2, AceBench) benchmarks. The model is trained with a novel stack incorporating the MuonClip optimizer for stable large-scale MoE training.",
-      "architecture": {
-        "modality": "text->text",
-        "input_modalities": [
-          "text"
-        ],
-        "output_modalities": [
-          "text"
-        ],
-        "tokenizer": "Other",
-        "instruct_type": null
-      },
-      "top_provider": {
-        "context_length": 262144,
-        "max_completion_tokens": null,
-        "is_moderated": false
-      },
-      "per_request_limits": null,
-      "supported_parameters": [
-        "frequency_penalty",
-        "max_tokens",
-        "presence_penalty",
-        "response_format",
-        "seed",
-        "stop",
-        "structured_outputs",
-        "temperature",
-        "tool_choice",
-        "tools",
-        "top_p"
-      ],
       "source": "models.dev",
       "provider_id": "openrouter",
       "open_weights": true,
@@ -43144,7 +43239,6 @@
         "parallel_tool_calls",
         "presence_penalty",
         "reasoning",
-        "reasoning_effort",
         "repetition_penalty",
         "response_format",
         "seed",
@@ -43322,128 +43416,6 @@
         "max_tokens",
         "stop",
         "temperature"
-      ]
-    }
-  },
-  {
-    "id": "neversleep/llama-3.1-lumimaid-8b",
-    "name": "NeverSleep: Lumimaid v0.2 8B",
-    "provider": "openrouter",
-    "family": "neversleep",
-    "created_at": "2024-09-15 00:00:00 UTC",
-    "context_window": 32768,
-    "max_output_tokens": 4096,
-    "knowledge_cutoff": null,
-    "modalities": {
-      "input": [
-        "text"
-      ],
-      "output": [
-        "text"
-      ]
-    },
-    "capabilities": [
-      "streaming",
-      "structured_output"
-    ],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "input_per_million": 0.09,
-          "output_per_million": 0.6
-        }
-      }
-    },
-    "metadata": {
-      "description": "Lumimaid v0.2 8B is a finetune of [Llama 3.1 8B](/models/meta-llama/llama-3.1-8b-instruct) with a \"HUGE step up dataset wise\" compared to Lumimaid v0.1. Sloppy chats output were purged.\n\nUsage of this model is subject to [Meta's Acceptable Use Policy](https://llama.meta.com/llama3/use-policy/).",
-      "architecture": {
-        "modality": "text->text",
-        "input_modalities": [
-          "text"
-        ],
-        "output_modalities": [
-          "text"
-        ],
-        "tokenizer": "Llama3",
-        "instruct_type": "llama3"
-      },
-      "top_provider": {
-        "context_length": 32768,
-        "max_completion_tokens": 4096,
-        "is_moderated": false
-      },
-      "per_request_limits": null,
-      "supported_parameters": [
-        "frequency_penalty",
-        "logprobs",
-        "max_tokens",
-        "presence_penalty",
-        "response_format",
-        "stop",
-        "structured_outputs",
-        "temperature",
-        "top_logprobs",
-        "top_p"
-      ]
-    }
-  },
-  {
-    "id": "neversleep/noromaid-20b",
-    "name": "Noromaid 20B",
-    "provider": "openrouter",
-    "family": "neversleep",
-    "created_at": "2023-11-26 00:00:00 UTC",
-    "context_window": 4096,
-    "max_output_tokens": 2048,
-    "knowledge_cutoff": null,
-    "modalities": {
-      "input": [
-        "text"
-      ],
-      "output": [
-        "text"
-      ]
-    },
-    "capabilities": [
-      "streaming",
-      "structured_output"
-    ],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "input_per_million": 1.0,
-          "output_per_million": 1.75
-        }
-      }
-    },
-    "metadata": {
-      "description": "A collab between IkariDev and Undi. This merge is suitable for RP, ERP, and general knowledge.\n\n#merge #uncensored",
-      "architecture": {
-        "modality": "text->text",
-        "input_modalities": [
-          "text"
-        ],
-        "output_modalities": [
-          "text"
-        ],
-        "tokenizer": "Llama2",
-        "instruct_type": "alpaca"
-      },
-      "top_provider": {
-        "context_length": 4096,
-        "max_completion_tokens": 2048,
-        "is_moderated": false
-      },
-      "per_request_limits": null,
-      "supported_parameters": [
-        "frequency_penalty",
-        "max_tokens",
-        "presence_penalty",
-        "response_format",
-        "stop",
-        "structured_outputs",
-        "temperature",
-        "top_p"
       ]
     }
   },
@@ -43747,8 +43719,8 @@
     "provider": "openrouter",
     "family": "nousresearch",
     "created_at": "2024-08-18 00:00:00 UTC",
-    "context_window": 65536,
-    "max_output_tokens": 65536,
+    "context_window": 131072,
+    "max_output_tokens": null,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -43784,14 +43756,13 @@
         "instruct_type": "chatml"
       },
       "top_provider": {
-        "context_length": 65536,
-        "max_completion_tokens": 65536,
+        "context_length": 131072,
+        "max_completion_tokens": null,
         "is_moderated": false
       },
       "per_request_limits": null,
       "supported_parameters": [
         "frequency_penalty",
-        "logprobs",
         "max_tokens",
         "min_p",
         "presence_penalty",
@@ -43799,10 +43770,8 @@
         "response_format",
         "seed",
         "stop",
-        "structured_outputs",
         "temperature",
         "top_k",
-        "top_logprobs",
         "top_p"
       ]
     }
@@ -44235,6 +44204,62 @@
         "output": 256000
       },
       "knowledge": "2025-11"
+    }
+  },
+  {
+    "id": "nvidia/nemotron-3-super-120b-a12b:free",
+    "name": "NVIDIA: Nemotron 3 Super (free)",
+    "provider": "openrouter",
+    "family": "nvidia",
+    "created_at": "2026-03-11 16:07:19 UTC",
+    "context_window": 262144,
+    "max_output_tokens": 262144,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output"
+    ],
+    "pricing": {},
+    "metadata": {
+      "description": "NVIDIA Nemotron 3 Super is a 120B-parameter open hybrid MoE model, activating just 12B parameters for maximum compute efficiency and accuracy in complex multi-agent applications. Built on a hybrid Mamba-Transformer Mixture-of-Experts architecture with multi-token prediction (MTP), it delivers over 50% higher token generation compared to leading open models.\n \nThe model features a 1M token context window for long-term agent coherence, cross-document reasoning, and multi-step task planning. Latent MoE enables calling 4 experts for the inference cost of only one, improving intelligence and generalization. Multi-environment RL training across 10+ environments delivers leading accuracy on benchmarks including AIME 2025, TerminalBench, and SWE-Bench Verified.\n \nFully open with weights, datasets, and recipes under the NVIDIA Open License, Nemotron 3 Super allows easy customization and secure deployment anywhere — from workstation to cloud.",
+      "architecture": {
+        "modality": "text->text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": "nemotron"
+      },
+      "top_provider": {
+        "context_length": 262144,
+        "max_completion_tokens": 262144,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "include_reasoning",
+        "max_tokens",
+        "reasoning",
+        "response_format",
+        "seed",
+        "structured_outputs",
+        "temperature",
+        "tool_choice",
+        "tools",
+        "top_p"
+      ]
     }
   },
   {
@@ -47519,18 +47544,12 @@
       },
       "per_request_limits": null,
       "supported_parameters": [
-        "frequency_penalty",
-        "logit_bias",
-        "logprobs",
         "max_tokens",
-        "presence_penalty",
         "response_format",
         "seed",
-        "stop",
         "structured_outputs",
         "tool_choice",
-        "tools",
-        "top_logprobs"
+        "tools"
       ]
     }
   },
@@ -47572,10 +47591,11 @@
     "metadata": {
       "description": "GPT-5.3-Codex is OpenAI’s most advanced agentic coding model, combining the frontier software engineering performance of GPT-5.2-Codex with the broader reasoning and professional knowledge capabilities of GPT-5.2. It achieves state-of-the-art results on SWE-Bench Pro and strong performance on Terminal-Bench 2.0 and OSWorld-Verified, reflecting improved multi-language coding, terminal proficiency, and real-world computer-use skills. The model is optimized for long-running, tool-using workflows and supports interactive steering during execution, making it suitable for complex development tasks, debugging, deployment, and iterative product work.\n\nBeyond coding, GPT-5.3-Codex performs strongly on structured knowledge-work benchmarks such as GDPval, supporting tasks like document drafting, spreadsheet analysis, slide creation, and operational research across domains. It is trained with enhanced cybersecurity awareness, including vulnerability identification capabilities, and deployed with additional safeguards for high-risk use cases. Compared to prior Codex models, it is more token-efficient and approximately 25% faster, targeting professional end-to-end workflows that span reasoning, execution, and computer interaction.",
       "architecture": {
-        "modality": "text+image->text",
+        "modality": "text+image+file->text",
         "input_modalities": [
           "text",
-          "image"
+          "image",
+          "file"
         ],
         "output_modalities": [
           "text"
@@ -47674,20 +47694,14 @@
       },
       "per_request_limits": null,
       "supported_parameters": [
-        "frequency_penalty",
         "include_reasoning",
-        "logit_bias",
-        "logprobs",
         "max_tokens",
-        "presence_penalty",
         "reasoning",
         "response_format",
         "seed",
-        "stop",
         "structured_outputs",
         "tool_choice",
-        "tools",
-        "top_logprobs"
+        "tools"
       ],
       "source": "models.dev",
       "provider_id": "openrouter",
@@ -47770,20 +47784,14 @@
       },
       "per_request_limits": null,
       "supported_parameters": [
-        "frequency_penalty",
         "include_reasoning",
-        "logit_bias",
-        "logprobs",
         "max_tokens",
-        "presence_penalty",
         "reasoning",
         "response_format",
         "seed",
-        "stop",
         "structured_outputs",
         "tool_choice",
-        "tools",
-        "top_logprobs"
+        "tools"
       ],
       "source": "models.dev",
       "provider_id": "openrouter",
@@ -47798,7 +47806,7 @@
       },
       "limit": {
         "context": 1050000,
-        "input": 272000,
+        "input": 922000,
         "output": 128000
       },
       "knowledge": "2025-08-31"
@@ -48049,8 +48057,7 @@
     "capabilities": [
       "function_calling",
       "structured_output",
-      "reasoning",
-      "streaming"
+      "reasoning"
     ],
     "pricing": {
       "text_tokens": {
@@ -48061,42 +48068,6 @@
       }
     },
     "metadata": {
-      "description": "gpt-oss-120b is an open-weight, 117B-parameter Mixture-of-Experts (MoE) language model from OpenAI designed for high-reasoning, agentic, and general-purpose production use cases. It activates 5.1B parameters per forward pass and is optimized to run on a single H100 GPU with native MXFP4 quantization. The model supports configurable reasoning depth, full chain-of-thought access, and native tool use, including function calling, browsing, and structured output generation.",
-      "architecture": {
-        "modality": "text->text",
-        "input_modalities": [
-          "text"
-        ],
-        "output_modalities": [
-          "text"
-        ],
-        "tokenizer": "GPT",
-        "instruct_type": null
-      },
-      "top_provider": {
-        "context_length": 131072,
-        "max_completion_tokens": null,
-        "is_moderated": false
-      },
-      "per_request_limits": null,
-      "supported_parameters": [
-        "frequency_penalty",
-        "include_reasoning",
-        "max_tokens",
-        "min_p",
-        "presence_penalty",
-        "reasoning",
-        "repetition_penalty",
-        "response_format",
-        "seed",
-        "stop",
-        "structured_outputs",
-        "temperature",
-        "tool_choice",
-        "tools",
-        "top_k",
-        "top_p"
-      ],
       "source": "models.dev",
       "provider_id": "openrouter",
       "open_weights": true,
@@ -49258,9 +49229,9 @@
     "name": "Free Models Router",
     "provider": "openrouter",
     "family": "openrouter",
-    "created_at": "2026-02-01 03:43:47 UTC",
+    "created_at": "2026-02-01 00:00:00 UTC",
     "context_window": 200000,
-    "max_output_tokens": null,
+    "max_output_tokens": 8000,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -49272,9 +49243,11 @@
       ]
     },
     "capabilities": [
-      "streaming",
       "function_calling",
-      "structured_output"
+      "structured_output",
+      "reasoning",
+      "vision",
+      "streaming"
     ],
     "pricing": {},
     "metadata": {
@@ -49314,7 +49287,185 @@
         "tools",
         "top_k",
         "top_p"
+      ],
+      "source": "models.dev",
+      "provider_id": "openrouter",
+      "open_weights": false,
+      "attachment": true,
+      "temperature": true,
+      "last_updated": "2026-02-01",
+      "cost": {
+        "input": 0,
+        "output": 0
+      },
+      "limit": {
+        "context": 200000,
+        "input": 200000,
+        "output": 8000
+      }
+    }
+  },
+  {
+    "id": "openrouter/healer-alpha",
+    "name": "Healer Alpha",
+    "provider": "openrouter",
+    "family": "alpha",
+    "created_at": "2026-03-11 00:00:00 UTC",
+    "context_window": 262144,
+    "max_output_tokens": 64000,
+    "knowledge_cutoff": "2026-03-11",
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "audio",
+        "pdf"
+      ],
+      "output": [
+        "text"
       ]
+    },
+    "capabilities": [
+      "function_calling",
+      "structured_output",
+      "reasoning",
+      "vision",
+      "streaming"
+    ],
+    "pricing": {},
+    "metadata": {
+      "description": "Healer Alpha is a frontier omni-modal model with vision, hearing, reasoning, and action capabilities. It brings the full power of agentic intelligence into the real world: natively perceiving visual and audio inputs, reasoning across modalities, and executing complex multi-step tasks with precision and reliability.\n\n**Note:** All prompts and completions for this model are logged by the provider and may be used to improve the model.",
+      "architecture": {
+        "modality": "text+image+audio+video->text",
+        "input_modalities": [
+          "text",
+          "image",
+          "audio",
+          "video"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 262144,
+        "max_completion_tokens": 32000,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "frequency_penalty",
+        "include_reasoning",
+        "max_tokens",
+        "presence_penalty",
+        "reasoning",
+        "response_format",
+        "stop",
+        "temperature",
+        "tool_choice",
+        "tools",
+        "top_p"
+      ],
+      "source": "models.dev",
+      "provider_id": "openrouter",
+      "open_weights": false,
+      "attachment": true,
+      "temperature": true,
+      "last_updated": "2026-03-11",
+      "interleaved": {
+        "field": "reasoning_details"
+      },
+      "cost": {
+        "input": 0,
+        "output": 0
+      },
+      "limit": {
+        "context": 262144,
+        "output": 64000
+      },
+      "knowledge": "2026-03-11"
+    }
+  },
+  {
+    "id": "openrouter/hunter-alpha",
+    "name": "Hunter Alpha",
+    "provider": "openrouter",
+    "family": "alpha",
+    "created_at": "2026-03-11 00:00:00 UTC",
+    "context_window": 1048576,
+    "max_output_tokens": 64000,
+    "knowledge_cutoff": "2026-03-11",
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "pdf"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "structured_output",
+      "reasoning",
+      "vision",
+      "streaming"
+    ],
+    "pricing": {},
+    "metadata": {
+      "description": "Hunter Alpha is a 1 Trillion parameter + 1M token context frontier intelligence model built for agentic use. It excels at long-horizon planning, complex reasoning, and sustained multi-step task execution, with the reliability and instruction-following precision that frameworks like OpenClaw need.\n\n**Note:** All prompts and completions for this model are logged by the provider and may be used to improve the model.",
+      "architecture": {
+        "modality": "text+image->text",
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 1048576,
+        "max_completion_tokens": 32000,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "frequency_penalty",
+        "include_reasoning",
+        "max_tokens",
+        "presence_penalty",
+        "reasoning",
+        "response_format",
+        "stop",
+        "temperature",
+        "tool_choice",
+        "tools",
+        "top_p"
+      ],
+      "source": "models.dev",
+      "provider_id": "openrouter",
+      "open_weights": false,
+      "attachment": true,
+      "temperature": true,
+      "last_updated": "2026-03-11",
+      "interleaved": {
+        "field": "reasoning_details"
+      },
+      "cost": {
+        "input": 0,
+        "output": 0
+      },
+      "limit": {
+        "context": 1048576,
+        "output": 64000
+      },
+      "knowledge": "2026-03-11"
     }
   },
   {
@@ -49946,14 +50097,13 @@
     },
     "capabilities": [
       "structured_output",
-      "streaming",
-      "predicted_outputs"
+      "streaming"
     ],
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.2,
-          "output_per_million": 0.2
+          "input_per_million": 0.66,
+          "output_per_million": 1.0
         }
       }
     },
@@ -49972,19 +50122,16 @@
       },
       "top_provider": {
         "context_length": 32768,
-        "max_completion_tokens": 8192,
+        "max_completion_tokens": null,
         "is_moderated": false
       },
       "per_request_limits": null,
       "supported_parameters": [
         "frequency_penalty",
-        "logit_bias",
         "max_tokens",
-        "min_p",
         "presence_penalty",
         "repetition_penalty",
         "seed",
-        "stop",
         "temperature",
         "top_k",
         "top_p"
@@ -50199,9 +50346,9 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.39999999999999997,
-          "output_per_million": 1.2,
-          "cached_input_per_million": 0.08
+          "input_per_million": 0.26,
+          "output_per_million": 0.78,
+          "cached_input_per_million": 0.052000000000000005
         }
       }
     },
@@ -50450,8 +50597,8 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.7999999999999999,
-          "output_per_million": 3.1999999999999997
+          "input_per_million": 0.52,
+          "output_per_million": 2.08
         }
       }
     },
@@ -52276,8 +52423,7 @@
     },
     "capabilities": [
       "function_calling",
-      "structured_output",
-      "streaming"
+      "structured_output"
     ],
     "pricing": {
       "text_tokens": {
@@ -52288,36 +52434,6 @@
       }
     },
     "metadata": {
-      "description": "Qwen3-Coder-480B-A35B-Instruct is a Mixture-of-Experts (MoE) code generation model developed by the Qwen team. It is optimized for agentic coding tasks such as function calling, tool use, and long-context reasoning over repositories. The model features 480 billion total parameters, with 35 billion active per forward pass (8 out of 160 experts).\n\nPricing for the Alibaba endpoints varies by context length. Once a request is greater than 128k input tokens, the higher pricing is used.",
-      "architecture": {
-        "modality": "text->text",
-        "input_modalities": [
-          "text"
-        ],
-        "output_modalities": [
-          "text"
-        ],
-        "tokenizer": "Qwen3",
-        "instruct_type": null
-      },
-      "top_provider": {
-        "context_length": 262144,
-        "max_completion_tokens": 65536,
-        "is_moderated": false
-      },
-      "per_request_limits": null,
-      "supported_parameters": [
-        "max_tokens",
-        "repetition_penalty",
-        "response_format",
-        "seed",
-        "structured_outputs",
-        "temperature",
-        "tool_choice",
-        "tools",
-        "top_k",
-        "top_p"
-      ],
       "source": "models.dev",
       "provider_id": "openrouter",
       "open_weights": true,
@@ -52589,7 +52705,7 @@
         "instruct_type": null
       },
       "top_provider": {
-        "context_length": 262144,
+        "context_length": 131072,
         "max_completion_tokens": null,
         "is_moderated": false
       },
@@ -52746,8 +52862,8 @@
         "instruct_type": null
       },
       "top_provider": {
-        "context_length": 128000,
-        "max_completion_tokens": null,
+        "context_length": 131072,
+        "max_completion_tokens": 32768,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -52843,6 +52959,7 @@
       "supported_parameters": [
         "frequency_penalty",
         "logit_bias",
+        "logprobs",
         "max_tokens",
         "min_p",
         "presence_penalty",
@@ -52855,6 +52972,7 @@
         "tool_choice",
         "tools",
         "top_k",
+        "top_logprobs",
         "top_p"
       ]
     }
@@ -52882,7 +53000,14 @@
       "function_calling",
       "structured_output"
     ],
-    "pricing": {},
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.26,
+          "output_per_million": 2.6
+        }
+      }
+    },
     "metadata": {
       "description": "Qwen3-VL-235B-A22B Thinking is a multimodal model that unifies strong text generation with visual understanding across images and video. The Thinking model is optimized for multimodal reasoning in STEM and math. The series emphasizes robust perception (recognition of diverse real-world and synthetic categories), spatial understanding (2D/3D grounding), and long-form visual comprehension, with competitive results on public multimodal benchmarks for both perception and reasoning.\n\nBeyond analysis, Qwen3-VL supports agentic interaction and tool use: it can follow complex instructions over multi-image, multi-turn dialogues; align text to video timelines for precise temporal queries; and operate GUI elements for automation tasks. The models also enable visual coding workflows, turning sketches or mockups into code and assisting with UI debugging, while maintaining strong text-only performance comparable to the flagship Qwen3 language models. This makes Qwen3-VL suitable for production scenarios spanning document AI, multilingual OCR, software/UI assistance, spatial/embodied tasks, and research on vision-language agents.",
       "architecture": {
@@ -53014,7 +53139,14 @@
       "function_calling",
       "structured_output"
     ],
-    "pricing": {},
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.13,
+          "output_per_million": 1.56
+        }
+      }
+    },
     "metadata": {
       "description": "Qwen3-VL-30B-A3B-Thinking is a multimodal model that unifies strong text generation with visual understanding for images and videos. Its Thinking variant enhances reasoning in STEM, math, and complex tasks. It excels in perception of real-world/synthetic categories, 2D/3D spatial grounding, and long-form visual comprehension, achieving competitive multimodal benchmark results. For agentic use, it handles multi-image multi-turn instructions, video timeline alignments, GUI automation, and visual coding from sketches to debugged UI. Text performance matches flagship Qwen3 models, suiting document AI, OCR, UI assistance, spatial tasks, and agent research.",
       "architecture": {
@@ -53578,6 +53710,82 @@
     }
   },
   {
+    "id": "qwen/qwen3.5-9b",
+    "name": "Qwen: Qwen3.5-9B",
+    "provider": "openrouter",
+    "family": "qwen",
+    "created_at": "2026-03-10 14:19:56 UTC",
+    "context_window": 256000,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "video"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "predicted_outputs"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.049999999999999996,
+          "output_per_million": 0.15
+        }
+      }
+    },
+    "metadata": {
+      "description": "Qwen3.5-9B is a multimodal foundation model from the Qwen3.5 family, designed to deliver strong reasoning, coding, and visual understanding in an efficient 9B-parameter architecture. It uses a unified vision-language design with early fusion of multimodal tokens, allowing the model to process and reason across text and images within the same context.",
+      "architecture": {
+        "modality": "text+image+video->text",
+        "input_modalities": [
+          "text",
+          "image",
+          "video"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "tokenizer": "Qwen3",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 256000,
+        "max_completion_tokens": null,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "frequency_penalty",
+        "include_reasoning",
+        "logit_bias",
+        "logprobs",
+        "max_tokens",
+        "min_p",
+        "presence_penalty",
+        "reasoning",
+        "repetition_penalty",
+        "response_format",
+        "stop",
+        "structured_outputs",
+        "temperature",
+        "tool_choice",
+        "tools",
+        "top_k",
+        "top_logprobs",
+        "top_p"
+      ]
+    }
+  },
+  {
     "id": "qwen/qwen3.5-flash-02-23",
     "name": "Qwen: Qwen3.5-Flash",
     "provider": "openrouter",
@@ -53604,8 +53812,8 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.09999999999999999,
-          "output_per_million": 0.39999999999999997
+          "input_per_million": 0.065,
+          "output_per_million": 0.26
         }
       }
     },
@@ -53837,69 +54045,6 @@
         "output": 32768
       },
       "knowledge": "2025-03"
-    }
-  },
-  {
-    "id": "raifle/sorcererlm-8x22b",
-    "name": "SorcererLM 8x22B",
-    "provider": "openrouter",
-    "family": "raifle",
-    "created_at": "2024-11-08 22:31:23 UTC",
-    "context_window": 16000,
-    "max_output_tokens": null,
-    "knowledge_cutoff": null,
-    "modalities": {
-      "input": [
-        "text"
-      ],
-      "output": [
-        "text"
-      ]
-    },
-    "capabilities": [
-      "streaming",
-      "predicted_outputs"
-    ],
-    "pricing": {
-      "text_tokens": {
-        "standard": {
-          "input_per_million": 4.5,
-          "output_per_million": 4.5
-        }
-      }
-    },
-    "metadata": {
-      "description": "SorcererLM is an advanced RP and storytelling model, built as a Low-rank 16-bit LoRA fine-tuned on [WizardLM-2 8x22B](/microsoft/wizardlm-2-8x22b).\n\n- Advanced reasoning and emotional intelligence for engaging and immersive interactions\n- Vivid writing capabilities enriched with spatial and contextual awareness\n- Enhanced narrative depth, promoting creative and dynamic storytelling",
-      "architecture": {
-        "modality": "text->text",
-        "input_modalities": [
-          "text"
-        ],
-        "output_modalities": [
-          "text"
-        ],
-        "tokenizer": "Mistral",
-        "instruct_type": "vicuna"
-      },
-      "top_provider": {
-        "context_length": 16000,
-        "max_completion_tokens": null,
-        "is_moderated": false
-      },
-      "per_request_limits": null,
-      "supported_parameters": [
-        "frequency_penalty",
-        "logit_bias",
-        "max_tokens",
-        "min_p",
-        "presence_penalty",
-        "repetition_penalty",
-        "seed",
-        "stop",
-        "temperature",
-        "top_k",
-        "top_p"
-      ]
     }
   },
   {
@@ -54251,8 +54396,8 @@
     "provider": "openrouter",
     "family": "sao10k",
     "created_at": "2024-08-28 00:00:00 UTC",
-    "context_window": 32768,
-    "max_output_tokens": 32768,
+    "context_window": 131072,
+    "max_output_tokens": 16384,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -54270,8 +54415,8 @@
     "pricing": {
       "text_tokens": {
         "standard": {
-          "input_per_million": 0.65,
-          "output_per_million": 0.75
+          "input_per_million": 0.85,
+          "output_per_million": 0.85
         }
       }
     },
@@ -54289,14 +54434,13 @@
         "instruct_type": "llama3"
       },
       "top_provider": {
-        "context_length": 32768,
-        "max_completion_tokens": 32768,
+        "context_length": 131072,
+        "max_completion_tokens": 16384,
         "is_moderated": false
       },
       "per_request_limits": null,
       "supported_parameters": [
         "frequency_penalty",
-        "logprobs",
         "max_tokens",
         "min_p",
         "presence_penalty",
@@ -54309,7 +54453,6 @@
         "tool_choice",
         "tools",
         "top_k",
-        "top_logprobs",
         "top_p"
       ]
     }
@@ -54825,7 +54968,6 @@
     },
     "capabilities": [
       "streaming",
-      "structured_output",
       "predicted_outputs"
     ],
     "pricing": {
@@ -54861,10 +55003,8 @@
         "max_tokens",
         "presence_penalty",
         "repetition_penalty",
-        "response_format",
         "seed",
         "stop",
-        "structured_outputs",
         "temperature",
         "top_k",
         "top_p"
@@ -56044,6 +56184,183 @@
     }
   },
   {
+    "id": "x-ai/grok-4.20-beta",
+    "name": "Grok 4.20 Beta",
+    "provider": "openrouter",
+    "family": "grok",
+    "created_at": "2026-03-12 00:00:00 UTC",
+    "context_window": 2000000,
+    "max_output_tokens": 30000,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "reasoning",
+      "vision",
+      "streaming",
+      "structured_output"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 2,
+          "output_per_million": 6,
+          "cached_input_per_million": 0.2
+        }
+      }
+    },
+    "metadata": {
+      "description": "Grok 4.20 Beta is xAI's newest flagship model with industry-leading speed and agentic tool calling capabilities. It combines the lowest hallucination rate on the market with strict prompt adherance, delivering consistently precise and truthful responses.\n\nReasoning can be enabled/disabled using the `reasoning` `enabled` parameter in the API. [Learn more in our docs](https://openrouter.ai/docs/use-cases/reasoning-tokens#controlling-reasoning-tokens)",
+      "architecture": {
+        "modality": "text+image->text",
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "tokenizer": "Grok",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 2000000,
+        "max_completion_tokens": null,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "include_reasoning",
+        "logprobs",
+        "max_tokens",
+        "reasoning",
+        "response_format",
+        "seed",
+        "structured_outputs",
+        "temperature",
+        "tool_choice",
+        "tools",
+        "top_logprobs",
+        "top_p"
+      ],
+      "source": "models.dev",
+      "provider_id": "openrouter",
+      "open_weights": false,
+      "attachment": true,
+      "temperature": true,
+      "last_updated": "2026-03-12",
+      "status": "beta",
+      "cost": {
+        "input": 2,
+        "output": 6,
+        "cache_read": 0.2,
+        "context_over_200k": {
+          "input": 4,
+          "output": 12
+        }
+      },
+      "limit": {
+        "context": 2000000,
+        "output": 30000
+      }
+    }
+  },
+  {
+    "id": "x-ai/grok-4.20-multi-agent-beta",
+    "name": "Grok 4.20 Multi - Agent Beta",
+    "provider": "openrouter",
+    "family": "grok",
+    "created_at": "2026-03-12 00:00:00 UTC",
+    "context_window": 2000000,
+    "max_output_tokens": 30000,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "reasoning",
+      "vision",
+      "streaming",
+      "structured_output"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 2,
+          "output_per_million": 6,
+          "cached_input_per_million": 0.2
+        }
+      }
+    },
+    "metadata": {
+      "description": "Grok 4.20 Multi-Agent Beta is a variant of xAI’s Grok 4.20 designed for collaborative, agent-based workflows. Multiple agents operate in parallel to conduct deep research, coordinate tool use, and synthesize information across complex tasks.\n\nReasoning effort behavior:\n- low / medium: 4 agents\n- high / xhigh: 16 agents",
+      "architecture": {
+        "modality": "text+image->text",
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "tokenizer": "Grok",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 2000000,
+        "max_completion_tokens": null,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "include_reasoning",
+        "logprobs",
+        "max_tokens",
+        "reasoning",
+        "response_format",
+        "seed",
+        "structured_outputs",
+        "temperature",
+        "top_logprobs",
+        "top_p"
+      ],
+      "source": "models.dev",
+      "provider_id": "openrouter",
+      "open_weights": false,
+      "attachment": true,
+      "temperature": true,
+      "last_updated": "2026-03-12",
+      "status": "beta",
+      "cost": {
+        "input": 2,
+        "output": 6,
+        "cache_read": 0.2,
+        "context_over_200k": {
+          "input": 4,
+          "output": 12
+        }
+      },
+      "limit": {
+        "context": 2000000,
+        "output": 30000
+      }
+    }
+  },
+  {
     "id": "x-ai/grok-code-fast-1",
     "name": "Grok Code Fast 1",
     "provider": "openrouter",
@@ -56703,8 +57020,7 @@
     "capabilities": [
       "function_calling",
       "structured_output",
-      "reasoning",
-      "streaming"
+      "reasoning"
     ],
     "pricing": {
       "text_tokens": {
@@ -56716,41 +57032,6 @@
       }
     },
     "metadata": {
-      "description": "Compared with GLM-4.5, this generation brings several key improvements:\n\nLonger context window: The context window has been expanded from 128K to 200K tokens, enabling the model to handle more complex agentic tasks.\nSuperior coding performance: The model achieves higher scores on code benchmarks and demonstrates better real-world performance in applications such as Claude Code、Cline、Roo Code and Kilo Code, including improvements in generating visually polished front-end pages.\nAdvanced reasoning: GLM-4.6 shows a clear improvement in reasoning performance and supports tool use during inference, leading to stronger overall capability.\nMore capable agents: GLM-4.6 exhibits stronger performance in tool using and search-based agents, and integrates more effectively within agent frameworks.\nRefined writing: Better aligns with human preferences in style and readability, and performs more naturally in role-playing scenarios.",
-      "architecture": {
-        "modality": "text->text",
-        "input_modalities": [
-          "text"
-        ],
-        "output_modalities": [
-          "text"
-        ],
-        "tokenizer": "Other",
-        "instruct_type": null
-      },
-      "top_provider": {
-        "context_length": 204800,
-        "max_completion_tokens": 131072,
-        "is_moderated": false
-      },
-      "per_request_limits": null,
-      "supported_parameters": [
-        "frequency_penalty",
-        "include_reasoning",
-        "max_tokens",
-        "presence_penalty",
-        "reasoning",
-        "repetition_penalty",
-        "response_format",
-        "seed",
-        "stop",
-        "structured_outputs",
-        "temperature",
-        "tool_choice",
-        "tools",
-        "top_k",
-        "top_p"
-      ],
       "source": "models.dev",
       "provider_id": "openrouter",
       "open_weights": true,
@@ -57069,7 +57350,7 @@
       },
       "top_provider": {
         "context_length": 202752,
-        "max_completion_tokens": null,
+        "max_completion_tokens": 131072,
         "is_moderated": false
       },
       "per_request_limits": null,
@@ -57112,6 +57393,68 @@
         "context": 202752,
         "output": 131000
       }
+    }
+  },
+  {
+    "id": "z-ai/glm-5-turbo",
+    "name": "Z.ai: GLM 5 Turbo",
+    "provider": "openrouter",
+    "family": "z-ai",
+    "created_at": "2026-03-15 14:06:13 UTC",
+    "context_window": 202752,
+    "max_output_tokens": 131072,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.96,
+          "output_per_million": 3.1999999999999997,
+          "cached_input_per_million": 0.192
+        }
+      }
+    },
+    "metadata": {
+      "description": "GLM-5 Turbo is a new model from Z.ai designed for fast inference and strong performance in agent-driven environments such as OpenClaw scenarios. It is deeply optimized for real-world agent workflows involving long execution chains, with improved complex instruction decomposition, tool use, scheduled and persistent execution, and overall stability across extended tasks.",
+      "architecture": {
+        "modality": "text->text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 202752,
+        "max_completion_tokens": 131072,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "include_reasoning",
+        "max_tokens",
+        "reasoning",
+        "response_format",
+        "temperature",
+        "tool_choice",
+        "tools",
+        "top_p"
+      ]
     }
   },
   {
@@ -57267,7 +57610,7 @@
     "name": "Sonar Reasoning",
     "provider": "perplexity",
     "family": "sonar_reasoning",
-    "created_at": "2026-03-07 16:31:13 UTC",
+    "created_at": "2026-03-16 20:45:21 UTC",
     "context_window": 128000,
     "max_output_tokens": 4096,
     "knowledge_cutoff": null,
@@ -57648,6 +57991,43 @@
       }
     },
     "metadata": {
+      "version_id": "default",
+      "open_source_category": null,
+      "launch_stage": "GA",
+      "supported_actions": {
+        "openNotebook": {
+          "references": {
+            "us-central1": {
+              "uri": "https://colab.research.google.com/github/GoogleCloudPlatform/generative-ai/blob/main/gemini/getting-started/intro_gemini_2_0_flash.ipynb"
+            }
+          },
+          "resourceTitle": "Notebook",
+          "resourceUseCase": "Vertex Serving",
+          "resourceDescription": "Intro to Gemini 2.0 Flash."
+        },
+        "openGenerationAiStudio": {
+          "references": {
+            "us-central1": {
+              "uri": "https://console.cloud.google.com/vertex-ai/generative/multimodal/create/text?model=gemini-2.0-flash-001"
+            }
+          }
+        },
+        "openNotebooks": {
+          "notebooks": [
+            {
+              "references": {
+                "us-central1": {
+                  "uri": "https://colab.research.google.com/github/GoogleCloudPlatform/generative-ai/blob/main/gemini/getting-started/intro_gemini_2_0_flash.ipynb"
+                }
+              },
+              "resourceTitle": "Notebook",
+              "resourceUseCase": "Vertex Serving",
+              "resourceDescription": "Intro to Gemini 2.0 Flash."
+            }
+          ]
+        }
+      },
+      "publisher_model_template": "projects/{project}/locations/{location}/publishers/google/models/gemini-2.0-flash@default",
       "source": "models.dev",
       "provider_id": "google-vertex",
       "open_weights": false,
@@ -58603,28 +58983,59 @@
   },
   {
     "id": "gemini-3.1-flash-image-preview",
-    "name": "gemini-3.1-flash-image-preview",
+    "name": "Gemini 3.1 Flash Image (Preview)",
     "provider": "vertexai",
-    "family": "gemini",
-    "created_at": null,
-    "context_window": null,
-    "max_output_tokens": null,
+    "family": "gemini-flash",
+    "created_at": "2026-02-26 00:00:00 UTC",
+    "context_window": 131072,
+    "max_output_tokens": 32768,
     "knowledge_cutoff": null,
     "modalities": {
-      "input": [],
-      "output": []
+      "input": [
+        "text",
+        "image",
+        "pdf"
+      ],
+      "output": [
+        "text",
+        "image"
+      ]
     },
     "capabilities": [
+      "reasoning",
+      "vision",
       "streaming",
       "function_calling"
     ],
-    "pricing": {},
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.25,
+          "output_per_million": 60
+        }
+      }
+    },
     "metadata": {
       "version_id": "default",
       "open_source_category": null,
       "launch_stage": "PUBLIC_PREVIEW",
       "supported_actions": null,
-      "publisher_model_template": "projects/{project}/locations/{location}/publishers/google/models/gemini-3.1-flash-image-preview@default"
+      "publisher_model_template": "projects/{project}/locations/{location}/publishers/google/models/gemini-3.1-flash-image-preview@default",
+      "source": "models.dev",
+      "provider_id": "google",
+      "open_weights": false,
+      "attachment": true,
+      "temperature": true,
+      "last_updated": "2026-02-26",
+      "cost": {
+        "input": 0.25,
+        "output": 60
+      },
+      "limit": {
+        "context": 131072,
+        "output": 32768
+      },
+      "knowledge": "2025-01"
     }
   },
   {
@@ -59259,6 +59670,90 @@
       "structured_output",
       "reasoning",
       "vision"
+    ],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "owned_by": "xai"
+    }
+  },
+  {
+    "id": "grok-4.20-beta-0309-non-reasoning",
+    "name": "Grok 4.20 Beta 0309 Non Reasoning",
+    "provider": "xai",
+    "family": "grok",
+    "created_at": "2026-03-09 00:00:00 UTC",
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output"
+    ],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "owned_by": "xai"
+    }
+  },
+  {
+    "id": "grok-4.20-beta-0309-reasoning",
+    "name": "Grok 4.20 Beta 0309 Reasoning",
+    "provider": "xai",
+    "family": "grok",
+    "created_at": "2026-03-09 00:00:00 UTC",
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output"
+    ],
+    "pricing": {},
+    "metadata": {
+      "object": "model",
+      "owned_by": "xai"
+    }
+  },
+  {
+    "id": "grok-4.20-multi-agent-beta-0309",
+    "name": "Grok 4.20 Multi Agent Beta 0309",
+    "provider": "xai",
+    "family": "grok",
+    "created_at": "2026-03-09 00:00:00 UTC",
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output"
     ],
     "pricing": {},
     "metadata": {

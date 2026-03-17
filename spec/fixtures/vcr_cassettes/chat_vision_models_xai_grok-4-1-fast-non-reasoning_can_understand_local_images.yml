@@ -11,7 +11,7 @@ http_interactions:
       User-Agent:
       - Faraday v2.14.1
       Authorization:
-      - Bearer <XAI_API_KEY>
+      - Bearer <AUTH_TOKEN>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -24,29 +24,35 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 03 Mar 2026 12:36:56 GMT
+      - Mon, 16 Mar 2026 19:15:56 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Strict-Transport-Security:
+      - max-age=31536000
+      Set-Cookie:
+      - "<COOKIE>"
       X-Ratelimit-Limit-Tokens:
       - '4000000'
       X-Ratelimit-Remaining-Tokens:
-      - '3995347'
+      - '4000000'
       X-Zero-Data-Retention:
       - 'false'
       X-Ratelimit-Limit-Requests:
       - '607'
       X-Ratelimit-Remaining-Requests:
-      - '590'
+      - '607'
       X-Metrics-Ttft-Ms:
-      - '241.4'
+      - '190.5'
       X-Metrics-Mean-Itl-Ms:
-      - '17.7'
+      - '14.2'
       X-Metrics-E2e-Ms:
-      - '1744.3'
+      - '1107.8'
+      Cf-Cache-Status:
+      - DYNAMIC
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Vary:
@@ -59,22 +65,16 @@ http_interactions:
       - prod-ic-inference-api
       X-Envoy-Wasm-Route:
       - ic-protected-inference-api
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=31536000
       Server:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"d0af883c-1e0a-91b8-8ed9-1ffa197b19bc","object":"chat.completion","created":1772541415,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"A
-        vibrant, faceted red gemstone (like a ruby or diamond) with a large circular
-        hole or hollow center, rendered in a shiny, 3D polygonal style against a black
-        background. It has sharp edges, smooth gradients from deep red to bright crimson,
-        and a glowing highlight on the rim, giving it a digital or game-asset look.","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":433,"completion_tokens":71,"total_tokens":504,"prompt_tokens_details":{"text_tokens":177,"audio_tokens":0,"image_tokens":256,"cached_tokens":161},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":979500},"system_fingerprint":"fp_2338d85ee7"}'
-  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+      string: '{"id":"0c93e234-6fc2-98b5-b0f4-b9c921219251","object":"chat.completion","created":1773688554,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"A
+        vibrant, faceted red gemstone (like a ruby or diamond) with a prominent circular
+        hole or transparent center, rendered in a shiny, gradient 3D style against
+        a black background. It looks like a digital icon or game asset, possibly symbolizing
+        a \"blood diamond\" or treasure item.","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":433,"completion_tokens":61,"total_tokens":494,"prompt_tokens_details":{"text_tokens":177,"audio_tokens":0,"image_tokens":256,"cached_tokens":161},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":929500},"system_fingerprint":"fp_48319fcb08"}'
+  recorded_at: Mon, 16 Mar 2026 19:15:56 GMT
 recorded_with: VCR 6.4.0

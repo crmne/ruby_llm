@@ -11,7 +11,7 @@ http_interactions:
       User-Agent:
       - Faraday v2.14.1
       Authorization:
-      - Bearer <OPENROUTER_API_KEY>
+      - Bearer <AUTH_TOKEN>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -24,57 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 03 Mar 2026 11:48:01 GMT
-      Content-Type:
-      - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Access-Control-Allow-Origin:
-      - "*"
-      Permissions-Policy:
-      - payment=(self "https://checkout.stripe.com" "https://connect-js.stripe.com"
-        "https://js.stripe.com" "https://*.js.stripe.com" "https://hooks.stripe.com")
-      Referrer-Policy:
-      - no-referrer, strict-origin-when-cross-origin
-      X-Content-Type-Options:
-      - nosniff
-      Server:
-      - cloudflare
-      Cf-Ray:
-      - "<CF_RAY>"
-    body:
-      encoding: ASCII-8BIT
-      string: "\n         \n\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1772538479-9m904q28f4M6Du7L3RGo\",\"object\":\"chat.completion\",\"created\":1772538479,\"model\":\"anthropic/claude-4.5-haiku-20251001\",\"provider\":\"Amazon
-        Bedrock\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"message\":{\"role\":\"assistant\",\"content\":\"{\\\"name\\\":\\\"Bob\\\",\\\"age\\\":30}\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":174,\"completion_tokens\":12,\"total_tokens\":186,\"cost\":0.000234,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.000234,\"upstream_inference_prompt_cost\":0.000174,\"upstream_inference_completions_cost\":0.00006},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}}}"
-  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
-- request:
-    method: post
-    uri: https://openrouter.ai/api/v1/chat/completions
-    body:
-      encoding: UTF-8
-      string: '{"model":"anthropic/claude-haiku-4.5","messages":[{"role":"user","content":"Generate
-        a person named Bob"},{"role":"assistant","content":"{\"name\":\"Bob\",\"age\":30}"},{"role":"user","content":"Now
-        just tell me about Ruby"}],"stream":false}'
-    headers:
-      User-Agent:
-      - Faraday v2.14.1
-      Authorization:
-      - Bearer <OPENROUTER_API_KEY>
-      Content-Type:
-      - application/json
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Date:
-      - Tue, 03 Mar 2026 11:48:02 GMT
+      - Mon, 16 Mar 2026 19:12:30 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -97,23 +47,73 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: "\n         \n\n         \n\n         \n\n         \n\n         \n\n
-        \        \n{\"id\":\"gen-1772538481-o0SQLRhC4s4B6PRRHMpB\",\"object\":\"chat.completion\",\"created\":1772538481,\"model\":\"anthropic/claude-4.5-haiku-20251001\",\"provider\":\"Anthropic\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"message\":{\"role\":\"assistant\",\"content\":\"#
+        \        \n{\"id\":\"gen-1773688347-rqVIYm20mv1mUdbFNBei\",\"object\":\"chat.completion\",\"created\":1773688347,\"model\":\"anthropic/claude-4.5-haiku-20251001\",\"provider\":\"Amazon
+        Bedrock\",\"system_fingerprint\":null,\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"message\":{\"role\":\"assistant\",\"content\":\"{\\\"name\\\":\\\"Bob\\\",\\\"age\\\":30}\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":174,\"completion_tokens\":12,\"total_tokens\":186,\"cost\":0.000234,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.000234,\"upstream_inference_prompt_cost\":0.000174,\"upstream_inference_completions_cost\":0.00006},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}}}"
+  recorded_at: Mon, 16 Mar 2026 19:12:30 GMT
+- request:
+    method: post
+    uri: https://openrouter.ai/api/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"anthropic/claude-haiku-4.5","messages":[{"role":"user","content":"Generate
+        a person named Bob"},{"role":"assistant","content":"{\"name\":\"Bob\",\"age\":30}"},{"role":"user","content":"Now
+        just tell me about Ruby"}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 16 Mar 2026 19:12:31 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      Permissions-Policy:
+      - payment=(self "https://checkout.stripe.com" "https://connect-js.stripe.com"
+        "https://js.stripe.com" "https://*.js.stripe.com" "https://hooks.stripe.com")
+      Referrer-Policy:
+      - no-referrer, strict-origin-when-cross-origin
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: "\n         \n\n         \n\n         \n\n         \n\n         \n\n
+        \        \n\n         \n{\"id\":\"gen-1773688350-T9JmgYs8orEWRmNwLTmT\",\"object\":\"chat.completion\",\"created\":1773688350,\"model\":\"anthropic/claude-4.5-haiku-20251001\",\"provider\":\"Amazon
+        Bedrock\",\"system_fingerprint\":null,\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"message\":{\"role\":\"assistant\",\"content\":\"#
         Ruby\\n\\nRuby is a dynamic, open-source programming language known for its
-        simplicity and elegance. Here are some key points:\\n\\n**Key Features:**\\n-
-        **Readable syntax** - Often described as \\\"programmer-friendly\\\" with
-        syntax that resembles natural English\\n- **Object-oriented** - Everything
-        is an object, including numbers and strings\\n- **Dynamically typed** - Variable
-        types are determined at runtime\\n- **Interpreted language** - Code is executed
-        directly without compilation\\n\\n**Common Uses:**\\n- Web development (especially
-        with the Rails framework)\\n- Scripting and automation\\n- Data analysis\\n-
-        DevOps tools\\n\\n**Popular Frameworks:**\\n- **Ruby on Rails** - The most
-        popular web framework, known for rapid development\\n- Sinatra - A lightweight
-        web framework\\n- Jekyll - Static site generator\\n\\n**Community:**\\n- Active
-        and welcoming developer community\\n- Rich ecosystem of gems (libraries/packages)\\n-
-        Strong convention-over-configuration philosophy\\n\\n**Advantages:**\\n- Fast
-        development cycle\\n- Great for prototyping\\n- Excellent documentation and
-        tutorials\\n- High productivity language\\n\\nRuby remains popular, especially
-        in startups and for full-stack web development, though it faces competition
-        from Python and JavaScript in recent years.\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":33,\"completion_tokens\":269,\"total_tokens\":302,\"cost\":0.001378,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.001378,\"upstream_inference_prompt_cost\":0.000033,\"upstream_inference_completions_cost\":0.001345},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}}}"
-  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+        simplicity and elegance. Here are some key points:\\n\\n**Characteristics:**\\n-
+        **Syntax**: Clean, readable, and intuitive syntax that emphasizes developer
+        productivity\\n- **Object-Oriented**: Everything is an object in Ruby\\n-
+        **Dynamic Typing**: Types are determined at runtime\\n- **Interpreted**: Code
+        is executed directly without compilation\\n\\n**Common Uses:**\\n- Web development
+        (especially with Rails framework)\\n- Scripting and automation\\n- Data analysis\\n-
+        System administration\\n\\n**Popular Framework:**\\n- **Ruby on Rails**: A
+        web application framework that follows the Model-View-Controller (MVC) pattern
+        and emphasizes convention over configuration\\n\\n**Strengths:**\\n- Fast
+        development cycle\\n- Large, supportive community\\n- Extensive libraries
+        (gems)\\n- Great for rapid prototyping\\n\\n**Notable Features:**\\n- Blocks
+        and iterators\\n- Metaprogramming capabilities\\n- Duck typing philosophy\\n\\nRuby
+        remains popular in startups and is valued for allowing developers to build
+        applications quickly and efficiently.\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":33,\"completion_tokens\":237,\"total_tokens\":270,\"cost\":0.001218,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.001218,\"upstream_inference_prompt_cost\":0.000033,\"upstream_inference_completions_cost\":0.001185},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}}}"
+  recorded_at: Mon, 16 Mar 2026 19:12:33 GMT
 recorded_with: VCR 6.4.0

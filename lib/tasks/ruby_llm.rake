@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 
-def run_parallel_rspec
+def run_test_queue_rspec
   workers = ENV.fetch('RSPEC_WORKERS', nil)
-  cmd = %w[bundle exec parallel_rspec]
-  cmd += ['-n', workers] if workers && !workers.empty?
-  system(*cmd)
+  env = {}
+  env['TEST_QUEUE_WORKERS'] = workers if workers && !workers.empty? && ENV.fetch('TEST_QUEUE_WORKERS', '').empty?
+
+  system(env, 'bundle', 'exec', 'bin/rspec-queue')
 end
 
 namespace :ruby_llm do

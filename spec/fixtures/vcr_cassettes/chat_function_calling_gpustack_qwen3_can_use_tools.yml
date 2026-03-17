@@ -14,7 +14,7 @@ http_interactions:
       User-Agent:
       - Faraday v2.14.1
       Authorization:
-      - Bearer <GPUSTACK_API_KEY>
+      - Bearer <AUTH_TOKEN>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -27,15 +27,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 03 Mar 2026 11:46:52 GMT
-      - Tue, 03 Mar 2026 11:46:52 GMT
+      - Mon, 16 Mar 2026 19:10:44 GMT
+      - Mon, 16 Mar 2026 19:10:44 GMT
       Server:
       - uvicorn
       - uvicorn
       Keep-Alive:
       - timeout=15, max=100
       Content-Length:
-      - '1483'
+      - '1476'
       Content-Type:
       - application/json
       X-Request-Accepted-At:
@@ -50,36 +50,36 @@ http_interactions:
         the user is asking for the weather in Berlin, and they provided the coordinates
         52.5200 latitude and 13.4050 longitude. I need to use the weather function
         to get the current weather for that location. Let me check the function parameters.
-        The function requires latitude and longitude as strings. The user has already
-        given the coordinates, so I should plug those values into the function. I
-        don''t need to ask for more information since the required parameters are
-        provided. Let me make sure the JSON structure is correct with the function
-        name and arguments. Alright, time to call the function with the given coordinates.\n","role":"assistant","tool_calls":[{"function":{"arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}","name":"weather"},"id":"call-1Nt469kHdPEr4eszlVTG92YlZgO7pHyw","type":"function"}]}}],"created":1772538414,"id":"chatcmpl-1kU4aRnbHAmkIvJ2siswj5yo8V6tOG1d","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":171,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":133,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":269,"prompt_tokens_details":{"cached_tokens":66},"prompt_tokens_per_second":4542.998040937648,"time_per_output_token_ms":8.42421052631579,"time_to_first_token_ms":59.212,"tokens_per_second":118.7054854429589,"total_tokens":440}}'
-  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+        The function requires latitude and longitude as strings. The user has given
+        the coordinates, so I should plug those values into the function. I don''t
+        need to ask for more information since the required parameters are provided.
+        Let me make sure the JSON structure is correct with the function name and
+        arguments. Alright, time to call the function with the given coordinates.\n","role":"assistant","tool_calls":[{"function":{"arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}","name":"weather"},"id":"call-yQlPO654HhFzEWYVSliKCCmkm6fObdYR","type":"function"}]}}],"created":1773688246,"id":"chatcmpl-vpTsbpVabpXHt9zfQj5BXfiY1YQgof5B","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":170,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":132,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":269,"prompt_tokens_details":{"cached_tokens":0},"prompt_tokens_per_second":1027.8552596385312,"time_per_output_token_ms":8.67684705882353,"time_to_first_token_ms":261.71,"tokens_per_second":115.24923664329141,"total_tokens":439}}'
+  recorded_at: Mon, 16 Mar 2026 19:10:46 GMT
 - request:
     method: post
     uri: "<GPUSTACK_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
       string: '{"model":"qwen3","messages":[{"role":"user","content":"What''s the
-        weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"call-1Nt469kHdPEr4eszlVTG92YlZgO7pHyw","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}],"reasoning":"\nOkay,
+        weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"call-yQlPO654HhFzEWYVSliKCCmkm6fObdYR","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}],"reasoning":"\nOkay,
         the user is asking for the weather in Berlin, and they provided the coordinates
         52.5200 latitude and 13.4050 longitude. I need to use the weather function
         to get the current weather for that location. Let me check the function parameters.
-        The function requires latitude and longitude as strings. The user has already
-        given the coordinates, so I should plug those values into the function. I
-        don''t need to ask for more information since the required parameters are
-        provided. Let me make sure the JSON structure is correct with the function
-        name and arguments. Alright, time to call the function with the given coordinates.\n","reasoning_content":"\nOkay,
+        The function requires latitude and longitude as strings. The user has given
+        the coordinates, so I should plug those values into the function. I don''t
+        need to ask for more information since the required parameters are provided.
+        Let me make sure the JSON structure is correct with the function name and
+        arguments. Alright, time to call the function with the given coordinates.\n","reasoning_content":"\nOkay,
         the user is asking for the weather in Berlin, and they provided the coordinates
         52.5200 latitude and 13.4050 longitude. I need to use the weather function
         to get the current weather for that location. Let me check the function parameters.
-        The function requires latitude and longitude as strings. The user has already
-        given the coordinates, so I should plug those values into the function. I
-        don''t need to ask for more information since the required parameters are
-        provided. Let me make sure the JSON structure is correct with the function
-        name and arguments. Alright, time to call the function with the given coordinates.\n"},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call-1Nt469kHdPEr4eszlVTG92YlZgO7pHyw"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        The function requires latitude and longitude as strings. The user has given
+        the coordinates, so I should plug those values into the function. I don''t
+        need to ask for more information since the required parameters are provided.
+        Let me make sure the JSON structure is correct with the function name and
+        arguments. Alright, time to call the function with the given coordinates.\n"},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call-yQlPO654HhFzEWYVSliKCCmkm6fObdYR"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}],"enable_thinking":false}'
@@ -87,7 +87,7 @@ http_interactions:
       User-Agent:
       - Faraday v2.14.1
       Authorization:
-      - Bearer <GPUSTACK_API_KEY>
+      - Bearer <AUTH_TOKEN>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -100,15 +100,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 03 Mar 2026 11:46:54 GMT
-      - Tue, 03 Mar 2026 11:46:54 GMT
+      - Mon, 16 Mar 2026 19:10:45 GMT
+      - Mon, 16 Mar 2026 19:10:46 GMT
       Server:
       - uvicorn
       - uvicorn
       Keep-Alive:
       - timeout=15, max=100
       Content-Length:
-      - '1356'
+      - '1398'
       Content-Type:
       - application/json
       X-Request-Accepted-At:
@@ -120,6 +120,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJcblxuQ3VycmVudCB3ZWF0aGVyIGluIEJlcmxpbiAoNTIuNTIwMCwgMTMuNDA1MCk6IPCfjKTvuI8gMTXCsEMsIFdpbmQ6IDEwIGttL2giLCJyZWFzb25pbmdfY29udGVudCI6IlxuT2theSwgdGhlIHVzZXIgYXNrZWQgZm9yIHRoZSB3ZWF0aGVyIGluIEJlcmxpbiB3aXRoIHRoZSBjb29yZGluYXRlcyBwcm92aWRlZC4gSSBjYWxsZWQgdGhlIHdlYXRoZXIgZnVuY3Rpb24gd2l0aCB0aG9zZSBjb29yZGluYXRlcy4gVGhlIHJlc3BvbnNlIGNhbWUgYmFjayB3aXRoIDE1wrBDIGFuZCB3aW5kIHNwZWVkIG9mIDEwIGttL2guIE5vdyBJIG5lZWQgdG8gcHJlc2VudCB0aGlzIGluZm9ybWF0aW9uIGNsZWFybHkuIExldCBtZSBjaGVjayBpZiB0aGVyZSdzIGFueSBhZGRpdGlvbmFsIGRhdGEgbmVlZGVkLCBidXQgdGhlIHVzZXIgb25seSBhc2tlZCBmb3IgdGhlIGN1cnJlbnQgd2VhdGhlci4gSSBzaG91bGQgZm9ybWF0IHRoZSBhbnN3ZXIgaW4gYSBmcmllbmRseSBtYW5uZXIsIG1lbnRpb25pbmcgYm90aCB0ZW1wZXJhdHVyZSBhbmQgd2luZC4gTWFrZSBzdXJlIHRvIG5vdGUgdGhlIGxvY2F0aW9uIGFzIEJlcmxpbiBmb3IgY2xhcml0eS4gTm8gbmVlZCBmb3IgZXh0cmEgZGV0YWlscyBzaW5jZSB0aGUgcmVzcG9uc2UgZnJvbSB0aGUgZnVuY3Rpb24gaXMgc3RyYWlnaHRmb3J3YXJkLiBBbHJpZ2h0LCB0aW1lIHRvIHB1dCBpdCBhbGwgdG9nZXRoZXIuXG4iLCJyb2xlIjoiYXNzaXN0YW50In19XSwiY3JlYXRlZCI6MTc3MjUzODQxNiwiaWQiOiJjaGF0Y21wbC1WMzRwR1pSOUcxUFBsUzkzRFdKVXVaODRubGNEcTY5cSIsIm1vZGVsIjoicXdlbjMiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJ1c2FnZSI6eyJjb21wbGV0aW9uX3Rva2VucyI6MTY2LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7ImFjY2VwdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowLCJyZWFzb25pbmdfdG9rZW5zIjoxMjUsInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowfSwiZHJhZnRfdG9rZW5zIjowLCJkcmFmdF90b2tlbnNfYWNjZXB0YW5jZSI6MC4wLCJwcm9tcHRfdG9rZW5zIjozMTIsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjoyNjh9LCJwcm9tcHRfdG9rZW5zX3Blcl9zZWNvbmQiOjE1Nzk2LjY2ODUyMzExMjc1MiwidGltZV9wZXJfb3V0cHV0X3Rva2VuX21zIjo4LjUxNTQ4Nzk1MTgwNzIyOSwidGltZV90b19maXJzdF90b2tlbl9tcyI6MTkuNzUxLCJ0b2tlbnNfcGVyX3NlY29uZCI6MTE3LjQzMzA4MjU5NzE5NTM0LCJ0b3RhbF90b2tlbnMiOjQ3OH19
-  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJcblxuQ3VycmVudCB3ZWF0aGVyIGluIEJlcmxpbiAoNTIuNTIwMCwgMTMuNDA1MCk6IPCfjKTvuI8gMTXCsEMsIFdpbmQ6IDEwIGttL2guIExldCBtZSBrbm93IGlmIHlvdSdkIGxpa2UgYWRkaXRpb25hbCBkZXRhaWxzISIsInJlYXNvbmluZ19jb250ZW50IjoiXG5Pa2F5LCB0aGUgdXNlciBhc2tlZCBmb3IgdGhlIHdlYXRoZXIgaW4gQmVybGluIHdpdGggdGhlIGNvb3JkaW5hdGVzIHByb3ZpZGVkLiBJIGNhbGxlZCB0aGUgd2VhdGhlciBmdW5jdGlvbiB3aXRoIHRob3NlIGNvb3JkaW5hdGVzLiBUaGUgcmVzcG9uc2UgY2FtZSBiYWNrIHdpdGggMTXCsEMgYW5kIHdpbmQgc3BlZWQgb2YgMTAga20vaC4gTm93IEkgbmVlZCB0byBwcmVzZW50IHRoaXMgaW5mb3JtYXRpb24gY2xlYXJseS4gTGV0IG1lIGNoZWNrIGlmIHRoZXJlJ3MgYW55IG1pc3NpbmcgZGF0YSBvciBpZiB0aGUgdXNlciBtaWdodCBuZWVkIG1vcmUgZGV0YWlscy4gVGhlIGFuc3dlciBzZWVtcyBzdHJhaWdodGZvcndhcmQsIGp1c3Qgc3RhdGluZyB0aGUgdGVtcGVyYXR1cmUgYW5kIHdpbmQuIEkgc2hvdWxkIGZvcm1hdCBpdCBpbiBhIGZyaWVuZGx5IG1hbm5lciwgbWF5YmUgbWVudGlvbiBCZXJsaW4gc3BlY2lmaWNhbGx5IHNpbmNlIHRoZSBjb29yZGluYXRlcyBhcmUgZm9yIHRoZXJlLiBObyBuZWVkIGZvciBleHRyYSBpbmZvIHVubGVzcyB0aGUgdXNlciBhc2tzIGZvciBtb3JlLiBBbHJpZ2h0LCB0aW1lIHRvIHB1dCBpdCBhbGwgdG9nZXRoZXIuXG4iLCJyb2xlIjoiYXNzaXN0YW50In19XSwiY3JlYXRlZCI6MTc3MzY4ODI0NywiaWQiOiJjaGF0Y21wbC11c0NpNnNCNjlabUp0UlVtNGhtWDZFZmsyTHNNNWpOWCIsIm1vZGVsIjoicXdlbjMiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJ1c2FnZSI6eyJjb21wbGV0aW9uX3Rva2VucyI6MTc3LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7ImFjY2VwdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowLCJyZWFzb25pbmdfdG9rZW5zIjoxMjUsInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowfSwiZHJhZnRfdG9rZW5zIjowLCJkcmFmdF90b2tlbnNfYWNjZXB0YW5jZSI6MC4wLCJwcm9tcHRfdG9rZW5zIjozMTIsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjoyNjh9LCJwcm9tcHRfdG9rZW5zX3Blcl9zZWNvbmQiOjEwNjk3LjAyMDYwNTQ3ODc5NCwidGltZV9wZXJfb3V0cHV0X3Rva2VuX21zIjo4LjY1NTE1ODE5MjA5MDM5NSwidGltZV90b19maXJzdF90b2tlbl9tcyI6MjkuMTY3LCJ0b2tlbnNfcGVyX3NlY29uZCI6MTE1LjUzODAzODQ1MTMyMDI5LCJ0b3RhbF90b2tlbnMiOjQ4OX19
+  recorded_at: Mon, 16 Mar 2026 19:10:47 GMT
 recorded_with: VCR 6.4.0

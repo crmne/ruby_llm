@@ -9,7 +9,7 @@ end
 
 chat_models = [
   { provider: :anthropic, model: 'claude-haiku-4-5' },
-  { provider: :azure, model: 'Kimi-K2.5' },
+  { provider: :azure, model: 'grok-4-1-fast-non-reasoning' },
   { provider: :bedrock, model: 'amazon.nova-2-lite-v1:0' },
   { provider: :deepseek, model: 'deepseek-chat' },
   { provider: :gemini, model: 'gemini-2.5-flash' },
@@ -38,7 +38,7 @@ STRUCTURED_OUTPUT_MODELS = filter_local_providers(structured_output_models).free
 
 thinking_models = [
   { provider: :anthropic, model: 'claude-haiku-4-5' },
-  { provider: :azure, model: 'Kimi-K2.5' },
+  { provider: :azure, model: 'grok-4-fast-reasoning' },
   { provider: :bedrock, model: 'claude-haiku-4-5' },
   { provider: :deepseek, model: 'deepseek-reasoner' },
   { provider: :gemini, model: 'gemini-3-flash-preview' },
@@ -64,7 +64,7 @@ PDF_MODELS = [
 
 vision_models = [
   { provider: :anthropic, model: 'claude-haiku-4-5' },
-  { provider: :azure, model: 'Kimi-K2.5' },
+  { provider: :azure, model: 'grok-4-1-fast-non-reasoning' },
   { provider: :bedrock, model: 'claude-sonnet-4-5' },
   { provider: :gemini, model: 'gemini-2.5-flash' },
   { provider: :mistral, model: 'pixtral-12b' },

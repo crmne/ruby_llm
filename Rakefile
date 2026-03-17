@@ -6,6 +6,11 @@ require 'rake/clean'
 
 Dir.glob('lib/tasks/**/*.rake').each { |r| load r }
 
+desc 'Run test suite with rspec-queue'
+task :test do
+  run_test_queue_rspec || abort('Tests failed')
+end
+
 desc 'Run overcommit hooks and update models'
 task :default do
   sh 'overcommit --run'
