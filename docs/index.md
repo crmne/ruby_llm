@@ -25,6 +25,12 @@ redirect_from:
 <a href="{% link _getting_started/getting-started.md %}" class="btn btn-primary fs-5 mb-4 mb-md-0 mr-2" style="margin: 0;">Get started</a>
 <a href="https://github.com/crmne/ruby_llm" class="btn fs-5 mb-4 mb-md-0 mr-2" style="margin: 0;">GitHub</a>
 
+## From zero to AI chat app in under two minutes
+
+<video autoplay muted loop playsinline style="width: 100%; border-radius: 8px;">
+  <source src="https://talks.paolino.me/rucoco-2026/demo.mp4" type="video/mp4">
+</video>
+
 ---
 
 <div class="provider-icons">
