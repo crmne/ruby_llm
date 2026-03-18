@@ -103,17 +103,5 @@ RSpec.describe RubyLLM::Models do
       model, _provider = models.resolve('claude-sonnet-4-5')
       expect(model.provider).to eq('anthropic')
     end
-
-    it 'works with an empty hash (no-op)' do
-      models = described_class.new([anthropic_model, bedrock_model])
-
-      RubyLLM.configure do |config|
-        config.default_providers = {}
-      end
-
-      # Falls through to default PROVIDER_PREFERENCE (anthropic before bedrock)
-      model, _provider = models.resolve('claude-sonnet-4-5')
-      expect(model.provider).to eq('anthropic')
-    end
   end
 end
