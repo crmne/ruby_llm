@@ -93,7 +93,7 @@ module RubyLLM
 
         def acts_as_message(chat: :chat, chat_class: nil, chat_foreign_key: nil, touch_chat: false, # rubocop:disable Metrics/ParameterLists
                             tool_calls: :tool_calls, tool_call_class: nil, tool_calls_foreign_key: nil,
-                            model: :model, model_class: nil, model_foreign_key: nil)
+                            parent_tool_call_foreign_key: nil, model: :model, model_class: nil, model_foreign_key: nil)
           include RubyLLM::ActiveRecord::MessageMethods
 
           class_attribute :chat_association_name, :tool_calls_association_name, :model_association_name,
@@ -118,7 +118,7 @@ module RubyLLM
 
           belongs_to :parent_tool_call,
                      class_name: self.tool_call_class,
-                     foreign_key: ActiveSupport::Inflector.foreign_key(tool_calls.to_s.singularize),
+                     foreign_key: parent_tool_call_foreign_key || ActiveSupport::Inflector.foreign_key(tool_calls.to_s.singularize),
                      optional: true
 
           has_many :tool_results,
