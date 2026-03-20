@@ -281,6 +281,15 @@ Instruction persistence contract in Rails mode:
 * `find` applies instructions at runtime only (no persistence side effects)
 * `sync_instructions!` explicitly persists the current agent instructions
 
+### Using an Existing Chat Record
+If you already have a `Chat` record, pass it to `Agent.new(chat:)` instead of calling `Agent.find`. This applies all agent configuration (instructions, tools, etc.) without an extra database query:
+
+```ruby
+chat_record = Chat.find(params[:id])
+chat = WorkAssistant.new(chat: chat_record)
+chat.ask("Hello")
+```
+
 ## When to Use Agents vs `RubyLLM.chat`
 
 Use `RubyLLM.chat` for one-off, inline conversations:
