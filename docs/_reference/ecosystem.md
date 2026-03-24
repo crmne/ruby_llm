@@ -30,6 +30,7 @@ After reading this guide, you will know:
 * How `RubyLLM::Monitoring` provides dashboards and alerts for RubyLLM activity
 * How `RubyLLM::RedCandle` enables local model execution from Ruby
 * How OpenTelemetry instrumentation for RubyLLM provides observability into your LLM applications
+* How Respan provides an AI gateway, tracing, and prompt management for RubyLLM applications
 * Where to find community projects and how to contribute your own
 
 ## RubyLLM::Schema
@@ -204,7 +205,7 @@ For detailed documentation and examples, visit the [RubyLLM::RedCandle repositor
 
 **Observability for RubyLLM Applications**
 
-[opentelemetry-instrumentation-ruby_llm](https://github.com/thoughtbot/opentelemetry-instrumentation-ruby_llm) adds OpenTelemetry tracing to RubyLLM, enabling you to send traces to any compatible backend (Langfuse, Datadog, Honeycomb, Jaeger, Arize Phoenix and more).
+[opentelemetry-instrumentation-ruby_llm](https://github.com/thoughtbot/opentelemetry-instrumentation-ruby_llm) adds OpenTelemetry tracing to RubyLLM, enabling you to send traces to any compatible backend (Respan, Langfuse, Datadog, Honeycomb, Jaeger, Arize Phoenix and more).
 
 ### Why Use OpenTelemetry Instrumentation?
 
@@ -243,6 +244,60 @@ end
 ```
 
 For detailed documentation, setup instructions, and examples, visit the [OpenTelemetry RubyLLM Instrumentation repository](https://github.com/thoughtbot/opentelemetry-instrumentation-ruby_llm).
+
+---
+
+## Respan
+
+**AI Gateway, Tracing, and Prompt Management**
+
+[Respan](https://respan.ai) is an LLM platform that provides an AI gateway, tracing, evaluation, and prompt management. Since Respan's gateway is OpenAI-compatible, you can route all RubyLLM traffic through it by changing the base URL — no additional gems required.
+
+### Why Use Respan?
+
+When building LLM applications, you often need to:
+
+- Access models from multiple providers through a single API
+- Monitor costs, latency, and token usage across all LLM calls
+- Evaluate and compare prompt versions before deploying changes
+- Trace multi-step agent workflows end to end
+
+Respan provides all of this through its gateway and dashboard, with a dedicated [RubyLLM integration](https://respan.ai/docs/integrations/ruby_llm).
+
+### Key Features
+
+- Access 250+ models (OpenAI, Anthropic, Google, and more) via one unified API
+- Dashboard with real-time metrics for requests, tokens, latency, and cost
+- Tracing for conversations, tool calls, and agent workflows
+- Prompt management with versioning and deployment without code changes
+- Model fallbacks, load balancing, and caching
+- Online and offline evaluation for quality scoring
+- Multi-tenancy support via RubyLLM contexts
+- OpenTelemetry (OTLP) ingestion — works with the [OpenTelemetry RubyLLM Instrumentation](#opentelemetry-rubyllm-instrumentation) gem
+
+### Setup
+
+Point RubyLLM at the Respan gateway:
+
+```ruby
+RubyLLM.configure do |config|
+  config.openai_api_key = ENV["RESPAN_API_KEY"]
+  config.openai_api_base = "https://api.respan.ai/api"
+end
+```
+
+OpenAI models work directly. For non-OpenAI models, add `provider: :openai` and `assume_model_exists: true`:
+
+```ruby
+chat = RubyLLM.chat(model: "claude-sonnet-4-6",
+                     provider: :openai,
+                     assume_model_exists: true)
+response = chat.ask("Hello from RubyLLM!")
+```
+
+Streaming, tools, and Rails `acts_as_chat` all work through the gateway without changes.
+
+For detailed documentation, setup instructions, and examples, visit the [Respan RubyLLM integration guide](https://respan.ai/docs/integrations/ruby_llm).
 
 ---
 
