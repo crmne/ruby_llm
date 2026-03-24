@@ -251,7 +251,7 @@ For detailed documentation, setup instructions, and examples, visit the [OpenTel
 
 **AI Gateway, Tracing, and Prompt Management**
 
-[Respan](https://respan.ai) is an LLM platform that provides an AI gateway, tracing, evaluation, and prompt management. Since Respan's gateway is OpenAI-compatible, you can route all RubyLLM traffic through it by changing the base URL — no additional gems required.
+[Respan](https://respan.ai) is an LLM platform that provides an AI gateway, tracing, evaluation, and prompt management. Since Respan's gateway is OpenAI-compatible, you can route RubyLLM requests through it by setting the OpenAI base URL and using `provider: :openai` — no additional gems required.
 
 ### Why Use Respan?
 
