@@ -62,9 +62,8 @@ module RubyLLM
     def save(path)
       return unless io_like?
 
-      File.open(path, 'w') do |f|
-        f.puts(@source.read)
-      end
+      @source.rewind if @source.respond_to?(:rewind)
+      File.binwrite(path, @source.read)
     end
 
     def for_llm
