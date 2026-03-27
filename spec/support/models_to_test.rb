@@ -14,6 +14,7 @@ chat_models = [
   { provider: :deepseek, model: 'deepseek-chat' },
   { provider: :gemini, model: 'gemini-2.5-flash' },
   { provider: :gpustack, model: 'qwen3' },
+  { provider: :minimax, model: 'MiniMax-M2.7' },
   { provider: :mistral, model: 'mistral-small-latest' },
   { provider: :ollama, model: 'qwen3' },
   { provider: :openai, model: 'gpt-5-nano' },
