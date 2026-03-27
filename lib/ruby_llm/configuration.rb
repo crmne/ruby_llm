@@ -51,7 +51,7 @@ module RubyLLM
     option :http_proxy, nil
 
     option :logger, nil
-    option :log_file, -> { $stdout }
+    option :log_file, -> { ENV['RUBYLLM_LOG_FILE'] || $stdout }
     option :log_level, -> { ENV['RUBYLLM_DEBUG'] ? Logger::DEBUG : Logger::INFO }
     option :log_stream_debug, -> { ENV['RUBYLLM_STREAM_DEBUG'] == 'true' }
     option :log_regexp_timeout, -> { Regexp.respond_to?(:timeout) ? (Regexp.timeout || 1.0) : nil }
