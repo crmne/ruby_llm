@@ -9,14 +9,14 @@ module RubyLLM
 
         def context_window_for(model_id)
           case model_id
-          when /deepseek-(?:chat|reasoner)/ then 64_000
+          when /deepseek-(?:chat|reasoner|v3)/ then 64_000
           else 32_768
           end
         end
 
         def max_tokens_for(model_id)
           case model_id
-          when /deepseek-(?:chat|reasoner)/ then 8_192
+          when /deepseek-(?:chat|reasoner|v3)/ then 8_192
           else 4_096
           end
         end
@@ -38,7 +38,7 @@ module RubyLLM
         end
 
         def supports_functions?(model_id)
-          model_id.match?(/deepseek-chat/)
+          model_id.match?(/deepseek-(?:chat|v3)/)
         end
 
         def supports_tool_choice?(_model_id)
@@ -55,7 +55,7 @@ module RubyLLM
 
         def format_display_name(model_id)
           case model_id
-          when 'deepseek-chat' then 'DeepSeek V3'
+          when 'deepseek-chat', /deepseek-v3/ then 'DeepSeek V3'
           when 'deepseek-reasoner' then 'DeepSeek R1'
           else
             model_id.split('-')
@@ -69,10 +69,9 @@ module RubyLLM
         end
 
         def model_family(model_id)
-          case model_id
-          when /deepseek-reasoner/ then :reasoner
-          else :chat
-          end
+          return :reasoner if model_id.match?(/deepseek-reasoner/)
+
+          :chat
         end
 
         PRICES = {
@@ -110,7 +109,7 @@ module RubyLLM
         def capabilities_for(model_id)
           capabilities = ['streaming']
 
-          capabilities << 'function_calling' if model_id.match?(/deepseek-chat/)
+          capabilities << 'function_calling' if model_id.match?(/deepseek-(?:chat|v3)/)
 
           capabilities
         end

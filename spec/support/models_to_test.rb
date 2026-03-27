@@ -12,6 +12,7 @@ chat_models = [
   { provider: :azure, model: 'grok-4-1-fast-non-reasoning' },
   { provider: :bedrock, model: 'amazon.nova-2-lite-v1:0' },
   { provider: :deepseek, model: 'deepseek-chat' },
+  { provider: :deepseek, model: 'deepseek-v3.2' },
   { provider: :gemini, model: 'gemini-2.5-flash' },
   { provider: :gpustack, model: 'qwen3' },
   { provider: :mistral, model: 'mistral-small-latest' },
