@@ -101,6 +101,10 @@ TRANSCRIPTION_MODELS = [
   { provider: :vertexai, model: 'gemini-2.5-flash' }
 ].freeze
 
+SPEECH_MODELS = [
+  { provider: :openai, model: 'gpt-4o-mini-tts' },
+  { provider: :gemini, model: 'gemini-2.5-flash-preview-tts' }
+].freeze
 image_generation_models = [
   { provider: :openai, model: 'dall-e-3', supports_size: true },
   { provider: :openai, model: 'gpt-image-1', supports_size: false },

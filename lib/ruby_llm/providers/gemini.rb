@@ -7,6 +7,7 @@ module RubyLLM
       include Gemini::Chat
       include Gemini::Embeddings
       include Gemini::Images
+      include Gemini::Speech
       include Gemini::Models
       include Gemini::Transcription
       include Gemini::Streaming
