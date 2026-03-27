@@ -6,7 +6,13 @@
     </span>
   </div>
 
-  <div id="<%= message_variable_name %>_<%%= assistant.id %>_content" class="whitespace-pre-wrap"><%%= assistant.content %></div>
+  <%% if assistant.content.present? %>
+    <div id="<%= message_variable_name %>_<%%= assistant.id %>_content" class="whitespace-pre-wrap"><%%= assistant.content %></div>
+  <%% elsif assistant.content_raw.present? && assistant.content_raw.is_a?(Hash) %>
+    <div id="<%= message_variable_name %>_<%%= assistant.id %>_content">
+      <pre class="whitespace-pre-wrap"><%%= JSON.pretty_generate(assistant.content_raw) -%></pre>
+    </div>
+  <%% end %>
 
   <div>
     <span class="text-sm text-gray-600"><%%= assistant.created_at&.strftime("%I:%M %p") %></span>
