@@ -36,4 +36,49 @@ RSpec.describe RubyLLM::Providers::VertexAI do
       end
     end
   end
+
+  describe '#render_payload' do
+    let(:location) { 'us-central1' }
+    let(:model) do
+      instance_double(RubyLLM::Model::Info, id: 'gemini-2.5-pro', max_tokens: nil, metadata: {})
+    end
+
+    it 'normalizes tool response content roles to user' do
+      tool_message = instance_double(
+        RubyLLM::Message,
+        role: :tool,
+        tool_call_id: 'call_1',
+        content: 'tool output'
+      )
+      user_message = instance_double(
+        RubyLLM::Message,
+        role: :user,
+        tool_call?: false,
+        tool_result?: false,
+        content: 'prompt'
+      )
+
+      payload = provider.send(:render_payload, [tool_message, user_message], tools: {}, temperature: nil, model: model)
+
+      expect(payload[:contents]).to eq(
+        [
+          {
+            role: 'user',
+            parts: [
+              {
+                functionResponse: {
+                  name: 'call_1',
+                  response: {
+                    name: 'call_1',
+                    content: [{ text: 'tool output' }]
+                  }
+                }
+              }
+            ]
+          },
+          { role: 'user', parts: [{ text: 'prompt' }] }
+        ]
+      )
+    end
+  end
 end
