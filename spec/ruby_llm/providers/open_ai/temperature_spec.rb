@@ -10,8 +10,8 @@ RSpec.describe RubyLLM::Providers::OpenAI::Temperature do
       end
     end
 
-    it 'returns nil for search preview models' do
-      %w[gpt-4o-search-preview gpt-4o-mini-search-preview].each do |model|
+    it 'returns nil for search models' do
+      %w[gpt-4o-search-preview gpt-4o-mini-search-preview gpt-5-search-api].each do |model|
         expect(described_class.normalize(0.7, model)).to be_nil
       end
     end
