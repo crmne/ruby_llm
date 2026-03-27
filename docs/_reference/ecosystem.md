@@ -6,19 +6,19 @@ description: Extend RubyLLM with MCP servers, structured schemas, instrumentatio
 ---
 
 # {{ page.title }}
+
 {: .no_toc }
 
-{{ page.description }}
-{: .fs-6 .fw-300 }
+{{ page.description }} {: .fs-6 .fw-300 }
 
 > Ecosystem projects are maintained by their respective authors. We list projects for discoverability, but we cannot guarantee the quality, security, maintenance status, or fitness of every listed project.
 {: .note }
 
 ## Table of contents
+
 {: .no_toc .text-delta }
 
-1. TOC
-{:toc}
+1. TOC {:toc}
 
 ---
 
@@ -243,6 +243,42 @@ end
 ```
 
 For detailed documentation, setup instructions, and examples, visit the [OpenTelemetry RubyLLM Instrumentation repository](https://github.com/thoughtbot/opentelemetry-instrumentation-ruby_llm).
+
+---
+
+## RubyLLM::Tribunal
+
+**LLM Evaluation Framework for Ruby**
+
+[RubyLLM::Tribunal](https://github.com/Alqemist-labs/ruby_llm-tribunal) provides comprehensive tools for evaluating and testing LLM outputs, detecting hallucinations, measuring response quality, and ensuring safety. Perfect for RAG systems, chatbots, and any LLM-powered application.
+
+### Why Use RubyLLM::Tribunal?
+
+When building LLM applications, you need to validate that your outputs are:
+
+- Faithful to source documents (no hallucinations)
+- Safe and appropriate (no toxic or harmful content)
+- Accurate and relevant to user queries
+- Resistant to jailbreak attempts
+
+RubyLLM::Tribunal makes this easy with assertions you can use in your test suite.
+
+### Key Features
+
+- 🎯 Deterministic assertions for fast, free evaluations (contains, regex, JSON validation)
+- 🤖 LLM-as-Judge for AI-powered quality assessment (faithfulness, relevance, hallucination)
+- 🔐 Safety testing for toxicity, bias, jailbreak, and PII detection
+- 🎭 Red Team attacks to generate adversarial prompts and test defenses
+- 📊 Multiple reporters (Console, JSON, HTML, JUnit, GitHub Actions)
+- 🧪 Test integration with RSpec and Minitest
+
+### Installation
+
+```bash
+gem install ruby_llm-tribunal
+```
+
+For detailed documentation and examples, visit the [RubyLLM::Tribunal repository](https://github.com/Alqemist-labs/ruby_llm-tribunal).
 
 ---
 
