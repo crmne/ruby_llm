@@ -603,6 +603,60 @@ RSpec.describe RubyLLM::Chat do
       expect(response.content).to eq('Task completed successfully')
     end
 
+    it 'step executes a single tool-calling iteration without recursing' do
+      chat = RubyLLM.chat.with_tool(Weather)
+      provider = chat.instance_variable_get(:@provider)
+      tool_call = RubyLLM::ToolCall.new(
+        id: 'call_1',
+        name: 'weather',
+        arguments: { 'latitude' => 52.52, 'longitude' => 13.405 }
+      )
+
+      allow(provider).to receive(:complete).and_return(
+        RubyLLM::Message.new(
+          role: :assistant,
+          content: '',
+          tool_calls: { tool_call.id => tool_call }
+        )
+      )
+
+      chat.add_message(role: :user, content: "What's the weather in Berlin?")
+
+      response = chat.step
+
+      expect(response).to be_a(RubyLLM::Message)
+      expect(response.tool_call?).to be(true)
+      expect(provider).to have_received(:complete).once
+      expect(chat.messages.map(&:role)).to eq(%i[user assistant tool])
+      expect(chat.messages.last.content).to include('15')
+    end
+
+    it 'step returns Halt when a tool halts' do
+      chat = RubyLLM.chat.with_tool(HaltingTool)
+      provider = chat.instance_variable_get(:@provider)
+      tool_call = RubyLLM::ToolCall.new(
+        id: 'call_1',
+        name: 'halting',
+        arguments: {}
+      )
+
+      allow(provider).to receive(:complete).and_return(
+        RubyLLM::Message.new(
+          role: :assistant,
+          content: '',
+          tool_calls: { tool_call.id => tool_call }
+        )
+      )
+
+      chat.add_message(role: :user, content: 'Execute the halting tool')
+
+      response = chat.step
+
+      expect(response).to be_a(RubyLLM::Tool::Halt)
+      expect(response.content).to eq('Task completed successfully')
+      expect(provider).to have_received(:complete).once
+    end
+
     it 'does not continue conversation after halt' do
       call_count = 0
       original_complete = described_class.instance_method(:complete)

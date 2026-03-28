@@ -136,35 +136,25 @@ module RubyLLM
       messages.each(&)
     end
 
-    def complete(&) # rubocop:disable Metrics/PerceivedComplexity
-      response = @provider.complete(
-        messages,
-        tools: @tools,
-        tool_prefs: @tool_prefs,
-        temperature: @temperature,
-        model: @model,
-        params: @params,
-        headers: @headers,
-        schema: @schema,
-        thinking: @thinking,
-        &wrap_streaming_block(&)
-      )
+    def complete(&)
+      response = step(&)
+      return response if response.is_a?(Tool::Halt)
+
+      response.tool_call? ? complete(&) : response
+    end
+
+    def step(&)
+      response = provider_complete(&)
 
       @on[:new_message]&.call unless block_given?
 
-      if @schema && response.content.is_a?(String) && !response.tool_call?
-        begin
-          response.content = JSON.parse(response.content)
-        rescue JSON::ParserError
-          # If parsing fails, keep content as string
-        end
-      end
+      normalize_schema_response(response)
 
       add_message response
       @on[:end_message]&.call(response)
 
       if response.tool_call?
-        handle_tool_calls(response, &)
+        handle_tool_calls(response, continue_loop: false, &) || response
       else
         response
       end
@@ -185,6 +175,31 @@ module RubyLLM
     end
 
     private
+
+    def provider_complete(&)
+      @provider.complete(
+        messages,
+        tools: @tools,
+        tool_prefs: @tool_prefs,
+        temperature: @temperature,
+        model: @model,
+        params: @params,
+        headers: @headers,
+        schema: @schema,
+        thinking: @thinking,
+        &wrap_streaming_block(&)
+      )
+    end
+
+    def normalize_schema_response(response)
+      return unless @schema && response.content.is_a?(String) && !response.tool_call?
+
+      begin
+        response.content = JSON.parse(response.content)
+      rescue JSON::ParserError
+        # If parsing fails, keep content as string
+      end
+    end
 
     def normalize_schema_payload(raw_schema)
       return nil if raw_schema.nil?
@@ -231,7 +246,7 @@ module RubyLLM
       end
     end
 
-    def handle_tool_calls(response, &) # rubocop:disable Metrics/PerceivedComplexity
+    def handle_tool_calls(response, continue_loop: true, &) # rubocop:disable Metrics/PerceivedComplexity
       halt_result = nil
 
       response.tool_calls.each_value do |tool_call|
@@ -248,7 +263,7 @@ module RubyLLM
       end
 
       reset_tool_choice if forced_tool_choice?
-      halt_result || complete(&)
+      halt_result || (continue_loop ? complete(&) : nil)
     end
 
     def execute_tool(tool_call)

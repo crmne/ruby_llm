@@ -227,6 +227,14 @@ module RubyLLM
         raise e
       end
 
+      def step(...)
+        to_llm.step(...)
+      rescue RubyLLM::Error => e
+        cleanup_failed_messages if @message&.persisted? && @message.content.blank?
+        cleanup_orphaned_tool_results
+        raise e
+      end
+
       private
 
       def cleanup_failed_messages

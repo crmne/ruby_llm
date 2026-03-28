@@ -738,6 +738,72 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     end
   end
 
+  describe 'step' do
+    it 'executes a single tool-calling iteration without recursing' do
+      chat = Chat.create!(model: model).with_tool(Calculator)
+      provider = chat.to_llm.instance_variable_get(:@provider)
+      tool_call = RubyLLM::ToolCall.new(
+        id: 'call_1',
+        name: 'calculator',
+        arguments: { 'expression' => '2 + 2' }
+      )
+
+      allow(provider).to receive(:complete).and_return(
+        RubyLLM::Message.new(
+          role: :assistant,
+          content: '',
+          tool_calls: { tool_call.id => tool_call }
+        )
+      )
+
+      chat.add_message(role: :user, content: 'What is 2 + 2?')
+
+      response = chat.step
+
+      expect(response).to be_a(RubyLLM::Message)
+      expect(response.tool_call?).to be(true)
+      expect(provider).to have_received(:complete).once
+      expect(chat.messages.order(:id).pluck(:role)).to eq(%w[user assistant tool])
+      expect(chat.messages.order(:id).last.content).to eq('4')
+    end
+
+    it 'returns Halt when a tool halts' do
+      stub_const('HaltingTool', Class.new(RubyLLM::Tool) do
+        description 'A tool that halts'
+
+        def execute
+          halt('Task completed successfully')
+        end
+      end)
+
+      chat = Chat.create!(model: model).with_tool(HaltingTool)
+      provider = chat.to_llm.instance_variable_get(:@provider)
+      tool_call = RubyLLM::ToolCall.new(
+        id: 'call_1',
+        name: 'halting',
+        arguments: {}
+      )
+
+      allow(provider).to receive(:complete).and_return(
+        RubyLLM::Message.new(
+          role: :assistant,
+          content: '',
+          tool_calls: { tool_call.id => tool_call }
+        )
+      )
+
+      chat.add_message(role: :user, content: 'Execute the halting tool')
+
+      response = chat.step
+
+      expect(response).to be_a(RubyLLM::Tool::Halt)
+      expect(response.content).to eq('Task completed successfully')
+      expect(provider).to have_received(:complete).once
+      expect(chat.messages.order(:id).pluck(:role)).to eq(%w[user assistant tool])
+      expect(chat.messages.order(:id).last.content).to eq('Task completed successfully')
+    end
+  end
+
   describe 'error recovery' do
     it 'does not clean up complete tool interactions when error occurs after tool execution' do
       chat = Chat.create!(model: model)
