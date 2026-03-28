@@ -106,6 +106,12 @@ module RubyLLM
           self.tool_call_class = (tool_call_class || tool_calls.to_s.classify).to_s
           self.model_class = (model_class || model.to_s.classify).to_s
 
+          parent_tool_call_foreign_key = if tool_calls_foreign_key&.end_with?('_message_id')
+                                           tool_calls_foreign_key.sub(/_message_id\z/, '_tool_call_id')
+                                         else
+                                           ActiveSupport::Inflector.foreign_key(self.tool_call_class)
+                                         end
+
           belongs_to chat,
                      class_name: self.chat_class,
                      foreign_key: chat_foreign_key,
@@ -118,7 +124,7 @@ module RubyLLM
 
           belongs_to :parent_tool_call,
                      class_name: self.tool_call_class,
-                     foreign_key: ActiveSupport::Inflector.foreign_key(tool_calls.to_s.singularize),
+                     foreign_key: parent_tool_call_foreign_key,
                      optional: true
 
           has_many :tool_results,

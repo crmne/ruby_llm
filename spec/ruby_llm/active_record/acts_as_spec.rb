@@ -512,15 +512,17 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
 
       after(:all) do # rubocop:disable RSpec/BeforeAfterAll
         ActiveRecord::Migration.suppress_messages do
-          if ActiveRecord::Base.connection.table_exists?(:support_tool_calls)
-            ActiveRecord::Migration.drop_table :support_tool_calls
-          end
+          ActiveRecord::Base.connection.execute('PRAGMA foreign_keys = OFF')
           if ActiveRecord::Base.connection.table_exists?(:support_messages)
             ActiveRecord::Migration.drop_table :support_messages
+          end
+          if ActiveRecord::Base.connection.table_exists?(:support_tool_calls)
+            ActiveRecord::Migration.drop_table :support_tool_calls
           end
           if ActiveRecord::Base.connection.table_exists?(:support_conversations)
             ActiveRecord::Migration.drop_table :support_conversations
           end
+          ActiveRecord::Base.connection.execute('PRAGMA foreign_keys = ON')
         end
       end
 
@@ -534,7 +536,12 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
         end
 
         class Message < ActiveRecord::Base # rubocop:disable RSpec/LeakyConstantDeclaration
-          acts_as_message chat: :conversation, chat_class: 'Support::Conversation', tool_call_class: 'Support::ToolCall'
+          acts_as_message(
+            chat: :conversation,
+            chat_class: 'Support::Conversation',
+            tool_calls: :stored_calls,
+            tool_call_class: 'Support::ToolCall'
+          )
         end
 
         class ToolCall < ActiveRecord::Base # rubocop:disable RSpec/LeakyConstantDeclaration
@@ -547,6 +554,30 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
 
         expect { conversation.messages.create!(role: 'user', content: 'Test') }.not_to raise_error
         expect(conversation.messages.count).to eq(1)
+      end
+
+      it 'uses the tool_call_class-derived foreign key for parent_tool_call' do
+        association = Support::Message.reflect_on_association(:parent_tool_call)
+
+        expect(association.foreign_key).to eq('tool_call_id')
+      end
+
+      it 'persists parent_tool_call with a custom tool_calls association name' do
+        conversation = Support::Conversation.create!(model: model)
+        message = conversation.messages.create!(role: 'assistant', content: 'Tool call message')
+        tool_call = message.stored_calls.create!(
+          tool_call_id: 'call_123',
+          name: 'calculator',
+          arguments: { expression: '2 + 2' }
+        )
+
+        expect do
+          conversation.messages.create!(
+            role: 'tool',
+            content: '4',
+            parent_tool_call: tool_call
+          )
+        end.not_to raise_error
       end
     end
 
