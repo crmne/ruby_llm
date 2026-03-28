@@ -12,6 +12,10 @@ if defined?(Rails::Railtie)
 
       initializer 'ruby_llm.active_record' do
         ActiveSupport.on_load :active_record do
+          require 'ruby_llm/active_record/chat_methods'
+          require 'ruby_llm/active_record/message_methods'
+          require 'ruby_llm/active_record/model_methods'
+
           if RubyLLM.config.use_new_acts_as
             require 'ruby_llm/active_record/acts_as'
             ::ActiveRecord::Base.include RubyLLM::ActiveRecord::ActsAs
