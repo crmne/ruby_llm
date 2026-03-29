@@ -53,6 +53,8 @@ module RubyLLM
           return RubyLLM::Transcription.new(text: data, model: model) if data.is_a?(String)
 
           usage = data['usage'] || {}
+          input_tokens = usage['input_tokens'].nil? ? usage['prompt_tokens'] : usage['input_tokens']
+          output_tokens = usage['output_tokens'].nil? ? usage['completion_tokens'] : usage['output_tokens']
 
           RubyLLM::Transcription.new(
             text: data['text'],
@@ -60,8 +62,8 @@ module RubyLLM
             language: data['language'],
             duration: data['duration'],
             segments: data['segments'],
-            input_tokens: usage['input_tokens'] || usage['prompt_tokens'],
-            output_tokens: usage['output_tokens'] || usage['completion_tokens']
+            input_tokens: input_tokens,
+            output_tokens: output_tokens
           )
         end
       end
