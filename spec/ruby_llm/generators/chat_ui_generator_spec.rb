@@ -134,13 +134,13 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         expect(message_content).to include('acts_as_message')
 
         # Check broadcasting setup
-        expect(message_content).to include(%q(broadcasts_to ->(message) { "chat_#{message.chat_id}" }))
+        expect(message_content).to include("broadcasts_to ->(message) { \"chat_\#{message.chat_id}\" }")
         expect(message_content).to include('inserts_by: :append')
 
         # Check broadcast_append_chunk method
         expect(message_content).to include('def broadcast_append_chunk(content)')
-        expect(message_content).to include(%q(broadcast_append_to "chat_#{chat_id}"))
-        expect(message_content).to include(%q(target: "message_#{id}_content"))
+        expect(message_content).to include("broadcast_append_to \"chat_\#{chat_id}\"")
+        expect(message_content).to include("target: \"message_\#{id}_content\"")
         expect(message_content).to include('content: ERB::Util.html_escape(content.to_s)')
       end
     end
@@ -318,13 +318,13 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         expect(message_content).to include("model: :llm_model, model_class: 'Llm::Model'")
 
         # Check broadcasting setup
-        expect(message_content).to include(%q(broadcasts_to ->(llm_message) { "llm_chat_#{llm_message.llm_chat_id}" }))
+        expect(message_content).to include("broadcasts_to ->(llm_message) { \"llm_chat_\#{llm_message.llm_chat_id}\" }")
         expect(message_content).to include('inserts_by: :append')
 
         # Check broadcast_append_chunk method
         expect(message_content).to include('def broadcast_append_chunk(content)')
-        expect(message_content).to include(%q(broadcast_append_to "llm_chat_#{llm_chat_id}"))
-        expect(message_content).to include(%q(target: "llm_message_#{id}_content"))
+        expect(message_content).to include("broadcast_append_to \"llm_chat_\#{llm_chat_id}\"")
+        expect(message_content).to include("target: \"llm_message_\#{id}_content\"")
         expect(message_content).to include('content: ERB::Util.html_escape(content.to_s)')
       end
     end
