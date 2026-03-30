@@ -14,30 +14,6 @@ RSpec.describe RubyLLM::Providers::Gemini::Chat do
     end
   end
 
-  describe '#parse_completion_response' do
-    it 'normalizes finish_reason on the message' do
-      response_body = {
-        'candidates' => [
-          {
-            'finishReason' => 'SAFETY',
-            'content' => {
-              'parts' => [{ 'text' => 'blocked' }]
-            }
-          }
-        ],
-        'usageMetadata' => {},
-        'modelVersion' => 'gemini-2.5-flash'
-      }
-
-      response = instance_double(Faraday::Response, body: response_body, env: instance_double(Faraday::Env))
-      allow(test_obj).to receive(:extract_tool_calls).and_return(nil)
-
-      message = test_obj.send(:parse_completion_response, response)
-
-      expect(message.finish_reason).to eq('content_filter')
-    end
-  end
-
   describe '#convert_schema_to_gemini' do
     it 'extracts inner schema from wrapper format' do
       # Simulate what RubyLLM::Schema.to_json_schema returns
@@ -549,6 +525,29 @@ RSpec.describe RubyLLM::Providers::Gemini::Chat do
   end
 
   describe '#parse_completion_response' do
+    it 'normalizes finish_reason on the message' do
+      response = Struct.new(:body, :env).new(
+        {
+          'candidates' => [
+            {
+              'finishReason' => 'SAFETY',
+              'content' => {
+                'parts' => [{ 'text' => 'blocked' }]
+              }
+            }
+          ],
+          'usageMetadata' => {},
+          'modelVersion' => 'gemini-2.5-flash'
+        },
+        Struct.new(:url).new(Struct.new(:path).new('/v1/models/gemini-2.5-flash:generateContent'))
+      )
+
+      provider = RubyLLM::Providers::Gemini.new(RubyLLM.config)
+      message = provider.send(:parse_completion_response, response)
+
+      expect(message.finish_reason).to eq('content_filter')
+    end
+
     it 'keeps thought-only parts out of assistant content' do
       response = Struct.new(:body, :env).new(
         {

@@ -3,19 +3,30 @@
 require 'spec_helper'
 
 RSpec.describe RubyLLM::Providers::OpenAI do
-  include_context 'with configured RubyLLM'
-
   subject(:provider) { described_class.new(RubyLLM.config) }
+
+  include_context 'with configured RubyLLM'
 
   describe '#complete' do
     let(:model) { instance_double(RubyLLM::Model::Info, id: 'gpt-4o') }
-    let(:response) { instance_double(Faraday::Response) }
+    let(:response_body) do
+      {
+        'model' => 'gpt-4o',
+        'choices' => [
+          {
+            'message' => {
+              'role' => 'assistant',
+              'content' => 'ok'
+            }
+          }
+        ],
+        'usage' => {}
+      }
+    end
+    let(:response) { instance_double(Faraday::Response, body: response_body) }
 
     before do
       allow(provider.connection).to receive(:post).and_return(response)
-      allow(provider).to receive(:parse_completion_response).with(response).and_return(
-        RubyLLM::Message.new(role: :assistant, content: 'ok')
-      )
     end
 
     it 'adds max_completion_tokens when max_tokens is provided' do

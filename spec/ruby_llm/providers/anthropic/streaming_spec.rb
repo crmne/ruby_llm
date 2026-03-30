@@ -22,12 +22,14 @@ RSpec.describe RubyLLM::Providers::Anthropic::Streaming do
       }
     }
 
-    allow(test_obj).to receive(:extract_model_id).and_return('claude-sonnet-4-5')
-    allow(test_obj).to receive(:extract_input_tokens).and_return(nil)
-    allow(test_obj).to receive(:extract_output_tokens).and_return(nil)
-    allow(test_obj).to receive(:extract_cached_tokens).and_return(nil)
-    allow(test_obj).to receive(:extract_cache_creation_tokens).and_return(nil)
-    allow(test_obj).to receive(:extract_tool_calls).and_return(nil)
+    allow(test_obj).to receive_messages(
+      extract_model_id: 'claude-sonnet-4-5',
+      extract_input_tokens: nil,
+      extract_output_tokens: nil,
+      extract_cached_tokens: nil,
+      extract_cache_creation_tokens: nil,
+      extract_tool_calls: nil
+    )
 
     chunk = test_obj.send(:build_chunk, data)
 
