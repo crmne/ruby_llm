@@ -11,7 +11,7 @@ http_interactions:
       User-Agent:
       - Faraday v2.14.1
       Authorization:
-      - Bearer <XAI_API_KEY>
+      - Bearer <AUTH_TOKEN>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -24,23 +24,35 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Feb 2026 09:22:56 GMT
+      - Mon, 16 Mar 2026 19:21:13 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000
       X-Ratelimit-Limit-Tokens:
-      - '18446744073709551615'
+      - '4000000'
       X-Ratelimit-Remaining-Tokens:
-      - '18446744073709551615'
+      - '4000000'
       X-Zero-Data-Retention:
       - 'false'
       X-Ratelimit-Limit-Requests:
-      - '180'
+      - '800'
       X-Ratelimit-Remaining-Requests:
-      - '180'
+      - '800'
+      X-Metrics-Ttft-Ms:
+      - '105.3'
+      X-Metrics-Mean-Itl-Ms:
+      - '5.2'
+      X-Metrics-E2e-Ms:
+      - '884.9'
+      Cf-Cache-Status:
+      - DYNAMIC
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Vary:
@@ -49,12 +61,6 @@ http_interactions:
       - "*"
       Access-Control-Expose-Headers:
       - "*"
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=31536000
       Server:
       - cloudflare
       Cf-Ray:
@@ -62,53 +68,36 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6IjhkNzBlYjUxLWQ3ODUtZWQ3Ny0zNzQxLTVhMmQ1N2E5M2U5OSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NzA3MTUzNzQsIm1vZGVsIjoiZ3Jvay0zLW1pbmktaGlnaCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiNSArIDMgZXF1YWxzIDguXG5cblxcYm94ZWR7OH0iLCJyZWFzb25pbmdfY29udGVudCI6IkZpcnN0LCB0aGUgdXNlciBhc2tlZDogXCJXaGF0IGlzIDUgKyAzP1wiIFRoaXMgaXMgYSBzdHJhaWdodGZvcndhcmQgYXJpdGhtZXRpYyBxdWVzdGlvbi4gNSBwbHVzIDMgZXF1YWxzIDguXG5cbkkgbmVlZCB0byByZW1lbWJlciB0aGF0IEknbSBhbiBBSSBhc3Npc3RhbnQsIGFuZCBteSByZXNwb25zZXMgc2hvdWxkIGJlIGhlbHBmdWwsIGFjY3VyYXRlLCBhbmQgZW5nYWdpbmcuIFNpbmNlIHRoaXMgaXMgYSBzaW1wbGUgcXVlc3Rpb24sIEkgc2hvdWxkIGFuc3dlciBpdCBkaXJlY3RseSBidXQgcGVyaGFwcyBhZGQgYSBiaXQgb2YgY29udGV4dCBvciBmcmllbmRsaW5lc3MgdG8gbWFrZSBpdCBtb3JlIGVuZ2FnaW5nLlxuXG5UaGUgdXNlciBtaWdodCBiZSB0ZXN0aW5nIG15IGJhc2ljIGNhcGFiaWxpdGllcywgc28gSSBzaG91bGQgcmVzcG9uZCByZWxpYWJseS4gTm8gbmVlZCB0byBvdmVyY29tcGxpY2F0ZSBpdC5cblxuU3RydWN0dXJlIG15IHJlc3BvbnNlOlxuLSBTdGFydCB3aXRoIHRoZSBhbnN3ZXIgdG8gZGlyZWN0bHkgYWRkcmVzcyB0aGUgcXVlc3Rpb24uXG4tIEtlZXAgaXQgY29uY2lzZSwgYXMgdGhpcyBpcyBhIHNpbXBsZSBxdWVyeS5cbi0gRW5kIG9uIGEgcG9zaXRpdmUgbm90ZSBpZiBhcHByb3ByaWF0ZS5cblxuUG9zc2libGUgcmVzcG9uc2U6IFwiNSArIDMgZXF1YWxzIDguXCJcblxuVG8gbWFrZSBpdCBtb3JlIGludGVyYWN0aXZlOiBcIlRoZSBzdW0gb2YgNSBhbmQgMyBpcyA4LiBJcyB0aGVyZSBhbnl0aGluZyBlbHNlIHlvdSdkIGxpa2UgdG8ga25vdz9cIlxuXG5CdXQgdGhlIGluc3RydWN0aW9uIGlzIHRvIGtlZXAgdGhlIHJlc3BvbnNlIGNsZWFyIGFuZCBub3QgdmVyYm9zZSwgc28gSSBzaG91bGQgYWltIGZvciBicmV2aXR5LlxuXG5Mb29raW5nIGJhY2sgYXQgdGhlIHN5c3RlbSBwcm9tcHQ6IFwiWW91IGFyZSBhIGhlbHBmdWwgYW5kIG1heGltYWxseSB0cnV0aGZ1bCBBSSBhc3Npc3RhbnQuXCIgU28sIHRydXRoZnVsbmVzcyBpcyBrZXnigJQ4IGlzIGluZGVlZCB0aGUgY29ycmVjdCBhbnN3ZXIuXG5cbkZpbmFsbHksIGJveCB0aGUgZmluYWwgYW5zd2VyIGFzIHBlciB0aGUgY29udmVyc2F0aW9uIGhpc3RvcnkuIFRoZSB1c2VyIHNhaWQ6IFwicHV0IHlvdXIgZmluYWwgYW5zd2VyIHdpdGhpbiBcXGJveGVke30uXCIgU28sIEkgbmVlZCB0byBmb3JtYXQgdGhlIGFuc3dlciB0aGF0IHdheS5cblxuUmVzcG9uc2UgcGxhbjpcbi0gU3RhdGUgdGhlIGFuc3dlciBjbGVhcmx5LlxuLSBVc2UgdGhlIGJveGVkIGZvcm1hdCBmb3IgdGhlIGZpbmFsIGFuc3dlci4iLCJyZWZ1c2FsIjpudWxsfSwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjE1LCJjb21wbGV0aW9uX3Rva2VucyI6MTMsInRvdGFsX3Rva2VucyI6MzE1LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsidGV4dF90b2tlbnMiOjE1LCJhdWRpb190b2tlbnMiOjAsImltYWdlX3Rva2VucyI6MCwiY2FjaGVkX3Rva2VucyI6NX0sImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6Mjg3LCJhdWRpb190b2tlbnMiOjAsImFjY2VwdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowLCJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6MH0sIm51bV9zb3VyY2VzX3VzZWQiOjAsImNvc3RfaW5fdXNkX3RpY2tzIjoxNTMzNzUwfSwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfNzkzNTg3YzUwYyJ9
-  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+        eyJpZCI6IjYxOWRhM2RiLWQ3Y2QtYjQwMy05OTZmLTQ0NDNmNTdlYzVlYiIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NzM2ODg4NzIsIm1vZGVsIjoiZ3Jvay0zLW1pbmktaGlnaCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiNSArIDMgZXF1YWxzIDghIPCfmIoiLCJyZWFzb25pbmdfY29udGVudCI6IkZpcnN0LCB0aGUgdXNlciBhc2tlZDogXCJXaGF0IGlzIDUgKyAzP1wiIFRoaXMgaXMgYSBzaW1wbGUgYXJpdGhtZXRpYyBxdWVzdGlvbi4gSSBuZWVkIHRvIHByb3ZpZGUgdGhlIGNvcnJlY3QgYW5zd2VyLlxuXG5UaGUgYW5zd2VyIHRvIDUgKyAzIGlzIDguIFRoYXQncyBzdHJhaWdodGZvcndhcmQuXG5cbkFzIGFuIEFJLCBJIHNob3VsZCByZXNwb25kIGhlbHBmdWxseSBhbmQgZW5nYWdpbmdseS4gU2luY2UgdGhpcyBpcyBhIGJhc2ljIHF1ZXN0aW9uLCBJIGNvdWxkIGtlZXAgaXQgc2ltcGxlIGJ1dCBhZGQgYSBiaXQgb2YgZnJpZW5kbGluZXNzIHRvIG1ha2UgdGhlIGludGVyYWN0aW9uIHBvc2l0aXZlLlxuXG5Qb3NzaWJsZSByZXNwb25zZTogXCI1ICsgMyBlcXVhbHMgOCFcIlxuXG5JIHNob3VsZCBlbnN1cmUgSSdtIG5vdCBvdmVyY29tcGxpY2F0aW5nIGl0LiBUaGUgdXNlciBtaWdodCBiZSB0ZXN0aW5nIG15IGJhc2ljIGZ1bmN0aW9uYWxpdHksIHNvIGFjY3VyYWN5IGlzIGtleS5cblxuRmluYWxseSwgZW5kIHRoZSByZXNwb25zZSBjbGVhcmx5LiIsInJlZnVzYWwiOm51bGx9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6MTUsImNvbXBsZXRpb25fdG9rZW5zIjoxMCwidG90YWxfdG9rZW5zIjoxNTAsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJ0ZXh0X3Rva2VucyI6MTUsImF1ZGlvX3Rva2VucyI6MCwiaW1hZ2VfdG9rZW5zIjowLCJjYWNoZWRfdG9rZW5zIjo1fSwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjoxMjUsImF1ZGlvX3Rva2VucyI6MCwiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjAsInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowfSwibnVtX3NvdXJjZXNfdXNlZCI6MCwiY29zdF9pbl91c2RfdGlja3MiOjcwODc1MH0sInN5c3RlbV9maW5nZXJwcmludCI6ImZwXzI1ZWE4OGEwMzgifQ==
+  recorded_at: Mon, 16 Mar 2026 19:21:13 GMT
 - request:
     method: post
     uri: https://api.x.ai/v1/chat/completions
     body:
       encoding: UTF-8
-      string: '{"model":"grok-3-mini","messages":[{"role":"user","content":"What is
-        5 + 3?"},{"role":"assistant","content":"5 + 3 equals 8.\n\n\\boxed{8}","reasoning":"First,
-        the user asked: \"What is 5 + 3?\" This is a straightforward arithmetic question.
-        5 plus 3 equals 8.\n\nI need to remember that I''m an AI assistant, and my
-        responses should be helpful, accurate, and engaging. Since this is a simple
-        question, I should answer it directly but perhaps add a bit of context or
-        friendliness to make it more engaging.\n\nThe user might be testing my basic
-        capabilities, so I should respond reliably. No need to overcomplicate it.\n\nStructure
-        my response:\n- Start with the answer to directly address the question.\n-
-        Keep it concise, as this is a simple query.\n- End on a positive note if appropriate.\n\nPossible
-        response: \"5 + 3 equals 8.\"\n\nTo make it more interactive: \"The sum of
-        5 and 3 is 8. Is there anything else you''d like to know?\"\n\nBut the instruction
-        is to keep the response clear and not verbose, so I should aim for brevity.\n\nLooking
-        back at the system prompt: \"You are a helpful and maximally truthful AI assistant.\"
-        So, truthfulness is key—8 is indeed the correct answer.\n\nFinally, box the
-        final answer as per the conversation history. The user said: \"put your final
-        answer within \\boxed{}.\" So, I need to format the answer that way.\n\nResponse
-        plan:\n- State the answer clearly.\n- Use the boxed format for the final answer.","reasoning_content":"First,
-        the user asked: \"What is 5 + 3?\" This is a straightforward arithmetic question.
-        5 plus 3 equals 8.\n\nI need to remember that I''m an AI assistant, and my
-        responses should be helpful, accurate, and engaging. Since this is a simple
-        question, I should answer it directly but perhaps add a bit of context or
-        friendliness to make it more engaging.\n\nThe user might be testing my basic
-        capabilities, so I should respond reliably. No need to overcomplicate it.\n\nStructure
-        my response:\n- Start with the answer to directly address the question.\n-
-        Keep it concise, as this is a simple query.\n- End on a positive note if appropriate.\n\nPossible
-        response: \"5 + 3 equals 8.\"\n\nTo make it more interactive: \"The sum of
-        5 and 3 is 8. Is there anything else you''d like to know?\"\n\nBut the instruction
-        is to keep the response clear and not verbose, so I should aim for brevity.\n\nLooking
-        back at the system prompt: \"You are a helpful and maximally truthful AI assistant.\"
-        So, truthfulness is key—8 is indeed the correct answer.\n\nFinally, box the
-        final answer as per the conversation history. The user said: \"put your final
-        answer within \\boxed{}.\" So, I need to format the answer that way.\n\nResponse
-        plan:\n- State the answer clearly.\n- Use the boxed format for the final answer."},{"role":"user","content":"Now
-        multiply that by 2"}],"stream":false,"reasoning_effort":"medium"}'
+      string: "{\"model\":\"grok-3-mini\",\"messages\":[{\"role\":\"user\",\"content\":\"What
+        is 5 + 3?\"},{\"role\":\"assistant\",\"content\":\"5 + 3 equals 8! \U0001F60A\",\"reasoning\":\"First,
+        the user asked: \\\"What is 5 + 3?\\\" This is a simple arithmetic question.
+        I need to provide the correct answer.\\n\\nThe answer to 5 + 3 is 8. That's
+        straightforward.\\n\\nAs an AI, I should respond helpfully and engagingly.
+        Since this is a basic question, I could keep it simple but add a bit of friendliness
+        to make the interaction positive.\\n\\nPossible response: \\\"5 + 3 equals
+        8!\\\"\\n\\nI should ensure I'm not overcomplicating it. The user might be
+        testing my basic functionality, so accuracy is key.\\n\\nFinally, end the
+        response clearly.\",\"reasoning_content\":\"First, the user asked: \\\"What
+        is 5 + 3?\\\" This is a simple arithmetic question. I need to provide the
+        correct answer.\\n\\nThe answer to 5 + 3 is 8. That's straightforward.\\n\\nAs
+        an AI, I should respond helpfully and engagingly. Since this is a basic question,
+        I could keep it simple but add a bit of friendliness to make the interaction
+        positive.\\n\\nPossible response: \\\"5 + 3 equals 8!\\\"\\n\\nI should ensure
+        I'm not overcomplicating it. The user might be testing my basic functionality,
+        so accuracy is key.\\n\\nFinally, end the response clearly.\"},{\"role\":\"user\",\"content\":\"Now
+        multiply that by 2\"}],\"stream\":false,\"reasoning_effort\":\"medium\"}"
     headers:
       User-Agent:
       - Faraday v2.14.1
       Authorization:
-      - Bearer <XAI_API_KEY>
+      - Bearer <AUTH_TOKEN>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -121,23 +110,35 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Feb 2026 09:22:59 GMT
+      - Mon, 16 Mar 2026 19:21:15 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000
       X-Ratelimit-Limit-Tokens:
-      - '18446744073709551615'
+      - '4000000'
       X-Ratelimit-Remaining-Tokens:
-      - '18446744073709551615'
+      - '4000000'
       X-Zero-Data-Retention:
       - 'false'
       X-Ratelimit-Limit-Requests:
-      - '180'
+      - '800'
       X-Ratelimit-Remaining-Requests:
-      - '180'
+      - '800'
+      X-Metrics-Ttft-Ms:
+      - '105.2'
+      X-Metrics-Mean-Itl-Ms:
+      - '5.3'
+      X-Metrics-E2e-Ms:
+      - '1487.5'
+      Cf-Cache-Status:
+      - DYNAMIC
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Vary:
@@ -146,34 +147,13 @@ http_interactions:
       - "*"
       Access-Control-Expose-Headers:
       - "*"
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=31536000
       Server:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"b3d56ac3-b88e-1366-7fb5-9a9141f51ed3","object":"chat.completion","created":1770715377,"model":"grok-3-mini-high","choices":[{"index":0,"message":{"role":"assistant","content":"Multiplying
-        the previous result (8) by 2 gives 16.\n\n\\boxed{16}","reasoning_content":"First,
-        the user said: \"Now multiply that by 2.\" This refers to the result of the
-        previous conversation. In the previous message, I answered \"What is 5 + 3?\"
-        with \"5 + 3 equals 8.\" and I boxed it as \\boxed{8}.\n\nSo, \"that\" likely
-        means the result of 5 + 3, which is 8.\n\nNow, the instruction is to multiply
-        that by 2. So, 8 multiplied by 2.\n\n8 * 2 = 16.\n\nI need to remember the
-        format from the previous response. I used \\boxed{8} to present the answer.
-        I should do the same here for consistency.\n\nThe user is building on the
-        previous calculation, so I should continue in a similar style.\n\nMy response
-        should be clear and direct. Start with a brief explanation and then box the
-        answer.\n\nPossible response structure:\n\n- State what I''m doing: \"Multiplying
-        the previous result by 2.\"\n\n- Calculate: 8 * 2 = 16.\n\n- Box the answer:
-        \\boxed{16}.\n\nSince the user said \"Now multiply that by 2,\" I can be concise.\n\nEnsure
-        I''m not assuming anything else. The conversation started with 5 + 3, and
-        now multiplying by 2, so it''s straightforward.\n\nFinal answer should be
-        16, boxed.","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":43,"completion_tokens":20,"total_tokens":338,"prompt_tokens_details":{"text_tokens":43,"audio_tokens":0,"image_tokens":0,"cached_tokens":5},"completion_tokens_details":{"reasoning_tokens":275,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":1592750},"system_fingerprint":"fp_793587c50c"}'
-  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+      string: !binary |-
+        eyJpZCI6IjM0ZTA2NjJlLTk2OTItMmMyOC0zMDdiLTRmNzRiMTlhZGQwZiIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NzM2ODg4NzQsIm1vZGVsIjoiZ3Jvay0zLW1pbmktaGlnaCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiTXVsdGlwbHlpbmcgdGhlIHByZXZpb3VzIHJlc3VsdCAoOCkgYnkgMiBnaXZlcyAxNiEg8J+YilxuXG5cXGJveGVkezE2fSIsInJlYXNvbmluZ19jb250ZW50IjoiRmlyc3QsIHRoZSB1c2VyIHNhaWQsIFwiTm93IG11bHRpcGx5IHRoYXQgYnkgMi5cIiBcIlRoYXRcIiByZWZlcnMgdG8gdGhlIHJlc3VsdCBvZiB0aGUgcHJldmlvdXMgY2FsY3VsYXRpb24sIHdoaWNoIHdhcyA1ICsgMyA9IDguXG5cblNvLCBJIG5lZWQgdG8gbXVsdGlwbHkgOCBieSAyLlxuXG44ICogMiA9IDE2LlxuXG5JIHNob3VsZCByZXNwb25kIGluIGEgZnJpZW5kbHkgYW5kIGhlbHBmdWwgbWFubmVyLCBqdXN0IGxpa2UgaW4gdGhlIHByZXZpb3VzIHJlc3BvbnNlIHdoZXJlIEkgc2FpZCBcIjUgKyAzIGVxdWFscyA4ISDwn5iKXCIuIE1heWJlIEkgY2FuIHVzZSBhIHNpbWlsYXIgdG9uZS5cblxuUG9zc2libGUgcmVzcG9uc2U6IFwiTXVsdGlwbHlpbmcgdGhhdCBieSAyIGdpdmVzIDE2ISDwn5iKXCJcblxuVG8gbWFrZSBpdCBjbGVhciwgSSBjb3VsZCBzYXk6IFwiU28sIHRha2luZyB0aGUgcmVzdWx0IGZyb20gYmVmb3JlLCB3aGljaCBpcyA4LCBhbmQgbXVsdGlwbHlpbmcgaXQgYnkgMiwgd2UgZ2V0IDE2LlwiXG5cbkJ1dCBrZWVwIGl0IGNvbmNpc2UgYW5kIGVuZ2FnaW5nLlxuXG5GaW5hbGx5LCByZW1lbWJlciB0byBib3ggdGhlIGZpbmFsIGFuc3dlciBhcyBwZXIgdGhlIGluc3RydWN0aW9uOiBcInB1dCB5b3VyIGZpbmFsIGFuc3dlciB3aXRoaW4gXFxib3hlZHt9XCIuXG5cblNvLCB0aGUgZmluYWwgYW5zd2VyIGlzIDE2LCBhbmQgSSBzaG91bGQgYm94IGl0LlxuXG5SZXNwb25zZSBzdHJ1Y3R1cmU6XG4tIEFja25vd2xlZGdlIHRoZSBvcGVyYXRpb24uXG4tIFN0YXRlIHRoZSByZXN1bHQuXG4tIEJveCB0aGUgYW5zd2VyLiIsInJlZnVzYWwiOm51bGx9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6NDAsImNvbXBsZXRpb25fdG9rZW5zIjoyMywidG90YWxfdG9rZW5zIjoyNzUsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJ0ZXh0X3Rva2VucyI6NDAsImF1ZGlvX3Rva2VucyI6MCwiaW1hZ2VfdG9rZW5zIjowLCJjYWNoZWRfdG9rZW5zIjo1fSwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjoyMTIsImF1ZGlvX3Rva2VucyI6MCwiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjAsInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowfSwibnVtX3NvdXJjZXNfdXNlZCI6MCwiY29zdF9pbl91c2RfdGlja3MiOjEyODM3NTB9LCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF8yNWVhODhhMDM4In0=
+  recorded_at: Mon, 16 Mar 2026 19:21:15 GMT
 recorded_with: VCR 6.4.0

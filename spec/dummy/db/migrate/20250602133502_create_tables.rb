@@ -49,7 +49,7 @@ class CreateTables < ActiveRecord::Migration[7.0]
       t.references :message
       t.string :tool_call_id
       t.string :name
-      t.string :thought_signature
+      t.text :thought_signature
       t.json :arguments
       t.timestamps
     end

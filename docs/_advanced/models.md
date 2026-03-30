@@ -27,7 +27,7 @@ After reading this guide, you will know:
 *   How to find and filter available models based on provider, type, or capabilities.
 *   How to understand model capabilities and pricing using `Model::Info`.
 *   How to use model aliases for convenience.
-*   How to connect to custom endpoints (like Azure OpenAI or proxies) using `openai_api_base`.
+*   How to connect to custom endpoints (like Azure OpenAI, Anthropic proxies, or local gateways) using provider-specific `*_api_base` settings.
 *   How to use models not listed in the default registry using `assume_model_exists`.
 
 ## The Model Registry
@@ -120,8 +120,8 @@ This task is not intended for Rails applications as it writes to gem directories
 For Rails applications, the install generator sets up everything automatically:
 
 ```bash
-rails generate ruby_llm:install
-rails db:migrate
+bin/rails generate ruby_llm:install
+bin/rails db:migrate
 ```
 
 This creates the Model table and loads model data from the gem's registry.

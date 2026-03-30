@@ -1,0 +1,159 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
+    body:
+      encoding: UTF-8
+      string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"user","content":"When
+        was the fall of Rome?"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}],"tool_choice":"required"}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Api-Key:
+      - "<AZURE_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json
+      Request-Context:
+      - appId=
+      X-Ms-Rai-Invoked:
+      - 'true'
+      Prompt-Token-Len:
+      - '237'
+      Sampling-Token-Len:
+      - '40'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      X-Ms-Client-Request-Id:
+      - 0daa522d-6984-4d49-94f1-1820c8cf3f03
+      Azureml-Model-Session:
+      - d-a3423142-ae3e-4fb1-be62-1eecd5f54116
+      Azureai-Requested-Tier:
+      - default
+      Azureai-Processed-Tier:
+      - default
+      X-Ms-Is-Spilled-Over:
+      - 'false'
+      X-Ratelimit-Remaining-Tokens:
+      - '50000'
+      X-Ratelimit-Reset-Tokens:
+      - '0'
+      X-Ratelimit-Limit-Tokens:
+      - '50000'
+      X-Ratelimit-Renewalperiod-Tokens:
+      - '60'
+      X-Ratelimit-Abusepenalty-Active:
+      - 'False'
+      Apim-Request-Id:
+      - 0daa522d-6984-4d49-94f1-1820c8cf3f03
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Ms-Deployment-Name:
+      - grok-4-1-fast-non-reasoning
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Region:
+      - West Europe
+      Date:
+      - Mon, 16 Mar 2026 20:27:47 GMT
+    body:
+      encoding: UTF-8
+      string: '{"choices":[{"content_filter_results":{},"finish_reason":"tool_calls","index":0,"logprobs":null,"message":{"content":"","refusal":null,"role":"assistant","tool_calls":[{"function":{"arguments":"{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}","call_id":null,"name":"weather"},"id":"call_39596634","type":"function"}]},"stop_reason":null}],"created":1773692866,"id":"3a6eae02-d1bb-41dc-a215-f97cc9b5bf00","model":"grok-4-1-fast-non-reasoning","object":"chat.completion","prompt_filter_results":[{"prompt_index":0,"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"jailbreak":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}}}],"usage":{"audio_prompt_tokens":0,"completion_tokens":40,"completion_tokens_details":{"accepted_prediction_tokens":0,"audio_tokens":0,"reasoning_tokens":0,"rejected_prediction_tokens":0},"cost_in_usd_ticks":0,"num_sources_used":0,"prompt_tokens":237,"prompt_tokens_details":{"audio_tokens":0,"cached_tokens":0,"image_tokens":0,"text_tokens":237},"total_tokens":277}}
+
+        '
+  recorded_at: Mon, 16 Mar 2026 20:27:48 GMT
+- request:
+    method: post
+    uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
+    body:
+      encoding: UTF-8
+      string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"user","content":"When
+        was the fall of Rome?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_39596634","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}"}}]},{"role":"tool","content":"Current
+        weather at 41.9028, 12.4964: 15°C, Wind: 10 km/h","tool_call_id":"call_39596634"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Api-Key:
+      - "<AZURE_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json
+      Request-Context:
+      - appId=
+      X-Ms-Rai-Invoked:
+      - 'true'
+      Sampling-Token-Len:
+      - '303'
+      Prompt-Token-Len:
+      - '312'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      X-Ms-Client-Request-Id:
+      - 8cd3dd63-5943-485b-8150-4f9e123b0cea
+      Azureml-Model-Session:
+      - d-a3423142-ae3e-4fb1-be62-1eecd5f54116
+      Azureai-Requested-Tier:
+      - default
+      Azureai-Processed-Tier:
+      - default
+      X-Ms-Is-Spilled-Over:
+      - 'false'
+      X-Ratelimit-Remaining-Tokens:
+      - '50000'
+      X-Ratelimit-Reset-Tokens:
+      - '0'
+      X-Ratelimit-Limit-Tokens:
+      - '50000'
+      X-Ratelimit-Renewalperiod-Tokens:
+      - '60'
+      X-Ratelimit-Abusepenalty-Active:
+      - 'False'
+      Apim-Request-Id:
+      - 8cd3dd63-5943-485b-8150-4f9e123b0cea
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Ms-Deployment-Name:
+      - grok-4-1-fast-non-reasoning
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Region:
+      - West Europe
+      Date:
+      - Mon, 16 Mar 2026 20:27:51 GMT
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJjaG9pY2VzIjpbeyJjb250ZW50X2ZpbHRlcl9yZXN1bHRzIjp7ImhhdGUiOnsiZmlsdGVyZWQiOmZhbHNlLCJzZXZlcml0eSI6InNhZmUifSwicHJvdGVjdGVkX21hdGVyaWFsX2NvZGUiOnsiZmlsdGVyZWQiOmZhbHNlLCJkZXRlY3RlZCI6ZmFsc2V9LCJwcm90ZWN0ZWRfbWF0ZXJpYWxfdGV4dCI6eyJmaWx0ZXJlZCI6ZmFsc2UsImRldGVjdGVkIjpmYWxzZX0sInNlbGZfaGFybSI6eyJmaWx0ZXJlZCI6ZmFsc2UsInNldmVyaXR5Ijoic2FmZSJ9LCJzZXh1YWwiOnsiZmlsdGVyZWQiOmZhbHNlLCJzZXZlcml0eSI6InNhZmUifSwidmlvbGVuY2UiOnsiZmlsdGVyZWQiOmZhbHNlLCJzZXZlcml0eSI6InNhZmUifX0sImZpbmlzaF9yZWFzb24iOiJzdG9wIiwiaW5kZXgiOjAsImxvZ3Byb2JzIjpudWxsLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiIqKlRoZSBcImZhbGwgb2YgUm9tZVwiIGlzIHRyYWRpdGlvbmFsbHkgZGF0ZWQgdG8gU2VwdGVtYmVyIDQsIDQ3NiBDRS4qKlxuXG5UaGlzIG1hcmtzIHdoZW4gdGhlIEdlcm1hbmljIGNoaWVmdGFpbiBPZG9hY2VyIGRlcG9zZWQgUm9tdWx1cyBBdWd1c3R1bHVzLCB0aGUgbGFzdCBXZXN0ZXJuIFJvbWFuIGVtcGVyb3IsIGluIHRoZSBjaXR5IG9mIFJhdmVubmEgKHRoZSBXZXN0ZXJuIEVtcGlyZSdzIGNhcGl0YWwgYnkgdGhlbikuIEhlcmUncyB3aHkgdGhpcyBkYXRlIGlzIGtleSwgYmFja2VkIGJ5IGhpc3RvcmljYWwgZXZpZGVuY2U6XG5cbi0gKipQcmltYXJ5IHNvdXJjZXMqKjogQ2hyb25pY2xlcnMgbGlrZSBNYXJjZWxsaW51cyBDb21lcyBhbmQgdGhlICpDaHJvbmljb24qIG9mIFByb3NwZXIgb2YgQXF1aXRhaW5lIHJlY29yZCBPZG9hY2VyJ3MgYWN0LCBzZW5kaW5nIHRoZSBpbXBlcmlhbCByZWdhbGlhIHRvIENvbnN0YW50aW5vcGxlIGFzIGEgc3ltYm9saWMgZW5kIHRvIFdlc3Rlcm4gcnVsZS4gQ2Fzc2lvZG9ydXMncyAqQ2hyb25pY2EqIGFsc28gbm90ZXMgaXQuXG4tICoqQ29udGV4dCoqOiBUaGUgV2VzdGVybiBSb21hbiBFbXBpcmUgaGFkIHdlYWtlbmVkIG92ZXIgY2VudHVyaWVzIGR1ZSB0byBpbnZhc2lvbnMgKGUuZy4sIFZpc2lnb3RocyBzYWNraW5nIFJvbWUgaW4gNDEwIENFLCBWYW5kYWxzIGluIDQ1NSBDRSksIGVjb25vbWljIGNvbGxhcHNlLCBtaWxpdGFyeSByZWxpYW5jZSBvbiBiYXJiYXJpYW4gZm9lZGVyYXRpLCBhbmQgaW50ZXJuYWwgc3RyaWZlLiBUaGUgRWFzdGVybiBFbXBpcmUgKEJ5emFudGluZSkgY29udGludWVkIHVudGlsIDE0NTMuXG4tICoqRGViYXRlKio6IEhpc3RvcmlhbnMgbGlrZSBFZHdhcmQgR2liYm9uICgqVGhlIEhpc3Rvcnkgb2YgdGhlIERlY2xpbmUgYW5kIEZhbGwgb2YgdGhlIFJvbWFuIEVtcGlyZSosIDE3NzbigJMxNzg5KSBwb3B1bGFyaXplZCA0NzYgQ0UsIGJ1dCBzb21lIGFyZ3VlIGZvciBncmFkdWFsIGRlY2xpbmUgKGUuZy4sIFBldGVyIEJyb3duIGluICpUaGUgV29ybGQgb2YgTGF0ZSBBbnRpcXVpdHkqKSBvciBsYXRlciBkYXRlcyBsaWtlIDQ4MCBDRSAoZGVhdGggb2YgSnVsaXVzIE5lcG9zKS4gU3RpbGwsIDQ3NiBpcyB0aGUgY29uc2Vuc3VzIG1hcmtlciBpbiB0ZXh0Ym9va3MgbGlrZSB0aG9zZSBieSBNYXJ5IEJlYXJkIG9yIEFkcmlhbiBHb2xkc3dvcnRoeS5cblxuTm8gc2luZ2xlIFwiZGF5XCIgZW5kZWQgYW4gZW1waXJlIHNwYW5uaW5nIGNlbnR1cmllcywgYnV0IDQ3NiBDRSBpcyB0aGUgc3RhbmRhcmQgaGlzdG9yaWNhbCBiZW5jaG1hcmsuIiwicmVmdXNhbCI6bnVsbCwicm9sZSI6ImFzc2lzdGFudCIsInRvb2xfY2FsbHMiOm51bGx9LCJzdG9wX3JlYXNvbiI6bnVsbH1dLCJjcmVhdGVkIjoxNzczNjkyODY4LCJpZCI6IjQ1YmMwM2UyLWJiYjctNDEwMS1iZjFkLWM5ZDVhMzk5MTE3MCIsIm1vZGVsIjoiZ3Jvay00LTEtZmFzdC1ub24tcmVhc29uaW5nIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwicHJvbXB0X2ZpbHRlcl9yZXN1bHRzIjpbeyJwcm9tcHRfaW5kZXgiOjAsImNvbnRlbnRfZmlsdGVyX3Jlc3VsdHMiOnsiaGF0ZSI6eyJmaWx0ZXJlZCI6ZmFsc2UsInNldmVyaXR5Ijoic2FmZSJ9LCJqYWlsYnJlYWsiOnsiZmlsdGVyZWQiOmZhbHNlLCJkZXRlY3RlZCI6ZmFsc2V9LCJzZWxmX2hhcm0iOnsiZmlsdGVyZWQiOmZhbHNlLCJzZXZlcml0eSI6InNhZmUifSwic2V4dWFsIjp7ImZpbHRlcmVkIjpmYWxzZSwic2V2ZXJpdHkiOiJzYWZlIn0sInZpb2xlbmNlIjp7ImZpbHRlcmVkIjpmYWxzZSwic2V2ZXJpdHkiOiJzYWZlIn19fV0sInVzYWdlIjp7ImF1ZGlvX3Byb21wdF90b2tlbnMiOjAsImNvbXBsZXRpb25fdG9rZW5zIjozMDMsImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjAsImF1ZGlvX3Rva2VucyI6MCwicmVhc29uaW5nX3Rva2VucyI6MCwicmVqZWN0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjB9LCJjb3N0X2luX3VzZF90aWNrcyI6MCwibnVtX3NvdXJjZXNfdXNlZCI6MCwicHJvbXB0X3Rva2VucyI6MzEyLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiYXVkaW9fdG9rZW5zIjowLCJjYWNoZWRfdG9rZW5zIjowLCJpbWFnZV90b2tlbnMiOjAsInRleHRfdG9rZW5zIjozMTJ9LCJ0b3RhbF90b2tlbnMiOjYxNX19Cg==
+  recorded_at: Mon, 16 Mar 2026 20:27:52 GMT
+recorded_with: VCR 6.4.0

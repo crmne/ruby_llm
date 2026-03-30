@@ -56,6 +56,16 @@ RSpec.describe RubyLLM::Agent do
     FileUtils.rm_rf(prompt_dir) if prompt_dir
   end
 
+  it 'raises when instructions prompt shorthand file is missing' do
+    agent_class = Class.new(RubyLLM::Agent) do
+      chat_model Chat
+      model 'gpt-4.1-nano'
+      instructions
+    end
+
+    expect { agent_class.create! }.to raise_error(RubyLLM::PromptNotFoundError, /Prompt file not found/)
+  end
+
   it 'exposes chat_model record as chat in execution context for .create! and .find' do
     agent_class = Class.new(RubyLLM::Agent) do
       chat_model Chat
@@ -101,6 +111,30 @@ RSpec.describe RubyLLM::Agent do
     FileUtils.rm_rf(prompt_dir) if prompt_dir
   end
 
+  it 'keeps runtime instructions on repeated to_llm calls after find' do
+    prompt_dir = write_prompt(
+      'spec_runtime_reuse_agent',
+      'System for <%= display_name %> on chat <%= chat.id %>'
+    )
+
+    agent_class = Class.new(RubyLLM::Agent) do
+      chat_model Chat
+      model 'gpt-4.1-nano'
+      inputs :display_name
+      instructions display_name: -> { display_name }
+    end
+
+    stub_const('SpecRuntimeReuseAgent', agent_class)
+
+    chat = SpecRuntimeReuseAgent.create!(display_name: 'Ava')
+    loaded = SpecRuntimeReuseAgent.find(chat.id, display_name: 'Bea')
+
+    expect(loaded.to_llm.messages.first.content).to eq("System for Bea on chat #{chat.id}")
+    expect(loaded.to_llm.messages.first.content).to eq("System for Bea on chat #{chat.id}")
+  ensure
+    FileUtils.rm_rf(prompt_dir) if prompt_dir
+  end
+
   it 'syncs instructions explicitly via .sync_instructions!' do
     prompt_dir = write_prompt(
       'spec_sync_agent',
@@ -139,6 +173,46 @@ RSpec.describe RubyLLM::Agent do
     expect do
       agent_class.create!
     end.to raise_error(ArgumentError, /chat_model must be configured/)
+  end
+
+  it 'propagates assume_model_exists from class config when using find' do
+    agent_class = Class.new(RubyLLM::Agent) do
+      chat_model Chat
+      model 'not-a-real-model', provider: :openai, assume_model_exists: true
+      instructions 'Hello'
+    end
+
+    stub_const('SpecAssumeExistsAgent', agent_class)
+
+    created = SpecAssumeExistsAgent.create!
+    expect { SpecAssumeExistsAgent.find(created.id) }.not_to raise_error
+  end
+
+  it 'propagates assume_model_exists from class config when using sync_instructions! with id' do
+    agent_class = Class.new(RubyLLM::Agent) do
+      chat_model Chat
+      model 'not-a-real-model', provider: :openai, assume_model_exists: true
+      instructions 'Hello'
+    end
+
+    stub_const('SpecAssumeExistsSyncAgent', agent_class)
+
+    created = SpecAssumeExistsSyncAgent.create!
+    expect { SpecAssumeExistsSyncAgent.sync_instructions!(created.id) }.not_to raise_error
+  end
+
+  it 'propagates assume_model_exists from class config when initializing with a reloaded chat record' do
+    agent_class = Class.new(RubyLLM::Agent) do
+      chat_model Chat
+      model 'not-a-real-model', provider: :openai, assume_model_exists: true
+      instructions 'Hello'
+    end
+
+    stub_const('SpecAssumeExistsInitAgent', agent_class)
+
+    created = SpecAssumeExistsInitAgent.create!
+    reloaded = Chat.find(created.id)
+    expect { SpecAssumeExistsInitAgent.new(chat: reloaded) }.not_to raise_error
   end
 
   it 'raises when .sync_instructions! is used without chat_model' do

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+require 'stringio'
 
 RSpec.describe RubyLLM::ActiveRecord::ActsAs do
   include_context 'with configured RubyLLM'
@@ -31,13 +32,17 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     )
   end
 
+  def attachment_io(path)
+    StringIO.new(File.binread(path))
+  end
+
   describe 'attachment handling' do
     it 'converts ActiveStorage attachments to RubyLLM Content' do
       chat = Chat.create!(model: model)
 
       message = chat.messages.create!(role: 'user', content: 'Check this out')
       message.attachments.attach(
-        io: File.open(image_path),
+        io: attachment_io(image_path),
         filename: 'ruby.png',
         content_type: 'image/png'
       )
@@ -83,6 +88,24 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       user_message = chat.messages.find_by(role: 'user')
       expect(user_message.attachments.count).to eq(1)
     end
+
+    it 'reuses an existing ActiveStorage::Blob without re-uploading' do
+      chat = Chat.create!(model: model)
+
+      existing_blob = ActiveStorage::Blob.create_and_upload!(
+        io: attachment_io(image_path),
+        filename: 'ruby.png',
+        content_type: 'image/png'
+      )
+
+      expect do
+        chat.create_user_message('What do you see?', with: existing_blob)
+      end.not_to change(ActiveStorage::Blob, :count)
+
+      user_message = chat.messages.find_by(role: 'user')
+      expect(user_message.attachments.count).to eq(1)
+      expect(user_message.attachments.first.blob_id).to eq(existing_blob.id)
+    end
   end
 
   describe 'attachment types' do
@@ -91,7 +114,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       message = chat.messages.create!(role: 'user', content: 'Image test')
 
       message.attachments.attach(
-        io: File.open(image_path),
+        io: attachment_io(image_path),
         filename: 'test.png',
         content_type: 'image/png'
       )
@@ -107,7 +130,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       message = chat.messages.create!(role: 'user', content: 'Video test')
 
       message.attachments.attach(
-        io: File.open(video_path),
+        io: attachment_io(video_path),
         filename: 'test.mp4',
         content_type: 'video/mp4'
       )
@@ -122,7 +145,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       message = chat.messages.create!(role: 'user', content: 'PDF test')
 
       message.attachments.attach(
-        io: File.open(pdf_path),
+        io: attachment_io(pdf_path),
         filename: 'test.pdf',
         content_type: 'application/pdf'
       )

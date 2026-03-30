@@ -38,7 +38,7 @@ module RubyLLM
           end
 
           message = accumulator.to_message(response)
-          RubyLLM.logger.debug "Stream completed: #{message.content}"
+          RubyLLM.logger.debug { "Stream completed: #{message.content}" }
           message
         end
 
@@ -56,7 +56,7 @@ module RubyLLM
           error_response = env.merge(body: data)
           ErrorMiddleware.parse_error(provider: self, response: error_response)
         rescue JSON::ParserError
-          RubyLLM.logger.debug "Failed Bedrock stream error chunk: #{chunk}"
+          RubyLLM.logger.debug { "Failed Bedrock stream error chunk: #{chunk}" }
         end
 
         def parse_stream_chunk(decoder, raw_chunk, accumulator)
@@ -100,7 +100,11 @@ module RubyLLM
 
           while message
             event = decode_event_payload(message.payload.read)
-            RubyLLM.logger.debug("Bedrock stream event keys: #{event.keys}") if event && RubyLLM.config.log_stream_debug
+            if event && RubyLLM.config.log_stream_debug
+              RubyLLM.logger.debug do
+                "Bedrock stream event keys: #{event.keys}"
+              end
+            end
             events << event if event
             break if eof
 
@@ -119,7 +123,7 @@ module RubyLLM
             outer
           end
         rescue JSON::ParserError => e
-          RubyLLM.logger.debug "Failed to decode Bedrock stream event payload: #{e.message}"
+          RubyLLM.logger.debug { "Failed to decode Bedrock stream event payload: #{e.message}" }
           nil
         end
 

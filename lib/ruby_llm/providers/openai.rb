@@ -35,6 +35,16 @@ module RubyLLM
           OpenAI::Capabilities
         end
 
+        def configuration_options
+          %i[
+            openai_api_key
+            openai_api_base
+            openai_organization_id
+            openai_project_id
+            openai_use_system_role
+          ]
+        end
+
         def configuration_requirements
           %i[openai_api_key]
         end

@@ -47,5 +47,24 @@ RSpec.describe RubyLLM::ErrorMiddleware do
         described_class.parse_error(provider: provider, response: response)
       end.to raise_error(RubyLLM::RateLimitError)
     end
+
+    it 'maps context-length-like 400 errors to ContextLengthExceededError' do
+      msg = "This model's maximum context length is 8192 tokens."
+      response = Struct.new(:status, :body).new(400, %({"error":{"message":"#{msg}"}}))
+      provider = instance_double(RubyLLM::Provider, parse_error: msg)
+
+      expect do
+        described_class.parse_error(provider: provider, response: response)
+      end.to raise_error(RubyLLM::ContextLengthExceededError)
+    end
+
+    it 'keeps regular 400 errors as BadRequestError' do
+      response = Struct.new(:status, :body).new(400, '{"error":{"message":"Invalid model specified"}}')
+      provider = instance_double(RubyLLM::Provider, parse_error: 'Invalid model specified')
+
+      expect do
+        described_class.parse_error(provider: provider, response: response)
+      end.to raise_error(RubyLLM::BadRequestError)
+    end
   end
 end

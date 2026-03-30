@@ -28,6 +28,10 @@ module RubyLLM
           Gemini::Capabilities
         end
 
+        def configuration_options
+          %i[gemini_api_key gemini_api_base]
+        end
+
         def configuration_requirements
           %i[gemini_api_key]
         end

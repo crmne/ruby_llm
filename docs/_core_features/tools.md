@@ -85,6 +85,15 @@ end
 > ```
 {: .note }
 
+> If a model attempts to call a tool that doesn't exist (sometimes called "tool hallucination"), RubyLLM handles this gracefully by:
+>
+> 1. Returning an error message to the model indicating which tool it tried to call
+> 2. Listing the actually available tools
+> 3. Allowing the conversation to continue so the model can correct itself
+>
+> This prevents crashes and gives the model a chance to use the correct tool or respond appropriately.
+{: .note }
+
 ## Declaring Parameters
 
 RubyLLM ships with two complementary approaches:
@@ -275,6 +284,71 @@ response = chat.ask "What's the current weather like in Berlin? (Lat: 52.52, Lon
 puts response.content
 # => "Current weather at 52.52, 13.4: Temperature: 12.5°C, Wind Speed: 8.3 km/h, Conditions: Mainly clear, partly cloudy, and overcast."
 ```
+
+### Tool Call Controls
+{: .d-inline-block }
+
+v1.13.0+
+{: .label .label-green }
+
+Control tool behavior with two options:
+- `choice` controls which tools the model is allowed/required to use.
+- `calls` controls how many tool calls can appear in one assistant response.
+
+#### Tool Choice (`choice`)
+
+Use `choice` to control whether the model can call tools and which one it can call.
+
+```ruby
+# Model decides if a tool is needed
+chat.with_tools(Weather, Calculator, choice: :auto)
+
+# Model must call a tool
+chat.with_tools(Weather, Calculator, choice: :required)
+
+# Disable tool calls
+chat.with_tools(Weather, Calculator, choice: :none)
+
+# Force one specific tool (symbol or class)
+chat.with_tools(Weather, Calculator, choice: :weather)
+chat.with_tools(Weather, Calculator, choice: Weather)
+```
+
+Valid values:
+- `:auto`
+- `:required`
+- `:none`
+- tool name symbol/string or `ToolClass`
+
+> With `:required` or specific tool choices, `tool_choice` is automatically reset to `nil` after tool execution to prevent infinite loops.
+{: .note }
+
+#### "Parallel" Tool Calling (`calls`)
+
+> Providers usually call this **parallel tool calling**. We call it `calls` because "parallel" can be misleading: tools are not executed in parallel unless the tool executor itself is parallelized. `calls` describes the actual behavior directly: `:many` means multiple tool calls in one assistant response, `:one` means one tool call in one assistant response.
+{: .note }
+
+Use `calls` to control how many tool calls the model may return in a single assistant response.
+
+```ruby
+# Allow multiple tool calls in one response
+chat.with_tools(Weather, Calculator, calls: :many)
+
+# Allow one tool call in one response
+chat.with_tools(Weather, Calculator, calls: :one)
+# equivalent:
+chat.with_tools(Weather, Calculator, calls: 1)
+```
+
+Valid values:
+- `:many`
+- `:one`
+- `1`
+
+If `calls` is not provided, RubyLLM uses provider/model defaults, which are usually equivalent to `calls: :many`.
+
+> Tool choice and call-count controls are provider/model dependent.
+{: .note }
 
 ### Model Compatibility
 

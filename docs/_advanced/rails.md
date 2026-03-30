@@ -70,7 +70,7 @@ This approach optimizes for real-time experiences:
 The easiest way to get started is using the provided Rails generator:
 
 ```bash
-rails generate ruby_llm:install
+bin/rails generate ruby_llm:install
 ```
 
 The generator:
@@ -79,11 +79,13 @@ The generator:
 - Installs ActiveStorage for file attachments
 - Configures the database model registry
 - Creates an initializer with sensible defaults
+- Creates conventional AI app directories (`v1.14.0+`)
 
 After running the generator:
 
 ```bash
-rails db:migrate
+bin/rails db:migrate
+bin/rails ruby_llm:load_models # v1.13+
 ```
 
 Your Rails app is now AI-ready!
@@ -94,7 +96,7 @@ Your Rails app is now AI-ready!
 Want a ready-to-use chat interface? Run the chat UI generator:
 
 ```bash
-rails generate ruby_llm:chat_ui
+bin/rails generate ruby_llm:chat_ui
 ```
 
 This creates a complete chat interface with:
@@ -109,8 +111,103 @@ The UI generator also supports custom model names:
 
 ```bash
 # Use your custom model names from the install generator
-rails generate ruby_llm:chat_ui chat:Conversation message:ChatMessage model:AIModel
+bin/rails generate ruby_llm:chat_ui chat:Conversation message:ChatMessage model:AIModel
 ```
+
+### Conventional Directory Structure
+{: .d-inline-block }
+
+v1.14.0+
+{: .label .label-green }
+
+RubyLLM's Rails generators now establish a default app structure:
+
+```text
+app/
+|-- agents/
+|-- prompts/
+|-- schemas/
+`-- tools/
+```
+
+The install generator creates these directories with `.gitkeep` files so teams start from one shared convention.
+
+These are conventions, not hard requirements:
+
+- Agents, tools, and schemas can live anywhere in your app autoload paths.
+- Prompt lookup convention: the `instructions` class macro resolves `instructions.txt.erb` from the agent class name.
+
+For prompt lookup, RubyLLM uses class name conventions:
+
+- `WorkAssistant` -> `app/prompts/work_assistant/instructions.txt.erb`
+- `Admin::SupportAgent` -> `app/prompts/admin/support_agent/instructions.txt.erb`
+
+See the [Agents guide]({% link _core_features/agents.md %}#default-instructions-prompt) for how `instructions` rendering works.
+
+### Rails Generators for Agents, Tools, and Schemas
+{: .d-inline-block }
+
+v1.14.0+
+{: .label .label-green }
+
+Alongside `ruby_llm:install` and `ruby_llm:chat_ui`, Rails apps can generate starter classes for common AI building blocks:
+
+```bash
+bin/rails generate ruby_llm:agent Support
+bin/rails generate ruby_llm:tool Weather
+bin/rails generate ruby_llm:schema Product
+```
+
+What each generator creates:
+
+- `ruby_llm:agent`: `app/agents/support_agent.rb` and `app/prompts/support_agent/instructions.txt.erb`
+- `ruby_llm:tool`: `app/tools/weather_tool.rb` plus tool-specific chat UI partials under `app/views/messages/tool_calls` and `app/views/messages/tool_results`
+- `ruby_llm:schema`: `app/schemas/product_schema.rb`
+
+### Chat UI View Conventions
+{: .d-inline-block }
+
+v1.14.0+
+{: .label .label-green }
+
+The generated chat UI follows one convention: each message partial uses the local that matches its partial name.
+
+- `messages/_user.html.erb` gets `user`
+- `messages/_assistant.html.erb` gets `assistant`
+- `messages/_system.html.erb` gets `system`
+- `messages/_tool.html.erb` gets `tool`
+- `messages/_tool_calls.html.erb` gets `tool_calls`
+
+This comes from Rails partial rendering: `render @chat.messages` calls `to_partial_path`, and Rails injects a local named after that partial.
+
+For compatibility with model broadcasts (`broadcasts_to`), generated message partials also accept a `message` local as a fallback.
+
+#### Tool Call and Tool Result Partials
+
+Tool-specific partials are generated under `app/views/messages/tool_calls` and `app/views/messages/tool_results`:
+
+```text
+app/views/messages/
+|-- tool_calls/
+|   |-- _default.html.erb
+|   `-- _your_tool.html.erb
+`-- tool_results/
+    |-- _default.html.erb
+    `-- _your_tool.html.erb
+```
+
+Locals passed to those partials:
+
+- `messages/tool_calls/_your_tool.html.erb` receives `tool_calls` and `tool_call`
+- `messages/tool_results/_your_tool.html.erb` receives `tool`
+
+`ruby_llm:tool` creates `_your_tool.html.erb` files with the correct names so custom rendering hooks up automatically.
+
+Using fixed locals keeps the templates dumb and predictable.
+
+Turbo Stream templates used by the generated chat UI:
+
+- `messages/create.turbo_stream.erb` resets the message form for `MessagesController#create`.
 
 #### Generator Options
 
@@ -118,17 +215,19 @@ The generator uses Rails-like syntax for custom model names:
 
 ```bash
 # Default - creates Chat, Message, ToolCall, Model
-rails generate ruby_llm:install
+bin/rails generate ruby_llm:install
 
 # Custom model names using Rails conventions
-rails generate ruby_llm:install chat:Conversation message:ChatMessage
-rails generate ruby_llm:install chat:Discussion message:DiscussionMessage tool_call:FunctionCall model:AIModel
+bin/rails generate ruby_llm:install chat:Conversation message:ChatMessage
+bin/rails generate ruby_llm:install chat:Discussion message:DiscussionMessage tool_call:FunctionCall model:AIModel
 
 # Skip ActiveStorage if you don't need file attachments
-rails generate ruby_llm:install --skip-active-storage
+bin/rails generate ruby_llm:install --skip-active-storage
 ```
 
 The `name:ClassName` syntax follows Rails conventions - specify only what you want to customize.
+
+For most apps, keep the default behavior (install ActiveStorage) so file attachments work out of the box. Use `--skip-active-storage` only when you're sure you won't send files to models.
 
 
 ### Setting Up ActiveStorage
@@ -136,8 +235,8 @@ The `name:ClassName` syntax follows Rails conventions - specify only what you wa
 The generator automatically configures ActiveStorage for file attachments. If you skipped it during generation, add it manually:
 
 ```bash
-rails active_storage:install
-rails db:migrate
+bin/rails active_storage:install
+bin/rails db:migrate
 ```
 
 Then add to your Message model:
@@ -170,7 +269,7 @@ chat.ask(raw_block)
 
 The v1.9 schema adds a `content_raw` column so raw payloads live alongside the plain-text `content` field. When you load messages via `acts_as_message`, RubyLLM reconstructs the original `Content::Raw` automatically.
 
-> Existing apps: run `rails generate ruby_llm:upgrade_to_v1_9` to add cached-token tracking and raw content storage columns introduced in v1.9.0. New apps will get the proper columns from the install generator.
+> Existing apps: run `bin/rails generate ruby_llm:upgrade_to_v1_9` to add cached-token tracking and raw content storage columns introduced in v1.9.0. New apps will get the proper columns from the install generator.
 {: .note }
 
 ### Configuring RubyLLM
@@ -191,6 +290,24 @@ RubyLLM.configure do |config|
   # config.model_registry_class = 'AIModel'
 end
 ```
+
+### Fiber-Safe ActiveRecord Connections for Async/Fiber Workloads
+{: .d-inline-block }
+
+Rails 7.2.1+ / 8.x
+{: .label .label-green }
+
+If your app performs database work inside Fibers (for example with async-based workflow stacks), use fiber-safe connection isolation:
+
+```ruby
+# config/application.rb
+config.active_support.isolation_level = :fiber
+```
+
+Why: Rails defaults to thread-based connection isolation. In fiber-heavy flows, that can cause intermittent connection-state issues. `:fiber` scopes ActiveRecord connections per Fiber instead of per Thread.
+
+> If you use this setting, prefer Rails versions with fiber isolation fixes (Rails 7.2.1+ / 8.x).
+{: .note }
 
 ### Setting Up Models with `acts_as` Helpers
 
@@ -438,8 +555,8 @@ chat.model.name # => "GPT-4"
 chat.model.context_window # => 128000
 chat.model.supports_vision # => true
 
-# Populate/refresh models from models.json
-rails ruby_llm:load_models
+# Populate/refresh models from models.json (v1.13+)
+bin/rails ruby_llm:load_models
 
 # Query based on model attributes
 Chat.joins(:model).where(models: { provider: 'anthropic' })
@@ -449,6 +566,8 @@ Model.left_joins(:chats).group(:id).order('COUNT(chats.id) DESC')
 Model.where(supports_functions: true)
 Model.where(supports_vision: true)
 ```
+
+If the model registry table is empty (or not available yet), RubyLLM falls back to `models.json` for lookups (v1.13+).
 
 ### System Instructions
 
@@ -679,19 +798,19 @@ Complete example with background jobs and Turbo Streams:
 # app/models/chat.rb
 class Chat < ApplicationRecord
   acts_as_chat
-  broadcasts_to ->(chat) { [chat, "messages"] }
 end
 
 # app/models/message.rb
 class Message < ApplicationRecord
   acts_as_message
-  broadcasts_to ->(message) { [message.chat, "messages"] }
+  broadcasts_to ->(message) { "chat_#{message.chat_id}" }
 
   # Helper to broadcast chunks during streaming
   def broadcast_append_chunk(chunk_content)
-    broadcast_append_to [ chat, "messages" ], # Target the stream
-      target: dom_id(self, "content"), # Target the content div inside the message frame
-      html: chunk_content # Append the raw chunk
+    broadcast_append_to "chat_#{chat_id}",
+      target: "message_#{id}_content",
+      partial: "messages/content",
+      locals: { content: chunk_content }
   end
 end
 
@@ -718,7 +837,7 @@ end
 
 ```erb
 <%# app/views/chats/show.html.erb %>
-<%= turbo_stream_from [@chat, "messages"] %>
+<%= turbo_stream_from "chat_#{@chat.id}" %>
 <h1>Chat <%= @chat.id %></h1>
 <div id="messages">
   <%= render @chat.messages %>
@@ -730,17 +849,15 @@ end
 <% end %>
 
 <%# app/views/messages/_message.html.erb %>
-<%= turbo_frame_tag message do %>
-  <div class="message <%= message.role %>">
-    <strong><%= message.role.capitalize %>:</strong>
-    <%# Target div for streaming content %>
-    <div id="<%= dom_id(message, "content") %>" style="display: inline;">
-      <%# Render initial content if not streaming, otherwise job appends here %>
-      <%= message.content.present? ? simple_format(message.content) : '<span class="thinking">...</span>'.html_safe %>
-    </div>
+<div id="message_<%= message.id %>" class="message">
+  <strong><%= message.role.capitalize %>:</strong>
+  <div id="message_<%= message.id %>_content" style="white-space: pre-wrap;">
+    <%= message.content %>
   </div>
-<% end %>
+</div>
 ```
+
+This helper intentionally lives in your app model (via generator) rather than core RubyLLM methods, so streaming behavior stays explicit and customizable.
 
 
 This implementation provides:

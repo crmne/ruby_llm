@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Expires:
-      - Mon, 01 Jan 1990 00:00:00 GMT
       Date:
-      - Tue, 10 Feb 2026 09:29:41 GMT
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
+      - Mon, 16 Mar 2026 19:18:14 GMT
       Pragma:
       - no-cache
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      Expires:
+      - Mon, 01 Jan 1990 00:00:00 GMT
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "openid https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email",
+          "scope": "https://www.googleapis.com/auth/sqlservice.login openid https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+  recorded_at: Mon, 16 Mar 2026 19:18:14 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -70,7 +70,7 @@ http_interactions:
       User-Agent:
       - Faraday v2.14.1
       Authorization:
-      - Bearer <GOOGLE_BEARER_TOKEN>
+      - Bearer <AUTH_TOKEN>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -89,7 +89,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Tue, 10 Feb 2026 09:29:42 GMT
+      - Mon, 16 Mar 2026 19:18:15 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -121,18 +121,18 @@ http_interactions:
                         ]
                       }
                     },
-                    "thoughtSignature": "CuAEAY89a19a8c2ZOhzDUDpva989QO35GQSRvaeCCNLCLkYU+iqvt7MQ1s6zQsbhsCLDuEcbMQLHewSp59qak9RvXKv167kDh6va3r5BJ4PMxN0BtUzQjsvAbR1sA1ZGtid5Q0yqoXV/G1XAeEiDmDLD5H3idPwiTGwQLjK8L0T8x/H8+OwrWUkjmn/SeYTnEpaJ54yw6aT7S++US92dzY3h6kAk/za3jfDToNZ0+bO7WNnNG4aGkqZXGfq74OnuIKtqX9sLUNlVmG8XXLv36LxE4a6v0mgSlc7KwGQ9UhnCheZA1QfCumT1eQSvpBi0kDoMWQx6leZmGdWdZ/ne73R4JEo9iTaWhMr9rNcc4pgjsHz11auYCQD59kTlB+DRIVPAJDvKhcwxOpnd9RDaVTz4Xnxz6Pbr010vAtNySOrMzvBAmATjd6RkZrsvMjy/9OLmE4ISGSfh4Lm0sWiq/nSUUgFsi0loNodXeWU3SKCB+zsrJPr1Zi/t20IncJxsnZRwE6Bo0hFjxLr4PNUBBGCWYD0jUHORhrVVqPmvnWdsXFjmqPi3ve9nXYvs/xou7q0MuinWfJQ04tSmW7jot0UYJlPlDeeyVXlMCQb+lhMqWqNNDMvnSgY5BBQrxz6oxPXaYT6pK0tSHZe3kMFO/1Lfv0Vz1Av1Zfrt0dIzW+DeHCQ7kJ+HTWPXXk3eEQf/WlVs7yG/+Gxvedf1qHTXa6GGYGgvCon2EzCxY46nnzYCqKq8vmpMbOb3x/Md/sGz4Hq/Q6P0wz9HhMfQGP1Z/a1GkjnVBUxdv5IeKIk+9pzoTtE="
+                    "thoughtSignature": "CvwBAY89a1+pOpkWmiK5IR/CsZnftPLrYmgypOWAz5QAkwNPlSyFiU/Jc5fKA69VvwSvReghkLkrc1u083r2wIWSlkdOixxog0JycR7wgQ0zOnwxe18dFs8/ozLHAQcw0XIvMhjgS+LmcmJHuniTfh4HfiCt/xJx+kRz6RZKO+hpEs2LsBGX8cW1OS8Kb4Jf1ng2HrdVyRL6IsmgXpCbo5sH9kC+eul7TaLNxXsnguleROqWLI8BNgJNdS7LBOZLsUtP4glDW0jP4Af5WJaZ/3Hbw7CAU73US5LCaTQVzQThVu8UieFhIRE+PXOA+CAvO8XG+SC6wADlzUJB65l2"
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -8.1205348968505859
+              "avgLogprobs": -2.3776013056437173
             }
           ],
           "usageMetadata": {
             "promptTokenCount": 37,
             "candidatesTokenCount": 6,
-            "totalTokenCount": 180,
+            "totalTokenCount": 96,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -146,11 +146,11 @@ http_interactions:
                 "tokenCount": 6
               }
             ],
-            "thoughtsTokenCount": 137
+            "thoughtsTokenCount": 53
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-02-10T09:29:41.413445Z",
-          "responseId": "hfqKaYWeGZHRk7QPupqKcQ"
+          "createTime": "2026-03-16T19:18:14.386697Z",
+          "responseId": "dle4aYnNF5yB6dgPnqyawAM"
         }
-  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+  recorded_at: Mon, 16 Mar 2026 19:18:15 GMT
 recorded_with: VCR 6.4.0

@@ -479,6 +479,9 @@ puts response.content # => {"name" => "Alice", "age" => 30}
 puts response.content.class # => Hash
 ```
 
+> RubyLLM::Schema classes automatically use their class name (e.g., `PersonSchema`) as the schema name in API requests, which can help the model better understand the expected output structure.
+{: .note }
+
 ### Using Manual JSON Schemas
 
 If you prefer not to use RubyLLM::Schema, you can provide a JSON Schema directly:
@@ -508,6 +511,33 @@ puts response.content
 
 > **OpenAI Requirement:** When using manual JSON schemas with OpenAI, you must include `additionalProperties: false` in your schema objects. RubyLLM::Schema handles this automatically.
 {: .warning }
+
+#### Custom Schema Names
+
+By default, schemas are named 'response' in API requests. You can provide a custom name that can influence model behavior and aid debugging:
+
+```ruby
+# Provide a custom name with the full format
+person_schema = {
+  name: 'PersonSchema',
+  schema: {
+    type: 'object',
+    properties: {
+      name: { type: 'string' },
+      age: { type: 'integer' }
+    },
+    required: ['name', 'age'],
+    additionalProperties: false
+  }
+}
+
+chat = RubyLLM.chat
+response = chat.with_schema(person_schema).ask("Generate a person")
+```
+
+Custom schema names are useful for:
+- **Influencing model behavior** - Descriptive names can help the model better understand the expected output structure
+- **Debugging and logging** - Identifying which schema was used in API requests
 
 ### Complex Nested Schemas
 
@@ -544,7 +574,7 @@ end
 
 Not all models support structured output. Currently supported:
 - **OpenAI**: GPT-4o, GPT-4o-mini, and newer models
-- **Anthropic**: No native structured output support. You can simulate it with tool definitions or careful prompting
+- **Anthropic**: Claude 4.5+ models (Haiku, Sonnet, Opus)
 - **Gemini**: Gemini 1.5 Pro/Flash and newer
 
 Models that don't support structured output:

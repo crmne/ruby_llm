@@ -11,7 +11,7 @@ http_interactions:
       User-Agent:
       - Faraday v2.14.1
       Authorization:
-      - Bearer <OPENAI_API_KEY>
+      - Bearer <AUTH_TOKEN>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -24,60 +24,60 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Feb 2026 08:57:58 GMT
+      - Mon, 16 Mar 2026 19:12:04 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Cf-Ray:
+      - "<CF_RAY>"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
       Access-Control-Expose-Headers:
       - X-Request-ID
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '3995'
+      - '7014'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
       - '2020-10-01'
-      Server:
-      - cloudflare
-      X-Ratelimit-Limit-Requests:
-      - '500'
-      X-Ratelimit-Limit-Tokens:
-      - '200000'
-      X-Ratelimit-Remaining-Requests:
-      - '499'
-      X-Ratelimit-Remaining-Tokens:
-      - '199991'
-      X-Ratelimit-Reset-Requests:
-      - 120ms
-      X-Ratelimit-Reset-Tokens:
-      - 2ms
-      X-Request-Id:
-      - "<X_REQUEST_ID>"
       X-Openai-Proxy-Wasm:
       - v0.1
-      Cf-Cache-Status:
-      - DYNAMIC
+      X-Ratelimit-Limit-Requests:
+      - '5000'
+      X-Ratelimit-Limit-Tokens:
+      - '2000000'
+      X-Ratelimit-Remaining-Requests:
+      - '4999'
+      X-Ratelimit-Remaining-Tokens:
+      - '1999991'
+      X-Ratelimit-Reset-Requests:
+      - 12ms
+      X-Ratelimit-Reset-Tokens:
+      - 0s
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
       Set-Cookie:
       - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
-      X-Content-Type-Options:
-      - nosniff
-      Cf-Ray:
-      - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-D7dr8DfPVFGj9t1CI1TJAp6mELAzC",
+          "id": "chatcmpl-DK7e1OMiVe5UP921KMh0NCOvqkELL",
           "object": "chat.completion",
-          "created": 1770713874,
+          "created": 1773688317,
           "model": "gpt-5-nano-2025-08-07",
           "choices": [
             {
@@ -93,14 +93,14 @@ http_interactions:
           ],
           "usage": {
             "prompt_tokens": 43,
-            "completion_tokens": 405,
-            "total_tokens": 448,
+            "completion_tokens": 597,
+            "total_tokens": 640,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
             },
             "completion_tokens_details": {
-              "reasoning_tokens": 384,
+              "reasoning_tokens": 576,
               "audio_tokens": 0,
               "accepted_prediction_tokens": 0,
               "rejected_prediction_tokens": 0
@@ -109,7 +109,7 @@ http_interactions:
           "service_tier": "default",
           "system_fingerprint": null
         }
-  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+  recorded_at: Mon, 16 Mar 2026 19:12:04 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/chat/completions
@@ -122,7 +122,7 @@ http_interactions:
       User-Agent:
       - Faraday v2.14.1
       Authorization:
-      - Bearer <OPENAI_API_KEY>
+      - Bearer <AUTH_TOKEN>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -135,67 +135,67 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Feb 2026 08:58:23 GMT
+      - Mon, 16 Mar 2026 19:12:16 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Cf-Ray:
+      - "<CF_RAY>"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
       Access-Control-Expose-Headers:
       - X-Request-ID
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '24470'
+      - '12318'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
       - '2020-10-01'
-      Server:
-      - cloudflare
-      X-Ratelimit-Limit-Requests:
-      - '500'
-      X-Ratelimit-Limit-Tokens:
-      - '200000'
-      X-Ratelimit-Remaining-Requests:
-      - '499'
-      X-Ratelimit-Remaining-Tokens:
-      - '199976'
-      X-Ratelimit-Reset-Requests:
-      - 120ms
-      X-Ratelimit-Reset-Tokens:
-      - 7ms
-      X-Request-Id:
-      - "<X_REQUEST_ID>"
       X-Openai-Proxy-Wasm:
       - v0.1
-      Cf-Cache-Status:
-      - DYNAMIC
+      X-Ratelimit-Limit-Requests:
+      - '5000'
+      X-Ratelimit-Limit-Tokens:
+      - '2000000'
+      X-Ratelimit-Remaining-Requests:
+      - '4999'
+      X-Ratelimit-Remaining-Tokens:
+      - '1999976'
+      X-Ratelimit-Reset-Requests:
+      - 12ms
+      X-Ratelimit-Reset-Tokens:
+      - 0s
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
       Set-Cookie:
       - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
-      X-Content-Type-Options:
-      - nosniff
-      Cf-Ray:
-      - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-D7drCIfcyujfLfvsaJp6C6UhoWmuy",
+          "id": "chatcmpl-DK7e81khegjRpz5i5CjZ86l4ZaSSR",
           "object": "chat.completion",
-          "created": 1770713878,
+          "created": 1773688324,
           "model": "gpt-5-nano-2025-08-07",
           "choices": [
             {
               "index": 0,
               "message": {
                 "role": "assistant",
-                "content": "Ruby is a dynamic, interpreted programming language designed for developer happiness. It emphasizes readability and productivity, with a clean and expressive syntax.\n\nKey points:\n- Everything is an object, and it supports strong object-oriented features with modules for mixins.\n- It has powerful metaprogramming capabilities, allowing you to define behavior at runtime.\n- Blocks, iterators, and first-class functions (procs/lambdas) make common tasks concise and expressive.\n- Garbage-collected memory management helps reduce manual memory handling.\n\nEcosystem and popular uses:\n- The Ruby on Rails web framework is its most famous ecosystem, enabling rapid web app development.\n- Other frameworks include Sinatra (lighter weight) and RSpec for testing.\n- RubyGems is the package manager, with Bundler for dependency management.\n- Widely used for scripting, automation, DevOps tasks, and building DSLs (domain-specific languages).\n\nPerformance and concurrency:\n- Ruby is dynamic and typically slower than compiled languages, but recent versions focus on speed improvements.\n- Parallelism has traditionally been tricky due to a <GOOGLE_CLOUD_LOCATION> interpreter lock in common implementations; newer features like Ractor (in Ruby 3.x) aim to enable safer parallelism.\n- Projects like the Ruby 3x3 initiative target faster performance and improved productivity.\n\nGetting started quickly:\n- Install Ruby (via rbenv, rvm, or a system package).\n- Check version with: ruby -v\n- Create a file, e.g., hello.rb, with: puts \"Hello, Ruby!\"\n- Run it with: ruby hello.rb\n\nQuick example:\ndef greet(name)\n  puts \"Hello, #{name}!\"\nend\ngreet(\"Ruby\")\n\nIf you want, tell me your goal (web app, scripting, data tasks, etc.) and I can tailor a more focusedRuby overview or a quick-start guide.",
+                "content": "Ruby is a dynamic, open-source programming language focused on simplicity and productivity.\n\n- Origins: Created by Yukihiro Matsumoto (Matz) and first released in 1995. Influences include Perl, Smalltalk, Eiffel, and Lisp.\n- Philosophy: Emphasizes human-friendly syntax and developer happiness; aims to be easy to read and write.\n- Core ideas: Everything is an object; powerful metaprogramming, blocks, and first-class functions; strong standard library; dynamic typing with garbage collection.\n- Key features: \n  - Clean, readable syntax\n  - Blocks and iterators for concise iteration\n  - Modules and mixins for reusable behavior\n  - Rich ecosystem with RubyGems for package management\n  - Multiple implementations (MRI is the reference, plus JRuby, TruffleRuby, etc.)\n- Ecosystem and use cases:\n  - Web development with Ruby on Rails (a famous, full-featured framework)\n  - Lightweight web apps with Sinatra or Hanami\n  - Scripting, automation, DevOps tasks\n  - Prototyping and rapid development\n- Performance and concurrency:\n  - Historically slower than compiled languages, but Ruby 2.x/3.x introduced notable performance improvements\n  - Concurrency features like Ractors (in newer Ruby versions) provide safer parallelism\n- Getting started:\n  - Install via version managers like rbenv or RVM\n  - Use gem to install libraries\n  - Create web apps with Rails (rails new myapp)\n\nA quick example:\n- Print a hello message: puts \"Hello, Ruby!\"",
                 "refusal": null,
                 "annotations": []
               },
@@ -204,14 +204,14 @@ http_interactions:
           ],
           "usage": {
             "prompt_tokens": 36,
-            "completion_tokens": 1981,
-            "total_tokens": 2017,
+            "completion_tokens": 1422,
+            "total_tokens": 1458,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
             },
             "completion_tokens_details": {
-              "reasoning_tokens": 1600,
+              "reasoning_tokens": 1088,
               "audio_tokens": 0,
               "accepted_prediction_tokens": 0,
               "rejected_prediction_tokens": 0
@@ -220,5 +220,5 @@ http_interactions:
           "service_tier": "default",
           "system_fingerprint": null
         }
-  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+  recorded_at: Mon, 16 Mar 2026 19:12:16 GMT
 recorded_with: VCR 6.4.0

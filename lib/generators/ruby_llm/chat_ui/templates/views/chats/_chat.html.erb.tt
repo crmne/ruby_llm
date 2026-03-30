@@ -1,7 +1,7 @@
 <div id="<%%= dom_id <%= chat_model_name.demodulize.underscore %> %>">
   <div>
     <strong>Model:</strong>
-    <%%= <%= chat_model_name.demodulize.underscore %>.<%= model_table_name.singularize %>&.name || 'Default' %>
+    <%%= <%= chat_model_name.demodulize.underscore %>.<%= model_table_name.singularize %>&.label || default_model_display_name %>
   </div>
 
   <div>

@@ -12,12 +12,12 @@ http_interactions:
       User-Agent:
       - Faraday v2.14.1
       X-Amz-Date:
-      - 20260210T092517Z
+      - 20260316T191353Z
       X-Amz-Content-Sha256:
       - 871d5de5615b8a3924a8176ad9149085ff97331197096f4717ba1198cca8c616
       Authorization:
-      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20260210/<AWS_REGION>/bedrock/aws4_request,
-        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=6ee2976e9f17b78530f78dfb5c807a8668d6f42ae0bc6ec04efae25ccf4a6268
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -30,7 +30,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Feb 2026 09:25:18 GMT
+      - Mon, 16 Mar 2026 19:13:54 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -38,29 +38,29 @@ http_interactions:
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - f20138bf-3ce6-44b6-ba10-adbe06d55ccb
+      - fa2377a0-c6b9-4525-ae9a-915024d21689
     body:
       encoding: UTF-8
-      string: '{"metrics":{"latencyMs":500},"output":{"message":{"content":[{"toolUse":{"input":{},"name":"best_language_to_learn","toolUseId":"tooluse_ktHu3cema0Kh51noWKdjMW"}}],"role":"assistant"}},"stopReason":"tool_use","usage":{"inputTokens":904,"outputTokens":18,"serverToolUsage":{},"totalTokens":922}}'
-  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+      string: '{"metrics":{"latencyMs":437},"output":{"message":{"content":[{"toolUse":{"input":{},"name":"best_language_to_learn","toolUseId":"tooluse_aeld7EMvASkfVquYH8CylF"}}],"role":"assistant"}},"stopReason":"tool_use","usage":{"inputTokens":904,"outputTokens":18,"serverToolUsage":{},"totalTokens":922}}'
+  recorded_at: Mon, 16 Mar 2026 19:13:54 GMT
 - request:
     method: post
     uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.amazon.nova-2-lite-v1:0/converse
     body:
       encoding: UTF-8
       string: '{"messages":[{"role":"user","content":[{"text":"What''s the best language
-        to learn?"}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_ktHu3cema0Kh51noWKdjMW","name":"best_language_to_learn","input":{}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_ktHu3cema0Kh51noWKdjMW","content":[{"text":"Ruby"}]}}]}],"inferenceConfig":{},"toolConfig":{"tools":[{"toolSpec":{"name":"best_language_to_learn","description":"Gets
+        to learn?"}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_aeld7EMvASkfVquYH8CylF","name":"best_language_to_learn","input":{}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_aeld7EMvASkfVquYH8CylF","content":[{"text":"Ruby"}]}}]}],"inferenceConfig":{},"toolConfig":{"tools":[{"toolSpec":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","inputSchema":{"json":{"type":"object","properties":{},"required":[]}}}}]}}'
     headers:
       User-Agent:
       - Faraday v2.14.1
       X-Amz-Date:
-      - 20260210T092518Z
+      - 20260316T191354Z
       X-Amz-Content-Sha256:
-      - 293558474e8e911a96b7d5175e670819c62b314532260c9d36e4a4d4a4791928
+      - f590d06022e5778daeb68620f6bd43d251e21da1b3115e1d4d566154edce8e89
       Authorization:
-      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20260210/<AWS_REGION>/bedrock/aws4_request,
-        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=33d86ff10e12a681e40d6713826a238e3c7acdabfbe6691d7d1e570ba689d2b4
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -73,25 +73,23 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Feb 2026 09:25:20 GMT
+      - Mon, 16 Mar 2026 19:13:55 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '836'
+      - '620'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 9431f4fb-726e-44c7-a852-bd9fd2c329e2
+      - '007089c5-2300-4ca3-8643-175fcea6d922'
     body:
       encoding: UTF-8
-      string: '{"metrics":{"latencyMs":1151},"output":{"message":{"content":[{"text":"Based
-        on the analysis, **Ruby** is currently the best language to learn. \n\nRuby
-        is a versatile, beginner-friendly programming language that powers many successful
-        applications and frameworks, most notably Ruby on Rails. Its elegant syntax
-        makes it approachable for newcomers while still being powerful enough for
-        complex projects. The language has a strong, supportive community and is widely
-        used in web development, startups, and even in areas like data science and
-        DevOps. Learning Ruby opens doors to understanding modern software development
-        practices and can serve as an excellent foundation for learning other languages."}],"role":"assistant"}},"stopReason":"end_turn","usage":{"inputTokens":952,"outputTokens":109,"serverToolUsage":{},"totalTokens":1061}}'
-  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+      string: '{"metrics":{"latencyMs":931},"output":{"message":{"content":[{"text":"The
+        best language to learn is **Ruby**. \n\nRuby is a versatile and beginner-friendly
+        programming language known for its elegant syntax and strong community support.
+        It''s widely used for web development (especially with the Ruby on Rails framework),
+        scripting, automation, and even data analysis. Its readability and expressive
+        nature make it an excellent choice for both newcomers and experienced developers
+        alike."}],"role":"assistant"}},"stopReason":"end_turn","usage":{"inputTokens":952,"outputTokens":74,"serverToolUsage":{},"totalTokens":1026}}'
+  recorded_at: Mon, 16 Mar 2026 19:13:55 GMT
 recorded_with: VCR 6.4.0

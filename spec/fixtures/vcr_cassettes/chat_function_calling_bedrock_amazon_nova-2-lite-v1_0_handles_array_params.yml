@@ -13,12 +13,12 @@ http_interactions:
       User-Agent:
       - Faraday v2.14.1
       X-Amz-Date:
-      - 20260210T092927Z
+      - 20260316T191754Z
       X-Amz-Content-Sha256:
       - 13e572840fd15283d0f6421978c15152e8b83042679a5aa84833f89522a168fc
       Authorization:
-      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20260210/<AWS_REGION>/bedrock/aws4_request,
-        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=aa72a66d714739b0793c5aecf4ba08e4988d315228e93e3e198c442dbe1aefe4
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -31,7 +31,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Feb 2026 09:29:28 GMT
+      - Mon, 16 Mar 2026 19:17:55 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -39,9 +39,9 @@ http_interactions:
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 116f0c0b-b597-40f4-af34-4f0f65703a46
+      - '09b7ba17-ec2e-4ec1-936b-7d4c19dbd515'
     body:
       encoding: UTF-8
-      string: '{"metrics":{"latencyMs":417},"output":{"message":{"content":[{"toolUse":{"input":{"tags":["red","blue"]},"name":"array_params","toolUseId":"tooluse_5rsMV9eZYX8NdMC96NSQwx"}}],"role":"assistant"}},"stopReason":"tool_use","usage":{"inputTokens":963,"outputTokens":30,"serverToolUsage":{},"totalTokens":993}}'
-  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+      string: '{"metrics":{"latencyMs":409},"output":{"message":{"content":[{"toolUse":{"input":{"tags":["red","blue"]},"name":"array_params","toolUseId":"tooluse_9hYSIjDFuUQxXJEbH62FVc"}}],"role":"assistant"}},"stopReason":"tool_use","usage":{"inputTokens":963,"outputTokens":30,"serverToolUsage":{},"totalTokens":993}}'
+  recorded_at: Mon, 16 Mar 2026 19:17:55 GMT
 recorded_with: VCR 6.4.0

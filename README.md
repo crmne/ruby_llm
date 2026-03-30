@@ -9,10 +9,10 @@
 
 Battle tested at [<picture><source media="(prefers-color-scheme: dark)" srcset="https://chatwithwork.com/logotype-dark.svg"><img src="https://chatwithwork.com/logotype.svg" alt="Chat with Work" height="30" align="absmiddle"></picture>](https://chatwithwork.com) — *Your AI coworker*
 
-[![Gem Version](https://badge.fury.io/rb/ruby_llm.svg?a=10)](https://badge.fury.io/rb/ruby_llm)
+[![Gem Version](https://badge.fury.io/rb/ruby_llm.svg)](https://badge.fury.io/rb/ruby_llm)
 [![Ruby Style Guide](https://img.shields.io/badge/code_style-rubocop-brightgreen.svg)](https://github.com/rubocop/rubocop)
 [![Gem Downloads](https://img.shields.io/gem/dt/ruby_llm)](https://rubygems.org/gems/ruby_llm)
-[![codecov](https://codecov.io/gh/crmne/ruby_llm/branch/main/graph/badge.svg?a=2)](https://codecov.io/gh/crmne/ruby_llm)
+[![codecov](https://codecov.io/gh/crmne/ruby_llm/branch/main/graph/badge.svg)](https://codecov.io/gh/crmne/ruby_llm)
 
 <a href="https://trendshift.io/repositories/13640" target="_blank"><img src="https://trendshift.io/api/badge/repositories/13640" alt="crmne%2Fruby_llm | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
 </div>
@@ -23,6 +23,10 @@ Battle tested at [<picture><source media="(prefers-color-scheme: dark)" srcset="
 ---
 
 Build chatbots, AI agents, RAG applications. Works with OpenAI, xAI, Anthropic, Google, AWS, local models, and any OpenAI-compatible API.
+
+## From zero to AI chat app in under two minutes
+
+https://github.com/user-attachments/assets/65422091-9338-47da-a303-92b918bd1345
 
 ## Why RubyLLM?
 
@@ -105,7 +109,7 @@ chat.with_tool(Weather).ask "What's the weather in Berlin?"
 ```ruby
 # Define an agent with instructions + tools
 class WeatherAssistant < RubyLLM::Agent
-  model "gpt-4.1-nano"
+  model "gpt-5-nano"
   instructions "Be concise and always use tools for weather."
   tools Weather
 end
@@ -166,10 +170,12 @@ end
 
 ```bash
 # Install Rails Integration
-rails generate ruby_llm:install
+bin/rails generate ruby_llm:install
+bin/rails db:migrate
+bin/rails ruby_llm:load_models # v1.13+
 
 # Add Chat UI (optional)
-rails generate ruby_llm:chat_ui
+bin/rails generate ruby_llm:chat_ui
 ```
 
 ```ruby

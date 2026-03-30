@@ -164,8 +164,13 @@ module StreamingErrorHelpers
     },
     azure: {
       url: lambda {
-        base = RubyLLM.config.azure_api_base.to_s
-        "#{base.sub(%r{/+\z}, '')}/models/chat/completions?api-version=2024-05-01-preview"
+        provider = RubyLLM::Providers::Azure.new(RubyLLM.config)
+        base = provider.api_base.to_s.sub(/\?.*\z/, '').sub(%r{/+\z}, '')
+        path = provider.completion_url
+        next path if path.start_with?('http')
+        next base if path.empty?
+
+        "#{base}/#{path}"
       },
       error_response: {
         error: {

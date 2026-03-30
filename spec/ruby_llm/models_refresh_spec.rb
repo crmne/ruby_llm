@@ -93,6 +93,10 @@ RSpec.describe RubyLLM::Models do
       )
     end
 
+    after do
+      RubyLLM.models.load_from_json!
+    end
+
     let(:mock_provider_models) do
       [
         RubyLLM::Model::Info.new(

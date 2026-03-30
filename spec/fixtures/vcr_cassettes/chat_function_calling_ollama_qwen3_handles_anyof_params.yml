@@ -27,38 +27,62 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 10 Feb 2026 14:05:27 GMT
+      - Mon, 16 Mar 2026 19:18:35 GMT
       Transfer-Encoding:
       - chunked
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-216","object":"chat.completion","created":1770732327,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
-        let me see. The user wants me to call the any-of params tool for the task
+      string: '{"id":"chatcmpl-294","object":"chat.completion","created":1773688715,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
+        let''s see. The user wants me to call the any-of params tool for the task
         \"Review PR\" with status \"pending\" and report the result.\n\nFirst, I need
         to understand the tool''s structure. The function provided has parameters
-        that use the anyOf DSL. The parameters are status and task. The status can
-        be either a string from the enum [\"pending\", \"done\"] or null. The task
-        is a string.\n\nSo, the user is specifying the task as \"Review PR\" and the
-        status as \"pending\". Both are valid because \"pending\" is in the enum.
-        I need to construct the function call with these parameters.\n\nWait, the
-        function''s parameters are under any_of_params. The function name might be
-        something like any_of_params, but looking back, the tool''s function is described
-        as any_of_params with the parameters status and task. But the actual function
-        name isn''t clear. Wait, the tools section says \"any_of_params Uses params
-        DSL any_of support {object \u003cnil\u003e \u003cnil\u003e [task status] ...}\".
-        Hmm, maybe the function is named \"any_of_params\" or perhaps the parameters
-        are part of a function. Wait, the initial tool description might be a bit
-        confusing. Let me parse it again.\n\nThe tools section has a function with
-        parameters that use anyOf. The parameters are status and task. The function''s
-        name isn''t explicitly given, but the user mentioned \"call the any-of params
-        tool\", so the function name is likely \"any_of_params\". \n\nSo, the arguments
-        should be a JSON object with \"task\" set to \"Review PR\" and \"status\"
-        set to \"pending\". Since both are valid, the function call should include
-        both. Then, the tool will process this and return a result, which I need to
-        report.\n\nTherefore, the correct tool call is to use the any_of_params function
-        with those arguments. I''ll structure the JSON accordingly.\n","tool_calls":[{"id":"call_069rtz9a","index":0,"type":"function","function":{"name":"any_of_params","arguments":"{\"status\":\"pending\",\"task\":\"Review
-        PR\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":186,"completion_tokens":423,"total_tokens":609}}
+        that use the any_of DSL. The parameters are status and task. The status can
+        be a string from the enum [\"pending\", \"done\"] or null. The task is a string.\n\nSo,
+        the user is specifying the task as \"Review PR\" and the status as \"pending\".
+        Both are valid. Since the any_of allows either status or task, but in this
+        case, both are provided. Wait, actually, looking at the function definition,
+        the parameters are part of an object. The status is a field within that object,
+        and the task is another field. The any_of is applied to the status field,
+        meaning that status can be either \"pending\", \"done\", or null. The task
+        field is a regular string.\n\nSo, the function call needs to include both
+        task and status. The user provided both, so I should structure the arguments
+        with both parameters. The task is \"Review PR\", status is \"pending\". Since
+        \"pending\" is in the enum, that''s valid. So the JSON arguments should be
+        {\"task\": \"Review PR\", \"status\": \"pending\"}.\n\nI need to make sure
+        that the tool call is correctly formatted. The function name is \"any_of_params\",
+        and the arguments are the JSON object with task and status. Then, after making
+        the call, the result should be reported. But the user''s instruction is to
+        call the tool and report the result, so the response should include the tool
+        call and then the result. However, in the example, the assistant is supposed
+        to output the tool call in XML tags, then after that, the result. But in this
+        case, since the user is asking to call the tool and report the result, the
+        assistant should generate the tool call and then the result. However, the
+        user''s message says \"Call the any-of params tool... and report the result.\"
+        So the assistant needs to make the tool call and then present the result.
+        But in the context of this setup, the assistant is to output the tool call
+        first, then the result. But since the user is asking for the result, perhaps
+        the assistant is to simulate the tool call and then provide the result. However,
+        in the given example, the assistant is supposed to output the tool call in
+        the XML tags, and then the result. But the user''s instruction is to call
+        the tool and report the result, so the assistant should generate the tool
+        call and then the result. But since the user hasn''t provided a tool response,
+        maybe the assistant is to just generate the tool call. Wait, the user''s instruction
+        is to \"Call the any-of params tool... and report the result.\" So the assistant
+        should make the tool call and then report the result. However, in the context
+        of this problem, the assistant is to output the tool call, and then the result.
+        But the user is expecting the assistant to generate the tool call and then
+        the result. However, in the given problem, the assistant is to output the
+        tool call, and then perhaps the result is inferred. But since the tool''s
+        response isn''t provided, maybe the assistant is to just make the tool call.
+        Wait, the user''s message says \"report the result\" after calling the tool.
+        But in the absence of a tool response, perhaps the assistant is to simulate
+        that. However, the problem states that the assistant should call the function
+        and return the tool call in XML tags. The actual result might be handled elsewhere.
+        So the correct action here is to generate the tool call with the given parameters.
+        The function name is \"any_of_params\" and the arguments are {\"task\": \"Review
+        PR\", \"status\": \"pending\"}. So the tool call should be structured accordingly.\n","tool_calls":[{"id":"call_wcpa54fz","index":0,"type":"function","function":{"name":"any_of_params","arguments":"{\"task\":\"Review
+        PR\",\"status\":\"pending\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":186,"completion_tokens":828,"total_tokens":1014}}
 
         '
-  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+  recorded_at: Mon, 16 Mar 2026 19:18:35 GMT
 recorded_with: VCR 6.4.0

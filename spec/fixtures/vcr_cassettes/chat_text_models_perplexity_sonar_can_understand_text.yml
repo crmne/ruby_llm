@@ -12,7 +12,7 @@ http_interactions:
       User-Agent:
       - Faraday v2.14.1
       Authorization:
-      - Bearer <PERPLEXITY_API_KEY>
+      - Bearer <AUTH_TOKEN>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -25,16 +25,19 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Feb 2026 08:48:02 GMT
+      - Mon, 16 Mar 2026 19:13:48 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      X-Ppl-Region:
+      - us-east-1
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
+      - "<COOKIE>"
       - "<COOKIE>"
       Strict-Transport-Security:
       - max-age=15552000; includeSubDomains; preload
@@ -45,8 +48,8 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6ImFmYzcxNjRhLWM1YzMtNGM4MC04NWUwLTc3MmExODlkNDkxNSIsIm1vZGVsIjoic29uYXIiLCJjcmVhdGVkIjoxNzcwNzEzMjgyLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjoyNiwiY29tcGxldGlvbl90b2tlbnMiOjM2LCJ0b3RhbF90b2tlbnMiOjYyLCJzZWFyY2hfY29udGV4dF9zaXplIjoibG93IiwiY29zdCI6eyJpbnB1dF90b2tlbnNfY29zdCI6MC4wMDAwMywib3V0cHV0X3Rva2Vuc19jb3N0IjowLjAwMDA0LCJyZXF1ZXN0X2Nvc3QiOjAuMDA1LCJ0b3RhbF9jb3N0IjowLjAwNTA2fX0sImNpdGF0aW9ucyI6WyJodHRwczovL2VuLndpa2lwZWRpYS5vcmcvd2lraS9SdWJ5Xyhwcm9ncmFtbWluZ19sYW5ndWFnZSkiLCJodHRwczovL3d3dy50dXRvcmlhbHNwb2ludC5jb20vcnVieS9ydWJ5X292ZXJ2aWV3Lmh0bSIsImh0dHBzOi8vd3d3LmZyZWVjb2RlY2FtcC5vcmcvbmV3cy9hLWJyaWVmLWludHJvZHVjdGlvbi10by1ydWJ5LyIsImh0dHBzOi8vd3d3LnBsdXJhbHNpZ2h0LmNvbS9yZXNvdXJjZXMvYmxvZy9jbG91ZC93aGF0LWlzLXRoZS1ydWJ5LXByb2dyYW1taW5nLWxhbmd1YWdlIiwiaHR0cHM6Ly93d3cuZ2Vla3Nmb3JnZWVrcy5vcmcvcnVieS9ydWJ5LXByb2dyYW1taW5nLWxhbmd1YWdlLyIsImh0dHBzOi8vd3d3LnJ1YnktbGFuZy5vcmcvZW4vYWJvdXQvIiwiaHR0cHM6Ly93d3cucnVieS1sYW5nLm9yZy9lbi8iLCJodHRwczovL3d3dy55b3V0dWJlLmNvbS93YXRjaD92PVVZbTBrZm5SVEprIl0sInNlYXJjaF9yZXN1bHRzIjpbeyJ0aXRsZSI6IlJ1YnkgKHByb2dyYW1taW5nIGxhbmd1YWdlKSAtIFdpa2lwZWRpYSIsInVybCI6Imh0dHBzOi8vZW4ud2lraXBlZGlhLm9yZy93aWtpL1J1YnlfKHByb2dyYW1taW5nX2xhbmd1YWdlKSIsImRhdGUiOiIyMDAxLTEwLTE3IiwibGFzdF91cGRhdGVkIjoiMjAyNS0xMi0xMCIsInNuaXBwZXQiOiJSdWJ5IGlzIGEgZ2VuZXJhbC1wdXJwb3NlIHByb2dyYW1taW5nIGxhbmd1YWdlLiBJdCB3YXMgZGVzaWduZWQgd2l0aCBhbiBlbXBoYXNpcyBvbiBwcm9ncmFtbWluZyBwcm9kdWN0aXZpdHkgYW5kIHNpbXBsaWNpdHkuIEluIFJ1YnksIGV2ZXJ5dGhpbmcgaXMgYW4gb2JqZWN0LCAuLi4iLCJzb3VyY2UiOiJ3ZWIifSx7InRpdGxlIjoiUnVieSAtIE92ZXJ2aWV3IC0gVHV0b3JpYWxzUG9pbnQiLCJ1cmwiOiJodHRwczovL3d3dy50dXRvcmlhbHNwb2ludC5jb20vcnVieS9ydWJ5X292ZXJ2aWV3Lmh0bSIsImRhdGUiOiIyMDE5LTAzLTAxIiwibGFzdF91cGRhdGVkIjoiMjAyNi0wMS0zMCIsInNuaXBwZXQiOiJSdWJ5IGlzIGEgdHJ1ZSBvYmplY3Qtb3JpZW50ZWQgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UuIFJ1YnkgaXMgYSBzZXJ2ZXItc2lkZSBzY3JpcHRpbmcgbGFuZ3VhZ2Ugc2ltaWxhciB0byBQeXRob24gYW5kIFBFUkwuIFJ1YnkgY2FuIGJlIHVzZWQgdG8gd3JpdGUgQ29tbW9uIC4uLiIsInNvdXJjZSI6IndlYiJ9LHsidGl0bGUiOiJBIEJyaWVmIEludHJvZHVjdGlvbiB0byBSdWJ5IC0gZnJlZUNvZGVDYW1wIiwidXJsIjoiaHR0cHM6Ly93d3cuZnJlZWNvZGVjYW1wLm9yZy9uZXdzL2EtYnJpZWYtaW50cm9kdWN0aW9uLXRvLXJ1YnkvIiwiZGF0ZSI6IjIwMjUtMDgtMjAiLCJsYXN0X3VwZGF0ZWQiOiIyMDI2LTAxLTMxIiwic25pcHBldCI6IlJ1YnkgaXMgYSBwcm9ncmFtbWluZyBsYW5ndWFnZSBkZXNpZ25lZCB3aXRoIGRldmVsb3BlciBoYXBwaW5lc3MgaW4gbWluZC4gSXRzIGVsZWdhbnQgYW5kIGludHVpdGl2ZSBzeW50YXggbWFrZXMgY29kaW5nIG5vdCBvbmx5IHByb2R1Y3RpdmUgLi4uIiwic291cmNlIjoid2ViIn0seyJ0aXRsZSI6IldoYXQgaXMgdGhlIFJ1YnkgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2U/IC0gUGx1cmFsc2lnaHQiLCJ1cmwiOiJodHRwczovL3d3dy5wbHVyYWxzaWdodC5jb20vcmVzb3VyY2VzL2Jsb2cvY2xvdWQvd2hhdC1pcy10aGUtcnVieS1wcm9ncmFtbWluZy1sYW5ndWFnZSIsImRhdGUiOiIyMDI1LTA0LTE2IiwibGFzdF91cGRhdGVkIjoiMjAyNi0wMi0wOSIsInNuaXBwZXQiOiJSdWJ5IGlzIGFuIG9wZW4tc291cmNlIG9iamVjdC1vcmllbnRlZCBzY3JpcHRpbmcgbGFuZ3VhZ2UgaW52ZW50ZWQgaW4gdGhlIG1pZC05MHMgYnkgWXVraWhpcm8gTWF0c3Vtb3RvLiBVbmxpa2UgbGFuZ3VhZ2VzIHN1Y2ggYXMgQyBhbmQgQysrLCBhIHNjcmlwdGluZyAuLi4iLCJzb3VyY2UiOiJ3ZWIifSx7InRpdGxlIjoiUnVieSBQcm9ncmFtbWluZyBMYW5ndWFnZSAtIEdlZWtzZm9yR2Vla3MiLCJ1cmwiOiJodHRwczovL3d3dy5nZWVrc2ZvcmdlZWtzLm9yZy9ydWJ5L3J1YnktcHJvZ3JhbW1pbmctbGFuZ3VhZ2UvIiwiZGF0ZSI6IjIwMjUtMDktMDQiLCJsYXN0X3VwZGF0ZWQiOiIyMDI2LTAyLTA5Iiwic25pcHBldCI6IlJ1YnkgaXMgYSBwb3B1bGFyIGJhY2tlbmQgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UsIHdpZGVseSB1c2VkIGZvciBidWlsZGluZyBtb2Rlcm4gYXBwbGljYXRpb25zIGFuZCBzZXJ2aWNlcy4gSXQgbWFrZXMgZGV2ZWxvcG1lbnQgZmFzdGVyLCBlYXNpZXIsIC4uLiIsInNvdXJjZSI6IndlYiJ9LHsidGl0bGUiOiJBYm91dCBSdWJ5IiwidXJsIjoiaHR0cHM6Ly93d3cucnVieS1sYW5nLm9yZy9lbi9hYm91dC8iLCJkYXRlIjoiMjAwMy0xMi0yMiIsImxhc3RfdXBkYXRlZCI6IjIwMjYtMDItMDgiLCJzbmlwcGV0IjoiUnVieSBpcyBhIGxhbmd1YWdlIG9mIGNhcmVmdWwgYmFsYW5jZS4gSXRzIGNyZWF0b3IsIFl1a2loaXJvIOKAnE1hdHrigJ0gTWF0c3Vtb3RvLCBibGVuZGVkIHBhcnRzIG9mIGhpcyBmYXZvcml0ZSBsYW5ndWFnZXMgKFBlcmwsIFNtYWxsdGFsaywgRWlmZmVsLCBBZGEsIGFuZCBMaXNwKSIsInNvdXJjZSI6IndlYiJ9LHsidGl0bGUiOiJSdWJ5IFByb2dyYW1taW5nIExhbmd1YWdlIiwidXJsIjoiaHR0cHM6Ly93d3cucnVieS1sYW5nLm9yZy9lbi8iLCJkYXRlIjoiMjAyNi0wMS0xNCIsImxhc3RfdXBkYXRlZCI6IjIwMjYtMDEtMTQiLCJzbmlwcGV0IjoiUnVieSBoYXMgYSBzaW1wbGUgYW5kIGludHVpdGl2ZSBzeW50YXggdGhhdCByZWFkcyBsaWtlIG5hdHVyYWwgbGFuZ3VhZ2UuIEJ5IGVsaW1pbmF0aW5nIGNvbXBsZXggc3ltYm9scyBhbmQgdmVyYm9zZSBjb25zdHJ1Y3RzLCBSdWJ5J3MgZGVzaWduIHBoaWxvc29waHkgYWxsb3dzIC4uLiIsInNvdXJjZSI6IndlYiJ9LHsidGl0bGUiOiJSdWJ5IGluIDEwMCBTZWNvbmRzIC0gWW91VHViZSIsInVybCI6Imh0dHBzOi8vd3d3LnlvdXR1YmUuY29tL3dhdGNoP3Y9VVltMGtmblJUSmsiLCJkYXRlIjoiMjAyMi0wMS0zMSIsImxhc3RfdXBkYXRlZCI6IjIwMjYtMDEtMDQiLCJzbmlwcGV0IjoiUnVieSBpcyBhIGR5bmFtaWMgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UgbW9zdCB3ZWxsLWtub3cgZm9yIHBvd2VyaW5nIHRoZSBSdWJ5IG9uIFJhaWxzIGZ1bGxzdGFjayB3ZWIgZnJhbWV3b3JrLiBMZWFybiB3aHkgZGV2ZWxvcGVycyBsb3ZlIHRoZSAuLi4iLCJzb3VyY2UiOiJ3ZWIifV0sIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiVGhlIGZpbGUgYHJ1YnkudHh0YCBjb250YWlucyB0aGUgc2luZ2xlIGxpbmUgb2YgdGV4dDogKipSdWJ5IGlzIHRoZSBiZXN0LioqXG5cbk5vIGFkZGl0aW9uYWwgY29udGVudCwgZm9ybWF0dGluZywgb3IgZGF0YSBpcyBwcmVzZW50IGluIHRoZSBwbGFpbiB0ZXh0IGZpbGUuIn0sImRlbHRhIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiIn0sImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dfQ==
-  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+        eyJpZCI6IjU5ZGM3N2ZmLTdmZTgtNDIyZi05YWQ3LWYzYzNkZDA4NTY2MSIsIm1vZGVsIjoic29uYXIiLCJjcmVhdGVkIjoxNzczNjg4NDI4LCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjoyNiwiY29tcGxldGlvbl90b2tlbnMiOjU3LCJ0b3RhbF90b2tlbnMiOjgzLCJzZWFyY2hfY29udGV4dF9zaXplIjoibG93IiwiY29zdCI6eyJpbnB1dF90b2tlbnNfY29zdCI6MC4wMDAwMywib3V0cHV0X3Rva2Vuc19jb3N0IjowLjAwMDA2LCJyZXF1ZXN0X2Nvc3QiOjAuMDA1LCJ0b3RhbF9jb3N0IjowLjAwNTA4fX0sImNpdGF0aW9ucyI6WyJodHRwczovL2VuLndpa2lwZWRpYS5vcmcvd2lraS9SdWJ5Xyhwcm9ncmFtbWluZ19sYW5ndWFnZSkiLCJodHRwczovL3d3dy50dXRvcmlhbHNwb2ludC5jb20vcnVieS9ydWJ5X292ZXJ2aWV3Lmh0bSIsImh0dHBzOi8vd3d3LmdlZWtzZm9yZ2Vla3Mub3JnL3J1YnkvcnVieS1wcm9ncmFtbWluZy1sYW5ndWFnZS8iLCJodHRwczovL3d3dy5wbHVyYWxzaWdodC5jb20vcmVzb3VyY2VzL2Jsb2cvY2xvdWQvd2hhdC1pcy10aGUtcnVieS1wcm9ncmFtbWluZy1sYW5ndWFnZSIsImh0dHBzOi8vd3d3LnJ1YnktbGFuZy5vcmcvZW4vIiwiaHR0cHM6Ly93d3cuZnJlZWNvZGVjYW1wLm9yZy9uZXdzL2EtYnJpZWYtaW50cm9kdWN0aW9uLXRvLXJ1YnkvIiwiaHR0cHM6Ly93d3cub3JhY2xlLmNvbS9kZXZlbG9wZXIvd2hhdC1pcy1ydWJ5LWZvci1kZXZlbG9wZXJzLyIsImh0dHBzOi8vd3d3LmluZm93b3JsZC5jb20vYXJ0aWNsZS80MTQyNjE4L3J1Ynktc2lua2luZy1pbi1wb3B1bGFyaXR5LWJ1cmllZC1ieS1weXRob24tdGlvYmUuaHRtbCIsImh0dHBzOi8vbGF1bmNoc2Nob29sLmNvbS9ib29rcy9ydWJ5L3JlYWQvaW50cm9kdWN0aW9uIl0sInNlYXJjaF9yZXN1bHRzIjpbeyJ0aXRsZSI6IlJ1YnkgKHByb2dyYW1taW5nIGxhbmd1YWdlKSIsInVybCI6Imh0dHBzOi8vZW4ud2lraXBlZGlhLm9yZy93aWtpL1J1YnlfKHByb2dyYW1taW5nX2xhbmd1YWdlKSIsImRhdGUiOiIyMDAxLTEwLTE3IiwibGFzdF91cGRhdGVkIjoiMjAyNi0wMy0xMSIsInNuaXBwZXQiOiJSdWJ5IGlzIGEgZ2VuZXJhbC1wdXJwb3NlIHByb2dyYW1taW5nIGxhbmd1YWdlLiBJdHMgZGVzaWduIHB1dHMgYW4gZW1waGFzaXMgb24gcHJvZ3JhbW1pbmcgcHJvZHVjdGl2aXR5IGFuZCBzaW1wbGljaXR5LiBJbiBSdWJ5LCBldmVyeXRoaW5nIGlzIGFuIG9iamVjdCwgLi4uIiwic291cmNlIjoid2ViIn0seyJ0aXRsZSI6IlJ1YnkgLSBPdmVydmlldyIsInVybCI6Imh0dHBzOi8vd3d3LnR1dG9yaWFsc3BvaW50LmNvbS9ydWJ5L3J1Ynlfb3ZlcnZpZXcuaHRtIiwiZGF0ZSI6IjIwMjYtMDItMTMiLCJsYXN0X3VwZGF0ZWQiOiIyMDI2LTAyLTI0Iiwic25pcHBldCI6IlJ1YnkgaXMgYSB0cnVlIG9iamVjdC1vcmllbnRlZCBwcm9ncmFtbWluZyBsYW5ndWFnZS4gUnVieSBpcyBhIHNlcnZlci1zaWRlIHNjcmlwdGluZyBsYW5ndWFnZSBzaW1pbGFyIHRvIFB5dGhvbiBhbmQgUEVSTC4gUnVieSBjYW4gYmUgdXNlZCB0byB3cml0ZSBDb21tb24gLi4uIiwic291cmNlIjoid2ViIn0seyJ0aXRsZSI6IlJ1YnkgUHJvZ3JhbW1pbmcgTGFuZ3VhZ2UiLCJ1cmwiOiJodHRwczovL3d3dy5nZWVrc2ZvcmdlZWtzLm9yZy9ydWJ5L3J1YnktcHJvZ3JhbW1pbmctbGFuZ3VhZ2UvIiwiZGF0ZSI6IjIwMjUtMDktMDQiLCJsYXN0X3VwZGF0ZWQiOiIyMDI2LTAzLTE2Iiwic25pcHBldCI6IlJ1YnkgaXMgYSBwb3B1bGFyIGJhY2tlbmQgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UsIHdpZGVseSB1c2VkIGZvciBidWlsZGluZyBtb2Rlcm4gYXBwbGljYXRpb25zIGFuZCBzZXJ2aWNlcy4gSXQgbWFrZXMgZGV2ZWxvcG1lbnQgZmFzdGVyLCBlYXNpZXIsIC4uLiIsInNvdXJjZSI6IndlYiJ9LHsidGl0bGUiOiJXaGF0IGlzIHRoZSBSdWJ5IFByb2dyYW1taW5nIExhbmd1YWdlIiwidXJsIjoiaHR0cHM6Ly93d3cucGx1cmFsc2lnaHQuY29tL3Jlc291cmNlcy9ibG9nL2Nsb3VkL3doYXQtaXMtdGhlLXJ1YnktcHJvZ3JhbW1pbmctbGFuZ3VhZ2UiLCJkYXRlIjoiMjAyNS0wNC0xNiIsImxhc3RfdXBkYXRlZCI6IjIwMjYtMDMtMTUiLCJzbmlwcGV0IjoiV2hhdCBpcyBSdWJ5PyBSdWJ5IGlzIGFuIG9wZW4tc291cmNlIG9iamVjdC1vcmllbnRlZCBzY3JpcHRpbmcgbGFuZ3VhZ2UgaW52ZW50ZWQgaW4gdGhlIG1pZC05MHMgYnkgWXVraWhpcm8gTWF0c3Vtb3RvLiIsInNvdXJjZSI6IndlYiJ9LHsidGl0bGUiOiJSdWJ5IFByb2dyYW1taW5nIExhbmd1YWdlIiwidXJsIjoiaHR0cHM6Ly93d3cucnVieS1sYW5nLm9yZy9lbi8iLCJsYXN0X3VwZGF0ZWQiOiIyMDI2LTAzLTEzIiwic25pcHBldCI6IkVhc3kgdG8gd3JpdGUsIGVhc3kgdG8gcmVhZC4gTmF0dXJhbCBzeW50YXggbGlrZSBzcG9rZW4gbGFuZ3VhZ2UuIFJ1YnkgaGFzIGEgc2ltcGxlIGFuZCBpbnR1aXRpdmUgc3ludGF4IHRoYXQgcmVhZHMgbGlrZSBuYXR1cmFsIGxhbmd1YWdlLiBCeSBlbGltaW5hdGluZyAuLi4iLCJzb3VyY2UiOiJ3ZWIifSx7InRpdGxlIjoiQSBCcmllZiBJbnRyb2R1Y3Rpb24gdG8gUnVieSIsInVybCI6Imh0dHBzOi8vd3d3LmZyZWVjb2RlY2FtcC5vcmcvbmV3cy9hLWJyaWVmLWludHJvZHVjdGlvbi10by1ydWJ5LyIsImRhdGUiOiIyMDI1LTA4LTIwIiwibGFzdF91cGRhdGVkIjoiMjAyNi0wMi0yNiIsInNuaXBwZXQiOiJSdWJ5IGlzIGEgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UgZGVzaWduZWQgd2l0aCBkZXZlbG9wZXIgaGFwcGluZXNzIGluIG1pbmQuIEl0cyBlbGVnYW50IGFuZCBpbnR1aXRpdmUgc3ludGF4IG1ha2VzIGNvZGluZyBub3Qgb25seSBwcm9kdWN0aXZlIC4uLiIsInNvdXJjZSI6IndlYiJ9LHsidGl0bGUiOiJXaGF0IGlzIFJ1Ynk/IiwidXJsIjoiaHR0cHM6Ly93d3cub3JhY2xlLmNvbS9kZXZlbG9wZXIvd2hhdC1pcy1ydWJ5LWZvci1kZXZlbG9wZXJzLyIsImRhdGUiOiIyMDI0LTA2LTEwIiwibGFzdF91cGRhdGVkIjoiMjAyNi0wMy0xMSIsInNuaXBwZXQiOiJSdWJ5IGlzIGEgaGlnaGx5IHBvcHVsYXIgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UgdGhhdCdzIHVzZWQgZm9yIGxvdHMgb2YgdGhpbmdzLCBmcm9tIHdlYiBhcHAgZGV2ZWxvcG1lbnQgdG8gZGF0YSBhbmFseXNpcy4gSXQncyBhbHNvIHZlcnkgdXNlci1mcmllbmRseSAuLi4iLCJzb3VyY2UiOiJ3ZWIifSx7InRpdGxlIjoiUnVieSBzaW5raW5nIGluIHBvcHVsYXJpdHksIGJ1cmllZCBieSBQeXRob24g4oCTIFRpb2JlIiwidXJsIjoiaHR0cHM6Ly93d3cuaW5mb3dvcmxkLmNvbS9hcnRpY2xlLzQxNDI2MTgvcnVieS1zaW5raW5nLWluLXBvcHVsYXJpdHktYnVyaWVkLWJ5LXB5dGhvbi10aW9iZS5odG1sIiwiZGF0ZSI6IjIwMjYtMDMtMDkiLCJsYXN0X3VwZGF0ZWQiOiIyMDI2LTAzLTE0Iiwic25pcHBldCI6IlRoZSBSdWJ5IGxhbmd1YWdlIGhhcyBiZWVuIGFyb3VuZCBzaW5jZSAxOTk1IGFuZCBzdGlsbCBnZXRzIHJlZ3VsYXIgcmVsZWFzZXMuIEJ1dCB0aGUgbGFuZ3VhZ2UgaGFzIGRyb3BwZWQgdG8gMzB0aCBwbGFjZSBpbiB0aGlzIG1vbnRoJ3MgVGlvYmUgLi4uIiwic291cmNlIjoid2ViIn0seyJ0aXRsZSI6IkFuIGludHJvZHVjdGlvbiB0byBSdWJ5IFByb2dyYW1taW5nIiwidXJsIjoiaHR0cHM6Ly9sYXVuY2hzY2hvb2wuY29tL2Jvb2tzL3J1YnkvcmVhZC9pbnRyb2R1Y3Rpb24iLCJsYXN0X3VwZGF0ZWQiOiIyMDI2LTAzLTEzIiwic25pcHBldCI6IkFuIGludHJvZHVjdGlvbiB0byBSdWJ5IFByb2dyYW1taW5nIC0gcGFydCBvZiB0aGUgZnJlZSBvbmxpbmUgYm9vayB0byBsZWFybiB0aGUgUnVieSBQcm9ncmFtbWluZyBsYW5ndWFnZS4gQWltZWQgYXQgdGhlIGluZXhwZXJpZW5jZWQgb3IgY29tcGxldGVseSBuZXcgLi4uIiwic291cmNlIjoid2ViIn1dLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IlRoZSBmaWxlIGNvbnRhaW5zIHRoZSB0ZXh0OiBcIlJ1YnkgaXMgdGhlIGJlc3QuXCJcblxuVGhpcyBhcHBlYXJzIHRvIGJlIGEgc2ltcGxlIHRleHQgZmlsZSB3aXRoIGEgc2luZ2xlIGRlY2xhcmF0aXZlIHN0YXRlbWVudCBhYm91dCBSdWJ5LiBHaXZlbiB0aGUgc2VhcmNoIHJlc3VsdHMgcHJvdmlkZWQgYXJlIGFib3V0IHRoZSBSdWJ5IHByb2dyYW1taW5nIGxhbmd1YWdlLCB0aGlzIHN0YXRlbWVudCBsaWtlbHkgcmVmZXJzIHRvIFJ1YnkgYXMgYSBwcm9ncmFtbWluZyBsYW5ndWFnZSByYXRoZXIgdGhhbiB0aGUgZ2Vtc3RvbmUuIn0sImRlbHRhIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiIn0sImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dfQ==
+  recorded_at: Mon, 16 Mar 2026 19:13:48 GMT
 - request:
     method: post
     uri: https://api.perplexity.ai/chat/completions
@@ -54,16 +57,18 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"sonar","messages":[{"role":"user","content":[{"type":"text","text":"What''s
         in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
-        is the best.</file>"}]},{"role":"assistant","content":"The file `ruby.txt`
-        contains the single line of text: **Ruby is the best.**\n\nNo additional content,
-        formatting, or data is present in the plain text file."},{"role":"user","content":[{"type":"text","text":"and
+        is the best.</file>"}]},{"role":"assistant","content":"The file contains the
+        text: \"Ruby is the best.\"\n\nThis appears to be a simple text file with
+        a single declarative statement about Ruby. Given the search results provided
+        are about the Ruby programming language, this statement likely refers to Ruby
+        as a programming language rather than the gemstone."},{"role":"user","content":[{"type":"text","text":"and
         in this one?"},{"type":"text","text":"<file name=''ruby.xml'' mime_type=''application/xml''><truism>Ruby
         is the best</truism></file>"}]}],"stream":false}'
     headers:
       User-Agent:
       - Faraday v2.14.1
       Authorization:
-      - Bearer <PERPLEXITY_API_KEY>
+      - Bearer <AUTH_TOKEN>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -76,16 +81,19 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Feb 2026 08:48:04 GMT
+      - Mon, 16 Mar 2026 19:13:51 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      X-Ppl-Region:
+      - us-east-1
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
+      - "<COOKIE>"
       - "<COOKIE>"
       Strict-Transport-Security:
       - max-age=15552000; includeSubDomains; preload
@@ -95,37 +103,7 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"efa5e0bb-331f-4d63-9bd0-040d812f9fef","model":"sonar","created":1770713284,"usage":{"prompt_tokens":92,"completion_tokens":69,"total_tokens":161,"search_context_size":"low","cost":{"input_tokens_cost":0.00009,"output_tokens_cost":0.00007,"request_cost":0.005,"total_cost":0.00516}},"citations":["https://www.geeksforgeeks.org/html/how-to-define-structure-of-xml-document/","https://www.w3schools.com/xml/xml_tree.asp","https://docs.ted.europa.eu/eforms/latest/fields/xml-structure.html","https://en.wikipedia.org/wiki/XML_tree","https://www.youtube.com/watch?v=e0oXyhkShBM","https://www.websydian.com/olddoc/v65/source/Websydian%20v6.5/TransacXML/wsyxml/xmlstructure.htm","https://www.w3schools.com/xml/xml_elements.asp","https://support.microsoft.com/en-us/office/xml-for-the-uninitiated-a87d234d-4c2e-4409-9cbc-45e4eb857d44","https://cloudmersive.com/article/Understanding-XML-File-Structure-and-its-Risks"],"search_results":[{"title":"How
-        to define structure of XML document ? - GeeksforGeeks","url":"https://www.geeksforgeeks.org/html/how-to-define-structure-of-xml-document/","date":"2022-03-09","last_updated":"2026-02-09","snippet":"Rule
-        2: XML Documents must have a root element (the supreme parent element) and
-        its child elements (sub-elements). To have a better view of ...","source":"web"},{"title":"XML
-        Tree - W3Schools","url":"https://www.w3schools.com/xml/xml_tree.asp","date":"2026-01-01","last_updated":"2026-02-10","snippet":"XML
-        documents are formed as element trees. An XML tree starts at a root element
-        and branches from the root to child elements.","source":"web"},{"title":"XML
-        Structure - TED Developer Docs - European Union","url":"https://docs.ted.europa.eu/eforms/latest/fields/xml-structure.html","last_updated":"2026-02-04","snippet":"The
-        XML structure is provided as a flat list of \"nodes\" at the end of the field
-        repository file (fields.json). Every node represents an XML element. Each
-        node ...","source":"web"},{"title":"XML tree - Wikipedia","url":"https://en.wikipedia.org/wiki/XML_tree","date":"2006-03-30","last_updated":"2025-12-19","snippet":"XML
-        documents must contain a root element (one that is the parent of all other
-        elements). All elements in an XML document can contain sub elements, text
-        and ...","source":"web"},{"title":"Structure of an XML Document - YouTube","url":"https://www.youtube.com/watch?v=e0oXyhkShBM","date":"2023-04-09","last_updated":"2025-11-21","snippet":"Introduction
-        to XML 1. XML Declaration 2. Features of XML 3.","source":"web"},{"title":"Basic
-        XML structure - Websydian","url":"https://www.websydian.com/olddoc/v65/source/Websydian%20v6.5/TransacXML/wsyxml/xmlstructure.htm","date":"2010-12-31","last_updated":"2026-01-11","snippet":"All
-        XML documents can be described as tree-structures. They all have exactly one
-        top element. The top element can contain any number of attributes and simple
-        ...","source":"web"},{"title":"XML Elements - W3Schools","url":"https://www.w3schools.com/xml/xml_elements.asp","date":"2008-01-10","last_updated":"2026-02-09","snippet":"An
-        XML element is everything from (including) the element''s start tag to (including)
-        the element''s end tag.","source":"web"},{"title":"XML for the uninitiated
-        - Microsoft Support","url":"https://support.microsoft.com/en-us/office/xml-for-the-uninitiated-a87d234d-4c2e-4409-9cbc-45e4eb857d44","date":"2024-06-06","last_updated":"2025-10-16","snippet":"In
-        addition to tagged, well-formed data, XML systems typically use two additional
-        components: schemas and transforms. ... A basic XML file structure with a
-        schema ...","source":"web"},{"title":"Understanding XML File Structure and
-        its Risks - Cloudmersive APIs","url":"https://cloudmersive.com/article/Understanding-XML-File-Structure-and-its-Risks","date":"2025-05-28","last_updated":"2026-01-13","snippet":"Extensible
-        Markup Language (XML) is a fundamental data structure in modern software.
-        It underpins everything from MS Office documents to ...","source":"web"}],"object":"chat.completion","choices":[{"index":0,"message":{"role":"assistant","content":"The
-        file `ruby.xml` contains a simple XML document with a single root element
-        `<truism>` enclosing the text content **Ruby is the best</truism>**. \n\nThis
-        forms a minimal well-formed XML tree structure: one root element with text
-        content and no attributes, child elements, or XML declaration.[1][2][4]"},"delta":{"role":"assistant","content":""},"finish_reason":"stop"}]}'
-  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+      string: !binary |-
+        eyJpZCI6Ijc1MDAwZjc5LWU0MDEtNDVlMS04YjUwLTRjMDJlMTRjY2Y5MSIsIm1vZGVsIjoic29uYXIiLCJjcmVhdGVkIjoxNzczNjg4NDMxLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjoxMTMsImNvbXBsZXRpb25fdG9rZW5zIjo4NiwidG90YWxfdG9rZW5zIjoxOTksInNlYXJjaF9jb250ZXh0X3NpemUiOiJsb3ciLCJjb3N0Ijp7ImlucHV0X3Rva2Vuc19jb3N0IjowLjAwMDExLCJvdXRwdXRfdG9rZW5zX2Nvc3QiOjAuMDAwMDksInJlcXVlc3RfY29zdCI6MC4wMDUsInRvdGFsX2Nvc3QiOjAuMDA1Mn19LCJjaXRhdGlvbnMiOlsiaHR0cHM6Ly9kZXYudG8vZGFuaWVsc2MvZGVlcC1kaXZlLXhtbC10cnVlZm9ybWF0LXByZXNlcnZlLXhtbC1mb3JtYXR0aW5nLXdpdGgtZWFzZS00NmY1IiwiaHR0cHM6Ly93d3cudzNzY2hvb2xzLmNvbS94bWwveG1sX2VsZW1lbnRzLmFzcCIsImh0dHBzOi8vYmxvZy5jb2Rpbmdob3Jyb3IuY29tL3JldmlzaXRpbmctdGhlLXhtbC1hbmdsZS1icmFja2V0LXRheC8iLCJodHRwczovL3F1b2QubGliLnVtaWNoLmVkdS9qL2plcC8zMzM2NDUxLjAwMTQuMTA1Ly0td2h5LWNyZWF0ZS1hLWN1c3RvbWl6YXRpb24tb2YtYS1zdGFuZGFyZC1hbi1hY3MtY2FzZS1zdHVkeT9yZ249bWFpbiUzQnZpZXclM0RmdWxsdGV4dCIsImh0dHA6Ly9vcmVhdGVhaS5jb20vYmxvZy91bnBhY2tpbmctdGhlLWVsZW1lbnQtaW4teG1sLW1vcmUtdGhhbi1qdXN0LWEtdGFnLzc5NGU0ZDQxZDhjNTVhYWMyYmIzMzc0YTgxOTJmOGE3IiwiaHR0cHM6Ly93d3cuYmFsaXNhZ2UubmV0L1Byb2NlZWRpbmdzL3ZvbDMvaHRtbC9QaWV6MDEvQmFsaXNhZ2VWb2wzLVBpZXowMS5odG1sIiwiaHR0cDovL2FtYnVyLm5ldC9lYXRpbmdjYWtlLmh0bSIsImh0dHBzOi8vbmV3cy55Y29tYmluYXRvci5jb20vaXRlbT9pZD0zNzM4MTQwOSJdLCJzZWFyY2hfcmVzdWx0cyI6W3sidGl0bGUiOiJEZWVwIERpdmU6IHhtbC10cnVlZm9ybWF0IOKAkyBQcmVzZXJ2ZSBYTUwgRm9ybWF0dGluZyB3aXRoIEVhc2UiLCJ1cmwiOiJodHRwczovL2Rldi50by9kYW5pZWxzYy9kZWVwLWRpdmUteG1sLXRydWVmb3JtYXQtcHJlc2VydmUteG1sLWZvcm1hdHRpbmctd2l0aC1lYXNlLTQ2ZjUiLCJkYXRlIjoiMjAyNS0wMy0wMSIsImxhc3RfdXBkYXRlZCI6IjIwMjUtMDktMjYiLCJzbmlwcGV0IjoieG1sLXRydWVmb3JtYXQgaXMgYSBUeXBlU2NyaXB0IGxpYnJhcnkgZm9yIHBhcnNpbmcgYW5kIG1hbmlwdWxhdGluZyBYTUwgZG9jdW1lbnRzIHdoaWxlIHJldGFpbmluZyB0aGVpciBleGFjdCBvcmlnaW5hbCBmb3JtYXR0aW5nLiIsInNvdXJjZSI6IndlYiJ9LHsidGl0bGUiOiJYTUwgRWxlbWVudHMiLCJ1cmwiOiJodHRwczovL3d3dy53M3NjaG9vbHMuY29tL3htbC94bWxfZWxlbWVudHMuYXNwIiwibGFzdF91cGRhdGVkIjoiMjAyNi0wMy0xNSIsInNuaXBwZXQiOiJBbiBYTUwgZWxlbWVudCBpcyBldmVyeXRoaW5nIGZyb20gKGluY2x1ZGluZykgdGhlIGVsZW1lbnQncyBzdGFydCB0YWcgdG8gKGluY2x1ZGluZykgdGhlIGVsZW1lbnQncyBlbmQgdGFnLiIsInNvdXJjZSI6IndlYiJ9LHsidGl0bGUiOiJSZXZpc2l0aW5nIHRoZSBYTUwgQW5nbGUgQnJhY2tldCBUYXgiLCJ1cmwiOiJodHRwczovL2Jsb2cuY29kaW5naG9ycm9yLmNvbS9yZXZpc2l0aW5nLXRoZS14bWwtYW5nbGUtYnJhY2tldC10YXgvIiwiZGF0ZSI6IjIwMDgtMDYtMjMiLCJsYXN0X3VwZGF0ZWQiOiIyMDI2LTAzLTA0Iiwic25pcHBldCI6Ik9uY2UgYWdhaW4sIHRoZSBpc3N1ZSBpcyB0aGF0IFhNTCBpc24ndCBtZWFudCB0byBiZSBwYXJzZWQgYnkgYSBodW1hbi4gSXQncyBpbnRlbnRpb24gaXMgbm90IHRvIGJlIGh1bWFuIHJlYWRhYmxlIC0gdGhlIHZlcmJvc2l0eSB0aGF0IGlzIHNvIC4uLiIsInNvdXJjZSI6IndlYiJ9LHsidGl0bGUiOiJXaHkgQ3JlYXRlIGEgQ3VzdG9taXphdGlvbiBvZiBhIFN0YW5kYXJkPyBBbiBBQ1MgQ2FzZSBTdHVkeSIsInVybCI6Imh0dHBzOi8vcXVvZC5saWIudW1pY2guZWR1L2ovamVwLzMzMzY0NTEuMDAxNC4xMDUvLS13aHktY3JlYXRlLWEtY3VzdG9taXphdGlvbi1vZi1hLXN0YW5kYXJkLWFuLWFjcy1jYXNlLXN0dWR5P3Jnbj1tYWluJTNCdmlldyUzRGZ1bGx0ZXh0IiwiZGF0ZSI6IjIwMTEtMDgtMTUiLCJsYXN0X3VwZGF0ZWQiOiIyMDI1LTA5LTA5Iiwic25pcHBldCI6ImJ5IEQgTydCcmllbiDCtyAyMDExIMK3IENpdGVkIGJ5IDEg4oCUIEFueSBYTUwgdGhhdCBpcyB2YWxpZCBhY2NvcmRpbmcgdG8gdGhlIHN0YW5kYXJkIHdvdWxkIGFsc28gYmUgdmFsaWQgdG8gdGhlIGV4dGVuZGVkIHZlcnNpb24gb2YgdGhlIHNjaGVtYSwgYWx0aG91Z2ggdGhlIHJldmVyc2UgbWF5IG5vdCBiZSB0cnVlLiBGb3IgZXhhbXBsZSwgLi4uIiwic291cmNlIjoid2ViIn0seyJ0aXRsZSI6IlVucGFja2luZyB0aGUgJ0VsZW1lbnQnIGluIFhNTDogTW9yZSBUaGFuIEp1c3QgYSBUYWciLCJ1cmwiOiJodHRwOi8vb3JlYXRlYWkuY29tL2Jsb2cvdW5wYWNraW5nLXRoZS1lbGVtZW50LWluLXhtbC1tb3JlLXRoYW4tanVzdC1hLXRhZy83OTRlNGQ0MWQ4YzU1YWFjMmJiMzM3NGE4MTkyZjhhNyIsImRhdGUiOiIyMDI2LTAxLTI3Iiwic25pcHBldCI6IkF0IGl0cyBoZWFydCwgYW4gWE1MIGVsZW1lbnQgaXMgYSBwaWVjZSBvZiBkYXRhLCBpZGVudGlmaWVkIGJ5IGEgc3RhcnQgdGFnIGFuZCBhbiBlbmQgdGFnLiBUaGluayBvZiBpdCBsaWtlIGEgY29udGFpbmVyLiBGb3IgaW5zdGFuY2UsIGluIDxuYW1lPiAuLi4iLCJzb3VyY2UiOiJ3ZWIifSx7InRpdGxlIjoiQmFsaXNhZ2UgUGFwZXI6IEhvdyB0byBQbGF5IFhNTDogTWFya3VwIFRlY2hub2xvZ2llcyBhcyBOb21pYyBHYW1lIiwidXJsIjoiaHR0cHM6Ly93d3cuYmFsaXNhZ2UubmV0L1Byb2NlZWRpbmdzL3ZvbDMvaHRtbC9QaWV6MDEvQmFsaXNhZ2VWb2wzLVBpZXowMS5odG1sIiwiZGF0ZSI6IjIwMDktMDgtMTEiLCJsYXN0X3VwZGF0ZWQiOiIyMDI1LTAyLTI2Iiwic25pcHBldCI6IkFuZCB5ZXQgdGhlIGVsZW1lbnQgc2VtYW50aWNzIG9mIGJveGVkLXRleHQgYXJlIG5vdCBhcyBzb2Z0IGFzIHRob3NlIG9mIGFiIG9yIGJsb2NrcXVvdGUgKHdoaWNoIGluZGVlZCBtaWdodCBoYXZlIGhhcmRlciBzZW1hbnRpY3MgaWYgaXQgaGFkIG5vdCBiZWVuIHN1YmplY3QgdG8gLi4uIiwic291cmNlIjoid2ViIn0seyJ0aXRsZSI6IlhNTCBpbiBhIENpdGl6ZW4tQ2VudGVyZWQgRS1Hb3Zlcm5tZW50OiBIYXZpbmcgb3VyIENha2UgLi4uIiwidXJsIjoiaHR0cDovL2FtYnVyLm5ldC9lYXRpbmdjYWtlLmh0bSIsImRhdGUiOiIyMDAxLTExLTA5Iiwic25pcHBldCI6IlhNTCBlbWJvZGllcyBhIHBvd2VyZnVsIG5ldyBwb3RlbnRpYWwgdG8gcmVwcmVzZW50IGJvdGggdGhhdCB3aGljaCB3ZSBhbGwgaGF2ZSBpbiBjb21tb24gYXMgd2VsbCBhcyB0aGF0IHdoaWNoIG1ha2VzIGVhY2ggb2YgdXMgYW5kIG91ciBvcmdhbml6YXRpb25zIHVuaXF1ZS4iLCJzb3VyY2UiOiJ3ZWIifSx7InRpdGxlIjoiRFNMcyBhcmUgYSB3YXN0ZSBvZiB0aW1lIiwidXJsIjoiaHR0cHM6Ly9uZXdzLnljb21iaW5hdG9yLmNvbS9pdGVtP2lkPTM3MzgxNDA5IiwiZGF0ZSI6IjIwMjMtMDktMDQiLCJsYXN0X3VwZGF0ZWQiOiIyMDI0LTA5LTE1Iiwic25pcHBldCI6IldlIHN0b3AgY2FsbGluZyB0aGUgdXNlZnVsIG9uZXMg4oCcRFNMc+KAnSBzbyB0aGlzIGlzIGEgdHJ1aXNtLiBJcyBTUUwgYSDigJx3YXN0ZSBvZiB0aW1lP+KAnSBSZWd1bGFyIGV4cHJlc3Npb25zLCBIVE1MLCBNYWtlZmlsZXMsIC4uLiIsInNvdXJjZSI6IndlYiJ9XSwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJUaGUgZmlsZSBjb250YWlucyBhbiBYTUwgZG9jdW1lbnQgd2l0aCBhIHNpbmdsZSBlbGVtZW50OiBgPHRydWlzbT5SdWJ5IGlzIHRoZSBiZXN0PC90cnVpc20+YC5cblxuVGhpcyBpcyBhICoqd2VsbC1mb3JtZWQgWE1MIGVsZW1lbnQqKlsyXSBjb25zaXN0aW5nIG9mIGEgc3RhcnQgdGFnIChgPHRydWlzbT5gKSwgdGV4dCBjb250ZW50IChcIlJ1YnkgaXMgdGhlIGJlc3RcIiksIGFuZCBhbiBlbmQgdGFnIChgPC90cnVpc20+YClbMl0uIFRoZSBlbGVtZW50IGlzIG5hbWVkIFwidHJ1aXNtXCIgYW5kIGNvbnRhaW5zIHRleHQgY29udGVudCByYXRoZXIgdGhhbiBuZXN0ZWQgZWxlbWVudHNbMl0uIn0sImRlbHRhIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiIn0sImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dfQ==
+  recorded_at: Mon, 16 Mar 2026 19:13:51 GMT
 recorded_with: VCR 6.4.0

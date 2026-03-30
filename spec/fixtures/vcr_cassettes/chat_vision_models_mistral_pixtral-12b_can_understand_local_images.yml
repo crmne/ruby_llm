@@ -11,7 +11,7 @@ http_interactions:
       User-Agent:
       - Faraday v2.14.1
       Authorization:
-      - Bearer <MISTRAL_API_KEY>
+      - Bearer <AUTH_TOKEN>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Feb 2026 08:49:27 GMT
+      - Mon, 16 Mar 2026 19:15:15 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -32,27 +32,29 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '019c46bd-c0b7-78d5-bfb1-f8ddf453a659'
+      - '019cf812-e965-7c12-80e0-06245b0f5bc2'
       X-Kong-Request-Id:
-      - '019c46bd-c0b7-78d5-bfb1-f8ddf453a659'
+      - '019cf812-e965-7c12-80e0-06245b0f5bc2'
       X-Ratelimit-Limit-Tokens-Minute:
       - '2000000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '1999920'
+      - '1999771'
       X-Ratelimit-Tokens-Query-Cost:
-      - '80'
+      - '86'
       X-Ratelimit-Limit-Req-Minute:
       - '360'
       X-Ratelimit-Remaining-Req-Minute:
-      - '359'
+      - '358'
       X-Envoy-Upstream-Service-Time:
-      - '397'
+      - '414'
+      Server:
+      - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '398'
+      - '415'
       X-Kong-Proxy-Latency:
-      - '7'
+      - '8'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -62,17 +64,15 @@ http_interactions:
       - max-age=15552000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
-      Server:
-      - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"9e5365f92a0b46dc854275e89b889e53","created":1770713366,"model":"pixtral-12b","usage":{"prompt_tokens":41,"total_tokens":80,"completion_tokens":39,"num_cached_tokens":0},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
-        image displays a red, faceted gemstone that resembles a ruby. The gemstone
-        has a polished, reflective surface with a three-dimensional appearance, giving
-        it a shiny and sparkling look."}}]}'
-  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+      string: '{"id":"b84595d4b2d648f5a8177163aee6bf4b","created":1773688514,"model":"pixtral-12b","usage":{"prompt_tokens":41,"total_tokens":86,"completion_tokens":45,"prompt_tokens_details":{"cached_tokens":0}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
+        image displays a red, faceted gemstone. It appears to be a stylized representation
+        of a ruby or a similar precious stone. The gemstone has a glossy finish and
+        is set against a white background."}}]}'
+  recorded_at: Mon, 16 Mar 2026 19:15:15 GMT
 recorded_with: VCR 6.4.0

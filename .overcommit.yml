@@ -9,7 +9,10 @@ PreCommit:
 
   RSpec:
     enabled: true
-    command: ['bundle', 'exec', 'rspec', '--tag', '~generator']
+    command: [
+      'bundle', 'exec', 'bin/rspec-queue',
+      '--tag', '~generator'
+    ]
     on_warn: fail
 
   TrailingWhitespace:
@@ -23,6 +26,11 @@ PreCommit:
     enabled: true
     description: 'Update appraisal gemfiles'
     command: ['bundle', 'exec', 'appraisal', 'update']
+
+  Gitleaks:
+    enabled: true
+    required_executable: 'gitleaks'
+    command: ['bin/gitleaks-staged']
 
 PostCheckout:
   ALL: # Special hook name that customizes all hooks of this type

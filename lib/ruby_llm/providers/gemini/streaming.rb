@@ -22,6 +22,7 @@ module RubyLLM
             ),
             input_tokens: extract_input_tokens(data),
             output_tokens: extract_output_tokens(data),
+            cached_tokens: data.dig('usageMetadata', 'cachedContentTokenCount'),
             thinking_tokens: data.dig('usageMetadata', 'thoughtsTokenCount'),
             tool_calls: extract_tool_calls(data)
           )
@@ -83,7 +84,7 @@ module RubyLLM
           error_data = JSON.parse(data)
           [error_data['error']['code'], error_data['error']['message']]
         rescue JSON::ParserError => e
-          RubyLLM.logger.debug "Failed to parse streaming error: #{e.message}"
+          RubyLLM.logger.debug { "Failed to parse streaming error: #{e.message}" }
           [500, "Failed to parse error: #{data}"]
         end
       end

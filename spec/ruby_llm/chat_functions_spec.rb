@@ -99,6 +99,28 @@ RSpec.describe RubyLLM::Chat do
 
       expect(chat.tools).to be_empty
     end
+
+    it 'stores calls preference as :many or :one' do
+      chat = described_class.new
+
+      chat.with_tools(calls: :many)
+      expect(chat.tool_prefs[:calls]).to eq(:many)
+
+      chat.with_tools(calls: :one)
+      expect(chat.tool_prefs[:calls]).to eq(:one)
+
+      chat.with_tools(calls: 1)
+      expect(chat.tool_prefs[:calls]).to eq(:one)
+    end
+
+    it 'raises for invalid calls values' do
+      chat = described_class.new
+
+      expect { chat.with_tools(calls: :single) }.to raise_error(
+        ArgumentError,
+        /Invalid calls value/
+      )
+    end
   end
 
   describe '#with_model' do

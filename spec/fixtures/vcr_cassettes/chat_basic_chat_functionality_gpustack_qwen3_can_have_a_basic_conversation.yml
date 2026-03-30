@@ -11,7 +11,7 @@ http_interactions:
       User-Agent:
       - Faraday v2.14.1
       Authorization:
-      - Bearer <GPUSTACK_API_KEY>
+      - Bearer <AUTH_TOKEN>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -24,28 +24,35 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Feb 2026 15:36:15 GMT
+      - Mon, 16 Mar 2026 19:24:55 GMT
+      - Mon, 16 Mar 2026 19:24:55 GMT
       Server:
-      - istio-envoy
+      - uvicorn
+      - uvicorn
+      Keep-Alive:
+      - timeout=15, max=100
+      Content-Length:
+      - '1360'
       Content-Type:
-      - application/json; charset=utf-8
+      - application/json
+      X-Request-Accepted-At:
+      - "<X_REQUEST_ID>"
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
       Access-Control-Allow-Origin:
-      - ''
-      Req-Cost-Time:
-      - '16996'
-      Req-Arrive-Time:
-      - '1770737776821'
-      Resp-Start-Time:
-      - '1770737793818'
-      X-Envoy-Upstream-Service-Time:
-      - '16963'
-      Vary:
-      - Accept-Encoding
-      Transfer-Encoding:
-      - chunked
+      - "*"
     body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiMiArIDIgZXF1YWxzICoqNCoqLiBJdCdzIGEgYmFzaWMgYXJpdGhtZXRpYyBvcGVyYXRpb24gd2hlcmUgYWRkaW5nIHR3byBudW1iZXJzIHRvZ2V0aGVyIGdpdmVzIHRoZWlyIHN1bS4gTGV0IG1lIGtub3cgaWYgeW91IG5lZWQgaGVscCB3aXRoIGFueXRoaW5nIG1vcmUgY29tcGxleCEg8J+YiiIsInJlYXNvbmluZ19jb250ZW50IjoiT2theSwgdGhlIHVzZXIgaXMgYXNraW5nIFwiV2hhdCdzIDIgKyAyP1wiIFRoYXQncyBhIGJhc2ljIG1hdGggcXVlc3Rpb24uIExldCBtZSB0aGluay4gSSBuZWVkIHRvIG1ha2Ugc3VyZSBJIGFuc3dlciBjb3JyZWN0bHkuIDIgcGx1cyAyIGlzIHN0cmFpZ2h0Zm9yd2FyZC4gMiArIDIgZXF1YWxzIDQuIEJ1dCB3YWl0LCBtYXliZSB0aGV5IHdhbnQgYSBtb3JlIGRldGFpbGVkIGV4cGxhbmF0aW9uPyBPciBpcyBpdCBqdXN0IGEgc2ltcGxlIGFuc3dlcj8gU2luY2UgdGhlIHF1ZXN0aW9uIGlzIHNvIGJhc2ljLCBtYXliZSB0aGV5J3JlIHRlc3RpbmcgaWYgSSBrbm93IHRoZSBhbnN3ZXIgb3IgaWYgdGhleSdyZSBhIGJlZ2lubmVyLiBJIHNob3VsZCBjb25maXJtIHRoZSBhbnN3ZXIgY2xlYXJseS4gTGV0IG1lIGNoZWNrIGlmIHRoZXJlJ3MgYW55IHRyaWNrIGhlcmUuIE5vLCBpdCdzIGp1c3QgYSBzaW1wbGUgYWRkaXRpb24uIFNvIHRoZSBhbnN3ZXIgaXMgNC4gSSBzaG91bGQgcHJlc2VudCBpdCBpbiBhIGZyaWVuZGx5IG1hbm5lci4gTWF5YmUgYWRkIGEgbm90ZSB0aGF0IGl0J3MgYSBiYXNpYyBtYXRoIHByb2JsZW0uIEFscmlnaHQsIHRoYXQncyBpdC4ifX1dLCJjcmVhdGVkIjoxNzcwNzM3NzkzLCJtb2RlbCI6InF3ZW4zIiwic3lzdGVtX2ZpbmdlcnByaW50IjoiYjc5ODEtOThlNTdjYTQyIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwidXNhZ2UiOnsiY29tcGxldGlvbl90b2tlbnMiOjE5NywicHJvbXB0X3Rva2VucyI6MTYsInRvdGFsX3Rva2VucyI6MjEzLCJ0aW1lX3RvX2ZpcnN0X3Rva2VuX21zIjoxNjk5NywidGltZV9wZXJfb3V0cHV0X3Rva2VuX21zIjowLCJ0b2tlbnNfcGVyX3NlY29uZCI6MH0sImlkIjoiY2hhdGNtcGwtS0ZsWWZkVklBcUVmWGJYMTBRN0lySUYwUW1wa25pOXYiLCJ0aW1pbmdzIjp7ImNhY2hlX24iOjUsInByb21wdF9uIjoxMSwicHJvbXB0X21zIjoyNzQuMjUxLCJwcm9tcHRfcGVyX3Rva2VuX21zIjoyNC45MzE5MDkwOTA5MDkwODcsInByb21wdF9wZXJfc2Vjb25kIjo0MC4xMDkyNDI5OTI3MzI5NCwicHJlZGljdGVkX24iOjE5NywicHJlZGljdGVkX21zIjoxNjYxMi41MTYsInByZWRpY3RlZF9wZXJfdG9rZW5fbXMiOjg0LjMyNzQ5MjM4NTc4NjgsInByZWRpY3RlZF9wZXJfc2Vjb25kIjoxMS44NTg1Mjg4MzQ1MjQ1MjR9fQ==
-  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+      encoding: UTF-8
+      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"\n\n2
+        + 2 equals 4.","reasoning_content":"\nOkay, the user asked \"What''s 2 + 2?\"
+        Let me think. Well, this is a basic arithmetic question. I know that 2 plus
+        2 equals 4. But maybe I should double-check to make sure I''m not making a
+        mistake. Let me visualize it: two objects plus another two objects would total
+        four. Yeah, that makes sense. I can also think of it on a number line. Starting
+        at 2 and moving two units to the right would land me at 4. Another way is
+        to use addition facts. Since 2 + 2 is a common addition fact, it''s definitely
+        4. I don''t think there''s any trick or context here that changes the answer.
+        The user might just be testing if I know the basics. So, the answer should
+        be straightforward.\n","role":"assistant"}}],"created":1773689098,"id":"chatcmpl-9VBm16aTDiIMnzlmuIiVry6LEwHiiAq1","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":180,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":169,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":16,"prompt_tokens_details":{"cached_tokens":0},"prompt_tokens_per_second":771.6421509524959,"time_per_output_token_ms":18.904166666666665,"time_to_first_token_ms":20.735,"tokens_per_second":52.89839100727353,"total_tokens":196}}'
+  recorded_at: Mon, 16 Mar 2026 19:24:58 GMT
 recorded_with: VCR 6.4.0

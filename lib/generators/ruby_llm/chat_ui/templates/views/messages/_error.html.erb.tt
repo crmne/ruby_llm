@@ -1,0 +1,8 @@
+<div id="<%= message_variable_name %>_<%%= <%= message_model_name.demodulize.underscore %>.id %>" class="<%= message_variable_name %>"
+     style="margin-bottom: 20px; padding: 10px; border-left: 3px solid #dc2626; background: #fef2f2;">
+  <div style="font-weight: bold; margin-bottom: 5px; color: #b91c1c;"><%%= title.presence || "Error" %></div>
+  <pre style="white-space: pre-wrap; margin: 0; color: #7f1d1d;"><%%= error_message %></pre>
+  <div style="font-size: 0.85em; color: #7f1d1d; margin-top: 5px;">
+    <%%= <%= message_model_name.demodulize.underscore %>.created_at&.strftime("%I:%M %p") %>
+  </div>
+</div>

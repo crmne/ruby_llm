@@ -10,7 +10,6 @@ module RubyLLM
         f.response :logger,
                    RubyLLM.logger,
                    bodies: false,
-                   response: false,
                    errors: true,
                    headers: false,
                    log_level: :debug
@@ -60,14 +59,19 @@ module RubyLLM
     def setup_logging(faraday)
       faraday.response :logger,
                        RubyLLM.logger,
-                       bodies: true,
-                       response: true,
+                       bodies: RubyLLM.logger.debug?,
                        errors: true,
                        headers: false,
                        log_level: :debug do |logger|
-        logger.filter(%r{[A-Za-z0-9+/=]{100,}}, '[BASE64 DATA]')
-        logger.filter(/[-\d.e,\s]{100,}/, '[EMBEDDINGS ARRAY]')
+        logger.filter(logging_regexp('[A-Za-z0-9+/=]{100,}'), '[BASE64 DATA]')
+        logger.filter(logging_regexp('[-\\d.e,\\s]{100,}'), '[EMBEDDINGS ARRAY]')
       end
+    end
+
+    def logging_regexp(pattern)
+      return Regexp.new(pattern) if @config.log_regexp_timeout.nil? || !Regexp.respond_to?(:timeout)
+
+      Regexp.new(pattern, timeout: @config.log_regexp_timeout)
     end
 
     def setup_retry(faraday)

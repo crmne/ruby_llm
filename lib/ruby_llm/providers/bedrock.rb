@@ -18,12 +18,15 @@ module RubyLLM
         {}
       end
 
-      def complete(messages, tools:, temperature:, model:, params: {}, headers: {}, schema: nil, thinking: nil, &) # rubocop:disable Metrics/ParameterLists
+      # rubocop:disable Metrics/ParameterLists
+      def complete(messages, tools:, temperature:, model:, params: {}, headers: {}, schema: nil, thinking: nil,
+                   tool_prefs: nil, &)
         normalized_params = normalize_params(params, model:)
 
         super(
           messages,
           tools: tools,
+          tool_prefs: tool_prefs,
           temperature: temperature,
           model: model,
           params: normalized_params,
@@ -33,6 +36,7 @@ module RubyLLM
           &
         )
       end
+      # rubocop:enable Metrics/ParameterLists
 
       def parse_error(response)
         return if response.body.nil? || response.body.empty?
@@ -49,6 +53,10 @@ module RubyLLM
       end
 
       class << self
+        def configuration_options
+          %i[bedrock_api_key bedrock_secret_key bedrock_region bedrock_session_token]
+        end
+
         def configuration_requirements
           %i[bedrock_api_key bedrock_secret_key bedrock_region]
         end

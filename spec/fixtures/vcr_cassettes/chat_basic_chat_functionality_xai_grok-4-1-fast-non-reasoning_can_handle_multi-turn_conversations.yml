@@ -1,0 +1,165 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.x.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"user","content":"Who
+        is the creator of the programming language Ruby?"}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 16 Mar 2026 19:16:04 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Ratelimit-Limit-Tokens:
+      - '4000000'
+      X-Ratelimit-Remaining-Tokens:
+      - '4000000'
+      X-Zero-Data-Retention:
+      - 'false'
+      X-Ratelimit-Limit-Requests:
+      - '607'
+      X-Ratelimit-Remaining-Requests:
+      - '607'
+      X-Metrics-Ttft-Ms:
+      - '348.8'
+      X-Metrics-Mean-Itl-Ms:
+      - '13.8'
+      X-Metrics-E2e-Ms:
+      - '2212.7'
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"0a03ceb1-ebeb-e419-2f3a-3745a055d093","object":"chat.completion","created":1773688562,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"**Matzuda
+        Yukihiro** (commonly known as **Matz**) is the creator of the Ruby programming
+        language.\n\nHe designed and developed Ruby in the mid-1990s in Japan, first
+        releasing it in 1995. Matz aimed to create a language that was fun, object-oriented,
+        and developer-friendly, blending influences from Perl, Smalltalk, and Lisp.
+        This is well-documented in official sources like the Ruby website (ruby-lang.org),
+        Matz''s own writings, and programming history references such as \"Programming
+        Ruby: The Pragmatic Programmer''s Guide.\" Ruby powers frameworks like Ruby
+        on Rails and remains popular for web development today.","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":178,"completion_tokens":130,"total_tokens":308,"prompt_tokens_details":{"text_tokens":178,"audio_tokens":0,"image_tokens":0,"cached_tokens":161},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":764500},"system_fingerprint":"fp_48319fcb08"}'
+  recorded_at: Mon, 16 Mar 2026 19:16:04 GMT
+- request:
+    method: post
+    uri: https://api.x.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"user","content":"Who
+        is the creator of the programming language Ruby?"},{"role":"assistant","content":"**Matzuda
+        Yukihiro** (commonly known as **Matz**) is the creator of the Ruby programming
+        language.\n\nHe designed and developed Ruby in the mid-1990s in Japan, first
+        releasing it in 1995. Matz aimed to create a language that was fun, object-oriented,
+        and developer-friendly, blending influences from Perl, Smalltalk, and Lisp.
+        This is well-documented in official sources like the Ruby website (ruby-lang.org),
+        Matz''s own writings, and programming history references such as \"Programming
+        Ruby: The Pragmatic Programmer''s Guide.\" Ruby powers frameworks like Ruby
+        on Rails and remains popular for web development today."},{"role":"user","content":"What
+        year did he create Ruby?"}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 16 Mar 2026 19:16:07 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Ratelimit-Limit-Tokens:
+      - '4000000'
+      X-Ratelimit-Remaining-Tokens:
+      - '3999407'
+      X-Zero-Data-Retention:
+      - 'false'
+      X-Ratelimit-Limit-Requests:
+      - '607'
+      X-Ratelimit-Remaining-Requests:
+      - '606'
+      X-Metrics-Ttft-Ms:
+      - '99.8'
+      X-Metrics-Mean-Itl-Ms:
+      - '11.9'
+      X-Metrics-E2e-Ms:
+      - '1666.9'
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"c5b59c60-af64-4532-25fc-393e3c8c6483","object":"chat.completion","created":1773688565,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"**Ruby
+        was first released in 1995.**\n\nMatz (Yukihiro Matsumoto) began developing
+        Ruby in 1993 while working at a Japanese company, but the initial public release
+        (version 0.95) occurred on **December 21, 1995**. This is confirmed by:\n-
+        The official Ruby history on ruby-lang.org.\n- Matz''s own accounts in interviews
+        (e.g., in \"The History of Ruby\" talks).\n- Archival records from the Ruby
+        mailing lists and early release notes.\n\nStable version 1.0 followed in 2003,
+        but 1995 marks its creation and debut.","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":326,"completion_tokens":127,"total_tokens":453,"prompt_tokens_details":{"text_tokens":326,"audio_tokens":0,"image_tokens":0,"cached_tokens":178},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":1020000},"system_fingerprint":"fp_48319fcb08"}'
+  recorded_at: Mon, 16 Mar 2026 19:16:07 GMT
+recorded_with: VCR 6.4.0

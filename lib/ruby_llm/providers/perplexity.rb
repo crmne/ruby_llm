@@ -23,6 +23,10 @@ module RubyLLM
           Perplexity::Capabilities
         end
 
+        def configuration_options
+          %i[perplexity_api_key]
+        end
+
         def configuration_requirements
           %i[perplexity_api_key]
         end

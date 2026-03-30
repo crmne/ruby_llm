@@ -8,6 +8,7 @@ require 'dotenv/load'
 require 'irb'
 
 RubyLLM.configure do |config|
+  config.anthropic_api_base = ENV.fetch('ANTHROPIC_BASE_URL', nil)
   config.anthropic_api_key = ENV.fetch('ANTHROPIC_API_KEY', nil)
   config.azure_api_base = ENV.fetch('AZURE_API_BASE', nil)
   config.azure_api_key = ENV.fetch('AZURE_API_KEY', nil)

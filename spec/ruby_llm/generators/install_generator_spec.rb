@@ -31,6 +31,10 @@ RSpec.describe RubyLLM::Generators::InstallGenerator, :generator, type: :generat
         expect(File.exist?('app/models/message.rb')).to be true
         expect(File.exist?('app/models/model.rb')).to be true
         expect(File.exist?('app/models/tool_call.rb')).to be true
+        expect(File.exist?('app/agents/.gitkeep')).to be true
+        expect(File.exist?('app/tools/.gitkeep')).to be true
+        expect(File.exist?('app/schemas/.gitkeep')).to be true
+        expect(File.exist?('app/prompts/.gitkeep')).to be true
       end
     end
 
@@ -42,6 +46,27 @@ RSpec.describe RubyLLM::Generators::InstallGenerator, :generator, type: :generat
         expect(migrations.any? { |f| f.include?('create_tool_calls') }).to be true
         expect(migrations.any? { |f| f.include?('create_models') }).to be true
         expect(migrations.any? { |f| f.include?('add_references_to_chats_tool_calls_and_messages') }).to be true
+      end
+    end
+
+    it 'uses text for tool call thought signatures' do
+      within_test_app(app_path) do
+        migration = Dir.glob('db/migrate/*create_tool_calls.rb').first
+        expect(migration).to be_present
+
+        content = File.read(migration)
+        expect(content).to include('t.text :thought_signature')
+      end
+    end
+
+    it 'keeps create_models migration schema-only' do
+      within_test_app(app_path) do
+        migration = Dir.glob('db/migrate/*create_models.rb').first
+        expect(migration).to be_present
+
+        content = File.read(migration)
+        expect(content).not_to include('Loading models from models.json')
+        expect(content).not_to include('save_to_database')
       end
     end
 

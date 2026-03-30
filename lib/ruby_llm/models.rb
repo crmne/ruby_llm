@@ -47,7 +47,8 @@ module RubyLLM
 
       def read_from_json(file = RubyLLM.config.model_registry_file)
         data = File.exist?(file) ? File.read(file) : '[]'
-        JSON.parse(data, symbolize_names: true).map { |model| Model::Info.new(model) }
+        models = JSON.parse(data, symbolize_names: true).map { |model| Model::Info.new(model) }
+        filter_models(models)
       rescue JSON::ParserError
         []
       end
@@ -232,7 +233,13 @@ module RubyLLM
           end
         end
 
-        models.sort_by { |m| [m.provider, m.id] }
+        filter_models(models).sort_by { |m| [m.provider, m.id] }
+      end
+
+      def filter_models(models)
+        models.reject do |model|
+          model.provider.to_s == 'vertexai' && model.id.to_s.include?('/')
+        end
       end
 
       def find_models_dev_model(key, models_dev_by_key)
@@ -266,8 +273,8 @@ module RubyLLM
       end
 
       def index_by_key(models)
-        models.each_with_object({}) do |model, hash|
-          hash["#{model.provider}:#{model.id}"] = model
+        models.to_h do |model|
+          ["#{model.provider}:#{model.id}", model]
         end
       end
 
@@ -312,12 +319,15 @@ module RubyLLM
         modalities = normalize_models_dev_modalities(model_data[:modalities])
         capabilities = models_dev_capabilities(model_data, modalities)
 
+        created_date = [model_data[:release_date], model_data[:last_updated]]
+                       .find { |value| !value.to_s.strip.empty? }
+
         data = {
           id: model_data[:id],
           name: model_data[:name] || model_data[:id],
           provider: provider_slug,
           family: model_data[:family],
-          created_at: model_data[:release_date] || model_data[:last_updated],
+          created_at: created_date ? "#{created_date} 00:00:00 UTC" : nil,
           context_window: model_data.dig(:limit, :context),
           max_output_tokens: model_data.dig(:limit, :output),
           knowledge_cutoff: normalize_models_dev_knowledge(model_data[:knowledge]),
@@ -398,7 +408,7 @@ module RubyLLM
     end
 
     def initialize(models = nil)
-      @models = models || self.class.load_models
+      @models = self.class.filter_models(models || self.class.load_models)
     end
 
     def load_from_json!(file = RubyLLM.config.model_registry_file)

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+require 'stringio'
 
 RSpec.describe RubyLLM::ActiveRecord::ActsAs do
   include_context 'with configured RubyLLM'
@@ -184,6 +185,30 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       saved_message = chat.messages.last
       expect(saved_message.role).to eq('assistant')
       expect(saved_message.content_raw).to eq({ 'name' => 'Alice', 'age' => 25 })
+    end
+
+    it 'supports multi-turn conversations with structured responses' do
+      chat = Chat.create!(model: model)
+
+      schema = {
+        type: 'object',
+        properties: {
+          country: { type: 'string' }
+        },
+        required: %w[country],
+        additionalProperties: false
+      }
+
+      chat.with_schema(schema)
+
+      # First turn
+      chat.ask('What country is Paris in?')
+
+      # Second turn - this should not raise an error
+      response = chat.ask('What about Berlin?')
+
+      expect(response.content).to be_a(Hash)
+      expect(response.content['country']).to eq('Germany')
     end
   end
 
@@ -506,6 +531,34 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
         bot_chat.with_model('claude-3-5-haiku-20241022')
         expect(bot_chat.reload.model_id).to eq('claude-3-5-haiku-20241022')
       end
+
+      it 'cleans up incomplete tool interactions with custom message association name' do
+        bot_chat = Assistants::BotChat.create!(model: model)
+
+        bot_chat.bot_messages.create!(role: 'user', content: 'Do multiple calculations')
+
+        tool_call_msg = bot_chat.bot_messages.create!(role: 'assistant', content: nil)
+        tool_call1 = tool_call_msg.bot_tool_calls.create!(
+          tool_call_id: 'call_custom_1',
+          name: 'calculator',
+          arguments: { expression: '2 + 2' }.to_json
+        )
+        tool_call_msg.bot_tool_calls.create!(
+          tool_call_id: 'call_custom_2',
+          name: 'calculator',
+          arguments: { expression: '3 + 3' }.to_json
+        )
+
+        bot_chat.bot_messages.create!(
+          role: 'tool',
+          content: '4',
+          parent_tool_call: tool_call1
+        )
+
+        expect do
+          bot_chat.send(:cleanup_orphaned_tool_results)
+        end.to change { bot_chat.bot_messages.count }.by(-2)
+      end
     end
 
     describe 'namespaced chat models with custom foreign keys' do
@@ -615,12 +668,24 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
         expect(llm_tool_call.name).to eq('calculator')
         expect(llm_tool_call.arguments).to eq({ 'expression' => '2 + 2' })
       end
+
+      it 'correctly preserves custom model' do
+        custom_model = 'my-custom-model'
+        bot_chat = Assistants::BotChat.create!(model: custom_model, assume_model_exists: true, provider: 'openrouter')
+        bot_chat.save!
+        llm_chat = bot_chat.to_llm
+        expect(llm_chat.model.id).to eq(custom_model)
+      end
     end
   end
 
   describe 'attachment handling' do
     let(:image_path) { File.expand_path('../../fixtures/ruby.png', __dir__) }
     let(:pdf_path) { File.expand_path('../../fixtures/sample.pdf', __dir__) }
+
+    def attachment_io(path)
+      StringIO.new(File.binread(path))
+    end
 
     def uploaded_file(path, type)
       filename = File.basename(path)
@@ -649,7 +714,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
 
       message = chat.messages.create!(role: 'user', content: 'Check this out')
       message.attachments.attach(
-        io: File.open(image_path),
+        io: attachment_io(image_path),
         filename: 'ruby.png',
         content_type: 'image/png'
       )
@@ -690,7 +755,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
         message = chat.messages.create!(role: 'user', content: 'Image test')
 
         message.attachments.attach(
-          io: File.open(image_path),
+          io: attachment_io(image_path),
           filename: 'test.png',
           content_type: 'image/png'
         )
@@ -705,7 +770,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
         message = chat.messages.create!(role: 'user', content: 'PDF test')
 
         message.attachments.attach(
-          io: File.open(pdf_path),
+          io: attachment_io(pdf_path),
           filename: 'test.pdf',
           content_type: 'application/pdf'
         )
@@ -822,6 +887,102 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       expect do
         chat.send(:cleanup_orphaned_tool_results)
       end.to change { chat.messages.count }.by(-1)
+    end
+
+    context 'with custom configurations' do
+      before(:all) do # rubocop:disable RSpec/BeforeAfterAll
+        # Create additional tables for testing edge cases
+        ActiveRecord::Migration.suppress_messages do
+          ActiveRecord::Migration.create_table :clanker_chats, force: true do |t|
+            t.string :model_id
+            t.timestamps
+          end
+          ActiveRecord::Migration.create_table :clanker_messages, force: true do |t|
+            t.references :clanker_chat
+            t.string :role
+            t.text :content
+            t.json :content_raw
+            t.string :model_id
+            t.integer :input_tokens
+            t.integer :output_tokens
+            t.integer :cached_tokens
+            t.integer :cache_creation_tokens
+            t.references :clanker_tool_call
+            t.timestamps
+          end
+
+          ActiveRecord::Migration.create_table :clanker_tool_calls, force: true do |t|
+            t.references :clanker_message
+            t.string :tool_call_id
+            t.string :name
+            t.json :arguments
+            t.timestamps
+          end
+        end
+      end
+
+      after(:all) do # rubocop:disable RSpec/BeforeAfterAll
+        ActiveRecord::Migration.suppress_messages do
+          if ActiveRecord::Base.connection.table_exists?(:clanker_tool_calls)
+            ActiveRecord::Migration.drop_table :clanker_tool_calls
+          end
+          if ActiveRecord::Base.connection.table_exists?(:clanker_messages)
+            ActiveRecord::Migration.drop_table :clanker_messages
+          end
+          if ActiveRecord::Base.connection.table_exists?(:clanker_chats)
+            ActiveRecord::Migration.drop_table :clanker_chats
+          end
+        end
+      end
+
+      module Clanker # rubocop:disable RSpec/LeakyConstantDeclaration,Lint/ConstantDefinitionInBlock
+        class Chat < ActiveRecord::Base # rubocop:disable RSpec/LeakyConstantDeclaration
+          acts_as_chat messages: :clanker_messages, message_class: 'Clanker::Message',
+                       messages_foreign_key: 'clanker_chat_id'
+          alias messages clanker_messages
+          self.table_name = 'clanker_chats'
+        end
+
+        class Message < ActiveRecord::Base # rubocop:disable RSpec/LeakyConstantDeclaration
+          acts_as_message chat: :clanker_chat, chat_class: 'Clanker::Chat', chat_foreign_key: 'clanker_chat_id',
+                          tool_calls: :clanker_tool_calls, tool_call_class: 'Clanker::ToolCall',
+                          tool_calls_foreign_key: 'clanker_message_id'
+          alias tool_calls clanker_tool_calls
+
+          self.table_name = 'clanker_messages'
+        end
+
+        class ToolCall < ActiveRecord::Base # rubocop:disable RSpec/LeakyConstantDeclaration
+          acts_as_tool_call message: :clanker_message, message_class: 'Clanker::Message',
+                            message_foreign_key: 'clanker_message_id', result: :result, result_class: 'Clanker::Message',
+                            result_foreign_key: 'clanker_tool_call_id'
+          alias message clanker_message
+
+          self.table_name = 'clanker_tool_calls'
+        end
+      end
+
+      it 'does not clean up complete tool interactions when error occurs after tool execution' do
+        chat = Clanker::Chat.create!(model: model)
+        chat.clanker_messages.create!(role: 'user', content: 'What is 5 + 5?')
+
+        tool_call_msg = chat.messages.create!(role: 'assistant', content: nil)
+        tool_call = tool_call_msg.tool_calls.create!(
+          tool_call_id: 'call_123',
+          name: 'calculator',
+          arguments: { expression: '5 + 5' }.to_json
+        )
+
+        chat.messages.create!(
+          role: 'tool',
+          content: '10',
+          parent_tool_call: tool_call
+        )
+
+        expect do
+          chat.send(:cleanup_orphaned_tool_results)
+        end.not_to(change { chat.messages.count })
+      end
     end
   end
 

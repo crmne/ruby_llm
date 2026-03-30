@@ -79,7 +79,8 @@ module RubyLLM
         model_record = model_association
         @chat ||= (context || RubyLLM).chat(
           model: model_record.model_id,
-          provider: model_record.provider.to_sym
+          provider: model_record.provider.to_sym,
+          assume_model_exists: assume_model_exists || false
         )
         @chat.reset_messages!
 
@@ -87,6 +88,7 @@ module RubyLLM
         ordered_messages.each do |msg|
           @chat.add_message(msg.to_llm)
         end
+        reapply_runtime_instructions(@chat)
 
         setup_persistence_callbacks
       end
@@ -94,6 +96,14 @@ module RubyLLM
       def with_instructions(instructions, append: false, replace: nil)
         append = append_instructions?(append:, replace:)
         persist_system_instruction(instructions, append:)
+
+        to_llm.with_instructions(instructions, append:, replace:)
+        self
+      end
+
+      def with_runtime_instructions(instructions, append: false, replace: nil)
+        append = append_instructions?(append:, replace:)
+        store_runtime_instruction(instructions, append:)
 
         to_llm.with_instructions(instructions, append:, replace:)
         self
@@ -115,7 +125,7 @@ module RubyLLM
         self.assume_model_exists = assume_exists
         resolve_model_from_strings
         save!
-        to_llm.with_model(model.model_id, provider: model.provider.to_sym, assume_exists:)
+        to_llm.with_model(model_association.model_id, provider: model_association.provider.to_sym, assume_exists:)
         self
       end
 
@@ -238,9 +248,10 @@ module RubyLLM
         if last.tool_call?
           last.destroy
         elsif last.tool_result?
-          tool_call_message = last.parent_tool_call.message
-          expected_results = tool_call_message.tool_calls.pluck(:id)
-          actual_results = tool_call_message.tool_results.pluck(:tool_call_id)
+          tool_call_message = last.parent_tool_call.message_association
+          expected_results = tool_call_message.tool_calls_association.pluck(:id)
+          fk_column = tool_call_message.class.reflections['tool_results'].foreign_key
+          actual_results = tool_call_message.tool_results.pluck(fk_column)
 
           if expected_results.sort != actual_results.sort
             tool_call_message.tool_results.each(&:destroy)
@@ -291,6 +302,26 @@ module RubyLLM
       def order_messages_for_llm(messages)
         system_messages, non_system_messages = messages.partition { |msg| msg.role.to_s == 'system' }
         system_messages + non_system_messages
+      end
+
+      def runtime_instructions
+        @runtime_instructions ||= []
+      end
+
+      def store_runtime_instruction(instructions, append:)
+        if append
+          runtime_instructions << instructions
+        else
+          @runtime_instructions = [instructions]
+        end
+      end
+
+      def reapply_runtime_instructions(chat)
+        return if runtime_instructions.empty?
+
+        first, *rest = runtime_instructions
+        chat.with_instructions(first)
+        rest.each { |instruction| chat.with_instructions(instruction, append: true) }
       end
 
       def persist_new_message
@@ -396,11 +427,18 @@ module RubyLLM
 
         attachment = source.is_a?(RubyLLM::Attachment) ? source : RubyLLM::Attachment.new(source)
 
-        {
-          io: StringIO.new(attachment.content),
-          filename: attachment.filename,
-          content_type: attachment.mime_type
-        }
+        if attachment.active_storage?
+          case attachment.source
+          when ActiveStorage::Blob then attachment.source
+          when ActiveStorage::Attached::One, ActiveStorage::Attached::Many then attachment.source.blobs
+          end
+        else
+          {
+            io: StringIO.new(attachment.content),
+            filename: attachment.filename,
+            content_type: attachment.mime_type
+          }
+        end
       rescue StandardError => e
         RubyLLM.logger.warn "Failed to process attachment #{source}: #{e.message}"
         nil

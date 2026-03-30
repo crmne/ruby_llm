@@ -25,11 +25,11 @@ http_interactions:
       message: Unauthorized
     headers:
       Date:
-      - Tue, 10 Feb 2026 08:55:15 GMT
+      - Mon, 16 Mar 2026 19:10:38 GMT
       Content-Type:
       - application/json
-      Content-Length:
-      - '130'
+      Transfer-Encoding:
+      - chunked
       Connection:
       - keep-alive
       X-Should-Retry:
@@ -41,7 +41,11 @@ http_interactions:
       Server:
       - cloudflare
       X-Envoy-Upstream-Service-Time:
-      - '21'
+      - '7'
+      Vary:
+      - Accept-Encoding
+      Server-Timing:
+      - proxy;dur=7
       Cf-Cache-Status:
       - DYNAMIC
       X-Robots-Tag:
@@ -51,8 +55,8 @@ http_interactions:
       Cf-Ray:
       - "<CF_RAY>"
     body:
-      encoding: UTF-8
+      encoding: ASCII-8BIT
       string: '{"type":"error","error":{"type":"authentication_error","message":"invalid
-        x-api-key"},"request_id":"req_011CXz7E9QAJfGQ9vToZNkE5"}'
-  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+        x-api-key"},"request_id":"req_011CZ7Hf14iH5tn8tHoBVFCz"}'
+  recorded_at: Mon, 16 Mar 2026 19:10:38 GMT
 recorded_with: VCR 6.4.0

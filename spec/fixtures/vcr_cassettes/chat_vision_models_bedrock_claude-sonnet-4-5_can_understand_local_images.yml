@@ -11,12 +11,12 @@ http_interactions:
       User-Agent:
       - Faraday v2.14.1
       X-Amz-Date:
-      - 20260210T084856Z
+      - 20260316T191448Z
       X-Amz-Content-Sha256:
       - d41c783d2a3e558d5aed2e01edbd778c8c2b0d628da0bd3a2a9f8760c2d0d9bb
       Authorization:
-      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20260210/<AWS_REGION>/bedrock/aws4_request,
-        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=3f41d28b597b1bf2a8e9bc48c83738ee08f2f2209e2a15077954344801a03a1a
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -29,26 +29,27 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Feb 2026 08:49:01 GMT
+      - Mon, 16 Mar 2026 19:14:54 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '979'
+      - '1057'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 77f047c2-b39f-4f80-878b-d70af76dccb3
+      - 697db7e2-5020-434b-8a41-39f2ea152ed1
     body:
       encoding: UTF-8
-      string: '{"metrics":{"latencyMs":4594},"output":{"message":{"content":[{"text":"#
-        Ruby Programming Language Logo\n\nThis image shows the **Ruby programming
-        language logo**. It features a stylized red gemstone (a ruby) with faceted
-        surfaces that create a three-dimensional appearance. The gem has highlights
-        and shadows that give it depth and a polished, shiny look.\n\nRuby is a dynamic,
-        open-source programming language known for:\n- Its elegant, readable syntax\n-
-        Focus on simplicity and productivity\n- Object-oriented design\n- Popular
-        web framework Ruby on Rails\n\nThe gemstone imagery reflects the language''s
-        name and suggests something valuable and refined, which aligns with Ruby''s
-        philosophy of developer happiness and code elegance."}],"role":"assistant"}},"stopReason":"end_turn","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":43,"outputTokens":138,"serverToolUsage":{},"totalTokens":181}}'
-  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+      string: '{"metrics":{"latencyMs":4449},"output":{"message":{"content":[{"text":"#
+        Ruby Programming Language Logo\n\nThis image shows the official logo of **Ruby**,
+        a dynamic, open-source programming language. The logo depicts a stylized ruby
+        gemstone rendered in deep red tones with faceted surfaces that create highlights
+        and shadows, giving it a three-dimensional, polished appearance.\n\n## Key
+        characteristics:\n- **Color**: Deep red/crimson, reflecting an actual ruby
+        gemstone\n- **Design**: Geometric, faceted gem with multiple angular surfaces\n-
+        **Style**: Clean, modern, and iconic\n- **Symbolism**: Represents the Ruby
+        programming language, which was named after the precious gemstone\n\nRuby
+        is known for its elegant syntax and is famously used in web development, particularly
+        with the Ruby on Rails framework."}],"role":"assistant"}},"stopReason":"end_turn","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":43,"outputTokens":159,"serverToolUsage":{},"totalTokens":202}}'
+  recorded_at: Mon, 16 Mar 2026 19:14:54 GMT
 recorded_with: VCR 6.4.0

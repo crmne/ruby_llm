@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Expires:
-      - Mon, 01 Jan 1990 00:00:00 GMT
-      Pragma:
-      - no-cache
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
       Date:
-      - Tue, 10 Feb 2026 09:30:14 GMT
+      - Mon, 16 Mar 2026 19:19:02 GMT
+      Pragma:
+      - no-cache
+      Expires:
+      - Mon, 01 Jan 1990 00:00:00 GMT
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email openid",
+          "scope": "https://www.googleapis.com/auth/sqlservice.login openid https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+  recorded_at: Mon, 16 Mar 2026 19:19:02 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -71,7 +71,7 @@ http_interactions:
       User-Agent:
       - Faraday v2.14.1
       Authorization:
-      - Bearer <GOOGLE_BEARER_TOKEN>
+      - Bearer <AUTH_TOKEN>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -90,7 +90,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Tue, 10 Feb 2026 09:30:16 GMT
+      - Mon, 16 Mar 2026 19:19:04 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -117,23 +117,23 @@ http_interactions:
                       "name": "object_params",
                       "args": {
                         "window": {
-                          "end": "2025-01-02",
-                          "start": "2025-01-01"
+                          "start": "2025-01-01",
+                          "end": "2025-01-02"
                         }
                       }
                     },
-                    "thoughtSignature": "CoIDAY89a18kkX2KYQnK75aggCGnipvLYydnv5ETmOoCgKAo3H/zEXeaRtsvTDVqtbyxiMkrm8USzz1pdLbxe8/eNKApATvT+JLr5NRv3NaUtk0khFI4ZTYZSKoHhe7qjpncU+wINcIl2AIoduXHw4EOg8mF76s+dUXJQ11d4h8JSl5khl/TN3XGgjpzoLVGiyd9OD9Ws/TYl2NtvC6VCqb9goITu01kkjh4/dy5QOL6PPLY4pYqkuHeY1529cBET0BoSiRuPFZy8++ElK3VpqXG4ymJQp0SSUniJpeTKhx9Blb0gMxFIktv03PI6AB3hSF6oRKgtVyxF04XPkROFen4XHBv1Dpr5zHrCfLfmur5guTeOS7wnxo9svEEUP75Dgki1yMpf9475JuWhVHlv6SfF1vxgChn/OZfzDQoBdBMKHsmMlhlptEo6U3IKzK9/6TBmQPqdsy57gszpxroeCQHfTrt47poTb9JVmq9iOsyHWFwNQaQF0fKzah2PR6eVjFp1OM="
+                    "thoughtSignature": "CrEDAY89a1+eb55RnNT0GxQco2A2pWHzpnWA34A8TQe/uWMqTs940phO3UNjpmVZzM/U8e5b5d2OOHQW0N2kDxOavqI/sDoEeXSXqGJ1SOjmsuKk5vA+KRMPXBa7JsXSrgC+5NU3yuf7VomhDUQCxHrqjz7wF5e570r9Ajt6M6NSaB220E2AO76Kx7yDeM6ATPPASMwzDKyOIU6LLpUoSnkUg8OdUkSxE3nBpsdkWqBjLbpQUYalEQyLH4izgAxFgLx85Y5pauJiN+l/yJtYUv2McMH/UUtCew5nkgaxZeE58F4feWyBjYlXgJ2fJ6wpRPDb1V0TGHMZYXVnUlSkKHplzmXEp23JbK1Q+uKlXxfqzr9lNwCV3gFjsiOXJl+TSLjUoq9Nfhbftk+MlYQuUr5g6iOiLi63nwJLIkKeKmOtA/lUBaAx1MWqAdtX6S43Nb3NV5UJWKePH6eY5UJb06xMQ7RajnBLsMOBqilHYV8TtfxRbq6SQkkI6sfXVYbkqK4m1NYICnbL0TkMTrkCY7gL1SfdilSX0DNgsjAvBpttXlisbnVNZUVnuusNVIk9IIIi/g=="
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.48641806382399339
+              "avgLogprobs": -0.29282942185035121
             }
           ],
           "usageMetadata": {
             "promptTokenCount": 63,
             "candidatesTokenCount": 26,
-            "totalTokenCount": 198,
+            "totalTokenCount": 209,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -147,11 +147,11 @@ http_interactions:
                 "tokenCount": 26
               }
             ],
-            "thoughtsTokenCount": 109
+            "thoughtsTokenCount": 120
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-02-10T09:30:14.939683Z",
-          "responseId": "pvqKaaOtOY_Ek7QPvsCAmQI"
+          "createTime": "2026-03-16T19:19:02.460088Z",
+          "responseId": "ple4abiKHPygz_IPiM7loQg"
         }
-  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+  recorded_at: Mon, 16 Mar 2026 19:19:04 GMT
 recorded_with: VCR 6.4.0

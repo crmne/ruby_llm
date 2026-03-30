@@ -11,7 +11,7 @@ http_interactions:
       User-Agent:
       - Faraday v2.14.1
       Authorization:
-      - Bearer <MISTRAL_API_KEY>
+      - Bearer <AUTH_TOKEN>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Feb 2026 09:17:47 GMT
+      - Mon, 16 Mar 2026 19:17:32 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -32,58 +32,50 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '019c46d7-ae44-7b30-bb4c-ad2a3348cdce'
+      - '019cf815-006b-7571-b205-34776369ccbb'
       X-Kong-Request-Id:
-      - '019c46d7-ae44-7b30-bb4c-ad2a3348cdce'
+      - '019cf815-006b-7571-b205-34776369ccbb'
       X-Ratelimit-Limit-Tokens-Minute:
-      - '75000'
+      - '120000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '71474'
-      X-Ratelimit-Limit-Tokens-Month:
-      - '50000000000'
-      X-Ratelimit-Remaining-Tokens-Month:
-      - '49999899846'
+      - '115213'
       X-Ratelimit-Tokens-Query-Cost:
-      - '174'
+      - '80'
       X-Ratelimit-Limit-Req-Minute:
-      - '100'
+      - '10'
       X-Ratelimit-Remaining-Req-Minute:
-      - '97'
+      - '7'
       X-Envoy-Upstream-Service-Time:
-      - '1179'
+      - '869'
+      Server:
+      - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '1180'
+      - '870'
       X-Kong-Proxy-Latency:
-      - '10'
-      Cf-Cache-Status:
-      - DYNAMIC
+      - '11'
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
-      Server:
-      - cloudflare
+      Cf-Cache-Status:
+      - DYNAMIC
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"0493bf7bc0c646e4b6bf1c64ef20c5de","created":1770715065,"model":"magistral-small-latest","usage":{"prompt_tokens":11,"total_tokens":174,"completion_tokens":163,"num_cached_tokens":64},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":[{"type":"thinking","thinking":[{"type":"text","text":"The
-        user is asking for the sum of 5 and 3. In mathematics, addition is the process
-        of combining two numbers to get their total. The plus sign (+) indicates that
-        we need to add the two numbers together.\n\nLet me break this down:\n- The
-        first number is 5.\n- The second number is 3.\n\nNow, adding these together:
-        5 + 3.\n\nI know that 5 + 3 is the same as 3 + 5 because addition is commutative.
-        Let me count up from 5: 5 + 1 = 6, 6 + 2 = 8.\n\nSo, 5 + 3 = 8.\n\nNow, to
-        present the answer clearly."}]},{"type":"text","text":"The answer to 5 + 3
-        is 8."}]}}]}'
-  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+      string: '{"id":"4930a106c2ae48e19f4cf9cf5ed4a0cd","created":1773688651,"model":"magistral-small-latest","usage":{"prompt_tokens":11,"total_tokens":80,"completion_tokens":69,"prompt_tokens_details":{"cached_tokens":0}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":[{"type":"thinking","thinking":[{"type":"text","text":"The
+        user is asking for the sum of 5 and 3. Both numbers are integers. The basic
+        arithmetic rule for addition is that you add the two numbers together. 5 plus
+        3 equals 8.\n\nNow, to present the answer clearly to the user."}]},{"type":"text","text":"The
+        sum of 5 and 3 is 8."}]}}]}'
+  recorded_at: Mon, 16 Mar 2026 19:17:32 GMT
 - request:
     method: post
     uri: https://api.mistral.ai/v1/chat/completions
@@ -91,19 +83,15 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"magistral-small-latest","messages":[{"role":"user","content":"What
         is 5 + 3?"},{"role":"assistant","content":[{"type":"thinking","thinking":[{"type":"text","text":"The
-        user is asking for the sum of 5 and 3. In mathematics, addition is the process
-        of combining two numbers to get their total. The plus sign (+) indicates that
-        we need to add the two numbers together.\n\nLet me break this down:\n- The
-        first number is 5.\n- The second number is 3.\n\nNow, adding these together:
-        5 + 3.\n\nI know that 5 + 3 is the same as 3 + 5 because addition is commutative.
-        Let me count up from 5: 5 + 1 = 6, 6 + 2 = 8.\n\nSo, 5 + 3 = 8.\n\nNow, to
-        present the answer clearly."}]},{"type":"text","text":"The answer to 5 + 3
-        is 8."}]},{"role":"user","content":"Now multiply that by 2"}],"stream":false}'
+        user is asking for the sum of 5 and 3. Both numbers are integers. The basic
+        arithmetic rule for addition is that you add the two numbers together. 5 plus
+        3 equals 8.\n\nNow, to present the answer clearly to the user."}]},{"type":"text","text":"The
+        sum of 5 and 3 is 8."}]},{"role":"user","content":"Now multiply that by 2"}],"stream":false}'
     headers:
       User-Agent:
       - Faraday v2.14.1
       Authorization:
-      - Bearer <MISTRAL_API_KEY>
+      - Bearer <AUTH_TOKEN>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -116,7 +104,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Feb 2026 09:17:48 GMT
+      - Mon, 16 Mar 2026 19:17:33 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -124,49 +112,49 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '019c46d7-b479-79c1-a9c7-e8ca6b451904'
+      - '019cf815-042f-7e99-bad8-ccf3057ca6a4'
       X-Kong-Request-Id:
-      - '019c46d7-b479-79c1-a9c7-e8ca6b451904'
+      - '019cf815-042f-7e99-bad8-ccf3057ca6a4'
       X-Ratelimit-Limit-Tokens-Minute:
-      - '75000'
+      - '120000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '71173'
-      X-Ratelimit-Limit-Tokens-Month:
-      - '50000000000'
-      X-Ratelimit-Remaining-Tokens-Month:
-      - '49999899545'
+      - '115028'
       X-Ratelimit-Tokens-Query-Cost:
-      - '301'
+      - '185'
       X-Ratelimit-Limit-Req-Minute:
-      - '100'
+      - '10'
       X-Ratelimit-Remaining-Req-Minute:
-      - '96'
+      - '7'
       X-Envoy-Upstream-Service-Time:
-      - '726'
+      - '1003'
+      Server:
+      - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '727'
+      - '1004'
       X-Kong-Proxy-Latency:
-      - '9'
-      Cf-Cache-Status:
-      - DYNAMIC
+      - '11'
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
-      Server:
-      - cloudflare
+      Cf-Cache-Status:
+      - DYNAMIC
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        eyJpZCI6ImExNGYxZWFhMTJhMDRkNzc5OGQxZTA4YjRlODNmZmNiIiwiY3JlYXRlZCI6MTc3MDcxNTA2NywibW9kZWwiOiJtYWdpc3RyYWwtc21hbGwtbGF0ZXN0IiwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6MTgyLCJ0b3RhbF90b2tlbnMiOjMwMSwiY29tcGxldGlvbl90b2tlbnMiOjExOSwibnVtX2NhY2hlZF90b2tlbnMiOjI1Nn0sIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNob2ljZXMiOlt7ImluZGV4IjowLCJmaW5pc2hfcmVhc29uIjoic3RvcCIsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsInRvb2xfY2FsbHMiOm51bGwsImNvbnRlbnQiOlt7InR5cGUiOiJ0aGlua2luZyIsInRoaW5raW5nIjpbeyJ0eXBlIjoidGV4dCIsInRleHQiOiJPa2F5LCB0aGUgdXNlciBoYXMgYXNrZWQgdG8gbXVsdGlwbHkgdGhlIHByZXZpb3VzIHJlc3VsdCAod2hpY2ggd2FzIDgpIGJ5IDIuXG5cbkZpcnN0LCBsZXQncyByZWNhbGwgdGhlIHByZXZpb3VzIHJlc3VsdDogOC5cblxuTm93LCB3ZSBuZWVkIHRvIG11bHRpcGx5IDggYnkgMi4gTXVsdGlwbGljYXRpb24gaXMgcmVwZWF0ZWQgYWRkaXRpb24uIFNvLCA4IG11bHRpcGxpZWQgYnkgMiBtZWFucyBhZGRpbmcgOCB0byBpdHNlbGYgb25jZSBtb3JlLlxuXG5MZXQgbWUgY2FsY3VsYXRlIHRoYXQ6XG44ICsgOCA9IDE2XG5cblNvLCA4IMOXIDIgPSAxNi5cblxuTm93LCB0byBwcmVzZW50IHRoZSBhbnN3ZXIgY2xlYXJseS4ifV19LHsidHlwZSI6InRleHQiLCJ0ZXh0IjoiVGhlIGFuc3dlciB0byBtdWx0aXBseWluZyA4IGJ5IDIgaXMgMTYuIn1dfX1dfQ==
-  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+      string: '{"id":"81c14a5f20fe4aa4ac19e9087dfa990b","created":1773688652,"model":"magistral-small-latest","usage":{"prompt_tokens":88,"total_tokens":185,"completion_tokens":97,"prompt_tokens_details":{"cached_tokens":69}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":[{"type":"thinking","thinking":[{"type":"text","text":"Okay,
+        the user has asked to multiply the previous result (which was 8) by 2. Let''s
+        do that step by step.\n\nFirst, recall the previous result was 8. Now, we
+        need to multiply 8 by 2.\n\n8 times 2 is 16.\n\nSo, the answer is 16.\n\nNow,
+        to present the answer clearly to the user."}]},{"type":"text","text":"The
+        result of multiplying 8 by 2 is 16."}]}}]}'
+  recorded_at: Mon, 16 Mar 2026 19:17:33 GMT
 recorded_with: VCR 6.4.0

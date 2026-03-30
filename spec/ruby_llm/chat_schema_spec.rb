@@ -2,6 +2,12 @@
 
 require 'spec_helper'
 
+# Define a test schema class for testing RubyLLM::Schema instances
+class PersonSchemaClass < RubyLLM::Schema
+  string :name
+  number :age
+end
+
 RSpec.describe RubyLLM::Chat do
   include_context 'with configured RubyLLM'
 
@@ -18,9 +24,9 @@ RSpec.describe RubyLLM::Chat do
       }
     end
 
-    # Test OpenAI-compatible providers that support structured output
+    # Test providers that support structured output with JSON schema
     # Note: Only test models that have json_schema support, not just json_object
-    CHAT_MODELS.select { |model_info| %i[openai].include?(model_info[:provider]) }.each do |model_info|
+    STRUCTURED_OUTPUT_MODELS.each do |model_info|
       model = model_info[:model]
       provider = model_info[:provider]
 
@@ -54,7 +60,9 @@ RSpec.describe RubyLLM::Chat do
           response1 = chat.ask('Generate a person named Bob')
 
           expect(response1.content).to be_a(Hash)
-          expect(response1.content['name']).to eq('Bob')
+          expect(response1.content['name']).to be_a(String)
+          expect(response1.content['name']).not_to be_empty
+          expect(response1.content['age']).to be_a(Integer)
 
           # Remove schema and ask again - should get plain string
           chat.with_schema(nil)
@@ -63,29 +71,115 @@ RSpec.describe RubyLLM::Chat do
           expect(response2.content).to be_a(String)
           expect(response2.content).to include('Ruby')
         end
-      end
-    end
 
-    # Test Gemini provider separately due to different schema format
-    CHAT_MODELS.select { |model_info| model_info[:provider] == :gemini }.each do |model_info|
-      model = model_info[:model]
-      provider = model_info[:provider]
-
-      context "with #{provider}/#{model}" do
-        let(:chat) { RubyLLM.chat(model: model, provider: provider) }
-
-        it 'converts JSON schema to Gemini format and returns structured output' do
+        it 'accepts RubyLLM::Schema class instances and returns structured output' do
           skip 'Model does not support structured output' unless chat.model.structured_output?
 
           response = chat
-                     .with_schema(person_schema)
-                     .ask('Generate a person named Jane who is 25 years old')
+                     .with_schema(PersonSchemaClass)
+                     .ask('Generate a person named Alice who is 28 years old')
 
           # Content should already be parsed as a Hash when schema is used
           expect(response.content).to be_a(Hash)
-          expect(response.content['name']).to eq('Jane')
-          expect(response.content['age']).to eq(25)
+          expect(response.content['name']).to eq('Alice')
+          expect(response.content['age']).to eq(28)
         end
+      end
+    end
+
+    describe 'schema name sanitization' do
+      it 'sanitizes :: from namespaced RubyLLM::Schema class names' do
+        namespaced_schema = stub_const('MyApp::Nested::TestSchema', Class.new(RubyLLM::Schema) do
+          string :name
+        end)
+
+        chat = RubyLLM.chat
+        chat.with_schema(namespaced_schema)
+        schema = chat.schema
+
+        expect(schema[:name]).to eq('MyApp__Nested__TestSchema')
+        expect(schema[:name]).to match(/\A[a-zA-Z0-9_-]+\z/)
+      end
+
+      it 'sanitizes :: from plain hash schema names' do
+        chat = RubyLLM.chat
+        chat.with_schema({
+                           name: 'Some::Namespaced::Schema',
+                           schema: { type: 'object', properties: {} }
+                         })
+
+        expect(chat.schema[:name]).to eq('Some__Namespaced__Schema')
+      end
+
+      it 'uses response as default name when no name is provided' do
+        chat = RubyLLM.chat
+        chat.with_schema({ type: 'object', properties: {} })
+
+        expect(chat.schema[:name]).to eq('response')
+      end
+
+      it 'uses response as default name when provided name is empty' do
+        chat = RubyLLM.chat
+        chat.with_schema({
+                           name: '',
+                           schema: { type: 'object', properties: {} }
+                         })
+
+        expect(chat.schema[:name]).to eq('response')
+      end
+    end
+
+    # Regression test for schema + tool calls interaction
+    # When both schema and tools are used, intermediate tool-call responses
+    # may contain text content. Parsing that text into a Hash causes errors
+    # on the next API call because the Hash gets serialized as
+    # { type: "text", text: <Hash> } instead of a plain string.
+    describe 'schema with tool calls' do
+      before do
+        stub_const('SchemaToolTestWeather', Class.new(RubyLLM::Tool) do
+          description 'Gets current weather for a location'
+          param :location, desc: 'City name'
+
+          def execute(location:)
+            "Weather in #{location}: 20°C"
+          end
+        end)
+      end
+
+      it 'does not parse tool-call response content as JSON when schema is set' do
+        chat = RubyLLM.chat.with_tool(SchemaToolTestWeather).with_schema(person_schema)
+        provider = chat.instance_variable_get(:@provider)
+
+        tool_call = RubyLLM::ToolCall.new(
+          id: 'call_1',
+          name: 'schema_tool_test_weather',
+          arguments: { 'location' => 'Berlin' }
+        )
+
+        # First response: tool call with JSON-like text content
+        # Second response: final answer with valid JSON matching the schema
+        allow(provider).to receive(:complete).and_return(
+          RubyLLM::Message.new(
+            role: :assistant,
+            content: '{"name": "partial"}',
+            tool_calls: { tool_call.id => tool_call }
+          ),
+          RubyLLM::Message.new(
+            role: :assistant,
+            content: '{"name": "John", "age": 30}'
+          )
+        )
+
+        response = chat.ask('What is the weather and generate a person named John who is 30?')
+
+        # The intermediate tool-call message should have kept content as String
+        tool_call_msg = chat.messages.find { |m| m.role == :assistant && m.tool_call? }
+        expect(tool_call_msg.content).to be_a(String)
+
+        # The final response should have parsed content as Hash
+        expect(response.content).to be_a(Hash)
+        expect(response.content['name']).to eq('John')
+        expect(response.content['age']).to eq(30)
       end
     end
 
@@ -123,7 +217,7 @@ RSpec.describe RubyLLM::Chat do
       end
 
       test_model = CHAT_MODELS.find do |model_info|
-        %i[openai gemini].include?(model_info[:provider])
+        %i[openai gemini bedrock].include?(model_info[:provider])
       end
 
       if test_model

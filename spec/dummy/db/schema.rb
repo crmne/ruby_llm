@@ -119,7 +119,7 @@ ActiveRecord::Schema[7.1].define(version: 20_251_021_170_000) do
     t.integer 'message_id'
     t.string 'tool_call_id'
     t.string 'name'
-    t.string 'thought_signature'
+    t.text 'thought_signature'
     t.json 'arguments'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false

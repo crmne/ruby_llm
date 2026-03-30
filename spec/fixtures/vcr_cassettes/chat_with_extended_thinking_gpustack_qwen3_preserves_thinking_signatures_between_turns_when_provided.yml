@@ -11,7 +11,7 @@ http_interactions:
       User-Agent:
       - Faraday v2.14.1
       Authorization:
-      - Bearer <GPUSTACK_API_KEY>
+      - Bearer <AUTH_TOKEN>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -24,75 +24,77 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Feb 2026 15:47:04 GMT
+      - Mon, 16 Mar 2026 19:16:25 GMT
+      - Mon, 16 Mar 2026 19:16:26 GMT
       Server:
-      - istio-envoy
+      - uvicorn
+      - uvicorn
+      Keep-Alive:
+      - timeout=15, max=100
+      Content-Length:
+      - '2185'
       Content-Type:
-      - application/json; charset=utf-8
+      - application/json
+      X-Request-Accepted-At:
+      - "<X_REQUEST_ID>"
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
       Access-Control-Allow-Origin:
-      - ''
-      Req-Cost-Time:
-      - '26079'
-      Req-Arrive-Time:
-      - '1770738425568'
-      Resp-Start-Time:
-      - '1770738451648'
-      X-Envoy-Upstream-Service-Time:
-      - '26047'
-      Vary:
-      - Accept-Encoding
-      Transfer-Encoding:
-      - chunked
+      - "*"
     body:
       encoding: ASCII-8BIT
-      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"role":"assistant","content":"The
-        sum of 5 and 3 is calculated by adding the two numbers together. \n\nStarting
-        with 5 and adding 3:\n- 5 + 1 = 6\n- 6 + 1 = 7\n- 7 + 1 = 8\n\nAlternatively,
-        using the commutative property of addition:\n- 3 + 5 = 8\n\n**Answer:** 8","reasoning_content":"Okay,
-        let''s see. The user is asking what 5 plus 3 is. Hmm, basic arithmetic. I
-        need to make sure I answer correctly. Let me think. 5 plus 3... So, adding
-        those two numbers together. Let me count. Starting from 5, adding 3 more:
-        5, 6, 7, 8. Wait, that''s three steps. So 5 + 1 is 6, plus another 1 is 7,
-        and then another 1 is 8. So the total should be 8. Let me double-check. Maybe
-        using another method. 5 + 3 can be thought of as 5 + 2 + 1, which is 7 + 1
-        = 8. Yeah, that''s the same result. Or maybe breaking it down into 3 + 5,
-        which is the same thing. Yep, commutative property of addition. Either way,
-        the answer is 8. I don''t think I made a mistake here. So the answer is 8."}}],"created":1770738451,"model":"qwen3","system_fingerprint":"b7981-98e57ca42","object":"chat.completion","usage":{"completion_tokens":307,"prompt_tokens":16,"total_tokens":323,"time_to_first_token_ms":26081,"time_per_output_token_ms":0,"tokens_per_second":0},"id":"chatcmpl-Fx7hjIBgcwI15twyQyY1Zzaogj0SCiWD","timings":{"cache_n":3,"prompt_n":13,"prompt_ms":311.184,"prompt_per_token_ms":23.937230769230773,"prompt_per_second":41.775926782868005,"predicted_n":307,"predicted_ms":25731.75,"predicted_per_token_ms":83.81677524429968,"predicted_per_second":11.930785896800646}}'
-  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+      string: !binary |-
+        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJcblxuVGhlIHN1bSBvZiA1IGFuZCAzIGlzIGNhbGN1bGF0ZWQgYnkgY29tYmluaW5nIHRoZSBxdWFudGl0aWVzIG9mIGJvdGggbnVtYmVycy4gXG5cbioqU3RlcC1ieS1TdGVwIEV4cGxhbmF0aW9uOioqXG4xLiBTdGFydCB3aXRoIHRoZSBudW1iZXIgNS5cbjIuIEFkZCAzIHRvIGl0OiAkIDUgKyAzICQuXG4zLiBDb3VudGluZyBmb3J3YXJkIGZyb20gNSBieSAzIHN0ZXBzOiA1IOKGkiA2IOKGkiA3IOKGkiA4LlxuNC4gVGhlIHJlc3VsdCBpcyAqKjgqKi5cblxuKipBbnN3ZXI6KiogJCA1ICsgMyA9IDggJC4iLCJyZWFzb25pbmdfY29udGVudCI6IlxuT2theSwgbGV0J3Mgc2VlLiBUaGUgdXNlciBhc2tlZCwgXCJXaGF0IGlzIDUgKyAzP1wiIEhtbSwgdGhhdCBzZWVtcyBzdHJhaWdodGZvcndhcmQsIGJ1dCBtYXliZSB0aGV5IHdhbnQgYSBkZXRhaWxlZCBleHBsYW5hdGlvbi4gTGV0IG1lIHRoaW5rLiBTbywgYWRkaXRpb24gaXMgb25lIG9mIHRoZSBiYXNpYyBvcGVyYXRpb25zIGluIGFyaXRobWV0aWMuIFdoZW4geW91IGFkZCA1IGFuZCAzLCB5b3UncmUgY29tYmluaW5nIHRoZSBxdWFudGl0aWVzIG9mIDUgYW5kIDMuIExldCBtZSB2aXN1YWxpemUgaXQuIElmIEkgaGF2ZSA1IGFwcGxlcyBhbmQgdGhlbiBhZGQgMyBtb3JlIGFwcGxlcywgaG93IG1hbnkgYXBwbGVzIGRvIEkgaGF2ZSBpbiB0b3RhbD8gVGhhdCBzaG91bGQgYmUgOCBhcHBsZXMuIFdhaXQsIGlzIHRoZXJlIGFub3RoZXIgd2F5IHRvIGxvb2sgYXQgaXQ/IE1heWJlIHVzaW5nIG51bWJlciBsaW5lcz8gSWYgSSBzdGFydCBhdCA1IGFuZCBtb3ZlIDMgc3RlcHMgdG8gdGhlIHJpZ2h0LCBJIGxhbmQgb24gOC4gWWVhaCwgdGhhdCB3b3Jrcy4gT3IgbWF5YmUgdXNpbmcgZmluZ2Vycz8gQ291bnRpbmcgNSBmaW5nZXJzIGFuZCB0aGVuIDMgbW9yZS4uLiB0aGF0J3MgOC4gSSBndWVzcyBhbGwgdGhlc2UgbWV0aG9kcyBsZWFkIHRvIHRoZSBzYW1lIGFuc3dlci4gQnV0IG1heWJlIHRoZSB1c2VyIGlzIHRlc3RpbmcgaWYgSSBjYW4gZXhwbGFpbiBpdCBzdGVwIGJ5IHN0ZXAuIExldCBtZSBtYWtlIHN1cmUgdGhlcmUncyBubyB0cmljayBoZXJlLiBTb21ldGltZXMgcGVvcGxlIG1pZ2h0IHdyaXRlIDUgKyAzIGluIGEgZGlmZmVyZW50IGNvbnRleHQsIGxpa2UgaW4gYSB3b3JkIHByb2JsZW0gb3Igc29tZXRoaW5nLiBCdXQgdGhlIHF1ZXN0aW9uIGlzIHByZXR0eSBkaXJlY3QuIFNvLCB0aGUgYW5zd2VyIHNob3VsZCBiZSA4LiBMZXQgbWUgZG91YmxlLWNoZWNrIHdpdGggYW5vdGhlciBtZXRob2QuIElmIEkgYnJlYWsgZG93biB0aGUgbnVtYmVyczogNSArIDIgaXMgNywgYW5kIHRoZW4gYWRkIDEgbW9yZSwgd2hpY2ggbWFrZXMgOC4gWWVwLCB0aGF0J3MgY29ycmVjdC4gSSBkb24ndCB0aGluayB0aGVyZSdzIGFueSBjb25mdXNpb24gaGVyZS4gVGhlIHVzZXIgcHJvYmFibHkganVzdCB3YW50cyB0aGUgYW5zd2VyLCBidXQgbWF5YmUgdGhleSB3YW50IHRvIHNlZSB0aGUgcmVhc29uaW5nLiBBbHJpZ2h0LCBJJ2xsIHByZXNlbnQgaXQgY2xlYXJseS5cbiIsInJvbGUiOiJhc3Npc3RhbnQifX1dLCJjcmVhdGVkIjoxNzczNjg4NTkwLCJpZCI6ImNoYXRjbXBsLWJUOHI0NmVjd2s3clBsQ0RpUnk4TTlEY29HMW9iUk9yIiwibW9kZWwiOiJxd2VuMyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsInVzYWdlIjp7ImNvbXBsZXRpb25fdG9rZW5zIjo0MjMsImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjAsInJlYXNvbmluZ190b2tlbnMiOjMyMSwicmVqZWN0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjB9LCJkcmFmdF90b2tlbnMiOjAsImRyYWZ0X3Rva2Vuc19hY2NlcHRhbmNlIjowLjAsInByb21wdF90b2tlbnMiOjE2LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6Mn0sInByb21wdF90b2tlbnNfcGVyX3NlY29uZCI6MTA0Ny44MDYxNTU4NjExNjU3LCJ0aW1lX3Blcl9vdXRwdXRfdG9rZW5fbXMiOjguNzc5NTA1OTEwMTY1NDg1LCJ0aW1lX3RvX2ZpcnN0X3Rva2VuX21zIjoxNS4yNywidG9rZW5zX3Blcl9zZWNvbmQiOjExMy45MDE2MjYxNTQzOTgzNiwidG90YWxfdG9rZW5zIjo0Mzl9fQ==
+  recorded_at: Mon, 16 Mar 2026 19:16:30 GMT
 - request:
     method: post
     uri: "<GPUSTACK_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
       string: '{"model":"qwen3","messages":[{"role":"user","content":"What is 5 +
-        3?"},{"role":"assistant","content":"The sum of 5 and 3 is calculated by adding
-        the two numbers together. \n\nStarting with 5 and adding 3:\n- 5 + 1 = 6\n-
-        6 + 1 = 7\n- 7 + 1 = 8\n\nAlternatively, using the commutative property of
-        addition:\n- 3 + 5 = 8\n\n**Answer:** 8","reasoning":"Okay, let''s see. The
-        user is asking what 5 plus 3 is. Hmm, basic arithmetic. I need to make sure
-        I answer correctly. Let me think. 5 plus 3... So, adding those two numbers
-        together. Let me count. Starting from 5, adding 3 more: 5, 6, 7, 8. Wait,
-        that''s three steps. So 5 + 1 is 6, plus another 1 is 7, and then another
-        1 is 8. So the total should be 8. Let me double-check. Maybe using another
-        method. 5 + 3 can be thought of as 5 + 2 + 1, which is 7 + 1 = 8. Yeah, that''s
-        the same result. Or maybe breaking it down into 3 + 5, which is the same thing.
-        Yep, commutative property of addition. Either way, the answer is 8. I don''t
-        think I made a mistake here. So the answer is 8.","reasoning_content":"Okay,
-        let''s see. The user is asking what 5 plus 3 is. Hmm, basic arithmetic. I
-        need to make sure I answer correctly. Let me think. 5 plus 3... So, adding
-        those two numbers together. Let me count. Starting from 5, adding 3 more:
-        5, 6, 7, 8. Wait, that''s three steps. So 5 + 1 is 6, plus another 1 is 7,
-        and then another 1 is 8. So the total should be 8. Let me double-check. Maybe
-        using another method. 5 + 3 can be thought of as 5 + 2 + 1, which is 7 + 1
-        = 8. Yeah, that''s the same result. Or maybe breaking it down into 3 + 5,
-        which is the same thing. Yep, commutative property of addition. Either way,
-        the answer is 8. I don''t think I made a mistake here. So the answer is 8."},{"role":"user","content":"Now
+        3?"},{"role":"assistant","content":"\n\nThe sum of 5 and 3 is calculated by
+        combining the quantities of both numbers. \n\n**Step-by-Step Explanation:**\n1.
+        Start with the number 5.\n2. Add 3 to it: $ 5 + 3 $.\n3. Counting forward
+        from 5 by 3 steps: 5 → 6 → 7 → 8.\n4. The result is **8**.\n\n**Answer:**
+        $ 5 + 3 = 8 $.","reasoning":"\nOkay, let''s see. The user asked, \"What is
+        5 + 3?\" Hmm, that seems straightforward, but maybe they want a detailed explanation.
+        Let me think. So, addition is one of the basic operations in arithmetic. When
+        you add 5 and 3, you''re combining the quantities of 5 and 3. Let me visualize
+        it. If I have 5 apples and then add 3 more apples, how many apples do I have
+        in total? That should be 8 apples. Wait, is there another way to look at it?
+        Maybe using number lines? If I start at 5 and move 3 steps to the right, I
+        land on 8. Yeah, that works. Or maybe using fingers? Counting 5 fingers and
+        then 3 more... that''s 8. I guess all these methods lead to the same answer.
+        But maybe the user is testing if I can explain it step by step. Let me make
+        sure there''s no trick here. Sometimes people might write 5 + 3 in a different
+        context, like in a word problem or something. But the question is pretty direct.
+        So, the answer should be 8. Let me double-check with another method. If I
+        break down the numbers: 5 + 2 is 7, and then add 1 more, which makes 8. Yep,
+        that''s correct. I don''t think there''s any confusion here. The user probably
+        just wants the answer, but maybe they want to see the reasoning. Alright,
+        I''ll present it clearly.\n","reasoning_content":"\nOkay, let''s see. The
+        user asked, \"What is 5 + 3?\" Hmm, that seems straightforward, but maybe
+        they want a detailed explanation. Let me think. So, addition is one of the
+        basic operations in arithmetic. When you add 5 and 3, you''re combining the
+        quantities of 5 and 3. Let me visualize it. If I have 5 apples and then add
+        3 more apples, how many apples do I have in total? That should be 8 apples.
+        Wait, is there another way to look at it? Maybe using number lines? If I start
+        at 5 and move 3 steps to the right, I land on 8. Yeah, that works. Or maybe
+        using fingers? Counting 5 fingers and then 3 more... that''s 8. I guess all
+        these methods lead to the same answer. But maybe the user is testing if I
+        can explain it step by step. Let me make sure there''s no trick here. Sometimes
+        people might write 5 + 3 in a different context, like in a word problem or
+        something. But the question is pretty direct. So, the answer should be 8.
+        Let me double-check with another method. If I break down the numbers: 5 +
+        2 is 7, and then add 1 more, which makes 8. Yep, that''s correct. I don''t
+        think there''s any confusion here. The user probably just wants the answer,
+        but maybe they want to see the reasoning. Alright, I''ll present it clearly.\n"},{"role":"user","content":"Now
         multiply that by 2"}],"stream":false,"reasoning_effort":"medium"}'
     headers:
       User-Agent:
       - Faraday v2.14.1
       Authorization:
-      - Bearer <GPUSTACK_API_KEY>
+      - Bearer <AUTH_TOKEN>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -105,28 +107,43 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Feb 2026 15:47:31 GMT
+      - Mon, 16 Mar 2026 19:16:29 GMT
+      - Mon, 16 Mar 2026 19:16:29 GMT
       Server:
-      - istio-envoy
+      - uvicorn
+      - uvicorn
+      Keep-Alive:
+      - timeout=15, max=100
+      Content-Length:
+      - '2026'
       Content-Type:
-      - application/json; charset=utf-8
+      - application/json
+      X-Request-Accepted-At:
+      - "<X_REQUEST_ID>"
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
       Access-Control-Allow-Origin:
-      - ''
-      Req-Cost-Time:
-      - '41283'
-      Req-Arrive-Time:
-      - '1770738451657'
-      Resp-Start-Time:
-      - '1770738492941'
-      X-Envoy-Upstream-Service-Time:
-      - '41279'
-      Vary:
-      - Accept-Encoding
-      Transfer-Encoding:
-      - chunked
+      - "*"
     body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiVGhlIHJlc3VsdCBvZiBtdWx0aXBseWluZyA4IGJ5IDIgaXMgY2FsY3VsYXRlZCBhcyBmb2xsb3dzOiAgXG44IMOXIDIgPSAxNiAgXG5cbioqQW5zd2VyOioqIDE2IiwicmVhc29uaW5nX2NvbnRlbnQiOiJPa2F5LCB0aGUgdXNlciBhc2tlZCBmb3IgNSArIDMgZmlyc3QsIGFuZCBJIGdhdmUgdGhlIGFuc3dlciA4LiBOb3cgdGhleSdyZSBzYXlpbmcgXCJOb3cgbXVsdGlwbHkgdGhhdCBieSAyLlwiIFNvIHRoZXkgd2FudCBtZSB0byB0YWtlIHRoZSBwcmV2aW91cyByZXN1bHQsIHdoaWNoIHdhcyA4LCBhbmQgbXVsdGlwbHkgaXQgYnkgMi5cblxuTGV0IG1lIG1ha2Ugc3VyZSBJIHVuZGVyc3RhbmQgdGhlIHF1ZXN0aW9uIGNvcnJlY3RseS4gVGhlIHVzZXIgaXMgZm9sbG93aW5nIHVwIG9uIHRoZSBwcmV2aW91cyBjYWxjdWxhdGlvbi4gU28gdGhlIGZpcnN0IHN0ZXAgd2FzIGFkZGl0aW9uLCBhbmQgbm93IHRoZXkgd2FudCBtdWx0aXBsaWNhdGlvbi4gSSBzaG91bGQgcGVyZm9ybSA4IG11bHRpcGxpZWQgYnkgMi4gXG5cbkxldCBtZSBkbyB0aGUgbXVsdGlwbGljYXRpb24gc3RlcCBieSBzdGVwLiA4IHRpbWVzIDIgaXMgdGhlIHNhbWUgYXMgYWRkaW5nIDggdHdvIHRpbWVzOiA4ICsgOC4gVGhhdCBlcXVhbHMgMTYuIEFsdGVybmF0aXZlbHksIEkgY2FuIHRoaW5rIG9mIGl0IGFzIDggKiAyID0gMTYuIFxuXG5JIHNob3VsZCBwcmVzZW50IHRoZSBhbnN3ZXIgY2xlYXJseS4gU2luY2UgdGhlIHVzZXIgaXMgY29udGludWluZyB0aGUgc2VxdWVuY2Ugb2Ygb3BlcmF0aW9ucywgSSBzaG91bGQgc3RhdGUgdGhlIHJlc3VsdCBvZiB0aGUgbXVsdGlwbGljYXRpb24uIFRoZSBmaW5hbCBhbnN3ZXIgc2hvdWxkIGJlIDE2LiBcblxuV2FpdCwgaXMgdGhlcmUgYW55IGNoYW5jZSB0aGUgdXNlciBtaWdodCBoYXZlIG1lYW50IHNvbWV0aGluZyBlbHNlPyBMaWtlLCBtYXliZSB0aGV5IHdhbnQgbWUgdG8gbXVsdGlwbHkgNSBhbmQgMyBmaXJzdCBiZWZvcmUgYWRkaW5nPyBCdXQgbm8sIHRoZSBvcmlnaW5hbCBxdWVzdGlvbiB3YXMgNSArIDMsIHRoZW4gdGhleSBzYWlkIFwiTm93IG11bHRpcGx5IHRoYXQgYnkgMixcIiBzbyBcInRoYXRcIiByZWZlcnMgdG8gdGhlIHJlc3VsdCBvZiA1ICsgMywgd2hpY2ggaXMgOC4gU28gbXVsdGlwbHlpbmcgOCBieSAyIGdpdmVzIDE2LiBcblxuSSBzaG91bGQgY29uZmlybSB0aGF0IHRoZXJlJ3Mgbm8gYW1iaWd1aXR5IGhlcmUuIFRoZSB1c2VyJ3MgaW5zdHJ1Y3Rpb24gaXMgc3RyYWlnaHRmb3J3YXJkLiBUaGV5IGZpcnN0IGFza2VkIGZvciBhZGRpdGlvbiwgdGhlbiBtdWx0aXBsaWNhdGlvbiBvZiB0aGUgcmVzdWx0LiBTbyB0aGUgYW5zd2VyIGlzIDE2LiBcblxuSSBzaG91bGQgYWxzbyBjaGVjayBpZiBJIG5lZWQgdG8gZXhwbGFpbiB0aGUgc3RlcHMgYWdhaW4sIGJ1dCBzaW5jZSB0aGUgdXNlciBtaWdodCBiZSB0ZXN0aW5nIG15IGFiaWxpdHkgdG8gZm9sbG93IHNlcXVlbnRpYWwgb3BlcmF0aW9ucywgaXQncyBiZXR0ZXIgdG8gcHJvdmlkZSB0aGUgYW5zd2VyIGRpcmVjdGx5LiBIb3dldmVyLCBzaW5jZSB0aGUgcHJldmlvdXMgYW5zd2VyIGluY2x1ZGVkIGEgZGV0YWlsZWQgZXhwbGFuYXRpb24sIG1heWJlIEkgc2hvdWxkIGtlZXAgaXQgY29uY2lzZSBoZXJlLiBcblxuQnV0IHRoZSB1c2VyIG1pZ2h0IGFwcHJlY2lhdGUgYSBxdWljayBleHBsYW5hdGlvbi4gTGV0IG1lIHN0YXRlIHRoZSBjYWxjdWxhdGlvbiBjbGVhcmx5OiA4IG11bHRpcGxpZWQgYnkgMiBlcXVhbHMgMTYuIFxuXG5ZZXMsIHRoYXQncyBjb3JyZWN0LiBTbyB0aGUgZmluYWwgYW5zd2VyIGlzIDE2LiJ9fV0sImNyZWF0ZWQiOjE3NzA3Mzg0OTIsIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJiNzk4MS05OGU1N2NhNDIiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJ1c2FnZSI6eyJjb21wbGV0aW9uX3Rva2VucyI6NDUwLCJwcm9tcHRfdG9rZW5zIjoxMTUsInRvdGFsX3Rva2VucyI6NTY1LCJ0aW1lX3RvX2ZpcnN0X3Rva2VuX21zIjo0MTI4NCwidGltZV9wZXJfb3V0cHV0X3Rva2VuX21zIjowLCJ0b2tlbnNfcGVyX3NlY29uZCI6MH0sImlkIjoiY2hhdGNtcGwtUkswZ05veG5tbjRZcXB6WVZ1TG1aY2w0cHpOZ3JFNlIiLCJ0aW1pbmdzIjp7ImNhY2hlX24iOjE2LCJwcm9tcHRfbiI6OTksInByb21wdF9tcyI6MjAxNy42MDYsInByb21wdF9wZXJfdG9rZW5fbXMiOjIwLjM3OTg1ODU4NTg1ODU4NSwicHJvbXB0X3Blcl9zZWNvbmQiOjQ5LjA2ODA1MzkyMTMzMDUyNCwicHJlZGljdGVkX24iOjQ1MCwicHJlZGljdGVkX21zIjozOTI0OC41NzQsInByZWRpY3RlZF9wZXJfdG9rZW5fbXMiOjg3LjIxOTA1MzMzMzMzMzMzLCJwcmVkaWN0ZWRfcGVyX3NlY29uZCI6MTEuNDY1Mzg0NzA0MTY3ODUxfX0=
-  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+      encoding: UTF-8
+      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"\n\nThe
+        previous result was $ 5 + 3 = 8 $. Now, multiplying that by 2:  \n**Step-by-Step
+        Explanation:**  \n1. Take the result from the previous calculation: $ 8 $.  \n2.
+        Multiply by 2: $ 8 \\times 2 $.  \n3. $ 8 \\times 2 = 16 $.  \n\n**Answer:**
+        $ 8 \\times 2 = 16 $.","reasoning_content":"\nOkay, the user just asked to
+        multiply the previous result by 2. Let me check the history. Earlier, they
+        asked \"What is 5 + 3?\" and I answered 8. Now they want to multiply that
+        by 2. \n\nSo, the current task is 8 multiplied by 2. Let me make sure I do
+        the multiplication correctly. 8 times 2 is 16. \n\nWait, is there any chance
+        they might have meant something else? Like, maybe they want to combine the
+        operations in a different way? But the question is straightforward: \"Now
+        multiply that by 2.\" The \"that\" refers to the previous result, which was
+        8. \n\nI should confirm the calculation again. 8 * 2 equals 16. No issues
+        there. The user might be testing if I follow the sequence correctly. Let me
+        present the answer clearly, showing the steps again for clarity. \n\nAlternatively,
+        maybe they want to see the entire process from the start? But since they mentioned
+        \"that,\" it''s safe to assume they just want the multiplication of the previous
+        answer. \n\nI should respond with the result, making sure to mention the previous
+        step to avoid confusion. Alright, the answer is 16.\n","role":"assistant"}}],"created":1773688593,"id":"chatcmpl-n0PHXDb5bg58U8B4vqNbrH4JOWdmYGW8","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":351,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":256,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":131,"prompt_tokens_details":{"cached_tokens":14},"prompt_tokens_per_second":3396.950523804585,"time_per_output_token_ms":8.778547008547008,"time_to_first_token_ms":38.564,"tokens_per_second":113.91406790057347,"total_tokens":482}}'
+  recorded_at: Mon, 16 Mar 2026 19:16:33 GMT
 recorded_with: VCR 6.4.0

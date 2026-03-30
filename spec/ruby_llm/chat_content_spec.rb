@@ -86,6 +86,8 @@ RSpec.describe RubyLLM::Chat do # rubocop:disable RSpec/MultipleMemoizedHelpers
     model = VISION_MODELS.first[:model]
     provider = VISION_MODELS.first[:provider]
     it "return errors when content doesn't exist" do
+      stub_request(:get, bad_image_url).to_return(status: 404, body: 'Not Found')
+
       chat = RubyLLM.chat(model: model, provider: provider)
       expect do
         chat.ask('What do you see in this image?', with: bad_image_url)
@@ -268,16 +270,24 @@ RSpec.describe RubyLLM::Chat do # rubocop:disable RSpec/MultipleMemoizedHelpers
     end
 
     it 'handles File objects' do
-      file = File.open(text_path, 'r')
+      File.open(text_path, 'r') do |file|
+        attachment = RubyLLM::Attachment.new(file)
 
-      attachment = RubyLLM::Attachment.new(file)
+        expect(attachment.io_like?).to be true
+        expect(attachment.content).to be_present
+        expect(attachment.filename).to eq('ruby.txt')
+        expect(attachment.mime_type).to eq('text/plain')
+      end
+    end
 
-      expect(attachment.io_like?).to be true
-      expect(attachment.content).to be_present
-      expect(attachment.filename).to eq('ruby.txt')
-      expect(attachment.mime_type).to eq('text/plain')
+    it 'reads path attachments in binary mode' do
+      attachment = RubyLLM::Attachment.new(image_path)
 
-      file.close
+      allow(File).to receive(:binread).and_call_original
+
+      attachment.content
+
+      expect(File).to have_received(:binread).with(attachment.source)
     end
 
     it 'handles ActionDispatch::Http::UploadedFile' do

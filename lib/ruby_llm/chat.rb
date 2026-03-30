@@ -6,7 +6,7 @@ module RubyLLM
     include Enumerable
     include Fallback
 
-    attr_reader :model, :messages, :tools, :params, :headers, :schema
+    attr_reader :model, :messages, :tools, :tool_prefs, :params, :headers, :schema
 
     def initialize(model: nil, provider: nil, assume_model_exists: false, context: nil)
       if assume_model_exists && !provider
@@ -20,6 +20,7 @@ module RubyLLM
       @temperature = nil
       @messages = []
       @tools = {}
+      @tool_prefs = { choice: nil, calls: nil }
       @params = {}
       @headers = {}
       @schema = nil
@@ -53,15 +54,19 @@ module RubyLLM
       self
     end
 
-    def with_tool(tool)
-      tool_instance = tool.is_a?(Class) ? tool.new : tool
-      @tools[tool_instance.name.to_sym] = tool_instance
+    def with_tool(tool, choice: nil, calls: nil)
+      unless tool.nil?
+        tool_instance = tool.is_a?(Class) ? tool.new : tool
+        @tools[tool_instance.name.to_sym] = tool_instance
+      end
+      update_tool_options(choice:, calls:)
       self
     end
 
-    def with_tools(*tools, replace: false)
+    def with_tools(*tools, replace: false, choice: nil, calls: nil)
       @tools.clear if replace
       tools.compact.each { |tool| with_tool tool }
+      update_tool_options(choice:, calls:)
       self
     end
 
@@ -103,12 +108,9 @@ module RubyLLM
     def with_schema(schema)
       schema_instance = schema.is_a?(Class) ? schema.new : schema
 
-      # Accept both RubyLLM::Schema instances and plain JSON schemas
-      @schema = if schema_instance.respond_to?(:to_json_schema)
-                  schema_instance.to_json_schema[:schema]
-                else
-                  schema_instance
-                end
+      @schema = normalize_schema_payload(
+        schema_instance.respond_to?(:to_json_schema) ? schema_instance.to_json_schema : schema_instance
+      )
 
       self
     end
@@ -137,38 +139,10 @@ module RubyLLM
       messages.each(&)
     end
 
-    def complete(&) # rubocop:disable Metrics/PerceivedComplexity
+    def complete(&)
       with_fallback_protection do
-        response = @provider.complete(
-          messages,
-          tools: @tools,
-          temperature: @temperature,
-          model: @model,
-          params: @params,
-          headers: @headers,
-          schema: @schema,
-          thinking: @thinking,
-          &wrap_streaming_block(&)
-        )
-
-        @on[:new_message]&.call unless block_given?
-
-        if @schema && response.content.is_a?(String)
-          begin
-            response.content = JSON.parse(response.content)
-          rescue JSON::ParserError
-            # If parsing fails, keep content as string
-          end
-        end
-
-        add_message response
-        @on[:end_message]&.call(response)
-
-        if response.tool_call?
-          handle_tool_calls(response, &)
-        else
-          response
-        end
+        response = complete_with_provider(&)
+        finalize_completion(response, &)
       end
     end
 
@@ -187,6 +161,75 @@ module RubyLLM
     end
 
     private
+
+    def normalize_schema_payload(raw_schema)
+      return nil if raw_schema.nil?
+      return raw_schema unless raw_schema.is_a?(Hash)
+
+      schema = RubyLLM::Utils.deep_symbolize_keys(raw_schema)
+      schema_def = extract_schema_definition(schema)
+      strict = extract_schema_strict(schema, schema_def)
+      build_schema_payload(schema, schema_def, strict)
+    end
+
+    def extract_schema_definition(schema)
+      RubyLLM::Utils.deep_dup(schema[:schema] || schema)
+    end
+
+    def extract_schema_strict(schema, schema_def)
+      return schema[:strict] if schema.key?(:strict)
+      return schema_def.delete(:strict) if schema_def.is_a?(Hash)
+
+      nil
+    end
+
+    def build_schema_payload(schema, schema_def, strict)
+      {
+        name: sanitize_schema_name(schema[:name] || 'response'),
+        schema: schema_def,
+        strict: strict.nil? || strict,
+        description: schema[:description]
+      }.compact
+    end
+
+    def sanitize_schema_name(name)
+      sanitized = name.to_s.gsub(/[^a-zA-Z0-9_-]/, '_')
+      sanitized.empty? ? 'response' : sanitized
+    end
+
+    def complete_with_provider(&)
+      @provider.complete(
+        messages,
+        tools: @tools,
+        tool_prefs: @tool_prefs,
+        temperature: @temperature,
+        model: @model,
+        params: @params,
+        headers: @headers,
+        schema: @schema,
+        thinking: @thinking,
+        &wrap_streaming_block(&)
+      )
+    end
+
+    def finalize_completion(response, &)
+      @on[:new_message]&.call unless block_given?
+      normalize_schema_response(response)
+      add_message response
+      @on[:end_message]&.call(response)
+
+      response.tool_call? ? handle_tool_calls(response, &) : response
+    end
+
+    def normalize_schema_response(response)
+      return unless @schema && response.content.is_a?(String) && !response.tool_call?
+
+      begin
+        response.content = JSON.parse(response.content)
+      rescue JSON::ParserError
+        # If parsing fails, keep content as string
+      end
+    end
 
     def wrap_streaming_block(&block)
       return nil unless block_given?
@@ -214,13 +257,76 @@ module RubyLLM
         halt_result = result if result.is_a?(Tool::Halt)
       end
 
+      reset_tool_choice if forced_tool_choice?
       halt_result || complete(&)
     end
 
     def execute_tool(tool_call)
       tool = tools[tool_call.name.to_sym]
+      if tool.nil?
+        return {
+          error: "Model tried to call unavailable tool `#{tool_call.name}`. " \
+                 "Available tools: #{tools.keys.to_json}."
+        }
+      end
+
       args = tool_call.arguments
       tool.call(args)
+    end
+
+    def update_tool_options(choice:, calls:)
+      unless choice.nil?
+        normalized_choice = normalize_tool_choice(choice)
+        valid_tool_choices = %i[auto none required] + tools.keys
+        unless valid_tool_choices.include?(normalized_choice)
+          raise InvalidToolChoiceError,
+                "Invalid tool choice: #{choice}. Valid choices are: #{valid_tool_choices.join(', ')}"
+        end
+
+        @tool_prefs[:choice] = normalized_choice
+      end
+
+      @tool_prefs[:calls] = normalize_calls(calls) unless calls.nil?
+    end
+
+    def normalize_calls(calls)
+      case calls
+      when :many, 'many'
+        :many
+      when :one, 'one', 1
+        :one
+      else
+        raise ArgumentError, "Invalid calls value: #{calls.inspect}. Valid values are: :many, :one, or 1"
+      end
+    end
+
+    def normalize_tool_choice(choice)
+      return choice.to_sym if choice.is_a?(String) || choice.is_a?(Symbol)
+      return tool_name_for_choice_class(choice) if choice.is_a?(Class)
+
+      choice.respond_to?(:name) ? choice.name.to_sym : choice.to_sym
+    end
+
+    def tool_name_for_choice_class(tool_class)
+      matched_tool_name = tools.find { |_name, tool| tool.is_a?(tool_class) }&.first
+      return matched_tool_name if matched_tool_name
+
+      classify_tool_name(tool_class.name)
+    end
+
+    def classify_tool_name(class_name)
+      class_name.split('::').last
+                .gsub(/([a-z\d])([A-Z])/, '\1_\2')
+                .downcase
+                .to_sym
+    end
+
+    def forced_tool_choice?
+      @tool_prefs[:choice] && !%i[auto none].include?(@tool_prefs[:choice])
+    end
+
+    def reset_tool_choice
+      @tool_prefs[:choice] = nil
     end
 
     def build_content(message, attachments)

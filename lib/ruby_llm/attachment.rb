@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require 'pathname'
+require 'uri'
+
 module RubyLLM
   # A class representing a file attachment.
   class Attachment
@@ -134,7 +137,7 @@ module RubyLLM
     end
 
     def load_content_from_path
-      @content = File.read(@source)
+      @content = File.binread(@source)
     end
 
     def load_content_from_io

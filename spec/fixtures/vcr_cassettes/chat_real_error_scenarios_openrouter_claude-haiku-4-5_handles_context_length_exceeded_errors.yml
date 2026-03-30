@@ -10,7 +10,7 @@ http_interactions:
       User-Agent:
       - Faraday v2.14.1
       Authorization:
-      - Bearer <OPENROUTER_API_KEY>
+      - Bearer <AUTH_TOKEN>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -23,19 +23,15 @@ http_interactions:
       message: Bad Request
     headers:
       Date:
-      - Tue, 10 Feb 2026 08:57:13 GMT
+      - Mon, 16 Mar 2026 19:11:24 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Cf-Ray:
-      - "<CF_RAY>"
       Access-Control-Allow-Origin:
       - "*"
-      Vary:
-      - Accept-Encoding
       Permissions-Policy:
       - payment=(self "https://checkout.stripe.com" "https://connect-js.stripe.com"
         "https://js.stripe.com" "https://*.js.stripe.com" "https://hooks.stripe.com")
@@ -45,11 +41,13 @@ http_interactions:
       - nosniff
       Server:
       - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
     body:
       encoding: UTF-8
       string: '{"error":{"message":"This endpoint''s maximum context length is 200000
         tokens. However, you requested about 2500021 tokens (2500021 of text input).
-        Please reduce the length of either one, or use the \"middle-out\" transform
+        Please reduce the length of either one, or use the context-compression plugin
         to compress your prompt automatically.","code":400,"metadata":{"provider_name":null}}}'
-  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+  recorded_at: Mon, 16 Mar 2026 19:11:24 GMT
 recorded_with: VCR 6.4.0

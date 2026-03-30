@@ -11,7 +11,7 @@ http_interactions:
       User-Agent:
       - Faraday v2.14.1
       Authorization:
-      - Bearer <MISTRAL_API_KEY>
+      - Bearer <AUTH_TOKEN>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -24,82 +24,62 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Feb 2026 09:04:14 GMT
+      - Mon, 16 Mar 2026 19:11:18 GMT
       Content-Type:
       - text/event-stream; charset=utf-8
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Cf-Ray:
-      - "<CF_RAY>"
       Mistral-Correlation-Id:
-      - '019c46cb-4a3e-73d0-9dfb-11c518757873'
+      - '019cf80f-4e72-7014-8c69-e298bbcbfeee'
       X-Kong-Request-Id:
-      - '019c46cb-4a3e-73d0-9dfb-11c518757873'
+      - '019cf80f-4e72-7014-8c69-e298bbcbfeee'
       X-Envoy-Upstream-Service-Time:
-      - '66'
+      - '56'
+      Server:
+      - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '67'
+      - '57'
       X-Kong-Proxy-Latency:
-      - '8'
-      Cf-Cache-Status:
-      - DYNAMIC
+      - '9'
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
-      Server:
-      - cloudflare
+      Cf-Cache-Status:
+      - DYNAMIC
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      Cf-Ray:
+      - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: UTF-8
       string: |+
-        data: {"id":"a20d8f7bedcd4e0f8d1e6133458d8304","object":"chat.completion.chunk","created":1770714253,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null}]}
+        data: {"id":"3c92d6e191ea455585831f53f74e617f","object":"chat.completion.chunk","created":1773688278,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null}]}
 
-        data: {"id":"a20d8f7bedcd4e0f8d1e6133458d8304","object":"chat.completion.chunk","created":1770714253,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":"Here"},"finish_reason":null}],"p":"abcdefghijkl"}
+        data: {"id":"3c92d6e191ea455585831f53f74e617f","object":"chat.completion.chunk","created":1773688278,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":"Here"},"finish_reason":null}],"p":"abcdefghijklmnopqrs"}
 
-        data: {"id":"a20d8f7bedcd4e0f8d1e6133458d8304","object":"chat.completion.chunk","created":1770714253,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":"'s"},"finish_reason":null}],"p":"abcdefghijklmnopqrstuvwxyz0123456789"}
+        data: {"id":"3c92d6e191ea455585831f53f74e617f","object":"chat.completion.chunk","created":1773688278,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":"'s"},"finish_reason":null}],"p":"abcdefghijklmnop"}
 
-        data: {"id":"a20d8f7bedcd4e0f8d1e6133458d8304","object":"chat.completion.chunk","created":1770714253,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":" the"},"finish_reason":null}],"p":"abcdefghijklmnopqrstuvwxyz0"}
+        data: {"id":"3c92d6e191ea455585831f53f74e617f","object":"chat.completion.chunk","created":1773688278,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":" the"},"finish_reason":null}],"p":"abcdefghijklmnopqrstuvwxyz012345"}
 
-        data: {"id":"a20d8f7bedcd4e0f8d1e6133458d8304","object":"chat.completion.chunk","created":1770714253,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":" count"},"finish_reason":null}],"p":"abcdefghijklmnopqrst"}
+        data: {"id":"3c92d6e191ea455585831f53f74e617f","object":"chat.completion.chunk","created":1773688278,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":" count from 1"},"finish_reason":null}],"p":"abcde"}
 
-        data: {"id":"a20d8f7bedcd4e0f8d1e6133458d8304","object":"chat.completion.chunk","created":1770714253,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":" from"},"finish_reason":null}],"p":"abcdefghijklmno"}
+        data: {"id":"3c92d6e191ea455585831f53f74e617f","object":"chat.completion.chunk","created":1773688278,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":" to 3:\n\n"},"finish_reason":null}],"p":"abcdefghijklmnopqrstuvw"}
 
-        data: {"id":"a20d8f7bedcd4e0f8d1e6133458d8304","object":"chat.completion.chunk","created":1770714253,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":" "},"finish_reason":null}],"p":"abcdefghijklmnopqrs"}
+        data: {"id":"3c92d6e191ea455585831f53f74e617f","object":"chat.completion.chunk","created":1773688278,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":"1\n"},"finish_reason":null}],"p":"abcdefghijklmnop"}
 
-        data: {"id":"a20d8f7bedcd4e0f8d1e6133458d8304","object":"chat.completion.chunk","created":1770714253,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":"1"},"finish_reason":null}],"p":"abcd"}
-
-        data: {"id":"a20d8f7bedcd4e0f8d1e6133458d8304","object":"chat.completion.chunk","created":1770714253,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":" to"},"finish_reason":null}],"p":"abcdefghijklmnopq"}
-
-        data: {"id":"a20d8f7bedcd4e0f8d1e6133458d8304","object":"chat.completion.chunk","created":1770714253,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":" "},"finish_reason":null}],"p":"abcdefghijklmnopqrstu"}
-
-        data: {"id":"a20d8f7bedcd4e0f8d1e6133458d8304","object":"chat.completion.chunk","created":1770714253,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":"3"},"finish_reason":null}],"p":"a"}
-
-        data: {"id":"a20d8f7bedcd4e0f8d1e6133458d8304","object":"chat.completion.chunk","created":1770714253,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":":\n\n"},"finish_reason":null}],"p":"abcdef"}
-
-        data: {"id":"a20d8f7bedcd4e0f8d1e6133458d8304","object":"chat.completion.chunk","created":1770714253,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":"1"},"finish_reason":null}],"p":"abcdefghi"}
-
-        data: {"id":"a20d8f7bedcd4e0f8d1e6133458d8304","object":"chat.completion.chunk","created":1770714253,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":"\n"},"finish_reason":null}],"p":"abcdefghijklmnopqr"}
-
-        data: {"id":"a20d8f7bedcd4e0f8d1e6133458d8304","object":"chat.completion.chunk","created":1770714253,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":"2"},"finish_reason":null}],"p":"abcdefghijklmnopqrs"}
-
-        data: {"id":"a20d8f7bedcd4e0f8d1e6133458d8304","object":"chat.completion.chunk","created":1770714253,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":"\n"},"finish_reason":null}],"p":"abcdefghijklmnopqrstuvwxyz012345678"}
-
-        data: {"id":"a20d8f7bedcd4e0f8d1e6133458d8304","object":"chat.completion.chunk","created":1770714253,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":"3"},"finish_reason":null}],"p":"abcdefghijklmnopqrstu"}
-
-        data: {"id":"a20d8f7bedcd4e0f8d1e6133458d8304","object":"chat.completion.chunk","created":1770714253,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":""},"finish_reason":"stop"}],"usage":{"prompt_tokens":10,"total_tokens":27,"completion_tokens":17,"num_cached_tokens":0},"p":"abcdefghijklm"}
+        data: {"id":"3c92d6e191ea455585831f53f74e617f","object":"chat.completion.chunk","created":1773688278,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":"2\n3"},"finish_reason":"stop"}],"usage":{"prompt_tokens":10,"total_tokens":27,"completion_tokens":17,"prompt_tokens_details":{"cached_tokens":0}},"p":"abcdefghijklmnopqr"}
 
         data: [DONE]
 
-  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+  recorded_at: Mon, 16 Mar 2026 19:11:18 GMT
 - request:
     method: post
     uri: https://api.mistral.ai/v1/chat/completions
@@ -111,7 +91,7 @@ http_interactions:
       User-Agent:
       - Faraday v2.14.1
       Authorization:
-      - Bearer <MISTRAL_API_KEY>
+      - Bearer <AUTH_TOKEN>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -124,7 +104,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 10 Feb 2026 09:04:16 GMT
+      - Mon, 16 Mar 2026 19:11:19 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -132,46 +112,46 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '019c46cb-4cf7-7ee2-a21c-fefa2b47d8b2'
+      - '019cf80f-4f72-76b2-97a3-465843d03a50'
       X-Kong-Request-Id:
-      - '019c46cb-4cf7-7ee2-a21c-fefa2b47d8b2'
+      - '019cf80f-4f72-76b2-97a3-465843d03a50'
       X-Ratelimit-Limit-Tokens-Minute:
       - '2000000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '1999919'
+      - '1999496'
       X-Ratelimit-Tokens-Query-Cost:
       - '27'
       X-Ratelimit-Limit-Req-Minute:
       - '360'
       X-Ratelimit-Remaining-Req-Minute:
-      - '357'
+      - '352'
       X-Envoy-Upstream-Service-Time:
-      - '1798'
+      - '254'
+      Server:
+      - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '1798'
+      - '255'
       X-Kong-Proxy-Latency:
-      - '9'
-      Cf-Cache-Status:
-      - DYNAMIC
+      - '8'
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
-      Server:
-      - cloudflare
+      Cf-Cache-Status:
+      - DYNAMIC
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"2b833cdc5938431da7fc01dc32853124","created":1770714254,"model":"mistral-small-latest","usage":{"prompt_tokens":10,"total_tokens":27,"completion_tokens":17,"num_cached_tokens":0},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"Here''s
+      string: '{"id":"686dff03f3a049c79dcd3af8cf26b50b","created":1773688278,"model":"mistral-small-latest","usage":{"prompt_tokens":10,"total_tokens":27,"completion_tokens":17,"prompt_tokens_details":{"cached_tokens":0}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"Here''s
         the count from 1 to 3:\n\n1\n2\n3"}}]}'
-  recorded_at: Thu, 19 Feb 2026 16:22:15 GMT
+  recorded_at: Mon, 16 Mar 2026 19:11:19 GMT
 recorded_with: VCR 6.4.0
 ...

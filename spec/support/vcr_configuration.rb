@@ -92,6 +92,33 @@ VCR.configure do |config|
 
   # Filter cookies
   config.before_record do |interaction|
+    # Remove auth headers that may include provider secrets or signed credentials
+    if interaction.request.headers['Authorization']
+      interaction.request.headers['Authorization'] =
+        interaction.request.headers['Authorization'].map do |value|
+          case value
+          when /\AAWS4-HMAC-SHA256 /i
+            'AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request, ' \
+            'SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>'
+          when /\ABearer /i
+            'Bearer <AUTH_TOKEN>'
+          else
+            value
+          end
+        end
+    end
+
+    # Remove security token header when present in signed Bedrock requests
+    if interaction.request.headers['X-Amz-Security-Token']
+      interaction.request.headers['X-Amz-Security-Token'] = ['<AWS_SESSION_TOKEN>']
+    end
+
+    # Normalize signature fragments that may still appear in encoded payloads
+    if interaction.request.body
+      interaction.request.body =
+        interaction.request.body.gsub(/Signature=[0-9a-f]{64}/i, 'Signature=<AWS_SIGV4_SIGNATURE>')
+    end
+
     if interaction.response.headers['Set-Cookie']
       interaction.response.headers['Set-Cookie'] = interaction.response.headers['Set-Cookie'].map { '<COOKIE>' }
     end

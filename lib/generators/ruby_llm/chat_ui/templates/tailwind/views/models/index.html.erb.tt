@@ -1,0 +1,40 @@
+<%% content_for :title, "<%= model_model_name.pluralize %>" %>
+
+<div class="w-full">
+  <%% if notice.present? %>
+    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-md inline-block" id="notice"><%%= notice %></p>
+  <%% end %>
+
+  <div class="flex justify-between items-center">
+    <h1 class="font-bold text-4xl"><%= model_model_name.pluralize %></h1>
+    <div class="flex items-center gap-2">
+      <%%= link_to "<%= chat_model_name.pluralize %>", <%= chat_table_name %>_path, class: "rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 text-gray-900 block font-medium" %>
+      <%%= button_to "Refresh <%= model_model_name.pluralize %>", refresh_<%= model_table_name %>_path, method: :post, class: "rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white block font-medium cursor-pointer" %>
+    </div>
+  </div>
+
+  <div id="<%= model_table_name %>" class="mt-5 overflow-x-auto">
+    <%% if @<%= model_variable_name.pluralize %>.any? %>
+      <table class="min-w-full divide-y divide-gray-300 border border-gray-300">
+        <thead class="bg-gray-50">
+          <tr>
+            <th class="px-3 py-2 text-left text-sm font-semibold text-gray-900">Provider</th>
+            <th class="px-3 py-2 text-left text-sm font-semibold text-gray-900">Model</th>
+            <th class="px-3 py-2 text-left text-sm font-semibold text-gray-900">Context Window</th>
+            <th class="px-3 py-2 text-left text-sm font-semibold text-gray-900">$/1M tokens (In/Out)</th>
+            <th class="px-3 py-2 text-left text-sm font-semibold text-gray-900"></th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-200 bg-white">
+          <%% @<%= model_variable_name.pluralize %>.each do |model_info| %>
+            <%%= render "<%= model_model_name.underscore.pluralize %>/<%= model_model_name.demodulize.underscore %>",
+              <%= model_model_name.demodulize.underscore %>: model_info %>
+          <%% end %>
+        </tbody>
+      </table>
+    <%% else %>
+      <p class="text-center my-10">No chat models found.</p>
+    <%% end %>
+  </div>
+
+</div>
