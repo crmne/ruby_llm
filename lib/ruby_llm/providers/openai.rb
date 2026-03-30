@@ -30,6 +30,24 @@ module RubyLLM
         OpenAI::Temperature.normalize(temperature, model.id)
       end
 
+      # rubocop:disable Metrics/ParameterLists
+      def complete(messages, tools:, temperature:, model:, params: {}, headers: {}, schema: nil, thinking: nil,
+                   tool_prefs: nil, &)
+        super(
+          messages,
+          tools: tools,
+          tool_prefs: tool_prefs,
+          temperature: temperature,
+          model: model,
+          params: normalize_params(params),
+          headers: headers,
+          schema: schema,
+          thinking: thinking,
+          &
+        )
+      end
+      # rubocop:enable Metrics/ParameterLists
+
       class << self
         def capabilities
           OpenAI::Capabilities
@@ -48,6 +66,17 @@ module RubyLLM
         def configuration_requirements
           %i[openai_api_key]
         end
+      end
+
+      private
+
+      def normalize_params(params)
+        normalized = RubyLLM::Utils.deep_symbolize_keys(params || {})
+        max_tokens = normalized[:max_tokens]
+
+        return normalized if max_tokens.nil? || normalized.key?(:max_completion_tokens)
+
+        normalized.merge(max_completion_tokens: max_tokens)
       end
     end
   end
