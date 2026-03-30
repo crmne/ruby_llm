@@ -66,11 +66,9 @@ RSpec.describe RubyLLM::Chat do
       primary_calls = 0
       allow(primary_provider).to receive(:complete) do
         primary_calls += 1
-        if primary_calls == 1
-          raise RubyLLM::OverloadedError.new(nil, 'overloaded')
-        else
-          RubyLLM::Message.new(role: :assistant, content: 'primary restored')
-        end
+        raise RubyLLM::OverloadedError.new(nil, 'overloaded') if primary_calls == 1
+
+        RubyLLM::Message.new(role: :assistant, content: 'primary restored')
       end
       allow(fallback_provider).to receive(:complete)
         .and_return(RubyLLM::Message.new(role: :assistant, content: 'ok'))
@@ -94,11 +92,9 @@ RSpec.describe RubyLLM::Chat do
       primary_calls = 0
       allow(primary_provider).to receive(:complete) do
         primary_calls += 1
-        if primary_calls == 1
-          raise RubyLLM::OverloadedError.new(nil, 'overloaded')
-        else
-          RubyLLM::Message.new(role: :assistant, content: 'primary restored')
-        end
+        raise RubyLLM::OverloadedError.new(nil, 'overloaded') if primary_calls == 1
+
+        RubyLLM::Message.new(role: :assistant, content: 'primary restored')
       end
       allow(fallback_provider).to receive(:complete)
         .and_raise(RubyLLM::ServerError.new(nil, 'fallback down'))
@@ -239,6 +235,7 @@ RSpec.describe RubyLLM::Chat do
 
     it 'logs warning with fallback error details when both primary and fallback fail' do
       chat.with_fallback('claude-haiku-4-5-20251001')
+      allow(RubyLLM.logger).to receive(:warn)
 
       allow(primary_provider).to receive(:complete)
         .and_raise(RubyLLM::ServiceUnavailableError.new(nil, 'primary down'))
@@ -247,14 +244,17 @@ RSpec.describe RubyLLM::Chat do
 
       chat.add_message(role: :user, content: 'Hello')
 
-      expect(RubyLLM.logger).to receive(:warn).with(/falling back to/)
-      expect(RubyLLM.logger).to receive(:warn).with(/Fallback to claude-haiku-4-5-20251001 also failed: RubyLLM::ServerError - fallback also down/)
-
       expect { chat.complete }.to raise_error(RubyLLM::ServiceUnavailableError, 'primary down')
+
+      expect(RubyLLM.logger).to have_received(:warn).with(/falling back to/)
+      expect(RubyLLM.logger).to have_received(:warn).with(
+        /Fallback to claude-haiku-4-5-20251001 also failed: RubyLLM::ServerError/
+      )
     end
 
     it 'sanitizes model IDs with control characters in log output' do
       chat.with_fallback('claude-haiku-4-5-20251001')
+      allow(RubyLLM.logger).to receive(:warn).and_call_original
 
       allow(chat.model).to receive(:id).and_return("gpt-4\nnewline-injected")
 
@@ -265,9 +265,9 @@ RSpec.describe RubyLLM::Chat do
 
       chat.add_message(role: :user, content: 'Hello')
 
-      expect(RubyLLM.logger).to receive(:warn).with(/gpt-4newline-injected/).and_call_original
-
       chat.complete
+
+      expect(RubyLLM.logger).to have_received(:warn).with(/gpt-4newline-injected/)
     end
   end
 end

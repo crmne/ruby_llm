@@ -39,8 +39,8 @@ module RubyLLM
         @in_fallback = true
         with_model(@fallback[:model], provider: @fallback[:provider])
         yield
-      rescue *ERRORS => fallback_error
-        log_fallback_failure(fallback_error)
+      rescue *ERRORS => e
+        log_fallback_failure(e)
         raise error
       ensure
         @in_fallback = false
@@ -51,13 +51,17 @@ module RubyLLM
     end
 
     def log_fallback(error)
-      RubyLLM.logger.warn "RubyLLM: #{error.class} on #{sanitize_for_log(@model.id)}, " \
-                           "falling back to #{sanitize_for_log(@fallback[:model])}"
+      RubyLLM.logger.warn(
+        "RubyLLM: #{error.class} on #{sanitize_for_log(@model.id)}, " \
+        "falling back to #{sanitize_for_log(@fallback[:model])}"
+      )
     end
 
     def log_fallback_failure(error)
-      RubyLLM.logger.warn "RubyLLM: Fallback to #{sanitize_for_log(@fallback[:model])} also failed: " \
-                           "#{error.class} - #{sanitize_for_log(error.message)}"
+      RubyLLM.logger.warn(
+        "RubyLLM: Fallback to #{sanitize_for_log(@fallback[:model])} also failed: " \
+        "#{error.class} - #{sanitize_for_log(error.message)}"
+      )
     end
 
     def sanitize_for_log(value)
