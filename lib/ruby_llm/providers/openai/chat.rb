@@ -77,9 +77,19 @@ module RubyLLM
             cached_tokens: cached_tokens,
             cache_creation_tokens: 0,
             thinking_tokens: thinking_tokens,
+            finish_reason: normalize_finish_reason(data.dig('choices', 0, 'finish_reason')),
             model_id: data['model'],
             raw: response
           )
+        end
+
+        def normalize_finish_reason(reason)
+          case reason
+          when 'tool_calls', 'function_call'
+            'tool_use'
+          else
+            reason
+          end
         end
 
         def format_messages(messages)

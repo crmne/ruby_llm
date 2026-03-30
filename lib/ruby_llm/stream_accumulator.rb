@@ -9,6 +9,7 @@ module RubyLLM
       @content = +''
       @thinking_text = +''
       @thinking_signature = nil
+      @finish_reason = nil
       @tool_calls = {}
       @input_tokens = nil
       @output_tokens = nil
@@ -23,6 +24,7 @@ module RubyLLM
     def add(chunk)
       RubyLLM.logger.debug { chunk.inspect } if RubyLLM.config.log_stream_debug
       @model_id ||= chunk.model_id
+      @finish_reason = chunk.finish_reason if chunk.finish_reason
 
       handle_chunk_content(chunk)
       append_thinking_from_chunk(chunk)
@@ -47,6 +49,7 @@ module RubyLLM
         ),
         model_id: model_id,
         tool_calls: tool_calls_from_stream,
+        finish_reason: @finish_reason,
         raw: response
       )
     end

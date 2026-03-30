@@ -3,6 +3,20 @@
 require 'spec_helper'
 
 RSpec.describe RubyLLM::StreamAccumulator do
+  describe '#to_message' do
+    it 'keeps the last non-nil finish_reason from streamed chunks' do
+      accumulator = described_class.new
+
+      accumulator.add(RubyLLM::Chunk.new(role: :assistant, content: 'hel'))
+      accumulator.add(RubyLLM::Chunk.new(role: :assistant, content: 'lo', finish_reason: 'length'))
+
+      message = accumulator.to_message(instance_double(Faraday::Response))
+
+      expect(message.content).to eq('hello')
+      expect(message.finish_reason).to eq('length')
+    end
+  end
+
   describe '#add' do
     it 'handles tool call deltas that omit arguments' do
       accumulator = described_class.new
