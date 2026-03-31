@@ -139,15 +139,14 @@ module RubyLLM
           )
         end
 
+        FINISH_REASON_MAP = {
+          'end_turn' => 'stop',
+          'stop_sequence' => 'stop',
+          'max_tokens' => 'length'
+        }.freeze
+
         def normalize_finish_reason(reason)
-          case reason
-          when 'end_turn', 'stop_sequence'
-            'stop'
-          when 'max_tokens'
-            'length'
-          else
-            reason
-          end
+          FINISH_REASON_MAP.fetch(reason, reason)
         end
 
         def format_message(msg, thinking: nil)
