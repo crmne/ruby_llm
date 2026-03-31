@@ -36,6 +36,25 @@ RSpec.describe RubyLLM::Providers::Gemini::Streaming do
     expect(chunk.cached_tokens).to eq(6)
   end
 
+  it 'normalizes finish_reason on streaming chunks' do
+    data = {
+      'candidates' => [
+        {
+          'finishReason' => 'MAX_TOKENS',
+          'content' => {
+            'parts' => [{ 'text' => 'hello' }]
+          }
+        }
+      ],
+      'usageMetadata' => {},
+      'modelVersion' => 'gemini-2.5-flash'
+    }
+
+    chunk = test_obj.send(:build_chunk, data)
+
+    expect(chunk.finish_reason).to eq('length')
+  end
+
   it 'correctly sums candidatesTokenCount and thoughtsTokenCount in streaming' do
     chat = RubyLLM.chat(model: 'gemini-2.5-flash', provider: :gemini)
 

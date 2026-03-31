@@ -133,9 +133,20 @@ module RubyLLM
             cached_tokens: cached_tokens,
             cache_creation_tokens: cache_creation_tokens,
             thinking_tokens: thinking_tokens,
+            finish_reason: normalize_finish_reason(data['stop_reason']),
             model_id: data['model'],
             raw: response
           )
+        end
+
+        FINISH_REASON_MAP = {
+          'end_turn' => 'stop',
+          'stop_sequence' => 'stop',
+          'max_tokens' => 'length'
+        }.freeze
+
+        def normalize_finish_reason(reason)
+          FINISH_REASON_MAP.fetch(reason, reason)
         end
 
         def format_message(msg, thinking: nil)

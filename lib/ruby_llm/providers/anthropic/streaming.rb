@@ -26,8 +26,20 @@ module RubyLLM
             output_tokens: extract_output_tokens(data),
             cached_tokens: extract_cached_tokens(data),
             cache_creation_tokens: extract_cache_creation_tokens(data),
-            tool_calls: extract_tool_calls(data)
+            tool_calls: extract_tool_calls(data),
+            finish_reason: normalize_finish_reason(data.dig('delta', 'stop_reason'))
           )
+        end
+
+        def normalize_finish_reason(reason)
+          case reason
+          when 'end_turn', 'stop_sequence'
+            'stop'
+          when 'max_tokens'
+            'length'
+          else
+            reason
+          end
         end
 
         def extract_content_delta(data, delta_type)

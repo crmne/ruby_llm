@@ -31,7 +31,8 @@ module RubyLLM
             output_tokens: usage['completion_tokens'],
             cached_tokens: cached_tokens,
             cache_creation_tokens: 0,
-            thinking_tokens: usage.dig('completion_tokens_details', 'reasoning_tokens')
+            thinking_tokens: usage.dig('completion_tokens_details', 'reasoning_tokens'),
+            finish_reason: OpenAI::Chat.normalize_finish_reason(data.dig('choices', 0, 'finish_reason'))
           )
         end
 

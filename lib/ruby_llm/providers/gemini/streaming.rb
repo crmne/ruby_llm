@@ -24,7 +24,8 @@ module RubyLLM
             output_tokens: extract_output_tokens(data),
             cached_tokens: data.dig('usageMetadata', 'cachedContentTokenCount'),
             thinking_tokens: data.dig('usageMetadata', 'thoughtsTokenCount'),
-            tool_calls: extract_tool_calls(data)
+            tool_calls: extract_tool_calls(data),
+            finish_reason: normalize_finish_reason(data.dig('candidates', 0, 'finishReason'))
           )
         end
 
@@ -32,6 +33,19 @@ module RubyLLM
 
         def extract_model_id(data)
           data['modelVersion']
+        end
+
+        def normalize_finish_reason(reason)
+          case reason
+          when 'STOP'
+            'stop'
+          when 'MAX_TOKENS'
+            'length'
+          when 'SAFETY', 'RECITATION'
+            'content_filter'
+          else
+            reason
+          end
         end
 
         def extract_text_content(parts)

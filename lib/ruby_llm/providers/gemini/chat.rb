@@ -122,9 +122,21 @@ module RubyLLM
             output_tokens: calculate_output_tokens(data),
             cached_tokens: data.dig('usageMetadata', 'cachedContentTokenCount'),
             thinking_tokens: data.dig('usageMetadata', 'thoughtsTokenCount'),
+            finish_reason: normalize_finish_reason(data.dig('candidates', 0, 'finishReason')),
             model_id: data['modelVersion'] || response.env.url.path.split('/')[3].split(':')[0],
             raw: response
           )
+        end
+
+        FINISH_REASON_MAP = {
+          'STOP' => 'stop',
+          'MAX_TOKENS' => 'length',
+          'SAFETY' => 'content_filter',
+          'RECITATION' => 'content_filter'
+        }.freeze
+
+        def normalize_finish_reason(reason)
+          FINISH_REASON_MAP.fetch(reason, reason)
         end
 
         def convert_schema_to_gemini(schema)

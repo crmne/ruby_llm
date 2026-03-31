@@ -155,5 +155,20 @@ RSpec.describe RubyLLM::Providers::Anthropic::Chat do
       expect(message.cached_tokens).to eq(21)
       expect(message.cache_creation_tokens).to eq(7)
     end
+
+    it 'normalizes finish_reason on the message' do
+      response_body = {
+        'model' => 'claude-sonnet-4-5-20250929',
+        'stop_reason' => 'max_tokens',
+        'content' => [{ 'type' => 'text', 'text' => 'Hi!' }],
+        'usage' => {}
+      }
+
+      response = instance_double(Faraday::Response, body: response_body)
+
+      message = described_class.parse_completion_response(response)
+
+      expect(message.finish_reason).to eq('length')
+    end
   end
 end

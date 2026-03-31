@@ -32,6 +32,30 @@ RSpec.describe RubyLLM::Providers::OpenAI::Chat do
       expect(message.output_tokens).to eq(4)
       expect(message.cache_creation_tokens).to eq(0)
     end
+
+    it 'normalizes finish_reason on the message' do
+      response_body = {
+        'model' => 'gpt-4.1-nano',
+        'choices' => [
+          {
+            'finish_reason' => 'tool_calls',
+            'message' => {
+              'role' => 'assistant',
+              'content' => nil,
+              'tool_calls' => []
+            }
+          }
+        ],
+        'usage' => {}
+      }
+
+      response = instance_double(Faraday::Response, body: response_body)
+      allow(described_class).to receive(:parse_tool_calls).and_return(nil)
+
+      message = described_class.parse_completion_response(response)
+
+      expect(message.finish_reason).to eq('tool_use')
+    end
   end
 
   describe '.render_payload' do
