@@ -128,17 +128,15 @@ module RubyLLM
           )
         end
 
+        FINISH_REASON_MAP = {
+          'STOP' => 'stop',
+          'MAX_TOKENS' => 'length',
+          'SAFETY' => 'content_filter',
+          'RECITATION' => 'content_filter'
+        }.freeze
+
         def normalize_finish_reason(reason)
-          case reason
-          when 'STOP'
-            'stop'
-          when 'MAX_TOKENS'
-            'length'
-          when 'SAFETY', 'RECITATION'
-            'content_filter'
-          else
-            reason
-          end
+          FINISH_REASON_MAP.fetch(reason, reason)
         end
 
         def convert_schema_to_gemini(schema)
