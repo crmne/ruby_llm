@@ -33,18 +33,22 @@ module RubyLLM
             end
           end
 
-          system_prompt = append_tool_definitions(system_prompt, tools) if tools&.any?
-
           latest_user_message = extract_text(conversation.pop.content) if conversation.last&.role == :user
 
           input_parts = conversation.map do |msg|
             format_conversation_message(msg)
           end
 
+          # When tools are present, prepend tool instructions to the user prompt
+          if tools&.any?
+            tool_prefix = build_tool_prefix(tools)
+            latest_user_message = "#{tool_prefix}\n\nUser question: #{latest_user_message}"
+          end
+
           payload = {
             prompt: latest_user_message || '',
             model: 'on-device',
-            format: tools&.any? ? 'text' : 'json',
+            format: 'json',
             stream: false
           }
           payload[:system] = system_prompt if system_prompt
@@ -52,29 +56,15 @@ module RubyLLM
           payload
         end
 
-        def append_tool_definitions(system_prompt, tools)
-          tool_text = "You have access to the following tools:\n"
-
-          tools.each_value do |tool|
-            tool_text += "\nTool: #{tool.name}\n"
-            tool_text += "Description: #{tool.description}\n"
-
-            if tool.parameters.any?
-              tool_text += "Parameters:\n"
-              tool.parameters.each_value do |param|
-                required_label = param.required ? 'required' : 'optional'
-                tool_text += "  - #{param.name} (#{param.type}, #{required_label})"
-                tool_text += ": #{param.description}" if param.description
-                tool_text += "\n"
-              end
-            end
+        def build_tool_prefix(tools)
+          parts = tools.map do |_key, tool|
+            params = tool.parameters.map { |_n, p| p.name.to_s }.join(', ')
+            "#{tool.name}(#{params}): #{tool.description}"
           end
 
-          tool_text += "\nTo use a tool, reply ONLY with JSON: "
-          tool_text += '{"tool_call":{"name":"TOOL_NAME","arguments":{"param":"value"}}}'
-          tool_text += "\nOtherwise reply with plain text."
-
-          [system_prompt, tool_text].compact.join("\n\n")
+          "Available tools: #{parts.join('; ')}. " \
+            'To call a tool, respond with ONLY: {"tool_call":{"name":"NAME","arguments":{"key":"val"}}} ' \
+            'Otherwise respond normally.'
         end
 
         def format_conversation_message(msg)
