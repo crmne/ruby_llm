@@ -19,7 +19,7 @@ module RubyLLM
 
       def complete(messages, tools: nil, temperature: nil, model: nil, params: {}, headers: {}, schema: nil,
                    thinking: nil, tool_prefs: nil, &)
-        payload = build_payload(messages)
+        payload = build_payload(messages, tools: tools)
         execute_binary(payload, @config)
       end
 

@@ -2,6 +2,7 @@
 
 require 'open3'
 require 'json'
+require 'securerandom'
 
 module RubyLLM
   module Providers
@@ -18,7 +19,7 @@ module RubyLLM
 
         private
 
-        def build_payload(messages)
+        def build_payload(messages, tools: nil)
           system_prompt = nil
           conversation = []
           latest_user_message = nil
@@ -32,10 +33,12 @@ module RubyLLM
             end
           end
 
+          system_prompt = append_tool_definitions(system_prompt, tools) if tools&.any?
+
           latest_user_message = extract_text(conversation.pop.content) if conversation.last&.role == :user
 
           input_parts = conversation.map do |msg|
-            "#{msg.role}: #{extract_text(msg.content)}"
+            format_conversation_message(msg)
           end
 
           payload = {
@@ -47,6 +50,44 @@ module RubyLLM
           payload[:system] = system_prompt if system_prompt
           payload[:input] = input_parts.join("\n") unless input_parts.empty?
           payload
+        end
+
+        def append_tool_definitions(system_prompt, tools)
+          tool_text = "You have access to the following tools:\n"
+
+          tools.each_value do |tool|
+            tool_text += "\nTool: #{tool.name}\n"
+            tool_text += "Description: #{tool.description}\n"
+
+            if tool.parameters.any?
+              tool_text += "Parameters:\n"
+              tool.parameters.each_value do |param|
+                required_label = param.required ? 'required' : 'optional'
+                tool_text += "  - #{param.name} (#{param.type}, #{required_label})"
+                tool_text += ": #{param.description}" if param.description
+                tool_text += "\n"
+              end
+            end
+          end
+
+          tool_text += <<~INSTRUCTIONS
+
+            When you need to use a tool, respond with ONLY this exact JSON format, nothing else:
+            {"tool_call": {"name": "tool_name", "arguments": {"param1": "value1"}}}
+
+            If you don't need a tool, respond normally with plain text.
+          INSTRUCTIONS
+
+          [system_prompt, tool_text].compact.join("\n\n")
+        end
+
+        def format_conversation_message(msg)
+          if msg.role == :tool
+            tool_name = msg.tool_call_id || 'unknown'
+            "tool_result (#{tool_name}): #{extract_text(msg.content)}"
+          else
+            "#{msg.role}: #{extract_text(msg.content)}"
+          end
         end
 
         def extract_text(content)
@@ -102,17 +143,36 @@ module RubyLLM
 
           output_text = body['output'] || ''
           estimated_tokens = estimate_tokens(output_text)
+          model_id = body['model'] || 'apple-intelligence'
+
+          tool_calls = extract_tool_calls(output_text)
 
           Message.new(
             role: :assistant,
-            content: output_text,
-            model_id: body['model'] || 'apple-intelligence',
+            content: tool_calls ? '' : output_text,
+            tool_calls: tool_calls,
+            model_id: model_id,
             input_tokens: 0,
             output_tokens: estimated_tokens,
             raw: body
           )
         rescue JSON::ParserError => e
           raise RubyLLM::Error, "Failed to parse binary response: #{e.message}"
+        end
+
+        def extract_tool_calls(text)
+          parsed = JSON.parse(text.strip)
+          return nil unless parsed.is_a?(Hash) && parsed['tool_call']
+
+          tc = parsed['tool_call']
+          return nil unless tc['name']
+
+          call_id = "call_#{SecureRandom.hex(8)}"
+          arguments = (tc['arguments'] || {}).transform_keys(&:to_sym)
+
+          { call_id => ToolCall.new(id: call_id, name: tc['name'], arguments: arguments) }
+        rescue JSON::ParserError
+          nil
         end
 
         def estimate_tokens(text)
