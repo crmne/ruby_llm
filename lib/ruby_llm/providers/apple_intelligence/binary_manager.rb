@@ -30,14 +30,12 @@ module RubyLLM
         end
 
         def check_platform!
-          unless RUBY_PLATFORM =~ /darwin/
-            raise RubyLLM::Error, 'Apple Intelligence provider requires macOS'
-          end
+          raise RubyLLM::Error, 'Apple Intelligence provider requires macOS' unless RUBY_PLATFORM.include?('darwin')
 
-          unless RUBY_PLATFORM =~ /arm64/
-            RubyLLM.logger.warn('Apple Intelligence binary is built for arm64. ' \
-                                'It may not work on this architecture.')
-          end
+          return if RUBY_PLATFORM.include?('arm64')
+
+          RubyLLM.logger.warn('Apple Intelligence binary is built for arm64. ' \
+                              'It may not work on this architecture.')
         end
 
         def download_binary!(path)
@@ -45,9 +43,7 @@ module RubyLLM
           RubyLLM.logger.info("Downloading osx-ai-inloop binary to #{path}...")
 
           URI.open(BINARY_URL, 'rb') do |remote| # rubocop:disable Security/Open
-            File.open(path, 'wb') do |local|
-              local.write(remote.read)
-            end
+            File.binwrite(path, remote.read)
           end
 
           RubyLLM.logger.info('Binary downloaded successfully.')

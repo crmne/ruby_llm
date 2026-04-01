@@ -19,10 +19,9 @@ module RubyLLM
 
         private
 
-        def build_payload(messages)
+        def build_payload(messages) # rubocop:disable Metrics/PerceivedComplexity
           system_prompt = nil
           conversation = []
-          latest_user_message = nil
 
           messages.each do |msg|
             case msg.role
@@ -35,20 +34,19 @@ module RubyLLM
 
           latest_user_message = extract_text(conversation.pop.content) if conversation.last&.role == :user
 
-          # After tool execution, the last message is :tool (the result).
-          # Build a prompt that asks the model to answer using the tool result.
+          # After tool execution the last message is :tool (the result).
+          # Synthesize a prompt so the model can answer using the tool output.
           if latest_user_message.nil? || latest_user_message.empty?
             tool_results = conversation.select { |m| m.role == :tool }.map { |m| extract_text(m.content) }
-            user_msg = conversation.select { |m| m.role == :user }.last
+            user_msg = conversation.reverse.find { |m| m.role == :user }
             original_question = user_msg ? extract_text(user_msg.content) : 'the user question'
 
-            latest_user_message = "Answer this question: #{original_question}\n\nUse this data: #{tool_results.join('; ')}"
-            conversation = [] # already incorporated into the prompt
+            latest_user_message = "Answer this question: #{original_question}\n\n" \
+                                  "Use this data: #{tool_results.join('; ')}"
+            conversation = []
           end
 
-          input_parts = conversation.map do |msg|
-            format_conversation_message(msg)
-          end
+          input_parts = conversation.map { |msg| format_conversation_message(msg) }
 
           payload = {
             prompt: latest_user_message,
@@ -78,7 +76,7 @@ module RubyLLM
           end
         end
 
-        def execute_binary(payload, config, tools: nil)
+        def execute_binary(payload, config)
           bin = BinaryManager.binary_path(config)
           json_input = JSON.generate(payload)
 
@@ -88,12 +86,10 @@ module RubyLLM
           parse_binary_response(stdout)
         end
 
-        # Two-pass tool calling: first ask the model to extract arguments,
-        # then construct the tool call programmatically.
-        def resolve_tool_call(tools, user_message, config)
+        def resolve_tool_call(tools, user_message, config) # rubocop:disable Metrics/PerceivedComplexity
           return nil unless tools&.any?
 
-          tool_name, tool = tools.first # single-tool shortcut for now
+          tool_name, tool = tools.first
 
           # Zero-parameter tools: call immediately
           if tool.parameters.empty?
@@ -101,30 +97,18 @@ module RubyLLM
             return { call_id => ToolCall.new(id: call_id, name: tool_name.to_s, arguments: {}) }
           end
 
-          # Build a minimal extraction prompt per parameter
+          extract_tool_arguments(tool_name, tool, user_message, config)
+        rescue StandardError => e
+          RubyLLM.logger.debug { "Tool call resolution failed: #{e.message}" }
+          nil
+        end
+
+        def extract_tool_arguments(tool_name, tool, user_message, config)
           arguments = {}
           bin = BinaryManager.binary_path(config)
 
           tool.parameters.each_value do |param|
-            prompt = "What #{param.name} is mentioned in this text? Reply with just the value, nothing else.\n\n#{user_message}"
-            payload = { prompt: prompt, model: 'on-device', format: 'json', stream: false }
-
-            stdout, _stderr, status = Open3.capture3(bin, stdin_data: JSON.generate(payload))
-            next unless status.success?
-
-            body = JSON.parse(stdout) rescue next
-            next unless body['ok']
-
-            raw_output = (body['output'] || '').strip
-            # The model might wrap the answer in JSON or return plain text
-            value = begin
-              parsed = JSON.parse(raw_output)
-              # If it returned {"city": "Tokyo"} or {"value": "Tokyo"}
-              parsed.is_a?(Hash) ? (parsed[param.name.to_s] || parsed.values.first) : parsed.to_s
-            rescue JSON::ParserError
-              raw_output.gsub(/\A["']|["']\z/, '') # strip quotes if plain text
-            end
-
+            value = extract_single_param(bin, param.name, user_message)
             arguments[param.name.to_sym] = value if value && !value.empty?
           end
 
@@ -132,9 +116,33 @@ module RubyLLM
 
           call_id = "call_#{SecureRandom.hex(8)}"
           { call_id => ToolCall.new(id: call_id, name: tool_name.to_s, arguments: arguments) }
-        rescue StandardError => e
-          RubyLLM.logger.debug { "Tool call resolution failed: #{e.message}" }
-          nil
+        end
+
+        def extract_single_param(bin, param_name, user_message)
+          prompt = "What #{param_name} is mentioned in this text? " \
+                   "Reply with just the value, nothing else.\n\n#{user_message}"
+          payload = { prompt: prompt, model: 'on-device', format: 'json', stream: false }
+
+          stdout, _stderr, status = Open3.capture3(bin, stdin_data: JSON.generate(payload))
+          return nil unless status.success?
+
+          body = begin
+            JSON.parse(stdout)
+          rescue JSON::ParserError
+            return nil
+          end
+          return nil unless body['ok']
+
+          parse_extracted_value(body['output']&.strip, param_name)
+        end
+
+        def parse_extracted_value(raw_output, param_name)
+          return nil if raw_output.nil? || raw_output.empty?
+
+          parsed = JSON.parse(raw_output)
+          parsed.is_a?(Hash) ? (parsed[param_name.to_s] || parsed.values.first).to_s : parsed.to_s
+        rescue JSON::ParserError
+          raw_output.gsub(/\A["']|["']\z/, '')
         end
 
         def handle_exit_code(status, stdout, stderr)
@@ -145,20 +153,21 @@ module RubyLLM
 
           begin
             body = JSON.parse(stdout)
-            if body['error']
-              error_msg = "#{body['error']['code']}: #{body['error']['message']}"
-            end
+            error_msg = "#{body['error']['code']}: #{body['error']['message']}" if body['error']
           rescue JSON::ParserError
             error_msg = "#{error_msg} — #{stderr}" unless stderr.empty?
           end
 
+          raise_for_exit_code(code, error_msg)
+        end
+
+        def raise_for_exit_code(code, error_msg)
           case code
           when 1 then raise RubyLLM::BadRequestError, error_msg
           when 2 then raise RubyLLM::Error, "Unsupported environment: #{error_msg}"
           when 3 then raise RubyLLM::ModelNotFoundError, error_msg
-          when 4 then raise RubyLLM::ServerError, error_msg
-          when 5 then raise RubyLLM::ServerError, error_msg
-          else        raise RubyLLM::Error, error_msg
+          when 4, 5 then raise RubyLLM::ServerError, error_msg
+          else raise RubyLLM::Error, error_msg
           end
         end
 
@@ -171,18 +180,15 @@ module RubyLLM
           end
 
           output_text = body['output'] || ''
-          estimated_tokens = estimate_tokens(output_text)
-          model_id = body['model'] || 'apple-intelligence'
-
           tool_calls = extract_tool_calls(output_text)
 
           Message.new(
             role: :assistant,
             content: tool_calls ? '' : output_text,
             tool_calls: tool_calls,
-            model_id: model_id,
+            model_id: body['model'] || 'apple-intelligence',
             input_tokens: 0,
-            output_tokens: estimated_tokens,
+            output_tokens: estimate_tokens(output_text),
             raw: body
           )
         rescue JSON::ParserError => e
