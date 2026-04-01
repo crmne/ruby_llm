@@ -24,7 +24,11 @@ module RubyLLM
         if tools&.any?
           last_user = messages.select { |m| m.role == :user }.last
           if last_user
-            user_text = last_user.content.is_a?(String) ? last_user.content : last_user.content.to_s
+            user_text = case last_user.content
+                        when String then last_user.content
+                        when Content then last_user.content.text || ''
+                        else last_user.content.to_s
+                        end
             tool_result = resolve_tool_call(tools, user_text, @config)
             if tool_result
               return Message.new(
