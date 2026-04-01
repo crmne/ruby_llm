@@ -90,34 +90,39 @@ module RubyLLM
             return { call_id => ToolCall.new(id: call_id, name: tool_name.to_s, arguments: {}) }
           end
 
-          param_names = tool.parameters.map { |_n, p| p.name.to_s }
-          extraction_prompt = "Extract these values from the text and return JSON with keys: #{param_names.join(', ')}.\nText: #{user_message}"
-
-          payload = {
-            prompt: extraction_prompt,
-            model: 'on-device',
-            format: 'json',
-            stream: false
-          }
-
+          # Build a minimal extraction prompt per parameter
+          arguments = {}
           bin = BinaryManager.binary_path(config)
-          stdout, stderr, status = Open3.capture3(bin, stdin_data: JSON.generate(payload))
-          return nil unless status.success?
 
-          body = JSON.parse(stdout)
-          return nil unless body['ok']
+          tool.parameters.each_value do |param|
+            prompt = "What #{param.name} is mentioned in this text? Reply with just the value, nothing else.\n\n#{user_message}"
+            payload = { prompt: prompt, model: 'on-device', format: 'json', stream: false }
 
-          output = body['output']&.strip
-          return nil if output.nil? || output.empty?
+            stdout, _stderr, status = Open3.capture3(bin, stdin_data: JSON.generate(payload))
+            next unless status.success?
 
-          args = JSON.parse(output)
-          return nil unless args.is_a?(Hash) && args.any?
+            body = JSON.parse(stdout) rescue next
+            next unless body['ok']
+
+            raw_output = (body['output'] || '').strip
+            # The model might wrap the answer in JSON or return plain text
+            value = begin
+              parsed = JSON.parse(raw_output)
+              # If it returned {"city": "Tokyo"} or {"value": "Tokyo"}
+              parsed.is_a?(Hash) ? (parsed[param.name.to_s] || parsed.values.first) : parsed.to_s
+            rescue JSON::ParserError
+              raw_output.gsub(/\A["']|["']\z/, '') # strip quotes if plain text
+            end
+
+            arguments[param.name.to_sym] = value if value && !value.empty?
+          end
+
+          return nil if arguments.empty?
 
           call_id = "call_#{SecureRandom.hex(8)}"
-          arguments = args.transform_keys(&:to_sym)
-
           { call_id => ToolCall.new(id: call_id, name: tool_name.to_s, arguments: arguments) }
-        rescue JSON::ParserError, StandardError
+        rescue StandardError => e
+          RubyLLM.logger.debug { "Tool call resolution failed: #{e.message}" }
           nil
         end
 
