@@ -19,7 +19,27 @@ module RubyLLM
 
       def complete(messages, tools: nil, temperature: nil, model: nil, params: {}, headers: {}, schema: nil,
                    thinking: nil, tool_prefs: nil, &)
-        payload = build_payload(messages, tools: tools)
+        # Two-pass tool calling: if tools are registered, first ask the model
+        # to extract arguments, then construct the tool call programmatically.
+        if tools&.any?
+          last_user = messages.select { |m| m.role == :user }.last
+          if last_user
+            user_text = last_user.content.is_a?(String) ? last_user.content : last_user.content.to_s
+            tool_result = resolve_tool_call(tools, user_text, @config)
+            if tool_result
+              return Message.new(
+                role: :assistant,
+                content: '',
+                tool_calls: tool_result,
+                model_id: 'apple-intelligence',
+                input_tokens: 0,
+                output_tokens: 0
+              )
+            end
+          end
+        end
+
+        payload = build_payload(messages)
         execute_binary(payload, @config)
       end
 

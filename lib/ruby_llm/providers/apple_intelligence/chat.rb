@@ -19,7 +19,7 @@ module RubyLLM
 
         private
 
-        def build_payload(messages, tools: nil)
+        def build_payload(messages)
           system_prompt = nil
           conversation = []
           latest_user_message = nil
@@ -39,12 +39,6 @@ module RubyLLM
             format_conversation_message(msg)
           end
 
-          # When tools are present, prepend tool instructions to the user prompt
-          if tools&.any?
-            tool_prefix = build_tool_prefix(tools)
-            latest_user_message = "#{tool_prefix}\n\nUser question: #{latest_user_message}"
-          end
-
           payload = {
             prompt: latest_user_message || '',
             model: 'on-device',
@@ -54,17 +48,6 @@ module RubyLLM
           payload[:system] = system_prompt if system_prompt
           payload[:input] = input_parts.join("\n") unless input_parts.empty?
           payload
-        end
-
-        def build_tool_prefix(tools)
-          parts = tools.map do |_key, tool|
-            params = tool.parameters.map { |_n, p| p.name.to_s }.join(', ')
-            "#{tool.name}(#{params}): #{tool.description}"
-          end
-
-          "Available tools: #{parts.join('; ')}. " \
-            'To call a tool, respond with ONLY: {"tool_call":{"name":"NAME","arguments":{"key":"val"}}} ' \
-            'Otherwise respond normally.'
         end
 
         def format_conversation_message(msg)
@@ -84,7 +67,7 @@ module RubyLLM
           end
         end
 
-        def execute_binary(payload, config)
+        def execute_binary(payload, config, tools: nil)
           bin = BinaryManager.binary_path(config)
           json_input = JSON.generate(payload)
 
@@ -92,6 +75,50 @@ module RubyLLM
 
           handle_exit_code(status, stdout, stderr)
           parse_binary_response(stdout)
+        end
+
+        # Two-pass tool calling: first ask the model to extract arguments,
+        # then construct the tool call programmatically.
+        def resolve_tool_call(tools, user_message, config)
+          return nil unless tools&.any?
+
+          tool_name, tool = tools.first # single-tool shortcut for now
+
+          # Zero-parameter tools: call immediately
+          if tool.parameters.empty?
+            call_id = "call_#{SecureRandom.hex(8)}"
+            return { call_id => ToolCall.new(id: call_id, name: tool_name.to_s, arguments: {}) }
+          end
+
+          param_names = tool.parameters.map { |_n, p| p.name.to_s }
+          extraction_prompt = "Extract these values from the text and return JSON with keys: #{param_names.join(', ')}.\nText: #{user_message}"
+
+          payload = {
+            prompt: extraction_prompt,
+            model: 'on-device',
+            format: 'json',
+            stream: false
+          }
+
+          bin = BinaryManager.binary_path(config)
+          stdout, stderr, status = Open3.capture3(bin, stdin_data: JSON.generate(payload))
+          return nil unless status.success?
+
+          body = JSON.parse(stdout)
+          return nil unless body['ok']
+
+          output = body['output']&.strip
+          return nil if output.nil? || output.empty?
+
+          args = JSON.parse(output)
+          return nil unless args.is_a?(Hash) && args.any?
+
+          call_id = "call_#{SecureRandom.hex(8)}"
+          arguments = args.transform_keys(&:to_sym)
+
+          { call_id => ToolCall.new(id: call_id, name: tool_name.to_s, arguments: arguments) }
+        rescue JSON::ParserError, StandardError
+          nil
         end
 
         def handle_exit_code(status, stdout, stderr)
