@@ -44,7 +44,7 @@ module RubyLLM
           payload = {
             prompt: latest_user_message || '',
             model: 'on-device',
-            format: 'json',
+            format: tools&.any? ? 'text' : 'json',
             stream: false
           }
           payload[:system] = system_prompt if system_prompt
@@ -70,13 +70,9 @@ module RubyLLM
             end
           end
 
-          tool_text += <<~INSTRUCTIONS
-
-            When you need to use a tool, respond with ONLY this exact JSON format, nothing else:
-            {"tool_call": {"name": "tool_name", "arguments": {"param1": "value1"}}}
-
-            If you don't need a tool, respond normally with plain text.
-          INSTRUCTIONS
+          tool_text += "\nTo use a tool, reply ONLY with JSON: "
+          tool_text += '{"tool_call":{"name":"TOOL_NAME","arguments":{"param":"value"}}}'
+          tool_text += "\nOtherwise reply with plain text."
 
           [system_prompt, tool_text].compact.join("\n\n")
         end
