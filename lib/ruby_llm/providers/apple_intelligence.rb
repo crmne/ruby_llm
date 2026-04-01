@@ -19,9 +19,10 @@ module RubyLLM
 
       def complete(messages, tools: nil, temperature: nil, model: nil, params: {}, headers: {}, schema: nil,
                    thinking: nil, tool_prefs: nil, &)
-        # Two-pass tool calling: if tools are registered, first ask the model
-        # to extract arguments, then construct the tool call programmatically.
-        if tools&.any?
+        # Two-pass tool calling: if tools are registered and we haven't already
+        # executed a tool (no :tool messages yet), extract arguments and call.
+        has_tool_results = messages.any? { |m| m.role == :tool }
+        if tools&.any? && !has_tool_results
           last_user = messages.select { |m| m.role == :user }.last
           if last_user
             user_text = case last_user.content
