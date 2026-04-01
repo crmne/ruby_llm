@@ -35,12 +35,23 @@ module RubyLLM
 
           latest_user_message = extract_text(conversation.pop.content) if conversation.last&.role == :user
 
+          # After tool execution, the last message is :tool (the result).
+          # Build a prompt that asks the model to answer using the tool result.
+          if latest_user_message.nil? || latest_user_message.empty?
+            tool_results = conversation.select { |m| m.role == :tool }.map { |m| extract_text(m.content) }
+            user_msg = conversation.select { |m| m.role == :user }.last
+            original_question = user_msg ? extract_text(user_msg.content) : 'the user question'
+
+            latest_user_message = "Answer this question: #{original_question}\n\nUse this data: #{tool_results.join('; ')}"
+            conversation = [] # already incorporated into the prompt
+          end
+
           input_parts = conversation.map do |msg|
             format_conversation_message(msg)
           end
 
           payload = {
-            prompt: latest_user_message || '',
+            prompt: latest_user_message,
             model: 'on-device',
             format: 'json',
             stream: false
