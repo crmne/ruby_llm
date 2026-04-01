@@ -22,7 +22,7 @@ Battle tested at [<picture><source media="(prefers-color-scheme: dark)" srcset="
 
 ---
 
-Build chatbots, AI agents, RAG applications. Works with OpenAI, xAI, Anthropic, Google, AWS, local models, and any OpenAI-compatible API.
+Build chatbots, AI agents, RAG applications. Works with OpenAI, xAI, Anthropic, Google, AWS, Apple Intelligence, local models, and any OpenAI-compatible API.
 
 ## From zero to AI chat app in under two minutes
 
@@ -123,6 +123,12 @@ end
 response = chat.with_schema(ProductSchema).ask "Analyze this product", with: "product.txt"
 ```
 
+```ruby
+# Totally local AI with Apple Intelligence — no API keys, no cloud
+chat = RubyLLM.chat(model: "apple-intelligence", provider: :apple_intelligence)
+chat.ask "Explain this code", with: "app.rb"
+```
+
 ## Features
 
 * **Chat:** Conversational AI with `RubyLLM.chat`
@@ -140,7 +146,7 @@ response = chat.with_schema(ProductSchema).ask "Analyze this product", with: "pr
 * **Async:** Fiber-based concurrency
 * **Model registry:** 800+ models with capability detection and pricing
 * **Extended thinking:** Control, view, and persist model deliberation
-* **Providers:** OpenAI, xAI, Anthropic, Gemini, VertexAI, Bedrock, DeepSeek, Mistral, Ollama, OpenRouter, Perplexity, GPUStack, and any OpenAI-compatible API
+* **Providers:** OpenAI, xAI, Anthropic, Gemini, VertexAI, Bedrock, DeepSeek, Mistral, Ollama, OpenRouter, Perplexity, GPUStack, Apple Intelligence, and any OpenAI-compatible API
 
 ## Installation
 
