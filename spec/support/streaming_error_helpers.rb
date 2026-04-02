@@ -197,6 +197,16 @@ module StreamingErrorHelpers
     config = ERROR_HANDLING_CONFIGS[provider]
     return unless config
 
+    if provider == :vertexai
+      require 'googleauth'
+      allow(Google::Auth).to receive(:get_application_default).and_return(
+        instance_double(
+          Google::Auth::GCECredentials,
+          apply: { 'Authorization' => 'Bearer test-token' }
+        )
+      )
+    end
+
     url = config[:url].respond_to?(:call) ? config[:url].call : config[:url]
 
     body = case type

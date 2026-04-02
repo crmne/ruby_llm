@@ -114,7 +114,11 @@ module RubyLLM
 
     def parse_streaming_error(data)
       error_data = JSON.parse(data)
-      [500, error_data['message'] || 'Unknown streaming error']
+      error_payload = error_data['error'].is_a?(Hash) ? error_data['error'] : error_data
+      status = error_payload['code'] || error_data['code'] || 500
+      message = error_payload['message'] || error_data['message'] || 'Unknown streaming error'
+
+      [status, message]
     rescue JSON::ParserError => e
       RubyLLM.logger.debug { "Failed to parse streaming error: #{e.message}" }
       [500, "Failed to parse error: #{data}"]
@@ -136,10 +140,10 @@ module RubyLLM
     def build_stream_error_response(parsed_data, env, status)
       error_status = status || env&.status || 500
 
-      if faraday_1?
-        Struct.new(:body, :status).new(parsed_data, error_status)
-      else
+      if env.respond_to?(:merge)
         env.merge(body: parsed_data, status: error_status)
+      else
+        Struct.new(:body, :status).new(parsed_data, error_status)
       end
     end
 
@@ -163,10 +167,10 @@ module RubyLLM
 
       def v2_on_data(on_chunk, on_failed_response)
         proc do |chunk, _bytes, env|
-          if env&.status == 200
-            on_chunk.call(chunk, env)
-          else
+          if env && env.status != 200
             on_failed_response.call(chunk, env)
+          else
+            on_chunk.call(chunk, env)
           end
         end
       end
