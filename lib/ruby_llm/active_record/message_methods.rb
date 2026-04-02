@@ -97,7 +97,11 @@ module RubyLLM
       end
 
       def extract_content
-        return RubyLLM::Content::Raw.new(content_raw) if has_attribute?(:content_raw) && content_raw.present?
+        if has_attribute?(:content_raw) && content_raw.present?
+          return content_raw if content_raw.is_a?(Hash)
+
+          return RubyLLM::Content::Raw.new(content_raw)
+        end
 
         content_value = self[:content]
 

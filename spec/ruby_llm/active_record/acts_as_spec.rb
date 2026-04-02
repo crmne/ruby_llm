@@ -185,6 +185,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       saved_message = chat.messages.last
       expect(saved_message.role).to eq('assistant')
       expect(saved_message.content_raw).to eq({ 'name' => 'Alice', 'age' => 25 })
+      expect(saved_message.to_llm.content).to eq({ 'name' => 'Alice', 'age' => 25 })
     end
 
     it 'supports multi-turn conversations with structured responses' do
