@@ -106,6 +106,70 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       result = chat.with_tool(Calculator)
       expect(result).to eq(chat)
     end
+
+    it 'supports dynamically adding tools during tool execution' do
+      # A tool that dynamically registers another tool on the chat when executed.
+      # This simulates the "ToolSearch" pattern where a tool discovers and registers
+      # new tools mid-conversation via chat.with_tool.
+      dynamic_tool = Class.new(RubyLLM::Tool) do
+        description 'Searches for tools and makes them available'
+        param :query, type: :string, desc: 'Search query'
+
+        attr_accessor :chat_ref
+
+        def execute(query:)
+          chat_ref.with_tool(Calculator)
+          "Found calculator tool for: #{query}"
+        end
+      end
+
+      chat = Chat.create!(model: model)
+      tool_instance = dynamic_tool.new
+      tool_instance.chat_ref = chat
+      chat.with_tool(tool_instance)
+
+      llm_chat = chat.instance_variable_get(:@chat)
+      provider = llm_chat.instance_variable_get(:@provider)
+
+      # First response: model calls the dynamic tool search
+      search_tool_call = RubyLLM::ToolCall.new(
+        id: 'call_1',
+        name: tool_instance.name,
+        arguments: { 'query' => 'calculator' }
+      )
+
+      # Capture messages sent to the provider on each complete call to verify
+      # that no extra empty assistant message is inserted between tool_calls
+      # and tool results (the actual bug this test guards against).
+      messages_per_call = []
+      call_count = 0
+      allow(provider).to receive(:complete) do |messages, **_kwargs, &_block|
+        messages_per_call << messages.map { |m| { role: m.role.to_s, content: m.content.to_s } }
+        call_count += 1
+        case call_count
+        when 1
+          RubyLLM::Message.new(
+            role: :assistant, content: '',
+            tool_calls: { search_tool_call.id => search_tool_call }
+          )
+        else
+          RubyLLM::Message.new(
+            role: :assistant, content: 'Found it!'
+          )
+        end
+      end
+
+      response = chat.ask('Find me a calculator')
+      expect(response.content).to eq('Found it!')
+
+      # On the second provider call, verify no stray empty assistant message
+      # was inserted between the tool_calls assistant and the tool result.
+      # The bug caused messages to be: [user, assistant(tool_calls), assistant(""), tool]
+      # Correct should be: [user, assistant(tool_calls), tool]
+      second_call_roles = messages_per_call[1].map { |m| m[:role] }
+      assistant_count = second_call_roles.count('assistant')
+      expect(assistant_count).to eq(1), "Expected 1 assistant message but got #{assistant_count}: #{second_call_roles}"
+    end
   end
 
   describe 'model switching' do

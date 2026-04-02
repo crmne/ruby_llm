@@ -75,19 +75,23 @@ module RubyLLM
 
       public
 
-      def to_llm
+      def to_llm(reset_messages: true)
         model_record = model_association
         @chat ||= (context || RubyLLM).chat(
           model: model_record.model_id,
           provider: model_record.provider.to_sym,
           assume_model_exists: assume_model_exists || false
         )
-        @chat.reset_messages!
 
-        ordered_messages = order_messages_for_llm(messages_association.to_a)
-        ordered_messages.each do |msg|
-          @chat.add_message(msg.to_llm)
+        if reset_messages
+          @chat.reset_messages!
+
+          ordered_messages = order_messages_for_llm(messages_association.to_a)
+          ordered_messages.each do |msg|
+            @chat.add_message(msg.to_llm)
+          end
         end
+
         reapply_runtime_instructions(@chat)
 
         setup_persistence_callbacks
@@ -110,12 +114,12 @@ module RubyLLM
       end
 
       def with_tool(...)
-        to_llm.with_tool(...)
+        to_llm(reset_messages: false).with_tool(...)
         self
       end
 
       def with_tools(...)
-        to_llm.with_tools(...)
+        to_llm(reset_messages: false).with_tools(...)
         self
       end
 
