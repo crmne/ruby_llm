@@ -29,7 +29,6 @@ module RubyLLM
   class BadRequestError < Error; end
   class ForbiddenError < Error; end
   class ContextLengthExceededError < Error; end
-  class NotFoundError < Error; end
   class OverloadedError < Error; end
   class PaymentRequiredError < Error; end
   class RateLimitError < Error; end
@@ -70,7 +69,11 @@ module RubyLLM
         when 200..399
           message
         when 400
-          raise_with_context_check(BadRequestError, response, message, 'Invalid request - check your input')
+          if context_length_exceeded?(message)
+            raise ContextLengthExceededError.new(response, message || 'Context length exceeded')
+          end
+
+          raise BadRequestError.new(response, message || 'Invalid request - please check your input')
         when 401
           raise UnauthorizedError.new(response, message || 'Invalid API key - check your credentials')
         when 402
@@ -78,10 +81,12 @@ module RubyLLM
         when 403
           raise ForbiddenError.new(response,
                                    message || 'Forbidden - you do not have permission to access this resource')
-        when 404
-          raise NotFoundError.new(response, message || 'Resource not found')
         when 429
-          raise_with_context_check(RateLimitError, response, message, 'Rate limit exceeded - please wait')
+          if context_length_exceeded?(message)
+            raise ContextLengthExceededError.new(response, message || 'Context length exceeded')
+          end
+
+          raise RateLimitError.new(response, message || 'Rate limit exceeded - please wait a moment')
         when 500
           raise ServerError.new(response, message || 'API server error - please try again')
         when 502..504
@@ -94,14 +99,6 @@ module RubyLLM
       end
 
       private
-
-      def raise_with_context_check(error_class, response, message, default_msg)
-        if context_length_exceeded?(message)
-          raise ContextLengthExceededError.new(response, message || 'Context length exceeded')
-        end
-
-        raise error_class.new(response, message || default_msg)
-      end
 
       def context_length_exceeded?(message)
         return false if message.to_s.empty?
