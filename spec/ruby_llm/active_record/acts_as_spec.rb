@@ -1136,6 +1136,48 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     end
   end
 
+  describe 'strict_loading compatibility' do
+    # Verify that to_llm and cleanup_orphaned_tool_results eager-load message
+    # associations, preventing N+1 queries with strict_loading enabled.
+
+    let(:strict_loading_state) { {} }
+
+    let!(:chat_with_tool_calls) do
+      chat = Chat.create!(model: model)
+      chat.messages.create!(role: 'user', content: "What's 2 + 2?")
+      assistant_msg = chat.messages.create!(role: 'assistant', content: nil)
+      tool_call = assistant_msg.tool_calls.create!(
+        tool_call_id: 'call_strict_1',
+        name: 'calculator',
+        arguments: { expression: '2 + 2' }.to_json
+      )
+      chat.messages.create!(role: 'tool', content: '4', parent_tool_call: tool_call)
+      chat.messages.create!(role: 'assistant', content: 'The answer is 4.')
+      chat
+    end
+
+    before do
+      strict_loading_state[:by_default] = ApplicationRecord.strict_loading_by_default
+      strict_loading_state[:mode] = ApplicationRecord.strict_loading_mode
+
+      ApplicationRecord.strict_loading_by_default = true
+      ApplicationRecord.strict_loading_mode = :n_plus_one_only
+    end
+
+    after do
+      ApplicationRecord.strict_loading_by_default = strict_loading_state[:by_default]
+      ApplicationRecord.strict_loading_mode = strict_loading_state[:mode]
+    end
+
+    it 'to_llm does not raise StrictLoadingViolationError' do
+      expect { chat_with_tool_calls.reload.to_llm }.not_to raise_error
+    end
+
+    it 'cleanup_orphaned_tool_results does not raise StrictLoadingViolationError' do
+      expect { chat_with_tool_calls.reload.send(:cleanup_orphaned_tool_results) }.not_to raise_error
+    end
+  end
+
   describe 'extended thinking persistence' do
     def thinking_config_for(provider)
       case provider

@@ -61,7 +61,7 @@ module RubyLLM
           provider: model_record.provider.to_sym,
           assume_model_exists: assume_model_exists || false
         )
-        @chat.messages = messages_association.to_a
+        @chat.messages = eager_load_messages
         reapply_runtime_instructions(@chat)
 
         setup_persistence_callbacks
@@ -282,7 +282,7 @@ module RubyLLM
 
       def cleanup_orphaned_tool_results # rubocop:disable Metrics/PerceivedComplexity
         messages_association.reload
-        last = messages_association.order(:id).last
+        last = eager_load_messages.max_by(&:id)
 
         return unless last&.tool_call? || last&.tool_result?
 
@@ -299,6 +299,22 @@ module RubyLLM
             tool_call_message.destroy
           end
         end
+      end
+
+      def eager_load_messages
+        assoc = messages_association
+        messages = assoc.to_a
+        return messages unless assoc.respond_to?(:klass)
+
+        msg_class = assoc.klass
+        associations = [
+          msg_class.tool_calls_association_name,
+          :parent_tool_call,
+          msg_class.model_association_name
+        ].compact
+
+        ::ActiveRecord::Associations::Preloader.new(records: messages, associations: associations).call
+        messages
       end
 
       def find_or_create_model_record(model_info)
