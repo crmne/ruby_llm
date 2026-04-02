@@ -198,4 +198,48 @@ RSpec.describe RubyLLM::Providers::Anthropic::Tools do
       expect(described_class.parse_tool_calls([])).to be_nil
     end
   end
+
+  describe '.extract_tool_calls (streaming)' do
+    # Build a test object that mixes in the Streaming + Tools modules
+    # so we can call extract_tool_calls with raw Anthropic event data.
+    let(:provider) do
+      Class.new do
+        include RubyLLM::Providers::Anthropic::Streaming
+        include RubyLLM::Providers::Anthropic::Tools
+
+        public :extract_tool_calls, :json_delta?
+      end.new
+    end
+
+    it 'emits block index key for input_json_delta events' do
+      data = {
+        'type' => 'content_block_delta',
+        'index' => 3,
+        'delta' => { 'type' => 'input_json_delta', 'partial_json' => '{"sym' }
+      }
+
+      result = provider.extract_tool_calls(data)
+
+      expect(result).to have_key('block_idx_3')
+      expect(result['block_idx_3'].arguments).to eq('{"sym')
+      expect(result['block_idx_3'].id).to be_nil
+    end
+
+    it 'emits tool call and index registration for content_block_start' do
+      data = {
+        'type' => 'content_block_start',
+        'index' => 2,
+        'content_block' => { 'type' => 'tool_use', 'id' => 'toolu_abc', 'name' => 'weather', 'input' => {} }
+      }
+
+      result = provider.extract_tool_calls(data)
+
+      expect(result).to have_key('toolu_abc')
+      expect(result['toolu_abc'].name).to eq('weather')
+
+      expect(result).to have_key('register_idx_2')
+      expect(result['register_idx_2'].id).to eq('toolu_abc')
+      expect(result['register_idx_2'].name).to eq('_register_block_index')
+    end
+  end
 end
