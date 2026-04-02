@@ -126,6 +126,16 @@ chat.with_model('{{ site.models.anthropic_latest }}')
 response2 = chat.ask "Follow-up question..."
 ```
 
+You can also set a fallback model that kicks in automatically when the primary model is unavailable:
+
+```ruby
+chat = RubyLLM.chat(model: "gemini-2.5-flash-lite")
+  .with_fallback("gemini-2.5-flash")
+  .ask("Classify this email")
+```
+
+See [Error Handling]({% link _advanced/error-handling.md %}#model-fallback) for details on which errors trigger fallback.
+
 For detailed information about model selection, capabilities, aliases, and working with custom models, see the [Working with Models Guide]({% link _advanced/models.md %}).
 
 ## Multi-modal Conversations

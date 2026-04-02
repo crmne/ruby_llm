@@ -1,0 +1,273 @@
+# frozen_string_literal: true
+
+require 'spec_helper'
+
+RSpec.describe RubyLLM::Chat do
+  include_context 'with configured RubyLLM'
+
+  describe '#with_fallback' do
+    let(:primary_provider) { instance_double(RubyLLM::Provider) }
+    let(:fallback_provider) { instance_double(RubyLLM::Provider) }
+    let(:chat) { RubyLLM.chat(model: 'gpt-4.1-nano') }
+
+    before do
+      allow(RubyLLM::Models).to receive(:resolve).and_call_original
+      allow(RubyLLM::Models).to receive(:resolve)
+        .with('gpt-4.1-nano', provider: nil, assume_exists: false, config: anything)
+        .and_return([RubyLLM::Models.find('gpt-4.1-nano'), primary_provider])
+      allow(primary_provider).to receive(:connection).and_return(double)
+      allow(RubyLLM::Models).to receive(:resolve)
+        .with('claude-haiku-4-5-20251001', provider: nil, assume_exists: false, config: anything)
+        .and_return([RubyLLM::Models.find('claude-haiku-4-5-20251001'), fallback_provider])
+      allow(fallback_provider).to receive(:connection).and_return(double)
+    end
+
+    it 'returns self for chaining' do
+      expect(chat.with_fallback('claude-haiku-4-5-20251001')).to eq(chat)
+    end
+
+    it 'tries fallback model on transient errors' do
+      chat.with_fallback('claude-haiku-4-5-20251001')
+
+      call_count = 0
+      allow(primary_provider).to receive(:complete) do
+        call_count += 1
+        raise RubyLLM::ServiceUnavailableError.new(nil, 'model experiencing high demand')
+      end
+
+      allow(fallback_provider).to receive(:complete)
+        .and_return(RubyLLM::Message.new(role: :assistant, content: 'Hello from fallback!'))
+
+      chat.add_message(role: :user, content: 'Hello')
+      response = chat.complete
+
+      expect(response.content).to eq('Hello from fallback!')
+      expect(call_count).to eq(1)
+    end
+
+    it 'raises original error when fallback also fails' do
+      chat.with_fallback('claude-haiku-4-5-20251001')
+
+      original_error = RubyLLM::ServiceUnavailableError.new(nil, 'primary down')
+      allow(primary_provider).to receive(:complete).and_raise(original_error)
+      allow(fallback_provider).to receive(:complete)
+        .and_raise(RubyLLM::ServerError.new(nil, 'fallback also down'))
+
+      chat.add_message(role: :user, content: 'Hello')
+
+      expect { chat.complete }.to raise_error(RubyLLM::ServiceUnavailableError, 'primary down')
+    end
+
+    it 'restores original model after successful fallback' do
+      chat.with_fallback('claude-haiku-4-5-20251001')
+
+      original_model = chat.model
+
+      primary_calls = 0
+      allow(primary_provider).to receive(:complete) do
+        primary_calls += 1
+        raise RubyLLM::OverloadedError.new(nil, 'overloaded') if primary_calls == 1
+
+        RubyLLM::Message.new(role: :assistant, content: 'primary restored')
+      end
+      allow(fallback_provider).to receive(:complete)
+        .and_return(RubyLLM::Message.new(role: :assistant, content: 'ok'))
+
+      chat.add_message(role: :user, content: 'Hello')
+      chat.complete
+
+      expect(chat.model).to eq(original_model)
+
+      # Verify provider restoration: next call routes to primary
+      chat.add_message(role: :user, content: 'Hello again')
+      response = chat.complete
+      expect(response.content).to eq('primary restored')
+    end
+
+    it 'restores original model when fallback fails' do
+      chat.with_fallback('claude-haiku-4-5-20251001')
+
+      original_model = chat.model
+
+      primary_calls = 0
+      allow(primary_provider).to receive(:complete) do
+        primary_calls += 1
+        raise RubyLLM::OverloadedError.new(nil, 'overloaded') if primary_calls == 1
+
+        RubyLLM::Message.new(role: :assistant, content: 'primary restored')
+      end
+      allow(fallback_provider).to receive(:complete)
+        .and_raise(RubyLLM::ServerError.new(nil, 'fallback down'))
+
+      chat.add_message(role: :user, content: 'Hello')
+
+      expect { chat.complete }.to raise_error(RubyLLM::OverloadedError)
+      expect(chat.model).to eq(original_model)
+
+      # Verify provider restoration: next call routes to primary
+      chat.add_message(role: :user, content: 'Hello again')
+      response = chat.complete
+      expect(response.content).to eq('primary restored')
+    end
+
+    it 'does not trigger fallback on non-transient errors' do
+      chat.with_fallback('claude-haiku-4-5-20251001')
+
+      allow(primary_provider).to receive(:complete)
+        .and_raise(RubyLLM::BadRequestError.new(nil, 'invalid request'))
+
+      chat.add_message(role: :user, content: 'Hello')
+
+      expect { chat.complete }.to raise_error(RubyLLM::BadRequestError, 'invalid request')
+    end
+
+    it 'does not trigger fallback on auth errors' do
+      chat.with_fallback('claude-haiku-4-5-20251001')
+
+      allow(primary_provider).to receive(:complete)
+        .and_raise(RubyLLM::UnauthorizedError.new(nil, 'bad key'))
+
+      chat.add_message(role: :user, content: 'Hello')
+
+      expect { chat.complete }.to raise_error(RubyLLM::UnauthorizedError)
+    end
+
+    it 'preserves message history across fallback' do
+      chat.with_fallback('claude-haiku-4-5-20251001')
+      chat.add_message(role: :user, content: 'First message')
+      chat.add_message(role: :assistant, content: 'First reply')
+      chat.add_message(role: :user, content: 'Second message')
+
+      allow(primary_provider).to receive(:complete)
+        .and_raise(RubyLLM::RateLimitError.new(nil, 'rate limited'))
+
+      captured_messages = nil
+      allow(fallback_provider).to receive(:complete) do |messages, **_kwargs|
+        captured_messages = messages.dup
+        RubyLLM::Message.new(role: :assistant, content: 'Fallback reply')
+      end
+
+      chat.complete
+
+      expect(captured_messages.length).to eq(3)
+      expect(captured_messages[0].content).to eq('First message')
+      expect(captured_messages[1].content).to eq('First reply')
+      expect(captured_messages[2].content).to eq('Second message')
+    end
+
+    it 'works with streaming' do
+      chat.with_fallback('claude-haiku-4-5-20251001')
+
+      allow(primary_provider).to receive(:complete)
+        .and_raise(RubyLLM::ServiceUnavailableError.new(nil, 'unavailable'))
+
+      allow(fallback_provider).to receive(:complete) do |_messages, **_kwargs, &block|
+        block&.call(RubyLLM::Chunk.new(role: :assistant, content: 'chunk'))
+        RubyLLM::Message.new(role: :assistant, content: 'streamed reply')
+      end
+
+      chat.add_message(role: :user, content: 'Hello')
+
+      chunks = []
+      response = chat.complete { |chunk| chunks << chunk }
+
+      expect(response.content).to eq('streamed reply')
+      expect(chunks).not_to be_empty
+    end
+
+    it 'does not fallback when no fallback is configured' do
+      allow(primary_provider).to receive(:complete)
+        .and_raise(RubyLLM::ServiceUnavailableError.new(nil, 'unavailable'))
+
+      chat.add_message(role: :user, content: 'Hello')
+
+      expect { chat.complete }.to raise_error(RubyLLM::ServiceUnavailableError)
+    end
+
+    [
+      RubyLLM::RateLimitError,
+      RubyLLM::ServerError,
+      RubyLLM::ServiceUnavailableError,
+      RubyLLM::OverloadedError
+    ].each do |error_class|
+      it "triggers fallback on #{error_class.name.split('::').last}" do
+        chat.with_fallback('claude-haiku-4-5-20251001')
+
+        allow(primary_provider).to receive(:complete)
+          .and_raise(error_class.new(nil, 'error'))
+        allow(fallback_provider).to receive(:complete)
+          .and_return(RubyLLM::Message.new(role: :assistant, content: 'ok'))
+
+        chat.add_message(role: :user, content: 'Hello')
+        response = chat.complete
+
+        expect(response.content).to eq('ok')
+      end
+    end
+
+    it 'triggers fallback on Faraday::TimeoutError' do
+      chat.with_fallback('claude-haiku-4-5-20251001')
+
+      allow(primary_provider).to receive(:complete)
+        .and_raise(Faraday::TimeoutError.new('request timed out'))
+      allow(fallback_provider).to receive(:complete)
+        .and_return(RubyLLM::Message.new(role: :assistant, content: 'ok from fallback'))
+
+      chat.add_message(role: :user, content: 'Hello')
+      response = chat.complete
+
+      expect(response.content).to eq('ok from fallback')
+    end
+
+    it 'triggers fallback on Faraday::ConnectionFailed' do
+      chat.with_fallback('claude-haiku-4-5-20251001')
+
+      allow(primary_provider).to receive(:complete)
+        .and_raise(Faraday::ConnectionFailed.new('connection refused'))
+      allow(fallback_provider).to receive(:complete)
+        .and_return(RubyLLM::Message.new(role: :assistant, content: 'ok from fallback'))
+
+      chat.add_message(role: :user, content: 'Hello')
+      response = chat.complete
+
+      expect(response.content).to eq('ok from fallback')
+    end
+
+    it 'logs warning with fallback error details when both primary and fallback fail' do
+      chat.with_fallback('claude-haiku-4-5-20251001')
+      allow(RubyLLM.logger).to receive(:warn)
+
+      allow(primary_provider).to receive(:complete)
+        .and_raise(RubyLLM::ServiceUnavailableError.new(nil, 'primary down'))
+      allow(fallback_provider).to receive(:complete)
+        .and_raise(RubyLLM::ServerError.new(nil, 'fallback also down'))
+
+      chat.add_message(role: :user, content: 'Hello')
+
+      expect { chat.complete }.to raise_error(RubyLLM::ServiceUnavailableError, 'primary down')
+
+      expect(RubyLLM.logger).to have_received(:warn).with(/falling back to/)
+      expect(RubyLLM.logger).to have_received(:warn).with(
+        /Fallback to claude-haiku-4-5-20251001 also failed: RubyLLM::ServerError/
+      )
+    end
+
+    it 'sanitizes model IDs with control characters in log output' do
+      chat.with_fallback('claude-haiku-4-5-20251001')
+      allow(RubyLLM.logger).to receive(:warn).and_call_original
+
+      allow(chat.model).to receive(:id).and_return("gpt-4\nnewline-injected")
+
+      allow(primary_provider).to receive(:complete)
+        .and_raise(RubyLLM::ServiceUnavailableError.new(nil, 'unavailable'))
+      allow(fallback_provider).to receive(:complete)
+        .and_return(RubyLLM::Message.new(role: :assistant, content: 'ok'))
+
+      chat.add_message(role: :user, content: 'Hello')
+
+      chat.complete
+
+      expect(RubyLLM.logger).to have_received(:warn).with(/gpt-4newline-injected/)
+    end
+  end
+end

@@ -4,6 +4,7 @@ module RubyLLM
   # Represents a conversation with an AI model
   class Chat
     include Enumerable
+    include Fallback
 
     attr_reader :model, :messages, :tools, :tool_prefs, :params, :headers, :schema
 
@@ -24,6 +25,8 @@ module RubyLLM
       @headers = {}
       @schema = nil
       @thinking = nil
+      @fallback = nil
+      @in_fallback = false
       @on = {
         new_message: nil,
         end_message: nil,
@@ -136,37 +139,10 @@ module RubyLLM
       messages.each(&)
     end
 
-    def complete(&) # rubocop:disable Metrics/PerceivedComplexity
-      response = @provider.complete(
-        messages,
-        tools: @tools,
-        tool_prefs: @tool_prefs,
-        temperature: @temperature,
-        model: @model,
-        params: @params,
-        headers: @headers,
-        schema: @schema,
-        thinking: @thinking,
-        &wrap_streaming_block(&)
-      )
-
-      @on[:new_message]&.call unless block_given?
-
-      if @schema && response.content.is_a?(String) && !response.tool_call?
-        begin
-          response.content = JSON.parse(response.content)
-        rescue JSON::ParserError
-          # If parsing fails, keep content as string
-        end
-      end
-
-      add_message response
-      @on[:end_message]&.call(response)
-
-      if response.tool_call?
-        handle_tool_calls(response, &)
-      else
-        response
+    def complete(&)
+      with_fallback_protection do
+        response = complete_with_provider(&)
+        finalize_completion(response, &)
       end
     end
 
@@ -219,6 +195,40 @@ module RubyLLM
     def sanitize_schema_name(name)
       sanitized = name.to_s.gsub(/[^a-zA-Z0-9_-]/, '_')
       sanitized.empty? ? 'response' : sanitized
+    end
+
+    def complete_with_provider(&)
+      @provider.complete(
+        messages,
+        tools: @tools,
+        tool_prefs: @tool_prefs,
+        temperature: @temperature,
+        model: @model,
+        params: @params,
+        headers: @headers,
+        schema: @schema,
+        thinking: @thinking,
+        &wrap_streaming_block(&)
+      )
+    end
+
+    def finalize_completion(response, &)
+      @on[:new_message]&.call unless block_given?
+      normalize_schema_response(response)
+      add_message response
+      @on[:end_message]&.call(response)
+
+      response.tool_call? ? handle_tool_calls(response, &) : response
+    end
+
+    def normalize_schema_response(response)
+      return unless @schema && response.content.is_a?(String) && !response.tool_call?
+
+      begin
+        response.content = JSON.parse(response.content)
+      rescue JSON::ParserError
+        # If parsing fails, keep content as string
+      end
     end
 
     def wrap_streaming_block(&block)
