@@ -23,6 +23,8 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      X-Gemini-Service-Tier:
+      - standard
       Content-Type:
       - application/json; charset=UTF-8
       Vary:
@@ -30,7 +32,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 16 Mar 2026 19:11:18 GMT
+      - Thu, 02 Apr 2026 11:23:12 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -40,7 +42,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=759
+      - gfet4t7; dur=788
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -54,7 +56,7 @@ http_interactions:
               "content": {
                 "parts": [
                   {
-                    "text": "{\"result\": 8}"
+                    "text": "{\n  \"result\": 8\n}"
                   }
                 ],
                 "role": "model"
@@ -65,18 +67,18 @@ http_interactions:
           ],
           "usageMetadata": {
             "promptTokenCount": 22,
-            "candidatesTokenCount": 6,
-            "totalTokenCount": 69,
+            "candidatesTokenCount": 10,
+            "totalTokenCount": 98,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
                 "tokenCount": 22
               }
             ],
-            "thoughtsTokenCount": 41
+            "thoughtsTokenCount": 66
           },
           "modelVersion": "gemini-2.5-flash",
-          "responseId": "1VW4aefJEZqlkdUP-6es-QU"
+          "responseId": "n1HOaemQN_Hn7M8Pg638oAM"
         }
-  recorded_at: Mon, 16 Mar 2026 19:11:18 GMT
+  recorded_at: Thu, 02 Apr 2026 11:23:12 GMT
 recorded_with: VCR 6.4.0

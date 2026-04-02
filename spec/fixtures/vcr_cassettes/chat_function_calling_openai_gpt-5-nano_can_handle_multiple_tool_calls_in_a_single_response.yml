@@ -26,7 +26,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 16 Mar 2026 19:17:38 GMT
+      - Thu, 02 Apr 2026 11:29:36 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -48,7 +48,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '5337'
+      - '9419'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
@@ -77,9 +77,9 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-DK7jRqUz6SCnFYuX4St82woU412pf",
+          "id": "chatcmpl-DQAWloEpAYtSlPfOQ1lVwGifvi5bY",
           "object": "chat.completion",
-          "created": 1773688653,
+          "created": 1775129367,
           "model": "gpt-5-nano-2025-08-07",
           "choices": [
             {
@@ -89,7 +89,7 @@ http_interactions:
                 "content": null,
                 "tool_calls": [
                   {
-                    "id": "call_CqY5pdxzwu6BUx7ITq8ufFI6",
+                    "id": "call_MlKaAiYFsGM6SXyv9r4NrQKR",
                     "type": "function",
                     "function": {
                       "name": "dice_roll",
@@ -97,7 +97,7 @@ http_interactions:
                     }
                   },
                   {
-                    "id": "call_r0SbTvLviWcWq2yKxHWSGNl5",
+                    "id": "call_x6UcaiPYqmva4QBAWNZC054S",
                     "type": "function",
                     "function": {
                       "name": "dice_roll",
@@ -105,7 +105,7 @@ http_interactions:
                     }
                   },
                   {
-                    "id": "call_TMCTfaWF2KMK0wc2Vlba0McO",
+                    "id": "call_VrZilMCXDsAcZ521e7mH2ucC",
                     "type": "function",
                     "function": {
                       "name": "dice_roll",
@@ -121,14 +121,14 @@ http_interactions:
           ],
           "usage": {
             "prompt_tokens": 152,
-            "completion_tokens": 446,
-            "total_tokens": 598,
+            "completion_tokens": 1342,
+            "total_tokens": 1494,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
             },
             "completion_tokens_details": {
-              "reasoning_tokens": 384,
+              "reasoning_tokens": 1280,
               "audio_tokens": 0,
               "accepted_prediction_tokens": 0,
               "rejected_prediction_tokens": 0
@@ -137,7 +137,7 @@ http_interactions:
           "service_tier": "default",
           "system_fingerprint": null
         }
-  recorded_at: Mon, 16 Mar 2026 19:17:38 GMT
+  recorded_at: Thu, 02 Apr 2026 11:29:36 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/chat/completions
@@ -145,10 +145,10 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"gpt-5-nano","messages":[{"role":"developer","content":"You
         must call the dice_roll tool exactly 3 times when asked to roll dice 3 times."},{"role":"user","content":"Roll
-        the dice 3 times"},{"role":"assistant","content":"","tool_calls":[{"id":"call_CqY5pdxzwu6BUx7ITq8ufFI6","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_r0SbTvLviWcWq2yKxHWSGNl5","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_TMCTfaWF2KMK0wc2Vlba0McO","type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},{"role":"tool","content":"{roll:
-        1}","tool_call_id":"call_CqY5pdxzwu6BUx7ITq8ufFI6"},{"role":"tool","content":"{roll:
-        2}","tool_call_id":"call_r0SbTvLviWcWq2yKxHWSGNl5"},{"role":"tool","content":"{roll:
-        3}","tool_call_id":"call_TMCTfaWF2KMK0wc2Vlba0McO"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
+        the dice 3 times"},{"role":"assistant","content":"","tool_calls":[{"id":"call_MlKaAiYFsGM6SXyv9r4NrQKR","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_x6UcaiPYqmva4QBAWNZC054S","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_VrZilMCXDsAcZ521e7mH2ucC","type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},{"role":"tool","content":"{roll:
+        1}","tool_call_id":"call_MlKaAiYFsGM6SXyv9r4NrQKR"},{"role":"tool","content":"{roll:
+        2}","tool_call_id":"call_x6UcaiPYqmva4QBAWNZC054S"},{"role":"tool","content":"{roll:
+        3}","tool_call_id":"call_VrZilMCXDsAcZ521e7mH2ucC"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
         a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
@@ -167,7 +167,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 16 Mar 2026 19:17:42 GMT
+      - Thu, 02 Apr 2026 11:29:40 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -189,7 +189,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '3379'
+      - '3786'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
@@ -218,16 +218,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-DK7jX74NwGqQ3qr5AGC9IzVE1svqW",
+          "id": "chatcmpl-DQAWuT24VU7ECIyO8KxwVjqAQTWwK",
           "object": "chat.completion",
-          "created": 1773688659,
+          "created": 1775129376,
           "model": "gpt-5-nano-2025-08-07",
           "choices": [
             {
               "index": 0,
               "message": {
                 "role": "assistant",
-                "content": "Roll results:\n- Roll 1: 1\n- Roll 2: 2\n- Roll 3: 3\n\nTotal: 6",
+                "content": "Here are your three rolls:\n- Roll 1: 1\n- Roll 2: 2\n- Roll 3: 3\n\nTotal: 6\n\nWould you like to roll again?",
                 "refusal": null,
                 "annotations": []
               },
@@ -236,14 +236,14 @@ http_interactions:
           ],
           "usage": {
             "prompt_tokens": 241,
-            "completion_tokens": 360,
-            "total_tokens": 601,
+            "completion_tokens": 563,
+            "total_tokens": 804,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
             },
             "completion_tokens_details": {
-              "reasoning_tokens": 320,
+              "reasoning_tokens": 512,
               "audio_tokens": 0,
               "accepted_prediction_tokens": 0,
               "rejected_prediction_tokens": 0
@@ -252,5 +252,5 @@ http_interactions:
           "service_tier": "default",
           "system_fingerprint": null
         }
-  recorded_at: Mon, 16 Mar 2026 19:17:42 GMT
+  recorded_at: Thu, 02 Apr 2026 11:29:40 GMT
 recorded_with: VCR 6.4.0
