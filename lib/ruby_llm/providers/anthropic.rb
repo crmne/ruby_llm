@@ -22,12 +22,14 @@ module RubyLLM
         }
       end
 
-      def complete(messages, headers: {}, **kwargs, &block)
+      # rubocop:disable Metrics/ParameterLists
+      def complete(messages, tools:, temperature:, model:, params: {}, headers: {}, schema: nil, thinking: nil,
+                   tool_prefs: nil, &block)
         headers = headers.merge('anthropic-beta' => 'prompt-caching-2024-07-31') if messages.any?(&:cache_point?)
 
-        super(messages, headers: headers, **kwargs, &block) # rubocop:disable Style/SuperArguments
-        # Ignoring as we're modifying headers before calling super. We need to call super with modified headers.
+        super
       end
+      # rubocop:enable Metrics/ParameterLists
 
       class << self
         def capabilities
