@@ -27,57 +27,50 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 16 Mar 2026 19:18:42 GMT
+      - Thu, 02 Apr 2026 11:30:56 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Strict-Transport-Security:
-      - max-age=31536000
       Set-Cookie:
       - "<COOKIE>"
       X-Ratelimit-Limit-Tokens:
-      - '4000000'
+      - '10000000'
       X-Ratelimit-Remaining-Tokens:
-      - '4000000'
+      - '10000000'
       X-Zero-Data-Retention:
       - 'false'
       X-Ratelimit-Limit-Requests:
-      - '607'
+      - '1800'
       X-Ratelimit-Remaining-Requests:
-      - '607'
+      - '1800'
       X-Metrics-Mean-Itl-Ms:
-      - '25.2'
+      - '27.4'
       X-Metrics-E2e-Ms:
-      - '1153.6'
-      Cf-Cache-Status:
-      - DYNAMIC
+      - '1232.4'
+      Strict-Transport-Security:
+      - max-age=31536000
       X-Request-Id:
       - "<X_REQUEST_ID>"
+      Traceparent:
+      - 00-3fcf9420830b24c4ddcd8686082bddeb-53d7d86f0089a901-01
+      Cf-Cache-Status:
+      - DYNAMIC
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
       - "*"
       Access-Control-Expose-Headers:
       - "*"
-      Content-Security-Policy-Report-Only:
-      - script-src 'none'; report-uri https://csp-reporting.cloudflare.com/cdn-cgi/script_monitor/report?m=XcUcpavuNkJ9suHCnAG7xb34SARIoVJRYLI7knARLCg-1773688720.935826-1.0.1.1-X.pG1mHeQM0Exryzhry1dyORL1.z5n51duUWeTOkQnSyVyj63g9Xx35D.yjVCr12ruBNa6ZB9pEso5LTBnARJAEvjwAnoaPdGKKDMhs4xElN.bcOK5mxs4IoUC_AXr03T9q9ieym_khfJLe706STkct2JSUHN8A1TH3oppShnvE;
-        report-to cf-csp-endpoint
-      X-Envoy-Wasm-Service:
-      - prod-ic-inference-api
-      X-Envoy-Wasm-Route:
-      - ic-protected-inference-api
-      Report-To:
-      - '{"group":"cf-csp-endpoint","max_age":86400,"endpoints":[{"url":"https://csp-reporting.cloudflare.com/cdn-cgi/script_monitor/report?m=XcUcpavuNkJ9suHCnAG7xb34SARIoVJRYLI7knARLCg-1773688720.935826-1.0.1.1-X.pG1mHeQM0Exryzhry1dyORL1.z5n51duUWeTOkQnSyVyj63g9Xx35D.yjVCr12ruBNa6ZB9pEso5LTBnARJAEvjwAnoaPdGKKDMhs4xElN.bcOK5mxs4IoUC_AXr03T9q9ieym_khfJLe706STkct2JSUHN8A1TH3oppShnvE"}]}'
       Server:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"23fd6b6f-afe3-9a54-bbbe-8dceadb094c2","object":"chat.completion","created":1773688721,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"call_70768661","function":{"name":"any_of_params","arguments":"{\"task\":\"Review
-        PR\",\"status\":\"pending\"}"},"type":"function"}],"refusal":null},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":421,"completion_tokens":37,"total_tokens":458,"prompt_tokens_details":{"text_tokens":421,"audio_tokens":0,"image_tokens":0,"cached_tokens":158},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":790000},"system_fingerprint":"fp_48319fcb08"}'
-  recorded_at: Mon, 16 Mar 2026 19:18:42 GMT
+      string: '{"id":"03a8076b-7e97-9183-9896-3710138db4a6","object":"chat.completion","created":1775129455,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"call_38248789","function":{"name":"any_of_params","arguments":"{\"task\":\"Review
+        PR\",\"status\":\"pending\"}"},"type":"function"}],"refusal":null},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":421,"completion_tokens":37,"total_tokens":458,"prompt_tokens_details":{"text_tokens":421,"audio_tokens":0,"image_tokens":0,"cached_tokens":158},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":790000},"system_fingerprint":"fp_5d249ba471"}'
+  recorded_at: Thu, 02 Apr 2026 11:30:56 GMT
 recorded_with: VCR 6.4.0

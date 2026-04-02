@@ -24,59 +24,49 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 16 Mar 2026 19:16:02 GMT
+      - Thu, 02 Apr 2026 11:27:24 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Strict-Transport-Security:
-      - max-age=31536000
-      Set-Cookie:
-      - "<COOKIE>"
       X-Ratelimit-Limit-Tokens:
-      - '4000000'
+      - '10000000'
       X-Ratelimit-Remaining-Tokens:
-      - '4000000'
+      - '10000000'
       X-Zero-Data-Retention:
       - 'false'
       X-Ratelimit-Limit-Requests:
-      - '607'
+      - '1800'
       X-Ratelimit-Remaining-Requests:
-      - '606'
+      - '1800'
       X-Metrics-Ttft-Ms:
-      - '106.4'
-      X-Metrics-Mean-Itl-Ms:
-      - '9.5'
+      - '100.1'
       X-Metrics-E2e-Ms:
-      - '1152.9'
+      - '230.8'
       Cf-Cache-Status:
       - DYNAMIC
       X-Request-Id:
       - "<X_REQUEST_ID>"
+      Traceparent:
+      - 00-c64c21fde45a17010207381da9d111f4-fef0e904000109a1-01
+      Set-Cookie:
+      - "<COOKIE>"
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
       - "*"
       Access-Control-Expose-Headers:
       - "*"
-      X-Envoy-Wasm-Service:
-      - prod-ic-inference-api
-      X-Envoy-Wasm-Route:
-      - ic-protected-inference-api
+      Strict-Transport-Security:
+      - max-age=31536000
       Server:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"a2368505-d6bf-9513-a37a-bee61f874f24","object":"chat.completion","created":1773688561,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"**Paris**
-        is the capital of France. \n\nThis has been the case since 987 AD, when Hugh
-        Capet established the Capetian dynasty and made Paris the seat of royal power.
-        It''s confirmed by official sources like the French government''s website
-        (e.g., diplomatie.gouv.fr) and international bodies like the UN, which list
-        Paris as the capital city with a population of about 2.1 million in the city
-        proper and 12.6 million in the metro area (INSEE data, 2023).","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":175,"completion_tokens":105,"total_tokens":280,"prompt_tokens_details":{"text_tokens":175,"audio_tokens":0,"image_tokens":0,"cached_tokens":161},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":633500},"system_fingerprint":"fp_48319fcb08"}'
-  recorded_at: Mon, 16 Mar 2026 19:16:02 GMT
+      string: '{"id":"de7ba74c-7024-9d8d-9eec-744df9b3a279","object":"chat.completion","created":1775129244,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"Paris","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":175,"completion_tokens":1,"total_tokens":176,"prompt_tokens_details":{"text_tokens":175,"audio_tokens":0,"image_tokens":0,"cached_tokens":161},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":113500},"system_fingerprint":"fp_5d249ba471"}'
+  recorded_at: Thu, 02 Apr 2026 11:27:24 GMT
 recorded_with: VCR 6.4.0

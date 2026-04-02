@@ -26,6 +26,8 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      X-Gemini-Service-Tier:
+      - standard
       Content-Type:
       - application/json; charset=UTF-8
       Vary:
@@ -33,7 +35,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 16 Mar 2026 19:21:08 GMT
+      - Thu, 02 Apr 2026 11:33:20 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -43,7 +45,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=922
+      - gfet4t7; dur=1033
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -60,11 +62,11 @@ http_interactions:
                     "functionCall": {
                       "name": "weather",
                       "args": {
-                        "latitude": "52.5200",
-                        "longitude": "13.4050"
+                        "latitude": "41.9028",
+                        "longitude": "12.4964"
                       }
                     },
-                    "thoughtSignature": "CvYBAb4+9vvFamTFuEzyYmvHSRDoFPWqpWdcVJIQMjZztGe1BNoh73HES/t9/sCs/M4dYblf+ls25Mq0XzANDP4bPngLEMyNNT8XkFtyzYX3jbBT9wjr/BzU9ZqEMkRCCVqM5evH/SOUcGJILQPBVJc6F3mMurfVkV5xYl1UJyrnjHkrZpjd716Ik9mttxSVBEPYGDYwbte4v++d8DgHvUvdGRfC7BuRrYC6nM6smptV0sbWFHuoa4M/esiiI6iyvNJjIJqLdbNy577ExJkdkkBjoz/Nimk2jiAbi06eWCxKDEyJbmzbf6G673tdLycSDBlbRM/K+u7C"
+                    "thoughtSignature": "CpkDAb4+9vubpda05WhklsQymPnsfe5e/mNRfPK6RkAzgvcgidZOEgrWd7pMMEIYMf6kfADwuZMzhSMRug9pgUlC1VJ1wo7mDrRXAvRqbOd2yqPfgeZvWdFZOLPL+r/opqAsz4SjPz+KvDbzM8Ih4sKTDu5Hew9RR36kRTcg5hl/thsD5BKpRRBPan6HyQDcdSuxNtmNui2ZoI1GexOIIeRVc99wd8hEsJT6FxnZ48esZkfiqUZSBgGR4TSiqZH/7vfqkzw+djF5fOrIAOhIy/XUse5UY5sAKnoTQG7Xr3KCs/X+7+sCfHIjvW91ea6KW6tYjBO+O3zD/YHPOCyWfD9/Fz6C9v0hLQWK8qsufkRVr+J4pAUnJMCHIFQQvurLodiQNtWkK7lv4lGUw0likSDRQXMD50mMyD7hOYJew+8jF1BHu6ta/4CXKQchpqcq11knQUHOBLzqPOv29qhhJGr9aTS2aGSxybbZ8FSVG6kUcW5UQxPrMF5CaIcV06SHTeah39mXIMzNMrjzQpLs1KTMLKztaq3wKIDnEA=="
                   }
                 ],
                 "role": "model"
@@ -77,27 +79,27 @@ http_interactions:
           "usageMetadata": {
             "promptTokenCount": 84,
             "candidatesTokenCount": 30,
-            "totalTokenCount": 155,
+            "totalTokenCount": 195,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
                 "tokenCount": 84
               }
             ],
-            "thoughtsTokenCount": 41
+            "thoughtsTokenCount": 81
           },
           "modelVersion": "gemini-2.5-flash",
-          "responseId": "I1i4acC7O8_l7M8PquDJsQU"
+          "responseId": "_1POaa_AKvmEvdIPtqCiyAM"
         }
-  recorded_at: Mon, 16 Mar 2026 19:21:08 GMT
+  recorded_at: Thu, 02 Apr 2026 11:33:20 GMT
 - request:
     method: post
     uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"When was the fall of
-        Rome?"}]},{"role":"model","parts":[{"functionCall":{"name":"weather","args":{"latitude":"52.5200","longitude":"13.4050"}},"thoughtSignature":"CvYBAb4+9vvFamTFuEzyYmvHSRDoFPWqpWdcVJIQMjZztGe1BNoh73HES/t9/sCs/M4dYblf+ls25Mq0XzANDP4bPngLEMyNNT8XkFtyzYX3jbBT9wjr/BzU9ZqEMkRCCVqM5evH/SOUcGJILQPBVJc6F3mMurfVkV5xYl1UJyrnjHkrZpjd716Ik9mttxSVBEPYGDYwbte4v++d8DgHvUvdGRfC7BuRrYC6nM6smptV0sbWFHuoa4M/esiiI6iyvNJjIJqLdbNy577ExJkdkkBjoz/Nimk2jiAbi06eWCxKDEyJbmzbf6G673tdLycSDBlbRM/K+u7C"}]},{"role":"function","parts":[{"functionResponse":{"name":"weather","response":{"name":"weather","content":[{"text":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"weather","description":"Gets
+        Rome?"}]},{"role":"model","parts":[{"functionCall":{"name":"weather","args":{"latitude":"41.9028","longitude":"12.4964"}},"thoughtSignature":"CpkDAb4+9vubpda05WhklsQymPnsfe5e/mNRfPK6RkAzgvcgidZOEgrWd7pMMEIYMf6kfADwuZMzhSMRug9pgUlC1VJ1wo7mDrRXAvRqbOd2yqPfgeZvWdFZOLPL+r/opqAsz4SjPz+KvDbzM8Ih4sKTDu5Hew9RR36kRTcg5hl/thsD5BKpRRBPan6HyQDcdSuxNtmNui2ZoI1GexOIIeRVc99wd8hEsJT6FxnZ48esZkfiqUZSBgGR4TSiqZH/7vfqkzw+djF5fOrIAOhIy/XUse5UY5sAKnoTQG7Xr3KCs/X+7+sCfHIjvW91ea6KW6tYjBO+O3zD/YHPOCyWfD9/Fz6C9v0hLQWK8qsufkRVr+J4pAUnJMCHIFQQvurLodiQNtWkK7lv4lGUw0likSDRQXMD50mMyD7hOYJew+8jF1BHu6ta/4CXKQchpqcq11knQUHOBLzqPOv29qhhJGr9aTS2aGSxybbZ8FSVG6kUcW5UQxPrMF5CaIcV06SHTeah39mXIMzNMrjzQpLs1KTMLKztaq3wKIDnEA=="}]},{"role":"function","parts":[{"functionResponse":{"name":"weather","response":{"name":"weather","content":[{"text":"Current
+        weather at 41.9028, 12.4964: 15°C, Wind: 10 km/h"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"OBJECT","properties":{"latitude":{"type":"STRING","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"STRING","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"]}}]}]}'
@@ -117,6 +119,8 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      X-Gemini-Service-Tier:
+      - standard
       Content-Type:
       - application/json; charset=UTF-8
       Vary:
@@ -124,7 +128,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 16 Mar 2026 19:21:09 GMT
+      - Thu, 02 Apr 2026 11:33:21 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -134,7 +138,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=633
+      - gfet4t7; dur=610
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -148,7 +152,7 @@ http_interactions:
               "content": {
                 "parts": [
                   {
-                    "text": "The Fall of Rome traditionally refers to the collapse of the Western Roman Empire, which is generally dated to 476 CE when the last Western Roman Emperor, Romulus Augustulus, was deposed by the Germanic chieftain Odoacer. However, the decline was a long and complex process rather than a single event."
+                    "text": "The fall of Rome is generally considered to have occurred in 476 CE when the last Western Roman Emperor, Romulus Augustulus, was deposed."
                   }
                 ],
                 "role": "model"
@@ -159,8 +163,8 @@ http_interactions:
           ],
           "usageMetadata": {
             "promptTokenCount": 171,
-            "candidatesTokenCount": 63,
-            "totalTokenCount": 234,
+            "candidatesTokenCount": 31,
+            "totalTokenCount": 202,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
@@ -169,7 +173,7 @@ http_interactions:
             ]
           },
           "modelVersion": "gemini-2.5-flash",
-          "responseId": "JFi4ady4OomkxN8P0ZOpuAM"
+          "responseId": "AFTOafGnMOq1nsEPq6XswQI"
         }
-  recorded_at: Mon, 16 Mar 2026 19:21:09 GMT
+  recorded_at: Thu, 02 Apr 2026 11:33:21 GMT
 recorded_with: VCR 6.4.0

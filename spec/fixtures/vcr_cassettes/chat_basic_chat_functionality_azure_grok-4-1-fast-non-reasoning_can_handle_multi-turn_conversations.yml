@@ -31,14 +31,14 @@ http_interactions:
       - appId=
       Prompt-Token-Len:
       - '10'
-      Sampling-Token-Len:
-      - '139'
       X-Ms-Rai-Invoked:
       - 'true'
+      Sampling-Token-Len:
+      - '103'
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Ms-Client-Request-Id:
-      - f92c476c-b208-49df-8ac1-f45280e6a433
+      - d2465941-bc42-4082-b2a3-d9ff1785f7df
       Azureml-Model-Session:
       - d-d37d4aed-feba-4c61-ae2a-7f8ce4d38049
       Azureai-Requested-Tier:
@@ -47,18 +47,26 @@ http_interactions:
       - default
       X-Ms-Is-Spilled-Over:
       - 'false'
+      X-Ratelimit-Remaining-Requests:
+      - '48'
+      X-Ratelimit-Reset-Requests:
+      - '2578'
+      X-Ratelimit-Limit-Requests:
+      - '50'
+      X-Ratelimit-Renewalperiod-Requests:
+      - '60'
+      X-Ratelimit-Abusepenalty-Active:
+      - 'False'
       X-Ratelimit-Remaining-Tokens:
-      - '50000'
+      - '49963'
       X-Ratelimit-Reset-Tokens:
-      - '0'
+      - '44'
       X-Ratelimit-Limit-Tokens:
       - '50000'
       X-Ratelimit-Renewalperiod-Tokens:
       - '60'
-      X-Ratelimit-Abusepenalty-Active:
-      - 'False'
       Apim-Request-Id:
-      - f92c476c-b208-49df-8ac1-f45280e6a433
+      - d2465941-bc42-4082-b2a3-d9ff1785f7df
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Ms-Deployment-Name:
@@ -68,12 +76,20 @@ http_interactions:
       X-Ms-Region:
       - West Europe
       Date:
-      - Mon, 16 Mar 2026 20:26:56 GMT
+      - Thu, 02 Apr 2026 11:23:18 GMT
     body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        eyJjaG9pY2VzIjpbeyJjb250ZW50X2ZpbHRlcl9yZXN1bHRzIjp7ImhhdGUiOnsiZmlsdGVyZWQiOmZhbHNlLCJzZXZlcml0eSI6InNhZmUifSwicHJvdGVjdGVkX21hdGVyaWFsX2NvZGUiOnsiZmlsdGVyZWQiOmZhbHNlLCJkZXRlY3RlZCI6ZmFsc2V9LCJwcm90ZWN0ZWRfbWF0ZXJpYWxfdGV4dCI6eyJmaWx0ZXJlZCI6ZmFsc2UsImRldGVjdGVkIjpmYWxzZX0sInNlbGZfaGFybSI6eyJmaWx0ZXJlZCI6ZmFsc2UsInNldmVyaXR5Ijoic2FmZSJ9LCJzZXh1YWwiOnsiZmlsdGVyZWQiOmZhbHNlLCJzZXZlcml0eSI6InNhZmUifSwidmlvbGVuY2UiOnsiZmlsdGVyZWQiOmZhbHNlLCJzZXZlcml0eSI6InNhZmUifX0sImZpbmlzaF9yZWFzb24iOiJzdG9wIiwiaW5kZXgiOjAsImxvZ3Byb2JzIjpudWxsLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiIqKk1hdHp1cm8gWXVraWhpcm8gTWF0c3Vtb3RvKiosIGNvbW1vbmx5IGtub3duIGFzICoqTWF0eioqLCBpcyB0aGUgY3JlYXRvciBvZiB0aGUgUnVieSBwcm9ncmFtbWluZyBsYW5ndWFnZS5cblxuSGUgZGVzaWduZWQgYW5kIGRldmVsb3BlZCBSdWJ5IGluIHRoZSBtaWQtMTk5MHMgKGZpcnN0IHJlbGVhc2VkIGluIDE5OTUpIGluIEphcGFuLCB3aXRoIHRoZSBnb2FsIG9mIGNyZWF0aW5nIGEgc2NyaXB0aW5nIGxhbmd1YWdlIHRoYXQgd2FzIGJvdGggb2JqZWN0LW9yaWVudGVkIGFuZCBlbmpveWFibGUgdG8gdXNl4oCUcHJpb3JpdGl6aW5nIHByb2dyYW1tZXIgaGFwcGluZXNzIChcImhhcHB5IGhhY2tpbmcgd2l0aCBSdWJ5XCIpLiBUaGlzIGlzIHdlbGwtZG9jdW1lbnRlZCBpbiBvZmZpY2lhbCBSdWJ5IHNvdXJjZXMgbGlrZSBydWJ5LWxhbmcub3JnLCBNYXR6J3Mgb3duIHdyaXRpbmdzLCBhbmQgcHJvZ3JhbW1pbmcgaGlzdG9yeSByZWZlcmVuY2VzIHN1Y2ggYXMgXCJQcm9ncmFtbWluZyBSdWJ5OiBUaGUgUHJhZ21hdGljIFByb2dyYW1tZXIncyBHdWlkZS5cIiBSdWJ5J3Mgc3ludGF4IGRyYXdzIGluZmx1ZW5jZXMgZnJvbSBQZXJsLCBTbWFsbHRhbGssIEVpZmZlbCwgYW5kIExpc3AsIHJlZmxlY3RpbmcgTWF0eidzIHZpc2lvbiBmb3IgZWxlZ2FudCwgcmVhZGFibGUgY29kZS4iLCJyZWZ1c2FsIjpudWxsLCJyb2xlIjoiYXNzaXN0YW50IiwidG9vbF9jYWxscyI6bnVsbH0sInN0b3BfcmVhc29uIjpudWxsfV0sImNyZWF0ZWQiOjE3NzM2OTI4MTMsImlkIjoiOGYyYjU1ZTktYmU4YS00ODJhLWJlYTgtODY4ZGYyYjBiZWY5IiwibW9kZWwiOiJncm9rLTQtMS1mYXN0LW5vbi1yZWFzb25pbmciLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJwcm9tcHRfZmlsdGVyX3Jlc3VsdHMiOlt7InByb21wdF9pbmRleCI6MCwiY29udGVudF9maWx0ZXJfcmVzdWx0cyI6eyJoYXRlIjp7ImZpbHRlcmVkIjpmYWxzZSwic2V2ZXJpdHkiOiJzYWZlIn0sImphaWxicmVhayI6eyJmaWx0ZXJlZCI6ZmFsc2UsImRldGVjdGVkIjpmYWxzZX0sInNlbGZfaGFybSI6eyJmaWx0ZXJlZCI6ZmFsc2UsInNldmVyaXR5Ijoic2FmZSJ9LCJzZXh1YWwiOnsiZmlsdGVyZWQiOmZhbHNlLCJzZXZlcml0eSI6InNhZmUifSwidmlvbGVuY2UiOnsiZmlsdGVyZWQiOmZhbHNlLCJzZXZlcml0eSI6InNhZmUifX19XSwidXNhZ2UiOnsiYXVkaW9fcHJvbXB0X3Rva2VucyI6MCwiY29tcGxldGlvbl90b2tlbnMiOjEzOSwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJhY2NlcHRlZF9wcmVkaWN0aW9uX3Rva2VucyI6MCwiYXVkaW9fdG9rZW5zIjowLCJyZWFzb25pbmdfdG9rZW5zIjowLCJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6MH0sImNvc3RfaW5fdXNkX3RpY2tzIjowLCJudW1fc291cmNlc191c2VkIjowLCJwcm9tcHRfdG9rZW5zIjoxMCwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImF1ZGlvX3Rva2VucyI6MCwiY2FjaGVkX3Rva2VucyI6MCwiaW1hZ2VfdG9rZW5zIjowLCJ0ZXh0X3Rva2VucyI6MTB9LCJ0b3RhbF90b2tlbnMiOjE0OX19Cg==
-  recorded_at: Mon, 16 Mar 2026 20:26:56 GMT
+      encoding: UTF-8
+      string: '{"choices":[{"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"protected_material_code":{"filtered":false,"detected":false},"protected_material_text":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}},"finish_reason":"stop","index":0,"logprobs":null,"message":{"content":"**Matzuro
+        Matsumoto**, commonly known as **Matz**, created the Ruby programming language.\n\nHe
+        designed it in 1993 in Japan, with the first release in 1995. Ruby draws inspiration
+        from languages like Perl, Smalltalk, Eiffel, and Lisp, emphasizing programmer
+        happiness and simplicity (\"a scripting language that makes you happy\").
+        This is well-documented on the official Ruby website (ruby-lang.org), Matz''s
+        own writings, and programming histories like \"Programming Ruby: The Pragmatic
+        Programmer''s Guide.\"","refusal":null,"role":"assistant","tool_calls":null},"stop_reason":null}],"created":1775128998,"id":"87e8bf08-1a3a-43b5-9e9f-06d0d09233c7","model":"grok-4-1-fast-non-reasoning","object":"chat.completion","prompt_filter_results":[{"prompt_index":0,"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"jailbreak":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}}}],"usage":{"audio_prompt_tokens":0,"completion_tokens":103,"completion_tokens_details":{"accepted_prediction_tokens":0,"audio_tokens":0,"reasoning_tokens":0,"rejected_prediction_tokens":0},"cost_in_usd_ticks":0,"num_sources_used":0,"prompt_tokens":10,"prompt_tokens_details":{"audio_tokens":0,"cached_tokens":0,"image_tokens":0,"text_tokens":10},"total_tokens":113}}
+
+        '
+  recorded_at: Thu, 02 Apr 2026 11:23:19 GMT
 - request:
     method: post
     uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
@@ -81,16 +97,14 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"user","content":"Who
         is the creator of the programming language Ruby?"},{"role":"assistant","content":"**Matzuro
-        Yukihiro Matsumoto**, commonly known as **Matz**, is the creator of the Ruby
-        programming language.\n\nHe designed and developed Ruby in the mid-1990s (first
-        released in 1995) in Japan, with the goal of creating a scripting language
-        that was both object-oriented and enjoyable to use—prioritizing programmer
-        happiness (\"happy hacking with Ruby\"). This is well-documented in official
-        Ruby sources like ruby-lang.org, Matz''s own writings, and programming history
-        references such as \"Programming Ruby: The Pragmatic Programmer''s Guide.\"
-        Ruby''s syntax draws influences from Perl, Smalltalk, Eiffel, and Lisp, reflecting
-        Matz''s vision for elegant, readable code."},{"role":"user","content":"What
-        year did he create Ruby?"}],"stream":false}'
+        Matsumoto**, commonly known as **Matz**, created the Ruby programming language.\n\nHe
+        designed it in 1993 in Japan, with the first release in 1995. Ruby draws inspiration
+        from languages like Perl, Smalltalk, Eiffel, and Lisp, emphasizing programmer
+        happiness and simplicity (\"a scripting language that makes you happy\").
+        This is well-documented on the official Ruby website (ruby-lang.org), Matz''s
+        own writings, and programming histories like \"Programming Ruby: The Pragmatic
+        Programmer''s Guide.\""},{"role":"user","content":"What year did he create
+        Ruby?"}],"stream":false}'
     headers:
       User-Agent:
       - Faraday v2.14.1
@@ -113,16 +127,16 @@ http_interactions:
       - application/json
       Request-Context:
       - appId=
+      Sampling-Token-Len:
+      - '92'
+      Prompt-Token-Len:
+      - '131'
       X-Ms-Rai-Invoked:
       - 'true'
-      Prompt-Token-Len:
-      - '167'
-      Sampling-Token-Len:
-      - '149'
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Ms-Client-Request-Id:
-      - a6be0404-90a1-4fef-9d7e-6f6cc47463f3
+      - 9f2f3797-61e0-4f58-baba-3a9ada04d279
       Azureml-Model-Session:
       - d-d37d4aed-feba-4c61-ae2a-7f8ce4d38049
       Azureai-Requested-Tier:
@@ -131,18 +145,26 @@ http_interactions:
       - default
       X-Ms-Is-Spilled-Over:
       - 'false'
+      X-Ratelimit-Remaining-Requests:
+      - '48'
+      X-Ratelimit-Reset-Requests:
+      - '2064'
+      X-Ratelimit-Limit-Requests:
+      - '50'
+      X-Ratelimit-Renewalperiod-Requests:
+      - '60'
+      X-Ratelimit-Abusepenalty-Active:
+      - 'False'
       X-Ratelimit-Remaining-Tokens:
-      - '50000'
+      - '49813'
       X-Ratelimit-Reset-Tokens:
-      - '0'
+      - '224'
       X-Ratelimit-Limit-Tokens:
       - '50000'
       X-Ratelimit-Renewalperiod-Tokens:
       - '60'
-      X-Ratelimit-Abusepenalty-Active:
-      - 'False'
       Apim-Request-Id:
-      - a6be0404-90a1-4fef-9d7e-6f6cc47463f3
+      - 9f2f3797-61e0-4f58-baba-3a9ada04d279
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Ms-Deployment-Name:
@@ -152,19 +174,17 @@ http_interactions:
       X-Ms-Region:
       - West Europe
       Date:
-      - Mon, 16 Mar 2026 20:26:58 GMT
+      - Thu, 02 Apr 2026 11:23:20 GMT
     body:
       encoding: UTF-8
-      string: '{"choices":[{"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"protected_material_code":{"filtered":false,"detected":false},"protected_material_text":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}},"finish_reason":"stop","index":0,"logprobs":null,"message":{"content":"**Ruby
-        was first released in 1995**, specifically on December 21, 1995, when Matz
-        (Yukihiro Matsumoto) announced its initial version (0.95) to the public via
-        a Japanese programming news group (fj.comp.lang.ruby, later ruby-list).\n\nDevelopment
-        began earlier, around 1993, as Matz experimented with ideas for a new language
-        during his time at a Japanese networking company. The stable 1.0 release came
-        in 2003, but 1995 marks the official birth year, as confirmed by ruby-lang.org''s
-        history page, Matz''s interviews (e.g., in \"The Philosophy of Ruby\" and
-        Dr. Dobb''s Journal), and the language''s own documentation.","refusal":null,"role":"assistant","tool_calls":null},"stop_reason":null}],"created":1773692817,"id":"0b3cc181-d873-4986-8bdc-5c8054974a21","model":"grok-4-1-fast-non-reasoning","object":"chat.completion","prompt_filter_results":[{"prompt_index":0,"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"jailbreak":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}}}],"usage":{"audio_prompt_tokens":0,"completion_tokens":149,"completion_tokens_details":{"accepted_prediction_tokens":0,"audio_tokens":0,"reasoning_tokens":0,"rejected_prediction_tokens":0},"cost_in_usd_ticks":0,"num_sources_used":0,"prompt_tokens":167,"prompt_tokens_details":{"audio_tokens":0,"cached_tokens":0,"image_tokens":0,"text_tokens":167},"total_tokens":316}}
+      string: '{"choices":[{"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"protected_material_code":{"filtered":false,"detected":false},"protected_material_text":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}},"finish_reason":"stop","index":0,"logprobs":null,"message":{"content":"**1993**\n\nMatz
+        (Yukihiro Matsumoto) began developing Ruby in February 1993 while working
+        at a Japanese networking company. The first alpha version was released internally
+        that year, with the official public release (version 0.95) coming on December
+        21, 1995. This timeline is confirmed in Matz''s own accounts, such as his
+        essays on ruby-lang.org/en/about/ and interviews in books like \"The Ruby
+        Way.\"","refusal":null,"role":"assistant","tool_calls":null},"stop_reason":null}],"created":1775129000,"id":"b50e5ed6-f7da-4048-95fe-8b0cee149434","model":"grok-4-1-fast-non-reasoning","object":"chat.completion","prompt_filter_results":[{"prompt_index":0,"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"jailbreak":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}}}],"usage":{"audio_prompt_tokens":0,"completion_tokens":92,"completion_tokens_details":{"accepted_prediction_tokens":0,"audio_tokens":0,"reasoning_tokens":0,"rejected_prediction_tokens":0},"cost_in_usd_ticks":0,"num_sources_used":0,"prompt_tokens":131,"prompt_tokens_details":{"audio_tokens":0,"cached_tokens":0,"image_tokens":0,"text_tokens":131},"total_tokens":223}}
 
         '
-  recorded_at: Mon, 16 Mar 2026 20:26:59 GMT
+  recorded_at: Thu, 02 Apr 2026 11:23:21 GMT
 recorded_with: VCR 6.4.0

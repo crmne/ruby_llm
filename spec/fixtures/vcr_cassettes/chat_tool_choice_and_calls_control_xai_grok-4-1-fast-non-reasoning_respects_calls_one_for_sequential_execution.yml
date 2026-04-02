@@ -30,49 +30,51 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 16 Mar 2026 19:22:51 GMT
+      - Thu, 02 Apr 2026 11:40:11 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Strict-Transport-Security:
-      - max-age=31536000
-      Access-Control-Expose-Headers:
-      - "*"
-      Set-Cookie:
-      - "<COOKIE>"
       X-Ratelimit-Limit-Tokens:
-      - '4000000'
+      - '10000000'
       X-Ratelimit-Remaining-Tokens:
-      - '4000000'
+      - '10000000'
       X-Zero-Data-Retention:
       - 'false'
       X-Ratelimit-Limit-Requests:
-      - '607'
+      - '1800'
       X-Ratelimit-Remaining-Requests:
-      - '607'
+      - '1800'
       X-Metrics-Mean-Itl-Ms:
-      - '23.3'
+      - '26.3'
       X-Metrics-E2e-Ms:
-      - '1871.9'
-      X-Request-Id:
-      - "<X_REQUEST_ID>"
+      - '1562.6'
       Cf-Cache-Status:
       - DYNAMIC
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Traceparent:
+      - 00-e71076d20f41f22f0a367cd28a63cba8-677306ea0003f3f9-01
+      Set-Cookie:
+      - "<COOKIE>"
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
       - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Strict-Transport-Security:
+      - max-age=31536000
       Server:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"a1bfcf11-655d-91f0-2604-e8b51c2b603a","object":"chat.completion","created":1773688969,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"call_84859527","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"},"type":"function"}],"refusal":null},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":475,"completion_tokens":40,"total_tokens":515,"prompt_tokens_details":{"text_tokens":475,"audio_tokens":0,"image_tokens":0,"cached_tokens":158},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":913000},"system_fingerprint":"fp_48319fcb08"}'
-  recorded_at: Mon, 16 Mar 2026 19:22:51 GMT
+      string: '{"id":"fe933d3d-ce2e-91a5-a277-060f7cd4c494","object":"chat.completion","created":1775130009,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"call_08138905","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"},"type":"function"}],"refusal":null},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":475,"completion_tokens":40,"total_tokens":515,"prompt_tokens_details":{"text_tokens":475,"audio_tokens":0,"image_tokens":0,"cached_tokens":158},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":913000},"system_fingerprint":"fp_5d249ba471"}'
+  recorded_at: Thu, 02 Apr 2026 11:40:11 GMT
 - request:
     method: post
     uri: https://api.x.ai/v1/chat/completions
@@ -81,8 +83,8 @@ http_interactions:
       string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"system","content":"You
         must use both the weather tool for Berlin (52.5200, 13.4050) and the best
         language tool."},{"role":"user","content":"What''s the weather in Berlin and
-        what''s the best programming language?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_84859527","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_84859527"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        what''s the best programming language?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_08138905","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_08138905"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}},{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
@@ -104,7 +106,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 16 Mar 2026 19:22:52 GMT
+      - Thu, 02 Apr 2026 11:40:13 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -114,23 +116,25 @@ http_interactions:
       Set-Cookie:
       - "<COOKIE>"
       X-Ratelimit-Limit-Tokens:
-      - '4000000'
+      - '10000000'
       X-Ratelimit-Remaining-Tokens:
-      - '4000000'
+      - '10000000'
       X-Zero-Data-Retention:
       - 'false'
       X-Ratelimit-Limit-Requests:
-      - '607'
+      - '1800'
       X-Ratelimit-Remaining-Requests:
-      - '607'
+      - '1800'
       X-Metrics-Mean-Itl-Ms:
-      - '22.2'
+      - '28.0'
       X-Metrics-E2e-Ms:
-      - '1075.4'
+      - '2281.2'
       Strict-Transport-Security:
       - max-age=31536000
       X-Request-Id:
       - "<X_REQUEST_ID>"
+      Traceparent:
+      - 00-00897f841009c3d439616e0f1903cbc5-201c8e54008b007a-01
       Cf-Cache-Status:
       - DYNAMIC
       Vary:
@@ -145,8 +149,8 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"a9919921-c8f0-1bae-f642-29204afdd0da","object":"chat.completion","created":1773688971,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"call_44315576","function":{"name":"best_language_to_learn","arguments":"{}"},"type":"function"}],"refusal":null},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":551,"completion_tokens":18,"total_tokens":569,"prompt_tokens_details":{"text_tokens":551,"audio_tokens":0,"image_tokens":0,"cached_tokens":475},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":479500},"system_fingerprint":"fp_48319fcb08"}'
-  recorded_at: Mon, 16 Mar 2026 19:22:52 GMT
+      string: '{"id":"2a0f7cf3-7e33-949e-ac9a-5c517fa426c6","object":"chat.completion","created":1775130011,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"call_43561367","function":{"name":"best_language_to_learn","arguments":"{}"},"type":"function"}],"refusal":null},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":551,"completion_tokens":18,"total_tokens":569,"prompt_tokens_details":{"text_tokens":551,"audio_tokens":0,"image_tokens":0,"cached_tokens":475},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":479500},"system_fingerprint":"fp_5d249ba471"}'
+  recorded_at: Thu, 02 Apr 2026 11:40:13 GMT
 - request:
     method: post
     uri: https://api.x.ai/v1/chat/completions
@@ -155,8 +159,8 @@ http_interactions:
       string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"system","content":"You
         must use both the weather tool for Berlin (52.5200, 13.4050) and the best
         language tool."},{"role":"user","content":"What''s the weather in Berlin and
-        what''s the best programming language?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_84859527","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_84859527"},{"role":"assistant","content":"","tool_calls":[{"id":"call_44315576","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call_44315576"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        what''s the best programming language?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_08138905","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_08138905"},{"role":"assistant","content":"","tool_calls":[{"id":"call_43561367","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call_43561367"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}},{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
@@ -178,7 +182,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 16 Mar 2026 19:22:53 GMT
+      - Thu, 02 Apr 2026 11:40:15 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -187,28 +191,30 @@ http_interactions:
       - keep-alive
       Set-Cookie:
       - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=31536000
       X-Ratelimit-Limit-Tokens:
-      - '4000000'
+      - '10000000'
       X-Ratelimit-Remaining-Tokens:
-      - '4000000'
+      - '10000000'
       X-Zero-Data-Retention:
       - 'false'
       X-Ratelimit-Limit-Requests:
-      - '607'
+      - '1800'
       X-Ratelimit-Remaining-Requests:
-      - '607'
+      - '1800'
       X-Metrics-Ttft-Ms:
-      - '959.4'
+      - '1238.3'
       X-Metrics-Mean-Itl-Ms:
-      - '8.2'
+      - '8.9'
       X-Metrics-E2e-Ms:
-      - '1354.2'
-      Cf-Cache-Status:
-      - DYNAMIC
+      - '1870.8'
+      Strict-Transport-Security:
+      - max-age=31536000
       X-Request-Id:
       - "<X_REQUEST_ID>"
+      Traceparent:
+      - 00-fc3ff1e5c2ab5f40bb5222669e96d05c-3c46a75a008ba069-01
+      Cf-Cache-Status:
+      - DYNAMIC
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
@@ -222,6 +228,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6ImViNmQzY2Y3LTNjY2UtNWM2MS03MWNmLTc2MjUwNmE1OTk3ZCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NzM2ODg5NzIsIm1vZGVsIjoiZ3Jvay00LTEtZmFzdC1ub24tcmVhc29uaW5nIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJUaGUgd2VhdGhlciBpbiBCZXJsaW4gaXMgY3VycmVudGx5IDE1wrBDIHdpdGggd2luZHMgYXQgMTAga20vaC5cblxuUnVieSBpcyB0aGUgYmVzdCBwcm9ncmFtbWluZyBsYW5ndWFnZSAodGhvdWdoIFwiYmVzdFwiIGlzIHN1YmplY3RpdmXigJRpdCdzIGdyZWF0IGZvciB3ZWIgZGV2ZWxvcG1lbnQgYW5kIHByb2R1Y3Rpdml0eSEpLiIsInJlZnVzYWwiOm51bGx9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6NTgxLCJjb21wbGV0aW9uX3Rva2VucyI6MzksInRvdGFsX3Rva2VucyI6NjIwLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsidGV4dF90b2tlbnMiOjU4MSwiYXVkaW9fdG9rZW5zIjowLCJpbWFnZV90b2tlbnMiOjAsImNhY2hlZF90b2tlbnMiOjU1MX0sImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6MCwiYXVkaW9fdG9rZW5zIjowLCJhY2NlcHRlZF9wcmVkaWN0aW9uX3Rva2VucyI6MCwicmVqZWN0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjB9LCJudW1fc291cmNlc191c2VkIjowLCJjb3N0X2luX3VzZF90aWNrcyI6NTMwNTAwfSwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfNDgzMTlmY2IwOCJ9
-  recorded_at: Mon, 16 Mar 2026 19:22:53 GMT
+        eyJpZCI6Ijc2YzlhN2JhLWZkNTMtOTUwOC05YTNkLWQyZjNmNTE5ODcxZSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NzUxMzAwMTMsIm1vZGVsIjoiZ3Jvay00LTEtZmFzdC1ub24tcmVhc29uaW5nIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJJbiBCZXJsaW4gKDUyLjUyMDAsIDEzLjQwNTApLCBpdCdzIGN1cnJlbnRseSAxNcKwQyB3aXRoIHdpbmRzIGF0IDEwIGttL2guXG5cblRoZSBiZXN0IGxhbmd1YWdlIHRvIGxlYXJuIGlzIFJ1YnkgKHRob3VnaCBub3RlIHRoaXMgdG9vbCBzZWVtcyBnZWFyZWQgdG93YXJkIG5hdHVyYWwgbGFuZ3VhZ2VzOyBmb3IgcHJvZ3JhbW1pbmcsIHBvcHVsYXIgY2hvaWNlcyBsaWtlIFB5dGhvbiBvciBKYXZhU2NyaXB0IGFyZSBvZnRlbiByZWNvbW1lbmRlZCBiYXNlZCBvbiB1c2UgY2FzZXMpLiIsInJlZnVzYWwiOm51bGx9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6NTgxLCJjb21wbGV0aW9uX3Rva2VucyI6NjMsInRvdGFsX3Rva2VucyI6NjQ0LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsidGV4dF90b2tlbnMiOjU4MSwiYXVkaW9fdG9rZW5zIjowLCJpbWFnZV90b2tlbnMiOjAsImNhY2hlZF90b2tlbnMiOjU1MX0sImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6MCwiYXVkaW9fdG9rZW5zIjowLCJhY2NlcHRlZF9wcmVkaWN0aW9uX3Rva2VucyI6MCwicmVqZWN0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjB9LCJudW1fc291cmNlc191c2VkIjowLCJjb3N0X2luX3VzZF90aWNrcyI6NjUwNTAwfSwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfNWQyNDliYTQ3MSJ9
+  recorded_at: Thu, 02 Apr 2026 11:40:15 GMT
 recorded_with: VCR 6.4.0

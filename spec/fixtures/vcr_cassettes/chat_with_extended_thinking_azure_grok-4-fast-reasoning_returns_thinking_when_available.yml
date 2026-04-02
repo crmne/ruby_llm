@@ -31,36 +31,44 @@ http_interactions:
       - application/json
       Request-Context:
       - appId=
-      X-Ms-Rai-Invoked:
-      - 'true'
       Prompt-Token-Len:
       - '43'
       Sampling-Token-Len:
-      - '56'
+      - '108'
+      X-Ms-Rai-Invoked:
+      - 'true'
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Ms-Client-Request-Id:
-      - 83b441b0-6f7d-4651-ac4b-a0d991084afe
+      - d34ed20a-208a-41c0-9878-52aeda0f6f76
       Azureml-Model-Session:
-      - d-310d88e7-fc36-41d4-bdf5-7c3416ea1fae
+      - d-ae5889f7-b014-4479-9f80-18aa1cf8f055
       Azureai-Requested-Tier:
       - default
       Azureai-Processed-Tier:
       - default
       X-Ms-Is-Spilled-Over:
       - 'false'
+      X-Ratelimit-Remaining-Requests:
+      - '49'
+      X-Ratelimit-Reset-Requests:
+      - '1200'
+      X-Ratelimit-Limit-Requests:
+      - '50'
+      X-Ratelimit-Renewalperiod-Requests:
+      - '60'
+      X-Ratelimit-Abusepenalty-Active:
+      - 'False'
       X-Ratelimit-Remaining-Tokens:
-      - '50000'
+      - '49919'
       X-Ratelimit-Reset-Tokens:
-      - '0'
+      - '97'
       X-Ratelimit-Limit-Tokens:
       - '50000'
       X-Ratelimit-Renewalperiod-Tokens:
       - '60'
-      X-Ratelimit-Abusepenalty-Active:
-      - 'False'
       Apim-Request-Id:
-      - 83b441b0-6f7d-4651-ac4b-a0d991084afe
+      - d34ed20a-208a-41c0-9878-52aeda0f6f76
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Ms-Deployment-Name:
@@ -70,15 +78,18 @@ http_interactions:
       X-Ms-Region:
       - West Europe
       Date:
-      - Mon, 16 Mar 2026 20:41:39 GMT
+      - Thu, 02 Apr 2026 11:23:43 GMT
     body:
       encoding: UTF-8
-      string: '{"choices":[{"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"protected_material_code":{"filtered":false,"detected":false},"protected_material_text":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}},"finish_reason":"stop","index":0,"logprobs":null,"message":{"content":"The
-        question you ask is: \"Will you answer this question with ''no''?\"\n\nThe
-        mirror cannot answer this question truthfully (any yes or no response would
-        be a lie), so it shows you your future self. The mirror reveals that no truthful
-        answer to the question is possible.","refusal":null,"role":"assistant","tool_calls":null},"stop_reason":null}],"created":1773693653,"id":"4fdd7c06-6da9-4a74-b7ca-02333ca09d09","model":"grok-4-fast-reasoning","object":"chat.completion","prompt_filter_results":[{"prompt_index":0,"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"jailbreak":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}}}],"usage":{"audio_prompt_tokens":0,"completion_tokens":56,"completion_tokens_details":{"accepted_prediction_tokens":0,"audio_tokens":0,"reasoning_tokens":7753,"rejected_prediction_tokens":0},"num_sources_used":0,"prompt_tokens":43,"prompt_tokens_details":{"audio_tokens":0,"cached_tokens":0,"image_tokens":0,"text_tokens":43},"total_tokens":7852}}
+      string: '{"choices":[{"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"protected_material_code":{"filtered":false,"detected":false},"protected_material_text":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"low"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}},"finish_reason":"stop","index":0,"logprobs":null,"message":{"content":"The
+        question you ask is: \"Is the answer to this question ''no''?\"\n\nThis creates
+        a logical paradox for a truthful mirror (if it answers \"yes\", the answer
+        isn''t \"no\", so it should be \"no\" instead; if it answers \"no\", the answer
+        is \"no\", so it should be \"yes\" instead). Unable to answer truthfully,
+        the mirror shows you your future self as its response.\n\nThe mirror reveals
+        that the answer it gives (i.e., the vision) is a truthful depiction of your
+        future.","refusal":null,"role":"assistant","tool_calls":null},"stop_reason":null}],"created":1775128992,"id":"e0d803b0-6037-4d46-ab0f-ba2a25c3786f","model":"grok-4-fast-reasoning","object":"chat.completion","prompt_filter_results":[{"prompt_index":0,"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"jailbreak":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}}}],"usage":{"audio_prompt_tokens":0,"completion_tokens":108,"completion_tokens_details":{"accepted_prediction_tokens":0,"audio_tokens":0,"reasoning_tokens":6404,"rejected_prediction_tokens":0},"num_sources_used":0,"prompt_tokens":43,"prompt_tokens_details":{"audio_tokens":0,"cached_tokens":0,"image_tokens":0,"text_tokens":43},"total_tokens":6555}}
 
         '
-  recorded_at: Mon, 16 Mar 2026 20:41:40 GMT
+  recorded_at: Thu, 02 Apr 2026 11:23:43 GMT
 recorded_with: VCR 6.4.0

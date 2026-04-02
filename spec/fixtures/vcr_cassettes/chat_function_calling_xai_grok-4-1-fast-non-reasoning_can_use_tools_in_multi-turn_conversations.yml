@@ -27,57 +27,64 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 16 Mar 2026 19:13:44 GMT
+      - Thu, 02 Apr 2026 11:25:25 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Set-Cookie:
-      - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=31536000
+      Content-Security-Policy-Report-Only:
+      - script-src 'unsafe-inline' 'unsafe-eval'; report-uri https://csp-reporting.cloudflare.com/cdn-cgi/script_monitor/report?m=ozwzM_gKVRq_O5vAZlHXvHLBxixpVcw9uqh1DILehH8-1775129124.2188566-1.0.1.1-5YUgr33tZfYoUJJqD6ty8kCkwflwsvFTloIYsuxK44pxqrv.gYYnC5aVu_u0.g16RzhG_hnqytSRGqTvwUqLhTBUSTh3Js_H6J5REkr8C3A.oiJgqJUxaldIPqMyMUAH4q7NwSz5J61F1SppwfJOKDt0TjACp5D32hGqaMKlGPo;
+        report-to cf-csp-endpoint
       X-Ratelimit-Limit-Tokens:
-      - '4000000'
+      - '10000000'
       X-Ratelimit-Remaining-Tokens:
-      - '4000000'
+      - '10000000'
       X-Zero-Data-Retention:
       - 'false'
       X-Ratelimit-Limit-Requests:
-      - '607'
+      - '1800'
       X-Ratelimit-Remaining-Requests:
-      - '607'
+      - '1800'
       X-Metrics-Mean-Itl-Ms:
-      - '24.8'
+      - '40.6'
       X-Metrics-E2e-Ms:
-      - '1217.8'
-      Cf-Cache-Status:
-      - DYNAMIC
+      - '1541.5'
+      Strict-Transport-Security:
+      - max-age=31536000
       X-Request-Id:
       - "<X_REQUEST_ID>"
+      Traceparent:
+      - 00-1c29235de35d5b6391c3391235fb7783-8c57dbde008864e1-01
+      Cf-Cache-Status:
+      - DYNAMIC
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
       - "*"
       Access-Control-Expose-Headers:
       - "*"
+      Set-Cookie:
+      - "<COOKIE>"
+      Report-To:
+      - '{"group":"cf-csp-endpoint","max_age":86400,"endpoints":[{"url":"https://csp-reporting.cloudflare.com/cdn-cgi/script_monitor/report?m=ozwzM_gKVRq_O5vAZlHXvHLBxixpVcw9uqh1DILehH8-1775129124.2188566-1.0.1.1-5YUgr33tZfYoUJJqD6ty8kCkwflwsvFTloIYsuxK44pxqrv.gYYnC5aVu_u0.g16RzhG_hnqytSRGqTvwUqLhTBUSTh3Js_H6J5REkr8C3A.oiJgqJUxaldIPqMyMUAH4q7NwSz5J61F1SppwfJOKDt0TjACp5D32hGqaMKlGPo"}]}'
       Server:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"2de3bcec-aa3c-d5c9-281c-882f4a90fde2","object":"chat.completion","created":1773688423,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"call_44107979","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"},"type":"function"}],"refusal":null},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":417,"completion_tokens":40,"total_tokens":457,"prompt_tokens_details":{"text_tokens":417,"audio_tokens":0,"image_tokens":0,"cached_tokens":416},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":410000},"system_fingerprint":"fp_48319fcb08"}'
-  recorded_at: Mon, 16 Mar 2026 19:13:44 GMT
+      string: '{"id":"5059476c-7b97-9bf0-ac68-425297e2f603","object":"chat.completion","created":1775129124,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"call_02571920","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"},"type":"function"}],"refusal":null},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":417,"completion_tokens":40,"total_tokens":457,"prompt_tokens_details":{"text_tokens":417,"audio_tokens":0,"image_tokens":0,"cached_tokens":158},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":797000},"system_fingerprint":"fp_5d249ba471"}'
+  recorded_at: Thu, 02 Apr 2026 11:25:25 GMT
 - request:
     method: post
     uri: https://api.x.ai/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"user","content":"What''s
-        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"call_44107979","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_44107979"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"call_02571920","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_02571920"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
@@ -98,42 +105,44 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 16 Mar 2026 19:13:46 GMT
+      - Thu, 02 Apr 2026 11:25:27 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Strict-Transport-Security:
-      - max-age=31536000
-      Access-Control-Expose-Headers:
-      - "*"
       Set-Cookie:
       - "<COOKIE>"
       X-Ratelimit-Limit-Tokens:
-      - '4000000'
+      - '10000000'
       X-Ratelimit-Remaining-Tokens:
-      - '4000000'
+      - '10000000'
       X-Zero-Data-Retention:
       - 'false'
       X-Ratelimit-Limit-Requests:
-      - '607'
+      - '1800'
       X-Ratelimit-Remaining-Requests:
-      - '607'
+      - '1800'
       X-Metrics-Ttft-Ms:
-      - '931.6'
+      - '1191.1'
       X-Metrics-Mean-Itl-Ms:
-      - '31.0'
+      - '7.5'
       X-Metrics-E2e-Ms:
-      - '1801.6'
+      - '1466.4'
+      Strict-Transport-Security:
+      - max-age=31536000
       X-Request-Id:
       - "<X_REQUEST_ID>"
+      Traceparent:
+      - 00-77e4841fd8d39f353e6ddc36cca73fb9-61cc84e10000be76-01
       Cf-Cache-Status:
       - DYNAMIC
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
       - "*"
       Server:
       - cloudflare
@@ -142,16 +151,16 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6ImQ0NTcwOTQwLWIyMzQtNjI1OS00MTU5LWJiYjYxYmUxODZjZCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NzM2ODg0MjQsIm1vZGVsIjoiZ3Jvay00LTEtZmFzdC1ub24tcmVhc29uaW5nIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJUaGUgY3VycmVudCB3ZWF0aGVyIGluIEJlcmxpbiAoNTIuNTIwMCwgMTMuNDA1MCkgaXMgMTXCsEMgd2l0aCB3aW5kcyBhdCAxMCBrbS9oLiIsInJlZnVzYWwiOm51bGx9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6NDkzLCJjb21wbGV0aW9uX3Rva2VucyI6MjksInRvdGFsX3Rva2VucyI6NTIyLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsidGV4dF90b2tlbnMiOjQ5MywiYXVkaW9fdG9rZW5zIjowLCJpbWFnZV90b2tlbnMiOjAsImNhY2hlZF90b2tlbnMiOjQ5Mn0sImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6MCwiYXVkaW9fdG9rZW5zIjowLCJhY2NlcHRlZF9wcmVkaWN0aW9uX3Rva2VucyI6MCwicmVqZWN0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjB9LCJudW1fc291cmNlc191c2VkIjowLCJjb3N0X2luX3VzZF90aWNrcyI6MzkzMDAwfSwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfNDgzMTlmY2IwOCJ9
-  recorded_at: Mon, 16 Mar 2026 19:13:46 GMT
+        eyJpZCI6ImU0ZmQ1OWEyLTNiNmMtOThmMS1hOTQwLTA3OTYzZWU4YmNhNiIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NzUxMjkxMjUsIm1vZGVsIjoiZ3Jvay00LTEtZmFzdC1ub24tcmVhc29uaW5nIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJUaGUgY3VycmVudCB3ZWF0aGVyIGluIEJlcmxpbiAoNTIuNTIwMCwgMTMuNDA1MCkgaXMgMTXCsEMgd2l0aCB3aW5kcyBhdCAxMCBrbS9oLiIsInJlZnVzYWwiOm51bGx9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6NDkzLCJjb21wbGV0aW9uX3Rva2VucyI6MjksInRvdGFsX3Rva2VucyI6NTIyLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsidGV4dF90b2tlbnMiOjQ5MywiYXVkaW9fdG9rZW5zIjowLCJpbWFnZV90b2tlbnMiOjAsImNhY2hlZF90b2tlbnMiOjQ5Mn0sImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6MCwiYXVkaW9fdG9rZW5zIjowLCJhY2NlcHRlZF9wcmVkaWN0aW9uX3Rva2VucyI6MCwicmVqZWN0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjB9LCJudW1fc291cmNlc191c2VkIjowLCJjb3N0X2luX3VzZF90aWNrcyI6MzkzMDAwfSwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfNWQyNDliYTQ3MSJ9
+  recorded_at: Thu, 02 Apr 2026 11:25:27 GMT
 - request:
     method: post
     uri: https://api.x.ai/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"user","content":"What''s
-        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"call_44107979","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_44107979"},{"role":"assistant","content":"The
+        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"call_02571920","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_02571920"},{"role":"assistant","content":"The
         current weather in Berlin (52.5200, 13.4050) is 15°C with winds at 10 km/h."},{"role":"user","content":"What''s
         the weather in Paris? (48.8575, 2.3514)"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
@@ -174,40 +183,42 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 16 Mar 2026 19:13:47 GMT
+      - Thu, 02 Apr 2026 11:25:29 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Strict-Transport-Security:
-      - max-age=31536000
-      Access-Control-Expose-Headers:
-      - "*"
       Set-Cookie:
       - "<COOKIE>"
       X-Ratelimit-Limit-Tokens:
-      - '4000000'
+      - '10000000'
       X-Ratelimit-Remaining-Tokens:
-      - '4000000'
+      - '10000000'
       X-Zero-Data-Retention:
       - 'false'
       X-Ratelimit-Limit-Requests:
-      - '607'
+      - '1800'
       X-Ratelimit-Remaining-Requests:
-      - '607'
+      - '1800'
       X-Metrics-Mean-Itl-Ms:
-      - '25.3'
+      - '0.0'
       X-Metrics-E2e-Ms:
-      - '1146.6'
+      - '1506.2'
+      Strict-Transport-Security:
+      - max-age=31536000
       X-Request-Id:
       - "<X_REQUEST_ID>"
+      Traceparent:
+      - 00-1906fa8b618e62531c694ddfe6c377ac-22843f570000bc4a-01
       Cf-Cache-Status:
       - DYNAMIC
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
       - "*"
       Server:
       - cloudflare
@@ -215,19 +226,19 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"0d35db58-2f36-4f11-8fc8-b6797e240252","object":"chat.completion","created":1773688426,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"call_86420762","function":{"name":"weather","arguments":"{\"latitude\":\"48.8575\",\"longitude\":\"2.3514\"}"},"type":"function"}],"refusal":null},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":551,"completion_tokens":40,"total_tokens":591,"prompt_tokens_details":{"text_tokens":551,"audio_tokens":0,"image_tokens":0,"cached_tokens":493},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":562500},"system_fingerprint":"fp_48319fcb08"}'
-  recorded_at: Mon, 16 Mar 2026 19:13:47 GMT
+      string: '{"id":"55d3110e-4bdf-9d08-874a-e7f7b3677f5c","object":"chat.completion","created":1775129127,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"call_20206289","function":{"name":"weather","arguments":"{\"latitude\":\"48.8575\",\"longitude\":\"2.3514\"}"},"type":"function"}],"refusal":null},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":551,"completion_tokens":40,"total_tokens":591,"prompt_tokens_details":{"text_tokens":551,"audio_tokens":0,"image_tokens":0,"cached_tokens":493},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":562500},"system_fingerprint":"fp_5d249ba471"}'
+  recorded_at: Thu, 02 Apr 2026 11:25:29 GMT
 - request:
     method: post
     uri: https://api.x.ai/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"user","content":"What''s
-        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"call_44107979","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_44107979"},{"role":"assistant","content":"The
+        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"call_02571920","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_02571920"},{"role":"assistant","content":"The
         current weather in Berlin (52.5200, 13.4050) is 15°C with winds at 10 km/h."},{"role":"user","content":"What''s
-        the weather in Paris? (48.8575, 2.3514)"},{"role":"assistant","content":"","tool_calls":[{"id":"call_86420762","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"48.8575\",\"longitude\":\"2.3514\"}"}}]},{"role":"tool","content":"Current
-        weather at 48.8575, 2.3514: 15°C, Wind: 10 km/h","tool_call_id":"call_86420762"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        the weather in Paris? (48.8575, 2.3514)"},{"role":"assistant","content":"","tool_calls":[{"id":"call_20206289","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"48.8575\",\"longitude\":\"2.3514\"}"}}]},{"role":"tool","content":"Current
+        weather at 48.8575, 2.3514: 15°C, Wind: 10 km/h","tool_call_id":"call_20206289"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
@@ -248,7 +259,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 16 Mar 2026 19:13:50 GMT
+      - Thu, 02 Apr 2026 11:25:31 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -257,28 +268,30 @@ http_interactions:
       - keep-alive
       Set-Cookie:
       - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=31536000
       X-Ratelimit-Limit-Tokens:
-      - '4000000'
+      - '10000000'
       X-Ratelimit-Remaining-Tokens:
-      - '4000000'
+      - '10000000'
       X-Zero-Data-Retention:
       - 'false'
       X-Ratelimit-Limit-Requests:
-      - '607'
+      - '1800'
       X-Ratelimit-Remaining-Requests:
-      - '607'
+      - '1800'
       X-Metrics-Ttft-Ms:
-      - '1667.6'
+      - '1675.2'
       X-Metrics-Mean-Itl-Ms:
-      - '4.6'
+      - '2.8'
       X-Metrics-E2e-Ms:
-      - '1920.1'
-      Cf-Cache-Status:
-      - DYNAMIC
+      - '1877.1'
+      Strict-Transport-Security:
+      - max-age=31536000
       X-Request-Id:
       - "<X_REQUEST_ID>"
+      Traceparent:
+      - 00-57846b2d5865feaeabe1ec8051506f01-c503f67600888fe6-01
+      Cf-Cache-Status:
+      - DYNAMIC
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
@@ -292,6 +305,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6IjI2NzkzZWE2LTE3YWUtN2QyZS0xNjZiLTZkOTliZDEzZDExNyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NzM2ODg0MjgsIm1vZGVsIjoiZ3Jvay00LTEtZmFzdC1ub24tcmVhc29uaW5nIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJUaGUgY3VycmVudCB3ZWF0aGVyIGluIFBhcmlzICg0OC44NTc1LCAyLjM1MTQpIGlzIDE1wrBDIHdpdGggd2luZHMgYXQgMTAga20vaC4iLCJyZWZ1c2FsIjpudWxsfSwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjYyNywiY29tcGxldGlvbl90b2tlbnMiOjI5LCJ0b3RhbF90b2tlbnMiOjY1NiwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7InRleHRfdG9rZW5zIjo2MjcsImF1ZGlvX3Rva2VucyI6MCwiaW1hZ2VfdG9rZW5zIjowLCJjYWNoZWRfdG9rZW5zIjo1NTF9LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjAsImF1ZGlvX3Rva2VucyI6MCwiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjAsInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowfSwibnVtX3NvdXJjZXNfdXNlZCI6MCwiY29zdF9pbl91c2RfdGlja3MiOjU3MjUwMH0sInN5c3RlbV9maW5nZXJwcmludCI6ImZwXzQ4MzE5ZmNiMDgifQ==
-  recorded_at: Mon, 16 Mar 2026 19:13:50 GMT
+        eyJpZCI6IjIwYWViYTYxLTYxZDgtOTNjZS1iNzZlLWE3YjFiMjczODU5ZCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NzUxMjkxMjksIm1vZGVsIjoiZ3Jvay00LTEtZmFzdC1ub24tcmVhc29uaW5nIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJUaGUgY3VycmVudCB3ZWF0aGVyIGluIFBhcmlzICg0OC44NTc1LCAyLjM1MTQpIGlzIDE1wrBDIHdpdGggd2luZHMgYXQgMTAga20vaC4iLCJyZWZ1c2FsIjpudWxsfSwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjYyNywiY29tcGxldGlvbl90b2tlbnMiOjI5LCJ0b3RhbF90b2tlbnMiOjY1NiwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7InRleHRfdG9rZW5zIjo2MjcsImF1ZGlvX3Rva2VucyI6MCwiaW1hZ2VfdG9rZW5zIjowLCJjYWNoZWRfdG9rZW5zIjo1NTF9LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjAsImF1ZGlvX3Rva2VucyI6MCwiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjAsInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowfSwibnVtX3NvdXJjZXNfdXNlZCI6MCwiY29zdF9pbl91c2RfdGlja3MiOjU3MjUwMH0sInN5c3RlbV9maW5nZXJwcmludCI6ImZwXzVkMjQ5YmE0NzEifQ==
+  recorded_at: Thu, 02 Apr 2026 11:25:31 GMT
 recorded_with: VCR 6.4.0

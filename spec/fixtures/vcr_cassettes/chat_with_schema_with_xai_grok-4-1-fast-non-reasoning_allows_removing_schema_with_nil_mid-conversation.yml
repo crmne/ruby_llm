@@ -24,51 +24,58 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 16 Mar 2026 19:12:37 GMT
+      - Thu, 02 Apr 2026 11:24:22 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Set-Cookie:
-      - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=31536000
+      Content-Security-Policy-Report-Only:
+      - script-src 'unsafe-inline' 'unsafe-eval'; connect-src 'none'; report-uri https://csp-reporting.cloudflare.com/cdn-cgi/script_monitor/report?m=.xx7ppkTef5NIj1PQwFsZdL3f8hzu5nhKonMo7eWpCQ-1775129062.3132124-1.0.1.1-xujeKm87_hFW0jl86cCmwGCVC5KxjFKzSdwTIAjPnKhLkKHQbGLfOV3le0AD.FuD7QsSAADZvJLKecLCOBCo6GhptUUyfsXe59wJ_e9O57I196oTJBMa3UJ7_jIcNGoeFEvM3fS5Ofy58lungG.6SENxULC3TSu_NDgQ9CIZc4Q;
+        report-to cf-csp-endpoint
       X-Ratelimit-Limit-Tokens:
-      - '4000000'
+      - '10000000'
       X-Ratelimit-Remaining-Tokens:
-      - '4000000'
+      - '10000000'
       X-Zero-Data-Retention:
       - 'false'
       X-Ratelimit-Limit-Requests:
-      - '607'
+      - '1800'
       X-Ratelimit-Remaining-Requests:
-      - '607'
+      - '1800'
       X-Metrics-Ttft-Ms:
-      - '134.3'
+      - '121.1'
       X-Metrics-Mean-Itl-Ms:
-      - '6.4'
+      - '8.6'
       X-Metrics-E2e-Ms:
-      - '354.5'
-      Cf-Cache-Status:
-      - DYNAMIC
+      - '281.0'
+      Strict-Transport-Security:
+      - max-age=31536000
       X-Request-Id:
       - "<X_REQUEST_ID>"
+      Traceparent:
+      - 00-39cebd999f813c5b183a3d1e14748497-45f1ead50000fcbc-01
+      Cf-Cache-Status:
+      - DYNAMIC
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
       - "*"
       Access-Control-Expose-Headers:
       - "*"
+      Set-Cookie:
+      - "<COOKIE>"
+      Report-To:
+      - '{"group":"cf-csp-endpoint","max_age":86400,"endpoints":[{"url":"https://csp-reporting.cloudflare.com/cdn-cgi/script_monitor/report?m=.xx7ppkTef5NIj1PQwFsZdL3f8hzu5nhKonMo7eWpCQ-1775129062.3132124-1.0.1.1-xujeKm87_hFW0jl86cCmwGCVC5KxjFKzSdwTIAjPnKhLkKHQbGLfOV3le0AD.FuD7QsSAADZvJLKecLCOBCo6GhptUUyfsXe59wJ_e9O57I196oTJBMa3UJ7_jIcNGoeFEvM3fS5Ofy58lungG.6SENxULC3TSu_NDgQ9CIZc4Q"}]}'
       Server:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"8b4c6f6a-13aa-0460-7377-d38f85904bfa","object":"chat.completion","created":1773688356,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"{\"name\":\"Bob\",\"age\":30}","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":246,"completion_tokens":9,"total_tokens":255,"prompt_tokens_details":{"text_tokens":246,"audio_tokens":0,"image_tokens":0,"cached_tokens":169},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":283500},"system_fingerprint":"fp_48319fcb08"}'
-  recorded_at: Mon, 16 Mar 2026 19:12:37 GMT
+      string: '{"id":"4ab939f8-18bb-933f-936b-399d1fa8f870","object":"chat.completion","created":1775129062,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"{\"name\":\"Bob\",\"age\":30}","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":246,"completion_tokens":9,"total_tokens":255,"prompt_tokens_details":{"text_tokens":246,"audio_tokens":0,"image_tokens":0,"cached_tokens":169},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":283500},"system_fingerprint":"fp_5d249ba471"}'
+  recorded_at: Thu, 02 Apr 2026 11:24:22 GMT
 - request:
     method: post
     uri: https://api.x.ai/v1/chat/completions
@@ -94,49 +101,51 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 16 Mar 2026 19:12:38 GMT
+      - Thu, 02 Apr 2026 11:24:23 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Set-Cookie:
-      - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=31536000
       X-Ratelimit-Limit-Tokens:
-      - '4000000'
+      - '10000000'
       X-Ratelimit-Remaining-Tokens:
-      - '4000000'
+      - '10000000'
       X-Zero-Data-Retention:
       - 'false'
       X-Ratelimit-Limit-Requests:
-      - '607'
+      - '1800'
       X-Ratelimit-Remaining-Requests:
-      - '607'
+      - '1800'
       X-Metrics-Ttft-Ms:
-      - '143.9'
+      - '162.0'
       X-Metrics-Mean-Itl-Ms:
-      - '6.8'
+      - '0.0'
       X-Metrics-E2e-Ms:
-      - '375.5'
+      - '243.8'
       Cf-Cache-Status:
       - DYNAMIC
       X-Request-Id:
       - "<X_REQUEST_ID>"
+      Traceparent:
+      - 00-7edb5310ca878275b3856438d77310da-53d7d86f00880330-01
+      Set-Cookie:
+      - "<COOKIE>"
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
       - "*"
       Access-Control-Expose-Headers:
       - "*"
+      Strict-Transport-Security:
+      - max-age=31536000
       Server:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"65cb4d08-faf7-711d-ac65-90c7ac3d9510","object":"chat.completion","created":1773688357,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"{\"name\":\"Ruby\",\"age\":28}","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":199,"completion_tokens":9,"total_tokens":208,"prompt_tokens_details":{"text_tokens":199,"audio_tokens":0,"image_tokens":0,"cached_tokens":161},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":201500},"system_fingerprint":"fp_48319fcb08"}'
-  recorded_at: Mon, 16 Mar 2026 19:12:38 GMT
+      string: '{"id":"a7faa690-3d3e-9958-a1a0-bd62c691aa34","object":"chat.completion","created":1775129062,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"{\"name\":\"Ruby\",\"age\":28}","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":199,"completion_tokens":9,"total_tokens":208,"prompt_tokens_details":{"text_tokens":199,"audio_tokens":0,"image_tokens":0,"cached_tokens":162},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":200000},"system_fingerprint":"fp_5d249ba471"}'
+  recorded_at: Thu, 02 Apr 2026 11:24:23 GMT
 recorded_with: VCR 6.4.0
