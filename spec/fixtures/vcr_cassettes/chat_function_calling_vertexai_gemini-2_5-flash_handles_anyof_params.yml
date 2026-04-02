@@ -20,12 +20,12 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
-      Date:
-      - Mon, 16 Mar 2026 19:18:39 GMT
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
+      Date:
+      - Thu, 02 Apr 2026 11:30:54 GMT
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
       Pragma:
       - no-cache
       Content-Type:
@@ -56,7 +56,7 @@ http_interactions:
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Mon, 16 Mar 2026 19:18:40 GMT
+  recorded_at: Thu, 02 Apr 2026 11:30:54 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -89,7 +89,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 16 Mar 2026 19:18:40 GMT
+      - Thu, 02 Apr 2026 11:30:55 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -115,22 +115,22 @@ http_interactions:
                     "functionCall": {
                       "name": "any_of_params",
                       "args": {
-                        "task": "Review PR",
-                        "status": "pending"
+                        "status": "pending",
+                        "task": "Review PR"
                       }
                     },
-                    "thoughtSignature": "CqsCAY89a19MkeDlU24iIbPsNCm3KRCw5LWOL8rWChrZzFLyJCOGWJcPul5AlZvg48KFqj9wxhvoKBlQjnfn70UrdALrzOZsje1RJWQ86S480V96EAGYF+csMQ3R9rC6Bo3wFD7UwwN5C7cAPO4R5t+vYxuVmQpSGoAqdpEhmmLCXAuAQiLTwgZmdkwPNt8Y7xNcP3Ogh8Bjh0L0ODFD/xfP7akOnAiogp6eotQzKjEIHIe1CVKtGE4bFHIxmhY/s8fov5wXqhm4lxsebXw+p4/afR7EkJHPdut2uprVn0mmUO8M6V/1acKHGVJvDnHXrPr3XMp9pCcF8eTzB9RAPLmLgdYPdarZk1quzhvO/N6kaCYc4QksDU54cRaCjDDwl2Bc/dX6jTT31gjqw7s="
+                    "thoughtSignature": "CvEBAY89a191b/fyrRgC6DZtnNt0tgxYedm/oxzy4gRlF4UUXgxyL5+v5c1byDOmTW+YJHzBQiEeBTJ7vyl5VQevvNEQ1PFLUkOwD0OpD/FwCEd7Lpjt0e9gzrQTl7AltNn78e8gMc7uprVlOf4MBPdZ9T0DX8rSOUvM7mG917QWbAprAX6wlwU69hCZUj+zHQawAQ2jf9qLNpQ1fky/YC1TwwcfOwDFwg7LvzeBdphn7Vovi29c48TjNVPus77VfafXB/BzSaocL73585xzt02/RcFhIT1dvhGbSn8VbGGWpmtmMly+SXkGOoeuEpzhEGh1TA=="
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.92363796234130857
+              "avgLogprobs": -0.64731016159057619
             }
           ],
           "usageMetadata": {
             "promptTokenCount": 50,
             "candidatesTokenCount": 10,
-            "totalTokenCount": 132,
+            "totalTokenCount": 121,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -144,11 +144,11 @@ http_interactions:
                 "tokenCount": 10
               }
             ],
-            "thoughtsTokenCount": 72
+            "thoughtsTokenCount": 61
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-03-16T19:18:40.133302Z",
-          "responseId": "kFe4abaRCO3jvNkPoIuakAI"
+          "createTime": "2026-04-02T11:30:54.707334Z",
+          "responseId": "blPOaYaWK_j12fMP37G9qQ0"
         }
-  recorded_at: Mon, 16 Mar 2026 19:18:40 GMT
+  recorded_at: Thu, 02 Apr 2026 11:30:55 GMT
 recorded_with: VCR 6.4.0

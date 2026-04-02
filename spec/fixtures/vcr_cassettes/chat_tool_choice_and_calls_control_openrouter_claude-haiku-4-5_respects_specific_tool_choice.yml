@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 16 Mar 2026 19:22:10 GMT
+      - Thu, 02 Apr 2026 11:39:33 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -49,18 +49,18 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: "\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1773688928-yduLttRV2Ha9mdRYTVK0\",\"object\":\"chat.completion\",\"created\":1773688928,\"model\":\"anthropic/claude-4.5-haiku-20251001\",\"provider\":\"Amazon
-        Bedrock\",\"system_fingerprint\":null,\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"tool_calls\",\"native_finish_reason\":\"tool_calls\",\"message\":{\"role\":\"assistant\",\"content\":null,\"refusal\":null,\"reasoning\":null,\"tool_calls\":[{\"type\":\"function\",\"index\":0,\"id\":\"toolu_bdrk_01CDbGQqcz9v7mXxnBkgDEB7\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":
+      string: "\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1775129971-jYidISfiiMr4lmEEuPkG\",\"object\":\"chat.completion\",\"created\":1775129971,\"model\":\"anthropic/claude-4.5-haiku-20251001\",\"provider\":\"Amazon
+        Bedrock\",\"system_fingerprint\":null,\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"tool_calls\",\"native_finish_reason\":\"tool_use\",\"message\":{\"role\":\"assistant\",\"content\":null,\"refusal\":null,\"reasoning\":null,\"tool_calls\":[{\"type\":\"function\",\"index\":0,\"id\":\"toolu_bdrk_019LszbAREeSsBfTLdzMvkcy\",\"function\":{\"name\":\"weather\",\"arguments\":\"{\\\"latitude\\\":
         \\\"41.9028\\\", \\\"longitude\\\": \\\"12.4964\\\"}\"}}]}}],\"usage\":{\"prompt_tokens\":716,\"completion_tokens\":56,\"total_tokens\":772,\"cost\":0.000996,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.000996,\"upstream_inference_prompt_cost\":0.000716,\"upstream_inference_completions_cost\":0.00028},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}}}"
-  recorded_at: Mon, 16 Mar 2026 19:22:10 GMT
+  recorded_at: Thu, 02 Apr 2026 11:39:33 GMT
 - request:
     method: post
     uri: https://openrouter.ai/api/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"anthropic/claude-haiku-4.5","messages":[{"role":"user","content":"What''s
-        the fall of Rome?"},{"role":"assistant","content":"","tool_calls":[{"id":"toolu_bdrk_01CDbGQqcz9v7mXxnBkgDEB7","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}"}}]},{"role":"tool","content":"Current
-        weather at 41.9028, 12.4964: 15°C, Wind: 10 km/h","tool_call_id":"toolu_bdrk_01CDbGQqcz9v7mXxnBkgDEB7"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        the fall of Rome?"},{"role":"assistant","content":"","tool_calls":[{"id":"toolu_bdrk_019LszbAREeSsBfTLdzMvkcy","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}"}}]},{"role":"tool","content":"Current
+        weather at 41.9028, 12.4964: 15°C, Wind: 10 km/h","tool_call_id":"toolu_bdrk_019LszbAREeSsBfTLdzMvkcy"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
@@ -81,7 +81,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 16 Mar 2026 19:22:12 GMT
+      - Thu, 02 Apr 2026 11:39:35 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -104,28 +104,28 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: "\n         \n\n         \n\n         \n\n         \n\n         \n\n
-        \        \n\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1773688930-7VGwkWwJKSIUYEFkfRfp\",\"object\":\"chat.completion\",\"created\":1773688930,\"model\":\"anthropic/claude-4.5-haiku-20251001\",\"provider\":\"Amazon
-        Bedrock\",\"system_fingerprint\":null,\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"message\":{\"role\":\"assistant\",\"content\":\"I
-        appreciate the question, but I should clarify that I mistakenly called the
-        weather tool. Let me give you a proper answer about the Fall of Rome instead!\\n\\n**The
-        Fall of Rome** refers to the collapse of the Roman Empire in the Western Hemisphere,
-        which occurred gradually from around the 3rd century CE and culminated in
-        476 CE, when the last Western Roman Emperor was deposed.\\n\\n## Key factors
-        in Rome's decline:\\n\\n1. **Political instability** - Constant civil wars,
-        power struggles, and frequent changes of leadership weakened central authority\\n\\n2.
-        **Economic troubles** - Heavy taxation, inflation, debasement of currency,
-        and disruption of trade routes\\n\\n3. **Military pressure** - Invasions by
-        Germanic tribes (Goths, Vandals, Franks, etc.) and other barbarian groups
-        stressed military resources\\n\\n4. **Barbarian invasions** - In 410 CE, Alaric
-        and the Visigoths sacked Rome; in 455 CE, the Vandals did the same. In 476
-        CE, Odoacer, a Germanic chieftain, deposed Romulus Augustulus\\n\\n5. **Division
-        of the empire** - In 285 CE, the empire was split into Eastern and Western
-        halves, making it harder to defend and govern\\n\\n6. **Spread of Christianity**
-        - Some argue this shifted focus from civic duty to spiritual matters\\n\\n7.
-        **Administrative breakdown** - The vast empire became too large to govern
-        effectively\\n\\n## Important note:\\nWhile the Western Roman Empire fell
-        in 476 CE, the **Eastern Roman Empire (Byzantine Empire)** continued for another
-        1,000 years until 1453 CE.\\n\\nWould you like to know more about any specific
-        aspect?\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":736,\"completion_tokens\":383,\"total_tokens\":1119,\"cost\":0.002651,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.002651,\"upstream_inference_prompt_cost\":0.000736,\"upstream_inference_completions_cost\":0.001915},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}}}"
-  recorded_at: Mon, 16 Mar 2026 19:22:14 GMT
+        \        \n\n         \n\n         \n\n         \n{\"id\":\"gen-1775129973-n5xMEurYXuejW82Hojfl\",\"object\":\"chat.completion\",\"created\":1775129973,\"model\":\"anthropic/claude-4.5-haiku-20251001\",\"provider\":\"Amazon
+        Bedrock\",\"system_fingerprint\":null,\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"end_turn\",\"message\":{\"role\":\"assistant\",\"content\":\"The
+        Fall of Rome is one of the most significant events in world history. It generally
+        refers to the decline and collapse of the Roman Empire, particularly the Western
+        Roman Empire, which occurred over several centuries.\\n\\n**Key points about
+        the Fall of Rome:**\\n\\n**Timeline:** The process began in the 3rd century
+        and accelerated after 410 CE, culminating in 476 CE when the last Western
+        Roman Emperor was deposed.\\n\\n**Major causes included:**\\n\\n1. **Political
+        instability** - Constant civil wars and weak leadership\\n2. **Economic decline**
+        - Inflation, currency devaluation, and loss of trade\\n3. **Military pressure**
+        - Invasions by Germanic tribes and other \\\"barbarian\\\" groups\\n4. **Military
+        overstretching** - The empire was too large to defend effectively\\n5. **Social
+        decay** - Loss of civic virtue and public institutions\\n6. **Administrative
+        problems** - The government became too corrupt and bloated\\n7. **Rise of
+        Christianity** - Some argue this changed traditional values (though this is
+        debated)\\n\\n**What happened:**\\n\\n- The Western Roman Empire fragmented
+        into various Germanic kingdoms\\n- Rome itself was sacked multiple times (410
+        CE by Visigoths, 455 CE by Vandals)\\n- By 476 CE, the Germanic chieftain
+        Odoacer deposed the last Western emperor, Romulus Augustulus\\n- The Eastern
+        Roman Empire (Byzantine Empire) continued for another thousand years until
+        1453\\n\\n**Significance:** The fall marked the end of Classical Antiquity
+        and the beginning of the Medieval period in Europe, reshaping European civilization
+        for centuries to come.\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":736,\"completion_tokens\":356,\"total_tokens\":1092,\"cost\":0.002516,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.002516,\"upstream_inference_prompt_cost\":0.000736,\"upstream_inference_completions_cost\":0.00178},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}}}"
+  recorded_at: Thu, 02 Apr 2026 11:39:37 GMT
 recorded_with: VCR 6.4.0

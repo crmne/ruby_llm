@@ -29,36 +29,44 @@ http_interactions:
       - application/json
       Request-Context:
       - appId=
-      Prompt-Token-Len:
-      - '7'
       X-Ms-Rai-Invoked:
       - 'true'
       Sampling-Token-Len:
-      - '1'
+      - '77'
+      Prompt-Token-Len:
+      - '7'
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Ms-Client-Request-Id:
-      - c4541c70-2fce-4e75-b693-605f04d60b6d
+      - c9d0bec2-c436-482f-9132-47e71673ffb1
       Azureml-Model-Session:
-      - d-d37d4aed-feba-4c61-ae2a-7f8ce4d38049
+      - d-a3423142-ae3e-4fb1-be62-1eecd5f54116
       Azureai-Requested-Tier:
       - default
       Azureai-Processed-Tier:
       - default
       X-Ms-Is-Spilled-Over:
       - 'false'
+      X-Ratelimit-Remaining-Requests:
+      - '47'
+      X-Ratelimit-Reset-Requests:
+      - '3208'
+      X-Ratelimit-Limit-Requests:
+      - '50'
+      X-Ratelimit-Renewalperiod-Requests:
+      - '60'
+      X-Ratelimit-Abusepenalty-Active:
+      - 'False'
       X-Ratelimit-Remaining-Tokens:
-      - '50000'
+      - '49744'
       X-Ratelimit-Reset-Tokens:
-      - '0'
+      - '307'
       X-Ratelimit-Limit-Tokens:
       - '50000'
       X-Ratelimit-Renewalperiod-Tokens:
       - '60'
-      X-Ratelimit-Abusepenalty-Active:
-      - 'False'
       Apim-Request-Id:
-      - c4541c70-2fce-4e75-b693-605f04d60b6d
+      - c9d0bec2-c436-482f-9132-47e71673ffb1
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Ms-Deployment-Name:
@@ -68,11 +76,16 @@ http_interactions:
       X-Ms-Region:
       - West Europe
       Date:
-      - Mon, 16 Mar 2026 20:26:53 GMT
+      - Thu, 02 Apr 2026 11:23:17 GMT
     body:
       encoding: UTF-8
-      string: '{"choices":[{"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"protected_material_code":{"filtered":false,"detected":false},"protected_material_text":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}},"finish_reason":"stop","index":0,"logprobs":null,"message":{"content":"Paris","refusal":null,"role":"assistant","tool_calls":null},"stop_reason":null}],"created":1773692812,"id":"b7ed75b9-58e0-4d94-babb-483c063de918","model":"grok-4-1-fast-non-reasoning","object":"chat.completion","prompt_filter_results":[{"prompt_index":0,"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"jailbreak":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}}}],"usage":{"audio_prompt_tokens":0,"completion_tokens":1,"completion_tokens_details":{"accepted_prediction_tokens":0,"audio_tokens":0,"reasoning_tokens":0,"rejected_prediction_tokens":0},"cost_in_usd_ticks":0,"num_sources_used":0,"prompt_tokens":7,"prompt_tokens_details":{"audio_tokens":0,"cached_tokens":0,"image_tokens":0,"text_tokens":7},"total_tokens":8}}
+      string: '{"choices":[{"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"protected_material_code":{"filtered":false,"detected":false},"protected_material_text":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}},"finish_reason":"stop","index":0,"logprobs":null,"message":{"content":"**Paris**
+        is the capital of France. \n\nThis is confirmed by official sources like the
+        French government''s website (e.g., diplomatie.gouv.fr) and international
+        references such as the CIA World Factbook, which list Paris as the political,
+        cultural, and economic center since the early Middle Ages. It''s home to landmarks
+        like the Eiffel Tower and the seat of the French National Assembly.","refusal":null,"role":"assistant","tool_calls":null},"stop_reason":null}],"created":1775128996,"id":"3d7ea7ef-5539-4d82-8bfa-69126b921b1e","model":"grok-4-1-fast-non-reasoning","object":"chat.completion","prompt_filter_results":[{"prompt_index":0,"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"jailbreak":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}}}],"usage":{"audio_prompt_tokens":0,"completion_tokens":77,"completion_tokens_details":{"accepted_prediction_tokens":0,"audio_tokens":0,"reasoning_tokens":0,"rejected_prediction_tokens":0},"cost_in_usd_ticks":0,"num_sources_used":0,"prompt_tokens":7,"prompt_tokens_details":{"audio_tokens":0,"cached_tokens":0,"image_tokens":0,"text_tokens":7},"total_tokens":84}}
 
         '
-  recorded_at: Mon, 16 Mar 2026 20:26:53 GMT
+  recorded_at: Thu, 02 Apr 2026 11:23:17 GMT
 recorded_with: VCR 6.4.0

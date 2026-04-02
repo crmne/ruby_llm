@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 16 Mar 2026 19:13:33 GMT
+      - Thu, 02 Apr 2026 11:25:19 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -32,62 +32,64 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '019cf811-5a0b-7c73-a281-3594d15f5ad5'
+      - '019d4df0-c6bb-70c4-b1d0-e2aaa545df73'
       X-Kong-Request-Id:
-      - '019cf811-5a0b-7c73-a281-3594d15f5ad5'
+      - '019d4df0-c6bb-70c4-b1d0-e2aaa545df73'
       X-Ratelimit-Limit-Tokens-Minute:
-      - '2000000'
+      - '600000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '1999061'
+      - '599348'
       X-Ratelimit-Tokens-Query-Cost:
-      - '124'
+      - '108'
       X-Ratelimit-Limit-Req-Minute:
       - '360'
       X-Ratelimit-Remaining-Req-Minute:
       - '355'
       X-Envoy-Upstream-Service-Time:
-      - '755'
+      - '746'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '756'
+      - '747'
       X-Kong-Proxy-Latency:
-      - '10'
+      - '7'
+      Cf-Cache-Status:
+      - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
-      X-Content-Type-Options:
-      - nosniff
-      Cf-Cache-Status:
-      - DYNAMIC
       Strict-Transport-Security:
       - max-age=15552000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        eyJpZCI6IjdhNTM4YjUwMjUyOTQyMDU5ZWZkMDkyODI5YmQ5M2RhIiwiY3JlYXRlZCI6MTc3MzY4ODQxMiwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsInVzYWdlIjp7InByb21wdF90b2tlbnMiOjEzLCJ0b3RhbF90b2tlbnMiOjEyNCwiY29tcGxldGlvbl90b2tlbnMiOjExMSwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjB9fSwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImZpbmlzaF9yZWFzb24iOiJzdG9wIiwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwidG9vbF9jYWxscyI6bnVsbCwiY29udGVudCI6IlRoZSBjcmVhdG9yIG9mIHRoZSAqKlJ1YnkqKiBwcm9ncmFtbWluZyBsYW5ndWFnZSBpcyAqKll1a2loaXJvIFwiTWF0elwiIE1hdHN1bW90byoqLCBhIEphcGFuZXNlIGNvbXB1dGVyIHNjaWVudGlzdCBhbmQgc29mdHdhcmUgcHJvZ3JhbW1lci5cblxuTWF0eiBkZXNpZ25lZCBSdWJ5IGluIHRoZSBtaWQtMTk5MHMgd2l0aCB0aGUgZ29hbCBvZiBjcmVhdGluZyBhIGxhbmd1YWdlIHRoYXQgYmFsYW5jZXMgc2ltcGxpY2l0eSBhbmQgcHJvZHVjdGl2aXR5IHdoaWxlIGJlaW5nIGZ1biB0byB1c2UuIFJ1YnkgZW1waGFzaXplcyBkZXZlbG9wZXIgaGFwcGluZXNzIGFuZCByZWFkYWJpbGl0eSwgbWFraW5nIGl0IGEgcG9wdWxhciBjaG9pY2UgZm9yIHdlYiBkZXZlbG9wbWVudCAoZXNwZWNpYWxseSB3aXRoIGZyYW1ld29ya3MgbGlrZSAqKlJ1Ynkgb24gUmFpbHMqKikuXG5cbk1hdHogcmVtYWlucyBhY3RpdmVseSBpbnZvbHZlZCBpbiB0aGUgUnVieSBjb21tdW5pdHksIGd1aWRpbmcgaXRzIGV2b2x1dGlvbiBhbmQgZW5zdXJpbmcgaXRzIGNvbnRpbnVlZCByZWxldmFuY2UuIPCfmoAifX1dfQ==
-  recorded_at: Mon, 16 Mar 2026 19:13:33 GMT
+      string: '{"id":"713702228ce04203b2fac1ef9188eae6","created":1775129118,"model":"mistral-small-latest","usage":{"prompt_tokens":25,"total_tokens":108,"completion_tokens":83,"prompt_tokens_details":{"cached_tokens":0}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
+        creator of the **Ruby** programming language is **Yukihiro \"Matz\" Matsumoto**.\n\nRuby
+        was first released in **1995** and is known for its simplicity, productivity,
+        and flexibility. Matz designed Ruby with the principle of **\"least surprise\"**,
+        aiming to make programming enjoyable and intuitive.\n\nWould you like to know
+        more about Ruby''s features or its history?"}}]}'
+  recorded_at: Thu, 02 Apr 2026 11:25:19 GMT
 - request:
     method: post
     uri: https://api.mistral.ai/v1/chat/completions
     body:
       encoding: UTF-8
-      string: "{\"model\":\"mistral-small-latest\",\"messages\":[{\"role\":\"user\",\"content\":\"Who
-        is the creator of the programming language Ruby?\"},{\"role\":\"assistant\",\"content\":\"The
-        creator of the **Ruby** programming language is **Yukihiro \\\"Matz\\\" Matsumoto**,
-        a Japanese computer scientist and software programmer.\\n\\nMatz designed
-        Ruby in the mid-1990s with the goal of creating a language that balances simplicity
-        and productivity while being fun to use. Ruby emphasizes developer happiness
-        and readability, making it a popular choice for web development (especially
-        with frameworks like **Ruby on Rails**).\\n\\nMatz remains actively involved
-        in the Ruby community, guiding its evolution and ensuring its continued relevance.
-        \U0001F680\"},{\"role\":\"user\",\"content\":\"What year did he create Ruby?\"}],\"stream\":false}"
+      string: '{"model":"mistral-small-latest","messages":[{"role":"user","content":"Who
+        is the creator of the programming language Ruby?"},{"role":"assistant","content":"The
+        creator of the **Ruby** programming language is **Yukihiro \"Matz\" Matsumoto**.\n\nRuby
+        was first released in **1995** and is known for its simplicity, productivity,
+        and flexibility. Matz designed Ruby with the principle of **\"least surprise\"**,
+        aiming to make programming enjoyable and intuitive.\n\nWould you like to know
+        more about Ruby''s features or its history?"},{"role":"user","content":"What
+        year did he create Ruby?"}],"stream":false}'
     headers:
       User-Agent:
       - Faraday v2.14.1
@@ -105,7 +107,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 16 Mar 2026 19:13:34 GMT
+      - Thu, 02 Apr 2026 11:25:19 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -113,45 +115,46 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '019cf811-5e50-74fb-a22d-9c40639c42a9'
+      - '019d4df0-c9e2-73b9-851b-20a03c26a2ca'
       X-Kong-Request-Id:
-      - '019cf811-5e50-74fb-a22d-9c40639c42a9'
+      - '019d4df0-c9e2-73b9-851b-20a03c26a2ca'
       X-Ratelimit-Limit-Tokens-Minute:
-      - '2000000'
+      - '600000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '1998858'
+      - '599187'
       X-Ratelimit-Tokens-Query-Cost:
-      - '267'
+      - '167'
       X-Ratelimit-Limit-Req-Minute:
       - '360'
       X-Ratelimit-Remaining-Req-Minute:
       - '354'
       X-Envoy-Upstream-Service-Time:
-      - '1024'
+      - '480'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '1025'
+      - '481'
       X-Kong-Proxy-Latency:
-      - '11'
+      - '10'
+      Cf-Cache-Status:
+      - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
-      X-Content-Type-Options:
-      - nosniff
-      Cf-Cache-Status:
-      - DYNAMIC
       Strict-Transport-Security:
       - max-age=15552000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        eyJpZCI6IjNmODZmNWEzZGZiOTQxNTc4ZjA2ODhiMjAyOTc1MmRjIiwiY3JlYXRlZCI6MTc3MzY4ODQxMywibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsInVzYWdlIjp7InByb21wdF90b2tlbnMiOjEzMywidG90YWxfdG9rZW5zIjoyNjcsImNvbXBsZXRpb25fdG9rZW5zIjoxMzQsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjowfX0sIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNob2ljZXMiOlt7ImluZGV4IjowLCJmaW5pc2hfcmVhc29uIjoic3RvcCIsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsInRvb2xfY2FsbHMiOm51bGwsImNvbnRlbnQiOiJZdWtpaGlybyBcIk1hdHpcIiBNYXRzdW1vdG8gYmVnYW4gZGV2ZWxvcGluZyAqKlJ1YnkqKiBpbiAqKjE5OTMqKiBhbmQgcHVibGljbHkgcmVsZWFzZWQgdGhlIGZpcnN0IHZlcnNpb24gKCoqUnVieSAwLjk1KiopIGluICoqRGVjZW1iZXIgMTk5NSoqLlxuXG5UaGUgbGFuZ3VhZ2Ugd2FzIG9mZmljaWFsbHkgYW5ub3VuY2VkIGluIGEgSmFwYW5lc2UgbmV3c2dyb3VwIG9uICoqRmVicnVhcnkgMjQsIDE5OTMqKiwgYnV0IHRoZSBmaXJzdCBzdGFibGUgdmVyc2lvbiAoUnVieSAxLjApIHdhcyByZWxlYXNlZCBpbiAqKkRlY2VtYmVyIDE5OTYqKi5cblxuU28sIHdoaWxlIGRldmVsb3BtZW50IHN0YXJ0ZWQgaW4gKioxOTkzKiosIFJ1Ynkgd2FzIGZpcnN0IGludHJvZHVjZWQgdG8gdGhlIHB1YmxpYyBpbiAqKjE5OTUqKiwgd2l0aCBtYWpvciBtaWxlc3RvbmVzIGluICoqMTk5NioqLiDwn5qAIn19XX0=
-  recorded_at: Mon, 16 Mar 2026 19:13:34 GMT
+      string: '{"id":"7c48d11dafb84e58928e3b7742f7bb1e","created":1775129119,"model":"mistral-small-latest","usage":{"prompt_tokens":117,"total_tokens":167,"completion_tokens":50,"prompt_tokens_details":{"cached_tokens":0}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"Yukihiro
+        \"Matz\" Matsumoto created **Ruby in 1995**.\n\nThe first public release,
+        **Ruby 0.95**, was announced on **December 21, 1995**."}}]}'
+  recorded_at: Thu, 02 Apr 2026 11:25:19 GMT
 recorded_with: VCR 6.4.0

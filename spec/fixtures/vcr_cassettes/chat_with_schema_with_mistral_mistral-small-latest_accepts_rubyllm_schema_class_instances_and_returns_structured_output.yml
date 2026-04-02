@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 16 Mar 2026 19:11:53 GMT
+      - Thu, 02 Apr 2026 11:23:43 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -32,45 +32,45 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '019cf80f-d45c-73ee-9bb8-b872d8e89257'
+      - '019d4def-52f5-745f-8ac8-7257bafdf441'
       X-Kong-Request-Id:
-      - '019cf80f-d45c-73ee-9bb8-b872d8e89257'
+      - '019d4def-52f5-745f-8ac8-7257bafdf441'
       X-Ratelimit-Limit-Tokens-Minute:
-      - '2000000'
+      - '600000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '1998511'
+      - '598989'
       X-Ratelimit-Tokens-Query-Cost:
-      - '33'
+      - '29'
       X-Ratelimit-Limit-Req-Minute:
       - '360'
       X-Ratelimit-Remaining-Req-Minute:
-      - '347'
+      - '348'
       X-Envoy-Upstream-Service-Time:
-      - '177'
+      - '511'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '178'
+      - '513'
       X-Kong-Proxy-Latency:
       - '17'
+      Cf-Cache-Status:
+      - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
-      X-Content-Type-Options:
-      - nosniff
-      Cf-Cache-Status:
-      - DYNAMIC
       Strict-Transport-Security:
       - max-age=15552000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"f678789d270844b0bba43314b9cdd330","created":1773688312,"model":"mistral-small-latest","usage":{"prompt_tokens":15,"total_tokens":33,"completion_tokens":18,"prompt_tokens_details":{"cached_tokens":0}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"{\n  \"name\":
-        \"Alice\",\n  \"age\": 28\n}"}}]}'
-  recorded_at: Mon, 16 Mar 2026 19:11:53 GMT
+      string: '{"id":"79a17049d14e4c73a15a7aaa0569c731","created":1775129023,"model":"mistral-small-latest","usage":{"prompt_tokens":15,"total_tokens":29,"completion_tokens":14,"prompt_tokens_details":{"cached_tokens":0}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"{\"name\":
+        \"Alice\", \"age\": 28}"}}]}'
+  recorded_at: Thu, 02 Apr 2026 11:23:43 GMT
 recorded_with: VCR 6.4.0
