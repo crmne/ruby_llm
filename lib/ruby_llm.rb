@@ -107,6 +107,4 @@ RubyLLM::Provider.register :perplexity, RubyLLM::Providers::Perplexity
 RubyLLM::Provider.register :vertexai, RubyLLM::Providers::VertexAI
 RubyLLM::Provider.register :xai, RubyLLM::Providers::XAI
 
-if defined?(Rails::Railtie)
-  require 'ruby_llm/railtie'
-end
+require 'ruby_llm/railtie' if defined?(Rails::Railtie)
