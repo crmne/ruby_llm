@@ -76,6 +76,10 @@ RubyLLM.configure do |config|
   config.gpustack_api_base = ENV['GPUSTACK_API_BASE']
   config.gpustack_api_key = ENV['GPUSTACK_API_KEY']
 
+  # MiniMax
+  config.minimax_api_key = ENV['MINIMAX_API_KEY']
+  config.minimax_api_base = ENV['MINIMAX_API_BASE'] # Optional custom MiniMax endpoint (defaults to https://api.minimax.io/v1)
+
   # Mistral
   config.mistral_api_key = ENV['MISTRAL_API_KEY']
 
@@ -476,6 +480,10 @@ RubyLLM.configure do |config|
   # GPUStack
   config.gpustack_api_base = String
   config.gpustack_api_key = String
+
+  # MiniMax
+  config.minimax_api_key = String
+  config.minimax_api_base = String
 
   # Mistral
   config.mistral_api_key = String
