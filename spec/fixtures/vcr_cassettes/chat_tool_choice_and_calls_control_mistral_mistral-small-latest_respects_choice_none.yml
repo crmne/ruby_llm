@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 16 Mar 2026 19:21:11 GMT
+      - Thu, 02 Apr 2026 11:33:32 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -35,46 +35,58 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '019cf818-5954-716f-a016-a0847f2f6954'
+      - '019d4df8-2d45-7a91-a95c-369d136ee457'
       X-Kong-Request-Id:
-      - '019cf818-5954-716f-a016-a0847f2f6954'
+      - '019d4df8-2d45-7a91-a95c-369d136ee457'
       X-Ratelimit-Limit-Tokens-Minute:
-      - '2000000'
+      - '600000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '1999823'
+      - '599644'
       X-Ratelimit-Tokens-Query-Cost:
-      - '177'
+      - '356'
       X-Ratelimit-Limit-Req-Minute:
       - '360'
       X-Ratelimit-Remaining-Req-Minute:
       - '359'
       X-Envoy-Upstream-Service-Time:
-      - '301'
+      - '8726'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '302'
+      - '8727'
       X-Kong-Proxy-Latency:
-      - '10'
+      - '20'
+      Cf-Cache-Status:
+      - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
-      X-Content-Type-Options:
-      - nosniff
-      Cf-Cache-Status:
-      - DYNAMIC
       Strict-Transport-Security:
       - max-age=15552000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"0e8950fafe01436f8e462533fb672318","created":1773688871,"model":"mistral-small-latest","usage":{"prompt_tokens":147,"total_tokens":177,"completion_tokens":30,"prompt_tokens_details":{"cached_tokens":0}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"Let''s
-        check the weather for you. I''ll look up the current weather in Berlin using
-        the provided coordinates. Please hold on for a moment."}}]}'
-  recorded_at: Mon, 16 Mar 2026 19:21:11 GMT
+      string: '{"id":"3b0ee9aa7b7941c5b041b8cc20b5bbfb","created":1775129603,"model":"mistral-small-latest","usage":{"prompt_tokens":159,"total_tokens":356,"completion_tokens":197,"prompt_tokens_details":{"cached_tokens":0}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"I''ll
+        check the current weather for Berlin using the coordinates you provided. One
+        moment, please. I''ll use the weather function to get that information for
+        you. I''ll get the current weather for Berlin using the provided coordinates.
+        I''ll use the weather function to retrieve the information. I''ll get the
+        current weather for Berlin using the coordinates you provided. I''ll use the
+        weather function to fetch the data. I''ll get the current weather for Berlin
+        using the coordinates you provided. I''ll use the weather function to retrieve
+        the information. I''ll get the current weather for Berlin using the coordinates
+        you provided. I''ll use the weather function to fetch the data. I''ll get
+        the current weather for Berlin using the coordinates you provided. I''ll use
+        the weather function to retrieve the information. I''ll get the current weather
+        for Berlin using the coordinates you provided. I''ll use the weather function
+        to fetch the data. I''ll get the current weather for Berlin using the coordinates
+        you provided. I"}}]}'
+  recorded_at: Thu, 02 Apr 2026 11:33:32 GMT
 recorded_with: VCR 6.4.0

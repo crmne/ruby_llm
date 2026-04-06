@@ -27,39 +27,39 @@ http_interactions:
       Content-Type:
       - text/plain; charset=utf-8
       Last-Modified:
-      - Mon, 16 Mar 2026 01:54:03 GMT
+      - Wed, 01 Apr 2026 06:42:59 GMT
       Access-Control-Allow-Origin:
       - "*"
       Etag:
-      - W/"69b762bb-9c6"
+      - W/"69ccbe73-9c6"
       Expires:
-      - Mon, 16 Mar 2026 19:20:40 GMT
+      - Thu, 02 Apr 2026 11:33:43 GMT
       Cache-Control:
       - max-age=600
       X-Proxy-Cache:
       - MISS
       X-Github-Request-Id:
-      - 2E30:38D72F:D7B24:DA007:69B855AE
+      - 7CD0:3B9ECA:F87895:FB1241:69CE51BF
       Accept-Ranges:
       - bytes
       Date:
-      - Mon, 16 Mar 2026 19:14:09 GMT
+      - Thu, 02 Apr 2026 11:24:54 GMT
       Via:
       - 1.1 varnish
       Age:
-      - '167'
+      - '39'
       X-Served-By:
-      - cache-fra-etou8220112-FRA
+      - cache-ber1080042-BER
       X-Cache:
       - HIT
       X-Cache-Hits:
-      - '1'
+      - '7'
       X-Timer:
-      - S1773688450.625594,VS0,VE2
+      - S1775129094.343699,VS0,VE0
       Vary:
       - Accept-Encoding
       X-Fastly-Request-Id:
-      - 88b8b6770af0fa71746d82403d7444d9b2b3c76b
+      - 07a0b029843d25056ecfd5cff6231b48884ef805
     body:
       encoding: ASCII-8BIT
       string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
@@ -95,7 +95,7 @@ http_interactions:
         \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
         WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
         FOR A PARTICULAR\n     PURPOSE.\n"
-  recorded_at: Mon, 16 Mar 2026 19:14:09 GMT
+  recorded_at: Thu, 02 Apr 2026 11:24:54 GMT
 - request:
     method: post
     uri: https://api.x.ai/v1/chat/completions
@@ -153,42 +153,44 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 16 Mar 2026 19:14:12 GMT
+      - Thu, 02 Apr 2026 11:24:57 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Strict-Transport-Security:
-      - max-age=31536000
-      Access-Control-Expose-Headers:
-      - "*"
       Set-Cookie:
       - "<COOKIE>"
       X-Ratelimit-Limit-Tokens:
-      - '4000000'
+      - '10000000'
       X-Ratelimit-Remaining-Tokens:
-      - '4000000'
+      - '10000000'
       X-Zero-Data-Retention:
       - 'false'
       X-Ratelimit-Limit-Requests:
-      - '607'
+      - '1800'
       X-Ratelimit-Remaining-Requests:
-      - '607'
+      - '1800'
       X-Metrics-Ttft-Ms:
-      - '114.0'
+      - '235.4'
       X-Metrics-Mean-Itl-Ms:
-      - '10.2'
+      - '12.6'
       X-Metrics-E2e-Ms:
-      - '2278.1'
+      - '2994.0'
+      Strict-Transport-Security:
+      - max-age=31536000
       X-Request-Id:
       - "<X_REQUEST_ID>"
+      Traceparent:
+      - 00-d9d1c9cdeeb3fa2a24690268c4a0488f-87de99c100889311-01
       Cf-Cache-Status:
       - DYNAMIC
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
       - "*"
       Server:
       - cloudflare
@@ -196,19 +198,20 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"3e4ea5bc-60c9-5466-3c77-39957286e202","object":"chat.completion","created":1773688449,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"This
-        is the **Ruby License** (also known as the Ruby License or matz''s license),
+      string: '{"id":"f89fe529-ad1c-9efb-a5d8-65259e0a2cbb","object":"chat.completion","created":1775129094,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"This
+        is the **Ruby License** (also known as the Ruby BSDL or matz''s original license),
         a permissive open-source license for the Ruby programming language, authored
-        by Yukihiro Matsumoto (matz).\n\n### Key Points:\n- **Permissive**: Allows
-        redistribution, modification, and commercial use with minimal restrictions.\n-
-        **Dual-licensing option**: You can use either this license **or** the 2-clause
-        BSD License (BSDL).\n- **Main allowances**:\n  1. Free verbatim copying (with
-        notices preserved).\n  2. Modifications for public domain, internal corporate
-        use, non-standard binaries, or with author arrangements.\n  3. Binary distribution
-        with source access instructions.\n  4. Inclusion in other software (even commercial),
-        excluding certain third-party files (see `LEGAL` file).\n- **No warranty**:
-        Provided \"AS IS\" without guarantees.\n\nThis license has been used in early
-        Ruby versions (pre-2.0) and is OSI-approved. Modern Ruby uses the 2-clause
-        BSD license exclusively.","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":692,"completion_tokens":207,"total_tokens":899,"prompt_tokens_details":{"text_tokens":692,"audio_tokens":0,"image_tokens":0,"cached_tokens":161},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":2177500},"system_fingerprint":"fp_48319fcb08"}'
-  recorded_at: Mon, 16 Mar 2026 19:14:12 GMT
+        by Yukihiro Matsumoto (matz).\n\n### Key Points:\n- **Copyright**: Held by
+        Yukihiro Matsumoto.\n- **Permissions**:\n  - Free redistribution of verbatim
+        source copies (with notices intact).\n  - Modification allowed, with specific
+        conditions (e.g., make mods public domain, restrict to internal use, rename
+        binaries, or arrange with author).\n  - Binary distribution allowed with source
+        availability or pointers to originals.\n  - Can be embedded in other software
+        (including commercial).\n- **Exclusions**:\n  - Some files have different
+        terms (see `LEGAL` file).\n  - Generated scripts/libraries aren''t covered.\n-
+        **Disclaimer**: Provided \"AS IS\" with no warranties.\n\nIt''s similar to
+        a 2-clause BSD license but with unique clauses for modifications and binaries.
+        This allowed Ruby''s widespread adoption while protecting the original work.
+        Full 2-clause BSDL is in the referenced `BSDL` file.","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":692,"completion_tokens":216,"total_tokens":908,"prompt_tokens_details":{"text_tokens":692,"audio_tokens":0,"image_tokens":0,"cached_tokens":161},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":2222500},"system_fingerprint":"fp_5d249ba471"}'
+  recorded_at: Thu, 02 Apr 2026 11:24:57 GMT
 recorded_with: VCR 6.4.0

@@ -27,39 +27,39 @@ http_interactions:
       Content-Type:
       - text/plain; charset=utf-8
       Last-Modified:
-      - Mon, 16 Mar 2026 01:54:03 GMT
+      - Wed, 01 Apr 2026 06:42:59 GMT
       Access-Control-Allow-Origin:
       - "*"
       Etag:
-      - W/"69b762bb-9c6"
+      - W/"69ccbe73-9c6"
       Expires:
-      - Mon, 16 Mar 2026 19:20:40 GMT
+      - Thu, 02 Apr 2026 11:33:43 GMT
       Cache-Control:
       - max-age=600
       X-Proxy-Cache:
       - MISS
       X-Github-Request-Id:
-      - 2E30:38D72F:D7B24:DA007:69B855AE
+      - 7CD0:3B9ECA:F87895:FB1241:69CE51BF
       Accept-Ranges:
       - bytes
       Date:
-      - Mon, 16 Mar 2026 19:12:16 GMT
+      - Thu, 02 Apr 2026 11:23:48 GMT
       Via:
       - 1.1 varnish
       Age:
-      - '54'
+      - '5'
       X-Served-By:
-      - cache-fra-etou8220134-FRA
+      - cache-ber1080024-BER
       X-Cache:
       - HIT
       X-Cache-Hits:
       - '1'
       X-Timer:
-      - S1773688337.991398,VS0,VE2
+      - S1775129028.487077,VS0,VE1
       Vary:
       - Accept-Encoding
       X-Fastly-Request-Id:
-      - 92399936092433820d9ff0b53e1e0b8b76c6f0df
+      - 62ff2f381fac5b44d1a99b72cd3028d655b79a05
     body:
       encoding: ASCII-8BIT
       string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
@@ -95,7 +95,7 @@ http_interactions:
         \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
         WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
         FOR A PARTICULAR\n     PURPOSE.\n"
-  recorded_at: Mon, 16 Mar 2026 19:12:17 GMT
+  recorded_at: Thu, 02 Apr 2026 11:23:48 GMT
 - request:
     method: post
     uri: https://api.mistral.ai/v1/chat/completions
@@ -153,7 +153,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 16 Mar 2026 19:12:19 GMT
+      - Thu, 02 Apr 2026 11:23:52 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -161,45 +161,74 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '019cf810-32a3-7d51-9437-691f6959ac30'
+      - '019d4def-67c5-7854-a03c-19906b055446'
       X-Kong-Request-Id:
-      - '019cf810-32a3-7d51-9437-691f6959ac30'
+      - '019d4def-67c5-7854-a03c-19906b055446'
       X-Ratelimit-Limit-Tokens-Minute:
-      - '2000000'
+      - '600000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '1997782'
+      - '597307'
       X-Ratelimit-Tokens-Query-Cost:
-      - '958'
+      - '1086'
       X-Ratelimit-Limit-Req-Minute:
       - '360'
       X-Ratelimit-Remaining-Req-Minute:
-      - '349'
+      - '343'
       X-Envoy-Upstream-Service-Time:
-      - '2621'
+      - '3776'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '2621'
+      - '3777'
       X-Kong-Proxy-Latency:
-      - '8'
+      - '15'
+      Cf-Cache-Status:
+      - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
-      X-Content-Type-Options:
-      - nosniff
-      Cf-Cache-Status:
-      - DYNAMIC
       Strict-Transport-Security:
       - max-age=15552000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        eyJpZCI6IjBhNWFmYzVjZjUxNTRhNmU5Mjk0ZTIxZTFiYTZlNjgwIiwiY3JlYXRlZCI6MTc3MzY4ODMzNywibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsInVzYWdlIjp7InByb21wdF90b2tlbnMiOjU3NywidG90YWxfdG9rZW5zIjo5NTgsImNvbXBsZXRpb25fdG9rZW5zIjozODEsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjowfX0sIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNob2ljZXMiOlt7ImluZGV4IjowLCJmaW5pc2hfcmVhc29uIjoic3RvcCIsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsInRvb2xfY2FsbHMiOm51bGwsImNvbnRlbnQiOiJUaGlzIGZpbGUgKGBsaWNlbnNlLnR4dGApIGNvbnRhaW5zIHRoZSAqKlJ1YnkgTGljZW5zZSoqLCBhIHBlcm1pc3NpdmUgb3Blbi1zb3VyY2UgbGljZW5zZSBjcmVhdGVkIGJ5IFl1a2loaXJvIE1hdHN1bW90byAoTWF0eiksIHRoZSBjcmVhdG9yIG9mIHRoZSBSdWJ5IHByb2dyYW1taW5nIGxhbmd1YWdlLiBIZXJl4oCZcyBhIHN1bW1hcnkgb2YgaXRzIGtleSBwb2ludHM6XG5cbiMjIyAqKktleSBUZXJtcyBvZiB0aGUgUnVieSBMaWNlbnNlOioqXG4xLiAqKlJlZGlzdHJpYnV0aW9uICYgTW9kaWZpY2F0aW9uOioqXG4gICAtIFlvdSBjYW4gZnJlZWx5IGNvcHkgYW5kIGRpc3RyaWJ1dGUgdGhlIG9yaWdpbmFsIHNvdXJjZSBjb2RlICh3aXRoIGNvcHlyaWdodCBub3RpY2VzIGludGFjdCkuXG4gICAtIFlvdSBjYW4gbW9kaWZ5IHRoZSBzb2Z0d2FyZSB1bmRlciBjZXJ0YWluIGNvbmRpdGlvbnMgKGUuZy4sIHJlbGVhc2luZyBtb2RpZmljYXRpb25zIHB1YmxpY2x5LCB1c2luZyB0aGVtIGludGVybmFsbHksIG9yIHJlbmFtaW5nIGJpbmFyaWVzKS5cblxuMi4gKipCaW5hcnkgRGlzdHJpYnV0aW9uOioqXG4gICAtIFlvdSBjYW4gZGlzdHJpYnV0ZSBjb21waWxlZCBiaW5hcmllcywgYnV0IHlvdSBtdXN0IGVpdGhlcjpcbiAgICAgLSBJbmNsdWRlIGluc3RydWN0aW9ucyBvbiB3aGVyZSB0byBnZXQgdGhlIG9yaWdpbmFsIHNvdXJjZS5cbiAgICAgLSBQcm92aWRlIHRoZSBzb3VyY2UgY29kZS5cbiAgICAgLSBSZW5hbWUgbm9uLXN0YW5kYXJkIGJpbmFyaWVzIGNsZWFybHkuXG5cbjMuICoqSW5jbHVzaW9uIGluIE90aGVyIFNvZnR3YXJlOioqXG4gICAtIFlvdSBjYW4gaW5jbHVkZSBSdWJ5IChvciBwYXJ0cyBvZiBpdCkgaW4gb3RoZXIgc29mdHdhcmUgKGV2ZW4gY29tbWVyY2lhbCksIGJ1dCBzb21lIGZpbGVzIGluIHRoZSBkaXN0cmlidXRpb24gbWF5IGhhdmUgZGlmZmVyZW50IGxpY2Vuc2VzIChjaGVjayBgTEVHQUxgIGZvciBkZXRhaWxzKS5cblxuNC4gKipObyBXYXJyYW50eToqKlxuICAgLSBUaGUgc29mdHdhcmUgaXMgcHJvdmlkZWQgXCJhcyBpc1wiIHdpdGggbm8gZ3VhcmFudGVlcyBvZiBmdW5jdGlvbmFsaXR5IG9yIGZpdG5lc3MgZm9yIGEgcHVycG9zZS5cblxuNS4gKipUaGlyZC1QYXJ0eSBGaWxlczoqKlxuICAgLSBTb21lIGZpbGVzIGluIHRoZSBkaXN0cmlidXRpb24gbWF5IGhhdmUgZGlmZmVyZW50IGxpY2Vuc2luZyB0ZXJtcyAocmVmZXIgdG8gYExFR0FMYCkuXG5cbiMjIyAqKkNvbXBhcmlzb24gdG8gT3RoZXIgTGljZW5zZXM6Kipcbi0gU2ltaWxhciB0byAqKkJTRC1zdHlsZSBsaWNlbnNlcyoqIChwZXJtaXNzaXZlLCBhbGxvd3MgY29tbWVyY2lhbCB1c2UpLlxuLSBMZXNzIHJlc3RyaWN0aXZlIHRoYW4gdGhlICoqR1BMKiogKG5vIGNvcHlsZWZ0IHJlcXVpcmVtZW50KS5cbi0gU29tZSBjb25kaXRpb25zIGFyZSB1bmlxdWUgKGUuZy4sIGFsbG93aW5nIGludGVybmFsIHVzZSB3aXRob3V0IHB1YmxpYyByZWxlYXNlKS5cblxuIyMjICoqV2hlcmUgdG8gRmluZCBNb3JlIERldGFpbHM6Kipcbi0gVGhlIGxpY2Vuc2UgcmVmZXJlbmNlcyBgQlNEYCAobGlrZWx5IHRoZSAyLWNsYXVzZSBCU0QgTGljZW5zZSkgYW5kIGEgYExFR0FMYCBmaWxlIGZvciBhZGRpdGlvbmFsIHRlcm1zLlxuXG5UaGlzIGxpY2Vuc2UgaXMgKip2ZXJ5IHBlcm1pc3NpdmUqKiwgbWFraW5nIFJ1Ynkgd2lkZWx5IHVzYWJsZSBpbiBib3RoIG9wZW4tc291cmNlIGFuZCBwcm9wcmlldGFyeSBwcm9qZWN0cy4ifX1dfQ==
-  recorded_at: Mon, 16 Mar 2026 19:12:19 GMT
+      string: '{"id":"9e609c31eba74832b2631539cb6fe9b3","created":1775129028,"model":"mistral-small-latest","usage":{"prompt_tokens":589,"total_tokens":1086,"completion_tokens":497,"prompt_tokens_details":{"cached_tokens":0}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"This
+        file (`license.txt`) contains the **Ruby License**, which outlines the terms
+        under which Ruby (the programming language) can be redistributed and modified.
+        Here''s a summary of its key points:\n\n### **Key Terms of the Ruby License:**\n1.
+        **Redistribution of Source Code**:\n   - You can freely redistribute the original
+        source code, provided you include all original copyright notices and disclaimers.\n\n2.
+        **Modification of Ruby**:\n   - You may modify Ruby, but you must follow **at
+        least one** of these conditions:\n     - a) Release modifications into the
+        **Public Domain** or make them freely available (e.g., posting online).\n     -
+        b) Use modified versions **only within your organization**.\n     - c) Rename
+        non-standard binaries and provide instructions for obtaining the original
+        version.\n     - d) Make other arrangements with the author (Matz).\n\n3.
+        **Distribution of Binaries**:\n   - You may distribute Ruby in compiled form,
+        but you must:\n     - a) Include binaries + instructions on where to get the
+        original source.\n     - b) Provide the **machine-readable source code** alongside
+        binaries.\n     - c) Rename non-standard binaries and provide original source
+        instructions.\n     - d) Make other arrangements with the author.\n\n4. **Inclusion
+        in Other Software**:\n   - You can incorporate parts of Ruby into other software
+        (including commercial), but some files have separate licenses (check `LEGAL`
+        for details).\n\n5. **Scripts & Outputs**:\n   - Files generated by Ruby (e.g.,
+        scripts) are **not automatically covered** by this license and belong to their
+        creators.\n\n6. **No Warranty**:\n   - Ruby is provided **\"AS IS\"** with
+        **no guarantees** of merchantability or fitness for a particular purpose.\n\n###
+        **Comparison to Other Licenses**:\n- The Ruby License is **not a standard
+        open-source license** (like MIT, GPL, or Apache).\n- It is **more restrictive**
+        than permissive licenses (e.g., MIT) but **less strict** than copyleft licenses
+        (e.g., GPL).\n- Some files in Ruby may have **additional licensing terms**
+        (see `LEGAL` file).\n\n### **Purpose**:\nThis license ensures that Ruby remains
+        **free to use, modify, and distribute**, while protecting the original authors
+        from liability.\n\nWould you like help interpreting any specific part in more
+        detail?"}}]}'
+  recorded_at: Thu, 02 Apr 2026 11:23:52 GMT
 recorded_with: VCR 6.4.0

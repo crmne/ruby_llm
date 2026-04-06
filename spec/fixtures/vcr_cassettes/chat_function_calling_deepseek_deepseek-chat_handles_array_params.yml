@@ -33,7 +33,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Mon, 16 Mar 2026 19:17:55 GMT
+      - Thu, 02 Apr 2026 11:29:54 GMT
       Server:
       - elb
       Vary:
@@ -41,7 +41,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 67fa0ba7b5efd73c59081e8a1629fa24
+      - af0a56ea1cec3522c8455b095c880167
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -49,15 +49,16 @@ http_interactions:
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 3d98ff2f094b729179a8f8c2a7dd59ba.cloudfront.net (CloudFront)
+      - 1.1 d9ce3c90781cc87845c80393506fb47c.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
       - TXL52-P2
       X-Amz-Cf-Id:
-      - nycnuvbKDtROqGGM5Ih7jiE3YUWcGnRqVfCKlYE0VC6l_ZZvtLa84w==
+      - _tqz7g0PbL4EsDJBsK7_o5WrbamyfWihlamkoIZd_QhzeXfkCDoeBw==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"0f07eb87-4c61-4bd9-a549-ea4da87d0d8d","object":"chat.completion","created":1773688675,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"I''ll
-        call the array params tool with the tags [\"red\", \"blue\"] as you requested.","tool_calls":[{"index":0,"id":"call_00_q6bIbS22VIDo6wPRqNzAI0wX","type":"function","function":{"name":"array_params","arguments":"{\"tags\":
-        [\"red\", \"blue\"]}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":346,"completion_tokens":67,"total_tokens":413,"prompt_tokens_details":{"cached_tokens":192},"prompt_cache_hit_tokens":192,"prompt_cache_miss_tokens":154},"system_fingerprint":"fp_eaab8d114b_prod0820_fp8_kvcache"}'
-  recorded_at: Mon, 16 Mar 2026 19:17:58 GMT
+      string: '{"id":"34caceae-7c96-43d4-8ce9-4406b9ddd846","object":"chat.completion","created":1775129394,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"I''ll
+        call the array params tool with the tags [\"red\", \"blue\"] and then tell
+        you the combined tags.","tool_calls":[{"index":0,"id":"call_00_2M7G6Ge9beiJRJmbQK5FYe3F","type":"function","function":{"name":"array_params","arguments":"{\"tags\":
+        [\"red\", \"blue\"]}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":346,"completion_tokens":71,"total_tokens":417,"prompt_tokens_details":{"cached_tokens":192},"prompt_cache_hit_tokens":192,"prompt_cache_miss_tokens":154},"system_fingerprint":"fp_eaab8d114b_prod0820_fp8_kvcache_new_kvcache"}'
+  recorded_at: Thu, 02 Apr 2026 11:29:58 GMT
 recorded_with: VCR 6.4.0

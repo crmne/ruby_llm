@@ -12,7 +12,7 @@ http_interactions:
       User-Agent:
       - Faraday v2.14.1
       X-Amz-Date:
-      - 20260316T191353Z
+      - 20260402T112539Z
       X-Amz-Content-Sha256:
       - 871d5de5615b8a3924a8176ad9149085ff97331197096f4717ba1198cca8c616
       Authorization:
@@ -30,34 +30,34 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 16 Mar 2026 19:13:54 GMT
+      - Thu, 02 Apr 2026 11:25:40 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '294'
+      - '306'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - fa2377a0-c6b9-4525-ae9a-915024d21689
+      - 45843b82-51a9-4624-a23c-9ea1b967e5c2
     body:
       encoding: UTF-8
-      string: '{"metrics":{"latencyMs":437},"output":{"message":{"content":[{"toolUse":{"input":{},"name":"best_language_to_learn","toolUseId":"tooluse_aeld7EMvASkfVquYH8CylF"}}],"role":"assistant"}},"stopReason":"tool_use","usage":{"inputTokens":904,"outputTokens":18,"serverToolUsage":{},"totalTokens":922}}'
-  recorded_at: Mon, 16 Mar 2026 19:13:54 GMT
+      string: '{"metrics":{"latencyMs":565},"output":{"message":{"content":[{"text":""},{"toolUse":{"input":{},"name":"best_language_to_learn","toolUseId":"tooluse_0Ecz6vr1Azpd68nbLdSn0j"}}],"role":"assistant"}},"stopReason":"tool_use","usage":{"inputTokens":904,"outputTokens":18,"serverToolUsage":{},"totalTokens":922}}'
+  recorded_at: Thu, 02 Apr 2026 11:25:40 GMT
 - request:
     method: post
     uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.amazon.nova-2-lite-v1:0/converse
     body:
       encoding: UTF-8
       string: '{"messages":[{"role":"user","content":[{"text":"What''s the best language
-        to learn?"}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_aeld7EMvASkfVquYH8CylF","name":"best_language_to_learn","input":{}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_aeld7EMvASkfVquYH8CylF","content":[{"text":"Ruby"}]}}]}],"inferenceConfig":{},"toolConfig":{"tools":[{"toolSpec":{"name":"best_language_to_learn","description":"Gets
+        to learn?"}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_0Ecz6vr1Azpd68nbLdSn0j","name":"best_language_to_learn","input":{}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_0Ecz6vr1Azpd68nbLdSn0j","content":[{"text":"Ruby"}]}}]}],"inferenceConfig":{},"toolConfig":{"tools":[{"toolSpec":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","inputSchema":{"json":{"type":"object","properties":{},"required":[]}}}}]}}'
     headers:
       User-Agent:
       - Faraday v2.14.1
       X-Amz-Date:
-      - 20260316T191354Z
+      - 20260402T112540Z
       X-Amz-Content-Sha256:
-      - f590d06022e5778daeb68620f6bd43d251e21da1b3115e1d4d566154edce8e89
+      - daa94c18446612a2c6d51045d284ec0289e8540e902c044a84c1a10edcc30050
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
@@ -73,23 +73,18 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 16 Mar 2026 19:13:55 GMT
+      - Thu, 02 Apr 2026 11:25:41 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '620'
+      - '651'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - '007089c5-2300-4ca3-8643-175fcea6d922'
+      - 84309a37-97dc-49ea-9bdb-85d376bacc54
     body:
-      encoding: UTF-8
-      string: '{"metrics":{"latencyMs":931},"output":{"message":{"content":[{"text":"The
-        best language to learn is **Ruby**. \n\nRuby is a versatile and beginner-friendly
-        programming language known for its elegant syntax and strong community support.
-        It''s widely used for web development (especially with the Ruby on Rails framework),
-        scripting, automation, and even data analysis. Its readability and expressive
-        nature make it an excellent choice for both newcomers and experienced developers
-        alike."}],"role":"assistant"}},"stopReason":"end_turn","usage":{"inputTokens":952,"outputTokens":74,"serverToolUsage":{},"totalTokens":1026}}'
-  recorded_at: Mon, 16 Mar 2026 19:13:55 GMT
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJtZXRyaWNzIjp7ImxhdGVuY3lNcyI6Nzg3fSwib3V0cHV0Ijp7Im1lc3NhZ2UiOnsiY29udGVudCI6W3sidGV4dCI6IlRoZSBiZXN0IGxhbmd1YWdlIHRvIGxlYXJuIGlzICoqUnVieSoqLiBcblxuUnVieSBpcyBhIHZlcnNhdGlsZSBhbmQgYmVnaW5uZXItZnJpZW5kbHkgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2Uga25vd24gZm9yIGl0cyBlbGVnYW50IHN5bnRheCBhbmQgc3Ryb25nIGNvbW11bml0eSBzdXBwb3J0LiBJdOKAmXMgd2lkZWx5IHVzZWQgaW4gd2ViIGRldmVsb3BtZW50IChlc3BlY2lhbGx5IHdpdGggdGhlIFJ1Ynkgb24gUmFpbHMgZnJhbWV3b3JrKSwgc2NyaXB0aW5nLCBhdXRvbWF0aW9uLCBhbmQgZXZlbiBBSS9NTCBwcm9qZWN0cy4gSXRzIGJhbGFuY2Ugb2Ygc2ltcGxpY2l0eSBhbmQgcG93ZXIgbWFrZXMgaXQgYW4gZXhjZWxsZW50IGNob2ljZSB3aGV0aGVyIHlvdSdyZSBqdXN0IHN0YXJ0aW5nIG91dCBvciBsb29raW5nIHRvIGV4cGFuZCB5b3VyIGV4aXN0aW5nIGNvZGluZyBza2lsbHMuIn1dLCJyb2xlIjoiYXNzaXN0YW50In19LCJzdG9wUmVhc29uIjoiZW5kX3R1cm4iLCJ1c2FnZSI6eyJpbnB1dFRva2VucyI6OTUyLCJvdXRwdXRUb2tlbnMiOjgzLCJzZXJ2ZXJUb29sVXNhZ2UiOnt9LCJ0b3RhbFRva2VucyI6MTAzNX19
+  recorded_at: Thu, 02 Apr 2026 11:25:42 GMT
 recorded_with: VCR 6.4.0
