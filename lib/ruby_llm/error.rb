@@ -62,6 +62,13 @@ module RubyLLM
         /reduce the length of messages/i
       ].freeze
 
+      RATE_LIMIT_PATTERNS = [
+        /rate limit/i,
+        /per minute/i,
+        /per hour/i,
+        /per day/i
+      ].freeze
+
       def parse_error(provider:, response:) # rubocop:disable Metrics/PerceivedComplexity
         message = provider&.parse_error(response)
 
@@ -102,6 +109,7 @@ module RubyLLM
 
       def context_length_exceeded?(message)
         return false if message.to_s.empty?
+        return false if RATE_LIMIT_PATTERNS.any? { |pattern| message.match?(pattern) }
 
         CONTEXT_LENGTH_PATTERNS.any? { |pattern| message.match?(pattern) }
       end

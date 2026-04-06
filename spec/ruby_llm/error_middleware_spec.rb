@@ -48,6 +48,18 @@ RSpec.describe RubyLLM::ErrorMiddleware do
       end.to raise_error(RubyLLM::RateLimitError)
     end
 
+    it 'keeps token-per-minute rate limit 429 errors as RateLimitError, not ContextLengthExceededError' do
+      # Anthropic returns 429 with a message mentioning "input tokens per minute", which matches
+      # the /input[_\s-]?token/i context length pattern — it should be classified as a rate limit.
+      msg = "This request would exceed your organization's rate limit of 30,000 input tokens per minute"
+      response = Struct.new(:status, :body).new(429, %({"error":{"message":"#{msg}"}}))
+      provider = instance_double(RubyLLM::Provider, parse_error: msg)
+
+      expect do
+        described_class.parse_error(provider: provider, response: response)
+      end.to raise_error(RubyLLM::RateLimitError)
+    end
+
     it 'maps context-length-like 400 errors to ContextLengthExceededError' do
       msg = "This model's maximum context length is 8192 tokens."
       response = Struct.new(:status, :body).new(400, %({"error":{"message":"#{msg}"}}))
