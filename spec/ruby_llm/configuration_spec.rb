@@ -26,4 +26,11 @@ RSpec.describe RubyLLM::Configuration do
       )
     end
   end
+
+  describe 'method redefinition warnings' do
+    it 'does not emit method redefined warning for log_regexp_timeout=' do
+      warnings = `#{RbConfig.ruby} -W -e 'require "ruby_llm"' 2>&1`
+      expect(warnings).not_to include('method redefined')
+    end
+  end
 end
