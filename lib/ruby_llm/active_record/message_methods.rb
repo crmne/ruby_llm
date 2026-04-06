@@ -5,6 +5,7 @@ module RubyLLM
     # Methods mixed into message models.
     module MessageMethods
       extend ActiveSupport::Concern
+      include PayloadHelpers
 
       class_methods do
         attr_reader :chat_class, :tool_call_class, :chat_foreign_key, :tool_call_foreign_key
@@ -52,10 +53,7 @@ module RubyLLM
       end
 
       def tool_error_message
-        payload = parse_payload(content)
-        return unless payload.is_a?(Hash)
-
-        payload['error'] || payload[:error]
+        payload_error_message(content)
       end
 
       private
@@ -127,15 +125,6 @@ module RubyLLM
         tempfile.rewind
         @_tempfiles << tempfile
         tempfile
-      end
-
-      def parse_payload(value)
-        return value if value.is_a?(Hash) || value.is_a?(Array)
-        return if value.blank?
-
-        JSON.parse(value)
-      rescue JSON::ParserError
-        nil
       end
     end
   end

@@ -26,7 +26,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 16 Mar 2026 19:10:46 GMT
+      - Thu, 02 Apr 2026 11:23:17 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -48,7 +48,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '560'
+      - '311'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
@@ -77,9 +77,9 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-DK7crkQ9zYYspCKJdF7HpXsiVJ7Ts",
+          "id": "chatcmpl-DQAQnTWJTFt3Dodbn42wuA6xtqPzQ",
           "object": "chat.completion",
-          "created": 1773688245,
+          "created": 1775128997,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
@@ -89,11 +89,11 @@ http_interactions:
                 "content": null,
                 "tool_calls": [
                   {
-                    "id": "call_sBhlv12NmhPjs96HLhMrNq58",
+                    "id": "call_dSDD7i1GOvG8xvULDlvK6UR4",
                     "type": "function",
                     "function": {
                       "name": "calculator",
-                      "arguments": "{\"expression\":\"123 * 456\"}"
+                      "arguments": "{\"expression\":\"123*456\"}"
                     }
                   }
                 ],
@@ -106,8 +106,8 @@ http_interactions:
           ],
           "usage": {
             "prompt_tokens": 53,
-            "completion_tokens": 17,
-            "total_tokens": 70,
+            "completion_tokens": 16,
+            "total_tokens": 69,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
@@ -120,17 +120,16 @@ http_interactions:
             }
           },
           "service_tier": "default",
-          "system_fingerprint": "fp_6bc00088c8"
+          "system_fingerprint": "fp_ce3966f242"
         }
-  recorded_at: Mon, 16 Mar 2026 19:10:46 GMT
+  recorded_at: Thu, 02 Apr 2026 11:23:17 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":"What''s
-        123 * 456?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_sBhlv12NmhPjs96HLhMrNq58","type":"function","function":{"name":"calculator","arguments":"{\"expression\":\"123
-        * 456\"}"}}]},{"role":"tool","content":"56088","tool_call_id":"call_sBhlv12NmhPjs96HLhMrNq58"}],"stream":false,"tools":[{"type":"function","function":{"name":"calculator","description":"Performs
+        123 * 456?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_dSDD7i1GOvG8xvULDlvK6UR4","type":"function","function":{"name":"calculator","arguments":"{\"expression\":\"123*456\"}"}}]},{"role":"tool","content":"56088","tool_call_id":"call_dSDD7i1GOvG8xvULDlvK6UR4"}],"stream":false,"tools":[{"type":"function","function":{"name":"calculator","description":"Performs
         basic arithmetic","parameters":{"type":"object","properties":{"expression":{"type":"string","description":"Math
         expression to evaluate"}},"required":["expression"],"additionalProperties":false,"strict":true}}}]}'
     headers:
@@ -150,7 +149,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 16 Mar 2026 19:10:47 GMT
+      - Thu, 02 Apr 2026 11:23:18 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -172,7 +171,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '343'
+      - '294'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
@@ -201,16 +200,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-DK7ctOqT6ucmjCbWtpP4yEN6redCi",
+          "id": "chatcmpl-DQAQnPhZKxZshanlFfXgrYMqupvVO",
           "object": "chat.completion",
-          "created": 1773688247,
+          "created": 1775128997,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
               "index": 0,
               "message": {
                 "role": "assistant",
-                "content": "The product of 123 and 456 is 56,088.",
+                "content": "The result of 123 multiplied by 456 is 56,088.",
                 "refusal": null,
                 "annotations": []
               },
@@ -219,8 +218,8 @@ http_interactions:
             }
           ],
           "usage": {
-            "prompt_tokens": 79,
-            "completion_tokens": 15,
+            "prompt_tokens": 78,
+            "completion_tokens": 16,
             "total_tokens": 94,
             "prompt_tokens_details": {
               "cached_tokens": 0,
@@ -234,7 +233,7 @@ http_interactions:
             }
           },
           "service_tier": "default",
-          "system_fingerprint": "fp_18301a75d5"
+          "system_fingerprint": "fp_c37b9b873d"
         }
-  recorded_at: Mon, 16 Mar 2026 19:10:47 GMT
+  recorded_at: Thu, 02 Apr 2026 11:23:18 GMT
 recorded_with: VCR 6.4.0

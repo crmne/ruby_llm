@@ -217,8 +217,8 @@ RSpec.describe RubyLLM::Chat do
 
     describe 'thought signatures' do
       [
-        { provider: :gemini, model: 'gemini-3-pro-preview' },
-        { provider: :vertexai, model: 'gemini-3-pro-preview' }
+        { provider: :gemini, model: 'gemini-3.1-pro-preview' },
+        { provider: :vertexai, model: 'gemini-3.1-pro-preview' }
       ].each do |model_info|
         provider = model_info[:provider]
         model = model_info[:model]

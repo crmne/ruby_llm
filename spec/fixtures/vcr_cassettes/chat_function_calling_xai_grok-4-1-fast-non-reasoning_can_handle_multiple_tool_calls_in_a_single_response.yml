@@ -26,49 +26,51 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 16 Mar 2026 19:17:52 GMT
+      - Thu, 02 Apr 2026 11:29:49 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Set-Cookie:
-      - "<COOKIE>"
       X-Ratelimit-Limit-Tokens:
-      - '4000000'
+      - '10000000'
       X-Ratelimit-Remaining-Tokens:
-      - '4000000'
+      - '10000000'
       X-Zero-Data-Retention:
       - 'false'
       X-Ratelimit-Limit-Requests:
-      - '607'
+      - '1800'
       X-Ratelimit-Remaining-Requests:
-      - '607'
+      - '1800'
       X-Metrics-Mean-Itl-Ms:
-      - '5.6'
+      - '2.3'
       X-Metrics-E2e-Ms:
-      - '863.3'
-      Strict-Transport-Security:
-      - max-age=31536000
-      X-Request-Id:
-      - "<X_REQUEST_ID>"
+      - '803.1'
       Cf-Cache-Status:
       - DYNAMIC
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Traceparent:
+      - 00-75c56a8f108fb07cc91167ac36d31f9a-6fef75610088deed-01
+      Set-Cookie:
+      - "<COOKIE>"
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
       - "*"
       Access-Control-Expose-Headers:
       - "*"
+      Strict-Transport-Security:
+      - max-age=31536000
       Server:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"0cf48087-d279-d425-aa62-43a6028af073","object":"chat.completion","created":1773688671,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"call_14196985","function":{"name":"dice_roll","arguments":"{}"},"type":"function"},{"id":"call_93316329","function":{"name":"dice_roll","arguments":"{}"},"type":"function"},{"id":"call_66200380","function":{"name":"dice_roll","arguments":"{}"},"type":"function"}],"refusal":null},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":387,"completion_tokens":45,"total_tokens":432,"prompt_tokens_details":{"text_tokens":387,"audio_tokens":0,"image_tokens":0,"cached_tokens":158},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":762000},"system_fingerprint":"fp_48319fcb08"}'
-  recorded_at: Mon, 16 Mar 2026 19:17:52 GMT
+      string: '{"id":"6d5acd12-d0b3-94e4-ab6a-7e099015ce0c","object":"chat.completion","created":1775129388,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"call_92164829","function":{"name":"dice_roll","arguments":"{}"},"type":"function"},{"id":"call_19486033","function":{"name":"dice_roll","arguments":"{}"},"type":"function"},{"id":"call_65579655","function":{"name":"dice_roll","arguments":"{}"},"type":"function"}],"refusal":null},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":387,"completion_tokens":45,"total_tokens":432,"prompt_tokens_details":{"text_tokens":387,"audio_tokens":0,"image_tokens":0,"cached_tokens":158},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":762000},"system_fingerprint":"fp_5d249ba471"}'
+  recorded_at: Thu, 02 Apr 2026 11:29:49 GMT
 - request:
     method: post
     uri: https://api.x.ai/v1/chat/completions
@@ -76,9 +78,9 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"system","content":"You
         must call the dice_roll tool exactly 3 times when asked to roll dice 3 times."},{"role":"user","content":"Roll
-        the dice 3 times"},{"role":"assistant","content":"","tool_calls":[{"id":"call_14196985","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_93316329","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_66200380","type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},{"role":"tool","content":"{roll:
-        1}","tool_call_id":"call_14196985"},{"role":"tool","content":"{roll: 2}","tool_call_id":"call_93316329"},{"role":"tool","content":"{roll:
-        3}","tool_call_id":"call_66200380"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
+        the dice 3 times"},{"role":"assistant","content":"","tool_calls":[{"id":"call_92164829","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_19486033","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_65579655","type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},{"role":"tool","content":"{roll:
+        1}","tool_call_id":"call_92164829"},{"role":"tool","content":"{roll: 2}","tool_call_id":"call_19486033"},{"role":"tool","content":"{roll:
+        3}","tool_call_id":"call_65579655"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
         a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
@@ -97,50 +99,52 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 16 Mar 2026 19:17:53 GMT
+      - Thu, 02 Apr 2026 11:29:50 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Set-Cookie:
-      - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=31536000
       X-Ratelimit-Limit-Tokens:
-      - '4000000'
+      - '10000000'
       X-Ratelimit-Remaining-Tokens:
-      - '4000000'
+      - '10000000'
       X-Zero-Data-Retention:
       - 'false'
       X-Ratelimit-Limit-Requests:
-      - '607'
+      - '1800'
       X-Ratelimit-Remaining-Requests:
-      - '607'
+      - '1800'
       X-Metrics-Ttft-Ms:
-      - '573.2'
+      - '670.0'
       X-Metrics-Mean-Itl-Ms:
-      - '10.4'
+      - '0.0'
       X-Metrics-E2e-Ms:
-      - '782.4'
+      - '730.6'
       Cf-Cache-Status:
       - DYNAMIC
       X-Request-Id:
       - "<X_REQUEST_ID>"
+      Traceparent:
+      - 00-5e6de10e8d5b7af41d79ba324601c105-c6a4bfc2008917f0-01
+      Set-Cookie:
+      - "<COOKIE>"
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
       - "*"
       Access-Control-Expose-Headers:
       - "*"
+      Strict-Transport-Security:
+      - max-age=31536000
       Server:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"bcd71c63-5a17-96c6-62f4-b07b9240c58a","object":"chat.completion","created":1773688672,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"The
-        dice rolls are: 1, 2, 3!","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":469,"completion_tokens":14,"total_tokens":483,"prompt_tokens_details":{"text_tokens":469,"audio_tokens":0,"image_tokens":0,"cached_tokens":387},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":427500},"system_fingerprint":"fp_48319fcb08"}'
-  recorded_at: Mon, 16 Mar 2026 19:17:53 GMT
+      string: '{"id":"e61bef94-fcbf-91bb-9d4e-41d641912a57","object":"chat.completion","created":1775129389,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        three dice rolls were: 1, 2, 3.","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":469,"completion_tokens":15,"total_tokens":484,"prompt_tokens_details":{"text_tokens":469,"audio_tokens":0,"image_tokens":0,"cached_tokens":387},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":432500},"system_fingerprint":"fp_5d249ba471"}'
+  recorded_at: Thu, 02 Apr 2026 11:29:50 GMT
 recorded_with: VCR 6.4.0

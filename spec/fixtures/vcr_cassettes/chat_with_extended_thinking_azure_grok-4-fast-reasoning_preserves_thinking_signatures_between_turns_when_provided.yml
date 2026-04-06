@@ -29,16 +29,16 @@ http_interactions:
       - application/json
       Request-Context:
       - appId=
-      X-Ms-Rai-Invoked:
-      - 'true'
-      Sampling-Token-Len:
-      - '1'
       Prompt-Token-Len:
       - '8'
+      Sampling-Token-Len:
+      - '1'
+      X-Ms-Rai-Invoked:
+      - 'true'
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Ms-Client-Request-Id:
-      - c99e923f-1001-4be1-b4d1-cf181a20344f
+      - fbc10a46-8ef4-4df2-ba38-25fa99a800c7
       Azureml-Model-Session:
       - d-310d88e7-fc36-41d4-bdf5-7c3416ea1fae
       Azureai-Requested-Tier:
@@ -47,18 +47,26 @@ http_interactions:
       - default
       X-Ms-Is-Spilled-Over:
       - 'false'
+      X-Ratelimit-Remaining-Requests:
+      - '49'
+      X-Ratelimit-Reset-Requests:
+      - '1200'
+      X-Ratelimit-Limit-Requests:
+      - '50'
+      X-Ratelimit-Renewalperiod-Requests:
+      - '60'
+      X-Ratelimit-Abusepenalty-Active:
+      - 'False'
       X-Ratelimit-Remaining-Tokens:
-      - '50000'
+      - '49967'
       X-Ratelimit-Reset-Tokens:
-      - '0'
+      - '39'
       X-Ratelimit-Limit-Tokens:
       - '50000'
       X-Ratelimit-Renewalperiod-Tokens:
       - '60'
-      X-Ratelimit-Abusepenalty-Active:
-      - 'False'
       Apim-Request-Id:
-      - c99e923f-1001-4be1-b4d1-cf181a20344f
+      - fbc10a46-8ef4-4df2-ba38-25fa99a800c7
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Ms-Deployment-Name:
@@ -68,13 +76,13 @@ http_interactions:
       X-Ms-Region:
       - West Europe
       Date:
-      - Mon, 16 Mar 2026 20:42:15 GMT
+      - Thu, 02 Apr 2026 11:24:16 GMT
     body:
       encoding: UTF-8
-      string: '{"choices":[{"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"protected_material_code":{"filtered":false,"detected":false},"protected_material_text":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}},"finish_reason":"stop","index":0,"logprobs":null,"message":{"content":"8","refusal":null,"role":"assistant","tool_calls":null},"stop_reason":null}],"created":1773693735,"id":"2bb43f4d-ab8b-41f4-977e-a96271915ff9","model":"grok-4-fast-reasoning","object":"chat.completion","prompt_filter_results":[{"prompt_index":0,"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"jailbreak":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}}}],"usage":{"audio_prompt_tokens":0,"completion_tokens":1,"completion_tokens_details":{"accepted_prediction_tokens":0,"audio_tokens":0,"reasoning_tokens":49,"rejected_prediction_tokens":0},"num_sources_used":0,"prompt_tokens":8,"prompt_tokens_details":{"audio_tokens":0,"cached_tokens":0,"image_tokens":0,"text_tokens":8},"total_tokens":58}}
+      string: '{"choices":[{"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"protected_material_code":{"filtered":false,"detected":false},"protected_material_text":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}},"finish_reason":"stop","index":0,"logprobs":null,"message":{"content":"8","refusal":null,"role":"assistant","tool_calls":null},"stop_reason":null}],"created":1775129056,"id":"0db52c1e-2b32-4305-9702-bf8bbfd35748","model":"grok-4-fast-reasoning","object":"chat.completion","prompt_filter_results":[{"prompt_index":0,"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"jailbreak":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}}}],"usage":{"audio_prompt_tokens":0,"completion_tokens":1,"completion_tokens_details":{"accepted_prediction_tokens":0,"audio_tokens":0,"reasoning_tokens":59,"rejected_prediction_tokens":0},"num_sources_used":0,"prompt_tokens":8,"prompt_tokens_details":{"audio_tokens":0,"cached_tokens":0,"image_tokens":0,"text_tokens":8},"total_tokens":68}}
 
         '
-  recorded_at: Mon, 16 Mar 2026 20:42:16 GMT
+  recorded_at: Thu, 02 Apr 2026 11:24:17 GMT
 - request:
     method: post
     uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
@@ -105,36 +113,44 @@ http_interactions:
       - application/json
       Request-Context:
       - appId=
-      Prompt-Token-Len:
-      - '24'
       Sampling-Token-Len:
       - '1'
+      Prompt-Token-Len:
+      - '24'
       X-Ms-Rai-Invoked:
       - 'true'
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Ms-Client-Request-Id:
-      - ec8a952f-fe47-4f88-b2c9-faa80d5be78a
+      - 910f97d1-e325-4d01-aa19-2bde6afbf43a
       Azureml-Model-Session:
-      - d-ae5889f7-b014-4479-9f80-18aa1cf8f055
+      - d-310d88e7-fc36-41d4-bdf5-7c3416ea1fae
       Azureai-Requested-Tier:
       - default
       Azureai-Processed-Tier:
       - default
       X-Ms-Is-Spilled-Over:
       - 'false'
+      X-Ratelimit-Remaining-Requests:
+      - '49'
+      X-Ratelimit-Reset-Requests:
+      - '1200'
+      X-Ratelimit-Limit-Requests:
+      - '50'
+      X-Ratelimit-Renewalperiod-Requests:
+      - '60'
+      X-Ratelimit-Abusepenalty-Active:
+      - 'False'
       X-Ratelimit-Remaining-Tokens:
-      - '50000'
+      - '49946'
       X-Ratelimit-Reset-Tokens:
-      - '0'
+      - '64'
       X-Ratelimit-Limit-Tokens:
       - '50000'
       X-Ratelimit-Renewalperiod-Tokens:
       - '60'
-      X-Ratelimit-Abusepenalty-Active:
-      - 'False'
       Apim-Request-Id:
-      - ec8a952f-fe47-4f88-b2c9-faa80d5be78a
+      - 910f97d1-e325-4d01-aa19-2bde6afbf43a
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Ms-Deployment-Name:
@@ -144,11 +160,11 @@ http_interactions:
       X-Ms-Region:
       - West Europe
       Date:
-      - Mon, 16 Mar 2026 20:42:17 GMT
+      - Thu, 02 Apr 2026 11:24:17 GMT
     body:
       encoding: UTF-8
-      string: '{"choices":[{"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"protected_material_code":{"filtered":false,"detected":false},"protected_material_text":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}},"finish_reason":"stop","index":0,"logprobs":null,"message":{"content":"16","refusal":null,"role":"assistant","tool_calls":null},"stop_reason":null}],"created":1773693736,"id":"7f6c2380-ee37-4679-98d3-b18005678183","model":"grok-4-fast-reasoning","object":"chat.completion","prompt_filter_results":[{"prompt_index":0,"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"jailbreak":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}}}],"usage":{"audio_prompt_tokens":0,"completion_tokens":1,"completion_tokens_details":{"accepted_prediction_tokens":0,"audio_tokens":0,"reasoning_tokens":98,"rejected_prediction_tokens":0},"num_sources_used":0,"prompt_tokens":24,"prompt_tokens_details":{"audio_tokens":0,"cached_tokens":0,"image_tokens":0,"text_tokens":24},"total_tokens":123}}
+      string: '{"choices":[{"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"protected_material_code":{"filtered":false,"detected":false},"protected_material_text":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}},"finish_reason":"stop","index":0,"logprobs":null,"message":{"content":"16","refusal":null,"role":"assistant","tool_calls":null},"stop_reason":null}],"created":1775129057,"id":"e2c3dcb6-ae13-4677-9b2a-4c2f7f6bc374","model":"grok-4-fast-reasoning","object":"chat.completion","prompt_filter_results":[{"prompt_index":0,"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"jailbreak":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}}}],"usage":{"audio_prompt_tokens":0,"completion_tokens":1,"completion_tokens_details":{"accepted_prediction_tokens":0,"audio_tokens":0,"reasoning_tokens":82,"rejected_prediction_tokens":0},"num_sources_used":0,"prompt_tokens":24,"prompt_tokens_details":{"audio_tokens":0,"cached_tokens":0,"image_tokens":0,"text_tokens":24},"total_tokens":107}}
 
         '
-  recorded_at: Mon, 16 Mar 2026 20:42:17 GMT
+  recorded_at: Thu, 02 Apr 2026 11:24:18 GMT
 recorded_with: VCR 6.4.0

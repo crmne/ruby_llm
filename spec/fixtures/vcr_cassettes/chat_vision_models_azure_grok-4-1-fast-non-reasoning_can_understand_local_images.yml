@@ -29,36 +29,44 @@ http_interactions:
       - application/json
       Request-Context:
       - appId=
-      Sampling-Token-Len:
-      - '59'
-      X-Ms-Rai-Invoked:
-      - 'true'
       Prompt-Token-Len:
       - '265'
+      X-Ms-Rai-Invoked:
+      - 'true'
+      Sampling-Token-Len:
+      - '62'
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Ms-Client-Request-Id:
-      - 83715202-33c6-422a-be66-a7683af15e51
+      - d40198eb-c84f-409e-909d-709a1454cebd
       Azureml-Model-Session:
-      - d-d37d4aed-feba-4c61-ae2a-7f8ce4d38049
+      - d-a3423142-ae3e-4fb1-be62-1eecd5f54116
       Azureai-Requested-Tier:
       - default
       Azureai-Processed-Tier:
       - default
       X-Ms-Is-Spilled-Over:
       - 'false'
+      X-Ratelimit-Remaining-Requests:
+      - '49'
+      X-Ratelimit-Reset-Requests:
+      - '1200'
+      X-Ratelimit-Limit-Requests:
+      - '50'
+      X-Ratelimit-Renewalperiod-Requests:
+      - '60'
+      X-Ratelimit-Abusepenalty-Active:
+      - 'False'
       X-Ratelimit-Remaining-Tokens:
-      - '50000'
+      - '49362'
       X-Ratelimit-Reset-Tokens:
-      - '0'
+      - '765'
       X-Ratelimit-Limit-Tokens:
       - '50000'
       X-Ratelimit-Renewalperiod-Tokens:
       - '60'
-      X-Ratelimit-Abusepenalty-Active:
-      - 'False'
       Apim-Request-Id:
-      - 83715202-33c6-422a-be66-a7683af15e51
+      - d40198eb-c84f-409e-909d-709a1454cebd
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Ms-Deployment-Name:
@@ -68,15 +76,15 @@ http_interactions:
       X-Ms-Region:
       - West Europe
       Date:
-      - Mon, 16 Mar 2026 20:26:59 GMT
+      - Thu, 02 Apr 2026 11:25:04 GMT
     body:
       encoding: UTF-8
       string: '{"choices":[{"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"protected_material_code":{"filtered":false,"detected":false},"protected_material_text":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}},"finish_reason":"stop","index":0,"logprobs":null,"message":{"content":"I
-        see a vibrant, faceted red gemstone, resembling a ruby or diamond, with a
-        large circular hole or transparency in the center. It''s rendered in a shiny,
-        3D polygonal style against a black background, with glowing highlights and
-        a gradient red color scheme for a jewel-like effect.","refusal":null,"role":"assistant","tool_calls":null},"stop_reason":null}],"created":1773692819,"id":"0715be73-8524-4b7c-b7e0-4724061294c4","model":"grok-4-1-fast-non-reasoning","object":"chat.completion","prompt_filter_results":[{"prompt_index":0,"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"jailbreak":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}}}],"usage":{"audio_prompt_tokens":0,"completion_tokens":59,"completion_tokens_details":{"accepted_prediction_tokens":0,"audio_tokens":0,"reasoning_tokens":0,"rejected_prediction_tokens":0},"cost_in_usd_ticks":0,"num_sources_used":0,"prompt_tokens":265,"prompt_tokens_details":{"audio_tokens":0,"cached_tokens":0,"image_tokens":256,"text_tokens":9},"total_tokens":324}}
+        see a vibrant, faceted red gemstone, resembling a ruby or diamond, rendered
+        in a shiny 3D style with a large circular cutout or hollow center on the front
+        face. It''s glowing against a black background, with smooth gradients and
+        sharp polygonal edges giving it a digital or gem-like sparkle.","refusal":null,"role":"assistant","tool_calls":null},"stop_reason":null}],"created":1775129104,"id":"d70f248d-2aa5-4461-8b2a-59a27395ecf1","model":"grok-4-1-fast-non-reasoning","object":"chat.completion","prompt_filter_results":[{"prompt_index":0,"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"jailbreak":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}}}],"usage":{"audio_prompt_tokens":0,"completion_tokens":62,"completion_tokens_details":{"accepted_prediction_tokens":0,"audio_tokens":0,"reasoning_tokens":0,"rejected_prediction_tokens":0},"cost_in_usd_ticks":0,"num_sources_used":0,"prompt_tokens":265,"prompt_tokens_details":{"audio_tokens":0,"cached_tokens":0,"image_tokens":256,"text_tokens":9},"total_tokens":327}}
 
         '
-  recorded_at: Mon, 16 Mar 2026 20:26:59 GMT
+  recorded_at: Thu, 02 Apr 2026 11:25:05 GMT
 recorded_with: VCR 6.4.0

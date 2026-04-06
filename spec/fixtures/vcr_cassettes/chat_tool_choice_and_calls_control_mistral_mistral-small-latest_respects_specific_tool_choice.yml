@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 16 Mar 2026 19:21:14 GMT
+      - Thu, 02 Apr 2026 11:38:28 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -35,55 +35,55 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '019cf818-6408-71e3-9a72-e6984906c6df'
+      - '019d4dfc-d284-7fac-b0d3-cfb5f6897a4a'
       X-Kong-Request-Id:
-      - '019cf818-6408-71e3-9a72-e6984906c6df'
+      - '019d4dfc-d284-7fac-b0d3-cfb5f6897a4a'
       X-Ratelimit-Limit-Tokens-Minute:
-      - '2000000'
+      - '600000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '1999220'
+      - '578479'
       X-Ratelimit-Tokens-Query-Cost:
-      - '160'
+      - '172'
       X-Ratelimit-Limit-Req-Minute:
       - '360'
       X-Ratelimit-Remaining-Req-Minute:
-      - '356'
+      - '359'
       X-Envoy-Upstream-Service-Time:
-      - '205'
+      - '475'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '206'
+      - '477'
       X-Kong-Proxy-Latency:
-      - '13'
+      - '9'
+      Cf-Cache-Status:
+      - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
-      X-Content-Type-Options:
-      - nosniff
-      Cf-Cache-Status:
-      - DYNAMIC
       Strict-Transport-Security:
       - max-age=15552000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"d83cd622788b48a7b67cb89bb0e28d20","created":1773688874,"model":"mistral-small-latest","usage":{"prompt_tokens":132,"total_tokens":160,"completion_tokens":28,"prompt_tokens_details":{"cached_tokens":0}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"tool_calls","message":{"role":"assistant","tool_calls":[{"id":"P6IR0IMyf","function":{"name":"weather","arguments":"{\"latitude\":
+      string: '{"id":"348b0b86c13b4217b4c351a60e2bea70","created":1775129907,"model":"mistral-small-latest","usage":{"prompt_tokens":144,"total_tokens":172,"completion_tokens":28,"prompt_tokens_details":{"cached_tokens":0}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"tool_calls","message":{"role":"assistant","tool_calls":[{"id":"fQv24eGd0","function":{"name":"weather","arguments":"{\"latitude\":
         \"41.9028\", \"longitude\": \"12.4964\"}"},"index":0}],"content":""}}]}'
-  recorded_at: Mon, 16 Mar 2026 19:21:14 GMT
+  recorded_at: Thu, 02 Apr 2026 11:38:28 GMT
 - request:
     method: post
     uri: https://api.mistral.ai/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"mistral-small-latest","messages":[{"role":"user","content":"What''s
-        the fall of Rome?"},{"role":"assistant","content":"","tool_calls":[{"id":"P6IR0IMyf","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}"}}]},{"role":"tool","content":"Current
-        weather at 41.9028, 12.4964: 15°C, Wind: 10 km/h","tool_call_id":"P6IR0IMyf"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        the fall of Rome?"},{"role":"assistant","content":"","tool_calls":[{"id":"fQv24eGd0","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}"}}]},{"role":"tool","content":"Current
+        weather at 41.9028, 12.4964: 15°C, Wind: 10 km/h","tool_call_id":"fQv24eGd0"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
@@ -104,7 +104,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 16 Mar 2026 19:21:17 GMT
+      - Thu, 02 Apr 2026 11:38:37 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -112,72 +112,41 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '019cf818-6536-731c-a493-0bc81845e8ff'
+      - '019d4dfc-d4a0-7cd1-9b52-202ce1639365'
       X-Kong-Request-Id:
-      - '019cf818-6536-731c-a493-0bc81845e8ff'
+      - '019d4dfc-d4a0-7cd1-9b52-202ce1639365'
       X-Ratelimit-Limit-Tokens-Minute:
-      - '2000000'
+      - '600000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '1998564'
+      - '578291'
       X-Ratelimit-Tokens-Query-Cost:
-      - '656'
-      X-Ratelimit-Limit-Req-Minute:
-      - '360'
-      X-Ratelimit-Remaining-Req-Minute:
-      - '355'
+      - '188'
       X-Envoy-Upstream-Service-Time:
-      - '3229'
+      - '9301'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '3230'
+      - '9303'
       X-Kong-Proxy-Latency:
-      - '8'
+      - '7'
+      Cf-Cache-Status:
+      - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
-      X-Content-Type-Options:
-      - nosniff
-      Cf-Cache-Status:
-      - DYNAMIC
       Strict-Transport-Security:
       - max-age=15552000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"3b992836a21c4a7895e0bcc166958478","created":1773688874,"model":"mistral-small-latest","usage":{"prompt_tokens":208,"total_tokens":656,"completion_tokens":448,"prompt_tokens_details":{"cached_tokens":64}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
-        fall of Rome typically refers to the eventual decline and fall of the Western
-        Roman Empire. This process was gradual and complex, spanning several centuries,
-        but it is often marked by key events such as the sack of Rome by the Visigoths
-        in 410 AD and the deposition of the last Western Roman Emperor, Romulus Augustulus,
-        in 476 AD.\n\nSeveral factors contributed to the fall of Rome, including:\n\n1.
-        **Military Overspending and Overextension**: The Roman Empire was vast, and
-        maintaining control over such a large territory required significant military
-        resources. Overextension and the cost of defending borders made it difficult
-        to sustain.\n\n2. **Political Corruption and Internal Conflicts**: Political
-        instability, corruption, and internal conflicts weakened the empire. Frequent
-        changes in leadership and civil wars diverted resources and attention from
-        more pressing issues.\n\n3. **Economic Troubles**: Economic issues such as
-        heavy taxation, inflation, and reliance on slave labor contributed to the
-        decline. The economy was further strained by the cost of maintaining the military
-        and bureaucracy.\n\n4. **Barbarian Invasions**: Invasions by various barbarian
-        tribes, such as the Goths, Vandals, and Huns, put immense pressure on the
-        empire. The sack of Rome by the Visigoths in 410 AD and the Vandals in 455
-        AD were significant blows.\n\n5. **Social and Cultural Decline**: There was
-        a decline in civic pride and a growing reliance on the empire for support.
-        The spread of Christianity also shifted focus away from traditional Roman
-        values and institutions.\n\n6. **Division of the Empire**: The division of
-        the empire into Western and Eastern parts in 285 AD under Diocletian created
-        administrative and political challenges. The Western Roman Empire, with its
-        capital in Rome, was generally weaker and more vulnerable than the Eastern
-        Roman Empire (Byzantine Empire) with its capital in Constantinople.\n\nThe
-        fall of Rome marked the end of the ancient world and the beginning of the
-        Middle Ages in Europe. The Eastern Roman Empire, however, continued to thrive
-        for nearly another thousand years until the fall of Constantinople in 1453."}}]}'
-  recorded_at: Mon, 16 Mar 2026 19:21:17 GMT
+      string: !binary |-
+        eyJpZCI6ImJiZjEyODcxNjNkMjQzZGY4NTUxYzI0ODE0NTE3NzA5IiwiY3JlYXRlZCI6MTc3NTEyOTkxMiwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsInVzYWdlIjp7InByb21wdF90b2tlbnMiOjIwNCwidG90YWxfdG9rZW5zIjozMTYsImNvbXBsZXRpb25fdG9rZW5zIjoxMTIsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjoxMjh9fSwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImZpbmlzaF9yZWFzb24iOiJzdG9wIiwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwidG9vbF9jYWxscyI6bnVsbCwiY29udGVudCI6IlRoZSDigJxGYWxsIG9mIFJvbWXigJ0gaXMgYSBzaG9ydGhhbmQgZm9yIHRoZSBncmFkdWFsIGNvbGxhcHNlIG9mIHRoZSBXZXN0ZXJuIFJvbWFuIEVtcGlyZSBpbiB0aGUgNXRoIGNlbnR1cnkgQUQuIEhpc3RvcmlhbnMgdXN1YWxseSBkYXRlIGl0IGZyb20gdGhlIGRlcG9zaXRpb24gb2YgdGhlIGxhc3Qgd2VzdGVybiBlbXBlcm9yLCBSb211bHVzIEF1Z3VzdHVsdXMsIGluIDQ3NiBBRCwgd2hlbiB0aGUgR2VybWFuaWMgY2hpZWZ0YWluIE9kb2FjZXIgc2VudCB0aGUgaW1wZXJpYWwgaW5zaWduaWEgdG8gQ29uc3RhbnRpbm9wbGUgYW5kIGRlY2xhcmVkIGhpbXNlbGYgS2luZyBvZiBJdGFseS4gVGhlIEVhc3Rlcm4gUm9tYW4gKEJ5emFudGluZSkgRW1waXJlIGNvbnRpbnVlZCBmb3IgYW5vdGhlciB0aG91c2FuZCB5ZWFycywgYnV0IHRoZSBXZXN0IGZyYWdtZW50ZWQgaW50byBzbWFsbGVyIEdlcm1hbmljIGtpbmdkb21zLCBlbmRpbmcgdGhlIGFuY2llbnQgUm9tYW4gc3RhdGUgaW4gdGhlIFdlc3QuIn19XX0=
+  recorded_at: Thu, 02 Apr 2026 11:38:37 GMT
 recorded_with: VCR 6.4.0
