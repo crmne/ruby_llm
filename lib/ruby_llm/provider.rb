@@ -75,8 +75,8 @@ module RubyLLM
       parse_embedding_response(response, model:, text:)
     end
 
-    def moderate(input, model:)
-      payload = render_moderation_payload(input, model:)
+    def moderate(input, model:, image: nil)
+      payload = render_moderation_payload(input, model:, image:)
       response = @connection.post moderation_url, payload
       parse_moderation_response(response, model:)
     end

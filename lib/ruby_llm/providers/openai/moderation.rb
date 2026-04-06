@@ -11,11 +11,17 @@ module RubyLLM
           'moderations'
         end
 
-        def render_moderation_payload(input, model:)
-          {
-            model: model,
-            input: input
-          }
+        def render_moderation_payload(input, model:, image: nil)
+          mod_input = if image
+                        parts = []
+                        parts << { type: 'text', text: input } if input
+                        parts << Media.format_image(image)
+                        parts
+                      else
+                        input
+                      end
+
+          { model: model, input: mod_input }
         end
 
         def parse_moderation_response(response, model:)

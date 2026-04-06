@@ -12,18 +12,22 @@ module RubyLLM
       @results = results
     end
 
-    def self.moderate(input,
+    def self.moderate(input = nil,
                       model: nil,
+                      image: nil,
                       provider: nil,
                       assume_model_exists: false,
                       context: nil)
+      raise ArgumentError, 'must provide input text, image, or both' if input.nil? && image.nil?
+
       config = context&.config || RubyLLM.config
       model ||= config.default_moderation_model || 'omni-moderation-latest'
       model, provider_instance = Models.resolve(model, provider: provider, assume_exists: assume_model_exists,
                                                        config: config)
       model_id = model.id
+      image = Attachment.new(image) if image
 
-      provider_instance.moderate(input, model: model_id)
+      provider_instance.moderate(input, model: model_id, image: image)
     end
 
     # Convenience method to get content from moderation result
