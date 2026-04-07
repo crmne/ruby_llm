@@ -118,6 +118,11 @@ result = RubyLLM.moderate(
   provider: "openai",
   assume_model_exists: true
 )
+
+# Using an image
+result = RubyLLM.moderate(
+  image: "https://upload.wikimedia.org/wikipedia/en/7/7d/Lenna_%28test_image%29.png"
+)
 ```
 
 ## Choosing Models

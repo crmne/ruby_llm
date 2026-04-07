@@ -41,6 +41,28 @@ RSpec.describe RubyLLM::Moderation do
         expect(result).to be_a(described_class)
         expect(result.model).to be_present
       end
+
+      it 'moderates text with an image' do
+        result = RubyLLM.moderate('describe this image',
+                                  image: 'https://upload.wikimedia.org/wikipedia/en/7/7d/Lenna_%28test_image%29.png')
+
+        expect(result).to be_a(described_class)
+        expect(result.results).to be_an(Array)
+        expect(result.flagged?).to be_in([true, false])
+      end
+
+      it 'moderates an image without text' do
+        result = RubyLLM.moderate(image: 'https://upload.wikimedia.org/wikipedia/en/7/7d/Lenna_%28test_image%29.png')
+
+        expect(result).to be_a(described_class)
+        expect(result.results).to be_an(Array)
+      end
+    end
+  end
+
+  describe 'argument validation' do
+    it 'raises ArgumentError when neither text nor image is provided' do
+      expect { RubyLLM.moderate }.to raise_error(ArgumentError, 'must provide input text, image, or both')
     end
   end
 end
