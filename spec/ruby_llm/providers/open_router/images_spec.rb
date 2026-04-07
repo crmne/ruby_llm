@@ -9,6 +9,11 @@ RSpec.describe RubyLLM::Providers::OpenRouter::Images do
     it 'returns the chat completions endpoint' do
       expect(images_module.images_url).to eq('chat/completions')
     end
+
+    it 'accepts model and attachments kwargs' do
+      expect(images_module.images_url(model: 'google/gemini-2.5-flash-image',
+                                      with: ['file.png'])).to eq('chat/completions')
+    end
   end
 
   describe '.render_image_payload' do
@@ -24,6 +29,17 @@ RSpec.describe RubyLLM::Providers::OpenRouter::Images do
       allow(RubyLLM.logger).to receive(:debug).and_yield
       images_module.render_image_payload('a cute cat', model: 'test-model', size: '512x512')
       expect(RubyLLM.logger).to have_received(:debug)
+    end
+
+    it 'raises when attachments are provided' do
+      expect do
+        images_module.render_image_payload(
+          'a cute cat',
+          model: 'test-model',
+          size: '1024x1024',
+          with: ['file.png']
+        )
+      end.to raise_error(RubyLLM::Error, /Image editing is not supported for OpenRouter/)
     end
   end
 

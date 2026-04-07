@@ -36,6 +36,7 @@ module RubyLLM
                    provider: nil,
                    assume_model_exists: false,
                    size: '1024x1024',
+                   with: nil,
                    context: nil)
       config = context&.config || RubyLLM.config
       model ||= config.default_image_model
@@ -43,7 +44,7 @@ module RubyLLM
                                                        config: config)
       model_id = model.id
 
-      provider_instance.paint(prompt, model: model_id, size:)
+      provider_instance.paint(prompt, model: model_id, size:, with:)
     end
   end
 end
