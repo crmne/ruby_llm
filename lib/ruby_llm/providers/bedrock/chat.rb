@@ -114,19 +114,24 @@ module RubyLLM
           text_and_media_blocks = Media.render_content(msg.content, used_document_names: @used_document_names)
           blocks.concat(text_and_media_blocks) if text_and_media_blocks
 
-          if msg.tool_call?
-            msg.tool_calls.each_value do |tool_call|
-              blocks << {
-                toolUse: {
-                  toolUseId: tool_call.id,
-                  name: tool_call.name,
-                  input: tool_call.arguments
-                }
-              }
-            end
-          end
+          append_tool_use_blocks(blocks, msg)
+          blocks << { cachePoint: { type: 'default' } } if msg.cache_point?
 
           blocks
+        end
+
+        def append_tool_use_blocks(blocks, msg)
+          return unless msg.tool_call?
+
+          msg.tool_calls.each_value do |tool_call|
+            blocks << {
+              toolUse: {
+                toolUseId: tool_call.id,
+                name: tool_call.name,
+                input: tool_call.arguments
+              }
+            }
+          end
         end
 
         def render_raw_content(content)
@@ -200,7 +205,10 @@ module RubyLLM
         end
 
         def render_system(messages)
-          messages.flat_map { |msg| Media.render_content(msg.content, used_document_names: @used_document_names) }
+          messages.flat_map do |msg|
+            blocks = Media.render_content(msg.content, used_document_names: @used_document_names)
+            msg.cache_point? ? blocks + [{ cachePoint: { type: 'default' } }] : blocks
+          end
         end
 
         def render_inference_config(_model, temperature)
