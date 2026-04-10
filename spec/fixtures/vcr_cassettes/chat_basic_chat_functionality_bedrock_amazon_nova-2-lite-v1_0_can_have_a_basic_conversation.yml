@@ -1,0 +1,45 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.amazon.nova-2-lite-v1:0/converse
+    body:
+      encoding: UTF-8
+      string: '{"messages":[{"role":"user","content":[{"text":"What''s 2 + 2?"}]}],"inferenceConfig":{}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      X-Amz-Date:
+      - 20260402T112329Z
+      X-Amz-Content-Sha256:
+      - c1f28bcaee1077b285985eb19952d44ca4723ecf1286b46c8a0fcab38095fd74
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 02 Apr 2026 11:23:30 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '440'
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - 865ed80c-92af-49ba-a239-a5f310e262bd
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJtZXRyaWNzIjp7ImxhdGVuY3lNcyI6NjEyfSwib3V0cHV0Ijp7Im1lc3NhZ2UiOnsiY29udGVudCI6W3sidGV4dCI6IjIgKyAyIGVxdWFscyAqKjQqKi5cblxuVGhpcyBpcyBhIGJhc2ljIGFyaXRobWV0aWMgYWRkaXRpb246IHdoZW4geW91IGFkZCB0d28gdW5pdHMgKDIpIHRvIGFub3RoZXIgdHdvIHVuaXRzICgyKSwgdGhlIHRvdGFsIGJlY29tZXMgZm91ciB1bml0cyAoNCkuIFxuXG4qKlNpbXBsZSBicmVha2Rvd246Kipcbi0gU3RhcnQgYXQgMi5cbi0gQWRkIDIgbW9yZSDihpIgMiArIDIgPSA0LlxuXG7inIUgKipBbnN3ZXI6IDQqKiJ9XSwicm9sZSI6ImFzc2lzdGFudCJ9fSwic3RvcFJlYXNvbiI6ImVuZF90dXJuIiwidXNhZ2UiOnsiaW5wdXRUb2tlbnMiOjUzLCJvdXRwdXRUb2tlbnMiOjcyLCJzZXJ2ZXJUb29sVXNhZ2UiOnt9LCJ0b3RhbFRva2VucyI6MTI1fX0=
+  recorded_at: Thu, 02 Apr 2026 11:23:31 GMT
+recorded_with: VCR 6.4.0

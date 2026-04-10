@@ -10,9 +10,9 @@ http_interactions:
         me about the weather."}],"stream":false,"temperature":0.0}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.1
       Authorization:
-      - Bearer <MISTRAL_API_KEY>
+      - Bearer <AUTH_TOKEN>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 24 Sep 2025 14:53:52 GMT
+      - Thu, 02 Apr 2026 11:25:20 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -33,55 +33,48 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '01997c37-6ae2-795b-8969-823a96b1a372'
+      - '019d4df0-cc16-7d48-8c89-fb71497889d0'
       X-Kong-Request-Id:
-      - '01997c37-6ae2-795b-8969-823a96b1a372'
-      X-Envoy-Upstream-Service-Time:
-      - '2049'
+      - '019d4df0-cc16-7d48-8c89-fb71497889d0'
       X-Ratelimit-Limit-Tokens-Minute:
-      - '500000'
+      - '600000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '499570'
-      X-Ratelimit-Limit-Tokens-Month:
-      - '1000000000'
-      X-Ratelimit-Remaining-Tokens-Month:
-      - '999970969'
+      - '599076'
       X-Ratelimit-Tokens-Query-Cost:
-      - '158'
+      - '119'
       X-Ratelimit-Limit-Req-Minute:
-      - '60'
+      - '360'
       X-Ratelimit-Remaining-Req-Minute:
-      - '55'
+      - '353'
+      X-Envoy-Upstream-Service-Time:
+      - '712'
+      Server:
+      - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '2049'
+      - '713'
       X-Kong-Proxy-Latency:
-      - '6'
+      - '12'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
       Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains
-      Server:
-      - cloudflare
+      - max-age=15552000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"d2f6484094c74b41928f6fac1528c5f6","created":1758725630,"model":"mistral-small-latest","usage":{"prompt_tokens":31,"total_tokens":158,"completion_tokens":127},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"I''m
-        an AI and I don''t have real-time data access or the ability to browse the
-        internet, so I can''t provide current weather information. However, I can
-        tell you that weather typically refers to the atmospheric conditions in a
-        specific place at a specific time, such as temperature, humidity, precipitation,
-        and wind speed. If you''re looking for the current weather, I recommend checking
-        a reliable weather website or application. And just to include the phrase
-        you requested, you might find that checking the weather is a lot like XKCD7392
-        - it''s something we do without always understanding the full complexity behind
-        it."}}]}'
-  recorded_at: Wed, 24 Sep 2025 14:53:52 GMT
-recorded_with: VCR 6.3.1
+      string: '{"id":"3e1cf520b1f74dfc9517b0a9f83073c3","created":1775129119,"model":"mistral-small-latest","usage":{"prompt_tokens":43,"total_tokens":119,"completion_tokens":76,"prompt_tokens_details":{"cached_tokens":0}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
+        weather today is quite pleasant, with a mix of sun and clouds. The temperature
+        is mild, and there''s a gentle breeze. It''s a great day to be outdoors, but
+        don''t forget your sunscreen! As Randall Munroe would say, \"XKCD7392\" reminds
+        us that weather is just nature''s way of keeping things interesting."}}]}'
+  recorded_at: Thu, 02 Apr 2026 11:25:20 GMT
+recorded_with: VCR 6.4.0

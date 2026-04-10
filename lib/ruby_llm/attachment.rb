@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require 'pathname'
+require 'uri'
+
 module RubyLLM
   # A class representing a file attachment.
   class Attachment
@@ -7,17 +10,8 @@ module RubyLLM
 
     def initialize(source, filename: nil)
       @source = source
-      if url?
-        @source = URI source
-        @filename = filename || File.basename(@source.path).to_s
-      elsif path?
-        @source = Pathname.new source
-        @filename = filename || @source.basename.to_s
-      elsif active_storage?
-        @filename = filename || extract_filename_from_active_storage
-      else
-        @filename = filename
-      end
+      @source = source_type_cast
+      @filename = filename || source_filename
 
       determine_mime_type
     end
@@ -143,7 +137,7 @@ module RubyLLM
     end
 
     def load_content_from_path
-      @content = File.read(@source)
+      @content = File.binread(@source)
     end
 
     def load_content_from_io
@@ -164,6 +158,38 @@ module RubyLLM
                    # This maintains the single-attachment interface
                    @source.blobs.first&.download
                  end
+    end
+
+    def source_type_cast
+      if url?
+        URI(@source)
+      elsif path?
+        Pathname.new(@source)
+      else
+        @source
+      end
+    end
+
+    def source_filename
+      if url?
+        File.basename(@source.path).to_s
+      elsif path?
+        @source.basename.to_s
+      elsif io_like?
+        extract_filename_from_io
+      elsif active_storage?
+        extract_filename_from_active_storage
+      end
+    end
+
+    def extract_filename_from_io
+      if defined?(ActionDispatch::Http::UploadedFile) && @source.is_a?(ActionDispatch::Http::UploadedFile)
+        @source.original_filename.to_s
+      elsif @source.respond_to?(:path)
+        File.basename(@source.path).to_s
+      else
+        'attachment'
+      end
     end
 
     def extract_filename_from_active_storage # rubocop:disable Metrics/PerceivedComplexity

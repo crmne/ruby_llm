@@ -1,0 +1,95 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
+    body:
+      encoding: UTF-8
+      string: '{"model":"grok-4-fast-reasoning","messages":[{"role":"user","content":"If
+        a magic mirror shows your future self, but only if you ask a question it cannot
+        answer truthfully, what question do you ask to see your future, and what would
+        the mirror reveal about the answer it gives?"}],"stream":false,"reasoning_effort":"medium"}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Api-Key:
+      - "<AZURE_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json
+      Request-Context:
+      - appId=
+      Prompt-Token-Len:
+      - '43'
+      Sampling-Token-Len:
+      - '108'
+      X-Ms-Rai-Invoked:
+      - 'true'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      X-Ms-Client-Request-Id:
+      - d34ed20a-208a-41c0-9878-52aeda0f6f76
+      Azureml-Model-Session:
+      - d-ae5889f7-b014-4479-9f80-18aa1cf8f055
+      Azureai-Requested-Tier:
+      - default
+      Azureai-Processed-Tier:
+      - default
+      X-Ms-Is-Spilled-Over:
+      - 'false'
+      X-Ratelimit-Remaining-Requests:
+      - '49'
+      X-Ratelimit-Reset-Requests:
+      - '1200'
+      X-Ratelimit-Limit-Requests:
+      - '50'
+      X-Ratelimit-Renewalperiod-Requests:
+      - '60'
+      X-Ratelimit-Abusepenalty-Active:
+      - 'False'
+      X-Ratelimit-Remaining-Tokens:
+      - '49919'
+      X-Ratelimit-Reset-Tokens:
+      - '97'
+      X-Ratelimit-Limit-Tokens:
+      - '50000'
+      X-Ratelimit-Renewalperiod-Tokens:
+      - '60'
+      Apim-Request-Id:
+      - d34ed20a-208a-41c0-9878-52aeda0f6f76
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Ms-Deployment-Name:
+      - grok-4-fast-reasoning
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Region:
+      - West Europe
+      Date:
+      - Thu, 02 Apr 2026 11:23:43 GMT
+    body:
+      encoding: UTF-8
+      string: '{"choices":[{"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"protected_material_code":{"filtered":false,"detected":false},"protected_material_text":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"low"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}},"finish_reason":"stop","index":0,"logprobs":null,"message":{"content":"The
+        question you ask is: \"Is the answer to this question ''no''?\"\n\nThis creates
+        a logical paradox for a truthful mirror (if it answers \"yes\", the answer
+        isn''t \"no\", so it should be \"no\" instead; if it answers \"no\", the answer
+        is \"no\", so it should be \"yes\" instead). Unable to answer truthfully,
+        the mirror shows you your future self as its response.\n\nThe mirror reveals
+        that the answer it gives (i.e., the vision) is a truthful depiction of your
+        future.","refusal":null,"role":"assistant","tool_calls":null},"stop_reason":null}],"created":1775128992,"id":"e0d803b0-6037-4d46-ab0f-ba2a25c3786f","model":"grok-4-fast-reasoning","object":"chat.completion","prompt_filter_results":[{"prompt_index":0,"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"jailbreak":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}}}],"usage":{"audio_prompt_tokens":0,"completion_tokens":108,"completion_tokens_details":{"accepted_prediction_tokens":0,"audio_tokens":0,"reasoning_tokens":6404,"rejected_prediction_tokens":0},"num_sources_used":0,"prompt_tokens":43,"prompt_tokens_details":{"audio_tokens":0,"cached_tokens":0,"image_tokens":0,"text_tokens":43},"total_tokens":6555}}
+
+        '
+  recorded_at: Thu, 02 Apr 2026 11:23:43 GMT
+recorded_with: VCR 6.4.0

@@ -1,0 +1,89 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.anthropic.claude-haiku-4-5-20251001-v1:0/converse
+    body:
+      encoding: UTF-8
+      string: '{"messages":[{"role":"user","content":[{"text":"What is 5 + 3?"}]}],"inferenceConfig":{},"additionalModelRequestFields":{"reasoning_config":{"type":"enabled","budget_tokens":1024}}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      X-Amz-Date:
+      - 20260402T112434Z
+      X-Amz-Content-Sha256:
+      - d479455c2e0d919436a9fd1b0104fb7e86a2643fa2ab36d3c18aa44478d70510
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 02 Apr 2026 11:24:36 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '739'
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - faf1c5b1-8692-498b-b87a-793d6678ab48
+    body:
+      encoding: UTF-8
+      string: '{"metrics":{"latencyMs":982},"output":{"message":{"content":[{"reasoningContent":{"reasoningText":{"signature":"EtoBCkgIDBABGAIqQLKq2DhhKi8eMlaNPnFY0FXQcM1jQ2R6JIhLByE96G74keoXXgYpOWmtKeaWTWiEvboqUadBGHCDfeOqTFOOwmISDAK/eklSY50EvHPxQBoM1TqNex+yIWeeRe4tIjCy9WAXiHd4lC+4+1PNigZVHDTO6jpexEiI3rfYmWRJv0Er46FBPVVYjhKotbIMiJoqQNkltayWsd+GF7JLexyAvGBIIjX7Mh4ur7snsm6A3OOrownUYPw/VZbFQ0QtkwEZ2BC90wfXrUqm5oGchGLa6dYYAQ==","text":"This
+        is a simple arithmetic question. 5 + 3 = 8."}}},{"text":"5 + 3 = **8**"}],"role":"assistant"}},"stopReason":"end_turn","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":45,"outputTokens":39,"serverToolUsage":{},"totalTokens":84}}'
+  recorded_at: Thu, 02 Apr 2026 11:24:36 GMT
+- request:
+    method: post
+    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.anthropic.claude-haiku-4-5-20251001-v1:0/converse
+    body:
+      encoding: UTF-8
+      string: '{"messages":[{"role":"user","content":[{"text":"What is 5 + 3?"}]},{"role":"assistant","content":[{"reasoningContent":{"reasoningText":{"text":"This
+        is a simple arithmetic question. 5 + 3 = 8.","signature":"EtoBCkgIDBABGAIqQLKq2DhhKi8eMlaNPnFY0FXQcM1jQ2R6JIhLByE96G74keoXXgYpOWmtKeaWTWiEvboqUadBGHCDfeOqTFOOwmISDAK/eklSY50EvHPxQBoM1TqNex+yIWeeRe4tIjCy9WAXiHd4lC+4+1PNigZVHDTO6jpexEiI3rfYmWRJv0Er46FBPVVYjhKotbIMiJoqQNkltayWsd+GF7JLexyAvGBIIjX7Mh4ur7snsm6A3OOrownUYPw/VZbFQ0QtkwEZ2BC90wfXrUqm5oGchGLa6dYYAQ=="}}},{"text":"5
+        + 3 = **8**"}]},{"role":"user","content":[{"text":"Now multiply that by 2"}]}],"inferenceConfig":{},"additionalModelRequestFields":{"reasoning_config":{"type":"enabled","budget_tokens":1024}}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      X-Amz-Date:
+      - 20260402T112436Z
+      X-Amz-Content-Sha256:
+      - 5746f6135a8b50d7e5c618e608d64df6ccd14e0a56e947069b5d770f5f9eb240
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 02 Apr 2026 11:24:38 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '864'
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - fc392b2a-30ff-42a8-bdb9-5014263e1317
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJtZXRyaWNzIjp7ImxhdGVuY3lNcyI6MTI1MX0sIm91dHB1dCI6eyJtZXNzYWdlIjp7ImNvbnRlbnQiOlt7InJlYXNvbmluZ0NvbnRlbnQiOnsicmVhc29uaW5nVGV4dCI6eyJzaWduYXR1cmUiOiJFbzBDQ2tnSURCQUJHQUlxUU4xY20vblVoazhydzB6aEF5RlJMWXhLMElzd3FkajdRWjY5NkRuSnBYWmhsOVFYN2RLSllsQVVHcjlvVUhMZ0ZKbFBPN0EybTd4anFNMmJWZGVVMDY0U0RGQ29HaUhUcjl3T0xFdmc2aG9NR0ZvWkxuUStjb2xWZyt2R0lqQzEybUlRRnMzdXpzeE1OZElVRWZyZjRXdmVET0ptNkhsc0tENzVqOFQxeUFXRFdtTlhubCs0ZUd1KzhuMS93U2dxYzRIcHJycXEvRnlZcW4yV0xacmE3VlIyaU1tZ0RyVm5TancvMEllRi9MQzgybEZRK2RXcUhCUVpwaXB1cHVyVjV3Ry8zUU5DN2ZqRWhTY1dsVVNUUE9kdGpoL0FwemNQT2c4TzgxVm5LSWtFUDVLU3BndlE4Y044eUQ1R2pxZithdjRIU3l1N051TzRWZTZUS1MwRjJ5a09xWUlZQVE9PSIsInRleHQiOiJUaGUgdXNlciBpcyBhc2tpbmcgbWUgdG8gbXVsdGlwbHkgdGhlIHByZXZpb3VzIHJlc3VsdCBieSAyLiBUaGUgcHJldmlvdXMgcmVzdWx0IHdhcyA4LlxuXG44IMOXIDIgPSAxNiJ9fX0seyJ0ZXh0IjoiOCDDlyAyID0gKioxNioqIn1dLCJyb2xlIjoiYXNzaXN0YW50In19LCJzdG9wUmVhc29uIjoiZW5kX3R1cm4iLCJ1c2FnZSI6eyJjYWNoZVJlYWRJbnB1dFRva2VuQ291bnQiOjAsImNhY2hlUmVhZElucHV0VG9rZW5zIjowLCJjYWNoZVdyaXRlSW5wdXRUb2tlbkNvdW50IjowLCJjYWNoZVdyaXRlSW5wdXRUb2tlbnMiOjAsImlucHV0VG9rZW5zIjo2OCwib3V0cHV0VG9rZW5zIjo1Miwic2VydmVyVG9vbFVzYWdlIjp7fSwidG90YWxUb2tlbnMiOjEyMH19
+  recorded_at: Thu, 02 Apr 2026 11:24:38 GMT
+recorded_with: VCR 6.4.0

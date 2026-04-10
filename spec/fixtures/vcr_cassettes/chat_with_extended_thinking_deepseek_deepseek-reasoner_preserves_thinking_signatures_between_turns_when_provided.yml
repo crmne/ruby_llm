@@ -1,0 +1,135 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.deepseek.com/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"deepseek-reasoner","messages":[{"role":"user","content":"What
+        is 5 + 3?"}],"stream":false,"reasoning_effort":"medium"}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Date:
+      - Thu, 02 Apr 2026 11:31:18 GMT
+      Server:
+      - elb
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Credentials:
+      - 'true'
+      X-Ds-Trace-Id:
+      - aae57f8e0fcb77edeead180611eb6b7f
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 1444224b4b97d67af7507c4e96f65844.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - TXL50-P1
+      X-Amz-Cf-Id:
+      - fR-4wTkYkMx7BFoedHYDtkmboOKM8NDd0qg25bciFY68uN2Ox6M2VQ==
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"b66043c6-d84b-476e-9d5a-328bcbf1c815","object":"chat.completion","created":1775129478,"model":"deepseek-reasoner","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        sum of 5 and 3 is 8.\n\n\\boxed{8}","reasoning_content":"We are asked: \"What
+        is 5 + 3?\" This is a simple arithmetic question. The answer is 8. So we should
+        respond with 8.\n\nBut let''s consider if there''s any trick. The user might
+        be testing if the AI can do basic math. It''s straightforward: 5 + 3 = 8.\n\nWe
+        can answer: \"8\" or maybe \"The sum of 5 and 3 is 8.\" Since the instruction
+        is just \"What is 5 + 3?\" we can give a concise answer.\n\nThus, the final
+        answer is \\boxed{8}."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":12,"completion_tokens":144,"total_tokens":156,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":125},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":12},"system_fingerprint":"fp_eaab8d114b_prod0820_fp8_kvcache_new_kvcache"}'
+  recorded_at: Thu, 02 Apr 2026 11:31:25 GMT
+- request:
+    method: post
+    uri: https://api.deepseek.com/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"deepseek-reasoner","messages":[{"role":"user","content":"What
+        is 5 + 3?"},{"role":"assistant","content":"The sum of 5 and 3 is 8.\n\n\\boxed{8}","reasoning":"We
+        are asked: \"What is 5 + 3?\" This is a simple arithmetic question. The answer
+        is 8. So we should respond with 8.\n\nBut let''s consider if there''s any
+        trick. The user might be testing if the AI can do basic math. It''s straightforward:
+        5 + 3 = 8.\n\nWe can answer: \"8\" or maybe \"The sum of 5 and 3 is 8.\" Since
+        the instruction is just \"What is 5 + 3?\" we can give a concise answer.\n\nThus,
+        the final answer is \\boxed{8}.","reasoning_content":"We are asked: \"What
+        is 5 + 3?\" This is a simple arithmetic question. The answer is 8. So we should
+        respond with 8.\n\nBut let''s consider if there''s any trick. The user might
+        be testing if the AI can do basic math. It''s straightforward: 5 + 3 = 8.\n\nWe
+        can answer: \"8\" or maybe \"The sum of 5 and 3 is 8.\" Since the instruction
+        is just \"What is 5 + 3?\" we can give a concise answer.\n\nThus, the final
+        answer is \\boxed{8}."},{"role":"user","content":"Now multiply that by 2"}],"stream":false,"reasoning_effort":"medium"}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Date:
+      - Thu, 02 Apr 2026 11:31:25 GMT
+      Server:
+      - elb
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Credentials:
+      - 'true'
+      X-Ds-Trace-Id:
+      - 9034369b061b6b029ab126202ff69a70
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 4842376441adfff51e41110458fe337a.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - TXL50-P4
+      X-Amz-Cf-Id:
+      - jkBnzW-GfTYT8HUfWQLGOixK0_LJirBmMCD9qKY3kZqCViscYoT97A==
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"8cf311c7-76c7-40e6-9dba-9127f28fb041","object":"chat.completion","created":1775129485,"model":"deepseek-reasoner","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        previous result was 8. Multiplying 8 by 2 gives 16.\n\n\\boxed{16}","reasoning_content":"We
+        are given: \"Now multiply that by 2\". The previous answer was 8. So multiplying
+        8 by 2 gives 16.\n\n\\boxed{16}"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":40,"completion_tokens":60,"total_tokens":100,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":36},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":40},"system_fingerprint":"fp_eaab8d114b_prod0820_fp8_kvcache_new_kvcache"}'
+  recorded_at: Thu, 02 Apr 2026 11:31:28 GMT
+recorded_with: VCR 6.4.0

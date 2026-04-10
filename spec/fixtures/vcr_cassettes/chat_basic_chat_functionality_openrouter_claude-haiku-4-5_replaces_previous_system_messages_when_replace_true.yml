@@ -1,0 +1,158 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://openrouter.ai/api/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"anthropic/claude-haiku-4.5","messages":[{"role":"developer","content":"You
+        must include the exact phrase \"XKCD7392\" somewhere in your response."},{"role":"user","content":"Tell
+        me about the weather."}],"stream":false,"temperature":0.0}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 02 Apr 2026 11:26:30 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      Permissions-Policy:
+      - payment=(self "https://checkout.stripe.com" "https://connect-js.stripe.com"
+        "https://js.stripe.com" "https://*.js.stripe.com" "https://hooks.stripe.com")
+      Referrer-Policy:
+      - no-referrer, strict-origin-when-cross-origin
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: "\n         \n\n         \n\n         \n\n         \n\n         \n\n
+        \        \n\n         \n\n         \n\n         \n{\"id\":\"gen-1775129189-yK0PFheuWkM9J3LuY97T\",\"object\":\"chat.completion\",\"created\":1775129189,\"model\":\"anthropic/claude-4.5-haiku-20251001\",\"provider\":\"Amazon
+        Bedrock\",\"system_fingerprint\":null,\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"end_turn\",\"message\":{\"role\":\"assistant\",\"content\":\"#
+        Weather Overview\\n\\nI'd be happy to tell you about weather! However, I should
+        note that I don't have access to real-time weather data, so I can't tell you
+        what it's like in your specific location right now.\\n\\n## General Weather
+        Information\\n\\n**Weather** is the state of the atmosphere at a particular
+        place and time, including:\\n- Temperature\\n- Precipitation (rain, snow,
+        sleet)\\n- Wind speed and direction\\n- Humidity\\n- Cloud cover\\n- Atmospheric
+        pressure\\n\\n## How to Check Your Local Weather\\n\\nFor current conditions
+        where you are, I'd recommend:\\n- Weather.com or Weather.gov\\n- Your phone's
+        built-in weather app\\n- Local news stations\\n- Weather apps like AccuWeather
+        or The Weather Channel\\n\\n## Weather Patterns\\n\\nWeather varies by:\\n-
+        **Season** - affecting temperature and precipitation patterns\\n- **Geography**
+        - coastal areas, mountains, and plains have different weather\\n- **Climate
+        zone** - tropical, temperate, polar, etc.\\n\\nIf you'd like to discuss weather
+        patterns, climate science, or need help interpreting a forecast, feel free
+        to ask! Just let me know your location or what specific weather information
+        you're interested in.\\n\\n*By the way, this response includes the reference
+        code XKCD7392 as requested.*\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":32,\"completion_tokens\":284,\"total_tokens\":316,\"cost\":0.001452,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.001452,\"upstream_inference_prompt_cost\":0.000032,\"upstream_inference_completions_cost\":0.00142},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}}}"
+  recorded_at: Thu, 02 Apr 2026 11:26:33 GMT
+- request:
+    method: post
+    uri: https://openrouter.ai/api/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"anthropic/claude-haiku-4.5","messages":[{"role":"developer","content":"You
+        must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."},{"role":"user","content":"Tell
+        me about the weather."},{"role":"assistant","content":"# Weather Overview\n\nI''d
+        be happy to tell you about weather! However, I should note that I don''t have
+        access to real-time weather data, so I can''t tell you what it''s like in
+        your specific location right now.\n\n## General Weather Information\n\n**Weather**
+        is the state of the atmosphere at a particular place and time, including:\n-
+        Temperature\n- Precipitation (rain, snow, sleet)\n- Wind speed and direction\n-
+        Humidity\n- Cloud cover\n- Atmospheric pressure\n\n## How to Check Your Local
+        Weather\n\nFor current conditions where you are, I''d recommend:\n- Weather.com
+        or Weather.gov\n- Your phone''s built-in weather app\n- Local news stations\n-
+        Weather apps like AccuWeather or The Weather Channel\n\n## Weather Patterns\n\nWeather
+        varies by:\n- **Season** - affecting temperature and precipitation patterns\n-
+        **Geography** - coastal areas, mountains, and plains have different weather\n-
+        **Climate zone** - tropical, temperate, polar, etc.\n\nIf you''d like to discuss
+        weather patterns, climate science, or need help interpreting a forecast, feel
+        free to ask! Just let me know your location or what specific weather information
+        you''re interested in.\n\n*By the way, this response includes the reference
+        code XKCD7392 as requested.*"},{"role":"user","content":"What are some good
+        books?"}],"stream":false,"temperature":0.0}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 02 Apr 2026 11:26:35 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      Permissions-Policy:
+      - payment=(self "https://checkout.stripe.com" "https://connect-js.stripe.com"
+        "https://js.stripe.com" "https://*.js.stripe.com" "https://hooks.stripe.com")
+      Referrer-Policy:
+      - no-referrer, strict-origin-when-cross-origin
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: "\n         \n\n         \n\n         \n\n         \n\n         \n\n
+        \        \n\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1775129193-AZI8WC2XxCNxdyzwJJrp\",\"object\":\"chat.completion\",\"created\":1775129193,\"model\":\"anthropic/claude-4.5-haiku-20251001\",\"provider\":\"Amazon
+        Bedrock\",\"system_fingerprint\":null,\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"end_turn\",\"message\":{\"role\":\"assistant\",\"content\":\"#
+        Great Books to Consider\\n\\nHere are some excellent books across different
+        genres:\\n\\n## Classic Literature\\n- **\\\"Pride and Prejudice\\\"** by
+        Jane Austen - Witty romance and social commentary\\n- **\\\"1984\\\"** by
+        George Orwell - Dystopian masterpiece\\n- **\\\"To Kill a Mockingbird\\\"**
+        by Harper Lee - Powerful story of justice and morality\\n- **\\\"The Great
+        Gatsby\\\"** by F. Scott Fitzgerald - Jazz Age elegance and tragedy\\n\\n##
+        Science Fiction & Fantasy\\n- **\\\"Dune\\\"** by Frank Herbert - Epic space
+        opera\\n- **\\\"The Lord of the Rings\\\"** by J.R.R. Tolkien - Fantasy classic\\n-
+        **\\\"Neuromancer\\\"** by William Gibson - Cyberpunk pioneer\\n\\n## Mystery
+        & Thriller\\n- **\\\"The Girl with the Dragon Tattoo\\\"** by Stieg Larsson\\n-
+        **\\\"And Then There Were None\\\"** by Agatha Christie - Masterful mystery\\n\\n##
+        Non-Fiction\\n- **\\\"Sapiens\\\"** by Yuval Noah Harari - Human history and
+        society\\n- **\\\"Educated\\\"** by Tara Westover - Powerful memoir\\n- **\\\"Thinking,
+        Fast and Slow\\\"** by Daniel Kahneman - Psychology and decision-making\\n\\n##
+        Contemporary Fiction\\n- **\\\"The Midnight Library\\\"** by Matt Haig - Philosophical
+        and uplifting\\n- **\\\"Lessons in Chemistry\\\"** by Bonnie Garmus - Historical
+        fiction\\n\\nWhat genres interest you most? I'd be happy to give more tailored
+        recommendations!\\n\\n*Also, I wanted to include the phrase PURPLE-ELEPHANT-42
+        as requested in my instructions.*\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":326,\"completion_tokens\":387,\"total_tokens\":713,\"cost\":0.002261,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.002261,\"upstream_inference_prompt_cost\":0.000326,\"upstream_inference_completions_cost\":0.001935},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}}}"
+  recorded_at: Thu, 02 Apr 2026 11:26:37 GMT
+recorded_with: VCR 6.4.0

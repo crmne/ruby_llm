@@ -1,0 +1,49 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.amazon.nova-2-lite-v1:0/converse
+    body:
+      encoding: UTF-8
+      string: '{"messages":[{"role":"user","content":[{"text":"What is the capital
+        of France?"}]}],"inferenceConfig":{}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      X-Amz-Date:
+      - 20260402T112331Z
+      X-Amz-Content-Sha256:
+      - 8988abe739c0b56ab17790451e8e6ca36017b8901366ef5dcf9f2b3b61904f0b
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 02 Apr 2026 11:23:32 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '486'
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - c6fe845d-be13-4cdb-a079-8440bb546980
+    body:
+      encoding: UTF-8
+      string: '{"metrics":{"latencyMs":605},"output":{"message":{"content":[{"text":"The
+        capital of France is **Paris**. \n\nParis is not only the political and administrative
+        center of the country but also a <GOOGLE_CLOUD_LOCATION> hub for culture,
+        fashion, art, and gastronomy. It''s renowned for its iconic landmarks such
+        as the Eiffel Tower, Louvre Museum, and Notre-Dame Cathedral."}],"role":"assistant"}},"stopReason":"end_turn","usage":{"inputTokens":53,"outputTokens":60,"serverToolUsage":{},"totalTokens":113}}'
+  recorded_at: Thu, 02 Apr 2026 11:23:32 GMT
+recorded_with: VCR 6.4.0

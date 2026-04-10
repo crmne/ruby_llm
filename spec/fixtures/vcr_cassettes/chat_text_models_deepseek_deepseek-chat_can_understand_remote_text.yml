@@ -8,7 +8,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.1
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -26,42 +26,40 @@ http_interactions:
       - GitHub.com
       Content-Type:
       - text/plain; charset=utf-8
-      X-Origin-Cache:
-      - HIT
       Last-Modified:
-      - Mon, 22 Sep 2025 10:00:17 GMT
+      - Wed, 01 Apr 2026 06:43:01 GMT
       Access-Control-Allow-Origin:
       - "*"
       Etag:
-      - W/"68d11e31-9c6"
+      - W/"69ccbe75-9c6"
       Expires:
-      - Wed, 24 Sep 2025 07:22:10 GMT
+      - Thu, 02 Apr 2026 11:33:08 GMT
       Cache-Control:
       - max-age=600
       X-Proxy-Cache:
       - MISS
       X-Github-Request-Id:
-      - B734:1C7402:3A47B42:3AB5F7B:68D399CA
+      - 7CC4:C8EAE:1010677:103A1A3:69CE519C
       Accept-Ranges:
       - bytes
       Date:
-      - Wed, 24 Sep 2025 14:38:49 GMT
+      - Thu, 02 Apr 2026 11:23:30 GMT
       Via:
       - 1.1 varnish
       Age:
-      - '247'
+      - '22'
       X-Served-By:
-      - cache-fra-etou8220174-FRA
+      - cache-ber1080047-BER
       X-Cache:
       - HIT
       X-Cache-Hits:
       - '1'
       X-Timer:
-      - S1758724730.585976,VS0,VE2
+      - S1775129011.886210,VS0,VE1
       Vary:
       - Accept-Encoding
       X-Fastly-Request-Id:
-      - 05cb6536d4c320fb7ff8797fb4f95b0a8b52dc29
+      - 5e9c44da5155b4bed3a59103fd516d1f5d1d6aba
     body:
       encoding: ASCII-8BIT
       string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
@@ -97,7 +95,7 @@ http_interactions:
         \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
         WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
         FOR A PARTICULAR\n     PURPOSE.\n"
-  recorded_at: Wed, 24 Sep 2025 14:38:49 GMT
+  recorded_at: Thu, 02 Apr 2026 11:23:30 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/chat/completions
@@ -140,9 +138,9 @@ http_interactions:
         A PARTICULAR\n     PURPOSE.\n</file>"}]}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.1
       Authorization:
-      - Bearer <DEEPSEEK_API_KEY>
+      - Bearer <AUTH_TOKEN>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -154,49 +152,54 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Date:
-      - Wed, 24 Sep 2025 14:38:49 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Date:
+      - Thu, 02 Apr 2026 11:23:31 GMT
+      Server:
+      - elb
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - c1418eeac9a7dff20ec1a625df4a2186
+      - d6a5e91739387cb7a45016e0d96dfc9d
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Server:
-      - cloudflare
-      Cf-Ray:
-      - "<CF_RAY>"
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 0daacc4ea9faa788f2eb67745b6bb46c.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - TXL50-P5
+      X-Amz-Cf-Id:
+      - PXUatgboXtFS9RZ3PywL1g8EjAbX0Ln2rUSdDtNk8UvpEhBUYgmhcQ==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"c183eaa0-354b-412f-a16b-4404f5c2c86a","object":"chat.completion","created":1758724729,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"This
-        file contains the license terms for the Ruby programming language. It''s a
-        copyright notice and software license that outlines the terms under which
-        Ruby can be used, modified, and distributed.\n\nKey points of this license:\n\n1.
-        **Copyright**: Ruby is copyrighted free software by Yukihiro Matsumoto (\"Matz\")\n\n2.
-        **Redistribution options**: Can be used under either the 2-clause BSDL or
-        the terms specified in this file\n\n3. **Main permissions**:\n   - Free copying
-        of source code with proper attribution\n   - Modification allowed with certain
-        conditions (like making modifications public, using only internally, or making
-        distribution arrangements)\n   - Distribution of binaries with various options\n   -
-        Incorporation into other software (including commercial)\n\n4. **Important
-        limitations**:\n   - Some files have different licensing terms (referenced
-        in \"LEGAL\" file)\n   - Generated scripts/files belong to their creator,
-        not under Ruby''s copyright\n   - Software is provided \"AS IS\" without warranties\n\nThis
-        appears to be Ruby''s historical license before it adopted the more standard
-        BSD-2-Clause license that Ruby uses today."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":544,"completion_tokens":229,"total_tokens":773,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":544},"system_fingerprint":"fp_f253fc19d1_prod0820_fp8_kvcache"}'
-  recorded_at: Wed, 24 Sep 2025 14:39:05 GMT
-recorded_with: VCR 6.3.1
+      string: '{"id":"8f6cfaaa-8694-497e-8b21-7180860fcdd3","object":"chat.completion","created":1775129011,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"This
+        file (`license.txt`) contains the **Ruby programming language''s license terms**.
+        It''s the original Ruby license (also known as the **Ruby License** or **Dual
+        Ruby/BSD License**), which allows distribution under either:\n\n1. **The 2-clause
+        BSDL (BSD License)**  \n2. **The custom terms listed in this file**\n\n###
+        Key points of the license:\n\n- **Free redistribution**: You can copy and
+        distribute verbatim source code with original copyright notices.\n- **Modification
+        allowed**, provided you meet at least one condition (e.g., make modifications
+        public, use only internally, rename non-standard binaries, or arrange with
+        the author).\n- **Binary distribution allowed** if you include source or instructions
+        to get it, rename non-standard versions, or arrange with the author.\n- **Can
+        incorporate Ruby into other software** (including commercial), but some files
+        have separate terms (see `LEGAL` file).\n- **Output files** (scripts, libraries
+        generated using Ruby) are not automatically covered by Ruby''s copyright.\n-
+        **No warranty**: Software is provided \"AS IS\" without warranties.\n\nThis
+        license is **FSF-approved** as a free software license and **OSI-approved**
+        as an open source license, but it''s considered **non-copyleft** and **GPL-compatible**
+        only if the BSDL option is chosen (due to a minor clause in the Ruby-specific
+        terms)."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":544,"completion_tokens":290,"total_tokens":834,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":544},"system_fingerprint":"fp_eaab8d114b_prod0820_fp8_kvcache_new_kvcache"}'
+  recorded_at: Thu, 02 Apr 2026 11:23:41 GMT
+recorded_with: VCR 6.4.0

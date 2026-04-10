@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'ruby_llm/schema'
+
 module RubyLLM
   # Parameter definition for Tool methods.
   class Parameter
@@ -29,6 +31,8 @@ module RubyLLM
     end
 
     class << self
+      attr_reader :params_schema_definition
+
       def description(text = nil)
         return @description unless text
 
@@ -41,6 +45,11 @@ module RubyLLM
 
       def parameters
         @parameters ||= {}
+      end
+
+      def params(schema = nil, &block)
+        @params_schema_definition = SchemaDefinition.new(schema:, block:)
+        self
       end
 
       def with_params(**params)
@@ -76,10 +85,27 @@ module RubyLLM
       self.class.provider_params
     end
 
+    def params_schema
+      return @params_schema if defined?(@params_schema)
+
+      @params_schema = begin
+        definition = self.class.params_schema_definition
+        if definition&.present?
+          definition.json_schema
+        elsif parameters.any?
+          SchemaDefinition.from_parameters(parameters)&.json_schema
+        end
+      end
+    end
+
     def call(args)
-      RubyLLM.logger.debug "Tool #{name} called with: #{args.inspect}"
-      result = execute(**args.transform_keys(&:to_sym))
-      RubyLLM.logger.debug "Tool #{name} returned: #{result.inspect}"
+      normalized_args = normalize_args(args)
+      validation_error = validate_keyword_arguments(normalized_args)
+      return { error: "Invalid tool arguments: #{validation_error}" } if validation_error
+
+      RubyLLM.logger.debug { "Tool #{name} called with: #{normalized_args.inspect}" }
+      result = execute(**normalized_args)
+      RubyLLM.logger.debug { "Tool #{name} returned: #{result.inspect}" }
       result
     end
 
@@ -91,6 +117,138 @@ module RubyLLM
 
     def halt(message)
       Halt.new(message)
+    end
+
+    def normalize_args(args)
+      return {} if args.nil?
+      return args.transform_keys(&:to_sym) if args.respond_to?(:transform_keys)
+
+      {}
+    end
+
+    def validate_keyword_arguments(arguments)
+      required_keywords, optional_keywords, accepts_extra_keywords = execute_keyword_signature
+
+      return nil if required_keywords.empty? && optional_keywords.empty?
+
+      argument_keys = arguments.keys
+      missing_keyword = first_missing_keyword(required_keywords, argument_keys)
+      return "missing keyword: #{missing_keyword}" if missing_keyword
+      return nil if accepts_extra_keywords
+
+      allowed_keywords = required_keywords + optional_keywords
+      unknown_keyword = first_unknown_keyword(argument_keys, allowed_keywords)
+      return "unknown keyword: #{unknown_keyword}" if unknown_keyword
+
+      nil
+    end
+
+    def execute_keyword_signature
+      keyword_signature = method(:execute).parameters
+      required_keywords = keyword_signature.filter_map { |kind, name| name if kind == :keyreq }
+      optional_keywords = keyword_signature.filter_map { |kind, name| name if kind == :key }
+      accepts_extra_keywords = keyword_signature.any? { |kind, _| kind == :keyrest }
+
+      [required_keywords, optional_keywords, accepts_extra_keywords]
+    end
+
+    def first_missing_keyword(required_keywords, argument_keys)
+      (required_keywords - argument_keys).first
+    end
+
+    def first_unknown_keyword(argument_keys, allowed_keywords)
+      (argument_keys - allowed_keywords).first
+    end
+
+    # Wraps schema handling for tool parameters, supporting JSON Schema hashes,
+    # RubyLLM::Schema instances/classes, and DSL blocks.
+    class SchemaDefinition
+      def self.from_parameters(parameters)
+        return nil if parameters.nil? || parameters.empty?
+
+        properties = parameters.to_h do |name, param|
+          schema = {
+            type: map_type(param.type),
+            description: param.description
+          }.compact
+
+          schema[:items] = default_items_schema if schema[:type] == 'array'
+
+          [name.to_s, schema]
+        end
+
+        required = parameters.select { |_, param| param.required }.keys.map(&:to_s)
+
+        json_schema = {
+          type: 'object',
+          properties: properties,
+          required: required,
+          additionalProperties: false,
+          strict: true
+        }
+
+        new(schema: json_schema)
+      end
+
+      def self.map_type(type)
+        case type.to_s
+        when 'integer', 'int' then 'integer'
+        when 'number', 'float', 'double' then 'number'
+        when 'boolean' then 'boolean'
+        when 'array' then 'array'
+        when 'object' then 'object'
+        else
+          'string'
+        end
+      end
+
+      def self.default_items_schema
+        { type: 'string' }
+      end
+
+      def initialize(schema: nil, block: nil)
+        @schema = schema
+        @block = block
+      end
+
+      def present?
+        @schema || @block
+      end
+
+      def json_schema
+        @json_schema ||= RubyLLM::Utils.deep_stringify_keys(resolve_schema)
+      end
+
+      private
+
+      def resolve_schema
+        return resolve_direct_schema(@schema) if @schema
+        return build_from_block(&@block) if @block
+
+        nil
+      end
+
+      def resolve_direct_schema(schema)
+        return extract_schema(schema.to_json_schema) if schema.respond_to?(:to_json_schema)
+        return RubyLLM::Utils.deep_dup(schema) if schema.is_a?(Hash)
+        if schema.is_a?(Class) && schema.method_defined?(:to_json_schema)
+          return extract_schema(schema.new.to_json_schema)
+        end
+
+        nil
+      end
+
+      def build_from_block(&)
+        schema_class = RubyLLM::Schema.create(&)
+        extract_schema(schema_class.new.to_json_schema)
+      end
+
+      def extract_schema(schema_hash)
+        return nil unless schema_hash.is_a?(Hash)
+
+        schema = schema_hash[:schema] || schema_hash['schema'] || schema_hash
+        RubyLLM::Utils.deep_dup(schema)
+      end
     end
   end
 end

@@ -1,0 +1,85 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"Generate a person named
+        John who is 30 years old"}]}],"generationConfig":{"responseMimeType":"application/json","responseJsonSchema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"integer"}},"required":["name","age"],"additionalProperties":false}}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      X-Goog-Api-Key:
+      - "<GEMINI_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      X-Gemini-Service-Tier:
+      - standard
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Thu, 02 Apr 2026 11:23:27 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Server-Timing:
+      - gfet4t7; dur=1810
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "candidates": [
+            {
+              "content": {
+                "parts": [
+                  {
+                    "text": "{\"name\":\"John\",\"age\":30}",
+                    "thoughtSignature": "EowFCokFAb4+9vtPqEgzhJF9hiF+F/5IjOTe6AB7R4xEEkS8Fry7i4Wm2syRxk2lkMODMgAzVwCQcqFWa+THlL2t2KIHYfeOye5a5zUs2sD3Ve9YSrLvk3uMSzZAxkYu0LxYrU3/kKSux1qXXZSWMgCsI7KIayLhMsXFxzVj5fvfsFylnR0DFIMrtc1cOBgppSw2wiAYQ/ZTH0JxzevECSOsB07KVZFZP8ZSF2vtRjMGzETVM2IowbzFiqpiz1RFxASGjDq5beJdnmGXVA8wpHfVv6M+vmJUwc7kALAkTqAfcuQcX1F0NI/KIEMmvlNVGinhzaf5L2hUGkqp8r+L9hwd65hI0jH3FVTFsP99TONWFahNv/9exFVCuHCm3rhV2vOTT1oijOhlR3kqRdRPWQ/yMUEE72EtDhW0aitovYvzWOFFZN3EmvspBe4d6lINqziCFa124Ak8r5Fbe1bocNmmOvWRgdGvOfb8UY7rX6+BYTfYEqER5Eorr5nUO9u5S+ySwg6YVdhYFXrsxKe7GYM0TJSYySYkeVzDNW+aLtPvKoTFUuQJpuVSE8StH7bbFl9d6eQyEO4QF16ZYNIYd+jU36gWInl/F1fs5QKdGy8Rxy6yx0fjMVS1VfFxY+X8A0Xa9lmF7iAty0gNOLck0vZyT56YwHRbfL/tipOsvbD3pxqs0n2KMXdw3qAkZ+ahp715aXvr9Yx+FO4+cF2T5fn204XClMvf+NCc/vbVSEimOhID41wNvc/uUMmTI/FxHKFkXq1i9YXNEKa6KKgNJpsxzNPnyMVERk7t363gCCQ74RHTERD9C7IERbkEJzg0LeEUkS6J3f61RitbME6i9FaYEjy4E12Ea8AYX9maRQ=="
+                  }
+                ],
+                "role": "model"
+              },
+              "finishReason": "STOP",
+              "index": 0
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 13,
+            "candidatesTokenCount": 10,
+            "totalTokenCount": 209,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 13
+              }
+            ],
+            "thoughtsTokenCount": 186
+          },
+          "modelVersion": "gemini-3-flash-preview",
+          "responseId": "r1HOaYfjBeXBvdIPiaiS-AI"
+        }
+  recorded_at: Thu, 02 Apr 2026 11:23:27 GMT
+recorded_with: VCR 6.4.0

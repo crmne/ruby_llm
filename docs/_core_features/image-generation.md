@@ -24,6 +24,7 @@ redirect_from:
 After reading this guide, you will know:
 
 *   How to generate images from text prompts.
+*   How to edit existing images with source images and masks.
 *   How to select different image generation models.
 *   How to specify image sizes (for supported models).
 *   How to access and save generated image data (URL or Base64).
@@ -61,6 +62,46 @@ puts "Model Used: #{image.model_id}"
 ```
 
 The `paint` method abstracts the differences between provider APIs.
+
+## Editing Existing Images
+{: .d-inline-block }
+
+v1.15+
+{: .label .label-green }
+
+Some models, such as OpenAI's GPT Image models, can edit an existing image instead of generating from scratch. Use `with:` to pass one or more source images, and `mask:` when you want to constrain which parts of the image may change.
+
+```ruby
+image = RubyLLM.paint(
+  "Turn the logo green and keep the background transparent",
+  model: "gpt-image-1",
+  with: "logo.png"
+)
+```
+
+`with:` accepts the same kinds of sources RubyLLM already supports elsewhere for attachments: local files, URLs, IO-like objects, and Active Storage attachments.
+
+### Editing With Multiple Images
+
+```ruby
+image = RubyLLM.paint(
+  "Combine these references into a postcard illustration",
+  model: "gpt-image-1",
+  with: ["person.png", "style-reference.png"]
+)
+```
+
+### Editing With a Mask
+
+```ruby
+image = RubyLLM.paint(
+  "Replace only the background with a sunset sky",
+  model: "gpt-image-1",
+  with: "portrait.png",
+  mask: "portrait-mask.png",
+  params: { size: "1024x1024" }
+)
+```
 
 ## Choosing Models
 

@@ -8,7 +8,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.1
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -26,42 +26,40 @@ http_interactions:
       - GitHub.com
       Content-Type:
       - text/plain; charset=utf-8
-      X-Origin-Cache:
-      - HIT
       Last-Modified:
-      - Mon, 22 Sep 2025 10:00:17 GMT
+      - Wed, 01 Apr 2026 06:42:59 GMT
       Access-Control-Allow-Origin:
       - "*"
       Etag:
-      - W/"68d11e31-9c6"
+      - W/"69ccbe73-9c6"
       Expires:
-      - Wed, 24 Sep 2025 07:22:10 GMT
+      - Thu, 02 Apr 2026 11:33:43 GMT
       Cache-Control:
       - max-age=600
       X-Proxy-Cache:
       - MISS
       X-Github-Request-Id:
-      - B734:1C7402:3A47B42:3AB5F7B:68D399CA
+      - 7CD0:3B9ECA:F87895:FB1241:69CE51BF
       Accept-Ranges:
       - bytes
+      Age:
+      - '0'
       Date:
-      - Wed, 24 Sep 2025 14:39:25 GMT
+      - Thu, 02 Apr 2026 11:41:48 GMT
       Via:
       - 1.1 varnish
-      Age:
-      - '283'
       X-Served-By:
-      - cache-fra-etou8220111-FRA
+      - cache-ber1080057-BER
       X-Cache:
       - HIT
       X-Cache-Hits:
-      - '1'
+      - '0'
       X-Timer:
-      - S1758724765.275998,VS0,VE3
+      - S1775130109.612247,VS0,VE124
       Vary:
       - Accept-Encoding
       X-Fastly-Request-Id:
-      - abcc33040d02441d59f1a9b349a4a8a299e15983
+      - 3d2dad84b09692121dd581276740f511e1438d57
     body:
       encoding: ASCII-8BIT
       string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
@@ -97,7 +95,7 @@ http_interactions:
         \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
         WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
         FOR A PARTICULAR\n     PURPOSE.\n"
-  recorded_at: Wed, 24 Sep 2025 14:39:25 GMT
+  recorded_at: Thu, 02 Apr 2026 11:41:48 GMT
 - request:
     method: post
     uri: "<GPUSTACK_API_BASE>/chat/completions"
@@ -140,7 +138,9 @@ http_interactions:
         A PARTICULAR\n     PURPOSE.\n</file>"}]}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -153,15 +153,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 24 Sep 2025 14:39:24 GMT
-      - Wed, 24 Sep 2025 14:39:25 GMT
+      - Thu, 02 Apr 2026 11:41:48 GMT
+      - Thu, 02 Apr 2026 11:41:48 GMT
       Server:
       - uvicorn
       - uvicorn
       Keep-Alive:
       - timeout=15, max=100
       Content-Length:
-      - '3503'
+      - '7382'
       Content-Type:
       - application/json
       X-Request-Accepted-At:
@@ -171,8 +171,93 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
     body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJcblxuVGhlIGBsaWNlbnNlLnR4dGAgZmlsZSBjb250YWlucyB0aGUgKipsaWNlbnNlIHRlcm1zKiogZm9yICoqUnVieSoqLCBhIHByb2dyYW1taW5nIGxhbmd1YWdlIGNyZWF0ZWQgYnkgWXVraWhpcm8gTWF0c3Vtb3RvIChNYXR6KS4gSGVyZSdzIGEgYnJlYWtkb3duIG9mIGl0cyBrZXkgcG9pbnRzOlxuXG4tLS1cblxuIyMjICoqMS4gUmVkaXN0cmlidXRpb24gYW5kIE1vZGlmaWNhdGlvbioqXG4tIFlvdSBjYW4gKipyZWRpc3RyaWJ1dGUqKiBhbmQgKiptb2RpZnkqKiBSdWJ5IHVuZGVyICoqdHdvIG9wdGlvbnMqKjpcbiAgLSBUaGUgKioyLWNsYXVzZSBCU0RMKiogKEJlcmtlbGV5IFNvZnR3YXJlIERpc3RyaWJ1dGlvbiBMaWNlbnNlKSwgb3JcbiAgLSBUaGUgKipjb25kaXRpb25zIGxpc3RlZCBiZWxvdyoqICh3aGljaCBhcmUgc2ltaWxhciB0byB0aGUgQlNETCBidXQgbW9yZSBkZXRhaWxlZCkuXG5cbi0tLVxuXG4jIyMgKioyLiBLZXkgQ29uZGl0aW9ucyoqXG4jIyMjICoqQ29uZGl0aW9uIDE6IFZlcmJhdGltIENvcGllcyoqXG4tIFlvdSBjYW4gZnJlZWx5IGNvcHkgYW5kIGRpc3RyaWJ1dGUgdGhlICoqc291cmNlIGNvZGUqKiBhcy1pcywgKip3aXRob3V0IHJlc3RyaWN0aW9uKiosICoqcHJvdmlkZWQqKjpcbiAgLSBZb3UgKipkdXBsaWNhdGUgYWxsIG9yaWdpbmFsIGNvcHlyaWdodCBub3RpY2VzKiogYW5kICoqZGlzY2xhaW1lcnMqKi5cblxuIyMjIyAqKkNvbmRpdGlvbiAyOiBNb2RpZmljYXRpb25zKipcbi0gSWYgeW91ICoqbW9kaWZ5KiogdGhlIHNvZnR3YXJlLCB5b3UgbXVzdCBkbyAqKmF0IGxlYXN0IG9uZSoqIG9mIHRoZSBmb2xsb3dpbmc6XG4gIC0gKiphKSoqIFBsYWNlIHlvdXIgY2hhbmdlcyBpbiB0aGUgKipQdWJsaWMgRG9tYWluKiogb3IgbWFrZSB0aGVtIGZyZWVseSBhdmFpbGFibGUgKGUuZy4sIHNoYXJlIHZpYSBVc2VuZXQgb3IgYWxsb3cgdGhlIGF1dGhvciB0byBpbmNsdWRlIHRoZW0pLlxuICAtICoqYikqKiBVc2UgdGhlIG1vZGlmaWVkIHNvZnR3YXJlICoqb25seSB3aXRoaW4geW91ciBvcmdhbml6YXRpb24qKi5cbiAgLSAqKmMpKiogTmFtZSBub24tc3RhbmRhcmQgYmluYXJpZXMgZGlmZmVyZW50bHkgYW5kIGluY2x1ZGUgaW5zdHJ1Y3Rpb25zIHRvIGZpbmQgdGhlIG9yaWdpbmFsIHNvdXJjZS5cbiAgLSAqKmQpKiogTWFrZSBvdGhlciBhcnJhbmdlbWVudHMgd2l0aCB0aGUgYXV0aG9yLlxuXG4jIyMjICoqQ29uZGl0aW9uIDM6IEJpbmFyeSBEaXN0cmlidXRpb24qKlxuLSBJZiBkaXN0cmlidXRpbmcgKipiaW5hcnkvb2JqZWN0IGNvZGUqKiwgeW91IG11c3QgZG8gKiphdCBsZWFzdCBvbmUqKiBvZjpcbiAgLSAqKmEpKiogSW5jbHVkZSBpbnN0cnVjdGlvbnMgdG8gZ2V0IHRoZSBvcmlnaW5hbCBzb3VyY2UuXG4gIC0gKipiKSoqIFByb3ZpZGUgdGhlICoqbWFjaGluZS1yZWFkYWJsZSBzb3VyY2UgY29kZSoqLlxuICAtICoqYykqKiBVc2Ugbm9uLXN0YW5kYXJkIG5hbWVzIGZvciBiaW5hcmllcyBhbmQgaW5jbHVkZSBzb3VyY2UgbG9jYXRpb24gaW5zdHJ1Y3Rpb25zLlxuICAtICoqZCkqKiBNYWtlIG90aGVyIGFycmFuZ2VtZW50cyB3aXRoIHRoZSBhdXRob3IuXG5cbiMjIyMgKipDb25kaXRpb24gNDogQ29tYmluaW5nIHdpdGggT3RoZXIgU29mdHdhcmUqKlxuLSBZb3UgY2FuICoqbW9kaWZ5IGFuZCBpbmNsdWRlIFJ1YnkgaW4gb3RoZXIgc29mdHdhcmUqKiAoZXZlbiBjb21tZXJjaWFsKSwgKipleGNlcHQqKiBmb3IgY2VydGFpbiBmaWxlcyBub3Qgd3JpdHRlbiBieSBNYXR6LiBDaGVjayB0aGUgYExFR0FMYCBmaWxlIGZvciBkZXRhaWxzIG9uIHRoZXNlIGV4Y2VwdGlvbnMuXG5cbiMjIyMgKipDb25kaXRpb24gNTogU2NyaXB0cyBhbmQgTGlicmFyeSBGaWxlcyoqXG4tICoqU2NyaXB0cyoqIGFuZCAqKmxpYnJhcnkgZmlsZXMqKiBnZW5lcmF0ZWQgYXMgaW5wdXQvb3V0cHV0IGJ5IFJ1YnkgKipkbyBub3QgZmFsbCB1bmRlciBSdWJ54oCZcyBjb3B5cmlnaHQqKi4gVGhleSBiZWxvbmcgdG8gdGhlaXIgY3JlYXRvcnMgYW5kIGNhbiBiZSBzb2xkIG9yIHVzZWQgZnJlZWx5LlxuXG4jIyMjICoqQ29uZGl0aW9uIDY6IFdhcnJhbnR5IERpc2NsYWltZXIqKlxuLSBUaGUgc29mdHdhcmUgaXMgcHJvdmlkZWQgKipcIkFTIElTXCIqKiB3aXRoICoqbm8gd2FycmFudGllcyoqIChleHBsaWNpdCBvciBpbXBsaWVkKSwgaW5jbHVkaW5nICoqbm8gZ3VhcmFudGVlIG9mIG1lcmNoYW50YWJpbGl0eSoqIG9yICoqZml0bmVzcyBmb3IgYSBwYXJ0aWN1bGFyIHB1cnBvc2UqKi5cblxuLS0tXG5cbiMjIyAqKkFkZGl0aW9uYWwgTm90ZXMqKlxuLSBUaGUgbGljZW5zZSByZWZlcmVuY2VzIHR3byBmaWxlczpcbiAgLSBgQlNETGA6IFRoZSAyLWNsYXVzZSBCZXJrZWxleSBTb2Z0d2FyZSBEaXN0cmlidXRpb24gTGljZW5zZS5cbiAgLSBgTEVHQUxgOiBBIGZpbGUgbGlzdGluZyBleGNlcHRpb25zIGZvciBmaWxlcyBub3QgdW5kZXIgdGhlIGFib3ZlIHRlcm1zLlxuXG4tLS1cblxuIyMjICoqU3VtbWFyeSoqXG5UaGlzIGxpY2Vuc2UgYWxsb3dzICoqZnJlZSB1c2UsIG1vZGlmaWNhdGlvbiwgYW5kIHJlZGlzdHJpYnV0aW9uKiogb2YgUnVieSB1bmRlciBzcGVjaWZpYyBjb25kaXRpb25zLCBlbXBoYXNpemluZyAqKmZyZWVkb20gdG8gc2hhcmUqKiB3aGlsZSByZXF1aXJpbmcgcHJvcGVyIGF0dHJpYnV0aW9uIGFuZCBoYW5kbGluZyBvZiBtb2RpZmljYXRpb25zLiBJdCBpcyAqKnBlcm1pc3NpdmUqKiBidXQgaW5jbHVkZXMgZXhjZXB0aW9ucyBmb3IgY2VydGFpbiBmaWxlcyBhbmQgc2NlbmFyaW9zLiBBbHdheXMgY2hlY2sgdGhlIGBMRUdBTGAgYW5kIGBCU0RMYCBmaWxlcyBmb3IgZnVsbCBkZXRhaWxzLiIsInJvbGUiOiJhc3Npc3RhbnQifX1dLCJjcmVhdGVkIjoxNzU4NzI0Nzc0LCJpZCI6ImNoYXRjbXBsLWloZkFBbk1QN05DOWNsZFdneGRqbk1ydmxLWVlBV1FnIiwibW9kZWwiOiJxd2VuMyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsInVzYWdlIjp7ImNvbXBsZXRpb25fdG9rZW5zIjo5NTMsImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjAsInJlYXNvbmluZ190b2tlbnMiOjMyNywicmVqZWN0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjB9LCJkcmFmdF90b2tlbnMiOjAsImRyYWZ0X3Rva2Vuc19hY2NlcHRhbmNlIjowLjAsInByb21wdF90b2tlbnMiOjU0NCwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjEyfSwicHJvbXB0X3Rva2Vuc19wZXJfc2Vjb25kIjozNTk1LjY3MTk3NDI0ODY0MzQsInRpbWVfcGVyX291dHB1dF90b2tlbl9tcyI6OS45MzM3OTg1MzA5NTQ4OCwidGltZV90b19maXJzdF90b2tlbl9tcyI6MTUxLjI5MywidG9rZW5zX3Blcl9zZWNvbmQiOjEwMC42NjY0MjY1MzE5OTQwOCwidG90YWxfdG9rZW5zIjoxNDk3fX0=
-  recorded_at: Wed, 24 Sep 2025 14:39:34 GMT
-recorded_with: VCR 6.3.1
+      encoding: UTF-8
+      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"\n\nThe
+        `license.txt` file contains the **license terms** for **Ruby**, a programming
+        language created by Yukihiro Matsumoto (Matz). Here''s a breakdown of its
+        key points:\n\n---\n\n### **1. License Overview**\n- **Copyright**: Ruby is
+        free software copyrighted by Yukihiro Matsumoto (`matz@netlab.jp`).\n- **License
+        Type**: The software is distributed under the **2-clause BSDL** (Berkeley
+        Software Distribution License) or the **conditions listed below** (which are
+        similar to the BSDL).\n\n---\n\n### **2. Key License Conditions**\n#### **Condition
+        1: Redistribution of Source Code**\n- You can freely copy and distribute the
+        **source code** as-is, **without restrictions**, **as long as**:\n  - All
+        original **copyright notices** and **disclaimers** are duplicated.\n\n####
+        **Condition 2: Modification of Software**\n- If you modify the software, you
+        must do **at least one** of the following:\n  - **(a)** Place your modifications
+        in the **Public Domain** or make them **freely available** (e.g., post to
+        Usenet or share with the author).\n  - **(b)** Use the modified software **only
+        within your organization**.\n  - **(c)** Rename non-standard binaries with
+        instructions on how to get the original source.\n  - **(d)** Make other distribution
+        arrangements with the author.\n\n#### **Condition 3: Distribution of Binaries/Objects**\n-
+        If you distribute **binary/compiled forms**, you must do **at least one**
+        of:\n  - **(a)** Include instructions (e.g., in documentation) on how to get
+        the original source.\n  - **(b)** Provide the **machine-readable source code**
+        with the distribution.\n  - **(c)** Rename non-standard binaries and include
+        instructions for the original source.\n  - **(d)** Make other arrangements
+        with the author.\n\n#### **Condition 4: Combining with Other Software**\n-
+        You can **modify and integrate Ruby into other software** (even commercial),
+        **but**:\n  - Some files in the distribution are **not under these terms**
+        (e.g., third-party libraries).\n  - Refer to the `LEGAL` file for details
+        on which files have different conditions.\n\n#### **Condition 5: Scripts/Generated
+        Files**\n- Scripts or files generated as **input/output** by Ruby (e.g., user-created
+        scripts) are **not automatically copyrighted** by Ruby.\n  - They belong to
+        the **creator** and can be sold or used commercially.\n  - They can be **aggregated**
+        with Ruby software.\n\n#### **Condition 6: Warranty Disclaimer**\n- The software
+        is provided **\"AS IS\"** with **no warranties** (explicit or implied), including:\n  -
+        No warranty of **merchantability** or **fitness for a particular purpose**.\n\n---\n\n###
+        **3. Additional Notes**\n- The license allows **permissive use** (e.g., redistribution,
+        modification, commercial use), but with specific requirements for attribution
+        and source availability.\n- Some files (e.g., third-party libraries) may have
+        **different licensing terms**, so check the `LEGAL` file for details.\n- The
+        license is **similar to the BSD license**, but with additional conditions
+        for modification and distribution.\n\n---\n\n### **Summary**\nThis license
+        grants **freedom to use, modify, and distribute Ruby**, but requires:\n- Proper
+        attribution and disclaimers.\n- Source code availability or specific conditions
+        for modified/binary distributions.\n- No implied warranties (use at your own
+        risk).\n\nIf you''re using Ruby in a project, ensure you comply with these
+        terms, especially when redistributing or modifying the software.","reasoning_content":"\nOkay,
+        the user is asking what''s in the license.txt file they provided. Let me start
+        by reading through the content carefully.\n\nFirst, the file mentions that
+        Ruby is copyrighted free software by Yukihiro Matsumoto. Then there are several
+        numbered conditions. Let me break them down one by one.\n\nCondition 1 allows
+        redistribution of the source code as long as all original copyright notices
+        and disclaimers are duplicated. That seems straightforward.\n\nCondition 2
+        talks about modifying the software. The user has to do at least one of the
+        options a to d. Option a is placing modifications in the Public Domain or
+        making them freely available. Option b is using the modified software only
+        within the company. Option c is renaming non-standard binaries with instructions
+        on where to get the original. Option d is other arrangements with the author.
+        I need to make sure I explain each of these clearly.\n\nCondition 3 covers
+        distributing in object code or binary form. Again, similar to condition 2,
+        but with different options. The options here are similar, like distributing
+        binaries with instructions on where to get the original, accompanying with
+        machine-readable source, renaming binaries, or other arrangements. It''s important
+        to note that these are the same as in condition 2 but for binary distributions.\n\nCondition
+        4 mentions modifying and including parts of the software into other software,
+        possibly commercial. However, some files aren''t under these terms, so they
+        refer to the LEGAL file for more info. I should mention that some files have
+        different conditions.\n\nCondition 5 states that scripts and library files
+        generated as input or output don''t fall under the software''s copyright.
+        They belong to the generator and can be sold commercially. This is important
+        for users who create their own scripts.\n\nCondition 6 is the standard \"AS
+        IS\" disclaimer, no warranties. That''s a common clause in open-source licenses.\n\nNow,
+        putting this all together, the user might be looking to understand the licensing
+        terms for Ruby. They might be a developer wanting to use Ruby in their project,
+        or they might be a company considering redistribution. They could be checking
+        if they can modify the software, distribute it, or include parts of it in
+        their commercial product. \n\nI should explain each section of the license
+        in simple terms, highlighting the key points like redistribution, modification,
+        binary distribution, and the exceptions for certain files. Also, noting the
+        disclaimer of warranties is crucial. The user might not be familiar with the
+        BSDL license, so mentioning that it''s a 2-clause BSDL and referencing the
+        BSDL file is important. \n\nI need to make sure the explanation is clear and
+        covers all the conditions without being too technical. The user might not
+        need the exact legal jargon but rather a summary of what the license allows
+        and restricts. Also, pointing out that some files have different conditions
+        (LEGAL file) is essential to avoid confusion. \n\nFinally, I should conclude
+        by summarizing the main points, emphasizing the permissive nature of the license
+        but also the specific conditions that apply. This way, the user can quickly
+        grasp the key aspects of the license without getting lost in the details.\n","role":"assistant"}}],"created":1775130125,"id":"chatcmpl-Ax0RO8zW39wnnmiVpvImeQkMcCWUhTmE","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":1387,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":628,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":544,"prompt_tokens_details":{"cached_tokens":12},"prompt_tokens_per_second":4025.45508361699,"time_per_output_token_ms":11.711898341744773,"time_to_first_token_ms":135.14,"tokens_per_second":85.38325477396738,"total_tokens":1931}}'
+  recorded_at: Thu, 02 Apr 2026 11:42:05 GMT
+recorded_with: VCR 6.4.0

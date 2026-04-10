@@ -1,0 +1,42 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+ENV['TEST_ENV_NUMBER'] = '0' if ENV.fetch('TEST_ENV_NUMBER', '').empty?
+
+require 'bundler/setup'
+require 'test_queue'
+require 'test_queue/runner/rspec'
+require 'simplecov'
+
+# test-queue depends on fork(2), which JRuby does not implement.
+# Fall back to regular RSpec for JRuby jobs.
+if RUBY_ENGINE == 'jruby'
+  warn 'JRuby detected: falling back to plain rspec because test-queue requires fork.'
+  exit(RSpec::Core::Runner.run(ARGV))
+end
+
+# Wraps test-queue RSpec to isolate DBs per worker and emit merged coverage.
+class RubyLLMRSpecQueueRunner < TestQueue::Runner::RSpec
+  def after_fork(num)
+    super
+    ENV['TEST_ENV_NUMBER'] = num.to_s
+    return if ENV['SKIP_COVERAGE']
+    return unless defined?(SimpleCov) && SimpleCov.running
+
+    SimpleCov.command_name("RSpec worker #{num}")
+  end
+
+  def cleanup_worker
+    return unless defined?(SimpleCov) && SimpleCov.running
+
+    SimpleCov.result
+  end
+end
+
+runner = RubyLLMRSpecQueueRunner.new
+runner.exit_when_done = false
+exit_status = runner.execute
+
+SimpleCov.result.format! if !ENV['SKIP_COVERAGE'] && defined?(SimpleCov) && SimpleCov.running
+
+exit exit_status

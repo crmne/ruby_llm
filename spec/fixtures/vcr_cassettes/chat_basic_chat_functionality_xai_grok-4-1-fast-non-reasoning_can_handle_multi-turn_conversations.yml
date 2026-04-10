@@ -1,0 +1,165 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.x.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"user","content":"Who
+        is the creator of the programming language Ruby?"}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 02 Apr 2026 11:27:26 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Ratelimit-Limit-Tokens:
+      - '10000000'
+      X-Ratelimit-Remaining-Tokens:
+      - '10000000'
+      X-Zero-Data-Retention:
+      - 'false'
+      X-Ratelimit-Limit-Requests:
+      - '1800'
+      X-Ratelimit-Remaining-Requests:
+      - '1800'
+      X-Metrics-Ttft-Ms:
+      - '161.7'
+      X-Metrics-Mean-Itl-Ms:
+      - '10.2'
+      X-Metrics-E2e-Ms:
+      - '1355.7'
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Traceparent:
+      - 00-ce9f23096f4434d087280922c2ae3fcc-87de99c1008935b1-01
+      Cf-Cache-Status:
+      - DYNAMIC
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"623f9fdb-f674-94b9-ae1d-fb34dccb3946","object":"chat.completion","created":1775129244,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"**Matzuro
+        Matsumoto**, commonly known as **Matz**, created the Ruby programming language.\n\nHe
+        first released it in 1995 in Japan, designing it to prioritize programmer
+        happiness and productivity with a focus on simplicity and elegance. Matsumoto
+        announced Ruby publicly in 1995, with version 1.0 following in 1996. This
+        is confirmed by official sources like the Ruby website (ruby-lang.org), Matsumoto''s
+        own writings, and programming history references such as the book *Programming
+        Ruby: The Pragmatic Programmer''s Guide*.","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":178,"completion_tokens":106,"total_tokens":284,"prompt_tokens_details":{"text_tokens":178,"audio_tokens":0,"image_tokens":0,"cached_tokens":161},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":644500},"system_fingerprint":"fp_5d249ba471"}'
+  recorded_at: Thu, 02 Apr 2026 11:27:26 GMT
+- request:
+    method: post
+    uri: https://api.x.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"user","content":"Who
+        is the creator of the programming language Ruby?"},{"role":"assistant","content":"**Matzuro
+        Matsumoto**, commonly known as **Matz**, created the Ruby programming language.\n\nHe
+        first released it in 1995 in Japan, designing it to prioritize programmer
+        happiness and productivity with a focus on simplicity and elegance. Matsumoto
+        announced Ruby publicly in 1995, with version 1.0 following in 1996. This
+        is confirmed by official sources like the Ruby website (ruby-lang.org), Matsumoto''s
+        own writings, and programming history references such as the book *Programming
+        Ruby: The Pragmatic Programmer''s Guide*."},{"role":"user","content":"What
+        year did he create Ruby?"}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 02 Apr 2026 11:27:27 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Ratelimit-Limit-Tokens:
+      - '10000000'
+      X-Ratelimit-Remaining-Tokens:
+      - '10000000'
+      X-Zero-Data-Retention:
+      - 'false'
+      X-Ratelimit-Limit-Requests:
+      - '1800'
+      X-Ratelimit-Remaining-Requests:
+      - '1800'
+      X-Metrics-Ttft-Ms:
+      - '213.3'
+      X-Metrics-Mean-Itl-Ms:
+      - '7.1'
+      X-Metrics-E2e-Ms:
+      - '928.3'
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Traceparent:
+      - 00-1f9780f77ed995b4026624acb22c5c83-f49820cf0089434e-01
+      Set-Cookie:
+      - "<COOKIE>"
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Strict-Transport-Security:
+      - max-age=31536000
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"780b8117-3a2a-9f1a-bbfd-fb6d6ee2553e","object":"chat.completion","created":1775129246,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"**1995**.\n\nMatzuro
+        Matsumoto released the first version of Ruby in Japan in December 1995. This
+        marks the official creation year, as documented on the Ruby project''s official
+        history page (ruby-lang.org/en/about/) and in Matsumoto''s book *The Ruby
+        Way*. Version 1.0 was released in 1996, but 1995 is when development began
+        and the initial public release occurred.","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":302,"completion_tokens":82,"total_tokens":384,"prompt_tokens_details":{"text_tokens":302,"audio_tokens":0,"image_tokens":0,"cached_tokens":178},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":747000},"system_fingerprint":"fp_5d249ba471"}'
+  recorded_at: Thu, 02 Apr 2026 11:27:27 GMT
+recorded_with: VCR 6.4.0

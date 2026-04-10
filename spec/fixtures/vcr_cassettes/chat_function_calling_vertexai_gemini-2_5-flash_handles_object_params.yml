@@ -1,0 +1,157 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://oauth2.googleapis.com/token
+    body:
+      encoding: ASCII-8BIT
+      string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Pragma:
+      - no-cache
+      Date:
+      - Thu, 02 Apr 2026 11:31:19 GMT
+      Expires:
+      - Mon, 01 Jan 1990 00:00:00 GMT
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      Content-Type:
+      - application/json; charset=utf-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "access_token": "<GOOGLE_ACCESS_TOKEN>",
+          "expires_in": 3599,
+          "scope": "https://www.googleapis.com/auth/sqlservice.login openid https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/cloud-platform",
+          "token_type": "Bearer",
+          "id_token": "<GOOGLE_ID_TOKEN>"
+        }
+  recorded_at: Thu, 02 Apr 2026 11:31:19 GMT
+- request:
+    method: post
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"Call the object params
+        tool with window start 2025-01-01 and end 2025-01-02 and include the result."}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"object_params","description":"Uses
+        params DSL object support","parameters":{"type":"OBJECT","properties":{"window":{"type":"OBJECT","description":"Time
+        window to schedule","properties":{"start":{"type":"STRING","description":"ISO
+        start"},"end":{"type":"STRING","description":"ISO end"}},"required":["start","end"]}},"required":["window"]}}]}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Thu, 02 Apr 2026 11:31:20 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "candidates": [
+            {
+              "content": {
+                "role": "model",
+                "parts": [
+                  {
+                    "functionCall": {
+                      "name": "object_params",
+                      "args": {
+                        "window": {
+                          "start": "2025-01-01",
+                          "end": "2025-01-02"
+                        }
+                      }
+                    },
+                    "thoughtSignature": "CrUDAY89a1/gRo9pNihh9eqOfU2l9gP3xSbvEw3ld/fL6i8x5Ywrg8xQeJRVvcymjjKzs42leHC9of3a2sEeJ2JQ9FeBwGjE/iYqNNtbwEvVrtOWTZu5o20wA7nOiMrI5VTepd/Hs/wg1N1ICP+W8sCVPZhdymhvUqBE0F0XiCmfny8VgJ2GE3BvyP15ByAgEbMLlcXaDbCmOxQbypP7eWujjssRFgnPD+To80GCP1PHUDFSHNSVNzecvuXRuIDFAnyctXTe3BB2QFxFBzsjmQPUyWEA3BEH+rsIv5q7nW1COep9Qmyjqq6auqfF6+6Fv4QcDnUhCS93XQIKHUOCXLWpsAdYl6U+ZUJgEvezqxaz9XkU3zr8StHygnF3Pcdh8SiQnS/mn6Ac/9xWx63UHq1Wsl/B0K7xriTFoWJfBsgBk7bokWDinn2XsO2ddsMYEqPmtKHj3QNdLMDDM5uVAeom8511bVGn5EmH6oYWfCT3YbFGNtgij6gpNUV9NmZOPDQwTuRCHurJ2xvKpr8MTySCJ8CLdwJ9MEGntQZ1HvpMpzMl50oMckJ5a1h+LD3qpgit/wAr4lM="
+                  }
+                ]
+              },
+              "finishReason": "STOP",
+              "avgLogprobs": -0.27169141402611363
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 63,
+            "candidatesTokenCount": 26,
+            "totalTokenCount": 209,
+            "trafficType": "ON_DEMAND",
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 63
+              }
+            ],
+            "candidatesTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 26
+              }
+            ],
+            "thoughtsTokenCount": 120
+          },
+          "modelVersion": "gemini-2.5-flash",
+          "createTime": "2026-04-02T11:31:19.155956Z",
+          "responseId": "h1POabTCCfj12fMP37G9qQ0"
+        }
+  recorded_at: Thu, 02 Apr 2026 11:31:20 GMT
+recorded_with: VCR 6.4.0

@@ -37,17 +37,21 @@ module RubyLLM
       self.class.configuration_requirements
     end
 
-    def complete(messages, tools:, temperature:, model:, params: {}, headers: {}, schema: nil, &) # rubocop:disable Metrics/ParameterLists
+    # rubocop:disable Metrics/ParameterLists
+    def complete(messages, tools:, temperature:, model:, params: {}, headers: {}, schema: nil, thinking: nil,
+                 tool_prefs: nil, &)
       normalized_temperature = maybe_normalize_temperature(temperature, model)
 
       payload = Utils.deep_merge(
         render_payload(
           messages,
           tools: tools,
+          tool_prefs: tool_prefs,
           temperature: normalized_temperature,
           model: model,
           stream: block_given?,
-          schema: schema
+          schema: schema,
+          thinking: thinking
         ),
         params
       )
@@ -58,6 +62,7 @@ module RubyLLM
         sync_response @connection, payload, headers
       end
     end
+    # rubocop:enable Metrics/ParameterLists
 
     def list_models
       response = @connection.get models_url
@@ -76,9 +81,10 @@ module RubyLLM
       parse_moderation_response(response, model:)
     end
 
-    def paint(prompt, model:, size:)
-      payload = render_image_payload(prompt, model:, size:)
-      response = @connection.post images_url, payload
+    def paint(prompt, model:, size:, with: nil, mask: nil, params: {}) # rubocop:disable Metrics/ParameterLists
+      validate_paint_inputs!(with:, mask:)
+      payload = render_image_payload(prompt, model:, size:, with:, mask:, params:)
+      response = @connection.post images_url(with:, mask:), payload
       parse_image_response(response, model:)
     end
 
@@ -101,16 +107,24 @@ module RubyLLM
       self.class.remote?
     end
 
+    def assume_models_exist?
+      self.class.assume_models_exist?
+    end
+
     def parse_error(response)
       return if response.body.empty?
 
       body = try_parse_json(response.body)
       case body
       when Hash
+        error = body['error']
+        return error if error.is_a?(String)
+
         body.dig('error', 'message')
       when Array
         body.map do |part|
-          part.dig('error', 'message')
+          error = part['error']
+          error.is_a?(String) ? error : part.dig('error', 'message')
         end.join('. ')
       else
         body
@@ -144,10 +158,14 @@ module RubyLLM
       end
 
       def capabilities
-        raise NotImplementedError
+        nil
       end
 
       def configuration_requirements
+        []
+      end
+
+      def configuration_options
         []
       end
 
@@ -159,12 +177,17 @@ module RubyLLM
         !local?
       end
 
+      def assume_models_exist?
+        false
+      end
+
       def configured?(config)
         configuration_requirements.all? { |req| config.send(req) }
       end
 
       def register(name, provider_class)
         providers[name.to_sym] = provider_class
+        RubyLLM::Configuration.register_provider_options(provider_class.configuration_options)
       end
 
       def resolve(name)
@@ -202,6 +225,12 @@ module RubyLLM
     end
 
     private
+
+    def validate_paint_inputs!(with:, mask:)
+      return if with.nil? && mask.nil?
+
+      raise UnsupportedAttachmentError, "#{name} does not support image references in paint"
+    end
 
     def build_audio_file_part(file_path)
       expanded_path = File.expand_path(file_path)

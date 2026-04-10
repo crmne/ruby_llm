@@ -9,9 +9,9 @@ http_interactions:
         from 1 to 3"}],"stream":true,"temperature":0.0,"stream_options":{"include_usage":true}}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.1
       Authorization:
-      - Bearer <DEEPSEEK_API_KEY>
+      - Bearer <AUTH_TOKEN>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -23,16 +23,18 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Date:
-      - Wed, 24 Sep 2025 14:55:50 GMT
       Content-Type:
       - text/event-stream; charset=utf-8
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Cf-Ray:
-      - "<CF_RAY>"
+      Date:
+      - Thu, 02 Apr 2026 11:23:03 GMT
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - elb
       Cache-Control:
       - no-cache
       Vary:
@@ -40,37 +42,41 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 467cd17dd2d92a8d64de8afadb42fc0c
+      - 4f435883c871372df34af537c37f6fea
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
-      X-Content-Type-Options:
-      - nosniff
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Server:
-      - cloudflare
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 1d306dc69347ed17cde7ecdf2fbdbf88.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - TXL50-P2
+      X-Amz-Cf-Id:
+      - cUR7PzfAZUgj6axo2xlcF6EUXMtfmhwK1mUl8DcP8XmIV71Wbf-5Gw==
     body:
       encoding: UTF-8
       string: |+
-        data: {"id":"de8088d1-a15b-4d1c-baf2-5127f80c558e","object":"chat.completion.chunk","created":1758725749,"model":"deepseek-chat","system_fingerprint":"fp_f253fc19d1_prod0820_fp8_kvcache","choices":[{"index":0,"delta":{"role":"assistant","content":""},"logprobs":null,"finish_reason":null}],"usage":null}
+        data: {"id":"8d4b812b-4c1d-4f4d-bd07-7170c10464db","object":"chat.completion.chunk","created":1775128983,"model":"deepseek-chat","system_fingerprint":"fp_eaab8d114b_prod0820_fp8_kvcache_new_kvcache","choices":[{"index":0,"delta":{"role":"assistant","content":""},"logprobs":null,"finish_reason":null}],"usage":null}
 
-        data: {"id":"de8088d1-a15b-4d1c-baf2-5127f80c558e","object":"chat.completion.chunk","created":1758725749,"model":"deepseek-chat","system_fingerprint":"fp_f253fc19d1_prod0820_fp8_kvcache","choices":[{"index":0,"delta":{"content":"1"},"logprobs":null,"finish_reason":null}],"usage":null}
+        data: {"id":"8d4b812b-4c1d-4f4d-bd07-7170c10464db","object":"chat.completion.chunk","created":1775128983,"model":"deepseek-chat","system_fingerprint":"fp_eaab8d114b_prod0820_fp8_kvcache_new_kvcache","choices":[{"index":0,"delta":{"content":"1"},"logprobs":null,"finish_reason":null}],"usage":null}
 
-        data: {"id":"de8088d1-a15b-4d1c-baf2-5127f80c558e","object":"chat.completion.chunk","created":1758725749,"model":"deepseek-chat","system_fingerprint":"fp_f253fc19d1_prod0820_fp8_kvcache","choices":[{"index":0,"delta":{"content":"  \n"},"logprobs":null,"finish_reason":null}],"usage":null}
+        data: {"id":"8d4b812b-4c1d-4f4d-bd07-7170c10464db","object":"chat.completion.chunk","created":1775128983,"model":"deepseek-chat","system_fingerprint":"fp_eaab8d114b_prod0820_fp8_kvcache_new_kvcache","choices":[{"index":0,"delta":{"content":","},"logprobs":null,"finish_reason":null}],"usage":null}
 
-        data: {"id":"de8088d1-a15b-4d1c-baf2-5127f80c558e","object":"chat.completion.chunk","created":1758725749,"model":"deepseek-chat","system_fingerprint":"fp_f253fc19d1_prod0820_fp8_kvcache","choices":[{"index":0,"delta":{"content":"2"},"logprobs":null,"finish_reason":null}],"usage":null}
+        data: {"id":"8d4b812b-4c1d-4f4d-bd07-7170c10464db","object":"chat.completion.chunk","created":1775128983,"model":"deepseek-chat","system_fingerprint":"fp_eaab8d114b_prod0820_fp8_kvcache_new_kvcache","choices":[{"index":0,"delta":{"content":" "},"logprobs":null,"finish_reason":null}],"usage":null}
 
-        data: {"id":"de8088d1-a15b-4d1c-baf2-5127f80c558e","object":"chat.completion.chunk","created":1758725749,"model":"deepseek-chat","system_fingerprint":"fp_f253fc19d1_prod0820_fp8_kvcache","choices":[{"index":0,"delta":{"content":"  \n"},"logprobs":null,"finish_reason":null}],"usage":null}
+        data: {"id":"8d4b812b-4c1d-4f4d-bd07-7170c10464db","object":"chat.completion.chunk","created":1775128983,"model":"deepseek-chat","system_fingerprint":"fp_eaab8d114b_prod0820_fp8_kvcache_new_kvcache","choices":[{"index":0,"delta":{"content":"2"},"logprobs":null,"finish_reason":null}],"usage":null}
 
-        data: {"id":"de8088d1-a15b-4d1c-baf2-5127f80c558e","object":"chat.completion.chunk","created":1758725749,"model":"deepseek-chat","system_fingerprint":"fp_f253fc19d1_prod0820_fp8_kvcache","choices":[{"index":0,"delta":{"content":"3"},"logprobs":null,"finish_reason":null}],"usage":null}
+        data: {"id":"8d4b812b-4c1d-4f4d-bd07-7170c10464db","object":"chat.completion.chunk","created":1775128983,"model":"deepseek-chat","system_fingerprint":"fp_eaab8d114b_prod0820_fp8_kvcache_new_kvcache","choices":[{"index":0,"delta":{"content":","},"logprobs":null,"finish_reason":null}],"usage":null}
 
-        data: {"id":"de8088d1-a15b-4d1c-baf2-5127f80c558e","object":"chat.completion.chunk","created":1758725749,"model":"deepseek-chat","system_fingerprint":"fp_f253fc19d1_prod0820_fp8_kvcache","choices":[{"index":0,"delta":{"content":""},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":11,"completion_tokens":5,"total_tokens":16,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":11}}
+        data: {"id":"8d4b812b-4c1d-4f4d-bd07-7170c10464db","object":"chat.completion.chunk","created":1775128983,"model":"deepseek-chat","system_fingerprint":"fp_eaab8d114b_prod0820_fp8_kvcache_new_kvcache","choices":[{"index":0,"delta":{"content":" "},"logprobs":null,"finish_reason":null}],"usage":null}
+
+        data: {"id":"8d4b812b-4c1d-4f4d-bd07-7170c10464db","object":"chat.completion.chunk","created":1775128983,"model":"deepseek-chat","system_fingerprint":"fp_eaab8d114b_prod0820_fp8_kvcache_new_kvcache","choices":[{"index":0,"delta":{"content":"3"},"logprobs":null,"finish_reason":null}],"usage":null}
+
+        data: {"id":"8d4b812b-4c1d-4f4d-bd07-7170c10464db","object":"chat.completion.chunk","created":1775128983,"model":"deepseek-chat","system_fingerprint":"fp_eaab8d114b_prod0820_fp8_kvcache_new_kvcache","choices":[{"index":0,"delta":{"content":""},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":11,"completion_tokens":7,"total_tokens":18,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":11}}
 
         data: [DONE]
 
-  recorded_at: Wed, 24 Sep 2025 14:55:53 GMT
+  recorded_at: Thu, 02 Apr 2026 11:23:04 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/chat/completions
@@ -80,9 +86,9 @@ http_interactions:
         from 1 to 3"}],"stream":false,"temperature":0.0}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.1
       Authorization:
-      - Bearer <DEEPSEEK_API_KEY>
+      - Bearer <AUTH_TOKEN>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -94,35 +100,38 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Date:
-      - Wed, 24 Sep 2025 14:55:53 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Date:
+      - Thu, 02 Apr 2026 11:23:05 GMT
+      Server:
+      - elb
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 903680bddf8cd45e78eb7eb23a4c78e4
+      - 81cdcd83682460f0fa0b1eb79d6c3bbb
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Server:
-      - cloudflare
-      Cf-Ray:
-      - "<CF_RAY>"
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 b7fabb5a327e018775ea26a6f65c6e10.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - TXL50-P1
+      X-Amz-Cf-Id:
+      - C-p4CKKbdY0NSPt_nCLcZV5xWb3ld73fg4K7XfCGnYodR2zGEddbrg==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"1b3ad9b3-7833-44a4-b8f1-7caa51293e51","object":"chat.completion","created":1758725753,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"1  \n2  \n3"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":11,"completion_tokens":5,"total_tokens":16,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":11},"system_fingerprint":"fp_f253fc19d1_prod0820_fp8_kvcache"}'
-  recorded_at: Wed, 24 Sep 2025 14:55:56 GMT
-recorded_with: VCR 6.3.1
+      string: '{"id":"674fe1e1-1ec7-4f34-a048-1b3764f0151b","object":"chat.completion","created":1775128985,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"1,
+        2, 3"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":11,"completion_tokens":7,"total_tokens":18,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":11},"system_fingerprint":"fp_eaab8d114b_prod0820_fp8_kvcache_new_kvcache"}'
+  recorded_at: Thu, 02 Apr 2026 11:23:06 GMT
+recorded_with: VCR 6.4.0
 ...

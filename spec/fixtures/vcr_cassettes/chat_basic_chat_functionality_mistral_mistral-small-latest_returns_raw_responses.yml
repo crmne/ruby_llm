@@ -9,9 +9,9 @@ http_interactions:
         is the capital of France?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.1
       Authorization:
-      - Bearer <MISTRAL_API_KEY>
+      - Bearer <AUTH_TOKEN>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 24 Sep 2025 14:53:48 GMT
+      - Thu, 02 Apr 2026 11:25:18 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -32,47 +32,45 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '01997c37-617b-75bb-9f92-e2777deafd55'
+      - '019d4df0-c53d-7754-8801-c15cdd7d8664'
       X-Kong-Request-Id:
-      - '01997c37-617b-75bb-9f92-e2777deafd55'
-      X-Envoy-Upstream-Service-Time:
-      - '669'
+      - '019d4df0-c53d-7754-8801-c15cdd7d8664'
       X-Ratelimit-Limit-Tokens-Minute:
-      - '500000'
+      - '600000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '499860'
-      X-Ratelimit-Limit-Tokens-Month:
-      - '1000000000'
-      X-Ratelimit-Remaining-Tokens-Month:
-      - '999971259'
+      - '599447'
       X-Ratelimit-Tokens-Query-Cost:
-      - '75'
+      - '31'
       X-Ratelimit-Limit-Req-Minute:
-      - '60'
+      - '360'
       X-Ratelimit-Remaining-Req-Minute:
-      - '58'
+      - '356'
+      X-Envoy-Upstream-Service-Time:
+      - '298'
+      Server:
+      - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '670'
+      - '299'
       X-Kong-Proxy-Latency:
-      - '7'
+      - '16'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
       Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains
-      Server:
-      - cloudflare
+      - max-age=15552000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        eyJpZCI6IjJmZjMzOWU2MmZlNjRiMDc4MThmZWIxMTFlYmQ2MGIxIiwiY3JlYXRlZCI6MTc1ODcyNTYyOCwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsInVzYWdlIjp7InByb21wdF90b2tlbnMiOjEwLCJ0b3RhbF90b2tlbnMiOjc1LCJjb21wbGV0aW9uX3Rva2VucyI6NjV9LCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZmluaXNoX3JlYXNvbiI6InN0b3AiLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJ0b29sX2NhbGxzIjpudWxsLCJjb250ZW50IjoiVGhlIGNhcGl0YWwgb2YgRnJhbmNlIGlzICoqUGFyaXMqKi5cblxuUGFyaXMgaXMga25vd24gZm9yIGl0cyBpY29uaWMgbGFuZG1hcmtzIHN1Y2ggYXMgdGhlIEVpZmZlbCBUb3dlciwgTm90cmUtRGFtZSBDYXRoZWRyYWwsIGFuZCB0aGUgTG91dnJlIE11c2V1bS4gSXQgaXMgYWxzbyBhIG1ham9yIGdsb2JhbCBjZW50ZXIgZm9yIGFydCwgZmFzaGlvbiwgZ2FzdHJvbm9teSwgYW5kIGN1bHR1cmUuXG5cbldvdWxkIHlvdSBsaWtlIHRvIGtub3cgbW9yZSBhYm91dCBQYXJpcyBvciBGcmFuY2U/IPCfmIoifX1dfQ==
-  recorded_at: Wed, 24 Sep 2025 14:53:48 GMT
-recorded_with: VCR 6.3.1
+      string: '{"id":"7d4b46b701de4957928b17182e8081b3","created":1775129118,"model":"mistral-small-latest","usage":{"prompt_tokens":22,"total_tokens":31,"completion_tokens":9,"prompt_tokens_details":{"cached_tokens":0}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
+        capital of France is **Paris**."}}]}'
+  recorded_at: Thu, 02 Apr 2026 11:25:18 GMT
+recorded_with: VCR 6.4.0

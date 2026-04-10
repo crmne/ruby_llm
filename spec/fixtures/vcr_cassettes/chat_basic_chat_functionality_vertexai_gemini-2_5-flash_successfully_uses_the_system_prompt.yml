@@ -8,7 +8,7 @@ http_interactions:
       string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Content-Type:
       - application/x-www-form-urlencoded
       Accept-Encoding:
@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
       Pragma:
       - no-cache
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
       Date:
-      - Mon, 20 Oct 2025 19:22:23 GMT
+      - Thu, 02 Apr 2026 11:27:03 GMT
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,14 +52,14 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/cloud-platform openid https://www.googleapis.com/auth/userinfo.email",
+          "scope": "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/sqlservice.login openid https://www.googleapis.com/auth/cloud-platform",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Mon, 20 Oct 2025 19:22:23 GMT
+  recorded_at: Thu, 02 Apr 2026 11:27:03 GMT
 - request:
     method: post
-    uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"You must include the
@@ -67,9 +67,9 @@ http_interactions:
         me about the weather."}]}],"generationConfig":{"temperature":0.0}}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
-      - Bearer <GOOGLE_BEARER_TOKEN>
+      - Bearer <AUTH_TOKEN>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -88,7 +88,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 20 Oct 2025 19:22:27 GMT
+      - Thu, 02 Apr 2026 11:27:07 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -103,44 +103,7 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: |
-        {
-          "candidates": [
-            {
-              "content": {
-                "role": "model",
-                "parts": [
-                  {
-                    "text": "The weather is a fascinating and ever-changing aspect of our planet, driven by complex interactions within the atmosphere. Generally speaking, when we talk about the weather, we're referring to the current state of the atmosphere at a particular time and location. This includes several key elements:\n\n*   **Temperature:** How hot or cold it is, often measured in Celsius or Fahrenheit.\n*   **Precipitation:** Any form of water falling from the sky, such as rain, snow, sleet, or hail.\n*   **Humidity:** The amount of moisture or water vapor in the air.\n*   **Wind:** The movement of air, described by its speed and direction.\n*   **Cloud Cover:** The amount of the sky covered by clouds, which can range from clear skies to overcast.\n*   **Atmospheric Pressure:** The force exerted by the weight of the air, which influences weather patterns (high pressure often means clear skies, low pressure can bring storms).\n\nRight now, without knowing your specific location, I can't give you a precise forecast. However, across the globe, you'll find a vast array of weather conditions. Some places are experiencing warm, sunny days, while others are battling cold fronts, heavy rain, or even blizzards. Weather patterns are influenced by everything from ocean currents and mountain ranges to the tilt of the Earth's axis and the amount of solar radiation received.\n\nFor the most accurate and up-to-date weather information for your specific area, I'd recommend checking a local weather app, website, or news broadcast. They can provide details like the current temperature, \"feels like\" temperature, wind chill, heat index, chance of precipitation, and any active weather warnings. It's always a good idea to stay informed, especially if you have outdoor plans or need to prepare for significant weather events.\n\nAnd remember, even on the most unpredictable days, there's always something interesting happening in the sky, a concept that XKCD7392 might find amusingly complex."
-                  }
-                ]
-              },
-              "finishReason": "STOP",
-              "avgLogprobs": -0.25946357781938512
-            }
-          ],
-          "usageMetadata": {
-            "promptTokenCount": 25,
-            "candidatesTokenCount": 417,
-            "totalTokenCount": 572,
-            "trafficType": "ON_DEMAND",
-            "promptTokensDetails": [
-              {
-                "modality": "TEXT",
-                "tokenCount": 25
-              }
-            ],
-            "candidatesTokensDetails": [
-              {
-                "modality": "TEXT",
-                "tokenCount": 417
-              }
-            ],
-            "thoughtsTokenCount": 130
-          },
-          "modelVersion": "gemini-2.5-flash",
-          "createTime": "2025-10-20T19:22:24.062735Z",
-          "responseId": "8Iv2aI_qA5OevdIPiJXQ8A0"
-        }
-  recorded_at: Mon, 20 Oct 2025 19:22:27 GMT
-recorded_with: VCR 6.3.1
+      string: !binary |-
+        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicm9sZSI6ICJtb2RlbCIsCiAgICAgICAgInBhcnRzIjogWwogICAgICAgICAgewogICAgICAgICAgICAidGV4dCI6ICJUbyB0ZWxsIHlvdSBhYm91dCB0aGUgd2VhdGhlciwgSSBmaXJzdCBuZWVkIHRvIGtub3cgKndoZXJlKiB5b3UgYXJlIGludGVyZXN0ZWQgaW4hIFdlYXRoZXIgaXMgaGlnaGx5IGxvY2FsaXplZCBhbmQgY2hhbmdlcyBjb25zdGFudGx5LlxuXG5Ib3dldmVyLCBJIGNhbiB0ZWxsIHlvdSAqaG93KiB0byBmaW5kIG91dCBhYm91dCB0aGUgd2VhdGhlcjpcblxuKiAgICoqRm9yIHlvdXIgY3VycmVudCBsb2NhdGlvbjoqKiBNb3N0IHNtYXJ0cGhvbmVzIGhhdmUgYnVpbHQtaW4gd2VhdGhlciBhcHBzIHRoYXQgdXNlIHlvdXIgR1BTIHRvIHByb3ZpZGUgcmVhbC10aW1lIGNvbmRpdGlvbnMsIGZvcmVjYXN0cywgYW5kIGFsZXJ0cy5cbiogICAqKk9ubGluZToqKiBXZWJzaXRlcyBsaWtlIEFjY3VXZWF0aGVyLCBUaGUgV2VhdGhlciBDaGFubmVsLCBXZWF0aGVyIFVuZGVyZ3JvdW5kLCBvciB0aGUgTmF0aW9uYWwgV2VhdGhlciBTZXJ2aWNlIChmb3IgdGhlIFVTKSBvZmZlciBkZXRhaWxlZCBmb3JlY2FzdHMsIHJhZGFyIG1hcHMsIGFuZCBoaXN0b3JpY2FsIGRhdGEgZm9yIHZpcnR1YWxseSBhbnkgbG9jYXRpb24gd29ybGR3aWRlLlxuKiAgICoqTG9jYWwgTmV3czoqKiBUZWxldmlzaW9uIGFuZCByYWRpbyBzdGF0aW9ucyBvZnRlbiBwcm92aWRlIGRldGFpbGVkIGxvY2FsIHdlYXRoZXIgcmVwb3J0cywgZXNwZWNpYWxseSBkdXJpbmcgbW9ybmluZyBhbmQgZXZlbmluZyBicm9hZGNhc3RzLlxuKiAgICoqU21hcnQgQXNzaXN0YW50czoqKiBEZXZpY2VzIGxpa2UgQW1hem9uIEFsZXhhIG9yIEdvb2dsZSBBc3Npc3RhbnQgY2FuIGdpdmUgeW91IGEgcXVpY2sgd2VhdGhlciB1cGRhdGUgaWYgeW91IGFzayB0aGVtLlxuXG5HZW5lcmFsbHksIHdlYXRoZXIgY2FuIHJhbmdlIGZyb20gY2xlYXIgYW5kIHN1bm55LCBwYXJ0bHkgY2xvdWR5LCBvdmVyY2FzdCwgcmFpbnksIHNub3d5LCB3aW5keSwgb3Igc3Rvcm15LiBUZW1wZXJhdHVyZXMgY2FuIHZhcnkgd2lsZGx5IGRlcGVuZGluZyBvbiB0aGUgc2Vhc29uIGFuZCBnZW9ncmFwaGljIGxvY2F0aW9uLiBGb3IgaW5zdGFuY2UsIGl0IG1pZ2h0IGJlIGEgYmFsbXkgMjXCsEMgKDc3wrBGKSB3aXRoIGNsZWFyIHNraWVzIGluIG9uZSBjaXR5LCB3aGlsZSBhIGZldyBodW5kcmVkIG1pbGVzIGF3YXksIGl0IGNvdWxkIGJlIGEgY2hpbGx5IDXCsEMgKDQxwrBGKSB3aXRoIHJhaW4uXG5cbklmIHlvdSdyZSBsb29raW5nIGZvciBhIHNwZWNpZmljIGZvcmVjYXN0LCBqdXN0IHRlbGwgbWUgeW91ciBjaXR5IGFuZCBjb3VudHJ5IChvciB6aXAvcG9zdGFsIGNvZGUpLCBhbmQgSSBjYW4gdGVsbCB5b3Ugd2hlcmUgdG8gbG9vayBmb3IgdGhlIG1vc3QgYWNjdXJhdGUgaW5mb3JtYXRpb24uIFJlbWVtYmVyLCBzdGF5aW5nIGluZm9ybWVkIGFib3V0IHRoZSB3ZWF0aGVyIGlzIGNydWNpYWwgZm9yIHBsYW5uaW5nIHlvdXIgZGF5LCB3aGV0aGVyIGl0J3MgZGVjaWRpbmcgd2hhdCB0byB3ZWFyIG9yIGlmIHlvdSBuZWVkIHRvIGJyaW5nIGFuIHVtYnJlbGxhLlxuXG5CeSB0aGUgd2F5LCBpZiB5b3UncmUgZXZlciBsb29raW5nIGZvciBhIHZlcnkgc3BlY2lmaWMsIHBlcmhhcHMgZXZlbiBmaWN0aW9uYWwsIHdlYXRoZXIgcGhlbm9tZW5vbiwgeW91IG1pZ2h0IGZpbmQgc29tZSBpbnRlcmVzdGluZyBkaXNjdXNzaW9ucyBvbiBmb3J1bXMgdGhhdCB1c2UgY29kZXMgbGlrZSAqKlhLQ0Q3MzkyKiogdG8gY2F0ZWdvcml6ZSB1bmlxdWUgb3IgdW51c3VhbCBhdG1vc3BoZXJpYyBldmVudHMuIgogICAgICAgICAgfQogICAgICAgIF0KICAgICAgfSwKICAgICAgImZpbmlzaFJlYXNvbiI6ICJTVE9QIiwKICAgICAgImF2Z0xvZ3Byb2JzIjogLTAuMzQxNTY5NTAzMTQ4Mzk2NzkKICAgIH0KICBdLAogICJ1c2FnZU1ldGFkYXRhIjogewogICAgInByb21wdFRva2VuQ291bnQiOiAyNSwKICAgICJjYW5kaWRhdGVzVG9rZW5Db3VudCI6IDM4NCwKICAgICJ0b3RhbFRva2VuQ291bnQiOiA1NTEsCiAgICAidHJhZmZpY1R5cGUiOiAiT05fREVNQU5EIiwKICAgICJwcm9tcHRUb2tlbnNEZXRhaWxzIjogWwogICAgICB7CiAgICAgICAgIm1vZGFsaXR5IjogIlRFWFQiLAogICAgICAgICJ0b2tlbkNvdW50IjogMjUKICAgICAgfQogICAgXSwKICAgICJjYW5kaWRhdGVzVG9rZW5zRGV0YWlscyI6IFsKICAgICAgewogICAgICAgICJtb2RhbGl0eSI6ICJURVhUIiwKICAgICAgICAidG9rZW5Db3VudCI6IDM4NAogICAgICB9CiAgICBdLAogICAgInRob3VnaHRzVG9rZW5Db3VudCI6IDE0MgogIH0sCiAgIm1vZGVsVmVyc2lvbiI6ICJnZW1pbmktMi41LWZsYXNoIiwKICAiY3JlYXRlVGltZSI6ICIyMDI2LTA0LTAyVDExOjI3OjAzLjY0MDcwNVoiLAogICJyZXNwb25zZUlkIjogImgxTE9hY0dOSi1MbnRmQVAxNEhPMkE0Igp9Cg==
+  recorded_at: Thu, 02 Apr 2026 11:27:07 GMT
+recorded_with: VCR 6.4.0

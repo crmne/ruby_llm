@@ -6,12 +6,12 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"model":"mistral-small-latest","messages":[{"role":"user","content":"Who
-        was Ruby''s creator?"}],"stream":false}'
+        is the creator of the programming language Ruby?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.1
       Authorization:
-      - Bearer <MISTRAL_API_KEY>
+      - Bearer <AUTH_TOKEN>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 24 Sep 2025 15:10:08 GMT
+      - Thu, 02 Apr 2026 11:25:19 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -32,75 +32,69 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '01997c46-51c5-7713-9614-0f144e2eade0'
+      - '019d4df0-c6bb-70c4-b1d0-e2aaa545df73'
       X-Kong-Request-Id:
-      - '01997c46-51c5-7713-9614-0f144e2eade0'
-      X-Envoy-Upstream-Service-Time:
-      - '1055'
+      - '019d4df0-c6bb-70c4-b1d0-e2aaa545df73'
       X-Ratelimit-Limit-Tokens-Minute:
-      - '500000'
+      - '600000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '499871'
-      X-Ratelimit-Limit-Tokens-Month:
-      - '1000000000'
-      X-Ratelimit-Remaining-Tokens-Month:
-      - '999967400'
+      - '599348'
       X-Ratelimit-Tokens-Query-Cost:
-      - '129'
+      - '108'
       X-Ratelimit-Limit-Req-Minute:
-      - '60'
+      - '360'
       X-Ratelimit-Remaining-Req-Minute:
-      - '59'
+      - '355'
+      X-Envoy-Upstream-Service-Time:
+      - '746'
+      Server:
+      - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '1056'
+      - '747'
       X-Kong-Proxy-Latency:
-      - '6'
+      - '7'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
       Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains
-      Server:
-      - cloudflare
+      - max-age=15552000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"d1d9172a234f41948f38c92798eec5a8","created":1758726607,"model":"mistral-small-latest","usage":{"prompt_tokens":9,"total_tokens":129,"completion_tokens":120},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"Ruby
-        was created by **Yukihiro \"Matz\" Matsumoto**, a Japanese programmer and
-        software engineer. He began developing Ruby in the 1990s, with the first public
-        release in 1995. Matsumoto designed Ruby to be a simple, elegant, and productive
-        programming language, emphasizing developer happiness and readability.\n\nRuby
-        gained widespread popularity, especially after the release of the **Ruby on
-        Rails** web framework in 2004, which further boosted its adoption in web development.\n\nWould
-        you like more details about Ruby''s history or features?"}}]}'
-  recorded_at: Wed, 24 Sep 2025 15:10:08 GMT
+      string: '{"id":"713702228ce04203b2fac1ef9188eae6","created":1775129118,"model":"mistral-small-latest","usage":{"prompt_tokens":25,"total_tokens":108,"completion_tokens":83,"prompt_tokens_details":{"cached_tokens":0}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
+        creator of the **Ruby** programming language is **Yukihiro \"Matz\" Matsumoto**.\n\nRuby
+        was first released in **1995** and is known for its simplicity, productivity,
+        and flexibility. Matz designed Ruby with the principle of **\"least surprise\"**,
+        aiming to make programming enjoyable and intuitive.\n\nWould you like to know
+        more about Ruby''s features or its history?"}}]}'
+  recorded_at: Thu, 02 Apr 2026 11:25:19 GMT
 - request:
     method: post
     uri: https://api.mistral.ai/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"mistral-small-latest","messages":[{"role":"user","content":"Who
-        was Ruby''s creator?"},{"role":"assistant","content":"Ruby was created by
-        **Yukihiro \"Matz\" Matsumoto**, a Japanese programmer and software engineer.
-        He began developing Ruby in the 1990s, with the first public release in 1995.
-        Matsumoto designed Ruby to be a simple, elegant, and productive programming
-        language, emphasizing developer happiness and readability.\n\nRuby gained
-        widespread popularity, especially after the release of the **Ruby on Rails**
-        web framework in 2004, which further boosted its adoption in web development.\n\nWould
-        you like more details about Ruby''s history or features?"},{"role":"user","content":"What
+        is the creator of the programming language Ruby?"},{"role":"assistant","content":"The
+        creator of the **Ruby** programming language is **Yukihiro \"Matz\" Matsumoto**.\n\nRuby
+        was first released in **1995** and is known for its simplicity, productivity,
+        and flexibility. Matz designed Ruby with the principle of **\"least surprise\"**,
+        aiming to make programming enjoyable and intuitive.\n\nWould you like to know
+        more about Ruby''s features or its history?"},{"role":"user","content":"What
         year did he create Ruby?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.1
       Authorization:
-      - Bearer <MISTRAL_API_KEY>
+      - Bearer <AUTH_TOKEN>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -113,7 +107,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 24 Sep 2025 15:10:10 GMT
+      - Thu, 02 Apr 2026 11:25:19 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -121,50 +115,46 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '01997c46-5650-7852-b90d-2472b4831b28'
+      - '019d4df0-c9e2-73b9-851b-20a03c26a2ca'
       X-Kong-Request-Id:
-      - '01997c46-5650-7852-b90d-2472b4831b28'
-      X-Envoy-Upstream-Service-Time:
-      - '1825'
+      - '019d4df0-c9e2-73b9-851b-20a03c26a2ca'
       X-Ratelimit-Limit-Tokens-Minute:
-      - '500000'
+      - '600000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '499648'
-      X-Ratelimit-Limit-Tokens-Month:
-      - '1000000000'
-      X-Ratelimit-Remaining-Tokens-Month:
-      - '999967177'
+      - '599187'
       X-Ratelimit-Tokens-Query-Cost:
-      - '223'
+      - '167'
       X-Ratelimit-Limit-Req-Minute:
-      - '60'
+      - '360'
       X-Ratelimit-Remaining-Req-Minute:
-      - '58'
+      - '354'
+      X-Envoy-Upstream-Service-Time:
+      - '480'
+      Server:
+      - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '1825'
+      - '481'
       X-Kong-Proxy-Latency:
-      - '6'
+      - '10'
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
       Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains
-      Server:
-      - cloudflare
+      - max-age=15552000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"b694e1c5da3b4ac592e3bb975a160b44","created":1758726608,"model":"mistral-small-latest","usage":{"prompt_tokens":138,"total_tokens":223,"completion_tokens":85},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"Yukihiro
-        \"Matz\" Matsumoto began developing **Ruby in 1993** and publicly released
-        the first version (**Ruby 0.95**) in **December 1995**.\n\nSo, while development
-        started in **1993**, Ruby was officially introduced to the world in **1995**.\n\nWould
-        you like details on Ruby''s early versions or its evolution?"}}]}'
-  recorded_at: Wed, 24 Sep 2025 15:10:10 GMT
-recorded_with: VCR 6.3.1
+      string: '{"id":"7c48d11dafb84e58928e3b7742f7bb1e","created":1775129119,"model":"mistral-small-latest","usage":{"prompt_tokens":117,"total_tokens":167,"completion_tokens":50,"prompt_tokens_details":{"cached_tokens":0}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"Yukihiro
+        \"Matz\" Matsumoto created **Ruby in 1995**.\n\nThe first public release,
+        **Ruby 0.95**, was announced on **December 21, 1995**."}}]}'
+  recorded_at: Thu, 02 Apr 2026 11:25:19 GMT
+recorded_with: VCR 6.4.0

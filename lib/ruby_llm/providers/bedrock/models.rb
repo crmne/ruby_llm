@@ -3,94 +3,139 @@
 module RubyLLM
   module Providers
     class Bedrock
-      # Models methods for the AWS Bedrock API implementation
+      # Models methods for AWS Bedrock.
       module Models
-        def list_models
-          mgmt_api_base = "https://bedrock.#{@config.bedrock_region}.amazonaws.com"
-          full_models_url = "#{mgmt_api_base}/#{models_url}"
-          signature = sign_request(full_models_url, method: :get)
-          response = @connection.get(full_models_url) do |req|
-            req.headers.merge! signature.headers
-          end
-
-          parse_list_models_response(response, slug, capabilities)
-        end
-
         module_function
 
-        def models_url
-          'foundation-models'
+        REGION_PREFIXES = %w[global us eu ap sa ca me af il].freeze
+
+        def models_api_base
+          "https://bedrock.#{bedrock_region}.amazonaws.com"
         end
 
-        def parse_list_models_response(response, slug, capabilities)
-          models = Array(response.body['modelSummaries'])
+        def models_url
+          '/foundation-models'
+        end
 
-          models.select { |m| m['modelId'].include?('claude') }.map do |model_data|
-            model_id = model_data['modelId']
-
-            Model::Info.new(
-              id: model_id_with_region(model_id, model_data),
-              name: model_data['modelName'] || capabilities.format_display_name(model_id),
-              provider: slug,
-              family: capabilities.model_family(model_id),
-              created_at: nil,
-              context_window: capabilities.context_window_for(model_id),
-              max_output_tokens: capabilities.max_tokens_for(model_id),
-              modalities: capabilities.modalities_for(model_id),
-              capabilities: capabilities.capabilities_for(model_id),
-              pricing: capabilities.pricing_for(model_id),
-              metadata: {
-                provider_name: model_data['providerName'],
-                inference_types: model_data['inferenceTypesSupported'] || [],
-                streaming_supported: model_data['responseStreamingSupported'] || false,
-                input_modalities: model_data['inputModalities'] || [],
-                output_modalities: model_data['outputModalities'] || []
-              }
-            )
+        def parse_list_models_response(response, slug, _capabilities)
+          Array(response.body['modelSummaries']).map do |model_data|
+            create_model_info(model_data, slug)
           end
         end
 
-        def create_model_info(model_data, slug, _capabilities)
-          model_id = model_data['modelId']
+        def create_model_info(model_data, slug, _capabilities = nil)
+          model_id = model_id_with_region(model_data['modelId'], model_data)
+          converse_data = model_data['converse'] || {}
 
           Model::Info.new(
-            id: model_id_with_region(model_id, model_data),
-            name: model_data['modelName'] || model_id,
+            id: model_id,
+            name: model_data['modelName'],
             provider: slug,
-            family: 'claude',
+            family: model_data['modelFamily'] || model_data['providerName']&.downcase,
             created_at: nil,
-            context_window: 200_000,
-            max_output_tokens: 4096,
-            modalities: { input: ['text'], output: ['text'] },
-            capabilities: [],
+            context_window: parse_context_window(model_data),
+            max_output_tokens: converse_data['maxTokensDefault'] || converse_data['maxTokensMaximum'],
+            modalities: {
+              input: normalize_modalities(model_data['inputModalities']),
+              output: normalize_modalities(model_data['outputModalities'])
+            },
+            capabilities: parse_capabilities(model_data),
             pricing: {},
-            metadata: {}
+            metadata: {
+              provider_name: model_data['providerName'],
+              model_arn: model_data['modelArn'],
+              inference_types: model_data['inferenceTypesSupported'],
+              converse: converse_data
+            }
           )
         end
 
         def model_id_with_region(model_id, model_data)
-          return model_id unless model_data['inferenceTypesSupported']&.include?('INFERENCE_PROFILE')
-          return model_id if model_data['inferenceTypesSupported']&.include?('ON_DEMAND')
-
-          desired_region_prefix = inference_profile_region_prefix
-
-          # Return unchanged if model already has the correct region prefix
-          return model_id if model_id.start_with?("#{desired_region_prefix}.")
-
-          # Remove any existing region prefix (e.g., "us.", "eu.", "ap.")
-          clean_model_id = model_id.sub(/^[a-z]{2}\./, '')
-
-          # Apply the desired region prefix
-          "#{desired_region_prefix}.#{clean_model_id}"
+          inference_types = Array(model_data['inferenceTypesSupported'])
+          normalize_inference_profile_id(model_id, inference_types, @config.bedrock_region)
         end
 
-        def inference_profile_region_prefix
-          # Extract region prefix from bedrock_region (e.g., "eu-west-3" -> "eu")
-          region = @config.bedrock_region.to_s
-          return 'us' if region.empty? # Default fallback
+        def normalize_inference_profile_id(model_id, inference_types, region)
+          return model_id unless inference_types.include?('INFERENCE_PROFILE')
+          return model_id if inference_types.include?('ON_DEMAND')
 
-          # Take first two characters as the region prefix
-          region[0, 2]
+          with_region_prefix(model_id, region)
+        end
+
+        def with_region_prefix(model_id, region)
+          prefix = region_prefix(region)
+
+          if region_prefixed?(model_id)
+            model_id.sub(/\A(?:#{REGION_PREFIXES.join('|')})\./, "#{prefix}.")
+          else
+            "#{prefix}.#{model_id}"
+          end
+        end
+
+        def region_prefix(region)
+          prefix = region.to_s.split('-').first
+          prefix = '' if prefix.nil?
+          prefix.empty? ? 'us' : prefix
+        end
+
+        def region_prefixed?(model_id)
+          model_id.match?(/\A(?:#{REGION_PREFIXES.join('|')})\./)
+        end
+
+        def normalize_modalities(modalities)
+          Array(modalities).map do |modality|
+            normalized = modality.to_s.downcase
+            case normalized
+            when 'embedding' then 'embeddings'
+            when 'speech' then 'audio'
+            else normalized
+            end
+          end
+        end
+
+        def parse_capabilities(model_data)
+          capabilities = []
+          capabilities << 'streaming' if model_data['responseStreamingSupported']
+
+          converse = model_data['converse'] || {}
+          capabilities << 'function_calling' if converse.is_a?(Hash)
+          capabilities << 'reasoning' if converse.dig('reasoningSupported', 'embedded')
+          capabilities << 'structured_output' if supports_structured_output?(model_data['modelId'])
+
+          capabilities
+        end
+
+        # Structured output supported on Claude 4.5+ and assumed for future major versions.
+        # Bedrock IDs look like: us.anthropic.claude-haiku-4-5-20251001-v1:0
+        # Must handle optional region prefix (us./eu./global.) and anthropic. prefix.
+        def supports_structured_output?(model_id)
+          return false unless model_id
+
+          normalized = model_id.sub(/\A(?:#{REGION_PREFIXES.join('|')})\./, '').delete_prefix('anthropic.')
+          match = normalized.match(/claude-(?:opus|sonnet|haiku)-(\d+)-(\d{1,2})(?:\b|-)/)
+          return false unless match
+
+          major = match[1].to_i
+          minor = match[2].to_i
+          major > 4 || (major == 4 && minor >= 5)
+        end
+
+        def reasoning_embedded?(model)
+          metadata = RubyLLM::Utils.deep_symbolize_keys(model.metadata || {})
+          converse = metadata[:converse] || {}
+          reasoning_supported = converse[:reasoningSupported] || {}
+          reasoning_supported[:embedded] || false
+        end
+
+        def parse_context_window(model_data)
+          value = model_data.dig('description', 'maxContextWindow')
+          return unless value.is_a?(String)
+
+          if value.match?(/\A\d+[kK]\z/)
+            value.to_i * 1000
+          elsif value.match?(/\A\d+\z/)
+            value.to_i
+          end
         end
       end
     end

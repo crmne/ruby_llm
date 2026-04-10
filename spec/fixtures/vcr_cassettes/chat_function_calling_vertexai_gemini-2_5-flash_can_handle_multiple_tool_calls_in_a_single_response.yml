@@ -8,7 +8,7 @@ http_interactions:
       string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Content-Type:
       - application/x-www-form-urlencoded
       Accept-Encoding:
@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Expires:
-      - Mon, 01 Jan 1990 00:00:00 GMT
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
       Pragma:
       - no-cache
+      Expires:
+      - Mon, 01 Jan 1990 00:00:00 GMT
       Date:
-      - Mon, 20 Oct 2025 19:23:03 GMT
+      - Thu, 02 Apr 2026 11:29:45 GMT
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,14 +52,14 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login",
+          "scope": "https://www.googleapis.com/auth/sqlservice.login openid https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/cloud-platform",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Mon, 20 Oct 2025 19:23:04 GMT
+  recorded_at: Thu, 02 Apr 2026 11:29:45 GMT
 - request:
     method: post
-    uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"You must call the dice_roll
@@ -68,9 +68,9 @@ http_interactions:
         a single six-sided die and returns the result"}]}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
-      - Bearer <GOOGLE_BEARER_TOKEN>
+      - Bearer <AUTH_TOKEN>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -89,7 +89,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 20 Oct 2025 19:23:04 GMT
+      - Thu, 02 Apr 2026 11:29:46 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -116,23 +116,23 @@ http_interactions:
                       "name": "dice_roll",
                       "args": {}
                     },
-                    "thoughtSignature": "CrcBAePx/14Wg9keB5qOz7NCZfi9WNb51I9u6X8uXgkleNPjG9uCDy8bEej0O67ErKXuvxqLNkR7/jFdVunjF5ItULGdDiza5bd/BOvP+mQG7Zid+AC402f/jaaFmxfoFuiTcLBsbUztQS1W95Ip138lJUp+i+1rngvjPoT/GjygB/IvyiHyahoETS43OYpGmfm/jGt8Ir8uPs//indylvPYbe+uqzpRfP0RGiuSOXCkX+KKnkGe/G9M"
+                    "thoughtSignature": "CqsBAY89a19ry/uYB+jmNNDfX7bUE9dW0fFcd3ryKvN/LAZ5QvWanAE8snxayjJXkuaRY1E5oDR0+5NGX2//N1n0LFjlo6XLQABaduyrnsVrjcMF3MPh6i6T3s7+ob0C1E7ESY29VtYexqh9+UDfmKi4Yvdzob5nTgNCrRwIzif8SnGKzP3e7wWXO25BfaH27A9pCZXQTCH0mq3LHX5Lii6icKWxcmfG51vFk4on"
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -2.5279855728149414
+              "avgLogprobs": -1.4918519655863445
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 41,
+            "promptTokenCount": 42,
             "candidatesTokenCount": 3,
-            "totalTokenCount": 83,
+            "totalTokenCount": 79,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 41
+                "tokenCount": 42
               }
             ],
             "candidatesTokensDetails": [
@@ -141,85 +141,28 @@ http_interactions:
                 "tokenCount": 3
               }
             ],
-            "thoughtsTokenCount": 39
+            "thoughtsTokenCount": 34
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2025-10-20T19:23:04.133189Z",
-          "responseId": "GIz2aMWQCO2IvdIP1ZTd-QU"
+          "createTime": "2026-04-02T11:29:45.888148Z",
+          "responseId": "KVPOadSaNvLivNkP8aXoyA4"
         }
-  recorded_at: Mon, 20 Oct 2025 19:23:04 GMT
+  recorded_at: Thu, 02 Apr 2026 11:29:46 GMT
 - request:
     method: post
-    uri: https://oauth2.googleapis.com/token
-    body:
-      encoding: ASCII-8BIT
-      string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
-    headers:
-      User-Agent:
-      - Faraday v2.14.0
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Expires:
-      - Mon, 01 Jan 1990 00:00:00 GMT
-      Date:
-      - Mon, 20 Oct 2025 19:23:04 GMT
-      Pragma:
-      - no-cache
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
-      Content-Type:
-      - application/json; charset=utf-8
-      Vary:
-      - Origin
-      - Referer
-      - X-Origin
-      Server:
-      - scaffolding on HTTPServer2
-      X-Xss-Protection:
-      - '0'
-      X-Frame-Options:
-      - SAMEORIGIN
-      X-Content-Type-Options:
-      - nosniff
-      Alt-Svc:
-      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
-      Transfer-Encoding:
-      - chunked
-    body:
-      encoding: ASCII-8BIT
-      string: |-
-        {
-          "access_token": "<GOOGLE_ACCESS_TOKEN>",
-          "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email openid",
-          "token_type": "Bearer",
-          "id_token": "<GOOGLE_ID_TOKEN>"
-        }
-  recorded_at: Mon, 20 Oct 2025 19:23:04 GMT
-- request:
-    method: post
-    uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"You must call the dice_roll
         tool exactly 3 times when asked to roll dice 3 times."}]},{"role":"user","parts":[{"text":"Roll
-        the dice 3 times"}]},{"role":"model","parts":[{"functionCall":{"name":"dice_roll","args":{}}}]},{"role":"user","parts":[{"functionResponse":{"name":"656bc2c7-bf2d-4c82-8147-c578a476ef0f","response":{"name":"656bc2c7-bf2d-4c82-8147-c578a476ef0f","content":[{"text":"{roll:
+        the dice 3 times"}]},{"role":"model","parts":[{"functionCall":{"name":"dice_roll","args":{}},"thoughtSignature":"CqsBAY89a19ry/uYB+jmNNDfX7bUE9dW0fFcd3ryKvN/LAZ5QvWanAE8snxayjJXkuaRY1E5oDR0+5NGX2//N1n0LFjlo6XLQABaduyrnsVrjcMF3MPh6i6T3s7+ob0C1E7ESY29VtYexqh9+UDfmKi4Yvdzob5nTgNCrRwIzif8SnGKzP3e7wWXO25BfaH27A9pCZXQTCH0mq3LHX5Lii6icKWxcmfG51vFk4on"}]},{"role":"function","parts":[{"functionResponse":{"name":"dice_roll","response":{"name":"dice_roll","content":[{"text":"{roll:
         1}"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"dice_roll","description":"Rolls
         a single six-sided die and returns the result"}]}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
-      - Bearer <GOOGLE_BEARER_TOKEN>
+      - Bearer <AUTH_TOKEN>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -238,7 +181,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 20 Oct 2025 19:23:05 GMT
+      - Thu, 02 Apr 2026 11:29:47 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -265,23 +208,23 @@ http_interactions:
                       "name": "dice_roll",
                       "args": {}
                     },
-                    "thoughtSignature": "CooBAePx/16Nb2dAov9YrSBiTEQyXvdBwQCbJuog+MzKozIwnR6utO7eNXBDjHiqoZ17nHn2ZY3HFRpGJb8kdDnWMCS3zdPqcTyDURs7uu3UMR79w1QIMUMjYBKj9UwWKHCemL8+iK5UXO/jkMsFVvR6Aamm8J7kLmmGd+5apxZJ3B3gLri83gpl8Lnz"
+                    "thoughtSignature": "Cl8Bjz1rX0yMlAX63mztRLwlBypQVIPsuEMoDdxefIfRbNBHouv02CBc1ZFHw7S5yb/GSA4v6XLQpnvE4rlE93OdvvHMd+EafVEnsXdniSLOHlggD10kkXFCOvYeDj5dKw=="
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.66570321718851722
+              "avgLogprobs": -0.75946839650472009
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 119,
+            "promptTokenCount": 94,
             "candidatesTokenCount": 3,
-            "totalTokenCount": 151,
+            "totalTokenCount": 113,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 119
+                "tokenCount": 94
               }
             ],
             "candidatesTokensDetails": [
@@ -290,86 +233,29 @@ http_interactions:
                 "tokenCount": 3
               }
             ],
-            "thoughtsTokenCount": 29
+            "thoughtsTokenCount": 16
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2025-10-20T19:23:04.796376Z",
-          "responseId": "GIz2aNjNMMC1xN8P9ePE-Qk"
+          "createTime": "2026-04-02T11:29:46.766371Z",
+          "responseId": "KlPOaaPjLojYvdIPyMqbCQ"
         }
-  recorded_at: Mon, 20 Oct 2025 19:23:05 GMT
+  recorded_at: Thu, 02 Apr 2026 11:29:47 GMT
 - request:
     method: post
-    uri: https://oauth2.googleapis.com/token
-    body:
-      encoding: ASCII-8BIT
-      string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
-    headers:
-      User-Agent:
-      - Faraday v2.14.0
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Date:
-      - Mon, 20 Oct 2025 19:23:05 GMT
-      Expires:
-      - Mon, 01 Jan 1990 00:00:00 GMT
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
-      Pragma:
-      - no-cache
-      Content-Type:
-      - application/json; charset=utf-8
-      Vary:
-      - Origin
-      - Referer
-      - X-Origin
-      Server:
-      - scaffolding on HTTPServer2
-      X-Xss-Protection:
-      - '0'
-      X-Frame-Options:
-      - SAMEORIGIN
-      X-Content-Type-Options:
-      - nosniff
-      Alt-Svc:
-      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
-      Transfer-Encoding:
-      - chunked
-    body:
-      encoding: ASCII-8BIT
-      string: |-
-        {
-          "access_token": "<GOOGLE_ACCESS_TOKEN>",
-          "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login",
-          "token_type": "Bearer",
-          "id_token": "<GOOGLE_ID_TOKEN>"
-        }
-  recorded_at: Mon, 20 Oct 2025 19:23:05 GMT
-- request:
-    method: post
-    uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"You must call the dice_roll
         tool exactly 3 times when asked to roll dice 3 times."}]},{"role":"user","parts":[{"text":"Roll
-        the dice 3 times"}]},{"role":"model","parts":[{"functionCall":{"name":"dice_roll","args":{}}}]},{"role":"user","parts":[{"functionResponse":{"name":"656bc2c7-bf2d-4c82-8147-c578a476ef0f","response":{"name":"656bc2c7-bf2d-4c82-8147-c578a476ef0f","content":[{"text":"{roll:
-        1}"}]}}}]},{"role":"model","parts":[{"functionCall":{"name":"dice_roll","args":{}}}]},{"role":"user","parts":[{"functionResponse":{"name":"65434e8e-62ac-4909-828a-6763b92bf7b4","response":{"name":"65434e8e-62ac-4909-828a-6763b92bf7b4","content":[{"text":"{roll:
+        the dice 3 times"}]},{"role":"model","parts":[{"functionCall":{"name":"dice_roll","args":{}},"thoughtSignature":"CqsBAY89a19ry/uYB+jmNNDfX7bUE9dW0fFcd3ryKvN/LAZ5QvWanAE8snxayjJXkuaRY1E5oDR0+5NGX2//N1n0LFjlo6XLQABaduyrnsVrjcMF3MPh6i6T3s7+ob0C1E7ESY29VtYexqh9+UDfmKi4Yvdzob5nTgNCrRwIzif8SnGKzP3e7wWXO25BfaH27A9pCZXQTCH0mq3LHX5Lii6icKWxcmfG51vFk4on"}]},{"role":"function","parts":[{"functionResponse":{"name":"dice_roll","response":{"name":"dice_roll","content":[{"text":"{roll:
+        1}"}]}}}]},{"role":"model","parts":[{"functionCall":{"name":"dice_roll","args":{}},"thoughtSignature":"Cl8Bjz1rX0yMlAX63mztRLwlBypQVIPsuEMoDdxefIfRbNBHouv02CBc1ZFHw7S5yb/GSA4v6XLQpnvE4rlE93OdvvHMd+EafVEnsXdniSLOHlggD10kkXFCOvYeDj5dKw=="}]},{"role":"function","parts":[{"functionResponse":{"name":"dice_roll","response":{"name":"dice_roll","content":[{"text":"{roll:
         2}"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"dice_roll","description":"Rolls
         a single six-sided die and returns the result"}]}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
-      - Bearer <GOOGLE_BEARER_TOKEN>
+      - Bearer <AUTH_TOKEN>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -388,7 +274,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 20 Oct 2025 19:23:06 GMT
+      - Thu, 02 Apr 2026 11:29:48 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -414,23 +300,24 @@ http_interactions:
                     "functionCall": {
                       "name": "dice_roll",
                       "args": {}
-                    }
+                    },
+                    "thoughtSignature": "Cl8Bjz1rX5VtdrK9DYysQEIElJ2e2b4tODuzJBLifE3KOgvM1W6CJPaY6gRQSi3cP9RvbUsFzJJ2rycpviXCJ0w7/2LtOHgdjr1zspM+zpMdnLnVFdYk36rhyslfZw5NVQ=="
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.14441438515981039
+              "avgLogprobs": -0.043365846077601113
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 199,
+            "promptTokenCount": 128,
             "candidatesTokenCount": 3,
-            "totalTokenCount": 202,
+            "totalTokenCount": 147,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 199
+                "tokenCount": 128
               }
             ],
             "candidatesTokensDetails": [
@@ -438,87 +325,31 @@ http_interactions:
                 "modality": "TEXT",
                 "tokenCount": 3
               }
-            ]
+            ],
+            "thoughtsTokenCount": 16
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2025-10-20T19:23:05.408277Z",
-          "responseId": "GYz2aNX1GI6Dxs0Pp8eymAU"
+          "createTime": "2026-04-02T11:29:47.776726Z",
+          "responseId": "K1POaZa0L9eFtfAP6dG9iQk"
         }
-  recorded_at: Mon, 20 Oct 2025 19:23:06 GMT
+  recorded_at: Thu, 02 Apr 2026 11:29:48 GMT
 - request:
     method: post
-    uri: https://oauth2.googleapis.com/token
-    body:
-      encoding: ASCII-8BIT
-      string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
-    headers:
-      User-Agent:
-      - Faraday v2.14.0
-      Content-Type:
-      - application/x-www-form-urlencoded
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Pragma:
-      - no-cache
-      Date:
-      - Mon, 20 Oct 2025 19:23:06 GMT
-      Expires:
-      - Mon, 01 Jan 1990 00:00:00 GMT
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
-      Content-Type:
-      - application/json; charset=utf-8
-      Vary:
-      - Origin
-      - Referer
-      - X-Origin
-      Server:
-      - scaffolding on HTTPServer2
-      X-Xss-Protection:
-      - '0'
-      X-Frame-Options:
-      - SAMEORIGIN
-      X-Content-Type-Options:
-      - nosniff
-      Alt-Svc:
-      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
-      Transfer-Encoding:
-      - chunked
-    body:
-      encoding: ASCII-8BIT
-      string: |-
-        {
-          "access_token": "<GOOGLE_ACCESS_TOKEN>",
-          "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/cloud-platform openid https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email",
-          "token_type": "Bearer",
-          "id_token": "<GOOGLE_ID_TOKEN>"
-        }
-  recorded_at: Mon, 20 Oct 2025 19:23:06 GMT
-- request:
-    method: post
-    uri: https://<GOOGLE_CLOUD_LOCATION>-aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"You must call the dice_roll
         tool exactly 3 times when asked to roll dice 3 times."}]},{"role":"user","parts":[{"text":"Roll
-        the dice 3 times"}]},{"role":"model","parts":[{"functionCall":{"name":"dice_roll","args":{}}}]},{"role":"user","parts":[{"functionResponse":{"name":"656bc2c7-bf2d-4c82-8147-c578a476ef0f","response":{"name":"656bc2c7-bf2d-4c82-8147-c578a476ef0f","content":[{"text":"{roll:
-        1}"}]}}}]},{"role":"model","parts":[{"functionCall":{"name":"dice_roll","args":{}}}]},{"role":"user","parts":[{"functionResponse":{"name":"65434e8e-62ac-4909-828a-6763b92bf7b4","response":{"name":"65434e8e-62ac-4909-828a-6763b92bf7b4","content":[{"text":"{roll:
-        2}"}]}}}]},{"role":"model","parts":[{"functionCall":{"name":"dice_roll","args":{}}}]},{"role":"user","parts":[{"functionResponse":{"name":"cbca3223-e265-4cd9-83be-81e44f292234","response":{"name":"cbca3223-e265-4cd9-83be-81e44f292234","content":[{"text":"{roll:
+        the dice 3 times"}]},{"role":"model","parts":[{"functionCall":{"name":"dice_roll","args":{}},"thoughtSignature":"CqsBAY89a19ry/uYB+jmNNDfX7bUE9dW0fFcd3ryKvN/LAZ5QvWanAE8snxayjJXkuaRY1E5oDR0+5NGX2//N1n0LFjlo6XLQABaduyrnsVrjcMF3MPh6i6T3s7+ob0C1E7ESY29VtYexqh9+UDfmKi4Yvdzob5nTgNCrRwIzif8SnGKzP3e7wWXO25BfaH27A9pCZXQTCH0mq3LHX5Lii6icKWxcmfG51vFk4on"}]},{"role":"function","parts":[{"functionResponse":{"name":"dice_roll","response":{"name":"dice_roll","content":[{"text":"{roll:
+        1}"}]}}}]},{"role":"model","parts":[{"functionCall":{"name":"dice_roll","args":{}},"thoughtSignature":"Cl8Bjz1rX0yMlAX63mztRLwlBypQVIPsuEMoDdxefIfRbNBHouv02CBc1ZFHw7S5yb/GSA4v6XLQpnvE4rlE93OdvvHMd+EafVEnsXdniSLOHlggD10kkXFCOvYeDj5dKw=="}]},{"role":"function","parts":[{"functionResponse":{"name":"dice_roll","response":{"name":"dice_roll","content":[{"text":"{roll:
+        2}"}]}}}]},{"role":"model","parts":[{"functionCall":{"name":"dice_roll","args":{}},"thoughtSignature":"Cl8Bjz1rX5VtdrK9DYysQEIElJ2e2b4tODuzJBLifE3KOgvM1W6CJPaY6gRQSi3cP9RvbUsFzJJ2rycpviXCJ0w7/2LtOHgdjr1zspM+zpMdnLnVFdYk36rhyslfZw5NVQ=="}]},{"role":"function","parts":[{"functionResponse":{"name":"dice_roll","response":{"name":"dice_roll","content":[{"text":"{roll:
         3}"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"dice_roll","description":"Rolls
         a single six-sided die and returns the result"}]}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.0
+      - Faraday v2.14.1
       Authorization:
-      - Bearer <GOOGLE_BEARER_TOKEN>
+      - Bearer <AUTH_TOKEN>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -537,7 +368,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 20 Oct 2025 19:23:06 GMT
+      - Thu, 02 Apr 2026 11:29:48 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -560,35 +391,35 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "I rolled the dice three times and got 1, 2, and 3."
+                    "text": "I rolled the dice 3 times. The results are 1, 2, and 3."
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.2694847848680284
+              "avgLogprobs": -0.24552054632277714
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 275,
-            "candidatesTokenCount": 18,
-            "totalTokenCount": 293,
+            "promptTokenCount": 162,
+            "candidatesTokenCount": 21,
+            "totalTokenCount": 183,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 275
+                "tokenCount": 162
               }
             ],
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 18
+                "tokenCount": 21
               }
             ]
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2025-10-20T19:23:06.644934Z",
-          "responseId": "Goz2aMauJ8CuvdIPy7_ioA4"
+          "createTime": "2026-04-02T11:29:48.353064Z",
+          "responseId": "LFPOaajGFfj12fMP37G9qQ0"
         }
-  recorded_at: Mon, 20 Oct 2025 19:23:06 GMT
-recorded_with: VCR 6.3.1
+  recorded_at: Thu, 02 Apr 2026 11:29:48 GMT
+recorded_with: VCR 6.4.0

@@ -31,6 +31,10 @@ RSpec.describe RubyLLM::Generators::InstallGenerator, :generator, type: :generat
         expect(File.exist?('app/models/message.rb')).to be true
         expect(File.exist?('app/models/model.rb')).to be true
         expect(File.exist?('app/models/tool_call.rb')).to be true
+        expect(File.exist?('app/agents/.gitkeep')).to be true
+        expect(File.exist?('app/tools/.gitkeep')).to be true
+        expect(File.exist?('app/schemas/.gitkeep')).to be true
+        expect(File.exist?('app/prompts/.gitkeep')).to be true
       end
     end
 
@@ -42,6 +46,27 @@ RSpec.describe RubyLLM::Generators::InstallGenerator, :generator, type: :generat
         expect(migrations.any? { |f| f.include?('create_tool_calls') }).to be true
         expect(migrations.any? { |f| f.include?('create_models') }).to be true
         expect(migrations.any? { |f| f.include?('add_references_to_chats_tool_calls_and_messages') }).to be true
+      end
+    end
+
+    it 'uses text for tool call thought signatures' do
+      within_test_app(app_path) do
+        migration = Dir.glob('db/migrate/*create_tool_calls.rb').first
+        expect(migration).to be_present
+
+        content = File.read(migration)
+        expect(content).to include('t.text :thought_signature')
+      end
+    end
+
+    it 'keeps create_models migration schema-only' do
+      within_test_app(app_path) do
+        migration = Dir.glob('db/migrate/*create_models.rb').first
+        expect(migration).to be_present
+
+        content = File.read(migration)
+        expect(content).not_to include('Loading models from models.json')
+        expect(content).not_to include('save_to_database')
       end
     end
 
@@ -79,8 +104,8 @@ RSpec.describe RubyLLM::Generators::InstallGenerator, :generator, type: :generat
           message = chat.messages.create!(role: :user, content: 'Test')
           exit(message.chat_id == chat.id ? 0 : 1)
         RUBY
-        result = system("bundle exec rails runner \"#{test_script.gsub('"', '\"')}\" 2>&1")
-        expect(result).to be true
+        success, output = run_rails_runner(test_script)
+        expect(success).to be(true), output
       end
     end
   end
@@ -162,8 +187,8 @@ RSpec.describe RubyLLM::Generators::InstallGenerator, :generator, type: :generat
           message = chat.llm_messages.create!(role: :user, content: 'Test')
           exit(message.llm_chat_id == chat.id ? 0 : 1)
         RUBY
-        result = system("bundle exec rails runner \"#{test_script.gsub('"', '\"')}\" 2>&1")
-        expect(result).to be true
+        success, output = run_rails_runner(test_script)
+        expect(success).to be(true), output
       end
     end
   end

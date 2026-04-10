@@ -1,0 +1,114 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-3-pro-preview:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"What''s the weather in
+        Berlin? (52.5200, 13.4050)"}]}],"generationConfig":{"thinkingConfig":{"includeThoughts":true,"thinkingLevel":"low"}},"tools":[{"functionDeclarations":[{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"OBJECT","properties":{"latitude":{"type":"STRING","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"STRING","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}]}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      X-Goog-Api-Key:
+      - "<GEMINI_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      X-Gemini-Service-Tier:
+      - standard
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Thu, 02 Apr 2026 12:14:50 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Server-Timing:
+      - gfet4t7; dur=4462
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicGFydHMiOiBbCiAgICAgICAgICB7CiAgICAgICAgICAgICJ0ZXh0IjogIioqTXkgVGhvdWdodCBQcm9jZXNzOiBXZWF0aGVyIGluIEJlcmxpbioqXG5cbk9rYXksIHRoZSB1c2VyIHdhbnRzIHRoZSBjdXJyZW50IHdlYXRoZXIgaW4gQmVybGluIGFuZCBoYXMgaGVscGZ1bGx5IHByb3ZpZGVkIGNvb3JkaW5hdGVzLiBNeSBtaW5kIGltbWVkaWF0ZWx5IGp1bXBzIHRvIHVzaW5nIHRoZSBgZGVmYXVsdF9hcGk6d2VhdGhlcmAgdG9vbCDigJMgdGhhdCdzIHRoZSBvYnZpb3VzIGNob2ljZS4gTm93LCBJIG5lZWQgdG8gYnJlYWsgZG93biB0aGUgcmVxdWVzdC4gSSd2ZSBnb3QgdGhlIGxhdGl0dWRlLCA1Mi41MjAwLCBhbmQgdGhlIGxvbmdpdHVkZSwgMTMuNDA1MC4gVGltZSB0byBwdWxsIHRob3NlIG91dCBhbmQgZ2V0IHRoZW0gZm9ybWF0dGVkIGNvcnJlY3RseSBmb3IgdGhlIHRvb2wuIExldCdzIHNlZS4uLiBJJ2xsIG5lZWQgdG8gY3JlYXRlIHRoZSBwcm9wZXIgSlNPTi4gU28sIEkgaGF2ZTogYFwibGF0aXR1ZGVcIjogXCI1Mi41MjAwXCJgIGFuZCBgXCJsb25naXR1ZGVcIjogXCIxMy40MDUwXCJgLiBQZXJmZWN0LiBOb3csIEkgY2FuIGV4ZWN1dGUgdGhlIHRvb2wgY2FsbCB3aXRoIHRoZXNlIHBhcmFtZXRlcnMgYW5kIGdldCB0aGUgd2VhdGhlciBpbmZvcm1hdGlvbi4gVGhhdCBzaG91bGQgYmUgYSBxdWljayBhbmQgZWZmaWNpZW50IHNvbHV0aW9uIGZvciB0aGlzIHJlcXVlc3QuXG5cblxuIiwKICAgICAgICAgICAgInRob3VnaHQiOiB0cnVlCiAgICAgICAgICB9LAogICAgICAgICAgewogICAgICAgICAgICAiZnVuY3Rpb25DYWxsIjogewogICAgICAgICAgICAgICJuYW1lIjogIndlYXRoZXIiLAogICAgICAgICAgICAgICJhcmdzIjogewogICAgICAgICAgICAgICAgImxhdGl0dWRlIjogIjUyLjUyMDAiLAogICAgICAgICAgICAgICAgImxvbmdpdHVkZSI6ICIxMy40MDUwIgogICAgICAgICAgICAgIH0sCiAgICAgICAgICAgICAgImlkIjogImhmZ290MXp5IgogICAgICAgICAgICB9LAogICAgICAgICAgICAidGhvdWdodFNpZ25hdHVyZSI6ICJFb01FQ29BRUFiNCs5dnRWZUFaYmxVOUpPRTd5emJKZ3psVkY0T29uVjQ1aVgydGJEVGt2OXhzcWloTVdaVzYvSU16cll4eklESmFscUIra21SL1J0V3pMaW1VM2pLWU9yNDZNU2VibzRWQ0J4SEp2a1ZFT05Fa2hmdlhCbW5xQWJ0V0Zzd3F3RlZiblJNSURKQkJNVnZBY1ZZWVJ4THdtTHVWTXhyd1RZZzBkZUx0N2w0QllpamV4d0lxaTg5VEtaTmR3b2h5eHBYWHZKVmdyNUg4aTNiNGcrazJiNlI2cFZLSmtFS0pPMnFneVdTQy9KZElNQzBTUmtTenFOV0U0dzR5dkJoK3ZyRk94cTBEZVM0dkEwekM5djh6YXVwcTk5MFRXVWhnS3lQeE9LQUR1RjlNYTlURnRpY3k4ajI4c0VGMzR5N3NoUGc3WThTcDlqTVhCQTU4Y013RElNZGZCUW10QkVuY3MzOHVUMGgrNU9DRHkvSnFuT3lSTS9QYVU5ZlNXUHhaWUJrYS9BUFlnSTJEVjlrNTlkMmNpSis3cVUzVEk3aU8zM1BzQ1NaaEw4eUhvYkpFT3RMYVZNNUw3blpKeXYxVHBVdlBLeDRET0ZVOHYxcE5Zb2l1d2hrVmE2a1UrNlpPVTVZZTVuNG1XOVpPbU9Od1VGYUVCOGhTd3BEV1NLZDV2QThraURpL0JBZlc5a0xuOG5vaU1pdk04bEJtZzkydlhrU3JNcGtiaEJ6SUszMVpYNmIwc1JzR09BN0xsZHNiditZbUxVaTBsYXl4dTVGQTVIN3ArTDZ3aVZ2dCtiNTNYOVFYTjdJQ0lqZnZWV01OY3VwUTNGbnppMWUwMkNCVitkazhhNzNYVVNuY1hyWEFKNFpkS2VVSjQ2QU1ZSzJFbjlEdnBPZjJueHVBPSIKICAgICAgICAgIH0KICAgICAgICBdLAogICAgICAgICJyb2xlIjogIm1vZGVsIgogICAgICB9LAogICAgICAiZmluaXNoUmVhc29uIjogIlNUT1AiLAogICAgICAiaW5kZXgiOiAwLAogICAgICAiZmluaXNoTWVzc2FnZSI6ICJNb2RlbCBnZW5lcmF0ZWQgZnVuY3Rpb24gY2FsbChzKS4iCiAgICB9CiAgXSwKICAidXNhZ2VNZXRhZGF0YSI6IHsKICAgICJwcm9tcHRUb2tlbkNvdW50IjogMTIwLAogICAgImNhbmRpZGF0ZXNUb2tlbkNvdW50IjogMzIsCiAgICAidG90YWxUb2tlbkNvdW50IjogMzEwLAogICAgInByb21wdFRva2Vuc0RldGFpbHMiOiBbCiAgICAgIHsKICAgICAgICAibW9kYWxpdHkiOiAiVEVYVCIsCiAgICAgICAgInRva2VuQ291bnQiOiAxMjAKICAgICAgfQogICAgXSwKICAgICJ0aG91Z2h0c1Rva2VuQ291bnQiOiAxNTgKICB9LAogICJtb2RlbFZlcnNpb24iOiAiZ2VtaW5pLTMuMS1wcm8tcHJldmlldyIsCiAgInJlc3BvbnNlSWQiOiAidWwzT2FaeXZCYmlqdmRJUHgtckRrQUUiCn0K
+  recorded_at: Thu, 02 Apr 2026 12:14:50 GMT
+- request:
+    method: post
+    uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-3-pro-preview:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"What''s the weather in
+        Berlin? (52.5200, 13.4050)"}]},{"role":"model","parts":[{"functionCall":{"name":"weather","args":{"latitude":"52.5200","longitude":"13.4050"}},"thoughtSignature":"EoMECoAEAb4+9vtVeAZblU9JOE7yzbJgzlVF4OonV45iX2tbDTkv9xsqihMWZW6/IMzrYxzIDJalqB+kmR/RtWzLimU3jKYOr46MSebo4VCBxHJvkVEONEkhfvXBmnqAbtWFswqwFVbnRMIDJBBMVvAcVYYRxLwmLuVMxrwTYg0deLt7l4BYijexwIqi89TKZNdwohyxpXXvJVgr5H8i3b4g+k2b6R6pVKJkEKJO2qgyWSC/JdIMC0SRkSzqNWE4w4yvBh+vrFOxq0DeS4vA0zC9v8zaupq990TWUhgKyPxOKADuF9Ma9TFticy8j28sEF34y7shPg7Y8Sp9jMXBA58cMwDIMdfBQmtBEncs38uT0h+5OCDy/JqnOyRM/PaU9fSWPxZYBka/APYgI2DV9k59d2ciJ+7qU3TI7iO33PsCSZhL8yHobJEOtLaVM5L7nZJyv1TpUvPKx4DOFU8v1pNYoiuwhkVa6kU+6ZOU5Ye5n4mW9ZOmONwUFaEB8hSwpDWSKd5vA8kiDi/BAfW9kLn8noiMivM8lBmg92vXkSrMpkbhBzIK31ZX6b0sRsGOA7Lldsbv+YmLUi0layxu5FA5H7p+L6wiVvt+b53X9QXN7ICIjfvVWMNcupQ3Fnzi1e02CBV+dk8a73XUSncXrXAJ4ZdKeUJ46AMYK2En9DvpOf2nxuA="}]},{"role":"function","parts":[{"functionResponse":{"name":"weather","response":{"name":"weather","content":[{"text":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}}}]}],"generationConfig":{"thinkingConfig":{"includeThoughts":true,"thinkingLevel":"low"}},"tools":[{"functionDeclarations":[{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"OBJECT","properties":{"latitude":{"type":"STRING","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"STRING","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}]}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      X-Goog-Api-Key:
+      - "<GEMINI_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      X-Gemini-Service-Tier:
+      - standard
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Thu, 02 Apr 2026 12:14:53 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Server-Timing:
+      - gfet4t7; dur=3658
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicGFydHMiOiBbCiAgICAgICAgICB7CiAgICAgICAgICAgICJ0ZXh0IjogIkhlcmUncyBteSB0aG91Z2h0IHByb2Nlc3MsIGRpc3RpbGxlZDpcblxuKipXZWF0aGVyIERhdGEgUHJvY2Vzc2luZyAtIEJlcmxpbioqXG5cbk9rYXksIHNvIEkndmUgcmVjZWl2ZWQgc29tZSBkYXRhIGZyb20gdGhlIHdlYXRoZXIgQVBJIOKAkyBsb29rcyBsaWtlIGl0J3MgMTXCsEMgYW5kIHRoZSB3aW5kIGlzIGJsb3dpbmcgYXQgMTAga20vaCBpbiBCZXJsaW4uIE5vIHJlYWwgc3VycHJpc2VzIHRoZXJlLCB0aGUgQVBJIHNlZW1zIHRvIGJlIGRvaW5nIGl0cyBqb2IgY29ycmVjdGx5LiBNeSBuZXh0IGFjdGlvbiBpcyBzdHJhaWdodGZvcndhcmQ6IEkgbmVlZCB0byB1c2UgdGhpcyBpbmZvcm1hdGlvbiB0byBjb25jaXNlbHkgY29tbXVuaWNhdGUgdGhlIGN1cnJlbnQgd2VhdGhlciBjb25kaXRpb25zIGZvciBCZXJsaW4gdG8gdGhlIHVzZXIuIEVzc2VudGlhbGx5LCB0cmFuc2xhdGUgdGhpcyByYXcgZGF0YSBpbnRvIGh1bWFuLXJlYWRhYmxlIGluZm9ybWF0aW9uLiBHb3QgaXQuIE5vdyB0byBmb3JtdWxhdGUgdGhlIHByZWNpc2UgcGhyYXNpbmfigKZcblxuXG4iLAogICAgICAgICAgICAidGhvdWdodCI6IHRydWUKICAgICAgICAgIH0sCiAgICAgICAgICB7CiAgICAgICAgICAgICJ0ZXh0IjogIlRoZSBjdXJyZW50IHdlYXRoZXIgaW4gQmVybGluIGlzIDE1wrBDIHdpdGggYSB3aW5kIHNwZWVkIG9mIDEwIGttL2guIiwKICAgICAgICAgICAgInRob3VnaHRTaWduYXR1cmUiOiAiRXBRQ0NwRUNBYjQrOXZzbWJsNThhWEd1YmlDNVBGMklvcXU2a2lmd1ZMVmhlMGRxbGhScHplUkh2ekgvQ1greE5vbVVSK1RSamJJMC9BVkM1a2VpeGFZNms1NlkxWG5VVnFNemFtZlQyV1pUMjRHU0ZTMVR6V3NaVXo2OHpSZmU1T1VoUVJxZW5oMzVqVm1wM3UzVVZCN1ZxbXFCaUp5RXc5bEtzVGs4MHNHc1pwaGJzeFlXRmo5MFNkdCt3WmNDTVdYYm5laGp2bWY1WmVaUVRIQVg3OGpySmxjUDMyYi9UWjdjZkorYTZCSytMZjgvV0xraDhadUdyMkt4QUtQZ1RrS3RQbkhCTk1jdXczd3lzSkJaYm11NkRQUnlycitOWGhRVkIvWFUwNC94Z1h5MGRkMWhaSldMUGh6MGNUOUwrTzcrbk1GY0N0WHFzT2RQMzBqZm5rVlR5ZlJGY2txVVZ3NlBaNXhlckpsbDJzWXYwc0ZtIgogICAgICAgICAgfQogICAgICAgIF0sCiAgICAgICAgInJvbGUiOiAibW9kZWwiCiAgICAgIH0sCiAgICAgICJmaW5pc2hSZWFzb24iOiAiU1RPUCIsCiAgICAgICJpbmRleCI6IDAKICAgIH0KICBdLAogICJ1c2FnZU1ldGFkYXRhIjogewogICAgInByb21wdFRva2VuQ291bnQiOiAzNjUsCiAgICAiY2FuZGlkYXRlc1Rva2VuQ291bnQiOiAyMywKICAgICJ0b3RhbFRva2VuQ291bnQiOiA0NDUsCiAgICAicHJvbXB0VG9rZW5zRGV0YWlscyI6IFsKICAgICAgewogICAgICAgICJtb2RhbGl0eSI6ICJURVhUIiwKICAgICAgICAidG9rZW5Db3VudCI6IDM2NQogICAgICB9CiAgICBdLAogICAgInRob3VnaHRzVG9rZW5Db3VudCI6IDU3CiAgfSwKICAibW9kZWxWZXJzaW9uIjogImdlbWluaS0zLjEtcHJvLXByZXZpZXciLAogICJyZXNwb25zZUlkIjogInZWM09hY3VSTXVpX25zRVA2T2l3QVEiCn0K
+  recorded_at: Thu, 02 Apr 2026 12:14:53 GMT
+recorded_with: VCR 6.4.0

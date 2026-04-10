@@ -8,7 +8,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.1
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -26,42 +26,40 @@ http_interactions:
       - GitHub.com
       Content-Type:
       - text/plain; charset=utf-8
-      X-Origin-Cache:
-      - HIT
       Last-Modified:
-      - Mon, 22 Sep 2025 10:00:17 GMT
+      - Wed, 01 Apr 2026 06:42:59 GMT
       Access-Control-Allow-Origin:
       - "*"
       Etag:
-      - W/"68d11e31-9c6"
+      - W/"69ccbe73-9c6"
       Expires:
-      - Wed, 24 Sep 2025 07:22:10 GMT
+      - Thu, 02 Apr 2026 11:33:43 GMT
       Cache-Control:
       - max-age=600
       X-Proxy-Cache:
       - MISS
       X-Github-Request-Id:
-      - B734:1C7402:3A47B42:3AB5F7B:68D399CA
+      - 7CD0:3B9ECA:F87895:FB1241:69CE51BF
       Accept-Ranges:
       - bytes
+      Age:
+      - '0'
       Date:
-      - Wed, 24 Sep 2025 14:39:07 GMT
+      - Thu, 02 Apr 2026 11:23:43 GMT
       Via:
       - 1.1 varnish
-      Age:
-      - '265'
       X-Served-By:
-      - cache-fra-etou8220107-FRA
+      - cache-ber1080049-BER
       X-Cache:
-      - HIT
+      - MISS
       X-Cache-Hits:
-      - '1'
+      - '0'
       X-Timer:
-      - S1758724748.874973,VS0,VE4
+      - S1775129024.815136,VS0,VE114
       Vary:
       - Accept-Encoding
       X-Fastly-Request-Id:
-      - 7149d522fa1e22b687c7a841206b7d67e55685e1
+      - f67770a8f36df75699195bc832fa6cc22e8ff950
     body:
       encoding: ASCII-8BIT
       string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
@@ -97,7 +95,7 @@ http_interactions:
         \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
         WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
         FOR A PARTICULAR\n     PURPOSE.\n"
-  recorded_at: Wed, 24 Sep 2025 14:39:07 GMT
+  recorded_at: Thu, 02 Apr 2026 11:23:43 GMT
 - request:
     method: post
     uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
@@ -139,7 +137,7 @@ http_interactions:
         MERCHANTABILITY AND FITNESS FOR A PARTICULAR\n     PURPOSE.\n</file>"}]}],"generationConfig":{}}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.1
       X-Goog-Api-Key:
       - "<GEMINI_API_KEY>"
       Content-Type:
@@ -153,6 +151,8 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      X-Gemini-Service-Tier:
+      - standard
       Content-Type:
       - application/json; charset=UTF-8
       Vary:
@@ -160,7 +160,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 24 Sep 2025 14:39:19 GMT
+      - Thu, 02 Apr 2026 11:23:47 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -170,7 +170,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=11163
+      - gfet4t7; dur=3040
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -184,7 +184,7 @@ http_interactions:
               "content": {
                 "parts": [
                   {
-                    "text": "This file named `license.txt` contains the **software license for Ruby**.\n\nHere's a summary of its contents:\n\n*   It declares Ruby as **copyrighted free software by Yukihiro Matsumoto (matz)**.\n*   It states that users can redistribute and/or modify Ruby under either the terms of the **2-clause BSDL** (Berkeley Software Distribution License) or the **specific conditions** detailed within this file.\n\nThe detailed conditions cover:\n\n1.  **Verbatim Copies:** Allowing the distribution of source form verbatim copies, provided copyright notices and disclaimers are duplicated.\n2.  **Modifications:** Stipulating that modifications must be placed in the Public Domain, made Freely Available, used only internally, given non-standard names for binaries, or have other distribution arrangements with the author.\n3.  **Object Code/Binary Distribution:** Requiring either instructions on where to get the original source, accompanying the distribution with machine-readable source, giving non-standard binaries non-standard names, or making other arrangements with the author.\n4.  **Incorporation into Other Software:** Allows modifying and including parts of Ruby into other software (even commercial), but notes that some files in the distribution are not under these terms and refers to a `LEGAL` file for their conditions.\n5.  **Scripts and Library Files:** States that scripts and library files used with or produced by the software do not automatically fall under Ruby's copyright; they belong to whoever generated them and can be sold commercially or aggregated with Ruby.\n6.  **Disclaimer of Warranty:** Explicitly states that the software is provided \"AS IS\" and without any express or implied warranties, including merchantability or fitness for a particular purpose."
+                    "text": "This file is a **software license agreement for Ruby**, authored by Yukihiro Matsumoto.\n\nIt states that Ruby is copyrighted free software and can be redistributed and modified under either:\n\n1.  **The terms of the 2-clause BSDL** (BSD License).\n2.  **A custom set of conditions** outlined in the document, which include:\n    *   Permission to make and give away verbatim copies.\n    *   Conditions for modifying the software (e.g., placing modifications in the public domain, using internally, giving non-standard names, or making other arrangements with the author).\n    *   Conditions for distributing the software in object code or binary form (e.g., providing instructions for obtaining the source, accompanying with source, or giving non-standard names).\n    *   Permission to include parts of the software in other software, but notes that some files in the distribution may have different terms (refer to `LEGAL` file).\n    *   Generated or input scripts/library files are owned by their generator and can be sold commercially.\n    *   A standard disclaimer that the software is provided \"AS IS\" without any express or implied warranties."
                   }
                 ],
                 "role": "model"
@@ -195,18 +195,18 @@ http_interactions:
           ],
           "usageMetadata": {
             "promptTokenCount": 568,
-            "candidatesTokenCount": 360,
-            "totalTokenCount": 1767,
+            "candidatesTokenCount": 244,
+            "totalTokenCount": 1114,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
                 "tokenCount": 568
               }
             ],
-            "thoughtsTokenCount": 839
+            "thoughtsTokenCount": 302
           },
           "modelVersion": "gemini-2.5-flash",
-          "responseId": "lwLUaLrwBPavnsEP3O63gAc"
+          "responseId": "wFHOabevAt6UxN8P-8uTwQE"
         }
-  recorded_at: Wed, 24 Sep 2025 14:39:19 GMT
-recorded_with: VCR 6.3.1
+  recorded_at: Thu, 02 Apr 2026 11:23:47 GMT
+recorded_with: VCR 6.4.0

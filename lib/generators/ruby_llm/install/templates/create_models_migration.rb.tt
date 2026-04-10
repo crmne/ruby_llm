@@ -1,4 +1,4 @@
-class Create<%= model_model_name.gsub('::', '').pluralize %> < ActiveRecord::Migration<%= migration_version %>
+class <%= create_migration_class_name(model_table_name) %> < ActiveRecord::Migration<%= migration_version %>
   def change
     create_table :<%= model_table_name %> do |t|
       t.string :model_id, null: false
@@ -14,6 +14,11 @@ class Create<%= model_model_name.gsub('::', '').pluralize %> < ActiveRecord::Mig
       t.jsonb :capabilities, default: []
       t.jsonb :pricing, default: {}
       t.jsonb :metadata, default: {}
+<% elsif mysql? %>
+      t.json :modalities
+      t.json :capabilities
+      t.json :pricing
+      t.json :metadata
 <% else %>
       t.json :modalities, default: {}
       t.json :capabilities, default: []
@@ -22,19 +27,13 @@ class Create<%= model_model_name.gsub('::', '').pluralize %> < ActiveRecord::Mig
 <% end %>
       t.timestamps
 
-      t.index [:provider, :model_id], unique: true
+      t.index [ :provider, :model_id ], unique: true
       t.index :provider
       t.index :family
-<% if postgresql? %>
+<% if postgresql? -%>
       t.index :capabilities, using: :gin
       t.index :modalities, using: :gin
-<% end %>
-    end
-
-    # Load models from JSON
-    say_with_time "Loading models from models.json" do
-      RubyLLM.models.load_from_json!
-      <%= model_model_name %>.save_to_database
+<% end -%>
     end
   end
 end

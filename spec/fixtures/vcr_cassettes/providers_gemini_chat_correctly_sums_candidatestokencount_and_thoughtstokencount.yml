@@ -9,7 +9,7 @@ http_interactions:
         by step."}]}],"generationConfig":{}}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.1
       X-Goog-Api-Key:
       - "<GEMINI_API_KEY>"
       Content-Type:
@@ -23,6 +23,8 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      X-Gemini-Service-Tier:
+      - standard
       Content-Type:
       - application/json; charset=UTF-8
       Vary:
@@ -30,7 +32,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 24 Sep 2025 15:06:28 GMT
+      - Thu, 02 Apr 2026 11:22:50 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -40,7 +42,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=9177
+      - gfet4t7; dur=1613
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -54,7 +56,7 @@ http_interactions:
               "content": {
                 "parts": [
                   {
-                    "text": "Okay, let's think step by step:\n\n1.  **Start with the first number:** You have 2 of something (imagine two apples).\n2.  **Add the second number:** You are adding another 2 of that same thing (imagine two more apples).\n3.  **Combine them:** Put all the apples together.\n4.  **Count the total:** If you count all the apples you have now (the first two plus the second two), you get 1, 2, 3, 4.\n\nSo, 2 + 2 = **4**."
+                    "text": "Let's break it down:\n\n1.  We have the number 2.\n2.  We are adding another 2 to it.\n3.  If you count them together:\n    *   Start with 2.\n    *   Count one more: 3.\n    *   Count one more: 4.\n\nSo, 2 + 2 = **4**."
                   }
                 ],
                 "role": "model"
@@ -65,18 +67,18 @@ http_interactions:
           ],
           "usageMetadata": {
             "promptTokenCount": 13,
-            "candidatesTokenCount": 125,
-            "totalTokenCount": 600,
+            "candidatesTokenCount": 84,
+            "totalTokenCount": 280,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
                 "tokenCount": 13
               }
             ],
-            "thoughtsTokenCount": 462
+            "thoughtsTokenCount": 183
           },
           "modelVersion": "gemini-2.5-flash",
-          "responseId": "9AjUaMKlH_uzkdUPzp2MiAc"
+          "responseId": "iFHOabawKZjo7M8PlqapsAQ"
         }
-  recorded_at: Wed, 24 Sep 2025 15:06:28 GMT
-recorded_with: VCR 6.3.1
+  recorded_at: Thu, 02 Apr 2026 11:22:50 GMT
+recorded_with: VCR 6.4.0

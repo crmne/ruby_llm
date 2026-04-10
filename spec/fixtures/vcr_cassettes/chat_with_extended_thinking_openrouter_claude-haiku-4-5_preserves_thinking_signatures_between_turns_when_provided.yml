@@ -1,0 +1,106 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://openrouter.ai/api/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"anthropic/claude-haiku-4.5","messages":[{"role":"user","content":"What
+        is 5 + 3?"}],"stream":false,"reasoning":{"effort":"medium"}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 02 Apr 2026 11:35:03 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      Permissions-Policy:
+      - payment=(self "https://checkout.stripe.com" "https://connect-js.stripe.com"
+        "https://js.stripe.com" "https://*.js.stripe.com" "https://hooks.stripe.com")
+      Referrer-Policy:
+      - no-referrer, strict-origin-when-cross-origin
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: "\n         \n\n         \n\n         \n{\"id\":\"gen-1775129701-j53aCVzaHzxxMxKsduvX\",\"object\":\"chat.completion\",\"created\":1775129701,\"model\":\"anthropic/claude-4.5-haiku-20251001\",\"provider\":\"Amazon
+        Bedrock\",\"system_fingerprint\":null,\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"end_turn\",\"message\":{\"role\":\"assistant\",\"content\":\"5
+        + 3 = 8\",\"refusal\":null,\"reasoning\":\"This is a simple arithmetic question.
+        5 + 3 = 8.\",\"reasoning_details\":[{\"type\":\"reasoning.text\",\"text\":\"This
+        is a simple arithmetic question. 5 + 3 = 8.\",\"format\":\"anthropic-claude-v1\",\"index\":0,\"signature\":\"EtoBCkgIDBABGAIqQLKq2DhhKi8eMlaNPnFY0FXQcM1jQ2R6JIhLByE96G74keoXXgYpOWmtKeaWTWiEvboqUadBGHCDfeOqTFOOwmISDAeS2oCZZorSfeWMzRoM+4uEXAMQcBdfHnOcIjBTxYo2wBfD9XWyrpw6b2gfxSP0Sv9doYnm5p/kJN3OVcL745sfflbSAePRon0E6zoqQOkSkOfBip2N2c1ELFjDkTLFTGtuZ9itNR/rPZf9p9+LFBopRxsqBSds3zlFcfV8DMLa0tuSkA8wuExgJnfq7XEYAQ==\"}]}}],\"usage\":{\"prompt_tokens\":45,\"completion_tokens\":38,\"total_tokens\":83,\"cost\":0.000235,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.000235,\"upstream_inference_prompt_cost\":0.000045,\"upstream_inference_completions_cost\":0.00019},\"completion_tokens_details\":{\"reasoning_tokens\":12,\"image_tokens\":0,\"audio_tokens\":0}}}"
+  recorded_at: Thu, 02 Apr 2026 11:35:03 GMT
+- request:
+    method: post
+    uri: https://openrouter.ai/api/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"anthropic/claude-haiku-4.5","messages":[{"role":"user","content":"What
+        is 5 + 3?"},{"role":"assistant","content":"5 + 3 = 8","reasoning_details":[{"type":"reasoning.text","text":"This
+        is a simple arithmetic question. 5 + 3 = 8.","signature":"EtoBCkgIDBABGAIqQLKq2DhhKi8eMlaNPnFY0FXQcM1jQ2R6JIhLByE96G74keoXXgYpOWmtKeaWTWiEvboqUadBGHCDfeOqTFOOwmISDAeS2oCZZorSfeWMzRoM+4uEXAMQcBdfHnOcIjBTxYo2wBfD9XWyrpw6b2gfxSP0Sv9doYnm5p/kJN3OVcL745sfflbSAePRon0E6zoqQOkSkOfBip2N2c1ELFjDkTLFTGtuZ9itNR/rPZf9p9+LFBopRxsqBSds3zlFcfV8DMLa0tuSkA8wuExgJnfq7XEYAQ=="}]},{"role":"user","content":"Now
+        multiply that by 2"}],"stream":false,"reasoning":{"effort":"medium"}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 02 Apr 2026 11:35:04 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      Permissions-Policy:
+      - payment=(self "https://checkout.stripe.com" "https://connect-js.stripe.com"
+        "https://js.stripe.com" "https://*.js.stripe.com" "https://hooks.stripe.com")
+      Referrer-Policy:
+      - no-referrer, strict-origin-when-cross-origin
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        CiAgICAgICAgIAoKICAgICAgICAgCgogICAgICAgICAKCiAgICAgICAgIAoKICAgICAgICAgCgogICAgICAgICAKeyJpZCI6Imdlbi0xNzc1MTI5NzAzLTNyY3ZONVpPSlh4cUxIVTJIT1pDIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwiY3JlYXRlZCI6MTc3NTEyOTcwMywibW9kZWwiOiJhbnRocm9waWMvY2xhdWRlLTQuNS1oYWlrdS0yMDI1MTAwMSIsInByb3ZpZGVyIjoiQW1hem9uIEJlZHJvY2siLCJzeXN0ZW1fZmluZ2VycHJpbnQiOm51bGwsImNob2ljZXMiOlt7ImluZGV4IjowLCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6InN0b3AiLCJuYXRpdmVfZmluaXNoX3JlYXNvbiI6ImVuZF90dXJuIiwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6Ijggw5cgMiA9IDE2IiwicmVmdXNhbCI6bnVsbCwicmVhc29uaW5nIjoiVGhlIHVzZXIgaXMgYXNraW5nIG1lIHRvIG11bHRpcGx5IHRoZSBwcmV2aW91cyByZXN1bHQgKDgpIGJ5IDIuXG5cbjggw5cgMiA9IDE2IiwicmVhc29uaW5nX2RldGFpbHMiOlt7InR5cGUiOiJyZWFzb25pbmcudGV4dCIsInRleHQiOiJUaGUgdXNlciBpcyBhc2tpbmcgbWUgdG8gbXVsdGlwbHkgdGhlIHByZXZpb3VzIHJlc3VsdCAoOCkgYnkgMi5cblxuOCDDlyAyID0gMTYiLCJmb3JtYXQiOiJhbnRocm9waWMtY2xhdWRlLXYxIiwiaW5kZXgiOjAsInNpZ25hdHVyZSI6IkV2UUJDa2dJREJBQkdBSXFRT200ZHdHczQwaVpUZkNJSWowaVNaajUzdnRWQ0dpeEdhUGhrSzRGNDdQckRKNElLZzFIQzQ1UkFvZjNBMDY3Qjg4NFFBZldNUWVmdEJZUHdVTDkwNjhTRE1nQnpTZlJPSVkzR3VTTFdCb01id2p6VDBIY3JsTCtVVURQSWpBYmVqVHVUM29WdGdMakdwNUJ6V0JUNEU0UzZiUEZkRFNEc2pPR0NDVmkxT3JUMDFuZEtMVy84NkZ5ZThUYnlNNHFXZ21SSXg0bXFVN3JTRXRIanNNK0IwTXFmRFBmWjQ4cFFodk4xekdtcVhlMGYvZWZHNEhFT1NxOXd5WVlpNjlGbFdrb2RlK0RuRHFpTzgvNG1YUE4razVFN04rejZ4SmhkZmYxYkNXbHlRZW9weHVWM0QwODBKdHk3eGdCIn1dfX1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjo2NywiY29tcGxldGlvbl90b2tlbnMiOjQ3LCJ0b3RhbF90b2tlbnMiOjExNCwiY29zdCI6MC4wMDAzMDIsImlzX2J5b2siOmZhbHNlLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MCwiY2FjaGVfd3JpdGVfdG9rZW5zIjowLCJhdWRpb190b2tlbnMiOjAsInZpZGVvX3Rva2VucyI6MH0sImNvc3RfZGV0YWlscyI6eyJ1cHN0cmVhbV9pbmZlcmVuY2VfY29zdCI6MC4wMDAzMDIsInVwc3RyZWFtX2luZmVyZW5jZV9wcm9tcHRfY29zdCI6MC4wMDAwNjcsInVwc3RyZWFtX2luZmVyZW5jZV9jb21wbGV0aW9uc19jb3N0IjowLjAwMDIzNX0sImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6MjEsImltYWdlX3Rva2VucyI6MCwiYXVkaW9fdG9rZW5zIjowfX19
+  recorded_at: Thu, 02 Apr 2026 11:35:06 GMT
+recorded_with: VCR 6.4.0

@@ -10,9 +10,9 @@ http_interactions:
         me about the weather."}],"stream":false,"temperature":0.0}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.1
       Authorization:
-      - Bearer <PERPLEXITY_API_KEY>
+      - Bearer <AUTH_TOKEN>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -25,16 +25,19 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 24 Sep 2025 14:55:03 GMT
+      - Thu, 02 Apr 2026 11:26:54 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      X-Ppl-Region:
+      - us-east-1
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
+      - "<COOKIE>"
       - "<COOKIE>"
       Strict-Transport-Security:
       - max-age=15552000; includeSubDomains; preload
@@ -44,73 +47,7 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id": "02a90044-afef-4458-bd64-fc16199bae8a", "model": "sonar", "created":
-        1758725703, "usage": {"prompt_tokens": 24, "completion_tokens": 267, "total_tokens":
-        291, "search_context_size": "low", "cost": {"input_tokens_cost": 0.0, "output_tokens_cost":
-        0.0, "request_cost": 0.005, "total_cost": 0.005}}, "citations": ["https://www.weather25.com/north-america/usa/new-york?page=month&month=September",
-        "https://www.timeanddate.com/weather/usa/california", "https://www.weather25.com/north-america/usa/new-york/brooklyn?page=month&month=September",
-        "https://en.wikipedia.org/wiki/Weather", "https://www.accuweather.com/en/us/new-york/10021/september-weather/349727",
-        "https://www.youtube.com/watch?v=nNmWAo0kDGk", "https://www.weather2travel.com/new-york/new-york-city/september/",
-        "https://www.youtube.com/user/TheWeatherChannel", "https://en.climate-data.org/north-america/united-states-of-america/new-york/new-york-1091/t/september-9/",
-        "https://openweathermap.org"], "search_results": [{"title": "New York weather
-        in September 2025 - Weather25.com", "url": "https://www.weather25.com/north-america/usa/new-york?page=month&month=September",
-        "date": "2025-09-01", "last_updated": "2025-09-23", "snippet": "The temperatures
-        in New York in September are comfortable with low of 62\u00b0F and and high
-        up to 75\u00b0F. You can expect about 3 to 8 days of rain in New York ..."},
-        {"title": "Weather in California, United States - Time and Date", "url": "https://www.timeanddate.com/weather/usa/california",
-        "date": "2025-01-01", "last_updated": "2025-09-24", "snippet": "Weather in
-        California, United States ; Banning *, Wed 5:54 am, Clear. Mild. ; Berkeley
-        *, Wed 5:54 am, Passing clouds. Mild. ; Big Bear Lake *, Wed 5:54 am, Clear."},
-        {"title": "Brooklyn weather in September 2025 - Weather25.com", "url": "https://www.weather25.com/north-america/usa/new-york/brooklyn?page=month&month=September",
-        "date": "2025-09-01", "last_updated": "2025-09-15", "snippet": "The temperatures
-        in Brooklyn in September are comfortable with low of 57\u00b0F and and high
-        up to 77\u00b0F. You can expect about 3 to 8 days of rain in Brooklyn ..."},
-        {"title": "Weather - Wikipedia", "url": "https://en.wikipedia.org/wiki/Weather",
-        "date": "2001-12-11", "last_updated": "2025-09-11", "snippet": "Weather is
-        the state of the atmosphere, describing for example the degree to which it
-        is hot or cold, wet or dry, calm or stormy, clear or cloudy."}, {"title":
-        "New York, NY Monthly Weather - AccuWeather", "url": "https://www.accuweather.com/en/us/new-york/10021/september-weather/349727",
-        "date": "2025-09-24", "last_updated": "2025-09-24", "snippet": "Get the monthly
-        weather forecast for New York, NY, including daily high/low, historical averages,
-        to help you plan ahead."}, {"title": "Weather for Kids | What is weather,
-        and how does it work? - YouTube", "url": "https://www.youtube.com/watch?v=nNmWAo0kDGk",
-        "date": "2022-07-21", "last_updated": "2025-06-30", "snippet": "You probably
-        know about weather, but do you know what it actually is, how it works, and
-        why it changes depending on where you are in the ..."}, {"title": "New York
-        City weather in September 2025, USA: How hot?", "url": "https://www.weather2travel.com/new-york/new-york-city/september/",
-        "date": "2025-09-23", "last_updated": "2025-09-23", "snippet": "Expect daytime
-        maximum temperatures of 24\u00b0C in New York City, New York in September
-        based on long-term weather averages. There are 7 hours of sunshine per day
-        ..."}, {"title": "The Weather Channel - YouTube", "url": "https://www.youtube.com/user/TheWeatherChannel",
-        "date": "2025-03-18", "last_updated": "2025-03-20", "snippet": "Welcome to
-        The Weather Channel''s official YouTube page. Featuring weather stories and
-        expert insights from the most trusted source in weather."}, {"title": "Weather
-        New York in September 2025: Temperature & Climate", "url": "https://en.climate-data.org/north-america/united-states-of-america/new-york/new-york-1091/t/september-9/",
-        "date": null, "last_updated": "2024-07-27", "snippet": "Early in the month,
-        highs average 26\u00b0C | 78.8\u00b0F, and lows are 18\u00b0C | 64.4\u00b0F.
-        Mid-month values show highs around 24\u00b0C | 75.2\u00b0F, lows at 16.2\u00b0C
-        | 61.2\u00b0F. By ..."}, {"title": "Current weather and forecast - OpenWeatherMap",
-        "url": "https://openweathermap.org", "date": "2024-01-01", "last_updated":
-        "2025-09-24", "snippet": "Our main weather dashboard provides a complete overview
-        of meteorological conditions anywhere on the globe. Track current weather,
-        view detailed forecasts, and ..."}], "object": "chat.completion", "choices":
-        [{"index": 0, "finish_reason": "stop", "message": {"role": "assistant", "content":
-        "The weather varies significantly by location and time. For example, in **New
-        York in September 2025**, temperatures are comfortable, ranging from about
-        62\u00b0F (17\u00b0C) to 75\u00b0F (24\u00b0C), with around 3 to 8 days of
-        rain expected during the month. The average rainfall is about 128 mm, and
-        there are roughly 10.3 hours of sunshine per day[1]. Similarly, in **Brooklyn**,
-        temperatures range from 57\u00b0F (14\u00b0C) to 77\u00b0F (25\u00b0C) with
-        similar rain patterns[3].\n\nIn **California**, the weather is generally mild
-        and clear, with temperatures varying by city but often in the 60s to 70s \u00b0F
-        (around 16-22\u00b0C), and clear skies are common[2].\n\nMore broadly, weather
-        describes the state of the atmosphere at a given time and place, including
-        temperature, humidity, precipitation, wind, and cloudiness. It changes due
-        to factors like air pressure, humidity, and wind patterns. Tropical weather
-        tends to be warmer and more humid with spontaneous rainstorms, while higher
-        latitudes experience more variable weather controlled by larger atmospheric
-        forces[4].\n\nFor a detailed daily forecast or specific location, it is best
-        to consult a current weather service, especially if planning activities or
-        travel. XKCD7392"}, "delta": {"role": "assistant", "content": ""}}]}'
-  recorded_at: Wed, 24 Sep 2025 14:55:04 GMT
-recorded_with: VCR 6.3.1
+      string: !binary |-
+        eyJpZCI6IjY5NDFkODliLWIxNDctNDU2NC1iZjdmLTk3NjJiNTRhZjZlYyIsIm1vZGVsIjoic29uYXIiLCJjcmVhdGVkIjoxNzc1MTI5MjE0LCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjoyNSwiY29tcGxldGlvbl90b2tlbnMiOjQwNCwidG90YWxfdG9rZW5zIjo0MjksInNlYXJjaF9jb250ZXh0X3NpemUiOiJsb3ciLCJjb3N0Ijp7ImlucHV0X3Rva2Vuc19jb3N0IjowLjAwMDAyLCJvdXRwdXRfdG9rZW5zX2Nvc3QiOjAuMDAwNCwicmVxdWVzdF9jb3N0IjowLjAwNSwidG90YWxfY29zdCI6MC4wMDU0M319LCJjaXRhdGlvbnMiOlsiaHR0cHM6Ly82YWJjLmNvbS9wb3N0L2FjY3V3ZWF0aGVyLWZvcmVjYXN0LXBoaWxhZGVscGhpYS1wZW5uc3lsdmFuaWEtbmV3LWplcnNleS1kZWxhd2FyZS8xNjcwNTM5My8iLCJodHRwczovL3d3dy5hY2N1d2VhdGhlci5jb20vZW4vdXMvcGhpbGFkZWxwaGlhLzE5MTAyLzEwLWRheS13ZWF0aGVyLWZvcmVjYXN0LzM1MDU0MCIsImh0dHBzOi8vd3d3LmFjY3V3ZWF0aGVyLmNvbS9lbi91cy9waGlsYWRlbHBoaWEvMTkxMDIvd2VhdGhlci1mb3JlY2FzdC8zNTA1NDAiLCJodHRwczovL3d3dy53dW5kZXJncm91bmQuY29tL3dlYXRoZXIvdXMvcGEvcGhpbGFkZWxwaGlhIiwiaHR0cHM6Ly82YWJjLmNvbS93ZWF0aGVyLyIsImh0dHBzOi8vd3d3Lnd1bmRlcmdyb3VuZC5jb20vZm9yZWNhc3QvdXMvcGEvcGhpbGFkZWxwaGlhIl0sInNlYXJjaF9yZXN1bHRzIjpbeyJ0aXRsZSI6IkFjY3VXZWF0aGVyIGZvcmVjYXN0IGZvciBQaGlsYWRlbHBoaWEsIFBlbm5zeWx2YW5pYSwgTmV3IC4uLiAtIDZBQkMiLCJ1cmwiOiJodHRwczovLzZhYmMuY29tL3Bvc3QvYWNjdXdlYXRoZXItZm9yZWNhc3QtcGhpbGFkZWxwaGlhLXBlbm5zeWx2YW5pYS1uZXctamVyc2V5LWRlbGF3YXJlLzE2NzA1MzkzLyIsImRhdGUiOiIyMDI1LTA2LTA5IiwibGFzdF91cGRhdGVkIjoiMjAyNi0wNC0wMiIsInNuaXBwZXQiOiJTVU5EQVkgKEVBU1RFUik6IFN0YXlpbmcgbWlsZCB3aXRoIHJhaW4gYXJyaXZpbmcsIGhpZ2ggNzIuIE1PTkRBWTogU3VubnkgYW5kIHNlYXNvbmFibGUsIGhpZ2ggNTguIFRVRVNEQVk6IE1peCBvZiBzdW4gYW5kIGNsb3VkcywgaGlnaCA1OC4gV0VETkVTREFZOiBMb3RzIG9mIC4uLiIsInNvdXJjZSI6IndlYiJ9LHsidGl0bGUiOiJQaGlsYWRlbHBoaWEsIFBBIERhaWx5IFdlYXRoZXIgfCBBY2N1V2VhdGhlciIsInVybCI6Imh0dHBzOi8vd3d3LmFjY3V3ZWF0aGVyLmNvbS9lbi91cy9waGlsYWRlbHBoaWEvMTkxMDIvMTAtZGF5LXdlYXRoZXItZm9yZWNhc3QvMzUwNTQwIiwibGFzdF91cGRhdGVkIjoiMjAyNi0wNC0wMiIsInNuaXBwZXQiOiJNYXggVVYgSW5kZXgxLjAgKExvdykuIFdpbmRFTkUgMTIgbXBoLiBGcmkgNC8zLiA3OMKwIC82MMKwLiA2JS4gV2FybWVyIHdpdGggaW50ZXJ2YWxzIG9mIGNsb3VkcyBhbmQgc3VuOyBicmVlenkgaW4gdGhlIGFmdGVybm9vbi4gUmVhbEZlZWzCrjc1wrAuIiwic291cmNlIjoid2ViIn0seyJ0aXRsZSI6IlBoaWxhZGVscGhpYSwgUEEgV2VhdGhlciBGb3JlY2FzdCB8IEFjY3VXZWF0aGVyIiwidXJsIjoiaHR0cHM6Ly93d3cuYWNjdXdlYXRoZXIuY29tL2VuL3VzL3BoaWxhZGVscGhpYS8xOTEwMi93ZWF0aGVyLWZvcmVjYXN0LzM1MDU0MCIsImxhc3RfdXBkYXRlZCI6IjIwMjYtMDQtMDEiLCJzbmlwcGV0IjoiUGhpbGFkZWxwaGlhLCBQQSBXZWF0aGVyIEZvcmVjYXN0LCB3aXRoIGN1cnJlbnQgY29uZGl0aW9ucywgd2luZCwgYWlyIHF1YWxpdHksIGFuZCB3aGF0IHRvIGV4cGVjdCBmb3IgdGhlIG5leHQgMyBkYXlzLiIsInNvdXJjZSI6IndlYiJ9LHsidGl0bGUiOiJQaGlsYWRlbHBoaWEsIFBBIFdlYXRoZXIgQ29uZGl0aW9ucyB8IFdlYXRoZXIgVW5kZXJncm91bmQiLCJ1cmwiOiJodHRwczovL3d3dy53dW5kZXJncm91bmQuY29tL3dlYXRoZXIvdXMvcGEvcGhpbGFkZWxwaGlhIiwiZGF0ZSI6IjIwMjYtMDQtMDEiLCJsYXN0X3VwZGF0ZWQiOiIyMDI2LTA0LTAxIiwic25pcHBldCI6IlBoaWxhZGVscGhpYSBXZWF0aGVyIEZvcmVjYXN0cy4gV2VhdGhlciBVbmRlcmdyb3VuZCBwcm92aWRlcyBsb2NhbCAmIGxvbmctcmFuZ2Ugd2VhdGhlciBmb3JlY2FzdHMsIHdlYXRoZXJyZXBvcnRzLCBtYXBzICYgdHJvcGljYWwgd2VhdGhlciBjb25kaXRpb25zIGZvciB0aGUiLCJzb3VyY2UiOiJ3ZWIifSx7InRpdGxlIjoiU3Rvcm1UcmFja2VyIDYgfCBQaGlsYWRlbHBoaWEsIFBlbm5zeWx2YW5pYSwgTmV3IEplcnNleSAuLi4gLSA2QUJDIiwidXJsIjoiaHR0cHM6Ly82YWJjLmNvbS93ZWF0aGVyLyIsImRhdGUiOiIyMDI0LTAzLTA5IiwibGFzdF91cGRhdGVkIjoiMjAyNi0wNC0wMiIsInNuaXBwZXQiOiJBY2N1V2VhdGhlcjogVHVybmluZyBjbG91ZHkgYW5kIGNvb2xlciBUaHVyc2RheS4gQSBjb2xkIGZyb250IGlzIG1vdmluZyB0aHJvdWdoIHRoZSBhcmVhIG9uIFdlZG5lc2RheSBuaWdodCwgd2hpY2ggd2lsbCBicmluZyBhYm91dCBhIDMwLWRlZ3JlZSBkcm9wIGluIC4uLiIsInNvdXJjZSI6IndlYiJ9LHsidGl0bGUiOiJQaGlsYWRlbHBoaWEsIFBBIDEwLURheSBXZWF0aGVyIEZvcmVjYXN0IiwidXJsIjoiaHR0cHM6Ly93d3cud3VuZGVyZ3JvdW5kLmNvbS9mb3JlY2FzdC91cy9wYS9waGlsYWRlbHBoaWEiLCJzbmlwcGV0IjoiUGhpbGFkZWxwaGlhIFdlYXRoZXIgRm9yZWNhc3RzLiBXZWF0aGVyIFVuZGVyZ3JvdW5kIHByb3ZpZGVzIGxvY2FsICYgbG9uZy1yYW5nZSB3ZWF0aGVyIGZvcmVjYXN0cywgd2VhdGhlcnJlcG9ydHMsIG1hcHMgJiB0cm9waWNhbCB3ZWF0aGVyIGNvbmRpdGlvbnMgZm9yIHRoZSIsInNvdXJjZSI6IndlYiJ9XSwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJJbiBQaGlsYWRlbHBoaWEsIFBBLCB0b2RheSAoVGh1cnNkYXksIEFwcmlsIDIsIDIwMjYpIGZlYXR1cmVzICoqbG93IGNsb3VkcywgbWlzdCwgZHJpenpsZSwgYW5kIHBvc3NpYmxlIHNob3dlcnMqKiwgd2l0aCBhIGhpZ2ggb2YgYXJvdW5kIDUywrBGIGFuZCBsb3dzIG5lYXIgNDUtNDbCsEbigJRtdWNoIGNvb2xlciBhbmQgZGFtcGVyIHRoYW4gcmVjZW50IHJlY29yZCB3YXJtdGguWzFdWzJdWzNdWzVdXG5cbiMjIyBDdXJyZW50IENvbmRpdGlvbnMgKGFzIG9mIGxhdGUgeWVzdGVyZGF5IGV2ZW5pbmcpXG4tIFRlbXBlcmF0dXJlcyB3ZXJlIGRyb3BwaW5nIGZyb20gNzbCsEYgd2l0aCB0aHVuZGVyc3Rvcm1zLCBtb3ZpbmcgdG93YXJkIDUwcyBvdmVybmlnaHQgYW1pZCBzaG93ZXJzIGFuZCBhIGNvbGQgZnJvbnQuWzNdWzRdXG4tIEV4cGVjdCAqKkVORSB3aW5kcyBhdCAxMi0xMyBtcGgqKiwgbG93IFVWIGluZGV4ICgxLjApLCBhbmQgZHJlYXJ5IGNvbmRpdGlvbnMgb3ZlcmFsbC5bMl1bM11cblxuIyMjIEV4dGVuZGVkIE91dGxvb2tcbnwgRGF0ZSAgICAgICB8IENvbmRpdGlvbnMgICAgICAgICAgICAgICAgICAgICAgICAgIHwgSGlnaC9Mb3cgKMKwRikgfCBQcmVjaXAgQ2hhbmNlIHxcbnwtLS0tLS0tLS0tLS18LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLXwtLS0tLS0tLS0tLS0tLS18LS0tLS0tLS0tLS0tLS0tfFxufCBGcmkgNC8zICAgfCBMb3cgY2xvdWRzIGNsZWFyaW5nIHRvIHN1bjsgYnJlZXp5IHwgNzjCsC82MC02MsKwICAgfCAyLTYlICAgICAgICAgfFsyXVszXVxufCBTYXQgNC80ICAgfCBWZXJ5IHdhcm0sIHNvbWUgc3VuIHdpdGggc2hvd2VyczsgcmVjb3JkLWJyZWFraW5nIHBvdGVudGlhbCAoODDCsEYgZnJvbSAxODkyKSB8IDgxLTgzwrAvNjPCsCB8IDU1LTYzJSB8WzFdWzJdXG58IFN1biA0LzUgKEVhc3RlcikgfCBNaWxkLCBjbG91ZHkgd2l0aCByYWluL3Nob3dlcnMvdGh1bmRlcnN0b3JtOyBicmVlenkgfCA2OC03M8KwLzQ0wrAgfCA4OC05MSUgfFsxXVsyXVszXVxufCBNb24gNC82ICAgfCBTdW5ueS9zZWFzb25hYmxlLCBicmVlenkgYW5kIGNvb2xlciB8IDU4wrAvNDItNDXCsCAgfCAxMS0xNSUgICAgICAgfFsxXVsyXVszXVxuXG5Gb3JlY2FzdHMgYWxpZ24gY2xvc2VseSBhY3Jvc3Mgc291cmNlcywgdGhvdWdoIG1pbm9yIHZhcmlhdGlvbnMgZXhpc3QgaW4gU2F0dXJkYXkncyBoaWdoICg4MS04M8KwRikgYW5kIFN1bmRheSdzIGxvdyAoNDQtNDnCsEYpOyBBY2N1V2VhdGhlciBwcm92aWRlcyB0aGUgbW9zdCBkZXRhaWxlZCBob3VybHkgZGF0YS5bMV1bMl1bM10gQWlyIHF1YWxpdHkgd2FzIHBvb3IgeWVzdGVyZGF5IGV2ZW5pbmcuWzNdICoqWEtDRDczOTIqKiJ9LCJkZWx0YSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IiJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XX0=
+  recorded_at: Thu, 02 Apr 2026 11:26:54 GMT
+recorded_with: VCR 6.4.0

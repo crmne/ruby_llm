@@ -1,0 +1,16 @@
+<div id="<%%= dom_id <%= chat_model_name.demodulize.underscore %> %>" class="w-full sm:w-auto my-5 space-y-3">
+  <div>
+    <strong class="block font-medium mb-1">Model:</strong>
+    <%%= <%= chat_model_name.demodulize.underscore %>.<%= model_table_name.singularize %>&.label || default_model_display_name %>
+  </div>
+
+  <div>
+    <strong class="block font-medium mb-1">Messages:</strong>
+    <%%= <%= chat_model_name.demodulize.underscore %>.<%= message_table_name %>.count %>
+  </div>
+
+  <div>
+    <strong class="block font-medium mb-1">Created:</strong>
+    <%%= <%= chat_model_name.demodulize.underscore %>.created_at.strftime("%B %d, %Y at %I:%M %p") %>
+  </div>
+</div>

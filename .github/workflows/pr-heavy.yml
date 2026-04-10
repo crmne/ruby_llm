@@ -1,0 +1,29 @@
+name: PR Heavy
+
+on:
+  pull_request:
+    branches: ["main"]
+    paths:
+      - "lib/**"
+      - "spec/**"
+      - "gemfiles/**"
+      - "Gemfile"
+      - "Rakefile"
+      - "Appraisals"
+      - "ruby_llm.gemspec"
+      - ".github/workflows/_test-matrix.yml"
+      - ".github/workflows/pr-heavy.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pr-heavy-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    uses: ./.github/workflows/_test-matrix.yml
+    with:
+      bundler-cache: false
+    secrets: inherit

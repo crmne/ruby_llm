@@ -10,22 +10,40 @@ module RubyLLM
       include VertexAI::Models
       include VertexAI::Transcription
 
+      SCOPES = [
+        'https://www.googleapis.com/auth/cloud-platform',
+        'https://www.googleapis.com/auth/generative-language.retriever'
+      ].freeze
+
       def initialize(config)
         super
         @authorizer = nil
       end
 
       def api_base
-        "https://#{@config.vertexai_location}-aiplatform.googleapis.com/v1beta1"
+        if @config.vertexai_location.to_s == 'global'
+          'https://aiplatform.googleapis.com/v1beta1'
+        else
+          "https://#{@config.vertexai_location}-aiplatform.googleapis.com/v1beta1"
+        end
       end
 
       def headers
-        {
-          'Authorization' => "Bearer #{access_token}"
-        }
+        if defined?(VCR) && !VCR.current_cassette.recording?
+          { 'Authorization' => 'Bearer test-token' }
+        else
+          initialize_authorizer unless @authorizer
+          @authorizer.apply({})
+        end
+      rescue Google::Auth::AuthorizationError => e
+        raise UnauthorizedError.new(nil, "Invalid Google Cloud credentials for Vertex AI: #{e.message}")
       end
 
       class << self
+        def configuration_options
+          %i[vertexai_project_id vertexai_location vertexai_service_account_key]
+        end
+
         def configuration_requirements
           %i[vertexai_project_id vertexai_location]
         end
@@ -33,25 +51,20 @@ module RubyLLM
 
       private
 
-      def access_token
-        return 'test-token' if defined?(VCR) && !VCR.current_cassette.recording?
-
-        initialize_authorizer unless @authorizer
-        @authorizer.fetch_access_token!['access_token']
-      rescue Google::Auth::AuthorizationError => e
-        raise UnauthorizedError.new(nil, "Invalid Google Cloud credentials for Vertex AI: #{e.message}")
-      end
-
       def initialize_authorizer
         require 'googleauth'
-        @authorizer = ::Google::Auth.get_application_default(
-          scope: [
-            'https://www.googleapis.com/auth/cloud-platform',
-            'https://www.googleapis.com/auth/generative-language.retriever'
-          ]
-        )
+        @authorizer =
+          if @config.vertexai_service_account_key
+            ::Google::Auth::ServiceAccountCredentials.make_creds(
+              json_key_io: StringIO.new(@config.vertexai_service_account_key),
+              scope: SCOPES
+            )
+          else
+            ::Google::Auth.get_application_default(SCOPES)
+          end
       rescue LoadError
-        raise Error, 'The googleauth gem is required for Vertex AI. Please add it to your Gemfile: gem "googleauth"'
+        raise Error,
+              'The googleauth gem ~> 1.15 is required for Vertex AI. Please add it to your Gemfile: gem "googleauth"'
       end
     end
   end

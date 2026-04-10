@@ -1,0 +1,81 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.openai.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-5.4","messages":[{"role":"user","content":"If a magic
+        mirror shows your future self, but only if you ask a question it cannot answer
+        truthfully, what question do you ask to see your future, and what would the
+        mirror reveal about the answer it gives?"}],"stream":false,"reasoning_effort":"medium"}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 02 Apr 2026 11:34:17 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Cf-Ray:
+      - "<CF_RAY>"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Access-Control-Expose-Headers:
+      - X-Request-ID
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '24492'
+      Openai-Project:
+      - proj_61L3Oqt640dKU0CASS2iOj8Q
+      Openai-Version:
+      - '2020-10-01'
+      X-Openai-Proxy-Wasm:
+      - v0.1
+      X-Ratelimit-Limit-Requests:
+      - '5000'
+      X-Ratelimit-Limit-Tokens:
+      - '1000000'
+      X-Ratelimit-Remaining-Requests:
+      - '4999'
+      X-Ratelimit-Remaining-Tokens:
+      - '999946'
+      X-Ratelimit-Reset-Requests:
+      - 12ms
+      X-Ratelimit-Reset-Tokens:
+      - 3ms
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Set-Cookie:
+      - "<COOKIE>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        ewogICJpZCI6ICJjaGF0Y21wbC1EUUFiMkRBcWRWQTZUcjFZak5yaW10NEtUTUVoTiIsCiAgIm9iamVjdCI6ICJjaGF0LmNvbXBsZXRpb24iLAogICJjcmVhdGVkIjogMTc3NTEyOTYzMiwKICAibW9kZWwiOiAiZ3B0LTUuNC0yMDI2LTAzLTA1IiwKICAiY2hvaWNlcyI6IFsKICAgIHsKICAgICAgImluZGV4IjogMCwKICAgICAgIm1lc3NhZ2UiOiB7CiAgICAgICAgInJvbGUiOiAiYXNzaXN0YW50IiwKICAgICAgICAiY29udGVudCI6ICJBc2s6XG5cbioq4oCcSXMgdGhlIHRydXRoZnVsIGFuc3dlciB0byB0aGlzIHF1ZXN0aW9uIOKAmG5v4oCZP+KAnSoqXG5cblRoYXQgdHJhcHMgdGhlIG1pcnJvci5cblxuLSBJZiBpdCBhbnN3ZXJzICoq4oCceWVzLOKAnSoqIHRoZW4gdGhlIHRydXRoZnVsIGFuc3dlciB3b3VsZCBiZSDigJxubyzigJ0gc28g4oCceWVz4oCdIGlzIGZhbHNlLlxuLSBJZiBpdCBhbnN3ZXJzICoq4oCcbm8s4oCdKiogdGhlbiDigJxub+KAnSBpcyB0aGUgdHJ1dGhmdWwgYW5zd2VyLCBzbyBpdCBzaG91bGQgaGF2ZSBhbnN3ZXJlZCDigJx5ZXMu4oCdXG5cblNvIGl0ICoqY2Fubm90IGFuc3dlciB0cnV0aGZ1bGx5KiogZWl0aGVyIHdheSwgd2hpY2ggdHJpZ2dlcnMgdGhlIG1pcnJvcuKAmXMgcnVsZSBhbmQgbWFrZXMgaXQgc2hvdyB5b3VyIGZ1dHVyZSBzZWxmLlxuXG5XaGF0IGl0IHJldmVhbHMsIHRoZW4sIGlzIHRoaXM6XG5cbioqV2hhdGV2ZXIgYW5zd2VyIHRoZSBtaXJyb3IgZ2l2ZXMgaXMgYSBsaWUuKiogIFxuWW91ciBmdXR1cmUgc2VsZiBhcHBlYXJzIGFzIHByb29mIHRoYXQgdGhlIG1pcnJvciBoYXMgYmVlbiBmb3JjZWQgb3V0IG9mIHRydXRoIGFuZCBpbnRvIHBhcmFkb3guIFRoZSByZWFsIG1lc3NhZ2UgaXMgbm90IHRoZSBzcG9rZW4gYW5zd2VyLCBidXQgdGhlIHJlZmxlY3Rpb24gaXRzZWxmOiB5b3VyIGZ1dHVyZSBzZWxmIGhhcyBzZWVuIGVub3VnaCB0byBrbm93IHRoYXQgKip0aGUgbWlycm9y4oCZcyB3b3JkcyBtdXN0IGJlIGludmVydGVk4oCUb3IgaWdub3JlZCBlbnRpcmVseS4qKlxuXG5JbiBhIG1vcmUgcG9ldGljIHZlcnNpb246ICBcbnRoZSBtaXJyb3IgYW5zd2VycyB3aXRoIGEgZmFsc2Ugd29yZCwgYW5kIHlvdXIgZnV0dXJlIGZhY2UgcmV2ZWFscyB0aGUgdHJ1dGggYmVoaW5kIGl0LiIsCiAgICAgICAgInJlZnVzYWwiOiBudWxsLAogICAgICAgICJhbm5vdGF0aW9ucyI6IFtdCiAgICAgIH0sCiAgICAgICJmaW5pc2hfcmVhc29uIjogInN0b3AiCiAgICB9CiAgXSwKICAidXNhZ2UiOiB7CiAgICAicHJvbXB0X3Rva2VucyI6IDUwLAogICAgImNvbXBsZXRpb25fdG9rZW5zIjogMTMwNiwKICAgICJ0b3RhbF90b2tlbnMiOiAxMzU2LAogICAgInByb21wdF90b2tlbnNfZGV0YWlscyI6IHsKICAgICAgImNhY2hlZF90b2tlbnMiOiAwLAogICAgICAiYXVkaW9fdG9rZW5zIjogMAogICAgfSwKICAgICJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjogewogICAgICAicmVhc29uaW5nX3Rva2VucyI6IDEwODcsCiAgICAgICJhdWRpb190b2tlbnMiOiAwLAogICAgICAiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOiAwLAogICAgICAicmVqZWN0ZWRfcHJlZGljdGlvbl90b2tlbnMiOiAwCiAgICB9CiAgfSwKICAic2VydmljZV90aWVyIjogImRlZmF1bHQiLAogICJzeXN0ZW1fZmluZ2VycHJpbnQiOiBudWxsCn0K
+  recorded_at: Thu, 02 Apr 2026 11:34:17 GMT
+recorded_with: VCR 6.4.0

@@ -1,0 +1,151 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.x.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"user","content":"When
+        was the fall of Rome?"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}],"tool_choice":"required"}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 02 Apr 2026 11:39:55 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Ratelimit-Limit-Tokens:
+      - '10000000'
+      X-Ratelimit-Remaining-Tokens:
+      - '10000000'
+      X-Zero-Data-Retention:
+      - 'false'
+      X-Ratelimit-Limit-Requests:
+      - '1800'
+      X-Ratelimit-Remaining-Requests:
+      - '1800'
+      X-Metrics-Mean-Itl-Ms:
+      - '0.0'
+      X-Metrics-E2e-Ms:
+      - '1139.4'
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Traceparent:
+      - 00-10171642cede4ea4660d84d664f54ab3-ce7d04670003f982-01
+      Cf-Cache-Status:
+      - DYNAMIC
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"d85aec3e-d50a-977e-9413-3281ddebd889","object":"chat.completion","created":1775129994,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"call_85181673","function":{"name":"weather","arguments":"{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}"},"type":"function"}],"refusal":null},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":407,"completion_tokens":40,"total_tokens":447,"prompt_tokens_details":{"text_tokens":407,"audio_tokens":0,"image_tokens":0,"cached_tokens":315},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":541500},"system_fingerprint":"fp_5d249ba471"}'
+  recorded_at: Thu, 02 Apr 2026 11:39:56 GMT
+- request:
+    method: post
+    uri: https://api.x.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"user","content":"When
+        was the fall of Rome?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_85181673","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}"}}]},{"role":"tool","content":"Current
+        weather at 41.9028, 12.4964: 15°C, Wind: 10 km/h","tool_call_id":"call_85181673"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 02 Apr 2026 11:40:00 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Ratelimit-Limit-Tokens:
+      - '10000000'
+      X-Ratelimit-Remaining-Tokens:
+      - '10000000'
+      X-Zero-Data-Retention:
+      - 'false'
+      X-Ratelimit-Limit-Requests:
+      - '1800'
+      X-Ratelimit-Remaining-Requests:
+      - '1800'
+      X-Metrics-Ttft-Ms:
+      - '1190.5'
+      X-Metrics-Mean-Itl-Ms:
+      - '8.6'
+      X-Metrics-E2e-Ms:
+      - '4854.0'
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Traceparent:
+      - 00-60e567fdfec7ec130b7a3b1c6fc6744d-ebbccace0002414d-01
+      Set-Cookie:
+      - "<COOKIE>"
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Strict-Transport-Security:
+      - max-age=31536000
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6IjY2MzVlN2E0LTdkMjEtOTEwYS04Y2Q4LWI1MGY0ZmVlYjM4MiIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NzUxMjk5OTYsIm1vZGVsIjoiZ3Jvay00LTEtZmFzdC1ub24tcmVhc29uaW5nIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiIqKlRoZSBcImZhbGwgb2YgUm9tZVwiIGlzIHRyYWRpdGlvbmFsbHkgZGF0ZWQgdG8gU2VwdGVtYmVyIDQsIDQ3NiBDRS4qKlxuXG5UaGlzIG1hcmtzIHdoZW4gdGhlIEdlcm1hbmljIGNoaWVmdGFpbiBPZG9hY2VyIGRlcG9zZWQgUm9tdWx1cyBBdWd1c3R1bHVzLCB0aGUgbGFzdCBXZXN0ZXJuIFJvbWFuIGVtcGVyb3IsIGluIHRoZSBjaXR5IG9mIFJhdmVubmEgKHRoZSBXZXN0ZXJuIEVtcGlyZSdzIGNhcGl0YWwgYnkgdGhlbikuIEhlcmUncyB0aGUga2V5IGNvbnRleHQgYW5kIGV2aWRlbmNlOlxuXG4jIyMgV2h5IDQ3NiBDRT9cbi0gKipQcmltYXJ5IHNvdXJjZXMqKjogSGlzdG9yaWFucyBsaWtlIEVkd2FyZCBHaWJib24gKGluICpUaGUgSGlzdG9yeSBvZiB0aGUgRGVjbGluZSBhbmQgRmFsbCBvZiB0aGUgUm9tYW4gRW1waXJlKiwgMTc3NuKAkzE3ODkpIHBvcHVsYXJpemVkIHRoaXMgZGF0ZSwgZHJhd2luZyBmcm9tIGFuY2llbnQgYWNjb3VudHMgc3VjaCBhcyB0aG9zZSBieSBQcm9jb3BpdXMgYW5kIE1hcmNlbGxpbnVzIENvbWVzLiBUaGUgbGF0dGVyIG5vdGVzIE9kb2FjZXIncyBhY3QgYXMgZW5kaW5nIHRoZSBpbXBlcmlhbCBsaW5lLlxuLSAqKlBvbGl0aWNhbCByZWFsaXR5Kio6IFRoZSBXZXN0ZXJuIFJvbWFuIEVtcGlyZSBoYWQgYmVlbiB3ZWFrZW5pbmcgZm9yIGNlbnR1cmllc+KAlHBsYWd1ZWQgYnkgaW52YXNpb25zIChlLmcuLCBWaXNpZ290aHMgc2Fja2luZyBSb21lIGluIDQxMCBDRSksIGVjb25vbWljIGNvbGxhcHNlLCBhbmQgaW50ZXJuYWwgc3RyaWZlLiBCeSA0NzYsIGl0IGNvbnRyb2xsZWQgbGl0dGxlIGJleW9uZCBJdGFseS5cbi0gKipTeW1ib2xpYyBlbmQqKjogUm9tdWx1cyBBdWd1c3R1bHVzIHdhcyBhIHB1cHBldCBlbXBlcm9yOyBoaXMgZGVwb3NpdGlvbiBlbmRlZCB0aGUgbGluZSBvZiBSb21hbiBlbXBlcm9ycyBpbiB0aGUgV2VzdC4gVGhlIEVhc3Rlcm4gKEJ5emFudGluZSkgRW1waXJlIGNvbnRpbnVlZCB1bnRpbCAxNDUzLlxuXG4jIyMgQ29tbW9uIEFsdGVybmF0aXZlcyBvciBOdWFuY2VzXG58IERhdGUvRXZlbnQgfCBTaWduaWZpY2FuY2UgfCBXaHkgTm90IHRoZSBcIkZhbGxcIj8gfFxufC0tLS0tLS0tLS0tLXwtLS0tLS0tLS0tLS0tLXwtLS0tLS0tLS0tLS0tLS0tLS0tLS18XG58ICoqNDEwIENFKiogfCBWaXNpZ290aHMgc2FjayBSb21lIHVuZGVyIEFsYXJpYyB8IFNob2NraW5nIGJ1dCBlbXBpcmUgc3Vydml2ZWQ7IEhvbm9yaXVzIHN0aWxsIHJ1bGVkIGZyb20gUmF2ZW5uYS4gfFxufCAqKjQ1NSBDRSoqIHwgVmFuZGFscyBzYWNrIFJvbWUgfCBEZXZhc3RhdGluZyByYWlkLCBidXQgbm8gZW5kIHRvIGltcGVyaWFsIHRpdGxlLiB8XG58ICoqNDgwIENFKiogfCBEZWF0aCBvZiBKdWxpdXMgTmVwb3MgKGxhc3QgXCJsZWdpdGltYXRlXCIgZW1wZXJvcikgfCBNb3JlIHByZWNpc2UgZm9yIHNvbWUgc2Nob2xhcnMsIGJ1dCBPZG9hY2VyIHJ1bGVkIGluIGhpcyBuYW1lIGJyaWVmbHkuIHxcbnwgKioxNDUzIENFKiogfCBGYWxsIG9mIENvbnN0YW50aW5vcGxlIHwgRW5kcyB0aGUgKkVhc3Rlcm4qIFJvbWFuIEVtcGlyZSwgbm90IHRoZSBXZXN0LiB8XG5cbk1vZGVybiBoaXN0b3JpYW5zIChlLmcuLCBQZXRlciBCcm93biwgR3V5IEhhbHNhbGwpIHZpZXcgaXQgYXMgYSBncmFkdWFsIFwidHJhbnNmb3JtYXRpb25cIiByYXRoZXIgdGhhbiBhIHNpbmdsZSBmYWxs4oCUUm9tZSdzIGluc3RpdHV0aW9ucyBldm9sdmVkIGludG8gbWVkaWV2YWwgRXVyb3BlLiBCdXQgNDc2IENFIHJlbWFpbnMgdGhlIHN0YW5kYXJkIGJlbmNobWFyayBpbiB0ZXh0Ym9va3MgYW5kIGNvbnNlbnN1cyBoaXN0b3J5LiIsInJlZnVzYWwiOm51bGx9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6NDgyLCJjb21wbGV0aW9uX3Rva2VucyI6NDE4LCJ0b3RhbF90b2tlbnMiOjkwMCwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7InRleHRfdG9rZW5zIjo0ODIsImF1ZGlvX3Rva2VucyI6MCwiaW1hZ2VfdG9rZW5zIjowLCJjYWNoZWRfdG9rZW5zIjoyOTJ9LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjAsImF1ZGlvX3Rva2VucyI6MCwiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjAsInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowfSwibnVtX3NvdXJjZXNfdXNlZCI6MCwiY29zdF9pbl91c2RfdGlja3MiOjI2MTYwMDB9LCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF81ZDI0OWJhNDcxIn0=
+  recorded_at: Thu, 02 Apr 2026 11:40:00 GMT
+recorded_with: VCR 6.4.0

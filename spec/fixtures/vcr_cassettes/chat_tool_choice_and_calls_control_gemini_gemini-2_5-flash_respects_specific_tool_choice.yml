@@ -1,0 +1,177 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"What''s the fall of Rome?"}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"OBJECT","properties":{"latitude":{"type":"STRING","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"STRING","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}]}],"toolConfig":{"functionCallingConfig":{"mode":"any","allowedFunctionNames":["weather"]}}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      X-Goog-Api-Key:
+      - "<GEMINI_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      X-Gemini-Service-Tier:
+      - standard
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Thu, 02 Apr 2026 11:33:22 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Server-Timing:
+      - gfet4t7; dur=1178
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "candidates": [
+            {
+              "content": {
+                "parts": [
+                  {
+                    "functionCall": {
+                      "name": "weather",
+                      "args": {
+                        "latitude": "52.5200",
+                        "longitude": "13.4050"
+                      }
+                    },
+                    "thoughtSignature": "CvoCAb4+9vvrtQ70lzjyLr1n5TT4QM2zZMB7hkrhKtQdTuJiMf08sl9achOP7zt+l3IRxY/P/rocg1LPnS4rJ1nbu0xF0GkQZrR+T6ouXi6Gl0dUcc48uqMjgZsgMb5ZzXg3xekwCtIbEBLX4hrfSd/EMXYsIjridldCFMtvM+DcdR8VLbbU3CdnMo8EufnIEsXjU3RF4HZAD7j9ly4ToIsTV6gGocnpWpEw3wD+/LkXMs4dOXIwuS/RZb9cdFCaAn4sCPRxy3X7Ex+hSgSIUL2zsl6r/ft3L7AyzuJVQROrO99vUzTdXSGDy4RVhv0QZVqiyCIy0ckHFalBW6+3+O5cmQMn25rIflBosiLp5uROc1V5vCC2j+PKkxioTa1uSY9GFEzE6nXTuzlD+sZvPMBWI8qQPcmPLSVAO3me8+20DP7b2s5Y8zoafqyOtNfEIOU4uYZbNXScSFM7FjGgT+55z0qdUfAhXoLIk2v0vjZTtBQWk71rnDTi2jay"
+                  }
+                ],
+                "role": "model"
+              },
+              "finishReason": "STOP",
+              "index": 0,
+              "finishMessage": "Model generated function call(s)."
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 85,
+            "candidatesTokenCount": 30,
+            "totalTokenCount": 179,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 85
+              }
+            ],
+            "thoughtsTokenCount": 64
+          },
+          "modelVersion": "gemini-2.5-flash",
+          "responseId": "AVTOaaDrHf2dkdUP4Jy3wAU"
+        }
+  recorded_at: Thu, 02 Apr 2026 11:33:22 GMT
+- request:
+    method: post
+    uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"What''s the fall of Rome?"}]},{"role":"model","parts":[{"functionCall":{"name":"weather","args":{"latitude":"52.5200","longitude":"13.4050"}},"thoughtSignature":"CvoCAb4+9vvrtQ70lzjyLr1n5TT4QM2zZMB7hkrhKtQdTuJiMf08sl9achOP7zt+l3IRxY/P/rocg1LPnS4rJ1nbu0xF0GkQZrR+T6ouXi6Gl0dUcc48uqMjgZsgMb5ZzXg3xekwCtIbEBLX4hrfSd/EMXYsIjridldCFMtvM+DcdR8VLbbU3CdnMo8EufnIEsXjU3RF4HZAD7j9ly4ToIsTV6gGocnpWpEw3wD+/LkXMs4dOXIwuS/RZb9cdFCaAn4sCPRxy3X7Ex+hSgSIUL2zsl6r/ft3L7AyzuJVQROrO99vUzTdXSGDy4RVhv0QZVqiyCIy0ckHFalBW6+3+O5cmQMn25rIflBosiLp5uROc1V5vCC2j+PKkxioTa1uSY9GFEzE6nXTuzlD+sZvPMBWI8qQPcmPLSVAO3me8+20DP7b2s5Y8zoafqyOtNfEIOU4uYZbNXScSFM7FjGgT+55z0qdUfAhXoLIk2v0vjZTtBQWk71rnDTi2jay"}]},{"role":"function","parts":[{"functionResponse":{"name":"weather","response":{"name":"weather","content":[{"text":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"OBJECT","properties":{"latitude":{"type":"STRING","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"STRING","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}]}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      X-Goog-Api-Key:
+      - "<GEMINI_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      X-Gemini-Service-Tier:
+      - standard
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Thu, 02 Apr 2026 11:33:23 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Server-Timing:
+      - gfet4t7; dur=623
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "candidates": [
+            {
+              "content": {
+                "parts": [
+                  {
+                    "text": "I am sorry, I cannot answer questions that require historical knowledge. My purpose is to provide information using the available tools, which are designed for real-time data retrieval like weather. I cannot browse the internet or access a knowledge base for historical events."
+                  }
+                ],
+                "role": "model"
+              },
+              "finishReason": "STOP",
+              "index": 0
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 172,
+            "candidatesTokenCount": 50,
+            "totalTokenCount": 222,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 172
+              }
+            ]
+          },
+          "modelVersion": "gemini-2.5-flash",
+          "responseId": "AlTOaZfdLI-Lxs0P9aaLoAM"
+        }
+  recorded_at: Thu, 02 Apr 2026 11:33:23 GMT
+recorded_with: VCR 6.4.0

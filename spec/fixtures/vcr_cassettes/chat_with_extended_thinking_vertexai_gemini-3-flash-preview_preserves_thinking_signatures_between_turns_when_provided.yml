@@ -1,0 +1,200 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://oauth2.googleapis.com/token
+    body:
+      encoding: ASCII-8BIT
+      string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 02 Apr 2026 11:36:21 GMT
+      Expires:
+      - Mon, 01 Jan 1990 00:00:00 GMT
+      Pragma:
+      - no-cache
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      Content-Type:
+      - application/json; charset=utf-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "access_token": "<GOOGLE_ACCESS_TOKEN>",
+          "expires_in": 3599,
+          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/sqlservice.login openid",
+          "token_type": "Bearer",
+          "id_token": "<GOOGLE_ID_TOKEN>"
+        }
+  recorded_at: Thu, 02 Apr 2026 11:36:21 GMT
+- request:
+    method: post
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-3-flash-preview:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"What is 5 + 3?"}]}],"generationConfig":{"thinkingConfig":{"includeThoughts":true,"thinkingLevel":"medium"}}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Thu, 02 Apr 2026 11:36:40 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "candidates": [
+            {
+              "content": {
+                "role": "model",
+                "parts": [
+                  {
+                    "text": "5 + 3 = 8",
+                    "thoughtSignature": "CnABjz1rX4a6m+pBSRPWtutsXh7bce3S9LM3jvUmN/DRyBL1rVENYxCSbA/3L04l/aI0a1KKnjidOQq1Rin/oXLlQNmv2WWXAK+II2QYFmcge3QayKA3swFJkG31tkbmG77XtMX0kdf4huXoYmVVBgst"
+                  },
+                  {
+                    "text": "**Calculating the Sum**\n\nI've determined the sum of the two numbers. After evaluating the expression, I've arrived at a concise, clear answer, ready to share. The result is now certain.\n\n\n",
+                    "thought": true
+                  }
+                ]
+              },
+              "finishReason": "STOP",
+              "avgLogprobs": -0.3774959778895684
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 8,
+            "candidatesTokenCount": 7,
+            "totalTokenCount": 44,
+            "trafficType": "ON_DEMAND",
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 8
+              }
+            ],
+            "candidatesTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 7
+              }
+            ],
+            "thoughtsTokenCount": 29
+          },
+          "modelVersion": "gemini-3-flash-preview",
+          "createTime": "2026-04-02T11:36:21.697610Z",
+          "responseId": "tVTOaYrKKr-B6dgPs4H1mQc"
+        }
+  recorded_at: Thu, 02 Apr 2026 11:36:40 GMT
+- request:
+    method: post
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-3-flash-preview:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"What is 5 + 3?"}]},{"role":"model","parts":[{"thought":true,"text":"**Calculating
+        the Sum**\n\nI''ve determined the sum of the two numbers. After evaluating
+        the expression, I''ve arrived at a concise, clear answer, ready to share.
+        The result is now certain.\n\n\n","thoughtSignature":"CnABjz1rX4a6m+pBSRPWtutsXh7bce3S9LM3jvUmN/DRyBL1rVENYxCSbA/3L04l/aI0a1KKnjidOQq1Rin/oXLlQNmv2WWXAK+II2QYFmcge3QayKA3swFJkG31tkbmG77XtMX0kdf4huXoYmVVBgst"},{"text":"5
+        + 3 = 8"}]},{"role":"user","parts":[{"text":"Now multiply that by 2"}]}],"generationConfig":{"thinkingConfig":{"includeThoughts":true,"thinkingLevel":"medium"}}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Thu, 02 Apr 2026 11:36:41 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicm9sZSI6ICJtb2RlbCIsCiAgICAgICAgInBhcnRzIjogWwogICAgICAgICAgewogICAgICAgICAgICAidGV4dCI6ICIqKkNhbGN1bGF0aW5nIHRoZSBOZXh0IFN0ZXAqKlxuXG5JJ3ZlIGdvdCB0aGUgcHJldmlvdXMgcmVzdWx0LCA4LCBhbmQgbm93IEkgbmVlZCB0byBtdWx0aXBseSBpdC4gTXkgbmV4dCBzdGVwIGlzIGNsZWFyOiBwZXJmb3JtIGEgbXVsdGlwbGljYXRpb24gb3BlcmF0aW9uIHVzaW5nIGEgZmFjdG9yIG9mIDIuIFRoZSBjYWxjdWxhdGlvbiwgOCBtdWx0aXBsaWVkIGJ5IDIsIGRpcmVjdGx5IHJlc3VsdHMgaW4gMTYuIFRoZSBmaW5hbCBhbnN3ZXIgaXMgMTYuXG5cblxuIiwKICAgICAgICAgICAgInRob3VnaHQiOiB0cnVlCiAgICAgICAgICB9LAogICAgICAgICAgewogICAgICAgICAgICAidGV4dCI6ICI4IMOXIDIgPSAxNiIsCiAgICAgICAgICAgICJ0aG91Z2h0U2lnbmF0dXJlIjogIkN1a0JBWTg5YTEvV3JneHV6UlY3Z2cyR0x4VUVKUXBKQzFvOVlRMDBPU2FrT2JPWkVRbC9tdjArQXFWOUE0MlpQamUybzFTZHJpVXVUOWhMNWpSODB5Q0pWeDh5N3pjd2xiYjhoejVWUjJiYVpJMlRFYklLTFlUSjBBblI2V3BGU01IbXN5cmFPVmNYTG5NNGllSkZtYkRxZFhqMjRCZ0RGQ1A1WWFSZFVtUUY3dmtDL2djZmJnRFlLTzhzVmFMMHRoL1FEVktDQ2tJZ3NLRnBSb1lWeElmcnNLaXMxdU1oSTB2ZklaaFM2Q0h5dmZBQkJFWWhseHlDTll4aFpZOXdva0w5SWtZTVlSejd4ZkxXWnlnYnpaY1lOWDB6YjgxS1poa3BxbTNLV1czL01vU1VhNzZ2bGZrVTZGcz0iCiAgICAgICAgICB9CiAgICAgICAgXQogICAgICB9LAogICAgICAiZmluaXNoUmVhc29uIjogIlNUT1AiLAogICAgICAiYXZnTG9ncHJvYnMiOiAtMS41MjI4MTQ5NTc0MDUyNDg3CiAgICB9CiAgXSwKICAidXNhZ2VNZXRhZGF0YSI6IHsKICAgICJwcm9tcHRUb2tlbkNvdW50IjogNjUsCiAgICAiY2FuZGlkYXRlc1Rva2VuQ291bnQiOiA4LAogICAgInRvdGFsVG9rZW5Db3VudCI6IDEzNSwKICAgICJ0cmFmZmljVHlwZSI6ICJPTl9ERU1BTkQiLAogICAgInByb21wdFRva2Vuc0RldGFpbHMiOiBbCiAgICAgIHsKICAgICAgICAibW9kYWxpdHkiOiAiVEVYVCIsCiAgICAgICAgInRva2VuQ291bnQiOiA2NQogICAgICB9CiAgICBdLAogICAgImNhbmRpZGF0ZXNUb2tlbnNEZXRhaWxzIjogWwogICAgICB7CiAgICAgICAgIm1vZGFsaXR5IjogIlRFWFQiLAogICAgICAgICJ0b2tlbkNvdW50IjogOAogICAgICB9CiAgICBdLAogICAgInRob3VnaHRzVG9rZW5Db3VudCI6IDYyCiAgfSwKICAibW9kZWxWZXJzaW9uIjogImdlbWluaS0zLWZsYXNoLXByZXZpZXciLAogICJjcmVhdGVUaW1lIjogIjIwMjYtMDQtMDJUMTE6MzY6NDAuMzE0MTE4WiIsCiAgInJlc3BvbnNlSWQiOiAieUZUT2FZYVdFNy1CNmRnUHM0SDFtUWMiCn0K
+  recorded_at: Thu, 02 Apr 2026 11:36:41 GMT
+recorded_with: VCR 6.4.0

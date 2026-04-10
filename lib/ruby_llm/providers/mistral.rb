@@ -23,6 +23,10 @@ module RubyLLM
           Mistral::Capabilities
         end
 
+        def configuration_options
+          %i[mistral_api_key]
+        end
+
         def configuration_requirements
           %i[mistral_api_key]
         end

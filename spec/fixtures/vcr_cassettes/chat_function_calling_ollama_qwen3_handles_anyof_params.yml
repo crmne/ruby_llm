@@ -1,0 +1,48 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: "<OLLAMA_API_BASE>/chat/completions"
+    body:
+      encoding: UTF-8
+      string: '{"model":"qwen3","messages":[{"role":"user","content":"Call the any-of
+        params tool for task \"Review PR\" with status \"pending\" and report the
+        result."}],"stream":false,"tools":[{"type":"function","function":{"name":"any_of_params","description":"Uses
+        params DSL any_of support","parameters":{"type":"object","properties":{"task":{"type":"string","description":"Task
+        description"},"status":{"description":"Optional task status","anyOf":[{"type":"string","enum":["pending","done"]},{"type":"null"}]}},"required":["task","status"],"additionalProperties":false,"strict":true}}}],"enable_thinking":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 02 Apr 2026 11:30:47 GMT
+      Content-Length:
+      - '1078'
+    body:
+      encoding: UTF-8
+      string: '{"id":"chatcmpl-294","object":"chat.completion","created":1775129447,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
+        the user wants me to call the any-of params tool for the task \"Review PR\"
+        with status \"pending\" and report the result. Let me check the tools provided.
+        The available function has parameters for task and status. The status uses
+        anyOf, which allows either a string from the enum [\"pending\", \"done\"]
+        or null. Since the user specified \"pending\", which is valid, I need to structure
+        the JSON arguments with task as \"Review PR\" and status as \"pending\". I''ll
+        make sure the syntax is correct and that the parameters are properly nested.
+        Then, I''ll return the tool call in the required XML format.\n","tool_calls":[{"id":"call_zrilabmi","index":0,"type":"function","function":{"name":"any_of_params","arguments":"{\"task\":\"Review
+        PR\",\"status\":\"pending\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":186,"completion_tokens":163,"total_tokens":349}}
+
+        '
+  recorded_at: Thu, 02 Apr 2026 11:30:47 GMT
+recorded_with: VCR 6.4.0

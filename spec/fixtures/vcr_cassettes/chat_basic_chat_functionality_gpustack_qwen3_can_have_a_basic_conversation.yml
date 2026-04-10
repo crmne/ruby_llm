@@ -9,7 +9,9 @@ http_interactions:
         2?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.13.4
+      - Faraday v2.14.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -22,15 +24,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 24 Sep 2025 15:09:39 GMT
-      - Wed, 24 Sep 2025 15:09:39 GMT
+      - Thu, 02 Apr 2026 11:24:45 GMT
+      - Thu, 02 Apr 2026 11:24:45 GMT
       Server:
       - uvicorn
       - uvicorn
       Keep-Alive:
       - timeout=15, max=100
       Content-Length:
-      - '756'
+      - '2441'
       Content-Type:
       - application/json
       X-Request-Accepted-At:
@@ -40,8 +42,31 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
     body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJcblxuMiArIDIgZXF1YWxzICoqNCoqLiBcblxuSWYgeW91IGhhdmUgYW55IG1vcmUgcXVlc3Rpb25zIG9yIG5lZWQgZnVydGhlciBjbGFyaWZpY2F0aW9uLCBmZWVsIGZyZWUgdG8gYXNrISDwn5iKIiwicm9sZSI6ImFzc2lzdGFudCJ9fV0sImNyZWF0ZWQiOjE3NTg3MjY1ODMsImlkIjoiY2hhdGNtcGwtYUlxOXFmdjFWTFRkY25kb2FMVWVOSG9hSlpzd0UzajAiLCJtb2RlbCI6InF3ZW4zIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwidXNhZ2UiOnsiY29tcGxldGlvbl90b2tlbnMiOjQxOSwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJhY2NlcHRlZF9wcmVkaWN0aW9uX3Rva2VucyI6MCwicmVhc29uaW5nX3Rva2VucyI6Mzg3LCJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6MH0sImRyYWZ0X3Rva2VucyI6MCwiZHJhZnRfdG9rZW5zX2FjY2VwdGFuY2UiOjAuMCwicHJvbXB0X3Rva2VucyI6MTYsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjowfSwicHJvbXB0X3Rva2Vuc19wZXJfc2Vjb25kIjo0NTQuMDU1MjgxMjMwNDg5OCwidGltZV9wZXJfb3V0cHV0X3Rva2VuX21zIjo5LjMyMDk3ODUyMDI4NjM5NiwidGltZV90b19maXJzdF90b2tlbl9tcyI6MzUuMjM4LCJ0b2tlbnNfcGVyX3NlY29uZCI6MTA3LjI4NDg3MzM0NDk1Nzk5LCJ0b3RhbF90b2tlbnMiOjQzNX19
-  recorded_at: Wed, 24 Sep 2025 15:09:43 GMT
-recorded_with: VCR 6.3.1
+      encoding: UTF-8
+      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"\n\n2
+        + 2 equals **4**. \n\nThis is a basic arithmetic operation where adding two
+        numbers (2 and 2) results in their sum, which is 4.","reasoning_content":"\nOkay,
+        the user asked, \"What''s 2 + 2?\" That''s a pretty straightforward question.
+        Let me make sure I understand it correctly. They''re asking for the sum of
+        2 and 2. I know that in basic arithmetic, adding two numbers together gives
+        their total. So, 2 plus 2 should be 4. But wait, maybe they want a more detailed
+        explanation? Let me think.\n\nHmm, the user might be testing if I can handle
+        simple math problems, or maybe they''re just curious. Either way, the answer
+        is 4. But perhaps I should break it down. Let me recall the addition process.
+        When you add two numbers, you combine their quantities. So, if you have two
+        objects and add two more, you end up with four. \n\nWait, but is there any
+        chance they''re using a different base or something? Like in some contexts,
+        numbers can be represented differently, but unless specified, I should assume
+        base 10. So, 2 + 2 in base 10 is definitely 4. \n\nAnother angle: maybe they''re
+        looking for a visual representation? Like, drawing two apples and two apples,
+        then counting them all. But the question is pretty direct, so a simple answer
+        should suffice. \n\nI should also consider if there''s any trick or hidden
+        meaning. Sometimes people ask simple questions to see if the AI is paying
+        attention. But in this case, the answer is pretty clear. \n\nLet me double-check.
+        2 + 2 equals 4. Yes, that''s correct. No need for any complex calculations
+        here. The user probably expects a quick answer. \n\nI guess the best approach
+        is to state the answer clearly and concisely, maybe with a brief explanation
+        to ensure clarity. But since the question is straightforward, keeping it simple
+        would be best.\n","role":"assistant"}}],"created":1775129091,"id":"chatcmpl-6qapkycSqhM4DSQoK8MGLqXmluJWfeNw","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":416,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":377,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":16,"prompt_tokens_details":{"cached_tokens":0},"prompt_tokens_per_second":691.1148546499071,"time_per_output_token_ms":12.921572115384615,"time_to_first_token_ms":23.151,"tokens_per_second":77.38996393553266,"total_tokens":432}}'
+  recorded_at: Thu, 02 Apr 2026 11:24:51 GMT
+recorded_with: VCR 6.4.0

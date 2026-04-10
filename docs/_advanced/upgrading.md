@@ -21,16 +21,62 @@ redirect_from:
 {:toc}
 
 ---
+# Upgrade to 1.14
+
+## How to Upgrade
+
+```bash
+# Run the upgrade generator
+bin/rails generate ruby_llm:upgrade_to_v1_14
+
+# Run migrations
+bin/rails db:migrate
+```
+
+That's it! The generator:
+- Changes `thought_signature` on tool calls from `string` to `text`
+- Prevents thought signature truncation issues on MySQL/MariaDB
+
+## What's New in 1.14
+
+Among other features:
+
+- Safer Gemini thought signature persistence for Rails apps using ActiveRecord
+
+# Upgrade to 1.10
+
+## How to Upgrade
+
+```bash
+# Run the upgrade generator
+bin/rails generate ruby_llm:upgrade_to_v1_10
+
+# Run migrations
+bin/rails db:migrate
+```
+
+That's it! The generator:
+- Adds `thinking_text` and `thinking_signature` for storing extended thinking output
+- Adds `thinking_tokens` for tracking thinking token usage
+- Adds `thought_signature` to tool calls for Gemini 3 Pro function calling
+
+## What's New in 1.10
+
+Among other features:
+
+- Extended thinking support across providers with optional persistence
+- Thinking token tracking when providers report it
+
 # Upgrade to 1.9
 
 ## How to Upgrade
 
 ```bash
 # Run the upgrade generator
-rails generate ruby_llm:upgrade_to_v1_9
+bin/rails generate ruby_llm:upgrade_to_v1_9
 
 # Run migrations
-rails db:migrate
+bin/rails db:migrate
 ```
 
 That's it! The generator:
@@ -54,10 +100,10 @@ Upgrade to the DB-backed model registry for better data integrity and rich model
 
 ```bash
 # Run the upgrade generator
-rails generate ruby_llm:upgrade_to_v1_7
+bin/rails generate ruby_llm:upgrade_to_v1_7
 
 # Run migrations
-rails db:migrate
+bin/rails db:migrate
 ```
 
 That's it! The generator:
@@ -73,8 +119,8 @@ That's it! The generator:
 If you're using custom model names:
 
 ```bash
-rails generate ruby_llm:upgrade_to_v1_7 chat:Conversation message:ChatMessage tool_call:MyToolCall model:MyModel
-rails db:migrate
+bin/rails generate ruby_llm:upgrade_to_v1_7 chat:Conversation message:ChatMessage tool_call:MyToolCall model:MyModel
+bin/rails db:migrate
 ```
 
 ### What happens without upgrading
@@ -197,10 +243,10 @@ Add a fully-functional chat UI to your Rails app with Turbo streaming:
 
 ```bash
 # Default model names
-rails generate ruby_llm:chat_ui
+bin/rails generate ruby_llm:chat_ui
 
 # Or with custom model names (same as install generator)
-rails generate ruby_llm:chat_ui chat:Conversation message:ChatMessage model:LLMModel
+bin/rails generate ruby_llm:chat_ui chat:Conversation message:ChatMessage model:LLMModel
 ```
 
 This creates:
@@ -263,9 +309,9 @@ See the [Configuration guide]({% link _getting_started/configuration.md %}#initi
 Fresh installs get the model registry automatically:
 
 ```bash
-rails generate ruby_llm:install
-rails db:migrate
+bin/rails generate ruby_llm:install
+bin/rails db:migrate
 
 # Optional: Add chat UI
-rails generate ruby_llm:chat_ui
+bin/rails generate ruby_llm:chat_ui
 ```

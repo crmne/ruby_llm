@@ -1,0 +1,79 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.mistral.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"mistral-small-latest","messages":[{"role":"user","content":"Call
+        the array params tool with tags [\"red\",\"blue\"] and tell me the combined
+        tags."}],"stream":false,"tools":[{"type":"function","function":{"name":"array_params","description":"Uses
+        params DSL array support","parameters":{"type":"object","properties":{"tags":{"type":"array","description":"List
+        of tags to combine","items":{"type":"string"}}},"required":["tags"],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 02 Apr 2026 11:30:08 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Mistral-Correlation-Id:
+      - '019d4df5-18d6-7b29-90c0-9cbf19a43e3b'
+      X-Kong-Request-Id:
+      - '019d4df5-18d6-7b29-90c0-9cbf19a43e3b'
+      X-Ratelimit-Limit-Tokens-Minute:
+      - '600000'
+      X-Ratelimit-Remaining-Tokens-Minute:
+      - '599534'
+      X-Ratelimit-Tokens-Query-Cost:
+      - '138'
+      X-Ratelimit-Limit-Req-Minute:
+      - '360'
+      X-Ratelimit-Remaining-Req-Minute:
+      - '357'
+      X-Envoy-Upstream-Service-Time:
+      - '7280'
+      Server:
+      - cloudflare
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Kong-Upstream-Latency:
+      - '7280'
+      X-Kong-Proxy-Latency:
+      - '19'
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"97d4d70b79b14722b29d26af8fe909bc","created":1775129401,"model":"mistral-small-latest","usage":{"prompt_tokens":123,"total_tokens":138,"completion_tokens":15,"prompt_tokens_details":{"cached_tokens":0}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"tool_calls","message":{"role":"assistant","tool_calls":[{"id":"Cj1jCf0t1","function":{"name":"array_params","arguments":"{\"tags\":
+        [\"red\", \"blue\"]}"},"index":0}],"content":""}}]}'
+  recorded_at: Thu, 02 Apr 2026 11:30:08 GMT
+recorded_with: VCR 6.4.0

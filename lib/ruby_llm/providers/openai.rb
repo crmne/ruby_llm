@@ -27,12 +27,22 @@ module RubyLLM
       end
 
       def maybe_normalize_temperature(temperature, model)
-        OpenAI::Capabilities.normalize_temperature(temperature, model.id)
+        OpenAI::Temperature.normalize(temperature, model.id)
       end
 
       class << self
         def capabilities
           OpenAI::Capabilities
+        end
+
+        def configuration_options
+          %i[
+            openai_api_key
+            openai_api_base
+            openai_organization_id
+            openai_project_id
+            openai_use_system_role
+          ]
         end
 
         def configuration_requirements

@@ -1,0 +1,27 @@
+<%% content_for :title, "Showing <%= model_table_name.singularize.humanize.downcase %>" %>
+
+<div class="md:w-2/3 w-full">
+  <%% if notice.present? %>
+    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-md inline-block" id="notice"><%%= notice %></p>
+  <%% end %>
+
+  <h1 class="font-bold text-4xl">Showing <%= model_table_name.singularize.humanize.downcase %></h1>
+
+  <div class="my-5 space-y-3">
+    <p><strong class="block font-medium mb-1">Provider:</strong> <%%= @<%= model_variable_name %>.provider_class&.name || @<%= model_variable_name %>.provider %></p>
+    <p><strong class="block font-medium mb-1">Model:</strong> <%%= @<%= model_variable_name %>.name %></p>
+    <p><strong class="block font-medium mb-1">ID:</strong> <%%= @<%= model_variable_name %>.model_id %></p>
+    <p><strong class="block font-medium mb-1">Context Window:</strong> <%%= number_with_delimiter(@<%= model_variable_name %>.context_window) if @<%= model_variable_name %>.context_window %></p>
+    <p><strong class="block font-medium mb-1">Max Output Tokens:</strong> <%%= number_with_delimiter(@<%= model_variable_name %>.max_output_tokens) if @<%= model_variable_name %>.max_output_tokens %></p>
+  </div>
+
+  <%% if @<%= model_variable_name %>.capabilities.any? %>
+    <div class="my-5">
+      <strong class="block font-medium mb-1">Capabilities:</strong>
+      <%%= @<%= model_variable_name %>.capabilities.join(", ") %>
+    </div>
+  <%% end %>
+
+  <%%= link_to "Start <%= chat_table_name.singularize.humanize.downcase %> with this model", new_<%= chat_variable_name %>_path(model: @<%= model_variable_name %>.model_id), class: "w-full sm:w-auto text-center rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
+  <%%= link_to "All <%= model_table_name.humanize.downcase %>", <%= model_table_name %>_path, class: "w-full sm:w-auto text-center mt-2 sm:mt-0 sm:ml-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
+</div>

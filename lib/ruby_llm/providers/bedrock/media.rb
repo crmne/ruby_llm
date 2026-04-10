@@ -3,57 +3,86 @@
 module RubyLLM
   module Providers
     class Bedrock
-      # Media handling methods for the Bedrock API integration
-      # NOTE: Bedrock does not support url attachments
+      # Media formatting for Bedrock Converse content blocks.
       module Media
-        extend Anthropic::Media
-
         module_function
 
-        def format_content(content) # rubocop:disable Metrics/PerceivedComplexity
-          return content.value if content.is_a?(RubyLLM::Content::Raw)
-          return [Anthropic::Media.format_text(content.to_json)] if content.is_a?(Hash) || content.is_a?(Array)
-          return [Anthropic::Media.format_text(content)] unless content.is_a?(Content)
+        def render_content(content, used_document_names: nil)
+          return [] if empty_content?(content)
+          return render_raw_content(content) if content.is_a?(RubyLLM::Content::Raw)
+          return [{ text: content.to_json }] if content.is_a?(Hash) || content.is_a?(Array)
+          return [{ text: content }] unless content.is_a?(RubyLLM::Content)
 
-          parts = []
-          parts << Anthropic::Media.format_text(content.text) if content.text
+          render_content_object(content, used_document_names || {})
+        end
 
+        def empty_content?(content)
+          content.nil? || (content.respond_to?(:empty?) && content.empty?)
+        end
+
+        def render_content_object(content, used_document_names)
+          blocks = []
+          blocks << { text: content.text } if content.text
           content.attachments.each do |attachment|
-            case attachment.type
-            when :image
-              parts << format_image(attachment)
-            when :pdf
-              parts << format_pdf(attachment)
-            when :text
-              parts << Anthropic::Media.format_text_file(attachment)
-            else
-              raise UnsupportedAttachmentError, attachment.type
-            end
+            blocks << render_attachment(attachment, used_document_names:)
           end
-
-          parts
+          blocks
         end
 
-        def format_image(image)
+        def render_raw_content(content)
+          value = content.value
+          value.is_a?(Array) ? value : [value]
+        end
+
+        def render_attachment(attachment, used_document_names:)
+          case attachment.type
+          when :image
+            render_image_attachment(attachment)
+          when :pdf
+            render_document_attachment(attachment, used_document_names:)
+          when :text
+            { text: attachment.for_llm }
+          else
+            raise UnsupportedAttachmentError, attachment.mime_type
+          end
+        end
+
+        def render_image_attachment(attachment)
           {
-            type: 'image',
-            source: {
-              type: 'base64',
-              media_type: image.mime_type,
-              data: image.encoded
+            image: {
+              format: attachment.format,
+              source: {
+                bytes: attachment.encoded
+              }
             }
           }
         end
 
-        def format_pdf(pdf)
+        def render_document_attachment(attachment, used_document_names:)
+          document_name = unique_document_name(sanitize_document_name(attachment.filename), used_document_names)
           {
-            type: 'document',
-            source: {
-              type: 'base64',
-              media_type: pdf.mime_type,
-              data: pdf.encoded
+            document: {
+              format: attachment.format,
+              name: document_name,
+              source: {
+                bytes: attachment.encoded
+              }
             }
           }
+        end
+
+        def sanitize_document_name(filename)
+          base = File.basename(filename.to_s, '.*')
+          safe = base.gsub(/[^a-zA-Z0-9_-]/, '_')
+          safe.empty? ? 'document' : safe
+        end
+
+        def unique_document_name(base_name, used_names)
+          count = used_names[base_name].to_i
+          used_names[base_name] = count + 1
+          return base_name if count.zero?
+
+          "#{base_name}_#{count + 1}"
         end
       end
     end

@@ -8,7 +8,7 @@ group :development do # rubocop:disable Metrics/BlockLength
   gem 'appraisal'
   gem 'async', platform: :mri
   gem 'bundler', '>= 2.0'
-  gem 'codecov'
+  gem 'colorize'
   gem 'dotenv'
   gem 'ferrum'
   gem 'flay'
@@ -26,9 +26,9 @@ group :development do # rubocop:disable Metrics/BlockLength
   gem 'rubocop-performance'
   gem 'rubocop-rake', '>= 0.6'
   gem 'rubocop-rspec'
-  gem 'ruby_llm-schema', '~> 0.1.0'
   gem 'simplecov', '>= 0.21'
   gem 'simplecov-cobertura'
+  gem 'test-queue'
 
   # database drivers for MRI and JRuby
   gem 'activerecord-jdbcsqlite3-adapter', platform: 'jruby'
@@ -40,4 +40,11 @@ group :development do # rubocop:disable Metrics/BlockLength
 
   # Optional dependency for Vertex AI
   gem 'googleauth'
+
+  # Optional dependency for Bedrock
+  gem 'aws-eventstream'
+end
+
+group :development, :test do
+  gem 'turbo-rails'
 end

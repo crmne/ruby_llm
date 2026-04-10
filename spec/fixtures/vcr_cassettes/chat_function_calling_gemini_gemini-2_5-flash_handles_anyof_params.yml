@@ -1,0 +1,94 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"Call the any-of params
+        tool for task \"Review PR\" with status \"pending\" and report the result."}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"any_of_params","description":"Uses
+        params DSL any_of support","parameters":{"type":"OBJECT","properties":{"task":{"type":"STRING","description":"Task
+        description"},"status":{"type":"STRING","description":"Optional task status","enum":["pending","done"],"nullable":true}},"required":["task","status"]}}]}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      X-Goog-Api-Key:
+      - "<GEMINI_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      X-Gemini-Service-Tier:
+      - standard
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Thu, 02 Apr 2026 11:30:29 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Server-Timing:
+      - gfet4t7; dur=642
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "candidates": [
+            {
+              "content": {
+                "parts": [
+                  {
+                    "functionCall": {
+                      "name": "any_of_params",
+                      "args": {
+                        "task": "Review PR",
+                        "status": "pending"
+                      }
+                    },
+                    "thoughtSignature": "Co4CAb4+9vu9JF1NrVxS+kz2sAYUGwCfmT/zPURJUY/SdzlIuWbH3pv7JkHAlPkCUPCJx76HlBc1Igmwp8LcXMChrOeI/bBA29tfmWzJpRQ0ubrASCyb9b6ehsJIW/StF6bFq2+R4XIuYE05N6YwMmNWVYGhvimkutZ0NbDnf6ZBuRCKofS58vYpJkcjw994F9Owb8oiMDi0B9CGmXTHCYjtjy8pOlftptWJBl03BU2rGQV8OAh+rG1CD7cB5h815HRmLrCQTPEkKqHrZZpricCHq9J7yI7gqFBEeHW/pPvctGNJC6XfgUjwSEPMVKeGDAq61hyKS7tooPdPRqHjdGOWkXzkLNDgFjSqPbq88wbo"
+                  }
+                ],
+                "role": "model"
+              },
+              "finishReason": "STOP",
+              "index": 0,
+              "finishMessage": "Model generated function call(s)."
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 84,
+            "candidatesTokenCount": 23,
+            "totalTokenCount": 167,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 84
+              }
+            ],
+            "thoughtsTokenCount": 60
+          },
+          "modelVersion": "gemini-2.5-flash",
+          "responseId": "VFPOaYLGJ-SKxN8P4ZmWuA4"
+        }
+  recorded_at: Thu, 02 Apr 2026 11:30:29 GMT
+recorded_with: VCR 6.4.0

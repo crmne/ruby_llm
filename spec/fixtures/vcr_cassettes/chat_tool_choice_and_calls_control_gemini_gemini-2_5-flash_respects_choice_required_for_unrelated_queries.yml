@@ -1,0 +1,179 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"When was the fall of
+        Rome?"}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"OBJECT","properties":{"latitude":{"type":"STRING","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"STRING","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}]}],"toolConfig":{"functionCallingConfig":{"mode":"any"}}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      X-Goog-Api-Key:
+      - "<GEMINI_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      X-Gemini-Service-Tier:
+      - standard
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Thu, 02 Apr 2026 11:33:20 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Server-Timing:
+      - gfet4t7; dur=1033
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "candidates": [
+            {
+              "content": {
+                "parts": [
+                  {
+                    "functionCall": {
+                      "name": "weather",
+                      "args": {
+                        "latitude": "41.9028",
+                        "longitude": "12.4964"
+                      }
+                    },
+                    "thoughtSignature": "CpkDAb4+9vubpda05WhklsQymPnsfe5e/mNRfPK6RkAzgvcgidZOEgrWd7pMMEIYMf6kfADwuZMzhSMRug9pgUlC1VJ1wo7mDrRXAvRqbOd2yqPfgeZvWdFZOLPL+r/opqAsz4SjPz+KvDbzM8Ih4sKTDu5Hew9RR36kRTcg5hl/thsD5BKpRRBPan6HyQDcdSuxNtmNui2ZoI1GexOIIeRVc99wd8hEsJT6FxnZ48esZkfiqUZSBgGR4TSiqZH/7vfqkzw+djF5fOrIAOhIy/XUse5UY5sAKnoTQG7Xr3KCs/X+7+sCfHIjvW91ea6KW6tYjBO+O3zD/YHPOCyWfD9/Fz6C9v0hLQWK8qsufkRVr+J4pAUnJMCHIFQQvurLodiQNtWkK7lv4lGUw0likSDRQXMD50mMyD7hOYJew+8jF1BHu6ta/4CXKQchpqcq11knQUHOBLzqPOv29qhhJGr9aTS2aGSxybbZ8FSVG6kUcW5UQxPrMF5CaIcV06SHTeah39mXIMzNMrjzQpLs1KTMLKztaq3wKIDnEA=="
+                  }
+                ],
+                "role": "model"
+              },
+              "finishReason": "STOP",
+              "index": 0,
+              "finishMessage": "Model generated function call(s)."
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 84,
+            "candidatesTokenCount": 30,
+            "totalTokenCount": 195,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 84
+              }
+            ],
+            "thoughtsTokenCount": 81
+          },
+          "modelVersion": "gemini-2.5-flash",
+          "responseId": "_1POaa_AKvmEvdIPtqCiyAM"
+        }
+  recorded_at: Thu, 02 Apr 2026 11:33:20 GMT
+- request:
+    method: post
+    uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"When was the fall of
+        Rome?"}]},{"role":"model","parts":[{"functionCall":{"name":"weather","args":{"latitude":"41.9028","longitude":"12.4964"}},"thoughtSignature":"CpkDAb4+9vubpda05WhklsQymPnsfe5e/mNRfPK6RkAzgvcgidZOEgrWd7pMMEIYMf6kfADwuZMzhSMRug9pgUlC1VJ1wo7mDrRXAvRqbOd2yqPfgeZvWdFZOLPL+r/opqAsz4SjPz+KvDbzM8Ih4sKTDu5Hew9RR36kRTcg5hl/thsD5BKpRRBPan6HyQDcdSuxNtmNui2ZoI1GexOIIeRVc99wd8hEsJT6FxnZ48esZkfiqUZSBgGR4TSiqZH/7vfqkzw+djF5fOrIAOhIy/XUse5UY5sAKnoTQG7Xr3KCs/X+7+sCfHIjvW91ea6KW6tYjBO+O3zD/YHPOCyWfD9/Fz6C9v0hLQWK8qsufkRVr+J4pAUnJMCHIFQQvurLodiQNtWkK7lv4lGUw0likSDRQXMD50mMyD7hOYJew+8jF1BHu6ta/4CXKQchpqcq11knQUHOBLzqPOv29qhhJGr9aTS2aGSxybbZ8FSVG6kUcW5UQxPrMF5CaIcV06SHTeah39mXIMzNMrjzQpLs1KTMLKztaq3wKIDnEA=="}]},{"role":"function","parts":[{"functionResponse":{"name":"weather","response":{"name":"weather","content":[{"text":"Current
+        weather at 41.9028, 12.4964: 15°C, Wind: 10 km/h"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"OBJECT","properties":{"latitude":{"type":"STRING","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"STRING","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"]}}]}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      X-Goog-Api-Key:
+      - "<GEMINI_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      X-Gemini-Service-Tier:
+      - standard
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Thu, 02 Apr 2026 11:33:21 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Server-Timing:
+      - gfet4t7; dur=610
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "candidates": [
+            {
+              "content": {
+                "parts": [
+                  {
+                    "text": "The fall of Rome is generally considered to have occurred in 476 CE when the last Western Roman Emperor, Romulus Augustulus, was deposed."
+                  }
+                ],
+                "role": "model"
+              },
+              "finishReason": "STOP",
+              "index": 0
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 171,
+            "candidatesTokenCount": 31,
+            "totalTokenCount": 202,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 171
+              }
+            ]
+          },
+          "modelVersion": "gemini-2.5-flash",
+          "responseId": "AFTOafGnMOq1nsEPq6XswQI"
+        }
+  recorded_at: Thu, 02 Apr 2026 11:33:21 GMT
+recorded_with: VCR 6.4.0

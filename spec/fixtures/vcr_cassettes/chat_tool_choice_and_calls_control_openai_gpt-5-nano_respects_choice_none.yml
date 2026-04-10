@@ -1,0 +1,82 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.openai.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-5-nano","messages":[{"role":"user","content":"What''s
+        the weather in Berlin? (52.5200, 13.4050)"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}],"tool_choice":"none"}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 02 Apr 2026 11:38:49 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Cf-Ray:
+      - "<CF_RAY>"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Access-Control-Expose-Headers:
+      - X-Request-ID
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '9762'
+      Openai-Project:
+      - proj_61L3Oqt640dKU0CASS2iOj8Q
+      Openai-Version:
+      - '2020-10-01'
+      X-Openai-Proxy-Wasm:
+      - v0.1
+      X-Ratelimit-Limit-Requests:
+      - '5000'
+      X-Ratelimit-Limit-Tokens:
+      - '2000000'
+      X-Ratelimit-Remaining-Requests:
+      - '4999'
+      X-Ratelimit-Remaining-Tokens:
+      - '1999986'
+      X-Ratelimit-Reset-Requests:
+      - 12ms
+      X-Ratelimit-Reset-Tokens:
+      - 0s
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Set-Cookie:
+      - "<COOKIE>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        ewogICJpZCI6ICJjaGF0Y21wbC1EUUFmZkV2eGxZNENjWnA2cERsTmJTUHo5NFdrSSIsCiAgIm9iamVjdCI6ICJjaGF0LmNvbXBsZXRpb24iLAogICJjcmVhdGVkIjogMTc3NTEyOTkxOSwKICAibW9kZWwiOiAiZ3B0LTUtbmFuby0yMDI1LTA4LTA3IiwKICAiY2hvaWNlcyI6IFsKICAgIHsKICAgICAgImluZGV4IjogMCwKICAgICAgIm1lc3NhZ2UiOiB7CiAgICAgICAgInJvbGUiOiAiYXNzaXN0YW50IiwKICAgICAgICAiY29udGVudCI6ICJJIGRvbuKAmXQgaGF2ZSBsaXZlIHdlYXRoZXIgZGF0YSBhdmFpbGFibGUgcmlnaHQgbm93LlxuXG5JZiBpdCBoZWxwcywgaGVyZSBhcmUgdHlwaWNhbCBCZXJsaW4gY29uZGl0aW9ucyBieSBzZWFzb246XG4tIFdpbnRlciAoRGVj4oCTRmViKTogaGlnaHMgfjPigJM2wrBDLCBsb3dzIH4tMiB0byAtNcKwQy4gT2Z0ZW4gY2xvdWR5IHdpdGggc29tZSBzbm93OyBwcmVjaXBpdGF0aW9uIG9uZ29pbmcuXG4tIFNwcmluZyAoTWFy4oCTTWF5KTogZ3JhZHVhbGx5IHdhcm1pbmcuIE1hcmNoIH424oCTMTDCsEMsIEFwcmlsIH454oCTMTXCsEMsIE1heSB+MTXigJMyMMKwQy4gUmFpbnkgcGVyaW9kcyBwb3NzaWJsZS5cbi0gU3VtbWVyIChKdW7igJNBdWcpOiBoaWdocyB+MjLigJMyNcKwQywgbmlnaHRzIH4xNOKAkzE4wrBDLiBHZW5lcmFsbHkgbWlsZCB0byB3YXJtLCB3aXRoIG9jY2FzaW9uYWwgdGh1bmRlcnN0b3JtczsgcmFpbiBjYW4gYmUgZnJlcXVlbnQuXG4tIEF1dHVtbiAoU2Vw4oCTTm92KTogaGlnaHMgfjEw4oCTMTjCsEMgaW4gZWFybHkgZmFsbCwgY29vbGluZyB0byB+NeKAkzEwwrBDIGJ5IGxhdGUgZmFsbDsgdmFyaWFibGUgd2l0aCBwZXJpb2RzIG9mIHJhaW4uXG5cbklmIHlvdeKAmWQgbGlrZSwgSSBjYW46XG4tIFByb3ZpZGUgYSBxdWljayBzdW1tYXJ5IGJhc2VkIG9uIGhpc3RvcmljYWwgYXZlcmFnZXMgZm9yIHRvZGF54oCZcyBkYXRlLFxuLSBFeHBsYWluIGhvdyB0byByZWFkIGFuZCBpbnRlcnByZXQgYSBmb3JlY2FzdCB5b3UgYWxyZWFkeSBoYXZlLFxuLSBPciBoZWxwIHlvdSBmaW5kIGEgcmVsaWFibGUgc291cmNlIHRvIGNoZWNrIHRoZSBjdXJyZW50IGNvbmRpdGlvbnMgeW91cnNlbGYuIFxuXG5XaGF0IHdvdWxkIHlvdSBwcmVmZXI/IiwKICAgICAgICAicmVmdXNhbCI6IG51bGwsCiAgICAgICAgImFubm90YXRpb25zIjogW10KICAgICAgfSwKICAgICAgImZpbmlzaF9yZWFzb24iOiAic3RvcCIKICAgIH0KICBdLAogICJ1c2FnZSI6IHsKICAgICJwcm9tcHRfdG9rZW5zIjogMTY5LAogICAgImNvbXBsZXRpb25fdG9rZW5zIjogMTMxMywKICAgICJ0b3RhbF90b2tlbnMiOiAxNDgyLAogICAgInByb21wdF90b2tlbnNfZGV0YWlscyI6IHsKICAgICAgImNhY2hlZF90b2tlbnMiOiAwLAogICAgICAiYXVkaW9fdG9rZW5zIjogMAogICAgfSwKICAgICJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjogewogICAgICAicmVhc29uaW5nX3Rva2VucyI6IDEwODgsCiAgICAgICJhdWRpb190b2tlbnMiOiAwLAogICAgICAiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOiAwLAogICAgICAicmVqZWN0ZWRfcHJlZGljdGlvbl90b2tlbnMiOiAwCiAgICB9CiAgfSwKICAic2VydmljZV90aWVyIjogImRlZmF1bHQiLAogICJzeXN0ZW1fZmluZ2VycHJpbnQiOiBudWxsCn0K
+  recorded_at: Thu, 02 Apr 2026 11:38:49 GMT
+recorded_with: VCR 6.4.0

@@ -1,0 +1,45 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: "<OLLAMA_API_BASE>/chat/completions"
+    body:
+      encoding: UTF-8
+      string: '{"model":"qwen3","messages":[{"role":"user","content":"Call the array
+        params tool with tags [\"red\",\"blue\"] and tell me the combined tags."}],"stream":false,"tools":[{"type":"function","function":{"name":"array_params","description":"Uses
+        params DSL array support","parameters":{"type":"object","properties":{"tags":{"type":"array","description":"List
+        of tags to combine","items":{"type":"string"}}},"required":["tags"],"additionalProperties":false,"strict":true}}}],"enable_thinking":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 02 Apr 2026 11:30:12 GMT
+      Content-Length:
+      - '995'
+    body:
+      encoding: UTF-8
+      string: '{"id":"chatcmpl-258","object":"chat.completion","created":1775129412,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
+        the user wants me to call the array params tool with the tags [\"red\", \"blue\"]
+        and combine them. Let me check the function definition. The tool''s function
+        is supposed to take an array of strings called tags. The parameters are set
+        up to handle an array, so I just need to pass those two tags as an array.
+        The combined tags would be the array itself since the function''s purpose
+        is to combine them. So I''ll structure the tool call with the name \"array_params\"
+        and the arguments as a JSON object with the tags array. That should do it.\n","tool_calls":[{"id":"call_ygdvdq7j","index":0,"type":"function","function":{"name":"array_params","arguments":"{\"tags\":[\"red\",\"blue\"]}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":162,"completion_tokens":147,"total_tokens":309}}
+
+        '
+  recorded_at: Thu, 02 Apr 2026 11:30:12 GMT
+recorded_with: VCR 6.4.0

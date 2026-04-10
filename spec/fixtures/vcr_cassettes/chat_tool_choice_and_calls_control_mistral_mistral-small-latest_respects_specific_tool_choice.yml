@@ -1,0 +1,152 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.mistral.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"mistral-small-latest","messages":[{"role":"user","content":"What''s
+        the fall of Rome?"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}],"tool_choice":{"type":"function","function":{"name":"weather"}}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 02 Apr 2026 11:38:28 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Mistral-Correlation-Id:
+      - '019d4dfc-d284-7fac-b0d3-cfb5f6897a4a'
+      X-Kong-Request-Id:
+      - '019d4dfc-d284-7fac-b0d3-cfb5f6897a4a'
+      X-Ratelimit-Limit-Tokens-Minute:
+      - '600000'
+      X-Ratelimit-Remaining-Tokens-Minute:
+      - '578479'
+      X-Ratelimit-Tokens-Query-Cost:
+      - '172'
+      X-Ratelimit-Limit-Req-Minute:
+      - '360'
+      X-Ratelimit-Remaining-Req-Minute:
+      - '359'
+      X-Envoy-Upstream-Service-Time:
+      - '475'
+      Server:
+      - cloudflare
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Kong-Upstream-Latency:
+      - '477'
+      X-Kong-Proxy-Latency:
+      - '9'
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"348b0b86c13b4217b4c351a60e2bea70","created":1775129907,"model":"mistral-small-latest","usage":{"prompt_tokens":144,"total_tokens":172,"completion_tokens":28,"prompt_tokens_details":{"cached_tokens":0}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"tool_calls","message":{"role":"assistant","tool_calls":[{"id":"fQv24eGd0","function":{"name":"weather","arguments":"{\"latitude\":
+        \"41.9028\", \"longitude\": \"12.4964\"}"},"index":0}],"content":""}}]}'
+  recorded_at: Thu, 02 Apr 2026 11:38:28 GMT
+- request:
+    method: post
+    uri: https://api.mistral.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"mistral-small-latest","messages":[{"role":"user","content":"What''s
+        the fall of Rome?"},{"role":"assistant","content":"","tool_calls":[{"id":"fQv24eGd0","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}"}}]},{"role":"tool","content":"Current
+        weather at 41.9028, 12.4964: 15°C, Wind: 10 km/h","tool_call_id":"fQv24eGd0"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 02 Apr 2026 11:38:37 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Mistral-Correlation-Id:
+      - '019d4dfc-d4a0-7cd1-9b52-202ce1639365'
+      X-Kong-Request-Id:
+      - '019d4dfc-d4a0-7cd1-9b52-202ce1639365'
+      X-Ratelimit-Limit-Tokens-Minute:
+      - '600000'
+      X-Ratelimit-Remaining-Tokens-Minute:
+      - '578291'
+      X-Ratelimit-Tokens-Query-Cost:
+      - '188'
+      X-Envoy-Upstream-Service-Time:
+      - '9301'
+      Server:
+      - cloudflare
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Kong-Upstream-Latency:
+      - '9303'
+      X-Kong-Proxy-Latency:
+      - '7'
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImJiZjEyODcxNjNkMjQzZGY4NTUxYzI0ODE0NTE3NzA5IiwiY3JlYXRlZCI6MTc3NTEyOTkxMiwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsInVzYWdlIjp7InByb21wdF90b2tlbnMiOjIwNCwidG90YWxfdG9rZW5zIjozMTYsImNvbXBsZXRpb25fdG9rZW5zIjoxMTIsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjoxMjh9fSwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImZpbmlzaF9yZWFzb24iOiJzdG9wIiwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwidG9vbF9jYWxscyI6bnVsbCwiY29udGVudCI6IlRoZSDigJxGYWxsIG9mIFJvbWXigJ0gaXMgYSBzaG9ydGhhbmQgZm9yIHRoZSBncmFkdWFsIGNvbGxhcHNlIG9mIHRoZSBXZXN0ZXJuIFJvbWFuIEVtcGlyZSBpbiB0aGUgNXRoIGNlbnR1cnkgQUQuIEhpc3RvcmlhbnMgdXN1YWxseSBkYXRlIGl0IGZyb20gdGhlIGRlcG9zaXRpb24gb2YgdGhlIGxhc3Qgd2VzdGVybiBlbXBlcm9yLCBSb211bHVzIEF1Z3VzdHVsdXMsIGluIDQ3NiBBRCwgd2hlbiB0aGUgR2VybWFuaWMgY2hpZWZ0YWluIE9kb2FjZXIgc2VudCB0aGUgaW1wZXJpYWwgaW5zaWduaWEgdG8gQ29uc3RhbnRpbm9wbGUgYW5kIGRlY2xhcmVkIGhpbXNlbGYgS2luZyBvZiBJdGFseS4gVGhlIEVhc3Rlcm4gUm9tYW4gKEJ5emFudGluZSkgRW1waXJlIGNvbnRpbnVlZCBmb3IgYW5vdGhlciB0aG91c2FuZCB5ZWFycywgYnV0IHRoZSBXZXN0IGZyYWdtZW50ZWQgaW50byBzbWFsbGVyIEdlcm1hbmljIGtpbmdkb21zLCBlbmRpbmcgdGhlIGFuY2llbnQgUm9tYW4gc3RhdGUgaW4gdGhlIFdlc3QuIn19XX0=
+  recorded_at: Thu, 02 Apr 2026 11:38:37 GMT
+recorded_with: VCR 6.4.0

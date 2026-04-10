@@ -139,7 +139,7 @@ end
 
 Refer to the [Available Models Reference]({% link _reference/available-models.md %}) for details on moderation models and their capabilities.
 
-## Integration Patters
+## Integration Patterns
 
 ### Pre-Chat Moderation
 

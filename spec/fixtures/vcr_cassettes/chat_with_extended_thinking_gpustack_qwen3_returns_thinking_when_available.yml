@@ -1,0 +1,174 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: "<GPUSTACK_API_BASE>/chat/completions"
+    body:
+      encoding: UTF-8
+      string: '{"model":"qwen3","messages":[{"role":"user","content":"If a magic mirror
+        shows your future self, but only if you ask a question it cannot answer truthfully,
+        what question do you ask to see your future, and what would the mirror reveal
+        about the answer it gives?"}],"stream":false,"reasoning_effort":"medium"}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 02 Apr 2026 11:31:55 GMT
+      - Thu, 02 Apr 2026 11:31:56 GMT
+      Server:
+      - uvicorn
+      - uvicorn
+      Keep-Alive:
+      - timeout=15, max=100
+      Content-Length:
+      - '10165'
+      Content-Type:
+      - application/json
+      X-Request-Accepted-At:
+      - "<X_REQUEST_ID>"
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Access-Control-Allow-Origin:
+      - "*"
+    body:
+      encoding: UTF-8
+      string: '{"choices":[{"finish_reason":"length","index":0,"message":{"content":"\n\n**Question:**  \n*\"What
+        is the answer to this question?\"*  \n\n**Mirror''s Revelation:**  \nThe mirror
+        cannot answer truthfully, as the question is self-referential and leads to
+        a paradox. Its inability to resolve the contradiction forces it to reveal
+        a vision of your future self.","reasoning_content":"\nOkay, so I need to figure
+        out what question to ask a magic mirror that only shows your future self if
+        the question can''t be answered truthfully. The mirror reveals something about
+        the answer it gives. Let me start by breaking down the problem.\n\nFirst,
+        the mirror only shows your future self if the question it can''t answer truthfully.
+        That means the question must be one that the mirror can''t answer truthfully,
+        which might be a paradox or a self-referential question. For example, something
+        like \"Will I be happy?\" might be answerable, but maybe a question that creates
+        a paradox.\n\nWait, the key here is that the mirror can''t answer truthfully.
+        So the question must be such that if it answers \"yes\" or \"no,\" it creates
+        a contradiction. Classic example is the \"This statement is false\" paradox,
+        which is a self-referential paradox. So maybe the question is something like
+        \"Will I be able to answer this question truthfully?\" or \"Is this statement
+        true?\" But how does that relate to seeing your future self?\n\nAlternatively,
+        the question might be designed to force the mirror into a situation where
+        it can''t give a truthful answer, thus revealing your future. So maybe the
+        question is something that leads to a paradox, making the mirror unable to
+        answer, thereby showing your future self. But how does that work?\n\nLet me
+        think. If the question is paradoxical, the mirror can''t answer it truthfully.
+        Therefore, the mirror might have to show your future self as a consequence.
+        So the question would be something like \"What is the answer to this question?\"
+        But that''s a bit too straightforward. Wait, the mirror can''t answer it truthfully
+        because the answer is the question itself, leading to a loop.\n\nAlternatively,
+        maybe the question is \"Will I be able to see my future self?\" But if the
+        mirror can''t answer that, then it would show your future self. But that seems
+        circular.\n\nWait, the problem states that the mirror shows your future self
+        only if you ask a question it cannot answer truthfully. So the question must
+        be such that the mirror cannot answer it truthfully. So the question must
+        be one that leads to a paradox, making the mirror''s answer either a lie or
+        impossible to determine.\n\nLet me think of the classic \"This statement is
+        false\" paradox. If the mirror is asked, \"Is this statement true?\" then
+        it can''t answer truthfully. But how does that relate to seeing your future
+        self?\n\nAlternatively, the question could be something like, \"What is the
+        answer to this question?\" which is a self-referential question. The mirror
+        can''t answer it truthfully because the answer would have to be the same as
+        the question, leading to a loop. Therefore, the mirror can''t answer it, so
+        it shows your future self. But what would the mirror reveal about the answer
+        it gives?\n\nWait, the mirror can''t answer the question truthfully, so maybe
+        the answer is something that reveals your future. For example, if the question
+        is \"What is the answer to this question?\" then the mirror can''t answer
+        it, but maybe the act of not being able to answer leads to showing your future
+        self. But the answer it gives... if it can''t answer, maybe it shows a vision
+        of your future self, which is the answer. But how?\n\nAlternatively, the question
+        is designed so that the mirror''s inability to answer truthfully is the key
+        to revealing the future. For instance, if the question is \"Will I be able
+        to answer this question truthfully?\" If the mirror answers \"Yes,\" then
+        it''s a lie, so it must be \"No,\" but then the answer is \"No,\" which would
+        be truthful if the mirror can''t answer it. Wait, this is getting confusing.\n\nLet
+        me think of a paradox. If the question is \"Is the answer to this question
+        ''No''?\" Then if the mirror answers \"No,\" then the answer is \"No,\" which
+        would make the statement \"Is the answer to this question ''No''?\" true,
+        which contradicts the answer. If the mirror answers \"Yes,\" then the answer
+        is \"Yes,\" making the statement false. So the mirror can''t answer truthfully,
+        hence it can''t answer. Therefore, the mirror can''t answer, so it shows your
+        future self. But what would the mirror reveal about the answer it gives? Since
+        it can''t give an answer, maybe it shows a vision of your future, which is
+        the answer. But the answer is the mirror''s inability to answer, which is
+        a paradox.\n\nAlternatively, the question is \"What is the answer to this
+        question?\" The mirror can''t answer it because the answer is the same as
+        the question, so it can''t provide a truthful answer. Therefore, the mirror
+        shows your future self. The answer it gives is that it can''t answer, but
+        the act of not answering leads to revealing your future. So the mirror''s
+        answer is that it can''t answer, but the vision is your future self. So the
+        answer it gives is that it can''t answer, but the mirror''s inability to answer
+        is the key to revealing the future.\n\nBut the question is about what question
+        to ask and what the mirror reveals about the answer. So maybe the question
+        is something like \"What is the answer to this question?\" and the mirror
+        reveals that the answer is a paradox, which is your future self. Alternatively,
+        the question is \"Will I be able to see my future self?\" but that might not
+        be paradoxical.\n\nWait, another approach. The mirror can only show your future
+        self if the question is one that it can''t answer. So the question must be
+        something that is inherently unanswerable. For example, the question could
+        be \"What is the answer to this question?\" which is a self-referential question,
+        leading to a paradox. Therefore, the mirror can''t answer it truthfully, so
+        it shows your future self. The answer it gives is that it can''t answer, but
+        the mirror''s inability is the key to revealing your future. However, the
+        problem says \"what would the mirror reveal about the answer it gives?\" So
+        maybe the answer is that the answer is a paradox, which is your future self.\n\nAlternatively,
+        the mirror''s answer is that it can''t answer, but the act of not answering
+        allows the mirror to show your future. So the answer is that the mirror can''t
+        answer, which is the answer, but the mirror uses that inability to show your
+        future.\n\nI think the classic question for a paradox is \"Is the answer to
+        this question ''No''?\" which is a paradox. But how does that relate to seeing
+        your future self? Maybe the mirror can''t answer that, so it shows your future.
+        The answer it gives is that it can''t answer, but the mirror''s answer is
+        the future. So the mirror reveals that the answer is a paradox, which is your
+        future.\n\nAlternatively, the question is \"Will I be able to see my future
+        self?\" If the mirror can''t answer that, then it shows your future. But the
+        answer is that the mirror can''t answer, which is the key. So the mirror reveals
+        that the answer is that it can''t answer, which is the paradox, and that leads
+        to seeing your future.\n\nI think the key here is that the question is paradoxical,
+        leading the mirror to be unable to answer truthfully, thereby revealing your
+        future self. The answer the mirror gives is that it can''t answer, but the
+        act of not answering is the key. Therefore, the question is something like
+        \"Is this statement true?\" or \"What is the answer to this question?\" and
+        the mirror reveals that the answer is a paradox, which is your future self.\n\nBut
+        the user might be looking for a specific question. Maybe the question is \"What
+        is the answer to this question?\" which is a classic self-referential question.
+        The mirror can''t answer it truthfully, so it shows your future self. The
+        answer it gives is that it can''t answer, but the mirror''s inability to answer
+        is the key to revealing your future. So the mirror reveals that the answer
+        is a paradox, which is your future self.\n\nAlternatively, the question is
+        \"Will I be able to answer this question truthfully?\" If the mirror answers
+        \"Yes,\" then it''s lying, so the answer must be \"No,\" but then the mirror
+        can''t answer truthfully. So the mirror can''t answer, thus showing your future.
+        The answer is that the mirror can''t answer, which is the key.\n\nI think
+        the most common answer to this type of question is the paradoxical question,
+        like \"Is the answer to this question ''No''?\" or \"What is the answer to
+        this question?\" which leads to a paradox. Therefore, the mirror can''t answer,
+        so it shows your future self. The answer it gives is that it can''t answer,
+        which is the paradox, and the mirror reveals that the answer is your future
+        self, which is the paradox itself.\n\nSo putting it together, the question
+        is something like \"What is the answer to this question?\" and the mirror
+        reveals that the answer is a paradox, which is your future self. Alternatively,
+        the question could be \"Will I be able to see my future self?\" but that''s
+        not paradoxical. The key is the paradox.\n\nTherefore, the answer is that
+        the question is a paradoxical one, like \"Is the answer to this question ''No''?\"
+        and the mirror reveals that the answer is a paradox, which is your future
+        self. The mirror can''t answer truthfully, so it shows your future. The answer
+        it gives is that it can''t answer, but the mirror''s inability to answer leads
+        to the revelation of your future self.\n","role":"assistant"}}],"created":1775129533,"id":"chatcmpl-dia3pXF1CjEbLLTsF3RJe3NFzCPyamEs","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":2048,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":1987,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":52,"prompt_tokens_details":{"cached_tokens":0},"prompt_tokens_per_second":2215.8776153747817,"time_per_output_token_ms":8.44669287109375,"time_to_first_token_ms":23.467,"tokens_per_second":118.38953011091445,"total_tokens":2100}}'
+  recorded_at: Thu, 02 Apr 2026 11:32:13 GMT
+recorded_with: VCR 6.4.0

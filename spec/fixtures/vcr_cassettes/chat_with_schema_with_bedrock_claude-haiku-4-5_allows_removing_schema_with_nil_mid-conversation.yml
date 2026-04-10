@@ -1,0 +1,100 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.anthropic.claude-haiku-4-5-20251001-v1:0/converse
+    body:
+      encoding: UTF-8
+      string: '{"messages":[{"role":"user","content":[{"text":"Generate a person named
+        Bob"}]}],"inferenceConfig":{},"outputConfig":{"textFormat":{"type":"json_schema","structure":{"jsonSchema":{"schema":"{\"type\":\"object\",\"properties\":{\"name\":{\"type\":\"string\"},\"age\":{\"type\":\"integer\"}},\"required\":[\"name\",\"age\"],\"additionalProperties\":false}","name":"response"}}}}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      X-Amz-Date:
+      - 20260402T112316Z
+      X-Amz-Content-Sha256:
+      - af62f0aa22d1ee9e206e655ec402d6baf3a7468f410418a88a9815c11975716d
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 02 Apr 2026 11:23:19 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '344'
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - 1181c369-2007-4a6c-84a0-416d594e746e
+    body:
+      encoding: UTF-8
+      string: '{"metrics":{"latencyMs":2337},"output":{"message":{"content":[{"text":"{\"name\":\"Bob\",\"age\":30}"}],"role":"assistant"}},"stopReason":"end_turn","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":174,"outputTokens":12,"serverToolUsage":{},"totalTokens":186}}'
+  recorded_at: Thu, 02 Apr 2026 11:23:19 GMT
+- request:
+    method: post
+    uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.anthropic.claude-haiku-4-5-20251001-v1:0/converse
+    body:
+      encoding: UTF-8
+      string: '{"messages":[{"role":"user","content":[{"text":"Generate a person named
+        Bob"}]},{"role":"assistant","content":[{"text":"{\"name\":\"Bob\",\"age\":30}"}]},{"role":"user","content":[{"text":"Now
+        just tell me about Ruby"}]}],"inferenceConfig":{}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      X-Amz-Date:
+      - 20260402T112319Z
+      X-Amz-Content-Sha256:
+      - 4192f814dde366ba7862dfc154dbdb0ec0f4807aca4d4fb3ea390a961942545a
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 02 Apr 2026 11:23:22 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1271'
+      Connection:
+      - keep-alive
+      X-Amzn-Requestid:
+      - 6937a6fc-1c06-4cc4-abb0-f3e3acc788e6
+    body:
+      encoding: UTF-8
+      string: '{"metrics":{"latencyMs":2608},"output":{"message":{"content":[{"text":"#
+        Ruby\n\nRuby is a dynamic, open-source programming language known for its
+        simplicity and productivity. Here are some key characteristics:\n\n**Features:**\n-
+        **Elegant syntax** - Easy to read and write, with a focus on developer happiness\n-
+        **Object-oriented** - Everything is an object\n- **Dynamic typing** - Types
+        are determined at runtime\n- **Interpreted** - Code is executed directly without
+        compilation\n\n**Popular Uses:**\n- Web development (especially with Ruby
+        on Rails framework)\n- Scripting and automation\n- Data analysis\n- System
+        administration\n\n**Key Strengths:**\n- Fast development cycles\n- Large,
+        supportive community\n- Extensive libraries (gems)\n- Great for rapid prototyping\n\n**Notable
+        Framework:**\n- **Ruby on Rails** - A web application framework that emphasizes
+        convention over configuration\n\nRuby was created by Yukihiro Matsumoto in
+        1995 and has become particularly popular in web development startups and agencies."}],"role":"assistant"}},"stopReason":"end_turn","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":33,"outputTokens":212,"serverToolUsage":{},"totalTokens":245}}'
+  recorded_at: Thu, 02 Apr 2026 11:23:22 GMT
+recorded_with: VCR 6.4.0

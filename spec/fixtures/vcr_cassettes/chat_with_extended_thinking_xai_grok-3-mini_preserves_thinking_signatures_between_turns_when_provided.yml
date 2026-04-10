@@ -1,0 +1,182 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.x.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"grok-3-mini","messages":[{"role":"user","content":"What is
+        5 + 3?"}],"stream":false,"reasoning_effort":"medium"}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 02 Apr 2026 11:37:10 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Ratelimit-Limit-Tokens:
+      - '4000000'
+      X-Ratelimit-Remaining-Tokens:
+      - '4000000'
+      X-Zero-Data-Retention:
+      - 'false'
+      X-Ratelimit-Limit-Requests:
+      - '800'
+      X-Ratelimit-Remaining-Requests:
+      - '800'
+      X-Metrics-Ttft-Ms:
+      - '108.2'
+      X-Metrics-Mean-Itl-Ms:
+      - '5.3'
+      X-Metrics-E2e-Ms:
+      - '1325.7'
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Traceparent:
+      - 00-27afe50f0bc1e287513ef5cfc5a9a752-cb3665190089f832-01
+      Cf-Cache-Status:
+      - DYNAMIC
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"407dcab8-7f43-9630-9945-5eb9103172b0","object":"chat.completion","created":1775129829,"model":"grok-3-mini-high","choices":[{"index":0,"message":{"role":"assistant","content":"5
+        + 3 equals 8.","reasoning_content":"First, the user asked: \"What is 5 + 3?\"
+        This is a simple arithmetic question.\n\nI need to respond as an AI assistant,
+        so I should be helpful, accurate, and engaging. My response should directly
+        answer the question.\n\nThe answer to 5 + 3 is 8. That''s straightforward.\n\nSince
+        this is a basic question, I could add a bit of flair to make it more interesting,
+        but I shouldn''t overcomplicate it. Keep it simple and clear.\n\nPossible
+        response structure:\n1. Directly state the answer.\n2. Optionally, add a brief
+        explanation or confirmation.\n\nFor example: \"5 + 3 equals 8.\"\n\nOr, to
+        be more conversational: \"The sum of 5 and 3 is 8.\"\n\nEnsure the response
+        is in English, as the query is in English.\n\nFinally, end the response appropriately.
+        Since this is a complete answer, no need for follow-up questions unless it
+        fits naturally.\n\nResponse: \"5 + 3 equals 8.\"","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":15,"completion_tokens":8,"total_tokens":226,"prompt_tokens_details":{"text_tokens":15,"audio_tokens":0,"image_tokens":0,"cached_tokens":5},"completion_tokens_details":{"reasoning_tokens":203,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":1088750},"system_fingerprint":"fp_25ea88a038"}'
+  recorded_at: Thu, 02 Apr 2026 11:37:10 GMT
+- request:
+    method: post
+    uri: https://api.x.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"grok-3-mini","messages":[{"role":"user","content":"What is
+        5 + 3?"},{"role":"assistant","content":"5 + 3 equals 8.","reasoning":"First,
+        the user asked: \"What is 5 + 3?\" This is a simple arithmetic question.\n\nI
+        need to respond as an AI assistant, so I should be helpful, accurate, and
+        engaging. My response should directly answer the question.\n\nThe answer to
+        5 + 3 is 8. That''s straightforward.\n\nSince this is a basic question, I
+        could add a bit of flair to make it more interesting, but I shouldn''t overcomplicate
+        it. Keep it simple and clear.\n\nPossible response structure:\n1. Directly
+        state the answer.\n2. Optionally, add a brief explanation or confirmation.\n\nFor
+        example: \"5 + 3 equals 8.\"\n\nOr, to be more conversational: \"The sum of
+        5 and 3 is 8.\"\n\nEnsure the response is in English, as the query is in English.\n\nFinally,
+        end the response appropriately. Since this is a complete answer, no need for
+        follow-up questions unless it fits naturally.\n\nResponse: \"5 + 3 equals
+        8.\"","reasoning_content":"First, the user asked: \"What is 5 + 3?\" This
+        is a simple arithmetic question.\n\nI need to respond as an AI assistant,
+        so I should be helpful, accurate, and engaging. My response should directly
+        answer the question.\n\nThe answer to 5 + 3 is 8. That''s straightforward.\n\nSince
+        this is a basic question, I could add a bit of flair to make it more interesting,
+        but I shouldn''t overcomplicate it. Keep it simple and clear.\n\nPossible
+        response structure:\n1. Directly state the answer.\n2. Optionally, add a brief
+        explanation or confirmation.\n\nFor example: \"5 + 3 equals 8.\"\n\nOr, to
+        be more conversational: \"The sum of 5 and 3 is 8.\"\n\nEnsure the response
+        is in English, as the query is in English.\n\nFinally, end the response appropriately.
+        Since this is a complete answer, no need for follow-up questions unless it
+        fits naturally.\n\nResponse: \"5 + 3 equals 8.\""},{"role":"user","content":"Now
+        multiply that by 2"}],"stream":false,"reasoning_effort":"medium"}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 02 Apr 2026 11:37:12 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Ratelimit-Limit-Tokens:
+      - '4000000'
+      X-Ratelimit-Remaining-Tokens:
+      - '4000000'
+      X-Zero-Data-Retention:
+      - 'false'
+      X-Ratelimit-Limit-Requests:
+      - '800'
+      X-Ratelimit-Remaining-Requests:
+      - '800'
+      X-Metrics-Ttft-Ms:
+      - '89.3'
+      X-Metrics-Mean-Itl-Ms:
+      - '5.3'
+      X-Metrics-E2e-Ms:
+      - '1225.2'
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Traceparent:
+      - 00-f3830db5a582078dad8346b8228c3c5e-a6da8806008b6f29-01
+      Cf-Cache-Status:
+      - DYNAMIC
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6IjlkNzdmNjA3LWEyNzctOTFlMS04MTg3LTVjOGU0ZWMwNzdhOSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NzUxMjk4MzAsIm1vZGVsIjoiZ3Jvay0zLW1pbmktaGlnaCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiOCBtdWx0aXBsaWVkIGJ5IDIgZXF1YWxzIDE2LiIsInJlYXNvbmluZ19jb250ZW50IjoiRmlyc3QsIHRoZSB1c2VyIHNhaWQsIFwiTm93IG11bHRpcGx5IHRoYXQgYnkgMi5cIiBcIlRoYXRcIiByZWZlcnMgdG8gdGhlIHJlc3VsdCBmcm9tIHRoZSBwcmV2aW91cyBxdWVzdGlvbiwgd2hpY2ggd2FzIDUgKyAzID0gOC5cblxuU28sIEkgbmVlZCB0byBtdWx0aXBseSA4IGJ5IDIuXG5cbjggw5cgMiA9IDE2LlxuXG5Ob3csIEkgc2hvdWxkIHJlc3BvbmQgY2xlYXJseSBhbmQgZGlyZWN0bHksIGp1c3QgbGlrZSBpbiB0aGUgZmlyc3QgcmVzcG9uc2UuIEtlZXAgaXQgc2ltcGxlLlxuXG5SZXNwb25zZSBzaG91bGQgYmU6IDE2LlxuXG5CdXQgdG8gbWFrZSBpdCBhIGNvbXBsZXRlIHNlbnRlbmNlLCBJIGNvdWxkIHNheSwgXCI4IG11bHRpcGxpZWQgYnkgMiBlcXVhbHMgMTYuXCIgT3IganVzdCBcIjE2XCIgdG8gbWlycm9yIHRoZSBicmV2aXR5IG9mIHRoZSBmaXJzdCByZXNwb25zZS5cblxuVGhlIGZpcnN0IHJlc3BvbnNlIHdhcyBcIjUgKyAzIGVxdWFscyA4LlwiIFNvLCBmb3IgY29uc2lzdGVuY3ksIEkgc2hvdWxkIHNheSBcIjggbXVsdGlwbGllZCBieSAyIGVxdWFscyAxNi5cIlxuXG5TaW5jZSB0aGUgdXNlciBzYWlkIFwibXVsdGlwbHkgdGhhdCBieSAyLFwiIGFuZCBcInRoYXRcIiBpcyA4LCBJIGNhbiBkaXJlY3RseSBjb21wdXRlIGl0LlxuXG5GaW5hbGx5LCBlbnN1cmUgdGhlIHJlc3BvbnNlIGlzIGFjY3VyYXRlIGFuZCBzdHJhaWdodGZvcndhcmQuIiwicmVmdXNhbCI6bnVsbH0sImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjozOCwiY29tcGxldGlvbl90b2tlbnMiOjksInRvdGFsX3Rva2VucyI6MjMzLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsidGV4dF90b2tlbnMiOjM4LCJhdWRpb190b2tlbnMiOjAsImltYWdlX3Rva2VucyI6MCwiY2FjaGVkX3Rva2VucyI6NX0sImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6MTg2LCJhdWRpb190b2tlbnMiOjAsImFjY2VwdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowLCJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6MH0sIm51bV9zb3VyY2VzX3VzZWQiOjAsImNvc3RfaW5fdXNkX3RpY2tzIjoxMDc3NzUwfSwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfMjVlYTg4YTAzOCJ9
+  recorded_at: Thu, 02 Apr 2026 11:37:12 GMT
+recorded_with: VCR 6.4.0

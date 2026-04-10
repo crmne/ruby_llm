@@ -7,7 +7,7 @@ module RubyLLM
       include DeepSeek::Chat
 
       def api_base
-        'https://api.deepseek.com'
+        @config.deepseek_api_base || 'https://api.deepseek.com'
       end
 
       def headers
@@ -19,6 +19,10 @@ module RubyLLM
       class << self
         def capabilities
           DeepSeek::Capabilities
+        end
+
+        def configuration_options
+          %i[deepseek_api_key deepseek_api_base]
         end
 
         def configuration_requirements
