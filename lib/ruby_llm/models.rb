@@ -105,6 +105,7 @@ module RubyLLM
 
       def resolve(model_id, provider: nil, assume_exists: false, config: nil) # rubocop:disable Metrics/PerceivedComplexity
         config ||= RubyLLM.config
+        provider ||= resolve_default_provider(model_id, config)
         provider_class = provider ? Provider.providers[provider.to_sym] : nil
 
         if provider_class
@@ -134,6 +135,17 @@ module RubyLLM
           provider_instance = provider_class.new(config)
         end
         [model, provider_instance]
+      end
+
+      def resolve_default_provider(model_id, config)
+        default_providers = config.default_providers
+        return nil if default_providers.nil? || default_providers.empty?
+
+        model_id_str = model_id.to_s
+        best_key = default_providers.keys
+                                    .select { |key| model_id_str.start_with?(key.to_s) }
+                                    .max_by { |key| key.to_s.length }
+        default_providers[best_key] if best_key
       end
 
       def method_missing(method, ...)
