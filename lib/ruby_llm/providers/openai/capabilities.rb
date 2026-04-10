@@ -8,6 +8,9 @@ module RubyLLM
         module_function
 
         MODEL_PATTERNS = {
+          gpt_image15: /^gpt-image-1\.5/,
+          gpt_image_mini: /^gpt-image-1-mini/,
+          gpt_image: /^gpt-image-1(?:$|-)/,
           gpt41: /^gpt-4\.1(?!-(?:mini|nano))/,
           gpt41_mini: /^gpt-4\.1-mini/,
           gpt41_nano: /^gpt-4\.1-nano/,
@@ -43,6 +46,18 @@ module RubyLLM
         }.freeze
 
         PRICES = {
+          gpt_image: {
+            text: { input: 5.0, cached_input: 1.25 },
+            images: { input: 10.0, cached_input: 2.5, output: 40.0 }
+          },
+          gpt_image_mini: {
+            text: { input: 2.0, cached_input: 0.2 },
+            images: { input: 2.5, cached_input: 0.25, output: 8.0 }
+          },
+          gpt_image15: {
+            text: { input: 5.0, cached_input: 1.25, output: 10.0 },
+            images: { input: 8.0, cached_input: 2.0, output: 32.0 }
+          },
           gpt5: { input: 1.25, output: 10.0, cached_input: 0.125 },
           gpt5_mini: { input: 0.25, output: 2.0, cached_input: 0.025 },
           gpt5_nano: { input: 0.05, output: 0.4, cached_input: 0.005 },
@@ -77,6 +92,20 @@ module RubyLLM
           moderation: { price: 0.0 }
         }.freeze
 
+        NIL_LIMIT_FAMILIES = %w[
+          gpt_image
+          gpt_image_mini
+          gpt_image15
+          gpt4o_mini_tts
+          tts1
+          tts1_hd
+          whisper
+          moderation
+          embedding3_large
+          embedding3_small
+          embedding_ada
+        ].freeze
+
         def supports_tool_choice?(_model_id)
           true
         end
@@ -86,7 +115,10 @@ module RubyLLM
         end
 
         def context_window_for(model_id)
-          case model_family(model_id)
+          family = model_family(model_id)
+          return nil if NIL_LIMIT_FAMILIES.include?(family)
+
+          case family
           when 'gpt41', 'gpt41_mini', 'gpt41_nano' then 1_047_576
           when 'gpt5', 'gpt5_mini', 'gpt5_nano', 'gpt4_turbo', 'gpt4o', 'gpt4o_audio', 'gpt4o_mini',
                'gpt4o_mini_audio', 'gpt4o_mini_realtime', 'gpt4o_realtime', 'gpt4o_search',
@@ -95,14 +127,15 @@ module RubyLLM
           when 'gpt4o_mini_transcribe' then 16_000
           when 'o1', 'o1_pro', 'o3_mini' then 200_000
           when 'gpt35_turbo' then 16_385
-          when 'gpt4o_mini_tts', 'tts1', 'tts1_hd', 'whisper', 'moderation',
-               'embedding3_large', 'embedding3_small', 'embedding_ada' then nil
           else 4_096
           end
         end
 
         def max_tokens_for(model_id)
-          case model_family(model_id)
+          family = model_family(model_id)
+          return nil if NIL_LIMIT_FAMILIES.include?(family)
+
+          case family
           when 'gpt5', 'gpt5_mini', 'gpt5_nano' then 400_000
           when 'gpt41', 'gpt41_mini', 'gpt41_nano' then 32_768
           when 'gpt4' then 8_192
@@ -110,8 +143,6 @@ module RubyLLM
           when 'gpt4o_mini_transcribe' then 2_000
           when 'o1', 'o1_pro', 'o3_mini' then 100_000
           when 'o1_mini' then 65_536
-          when 'gpt4o_mini_tts', 'tts1', 'tts1_hd', 'whisper', 'moderation',
-               'embedding3_large', 'embedding3_small', 'embedding_ada' then nil
           else 16_384
           end
         end
@@ -126,6 +157,8 @@ module RubyLLM
         end
 
         def pricing_for(model_id)
+          return image_pricing_for(model_id) if image_model?(model_id)
+
           standard_pricing = {
             input_per_million: input_price_for(model_id),
             output_per_million: output_price_for(model_id)
@@ -147,8 +180,9 @@ module RubyLLM
 
         def supports_vision?(model_id)
           case model_family(model_id)
-          when 'gpt5', 'gpt5_mini', 'gpt5_nano', 'gpt41', 'gpt41_mini', 'gpt41_nano', 'gpt4',
-               'gpt4_turbo', 'gpt4o', 'gpt4o_mini', 'o1', 'o1_pro', 'moderation', 'gpt4o_search'
+          when 'gpt_image', 'gpt_image_mini', 'gpt_image15', 'gpt5', 'gpt5_mini', 'gpt5_nano', 'gpt41', 'gpt41_mini',
+               'gpt41_nano', 'gpt4', 'gpt4_turbo', 'gpt4o', 'gpt4o_mini', 'o1', 'o1_pro', 'moderation',
+               'gpt4o_search'
             true
           else
             false
@@ -176,27 +210,63 @@ module RubyLLM
         end
 
         def input_price_for(model_id)
+          return family_prices(model_id).dig(:text, :input) if image_model?(model_id)
+
           price_for(model_id, :input, 0.50)
         end
 
         def output_price_for(model_id)
+          return family_prices(model_id).dig(:text, :output) if image_model?(model_id)
+
           price_for(model_id, :output, 1.50)
         end
 
         def cached_input_price_for(model_id)
+          return family_prices(model_id).dig(:text, :cached_input) if image_model?(model_id)
+
           family = model_family(model_id).to_sym
           PRICES.fetch(family, {})[:cached_input]
         end
 
+        def image_model?(model_id)
+          %w[gpt_image gpt_image_mini gpt_image15].include?(model_family(model_id))
+        end
+
+        def image_pricing_for(model_id)
+          text_pricing = {
+            input_per_million: input_price_for(model_id)
+          }
+          cached_text_price = cached_input_price_for(model_id)
+          text_pricing[:cached_input_per_million] = cached_text_price if cached_text_price
+
+          image_pricing = {
+            input_per_million: family_prices(model_id).dig(:images, :input),
+            output_per_million: family_prices(model_id).dig(:images, :output)
+          }
+          cached_image_price = family_prices(model_id).dig(:images, :cached_input)
+          image_pricing[:cached_input_per_million] = cached_image_price if cached_image_price
+
+          {
+            text_tokens: { standard: text_pricing },
+            images: { standard: image_pricing }
+          }
+        end
+
         def price_for(model_id, key, fallback)
-          family = model_family(model_id).to_sym
-          prices = PRICES.fetch(family, { key => fallback })
+          prices = family_prices(model_id)
+          prices = { key => fallback } if prices.empty?
           prices[key] || prices[:price] || fallback
+        end
+
+        def family_prices(model_id)
+          family = model_family(model_id).to_sym
+          PRICES.fetch(family, {})
         end
 
         module_function :context_window_for, :max_tokens_for, :critical_capabilities_for, :pricing_for,
                         :model_family, :supports_vision?, :supports_functions?, :supports_structured_output?,
-                        :input_price_for, :output_price_for, :cached_input_price_for, :price_for
+                        :input_price_for, :output_price_for, :cached_input_price_for, :image_model?,
+                        :image_pricing_for, :price_for, :family_prices
       end
     end
   end
