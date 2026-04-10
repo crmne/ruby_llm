@@ -5,7 +5,8 @@ module RubyLLM
   class Message
     ROLES = %i[system user assistant tool].freeze
 
-    attr_reader :role, :model_id, :tool_calls, :tool_call_id, :raw, :thinking, :tokens
+    attr_reader :role, :model_id, :tool_calls, :tool_call_id, :raw, :thinking, :tokens, :cache_point
+    alias cache_point? cache_point
     attr_writer :content
 
     def initialize(options = {})
@@ -24,6 +25,7 @@ module RubyLLM
       )
       @raw = options[:raw]
       @thinking = options[:thinking]
+      @cache_point = options.fetch(:cache_point, false)
 
       ensure_valid_role
     end
@@ -80,7 +82,8 @@ module RubyLLM
         tool_calls: tool_calls,
         tool_call_id: tool_call_id,
         thinking: thinking&.text,
-        thinking_signature: thinking&.signature
+        thinking_signature: thinking&.signature,
+        cache_point: @cache_point || nil
       }.merge(tokens ? tokens.to_h : {}).compact
     end
 

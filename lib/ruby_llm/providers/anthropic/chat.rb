@@ -41,11 +41,13 @@ module RubyLLM
           system_messages.flat_map do |msg|
             content = msg.content
 
-            if content.is_a?(RubyLLM::Content::Raw)
-              content.value
-            else
-              Media.format_content(content)
-            end
+            blocks = if content.is_a?(RubyLLM::Content::Raw)
+                       Array(content.value)
+                     else
+                       Array(Media.format_content(content))
+                     end
+
+            msg.cache_point? ? inject_cache_control(blocks) : blocks
           end
         end
 
@@ -159,6 +161,7 @@ module RubyLLM
           end
 
           append_formatted_content(content_blocks, msg.content)
+          inject_cache_control(content_blocks) if msg.cache_point?
 
           {
             role: convert_role(msg.role),
@@ -226,6 +229,17 @@ module RubyLLM
           else
             content_blocks << formatted_content
           end
+        end
+
+        def inject_cache_control(blocks)
+          return blocks if blocks.empty?
+
+          last = blocks.last
+          # Don't duplicate if already present (e.g. Content::Raw with cache_control)
+          return blocks if last.is_a?(Hash) && last[:cache_control]
+
+          blocks[-1] = last.merge(cache_control: { type: 'ephemeral' })
+          blocks
         end
 
         def convert_role(role)
