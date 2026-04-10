@@ -6,19 +6,19 @@ description: Extend RubyLLM with MCP servers, structured schemas, instrumentatio
 ---
 
 # {{ page.title }}
-
 {: .no_toc }
 
-{{ page.description }} {: .fs-6 .fw-300 }
+{{ page.description }}
+{: .fs-6 .fw-300 }
 
 > Ecosystem projects are maintained by their respective authors. We list projects for discoverability, but we cannot guarantee the quality, security, maintenance status, or fitness of every listed project.
 {: .note }
 
 ## Table of contents
-
 {: .no_toc .text-delta }
 
-1. TOC {:toc}
+1. TOC
+{:toc}
 
 ---
 
@@ -248,29 +248,29 @@ For detailed documentation, setup instructions, and examples, visit the [OpenTel
 
 ## RubyLLM::Tribunal
 
-**LLM Evaluation Framework for Ruby**
+**LLM Evaluation and Testing for Ruby**
 
-[RubyLLM::Tribunal](https://github.com/Alqemist-labs/ruby_llm-tribunal) provides comprehensive tools for evaluating and testing LLM outputs, detecting hallucinations, measuring response quality, and ensuring safety. Perfect for RAG systems, chatbots, and any LLM-powered application.
+[`RubyLLM::Tribunal`](https://github.com/Alqemist-labs/ruby_llm-tribunal) helps you evaluate and test LLM outputs in Ruby applications. It combines deterministic assertions for fast checks with model-based evaluations for quality, faithfulness, and safety.
 
 ### Why Use RubyLLM::Tribunal?
 
-When building LLM applications, you need to validate that your outputs are:
+When building LLM features, you often need to verify that responses are:
 
-- Faithful to source documents (no hallucinations)
-- Safe and appropriate (no toxic or harmful content)
-- Accurate and relevant to user queries
-- Resistant to jailbreak attempts
+- Grounded in retrieved context
+- Relevant to the user's request
+- Free from hallucinations or unsafe content
+- Resistant to jailbreak or prompt injection attempts
 
-RubyLLM::Tribunal makes this easy with assertions you can use in your test suite.
+`RubyLLM::Tribunal` brings these checks into your RSpec or Minitest suite.
 
 ### Key Features
 
-- 🎯 Deterministic assertions for fast, free evaluations (contains, regex, JSON validation)
-- 🤖 LLM-as-Judge for AI-powered quality assessment (faithfulness, relevance, hallucination)
-- 🔐 Safety testing for toxicity, bias, jailbreak, and PII detection
-- 🎭 Red Team attacks to generate adversarial prompts and test defenses
-- 📊 Multiple reporters (Console, JSON, HTML, JUnit, GitHub Actions)
-- 🧪 Test integration with RSpec and Minitest
+- Deterministic assertions for exact matches, regexes, JSON validation, and other fast checks
+- LLM-as-judge assertions for faithfulness, relevance, correctness, and refusal behavior
+- Assertions for hallucinations, toxicity, harmful content, bias, jailbreaks, and PII exposure
+- Red team attacks to generate adversarial prompts and test defenses
+- Multiple reporters including Console, JSON, HTML, JUnit, and GitHub Actions
+- Test helpers for RSpec and Minitest
 
 ### Installation
 
