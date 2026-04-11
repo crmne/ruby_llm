@@ -476,7 +476,7 @@ module RubyLLM
         text_content = if content.respond_to?(:to_plain_text)
                          content.to_plain_text
                        else
-                         content.to_s
+                         content
                        end
 
         return text_content unless respond_to?(:attachments) && attachments.attached?

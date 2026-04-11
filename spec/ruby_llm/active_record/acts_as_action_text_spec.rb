@@ -5,8 +5,7 @@ require 'rails_helper'
 RSpec.describe RubyLLM::ActiveRecord::ActsAs do
   include_context 'with configured RubyLLM'
 
-  let(:model) { 'gpt-4.1-nano' }
-  let(:chat) { Chat.create!(model: model) }
+  let(:chat) { Chat.create! }
 
   def mock_action_text(plain_text)
     instance_double(ActionText::RichText).tap do |mock|
@@ -17,9 +16,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
   def create_message_with_action_text(content_text)
     message = chat.messages.create!(role: :user)
     action_text_content = mock_action_text(content_text)
-    allow(message).to receive(:[]) do |key|
-      key == :content ? action_text_content : message.read_attribute(key)
-    end
+    allow(message).to receive(:content).and_return(action_text_content)
     [message, action_text_content]
   end
 
