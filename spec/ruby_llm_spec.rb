@@ -46,5 +46,23 @@ RSpec.describe RubyLLM do
         expect(described_class.logger).to eq(logger)
       end
     end
+
+    context 'with RUBYLLM_LOG_FILE set' do
+      around do |example|
+        original_log_file = ENV.fetch('RUBYLLM_LOG_FILE', nil)
+        ENV['RUBYLLM_LOG_FILE'] = '/tmp/ruby_llm.log'
+        example.run
+      ensure
+        ENV['RUBYLLM_LOG_FILE'] = original_log_file
+      end
+
+      it 'uses the env var as the default log file' do
+        allow(Logger).to receive(:new)
+          .with('/tmp/ruby_llm.log', progname: 'RubyLLM', level: Logger::INFO)
+          .and_return(logger)
+
+        expect(described_class.logger).to eq(logger)
+      end
+    end
   end
 end
