@@ -550,6 +550,115 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       end
     end
 
+    describe 'custom parent_tool_call_foreign_key' do
+      before(:all) do # rubocop:disable RSpec/BeforeAfterAll
+        ActiveRecord::Migration.suppress_messages do
+          ActiveRecord::Migration.create_table :ptc_chats, force: true do |t|
+            t.string :model_id
+            t.timestamps
+          end
+
+          ActiveRecord::Migration.create_table :ptc_tool_calls, force: true do |t|
+            t.references :ptc_message
+            t.string :tool_call_id
+            t.string :name
+            t.json :arguments
+            t.timestamps
+          end
+
+          ActiveRecord::Migration.create_table :ptc_messages, force: true do |t|
+            t.references :ptc_chat
+            t.string :role
+            t.text :content
+            t.json :content_raw
+            t.string :model_id
+            t.integer :input_tokens
+            t.integer :output_tokens
+            t.integer :cached_tokens
+            t.integer :cache_creation_tokens
+            t.integer :ptc_tool_call_id
+            t.timestamps
+          end
+        end
+      end
+
+      after(:all) do # rubocop:disable RSpec/BeforeAfterAll
+        ActiveRecord::Migration.suppress_messages do
+          %i[ptc_messages ptc_tool_calls ptc_chats].each do |t|
+            ActiveRecord::Migration.drop_table(t) if ActiveRecord::Base.connection.table_exists?(t)
+          end
+        end
+      end
+
+      class PtcChat < ActiveRecord::Base # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
+        acts_as_chat messages: :ptc_messages, message_class: 'PtcMessage'
+        self.table_name = 'ptc_chats'
+      end
+
+      class PtcMessage < ActiveRecord::Base # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
+        acts_as_message chat: :ptc_chat, chat_class: 'PtcChat',
+                        tool_calls: :ptc_tool_calls, tool_call_class: 'PtcToolCall',
+                        parent_tool_call_foreign_key: 'ptc_tool_call_id'
+        self.table_name = 'ptc_messages'
+      end
+
+      class PtcToolCall < ActiveRecord::Base # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
+        acts_as_tool_call message: :ptc_message, message_class: 'PtcMessage',
+                          result_class: 'PtcMessage',
+                          result_foreign_key: 'ptc_tool_call_id'
+        self.table_name = 'ptc_tool_calls'
+      end
+
+      it 'uses the custom foreign key for the parent_tool_call association' do
+        chat = PtcChat.create!(model: model)
+        chat.ptc_messages.create!(role: 'user', content: 'Calculate something')
+
+        tool_call_msg = chat.ptc_messages.create!(role: 'assistant', content: nil)
+        tool_call = tool_call_msg.ptc_tool_calls.create!(
+          tool_call_id: 'call_ptc_1',
+          name: 'calculator',
+          arguments: { expression: '2 + 2' }.to_json
+        )
+
+        tool_result_msg = chat.ptc_messages.create!(
+          role: 'tool',
+          content: '4',
+          ptc_tool_call_id: tool_call.id
+        )
+
+        expect(tool_result_msg.parent_tool_call).to eq(tool_call)
+        expect(tool_call.result).to eq(tool_result_msg)
+      end
+
+      it 'cleans up orphaned tool results with custom parent_tool_call_foreign_key' do
+        chat = PtcChat.create!(model: model)
+        chat.ptc_messages.create!(role: 'user', content: 'Do calculations')
+
+        tool_call_msg = chat.ptc_messages.create!(role: 'assistant', content: nil)
+        tool_call1 = tool_call_msg.ptc_tool_calls.create!(
+          tool_call_id: 'call_ptc_2',
+          name: 'calculator',
+          arguments: { expression: '2 + 2' }.to_json
+        )
+        tool_call_msg.ptc_tool_calls.create!(
+          tool_call_id: 'call_ptc_3',
+          name: 'calculator',
+          arguments: { expression: '3 + 3' }.to_json
+        )
+
+        # Only one tool result exists — the other is missing
+        chat.ptc_messages.create!(
+          role: 'tool',
+          content: '4',
+          ptc_tool_call_id: tool_call1.id
+        )
+
+        expect do
+          chat.send(:cleanup_orphaned_tool_results)
+        end.to change { chat.ptc_messages.count }.by(-2)
+      end
+    end
+
     describe 'to_llm conversion' do
       it 'correctly converts custom messages to RubyLLM format' do
         bot_chat = Assistants::BotChat.create!(model: model)
