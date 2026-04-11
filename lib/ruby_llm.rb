@@ -15,6 +15,7 @@ require 'zeitwerk'
 
 loader = Zeitwerk::Loader.for_gem
 loader.inflector.inflect(
+  'apple_intelligence' => 'AppleIntelligence',
   'azure' => 'Azure',
   'UI' => 'UI',
   'api' => 'API',
@@ -93,6 +94,7 @@ module RubyLLM
   end
 end
 
+RubyLLM::Provider.register :apple_intelligence, RubyLLM::Providers::AppleIntelligence
 RubyLLM::Provider.register :anthropic, RubyLLM::Providers::Anthropic
 RubyLLM::Provider.register :azure, RubyLLM::Providers::Azure
 RubyLLM::Provider.register :bedrock, RubyLLM::Providers::Bedrock

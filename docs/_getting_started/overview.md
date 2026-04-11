@@ -149,6 +149,9 @@ chat = RubyLLM.chat(
   model: "{{ site.models.local_llama }}",
   provider: :ollama,
 )
+
+# On-device AI with Apple Intelligence — no API keys, no cloud
+chat = RubyLLM.chat(model: "apple-intelligence", provider: :apple_intelligence)
 ```
 
 ### Capability Management
