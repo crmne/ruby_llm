@@ -999,7 +999,8 @@ class ChatMessage < ApplicationRecord
                   chat_class: 'Conversation',  # Optional if inferrable
                   tool_calls: :ai_tool_calls,
                   tool_call_class: 'AIToolCall',  # Required for non-standard naming
-                  model: :ai_model
+                  model: :ai_model,
+                  parent_tool_call_foreign_key: :ai_tool_call_id
 end
 
 # app/models/ai_tool_call.rb (instead of ToolCall)
