@@ -84,7 +84,7 @@ module RubyLLM
         )
         @chat.reset_messages!
 
-        ordered_messages = order_messages_for_llm(messages_association.to_a)
+        ordered_messages = order_messages_for_llm(eager_load_messages)
         ordered_messages.each do |msg|
           @chat.add_message(msg.to_llm)
         end
@@ -236,7 +236,7 @@ module RubyLLM
 
       def cleanup_orphaned_tool_results # rubocop:disable Metrics/PerceivedComplexity
         messages_association.reload
-        last = messages_association.order(:id).last
+        last = eager_load_messages.max_by(&:id)
 
         return unless last&.tool_call? || last&.tool_result?
 
@@ -253,6 +253,16 @@ module RubyLLM
             tool_call_message.destroy
           end
         end
+      end
+
+      def eager_load_messages
+        assoc = messages_association
+        return assoc.to_a unless assoc.respond_to?(:includes)
+
+        msg_class = assoc.klass
+        tool_calls_name = msg_class.tool_calls_association_name
+        model_name = msg_class.model_association_name
+        assoc.includes(tool_calls_name, :parent_tool_call, model_name).to_a
       end
 
       def setup_persistence_callbacks
