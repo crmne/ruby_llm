@@ -46,13 +46,15 @@ module RubyLLM
 
         def format_tool_result(msg, function_name = nil)
           function_name ||= msg.tool_call_id
+          content = msg.content
+          content = '(no output)' if content.nil? || (content.respond_to?(:empty?) && content.empty?)
 
           [{
             functionResponse: {
               name: function_name,
               response: {
                 name: function_name,
-                content: Media.format_content(msg.content)
+                content: Media.format_content(content)
               }
             }
           }]
