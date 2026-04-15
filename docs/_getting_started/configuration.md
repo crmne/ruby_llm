@@ -107,6 +107,26 @@ end
 > Attempting to use an unconfigured provider will raise `RubyLLM::ConfigurationError`. Only configure what you need.
 {: .note }
 
+### Apple Intelligence (On-Device)
+
+Apple Intelligence requires no API keys — it runs entirely on your Mac. Just use it:
+
+```ruby
+chat = RubyLLM.chat(model: "apple-intelligence", provider: :apple_intelligence)
+chat.ask "Hello from on-device AI!"
+```
+
+The `osx-ai-inloop` binary is automatically downloaded on first use. To customize its location:
+
+```ruby
+RubyLLM.configure do |config|
+  config.apple_intelligence_binary_path = "/opt/bin/osx-ai-inloop"
+end
+```
+
+> Apple Intelligence requires macOS 26+ (Tahoe) on Apple Silicon with Apple Intelligence enabled. See the [Apple Intelligence guide]({% link _getting_started/apple-intelligence.md %}) for full details.
+{: .note }
+
 ### OpenAI Organization & Project Headers
 
 For OpenAI users with multiple organizations or projects:
@@ -450,6 +470,9 @@ Here's a complete reference of all configuration options:
 
 ```ruby
 RubyLLM.configure do |config|
+  # Apple Intelligence (on-device, no API key needed)
+  config.apple_intelligence_binary_path = String  # Optional: custom binary path
+
   # Anthropic
   config.anthropic_api_key = String
   config.anthropic_api_base = String  # v1.13.0+
