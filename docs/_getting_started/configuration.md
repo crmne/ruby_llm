@@ -200,6 +200,26 @@ Defaults if not configured:
 - Embeddings: `{{ site.models.default_embedding }}`
 - Images: `{{ site.models.default_image }}`
 
+## Default Providers
+
+Route models to specific providers by default, so you don't have to pass `provider:` on every call:
+
+```ruby
+RubyLLM.configure do |config|
+  config.default_providers = {
+    'claude' => :bedrock,            # all claude models route to bedrock
+    'claude-haiku' => :anthropic,    # except haiku, which goes direct to anthropic
+    'gpt' => :azure,                 # all gpt models route to azure
+    'gemini' => :vertexai,           # all gemini models route to vertex ai
+    'claude-sonnet-4-5' => :openrouter,  # one specific model via openrouter
+  }
+end
+```
+
+Keys are matched against the start of the model ID. When multiple keys match, the longest (most specific) one wins. Passing an explicit `provider:` argument always overrides `default_providers`.
+
+This applies to all model types: chat, embeddings, images, transcription, and moderation.
+
 ## Model Registry File
 
 By default, RubyLLM reads model information from the bundled `models.json` file. If your gem directory is read-only, you can configure a writable location:
@@ -512,6 +532,9 @@ RubyLLM.configure do |config|
   config.default_image_model = String
   config.default_moderation_model = String
   config.default_transcription_model = String
+
+  # Default Providers
+  config.default_providers = Hash  # Route models to providers by model ID prefix
 
   # Model Registry
   config.model_registry_file = String  # Path to model registry JSON file (v1.9.0+)
