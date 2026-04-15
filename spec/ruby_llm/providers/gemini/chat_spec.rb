@@ -600,6 +600,49 @@ RSpec.describe RubyLLM::Providers::Gemini::Chat do
       expect(message.output_tokens).to eq(8)
       expect(message.cached_tokens).to eq(21)
     end
+
+    it 'handles message where both text and attachments are present' do
+      raw_data = 'fake-image-bytes'
+      encoded_data = Base64.strict_encode64(raw_data)
+      response = Struct.new(:body, :env).new(
+        {
+          'candidates' => [
+            {
+              'content' => {
+                'parts' => [
+                  {
+                    'functionCall' => {
+                      'name' => 'lookup_weather',
+                      'args' => { 'city' => 'Paris' }
+                    }
+                  },
+                  { 'text' => 'Here is the result with an image.' },
+                  {
+                    'inlineData' => {
+                      'mimeType' => 'image/png',
+                      'data' => encoded_data
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          'usageMetadata' => {}
+        },
+        Struct.new(:url).new(Struct.new(:path).new('/v1/models/gemini-2.5-flash-image:generateContent'))
+      )
+
+      provider = RubyLLM::Providers::Gemini.new(RubyLLM.config)
+      message = provider.send(:parse_completion_response, response)
+      attachment = message.content.attachments.first
+
+      expect(message.content).to be_a(RubyLLM::Content)
+      expect(message.content.text).to eq('Here is the result with an image.')
+      expect(message.content.attachments.size).to eq(1)
+      expect(attachment).to be_a(RubyLLM::Attachment)
+      expect(attachment.mime_type).to eq('image/png')
+      expect(attachment.content).to eq(raw_data)
+    end
   end
 
   it 'correctly sums candidatesTokenCount and thoughtsTokenCount' do
