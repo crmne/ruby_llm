@@ -32,20 +32,20 @@ module RubyLLM
       }
     end
 
-    def ask(message = nil, with: nil, &)
-      add_message role: :user, content: build_content(message, with)
+    def ask(message = nil, with: nil, cache_point: false, &)
+      add_message role: :user, content: build_content(message, with), cache_point: cache_point
       complete(&)
     end
 
     alias say ask
 
-    def with_instructions(instructions, append: false, replace: nil)
+    def with_instructions(instructions, append: false, replace: nil, cache_point: false)
       append ||= (replace == false) unless replace.nil?
 
       if append
-        append_system_instruction(instructions)
+        append_system_instruction(instructions, cache_point: cache_point)
       else
-        replace_system_instruction(instructions)
+        replace_system_instruction(instructions, cache_point: cache_point)
       end
 
       self
@@ -329,21 +329,16 @@ module RubyLLM
       object.is_a?(Content) || object.is_a?(Content::Raw)
     end
 
-    def append_system_instruction(instructions)
+    def append_system_instruction(instructions, cache_point: false)
       system_messages, non_system_messages = @messages.partition { |msg| msg.role == :system }
-      system_messages << Message.new(role: :system, content: instructions)
+      system_messages << Message.new(role: :system, content: instructions, cache_point: cache_point)
       @messages = system_messages + non_system_messages
     end
 
-    def replace_system_instruction(instructions)
-      system_messages, non_system_messages = @messages.partition { |msg| msg.role == :system }
+    def replace_system_instruction(instructions, cache_point: false)
+      _, non_system_messages = @messages.partition { |msg| msg.role == :system }
 
-      if system_messages.empty?
-        system_messages = [Message.new(role: :system, content: instructions)]
-      else
-        system_messages.first.content = instructions
-        system_messages = [system_messages.first]
-      end
+      system_messages = [Message.new(role: :system, content: instructions, cache_point: cache_point)]
 
       @messages = system_messages + non_system_messages
     end
