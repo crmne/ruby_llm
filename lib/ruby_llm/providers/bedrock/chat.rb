@@ -45,7 +45,8 @@ module RubyLLM
 
         def parse_completion_response(response)
           data = response.body
-          return if data.nil? || data.empty?
+          raise Error.new(response, 'Provider returned an empty response body') if data.nil?
+          return if data.empty?
 
           content_blocks = data.dig('output', 'message', 'content') || []
           usage = data['usage'] || {}

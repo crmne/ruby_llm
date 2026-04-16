@@ -112,7 +112,7 @@ module RubyLLM
     end
 
     def parse_error(response)
-      return if response.body.empty?
+      return if response.body.nil? || response.body.empty?
 
       body = try_parse_json(response.body)
       case body
@@ -266,7 +266,13 @@ module RubyLLM
       response = connection.post completion_url, payload do |req|
         req.headers = additional_headers.merge(req.headers) unless additional_headers.empty?
       end
+      ensure_response_body!(response)
+
       parse_completion_response response
+    end
+
+    def ensure_response_body!(response)
+      raise Error.new(response, 'Provider returned an empty response body') if response.body.nil?
     end
   end
 end

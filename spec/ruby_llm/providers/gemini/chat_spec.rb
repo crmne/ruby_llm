@@ -525,6 +525,19 @@ RSpec.describe RubyLLM::Providers::Gemini::Chat do
   end
 
   describe '#parse_completion_response' do
+    it 'raises RubyLLM::Error for nil completion bodies' do
+      response = Struct.new(:body, :env).new(
+        nil,
+        Struct.new(:url).new(Struct.new(:path).new('/v1/models/gemini-2.5-flash:generateContent'))
+      )
+
+      provider = RubyLLM::Providers::Gemini.new(RubyLLM.config)
+
+      expect do
+        provider.send(:parse_completion_response, response)
+      end.to raise_error(RubyLLM::Error, 'Provider returned an empty response body')
+    end
+
     it 'keeps thought-only parts out of assistant content' do
       response = Struct.new(:body, :env).new(
         {

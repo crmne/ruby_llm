@@ -34,7 +34,7 @@ module RubyLLM
 
       def parse_error(response)
         body = response.body
-        return if body.empty?
+        return if body.nil? || body.empty?
 
         # If response is HTML (Perplexity returns HTML for auth errors)
         if body.include?('<html>') && body.include?('<title>')
