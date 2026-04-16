@@ -5,7 +5,8 @@ http_interactions:
     uri: https://api.openai.com/v1/moderations
     body:
       encoding: UTF-8
-      string: '{"model":"omni-moderation-latest","input":"This is a safe message"}'
+      string: '{"model":"omni-moderation-latest","input":[{"type":"text","text":"describe
+        this image"},{"type":"image_url","image_url":{"url":"https://upload.wikimedia.org/wikipedia/en/7/7d/Lenna_%28test_image%29.png"}}]}'
     headers:
       User-Agent:
       - Faraday v2.14.1
@@ -23,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 02 Apr 2026 11:22:54 GMT
+      - Mon, 06 Apr 2026 20:12:06 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -41,7 +42,7 @@ http_interactions:
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Openai-Processing-Ms:
-      - '772'
+      - '1232'
       X-Openai-Proxy-Wasm:
       - v0.1
       Cf-Cache-Status:
@@ -60,7 +61,7 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "modr-2644",
+          "id": "modr-1430",
           "model": "omni-moderation-latest",
           "results": [
             {
@@ -81,19 +82,19 @@ http_interactions:
                 "violence/graphic": false
               },
               "category_scores": {
-                "harassment": 0.000011959857805023158,
-                "harassment/threatening": 3.7636447180974406e-6,
-                "sexual": 0.00006667023092435894,
-                "hate": 7.602479448313689e-6,
-                "hate/threatening": 3.2377619022355566e-7,
-                "illicit": 0.000015118199327273332,
-                "illicit/violent": 6.709224499600877e-6,
-                "self-harm/intent": 0.00021217710837818755,
-                "self-harm/instructions": 3.944258675190877e-6,
-                "self-harm": 0.0004544456121966584,
-                "sexual/minors": 5.307507822667365e-6,
-                "violence": 0.000493111798506495,
-                "violence/graphic": 2.931153855960119e-6
+                "harassment": 0.0000295957113513077,
+                "harassment/threatening": 2.2827997192887966e-6,
+                "sexual": 0.00008969393236719384,
+                "hate": 0.000010071400221737608,
+                "hate/threatening": 4.860448402299843e-7,
+                "illicit": 7.484622751061123e-6,
+                "illicit/violent": 2.355261854303796e-6,
+                "self-harm/intent": 4.264746818557914e-6,
+                "self-harm/instructions": 1.4285517650093407e-6,
+                "self-harm": 0.0004624317865236275,
+                "sexual/minors": 2.0785170435063726e-6,
+                "violence": 0.0005224900751216392,
+                "violence/graphic": 0.000017400543552708932
               },
               "category_applied_input_types": {
                 "harassment": [
@@ -103,7 +104,8 @@ http_interactions:
                   "text"
                 ],
                 "sexual": [
-                  "text"
+                  "text",
+                  "image"
                 ],
                 "hate": [
                   "text"
@@ -118,26 +120,31 @@ http_interactions:
                   "text"
                 ],
                 "self-harm/intent": [
-                  "text"
+                  "text",
+                  "image"
                 ],
                 "self-harm/instructions": [
-                  "text"
+                  "text",
+                  "image"
                 ],
                 "self-harm": [
-                  "text"
+                  "text",
+                  "image"
                 ],
                 "sexual/minors": [
                   "text"
                 ],
                 "violence": [
-                  "text"
+                  "text",
+                  "image"
                 ],
                 "violence/graphic": [
-                  "text"
+                  "text",
+                  "image"
                 ]
               }
             }
           ]
         }
-  recorded_at: Thu, 02 Apr 2026 11:22:54 GMT
+  recorded_at: Mon, 06 Apr 2026 20:12:06 GMT
 recorded_with: VCR 6.4.0
