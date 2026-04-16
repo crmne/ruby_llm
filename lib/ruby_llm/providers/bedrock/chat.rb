@@ -154,19 +154,23 @@ module RubyLLM
 
         def render_tool_result_content(content)
           return render_raw_tool_result_content(content.value) if content.is_a?(RubyLLM::Content::Raw)
+          return [{ json: content }] if content.is_a?(Hash) || content.is_a?(Array)
+          return render_content_tool_result_content(content) if content.is_a?(RubyLLM::Content)
 
-          if content.is_a?(Hash) || content.is_a?(Array)
-            [{ json: content }]
-          elsif content.is_a?(RubyLLM::Content)
-            blocks = []
-            blocks << { text: content.text } if content.text
-            content.attachments.each do |attachment|
-              blocks << { text: attachment.for_llm }
-            end
-            blocks
-          else
-            [{ text: content.to_s }]
-          end
+          [text_tool_result_block(content)]
+        end
+
+        def render_content_tool_result_content(content)
+          blocks = []
+          blocks << text_tool_result_block(content.text) unless content.text.to_s.empty?
+          content.attachments.each { |attachment| blocks << text_tool_result_block(attachment.for_llm) }
+          blocks.empty? ? [text_tool_result_block(nil)] : blocks
+        end
+
+        def text_tool_result_block(text)
+          text = text.to_s
+          text = '(no output)' if text.empty?
+          { text: text }
         end
 
         def render_raw_tool_result_content(raw_value)

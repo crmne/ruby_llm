@@ -3,6 +3,14 @@
 require 'spec_helper'
 
 RSpec.describe RubyLLM::Providers::Bedrock::Chat do
+  describe '.render_tool_result_content' do
+    it 'uses a placeholder when the tool returns no content' do
+      result = described_class.render_tool_result_content('')
+
+      expect(result).to eq([{ text: '(no output)' }])
+    end
+  end
+
   describe '.render_payload' do
     let(:model) do
       instance_double(RubyLLM::Model::Info,
