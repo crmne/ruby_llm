@@ -10,6 +10,12 @@ RSpec.describe RubyLLM::Providers::OpenRouter do # rubocop:disable RSpec/SpecFil
   end
 
   describe '#parse_error' do
+    it 'returns nil when the response body is nil' do
+      response = instance_double(Faraday::Response, body: nil)
+
+      expect(provider.parse_error(response)).to be_nil
+    end
+
     it 'appends nested provider message from metadata.raw when present' do
       response = instance_double(
         Faraday::Response,

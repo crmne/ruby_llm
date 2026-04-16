@@ -3,6 +3,16 @@
 require 'spec_helper'
 
 RSpec.describe RubyLLM::Providers::OpenRouter::Chat do
+  describe '.parse_completion_response' do
+    it 'raises RubyLLM::Error for nil completion bodies' do
+      response = instance_double(Faraday::Response, body: nil)
+
+      expect do
+        described_class.parse_completion_response(response)
+      end.to raise_error(RubyLLM::Error, 'Provider returned an empty response body')
+    end
+  end
+
   describe '.render_payload' do
     let(:model) { instance_double(RubyLLM::Model::Info, id: 'anthropic/claude-haiku-4.5') }
     let(:messages) { [RubyLLM::Message.new(role: :user, content: 'Hello')] }

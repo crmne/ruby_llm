@@ -52,6 +52,8 @@ module RubyLLM
 
         def parse_completion_response(response)
           data = response.body
+          raise Error.new(response, 'Provider returned an empty response body') if data.nil?
+
           return if data.empty?
 
           raise Error.new(response, data.dig('error', 'message')) if data.dig('error', 'message')

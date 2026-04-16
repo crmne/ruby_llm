@@ -3,6 +3,57 @@
 require 'spec_helper'
 
 RSpec.describe RubyLLM::Provider do
+  describe '#sync_response' do
+    let(:provider_class) do
+      Class.new(described_class) do
+        def api_base
+          'https://example.com'
+        end
+
+        def completion_url
+          'chat/completions'
+        end
+
+        def parse_completion_response(_response)
+          :parsed
+        end
+      end
+    end
+    let(:provider) { provider_class.new(RubyLLM::Configuration.new) }
+
+    it 'raises RubyLLM::Error for nil completion bodies' do
+      request = instance_double(Faraday::Request, headers: {})
+      response = instance_double(Faraday::Response, body: nil)
+      connection = instance_double(RubyLLM::Connection)
+
+      allow(connection).to receive(:post)
+        .with('chat/completions', { prompt: 'hello' })
+        .and_yield(request)
+        .and_return(response)
+
+      expect do
+        provider.send(:sync_response, connection, { prompt: 'hello' })
+      end.to raise_error(RubyLLM::Error, 'Provider returned an empty response body')
+    end
+  end
+
+  describe '#parse_error' do
+    let(:provider_class) do
+      Class.new(described_class) do
+        def api_base
+          'https://example.com'
+        end
+      end
+    end
+    let(:provider) { provider_class.new(RubyLLM::Configuration.new) }
+
+    it 'returns nil when the response body is nil' do
+      response = Struct.new(:body).new(nil)
+
+      expect(provider.parse_error(response)).to be_nil
+    end
+  end
+
   describe '.register' do
     it 'registers provider configuration options on Configuration' do
       provider_key = :test_provider_spec
