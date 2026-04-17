@@ -25,6 +25,7 @@ RSpec.shared_context 'with configured RubyLLM' do
       config.gpustack_api_key = ENV.fetch('GPUSTACK_API_KEY', nil)
       # Disable retries in tests for deterministic, fast failures.
       config.max_retries = 0
+      config.minimax_api_key = ENV.fetch('MINIMAX_API_KEY', 'test')
       config.mistral_api_key = ENV.fetch('MISTRAL_API_KEY', 'test')
       config.model_registry_class = 'Model'
       config.ollama_api_base = ENV.fetch('OLLAMA_API_BASE', 'http://localhost:11434/v1')
