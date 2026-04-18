@@ -95,9 +95,19 @@ module RubyLLM
 
       case content
       when String then Content.new(content)
-      when Hash then Content.new(content[:text], content)
+      when Hash then normalize_hash_content(content)
       else content
       end
+    end
+
+    def normalize_hash_content(content)
+      return content if content.keys.any?(String)
+
+      text = content[:text]
+      attachments = content.except(:text)
+      return Content.new(text) if attachments.empty?
+
+      Content.new(text, attachments)
     end
 
     def ensure_valid_role
