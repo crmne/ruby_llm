@@ -101,4 +101,55 @@ RSpec.describe RubyLLM::Providers::Bedrock::Chat do
       end
     end
   end
+
+  describe '.parse_completion_response' do
+    it 'extracts thinking_tokens from top-level reasoningTokens' do
+      response_body = {
+        'output' => { 'message' => { 'content' => [{ 'text' => 'Hi!' }] } },
+        'usage' => {
+          'inputTokens' => 100,
+          'outputTokens' => 50,
+          'reasoningTokens' => 1200
+        }
+      }
+      response = instance_double(Faraday::Response, body: response_body)
+      message = described_class.parse_completion_response(response)
+
+      expect(message.thinking_tokens).to eq(1200)
+    end
+
+    it 'extracts thinking_tokens from nested outputTokensDetails' do
+      response_body = {
+        'output' => { 'message' => { 'content' => [{ 'text' => 'Hi!' }] } },
+        'usage' => {
+          'inputTokens' => 100,
+          'outputTokens' => 50,
+          'outputTokensDetails' => { 'reasoningTokens' => 800 }
+        }
+      }
+      response = instance_double(Faraday::Response, body: response_body)
+      message = described_class.parse_completion_response(response)
+
+      expect(message.thinking_tokens).to eq(800)
+    end
+
+    it 'captures cache usage metrics' do
+      response_body = {
+        'output' => { 'message' => { 'content' => [{ 'text' => 'Hi!' }] } },
+        'usage' => {
+          'inputTokens' => 100,
+          'outputTokens' => 50,
+          'cacheReadInputTokens' => 30,
+          'cacheWriteInputTokens' => 10
+        }
+      }
+      response = instance_double(Faraday::Response, body: response_body)
+      message = described_class.parse_completion_response(response)
+
+      expect(message.input_tokens).to eq(100)
+      expect(message.output_tokens).to eq(50)
+      expect(message.cached_tokens).to eq(30)
+      expect(message.cache_creation_tokens).to eq(10)
+    end
+  end
 end
