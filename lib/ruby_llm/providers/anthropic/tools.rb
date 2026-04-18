@@ -72,10 +72,31 @@ module RubyLLM
 
         def extract_tool_calls(data)
           if json_delta?(data)
-            { nil => ToolCall.new(id: nil, name: nil, arguments: data.dig('delta', 'partial_json')) }
+            # Use the content block index as the hash key so the accumulator
+            # can route fragments to the correct tool call during parallel
+            # streaming. Without this, all fragments go to @latest_tool_call_id
+            # and parallel tool call arguments get concatenated together.
+            block_index = data['index']
+            key = block_index ? "block_idx_#{block_index}" : nil
+            { key => ToolCall.new(id: nil, name: nil, arguments: data.dig('delta', 'partial_json')) }
+          elsif data['type'] == 'content_block_start' && data.dig('content_block', 'type') == 'tool_use'
+            block = data['content_block']
+            build_tool_use_start(block, data['index'])
           else
             parse_tool_calls(data['content_block'])
           end
+        end
+
+        def build_tool_use_start(block, block_index)
+          input = block['input']
+          args = input.is_a?(Hash) && input.empty? ? +'' : (input || +'')
+          tool_calls = { block['id'] => ToolCall.new(id: block['id'], name: block['name'], arguments: args) }
+          if block_index
+            tool_calls["register_idx_#{block_index}"] = ToolCall.new(
+              id: block['id'], name: '_register_block_index', arguments: nil
+            )
+          end
+          tool_calls
         end
 
         def parse_tool_calls(content_blocks)
