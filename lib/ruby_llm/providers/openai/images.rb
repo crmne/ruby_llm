@@ -11,13 +11,13 @@ module RubyLLM
           'images/generations'
         end
 
-        def render_image_payload(prompt, model:, size:)
+        def render_image_payload(prompt, model:, size:, params: {})
           {
             model: model,
             prompt: prompt,
             n: 1,
             size: size
-          }
+          }.merge(params)
         end
 
         def parse_image_response(response, model:)

@@ -9,10 +9,10 @@ module RubyLLM
           "models/#{@model}:predict"
         end
 
-        def render_image_payload(prompt, model:, size:)
+        def render_image_payload(prompt, model:, size:, params: {})
           RubyLLM.logger.debug { "Ignoring size #{size}. Gemini does not support image size customization." }
           @model = model
-          {
+          payload = {
             instances: [
               {
                 prompt: prompt
@@ -22,6 +22,8 @@ module RubyLLM
               sampleCount: 1
             }
           }
+          payload[:parameters].merge!(params) unless params.empty?
+          payload
         end
 
         def parse_image_response(response, model:)
