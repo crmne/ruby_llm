@@ -1,0 +1,60 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://ollama.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-oss:120b","messages":[{"role":"user","content":"What
+        is the capital of France?"}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Build-Commit:
+      - cb9cf73b49b7587da2808522bbd9125ae1d7d3f8
+      X-Build-Time:
+      - '2026-04-22T08:02:18-07:00'
+      X-Frame-Options:
+      - DENY
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Content-Length:
+      - '393'
+      Date:
+      - Wed, 22 Apr 2026 20:33:33 GMT
+      Server:
+      - Google Frontend
+      Traceparent:
+      - 00-ad2e0d99559c0b9d9f8d8a182a31ea2b-3de65b249635741a-00
+      X-Cloud-Trace-Context:
+      - ad2e0d99559c0b9d9f8d8a182a31ea2b/4460352693654090778
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000
+    body:
+      encoding: UTF-8
+      string: '{"id":"chatcmpl-274","object":"chat.completion","created":1776890013,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        capital of France is **Paris**.","reasoning":"The user asks a simple factual
+        question. Answer: Paris."},"finish_reason":"stop"}],"usage":{"prompt_tokens":74,"completion_tokens":31,"total_tokens":105}}
+
+        '
+  recorded_at: Wed, 22 Apr 2026 20:33:33 GMT
+recorded_with: VCR 6.4.0

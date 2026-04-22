@@ -45,6 +45,7 @@ def configure_from_env
     config.deepseek_api_key = ENV.fetch('DEEPSEEK_API_KEY', nil)
     config.gemini_api_key = ENV.fetch('GEMINI_API_KEY', nil)
     config.mistral_api_key = ENV.fetch('MISTRAL_API_KEY', nil)
+    config.ollama_cloud_api_key = ENV.fetch('OLLAMA_CLOUD_API_KEY', nil)
     config.openai_api_key = ENV.fetch('OPENAI_API_KEY', nil)
     config.openrouter_api_key = ENV.fetch('OPENROUTER_API_KEY', nil)
     config.perplexity_api_key = ENV.fetch('PERPLEXITY_API_KEY', nil)

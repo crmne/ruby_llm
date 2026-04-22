@@ -83,6 +83,10 @@ RubyLLM.configure do |config|
   config.ollama_api_base = 'http://localhost:11434/v1'
   config.ollama_api_key = ENV['OLLAMA_API_KEY'] # Available in v1.13.0+ (optional for authenticated/remote Ollama endpoints)
 
+  # Ollama Cloud
+  config.ollama_cloud_api_key = ENV['OLLAMA_CLOUD_API_KEY']   # Required. Keys: https://ollama.com/settings/keys
+  config.ollama_cloud_api_base = ENV['OLLAMA_CLOUD_API_BASE'] # Optional. Defaults to https://ollama.com/v1
+
   # OpenAI
   config.openai_api_key = ENV['OPENAI_API_KEY']
   config.openai_api_base = ENV['OPENAI_API_BASE'] # Optional custom OpenAI-compatible endpoint
@@ -165,6 +169,28 @@ end
 ```
 
 By default, RubyLLM uses the 'developer' role (matching OpenAI's current API). Set `openai_use_system_role` to true for compatibility with servers that still expect 'system'.
+
+### Ollama Cloud
+
+Ollama's hosted service exposes OpenAI-compatible endpoints at `https://ollama.com/v1` with Bearer-token auth. Keys are issued at [ollama.com/settings/keys](https://ollama.com/settings/keys).
+
+```ruby
+RubyLLM.configure do |config|
+  config.ollama_cloud_api_key = ENV['OLLAMA_CLOUD_API_KEY']
+end
+
+chat = RubyLLM.chat(
+  model: 'gpt-oss:120b',
+  provider: :ollama_cloud,
+  assume_model_exists: true
+)
+chat.ask('Hello from the cloud')
+```
+
+Cloud-capable models include `gpt-oss:120b`, `gpt-oss:120b-cloud`, `qwen3-coder:480b-cloud`, and `deepseek-v3.1:671b-cloud`. Models are discovered dynamically via `/v1/models`; pass `assume_model_exists: true` until you run `RubyLLM.models.refresh!`.
+
+> Ollama Cloud is billed by subscription tier (Free / Pro $20/mo / Max $100/mo), not per-token — so `Message#input_tokens` and `Message#output_tokens` are reported but `Model::Info#pricing` will be empty. See [ollama.com/pricing](https://ollama.com/pricing) for current tiers.
+{: .note }
 
 ### Gemini API Versions
 {: .d-inline-block }
@@ -483,6 +509,10 @@ RubyLLM.configure do |config|
   # Ollama
   config.ollama_api_base = String
   config.ollama_api_key = String  # v1.13.0+
+
+  # Ollama Cloud
+  config.ollama_cloud_api_key = String
+  config.ollama_cloud_api_base = String
 
   # OpenAI
   config.openai_api_key = String

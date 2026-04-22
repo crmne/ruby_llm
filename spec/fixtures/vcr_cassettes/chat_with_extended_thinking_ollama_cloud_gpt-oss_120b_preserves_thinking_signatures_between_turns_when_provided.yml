@@ -1,0 +1,116 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://ollama.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-oss:120b","messages":[{"role":"user","content":"What
+        is 5 + 3?"}],"stream":false,"reasoning_effort":"medium"}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Build-Commit:
+      - cb9cf73b49b7587da2808522bbd9125ae1d7d3f8
+      X-Build-Time:
+      - '2026-04-22T08:02:18-07:00'
+      X-Frame-Options:
+      - DENY
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Content-Length:
+      - '357'
+      Date:
+      - Wed, 22 Apr 2026 20:34:31 GMT
+      Server:
+      - Google Frontend
+      X-Cloud-Trace-Context:
+      - 1c31fcce288de3d9b2a60992d9c0822a/6023590140795802099
+      Traceparent:
+      - 00-1c31fcce288de3d9b2a60992d9c0822a-5398175196add1f3-00
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImNoYXRjbXBsLTI5NSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NzY4OTAwNzEsIm1vZGVsIjoiZ3B0LW9zczoxMjBiIiwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfb2xsYW1hIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiI14oCvK+KArzPigK894oCvOC4iLCJyZWFzb25pbmciOiJVc2VyIGFza3Mgc2ltcGxlIGFkZGl0aW9uLiBBbnN3ZXIgOC4ifSwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjc1LCJjb21wbGV0aW9uX3Rva2VucyI6MjksInRvdGFsX3Rva2VucyI6MTA0fX0K
+  recorded_at: Wed, 22 Apr 2026 20:34:31 GMT
+- request:
+    method: post
+    uri: https://ollama.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-oss:120b","messages":[{"role":"user","content":"What
+        is 5 + 3?"},{"role":"assistant","content":"5 + 3 = 8.","reasoning":"User asks
+        simple addition. Answer 8.","reasoning_content":"User asks simple addition.
+        Answer 8."},{"role":"user","content":"Now multiply that by 2"}],"stream":false,"reasoning_effort":"medium"}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Build-Commit:
+      - cb9cf73b49b7587da2808522bbd9125ae1d7d3f8
+      X-Build-Time:
+      - '2026-04-22T08:02:18-07:00'
+      X-Frame-Options:
+      - DENY
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Content-Length:
+      - '384'
+      Date:
+      - Wed, 22 Apr 2026 20:34:32 GMT
+      Server:
+      - Google Frontend
+      Traceparent:
+      - 00-9af1213d87f6f6a82007c7c6fb91cfd6-f7a6ea06487d41e8-00
+      X-Cloud-Trace-Context:
+      - 9af1213d87f6f6a82007c7c6fb91cfd6/17845207886209040872
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000
+    body:
+      encoding: UTF-8
+      string: '{"id":"chatcmpl-995","object":"chat.completion","created":1776890072,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"\\(8
+        \\times 2 = 16\\).","reasoning":"User wants to multiply 8 by 2 =\u003e 16.
+        Provide answer."},"finish_reason":"stop"}],"usage":{"prompt_tokens":101,"completion_tokens":37,"total_tokens":138}}
+
+        '
+  recorded_at: Wed, 22 Apr 2026 20:34:32 GMT
+recorded_with: VCR 6.4.0
