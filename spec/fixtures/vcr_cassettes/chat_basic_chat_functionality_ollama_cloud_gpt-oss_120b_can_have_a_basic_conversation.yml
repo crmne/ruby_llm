@@ -1,0 +1,57 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://ollama.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-oss:120b","messages":[{"role":"user","content":"What''s
+        2 + 2?"}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Build-Commit:
+      - cb9cf73b49b7587da2808522bbd9125ae1d7d3f8
+      X-Build-Time:
+      - '2026-04-22T08:02:18-07:00'
+      X-Frame-Options:
+      - DENY
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Content-Length:
+      - '369'
+      Date:
+      - Wed, 22 Apr 2026 20:33:32 GMT
+      Server:
+      - Google Frontend
+      Traceparent:
+      - 00-e626e1e64586293768d662f7d349b954-21d49092bef1b70a-00
+      X-Cloud-Trace-Context:
+      - e626e1e64586293768d662f7d349b954/2437732258257417994
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImNoYXRjbXBsLTM1NSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NzY4OTAwMTIsIm1vZGVsIjoiZ3B0LW9zczoxMjBiIiwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfb2xsYW1hIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiIy4oCvK+KArzLigK894oCvNC4iLCJyZWFzb25pbmciOiJVc2VyIGFza3MgYSBzaW1wbGUgbWF0aCBxdWVzdGlvbjogMisyLiBBbnN3ZXIgNC4ifSwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjc0LCJjb21wbGV0aW9uX3Rva2VucyI6MzYsInRvdGFsX3Rva2VucyI6MTEwfX0K
+  recorded_at: Wed, 22 Apr 2026 20:33:32 GMT
+recorded_with: VCR 6.4.0

@@ -59,6 +59,10 @@ RSpec.describe RubyLLM::Chat do
           skip 'ollama/qwen3 includes thinking tags even with enable_thinking: false'
         end
 
+        if provider == :ollama_cloud && model == 'gpt-oss:120b'
+          skip 'ollama_cloud/gpt-oss:120b reasoning model retains prior system instruction content'
+        end
+
         chat = RubyLLM.chat(model: model, provider: provider).with_temperature(0.0)
         # Disable thinking mode for qwen models to avoid <think> tags in output
         chat = chat.with_thinking(effort: :none) if model == 'qwen3'

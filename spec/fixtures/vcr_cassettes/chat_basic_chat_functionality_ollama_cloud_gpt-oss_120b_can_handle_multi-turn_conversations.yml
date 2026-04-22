@@ -1,0 +1,123 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://ollama.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-oss:120b","messages":[{"role":"user","content":"Who is
+        the creator of the programming language Ruby?"}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Build-Commit:
+      - cb9cf73b49b7587da2808522bbd9125ae1d7d3f8
+      X-Build-Time:
+      - '2026-04-22T08:02:18-07:00'
+      X-Frame-Options:
+      - DENY
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Content-Length:
+      - '930'
+      Date:
+      - Wed, 22 Apr 2026 20:33:35 GMT
+      Server:
+      - Google Frontend
+      X-Cloud-Trace-Context:
+      - 52b37f31570264dad00ed965baf2dbbe/6186134168654805025
+      Traceparent:
+      - 00-52b37f31570264dad00ed965baf2dbbe-55d9904037937821-00
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImNoYXRjbXBsLTE5MiIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NzY4OTAwMTUsIm1vZGVsIjoiZ3B0LW9zczoxMjBiIiwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfb2xsYW1hIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJUaGUgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UgKipSdWJ5Kiogd2FzIGNyZWF0ZWQgYnkgKipZdWtpaGlyb+KAr+KAnOKAi01hdHrigIvigJ3igK9NYXRzdW1vdG8qKi4gSGUgYmVnYW4gZGV2ZWxvcGluZyBSdWJ5IGluIDE5OTMgYW5kIHJlbGVhc2VkIGl0cyBmaXJzdCBwdWJsaWMgdmVyc2lvbiAoMC45NSkgaW4gRGVjZW1iZXLigK8xOTk1LiBNYXRzdW1vdG8gZGVzaWduZWQgUnVieSB0byBiZSBhbiBvYmplY3TigJFvcmllbnRlZCwgZXhwcmVzc2l2ZSwgYW5kIHByb2dyYW1tZXLigJFmcmllbmRseSBsYW5ndWFnZSwgZHJhd2luZyBpbnNwaXJhdGlvbiBmcm9tIGxhbmd1YWdlcyBzdWNoIGFzIFBlcmwsIFNtYWxsdGFsaywgRWlmZmVsLCBhbmQgQWRhLiBIZSBjb250aW51ZXMgdG8gYmUgYW4gYWN0aXZlIGZpZ3VyZSBpbiB0aGUgUnVieSBjb21tdW5pdHkuIiwicmVhc29uaW5nIjoiVGhlIHVzZXIgYXNrczogXCJXaG8gaXMgdGhlIGNyZWF0b3Igb2YgdGhlIHByb2dyYW1taW5nIGxhbmd1YWdlIFJ1Ynk/XCIgU3RyYWlnaHQgYW5zd2VyOiBZdWtpaGlybyBcIk1hdHpcIiBNYXRzdW1vdG8sIGEgSmFwYW5lc2UgY29tcHV0ZXIgc2NpZW50aXN0LCBjcmVhdGVkIFJ1YnkgaW4gdGhlIG1pZC0xOTkwcy4gUHJvdmlkZSBicmllZiBpbmZvLiJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6NzcsImNvbXBsZXRpb25fdG9rZW5zIjoxNjAsInRvdGFsX3Rva2VucyI6MjM3fX0K
+  recorded_at: Wed, 22 Apr 2026 20:33:35 GMT
+- request:
+    method: post
+    uri: https://ollama.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-oss:120b","messages":[{"role":"user","content":"Who is
+        the creator of the programming language Ruby?"},{"role":"assistant","content":"The
+        programming language **Ruby** was created by **Yukihiro “​Matz​” Matsumoto**.
+        He began developing Ruby in 1993 and released its first public version (0.95)
+        in December 1995. Matsumoto designed Ruby to be an object‑oriented, expressive,
+        and programmer‑friendly language, drawing inspiration from languages such
+        as Perl, Smalltalk, Eiffel, and Ada. He continues to be an active figure in
+        the Ruby community.","reasoning":"The user asks: \"Who is the creator of the
+        programming language Ruby?\" Straight answer: Yukihiro \"Matz\" Matsumoto,
+        a Japanese computer scientist, created Ruby in the mid-1990s. Provide brief
+        info.","reasoning_content":"The user asks: \"Who is the creator of the programming
+        language Ruby?\" Straight answer: Yukihiro \"Matz\" Matsumoto, a Japanese
+        computer scientist, created Ruby in the mid-1990s. Provide brief info."},{"role":"user","content":"What
+        year did he create Ruby?"}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Build-Commit:
+      - cb9cf73b49b7587da2808522bbd9125ae1d7d3f8
+      X-Build-Time:
+      - '2026-04-22T08:02:18-07:00'
+      X-Frame-Options:
+      - DENY
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Content-Length:
+      - '889'
+      Date:
+      - Wed, 22 Apr 2026 20:33:38 GMT
+      Server:
+      - Google Frontend
+      Traceparent:
+      - 00-18d9179e85e881153236e7c68baf2637-f6f8ef5ccc92ef7c-00
+      X-Cloud-Trace-Context:
+      - 18d9179e85e881153236e7c68baf2637/17796237109402726268
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImNoYXRjbXBsLTEwOCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NzY4OTAwMTgsIm1vZGVsIjoiZ3B0LW9zczoxMjBiIiwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfb2xsYW1hIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJZdWtpaGlyb+KAr+KAnOKAi01hdHrigIvigJ3igK9NYXRzdW1vdG8gYmVnYW4gKip3cml0aW5nIHRoZSBjb2RlIGZvciBSdWJ5IGluIDE5OTMqKiwgYW5kIHRoZSBsYW5ndWFnZeKAmXMgZmlyc3QgcHVibGljIHJlbGVhc2UgKHZlcnNpb27igK8wLjk1KSBjYW1lIG91dCBpbiAqKkRlY2VtYmVy4oCvMTk5NSoqLiBTbyB0aGUgY3JlYXRpb24gd29yayBzdGFydGVkIGluICoqMTk5MyoqLCB3aXRoIHRoZSBmaXJzdCBwdWJsaWNseSBhdmFpbGFibGUgdmVyc2lvbiBhcHBlYXJpbmcgaW4gKioxOTk1KiouIiwicmVhc29uaW5nIjoiVXNlciBhc2tzOiBcIldoYXQgeWVhciBkaWQgaGUgY3JlYXRlIFJ1Ynk/XCIgVGhlIGNyZWF0b3IgaXMgTWF0c3Vtb3RvLCBhbmQgeWVhciBoZSBjcmVhdGVkIFJ1Ynk/IEhlIHN0YXJ0ZWQgZGV2ZWxvcGluZyBpbiAxOTkzLCBmaXJzdCBwdWJsaWMgdmVyc2lvbiBpbiAxOTk1LiBUaGUgcXVlc3Rpb24gbGlrZWx5OiBcIldoYXQgeWVhciBkaWQgaGUgY3JlYXRlIFJ1Ynk/XCIgTWlnaHQgYW5zd2VyIDE5OTMgKHdoZW4gZGV2ZWxvcG1lbnQgc3RhcnRlZCkgb3IgMTk5NSAoZmlyc3QgcmVsZWFzZSkuIFByb3ZpZGUgYm90aCBpbmZvLiJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6MTk2LCJjb21wbGV0aW9uX3Rva2VucyI6MTU5LCJ0b3RhbF90b2tlbnMiOjM1NX19Cg==
+  recorded_at: Wed, 22 Apr 2026 20:33:38 GMT
+recorded_with: VCR 6.4.0
