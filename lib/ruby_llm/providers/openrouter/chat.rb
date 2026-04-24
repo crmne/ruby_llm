@@ -52,7 +52,7 @@ module RubyLLM
 
         def parse_completion_response(response)
           data = response.body
-          return if data.empty?
+          return if data.blank?
 
           raise Error.new(response, data.dig('error', 'message')) if data.dig('error', 'message')
 
