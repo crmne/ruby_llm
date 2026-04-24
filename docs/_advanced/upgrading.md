@@ -28,9 +28,11 @@ This guide focuses on upgrade-impacting changes: migrations, token semantics, de
 
 ## How to Upgrade
 
-No generator is required for the token and cost API changes in 1.15.
+No generator is required for the token, cost, and tool-search API changes in 1.15.
 
 If you use the Rails integration and already ran the v1.9 migration, no new columns are needed. The new `cache_read_tokens` and `cache_write_tokens` helpers use the existing `cached_tokens` and `cache_creation_tokens` columns.
+
+Tool search is fully additive — if you don't use `defer:` or `deferred`, nothing changes.
 
 ## Token Semantics Changed
 
@@ -78,6 +80,10 @@ Cost helpers are available from 1.15 onward. They return `nil` for any cost buck
 `tokens.thinking` remains available from 1.10. From 1.15 onward, `tokens.output` is normalized as the billable output bucket. Do not add `tokens.thinking` to `tokens.output` yourself; RubyLLM includes thinking in output when the provider bills it as output, and exposes `cost.thinking` only for models with distinct reasoning-token pricing.
 
 See [Tracking Token Usage]({% link _core_features/chat.md %}#tracking-token-usage) for the provider comparison table and the exact normalized token semantics RubyLLM exposes.
+
+## Tool Search (Anthropic)
+
+1.15 adds tool search in a fully additive way. `RubyLLM::Chat#with_tool` / `#with_tools` accept a new `defer:` keyword argument, and `RubyLLM::Tool` exposes a class-level `deferred` DSL. On Anthropic this translates to the native `defer_loading: true` flag plus the `tool_search_tool_bm25_20251119` primitive: deferred tools stay out of the system-prompt prefix and Claude loads the ones it actually needs server-side. On other providers `defer:` is ignored with a one-time warning. If you don't use `defer:` or `deferred`, nothing changes. See [Tool Search]({% link _core_features/tool-search.md %}).
 
 # Upgrade to 1.14
 

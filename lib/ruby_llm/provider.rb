@@ -111,6 +111,10 @@ module RubyLLM
       self.class.assume_models_exist?
     end
 
+    def supports_deferred_loading?
+      false
+    end
+
     def parse_error(response)
       return if response.body.empty?
 
