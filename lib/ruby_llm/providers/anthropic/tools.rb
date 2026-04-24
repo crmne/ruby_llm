@@ -11,6 +11,14 @@ module RubyLLM
           blocks.select { |c| c['type'] == 'tool_use' }
         end
 
+        def find_tool_references(blocks)
+          results = blocks.select { |c| c['type'] == 'tool_search_tool_result' }
+          results.flat_map do |block|
+            refs = block.dig('content', 'tool_references') || []
+            refs.filter_map { |r| r['tool_name'] }
+          end
+        end
+
         def format_tool_call(msg)
           return { role: 'assistant', content: msg.content.value } if msg.content.is_a?(RubyLLM::Content::Raw)
 
@@ -55,6 +63,12 @@ module RubyLLM
           }
         end
 
+        # Anthropic's native server-side BM25 tool-search primitive.
+        NATIVE_TOOL_SEARCH = {
+          type: 'tool_search_tool_bm25_20251119',
+          name: 'tool_search_tool_bm25'
+        }.freeze
+
         def function_for(tool)
           input_schema = tool.params_schema ||
                          RubyLLM::Tool::SchemaDefinition.from_parameters(tool.parameters)&.json_schema
@@ -65,9 +79,17 @@ module RubyLLM
             input_schema: input_schema || default_input_schema
           }
 
+          declaration[:defer_loading] = true if tool.deferred?
+
           return declaration if tool.provider_params.empty?
 
           RubyLLM::Utils.deep_merge(declaration, tool.provider_params)
+        end
+
+        def format_tools(tools)
+          formatted = tools.values.map { |t| function_for(t) }
+          formatted << NATIVE_TOOL_SEARCH if formatted.any? { |t| t[:defer_loading] }
+          formatted
         end
 
         def extract_tool_calls(data)

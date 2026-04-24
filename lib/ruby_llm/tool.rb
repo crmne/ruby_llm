@@ -17,6 +17,34 @@ module RubyLLM
 
   # Base class for creating tools that AI models can use
   class Tool
+    # @api private
+    #
+    # Pins a per-registration +deferred?+ value on a tool without mutating the
+    # tool itself, so one instance can be safely shared across chats.
+    class Registration
+      def initialize(tool, deferred:)
+        @tool = tool
+        @deferred = deferred
+      end
+
+      def deferred? = @deferred
+      def name = @tool.name
+      def description = @tool.description
+      def parameters = @tool.parameters
+      def provider_params = @tool.provider_params
+      def params_schema = @tool.params_schema
+    end
+
+    # Event yielded to +Chat#on_tool_search+ callbacks.
+    class SearchEvent
+      attr_reader :query, :results
+
+      def initialize(query, results)
+        @query = query
+        @results = results
+      end
+    end
+
     # Stops conversation continuation after tool execution
     class Halt
       attr_reader :content
@@ -60,6 +88,15 @@ module RubyLLM
       def provider_params
         @provider_params ||= {}
       end
+
+      def deferred(value = true) # rubocop:disable Style/OptionalBooleanParameter
+        @deferred = value ? true : false
+        self
+      end
+
+      def deferred?
+        @deferred == true
+      end
     end
 
     def name
@@ -83,6 +120,10 @@ module RubyLLM
 
     def provider_params
       self.class.provider_params
+    end
+
+    def deferred?
+      self.class.deferred?
     end
 
     def params_schema

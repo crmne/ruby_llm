@@ -21,6 +21,16 @@ redirect_from:
 {:toc}
 
 ---
+# Upgrade to 1.15
+
+## How to Upgrade
+
+1.15 adds tool search in a fully additive way. No generator, no migration — upgrade the gem and continue using RubyLLM as before.
+
+## What's New in 1.15
+
+- **Tool Search (Anthropic)** — `RubyLLM::Chat#with_tool` / `#with_tools` accept a new `defer:` keyword argument, and `RubyLLM::Tool` exposes a class-level `deferred` DSL. On Anthropic this translates to the native `defer_loading: true` flag plus the `tool_search_tool_bm25_20251119` primitive: deferred tools stay out of the system-prompt prefix and Claude loads the ones it actually needs server-side. On other providers `defer:` is ignored with a one-time warning. If you don't use `defer:` or `deferred`, nothing changes. See [Tool Search]({% link _core_features/tool-search.md %}).
+
 # Upgrade to 1.14
 
 ## How to Upgrade

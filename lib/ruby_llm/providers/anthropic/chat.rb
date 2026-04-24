@@ -65,7 +65,7 @@ module RubyLLM
 
         def add_optional_fields(payload, system_content:, tools:, tool_prefs:, temperature:, schema: nil) # rubocop:disable Metrics/ParameterLists
           if tools.any?
-            payload[:tools] = tools.values.map { |t| Tools.function_for(t) }
+            payload[:tools] = Tools.format_tools(tools)
             unless tool_prefs[:choice].nil? && tool_prefs[:calls].nil?
               payload[:tool_choice] = Tools.build_tool_choice(tool_prefs)
             end
@@ -90,8 +90,10 @@ module RubyLLM
           thinking_content = extract_thinking_content(content_blocks)
           thinking_signature = extract_thinking_signature(content_blocks)
           tool_use_blocks = Tools.find_tool_uses(content_blocks)
+          tool_references = Tools.find_tool_references(content_blocks)
 
-          build_message(data, text_content, thinking_content, thinking_signature, tool_use_blocks, response)
+          build_message(data, text_content, thinking_content, thinking_signature, tool_use_blocks, tool_references,
+                        response)
         end
 
         def extract_text_content(blocks)
@@ -111,7 +113,7 @@ module RubyLLM
           thinking_block&.dig('signature') || thinking_block&.dig('data')
         end
 
-        def build_message(data, content, thinking, thinking_signature, tool_use_blocks, response) # rubocop:disable Metrics/ParameterLists
+        def build_message(data, content, thinking, thinking_signature, tool_use_blocks, tool_references, response) # rubocop:disable Metrics/ParameterLists
           usage = data['usage'] || {}
           cached_tokens = usage['cache_read_input_tokens']
           cache_creation_tokens = usage['cache_creation_input_tokens']
@@ -128,6 +130,7 @@ module RubyLLM
             content: content,
             thinking: Thinking.build(text: thinking, signature: thinking_signature),
             tool_calls: Tools.parse_tool_calls(tool_use_blocks),
+            tool_references: tool_references,
             input_tokens: usage['input_tokens'],
             output_tokens: usage['output_tokens'],
             cached_tokens: cached_tokens,
