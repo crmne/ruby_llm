@@ -5,7 +5,7 @@ module RubyLLM
   class Chat
     include Enumerable
 
-    attr_reader :model, :messages, :tools, :tool_prefs, :params, :headers, :schema
+    attr_reader :model, :messages, :tools, :tool_prefs, :params, :headers, :schema, :tool_catalog
 
     def initialize(model: nil, provider: nil, assume_model_exists: false, context: nil)
       if assume_model_exists && !provider
@@ -19,6 +19,7 @@ module RubyLLM
       @temperature = nil
       @messages = []
       @tools = {}
+      @tool_catalog = ToolCatalog.new
       @tool_prefs = { choice: nil, calls: nil }
       @params = {}
       @headers = {}
@@ -28,7 +29,8 @@ module RubyLLM
         new_message: nil,
         end_message: nil,
         tool_call: nil,
-        tool_result: nil
+        tool_result: nil,
+        tool_search: nil
       }
     end
 
@@ -51,18 +53,18 @@ module RubyLLM
       self
     end
 
-    def with_tool(tool, choice: nil, calls: nil)
-      unless tool.nil?
-        tool_instance = tool.is_a?(Class) ? tool.new : tool
-        @tools[tool_instance.name.to_sym] = tool_instance
-      end
+    def with_tool(tool, defer: nil, choice: nil, calls: nil)
+      register_tool(tool, defer: defer) unless tool.nil?
       update_tool_options(choice:, calls:)
       self
     end
 
-    def with_tools(*tools, replace: false, choice: nil, calls: nil)
-      @tools.clear if replace
-      tools.compact.each { |tool| with_tool tool }
+    def with_tools(*tools, replace: false, defer: nil, choice: nil, calls: nil)
+      if replace
+        @tools.clear
+        @tool_catalog = ToolCatalog.new
+      end
+      tools.compact.each { |tool| with_tool tool, defer: defer }
       update_tool_options(choice:, calls:)
       self
     end
@@ -132,6 +134,11 @@ module RubyLLM
       self
     end
 
+    def on_tool_search(&block)
+      @on[:tool_search] = block
+      self
+    end
+
     def each(&)
       messages.each(&)
     end
@@ -139,7 +146,7 @@ module RubyLLM
     def complete(&) # rubocop:disable Metrics/PerceivedComplexity
       response = @provider.complete(
         messages,
-        tools: @tools,
+        tools: effective_tools,
         tool_prefs: @tool_prefs,
         temperature: @temperature,
         model: @model,
@@ -161,6 +168,7 @@ module RubyLLM
       end
 
       add_message response
+      promote_from_tool_references(response)
       @on[:end_message]&.call(response)
 
       if response.tool_call?
@@ -185,6 +193,25 @@ module RubyLLM
     end
 
     private
+
+    # Promotes deferred tools that a provider's native tool-search primitive
+    # loaded via +message.tool_references+. The resulting +SearchEvent+
+    # carries +query: nil+ to signal the native path.
+    def promote_from_tool_references(message)
+      names = Array(message.tool_references)
+      return self if names.empty? || @tool_catalog.empty?
+
+      promoted = names.filter_map do |name|
+        tool = @tool_catalog.promote(name)
+        next unless tool
+
+        @tools[tool.name.to_sym] = tool
+        tool.name.to_sym
+      end
+
+      @on[:tool_search]&.call(Tool::SearchEvent.new(nil, promoted)) unless promoted.empty?
+      self
+    end
 
     def normalize_schema_payload(raw_schema)
       return nil if raw_schema.nil?
@@ -327,6 +354,48 @@ module RubyLLM
 
     def content_like?(object)
       object.is_a?(Content) || object.is_a?(Content::Raw)
+    end
+
+    def effective_tools
+      active = @tools.transform_values { |t| Tool::Registration.new(t, deferred: false) }
+      return active if @tool_catalog.empty?
+
+      deferred = @tool_catalog.available.transform_values { |t| Tool::Registration.new(t, deferred: true) }
+      deferred.merge(active)
+    end
+
+    def register_tool(tool, defer:)
+      tool_instance = tool.is_a?(Class) ? tool.new : tool
+
+      if defer_allowed?(tool_instance, defer)
+        @tool_catalog.add(tool_instance)
+      else
+        @tools[tool_instance.name.to_sym] = tool_instance
+      end
+    end
+
+    def defer_allowed?(tool, explicit)
+      return false unless explicit.nil? ? tool.deferred? : explicit == true
+
+      unless @config.tool_search_enabled
+        warn_deferred_ignored('tool_search_enabled is false')
+        return false
+      end
+
+      unless @provider.respond_to?(:supports_deferred_loading?) && @provider.supports_deferred_loading?
+        warn_deferred_ignored("provider #{@provider.slug} does not support deferred tool loading")
+        return false
+      end
+
+      true
+    end
+
+    def warn_deferred_ignored(reason)
+      @deferred_warnings ||= Set.new
+      return if @deferred_warnings.include?(reason)
+
+      @deferred_warnings << reason
+      RubyLLM.logger.warn("Ignoring defer: true — #{reason}")
     end
 
     def append_system_instruction(instructions)

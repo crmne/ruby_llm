@@ -509,6 +509,8 @@ end
 
 For MCP server integration, check out the community-maintained [`ruby_llm-mcp`](https://github.com/patvice/ruby_llm-mcp) gem.
 
+When a chat is wired to many tools — especially across MCP servers — see [Tool Search]({% link _core_features/tool-search.md %}) for how to defer tool schemas and let the model load only the ones it needs.
+
 ## Debugging Tools
 
 Set the `RUBYLLM_DEBUG` environment variable to see detailed logging, including tool calls and results.

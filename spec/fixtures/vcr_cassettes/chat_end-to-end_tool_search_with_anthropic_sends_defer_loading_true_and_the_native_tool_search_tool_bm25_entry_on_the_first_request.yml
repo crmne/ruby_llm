@@ -1,0 +1,107 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.anthropic.com/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"claude-haiku-4-5-20251001","messages":[{"role":"user","content":[{"type":"text","text":"What''s
+        the current weather in Berlin?"}]}],"stream":false,"max_tokens":64000,"tools":[{"name":"weather_lookup","description":"Looks
+        up the current weather (temperature, wind) for a city by name.","input_schema":{"type":"object","properties":{"city":{"type":"string","description":"City
+        name, e.g. \"Berlin\""}},"required":["city"],"additionalProperties":false,"strict":true},"defer_loading":true},{"name":"stock_price","description":"Fetches
+        the latest equity stock price in USD for a ticker symbol.","input_schema":{"type":"object","properties":{"ticker":{"type":"string","description":"Uppercase
+        ticker symbol, e.g. \"AAPL\""}},"required":["ticker"],"additionalProperties":false,"strict":true},"defer_loading":true},{"name":"translate_text","description":"Translates
+        a short piece of text from one natural language to another.","input_schema":{"type":"object","properties":{"text":{"type":"string","description":"Text
+        to translate"},"target_language":{"type":"string","description":"Target language
+        name, e.g. \"Spanish\""}},"required":["text","target_language"],"additionalProperties":false,"strict":true},"defer_loading":true},{"name":"calculator","description":"Evaluates
+        a basic arithmetic expression involving +, -, *, /.","input_schema":{"type":"object","properties":{"expression":{"type":"string","description":"Arithmetic
+        expression, e.g. \"2 + 2\""}},"required":["expression"],"additionalProperties":false,"strict":true},"defer_loading":true},{"name":"dictionary","description":"Looks
+        up the dictionary definition of an English word.","input_schema":{"type":"object","properties":{"word":{"type":"string","description":"The
+        word to define"}},"required":["word"],"additionalProperties":false,"strict":true},"defer_loading":true},{"name":"current_time","description":"Returns
+        the current server time as an ISO-8601 string.","input_schema":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}},{"type":"tool_search_tool_bm25_20251119","name":"tool_search_tool_bm25"}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Anthropic-Version:
+      - '2023-06-01'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 24 Apr 2026 10:28:14 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Anthropic-Ratelimit-Input-Tokens-Limit:
+      - '4000000'
+      Anthropic-Ratelimit-Input-Tokens-Remaining:
+      - '4000000'
+      Anthropic-Ratelimit-Input-Tokens-Reset:
+      - '2026-04-24T10:28:13Z'
+      Anthropic-Ratelimit-Output-Tokens-Limit:
+      - '800000'
+      Anthropic-Ratelimit-Output-Tokens-Remaining:
+      - '800000'
+      Anthropic-Ratelimit-Output-Tokens-Reset:
+      - '2026-04-24T10:28:14Z'
+      Anthropic-Ratelimit-Requests-Limit:
+      - '20000'
+      Anthropic-Ratelimit-Requests-Remaining:
+      - '19999'
+      Anthropic-Ratelimit-Requests-Reset:
+      - '2026-04-24T10:28:12Z'
+      Anthropic-Ratelimit-Tokens-Limit:
+      - '4800000'
+      Anthropic-Ratelimit-Tokens-Remaining:
+      - '4800000'
+      Anthropic-Ratelimit-Tokens-Reset:
+      - '2026-04-24T10:28:13Z'
+      Request-Id:
+      - "<REQUEST_ID>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Anthropic-Organization-Id:
+      - "<ANTHROPIC_ORGANIZATION_ID>"
+      Server:
+      - cloudflare
+      X-Envoy-Upstream-Service-Time:
+      - '1299'
+      Vary:
+      - Accept-Encoding
+      Server-Timing:
+      - x-originResponse;dur=1301
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Content-Security-Policy:
+      - default-src 'none'; frame-ancestors 'none'
+      X-Robots-Tag:
+      - none
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_015ea6m9mLKokbPqCqek9ZrS","type":"message","role":"assistant","content":[{"type":"text","text":"I
+        don''t have access to a weather tool. The tools available to me are:\n\n1.
+        **current_time** - Returns the current server time\n2. **tool_search_tool_bm25**
+        - Searches for available functions/tools\n\nTo get the current weather in
+        Berlin, you would need to:\n- Use a weather service API (like OpenWeatherMap,
+        WeatherAPI, etc.)\n- Check a weather website (like weather.com, weather.gov,
+        etc.)\n- Use a voice assistant with weather capabilities\n\nIs there anything
+        else I can help you with, such as checking the current time?"}],"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":762,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":135,"service_tier":"standard","inference_geo":"not_available"}}'
+  recorded_at: Fri, 24 Apr 2026 10:28:13 GMT
+recorded_with: VCR 6.4.0

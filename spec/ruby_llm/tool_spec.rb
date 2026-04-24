@@ -91,4 +91,32 @@ RSpec.describe RubyLLM::Tool do
         .to raise_error(ArgumentError, 'bad value provided')
     end
   end
+
+  describe '.deferred' do
+    it 'defaults to false' do
+      stub_const('UndeclaredTool', Class.new(described_class))
+      expect(UndeclaredTool.deferred?).to be(false)
+      expect(UndeclaredTool.new.deferred?).to be(false)
+    end
+
+    it 'marks the class as deferred when called without arguments' do
+      stub_const('HeavyTool', Class.new(described_class) { deferred })
+      expect(HeavyTool.deferred?).to be(true)
+      expect(HeavyTool.new.deferred?).to be(true)
+    end
+
+    it 'accepts explicit true/false' do
+      stub_const('TrueTool', Class.new(described_class) { deferred(true) })
+      stub_const('FalseTool', Class.new(described_class) { deferred(false) })
+      expect(TrueTool.deferred?).to be(true)
+      expect(FalseTool.deferred?).to be(false)
+    end
+
+    it 'does not propagate to unrelated classes' do
+      stub_const('ParentTool', Class.new(described_class) { deferred })
+      stub_const('SiblingTool', Class.new(described_class))
+      expect(ParentTool.deferred?).to be(true)
+      expect(SiblingTool.deferred?).to be(false)
+    end
+  end
 end
