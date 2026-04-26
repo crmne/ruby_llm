@@ -89,6 +89,22 @@ RSpec.describe RubyLLM::Image do
 
       save_and_verify_image image
     end
+
+    it 'gemini-2.5-flash-image supports image edits with a local file' do
+      image = RubyLLM.paint(
+        prompt,
+        model: 'gemini-2.5-flash-image',
+        provider: :gemini,
+        with: image_path
+      )
+
+      expect(image.base64?).to be(true)
+      expect(image.data).to be_present
+      expect(image.mime_type).to include('image')
+      expect(image.model_id).to eq('gemini-2.5-flash-image')
+
+      save_and_verify_image image
+    end
   end
 
   describe 'edit functionality' do
