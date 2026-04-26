@@ -105,6 +105,8 @@ image_generation_models = [
   { provider: :openai, model: 'dall-e-3', supports_size: true },
   { provider: :openai, model: 'gpt-image-1', supports_size: false },
   { provider: :gemini, model: 'imagen-4.0-generate-001', supports_size: false },
+  { provider: :gemini, model: 'gemini-2.5-flash-image', supports_size: false },
+  { provider: :gemini, model: 'gemini-3.1-flash-image-preview', supports_size: false },
   { provider: :openrouter, model: 'google/gemini-2.5-flash-image', supports_size: false }
 ].freeze
 IMAGE_GENERATION_MODELS = filter_local_providers(image_generation_models).freeze
