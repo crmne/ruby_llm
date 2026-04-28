@@ -4,12 +4,14 @@ require 'spec_helper'
 
 RSpec.describe RubyLLM::Providers::Bedrock::Chat do
   describe '.parse_completion_response' do
-    it 'raises RubyLLM::Error for nil completion bodies' do
-      response = instance_double(Faraday::Response, body: nil)
+    it 'raises RubyLLM::Error for nil or empty completion bodies' do
+      [nil, {}].each do |body|
+        response = instance_double(Faraday::Response, body: body)
 
-      expect do
-        described_class.parse_completion_response(response)
-      end.to raise_error(RubyLLM::Error, 'Provider returned an empty response body')
+        expect do
+          described_class.parse_completion_response(response)
+        end.to raise_error(RubyLLM::Error, 'Provider returned an empty response body')
+      end
     end
   end
 

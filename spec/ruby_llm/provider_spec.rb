@@ -35,6 +35,21 @@ RSpec.describe RubyLLM::Provider do
         provider.send(:sync_response, connection, { prompt: 'hello' })
       end.to raise_error(RubyLLM::Error, 'Provider returned an empty response body')
     end
+
+    it 'raises RubyLLM::Error for empty completion bodies' do
+      request = instance_double(Faraday::Request, headers: {})
+      response = instance_double(Faraday::Response, body: {})
+      connection = instance_double(RubyLLM::Connection)
+
+      allow(connection).to receive(:post)
+        .with('chat/completions', { prompt: 'hello' })
+        .and_yield(request)
+        .and_return(response)
+
+      expect do
+        provider.send(:sync_response, connection, { prompt: 'hello' })
+      end.to raise_error(RubyLLM::Error, 'Provider returned an empty response body')
+    end
   end
 
   describe '#parse_error' do

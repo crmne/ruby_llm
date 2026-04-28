@@ -107,7 +107,7 @@ module RubyLLM
 
         def parse_completion_response(response)
           data = response.body
-          raise Error.new(response, 'Provider returned an empty response body') if data.nil?
+          raise Error.new(response, 'Provider returned an empty response body') if data.nil? || data.empty?
 
           parts = data.dig('candidates', 0, 'content', 'parts') || []
           tool_calls = extract_tool_calls(data)

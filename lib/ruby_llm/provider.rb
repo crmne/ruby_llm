@@ -272,7 +272,10 @@ module RubyLLM
     end
 
     def ensure_response_body!(response)
-      raise Error.new(response, 'Provider returned an empty response body') if response.body.nil?
+      body = response.body
+      return unless body.nil? || (body.respond_to?(:empty?) && body.empty?)
+
+      raise Error.new(response, 'Provider returned an empty response body')
     end
   end
 end
