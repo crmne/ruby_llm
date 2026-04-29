@@ -22,6 +22,8 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      X-Gemini-Service-Tier:
+      - standard
       Content-Type:
       - application/json; charset=UTF-8
       Vary:
@@ -29,7 +31,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 16 Mar 2026 19:15:47 GMT
+      - Thu, 02 Apr 2026 11:31:54 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -39,7 +41,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=1769
+      - gfet4t7; dur=1524
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -53,12 +55,12 @@ http_interactions:
               "content": {
                 "parts": [
                   {
-                    "text": "Here's my thought process, distilled:\n\n**The Math Is Simple, Let's Get This Done**\n\nOkay, so the user's looking for a straightforward calculation. It seems they want the sum of 5 and 3. My expertise is in handling complex problems, but I can certainly handle something this fundamental. Let's get the answer quickly and efficiently, no need for elaborate methods. 5 plus 3 equals 8. Simple arithmetic, precisely what they are after. I'll state the result clearly so there's no confusion.\n\n\n",
+                    "text": "Here's my thought process, distilled:\n\n**The Math Problem**\n\nOkay, the task is straightforward. The user has presented a simple arithmetic problem. It appears they want the sum of two numbers, specifically 5 and 3. My expertise screams, \"Addition!\" I instantly process the operation: 5 + 3 = 8. That's the answer. Done.\n\n\n",
                     "thought": true
                   },
                   {
                     "text": "5 + 3 = 8",
-                    "thoughtSignature": "EoQBCoEBAb4+9vtMduE1f+UIwCURUBYsajxWbIgHBxyZXuYnEt4m+b4YMx5to5BMylZqwhsP1YSMecKh3HkQLEu4sZ6UO5X+ilJ1tYiWdQlW9NLX4ojAwOoHSS+a3M+OeQrfH5l2/OZ81WIZA7IDhxTPjigxGtX9pp8Bgo5ko4M4GxSdA2Zh"
+                    "thoughtSignature": "EoMBCoABAb4+9vsVJFQTmlfRlr75S1eNAlGrPqqdmNtxSUJ983D2/Llb7QxJ2kpDUtdgfIc2onIsfmgdSDxr6Hb8fKaHfXy/iyC56PvmVyN1R+L9jEzhdOoUbOwvaRkP1KozL4/V1jjD68MwWt77dw2unwvp/dNRbbWKDFI5C9VoW7q/rec="
                   }
                 ],
                 "role": "model"
@@ -70,32 +72,30 @@ http_interactions:
           "usageMetadata": {
             "promptTokenCount": 9,
             "candidatesTokenCount": 7,
-            "totalTokenCount": 45,
+            "totalTokenCount": 46,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
                 "tokenCount": 9
               }
             ],
-            "thoughtsTokenCount": 29
+            "thoughtsTokenCount": 30
           },
           "modelVersion": "gemini-3-flash-preview",
-          "responseId": "41a4ad-kAvn3xs0Pn7X2qQU"
+          "responseId": "qlPOadj0IPT6kdUP-bS0sQY"
         }
-  recorded_at: Mon, 16 Mar 2026 19:15:47 GMT
+  recorded_at: Thu, 02 Apr 2026 11:31:54 GMT
 - request:
     method: post
     uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"What is 5 + 3?"}]},{"role":"model","parts":[{"thought":true,"text":"Here''s
-        my thought process, distilled:\n\n**The Math Is Simple, Let''s Get This Done**\n\nOkay,
-        so the user''s looking for a straightforward calculation. It seems they want
-        the sum of 5 and 3. My expertise is in handling complex problems, but I can
-        certainly handle something this fundamental. Let''s get the answer quickly
-        and efficiently, no need for elaborate methods. 5 plus 3 equals 8. Simple
-        arithmetic, precisely what they are after. I''ll state the result clearly
-        so there''s no confusion.\n\n\n","thoughtSignature":"EoQBCoEBAb4+9vtMduE1f+UIwCURUBYsajxWbIgHBxyZXuYnEt4m+b4YMx5to5BMylZqwhsP1YSMecKh3HkQLEu4sZ6UO5X+ilJ1tYiWdQlW9NLX4ojAwOoHSS+a3M+OeQrfH5l2/OZ81WIZA7IDhxTPjigxGtX9pp8Bgo5ko4M4GxSdA2Zh"},{"text":"5
+        my thought process, distilled:\n\n**The Math Problem**\n\nOkay, the task is
+        straightforward. The user has presented a simple arithmetic problem. It appears
+        they want the sum of two numbers, specifically 5 and 3. My expertise screams,
+        \"Addition!\" I instantly process the operation: 5 + 3 = 8. That''s the answer.
+        Done.\n\n\n","thoughtSignature":"EoMBCoABAb4+9vsVJFQTmlfRlr75S1eNAlGrPqqdmNtxSUJ983D2/Llb7QxJ2kpDUtdgfIc2onIsfmgdSDxr6Hb8fKaHfXy/iyC56PvmVyN1R+L9jEzhdOoUbOwvaRkP1KozL4/V1jjD68MwWt77dw2unwvp/dNRbbWKDFI5C9VoW7q/rec="},{"text":"5
         + 3 = 8"}]},{"role":"user","parts":[{"text":"Now multiply that by 2"}]}],"generationConfig":{"thinkingConfig":{"includeThoughts":true,"thinkingLevel":"low"}}}'
     headers:
       User-Agent:
@@ -113,6 +113,8 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      X-Gemini-Service-Tier:
+      - standard
       Content-Type:
       - application/json; charset=UTF-8
       Vary:
@@ -120,7 +122,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 16 Mar 2026 19:15:49 GMT
+      - Thu, 02 Apr 2026 11:31:56 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -130,7 +132,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=1943
+      - gfet4t7; dur=1596
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -138,6 +140,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicGFydHMiOiBbCiAgICAgICAgICB7CiAgICAgICAgICAgICJ0ZXh0IjogIkhlcmUncyBteSB0YWtlIG9uIHRoZSBzaXR1YXRpb246XG5cbioqU2ltcGxlIE11bHRpcGxpY2F0aW9uKipcblxuQWxyaWdodCwgbGV0J3Mga2VlcCB0aGlzIG1vdmluZy4gTXkgY3VycmVudCB0YXNrIGlzIHN0cmFpZ2h0Zm9yd2FyZDogdGFrZSB0aGF0IGxhc3QgdmFsdWUg4oCTIHdoaWNoLCBpZiBJIHJlY2FsbCBjb3JyZWN0bHksIHdhcyA4IOKAkyBhbmQgZG91YmxlIGl0LiBJdCdzIGEgc2ltcGxlIG11bHRpcGxpY2F0aW9uLCA4ICogMi4gVGhlIGNhbGN1bGF0aW9uIGl0c2VsZiBpcyB0cml2aWFsLCBvZiBjb3Vyc2UuIFRoZSByZXN1bHQgaXMgMTYuIERvbmUuXG5cblxuIiwKICAgICAgICAgICAgInRob3VnaHQiOiB0cnVlCiAgICAgICAgICB9LAogICAgICAgICAgewogICAgICAgICAgICAidGV4dCI6ICI4IMOXIDIgPSAxNiIsCiAgICAgICAgICAgICJ0aG91Z2h0U2lnbmF0dXJlIjogIkVyMEJDcm9CQWI0Kzl2dS9uYXhHNFQ4RnlwTURjcUVkQktpY0dsVGpaaDhSQjZpZHVUbzZYRTFYbzh2T0N1MkFQRzk1NGd4S2IrN0t2bXo5U0VSaHNpTU84Qi9BNDE0cjVNc09qREtpa2c0Y1hlY0hIK21hNmRoL0Q3VXExZjRSSnBjeGwzTEVGay96ZG1GclBaeHJUbWhvY1oxNHlTSitzbk5RZGtZSVh4bVJ5YUZMbjMrZHJaRTE3NW55SCtQUy9aNUQ0SjNFZnFkRW5JcEZjNzhZZTBUSm9PYTNiYmdDRzAzNDIvWmgxeitxSTQzNzBqdFB2SzlwNTYrM01tMDAiCiAgICAgICAgICB9CiAgICAgICAgXSwKICAgICAgICAicm9sZSI6ICJtb2RlbCIKICAgICAgfSwKICAgICAgImZpbmlzaFJlYXNvbiI6ICJTVE9QIiwKICAgICAgImluZGV4IjogMAogICAgfQogIF0sCiAgInVzYWdlTWV0YWRhdGEiOiB7CiAgICAicHJvbXB0VG9rZW5Db3VudCI6IDE0MCwKICAgICJjYW5kaWRhdGVzVG9rZW5Db3VudCI6IDgsCiAgICAidG90YWxUb2tlbkNvdW50IjogMTkyLAogICAgInByb21wdFRva2Vuc0RldGFpbHMiOiBbCiAgICAgIHsKICAgICAgICAibW9kYWxpdHkiOiAiVEVYVCIsCiAgICAgICAgInRva2VuQ291bnQiOiAxNDAKICAgICAgfQogICAgXSwKICAgICJ0aG91Z2h0c1Rva2VuQ291bnQiOiA0NAogIH0sCiAgIm1vZGVsVmVyc2lvbiI6ICJnZW1pbmktMy1mbGFzaC1wcmV2aWV3IiwKICAicmVzcG9uc2VJZCI6ICI1VmE0YWZXNkJNWG5uc0VQcThYNHFBayIKfQo=
-  recorded_at: Mon, 16 Mar 2026 19:15:49 GMT
+        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicGFydHMiOiBbCiAgICAgICAgICB7CiAgICAgICAgICAgICJ0ZXh0IjogIioqRG91YmxpbmcgRG93biBvbiB0aGUgUmVzdWx0KipcblxuT2theSwgc28gd2UndmUgZ290IG91ciBwcmV2aW91cyByZXN1bHQgbG9ja2VkIGluIOKAkyB0aGF0IHdhcyA4LiBOb3csIHRoZSBuZXh0IGxvZ2ljYWwgc3RlcCwgYXQgbGVhc3QgaW4gdGhpcyBzZXF1ZW5jZSwgaXMgdG8gc2ltcGx5IGRvdWJsZSB0aGF0IGZpZ3VyZS4gSXQncyBhIHN0cmFpZ2h0Zm9yd2FyZCBtdWx0aXBsaWNhdGlvbiwgcmVhbGx5LiBXZSdyZSBnb2luZyB0byB0YWtlIHRoYXQgOCBhbmQgbXVsdGlwbHkgaXQgYnkgMi4gTGV0J3Mgc2VlLi4uIDggdGltZXMgMiBpcyB1bmRlbmlhYmx5IDE2LiBEb25lLlxuXG5cbiIsCiAgICAgICAgICAgICJ0aG91Z2h0IjogdHJ1ZQogICAgICAgICAgfSwKICAgICAgICAgIHsKICAgICAgICAgICAgInRleHQiOiAiOCDDlyAyID0gMTYiLAogICAgICAgICAgICAidGhvdWdodFNpZ25hdHVyZSI6ICJFcDBCQ3BvQkFiNCs5dnVFcytPNXJENXRwdnpQSUcvUXlEN29iekVESEZ2cWt1YUpyamJYMFJnaHFpQmR6ZWdDMFVQVi83ZVFWaXBhTWlFQlZZcGFOVTFwWlF4QlRHclNVbndFREx6Sk01Q0M4Rk1zdFhqNFFSd0NVelc4WjE1N0pUd2hvZXIxc1BjWmFwL2R3L290UStaUVdrTCs2RTFIR2tZdTV4TldhMm54aUpDd3VYdytZZXVTelkwT2ozQWEvUm9VMHFTQmlhUVZzWi9McG9JRXhRPT0iCiAgICAgICAgICB9CiAgICAgICAgXSwKICAgICAgICAicm9sZSI6ICJtb2RlbCIKICAgICAgfSwKICAgICAgImZpbmlzaFJlYXNvbiI6ICJTVE9QIiwKICAgICAgImluZGV4IjogMAogICAgfQogIF0sCiAgInVzYWdlTWV0YWRhdGEiOiB7CiAgICAicHJvbXB0VG9rZW5Db3VudCI6IDEwNCwKICAgICJjYW5kaWRhdGVzVG9rZW5Db3VudCI6IDgsCiAgICAidG90YWxUb2tlbkNvdW50IjogMTQ1LAogICAgInByb21wdFRva2Vuc0RldGFpbHMiOiBbCiAgICAgIHsKICAgICAgICAibW9kYWxpdHkiOiAiVEVYVCIsCiAgICAgICAgInRva2VuQ291bnQiOiAxMDQKICAgICAgfQogICAgXSwKICAgICJ0aG91Z2h0c1Rva2VuQ291bnQiOiAzMwogIH0sCiAgIm1vZGVsVmVyc2lvbiI6ICJnZW1pbmktMy1mbGFzaC1wcmV2aWV3IiwKICAicmVzcG9uc2VJZCI6ICJyRlBPYWVIbkRPU0t4TjhQNFptV3VBNCIKfQo=
+  recorded_at: Thu, 02 Apr 2026 11:31:56 GMT
 recorded_with: VCR 6.4.0

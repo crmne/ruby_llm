@@ -1,0 +1,66 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.openai.com/v1/images/edits
+    body:
+      encoding: UTF-8
+      string: "<MULTIPART_FORM_DATA_WITH_IMAGE>"
+    headers:
+      User-Agent:
+      - Faraday v2.13.4
+      Authorization:
+      - Bearer <OPENAI_API_KEY>
+      Content-Type:
+      - multipart/form-data; boundary=-----------RubyMultipartPost-de2c4a9bfa1ad13eda4203474f12b2af
+      Content-Length:
+      - '16848'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 11 Sep 2025 04:41:23 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Openai-Version:
+      - '2020-10-01'
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Openai-Processing-Ms:
+      - '15075'
+      X-Envoy-Upstream-Service-Time:
+      - '15078'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: UTF-8
+      string: '{"created":1757565683,"background":"opaque","data":[{"b64_json":"\u003cBASE64_IMAGE_DATA\u003e"}],"output_format":"png","quality":"low","size":"1024x1024","usage":{"input_tokens":221,"input_tokens_details":{"image_tokens":194,"text_tokens":27},"output_tokens":272,"total_tokens":493}}'
+  recorded_at: Thu, 11 Sep 2025 04:41:23 GMT
+recorded_with: VCR 6.3.1

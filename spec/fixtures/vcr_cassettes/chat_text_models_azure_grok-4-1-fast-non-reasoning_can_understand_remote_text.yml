@@ -27,39 +27,39 @@ http_interactions:
       Content-Type:
       - text/plain; charset=utf-8
       Last-Modified:
-      - Mon, 16 Mar 2026 01:54:05 GMT
+      - Wed, 01 Apr 2026 06:43:01 GMT
       Access-Control-Allow-Origin:
       - "*"
       Etag:
-      - W/"69b762bd-9c6"
+      - W/"69ccbe75-9c6"
       Expires:
-      - Mon, 16 Mar 2026 20:36:53 GMT
+      - Thu, 02 Apr 2026 11:33:08 GMT
       Cache-Control:
       - max-age=600
       X-Proxy-Cache:
       - MISS
       X-Github-Request-Id:
-      - AB8E:25393A:25D461:263663:69B8678D
+      - 7CC4:C8EAE:1010677:103A1A3:69CE519C
       Accept-Ranges:
       - bytes
-      Age:
-      - '0'
       Date:
-      - Mon, 16 Mar 2026 20:26:53 GMT
+      - Thu, 02 Apr 2026 11:23:15 GMT
       Via:
       - 1.1 varnish
+      Age:
+      - '7'
       X-Served-By:
-      - cache-fra-etou8220193-FRA
+      - cache-ber1080032-BER
       X-Cache:
-      - MISS
+      - HIT
       X-Cache-Hits:
-      - '0'
+      - '1'
       X-Timer:
-      - S1773692814.618400,VS0,VE108
+      - S1775128996.683442,VS0,VE1
       Vary:
       - Accept-Encoding
       X-Fastly-Request-Id:
-      - 12527e1763517cc5339d52f88f57178c5f9085ad
+      - 8eed325b7150d24438db261b62a321f242c98650
     body:
       encoding: ASCII-8BIT
       string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
@@ -95,7 +95,7 @@ http_interactions:
         \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
         WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
         FOR A PARTICULAR\n     PURPOSE.\n"
-  recorded_at: Mon, 16 Mar 2026 20:26:53 GMT
+  recorded_at: Thu, 02 Apr 2026 11:23:15 GMT
 - request:
     method: post
     uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
@@ -158,36 +158,44 @@ http_interactions:
       - application/json
       Request-Context:
       - appId=
-      Sampling-Token-Len:
-      - '232'
-      Prompt-Token-Len:
-      - '524'
       X-Ms-Rai-Invoked:
       - 'true'
+      Sampling-Token-Len:
+      - '248'
+      Prompt-Token-Len:
+      - '524'
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Ms-Client-Request-Id:
-      - 8d5bf182-89a5-4224-85b1-e5af19d17669
+      - 4b61624a-4991-489b-ab6d-fd93077fc0a1
       Azureml-Model-Session:
-      - d-a3423142-ae3e-4fb1-be62-1eecd5f54116
+      - d-d37d4aed-feba-4c61-ae2a-7f8ce4d38049
       Azureai-Requested-Tier:
       - default
       Azureai-Processed-Tier:
       - default
       X-Ms-Is-Spilled-Over:
       - 'false'
+      X-Ratelimit-Remaining-Requests:
+      - '48'
+      X-Ratelimit-Reset-Requests:
+      - '2572'
+      X-Ratelimit-Limit-Requests:
+      - '50'
+      X-Ratelimit-Renewalperiod-Requests:
+      - '60'
+      X-Ratelimit-Abusepenalty-Active:
+      - 'False'
       X-Ratelimit-Remaining-Tokens:
-      - '50000'
+      - '49304'
       X-Ratelimit-Reset-Tokens:
-      - '0'
+      - '835'
       X-Ratelimit-Limit-Tokens:
       - '50000'
       X-Ratelimit-Renewalperiod-Tokens:
       - '60'
-      X-Ratelimit-Abusepenalty-Active:
-      - 'False'
       Apim-Request-Id:
-      - 8d5bf182-89a5-4224-85b1-e5af19d17669
+      - 4b61624a-4991-489b-ab6d-fd93077fc0a1
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Ms-Deployment-Name:
@@ -197,7 +205,7 @@ http_interactions:
       X-Ms-Region:
       - West Europe
       Date:
-      - Mon, 16 Mar 2026 20:26:56 GMT
+      - Thu, 02 Apr 2026 11:23:17 GMT
     body:
       encoding: UTF-8
       string: '{"choices":[{"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"protected_material_code":{"filtered":false,"detected":false},"protected_material_text":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}},"finish_reason":"stop","index":0,"logprobs":null,"message":{"content":"This
@@ -206,17 +214,18 @@ http_interactions:
         by Yukihiro Matsumoto (matz).\n\n### Key Points:\n- **Copyright**: Held by
         Yukihiro Matsumoto.\n- **Permissions**:\n  - Free redistribution of verbatim
         source copies (with notices preserved).\n  - Modification allowed, but you
-        must either:\n    - Make mods public domain/freely available.\n    - Use only
+        must either:\n    - Publicly release mods (e.g., Usenet/posting).\n    - Use
         internally in your org.\n    - Rename non-standard binaries and point to original.\n    -
-        Arrange directly with author.\n  - Binary distribution allowed with similar
-        conditions (e.g., include source or instructions to original).\n  - Can embed
-        modified parts into other software (even commercial).\n- **Exceptions**: Some
-        files have different terms (see `LEGAL` file); scripts/libraries generated
-        by Ruby aren''t covered.\n- **No Warranty**: Provided \"AS IS\" with no guarantees.\n\nIt''s
-        similar to a BSD-style license but with unique clauses (e.g., internal use
-        option). Often dual-licensed with 2-clause BSD. Full modern Ruby source uses
-        this + BSD/GPL-2 options.","refusal":null,"role":"assistant","tool_calls":null},"stop_reason":null}],"created":1773692814,"id":"5904f0e8-c93e-4ce5-9d72-95eec3fe7dd4","model":"grok-4-1-fast-non-reasoning","object":"chat.completion","prompt_filter_results":[{"prompt_index":0,"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"jailbreak":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}}}],"usage":{"audio_prompt_tokens":0,"completion_tokens":232,"completion_tokens_details":{"accepted_prediction_tokens":0,"audio_tokens":0,"reasoning_tokens":0,"rejected_prediction_tokens":0},"cost_in_usd_ticks":0,"num_sources_used":0,"prompt_tokens":524,"prompt_tokens_details":{"audio_tokens":0,"cached_tokens":0,"image_tokens":0,"text_tokens":524},"total_tokens":756}}
+        Arrange with author.\n  - Binary distribution requires source access or similar.\n  -
+        Can embed modified parts in other (even commercial) software.\n- **Exclusions**:
+        Some files have different terms (see `LEGAL` file); scripts/libs generated
+        by Ruby aren''t covered.\n- **No Warranty**: \"AS IS\" with no guarantees.\n\nIt''s
+        similar to a **2-clause BSD license** (explicitly mentioned as an alternative
+        via `BSDL` file) but with extra conditions on modifications/distribution to
+        promote openness. Ruby software released under this is free to use commercially.
+        \n\nFull modern Ruby distributions often use the **2-clause BSD** instead
+        for simplicity.","refusal":null,"role":"assistant","tool_calls":null},"stop_reason":null}],"created":1775128996,"id":"ad3affb5-a49a-45fa-80c0-cd48fcb0ac22","model":"grok-4-1-fast-non-reasoning","object":"chat.completion","prompt_filter_results":[{"prompt_index":0,"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"jailbreak":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}}}],"usage":{"audio_prompt_tokens":0,"completion_tokens":248,"completion_tokens_details":{"accepted_prediction_tokens":0,"audio_tokens":0,"reasoning_tokens":0,"rejected_prediction_tokens":0},"cost_in_usd_ticks":0,"num_sources_used":0,"prompt_tokens":524,"prompt_tokens_details":{"audio_tokens":0,"cached_tokens":0,"image_tokens":0,"text_tokens":524},"total_tokens":772}}
 
         '
-  recorded_at: Mon, 16 Mar 2026 20:26:57 GMT
+  recorded_at: Thu, 02 Apr 2026 11:23:18 GMT
 recorded_with: VCR 6.4.0

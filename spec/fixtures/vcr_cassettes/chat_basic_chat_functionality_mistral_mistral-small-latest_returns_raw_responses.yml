@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 16 Mar 2026 19:13:32 GMT
+      - Thu, 02 Apr 2026 11:25:18 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -32,48 +32,45 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '019cf811-5835-7666-bc6b-1c490694807c'
+      - '019d4df0-c53d-7754-8801-c15cdd7d8664'
       X-Kong-Request-Id:
-      - '019cf811-5835-7666-bc6b-1c490694807c'
+      - '019d4df0-c53d-7754-8801-c15cdd7d8664'
       X-Ratelimit-Limit-Tokens-Minute:
-      - '2000000'
+      - '600000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '1999146'
+      - '599447'
       X-Ratelimit-Tokens-Query-Cost:
-      - '70'
+      - '31'
       X-Ratelimit-Limit-Req-Minute:
       - '360'
       X-Ratelimit-Remaining-Req-Minute:
       - '356'
       X-Envoy-Upstream-Service-Time:
-      - '377'
+      - '298'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '378'
+      - '299'
       X-Kong-Proxy-Latency:
-      - '7'
+      - '16'
+      Cf-Cache-Status:
+      - DYNAMIC
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
-      X-Content-Type-Options:
-      - nosniff
-      Cf-Cache-Status:
-      - DYNAMIC
       Strict-Transport-Security:
       - max-age=15552000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"e7bf06f6520646a58cf8bb785c7c2470","created":1773688412,"model":"mistral-small-latest","usage":{"prompt_tokens":10,"total_tokens":70,"completion_tokens":60,"prompt_tokens_details":{"cached_tokens":0}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
-        capital of France is **Paris**. It is known for iconic landmarks such as the
-        Eiffel Tower, the Louvre Museum, and Notre-Dame Cathedral. Paris is also a
-        major <GOOGLE_CLOUD_LOCATION> hub for culture, fashion, and cuisine.\n\nWould
-        you like to know more about Paris or France in general?"}}]}'
-  recorded_at: Mon, 16 Mar 2026 19:13:32 GMT
+      string: '{"id":"7d4b46b701de4957928b17182e8081b3","created":1775129118,"model":"mistral-small-latest","usage":{"prompt_tokens":22,"total_tokens":31,"completion_tokens":9,"prompt_tokens_details":{"cached_tokens":0}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
+        capital of France is **Paris**."}}]}'
+  recorded_at: Thu, 02 Apr 2026 11:25:18 GMT
 recorded_with: VCR 6.4.0

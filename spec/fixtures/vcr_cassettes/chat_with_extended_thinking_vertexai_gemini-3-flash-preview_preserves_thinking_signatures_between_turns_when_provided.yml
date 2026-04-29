@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Date:
+      - Thu, 02 Apr 2026 11:36:21 GMT
+      Expires:
+      - Mon, 01 Jan 1990 00:00:00 GMT
       Pragma:
       - no-cache
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
-      Date:
-      - Mon, 16 Mar 2026 19:20:26 GMT
-      Expires:
-      - Mon, 01 Jan 1990 00:00:00 GMT
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/sqlservice.login openid https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/cloud-platform",
+          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/sqlservice.login openid",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Mon, 16 Mar 2026 19:20:26 GMT
+  recorded_at: Thu, 02 Apr 2026 11:36:21 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-3-flash-preview:generateContent
@@ -86,7 +86,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 16 Mar 2026 19:20:30 GMT
+      - Thu, 02 Apr 2026 11:36:40 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -109,23 +109,23 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "**Calculating a Simple Sum**\n\nI've quickly determined the answer to the user's query: 5 + 3 equals 8. It was a straightforward calculation, and the result is now readily available.\n\n\n",
-                    "thought": true
+                    "text": "5 + 3 = 8",
+                    "thoughtSignature": "CnABjz1rX4a6m+pBSRPWtutsXh7bce3S9LM3jvUmN/DRyBL1rVENYxCSbA/3L04l/aI0a1KKnjidOQq1Rin/oXLlQNmv2WWXAK+II2QYFmcge3QayKA3swFJkG31tkbmG77XtMX0kdf4huXoYmVVBgst"
                   },
                   {
-                    "text": "5 + 3 = 8",
-                    "thoughtSignature": "ClgBjz1rXzsRKRT1NejfHTYeDftgO4Aeo3Jpis/0pbsVvYz8esfYfB42cRnQggwBPK3gj6KumfIi48skPGBsTfSmM/1/xQBWClfyq2+qCwbFCUJeY38qVpTX"
+                    "text": "**Calculating the Sum**\n\nI've determined the sum of the two numbers. After evaluating the expression, I've arrived at a concise, clear answer, ready to share. The result is now certain.\n\n\n",
+                    "thought": true
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.49098546747724675
+              "avgLogprobs": -0.3774959778895684
             }
           ],
           "usageMetadata": {
             "promptTokenCount": 8,
             "candidatesTokenCount": 7,
-            "totalTokenCount": 39,
+            "totalTokenCount": 44,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -139,22 +139,22 @@ http_interactions:
                 "tokenCount": 7
               }
             ],
-            "thoughtsTokenCount": 24
+            "thoughtsTokenCount": 29
           },
           "modelVersion": "gemini-3-flash-preview",
-          "createTime": "2026-03-16T19:20:26.856343Z",
-          "responseId": "-le4aZeiNKfCtfAPpbfF0QQ"
+          "createTime": "2026-04-02T11:36:21.697610Z",
+          "responseId": "tVTOaYrKKr-B6dgPs4H1mQc"
         }
-  recorded_at: Mon, 16 Mar 2026 19:20:30 GMT
+  recorded_at: Thu, 02 Apr 2026 11:36:40 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-3-flash-preview:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"What is 5 + 3?"}]},{"role":"model","parts":[{"thought":true,"text":"**Calculating
-        a Simple Sum**\n\nI''ve quickly determined the answer to the user''s query:
-        5 + 3 equals 8. It was a straightforward calculation, and the result is now
-        readily available.\n\n\n","thoughtSignature":"ClgBjz1rXzsRKRT1NejfHTYeDftgO4Aeo3Jpis/0pbsVvYz8esfYfB42cRnQggwBPK3gj6KumfIi48skPGBsTfSmM/1/xQBWClfyq2+qCwbFCUJeY38qVpTX"},{"text":"5
+        the Sum**\n\nI''ve determined the sum of the two numbers. After evaluating
+        the expression, I''ve arrived at a concise, clear answer, ready to share.
+        The result is now certain.\n\n\n","thoughtSignature":"CnABjz1rX4a6m+pBSRPWtutsXh7bce3S9LM3jvUmN/DRyBL1rVENYxCSbA/3L04l/aI0a1KKnjidOQq1Rin/oXLlQNmv2WWXAK+II2QYFmcge3QayKA3swFJkG31tkbmG77XtMX0kdf4huXoYmVVBgst"},{"text":"5
         + 3 = 8"}]},{"role":"user","parts":[{"text":"Now multiply that by 2"}]}],"generationConfig":{"thinkingConfig":{"includeThoughts":true,"thinkingLevel":"medium"}}}'
     headers:
       User-Agent:
@@ -179,7 +179,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 16 Mar 2026 19:20:39 GMT
+      - Thu, 02 Apr 2026 11:36:41 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -195,6 +195,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicm9sZSI6ICJtb2RlbCIsCiAgICAgICAgInBhcnRzIjogWwogICAgICAgICAgewogICAgICAgICAgICAidGV4dCI6ICIqKkNhbGN1bGF0aW5nIHRoZSBOZXh0IFN0ZXAqKlxuXG5JJ20gZm9jdXNlZCBvbiB0aGUgbmV4dCBjYWxjdWxhdGlvbi4gVGFraW5nIHRoZSBwcmlvciBvdXRjb21lLCB3aGljaCB3YXMgZWlnaHQsIEknbSBub3cgbXVsdGlwbHlpbmcgaXQgYnkgdHdvLiBUaGUgYW50aWNpcGF0ZWQgcmVzdWx0IHNob3VsZCBiZSBzaXh0ZWVuLCBob3BlZnVsbHksIEkndmUgZ290IHRoYXQgcmlnaHQuIFRoaXMgaXMgc3RyYWlnaHRmb3J3YXJkIHNvIGZhci5cblxuXG4iLAogICAgICAgICAgICAidGhvdWdodCI6IHRydWUKICAgICAgICAgIH0sCiAgICAgICAgICB7CiAgICAgICAgICAgICJ0ZXh0IjogIjggw5cgMiA9IDE2IiwKICAgICAgICAgICAgInRob3VnaHRTaWduYXR1cmUiOiAiQ3FBQkFZODlhMStMNmJud2d6VmUxN2t2UHdXN0ZFaFlkZElpdlRINVFxMktEeGZpNm9KQnptYUZQQllHZUJtTkRyNmdFb3pSTWJZY3dXVmlrSDdvZFZVS0NpTld5a0htdkhRakE2Uk8zU3dkeWwvYXRqM3MzSlVOUTZRdnZ2OG1UQytaVlJVRlduVG1VY0ZFVjQza2lkSFY0VDNjYXJNTnV2djhJUlFrVTNRQmUyUi9Fb2VPd1A3OXFPVVF2MjlFYS9KdDQ2RnY3VVhHNXpnRFlnd2JnM3pOV2c9PSIKICAgICAgICAgIH0KICAgICAgICBdCiAgICAgIH0sCiAgICAgICJmaW5pc2hSZWFzb24iOiAiU1RPUCIsCiAgICAgICJhdmdMb2dwcm9icyI6IC0wLjY3ODI3MTc0NDM1MjM1MDk0CiAgICB9CiAgXSwKICAidXNhZ2VNZXRhZGF0YSI6IHsKICAgICJwcm9tcHRUb2tlbkNvdW50IjogNjYsCiAgICAiY2FuZGlkYXRlc1Rva2VuQ291bnQiOiA4LAogICAgInRvdGFsVG9rZW5Db3VudCI6IDExOCwKICAgICJ0cmFmZmljVHlwZSI6ICJPTl9ERU1BTkQiLAogICAgInByb21wdFRva2Vuc0RldGFpbHMiOiBbCiAgICAgIHsKICAgICAgICAibW9kYWxpdHkiOiAiVEVYVCIsCiAgICAgICAgInRva2VuQ291bnQiOiA2NgogICAgICB9CiAgICBdLAogICAgImNhbmRpZGF0ZXNUb2tlbnNEZXRhaWxzIjogWwogICAgICB7CiAgICAgICAgIm1vZGFsaXR5IjogIlRFWFQiLAogICAgICAgICJ0b2tlbkNvdW50IjogOAogICAgICB9CiAgICBdLAogICAgInRob3VnaHRzVG9rZW5Db3VudCI6IDQ0CiAgfSwKICAibW9kZWxWZXJzaW9uIjogImdlbWluaS0zLWZsYXNoLXByZXZpZXciLAogICJjcmVhdGVUaW1lIjogIjIwMjYtMDMtMTZUMTk6MjA6MzAuOTY3MDk3WiIsCiAgInJlc3BvbnNlSWQiOiAiX2xlNGFibURPNEczbVBVUG9aMnktUUkiCn0K
-  recorded_at: Mon, 16 Mar 2026 19:20:39 GMT
+        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicm9sZSI6ICJtb2RlbCIsCiAgICAgICAgInBhcnRzIjogWwogICAgICAgICAgewogICAgICAgICAgICAidGV4dCI6ICIqKkNhbGN1bGF0aW5nIHRoZSBOZXh0IFN0ZXAqKlxuXG5JJ3ZlIGdvdCB0aGUgcHJldmlvdXMgcmVzdWx0LCA4LCBhbmQgbm93IEkgbmVlZCB0byBtdWx0aXBseSBpdC4gTXkgbmV4dCBzdGVwIGlzIGNsZWFyOiBwZXJmb3JtIGEgbXVsdGlwbGljYXRpb24gb3BlcmF0aW9uIHVzaW5nIGEgZmFjdG9yIG9mIDIuIFRoZSBjYWxjdWxhdGlvbiwgOCBtdWx0aXBsaWVkIGJ5IDIsIGRpcmVjdGx5IHJlc3VsdHMgaW4gMTYuIFRoZSBmaW5hbCBhbnN3ZXIgaXMgMTYuXG5cblxuIiwKICAgICAgICAgICAgInRob3VnaHQiOiB0cnVlCiAgICAgICAgICB9LAogICAgICAgICAgewogICAgICAgICAgICAidGV4dCI6ICI4IMOXIDIgPSAxNiIsCiAgICAgICAgICAgICJ0aG91Z2h0U2lnbmF0dXJlIjogIkN1a0JBWTg5YTEvV3JneHV6UlY3Z2cyR0x4VUVKUXBKQzFvOVlRMDBPU2FrT2JPWkVRbC9tdjArQXFWOUE0MlpQamUybzFTZHJpVXVUOWhMNWpSODB5Q0pWeDh5N3pjd2xiYjhoejVWUjJiYVpJMlRFYklLTFlUSjBBblI2V3BGU01IbXN5cmFPVmNYTG5NNGllSkZtYkRxZFhqMjRCZ0RGQ1A1WWFSZFVtUUY3dmtDL2djZmJnRFlLTzhzVmFMMHRoL1FEVktDQ2tJZ3NLRnBSb1lWeElmcnNLaXMxdU1oSTB2ZklaaFM2Q0h5dmZBQkJFWWhseHlDTll4aFpZOXdva0w5SWtZTVlSejd4ZkxXWnlnYnpaY1lOWDB6YjgxS1poa3BxbTNLV1czL01vU1VhNzZ2bGZrVTZGcz0iCiAgICAgICAgICB9CiAgICAgICAgXQogICAgICB9LAogICAgICAiZmluaXNoUmVhc29uIjogIlNUT1AiLAogICAgICAiYXZnTG9ncHJvYnMiOiAtMS41MjI4MTQ5NTc0MDUyNDg3CiAgICB9CiAgXSwKICAidXNhZ2VNZXRhZGF0YSI6IHsKICAgICJwcm9tcHRUb2tlbkNvdW50IjogNjUsCiAgICAiY2FuZGlkYXRlc1Rva2VuQ291bnQiOiA4LAogICAgInRvdGFsVG9rZW5Db3VudCI6IDEzNSwKICAgICJ0cmFmZmljVHlwZSI6ICJPTl9ERU1BTkQiLAogICAgInByb21wdFRva2Vuc0RldGFpbHMiOiBbCiAgICAgIHsKICAgICAgICAibW9kYWxpdHkiOiAiVEVYVCIsCiAgICAgICAgInRva2VuQ291bnQiOiA2NQogICAgICB9CiAgICBdLAogICAgImNhbmRpZGF0ZXNUb2tlbnNEZXRhaWxzIjogWwogICAgICB7CiAgICAgICAgIm1vZGFsaXR5IjogIlRFWFQiLAogICAgICAgICJ0b2tlbkNvdW50IjogOAogICAgICB9CiAgICBdLAogICAgInRob3VnaHRzVG9rZW5Db3VudCI6IDYyCiAgfSwKICAibW9kZWxWZXJzaW9uIjogImdlbWluaS0zLWZsYXNoLXByZXZpZXciLAogICJjcmVhdGVUaW1lIjogIjIwMjYtMDQtMDJUMTE6MzY6NDAuMzE0MTE4WiIsCiAgInJlc3BvbnNlSWQiOiAieUZUT2FZYVdFNy1CNmRnUHM0SDFtUWMiCn0K
+  recorded_at: Thu, 02 Apr 2026 11:36:41 GMT
 recorded_with: VCR 6.4.0

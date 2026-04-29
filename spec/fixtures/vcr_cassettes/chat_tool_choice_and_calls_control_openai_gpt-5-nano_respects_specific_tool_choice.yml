@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 16 Mar 2026 19:21:44 GMT
+      - Thu, 02 Apr 2026 11:39:07 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -49,7 +49,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '5768'
+      - '6476'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
@@ -78,9 +78,9 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-DK7nOddFU3CQwH4eDkNuKh4eGprHx",
+          "id": "chatcmpl-DQAg0TAajWGoeEQ6mJi0oomckbBPK",
           "object": "chat.completion",
-          "created": 1773688898,
+          "created": 1775129940,
           "model": "gpt-5-nano-2025-08-07",
           "choices": [
             {
@@ -90,7 +90,7 @@ http_interactions:
                 "content": null,
                 "tool_calls": [
                   {
-                    "id": "call_e2BH4SbZ2W1m83MZrVN3YnG5",
+                    "id": "call_BRrhz9bSTcQ987sXHLMVPDoO",
                     "type": "function",
                     "function": {
                       "name": "weather",
@@ -106,14 +106,14 @@ http_interactions:
           ],
           "usage": {
             "prompt_tokens": 157,
-            "completion_tokens": 864,
-            "total_tokens": 1021,
+            "completion_tokens": 800,
+            "total_tokens": 957,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
             },
             "completion_tokens_details": {
-              "reasoning_tokens": 832,
+              "reasoning_tokens": 768,
               "audio_tokens": 0,
               "accepted_prediction_tokens": 0,
               "rejected_prediction_tokens": 0
@@ -122,15 +122,15 @@ http_interactions:
           "service_tier": "default",
           "system_fingerprint": null
         }
-  recorded_at: Mon, 16 Mar 2026 19:21:44 GMT
+  recorded_at: Thu, 02 Apr 2026 11:39:07 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"gpt-5-nano","messages":[{"role":"user","content":"What''s
-        the fall of Rome?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_e2BH4SbZ2W1m83MZrVN3YnG5","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}"}}]},{"role":"tool","content":"Current
-        weather at 41.9028, 12.4964: 15°C, Wind: 10 km/h","tool_call_id":"call_e2BH4SbZ2W1m83MZrVN3YnG5"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        the fall of Rome?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_BRrhz9bSTcQ987sXHLMVPDoO","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}"}}]},{"role":"tool","content":"Current
+        weather at 41.9028, 12.4964: 15°C, Wind: 10 km/h","tool_call_id":"call_BRrhz9bSTcQ987sXHLMVPDoO"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
@@ -151,7 +151,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 16 Mar 2026 19:21:54 GMT
+      - Thu, 02 Apr 2026 11:39:21 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -173,7 +173,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '9607'
+      - '14032'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
@@ -201,6 +201,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        ewogICJpZCI6ICJjaGF0Y21wbC1ESzduVUlDVHBXeld6enhWUnhsNURNMEZJYWw4ciIsCiAgIm9iamVjdCI6ICJjaGF0LmNvbXBsZXRpb24iLAogICJjcmVhdGVkIjogMTc3MzY4ODkwNCwKICAibW9kZWwiOiAiZ3B0LTUtbmFuby0yMDI1LTA4LTA3IiwKICAiY2hvaWNlcyI6IFsKICAgIHsKICAgICAgImluZGV4IjogMCwKICAgICAgIm1lc3NhZ2UiOiB7CiAgICAgICAgInJvbGUiOiAiYXNzaXN0YW50IiwKICAgICAgICAiY29udGVudCI6ICJTaG9ydCBhbnN3ZXI6IHRoZSDigJxmYWxsIG9mIFJvbWXigJ0gdXN1YWxseSByZWZlcnMgdG8gdGhlIGVuZCBvZiB0aGUgV2VzdGVybiBSb21hbiBFbXBpcmUgaW4gNDc2IENFLCB3aGVuIHRoZSBsYXN0IGVtcGVyb3IsIFJvbXVsdXMgQXVndXN0dWx1cywgd2FzIGRlcG9zZWQgYnkgdGhlIEdlcm1hbmljIGNoaWVmdGFpbiBPZG9hY2VyLiBUaGUgRWFzdGVybiBSb21hbiBFbXBpcmUgKHRoZSBCeXphbnRpbmUgRW1waXJlKSBjb250aW51ZWQgZm9yIG5lYXJseSBhbm90aGVyIHRob3VzYW5kIHllYXJzLCB1bnRpbCAxNDUzLlxuXG5LZXkgcG9pbnRzOlxuLSBXaGVuOiA0NzYgQ0UgaXMgdGhlIHRyYWRpdGlvbmFsIGRhdGUgZm9yIHRoZSBXZXN0ZXJuIEVtcGlyZeKAmXMgZW5kOyAxNDUzIG1hcmtzIHRoZSBmYWxsIG9mIENvbnN0YW50aW5vcGxlICh0aGUgRWFzdGVybiBFbXBpcmUpIHRvIHRoZSBPdHRvbWFucy5cbi0gV2hhdCBoYXBwZW5lZDogdGhlIFdlc3Rlcm4gRW1waXJlIHdlYWtlbmVkIHVuZGVyIGVjb25vbWljIHRyb3VibGVzLCBtaWxpdGFyeSBvdmVyZXh0ZW5zaW9uLCBpbnRlcm5hbCBwb2xpdGljYWwgaW5zdGFiaWxpdHksIGFuZCByZWxlbnRsZXNzIHByZXNzdXJlIGZyb20gdmFyaW91cyBiYXJiYXJpYW4gZ3JvdXBzIChWaXNpZ290aHMsIFZhbmRhbHMsIE9zdHJvZ290aHMsIEZyYW5rcywgZXRjLikuIFJvbXVsdXMgQXVndXN0dWx1cyB3YXMgcmVtb3ZlZCBieSBPZG9hY2VyLCB3aG8gcnVsZWQgcGFydHMgb2YgSXRhbHkgYXMgYSBraW5nIHVuZGVyIG5vbWluYWwgUm9tYW4gYXV0aG9yaXR5LlxuLSBXaHkgaXTigJlzIGRlYmF0ZWQ6IHNvbWUgaGlzdG9yaWFucyBjYWxsIGl0IGEg4oCcZmFsbCzigJ0gb3RoZXJzIGRlc2NyaWJlIGl0IGFzIGEgbG9uZyB0cmFuc2Zvcm1hdGlvbi4gVGhlIFJvbWFuIHN0YXRlIGRpZG7igJl0IHZhbmlzaCBvdmVybmlnaHQ7IGluc3RpdHV0aW9ucyBwZXJzaXN0ZWQgaW4gZGlmZmVyZW50IGZvcm1zLCBhbmQgTGF0aW4tc3BlYWtpbmcsIFJvbWFuLWxlZ2FsLCBhbmQgY3VsdHVyYWwgY29udGludWl0eSBjb250aW51ZWQgaW4gdmFyaW91cyByZWdpb25zLlxuLSBBZnRlcm1hdGg6IHRoZSBFYXN0ZXJuIChCeXphbnRpbmUpIEVtcGlyZSBjb250aW51ZWQgdG8gZXhpc3QgYW5kIHByZXNlcnZlIG11Y2ggb2YgUm9tYW4gbGF3IGFuZCBnb3Zlcm5hbmNlOyBtZWRpZXZhbCBFdXJvcGUgc2F3IHRoZSByaXNlIG9mIHN1Y2Nlc3NvciBraW5nZG9tcyBhbmQgdGhlIGZyYWdtZW50YXRpb24gb2YgaW1wZXJpYWwgYXV0aG9yaXR5LlxuXG5JZiB5b3XigJlkIGxpa2UsIEkgY2FuIGdpdmUgeW91IGEgY29uY2lzZSB0aW1lbGluZSBvZiBtYWpvciBldmVudHMgbGVhZGluZyB1cCB0byA0NzYgQ0Ugb3IgZGl2ZSBpbnRvIGEgcGFydGljdWxhciBjYXVzZSAoZWNvbm9teSwgbWlsaXRhcnksIHBvbGl0aWNzKSBvciBkaXNjdXNzIGhvdyBoaXN0b3JpYW5z4oCZIHZpZXdzIG9uIHRoZSDigJxmYWxs4oCdIGhhdmUgZXZvbHZlZC4iLAogICAgICAgICJyZWZ1c2FsIjogbnVsbCwKICAgICAgICAiYW5ub3RhdGlvbnMiOiBbXQogICAgICB9LAogICAgICAiZmluaXNoX3JlYXNvbiI6ICJzdG9wIgogICAgfQogIF0sCiAgInVzYWdlIjogewogICAgInByb21wdF90b2tlbnMiOiAyMTgsCiAgICAiY29tcGxldGlvbl90b2tlbnMiOiAxMTU5LAogICAgInRvdGFsX3Rva2VucyI6IDEzNzcsCiAgICAicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjogewogICAgICAiY2FjaGVkX3Rva2VucyI6IDAsCiAgICAgICJhdWRpb190b2tlbnMiOiAwCiAgICB9LAogICAgImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOiB7CiAgICAgICJyZWFzb25pbmdfdG9rZW5zIjogODMyLAogICAgICAiYXVkaW9fdG9rZW5zIjogMCwKICAgICAgImFjY2VwdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjogMCwKICAgICAgInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjogMAogICAgfQogIH0sCiAgInNlcnZpY2VfdGllciI6ICJkZWZhdWx0IiwKICAic3lzdGVtX2ZpbmdlcnByaW50IjogbnVsbAp9Cg==
-  recorded_at: Mon, 16 Mar 2026 19:21:54 GMT
+        ewogICJpZCI6ICJjaGF0Y21wbC1EUUFnN0QzeEFORGJ3ZE1nTlVLVXJsdmQ4bnFlOSIsCiAgIm9iamVjdCI6ICJjaGF0LmNvbXBsZXRpb24iLAogICJjcmVhdGVkIjogMTc3NTEyOTk0NywKICAibW9kZWwiOiAiZ3B0LTUtbmFuby0yMDI1LTA4LTA3IiwKICAiY2hvaWNlcyI6IFsKICAgIHsKICAgICAgImluZGV4IjogMCwKICAgICAgIm1lc3NhZ2UiOiB7CiAgICAgICAgInJvbGUiOiAiYXNzaXN0YW50IiwKICAgICAgICAiY29udGVudCI6ICJTaG9ydCBhbnN3ZXI6IGluIFdlc3Rlcm4gaGlzdG9yeSwgdGhlIOKAnGZhbGwgb2YgUm9tZeKAnSBpcyB1c3VhbGx5IGRhdGVkIHRvIDQ3NiBDRSwgd2hlbiBSb211bHVzIEF1Z3VzdHVsdXMsIHRoZSBsYXN0IFdlc3Rlcm4gUm9tYW4gZW1wZXJvciwgd2FzIGRlcG9zZWQgYnkgdGhlIEdlcm1hbmljIGNoaWVmdGFpbiBPZG9hY2VyLiBUaGUgRWFzdGVybiBSb21hbiBFbXBpcmUgKHRoZSBCeXphbnRpbmUgRW1waXJlKSBzdXJ2aXZlZCBmb3IgbmVhcmx5IGFub3RoZXIgdGhvdXNhbmQgeWVhcnMuXG5cbkEgYml0IG1vcmUgY29udGV4dDpcbi0gSXQgd2FzIGEgbG9uZywgY29tcGxleCBwcm9jZXNzLCBub3QgYSBzaW5nbGUgZGF5LiBGYWN0b3JzIGluY2x1ZGVkIHBvbGl0aWNhbCBpbnN0YWJpbGl0eSwgZWNvbm9taWMgdHJvdWJsZXMsIG92ZXJleHRlbnNpb24sIGhlYXZ5IHRheGF0aW9uLCBhbmQgcmVsaWFuY2Ugb24gYmFyYmFyaWFuIG1lcmNlbmFyaWVzLlxuLSBUaGUgV2VzdGVybiBFbXBpcmUgZmFjZWQgcmVwZWF0ZWQgaW52YXNpb25zIGFuZCBpbnRlcm5hbCBwb3dlciBzdHJ1Z2dsZXMuIFJvbWUgaXRzZWxmIHdhcyBzYWNrZWQgaW4gNDEwICggVmlzaWdvdGhzKSBhbmQgNDU1IChWYW5kYWxzKSwgc2lnbmFsaW5nIGRlZXAgd2Vha25lc3MuXG4tIEluIDQ3NiwgT2RvYWNlciBkZWNsYXJlZCBoaW1zZWxmIHJ1bGVyIG9mIEl0YWx5IGFuZCBzZW50IFJvbWXigJlzIGltcGVyaWFsIHJlZ2FsaWEgdG8gdGhlIEVhc3Rlcm4gZW1wZXJvciwgZWZmZWN0aXZlbHkgZW5kaW5nIHRoZSBXZXN0ZXJuIGltcGVyaWFsIGxpbmUuIFNvbWUgaGlzdG9yaWVzIGFsc28gY291bnQgSnVsaXVzIE5lcG9zIChsYXN0IHdpZGVseSByZWNvZ25pemVkIFdlc3Rlcm4gRW1wZXJvcikgYXMgdGhlIGZpbmFsIGhvbGRlciBvZiB0aGUgdGl0bGUgYmVmb3JlIGhpcyBtdXJkZXIgaW4gNDgwLlxuLSBUaGUgRWFzdGVybiBFbXBpcmUsIGNlbnRlcmVkIGluIENvbnN0YW50aW5vcGxlLCBjb250aW51ZWQgdG8gZXhpc3QgYW5kIGZ1bmN0aW9uIGFzIHRoZSBCeXphbnRpbmUgRW1waXJlIHVudGlsIDE0NTMuXG5cbk9uIHRoZSBxdWVzdGlvbiBvZiDigJxmYWxs4oCdIHZzLiDigJx0cmFuc2Zvcm1hdGlvbuKAnTogbWFueSBtb2Rlcm4gaGlzdG9yaWFucyB2aWV3IHRoaXMgYXMgYSB0cmFuc2l0aW9uIHJhdGhlciB0aGFuIGEgY2xlYW4gY29sbGFwc2UuIFJvbWFuIGxhdywgYWRtaW5pc3RyYXRpb24sIGFuZCBjdWx0dXJhbCBpbmZsdWVuY2UgcGVyc2lzdGVkIGluIHZhcmlvdXMgZm9ybXMgaW4gc3VjY2Vzc29yIGtpbmdkb21zIGFuZCBpbiB0aGUgQnl6YW50aW5lIEVtcGlyZSwgc2hhcGluZyBtZWRpZXZhbCBFdXJvcGUgbG9uZyBhZnRlciA0NzYuIElmIHlvdeKAmWQgbGlrZSwgSSBjYW4gcmVjb21tZW5kIHNvbWUgcmVhZGFibGUgb3ZlcnZpZXdzIG9yIGZ1cnRoZXIgcmVhZGluZy4iLAogICAgICAgICJyZWZ1c2FsIjogbnVsbCwKICAgICAgICAiYW5ub3RhdGlvbnMiOiBbXQogICAgICB9LAogICAgICAiZmluaXNoX3JlYXNvbiI6ICJzdG9wIgogICAgfQogIF0sCiAgInVzYWdlIjogewogICAgInByb21wdF90b2tlbnMiOiAyMTgsCiAgICAiY29tcGxldGlvbl90b2tlbnMiOiAxODQ0LAogICAgInRvdGFsX3Rva2VucyI6IDIwNjIsCiAgICAicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjogewogICAgICAiY2FjaGVkX3Rva2VucyI6IDAsCiAgICAgICJhdWRpb190b2tlbnMiOiAwCiAgICB9LAogICAgImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOiB7CiAgICAgICJyZWFzb25pbmdfdG9rZW5zIjogMTUzNiwKICAgICAgImF1ZGlvX3Rva2VucyI6IDAsCiAgICAgICJhY2NlcHRlZF9wcmVkaWN0aW9uX3Rva2VucyI6IDAsCiAgICAgICJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6IDAKICAgIH0KICB9LAogICJzZXJ2aWNlX3RpZXIiOiAiZGVmYXVsdCIsCiAgInN5c3RlbV9maW5nZXJwcmludCI6IG51bGwKfQo=
+  recorded_at: Thu, 02 Apr 2026 11:39:21 GMT
 recorded_with: VCR 6.4.0

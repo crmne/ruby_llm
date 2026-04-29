@@ -24,6 +24,8 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      X-Gemini-Service-Tier:
+      - standard
       Content-Type:
       - application/json; charset=UTF-8
       Vary:
@@ -31,7 +33,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 16 Mar 2026 19:14:04 GMT
+      - Thu, 02 Apr 2026 11:25:51 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -41,7 +43,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=720
+      - gfet4t7; dur=632
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -59,7 +61,7 @@ http_interactions:
                       "name": "best_language_to_learn",
                       "args": {}
                     },
-                    "thoughtSignature": "Ct0BAb4+9vv/mK5HgATtF+UKfoIJjD3FT5Zfp4LzDUS3sIHrhqszVLEhqT/HEbPZ0gDydmagvFdVWePWk/2Kftf9o1t7mO7OCyPNg+Vkfc6VkAUf3WqfeBjvvuZo1pCC5AEhAZOiZt+gDWfm9uq/Xf+Dha9G++n5/gZK0fAslqxxEq5nt9Ljnq6lwXakuEu8qF4Xfo2ESEUfpjyu7nNHVqc9pzhFYVfpDuyaIiXx4+2y5r3Gj5h6I+XhxD0iy31ypqUAnQ304cqnfl7XK1iuak9rf26Fh2T6F5BfpZhIftE="
+                    "thoughtSignature": "CvMBAb4+9vv/YneOElepf/nQVxulE+VI6Ws/vuZZe3j2xdLzkFiGqafzkDWE0igDRnJHOqTCyQTDe1MK8rVKt27jiyBFWJglHIAXs/r7+j003Gm1RcHW6k8pwAMvtB20gIs3nLRisop6kSOe5lJ0UYPrK8AU3SkNHoGvTxpDzTCmBAD5p2gFnTLy8Z5QgV3p5OBFlOvH8XfDSGOz36kLNyvLwGDJZBFw56l6qV6UCvFYFkmo05OCPLq9ChkTGGbzjiiTl4Vlc5R1v2hcf6Tarf1gyU91YYkDnWdwJtcViQ7G6/lEuHpeqVUwn9co1pv+xsCFq8T+"
                   }
                 ],
                 "role": "model"
@@ -72,26 +74,26 @@ http_interactions:
           "usageMetadata": {
             "promptTokenCount": 41,
             "candidatesTokenCount": 14,
-            "totalTokenCount": 98,
+            "totalTokenCount": 103,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
                 "tokenCount": 41
               }
             ],
-            "thoughtsTokenCount": 43
+            "thoughtsTokenCount": 48
           },
           "modelVersion": "gemini-2.5-flash",
-          "responseId": "e1a4abz0E7fgnsEP3Nzc0Ag"
+          "responseId": "P1LOacmqEbiNxN8PipfM-AI"
         }
-  recorded_at: Mon, 16 Mar 2026 19:14:04 GMT
+  recorded_at: Thu, 02 Apr 2026 11:25:51 GMT
 - request:
     method: post
     uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"What''s the best language
-        to learn?"}]},{"role":"model","parts":[{"functionCall":{"name":"best_language_to_learn","args":{}},"thoughtSignature":"Ct0BAb4+9vv/mK5HgATtF+UKfoIJjD3FT5Zfp4LzDUS3sIHrhqszVLEhqT/HEbPZ0gDydmagvFdVWePWk/2Kftf9o1t7mO7OCyPNg+Vkfc6VkAUf3WqfeBjvvuZo1pCC5AEhAZOiZt+gDWfm9uq/Xf+Dha9G++n5/gZK0fAslqxxEq5nt9Ljnq6lwXakuEu8qF4Xfo2ESEUfpjyu7nNHVqc9pzhFYVfpDuyaIiXx4+2y5r3Gj5h6I+XhxD0iy31ypqUAnQ304cqnfl7XK1iuak9rf26Fh2T6F5BfpZhIftE="}]},{"role":"function","parts":[{"functionResponse":{"name":"best_language_to_learn","response":{"name":"best_language_to_learn","content":[{"text":"Ruby"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"best_language_to_learn","description":"Gets
+        to learn?"}]},{"role":"model","parts":[{"functionCall":{"name":"best_language_to_learn","args":{}},"thoughtSignature":"CvMBAb4+9vv/YneOElepf/nQVxulE+VI6Ws/vuZZe3j2xdLzkFiGqafzkDWE0igDRnJHOqTCyQTDe1MK8rVKt27jiyBFWJglHIAXs/r7+j003Gm1RcHW6k8pwAMvtB20gIs3nLRisop6kSOe5lJ0UYPrK8AU3SkNHoGvTxpDzTCmBAD5p2gFnTLy8Z5QgV3p5OBFlOvH8XfDSGOz36kLNyvLwGDJZBFw56l6qV6UCvFYFkmo05OCPLq9ChkTGGbzjiiTl4Vlc5R1v2hcf6Tarf1gyU91YYkDnWdwJtcViQ7G6/lEuHpeqVUwn9co1pv+xsCFq8T+"}]},{"role":"function","parts":[{"functionResponse":{"name":"best_language_to_learn","response":{"name":"best_language_to_learn","content":[{"text":"Ruby"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"best_language_to_learn","description":"Gets
         the best language to learn"}]}]}'
     headers:
       User-Agent:
@@ -109,6 +111,8 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      X-Gemini-Service-Tier:
+      - standard
       Content-Type:
       - application/json; charset=UTF-8
       Vary:
@@ -116,7 +120,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 16 Mar 2026 19:14:04 GMT
+      - Thu, 02 Apr 2026 11:25:52 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -126,7 +130,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=669
+      - gfet4t7; dur=766
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -140,7 +144,7 @@ http_interactions:
               "content": {
                 "parts": [
                   {
-                    "text": "The best language to learn is Ruby."
+                    "text": "Ruby is the best language to learn."
                   }
                 ],
                 "role": "model"
@@ -161,7 +165,7 @@ http_interactions:
             ]
           },
           "modelVersion": "gemini-2.5-flash",
-          "responseId": "fFa4abvqBv_8xN8PoJGN8Qg"
+          "responseId": "P1LOaYyAPaOfxN8P3tWrsQ4"
         }
-  recorded_at: Mon, 16 Mar 2026 19:14:04 GMT
+  recorded_at: Thu, 02 Apr 2026 11:25:52 GMT
 recorded_with: VCR 6.4.0

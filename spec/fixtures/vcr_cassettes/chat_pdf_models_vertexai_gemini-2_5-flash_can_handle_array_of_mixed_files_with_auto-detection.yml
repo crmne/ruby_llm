@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Pragma:
-      - no-cache
-      Date:
-      - Mon, 16 Mar 2026 19:20:39 GMT
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
+      Date:
+      - Thu, 02 Apr 2026 11:31:42 GMT
+      Pragma:
+      - no-cache
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/sqlservice.login openid https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email",
+          "scope": "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/sqlservice.login openid https://www.googleapis.com/auth/cloud-platform",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Mon, 16 Mar 2026 19:20:39 GMT
+  recorded_at: Thu, 02 Apr 2026 11:31:42 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -86,7 +86,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 16 Mar 2026 19:21:00 GMT
+      - Thu, 02 Apr 2026 11:31:51 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -109,18 +109,18 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "Here's an analysis of the provided files:\n\n**File 1: Ruby Logo Image**\n\n*   **Type:** Image (specifically, a PNG or similar format given its appearance).\n*   **Content:** This is the well-known logo for the **Ruby programming language**. It depicts a stylized, faceted red gem or ruby.\n*   **Purpose:** It visually represents the Ruby programming language, often used in branding, documentation, and user interfaces related to Ruby.\n\n**File 2: Sample PDF Document**\n\n*   **Type:** Document image with accompanying OCR (Optical Character Recognition) text.\n*   **Visual Content:** The image shows a single page of a document. It has a clean, minimalist layout with a sans-serif font. The title \"Sample PDF\" is prominent, followed by \"This is a simple PDF file. Fun fun fun.\" Below this, there are multiple paragraphs of text.\n*   **Textual Content (from OCR):**\n    *   The document explicitly identifies itself as a \"Sample PDF\" with the introductory phrase \"This is a simple PDF file. Fun fun fun.\"\n    *   The bulk of the content consists of standard **\"Lorem ipsum\" placeholder text**. This text is commonly used in design and publishing to fill space when the actual content is not yet available, demonstrating the layout and typography without distracting with meaningful content.\n*   **OCR Accuracy:** The OCR seems highly accurate, capturing the text faithfully, including the Latin-like \"Lorem ipsum\" content.\n*   **Purpose:** This document serves as a basic example or placeholder PDF, likely used for testing, design mockups, or demonstrating PDF generation/viewing capabilities.\n\n**Overall Analysis and Potential Connections:**\n\nThe two files are distinct in their nature: one is a logo, the other is a sample document.\n\n*   There is no direct content link between the Ruby logo and the PDF document's text.\n*   However, a common indirect connection could be that the **Ruby programming language** (represented by its logo) is frequently used to **generate, manipulate, or parse PDF documents**. Many Ruby libraries exist for working with PDFs (e.g., Prawn for generating, PDF-reader for parsing, PDFKit for converting HTML to PDF).\n\nTherefore, while presented separately, these files *could* represent a scenario where a Ruby application is involved in creating or processing a PDF like the sample provided. Without further context, they are simply a programming language logo and a generic sample document."
+                    "text": "Let's analyze the provided files:\n\n1.  **File 1 (Image):**\n    *   **Type:** Image (looks like a PNG or JPEG).\n    *   **Content:** This is the widely recognized **logo for the Ruby programming language**. It depicts a stylized red, faceted gemstone.\n\n2.  **File 2 (Image and OCR):**\n    *   **Type:** Document (specifically, a visual representation of a PDF page, accompanied by its OCR text).\n    *   **Visual Content:** The image shows a single page of a document with a simple layout.\n        *   It has a header that reads \"Sample PDF\" and \"This is a simple PDF file. Fun fun fun.\"\n        *   The main body of the document consists of several paragraphs of **Lorem Ipsum placeholder text**.\n    *   **OCR Content:** The provided OCR successfully extracts the text from the document page. It accurately reproduces the header and the Lorem Ipsum content.\n\n**Summary:**\n\nThe first file is the **Ruby programming language logo**. The second file is a **sample PDF document** containing generic \"Lorem ipsum\" placeholder text, with its content successfully extracted by OCR. There is no explicit content-based relationship between the two files; one is a brand/language identifier, and the other is a generic text document."
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.85510935994701354
+              "avgLogprobs": -1.4047223646863758
             }
           ],
           "usageMetadata": {
             "promptTokenCount": 519,
-            "candidatesTokenCount": 519,
-            "totalTokenCount": 1845,
+            "candidatesTokenCount": 278,
+            "totalTokenCount": 1689,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -139,14 +139,14 @@ http_interactions:
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 519
+                "tokenCount": 278
               }
             ],
-            "thoughtsTokenCount": 807
+            "thoughtsTokenCount": 892
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-03-16T19:20:40.080420Z",
-          "responseId": "CFi4aaT0BOmhmPUPr8G7-AI"
+          "createTime": "2026-04-02T11:31:42.936268Z",
+          "responseId": "nlPOacySOdWO28oP0ZCG0AI"
         }
-  recorded_at: Mon, 16 Mar 2026 19:21:00 GMT
+  recorded_at: Thu, 02 Apr 2026 11:31:51 GMT
 recorded_with: VCR 6.4.0

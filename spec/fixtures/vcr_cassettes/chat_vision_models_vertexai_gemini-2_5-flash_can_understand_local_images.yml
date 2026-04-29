@@ -20,12 +20,12 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Date:
-      - Mon, 16 Mar 2026 19:15:46 GMT
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
       Pragma:
       - no-cache
+      Date:
+      - Thu, 02 Apr 2026 11:26:52 GMT
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
       Content-Type:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login",
+          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/sqlservice.login openid",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Mon, 16 Mar 2026 19:15:46 GMT
+  recorded_at: Thu, 02 Apr 2026 11:26:52 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -87,7 +87,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 16 Mar 2026 19:15:51 GMT
+      - Thu, 02 Apr 2026 11:27:00 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -110,40 +110,40 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "I see an image of a **red gemstone**, specifically resembling a **ruby**.\n\nHere are some details:\n*   It has multiple **facets**, giving it a cut, sparkling appearance typical of a jewel.\n*   The color is a **deep, rich red**, with varying shades and gradients that add to its three-dimensional quality.\n*   There are prominent **white highlights** on several of the facets, indicating a polished and reflective surface, particularly on the upper left and central parts.\n*   The overall shape is angular and geometric, characteristic of a cut gem.\n\nThis specific design is widely recognized as the **logo for the Ruby programming language**."
+                    "text": "I see a stylized **red gemstone**, most prominently a **ruby**.\n\nHere's a more detailed breakdown:\n\n*   **Color:** It's a vibrant, deep red, with varying shades from dark maroon in the deeper areas to bright, almost white highlights where light reflects.\n*   **Shape:** It's clearly a faceted gemstone, with many triangular and trapezoidal surfaces. The top surface appears somewhat rounded or domed, with a distinct crescent-shaped highlight running across it.\n*   **Lighting & Texture:** The strong highlights and shadows give it a shiny, polished, and three-dimensional appearance, suggesting a highly reflective and perhaps slightly translucent material, characteristic of a precious stone.\n*   **Overall Impression:** It looks like a classic cut ruby.\n\nThis image is widely recognized as the **logo for the Ruby programming language**."
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -1.4087223693402144
+              "avgLogprobs": -2.2919585129310347
             }
           ],
           "usageMetadata": {
             "promptTokenCount": 266,
-            "candidatesTokenCount": 137,
-            "totalTokenCount": 907,
+            "candidatesTokenCount": 174,
+            "totalTokenCount": 1275,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
-                "modality": "IMAGE",
-                "tokenCount": 258
-              },
-              {
                 "modality": "TEXT",
                 "tokenCount": 8
+              },
+              {
+                "modality": "IMAGE",
+                "tokenCount": 258
               }
             ],
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 137
+                "tokenCount": 174
               }
             ],
-            "thoughtsTokenCount": 504
+            "thoughtsTokenCount": 835
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-03-16T19:15:46.515225Z",
-          "responseId": "4la4aZm5H4uIu_EPy6DWWA"
+          "createTime": "2026-04-02T11:26:52.364230Z",
+          "responseId": "fFLOacadFuLntfAP14HO2A4"
         }
-  recorded_at: Mon, 16 Mar 2026 19:15:52 GMT
+  recorded_at: Thu, 02 Apr 2026 11:27:00 GMT
 recorded_with: VCR 6.4.0

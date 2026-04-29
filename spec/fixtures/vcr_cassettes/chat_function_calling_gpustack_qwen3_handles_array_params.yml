@@ -26,15 +26,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 16 Mar 2026 19:17:58 GMT
-      - Mon, 16 Mar 2026 19:17:59 GMT
+      - Thu, 02 Apr 2026 11:29:58 GMT
+      - Thu, 02 Apr 2026 11:29:59 GMT
       Server:
       - uvicorn
       - uvicorn
       Keep-Alive:
       - timeout=15, max=100
       Content-Length:
-      - '2057'
+      - '1707'
       Content-Type:
       - application/json
       X-Request-Accepted-At:
@@ -49,18 +49,14 @@ http_interactions:
         the user wants me to call the array_params function with the tags [\"red\",
         \"blue\"] and get the combined tags. Let me check the function definition.
         The function takes an object with a property \"tags\" which is an array of
-        strings. The required parameter is \"tags\", and it''s an array. So I need
-        to structure the arguments correctly. The user provided the tags as [\"red\",
-        \"blue\"], so I should pass those exactly. The function''s purpose is to combine
-        the tags, so the output should be those two tags combined, maybe as a single
-        string separated by commas or something. But the function''s description says
-        \"combine\", but the parameters just take an array. Wait, the function''s
-        parameters are expecting an object with \"tags\" as an array. So the correct
-        call is to pass the tags array. The user might expect the combined result,
-        but the function''s actual processing isn''t specified here. But according
-        to the tool''s definition, I just need to call the function with the given
-        tags. So the tool call should be array_params with arguments {\"tags\": [\"red\",
-        \"blue\"]}. Then the function will handle combining them. I should make sure
-        the JSON is correctly formatted with the array inside the arguments.\n","role":"assistant","tool_calls":[{"function":{"arguments":"{\"tags\":[\"red\",\"blue\"]}","name":"array_params"},"id":"call-LuyTd6tkJ2n4m6jijsowzs3zLA7qBApr","type":"function"}]}}],"created":1773688685,"id":"chatcmpl-KpiXsGPnOmSfcQQ49cZ4YkuXFpkR91Gb","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":280,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":255,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":237,"prompt_tokens_details":{"cached_tokens":0},"prompt_tokens_per_second":2647.2460821874965,"time_per_output_token_ms":18.202164285714286,"time_to_first_token_ms":89.527,"tokens_per_second":54.93852183197995,"total_tokens":517}}'
-  recorded_at: Mon, 16 Mar 2026 19:18:05 GMT
+        strings. The required parameter is \"tags\", and it''s strictly typed. So
+        I need to structure the arguments correctly. The user provided the tags as
+        a list, so I should pass them as a JSON object with the key \"tags\" and the
+        array as the value. The function should return the combined tags, which in
+        this case would just be the array joined somehow, but the function''s description
+        says it uses the params DSL array support. Since the user asked to call the
+        function with those tags, I just need to make sure the arguments are correctly
+        formatted. No other parameters are needed. Alright, I''ll generate the tool
+        call with the tags array.\n","role":"assistant","tool_calls":[{"function":{"arguments":"{\"tags\":[\"red\",\"blue\"]}","name":"array_params"},"id":"call-rEA0Alej4sNFACKW282746HdYGIyszpo","type":"function"}]}}],"created":1775129401,"id":"chatcmpl-AkAshtKoeSXdQal9CxlCKtehY56WwwII","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":209,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":184,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":237,"prompt_tokens_details":{"cached_tokens":0},"prompt_tokens_per_second":3860.689385547664,"time_per_output_token_ms":10.314765550239235,"time_to_first_token_ms":61.388,"tokens_per_second":96.94839840318102,"total_tokens":446}}'
+  recorded_at: Thu, 02 Apr 2026 11:30:01 GMT
 recorded_with: VCR 6.4.0

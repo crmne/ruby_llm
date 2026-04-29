@@ -26,7 +26,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 16 Mar 2026 19:10:59 GMT
+      - Thu, 02 Apr 2026 11:23:23 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -77,9 +77,9 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-DK7d4h6YdPUPYOjKiV285V2U3wvgh",
+          "id": "chatcmpl-DQAQtsTTpy6DY7UwqYu7aTGkfADrG",
           "object": "chat.completion",
-          "created": 1773688258,
+          "created": 1775129003,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
@@ -89,7 +89,7 @@ http_interactions:
                 "content": null,
                 "tool_calls": [
                   {
-                    "id": "call_gJivCpmatQj3d381HI3O8XzV",
+                    "id": "call_nlQlv2hPGEfkf8JbGkSSl7hT",
                     "type": "function",
                     "function": {
                       "name": "calculator",
@@ -120,17 +120,17 @@ http_interactions:
             }
           },
           "service_tier": "default",
-          "system_fingerprint": "fp_18301a75d5"
+          "system_fingerprint": "fp_ce3966f242"
         }
-  recorded_at: Mon, 16 Mar 2026 19:10:59 GMT
+  recorded_at: Thu, 02 Apr 2026 11:23:23 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":"What''s
-        123 * 456?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_gJivCpmatQj3d381HI3O8XzV","type":"function","function":{"name":"calculator","arguments":"{\"expression\":\"123
-        * 456\"}"}}]},{"role":"tool","content":"56088","tool_call_id":"call_gJivCpmatQj3d381HI3O8XzV"}],"stream":false,"tools":[{"type":"function","function":{"name":"calculator","description":"Performs
+        123 * 456?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_nlQlv2hPGEfkf8JbGkSSl7hT","type":"function","function":{"name":"calculator","arguments":"{\"expression\":\"123
+        * 456\"}"}}]},{"role":"tool","content":"56088","tool_call_id":"call_nlQlv2hPGEfkf8JbGkSSl7hT"}],"stream":false,"tools":[{"type":"function","function":{"name":"calculator","description":"Performs
         basic arithmetic","parameters":{"type":"object","properties":{"expression":{"type":"string","description":"Math
         expression to evaluate"}},"required":["expression"],"additionalProperties":false,"strict":true}}}]}'
     headers:
@@ -150,7 +150,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 16 Mar 2026 19:11:00 GMT
+      - Thu, 02 Apr 2026 11:23:24 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -172,7 +172,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '386'
+      - '214'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
@@ -201,16 +201,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-DK7d5GUMgcyprifaSplqbgzTEDHvD",
+          "id": "chatcmpl-DQAQtFvBKRUuACzdy4yh2estF8wMJ",
           "object": "chat.completion",
-          "created": 1773688259,
+          "created": 1775129003,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
               "index": 0,
               "message": {
                 "role": "assistant",
-                "content": "The result of multiplying 123 by 456 is 56,088.",
+                "content": "123 multiplied by 456 equals 56088.",
                 "refusal": null,
                 "annotations": []
               },
@@ -220,8 +220,8 @@ http_interactions:
           ],
           "usage": {
             "prompt_tokens": 79,
-            "completion_tokens": 16,
-            "total_tokens": 95,
+            "completion_tokens": 11,
+            "total_tokens": 90,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
@@ -234,7 +234,7 @@ http_interactions:
             }
           },
           "service_tier": "default",
-          "system_fingerprint": "fp_6bc00088c8"
+          "system_fingerprint": "fp_c37b9b873d"
         }
-  recorded_at: Mon, 16 Mar 2026 19:11:00 GMT
+  recorded_at: Thu, 02 Apr 2026 11:23:24 GMT
 recorded_with: VCR 6.4.0

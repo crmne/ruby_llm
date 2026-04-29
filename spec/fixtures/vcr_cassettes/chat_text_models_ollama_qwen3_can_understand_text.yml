@@ -25,25 +25,25 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 16 Mar 2026 19:12:22 GMT
+      - Thu, 02 Apr 2026 11:23:55 GMT
       Content-Length:
-      - '1065'
+      - '1058'
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-309","object":"chat.completion","created":1773688342,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"The
+      string: '{"id":"chatcmpl-519","object":"chat.completion","created":1775129035,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"The
         file `ruby.txt` contains the following text:\n\n```\nRuby is the best.\n```\n\nIt
         is a plain text file with no additional content or formatting.","reasoning":"Okay,
-        the user is asking what''s in the file named ruby.txt. Let me check the information
-        provided. The file has a MIME type of text/plain, which means it''s a plain
-        text file. The content given is \"Ruby is the best.\" So, the file is a simple
-        text file containing that exact sentence. I should confirm that there''s no
-        additional content or hidden data. Since the user provided the file details
-        directly, I can safely state that the file contains just that line. Maybe
-        the user wants to know if there''s more to it, but based on the info, it''s
-        straightforward. I''ll make sure to present the answer clearly and concisely.\n"},"finish_reason":"stop"}],"usage":{"prompt_tokens":36,"completion_tokens":174,"total_tokens":210}}
+        the user is asking what''s in the file named ''ruby.txt''. Let me check the
+        information provided. The file has a mime type of text/plain, which means
+        it''s a plain text file. The content given is \"Ruby is the best.\" So, the
+        file contains that exact sentence. I should confirm that there''s no additional
+        information or hidden content. Since the user provided the file details directly,
+        I can safely state that the file''s content is just that sentence. Maybe they
+        want to know if there''s more to it, but based on the data given, that''s
+        all there is. I''ll make sure to present the answer clearly and concisely.\n"},"finish_reason":"stop"}],"usage":{"prompt_tokens":36,"completion_tokens":174,"total_tokens":210}}
 
         '
-  recorded_at: Mon, 16 Mar 2026 19:12:22 GMT
+  recorded_at: Thu, 02 Apr 2026 11:23:55 GMT
 - request:
     method: post
     uri: "<OLLAMA_API_BASE>/chat/completions"
@@ -54,22 +54,22 @@ http_interactions:
         is the best.</file>"}]},{"role":"assistant","content":"The file `ruby.txt`
         contains the following text:\n\n```\nRuby is the best.\n```\n\nIt is a plain
         text file with no additional content or formatting.","reasoning":"Okay, the
-        user is asking what''s in the file named ruby.txt. Let me check the information
-        provided. The file has a MIME type of text/plain, which means it''s a plain
-        text file. The content given is \"Ruby is the best.\" So, the file is a simple
-        text file containing that exact sentence. I should confirm that there''s no
-        additional content or hidden data. Since the user provided the file details
-        directly, I can safely state that the file contains just that line. Maybe
-        the user wants to know if there''s more to it, but based on the info, it''s
-        straightforward. I''ll make sure to present the answer clearly and concisely.\n","reasoning_content":"Okay,
-        the user is asking what''s in the file named ruby.txt. Let me check the information
-        provided. The file has a MIME type of text/plain, which means it''s a plain
-        text file. The content given is \"Ruby is the best.\" So, the file is a simple
-        text file containing that exact sentence. I should confirm that there''s no
-        additional content or hidden data. Since the user provided the file details
-        directly, I can safely state that the file contains just that line. Maybe
-        the user wants to know if there''s more to it, but based on the info, it''s
-        straightforward. I''ll make sure to present the answer clearly and concisely.\n"},{"role":"user","content":[{"type":"text","text":"and
+        user is asking what''s in the file named ''ruby.txt''. Let me check the information
+        provided. The file has a mime type of text/plain, which means it''s a plain
+        text file. The content given is \"Ruby is the best.\" So, the file contains
+        that exact sentence. I should confirm that there''s no additional information
+        or hidden content. Since the user provided the file details directly, I can
+        safely state that the file''s content is just that sentence. Maybe they want
+        to know if there''s more to it, but based on the data given, that''s all there
+        is. I''ll make sure to present the answer clearly and concisely.\n","reasoning_content":"Okay,
+        the user is asking what''s in the file named ''ruby.txt''. Let me check the
+        information provided. The file has a mime type of text/plain, which means
+        it''s a plain text file. The content given is \"Ruby is the best.\" So, the
+        file contains that exact sentence. I should confirm that there''s no additional
+        information or hidden content. Since the user provided the file details directly,
+        I can safely state that the file''s content is just that sentence. Maybe they
+        want to know if there''s more to it, but based on the data given, that''s
+        all there is. I''ll make sure to present the answer clearly and concisely.\n"},{"role":"user","content":[{"type":"text","text":"and
         in this one?"},{"type":"text","text":"<file name=''ruby.xml'' mime_type=''application/xml''><truism>Ruby
         is the best</truism></file>"}]}],"stream":false}'
     headers:
@@ -89,12 +89,42 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 16 Mar 2026 19:12:35 GMT
+      - Thu, 02 Apr 2026 11:23:58 GMT
       Transfer-Encoding:
       - chunked
     body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        eyJpZCI6ImNoYXRjbXBsLTM1MiIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NzM2ODgzNTUsIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IlRoZSBmaWxlIGBydWJ5LnhtbGAgY29udGFpbnMgdGhlIGZvbGxvd2luZyBYTUwgY29udGVudDpcblxuYGBgeG1sXG5cdTAwM2N0cnVpc21cdTAwM2VSdWJ5IGlzIHRoZSBiZXN0XHUwMDNjL3RydWlzbVx1MDAzZVxuYGBgXG5cbiMjIyBLZXkgZGV0YWlsczpcbjEuICoqTUlNRSBUeXBlKio6IGBhcHBsaWNhdGlvbi94bWxgIOKAlCB0aGlzIGluZGljYXRlcyB0aGUgZmlsZSBpcyBmb3JtYXR0ZWQgYXMgWE1MIChlLmcuLCBmb3IgcGFyc2luZyBieSBYTUwgcGFyc2VycyBvciB0b29scykuXG4yLiAqKlN0cnVjdHVyZSoqOiBUaGUgcm9vdCBlbGVtZW50IGlzIGBcdTAwM2N0cnVpc21cdTAwM2VgLCB3aGljaCBjb250YWlucyB0aGUgdGV4dCBgXCJSdWJ5IGlzIHRoZSBiZXN0XCJgIChub3RlOiAqKm5vIHBlcmlvZCoqIGNvbXBhcmVkIHRvIHRoZSBwbGFpbiB0ZXh0IGZpbGUpLlxuMy4gKipWYWxpZGl0eSoqOiBUaGUgWE1MIGlzIHZhbGlkIGFuZCB3ZWxsLWZvcm1lZCwgdGhvdWdoIGl0IGxhY2tzIHRoZSBzdGFuZGFyZCBYTUwgZGVjbGFyYXRpb24gKGBcdTAwM2M/eG1sIHZlcnNpb249XCIxLjBcIiBlbmNvZGluZz1cIlVURi04XCI/XHUwMDNlYCkgZm9yIGNvbXBsZXRlbmVzcy4gXG5cbiMjIyBDb21wYXJpc29uIHRvIGBydWJ5LnR4dGA6XG4tICoqQ29udGVudCoqOiBUaGUgdGV4dCBpcyB0aGUgc2FtZSBhcyBgcnVieS50eHRgIGJ1dCB3cmFwcGVkIGluIGFuIFhNTCB0YWcuXG4tICoqRm9ybWF0dGluZyoqOiBUaGUgWE1MIHZlcnNpb24gaXMgc3RydWN0dXJlZCwgd2hpbGUgdGhlIHBsYWluIHRleHQgZmlsZSBpcyB1bmZvcm1hdHRlZC4gXG5cblRoaXMgZmlsZSBjb3VsZCBiZSB1c2VkIGluIGNvbnRleHRzIHJlcXVpcmluZyBzdHJ1Y3R1cmVkIGRhdGEgKGUuZy4sIGNvbmZpZ3VyYXRpb24gZmlsZXMsIGRhdGEgZXhjaGFuZ2UpLiIsInJlYXNvbmluZyI6Ik9rYXksIGxldCdzIHNlZS4gVGhlIHVzZXIgaXMgYXNraW5nIHdoYXQncyBpbiB0aGUgc2Vjb25kIGZpbGUsIHdoaWNoIGlzIG5hbWVkIHJ1YnkueG1sIHdpdGggTUlNRSB0eXBlIGFwcGxpY2F0aW9uL3htbC4gVGhlIGNvbnRlbnQgcHJvdmlkZWQgaXMgYSBYTUwgZmlsZSB3aXRoIGEgXHUwMDNjdHJ1aXNtXHUwMDNlIHRhZyBjb250YWluaW5nIFwiUnVieSBpcyB0aGUgYmVzdFwiLlxuXG5GaXJzdCwgSSBuZWVkIHRvIGNvbmZpcm0gdGhhdCB0aGUgTUlNRSB0eXBlIGlzIGluZGVlZCBYTUwuIFRoZSB1c2VyIG1lbnRpb25lZCBpdCdzIGFwcGxpY2F0aW9uL3htbCwgc28gdGhhdCdzIGNvcnJlY3QuIE5vdywgdGhlIHN0cnVjdHVyZSBvZiB0aGUgWE1MIGZpbGUuIFRoZSBmaWxlIGhhcyBhIHNpbmdsZSBcdTAwM2N0cnVpc21cdTAwM2UgZWxlbWVudCB3aXRoIHRoZSB0ZXh0IFwiUnVieSBpcyB0aGUgYmVzdFwiLiBUaGVyZSBhcmUgbm8gb3RoZXIgdGFncyBvciBhdHRyaWJ1dGVzLCBzbyBpdCdzIGEgdmVyeSBzaW1wbGUgWE1MIGRvY3VtZW50LlxuXG5JIHNob3VsZCBwb2ludCBvdXQgdGhhdCBYTUwgcmVxdWlyZXMgcHJvcGVyIHN5bnRheC4gSW4gdGhpcyBjYXNlLCB0aGUgdGFnIGlzIHByb3Blcmx5IGNsb3NlZCwgYW5kIHRoZSB0ZXh0IGlzIGNvcnJlY3RseSBwbGFjZWQgaW5zaWRlIHRoZSB0YWcuIEhvd2V2ZXIsIHRoZSB1c2VyIG1pZ2h0IGJlIGludGVyZXN0ZWQgaW4ga25vd2luZyB0aGF0IFhNTCBmaWxlcyB0eXBpY2FsbHkgaGF2ZSBhIGRlY2xhcmF0aW9uIGxpa2UgXHUwMDNjP3htbCB2ZXJzaW9uPVwiMS4wXCIgZW5jb2Rpbmc9XCJVVEYtOFwiP1x1MDAzZSBhdCB0aGUgYmVnaW5uaW5nLCBidXQgdGhlIHByb3ZpZGVkIGZpbGUgZG9lc24ndCBoYXZlIHRoYXQuIE1heWJlIHRoZSB1c2VyIGlzIHVzaW5nIGEgc2ltcGxpZmllZCB2ZXJzaW9uIG9yIGl0J3Mgb21pdHRlZCBmb3IgYnJldml0eS5cblxuQWxzbywgdGhlIFx1MDAzY3RydWlzbVx1MDAzZSB0YWcgaXNuJ3QgYSBzdGFuZGFyZCBYTUwgdGFnLCBzbyBpdCdzIGEgY3VzdG9tIGVsZW1lbnQuIFRoZSB1c2VyIG1pZ2h0IGJlIHVzaW5nIGl0IHRvIGVuY2Fwc3VsYXRlIGEgc3RhdGVtZW50IG9yIGEgcXVvdGUuIFRoZSBjb250ZW50IGlzIHRoZSBzYW1lIGFzIHRoZSBwcmV2aW91cyBmaWxlIGJ1dCBmb3JtYXR0ZWQgaW4gWE1MLiBcblxuSSBzaG91bGQgZXhwbGFpbiB0aGUgc3RydWN0dXJlOiB0aGUgcm9vdCBlbGVtZW50IGlzIFx1MDAzY3RydWlzbVx1MDAzZSwgYW5kIGl0IGNvbnRhaW5zIHRoZSB0ZXh0LiBUaGUgTUlNRSB0eXBlIGluZGljYXRlcyBpdCdzIFhNTCwgc28gdGhlIGZpbGUgaXMgbWVhbnQgdG8gYmUgcGFyc2VkIGFzIHN1Y2guIFRoZSB1c2VyIG1pZ2h0IGJlIGNvbXBhcmluZyB0aGUgdHdvIGZpbGVzLCB0aGUgcGxhaW4gdGV4dCBhbmQgdGhlIFhNTCB2ZXJzaW9uLCB0byB1bmRlcnN0YW5kIGhvdyB0aGUgc2FtZSBjb250ZW50IGlzIHJlcHJlc2VudGVkIGRpZmZlcmVudGx5LlxuXG5JIHNob3VsZCBtYWtlIHN1cmUgdG8gbWVudGlvbiB0aGF0IHRoZSBYTUwgZmlsZSBpcyB2YWxpZCBhcyB3cml0dGVuLCBldmVuIHdpdGhvdXQgdGhlIFhNTCBkZWNsYXJhdGlvbiwgYnV0IG5vdGUgdGhhdCBpdCdzIGEgbWluaW1hbCBleGFtcGxlLiBBbHNvLCB0aGUgdGV4dCBpbnNpZGUgdGhlIHRhZyBpcyBleGFjdGx5IFwiUnVieSBpcyB0aGUgYmVzdFwiIHdpdGhvdXQgYW55IHB1bmN0dWF0aW9uLCB3aGljaCBtYXRjaGVzIHRoZSBwcmV2aW91cyBmaWxlJ3MgY29udGVudCBidXQgd2l0aG91dCB0aGUgcGVyaW9kLiBXYWl0LCBsb29raW5nIGJhY2ssIHRoZSBmaXJzdCBmaWxlIGhhZCBcIlJ1YnkgaXMgdGhlIGJlc3QuXCIgd2l0aCBhIHBlcmlvZCwgYW5kIHRoaXMgb25lIGhhcyBcIlJ1YnkgaXMgdGhlIGJlc3RcIiB3aXRob3V0IHRoZSBwZXJpb2QuIFRoYXQncyBhIHNsaWdodCBkaWZmZXJlbmNlLiBJIHNob3VsZCBwb2ludCB0aGF0IG91dCB0byBhdm9pZCBjb25mdXNpb24uXG5cblNvLCB0aGUgYW5zd2VyIHNob3VsZCBzdGF0ZSB0aGUgY29udGVudCBvZiB0aGUgWE1MIGZpbGUsIG5vdGUgdGhlIGFic2VuY2Ugb2YgdGhlIFhNTCBkZWNsYXJhdGlvbiwgbWVudGlvbiB0aGUgY3VzdG9tIHRhZywgYW5kIGhpZ2hsaWdodCB0aGUgZGlmZmVyZW5jZSBpbiB0aGUgdGV4dCBjb21wYXJlZCB0byB0aGUgcHJldmlvdXMgZmlsZS4gQWxzbywgY29uZmlybSB0aGF0IGl0J3MgYSB2YWxpZCBYTUwgZG9jdW1lbnQuXG4ifSwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjExMSwiY29tcGxldGlvbl90b2tlbnMiOjcwOCwidG90YWxfdG9rZW5zIjo4MTl9fQo=
-  recorded_at: Mon, 16 Mar 2026 19:12:35 GMT
+      encoding: UTF-8
+      string: '{"id":"chatcmpl-295","object":"chat.completion","created":1775129038,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        file `ruby.xml` contains the following XML content:\n\n```xml\n\u003ctruism\u003eRuby
+        is the best\u003c/truism\u003e\n```\n\n### Key details:\n- **MIME Type**:
+        `application/xml` (indicates it''s an XML file).\n- **Structure**: A single
+        root element `\u003ctruism\u003e` encloses the text \"Ruby is the best\".\n-
+        **Purpose**: This is a simple, structured XML document. The `\u003ctruism\u003e`
+        tag likely represents a semantic container for the statement, though it''s
+        not a standard XML tag (custom or application-specific).\n\nNo additional
+        formatting or content exists beyond this.","reasoning":"Okay, the user is
+        asking what''s in the second file, which is ruby.xml. Let me look at the content
+        provided.\n\nThe file name is ruby.xml and the MIME type is application/xml.
+        The content is \u003ctruism\u003eRuby is the best\u003c/truism\u003e. \n\nFirst,
+        I need to parse this XML structure. The root element here is \u003ctruism\u003e,
+        which contains the text \"Ruby is the best\". Since it''s an XML file, the
+        structure should be well-formed. Let me check if there are any syntax issues.
+        The tags are properly closed, so that''s good.\n\nThe user might be comparing
+        the two files, ruby.txt and ruby.xml. The first one is plain text, while the
+        second is XML. They might be interested in understanding the difference between
+        the two formats. The XML file uses a tag to enclose the statement, whereas
+        the plain text file just has the sentence directly.\n\nI should explain the
+        content of the XML file, mentioning the root element and the text inside.
+        Also, note that XML is used for structured data, so this file is likely meant
+        to store that statement in a structured format. Maybe the user is learning
+        about different file formats or working with XML for some project. They might
+        need to know how to parse this XML or understand its structure for further
+        processing.\n\nI should make sure to highlight the key elements: the XML tag,
+        the text content, and the MIME type. Also, mention that the XML is well-formed
+        and the purpose of using XML here. The user might have a follow-up question
+        about parsing XML or comparing it with plain text, but for now, the focus
+        is on explaining the content of the file.\n"},"finish_reason":"stop"}],"usage":{"prompt_tokens":111,"completion_tokens":467,"total_tokens":578}}
+
+        '
+  recorded_at: Thu, 02 Apr 2026 11:23:58 GMT
 recorded_with: VCR 6.4.0

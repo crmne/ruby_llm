@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 16 Mar 2026 19:11:44 GMT
+      - Thu, 02 Apr 2026 11:23:34 GMT
       Content-Type:
       - text/event-stream
       Transfer-Encoding:
@@ -36,27 +36,29 @@ http_interactions:
       X-Zero-Data-Retention:
       - 'false'
       X-Ratelimit-Limit-Tokens:
-      - '4000000'
+      - '10000000'
       X-Ratelimit-Remaining-Tokens:
-      - '4000000'
+      - '10000000'
       X-Ratelimit-Limit-Requests:
-      - '607'
+      - '1800'
       X-Ratelimit-Remaining-Requests:
-      - '607'
-      Set-Cookie:
-      - "<COOKIE>"
+      - '1800'
+      Strict-Transport-Security:
+      - max-age=31536000
       Cf-Cache-Status:
       - DYNAMIC
       X-Request-Id:
       - "<X_REQUEST_ID>"
+      Traceparent:
+      - 00-7b9476fc7f5a2bd054b9e21ccb7167b8-88e4dd92000039cc-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
       - "*"
       Access-Control-Expose-Headers:
       - "*"
-      Strict-Transport-Security:
-      - max-age=31536000
+      Set-Cookie:
+      - "<COOKIE>"
       Server:
       - cloudflare
       Cf-Ray:
@@ -64,23 +66,27 @@ http_interactions:
     body:
       encoding: UTF-8
       string: |+
-        data: {"id":"a0b3f6de-83e2-94ee-9bbd-5f24c6519077","object":"chat.completion.chunk","created":1773688304,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":"1","role":"assistant"}}],"system_fingerprint":"fp_48319fcb08"}
+        data: {"id":"d6176287-cbd1-9c87-9638-403be487ea33","object":"chat.completion.chunk","created":1775129014,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":"1","role":"assistant"}}],"system_fingerprint":"fp_5d249ba471"}
 
-        data: {"id":"a0b3f6de-83e2-94ee-9bbd-5f24c6519077","object":"chat.completion.chunk","created":1773688304,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":"  \n"}}],"system_fingerprint":"fp_48319fcb08"}
+        data: {"id":"d6176287-cbd1-9c87-9638-403be487ea33","object":"chat.completion.chunk","created":1775129014,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":","}}],"system_fingerprint":"fp_5d249ba471"}
 
-        data: {"id":"a0b3f6de-83e2-94ee-9bbd-5f24c6519077","object":"chat.completion.chunk","created":1773688304,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":"2"}}],"system_fingerprint":"fp_48319fcb08"}
+        data: {"id":"d6176287-cbd1-9c87-9638-403be487ea33","object":"chat.completion.chunk","created":1775129015,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":" "}}],"system_fingerprint":"fp_5d249ba471"}
 
-        data: {"id":"a0b3f6de-83e2-94ee-9bbd-5f24c6519077","object":"chat.completion.chunk","created":1773688304,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":"  \n"}}],"system_fingerprint":"fp_48319fcb08"}
+        data: {"id":"d6176287-cbd1-9c87-9638-403be487ea33","object":"chat.completion.chunk","created":1775129015,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":"2"}}],"system_fingerprint":"fp_5d249ba471"}
 
-        data: {"id":"a0b3f6de-83e2-94ee-9bbd-5f24c6519077","object":"chat.completion.chunk","created":1773688304,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":"3"}}],"system_fingerprint":"fp_48319fcb08"}
+        data: {"id":"d6176287-cbd1-9c87-9638-403be487ea33","object":"chat.completion.chunk","created":1775129015,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":","}}],"system_fingerprint":"fp_5d249ba471"}
 
-        data: {"id":"a0b3f6de-83e2-94ee-9bbd-5f24c6519077","object":"chat.completion.chunk","created":1773688304,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{},"finish_reason":"stop"}],"system_fingerprint":"fp_48319fcb08"}
+        data: {"id":"d6176287-cbd1-9c87-9638-403be487ea33","object":"chat.completion.chunk","created":1775129015,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":" "}}],"system_fingerprint":"fp_5d249ba471"}
 
-        data: {"id":"a0b3f6de-83e2-94ee-9bbd-5f24c6519077","object":"chat.completion.chunk","created":1773688304,"model":"grok-4-1-fast-non-reasoning","choices":[],"usage":{"prompt_tokens":175,"completion_tokens":5,"total_tokens":180,"prompt_tokens_details":{"text_tokens":175,"audio_tokens":0,"image_tokens":0,"cached_tokens":174},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":114000},"system_fingerprint":"fp_48319fcb08"}
+        data: {"id":"d6176287-cbd1-9c87-9638-403be487ea33","object":"chat.completion.chunk","created":1775129015,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":"3"}}],"system_fingerprint":"fp_5d249ba471"}
+
+        data: {"id":"d6176287-cbd1-9c87-9638-403be487ea33","object":"chat.completion.chunk","created":1775129015,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{},"finish_reason":"stop"}],"system_fingerprint":"fp_5d249ba471"}
+
+        data: {"id":"d6176287-cbd1-9c87-9638-403be487ea33","object":"chat.completion.chunk","created":1775129015,"model":"grok-4-1-fast-non-reasoning","choices":[],"usage":{"prompt_tokens":175,"completion_tokens":7,"total_tokens":182,"prompt_tokens_details":{"text_tokens":175,"audio_tokens":0,"image_tokens":0,"cached_tokens":174},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":124000},"system_fingerprint":"fp_5d249ba471"}
 
         data: [DONE]
 
-  recorded_at: Mon, 16 Mar 2026 19:11:44 GMT
+  recorded_at: Thu, 02 Apr 2026 11:23:35 GMT
 - request:
     method: post
     uri: https://api.x.ai/v1/chat/completions
@@ -105,42 +111,44 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 16 Mar 2026 19:11:45 GMT
+      - Thu, 02 Apr 2026 11:23:35 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Strict-Transport-Security:
-      - max-age=31536000
-      Access-Control-Expose-Headers:
-      - "*"
       Set-Cookie:
       - "<COOKIE>"
       X-Ratelimit-Limit-Tokens:
-      - '4000000'
+      - '10000000'
       X-Ratelimit-Remaining-Tokens:
-      - '4000000'
+      - '10000000'
       X-Zero-Data-Retention:
       - 'false'
       X-Ratelimit-Limit-Requests:
-      - '607'
+      - '1800'
       X-Ratelimit-Remaining-Requests:
-      - '607'
+      - '1800'
       X-Metrics-Ttft-Ms:
-      - '92.8'
+      - '104.9'
       X-Metrics-Mean-Itl-Ms:
-      - '33.6'
+      - '30.4'
       X-Metrics-E2e-Ms:
-      - '459.8'
+      - '210.3'
+      Strict-Transport-Security:
+      - max-age=31536000
       X-Request-Id:
       - "<X_REQUEST_ID>"
+      Traceparent:
+      - 00-fb14966355b903edc04c3082f5488cfd-013be7ca00878ad6-01
       Cf-Cache-Status:
       - DYNAMIC
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
       - "*"
       Server:
       - cloudflare
@@ -148,7 +156,8 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"13350a23-98b2-7589-5ba3-7d82643e4c93","object":"chat.completion","created":1773688304,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"1  \n2  \n3","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":175,"completion_tokens":5,"total_tokens":180,"prompt_tokens_details":{"text_tokens":175,"audio_tokens":0,"image_tokens":0,"cached_tokens":161},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":133500},"system_fingerprint":"fp_48319fcb08"}'
-  recorded_at: Mon, 16 Mar 2026 19:11:45 GMT
+      string: '{"id":"0a46b903-b232-98e8-a150-2ef05196e85c","object":"chat.completion","created":1775129015,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"1,
+        2, 3","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":175,"completion_tokens":7,"total_tokens":182,"prompt_tokens_details":{"text_tokens":175,"audio_tokens":0,"image_tokens":0,"cached_tokens":174},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":124000},"system_fingerprint":"fp_5d249ba471"}'
+  recorded_at: Thu, 02 Apr 2026 11:23:35 GMT
 recorded_with: VCR 6.4.0
 ...

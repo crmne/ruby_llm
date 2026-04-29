@@ -33,7 +33,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Mon, 16 Mar 2026 19:18:21 GMT
+      - Thu, 02 Apr 2026 11:30:24 GMT
       Server:
       - elb
       Vary:
@@ -41,7 +41,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - f0a797400edc3912b92351336fdeabcb
+      - a8189d6c21f68cbea3b74544eb903077
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -49,16 +49,15 @@ http_interactions:
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 98b89ed6771805fd5b6d059738f20206.cloudfront.net (CloudFront)
+      - 1.1 004f800c04aabf7d29d67f327fb87542.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - TXL50-P3
+      - TXL50-P6
       X-Amz-Cf-Id:
-      - 2WO0nmfGbRt1zQIJ34u4TsZW9b7yhPF4Ez5S21MawFVVlj5cKmQMdw==
+      - qo6gTwghYrUDwlP2ji46sBfGoprSByDwJR9nXQFPBzn3vvGOMS1Rng==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"0f919666-301b-4283-8023-fc55fccc6c4e","object":"chat.completion","created":1773688701,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"I''ll
-        call the any_of_params tool with the task \"Review PR\" and status \"pending\"
-        as requested.","tool_calls":[{"index":0,"id":"call_00_dsMP8iJYj2fLRxFapKV4jVWC","type":"function","function":{"name":"any_of_params","arguments":"{\"task\":
-        \"Review PR\", \"status\": \"pending\"}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":380,"completion_tokens":83,"total_tokens":463,"prompt_tokens_details":{"cached_tokens":192},"prompt_cache_hit_tokens":192,"prompt_cache_miss_tokens":188},"system_fingerprint":"fp_eaab8d114b_prod0820_fp8_kvcache"}'
-  recorded_at: Mon, 16 Mar 2026 19:18:24 GMT
+      string: '{"id":"52e32e9d-1a7e-4b95-a98f-9143a4e6d20a","object":"chat.completion","created":1775129424,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"I''ll
+        call the any-of params tool with the specified task and status.","tool_calls":[{"index":0,"id":"call_00_ymPr4SmfpPkjA6rXHLgPHvIW","type":"function","function":{"name":"any_of_params","arguments":"{\"task\":
+        \"Review PR\", \"status\": \"pending\"}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":380,"completion_tokens":75,"total_tokens":455,"prompt_tokens_details":{"cached_tokens":192},"prompt_cache_hit_tokens":192,"prompt_cache_miss_tokens":188},"system_fingerprint":"fp_eaab8d114b_prod0820_fp8_kvcache_new_kvcache"}'
+  recorded_at: Thu, 02 Apr 2026 11:30:28 GMT
 recorded_with: VCR 6.4.0
