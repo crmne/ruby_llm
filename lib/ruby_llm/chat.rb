@@ -18,6 +18,7 @@ module RubyLLM
       with_model(model_id, provider: provider, assume_exists: assume_model_exists)
       @temperature = nil
       @messages = []
+      @messages_scope = nil
       @tools = {}
       @tool_prefs = { choice: nil, calls: nil }
       @params = {}
@@ -112,6 +113,16 @@ module RubyLLM
       self
     end
 
+    def with_messages(&block)
+      if block.nil?
+        @messages_scope = nil
+        return self
+      end
+
+      @messages_scope = block
+      self
+    end
+
     def on_new_message(&block)
       @on[:new_message] = block
       self
@@ -138,7 +149,7 @@ module RubyLLM
 
     def complete(&) # rubocop:disable Metrics/PerceivedComplexity
       response = @provider.complete(
-        messages,
+        scoped_messages,
         tools: @tools,
         tool_prefs: @tool_prefs,
         temperature: @temperature,
@@ -219,6 +230,10 @@ module RubyLLM
     def sanitize_schema_name(name)
       sanitized = name.to_s.gsub(/[^a-zA-Z0-9_-]/, '_')
       sanitized.empty? ? 'response' : sanitized
+    end
+
+    def scoped_messages
+       @messages_scope ? @messages_scope.call(messages) : messages
     end
 
     def wrap_streaming_block(&block)
