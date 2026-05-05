@@ -129,6 +129,11 @@ module RubyLLM
         self
       end
 
+      def with_fallback(...)
+        to_llm.with_fallback(...)
+        self
+      end
+
       def with_temperature(...)
         to_llm.with_temperature(...)
         self
@@ -221,7 +226,7 @@ module RubyLLM
 
       def complete(...)
         to_llm.complete(...)
-      rescue RubyLLM::Error => e
+      rescue *RubyLLM::Fallback::ERRORS => e
         cleanup_failed_messages if @message&.persisted? && @message.content.blank?
         cleanup_orphaned_tool_results
         raise e
@@ -320,6 +325,11 @@ module RubyLLM
       end
 
       def persist_new_message
+        if @message&.persisted? && @message.content.blank? &&
+           !@message.tool_calls_association.exists? &&
+           (!@message.respond_to?(:content_raw) || @message.content_raw.blank?)
+          @message.destroy
+        end
         @message = messages_association.create!(role: :assistant, content: '')
       end
 
