@@ -550,8 +550,8 @@ When using the Model registry (created by default by the generator), your chats 
 ```ruby
 # String automatically resolves to Model record
 chat = Chat.create!(model: '{{ site.models.openai_standard }}')
-chat.model # => #<Model model_id: "gpt-4o", provider: "openai">
-chat.model.name # => "GPT-4"
+chat.model # => #<Model model_id: "gpt-5.4", provider: "openai">
+chat.model.name # => "GPT-5"
 chat.model.context_window # => 128000
 chat.model.supports_vision # => true
 
