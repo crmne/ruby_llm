@@ -21,6 +21,7 @@ module RubyLLM
             yield req if block_given?
           end
 
+          ensure_response_body!(response)
           parse_completion_response(response)
         end
 

@@ -20,7 +20,7 @@ module RubyLLM
       end
 
       def parse_error(response)
-        return if response.body.empty?
+        return if response.body.nil? || response.body.empty?
 
         body = try_parse_json(response.body)
         case body

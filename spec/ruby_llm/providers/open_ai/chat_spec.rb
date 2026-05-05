@@ -4,6 +4,16 @@ require 'spec_helper'
 
 RSpec.describe RubyLLM::Providers::OpenAI::Chat do
   describe '.parse_completion_response' do
+    it 'raises RubyLLM::Error for nil or empty completion bodies' do
+      [nil, {}].each do |body|
+        response = instance_double(Faraday::Response, body: body)
+
+        expect do
+          described_class.parse_completion_response(response)
+        end.to raise_error(RubyLLM::Error, 'Provider returned an empty response body')
+      end
+    end
+
     it 'captures cached token information when present' do
       response_body = {
         'model' => 'gpt-4.1-nano',

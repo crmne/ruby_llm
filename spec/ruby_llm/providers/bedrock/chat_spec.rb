@@ -3,6 +3,18 @@
 require 'spec_helper'
 
 RSpec.describe RubyLLM::Providers::Bedrock::Chat do
+  describe '.parse_completion_response' do
+    it 'raises RubyLLM::Error for nil or empty completion bodies' do
+      [nil, {}].each do |body|
+        response = instance_double(Faraday::Response, body: body)
+
+        expect do
+          described_class.parse_completion_response(response)
+        end.to raise_error(RubyLLM::Error, 'Provider returned an empty response body')
+      end
+    end
+  end
+
   describe '.render_tool_result_content' do
     it 'uses a placeholder when the tool returns no content' do
       result = described_class.render_tool_result_content('')
