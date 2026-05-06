@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
+require 'ruby_llm/active_record/message_methods'
+require 'ruby_llm/active_record/tool_call_methods'
 
 RSpec.describe RubyLLM::ActiveRecord do
   describe RubyLLM::ActiveRecord::MessageMethods do

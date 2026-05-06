@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'active_support/concern'
+
 module RubyLLM
   module ActiveRecord
     # Methods mixed into chat models.
