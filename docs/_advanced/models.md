@@ -225,10 +225,11 @@ puts cost.input
 puts cost.output
 puts cost.cache_read
 puts cost.cache_write
+puts cost.thinking
 puts cost.total
 ```
 
-Costs use RubyLLM's normalized token buckets: standard input, output, cache read, and cache write. See [Tracking Token Usage]({% link _core_features/chat.md %}#tracking-token-usage) for the provider comparison table and what RubyLLM exposes consistently across providers.
+Costs use RubyLLM's normalized token buckets: standard input, billable output, cache read, cache write, and separately priced thinking when the model registry exposes a distinct reasoning-token price. See [Tracking Token Usage]({% link _core_features/chat.md %}#tracking-token-usage) for the provider comparison table and what RubyLLM exposes consistently across providers.
 
 Most applications use the shorter helpers on messages, chats, and agents:
 
@@ -245,7 +246,7 @@ cost = RubyLLM::Cost.aggregate(messages.map(&:cost))
 cost.total
 ```
 
-If pricing is incomplete for tokens that were used, the affected cost and `cost.total` return `nil`.
+If pricing is incomplete for tokens that were used, the affected cost and `cost.total` return `nil`. Cost helpers cover token-priced conversation usage; provider-specific add-ons such as search-query charges remain available in the provider's raw usage payload.
 
 ## Connecting to Custom Endpoints & Using Unlisted Models
 {: .d-inline-block }

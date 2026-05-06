@@ -40,7 +40,7 @@ Use the new cache names in new code:
 
 ```ruby
 response.input_tokens       # Standard input tokens
-response.output_tokens      # Output tokens
+response.output_tokens      # Billable output tokens
 response.cache_read_tokens  # Tokens served from prompt cache
 response.cache_write_tokens # Tokens written to prompt cache
 
@@ -78,6 +78,8 @@ agent.cost.total
 ```
 
 Cost helpers are available from 1.15 onward. They return `nil` for any cost bucket whose pricing is missing, and `cost.total` is also `nil` when a used bucket has incomplete pricing.
+
+`thinking_tokens` remains available from 1.10. From 1.15 onward, `output_tokens` is normalized as the billable output bucket. Do not add `thinking_tokens` to `output_tokens` yourself; RubyLLM includes thinking in output when the provider bills it as output, and exposes `cost.thinking` only for models with distinct reasoning-token pricing.
 
 See [Tracking Token Usage]({% link _core_features/chat.md %}#tracking-token-usage) for the provider comparison table and the exact normalized token semantics RubyLLM exposes.
 

@@ -3,7 +3,7 @@
 module RubyLLM
   # Represents the cost of token usage for a model response.
   class Cost
-    COMPONENTS = %i[input output cache_read cache_write].freeze
+    COMPONENTS = %i[input output cache_read cache_write thinking].freeze
     PER_MILLION = 1_000_000.0
 
     attr_reader :tokens, :model
@@ -47,6 +47,12 @@ module RubyLLM
       amount_for(:cache_write)
     end
 
+    def thinking
+      amount_for(:thinking)
+    end
+
+    alias reasoning thinking
+
     alias cached_input cache_read
     alias cache_creation cache_write
 
@@ -66,6 +72,7 @@ module RubyLLM
         output: output,
         cache_read: cache_read,
         cache_write: cache_write,
+        thinking: thinking,
         total: total
       }.compact
     end
@@ -78,6 +85,7 @@ module RubyLLM
 
     def missing?(component)
       return @missing.include?(component) if aggregate?
+      return false if component == :thinking && !thinking_priced_separately?
 
       tokens = tokens_for(component)
       tokens.to_i.positive? && price_for(component).nil?
@@ -121,6 +129,8 @@ module RubyLLM
         tokens.cache_read
       when :cache_write
         tokens.cache_write
+      when :thinking
+        tokens.thinking if thinking_priced_separately?
       end
     end
 
@@ -134,11 +144,21 @@ module RubyLLM
         text_pricing.cache_read_input
       when :cache_write
         text_pricing.cache_write_input
+      when :thinking
+        text_pricing.reasoning_output
       end
     end
 
     def text_pricing
       model&.pricing&.text_tokens || RubyLLM::Model::PricingCategory.new
+    end
+
+    def thinking_priced_separately?
+      reasoning_price = text_pricing.reasoning_output
+      return false unless reasoning_price
+
+      output_price = text_pricing.output
+      output_price.nil? || reasoning_price != output_price
     end
 
     def normalize_model(model)

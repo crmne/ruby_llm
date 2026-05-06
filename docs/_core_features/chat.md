@@ -613,7 +613,7 @@ Understanding token usage is important for managing costs and staying within con
 response = chat.ask "Explain the Ruby Global Interpreter Lock (GIL)."
 
 input_tokens = response.input_tokens   # Standard input tokens
-output_tokens = response.output_tokens # Output tokens
+output_tokens = response.output_tokens # Billable output tokens
 cache_read_tokens = response.cache_read_tokens # Tokens served from the provider's prompt cache - v1.15+
 cache_write_tokens = response.cache_write_tokens # Tokens written to cache - v1.15+
 thinking_tokens = response.thinking_tokens # Thinking tokens when providers report them - v1.10.0+
@@ -632,6 +632,7 @@ puts "Input Cost: $#{format('%.6f', response.cost.input)}" if response.cost.inpu
 puts "Output Cost: $#{format('%.6f', response.cost.output)}" if response.cost.output
 puts "Cache Read Cost: $#{format('%.6f', response.cost.cache_read)}" if response.cost.cache_read
 puts "Cache Write Cost: $#{format('%.6f', response.cost.cache_write)}" if response.cost.cache_write
+puts "Thinking Cost: $#{format('%.6f', response.cost.thinking)}" if response.cost.thinking
 puts "Total Cost: $#{format('%.6f', response.cost.total)}" if response.cost.total
 
 # Total tokens for the entire conversation so far
@@ -660,9 +661,11 @@ This means the same RubyLLM code works across providers: `input_tokens` for stan
 
 `cache_read_tokens` and `cache_write_tokens` are available from v1.15+ and are also exposed as `response.tokens.cache_read` and `response.tokens.cache_write`. The older `cached_tokens` and `cache_creation_tokens` methods remain available for compatibility with v1.9.0+ code.
 
-Thinking token usage is available via `response.thinking_tokens` and `response.tokens.thinking` when providers report it. For providers that do not include thinking token counts, these values remain `nil`.
+Thinking token usage is available via `response.thinking_tokens` and `response.tokens.thinking` when providers report it. For most providers, thinking/reasoning tokens are a breakdown of output work, not an extra bucket to add yourself. RubyLLM keeps `output_tokens` as the billable output bucket: OpenAI-style providers that include reasoning in completion tokens stay as-is, while OpenAI-compatible providers that report reasoning outside completion tokens are normalized so `output_tokens` includes the billable generated total.
 
-Cost helpers are available from v1.15+. RubyLLM uses token usage from the provider and pricing from the model registry. If the registry is missing pricing for tokens that were used, the affected cost and `cost.total` return `nil` instead of pretending the cost was zero.
+When a model has distinct reasoning-token pricing, `response.cost.thinking` prices that bucket separately. Otherwise, thinking tokens are treated as part of `response.cost.output` and `response.cost.thinking` stays `nil`.
+
+Cost helpers are available from v1.15+. RubyLLM uses token usage from the provider and pricing from the model registry. If the registry is missing pricing for tokens that were used, the affected cost and `cost.total` return `nil` instead of pretending the cost was zero. These helpers cover token-priced conversation usage; provider-specific add-ons such as search-query charges are left to the provider's raw usage payload.
 
 Refer to the [Working with Models Guide]({% link _advanced/models.md %}) for details on accessing model-specific pricing.
 

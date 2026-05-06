@@ -549,11 +549,12 @@ Persisted chats and messages expose the same normalized token and cost helpers a
 message = chat_record.messages.last
 
 message.input_tokens       # Standard input tokens
-message.output_tokens      # Output tokens
+message.output_tokens      # Billable output tokens
 message.cache_read_tokens  # Prompt cache reads
 message.cache_write_tokens # Prompt cache writes
 
 message.cost.total
+message.cost.thinking # When the model has distinct reasoning-token pricing
 chat_record.cost.total
 ```
 
