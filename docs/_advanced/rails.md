@@ -249,6 +249,8 @@ class Message < ApplicationRecord
 end
 ```
 
+This `:attachments` association is only required on RubyLLM message records. The ActiveStorage attachments you pass to `with:` from your own models can use any name.
+
 ### Working with Raw Provider Payloads, Anthropic Prompt Caching
 {: .d-inline-block }
 
@@ -642,7 +644,8 @@ chat_record.ask("What are in these files?", with: [
 chat_record.ask("Analyze this file", with: params[:uploaded_file])
 
 # Works with existing ActiveStorage attachments
-chat_record.ask("What's in this document?", with: user.profile_document)
+chat_record.ask("What's in this document?", with: user.profile_document) # has_one_attached
+chat_record.ask("Compare these documents", with: project.documents)      # has_many_attached
 ```
 
 File types are automatically detected from extensions or MIME types.
