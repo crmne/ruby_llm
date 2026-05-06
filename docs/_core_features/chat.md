@@ -653,18 +653,18 @@ You can register blocks to be called when certain events occur during the chat l
 
 ### Available Event Handlers
 
-RubyLLM provides four event handlers that cover the complete chat lifecycle:
+RubyLLM provides two callback styles. The `on_*` handlers replace any previously registered handler for the same event, which is useful when you want to override behavior. The Rails-style `before_*` and `after_*` callbacks are additive, so multiple registrations for the same event all run. Additive callbacks are available from v1.15+.
 
 ```ruby
 chat = RubyLLM.chat
 
 # Called at first chunk received from the assistant
-chat.on_new_message do
+chat.before_message do
   print "Assistant > "
 end
 
 # Called after the complete assistant message (including tool calls/results) is received
-chat.on_end_message do |message|
+chat.after_message do |message|
   puts "Response complete!"
   # Note: message might be nil if an error occurred during the request
   if message && message.output_tokens
@@ -673,18 +673,20 @@ chat.on_end_message do |message|
 end
 
 # Called when the AI decides to use a tool
-chat.on_tool_call do |tool_call|
+chat.before_tool_call do |tool_call|
   puts "AI is calling tool: #{tool_call.name} with arguments: #{tool_call.arguments}"
 end
 
 # Called after a tool returns its result
-chat.on_tool_result do |result|
+chat.after_tool_result do |result|
   puts "Tool returned: #{result}"
 end
 
 # These callbacks work for both streaming and non-streaming requests
 chat.ask "What is metaprogramming in Ruby?"
 ```
+
+The older `on_new_message`, `on_end_message`, `on_tool_call`, and `on_tool_result` handlers are still available and keep their replacing behavior. RubyLLM logs a deprecation warning when one of these handlers is used; prefer the additive Rails-style callbacks for new code.
 
 ## Raw Responses
 

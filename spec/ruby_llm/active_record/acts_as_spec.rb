@@ -702,28 +702,51 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
   end
 
   describe 'event callbacks' do
-    it 'preserves user callbacks when using Rails integration' do
+    it 'keeps on_new_message replacing while preserving persistence callbacks' do
       user_callback_called = false
+      second_user_callback_called = false
       end_callback_called = false
+      allow(RubyLLM.logger).to receive(:warn)
 
       chat = Chat.create!(model: model)
+      provider = chat.to_llm.instance_variable_get(:@provider)
+      allow(provider).to receive(:complete).and_return(RubyLLM::Message.new(role: :assistant, content: 'Hello back'))
 
       # Set user callbacks before calling ask
       chat.on_new_message { user_callback_called = true }
+      chat.on_new_message { second_user_callback_called = true }
       chat.on_end_message { end_callback_called = true }
 
       # Call ask which triggers to_llm and sets up persistence callbacks
       chat.ask('Hello')
 
-      # Both user callbacks and persistence should work
-      expect(user_callback_called).to be true
+      # on_* callbacks replace each other, but persistence uses additive callbacks.
+      expect(user_callback_called).to be false
+      expect(second_user_callback_called).to be true
       expect(end_callback_called).to be true
       expect(chat.messages.count).to eq(2) # Persistence still works
+    end
+
+    it 'preserves persistence when callbacks are registered directly on to_llm' do
+      user_callback_called = false
+      chat = Chat.create!(model: model)
+      llm_chat = chat.to_llm
+      provider = llm_chat.instance_variable_get(:@provider)
+      allow(provider).to receive(:complete).and_return(RubyLLM::Message.new(role: :assistant, content: 'Hello back'))
+      allow(RubyLLM.logger).to receive(:warn)
+
+      llm_chat.on_new_message { user_callback_called = true }
+
+      expect { chat.ask('Hello') }.not_to raise_error
+      expect(user_callback_called).to be true
+      expect(chat.messages.count).to eq(2)
+      expect(chat.messages.last.content).to eq('Hello back')
     end
 
     it 'calls on_tool_call and on_tool_result callbacks' do
       tool_call_received = nil
       tool_result_received = nil
+      allow(RubyLLM.logger).to receive(:warn)
 
       chat = Chat.create!(model: model)
                  .with_tool(Calculator)
