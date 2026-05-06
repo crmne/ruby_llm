@@ -49,12 +49,7 @@ Define a tool by creating a class that inherits from `RubyLLM::Tool`.
 
 ```ruby
 class Weather < RubyLLM::Tool
-  description "Gets current weather for a location"
-
-  params do  # the params DSL is only available in v1.9+. older versions should use the param helper instead
-    string :latitude, description: "Latitude (e.g., 52.5200)"
-    string :longitude, description: "Longitude (e.g., 13.4050)"
-  end
+  desc "Gets current weather for a location"
 
   def execute(latitude:, longitude:)
     url = "https://api.open-meteo.com/v1/forecast?latitude=#{latitude}&longitude=#{longitude}&current=temperature_2m,wind_speed_10m"
@@ -70,9 +65,9 @@ end
 ### Tool Components
 
 1.  **Inheritance:** Must inherit from `RubyLLM::Tool`.
-2.  **`description`:** A class method defining what the tool does. Crucial for the AI model to understand its purpose. Keep it clear and concise.
-3.  **`params`:** (v1.9+) The DSL for describing your input schema. Declare nested objects, arrays, enums, and optional fields in one place. If you only need flat keyword arguments, the older `param` (v1.0+) helper remains available. See [Using the `param` Helper for Simple Tools](#using-the-param-helper-for-simple-tools).
-4.  **`execute` Method:** The instance method containing your Ruby code. It receives the keyword arguments defined by your schema and returns the payload the model will see (typically a String, Hash, or `RubyLLM::Content`).
+2.  **`desc` / `description`:** A class method defining what the tool does. Crucial for the AI model to understand its purpose. Keep it clear and concise.
+3.  **`execute` Method:** The instance method containing your Ruby code. RubyLLM v1.15+ infers simple keyword parameters from this signature when no explicit parameter schema is declared.
+4.  **Parameter declarations:** Optional. Use `param` for simple descriptions and types, or `params` for nested objects, arrays, enums, and full JSON Schema control.
 
 > The tool's class name is automatically converted to a snake_case name used in the API call (e.g., `WeatherLookup` becomes `weather_lookup`). This is how the LLM would call it. You can override this by defining a `name` method in your tool class:
 >
@@ -96,12 +91,52 @@ end
 
 ## Declaring Parameters
 
-RubyLLM ships with two complementary approaches:
+RubyLLM ships with three complementary approaches:
 
-*   The **`params` DSL** for expressive, structured inputs. (v1.9+)
+*   **Signature inference** for simple flat arguments.
 *   The **`param` helper** for quick, flat argument lists. (v1.0+)
+*   The **`params` DSL** for expressive, structured inputs. (v1.9+)
 
-Start with the DSL whenever you need anything beyond a handful of simple strings—it keeps complex schemas maintainable and identical across every provider.
+Start with the method signature. Add `param` when a flat argument needs a description, type, or optionality that is not obvious from Ruby alone. Use the `params` DSL whenever you need nested objects, arrays, enums, or union types.
+
+### Signature Inference
+{: .d-inline-block }
+
+v1.15.0+
+{: .label .label-green }
+
+When a tool has no `param` or `params` declaration, RubyLLM builds a JSON Schema from `execute` keyword arguments:
+
+```ruby
+class Weather < RubyLLM::Tool
+  desc "Gets current weather for a location"
+
+  def execute(latitude:, longitude:, units: "metric")
+    # ...
+  end
+end
+```
+
+Required keywords become required string parameters. Optional keywords become optional string parameters. A tool with `def execute` receives an empty object schema.
+
+Ruby method signatures do not expose reliable JSON Schema types or descriptions, so add explicit declarations when those details matter.
+
+### Using the `param` Helper for Simple Tools
+
+If your tool just needs a few scalar arguments with descriptions or non-string types, use the `param` helper. RubyLLM translates these declarations into JSON Schema under the hood.
+
+```ruby
+class Distance < RubyLLM::Tool
+  desc "Calculates distance between two cities"
+  param :origin, desc: "Origin city name"
+  param :destination, description: "Destination city name"
+  param :units, type: :string, desc: "Unit system (metric or imperial)", required: false
+
+  def execute(origin:, destination:, units: "metric")
+    # ...
+  end
+end
+```
 
 ### params DSL
 {: .d-inline-block }
@@ -113,7 +148,7 @@ When you need nested objects, arrays, enums, or union types, the `params do ... 
 
 ```ruby
 class Scheduler < RubyLLM::Tool
-  description "Books a meeting"
+  desc "Books a meeting"
 
   params do
     object :window, description: "Time window to reserve" do
@@ -136,23 +171,6 @@ end
 ```
 
 RubyLLM bundles the DSL through [`ruby_llm-schema`](https://github.com/danielfriis/ruby_llm-schema), so every project has the same schema builders out of the box.
-
-### Using the `param` Helper for Simple Tools
-
-If your tool just needs a few scalar arguments, stick with the `param` helper. RubyLLM translates these declarations into JSON Schema under the hood.
-
-```ruby
-class Distance < RubyLLM::Tool
-  description "Calculates distance between two cities"
-  param :origin, desc: "Origin city name"
-  param :destination, desc: "Destination city name"
-  param :units, type: :string, desc: "Unit system (metric or imperial)", required: false
-
-  def execute(origin:, destination:, units: "metric")
-    # ...
-  end
-end
-```
 
 ### Supplying JSON Schema Manually
 {: .d-inline-block }
