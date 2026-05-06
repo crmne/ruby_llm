@@ -371,17 +371,17 @@ This entire multi-step process happens behind the scenes within a single `chat.a
 
 ## Monitoring Tool Calls with Callbacks
 
-You can monitor tool execution using event callbacks to track when tools are called and what they return:
+You can monitor tool execution using additive callbacks to track when tools are called and what they return. Available from v1.15+.
 
 ```ruby
 chat = RubyLLM.chat(model: '{{ site.models.openai_tools }}')
       .with_tool(Weather)
-      .on_tool_call do |tool_call|
+      .before_tool_call do |tool_call|
         # Called when the AI decides to use a tool
         puts "Calling tool: #{tool_call.name}"
         puts "Arguments: #{tool_call.arguments}"
       end
-      .on_tool_result do |result|
+      .after_tool_result do |result|
         # Called after the tool returns its result
         puts "Tool returned: #{result}"
       end
@@ -410,7 +410,7 @@ max_calls = 10
 
 chat = RubyLLM.chat(model: '{{ site.models.openai_tools }}')
       .with_tool(Weather)
-      .on_tool_call do |tool_call|
+      .before_tool_call do |tool_call|
         call_count += 1
         if call_count > max_calls
           raise "Tool call limit exceeded (#{max_calls} calls)"
@@ -421,7 +421,7 @@ chat = RubyLLM.chat(model: '{{ site.models.openai_tools }}')
 chat.ask("Check weather for every major city...")
 ```
 
-> Raising an exception in `on_tool_call` breaks the conversation flow - the LLM expects a tool response after requesting a tool call. This can leave the chat in an inconsistent state. Consider using better models or clearer tool descriptions to prevent loops instead of hard limits.
+> Raising an exception in `before_tool_call` breaks the conversation flow - the LLM expects a tool response after requesting a tool call. This can leave the chat in an inconsistent state. Consider using better models or clearer tool descriptions to prevent loops instead of hard limits.
 {: .warning }
 
 ## Advanced Tool Metadata

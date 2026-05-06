@@ -87,6 +87,7 @@ module RubyLLM
 
         add_association_params(params, :message, message_table_name, message_model_name,
                                owner_table: tool_call_table_name, owner_model_name: tool_call_model_name)
+        add_result_foreign_key_param(params)
 
         "acts_as_tool_call#{" #{params.join(', ')}" if params.any?}"
       end
@@ -176,6 +177,13 @@ module RubyLLM
         return "#{association_name}_id" unless collection_association
 
         "#{owner_model_name.demodulize.underscore}_id"
+      end
+
+      def add_result_foreign_key_param(params)
+        foreign_key = "#{tool_call_table_name.singularize}_id"
+        default_foreign_key = "#{tool_call_model_name.demodulize.underscore}_id"
+
+        params << "result_foreign_key: :#{foreign_key}" if foreign_key != default_foreign_key
       end
 
       # Convert namespaced model names to proper table names

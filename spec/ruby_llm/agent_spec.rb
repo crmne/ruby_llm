@@ -154,6 +154,26 @@ RSpec.describe RubyLLM::Agent do
         @events << :tool_result
         self
       end
+
+      def before_message(&)
+        @events << :before_message
+        self
+      end
+
+      def after_message(&)
+        @events << :after_message
+        self
+      end
+
+      def before_tool_call(&)
+        @events << :before_tool_call
+        self
+      end
+
+      def after_tool_result(&)
+        @events << :after_tool_result
+        self
+      end
     end.new
 
     agent = Class.new(described_class).new(chat: fake_chat)
@@ -162,7 +182,20 @@ RSpec.describe RubyLLM::Agent do
     expect(agent.on_end_message { :ok }).to eq(fake_chat)
     expect(agent.on_tool_call { :ok }).to eq(fake_chat)
     expect(agent.on_tool_result { :ok }).to eq(fake_chat)
-    expect(fake_chat.events).to eq(%i[new_message end_message tool_call tool_result])
+    expect(agent.before_message { :ok }).to eq(fake_chat)
+    expect(agent.after_message { :ok }).to eq(fake_chat)
+    expect(agent.before_tool_call { :ok }).to eq(fake_chat)
+    expect(agent.after_tool_result { :ok }).to eq(fake_chat)
+    expect(fake_chat.events).to eq(%i[
+                                     new_message
+                                     end_message
+                                     tool_call
+                                     tool_result
+                                     before_message
+                                     after_message
+                                     before_tool_call
+                                     after_tool_result
+                                   ])
   end
 
   it 'supports Enumerable by delegating each to chat' do
