@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require 'active_support/core_ext/object/blank'
+require 'json'
+
 module RubyLLM
   module ActiveRecord
     # Shared helpers for parsing serialized payloads on ActiveRecord-backed models.

@@ -101,4 +101,38 @@ RSpec.describe RubyLLM::Chat do
       end
     end
   end
+
+  describe '#cost' do
+    let(:model) do
+      RubyLLM::Model::Info.new(
+        id: 'priced-model',
+        name: 'Priced Model',
+        provider: 'openai',
+        pricing: {
+          text_tokens: {
+            standard: {
+              input_per_million: 1.0,
+              output_per_million: 2.0
+            }
+          }
+        }
+      )
+    end
+
+    it 'sums message costs for the conversation' do
+      allow(RubyLLM.models).to receive(:find).and_call_original
+      allow(RubyLLM.models).to receive(:find).with('priced-model').and_return(model)
+
+      chat = RubyLLM.chat(model: RubyLLM.config.default_model)
+      chat.add_message(role: :user, content: 'Hello')
+      chat.add_message(role: :assistant, content: 'Hi', input_tokens: 1_000, output_tokens: 2_000,
+                       model_id: 'priced-model')
+      chat.add_message(role: :assistant, content: 'Again', input_tokens: 500, output_tokens: 100,
+                       model_id: 'priced-model')
+
+      expect(chat.cost.input).to eq(0.0015)
+      expect(chat.cost.output).to eq(0.0042)
+      expect(chat.cost.total).to eq(0.0057)
+    end
+  end
 end

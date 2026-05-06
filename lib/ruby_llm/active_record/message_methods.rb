@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require 'active_support/concern'
+require 'ruby_llm/active_record/payload_helpers'
+
 module RubyLLM
   module ActiveRecord
     # Methods mixed into message models.
@@ -39,6 +42,18 @@ module RubyLLM
           cache_creation: cache_creation_value,
           thinking: thinking_tokens_value
         )
+      end
+
+      def cost
+        RubyLLM::Cost.new(tokens:, model: model_association)
+      end
+
+      def cache_read_tokens
+        cached_value
+      end
+
+      def cache_write_tokens
+        cache_creation_value
       end
 
       def to_partial_path

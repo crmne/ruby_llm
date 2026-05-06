@@ -13,7 +13,6 @@ module RubyLLM
 
         def build_chunk(data)
           usage = data['usage'] || {}
-          cached_tokens = usage.dig('prompt_tokens_details', 'cached_tokens')
           delta = data.dig('choices', 0, 'delta') || {}
 
           Chunk.new(
@@ -25,10 +24,10 @@ module RubyLLM
               signature: extract_thinking_signature(delta)
             ),
             tool_calls: OpenAI::Tools.parse_tool_calls(delta['tool_calls'], parse_arguments: false),
-            input_tokens: usage['prompt_tokens'],
+            input_tokens: OpenRouter::Chat.input_tokens(usage),
             output_tokens: usage['completion_tokens'],
-            cached_tokens: cached_tokens,
-            cache_creation_tokens: 0,
+            cached_tokens: OpenRouter::Chat.cache_read_tokens(usage),
+            cache_creation_tokens: OpenRouter::Chat.cache_write_tokens(usage),
             thinking_tokens: usage.dig('completion_tokens_details', 'reasoning_tokens')
           )
         end

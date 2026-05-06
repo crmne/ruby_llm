@@ -19,9 +19,16 @@ module RubyLLM
         standard&.output_per_million
       end
 
-      def cached_input
-        standard&.cached_input_per_million
+      def cache_read_input
+        standard&.cache_read_input_per_million || standard&.cached_input_per_million
       end
+
+      def cache_write_input
+        standard&.cache_write_input_per_million || standard&.cache_creation_input_per_million
+      end
+
+      alias cached_input cache_read_input
+      alias cache_creation_input cache_write_input
 
       def [](key)
         key == :batch ? batch : standard
