@@ -229,7 +229,10 @@ You can still instantiate and use an agent instance directly:
 
 ```ruby
 agent = WorkAssistant.new
-agent.ask("Hello")
+response = agent.ask("Hello")
+
+response.cost.total # v1.15+
+agent.cost.total    # v1.15+
 ```
 
 Agent instances delegate the full `RubyLLM::Chat` instance API to the underlying chat object
@@ -238,6 +241,7 @@ Agent instances delegate the full `RubyLLM::Chat` instance API to the underlying
 Delegated methods include:
 
 * `model`, `messages`, `tools`, `params`, `headers`, `schema`
+* `cost` (v1.15+)
 * `ask`, `say`, `complete`
 * `add_message`, `reset_messages!`, `each`
 * `with_tool`, `with_tools`
