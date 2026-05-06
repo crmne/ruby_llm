@@ -82,13 +82,29 @@ module RubyLLM
 
         def format_messages(messages)
           messages.map do |msg|
+            content = OpenAI::Media.format_content(msg.content)
+            content = inject_cache_control(content) if msg.cache_point?
+
             {
               role: format_role(msg.role),
-              content: OpenAI::Media.format_content(msg.content),
+              content: content,
               tool_calls: OpenAI::Tools.format_tool_calls(msg.tool_calls),
               tool_call_id: msg.tool_call_id
             }.compact.merge(format_thinking(msg))
           end
+        end
+
+        def inject_cache_control(content)
+          # Anthropic cache_control. For other models will be ignored by respective provider.
+          # Wrap plain strings into a text block first so the marker can be attached.
+          blocks = content.is_a?(Array) ? content.dup : [{ type: 'text', text: content }]
+          return blocks if blocks.empty?
+
+          last = blocks.last
+          return blocks if last.is_a?(Hash) && last[:cache_control]
+
+          blocks[-1] = last.merge(cache_control: { type: 'ephemeral' })
+          blocks
         end
 
         def format_role(role)

@@ -9,7 +9,7 @@ module RubyLLM
       accumulator = StreamAccumulator.new
 
       response = connection.post stream_url, payload do |req|
-        req.headers = additional_headers.merge(req.headers) unless additional_headers.empty?
+        req.headers.merge!(additional_headers) unless additional_headers.empty?
         if faraday_1?
           req.options[:on_data] = handle_stream do |chunk|
             accumulator.add chunk

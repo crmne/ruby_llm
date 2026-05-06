@@ -264,7 +264,7 @@ module RubyLLM
 
     def sync_response(connection, payload, additional_headers = {})
       response = connection.post completion_url, payload do |req|
-        req.headers = additional_headers.merge(req.headers) unless additional_headers.empty?
+        req.headers.merge!(additional_headers) unless additional_headers.empty?
       end
       parse_completion_response response
     end
