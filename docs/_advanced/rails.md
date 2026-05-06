@@ -329,12 +329,11 @@ Available in v1.7.0+
 ```ruby
 # app/models/chat.rb
 class Chat < ApplicationRecord
-  # New API style - uses association names as primary parameters
+  # New API style - uses Rails association names as primary parameters
   acts_as_chat # Defaults: messages: :messages, model: :model
 
   # Or with custom associations:
   # acts_as_chat messages: :chat_messages,
-  #              message_class: 'ChatMessage',  # Only needed if class can't be inferred
   #              model: :ai_model
 
   belongs_to :user, optional: true
@@ -342,12 +341,11 @@ end
 
 # app/models/message.rb
 class Message < ApplicationRecord
-  # New API style - uses association names
+  # New API style - uses Rails association names
   acts_as_message # Defaults: chat: :chat, tool_calls: :tool_calls, model: :model
 
   # Or with custom associations:
   # acts_as_message chat: :conversation,
-  #                 chat_class: 'Conversation',  # Only needed if class can't be inferred
   #                 tool_calls: :function_calls
 
   # Note: Do NOT add "validates :content, presence: true"
@@ -380,8 +378,7 @@ Pre-1.7.0 or opt-in
 class Chat < ApplicationRecord
   # Legacy API style - requires explicit class names
   acts_as_chat message_class: 'Message',
-               tool_call_class: 'ToolCall',
-               model_class: 'Model'  # Ignored in legacy mode
+               tool_call_class: 'ToolCall'
 end
 
 # app/models/message.rb
@@ -389,8 +386,7 @@ class Message < ApplicationRecord
   # Legacy API style - all class names and foreign keys explicit
   acts_as_message chat_class: 'Chat',
                   chat_foreign_key: 'chat_id',
-                  tool_call_class: 'ToolCall',
-                  model_class: 'Model'  # Ignored in legacy mode
+                  tool_call_class: 'ToolCall'
 end
 
 # app/models/tool_call.rb
@@ -986,9 +982,7 @@ Available in v1.7.0+
 # app/models/conversation.rb (instead of Chat)
 class Conversation < ApplicationRecord
   acts_as_chat messages: :chat_messages,  # Association name
-               message_class: 'ChatMessage',  # Optional if inferrable
-               model: :ai_model,
-               model_class: 'AiModel'  # Optional if inferrable
+               model: :ai_model
 
   belongs_to :user, optional: true
 end
@@ -996,25 +990,23 @@ end
 # app/models/chat_message.rb (instead of Message)
 class ChatMessage < ApplicationRecord
   acts_as_message chat: :conversation,  # Association name
-                  chat_class: 'Conversation',  # Optional if inferrable
                   tool_calls: :ai_tool_calls,
-                  tool_call_class: 'AIToolCall',  # Required for non-standard naming
                   model: :ai_model
 end
 
 # app/models/ai_tool_call.rb (instead of ToolCall)
-class AIToolCall < ApplicationRecord
+class AiToolCall < ApplicationRecord
   acts_as_tool_call message: :chat_message,
-                    message_class: 'ChatMessage',  # Optional if inferrable
                     result: :result
 end
 
 # app/models/ai_model.rb (instead of Model)
 class AiModel < ApplicationRecord
-  acts_as_model chats: :conversations,
-                chat_class: 'Conversation'  # Optional if inferrable
+  acts_as_model chats: :conversations
 end
 ```
+
+The new API follows Rails association inference: the association name determines the default foreign key, and the `*_class` options only change the class name. For example, `tool_calls: :ai_tool_calls` uses `ai_tool_call_id`, while `tool_call_class: 'AiToolCall'` by itself still uses `tool_call_id`.
 
 #### Namespaced Models Example
 
@@ -1033,8 +1025,28 @@ end
 module Admin
   class BotMessage < ApplicationRecord
     acts_as_message chat: :bot_chat,
-                    chat_class: 'Admin::BotChat'  # Required for namespace
+                    chat_class: 'Admin::BotChat',
+                    tool_calls: :bot_tool_calls,
+                    tool_call_class: 'Admin::BotToolCall'
   end
+end
+
+# app/models/admin/bot_tool_call.rb
+module Admin
+  class BotToolCall < ApplicationRecord
+    acts_as_tool_call message: :bot_message,
+                      message_class: 'Admin::BotMessage'
+  end
+end
+```
+
+If you choose prefixed association names such as `llm_tool_calls`, configure the reverse association the same way you would in Rails:
+
+```ruby
+class Llm::ToolCall < ApplicationRecord
+  acts_as_tool_call message: :llm_message,
+                    message_class: 'Llm::Message',
+                    result_foreign_key: :llm_tool_call_id
 end
 ```
 
@@ -1048,18 +1060,18 @@ Pre-1.7.0 or opt-in
 # app/models/conversation.rb
 class Conversation < ApplicationRecord
   acts_as_chat message_class: 'ChatMessage',
-               tool_call_class: 'AIToolCall'
+               tool_call_class: 'AiToolCall'
 end
 
 # app/models/chat_message.rb
 class ChatMessage < ApplicationRecord
   acts_as_message chat_class: 'Conversation',
                   chat_foreign_key: 'conversation_id',
-                  tool_call_class: 'AIToolCall'
+                  tool_call_class: 'AiToolCall'
 end
 
 # app/models/ai_tool_call.rb
-class AIToolCall < ApplicationRecord
+class AiToolCall < ApplicationRecord
   acts_as_tool_call message_class: 'ChatMessage',
                     message_foreign_key: 'chat_message_id'
 end

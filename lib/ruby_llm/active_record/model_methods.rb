@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require 'active_support/concern'
+require 'active_support/core_ext/module/delegation'
+
 module RubyLLM
   module ActiveRecord
     # Methods mixed into model registry models.
