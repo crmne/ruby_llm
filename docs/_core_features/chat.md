@@ -48,9 +48,9 @@ puts response.content
 
 # The response object contains metadata
 puts "Model Used: #{response.model_id}"
-puts "Tokens Used: #{response.input_tokens} input, #{response.output_tokens} output"
-puts "Cache Reads: #{response.cache_read_tokens}" # v1.15+
-puts "Cache Writes: #{response.cache_write_tokens}" # v1.15+
+puts "Tokens Used: #{response.tokens.input} input, #{response.tokens.output} output"
+puts "Cache Reads: #{response.tokens.cache_read}" # v1.15+
+puts "Cache Writes: #{response.tokens.cache_write}" # v1.15+
 ```
 
 The `ask` method adds your message to the conversation history with the `:user` role, sends the entire conversation history to the AI provider, and returns a `RubyLLM::Message` object containing the assistant's response.
@@ -612,11 +612,11 @@ Understanding token usage is important for managing costs and staying within con
 ```ruby
 response = chat.ask "Explain the Ruby Global Interpreter Lock (GIL)."
 
-input_tokens = response.input_tokens   # Standard input tokens
-output_tokens = response.output_tokens # Billable output tokens
-cache_read_tokens = response.cache_read_tokens # Tokens served from the provider's prompt cache - v1.15+
-cache_write_tokens = response.cache_write_tokens # Tokens written to cache - v1.15+
-thinking_tokens = response.thinking_tokens # Thinking tokens when providers report them - v1.10.0+
+input_tokens = response.tokens.input   # Standard input tokens
+output_tokens = response.tokens.output # Billable output tokens
+cache_read_tokens = response.tokens.cache_read # Tokens served from the provider's prompt cache - v1.15+
+cache_write_tokens = response.tokens.cache_write # Tokens written to cache - v1.15+
+thinking_tokens = response.tokens.thinking # Thinking tokens when providers report them - v1.10.0+
 request_side_input_tokens = input_tokens.to_i + cache_read_tokens.to_i + cache_write_tokens.to_i
 
 puts "Input Tokens: #{input_tokens}"
@@ -637,7 +637,7 @@ puts "Total Cost: $#{format('%.6f', response.cost.total)}" if response.cost.tota
 
 # Total tokens for the entire conversation so far
 total_conversation_tokens = chat.messages.sum do |msg|
-  msg.input_tokens.to_i + msg.output_tokens.to_i + msg.cache_read_tokens.to_i + msg.cache_write_tokens.to_i
+  msg.tokens&.input.to_i + msg.tokens&.output.to_i + msg.tokens&.cache_read.to_i + msg.tokens&.cache_write.to_i
 end
 puts "Total Conversation Tokens: #{total_conversation_tokens}"
 
@@ -645,23 +645,23 @@ puts "Total Conversation Tokens: #{total_conversation_tokens}"
 puts "Total Conversation Cost: $#{format('%.6f', chat.cost.total)}" if chat.cost.total
 ```
 
-RubyLLM handles provider token differences for you. From v1.15 onward, `input_tokens` means the standard input bucket used for pricing. Cache activity is exposed separately as `cache_read_tokens` and `cache_write_tokens`, even when the provider includes those tokens in a raw prompt total.
+RubyLLM handles provider token differences for you. From v1.15 onward, `tokens.input` means the standard input bucket used for pricing. Cache activity is exposed separately as `tokens.cache_read` and `tokens.cache_write`, even when the provider includes those tokens in a raw prompt total.
 
 | Provider | Raw provider usage | RubyLLM exposes |
 | --- | --- | --- |
-| OpenAI, Azure OpenAI, xAI, OpenAI-compatible | `prompt_tokens` can include `prompt_tokens_details.cached_tokens`; cache writes may appear as `cache_write_tokens`. | `input_tokens` excludes cache reads and writes. `cache_read_tokens` and `cache_write_tokens` receive the cache buckets. |
-| DeepSeek | `prompt_tokens` is split into `prompt_cache_hit_tokens` and `prompt_cache_miss_tokens`. | `input_tokens` is cache misses. `cache_read_tokens` is cache hits. |
-| OpenRouter | `prompt_tokens` can include cached tokens and cache-write tokens in `prompt_tokens_details`. | `input_tokens` excludes both cache buckets. `cache_read_tokens` and `cache_write_tokens` receive the cache buckets. |
-| Anthropic | `input_tokens` is already separate from `cache_read_input_tokens` and `cache_creation_input_tokens` or the `cache_creation` breakdown. | `input_tokens` passes through. Cache buckets map to `cache_read_tokens` and `cache_write_tokens`. |
-| Bedrock | `inputTokens` includes `cacheReadInputTokens` and `cacheWriteInputTokens`. | `input_tokens` excludes both cache buckets. Cache buckets are exposed separately. |
-| Gemini and Vertex AI | `promptTokenCount` includes `cachedContentTokenCount`. | `input_tokens` excludes cached content. `cache_read_tokens` receives cached content tokens. |
-| Providers without cache fields | Only standard input and output usage is reported. | Cache buckets stay `nil`; `input_tokens` stays as the provider input count. |
+| OpenAI, Azure OpenAI, xAI, OpenAI-compatible | `prompt_tokens` can include `prompt_tokens_details.cached_tokens`; cache writes may appear as `cache_write_tokens`. | `tokens.input` excludes cache reads and writes. `tokens.cache_read` and `tokens.cache_write` receive the cache buckets. |
+| DeepSeek | `prompt_tokens` is split into `prompt_cache_hit_tokens` and `prompt_cache_miss_tokens`. | `tokens.input` is cache misses. `tokens.cache_read` is cache hits. |
+| OpenRouter | `prompt_tokens` can include cached tokens and cache-write tokens in `prompt_tokens_details`. | `tokens.input` excludes both cache buckets. `tokens.cache_read` and `tokens.cache_write` receive the cache buckets. |
+| Anthropic | `input_tokens` is already separate from `cache_read_input_tokens` and `cache_creation_input_tokens` or the `cache_creation` breakdown. | `tokens.input` passes through. Cache buckets map to `tokens.cache_read` and `tokens.cache_write`. |
+| Bedrock | `inputTokens` includes `cacheReadInputTokens` and `cacheWriteInputTokens`. | `tokens.input` excludes both cache buckets. Cache buckets are exposed separately. |
+| Gemini and Vertex AI | `promptTokenCount` includes `cachedContentTokenCount`. | `tokens.input` excludes cached content. `tokens.cache_read` receives cached content tokens. |
+| Providers without cache fields | Only standard input and output usage is reported. | Cache buckets stay `nil`; `tokens.input` stays as the provider input count. |
 
-This means the same RubyLLM code works across providers: `input_tokens` for standard input, `output_tokens` for output, `cache_read_tokens` for prompt cache reads, and `cache_write_tokens` for prompt cache writes. To display the full request-side input activity, add `input_tokens + cache_read_tokens + cache_write_tokens`.
+This means the same RubyLLM code works across providers: `tokens.input` for standard input, `tokens.output` for output, `tokens.cache_read` for prompt cache reads, and `tokens.cache_write` for prompt cache writes. To display the full request-side input activity, add `tokens.input + tokens.cache_read + tokens.cache_write`.
 
-`cache_read_tokens` and `cache_write_tokens` are available from v1.15+ and are also exposed as `response.tokens.cache_read` and `response.tokens.cache_write`. The older `cached_tokens` and `cache_creation_tokens` methods remain available for compatibility with v1.9.0+ code.
+The top-level token helpers remain available for compatibility with v1.9.0+ code, but new code should prefer `response.tokens.*`.
 
-Thinking token usage is available via `response.thinking_tokens` and `response.tokens.thinking` when providers report it. For most providers, thinking/reasoning tokens are a breakdown of output work, not an extra bucket to add yourself. RubyLLM keeps `output_tokens` as the billable output bucket: OpenAI-style providers that include reasoning in completion tokens stay as-is, while OpenAI-compatible providers that report reasoning outside completion tokens are normalized so `output_tokens` includes the billable generated total.
+Thinking token usage is available via `response.tokens.thinking` when providers report it. For most providers, thinking/reasoning tokens are a breakdown of output work, not an extra bucket to add yourself. RubyLLM keeps `tokens.output` as the billable output bucket: OpenAI-style providers that include reasoning in completion tokens stay as-is, while OpenAI-compatible providers that report reasoning outside completion tokens are normalized so `tokens.output` includes the billable generated total.
 
 When a model has distinct reasoning-token pricing, `response.cost.thinking` prices that bucket separately. Otherwise, thinking tokens are treated as part of `response.cost.output` and `response.cost.thinking` stays `nil`.
 
@@ -689,12 +689,12 @@ end
 chat.after_message do |message|
   puts "Response complete!"
   # Note: message might be nil if an error occurred during the request
-  if message && message.output_tokens
+  if message&.tokens&.output
     tokens =
-      message.input_tokens.to_i +
-      message.output_tokens.to_i +
-      message.cache_read_tokens.to_i +
-      message.cache_write_tokens.to_i
+      message.tokens.input.to_i +
+      message.tokens.output.to_i +
+      message.tokens.cache_read.to_i +
+      message.tokens.cache_write.to_i
 
     puts "Used #{tokens} tokens"
   end

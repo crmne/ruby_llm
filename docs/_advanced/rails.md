@@ -548,10 +548,10 @@ Persisted chats and messages expose the same normalized token and cost helpers a
 ```ruby
 message = chat_record.messages.last
 
-message.input_tokens       # Standard input tokens
-message.output_tokens      # Billable output tokens
-message.cache_read_tokens  # Prompt cache reads
-message.cache_write_tokens # Prompt cache writes
+message.tokens.input       # Standard input tokens
+message.tokens.output      # Billable output tokens
+message.tokens.cache_read  # Prompt cache reads
+message.tokens.cache_write # Prompt cache writes
 
 message.cost.total
 message.cost.thinking # When the model has distinct reasoning-token pricing
@@ -751,10 +751,10 @@ class Chat < ApplicationRecord
     @message.assign_attributes(
       content: message.content,
       model: Model.find_by(model_id: message.model_id),
-      input_tokens: message.input_tokens,
-      output_tokens: message.output_tokens,
-      cached_tokens: message.cache_read_tokens,
-      cache_creation_tokens: message.cache_write_tokens
+      input_tokens: message.tokens.input,
+      output_tokens: message.tokens.output,
+      cached_tokens: message.tokens.cache_read,
+      cache_creation_tokens: message.tokens.cache_write
     )
 
     @message.save!

@@ -34,39 +34,35 @@ If you use the Rails integration and already ran the v1.9 migration, no new colu
 
 ## Token Semantics Changed
 
-RubyLLM now normalizes prompt cache usage before exposing token counts. From 1.15 onward, `response.input_tokens` and `response.tokens.input` mean standard input tokens. When a provider includes cache reads or cache writes in its raw prompt token total, RubyLLM subtracts those cache buckets and exposes them separately.
+RubyLLM now normalizes prompt cache usage before exposing token counts. From 1.15 onward, `response.tokens.input` means standard input tokens. When a provider includes cache reads or cache writes in its raw prompt token total, RubyLLM subtracts those cache buckets and exposes them separately.
 
 Use the new cache names in new code:
 
 ```ruby
-response.input_tokens       # Standard input tokens
-response.output_tokens      # Billable output tokens
-response.cache_read_tokens  # Tokens served from prompt cache
-response.cache_write_tokens # Tokens written to prompt cache
-
 response.tokens.input
 response.tokens.output
 response.tokens.cache_read
 response.tokens.cache_write
 ```
 
-The v1.9 cache names still work for backwards compatibility:
+The top-level token helpers still work for backwards compatibility:
 
 ```ruby
+response.input_tokens       # Same as tokens.input
+response.output_tokens      # Same as tokens.output
+response.cache_read_tokens  # Same as tokens.cache_read
+response.cache_write_tokens # Same as tokens.cache_write
 response.cached_tokens          # Same as cache_read_tokens
 response.cache_creation_tokens  # Same as cache_write_tokens
-
-response.tokens.cached          # Same as tokens.cache_read
-response.tokens.cache_creation  # Same as tokens.cache_write
 ```
 
 If your app stored or displayed provider raw prompt totals, reconstruct the request-side input activity by adding the normalized buckets:
 
 ```ruby
 request_side_input_tokens =
-  response.input_tokens.to_i +
-  response.cache_read_tokens.to_i +
-  response.cache_write_tokens.to_i
+  response.tokens.input.to_i +
+  response.tokens.cache_read.to_i +
+  response.tokens.cache_write.to_i
 ```
 
 For costs, prefer the new cost helpers instead of multiplying token totals yourself:
@@ -79,7 +75,7 @@ agent.cost.total
 
 Cost helpers are available from 1.15 onward. They return `nil` for any cost bucket whose pricing is missing, and `cost.total` is also `nil` when a used bucket has incomplete pricing.
 
-`thinking_tokens` remains available from 1.10. From 1.15 onward, `output_tokens` is normalized as the billable output bucket. Do not add `thinking_tokens` to `output_tokens` yourself; RubyLLM includes thinking in output when the provider bills it as output, and exposes `cost.thinking` only for models with distinct reasoning-token pricing.
+`tokens.thinking` remains available from 1.10. From 1.15 onward, `tokens.output` is normalized as the billable output bucket. Do not add `tokens.thinking` to `tokens.output` yourself; RubyLLM includes thinking in output when the provider bills it as output, and exposes `cost.thinking` only for models with distinct reasoning-token pricing.
 
 See [Tracking Token Usage]({% link _core_features/chat.md %}#tracking-token-usage) for the provider comparison table and the exact normalized token semantics RubyLLM exposes.
 

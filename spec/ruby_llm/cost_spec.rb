@@ -50,6 +50,41 @@ RSpec.describe RubyLLM::Cost do
       expect(cost.cache_creation).to eq(cost.cache_write)
     end
 
+    it 'calculates image costs from text and image input details' do
+      image_model = RubyLLM::Model::Info.new(
+        id: 'image-model',
+        name: 'Image Model',
+        provider: 'openai',
+        pricing: {
+          text_tokens: {
+            standard: {
+              input_per_million: 5.0
+            }
+          },
+          images: {
+            standard: {
+              input_per_million: 10.0,
+              output_per_million: 40.0
+            }
+          }
+        }
+      )
+      tokens = RubyLLM::Tokens.new(input: 350, output: 50)
+      cost = described_class.new(
+        tokens:,
+        model: image_model,
+        category: :images,
+        input_details: {
+          'text_tokens' => 100,
+          'image_tokens' => 250
+        }
+      )
+
+      expect(cost.input).to be_within(0.0000000001).of(0.003)
+      expect(cost.output).to be_within(0.0000000001).of(0.002)
+      expect(cost.total).to be_within(0.0000000001).of(0.005)
+    end
+
     it 'does not price thinking tokens separately when output already includes them' do
       tokens = RubyLLM::Tokens.new(input: 50, output: 1306, thinking: 1087)
       cost = described_class.new(tokens:, model:)
