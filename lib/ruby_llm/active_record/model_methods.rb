@@ -10,15 +10,7 @@ module RubyLLM
         def refresh!
           RubyLLM.models.refresh!
 
-          transaction do
-            RubyLLM.models.all.each do |model_info|
-              model = find_or_initialize_by(
-                model_id: model_info.id,
-                provider: model_info.provider
-              )
-              model.update!(from_llm_attributes(model_info))
-            end
-          end
+          save_to_database
         end
 
         def save_to_database
