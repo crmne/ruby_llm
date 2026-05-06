@@ -435,6 +435,7 @@ module RubyLLM
     # Methods mixed into message models.
     module MessageLegacyMethods
       extend ActiveSupport::Concern
+      include ContentExtraction
 
       class_methods do
         attr_reader :chat_class, :tool_call_class, :chat_foreign_key, :tool_call_foreign_key
@@ -473,20 +474,23 @@ module RubyLLM
       end
 
       def extract_content
-        text_content = if content.respond_to?(:to_plain_text)
-                         content.to_plain_text
-                       else
-                         content
-                       end
+        content_value = content
+        text_content = plain_text_content(content_value)
+        action_text_attachments = action_text_attachment_sources(content_value)
 
-        return text_content unless respond_to?(:attachments) && attachments.attached?
+        has_active_storage_attachments = respond_to?(:attachments) && attachments.attached?
+        return text_content if action_text_attachments.empty? && !has_active_storage_attachments
 
         RubyLLM::Content.new(text_content).tap do |content_obj|
           @_tempfiles = []
 
-          attachments.each do |attachment|
-            tempfile = download_attachment(attachment)
-            content_obj.add_attachment(tempfile, filename: attachment.filename.to_s)
+          add_action_text_attachments(content_obj, action_text_attachments)
+
+          if has_active_storage_attachments
+            attachments.each do |attachment|
+              tempfile = download_attachment(attachment)
+              content_obj.add_attachment(tempfile, filename: attachment.filename.to_s)
+            end
           end
         end
       end
