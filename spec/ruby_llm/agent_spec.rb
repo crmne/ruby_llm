@@ -127,6 +127,34 @@ RSpec.describe RubyLLM::Agent do
     expect(agent.messages.last.content).to eq('First')
   end
 
+  it 'exposes cost like RubyLLM::Chat' do
+    model = RubyLLM::Model::Info.new(
+      id: 'priced-model',
+      name: 'Priced Model',
+      provider: 'openai',
+      pricing: {
+        text_tokens: {
+          standard: {
+            input_per_million: 1.0,
+            output_per_million: 2.0
+          }
+        }
+      }
+    )
+    allow(RubyLLM.models).to receive(:find).and_call_original
+    allow(RubyLLM.models).to receive(:find).with('priced-model').and_return(model)
+
+    agent_class = Class.new(RubyLLM::Agent) do
+      model 'gpt-4.1-nano'
+    end
+    agent = agent_class.new
+
+    agent.add_message(role: :assistant, content: 'Hi', input_tokens: 1_000, output_tokens: 2_000,
+                      model_id: 'priced-model')
+
+    expect(agent.cost.total).to eq(0.005)
+  end
+
   it 'delegates callback hooks to the underlying chat' do
     fake_chat = Class.new do
       attr_reader :events

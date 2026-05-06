@@ -3,6 +3,35 @@
 require 'spec_helper'
 
 RSpec.describe RubyLLM::Providers::OpenRouter::Chat do
+  describe '.parse_completion_response' do
+    it 'normalizes cached prompt tokens out of input tokens' do
+      response_body = {
+        'model' => 'openai/gpt-4.1-nano',
+        'choices' => [
+          {
+            'message' => {
+              'role' => 'assistant',
+              'content' => 'Hello!'
+            }
+          }
+        ],
+        'usage' => {
+          'prompt_tokens' => 12,
+          'completion_tokens' => 4,
+          'prompt_tokens_details' => { 'cached_tokens' => 6, 'cache_write_tokens' => 4 }
+        }
+      }
+
+      response = instance_double(Faraday::Response, body: response_body)
+      message = described_class.parse_completion_response(response)
+
+      expect(message.input_tokens).to eq(2)
+      expect(message.cached_tokens).to eq(6)
+      expect(message.cache_creation_tokens).to eq(4)
+      expect(message.output_tokens).to eq(4)
+    end
+  end
+
   describe '.render_payload' do
     let(:model) { instance_double(RubyLLM::Model::Info, id: 'anthropic/claude-haiku-4.5') }
     let(:messages) { [RubyLLM::Message.new(role: :user, content: 'Hello')] }

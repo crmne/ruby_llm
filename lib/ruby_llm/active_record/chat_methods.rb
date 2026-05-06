@@ -216,6 +216,10 @@ module RubyLLM
         message_record
       end
 
+      def cost
+        RubyLLM::Cost.aggregate(messages_association.map(&:cost))
+      end
+
       def create_user_message(content, with: nil)
         add_message(role: :user, content: build_content(content, with))
       end

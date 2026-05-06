@@ -28,7 +28,37 @@ RSpec.describe RubyLLM::Providers::OpenAI::Chat do
       message = described_class.parse_completion_response(response)
 
       expect(message.cached_tokens).to eq(6)
-      expect(message.input_tokens).to eq(8)
+      expect(message.input_tokens).to eq(2)
+      expect(message.output_tokens).to eq(4)
+      expect(message.cache_creation_tokens).to eq(0)
+    end
+
+    it 'normalizes DeepSeek cache hit and miss usage fields' do
+      response_body = {
+        'model' => 'deepseek-chat',
+        'choices' => [
+          {
+            'message' => {
+              'role' => 'assistant',
+              'content' => 'Hello!'
+            }
+          }
+        ],
+        'usage' => {
+          'prompt_tokens' => 206,
+          'completion_tokens' => 4,
+          'prompt_cache_hit_tokens' => 192,
+          'prompt_cache_miss_tokens' => 14
+        }
+      }
+
+      response = instance_double(Faraday::Response, body: response_body)
+      allow(described_class).to receive(:parse_tool_calls).and_return(nil)
+
+      message = described_class.parse_completion_response(response)
+
+      expect(message.input_tokens).to eq(14)
+      expect(message.cached_tokens).to eq(192)
       expect(message.output_tokens).to eq(4)
       expect(message.cache_creation_tokens).to eq(0)
     end

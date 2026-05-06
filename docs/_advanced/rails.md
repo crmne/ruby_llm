@@ -537,6 +537,30 @@ chat_record.ask "Tell me more about that city"
 puts "Conversation length: #{chat_record.messages.count}" # => 4
 ```
 
+### Token Usage and Costs
+{: .d-inline-block }
+
+v1.15+
+{: .label .label-green }
+
+Persisted chats and messages expose the same normalized token and cost helpers as regular RubyLLM objects:
+
+```ruby
+message = chat_record.messages.last
+
+message.input_tokens       # Standard input tokens
+message.output_tokens      # Output tokens
+message.cache_read_tokens  # Prompt cache reads
+message.cache_write_tokens # Prompt cache writes
+
+message.cost.total
+chat_record.cost.total
+```
+
+`cache_read_tokens` and `cache_write_tokens` are aliases for the existing v1.9 `cached_tokens` and `cache_creation_tokens` columns, so apps that already ran the v1.9 migration do not need another migration for these names.
+
+RubyLLM normalizes provider-specific cache accounting before persisting token counts. See [Tracking Token Usage]({% link _core_features/chat.md %}#tracking-token-usage) for the provider comparison table.
+
 ### Database Model Registry
 {: .d-inline-block }
 
@@ -727,7 +751,9 @@ class Chat < ApplicationRecord
       content: message.content,
       model: Model.find_by(model_id: message.model_id),
       input_tokens: message.input_tokens,
-      output_tokens: message.output_tokens
+      output_tokens: message.output_tokens,
+      cached_tokens: message.cache_read_tokens,
+      cache_creation_tokens: message.cache_write_tokens
     )
 
     @message.save!

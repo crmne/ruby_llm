@@ -48,6 +48,34 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       expect(message.input_tokens).to be_positive
       expect(message.output_tokens).to be_positive
     end
+
+    it 'calculates message and chat costs from the model association' do
+      model_record = Model.create!(
+        model_id: 'priced-model',
+        name: 'Priced Model',
+        provider: 'openai',
+        pricing: {
+          text_tokens: {
+            standard: {
+              input_per_million: 1.0,
+              output_per_million: 2.0
+            }
+          }
+        }
+      )
+      chat = Chat.create!(model: model_record)
+
+      message = chat.messages.create!(
+        role: 'assistant',
+        content: 'Hi',
+        model: model_record,
+        input_tokens: 1_000,
+        output_tokens: 2_000
+      )
+
+      expect(message.cost.total).to eq(0.005)
+      expect(chat.cost.total).to eq(0.005)
+    end
   end
 
   describe 'system messages' do
@@ -298,6 +326,8 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
 
       expect(llm_message.cached_tokens).to eq(42)
       expect(llm_message.cache_creation_tokens).to eq(7)
+      expect(message.cache_read_tokens).to eq(42)
+      expect(message.cache_write_tokens).to eq(7)
     end
 
     it 'keeps create_user_message as a deprecated compatibility wrapper' do

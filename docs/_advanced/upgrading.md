@@ -20,7 +20,67 @@ redirect_from:
 1. TOC
 {:toc}
 
+This guide focuses on upgrade-impacting changes: migrations, token semantics, deprecations, and compatibility notes. It is not a complete changelog. For every feature, fix, and patch note, see the [GitHub releases](https://github.com/crmne/ruby_llm/releases).
+{: .note }
+
 ---
+# Upgrade to 1.15
+
+## How to Upgrade
+
+No generator is required for the token and cost API changes in 1.15.
+
+If you use the Rails integration and already ran the v1.9 migration, no new columns are needed. The new `cache_read_tokens` and `cache_write_tokens` helpers use the existing `cached_tokens` and `cache_creation_tokens` columns.
+
+## Token Semantics Changed
+
+RubyLLM now normalizes prompt cache usage before exposing token counts. From 1.15 onward, `response.input_tokens` and `response.tokens.input` mean standard input tokens. When a provider includes cache reads or cache writes in its raw prompt token total, RubyLLM subtracts those cache buckets and exposes them separately.
+
+Use the new cache names in new code:
+
+```ruby
+response.input_tokens       # Standard input tokens
+response.output_tokens      # Output tokens
+response.cache_read_tokens  # Tokens served from prompt cache
+response.cache_write_tokens # Tokens written to prompt cache
+
+response.tokens.input
+response.tokens.output
+response.tokens.cache_read
+response.tokens.cache_write
+```
+
+The v1.9 cache names still work for backwards compatibility:
+
+```ruby
+response.cached_tokens          # Same as cache_read_tokens
+response.cache_creation_tokens  # Same as cache_write_tokens
+
+response.tokens.cached          # Same as tokens.cache_read
+response.tokens.cache_creation  # Same as tokens.cache_write
+```
+
+If your app stored or displayed provider raw prompt totals, reconstruct the request-side input activity by adding the normalized buckets:
+
+```ruby
+request_side_input_tokens =
+  response.input_tokens.to_i +
+  response.cache_read_tokens.to_i +
+  response.cache_write_tokens.to_i
+```
+
+For costs, prefer the new cost helpers instead of multiplying token totals yourself:
+
+```ruby
+response.cost.total
+chat.cost.total
+agent.cost.total
+```
+
+Cost helpers are available from 1.15 onward. They return `nil` for any cost bucket whose pricing is missing, and `cost.total` is also `nil` when a used bucket has incomplete pricing.
+
+See [Tracking Token Usage]({% link _core_features/chat.md %}#tracking-token-usage) for the provider comparison table and the exact normalized token semantics RubyLLM exposes.
+
 # Upgrade to 1.14
 
 ## How to Upgrade

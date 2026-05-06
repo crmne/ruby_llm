@@ -149,6 +149,10 @@ module RubyLLM
       messages.each(&)
     end
 
+    def cost
+      Cost.aggregate(messages.map(&:cost))
+    end
+
     def complete(&)
       response = @provider.complete(
         messages,
