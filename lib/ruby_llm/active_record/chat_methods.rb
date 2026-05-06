@@ -410,8 +410,8 @@ module RubyLLM
           case attachment
           when ActionDispatch::Http::UploadedFile, ActiveStorage::Blob
             attachment
-          when ActiveStorage::Attached::One, ActiveStorage::Attached::Many
-            attachment.blobs
+          when ActiveStorage::Attachment, ActiveStorage::Attached::One, ActiveStorage::Attached::Many
+            active_storage_blobs(attachment)
           when Hash
             attachment.values.map { |v| prepare_for_active_storage(v) }
           else
@@ -426,10 +426,7 @@ module RubyLLM
         attachment = source.is_a?(RubyLLM::Attachment) ? source : RubyLLM::Attachment.new(source)
 
         if attachment.active_storage?
-          case attachment.source
-          when ActiveStorage::Blob then attachment.source
-          when ActiveStorage::Attached::One, ActiveStorage::Attached::Many then attachment.source.blobs
-          end
+          active_storage_blobs(attachment.source)
         else
           {
             io: StringIO.new(attachment.content),
@@ -440,6 +437,14 @@ module RubyLLM
       rescue StandardError => e
         RubyLLM.logger.warn "Failed to process attachment #{source}: #{e.message}"
         nil
+      end
+
+      def active_storage_blobs(attachment)
+        case attachment
+        when ActiveStorage::Blob then attachment
+        when ActiveStorage::Attachment, ActiveStorage::Attached::One then attachment.blob
+        when ActiveStorage::Attached::Many then attachment.blobs
+        end
       end
 
       def build_content(message, attachments)
