@@ -143,7 +143,7 @@ v1.7.0+
 
 **New Rails-like `acts_as` API**
 ```ruby
-# New API uses association names as primary parameters
+# New API uses Rails association names as primary parameters
 acts_as_chat messages: :messages, model: :model
 acts_as_message chat: :chat, tool_calls: :tool_calls, model: :model
 
@@ -210,7 +210,7 @@ If you're using custom model names (e.g., `Conversation` instead of `Chat`), you
 **Before (1.6):**
 ```ruby
 class Conversation < ApplicationRecord
-  acts_as_chat message_class: 'ChatMessage', tool_call_class: 'AIToolCall'
+  acts_as_chat message_class: 'ChatMessage', tool_call_class: 'AiToolCall'
 end
 
 class ChatMessage < ApplicationRecord
@@ -221,15 +221,16 @@ end
 **After (1.7):**
 ```ruby
 class Conversation < ApplicationRecord
-  acts_as_chat messages: :chat_messages,  # Association name
-               message_class: 'ChatMessage'  # Class name if not inferrable
+  acts_as_chat messages: :chat_messages  # Association name
 end
 
 class ChatMessage < ApplicationRecord
   acts_as_message chat: :conversation,  # Association name
-                  chat_class: 'Conversation'  # Class name if not inferrable
+                  tool_calls: :ai_tool_calls
 end
 ```
+
+The new API follows Rails association inference. Association names determine default foreign keys; class options only change the class name. For example, `tool_calls: :ai_tool_calls` uses `ai_tool_call_id`, while `tool_call_class: 'AiToolCall'` by itself still uses `tool_call_id`.
 
 ## New Chat UI Generator
 

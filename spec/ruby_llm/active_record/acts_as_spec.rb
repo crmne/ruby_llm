@@ -548,6 +548,14 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
         expect { conversation.messages.create!(role: 'user', content: 'Test') }.not_to raise_error
         expect(conversation.messages.count).to eq(1)
       end
+
+      it 'keeps foreign key inference tied to the association name' do
+        parent_tool_call = Support::Message.reflect_on_association(:parent_tool_call)
+        result = Support::ToolCall.reflect_on_association(:result)
+
+        expect(parent_tool_call.foreign_key).to eq('tool_call_id')
+        expect(result.foreign_key).to eq('tool_call_id')
+      end
     end
 
     describe 'to_llm conversion' do
@@ -924,6 +932,14 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
         expect do
           chat.send(:cleanup_orphaned_tool_results)
         end.not_to(change { chat.messages.count })
+      end
+
+      it 'uses the same custom foreign key for parent tool calls and results' do
+        parent_tool_call = Clanker::Message.reflect_on_association(:parent_tool_call)
+        result = Clanker::ToolCall.reflect_on_association(:result)
+
+        expect(parent_tool_call.foreign_key).to eq('clanker_tool_call_id')
+        expect(result.foreign_key).to eq('clanker_tool_call_id')
       end
     end
   end
