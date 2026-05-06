@@ -2,7 +2,7 @@
 layout: default
 title: Available Models
 nav_order: 1
-description: Browse 1250 AI models across 11 providers (not including local providers). Updated 2026-05-06.
+description: Browse 1251 AI models across 11 providers (not including local providers). Updated 2026-05-06.
 redirect_from:
   - /guides/available-models
 ---
@@ -66,7 +66,7 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | claude-sonnet-4-6 | anthropic | In: text, image, pdf; Out: text | function_calling, reasoning, vision | 1000000 | 64000 | In: $3.00, Out: $15.00, Cache Read: $0.30, Cache Write: $3.75 |
 
 
-### Azure (304)
+### Azure (305)
 
 | Model | Provider | I/O | Capabilities | Context | Max Output | Standard Pricing (per 1M tokens) |
 | :-- | :-- | :-- | :-- | --: | --: | :-- |
@@ -298,6 +298,7 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | gpt-audio-1.5-2026-02-23 | azure | In: -; Out: - | - | 4096 | 16384 | In: $0.50, Out: $1.50 |
 | gpt-audio-2025-08-28 | azure | In: -; Out: - | - | 4096 | 16384 | In: $0.50, Out: $1.50 |
 | gpt-audio-mini-2025-10-06 | azure | In: -; Out: - | - | 4096 | 16384 | In: $0.50, Out: $1.50 |
+| gpt-chat-latest-2026-05-05 | azure | In: -; Out: - | - | 4096 | 16384 | In: $0.50, Out: $1.50 |
 | gpt-image-1 | azure | In: -; Out: - | vision | - | - | In: $5.00, Cache Read: $1.25 |
 | gpt-image-1-2025-04-15 | azure | In: -; Out: - | vision | - | - | In: $5.00, Cache Read: $1.25 |
 | gpt-image-1-mini | azure | In: -; Out: - | vision | - | - | In: $2.00, Cache Read: $0.20 |
