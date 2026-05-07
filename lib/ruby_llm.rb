@@ -68,6 +68,14 @@ module RubyLLM
       Transcription.transcribe(...)
     end
 
+    def upload_file(...)
+      ProviderFile.upload(...)
+    end
+
+    def download_file(...)
+      ProviderFile.download(...)
+    end
+
     def models
       Models.instance
     end

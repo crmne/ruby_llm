@@ -46,6 +46,13 @@ module RubyLLM
       end
     end
 
+    def raw_get(url, &)
+      raw_connection.get url do |req|
+        req.headers.merge! @provider.headers if @provider.respond_to?(:headers)
+        yield req if block_given?
+      end
+    end
+
     def instance_variables
       super - %i[@config @connection]
     end
@@ -97,6 +104,17 @@ module RubyLLM
       return unless @config.http_proxy
 
       faraday.proxy = @config.http_proxy
+    end
+
+    def raw_connection
+      @raw_connection ||= Faraday.new(@provider.api_base) do |faraday|
+        setup_timeout(faraday)
+        setup_logging(faraday)
+        setup_retry(faraday)
+        faraday.adapter :net_http
+        faraday.use :llm_errors, provider: @provider
+        setup_http_proxy(faraday)
+      end
     end
 
     def retry_exceptions

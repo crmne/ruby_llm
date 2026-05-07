@@ -4,6 +4,7 @@ module RubyLLM
   # Base class for LLM providers.
   class Provider
     include Streaming
+    include Downloads
 
     attr_reader :config, :connection
 
@@ -93,6 +94,17 @@ module RubyLLM
       payload = render_transcription_payload(file_part, model:, language:, **options)
       response = @connection.post transcription_url, payload
       parse_transcription_response(response, model:)
+    end
+
+    def upload_file(file, **options)
+      payload = render_file_payload(file, **options)
+      response = @connection.post files_url, payload
+      parse_file_response(response)
+    end
+
+    def file_info(file_id)
+      response = @connection.get file_info_url(file_id)
+      parse_file_response(response)
     end
 
     def configured?

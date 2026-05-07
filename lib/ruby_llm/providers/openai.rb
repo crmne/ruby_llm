@@ -13,6 +13,7 @@ module RubyLLM
       include OpenAI::Images
       include OpenAI::Media
       include OpenAI::Transcription
+      include OpenAI::Files
 
       def api_base
         @config.openai_api_base || 'https://api.openai.com/v1'
