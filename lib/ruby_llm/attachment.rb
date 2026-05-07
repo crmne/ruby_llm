@@ -53,6 +53,8 @@ module RubyLLM
         nil
       end
 
+      @content&.force_encoding(Encoding::UTF_8) if text?
+
       @content
     end
 
