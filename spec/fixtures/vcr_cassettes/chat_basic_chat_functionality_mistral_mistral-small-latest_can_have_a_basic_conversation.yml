@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 02 Apr 2026 11:25:17 GMT
+      - Wed, 06 May 2026 23:54:31 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -32,45 +32,45 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '019d4df0-c3e5-74ba-8ac0-2820ca521935'
+      - '019dffb6-ec1b-7ce2-b072-3af65f5a9612'
       X-Kong-Request-Id:
-      - '019d4df0-c3e5-74ba-8ac0-2820ca521935'
+      - '019dffb6-ec1b-7ce2-b072-3af65f5a9612'
       X-Ratelimit-Limit-Tokens-Minute:
-      - '600000'
+      - '2000000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '599473'
+      - '1996095'
       X-Ratelimit-Tokens-Query-Cost:
       - '32'
       X-Ratelimit-Limit-Req-Minute:
-      - '360'
+      - '1500'
       X-Ratelimit-Remaining-Req-Minute:
-      - '357'
+      - '1493'
       X-Envoy-Upstream-Service-Time:
-      - '265'
+      - '312'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '266'
+      - '312'
       X-Kong-Proxy-Latency:
-      - '9'
-      Cf-Cache-Status:
-      - DYNAMIC
+      - '13'
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
+      Cf-Cache-Status:
+      - DYNAMIC
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"92c08d603bfd405bae9afac957b85f00","created":1775129117,"model":"mistral-small-latest","usage":{"prompt_tokens":23,"total_tokens":32,"completion_tokens":9,"prompt_tokens_details":{"cached_tokens":0}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"2
-        + 2 equals 4."}}]}'
-  recorded_at: Thu, 02 Apr 2026 11:25:17 GMT
+      string: '{"id":"63fe79849e26409f89b1f2ea021dfe72","created":1778111671,"model":"mistral-small-latest","usage":{"prompt_tokens":23,"total_tokens":32,"completion_tokens":9,"prompt_tokens_details":{"cached_tokens":0}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"2
+        + 2 equals **4**."}}]}'
+  recorded_at: Wed, 06 May 2026 23:54:31 GMT
 recorded_with: VCR 6.4.0

@@ -24,13 +24,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 02 Apr 2026 11:27:26 GMT
+      - Wed, 06 May 2026 23:56:55 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Strict-Transport-Security:
+      - max-age=31536000
       Set-Cookie:
       - "<COOKIE>"
       X-Ratelimit-Limit-Tokens:
@@ -44,19 +46,17 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '1800'
       X-Metrics-Ttft-Ms:
-      - '161.7'
+      - '290.7'
       X-Metrics-Mean-Itl-Ms:
-      - '10.2'
+      - '21.0'
       X-Metrics-E2e-Ms:
-      - '1355.7'
-      Strict-Transport-Security:
-      - max-age=31536000
+      - '3209.4'
+      Cf-Cache-Status:
+      - DYNAMIC
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Traceparent:
-      - 00-ce9f23096f4434d087280922c2ae3fcc-87de99c1008935b1-01
-      Cf-Cache-Status:
-      - DYNAMIC
+      - 00-2a68b5f2a06bd0f8be05c3847ec78fd2-eef0140300026400-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
@@ -69,30 +69,25 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"623f9fdb-f674-94b9-ae1d-fb34dccb3946","object":"chat.completion","created":1775129244,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"**Matzuro
-        Matsumoto**, commonly known as **Matz**, created the Ruby programming language.\n\nHe
-        first released it in 1995 in Japan, designing it to prioritize programmer
-        happiness and productivity with a focus on simplicity and elegance. Matsumoto
-        announced Ruby publicly in 1995, with version 1.0 following in 1996. This
-        is confirmed by official sources like the Ruby website (ruby-lang.org), Matsumoto''s
-        own writings, and programming history references such as the book *Programming
-        Ruby: The Pragmatic Programmer''s Guide*.","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":178,"completion_tokens":106,"total_tokens":284,"prompt_tokens_details":{"text_tokens":178,"audio_tokens":0,"image_tokens":0,"cached_tokens":161},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":644500},"system_fingerprint":"fp_5d249ba471"}'
-  recorded_at: Thu, 02 Apr 2026 11:27:26 GMT
+      string: !binary |-
+        eyJpZCI6IjNlZDA0ZDJlLTE1MDUtOTg3YS1hNzZiLWQ1YzExNmNhMzg2MyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NzgxMTE4MTIsIm1vZGVsIjoiZ3Jvay00LTEtZmFzdC1ub24tcmVhc29uaW5nIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiIqKk1hdHp1a3UqKiAoY29tbW9ubHkga25vd24gYXMgKipNYXR6KiopLCB3aG9zZSBmdWxsIG5hbWUgaXMgKipZdWtpaGlybyBNYXRzdW1vdG8qKiwgY3JlYXRlZCB0aGUgUnVieSBwcm9ncmFtbWluZyBsYW5ndWFnZS5cblxuSGUgZGVzaWduZWQgaXQgaW4gdGhlIG1pZC0xOTkwcyAoZmlyc3QgcmVsZWFzZWQgaW4gMTk5NSkgaW4gSmFwYW4sIGFpbWluZyBmb3IgYSBsYW5ndWFnZSB0aGF0IHdhcyBmdW4sIGVsZWdhbnQsIGFuZCBkZXZlbG9wZXItZnJpZW5kbHksIGluZmx1ZW5jZWQgYnkgUGVybCwgU21hbGx0YWxrLCBFaWZmZWwsIGFuZCBMaXNwLiBSdWJ5J3Mgb2ZmaWNpYWwgd2Vic2l0ZSAocnVieS1sYW5nLm9yZykgYW5kIE1hdHN1bW90bydzIG93biB3cml0aW5ncyBjb25maXJtIHRoaXPigJRoZSdzIHRoZSBwcmluY2lwYWwgZGVzaWduZXIgYW5kIGxlYWQgbWFpbnRhaW5lci4gRnVuIGZhY3Q6IFJ1YnkncyBtYXNjb3QgaXMgYSBnZW1zdG9uZSwgY2hvc2VuIGJlY2F1c2UgXCJtYXR6XCIgc291bmRzIGxpa2UgdGhlIEphcGFuZXNlIHdvcmQgZm9yIHBpbmUsIGJ1dCBnZW1zIGZpdCB0aGUgXCJwcmVjaW91c1wiIHZpYmUgaGUgd2FudGVkLiIsInJlZnVzYWwiOm51bGx9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6MTc4LCJjb21wbGV0aW9uX3Rva2VucyI6MTM5LCJ0b3RhbF90b2tlbnMiOjMxNywicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7InRleHRfdG9rZW5zIjoxNzgsImF1ZGlvX3Rva2VucyI6MCwiaW1hZ2VfdG9rZW5zIjowLCJjYWNoZWRfdG9rZW5zIjoxNjF9LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjAsImF1ZGlvX3Rva2VucyI6MCwiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjAsInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowfSwibnVtX3NvdXJjZXNfdXNlZCI6MCwiY29zdF9pbl91c2RfdGlja3MiOjgwOTUwMH0sInN5c3RlbV9maW5nZXJwcmludCI6ImZwX2I5ZmY5YjgxYjMifQ==
+  recorded_at: Wed, 06 May 2026 23:56:55 GMT
 - request:
     method: post
     uri: https://api.x.ai/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"user","content":"Who
-        is the creator of the programming language Ruby?"},{"role":"assistant","content":"**Matzuro
-        Matsumoto**, commonly known as **Matz**, created the Ruby programming language.\n\nHe
-        first released it in 1995 in Japan, designing it to prioritize programmer
-        happiness and productivity with a focus on simplicity and elegance. Matsumoto
-        announced Ruby publicly in 1995, with version 1.0 following in 1996. This
-        is confirmed by official sources like the Ruby website (ruby-lang.org), Matsumoto''s
-        own writings, and programming history references such as the book *Programming
-        Ruby: The Pragmatic Programmer''s Guide*."},{"role":"user","content":"What
-        year did he create Ruby?"}],"stream":false}'
+        is the creator of the programming language Ruby?"},{"role":"assistant","content":"**Matzuku**
+        (commonly known as **Matz**), whose full name is **Yukihiro Matsumoto**, created
+        the Ruby programming language.\n\nHe designed it in the mid-1990s (first released
+        in 1995) in Japan, aiming for a language that was fun, elegant, and developer-friendly,
+        influenced by Perl, Smalltalk, Eiffel, and Lisp. Ruby''s official website
+        (ruby-lang.org) and Matsumoto''s own writings confirm this—he''s the principal
+        designer and lead maintainer. Fun fact: Ruby''s mascot is a gemstone, chosen
+        because \"matz\" sounds like the Japanese word for pine, but gems fit the
+        \"precious\" vibe he wanted."},{"role":"user","content":"What year did he
+        create Ruby?"}],"stream":false}'
     headers:
       User-Agent:
       - Faraday v2.14.1
@@ -110,56 +105,52 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 02 Apr 2026 11:27:27 GMT
+      - Wed, 06 May 2026 23:56:57 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
       X-Ratelimit-Limit-Tokens:
       - '10000000'
       X-Ratelimit-Remaining-Tokens:
-      - '10000000'
+      - '9999017'
       X-Zero-Data-Retention:
       - 'false'
       X-Ratelimit-Limit-Requests:
       - '1800'
       X-Ratelimit-Remaining-Requests:
-      - '1800'
+      - '1797'
       X-Metrics-Ttft-Ms:
-      - '213.3'
+      - '210.0'
       X-Metrics-Mean-Itl-Ms:
-      - '7.1'
+      - '13.7'
       X-Metrics-E2e-Ms:
-      - '928.3'
-      Cf-Cache-Status:
-      - DYNAMIC
+      - '1490.6'
+      Strict-Transport-Security:
+      - max-age=31536000
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Traceparent:
-      - 00-1f9780f77ed995b4026624acb22c5c83-f49820cf0089434e-01
-      Set-Cookie:
-      - "<COOKIE>"
+      - 00-b9ec4cb6cc0397239707f99a26d66978-81bfa9fc000216d1-01
+      Cf-Cache-Status:
+      - DYNAMIC
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
       - "*"
       Access-Control-Expose-Headers:
       - "*"
-      Strict-Transport-Security:
-      - max-age=31536000
       Server:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"780b8117-3a2a-9f1a-bbfd-fb6d6ee2553e","object":"chat.completion","created":1775129246,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"**1995**.\n\nMatzuro
-        Matsumoto released the first version of Ruby in Japan in December 1995. This
-        marks the official creation year, as documented on the Ruby project''s official
-        history page (ruby-lang.org/en/about/) and in Matsumoto''s book *The Ruby
-        Way*. Version 1.0 was released in 1996, but 1995 is when development began
-        and the initial public release occurred.","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":302,"completion_tokens":82,"total_tokens":384,"prompt_tokens_details":{"text_tokens":302,"audio_tokens":0,"image_tokens":0,"cached_tokens":178},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":747000},"system_fingerprint":"fp_5d249ba471"}'
-  recorded_at: Thu, 02 Apr 2026 11:27:27 GMT
+      string: !binary |-
+        eyJpZCI6IjY1ODg2MWJhLWJlZjEtNGE1NC1mMGI5LWMxNWFmNWUwNzBlZSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NzgxMTE4MTYsIm1vZGVsIjoiZ3Jvay00LTEtZmFzdC1ub24tcmVhc29uaW5nIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiIqKjE5OTUqKlxuXG5ZdWtpaGlybyBcIk1hdHpcIiBNYXRzdW1vdG8gcmVsZWFzZWQgdGhlIGZpcnN0IHZlcnNpb24gb2YgUnVieSAodmVyc2lvbiAwLjk1KSBvbiBEZWNlbWJlciAyMSwgMTk5NS4gRGV2ZWxvcG1lbnQgYmVnYW4gZWFybGllciBpbiAxOTkz4oCTMTk5NCBhcyBhIHBlcnNvbmFsIHByb2plY3QsIGJ1dCAxOTk1IG1hcmtzIHRoZSBvZmZpY2lhbCBwdWJsaWMgZGVidXQuIFRoaXMgaXMgY29uZmlybWVkIGJ5IFJ1YnkncyBvZmZpY2lhbCBoaXN0b3J5IG9uIHJ1YnktbGFuZy5vcmcgYW5kIE1hdHN1bW90bydzIGludGVydmlld3MsIHN1Y2ggYXMgaW4gXCJUaGUgUGhpbG9zb3BoeSBvZiBSdWJ5XCIgKDIwMDIpLiIsInJlZnVzYWwiOm51bGx9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6MzM1LCJjb21wbGV0aW9uX3Rva2VucyI6ODksInRvdGFsX3Rva2VucyI6NDI0LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsidGV4dF90b2tlbnMiOjMzNSwiYXVkaW9fdG9rZW5zIjowLCJpbWFnZV90b2tlbnMiOjAsImNhY2hlZF90b2tlbnMiOjE3OH0sImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6MCwiYXVkaW9fdG9rZW5zIjowLCJhY2NlcHRlZF9wcmVkaWN0aW9uX3Rva2VucyI6MCwicmVqZWN0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjB9LCJudW1fc291cmNlc191c2VkIjowLCJjb3N0X2luX3VzZF90aWNrcyI6ODQ4MDAwfSwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfYjlmZjliODFiMyJ9
+  recorded_at: Wed, 06 May 2026 23:56:57 GMT
 recorded_with: VCR 6.4.0

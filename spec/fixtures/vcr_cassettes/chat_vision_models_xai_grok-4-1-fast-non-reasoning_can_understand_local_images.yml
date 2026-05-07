@@ -24,13 +24,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 02 Apr 2026 11:27:08 GMT
+      - Wed, 06 May 2026 23:55:08 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Strict-Transport-Security:
+      - max-age=31536000
       Set-Cookie:
       - "<COOKIE>"
       X-Ratelimit-Limit-Tokens:
@@ -44,19 +46,17 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '1800'
       X-Metrics-Ttft-Ms:
-      - '189.7'
+      - '326.6'
       X-Metrics-Mean-Itl-Ms:
-      - '8.7'
+      - '18.5'
       X-Metrics-E2e-Ms:
-      - '791.6'
-      Strict-Transport-Security:
-      - max-age=31536000
+      - '1807.5'
+      Cf-Cache-Status:
+      - DYNAMIC
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Traceparent:
-      - 00-52934153924c24ff05b4f1cc726e8d7d-ac30216100011ee4-01
-      Cf-Cache-Status:
-      - DYNAMIC
+      - 00-e500d8aaff2cebe6dfa91bade6b1eca1-8783b0aa0001f6bc-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
@@ -69,10 +69,11 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"b6cc4e74-d44a-9865-8848-fc9b851ac4f1","object":"chat.completion","created":1775129227,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"I
+      string: '{"id":"4c35d570-e4d1-9720-8b25-1d3c530382aa","object":"chat.completion","created":1778111706,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"I
         see a vibrant, faceted red gemstone, resembling a ruby or diamond, with a
-        prominent circular hole or cutout through its center. It''s rendered in a
-        shiny, 3D polygonal style on a black background, with glowing highlights and
-        sharp edges giving it a digital or game-icon appearance.","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":433,"completion_tokens":60,"total_tokens":493,"prompt_tokens_details":{"text_tokens":177,"audio_tokens":0,"image_tokens":256,"cached_tokens":161},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":924500},"system_fingerprint":"fp_5d249ba471"}'
-  recorded_at: Thu, 02 Apr 2026 11:27:08 GMT
+        prominent circular hole or transparency effect through its center. It''s rendered
+        in a shiny, 3D polygonal style against a black background, giving it a digital
+        or game-icon vibe (like a collectible item or jewel in a video game). The
+        gradients and highlights emphasize its glossy, precious appearance.","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":433,"completion_tokens":77,"total_tokens":510,"prompt_tokens_details":{"text_tokens":177,"audio_tokens":0,"image_tokens":256,"cached_tokens":162},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":1008000},"system_fingerprint":"fp_b9ff9b81b3"}'
+  recorded_at: Wed, 06 May 2026 23:55:08 GMT
 recorded_with: VCR 6.4.0

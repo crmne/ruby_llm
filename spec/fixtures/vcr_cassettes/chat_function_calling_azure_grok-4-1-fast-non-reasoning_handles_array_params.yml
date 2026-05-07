@@ -26,34 +26,44 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Cache-Control:
+      - no-cache
       Transfer-Encoding:
       - chunked
       Content-Type:
       - application/json
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Vary:
+      - access-control-request-headers
       Request-Context:
       - appId=
-      Prompt-Token-Len:
-      - '228'
+      Traceparent:
+      - 00-9ec14be8259d4612b7784e99affcd681-da829c2a00001321-00
       X-Ms-Rai-Invoked:
       - 'true'
-      Sampling-Token-Len:
-      - '29'
       X-Request-Id:
       - "<X_REQUEST_ID>"
+      X-Xai-Model-Address:
+      - http://localhost:9988
       X-Ms-Client-Request-Id:
-      - 3f3b688e-e120-49ce-aaf3-14c6ac0ac4b1
+      - 9ec14be8-259d-4612-b778-4e99affcd681
       Azureml-Model-Session:
-      - d-d37d4aed-feba-4c61-ae2a-7f8ce4d38049
+      - d20260429222844-bf683bdf
       Azureai-Requested-Tier:
       - default
       Azureai-Processed-Tier:
       - default
       X-Ms-Is-Spilled-Over:
       - 'false'
+      X-Ratelimit-Key:
+      - grok-4-1-fast-non-reasoning
       X-Ratelimit-Remaining-Requests:
       - '49'
       X-Ratelimit-Reset-Requests:
-      - '1200'
+      - '1'
       X-Ratelimit-Limit-Requests:
       - '50'
       X-Ratelimit-Renewalperiod-Requests:
@@ -63,13 +73,13 @@ http_interactions:
       X-Ratelimit-Remaining-Tokens:
       - '49877'
       X-Ratelimit-Reset-Tokens:
-      - '147'
+      - '0'
       X-Ratelimit-Limit-Tokens:
       - '50000'
       X-Ratelimit-Renewalperiod-Tokens:
       - '60'
       Apim-Request-Id:
-      - 3f3b688e-e120-49ce-aaf3-14c6ac0ac4b1
+      - 9ec14be8-259d-4612-b778-4e99affcd681
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Ms-Deployment-Name:
@@ -79,11 +89,9 @@ http_interactions:
       X-Ms-Region:
       - West Europe
       Date:
-      - Thu, 02 Apr 2026 11:29:52 GMT
+      - Thu, 07 May 2026 00:00:36 GMT
     body:
       encoding: UTF-8
-      string: '{"choices":[{"content_filter_results":{},"finish_reason":"tool_calls","index":0,"logprobs":null,"message":{"content":"","refusal":null,"role":"assistant","tool_calls":[{"function":{"arguments":"{\"tags\":[\"red\",\"blue\"]}","call_id":null,"name":"array_params"},"id":"call_53235896","type":"function"}]},"stop_reason":null}],"created":1775129392,"id":"87747108-e414-4913-b46b-97ee0f2402f4","model":"grok-4-1-fast-non-reasoning","object":"chat.completion","prompt_filter_results":[{"prompt_index":0,"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"jailbreak":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}}}],"usage":{"audio_prompt_tokens":0,"completion_tokens":29,"completion_tokens_details":{"accepted_prediction_tokens":0,"audio_tokens":0,"reasoning_tokens":0,"rejected_prediction_tokens":0},"cost_in_usd_ticks":0,"num_sources_used":0,"prompt_tokens":228,"prompt_tokens_details":{"audio_tokens":0,"cached_tokens":0,"image_tokens":0,"text_tokens":228},"total_tokens":257}}
-
-        '
-  recorded_at: Thu, 02 Apr 2026 11:29:53 GMT
+      string: '{"id":"ad215be1-8409-4e55-bc5c-2d39f479ea55","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"call_51238842","index":0,"type":"function","function":{"name":"array_params","arguments":"{\"tags\":[\"red\",\"blue\"]}"}}]},"finish_reason":"tool_calls","content_filter_results":{}}],"usage":{"prompt_tokens":229,"completion_tokens":29,"total_tokens":258,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":0,"audio_tokens":0,"text_tokens":229,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1778112036,"object":"chat.completion","prompt_filter_results":null}'
+  recorded_at: Thu, 07 May 2026 00:00:36 GMT
 recorded_with: VCR 6.4.0

@@ -24,34 +24,44 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Cache-Control:
+      - no-cache
       Transfer-Encoding:
       - chunked
       Content-Type:
       - application/json
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Vary:
+      - access-control-request-headers
       Request-Context:
       - appId=
+      Traceparent:
+      - 00-44a670c0ef9d417faff53da6a23cfa3e-679444f500001a7f-00
       X-Ms-Rai-Invoked:
       - 'true'
-      Prompt-Token-Len:
-      - '23'
-      Sampling-Token-Len:
-      - '213'
       X-Request-Id:
       - "<X_REQUEST_ID>"
+      X-Xai-Model-Address:
+      - http://localhost:9988
       X-Ms-Client-Request-Id:
-      - d0da39fa-9e89-47ef-b676-b5f6e57a977d
+      - 44a670c0-ef9d-417f-aff5-3da6a23cfa3e
       Azureml-Model-Session:
-      - d-a3423142-ae3e-4fb1-be62-1eecd5f54116
+      - d20260429222844-bf683bdf
       Azureai-Requested-Tier:
       - default
       Azureai-Processed-Tier:
       - default
       X-Ms-Is-Spilled-Over:
       - 'false'
+      X-Ratelimit-Key:
+      - grok-4-1-fast-non-reasoning
       X-Ratelimit-Remaining-Requests:
       - '49'
       X-Ratelimit-Reset-Requests:
-      - '1710'
+      - '1'
       X-Ratelimit-Limit-Requests:
       - '50'
       X-Ratelimit-Renewalperiod-Requests:
@@ -61,13 +71,13 @@ http_interactions:
       X-Ratelimit-Remaining-Tokens:
       - '49939'
       X-Ratelimit-Reset-Tokens:
-      - '73'
+      - '0'
       X-Ratelimit-Limit-Tokens:
       - '50000'
       X-Ratelimit-Renewalperiod-Tokens:
       - '60'
       Apim-Request-Id:
-      - d0da39fa-9e89-47ef-b676-b5f6e57a977d
+      - 44a670c0-ef9d-417f-aff5-3da6a23cfa3e
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Ms-Deployment-Name:
@@ -77,10 +87,10 @@ http_interactions:
       X-Ms-Region:
       - West Europe
       Date:
-      - Thu, 02 Apr 2026 11:23:22 GMT
+      - Wed, 06 May 2026 23:53:02 GMT
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJjaG9pY2VzIjpbeyJjb250ZW50X2ZpbHRlcl9yZXN1bHRzIjp7ImhhdGUiOnsiZmlsdGVyZWQiOmZhbHNlLCJzZXZlcml0eSI6InNhZmUifSwicHJvdGVjdGVkX21hdGVyaWFsX2NvZGUiOnsiZmlsdGVyZWQiOmZhbHNlLCJkZXRlY3RlZCI6ZmFsc2V9LCJwcm90ZWN0ZWRfbWF0ZXJpYWxfdGV4dCI6eyJmaWx0ZXJlZCI6ZmFsc2UsImRldGVjdGVkIjpmYWxzZX0sInNlbGZfaGFybSI6eyJmaWx0ZXJlZCI6ZmFsc2UsInNldmVyaXR5Ijoic2FmZSJ9LCJzZXh1YWwiOnsiZmlsdGVyZWQiOmZhbHNlLCJzZXZlcml0eSI6InNhZmUifSwidmlvbGVuY2UiOnsiZmlsdGVyZWQiOmZhbHNlLCJzZXZlcml0eSI6InNhZmUifX0sImZpbmlzaF9yZWFzb24iOiJzdG9wIiwiaW5kZXgiOjAsImxvZ3Byb2JzIjpudWxsLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJJJ20gYWZyYWlkIEkgZG9uJ3QgaGF2ZSByZWFsLXRpbWUgYWNjZXNzIHRvIHdlYXRoZXIgZGF0YSBmb3IgYSBzcGVjaWZpYyBsb2NhdGlvbuKAlGNvdWxkIHlvdSB0ZWxsIG1lIHlvdXIgY2l0eSBvciByZWdpb24/IEluIHRoZSBtZWFudGltZSwgaGVyZSdzIGEgcXVpY2sgPEdPT0dMRV9DTE9VRF9MT0NBVElPTj4gc25hcHNob3QgYmFzZWQgb24gcmVjZW50IHJlcG9ydHMgKGFzIG9mIG15IGxhc3QgdXBkYXRlKTpcblxuLSAqKk5vcnRoIEFtZXJpY2EqKjogTWlsZCBmYWxsIHdlYXRoZXIgaW4gbWFueSBhcmVhcywgd2l0aCB0ZW1wZXJhdHVyZXMgaW4gdGhlIDUwLTcwwrBGICgxMC0yMcKwQykgcmFuZ2UuIFNjYXR0ZXJlZCBzaG93ZXJzIGluIHRoZSBVUyBNaWR3ZXN0IGFuZCBOb3J0aGVhc3QuXG4tICoqRXVyb3BlKio6IENoaWxseSBhbmQgcmFpbnkgaW4gdGhlIFVLIGFuZCBTY2FuZGluYXZpYSAoNDAtNTXCsEYgLyA0LTEzwrBDKSwgd2FybWVyIGluIHNvdXRoZXJuIFNwYWluIGFuZCBJdGFseSAoNjAtNzXCsEYgLyAxNS0yNMKwQykuXG4tICoqQXNpYSoqOiBNb25zb29uIHNlYXNvbiB3aW5kaW5nIGRvd24gaW4gSW5kaWEgd2l0aCBoaWdocyBhcm91bmQgODXCsEYgKDI5wrBDKTsgY29vbGVyIGluIEphcGFuICg1MC02NcKwRiAvIDEwLTE4wrBDKS5cbi0gKipBdXN0cmFsaWEqKjogV2ludGVyIGNoaWxsIGluIHRoZSBzb3V0aCAoNTAtNjXCsEYgLyAxMC0xOMKwQyksIHdhcm1lciB0cm9waWNzIHVwIG5vcnRoLlxuXG5Gb3IgYWNjdXJhdGUsIHVwLXRvLXRoZS1taW51dGUgaW5mbywgY2hlY2sgYSBzaXRlIGxpa2Ugd2VhdGhlci5jb20gb3IgeW91ciBsb2NhbCBzZXJ2aWNlLiBYS0NENzM5MiIsInJlZnVzYWwiOm51bGwsInJvbGUiOiJhc3Npc3RhbnQiLCJ0b29sX2NhbGxzIjpudWxsfSwic3RvcF9yZWFzb24iOm51bGx9XSwiY3JlYXRlZCI6MTc3NTEyOTAwMSwiaWQiOiI3ZTVkYjI3Zi03MzQ2LTQ1YTAtOGM4My0wZWU4MjdiNjljZGQiLCJtb2RlbCI6Imdyb2stNC0xLWZhc3Qtbm9uLXJlYXNvbmluZyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsInByb21wdF9maWx0ZXJfcmVzdWx0cyI6W3sicHJvbXB0X2luZGV4IjowLCJjb250ZW50X2ZpbHRlcl9yZXN1bHRzIjp7ImhhdGUiOnsiZmlsdGVyZWQiOmZhbHNlLCJzZXZlcml0eSI6InNhZmUifSwiamFpbGJyZWFrIjp7ImZpbHRlcmVkIjpmYWxzZSwiZGV0ZWN0ZWQiOmZhbHNlfSwic2VsZl9oYXJtIjp7ImZpbHRlcmVkIjpmYWxzZSwic2V2ZXJpdHkiOiJzYWZlIn0sInNleHVhbCI6eyJmaWx0ZXJlZCI6ZmFsc2UsInNldmVyaXR5Ijoic2FmZSJ9LCJ2aW9sZW5jZSI6eyJmaWx0ZXJlZCI6ZmFsc2UsInNldmVyaXR5Ijoic2FmZSJ9fX1dLCJ1c2FnZSI6eyJhdWRpb19wcm9tcHRfdG9rZW5zIjowLCJjb21wbGV0aW9uX3Rva2VucyI6MjEzLCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7ImFjY2VwdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowLCJhdWRpb190b2tlbnMiOjAsInJlYXNvbmluZ190b2tlbnMiOjAsInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowfSwiY29zdF9pbl91c2RfdGlja3MiOjAsIm51bV9zb3VyY2VzX3VzZWQiOjAsInByb21wdF90b2tlbnMiOjIzLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiYXVkaW9fdG9rZW5zIjowLCJjYWNoZWRfdG9rZW5zIjowLCJpbWFnZV90b2tlbnMiOjAsInRleHRfdG9rZW5zIjoyM30sInRvdGFsX3Rva2VucyI6MjM2fX0K
-  recorded_at: Thu, 02 Apr 2026 11:23:23 GMT
+        eyJpZCI6IjhlOGQ0ZWE2LTE2MGQtNDMxNS05ZmJjLTdhNmQ2NjQ4MzBhYSIsIm1vZGVsIjoiZ3Jvay00LTEtZmFzdC1ub24tcmVhc29uaW5nIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJJIGNhbid0IGNoZWNrIHJlYWwtdGltZSB3ZWF0aGVyIHdpdGhvdXQgYSBzcGVjaWZpYyBsb2NhdGlvbiwgYnV0IGhlcmUncyBhIHF1aWNrIDxHT09HTEVfQ0xPVURfTE9DQVRJT04+IHNuYXBzaG90IGJhc2VkIG9uIHJlY2VudCBkYXRhIChhcyBvZiBteSBsYXN0IHVwZGF0ZSk6XG5cbi0gKipOZXcgWW9yaywgTlkqKjogUGFydGx5IGNsb3VkeSwgYXJvdW5kIDY1wrBGICgxOMKwQyksIHdpdGggYSBjaGFuY2Ugb2YgZXZlbmluZyBzaG93ZXJzLlxuLSAqKkxvbmRvbiwgVUsqKjogT3ZlcmNhc3QgYW5kIGRyaXp6bHksIGFib3V0IDU1wrBGICgxM8KwQykuXG4tICoqVG9reW8sIEphcGFuKio6IFN1bm55IGludGVydmFscywgNzLCsEYgKDIywrBDKSwgbWlsZCBicmVlemUuXG4tICoqU3lkbmV5LCBBdXN0cmFsaWEqKjogV2FybSBhbmQgY2xlYXIsIDY4wrBGICgyMMKwQykuXG5cbkZvciB5b3VyIHNwb3QsIHRyeSBhIHdlYXRoZXIgYXBwIGxpa2UgQWNjdVdlYXRoZXIgb3IgR29vZ2xlIFdlYXRoZXIgd2l0aCB5b3VyIGNpdHkhIFdoYXQncyB5b3VyIGxvY2F0aW9uPyBcblxuWEtDRDczOTIifSwiZmluaXNoX3JlYXNvbiI6InN0b3AiLCJjb250ZW50X2ZpbHRlcl9yZXN1bHRzIjp7fX1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjoyMywiY29tcGxldGlvbl90b2tlbnMiOjEzNywidG90YWxfdG9rZW5zIjoxNjAsImF1ZGlvX3Byb21wdF90b2tlbnMiOjAsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjowLCJhdWRpb190b2tlbnMiOjAsInRleHRfdG9rZW5zIjoyMywiaW1hZ2VfdG9rZW5zIjowfSwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjowLCJhdWRpb190b2tlbnMiOjAsImFjY2VwdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowLCJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6MH0sIm51bV9zb3VyY2VzX3VzZWQiOjB9LCJjcmVhdGVkIjoxNzc4MTExNTc5LCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJwcm9tcHRfZmlsdGVyX3Jlc3VsdHMiOm51bGx9
+  recorded_at: Wed, 06 May 2026 23:53:02 GMT
 recorded_with: VCR 6.4.0

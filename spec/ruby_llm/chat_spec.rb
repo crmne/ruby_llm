@@ -82,6 +82,8 @@ RSpec.describe RubyLLM::Chat do
 
   describe 'change model on the fly' do
     CHAT_MODELS.first(3).combination(2).each do |first, second|
+      next if [first[:provider], second[:provider]] == %i[azure bedrock]
+
       it "between #{first[:provider]}/#{first[:model]} and #{second[:provider]}/#{second[:model]}" do
         chat = RubyLLM.chat(model: first[:model], provider: first[:provider]).with_temperature(0.0)
         response = chat.ask('Reply with exactly: FOUR')

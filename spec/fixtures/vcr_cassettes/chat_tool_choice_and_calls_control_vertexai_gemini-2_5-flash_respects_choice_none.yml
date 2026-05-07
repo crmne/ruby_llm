@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Date:
+      - Thu, 07 May 2026 00:06:37 GMT
+      Expires:
+      - Mon, 01 Jan 1990 00:00:00 GMT
       Pragma:
       - no-cache
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
-      Date:
-      - Thu, 02 Apr 2026 11:39:44 GMT
-      Expires:
-      - Mon, 01 Jan 1990 00:00:00 GMT
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/sqlservice.login openid",
+          "scope": "https://www.googleapis.com/auth/sqlservice.login openid https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Thu, 02 Apr 2026 11:39:44 GMT
+  recorded_at: Thu, 07 May 2026 00:06:37 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -90,7 +90,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Thu, 02 Apr 2026 11:39:47 GMT
+      - Thu, 07 May 2026 00:06:40 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -106,6 +106,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicm9sZSI6ICJtb2RlbCIsCiAgICAgICAgInBhcnRzIjogWwogICAgICAgICAgewogICAgICAgICAgICAidGV4dCI6ICJUaGUgd2VhdGhlciBpbiBCZXJsaW4gKDUyLjUyMDAsIDEzLjQwNTApIGlzIGN1cnJlbnRseSAqKnBhcnRseSBjbG91ZHkqKiB3aXRoIGEgdGVtcGVyYXR1cmUgb2YgKioxMsKwQyAoNTTCsEYpKiouXG5cbkl0IGZlZWxzIGxpa2UgKioxMcKwQyAoNTLCsEYpKiouXG5UaGUgd2luZCBpcyBibG93aW5nIGZyb20gdGhlIFdlc3QgYXQgYXBwcm94aW1hdGVseSAqKjE2IGttL2ggKDEwIG1waCkqKi5cbkh1bWlkaXR5IGlzIGFyb3VuZCAqKjc3JSoqLiIKICAgICAgICAgIH0KICAgICAgICBdCiAgICAgIH0sCiAgICAgICJmaW5pc2hSZWFzb24iOiAiU1RPUCIsCiAgICAgICJhdmdMb2dwcm9icyI6IC0xLjczODE0NTI0Nzc0OTY2MDQKICAgIH0KICBdLAogICJ1c2FnZU1ldGFkYXRhIjogewogICAgInByb21wdFRva2VuQ291bnQiOiA3MCwKICAgICJjYW5kaWRhdGVzVG9rZW5Db3VudCI6IDkyLAogICAgInRvdGFsVG9rZW5Db3VudCI6IDYwMSwKICAgICJ0cmFmZmljVHlwZSI6ICJPTl9ERU1BTkQiLAogICAgInByb21wdFRva2Vuc0RldGFpbHMiOiBbCiAgICAgIHsKICAgICAgICAibW9kYWxpdHkiOiAiVEVYVCIsCiAgICAgICAgInRva2VuQ291bnQiOiA3MAogICAgICB9CiAgICBdLAogICAgImNhbmRpZGF0ZXNUb2tlbnNEZXRhaWxzIjogWwogICAgICB7CiAgICAgICAgIm1vZGFsaXR5IjogIlRFWFQiLAogICAgICAgICJ0b2tlbkNvdW50IjogOTIKICAgICAgfQogICAgXSwKICAgICJ0aG91Z2h0c1Rva2VuQ291bnQiOiA0MzkKICB9LAogICJtb2RlbFZlcnNpb24iOiAiZ2VtaW5pLTIuNS1mbGFzaCIsCiAgImNyZWF0ZVRpbWUiOiAiMjAyNi0wNC0wMlQxMTozOTo0NC4yMDU2MDVaIiwKICAicmVzcG9uc2VJZCI6ICJnRlhPYWFYR0RMLUI2ZGdQczRIMW1RYyIKfQo=
-  recorded_at: Thu, 02 Apr 2026 11:39:47 GMT
+        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicm9sZSI6ICJtb2RlbCIsCiAgICAgICAgInBhcnRzIjogWwogICAgICAgICAgewogICAgICAgICAgICAidGV4dCI6ICJUaGUgY3VycmVudCB3ZWF0aGVyIGluIEJlcmxpbiwgR2VybWFueSAoYXQgNTIuNTIwMCwgMTMuNDA1MCkgaXM6XG5cbiogICAqKlRlbXBlcmF0dXJlOioqIDE0wrBDICg1N8KwRilcbiogICAqKkZlZWxzIGxpa2U6KiogMTPCsEMgKDU1wrBGKVxuKiAgICoqQ29uZGl0aW9uOioqIFNjYXR0ZXJlZCBjbG91ZHNcbiogICAqKldpbmQ6KiogMTMga20vaCAoOCBtcGgpIGZyb20gdGhlIFdlc3RcbiogICAqKkh1bWlkaXR5OioqIDcyJVxuXG4qKFRoaXMgaW5mb3JtYXRpb24gaXMgYmFzZWQgb24gdGhlIGxhdGVzdCBhdmFpbGFibGUgZGF0YS4pKiIKICAgICAgICAgIH0KICAgICAgICBdCiAgICAgIH0sCiAgICAgICJmaW5pc2hSZWFzb24iOiAiU1RPUCIsCiAgICAgICJhdmdMb2dwcm9icyI6IC0xLjEyODM4MzQzNTcwMTA2OTEKICAgIH0KICBdLAogICJ1c2FnZU1ldGFkYXRhIjogewogICAgInByb21wdFRva2VuQ291bnQiOiA3MCwKICAgICJjYW5kaWRhdGVzVG9rZW5Db3VudCI6IDExNCwKICAgICJ0b3RhbFRva2VuQ291bnQiOiA2MTUsCiAgICAidHJhZmZpY1R5cGUiOiAiT05fREVNQU5EIiwKICAgICJwcm9tcHRUb2tlbnNEZXRhaWxzIjogWwogICAgICB7CiAgICAgICAgIm1vZGFsaXR5IjogIlRFWFQiLAogICAgICAgICJ0b2tlbkNvdW50IjogNzAKICAgICAgfQogICAgXSwKICAgICJjYW5kaWRhdGVzVG9rZW5zRGV0YWlscyI6IFsKICAgICAgewogICAgICAgICJtb2RhbGl0eSI6ICJURVhUIiwKICAgICAgICAidG9rZW5Db3VudCI6IDExNAogICAgICB9CiAgICBdLAogICAgInRob3VnaHRzVG9rZW5Db3VudCI6IDQzMQogIH0sCiAgIm1vZGVsVmVyc2lvbiI6ICJnZW1pbmktMi41LWZsYXNoIiwKICAiY3JlYXRlVGltZSI6ICIyMDI2LTA1LTA3VDAwOjA2OjM3LjM5MTYyOVoiLAogICJyZXNwb25zZUlkIjogImpkZjdhYzN6RjVybHRmQVBrOVh1LUFvIgp9Cg==
+  recorded_at: Thu, 07 May 2026 00:06:40 GMT
 recorded_with: VCR 6.4.0

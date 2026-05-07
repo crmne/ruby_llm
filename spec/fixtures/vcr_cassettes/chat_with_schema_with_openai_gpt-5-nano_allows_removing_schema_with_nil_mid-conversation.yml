@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 02 Apr 2026 11:23:53 GMT
+      - Wed, 06 May 2026 23:52:48 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -46,7 +46,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '5049'
+      - '4878'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
@@ -75,16 +75,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-DQARIVDNACipjCP5pYu5M8uCFoNMc",
+          "id": "chatcmpl-DcgKhYi6NvBu0udqutc8EQ9lT4042",
           "object": "chat.completion",
-          "created": 1775129028,
+          "created": 1778111563,
           "model": "gpt-5-nano-2025-08-07",
           "choices": [
             {
               "index": 0,
               "message": {
                 "role": "assistant",
-                "content": "{\"name\":\"Bob\",\"age\":30}",
+                "content": "{\"name\":\"Bob\",\"age\":34}",
                 "refusal": null,
                 "annotations": []
               },
@@ -93,14 +93,14 @@ http_interactions:
           ],
           "usage": {
             "prompt_tokens": 43,
-            "completion_tokens": 789,
-            "total_tokens": 832,
+            "completion_tokens": 469,
+            "total_tokens": 512,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
             },
             "completion_tokens_details": {
-              "reasoning_tokens": 768,
+              "reasoning_tokens": 448,
               "audio_tokens": 0,
               "accepted_prediction_tokens": 0,
               "rejected_prediction_tokens": 0
@@ -109,14 +109,14 @@ http_interactions:
           "service_tier": "default",
           "system_fingerprint": null
         }
-  recorded_at: Thu, 02 Apr 2026 11:23:53 GMT
+  recorded_at: Wed, 06 May 2026 23:52:48 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"gpt-5-nano","messages":[{"role":"user","content":"Generate
-        a person named Bob"},{"role":"assistant","content":"{\"name\":\"Bob\",\"age\":30}"},{"role":"user","content":"Now
+        a person named Bob"},{"role":"assistant","content":"{\"name\":\"Bob\",\"age\":34}"},{"role":"user","content":"Now
         just tell me about Ruby"}],"stream":false}'
     headers:
       User-Agent:
@@ -135,7 +135,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 02 Apr 2026 11:24:06 GMT
+      - Wed, 06 May 2026 23:53:04 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -157,7 +157,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '13460'
+      - '15625'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
@@ -185,6 +185,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        ewogICJpZCI6ICJjaGF0Y21wbC1EUUFSTlluT2dyS1BEZjB4SUJSbXpMOUFVcTdZNyIsCiAgIm9iamVjdCI6ICJjaGF0LmNvbXBsZXRpb24iLAogICJjcmVhdGVkIjogMTc3NTEyOTAzMywKICAibW9kZWwiOiAiZ3B0LTUtbmFuby0yMDI1LTA4LTA3IiwKICAiY2hvaWNlcyI6IFsKICAgIHsKICAgICAgImluZGV4IjogMCwKICAgICAgIm1lc3NhZ2UiOiB7CiAgICAgICAgInJvbGUiOiAiYXNzaXN0YW50IiwKICAgICAgICAiY29udGVudCI6ICJSdWJ5IGlzIGEgZHluYW1pYywgb3Blbi1zb3VyY2UgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UgY3JlYXRlZCBieSBZdWtpaGlybyBNYXRzdW1vdG8gKE1hdHopIGFuZCBmaXJzdCByZWxlYXNlZCBpbiAxOTk1LiBJdOKAmXMgZGVzaWduZWQgdG8gYmUgZW5qb3lhYmxlIHRvIHdyaXRlIGFuZCByZWFkLCB3aXRoIGFuIGVtcGhhc2lzIG9uIGRldmVsb3BlciBoYXBwaW5lc3MuXG5cbktleSBwb2ludHM6XG4tIFBhcmFkaWdtczogcHJpbWFyaWx5IG9iamVjdC1vcmllbnRlZCAoaW4gUnVieSwgYWxtb3N0IGV2ZXJ5dGhpbmcgaXMgYW4gb2JqZWN0KSwgYnV0IGl0IGFsc28gc3VwcG9ydHMgcHJvY2VkdXJhbCBhbmQgZnVuY3Rpb25hbCBzdHlsZXMuXG4tIFN5bnRheDogY2xlYW4sIGV4cHJlc3NpdmUsIGFuZCByZWFkYWJsZS4gUnVieSBoYXMgZmVhdHVyZXMgbGlrZSBibG9ja3MsIGl0ZXJhdG9ycywgYW5kIERTTC1mcmllbmRseSBjb25zdHJ1Y3RzLlxuLSBUeXBpbmc6IGR5bmFtaWMgYW5kIGR1Y2stdHlwZWQ7IHR5cGVzIGFyZSBkZXRlcm1pbmVkIGF0IHJ1biB0aW1lLlxuLSBSdW50aW1lIGFuZCBlY29zeXN0ZW06IHJ1bnMgb24gdGhlIHN0YW5kYXJkIFJ1YnkgaW50ZXJwcmV0ZXIgKE1SSSkgYW5kIGhhcyBvdGhlciBpbXBsZW1lbnRhdGlvbnMgc3VjaCBhcyBKUnVieSAob24gdGhlIEpWTSksIFJ1YmluaXVzLCBhbmQgVHJ1ZmZsZVJ1YnkuIEl0IHVzZXMgUnVieUdlbXMgZm9yIHBhY2thZ2UgbWFuYWdlbWVudCwgd2l0aCBCdW5kbGVyIHRvIG1hbmFnZSBwcm9qZWN0IGRlcGVuZGVuY2llcy5cbi0gQ29tbW9uIHVzZSBjYXNlczogd2ViIGRldmVsb3BtZW50IChlc3BlY2lhbGx5IHdpdGggdGhlIFJ1Ynkgb24gUmFpbHMgZnJhbWV3b3JrKSwgc2NyaXB0aW5nLCBhdXRvbWF0aW9uLCBEZXZPcHMsIGFuZCByYXBpZCBwcm90b3R5cGluZy5cbi0gUnVieSBvbiBSYWlsczogYSBodWdlbHkgcG9wdWxhciB3ZWIgZnJhbWV3b3JrIHRoYXQgaGVscGVkIGJvb3N0IFJ1YnnigJlzIHBvcHVsYXJpdHkgYnkgZW1waGFzaXppbmcgY29udmVudGlvbiBvdmVyIGNvbmZpZ3VyYXRpb24gYW5kIHJhcGlkIGRldmVsb3BtZW50LlxuLSBNZXRhLXByb2dyYW1taW5nIGFuZCBEU0xzOiBSdWJ5IG1ha2VzIGl0IGVhc3kgdG8gd3JpdGUgY29kZSB0aGF0IHdyaXRlcyBjb2RlLCBhbmQgdG8gY3JlYXRlIGRvbWFpbi1zcGVjaWZpYyBsYW5ndWFnZXMuXG4tIENvbW11bml0eSBhbmQgZWNvc3lzdGVtOiBhIHJpY2ggc3RhbmRhcmQgbGlicmFyeSwgZXh0ZW5zaXZlIGdlbXMsIGFuZCBhIHZpYnJhbnQgY29tbXVuaXR5IHdpdGggbWFueSByZXNvdXJjZXMgYW5kIHR1dG9yaWFscy5cbi0gUGVyZm9ybWFuY2U6IGhpc3RvcmljYWxseSBzbG93ZXIgdGhhbiBzdGF0aWNhbGx5IGNvbXBpbGVkIGxhbmd1YWdlcywgYnV0IHJlY2VudCB2ZXJzaW9ucyBoYXZlIGZvY3VzZWQgb24gcGVyZm9ybWFuY2UgaW1wcm92ZW1lbnRzIGFuZCB0aGVyZSBhcmUgYWx0ZXJuYXRpdmUgcnVudGltZXMgYW5kIEpJVCBvcHRpb25zIHRvIGV4cGxvcmUuXG5cbklmIHlvdSBtZWFudCBSdWJ5IHRoZSBnZW1zdG9uZSBvciBhbm90aGVyIFJ1YnksIEkgY2FuIHRlbGwgeW91IGFib3V0IHRoYXQgaW5zdGVhZC4iLAogICAgICAgICJyZWZ1c2FsIjogbnVsbCwKICAgICAgICAiYW5ub3RhdGlvbnMiOiBbXQogICAgICB9LAogICAgICAiZmluaXNoX3JlYXNvbiI6ICJzdG9wIgogICAgfQogIF0sCiAgInVzYWdlIjogewogICAgInByb21wdF90b2tlbnMiOiAzNiwKICAgICJjb21wbGV0aW9uX3Rva2VucyI6IDIzMTUsCiAgICAidG90YWxfdG9rZW5zIjogMjM1MSwKICAgICJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOiB7CiAgICAgICJjYWNoZWRfdG9rZW5zIjogMCwKICAgICAgImF1ZGlvX3Rva2VucyI6IDAKICAgIH0sCiAgICAiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6IHsKICAgICAgInJlYXNvbmluZ190b2tlbnMiOiAxOTg0LAogICAgICAiYXVkaW9fdG9rZW5zIjogMCwKICAgICAgImFjY2VwdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjogMCwKICAgICAgInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjogMAogICAgfQogIH0sCiAgInNlcnZpY2VfdGllciI6ICJkZWZhdWx0IiwKICAic3lzdGVtX2ZpbmdlcnByaW50IjogbnVsbAp9Cg==
-  recorded_at: Thu, 02 Apr 2026 11:24:06 GMT
+        ewogICJpZCI6ICJjaGF0Y21wbC1EY2dLbXFMVGt0SEZSdFVzYVNoWUZVVlRKQUp5UCIsCiAgIm9iamVjdCI6ICJjaGF0LmNvbXBsZXRpb24iLAogICJjcmVhdGVkIjogMTc3ODExMTU2OCwKICAibW9kZWwiOiAiZ3B0LTUtbmFuby0yMDI1LTA4LTA3IiwKICAiY2hvaWNlcyI6IFsKICAgIHsKICAgICAgImluZGV4IjogMCwKICAgICAgIm1lc3NhZ2UiOiB7CiAgICAgICAgInJvbGUiOiAiYXNzaXN0YW50IiwKICAgICAgICAiY29udGVudCI6ICJSdWJ5IGNhbiBtZWFuIHR3byB0aGluZ3MsIHNvIGhlcmXigJlzIGEgcXVpY2sgb3ZlcnZpZXcgb2YgYm90aC4gSWYgeW91IG1lYW50IG9uZSBzcGVjaWZpY2FsbHksIHRlbGwgbWUgYW5kIEnigJlsbCBkaXZlIGRlZXBlci5cblxuUnVieSAocHJvZ3JhbW1pbmcgbGFuZ3VhZ2UpXG4tIFdoYXQgaXQgaXM6IEEgZHluYW1pYywgb3Blbi1zb3VyY2UgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UgZGVzaWduZWQgZm9yIGRldmVsb3BlciBoYXBwaW5lc3MgYW5kIHByb2R1Y3Rpdml0eS5cbi0gV2hvIG1hZGUgaXQ6IFl1a2loaXJvIE1hdHN1bW90byAoTWF0eikgaW4gMTk5NS5cbi0gS2V5IGlkZWFzOiBSZWFkYWJsZSwgbmF0dXJhbCBzeW50YXg7IGV2ZXJ5dGhpbmcgaXMgYW4gb2JqZWN0OyBlbXBoYXNpcyBvbiBzaW1wbGljaXR5IGFuZCBlbGVnYW5jZS5cbi0gQ29yZSBmZWF0dXJlczpcbiAgLSBPYmplY3Qtb3JpZW50ZWQgKGFsbW9zdCBldmVyeXRoaW5nIGlzIGFuIG9iamVjdClcbiAgLSBCbG9ja3MsIHByb2NzLCBhbmQgbGFtYmRhcyBmb3IgZmxleGlibGUgY29udHJvbCBmbG93XG4gIC0gR2FyYmFnZSBjb2xsZWN0aW9uIGFuZCBhIHN0cm9uZyBzdGFuZGFyZCBsaWJyYXJ5XG4gIC0gTWl4aW5zIHZpYSBtb2R1bGVzLCBkeW5hbWljIHR5cGluZyB3aXRoIGR1Y2sgdHlwaW5nXG4gIC0gTWV0YXByb2dyYW1taW5nIGNhcGFiaWxpdGllcyBmb3IgcG93ZXJmdWwgYWJzdHJhY3Rpb25zXG4tIENvbW1vbiB1c2VzOiBXZWIgZGV2ZWxvcG1lbnQgKG5vdGFibHkgd2l0aCBSdWJ5IG9uIFJhaWxzKSwgc2NyaXB0aW5nLCBhdXRvbWF0aW9uLCByYXBpZCBwcm90b3R5cGluZywgQ0xJIHRvb2xzXG4tIEVjb3N5c3RlbTogUmljaCBzZXQgb2YgZ2VtcyAocGFja2FnZXMpIG1hbmFnZWQgYnkgUnVieUdlbXM7IEJ1bmRsZXIgZm9yIGRlcGVuZGVuY3kgbWFuYWdlbWVudFxuLSBRdWljayBleGFtcGxlOlxuICBwdXRzICdIZWxsbywgUnVieSEnXG4gIDMudGltZXMgeyB8aXwgcHV0cyBcIlRpY2sgI3tpfVwiIH1cblxuUnVieSAoZ2Vtc3RvbmUpXG4tIFdoYXQgaXQgaXM6IEEgcmVkIHRvIHBpbmsgdmFyaWV0eSBvZiBjb3J1bmR1bTsgb25lIG9mIHRoZSBoYXJkZXN0IG5hdHVyYWwgc3Vic3RhbmNlcyAoaGFyZG5lc3MgOSBvbiB0aGUgTW9ocyBzY2FsZSkuXG4tIFdoeSBpdOKAmXMgZmFtb3VzOiBCZWF1dGlmdWwsIHZpYnJhbnQgY29sb3I7IGhpZ2hseSB2YWx1ZWQgaW4gamV3ZWxyeS5cbi0gU291cmNlczogTm90YWJsZSBkZXBvc2l0cyBpbmNsdWRlIE15YW5tYXIgKGhpc3RvcmljYWwgc291cmNlKSwgU3JpIExhbmthLCBNYWRhZ2FzY2FyLCBhbmQgQWZyaWNhLlxuLSBDYXJlIGFuZCBjYXJlOiBDb21tb25seSBoZWF0LXRyZWF0ZWQgdG8gZW5oYW5jZSBjb2xvcjsgc3ludGhldGljIHJ1YmllcyBleGlzdCBmb3IgaW5kdXN0cmlhbCBhbmQgamV3ZWxyeSB1c2UuXG4tIFZhbHVlIGZhY3RvcnM6IENvbG9yLCBjbGFyaXR5LCBjdXQsIGNhcmF0IHdlaWdodDsgdW50cmVhdGVkIHN0b25lcyBhbmQgcmFyZSBjb2xvcnMgY2FuIGJlIHZlcnkgZXhwZW5zaXZlLlxuXG5Xb3VsZCB5b3UgbGlrZSBtb3JlIGRldGFpbCBvbiBSdWJ5IHRoZSBwcm9ncmFtbWluZyBsYW5ndWFnZSAoc3ludGF4LCBnZXR0aW5nIHN0YXJ0ZWQsIFJhaWxzLCBldGMuKSBvciBSdWJ5IHRoZSBnZW1zdG9uZT8iLAogICAgICAgICJyZWZ1c2FsIjogbnVsbCwKICAgICAgICAiYW5ub3RhdGlvbnMiOiBbXQogICAgICB9LAogICAgICAiZmluaXNoX3JlYXNvbiI6ICJzdG9wIgogICAgfQogIF0sCiAgInVzYWdlIjogewogICAgInByb21wdF90b2tlbnMiOiAzNiwKICAgICJjb21wbGV0aW9uX3Rva2VucyI6IDE5ODksCiAgICAidG90YWxfdG9rZW5zIjogMjAyNSwKICAgICJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOiB7CiAgICAgICJjYWNoZWRfdG9rZW5zIjogMCwKICAgICAgImF1ZGlvX3Rva2VucyI6IDAKICAgIH0sCiAgICAiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6IHsKICAgICAgInJlYXNvbmluZ190b2tlbnMiOiAxNjAwLAogICAgICAiYXVkaW9fdG9rZW5zIjogMCwKICAgICAgImFjY2VwdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjogMCwKICAgICAgInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjogMAogICAgfQogIH0sCiAgInNlcnZpY2VfdGllciI6ICJkZWZhdWx0IiwKICAic3lzdGVtX2ZpbmdlcnByaW50IjogbnVsbAp9Cg==
+  recorded_at: Wed, 06 May 2026 23:53:04 GMT
 recorded_with: VCR 6.4.0

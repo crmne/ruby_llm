@@ -23,34 +23,44 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Cache-Control:
+      - no-cache
       Transfer-Encoding:
       - chunked
       Content-Type:
       - application/json
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Vary:
+      - access-control-request-headers
       Request-Context:
       - appId=
-      Sampling-Token-Len:
-      - '9'
-      Prompt-Token-Len:
-      - '84'
+      Traceparent:
+      - 00-cb72742785b44c53a9fcb8ed1bd5685f-e5c05707000576bb-00
       X-Ms-Rai-Invoked:
       - 'true'
       X-Request-Id:
       - "<X_REQUEST_ID>"
+      X-Xai-Model-Address:
+      - http://localhost:9988
       X-Ms-Client-Request-Id:
-      - 7debfacb-919e-43f4-af8a-276f3a665932
+      - cb727427-85b4-4c53-a9fc-b8ed1bd5685f
       Azureml-Model-Session:
-      - d-d37d4aed-feba-4c61-ae2a-7f8ce4d38049
+      - d20260429215123-f480a160
       Azureai-Requested-Tier:
       - default
       Azureai-Processed-Tier:
       - default
       X-Ms-Is-Spilled-Over:
       - 'false'
+      X-Ratelimit-Key:
+      - grok-4-1-fast-non-reasoning
       X-Ratelimit-Remaining-Requests:
       - '49'
       X-Ratelimit-Reset-Requests:
-      - '1599'
+      - '1'
       X-Ratelimit-Limit-Requests:
       - '50'
       X-Ratelimit-Renewalperiod-Requests:
@@ -60,13 +70,13 @@ http_interactions:
       X-Ratelimit-Remaining-Tokens:
       - '49903'
       X-Ratelimit-Reset-Tokens:
-      - '116'
+      - '0'
       X-Ratelimit-Limit-Tokens:
       - '50000'
       X-Ratelimit-Renewalperiod-Tokens:
       - '60'
       Apim-Request-Id:
-      - 7debfacb-919e-43f4-af8a-276f3a665932
+      - cb727427-85b4-4c53-a9fc-b8ed1bd5685f
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Ms-Deployment-Name:
@@ -76,11 +86,9 @@ http_interactions:
       X-Ms-Region:
       - West Europe
       Date:
-      - Thu, 02 Apr 2026 11:23:12 GMT
+      - Wed, 06 May 2026 23:52:13 GMT
     body:
       encoding: UTF-8
-      string: '{"choices":[{"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"protected_material_code":{"filtered":false,"detected":false},"protected_material_text":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}},"finish_reason":"stop","index":0,"logprobs":null,"message":{"content":"{\"age\":28,\"name\":\"Alice\"}","refusal":null,"role":"assistant","tool_calls":null},"stop_reason":null}],"created":1775128992,"id":"5635d659-c295-4800-b631-d8ff34b4c0c5","model":"grok-4-1-fast-non-reasoning","object":"chat.completion","prompt_filter_results":[{"prompt_index":0,"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"jailbreak":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}}}],"usage":{"audio_prompt_tokens":0,"completion_tokens":9,"completion_tokens_details":{"accepted_prediction_tokens":0,"audio_tokens":0,"reasoning_tokens":0,"rejected_prediction_tokens":0},"cost_in_usd_ticks":0,"num_sources_used":0,"prompt_tokens":84,"prompt_tokens_details":{"audio_tokens":0,"cached_tokens":0,"image_tokens":0,"text_tokens":84},"total_tokens":93}}
-
-        '
-  recorded_at: Thu, 02 Apr 2026 11:23:13 GMT
+      string: '{"id":"19cd6d6a-05f9-41b8-a666-8acd2139d6ce","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"{\"name\":\"Alice\",\"age\":28}"},"finish_reason":"stop","content_filter_results":{}}],"usage":{"prompt_tokens":84,"completion_tokens":9,"total_tokens":93,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":0,"audio_tokens":0,"text_tokens":84,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1778111534,"object":"chat.completion","prompt_filter_results":null}'
+  recorded_at: Wed, 06 May 2026 23:52:14 GMT
 recorded_with: VCR 6.4.0

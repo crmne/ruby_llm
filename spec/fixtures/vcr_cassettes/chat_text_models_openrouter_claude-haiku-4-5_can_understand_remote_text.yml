@@ -26,40 +26,42 @@ http_interactions:
       - GitHub.com
       Content-Type:
       - text/plain; charset=utf-8
+      X-Origin-Cache:
+      - HIT
       Last-Modified:
-      - Wed, 01 Apr 2026 06:42:59 GMT
+      - Tue, 05 May 2026 02:26:38 GMT
       Access-Control-Allow-Origin:
       - "*"
       Etag:
-      - W/"69ccbe73-9c6"
+      - W/"69f9555e-9c6"
       Expires:
-      - Thu, 02 Apr 2026 11:33:43 GMT
+      - Thu, 07 May 2026 00:01:24 GMT
       Cache-Control:
       - max-age=600
       X-Proxy-Cache:
       - MISS
       X-Github-Request-Id:
-      - 7CD0:3B9ECA:F87895:FB1241:69CE51BF
+      - 8CA8:1519:3A7294A:3B13014:69FBD3FC
       Accept-Ranges:
       - bytes
       Date:
-      - Thu, 02 Apr 2026 11:24:33 GMT
+      - Wed, 06 May 2026 23:53:05 GMT
       Via:
       - 1.1 varnish
       Age:
-      - '18'
+      - '49'
       X-Served-By:
-      - cache-ber1080048-BER
+      - cache-lis1490053-LIS
       X-Cache:
       - HIT
       X-Cache-Hits:
       - '1'
       X-Timer:
-      - S1775129074.713489,VS0,VE1
+      - S1778111585.277460,VS0,VE1
       Vary:
       - Accept-Encoding
       X-Fastly-Request-Id:
-      - bc4214caa8c92b01fe2d8ad32f5f2fbe8410fc1e
+      - 7e9e87c62e7f4ddd7e531f3770c79d652de21076
     body:
       encoding: ASCII-8BIT
       string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
@@ -95,7 +97,7 @@ http_interactions:
         \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
         WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
         FOR A PARTICULAR\n     PURPOSE.\n"
-  recorded_at: Thu, 02 Apr 2026 11:24:33 GMT
+  recorded_at: Wed, 06 May 2026 23:53:05 GMT
 - request:
     method: post
     uri: https://openrouter.ai/api/v1/chat/completions
@@ -153,7 +155,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 02 Apr 2026 11:24:35 GMT
+      - Wed, 06 May 2026 23:53:06 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -162,8 +164,10 @@ http_interactions:
       - keep-alive
       Access-Control-Allow-Origin:
       - "*"
-      Vary:
-      - Accept-Encoding
+      X-Generation-Id:
+      - gen-1778111585-idAJ4cAhpliLmoGnPTkZ
+      Access-Control-Expose-Headers:
+      - X-Generation-Id,cf-ray
       Permissions-Policy:
       - payment=(self "https://checkout.stripe.com" "https://connect-js.stripe.com"
         "https://js.stripe.com" "https://*.js.stripe.com" "https://hooks.stripe.com")
@@ -177,26 +181,7 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: "\n         \n\n         \n\n         \n\n         \n\n         \n\n
-        \        \n\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1775129073-f91B32PGJUQ6slFulWRH\",\"object\":\"chat.completion\",\"created\":1775129073,\"model\":\"anthropic/claude-4.5-haiku-20251001\",\"provider\":\"Amazon
-        Bedrock\",\"system_fingerprint\":null,\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"end_turn\",\"message\":{\"role\":\"assistant\",\"content\":\"#
-        Ruby License File\\n\\nThis is the **license.txt** file for the Ruby programming
-        language. It outlines the licensing terms for Ruby, which is copyrighted free
-        software created by Yukihiro Matsumoto (matz@netlab.jp).\\n\\n## Key Points:\\n\\n**License
-        Options:**\\n- You can use either the 2-clause BSD License (BSDL) or the conditions
-        listed in this file\\n\\n**Main Permissions:**\\n1. **Modification & Distribution**
-        - You can modify and distribute Ruby, but must:\\n   - Make modifications
-        freely available (open source), OR\\n   - Use them only internally in your
-        organization, OR\\n   - Distribute modified binaries under different names
-        with original source location info\\n\\n2. **Binary Distribution** - You can
-        distribute compiled versions if you either:\\n   - Provide the source code,
-        OR\\n   - Give instructions on where to get the original distribution\\n\\n3.
-        **Integration** - You can incorporate Ruby into other software, including
-        commercial software\\n\\n4. **Scripts & Output** - Code you write using Ruby
-        is yours to own and sell; it doesn't automatically fall under Ruby's copyright\\n\\n**Important:**\\n-
-        The software is provided \\\"AS IS\\\" with no warranties or guarantees\\n-
-        Some files may have different licensing terms (see the LEGAL file)\\n\\nThis
-        is a fairly permissive license that allows both free and commercial use with
-        relatively few restrictions.\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":588,\"completion_tokens\":304,\"total_tokens\":892,\"cost\":0.002108,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.002108,\"upstream_inference_prompt_cost\":0.000588,\"upstream_inference_completions_cost\":0.00152},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}}}"
-  recorded_at: Thu, 02 Apr 2026 11:24:38 GMT
+      string: !binary |-
+        CiAgICAgICAgIAoKICAgICAgICAgCgogICAgICAgICAKCiAgICAgICAgIAoKICAgICAgICAgCgogICAgICAgICAKCiAgICAgICAgIAoKICAgICAgICAgCnsiaWQiOiJnZW4tMTc3ODExMTU4NS1pZEFKNGNBaHBsaUxtb0duUFRrWiIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NzgxMTE1ODUsIm1vZGVsIjoiYW50aHJvcGljL2NsYXVkZS00LjUtaGFpa3UtMjAyNTEwMDEiLCJwcm92aWRlciI6IkFtYXpvbiBCZWRyb2NrIiwic3lzdGVtX2ZpbmdlcnByaW50IjpudWxsLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOiJzdG9wIiwibmF0aXZlX2ZpbmlzaF9yZWFzb24iOiJlbmRfdHVybiIsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiIjIFJ1YnkgTGljZW5zZSBTdW1tYXJ5XG5cblRoaXMgaXMgdGhlICoqbGljZW5zZSBmaWxlIGZvciB0aGUgUnVieSBwcm9ncmFtbWluZyBsYW5ndWFnZSoqLCBjb3B5cmlnaHRlZCBieSBZdWtpaGlybyBNYXRzdW1vdG8gKFJ1YnkncyBjcmVhdG9yKS5cblxuIyMgS2V5IFBvaW50czpcblxuKipMaWNlbnNlIE9wdGlvbnM6Kipcbi0gWW91IGNhbiB1c2UgZWl0aGVyIHRoZSAyLWNsYXVzZSBCU0QgTGljZW5zZSAoQlNETCkgT1IgdGhlIGN1c3RvbSB0ZXJtcyBsaXN0ZWQgYmVsb3dcblxuKipNYWluIFBlcm1pc3Npb25zOioqXG4xLiAqKlJlZGlzdHJpYnV0aW9uKiogLSBZb3UgY2FuIGZyZWVseSBjb3B5IHRoZSBzb3VyY2UgY29kZSBpZiB5b3Uga2VlcCBvcmlnaW5hbCBjb3B5cmlnaHQgbm90aWNlc1xuMi4gKipNb2RpZmljYXRpb25zKiogLSBZb3UgY2FuIG1vZGlmeSBSdWJ5IGlmIHlvdTpcbiAgIC0gUmVsZWFzZSBtb2RpZmljYXRpb25zIHB1YmxpY2x5L2ZyZWVseSwgT1JcbiAgIC0gVXNlIHRoZW0gb25seSBpbnRlcm5hbGx5IGluIHlvdXIgb3JnYW5pemF0aW9uLCBPUlxuICAgLSBHaXZlIG1vZGlmaWVkIGJpbmFyaWVzIGRpZmZlcmVudCBuYW1lcyB3aXRoIGluc3RydWN0aW9ucyBvbiBnZXR0aW5nIHRoZSBvcmlnaW5hbCwgT1JcbiAgIC0gTWFrZSBvdGhlciBhcnJhbmdlbWVudHMgd2l0aCB0aGUgYXV0aG9yXG5cbjMuICoqQmluYXJ5IERpc3RyaWJ1dGlvbioqIC0gWW91IGNhbiBkaXN0cmlidXRlIGNvbXBpbGVkIHZlcnNpb25zIGlmIHlvdTpcbiAgIC0gSW5jbHVkZSBpbnN0cnVjdGlvbnMgb24gd2hlcmUgdG8gZ2V0IHRoZSBvcmlnaW5hbCBzb3VyY2UsIE9SXG4gICAtIFByb3ZpZGUgdGhlIHNvdXJjZSBjb2RlIHdpdGggaXQsIE9SXG4gICAtIFVzZSBub24tc3RhbmRhcmQgbmFtZXMgd2l0aCBkaXN0cmlidXRpb24gaW5zdHJ1Y3Rpb25zLCBPUlxuICAgLSBBcnJhbmdlIHRlcm1zIHdpdGggdGhlIGF1dGhvclxuXG40LiAqKkluY29ycG9yYXRpb24qKiAtIFlvdSBjYW4gaW5jbHVkZSBSdWJ5IGNvZGUgaW4gb3RoZXIgc29mdHdhcmUgKGV2ZW4gY29tbWVyY2lhbClcblxuNS4gKipTY3JpcHRzL091dHB1dCoqIC0gUHJvZ3JhbXMgeW91IHdyaXRlIHdpdGggUnVieSBhcmVuJ3QgYXV0b21hdGljYWxseSBjb3B5cmlnaHRlZCB1bmRlciBSdWJ5J3MgbGljZW5zZeKAlHlvdSBvd24gdGhlbVxuXG4qKkRpc2NsYWltZXI6KiogVGhlIHNvZnR3YXJlIGlzIHByb3ZpZGVkIFwiYXMtaXNcIiB3aXRoIG5vIHdhcnJhbnRpZXMgb2YgbWVyY2hhbnRhYmlsaXR5IG9yIGZpdG5lc3MgZm9yIGEgcGFydGljdWxhciBwdXJwb3NlLiIsInJlZnVzYWwiOm51bGwsInJlYXNvbmluZyI6bnVsbH19XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6NTg4LCJjb21wbGV0aW9uX3Rva2VucyI6MzAyLCJ0b3RhbF90b2tlbnMiOjg5MCwiY29zdCI6MC4wMDIwOTgsImlzX2J5b2siOmZhbHNlLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MCwiY2FjaGVfd3JpdGVfdG9rZW5zIjowLCJhdWRpb190b2tlbnMiOjAsInZpZGVvX3Rva2VucyI6MH0sImNvc3RfZGV0YWlscyI6eyJ1cHN0cmVhbV9pbmZlcmVuY2VfY29zdCI6MC4wMDIwOTgsInVwc3RyZWFtX2luZmVyZW5jZV9wcm9tcHRfY29zdCI6MC4wMDA1ODgsInVwc3RyZWFtX2luZmVyZW5jZV9jb21wbGV0aW9uc19jb3N0IjowLjAwMTUxfSwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjowLCJpbWFnZV90b2tlbnMiOjAsImF1ZGlvX3Rva2VucyI6MH19fQ==
+  recorded_at: Wed, 06 May 2026 23:53:08 GMT
 recorded_with: VCR 6.4.0

@@ -25,39 +25,39 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 02 Apr 2026 11:24:53 GMT
+      - Wed, 06 May 2026 23:53:32 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Strict-Transport-Security:
+      - max-age=31536000
       Set-Cookie:
       - "<COOKIE>"
       X-Ratelimit-Limit-Tokens:
       - '10000000'
       X-Ratelimit-Remaining-Tokens:
-      - '10000000'
+      - '9999237'
       X-Zero-Data-Retention:
       - 'false'
       X-Ratelimit-Limit-Requests:
       - '1800'
       X-Ratelimit-Remaining-Requests:
-      - '1800'
+      - '1797'
       X-Metrics-Ttft-Ms:
-      - '161.6'
+      - '220.1'
       X-Metrics-Mean-Itl-Ms:
-      - '0.1'
+      - '4.4'
       X-Metrics-E2e-Ms:
-      - '238.8'
-      Strict-Transport-Security:
-      - max-age=31536000
+      - '406.6'
+      Cf-Cache-Status:
+      - DYNAMIC
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Traceparent:
-      - 00-b281ad7f62fd28cdbf07b9cb9d1c83eb-5d8402ac0000c956-01
-      Cf-Cache-Status:
-      - DYNAMIC
+      - 00-2037e210ab3c6c8a4d517adfc3b6aa06-f7abd0e20001ee67-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
@@ -70,9 +70,9 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"c6daef25-73d5-9e35-af4a-5fc712fc34bd","object":"chat.completion","created":1775129093,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"The
-        file `ruby.txt` contains the text: \"Ruby is the best.\"","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":192,"completion_tokens":16,"total_tokens":208,"prompt_tokens_details":{"text_tokens":192,"audio_tokens":0,"image_tokens":0,"cached_tokens":161},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":222500},"system_fingerprint":"fp_5d249ba471"}'
-  recorded_at: Thu, 02 Apr 2026 11:24:53 GMT
+      string: '{"id":"7ddb8342-4a9b-92d7-aa4d-ec4f5c24a7be","object":"chat.completion","created":1778111612,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        file `ruby.txt` contains the text: \"Ruby is the best.\"","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":192,"completion_tokens":16,"total_tokens":208,"prompt_tokens_details":{"text_tokens":192,"audio_tokens":0,"image_tokens":0,"cached_tokens":161},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":222500},"system_fingerprint":"fp_b9ff9b81b3"}'
+  recorded_at: Wed, 06 May 2026 23:53:32 GMT
 - request:
     method: post
     uri: https://api.x.ai/v1/chat/completions
@@ -101,13 +101,17 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 02 Apr 2026 11:24:54 GMT
+      - Wed, 06 May 2026 23:53:33 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Strict-Transport-Security:
+      - max-age=31536000
+      Set-Cookie:
+      - "<COOKIE>"
       X-Ratelimit-Limit-Tokens:
       - '10000000'
       X-Ratelimit-Remaining-Tokens:
@@ -119,34 +123,30 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '1800'
       X-Metrics-Ttft-Ms:
-      - '134.3'
+      - '316.3'
       X-Metrics-Mean-Itl-Ms:
-      - '8.2'
+      - '19.7'
       X-Metrics-E2e-Ms:
-      - '363.1'
+      - '794.1'
       Cf-Cache-Status:
       - DYNAMIC
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Traceparent:
-      - 00-ef40559d451040cbc3356122dfa45e7f-76c38fad00879b5a-01
-      Set-Cookie:
-      - "<COOKIE>"
+      - 00-ebe569a123df4f0f3875e69d9409f12d-7ae2a2e00000903e-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
       - "*"
       Access-Control-Expose-Headers:
       - "*"
-      Strict-Transport-Security:
-      - max-age=31536000
       Server:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"8a1ae3a5-eacc-9803-8584-77a5aa478603","object":"chat.completion","created":1775129093,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"The
-        file `ruby.xml` contains the XML: `<truism>Ruby is the best</truism>`","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":249,"completion_tokens":22,"total_tokens":271,"prompt_tokens_details":{"text_tokens":249,"audio_tokens":0,"image_tokens":0,"cached_tokens":192},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":320000},"system_fingerprint":"fp_5d249ba471"}'
-  recorded_at: Thu, 02 Apr 2026 11:24:54 GMT
+      string: '{"id":"67305e92-7eb7-9097-8f59-90971f408c11","object":"chat.completion","created":1778111612,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        file `ruby.xml` contains the XML: `<truism>Ruby is the best</truism>`","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":249,"completion_tokens":22,"total_tokens":271,"prompt_tokens_details":{"text_tokens":249,"audio_tokens":0,"image_tokens":0,"cached_tokens":192},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":320000},"system_fingerprint":"fp_b9ff9b81b3"}'
+  recorded_at: Wed, 06 May 2026 23:53:33 GMT
 recorded_with: VCR 6.4.0

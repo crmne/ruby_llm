@@ -11,7 +11,7 @@ http_interactions:
       User-Agent:
       - Faraday v2.14.1
       X-Amz-Date:
-      - 20260402T112316Z
+      - 20260506T235216Z
       X-Amz-Content-Sha256:
       - af62f0aa22d1ee9e206e655ec402d6baf3a7468f410418a88a9815c11975716d
       Authorization:
@@ -29,19 +29,20 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 02 Apr 2026 11:23:19 GMT
+      - Wed, 06 May 2026 23:52:18 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '344'
+      - '347'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 1181c369-2007-4a6c-84a0-416d594e746e
+      - 45abbb82-1d76-43c7-83c4-906129cb3ce2
     body:
       encoding: UTF-8
-      string: '{"metrics":{"latencyMs":2337},"output":{"message":{"content":[{"text":"{\"name\":\"Bob\",\"age\":30}"}],"role":"assistant"}},"stopReason":"end_turn","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":174,"outputTokens":12,"serverToolUsage":{},"totalTokens":186}}'
-  recorded_at: Thu, 02 Apr 2026 11:23:19 GMT
+      string: '{"metrics":{"latencyMs":1651},"output":{"message":{"content":[{"text":"{\"name\":
+        \"Bob\", \"age\": 30}"}],"role":"assistant"}},"stopReason":"end_turn","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":174,"outputTokens":15,"serverToolUsage":{},"totalTokens":189}}'
+  recorded_at: Wed, 06 May 2026 23:52:19 GMT
 - request:
     method: post
     uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.anthropic.claude-haiku-4-5-20251001-v1:0/converse
@@ -54,7 +55,7 @@ http_interactions:
       User-Agent:
       - Faraday v2.14.1
       X-Amz-Date:
-      - 20260402T112319Z
+      - 20260506T235219Z
       X-Amz-Content-Sha256:
       - 4192f814dde366ba7862dfc154dbdb0ec0f4807aca4d4fb3ea390a961942545a
       Authorization:
@@ -72,29 +73,31 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 02 Apr 2026 11:23:22 GMT
+      - Wed, 06 May 2026 23:52:22 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '1271'
+      - '1440'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 6937a6fc-1c06-4cc4-abb0-f3e3acc788e6
+      - ad1b1491-04d2-4706-95b6-add55bfc1dd3
     body:
       encoding: UTF-8
-      string: '{"metrics":{"latencyMs":2608},"output":{"message":{"content":[{"text":"#
+      string: '{"metrics":{"latencyMs":2525},"output":{"message":{"content":[{"text":"#
         Ruby\n\nRuby is a dynamic, open-source programming language known for its
-        simplicity and productivity. Here are some key characteristics:\n\n**Features:**\n-
-        **Elegant syntax** - Easy to read and write, with a focus on developer happiness\n-
-        **Object-oriented** - Everything is an object\n- **Dynamic typing** - Types
-        are determined at runtime\n- **Interpreted** - Code is executed directly without
-        compilation\n\n**Popular Uses:**\n- Web development (especially with Ruby
-        on Rails framework)\n- Scripting and automation\n- Data analysis\n- System
-        administration\n\n**Key Strengths:**\n- Fast development cycles\n- Large,
-        supportive community\n- Extensive libraries (gems)\n- Great for rapid prototyping\n\n**Notable
-        Framework:**\n- **Ruby on Rails** - A web application framework that emphasizes
-        convention over configuration\n\nRuby was created by Yukihiro Matsumoto in
-        1995 and has become particularly popular in web development startups and agencies."}],"role":"assistant"}},"stopReason":"end_turn","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":33,"outputTokens":212,"serverToolUsage":{},"totalTokens":245}}'
-  recorded_at: Thu, 02 Apr 2026 11:23:22 GMT
+        simplicity and elegant syntax. Here are some key points:\n\n**Characteristics:**\n-
+        **Readable syntax** - Ruby code is often praised for being easy to read and
+        write\n- **Object-oriented** - Everything in Ruby is an object\n- **Dynamically
+        typed** - Types are checked at runtime\n- **Interpreted language** - Code
+        is executed line-by-line\n\n**Common Uses:**\n- Web development (especially
+        with Ruby on Rails framework)\n- Scripting and automation\n- Data analysis\n-
+        Building tools and utilities\n\n**Key Features:**\n- Blocks, procs, and lambdas
+        for functional programming\n- Powerful string and array manipulation\n- Metaprogramming
+        capabilities\n- Rich standard library\n\n**Popular Framework:**\n- **Ruby
+        on Rails** - A web development framework that emphasizes convention over configuration\n\n**Community:**\n-
+        Active and friendly community\n- Large ecosystem of gems (libraries/packages)\n-
+        Popular for startups and rapid development\n\nRuby was created by Yukihiro
+        Matsumoto in 1995 and continues to be widely used in web development today."}],"role":"assistant"}},"stopReason":"end_turn","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":33,"outputTokens":257,"serverToolUsage":{},"totalTokens":290}}'
+  recorded_at: Wed, 06 May 2026 23:52:22 GMT
 recorded_with: VCR 6.4.0

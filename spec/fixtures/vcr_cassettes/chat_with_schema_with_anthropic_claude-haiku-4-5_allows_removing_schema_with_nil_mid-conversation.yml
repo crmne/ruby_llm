@@ -26,7 +26,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 02 Apr 2026 11:23:05 GMT
+      - Wed, 06 May 2026 23:51:24 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -38,39 +38,39 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '450000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-04-02T11:23:05Z'
+      - '2026-05-06T23:51:24Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '90000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '90000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-04-02T11:23:05Z'
+      - '2026-05-06T23:51:24Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '1000'
       Anthropic-Ratelimit-Requests-Remaining:
-      - '999'
+      - '995'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-04-02T11:23:03Z'
+      - '2026-05-06T23:51:22Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '540000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '540000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-04-02T11:23:05Z'
+      - '2026-05-06T23:51:24Z'
       Request-Id:
       - "<REQUEST_ID>"
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
+      Traceresponse:
+      - 00-b1f2a0a98e82921e791cda50c3718980-54420605cd4c68d7-01
       Server:
       - cloudflare
       X-Envoy-Upstream-Service-Time:
-      - '2411'
+      - '1991'
       Vary:
       - Accept-Encoding
-      Server-Timing:
-      - x-originResponse;dur=2413
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -83,8 +83,8 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_01RMNNXDCYP4HxGHLD5AjaMi","type":"message","role":"assistant","content":[{"type":"text","text":"{\"name\":\"Bob\",\"age\":30}"}],"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":174,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":12,"service_tier":"standard","inference_geo":"not_available"}}'
-  recorded_at: Thu, 02 Apr 2026 11:23:05 GMT
+      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_0125mxznV6yfzHTEkJDwQ2ay","type":"message","role":"assistant","content":[{"type":"text","text":"{\"name\":\"Bob\",\"age\":30}"}],"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":174,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":12,"service_tier":"standard","inference_geo":"not_available"}}'
+  recorded_at: Wed, 06 May 2026 23:51:24 GMT
 - request:
     method: post
     uri: https://api.anthropic.com/v1/messages
@@ -112,7 +112,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 02 Apr 2026 11:23:08 GMT
+      - Wed, 06 May 2026 23:51:27 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -124,37 +124,39 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '450000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-04-02T11:23:06Z'
+      - '2026-05-06T23:51:24Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '90000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '90000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-04-02T11:23:08Z'
+      - '2026-05-06T23:51:27Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '1000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-04-02T11:23:05Z'
+      - '2026-05-06T23:51:24Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '540000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '540000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-04-02T11:23:06Z'
+      - '2026-05-06T23:51:24Z'
       Request-Id:
       - "<REQUEST_ID>"
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
+      Traceresponse:
+      - 00-abbb78072e2dff0d88e0d42000d7b57b-372e756973b42f73-01
       Server:
       - cloudflare
       X-Envoy-Upstream-Service-Time:
-      - '2630'
-      Server-Timing:
-      - x-originResponse;dur=2633
+      - '2512'
+      Vary:
+      - Accept-Encoding
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -167,19 +169,21 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_01DKNvVBAW6K4tLkFrDnqWLn","type":"message","role":"assistant","content":[{"type":"text","text":"#
-        Ruby\n\nRuby is a dynamic, open-source programming language known for its
-        simplicity and elegance. Here are some key characteristics:\n\n**Key Features:**\n-
-        **Syntax**: Clean, readable syntax that emphasizes developer happiness\n-
-        **Object-oriented**: Everything is an object\n- **Dynamically typed**: Types
-        are checked at runtime\n- **Interpreted**: Code is executed directly without
-        compilation\n\n**Common Uses:**\n- Web development (especially with Ruby on
-        Rails framework)\n- Scripting and automation\n- Data processing\n- DevOps
-        tools\n\n**Popular Framework:**\n- **Ruby on Rails** - A web application framework
-        that makes building web apps faster and easier\n\n**Notable Characteristics:**\n-
-        Strong community support\n- Extensive libraries (gems)\n- Excellent for rapid
-        development\n- Known for developer productivity\n\nRuby was created by Yukihiro
-        Matsumoto in 1995 and remains popular among startups and established companies
-        for building web applications and scripts."}],"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":33,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":212,"service_tier":"standard","inference_geo":"not_available"}}'
-  recorded_at: Thu, 02 Apr 2026 11:23:08 GMT
+      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_01StVggAs9uVg3aiidvSKJZd","type":"message","role":"assistant","content":[{"type":"text","text":"Ruby
+        is a dynamic, open-source programming language known for its simplicity and
+        elegance. Here are some key points about it:\n\n**Key Characteristics:**\n-
+        **Syntax**: Clean and readable, emphasizing programmer productivity\n- **Type
+        System**: Dynamically typed\n- **Paradigm**: Object-oriented, but also supports
+        functional programming\n\n**Common Uses:**\n- Web development (especially
+        with Ruby on Rails framework)\n- Scripting and automation\n- Data analysis\n-
+        System administration\n\n**Notable Features:**\n- Blocks, procs, and lambdas
+        for functional programming\n- Metaprogramming capabilities\n- Extensive standard
+        library\n- Strong community and ecosystem\n\n**Ruby on Rails:**\n- The most
+        popular web framework built with Ruby\n- Known for rapid development and convention
+        over configuration\n- Used by companies like GitHub, Airbnb, and Hulu\n\n**Advantages:**\n-
+        Fast development cycle\n- Readable code\n- Good for startups and MVPs\n\n**Disadvantages:**\n-
+        Slower execution speed compared to compiled languages\n- Higher memory consumption\n-
+        Smaller community than some other languages\n\nRuby remains popular for web
+        development and continues to evolve with regular updates."}],"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":33,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":261,"service_tier":"standard","inference_geo":"not_available"}}'
+  recorded_at: Wed, 06 May 2026 23:51:27 GMT
 recorded_with: VCR 6.4.0

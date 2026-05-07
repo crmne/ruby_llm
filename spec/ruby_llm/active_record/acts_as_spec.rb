@@ -1036,7 +1036,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
         { budget: 1024 }
       when :gemini
         { effort: :low }
-      when :ollama, :mistral
+      when :ollama
         nil
       else
         { effort: :medium }

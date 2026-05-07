@@ -23,34 +23,44 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Cache-Control:
+      - no-cache
       Transfer-Encoding:
       - chunked
       Content-Type:
       - application/json
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Vary:
+      - access-control-request-headers
       Request-Context:
       - appId=
-      Prompt-Token-Len:
-      - '265'
+      Traceparent:
+      - 00-5f1efaf9ffc2482c91584816cb7f6dfc-679444f500001b20-00
       X-Ms-Rai-Invoked:
       - 'true'
-      Sampling-Token-Len:
-      - '62'
       X-Request-Id:
       - "<X_REQUEST_ID>"
+      X-Xai-Model-Address:
+      - http://localhost:9988
       X-Ms-Client-Request-Id:
-      - d40198eb-c84f-409e-909d-709a1454cebd
+      - 5f1efaf9-ffc2-482c-9158-4816cb7f6dfc
       Azureml-Model-Session:
-      - d-a3423142-ae3e-4fb1-be62-1eecd5f54116
+      - d20260429222844-bf683bdf
       Azureai-Requested-Tier:
       - default
       Azureai-Processed-Tier:
       - default
       X-Ms-Is-Spilled-Over:
       - 'false'
+      X-Ratelimit-Key:
+      - grok-4-1-fast-non-reasoning
       X-Ratelimit-Remaining-Requests:
       - '49'
       X-Ratelimit-Reset-Requests:
-      - '1200'
+      - '1'
       X-Ratelimit-Limit-Requests:
       - '50'
       X-Ratelimit-Renewalperiod-Requests:
@@ -60,13 +70,13 @@ http_interactions:
       X-Ratelimit-Remaining-Tokens:
       - '49362'
       X-Ratelimit-Reset-Tokens:
-      - '765'
+      - '0'
       X-Ratelimit-Limit-Tokens:
       - '50000'
       X-Ratelimit-Renewalperiod-Tokens:
       - '60'
       Apim-Request-Id:
-      - d40198eb-c84f-409e-909d-709a1454cebd
+      - 5f1efaf9-ffc2-482c-9158-4816cb7f6dfc
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Ms-Deployment-Name:
@@ -76,15 +86,10 @@ http_interactions:
       X-Ms-Region:
       - West Europe
       Date:
-      - Thu, 02 Apr 2026 11:25:04 GMT
+      - Wed, 06 May 2026 23:54:03 GMT
     body:
-      encoding: UTF-8
-      string: '{"choices":[{"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"protected_material_code":{"filtered":false,"detected":false},"protected_material_text":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}},"finish_reason":"stop","index":0,"logprobs":null,"message":{"content":"I
-        see a vibrant, faceted red gemstone, resembling a ruby or diamond, rendered
-        in a shiny 3D style with a large circular cutout or hollow center on the front
-        face. It''s glowing against a black background, with smooth gradients and
-        sharp polygonal edges giving it a digital or gem-like sparkle.","refusal":null,"role":"assistant","tool_calls":null},"stop_reason":null}],"created":1775129104,"id":"d70f248d-2aa5-4461-8b2a-59a27395ecf1","model":"grok-4-1-fast-non-reasoning","object":"chat.completion","prompt_filter_results":[{"prompt_index":0,"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"jailbreak":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}}}],"usage":{"audio_prompt_tokens":0,"completion_tokens":62,"completion_tokens_details":{"accepted_prediction_tokens":0,"audio_tokens":0,"reasoning_tokens":0,"rejected_prediction_tokens":0},"cost_in_usd_ticks":0,"num_sources_used":0,"prompt_tokens":265,"prompt_tokens_details":{"audio_tokens":0,"cached_tokens":0,"image_tokens":256,"text_tokens":9},"total_tokens":327}}
-
-        '
-  recorded_at: Thu, 02 Apr 2026 11:25:05 GMT
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImNlNGE0NzMzLWQ1ZDgtNDYxYS1iMzg0LTBhM2RiZjlhMzc0ZiIsIm1vZGVsIjoiZ3Jvay00LTEtZmFzdC1ub24tcmVhc29uaW5nIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJJIHNlZSBhIHZpYnJhbnQsIGZhY2V0ZWQgcmVkIGdlbXN0b25l4oCUbGlrZWx5IGEgcnVieSBvciBkaWFtb25kLWxpa2UgY3J5c3RhbOKAlHJlbmRlcmVkIGluIGEgM0Qgc3R5bGUgd2l0aCBhIHRyYW5zcGFyZW50IG9yIGhvbGxvdyBjZW50ZXIsIGdsb3dpbmcgYWdhaW5zdCBhIGJsYWNrIGJhY2tncm91bmQuIEl0J3MgZ290IHNoYXJwIHBvbHlnb25hbCBlZGdlcyBhbmQgYSBnbG9zc3ksIHJlZmxlY3RpdmUgc2hpbmUsIGV2b2tpbmcgc29tZXRoaW5nIGZyb20gYSB2aWRlbyBnYW1lIG9yIGRpZ2l0YWwgYXJ0LiJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCIsImNvbnRlbnRfZmlsdGVyX3Jlc3VsdHMiOnt9fV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjI2NSwiY29tcGxldGlvbl90b2tlbnMiOjYyLCJ0b3RhbF90b2tlbnMiOjMyNywiYXVkaW9fcHJvbXB0X3Rva2VucyI6MCwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjAsImF1ZGlvX3Rva2VucyI6MCwidGV4dF90b2tlbnMiOjksImltYWdlX3Rva2VucyI6MjU2fSwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjowLCJhdWRpb190b2tlbnMiOjAsImFjY2VwdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowLCJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6MH0sIm51bV9zb3VyY2VzX3VzZWQiOjB9LCJjcmVhdGVkIjoxNzc4MTExNjQxLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJwcm9tcHRfZmlsdGVyX3Jlc3VsdHMiOm51bGx9
+  recorded_at: Wed, 06 May 2026 23:54:03 GMT
 recorded_with: VCR 6.4.0

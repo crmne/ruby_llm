@@ -23,15 +23,15 @@ http_interactions:
       message: Unauthorized
     headers:
       Date:
-      - Thu, 02 Apr 2026 11:23:08 GMT
+      - Wed, 06 May 2026 23:51:24 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Cf-Ray:
-      - "<CF_RAY>"
+      Server:
+      - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       Cf-Cache-Status:
@@ -41,13 +41,13 @@ http_interactions:
       - "<COOKIE>"
       Strict-Transport-Security:
       - max-age=15552000; includeSubDomains; preload
-      Server:
-      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
     body:
       encoding: UTF-8
       string: '{"error":{"message":"Invalid API key provided. Ensure your API key
         is correct and active.","type":"invalid_api_key","code":401}}
 
         '
-  recorded_at: Thu, 02 Apr 2026 11:23:08 GMT
+  recorded_at: Wed, 06 May 2026 23:51:24 GMT
 recorded_with: VCR 6.4.0
