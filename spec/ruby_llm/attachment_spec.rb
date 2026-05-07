@@ -24,7 +24,7 @@ RSpec.describe RubyLLM::Attachment do
   end
 
   it 'serializes non-ASCII text/* attachment content as JSON' do
-    attachment = RubyLLM::Attachment.new('spec/fixtures/multilingual.txt')
+    attachment = described_class.new('spec/fixtures/multilingual.txt')
 
     expect { JSON.generate(text: attachment.content) }.not_to output.to_stderr
   end

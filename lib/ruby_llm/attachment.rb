@@ -37,7 +37,7 @@ module RubyLLM
         @source.is_a?(ActiveStorage::Attached::Many)
     end
 
-    def content
+    def content # rubocop:disable Metrics/PerceivedComplexity
       return @content if defined?(@content) && !@content.nil?
 
       if url?
