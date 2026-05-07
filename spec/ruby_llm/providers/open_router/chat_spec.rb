@@ -30,6 +30,32 @@ RSpec.describe RubyLLM::Providers::OpenRouter::Chat do
       expect(message.cache_creation_tokens).to eq(4)
       expect(message.output_tokens).to eq(4)
     end
+
+    it 'normalizes OpenAI-compatible reasoning tokens that are reported outside completion tokens' do
+      response_body = {
+        'model' => 'x-ai/grok-4-fast-reasoning',
+        'choices' => [
+          {
+            'message' => {
+              'role' => 'assistant',
+              'content' => 'Hello!'
+            }
+          }
+        ],
+        'usage' => {
+          'prompt_tokens' => 50,
+          'completion_tokens' => 208,
+          'total_tokens' => 2443,
+          'completion_tokens_details' => { 'reasoning_tokens' => 2185 }
+        }
+      }
+
+      response = instance_double(Faraday::Response, body: response_body)
+      message = described_class.parse_completion_response(response)
+
+      expect(message.output_tokens).to eq(2393)
+      expect(message.thinking_tokens).to eq(2185)
+    end
   end
 
   describe '.render_payload' do

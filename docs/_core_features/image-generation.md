@@ -28,6 +28,7 @@ After reading this guide, you will know:
 *   How to select different image generation models.
 *   How to specify image sizes (for supported models).
 *   How to access and save generated image data (URL or Base64).
+*   How to inspect token usage and calculate image costs.
 *   How to integrate image generation with Rails Active Storage.
 *   Tips for writing effective image prompts.
 *   How to handle errors during image generation.
@@ -62,6 +63,27 @@ puts "Model Used: #{image.model_id}"
 ```
 
 The `paint` method abstracts the differences between provider APIs.
+
+## Token Usage and Costs
+{: .d-inline-block }
+
+v1.15+
+{: .label .label-green }
+
+When providers return image token usage, images expose the same cost shape as chats and messages:
+
+```ruby
+image = RubyLLM.paint("A small watercolor robot", model: "gpt-image-1")
+
+image.tokens.input
+image.tokens.output
+
+image.cost.input
+image.cost.output
+image.cost.total
+```
+
+Image costs use provider usage data plus pricing from the model registry. For models that report separate text and image input token details, RubyLLM applies the right pricing bucket to each part and returns the combined value as `image.cost.input`.
 
 ## Editing Existing Images
 {: .d-inline-block }

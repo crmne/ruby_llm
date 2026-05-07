@@ -60,7 +60,7 @@ module RubyLLM
           return unless message_data
 
           usage = data['usage'] || {}
-          thinking_tokens = usage.dig('completion_tokens_details', 'reasoning_tokens')
+          thinking_tokens = thinking_tokens(usage)
           thinking_text = extract_thinking_text(message_data)
           thinking_signature = extract_thinking_signature(message_data)
 
@@ -70,7 +70,7 @@ module RubyLLM
             thinking: Thinking.build(text: thinking_text, signature: thinking_signature),
             tool_calls: OpenAI::Tools.parse_tool_calls(message_data['tool_calls']),
             input_tokens: input_tokens(usage),
-            output_tokens: usage['completion_tokens'],
+            output_tokens: output_tokens(usage),
             cached_tokens: cache_read_tokens(usage),
             cache_creation_tokens: cache_write_tokens(usage),
             thinking_tokens: thinking_tokens,
@@ -88,12 +88,20 @@ module RubyLLM
           [prompt_tokens.to_i - cache_read_tokens(usage).to_i - cache_write_tokens(usage).to_i, 0].max
         end
 
+        def output_tokens(usage)
+          OpenAI::Chat.output_tokens(usage)
+        end
+
         def cache_read_tokens(usage)
           usage.dig('prompt_tokens_details', 'cached_tokens') || usage['prompt_cache_hit_tokens']
         end
 
         def cache_write_tokens(usage)
           usage.dig('prompt_tokens_details', 'cache_write_tokens') || 0
+        end
+
+        def thinking_tokens(usage)
+          OpenAI::Chat.thinking_tokens(usage)
         end
 
         def format_messages(messages)

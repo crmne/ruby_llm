@@ -25,10 +25,10 @@ module RubyLLM
             ),
             tool_calls: OpenAI::Tools.parse_tool_calls(delta['tool_calls'], parse_arguments: false),
             input_tokens: OpenRouter::Chat.input_tokens(usage),
-            output_tokens: usage['completion_tokens'],
+            output_tokens: OpenRouter::Chat.output_tokens(usage),
             cached_tokens: OpenRouter::Chat.cache_read_tokens(usage),
             cache_creation_tokens: OpenRouter::Chat.cache_write_tokens(usage),
-            thinking_tokens: usage.dig('completion_tokens_details', 'reasoning_tokens')
+            thinking_tokens: OpenRouter::Chat.thinking_tokens(usage)
           )
         end
 
