@@ -149,6 +149,17 @@ end
 chat = RubyLLM.chat(model: 'my-custom-model', provider: :openai, assume_model_exists: true)
 ```
 
+Hosted OpenAI-compatible gateways use the same configuration. For example, API NODE exposes an OpenAI-compatible endpoint that can be used as the OpenAI provider:
+
+```ruby
+RubyLLM.configure do |config|
+  config.openai_api_key = ENV['APINODE_API_KEY']
+  config.openai_api_base = "https://apinode.pro"
+end
+
+chat = RubyLLM.chat(model: 'gpt-5.5', provider: :openai, assume_model_exists: true)
+```
+
 #### System Role Compatibility
 
 OpenAI's API now uses 'developer' role for system messages, but some OpenAI-compatible servers still require the traditional 'system' role:
