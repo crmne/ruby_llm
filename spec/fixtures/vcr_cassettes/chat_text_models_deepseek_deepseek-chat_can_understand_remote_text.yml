@@ -26,40 +26,42 @@ http_interactions:
       - GitHub.com
       Content-Type:
       - text/plain; charset=utf-8
+      X-Origin-Cache:
+      - HIT
       Last-Modified:
-      - Mon, 16 Mar 2026 01:54:03 GMT
+      - Tue, 05 May 2026 02:26:38 GMT
       Access-Control-Allow-Origin:
       - "*"
       Etag:
-      - W/"69b762bb-9c6"
+      - W/"69f9555e-9c6"
       Expires:
-      - Mon, 16 Mar 2026 19:20:40 GMT
+      - Thu, 07 May 2026 00:01:24 GMT
       Cache-Control:
       - max-age=600
       X-Proxy-Cache:
       - MISS
       X-Github-Request-Id:
-      - 2E30:38D72F:D7B24:DA007:69B855AE
+      - 8CA8:1519:3A7294A:3B13014:69FBD3FC
       Accept-Ranges:
       - bytes
       Date:
-      - Mon, 16 Mar 2026 19:11:31 GMT
+      - Wed, 06 May 2026 23:52:24 GMT
       Via:
       - 1.1 varnish
       Age:
-      - '9'
+      - '8'
       X-Served-By:
-      - cache-fra-etou8220022-FRA
+      - cache-lis1490054-LIS
       X-Cache:
       - HIT
       X-Cache-Hits:
       - '1'
       X-Timer:
-      - S1773688291.410543,VS0,VE18
+      - S1778111545.502333,VS0,VE1
       Vary:
       - Accept-Encoding
       X-Fastly-Request-Id:
-      - 276792cf7505f74531d5ebac989714799cb38c3c
+      - 0e593eab8520f73d2cd8d358086f7a4a71552114
     body:
       encoding: ASCII-8BIT
       string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
@@ -95,7 +97,7 @@ http_interactions:
         \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
         WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
         FOR A PARTICULAR\n     PURPOSE.\n"
-  recorded_at: Mon, 16 Mar 2026 19:11:31 GMT
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/chat/completions
@@ -159,7 +161,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Mon, 16 Mar 2026 19:11:31 GMT
+      - Wed, 06 May 2026 23:52:24 GMT
       Server:
       - elb
       Vary:
@@ -167,7 +169,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - e75fc03243ad89dca79f5544a2d01213
+      - f7f6d45e109c19e77da437841710fd14
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -175,14 +177,25 @@ http_interactions:
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 55c4cb6ad29c7bbcd0c8f2d8b906a83e.cloudfront.net (CloudFront)
+      - 1.1 d8d835cce198f21656f532aa7cb25fbe.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - TXL50-P4
+      - LIS50-P1
       X-Amz-Cf-Id:
-      - 4bvpQLJHdYs2HFht8QP7TvTTeUZlPg5q_prQ92xOKat-GoHfwVygcQ==
+      - PznP_sbeFIw36M6kzy2t4IBt86Aw1s84k336n8BHPcV9JO4w59TajA==
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        eyJpZCI6IjFiZmI3YzkyLTMwMDEtNDg4Yi1hMzk4LWY1M2IzODAxNWZkYyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NzM2ODgyOTEsIm1vZGVsIjoiZGVlcHNlZWstY2hhdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiVGhpcyBmaWxlIChgbGljZW5zZS50eHRgKSBjb250YWlucyB0aGUgKipSdWJ5IHByb2dyYW1taW5nIGxhbmd1YWdlJ3MgbGljZW5zZSB0ZXJtcyoqLiBJdCBvdXRsaW5lcyB0aGUgY29uZGl0aW9ucyB1bmRlciB3aGljaCBSdWJ5IGNhbiBiZSB1c2VkLCBtb2RpZmllZCwgYW5kIGRpc3RyaWJ1dGVkLiBIZXJl4oCZcyBhIHN1bW1hcnkgb2Ygd2hhdOKAmXMgaW5jbHVkZWQ6XG5cbi0tLVxuXG4jIyMgKipLZXkgUG9pbnRzIG9mIHRoZSBMaWNlbnNlOioqXG4xLiAqKkNvcHlyaWdodCBIb2xkZXIqKiAgXG4gICAtIFJ1YnkgaXMgY29weXJpZ2h0ZWQgZnJlZSBzb2Z0d2FyZSBieSAqKll1a2loaXJvIE1hdHN1bW90byAoTWF0eikqKi5cblxuMi4gKipSZWRpc3RyaWJ1dGlvbiBUZXJtcyoqICBcbiAgIC0gWW91IGNhbiByZWRpc3RyaWJ1dGUvbW9kaWZ5IFJ1YnkgdW5kZXIgZWl0aGVyOlxuICAgICAtIFRoZSAqKjItY2xhdXNlIEJTREwqKiAoc2VlIHRoZSBgQlNETGAgZmlsZSksICoqb3IqKlxuICAgICAtIFRoZSBjb25kaXRpb25zIGxpc3RlZCBpbiB0aGlzIGZpbGUuXG5cbjMuICoqTWFpbiBDb25kaXRpb25zKiogIFxuICAgLSAqKlZlcmJhdGluIENvcGllcyoqOiBZb3UgbWF5IGZyZWVseSBkaXN0cmlidXRlIGV4YWN0IGNvcGllcyBvZiB0aGUgc291cmNlLCBwcm92aWRlZCBvcmlnaW5hbCBjb3B5cmlnaHRzIGFuZCBkaXNjbGFpbWVycyBhcmUgaW5jbHVkZWQuICBcbiAgIC0gKipNb2RpZmljYXRpb25zKio6IElmIHlvdSBtb2RpZnkgUnVieSwgeW91IG11c3QgZG8gYXQgbGVhc3Qgb25lIG9mIHRoZSBmb2xsb3dpbmc6XG4gICAgIC0gTWFrZSBtb2RpZmljYXRpb25zICoqcHVibGljIGRvbWFpbioqIG9yIGZyZWVseSBhdmFpbGFibGUgKGUuZy4sIHZpYSBVc2VuZXQpLlxuICAgICAtIFVzZSBtb2RpZmllZCBzb2Z0d2FyZSBvbmx5ICoqd2l0aGluIHlvdXIgb3JnYW5pemF0aW9uKiouXG4gICAgIC0gR2l2ZSAqKm5vbi1zdGFuZGFyZCBuYW1lcyoqIHRvIG5vbi1zdGFuZGFyZCBiaW5hcmllcyBhbmQgcHJvdmlkZSBpbnN0cnVjdGlvbnMgdG8gZ2V0IHRoZSBvcmlnaW5hbC5cbiAgICAgLSBNYWtlICoqb3RoZXIgZGlzdHJpYnV0aW9uIGFycmFuZ2VtZW50cyoqIHdpdGggdGhlIGF1dGhvci5cbiAgIC0gKipCaW5hcnkgRGlzdHJpYnV0aW9uKio6IFlvdSBtYXkgZGlzdHJpYnV0ZSBSdWJ5IGluIGJpbmFyeS9vYmplY3QgY29kZSBmb3JtIGlmIHlvdTpcbiAgICAgLSBJbmNsdWRlIGluc3RydWN0aW9ucyB0byBnZXQgdGhlIG9yaWdpbmFsIHNvdXJjZS5cbiAgICAgLSBJbmNsdWRlIG1hY2hpbmUtcmVhZGFibGUgc291cmNlIHdpdGggdGhlIGRpc3RyaWJ1dGlvbi5cbiAgICAgLSBHaXZlIG5vbi1zdGFuZGFyZCBiaW5hcmllcyBub24tc3RhbmRhcmQgbmFtZXMuXG4gICAgIC0gQXJyYW5nZSBkaXN0cmlidXRpb24gdGVybXMgd2l0aCB0aGUgYXV0aG9yLlxuICAgLSAqKkluY2x1c2lvbiBpbiBPdGhlciBTb2Z0d2FyZSoqOiBZb3UgbWF5IGluY29ycG9yYXRlIHBhcnRzIG9mIFJ1YnkgaW50byBvdGhlciBzb2Z0d2FyZSAoaW5jbHVkaW5nIGNvbW1lcmNpYWwpLCBidXQgbm90ZSB0aGF0IHNvbWUgZmlsZXMgaW4gdGhlIGRpc3RyaWJ1dGlvbiBoYXZlIGRpZmZlcmVudCB0ZXJtcyAoc2VlIHRoZSBgTEVHQUxgIGZpbGUpLlxuICAgLSAqKlNjcmlwdHMvTGlicmFyeSBGaWxlcyoqOiBTY3JpcHRzIG9yIGxpYnJhcmllcyBnZW5lcmF0ZWQgdXNpbmcgUnVieSBhcmUgKipub3QgYXV0b21hdGljYWxseSBjb3B5cmlnaHRlZCB1bmRlciBSdWJ54oCZcyBsaWNlbnNlKirigJR0aGV5IGJlbG9uZyB0byB0aGVpciBjcmVhdG9yIGFuZCBtYXkgYmUgc29sZCBjb21tZXJjaWFsbHkuXG4gICAtICoqTm8gV2FycmFudHkqKjogVGhlIHNvZnR3YXJlIGlzIHByb3ZpZGVkICoqXCJBUyBJU1wiKiogd2l0aG91dCBhbnkgZXhwcmVzcyBvciBpbXBsaWVkIHdhcnJhbnRpZXMuXG5cbi0tLVxuXG4jIyMgKipOb3RhYmxlIEFzcGVjdHM6Kipcbi0gVGhpcyBpcyAqKm5vdCBhIHN0YW5kYXJkIG9wZW4tc291cmNlIGxpY2Vuc2UqKiAobGlrZSBNSVQgb3IgR1BMKS4gSXTigJlzIFJ1YnnigJlzIG93biBsaWNlbnNlLCBvZnRlbiBjYWxsZWQgdGhlICoqXCJSdWJ5IExpY2Vuc2VcIioqIG9yICoqXCJNYXR64oCZcyBMaWNlbnNlXCIqKi5cbi0gSXQgaXMgZ2VuZXJhbGx5IGNvbnNpZGVyZWQgKipHUEwtY29tcGF0aWJsZSoqIGJ1dCAqKm5vdCBERlNHLWNvbXBsaWFudCoqIChEZWJpYW4gRnJlZSBTb2Z0d2FyZSBHdWlkZWxpbmVzKSBkdWUgdG8gcmVzdHJpY3Rpb25zIGxpa2UgdGhlIFwidXNlIHdpdGhpbiB5b3VyIG9yZ2FuaXphdGlvblwiIGNsYXVzZS5cbi0gVGhlIGxpY2Vuc2UgZW5jb3VyYWdlcyBzaGFyaW5nIG1vZGlmaWNhdGlvbnMgYnV0IGFsbG93cyBzb21lIGZsZXhpYmlsaXR5IGZvciBwcml2YXRlIG9yIG9yZ2FuaXphdGlvbmFsIHVzZS5cblxuLS0tXG5cbioqSW4gc2hvcnQqKjogVGhpcyBmaWxlIGlzIHRoZSAqKmxpY2Vuc2UgYWdyZWVtZW50IGZvciBSdWJ5KiosIHNwZWNpZnlpbmcgaG93IGl0IGNhbiBiZSBjb3BpZWQsIGNoYW5nZWQsIGFuZCBzaGFyZWQgd2hpbGUgcHJvdGVjdGluZyB0aGUgYXV0aG9y4oCZcyByaWdodHMgYW5kIG9mZmVyaW5nIGZsZXhpYmlsaXR5IHRvIHVzZXJzLiJ9LCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjU0NCwiY29tcGxldGlvbl90b2tlbnMiOjU2NSwidG90YWxfdG9rZW5zIjoxMTA5LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MH0sInByb21wdF9jYWNoZV9oaXRfdG9rZW5zIjowLCJwcm9tcHRfY2FjaGVfbWlzc190b2tlbnMiOjU0NH0sInN5c3RlbV9maW5nZXJwcmludCI6ImZwX2VhYWI4ZDExNGJfcHJvZDA4MjBfZnA4X2t2Y2FjaGUifQ==
-  recorded_at: Mon, 16 Mar 2026 19:11:44 GMT
+      string: '{"id":"2092649a-b2c1-4af8-9479-e1bb086508ec","object":"chat.completion","created":1778111544,"model":"deepseek-v4-flash","choices":[{"index":0,"message":{"role":"assistant","content":"This
+        file is the **license file for the Ruby programming language** (specifically
+        an older version of its license, often referred to as the \"Ruby License\").\n\nIt
+        states that Ruby is copyrighted free software by Yukihiro Matsumoto. The file
+        outlines the terms under which the software can be redistributed and modified,
+        offering several alternative conditions (e.g., making modifications freely
+        available, using modified versions only internally, or arranging distribution
+        with the author). It also references a separate `BSDL` file for a 2-clause
+        BSD license option, and a `LEGAL` file for the copying conditions of files
+        not written by the original author.\n\nImportantly, the license disclaims
+        all warranties, stating the software is provided \"AS IS\" without any express
+        or implied warranties, including merchantability and fitness for a particular
+        purpose."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":544,"completion_tokens":167,"total_tokens":711,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":544},"system_fingerprint":"fp_058df29938_prod0820_fp8_kvcache_20260402"}'
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 recorded_with: VCR 6.4.0

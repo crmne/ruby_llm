@@ -20,10 +20,10 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Date:
-      - Mon, 16 Mar 2026 19:11:34 GMT
       Pragma:
       - no-cache
+      Date:
+      - Wed, 06 May 2026 23:51:36 GMT
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
       Cache-Control:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/sqlservice.login openid https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email",
+          "scope": "https://www.googleapis.com/auth/sqlservice.login openid https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/cloud-platform",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Mon, 16 Mar 2026 19:11:34 GMT
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -87,7 +87,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 16 Mar 2026 19:11:35 GMT
+      - Wed, 06 May 2026 23:51:38 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -110,18 +110,18 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "blueberry"
+                    "text": "Murmur."
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -9.6476936340332031
+              "avgLogprobs": -7.2653458913167315
             }
           ],
           "usageMetadata": {
             "promptTokenCount": 63,
-            "candidatesTokenCount": 1,
-            "totalTokenCount": 86,
+            "candidatesTokenCount": 3,
+            "totalTokenCount": 89,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -136,14 +136,14 @@ http_interactions:
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 1
+                "tokenCount": 3
               }
             ],
-            "thoughtsTokenCount": 22
+            "thoughtsTokenCount": 23
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-03-16T19:11:34.978313Z",
-          "responseId": "5lW4aYnbO_fr2fMP5caz8AE"
+          "createTime": "2026-05-06T23:51:36.793396Z",
+          "responseId": "CNT7abS2MMKHhcIPuvcF"
         }
-  recorded_at: Mon, 16 Mar 2026 19:11:35 GMT
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 recorded_with: VCR 6.4.0

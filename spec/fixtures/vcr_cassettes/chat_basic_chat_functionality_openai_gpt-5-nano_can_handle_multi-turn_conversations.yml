@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 16 Mar 2026 19:14:07 GMT
+      - Wed, 06 May 2026 23:54:42 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -46,7 +46,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '2888'
+      - '2047'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
@@ -75,16 +75,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-DK7g4paCmoURlm5WPYBxmpWBhz0Rd",
+          "id": "chatcmpl-DcgMaF6n4Yel9pZ97pKeGVGsT64cu",
           "object": "chat.completion",
-          "created": 1773688444,
+          "created": 1778111680,
           "model": "gpt-5-nano-2025-08-07",
           "choices": [
             {
               "index": 0,
               "message": {
                 "role": "assistant",
-                "content": "Yukihiro Matsumoto (often called Matz). He created Ruby, first releasing it in 1995.",
+                "content": "Yukihiro Matsumoto (often called Matz), a Japanese programmer, created the Ruby programming language (first released in 1995).",
                 "refusal": null,
                 "annotations": []
               },
@@ -93,8 +93,8 @@ http_interactions:
           ],
           "usage": {
             "prompt_tokens": 16,
-            "completion_tokens": 226,
-            "total_tokens": 242,
+            "completion_tokens": 231,
+            "total_tokens": 247,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
@@ -109,7 +109,7 @@ http_interactions:
           "service_tier": "default",
           "system_fingerprint": null
         }
-  recorded_at: Mon, 16 Mar 2026 19:14:07 GMT
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/chat/completions
@@ -117,8 +117,9 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"gpt-5-nano","messages":[{"role":"user","content":"Who is
         the creator of the programming language Ruby?"},{"role":"assistant","content":"Yukihiro
-        Matsumoto (often called Matz). He created Ruby, first releasing it in 1995."},{"role":"user","content":"What
-        year did he create Ruby?"}],"stream":false}'
+        Matsumoto (often called Matz), a Japanese programmer, created the Ruby programming
+        language (first released in 1995)."},{"role":"user","content":"What year did
+        he create Ruby?"}],"stream":false}'
     headers:
       User-Agent:
       - Faraday v2.14.1
@@ -136,7 +137,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 16 Mar 2026 19:14:09 GMT
+      - Wed, 06 May 2026 23:54:44 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -158,7 +159,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '1466'
+      - '2110'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
@@ -172,7 +173,7 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '4999'
       X-Ratelimit-Remaining-Tokens:
-      - '1999954'
+      - '1999944'
       X-Ratelimit-Reset-Requests:
       - 12ms
       X-Ratelimit-Reset-Tokens:
@@ -185,41 +186,7 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: |
-        {
-          "id": "chatcmpl-DK7g7eoGD6K5m2pHjPRAZIRqeivPg",
-          "object": "chat.completion",
-          "created": 1773688447,
-          "model": "gpt-5-nano-2025-08-07",
-          "choices": [
-            {
-              "index": 0,
-              "message": {
-                "role": "assistant",
-                "content": "1995. Ruby was first released in 1995.",
-                "refusal": null,
-                "annotations": []
-              },
-              "finish_reason": "stop"
-            }
-          ],
-          "usage": {
-            "prompt_tokens": 58,
-            "completion_tokens": 149,
-            "total_tokens": 207,
-            "prompt_tokens_details": {
-              "cached_tokens": 0,
-              "audio_tokens": 0
-            },
-            "completion_tokens_details": {
-              "reasoning_tokens": 128,
-              "audio_tokens": 0,
-              "accepted_prediction_tokens": 0,
-              "rejected_prediction_tokens": 0
-            }
-          },
-          "service_tier": "default",
-          "system_fingerprint": null
-        }
-  recorded_at: Mon, 16 Mar 2026 19:14:09 GMT
+      string: !binary |-
+        ewogICJpZCI6ICJjaGF0Y21wbC1EY2dNY3JlQ0dJTmRsZFgwSWFkUFdUWkN3VllOQiIsCiAgIm9iamVjdCI6ICJjaGF0LmNvbXBsZXRpb24iLAogICJjcmVhdGVkIjogMTc3ODExMTY4MiwKICAibW9kZWwiOiAiZ3B0LTUtbmFuby0yMDI1LTA4LTA3IiwKICAiY2hvaWNlcyI6IFsKICAgIHsKICAgICAgImluZGV4IjogMCwKICAgICAgIm1lc3NhZ2UiOiB7CiAgICAgICAgInJvbGUiOiAiYXNzaXN0YW50IiwKICAgICAgICAiY29udGVudCI6ICIxOTk1IOKAlCBSdWJ5IHdhcyBmaXJzdCByZWxlYXNlZCB0aGF0IHllYXIgYnkgWXVraWhpcm8gTWF0c3Vtb3RvLiIsCiAgICAgICAgInJlZnVzYWwiOiBudWxsLAogICAgICAgICJhbm5vdGF0aW9ucyI6IFtdCiAgICAgIH0sCiAgICAgICJmaW5pc2hfcmVhc29uIjogInN0b3AiCiAgICB9CiAgXSwKICAidXNhZ2UiOiB7CiAgICAicHJvbXB0X3Rva2VucyI6IDYzLAogICAgImNvbXBsZXRpb25fdG9rZW5zIjogMjE4LAogICAgInRvdGFsX3Rva2VucyI6IDI4MSwKICAgICJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOiB7CiAgICAgICJjYWNoZWRfdG9rZW5zIjogMCwKICAgICAgImF1ZGlvX3Rva2VucyI6IDAKICAgIH0sCiAgICAiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6IHsKICAgICAgInJlYXNvbmluZ190b2tlbnMiOiAxOTIsCiAgICAgICJhdWRpb190b2tlbnMiOiAwLAogICAgICAiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOiAwLAogICAgICAicmVqZWN0ZWRfcHJlZGljdGlvbl90b2tlbnMiOiAwCiAgICB9CiAgfSwKICAic2VydmljZV90aWVyIjogImRlZmF1bHQiLAogICJzeXN0ZW1fZmluZ2VycHJpbnQiOiBudWxsCn0K
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 recorded_with: VCR 6.4.0

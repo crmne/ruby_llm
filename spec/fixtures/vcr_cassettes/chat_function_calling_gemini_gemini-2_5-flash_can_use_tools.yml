@@ -26,6 +26,8 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      X-Gemini-Service-Tier:
+      - standard
       Content-Type:
       - application/json; charset=UTF-8
       Vary:
@@ -33,7 +35,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 16 Mar 2026 19:10:43 GMT
+      - Wed, 06 May 2026 23:51:38 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -43,7 +45,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=934
+      - gfet4t7; dur=594
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -64,7 +66,7 @@ http_interactions:
                         "longitude": "13.4050"
                       }
                     },
-                    "thoughtSignature": "Cs0CAb4+9vv2jpxsD7gOLljXRzAtAbTvgfJcP+kMHdyTOzo3xgEbvyJQQVChGy1isaVAM0MpCo1/jkahyPS3R5VtPCFivxWS5NgGeLVYVL+4Ko+0LMWJ745szyvOHSS6y2UiuR2K0RsttRaTkAviKgADDit45zrsRmVtHhY8AQwLTmplmQaMRALZLoKNHQfV6Cav3uOPWpLLC0l7KIt8xvoKQj7BCuhiCfK0hSGNvFuzat5O17J1VU8d4LOJEvVH+vqM57syQSvarLIn8axFkpfMXASIYzNcV12TvC3lCo8yv6N/GLXAfJO97QMK0wWfeqJyR4nNKNu4ofee4kENQwNb+BrDnPhpL7jJIT807KOcDtaO9curJbL33otCwFs8G0D5VVcWm8QYZzJHhAwvw1JTMSJj7m58gxJ8iNmdYEaRdgdEQvSsvmyXWfRAZ9Lj"
+                    "thoughtSignature": "CvkBAQw51sf+Y07i17/E0MqlXf2YvP0KOmW7MO3uz4udWYHs6kuQFd6aHz9RIEiTVwoWAczfzu2bt9JP9cHPVZZc7DV36dPsSWhWPFTt0fbTCJL5789qjb3Zb0Xm1yQv30NSIOHTv7T+iSZi43mfGJyBnpWmNehiw5vuN3O6pYk6ozpplgTgBYwyBUTYTT1LKWTnaVzzE2/KmgEEs/+csKXV9Cjv3d/zIR4VYsQD3qyjPGGL77DtAgxdfCZb7RE3mZ3ijHbBVPhax4rb4MqF1Ueb9B3/kAVj5Q0deUcL+52WmjyESQRjynPTQxHk7Ym7DYCM/40uFD4a3S9O"
                   }
                 ],
                 "role": "model"
@@ -77,26 +79,27 @@ http_interactions:
           "usageMetadata": {
             "promptTokenCount": 103,
             "candidatesTokenCount": 30,
-            "totalTokenCount": 196,
+            "totalTokenCount": 176,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
                 "tokenCount": 103
               }
             ],
-            "thoughtsTokenCount": 63
+            "thoughtsTokenCount": 43,
+            "serviceTier": "standard"
           },
           "modelVersion": "gemini-2.5-flash",
-          "responseId": "slW4aZe2M9uivdIPoJ74qA0"
+          "responseId": "CtT7aayXFNXqkdUP6Jm6gA8"
         }
-  recorded_at: Mon, 16 Mar 2026 19:10:43 GMT
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 - request:
     method: post
     uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"What''s the weather in
-        Berlin? (52.5200, 13.4050)"}]},{"role":"model","parts":[{"functionCall":{"name":"weather","args":{"latitude":"52.5200","longitude":"13.4050"}},"thoughtSignature":"Cs0CAb4+9vv2jpxsD7gOLljXRzAtAbTvgfJcP+kMHdyTOzo3xgEbvyJQQVChGy1isaVAM0MpCo1/jkahyPS3R5VtPCFivxWS5NgGeLVYVL+4Ko+0LMWJ745szyvOHSS6y2UiuR2K0RsttRaTkAviKgADDit45zrsRmVtHhY8AQwLTmplmQaMRALZLoKNHQfV6Cav3uOPWpLLC0l7KIt8xvoKQj7BCuhiCfK0hSGNvFuzat5O17J1VU8d4LOJEvVH+vqM57syQSvarLIn8axFkpfMXASIYzNcV12TvC3lCo8yv6N/GLXAfJO97QMK0wWfeqJyR4nNKNu4ofee4kENQwNb+BrDnPhpL7jJIT807KOcDtaO9curJbL33otCwFs8G0D5VVcWm8QYZzJHhAwvw1JTMSJj7m58gxJ8iNmdYEaRdgdEQvSsvmyXWfRAZ9Lj"}]},{"role":"function","parts":[{"functionResponse":{"name":"weather","response":{"name":"weather","content":[{"text":"Current
+        Berlin? (52.5200, 13.4050)"}]},{"role":"model","parts":[{"functionCall":{"name":"weather","args":{"latitude":"52.5200","longitude":"13.4050"}},"thoughtSignature":"CvkBAQw51sf+Y07i17/E0MqlXf2YvP0KOmW7MO3uz4udWYHs6kuQFd6aHz9RIEiTVwoWAczfzu2bt9JP9cHPVZZc7DV36dPsSWhWPFTt0fbTCJL5789qjb3Zb0Xm1yQv30NSIOHTv7T+iSZi43mfGJyBnpWmNehiw5vuN3O6pYk6ozpplgTgBYwyBUTYTT1LKWTnaVzzE2/KmgEEs/+csKXV9Cjv3d/zIR4VYsQD3qyjPGGL77DtAgxdfCZb7RE3mZ3ijHbBVPhax4rb4MqF1Ueb9B3/kAVj5Q0deUcL+52WmjyESQRjynPTQxHk7Ym7DYCM/40uFD4a3S9O"}]},{"role":"function","parts":[{"functionResponse":{"name":"weather","response":{"name":"weather","content":[{"text":"Current
         weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"OBJECT","properties":{"latitude":{"type":"STRING","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"STRING","description":"Longitude (e.g.,
@@ -117,6 +120,8 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      X-Gemini-Service-Tier:
+      - standard
       Content-Type:
       - application/json; charset=UTF-8
       Vary:
@@ -124,7 +129,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 16 Mar 2026 19:10:44 GMT
+      - Wed, 06 May 2026 23:51:39 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -134,7 +139,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=423
+      - gfet4t7; dur=634
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -142,6 +147,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicGFydHMiOiBbCiAgICAgICAgICB7CiAgICAgICAgICAgICJ0ZXh0IjogIlRoZSB3ZWF0aGVyIGluIEJlcmxpbiBpcyAxNcKwQywgd2l0aCB3aW5kIGF0IDEwIGttL2guIgogICAgICAgICAgfQogICAgICAgIF0sCiAgICAgICAgInJvbGUiOiAibW9kZWwiCiAgICAgIH0sCiAgICAgICJmaW5pc2hSZWFzb24iOiAiU1RPUCIsCiAgICAgICJpbmRleCI6IDAKICAgIH0KICBdLAogICJ1c2FnZU1ldGFkYXRhIjogewogICAgInByb21wdFRva2VuQ291bnQiOiAxOTAsCiAgICAiY2FuZGlkYXRlc1Rva2VuQ291bnQiOiAyMSwKICAgICJ0b3RhbFRva2VuQ291bnQiOiAyMTEsCiAgICAicHJvbXB0VG9rZW5zRGV0YWlscyI6IFsKICAgICAgewogICAgICAgICJtb2RhbGl0eSI6ICJURVhUIiwKICAgICAgICAidG9rZW5Db3VudCI6IDE5MAogICAgICB9CiAgICBdCiAgfSwKICAibW9kZWxWZXJzaW9uIjogImdlbWluaS0yLjUtZmxhc2giLAogICJyZXNwb25zZUlkIjogInMxVzRhYXZITkt2Y3ZkSVB6c3ZrZ0EwIgp9Cg==
-  recorded_at: Mon, 16 Mar 2026 19:10:44 GMT
+        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicGFydHMiOiBbCiAgICAgICAgICB7CiAgICAgICAgICAgICJ0ZXh0IjogIlRoZSB3ZWF0aGVyIGluIEJlcmxpbiBpcyAxNcKwQywgd2l0aCB3aW5kIGF0IDEwIGttL2guIgogICAgICAgICAgfQogICAgICAgIF0sCiAgICAgICAgInJvbGUiOiAibW9kZWwiCiAgICAgIH0sCiAgICAgICJmaW5pc2hSZWFzb24iOiAiU1RPUCIsCiAgICAgICJpbmRleCI6IDAKICAgIH0KICBdLAogICJ1c2FnZU1ldGFkYXRhIjogewogICAgInByb21wdFRva2VuQ291bnQiOiAxOTAsCiAgICAiY2FuZGlkYXRlc1Rva2VuQ291bnQiOiAyMSwKICAgICJ0b3RhbFRva2VuQ291bnQiOiAyMTEsCiAgICAicHJvbXB0VG9rZW5zRGV0YWlscyI6IFsKICAgICAgewogICAgICAgICJtb2RhbGl0eSI6ICJURVhUIiwKICAgICAgICAidG9rZW5Db3VudCI6IDE5MAogICAgICB9CiAgICBdLAogICAgInNlcnZpY2VUaWVyIjogInN0YW5kYXJkIgogIH0sCiAgIm1vZGVsVmVyc2lvbiI6ICJnZW1pbmktMi41LWZsYXNoIiwKICAicmVzcG9uc2VJZCI6ICJDOVQ3YWVDTkRkWGZ2ZElQM3Z5T3VRNCIKfQo=
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 recorded_with: VCR 6.4.0

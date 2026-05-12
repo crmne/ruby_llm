@@ -3,6 +3,41 @@
 require 'spec_helper'
 
 RSpec.describe RubyLLM::Providers::Bedrock::Chat do
+  describe '.parse_completion_response' do
+    it 'normalizes cache read and write tokens out of input tokens' do
+      response_body = {
+        'modelId' => 'anthropic.claude-sonnet-4-5-20250929-v1:0',
+        'output' => {
+          'message' => {
+            'content' => [{ 'text' => 'Hi!' }]
+          }
+        },
+        'usage' => {
+          'inputTokens' => 100,
+          'outputTokens' => 5,
+          'cacheReadInputTokens' => 40,
+          'cacheWriteInputTokens' => 10
+        }
+      }
+
+      response = instance_double(Faraday::Response, body: response_body)
+      message = described_class.parse_completion_response(response)
+
+      expect(message.input_tokens).to eq(50)
+      expect(message.output_tokens).to eq(5)
+      expect(message.cached_tokens).to eq(40)
+      expect(message.cache_creation_tokens).to eq(10)
+    end
+  end
+
+  describe '.render_tool_result_content' do
+    it 'uses a placeholder when the tool returns no content' do
+      result = described_class.render_tool_result_content('')
+
+      expect(result).to eq([{ text: '(no output)' }])
+    end
+  end
+
   describe '.render_payload' do
     let(:model) do
       instance_double(RubyLLM::Model::Info,

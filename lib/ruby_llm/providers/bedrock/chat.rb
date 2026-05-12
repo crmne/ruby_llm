@@ -56,7 +56,7 @@ module RubyLLM
             content: parse_text_content(content_blocks),
             thinking: Thinking.build(text: thinking_text, signature: thinking_signature),
             tool_calls: parse_tool_calls(content_blocks),
-            input_tokens: usage['inputTokens'],
+            input_tokens: input_tokens(usage),
             output_tokens: usage['outputTokens'],
             cached_tokens: usage['cacheReadInputTokens'],
             cache_creation_tokens: usage['cacheWriteInputTokens'],
@@ -64,6 +64,13 @@ module RubyLLM
             model_id: data['modelId'],
             raw: response
           )
+        end
+
+        def input_tokens(usage)
+          input_tokens = usage['inputTokens']
+          return unless input_tokens
+
+          [input_tokens.to_i - usage['cacheReadInputTokens'].to_i - usage['cacheWriteInputTokens'].to_i, 0].max
         end
 
         def render_messages(messages)
@@ -154,19 +161,23 @@ module RubyLLM
 
         def render_tool_result_content(content)
           return render_raw_tool_result_content(content.value) if content.is_a?(RubyLLM::Content::Raw)
+          return [{ json: content }] if content.is_a?(Hash) || content.is_a?(Array)
+          return render_content_tool_result_content(content) if content.is_a?(RubyLLM::Content)
 
-          if content.is_a?(Hash) || content.is_a?(Array)
-            [{ json: content }]
-          elsif content.is_a?(RubyLLM::Content)
-            blocks = []
-            blocks << { text: content.text } if content.text
-            content.attachments.each do |attachment|
-              blocks << { text: attachment.for_llm }
-            end
-            blocks
-          else
-            [{ text: content.to_s }]
-          end
+          [text_tool_result_block(content)]
+        end
+
+        def render_content_tool_result_content(content)
+          blocks = []
+          blocks << text_tool_result_block(content.text) unless content.text.to_s.empty?
+          content.attachments.each { |attachment| blocks << text_tool_result_block(attachment.for_llm) }
+          blocks.empty? ? [text_tool_result_block(nil)] : blocks
+        end
+
+        def text_tool_result_block(text)
+          text = text.to_s
+          text = '(no output)' if text.empty?
+          { text: text }
         end
 
         def render_raw_tool_result_content(raw_value)

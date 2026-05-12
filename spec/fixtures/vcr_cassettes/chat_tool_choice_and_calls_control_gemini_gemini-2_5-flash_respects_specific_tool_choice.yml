@@ -25,6 +25,8 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      X-Gemini-Service-Tier:
+      - standard
       Content-Type:
       - application/json; charset=UTF-8
       Vary:
@@ -32,7 +34,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 16 Mar 2026 19:21:10 GMT
+      - Thu, 07 May 2026 00:04:40 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -42,7 +44,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=762
+      - gfet4t7; dur=840
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -63,7 +65,7 @@ http_interactions:
                         "longitude": "13.4050"
                       }
                     },
-                    "thoughtSignature": "Cu8CAb4+9vvg9t41HvtBvqprPi5UcZ7a0GWiZBHnCwAHUTdzoa9WIzRRjWbvAFuTmkbzrBKMN5Ryr/37l7vff005jzxVksv9oXPBiAlnoH/sA9DUysUntMRBS1kcsmuPJa/NBCfjKJGWX88WuoJdJMgUStD0M+WhbDAlX7giMN2GQrmtUhzd+OGFxPUVaiciHtFnKjb7vzSI9wtz5UEfJXeOlGVxsFnVcNaaAm9E2D6kcbAHa6tSQ061QrnFqjALjsGNwBQWaYiZ/YsGk1RDf+Kx5Y13ff0RVgipNAUUKf4dK3atSuHJefLG6ITOp9PVLTJyyNzI0HlZJCLFUDlWJFm4r5sx8ieh6D5Nw09rNQQg84+JilOJqr4/RpeRgB7LJ18OjxnPxky0rypmkVusIe9ynvnxBSEReC3GtkCsWdqeRrgyIF1PwBHaUvLbGNiT+v7NPlQfNVCMvExit0x3yi3faV/vvU8q9SaIhx69+XqGGA=="
+                    "thoughtSignature": "CuMCAQw51sdO/5DwzjekBuIatmDUSrlMekm2QAedJjSI8SglQ142aZPTrTWF/RROnEvepiL47GKNQLROquUwbHO0Tdz7TuVsAVDCsBFvJ1wscwKzVAasa9U8WW/XPXlLNKvxlcmF/KNq8ceYQwnuDNhy1ZJl4+/1E5+qD1TXqAlNGRljgADWvvW2CHStCd4udqBD6/vKlGqPDQegod7RIhPWAsKOz8teK+H0PnUj0raR88Uk7b5Qi98KK/0qs2BS4Lu8U74GqByMWsG1Eue5n+KwKfgYMM91+SlE/FDGNe+iex1BkitwRKmcLwtoKGr7OVAB6+9IOpLgZSi6xwulAIGnlrN1esWzoJQbHNG7IZ2MP+SdVFVGCl4+1FCZzK6Z1QAS+bF6IvBT3xr0KmprbGZ4tfL+U7+4w1mqpd9nnrIou03TAJxrIpMMULGcR+uskYvJ3b4DNIfQ2ieYPlGx7tI/bYyNVw=="
                   }
                 ],
                 "role": "model"
@@ -76,25 +78,26 @@ http_interactions:
           "usageMetadata": {
             "promptTokenCount": 85,
             "candidatesTokenCount": 30,
-            "totalTokenCount": 183,
+            "totalTokenCount": 175,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
                 "tokenCount": 85
               }
             ],
-            "thoughtsTokenCount": 68
+            "thoughtsTokenCount": 60,
+            "serviceTier": "standard"
           },
           "modelVersion": "gemini-2.5-flash",
-          "responseId": "JVi4aY6sKZTzkdUP0ayvuQc"
+          "responseId": "F9f7aeX3GoXykdUPyKSz4A4"
         }
-  recorded_at: Mon, 16 Mar 2026 19:21:10 GMT
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 - request:
     method: post
     uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
-      string: '{"contents":[{"role":"user","parts":[{"text":"What''s the fall of Rome?"}]},{"role":"model","parts":[{"functionCall":{"name":"weather","args":{"latitude":"52.5200","longitude":"13.4050"}},"thoughtSignature":"Cu8CAb4+9vvg9t41HvtBvqprPi5UcZ7a0GWiZBHnCwAHUTdzoa9WIzRRjWbvAFuTmkbzrBKMN5Ryr/37l7vff005jzxVksv9oXPBiAlnoH/sA9DUysUntMRBS1kcsmuPJa/NBCfjKJGWX88WuoJdJMgUStD0M+WhbDAlX7giMN2GQrmtUhzd+OGFxPUVaiciHtFnKjb7vzSI9wtz5UEfJXeOlGVxsFnVcNaaAm9E2D6kcbAHa6tSQ061QrnFqjALjsGNwBQWaYiZ/YsGk1RDf+Kx5Y13ff0RVgipNAUUKf4dK3atSuHJefLG6ITOp9PVLTJyyNzI0HlZJCLFUDlWJFm4r5sx8ieh6D5Nw09rNQQg84+JilOJqr4/RpeRgB7LJ18OjxnPxky0rypmkVusIe9ynvnxBSEReC3GtkCsWdqeRrgyIF1PwBHaUvLbGNiT+v7NPlQfNVCMvExit0x3yi3faV/vvU8q9SaIhx69+XqGGA=="}]},{"role":"function","parts":[{"functionResponse":{"name":"weather","response":{"name":"weather","content":[{"text":"Current
+      string: '{"contents":[{"role":"user","parts":[{"text":"What''s the fall of Rome?"}]},{"role":"model","parts":[{"functionCall":{"name":"weather","args":{"latitude":"52.5200","longitude":"13.4050"}},"thoughtSignature":"CuMCAQw51sdO/5DwzjekBuIatmDUSrlMekm2QAedJjSI8SglQ142aZPTrTWF/RROnEvepiL47GKNQLROquUwbHO0Tdz7TuVsAVDCsBFvJ1wscwKzVAasa9U8WW/XPXlLNKvxlcmF/KNq8ceYQwnuDNhy1ZJl4+/1E5+qD1TXqAlNGRljgADWvvW2CHStCd4udqBD6/vKlGqPDQegod7RIhPWAsKOz8teK+H0PnUj0raR88Uk7b5Qi98KK/0qs2BS4Lu8U74GqByMWsG1Eue5n+KwKfgYMM91+SlE/FDGNe+iex1BkitwRKmcLwtoKGr7OVAB6+9IOpLgZSi6xwulAIGnlrN1esWzoJQbHNG7IZ2MP+SdVFVGCl4+1FCZzK6Z1QAS+bF6IvBT3xr0KmprbGZ4tfL+U7+4w1mqpd9nnrIou03TAJxrIpMMULGcR+uskYvJ3b4DNIfQ2ieYPlGx7tI/bYyNVw=="}]},{"role":"function","parts":[{"functionResponse":{"name":"weather","response":{"name":"weather","content":[{"text":"Current
         weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"OBJECT","properties":{"latitude":{"type":"STRING","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"STRING","description":"Longitude (e.g.,
@@ -115,6 +118,8 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      X-Gemini-Service-Tier:
+      - standard
       Content-Type:
       - application/json; charset=UTF-8
       Vary:
@@ -122,7 +127,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 16 Mar 2026 19:21:11 GMT
+      - Thu, 07 May 2026 00:04:40 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -132,7 +137,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=676
+      - gfet4t7; dur=566
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -146,7 +151,7 @@ http_interactions:
               "content": {
                 "parts": [
                   {
-                    "text": "I am sorry, I cannot answer questions about historical events. I can only provide current weather information."
+                    "text": "I'm sorry, I can't provide information about historical events like the fall of Rome. My current capabilities are limited to providing weather information.\n"
                   }
                 ],
                 "role": "model"
@@ -157,17 +162,18 @@ http_interactions:
           ],
           "usageMetadata": {
             "promptTokenCount": 172,
-            "candidatesTokenCount": 20,
-            "totalTokenCount": 192,
+            "candidatesTokenCount": 30,
+            "totalTokenCount": 202,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
                 "tokenCount": 172
               }
-            ]
+            ],
+            "serviceTier": "standard"
           },
           "modelVersion": "gemini-2.5-flash",
-          "responseId": "Jli4afqeHNuxnsEP8eTtyQI"
+          "responseId": "GNf7afq3G7OgvdIPq6D9yA4"
         }
-  recorded_at: Mon, 16 Mar 2026 19:21:11 GMT
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 recorded_with: VCR 6.4.0
