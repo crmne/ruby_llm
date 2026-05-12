@@ -74,22 +74,23 @@ module RubyLLM
 
     def accumulate_tool_calls(new_tool_calls) # rubocop:disable Metrics/PerceivedComplexity
       RubyLLM.logger.debug { "Accumulating tool calls: #{new_tool_calls}" } if RubyLLM.config.log_stream_debug
-      new_tool_calls.each_value do |tool_call|
+      new_tool_calls.each do |stream_key, tool_call|
         if tool_call.id
           tool_call_id = tool_call.id.empty? ? SecureRandom.uuid : tool_call.id
           tool_call_arguments = tool_call.arguments
           if tool_call_arguments.nil? || (tool_call_arguments.respond_to?(:empty?) && tool_call_arguments.empty?)
             tool_call_arguments = +''
           end
-          @tool_calls[tool_call.id] = ToolCall.new(
+          accumulator_key = stream_key || tool_call.id
+          @tool_calls[accumulator_key] = ToolCall.new(
             id: tool_call_id,
             name: tool_call.name,
             arguments: tool_call_arguments,
             thought_signature: tool_call.thought_signature
           )
-          @latest_tool_call_id = tool_call.id
+          @latest_tool_call_id = accumulator_key
         else
-          existing = @tool_calls[@latest_tool_call_id]
+          existing = @tool_calls[stream_key || @latest_tool_call_id]
           if existing
             fragment = tool_call.arguments
             fragment = '' if fragment.nil?
@@ -104,7 +105,7 @@ module RubyLLM
 
     def find_tool_call(tool_call_id)
       if tool_call_id.nil?
-        @tool_calls[@latest_tool_call]
+        @tool_calls[@latest_tool_call_id]
       else
         @latest_tool_call_id = tool_call_id
         @tool_calls[tool_call_id]

@@ -306,6 +306,22 @@ response = chat.ask "What is the square root of 64? Answer with a JSON object wi
 puts JSON.parse(response.content)
 ```
 
+OpenAI can route chat requests through either Chat Completions or Responses while keeping the same `RubyLLM.chat` interface. The default `:auto` mode keeps existing Chat Completions behavior unless the request uses a Responses-only feature, such as a native `web_search` tool, a deep-research model, GPT-5 tool calls with reasoning enabled, or params like `previous_response_id`, `include`, `background`, `conversation`, `max_tool_calls`, `truncation`, or `text`.
+
+```ruby
+RubyLLM.configure do |config|
+  config.openai_api_mode = :auto # :auto, :chat_completions, or :responses
+end
+
+chat = RubyLLM.chat(model: "gpt-5.5")
+              .with_params(
+                openai_api_mode: :responses,
+                tools: [{ type: "web_search", search_context_size: "low" }]
+              )
+```
+
+The `openai_api_mode` key is consumed by RubyLLM and is not sent to the API. See OpenAI's [migration guide](https://platform.openai.com/docs/guides/migrate-to-responses), [web search guide](https://platform.openai.com/docs/guides/tools-web-search?api-mode=responses), and [streaming guide](https://platform.openai.com/docs/guides/streaming-responses) for provider-specific behavior.
+
 > **With great power comes great responsibility:** The `with_params` method can override any part of the request payload, including critical parameters like model, max_tokens, or tools. Use it carefully to avoid unintended behavior. Always verify that your overrides are compatible with the provider's API. To debug and see the exact request being sent, set the environment variable `RUBYLLM_DEBUG=true`.
 {: .warning }
 

@@ -42,6 +42,19 @@ module RubyLLM
           RubyLLM::Utils.deep_merge(definition, tool.provider_params)
         end
 
+        def response_tool_for(tool)
+          definition = {
+            type: 'function',
+            name: tool.name,
+            description: tool.description,
+            parameters: parameters_schema_for(tool)
+          }
+
+          return definition if tool.provider_params.empty?
+
+          RubyLLM::Utils.deep_merge(definition, tool.provider_params)
+        end
+
         def param_schema(param)
           {
             type: param.type,
@@ -100,6 +113,30 @@ module RubyLLM
           end
         end
 
+        def parse_response_tool_calls(outputs)
+          function_calls = Utils.to_safe_array(outputs).select { |output| output['type'] == 'function_call' }
+          return nil if function_calls.empty?
+
+          function_calls.to_h do |output|
+            id = output['call_id'] || output['id']
+            [
+              id,
+              ToolCall.new(
+                id: id,
+                name: output['name'],
+                arguments: parse_response_tool_call_arguments(output)
+              )
+            ]
+          end
+        end
+
+        def parse_response_tool_call_arguments(output)
+          arguments = output['arguments']
+          return {} if arguments.nil? || arguments.empty?
+
+          JSON.parse(arguments)
+        end
+
         def build_tool_choice(tool_choice)
           case tool_choice
           when :auto, :none, :required
@@ -110,6 +147,18 @@ module RubyLLM
               function: {
                 name: tool_choice
               }
+            }
+          end
+        end
+
+        def build_response_tool_choice(tool_choice)
+          case tool_choice
+          when :auto, :none, :required
+            tool_choice
+          else
+            {
+              type: 'function',
+              name: tool_choice
             }
           end
         end

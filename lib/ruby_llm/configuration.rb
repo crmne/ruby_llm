@@ -3,6 +3,8 @@
 module RubyLLM
   # Global configuration for RubyLLM
   class Configuration
+    OPENAI_API_MODES = %i[auto chat_completions responses].freeze
+
     class << self
       # Declare a single configuration option.
       def option(key, default = nil)
@@ -37,6 +39,7 @@ module RubyLLM
     option :default_moderation_model, 'omni-moderation-latest'
     option :default_image_model, 'gpt-image-1.5'
     option :default_transcription_model, 'whisper-1'
+    option :openai_api_mode, :auto
 
     option :model_registry_file, -> { File.expand_path('models.json', __dir__) }
     option :model_registry_class, 'Model'
@@ -76,6 +79,16 @@ module RubyLLM
         RubyLLM.logger.warn("log_regexp_timeout is not supported on Ruby #{RUBY_VERSION}")
         @log_regexp_timeout = value
       end
+    end
+
+    def openai_api_mode=(value)
+      mode = (value || :auto).to_sym
+      unless OPENAI_API_MODES.include?(mode)
+        raise ArgumentError,
+              "Invalid openai_api_mode: #{value.inspect}. Valid values are: #{OPENAI_API_MODES.join(', ')}"
+      end
+
+      @openai_api_mode = mode
     end
   end
 end

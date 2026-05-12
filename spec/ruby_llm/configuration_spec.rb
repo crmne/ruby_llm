@@ -14,6 +14,7 @@ RSpec.describe RubyLLM::Configuration do
       expect(config.retry_interval).to eq(0.1)
       expect(config.retry_backoff_factor).to eq(2)
       expect(config.retry_interval_randomness).to eq(0.5)
+      expect(config.openai_api_mode).to eq(:auto)
     end
 
     it 'exposes a discoverable options API' do
@@ -21,9 +22,20 @@ RSpec.describe RubyLLM::Configuration do
         :request_timeout,
         :default_model,
         :model_registry_file,
+        :openai_api_mode,
         :openai_api_key,
         :openrouter_api_base
       )
+    end
+
+    it 'normalizes valid OpenAI API mode values' do
+      config.openai_api_mode = 'responses'
+
+      expect(config.openai_api_mode).to eq(:responses)
+    end
+
+    it 'rejects invalid OpenAI API mode values' do
+      expect { config.openai_api_mode = :invalid }.to raise_error(ArgumentError, /Invalid openai_api_mode/)
     end
   end
 end
