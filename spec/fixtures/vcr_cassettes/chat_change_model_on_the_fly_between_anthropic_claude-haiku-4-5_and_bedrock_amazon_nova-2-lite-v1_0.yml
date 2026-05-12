@@ -26,7 +26,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 16 Mar 2026 19:16:37 GMT
+      - Wed, 06 May 2026 23:57:32 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -38,51 +38,53 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '450000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-03-16T19:16:37Z'
+      - '2026-05-06T23:57:32Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '90000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '90000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-03-16T19:16:37Z'
+      - '2026-05-06T23:57:32Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '1000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-03-16T19:16:37Z'
+      - '2026-05-06T23:57:32Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '540000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '540000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-03-16T19:16:37Z'
+      - '2026-05-06T23:57:32Z'
       Request-Id:
       - "<REQUEST_ID>"
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
+      Traceresponse:
+      - 00-cb55b12e25b446330770c8e9c769c905-ce61637161f68e78-01
       Server:
       - cloudflare
       X-Envoy-Upstream-Service-Time:
-      - '472'
+      - '499'
       Vary:
       - Accept-Encoding
-      Server-Timing:
-      - proxy;dur=472
-      X-Robots-Tag:
-      - none
-      Content-Security-Policy:
-      - default-src 'none'; frame-ancestors 'none'
       Cf-Cache-Status:
       - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Content-Security-Policy:
+      - default-src 'none'; frame-ancestors 'none'
+      X-Robots-Tag:
+      - none
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_01R8Y1mgstgXxiTrunxMgiaW","type":"message","role":"assistant","content":[{"type":"text","text":"FOUR"}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":13,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":5,"service_tier":"standard","inference_geo":"not_available"}}'
-  recorded_at: Mon, 16 Mar 2026 19:16:37 GMT
+      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_013shNXEiV1oUHj1DQ7YLx46","type":"message","role":"assistant","content":[{"type":"text","text":"FOUR"}],"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":13,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":5,"service_tier":"standard","inference_geo":"not_available"}}'
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 - request:
     method: post
     uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.amazon.nova-2-lite-v1:0/converse
@@ -95,7 +97,7 @@ http_interactions:
       User-Agent:
       - Faraday v2.14.1
       X-Amz-Date:
-      - 20260316T191637Z
+      - 20260506T235733Z
       X-Amz-Content-Sha256:
       - 333dfd1586b2db6e0fafa9b8fe21186addfce6c3214497fc9f9321fadb245d77
       Authorization:
@@ -113,7 +115,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 16 Mar 2026 19:16:38 GMT
+      - Wed, 06 May 2026 23:57:33 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -121,9 +123,9 @@ http_interactions:
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 2cc22a7f-e6be-4a31-a4b3-8f3ed4dffd1f
+      - f36fa66e-8a91-4c88-a7ea-527dc4ac184f
     body:
       encoding: UTF-8
-      string: '{"metrics":{"latencyMs":468},"output":{"message":{"content":[{"text":"EIGHT"}],"role":"assistant"}},"stopReason":"end_turn","usage":{"inputTokens":64,"outputTokens":5,"serverToolUsage":{},"totalTokens":69}}'
-  recorded_at: Mon, 16 Mar 2026 19:16:38 GMT
+      string: '{"metrics":{"latencyMs":288},"output":{"message":{"content":[{"text":"EIGHT"}],"role":"assistant"}},"stopReason":"end_turn","usage":{"inputTokens":64,"outputTokens":5,"serverToolUsage":{},"totalTokens":69}}'
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 recorded_with: VCR 6.4.0

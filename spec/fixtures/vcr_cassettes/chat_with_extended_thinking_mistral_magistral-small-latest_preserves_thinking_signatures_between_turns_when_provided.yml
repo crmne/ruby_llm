@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 16 Mar 2026 19:17:32 GMT
+      - Wed, 06 May 2026 23:54:27 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -32,29 +32,29 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '019cf815-006b-7571-b205-34776369ccbb'
+      - '019dffb6-dad6-7a72-bdfb-eda63ec11193'
       X-Kong-Request-Id:
-      - '019cf815-006b-7571-b205-34776369ccbb'
+      - '019dffb6-dad6-7a72-bdfb-eda63ec11193'
       X-Ratelimit-Limit-Tokens-Minute:
-      - '120000'
+      - '2000000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '115213'
+      - '1996020'
       X-Ratelimit-Tokens-Query-Cost:
-      - '80'
+      - '32'
       X-Ratelimit-Limit-Req-Minute:
-      - '10'
+      - '1500'
       X-Ratelimit-Remaining-Req-Minute:
-      - '7'
+      - '1494'
       X-Envoy-Upstream-Service-Time:
-      - '869'
+      - '177'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '870'
+      - '178'
       X-Kong-Proxy-Latency:
-      - '11'
+      - '27'
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
@@ -70,23 +70,17 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"4930a106c2ae48e19f4cf9cf5ed4a0cd","created":1773688651,"model":"magistral-small-latest","usage":{"prompt_tokens":11,"total_tokens":80,"completion_tokens":69,"prompt_tokens_details":{"cached_tokens":0}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":[{"type":"thinking","thinking":[{"type":"text","text":"The
-        user is asking for the sum of 5 and 3. Both numbers are integers. The basic
-        arithmetic rule for addition is that you add the two numbers together. 5 plus
-        3 equals 8.\n\nNow, to present the answer clearly to the user."}]},{"type":"text","text":"The
-        sum of 5 and 3 is 8."}]}}]}'
-  recorded_at: Mon, 16 Mar 2026 19:17:32 GMT
+      string: '{"id":"cfe2d34e3f5b443b940f6fb6d9c3854f","created":1778111666,"model":"magistral-small-latest","usage":{"prompt_tokens":23,"total_tokens":32,"completion_tokens":9,"prompt_tokens_details":{"cached_tokens":0}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"5
+        + 3 equals **8**."}}]}'
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 - request:
     method: post
     uri: https://api.mistral.ai/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"magistral-small-latest","messages":[{"role":"user","content":"What
-        is 5 + 3?"},{"role":"assistant","content":[{"type":"thinking","thinking":[{"type":"text","text":"The
-        user is asking for the sum of 5 and 3. Both numbers are integers. The basic
-        arithmetic rule for addition is that you add the two numbers together. 5 plus
-        3 equals 8.\n\nNow, to present the answer clearly to the user."}]},{"type":"text","text":"The
-        sum of 5 and 3 is 8."}]},{"role":"user","content":"Now multiply that by 2"}],"stream":false}'
+        is 5 + 3?"},{"role":"assistant","content":"5 + 3 equals **8**."},{"role":"user","content":"Now
+        multiply that by 2"}],"stream":false}'
     headers:
       User-Agent:
       - Faraday v2.14.1
@@ -104,7 +98,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 16 Mar 2026 19:17:33 GMT
+      - Wed, 06 May 2026 23:54:27 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -112,29 +106,29 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '019cf815-042f-7e99-bad8-ccf3057ca6a4'
+      - '019dffb6-dc15-73de-8a5b-42ddd7337b57'
       X-Kong-Request-Id:
-      - '019cf815-042f-7e99-bad8-ccf3057ca6a4'
+      - '019dffb6-dc15-73de-8a5b-42ddd7337b57'
       X-Ratelimit-Limit-Tokens-Minute:
-      - '120000'
+      - '2000000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '115028'
+      - '1995981'
       X-Ratelimit-Tokens-Query-Cost:
-      - '185'
+      - '50'
       X-Ratelimit-Limit-Req-Minute:
-      - '10'
+      - '1500'
       X-Ratelimit-Remaining-Req-Minute:
-      - '7'
+      - '1493'
       X-Envoy-Upstream-Service-Time:
-      - '1003'
+      - '189'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '1004'
+      - '191'
       X-Kong-Proxy-Latency:
-      - '11'
+      - '13'
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
@@ -150,11 +144,7 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"81c14a5f20fe4aa4ac19e9087dfa990b","created":1773688652,"model":"magistral-small-latest","usage":{"prompt_tokens":88,"total_tokens":185,"completion_tokens":97,"prompt_tokens_details":{"cached_tokens":69}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":[{"type":"thinking","thinking":[{"type":"text","text":"Okay,
-        the user has asked to multiply the previous result (which was 8) by 2. Let''s
-        do that step by step.\n\nFirst, recall the previous result was 8. Now, we
-        need to multiply 8 by 2.\n\n8 times 2 is 16.\n\nSo, the answer is 16.\n\nNow,
-        to present the answer clearly to the user."}]},{"type":"text","text":"The
-        result of multiplying 8 by 2 is 16."}]}}]}'
-  recorded_at: Mon, 16 Mar 2026 19:17:33 GMT
+      string: !binary |-
+        eyJpZCI6ImYwMGJmZmIyM2E3NzQzZGY5ZjJmOGI3Yzk4OGYwY2E0IiwiY3JlYXRlZCI6MTc3ODExMTY2NywibW9kZWwiOiJtYWdpc3RyYWwtc21hbGwtbGF0ZXN0IiwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6NDAsInRvdGFsX3Rva2VucyI6NTAsImNvbXBsZXRpb25fdG9rZW5zIjoxMCwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjB9fSwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImZpbmlzaF9yZWFzb24iOiJzdG9wIiwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwidG9vbF9jYWxscyI6bnVsbCwiY29udGVudCI6Ijggw5cgMiA9ICoqMTYqKi4ifX1dfQ==
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 recorded_with: VCR 6.4.0

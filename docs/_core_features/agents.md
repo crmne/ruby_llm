@@ -229,7 +229,10 @@ You can still instantiate and use an agent instance directly:
 
 ```ruby
 agent = WorkAssistant.new
-agent.ask("Hello")
+response = agent.ask("Hello")
+
+response.cost.total # v1.15+
+agent.cost.total    # v1.15+
 ```
 
 Agent instances delegate the full `RubyLLM::Chat` instance API to the underlying chat object
@@ -238,12 +241,14 @@ Agent instances delegate the full `RubyLLM::Chat` instance API to the underlying
 Delegated methods include:
 
 * `model`, `messages`, `tools`, `params`, `headers`, `schema`
+* `cost` (v1.15+)
 * `ask`, `say`, `complete`
 * `add_message`, `reset_messages!`, `each`
 * `with_tool`, `with_tools`
 * `with_model`, `with_temperature`, `with_thinking`, `with_context`
 * `with_params`, `with_headers`, `with_schema`
-* `on_new_message`, `on_end_message`, `on_tool_call`, `on_tool_result`
+* `before_message`, `after_message`, `before_tool_call`, `after_tool_result` (v1.15+)
+* Deprecated replacing callbacks: `on_new_message`, `on_end_message`, `on_tool_call`, `on_tool_result`
 
 You can always access the wrapped chat object directly via `agent.chat`.
 
@@ -280,6 +285,15 @@ Instruction persistence contract in Rails mode:
 * `create/create!` applies and persists instructions
 * `find` applies instructions at runtime only (no persistence side effects)
 * `sync_instructions!` explicitly persists the current agent instructions
+
+### Using an Existing Chat Record
+If you already have a `Chat` record, pass it to `Agent.new(chat:)` instead of calling `Agent.find`. This applies all agent configuration (instructions, tools, etc.) without an extra database query:
+
+```ruby
+chat_record = Chat.find(params[:id])
+chat = WorkAssistant.new(chat: chat_record)
+chat.ask("Hello")
+```
 
 ## When to Use Agents vs `RubyLLM.chat`
 

@@ -17,14 +17,12 @@ module RubyLLM
 
             Model::Info.new(
               id: model_id,
-              name: model_data['displayName'],
+              name: model_data['displayName'] || model_id,
               provider: slug,
-              family: capabilities.model_family(model_id),
               created_at: nil,
               context_window: model_data['inputTokenLimit'] || capabilities.context_window_for(model_id),
               max_output_tokens: model_data['outputTokenLimit'] || capabilities.max_tokens_for(model_id),
-              modalities: capabilities.modalities_for(model_id),
-              capabilities: capabilities.capabilities_for(model_id),
+              capabilities: capabilities.critical_capabilities_for(model_id),
               pricing: capabilities.pricing_for(model_id),
               metadata: {
                 version: model_data['version'],

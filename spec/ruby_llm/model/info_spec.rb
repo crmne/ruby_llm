@@ -175,6 +175,48 @@ RSpec.describe RubyLLM::Model::Info do
     end
   end
 
+  describe 'cache price helpers' do
+    it 'delegates to cache read and write pricing' do
+      info = described_class.new(
+        data.merge(
+          pricing: {
+            text_tokens: {
+              standard: {
+                cache_read_input_per_million: 0.5,
+                cache_write_input_per_million: 2.5
+              }
+            }
+          }
+        )
+      )
+
+      expect(info.cache_read_input_price_per_million).to eq(0.5)
+      expect(info.cache_write_input_price_per_million).to eq(2.5)
+      expect(info.cached_input_price_per_million).to eq(0.5)
+      expect(info.cache_creation_input_price_per_million).to eq(2.5)
+    end
+  end
+
+  describe '#cost_for' do
+    it 'builds a Cost for the supplied tokens' do
+      info = described_class.new(
+        data.merge(
+          pricing: {
+            text_tokens: {
+              standard: {
+                input_per_million: 2.50,
+                output_per_million: 10.00
+              }
+            }
+          }
+        )
+      )
+      tokens = RubyLLM::Tokens.new(input: 1_000, output: 2_000)
+
+      expect(info.cost_for(tokens).total).to eq(0.0225)
+    end
+  end
+
   describe '#to_h' do
     it 'returns a hash representation' do
       hash = info.to_h

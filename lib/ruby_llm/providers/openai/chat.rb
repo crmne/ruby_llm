@@ -61,8 +61,7 @@ module RubyLLM
           return unless message_data
 
           usage = data['usage'] || {}
-          cached_tokens = usage.dig('prompt_tokens_details', 'cached_tokens')
-          thinking_tokens = usage.dig('completion_tokens_details', 'reasoning_tokens')
+          thinking_tokens = thinking_tokens(usage)
           content, thinking_from_blocks = extract_content_and_thinking(message_data['content'])
           thinking_text = thinking_from_blocks || extract_thinking_text(message_data)
           thinking_signature = extract_thinking_signature(message_data)
@@ -72,14 +71,54 @@ module RubyLLM
             content: content,
             thinking: Thinking.build(text: thinking_text, signature: thinking_signature),
             tool_calls: parse_tool_calls(message_data['tool_calls']),
-            input_tokens: usage['prompt_tokens'],
-            output_tokens: usage['completion_tokens'],
-            cached_tokens: cached_tokens,
-            cache_creation_tokens: 0,
+            input_tokens: input_tokens(usage),
+            output_tokens: output_tokens(usage),
+            cached_tokens: cache_read_tokens(usage),
+            cache_creation_tokens: cache_write_tokens(usage),
             thinking_tokens: thinking_tokens,
             model_id: data['model'],
             raw: response
           )
+        end
+
+        def input_tokens(usage)
+          return usage['prompt_cache_miss_tokens'] if usage['prompt_cache_miss_tokens']
+
+          prompt_tokens = usage['prompt_tokens']
+          return unless prompt_tokens
+
+          [prompt_tokens.to_i - cache_read_tokens(usage).to_i - cache_write_tokens(usage).to_i, 0].max
+        end
+
+        def output_tokens(usage)
+          completion_tokens = usage['completion_tokens']
+          return unless completion_tokens
+
+          completion_tokens = completion_tokens.to_i
+          generated_tokens = generated_tokens_from_total(usage)
+          return completion_tokens unless generated_tokens && generated_tokens > completion_tokens
+
+          generated_tokens
+        end
+
+        def generated_tokens_from_total(usage)
+          prompt_tokens = usage['prompt_tokens']
+          total_tokens = usage['total_tokens']
+          return unless prompt_tokens && total_tokens
+
+          [total_tokens.to_i - prompt_tokens.to_i, 0].max
+        end
+
+        def cache_read_tokens(usage)
+          usage.dig('prompt_tokens_details', 'cached_tokens') || usage['prompt_cache_hit_tokens']
+        end
+
+        def cache_write_tokens(usage)
+          usage.dig('prompt_tokens_details', 'cache_write_tokens') || 0
+        end
+
+        def thinking_tokens(usage)
+          usage.dig('completion_tokens_details', 'reasoning_tokens') || usage['reasoning_tokens']
         end
 
         def format_messages(messages)
