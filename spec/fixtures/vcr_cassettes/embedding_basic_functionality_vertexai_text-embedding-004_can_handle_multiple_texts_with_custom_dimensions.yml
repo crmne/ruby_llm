@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Expires:
-      - Mon, 01 Jan 1990 00:00:00 GMT
-      Date:
-      - Thu, 02 Apr 2026 11:23:03 GMT
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
       Pragma:
       - no-cache
+      Date:
+      - Wed, 06 May 2026 23:52:10 GMT
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      Expires:
+      - Mon, 01 Jan 1990 00:00:00 GMT
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login openid https://www.googleapis.com/auth/userinfo.email",
+          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/sqlservice.login openid",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Thu, 02 Apr 2026 11:23:03 GMT
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/text-embedding-004:predict
@@ -86,7 +86,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Thu, 02 Apr 2026 11:23:04 GMT
+      - Wed, 06 May 2026 23:52:21 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -106,10 +106,6 @@ http_interactions:
           "predictions": [
             {
               "embeddings": {
-                "statistics": {
-                  "truncated": false,
-                  "token_count": 1
-                },
                 "values": [
                   -0.0071573383174836636,
                   0.01143405307084322,
@@ -879,15 +875,15 @@ http_interactions:
                   0.02526424266397953,
                   0.0099949613213539124,
                   -0.016448808833956718
-                ]
+                ],
+                "statistics": {
+                  "token_count": 1,
+                  "truncated": false
+                }
               }
             },
             {
               "embeddings": {
-                "statistics": {
-                  "truncated": false,
-                  "token_count": 1
-                },
                 "values": [
                   0.020355613902211189,
                   -0.049273330718278885,
@@ -1657,14 +1653,18 @@ http_interactions:
                   0.0027606498915702105,
                   0.018295800313353539,
                   -0.034528099000453949
-                ]
+                ],
+                "statistics": {
+                  "truncated": false,
+                  "token_count": 1
+                }
               }
             },
             {
               "embeddings": {
                 "statistics": {
-                  "truncated": false,
-                  "token_count": 2
+                  "token_count": 2,
+                  "truncated": false
                 },
                 "values": [
                   -0.0097851529717445374,
@@ -2443,5 +2443,5 @@ http_interactions:
             "billableCharacterCount": 20
           }
         }
-  recorded_at: Thu, 02 Apr 2026 11:23:04 GMT
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 recorded_with: VCR 6.4.0

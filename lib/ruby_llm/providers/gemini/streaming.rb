@@ -70,7 +70,10 @@ module RubyLLM
         end
 
         def extract_input_tokens(data)
-          data.dig('usageMetadata', 'promptTokenCount')
+          prompt_tokens = data.dig('usageMetadata', 'promptTokenCount')
+          return unless prompt_tokens
+
+          [prompt_tokens.to_i - data.dig('usageMetadata', 'cachedContentTokenCount').to_i, 0].max
         end
 
         def extract_output_tokens(data)
