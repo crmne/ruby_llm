@@ -3,6 +3,80 @@
 require 'spec_helper'
 
 RSpec.describe RubyLLM::Providers::Anthropic::Chat do
+  describe '.build_system_content' do
+    let(:logger) { instance_double(Logger, info: nil, debug: nil, error: nil, warn: nil) }
+
+    before { allow(RubyLLM).to receive(:logger).and_return(logger) }
+
+    it 'returns an empty array when no :system messages are present' do
+      expect(described_class.build_system_content([])).to eq([])
+    end
+
+    it 'returns a single text block for one :system message' do
+      msg = RubyLLM::Message.new(role: :system, content: 'Solo system prompt.')
+
+      blocks = described_class.build_system_content([msg])
+
+      expect(blocks).to eq([{ type: 'text', text: 'Solo system prompt.' }])
+    end
+
+    it 'returns both text blocks when multiple :system messages are passed' do
+      first = RubyLLM::Message.new(role: :system, content: 'Static prompt.')
+      second = RubyLLM::Message.new(role: :system, content: 'Per-session context.')
+
+      blocks = described_class.build_system_content([first, second])
+
+      expect(blocks).to eq(
+        [
+          { type: 'text', text: 'Static prompt.' },
+          { type: 'text', text: 'Per-session context.' }
+        ]
+      )
+    end
+
+    it 'does not log a warning when multiple :system messages are passed' do
+      first = RubyLLM::Message.new(role: :system, content: 'A')
+      second = RubyLLM::Message.new(role: :system, content: 'B')
+
+      described_class.build_system_content([first, second])
+
+      expect(logger).not_to have_received(:warn)
+    end
+
+    it 'preserves per-block cache_control on Raw content alongside plain text' do
+      cached_raw = RubyLLM::Providers::Anthropic::Content.new(
+        'Cached prefix.',
+        cache_control: { type: 'ephemeral' }
+      )
+      cached_msg = RubyLLM::Message.new(role: :system, content: cached_raw)
+      plain_msg = RubyLLM::Message.new(role: :system, content: 'Dynamic suffix.')
+
+      blocks = described_class.build_system_content([cached_msg, plain_msg])
+
+      expect(blocks).to eq(
+        [
+          { type: 'text', text: 'Cached prefix.', cache_control: { type: 'ephemeral' } },
+          { type: 'text', text: 'Dynamic suffix.' }
+        ]
+      )
+    end
+
+    it 'flattens mixed Raw-wrapped and plain string content into a single array' do
+      raw = RubyLLM::Content::Raw.new([{ type: 'text', text: 'Raw block.' }])
+      raw_msg = RubyLLM::Message.new(role: :system, content: raw)
+      plain_msg = RubyLLM::Message.new(role: :system, content: 'Plain block.')
+
+      blocks = described_class.build_system_content([raw_msg, plain_msg])
+
+      expect(blocks).to eq(
+        [
+          { type: 'text', text: 'Raw block.' },
+          { type: 'text', text: 'Plain block.' }
+        ]
+      )
+    end
+  end
+
   describe '.render_payload' do
     let(:model) { instance_double(RubyLLM::Model::Info, id: 'claude-sonnet-4-5', max_tokens: nil) }
 

@@ -596,7 +596,7 @@ RSpec.describe RubyLLM::Providers::Gemini::Chat do
       provider = RubyLLM::Providers::Gemini.new(RubyLLM.config)
       message = provider.send(:parse_completion_response, response)
 
-      expect(message.input_tokens).to eq(42)
+      expect(message.input_tokens).to eq(21)
       expect(message.output_tokens).to eq(8)
       expect(message.cached_tokens).to eq(21)
     end

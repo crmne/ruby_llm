@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
-      Date:
-      - Thu, 02 Apr 2026 12:16:55 GMT
-      Pragma:
-      - no-cache
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
+      Date:
+      - Thu, 07 May 2026 00:01:33 GMT
+      Pragma:
+      - no-cache
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/cloud-platform",
+          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login openid https://www.googleapis.com/auth/userinfo.email",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Thu, 02 Apr 2026 12:16:55 GMT
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-3.1-pro-preview:generateContent
@@ -90,7 +90,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Thu, 02 Apr 2026 12:17:00 GMT
+      - Thu, 07 May 2026 00:01:37 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -113,29 +113,29 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "**Defining the Approach**\n\nI've clearly defined the problem and identified the precise tool needed, along with the relevant parameters, for this weather query. My next step is to formulate the tool call. I've successfully extracted the necessary latitude and longitude values from the user's prompt.\n\n\n",
+                    "text": "**Fetching Berlin Weather**\n\nI'm focused on retrieving the current weather for Berlin. To do this, I'm utilizing the `default_api:weather` tool, inputting the provided latitude and longitude coordinates (52.5200, 13.4050) to get the most accurate information.\n\n",
                     "thought": true
                   },
                   {
                     "functionCall": {
                       "name": "weather",
                       "args": {
-                        "latitude": "52.5200",
-                        "longitude": "13.4050"
+                        "longitude": "13.4050",
+                        "latitude": "52.5200"
                       }
                     },
-                    "thoughtSignature": "CtcDAY89a18dDF0npigcqPKupMzc9RdKsAbkhpL5RB8aU7khHzGE34vcgdvUW89bWLg668wpFkO4geexxmUNddm/mXiFud+KNfJEl3iFY12Wo65JM/KByQ0GXUVmZ1l7pzYLqbdLms9cUI46FyNZCEeTjfR8lWXCgXrfy6/IJYY5TrijCtLwQOZ1dZ3eKhOVzO2n//xGZ50dZiHC4cV3i+cCGC1SIe8jW3BNIawnbIZR3lXwnOJqJfYKyKC5+uUQiXTDH83YnEPAG0bRiRKgTLAkQQUC7OGo52/h6ewHo9xxyyPBH1jyE68bHKiMBk33p/9LQcgsfiRtHVyCMMLd28xFwRBahtxH2CBIBLc/VxwwociSFmYqlu8B+Te3tyWQXCKZFvhPyuDz4Y8tJof9e1cNXM0s+QTdEbgIm1zeNJricv1zpVkL+M/In3XGhP4wI2q3MZGW1kp8RucKHiLKKByvnODgNjDo3ikOtPjF5asrTEgaftwUDvsV+VMCopr0zAh1oSU0GQEFy4cQGBw25eVYl3sKePINZZp1QmuiddxUAHPkuprQqJJs6aNDL+ve6qzjlqsoIoee3tk8y+t5ALHZ5It6no5Ip47UEcVGT8lYI7jUepMU2vuL"
+                    "thoughtSignature": "CtYDAY89a1/ohZQtgnWyD6vm1yKw334mnxdp2aY5DLbT/MEb3ndX9rraXmm0+2MxtXeunNAIGyTxESsYmIQ/f+hEH05WHmukYC87CfW19GDEEQAoHi6DyBP9zKUttM20DICEm7rx0wYAGL+D4id0frUagWV6X+w8Ed949/OYKWULuP2Me0Q7nSvn9N1zpdsRReozxOpXHFAnHY6UTQA3cvRBrJ0aTDReRaV8qAjuuTVyvEkjPI2g3JIz0hLMd2mCGQGllhFGZCfKHaCOjH8IBco3whOIA+pXK6HTC4ULt0YMkr2racmZRWArmNoLOfZcuMHrde94apFaKoJnfRz8dkav/2PKKhwo4EfS+TrGszVGsKxvsfVhcbGlUEo9Zl0pPkeJBzGZUbqxrIXGrIPlBwNXs0qCXeGrGT+IbX3UNSaqEZCkrQ/Lq/PPVsah5niomSuj/6BTo2kIuYMZBJKg4wJF3SjRCl8UYufk2idsLHp2CmzKxi7RSlyhCC22h5KavV4fMt+nd3d0jKW2TreSc0Ljq3rkjtoMfkGUv6BeVDVtjgOfV3D5trwx4kyXmXrcMcQuIYzMPHDX+mIrbLoRocZHFWVg9S1KQLhWrscRvj3xrYTt8o6d62gKIgGPPWtf3uyeWuC5AZMWnpMQKNYZosY0sB6cNrUqgTQ/Ok8="
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -1.0108038995188582
+              "avgLogprobs": 57.781246664150181
             }
           ],
           "usageMetadata": {
             "promptTokenCount": 70,
             "candidatesTokenCount": 21,
-            "totalTokenCount": 245,
+            "totalTokenCount": 244,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -149,20 +149,20 @@ http_interactions:
                 "tokenCount": 21
               }
             ],
-            "thoughtsTokenCount": 154
+            "thoughtsTokenCount": 153
           },
           "modelVersion": "gemini-3.1-pro-preview",
-          "createTime": "2026-04-02T12:16:55.679115Z",
-          "responseId": "N17Oacu5KfLivNkP8aXoyA4"
+          "createTime": "2026-05-07T00:01:33.778246Z",
+          "responseId": "Xdb7aYbAL5CgmPUPy9KiqQ4"
         }
-  recorded_at: Thu, 02 Apr 2026 12:17:01 GMT
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-3.1-pro-preview:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"What''s the weather in
-        Berlin? (52.5200, 13.4050)"}]},{"role":"model","parts":[{"functionCall":{"name":"weather","args":{"latitude":"52.5200","longitude":"13.4050"}},"thoughtSignature":"CtcDAY89a18dDF0npigcqPKupMzc9RdKsAbkhpL5RB8aU7khHzGE34vcgdvUW89bWLg668wpFkO4geexxmUNddm/mXiFud+KNfJEl3iFY12Wo65JM/KByQ0GXUVmZ1l7pzYLqbdLms9cUI46FyNZCEeTjfR8lWXCgXrfy6/IJYY5TrijCtLwQOZ1dZ3eKhOVzO2n//xGZ50dZiHC4cV3i+cCGC1SIe8jW3BNIawnbIZR3lXwnOJqJfYKyKC5+uUQiXTDH83YnEPAG0bRiRKgTLAkQQUC7OGo52/h6ewHo9xxyyPBH1jyE68bHKiMBk33p/9LQcgsfiRtHVyCMMLd28xFwRBahtxH2CBIBLc/VxwwociSFmYqlu8B+Te3tyWQXCKZFvhPyuDz4Y8tJof9e1cNXM0s+QTdEbgIm1zeNJricv1zpVkL+M/In3XGhP4wI2q3MZGW1kp8RucKHiLKKByvnODgNjDo3ikOtPjF5asrTEgaftwUDvsV+VMCopr0zAh1oSU0GQEFy4cQGBw25eVYl3sKePINZZp1QmuiddxUAHPkuprQqJJs6aNDL+ve6qzjlqsoIoee3tk8y+t5ALHZ5It6no5Ip47UEcVGT8lYI7jUepMU2vuL"}]},{"role":"function","parts":[{"functionResponse":{"name":"weather","response":{"name":"weather","content":[{"text":"Current
+        Berlin? (52.5200, 13.4050)"}]},{"role":"model","parts":[{"functionCall":{"name":"weather","args":{"longitude":"13.4050","latitude":"52.5200"}},"thoughtSignature":"CtYDAY89a1/ohZQtgnWyD6vm1yKw334mnxdp2aY5DLbT/MEb3ndX9rraXmm0+2MxtXeunNAIGyTxESsYmIQ/f+hEH05WHmukYC87CfW19GDEEQAoHi6DyBP9zKUttM20DICEm7rx0wYAGL+D4id0frUagWV6X+w8Ed949/OYKWULuP2Me0Q7nSvn9N1zpdsRReozxOpXHFAnHY6UTQA3cvRBrJ0aTDReRaV8qAjuuTVyvEkjPI2g3JIz0hLMd2mCGQGllhFGZCfKHaCOjH8IBco3whOIA+pXK6HTC4ULt0YMkr2racmZRWArmNoLOfZcuMHrde94apFaKoJnfRz8dkav/2PKKhwo4EfS+TrGszVGsKxvsfVhcbGlUEo9Zl0pPkeJBzGZUbqxrIXGrIPlBwNXs0qCXeGrGT+IbX3UNSaqEZCkrQ/Lq/PPVsah5niomSuj/6BTo2kIuYMZBJKg4wJF3SjRCl8UYufk2idsLHp2CmzKxi7RSlyhCC22h5KavV4fMt+nd3d0jKW2TreSc0Ljq3rkjtoMfkGUv6BeVDVtjgOfV3D5trwx4kyXmXrcMcQuIYzMPHDX+mIrbLoRocZHFWVg9S1KQLhWrscRvj3xrYTt8o6d62gKIgGPPWtf3uyeWuC5AZMWnpMQKNYZosY0sB6cNrUqgTQ/Ok8="}]},{"role":"function","parts":[{"functionResponse":{"name":"weather","response":{"name":"weather","content":[{"text":"Current
         weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}}}]}],"generationConfig":{"thinkingConfig":{"includeThoughts":true,"thinkingLevel":"low"}},"tools":[{"functionDeclarations":[{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"OBJECT","properties":{"latitude":{"type":"STRING","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"STRING","description":"Longitude (e.g.,
@@ -190,7 +190,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Thu, 02 Apr 2026 12:17:03 GMT
+      - Thu, 07 May 2026 00:01:40 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -206,6 +206,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicm9sZSI6ICJtb2RlbCIsCiAgICAgICAgInBhcnRzIjogWwogICAgICAgICAgewogICAgICAgICAgICAidGV4dCI6ICIqKlByZXNlbnRpbmcgV2VhdGhlciBEYXRhKipcblxuSSd2ZSBzdWNjZXNzZnVsbHkgcmVjZWl2ZWQgYW5kIHBhcnNlZCB0aGUgd2VhdGhlciBkYXRhIGZyb20gdGhlIEFQSS4gTXkgaW1tZWRpYXRlIHRhc2sgaXMgbm93IHRvIGZvcm1hdCB0aGUgb3V0cHV0LiBJJ20gZm9jdXNpbmcgb24gcHJlc2VudGluZyB0aGUgaW5mb3JtYXRpb24gaW4gYSBjb25jaXNlIGFuZCBlYXNpbHkgcmVhZGFibGUgbWFubmVyIGZvciB0aGUgdXNlci5cblxuXG4iLAogICAgICAgICAgICAidGhvdWdodCI6IHRydWUKICAgICAgICAgIH0sCiAgICAgICAgICB7CiAgICAgICAgICAgICJ0ZXh0IjogIlRoZSBjdXJyZW50IHdlYXRoZXIgaW4gQmVybGluIGlzIDE1wrBDIHdpdGggYSB3aW5kIHNwZWVkIG9mIDEwIGttL2guIiwKICAgICAgICAgICAgInRob3VnaHRTaWduYXR1cmUiOiAiQ3ZFQkFZODlhMThBWll3NVhqQzdnTTBYdzhDdVJaMVFkL3A1MExuUXZyc205Z1lGVnM3MFVSZkk4eVNXaWdWL3BvamtEeFhNMitSbjlOVWNabmhKSDU1V0xtb0JWYXcwOURIdTJkOG8rcWI0S0V2OGk5cEJzVHdBeE9pbzg3WU1ScWJvQTNkTGx3eXZwdFJLWWtjcG15S3dRZGdGUGg4SERiWjgrZERKSDdJUzFpb3NIMXp4eUthUEprMVlMdUs3K0R3a1Bsb0hsNWdqZXlZbGxIRFBoRCt6b0UxaGZpbzVUSzdvTjNpckpIWVhQd1hac3RkM21ONlV5WnFFaWhENVJVMEVac2tCQlljdDZhQXJTNkM5MjYvZHdZWGdwSmRobE0ybFJXckg0cXJPOVkzYW94bk5HOWgwdnBjRU5EVDNTbXVoTkE9PSIKICAgICAgICAgIH0KICAgICAgICBdCiAgICAgIH0sCiAgICAgICJmaW5pc2hSZWFzb24iOiAiU1RPUCIsCiAgICAgICJhdmdMb2dwcm9icyI6IC0wLjI5NTk0MDU3OTE0Mjg5ODQ1CiAgICB9CiAgXSwKICAidXNhZ2VNZXRhZGF0YSI6IHsKICAgICJwcm9tcHRUb2tlbkNvdW50IjogMTI3LAogICAgImNhbmRpZGF0ZXNUb2tlbkNvdW50IjogMjMsCiAgICAidG90YWxUb2tlbkNvdW50IjogMjIxLAogICAgInRyYWZmaWNUeXBlIjogIk9OX0RFTUFORCIsCiAgICAicHJvbXB0VG9rZW5zRGV0YWlscyI6IFsKICAgICAgewogICAgICAgICJtb2RhbGl0eSI6ICJURVhUIiwKICAgICAgICAidG9rZW5Db3VudCI6IDEyNwogICAgICB9CiAgICBdLAogICAgImNhbmRpZGF0ZXNUb2tlbnNEZXRhaWxzIjogWwogICAgICB7CiAgICAgICAgIm1vZGFsaXR5IjogIlRFWFQiLAogICAgICAgICJ0b2tlbkNvdW50IjogMjMKICAgICAgfQogICAgXSwKICAgICJ0aG91Z2h0c1Rva2VuQ291bnQiOiA3MQogIH0sCiAgIm1vZGVsVmVyc2lvbiI6ICJnZW1pbmktMy4xLXByby1wcmV2aWV3IiwKICAiY3JlYXRlVGltZSI6ICIyMDI2LTA0LTAyVDEyOjE3OjAxLjExNDYxNVoiLAogICJyZXNwb25zZUlkIjogIlBWN09hYmZfQnZMaXZOa1A4YVhveUE0Igp9Cg==
-  recorded_at: Thu, 02 Apr 2026 12:17:03 GMT
+        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicm9sZSI6ICJtb2RlbCIsCiAgICAgICAgInBhcnRzIjogWwogICAgICAgICAgewogICAgICAgICAgICAidGV4dCI6ICIqKlJlcG9ydGluZyBCZXJsaW4gV2VhdGhlcioqXG5cblRoZSB3ZWF0aGVyIGluIEJlcmxpbiBpcyBjdXJyZW50bHkgMTXCsEMgd2l0aCBhIHdpbmQgc3BlZWQgb2YgMTAga20vaC5cblxuIiwKICAgICAgICAgICAgInRob3VnaHQiOiB0cnVlCiAgICAgICAgICB9LAogICAgICAgICAgewogICAgICAgICAgICAidGV4dCI6ICJUaGUgY3VycmVudCB3ZWF0aGVyIGluIEJlcmxpbiBpcyAxNcKwQyB3aXRoIGEgd2luZCBzcGVlZCBvZiAxMCBrbS9oLiIsCiAgICAgICAgICAgICJ0aG91Z2h0U2lnbmF0dXJlIjogIkN2NEJBWTg5YTE4d0w4L1A3Ly9tQjJBZmtZdStBV2wydjVaRE1WM1l4UGJ2Y2xFa2t3NW0zRExqcGZ4WHh1YmU3cGFXQ1hoekNJajJTRC9ma1BsRVVqbTErYStNbjdOUjM2NnhhU2d1elBJRXlkL2tlUU95bWZ3SExyOHRCVHdGN0pEOEVIanRIRDdYWkwvWHdROCt5QmZ0UWJ6VnRLMFNIQklHOTFHMkVKZGpYV1FVWGQxNjdSTUJZaS8wUllybGF1RWNUNmx3VDdhTThZVDExWE1OT1d4cjJLSzZ1SjZsTjF4enVXRTZxZ0QrTUdrUzlUVGkyR051MXBQSjQvb3JJQ094cDBNOGdKT28zanR6TVNTQ3lTcWJNUmgwVGNlM29aRlZjVHRNcmRjdUdrOUF4THBzdU5YNEtoYVpsSTB0Z2pDTnRhZ1k5VUgwU1F1dzE0Qm05ZHM9IgogICAgICAgICAgfQogICAgICAgIF0KICAgICAgfSwKICAgICAgImZpbmlzaFJlYXNvbiI6ICJTVE9QIiwKICAgICAgImF2Z0xvZ3Byb2JzIjogLTAuNjYzODkzMjAwNTc2MTQ4NDIKICAgIH0KICBdLAogICJ1c2FnZU1ldGFkYXRhIjogewogICAgInByb21wdFRva2VuQ291bnQiOiAxMjcsCiAgICAiY2FuZGlkYXRlc1Rva2VuQ291bnQiOiAyMywKICAgICJ0b3RhbFRva2VuQ291bnQiOiAyMTAsCiAgICAidHJhZmZpY1R5cGUiOiAiT05fREVNQU5EIiwKICAgICJwcm9tcHRUb2tlbnNEZXRhaWxzIjogWwogICAgICB7CiAgICAgICAgIm1vZGFsaXR5IjogIlRFWFQiLAogICAgICAgICJ0b2tlbkNvdW50IjogMTI3CiAgICAgIH0KICAgIF0sCiAgICAiY2FuZGlkYXRlc1Rva2Vuc0RldGFpbHMiOiBbCiAgICAgIHsKICAgICAgICAibW9kYWxpdHkiOiAiVEVYVCIsCiAgICAgICAgInRva2VuQ291bnQiOiAyMwogICAgICB9CiAgICBdLAogICAgInRob3VnaHRzVG9rZW5Db3VudCI6IDYwCiAgfSwKICAibW9kZWxWZXJzaW9uIjogImdlbWluaS0zLjEtcHJvLXByZXZpZXciLAogICJjcmVhdGVUaW1lIjogIjIwMjYtMDUtMDdUMDA6MDE6MzcuNDcwNDc0WiIsCiAgInJlc3BvbnNlSWQiOiAiWWRiN2FjcmJISUdCaGNJUHU0ZXZ1UUkiCn0K
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 recorded_with: VCR 6.4.0

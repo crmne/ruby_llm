@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require 'active_support/concern'
+require 'active_support/inflector'
+
 module RubyLLM
   module ActiveRecord
     # Adds chat and message persistence capabilities to ActiveRecord models.
@@ -160,27 +163,33 @@ module RubyLLM
         self
       end
 
-      def on_new_message(&block)
-        to_llm
-
-        existing_callback = @chat.instance_variable_get(:@on)[:new_message]
-
-        @chat.on_new_message do
-          existing_callback&.call
-          block&.call
-        end
+      def on_new_message(&)
+        to_llm.on_new_message(&)
         self
       end
 
-      def on_end_message(&block)
-        to_llm
+      def on_end_message(&)
+        to_llm.on_end_message(&)
+        self
+      end
 
-        existing_callback = @chat.instance_variable_get(:@on)[:end_message]
+      def before_message(...)
+        to_llm.before_message(...)
+        self
+      end
 
-        @chat.on_end_message do |msg|
-          existing_callback&.call(msg)
-          block&.call(msg)
-        end
+      def after_message(...)
+        to_llm.after_message(...)
+        self
+      end
+
+      def before_tool_call(...)
+        to_llm.before_tool_call(...)
+        self
+      end
+
+      def after_tool_result(...)
+        to_llm.after_tool_result(...)
         self
       end
 
@@ -319,8 +328,8 @@ module RubyLLM
       def setup_persistence_callbacks
         return @chat if @chat.instance_variable_get(:@_persistence_callbacks_setup)
 
-        @chat.on_new_message { persist_new_message }
-        @chat.on_end_message { |msg| persist_message_completion(msg) }
+        @chat.before_message { persist_new_message }
+        @chat.after_message { |msg| persist_message_completion(msg) }
 
         @chat.instance_variable_set(:@_persistence_callbacks_setup, true)
         @chat
@@ -383,8 +392,8 @@ module RubyLLM
           case attachment
           when ActionDispatch::Http::UploadedFile, ActiveStorage::Blob
             attachment
-          when ActiveStorage::Attached::One, ActiveStorage::Attached::Many
-            attachment.blobs
+          when ActiveStorage::Attachment, ActiveStorage::Attached::One, ActiveStorage::Attached::Many
+            active_storage_blobs(attachment)
           when Hash
             attachment.values.map { |v| prepare_for_active_storage(v) }
           else
@@ -398,14 +407,26 @@ module RubyLLM
 
         attachment = source.is_a?(RubyLLM::Attachment) ? source : RubyLLM::Attachment.new(source)
 
-        {
-          io: StringIO.new(attachment.content),
-          filename: attachment.filename,
-          content_type: attachment.mime_type
-        }
+        if attachment.active_storage?
+          active_storage_blobs(attachment.source)
+        else
+          {
+            io: StringIO.new(attachment.content),
+            filename: attachment.filename,
+            content_type: attachment.mime_type
+          }
+        end
       rescue StandardError => e
         RubyLLM.logger.warn "Failed to process attachment #{source}: #{e.message}"
         nil
+      end
+
+      def active_storage_blobs(attachment)
+        case attachment
+        when ActiveStorage::Blob then attachment
+        when ActiveStorage::Attachment, ActiveStorage::Attached::One then attachment.blob
+        when ActiveStorage::Attached::Many then attachment.blobs
+        end
       end
 
       def build_content(message, attachments)
@@ -473,9 +494,15 @@ module RubyLLM
       end
 
       def extract_content
-        return content unless respond_to?(:attachments) && attachments.attached?
+        text_content = if content.respond_to?(:to_plain_text)
+                         content.to_plain_text
+                       else
+                         content
+                       end
 
-        RubyLLM::Content.new(content).tap do |content_obj|
+        return text_content unless respond_to?(:attachments) && attachments.attached?
+
+        RubyLLM::Content.new(text_content).tap do |content_obj|
           @_tempfiles = []
 
           attachments.each do |attachment|

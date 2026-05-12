@@ -7,10 +7,10 @@ module RubyLLM
   class Parameter
     attr_reader :name, :type, :description, :required
 
-    def initialize(name, type: 'string', desc: nil, required: true)
+    def initialize(name, type: 'string', desc: nil, description: nil, required: true)
       @name = name
       @type = type
-      @description = desc
+      @description = desc || description
       @required = required
     end
   end
@@ -30,6 +30,8 @@ module RubyLLM
       end
     end
 
+    POSITIONAL_PARAMETER_KINDS = %i[req opt rest].freeze
+
     class << self
       attr_reader :params_schema_definition
 
@@ -38,6 +40,7 @@ module RubyLLM
 
         @description = text
       end
+      alias desc description
 
       def param(name, **options)
         parameters[name] = Parameter.new(name, **options)
@@ -94,6 +97,8 @@ module RubyLLM
           definition.json_schema
         elsif parameters.any?
           SchemaDefinition.from_parameters(parameters)&.json_schema
+        else
+          SchemaDefinition.from_parameters(inferred_parameters, allow_empty: true)&.json_schema
         end
       end
     end
@@ -127,9 +132,10 @@ module RubyLLM
     end
 
     def validate_keyword_arguments(arguments)
-      required_keywords, optional_keywords, accepts_extra_keywords = execute_keyword_signature
+      required_keywords, optional_keywords, accepts_extra_keywords, accepts_positional_arguments =
+        execute_keyword_signature
 
-      return nil if required_keywords.empty? && optional_keywords.empty?
+      return nil if required_keywords.empty? && optional_keywords.empty? && accepts_positional_arguments
 
       argument_keys = arguments.keys
       missing_keyword = first_missing_keyword(required_keywords, argument_keys)
@@ -148,8 +154,11 @@ module RubyLLM
       required_keywords = keyword_signature.filter_map { |kind, name| name if kind == :keyreq }
       optional_keywords = keyword_signature.filter_map { |kind, name| name if kind == :key }
       accepts_extra_keywords = keyword_signature.any? { |kind, _| kind == :keyrest }
+      accepts_positional_arguments = keyword_signature.any? do |kind, _|
+        POSITIONAL_PARAMETER_KINDS.include?(kind)
+      end
 
-      [required_keywords, optional_keywords, accepts_extra_keywords]
+      [required_keywords, optional_keywords, accepts_extra_keywords, accepts_positional_arguments]
     end
 
     def first_missing_keyword(required_keywords, argument_keys)
@@ -160,11 +169,19 @@ module RubyLLM
       (argument_keys - allowed_keywords).first
     end
 
+    def inferred_parameters
+      required_keywords, optional_keywords, = execute_keyword_signature
+
+      (required_keywords + optional_keywords).to_h do |name|
+        [name, Parameter.new(name, required: required_keywords.include?(name))]
+      end
+    end
+
     # Wraps schema handling for tool parameters, supporting JSON Schema hashes,
     # RubyLLM::Schema instances/classes, and DSL blocks.
     class SchemaDefinition
-      def self.from_parameters(parameters)
-        return nil if parameters.nil? || parameters.empty?
+      def self.from_parameters(parameters, allow_empty: false)
+        return nil if parameters.nil? || (parameters.empty? && !allow_empty)
 
         properties = parameters.to_h do |name, param|
           schema = {

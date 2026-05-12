@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 02 Apr 2026 11:33:14 GMT
+      - Wed, 06 May 2026 23:54:27 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -32,63 +32,55 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '019d4df8-06a5-74a3-9ad7-3540687c0009'
+      - '019dffb6-dad6-7a72-bdfb-eda63ec11193'
       X-Kong-Request-Id:
-      - '019d4df8-06a5-74a3-9ad7-3540687c0009'
+      - '019dffb6-dad6-7a72-bdfb-eda63ec11193'
       X-Ratelimit-Limit-Tokens-Minute:
-      - '120000'
+      - '2000000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '114738'
+      - '1996020'
       X-Ratelimit-Tokens-Query-Cost:
-      - '136'
+      - '32'
       X-Ratelimit-Limit-Req-Minute:
-      - '10'
+      - '1500'
       X-Ratelimit-Remaining-Req-Minute:
-      - '7'
+      - '1494'
       X-Envoy-Upstream-Service-Time:
-      - '1422'
+      - '177'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '1423'
+      - '178'
       X-Kong-Proxy-Latency:
-      - '21'
-      Cf-Cache-Status:
-      - DYNAMIC
+      - '27'
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
+      Cf-Cache-Status:
+      - DYNAMIC
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"80cbd7e7e50f4db3aeff10e7fa8d79c2","created":1775129593,"model":"magistral-small-latest","usage":{"prompt_tokens":11,"total_tokens":136,"completion_tokens":125,"prompt_tokens_details":{"cached_tokens":0}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":[{"type":"thinking","thinking":[{"type":"text","text":"Okay,
-        the question is simple arithmetic. The user is asking for the sum of 5 and
-        3.\n\nLet me recall basic addition:\n- 5 + 1 = 6\n- 6 + 1 = 7\n- 7 + 1 = 8\n\nWait,
-        no. 5 + 3 is 8, right? Let me double-check:\n- 5 + 2 = 7, then add 1 more
-        to get 8.\n\nYes, 5 + 3 is indeed 8."}]},{"type":"text","text":"The sum of
-        5 and 3 is 8."}]}}]}'
-  recorded_at: Thu, 02 Apr 2026 11:33:14 GMT
+      string: '{"id":"cfe2d34e3f5b443b940f6fb6d9c3854f","created":1778111666,"model":"magistral-small-latest","usage":{"prompt_tokens":23,"total_tokens":32,"completion_tokens":9,"prompt_tokens_details":{"cached_tokens":0}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"5
+        + 3 equals **8**."}}]}'
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 - request:
     method: post
     uri: https://api.mistral.ai/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"magistral-small-latest","messages":[{"role":"user","content":"What
-        is 5 + 3?"},{"role":"assistant","content":[{"type":"thinking","thinking":[{"type":"text","text":"Okay,
-        the question is simple arithmetic. The user is asking for the sum of 5 and
-        3.\n\nLet me recall basic addition:\n- 5 + 1 = 6\n- 6 + 1 = 7\n- 7 + 1 = 8\n\nWait,
-        no. 5 + 3 is 8, right? Let me double-check:\n- 5 + 2 = 7, then add 1 more
-        to get 8.\n\nYes, 5 + 3 is indeed 8."}]},{"type":"text","text":"The sum of
-        5 and 3 is 8."}]},{"role":"user","content":"Now multiply that by 2"}],"stream":false}'
+        is 5 + 3?"},{"role":"assistant","content":"5 + 3 equals **8**."},{"role":"user","content":"Now
+        multiply that by 2"}],"stream":false}'
     headers:
       User-Agent:
       - Faraday v2.14.1
@@ -106,7 +98,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 02 Apr 2026 11:33:16 GMT
+      - Wed, 06 May 2026 23:54:27 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -114,49 +106,45 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '019d4df8-0c95-7997-84a6-ca7eb23902d4'
+      - '019dffb6-dc15-73de-8a5b-42ddd7337b57'
       X-Kong-Request-Id:
-      - '019d4df8-0c95-7997-84a6-ca7eb23902d4'
+      - '019dffb6-dc15-73de-8a5b-42ddd7337b57'
       X-Ratelimit-Limit-Tokens-Minute:
-      - '120000'
+      - '2000000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '114606'
+      - '1995981'
       X-Ratelimit-Tokens-Query-Cost:
-      - '132'
+      - '50'
       X-Ratelimit-Limit-Req-Minute:
-      - '10'
+      - '1500'
       X-Ratelimit-Remaining-Req-Minute:
-      - '6'
+      - '1493'
       X-Envoy-Upstream-Service-Time:
-      - '990'
+      - '189'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '991'
+      - '191'
       X-Kong-Proxy-Latency:
-      - '10'
-      Cf-Cache-Status:
-      - DYNAMIC
+      - '13'
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
+      Cf-Cache-Status:
+      - DYNAMIC
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"1dc57229c5144e748b93d0fc080dad3e","created":1775129595,"model":"magistral-small-latest","usage":{"prompt_tokens":144,"total_tokens":265,"completion_tokens":121,"prompt_tokens_details":{"cached_tokens":133}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":[{"type":"thinking","thinking":[{"type":"text","text":"Okay,
-        the user has given us the result from the previous question, which is 8, and
-        now asks us to multiply that result by 2.\n\nSo, the calculation is 8 * 2.\n\nLet
-        me recall multiplication tables:\n- 8 * 2 = 16.\n\nBut just to be sure, let
-        me break it down:\n- 8 * 1 = 8\n- 8 * 2 = 8 + 8 = 16\n\nYes, that''s correct."}]},{"type":"text","text":"The
-        result of multiplying 8 by 2 is 16."}]}}]}'
-  recorded_at: Thu, 02 Apr 2026 11:33:16 GMT
+      string: !binary |-
+        eyJpZCI6ImYwMGJmZmIyM2E3NzQzZGY5ZjJmOGI3Yzk4OGYwY2E0IiwiY3JlYXRlZCI6MTc3ODExMTY2NywibW9kZWwiOiJtYWdpc3RyYWwtc21hbGwtbGF0ZXN0IiwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6NDAsInRvdGFsX3Rva2VucyI6NTAsImNvbXBsZXRpb25fdG9rZW5zIjoxMCwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjB9fSwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImZpbmlzaF9yZWFzb24iOiJzdG9wIiwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwidG9vbF9jYWxscyI6bnVsbCwiY29udGVudCI6Ijggw5cgMiA9ICoqMTYqKi4ifX1dfQ==
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 recorded_with: VCR 6.4.0
