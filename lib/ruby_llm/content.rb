@@ -26,6 +26,10 @@ module RubyLLM
       end
     end
 
+    def empty?
+      @text.to_s.strip.empty? && @attachments.empty?
+    end
+
     # For Rails serialization
     def to_h
       { text: @text, attachments: @attachments.map(&:to_h) }
