@@ -31,7 +31,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Mon, 16 Mar 2026 19:11:28 GMT
+      - Wed, 06 May 2026 23:52:21 GMT
       Server:
       - elb
       Vary:
@@ -39,7 +39,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - fd0a13139ebce276161085c654c3a599
+      - 5c0036dede88c320097ebd4ff9edc87c
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -47,16 +47,18 @@ http_interactions:
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 b0a751f9161fd546ec249858c6f7afc6.cloudfront.net (CloudFront)
+      - 1.1 19122e456dd72898d91ba6e8ed8f0bf8.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - TXL52-P2
+      - LIS50-P2
       X-Amz-Cf-Id:
-      - DDUUsxdvh_FUbGckNfVBAd1P0rjobj9DOCwcddZFWBviL16BnkXOqw==
+      - oinANB0TC9VsYVeBC7FzBe-ojCNFVj5afHls-AkECp-vhZ0VvW-glQ==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"9b82d86d-2731-4a01-9aaa-4fec3d5837b7","object":"chat.completion","created":1773688288,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"The
-        file `ruby.txt` contains the text:\n\n```\nRuby is the best.\n```"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":33,"completion_tokens":18,"total_tokens":51,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":33},"system_fingerprint":"fp_eaab8d114b_prod0820_fp8_kvcache"}'
-  recorded_at: Mon, 16 Mar 2026 19:11:29 GMT
+      string: '{"id":"828cc696-9936-491b-b0cf-00c01ef7b56c","object":"chat.completion","created":1778111541,"model":"deepseek-v4-flash","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        file named **`ruby.txt`** contains the following plain text:\n\n> **Ruby is
+        the best.**\n\nIt is a simple text file (mime type: `text/plain`) with no
+        additional formatting or code blocks."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":33,"completion_tokens":47,"total_tokens":80,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":33},"system_fingerprint":"fp_058df29938_prod0820_fp8_kvcache_20260402"}'
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/chat/completions
@@ -64,10 +66,11 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"deepseek-chat","messages":[{"role":"user","content":[{"type":"text","text":"What''s
         in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
-        is the best.</file>"}]},{"role":"assistant","content":"The file `ruby.txt`
-        contains the text:\n\n```\nRuby is the best.\n```"},{"role":"user","content":[{"type":"text","text":"and
-        in this one?"},{"type":"text","text":"<file name=''ruby.xml'' mime_type=''application/xml''><truism>Ruby
-        is the best</truism></file>"}]}],"stream":false}'
+        is the best.</file>"}]},{"role":"assistant","content":"The file named **`ruby.txt`**
+        contains the following plain text:\n\n> **Ruby is the best.**\n\nIt is a simple
+        text file (mime type: `text/plain`) with no additional formatting or code
+        blocks."},{"role":"user","content":[{"type":"text","text":"and in this one?"},{"type":"text","text":"<file
+        name=''ruby.xml'' mime_type=''application/xml''><truism>Ruby is the best</truism></file>"}]}],"stream":false}'
     headers:
       User-Agent:
       - Faraday v2.14.1
@@ -91,7 +94,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Mon, 16 Mar 2026 19:11:29 GMT
+      - Wed, 06 May 2026 23:52:22 GMT
       Server:
       - elb
       Vary:
@@ -99,7 +102,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - '01975d7df276096d9eb9b5072082d7fa'
+      - 97b532975b9847fc101110c1e3bf6f22
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -107,15 +110,18 @@ http_interactions:
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 b0bcf28a9fd6a6d6da1d365359e434b4.cloudfront.net (CloudFront)
+      - 1.1 43ca2d8e4cb785d209f72e4235413ef0.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - TXL50-P6
+      - LIS50-P2
       X-Amz-Cf-Id:
-      - 0wp7O-1JKvWSsovhEtSeJ0C982pph5lX69fLJmCQPRdtMvwm6uoweQ==
+      - Mak92aQN0mRSjIRCGpXTkQpAHlGkMhsXjXpud_B1kbEc7ZxEcPKyXw==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"3dd3c04c-dc26-4d47-b005-fb4e900dd7f0","object":"chat.completion","created":1773688289,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"The
-        file `ruby.xml` contains XML content with a root element `<truism>`:\n\n```xml\n<truism>Ruby
-        is the best</truism>\n```"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":92,"completion_tokens":37,"total_tokens":129,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":92},"system_fingerprint":"fp_eaab8d114b_prod0820_fp8_kvcache"}'
-  recorded_at: Mon, 16 Mar 2026 19:11:31 GMT
+      string: '{"id":"a9ec3125-bdd3-4c32-9f4f-f7e14766559e","object":"chat.completion","created":1778111542,"model":"deepseek-v4-flash","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        file named **`ruby.xml`** contains the following XML content:\n\n```xml\n<truism>Ruby
+        is the best</truism>\n```\n\nIt is an XML file where the text \"Ruby is the
+        best\" is wrapped inside a custom element called `<truism>`. This is a structured
+        way of representing the same statement from the previous file, now labeled
+        as a truism."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":121,"completion_tokens":82,"total_tokens":203,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":121},"system_fingerprint":"fp_058df29938_prod0820_fp8_kvcache_20260402"}'
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 recorded_with: VCR 6.4.0

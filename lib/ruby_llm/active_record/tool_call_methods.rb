@@ -1,27 +1,17 @@
 # frozen_string_literal: true
 
+require 'active_support/concern'
+require 'ruby_llm/active_record/payload_helpers'
+
 module RubyLLM
   module ActiveRecord
     # Methods mixed into tool call models.
     module ToolCallMethods
       extend ActiveSupport::Concern
+      include PayloadHelpers
 
       def tool_error_message
-        payload = parse_payload(arguments)
-        return unless payload.is_a?(Hash)
-
-        payload['error'] || payload[:error]
-      end
-
-      private
-
-      def parse_payload(value)
-        return value if value.is_a?(Hash) || value.is_a?(Array)
-        return if value.blank?
-
-        JSON.parse(value)
-      rescue JSON::ParserError
-        nil
+        payload_error_message(arguments)
       end
     end
   end

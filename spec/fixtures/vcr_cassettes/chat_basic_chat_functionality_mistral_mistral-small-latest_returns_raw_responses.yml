@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 16 Mar 2026 19:13:32 GMT
+      - Wed, 06 May 2026 23:54:32 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -32,29 +32,29 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '019cf811-5835-7666-bc6b-1c490694807c'
+      - '019dffb6-ede9-7c7b-a014-16cb13ac8962'
       X-Kong-Request-Id:
-      - '019cf811-5835-7666-bc6b-1c490694807c'
+      - '019dffb6-ede9-7c7b-a014-16cb13ac8962'
       X-Ratelimit-Limit-Tokens-Minute:
       - '2000000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '1999146'
+      - '1996052'
       X-Ratelimit-Tokens-Query-Cost:
-      - '70'
+      - '60'
       X-Ratelimit-Limit-Req-Minute:
-      - '360'
+      - '1500'
       X-Ratelimit-Remaining-Req-Minute:
-      - '356'
+      - '1492'
       X-Envoy-Upstream-Service-Time:
-      - '377'
+      - '344'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '378'
+      - '345'
       X-Kong-Proxy-Latency:
-      - '7'
+      - '26'
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
@@ -70,10 +70,9 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"e7bf06f6520646a58cf8bb785c7c2470","created":1773688412,"model":"mistral-small-latest","usage":{"prompt_tokens":10,"total_tokens":70,"completion_tokens":60,"prompt_tokens_details":{"cached_tokens":0}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
-        capital of France is **Paris**. It is known for iconic landmarks such as the
-        Eiffel Tower, the Louvre Museum, and Notre-Dame Cathedral. Paris is also a
-        major <GOOGLE_CLOUD_LOCATION> hub for culture, fashion, and cuisine.\n\nWould
-        you like to know more about Paris or France in general?"}}]}'
-  recorded_at: Mon, 16 Mar 2026 19:13:32 GMT
+      string: '{"id":"95d85f719f004df3b01ba91a352618bf","created":1778111671,"model":"mistral-small-latest","usage":{"prompt_tokens":22,"total_tokens":60,"completion_tokens":38,"prompt_tokens_details":{"cached_tokens":0}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
+        capital of France is **Paris**. It is the largest city in France and serves
+        as the country''s political, economic, and cultural center.\n\nWould you like
+        more details about Paris?"}}]}'
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 recorded_with: VCR 6.4.0

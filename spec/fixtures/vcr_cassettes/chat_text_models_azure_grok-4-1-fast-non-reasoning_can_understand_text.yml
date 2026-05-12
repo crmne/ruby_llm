@@ -24,42 +24,60 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Cache-Control:
+      - no-cache
       Transfer-Encoding:
       - chunked
       Content-Type:
       - application/json
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Vary:
+      - access-control-request-headers
       Request-Context:
       - appId=
+      Traceparent:
+      - 00-ff705ad7b93a4c208b25f8627ccbd1d5-7f0222a700003146-00
       X-Ms-Rai-Invoked:
       - 'true'
-      Prompt-Token-Len:
-      - '24'
-      Sampling-Token-Len:
-      - '16'
       X-Request-Id:
       - "<X_REQUEST_ID>"
+      X-Xai-Model-Address:
+      - http://localhost:9988
       X-Ms-Client-Request-Id:
-      - 720c0264-c9aa-4a7b-a4cd-90c9041e4cd6
+      - ff705ad7-b93a-4c20-8b25-f8627ccbd1d5
       Azureml-Model-Session:
-      - d-d37d4aed-feba-4c61-ae2a-7f8ce4d38049
+      - d20260429222844-bf683bdf
       Azureai-Requested-Tier:
       - default
       Azureai-Processed-Tier:
       - default
       X-Ms-Is-Spilled-Over:
       - 'false'
+      X-Ratelimit-Key:
+      - grok-4-1-fast-non-reasoning
+      X-Ratelimit-Remaining-Requests:
+      - '49'
+      X-Ratelimit-Reset-Requests:
+      - '1'
+      X-Ratelimit-Limit-Requests:
+      - '50'
+      X-Ratelimit-Renewalperiod-Requests:
+      - '60'
+      X-Ratelimit-Abusepenalty-Active:
+      - 'False'
       X-Ratelimit-Remaining-Tokens:
-      - '50000'
+      - '49941'
       X-Ratelimit-Reset-Tokens:
       - '0'
       X-Ratelimit-Limit-Tokens:
       - '50000'
       X-Ratelimit-Renewalperiod-Tokens:
       - '60'
-      X-Ratelimit-Abusepenalty-Active:
-      - 'False'
       Apim-Request-Id:
-      - 720c0264-c9aa-4a7b-a4cd-90c9041e4cd6
+      - ff705ad7-b93a-4c20-8b25-f8627ccbd1d5
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Ms-Deployment-Name:
@@ -69,14 +87,12 @@ http_interactions:
       X-Ms-Region:
       - West Europe
       Date:
-      - Mon, 16 Mar 2026 20:26:51 GMT
+      - Thu, 07 May 2026 00:20:31 GMT
     body:
       encoding: UTF-8
-      string: '{"choices":[{"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"protected_material_code":{"filtered":false,"detected":false},"protected_material_text":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}},"finish_reason":"stop","index":0,"logprobs":null,"message":{"content":"The
-        file `ruby.txt` contains the text: \"Ruby is the best.\"","refusal":null,"role":"assistant","tool_calls":null},"stop_reason":null}],"created":1773692811,"id":"db0ba898-ddeb-4250-adb3-d38296866d8d","model":"grok-4-1-fast-non-reasoning","object":"chat.completion","prompt_filter_results":[{"prompt_index":0,"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"jailbreak":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}}}],"usage":{"audio_prompt_tokens":0,"completion_tokens":16,"completion_tokens_details":{"accepted_prediction_tokens":0,"audio_tokens":0,"reasoning_tokens":0,"rejected_prediction_tokens":0},"cost_in_usd_ticks":0,"num_sources_used":0,"prompt_tokens":24,"prompt_tokens_details":{"audio_tokens":0,"cached_tokens":0,"image_tokens":0,"text_tokens":24},"total_tokens":40}}
-
-        '
-  recorded_at: Mon, 16 Mar 2026 20:26:52 GMT
+      string: '{"id":"9024f0f5-0486-41f2-abb0-a050ff71b84b","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        file `ruby.txt` contains the text: \"Ruby is the best.\""},"finish_reason":"stop","content_filter_results":{}}],"usage":{"prompt_tokens":24,"completion_tokens":16,"total_tokens":40,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":0,"audio_tokens":0,"text_tokens":24,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1778113231,"object":"chat.completion","prompt_filter_results":null}'
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 - request:
     method: post
     uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
@@ -104,42 +120,60 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Cache-Control:
+      - no-cache
       Transfer-Encoding:
       - chunked
       Content-Type:
       - application/json
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Vary:
+      - access-control-request-headers
       Request-Context:
       - appId=
-      Sampling-Token-Len:
-      - '23'
+      Traceparent:
+      - 00-3e5b919aa79a420bb8d35a075353abcd-388c9f8c0000383d-00
       X-Ms-Rai-Invoked:
       - 'true'
-      Prompt-Token-Len:
-      - '81'
       X-Request-Id:
       - "<X_REQUEST_ID>"
+      X-Xai-Model-Address:
+      - http://localhost:9988
       X-Ms-Client-Request-Id:
-      - c2610043-d436-4092-9a4c-c1713eaffba9
+      - 3e5b919a-a79a-420b-b8d3-5a075353abcd
       Azureml-Model-Session:
-      - d-a3423142-ae3e-4fb1-be62-1eecd5f54116
+      - d20260429222844-bf683bdf
       Azureai-Requested-Tier:
       - default
       Azureai-Processed-Tier:
       - default
       X-Ms-Is-Spilled-Over:
       - 'false'
+      X-Ratelimit-Key:
+      - grok-4-1-fast-non-reasoning
+      X-Ratelimit-Remaining-Requests:
+      - '49'
+      X-Ratelimit-Reset-Requests:
+      - '1'
+      X-Ratelimit-Limit-Requests:
+      - '50'
+      X-Ratelimit-Renewalperiod-Requests:
+      - '60'
+      X-Ratelimit-Abusepenalty-Active:
+      - 'False'
       X-Ratelimit-Remaining-Tokens:
-      - '50000'
+      - '49871'
       X-Ratelimit-Reset-Tokens:
       - '0'
       X-Ratelimit-Limit-Tokens:
       - '50000'
       X-Ratelimit-Renewalperiod-Tokens:
       - '60'
-      X-Ratelimit-Abusepenalty-Active:
-      - 'False'
       Apim-Request-Id:
-      - c2610043-d436-4092-9a4c-c1713eaffba9
+      - 3e5b919a-a79a-420b-b8d3-5a075353abcd
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Ms-Deployment-Name:
@@ -149,12 +183,11 @@ http_interactions:
       X-Ms-Region:
       - West Europe
       Date:
-      - Mon, 16 Mar 2026 20:26:52 GMT
+      - Thu, 07 May 2026 00:20:32 GMT
     body:
       encoding: UTF-8
-      string: '{"choices":[{"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"protected_material_code":{"filtered":false,"detected":false},"protected_material_text":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}},"finish_reason":"stop","index":0,"logprobs":null,"message":{"content":"The
-        file `ruby.xml` contains the XML: `\u003ctruism\u003eRuby is the best\u003c/truism\u003e`.","refusal":null,"role":"assistant","tool_calls":null},"stop_reason":null}],"created":1773692812,"id":"e2ba8025-8e5f-4ad6-9847-d6b941395433","model":"grok-4-1-fast-non-reasoning","object":"chat.completion","prompt_filter_results":[{"prompt_index":0,"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"jailbreak":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}}}],"usage":{"audio_prompt_tokens":0,"completion_tokens":23,"completion_tokens_details":{"accepted_prediction_tokens":0,"audio_tokens":0,"reasoning_tokens":0,"rejected_prediction_tokens":0},"cost_in_usd_ticks":0,"num_sources_used":0,"prompt_tokens":81,"prompt_tokens_details":{"audio_tokens":0,"cached_tokens":0,"image_tokens":0,"text_tokens":81},"total_tokens":104}}
-
-        '
-  recorded_at: Mon, 16 Mar 2026 20:26:53 GMT
+      string: '{"id":"0c81d720-3ccc-433e-9d52-e950bd0e744c","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        file `ruby.xml` contains the following XML content:\n\n```\n<truism>Ruby is
+        the best</truism>\n```"},"finish_reason":"stop","content_filter_results":{}}],"usage":{"prompt_tokens":81,"completion_tokens":26,"total_tokens":107,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":0,"audio_tokens":0,"text_tokens":81,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1778113232,"object":"chat.completion","prompt_filter_results":null}'
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 recorded_with: VCR 6.4.0

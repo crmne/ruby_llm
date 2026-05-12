@@ -3,6 +3,31 @@
 require 'spec_helper'
 
 RSpec.describe RubyLLM::Tool do
+  describe '.description' do
+    it 'allows desc as a shorter alias' do
+      stub_const('DescribedTool', Class.new(described_class) do
+        desc 'Does a thing'
+      end)
+
+      expect(DescribedTool.description).to eq('Does a thing')
+      expect(DescribedTool.new.description).to eq('Does a thing')
+    end
+  end
+
+  describe '.param' do
+    it 'accepts description as an alias for desc' do
+      stub_const('ParamDescriptionTool', Class.new(described_class) do
+        param :city, description: 'City name'
+
+        def execute(city:)
+          city
+        end
+      end)
+
+      expect(ParamDescriptionTool.parameters[:city].description).to eq('City name')
+    end
+  end
+
   describe '#name' do
     it 'converts class name to snake_case and removes _tool suffix' do
       stub_const('SampleTool', Class.new(described_class))
@@ -89,6 +114,87 @@ RSpec.describe RubyLLM::Tool do
 
       expect { ManualArgumentErrorTool.new.call({ 'questions' => [] }) }
         .to raise_error(ArgumentError, 'bad value provided')
+    end
+
+    it 'returns an error hash for unknown arguments when execute takes no keywords' do
+      stub_const('NoArgumentTool', Class.new(described_class) do
+        def execute
+          'ok'
+        end
+      end)
+
+      result = NoArgumentTool.new.call({ 'unexpected' => true })
+
+      expect(result).to eq({ error: 'Invalid tool arguments: unknown keyword: unexpected' })
+    end
+
+    it 'preserves legacy positional argument handling' do
+      stub_const('RestArgumentTool', Class.new(described_class) do
+        def execute(*args)
+          args
+        end
+      end)
+
+      result = RestArgumentTool.new.call({ 'legacy' => true })
+
+      expect(result).to eq([{ legacy: true }])
+    end
+  end
+
+  describe '#params_schema' do
+    it 'infers flat string parameters from the execute keyword signature' do
+      stub_const('InferredSignatureTool', Class.new(described_class) do
+        def execute(query:, limit: '5')
+          [query, limit]
+        end
+      end)
+
+      expect(InferredSignatureTool.new.params_schema).to eq(
+        'type' => 'object',
+        'properties' => {
+          'query' => { 'type' => 'string' },
+          'limit' => { 'type' => 'string' }
+        },
+        'required' => ['query'],
+        'additionalProperties' => false,
+        'strict' => true
+      )
+    end
+
+    it 'uses an empty object schema for tools without keyword arguments' do
+      stub_const('EmptySignatureTool', Class.new(described_class) do
+        def execute
+          'ok'
+        end
+      end)
+
+      expect(EmptySignatureTool.new.params_schema).to eq(
+        'type' => 'object',
+        'properties' => {},
+        'required' => [],
+        'additionalProperties' => false,
+        'strict' => true
+      )
+    end
+
+    it 'keeps explicit param declarations authoritative' do
+      stub_const('ExplicitParamTool', Class.new(described_class) do
+        param :query, desc: 'Search query'
+
+        def execute(query:, internal:)
+          [query, internal]
+        end
+      end)
+
+      expect(ExplicitParamTool.new.params_schema).to eq(
+        'type' => 'object',
+        'properties' => {
+          'query' => { 'type' => 'string', 'description' => 'Search query' }
+        },
+        'required' => ['query'],
+        'additionalProperties' => false,
+        'strict' => true
+      )
     end
   end
 end

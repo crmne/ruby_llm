@@ -10,7 +10,7 @@ http_interactions:
       User-Agent:
       - Faraday v2.14.1
       X-Amz-Date:
-      - 20260316T191144Z
+      - 20260506T235158Z
       X-Amz-Content-Sha256:
       - d479455c2e0d919436a9fd1b0104fb7e86a2643fa2ab36d3c18aa44478d70510
       Authorization:
@@ -28,36 +28,35 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 16 Mar 2026 19:11:46 GMT
+      - Wed, 06 May 2026 23:51:59 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '757'
+      - '742'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - c605e1c4-2853-4640-a474-ca1dc65e9d6c
+      - a7a6335e-7bee-457f-8eb7-e04f49da8715
     body:
       encoding: UTF-8
-      string: '{"metrics":{"latencyMs":1528},"output":{"message":{"content":[{"reasoningContent":{"reasoningText":{"signature":"EuMBCkgICxABGAIqQE2gFSwh5qjlA6m3Nn/4mOZL3IR3ZaVSokZMJbfqwgWgiwfmyXMWnE+ShdQcGcRD8G+1HVn4MTkUa9T1RWg9wIISDIlv6Qb3CcVifmvsHRoMk7Sb2UleHpSOfyLYIjA+rX8HvRpR97LoBaNaKQVJgMdTXrre/7aHGoR8ZyLlrto3Tg0Q5qZb2KJFPId/qroqSZgGmSndWvVJ9I6P0Pk0xDOqrXErzbBZ7XHdbxL4yr0nW6QxlZfo0kKrV2IngcEl0n3hwO8+zWSWBjTwBd3Tvb4akTiiKllB0t4YAQ==","text":"This
-        is a straightforward arithmetic question. 5 + 3 = 8."}}},{"text":"5 + 3 =
-        8"}],"role":"assistant"}},"stopReason":"end_turn","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":45,"outputTokens":39,"serverToolUsage":{},"totalTokens":84}}'
-  recorded_at: Mon, 16 Mar 2026 19:11:46 GMT
+      string: '{"metrics":{"latencyMs":754},"output":{"message":{"content":[{"reasoningContent":{"reasoningText":{"signature":"Et0BCkgIDRABGAIqQM/IuX8kzyuovQQKMaVgUKBxN4J3/chklsPjvDwXRwHl9UOmvf1zywlxZkxD6MX/L6ryg5c7CnL2oZC03iimVvoSDNprJ3ZdhIxjY7OVABoMP4F43F89G+SkmJjnIjByXa2czPp8L9SK+iY6GQILulaxV50Lx2kIrY9A3owx8Ja/Wa3808AgvXdOXTzR67wqQ9B9bd0oi8FqXEn5lHhMwEo4r2RobCS5XSzpfZtZjwQHNAOm/LZYV2saxxVzLGeynfH5aKYBmntrSXgBCCFFSWEc+DwYAQ==","text":"This
+        is a straightforward math question. 5 + 3 = 8."}}},{"text":"5 + 3 = 8"}],"role":"assistant"}},"stopReason":"end_turn","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":45,"outputTokens":39,"serverToolUsage":{},"totalTokens":84}}'
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 - request:
     method: post
     uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.anthropic.claude-haiku-4-5-20251001-v1:0/converse
     body:
       encoding: UTF-8
       string: '{"messages":[{"role":"user","content":[{"text":"What is 5 + 3?"}]},{"role":"assistant","content":[{"reasoningContent":{"reasoningText":{"text":"This
-        is a straightforward arithmetic question. 5 + 3 = 8.","signature":"EuMBCkgICxABGAIqQE2gFSwh5qjlA6m3Nn/4mOZL3IR3ZaVSokZMJbfqwgWgiwfmyXMWnE+ShdQcGcRD8G+1HVn4MTkUa9T1RWg9wIISDIlv6Qb3CcVifmvsHRoMk7Sb2UleHpSOfyLYIjA+rX8HvRpR97LoBaNaKQVJgMdTXrre/7aHGoR8ZyLlrto3Tg0Q5qZb2KJFPId/qroqSZgGmSndWvVJ9I6P0Pk0xDOqrXErzbBZ7XHdbxL4yr0nW6QxlZfo0kKrV2IngcEl0n3hwO8+zWSWBjTwBd3Tvb4akTiiKllB0t4YAQ=="}}},{"text":"5
+        is a straightforward math question. 5 + 3 = 8.","signature":"Et0BCkgIDRABGAIqQM/IuX8kzyuovQQKMaVgUKBxN4J3/chklsPjvDwXRwHl9UOmvf1zywlxZkxD6MX/L6ryg5c7CnL2oZC03iimVvoSDNprJ3ZdhIxjY7OVABoMP4F43F89G+SkmJjnIjByXa2czPp8L9SK+iY6GQILulaxV50Lx2kIrY9A3owx8Ja/Wa3808AgvXdOXTzR67wqQ9B9bd0oi8FqXEn5lHhMwEo4r2RobCS5XSzpfZtZjwQHNAOm/LZYV2saxxVzLGeynfH5aKYBmntrSXgBCCFFSWEc+DwYAQ=="}}},{"text":"5
         + 3 = 8"}]},{"role":"user","content":[{"text":"Now multiply that by 2"}]}],"inferenceConfig":{},"additionalModelRequestFields":{"reasoning_config":{"type":"enabled","budget_tokens":1024}}}'
     headers:
       User-Agent:
       - Faraday v2.14.1
       X-Amz-Date:
-      - 20260316T191146Z
+      - 20260506T235159Z
       X-Amz-Content-Sha256:
-      - 6317c5814883edc45da8f5e8d21667e5b368f8b0897e24a2f06bf5b60c4de177
+      - '0085876b6e4fbae90c4d4def75fcee3849c43d29ae0834dacc1024b83a808d04'
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
@@ -73,18 +72,18 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 16 Mar 2026 19:11:48 GMT
+      - Wed, 06 May 2026 23:52:01 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '805'
+      - '804'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 72b1e19f-41eb-40a2-99f6-2a6f63a56a34
+      - d82fef79-f5d6-4b0e-a7cc-5734b5cdfb6c
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJtZXRyaWNzIjp7ImxhdGVuY3lNcyI6MTUzMn0sIm91dHB1dCI6eyJtZXNzYWdlIjp7ImNvbnRlbnQiOlt7InJlYXNvbmluZ0NvbnRlbnQiOnsicmVhc29uaW5nVGV4dCI6eyJzaWduYXR1cmUiOiJFdllCQ2tnSUN4QUJHQUlxUU9tNGR3R3M0MGlaVGZDSUlqMGlTWmo1M3Z0VkNHaXhHYVBoa0s0RjQ3UHJESjRJS2cxSEM0NVJBb2YzQTA2N0I4ODRRQWZXTVFlZnRCWVB3VUw5MDY4U0RPUE80NkUyc1oxd2xVRlo0Qm9NUmhPUVJocEFrYUNpenh3TElqQ2NXdlhEV2RPOVd4ZGFucGVic2Y3MmNVeDlDdDNES1RCQktReVpybXozMXpyMXEyUWFIazRJSlhkb21DVmJqeVVxWEZrTm1ZckNaZytuS2tWSERyNEg0RnBHaFB5bXBBK1pzUkJPMXI2QTRET1V6WVNRMFJjYnExc2l1ck9SS2FKK29lNWN5R21ZdkVWYU1Ec1RQRVE4c3N3V29NVjI2alpldVRZZ2s5SkFIVVJsRTN0a2QrMkxQM1gvRWVqT0dBRT0iLCJ0ZXh0IjoiVGhlIHVzZXIgaXMgYXNraW5nIG1lIHRvIG11bHRpcGx5IHRoZSBwcmV2aW91cyByZXN1bHQgKDgpIGJ5IDIuXG5cbjggw5cgMiA9IDE2In19fSx7InRleHQiOiI4IMOXIDIgPSAxNiJ9XSwicm9sZSI6ImFzc2lzdGFudCJ9fSwic3RvcFJlYXNvbiI6ImVuZF90dXJuIiwidXNhZ2UiOnsiY2FjaGVSZWFkSW5wdXRUb2tlbkNvdW50IjowLCJjYWNoZVJlYWRJbnB1dFRva2VucyI6MCwiY2FjaGVXcml0ZUlucHV0VG9rZW5Db3VudCI6MCwiY2FjaGVXcml0ZUlucHV0VG9rZW5zIjowLCJpbnB1dFRva2VucyI6NjcsIm91dHB1dFRva2VucyI6NDcsInNlcnZlclRvb2xVc2FnZSI6e30sInRvdGFsVG9rZW5zIjoxMTR9fQ==
-  recorded_at: Mon, 16 Mar 2026 19:11:48 GMT
+        eyJtZXRyaWNzIjp7ImxhdGVuY3lNcyI6OTAzfSwib3V0cHV0Ijp7Im1lc3NhZ2UiOnsiY29udGVudCI6W3sicmVhc29uaW5nQ29udGVudCI6eyJyZWFzb25pbmdUZXh0Ijp7InNpZ25hdHVyZSI6IkV2WUJDa2dJRFJBQkdBSXFRT200ZHdHczQwaVpUZkNJSWowaVNaajUzdnRWQ0dpeEdhUGhrSzRGNDdQckRKNElLZzFIQzQ1UkFvZjNBMDY3Qjg4NFFBZldNUWVmdEJZUHdVTDkwNjhTREtIcld0cmlhOGt2S0o4S1JSb01EdGVCdFJ4ckVvcU1EaDd1SWpCSndQenZ4NzQvb1VUU2Y4WXJEemtKRGkxUTliYmQ1OHJkWmROdnlySFQ3RGk1eUhVRnhWREtiajAxUVdGb3Bvc3FYQm5kbU9Hd1hLVk51Q3p6OUxkNXYzMmZmTG1JR3NBeU1kTEpncGlIWG9EOXg1OTcxWDlaMjNjYWo0OXFVUmtMektlK2o0L0treUZyeXhOc0JlMTNibWFERlpHaEJsTHdoNmJJVkoxYU9hZFhuUThmSmtzbEdBWlUvYlIrR0FFPSIsInRleHQiOiJUaGUgdXNlciBpcyBhc2tpbmcgbWUgdG8gbXVsdGlwbHkgdGhlIHByZXZpb3VzIHJlc3VsdCAoOCkgYnkgMi5cblxuOCDDlyAyID0gMTYifX19LHsidGV4dCI6Ijggw5cgMiA9IDE2In1dLCJyb2xlIjoiYXNzaXN0YW50In19LCJzdG9wUmVhc29uIjoiZW5kX3R1cm4iLCJ1c2FnZSI6eyJjYWNoZVJlYWRJbnB1dFRva2VuQ291bnQiOjAsImNhY2hlUmVhZElucHV0VG9rZW5zIjowLCJjYWNoZVdyaXRlSW5wdXRUb2tlbkNvdW50IjowLCJjYWNoZVdyaXRlSW5wdXRUb2tlbnMiOjAsImlucHV0VG9rZW5zIjo2Nywib3V0cHV0VG9rZW5zIjo0Nywic2VydmVyVG9vbFVzYWdlIjp7fSwidG90YWxUb2tlbnMiOjExNH19
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 recorded_with: VCR 6.4.0

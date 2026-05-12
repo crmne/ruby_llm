@@ -23,42 +23,60 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Cache-Control:
+      - no-cache
       Transfer-Encoding:
       - chunked
       Content-Type:
       - application/json
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Vary:
+      - access-control-request-headers
       Request-Context:
       - appId=
-      Sampling-Token-Len:
-      - '9'
-      Prompt-Token-Len:
-      - '78'
+      Traceparent:
+      - 00-996a901059754403919d2184a54942e2-c902fca50003508b-00
       X-Ms-Rai-Invoked:
       - 'true'
       X-Request-Id:
       - "<X_REQUEST_ID>"
+      X-Xai-Model-Address:
+      - http://localhost:9988
       X-Ms-Client-Request-Id:
-      - d518a0d2-55bd-4570-a210-d28d5af2f300
+      - 996a9010-5975-4403-919d-2184a54942e2
       Azureml-Model-Session:
-      - d-d37d4aed-feba-4c61-ae2a-7f8ce4d38049
+      - d20260429215123-f480a160
       Azureai-Requested-Tier:
       - default
       Azureai-Processed-Tier:
       - default
       X-Ms-Is-Spilled-Over:
       - 'false'
+      X-Ratelimit-Key:
+      - grok-4-1-fast-non-reasoning
+      X-Ratelimit-Remaining-Requests:
+      - '49'
+      X-Ratelimit-Reset-Requests:
+      - '1'
+      X-Ratelimit-Limit-Requests:
+      - '50'
+      X-Ratelimit-Renewalperiod-Requests:
+      - '60'
+      X-Ratelimit-Abusepenalty-Active:
+      - 'False'
       X-Ratelimit-Remaining-Tokens:
-      - '50000'
+      - '49911'
       X-Ratelimit-Reset-Tokens:
       - '0'
       X-Ratelimit-Limit-Tokens:
       - '50000'
       X-Ratelimit-Renewalperiod-Tokens:
       - '60'
-      X-Ratelimit-Abusepenalty-Active:
-      - 'False'
       Apim-Request-Id:
-      - d518a0d2-55bd-4570-a210-d28d5af2f300
+      - 996a9010-5975-4403-919d-2184a54942e2
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Ms-Deployment-Name:
@@ -68,20 +86,18 @@ http_interactions:
       X-Ms-Region:
       - West Europe
       Date:
-      - Mon, 16 Mar 2026 19:11:15 GMT
+      - Wed, 06 May 2026 23:52:01 GMT
     body:
       encoding: UTF-8
-      string: '{"choices":[{"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"protected_material_code":{"filtered":false,"detected":false},"protected_material_text":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}},"finish_reason":"stop","index":0,"logprobs":null,"message":{"content":"{\"age\":42,\"name\":\"Bob\"}","refusal":null,"role":"assistant","tool_calls":null},"stop_reason":null}],"created":1773688275,"id":"0194d7f2-cacb-4e4b-991f-4a4608dde2a7","model":"grok-4-1-fast-non-reasoning","object":"chat.completion","prompt_filter_results":[{"prompt_index":0,"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"jailbreak":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}}}],"usage":{"audio_prompt_tokens":0,"completion_tokens":9,"completion_tokens_details":{"accepted_prediction_tokens":0,"audio_tokens":0,"reasoning_tokens":0,"rejected_prediction_tokens":0},"cost_in_usd_ticks":0,"num_sources_used":0,"prompt_tokens":78,"prompt_tokens_details":{"audio_tokens":0,"cached_tokens":0,"image_tokens":0,"text_tokens":78},"total_tokens":87}}
-
-        '
-  recorded_at: Mon, 16 Mar 2026 19:11:16 GMT
+      string: '{"id":"d8c4e930-08b2-4beb-960c-39ca3fd86f47","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"{\"name\":\"Bob\",\"age\":30}"},"finish_reason":"stop","content_filter_results":{}}],"usage":{"prompt_tokens":78,"completion_tokens":9,"total_tokens":87,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":0,"audio_tokens":0,"text_tokens":78,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1778111521,"object":"chat.completion","prompt_filter_results":null}'
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 - request:
     method: post
     uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
     body:
       encoding: UTF-8
       string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"user","content":"Generate
-        a person named Bob"},{"role":"assistant","content":"{\"age\":42,\"name\":\"Bob\"}"},{"role":"user","content":"Now
+        a person named Bob"},{"role":"assistant","content":"{\"name\":\"Bob\",\"age\":30}"},{"role":"user","content":"Now
         just tell me about Ruby"}],"stream":false}'
     headers:
       User-Agent:
@@ -99,42 +115,60 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Cache-Control:
+      - no-cache
       Transfer-Encoding:
       - chunked
       Content-Type:
       - application/json
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Vary:
+      - access-control-request-headers
       Request-Context:
       - appId=
-      Sampling-Token-Len:
-      - '36'
+      Traceparent:
+      - 00-68f3391f63684e7aa188efe69fed058e-2da0405200002ba6-00
       X-Ms-Rai-Invoked:
       - 'true'
-      Prompt-Token-Len:
-      - '31'
       X-Request-Id:
       - "<X_REQUEST_ID>"
+      X-Xai-Model-Address:
+      - http://localhost:9988
       X-Ms-Client-Request-Id:
-      - 5c7f4ced-d77c-40ca-9c8c-cac5123672aa
+      - 68f3391f-6368-4e7a-a188-efe69fed058e
       Azureml-Model-Session:
-      - d-a3423142-ae3e-4fb1-be62-1eecd5f54116
+      - d20260429222844-bf683bdf
       Azureai-Requested-Tier:
       - default
       Azureai-Processed-Tier:
       - default
       X-Ms-Is-Spilled-Over:
       - 'false'
+      X-Ratelimit-Key:
+      - grok-4-1-fast-non-reasoning
+      X-Ratelimit-Remaining-Requests:
+      - '49'
+      X-Ratelimit-Reset-Requests:
+      - '1'
+      X-Ratelimit-Limit-Requests:
+      - '50'
+      X-Ratelimit-Renewalperiod-Requests:
+      - '60'
+      X-Ratelimit-Abusepenalty-Active:
+      - 'False'
       X-Ratelimit-Remaining-Tokens:
-      - '50000'
+      - '49940'
       X-Ratelimit-Reset-Tokens:
       - '0'
       X-Ratelimit-Limit-Tokens:
       - '50000'
       X-Ratelimit-Renewalperiod-Tokens:
       - '60'
-      X-Ratelimit-Abusepenalty-Active:
-      - 'False'
       Apim-Request-Id:
-      - 5c7f4ced-d77c-40ca-9c8c-cac5123672aa
+      - 68f3391f-6368-4e7a-a188-efe69fed058e
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Ms-Deployment-Name:
@@ -144,13 +178,11 @@ http_interactions:
       X-Ms-Region:
       - West Europe
       Date:
-      - Mon, 16 Mar 2026 19:11:16 GMT
+      - Wed, 06 May 2026 23:52:03 GMT
     body:
       encoding: UTF-8
-      string: '{"choices":[{"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"protected_material_code":{"filtered":false,"detected":false},"protected_material_text":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}},"finish_reason":"stop","index":0,"logprobs":null,"message":{"content":"{\"age\":28,\"name\":\"Ruby\",\"occupation\":\"Software
-        Engineer\",\"hobbies\":[\"Coding\",\"Hiking\",\"Reading sci-fi\"],\"personality\":\"Curious,
-        witty, adventurous\"}","refusal":null,"role":"assistant","tool_calls":null},"stop_reason":null}],"created":1773688277,"id":"bdc81b1a-ef8a-4684-885f-eb68a93b501b","model":"grok-4-1-fast-non-reasoning","object":"chat.completion","prompt_filter_results":[{"prompt_index":0,"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"jailbreak":{"filtered":false,"detected":false},"self_harm":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"}}}],"usage":{"audio_prompt_tokens":0,"completion_tokens":36,"completion_tokens_details":{"accepted_prediction_tokens":0,"audio_tokens":0,"reasoning_tokens":0,"rejected_prediction_tokens":0},"cost_in_usd_ticks":0,"num_sources_used":0,"prompt_tokens":31,"prompt_tokens_details":{"audio_tokens":0,"cached_tokens":0,"image_tokens":0,"text_tokens":31},"total_tokens":67}}
-
-        '
-  recorded_at: Mon, 16 Mar 2026 19:11:17 GMT
+      string: '{"id":"3df0f713-562c-418b-83b0-6f78ff2ee1cc","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"{\"name\":\"Ruby\",\"age\":28,\"occupation\":\"Software
+        Developer\",\"hobbies\":[\"Coding\",\"Hiking\",\"Reading Sci-Fi\"],\"personality\":\"Curious,
+        witty, and adventurous\"}"},"finish_reason":"stop","content_filter_results":{}}],"usage":{"prompt_tokens":31,"completion_tokens":37,"total_tokens":68,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":0,"audio_tokens":0,"text_tokens":31,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1778111523,"object":"chat.completion","prompt_filter_results":null}'
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 recorded_with: VCR 6.4.0

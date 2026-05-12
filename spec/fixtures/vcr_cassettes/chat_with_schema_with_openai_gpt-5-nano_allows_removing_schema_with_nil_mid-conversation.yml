@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 16 Mar 2026 19:12:04 GMT
+      - Wed, 06 May 2026 23:52:48 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -46,7 +46,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '7014'
+      - '4878'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
@@ -75,16 +75,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-DK7e1OMiVe5UP921KMh0NCOvqkELL",
+          "id": "chatcmpl-DcgKhYi6NvBu0udqutc8EQ9lT4042",
           "object": "chat.completion",
-          "created": 1773688317,
+          "created": 1778111563,
           "model": "gpt-5-nano-2025-08-07",
           "choices": [
             {
               "index": 0,
               "message": {
                 "role": "assistant",
-                "content": "{\"name\":\"Bob\",\"age\":30}",
+                "content": "{\"name\":\"Bob\",\"age\":34}",
                 "refusal": null,
                 "annotations": []
               },
@@ -93,14 +93,14 @@ http_interactions:
           ],
           "usage": {
             "prompt_tokens": 43,
-            "completion_tokens": 597,
-            "total_tokens": 640,
+            "completion_tokens": 469,
+            "total_tokens": 512,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
             },
             "completion_tokens_details": {
-              "reasoning_tokens": 576,
+              "reasoning_tokens": 448,
               "audio_tokens": 0,
               "accepted_prediction_tokens": 0,
               "rejected_prediction_tokens": 0
@@ -109,14 +109,14 @@ http_interactions:
           "service_tier": "default",
           "system_fingerprint": null
         }
-  recorded_at: Mon, 16 Mar 2026 19:12:04 GMT
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"gpt-5-nano","messages":[{"role":"user","content":"Generate
-        a person named Bob"},{"role":"assistant","content":"{\"name\":\"Bob\",\"age\":30}"},{"role":"user","content":"Now
+        a person named Bob"},{"role":"assistant","content":"{\"name\":\"Bob\",\"age\":34}"},{"role":"user","content":"Now
         just tell me about Ruby"}],"stream":false}'
     headers:
       User-Agent:
@@ -135,7 +135,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 16 Mar 2026 19:12:16 GMT
+      - Wed, 06 May 2026 23:53:04 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -157,7 +157,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '12318'
+      - '15625'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
@@ -184,41 +184,7 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: |
-        {
-          "id": "chatcmpl-DK7e81khegjRpz5i5CjZ86l4ZaSSR",
-          "object": "chat.completion",
-          "created": 1773688324,
-          "model": "gpt-5-nano-2025-08-07",
-          "choices": [
-            {
-              "index": 0,
-              "message": {
-                "role": "assistant",
-                "content": "Ruby is a dynamic, open-source programming language focused on simplicity and productivity.\n\n- Origins: Created by Yukihiro Matsumoto (Matz) and first released in 1995. Influences include Perl, Smalltalk, Eiffel, and Lisp.\n- Philosophy: Emphasizes human-friendly syntax and developer happiness; aims to be easy to read and write.\n- Core ideas: Everything is an object; powerful metaprogramming, blocks, and first-class functions; strong standard library; dynamic typing with garbage collection.\n- Key features: \n  - Clean, readable syntax\n  - Blocks and iterators for concise iteration\n  - Modules and mixins for reusable behavior\n  - Rich ecosystem with RubyGems for package management\n  - Multiple implementations (MRI is the reference, plus JRuby, TruffleRuby, etc.)\n- Ecosystem and use cases:\n  - Web development with Ruby on Rails (a famous, full-featured framework)\n  - Lightweight web apps with Sinatra or Hanami\n  - Scripting, automation, DevOps tasks\n  - Prototyping and rapid development\n- Performance and concurrency:\n  - Historically slower than compiled languages, but Ruby 2.x/3.x introduced notable performance improvements\n  - Concurrency features like Ractors (in newer Ruby versions) provide safer parallelism\n- Getting started:\n  - Install via version managers like rbenv or RVM\n  - Use gem to install libraries\n  - Create web apps with Rails (rails new myapp)\n\nA quick example:\n- Print a hello message: puts \"Hello, Ruby!\"",
-                "refusal": null,
-                "annotations": []
-              },
-              "finish_reason": "stop"
-            }
-          ],
-          "usage": {
-            "prompt_tokens": 36,
-            "completion_tokens": 1422,
-            "total_tokens": 1458,
-            "prompt_tokens_details": {
-              "cached_tokens": 0,
-              "audio_tokens": 0
-            },
-            "completion_tokens_details": {
-              "reasoning_tokens": 1088,
-              "audio_tokens": 0,
-              "accepted_prediction_tokens": 0,
-              "rejected_prediction_tokens": 0
-            }
-          },
-          "service_tier": "default",
-          "system_fingerprint": null
-        }
-  recorded_at: Mon, 16 Mar 2026 19:12:16 GMT
+      string: !binary |-
+        ewogICJpZCI6ICJjaGF0Y21wbC1EY2dLbXFMVGt0SEZSdFVzYVNoWUZVVlRKQUp5UCIsCiAgIm9iamVjdCI6ICJjaGF0LmNvbXBsZXRpb24iLAogICJjcmVhdGVkIjogMTc3ODExMTU2OCwKICAibW9kZWwiOiAiZ3B0LTUtbmFuby0yMDI1LTA4LTA3IiwKICAiY2hvaWNlcyI6IFsKICAgIHsKICAgICAgImluZGV4IjogMCwKICAgICAgIm1lc3NhZ2UiOiB7CiAgICAgICAgInJvbGUiOiAiYXNzaXN0YW50IiwKICAgICAgICAiY29udGVudCI6ICJSdWJ5IGNhbiBtZWFuIHR3byB0aGluZ3MsIHNvIGhlcmXigJlzIGEgcXVpY2sgb3ZlcnZpZXcgb2YgYm90aC4gSWYgeW91IG1lYW50IG9uZSBzcGVjaWZpY2FsbHksIHRlbGwgbWUgYW5kIEnigJlsbCBkaXZlIGRlZXBlci5cblxuUnVieSAocHJvZ3JhbW1pbmcgbGFuZ3VhZ2UpXG4tIFdoYXQgaXQgaXM6IEEgZHluYW1pYywgb3Blbi1zb3VyY2UgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UgZGVzaWduZWQgZm9yIGRldmVsb3BlciBoYXBwaW5lc3MgYW5kIHByb2R1Y3Rpdml0eS5cbi0gV2hvIG1hZGUgaXQ6IFl1a2loaXJvIE1hdHN1bW90byAoTWF0eikgaW4gMTk5NS5cbi0gS2V5IGlkZWFzOiBSZWFkYWJsZSwgbmF0dXJhbCBzeW50YXg7IGV2ZXJ5dGhpbmcgaXMgYW4gb2JqZWN0OyBlbXBoYXNpcyBvbiBzaW1wbGljaXR5IGFuZCBlbGVnYW5jZS5cbi0gQ29yZSBmZWF0dXJlczpcbiAgLSBPYmplY3Qtb3JpZW50ZWQgKGFsbW9zdCBldmVyeXRoaW5nIGlzIGFuIG9iamVjdClcbiAgLSBCbG9ja3MsIHByb2NzLCBhbmQgbGFtYmRhcyBmb3IgZmxleGlibGUgY29udHJvbCBmbG93XG4gIC0gR2FyYmFnZSBjb2xsZWN0aW9uIGFuZCBhIHN0cm9uZyBzdGFuZGFyZCBsaWJyYXJ5XG4gIC0gTWl4aW5zIHZpYSBtb2R1bGVzLCBkeW5hbWljIHR5cGluZyB3aXRoIGR1Y2sgdHlwaW5nXG4gIC0gTWV0YXByb2dyYW1taW5nIGNhcGFiaWxpdGllcyBmb3IgcG93ZXJmdWwgYWJzdHJhY3Rpb25zXG4tIENvbW1vbiB1c2VzOiBXZWIgZGV2ZWxvcG1lbnQgKG5vdGFibHkgd2l0aCBSdWJ5IG9uIFJhaWxzKSwgc2NyaXB0aW5nLCBhdXRvbWF0aW9uLCByYXBpZCBwcm90b3R5cGluZywgQ0xJIHRvb2xzXG4tIEVjb3N5c3RlbTogUmljaCBzZXQgb2YgZ2VtcyAocGFja2FnZXMpIG1hbmFnZWQgYnkgUnVieUdlbXM7IEJ1bmRsZXIgZm9yIGRlcGVuZGVuY3kgbWFuYWdlbWVudFxuLSBRdWljayBleGFtcGxlOlxuICBwdXRzICdIZWxsbywgUnVieSEnXG4gIDMudGltZXMgeyB8aXwgcHV0cyBcIlRpY2sgI3tpfVwiIH1cblxuUnVieSAoZ2Vtc3RvbmUpXG4tIFdoYXQgaXQgaXM6IEEgcmVkIHRvIHBpbmsgdmFyaWV0eSBvZiBjb3J1bmR1bTsgb25lIG9mIHRoZSBoYXJkZXN0IG5hdHVyYWwgc3Vic3RhbmNlcyAoaGFyZG5lc3MgOSBvbiB0aGUgTW9ocyBzY2FsZSkuXG4tIFdoeSBpdOKAmXMgZmFtb3VzOiBCZWF1dGlmdWwsIHZpYnJhbnQgY29sb3I7IGhpZ2hseSB2YWx1ZWQgaW4gamV3ZWxyeS5cbi0gU291cmNlczogTm90YWJsZSBkZXBvc2l0cyBpbmNsdWRlIE15YW5tYXIgKGhpc3RvcmljYWwgc291cmNlKSwgU3JpIExhbmthLCBNYWRhZ2FzY2FyLCBhbmQgQWZyaWNhLlxuLSBDYXJlIGFuZCBjYXJlOiBDb21tb25seSBoZWF0LXRyZWF0ZWQgdG8gZW5oYW5jZSBjb2xvcjsgc3ludGhldGljIHJ1YmllcyBleGlzdCBmb3IgaW5kdXN0cmlhbCBhbmQgamV3ZWxyeSB1c2UuXG4tIFZhbHVlIGZhY3RvcnM6IENvbG9yLCBjbGFyaXR5LCBjdXQsIGNhcmF0IHdlaWdodDsgdW50cmVhdGVkIHN0b25lcyBhbmQgcmFyZSBjb2xvcnMgY2FuIGJlIHZlcnkgZXhwZW5zaXZlLlxuXG5Xb3VsZCB5b3UgbGlrZSBtb3JlIGRldGFpbCBvbiBSdWJ5IHRoZSBwcm9ncmFtbWluZyBsYW5ndWFnZSAoc3ludGF4LCBnZXR0aW5nIHN0YXJ0ZWQsIFJhaWxzLCBldGMuKSBvciBSdWJ5IHRoZSBnZW1zdG9uZT8iLAogICAgICAgICJyZWZ1c2FsIjogbnVsbCwKICAgICAgICAiYW5ub3RhdGlvbnMiOiBbXQogICAgICB9LAogICAgICAiZmluaXNoX3JlYXNvbiI6ICJzdG9wIgogICAgfQogIF0sCiAgInVzYWdlIjogewogICAgInByb21wdF90b2tlbnMiOiAzNiwKICAgICJjb21wbGV0aW9uX3Rva2VucyI6IDE5ODksCiAgICAidG90YWxfdG9rZW5zIjogMjAyNSwKICAgICJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOiB7CiAgICAgICJjYWNoZWRfdG9rZW5zIjogMCwKICAgICAgImF1ZGlvX3Rva2VucyI6IDAKICAgIH0sCiAgICAiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6IHsKICAgICAgInJlYXNvbmluZ190b2tlbnMiOiAxNjAwLAogICAgICAiYXVkaW9fdG9rZW5zIjogMCwKICAgICAgImFjY2VwdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjogMCwKICAgICAgInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjogMAogICAgfQogIH0sCiAgInNlcnZpY2VfdGllciI6ICJkZWZhdWx0IiwKICAic3lzdGVtX2ZpbmdlcnByaW50IjogbnVsbAp9Cg==
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 recorded_with: VCR 6.4.0
