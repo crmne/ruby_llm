@@ -31,6 +31,11 @@ module RubyLLM
           !model_id.match?(/embed|moderation|ocr|voxtral|transcriptions/) && supports_tools?(model_id)
         end
 
+        def supports_reasoning?(model_id)
+          model_id.match?(/magistral/) ||
+            model_id.match?(/\Amistral-(?:small-latest|medium-(?:3(?:[.-]5)?|latest))\z/)
+        end
+
         def format_display_name(model_id)
           case model_id
           when /mistral-large/ then 'Mistral Large'
@@ -101,7 +106,7 @@ module RubyLLM
             capabilities << 'structured_output' if supports_json_mode?(model_id)
             capabilities << 'vision' if supports_vision?(model_id)
 
-            capabilities << 'reasoning' if model_id.match?(/magistral/)
+            capabilities << 'reasoning' if supports_reasoning?(model_id)
             capabilities << 'batch' unless model_id.match?(/voxtral|ocr|embed|moderation/)
             capabilities << 'fine_tuning' if model_id.match?(/mistral-(small|medium|large)|devstral/)
             capabilities << 'distillation' if model_id.match?(/ministral/)

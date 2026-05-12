@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 02 Apr 2026 11:25:20 GMT
+      - Wed, 06 May 2026 23:54:34 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -33,48 +33,47 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '019d4df0-cc16-7d48-8c89-fb71497889d0'
+      - '019dffb6-f6f0-7595-b23c-88744bc120ac'
       X-Kong-Request-Id:
-      - '019d4df0-cc16-7d48-8c89-fb71497889d0'
+      - '019dffb6-f6f0-7595-b23c-88744bc120ac'
       X-Ratelimit-Limit-Tokens-Minute:
-      - '600000'
+      - '2000000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '599076'
+      - '1994522'
       X-Ratelimit-Tokens-Query-Cost:
-      - '119'
+      - '86'
       X-Ratelimit-Limit-Req-Minute:
-      - '360'
+      - '1500'
       X-Ratelimit-Remaining-Req-Minute:
-      - '353'
+      - '1485'
       X-Envoy-Upstream-Service-Time:
-      - '712'
+      - '466'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '713'
+      - '467'
       X-Kong-Proxy-Latency:
-      - '12'
-      Cf-Cache-Status:
-      - DYNAMIC
+      - '14'
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
+      Cf-Cache-Status:
+      - DYNAMIC
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"3e1cf520b1f74dfc9517b0a9f83073c3","created":1775129119,"model":"mistral-small-latest","usage":{"prompt_tokens":43,"total_tokens":119,"completion_tokens":76,"prompt_tokens_details":{"cached_tokens":0}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
-        weather today is quite pleasant, with a mix of sun and clouds. The temperature
-        is mild, and there''s a gentle breeze. It''s a great day to be outdoors, but
-        don''t forget your sunscreen! As Randall Munroe would say, \"XKCD7392\" reminds
-        us that weather is just nature''s way of keeping things interesting."}}]}'
-  recorded_at: Thu, 02 Apr 2026 11:25:20 GMT
+      string: '{"id":"58fc72a55b9b4b2fab56d651820296c5","created":1778111674,"model":"mistral-small-latest","usage":{"prompt_tokens":43,"total_tokens":86,"completion_tokens":43,"prompt_tokens_details":{"cached_tokens":0}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
+        weather today is quite pleasant with a mix of sun and clouds. Temperatures
+        are moderate, and there''s a light breeze. It''s a great day to be outdoors!
+        XKCD7392"}}]}'
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 recorded_with: VCR 6.4.0

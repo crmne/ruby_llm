@@ -96,6 +96,8 @@ response.thinking&.text
 response.thinking_tokens
 ```
 
+`thinking_tokens` is usually a breakdown of generated output work. From v1.15 onward, RubyLLM normalizes `output_tokens` as the billable output bucket, so you should not add `thinking_tokens` to `output_tokens` for cost calculations. When a model has distinct reasoning-token pricing, the cost is exposed separately as `response.cost.thinking`.
+
 ### Upgrading Existing Installations
 
 For 1.10 upgrades, consider using the [upgrade guide]({% link _advanced/upgrading.md %}#upgrade-to-1-10) to run the generator.
