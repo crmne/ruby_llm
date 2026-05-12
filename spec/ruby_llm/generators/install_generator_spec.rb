@@ -177,6 +177,12 @@ RSpec.describe RubyLLM::Generators::InstallGenerator, :generator, type: :generat
         expect(message_model).to include("chat_class: 'Llm::Chat'")
         expect(message_model).to include('tool_calls: :llm_tool_calls')
         expect(message_model).to include("tool_call_class: 'Llm::ToolCall'")
+
+        tool_call_model = File.read('app/models/llm/tool_call.rb')
+        expect(tool_call_model).to include('acts_as_tool_call')
+        expect(tool_call_model).to include('message: :llm_message')
+        expect(tool_call_model).to include("message_class: 'Llm::Message'")
+        expect(tool_call_model).to include('result_foreign_key: :llm_tool_call_id')
       end
     end
 
@@ -186,6 +192,29 @@ RSpec.describe RubyLLM::Generators::InstallGenerator, :generator, type: :generat
           chat = Llm::Chat.create!
           message = chat.llm_messages.create!(role: :user, content: 'Test')
           exit(message.llm_chat_id == chat.id ? 0 : 1)
+        RUBY
+        success, output = run_rails_runner(test_script)
+        expect(success).to be(true), output
+      end
+    end
+
+    it 'namespaced tool results use the generated Rails foreign key' do
+      within_test_app(app_path) do
+        test_script = <<~RUBY
+          chat = Llm::Chat.create!
+          tool_call_message = chat.llm_messages.create!(role: :assistant, content: nil)
+          tool_call = tool_call_message.llm_tool_calls.create!(
+            tool_call_id: 'call_1',
+            name: 'calculator',
+            arguments: { expression: '2 + 2' }
+          )
+          tool_result = chat.llm_messages.create!(
+            role: :tool,
+            content: '4',
+            parent_tool_call: tool_call
+          )
+
+          exit(tool_result.llm_tool_call_id == tool_call.id && tool_call.result == tool_result ? 0 : 1)
         RUBY
         success, output = run_rails_runner(test_script)
         expect(success).to be(true), output

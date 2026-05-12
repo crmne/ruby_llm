@@ -33,7 +33,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Thu, 02 Apr 2026 11:30:24 GMT
+      - Thu, 07 May 2026 00:00:55 GMT
       Server:
       - elb
       Vary:
@@ -41,7 +41,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - a8189d6c21f68cbea3b74544eb903077
+      - 661f05733bbaef72992d2e3fb483a5b8
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -49,15 +49,14 @@ http_interactions:
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 004f800c04aabf7d29d67f327fb87542.cloudfront.net (CloudFront)
+      - 1.1 0cffef5d52bc610783bf46dfead84a9c.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - TXL50-P6
+      - LIS50-P2
       X-Amz-Cf-Id:
-      - qo6gTwghYrUDwlP2ji46sBfGoprSByDwJR9nXQFPBzn3vvGOMS1Rng==
+      - "-phlqNfFSgTtECp0fTywRzkL8cGGN6q9ogov-sVFb1yliYn6ZG8R5g=="
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"52e32e9d-1a7e-4b95-a98f-9143a4e6d20a","object":"chat.completion","created":1775129424,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"I''ll
-        call the any-of params tool with the specified task and status.","tool_calls":[{"index":0,"id":"call_00_ymPr4SmfpPkjA6rXHLgPHvIW","type":"function","function":{"name":"any_of_params","arguments":"{\"task\":
-        \"Review PR\", \"status\": \"pending\"}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":380,"completion_tokens":75,"total_tokens":455,"prompt_tokens_details":{"cached_tokens":192},"prompt_cache_hit_tokens":192,"prompt_cache_miss_tokens":188},"system_fingerprint":"fp_eaab8d114b_prod0820_fp8_kvcache_new_kvcache"}'
-  recorded_at: Thu, 02 Apr 2026 11:30:28 GMT
+      string: '{"id":"2df6aa25-612e-4a7e-bda6-8e38af7f7fcb","object":"chat.completion","created":1778112055,"model":"deepseek-v4-flash","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"index":0,"id":"call_00_h0tBJlaU20xwEjmGW0uE1367","type":"function","function":{"name":"any_of_params","arguments":"{\"task\":
+        \"Review PR\", \"status\": \"pending\"}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":355,"completion_tokens":61,"total_tokens":416,"prompt_tokens_details":{"cached_tokens":128},"prompt_cache_hit_tokens":128,"prompt_cache_miss_tokens":227},"system_fingerprint":"fp_058df29938_prod0820_fp8_kvcache_20260402"}'
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 recorded_with: VCR 6.4.0

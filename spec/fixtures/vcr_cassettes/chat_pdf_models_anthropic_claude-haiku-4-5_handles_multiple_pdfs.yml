@@ -26,7 +26,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 02 Apr 2026 11:28:06 GMT
+      - Wed, 06 May 2026 23:56:09 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -36,41 +36,41 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Limit:
       - '450000'
       Anthropic-Ratelimit-Input-Tokens-Remaining:
-      - '450000'
+      - '449000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-04-02T11:28:04Z'
+      - '2026-05-06T23:56:07Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '90000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '90000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-04-02T11:28:06Z'
+      - '2026-05-06T23:56:09Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '1000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-04-02T11:28:04Z'
+      - '2026-05-06T23:56:06Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '540000'
       Anthropic-Ratelimit-Tokens-Remaining:
-      - '540000'
+      - '539000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-04-02T11:28:04Z'
+      - '2026-05-06T23:56:07Z'
       Request-Id:
       - "<REQUEST_ID>"
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
+      Traceresponse:
+      - 00-2e395698eed2d6789638aa0a9efb35d9-ebd31e2c7b9b3a53-01
       Server:
       - cloudflare
       X-Envoy-Upstream-Service-Time:
-      - '2874'
+      - '2877'
       Vary:
       - Accept-Encoding
-      Server-Timing:
-      - x-originResponse;dur=2876
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -83,17 +83,18 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_01LgiG8nAsWwE5HbhKY12LEN","type":"message","role":"assistant","content":[{"type":"text","text":"#
+      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_01ESiS72GJE2N3VegRyxPmxh","type":"message","role":"assistant","content":[{"type":"text","text":"#
         Document Comparison\n\n## Summary\nThese two PDF documents are **virtually
         identical**. Both contain the same content with the same layout and formatting.\n\n##
         Details\n\n**Similarities:**\n- Same title: \"Sample PDF\"\n- Same subtitle:
-        \"This is a simple PDF file. Fun fun fun.\"\n- Identical Lorem ipsum placeholder
-        text (4 full paragraphs)\n- Same visual layout and typography\n- Both are
-        single-page documents\n\n**Differences:**\n- **None detected** - The documents
-        appear to be exact duplicates\n\n## Conclusion\nDocument 1 and Document 2
-        are essentially the same file. There are no meaningful differences in content,
-        structure, or formatting between them."}],"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":5341,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":153,"service_tier":"standard","inference_geo":"not_available"}}'
-  recorded_at: Thu, 02 Apr 2026 11:28:06 GMT
+        \"This is a simple PDF file. Fun fun fun.\"\n- Identical Lorem Ipsum text
+        spanning four paragraphs\n- Same visual layout with heading styles and body
+        text\n- Same page structure and formatting\n\n**Differences:**\n- **None detected**
+        - The documents appear to be exact duplicates\n\n## Conclusion\nDocument 1
+        and Document 2 are essentially the same file. If these were intended to be
+        different versions, there are no discernible changes between them in terms
+        of content, formatting, or structure."}],"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":5341,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":166,"service_tier":"standard","inference_geo":"not_available"}}'
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 - request:
     method: post
     uri: https://api.anthropic.com/v1/messages
@@ -104,12 +105,13 @@ http_interactions:
         Document Comparison\n\n## Summary\nThese two PDF documents are **virtually
         identical**. Both contain the same content with the same layout and formatting.\n\n##
         Details\n\n**Similarities:**\n- Same title: \"Sample PDF\"\n- Same subtitle:
-        \"This is a simple PDF file. Fun fun fun.\"\n- Identical Lorem ipsum placeholder
-        text (4 full paragraphs)\n- Same visual layout and typography\n- Both are
-        single-page documents\n\n**Differences:**\n- **None detected** - The documents
-        appear to be exact duplicates\n\n## Conclusion\nDocument 1 and Document 2
-        are essentially the same file. There are no meaningful differences in content,
-        structure, or formatting between them."}]},{"role":"user","content":[{"type":"text","text":"go
+        \"This is a simple PDF file. Fun fun fun.\"\n- Identical Lorem Ipsum text
+        spanning four paragraphs\n- Same visual layout with heading styles and body
+        text\n- Same page structure and formatting\n\n**Differences:**\n- **None detected**
+        - The documents appear to be exact duplicates\n\n## Conclusion\nDocument 1
+        and Document 2 are essentially the same file. If these were intended to be
+        different versions, there are no discernible changes between them in terms
+        of content, formatting, or structure."}]},{"role":"user","content":[{"type":"text","text":"go
         on"}]}],"stream":false,"max_tokens":64000}'
     headers:
       User-Agent:
@@ -130,7 +132,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 02 Apr 2026 11:28:11 GMT
+      - Wed, 06 May 2026 23:56:14 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -140,41 +142,41 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Limit:
       - '450000'
       Anthropic-Ratelimit-Input-Tokens-Remaining:
-      - '450000'
+      - '449000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-04-02T11:28:08Z'
+      - '2026-05-06T23:56:10Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '90000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '90000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-04-02T11:28:11Z'
+      - '2026-05-06T23:56:14Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '1000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-04-02T11:28:07Z'
+      - '2026-05-06T23:56:09Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '540000'
       Anthropic-Ratelimit-Tokens-Remaining:
-      - '540000'
+      - '539000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-04-02T11:28:08Z'
+      - '2026-05-06T23:56:10Z'
       Request-Id:
       - "<REQUEST_ID>"
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
+      Traceresponse:
+      - 00-8b2417ec596a21adcb6f24222d677623-d2de50db957a1731-01
       Server:
       - cloudflare
       X-Envoy-Upstream-Service-Time:
-      - '4172'
+      - '4780'
       Vary:
       - Accept-Encoding
-      Server-Timing:
-      - x-originResponse;dur=4173
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -187,23 +189,29 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_012p3ctSWxLv3N2zDEqYQCzh","type":"message","role":"assistant","content":[{"type":"text","text":"#
-        Deeper Analysis\n\nSince the documents appear identical at first glance, here
-        are some additional observations:\n\n## What This Could Mean\n\n1. **Test/Quality
-        Assurance Scenario**\n   - These may be intentional duplicates used to test
-        document comparison systems\n   - Could be part of version control testing\n\n2.
-        **Potential Hidden Differences**\n   - **Metadata**: PDFs can differ in metadata
-        (creation date, author, file properties) even with identical visible content\n   -
-        **Compression**: Different compression algorithms could be used\n   - **Encoding**:
-        Character encoding or font embedding might differ\n   - **Digital Signatures**:
-        One could be signed while the other isn''t\n\n3. **File Properties That Might
-        Differ** (not visible in text extraction)\n   - Creation timestamps\n   -
-        Modification dates\n   - File size\n   - Embedded fonts\n   - Color profiles\n   -
-        Resolution/DPI settings\n\n## Why This Matters\n\nIf you need to identify
-        differences beyond text content, you would need to:\n- Compare file checksums/hashes\n-
-        Examine PDF metadata\n- Use binary-level comparison tools\n- Check file properties\n-
-        Review creation/modification history\n\n**Would you like me to focus on any
-        specific aspect, or do you have additional information about what differences
-        you''re expecting to find?**"}],"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":5499,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":290,"service_tier":"standard","inference_geo":"not_available"}}'
-  recorded_at: Thu, 02 Apr 2026 11:28:11 GMT
+      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_01DcVtAoW9yqEt86gjjPrWwf","type":"message","role":"assistant","content":[{"type":"text","text":"#
+        Extended Document Analysis\n\n## Content Breakdown\n\n### Document Structure\nBoth
+        documents follow an identical structure:\n1. **Header**: \"Sample PDF\" (styled
+        in a light, thin font)\n2. **Tagline**: \"This is a simple PDF file. Fun fun
+        fun.\" (italicized)\n3. **Body Content**: Four substantial paragraphs of Lorem
+        Ipsum text\n4. **Visual Element**: Appears to include document rendering/preview\n\n###
+        Text Analysis\n\n**Paragraph 1**: \n- Introduces Lorem Ipsum with Latin placeholder
+        text\n- ~250 words covering various Latin phrases\n- Focuses on anatomical/structural
+        descriptors\n\n**Paragraph 2**:\n- Continues Lorem Ipsum theme\n- Similar
+        word count and density\n- Contains repeated Latin terms\n\n**Paragraph 3**:\n-
+        Opens with \"In mauris\" (location reference in Lorem Ipsum)\n- Longest paragraph
+        by appearance\n- Maintains consistent vocabulary\n\n**Paragraph 4**:\n- Begins
+        with \"Morbi elit nunc\" (action phrase)\n- Concludes the document\n- Final
+        substantive content before closing\n\n## Metadata Observations\n- Both listed
+        as PDF format (application/pdf)\n- Single page documents\n- No apparent metadata
+        differences visible\n- No timestamps or version indicators provided\n\n##
+        Use Case Assessment\nThese appear to be **sample/template documents** used
+        for:\n- PDF rendering/display testing\n- Lorem Ipsum placeholder content\n-
+        Document format validation\n- Design mockup purposes\n\n## Recommendation\nWithout
+        additional context, it''s unclear why two identical documents would need comparison.
+        If differences were expected, consider:\n- Checking file properties/metadata\n-
+        Examining binary-level differences\n- Verifying creation/modification dates\n-
+        Looking for embedded metadata\n\nIs there a specific difference you''re looking
+        for?"}],"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":5512,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":402,"service_tier":"standard","inference_geo":"not_available"}}'
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 recorded_with: VCR 6.4.0

@@ -26,40 +26,42 @@ http_interactions:
       - GitHub.com
       Content-Type:
       - text/plain; charset=utf-8
+      X-Origin-Cache:
+      - HIT
       Last-Modified:
-      - Wed, 01 Apr 2026 06:42:59 GMT
+      - Tue, 05 May 2026 02:26:38 GMT
       Access-Control-Allow-Origin:
       - "*"
       Etag:
-      - W/"69ccbe73-9c6"
+      - W/"69f9555e-9c6"
       Expires:
-      - Thu, 02 Apr 2026 11:33:43 GMT
+      - Thu, 07 May 2026 00:01:24 GMT
       Cache-Control:
       - max-age=600
       X-Proxy-Cache:
       - MISS
       X-Github-Request-Id:
-      - 7CD0:3B9ECA:F87895:FB1241:69CE51BF
+      - 8CA8:1519:3A7294A:3B13014:69FBD3FC
       Accept-Ranges:
       - bytes
-      Age:
-      - '0'
       Date:
-      - Thu, 02 Apr 2026 11:23:43 GMT
+      - Wed, 06 May 2026 23:52:30 GMT
       Via:
       - 1.1 varnish
+      Age:
+      - '13'
       X-Served-By:
-      - cache-ber1080049-BER
+      - cache-lis1490055-LIS
       X-Cache:
-      - MISS
+      - HIT
       X-Cache-Hits:
-      - '0'
+      - '1'
       X-Timer:
-      - S1775129024.815136,VS0,VE114
+      - S1778111550.026601,VS0,VE1
       Vary:
       - Accept-Encoding
       X-Fastly-Request-Id:
-      - f67770a8f36df75699195bc832fa6cc22e8ff950
+      - 6b0532ab4a640070264a17bf139cfbcd7be14cd2
     body:
       encoding: ASCII-8BIT
       string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
@@ -95,7 +97,7 @@ http_interactions:
         \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
         WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
         FOR A PARTICULAR\n     PURPOSE.\n"
-  recorded_at: Thu, 02 Apr 2026 11:23:43 GMT
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 - request:
     method: post
     uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
@@ -160,7 +162,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Thu, 02 Apr 2026 11:23:47 GMT
+      - Wed, 06 May 2026 23:52:39 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -170,7 +172,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=3040
+      - gfet4t7; dur=9533
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -184,7 +186,7 @@ http_interactions:
               "content": {
                 "parts": [
                   {
-                    "text": "This file is a **software license agreement for Ruby**, authored by Yukihiro Matsumoto.\n\nIt states that Ruby is copyrighted free software and can be redistributed and modified under either:\n\n1.  **The terms of the 2-clause BSDL** (BSD License).\n2.  **A custom set of conditions** outlined in the document, which include:\n    *   Permission to make and give away verbatim copies.\n    *   Conditions for modifying the software (e.g., placing modifications in the public domain, using internally, giving non-standard names, or making other arrangements with the author).\n    *   Conditions for distributing the software in object code or binary form (e.g., providing instructions for obtaining the source, accompanying with source, or giving non-standard names).\n    *   Permission to include parts of the software in other software, but notes that some files in the distribution may have different terms (refer to `LEGAL` file).\n    *   Generated or input scripts/library files are owned by their generator and can be sold commercially.\n    *   A standard disclaimer that the software is provided \"AS IS\" without any express or implied warranties."
+                    "text": "This file contains the **license for the Ruby programming language**, authored by Yukihiro Matsumoto (Matz).\n\nIt outlines the conditions under which you can use, redistribute, and modify Ruby. Key points include:\n\n*   **Dual Licensing:** You can use it under either the 2-clause BSDL or the specific terms detailed in this file.\n*   **Verbatim Copies:** You can make and give away exact copies of the source, provided you include all original copyright notices and disclaimers.\n*   **Modifications:** You can modify the software, provided you make your changes freely available, use them internally within your organization, differentiate non-standard binaries, or make other arrangements with the author.\n*   **Binary Distribution:** You can distribute Ruby in object code or binary form by providing instructions on obtaining the original source, accompanying it with the source code, or differentiating non-standard binaries.\n*   **Inclusion in Other Software:** You can modify and include parts of Ruby into other software (including commercial), but note that some files in the distribution may have different terms (refer to the `LEGAL` file).\n*   **User-Generated Content:** Scripts and library files created using Ruby do not automatically fall under Ruby's copyright; they belong to their generator and can be sold commercially.\n*   **No Warranty:** The software is provided \"AS IS\" without any express or implied warranties, including merchantability or fitness for a particular purpose.\n\nIn essence, it's a **permissive open-source license** that allows for a great deal of flexibility in using, modifying, and distributing the Ruby software."
                   }
                 ],
                 "role": "model"
@@ -195,18 +197,19 @@ http_interactions:
           ],
           "usageMetadata": {
             "promptTokenCount": 568,
-            "candidatesTokenCount": 244,
-            "totalTokenCount": 1114,
+            "candidatesTokenCount": 336,
+            "totalTokenCount": 2510,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
                 "tokenCount": 568
               }
             ],
-            "thoughtsTokenCount": 302
+            "thoughtsTokenCount": 1606,
+            "serviceTier": "standard"
           },
           "modelVersion": "gemini-2.5-flash",
-          "responseId": "wFHOabevAt6UxN8P-8uTwQE"
+          "responseId": "PtT7aeaCEuys28oP54if-A0"
         }
-  recorded_at: Thu, 02 Apr 2026 11:23:47 GMT
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 recorded_with: VCR 6.4.0
