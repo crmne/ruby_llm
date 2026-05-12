@@ -43,5 +43,13 @@ module RubyLLM
     def reasoning
       thinking
     end
+
+    def cache_read
+      cached
+    end
+
+    def cache_write
+      cache_creation
+    end
   end
 end

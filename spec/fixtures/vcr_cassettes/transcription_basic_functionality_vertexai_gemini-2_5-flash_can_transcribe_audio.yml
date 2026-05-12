@@ -22,12 +22,12 @@ http_interactions:
     headers:
       Pragma:
       - no-cache
+      Date:
+      - Wed, 06 May 2026 23:51:36 GMT
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
-      Date:
-      - Tue, 03 Mar 2026 11:47:07 GMT
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/sqlservice.login openid https://www.googleapis.com/auth/cloud-platform",
+          "scope": "https://www.googleapis.com/auth/sqlservice.login openid https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/cloud-platform",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -68,7 +68,7 @@ http_interactions:
       User-Agent:
       - Faraday v2.14.1
       Authorization:
-      - Bearer <GOOGLE_BEARER_TOKEN>
+      - Bearer <AUTH_TOKEN>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -87,7 +87,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Tue, 03 Mar 2026 11:47:08 GMT
+      - Wed, 06 May 2026 23:51:38 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -110,40 +110,40 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "Murry"
+                    "text": "Murmur."
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -10.862738609313965
+              "avgLogprobs": -7.2653458913167315
             }
           ],
           "usageMetadata": {
             "promptTokenCount": 63,
-            "candidatesTokenCount": 2,
-            "totalTokenCount": 88,
+            "candidatesTokenCount": 3,
+            "totalTokenCount": 89,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
-                "modality": "AUDIO",
-                "tokenCount": 50
-              },
-              {
                 "modality": "TEXT",
                 "tokenCount": 13
+              },
+              {
+                "modality": "AUDIO",
+                "tokenCount": 50
               }
             ],
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 2
+                "tokenCount": 3
               }
             ],
             "thoughtsTokenCount": 23
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-03-03T11:47:07.513062Z",
-          "responseId": "O8qmaaaoH6HntfAPw7LX4A4"
+          "createTime": "2026-05-06T23:51:36.793396Z",
+          "responseId": "CNT7abS2MMKHhcIPuvcF"
         }
-  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 recorded_with: VCR 6.4.0

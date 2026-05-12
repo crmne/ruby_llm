@@ -10,7 +10,7 @@ http_interactions:
       User-Agent:
       - Faraday v2.14.1
       Authorization:
-      - Bearer <OPENROUTER_API_KEY>
+      - Bearer <AUTH_TOKEN>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -23,7 +23,7 @@ http_interactions:
       message: Bad Request
     headers:
       Date:
-      - Tue, 03 Mar 2026 12:21:55 GMT
+      - Wed, 06 May 2026 23:52:18 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -32,6 +32,8 @@ http_interactions:
       - keep-alive
       Access-Control-Allow-Origin:
       - "*"
+      Access-Control-Expose-Headers:
+      - X-Generation-Id,cf-ray
       Permissions-Policy:
       - payment=(self "https://checkout.stripe.com" "https://connect-js.stripe.com"
         "https://js.stripe.com" "https://*.js.stripe.com" "https://hooks.stripe.com")
@@ -47,7 +49,7 @@ http_interactions:
       encoding: UTF-8
       string: '{"error":{"message":"This endpoint''s maximum context length is 200000
         tokens. However, you requested about 2500021 tokens (2500021 of text input).
-        Please reduce the length of either one, or use the \"middle-out\" transform
-        to compress your prompt automatically.","code":400,"metadata":{"provider_name":null}}}'
-  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+        Please reduce the length of either one, or use the context-compression plugin
+        to compress your prompt automatically.","code":400,"metadata":{"provider_name":null}},"user_id":"user_2w02ZGxKw2KeeHUGGzosck1DmmN"}'
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 recorded_with: VCR 6.4.0

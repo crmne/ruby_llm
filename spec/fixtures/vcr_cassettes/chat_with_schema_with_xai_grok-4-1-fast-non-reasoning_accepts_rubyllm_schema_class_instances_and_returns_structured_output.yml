@@ -11,7 +11,7 @@ http_interactions:
       User-Agent:
       - Faraday v2.14.1
       Authorization:
-      - Bearer <XAI_API_KEY>
+      - Bearer <AUTH_TOKEN>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -24,53 +24,51 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 03 Mar 2026 12:36:53 GMT
+      - Wed, 06 May 2026 23:53:17 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Strict-Transport-Security:
+      - max-age=31536000
+      Set-Cookie:
+      - "<COOKIE>"
       X-Ratelimit-Limit-Tokens:
-      - '4000000'
+      - '10000000'
       X-Ratelimit-Remaining-Tokens:
-      - '3997674'
+      - '10000000'
       X-Zero-Data-Retention:
       - 'false'
       X-Ratelimit-Limit-Requests:
-      - '607'
+      - '1800'
       X-Ratelimit-Remaining-Requests:
-      - '597'
+      - '1800'
       X-Metrics-Ttft-Ms:
-      - '204.9'
+      - '260.9'
       X-Metrics-Mean-Itl-Ms:
-      - '9.1'
+      - '2.6'
       X-Metrics-E2e-Ms:
-      - '440.4'
+      - '409.5'
+      Cf-Cache-Status:
+      - DYNAMIC
       X-Request-Id:
       - "<X_REQUEST_ID>"
+      Traceparent:
+      - 00-b337294511fc5c1cada02cda5ba1232d-d8db2bed0000b300-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
       - "*"
       Access-Control-Expose-Headers:
       - "*"
-      X-Envoy-Wasm-Service:
-      - prod-ic-inference-api
-      X-Envoy-Wasm-Route:
-      - ic-protected-inference-api
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=31536000
       Server:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"b1bc35eb-6431-9cbb-8bc8-980abfb1b632","object":"chat.completion","created":1772541413,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"{\"name\":\"Alice\",\"age\":28}","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":252,"completion_tokens":9,"total_tokens":261,"prompt_tokens_details":{"text_tokens":252,"audio_tokens":0,"image_tokens":0,"cached_tokens":167},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":298500},"system_fingerprint":"fp_2338d85ee7"}'
-  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+      string: '{"id":"2a05c569-5ace-9086-81ea-b1f0bd502dce","object":"chat.completion","created":1778111597,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"{\"name\":\"Alice\",\"age\":28}","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":252,"completion_tokens":9,"total_tokens":261,"prompt_tokens_details":{"text_tokens":252,"audio_tokens":0,"image_tokens":0,"cached_tokens":169},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":295500},"system_fingerprint":"fp_b9ff9b81b3"}'
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 recorded_with: VCR 6.4.0

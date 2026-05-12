@@ -11,7 +11,7 @@ http_interactions:
       User-Agent:
       - Faraday v2.14.1
       Authorization:
-      - Bearer <DEEPSEEK_API_KEY>
+      - Bearer <AUTH_TOKEN>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -30,7 +30,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Tue, 03 Mar 2026 11:46:47 GMT
+      - Wed, 06 May 2026 23:51:22 GMT
       Server:
       - elb
       Vary:
@@ -38,7 +38,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 93de845d4182ce9eb1daaedb0c727dc6
+      - 444eaa28eca68bbb6bcf842c9a155014
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -46,14 +46,14 @@ http_interactions:
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 f5a41f2e2650c6e3da553e0f45e52bfa.cloudfront.net (CloudFront)
+      - 1.1 a48f09960f130cb6049f12b379cf591e.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - TXL50-P3
+      - LIS50-P1
       X-Amz-Cf-Id:
-      - OTjPfNLw9fbz6RTN7X57GbtJxRrWMuDvQfz4UkMbZ8OF7HP5kixqPA==
+      - zjWlr7sanbQH7MzGuU7dPhw4BqFUkOo8igLI9m_zKKl_ia4g4O5zZg==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"609c6866-62ea-4bbf-a974-72683d4c6f6d","object":"chat.completion","created":1772538407,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"{\n    \"result\":
-        8\n}"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":44,"completion_tokens":13,"total_tokens":57,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":44},"system_fingerprint":"fp_eaab8d114b_prod0820_fp8_kvcache"}'
-  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+      string: '{"id":"5dd7fcf4-231c-4ae2-97ab-29fc599483ff","object":"chat.completion","created":1778111482,"model":"deepseek-v4-flash","choices":[{"index":0,"message":{"role":"assistant","content":"{\"result\":
+        8}"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":44,"completion_tokens":6,"total_tokens":50,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":44},"system_fingerprint":"fp_058df29938_prod0820_fp8_kvcache_20260402"}'
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 recorded_with: VCR 6.4.0

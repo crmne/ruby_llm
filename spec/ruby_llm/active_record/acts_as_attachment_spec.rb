@@ -36,6 +36,19 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     StringIO.new(File.binread(path))
   end
 
+  def attachment_host
+    attachment_host_class.create!
+  end
+
+  def attachment_host_class
+    @attachment_host_class ||= stub_const('AttachmentHost', Class.new(ApplicationRecord) do
+      self.table_name = 'chats'
+
+      has_one_attached :file
+      has_many_attached :files
+    end)
+  end
+
   describe 'attachment handling' do
     it 'converts ActiveStorage attachments to RubyLLM Content' do
       chat = Chat.create!(model: model)
@@ -87,6 +100,62 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
 
       user_message = chat.messages.find_by(role: 'user')
       expect(user_message.attachments.count).to eq(1)
+    end
+
+    it 'reuses an existing ActiveStorage::Blob without re-uploading' do
+      chat = Chat.create!(model: model)
+
+      existing_blob = ActiveStorage::Blob.create_and_upload!(
+        io: attachment_io(image_path),
+        filename: 'ruby.png',
+        content_type: 'image/png'
+      )
+
+      expect do
+        chat.create_user_message('What do you see?', with: existing_blob)
+      end.not_to change(ActiveStorage::Blob, :count)
+
+      user_message = chat.messages.find_by(role: 'user')
+      expect(user_message.attachments.count).to eq(1)
+      expect(user_message.attachments.first.blob_id).to eq(existing_blob.id)
+    end
+
+    it 'reuses an ActiveStorage::Attached::One without re-uploading' do
+      chat = Chat.create!(model: model)
+      host = attachment_host
+      host.file.attach(
+        io: attachment_io(image_path),
+        filename: 'ruby.png',
+        content_type: 'image/png'
+      )
+
+      expect do
+        chat.create_user_message('What do you see?', with: host.file)
+      end.not_to change(ActiveStorage::Blob, :count)
+
+      user_message = chat.messages.find_by(role: 'user')
+      expect(user_message.attachments.count).to eq(1)
+      expect(user_message.attachments.first.blob_id).to eq(host.file.blob.id)
+    end
+
+    it 'reuses ActiveStorage::Attached::Many without re-uploading' do
+      chat = Chat.create!(model: model)
+      host = attachment_host
+      host.files.attach([
+                          { io: attachment_io(image_path), filename: 'ruby.png', content_type: 'image/png' },
+                          { io: attachment_io(pdf_path), filename: 'sample.pdf', content_type: 'application/pdf' }
+                        ])
+      blob_ids = host.files.blobs.map(&:id)
+
+      expect do
+        chat.create_user_message('Analyze these', with: host.files)
+      end.not_to change(ActiveStorage::Blob, :count)
+
+      user_message = chat.messages.find_by(role: 'user')
+      expect(user_message.attachments.count).to eq(2)
+      expect(user_message.attachments.map(&:blob_id)).to match_array(blob_ids)
+      expect(user_message.attachments.map { |attachment| attachment.filename.to_s })
+        .to match_array(%w[ruby.png sample.pdf])
     end
   end
 

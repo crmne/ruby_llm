@@ -1,0 +1,206 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
+    body:
+      encoding: UTF-8
+      string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"user","content":"Who
+        is the creator of the programming language Ruby?"}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Api-Key:
+      - "<AZURE_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-cache
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Vary:
+      - access-control-request-headers
+      Request-Context:
+      - appId=
+      Traceparent:
+      - 00-334d7697c5004eb692af25f6d0de159a-f3394b4700030459-00
+      X-Ms-Rai-Invoked:
+      - 'true'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      X-Xai-Model-Address:
+      - http://localhost:9988
+      X-Ms-Client-Request-Id:
+      - 334d7697-c500-4eb6-92af-25f6d0de159a
+      Azureml-Model-Session:
+      - d20260429215123-f480a160
+      Azureai-Requested-Tier:
+      - default
+      Azureai-Processed-Tier:
+      - default
+      X-Ms-Is-Spilled-Over:
+      - 'false'
+      X-Ratelimit-Key:
+      - grok-4-1-fast-non-reasoning
+      X-Ratelimit-Remaining-Requests:
+      - '49'
+      X-Ratelimit-Reset-Requests:
+      - '1'
+      X-Ratelimit-Limit-Requests:
+      - '50'
+      X-Ratelimit-Renewalperiod-Requests:
+      - '60'
+      X-Ratelimit-Abusepenalty-Active:
+      - 'False'
+      X-Ratelimit-Remaining-Tokens:
+      - '49963'
+      X-Ratelimit-Reset-Tokens:
+      - '0'
+      X-Ratelimit-Limit-Tokens:
+      - '50000'
+      X-Ratelimit-Renewalperiod-Tokens:
+      - '60'
+      Apim-Request-Id:
+      - 334d7697-c500-4eb6-92af-25f6d0de159a
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Ms-Deployment-Name:
+      - grok-4-1-fast-non-reasoning
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Region:
+      - West Europe
+      Date:
+      - Wed, 06 May 2026 23:52:20 GMT
+    body:
+      encoding: UTF-8
+      string: '{"id":"b1ca2eb3-10b4-4496-ae1c-02b7a18c560b","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"**Matzuro
+        Matsumoto**, commonly known as **Matz**, created the Ruby programming language.\n\nHe
+        designed it in 1993 (initially released in 1995) in Japan, aiming for a language
+        that was both object-oriented and fun to use, influenced by Perl, Smalltalk,
+        Eiffel, and Lisp. Ruby''s official website (ruby-lang.org) credits him as
+        the creator, and his book *The Ruby Programming Language* (co-authored with
+        David Flanagan) confirms this. Today, Ruby powers frameworks like Ruby on
+        Rails, developed by David Heinemeier Hansson."},"finish_reason":"stop","content_filter_results":{}}],"usage":{"prompt_tokens":10,"completion_tokens":117,"total_tokens":127,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":0,"audio_tokens":0,"text_tokens":10,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1778111537,"object":"chat.completion","prompt_filter_results":null}'
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+- request:
+    method: post
+    uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
+    body:
+      encoding: UTF-8
+      string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"user","content":"Who
+        is the creator of the programming language Ruby?"},{"role":"assistant","content":"**Matzuro
+        Matsumoto**, commonly known as **Matz**, created the Ruby programming language.\n\nHe
+        designed it in 1993 (initially released in 1995) in Japan, aiming for a language
+        that was both object-oriented and fun to use, influenced by Perl, Smalltalk,
+        Eiffel, and Lisp. Ruby''s official website (ruby-lang.org) credits him as
+        the creator, and his book *The Ruby Programming Language* (co-authored with
+        David Flanagan) confirms this. Today, Ruby powers frameworks like Ruby on
+        Rails, developed by David Heinemeier Hansson."},{"role":"user","content":"What
+        year did he create Ruby?"}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Api-Key:
+      - "<AZURE_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-cache
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Vary:
+      - access-control-request-headers
+      Request-Context:
+      - appId=
+      Traceparent:
+      - 00-b377c7c48b894d008ba006fb971c3c02-d666ff3a00002355-00
+      X-Ms-Rai-Invoked:
+      - 'true'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      X-Xai-Model-Address:
+      - http://localhost:9988
+      X-Ms-Client-Request-Id:
+      - b377c7c4-8b89-4d00-8ba0-06fb971c3c02
+      Azureml-Model-Session:
+      - d20260429222844-bf683bdf
+      Azureai-Requested-Tier:
+      - default
+      Azureai-Processed-Tier:
+      - default
+      X-Ms-Is-Spilled-Over:
+      - 'false'
+      X-Ratelimit-Key:
+      - grok-4-1-fast-non-reasoning
+      X-Ratelimit-Remaining-Requests:
+      - '49'
+      X-Ratelimit-Reset-Requests:
+      - '1'
+      X-Ratelimit-Limit-Requests:
+      - '50'
+      X-Ratelimit-Renewalperiod-Requests:
+      - '60'
+      X-Ratelimit-Abusepenalty-Active:
+      - 'False'
+      X-Ratelimit-Remaining-Tokens:
+      - '49810'
+      X-Ratelimit-Reset-Tokens:
+      - '0'
+      X-Ratelimit-Limit-Tokens:
+      - '50000'
+      X-Ratelimit-Renewalperiod-Tokens:
+      - '60'
+      Apim-Request-Id:
+      - b377c7c4-8b89-4d00-8ba0-06fb971c3c02
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Ms-Deployment-Name:
+      - grok-4-1-fast-non-reasoning
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Region:
+      - West Europe
+      Date:
+      - Wed, 06 May 2026 23:52:44 GMT
+    body:
+      encoding: UTF-8
+      string: '{"id":"59c6d3b2-ed5e-45e3-8f95-35b1171f87cb","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"**Matzuro
+        Matsumoto (Matz) began developing Ruby in 1993**, with the first alpha release
+        on December 21, 1995, and the stable 1.0 version in 1996.\n\nThis timeline
+        is documented on Ruby''s official site (ruby-lang.org/en/about/) and Matz''s
+        own writings, such as his 2001 essay \"Birth of Ruby,\" where he describes
+        starting the project in February 1993 to create a scripting language that
+        balanced programmer happiness with productivity."},"finish_reason":"stop","content_filter_results":{}}],"usage":{"prompt_tokens":145,"completion_tokens":102,"total_tokens":247,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":0,"audio_tokens":0,"text_tokens":145,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1778111561,"object":"chat.completion","prompt_filter_results":null}'
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+recorded_with: VCR 6.4.0

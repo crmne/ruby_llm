@@ -15,7 +15,7 @@ http_interactions:
       User-Agent:
       - Faraday v2.14.1
       Authorization:
-      - Bearer <DEEPSEEK_API_KEY>
+      - Bearer <AUTH_TOKEN>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -34,7 +34,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Tue, 03 Mar 2026 11:53:00 GMT
+      - Thu, 07 May 2026 00:01:11 GMT
       Server:
       - elb
       Vary:
@@ -42,7 +42,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - a33966619354a6171148b06c7bcbcbab
+      - 5b9615974b3e19628d5f14a492c7cdc5
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -50,15 +50,14 @@ http_interactions:
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 b0b2d6ea67b4e46f60f1da6eab40b77c.cloudfront.net (CloudFront)
+      - 1.1 2f8f88c5d6534e0ffeb87b5babe5e2c0.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - TXL50-P6
+      - LIS50-P2
       X-Amz-Cf-Id:
-      - KuvcN6OimSN_x3OB9AL5bwtpwGq8ZjiwtBDxQcGYpgp9zN3PW-wAsw==
+      - D_kGbAgCSiccQe0km032qmKBvxYvkR6Y-0g6jk-nT16so3YCE7r32w==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"7810c788-2c5f-4b03-8886-9c09c8e68274","object":"chat.completion","created":1772538780,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"I''ll
-        call the object_params tool with the specified window parameters.","tool_calls":[{"index":0,"id":"call_00_VoHqbrROGD7JjUp6YOGB7cbD","type":"function","function":{"name":"object_params","arguments":"{\"window\":
-        {\"start\": \"2025-01-01\", \"end\": \"2025-01-02\"}}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":396,"completion_tokens":76,"total_tokens":472,"prompt_tokens_details":{"cached_tokens":192},"prompt_cache_hit_tokens":192,"prompt_cache_miss_tokens":204},"system_fingerprint":"fp_eaab8d114b_prod0820_fp8_kvcache"}'
-  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+      string: '{"id":"d1d0a446-c048-4fcc-a1c7-e58382101711","object":"chat.completion","created":1778112071,"model":"deepseek-v4-flash","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"index":0,"id":"call_00_HhLdNqkRq5QUnDEmd3NF0412","type":"function","function":{"name":"object_params","arguments":"{\"window\":
+        {\"start\": \"2025-01-01\", \"end\": \"2025-01-02\"}}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":371,"completion_tokens":64,"total_tokens":435,"prompt_tokens_details":{"cached_tokens":128},"prompt_cache_hit_tokens":128,"prompt_cache_miss_tokens":243},"system_fingerprint":"fp_058df29938_prod0820_fp8_kvcache_20260402"}'
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 recorded_with: VCR 6.4.0

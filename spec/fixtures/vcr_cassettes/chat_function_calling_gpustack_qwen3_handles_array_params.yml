@@ -13,7 +13,7 @@ http_interactions:
       User-Agent:
       - Faraday v2.14.1
       Authorization:
-      - Bearer <GPUSTACK_API_KEY>
+      - Bearer <AUTH_TOKEN>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -26,15 +26,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 03 Mar 2026 11:52:27 GMT
-      - Tue, 03 Mar 2026 11:52:28 GMT
+      - Thu, 02 Apr 2026 11:29:58 GMT
+      - Thu, 02 Apr 2026 11:29:59 GMT
       Server:
       - uvicorn
       - uvicorn
       Keep-Alive:
       - timeout=15, max=100
       Content-Length:
-      - '1607'
+      - '1707'
       Content-Type:
       - application/json
       X-Request-Accepted-At:
@@ -49,12 +49,14 @@ http_interactions:
         the user wants me to call the array_params function with the tags [\"red\",
         \"blue\"] and get the combined tags. Let me check the function definition.
         The function takes an object with a property \"tags\" which is an array of
-        strings. The required parameter is \"tags\", and it''s an array. So I need
-        to structure the arguments correctly. The user provided the tags as [\"red\",
-        \"blue\"], so I should pass those exactly. Since the function is supposed
-        to combine the tags, maybe it just returns them as a single array. I don''t
-        need to do anything else; just call the function with those tags. Let me make
-        sure the JSON is formatted right. The name is \"array_params\" and the arguments
-        should have \"tags\" as the key with the array. Alright, that should be it.\n","role":"assistant","tool_calls":[{"function":{"arguments":"{\"tags\":[\"red\",\"blue\"]}","name":"array_params"},"id":"call-1CTrQuF4UO1FTDCN0nLyZFnoxJp99sMJ","type":"function"}]}}],"created":1772538750,"id":"chatcmpl-FDyhjj565oIPj3siMUQZNCfJIhnU4cgx","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":196,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":171,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":237,"prompt_tokens_details":{"cached_tokens":3},"prompt_tokens_per_second":3260.9592999256997,"time_per_output_token_ms":8.260525510204083,"time_to_first_token_ms":72.678,"tokens_per_second":121.05767348151367,"total_tokens":433}}'
-  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+        strings. The required parameter is \"tags\", and it''s strictly typed. So
+        I need to structure the arguments correctly. The user provided the tags as
+        a list, so I should pass them as a JSON object with the key \"tags\" and the
+        array as the value. The function should return the combined tags, which in
+        this case would just be the array joined somehow, but the function''s description
+        says it uses the params DSL array support. Since the user asked to call the
+        function with those tags, I just need to make sure the arguments are correctly
+        formatted. No other parameters are needed. Alright, I''ll generate the tool
+        call with the tags array.\n","role":"assistant","tool_calls":[{"function":{"arguments":"{\"tags\":[\"red\",\"blue\"]}","name":"array_params"},"id":"call-rEA0Alej4sNFACKW282746HdYGIyszpo","type":"function"}]}}],"created":1775129401,"id":"chatcmpl-AkAshtKoeSXdQal9CxlCKtehY56WwwII","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":209,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":184,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":237,"prompt_tokens_details":{"cached_tokens":0},"prompt_tokens_per_second":3860.689385547664,"time_per_output_token_ms":10.314765550239235,"time_to_first_token_ms":61.388,"tokens_per_second":96.94839840318102,"total_tokens":446}}'
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 recorded_with: VCR 6.4.0

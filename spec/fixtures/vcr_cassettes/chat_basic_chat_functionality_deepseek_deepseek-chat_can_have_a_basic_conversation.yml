@@ -11,7 +11,7 @@ http_interactions:
       User-Agent:
       - Faraday v2.14.1
       Authorization:
-      - Bearer <DEEPSEEK_API_KEY>
+      - Bearer <AUTH_TOKEN>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -30,7 +30,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Tue, 03 Mar 2026 11:50:04 GMT
+      - Wed, 06 May 2026 23:53:53 GMT
       Server:
       - elb
       Vary:
@@ -38,7 +38,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 3fc09dd2766013a159b987c2c28be8dd
+      - 1c5faf222846df8694b2d0dc6dbd49a0
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -46,14 +46,13 @@ http_interactions:
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 683ff74407fd21e24c53718828996608.cloudfront.net (CloudFront)
+      - 1.1 2b465e86cf1e1500174ec210e73096be.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - TXL50-P3
+      - LIS50-P2
       X-Amz-Cf-Id:
-      - XOlfphCw4f3A1dLRWZQ6RB7LpFSgIxJlVhEi7_4uou0-gP7jL9kxOw==
+      - R-vwq4yjx2oQF_wJDxJFe374Tim8hcEVMQp3HOfbVLEQI15GURWBjw==
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        eyJpZCI6ImNhYjBkNDAwLWEyMmMtNDlkMi1iNjc2LWY5YmQzN2RjZGY5NiIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NzI1Mzg2MDQsIm1vZGVsIjoiZGVlcHNlZWstY2hhdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiVGhhdOKAmXMgYSBjbGFzc2ljISAgXG5cXFtcbjIgKyAyID0gNFxuXFxdIn0sImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6MTIsImNvbXBsZXRpb25fdG9rZW5zIjoxOCwidG90YWxfdG9rZW5zIjozMCwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjB9LCJwcm9tcHRfY2FjaGVfaGl0X3Rva2VucyI6MCwicHJvbXB0X2NhY2hlX21pc3NfdG9rZW5zIjoxMn0sInN5c3RlbV9maW5nZXJwcmludCI6ImZwX2VhYWI4ZDExNGJfcHJvZDA4MjBfZnA4X2t2Y2FjaGUifQ==
-  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+      string: '{"id":"af16730e-9821-4a84-a1a0-372891ce68b3","object":"chat.completion","created":1778111633,"model":"deepseek-v4-flash","choices":[{"index":0,"message":{"role":"assistant","content":"4"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":12,"completion_tokens":1,"total_tokens":13,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":12},"system_fingerprint":"fp_058df29938_prod0820_fp8_kvcache_20260402"}'
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 recorded_with: VCR 6.4.0
