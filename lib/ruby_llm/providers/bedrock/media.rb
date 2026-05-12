@@ -38,14 +38,16 @@ module RubyLLM
           case attachment.type
           when :image
             render_image_attachment(attachment)
-          when :pdf
+          when :pdf, :document
             render_document_attachment(attachment, used_document_names:)
           when :text
-            { text: attachment.for_llm }
+            render_text_attachment(attachment, used_document_names:)
           else
             raise UnsupportedAttachmentError, attachment.mime_type
           end
         end
+
+        SUPPORTED_DOCUMENT_FORMATS = %w[pdf csv doc docx xls xlsx html txt md].freeze
 
         def render_image_attachment(attachment)
           {
@@ -58,17 +60,35 @@ module RubyLLM
           }
         end
 
+        def render_text_attachment(attachment, used_document_names:)
+          return render_document_attachment(attachment, used_document_names:) if supported_document_format?(attachment)
+
+          { text: attachment.for_llm }
+        end
+
         def render_document_attachment(attachment, used_document_names:)
+          format = document_format(attachment)
+
+          raise UnsupportedAttachmentError, attachment.mime_type unless supported_document_format?(attachment)
+
           document_name = unique_document_name(sanitize_document_name(attachment.filename), used_document_names)
           {
             document: {
-              format: attachment.format,
+              format: format,
               name: document_name,
               source: {
                 bytes: attachment.encoded
               }
             }
           }
+        end
+
+        def supported_document_format?(attachment)
+          SUPPORTED_DOCUMENT_FORMATS.include?(document_format(attachment))
+        end
+
+        def document_format(attachment)
+          attachment.extension || attachment.format
         end
 
         def sanitize_document_name(filename)

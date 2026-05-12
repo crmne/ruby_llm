@@ -8,6 +8,10 @@ module RubyLLM
   class Attachment
     attr_reader :source, :filename, :mime_type
 
+    DOCUMENT_EXTENSIONS = %w[
+      doc docx dot key numbers odp ods odt pages pot pps ppt pptx rtf xls xlsx
+    ].freeze
+
     def initialize(source, filename: nil)
       @source = source
       @source = source_type_cast
@@ -83,6 +87,7 @@ module RubyLLM
       return :audio if audio?
       return :pdf if pdf?
       return :text if text?
+      return :document if document?
 
       :unknown
     end
@@ -112,6 +117,17 @@ module RubyLLM
 
     def pdf?
       RubyLLM::MimeType.pdf? mime_type
+    end
+
+    def document?
+      return false if pdf? || text?
+
+      RubyLLM::MimeType.document?(mime_type) || DOCUMENT_EXTENSIONS.include?(extension)
+    end
+
+    def extension
+      extension = File.extname(filename.to_s).delete_prefix('.').downcase
+      extension.empty? ? nil : extension
     end
 
     def text?
