@@ -37,7 +37,7 @@ module RubyLLM
         @source.is_a?(ActiveStorage::Attached::Many)
     end
 
-    def content
+    def content # rubocop:disable Metrics/PerceivedComplexity
       return @content if defined?(@content) && !@content.nil?
 
       if url?
@@ -52,6 +52,8 @@ module RubyLLM
         RubyLLM.logger.warn "Source is neither a URL, path, ActiveStorage, nor IO-like: #{@source.class}"
         nil
       end
+
+      @content&.force_encoding(Encoding::UTF_8) if text?
 
       @content
     end
