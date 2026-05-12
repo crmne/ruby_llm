@@ -26,40 +26,42 @@ http_interactions:
       - GitHub.com
       Content-Type:
       - text/plain; charset=utf-8
+      X-Origin-Cache:
+      - HIT
       Last-Modified:
-      - Wed, 01 Apr 2026 06:42:59 GMT
+      - Tue, 05 May 2026 02:26:38 GMT
       Access-Control-Allow-Origin:
       - "*"
       Etag:
-      - W/"69ccbe73-9c6"
+      - W/"69f9555e-9c6"
       Expires:
-      - Thu, 02 Apr 2026 11:33:43 GMT
+      - Thu, 07 May 2026 00:01:24 GMT
       Cache-Control:
       - max-age=600
       X-Proxy-Cache:
       - MISS
       X-Github-Request-Id:
-      - 7CD0:3B9ECA:F87895:FB1241:69CE51BF
+      - 8CA8:1519:3A7294A:3B13014:69FBD3FC
       Accept-Ranges:
       - bytes
       Date:
-      - Thu, 02 Apr 2026 11:24:54 GMT
+      - Wed, 06 May 2026 23:53:33 GMT
       Via:
       - 1.1 varnish
       Age:
-      - '39'
+      - '77'
       X-Served-By:
-      - cache-ber1080042-BER
+      - cache-lis1490029-LIS
       X-Cache:
       - HIT
       X-Cache-Hits:
-      - '7'
+      - '1'
       X-Timer:
-      - S1775129094.343699,VS0,VE0
+      - S1778111614.601700,VS0,VE1
       Vary:
       - Accept-Encoding
       X-Fastly-Request-Id:
-      - 07a0b029843d25056ecfd5cff6231b48884ef805
+      - a25fd05998ce0bb4caa61a51352170abaa6ad7e7
     body:
       encoding: ASCII-8BIT
       string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
@@ -95,7 +97,7 @@ http_interactions:
         \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
         WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
         FOR A PARTICULAR\n     PURPOSE.\n"
-  recorded_at: Thu, 02 Apr 2026 11:24:54 GMT
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 - request:
     method: post
     uri: https://api.x.ai/v1/chat/completions
@@ -153,13 +155,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 02 Apr 2026 11:24:57 GMT
+      - Wed, 06 May 2026 23:53:36 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Strict-Transport-Security:
+      - max-age=31536000
       Set-Cookie:
       - "<COOKIE>"
       X-Ratelimit-Limit-Tokens:
@@ -173,19 +177,17 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '1800'
       X-Metrics-Ttft-Ms:
-      - '235.4'
+      - '155.8'
       X-Metrics-Mean-Itl-Ms:
-      - '12.6'
+      - '9.5'
       X-Metrics-E2e-Ms:
-      - '2994.0'
-      Strict-Transport-Security:
-      - max-age=31536000
+      - '2857.5'
+      Cf-Cache-Status:
+      - DYNAMIC
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Traceparent:
-      - 00-d9d1c9cdeeb3fa2a24690268c4a0488f-87de99c100889311-01
-      Cf-Cache-Status:
-      - DYNAMIC
+      - 00-4f84c14640f7731b303e2b4e3a5da0e0-767dfab9000174f2-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
@@ -198,20 +200,7 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"f89fe529-ad1c-9efb-a5d8-65259e0a2cbb","object":"chat.completion","created":1775129094,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"This
-        is the **Ruby License** (also known as the Ruby BSDL or matz''s original license),
-        a permissive open-source license for the Ruby programming language, authored
-        by Yukihiro Matsumoto (matz).\n\n### Key Points:\n- **Copyright**: Held by
-        Yukihiro Matsumoto.\n- **Permissions**:\n  - Free redistribution of verbatim
-        source copies (with notices intact).\n  - Modification allowed, with specific
-        conditions (e.g., make mods public domain, restrict to internal use, rename
-        binaries, or arrange with author).\n  - Binary distribution allowed with source
-        availability or pointers to originals.\n  - Can be embedded in other software
-        (including commercial).\n- **Exclusions**:\n  - Some files have different
-        terms (see `LEGAL` file).\n  - Generated scripts/libraries aren''t covered.\n-
-        **Disclaimer**: Provided \"AS IS\" with no warranties.\n\nIt''s similar to
-        a 2-clause BSD license but with unique clauses for modifications and binaries.
-        This allowed Ruby''s widespread adoption while protecting the original work.
-        Full 2-clause BSDL is in the referenced `BSDL` file.","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":692,"completion_tokens":216,"total_tokens":908,"prompt_tokens_details":{"text_tokens":692,"audio_tokens":0,"image_tokens":0,"cached_tokens":161},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":2222500},"system_fingerprint":"fp_5d249ba471"}'
-  recorded_at: Thu, 02 Apr 2026 11:24:57 GMT
+      string: !binary |-
+        eyJpZCI6IjBkOTEzNGYxLTA1NDAtOWUxMi1iZWUwLTdiYzIxZmQ4OWNjMyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NzgxMTE2MTMsIm1vZGVsIjoiZ3Jvay00LTEtZmFzdC1ub24tcmVhc29uaW5nIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJUaGlzIGlzIHRoZSAqKlJ1YnkgTGljZW5zZSoqIChhbHNvIGtub3duIGFzIHRoZSBSdWJ5IExpY2Vuc2Ugb3IgbWF0eidzIGxpY2Vuc2UpLCBhIHBlcm1pc3NpdmUgb3Blbi1zb3VyY2UgbGljZW5zZSBmb3IgdGhlIFJ1YnkgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UsIGNvcHlyaWdodGVkIGJ5IFl1a2loaXJvIE1hdHN1bW90byAobWF0eikuXG5cbiMjIyBLZXkgUGVybWlzc2lvbnMgKGluIHBsYWluIEVuZ2xpc2gpOlxuLSAqKkZyZWUgcmVkaXN0cmlidXRpb24qKjogWW91IGNhbiBjb3B5IGFuZCBzaGFyZSB0aGUgc291cmNlIGNvZGUgdmVyYmF0aW0sIGFzIGxvbmcgYXMgeW91IGtlZXAgYWxsIG9yaWdpbmFsIGNvcHlyaWdodCBub3RpY2VzIGFuZCBkaXNjbGFpbWVycy5cbi0gKipNb2RpZmljYXRpb24gYWxsb3dlZCoqOiBZb3UgY2FuIG1vZGlmeSBpdCwgYnV0IG11c3QgZG8gKiphdCBsZWFzdCBvbmUqKiBvZjpcbiAgLSBNYWtlIG1vZHMgcHVibGljIChlLmcuLCBwb3N0IHRvIFVzZW5ldCkgb3IgbGV0IHRoZSBhdXRob3IgaW5jbHVkZSB0aGVtLlxuICAtIFVzZSBtb2RpZmllZCB2ZXJzaW9uIG9ubHkgaW50ZXJuYWxseSBpbiB5b3VyIG9yZy5cbiAgLSBOYW1lIG5vbi1zdGFuZGFyZCBiaW5hcmllcyBkaWZmZXJlbnRseSBhbmQgcG9pbnQgdG8gb3JpZ2luYWwgc291cmNlLlxuICAtIEFycmFuZ2UgZGlyZWN0bHkgd2l0aCB0aGUgYXV0aG9yLlxuLSAqKkJpbmFyeSBkaXN0cmlidXRpb24qKjogU2ltaWxhciBydWxlcyBhcHBseeKAlGluY2x1ZGUgc291cmNlIGFjY2VzcyBpbnN0cnVjdGlvbnMgb3IgdGhlIHNvdXJjZSBpdHNlbGYuXG4tICoqRW1iZWRkaW5nIE9LKio6IFlvdSBjYW4gaW5jbHVkZSBtb2RpZmllZCBwYXJ0cyBpbiBvdGhlciBzb2Z0d2FyZSAoZXZlbiBjb21tZXJjaWFsKSwgYnV0IGNoZWNrIGBMRUdBTGAgZmlsZSBmb3IgdGhpcmQtcGFydHkgZmlsZXMgd2l0aCBkaWZmZXJlbnQgdGVybXMuXG4tICoqU2NyaXB0cy9saWJyYXJpZXMqKjogR2VuZXJhdGVkIG91dHB1dHMgYXJlbid0IGF1dG9tYXRpY2FsbHkgY292ZXJlZCBieSB0aGlzIGxpY2Vuc2UuXG4tICoqTm8gd2FycmFudHkqKjogUHJvdmlkZWQgXCJBUyBJU1wiIHdpdGggbm8gZ3VhcmFudGVlcy5cblxuSXQncyBjb21wYXRpYmxlIHdpdGggYm90aCB0aGUgMi1jbGF1c2UgQlNEIGxpY2Vuc2UgKEJTREwpIGFuZCB0aGlzIGN1c3RvbSB0ZXh0LiBUaGlzIGxpY2Vuc2UgaGFzIGVuYWJsZWQgUnVieSdzIHdpZGVzcHJlYWQgdXNlIGluIHByb2plY3RzIGxpa2UgUnVieSBvbiBSYWlscy4gRm9yIGZ1bGwgbGVnYWwgZGV0YWlscywgYWx3YXlzIGNvbnN1bHQgYSBsYXd5ZXIsIGJ1dCBpdCdzIGRlc2lnbmVkIHRvIGJlIHZlcnkgZGV2ZWxvcGVyLWZyaWVuZGx5LiIsInJlZnVzYWwiOm51bGx9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6NjkyLCJjb21wbGV0aW9uX3Rva2VucyI6Mjc4LCJ0b3RhbF90b2tlbnMiOjk3MCwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7InRleHRfdG9rZW5zIjo2OTIsImF1ZGlvX3Rva2VucyI6MCwiaW1hZ2VfdG9rZW5zIjowLCJjYWNoZWRfdG9rZW5zIjoxNjF9LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjAsImF1ZGlvX3Rva2VucyI6MCwiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjAsInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowfSwibnVtX3NvdXJjZXNfdXNlZCI6MCwiY29zdF9pbl91c2RfdGlja3MiOjI1MzI1MDB9LCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9iOWZmOWI4MWIzIn0=
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 recorded_with: VCR 6.4.0

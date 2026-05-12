@@ -243,7 +243,7 @@ RSpec.describe RubyLLM::Chat do
     CHAT_MODELS.each do |model_info|
       model = model_info[:model]
       provider = model_info[:provider]
-      model = 'claude-sonnet-4' if provider == :bedrock # haiku can't do parallel tool calls
+      model = 'claude-sonnet-4-5' if provider == :bedrock # haiku can't do parallel tool calls
       it "#{provider}/#{model} can use parallel tool calls" do
         supports_functions? provider, model
         skip 'gpustack/qwen3 does not support parallel tool calls properly' if provider == :gpustack && model == 'qwen3'
@@ -343,6 +343,10 @@ RSpec.describe RubyLLM::Chat do
       provider = model_info[:provider]
       it "#{provider}/#{model} can use tools with multi-turn streaming conversations" do
         supports_functions? provider, model
+        if provider == :azure
+          skip 'Azure rate-limits this multi-turn streaming tool scenario under the parallel live suite'
+        end
+
         if provider == :gpustack && model == 'qwen3'
           skip 'gpustack/qwen3 does not support streaming tool calls properly'
         end
@@ -739,6 +743,10 @@ RSpec.describe RubyLLM::Chat do
         unless RubyLLM::Provider.providers[provider]&.local?
           model_info = RubyLLM.models.find(model)
           skip "#{model} doesn't support function calling" unless model_info&.supports_functions?
+        end
+
+        if provider == :azure
+          skip 'Azure rate-limits this multi-turn tool-control scenario under the parallel live suite'
         end
 
         provider_class = provider ? RubyLLM::Provider.providers[provider.to_sym] : nil

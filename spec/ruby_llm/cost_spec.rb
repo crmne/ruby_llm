@@ -50,6 +50,97 @@ RSpec.describe RubyLLM::Cost do
       expect(cost.cache_creation).to eq(cost.cache_write)
     end
 
+    it 'calculates image costs from text and image input details' do
+      image_model = RubyLLM::Model::Info.new(
+        id: 'image-model',
+        name: 'Image Model',
+        provider: 'openai',
+        pricing: {
+          text_tokens: {
+            standard: {
+              input_per_million: 5.0
+            }
+          },
+          images: {
+            standard: {
+              input_per_million: 10.0,
+              output_per_million: 40.0
+            }
+          }
+        }
+      )
+      tokens = RubyLLM::Tokens.new(input: 350, output: 50)
+      cost = described_class.new(
+        tokens:,
+        model: image_model,
+        category: :images,
+        input_details: {
+          'text_tokens' => 100,
+          'image_tokens' => 250
+        }
+      )
+
+      expect(cost.input).to be_within(0.0000000001).of(0.003)
+      expect(cost.output).to be_within(0.0000000001).of(0.002)
+      expect(cost.total).to be_within(0.0000000001).of(0.005)
+    end
+
+    it 'does not price thinking tokens separately when output already includes them' do
+      tokens = RubyLLM::Tokens.new(input: 50, output: 1306, thinking: 1087)
+      cost = described_class.new(tokens:, model:)
+
+      expect(cost.output).to be_within(0.0000000001).of(0.002612)
+      expect(cost.thinking).to be_nil
+      expect(cost.reasoning).to be_nil
+      expect(cost.total).to be_within(0.0000000001).of(0.002662)
+    end
+
+    it 'prices thinking tokens separately when the model has distinct reasoning pricing' do
+      reasoning_model = RubyLLM::Model::Info.new(
+        id: 'reasoning-priced-model',
+        name: 'Reasoning Priced Model',
+        provider: 'perplexity',
+        pricing: {
+          text_tokens: {
+            standard: {
+              input_per_million: 2.0,
+              output_per_million: 8.0,
+              reasoning_output_per_million: 3.0
+            }
+          }
+        }
+      )
+      tokens = RubyLLM::Tokens.new(input: 33, output: 11_395, thinking: 193_947)
+      cost = described_class.new(tokens:, model: reasoning_model)
+
+      expect(cost.input).to be_within(0.0000000001).of(0.000066)
+      expect(cost.output).to be_within(0.0000000001).of(0.09116)
+      expect(cost.thinking).to be_within(0.0000000001).of(0.581841)
+      expect(cost.total).to be_within(0.0000000001).of(0.673067)
+    end
+
+    it 'does not double-count thinking tokens when reasoning pricing matches output pricing' do
+      inclusive_model = RubyLLM::Model::Info.new(
+        id: 'inclusive-reasoning-model',
+        name: 'Inclusive Reasoning Model',
+        provider: 'openrouter',
+        pricing: {
+          text_tokens: {
+            standard: {
+              output_per_million: 12.0,
+              reasoning_output_per_million: 12.0
+            }
+          }
+        }
+      )
+      tokens = RubyLLM::Tokens.new(output: 1_000, thinking: 800)
+      cost = described_class.new(tokens:, model: inclusive_model)
+
+      expect(cost.output).to eq(0.012)
+      expect(cost.thinking).to be_nil
+      expect(cost.total).to eq(0.012)
+    end
+
     it 'reads legacy cache pricing keys' do
       legacy_model = RubyLLM::Model::Info.new(
         id: 'legacy-priced-model',

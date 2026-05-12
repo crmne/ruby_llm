@@ -57,8 +57,8 @@ Key attributes of a `Chunk`:
 *   `chunk.role`: Always `:assistant` for streamed response chunks.
 *   `chunk.model_id`: The model generating the response (usually present).
 *   `chunk.tool_calls`: A hash containing partial or complete tool call information if the model is invoking a [Tool]({% link _core_features/tools.md %}). The arguments might be streamed incrementally.
-*   `chunk.input_tokens`: Standard input tokens for the request (often `nil` until the final chunk). From v1.15 onward, cache reads and writes are exposed separately as `chunk.cache_read_tokens` and `chunk.cache_write_tokens` when providers report them.
-*   `chunk.output_tokens`: Cumulative output tokens *up to this chunk* (behavior varies by provider, often only accurate in the final chunk).
+*   `chunk.tokens&.input`: Standard input tokens for the request (often `nil` until the final chunk). From v1.15 onward, cache reads and writes are exposed separately as `chunk.tokens&.cache_read` and `chunk.tokens&.cache_write` when providers report them.
+*   `chunk.tokens&.output`: Cumulative billable output tokens *up to this chunk* (behavior varies by provider, often only accurate in the final chunk). From v1.15 onward, this includes thinking/reasoning tokens when the provider bills them as output.
 *   `chunk.thinking`: Optional thinking output when providers stream it.
 
 > Do not rely on token counts being present or accurate in every chunk. They are typically finalized only in the last chunk or the final returned message.
@@ -85,10 +85,10 @@ puts final_message.content
 # => Bugs swim in the stream.
 
 total_tokens =
-  final_message.input_tokens.to_i +
-  final_message.output_tokens.to_i +
-  final_message.cache_read_tokens.to_i +
-  final_message.cache_write_tokens.to_i
+  final_message.tokens.input.to_i +
+  final_message.tokens.output.to_i +
+  final_message.tokens.cache_read.to_i +
+  final_message.tokens.cache_write.to_i
 
 puts "Total Tokens: #{total_tokens}"
 ```

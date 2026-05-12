@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Date:
-      - Thu, 02 Apr 2026 11:27:00 GMT
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
-      Pragma:
-      - no-cache
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
+      Pragma:
+      - no-cache
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      Date:
+      - Wed, 06 May 2026 23:56:21 GMT
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/sqlservice.login openid https://www.googleapis.com/auth/cloud-platform",
+          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/cloud-platform",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Thu, 02 Apr 2026 11:27:00 GMT
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -87,7 +87,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Thu, 02 Apr 2026 11:27:01 GMT
+      - Wed, 06 May 2026 23:56:22 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -110,18 +110,18 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "The creator of the programming language Ruby is **Yukihiro Matsumoto**, often referred to as **Matz**.\n\nHe started working on Ruby in 1993 and released the first public version in 1995."
+                    "text": "The creator of the programming language Ruby is **Yukihiro Matsumoto**, often referred to by his nickname **\"Matz\"**.\n\nHe is a Japanese computer scientist and software engineer who started working on Ruby in the mid-1990s."
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.64829972449769369
+              "avgLogprobs": -1.1142305860332413
             }
           ],
           "usageMetadata": {
             "promptTokenCount": 10,
-            "candidatesTokenCount": 47,
-            "totalTokenCount": 192,
+            "candidatesTokenCount": 51,
+            "totalTokenCount": 198,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -132,16 +132,16 @@ http_interactions:
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 47
+                "tokenCount": 51
               }
             ],
-            "thoughtsTokenCount": 135
+            "thoughtsTokenCount": 137
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-04-02T11:27:00.157640Z",
-          "responseId": "hFLOacjPCfj12fMP37G9qQ0"
+          "createTime": "2026-05-06T23:56:21.392069Z",
+          "responseId": "JdX7aYX3F-TYvdIPhN2EiAc"
         }
-  recorded_at: Thu, 02 Apr 2026 11:27:01 GMT
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -150,9 +150,9 @@ http_interactions:
       string: '{"contents":[{"role":"user","parts":[{"text":"Who is the creator of
         the programming language Ruby?"}]},{"role":"model","parts":[{"text":"The creator
         of the programming language Ruby is **Yukihiro Matsumoto**, often referred
-        to as **Matz**.\n\nHe started working on Ruby in 1993 and released the first
-        public version in 1995."}]},{"role":"user","parts":[{"text":"What year did
-        he create Ruby?"}]}],"generationConfig":{}}'
+        to by his nickname **\"Matz\"**.\n\nHe is a Japanese computer scientist and
+        software engineer who started working on Ruby in the mid-1990s."}]},{"role":"user","parts":[{"text":"What
+        year did he create Ruby?"}]}],"generationConfig":{}}'
     headers:
       User-Agent:
       - Faraday v2.14.1
@@ -176,7 +176,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Thu, 02 Apr 2026 11:27:02 GMT
+      - Wed, 06 May 2026 23:56:24 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -199,36 +199,36 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "Yukihiro Matsumoto (Matz) started working on Ruby in **1993**."
+                    "text": "Yukihiro Matsumoto (Matz) started working on Ruby in **1993**.\n\nHe publicly released the first version of Ruby, **Ruby 0.95**, in **1995**."
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.39071075539839895
+              "avgLogprobs": -1.16300461509011
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 64,
-            "candidatesTokenCount": 19,
-            "totalTokenCount": 106,
+            "promptTokenCount": 68,
+            "candidatesTokenCount": 44,
+            "totalTokenCount": 286,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 64
+                "tokenCount": 68
               }
             ],
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 19
+                "tokenCount": 44
               }
             ],
-            "thoughtsTokenCount": 23
+            "thoughtsTokenCount": 174
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-04-02T11:27:01.691445Z",
-          "responseId": "hVLOafWZKtuhmPUPvJLguQ0"
+          "createTime": "2026-05-06T23:56:22.984062Z",
+          "responseId": "JtX7af6HPMKHhcIPuvcF"
         }
-  recorded_at: Thu, 02 Apr 2026 11:27:02 GMT
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 recorded_with: VCR 6.4.0
