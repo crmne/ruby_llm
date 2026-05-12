@@ -2,13 +2,16 @@
 
 module RubyLLM
   module Providers
-    class Azure
-      # Handles formatting of media content (images, audio) for Azure OpenAI-compatible APIs.
+    class Mistral
+      # Handles media content for Mistral Chat Completions.
       module Media
         module_function
 
         def format_content(content) # rubocop:disable Metrics/PerceivedComplexity
-          return content.value if content.is_a?(RubyLLM::Content::Raw)
+          if content.is_a?(RubyLLM::Content::Raw)
+            value = content.value
+            return value.is_a?(Hash) ? value.to_json : value
+          end
           return content.to_json if content.is_a?(Hash) || content.is_a?(Array)
           return content unless content.is_a?(Content)
 
@@ -21,6 +24,8 @@ module RubyLLM
               parts << format_image(attachment)
             when :audio
               parts << OpenAI::Media.format_audio(attachment)
+            when :pdf, :document
+              parts << format_document(attachment)
             when :text
               parts << OpenAI::Media.format_text_file(attachment)
             else
@@ -34,9 +39,14 @@ module RubyLLM
         def format_image(image)
           {
             type: 'image_url',
-            image_url: {
-              url: image.for_llm
-            }
+            image_url: image.url? ? image.source.to_s : image.for_llm
+          }
+        end
+
+        def format_document(document)
+          {
+            type: 'document_url',
+            document_url: document.url? ? document.source.to_s : document.for_llm
           }
         end
       end

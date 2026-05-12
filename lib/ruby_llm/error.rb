@@ -23,7 +23,17 @@ module RubyLLM
   class InvalidRoleError < StandardError; end
   class InvalidToolChoiceError < StandardError; end
   class ModelNotFoundError < StandardError; end
-  class UnsupportedAttachmentError < StandardError; end
+
+  # Raised when RubyLLM cannot format an attachment for the selected provider.
+  class UnsupportedAttachmentError < StandardError
+    GUIDANCE = 'Consider using a model that supports this attachment type.'
+
+    def initialize(type = nil)
+      message = 'Unsupported attachment type'
+      message = "#{message}: #{type}" if type
+      super("#{message}. #{GUIDANCE}")
+    end
+  end
 
   # Error classes for different HTTP status codes
   class BadRequestError < Error; end
