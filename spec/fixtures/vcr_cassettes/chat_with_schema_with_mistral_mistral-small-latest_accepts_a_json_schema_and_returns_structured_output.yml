@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 16 Mar 2026 19:11:50 GMT
+      - Wed, 06 May 2026 23:52:37 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -32,29 +32,29 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '019cf80f-c9c2-7ec9-a5d3-35fa4f80e501'
+      - '019dffb5-2ca5-7f49-9a93-c0a5d4b9fcbf'
       X-Kong-Request-Id:
-      - '019cf80f-c9c2-7ec9-a5d3-35fa4f80e501'
+      - '019dffb5-2ca5-7f49-9a93-c0a5d4b9fcbf'
       X-Ratelimit-Limit-Tokens-Minute:
       - '2000000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '1998903'
+      - '1999449'
       X-Ratelimit-Tokens-Query-Cost:
-      - '33'
+      - '29'
       X-Ratelimit-Limit-Req-Minute:
-      - '360'
+      - '1500'
       X-Ratelimit-Remaining-Req-Minute:
-      - '350'
+      - '1495'
       X-Envoy-Upstream-Service-Time:
-      - '143'
+      - '233'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '144'
+      - '233'
       X-Kong-Proxy-Latency:
-      - '10'
+      - '22'
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
@@ -70,7 +70,7 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"426fa90015f84865a688f94e9a8470d4","created":1773688310,"model":"mistral-small-latest","usage":{"prompt_tokens":15,"total_tokens":33,"completion_tokens":18,"prompt_tokens_details":{"cached_tokens":0}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"{\n  \"name\":
-        \"John\",\n  \"age\": 30\n}"}}]}'
-  recorded_at: Mon, 16 Mar 2026 19:11:50 GMT
+      string: '{"id":"7e64c61f82054f7cb2accf07e28a0540","created":1778111556,"model":"mistral-small-latest","usage":{"prompt_tokens":15,"total_tokens":29,"completion_tokens":14,"prompt_tokens_details":{"cached_tokens":0}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"{\"name\":
+        \"John\", \"age\": 30}"}}]}'
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 recorded_with: VCR 6.4.0

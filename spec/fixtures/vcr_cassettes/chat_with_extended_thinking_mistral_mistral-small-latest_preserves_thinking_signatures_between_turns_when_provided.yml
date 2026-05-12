@@ -1,0 +1,154 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.mistral.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"mistral-small-latest","messages":[{"role":"user","content":"What
+        is 5 + 3?"}],"stream":false,"reasoning_effort":"high"}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 07 May 2026 00:33:02 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Mistral-Correlation-Id:
+      - '019dffda-2ed7-79b3-aa89-ff83207a3806'
+      X-Kong-Request-Id:
+      - '019dffda-2ed7-79b3-aa89-ff83207a3806'
+      X-Ratelimit-Limit-Tokens-Minute:
+      - '2000000'
+      X-Ratelimit-Remaining-Tokens-Minute:
+      - '1992787'
+      X-Ratelimit-Tokens-Query-Cost:
+      - '66'
+      X-Ratelimit-Limit-Req-Minute:
+      - '1500'
+      X-Ratelimit-Remaining-Req-Minute:
+      - '1493'
+      X-Envoy-Upstream-Service-Time:
+      - '382'
+      Server:
+      - cloudflare
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Kong-Upstream-Latency:
+      - '383'
+      X-Kong-Proxy-Latency:
+      - '14'
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      X-Content-Type-Options:
+      - nosniff
+      Cf-Cache-Status:
+      - DYNAMIC
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"4ee2042c0be9475d9e5a5db1d4f29197","created":1778113982,"model":"mistral-small-latest","usage":{"prompt_tokens":23,"total_tokens":66,"completion_tokens":43,"prompt_tokens_details":{"cached_tokens":0}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":[{"type":"thinking","thinking":[{"type":"text","text":"The
+        user is asking for the sum of 5 and 3. This is a basic arithmetic operation.
+        I know that 5 + 3 equals 8."}],"closed":true},{"type":"text","text":"5 + 3
+        = 8"}]}}]}'
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+- request:
+    method: post
+    uri: https://api.mistral.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"mistral-small-latest","messages":[{"role":"user","content":"What
+        is 5 + 3?"},{"role":"assistant","content":[{"type":"thinking","thinking":[{"type":"text","text":"The
+        user is asking for the sum of 5 and 3. This is a basic arithmetic operation.
+        I know that 5 + 3 equals 8."}]},{"type":"text","text":"5 + 3 = 8"}]},{"role":"user","content":"Now
+        multiply that by 2"}],"stream":false,"reasoning_effort":"high"}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 07 May 2026 00:33:03 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Mistral-Correlation-Id:
+      - '019dffda-310a-7dfa-86da-e297a925ec7d'
+      X-Kong-Request-Id:
+      - '019dffda-310a-7dfa-86da-e297a925ec7d'
+      X-Ratelimit-Limit-Tokens-Minute:
+      - '2000000'
+      X-Ratelimit-Remaining-Tokens-Minute:
+      - '1992670'
+      X-Ratelimit-Tokens-Query-Cost:
+      - '117'
+      X-Ratelimit-Limit-Req-Minute:
+      - '1500'
+      X-Ratelimit-Remaining-Req-Minute:
+      - '1492'
+      X-Envoy-Upstream-Service-Time:
+      - '372'
+      Server:
+      - cloudflare
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Kong-Upstream-Latency:
+      - '374'
+      X-Kong-Proxy-Latency:
+      - '20'
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      X-Content-Type-Options:
+      - nosniff
+      Cf-Cache-Status:
+      - DYNAMIC
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImY2NGVkN2RhZGFiODQ3ZGU5OGJmODIwZjlmNGI5ZjMyIiwiY3JlYXRlZCI6MTc3ODExMzk4MiwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsInVzYWdlIjp7InByb21wdF90b2tlbnMiOjc0LCJ0b3RhbF90b2tlbnMiOjExNywiY29tcGxldGlvbl90b2tlbnMiOjQzLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MH19LCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZmluaXNoX3JlYXNvbiI6InN0b3AiLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJ0b29sX2NhbGxzIjpudWxsLCJjb250ZW50IjpbeyJ0eXBlIjoidGhpbmtpbmciLCJ0aGlua2luZyI6W3sidHlwZSI6InRleHQiLCJ0ZXh0IjoiVGhlIHVzZXIgd2FudHMgbWUgdG8gbXVsdGlwbHkgdGhlIHByZXZpb3VzIHJlc3VsdCAod2hpY2ggd2FzIDgpIGJ5IDIuIFNvLCA4IG11bHRpcGxpZWQgYnkgMiBlcXVhbHMgMTYuIn1dLCJjbG9zZWQiOnRydWV9LHsidHlwZSI6InRleHQiLCJ0ZXh0IjoiOCDDlyAyID0gMTYifV19fV19
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+recorded_with: VCR 6.4.0

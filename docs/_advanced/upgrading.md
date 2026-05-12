@@ -20,7 +20,65 @@ redirect_from:
 1. TOC
 {:toc}
 
+This guide focuses on upgrade-impacting changes: migrations, token semantics, deprecations, and compatibility notes. It is not a complete changelog. For every feature, fix, and patch note, see the [GitHub releases](https://github.com/crmne/ruby_llm/releases).
+{: .note }
+
 ---
+# Upgrade to 1.15
+
+## How to Upgrade
+
+No generator is required for the token and cost API changes in 1.15.
+
+If you use the Rails integration and already ran the v1.9 migration, no new columns are needed. The new `cache_read_tokens` and `cache_write_tokens` helpers use the existing `cached_tokens` and `cache_creation_tokens` columns.
+
+## Token Semantics Changed
+
+RubyLLM now normalizes prompt cache usage before exposing token counts. From 1.15 onward, `response.tokens.input` means standard input tokens. When a provider includes cache reads or cache writes in its raw prompt token total, RubyLLM subtracts those cache buckets and exposes them separately.
+
+Use the new cache names in new code:
+
+```ruby
+response.tokens.input
+response.tokens.output
+response.tokens.cache_read
+response.tokens.cache_write
+```
+
+The top-level token helpers still work for backwards compatibility:
+
+```ruby
+response.input_tokens       # Same as tokens.input
+response.output_tokens      # Same as tokens.output
+response.cache_read_tokens  # Same as tokens.cache_read
+response.cache_write_tokens # Same as tokens.cache_write
+response.cached_tokens          # Same as cache_read_tokens
+response.cache_creation_tokens  # Same as cache_write_tokens
+```
+
+If your app stored or displayed provider raw prompt totals, reconstruct the request-side input activity by adding the normalized buckets:
+
+```ruby
+request_side_input_tokens =
+  response.tokens.input.to_i +
+  response.tokens.cache_read.to_i +
+  response.tokens.cache_write.to_i
+```
+
+For costs, prefer the new cost helpers instead of multiplying token totals yourself:
+
+```ruby
+response.cost.total
+chat.cost.total
+agent.cost.total
+```
+
+Cost helpers are available from 1.15 onward. They return `nil` for any cost bucket whose pricing is missing, and `cost.total` is also `nil` when a used bucket has incomplete pricing.
+
+`tokens.thinking` remains available from 1.10. From 1.15 onward, `tokens.output` is normalized as the billable output bucket. Do not add `tokens.thinking` to `tokens.output` yourself; RubyLLM includes thinking in output when the provider bills it as output, and exposes `cost.thinking` only for models with distinct reasoning-token pricing.
+
+See [Tracking Token Usage]({% link _core_features/chat.md %}#tracking-token-usage) for the provider comparison table and the exact normalized token semantics RubyLLM exposes.
+
 # Upgrade to 1.14
 
 ## How to Upgrade
@@ -143,7 +201,7 @@ v1.7.0+
 
 **New Rails-like `acts_as` API**
 ```ruby
-# New API uses association names as primary parameters
+# New API uses Rails association names as primary parameters
 acts_as_chat messages: :messages, model: :model
 acts_as_message chat: :chat, tool_calls: :tool_calls, model: :model
 
@@ -210,7 +268,7 @@ If you're using custom model names (e.g., `Conversation` instead of `Chat`), you
 **Before (1.6):**
 ```ruby
 class Conversation < ApplicationRecord
-  acts_as_chat message_class: 'ChatMessage', tool_call_class: 'AIToolCall'
+  acts_as_chat message_class: 'ChatMessage', tool_call_class: 'AiToolCall'
 end
 
 class ChatMessage < ApplicationRecord
@@ -221,15 +279,16 @@ end
 **After (1.7):**
 ```ruby
 class Conversation < ApplicationRecord
-  acts_as_chat messages: :chat_messages,  # Association name
-               message_class: 'ChatMessage'  # Class name if not inferrable
+  acts_as_chat messages: :chat_messages  # Association name
 end
 
 class ChatMessage < ApplicationRecord
   acts_as_message chat: :conversation,  # Association name
-                  chat_class: 'Conversation'  # Class name if not inferrable
+                  tool_calls: :ai_tool_calls
 end
 ```
+
+The new API follows Rails association inference. Association names determine default foreign keys; class options only change the class name. For example, `tool_calls: :ai_tool_calls` uses `ai_tool_call_id`, while `tool_call_class: 'AiToolCall'` by itself still uses `tool_call_id`.
 
 ## New Chat UI Generator
 

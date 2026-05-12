@@ -26,40 +26,42 @@ http_interactions:
       - GitHub.com
       Content-Type:
       - text/plain; charset=utf-8
+      X-Origin-Cache:
+      - HIT
       Last-Modified:
-      - Mon, 16 Mar 2026 01:54:03 GMT
+      - Tue, 05 May 2026 02:26:38 GMT
       Access-Control-Allow-Origin:
       - "*"
       Etag:
-      - W/"69b762bb-9c6"
+      - W/"69f9555e-9c6"
       Expires:
-      - Mon, 16 Mar 2026 19:20:40 GMT
+      - Thu, 07 May 2026 00:01:24 GMT
       Cache-Control:
       - max-age=600
       X-Proxy-Cache:
       - MISS
       X-Github-Request-Id:
-      - 2E30:38D72F:D7B24:DA007:69B855AE
+      - 8CA8:1519:3A7294A:3B13014:69FBD3FC
       Accept-Ranges:
       - bytes
       Date:
-      - Mon, 16 Mar 2026 19:14:09 GMT
+      - Wed, 06 May 2026 23:53:33 GMT
       Via:
       - 1.1 varnish
       Age:
-      - '167'
+      - '77'
       X-Served-By:
-      - cache-fra-etou8220112-FRA
+      - cache-lis1490029-LIS
       X-Cache:
       - HIT
       X-Cache-Hits:
       - '1'
       X-Timer:
-      - S1773688450.625594,VS0,VE2
+      - S1778111614.601700,VS0,VE1
       Vary:
       - Accept-Encoding
       X-Fastly-Request-Id:
-      - 88b8b6770af0fa71746d82403d7444d9b2b3c76b
+      - a25fd05998ce0bb4caa61a51352170abaa6ad7e7
     body:
       encoding: ASCII-8BIT
       string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
@@ -95,7 +97,7 @@ http_interactions:
         \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
         WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
         FOR A PARTICULAR\n     PURPOSE.\n"
-  recorded_at: Mon, 16 Mar 2026 19:14:09 GMT
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 - request:
     method: post
     uri: https://api.x.ai/v1/chat/completions
@@ -153,7 +155,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 16 Mar 2026 19:14:12 GMT
+      - Wed, 06 May 2026 23:53:36 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -162,33 +164,35 @@ http_interactions:
       - keep-alive
       Strict-Transport-Security:
       - max-age=31536000
-      Access-Control-Expose-Headers:
-      - "*"
       Set-Cookie:
       - "<COOKIE>"
       X-Ratelimit-Limit-Tokens:
-      - '4000000'
+      - '10000000'
       X-Ratelimit-Remaining-Tokens:
-      - '4000000'
+      - '10000000'
       X-Zero-Data-Retention:
       - 'false'
       X-Ratelimit-Limit-Requests:
-      - '607'
+      - '1800'
       X-Ratelimit-Remaining-Requests:
-      - '607'
+      - '1800'
       X-Metrics-Ttft-Ms:
-      - '114.0'
+      - '155.8'
       X-Metrics-Mean-Itl-Ms:
-      - '10.2'
+      - '9.5'
       X-Metrics-E2e-Ms:
-      - '2278.1'
-      X-Request-Id:
-      - "<X_REQUEST_ID>"
+      - '2857.5'
       Cf-Cache-Status:
       - DYNAMIC
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Traceparent:
+      - 00-4f84c14640f7731b303e2b4e3a5da0e0-767dfab9000174f2-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
       - "*"
       Server:
       - cloudflare
@@ -196,19 +200,7 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"3e4ea5bc-60c9-5466-3c77-39957286e202","object":"chat.completion","created":1773688449,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"This
-        is the **Ruby License** (also known as the Ruby License or matz''s license),
-        a permissive open-source license for the Ruby programming language, authored
-        by Yukihiro Matsumoto (matz).\n\n### Key Points:\n- **Permissive**: Allows
-        redistribution, modification, and commercial use with minimal restrictions.\n-
-        **Dual-licensing option**: You can use either this license **or** the 2-clause
-        BSD License (BSDL).\n- **Main allowances**:\n  1. Free verbatim copying (with
-        notices preserved).\n  2. Modifications for public domain, internal corporate
-        use, non-standard binaries, or with author arrangements.\n  3. Binary distribution
-        with source access instructions.\n  4. Inclusion in other software (even commercial),
-        excluding certain third-party files (see `LEGAL` file).\n- **No warranty**:
-        Provided \"AS IS\" without guarantees.\n\nThis license has been used in early
-        Ruby versions (pre-2.0) and is OSI-approved. Modern Ruby uses the 2-clause
-        BSD license exclusively.","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":692,"completion_tokens":207,"total_tokens":899,"prompt_tokens_details":{"text_tokens":692,"audio_tokens":0,"image_tokens":0,"cached_tokens":161},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":2177500},"system_fingerprint":"fp_48319fcb08"}'
-  recorded_at: Mon, 16 Mar 2026 19:14:12 GMT
+      string: !binary |-
+        eyJpZCI6IjBkOTEzNGYxLTA1NDAtOWUxMi1iZWUwLTdiYzIxZmQ4OWNjMyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NzgxMTE2MTMsIm1vZGVsIjoiZ3Jvay00LTEtZmFzdC1ub24tcmVhc29uaW5nIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJUaGlzIGlzIHRoZSAqKlJ1YnkgTGljZW5zZSoqIChhbHNvIGtub3duIGFzIHRoZSBSdWJ5IExpY2Vuc2Ugb3IgbWF0eidzIGxpY2Vuc2UpLCBhIHBlcm1pc3NpdmUgb3Blbi1zb3VyY2UgbGljZW5zZSBmb3IgdGhlIFJ1YnkgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UsIGNvcHlyaWdodGVkIGJ5IFl1a2loaXJvIE1hdHN1bW90byAobWF0eikuXG5cbiMjIyBLZXkgUGVybWlzc2lvbnMgKGluIHBsYWluIEVuZ2xpc2gpOlxuLSAqKkZyZWUgcmVkaXN0cmlidXRpb24qKjogWW91IGNhbiBjb3B5IGFuZCBzaGFyZSB0aGUgc291cmNlIGNvZGUgdmVyYmF0aW0sIGFzIGxvbmcgYXMgeW91IGtlZXAgYWxsIG9yaWdpbmFsIGNvcHlyaWdodCBub3RpY2VzIGFuZCBkaXNjbGFpbWVycy5cbi0gKipNb2RpZmljYXRpb24gYWxsb3dlZCoqOiBZb3UgY2FuIG1vZGlmeSBpdCwgYnV0IG11c3QgZG8gKiphdCBsZWFzdCBvbmUqKiBvZjpcbiAgLSBNYWtlIG1vZHMgcHVibGljIChlLmcuLCBwb3N0IHRvIFVzZW5ldCkgb3IgbGV0IHRoZSBhdXRob3IgaW5jbHVkZSB0aGVtLlxuICAtIFVzZSBtb2RpZmllZCB2ZXJzaW9uIG9ubHkgaW50ZXJuYWxseSBpbiB5b3VyIG9yZy5cbiAgLSBOYW1lIG5vbi1zdGFuZGFyZCBiaW5hcmllcyBkaWZmZXJlbnRseSBhbmQgcG9pbnQgdG8gb3JpZ2luYWwgc291cmNlLlxuICAtIEFycmFuZ2UgZGlyZWN0bHkgd2l0aCB0aGUgYXV0aG9yLlxuLSAqKkJpbmFyeSBkaXN0cmlidXRpb24qKjogU2ltaWxhciBydWxlcyBhcHBseeKAlGluY2x1ZGUgc291cmNlIGFjY2VzcyBpbnN0cnVjdGlvbnMgb3IgdGhlIHNvdXJjZSBpdHNlbGYuXG4tICoqRW1iZWRkaW5nIE9LKio6IFlvdSBjYW4gaW5jbHVkZSBtb2RpZmllZCBwYXJ0cyBpbiBvdGhlciBzb2Z0d2FyZSAoZXZlbiBjb21tZXJjaWFsKSwgYnV0IGNoZWNrIGBMRUdBTGAgZmlsZSBmb3IgdGhpcmQtcGFydHkgZmlsZXMgd2l0aCBkaWZmZXJlbnQgdGVybXMuXG4tICoqU2NyaXB0cy9saWJyYXJpZXMqKjogR2VuZXJhdGVkIG91dHB1dHMgYXJlbid0IGF1dG9tYXRpY2FsbHkgY292ZXJlZCBieSB0aGlzIGxpY2Vuc2UuXG4tICoqTm8gd2FycmFudHkqKjogUHJvdmlkZWQgXCJBUyBJU1wiIHdpdGggbm8gZ3VhcmFudGVlcy5cblxuSXQncyBjb21wYXRpYmxlIHdpdGggYm90aCB0aGUgMi1jbGF1c2UgQlNEIGxpY2Vuc2UgKEJTREwpIGFuZCB0aGlzIGN1c3RvbSB0ZXh0LiBUaGlzIGxpY2Vuc2UgaGFzIGVuYWJsZWQgUnVieSdzIHdpZGVzcHJlYWQgdXNlIGluIHByb2plY3RzIGxpa2UgUnVieSBvbiBSYWlscy4gRm9yIGZ1bGwgbGVnYWwgZGV0YWlscywgYWx3YXlzIGNvbnN1bHQgYSBsYXd5ZXIsIGJ1dCBpdCdzIGRlc2lnbmVkIHRvIGJlIHZlcnkgZGV2ZWxvcGVyLWZyaWVuZGx5LiIsInJlZnVzYWwiOm51bGx9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6NjkyLCJjb21wbGV0aW9uX3Rva2VucyI6Mjc4LCJ0b3RhbF90b2tlbnMiOjk3MCwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7InRleHRfdG9rZW5zIjo2OTIsImF1ZGlvX3Rva2VucyI6MCwiaW1hZ2VfdG9rZW5zIjowLCJjYWNoZWRfdG9rZW5zIjoxNjF9LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjAsImF1ZGlvX3Rva2VucyI6MCwiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjAsInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowfSwibnVtX3NvdXJjZXNfdXNlZCI6MCwiY29zdF9pbl91c2RfdGlja3MiOjI1MzI1MDB9LCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9iOWZmOWI4MWIzIn0=
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 recorded_with: VCR 6.4.0

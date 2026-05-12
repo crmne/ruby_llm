@@ -32,7 +32,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Mon, 16 Mar 2026 19:17:17 GMT
+      - Wed, 06 May 2026 23:59:35 GMT
       Server:
       - elb
       Vary:
@@ -40,7 +40,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 032c3092b412c54b2bef104493ce47c7
+      - 8839d5628bea777b5b934aa27c44df2a
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -48,16 +48,16 @@ http_interactions:
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 6ffd9144e1bc0d7518dfec3f04843cdc.cloudfront.net (CloudFront)
+      - 1.1 39ae765868f39f2168989dfa478b9354.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - TXL50-P2
+      - LIS50-P1
       X-Amz-Cf-Id:
-      - ZaxokhOp-PX0Dn-Q0PMRF2lq3PRa7niDPzfHQskfFmEGHxPoMtihBQ==
+      - 2hdJIrBe_bovnlZ-_NScL1Y1YJvn2Bjc2B7CabdV-gW0eGorsMb6EA==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"5cb5c59b-08cc-45bd-9512-f0032586403f","object":"chat.completion","created":1773688637,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"I''ll
-        roll the dice 3 times for you as requested.","tool_calls":[{"index":0,"id":"call_00_dW3d5TG0ub0Tf21WJ0B23SFW","type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":330,"completion_tokens":41,"total_tokens":371,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":330},"system_fingerprint":"fp_eaab8d114b_prod0820_fp8_kvcache"}'
-  recorded_at: Mon, 16 Mar 2026 19:17:20 GMT
+      string: '{"id":"89e1ccdd-62fa-46bd-a5de-631ca1f6d1f7","object":"chat.completion","created":1778111975,"model":"deepseek-v4-flash","choices":[{"index":0,"message":{"role":"assistant","content":"I''ll
+        roll the dice 3 times for you!","tool_calls":[{"index":0,"id":"call_00_WIcnEzlju5GrxBady21E8993","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"index":1,"id":"call_01_Mxgr8A0IT12XUqKgkcMe1965","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"index":2,"id":"call_02_NXeiozEgAV73HMt4O7Lm0682","type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":305,"completion_tokens":72,"total_tokens":377,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":305},"system_fingerprint":"fp_058df29938_prod0820_fp8_kvcache_20260402"}'
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/chat/completions
@@ -66,8 +66,10 @@ http_interactions:
       string: '{"model":"deepseek-chat","messages":[{"role":"system","content":"You
         must call the dice_roll tool exactly 3 times when asked to roll dice 3 times."},{"role":"user","content":"Roll
         the dice 3 times"},{"role":"assistant","content":"I''ll roll the dice 3 times
-        for you as requested.","tool_calls":[{"id":"call_00_dW3d5TG0ub0Tf21WJ0B23SFW","type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},{"role":"tool","content":"{roll:
-        1}","tool_call_id":"call_00_dW3d5TG0ub0Tf21WJ0B23SFW"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
+        for you!","tool_calls":[{"id":"call_00_WIcnEzlju5GrxBady21E8993","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_01_Mxgr8A0IT12XUqKgkcMe1965","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call_02_NXeiozEgAV73HMt4O7Lm0682","type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},{"role":"tool","content":"{roll:
+        1}","tool_call_id":"call_00_WIcnEzlju5GrxBady21E8993"},{"role":"tool","content":"{roll:
+        2}","tool_call_id":"call_01_Mxgr8A0IT12XUqKgkcMe1965"},{"role":"tool","content":"{roll:
+        3}","tool_call_id":"call_02_NXeiozEgAV73HMt4O7Lm0682"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
         a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
@@ -92,7 +94,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Mon, 16 Mar 2026 19:17:20 GMT
+      - Wed, 06 May 2026 23:59:36 GMT
       Server:
       - elb
       Vary:
@@ -100,7 +102,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - bce7bcce80ab84691b69305f40143bae
+      - 94ea44e59ea6b74993479430b5b1d770
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -108,136 +110,14 @@ http_interactions:
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 11928875e072fa46f6185840ed222a20.cloudfront.net (CloudFront)
+      - 1.1 a8c46277c4df8eb178aecf68b391d6de.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - TXL50-P1
+      - LIS50-P1
       X-Amz-Cf-Id:
-      - FTtUX_-ftJov5e6SBkz-GhTgVsleltO5wMO0kNmbfcLs3yWRlrwr6g==
+      - hxHZN6grFkSVSpyQL9yXrm3G_lVfTTOYvNXIDOKYLf9AznmQHkW5ow==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"4de74a61-ccff-434b-9f06-0298c54bfa6e","object":"chat.completion","created":1773688640,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"index":0,"id":"call_00_DOVgE5zzIdZKFeqPmUq5DdNT","type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":392,"completion_tokens":29,"total_tokens":421,"prompt_tokens_details":{"cached_tokens":320},"prompt_cache_hit_tokens":320,"prompt_cache_miss_tokens":72},"system_fingerprint":"fp_eaab8d114b_prod0820_fp8_kvcache"}'
-  recorded_at: Mon, 16 Mar 2026 19:17:21 GMT
-- request:
-    method: post
-    uri: https://api.deepseek.com/chat/completions
-    body:
-      encoding: UTF-8
-      string: '{"model":"deepseek-chat","messages":[{"role":"system","content":"You
-        must call the dice_roll tool exactly 3 times when asked to roll dice 3 times."},{"role":"user","content":"Roll
-        the dice 3 times"},{"role":"assistant","content":"I''ll roll the dice 3 times
-        for you as requested.","tool_calls":[{"id":"call_00_dW3d5TG0ub0Tf21WJ0B23SFW","type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},{"role":"tool","content":"{roll:
-        1}","tool_call_id":"call_00_dW3d5TG0ub0Tf21WJ0B23SFW"},{"role":"assistant","content":"","tool_calls":[{"id":"call_00_DOVgE5zzIdZKFeqPmUq5DdNT","type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},{"role":"tool","content":"{roll:
-        2}","tool_call_id":"call_00_DOVgE5zzIdZKFeqPmUq5DdNT"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
-        a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
-    headers:
-      User-Agent:
-      - Faraday v2.14.1
-      Authorization:
-      - Bearer <AUTH_TOKEN>
-      Content-Type:
-      - application/json
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Content-Type:
-      - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Date:
-      - Mon, 16 Mar 2026 19:17:22 GMT
-      Server:
-      - elb
-      Vary:
-      - origin, access-control-request-method, access-control-request-headers
-      Access-Control-Allow-Credentials:
-      - 'true'
-      X-Ds-Trace-Id:
-      - 3ee0f3103db2df9a060b1e690e7515c9
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
-      X-Content-Type-Options:
-      - nosniff
-      X-Cache:
-      - Miss from cloudfront
-      Via:
-      - 1.1 7da1d60a481ae3940f6605e4b4cab476.cloudfront.net (CloudFront)
-      X-Amz-Cf-Pop:
-      - TXL50-P2
-      X-Amz-Cf-Id:
-      - 7U5_kFD_R5fFVbvN4Ge2dIWuPyQARNxAP00lSAaKHOYpEzbJTIDvBg==
-    body:
-      encoding: ASCII-8BIT
-      string: '{"id":"b77392b3-4df0-4e0b-b58b-9241f5b95e8e","object":"chat.completion","created":1773688641,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"index":0,"id":"call_00_WJrvw1I2E259x7ZDxzhJBFrm","type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":442,"completion_tokens":29,"total_tokens":471,"prompt_tokens_details":{"cached_tokens":384},"prompt_cache_hit_tokens":384,"prompt_cache_miss_tokens":58},"system_fingerprint":"fp_eaab8d114b_prod0820_fp8_kvcache"}'
-  recorded_at: Mon, 16 Mar 2026 19:17:23 GMT
-- request:
-    method: post
-    uri: https://api.deepseek.com/chat/completions
-    body:
-      encoding: UTF-8
-      string: '{"model":"deepseek-chat","messages":[{"role":"system","content":"You
-        must call the dice_roll tool exactly 3 times when asked to roll dice 3 times."},{"role":"user","content":"Roll
-        the dice 3 times"},{"role":"assistant","content":"I''ll roll the dice 3 times
-        for you as requested.","tool_calls":[{"id":"call_00_dW3d5TG0ub0Tf21WJ0B23SFW","type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},{"role":"tool","content":"{roll:
-        1}","tool_call_id":"call_00_dW3d5TG0ub0Tf21WJ0B23SFW"},{"role":"assistant","content":"","tool_calls":[{"id":"call_00_DOVgE5zzIdZKFeqPmUq5DdNT","type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},{"role":"tool","content":"{roll:
-        2}","tool_call_id":"call_00_DOVgE5zzIdZKFeqPmUq5DdNT"},{"role":"assistant","content":"","tool_calls":[{"id":"call_00_WJrvw1I2E259x7ZDxzhJBFrm","type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},{"role":"tool","content":"{roll:
-        3}","tool_call_id":"call_00_WJrvw1I2E259x7ZDxzhJBFrm"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
-        a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
-    headers:
-      User-Agent:
-      - Faraday v2.14.1
-      Authorization:
-      - Bearer <AUTH_TOKEN>
-      Content-Type:
-      - application/json
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Content-Type:
-      - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Date:
-      - Mon, 16 Mar 2026 19:17:24 GMT
-      Server:
-      - elb
-      Vary:
-      - origin, access-control-request-method, access-control-request-headers
-      Access-Control-Allow-Credentials:
-      - 'true'
-      X-Ds-Trace-Id:
-      - 323c18b6d07ece495cf7a10e29aa9c69
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
-      X-Content-Type-Options:
-      - nosniff
-      X-Cache:
-      - Miss from cloudfront
-      Via:
-      - 1.1 12414973c2da1422517a5a4e585ff6a8.cloudfront.net (CloudFront)
-      X-Amz-Cf-Pop:
-      - TXL50-P5
-      X-Amz-Cf-Id:
-      - Sbp3q9fKjP62tjF32siP4KwvNEwkhAdnYiTcveIp6vol8X12by3yKQ==
-    body:
-      encoding: ASCII-8BIT
-      string: '{"id":"a13973af-7cce-44f5-904b-7eb5971ac1f9","object":"chat.completion","created":1773688644,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"I''ve
-        rolled the dice 3 times and got the following results:\n1. First roll: 1\n2.
-        Second roll: 2  \n3. Third roll: 3"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":492,"completion_tokens":37,"total_tokens":529,"prompt_tokens_details":{"cached_tokens":448},"prompt_cache_hit_tokens":448,"prompt_cache_miss_tokens":44},"system_fingerprint":"fp_eaab8d114b_prod0820_fp8_kvcache"}'
-  recorded_at: Mon, 16 Mar 2026 19:17:26 GMT
+      string: !binary |-
+        eyJpZCI6IjU2ODZhYWMxLWE5N2MtNDhkZC04ZjI1LWY2Nzc0NzI2MzljMSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NzgxMTE5NzYsIm1vZGVsIjoiZGVlcHNlZWstdjQtZmxhc2giLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IkhlcmUgYXJlIHlvdXIgdGhyZWUgZGljZSByb2xsczpcblxuMS4g8J+OsiAqKjEqKlxuMi4g8J+OsiAqKjIqKlxuMy4g8J+OsiAqKjMqKlxuXG5XaGF0IGEgbmljZSBsaXR0bGUgc2VxdWVuY2UhIEEgMSwgMiwgYW5kIDMuIFdvdWxkIHlvdSBsaWtlIHRvIHJvbGwgYWdhaW4gb3IgZG8gYW55dGhpbmcgZWxzZT8ifSwibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjo0MTYsImNvbXBsZXRpb25fdG9rZW5zIjo1OSwidG90YWxfdG9rZW5zIjo0NzUsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjoyNTZ9LCJwcm9tcHRfY2FjaGVfaGl0X3Rva2VucyI6MjU2LCJwcm9tcHRfY2FjaGVfbWlzc190b2tlbnMiOjE2MH0sInN5c3RlbV9maW5nZXJwcmludCI6ImZwXzA1OGRmMjk5MzhfcHJvZDA4MjBfZnA4X2t2Y2FjaGVfMjAyNjA0MDIifQ==
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 recorded_with: VCR 6.4.0

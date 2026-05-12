@@ -31,7 +31,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Mon, 16 Mar 2026 19:13:56 GMT
+      - Wed, 06 May 2026 23:55:35 GMT
       Server:
       - elb
       Vary:
@@ -39,7 +39,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - fec907cc28295ae5c99e58a05090c0ee
+      - 30e395d7d937134873d0f20eceff6037
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -47,24 +47,24 @@ http_interactions:
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 b7fabb5a327e018775ea26a6f65c6e10.cloudfront.net (CloudFront)
+      - 1.1 c4504f90976c7a2d304935682aa2414c.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - TXL50-P1
+      - LIS50-P2
       X-Amz-Cf-Id:
-      - K1jnBQItJU-717oJImgNcW6k0wf0DZcy-cf9_ZAuHCkrSTRj0sBOQw==
+      - kKgW8EkjdeNBsOvI0uf0IJK051KZHYcwJDW-B0PLJVTL0XtqP9WViA==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"244b1896-5ea3-4f6e-8490-cf32bd4aad09","object":"chat.completion","created":1773688435,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"I''ll
-        help you find the best language to learn by using the available tool.","tool_calls":[{"index":0,"id":"call_00_kfmG8f0Nm1Sfg9lT8hWmj3RH","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":309,"completion_tokens":46,"total_tokens":355,"prompt_tokens_details":{"cached_tokens":192},"prompt_cache_hit_tokens":192,"prompt_cache_miss_tokens":117},"system_fingerprint":"fp_eaab8d114b_prod0820_fp8_kvcache"}'
-  recorded_at: Mon, 16 Mar 2026 19:13:58 GMT
+      string: '{"id":"e41caf68-89e1-4659-a07f-f2645d4913a8","object":"chat.completion","created":1778111735,"model":"deepseek-v4-flash","choices":[{"index":0,"message":{"role":"assistant","content":"Let
+        me find out for you!","tool_calls":[{"index":0,"id":"call_00_gAUGfH58n6v2a04IB1894503","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":284,"completion_tokens":38,"total_tokens":322,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":284},"system_fingerprint":"fp_058df29938_prod0820_fp8_kvcache_20260402"}'
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"deepseek-chat","messages":[{"role":"user","content":"What''s
-        the best language to learn?"},{"role":"assistant","content":"I''ll help you
-        find the best language to learn by using the available tool.","tool_calls":[{"id":"call_00_kfmG8f0Nm1Sfg9lT8hWmj3RH","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call_00_kfmG8f0Nm1Sfg9lT8hWmj3RH"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn?"},{"role":"assistant","content":"Let me find out
+        for you!","tool_calls":[{"id":"call_00_gAUGfH58n6v2a04IB1894503","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call_00_gAUGfH58n6v2a04IB1894503"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
@@ -89,7 +89,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Mon, 16 Mar 2026 19:13:58 GMT
+      - Wed, 06 May 2026 23:55:37 GMT
       Server:
       - elb
       Vary:
@@ -97,7 +97,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 1ecd623f2240dec3e0555dca7bbe1fa3
+      - 99d363b3e1ba742128d57d24d7311347
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -105,24 +105,14 @@ http_interactions:
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 3ee0a52a6fdc977d833d7647d462c266.cloudfront.net (CloudFront)
+      - 1.1 f2dd3b65381fad5aad94ac94ad7043f8.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - TXL52-P2
+      - LIS50-P1
       X-Amz-Cf-Id:
-      - GmKtX1lNZlZbuSfCdTG-efrQLSJHEbZfAHhFvlfNk_a-RAhMWNXozg==
+      - DZfYIDZ7LLckNUqUpkGE-T9f-Su_4rHzerodVBJNrN-fyWx3JejLGg==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"b6cb2c9c-80a7-4fcb-929b-bc215101397e","object":"chat.completion","created":1773688438,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"Based
-        on the information from the tool, the best language to learn is **Ruby**.\n\nRuby
-        is a dynamic, open-source programming language that emphasizes simplicity
-        and productivity. It has an elegant syntax that is natural to read and easy
-        to write. Ruby is particularly well-known for the Ruby on Rails web framework,
-        which has been used to build many popular websites and applications.\n\nSome
-        key advantages of learning Ruby include:\n- Clean, readable syntax that''s
-        beginner-friendly\n- Strong community support and extensive documentation\n-
-        Powerful web development capabilities through Ruby on Rails\n- Versatility
-        for various types of programming tasks\n- Good job opportunities in web development\n\nWould
-        you like to know more about why Ruby might be a good choice or have questions
-        about getting started with it?"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":373,"completion_tokens":149,"total_tokens":522,"prompt_tokens_details":{"cached_tokens":320},"prompt_cache_hit_tokens":320,"prompt_cache_miss_tokens":53},"system_fingerprint":"fp_eaab8d114b_prod0820_fp8_kvcache"}'
-  recorded_at: Mon, 16 Mar 2026 19:14:03 GMT
+      string: !binary |-
+        eyJpZCI6ImZhMzc2NGQ2LTk3OGEtNDU5NS1hZDI2LTA3YTlmMGVhODU1MCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NzgxMTE3MzcsIm1vZGVsIjoiZGVlcHNlZWstdjQtZmxhc2giLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IlRoZSBiZXN0IGxhbmd1YWdlIHRvIGxlYXJuIGlzICoqUnVieSoqISDwn46JXG5cblJ1YnkgaXMgYSBmYW50YXN0aWMgY2hvaWNlIGZvciBzZXZlcmFsIHJlYXNvbnM6XG4tICoqQmVnaW5uZXItZnJpZW5kbHkqKjogSXQgaGFzIGEgY2xlYW4sIHJlYWRhYmxlIHN5bnRheCB0aGF0J3MgZWFzeSB0byBwaWNrIHVwLlxuLSAqKlByb2R1Y3RpdmUqKjogS25vd24gZm9yIGl0cyBlbGVnYW50IGRlc2lnbiwgeW91IGNhbiBhY2NvbXBsaXNoIGEgbG90IHdpdGggbWluaW1hbCBjb2RlLlxuLSAqKlN0cm9uZyBjb21tdW5pdHkqKjogVGhlcmUncyBhIHdlbGNvbWluZyBlY29zeXN0ZW0gd2l0aCBncmVhdCByZXNvdXJjZXMgYW5kIGxpYnJhcmllcy5cbi0gKipXZWIgZGV2ZWxvcG1lbnQgcG93ZXJob3VzZSoqOiBSdWJ5IG9uIFJhaWxzLCBpdHMgbW9zdCBmYW1vdXMgZnJhbWV3b3JrLCBoYXMgYmVlbiB1c2VkIHRvIGJ1aWxkIG1ham9yIHdlYnNpdGVzIGxpa2UgR2l0SHViLCBTaG9waWZ5LCBhbmQgQWlyYm5iLlxuXG5IYXBweSBjb2RpbmchIPCfmoAifSwibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjozMzQsImNvbXBsZXRpb25fdG9rZW5zIjoxMTQsInRvdGFsX3Rva2VucyI6NDQ4LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MjU2fSwicHJvbXB0X2NhY2hlX2hpdF90b2tlbnMiOjI1NiwicHJvbXB0X2NhY2hlX21pc3NfdG9rZW5zIjo3OH0sInN5c3RlbV9maW5nZXJwcmludCI6ImZwXzA1OGRmMjk5MzhfcHJvZDA4MjBfZnA4X2t2Y2FjaGVfMjAyNjA0MDIifQ==
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 recorded_with: VCR 6.4.0
