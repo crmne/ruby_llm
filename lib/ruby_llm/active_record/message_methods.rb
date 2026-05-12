@@ -9,6 +9,7 @@ module RubyLLM
     module MessageMethods
       extend ActiveSupport::Concern
       include PayloadHelpers
+      include ContentExtraction
 
       class_methods do
         attr_reader :chat_class, :tool_call_class, :chat_foreign_key, :tool_call_foreign_key
@@ -115,16 +116,22 @@ module RubyLLM
         return RubyLLM::Content::Raw.new(content_raw) if has_attribute?(:content_raw) && content_raw.present?
 
         content_value = content
-        content_value = content_value.to_plain_text if content_value.respond_to?(:to_plain_text)
+        content_text = plain_text_content(content_value)
+        action_text_attachments = action_text_attachment_sources(content_value)
 
-        return content_value unless respond_to?(:attachments) && attachments.attached?
+        has_active_storage_attachments = respond_to?(:attachments) && attachments.attached?
+        return content_text if action_text_attachments.empty? && !has_active_storage_attachments
 
-        RubyLLM::Content.new(content_value).tap do |content_obj|
+        RubyLLM::Content.new(content_text).tap do |content_obj|
           @_tempfiles = []
 
-          attachments.each do |attachment|
-            tempfile = download_attachment(attachment)
-            content_obj.add_attachment(tempfile, filename: attachment.filename.to_s)
+          add_action_text_attachments(content_obj, action_text_attachments)
+
+          if has_active_storage_attachments
+            attachments.each do |attachment|
+              tempfile = download_attachment(attachment)
+              content_obj.add_attachment(tempfile, filename: attachment.filename.to_s)
+            end
           end
         end
       end
