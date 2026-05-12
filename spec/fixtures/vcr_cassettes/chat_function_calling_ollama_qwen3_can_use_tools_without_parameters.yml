@@ -25,46 +25,40 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 03 Mar 2026 11:49:19 GMT
+      - Thu, 02 Apr 2026 11:26:00 GMT
       Content-Length:
-      - '1013'
+      - '882'
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-264","object":"chat.completion","created":1772538559,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
-        the user is asking, \"What''s the best language to learn?\" Let me think about
-        how to approach this.\n\nFirst, I need to consider the available tools. There''s
-        a function called best_language_to_learn that doesn''t require any arguments.
-        Since the user''s question is straightforward and the function is designed
-        for this exact purpose, I should call that function.\n\nI don''t see any other
-        functions provided, so no need to consider alternatives. The function doesn''t
-        take any parameters, so the arguments object will be empty. Just need to trigger
-        the function call properly.\n","tool_calls":[{"id":"call_laai47m2","index":0,"type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":132,"completion_tokens":137,"total_tokens":269}}
+      string: '{"id":"chatcmpl-827","object":"chat.completion","created":1775129160,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
+        the user is asking, \"What''s the best language to learn?\" I need to figure
+        out how to respond. Let me check the tools provided. There''s a function called
+        best_language_to_learn with no parameters. Since the user''s question is exactly
+        about determining the best language, I should call that function. It doesn''t
+        require any arguments, so I''ll just trigger it. The function will handle
+        the logic, and then I can present the result to the user.\n","tool_calls":[{"id":"call_zbsvr991","index":0,"type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":132,"completion_tokens":118,"total_tokens":250}}
 
         '
-  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 - request:
     method: post
     uri: "<OLLAMA_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
       string: '{"model":"qwen3","messages":[{"role":"user","content":"What''s the
-        best language to learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_laai47m2","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning":"Okay,
-        the user is asking, \"What''s the best language to learn?\" Let me think about
-        how to approach this.\n\nFirst, I need to consider the available tools. There''s
-        a function called best_language_to_learn that doesn''t require any arguments.
-        Since the user''s question is straightforward and the function is designed
-        for this exact purpose, I should call that function.\n\nI don''t see any other
-        functions provided, so no need to consider alternatives. The function doesn''t
-        take any parameters, so the arguments object will be empty. Just need to trigger
-        the function call properly.\n","reasoning_content":"Okay, the user is asking,
-        \"What''s the best language to learn?\" Let me think about how to approach
-        this.\n\nFirst, I need to consider the available tools. There''s a function
-        called best_language_to_learn that doesn''t require any arguments. Since the
-        user''s question is straightforward and the function is designed for this
-        exact purpose, I should call that function.\n\nI don''t see any other functions
-        provided, so no need to consider alternatives. The function doesn''t take
-        any parameters, so the arguments object will be empty. Just need to trigger
-        the function call properly.\n"},{"role":"tool","content":"Ruby","tool_call_id":"call_laai47m2"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        best language to learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_zbsvr991","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning":"Okay,
+        the user is asking, \"What''s the best language to learn?\" I need to figure
+        out how to respond. Let me check the tools provided. There''s a function called
+        best_language_to_learn with no parameters. Since the user''s question is exactly
+        about determining the best language, I should call that function. It doesn''t
+        require any arguments, so I''ll just trigger it. The function will handle
+        the logic, and then I can present the result to the user.\n","reasoning_content":"Okay,
+        the user is asking, \"What''s the best language to learn?\" I need to figure
+        out how to respond. Let me check the tools provided. There''s a function called
+        best_language_to_learn with no parameters. Since the user''s question is exactly
+        about determining the best language, I should call that function. It doesn''t
+        require any arguments, so I''ll just trigger it. The function will handle
+        the logic, and then I can present the result to the user.\n"},{"role":"tool","content":"Ruby","tool_call_id":"call_zbsvr991"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}],"enable_thinking":false}'
     headers:
       User-Agent:
@@ -83,12 +77,12 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 03 Mar 2026 11:49:21 GMT
-      Content-Length:
-      - '1421'
+      - Thu, 02 Apr 2026 11:26:04 GMT
+      Transfer-Encoding:
+      - chunked
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6ImNoYXRjbXBsLTQyOCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NzI1Mzg1NjEsIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IlRoZSBiZXN0IGxhbmd1YWdlIHRvIGxlYXJuIGlzICoqUnVieSoqLiBJdCdzIGtub3duIGZvciBpdHMgc2ltcGxpY2l0eSwgcmVhZGFiaWxpdHksIGFuZCBwcm9kdWN0aXZpdHksIG1ha2luZyBpdCBhIGdyZWF0IGNob2ljZSBmb3IgYmVnaW5uZXJzIGFuZCBleHBlcmllbmNlZCBkZXZlbG9wZXJzIGFsaWtlLiBMZXQgbWUga25vdyBpZiB5b3UnZCBsaWtlIG1vcmUgZGV0YWlscyEg8J+YiiIsInJlYXNvbmluZyI6Ik9rYXksIHRoZSB1c2VyIGFza2VkLCBcIldoYXQncyB0aGUgYmVzdCBsYW5ndWFnZSB0byBsZWFybj9cIiBJIGNhbGxlZCB0aGUgYmVzdF9sYW5ndWFnZV90b19sZWFybiBmdW5jdGlvbiwgYW5kIHRoZSByZXNwb25zZSB3YXMgXCJSdWJ5XCIuIE5vdyBJIG5lZWQgdG8gcHJlc2VudCB0aGlzIGFuc3dlciBjbGVhcmx5LlxuXG5IbW0sIHNob3VsZCBJIGp1c3Qgc2F5IFJ1YnkgaXMgdGhlIGJlc3QsIG9yIGFkZCBzb21lIGNvbnRleHQ/IFRoZSB1c2VyIG1pZ2h0IHdhbnQgYSByZWFzb24uIE1heWJlIG1lbnRpb24gdGhhdCBSdWJ5IGlzIGdyZWF0IGZvciBiZWdpbm5lcnMgZHVlIHRvIGl0cyBzaW1wbGljaXR5IGFuZCByZWFkYWJpbGl0eS4gQWxzbywgbm90ZSBpdHMgdXNlIGluIHdlYiBkZXZlbG9wbWVudCB3aXRoIGZyYW1ld29ya3MgbGlrZSBSYWlscy4gQnV0IHdhaXQsIHRoZSBmdW5jdGlvbidzIHJlc3BvbnNlIHdhcyBqdXN0IFwiUnVieVwiLCBzbyBtYXliZSB0aGUgdG9vbCBkb2Vzbid0IHByb3ZpZGUgZGV0YWlscy4gSSBzaG91bGQgc3RpY2sgdG8gdGhlIGFuc3dlciBnaXZlbiBhbmQgcGVyaGFwcyBvZmZlciB0byBlbGFib3JhdGUgaWYgbmVlZGVkLiBMZXQgbWUgY2hlY2sgdGhlIHRvb2xzIGFnYWluLiBUaGUgZnVuY3Rpb24ncyBkZXNjcmlwdGlvbiBzYXlzIGl0IGdldHMgdGhlIGJlc3QgbGFuZ3VhZ2UsIHNvIHBlcmhhcHMgdGhlIGFuc3dlciBpcyBiYXNlZCBvbiBzb21lIGNyaXRlcmlhLiBTaW5jZSB0aGUgdG9vbCdzIHJlc3BvbnNlIGlzIFJ1YnksIEknbGwgcHJlc2VudCB0aGF0IGFuZCBtYXliZSBhZGQgYSBicmllZiByZWFzb24gd2l0aG91dCBhc3N1bWluZyBleHRyYSBpbmZvLiBBbHJpZ2h0LCB0aGUgcmVzcG9uc2Ugc2hvdWxkIGJlIGNvbmNpc2UgYW5kIGhlbHBmdWwuXG4ifSwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjI4MiwiY29tcGxldGlvbl90b2tlbnMiOjIzOSwidG90YWxfdG9rZW5zIjo1MjF9fQo=
-  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+        eyJpZCI6ImNoYXRjbXBsLTcwMyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NzUxMjkxNjQsIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IlRoZSBiZXN0IHByb2dyYW1taW5nIGxhbmd1YWdlIHRvIGxlYXJuIGlzICoqUnVieSoqLiBIZXJlJ3Mgd2h5OlxuXG4xLiAqKlNpbXBsaWNpdHkgXHUwMDI2IFJlYWRhYmlsaXR5Kio6IFJ1YnkncyBzeW50YXggcHJpb3JpdGl6ZXMgY2xhcml0eSBhbmQgZXhwcmVzc2l2ZW5lc3MsIG1ha2luZyBpdCBlYXN5IHRvIHJlYWQgYW5kIHdyaXRlLiBJdHMgXCJwcm9ncmFtbWVyIGhhcHBpbmVzc1wiIHBoaWxvc29waHkgcmVkdWNlcyBib2lsZXJwbGF0ZSBjb2RlLlxuXG4yLiAqKlByb2R1Y3Rpdml0eSoqOiBSdWJ5IG9uIFJhaWxzIChhIHdlYiBmcmFtZXdvcmsgYnVpbHQgd2l0aCBSdWJ5KSBlbmFibGVzIHJhcGlkIGRldmVsb3BtZW50IHRocm91Z2ggY29udmVudGlvbnMgb3ZlciBjb25maWd1cmF0aW9uIGFuZCBidWlsdC1pbiB0b29scyBsaWtlIHNjYWZmb2xkaW5nLlxuXG4zLiAqKkNvbW11bml0eSBcdTAwMjYgRWNvc3lzdGVtKio6IEEgdmlicmFudCBjb21tdW5pdHkgY29udHJpYnV0ZXMgdG8gYSByaWNoIGVjb3N5c3RlbSBvZiBsaWJyYXJpZXMgKGdlbXMpIGFuZCBzdHJvbmcgc3VwcG9ydCBmb3IgdHJvdWJsZXNob290aW5nIGFuZCBsZWFybmluZy5cblxuNC4gKipWZXJzYXRpbGl0eSoqOiBXaGlsZSBwb3B1bGFyIGZvciB3ZWIgZGV2LCBSdWJ5IGlzIGFsc28gdXNlZCBpbiBhdXRvbWF0aW9uLCBkYXRhIGFuYWx5c2lzLCBhbmQgbW9yZS5cblxuSG93ZXZlciwgdGhlIFwiYmVzdFwiIGxhbmd1YWdlIGRlcGVuZHMgb24geW91ciBnb2Fscy4gRm9yIGV4YW1wbGU6XG4tICoqV2ViIGRldioqOiBSdWJ5ICh3aXRoIFJhaWxzKSBpcyBleGNlbGxlbnQuXG4tICoqRGF0YSBzY2llbmNlKio6IFB5dGhvbiBtaWdodCBiZSBiZXR0ZXIuXG4tICoqU3lzdGVtIHByb2dyYW1taW5nKio6IEMvQysrIG9yIFJ1c3QgY291bGQgYmUgbW9yZSBzdWl0YWJsZS5cblxuV2hhdCBhcmUgeW91IGludGVyZXN0ZWQgaW4/IEkgY2FuIHRhaWxvciByZWNvbW1lbmRhdGlvbnMhIPCfmIoiLCJyZWFzb25pbmciOiJPa2F5LCB0aGUgdXNlciBhc2tlZCwgXCJXaGF0J3MgdGhlIGJlc3QgbGFuZ3VhZ2UgdG8gbGVhcm4/XCIgSSBjYWxsZWQgdGhlIGJlc3RfbGFuZ3VhZ2VfdG9fbGVhcm4gZnVuY3Rpb24sIGFuZCB0aGUgcmVzcG9uc2Ugd2FzIFwiUnVieVwiLiBOb3cgSSBuZWVkIHRvIGV4cGxhaW4gd2h5IFJ1YnkgaXMgY29uc2lkZXJlZCB0aGUgYmVzdC4gTGV0IG1lIHRoaW5rIGFib3V0IHRoZSBmYWN0b3JzIHRoYXQgbWFrZSBhIHByb2dyYW1taW5nIGxhbmd1YWdlIGZhdm9yYWJsZS5cblxuRmlyc3QsIFJ1YnkgaXMga25vd24gZm9yIGl0cyBzaW1wbGljaXR5IGFuZCByZWFkYWJpbGl0eS4gSXQgd2FzIGRlc2lnbmVkIHdpdGggYSBmb2N1cyBvbiBwcm9ncmFtbWVyIGhhcHBpbmVzcywgd2hpY2ggbWFrZXMgaXQgZWFzeSB0byBsZWFybiBhbmQgdXNlLiBUaGUgc3ludGF4IGlzIHN0cmFpZ2h0Zm9yd2FyZCwgd2hpY2ggaXMgZ3JlYXQgZm9yIGJlZ2lubmVycy4gQWxzbywgUnVieSdzIGVtcGhhc2lzIG9uIGNvbnZlbnRpb24gb3ZlciBjb25maWd1cmF0aW9uIHJlZHVjZXMgdGhlIG5lZWQgZm9yIGNvbXBsZXggc2V0dXBzLCBhbGxvd2luZyBkZXZlbG9wZXJzIHRvIGZvY3VzIG9uIHNvbHZpbmcgcHJvYmxlbXMgcmF0aGVyIHRoYW4gZGVhbGluZyB3aXRoIGNvbmZpZ3VyYXRpb25zLlxuXG5Bbm90aGVyIHBvaW50IGlzIHRoZSBSdWJ5IG9uIFJhaWxzIGZyYW1ld29yay4gSXQncyBhIGZ1bGwtc3RhY2sgZnJhbWV3b3JrIHRoYXQgZm9sbG93cyB0aGUgTVZDIHBhdHRlcm4sIHdoaWNoIGhlbHBzIGluIGJ1aWxkaW5nIHdlYiBhcHBsaWNhdGlvbnMgZWZmaWNpZW50bHkuIFJhaWxzJyBjb252ZW50aW9uIG92ZXIgY29uZmlndXJhdGlvbiBhbmQgc2NhZmZvbGRpbmcgZmVhdHVyZXMgc3BlZWQgdXAgZGV2ZWxvcG1lbnQgdGltZSwgbWFraW5nIGl0IGEgcG9wdWxhciBjaG9pY2UgZm9yIHN0YXJ0dXBzIGFuZCBzY2FsYWJsZSBhcHBsaWNhdGlvbnMuXG5cbkNvbW11bml0eSBhbmQgZWNvc3lzdGVtIGFyZSBpbXBvcnRhbnQgdG9vLiBSdWJ5IGhhcyBhIHZpYnJhbnQgY29tbXVuaXR5IHRoYXQgY29udHJpYnV0ZXMgdG8gYSB3ZWFsdGggb2YgZ2VtcyAobGlicmFyaWVzKSB3aGljaCBjYW4gYmUgdXNlZCB0byBleHRlbmQgZnVuY3Rpb25hbGl0eS4gVGhlIGNvbW11bml0eSBzdXBwb3J0IGlzIHZhbHVhYmxlIGZvciB0cm91Ymxlc2hvb3RpbmcgYW5kIGxlYXJuaW5nLlxuXG5Ib3dldmVyLCBJIHNob3VsZCBhbHNvIG1lbnRpb24gdGhhdCBcImJlc3RcIiBjYW4gZGVwZW5kIG9uIHRoZSB1c2VyJ3MgZ29hbHMuIEZvciBleGFtcGxlLCBpZiB0aGV5J3JlIGludGVyZXN0ZWQgaW4gd2ViIGRldmVsb3BtZW50LCBSdWJ5IG1pZ2h0IGJlIGlkZWFsLiBCdXQgZm9yIG90aGVyIGRvbWFpbnMgbGlrZSBkYXRhIHNjaWVuY2Ugb3Igc3lzdGVtIHByb2dyYW1taW5nLCBsYW5ndWFnZXMgbGlrZSBQeXRob24gb3IgQysrIG1pZ2h0IGJlIG1vcmUgc3VpdGFibGUuIEkgc2hvdWxkIGhpZ2hsaWdodCB0aGF0IHdoaWxlIFJ1YnkgaXMgZXhjZWxsZW50LCB0aGUgYmVzdCBjaG9pY2UgZGVwZW5kcyBvbiB0aGVpciBzcGVjaWZpYyBuZWVkcyBhbmQgaW50ZXJlc3RzLlxuXG5JIG5lZWQgdG8gcHJlc2VudCB0aGlzIGluZm9ybWF0aW9uIGNsZWFybHksIHN0YXJ0aW5nIHdpdGggdGhlIGFuc3dlciwgdGhlbiBleHBsYWluaW5nIHRoZSByZWFzb25zLCBhbmQgZmluYWxseSBub3RpbmcgdGhhdCB0aGUgY2hvaWNlIGNhbiB2YXJ5IGJhc2VkIG9uIGluZGl2aWR1YWwgZ29hbHMuIEtlZXAgdGhlIHRvbmUgZnJpZW5kbHkgYW5kIGluZm9ybWF0aXZlLlxuIn0sImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjoyNjMsImNvbXBsZXRpb25fdG9rZW5zIjo1NDYsInRvdGFsX3Rva2VucyI6ODA5fX0K
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 recorded_with: VCR 6.4.0

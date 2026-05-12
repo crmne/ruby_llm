@@ -11,7 +11,7 @@ http_interactions:
       User-Agent:
       - Faraday v2.14.1
       Authorization:
-      - Bearer <MISTRAL_API_KEY>
+      - Bearer <AUTH_TOKEN>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 03 Mar 2026 11:51:38 GMT
+      - Wed, 06 May 2026 23:54:31 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -32,45 +32,45 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '019cb38a-1b34-73b0-83c7-e80484522ab5'
+      - '019dffb6-ec1b-7ce2-b072-3af65f5a9612'
       X-Kong-Request-Id:
-      - '019cb38a-1b34-73b0-83c7-e80484522ab5'
+      - '019dffb6-ec1b-7ce2-b072-3af65f5a9612'
       X-Ratelimit-Limit-Tokens-Minute:
       - '2000000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '1998773'
+      - '1996095'
       X-Ratelimit-Tokens-Query-Cost:
-      - '65'
+      - '32'
       X-Ratelimit-Limit-Req-Minute:
-      - '360'
+      - '1500'
       X-Ratelimit-Remaining-Req-Minute:
-      - '353'
+      - '1493'
       X-Envoy-Upstream-Service-Time:
-      - '414'
+      - '312'
+      Server:
+      - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '415'
+      - '312'
       X-Kong-Proxy-Latency:
-      - '7'
-      Cf-Cache-Status:
-      - DYNAMIC
+      - '13'
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
-      Server:
-      - cloudflare
+      Cf-Cache-Status:
+      - DYNAMIC
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        eyJpZCI6ImM0MjExYTJiYzc4ZTRmOTU5OWJmOTA3MzM3MDZmYmZmIiwiY3JlYXRlZCI6MTc3MjUzODY5OCwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsInVzYWdlIjp7InByb21wdF90b2tlbnMiOjExLCJ0b3RhbF90b2tlbnMiOjY1LCJjb21wbGV0aW9uX3Rva2VucyI6NTQsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjowfX0sIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNob2ljZXMiOlt7ImluZGV4IjowLCJmaW5pc2hfcmVhc29uIjoic3RvcCIsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsInRvb2xfY2FsbHMiOm51bGwsImNvbnRlbnQiOiJUaGUgc3VtIG9mIDIgKyAyIGlzICoqNCoqLlxuXG5UaGlzIGlzIGEgYmFzaWMgYXJpdGhtZXRpYyBvcGVyYXRpb24gd2hlcmUgeW91IGFkZCB0d28gbnVtYmVycyB0b2dldGhlci4gSW4gdGhpcyBjYXNlLCBhZGRpbmcgMiBhbmQgMiBnaXZlcyB5b3UgNC5cblxuV291bGQgeW91IGxpa2UgaGVscCB3aXRoIGFueSBvdGhlciBtYXRoIHByb2JsZW1zPyDwn5iKIn19XX0=
-  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+      string: '{"id":"63fe79849e26409f89b1f2ea021dfe72","created":1778111671,"model":"mistral-small-latest","usage":{"prompt_tokens":23,"total_tokens":32,"completion_tokens":9,"prompt_tokens_details":{"cached_tokens":0}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"2
+        + 2 equals **4**."}}]}'
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 recorded_with: VCR 6.4.0

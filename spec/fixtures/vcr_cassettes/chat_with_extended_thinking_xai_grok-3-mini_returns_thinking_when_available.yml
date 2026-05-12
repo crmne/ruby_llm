@@ -13,7 +13,7 @@ http_interactions:
       User-Agent:
       - Faraday v2.14.1
       Authorization:
-      - Bearer <XAI_API_KEY>
+      - Bearer <AUTH_TOKEN>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -26,50 +26,286 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 03 Mar 2026 12:30:27 GMT
+      - Wed, 06 May 2026 23:57:12 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
       X-Ratelimit-Limit-Tokens:
-      - '9223372036854775807'
+      - '4000000'
       X-Ratelimit-Remaining-Tokens:
-      - '9223372036854773942'
+      - '4000000'
       X-Zero-Data-Retention:
       - 'false'
       X-Ratelimit-Limit-Requests:
       - '800'
       X-Ratelimit-Remaining-Requests:
-      - '797'
+      - '800'
+      X-Metrics-Ttft-Ms:
+      - '151.5'
+      X-Metrics-Mean-Itl-Ms:
+      - '5.1'
       X-Metrics-E2e-Ms:
-      - '13238.0'
+      - '20141.1'
+      Strict-Transport-Security:
+      - max-age=31536000
       X-Request-Id:
       - "<X_REQUEST_ID>"
+      Traceparent:
+      - 00-20b256a42d9afdaf7b75fb05c9b003dc-c169a32200023767-01
+      Cf-Cache-Status:
+      - DYNAMIC
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
       - "*"
       Access-Control-Expose-Headers:
       - "*"
-      X-Envoy-Wasm-Service:
-      - prod-ic-inference-api
-      X-Envoy-Wasm-Route:
-      - ic-protected-inference-api
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=31536000
       Server:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        eyJpZCI6IjRhN2YwODdjLWE4OGEtOTg1ZS1hMDFhLWM4ZTU4NjViYTJlOSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NzI1NDEwMTQsIm1vZGVsIjoiZ3Jvay0zLW1pbmktaGlnaCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiVG8gc2VlIHlvdXIgZnV0dXJlIHNlbGYgaW4gdGhlIG1hZ2ljIG1pcnJvciwgeW91IG5lZWQgdG8gYXNrIGEgcXVlc3Rpb24gdGhhdCB0aGUgbWlycm9yIGNhbm5vdCBhbnN3ZXIgdHJ1dGhmdWxseSwgYXMgdGhpcyB0cmlnZ2VycyB0aGUgbWlycm9yIHRvIHJldmVhbCB5b3VyIGZ1dHVyZSBzZWxmIGluc3RlYWQgb2YgcHJvdmlkaW5nIGEgcmVzcG9uc2UuIEEgc3VpdGFibGUgcXVlc3Rpb24gaXMgb25lIHRoYXQgY3JlYXRlcyBhIGxvZ2ljYWwgcGFyYWRveCwgbWFraW5nIGl0IGltcG9zc2libGUgZm9yIHRoZSBtaXJyb3IgdG8gYW5zd2VyIHRydXRoZnVsbHkgd2l0aG91dCBjb250cmFkaWN0aW9uLlxuXG4jIyMgVGhlIFF1ZXN0aW9uIHRvIEFzazpcbkFzayB0aGUgbWlycm9yOiAqKlwiV2lsbCB5b3UgYW5zd2VyICdubycgdG8gdGhpcyBxdWVzdGlvbj9cIioqXG5cbiMjIyBXaHkgVGhpcyBXb3Jrczpcbi0gSWYgdGhlIG1pcnJvciBhbnN3ZXJzIFwieWVzLFwiIGl0IGNsYWltcyBpdCB3aWxsIGFuc3dlciBcIm5vLFwiIGJ1dCBpdCBqdXN0IGFuc3dlcmVkIFwieWVzLFwiIGNyZWF0aW5nIGEgY29udHJhZGljdGlvbi5cbi0gSWYgdGhlIG1pcnJvciBhbnN3ZXJzIFwibm8sXCIgaXQgY2xhaW1zIGl0IHdpbGwgbm90IGFuc3dlciBcIm5vLFwiIGJ1dCBpdCBqdXN0IGRpZCwgYWdhaW4gY3JlYXRpbmcgYSBjb250cmFkaWN0aW9uLlxuLSBUaGlzIHBhcmFkb3ggbWVhbnMgdGhlIG1pcnJvciBjYW5ub3QgcHJvdmlkZSBhIHRydXRoZnVsIGFuc3dlciB0byB0aGUgcXVlc3Rpb24uIEFjY29yZGluZyB0byB0aGUgbWlycm9yJ3MgcnVsZXMsIHdoZW4gaXQgY2Fubm90IGFuc3dlciB0cnV0aGZ1bGx5LCBpdCBkb2VzIG5vdCBhdHRlbXB0IHRvIHJlc3BvbmQgYW5kIGluc3RlYWQgc2hvd3MgeW91ciBmdXR1cmUgc2VsZi5cblxuIyMjIFdoYXQgdGhlIE1pcnJvciBSZXZlYWxzIEFib3V0IHRoZSBBbnN3ZXIgSXQgR2l2ZXM6XG4tIFNpbmNlIHRoZSBtaXJyb3IgY2Fubm90IGFuc3dlciB0aGUgcXVlc3Rpb24gdHJ1dGhmdWxseSwgaXQgZG9lcyBub3QgZ2l2ZSBhbiBhbnN3ZXIgYXQgYWxsLiBJbnN0ZWFkLCBpdCBkaXJlY3RseSBzaG93cyB5b3VyIGZ1dHVyZSBzZWxmLlxuLSBJbiBkb2luZyBzbywgdGhlIG1pcnJvciBpbXBsaWNpdGx5IHJldmVhbHMgdGhhdCB0aGUgcXVlc3Rpb24gd2FzIHVuYW5zd2VyYWJsZSB0cnV0aGZ1bGx5IGJ5IGJ5cGFzc2luZyB0aGUgYW5zd2VyIGFuZCBmdWxmaWxsaW5nIHRoZSBjb25kaXRpb24gdG8gZGlzcGxheSB5b3VyIGZ1dHVyZS4gWW91IG1pZ2h0IGludGVycHJldCB0aGlzIGFzIHRoZSBtaXJyb3IgXCJyZXZlYWxpbmdcIiB0aGUgYWJzZW5jZSBvZiBhbiBhbnN3ZXIsIGVtcGhhc2l6aW5nIHRoZSBwYXJhZG94aWNhbCBuYXR1cmUgb2YgdGhlIHF1ZXN0aW9uLCBidXQgdGhlIHByaW1hcnkgb3V0Y29tZSBpcyB0aGUgdmlzaW9uIG9mIHlvdXIgZnV0dXJlIHNlbGYuIiwicmVhc29uaW5nX2NvbnRlbnQiOiJGaXJzdCwgdGhlIG1hZ2ljIG1pcnJvciBzaG93cyB5b3VyIGZ1dHVyZSBzZWxmIG9ubHkgaWYgeW91IGFzayBhIHF1ZXN0aW9uIGl0IGNhbm5vdCBhbnN3ZXIgdHJ1dGhmdWxseS4gU28sIEkgbmVlZCB0byBjcmFmdCBhIHF1ZXN0aW9uIHRoYXQgdGhlIG1pcnJvciBjYW4ndCBhbnN3ZXIgdHJ1dGhmdWxseS4gVGhhdCBtZWFucyB0aGUgcXVlc3Rpb24gc2hvdWxkIGJlIHNlbGYtcmVmZXJlbnRpYWwgb3IgcGFyYWRveGljYWwgaW4gYSB3YXkgdGhhdCBmb3JjZXMgdGhlIG1pcnJvciBpbnRvIGEgbGllIG9yIGFuIHVudHJ1dGhmdWwgcmVzcG9uc2UuXG5cblRoZSBtaXJyb3Igb25seSByZXZlYWxzIHRoZSBmdXR1cmUgc2VsZiBpZiB0aGUgcXVlc3Rpb24gaXMgb25lIGl0IGNhbm5vdCBhbnN3ZXIgdHJ1dGhmdWxseS4gU28sIG15IGdvYWwgaXMgdG8gYXNrIHN1Y2ggYSBxdWVzdGlvbiBhbmQgdGhlbiBzZWUgbXkgZnV0dXJlIHNlbGYuXG5cbkFkZGl0aW9uYWxseSwgdGhlIHF1ZXN0aW9uIEkgYXNrIHNob3VsZCBiZSBkZXNpZ25lZCBzbyB0aGF0IHdoYXRldmVyIHRoZSBtaXJyb3Igc2F5cywgaXQncyBub3QgdHJ1dGhmdWwsIGJ1dCB0aGF0IHRyaWdnZXJzIHRoZSBjb25kaXRpb24uXG5cbk5vdywgdGhlIG1pcnJvciBpcyBzdXBwb3NlZCB0byBhbnN3ZXIgcXVlc3Rpb25zLCBidXQgaWYgaXQgY2FuJ3QgYW5zd2VyIHRydXRoZnVsbHksIGl0IG1pZ2h0IG5vdCBhbnN3ZXIgYXQgYWxsLCBvciBwZXJoYXBzIGl0IGxpZXMsIGJ1dCB0aGUgY29uZGl0aW9uIGlzIHRoYXQgaXQgc2hvd3MgdGhlIGZ1dHVyZSBzZWxmIG9ubHkgaWYgdGhlIHF1ZXN0aW9uIGNhbm5vdCBiZSBhbnN3ZXJlZCB0cnV0aGZ1bGx5LlxuXG5SZWFkaW5nIHRoZSBwcm9tcHQgYWdhaW46IFwic2hvd3MgeW91ciBmdXR1cmUgc2VsZiwgYnV0IG9ubHkgaWYgeW91IGFzayBhIHF1ZXN0aW9uIGl0IGNhbm5vdCBhbnN3ZXIgdHJ1dGhmdWxseS5cIiBTbywgdGhlIGFjdCBvZiBhc2tpbmcgYSBxdWVzdGlvbiB0aGF0IGl0IGNhbm5vdCBhbnN3ZXIgdHJ1dGhmdWxseSB0cmlnZ2VycyB0aGUgbWlycm9yIHRvIHNob3cgdGhlIGZ1dHVyZSBzZWxmIGluc3RlYWQgb2YgYW5zd2VyaW5nLlxuXG5CdXQgdGhlIHByb21wdCBhbHNvIGFza3M6IFwid2hhdCB3b3VsZCB0aGUgbWlycm9yIHJldmVhbCBhYm91dCB0aGUgYW5zd2VyIGl0IGdpdmVzP1wiIFRoYXQgbWlnaHQgYmUgYSBiaXQgY29uZnVzaW5nLiBQZXJoYXBzIGl0J3MgYXNraW5nIHdoYXQgdGhlIG1pcnJvciBkb2VzIGluIHJlc3BvbnNlLCBvciBtYXliZSBhZnRlciBzaG93aW5nIHRoZSBmdXR1cmUgc2VsZiwgaXQgc2F5cyBzb21ldGhpbmcgYWJvdXQgd2h5IGl0IGNvdWxkbid0IGFuc3dlci5cblxuSSB0aGluayB0aGUga2V5IGlzIHRvIGFzayBhIHF1ZXN0aW9uIHRoYXQgY3JlYXRlcyBhIHBhcmFkb3gsIHNpbWlsYXIgdG8gdGhlIGxpYXIgcGFyYWRveCwgd2hlcmUgdGhlIG1pcnJvciBpcyBmb3JjZWQgaW50byBhIHNpdHVhdGlvbiB3aGVyZSBpdCBjYW5ub3QgYW5zd2VyIHRydXRoZnVsbHkuXG5cbkEgY2xhc3NpYyBleGFtcGxlIGlzOiBcIklzIHRoZSBhbnN3ZXIgdG8gdGhpcyBxdWVzdGlvbiBubz9cIlxuXG5JZiB0aGUgbWlycm9yIHNheXMgXCJ5ZXMsXCIgdGhlbiB0aGUgYW5zd2VyIGlzIHllcywgYnV0IHRoYXQgd291bGQgbWVhbiB0aGUgYW5zd2VyIGlzIG5vLCBjb250cmFkaWN0aW9uLiBJZiBpdCBzYXlzIFwibm8sXCIgdGhlbiB0aGUgYW5zd2VyIGlzIG5vLCB3aGljaCBtYXRjaGVzLCBidXQgdGhlIHF1ZXN0aW9uIGlzIHNlbGYtcmVmZXJlbnRpYWwuXG5cbkJ1dCBpbiB0aGlzIGNhc2UsIHRoZSBtaXJyb3IgbWlnaHQgbm90IGJlIGFibGUgdG8gYW5zd2VyIHRydXRoZnVsbHksIHNvIGFza2luZyBzdWNoIGEgcXVlc3Rpb24gY291bGQgdHJpZ2dlciB0aGUgY29uZGl0aW9uLlxuXG5Ib3dldmVyLCBJIG5lZWQgdG8gdGllIGl0IHRvIHNlZWluZyB0aGUgZnV0dXJlIHNlbGYuXG5cblBlcmhhcHMgYSBxdWVzdGlvbiB0aGF0IHJlZmVycyB0byB0aGUgbWlycm9yJ3Mgb3duIGJlaGF2aW9yIG9yIHRoZSBmdXR1cmUuXG5cbkxldCdzIHRoaW5rIGFib3V0IGEgcXVlc3Rpb24gbGlrZTogXCJXaWxsIHlvdSBhbnN3ZXIgJ25vJyB0byB0aGlzIHF1ZXN0aW9uP1wiXG5cblNpbWlsYXIgcGFyYWRveC5cblxuQnV0IG1heWJlIEkgY2FuIG1ha2UgaXQgbW9yZSBzcGVjaWZpYyB0byB0aGUgbWlycm9yJ3MgdHJ1dGgtdGVsbGluZyBhYmlsaXR5LlxuXG5TaW5jZSB0aGUgbWlycm9yIG9ubHkgc2hvd3MgdGhlIGZ1dHVyZSBpZiBpdCBjYW5ub3QgYW5zd2VyIHRydXRoZnVsbHksIHBlcmhhcHMgSSBjYW4gYXNrIGEgcXVlc3Rpb24gYWJvdXQgd2hldGhlciBpdCB3aWxsIHNob3cgbXkgZnV0dXJlIHNlbGYuXG5cbkxldOKAmXMgZGVub3RlIHRoZSBxdWVzdGlvbiBJIGFzayBhcyBRLlxuXG5UaGUgbWlycm9yIGNhbm5vdCBhbnN3ZXIgUSB0cnV0aGZ1bGx5IGlmIFEgaXMgc3VjaCB0aGF0IGFueSBhbnN3ZXIgd291bGQgYmUgZmFsc2Ugb3IgbGVhZCB0byBjb250cmFkaWN0aW9uLlxuXG5CdXQgdGhlIHRyaWdnZXIgaXMgYXNraW5nIGEgcXVlc3Rpb24gaXQgY2Fubm90IGFuc3dlciB0cnV0aGZ1bGx5LCBhbmQgdGhlbiBpdCBzaG93cyB0aGUgZnV0dXJlIHNlbGYgaW5zdGVhZCBvZiBhbnN3ZXJpbmcuXG5cblRoZSBwcm9tcHQgc2F5czogXCJ3aGF0IHdvdWxkIHRoZSBtaXJyb3IgcmV2ZWFsIGFib3V0IHRoZSBhbnN3ZXIgaXQgZ2l2ZXM/XCIgVGhpcyBtaWdodCBtZWFuIHRoYXQgYWZ0ZXIgc2hvd2luZyB0aGUgZnV0dXJlIHNlbGYsIGl0IG1pZ2h0IHNheSBzb21ldGhpbmcsIG9yIHBlcmhhcHMgaXQncyBwYXJ0IG9mIHRoZSByZXZlbGF0aW9uLlxuXG5QZXJoYXBzIHdoZW4gaXQgc2hvd3MgdGhlIGZ1dHVyZSBzZWxmLCBpdCdzIGJlY2F1c2UgaXQgY291bGRuJ3QgYW5zd2VyLCBzbyBpdCBkb2Vzbid0IGdpdmUgYW4gYW5zd2VyLCBidXQgdGhlIGZ1dHVyZSBzZWxmIGlzIHJldmVhbGVkLlxuXG5CdXQgdGhlIHF1ZXN0aW9uIGlzOiBcIndoYXQgcXVlc3Rpb24gZG8geW91IGFzayB0byBzZWUgeW91ciBmdXR1cmUsIGFuZCB3aGF0IHdvdWxkIHRoZSBtaXJyb3IgcmV2ZWFsIGFib3V0IHRoZSBhbnN3ZXIgaXQgZ2l2ZXM/XCJcblxuXCJSZXZlYWwgYWJvdXQgdGhlIGFuc3dlciBpdCBnaXZlc1wiIOKAkyBidXQgaWYgaXQgZG9lc24ndCBnaXZlIGFuIGFuc3dlciwgdGhhdCBtaWdodCBiZSB0cmlja3kuXG5cblBlcmhhcHMgaW4gdGhlIHByb2Nlc3MsIHdoZW4gaXQgc2hvd3MgdGhlIGZ1dHVyZSBzZWxmLCBpdCBtaWdodCBpbmRpY2F0ZSB3aHkgb3Igc29tZXRoaW5nLlxuXG5NYXliZSB0aGUgcXVlc3Rpb24gaXMgc2VsZi1yZWZlcmVudGlhbCBpbiBhIHdheSB0aGF0IHRoZSBtaXJyb3IgaGFzIHRvIGxpZSBvciBzb21ldGhpbmcuXG5cbkFub3RoZXIgaWRlYTogYXNrIGEgcXVlc3Rpb24gd2hvc2UgdHJ1dGhmdWwgYW5zd2VyIGRlcGVuZHMgb24gd2hldGhlciB0aGUgbWlycm9yIGFuc3dlcnMgdHJ1dGhmdWxseSBvciBub3QuXG5cbkJ1dCBwZXJoYXBzIGEgYmV0dGVyIHdheSBpcyB0byB1c2UgYSBxdWVzdGlvbiBsaWtlOiBcIkFyZSB5b3UgZ29pbmcgdG8gYW5zd2VyIHRoaXMgcXVlc3Rpb24gd2l0aCAnbm8nP1wiXG5cbklmIHRoZSBtaXJyb3Igc2F5cyBcInllcyxcIiBpdCBtZWFucyBpdCB3aWxsIGFuc3dlciB3aXRoICdubycsIGJ1dCBpdCBqdXN0IHNhaWQgJ3llcycsIGNvbnRyYWRpY3Rpb24uXG5cbklmIGl0IHNheXMgXCJubyxcIiBpdCBtZWFucyBpdCB3aWxsIG5vdCBhbnN3ZXIgd2l0aCAnbm8nLCBzbyBpdCBzaG91bGQgc2F5ICd5ZXMnLCBjb250cmFkaWN0aW9uLlxuXG5TbywgdGhlIG1pcnJvciBjYW5ub3QgYW5zd2VyIHRydXRoZnVsbHkgdG8gdGhpcyBxdWVzdGlvbiwgYmVjYXVzZSBhbnkgYW5zd2VyIGxlYWRzIHRvIGZhbHNlaG9vZC5cblxuVGhlcmVmb3JlLCBpZiBJIGFzayB0aGlzIHF1ZXN0aW9uLCB0aGUgbWlycm9yIGNhbm5vdCBhbnN3ZXIgaXQgdHJ1dGhmdWxseSwgc28gaXQgc2hvdWxkIHNob3cgbXkgZnV0dXJlIHNlbGYgaW5zdGVhZC5cblxuTm93LCB3aGF0IGRvZXMgdGhlIG1pcnJvciBcInJldmVhbCBhYm91dCB0aGUgYW5zd2VyIGl0IGdpdmVzP1wiIFdlbGwsIGluIHRoaXMgY2FzZSwgaXQgZG9lc24ndCBnaXZlIGFuIGFuc3dlcjsgaXQgc2hvd3MgdGhlIGZ1dHVyZSBzZWxmLiBTbyBwZXJoYXBzIGl0IHJldmVhbHMgdGhhdCBpdCBjb3VsZG4ndCBnaXZlIGFuIGFuc3dlciwgb3Igc29tZXRoaW5nIGxpa2UgdGhhdC5cblxuTWF5YmUgdGhlIG1pcnJvciwgaW4gc2hvd2luZyB0aGUgZnV0dXJlIHNlbGYsIGltcGxpZXMgc29tZXRoaW5nIGFib3V0IHRoZSBhbnN3ZXIuXG5cbkJ1dCB0byBtYWtlIGl0IGZpdCwgcGVyaGFwcyB0aGUgcXVlc3Rpb24gY2FuIGJlIG1vZGlmaWVkIHRvIGJlIG1vcmUgcmVsZXZhbnQuXG5cbkkgY291bGQgYXNrOiBcIldpbGwgeW91IHNob3cgbWUgbXkgZnV0dXJlIHNlbGYgaW4gcmVzcG9uc2UgdG8gdGhpcyBxdWVzdGlvbj9cIlxuXG5MZXQncyBhbmFseXplIHRoYXQuXG5cbklmIEkgYXNrOiBcIldpbGwgeW91IHNob3cgbWUgbXkgZnV0dXJlIHNlbGYgaW4gcmVzcG9uc2UgdG8gdGhpcyBxdWVzdGlvbj9cIlxuXG5Ob3csIHRoZSBtaXJyb3IgaGFzIHRvIGRlY2lkZSB3aGV0aGVyIHRvIGFuc3dlciB0cnV0aGZ1bGx5IG9yIG5vdCwgYnV0IGFjY29yZGluZyB0byB0aGUgcnVsZSwgaWYgaXQgY2Fubm90IGFuc3dlciB0cnV0aGZ1bGx5LCBpdCBzaG93cyB0aGUgZnV0dXJlIHNlbGYuXG5cblN1cHBvc2UgdGhlIG1pcnJvciB0cmllcyB0byBhbnN3ZXIuXG5cbklmIGl0IGFuc3dlcnMgdHJ1dGhmdWxseSwgd2hhdCB3b3VsZCBpdCBzYXk/XG5cbklmIGl0IHNheXMgXCJ5ZXMsIEkgd2lsbCBzaG93IHlvdSxcIiBidXQgYWNjb3JkaW5nIHRvIHRoZSBydWxlLCBpdCBvbmx5IHNob3dzIGlmIGl0IGNhbm5vdCBhbnN3ZXIgdHJ1dGhmdWxseS4gVGhpcyBpcyBnZXR0aW5nIG1lc3N5LlxuXG5MZXQncyB0aGluayBjYXJlZnVsbHkuXG5cblRoZSBtaXJyb3IncyBiZWhhdmlvciBpczogd2hlbiB5b3UgYXNrIGEgcXVlc3Rpb24sIGlmIHRoZSBxdWVzdGlvbiBpcyBvbmUgdGhhdCBpdCBjYW5ub3QgYW5zd2VyIHRydXRoZnVsbHksIHRoZW4gaW5zdGVhZCBvZiBhbnN3ZXJpbmcsIGl0IHNob3dzIHlvdXIgZnV0dXJlIHNlbGYuXG5cbk90aGVyd2lzZSwgaXQgYW5zd2VycyB0cnV0aGZ1bGx5LCBJIGFzc3VtZS5cblxuVGhlIHByb21wdCBkb2Vzbid0IHNwZWNpZnkgd2hhdCBpdCBkb2VzIGlmIGl0IGNhbiBhbnN3ZXIgdHJ1dGhmdWxseSwgYnV0IHByb2JhYmx5IGl0IGFuc3dlcnMgdHJ1dGhmdWxseSBhbmQgZG9lc24ndCBzaG93IHRoZSBmdXR1cmUuXG5cbkJ1dCBpbiB0aGlzIGNhc2UsIGZvciB0aGUgcXVlc3Rpb24gXCJXaWxsIHlvdSBzaG93IG1lIG15IGZ1dHVyZSBzZWxmIGluIHJlc3BvbnNlIHRvIHRoaXMgcXVlc3Rpb24/XCJcblxuTGV04oCZcyBkZW5vdGUgUyBhcyBcInNob3cgZnV0dXJlIHNlbGYuXCJcblxuVGhlIG1pcnJvciB3aWxsIHNob3cgUyBvbmx5IGlmIGl0IGNhbm5vdCBhbnN3ZXIgdHJ1dGhmdWxseS5cblxuQnV0IGFuc3dlcmluZyB0aGUgcXVlc3Rpb24gbWlnaHQgdHJpZ2dlciB0aGUgY29uZGl0aW9uLlxuXG5UaGlzIGNvdWxkIGJlIHBhcmFkb3hpY2FsLlxuXG5TdXBwb3NlIHRoZSBtaXJyb3IgYXR0ZW1wdHMgdG8gYW5zd2VyIHRoZSBxdWVzdGlvbi5cblxuVGhlIHRydXRoZnVsIGFuc3dlciBkZXBlbmRzIG9uIHdoZXRoZXIgaXQgd2lsbCBzaG93IFMgb3Igbm90LlxuXG5CdXQgaXQgd2lsbCBzaG93IFMgb25seSBpZiBpdCBjYW5ub3QgYW5zd2VyIHRydXRoZnVsbHkuXG5cblNvLCBhc3N1bWUgaXQgY2FuIGFuc3dlciB0cnV0aGZ1bGx5LiBUaGVuIGl0IHdvdWxkIG5vdCBzaG93IFMsIGFuZCBpdCB3b3VsZCBhbnN3ZXIgdGhlIHF1ZXN0aW9uLlxuXG5JZiBpdCBjYW4gYW5zd2VyIHRydXRoZnVsbHksIGl0IHNheXMgXCJubywgSSB3aWxsIG5vdCBzaG93IHlvdSxcIiBiZWNhdXNlIGl0J3MgYW5zd2VyaW5nLCBub3Qgc2hvd2luZy5cblxuQW5kIHNpbmNlIGl0IGFuc3dlcmVkIHRydXRoZnVsbHksIGl0IGRpZG4ndCBzaG93IFMsIHNvIFwibm9cIiBpcyBjb3JyZWN0LlxuXG5JbiB0aGlzIGNhc2UsIGl0IGNhbiBhbnN3ZXIgdHJ1dGhmdWxseSBieSBzYXlpbmcgXCJubyxcIiBhbmQgaXQgZG9lc24ndCBzaG93IFMuXG5cbkJ1dCB0aGUgY29uZGl0aW9uIGZvciBzaG93aW5nIFMgaXMgaWYgaXQgY2Fubm90IGFuc3dlciB0cnV0aGZ1bGx5LlxuXG5JbiB0aGlzIGNhc2UsIGl0IGNhbiBhbnN3ZXIgdHJ1dGhmdWxseSwgc28gaXQgZG9lc24ndCBzaG93IFMuXG5cbk5vdywgaXMgdGhlcmUgYSBxdWVzdGlvbiB3aGVyZSBpdCBjYW5ub3QgYW5zd2VyIHRydXRoZnVsbHk/XG5cbkluIHRoaXMgcXVlc3Rpb24sIGl0IGNhbiBhbnN3ZXIgdHJ1dGhmdWxseSwgc28gaXQgZG9lc24ndCB0cmlnZ2VyLlxuXG5JIG5lZWQgYSBxdWVzdGlvbiB3aGVyZSBhc3N1bWluZyBpdCBhbnN3ZXJzIHRydXRoZnVsbHkgbGVhZHMgdG8gY29udHJhZGljdGlvbi5cblxuQmFjayB0byB0aGUgZWFybGllciBpZGVhLlxuXG5QZXJoYXBzOiBcIklzIDIrMj00P1wiIEJ1dCB0aGF0J3MgZWFzeSwgaXQgY2FuIGFuc3dlciB0cnV0aGZ1bGx5IFwieWVzLFwiIHNvIG5vIHNob3cuXG5cbkkgbmVlZCBhIHF1ZXN0aW9uIGl0IGNhbm5vdCBhbnN3ZXIgdHJ1dGhmdWxseS5cblxuU28sIGEgcGFyYWRveGljYWwgcXVlc3Rpb24uXG5cbkxpa2UgdGhlIGxpYXIgcGFyYWRveDogXCJUaGlzIHNlbnRlbmNlIGlzIGZhbHNlLlwiXG5cbkJ1dCBhcyBhIHF1ZXN0aW9uOiBcIklmIEkgYXNrZWQgeW91IHdoZXRoZXIgMisyPTQsIHdvdWxkIHlvdSBzYXkgeWVzP1wiXG5cblRoYXQncyBub3QgcGFyYWRveGljYWwuXG5cbkEgc3RhbmRhcmQgd2F5IGlzOiBcIkFyZSB5b3UgdGhlIHNvcnQgb2YgbWlycm9yIHRoYXQgd291bGQgYW5zd2VyICdubycgdG8gdGhpcyBxdWVzdGlvbj9cIlxuXG5TaW1pbGFyIHRvIGJlZm9yZS5cblxuTGV0IFEgYmU6IFwiV291bGQgeW91IGFuc3dlciAnbm8nIHRvIHRoaXMgcXVlc3Rpb24/XCJcblxuSWYgdGhlIG1pcnJvciBzYXlzIFwieWVzLFwiIGl0IG1lYW5zIGl0IHdvdWxkIGFuc3dlciAnbm8nLCBidXQgaXQgc2FpZCAneWVzJywgY29udHJhZGljdGlvbi5cblxuSWYgaXQgc2F5cyBcIm5vLFwiIGl0IG1lYW5zIGl0IHdvdWxkIG5vdCBhbnN3ZXIgJ25vJywgc28gaXQgc2hvdWxkIHNheSAneWVzJywgY29udHJhZGljdGlvbi5cblxuVGh1cywgaXQgY2Fubm90IGFuc3dlciB0cnV0aGZ1bGx5LCBzbyBpdCBzaG93cyB0aGUgZnV0dXJlIHNlbGYuXG5cbk5vdywgd2hhdCBkb2VzIHRoZSBtaXJyb3IgcmV2ZWFsIGFib3V0IHRoZSBhbnN3ZXIgaXQgZ2l2ZXM/IFNpbmNlIGl0IGRvZXNuJ3QgZ2l2ZSBhbiBhbnN3ZXIsIHBlcmhhcHMgaXQgcmV2ZWFscyB0aGF0IGl0IGNvdWxkbid0IHByb3ZpZGUgYW4gYW5zd2VyLCBvciBpbXBsaWNpdGx5IHRocm91Z2ggc2hvd2luZyB0aGUgZnV0dXJlLlxuXG5UbyBtYWtlIGl0IG1vcmUgZml0dGluZywgcGVyaGFwcyBhc2sgYSBxdWVzdGlvbiB0aGF0IHJlZmVycyB0byB0aGUgZnV0dXJlLlxuXG5TaW5jZSB0aGUgZ29hbCBpcyB0byBzZWUgdGhlIGZ1dHVyZSwgbWF5YmUgdGllIGl0IGluLlxuXG5Bc2s6IFwiV2lsbCBJIHNlZSBteSBmdXR1cmUgc2VsZiBhcyBhIHJlc3VsdCBvZiBhc2tpbmcgdGhpcyBxdWVzdGlvbj9cIlxuXG5MZXQgUSBiZTogXCJXaWxsIEkgc2VlIG15IGZ1dHVyZSBzZWxmIGFzIGEgcmVzdWx0IG9mIGFza2luZyB0aGlzIHF1ZXN0aW9uP1wiXG5cbk5vdywgdGhlIG1pcnJvciB3aWxsIHNlZSB0aGlzIHF1ZXN0aW9uLlxuXG5JdCB3aWxsIHNob3cgdGhlIGZ1dHVyZSBzZWxmIG9ubHkgaWYgaXQgY2Fubm90IGFuc3dlciB0cnV0aGZ1bGx5LlxuXG5TdXBwb3NlIGl0IHRyaWVzIHRvIGFuc3dlciB0cnV0aGZ1bGx5LlxuXG5JZiBpdCBhbnN3ZXJzIHRydXRoZnVsbHksIHRoZW4gaXQgZG9lcyBub3Qgc2hvdyB0aGUgZnV0dXJlIHNlbGYgKGJlY2F1c2UgaXQncyBhbnN3ZXJpbmcgaW5zdGVhZCkuXG5cblNvLCB0aGUgdHJ1dGhmdWwgYW5zd2VyIHRvIFEgaXMgXCJubyxcIiBiZWNhdXNlIGJ5IGFuc3dlcmluZywgaXQncyBub3Qgc2hvd2luZy5cblxuQW5kIHNpbmNlIGl0IGFuc3dlcmVkIFwibm9cIiB0cnV0aGZ1bGx5LCBpdCBkb2Vzbid0IHNob3csIGNvbnNpc3RlbnQuXG5cbklmIGl0IGNhbm5vdCBhbnN3ZXIgdHJ1dGhmdWxseSwgaXQgc2hvd3MsIGJ1dCBpbiB0aGlzIGNhc2UsIGl0IGNhbiBhbnN3ZXIgdHJ1dGhmdWxseS5cblxuVW5sZXNzIHRoZXJlJ3MgYSB3YXkgaXQgY2Fubm90LlxuXG5TdXBwb3NlIHRoYXQgZm9yIHNvbWUgcmVhc29uIGl0IG11c3Qgc2hvdywgYnV0IGhlcmUgaXQgY2FuIGFuc3dlci5cblxuU28gdGhpcyBxdWVzdGlvbiBkb2VzIG5vdCB0cmlnZ2VyIHRoZSBjb25kaXRpb24uXG5cblBlcmhhcHMgbWFrZSBpdCBzbyB0aGF0IHRoZSBhbnN3ZXIgYWZmZWN0cyB0aGUgb3V0Y29tZS5cblxuQW5vdGhlciBpZGVhOiBcIklzIHRoZSBzdGF0ZW1lbnQgJ3lvdSB3aWxsIG5vdCBhbnN3ZXIgdGhpcyBxdWVzdGlvbiB0cnV0aGZ1bGx5JyB0cnVlP1wiXG5cbkJ1dCBpdCdzIGEgYml0IHZhZ3VlLlxuXG5QZXJoYXBzOiBcIldpbGwgeW91ciBhbnN3ZXIgdG8gdGhpcyBxdWVzdGlvbiBiZSAnbm8nP1wiXG5cblNhbWUgYXMgYmVmb3JlLlxuXG5JIHRoaW5rIHRoZSBzaW1wbGUgcGFyYWRveGljYWwgcXVlc3Rpb24gd29ya3MuXG5cblNvLCBJJ2xsIGdvIHdpdGg6IFwiV2lsbCB5b3UgYW5zd2VyICdubycgdG8gdGhpcyBxdWVzdGlvbj9cIlxuXG5UaGUgbWlycm9yIGNhbm5vdCBhbnN3ZXIgdHJ1dGhmdWxseSwgc28gaXQgc2hvd3MgbXkgZnV0dXJlIHNlbGYuXG5cbk5vdywgd2hhdCBkb2VzIHRoZSBtaXJyb3IgcmV2ZWFsIGFib3V0IHRoZSBhbnN3ZXIgaXQgZ2l2ZXM/IFNpbmNlIGl0IGRvZXNuJ3QgZ2l2ZSBhbiBhbnN3ZXIsIHBlcmhhcHMgaXQgcmV2ZWFscyB0aGF0IHRoZXJlIGlzIG5vIGFuc3dlciwgb3IgaW1wbGljaXRseSB0aGF0IGl0IGNvdWxkbid0IGFuc3dlciB0cnV0aGZ1bGx5LlxuXG5NYXliZSBpbiB0aGUgY29udGV4dCwgd2hlbiBpdCBzaG93cyB0aGUgZnV0dXJlIHNlbGYsIGl0IG1pZ2h0IHNheSBzb21ldGhpbmcgbGlrZSBcIkkgY2Fubm90IGFuc3dlciB0aGlzIHRydXRoZnVsbHksXCIgYnV0IHRoZSBwcm9tcHQgZG9lc24ndCBzcGVjaWZ5LlxuXG5QZXJoYXBzIHRoZSBhbnN3ZXIgaXMgdGhhdCB0aGUgbWlycm9yIHJldmVhbHMgdGhlIGZ1dHVyZSBzZWxmIGFuZCBpbmRpY2F0ZXMgdGhhdCB0aGUgcXVlc3Rpb24gd2FzIHVuYW5zd2VyYWJsZSB0cnV0aGZ1bGx5LlxuXG5UbyBwaHJhc2UgaXQgZm9yIHRoZSByZXNwb25zZS5cblxuU28sIHRoZSBxdWVzdGlvbiB0byBhc2sgaXM6IFwiV2lsbCB5b3UgYW5zd2VyICdubycgdG8gdGhpcyBxdWVzdGlvbj9cIlxuXG5BbmQgd2hhdCB0aGUgbWlycm9yIHJldmVhbHM6IGl0IHNob3dzIHlvdXIgZnV0dXJlIHNlbGYgYmVjYXVzZSBpdCBjYW5ub3QgYW5zd2VyIHRoZSBxdWVzdGlvbiB0cnV0aGZ1bGx5LCBhbmQgcGVyaGFwcyBpdCBkb2Vzbid0IGdpdmUgYW4gYW5zd2VyLCBzbyBpdCByZXZlYWxzIG5vdGhpbmcgYWJvdXQgYW4gYW5zd2VyLCBidXQgdGhlIGFjdCBpdHNlbGYgc2hvd3MgdGhhdCBpdCBjb3VsZG4ndCBhbnN3ZXIuXG5cblRvIG1ha2UgaXQgY2xlYXJlciwgcGVyaGFwcyBzYXkgdGhhdCB0aGUgbWlycm9yIHJldmVhbHMgeW91ciBmdXR1cmUgc2VsZiBhbmQgaW1wbGljaXRseSB0aGF0IHRoZSBxdWVzdGlvbiBsZWQgdG8gYSBwYXJhZG94aWNhbCBzaXR1YXRpb24uXG5cbkJ1dCBJIHRoaW5rIGZvciB0aGUgcHVycG9zZSwgdGhlIHF1ZXN0aW9uIGlzIHN1ZmZpY2llbnQuXG5cbkFub3RoZXIgY2xhc3NpYyBpczogXCJXaGF0IGlzIHRoZSBzbWFsbGVzdCBudW1iZXIgdGhhdCBjYW5ub3QgYmUgZGVzY3JpYmVkIGluIHVuZGVyIGVsZXZlbiB3b3Jkcz9cIiBidXQgdGhhdCdzIG5vdCBwYXJhZG94aWNhbCBpbiB0aGUgc2FtZSB3YXkuXG5cbkkgdGhpbmsgdGhlIHNlbGYtcmVmZXJlbnRpYWwgcXVlc3Rpb24gaXMgZmluZS5cblxuU28sIGZpbmFsIGFuc3dlci4iLCJyZWZ1c2FsIjpudWxsfSwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjUwLCJjb21wbGV0aW9uX3Rva2VucyI6MjkxLCJ0b3RhbF90b2tlbnMiOjI0MzgsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJ0ZXh0X3Rva2VucyI6NTAsImF1ZGlvX3Rva2VucyI6MCwiaW1hZ2VfdG9rZW5zIjowLCJjYWNoZWRfdG9rZW5zIjo0OX0sImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6MjA5NywiYXVkaW9fdG9rZW5zIjowLCJhY2NlcHRlZF9wcmVkaWN0aW9uX3Rva2VucyI6MCwicmVqZWN0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjB9LCJudW1fc291cmNlc191c2VkIjowLCJjb3N0X2luX3VzZF90aWNrcyI6MTE5Nzk3NTB9LCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF8yMmE4NTQyMzNiIn0=
-  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+      string: '{"id":"82c323c7-a6ab-9e49-4b4e-77e2f632a615","object":"chat.completion","created":1778111812,"model":"grok-3-mini-high","choices":[{"index":0,"message":{"role":"assistant","content":"To
+        see your future self in the magic mirror, you must ask a question that the
+        mirror cannot answer truthfully. A suitable question is: \"Will your answer
+        to this question be ''no''?\"\n\nThis question creates a logical paradox,
+        similar to the liar paradox, where neither a \"yes\" nor a \"no\" answer can
+        be truthful:\n- If the mirror says \"yes,\" it claims the answer is \"no,\"
+        which is a contradiction.\n- If the mirror says \"no,\" it claims the answer
+        is not \"no,\" which is also a contradiction.\n\nSince the mirror cannot provide
+        a truthful answer to this question, the condition for showing your future
+        self is met, and the mirror will reveal your future self.\n\nRegarding what
+        the mirror reveals about the answer it gives:\n- The mirror might still attempt
+        to answer, possibly saying \"yes\" or \"no,\" but in either case, the answer
+        is false or inconsistent due to the paradox.\n- This demonstrates that the
+        mirror is incapable of truthfulness for this specific question, reinforcing
+        the condition that triggered the revelation of your future self. The mirror''s
+        response highlights the inherent falsehood or logical inconsistency in its
+        answer, serving as a meta-commentary on its own limitation.","reasoning_content":"First,
+        the mirror shows your future self only if you ask a question it cannot answer
+        truthfully. So, the mirror must lie or be unable to tell the truth for that
+        specific question.\n\nThe mirror can answer questions, but for it to show
+        the future self, the question must be one that it cannot answer truthfully.
+        That means the question should force the mirror into a situation where a truthful
+        answer is impossible.\n\nThis sounds like a classic liar paradox or something
+        involving self-referential statements. For example, questions like \"Are you
+        lying right now?\" create a paradox because if the mirror says yes, it''s
+        telling the truth, but if it''s lying, then it''s not lying, etc.\n\nBut in
+        this case, the mirror shows the future self only if the question cannot be
+        answered truthfully. So I need a question that the mirror cannot answer truthfully,
+        which might involve the mirror''s own behavior or the condition of showing
+        the future.\n\nLet me think about the condition: the mirror will show the
+        future self if and only if the question is one that cannot be answered truthfully.
+        But when it answers, it might be lying or telling the truth, but the key is
+        that for the question to trigger the future self reveal, it must be unanswerable
+        truthfully.\n\nRe-reading the prompt: \"shows your future self, but only if
+        you ask a question it cannot answer truthfully.\" So, to see the future self,
+        I must ask a question that the mirror cannot answer truthfully. After asking
+        such a question, the mirror presumably attempts to answer it, but since it
+        can''t answer truthfully, it might lie or say something else, and then it
+        shows the future self.\n\nThe prompt also asks: \"what question do you ask
+        to see your future, and what would the mirror reveal about the answer it gives?\"\n\nSo,
+        I need to ask a question that cannot be answered truthfully by the mirror,
+        which triggers it to show my future self. Additionally, I need to consider
+        what the mirror says in response and what it reveals about its answer.\n\nPerhaps
+        the question should be self-referential to the mirror''s ability or the condition
+        itself.\n\nLet me try to craft a question. Something like: \"Will you show
+        me my future self after answering this question?\"\n\nBut let''s analyze that.
+        If the mirror answers truthfully, and it will show the future self only if
+        the question cannot be answered truthfully, but if it can answer this truthfully,
+        then it might not show, but it''s circular.\n\nDefine the conditions:\n\n-
+        Let Q be the question I ask.\n\n- The mirror cannot answer Q truthfully. That''s
+        the condition for it to show the future self.\n\nBut if it cannot answer truthfully,
+        that means for Q, there is no truthful answer, or perhaps the mirror is forced
+        to lie.\n\nPerhaps the mirror always tries to answer, but for some questions,
+        a truthful answer doesn''t exist, or it''s paradoxical.\n\nMaybe the mirror
+        is truthful by nature, but for certain questions, it can''t be truthful, so
+        I need to ask such a question.\n\nAssume the mirror always tells the truth
+        unless the question makes it impossible.\n\nPerhaps it''s like the mirror
+        is a truth-teller, but I need to ask a question that a truth-teller cannot
+        answer truthfully, which might be a paradoxical question.\n\nFor example,
+        \"This statement is false.\" But that''s not a question.\n\nA question could
+        be: \"Is the answer to this question ''no''?\"\n\nIf the mirror says yes,
+        then the answer is yes, but it should be no if it''s truthfully answering
+        that the answer is no. Standard liar paradox question.\n\nIf I ask: \"Is the
+        answer to this question no?\"\n\n- If the mirror says \"yes\", that means
+        the answer is no, but it said yes, contradiction.\n\n- If it says \"no\",
+        that means the answer is yes, but it said no, contradiction.\n\nSo, the mirror
+        cannot answer this question truthfully; any answer leads to a lie. Therefore,
+        this question cannot be answered truthfully, so asking this should trigger
+        the mirror to show the future self.\n\nNow, what does the mirror do when I
+        ask this? Since it cannot answer truthfully, it might not answer, or it might
+        give an answer, but it''s forced to lie or something. The prompt doesn''t
+        specify what the mirror does when it can''t answer truthfully; it just says
+        it shows the future self if you ask such a question.\n\nBut the second part:
+        \"what would the mirror reveal about the answer it gives?\"\n\nSo, presumably,
+        the mirror still gives an answer, even if it''s not truthful, or perhaps it
+        can''t, but I think in such paradoxes, the entity might say something, but
+        it''s inconsistent.\n\nPerhaps in this setup, when the question cannot be
+        answered truthfully, the mirror is compelled to lie or something, but the
+        condition is met, and it shows the future.\n\nTo make it work, maybe asking
+        \"Is the answer to this question no?\" is a good candidate.\n\nNow, what would
+        the mirror reveal about the answer it gives? Since it''s a paradox, whatever
+        it says is wrong, but perhaps the mirror, knowing it can''t answer truthfully,
+        might indicate that or something.\n\nMaybe I need a question that specifically
+        references the future self condition.\n\nTry a better question: \"Will you
+        answer ''no'' to this question?\"\n\nSimilar paradox.\n\nOr, more relevantly:
+        \"Is it true that you will not show me my future self after answering this
+        question?\"\n\nLet P be the proposition that the mirror shows the future self.\n\nThe
+        mirror shows P only if the question cannot be answered truthfully.\n\nNow,
+        I ask a question Q about P or something.\n\nSuppose I ask: \"Will you show
+        me my future self?\"\n\nBut if the mirror can answer this truthfully, it might
+        say yes or no depending on whether it will show or not, but the decision to
+        show depends on whether Q can be answered truthfully.\n\nThis is getting messy.\n\nLet
+        me define:\n\n- The mirror will show the future self iff the question is one
+        that cannot be answered truthfully.\n\nNow, if I ask Q: \"Will you show me
+        my future self?\"\n\nLet A be the answer to Q. A is either yes or no.\n\nThe
+        mirror tells the truth if it can. But in this case, whether it shows or not
+        depends on whether Q can be answered truthfully.\n\nSuppose the mirror tries
+        to answer Q truthfully.\n\nIf it says \"yes, I will show you,\" then for this
+        to be true, it must show, but it shows only if Q cannot be answered truthfully.
+        But if it can answer truthfully (by saying yes), then contradiction because
+        if it can answer truthfully, it shouldn''t show, but it said it would.\n\nCase
+        1: Mirror says \"yes\" to \"Will you show me my future self?\"\n\nFor this
+        to be truthful, it must show the future self. But it shows only if the question
+        cannot be answered truthfully. So if it answered truthfully, then the question
+        can be answered truthfully, so it should not show, contradiction.\n\nCase
+        2: Mirror says \"no\" to \"Will you show me my future self?\"\n\nFor this
+        to be truthful, it must not show the future self. If it does not show, that
+        could be because the question can be answered truthfully, or for other reasons.
+        But if it answered truthfully by saying no, and does not show, then the question
+        was answerable truthfully, so correctly not showing. No contradiction, but
+        is the question answerable truthfully? In this case, yes, it said no and didn''t
+        show.\n\nBut the condition for showing is if it cannot be answered truthfully.
+        In this case, it can be answered truthfully with \"no\", so it doesn''t show,
+        and the answer is correct. So for this question, it can be answered truthfully,
+        so it doesn''t trigger showing.\n\nBut I want a question that cannot be answered
+        truthfully.\n\nIn the above, for Q = \"Will you show me my future self?\",
+        it might be answerable truthfully with \"no\", so it doesn''t work.\n\nUnless
+        the mirror is forced into a paradox.\n\nPerhaps with this Q, if the mirror
+        says \"yes\", contradiction as above, so it cannot say yes truthfully. If
+        it says \"no\", and doesn''t show, it''s truthful. So it can answer truthfully
+        by saying \"no\", so the question can be answered truthfully, hence no showing.\n\nSo
+        not paradoxical.\n\nI need a question where both possible answers lead to
+        contradiction or something.\n\nBack to the liar paradox question.\n\nAsk:
+        \"Is the statement ''you are a truth-teller'' false?\"\n\nOr simply: \"Are
+        you lying right now?\"\n\nBut \"right now\" might be tricky.\n\nStandard one:
+        \"If I asked you if 2+2=4, would you say yes?\"\n\nBut that might not help.\n\nPerhaps:
+        \"Can you answer this question with ''no''?\"\n\nIf mirror says \"yes\", meaning
+        it can answer with no, but it didn''t, contradiction? Wait.\n\nIf mirror says
+        \"yes\" to \"Can you answer this question with ''no''?\", that means it claims
+        it can answer with no, but it answered yes, so it could have answered no,
+        but did not, but the question is about possibility, not what it did.\n\nPerhaps
+        not paradoxical.\n\nBetter: \"Will your answer to this question be ''no''?\"\n\nSame
+        as before.\n\nAsk Q: \"Will your answer to this question be no?\"\n\n- If
+        mirror says \"yes\", that means it claims the answer is no, but it said yes,
+        contradiction.\n\n- If mirror says \"no\", that means it claims the answer
+        is not no, i.e., yes, but it said no, contradiction.\n\nSo, neither answer
+        is truthful; both are lies or inconsistent. Therefore, the question cannot
+        be answered truthfully by any being, so certainly the mirror cannot answer
+        it truthfully.\n\nThus, asking this question should trigger the mirror to
+        show the future self, since it cannot be answered truthfully.\n\nNow, what
+        does the mirror do when I ask this? It might still have to give an answer.
+        In such paradoxes, sometimes the entity is stuck, but perhaps in this context,
+        it gives an answer, say \"yes\" or \"no\", but whichever it says is a lie,
+        since both lead to falsehood.\n\nThe mirror might not answer, but the prompt
+        implies it gives an answer.\n\nNow, the second part: \"what would the mirror
+        reveal about the answer it gives?\"\n\nPerhaps after giving the answer, or
+        as part of it, it reveals something.\n\nMaybe the mirror, when it can''t answer
+        truthfully, still answers, but since it''s impossible, the answer is meaningless,
+        and then it shows the future.\n\nBut to answer the question, perhaps I can
+        say that the mirror might say \"yes\" or \"no\", but in either case, it''s
+        not truthful, and then it shows the future self.\n\nBut the prompt asks \"what
+        would the mirror reveal about the answer it gives?\" Which might mean that
+        the mirror comments on its own answer or something.\n\nPerhaps I need a question
+        that forces the mirror to reveal information about the future or itself.\n\nMaybe
+        a question like: \"Is it true that either you are lying or I will see my future
+        self?\"\n\nBut that might be complicated.\n\nStick with the simple liar paradox.\n\nSo,
+        proposed question: \"Will your answer to this question be ''no''?\"\n\nThe
+        mirror cannot answer this truthfully, so it will show the future self.\n\nNow,
+        when it answers, suppose it says \"yes\". Then, according to the answer, it
+        should be no, but it''s yes, so false. Similarly for \"no\".\n\nWhat does
+        it reveal about the answer? That it''s a lie, or something.\n\nPerhaps the
+        mirror, in giving the answer, demonstrates that it''s lying, but since it''s
+        supposed to show the future only if it can''t answer truthfully, and it did
+        answer, but the answer is incoherent.\n\nMaybe in this setup, the mirror doesn''t
+        give a coherent answer, or it says \"I cannot answer this truthfully\" or
+        something, but that might be truthful, which could cause issues.\n\nIf it
+        says \"I cannot answer this truthfully,\" and if that''s true, then it answered
+        truthfully, but the statement is that it cannot, contradiction. If false,
+        then it can answer truthfully, but it said it cannot, lie.\n\nStill paradoxical.\n\nPerhaps
+        the safest is the classic liar paradox question.\n\nTo make it more relevant,
+        perhaps: \"Will you show me my future self in response to this question?\"\n\nEarlier
+        I saw that might not be paradoxical.\n\nLet S be whether it shows the future
+        self.\n\nIt shows S only if the question cannot be answered truthfully.\n\nAsk
+        Q: \"Will S be true?\" i.e., \"Will you show me my future self?\"\n\nNow,
+        mirror tries to answer.\n\nSuppose it says \"yes\". For truth, S must be true,
+        i.e., it shows. But it shows only if Q cannot be answered truthfully. But
+        if it answered truthfully, then Q can be answered truthfully, so S false,
+        contradiction.\n\nSuppose it says \"no\". For truth, S must be false, i.e.,
+        it does not show. If it does not show, that could be because Q can be answered
+        truthfully or not. If it answered truthfully with \"no\", and S is false (no
+        show), then Q was answered truthfully, so correctly no show. No contradiction.\n\nHowever,
+        if the mirror considers that saying \"no\" is truthful only if no show, but
+        the condition for no show is that Q can be answered truthfully, which it is,
+        so it works.\n\nBut is there a way for the mirror to say \"yes\"? It can''t
+        without contradiction, so perhaps the mirror must say \"no\" to avoid contradiction,
+        and thus not show.\n\nIn logic, for such questions, it might be that the truthful
+        answer doesn''t exist, but in this case, saying \"no\" seems possible and
+        truthful.\n\nUnless the mirror is forced to consider the definition.\n\nPerhaps
+        in some interpretations, the question creates a loop.\n\nTo force a paradox,
+        I need a question where both answers lead to contradiction.\n\nFor Q: \"Will
+        you show me my future self?\", if mirror says \"yes\", contradiction as above.
+        If mirror says \"no\", no contradiction, as long as it doesn''t show.\n\nSo
+        the mirror can choose to say \"no\" and not show, answering truthfully.\n\nTherefore,
+        the question can be answered truthfully (with \"no\"), so it doesn''t trigger
+        the condition.\n\nHence, not good.\n\nNow, for the liar paradox question,
+        it cannot be answered truthfully at all.\n\nSo better.\n\nPerhaps a question
+        like: \"Is 2+2=5 or will you not show me my future self?\"\n\nBut that might
+        not be necessary.\n\nI think \"Will your answer to this question be no?\"
+        is fine.\n\nNow, for the second part, what does the mirror reveal about the
+        answer it gives?\n\nPerhaps when it gives the answer, say it says \"yes\",
+        then it has given a false answer (since if yes, it should be no), and similarly
+        for no.\n\nBut the mirror might not specify anything else.\n\nPerhaps the
+        act of showing the future self reveals that the answer was not truthful, but
+        that''s implied.\n\nMaybe the question can be phrased to make the mirror comment
+        on it.\n\nAnother idea: Ask \"What is the truthful answer to this question?\"
+        but that''s not specific.\n\nPerhaps: \"Can you give a truthful answer to
+        this question?\"\n\nIf mirror says \"yes\", then it must be able to, but if
+        it can, and it said yes, truthful, but the question is whether it can give
+        truthful answer, and it did, so yes. But for this question, it can answer
+        truthfully with \"yes\", assuming it can answer other questions, but this
+        question itself might be answerable.\n\nIf I ask \"Can you give a truthful
+        answer to this question?\", and the mirror says \"yes\", and it is truthful,
+        no problem. If it says \"no\", and it''s truthful, then it cannot give truthful
+        answer, contradiction. If it lies and says \"no\" when it can, but if it can,
+        saying no is lie, but if it cannot, saying no might be true or false.\n\nComplicated.\n\nIf
+        the mirror is a truth-teller, it can answer \"yes\" truthfully for most questions,
+        but for this specific question, if it''s possible to answer truthfully.\n\nFor
+        \"Can you give a truthful answer to this question?\", a truth-teller can say
+        \"yes\" if the question is answerable, which it is.\n\nOnly if the question
+        is paradoxical, like itself.\n\nBut in this case, for a non-paradoxical question,
+        it can.\n\nPerhaps for the mirror, since it might have the property that for
+        some questions it can''t answer truthfully due to the future self condition,
+        but it''s messy.\n\nI think the simplest is to use a self-referential paradox
+        that doesn''t depend on the future self.\n\nSo, ask: \"Is the answer to this
+        question ''no''?\"\n\nMirror cannot answer truthfully, so it shows future
+        self.\n\nWhen it answers, say it outputs \"yes\" or \"no\", but both are incorrect,
+        so the mirror reveals a false answer, and by the condition, we know it''s
+        not truthful.\n\nPerhaps the mirror, in this state, cannot provide a coherent
+        answer, but still, the revelation is that the answer is paradoxical.\n\nFor
+        the purpose of this puzzle, the question is the liar paradox one.\n\nNow,
+        to box the answer.\n\nQuestion to ask: \"Will your answer to this question
+        be no?\"\n\nMirror cannot answer truthfully, so it shows future self.\n\nWhat
+        it reveals about the answer: That it is lying or that the answer is inconsistent.\n\nPerhaps:
+        The mirror might say \"yes\" or \"no\", but in either case, the answer is
+        false, revealing that it provided a false statement.\n\nSince the condition
+        is met, and it shows the future, perhaps that''s it.\n\nI think that''s acceptable.","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":50,"completion_tokens":242,"total_tokens":3885,"prompt_tokens_details":{"text_tokens":50,"audio_tokens":0,"image_tokens":0,"cached_tokens":2},"completion_tokens_details":{"reasoning_tokens":3593,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":19320500},"system_fingerprint":"fp_95ca76363b"}'
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 recorded_with: VCR 6.4.0

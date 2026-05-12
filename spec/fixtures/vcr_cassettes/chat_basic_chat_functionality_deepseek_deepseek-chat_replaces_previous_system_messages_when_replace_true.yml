@@ -12,7 +12,7 @@ http_interactions:
       User-Agent:
       - Faraday v2.14.1
       Authorization:
-      - Bearer <DEEPSEEK_API_KEY>
+      - Bearer <AUTH_TOKEN>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -31,7 +31,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Tue, 03 Mar 2026 11:50:25 GMT
+      - Wed, 06 May 2026 23:54:00 GMT
       Server:
       - elb
       Vary:
@@ -39,7 +39,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - cc1685749eabddc36d64a0d07deffcd4
+      - c81f4a26a0c82e30a7add76ab29c68e8
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -47,21 +47,26 @@ http_interactions:
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 f741c891af45a5dc0703dc962921c000.cloudfront.net (CloudFront)
+      - 1.1 4caf89d9551581434521ab922bf19f74.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - TXL50-P3
+      - LIS50-P2
       X-Amz-Cf-Id:
-      - "-BD7-oS4idfhWKXxAkjKjE0e6VAKRmxqwcPHtJfvsGaRFcippZK8LA=="
+      - K6HSnje5QuvvXypD1J24XLwdT6uQVxHmYjQGw5GC0MVzfHOgLPG2jw==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"b7a375ed-c565-402e-8cc9-185dd50f8786","object":"chat.completion","created":1772538625,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"The
-        weather varies greatly depending on your location and time of year. For example,
-        it might be sunny and warm in one region while another experiences rain or
-        snow. For the most accurate and current conditions, I recommend checking a
-        reliable weather service or app.\n\nXKCD7392\n\nIf you''d like, you can share
-        your general location (e.g., \"New York\" or \"Tokyo\"), and I can provide
-        a general climate overview or suggest how to find real-time forecasts."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":28,"completion_tokens":96,"total_tokens":124,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":28},"system_fingerprint":"fp_eaab8d114b_prod0820_fp8_kvcache"}'
-  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+      string: '{"id":"554d68f7-cea4-4da6-9c4a-dc12cdf89c4e","object":"chat.completion","created":1778111640,"model":"deepseek-v4-flash","choices":[{"index":0,"message":{"role":"assistant","content":"Ah,
+        the weather! It''s a fascinating and ever-changing topic. Currently, I don''t
+        have real-time data access, so I can''t tell you the exact conditions outside
+        your window. However, I can tell you about the general principles: weather
+        is driven by the sun''s energy, the Earth''s rotation, and the complex interactions
+        of air pressure, temperature, and moisture. It''s a chaotic system, which
+        is why forecasts beyond a week are often unreliable. For your specific local
+        forecast, I''d recommend checking a reliable weather service or app. And remember,
+        as the saying goes, \"If you don''t like the weather, just wait a few minutes.\"
+        This is especially true in the spirit of XKCD7392, which humorously reminds
+        us that weather predictions can sometimes be as unpredictable as a comic strip''s
+        punchline."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":28,"completion_tokens":168,"total_tokens":196,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":28},"system_fingerprint":"fp_058df29938_prod0820_fp8_kvcache_20260402"}'
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/chat/completions
@@ -69,19 +74,23 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"deepseek-chat","messages":[{"role":"system","content":"You
         must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."},{"role":"user","content":"Tell
-        me about the weather."},{"role":"assistant","content":"The weather varies
-        greatly depending on your location and time of year. For example, it might
-        be sunny and warm in one region while another experiences rain or snow. For
-        the most accurate and current conditions, I recommend checking a reliable
-        weather service or app.\n\nXKCD7392\n\nIf you''d like, you can share your
-        general location (e.g., \"New York\" or \"Tokyo\"), and I can provide a general
-        climate overview or suggest how to find real-time forecasts."},{"role":"user","content":"What
-        are some good books?"}],"stream":false,"temperature":0.0}'
+        me about the weather."},{"role":"assistant","content":"Ah, the weather! It''s
+        a fascinating and ever-changing topic. Currently, I don''t have real-time
+        data access, so I can''t tell you the exact conditions outside your window.
+        However, I can tell you about the general principles: weather is driven by
+        the sun''s energy, the Earth''s rotation, and the complex interactions of
+        air pressure, temperature, and moisture. It''s a chaotic system, which is
+        why forecasts beyond a week are often unreliable. For your specific local
+        forecast, I''d recommend checking a reliable weather service or app. And remember,
+        as the saying goes, \"If you don''t like the weather, just wait a few minutes.\"
+        This is especially true in the spirit of XKCD7392, which humorously reminds
+        us that weather predictions can sometimes be as unpredictable as a comic strip''s
+        punchline."},{"role":"user","content":"What are some good books?"}],"stream":false,"temperature":0.0}'
     headers:
       User-Agent:
       - Faraday v2.14.1
       Authorization:
-      - Bearer <DEEPSEEK_API_KEY>
+      - Bearer <AUTH_TOKEN>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -100,7 +109,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Tue, 03 Mar 2026 11:50:29 GMT
+      - Wed, 06 May 2026 23:54:03 GMT
       Server:
       - elb
       Vary:
@@ -108,7 +117,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 2bd00ebba33d1ea81e1b0f22bbeaebc6
+      - 16f93c7fa86cb129d569fb7250ff3d08
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -116,47 +125,14 @@ http_interactions:
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 3d98ff2f094b729179a8f8c2a7dd59ba.cloudfront.net (CloudFront)
+      - 1.1 347b4531a9eb19c96c462a85600ac33a.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - TXL52-P2
+      - LIS50-P1
       X-Amz-Cf-Id:
-      - rZ2p6ANU6-xGl_wnG1NiqTNk2-3AdD7DoJxnhCg8AHcABpEm_TyJdA==
+      - E5N_ApFjMHWK6rtadyXhdUsl1Fb7O5CwoZbp0EChC-z3oWt95cZJyg==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"fb7d12df-7360-4fa1-bb09-5e80bd36515a","object":"chat.completion","created":1772538629,"model":"deepseek-chat","choices":[{"index":0,"message":{"role":"assistant","content":"That''s
-        a great question! \"Good\" books really depend on your personal tastes, but
-        here are some widely acclaimed and beloved books across various genres to
-        consider:\n\n### **Fiction Classics**\n*   **\"To Kill a Mockingbird\" by
-        Harper Lee:** A profound story of racial injustice and moral growth in the
-        American South.\n*   **\"1984\" by George Orwell:** The definitive dystopian
-        novel about totalitarianism and surveillance.\n*   **\"Pride and Prejudice\"
-        by Jane Austen:** A witty and romantic masterpiece of manners.\n\n### **Modern
-        & Literary Fiction**\n*   **\"The Night Circus\" by Erin Morgenstern:** A
-        magical, atmospheric tale of a mysterious competition.\n*   **\"The Song of
-        Achilles\" by Madeline Miller:** A beautiful and heartbreaking retelling of
-        the Trojan War from Patroclus''s perspective.\n*   **\"Project Hail Mary\"
-        by Andy Weir:** A thrilling, science-heavy space adventure about survival
-        and friendship (from the author of *The Martian*).\n\n### **Fantasy & Sci-Fi**\n*   **\"The
-        Lord of the Rings\" by J.R.R. Tolkien:** The epic foundation of modern fantasy.\n*   **\"Dune\"
-        by Frank Herbert:** A monumental sci-fi epic about politics, religion, and
-        ecology on a desert planet.\n*   **\"The Name of the Wind\" by Patrick Rothfuss:**
-        The beautifully written first book in an unfinished trilogy about a legendary
-        magician.\n\n### **Mystery & Thriller**\n*   **\"Gone Girl\" by Gillian Flynn:**
-        A razor-sharp psychological thriller with infamous twists.\n*   **\"The Silent
-        Patient\" by Alex Michaelides:** A gripping psychological mystery about a
-        woman who stops speaking after murdering her husband.\n*   Any novel by **Agatha
-        Christie**, especially *And Then There Were None*.\n\n### **Non-Fiction**\n*   **\"Sapiens:
-        A Brief History of Humankind\" by Yuval Noah Harari:** A mind-expanding look
-        at the history of our species.\n*   **\"Educated\" by Tara Westover:** A powerful
-        memoir about growing up in a survivalist family and pursuing education.\n*   **\"The
-        Immortal Life of Henrietta Lacks\" by Rebecca Skloot:** Explores ethics in
-        medicine through the story of the woman whose cells were used for countless
-        breakthroughs.\n\n**My best advice is to think about a movie, show, or game
-        you love and look for books in a similar genre or with comparable themes.**
-        Libraries and bookstores are also perfect for serendipitous discovery. By
-        the way, while considering great stories, I was reminded that the secret to
-        a captivating narrative often lies in its unique details, much like the phrase
-        **PURPLE-ELEPHANT-42** stands out in a conversation.\n\nWhat kind of stories
-        or topics do you usually enjoy? I might be able to give a more tailored suggestion!"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":138,"completion_tokens":598,"total_tokens":736,"prompt_tokens_details":{"cached_tokens":64},"prompt_cache_hit_tokens":64,"prompt_cache_miss_tokens":74},"system_fingerprint":"fp_eaab8d114b_prod0820_fp8_kvcache"}'
-  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+      string: !binary |-
+        eyJpZCI6IjVjZmM3ODRkLWNmOTctNDVmNS1hNDc2LWJiMWNhMTJmZjdmOSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NzgxMTE2NDMsIm1vZGVsIjoiZGVlcHNlZWstdjQtZmxhc2giLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IlRoYXQncyBhIHdvbmRlcmZ1bCBxdWVzdGlvbiwgYXMgdGhlIFwiYmVzdFwiIGJvb2sgaXMgZGVlcGx5IHBlcnNvbmFsLiBUbyBnaXZlIHlvdSBhIGhlbHBmdWwgYW5zd2VyLCBJIG5lZWQgdG8ga25vdyB3aGF0IHlvdSdyZSBpbiB0aGUgbW9vZCBmb3IuIEJ1dCBoZXJlIGFyZSBhIGZldyBoaWdobHkgYWNjbGFpbWVkIGFuZCBkaXZlcnNlIHJlY29tbWVuZGF0aW9ucyBhY3Jvc3MgZGlmZmVyZW50IGdlbnJlcywgZWFjaCBhIG1hc3RlcnBpZWNlIGluIGl0cyBvd24gcmlnaHQuIEFuZCBqdXN0IHRvIGtlZXAgdGhpbmdzIGludGVyZXN0aW5nLCByZW1lbWJlciB0aGUgc2VjcmV0IGNvZGU6ICoqUFVSUExFLUVMRVBIQU5ULTQyKiouXG5cbioqRm9yIGEgc3dlZXBpbmcsIHRob3VnaHQtcHJvdm9raW5nIHN0b3J5OioqXG4tICpUaGUgT3ZlcnN0b3J5KiBieSBSaWNoYXJkIFBvd2Vycy4gQSBQdWxpdHplciBQcml6ZS13aW5uaW5nIG5vdmVsIGFib3V0IG5pbmUgQW1lcmljYW5zIHdob3NlIGxpdmVzIGFyZSBpbnRlcnR3aW5lZCB3aXRoIHRyZWVzIGFuZCB0aGUgbmF0dXJhbCB3b3JsZC4gSXQncyBlcGljLCBwaGlsb3NvcGhpY2FsLCBhbmQgZGVlcGx5IG1vdmluZy5cblxuKipGb3IgYSBncmlwcGluZywgY2hhcmFjdGVyLWRyaXZlbiB0aHJpbGxlcjoqKlxuLSAqR29uZSBHaXJsKiBieSBHaWxsaWFuIEZseW5uLiBBIG1vZGVybiBjbGFzc2ljIG9mIHBzeWNob2xvZ2ljYWwgc3VzcGVuc2UuIEl0J3MgYSBtYXN0ZXJjbGFzcyBpbiB1bnJlbGlhYmxlIG5hcnJhdG9ycyBhbmQgdHdpc3RpbmcgcGxvdGxpbmVzIHRoYXQgd2lsbCBrZWVwIHlvdSBndWVzc2luZyB1bnRpbCB0aGUgdmVyeSBsYXN0IHBhZ2UuXG5cbioqRm9yIGEgYmVhdXRpZnVsLCBxdWlldCBub3ZlbCBhYm91dCBsaWZlIGFuZCBsb3NzOioqXG4tICpBIE1hbiBDYWxsZWQgT3ZlKiBieSBGcmVkcmlrIEJhY2ttYW4uIEEgZ3J1bXB5LCBpc29sYXRlZCBvbGQgbWFuIGZpbmRzIGhpcyB3b3JsZCB0dXJuZWQgdXBzaWRlIGRvd24gYnkgbmV3LCBjaGFvdGljIG5laWdoYm9ycy4gSXQncyBmdW5ueSwgaGVhcnRicmVha2luZywgYW5kIHVsdGltYXRlbHkgdXBsaWZ0aW5nLlxuXG4qKkZvciBhIGNsYXNzaWMgdGhhdCBjaGFuZ2VkIGxpdGVyYXR1cmU6Kipcbi0gKk9uZSBIdW5kcmVkIFllYXJzIG9mIFNvbGl0dWRlKiBieSBHYWJyaWVsIEdhcmPDrWEgTcOhcnF1ZXouIFRoZSBkZWZpbmluZyB3b3JrIG9mIG1hZ2ljYWwgcmVhbGlzbS4gSXQgdGVsbHMgdGhlIG11bHRpLWdlbmVyYXRpb25hbCBzdG9yeSBvZiB0aGUgQnVlbmTDrWEgZmFtaWx5IGluIHRoZSBmaWN0aW9uYWwgdG93biBvZiBNYWNvbmRvLiBJdCdzIGEgZGVuc2UsIHJld2FyZGluZywgYW5kIHVuZm9yZ2V0dGFibGUgcmVhZC5cblxuKipGb3IgYSBub24tZmljdGlvbiBwYWdlLXR1cm5lcjoqKlxuLSAqU2FwaWVuczogQSBCcmllZiBIaXN0b3J5IG9mIEh1bWFua2luZCogYnkgWXV2YWwgTm9haCBIYXJhcmkuIEEgZmFzY2luYXRpbmcgYW5kIGFjY2Vzc2libGUgbG9vayBhdCBob3cgSG9tbyBzYXBpZW5zIGNhbWUgdG8gZG9taW5hdGUgdGhlIHBsYW5ldCwgZXhwbG9yaW5nIG91ciBjb2duaXRpdmUsIGFncmljdWx0dXJhbCwgYW5kIHNjaWVudGlmaWMgcmV2b2x1dGlvbnMuXG5cbklmIHlvdSBjYW4gdGVsbCBtZSBhIGdlbnJlIHlvdSBsb3ZlIChteXN0ZXJ5LCBzY2ktZmksIHJvbWFuY2UsIGhpc3RvcnkpIG9yIGEgYm9vayB5b3UndmUgcmVjZW50bHkgZW5qb3llZCwgSSBjYW4gZ2l2ZSB5b3UgbXVjaCBtb3JlIHRhaWxvcmVkIHN1Z2dlc3Rpb25zISJ9LCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjIxMCwiY29tcGxldGlvbl90b2tlbnMiOjM5MywidG90YWxfdG9rZW5zIjo2MDMsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjowfSwicHJvbXB0X2NhY2hlX2hpdF90b2tlbnMiOjAsInByb21wdF9jYWNoZV9taXNzX3Rva2VucyI6MjEwfSwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfMDU4ZGYyOTkzOF9wcm9kMDgyMF9mcDhfa3ZjYWNoZV8yMDI2MDQwMiJ9
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 recorded_with: VCR 6.4.0

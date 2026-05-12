@@ -2,6 +2,9 @@ title: RubyLLM
 description: One beautiful API for ChatGPT, Claude, Gemini, and more. Chat, images, embeddings, tools.
 url: https://rubyllm.com
 baseurl: /
+lang: en-US
+locale: en_US
+repository: crmne/ruby_llm
 remote_theme: just-the-docs/just-the-docs
 
 # Collections for organizing content
@@ -42,21 +45,29 @@ defaults:
       type: "getting_started"
     values:
       layout: "default"
+      seo:
+        type: "WebPage"
   - scope:
       path: ""
       type: "core_features"
     values:
       layout: "default"
+      seo:
+        type: "WebPage"
   - scope:
       path: ""
       type: "advanced"
     values:
       layout: "default"
+      seo:
+        type: "WebPage"
   - scope:
       path: ""
       type: "reference"
     values:
       layout: "default"
+      seo:
+        type: "WebPage"
 
 logo: "/assets/images/logotype.svg"
 favicon_ico: "/assets/images/logo.svg"
@@ -64,6 +75,13 @@ favicon_ico: "/assets/images/logo.svg"
 twitter:
   username: paolino
   card: summary_large_image
+
+social:
+  name: RubyLLM
+  links:
+    - https://github.com/crmne/ruby_llm
+    - https://rubygems.org/gems/ruby_llm
+    - https://github.com/sponsors/crmne
 
 search_enabled: true
 search:
@@ -114,6 +132,105 @@ plugins:
   - jekyll-sitemap
   - jekyll-og-image
   - jekyll-redirect-from
+  - jekyll-ai-visible-content
+
+author:
+  type: Organization
+  name: RubyLLM
+  url: https://rubyllm.com
+  twitter: paolino
+
+ai_visible_content:
+  enabled: true
+  entity:
+    type: Organization
+    id_slug: ruby-llm
+    name: RubyLLM
+    alternate_names:
+      - ruby_llm
+      - Ruby LLM
+    description: one consistent Ruby API for chat, image generation, embeddings, transcription, moderation, tools, agents, structured output, streaming, and Rails integration across OpenAI, Anthropic, Gemini, Bedrock, DeepSeek, Mistral, Ollama, OpenRouter, Perplexity, GPUStack, xAI, and OpenAI-compatible providers.
+    image: /assets/images/logotype.jpg
+    same_as:
+      - https://github.com/crmne/ruby_llm
+      - https://rubygems.org/gems/ruby_llm
+      - https://github.com/sponsors/crmne
+    knows_about:
+      - Ruby
+      - Ruby on Rails
+      - Large language models
+      - AI agents
+      - Retrieval augmented generation
+      - Function calling
+      - Structured output
+      - Vector embeddings
+      - Streaming AI responses
+      - Multi-modal AI
+      - OpenAI
+      - Anthropic Claude
+      - Google Gemini
+      - AWS Bedrock
+      - DeepSeek
+      - Mistral AI
+      - xAI
+      - OpenRouter
+      - Perplexity
+      - Ollama
+      - Vertex AI
+      - GPUStack
+      - OpenAI-compatible APIs
+  json_ld:
+    auto_inject: false
+    include_website_schema: true
+    include_breadcrumbs: true
+    include_blog_posting: false
+    include_faq: true
+    include_how_to: true
+    article_body: excerpt
+    compact: true
+  crawlers:
+    allow_gptbot: true
+    allow_perplexitybot: true
+    allow_claudebot: true
+    allow_googlebot: true
+    allow_bingbot: true
+    generate_robots_txt: true
+  llms_txt:
+    enabled: true
+    title: RubyLLM Documentation
+    description: Developer documentation for RubyLLM, a Ruby library for building AI applications with chat, agents, tools, embeddings, image generation, audio transcription, moderation, streaming, and Rails integration.
+    include_full_text: true
+    sections:
+      - heading: Canonical Resources
+        content: |
+          - Documentation: https://rubyllm.com
+          - Source code: https://github.com/crmne/ruby_llm
+          - RubyGems package: https://rubygems.org/gems/ruby_llm
+      - heading: Primary Topics
+        content: |
+          RubyLLM covers provider-agnostic AI application development in Ruby, including OpenAI, Anthropic, Gemini, Bedrock, DeepSeek, Mistral, Ollama, OpenRouter, Perplexity, GPUStack, xAI, OpenAI-compatible APIs, agents, tools, structured output, embeddings, image generation, audio transcription, moderation, streaming, Rails integration, async workloads, model registry usage, and upgrade guidance.
+  linking:
+    enable_entity_links: false
+    apply_to_metadata: false
+    enable_related_posts: false
+  validation:
+    warn_name_inconsistency: false
+    warn_missing_same_as: true
+    warn_missing_dates: false
+    warn_orphan_pages: false
+    warn_missing_descriptions: true
+    fail_build_on_error: false
+    content_only: true
+    verbose: false
+    max_examples: 5
+
+# Jekyll uses Dart Sass; suppress deprecations emitted by upstream theme styles.
+sass:
+  quiet_deps: true
+  silence_deprecations:
+    - import
+    - global-builtin
+    - color-functions
 
 og_image:
   output_dir: "assets/images/og"

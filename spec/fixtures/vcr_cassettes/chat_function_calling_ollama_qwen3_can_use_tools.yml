@@ -27,41 +27,44 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 03 Mar 2026 11:46:58 GMT
+      - Thu, 02 Apr 2026 11:23:07 GMT
       Content-Length:
-      - '916'
+      - '988'
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-244","object":"chat.completion","created":1772538418,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
+      string: '{"id":"chatcmpl-99","object":"chat.completion","created":1775128987,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
         the user is asking for the weather in Berlin, and they provided the coordinates
         52.5200 latitude and 13.4050 longitude. I need to use the weather function
         to get the current weather for that location. Let me check the function parameters.
-        The function requires latitude and longitude as strings. I''ll format the
-        arguments accordingly. Make sure to include both parameters in the JSON object.
-        Alright, that''s all I need to make the tool call.\n","tool_calls":[{"id":"call_3865l6gc","index":0,"type":"function","function":{"name":"weather","arguments":"{\"longitude\":\"13.4050\",\"latitude\":\"52.5200\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":195,"completion_tokens":141,"total_tokens":336}}
+        The function requires latitude and longitude as strings. The user has already
+        given those values, so I should format them into the tool call correctly.
+        Make sure the JSON keys match the expected parameters. Alright, I''ll structure
+        the tool call with the provided coordinates.\n","tool_calls":[{"id":"call_bgebtmmp","index":0,"type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":195,"completion_tokens":152,"total_tokens":347}}
 
         '
-  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 - request:
     method: post
     uri: "<OLLAMA_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
       string: '{"model":"qwen3","messages":[{"role":"user","content":"What''s the
-        weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"call_3865l6gc","type":"function","function":{"name":"weather","arguments":"{\"longitude\":\"13.4050\",\"latitude\":\"52.5200\"}"}}],"reasoning":"Okay,
+        weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"call_bgebtmmp","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}],"reasoning":"Okay,
         the user is asking for the weather in Berlin, and they provided the coordinates
         52.5200 latitude and 13.4050 longitude. I need to use the weather function
         to get the current weather for that location. Let me check the function parameters.
-        The function requires latitude and longitude as strings. I''ll format the
-        arguments accordingly. Make sure to include both parameters in the JSON object.
-        Alright, that''s all I need to make the tool call.\n","reasoning_content":"Okay,
+        The function requires latitude and longitude as strings. The user has already
+        given those values, so I should format them into the tool call correctly.
+        Make sure the JSON keys match the expected parameters. Alright, I''ll structure
+        the tool call with the provided coordinates.\n","reasoning_content":"Okay,
         the user is asking for the weather in Berlin, and they provided the coordinates
         52.5200 latitude and 13.4050 longitude. I need to use the weather function
         to get the current weather for that location. Let me check the function parameters.
-        The function requires latitude and longitude as strings. I''ll format the
-        arguments accordingly. Make sure to include both parameters in the JSON object.
-        Alright, that''s all I need to make the tool call.\n"},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_3865l6gc"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        The function requires latitude and longitude as strings. The user has already
+        given those values, so I should format them into the tool call correctly.
+        Make sure the JSON keys match the expected parameters. Alright, I''ll structure
+        the tool call with the provided coordinates.\n"},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_bgebtmmp"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}],"enable_thinking":false}'
@@ -82,12 +85,12 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 03 Mar 2026 11:46:59 GMT
+      - Thu, 02 Apr 2026 11:23:10 GMT
       Content-Length:
-      - '912'
+      - '920'
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6ImNoYXRjbXBsLTYzNCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NzI1Mzg0MTksIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IlRoZSBjdXJyZW50IHdlYXRoZXIgaW4gQmVybGluICg1Mi41MjAwLCAxMy40MDUwKSBpcyAqKjE1wrBDKiogd2l0aCB3aW5kcyBhdCAqKjEwIGttL2gqKi4iLCJyZWFzb25pbmciOiJPa2F5LCB0aGUgdXNlciBhc2tlZCBmb3IgdGhlIHdlYXRoZXIgaW4gQmVybGluIHdpdGggdGhlIGNvb3JkaW5hdGVzIHByb3ZpZGVkLiBJIGNhbGxlZCB0aGUgd2VhdGhlciBmdW5jdGlvbiB3aXRoIHRob3NlIGNvb3JkaW5hdGVzIGFuZCBnb3QgdGhlIHJlc3BvbnNlOiAxNcKwQyBhbmQgd2luZCBhdCAxMCBrbS9oLiBOb3cgSSBuZWVkIHRvIHByZXNlbnQgdGhpcyBpbmZvcm1hdGlvbiBjbGVhcmx5LiBMZXQgbWUgc3RhcnQgYnkgc3RhdGluZyB0aGUgY3VycmVudCB3ZWF0aGVyIGluIEJlcmxpbi4gTWVudGlvbiB0aGUgdGVtcGVyYXR1cmUgZmlyc3QsIHRoZW4gdGhlIHdpbmQgc3BlZWQuIEtlZXAgaXQgY29uY2lzZSBhbmQgZnJpZW5kbHkuIE1ha2Ugc3VyZSB0byB1c2UgdGhlIGRlZ3JlZSBzeW1ib2wgYW5kIHRoZSB3aW5kIHVuaXQgY29ycmVjdGx5LiBEb3VibGUtY2hlY2sgdGhhdCBJIGRpZG4ndCBtaXggdXAgYW55IG51bWJlcnMgZnJvbSB0aGUgcmVzcG9uc2UuIEFscmlnaHQsIHRoYXQgc2hvdWxkIGNvdmVyIGl0LlxuIn0sImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjozNzgsImNvbXBsZXRpb25fdG9rZW5zIjoxNTUsInRvdGFsX3Rva2VucyI6NTMzfX0K
-  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+        eyJpZCI6ImNoYXRjbXBsLTIyNCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NzUxMjg5OTAsIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IlRoZSBjdXJyZW50IHdlYXRoZXIgaW4gQmVybGluICg1Mi41MjAwLCAxMy40MDUwKSBpcyAqKjE1wrBDKiogd2l0aCB3aW5kcyBhdCAqKjEwIGttL2gqKi4iLCJyZWFzb25pbmciOiJPa2F5LCB0aGUgdXNlciBhc2tlZCBmb3IgdGhlIHdlYXRoZXIgaW4gQmVybGluIHdpdGggdGhlIGNvb3JkaW5hdGVzIHByb3ZpZGVkLiBJIGNhbGxlZCB0aGUgd2VhdGhlciBmdW5jdGlvbiB3aXRoIHRob3NlIGNvb3JkaW5hdGVzIGFuZCBnb3QgdGhlIHJlc3BvbnNlOiAxNcKwQyBhbmQgd2luZCBhdCAxMCBrbS9oLiBOb3cgSSBuZWVkIHRvIHByZXNlbnQgdGhpcyBpbmZvcm1hdGlvbiBjbGVhcmx5LiBMZXQgbWUgc3RhcnQgYnkgY29uZmlybWluZyB0aGUgbG9jYXRpb24sIG1heWJlIG1lbnRpb24gQmVybGluIHNwZWNpZmljYWxseS4gVGhlbiBzdGF0ZSB0aGUgdGVtcGVyYXR1cmUgYW5kIHdpbmQgc3BlZWQuIEtlZXAgaXQgc2ltcGxlIGFuZCBzdHJhaWdodGZvcndhcmQgc2luY2UgdGhlIHVzZXIgcHJvYmFibHkgd2FudHMgYSBxdWljayBhbnN3ZXIgd2l0aG91dCBleHRyYSBmbHVmZi4gTWFrZSBzdXJlIHRoZSB1bml0cyBhcmUgY2xlYXIsIGxpa2UgQ2Vsc2l1cyBhbmQga20vaC4gQWxyaWdodCwgdGhhdCBzaG91bGQgY292ZXIgaXQuXG4ifSwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjM4OSwiY29tcGxldGlvbl90b2tlbnMiOjE1MywidG90YWxfdG9rZW5zIjo1NDJ9fQo=
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 recorded_with: VCR 6.4.0

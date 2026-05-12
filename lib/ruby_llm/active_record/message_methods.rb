@@ -1,10 +1,14 @@
 # frozen_string_literal: true
 
+require 'active_support/concern'
+require 'ruby_llm/active_record/payload_helpers'
+
 module RubyLLM
   module ActiveRecord
     # Methods mixed into message models.
     module MessageMethods
       extend ActiveSupport::Concern
+      include PayloadHelpers
 
       class_methods do
         attr_reader :chat_class, :tool_call_class, :chat_foreign_key, :tool_call_foreign_key
@@ -39,6 +43,18 @@ module RubyLLM
         )
       end
 
+      def cost
+        RubyLLM::Cost.new(tokens:, model: model_association)
+      end
+
+      def cache_read_tokens
+        cached_value
+      end
+
+      def cache_write_tokens
+        cache_creation_value
+      end
+
       def to_partial_path
         partial_prefix = self.class.name.underscore.pluralize
         role_partial = if to_llm.tool_call?
@@ -52,10 +68,7 @@ module RubyLLM
       end
 
       def tool_error_message
-        payload = parse_payload(content)
-        return unless payload.is_a?(Hash)
-
-        payload['error'] || payload[:error]
+        payload_error_message(content)
       end
 
       private
@@ -101,7 +114,8 @@ module RubyLLM
       def extract_content
         return RubyLLM::Content::Raw.new(content_raw) if has_attribute?(:content_raw) && content_raw.present?
 
-        content_value = self[:content]
+        content_value = content
+        content_value = content_value.to_plain_text if content_value.respond_to?(:to_plain_text)
 
         return content_value unless respond_to?(:attachments) && attachments.attached?
 
@@ -127,15 +141,6 @@ module RubyLLM
         tempfile.rewind
         @_tempfiles << tempfile
         tempfile
-      end
-
-      def parse_payload(value)
-        return value if value.is_a?(Hash) || value.is_a?(Array)
-        return if value.blank?
-
-        JSON.parse(value)
-      rescue JSON::ParserError
-        nil
       end
     end
   end

@@ -71,7 +71,7 @@ def delete_cassettes(cassettes)
 end
 
 def run_tests
-  run_parallel_rspec || abort('Tests failed')
+  run_test_queue_rspec || abort('Tests failed')
 end
 
 def retimestamp_cassettes(cassette_dir)

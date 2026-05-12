@@ -158,7 +158,10 @@ module RubyLLM
         end
 
         def extract_input_tokens(metadata_usage, usage, message_usage)
-          metadata_usage['inputTokens'] || usage['inputTokens'] || message_usage['input_tokens']
+          bedrock_usage = metadata_usage['inputTokens'] ? metadata_usage : usage
+          return Bedrock::Chat.input_tokens(bedrock_usage) if bedrock_usage['inputTokens']
+
+          message_usage['input_tokens']
         end
 
         def extract_output_tokens(metadata_usage, usage)
