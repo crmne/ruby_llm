@@ -471,6 +471,22 @@ end
 
 Provider metadata is passed through verbatim—turn on `RUBYLLM_DEBUG=true` if you want to inspect the final payload while experimenting.
 
+### OpenAI Native Tools
+
+For OpenAI Responses features such as hosted web search, pass the native tool definitions through `with_params(tools: ...)`. RubyLLM appends those native tools to any Ruby tool classes registered with `with_tool` when the request routes through Responses.
+
+```ruby
+chat = RubyLLM.chat(model: "gpt-5.5")
+              .with_tool(Weather)
+              .with_params(
+                tools: [{ type: "web_search", search_context_size: "low" }]
+              )
+
+response = chat.ask("Find today's weather context and compare it with our local forecast.")
+```
+
+Ruby tool classes still use `with_tool`; `with_params(tools: ...)` is only for OpenAI-native tools such as `web_search`, `file_search`, or `code_interpreter`. See OpenAI's [Responses migration guide](https://platform.openai.com/docs/guides/migrate-to-responses) and [web search guide](https://platform.openai.com/docs/guides/tools-web-search?api-mode=responses) for the provider-specific tool shapes.
+
 ## Advanced: Halting Tool Continuation
 
 After a tool executes, the LLM normally continues the conversation to explain what happened. In rare cases, you might want to skip this and return the tool result directly.

@@ -5,15 +5,29 @@ module RubyLLM
     class OpenAI
       # Chat methods of the OpenAI API integration
       module Chat
-        def completion_url
+        def chat_completions_url
           'chat/completions'
         end
 
         module_function
 
-        # rubocop:disable Metrics/ParameterLists,Metrics/PerceivedComplexity
+        # rubocop:disable Metrics/ParameterLists,Metrics/PerceivedComplexity,Lint/UnusedMethodArgument
         def render_payload(messages, tools:, temperature:, model:, stream: false, schema: nil,
-                           thinking: nil, tool_prefs: nil)
+                           thinking: nil, tool_prefs: nil, native_tools: nil)
+          render_chat_payload(
+            messages,
+            tools: tools,
+            temperature: temperature,
+            model: model,
+            stream: stream,
+            schema: schema,
+            thinking: thinking,
+            tool_prefs: tool_prefs
+          )
+        end
+
+        def render_chat_payload(messages, tools:, temperature:, model:, stream: false, schema: nil,
+                                thinking: nil, tool_prefs: nil)
           tool_prefs ||= {}
           payload = {
             model: model.id,
@@ -49,9 +63,13 @@ module RubyLLM
           payload[:stream_options] = { include_usage: true } if stream
           payload
         end
-        # rubocop:enable Metrics/ParameterLists,Metrics/PerceivedComplexity
+        # rubocop:enable Metrics/ParameterLists,Metrics/PerceivedComplexity,Lint/UnusedMethodArgument
 
         def parse_completion_response(response)
+          parse_chat_completion_response(response)
+        end
+
+        def parse_chat_completion_response(response)
           data = response.body
           return if data.empty?
 
