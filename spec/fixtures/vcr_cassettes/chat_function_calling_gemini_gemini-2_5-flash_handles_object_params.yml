@@ -26,6 +26,8 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      X-Gemini-Service-Tier:
+      - standard
       Content-Type:
       - application/json; charset=UTF-8
       Vary:
@@ -33,7 +35,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 16 Mar 2026 19:18:50 GMT
+      - Thu, 07 May 2026 00:01:13 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -43,7 +45,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=929
+      - gfet4t7; dur=1116
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -61,12 +63,12 @@ http_interactions:
                       "name": "object_params",
                       "args": {
                         "window": {
-                          "start": "2025-01-01",
-                          "end": "2025-01-02"
+                          "end": "2025-01-02",
+                          "start": "2025-01-01"
                         }
                       }
                     },
-                    "thoughtSignature": "CsADAb4+9vsEjRm0hFaOOuDPojfkouvPtz6+uI/SaXgoeLQoYSkNCEEutrvD9qBgIQ+xS1xc79e9r6Utpgb/YUkzOil9d6iRy0KHliRATAuOPvr/Ov7GIwDrJ1JXer+r4VKHQvk6EN5WVPB33vU2Zi41gzHdyydSGNwAw90Fu45z5LBwox0TosEOvatRtvngzSQ/pg9wnDck8hREQUqnXy96pIjjpwQw0c4sXXclwN4zSel7diPhtSPHmSYYRKsczgpdP8CksrZrKornilymbq/7zVkTnDKYWrw11UDJaNRHTON5ZGwZL4q3oB9QxkVtTmpqb7XjXBcTySf5NUyIaZdcNlWtFEnVh1IMfby9Vi+XiyOBYWXocpLArY7nUJpXQaSRoxWvWYJ+1U2dOhuc+HB0RYZ/btSc1b1FtCulBIRjIt45E8BdWW8lAfDipOUv3mz687FZqgAzbCPK87QMVdPEfV5Govzf64KouBvwAKqxltoW/qM3rqAbrmiaCFeu0tz1Nx1LGjzIf7VbSyAhTA0Ysu8StkFBDPyjBdGNGaLM7B7YATk092Gpwk0S1H8W0fYMgNIsDSiMQnPNEfKpiR7uEw=="
+                    "thoughtSignature": "CqADAQw51sfgjsi1EV5in/w/ST0oMVDjA1JZsr/TrfJ5wvQmBpkGT+wQjx+bqF3PLm9wH3k1SNKDbIfXkD5W+tHTFZvKPFs50+9jy8Hvf6takKu2MT81ithNKTDZnzedCfDYtLfG0GyN5Z/is1OJ77+OOfwlnK240eCkSH3FAFnzcUNsL1XJiHqacTVbbxlQkkEAcAlo0g9oHDCpX4U5pSbSj8NA55CW5whvEMlFEKUqGgcjmBpHNParApMpurwIsLmNClUVSxjq8WETDSuF//OZe9ORTTG8it3KwtZenVP2MxE2DcPvaVHqP8LC9fZq6aSM+wDDUr7mspwg0zbiKEuDRtw+yt9Ilh7GDG1Evnu6r8iws7hki1andOg+z8lO5SVfl3RLQkxPjBN5A320FWM0st+OMVvXVX41ZCZncNxQ8D0T5t6Xqx3WuexNwCIucvA8JzkziAYhWbaTHvnNhG+VT7gxn256JbapSz+sDcblgVR5ITyHOxhyamjm4qkS3TiWMxiycgqVKOIkUdb6Y+lYj9zwK7AZxu2IFrgXNdDLI/Q="
                   }
                 ],
                 "role": "model"
@@ -79,17 +81,18 @@ http_interactions:
           "usageMetadata": {
             "promptTokenCount": 136,
             "candidatesTokenCount": 43,
-            "totalTokenCount": 304,
+            "totalTokenCount": 294,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
                 "tokenCount": 136
               }
             ],
-            "thoughtsTokenCount": 125
+            "thoughtsTokenCount": 115,
+            "serviceTier": "standard"
           },
           "modelVersion": "gemini-2.5-flash",
-          "responseId": "mVe4aeq7IdikvdIPy-SEwAs"
+          "responseId": "SNb7afTyNZzzkdUP6JrmqQM"
         }
-  recorded_at: Mon, 16 Mar 2026 19:18:50 GMT
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 recorded_with: VCR 6.4.0

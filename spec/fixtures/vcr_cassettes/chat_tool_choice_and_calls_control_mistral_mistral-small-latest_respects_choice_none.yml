@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 16 Mar 2026 19:21:11 GMT
+      - Thu, 07 May 2026 00:04:43 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -35,29 +35,29 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '019cf818-5954-716f-a016-a0847f2f6954'
+      - '019dffc0-3a46-705c-a0f7-850ddaaaa491'
       X-Kong-Request-Id:
-      - '019cf818-5954-716f-a016-a0847f2f6954'
+      - '019dffc0-3a46-705c-a0f7-850ddaaaa491'
       X-Ratelimit-Limit-Tokens-Minute:
       - '2000000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '1999823'
+      - '1999527'
       X-Ratelimit-Tokens-Query-Cost:
-      - '177'
+      - '473'
       X-Ratelimit-Limit-Req-Minute:
-      - '360'
+      - '1500'
       X-Ratelimit-Remaining-Req-Minute:
-      - '359'
+      - '1499'
       X-Envoy-Upstream-Service-Time:
-      - '301'
+      - '2107'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '302'
+      - '2108'
       X-Kong-Proxy-Latency:
-      - '10'
+      - '16'
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
@@ -73,8 +73,7 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"0e8950fafe01436f8e462533fb672318","created":1773688871,"model":"mistral-small-latest","usage":{"prompt_tokens":147,"total_tokens":177,"completion_tokens":30,"prompt_tokens_details":{"cached_tokens":0}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"Let''s
-        check the weather for you. I''ll look up the current weather in Berlin using
-        the provided coordinates. Please hold on for a moment."}}]}'
-  recorded_at: Mon, 16 Mar 2026 19:21:11 GMT
+      string: !binary |-
+        eyJpZCI6ImY0NDE2NTc1ZTY3ZDQyNDViYjViZTFhZjcxZGUwMzUyIiwiY3JlYXRlZCI6MTc3ODExMjI4MSwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsInVzYWdlIjp7InByb21wdF90b2tlbnMiOjE1OSwidG90YWxfdG9rZW5zIjo0NzMsImNvbXBsZXRpb25fdG9rZW5zIjozMTQsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjowfX0sIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNob2ljZXMiOlt7ImluZGV4IjowLCJmaW5pc2hfcmVhc29uIjoic3RvcCIsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsInRvb2xfY2FsbHMiOm51bGwsImNvbnRlbnQiOiJJJ2xsIGNoZWNrIHRoZSBjdXJyZW50IHdlYXRoZXIgZm9yIEJlcmxpbiB1c2luZyB0aGUgY29vcmRpbmF0ZXMgeW91IHByb3ZpZGVkLiBPbmUgbW9tZW50LCBwbGVhc2UuIPCfjKTvuI9cblxuTGV0IG1lIGZldGNoIHRoZSB3ZWF0aGVyIGRhdGEgZm9yIHlvdS4gSSdsbCB1c2UgdGhlIGNvb3JkaW5hdGVzICg1Mi41MjAwLCAxMy40MDUwKSB0byBnZXQgdGhlIG1vc3QgYWNjdXJhdGUgaW5mb3JtYXRpb24uIEknbGwgaGF2ZSB0aGF0IGZvciB5b3UgaW4ganVzdCBhIG1vbWVudC4g8J+MpO+4j1xuXG5MZXQgbWUgcmV0cmlldmUgdGhlIGN1cnJlbnQgd2VhdGhlciBmb3IgQmVybGluLiBJJ2xsIHVzZSB0aGUgY29vcmRpbmF0ZXMgeW91IHByb3ZpZGVkIHRvIGdldCB0aGUgbW9zdCBhY2N1cmF0ZSBpbmZvcm1hdGlvbi4gT25lIG1vbWVudCwgcGxlYXNlLiDwn4yk77iPXG5cbkxldCBtZSBmZXRjaCB0aGUgd2VhdGhlciBkYXRhIGZvciBCZXJsaW4gdXNpbmcgdGhlIGNvb3JkaW5hdGVzIHlvdSBwcm92aWRlZC4gT25lIG1vbWVudCwgcGxlYXNlLiDwn4yk77iPXG5cbkxldCBtZSBnZXQgdGhlIGN1cnJlbnQgd2VhdGhlciBmb3IgQmVybGluIHVzaW5nIHRoZSBjb29yZGluYXRlcyB5b3UgcHJvdmlkZWQuIEknbGwgaGF2ZSB0aGF0IGZvciB5b3UgaW4ganVzdCBhIG1vbWVudC4g8J+MpO+4j1xuXG5MZXQgbWUgY2hlY2sgdGhlIGN1cnJlbnQgd2VhdGhlciBmb3IgQmVybGluIHVzaW5nIHRoZSBjb29yZGluYXRlcyB5b3UgcHJvdmlkZWQuIE9uZSBtb21lbnQsIHBsZWFzZS4g8J+MpO+4j1xuXG5MZXQgbWUgcmV0cmlldmUgdGhlIGN1cnJlbnQgd2VhdGhlciBmb3IgQmVybGluIHVzaW5nIHRoZSBjb29yZGluYXRlcyB5b3UgcHJvdmlkZWQuIEknbGwgaGF2ZSB0aGF0IGZvciB5b3UgaW4ganVzdCBhIG1vbWVudC4g8J+MpO+4j1xuXG5MZXQgbWUgZ2V0IHRoZSB3ZWF0aGVyIGZvciBCZXJsaW4gdXNpbmcgdGhlIGNvb3JkaW5hdGVzIHlvdSBwcm92aWRlZC4gT25lIG1vbWVudCwgcGxlYXNlLiDwn4yk77iPXG5cbkxldCBtZSBmZXRjaCB0aGUgY3VycmVudCB3ZWF0aGVyIGZvciBCZXJsaW4gdXNpbmcgdGhlIGNvb3JkaW5hdGVzIHlvdSBwcm92aWRlZC4gSSdsbCBoYXZlIHRoYXQgZm9yIHlvdSBpbiBqdXN0IGEgbW9tZW50LiDwn4yk77iPXG5cbkxldCBtZSBjaGVjayB0aGUgY3VycmVudCB3ZWF0aGVyIGZvciBCZXJsaW4gdXNpbmcgdGhlIGNvb3JkaW5hdGVzIHlvdSBwcm92aWRlZC4gT25lIG1vbWVudCwgcGxlYXNlLiDwn4ykIn19XX0=
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 recorded_with: VCR 6.4.0

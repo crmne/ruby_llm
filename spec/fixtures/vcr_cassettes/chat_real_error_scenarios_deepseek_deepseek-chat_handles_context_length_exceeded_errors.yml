@@ -23,13 +23,13 @@ http_interactions:
       message: Bad Request
     headers:
       Content-Type:
-      - application/json
+      - application/octet-stream
       Content-Length:
-      - '294'
+      - '295'
       Connection:
       - keep-alive
       Date:
-      - Mon, 16 Mar 2026 19:11:09 GMT
+      - Wed, 06 May 2026 23:52:00 GMT
       Server:
       - elb
       Vary:
@@ -37,7 +37,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - c2edae947de88bf116eb793bd745f3ae
+      - b50ba7457c4715c4b64e21727fe791a9
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -45,15 +45,15 @@ http_interactions:
       X-Cache:
       - Error from cloudfront
       Via:
-      - 1.1 741f14d3698fa852a4fa5862133f97a4.cloudfront.net (CloudFront)
+      - 1.1 9d8f6ab0f40af181f480715564d5e94c.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - TXL52-P1
+      - LIS50-P2
       X-Amz-Cf-Id:
-      - JrFTeU0MbjZeiHia2DLLaLYWNOclAbpd5sq_h2Mi3CWA0Mv9ODuPcA==
+      - SVWpuFoMcL6QN9GQvM7NM1BerJsboCSalpV7uxpw7zNxwgeBt4aBzQ==
     body:
       encoding: UTF-8
-      string: '{"error":{"message":"This model''s maximum context length is 131072
+      string: '{"error":{"message":"This model''s maximum context length is 1048576
         tokens. However, you requested 1250025 tokens (1250025 in the messages, 0
         in the completion). Please reduce the length of the messages or completion.","type":"invalid_request_error","param":null,"code":"invalid_request_error"}}'
-  recorded_at: Mon, 16 Mar 2026 19:11:09 GMT
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 recorded_with: VCR 6.4.0

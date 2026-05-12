@@ -26,6 +26,8 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      X-Gemini-Service-Tier:
+      - standard
       Content-Type:
       - application/json; charset=UTF-8
       Vary:
@@ -33,7 +35,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 16 Mar 2026 19:21:07 GMT
+      - Thu, 07 May 2026 00:04:37 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -43,7 +45,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=3986
+      - gfet4t7; dur=3947
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -51,6 +53,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicGFydHMiOiBbCiAgICAgICAgICB7CiAgICAgICAgICAgICJ0ZXh0IjogIlRoZSB3ZWF0aGVyIGluIEJlcmxpbiwgR2VybWFueSAoYXMgb2YgbXkgbGFzdCB1cGRhdGUpIGlzOlxuXG4qICAgKipDdXJyZW50IFRlbXBlcmF0dXJlOioqIEFyb3VuZCAqKjE1wrBDICg1OcKwRikqKlxuKiAgICoqQ29uZGl0aW9uczoqKiAqKk1vc3RseSBDbG91ZHkqKlxuKiAgICoqRmVlbHMgTGlrZToqKiAxNMKwQyAoNTfCsEYpXG4qICAgKipXaW5kOioqIFdlc3Qtc291dGh3ZXN0IGF0IGFib3V0IDE1IGttL2hcbiogICAqKkh1bWlkaXR5OioqIEFwcHJveGltYXRlbHkgNzAlXG5cblRoZSBoaWdoIGZvciB0b2RheSBpcyBleHBlY3RlZCB0byBiZSBhcm91bmQgMTfCsEMgKDYzwrBGKSBhbmQgdGhlIGxvdyBhcm91bmQgMTDCsEMgKDUwwrBGKS4iCiAgICAgICAgICB9CiAgICAgICAgXSwKICAgICAgICAicm9sZSI6ICJtb2RlbCIKICAgICAgfSwKICAgICAgImZpbmlzaFJlYXNvbiI6ICJTVE9QIiwKICAgICAgImluZGV4IjogMAogICAgfQogIF0sCiAgInVzYWdlTWV0YWRhdGEiOiB7CiAgICAicHJvbXB0VG9rZW5Db3VudCI6IDEwMywKICAgICJjYW5kaWRhdGVzVG9rZW5Db3VudCI6IDEyNywKICAgICJ0b3RhbFRva2VuQ291bnQiOiA3OTIsCiAgICAicHJvbXB0VG9rZW5zRGV0YWlscyI6IFsKICAgICAgewogICAgICAgICJtb2RhbGl0eSI6ICJURVhUIiwKICAgICAgICAidG9rZW5Db3VudCI6IDEwMwogICAgICB9CiAgICBdLAogICAgInRob3VnaHRzVG9rZW5Db3VudCI6IDU2MgogIH0sCiAgIm1vZGVsVmVyc2lvbiI6ICJnZW1pbmktMi41LWZsYXNoIiwKICAicmVzcG9uc2VJZCI6ICJIMWk0YWNQbk9NcUFrZFVQdklHd3lBYyIKfQo=
-  recorded_at: Mon, 16 Mar 2026 19:21:07 GMT
+        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicGFydHMiOiBbCiAgICAgICAgICB7CiAgICAgICAgICAgICJ0ZXh0IjogIlRoZSB3ZWF0aGVyIGluIEJlcmxpbiAoNTIuNTIwMCwgMTMuNDA1MCkgaXMgY3VycmVudGx5ICoqcGFydGx5IGNsb3VkeSoqIHdpdGggYSB0ZW1wZXJhdHVyZSBvZiAqKjEywrBDICg1NMKwRikqKi5cblxuSGVyZSdzIGEgbW9yZSBkZXRhaWxlZCBicmVha2Rvd246XG4qICAgKipGZWVscyBsaWtlOioqIDEwwrBDICg1MMKwRilcbiogICAqKkhpZ2ggZm9yIHRvZGF5OioqIDE0wrBDICg1N8KwRilcbiogICAqKkxvdyBmb3IgdG9kYXk6KiogN8KwQyAoNDXCsEYpXG4qICAgKipXaW5kOioqIExpZ2h0IGJyZWV6ZSBmcm9tIHRoZSBXZXN0IGF0IGFib3V0IDEwIGttL2ggKDYgbXBoKVxuKiAgICoqSHVtaWRpdHk6KiogQXJvdW5kIDc1JVxuKiAgICoqUHJlY2lwaXRhdGlvbjoqKiBMb3cgY2hhbmNlIG9mIHJhaW4gdG9kYXkuXG5cbllvdSBjYW4gZXhwZWN0IHRoZSBwYXJ0bHkgY2xvdWR5IGNvbmRpdGlvbnMgdG8gY29udGludWUgdGhyb3VnaG91dCB0aGUgZGF5LiIKICAgICAgICAgIH0KICAgICAgICBdLAogICAgICAgICJyb2xlIjogIm1vZGVsIgogICAgICB9LAogICAgICAiZmluaXNoUmVhc29uIjogIlNUT1AiLAogICAgICAiaW5kZXgiOiAwCiAgICB9CiAgXSwKICAidXNhZ2VNZXRhZGF0YSI6IHsKICAgICJwcm9tcHRUb2tlbkNvdW50IjogMTAzLAogICAgImNhbmRpZGF0ZXNUb2tlbkNvdW50IjogMTcxLAogICAgInRvdGFsVG9rZW5Db3VudCI6IDczNCwKICAgICJwcm9tcHRUb2tlbnNEZXRhaWxzIjogWwogICAgICB7CiAgICAgICAgIm1vZGFsaXR5IjogIlRFWFQiLAogICAgICAgICJ0b2tlbkNvdW50IjogMTAzCiAgICAgIH0KICAgIF0sCiAgICAidGhvdWdodHNUb2tlbkNvdW50IjogNDYwLAogICAgInNlcnZpY2VUaWVyIjogInN0YW5kYXJkIgogIH0sCiAgIm1vZGVsVmVyc2lvbiI6ICJnZW1pbmktMi41LWZsYXNoIiwKICAicmVzcG9uc2VJZCI6ICJFZGY3YWZDa0tlaXluc0VQLXZxUzhBdyIKfQo=
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 recorded_with: VCR 6.4.0

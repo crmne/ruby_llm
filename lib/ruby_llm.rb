@@ -34,6 +34,7 @@ loader.inflector.inflect(
 )
 loader.ignore("#{__dir__}/tasks")
 loader.ignore("#{__dir__}/generators")
+loader.ignore("#{__dir__}/ruby_llm/active_record")
 loader.ignore("#{__dir__}/ruby_llm/railtie.rb")
 loader.setup
 
@@ -109,7 +110,4 @@ RubyLLM::Provider.register :perplexity, RubyLLM::Providers::Perplexity
 RubyLLM::Provider.register :vertexai, RubyLLM::Providers::VertexAI
 RubyLLM::Provider.register :xai, RubyLLM::Providers::XAI
 
-if defined?(Rails::Railtie)
-  require 'ruby_llm/railtie'
-  require 'ruby_llm/active_record/acts_as'
-end
+require 'ruby_llm/railtie' if defined?(Rails::Railtie)
