@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Date:
-      - Thu, 02 Apr 2026 11:24:45 GMT
-      Pragma:
-      - no-cache
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
+      Date:
+      - Wed, 06 May 2026 23:53:22 GMT
+      Pragma:
+      - no-cache
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -56,7 +56,7 @@ http_interactions:
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Thu, 02 Apr 2026 11:24:45 GMT
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -87,7 +87,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Thu, 02 Apr 2026 11:24:46 GMT
+      - Wed, 06 May 2026 23:53:24 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -115,13 +115,13 @@ http_interactions:
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.891416493584128
+              "avgLogprobs": -1.9743611952837776
             }
           ],
           "usageMetadata": {
             "promptTokenCount": 30,
             "candidatesTokenCount": 17,
-            "totalTokenCount": 84,
+            "totalTokenCount": 200,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -135,13 +135,13 @@ http_interactions:
                 "tokenCount": 17
               }
             ],
-            "thoughtsTokenCount": 37
+            "thoughtsTokenCount": 153
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-04-02T11:24:45.425053Z",
-          "responseId": "_VHOad34GYr8tfAPn7n0qQc"
+          "createTime": "2026-05-06T23:53:22.780304Z",
+          "responseId": "ctT7aZDQL-PlmLAPl7GUgAo"
         }
-  recorded_at: Thu, 02 Apr 2026 11:24:46 GMT
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -175,7 +175,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Thu, 02 Apr 2026 11:24:46 GMT
+      - Wed, 06 May 2026 23:53:25 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -198,18 +198,18 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "The file `ruby.xml` contains the XML text: `\u003ctruism\u003eRuby is the best\u003c/truism\u003e`"
+                    "text": "The file `ruby.xml` contains the XML: `\u003ctruism\u003eRuby is the best\u003c/truism\u003e`"
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.38281508286794025
+              "avgLogprobs": -0.33831561130026111
             }
           ],
           "usageMetadata": {
             "promptTokenCount": 81,
-            "candidatesTokenCount": 24,
-            "totalTokenCount": 138,
+            "candidatesTokenCount": 23,
+            "totalTokenCount": 129,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -220,14 +220,14 @@ http_interactions:
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 24
+                "tokenCount": 23
               }
             ],
-            "thoughtsTokenCount": 33
+            "thoughtsTokenCount": 25
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-04-02T11:24:46.298673Z",
-          "responseId": "_lHOabGdEteFtfAP6dG9iQk"
+          "createTime": "2026-05-06T23:53:24.178618Z",
+          "responseId": "dNT7abrzCpCgmPUPy9KiqQ4"
         }
-  recorded_at: Thu, 02 Apr 2026 11:24:46 GMT
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 recorded_with: VCR 6.4.0

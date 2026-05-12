@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Pragma:
-      - no-cache
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
+      Date:
+      - Thu, 07 May 2026 00:06:45 GMT
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
-      Date:
-      - Thu, 02 Apr 2026 11:39:51 GMT
+      Pragma:
+      - no-cache
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/sqlservice.login openid https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/cloud-platform",
+          "scope": "https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Thu, 02 Apr 2026 11:39:51 GMT
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -89,7 +89,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Thu, 02 Apr 2026 11:39:52 GMT
+      - Thu, 07 May 2026 00:06:46 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -115,22 +115,22 @@ http_interactions:
                     "functionCall": {
                       "name": "weather",
                       "args": {
-                        "latitude": "52.5200",
-                        "longitude": "13.4050"
+                        "longitude": "12.496422",
+                        "latitude": "41.9028"
                       }
                     },
-                    "thoughtSignature": "CvECAY89a1+AOlrnypXp6/VYXuSzf8LJSg+icKvUb8JiEKyaSlIaWEMPg/KBglJWHd7DxQrKyUcXCpMrKVW5B4f6fEbmC+L8JBA6F68vx9kfZIynrMPxHyy34zlMybckVPpHsR6CnRJeJFOVRLCeKi6a8WvuvOhoB9FhjTxcGTAuF7i+ZqSdaGr87cxmH7DdiINg+T8l7QDpRDIWYPYLwbgY++3+xRKZLts+IfKOb8YWF+QDgDGPgWUPoPZyJ1MclAOJpWozqiZqP+NCsVHLIw7RqaQyRe9tlLK06JY6Nb2+GoJIfwwzd3bP/8ek86bzFx7uTgd+OenFoYsXZv1cWHyFX0x2xG5U4Hk5BkMtNGM6+/oMHmxj3n0NMKnfocSgRcc1b5lEZIIerVC3iPXz6oQ7+q4mmz+oQyeiwB+bCU2kLLitPvJ3M1XQFsDJLl5hbbbpxDQbwl01vNkGCkkFv26P2W4SxeMfRv36OIHDwgwyJtVP"
+                    "thoughtSignature": "CqQCAY89a1+QlLBgA/2iVZ+lqsBV0C6lKzL1qCjpQIQjzckl+9kbpS+P3QiYQHXHjgmbvkBZb4PLY58KMOyU1SGe+Gg7PQ3Y7ufNo2MvBSpn9JWyB7rcbQqGYzaOwl1z4mz32CeUteR3rIW3RE6zamjyzaGVWXzzCzbp0Kbd73aEwuQB2iauql8BmlVYgtcijRsXf88Ofe6NsORfY1swSM39KjPkvcY024h4ybGJortfe3d9ssfHvTgitD5aiY04hxLLsT+8arya7JdUfMyCV6/D/zFvRbFaKtd8DAq5/RwkyEnexPUSJ4sS3FrM3dDdkyiOQqpCdnHods4bdzqTUET8/+0r1F3osW1PlOlD+kFr55hawHFcn9bD4KauRqli4lSinuaVQA=="
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.6974826700547162
+              "avgLogprobs": -0.65469862285413238
             }
           ],
           "usageMetadata": {
             "promptTokenCount": 52,
-            "candidatesTokenCount": 17,
-            "totalTokenCount": 131,
+            "candidatesTokenCount": 19,
+            "totalTokenCount": 120,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -141,23 +141,23 @@ http_interactions:
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 17
+                "tokenCount": 19
               }
             ],
-            "thoughtsTokenCount": 62
+            "thoughtsTokenCount": 49
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-04-02T11:39:51.866310Z",
-          "responseId": "h1XOaYbwNL-B6dgPs4H1mQc"
+          "createTime": "2026-05-07T00:06:45.266171Z",
+          "responseId": "ldf7abufENjQxN8P0ZCzoAw"
         }
-  recorded_at: Thu, 02 Apr 2026 11:39:52 GMT
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
-      string: '{"contents":[{"role":"user","parts":[{"text":"What''s the fall of Rome?"}]},{"role":"model","parts":[{"functionCall":{"name":"weather","args":{"latitude":"52.5200","longitude":"13.4050"}},"thoughtSignature":"CvECAY89a1+AOlrnypXp6/VYXuSzf8LJSg+icKvUb8JiEKyaSlIaWEMPg/KBglJWHd7DxQrKyUcXCpMrKVW5B4f6fEbmC+L8JBA6F68vx9kfZIynrMPxHyy34zlMybckVPpHsR6CnRJeJFOVRLCeKi6a8WvuvOhoB9FhjTxcGTAuF7i+ZqSdaGr87cxmH7DdiINg+T8l7QDpRDIWYPYLwbgY++3+xRKZLts+IfKOb8YWF+QDgDGPgWUPoPZyJ1MclAOJpWozqiZqP+NCsVHLIw7RqaQyRe9tlLK06JY6Nb2+GoJIfwwzd3bP/8ek86bzFx7uTgd+OenFoYsXZv1cWHyFX0x2xG5U4Hk5BkMtNGM6+/oMHmxj3n0NMKnfocSgRcc1b5lEZIIerVC3iPXz6oQ7+q4mmz+oQyeiwB+bCU2kLLitPvJ3M1XQFsDJLl5hbbbpxDQbwl01vNkGCkkFv26P2W4SxeMfRv36OIHDwgwyJtVP"}]},{"role":"function","parts":[{"functionResponse":{"name":"weather","response":{"name":"weather","content":[{"text":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"weather","description":"Gets
+      string: '{"contents":[{"role":"user","parts":[{"text":"What''s the fall of Rome?"}]},{"role":"model","parts":[{"functionCall":{"name":"weather","args":{"longitude":"12.496422","latitude":"41.9028"}},"thoughtSignature":"CqQCAY89a1+QlLBgA/2iVZ+lqsBV0C6lKzL1qCjpQIQjzckl+9kbpS+P3QiYQHXHjgmbvkBZb4PLY58KMOyU1SGe+Gg7PQ3Y7ufNo2MvBSpn9JWyB7rcbQqGYzaOwl1z4mz32CeUteR3rIW3RE6zamjyzaGVWXzzCzbp0Kbd73aEwuQB2iauql8BmlVYgtcijRsXf88Ofe6NsORfY1swSM39KjPkvcY024h4ybGJortfe3d9ssfHvTgitD5aiY04hxLLsT+8arya7JdUfMyCV6/D/zFvRbFaKtd8DAq5/RwkyEnexPUSJ4sS3FrM3dDdkyiOQqpCdnHods4bdzqTUET8/+0r1F3osW1PlOlD+kFr55hawHFcn9bD4KauRqli4lSinuaVQA=="}]},{"role":"function","parts":[{"functionResponse":{"name":"weather","response":{"name":"weather","content":[{"text":"Current
+        weather at 41.9028, 12.496422: 15°C, Wind: 10 km/h"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"OBJECT","properties":{"latitude":{"type":"STRING","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"STRING","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"]}}]}]}'
@@ -184,7 +184,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Thu, 02 Apr 2026 11:39:53 GMT
+      - Thu, 07 May 2026 00:06:48 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -207,35 +207,35 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "I'm sorry, I cannot answer questions about historical events like the fall of Rome. My capabilities are limited to providing current weather information."
+                    "text": "The fall of Rome is a complex historical event with many contributing factors, including economic problems, political instability, overexpansion, and barbarian invasions. Historians generally mark the end of the Western Roman Empire in 476 CE when the last Western Roman Emperor, Romulus Augustulus, was deposed by the Germanic chieftain Odoacer. However, the Eastern Roman (Byzantine) Empire continued for another thousand years.\n\nWhat aspects of the fall of Rome are you most interested in? For example, are you curious about:\n*   The key dates and events?\n*   The primary causes?\n*   The consequences and legacy?\n*   Specific figures involved?"
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.31854186739240375
+              "avgLogprobs": -0.26614938062780041
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 171,
-            "candidatesTokenCount": 28,
-            "totalTokenCount": 199,
+            "promptTokenCount": 162,
+            "candidatesTokenCount": 136,
+            "totalTokenCount": 298,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 171
+                "tokenCount": 162
               }
             ],
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 28
+                "tokenCount": 136
               }
             ]
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-04-02T11:39:52.991068Z",
-          "responseId": "iFXOady-PL-B6dgPs4H1mQc"
+          "createTime": "2026-05-07T00:06:47.195909Z",
+          "responseId": "l9f7acX6C4GBhcIPu4evuQI"
         }
-  recorded_at: Thu, 02 Apr 2026 11:39:53 GMT
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 recorded_with: VCR 6.4.0

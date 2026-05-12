@@ -50,56 +50,33 @@ module RubyLLM
       provider_instance.paint(prompt, model: model_id, size:, with:, mask:, params:)
     end
 
-    def total_cost
-      input_cost + output_cost
+    def tokens
+      @tokens ||= Tokens.build(
+        input: usage_value('input_tokens'),
+        output: usage_value('output_tokens')
+      )
     end
 
-    def input_cost
-      return flat_input_cost unless detailed_input_usage?
-
-      text_input_cost + image_input_cost
-    end
-
-    def output_cost
-      tokens_for('output_tokens') * output_token_price.to_f / 1_000_000
+    def cost
+      Cost.new(tokens:, model: model_info, category: :images, input_details: input_tokens_details)
     end
 
     def model_info
+      return unless model_id
+
       @model_info ||= RubyLLM.models.find(model_id)
+    rescue ModelNotFoundError
+      nil
     end
 
     private
 
-    def flat_input_cost
-      tokens_for('input_tokens') * model_info.input_price_per_million.to_f / 1_000_000
+    def input_tokens_details
+      usage_value('input_tokens_details')
     end
 
-    def text_input_cost
-      input_detail('text_tokens') * model_info.input_price_per_million.to_f / 1_000_000
-    end
-
-    def image_input_cost
-      input_detail('image_tokens') * image_input_token_price.to_f / 1_000_000
-    end
-
-    def output_token_price
-      model_info.pricing.images.output || model_info.output_price_per_million
-    end
-
-    def image_input_token_price
-      model_info.pricing.images.input || model_info.input_price_per_million
-    end
-
-    def detailed_input_usage?
-      usage['input_tokens_details'].is_a?(Hash)
-    end
-
-    def input_detail(key)
-      usage.dig('input_tokens_details', key).to_i
-    end
-
-    def tokens_for(key)
-      usage[key].to_i
+    def usage_value(key)
+      usage[key] || usage[key.to_sym]
     end
   end
 end
