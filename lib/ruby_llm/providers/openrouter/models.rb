@@ -23,7 +23,7 @@ module RubyLLM
             pricing_types = {
               prompt: :input_per_million,
               completion: :output_per_million,
-              input_cache_read: :cached_input_per_million,
+              input_cache_read: :cache_read_input_per_million,
               internal_reasoning: :reasoning_output_per_million
             }
 

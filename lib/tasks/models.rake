@@ -329,22 +329,23 @@ end
 
 def standard_pricing_display(model)
   pricing_data = model.pricing.to_h[:text_tokens]&.dig(:standard) || {}
+  parts = [
+    pricing_part(pricing_data, :input_per_million, 'In'),
+    pricing_part(pricing_data, :output_per_million, 'Out'),
+    pricing_part(pricing_data, %i[cache_read_input_per_million cached_input_per_million], 'Cache Read'),
+    pricing_part(pricing_data, %i[cache_write_input_per_million cache_creation_input_per_million], 'Cache Write')
+  ].compact
 
-  if pricing_data.any?
-    parts = []
-
-    parts << "In: $#{format('%.2f', pricing_data[:input_per_million])}" if pricing_data[:input_per_million]
-
-    parts << "Out: $#{format('%.2f', pricing_data[:output_per_million])}" if pricing_data[:output_per_million]
-
-    if pricing_data[:cached_input_per_million]
-      parts << "Cache: $#{format('%.2f', pricing_data[:cached_input_per_million])}"
-    end
-
-    return parts.join(', ') if parts.any?
-  end
+  return parts.join(', ') if parts.any?
 
   '-'
+end
+
+def pricing_part(pricing_data, key, label)
+  key = Array(key).find { |candidate| pricing_data[candidate] }
+  return unless key
+
+  "#{label}: $#{format('%.2f', pricing_data[key])}"
 end
 
 def generate_aliases # rubocop:disable Metrics/PerceivedComplexity
