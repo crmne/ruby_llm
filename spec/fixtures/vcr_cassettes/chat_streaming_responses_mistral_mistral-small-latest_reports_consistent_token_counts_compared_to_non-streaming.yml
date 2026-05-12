@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 02 Apr 2026 11:23:11 GMT
+      - Wed, 06 May 2026 23:51:35 GMT
       Content-Type:
       - text/event-stream; charset=utf-8
       Transfer-Encoding:
@@ -32,28 +32,28 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '019d4dee-d032-768d-80ac-6ee52a05df13'
+      - '019dffb4-3c03-7f6d-b27c-d0823e14bdc0'
       X-Kong-Request-Id:
-      - '019d4dee-d032-768d-80ac-6ee52a05df13'
+      - '019dffb4-3c03-7f6d-b27c-d0823e14bdc0'
       X-Envoy-Upstream-Service-Time:
-      - '1438'
+      - '147'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '1439'
+      - '148'
       X-Kong-Proxy-Latency:
-      - '13'
-      Cf-Cache-Status:
-      - DYNAMIC
+      - '21'
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
+      Cf-Cache-Status:
+      - DYNAMIC
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
@@ -61,17 +61,17 @@ http_interactions:
     body:
       encoding: UTF-8
       string: |+
-        data: {"id":"5b8a87a3468c406db8cfcab44bc99f45","object":"chat.completion.chunk","created":1775128989,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null}]}
+        data: {"id":"4fd574744b884abd87a3079ea560a458","object":"chat.completion.chunk","created":1778111495,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null}]}
 
-        data: {"id":"5b8a87a3468c406db8cfcab44bc99f45","object":"chat.completion.chunk","created":1775128989,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":"1"},"finish_reason":null}],"p":"abcdefghijklmno"}
+        data: {"id":"4fd574744b884abd87a3079ea560a458","object":"chat.completion.chunk","created":1778111495,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":"1"},"finish_reason":null}],"p":"abcdefghijklmnopqrstuv"}
 
-        data: {"id":"5b8a87a3468c406db8cfcab44bc99f45","object":"chat.completion.chunk","created":1775128989,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":", 2,"},"finish_reason":null}],"p":"abcd"}
+        data: {"id":"4fd574744b884abd87a3079ea560a458","object":"chat.completion.chunk","created":1778111495,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":", 2,"},"finish_reason":null}],"p":"abcdefgh"}
 
-        data: {"id":"5b8a87a3468c406db8cfcab44bc99f45","object":"chat.completion.chunk","created":1775128989,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":" 3"},"finish_reason":"stop"}],"usage":{"prompt_tokens":22,"total_tokens":30,"completion_tokens":8,"prompt_tokens_details":{"cached_tokens":0}},"p":"abcdefghijklmnopqrst"}
+        data: {"id":"4fd574744b884abd87a3079ea560a458","object":"chat.completion.chunk","created":1778111495,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":" 3"},"finish_reason":"stop"}],"usage":{"prompt_tokens":22,"total_tokens":30,"completion_tokens":8,"prompt_tokens_details":{"cached_tokens":0}},"p":"abcdefghijklmnopqrstuvwxyz01234"}
 
         data: [DONE]
 
-  recorded_at: Thu, 02 Apr 2026 11:23:11 GMT
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 - request:
     method: post
     uri: https://api.mistral.ai/v1/chat/completions
@@ -96,7 +96,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 02 Apr 2026 11:23:11 GMT
+      - Wed, 06 May 2026 23:51:35 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -104,46 +104,46 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '019d4dee-d63d-7e36-917e-ea6d3a5d8a6f'
+      - '019dffb4-3d4c-789d-bb30-9c680a7b9b37'
       X-Kong-Request-Id:
-      - '019d4dee-d63d-7e36-917e-ea6d3a5d8a6f'
+      - '019dffb4-3d4c-789d-bb30-9c680a7b9b37'
       X-Ratelimit-Limit-Tokens-Minute:
-      - '600000'
+      - '2000000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '599461'
+      - '1999910'
       X-Ratelimit-Tokens-Query-Cost:
       - '30'
       X-Ratelimit-Limit-Req-Minute:
-      - '360'
+      - '1500'
       X-Ratelimit-Remaining-Req-Minute:
-      - '352'
+      - '1497'
       X-Envoy-Upstream-Service-Time:
-      - '285'
+      - '191'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '285'
+      - '192'
       X-Kong-Proxy-Latency:
-      - '12'
-      Cf-Cache-Status:
-      - DYNAMIC
+      - '19'
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
+      Cf-Cache-Status:
+      - DYNAMIC
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"cde04b6f43434134bd1836aaab3177ce","created":1775128991,"model":"mistral-small-latest","usage":{"prompt_tokens":22,"total_tokens":30,"completion_tokens":8,"prompt_tokens_details":{"cached_tokens":0}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"1,
+      string: '{"id":"f03c0fd4755f4bc1851442c9d866cd90","created":1778111495,"model":"mistral-small-latest","usage":{"prompt_tokens":22,"total_tokens":30,"completion_tokens":8,"prompt_tokens_details":{"cached_tokens":0}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"1,
         2, 3"}}]}'
-  recorded_at: Thu, 02 Apr 2026 11:23:11 GMT
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 recorded_with: VCR 6.4.0
 ...

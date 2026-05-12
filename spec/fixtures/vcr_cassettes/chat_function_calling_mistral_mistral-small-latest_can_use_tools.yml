@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 02 Apr 2026 11:23:02 GMT
+      - Wed, 06 May 2026 23:51:40 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -35,55 +35,55 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '019d4dee-b3e0-7063-8e3b-8d1ff10120ef'
+      - '019dffb4-4e7e-76fd-943d-dce93ca88d63'
       X-Kong-Request-Id:
-      - '019d4dee-b3e0-7063-8e3b-8d1ff10120ef'
+      - '019dffb4-4e7e-76fd-943d-dce93ca88d63'
       X-Ratelimit-Limit-Tokens-Minute:
-      - '600000'
+      - '2000000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '599813'
+      - '1999723'
       X-Ratelimit-Tokens-Query-Cost:
       - '187'
       X-Ratelimit-Limit-Req-Minute:
-      - '360'
+      - '1500'
       X-Ratelimit-Remaining-Req-Minute:
-      - '356'
+      - '1496'
       X-Envoy-Upstream-Service-Time:
-      - '427'
+      - '292'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '428'
+      - '293'
       X-Kong-Proxy-Latency:
-      - '11'
-      Cf-Cache-Status:
-      - DYNAMIC
+      - '15'
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
+      Cf-Cache-Status:
+      - DYNAMIC
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"e8a865cbbf504f0cb114ef1ae7933713","created":1775128982,"model":"mistral-small-latest","usage":{"prompt_tokens":159,"total_tokens":187,"completion_tokens":28,"prompt_tokens_details":{"cached_tokens":0}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"tool_calls","message":{"role":"assistant","tool_calls":[{"id":"70Q49pwP9","function":{"name":"weather","arguments":"{\"latitude\":
+      string: '{"id":"b9bc44bcca584660bb35cd3a61b4d9ca","created":1778111499,"model":"mistral-small-latest","usage":{"prompt_tokens":159,"total_tokens":187,"completion_tokens":28,"prompt_tokens_details":{"cached_tokens":0}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"tool_calls","message":{"role":"assistant","tool_calls":[{"id":"V9NuFeD5G","function":{"name":"weather","arguments":"{\"latitude\":
         \"52.5200\", \"longitude\": \"13.4050\"}"},"index":0}],"content":""}}]}'
-  recorded_at: Thu, 02 Apr 2026 11:23:02 GMT
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 - request:
     method: post
     uri: https://api.mistral.ai/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"mistral-small-latest","messages":[{"role":"user","content":"What''s
-        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"70Q49pwP9","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"70Q49pwP9"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"V9NuFeD5G","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"V9NuFeD5G"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
@@ -104,7 +104,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 02 Apr 2026 11:23:03 GMT
+      - Wed, 06 May 2026 23:51:40 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -112,38 +112,38 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '019d4dee-b5d5-7fb6-a18a-4614a299e590'
+      - '019dffb4-5067-70cc-bd48-6a550bc3eb93'
       X-Kong-Request-Id:
-      - '019d4dee-b5d5-7fb6-a18a-4614a299e590'
+      - '019dffb4-5067-70cc-bd48-6a550bc3eb93'
       X-Ratelimit-Limit-Tokens-Minute:
-      - '600000'
+      - '2000000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '599551'
+      - '1999460'
       X-Ratelimit-Tokens-Query-Cost:
-      - '262'
+      - '263'
       X-Ratelimit-Limit-Req-Minute:
-      - '360'
+      - '1500'
       X-Ratelimit-Remaining-Req-Minute:
-      - '355'
+      - '1495'
       X-Envoy-Upstream-Service-Time:
-      - '377'
+      - '340'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '378'
+      - '341'
       X-Kong-Proxy-Latency:
-      - '9'
-      Cf-Cache-Status:
-      - DYNAMIC
+      - '12'
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
+      Cf-Cache-Status:
+      - DYNAMIC
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
@@ -151,6 +151,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6IjA0ZGFjZmJjOGU0OTQ1OTA4YjllY2FkMDQxZTdlOTI3IiwiY3JlYXRlZCI6MTc3NTEyODk4MywibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsInVzYWdlIjp7InByb21wdF90b2tlbnMiOjIyMiwidG90YWxfdG9rZW5zIjoyNjIsImNvbXBsZXRpb25fdG9rZW5zIjo0MCwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjB9fSwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImZpbmlzaF9yZWFzb24iOiJzdG9wIiwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwidG9vbF9jYWxscyI6bnVsbCwiY29udGVudCI6IlRoZSBjdXJyZW50IHdlYXRoZXIgaW4gQmVybGluICg1Mi41MjAwLCAxMy40MDUwKSBpcyAxNcKwQyB3aXRoIGEgd2luZCBzcGVlZCBvZiAxMCBrbS9oLiJ9fV19
-  recorded_at: Thu, 02 Apr 2026 11:23:03 GMT
+        eyJpZCI6ImM0MmE0OWQ2MThlYzQ4YWRiMThlNGQyMTFlYjRiOWJjIiwiY3JlYXRlZCI6MTc3ODExMTUwMCwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsInVzYWdlIjp7InByb21wdF90b2tlbnMiOjIyMiwidG90YWxfdG9rZW5zIjoyNjMsImNvbXBsZXRpb25fdG9rZW5zIjo0MSwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjB9fSwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImZpbmlzaF9yZWFzb24iOiJzdG9wIiwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwidG9vbF9jYWxscyI6bnVsbCwiY29udGVudCI6IlRoZSBjdXJyZW50IHdlYXRoZXIgaW4gQmVybGluICg1Mi41MjAwLCAxMy40MDUwKSBpcyAqKjE1wrBDKiogd2l0aCBhIHdpbmQgc3BlZWQgb2YgKioxMCBrbS9oKiouIn19XX0=
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 recorded_with: VCR 6.4.0

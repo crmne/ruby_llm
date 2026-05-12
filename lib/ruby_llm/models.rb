@@ -356,7 +356,8 @@ module RubyLLM
         text_standard = {
           input_per_million: cost[:input],
           output_per_million: cost[:output],
-          cached_input_per_million: cost[:cache_read],
+          cache_read_input_per_million: cost[:cache_read],
+          cache_write_input_per_million: cost[:cache_write],
           reasoning_output_per_million: cost[:reasoning]
         }.compact
 
