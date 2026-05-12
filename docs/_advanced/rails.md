@@ -249,6 +249,8 @@ class Message < ApplicationRecord
 end
 ```
 
+This `:attachments` association is only required on RubyLLM message records. The ActiveStorage attachments you pass to `with:` from your own models can use any name.
+
 ### Working with Raw Provider Payloads, Anthropic Prompt Caching
 {: .d-inline-block }
 
@@ -329,12 +331,11 @@ Available in v1.7.0+
 ```ruby
 # app/models/chat.rb
 class Chat < ApplicationRecord
-  # New API style - uses association names as primary parameters
+  # New API style - uses Rails association names as primary parameters
   acts_as_chat # Defaults: messages: :messages, model: :model
 
   # Or with custom associations:
   # acts_as_chat messages: :chat_messages,
-  #              message_class: 'ChatMessage',  # Only needed if class can't be inferred
   #              model: :ai_model
 
   belongs_to :user, optional: true
@@ -342,12 +343,11 @@ end
 
 # app/models/message.rb
 class Message < ApplicationRecord
-  # New API style - uses association names
+  # New API style - uses Rails association names
   acts_as_message # Defaults: chat: :chat, tool_calls: :tool_calls, model: :model
 
   # Or with custom associations:
   # acts_as_message chat: :conversation,
-  #                 chat_class: 'Conversation',  # Only needed if class can't be inferred
   #                 tool_calls: :function_calls
 
   # Note: Do NOT add "validates :content, presence: true"
@@ -380,8 +380,7 @@ Pre-1.7.0 or opt-in
 class Chat < ApplicationRecord
   # Legacy API style - requires explicit class names
   acts_as_chat message_class: 'Message',
-               tool_call_class: 'ToolCall',
-               model_class: 'Model'  # Ignored in legacy mode
+               tool_call_class: 'ToolCall'
 end
 
 # app/models/message.rb
@@ -389,8 +388,7 @@ class Message < ApplicationRecord
   # Legacy API style - all class names and foreign keys explicit
   acts_as_message chat_class: 'Chat',
                   chat_foreign_key: 'chat_id',
-                  tool_call_class: 'ToolCall',
-                  model_class: 'Model'  # Ignored in legacy mode
+                  tool_call_class: 'ToolCall'
 end
 
 # app/models/tool_call.rb
@@ -539,6 +537,31 @@ chat_record.ask "Tell me more about that city"
 puts "Conversation length: #{chat_record.messages.count}" # => 4
 ```
 
+### Token Usage and Costs
+{: .d-inline-block }
+
+v1.15+
+{: .label .label-green }
+
+Persisted chats and messages expose the same normalized token and cost helpers as regular RubyLLM objects:
+
+```ruby
+message = chat_record.messages.last
+
+message.tokens.input       # Standard input tokens
+message.tokens.output      # Billable output tokens
+message.tokens.cache_read  # Prompt cache reads
+message.tokens.cache_write # Prompt cache writes
+
+message.cost.total
+message.cost.thinking # When the model has distinct reasoning-token pricing
+chat_record.cost.total
+```
+
+`cache_read_tokens` and `cache_write_tokens` are aliases for the existing v1.9 `cached_tokens` and `cache_creation_tokens` columns, so apps that already ran the v1.9 migration do not need another migration for these names.
+
+RubyLLM normalizes provider-specific cache accounting before persisting token counts. See [Tracking Token Usage]({% link _core_features/chat.md %}#tracking-token-usage) for the provider comparison table.
+
 ### Database Model Registry
 {: .d-inline-block }
 
@@ -646,7 +669,8 @@ chat_record.ask("What are in these files?", with: [
 chat_record.ask("Analyze this file", with: params[:uploaded_file])
 
 # Works with existing ActiveStorage attachments
-chat_record.ask("What's in this document?", with: user.profile_document)
+chat_record.ask("What's in this document?", with: user.profile_document) # has_one_attached
+chat_record.ask("Compare these documents", with: project.documents)      # has_many_attached
 ```
 
 File types are automatically detected from extensions or MIME types.
@@ -727,8 +751,10 @@ class Chat < ApplicationRecord
     @message.assign_attributes(
       content: message.content,
       model: Model.find_by(model_id: message.model_id),
-      input_tokens: message.input_tokens,
-      output_tokens: message.output_tokens
+      input_tokens: message.tokens.input,
+      output_tokens: message.tokens.output,
+      cached_tokens: message.tokens.cache_read,
+      cache_creation_tokens: message.tokens.cache_write
     )
 
     @message.save!
@@ -986,9 +1012,7 @@ Available in v1.7.0+
 # app/models/conversation.rb (instead of Chat)
 class Conversation < ApplicationRecord
   acts_as_chat messages: :chat_messages,  # Association name
-               message_class: 'ChatMessage',  # Optional if inferrable
-               model: :ai_model,
-               model_class: 'AiModel'  # Optional if inferrable
+               model: :ai_model
 
   belongs_to :user, optional: true
 end
@@ -996,25 +1020,23 @@ end
 # app/models/chat_message.rb (instead of Message)
 class ChatMessage < ApplicationRecord
   acts_as_message chat: :conversation,  # Association name
-                  chat_class: 'Conversation',  # Optional if inferrable
                   tool_calls: :ai_tool_calls,
-                  tool_call_class: 'AIToolCall',  # Required for non-standard naming
                   model: :ai_model
 end
 
 # app/models/ai_tool_call.rb (instead of ToolCall)
-class AIToolCall < ApplicationRecord
+class AiToolCall < ApplicationRecord
   acts_as_tool_call message: :chat_message,
-                    message_class: 'ChatMessage',  # Optional if inferrable
                     result: :result
 end
 
 # app/models/ai_model.rb (instead of Model)
 class AiModel < ApplicationRecord
-  acts_as_model chats: :conversations,
-                chat_class: 'Conversation'  # Optional if inferrable
+  acts_as_model chats: :conversations
 end
 ```
+
+The new API follows Rails association inference: the association name determines the default foreign key, and the `*_class` options only change the class name. For example, `tool_calls: :ai_tool_calls` uses `ai_tool_call_id`, while `tool_call_class: 'AiToolCall'` by itself still uses `tool_call_id`.
 
 #### Namespaced Models Example
 
@@ -1033,8 +1055,28 @@ end
 module Admin
   class BotMessage < ApplicationRecord
     acts_as_message chat: :bot_chat,
-                    chat_class: 'Admin::BotChat'  # Required for namespace
+                    chat_class: 'Admin::BotChat',
+                    tool_calls: :bot_tool_calls,
+                    tool_call_class: 'Admin::BotToolCall'
   end
+end
+
+# app/models/admin/bot_tool_call.rb
+module Admin
+  class BotToolCall < ApplicationRecord
+    acts_as_tool_call message: :bot_message,
+                      message_class: 'Admin::BotMessage'
+  end
+end
+```
+
+If you choose prefixed association names such as `llm_tool_calls`, configure the reverse association the same way you would in Rails:
+
+```ruby
+class Llm::ToolCall < ApplicationRecord
+  acts_as_tool_call message: :llm_message,
+                    message_class: 'Llm::Message',
+                    result_foreign_key: :llm_tool_call_id
 end
 ```
 
@@ -1048,18 +1090,18 @@ Pre-1.7.0 or opt-in
 # app/models/conversation.rb
 class Conversation < ApplicationRecord
   acts_as_chat message_class: 'ChatMessage',
-               tool_call_class: 'AIToolCall'
+               tool_call_class: 'AiToolCall'
 end
 
 # app/models/chat_message.rb
 class ChatMessage < ApplicationRecord
   acts_as_message chat_class: 'Conversation',
                   chat_foreign_key: 'conversation_id',
-                  tool_call_class: 'AIToolCall'
+                  tool_call_class: 'AiToolCall'
 end
 
 # app/models/ai_tool_call.rb
-class AIToolCall < ApplicationRecord
+class AiToolCall < ApplicationRecord
   acts_as_tool_call message_class: 'ChatMessage',
                     message_foreign_key: 'chat_message_id'
 end

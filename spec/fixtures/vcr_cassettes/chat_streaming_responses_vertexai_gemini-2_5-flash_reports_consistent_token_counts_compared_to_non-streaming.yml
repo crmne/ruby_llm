@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Pragma:
-      - no-cache
+      Date:
+      - Thu, 07 May 2026 00:17:05 GMT
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
-      Date:
-      - Thu, 02 Apr 2026 11:23:30 GMT
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
+      Pragma:
+      - no-cache
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/sqlservice.login openid",
+          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/cloud-platform",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Thu, 02 Apr 2026 11:23:30 GMT
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:streamGenerateContent?alt=sse
@@ -90,7 +90,7 @@ http_interactions:
       Transfer-Encoding:
       - chunked
       Date:
-      - Thu, 02 Apr 2026 11:23:31 GMT
+      - Thu, 07 May 2026 00:17:06 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -109,9 +109,9 @@ http_interactions:
         33,\"trafficType\": \"ON_DEMAND\",\"promptTokensDetails\": [{\"modality\":
         \"TEXT\",\"tokenCount\": 7}],\"candidatesTokensDetails\": [{\"modality\":
         \"TEXT\",\"tokenCount\": 5}],\"thoughtsTokenCount\": 21},\"modelVersion\":
-        \"gemini-2.5-flash\",\"createTime\": \"2026-04-02T11:23:30.770239Z\",\"responseId\":
-        \"slHOab-BL4rv2fMP16PU8Q4\"}\r\n\r\n"
-  recorded_at: Thu, 02 Apr 2026 11:23:31 GMT
+        \"gemini-2.5-flash\",\"createTime\": \"2026-05-07T00:17:05.839737Z\",\"responseId\":
+        \"Adr7abmgM5rltfAPk9Xu-Ao\"}\r\n\r\n"
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 - request:
     method: post
     uri: https://oauth2.googleapis.com/token
@@ -139,7 +139,7 @@ http_interactions:
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
       Date:
-      - Thu, 02 Apr 2026 11:23:32 GMT
+      - Thu, 07 May 2026 00:17:07 GMT
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -164,11 +164,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login",
+          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/cloud-platform",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Thu, 02 Apr 2026 11:23:32 GMT
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -198,7 +198,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Thu, 02 Apr 2026 11:23:33 GMT
+      - Thu, 07 May 2026 00:17:08 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -249,8 +249,8 @@ http_interactions:
             "thoughtsTokenCount": 21
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-04-02T11:23:32.764049Z",
-          "responseId": "tFHOaZHRLvj12fMP37G9qQ0"
+          "createTime": "2026-05-07T00:17:08.085894Z",
+          "responseId": "BNr7aYafBcPJhcIP_oiG-A0"
         }
-  recorded_at: Thu, 02 Apr 2026 11:23:33 GMT
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 recorded_with: VCR 6.4.0

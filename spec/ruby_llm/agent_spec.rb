@@ -127,6 +127,34 @@ RSpec.describe RubyLLM::Agent do
     expect(agent.messages.last.content).to eq('First')
   end
 
+  it 'exposes cost like RubyLLM::Chat' do
+    model = RubyLLM::Model::Info.new(
+      id: 'priced-model',
+      name: 'Priced Model',
+      provider: 'openai',
+      pricing: {
+        text_tokens: {
+          standard: {
+            input_per_million: 1.0,
+            output_per_million: 2.0
+          }
+        }
+      }
+    )
+    allow(RubyLLM.models).to receive(:find).and_call_original
+    allow(RubyLLM.models).to receive(:find).with('priced-model').and_return(model)
+
+    agent_class = Class.new(RubyLLM::Agent) do
+      model 'gpt-4.1-nano'
+    end
+    agent = agent_class.new
+
+    agent.add_message(role: :assistant, content: 'Hi', input_tokens: 1_000, output_tokens: 2_000,
+                      model_id: 'priced-model')
+
+    expect(agent.cost.total).to eq(0.005)
+  end
+
   it 'delegates callback hooks to the underlying chat' do
     fake_chat = Class.new do
       attr_reader :events
@@ -154,6 +182,26 @@ RSpec.describe RubyLLM::Agent do
         @events << :tool_result
         self
       end
+
+      def before_message(&)
+        @events << :before_message
+        self
+      end
+
+      def after_message(&)
+        @events << :after_message
+        self
+      end
+
+      def before_tool_call(&)
+        @events << :before_tool_call
+        self
+      end
+
+      def after_tool_result(&)
+        @events << :after_tool_result
+        self
+      end
     end.new
 
     agent = Class.new(described_class).new(chat: fake_chat)
@@ -162,7 +210,20 @@ RSpec.describe RubyLLM::Agent do
     expect(agent.on_end_message { :ok }).to eq(fake_chat)
     expect(agent.on_tool_call { :ok }).to eq(fake_chat)
     expect(agent.on_tool_result { :ok }).to eq(fake_chat)
-    expect(fake_chat.events).to eq(%i[new_message end_message tool_call tool_result])
+    expect(agent.before_message { :ok }).to eq(fake_chat)
+    expect(agent.after_message { :ok }).to eq(fake_chat)
+    expect(agent.before_tool_call { :ok }).to eq(fake_chat)
+    expect(agent.after_tool_result { :ok }).to eq(fake_chat)
+    expect(fake_chat.events).to eq(%i[
+                                     new_message
+                                     end_message
+                                     tool_call
+                                     tool_result
+                                     before_message
+                                     after_message
+                                     before_tool_call
+                                     after_tool_result
+                                   ])
   end
 
   it 'supports Enumerable by delegating each to chat' do

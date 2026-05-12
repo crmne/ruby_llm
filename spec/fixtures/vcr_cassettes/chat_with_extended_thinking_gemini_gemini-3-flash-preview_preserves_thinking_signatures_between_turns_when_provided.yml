@@ -31,7 +31,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Thu, 02 Apr 2026 11:31:54 GMT
+      - Wed, 06 May 2026 23:54:18 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -41,7 +41,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=1524
+      - gfet4t7; dur=1557
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -55,12 +55,12 @@ http_interactions:
               "content": {
                 "parts": [
                   {
-                    "text": "Here's my thought process, distilled:\n\n**The Math Problem**\n\nOkay, the task is straightforward. The user has presented a simple arithmetic problem. It appears they want the sum of two numbers, specifically 5 and 3. My expertise screams, \"Addition!\" I instantly process the operation: 5 + 3 = 8. That's the answer. Done.\n\n\n",
+                    "text": "Here's my thought process, distilled:\n\n**Calculating a Simple Sum**\n\nOkay, the user wants the sum of 5 and 3. That's straightforward. I'll just use the standard addition operation: 5 + 3. The answer is obviously 8. Done.\n\n\n",
                     "thought": true
                   },
                   {
                     "text": "5 + 3 = 8",
-                    "thoughtSignature": "EoMBCoABAb4+9vsVJFQTmlfRlr75S1eNAlGrPqqdmNtxSUJ983D2/Llb7QxJ2kpDUtdgfIc2onIsfmgdSDxr6Hb8fKaHfXy/iyC56PvmVyN1R+L9jEzhdOoUbOwvaRkP1KozL4/V1jjD68MwWt77dw2unwvp/dNRbbWKDFI5C9VoW7q/rec="
+                    "thoughtSignature": "EmkKZwEMOdbHudnbMaKw+h607YscnZ5b86zsX606ghyu8eXwCuIoKks9pMuJTirivo0YIKGCZFn0gQgk5pYSYLkBT76X8mNwCPqvwuqBRaiKuMz7eVJO//BMUWAtJfF52BymWYIICPZhpjA="
                   }
                 ],
                 "role": "model"
@@ -72,30 +72,29 @@ http_interactions:
           "usageMetadata": {
             "promptTokenCount": 9,
             "candidatesTokenCount": 7,
-            "totalTokenCount": 46,
+            "totalTokenCount": 39,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
                 "tokenCount": 9
               }
             ],
-            "thoughtsTokenCount": 30
+            "thoughtsTokenCount": 23,
+            "serviceTier": "standard"
           },
           "modelVersion": "gemini-3-flash-preview",
-          "responseId": "qlPOadj0IPT6kdUP-bS0sQY"
+          "responseId": "qNT7afeGOer0kdUP-LLTiQM"
         }
-  recorded_at: Thu, 02 Apr 2026 11:31:54 GMT
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 - request:
     method: post
     uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"What is 5 + 3?"}]},{"role":"model","parts":[{"thought":true,"text":"Here''s
-        my thought process, distilled:\n\n**The Math Problem**\n\nOkay, the task is
-        straightforward. The user has presented a simple arithmetic problem. It appears
-        they want the sum of two numbers, specifically 5 and 3. My expertise screams,
-        \"Addition!\" I instantly process the operation: 5 + 3 = 8. That''s the answer.
-        Done.\n\n\n","thoughtSignature":"EoMBCoABAb4+9vsVJFQTmlfRlr75S1eNAlGrPqqdmNtxSUJ983D2/Llb7QxJ2kpDUtdgfIc2onIsfmgdSDxr6Hb8fKaHfXy/iyC56PvmVyN1R+L9jEzhdOoUbOwvaRkP1KozL4/V1jjD68MwWt77dw2unwvp/dNRbbWKDFI5C9VoW7q/rec="},{"text":"5
+        my thought process, distilled:\n\n**Calculating a Simple Sum**\n\nOkay, the
+        user wants the sum of 5 and 3. That''s straightforward. I''ll just use the
+        standard addition operation: 5 + 3. The answer is obviously 8. Done.\n\n\n","thoughtSignature":"EmkKZwEMOdbHudnbMaKw+h607YscnZ5b86zsX606ghyu8eXwCuIoKks9pMuJTirivo0YIKGCZFn0gQgk5pYSYLkBT76X8mNwCPqvwuqBRaiKuMz7eVJO//BMUWAtJfF52BymWYIICPZhpjA="},{"text":"5
         + 3 = 8"}]},{"role":"user","parts":[{"text":"Now multiply that by 2"}]}],"generationConfig":{"thinkingConfig":{"includeThoughts":true,"thinkingLevel":"low"}}}'
     headers:
       User-Agent:
@@ -122,7 +121,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Thu, 02 Apr 2026 11:31:56 GMT
+      - Wed, 06 May 2026 23:54:19 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -132,7 +131,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=1596
+      - gfet4t7; dur=1495
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -140,6 +139,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicGFydHMiOiBbCiAgICAgICAgICB7CiAgICAgICAgICAgICJ0ZXh0IjogIioqRG91YmxpbmcgRG93biBvbiB0aGUgUmVzdWx0KipcblxuT2theSwgc28gd2UndmUgZ290IG91ciBwcmV2aW91cyByZXN1bHQgbG9ja2VkIGluIOKAkyB0aGF0IHdhcyA4LiBOb3csIHRoZSBuZXh0IGxvZ2ljYWwgc3RlcCwgYXQgbGVhc3QgaW4gdGhpcyBzZXF1ZW5jZSwgaXMgdG8gc2ltcGx5IGRvdWJsZSB0aGF0IGZpZ3VyZS4gSXQncyBhIHN0cmFpZ2h0Zm9yd2FyZCBtdWx0aXBsaWNhdGlvbiwgcmVhbGx5LiBXZSdyZSBnb2luZyB0byB0YWtlIHRoYXQgOCBhbmQgbXVsdGlwbHkgaXQgYnkgMi4gTGV0J3Mgc2VlLi4uIDggdGltZXMgMiBpcyB1bmRlbmlhYmx5IDE2LiBEb25lLlxuXG5cbiIsCiAgICAgICAgICAgICJ0aG91Z2h0IjogdHJ1ZQogICAgICAgICAgfSwKICAgICAgICAgIHsKICAgICAgICAgICAgInRleHQiOiAiOCDDlyAyID0gMTYiLAogICAgICAgICAgICAidGhvdWdodFNpZ25hdHVyZSI6ICJFcDBCQ3BvQkFiNCs5dnVFcytPNXJENXRwdnpQSUcvUXlEN29iekVESEZ2cWt1YUpyamJYMFJnaHFpQmR6ZWdDMFVQVi83ZVFWaXBhTWlFQlZZcGFOVTFwWlF4QlRHclNVbndFREx6Sk01Q0M4Rk1zdFhqNFFSd0NVelc4WjE1N0pUd2hvZXIxc1BjWmFwL2R3L290UStaUVdrTCs2RTFIR2tZdTV4TldhMm54aUpDd3VYdytZZXVTelkwT2ozQWEvUm9VMHFTQmlhUVZzWi9McG9JRXhRPT0iCiAgICAgICAgICB9CiAgICAgICAgXSwKICAgICAgICAicm9sZSI6ICJtb2RlbCIKICAgICAgfSwKICAgICAgImZpbmlzaFJlYXNvbiI6ICJTVE9QIiwKICAgICAgImluZGV4IjogMAogICAgfQogIF0sCiAgInVzYWdlTWV0YWRhdGEiOiB7CiAgICAicHJvbXB0VG9rZW5Db3VudCI6IDEwNCwKICAgICJjYW5kaWRhdGVzVG9rZW5Db3VudCI6IDgsCiAgICAidG90YWxUb2tlbkNvdW50IjogMTQ1LAogICAgInByb21wdFRva2Vuc0RldGFpbHMiOiBbCiAgICAgIHsKICAgICAgICAibW9kYWxpdHkiOiAiVEVYVCIsCiAgICAgICAgInRva2VuQ291bnQiOiAxMDQKICAgICAgfQogICAgXSwKICAgICJ0aG91Z2h0c1Rva2VuQ291bnQiOiAzMwogIH0sCiAgIm1vZGVsVmVyc2lvbiI6ICJnZW1pbmktMy1mbGFzaC1wcmV2aWV3IiwKICAicmVzcG9uc2VJZCI6ICJyRlBPYWVIbkRPU0t4TjhQNFptV3VBNCIKfQo=
-  recorded_at: Thu, 02 Apr 2026 11:31:56 GMT
+        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicGFydHMiOiBbCiAgICAgICAgICB7CiAgICAgICAgICAgICJ0ZXh0IjogIioqRG91YmxpbmcgRG93biBvbiB0aGUgUmVzdWx0KipcblxuT2theSwgc28gdGhlIGxhc3QgdGhpbmcgSSBmaWd1cmVkIG91dCB3YXMgYSB2YWx1ZSBvZiA4LiBOb3csIEkgbmVlZCB0byB0YWtlIHRoYXQgYW5kIGRvdWJsZSBpdC4gSXQncyBhIHNpbXBsZSBtdWx0aXBsaWNhdGlvbiwgcmVhbGx5LiBNeSBjdXJyZW50IG9wZXJhdGlvbiBpcyBkZWZpbmVkIGFzIHRoZSBwcmV2aW91cyByZXN1bHQgKDgpIG11bHRpcGxpZWQgYnkgMi4gVGhpcyBpcyBzdHJhaWdodGZvcndhcmQ7IDggbXVsdGlwbGllZCBieSAyIGdpdmVzIG1lIGEgZmluYWwgcmVzdWx0IG9mIDE2LiBUaGF0J3MgdGhlIG5ldyBmaWd1cmUgSSdtIHdvcmtpbmcgd2l0aC5cblxuXG4iLAogICAgICAgICAgICAidGhvdWdodCI6IHRydWUKICAgICAgICAgIH0sCiAgICAgICAgICB7CiAgICAgICAgICAgICJ0ZXh0IjogIjggw5cgMiA9IDE2IiwKICAgICAgICAgICAgInRob3VnaHRTaWduYXR1cmUiOiAiRXAwQkNwb0JBUXc1MXNjSDRBL09MOGwydU5acWlxQ2xYOGFJQVRNcnVRdXhiS21VYkNRTm1iQi90S3NmTm11SXpGY3VZb2Ftc05jQjdBOTZqRDVnaVFsVHJETlJCMEl1TUtNc1ZDY1lMVHlMZURuRFluVXBmZzYxeDlUSWxaRUtpZDdPTEdCKy9jVVV5WExOMTB0NWNRVHV5ZGpoL2VyOTJQWnl3dHJLSS9DZS9hT25Td3VOU1l5U0JyUzVIUzZwc3JORVlMY1A4bzFqeTVxejE1ME9QQT09IgogICAgICAgICAgfQogICAgICAgIF0sCiAgICAgICAgInJvbGUiOiAibW9kZWwiCiAgICAgIH0sCiAgICAgICJmaW5pc2hSZWFzb24iOiAiU1RPUCIsCiAgICAgICJpbmRleCI6IDAKICAgIH0KICBdLAogICJ1c2FnZU1ldGFkYXRhIjogewogICAgInByb21wdFRva2VuQ291bnQiOiA4NiwKICAgICJjYW5kaWRhdGVzVG9rZW5Db3VudCI6IDgsCiAgICAidG90YWxUb2tlbkNvdW50IjogMTI2LAogICAgInByb21wdFRva2Vuc0RldGFpbHMiOiBbCiAgICAgIHsKICAgICAgICAibW9kYWxpdHkiOiAiVEVYVCIsCiAgICAgICAgInRva2VuQ291bnQiOiA4NgogICAgICB9CiAgICBdLAogICAgInRob3VnaHRzVG9rZW5Db3VudCI6IDMyLAogICAgInNlcnZpY2VUaWVyIjogInN0YW5kYXJkIgogIH0sCiAgIm1vZGVsVmVyc2lvbiI6ICJnZW1pbmktMy1mbGFzaC1wcmV2aWV3IiwKICAicmVzcG9uc2VJZCI6ICJxdFQ3YVpUQ0lwLXpuc0VQNXNTazZROCIKfQo=
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 recorded_with: VCR 6.4.0
