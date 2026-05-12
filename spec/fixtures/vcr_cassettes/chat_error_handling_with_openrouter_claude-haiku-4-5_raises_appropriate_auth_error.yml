@@ -23,7 +23,7 @@ http_interactions:
       message: Unauthorized
     headers:
       Date:
-      - Mon, 16 Mar 2026 19:10:40 GMT
+      - Wed, 06 May 2026 23:51:24 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -32,6 +32,8 @@ http_interactions:
       - keep-alive
       Access-Control-Allow-Origin:
       - "*"
+      Access-Control-Expose-Headers:
+      - X-Generation-Id,cf-ray
       Permissions-Policy:
       - payment=(self "https://checkout.stripe.com" "https://connect-js.stripe.com"
         "https://js.stripe.com" "https://*.js.stripe.com" "https://hooks.stripe.com")
@@ -46,5 +48,5 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"error":{"message":"Missing Authentication header","code":401}}'
-  recorded_at: Mon, 16 Mar 2026 19:10:40 GMT
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 recorded_with: VCR 6.4.0

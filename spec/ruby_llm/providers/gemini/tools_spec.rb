@@ -72,5 +72,27 @@ RSpec.describe RubyLLM::Providers::Gemini::Tools do
                              }
                            ])
     end
+
+    it 'uses a placeholder when the tool returns no content' do
+      message = RubyLLM::Message.new(
+        role: :tool,
+        content: '',
+        tool_call_id: 'uuid-123'
+      )
+
+      result = test_obj.format_tool_result(message)
+
+      expect(result).to eq([
+                             {
+                               functionResponse: {
+                                 name: 'uuid-123',
+                                 response: {
+                                   name: 'uuid-123',
+                                   content: [{ text: '(no output)' }]
+                                 }
+                               }
+                             }
+                           ])
+    end
   end
 end

@@ -118,13 +118,20 @@ module RubyLLM
               signature: extract_thought_signature(parts)
             ),
             tool_calls: tool_calls,
-            input_tokens: data.dig('usageMetadata', 'promptTokenCount'),
+            input_tokens: input_tokens(data),
             output_tokens: calculate_output_tokens(data),
             cached_tokens: data.dig('usageMetadata', 'cachedContentTokenCount'),
             thinking_tokens: data.dig('usageMetadata', 'thoughtsTokenCount'),
             model_id: data['modelVersion'] || response.env.url.path.split('/')[3].split(':')[0],
             raw: response
           )
+        end
+
+        def input_tokens(data)
+          prompt_tokens = data.dig('usageMetadata', 'promptTokenCount')
+          return unless prompt_tokens
+
+          [prompt_tokens.to_i - data.dig('usageMetadata', 'cachedContentTokenCount').to_i, 0].max
         end
 
         def convert_schema_to_gemini(schema)

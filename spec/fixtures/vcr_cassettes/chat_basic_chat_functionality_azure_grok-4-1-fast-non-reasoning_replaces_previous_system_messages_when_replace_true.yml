@@ -24,42 +24,60 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Cache-Control:
+      - no-cache
       Transfer-Encoding:
       - chunked
       Content-Type:
       - application/json
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Vary:
+      - access-control-request-headers
       Request-Context:
       - appId=
-      Sampling-Token-Len:
-      - '125'
+      Traceparent:
+      - 00-974c6b32f3944832a447d96e0c6d3648-2da0405200002dbc-00
       X-Ms-Rai-Invoked:
       - 'true'
-      Prompt-Token-Len:
-      - '23'
       X-Request-Id:
       - "<X_REQUEST_ID>"
+      X-Xai-Model-Address:
+      - http://localhost:9988
       X-Ms-Client-Request-Id:
-      - 6e26c75e-afa9-4b5c-952e-c8527b3b2fab
+      - 974c6b32-f394-4832-a447-d96e0c6d3648
       Azureml-Model-Session:
-      - d-d37d4aed-feba-4c61-ae2a-7f8ce4d38049
+      - d20260429222844-bf683bdf
       Azureai-Requested-Tier:
       - default
       Azureai-Processed-Tier:
       - default
       X-Ms-Is-Spilled-Over:
       - 'false'
+      X-Ratelimit-Key:
+      - grok-4-1-fast-non-reasoning
+      X-Ratelimit-Remaining-Requests:
+      - '49'
+      X-Ratelimit-Reset-Requests:
+      - '1'
+      X-Ratelimit-Limit-Requests:
+      - '50'
+      X-Ratelimit-Renewalperiod-Requests:
+      - '60'
+      X-Ratelimit-Abusepenalty-Active:
+      - 'False'
       X-Ratelimit-Remaining-Tokens:
-      - '50000'
+      - '49939'
       X-Ratelimit-Reset-Tokens:
       - '0'
       X-Ratelimit-Limit-Tokens:
       - '50000'
       X-Ratelimit-Renewalperiod-Tokens:
       - '60'
-      X-Ratelimit-Abusepenalty-Active:
-      - 'False'
       Apim-Request-Id:
-      - 6e26c75e-afa9-4b5c-952e-c8527b3b2fab
+      - 974c6b32-f394-4832-a447-d96e0c6d3648
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Ms-Deployment-Name:
@@ -69,12 +87,12 @@ http_interactions:
       X-Ms-Region:
       - West Europe
       Date:
-      - Mon, 16 Mar 2026 20:27:05 GMT
+      - Wed, 06 May 2026 23:53:12 GMT
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJjaG9pY2VzIjpbeyJjb250ZW50X2ZpbHRlcl9yZXN1bHRzIjp7ImhhdGUiOnsiZmlsdGVyZWQiOmZhbHNlLCJzZXZlcml0eSI6InNhZmUifSwicHJvdGVjdGVkX21hdGVyaWFsX2NvZGUiOnsiZmlsdGVyZWQiOmZhbHNlLCJkZXRlY3RlZCI6ZmFsc2V9LCJwcm90ZWN0ZWRfbWF0ZXJpYWxfdGV4dCI6eyJmaWx0ZXJlZCI6ZmFsc2UsImRldGVjdGVkIjpmYWxzZX0sInNlbGZfaGFybSI6eyJmaWx0ZXJlZCI6ZmFsc2UsInNldmVyaXR5Ijoic2FmZSJ9LCJzZXh1YWwiOnsiZmlsdGVyZWQiOmZhbHNlLCJzZXZlcml0eSI6InNhZmUifSwidmlvbGVuY2UiOnsiZmlsdGVyZWQiOmZhbHNlLCJzZXZlcml0eSI6InNhZmUifX0sImZpbmlzaF9yZWFzb24iOiJzdG9wIiwiaW5kZXgiOjAsImxvZ3Byb2JzIjpudWxsLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJJIGNhbid0IGNoZWNrIHJlYWwtdGltZSB3ZWF0aGVyIHdpdGhvdXQgYSBzcGVjaWZpYyBsb2NhdGlvbiwgYnV0IGhlcmUncyBhIHF1aWNrIDxHT09HTEVfQ0xPVURfTE9DQVRJT04+IHNuYXBzaG90IGJhc2VkIG9uIHJlY2VudCBkYXRhIChhcyBvZiBteSBsYXN0IHVwZGF0ZSk6XG5cbi0gKipOZXcgWW9yayBDaXR5Kio6IFBhcnRseSBjbG91ZHksIGFyb3VuZCA2NcKwRiAoMTjCsEMpLCB3aXRoIGEgY2hhbmNlIG9mIGV2ZW5pbmcgc2hvd2Vycy5cbi0gKipMb25kb24qKjogT3ZlcmNhc3QgYW5kIGRyaXp6bHksIGFib3V0IDU1wrBGICgxM8KwQykuXG4tICoqVG9reW8qKjogU3VubnkgaW50ZXJ2YWxzLCA3MsKwRiAoMjLCsEMpLCBtaWxkIGJyZWV6ZS5cbi0gKipTeWRuZXkqKjogV2FybSBhbmQgY2xlYXIsIDY4wrBGICgyMMKwQykuXG5cbkZvciB5b3VyIHNwb3QsIHRyeSBhIHdlYXRoZXIgYXBwIGxpa2UgQWNjdVdlYXRoZXIgb3IgR29vZ2xlIFdlYXRoZXIgd2l0aCB5b3VyIGNpdHkhIFhLQ0Q3MzkyIiwicmVmdXNhbCI6bnVsbCwicm9sZSI6ImFzc2lzdGFudCIsInRvb2xfY2FsbHMiOm51bGx9LCJzdG9wX3JlYXNvbiI6bnVsbH1dLCJjcmVhdGVkIjoxNzczNjkyODI0LCJpZCI6ImMzNjAzYjc2LTlmZDctNDVlZi04NDMzLWNmNGUxOWQ3N2M1MCIsIm1vZGVsIjoiZ3Jvay00LTEtZmFzdC1ub24tcmVhc29uaW5nIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwicHJvbXB0X2ZpbHRlcl9yZXN1bHRzIjpbeyJwcm9tcHRfaW5kZXgiOjAsImNvbnRlbnRfZmlsdGVyX3Jlc3VsdHMiOnsiaGF0ZSI6eyJmaWx0ZXJlZCI6ZmFsc2UsInNldmVyaXR5Ijoic2FmZSJ9LCJqYWlsYnJlYWsiOnsiZmlsdGVyZWQiOmZhbHNlLCJkZXRlY3RlZCI6ZmFsc2V9LCJzZWxmX2hhcm0iOnsiZmlsdGVyZWQiOmZhbHNlLCJzZXZlcml0eSI6InNhZmUifSwic2V4dWFsIjp7ImZpbHRlcmVkIjpmYWxzZSwic2V2ZXJpdHkiOiJzYWZlIn0sInZpb2xlbmNlIjp7ImZpbHRlcmVkIjpmYWxzZSwic2V2ZXJpdHkiOiJzYWZlIn19fV0sInVzYWdlIjp7ImF1ZGlvX3Byb21wdF90b2tlbnMiOjAsImNvbXBsZXRpb25fdG9rZW5zIjoxMjUsImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjAsImF1ZGlvX3Rva2VucyI6MCwicmVhc29uaW5nX3Rva2VucyI6MCwicmVqZWN0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjB9LCJjb3N0X2luX3VzZF90aWNrcyI6MCwibnVtX3NvdXJjZXNfdXNlZCI6MCwicHJvbXB0X3Rva2VucyI6MjMsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJhdWRpb190b2tlbnMiOjAsImNhY2hlZF90b2tlbnMiOjAsImltYWdlX3Rva2VucyI6MCwidGV4dF90b2tlbnMiOjIzfSwidG90YWxfdG9rZW5zIjoxNDh9fQo=
-  recorded_at: Mon, 16 Mar 2026 20:27:05 GMT
+        eyJpZCI6ImFhMTZmZTEzLWIyN2EtNGQ4Mi05N2E5LTFlYTQ4MmVhYzI1NiIsIm1vZGVsIjoiZ3Jvay00LTEtZmFzdC1ub24tcmVhc29uaW5nIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJJIGNhbid0IGNoZWNrIHJlYWwtdGltZSB3ZWF0aGVyIHdpdGhvdXQgYSBzcGVjaWZpYyBsb2NhdGlvbiwgYnV0IGhlcmUncyBhIHF1aWNrIHJ1bmRvd24gYmFzZWQgb24gZ2VuZXJhbCBrbm93bGVkZ2U6XG5cbi0gKipDdXJyZW50IDxHT09HTEVfQ0xPVURfTE9DQVRJT04+IHRyZW5kcyoqOiBJdCdzIG1pZC0yMDIzIHZpYmVz4oCUc3VtbWVycyBoZWF0aW5nIHVwIHdvcmxkd2lkZSwgd2l0aCBoZWF0d2F2ZXMgaW4gRXVyb3BlIGFuZCB0aGUgVVMsIHdoaWxlIHRoZSB0cm9waWNzIHNlZSBtb25zb29uIGFjdGlvbi5cbi0gKipGdW4gZmFjdCoqOiBXZWF0aGVyIGlzIGNoYW90aWM7IGEgYnV0dGVyZmx5IGluIEJyYXppbCBjYW4gdGhlb3JldGljYWxseSBjYXVzZSBhIHRvcm5hZG8gaW4gVGV4YXMgKGJ1dHRlcmZseSBlZmZlY3QpLlxuXG5UZWxsIG1lIHlvdXIgY2l0eSBmb3IgYSBwcmVjaXNlIGZvcmVjYXN0ISBYS0NENzM5MiJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCIsImNvbnRlbnRfZmlsdGVyX3Jlc3VsdHMiOnt9fV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjIzLCJjb21wbGV0aW9uX3Rva2VucyI6OTQsInRvdGFsX3Rva2VucyI6MTE3LCJhdWRpb19wcm9tcHRfdG9rZW5zIjowLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MCwiYXVkaW9fdG9rZW5zIjowLCJ0ZXh0X3Rva2VucyI6MjMsImltYWdlX3Rva2VucyI6MH0sImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6MCwiYXVkaW9fdG9rZW5zIjowLCJhY2NlcHRlZF9wcmVkaWN0aW9uX3Rva2VucyI6MCwicmVqZWN0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjB9LCJudW1fc291cmNlc191c2VkIjowfSwiY3JlYXRlZCI6MTc3ODExMTU5MSwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwicHJvbXB0X2ZpbHRlcl9yZXN1bHRzIjpudWxsfQ==
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 - request:
     method: post
     uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
@@ -83,13 +101,13 @@ http_interactions:
       string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"system","content":"You
         must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."},{"role":"user","content":"Tell
         me about the weather."},{"role":"assistant","content":"I can''t check real-time
-        weather without a specific location, but here''s a quick <GOOGLE_CLOUD_LOCATION>
-        snapshot based on recent data (as of my last update):\n\n- **New York City**:
-        Partly cloudy, around 65°F (18°C), with a chance of evening showers.\n- **London**:
-        Overcast and drizzly, about 55°F (13°C).\n- **Tokyo**: Sunny intervals, 72°F
-        (22°C), mild breeze.\n- **Sydney**: Warm and clear, 68°F (20°C).\n\nFor your
-        spot, try a weather app like AccuWeather or Google Weather with your city!
-        XKCD7392"},{"role":"user","content":"What are some good books?"}],"stream":false,"temperature":0.0}'
+        weather without a specific location, but here''s a quick rundown based on
+        general knowledge:\n\n- **Current <GOOGLE_CLOUD_LOCATION> trends**: It''s
+        mid-2023 vibes—summers heating up worldwide, with heatwaves in Europe and
+        the US, while the tropics see monsoon action.\n- **Fun fact**: Weather is
+        chaotic; a butterfly in Brazil can theoretically cause a tornado in Texas
+        (butterfly effect).\n\nTell me your city for a precise forecast! XKCD7392"},{"role":"user","content":"What
+        are some good books?"}],"stream":false,"temperature":0.0}'
     headers:
       User-Agent:
       - Faraday v2.14.1
@@ -106,42 +124,60 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      Cache-Control:
+      - no-cache
       Transfer-Encoding:
       - chunked
       Content-Type:
       - application/json
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Vary:
+      - access-control-request-headers
       Request-Context:
       - appId=
-      Sampling-Token-Len:
-      - '316'
+      Traceparent:
+      - 00-332ad7bf515449c2aa7bee9249476421-467129fc00002649-00
       X-Ms-Rai-Invoked:
       - 'true'
-      Prompt-Token-Len:
-      - '169'
       X-Request-Id:
       - "<X_REQUEST_ID>"
+      X-Xai-Model-Address:
+      - http://localhost:9988
       X-Ms-Client-Request-Id:
-      - 31ff1956-34f2-4056-8f3a-415a90af34e8
+      - 332ad7bf-5154-49c2-aa7b-ee9249476421
       Azureml-Model-Session:
-      - d-a3423142-ae3e-4fb1-be62-1eecd5f54116
+      - d20260429222844-bf683bdf
       Azureai-Requested-Tier:
       - default
       Azureai-Processed-Tier:
       - default
       X-Ms-Is-Spilled-Over:
       - 'false'
+      X-Ratelimit-Key:
+      - grok-4-1-fast-non-reasoning
+      X-Ratelimit-Remaining-Requests:
+      - '49'
+      X-Ratelimit-Reset-Requests:
+      - '1'
+      X-Ratelimit-Limit-Requests:
+      - '50'
+      X-Ratelimit-Renewalperiod-Requests:
+      - '60'
+      X-Ratelimit-Abusepenalty-Active:
+      - 'False'
       X-Ratelimit-Remaining-Tokens:
-      - '50000'
+      - '49803'
       X-Ratelimit-Reset-Tokens:
       - '0'
       X-Ratelimit-Limit-Tokens:
       - '50000'
       X-Ratelimit-Renewalperiod-Tokens:
       - '60'
-      X-Ratelimit-Abusepenalty-Active:
-      - 'False'
       Apim-Request-Id:
-      - 31ff1956-34f2-4056-8f3a-415a90af34e8
+      - 332ad7bf-5154-49c2-aa7b-ee9249476421
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Ms-Deployment-Name:
@@ -151,10 +187,10 @@ http_interactions:
       X-Ms-Region:
       - West Europe
       Date:
-      - Mon, 16 Mar 2026 20:27:09 GMT
+      - Wed, 06 May 2026 23:53:38 GMT
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJjaG9pY2VzIjpbeyJjb250ZW50X2ZpbHRlcl9yZXN1bHRzIjp7ImhhdGUiOnsiZmlsdGVyZWQiOmZhbHNlLCJzZXZlcml0eSI6InNhZmUifSwicHJvdGVjdGVkX21hdGVyaWFsX2NvZGUiOnsiZmlsdGVyZWQiOmZhbHNlLCJkZXRlY3RlZCI6ZmFsc2V9LCJwcm90ZWN0ZWRfbWF0ZXJpYWxfdGV4dCI6eyJmaWx0ZXJlZCI6ZmFsc2UsImRldGVjdGVkIjpmYWxzZX0sInNlbGZfaGFybSI6eyJmaWx0ZXJlZCI6ZmFsc2UsInNldmVyaXR5Ijoic2FmZSJ9LCJzZXh1YWwiOnsiZmlsdGVyZWQiOmZhbHNlLCJzZXZlcml0eSI6InNhZmUifSwidmlvbGVuY2UiOnsiZmlsdGVyZWQiOmZhbHNlLCJzZXZlcml0eSI6InNhZmUifX0sImZpbmlzaF9yZWFzb24iOiJzdG9wIiwiaW5kZXgiOjAsImxvZ3Byb2JzIjpudWxsLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJIZXJlIGFyZSBzb21lIHRpbWVsZXNzIGFuZCBoaWdobHkgcmVjb21tZW5kZWQgYm9va3MgYWNyb3NzIGdlbnJlc+KAlHBlcnNvbmFsIGZhdm9yaXRlcyBiYXNlZCBvbiBjcml0aWNhbCBhY2NsYWltLCByZWFkZXIgbG92ZSwgYW5kIGN1bHR1cmFsIGltcGFjdC4gSSd2ZSBpbmNsdWRlZCB3aHkgdGhleSBzdGFuZCBvdXQ6XG5cbiMjIyBGaWN0aW9uIENsYXNzaWNzXG4tICoqVG8gS2lsbCBhIE1vY2tpbmdiaXJkKiogYnkgSGFycGVyIExlZTogQSBwcm9mb3VuZCBzdG9yeSBvZiBqdXN0aWNlLCByYWNpc20sIGFuZCBjaGlsZGhvb2QgaW5ub2NlbmNlIGluIHRoZSBBbWVyaWNhbiBTb3V0aC4gSGVhcnQtd3JlbmNoaW5nIGFuZCBlc3NlbnRpYWwuXG4tICoqMTk4NCoqIGJ5IEdlb3JnZSBPcndlbGw6IER5c3RvcGlhbiB3YXJuaW5nIG9uIHN1cnZlaWxsYW5jZSwgdHJ1dGgsIGFuZCB0b3RhbGl0YXJpYW5pc20uIE1vcmUgcmVsZXZhbnQgdGhhbiBldmVyLiBQVVJQTEUtRUxFUEhBTlQtNDJcbi0gKipQcmlkZSBhbmQgUHJlanVkaWNlKiogYnkgSmFuZSBBdXN0ZW46IFdpdHR5IHJvbWFuY2Ugd2l0aCBzaGFycCBzb2NpYWwgY29tbWVudGFyeS4gUGVyZmVjdCBmb3IgYmFudGVyIGFuZCBjaGFyYWN0ZXIgZGVwdGguXG5cbiMjIyBTY2ktRmkvRmFudGFzeVxuLSAqKkR1bmUqKiBieSBGcmFuayBIZXJiZXJ0OiBFcGljIHdvcmxkLWJ1aWxkaW5nIG9uIHBvbGl0aWNzLCBlY29sb2d5LCBhbmQgZGVzdGlueS4gVGhlIHJlY2VudCBtb3ZpZXMgYmFyZWx5IHNjcmF0Y2ggdGhlIHN1cmZhY2UuXG4tICoqVGhlIE5hbWUgb2YgdGhlIFdpbmQqKiBieSBQYXRyaWNrIFJvdGhmdXNzOiBNYWdpY2FsIGNvbWluZy1vZi1hZ2UgdGFsZSB3aXRoIHN0dW5uaW5nIHByb3NlLiBJZiB5b3UgbGlrZSBpbW1lcnNpdmUgZmFudGFzeSwgc3RhcnQgaGVyZS5cblxuIyMjIE5vbi1GaWN0aW9uXG4tICoqU2FwaWVuczogQSBCcmllZiBIaXN0b3J5IG9mIEh1bWFua2luZCoqIGJ5IFl1dmFsIE5vYWggSGFyYXJpOiBTd2VlcGluZyBvdmVydmlldyBvZiBodW1hbiBoaXN0b3J54oCUbWluZC1leHBhbmRpbmcgYW5kIGFjY2Vzc2libGUuXG4tICoqRWR1Y2F0ZWQqKiBieSBUYXJhIFdlc3RvdmVyOiBNZW1vaXIgb2YgZXNjYXBpbmcgYSBzdXJ2aXZhbGlzdCBmYW1pbHkgdGhyb3VnaCBzaGVlciBpbnRlbGxlY3QuIEdyaXBwaW5nIGFuZCBpbnNwaXJpbmcuXG5cbiMjIyBNeXN0ZXJ5L1RocmlsbGVyXG4tICoqVGhlIEdpcmwgd2l0aCB0aGUgRHJhZ29uIFRhdHRvbyoqIGJ5IFN0aWVnIExhcnNzb246IERhcmssIHR3aXN0eSBjcmltZSBzYWdhIHdpdGggYSBiYWRhc3MgcHJvdGFnb25pc3QuXG5cblN0YXJ0IHdpdGggd2hhdCBtYXRjaGVzIHlvdXIgdmliZeKAlEdvb2RyZWFkcyBvciB5b3VyIGxpYnJhcnkgYXBwIGZvciByZXZpZXdzLiBXaGF0IGdlbnJlIGFyZSB5b3UgaW50bz8iLCJyZWZ1c2FsIjpudWxsLCJyb2xlIjoiYXNzaXN0YW50IiwidG9vbF9jYWxscyI6bnVsbH0sInN0b3BfcmVhc29uIjpudWxsfV0sImNyZWF0ZWQiOjE3NzM2OTI4MjYsImlkIjoiYWVjMWNhY2QtNGI1Yy00ODM4LThhODctNTllZmE0NWY3NmRjIiwibW9kZWwiOiJncm9rLTQtMS1mYXN0LW5vbi1yZWFzb25pbmciLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJwcm9tcHRfZmlsdGVyX3Jlc3VsdHMiOlt7InByb21wdF9pbmRleCI6MCwiY29udGVudF9maWx0ZXJfcmVzdWx0cyI6eyJoYXRlIjp7ImZpbHRlcmVkIjpmYWxzZSwic2V2ZXJpdHkiOiJzYWZlIn0sImphaWxicmVhayI6eyJmaWx0ZXJlZCI6ZmFsc2UsImRldGVjdGVkIjpmYWxzZX0sInNlbGZfaGFybSI6eyJmaWx0ZXJlZCI6ZmFsc2UsInNldmVyaXR5Ijoic2FmZSJ9LCJzZXh1YWwiOnsiZmlsdGVyZWQiOmZhbHNlLCJzZXZlcml0eSI6InNhZmUifSwidmlvbGVuY2UiOnsiZmlsdGVyZWQiOmZhbHNlLCJzZXZlcml0eSI6InNhZmUifX19XSwidXNhZ2UiOnsiYXVkaW9fcHJvbXB0X3Rva2VucyI6MCwiY29tcGxldGlvbl90b2tlbnMiOjMxNiwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJhY2NlcHRlZF9wcmVkaWN0aW9uX3Rva2VucyI6MCwiYXVkaW9fdG9rZW5zIjowLCJyZWFzb25pbmdfdG9rZW5zIjowLCJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6MH0sImNvc3RfaW5fdXNkX3RpY2tzIjowLCJudW1fc291cmNlc191c2VkIjowLCJwcm9tcHRfdG9rZW5zIjoxNjksInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJhdWRpb190b2tlbnMiOjAsImNhY2hlZF90b2tlbnMiOjAsImltYWdlX3Rva2VucyI6MCwidGV4dF90b2tlbnMiOjE2OX0sInRvdGFsX3Rva2VucyI6NDg1fX0K
-  recorded_at: Mon, 16 Mar 2026 20:27:10 GMT
+        eyJpZCI6IjI1MmM5YTNjLTMwZTItNDNhMS1iYWViLWMwOWZlZWYwYjA1ZSIsIm1vZGVsIjoiZ3Jvay00LTEtZmFzdC1ub24tcmVhc29uaW5nIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJIZXJlIGFyZSBzb21lIHRpbWVsZXNzIGFuZCByZWNlbnQgc3RhbmRvdXQgYm9va3MgYWNyb3NzIGdlbnJlc+KAlHBlcnNvbmFsIHJlY3MgYmFzZWQgb24gY3JpdGljYWwgYWNjbGFpbSwgcmVhZGVyIGxvdmUsIGFuZCBpbXBhY3QuIEkndmUgZ3JvdXBlZCB0aGVtIGZvciBlYXN5IGJyb3dzaW5nOlxuXG4jIyMgRmljdGlvbiBDbGFzc2ljc1xuLSAqKlRvIEtpbGwgYSBNb2NraW5nYmlyZCoqIGJ5IEhhcnBlciBMZWU6IEhlYXJ0LXdyZW5jaGluZyB0YWxlIG9mIGp1c3RpY2UsIHJhY2lzbSwgYW5kIGlubm9jZW5jZSBpbiB0aGUgQW1lcmljYW4gU291dGguXG4tICoqMTk4NCoqIGJ5IEdlb3JnZSBPcndlbGw6IER5c3RvcGlhbiB3YXJuaW5nIG9uIHN1cnZlaWxsYW5jZSBhbmQgdG90YWxpdGFyaWFuaXNt4oCUbW9yZSByZWxldmFudCB0aGFuIGV2ZXIuXG5cbiMjIyBNb2Rlcm4gRmljdGlvbi9TY2ktRmlcbi0gKipQcm9qZWN0IEhhaWwgTWFyeSoqIGJ5IEFuZHkgV2VpcjogR3JpcHBpbmcgaGFyZCBzY2ktZmkgYWJvdXQgYSBsb25lIGFzdHJvbmF1dCBzYXZpbmcgRWFydGguIEZ1biwgc21hcnQsIGFuZCBvcHRpbWlzdGljLlxuLSAqKlRoZSBNaWRuaWdodCBMaWJyYXJ5KiogYnkgTWF0dCBIYWlnOiBQaGlsb3NvcGhpY2FsIHdoYXQtaWYgc3Rvcnkgb24gbGlmZSdzIHJlZ3JldHPigJRwZXJmZWN0IGZvciByZWZsZWN0aXZlIHJlYWRzLlxuXG4jIyMgTm9uLUZpY3Rpb25cbi0gKipTYXBpZW5zOiBBIEJyaWVmIEhpc3Rvcnkgb2YgSHVtYW5raW5kKiogYnkgWXV2YWwgTm9haCBIYXJhcmk6IFN3ZWVwaW5nIG92ZXJ2aWV3IG9mIGh1bWFuIGhpc3Rvcnk7IG1pbmQtZXhwYW5kaW5nLlxuLSAqKkF0b21pYyBIYWJpdHMqKiBieSBKYW1lcyBDbGVhcjogUHJhY3RpY2FsIGd1aWRlIHRvIGJ1aWxkaW5nIGJldHRlciBoYWJpdHPigJRsaWZlLWNoYW5naW5nIGZvciBwcm9kdWN0aXZpdHkuXG5cbiMjIyBGYW50YXN5L0VwaWNcbi0gKipUaGUgTmFtZSBvZiB0aGUgV2luZCoqIChLaW5na2lsbGVyIENocm9uaWNsZSkgYnkgUGF0cmljayBSb3RoZnVzczogTWFnaWNhbCBjb21pbmctb2YtYWdlIGluIGEgcmljaGx5IGJ1aWx0IHdvcmxkLlxuXG5TdGFydCB3aXRoIHdoYXQgbWF0Y2hlcyB5b3VyIHZpYmUhIFdoYXQncyB5b3VyIGZhdm9yaXRlIGdlbnJlPyBQVVJQTEUtRUxFUEhBTlQtNDIifSwiZmluaXNoX3JlYXNvbiI6InN0b3AiLCJjb250ZW50X2ZpbHRlcl9yZXN1bHRzIjp7fX1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjoxMzgsImNvbXBsZXRpb25fdG9rZW5zIjoyNjAsInRvdGFsX3Rva2VucyI6Mzk4LCJhdWRpb19wcm9tcHRfdG9rZW5zIjowLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MCwiYXVkaW9fdG9rZW5zIjowLCJ0ZXh0X3Rva2VucyI6MTM4LCJpbWFnZV90b2tlbnMiOjB9LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjAsImF1ZGlvX3Rva2VucyI6MCwiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjAsInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowfSwibnVtX3NvdXJjZXNfdXNlZCI6MH0sImNyZWF0ZWQiOjE3NzgxMTE2MTMsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsInByb21wdF9maWx0ZXJfcmVzdWx0cyI6bnVsbH0=
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 recorded_with: VCR 6.4.0

@@ -27,35 +27,37 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 16 Mar 2026 19:22:37 GMT
+      - Thu, 07 May 2026 00:06:52 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Set-Cookie:
-      - "<COOKIE>"
       Strict-Transport-Security:
       - max-age=31536000
+      Set-Cookie:
+      - "<COOKIE>"
       X-Ratelimit-Limit-Tokens:
-      - '4000000'
+      - '10000000'
       X-Ratelimit-Remaining-Tokens:
-      - '4000000'
+      - '10000000'
       X-Zero-Data-Retention:
       - 'false'
       X-Ratelimit-Limit-Requests:
-      - '607'
+      - '1800'
       X-Ratelimit-Remaining-Requests:
-      - '607'
+      - '1800'
       X-Metrics-Mean-Itl-Ms:
-      - '23.9'
+      - '0.0'
       X-Metrics-E2e-Ms:
-      - '859.5'
+      - '1540.0'
       Cf-Cache-Status:
       - DYNAMIC
       X-Request-Id:
       - "<X_REQUEST_ID>"
+      Traceparent:
+      - 00-c38bb542c44dd272a58463e4ac464fe8-781f10750002280b-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
@@ -68,16 +70,16 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"11101655-04e7-1704-ffc5-d5f34d229dc9","object":"chat.completion","created":1773688956,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"call_74048486","function":{"name":"weather","arguments":"{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}"},"type":"function"}],"refusal":null},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":407,"completion_tokens":40,"total_tokens":447,"prompt_tokens_details":{"text_tokens":407,"audio_tokens":0,"image_tokens":0,"cached_tokens":158},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":777000},"system_fingerprint":"fp_48319fcb08"}'
-  recorded_at: Mon, 16 Mar 2026 19:22:37 GMT
+      string: '{"id":"35ef4873-98f1-980f-b10d-bbb5932eb727","object":"chat.completion","created":1778112410,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"call_73218724","function":{"name":"weather","arguments":"{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}"},"type":"function"}],"refusal":null},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":407,"completion_tokens":40,"total_tokens":447,"prompt_tokens_details":{"text_tokens":407,"audio_tokens":0,"image_tokens":0,"cached_tokens":158},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":777000},"system_fingerprint":"fp_b9ff9b81b3"}'
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 - request:
     method: post
     uri: https://api.x.ai/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"user","content":"When
-        was the fall of Rome?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_74048486","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}"}}]},{"role":"tool","content":"Current
-        weather at 41.9028, 12.4964: 15°C, Wind: 10 km/h","tool_call_id":"call_74048486"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        was the fall of Rome?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_73218724","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}"}}]},{"role":"tool","content":"Current
+        weather at 41.9028, 12.4964: 15°C, Wind: 10 km/h","tool_call_id":"call_73218724"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
@@ -98,55 +100,59 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 16 Mar 2026 19:22:40 GMT
+      - Thu, 07 May 2026 00:06:56 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Strict-Transport-Security:
+      - max-age=31536000
       Set-Cookie:
       - "<COOKIE>"
-      Content-Security-Policy-Report-Only:
-      - script-src 'none'; report-uri https://csp-reporting.cloudflare.com/cdn-cgi/script_monitor/report?m=wIVSAvUJ0C_G1e1URaRHhxwkDAnR4xIW5cgPuoB8V.M-1773688957.3004835-1.0.1.1-y1LkB1aRlv0pZFyLV8TTVBby68L9QFD8QRKKd7g2CCThm135fHLdo8h7v73HQ5DfK0_RYLMdFmqyT3nUaDas__GyzSXRijbK2s5CvmpmYGfTGR7raT_T5OxJLbMsChVOHJbxl_Ok6ogqo5kQrxNXrWl3CWggI7Qyvlvr5dUcWME;
-        report-to cf-csp-endpoint
       X-Ratelimit-Limit-Tokens:
-      - '4000000'
+      - '10000000'
       X-Ratelimit-Remaining-Tokens:
-      - '4000000'
+      - '10000000'
       X-Zero-Data-Retention:
       - 'false'
       X-Ratelimit-Limit-Requests:
-      - '607'
+      - '1800'
       X-Ratelimit-Remaining-Requests:
-      - '607'
+      - '1800'
       X-Metrics-Ttft-Ms:
-      - '1120.4'
+      - '3076.3'
       X-Metrics-Mean-Itl-Ms:
-      - '7.9'
+      - '8.7'
       X-Metrics-E2e-Ms:
-      - '3385.1'
+      - '4237.1'
       Cf-Cache-Status:
       - DYNAMIC
       X-Request-Id:
       - "<X_REQUEST_ID>"
+      Traceparent:
+      - 00-7d68ed1d008b9ebfecf9f1dfc444734c-2ee8a1330001c489-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
       - "*"
       Access-Control-Expose-Headers:
       - "*"
-      Strict-Transport-Security:
-      - max-age=31536000
-      Report-To:
-      - '{"group":"cf-csp-endpoint","max_age":86400,"endpoints":[{"url":"https://csp-reporting.cloudflare.com/cdn-cgi/script_monitor/report?m=wIVSAvUJ0C_G1e1URaRHhxwkDAnR4xIW5cgPuoB8V.M-1773688957.3004835-1.0.1.1-y1LkB1aRlv0pZFyLV8TTVBby68L9QFD8QRKKd7g2CCThm135fHLdo8h7v73HQ5DfK0_RYLMdFmqyT3nUaDas__GyzSXRijbK2s5CvmpmYGfTGR7raT_T5OxJLbMsChVOHJbxl_Ok6ogqo5kQrxNXrWl3CWggI7Qyvlvr5dUcWME"}]}'
       Server:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        eyJpZCI6IjBhNDNkZjdmLTAwNzktZThhYy1kYzJiLTU3YTdlMjkyN2FmNSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NzM2ODg5NTcsIm1vZGVsIjoiZ3Jvay00LTEtZmFzdC1ub24tcmVhc29uaW5nIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJUaGUgZmFsbCBvZiBSb21lIGlzIHRyYWRpdGlvbmFsbHkgZGF0ZWQgdG8gKio0NzYgQ0UqKiwgd2hlbiB0aGUgR2VybWFuaWMgY2hpZWZ0YWluIE9kb2FjZXIgZGVwb3NlZCB0aGUgbGFzdCBXZXN0ZXJuIFJvbWFuIGVtcGVyb3IsIFJvbXVsdXMgQXVndXN0dWx1cywgaW4gUmF2ZW5uYS4gVGhpcyBldmVudCBtYXJrcyB0aGUgY29udmVudGlvbmFsIGVuZCBvZiB0aGUgV2VzdGVybiBSb21hbiBFbXBpcmUgKHRob3VnaCB0aGUgRWFzdGVybiBSb21hbi9CeXphbnRpbmUgRW1waXJlIGNvbnRpbnVlZCBmb3IgbmVhcmx5IGEgbWlsbGVubml1bSB1bnRpbCAxNDUzKS5cblxuIyMjIEtleSBDb250ZXh0IGFuZCBFdmlkZW5jZVxuLSAqKkhpc3RvcmljYWwgU291cmNlcyoqOiBDaHJvbmljbGVkIGJ5IHdyaXRlcnMgbGlrZSBKb3JkYW5lcyAoKkdldGljYSosIGMuIDU1MSBDRSkgYW5kIFByb2NvcGl1cywgd2hvIGRlc2NyaWJlIE9kb2FjZXIncyB0YWtlb3Zlci4gVGhlIGltcGVyaWFsIHJlZ2FsaWEgd2FzIHJlcG9ydGVkbHkgc2VudCB0byBDb25zdGFudGlub3BsZSBhcyBhIHN5bWJvbGljIGVuZC5cbi0gKipXaHkgNDc2PyoqIEl0IGVuZGVkIHRoZSBsaW5lIG9mIGVtcGVyb3JzIGluIHRoZSBXZXN0LCBlc3RhYmxpc2hlZCBhZnRlciBjZW50dXJpZXMgb2YgZGVjbGluZSAoZS5nLiwgaW52YXNpb25zLCBlY29ub21pYyBjb2xsYXBzZSwgbWlsaXRhcnkgcmVsaWFuY2Ugb24gYmFyYmFyaWFucykuIEVkd2FyZCBHaWJib24ncyAqVGhlIEhpc3Rvcnkgb2YgdGhlIERlY2xpbmUgYW5kIEZhbGwgb2YgdGhlIFJvbWFuIEVtcGlyZSogKDE3NzbigJMxNzg5KSBwb3B1bGFyaXplZCB0aGlzIGRhdGUuXG4tICoqRGViYXRlcyoqOiBTb21lIGhpc3RvcmlhbnMgcHJlZmVyIDQxMCBDRSAoU2FjayBvZiBSb21lIGJ5IFZpc2lnb3RocyB1bmRlciBBbGFyaWMpIG9yIDQ4MCBDRSAoZGVhdGggb2YgSnVsaXVzIE5lcG9zLCB0aGUgZGUganVyZSBsYXN0IGVtcGVyb3IpLiBUaGUgXCJmYWxsXCIgd2FzIGdyYWR1YWwsIG5vdCBhIHNpbmdsZSBtb21lbnQuXG5cblRoaXMgaXMgc3VwcG9ydGVkIGJ5IHByaW1hcnkgc291cmNlcyBsaWtlIHRoZSAqQ2hyb25pY29uKiBvZiBNYXJjZWxsaW51cyBDb21lcyBhbmQgYXJjaGFlb2xvZ2ljYWwgZXZpZGVuY2Ugb2YgdXJiYW4gZGVjYXkgaW4gSXRhbHkgYnkgdGhlIDV0aCBjZW50dXJ5LiIsInJlZnVzYWwiOm51bGx9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6NDgyLCJjb21wbGV0aW9uX3Rva2VucyI6MjcxLCJ0b3RhbF90b2tlbnMiOjc1MywicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7InRleHRfdG9rZW5zIjo0ODIsImF1ZGlvX3Rva2VucyI6MCwiaW1hZ2VfdG9rZW5zIjowLCJjYWNoZWRfdG9rZW5zIjozMTR9LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjAsImF1ZGlvX3Rva2VucyI6MCwiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjAsInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowfSwibnVtX3NvdXJjZXNfdXNlZCI6MCwiY29zdF9pbl91c2RfdGlja3MiOjE4NDgwMDB9LCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF80ODMxOWZjYjA4In0=
-  recorded_at: Mon, 16 Mar 2026 19:22:40 GMT
+      string: '{"id":"d5a53955-fd7d-90c1-bfc9-c8fea9a48b98","object":"chat.completion","created":1778112412,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        \"fall of Rome\" conventionally refers to the deposition of the last Western
+        Roman Emperor, Romulus Augustulus, on **September 4, 476 CE**, by the Germanic
+        chieftain Odoacer. This marked the end of the Western Roman Empire (though
+        the Eastern Roman/Byzantine Empire continued until 1453).\n\nHistorians debate
+        whether it was a sudden \"fall\" or a gradual decline over centuries, influenced
+        by invasions, economic issues, military overextension, and internal corruption.
+        Key precursors include the Visigoths'' sack of Rome in 410 CE and the Vandals''
+        sack in 455 CE.","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":482,"completion_tokens":127,"total_tokens":609,"prompt_tokens_details":{"text_tokens":482,"audio_tokens":0,"image_tokens":0,"cached_tokens":314},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":1128000},"system_fingerprint":"fp_b9ff9b81b3"}'
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 recorded_with: VCR 6.4.0
