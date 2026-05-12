@@ -86,7 +86,7 @@ module RubyLLM
           parse_binary_response(stdout)
         end
 
-        def resolve_tool_call(tools, user_message, config) # rubocop:disable Metrics/PerceivedComplexity
+        def resolve_tool_call(tools, user_message, config)
           return nil unless tools&.any?
 
           tool_name, tool = tools.first
@@ -126,14 +126,16 @@ module RubyLLM
           stdout, _stderr, status = Open3.capture3(bin, stdin_data: JSON.generate(payload))
           return nil unless status.success?
 
-          body = begin
-            JSON.parse(stdout)
-          rescue JSON::ParserError
-            return nil
-          end
-          return nil unless body['ok']
+          body = parse_json_safely(stdout)
+          return nil if body.nil? || !body['ok']
 
           parse_extracted_value(body['output']&.strip, param_name)
+        end
+
+        def parse_json_safely(text)
+          JSON.parse(text)
+        rescue JSON::ParserError
+          nil
         end
 
         def parse_extracted_value(raw_output, param_name)

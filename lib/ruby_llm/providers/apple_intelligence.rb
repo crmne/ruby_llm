@@ -18,7 +18,7 @@ module RubyLLM
         nil
       end
 
-      # rubocop:disable Metrics/ParameterLists,Metrics/PerceivedComplexity
+      # rubocop:disable Metrics/ParameterLists
       def complete(messages, tools: nil, temperature: nil, model: nil, params: {}, headers: {}, schema: nil,
                    thinking: nil, tool_prefs: nil, &)
         _ = [temperature, model, params, headers, schema, thinking, tool_prefs] # not used for local provider
@@ -34,7 +34,7 @@ module RubyLLM
         payload = build_payload(messages)
         execute_binary(payload, @config)
       end
-      # rubocop:enable Metrics/ParameterLists,Metrics/PerceivedComplexity
+      # rubocop:enable Metrics/ParameterLists
 
       class << self
         def configuration_options
