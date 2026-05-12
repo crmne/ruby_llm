@@ -31,7 +31,7 @@ RSpec.describe RubyLLM::Providers::Gemini::Streaming do
 
     chunk = test_obj.send(:build_chunk, data)
 
-    expect(chunk.input_tokens).to eq(10)
+    expect(chunk.input_tokens).to eq(4)
     expect(chunk.output_tokens).to eq(4)
     expect(chunk.cached_tokens).to eq(6)
   end

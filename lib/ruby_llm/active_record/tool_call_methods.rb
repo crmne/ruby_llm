@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require 'active_support/concern'
+require 'ruby_llm/active_record/payload_helpers'
+
 module RubyLLM
   module ActiveRecord
     # Methods mixed into tool call models.

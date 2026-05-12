@@ -47,6 +47,49 @@ RSpec.describe RubyLLM::Image do
     'https://rubyllm.com/some-asset-that-does-not-exist.png'
   end
 
+  describe '#cost' do
+    it 'returns a RubyLLM::Cost with the same shape as chat and message costs' do
+      model_info = RubyLLM::Model::Info.new(
+        id: model,
+        name: 'GPT Image 1',
+        provider: 'openai',
+        pricing: {
+          text_tokens: {
+            standard: {
+              input_per_million: 5.0
+            }
+          },
+          images: {
+            standard: {
+              input_per_million: 10.0,
+              output_per_million: 40.0
+            }
+          }
+        }
+      )
+      allow(RubyLLM.models).to receive(:find).and_call_original
+      allow(RubyLLM.models).to receive(:find).with(model).and_return(model_info)
+
+      image = described_class.new(
+        model_id: model,
+        usage: {
+          'input_tokens' => 350,
+          'input_tokens_details' => {
+            'text_tokens' => 100,
+            'image_tokens' => 250
+          },
+          'output_tokens' => 50
+        }
+      )
+
+      expect(image.tokens.input).to eq(350)
+      expect(image.tokens.output).to eq(50)
+      expect(image.cost.input).to be_within(0.0000000001).of(0.003)
+      expect(image.cost.output).to be_within(0.0000000001).of(0.002)
+      expect(image.cost.total).to be_within(0.0000000001).of(0.005)
+    end
+  end
+
   describe 'basic functionality' do
     IMAGE_GENERATION_MODELS.each do |model_info|
       provider = model_info[:provider]

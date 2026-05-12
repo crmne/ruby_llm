@@ -29,7 +29,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 02 Apr 2026 11:29:51 GMT
+      - Thu, 07 May 2026 00:00:13 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -41,37 +41,39 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '450000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-04-02T11:29:51Z'
+      - '2026-05-07T00:00:13Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '90000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '90000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-04-02T11:29:51Z'
+      - '2026-05-07T00:00:13Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '1000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-04-02T11:29:50Z'
+      - '2026-05-07T00:00:12Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '540000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '540000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-04-02T11:29:51Z'
+      - '2026-05-07T00:00:13Z'
       Request-Id:
       - "<REQUEST_ID>"
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
+      Traceresponse:
+      - 00-88d6860fc7a0c7ecd7e6c6f7acd55505-d9f2a2066da49cc9-01
       Server:
       - cloudflare
       X-Envoy-Upstream-Service-Time:
-      - '739'
-      Server-Timing:
-      - x-originResponse;dur=742
+      - '680'
+      Vary:
+      - Accept-Encoding
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
@@ -84,6 +86,6 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_019Vc7vMn9yJ56hNwUCzZeLU","type":"message","role":"assistant","content":[{"type":"tool_use","id":"toolu_011Wc9ttRZevez246CuFWjFB","name":"array_params","input":{"tags":["red","blue"]},"caller":{"type":"direct"}}],"stop_reason":"tool_use","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":608,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":59,"service_tier":"standard","inference_geo":"not_available"}}'
-  recorded_at: Thu, 02 Apr 2026 11:29:51 GMT
+      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_01CvrhMBZeDqY1VVKtVDo8XG","type":"message","role":"assistant","content":[{"type":"tool_use","id":"toolu_01ERpFgaXyqCFtzfwxAxW2Yw","name":"array_params","input":{"tags":["red","blue"]},"caller":{"type":"direct"}}],"stop_reason":"tool_use","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":608,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":59,"service_tier":"standard","inference_geo":"not_available"}}'
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 recorded_with: VCR 6.4.0

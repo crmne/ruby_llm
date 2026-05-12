@@ -24,13 +24,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 02 Apr 2026 11:24:23 GMT
+      - Wed, 06 May 2026 23:53:17 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Strict-Transport-Security:
+      - max-age=31536000
       Set-Cookie:
       - "<COOKIE>"
       X-Ratelimit-Limit-Tokens:
@@ -44,19 +46,17 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '1800'
       X-Metrics-Ttft-Ms:
-      - '127.5'
+      - '260.9'
       X-Metrics-Mean-Itl-Ms:
-      - '8.5'
+      - '2.6'
       X-Metrics-E2e-Ms:
-      - '287.9'
-      Strict-Transport-Security:
-      - max-age=31536000
+      - '409.5'
+      Cf-Cache-Status:
+      - DYNAMIC
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Traceparent:
-      - 00-3ce7c0253056a924b1ed0512025a8683-53ed67540087f0c2-01
-      Cf-Cache-Status:
-      - DYNAMIC
+      - 00-b337294511fc5c1cada02cda5ba1232d-d8db2bed0000b300-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
@@ -69,6 +69,6 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"d866d5d1-a8aa-9424-be6b-44ad37be0524","object":"chat.completion","created":1775129063,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"{\"name\":\"Alice\",\"age\":28}","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":252,"completion_tokens":9,"total_tokens":261,"prompt_tokens_details":{"text_tokens":252,"audio_tokens":0,"image_tokens":0,"cached_tokens":163},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":304500},"system_fingerprint":"fp_5d249ba471"}'
-  recorded_at: Thu, 02 Apr 2026 11:24:23 GMT
+      string: '{"id":"2a05c569-5ace-9086-81ea-b1f0bd502dce","object":"chat.completion","created":1778111597,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"{\"name\":\"Alice\",\"age\":28}","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":252,"completion_tokens":9,"total_tokens":261,"prompt_tokens_details":{"text_tokens":252,"audio_tokens":0,"image_tokens":0,"cached_tokens":169},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":295500},"system_fingerprint":"fp_b9ff9b81b3"}'
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 recorded_with: VCR 6.4.0
