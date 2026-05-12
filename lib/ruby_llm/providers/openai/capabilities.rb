@@ -165,7 +165,7 @@ module RubyLLM
           }
 
           cached_price = cached_input_price_for(model_id)
-          standard_pricing[:cached_input_per_million] = cached_price if cached_price
+          standard_pricing[:cache_read_input_per_million] = cached_price if cached_price
 
           { text_tokens: { standard: standard_pricing } }
         end
@@ -237,14 +237,14 @@ module RubyLLM
             input_per_million: input_price_for(model_id)
           }
           cached_text_price = cached_input_price_for(model_id)
-          text_pricing[:cached_input_per_million] = cached_text_price if cached_text_price
+          text_pricing[:cache_read_input_per_million] = cached_text_price if cached_text_price
 
           image_pricing = {
             input_per_million: family_prices(model_id).dig(:images, :input),
             output_per_million: family_prices(model_id).dig(:images, :output)
           }
           cached_image_price = family_prices(model_id).dig(:images, :cached_input)
-          image_pricing[:cached_input_per_million] = cached_image_price if cached_image_price
+          image_pricing[:cache_read_input_per_million] = cached_image_price if cached_image_price
 
           {
             text_tokens: { standard: text_pricing },
