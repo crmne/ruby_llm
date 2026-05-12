@@ -48,6 +48,34 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       expect(message.input_tokens).to be_positive
       expect(message.output_tokens).to be_positive
     end
+
+    it 'calculates message and chat costs from the model association' do
+      model_record = Model.create!(
+        model_id: 'priced-model',
+        name: 'Priced Model',
+        provider: 'openai',
+        pricing: {
+          text_tokens: {
+            standard: {
+              input_per_million: 1.0,
+              output_per_million: 2.0
+            }
+          }
+        }
+      )
+      chat = Chat.create!(model: model_record)
+
+      message = chat.messages.create!(
+        role: 'assistant',
+        content: 'Hi',
+        model: model_record,
+        input_tokens: 1_000,
+        output_tokens: 2_000
+      )
+
+      expect(message.cost.total).to eq(0.005)
+      expect(chat.cost.total).to eq(0.005)
+    end
   end
 
   describe 'system messages' do
@@ -299,6 +327,8 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
 
       expect(llm_message.cached_tokens).to eq(42)
       expect(llm_message.cache_creation_tokens).to eq(7)
+      expect(message.cache_read_tokens).to eq(42)
+      expect(message.cache_write_tokens).to eq(7)
     end
 
     it 'keeps create_user_message as a deprecated compatibility wrapper' do
@@ -549,6 +579,14 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
         expect { conversation.messages.create!(role: 'user', content: 'Test') }.not_to raise_error
         expect(conversation.messages.count).to eq(1)
       end
+
+      it 'keeps foreign key inference tied to the association name' do
+        parent_tool_call = Support::Message.reflect_on_association(:parent_tool_call)
+        result = Support::ToolCall.reflect_on_association(:result)
+
+        expect(parent_tool_call.foreign_key).to eq('tool_call_id')
+        expect(result.foreign_key).to eq('tool_call_id')
+      end
     end
 
     describe 'to_llm conversion' do
@@ -703,28 +741,51 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
   end
 
   describe 'event callbacks' do
-    it 'preserves user callbacks when using Rails integration' do
+    it 'keeps on_new_message replacing while preserving persistence callbacks' do
       user_callback_called = false
+      second_user_callback_called = false
       end_callback_called = false
+      allow(RubyLLM.logger).to receive(:warn)
 
       chat = Chat.create!(model: model)
+      provider = chat.to_llm.instance_variable_get(:@provider)
+      allow(provider).to receive(:complete).and_return(RubyLLM::Message.new(role: :assistant, content: 'Hello back'))
 
       # Set user callbacks before calling ask
       chat.on_new_message { user_callback_called = true }
+      chat.on_new_message { second_user_callback_called = true }
       chat.on_end_message { end_callback_called = true }
 
       # Call ask which triggers to_llm and sets up persistence callbacks
       chat.ask('Hello')
 
-      # Both user callbacks and persistence should work
-      expect(user_callback_called).to be true
+      # on_* callbacks replace each other, but persistence uses additive callbacks.
+      expect(user_callback_called).to be false
+      expect(second_user_callback_called).to be true
       expect(end_callback_called).to be true
       expect(chat.messages.count).to eq(2) # Persistence still works
+    end
+
+    it 'preserves persistence when callbacks are registered directly on to_llm' do
+      user_callback_called = false
+      chat = Chat.create!(model: model)
+      llm_chat = chat.to_llm
+      provider = llm_chat.instance_variable_get(:@provider)
+      allow(provider).to receive(:complete).and_return(RubyLLM::Message.new(role: :assistant, content: 'Hello back'))
+      allow(RubyLLM.logger).to receive(:warn)
+
+      llm_chat.on_new_message { user_callback_called = true }
+
+      expect { chat.ask('Hello') }.not_to raise_error
+      expect(user_callback_called).to be true
+      expect(chat.messages.count).to eq(2)
+      expect(chat.messages.last.content).to eq('Hello back')
     end
 
     it 'calls on_tool_call and on_tool_result callbacks' do
       tool_call_received = nil
       tool_result_received = nil
+      allow(RubyLLM.logger).to receive(:warn)
 
       chat = Chat.create!(model: model)
                  .with_tool(Calculator)
@@ -903,6 +964,14 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
           chat.send(:cleanup_orphaned_tool_results)
         end.not_to(change { chat.messages.count })
       end
+
+      it 'uses the same custom foreign key for parent tool calls and results' do
+        parent_tool_call = Clanker::Message.reflect_on_association(:parent_tool_call)
+        result = Clanker::ToolCall.reflect_on_association(:result)
+
+        expect(parent_tool_call.foreign_key).to eq('clanker_tool_call_id')
+        expect(result.foreign_key).to eq('clanker_tool_call_id')
+      end
     end
   end
 
@@ -968,7 +1037,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
         { budget: 1024 }
       when :gemini
         { effort: :low }
-      when :ollama, :mistral
+      when :ollama
         nil
       else
         { effort: :medium }
