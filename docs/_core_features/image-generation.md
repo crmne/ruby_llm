@@ -24,9 +24,11 @@ redirect_from:
 After reading this guide, you will know:
 
 *   How to generate images from text prompts.
+*   How to edit existing images with source images and masks.
 *   How to select different image generation models.
 *   How to specify image sizes (for supported models).
 *   How to access and save generated image data (URL or Base64).
+*   How to inspect token usage and calculate image costs.
 *   How to integrate image generation with Rails Active Storage.
 *   Tips for writing effective image prompts.
 *   How to handle errors during image generation.
@@ -61,6 +63,67 @@ puts "Model Used: #{image.model_id}"
 ```
 
 The `paint` method abstracts the differences between provider APIs.
+
+## Token Usage and Costs
+{: .d-inline-block }
+
+v1.15+
+{: .label .label-green }
+
+When providers return image token usage, images expose the same cost shape as chats and messages:
+
+```ruby
+image = RubyLLM.paint("A small watercolor robot", model: "gpt-image-1")
+
+image.tokens.input
+image.tokens.output
+
+image.cost.input
+image.cost.output
+image.cost.total
+```
+
+Image costs use provider usage data plus pricing from the model registry. For models that report separate text and image input token details, RubyLLM applies the right pricing bucket to each part and returns the combined value as `image.cost.input`.
+
+## Editing Existing Images
+{: .d-inline-block }
+
+v1.15+
+{: .label .label-green }
+
+Some models, such as OpenAI's GPT Image models, can edit an existing image instead of generating from scratch. Use `with:` to pass one or more source images, and `mask:` when you want to constrain which parts of the image may change.
+
+```ruby
+image = RubyLLM.paint(
+  "Turn the logo green and keep the background transparent",
+  model: "gpt-image-1",
+  with: "logo.png"
+)
+```
+
+`with:` accepts the same kinds of sources RubyLLM already supports elsewhere for attachments: local files, URLs, IO-like objects, and Active Storage attachments.
+
+### Editing With Multiple Images
+
+```ruby
+image = RubyLLM.paint(
+  "Combine these references into a postcard illustration",
+  model: "gpt-image-1",
+  with: ["person.png", "style-reference.png"]
+)
+```
+
+### Editing With a Mask
+
+```ruby
+image = RubyLLM.paint(
+  "Replace only the background with a sunset sky",
+  model: "gpt-image-1",
+  with: "portrait.png",
+  mask: "portrait-mask.png",
+  params: { size: "1024x1024" }
+)
+```
 
 ## Choosing Models
 

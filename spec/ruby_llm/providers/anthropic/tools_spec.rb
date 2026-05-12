@@ -164,6 +164,30 @@ RSpec.describe RubyLLM::Providers::Anthropic::Tools do
                              ]
                            })
     end
+
+    it 'uses a placeholder when the tool returns no content' do
+      msg = instance_double(RubyLLM::Message,
+                            tool_call_id: 'tool_123',
+                            content: '')
+
+      result = tools.format_tool_result(msg)
+
+      expect(result).to eq({
+                             role: 'user',
+                             content: [
+                               {
+                                 type: 'tool_result',
+                                 tool_use_id: 'tool_123',
+                                 content: [
+                                   {
+                                     type: 'text',
+                                     text: '(no output)'
+                                   }
+                                 ]
+                               }
+                             ]
+                           })
+    end
   end
 
   describe '.parse_tool_calls' do

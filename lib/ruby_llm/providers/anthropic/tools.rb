@@ -45,10 +45,13 @@ module RubyLLM
         end
 
         def format_tool_result_block(msg)
+          content = msg.content
+          content = '(no output)' if content.nil? || (content.respond_to?(:empty?) && content.empty?)
+
           {
             type: 'tool_result',
             tool_use_id: msg.tool_call_id,
-            content: Media.format_content(msg.content)
+            content: Media.format_content(content)
           }
         end
 
