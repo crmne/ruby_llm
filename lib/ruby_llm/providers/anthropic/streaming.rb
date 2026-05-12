@@ -7,6 +7,12 @@ module RubyLLM
       module Streaming
         private
 
+        def stream_response(connection, payload, additional_headers = {}, &)
+          # Avoid Net::HTTP's auto-inflate: Cloudflare's gzip flushes
+          # infrequently for SSE, batching chunks until each flush.
+          super(connection, payload, additional_headers.merge('Accept-Encoding' => 'identity'), &)
+        end
+
         def stream_url
           completion_url
         end
