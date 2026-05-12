@@ -59,4 +59,23 @@ RSpec.describe RubyLLM::Error do
       expect(error.response).to be_nil
     end
   end
+
+  describe RubyLLM::UnsupportedAttachmentError do
+    it 'uses a simple standard message with the unsupported type and guidance' do
+      error = described_class.new('application/vnd.openxmlformats-officedocument.wordprocessingml.document')
+
+      expect(error.message).to eq(
+        'Unsupported attachment type: application/vnd.openxmlformats-officedocument.wordprocessingml.document. ' \
+        'Consider using a model that supports this attachment type.'
+      )
+    end
+
+    it 'omits the type when none is provided' do
+      error = described_class.new
+
+      expect(error.message).to eq(
+        'Unsupported attachment type. Consider using a model that supports this attachment type.'
+      )
+    end
+  end
 end
