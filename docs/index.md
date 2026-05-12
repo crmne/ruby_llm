@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Home
+title: RubyLLM
 nav_order: 1
 description: One beautiful Ruby API for GPT, Claude, Gemini, and more. Easily build chatbots, AI agents, RAG applications, and content generators.
 permalink: /
@@ -160,9 +160,7 @@ RubyLLM.moderate "Check if this text is safe"
 ```ruby
 # Let AI use your code
 class Weather < RubyLLM::Tool
-  description "Get current weather"
-  param :latitude
-  param :longitude
+  desc "Get current weather"
 
   def execute(latitude:, longitude:)
     url = "https://api.open-meteo.com/v1/forecast?latitude=#{latitude}&longitude=#{longitude}&current=temperature_2m,wind_speed_10m"

@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 02 Apr 2026 11:25:18 GMT
+      - Wed, 06 May 2026 23:54:32 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -32,45 +32,47 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '019d4df0-c53d-7754-8801-c15cdd7d8664'
+      - '019dffb6-ede9-7c7b-a014-16cb13ac8962'
       X-Kong-Request-Id:
-      - '019d4df0-c53d-7754-8801-c15cdd7d8664'
+      - '019dffb6-ede9-7c7b-a014-16cb13ac8962'
       X-Ratelimit-Limit-Tokens-Minute:
-      - '600000'
+      - '2000000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '599447'
+      - '1996052'
       X-Ratelimit-Tokens-Query-Cost:
-      - '31'
+      - '60'
       X-Ratelimit-Limit-Req-Minute:
-      - '360'
+      - '1500'
       X-Ratelimit-Remaining-Req-Minute:
-      - '356'
+      - '1492'
       X-Envoy-Upstream-Service-Time:
-      - '298'
+      - '344'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '299'
+      - '345'
       X-Kong-Proxy-Latency:
-      - '16'
-      Cf-Cache-Status:
-      - DYNAMIC
+      - '26'
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=15552000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
+      Cf-Cache-Status:
+      - DYNAMIC
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"7d4b46b701de4957928b17182e8081b3","created":1775129118,"model":"mistral-small-latest","usage":{"prompt_tokens":22,"total_tokens":31,"completion_tokens":9,"prompt_tokens_details":{"cached_tokens":0}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
-        capital of France is **Paris**."}}]}'
-  recorded_at: Thu, 02 Apr 2026 11:25:18 GMT
+      string: '{"id":"95d85f719f004df3b01ba91a352618bf","created":1778111671,"model":"mistral-small-latest","usage":{"prompt_tokens":22,"total_tokens":60,"completion_tokens":38,"prompt_tokens_details":{"cached_tokens":0}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
+        capital of France is **Paris**. It is the largest city in France and serves
+        as the country''s political, economic, and cultural center.\n\nWould you like
+        more details about Paris?"}}]}'
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 recorded_with: VCR 6.4.0

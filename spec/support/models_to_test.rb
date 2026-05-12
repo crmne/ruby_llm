@@ -39,12 +39,11 @@ STRUCTURED_OUTPUT_MODELS = filter_local_providers(structured_output_models).free
 
 thinking_models = [
   { provider: :anthropic, model: 'claude-haiku-4-5' },
-  { provider: :azure, model: 'grok-4-fast-reasoning' },
   { provider: :bedrock, model: 'claude-haiku-4-5' },
   { provider: :deepseek, model: 'deepseek-reasoner' },
   { provider: :gemini, model: 'gemini-3-flash-preview' },
   { provider: :gpustack, model: 'qwen3' },
-  { provider: :mistral, model: 'magistral-small-latest' },
+  { provider: :mistral, model: 'mistral-small-latest' },
   { provider: :ollama, model: 'qwen3' },
   { provider: :ollama_cloud, model: 'gpt-oss:120b' },
   { provider: :openai, model: 'gpt-5.4' },

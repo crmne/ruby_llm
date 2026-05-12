@@ -27,19 +27,21 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 02 Apr 2026 11:30:19 GMT
+      - Thu, 07 May 2026 00:00:49 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Strict-Transport-Security:
+      - max-age=31536000
       Set-Cookie:
       - "<COOKIE>"
       X-Ratelimit-Limit-Tokens:
       - '10000000'
       X-Ratelimit-Remaining-Tokens:
-      - '10000000'
+      - '9999155'
       X-Zero-Data-Retention:
       - 'false'
       X-Ratelimit-Limit-Requests:
@@ -47,17 +49,15 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '1800'
       X-Metrics-Mean-Itl-Ms:
-      - '26.2'
+      - '2.2'
       X-Metrics-E2e-Ms:
-      - '772.3'
-      Strict-Transport-Security:
-      - max-age=31536000
+      - '1533.1'
+      Cf-Cache-Status:
+      - DYNAMIC
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Traceparent:
-      - 00-4797d03dcc84e826cd45aa8a788e4363-d74906aa00891f7d-01
-      Cf-Cache-Status:
-      - DYNAMIC
+      - 00-c8bc47b2d932007785eca89f96473a97-a5ef65bf0001a2ab-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
@@ -70,6 +70,6 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"c79bd0e5-5159-99ac-957a-c02f540e5d8a","object":"chat.completion","created":1775129419,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"call_71237547","function":{"name":"array_params","arguments":"{\"tags\":[\"red\",\"blue\"]}"},"type":"function"}],"refusal":null},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":397,"completion_tokens":29,"total_tokens":426,"prompt_tokens_details":{"text_tokens":397,"audio_tokens":0,"image_tokens":0,"cached_tokens":158},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":702000},"system_fingerprint":"fp_5d249ba471"}'
-  recorded_at: Thu, 02 Apr 2026 11:30:19 GMT
+      string: '{"id":"a581a0d4-d6de-93e7-a729-ebdb5f7c0a38","object":"chat.completion","created":1778112048,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"call_58260255","function":{"name":"array_params","arguments":"{\"tags\":[\"red\",\"blue\"]}"},"type":"function"}],"refusal":null},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":397,"completion_tokens":29,"total_tokens":426,"prompt_tokens_details":{"text_tokens":397,"audio_tokens":0,"image_tokens":0,"cached_tokens":158},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":702000},"system_fingerprint":"fp_b9ff9b81b3"}'
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 recorded_with: VCR 6.4.0
