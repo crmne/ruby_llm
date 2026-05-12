@@ -106,6 +106,23 @@ module RubyLLM
         template 'helpers/messages_helper.rb', "app/helpers/#{message_model_name.underscore.pluralize}_helper.rb"
       end
 
+      def add_available_chat_models_to_application_controller
+        path = 'app/controllers/application_controller.rb'
+        return unless File.exist?(path)
+
+        application_controller = File.read(path)
+        return if application_controller.include?('def available_chat_models')
+
+        inject_into_file path, <<-RUBY, before: /^end\s*\z/
+  private
+
+  def available_chat_models
+    RubyLLM.models.chat_models.all
+           .sort_by { |model| [ model.provider.to_s, model.name.to_s ] }
+  end
+        RUBY
+      end
+
       def add_routes
         # For namespaced models, use Rails convention with namespace blocks
         if chat_model_name.include?('::')

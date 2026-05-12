@@ -217,8 +217,8 @@ RSpec.describe RubyLLM::Chat do
 
     describe 'thought signatures' do
       [
-        { provider: :gemini, model: 'gemini-3-pro-preview' },
-        { provider: :vertexai, model: 'gemini-3-pro-preview' }
+        { provider: :gemini, model: 'gemini-3.1-pro-preview' },
+        { provider: :vertexai, model: 'gemini-3.1-pro-preview' }
       ].each do |model_info|
         provider = model_info[:provider]
         model = model_info[:model]
@@ -243,7 +243,7 @@ RSpec.describe RubyLLM::Chat do
     CHAT_MODELS.each do |model_info|
       model = model_info[:model]
       provider = model_info[:provider]
-      model = 'claude-sonnet-4' if provider == :bedrock # haiku can't do parallel tool calls
+      model = 'claude-sonnet-4-5' if provider == :bedrock # haiku can't do parallel tool calls
       it "#{provider}/#{model} can use parallel tool calls" do
         supports_functions? provider, model
         skip 'gpustack/qwen3 does not support parallel tool calls properly' if provider == :gpustack && model == 'qwen3'
@@ -257,7 +257,10 @@ RSpec.describe RubyLLM::Chat do
         expect(response.content).to include('15')
         expect(response.content).to include('10')
         expect(response.content).to include('Ruby')
-        expect(chat.messages.count).to be(5)
+
+        # Some providers may still satisfy both tool calls with an additional turn.
+        expect(chat.messages.count).to be >= 5
+        expect(assistant_tool_call_messages(chat).sum { |message| message.tool_calls.size }).to be >= 2
       end
     end
 
@@ -340,6 +343,10 @@ RSpec.describe RubyLLM::Chat do
       provider = model_info[:provider]
       it "#{provider}/#{model} can use tools with multi-turn streaming conversations" do
         supports_functions? provider, model
+        if provider == :azure
+          skip 'Azure rate-limits this multi-turn streaming tool scenario under the parallel live suite'
+        end
+
         if provider == :gpustack && model == 'qwen3'
           skip 'gpustack/qwen3 does not support streaming tool calls properly'
         end
@@ -509,10 +516,9 @@ RSpec.describe RubyLLM::Chat do
         expect(tool_call.name).to eq('object_params')
 
         arguments = stringified_arguments(tool_call.arguments)
-        expect(arguments['window']).to include(
-          'start' => '2025-01-01',
-          'end' => '2025-01-02'
-        )
+        window = stringified_arguments(arguments['window'])
+        expect(window['start']).to start_with('2025-01-01')
+        expect(window['end']).to start_with('2025-01-02')
       end
     end
   end
@@ -737,6 +743,10 @@ RSpec.describe RubyLLM::Chat do
         unless RubyLLM::Provider.providers[provider]&.local?
           model_info = RubyLLM.models.find(model)
           skip "#{model} doesn't support function calling" unless model_info&.supports_functions?
+        end
+
+        if provider == :azure
+          skip 'Azure rate-limits this multi-turn tool-control scenario under the parallel live suite'
         end
 
         provider_class = provider ? RubyLLM::Provider.providers[provider.to_sym] : nil

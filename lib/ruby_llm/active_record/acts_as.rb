@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require 'active_support/concern'
+require 'active_support/inflector'
+
 module RubyLLM
   module ActiveRecord
     # Adds chat and message persistence capabilities to ActiveRecord models.
@@ -148,6 +151,8 @@ module RubyLLM
 
         def acts_as_tool_call(message: :message, message_class: nil, message_foreign_key: nil, # rubocop:disable Metrics/ParameterLists
                               result: :result, result_class: nil, result_foreign_key: nil)
+          include RubyLLM::ActiveRecord::ToolCallMethods
+
           class_attribute :message_association_name, :result_association_name, :message_class, :result_class
 
           self.message_association_name = message

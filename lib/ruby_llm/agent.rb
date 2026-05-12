@@ -121,6 +121,7 @@ module RubyLLM
         input_values, = partition_inputs(kwargs)
         record = resolved_chat_model.find(id)
         apply_configuration(record, input_values:, persist_instructions: false)
+
         record
       end
 
@@ -129,6 +130,7 @@ module RubyLLM
 
         input_values, = partition_inputs(kwargs)
         record = chat_or_id.is_a?(resolved_chat_model) ? chat_or_id : resolved_chat_model.find(chat_or_id)
+        apply_assume_model_exists(record)
         runtime = runtime_context(chat: record, inputs: input_values)
         instructions_value = resolved_instructions_value(record, runtime, inputs: input_values)
         return record if instructions_value.nil?
@@ -227,7 +229,16 @@ module RubyLLM
       end
 
       def llm_chat_for(chat_object)
+        apply_assume_model_exists(chat_object)
         chat_object.respond_to?(:to_llm) ? chat_object.to_llm : chat_object
+      end
+
+      def apply_assume_model_exists(chat_object)
+        return unless chat_kwargs.key?(:assume_model_exists) &&
+                      resolved_chat_model &&
+                      chat_object.is_a?(resolved_chat_model)
+
+        chat_object.assume_model_exists = chat_kwargs[:assume_model_exists]
       end
 
       def evaluate(value, runtime)
@@ -348,7 +359,8 @@ module RubyLLM
 
     def_delegators :chat, :model, :messages, :tools, :params, :headers, :schema, :ask, :say, :with_tool, :with_tools,
                    :with_model, :with_temperature, :with_thinking, :with_context, :with_params, :with_headers,
-                   :with_schema, :on_new_message, :on_end_message, :on_tool_call, :on_tool_result, :each, :complete,
-                   :add_message, :reset_messages!
+                   :with_schema, :on_new_message, :on_end_message, :on_tool_call, :on_tool_result, :before_message,
+                   :after_message, :before_tool_call, :after_tool_result, :each, :complete, :add_message,
+                   :reset_messages!, :cost
   end
 end

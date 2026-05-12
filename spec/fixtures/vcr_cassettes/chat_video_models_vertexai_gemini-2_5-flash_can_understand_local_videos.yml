@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
-      Date:
-      - Tue, 03 Mar 2026 11:51:38 GMT
       Pragma:
       - no-cache
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
+      Date:
+      - Wed, 06 May 2026 23:55:30 GMT
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid",
+          "scope": "https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -68,7 +68,7 @@ http_interactions:
       User-Agent:
       - Faraday v2.14.1
       Authorization:
-      - Bearer <GOOGLE_BEARER_TOKEN>
+      - Bearer <AUTH_TOKEN>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -87,7 +87,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Tue, 03 Mar 2026 11:51:43 GMT
+      - Wed, 06 May 2026 23:55:39 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -110,40 +110,40 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "This video shows a person sitting on a sandy beach, facing the ocean.\n\nHere's a breakdown of what's visible:\n*   **A person:** A individual with long, dark hair, wearing a light-colored top (possibly pink or peach) and light bottoms, is seated on the sand with their back to the camera. They are looking out towards the sea.\n*   **Beach:** The person is sitting on a wide, light-colored sandy beach.\n*   **Ocean:** Beyond the beach, there's a vast expanse of ocean, with gentle waves breaking near the shore. The water appears clear and blue.\n*   **Sky:** The sky is bright blue with scattered white clouds, suggesting a sunny day.\n*   **Atmosphere:** The scene conveys a sense of peace, relaxation, and contemplation, with the person enjoying the view of the sea."
+                    "text": "This video shows a serene beach scene on a sunny day.\n\nIn the foreground, a person with long, dark brown hair is sitting on the golden sand, facing away from the camera and looking out at the ocean. They are wearing a light pink top and what appears to be white shorts or a skirt. Their hair occasionally blows gently in the breeze.\n\nThe clear, blue ocean stretches out before them, with gentle waves breaking near the shore and extending to the horizon. The water appears light blue and clear closer to the beach, transitioning to a deeper blue further out.\n\nThe sky above is bright blue with scattered fluffy white clouds, indicating a pleasant, sunny day. A tiny, indistinct figure can be seen far out in the water on the right side of the frame.\n\nThe overall atmosphere is peaceful and calm."
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.82840757943241972
+              "avgLogprobs": -1.7082269841974431
             }
           ],
           "usageMetadata": {
             "promptTokenCount": 3362,
-            "candidatesTokenCount": 183,
-            "totalTokenCount": 3774,
+            "candidatesTokenCount": 165,
+            "totalTokenCount": 4323,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
-                "modality": "VIDEO",
-                "tokenCount": 3354
-              },
-              {
                 "modality": "TEXT",
                 "tokenCount": 8
+              },
+              {
+                "modality": "VIDEO",
+                "tokenCount": 3354
               }
             ],
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 183
+                "tokenCount": 165
               }
             ],
-            "thoughtsTokenCount": 229
+            "thoughtsTokenCount": 796
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-03-03T11:51:38.927428Z",
-          "responseId": "SsumacTNOMnCtfAP--W6kAk"
+          "createTime": "2026-05-06T23:55:31.551244Z",
+          "responseId": "89T7aczSIcPJhcIP_oiG-A0"
         }
-  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 recorded_with: VCR 6.4.0

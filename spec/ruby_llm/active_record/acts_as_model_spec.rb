@@ -130,6 +130,10 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       it 'delegates type detection' do
         expect(model.type).to eq('chat')
       end
+
+      it 'delegates label formatting' do
+        expect(model.label).to eq('OpenAI - GPT-4')
+      end
     end
 
     describe 'validations' do

@@ -48,9 +48,9 @@ puts response.content
 
 # The response object contains metadata
 puts "Model Used: #{response.model_id}"
-puts "Tokens Used: #{response.input_tokens} input, #{response.output_tokens} output"
-puts "Cached Prompt Tokens: #{response.cached_tokens}" # v1.9.0+
-puts "Cache Writes: #{response.cache_creation_tokens}" # v1.9.0+
+puts "Tokens Used: #{response.tokens.input} input, #{response.tokens.output} output"
+puts "Cache Reads: #{response.tokens.cache_read}" # v1.15+
+puts "Cache Writes: #{response.tokens.cache_write}" # v1.15+
 ```
 
 The `ask` method adds your message to the conversation history with the `:user` role, sends the entire conversation history to the AI provider, and returns a `RubyLLM::Message` object containing the assistant's response.
@@ -612,38 +612,60 @@ Understanding token usage is important for managing costs and staying within con
 ```ruby
 response = chat.ask "Explain the Ruby Global Interpreter Lock (GIL)."
 
-input_tokens = response.input_tokens   # Tokens in the prompt sent TO the model
-output_tokens = response.output_tokens # Tokens in the response FROM the model
-cached_tokens = response.cached_tokens # Tokens served from the provider's prompt cache (if supported) - v1.9.0+
-cache_creation_tokens = response.cache_creation_tokens # Tokens written to cache (Anthropic/some Bedrock models) - v1.9.0+
-thinking_tokens = response.thinking_tokens # Thinking tokens when providers report them - v1.10.0+
+input_tokens = response.tokens.input   # Standard input tokens
+output_tokens = response.tokens.output # Billable output tokens
+cache_read_tokens = response.tokens.cache_read # Tokens served from the provider's prompt cache - v1.15+
+cache_write_tokens = response.tokens.cache_write # Tokens written to cache - v1.15+
+thinking_tokens = response.tokens.thinking # Thinking tokens when providers report them - v1.10.0+
+request_side_input_tokens = input_tokens.to_i + cache_read_tokens.to_i + cache_write_tokens.to_i
 
 puts "Input Tokens: #{input_tokens}"
 puts "Output Tokens: #{output_tokens}"
-puts "Cached Prompt Tokens: #{cached_tokens}" # v1.9.0+
-puts "Cache Creation Tokens: #{cache_creation_tokens}" # v1.9.0+
+puts "Cache Read Tokens: #{cache_read_tokens}" # v1.15+
+puts "Cache Write Tokens: #{cache_write_tokens}" # v1.15+
 puts "Thinking Tokens: #{thinking_tokens}" # v1.10.0+
-puts "Total Tokens for this turn: #{input_tokens + output_tokens}"
+puts "Request-side Input Tokens: #{request_side_input_tokens}" # v1.15+
+puts "Standard Tokens for this turn: #{input_tokens.to_i + output_tokens.to_i}"
 
-# Estimate cost for this turn
-model_info = RubyLLM.models.find(response.model_id)
-if model_info.input_price_per_million && model_info.output_price_per_million
-  input_cost = input_tokens * model_info.input_price_per_million / 1_000_000
-  output_cost = output_tokens * model_info.output_price_per_million / 1_000_000
-  turn_cost = input_cost + output_cost
-  puts "Estimated Cost for this turn: $#{format('%.6f', turn_cost)}"
-else
-  puts "Pricing information not available for #{model_info.id}"
-end
+# Cost for this turn - v1.15+
+puts "Input Cost: $#{format('%.6f', response.cost.input)}" if response.cost.input
+puts "Output Cost: $#{format('%.6f', response.cost.output)}" if response.cost.output
+puts "Cache Read Cost: $#{format('%.6f', response.cost.cache_read)}" if response.cost.cache_read
+puts "Cache Write Cost: $#{format('%.6f', response.cost.cache_write)}" if response.cost.cache_write
+puts "Thinking Cost: $#{format('%.6f', response.cost.thinking)}" if response.cost.thinking
+puts "Total Cost: $#{format('%.6f', response.cost.total)}" if response.cost.total
 
 # Total tokens for the entire conversation so far
-total_conversation_tokens = chat.messages.sum { |msg| (msg.input_tokens || 0) + (msg.output_tokens || 0) }
+total_conversation_tokens = chat.messages.sum do |msg|
+  msg.tokens&.input.to_i + msg.tokens&.output.to_i + msg.tokens&.cache_read.to_i + msg.tokens&.cache_write.to_i
+end
 puts "Total Conversation Tokens: #{total_conversation_tokens}"
+
+# Total cost for the entire conversation so far - v1.15+
+puts "Total Conversation Cost: $#{format('%.6f', chat.cost.total)}" if chat.cost.total
 ```
 
-`cached_tokens` captures the portion of the prompt served from the provider's cache. OpenAI reports this value automatically for prompts over 1024 tokens, while Anthropic and some Bedrock models expose both cache hits and cache writes. When the provider does not send cache data the attributes remain `nil`, so the example above falls back to zero for display. Available from v1.9+
+RubyLLM handles provider token differences for you. From v1.15 onward, `tokens.input` means the standard input bucket used for pricing. Cache activity is exposed separately as `tokens.cache_read` and `tokens.cache_write`, even when the provider includes those tokens in a raw prompt total.
 
-Thinking token usage is available via `response.thinking_tokens` and `response.tokens.thinking` when providers report it. For providers that do not include thinking token counts, these values remain `nil`.
+| Provider | Raw provider usage | RubyLLM exposes |
+| --- | --- | --- |
+| OpenAI, Azure OpenAI, xAI, OpenAI-compatible | `prompt_tokens` can include `prompt_tokens_details.cached_tokens`; cache writes may appear as `cache_write_tokens`. | `tokens.input` excludes cache reads and writes. `tokens.cache_read` and `tokens.cache_write` receive the cache buckets. |
+| DeepSeek | `prompt_tokens` is split into `prompt_cache_hit_tokens` and `prompt_cache_miss_tokens`. | `tokens.input` is cache misses. `tokens.cache_read` is cache hits. |
+| OpenRouter | `prompt_tokens` can include cached tokens and cache-write tokens in `prompt_tokens_details`. | `tokens.input` excludes both cache buckets. `tokens.cache_read` and `tokens.cache_write` receive the cache buckets. |
+| Anthropic | `input_tokens` is already separate from `cache_read_input_tokens` and `cache_creation_input_tokens` or the `cache_creation` breakdown. | `tokens.input` passes through. Cache buckets map to `tokens.cache_read` and `tokens.cache_write`. |
+| Bedrock | `inputTokens` includes `cacheReadInputTokens` and `cacheWriteInputTokens`. | `tokens.input` excludes both cache buckets. Cache buckets are exposed separately. |
+| Gemini and Vertex AI | `promptTokenCount` includes `cachedContentTokenCount`. | `tokens.input` excludes cached content. `tokens.cache_read` receives cached content tokens. |
+| Providers without cache fields | Only standard input and output usage is reported. | Cache buckets stay `nil`; `tokens.input` stays as the provider input count. |
+
+This means the same RubyLLM code works across providers: `tokens.input` for standard input, `tokens.output` for output, `tokens.cache_read` for prompt cache reads, and `tokens.cache_write` for prompt cache writes. To display the full request-side input activity, add `tokens.input + tokens.cache_read + tokens.cache_write`.
+
+The top-level token helpers remain available for compatibility with v1.9.0+ code, but new code should prefer `response.tokens.*`.
+
+Thinking token usage is available via `response.tokens.thinking` when providers report it. For most providers, thinking/reasoning tokens are a breakdown of output work, not an extra bucket to add yourself. RubyLLM keeps `tokens.output` as the billable output bucket: OpenAI-style providers that include reasoning in completion tokens stay as-is, while OpenAI-compatible providers that report reasoning outside completion tokens are normalized so `tokens.output` includes the billable generated total.
+
+When a model has distinct reasoning-token pricing, `response.cost.thinking` prices that bucket separately. Otherwise, thinking tokens are treated as part of `response.cost.output` and `response.cost.thinking` stays `nil`.
+
+Cost helpers are available from v1.15+. RubyLLM uses token usage from the provider and pricing from the model registry. If the registry is missing pricing for tokens that were used, the affected cost and `cost.total` return `nil` instead of pretending the cost was zero. These helpers cover token-priced conversation usage; provider-specific add-ons such as search-query charges are left to the provider's raw usage payload.
 
 Refer to the [Working with Models Guide]({% link _advanced/models.md %}) for details on accessing model-specific pricing.
 
@@ -653,38 +675,46 @@ You can register blocks to be called when certain events occur during the chat l
 
 ### Available Event Handlers
 
-RubyLLM provides four event handlers that cover the complete chat lifecycle:
+RubyLLM provides two callback styles. The `on_*` handlers replace any previously registered handler for the same event, which is useful when you want to override behavior. The Rails-style `before_*` and `after_*` callbacks are additive, so multiple registrations for the same event all run. Additive callbacks are available from v1.15+.
 
 ```ruby
 chat = RubyLLM.chat
 
 # Called at first chunk received from the assistant
-chat.on_new_message do
+chat.before_message do
   print "Assistant > "
 end
 
 # Called after the complete assistant message (including tool calls/results) is received
-chat.on_end_message do |message|
+chat.after_message do |message|
   puts "Response complete!"
   # Note: message might be nil if an error occurred during the request
-  if message && message.output_tokens
-    puts "Used #{message.input_tokens + message.output_tokens} tokens"
+  if message&.tokens&.output
+    tokens =
+      message.tokens.input.to_i +
+      message.tokens.output.to_i +
+      message.tokens.cache_read.to_i +
+      message.tokens.cache_write.to_i
+
+    puts "Used #{tokens} tokens"
   end
 end
 
 # Called when the AI decides to use a tool
-chat.on_tool_call do |tool_call|
+chat.before_tool_call do |tool_call|
   puts "AI is calling tool: #{tool_call.name} with arguments: #{tool_call.arguments}"
 end
 
 # Called after a tool returns its result
-chat.on_tool_result do |result|
+chat.after_tool_result do |result|
   puts "Tool returned: #{result}"
 end
 
 # These callbacks work for both streaming and non-streaming requests
 chat.ask "What is metaprogramming in Ruby?"
 ```
+
+The older `on_new_message`, `on_end_message`, `on_tool_call`, and `on_tool_result` handlers are still available and keep their replacing behavior. RubyLLM logs a deprecation warning when one of these handlers is used; prefer the additive Rails-style callbacks for new code.
 
 ## Raw Responses
 

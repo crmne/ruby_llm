@@ -11,7 +11,7 @@ http_interactions:
       User-Agent:
       - Faraday v2.14.1
       Authorization:
-      - Bearer <XAI_API_KEY>
+      - Bearer <AUTH_TOKEN>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -24,54 +24,49 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 03 Mar 2026 12:36:56 GMT
+      - Wed, 06 May 2026 23:56:52 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Strict-Transport-Security:
+      - max-age=31536000
+      Set-Cookie:
+      - "<COOKIE>"
       X-Ratelimit-Limit-Tokens:
-      - '4000000'
+      - '10000000'
       X-Ratelimit-Remaining-Tokens:
-      - '3995347'
+      - '9999190'
       X-Zero-Data-Retention:
       - 'false'
       X-Ratelimit-Limit-Requests:
-      - '607'
+      - '1800'
       X-Ratelimit-Remaining-Requests:
-      - '590'
+      - '1799'
       X-Metrics-Ttft-Ms:
-      - '179.7'
-      X-Metrics-Mean-Itl-Ms:
-      - '12.2'
+      - '204.2'
       X-Metrics-E2e-Ms:
-      - '1482.5'
+      - '303.8'
+      Cf-Cache-Status:
+      - DYNAMIC
       X-Request-Id:
       - "<X_REQUEST_ID>"
+      Traceparent:
+      - 00-b0a9abae542f94640acb2d9dfb4b1d32-659e7a5600001c1d-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
       - "*"
       Access-Control-Expose-Headers:
       - "*"
-      X-Envoy-Wasm-Service:
-      - prod-ic-inference-api
-      X-Envoy-Wasm-Route:
-      - ic-protected-inference-api
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      Strict-Transport-Security:
-      - max-age=31536000
       Server:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        eyJpZCI6Ijg0YjUxYzNhLTE4NWQtOThlMi04YzdkLWM2ZmViODFhOWZmMCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NzI1NDE0MTUsIm1vZGVsIjoiZ3Jvay00LTEtZmFzdC1ub24tcmVhc29uaW5nIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJQYXJpcyBpcyB0aGUgY2FwaXRhbCBvZiBGcmFuY2UuIFxuXG5UaGlzIGlzIGEgd2VsbC1lc3RhYmxpc2hlZCBmYWN0OiBQYXJpcyBoYXMgYmVlbiB0aGUgcG9saXRpY2FsLCBjdWx0dXJhbCwgYW5kIGVjb25vbWljIGNlbnRlciBvZiBGcmFuY2Ugc2luY2UgdGhlIFJvbWFuIGVyYSAoYXMgTHV0ZXRpYSksIHNvbGlkaWZpZWQgZHVyaW5nIHRoZSBNaWRkbGUgQWdlcywgYW5kIHJlbWFpbnMgc28gdG9kYXkgYXMgdGhlIHNlYXQgb2YgdGhlIEZyZW5jaCBnb3Zlcm5tZW50LCBpbmNsdWRpbmcgdGhlIMOJbHlzw6llIFBhbGFjZSAocHJlc2lkZW50aWFsIHJlc2lkZW5jZSkgYW5kIHRoZSBOYXRpb25hbCBBc3NlbWJseS4gWW91IGNhbiB2ZXJpZnkgdGhpcyBvbiBvZmZpY2lhbCBzb3VyY2VzIGxpa2UgdGhlIEZyZW5jaCBnb3Zlcm5tZW50J3Mgd2Vic2l0ZSAoZnJhbmNlLmZyKSBvciBlbmN5Y2xvcGVkaWFzIGxpa2UgQnJpdGFubmljYS4iLCJyZWZ1c2FsIjpudWxsfSwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjE3NSwiY29tcGxldGlvbl90b2tlbnMiOjk1LCJ0b3RhbF90b2tlbnMiOjI3MCwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7InRleHRfdG9rZW5zIjoxNzUsImF1ZGlvX3Rva2VucyI6MCwiaW1hZ2VfdG9rZW5zIjowLCJjYWNoZWRfdG9rZW5zIjoxNjF9LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjAsImF1ZGlvX3Rva2VucyI6MCwiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjAsInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowfSwibnVtX3NvdXJjZXNfdXNlZCI6MCwiY29zdF9pbl91c2RfdGlja3MiOjU4MzUwMH0sInN5c3RlbV9maW5nZXJwcmludCI6ImZwXzIzMzhkODVlZTcifQ==
-  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+      string: '{"id":"fa70a789-f7e4-9cbb-a218-4d78a3ae662a","object":"chat.completion","created":1778111812,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"Paris","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":175,"completion_tokens":1,"total_tokens":176,"prompt_tokens_details":{"text_tokens":175,"audio_tokens":0,"image_tokens":0,"cached_tokens":164},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":109000},"system_fingerprint":"fp_b9ff9b81b3"}'
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 recorded_with: VCR 6.4.0

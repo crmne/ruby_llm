@@ -29,39 +29,39 @@ http_interactions:
       X-Origin-Cache:
       - HIT
       Last-Modified:
-      - Tue, 03 Mar 2026 02:28:42 GMT
+      - Tue, 05 May 2026 02:26:38 GMT
       Access-Control-Allow-Origin:
       - "*"
       Etag:
-      - W/"69a6475a-9c6"
+      - W/"69f9555e-9c6"
       Expires:
-      - Tue, 03 Mar 2026 10:01:39 GMT
+      - Thu, 07 May 2026 00:01:24 GMT
       Cache-Control:
       - max-age=600
       X-Proxy-Cache:
       - MISS
       X-Github-Request-Id:
-      - 85DC:1F9395:1E82256:1EB6375:69A6AF2B
+      - 8CA8:1519:3A7294A:3B13014:69FBD3FC
       Accept-Ranges:
       - bytes
       Date:
-      - Tue, 03 Mar 2026 11:47:36 GMT
+      - Wed, 06 May 2026 23:52:24 GMT
       Via:
       - 1.1 varnish
       Age:
-      - '56'
+      - '8'
       X-Served-By:
-      - cache-fra-etou8220116-FRA
+      - cache-lis1490054-LIS
       X-Cache:
       - HIT
       X-Cache-Hits:
       - '1'
       X-Timer:
-      - S1772538457.700396,VS0,VE1
+      - S1778111545.502333,VS0,VE1
       Vary:
       - Accept-Encoding
       X-Fastly-Request-Id:
-      - a91be291b38fc6287f86cdf455c8fecd768f3aad
+      - 0e593eab8520f73d2cd8d358086f7a4a71552114
     body:
       encoding: ASCII-8BIT
       string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
@@ -97,7 +97,7 @@ http_interactions:
         \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
         WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
         FOR A PARTICULAR\n     PURPOSE.\n"
-  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/chat/completions
@@ -142,7 +142,7 @@ http_interactions:
       User-Agent:
       - Faraday v2.14.1
       Authorization:
-      - Bearer <DEEPSEEK_API_KEY>
+      - Bearer <AUTH_TOKEN>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -161,7 +161,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Tue, 03 Mar 2026 11:47:36 GMT
+      - Wed, 06 May 2026 23:52:24 GMT
       Server:
       - elb
       Vary:
@@ -169,7 +169,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - fe3356b4864c03c7e509a66639bfb725
+      - f7f6d45e109c19e77da437841710fd14
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -177,14 +177,25 @@ http_interactions:
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 33c97bbb27238fe2afd4da07b8379206.cloudfront.net (CloudFront)
+      - 1.1 d8d835cce198f21656f532aa7cb25fbe.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - TXL50-P4
+      - LIS50-P1
       X-Amz-Cf-Id:
-      - 57TC19K6u9XE19UUEGmh8NQ9Is0VecQBVF_JYRWYICl7AJDPwh3KbA==
+      - PznP_sbeFIw36M6kzy2t4IBt86Aw1s84k336n8BHPcV9JO4w59TajA==
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        eyJpZCI6IjAwNjU1YTFhLWZiY2QtNDgwYy05ZjExLWYyNzRhNDdhZTAzNSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NzI1Mzg0NTYsIm1vZGVsIjoiZGVlcHNlZWstY2hhdCIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiVGhpcyBmaWxlIChgbGljZW5zZS50eHRgKSBjb250YWlucyB0aGUgKipSdWJ5IHByb2dyYW1taW5nIGxhbmd1YWdlIGxpY2Vuc2UgdGVybXMqKi4gSXQncyBhIHBlcm1pc3NpdmUgb3Blbi1zb3VyY2UgbGljZW5zZSB0aGF0IGFsbG93cyB1c2VycyB0bzpcblxuKipLZXkgcG9pbnRzIG9mIHRoZSBsaWNlbnNlOioqXG5cbjEuICoqRnJlZSByZWRpc3RyaWJ1dGlvbioqIOKAkyBZb3UgY2FuIGNvcHkgYW5kIGRpc3RyaWJ1dGUgdmVyYmF0aW0gY29waWVzIG9mIFJ1YnkncyBzb3VyY2UgY29kZS5cbjIuICoqTW9kaWZpY2F0aW9uIGFsbG93ZWQqKiB1bmRlciBjZXJ0YWluIGNvbmRpdGlvbnMgKGUuZy4sIG1ha2luZyBtb2RpZmljYXRpb25zIHB1YmxpYywgdXNpbmcgbW9kaWZpZWQgdmVyc2lvbnMgaW50ZXJuYWxseSwgb3IgcmVuYW1pbmcgbm9uLXN0YW5kYXJkIGJpbmFyaWVzKS5cbjMuICoqRGlzdHJpYnV0aW9uIG9mIGJpbmFyaWVzKiogcGVybWl0dGVkIGlmIHlvdSBpbmNsdWRlIHNvdXJjZSBjb2RlIG9yIGluc3RydWN0aW9ucyB0byBvYnRhaW4gdGhlIG9yaWdpbmFsLlxuNC4gKipDYW4gYmUgY29tYmluZWQgd2l0aCBvdGhlciBzb2Z0d2FyZSoqIChpbmNsdWRpbmcgY29tbWVyY2lhbCBzb2Z0d2FyZSksIHRob3VnaCBzb21lIGZpbGVzIGluIHRoZSBkaXN0cmlidXRpb24gaGF2ZSBzZXBhcmF0ZSB0ZXJtcyAoc2VlIHRoZSBgTEVHQUxgIGZpbGUpLlxuNS4gKipPdXRwdXQgZmlsZXMqKiAoc2NyaXB0cywgbGlicmFyaWVzIGdlbmVyYXRlZCB1c2luZyBSdWJ5KSBhcmUgbm90IGNvdmVyZWQgYnkgUnVieSdzIGNvcHlyaWdodC5cbjYuICoqTm8gd2FycmFudHkqKiDigJMgdGhlIHNvZnR3YXJlIGlzIHByb3ZpZGVkIFwiYXMgaXNcIiB3aXRob3V0IGFueSBndWFyYW50ZWVzLlxuXG5UaGlzIGlzIGVzc2VudGlhbGx5IHRoZSAqKlJ1YnkgTGljZW5zZSoqIChkdWFsLWxpY2Vuc2VkIHVuZGVyIHRoZSAqKjItY2xhdXNlIEJTREwqKiBvciB0aGUgY3VzdG9tIHRlcm1zIGxpc3RlZCkuIEl0J3Mga25vd24gZm9yIGJlaW5nIHBlcm1pc3NpdmUgYW5kIGJ1c2luZXNzLWZyaWVuZGx5LiJ9LCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjU0NCwiY29tcGxldGlvbl90b2tlbnMiOjIxOSwidG90YWxfdG9rZW5zIjo3NjMsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjo1MTJ9LCJwcm9tcHRfY2FjaGVfaGl0X3Rva2VucyI6NTEyLCJwcm9tcHRfY2FjaGVfbWlzc190b2tlbnMiOjMyfSwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfZWFhYjhkMTE0Yl9wcm9kMDgyMF9mcDhfa3ZjYWNoZSJ9
-  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+      string: '{"id":"2092649a-b2c1-4af8-9479-e1bb086508ec","object":"chat.completion","created":1778111544,"model":"deepseek-v4-flash","choices":[{"index":0,"message":{"role":"assistant","content":"This
+        file is the **license file for the Ruby programming language** (specifically
+        an older version of its license, often referred to as the \"Ruby License\").\n\nIt
+        states that Ruby is copyrighted free software by Yukihiro Matsumoto. The file
+        outlines the terms under which the software can be redistributed and modified,
+        offering several alternative conditions (e.g., making modifications freely
+        available, using modified versions only internally, or arranging distribution
+        with the author). It also references a separate `BSDL` file for a 2-clause
+        BSD license option, and a `LEGAL` file for the copying conditions of files
+        not written by the original author.\n\nImportantly, the license disclaims
+        all warranties, stating the software is provided \"AS IS\" without any express
+        or implied warranties, including merchantability and fitness for a particular
+        purpose."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":544,"completion_tokens":167,"total_tokens":711,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":544},"system_fingerprint":"fp_058df29938_prod0820_fp8_kvcache_20260402"}'
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 recorded_with: VCR 6.4.0

@@ -1,7 +1,6 @@
 class <%= model_controller_class_name %> < ApplicationController
   def index
-    @<%= model_table_name %> = RubyLLM.models.chat_models.all
-                                      .sort_by { |model| [model.provider.to_s, model.name.to_s] }
+    @<%= model_table_name %> = available_chat_models
   end
 
   def show

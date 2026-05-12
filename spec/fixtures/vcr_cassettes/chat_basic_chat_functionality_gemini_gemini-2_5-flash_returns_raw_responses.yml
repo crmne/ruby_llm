@@ -23,6 +23,8 @@ http_interactions:
       code: 200
       message: OK
     headers:
+      X-Gemini-Service-Tier:
+      - standard
       Content-Type:
       - application/json; charset=UTF-8
       Vary:
@@ -30,7 +32,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Tue, 03 Mar 2026 11:50:53 GMT
+      - Wed, 06 May 2026 23:54:10 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -40,7 +42,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=758
+      - gfet4t7; dur=541
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -66,17 +68,18 @@ http_interactions:
           "usageMetadata": {
             "promptTokenCount": 8,
             "candidatesTokenCount": 8,
-            "totalTokenCount": 48,
+            "totalTokenCount": 40,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
                 "tokenCount": 8
               }
             ],
-            "thoughtsTokenCount": 32
+            "thoughtsTokenCount": 24,
+            "serviceTier": "standard"
           },
           "modelVersion": "gemini-2.5-flash",
-          "responseId": "HMumabj0N4qB7M8P3fvBkAo"
+          "responseId": "odT7aai5NL6CvdIPqNXBiA0"
         }
-  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 recorded_with: VCR 6.4.0

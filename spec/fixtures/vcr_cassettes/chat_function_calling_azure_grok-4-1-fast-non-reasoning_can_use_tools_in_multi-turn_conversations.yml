@@ -1,0 +1,389 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
+    body:
+      encoding: UTF-8
+      string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"user","content":"What''s
+        the weather in Berlin? (52.5200, 13.4050)"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Api-Key:
+      - "<AZURE_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-cache
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Vary:
+      - access-control-request-headers
+      Request-Context:
+      - appId=
+      Traceparent:
+      - 00-86a1cdf17c894d95a837d8ea3fb8f4ce-50ec777700002745-00
+      X-Ms-Rai-Invoked:
+      - 'true'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      X-Xai-Model-Address:
+      - http://localhost:9988
+      X-Ms-Client-Request-Id:
+      - 86a1cdf1-7c89-4d95-a837-d8ea3fb8f4ce
+      Azureml-Model-Session:
+      - d20260429222844-bf683bdf
+      Azureai-Requested-Tier:
+      - default
+      Azureai-Processed-Tier:
+      - default
+      X-Ms-Is-Spilled-Over:
+      - 'false'
+      X-Ratelimit-Key:
+      - grok-4-1-fast-non-reasoning
+      X-Ratelimit-Remaining-Requests:
+      - '49'
+      X-Ratelimit-Reset-Requests:
+      - '1'
+      X-Ratelimit-Limit-Requests:
+      - '50'
+      X-Ratelimit-Renewalperiod-Requests:
+      - '60'
+      X-Ratelimit-Abusepenalty-Active:
+      - 'False'
+      X-Ratelimit-Remaining-Tokens:
+      - '49870'
+      X-Ratelimit-Reset-Tokens:
+      - '0'
+      X-Ratelimit-Limit-Tokens:
+      - '50000'
+      X-Ratelimit-Renewalperiod-Tokens:
+      - '60'
+      Apim-Request-Id:
+      - 86a1cdf1-7c89-4d95-a837-d8ea3fb8f4ce
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Ms-Deployment-Name:
+      - grok-4-1-fast-non-reasoning
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Region:
+      - West Europe
+      Date:
+      - Wed, 06 May 2026 23:53:37 GMT
+    body:
+      encoding: UTF-8
+      string: '{"id":"357b909a-8942-451e-a75d-e20f35a941f1","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"call_51003894","index":0,"type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},"finish_reason":"tool_calls","content_filter_results":{}}],"usage":{"prompt_tokens":249,"completion_tokens":40,"total_tokens":289,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":0,"audio_tokens":0,"text_tokens":249,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1778111617,"object":"chat.completion","prompt_filter_results":null}'
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+- request:
+    method: post
+    uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
+    body:
+      encoding: UTF-8
+      string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"user","content":"What''s
+        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"call_51003894","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_51003894"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Api-Key:
+      - "<AZURE_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-cache
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Vary:
+      - access-control-request-headers
+      Request-Context:
+      - appId=
+      Traceparent:
+      - 00-dd1d60d9f74d41c5a125651258d83c67-cfda3c0d0000205d-00
+      X-Ms-Rai-Invoked:
+      - 'true'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      X-Xai-Model-Address:
+      - http://localhost:9988
+      X-Ms-Client-Request-Id:
+      - dd1d60d9-f74d-41c5-a125-651258d83c67
+      Azureml-Model-Session:
+      - d20260429222844-bf683bdf
+      Azureai-Requested-Tier:
+      - default
+      Azureai-Processed-Tier:
+      - default
+      X-Ms-Is-Spilled-Over:
+      - 'false'
+      X-Ratelimit-Key:
+      - grok-4-1-fast-non-reasoning
+      X-Ratelimit-Remaining-Requests:
+      - '49'
+      X-Ratelimit-Reset-Requests:
+      - '1'
+      X-Ratelimit-Limit-Requests:
+      - '50'
+      X-Ratelimit-Renewalperiod-Requests:
+      - '60'
+      X-Ratelimit-Abusepenalty-Active:
+      - 'False'
+      X-Ratelimit-Remaining-Tokens:
+      - '49794'
+      X-Ratelimit-Reset-Tokens:
+      - '0'
+      X-Ratelimit-Limit-Tokens:
+      - '50000'
+      X-Ratelimit-Renewalperiod-Tokens:
+      - '60'
+      Apim-Request-Id:
+      - dd1d60d9-f74d-41c5-a125-651258d83c67
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Ms-Deployment-Name:
+      - grok-4-1-fast-non-reasoning
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Region:
+      - West Europe
+      Date:
+      - Wed, 06 May 2026 23:53:58 GMT
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImI2MzExM2JjLTQ4M2MtNGFiMS05NDhhLWQzYThlMWRjMDcwNCIsIm1vZGVsIjoiZ3Jvay00LTEtZmFzdC1ub24tcmVhc29uaW5nIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJUaGUgY3VycmVudCB3ZWF0aGVyIGluIEJlcmxpbiAoNTIuNTIwMCwgMTMuNDA1MCkgaXMgMTXCsEMgd2l0aCB3aW5kcyBhdCAxMCBrbS9oLiJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCIsImNvbnRlbnRfZmlsdGVyX3Jlc3VsdHMiOnt9fV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjMyNSwiY29tcGxldGlvbl90b2tlbnMiOjI5LCJ0b3RhbF90b2tlbnMiOjM1NCwiYXVkaW9fcHJvbXB0X3Rva2VucyI6MCwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjAsImF1ZGlvX3Rva2VucyI6MCwidGV4dF90b2tlbnMiOjMyNSwiaW1hZ2VfdG9rZW5zIjowfSwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjowLCJhdWRpb190b2tlbnMiOjAsImFjY2VwdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowLCJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6MH0sIm51bV9zb3VyY2VzX3VzZWQiOjB9LCJjcmVhdGVkIjoxNzc4MTExNjM4LCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJwcm9tcHRfZmlsdGVyX3Jlc3VsdHMiOm51bGx9
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+- request:
+    method: post
+    uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
+    body:
+      encoding: UTF-8
+      string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"user","content":"What''s
+        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"call_51003894","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_51003894"},{"role":"assistant","content":"The
+        current weather in Berlin (52.5200, 13.4050) is 15°C with winds at 10 km/h."},{"role":"user","content":"What''s
+        the weather in Paris? (48.8575, 2.3514)"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Api-Key:
+      - "<AZURE_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-cache
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Vary:
+      - access-control-request-headers
+      Request-Context:
+      - appId=
+      Traceparent:
+      - 00-30b2d972826f4e8db4e2523128ae457d-4208a8d700078994-01
+      X-Ms-Rai-Invoked:
+      - 'true'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      X-Xai-Model-Address:
+      - http://localhost:9988
+      X-Ms-Client-Request-Id:
+      - 30b2d972-826f-4e8d-b4e2-523128ae457d
+      Azureml-Model-Session:
+      - d20260429215123-f480a160
+      Azureai-Requested-Tier:
+      - default
+      Azureai-Processed-Tier:
+      - default
+      X-Ms-Is-Spilled-Over:
+      - 'false'
+      X-Ratelimit-Key:
+      - grok-4-1-fast-non-reasoning
+      X-Ratelimit-Remaining-Requests:
+      - '49'
+      X-Ratelimit-Reset-Requests:
+      - '1'
+      X-Ratelimit-Limit-Requests:
+      - '50'
+      X-Ratelimit-Renewalperiod-Requests:
+      - '60'
+      X-Ratelimit-Abusepenalty-Active:
+      - 'False'
+      X-Ratelimit-Remaining-Tokens:
+      - '49747'
+      X-Ratelimit-Reset-Tokens:
+      - '0'
+      X-Ratelimit-Limit-Tokens:
+      - '50000'
+      X-Ratelimit-Renewalperiod-Tokens:
+      - '60'
+      Apim-Request-Id:
+      - 30b2d972-826f-4e8d-b4e2-523128ae457d
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Ms-Deployment-Name:
+      - grok-4-1-fast-non-reasoning
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Region:
+      - West Europe
+      Date:
+      - Wed, 06 May 2026 23:54:01 GMT
+    body:
+      encoding: UTF-8
+      string: '{"id":"21609d87-056b-41fc-b223-b134e0e74680","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"call_00299290","index":0,"type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"48.8575\",\"longitude\":\"2.3514\"}"}}]},"finish_reason":"tool_calls","content_filter_results":{}}],"usage":{"prompt_tokens":383,"completion_tokens":40,"total_tokens":423,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":0,"audio_tokens":0,"text_tokens":383,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1778111642,"object":"chat.completion","prompt_filter_results":null}'
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+- request:
+    method: post
+    uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
+    body:
+      encoding: UTF-8
+      string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"user","content":"What''s
+        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"call_51003894","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_51003894"},{"role":"assistant","content":"The
+        current weather in Berlin (52.5200, 13.4050) is 15°C with winds at 10 km/h."},{"role":"user","content":"What''s
+        the weather in Paris? (48.8575, 2.3514)"},{"role":"assistant","content":"","tool_calls":[{"id":"call_00299290","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"48.8575\",\"longitude\":\"2.3514\"}"}}]},{"role":"tool","content":"Current
+        weather at 48.8575, 2.3514: 15°C, Wind: 10 km/h","tool_call_id":"call_00299290"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Api-Key:
+      - "<AZURE_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-cache
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Vary:
+      - access-control-request-headers
+      Request-Context:
+      - appId=
+      Traceparent:
+      - 00-9f073b10e2a544e1a880c7a6da973297-3173db7e0007038b-00
+      X-Ms-Rai-Invoked:
+      - 'true'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      X-Xai-Model-Address:
+      - http://localhost:9988
+      X-Ms-Client-Request-Id:
+      - 9f073b10-e2a5-44e1-a880-c7a6da973297
+      Azureml-Model-Session:
+      - d20260429215123-f480a160
+      Azureai-Requested-Tier:
+      - default
+      Azureai-Processed-Tier:
+      - default
+      X-Ms-Is-Spilled-Over:
+      - 'false'
+      X-Ratelimit-Key:
+      - grok-4-1-fast-non-reasoning
+      X-Ratelimit-Remaining-Requests:
+      - '49'
+      X-Ratelimit-Reset-Requests:
+      - '1'
+      X-Ratelimit-Limit-Requests:
+      - '50'
+      X-Ratelimit-Renewalperiod-Requests:
+      - '60'
+      X-Ratelimit-Abusepenalty-Active:
+      - 'False'
+      X-Ratelimit-Remaining-Tokens:
+      - '49672'
+      X-Ratelimit-Reset-Tokens:
+      - '0'
+      X-Ratelimit-Limit-Tokens:
+      - '50000'
+      X-Ratelimit-Renewalperiod-Tokens:
+      - '60'
+      Apim-Request-Id:
+      - 9f073b10-e2a5-44e1-a880-c7a6da973297
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Ms-Deployment-Name:
+      - grok-4-1-fast-non-reasoning
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Region:
+      - West Europe
+      Date:
+      - Wed, 06 May 2026 23:54:24 GMT
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6IjQ2N2IyMWUwLTIwYjUtNDhkYi05YTczLTEyOWQyNmJmMWFkZCIsIm1vZGVsIjoiZ3Jvay00LTEtZmFzdC1ub24tcmVhc29uaW5nIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJUaGUgY3VycmVudCB3ZWF0aGVyIGluIFBhcmlzICg0OC44NTc1LCAyLjM1MTQpIGlzIDE1wrBDIHdpdGggd2luZHMgYXQgMTAga20vaC4ifSwiZmluaXNoX3JlYXNvbiI6InN0b3AiLCJjb250ZW50X2ZpbHRlcl9yZXN1bHRzIjp7fX1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjo0NTksImNvbXBsZXRpb25fdG9rZW5zIjoyOSwidG90YWxfdG9rZW5zIjo0ODgsImF1ZGlvX3Byb21wdF90b2tlbnMiOjAsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjowLCJhdWRpb190b2tlbnMiOjAsInRleHRfdG9rZW5zIjo0NTksImltYWdlX3Rva2VucyI6MH0sImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6MCwiYXVkaW9fdG9rZW5zIjowLCJhY2NlcHRlZF9wcmVkaWN0aW9uX3Rva2VucyI6MCwicmVqZWN0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjB9LCJudW1fc291cmNlc191c2VkIjowfSwiY3JlYXRlZCI6MTc3ODExMTY2NCwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwicHJvbXB0X2ZpbHRlcl9yZXN1bHRzIjpudWxsfQ==
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+recorded_with: VCR 6.4.0

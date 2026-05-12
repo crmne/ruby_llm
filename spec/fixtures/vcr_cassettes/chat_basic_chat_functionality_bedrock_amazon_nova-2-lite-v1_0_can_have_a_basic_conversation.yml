@@ -10,12 +10,12 @@ http_interactions:
       User-Agent:
       - Faraday v2.14.1
       X-Amz-Date:
-      - 20260303T121107Z
+      - 20260506T235339Z
       X-Amz-Content-Sha256:
       - c1f28bcaee1077b285985eb19952d44ca4723ecf1286b46c8a0fcab38095fd74
       Authorization:
-      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/20260303/<AWS_REGION>/bedrock/aws4_request,
-        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=65a0401a29f908858595a7e23d1f29a0a31fc80a0465fb288df78272f05a227e
+      - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -28,19 +28,18 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 03 Mar 2026 12:11:08 GMT
+      - Wed, 06 May 2026 23:53:40 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '337'
+      - '468'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 0e694da4-c91e-48dd-b519-3f44f6c108a7
+      - 91d3fea3-4da1-40d1-a7f6-0e761be0ad7f
     body:
-      encoding: UTF-8
-      string: '{"metrics":{"latencyMs":546},"output":{"message":{"content":[{"text":"2
-        + 2 equals **4**. \n\nThis is a basic arithmetic addition: when you add two
-        units to another two units, the total becomes four units."}],"role":"assistant"}},"stopReason":"end_turn","usage":{"inputTokens":53,"outputTokens":35,"serverToolUsage":{},"totalTokens":88}}'
-  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJtZXRyaWNzIjp7ImxhdGVuY3lNcyI6ODU0fSwib3V0cHV0Ijp7Im1lc3NhZ2UiOnsiY29udGVudCI6W3sidGV4dCI6IjIgKyAyIGVxdWFscyAqKjQqKi5cblxuVGhpcyBpcyBhIGJhc2ljIGFyaXRobWV0aWMgb3BlcmF0aW9uIHdoZXJlIHlvdSdyZSBhZGRpbmcgdHdvIHdob2xlIG51bWJlcnMgKDIgYW5kIDIpIHRvZ2V0aGVyLiBUaGUgc3VtIG9mIHRoZXNlIHR3byBudW1iZXJzIGlzICoqNCoqLiBcblxuSWYgeW91IGhhdmUgYW55IGZvbGxvdy11cCBxdWVzdGlvbnPigJR3aGV0aGVyIHRoZXkncmUgbWF0aC1yZWxhdGVkIG9yIHNvbWV0aGluZyBlbHNl4oCUZmVlbCBmcmVlIHRvIGFzayEifV0sInJvbGUiOiJhc3Npc3RhbnQifX0sInN0b3BSZWFzb24iOiJlbmRfdHVybiIsInVzYWdlIjp7ImlucHV0VG9rZW5zIjo1Mywib3V0cHV0VG9rZW5zIjo2Mywic2VydmVyVG9vbFVzYWdlIjp7fSwidG90YWxUb2tlbnMiOjExNn19
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 recorded_with: VCR 6.4.0

@@ -28,29 +28,23 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 03 Mar 2026 11:53:10 GMT
+      - Thu, 02 Apr 2026 11:31:12 GMT
       Content-Length:
-      - '1711'
+      - '1235'
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-930","object":"chat.completion","created":1772538790,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
-        the user wants me to call the object params tool with a window start date
-        of 2025-01-01 and end date of 2025-01-02. Let me check the function signature
-        they provided.\n\nLooking at the tools section, the function is called \"object_params\"
-        and it takes a parameter called \"window\" which is an object with \"start\"
-        and \"end\" properties as strings. So I need to structure the arguments correctly.\n\nI
-        should create a JSON object with the name \"object_params\" and the arguments
-        as a window object containing the start and end dates. The dates are already
-        provided in ISO format, so I just need to plug those values in. \n\nWait,
-        the user mentioned to include the result. Does that mean after calling the
-        tool, I should present the result? But in the instructions, it says to return
-        the tool call in the specified XML tags. Maybe the \"result\" part is just
-        part of the user''s request to include the outcome, but the main task is to
-        generate the correct tool call.\n\nSo the correct tool call would be the JSON
-        with the window start and end. Let me make sure there are no typos in the
-        dates. The start is 2025-01-01 and end is 2025-01-02. Yep, that''s correct.
-        Alright, I''ll format that into the tool_call structure.\n","tool_calls":[{"id":"call_6adc7n38","index":0,"type":"function","function":{"name":"object_params","arguments":"{\"window\":{\"end\":\"2025-01-02\",\"start\":\"2025-01-01\"}}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":198,"completion_tokens":350,"total_tokens":548}}
+      string: '{"id":"chatcmpl-81","object":"chat.completion","created":1775129472,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
+        the user wants me to call the object params tool with a window starting on
+        2025-01-01 and ending on 2025-01-02. Let me check the function definition
+        again. The tool''s function is called \"object_params\" and it takes a parameter
+        called \"window\", which is an object with \"start\" and \"end\" properties
+        as ISO strings.\n\nSo I need to structure the arguments correctly. The start
+        date is 2025-01-01, and the end is 2025-01-02. Both should be in ISO format,
+        which these dates already are. The function doesn''t have any other parameters,
+        so I just need to pass the window object with those dates. I''ll make sure
+        the JSON is properly formatted with the correct keys. Let me double-check
+        the syntax to avoid any errors. Alright, that should do it.\n","tool_calls":[{"id":"call_otbvyvjc","index":0,"type":"function","function":{"name":"object_params","arguments":"{\"window\":{\"end\":\"2025-01-02\",\"start\":\"2025-01-01\"}}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":198,"completion_tokens":247,"total_tokens":445}}
 
         '
-  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 recorded_with: VCR 6.4.0

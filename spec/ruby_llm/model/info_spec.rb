@@ -156,6 +156,12 @@ RSpec.describe RubyLLM::Model::Info do
     end
   end
 
+  describe '#label' do
+    it 'returns provider and display name' do
+      expect(info.label).to eq('OpenAI - GPT-5')
+    end
+  end
+
   describe '#max_tokens' do
     it 'returns max_output_tokens' do
       expect(info.max_tokens).to eq(128_000)
@@ -166,6 +172,48 @@ RSpec.describe RubyLLM::Model::Info do
     it 'delegates to pricing' do
       expect(info.input_price_per_million).to eq(info.pricing.text_tokens.input)
       expect(info.output_price_per_million).to eq(info.pricing.text_tokens.output)
+    end
+  end
+
+  describe 'cache price helpers' do
+    it 'delegates to cache read and write pricing' do
+      info = described_class.new(
+        data.merge(
+          pricing: {
+            text_tokens: {
+              standard: {
+                cache_read_input_per_million: 0.5,
+                cache_write_input_per_million: 2.5
+              }
+            }
+          }
+        )
+      )
+
+      expect(info.cache_read_input_price_per_million).to eq(0.5)
+      expect(info.cache_write_input_price_per_million).to eq(2.5)
+      expect(info.cached_input_price_per_million).to eq(0.5)
+      expect(info.cache_creation_input_price_per_million).to eq(2.5)
+    end
+  end
+
+  describe '#cost_for' do
+    it 'builds a Cost for the supplied tokens' do
+      info = described_class.new(
+        data.merge(
+          pricing: {
+            text_tokens: {
+              standard: {
+                input_per_million: 2.50,
+                output_per_million: 10.00
+              }
+            }
+          }
+        )
+      )
+      tokens = RubyLLM::Tokens.new(input: 1_000, output: 2_000)
+
+      expect(info.cost_for(tokens).total).to eq(0.0225)
     end
   end
 

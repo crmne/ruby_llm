@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require 'pathname'
+require 'uri'
+
 module RubyLLM
   # A class representing a file attachment.
   class Attachment
@@ -29,6 +32,7 @@ module RubyLLM
       return false unless defined?(ActiveStorage)
 
       @source.is_a?(ActiveStorage::Blob) ||
+        @source.is_a?(ActiveStorage::Attachment) ||
         @source.is_a?(ActiveStorage::Attached::One) ||
         @source.is_a?(ActiveStorage::Attached::Many)
     end
@@ -145,16 +149,7 @@ module RubyLLM
     def load_content_from_active_storage
       return unless defined?(ActiveStorage)
 
-      @content = case @source
-                 when ActiveStorage::Blob
-                   @source.download
-                 when ActiveStorage::Attached::One
-                   @source.blob&.download
-                 when ActiveStorage::Attached::Many
-                   # For multiple attachments, just take the first one
-                   # This maintains the single-attachment interface
-                   @source.blobs.first&.download
-                 end
+      @content = active_storage_blob&.download
     end
 
     def source_type_cast
@@ -189,31 +184,23 @@ module RubyLLM
       end
     end
 
-    def extract_filename_from_active_storage # rubocop:disable Metrics/PerceivedComplexity
+    def extract_filename_from_active_storage
       return 'attachment' unless defined?(ActiveStorage)
 
-      case @source
-      when ActiveStorage::Blob
-        @source.filename.to_s
-      when ActiveStorage::Attached::One
-        @source.blob&.filename&.to_s || 'attachment'
-      when ActiveStorage::Attached::Many
-        @source.blobs.first&.filename&.to_s || 'attachment'
-      else
-        'attachment'
-      end
+      active_storage_blob&.filename&.to_s || 'attachment'
     end
 
     def active_storage_content_type
       return unless defined?(ActiveStorage)
 
+      active_storage_blob&.content_type
+    end
+
+    def active_storage_blob
       case @source
-      when ActiveStorage::Blob
-        @source.content_type
-      when ActiveStorage::Attached::One
-        @source.blob&.content_type
-      when ActiveStorage::Attached::Many
-        @source.blobs.first&.content_type
+      when ActiveStorage::Blob then @source
+      when ActiveStorage::Attachment, ActiveStorage::Attached::One then @source.blob
+      when ActiveStorage::Attached::Many then @source.blobs.first
       end
     end
   end

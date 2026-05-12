@@ -48,6 +48,11 @@ module RubyLLM
         name
       end
 
+      def label
+        provider_name = provider_class&.name || provider
+        "#{provider_name} - #{display_name}"
+      end
+
       def max_tokens
         max_output_tokens
       end
@@ -70,6 +75,23 @@ module RubyLLM
 
       def output_price_per_million
         pricing.text_tokens.output
+      end
+
+      def cache_read_input_price_per_million
+        pricing.text_tokens.cache_read_input
+      end
+
+      def cache_write_input_price_per_million
+        pricing.text_tokens.cache_write_input
+      end
+
+      alias cached_input_price_per_million cache_read_input_price_per_million
+      alias cache_creation_input_price_per_million cache_write_input_price_per_million
+
+      def cost_for(tokens)
+        tokens = tokens.tokens if tokens.respond_to?(:tokens)
+
+        Cost.new(tokens:, model: self)
       end
 
       def provider_class

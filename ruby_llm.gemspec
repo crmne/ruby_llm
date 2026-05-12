@@ -22,7 +22,7 @@ Gem::Specification.new do |spec|
 
   spec.metadata['homepage_uri'] = spec.homepage
   spec.metadata['source_code_uri'] = 'https://github.com/crmne/ruby_llm'
-  spec.metadata['changelog_uri'] = "#{spec.metadata['source_code_uri']}/commits/main"
+  spec.metadata['changelog_uri'] = "#{spec.metadata['source_code_uri']}/releases"
   spec.metadata['documentation_uri'] = spec.homepage
   spec.metadata['bug_tracker_uri'] = "#{spec.metadata['source_code_uri']}/issues"
   spec.metadata['funding_uri'] = 'https://github.com/sponsors/crmne'
@@ -31,8 +31,22 @@ Gem::Specification.new do |spec|
 
   # Post-install message for upgrading users
   spec.post_install_message = <<~MESSAGE
-    Upgrading from RubyLLM < 1.14.x? Check the upgrade guide for new features and migration instructions
-    --> https://rubyllm.com/upgrading/
+    RubyLLM 1.15 upgrade note:
+
+      Token accounting is now normalized across providers. `input_tokens` means
+      standard input tokens; prompt cache reads and writes are exposed separately
+      as `cache_read_tokens` and `cache_write_tokens`.
+
+      Need request-side input activity?
+        input_tokens + cache_read_tokens + cache_write_tokens
+
+      New cost helpers:
+        response.cost.total
+        chat.cost.total
+        agent.cost.total
+
+      Upgrading from RubyLLM < 1.15? Read the full upgrade guide:
+        https://rubyllm.com/upgrading/
   MESSAGE
 
   # Use Dir.glob to list all files within the lib directory
@@ -42,15 +56,10 @@ Gem::Specification.new do |spec|
   # Runtime dependencies
   spec.add_dependency 'base64'
   spec.add_dependency 'event_stream_parser', '~> 1'
-  if Gem::Version.new(Gem.ruby_version) >= Gem::Version.new('4.0')
-    spec.add_dependency 'faraday', '>= 2.0'
-    spec.add_dependency 'faraday-retry', '>= 2.0'
-  else
-    spec.add_dependency 'faraday', ENV['FARADAY_VERSION'] || '>= 1.10.0'
-    spec.add_dependency 'faraday-retry', '>= 1'
-  end
+  spec.add_dependency 'faraday', ENV['FARADAY_VERSION'] || '>= 1.10.0'
   spec.add_dependency 'faraday-multipart', '>= 1'
   spec.add_dependency 'faraday-net_http', '>= 1'
+  spec.add_dependency 'faraday-retry', '>= 1'
   spec.add_dependency 'marcel', '~> 1'
   spec.add_dependency 'ruby_llm-schema', '~> 0'
   spec.add_dependency 'zeitwerk', '~> 2'

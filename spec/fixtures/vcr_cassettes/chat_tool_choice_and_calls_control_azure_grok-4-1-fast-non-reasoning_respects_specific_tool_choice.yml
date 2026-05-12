@@ -1,0 +1,193 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
+    body:
+      encoding: UTF-8
+      string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"user","content":"What''s
+        the fall of Rome?"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}],"tool_choice":{"type":"function","function":{"name":"weather"}}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Api-Key:
+      - "<AZURE_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-cache
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Vary:
+      - access-control-request-headers
+      Request-Context:
+      - appId=
+      Traceparent:
+      - 00-78d62a0d0ed945c8bdbba2efd5519eb1-8b3304ba000398cf-00
+      X-Ms-Rai-Invoked:
+      - 'true'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      X-Xai-Model-Address:
+      - http://localhost:9988
+      X-Ms-Client-Request-Id:
+      - 78d62a0d-0ed9-45c8-bdbb-a2efd5519eb1
+      Azureml-Model-Session:
+      - d20260429215123-f480a160
+      Azureai-Requested-Tier:
+      - default
+      Azureai-Processed-Tier:
+      - default
+      X-Ms-Is-Spilled-Over:
+      - 'false'
+      X-Ratelimit-Key:
+      - grok-4-1-fast-non-reasoning
+      X-Ratelimit-Remaining-Requests:
+      - '49'
+      X-Ratelimit-Reset-Requests:
+      - '1'
+      X-Ratelimit-Limit-Requests:
+      - '50'
+      X-Ratelimit-Renewalperiod-Requests:
+      - '60'
+      X-Ratelimit-Abusepenalty-Active:
+      - 'False'
+      X-Ratelimit-Remaining-Tokens:
+      - '49860'
+      X-Ratelimit-Reset-Tokens:
+      - '0'
+      X-Ratelimit-Limit-Tokens:
+      - '50000'
+      X-Ratelimit-Renewalperiod-Tokens:
+      - '60'
+      Apim-Request-Id:
+      - 78d62a0d-0ed9-45c8-bdbb-a2efd5519eb1
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Ms-Deployment-Name:
+      - grok-4-1-fast-non-reasoning
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Region:
+      - West Europe
+      Date:
+      - Thu, 07 May 2026 00:03:47 GMT
+    body:
+      encoding: UTF-8
+      string: '{"id":"c3c3cafd-ba2d-4be2-8de1-94cd4e5daab5","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"call_66631712","index":0,"type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}"}}]},"finish_reason":"tool_calls","content_filter_results":{}}],"usage":{"prompt_tokens":238,"completion_tokens":40,"total_tokens":278,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":0,"audio_tokens":0,"text_tokens":238,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1778112227,"object":"chat.completion","prompt_filter_results":null}'
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+- request:
+    method: post
+    uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
+    body:
+      encoding: UTF-8
+      string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"user","content":"What''s
+        the fall of Rome?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_66631712","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}"}}]},{"role":"tool","content":"Current
+        weather at 41.9028, 12.4964: 15°C, Wind: 10 km/h","tool_call_id":"call_66631712"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Api-Key:
+      - "<AZURE_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-cache
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Vary:
+      - access-control-request-headers
+      Request-Context:
+      - appId=
+      Traceparent:
+      - 00-dbcd689d3c4a41c5a9dcecb9d96e8062-c902fca500035dcb-00
+      X-Ms-Rai-Invoked:
+      - 'true'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      X-Xai-Model-Address:
+      - http://localhost:9988
+      X-Ms-Client-Request-Id:
+      - dbcd689d-3c4a-41c5-a9dc-ecb9d96e8062
+      Azureml-Model-Session:
+      - d20260429215123-f480a160
+      Azureai-Requested-Tier:
+      - default
+      Azureai-Processed-Tier:
+      - default
+      X-Ms-Is-Spilled-Over:
+      - 'false'
+      X-Ratelimit-Key:
+      - grok-4-1-fast-non-reasoning
+      X-Ratelimit-Remaining-Requests:
+      - '49'
+      X-Ratelimit-Reset-Requests:
+      - '1'
+      X-Ratelimit-Limit-Requests:
+      - '50'
+      X-Ratelimit-Renewalperiod-Requests:
+      - '60'
+      X-Ratelimit-Abusepenalty-Active:
+      - 'False'
+      X-Ratelimit-Remaining-Tokens:
+      - '49800'
+      X-Ratelimit-Reset-Tokens:
+      - '0'
+      X-Ratelimit-Limit-Tokens:
+      - '50000'
+      X-Ratelimit-Renewalperiod-Tokens:
+      - '60'
+      Apim-Request-Id:
+      - dbcd689d-3c4a-41c5-a9dc-ecb9d96e8062
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Ms-Deployment-Name:
+      - grok-4-1-fast-non-reasoning
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Region:
+      - West Europe
+      Date:
+      - Thu, 07 May 2026 00:04:18 GMT
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6IjM1NzI2MmVmLWIzZmMtNGEyNC05Y2ZmLTM5NDViN2VjZThhZSIsIm1vZGVsIjoiZ3Jvay00LTEtZmFzdC1ub24tcmVhc29uaW5nIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJUaGUgXCJGYWxsIG9mIFJvbWVcIiAob3IgbW9yZSBwcmVjaXNlbHksIHRoZSBGYWxsIG9mIHRoZSBXZXN0ZXJuIFJvbWFuIEVtcGlyZSkgcmVmZXJzIHRvIHRoZSBjb2xsYXBzZSBvZiBSb21hbiBpbXBlcmlhbCBhdXRob3JpdHkgaW4gdGhlIFdlc3QsIGNvbnZlbnRpb25hbGx5IGRhdGVkIHRvICoqU2VwdGVtYmVyIDQsIDQ3NiBDRSoqLCB3aGVuIHRoZSBHZXJtYW5pYyBjaGllZnRhaW4gT2RvYWNlciBkZXBvc2VkIHRoZSBsYXN0IFdlc3Rlcm4gUm9tYW4gZW1wZXJvciwgUm9tdWx1cyBBdWd1c3R1bHVzLCBpbiBSYXZlbm5hLCBJdGFseS4gVGhpcyBldmVudCBtYXJrZWQgdGhlIGVuZCBvZiBhbmNpZW50IFJvbWUncyBjZW50cmFsaXplZCBydWxlIGluIFdlc3Rlcm4gRXVyb3BlLCB0aG91Z2ggdGhlIEVhc3Rlcm4gUm9tYW4gRW1waXJlIChCeXphbnRpdW0pIHBlcnNpc3RlZCBmb3IgYW5vdGhlciBtaWxsZW5uaXVtIHVudGlsIDE0NTMuXG5cbiMjIyBLZXkgQ29udGV4dCBhbmQgQ2F1c2VzXG5Sb21lJ3MgZGVjbGluZSB3YXMgYSBncmFkdWFsIHByb2Nlc3Mgc3Bhbm5pbmcgY2VudHVyaWVzIChyb3VnaGx5IDNyZOKAkzV0aCBjZW50dXJpZXMgQ0UpLCBub3QgYSBzaW5nbGUgZHJhbWF0aWMgZXZlbnQuIEhpc3RvcmlhbnMgZGViYXRlIHRoZSBleGFjdCBjYXVzZXMsIGJ1dCBtYWpvciBmYWN0b3JzIGluY2x1ZGU6XG5cbi0gKipCYXJiYXJpYW4gSW52YXNpb25zIGFuZCBNaWdyYXRpb25zKio6IFdhdmVzIG9mIEdlcm1hbmljIHRyaWJlcyAoZS5nLiwgVmlzaWdvdGhzLCBWYW5kYWxzLCBPc3Ryb2dvdGhzKSBhbmQgSHVucyBwcmVzc3VyZWQgYm9yZGVycy4gS2V5IGV2ZW50czpcbiAgfCBEYXRlICAgICAgIHwgRXZlbnQgfFxuICB8LS0tLS0tLS0tLS0tfC0tLS0tLS18XG4gIHwgNDEwIENFICAgIHwgVmlzaWdvdGhzIHNhY2sgUm9tZSB1bmRlciBBbGFyaWMuIHxcbiAgfCA0NTUgQ0UgICAgfCBWYW5kYWxzIHNhY2sgUm9tZS4gfFxuICB8IDQ3NiBDRSAgICB8IE9kb2FjZXIgZGVwb3NlcyBSb211bHVzIEF1Z3VzdHVsdXMuIHxcblxuLSAqKkVjb25vbWljIERlY2xpbmUqKjogSHlwZXJpbmZsYXRpb24sIGhlYXZ5IHRheGF0aW9uLCB0cmFkZSBkaXNydXB0aW9ucywgYW5kIHJlbGlhbmNlIG9uIHNsYXZlIGxhYm9yIGxlZCB0byBhZ3JpY3VsdHVyYWwgY29sbGFwc2UgYW5kIGRlcG9wdWxhdGlvbi5cblxuLSAqKk1pbGl0YXJ5IFdlYWtuZXNzZXMqKjogT3ZlcnJlbGlhbmNlIG9uIGJhcmJhcmlhbiBtZXJjZW5hcmllcywgY2l2aWwgd2FycywgYW5kIGluYWJpbGl0eSB0byBtYWludGFpbiBhIHByb2Zlc3Npb25hbCBhcm15LiBUaGUgZW1waXJlIHNwbGl0IGludG8gRWFzdCBhbmQgV2VzdCBpbiAzOTUgQ0UgdW5kZXIgVGhlb2Rvc2l1cyBJLlxuXG4tICoqUG9saXRpY2FsIEluc3RhYmlsaXR5Kio6IEZyZXF1ZW50IGFzc2Fzc2luYXRpb25zLCB3ZWFrIGVtcGVyb3JzLCBhbmQgY29ycnVwdGlvbiBlcm9kZWQgZ292ZXJuYW5jZS5cblxuLSAqKlNvY2lhbCBhbmQgQ3VsdHVyYWwgU2hpZnRzKio6IENocmlzdGlhbml0eSdzIHJpc2UgKG9mZmljaWFsIHJlbGlnaW9uIGJ5IDM4MCBDRSkgZGl2ZXJ0ZWQgcmVzb3VyY2VzIHRvIGNodXJjaGVzOyBwbGFndWVzIChlLmcuLCBBbnRvbmluZSBQbGFndWUgfjE2NeKAkzE4MCBDRSkga2lsbGVkIG1pbGxpb25zOyBsZWFkIHBvaXNvbmluZyBhbmQgZW52aXJvbm1lbnRhbCBkZWdyYWRhdGlvbiBhcmUgZGViYXRlZCBjb250cmlidXRvcnMuXG5cbiMjIyBFdmlkZW5jZSBhbmQgU291cmNlc1xuLSAqKlByaW1hcnkgQWNjb3VudHMqKjogSGlzdG9yaWFucyBsaWtlIEVkd2FyZCBHaWJib24gKCpUaGUgSGlzdG9yeSBvZiB0aGUgRGVjbGluZSBhbmQgRmFsbCBvZiB0aGUgUm9tYW4gRW1waXJlKiwgMTc3NuKAkzE3ODkpIHBvcHVsYXJpemVkIHRoZSBuYXJyYXRpdmUsIGRyYXdpbmcgZnJvbSBSb21hbiB3cml0ZXJzIGxpa2UgQW1taWFudXMgTWFyY2VsbGludXMgYW5kIFByb2NvcGl1cy4gQXJjaGFlb2xvZ2ljYWwgZXZpZGVuY2UgKGUuZy4sIGFiYW5kb25lZCB2aWxsYXMsIHNocnVua2VuIGNpdGllcykgc3VwcG9ydHMgZWNvbm9taWMgZGVjbGluZS5cbi0gKipNb2Rlcm4gVmlld3MqKjogTm90IGFsbCBhZ3JlZSBvbiBcImZhbGxcIuKAlHNvbWUgc2VlIGl0IGFzIGEgdHJhbnNmb3JtYXRpb24gaW50byBtZWRpZXZhbCBFdXJvcGUsIHdpdGggUm9tYW4gaW5zdGl0dXRpb25zIGV2b2x2aW5nIHVuZGVyIGJhcmJhcmlhbiBraW5nZG9tcyAoZS5nLiwgVmlzaWdvdGhpYyBTcGFpbikuXG5cblJvbWUncyBsZWdhY3kgZW5kdXJlcyBpbiBsYXcsIGxhbmd1YWdlLCBlbmdpbmVlcmluZywgYW5kIGN1bHR1cmUuIEZvciBkZWVwZXIgcmVhZGluZywgY2hlY2sgR2liYm9uIG9yIFBldGVyIEhlYXRoZXIncyAqVGhlIEZhbGwgb2YgdGhlIFJvbWFuIEVtcGlyZSogKDIwMDUpLiJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCIsImNvbnRlbnRfZmlsdGVyX3Jlc3VsdHMiOnt9fV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjMxMywiY29tcGxldGlvbl90b2tlbnMiOjUzMCwidG90YWxfdG9rZW5zIjo4NDMsImF1ZGlvX3Byb21wdF90b2tlbnMiOjAsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjowLCJhdWRpb190b2tlbnMiOjAsInRleHRfdG9rZW5zIjozMTMsImltYWdlX3Rva2VucyI6MH0sImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6MCwiYXVkaW9fdG9rZW5zIjowLCJhY2NlcHRlZF9wcmVkaWN0aW9uX3Rva2VucyI6MCwicmVqZWN0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjB9LCJudW1fc291cmNlc191c2VkIjowfSwiY3JlYXRlZCI6MTc3ODExMjIyOCwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwicHJvbXB0X2ZpbHRlcl9yZXN1bHRzIjpudWxsfQ==
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+recorded_with: VCR 6.4.0

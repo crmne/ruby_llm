@@ -11,7 +11,7 @@ http_interactions:
       User-Agent:
       - Faraday v2.14.1
       Authorization:
-      - Bearer <OPENROUTER_API_KEY>
+      - Bearer <AUTH_TOKEN>
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 03 Mar 2026 11:51:02 GMT
+      - Wed, 06 May 2026 23:54:48 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -33,6 +33,10 @@ http_interactions:
       - keep-alive
       Access-Control-Allow-Origin:
       - "*"
+      X-Generation-Id:
+      - gen-1778111687-HgO9UnGvq8gQFLGdQmhW
+      Access-Control-Expose-Headers:
+      - X-Generation-Id,cf-ray
       Permissions-Policy:
       - payment=(self "https://checkout.stripe.com" "https://connect-js.stripe.com"
         "https://js.stripe.com" "https://*.js.stripe.com" "https://hooks.stripe.com")
@@ -46,17 +50,15 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: "\n         \n\n         \n\n         \n\n         \n\n         \n\n
-        \        \n{\"id\":\"gen-1772538661-Ya7ANAQs5gj4ZCwYrZay\",\"object\":\"chat.completion\",\"created\":1772538661,\"model\":\"anthropic/claude-4.5-haiku-20251001\",\"provider\":\"Amazon
-        Bedrock\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"stop\",\"message\":{\"role\":\"assistant\",\"content\":\"#
-        Image Description\\n\\nThis is a **3D rendered logo** featuring an abstract
-        geometric design in shades of **red**. The design consists of:\\n\\n- **Curved,
-        faceted surfaces** that create a modern, dynamic appearance\\n- **Multiple
-        planes** that fold and intersect, giving it depth and dimension\\n- **Reflective/glossy
-        finish** with highlights and shadows that emphasize the 3D structure\\n- An
-        overall shape that resembles a stylized **gem, crystal, or abstract sculptural
-        form**\\n\\nThe logo has a **contemporary, tech-forward aesthetic** and could
-        represent a company in fields like technology, software, design, or innovation.
-        The sharp angles and smooth curves create visual interest and a sense of movement.\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":43,\"completion_tokens\":158,\"total_tokens\":201,\"cost\":0.000833,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.000833,\"upstream_inference_prompt_cost\":0.000043,\"upstream_inference_completions_cost\":0.00079},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}}}"
-  recorded_at: Thu, 05 Mar 2026 10:02:24 GMT
+      string: "\n         \n\n         \n\n         \n\n         \n\n         \n{\"id\":\"gen-1778111687-HgO9UnGvq8gQFLGdQmhW\",\"object\":\"chat.completion\",\"created\":1778111687,\"model\":\"anthropic/claude-4.5-haiku-20251001\",\"provider\":\"Amazon
+        Bedrock\",\"system_fingerprint\":null,\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"end_turn\",\"message\":{\"role\":\"assistant\",\"content\":\"This
+        image shows a stylized **red gem or crystal** icon, likely representing a
+        ruby or jewel. The design features:\\n\\n- **Multiple faceted surfaces** with
+        varying shades of red, creating a 3D appearance\\n- **Smooth, polished surfaces**
+        with highlights and reflections that give it a glossy, precious stone look\\n-
+        **Angular, geometric cuts** typical of how gemstones are faceted\\n- **A modern,
+        minimalist style** commonly used in app icons or UI design\\n\\nThe icon has
+        a clean, professional appearance and could represent concepts like value,
+        quality, apps related to jewelry, or premium services.\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":43,\"completion_tokens\":137,\"total_tokens\":180,\"cost\":0.000728,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.000728,\"upstream_inference_prompt_cost\":0.000043,\"upstream_inference_completions_cost\":0.000685},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}}}"
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
 recorded_with: VCR 6.4.0

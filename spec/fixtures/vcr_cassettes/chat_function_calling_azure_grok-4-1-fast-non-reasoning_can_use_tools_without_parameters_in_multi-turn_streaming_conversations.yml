@@ -1,0 +1,564 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
+    body:
+      encoding: UTF-8
+      string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"system","content":"You
+        must use tools whenever possible."},{"role":"user","content":"What''s the
+        best language to learn?"}],"stream":true,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}],"stream_options":{"include_usage":true}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Api-Key:
+      - "<AZURE_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-cache
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - text/event-stream
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Vary:
+      - access-control-request-headers
+      Request-Context:
+      - appId=
+      Traceparent:
+      - 00-e6795b1610af45a9ab49ea4b17777ad7-467129fc0000293b-00
+      X-Ms-Rai-Invoked:
+      - 'true'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      X-Xai-Model-Address:
+      - http://localhost:9988
+      X-Ms-Client-Request-Id:
+      - e6795b16-10af-45a9-ab49-ea4b17777ad7
+      Azureml-Model-Session:
+      - d20260429222844-bf683bdf
+      Azureai-Requested-Tier:
+      - default
+      Azureai-Processed-Tier:
+      - default
+      X-Ms-Is-Spilled-Over:
+      - 'false'
+      X-Ratelimit-Key:
+      - grok-4-1-fast-non-reasoning
+      X-Ratelimit-Remaining-Requests:
+      - '49'
+      X-Ratelimit-Reset-Requests:
+      - '1'
+      X-Ratelimit-Limit-Requests:
+      - '50'
+      X-Ratelimit-Renewalperiod-Requests:
+      - '60'
+      X-Ratelimit-Abusepenalty-Active:
+      - 'False'
+      X-Ratelimit-Remaining-Tokens:
+      - '49884'
+      X-Ratelimit-Reset-Tokens:
+      - '0'
+      X-Ratelimit-Limit-Tokens:
+      - '50000'
+      X-Ratelimit-Renewalperiod-Tokens:
+      - '60'
+      Apim-Request-Id:
+      - e6795b16-10af-45a9-ab49-ea4b17777ad7
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Ms-Deployment-Name:
+      - grok-4-1-fast-non-reasoning
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Region:
+      - West Europe
+      Date:
+      - Wed, 06 May 2026 23:56:18 GMT
+    body:
+      encoding: UTF-8
+      string: |+
+        data: {"choices":[{"delta":{"role":"assistant","tool_calls":[{"function":{"arguments":"{}","name":"best_language_to_learn"},"id":"call_08109836","index":0,"type":"function"}]},"index":0}],"created":1778111779,"id":"e613de84-9c6e-4e8f-b76a-c386e9569ec6","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{},"finish_reason":"tool_calls","index":0}],"created":1778111779,"id":"e613de84-9c6e-4e8f-b76a-c386e9569ec6","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[],"created":1778111779,"id":"e613de84-9c6e-4e8f-b76a-c386e9569ec6","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323","usage":{"completion_tokens":18,"completion_tokens_details":{"accepted_prediction_tokens":0,"audio_tokens":0,"reasoning_tokens":0,"rejected_prediction_tokens":0},"cost_in_usd_ticks":0,"num_sources_used":0,"prompt_tokens":205,"prompt_tokens_details":{"audio_tokens":0,"cached_tokens":0,"image_tokens":0,"text_tokens":205},"total_tokens":223}}
+
+        data: [DONE]
+
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+- request:
+    method: post
+    uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
+    body:
+      encoding: UTF-8
+      string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"system","content":"You
+        must use tools whenever possible."},{"role":"user","content":"What''s the
+        best language to learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_08109836","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call_08109836"}],"stream":true,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}],"stream_options":{"include_usage":true}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Api-Key:
+      - "<AZURE_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-cache
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - text/event-stream
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Vary:
+      - access-control-request-headers
+      Request-Context:
+      - appId=
+      Traceparent:
+      - 00-47477942087a47e797c8d34ac4dec641-467129fc000029d0-00
+      X-Ms-Rai-Invoked:
+      - 'true'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      X-Xai-Model-Address:
+      - http://localhost:9988
+      X-Ms-Client-Request-Id:
+      - 47477942-087a-47e7-97c8-d34ac4dec641
+      Azureml-Model-Session:
+      - d20260429222844-bf683bdf
+      Azureai-Requested-Tier:
+      - default
+      Azureai-Processed-Tier:
+      - default
+      X-Ms-Is-Spilled-Over:
+      - 'false'
+      X-Ratelimit-Key:
+      - grok-4-1-fast-non-reasoning
+      X-Ratelimit-Remaining-Requests:
+      - '49'
+      X-Ratelimit-Reset-Requests:
+      - '1'
+      X-Ratelimit-Limit-Requests:
+      - '50'
+      X-Ratelimit-Renewalperiod-Requests:
+      - '60'
+      X-Ratelimit-Abusepenalty-Active:
+      - 'False'
+      X-Ratelimit-Remaining-Tokens:
+      - '49830'
+      X-Ratelimit-Reset-Tokens:
+      - '0'
+      X-Ratelimit-Limit-Tokens:
+      - '50000'
+      X-Ratelimit-Renewalperiod-Tokens:
+      - '60'
+      Apim-Request-Id:
+      - 47477942-087a-47e7-97c8-d34ac4dec641
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Ms-Deployment-Name:
+      - grok-4-1-fast-non-reasoning
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Region:
+      - West Europe
+      Date:
+      - Wed, 06 May 2026 23:56:39 GMT
+    body:
+      encoding: UTF-8
+      string: |+
+        data: {"choices":[{"delta":{"content":"**","role":"assistant"},"index":0}],"created":1778111799,"id":"8b80b489-c0be-4e4e-8ecd-db089cc20e6f","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{"content":"Ruby"},"index":0}],"created":1778111799,"id":"8b80b489-c0be-4e4e-8ecd-db089cc20e6f","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{"content":"**"},"index":0}],"created":1778111800,"id":"8b80b489-c0be-4e4e-8ecd-db089cc20e6f","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{"content":" is"},"index":0}],"created":1778111800,"id":"8b80b489-c0be-4e4e-8ecd-db089cc20e6f","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{"content":" the"},"index":0}],"created":1778111800,"id":"8b80b489-c0be-4e4e-8ecd-db089cc20e6f","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{"content":" best"},"index":0}],"created":1778111800,"id":"8b80b489-c0be-4e4e-8ecd-db089cc20e6f","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{"content":" language"},"index":0}],"created":1778111800,"id":"8b80b489-c0be-4e4e-8ecd-db089cc20e6f","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{"content":" to"},"index":0}],"created":1778111800,"id":"8b80b489-c0be-4e4e-8ecd-db089cc20e6f","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{"content":" learn"},"index":0}],"created":1778111800,"id":"8b80b489-c0be-4e4e-8ecd-db089cc20e6f","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{"content":"!"},"index":0}],"created":1778111800,"id":"8b80b489-c0be-4e4e-8ecd-db089cc20e6f","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{"content":" It's"},"index":0}],"created":1778111800,"id":"8b80b489-c0be-4e4e-8ecd-db089cc20e6f","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{"content":" elegant"},"index":0}],"created":1778111800,"id":"8b80b489-c0be-4e4e-8ecd-db089cc20e6f","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{"content":","},"index":0}],"created":1778111800,"id":"8b80b489-c0be-4e4e-8ecd-db089cc20e6f","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{"content":" beginner"},"index":0}],"created":1778111800,"id":"8b80b489-c0be-4e4e-8ecd-db089cc20e6f","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{"content":"-friendly"},"index":0}],"created":1778111800,"id":"8b80b489-c0be-4e4e-8ecd-db089cc20e6f","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{"content":","},"index":0}],"created":1778111800,"id":"8b80b489-c0be-4e4e-8ecd-db089cc20e6f","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{"content":" and"},"index":0}],"created":1778111800,"id":"8b80b489-c0be-4e4e-8ecd-db089cc20e6f","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{"content":" powers"},"index":0}],"created":1778111800,"id":"8b80b489-c0be-4e4e-8ecd-db089cc20e6f","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{"content":" fun"},"index":0}],"created":1778111800,"id":"8b80b489-c0be-4e4e-8ecd-db089cc20e6f","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{"content":" projects"},"index":0}],"created":1778111800,"id":"8b80b489-c0be-4e4e-8ecd-db089cc20e6f","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{"content":" like"},"index":0}],"created":1778111800,"id":"8b80b489-c0be-4e4e-8ecd-db089cc20e6f","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{"content":" web"},"index":0}],"created":1778111800,"id":"8b80b489-c0be-4e4e-8ecd-db089cc20e6f","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{"content":" apps"},"index":0}],"created":1778111800,"id":"8b80b489-c0be-4e4e-8ecd-db089cc20e6f","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{"content":" with"},"index":0}],"created":1778111800,"id":"8b80b489-c0be-4e4e-8ecd-db089cc20e6f","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{"content":" Ruby"},"index":0}],"created":1778111800,"id":"8b80b489-c0be-4e4e-8ecd-db089cc20e6f","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{"content":" on"},"index":0}],"created":1778111800,"id":"8b80b489-c0be-4e4e-8ecd-db089cc20e6f","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{"content":" Rails"},"index":0}],"created":1778111800,"id":"8b80b489-c0be-4e4e-8ecd-db089cc20e6f","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{"content":"."},"index":0}],"created":1778111800,"id":"8b80b489-c0be-4e4e-8ecd-db089cc20e6f","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{"content":" Great"},"index":0}],"created":1778111800,"id":"8b80b489-c0be-4e4e-8ecd-db089cc20e6f","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{"content":" for"},"index":0}],"created":1778111800,"id":"8b80b489-c0be-4e4e-8ecd-db089cc20e6f","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{"content":" quick"},"index":0}],"created":1778111800,"id":"8b80b489-c0be-4e4e-8ecd-db089cc20e6f","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{"content":" prototyping"},"index":0}],"created":1778111800,"id":"8b80b489-c0be-4e4e-8ecd-db089cc20e6f","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{"content":" and"},"index":0}],"created":1778111800,"id":"8b80b489-c0be-4e4e-8ecd-db089cc20e6f","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{"content":" has"},"index":0}],"created":1778111800,"id":"8b80b489-c0be-4e4e-8ecd-db089cc20e6f","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{"content":" a"},"index":0}],"created":1778111800,"id":"8b80b489-c0be-4e4e-8ecd-db089cc20e6f","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{"content":" vibrant"},"index":0}],"created":1778111800,"id":"8b80b489-c0be-4e4e-8ecd-db089cc20e6f","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{"content":" community"},"index":0}],"created":1778111800,"id":"8b80b489-c0be-4e4e-8ecd-db089cc20e6f","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{"content":"."},"index":0}],"created":1778111800,"id":"8b80b489-c0be-4e4e-8ecd-db089cc20e6f","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{},"finish_reason":"stop","index":0}],"created":1778111800,"id":"8b80b489-c0be-4e4e-8ecd-db089cc20e6f","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[],"created":1778111800,"id":"8b80b489-c0be-4e4e-8ecd-db089cc20e6f","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323","usage":{"completion_tokens":38,"completion_tokens_details":{"accepted_prediction_tokens":0,"audio_tokens":0,"reasoning_tokens":0,"rejected_prediction_tokens":0},"cost_in_usd_ticks":0,"num_sources_used":0,"prompt_tokens":235,"prompt_tokens_details":{"audio_tokens":0,"cached_tokens":0,"image_tokens":0,"text_tokens":235},"total_tokens":273}}
+
+        data: [DONE]
+
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+- request:
+    method: post
+    uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
+    body:
+      encoding: UTF-8
+      string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"system","content":"You
+        must use tools whenever possible."},{"role":"user","content":"What''s the
+        best language to learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_08109836","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call_08109836"},{"role":"assistant","content":"**Ruby**
+        is the best language to learn! It''s elegant, beginner-friendly, and powers
+        fun projects like web apps with Ruby on Rails. Great for quick prototyping
+        and has a vibrant community."},{"role":"user","content":"Tell me again: what''s
+        the best language to learn?"}],"stream":true,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}],"stream_options":{"include_usage":true}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Api-Key:
+      - "<AZURE_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-cache
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - text/event-stream
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Vary:
+      - access-control-request-headers
+      Request-Context:
+      - appId=
+      Traceparent:
+      - 00-45295252cb6c4251834b8839a16b1e02-dd74c0ef000018ac-00
+      X-Ms-Rai-Invoked:
+      - 'true'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      X-Xai-Model-Address:
+      - http://localhost:9988
+      X-Ms-Client-Request-Id:
+      - 45295252-cb6c-4251-834b-8839a16b1e02
+      Azureml-Model-Session:
+      - d20260429222844-bf683bdf
+      Azureai-Requested-Tier:
+      - default
+      Azureai-Processed-Tier:
+      - default
+      X-Ms-Is-Spilled-Over:
+      - 'false'
+      X-Ratelimit-Key:
+      - grok-4-1-fast-non-reasoning
+      X-Ratelimit-Remaining-Requests:
+      - '49'
+      X-Ratelimit-Reset-Requests:
+      - '1'
+      X-Ratelimit-Limit-Requests:
+      - '50'
+      X-Ratelimit-Renewalperiod-Requests:
+      - '60'
+      X-Ratelimit-Abusepenalty-Active:
+      - 'False'
+      X-Ratelimit-Remaining-Tokens:
+      - '49756'
+      X-Ratelimit-Reset-Tokens:
+      - '0'
+      X-Ratelimit-Limit-Tokens:
+      - '50000'
+      X-Ratelimit-Renewalperiod-Tokens:
+      - '60'
+      Apim-Request-Id:
+      - 45295252-cb6c-4251-834b-8839a16b1e02
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Ms-Deployment-Name:
+      - grok-4-1-fast-non-reasoning
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Region:
+      - West Europe
+      Date:
+      - Wed, 06 May 2026 23:56:53 GMT
+    body:
+      encoding: UTF-8
+      string: |+
+        data: {"choices":[{"delta":{"role":"assistant","tool_calls":[{"function":{"arguments":"{}","name":"best_language_to_learn"},"id":"call_04519858","index":0,"type":"function"}]},"index":0}],"created":1778111813,"id":"c1d463d3-7523-4ed1-b1eb-d5002e27b44d","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{},"finish_reason":"tool_calls","index":0}],"created":1778111813,"id":"c1d463d3-7523-4ed1-b1eb-d5002e27b44d","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[],"created":1778111813,"id":"c1d463d3-7523-4ed1-b1eb-d5002e27b44d","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323","usage":{"completion_tokens":18,"completion_tokens_details":{"accepted_prediction_tokens":0,"audio_tokens":0,"reasoning_tokens":0,"rejected_prediction_tokens":0},"cost_in_usd_ticks":0,"num_sources_used":0,"prompt_tokens":295,"prompt_tokens_details":{"audio_tokens":0,"cached_tokens":0,"image_tokens":0,"text_tokens":295},"total_tokens":313}}
+
+        data: [DONE]
+
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+- request:
+    method: post
+    uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
+    body:
+      encoding: UTF-8
+      string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"system","content":"You
+        must use tools whenever possible."},{"role":"user","content":"What''s the
+        best language to learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_08109836","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call_08109836"},{"role":"assistant","content":"**Ruby**
+        is the best language to learn! It''s elegant, beginner-friendly, and powers
+        fun projects like web apps with Ruby on Rails. Great for quick prototyping
+        and has a vibrant community."},{"role":"user","content":"Tell me again: what''s
+        the best language to learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_04519858","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call_04519858"}],"stream":true,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}],"stream_options":{"include_usage":true}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.1
+      Api-Key:
+      - "<AZURE_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-cache
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - text/event-stream
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Vary:
+      - access-control-request-headers
+      Request-Context:
+      - appId=
+      Traceparent:
+      - 00-5ef25e661a3a426da4f4509a17cab691-8bcf6463000025e7-00
+      X-Ms-Rai-Invoked:
+      - 'true'
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      X-Xai-Model-Address:
+      - http://localhost:9988
+      X-Ms-Client-Request-Id:
+      - 5ef25e66-1a3a-426d-a4f4-509a17cab691
+      Azureml-Model-Session:
+      - d20260429222844-bf683bdf
+      Azureai-Requested-Tier:
+      - default
+      Azureai-Processed-Tier:
+      - default
+      X-Ms-Is-Spilled-Over:
+      - 'false'
+      X-Ratelimit-Key:
+      - grok-4-1-fast-non-reasoning
+      X-Ratelimit-Remaining-Requests:
+      - '49'
+      X-Ratelimit-Reset-Requests:
+      - '1'
+      X-Ratelimit-Limit-Requests:
+      - '50'
+      X-Ratelimit-Renewalperiod-Requests:
+      - '60'
+      X-Ratelimit-Abusepenalty-Active:
+      - 'False'
+      X-Ratelimit-Remaining-Tokens:
+      - '49702'
+      X-Ratelimit-Reset-Tokens:
+      - '0'
+      X-Ratelimit-Limit-Tokens:
+      - '50000'
+      X-Ratelimit-Renewalperiod-Tokens:
+      - '60'
+      Apim-Request-Id:
+      - 5ef25e66-1a3a-426d-a4f4-509a17cab691
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Ms-Deployment-Name:
+      - grok-4-1-fast-non-reasoning
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Region:
+      - West Europe
+      Date:
+      - Wed, 06 May 2026 23:56:55 GMT
+    body:
+      encoding: UTF-8
+      string: |+
+        data: {"choices":[{"delta":{"content":"**","role":"assistant"},"index":0}],"created":1778111815,"id":"3c845cff-a7bc-4f3f-b6bc-4692f3ae8937","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{"content":"Ruby"},"index":0}],"created":1778111815,"id":"3c845cff-a7bc-4f3f-b6bc-4692f3ae8937","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{"content":"**"},"index":0}],"created":1778111815,"id":"3c845cff-a7bc-4f3f-b6bc-4692f3ae8937","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{"content":" is"},"index":0}],"created":1778111815,"id":"3c845cff-a7bc-4f3f-b6bc-4692f3ae8937","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{"content":" the"},"index":0}],"created":1778111815,"id":"3c845cff-a7bc-4f3f-b6bc-4692f3ae8937","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{"content":" best"},"index":0}],"created":1778111815,"id":"3c845cff-a7bc-4f3f-b6bc-4692f3ae8937","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{"content":" language"},"index":0}],"created":1778111815,"id":"3c845cff-a7bc-4f3f-b6bc-4692f3ae8937","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{"content":" to"},"index":0}],"created":1778111815,"id":"3c845cff-a7bc-4f3f-b6bc-4692f3ae8937","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{"content":" learn"},"index":0}],"created":1778111815,"id":"3c845cff-a7bc-4f3f-b6bc-4692f3ae8937","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{"content":"!"},"index":0}],"created":1778111815,"id":"3c845cff-a7bc-4f3f-b6bc-4692f3ae8937","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{"content":" It's"},"index":0}],"created":1778111815,"id":"3c845cff-a7bc-4f3f-b6bc-4692f3ae8937","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{"content":" elegant"},"index":0}],"created":1778111815,"id":"3c845cff-a7bc-4f3f-b6bc-4692f3ae8937","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{"content":","},"index":0}],"created":1778111815,"id":"3c845cff-a7bc-4f3f-b6bc-4692f3ae8937","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{"content":" beginner"},"index":0}],"created":1778111815,"id":"3c845cff-a7bc-4f3f-b6bc-4692f3ae8937","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{"content":"-friendly"},"index":0}],"created":1778111815,"id":"3c845cff-a7bc-4f3f-b6bc-4692f3ae8937","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{"content":","},"index":0}],"created":1778111815,"id":"3c845cff-a7bc-4f3f-b6bc-4692f3ae8937","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{"content":" and"},"index":0}],"created":1778111815,"id":"3c845cff-a7bc-4f3f-b6bc-4692f3ae8937","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{"content":" powers"},"index":0}],"created":1778111815,"id":"3c845cff-a7bc-4f3f-b6bc-4692f3ae8937","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{"content":" fun"},"index":0}],"created":1778111815,"id":"3c845cff-a7bc-4f3f-b6bc-4692f3ae8937","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{"content":" projects"},"index":0}],"created":1778111815,"id":"3c845cff-a7bc-4f3f-b6bc-4692f3ae8937","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{"content":" like"},"index":0}],"created":1778111815,"id":"3c845cff-a7bc-4f3f-b6bc-4692f3ae8937","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{"content":" web"},"index":0}],"created":1778111815,"id":"3c845cff-a7bc-4f3f-b6bc-4692f3ae8937","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{"content":" apps"},"index":0}],"created":1778111815,"id":"3c845cff-a7bc-4f3f-b6bc-4692f3ae8937","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{"content":" with"},"index":0}],"created":1778111815,"id":"3c845cff-a7bc-4f3f-b6bc-4692f3ae8937","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{"content":" Ruby"},"index":0}],"created":1778111815,"id":"3c845cff-a7bc-4f3f-b6bc-4692f3ae8937","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{"content":" on"},"index":0}],"created":1778111815,"id":"3c845cff-a7bc-4f3f-b6bc-4692f3ae8937","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{"content":" Rails"},"index":0}],"created":1778111815,"id":"3c845cff-a7bc-4f3f-b6bc-4692f3ae8937","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{"content":"."},"index":0}],"created":1778111815,"id":"3c845cff-a7bc-4f3f-b6bc-4692f3ae8937","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{"content":" Great"},"index":0}],"created":1778111815,"id":"3c845cff-a7bc-4f3f-b6bc-4692f3ae8937","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{"content":" for"},"index":0}],"created":1778111815,"id":"3c845cff-a7bc-4f3f-b6bc-4692f3ae8937","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{"content":" quick"},"index":0}],"created":1778111815,"id":"3c845cff-a7bc-4f3f-b6bc-4692f3ae8937","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{"content":" prototyping"},"index":0}],"created":1778111815,"id":"3c845cff-a7bc-4f3f-b6bc-4692f3ae8937","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{"content":" and"},"index":0}],"created":1778111815,"id":"3c845cff-a7bc-4f3f-b6bc-4692f3ae8937","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{"content":" has"},"index":0}],"created":1778111815,"id":"3c845cff-a7bc-4f3f-b6bc-4692f3ae8937","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{"content":" a"},"index":0}],"created":1778111815,"id":"3c845cff-a7bc-4f3f-b6bc-4692f3ae8937","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{"content":" vibrant"},"index":0}],"created":1778111815,"id":"3c845cff-a7bc-4f3f-b6bc-4692f3ae8937","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{"content":" community"},"index":0}],"created":1778111815,"id":"3c845cff-a7bc-4f3f-b6bc-4692f3ae8937","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{"content":"."},"index":0}],"created":1778111815,"id":"3c845cff-a7bc-4f3f-b6bc-4692f3ae8937","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[{"delta":{},"finish_reason":"stop","index":0}],"created":1778111815,"id":"3c845cff-a7bc-4f3f-b6bc-4692f3ae8937","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323"}
+
+        data: {"choices":[],"created":1778111815,"id":"3c845cff-a7bc-4f3f-b6bc-4692f3ae8937","model":"grok-4-1-fast-non-reasoning","object":"chat.completion.chunk","system_fingerprint":"fp_49c5j0a323","usage":{"completion_tokens":38,"completion_tokens_details":{"accepted_prediction_tokens":0,"audio_tokens":0,"reasoning_tokens":0,"rejected_prediction_tokens":0},"cost_in_usd_ticks":0,"num_sources_used":0,"prompt_tokens":325,"prompt_tokens_details":{"audio_tokens":0,"cached_tokens":0,"image_tokens":0,"text_tokens":325},"total_tokens":363}}
+
+        data: [DONE]
+
+  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+recorded_with: VCR 6.4.0
+...
