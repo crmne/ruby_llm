@@ -88,7 +88,7 @@ module RubyLLM
       parse_image_response(response, model:)
     end
 
-    def tts(input, model:, voice:)
+    def speak(input, model:, voice:)
       payload = render_speech_payload(input, model:, voice:)
       response = @connection.post speech_url, payload
       parse_speech_response(response, model:)

@@ -3,9 +3,6 @@ layout: default
 title: Text to Speech
 nav_order: 7
 description: Convert text to speech
-redirect_from:
-  - /guides/audio-transcription
-  - /guides/transcription
 ---
 
 # {{ page.title }}
@@ -35,10 +32,10 @@ After reading this guide, you will know:
 
 ## Basic Text to Speech
 
-Generate audio with the global `RubyLLM.tts` method:
+Generate audio with the global `RubyLLM.speak` method:
 
 ```ruby
-audio = RubyLLM.tts("Hello, welcome to RubyLLM!")
+audio = RubyLLM.speak("Hello, welcome to RubyLLM!")
 
 ```
 
@@ -47,14 +44,14 @@ You can save the generated audio to a file.
 If you are using OpenAI, the audio will be saved as an MP3 file.
 
 ```ruby
-audio = RubyLLM.tts("This is a text to speech example.", provider: :openai, model: "gpt-4o-mini-tts")
+audio = RubyLLM.speak("This is a text to speech example.", provider: :openai, model: "gpt-4o-mini-tts")
 audio.save("example.mp3")
 ```
 
 If you are using Gemini, the audio will be saved as a raw PCM file.
 
 ```ruby
-audio = RubyLLM.tts("This is a text to speech example.", provider: :gemini, model: "gemini-2.5-flash-preview-tts")
+audio = RubyLLM.speak("This is a text to speech example.", provider: :gemini, model: "gemini-2.5-flash-preview-tts")
 audio.save("example.pcm")
 ```
 
@@ -73,19 +70,19 @@ For Gemini have a look at the [gemini voices](https://ai.google.dev/gemini-api/d
 ```ruby
 # Using a specific voice
 voice = "ash"
-audio = RubyLLM.tts("Hello, this is a #{voice}`s voice.", voice: voice)
+audio = RubyLLM.speak("Hello, this is a #{voice}`s voice.", voice: voice)
 ```
 
 ### Access Audio Data
 You can access the raw audio data:
 
 ```ruby
-audio = RubyLLM.tts("Accessing raw audio data.")
+audio = RubyLLM.speak("Accessing raw audio data.")
 audio.data # => binary audio data (MP3 for OpenAI, PCM for Gemini)
 ```
 
 ### Language Support
-OpenAi and Gemini gather language support automatically based on the text provided.
+OpenAI and Gemini gather language support automatically based on the text provided.
 Previously, you could specify the language manually in Gemini.
 
 ## Next Steps

@@ -15,18 +15,18 @@ module RubyLLM
       path
     end
 
-    def self.tts(input, # rubocop:disable Metrics/ParameterLists
-                 model: nil,
-                 provider: nil,
-                 assume_model_exists: false,
-                 voice: 'alloy',
-                 context: nil)
+    def self.speak(input, # rubocop:disable Metrics/ParameterLists
+                   model: nil,
+                   provider: nil,
+                   assume_model_exists: false,
+                   voice: 'alloy',
+                   context: nil)
       config = context&.config || RubyLLM.config
-      model ||= config.default_audio_model
+      model ||= config.default_tts_model
       model, provider_instance = Models.resolve(model, provider: provider, assume_exists: assume_model_exists,
                                                        config: config)
 
-      provider_instance.tts(input, model: model.id, voice:)
+      provider_instance.speak(input, model: model.id, voice:)
     end
   end
 end
