@@ -64,6 +64,10 @@ module RubyLLM
       Image.paint(...)
     end
 
+    def speak(...)
+      Speech.speak(...)
+    end
+
     def transcribe(...)
       Transcription.transcribe(...)
     end
