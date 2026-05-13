@@ -348,7 +348,7 @@ def pricing_part(pricing_data, key, label)
   "#{label}: $#{format('%.2f', pricing_data[key])}"
 end
 
-def generate_aliases # rubocop:disable Metrics/PerceivedComplexity
+def generate_aliases # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
   models = Hash.new { |h, k| h[k] = [] }
 
   RubyLLM.models.all.each do |model|

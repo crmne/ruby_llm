@@ -123,7 +123,7 @@ module RubyLLM
           }
         end
 
-        def release_date_for(model_id)
+        def release_date_for(model_id) # rubocop:disable Metrics/CyclomaticComplexity
           case model_id
           when 'open-mistral-7b', 'mistral-tiny' then '2023-09-27'
           when 'mistral-medium-2312', 'mistral-small-2312', 'mistral-small',
