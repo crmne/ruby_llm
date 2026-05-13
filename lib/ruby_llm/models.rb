@@ -95,16 +95,19 @@ module RubyLLM
       def refresh!(remote_only: false)
         # Replaces the process-wide model registry. Call save_to_json when the
         # refreshed registry should also be persisted.
-        existing_models = load_existing_models
+        RubyLLM.instrument('models.refresh.ruby_llm', remote_only:) do |payload|
+          existing_models = load_existing_models
 
-        provider_fetch = fetch_provider_models(remote_only: remote_only)
-        log_provider_fetch(provider_fetch)
+          provider_fetch = fetch_provider_models(remote_only: remote_only)
+          log_provider_fetch(provider_fetch)
 
-        models_dev_fetch = fetch_models_dev_models(existing_models)
-        log_models_dev_fetch(models_dev_fetch)
+          models_dev_fetch = fetch_models_dev_models(existing_models)
+          log_models_dev_fetch(models_dev_fetch)
 
-        merged_models = merge_with_existing(existing_models, provider_fetch, models_dev_fetch)
-        @instance = new(merged_models)
+          merged_models = merge_with_existing(existing_models, provider_fetch, models_dev_fetch)
+          payload[:model_count] = merged_models.size
+          @instance = new(merged_models)
+        end
       end
 
       def fetch_provider_models(remote_only: true) # rubocop:disable Metrics/PerceivedComplexity

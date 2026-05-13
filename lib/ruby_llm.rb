@@ -41,6 +41,10 @@ loader.setup
 # A delightful Ruby interface to modern AI language models.
 module RubyLLM
   class << self
+    def instrument(...)
+      Instrumentation.instrument(...)
+    end
+
     def context
       context_config = config.dup
       yield context_config if block_given?

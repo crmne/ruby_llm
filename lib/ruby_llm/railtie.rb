@@ -10,6 +10,10 @@ if defined?(Rails::Railtie)
         end
       end
 
+      initializer 'ruby_llm.instrumentation' do
+        RubyLLM.config.instrumenter ||= ActiveSupport::Notifications
+      end
+
       initializer 'ruby_llm.active_record' do
         ActiveSupport.on_load :active_record do
           require 'ruby_llm/active_record/payload_helpers'

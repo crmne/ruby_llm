@@ -528,6 +528,7 @@ RubyLLM.configure do |config|
 
   # Logging
   config.logger = Logger
+  config.instrumenter = Object # Responds to instrument(name, payload) { ... }
   config.log_file = String
   config.log_level = Symbol
   config.log_stream_debug = Boolean

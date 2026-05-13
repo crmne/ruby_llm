@@ -39,16 +39,20 @@ module RubyLLM
     end
 
     def post(url, payload, &)
-      @connection.post url, payload do |req|
-        req.headers.merge! provider_headers
-        yield req if block_given?
+      instrument_request(:post, url) do
+        @connection.post url, payload do |req|
+          req.headers.merge! provider_headers
+          yield req if block_given?
+        end
       end
     end
 
     def get(url, &)
-      @connection.get url do |req|
-        req.headers.merge! provider_headers
-        yield req if block_given?
+      instrument_request(:get, url) do
+        @connection.get url do |req|
+          req.headers.merge! provider_headers
+          yield req if block_given?
+        end
       end
     end
 
@@ -60,6 +64,20 @@ module RubyLLM
 
     def provider_headers
       @provider.respond_to?(:headers) ? @provider.headers : {}
+    end
+
+    def instrument_request(method, url)
+      payload = {
+        provider: @provider.respond_to?(:slug) ? @provider.slug : @provider.class.name,
+        method: method,
+        url: url
+      }
+
+      RubyLLM.instrument('request.ruby_llm', payload, config: @config) do
+        response = yield
+        payload[:status] = response.status if response.respond_to?(:status)
+        response
+      end
     end
 
     def setup_timeout(faraday)

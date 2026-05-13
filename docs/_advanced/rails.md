@@ -293,6 +293,14 @@ RubyLLM.configure do |config|
 end
 ```
 
+### Instrumentation
+{: .d-inline-block }
+
+v1.16.0+
+{: .label .label-green }
+
+Rails apps automatically emit RubyLLM events through `ActiveSupport::Notifications`. See [Instrumentation]({% link _advanced/instrumentation.md %}) for events, payloads, and non-Rails instrumenters.
+
 ### Fiber-Safe ActiveRecord Connections for Async/Fiber Workloads
 {: .d-inline-block }
 

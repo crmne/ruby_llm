@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Upgrading
-nav_order: 6
+nav_order: 7
 description: Upgrade guides for changes in data formats
 redirect_from:
   - /upgrading-to-1-7
