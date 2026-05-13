@@ -28,6 +28,15 @@ module RubyLLM
           payload[:reasoning_signature] = thinking.signature if thinking&.signature
           payload
         end
+
+        def format_content(content)
+          OpenAI::Media.format_content(
+            content,
+            document_attachments: :none,
+            image_attachments: false,
+            audio_attachments: false
+          )
+        end
       end
     end
   end
