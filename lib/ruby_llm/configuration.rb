@@ -67,6 +67,7 @@ module RubyLLM
       super.reject { |ivar| ivar.to_s.match?(/_id|_key|_secret|_token$/) }
     end
 
+    remove_method :log_regexp_timeout=
     def log_regexp_timeout=(value)
       if value.nil?
         @log_regexp_timeout = nil
