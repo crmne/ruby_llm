@@ -33,6 +33,7 @@ VCR.configure do |config|
   config.filter_sensitive_data('<GPUSTACK_API_KEY>') { ENV.fetch('GPUSTACK_API_KEY', nil) }
   config.filter_sensitive_data('<MISTRAL_API_KEY>') { ENV.fetch('MISTRAL_API_KEY', nil) }
   config.filter_sensitive_data('<OLLAMA_API_BASE>') { ENV.fetch('OLLAMA_API_BASE', 'http://localhost:11434/v1') }
+  config.filter_sensitive_data('<OLLAMA_CLOUD_API_KEY>') { ENV.fetch('OLLAMA_CLOUD_API_KEY', nil) }
   config.filter_sensitive_data('<OPENAI_API_KEY>') { ENV.fetch('OPENAI_API_KEY', nil) }
   config.filter_sensitive_data('<OPENROUTER_API_KEY>') { ENV.fetch('OPENROUTER_API_KEY', nil) }
   config.filter_sensitive_data('<PERPLEXITY_API_KEY>') { ENV.fetch('PERPLEXITY_API_KEY', nil) }

@@ -94,6 +94,22 @@ module StreamingErrorHelpers
       chunk_status: 500,
       expected_error: RubyLLM::ServerError
     },
+    ollama_cloud: {
+      url: lambda {
+        base = (RubyLLM.config.ollama_cloud_api_base || 'https://ollama.com/v1').to_s
+        "#{base.sub(%r{/+\z}, '')}/chat/completions"
+      },
+      error_response: {
+        error: {
+          message: 'Service overloaded - please try again later',
+          type: 'server_error',
+          param: nil,
+          code: nil
+        }
+      },
+      chunk_status: 500,
+      expected_error: RubyLLM::ServerError
+    },
     bedrock: {
       url: %r{\Ahttps://bedrock-runtime\.us-west-2\.amazonaws\.com/model/.+/converse-stream\z},
       error_response: {
