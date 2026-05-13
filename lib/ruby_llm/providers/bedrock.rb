@@ -6,6 +6,7 @@ module RubyLLM
     class Bedrock < Provider
       include Bedrock::Auth
       include Bedrock::Chat
+      include Bedrock::Embeddings
       include Bedrock::Media
       include Bedrock::Models
       include Bedrock::Streaming
@@ -45,6 +46,27 @@ module RubyLLM
         return body if body.is_a?(String)
 
         body['message'] || body['Message'] || body['error'] || body['__type'] || super
+      end
+
+      def embed(text, model:, dimensions:)
+        texts = [text].flatten
+        url = embedding_url(model:)
+
+        results = texts.map do |t|
+          payload = render_embedding_payload(t, model:, dimensions:)
+          body = JSON.generate(payload)
+          signed_hdrs = sign_headers('POST', url, body)
+
+          @connection.post(url, payload) do |req|
+            req.headers.merge!(signed_hdrs)
+          end
+        end
+
+        vectors = results.map { |r| r.body['embedding'] }
+        input_tokens = results.sum { |r| r.body['inputTextTokenCount'] || 0 }
+        vectors = vectors.first unless text.is_a?(Array)
+
+        Embedding.new(vectors:, model:, input_tokens:)
       end
 
       def list_models
