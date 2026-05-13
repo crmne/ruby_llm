@@ -18,5 +18,17 @@ RSpec.describe RubyLLM::Providers::Anthropic::Media do
       expect(document_block[:source]).to include(type: 'base64', media_type: 'application/pdf')
       expect(document_block[:source][:data]).to be_present
     end
+
+    it 'raises an actionable error for unsupported Office documents' do
+      content = RubyLLM::Content.new('Summarize this file')
+      content.add_attachment(StringIO.new('docx bytes'), filename: 'proposal.docx')
+
+      expect do
+        described_class.format_content(content)
+      end.to raise_error(
+        RubyLLM::UnsupportedAttachmentError,
+        %r{Unsupported attachment type: application/vnd.openxmlformats-officedocument.wordprocessingml.document}
+      )
+    end
   end
 end

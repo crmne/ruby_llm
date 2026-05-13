@@ -150,7 +150,7 @@ RSpec.describe RubyLLM::Image do
       it 'rejects edits with a non-png local file' do
         expect do
           RubyLLM.paint(prompt, with: audio_path, model: model)
-        end.to raise_error(RubyLLM::UnsupportedAttachmentError, /only supports image attachments/)
+        end.to raise_error(RubyLLM::UnsupportedAttachmentError, %r{Unsupported attachment type: audio/wav})
       end
 
       it 'customizes image output' do
