@@ -47,7 +47,7 @@ module RubyLLM
 
       yield return_value
     ensure
-      destination.close! if cleanup_after_block && destination.respond_to?(:close!)
+      destination.close! if block_given? && cleanup_after_block && destination.respond_to?(:close!)
       destination.close if close_after && destination.respond_to?(:close)
     end
 
