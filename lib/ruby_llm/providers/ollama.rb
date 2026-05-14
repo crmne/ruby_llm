@@ -8,8 +8,14 @@ module RubyLLM
       include Ollama::Media
       include Ollama::Models
 
+      # Ollama exposes two API surfaces:
+      #   - Native API at /api/* (different request/response format)
+      #   - OpenAI-compatible API at /v1/* (same format as OpenAI)
+      # Since this provider inherits from OpenAI, we use the /v1 endpoint
+      # so all OpenAI logic (chat, models, schemas) works without changes.
       def api_base
-        @config.ollama_api_base
+        base = @config.ollama_api_base.to_s.chomp('/')
+        base.end_with?('/v1') ? base : "#{base}/v1"
       end
 
       def headers
