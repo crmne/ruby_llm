@@ -79,6 +79,16 @@ RubyLLM.transcribe "meeting.wav"
 ```
 
 ```ruby
+# Upload a file to a provider and fetch it later
+file = RubyLLM.upload_file "batch.jsonl", provider: :openai, purpose: "batch"
+puts file.id
+
+# Download a file from a provider
+content = RubyLLM.download_file file.id, provider: :openai
+puts content.bytesize
+```
+
+```ruby
 # Moderate content for safety
 RubyLLM.moderate "Check if this text is safe"
 ```
@@ -127,6 +137,7 @@ response = chat.with_schema(ProductSchema).ask "Analyze this product", with: "pr
 * **Vision:** Analyze images and videos
 * **Audio:** Transcribe and understand speech with `RubyLLM.transcribe`
 * **Documents:** Extract from PDFs, CSVs, JSON, any file type
+* **Provider files:** Upload, inspect, and download provider-managed files
 * **Image generation:** Create images with `RubyLLM.paint`
 * **Embeddings:** Generate embeddings with `RubyLLM.embed`
 * **Moderation:** Content safety with `RubyLLM.moderate`

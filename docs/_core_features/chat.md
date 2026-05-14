@@ -246,6 +246,9 @@ puts response.content
 
 RubyLLM automatically detects file types based on extensions and content, so you can pass files directly without specifying the type:
 
+> `with:` sends files as part of the current chat request. If you need to upload a file to a provider's file API, store it for later use, or download it later by file ID, see the [Files Guide]({% link _core_features/files.md %}).
+{: .note }
+
 ```ruby
 chat = RubyLLM.chat(model: '{{ site.models.anthropic_current }}')
 
