@@ -72,6 +72,21 @@ module RubyLLM
       def to_h
         @value
       end
+
+      def to_s
+        case @value
+        when String
+          @value
+        when Hash, Array
+          @value.to_json
+        else
+          @value.to_s
+        end
+      end
+
+      def to_json(*args)
+        @value.to_json(*args)
+      end
     end
   end
 end

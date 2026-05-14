@@ -11,7 +11,9 @@ RSpec.describe 'ruby_llm.gemspec' do
   end
 
   it 'keeps faraday compatible with Ruby < 4.0' do
-    expect(runtime_dependency('faraday').requirement.to_s).to eq('>= 1.10.0')
+    expected_requirement = ENV['FARADAY_VERSION'] ? "= #{ENV['FARADAY_VERSION']}" : '>= 1.10.0'
+
+    expect(runtime_dependency('faraday').requirement.to_s).to eq(expected_requirement)
   end
 
   it 'keeps faraday-retry compatible with Faraday v1 and v2' do

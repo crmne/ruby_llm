@@ -53,7 +53,12 @@ module RubyLLM
 
         def handle_failed_stream(chunk, env)
           data = JSON.parse(chunk)
-          error_response = env.merge(body: data)
+          error_status = env&.status || data.dig('error', 'code') || data['code'] || 500
+          error_response = if env.respond_to?(:merge)
+                             env.merge(body: data, status: error_status)
+                           else
+                             Struct.new(:body, :status).new(data, error_status)
+                           end
           ErrorMiddleware.parse_error(provider: self, response: error_response)
         rescue JSON::ParserError
           RubyLLM.logger.debug { "Failed Bedrock stream error chunk: #{chunk}" }
