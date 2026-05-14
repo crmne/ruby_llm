@@ -83,6 +83,7 @@ RubyLLM.transcribe "meeting.wav"
 file = RubyLLM.upload_file "batch.jsonl", provider: :openai, purpose: "batch"
 puts file.id
 
+# Download a file from a provider
 content = RubyLLM.download_file file.id, provider: :openai
 puts content.bytesize
 ```

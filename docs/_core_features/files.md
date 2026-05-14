@@ -99,7 +99,14 @@ puts file_info.created_at
 
 ## Downloading File Contents
 
-Download file content with `RubyLLM.download_file`. By default, RubyLLM returns the raw response body.
+`RubyLLM.download_file` supports four download modes:
+
+- raw response body
+- download to a path
+- download to an IO object
+- download to a tempfile
+
+By default, RubyLLM returns the raw response body.
 
 ```ruby
 content = RubyLLM.download_file("file_123", provider: :openai)
@@ -132,7 +139,7 @@ end
 
 ### Downloading to a Tempfile
 
-Ask RubyLLM to manage a temporary file for you:
+Ask RubyLLM to create and manage a temporary file for you:
 
 ```ruby
 file = RubyLLM.download_file("file_123", provider: :openai, tempfile: true)
