@@ -14,6 +14,7 @@ RSpec.describe RubyLLM::Configuration do
       expect(config.retry_interval).to eq(0.1)
       expect(config.retry_backoff_factor).to eq(2)
       expect(config.retry_interval_randomness).to eq(0.5)
+      expect(config.default_providers).to eq({})
     end
 
     it 'exposes a discoverable options API' do
