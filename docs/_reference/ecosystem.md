@@ -282,6 +282,48 @@ For detailed documentation and examples, visit the [RubyLLM::Tribunal repository
 
 ---
 
+## RubyLLM::TopSecret
+
+**Automatically filter sensitive information from RubyLLM conversations using Top Secret.**
+
+[`RubyLLM::TopSecret`](https://github.com/thoughtbot/ruby_llm-top_secret) automatically filters sensitive information from your conversations using [`Top Secret`](https://github.com/thoughtbot/top_secret).
+
+### Why Use RubyLLM::TopSecret?
+
+If you're working in a regulated industry, or have general privacy concerns,
+you should be cautious about what data you send to an LLM. `RubyLLM::TopSecret`
+not only filters sensitive information before sending it to a provider,
+but it also restores the filtered response server-side.
+
+### Key Features
+
+- Supports in-memory and Active Record backed chats
+- Opt-in first architecture
+
+### Installation
+
+```bash
+gem install ruby_llm-top_secret
+```
+
+## Usage
+
+```ruby
+RubyLLM::TopSecret.with_filtering do
+  chat = RubyLLM.chat
+  response = chat.ask("My name is Ralph and my email is ralph@thoughtbot.com")
+
+  # The provider receives: "My name is [PERSON_1] and my email is [EMAIL_1]"
+  # The response comes back with placeholders restored:
+  puts response.content
+  # => "Nice to meet you, Ralph!"
+end
+```
+
+For detailed documentation and examples, visit the [RubyLLM::TopSecret repository](https://github.com/thoughtbot/ruby_llm-top_secret?tab=readme-ov-file).
+
+---
+
 ## Community Projects
 
 The RubyLLM ecosystem is growing! If you've built a library or tool that extends RubyLLM, we'd love to hear about it. Consider:
