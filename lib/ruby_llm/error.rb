@@ -62,6 +62,8 @@ module RubyLLM
         /reduce the length of messages/i
       ].freeze
 
+      RATE_LIMIT_PATTERN = /rate[\s_-]?limit/i
+
       def parse_error(provider:, response:) # rubocop:disable Metrics/PerceivedComplexity
         message = provider&.parse_error(response)
 
@@ -82,7 +84,7 @@ module RubyLLM
           raise ForbiddenError.new(response,
                                    message || 'Forbidden - you do not have permission to access this resource')
         when 429
-          if context_length_exceeded?(message)
+          if context_length_exceeded?(message) && !rate_limit_indicated?(message)
             raise ContextLengthExceededError.new(response, message || 'Context length exceeded')
           end
 
@@ -104,6 +106,12 @@ module RubyLLM
         return false if message.to_s.empty?
 
         CONTEXT_LENGTH_PATTERNS.any? { |pattern| message.match?(pattern) }
+      end
+
+      def rate_limit_indicated?(message)
+        return false if message.to_s.empty?
+
+        RATE_LIMIT_PATTERN.match?(message)
       end
     end
   end
