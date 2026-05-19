@@ -60,7 +60,7 @@ module RubyLLM
             output_tokens: usage['outputTokens'],
             cached_tokens: usage['cacheReadInputTokens'],
             cache_creation_tokens: usage['cacheWriteInputTokens'],
-            thinking_tokens: usage['reasoningTokens'],
+            thinking_tokens: usage['reasoningTokens'] || usage.dig('outputTokensDetails', 'reasoningTokens'),
             model_id: data['modelId'],
             raw: response
           )
