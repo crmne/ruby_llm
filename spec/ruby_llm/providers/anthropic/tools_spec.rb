@@ -222,4 +222,35 @@ RSpec.describe RubyLLM::Providers::Anthropic::Tools do
       expect(described_class.parse_tool_calls([])).to be_nil
     end
   end
+
+  describe '.function_for' do
+    it 'omits defer_loading when the tool is not deferred' do
+      tool = instance_double(RubyLLM::Tool, name: 'x', description: 'd', params_schema: nil,
+                                            parameters: {}, provider_params: {}, deferred?: false)
+      expect(described_class.function_for(tool)).not_to have_key(:defer_loading)
+    end
+
+    it 'emits defer_loading: true when the tool is deferred' do
+      tool = instance_double(RubyLLM::Tool, name: 'x', description: 'd', params_schema: nil,
+                                            parameters: {}, provider_params: {}, deferred?: true)
+      expect(described_class.function_for(tool)[:defer_loading]).to be(true)
+    end
+  end
+
+  describe '.format_tools' do
+    def tool(name, deferred:)
+      instance_double(RubyLLM::Tool, name: name, description: "#{name} desc", params_schema: nil,
+                                     parameters: {}, provider_params: {}, deferred?: deferred)
+    end
+
+    it 'does not append the native search tool when nothing is deferred' do
+      formatted = described_class.format_tools(a: tool('a', deferred: false), b: tool('b', deferred: false))
+      expect(formatted.map { |t| t[:name] }).to contain_exactly('a', 'b')
+    end
+
+    it 'appends the native BM25 search tool when any tool is deferred' do
+      formatted = described_class.format_tools(a: tool('a', deferred: false), b: tool('b', deferred: true))
+      expect(formatted.last).to eq(described_class::NATIVE_TOOL_SEARCH)
+    end
+  end
 end

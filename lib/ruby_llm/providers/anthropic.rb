@@ -22,6 +22,10 @@ module RubyLLM
         }
       end
 
+      def supports_deferred_loading?
+        true
+      end
+
       class << self
         def capabilities
           Anthropic::Capabilities

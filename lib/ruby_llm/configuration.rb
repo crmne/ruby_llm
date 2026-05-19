@@ -56,6 +56,8 @@ module RubyLLM
     option :log_stream_debug, -> { ENV['RUBYLLM_STREAM_DEBUG'] == 'true' }
     option :log_regexp_timeout, -> { Regexp.respond_to?(:timeout) ? (Regexp.timeout || 1.0) : nil }
 
+    option :tool_search_enabled, true
+
     def initialize
       self.class.send(:defaults).each do |key, default|
         value = default.respond_to?(:call) ? instance_exec(&default) : default
