@@ -18,7 +18,7 @@ RSpec.describe RubyLLM::Message do
       }
     )
   end
-  
+
   describe '#cache_point?' do
     it 'returns false by default' do
       message = described_class.new(role: :user, content: 'hello')

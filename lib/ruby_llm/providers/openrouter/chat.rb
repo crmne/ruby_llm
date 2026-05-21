@@ -130,7 +130,7 @@ module RubyLLM
           blocks[-1] = last.merge(cache_control: { type: 'ephemeral' })
           blocks
         end
-        
+
         def format_content(content)
           OpenAI::Media.format_content(content)
         end
