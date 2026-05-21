@@ -10,6 +10,15 @@ module RubyLLM
         def format_role(role)
           role.to_s
         end
+
+        def format_content(content)
+          OpenAI::Media.format_content(
+            content,
+            document_attachments: :none,
+            image_attachments: false,
+            audio_attachments: false
+          )
+        end
       end
     end
   end
