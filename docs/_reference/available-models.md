@@ -2,7 +2,7 @@
 layout: default
 title: Available Models
 nav_order: 1
-description: Browse 1251 AI models across 11 providers (not including local providers). Updated 2026-05-06.
+description: Browse 1252 AI models across 11 providers (not including local providers). Updated 2026-05-21.
 redirect_from:
   - /guides/available-models
 ---
@@ -387,8 +387,8 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | anthropic.claude-3-sonnet-20240229-v1:0:200k | bedrock | In: text, image; Out: text | streaming, function_calling | - | - | - |
 | anthropic.claude-3-sonnet-20240229-v1:0:28k | bedrock | In: text, image; Out: text | streaming, function_calling | - | - | - |
 | anthropic.claude-3-haiku-20240307-v1:0 | bedrock | In: text, image, pdf; Out: text | function_calling, vision, streaming | 200000 | 4096 | In: $0.25, Out: $1.25 |
-| anthropic.claude-3-haiku-20240307-v1:0:200k | bedrock | In: text, image, pdf; Out: text | function_calling, vision, streaming | 200000 | 4096 | In: $0.25, Out: $1.25 |
 | anthropic.claude-3-haiku-20240307-v1:0:48k | bedrock | In: text, image, pdf; Out: text | function_calling, vision, streaming | 48000 | 4096 | In: $0.25, Out: $1.25 |
+| anthropic.claude-3-haiku-20240307-v1:0:200k | bedrock | In: text, image, pdf; Out: text | function_calling, vision, streaming | 200000 | 4096 | In: $0.25, Out: $1.25 |
 | anthropic.claude-3-5-haiku-20241022-v1:0 | bedrock | In: text, image, pdf; Out: text | function_calling, vision, streaming | 200000 | 8192 | In: $0.80, Out: $4.00, Cache Read: $0.08, Cache Write: $1.00 |
 | anthropic.claude-haiku-4-5-20251001-v1:0 | bedrock | In: text, image, pdf; Out: text | function_calling, structured_output, reasoning, vision | 200000 | 64000 | In: $1.00, Out: $5.00, Cache Read: $0.10, Cache Write: $1.25 |
 | eu.anthropic.claude-haiku-4-5-20251001-v1:0 | bedrock | In: text, image, pdf; Out: text | function_calling, structured_output, reasoning, vision | 200000 | 64000 | In: $1.00, Out: $5.00, Cache Read: $0.10, Cache Write: $1.25 |
@@ -434,8 +434,8 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | mistral.devstral-2-123b | bedrock | In: text; Out: text | function_calling, streaming | 256000 | 8192 | In: $0.40, Out: $2.00 |
 | cohere.embed-english-v3 | bedrock | In: text; Out: embeddings | function_calling | - | - | - |
 | cohere.embed-english-v3:0:512 | bedrock | In: text; Out: embeddings | function_calling | - | - | - |
-| cohere.embed-multilingual-v3 | bedrock | In: text; Out: embeddings | function_calling | - | - | - |
 | cohere.embed-multilingual-v3:0:512 | bedrock | In: text; Out: embeddings | function_calling | - | - | - |
+| cohere.embed-multilingual-v3 | bedrock | In: text; Out: embeddings | function_calling | - | - | - |
 | us.cohere.embed-v4:0 | bedrock | In: text, image; Out: embeddings | function_calling | 128000 | - | - |
 | zai.glm-4.7 | bedrock | In: text; Out: text | function_calling, reasoning, streaming | 204800 | 131072 | In: $0.60, Out: $2.20 |
 | zai.glm-4.7-flash | bedrock | In: text; Out: text | function_calling, reasoning, streaming | 200000 | 131072 | In: $0.07, Out: $0.40 |
@@ -454,21 +454,21 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | meta.llama3-1-70b-instruct-v1:0:128k | bedrock | In: text; Out: text | function_calling, streaming | 128000 | 4096 | In: $0.72, Out: $0.72 |
 | meta.llama3-1-8b-instruct-v1:0 | bedrock | In: text; Out: text | function_calling, streaming | 128000 | 4096 | In: $0.22, Out: $0.22 |
 | meta.llama3-1-8b-instruct-v1:0:128k | bedrock | In: text; Out: text | function_calling, streaming | 128000 | 4096 | In: $0.22, Out: $0.22 |
-| meta.llama3-2-11b-instruct-v1:0 | bedrock | In: text, image; Out: text | function_calling, vision | 128000 | 4096 | In: $0.16, Out: $0.16 |
 | meta.llama3-2-11b-instruct-v1:0:128k | bedrock | In: text, image; Out: text | function_calling, vision, streaming | 128000 | 4096 | In: $0.16, Out: $0.16 |
 | us.meta.llama3-2-11b-instruct-v1:0 | bedrock | In: text, image; Out: text | function_calling, vision, streaming | 128000 | 4096 | In: $0.16, Out: $0.16 |
+| meta.llama3-2-11b-instruct-v1:0 | bedrock | In: text, image; Out: text | function_calling, vision | 128000 | 4096 | In: $0.16, Out: $0.16 |
 | meta.llama3-2-1b-instruct-v1:0 | bedrock | In: text; Out: text | function_calling | 131000 | 4096 | In: $0.10, Out: $0.10 |
 | meta.llama3-2-1b-instruct-v1:0:128k | bedrock | In: text; Out: text | function_calling, streaming | 128000 | 4096 | In: $0.10, Out: $0.10 |
 | us.meta.llama3-2-1b-instruct-v1:0 | bedrock | In: text; Out: text | function_calling, streaming | 131000 | 4096 | In: $0.10, Out: $0.10 |
 | meta.llama3-2-3b-instruct-v1:0 | bedrock | In: text; Out: text | function_calling | 131000 | 4096 | In: $0.15, Out: $0.15 |
 | meta.llama3-2-3b-instruct-v1:0:128k | bedrock | In: text; Out: text | function_calling, streaming | 128000 | 4096 | In: $0.15, Out: $0.15 |
 | us.meta.llama3-2-3b-instruct-v1:0 | bedrock | In: text; Out: text | function_calling, streaming | 131000 | 4096 | In: $0.15, Out: $0.15 |
-| meta.llama3-2-90b-instruct-v1:0 | bedrock | In: text, image; Out: text | function_calling, vision | 128000 | 4096 | In: $0.72, Out: $0.72 |
 | meta.llama3-2-90b-instruct-v1:0:128k | bedrock | In: text, image; Out: text | function_calling, vision, streaming | 128000 | 4096 | In: $0.72, Out: $0.72 |
 | us.meta.llama3-2-90b-instruct-v1:0 | bedrock | In: text, image; Out: text | function_calling, vision, streaming | 128000 | 4096 | In: $0.72, Out: $0.72 |
+| meta.llama3-2-90b-instruct-v1:0 | bedrock | In: text, image; Out: text | function_calling, vision | 128000 | 4096 | In: $0.72, Out: $0.72 |
 | meta.llama3-3-70b-instruct-v1:0 | bedrock | In: text; Out: text | function_calling | 128000 | 4096 | In: $0.72, Out: $0.72 |
-| meta.llama3-3-70b-instruct-v1:0:128k | bedrock | In: text; Out: text | function_calling, streaming | 128000 | 4096 | In: $0.72, Out: $0.72 |
 | us.meta.llama3-3-70b-instruct-v1:0 | bedrock | In: text; Out: text | function_calling, streaming | 128000 | 4096 | In: $0.72, Out: $0.72 |
+| meta.llama3-3-70b-instruct-v1:0:128k | bedrock | In: text; Out: text | function_calling, streaming | 128000 | 4096 | In: $0.72, Out: $0.72 |
 | meta.llama4-maverick-17b-instruct-v1:0 | bedrock | In: text, image; Out: text | function_calling, vision | 1000000 | 16384 | In: $0.24, Out: $0.97 |
 | us.meta.llama4-maverick-17b-instruct-v1:0 | bedrock | In: text, image; Out: text | function_calling, vision, streaming | 1000000 | 16384 | In: $0.24, Out: $0.97 |
 | meta.llama4-scout-17b-instruct-v1:0 | bedrock | In: text, image; Out: text | function_calling, vision | 3500000 | 16384 | In: $0.17, Out: $0.66 |
@@ -489,21 +489,21 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | nvidia.nemotron-nano-12b-v2 | bedrock | In: text, image; Out: text | function_calling, structured_output, vision, streaming | 128000 | 4096 | In: $0.20, Out: $0.60 |
 | nvidia.nemotron-nano-3-30b | bedrock | In: text; Out: text | function_calling, reasoning, streaming | 128000 | 4096 | In: $0.06, Out: $0.24 |
 | nvidia.nemotron-nano-9b-v2 | bedrock | In: text; Out: text | function_calling, structured_output, streaming | 128000 | 4096 | In: $0.06, Out: $0.23 |
-| amazon.nova-2-lite-v1:0 | bedrock | In: text, image, video; Out: text | function_calling, vision | 128000 | 4096 | In: $0.33, Out: $2.75 |
 | us.amazon.nova-2-lite-v1:0 | bedrock | In: text, image, video; Out: text | function_calling, vision, streaming | 128000 | 4096 | In: $0.33, Out: $2.75 |
+| amazon.nova-2-lite-v1:0 | bedrock | In: text, image, video; Out: text | function_calling, vision | 128000 | 4096 | In: $0.33, Out: $2.75 |
 | amazon.nova-2-sonic-v1:0 | bedrock | In: audio; Out: audio, text | streaming, function_calling | - | - | - |
-| amazon.nova-lite-v1:0 | bedrock | In: text, image, video; Out: text | function_calling, vision | 300000 | 8192 | In: $0.06, Out: $0.24, Cache Read: $0.02 |
 | us.amazon.nova-lite-v1:0 | bedrock | In: text, image, video; Out: text | function_calling, vision, streaming | 300000 | 8192 | In: $0.06, Out: $0.24, Cache Read: $0.02 |
-| amazon.nova-micro-v1:0 | bedrock | In: text; Out: text | function_calling | 128000 | 8192 | In: $0.04, Out: $0.14, Cache Read: $0.01 |
+| amazon.nova-lite-v1:0 | bedrock | In: text, image, video; Out: text | function_calling, vision | 300000 | 8192 | In: $0.06, Out: $0.24, Cache Read: $0.02 |
 | us.amazon.nova-micro-v1:0 | bedrock | In: text; Out: text | function_calling, streaming | 128000 | 8192 | In: $0.04, Out: $0.14, Cache Read: $0.01 |
-| amazon.nova-premier-v1:0 | bedrock | In: text, image, video; Out: text | function_calling, reasoning, vision | 1000000 | 16384 | In: $2.50, Out: $12.50 |
+| amazon.nova-micro-v1:0 | bedrock | In: text; Out: text | function_calling | 128000 | 8192 | In: $0.04, Out: $0.14, Cache Read: $0.01 |
 | amazon.nova-premier-v1:0:1000k | bedrock | In: text, image, video; Out: text | function_calling, reasoning, vision, streaming | 1000000 | 16384 | In: $2.50, Out: $12.50 |
-| amazon.nova-premier-v1:0:20k | bedrock | In: text, image, video; Out: text | function_calling, reasoning, vision, streaming | 20000 | 16384 | In: $2.50, Out: $12.50 |
-| amazon.nova-premier-v1:0:8k | bedrock | In: text, image, video; Out: text | function_calling, reasoning, vision, streaming | 8000 | 16384 | In: $2.50, Out: $12.50 |
-| amazon.nova-premier-v1:0:mm | bedrock | In: text, image, video; Out: text | streaming, function_calling | - | - | - |
+| amazon.nova-premier-v1:0 | bedrock | In: text, image, video; Out: text | function_calling, reasoning, vision | 1000000 | 16384 | In: $2.50, Out: $12.50 |
 | us.amazon.nova-premier-v1:0 | bedrock | In: text, image, video; Out: text | function_calling, reasoning, vision, streaming | 1000000 | 16384 | In: $2.50, Out: $12.50 |
-| amazon.nova-pro-v1:0 | bedrock | In: text, image, video; Out: text | function_calling, vision | 300000 | 8192 | In: $0.80, Out: $3.20, Cache Read: $0.20 |
+| amazon.nova-premier-v1:0:8k | bedrock | In: text, image, video; Out: text | function_calling, reasoning, vision, streaming | 8000 | 16384 | In: $2.50, Out: $12.50 |
+| amazon.nova-premier-v1:0:20k | bedrock | In: text, image, video; Out: text | function_calling, reasoning, vision, streaming | 20000 | 16384 | In: $2.50, Out: $12.50 |
+| amazon.nova-premier-v1:0:mm | bedrock | In: text, image, video; Out: text | streaming, function_calling | - | - | - |
 | us.amazon.nova-pro-v1:0 | bedrock | In: text, image, video; Out: text | function_calling, vision, streaming | 300000 | 8192 | In: $0.80, Out: $3.20, Cache Read: $0.20 |
+| amazon.nova-pro-v1:0 | bedrock | In: text, image, video; Out: text | function_calling, vision | 300000 | 8192 | In: $0.80, Out: $3.20, Cache Read: $0.20 |
 | us.writer.palmyra-x4-v1:0 | bedrock | In: text; Out: text | function_calling, reasoning, streaming | 122880 | 8192 | In: $2.50, Out: $10.00 |
 | writer.palmyra-x4-v1:0 | bedrock | In: text; Out: text | function_calling, reasoning | 122880 | 8192 | In: $2.50, Out: $10.00 |
 | us.writer.palmyra-x5-v1:0 | bedrock | In: text; Out: text | function_calling, reasoning, streaming | 1040000 | 8192 | In: $0.60, Out: $6.00 |
@@ -561,10 +561,11 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | deepseek-v4-pro | deepseek | In: text; Out: text | function_calling, structured_output, reasoning | 1000000 | 384000 | In: $1.74, Out: $3.48, Cache Read: $0.14 |
 
 
-### Gemini (67)
+### Gemini (68)
 
 | Model | Provider | I/O | Capabilities | Context | Max Output | Standard Pricing (per 1M tokens) |
 | :-- | :-- | :-- | :-- | --: | --: | :-- |
+| antigravity-preview-05-2026 | gemini | In: -; Out: - | - | 131072 | 65536 | In: $0.08, Out: $0.30 |
 | deep-research-max-preview-04-2026 | gemini | In: -; Out: - | - | 131072 | 65536 | In: $0.08, Out: $0.30 |
 | deep-research-preview-04-2026 | gemini | In: -; Out: - | - | 131072 | 65536 | In: $0.08, Out: $0.30 |
 | deep-research-pro-preview-12-2025 | gemini | In: -; Out: - | function_calling, structured_output, vision | 131072 | 65536 | In: $0.08, Out: $0.30 |
@@ -584,7 +585,6 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | gemini-2.5-flash-lite-preview-09-2025 | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision | 1048576 | 65536 | In: $0.10, Out: $0.40, Cache Read: $0.02 |
 | gemini-2.5-flash-native-audio-latest | gemini | In: -; Out: - | function_calling, structured_output, vision | 131072 | 8192 | In: $0.08, Out: $0.30 |
 | gemini-2.5-flash-native-audio-preview-09-2025 | gemini | In: -; Out: - | function_calling, structured_output, vision | 131072 | 8192 | In: $0.08, Out: $0.30 |
-| gemini-2.5-flash-native-audio-preview-12-2025 | gemini | In: -; Out: - | function_calling, structured_output, vision | 131072 | 8192 | In: $0.08, Out: $0.30 |
 | gemini-2.5-flash-preview-04-17 | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, reasoning, vision | 1048576 | 65536 | In: $0.15, Out: $0.60, Cache Read: $0.04 |
 | gemini-2.5-flash-preview-05-20 | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision | 1048576 | 65536 | In: $0.15, Out: $0.60, Cache Read: $0.04 |
 | gemini-2.5-flash-preview-09-2025 | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache Read: $0.08 |
@@ -596,11 +596,12 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | gemini-3-flash-preview | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision | 1048576 | 65536 | In: $0.50, Out: $3.00, Cache Read: $0.05 |
 | gemini-3-pro-preview | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision | 1000000 | 64000 | In: $2.00, Out: $12.00, Cache Read: $0.20 |
 | gemini-3.1-flash-image-preview | gemini | In: text, image, pdf; Out: text, image | reasoning, vision, function_calling, structured_output | 131072 | 32768 | In: $0.25, Out: $60.00 |
+| gemini-3.1-flash-lite | gemini | In: -; Out: - | structured_output, vision | 1048576 | 65536 | In: $0.08, Out: $0.30 |
 | gemini-3.1-flash-lite-preview | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision | 1048576 | 65536 | In: $0.25, Out: $1.50, Cache Read: $0.02, Cache Write: $1.00 |
-| gemini-3.1-flash-live-preview | gemini | In: -; Out: - | function_calling, structured_output, vision | 131072 | 65536 | In: $0.08, Out: $0.30 |
 | gemini-3.1-flash-tts-preview | gemini | In: -; Out: - | function_calling, structured_output, vision | 8192 | 16384 | In: $0.08, Out: $0.30 |
 | gemini-3.1-pro-preview | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision | 1048576 | 65536 | In: $2.00, Out: $12.00, Cache Read: $0.20 |
 | gemini-3.1-pro-preview-customtools | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision | 1048576 | 65536 | In: $2.00, Out: $12.00, Cache Read: $0.20 |
+| gemini-3.5-flash | gemini | In: -; Out: - | function_calling, structured_output, vision | 1048576 | 65536 | In: $0.08, Out: $0.30 |
 | gemini-embedding-001 | gemini | In: text; Out: embeddings | - | 2048 | 3072 | In: $0.15 |
 | gemini-embedding-2 | gemini | In: -; Out: - | function_calling, structured_output, vision | 8192 | 1 | - |
 | gemini-embedding-2-preview | gemini | In: -; Out: - | function_calling, structured_output, vision | 8192 | 1 | - |
@@ -638,8 +639,8 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 
 | Model | Provider | I/O | Capabilities | Context | Max Output | Standard Pricing (per 1M tokens) |
 | :-- | :-- | :-- | :-- | --: | --: | :-- |
-| codestral-2508 | mistral | In: text; Out: text | streaming, function_calling, structured_output, batch, predicted_outputs | 32768 | 8192 | - |
 | codestral-embed | mistral | In: text; Out: embeddings | predicted_outputs | 32768 | 8192 | - |
+| codestral-2508 | mistral | In: text; Out: text | streaming, function_calling, structured_output, batch, predicted_outputs | 32768 | 8192 | - |
 | codestral-embed-2505 | mistral | In: text; Out: embeddings | predicted_outputs | 32768 | 8192 | - |
 | codestral-latest | mistral | In: text; Out: text | function_calling, streaming, structured_output, batch, predicted_outputs | 256000 | 4096 | In: $0.30, Out: $0.90 |
 | devstral-2512 | mistral | In: text; Out: text | function_calling, streaming, structured_output, batch, fine_tuning | 262144 | 262144 | In: $0.40, Out: $2.00 |
@@ -662,24 +663,24 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | ministral-8b-2512 | mistral | In: text; Out: text | streaming, function_calling, structured_output, batch, distillation | 32768 | 8192 | - |
 | ministral-8b-latest | mistral | In: text; Out: text | function_calling, streaming, structured_output, batch, distillation | 128000 | 128000 | In: $0.10, Out: $0.10 |
 | open-mistral-7b | mistral | In: text; Out: text | function_calling | 8000 | 8000 | In: $0.25, Out: $0.25 |
-| mistral-embed | mistral | In: text; Out: text | - | 8000 | 3072 | In: $0.10 |
 | mistral-embed-2312 | mistral | In: text; Out: embeddings | - | 32768 | 8192 | - |
+| mistral-embed | mistral | In: text; Out: text | - | 8000 | 3072 | In: $0.10 |
 | mistral-large-pixtral-2411 | mistral | In: text, image; Out: text | streaming, function_calling, structured_output, vision, batch, fine_tuning | 32768 | 8192 | - |
 | mistral-large-latest | mistral | In: text, image; Out: text | function_calling, vision, streaming, structured_output, batch, fine_tuning | 262144 | 262144 | In: $0.50, Out: $1.50 |
 | mistral-large-2411 | mistral | In: text; Out: text | function_calling, streaming, structured_output, batch, fine_tuning | 131072 | 16384 | In: $2.00, Out: $6.00 |
 | mistral-large-2512 | mistral | In: text, image; Out: text | function_calling, vision, streaming, structured_output, batch, fine_tuning | 262144 | 262144 | In: $0.50, Out: $1.50 |
+| mistral-medium-c21211-r0-75 | mistral | In: text; Out: text | streaming, function_calling, structured_output, vision, batch, fine_tuning | 32768 | 8192 | - |
 | mistral-medium | mistral | In: text; Out: text | streaming, function_calling, structured_output, vision, batch, fine_tuning | 32768 | 8192 | - |
 | mistral-medium-3 | mistral | In: text; Out: text | streaming, function_calling, structured_output, vision, batch, fine_tuning | 32768 | 8192 | - |
 | mistral-medium-3-5 | mistral | In: text; Out: text | streaming, function_calling, structured_output, vision, batch, fine_tuning | 32768 | 8192 | - |
 | mistral-medium-3.5 | mistral | In: text; Out: text | streaming, function_calling, structured_output, vision, batch, fine_tuning | 32768 | 8192 | - |
-| mistral-medium-c21211-r0-75 | mistral | In: text; Out: text | streaming, function_calling, structured_output, vision, batch, fine_tuning | 32768 | 8192 | - |
 | mistral-medium-latest | mistral | In: text, image; Out: text | function_calling, structured_output, reasoning, vision, streaming, batch, fine_tuning | 262144 | 262144 | In: $1.50, Out: $7.50 |
 | mistral-medium-2505 | mistral | In: text, image; Out: text | function_calling, vision, streaming, structured_output, batch, fine_tuning | 131072 | 131072 | In: $0.40, Out: $2.00 |
 | mistral-medium-2508 | mistral | In: text, image; Out: text | function_calling, vision, streaming, structured_output, batch, fine_tuning | 262144 | 262144 | In: $0.40, Out: $2.00 |
 | mistral-medium-2604 | mistral | In: text, image; Out: text | function_calling, structured_output, reasoning, vision, streaming, batch, fine_tuning | 262144 | 262144 | In: $1.50, Out: $7.50 |
-| mistral-moderation-2411 | mistral | In: text; Out: text | moderation | 32768 | 8192 | - |
-| mistral-moderation-2603 | mistral | In: text; Out: text | moderation | 32768 | 8192 | - |
 | mistral-moderation-latest | mistral | In: text; Out: text | moderation | 32768 | 8192 | - |
+| mistral-moderation-2603 | mistral | In: text; Out: text | moderation | 32768 | 8192 | - |
+| mistral-moderation-2411 | mistral | In: text; Out: text | moderation | 32768 | 8192 | - |
 | mistral-nemo | mistral | In: text; Out: text | function_calling | 128000 | 128000 | In: $0.15, Out: $0.15 |
 | mistral-ocr-2505 | mistral | In: text; Out: text | vision | 32768 | 8192 | - |
 | mistral-ocr-2512 | mistral | In: text; Out: text | vision | 32768 | 8192 | - |
@@ -1356,7 +1357,7 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 
 ## Models by Capability
 
-### Function Calling (779)
+### Function Calling (778)
 
 | Model | Provider | I/O | Capabilities | Context | Max Output | Standard Pricing (per 1M tokens) |
 | :-- | :-- | :-- | :-- | --: | --: | :-- |
@@ -1441,8 +1442,8 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | anthropic.claude-3-sonnet-20240229-v1:0:200k | bedrock | In: text, image; Out: text | streaming, function_calling | - | - | - |
 | anthropic.claude-3-sonnet-20240229-v1:0:28k | bedrock | In: text, image; Out: text | streaming, function_calling | - | - | - |
 | anthropic.claude-3-haiku-20240307-v1:0 | bedrock | In: text, image, pdf; Out: text | function_calling, vision, streaming | 200000 | 4096 | In: $0.25, Out: $1.25 |
-| anthropic.claude-3-haiku-20240307-v1:0:200k | bedrock | In: text, image, pdf; Out: text | function_calling, vision, streaming | 200000 | 4096 | In: $0.25, Out: $1.25 |
 | anthropic.claude-3-haiku-20240307-v1:0:48k | bedrock | In: text, image, pdf; Out: text | function_calling, vision, streaming | 48000 | 4096 | In: $0.25, Out: $1.25 |
+| anthropic.claude-3-haiku-20240307-v1:0:200k | bedrock | In: text, image, pdf; Out: text | function_calling, vision, streaming | 200000 | 4096 | In: $0.25, Out: $1.25 |
 | anthropic.claude-3-5-haiku-20241022-v1:0 | bedrock | In: text, image, pdf; Out: text | function_calling, vision, streaming | 200000 | 8192 | In: $0.80, Out: $4.00, Cache Read: $0.08, Cache Write: $1.00 |
 | anthropic.claude-haiku-4-5-20251001-v1:0 | bedrock | In: text, image, pdf; Out: text | function_calling, structured_output, reasoning, vision | 200000 | 64000 | In: $1.00, Out: $5.00, Cache Read: $0.10, Cache Write: $1.25 |
 | eu.anthropic.claude-haiku-4-5-20251001-v1:0 | bedrock | In: text, image, pdf; Out: text | function_calling, structured_output, reasoning, vision | 200000 | 64000 | In: $1.00, Out: $5.00, Cache Read: $0.10, Cache Write: $1.25 |
@@ -1486,8 +1487,8 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | deepseek.v3-v1:0 | bedrock | In: text; Out: text | function_calling, structured_output, reasoning, streaming | 163840 | 81920 | In: $0.58, Out: $1.68 |
 | deepseek.v3.2 | bedrock | In: text; Out: text | function_calling, reasoning, streaming | 163840 | 81920 | In: $0.62, Out: $1.85 |
 | mistral.devstral-2-123b | bedrock | In: text; Out: text | function_calling, streaming | 256000 | 8192 | In: $0.40, Out: $2.00 |
-| cohere.embed-english-v3 | bedrock | In: text; Out: embeddings | function_calling | - | - | - |
 | cohere.embed-english-v3:0:512 | bedrock | In: text; Out: embeddings | function_calling | - | - | - |
+| cohere.embed-english-v3 | bedrock | In: text; Out: embeddings | function_calling | - | - | - |
 | cohere.embed-multilingual-v3 | bedrock | In: text; Out: embeddings | function_calling | - | - | - |
 | cohere.embed-multilingual-v3:0:512 | bedrock | In: text; Out: embeddings | function_calling | - | - | - |
 | us.cohere.embed-v4:0 | bedrock | In: text, image; Out: embeddings | function_calling | 128000 | - | - |
@@ -1509,24 +1510,24 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | meta.llama3-1-8b-instruct-v1:0 | bedrock | In: text; Out: text | function_calling, streaming | 128000 | 4096 | In: $0.22, Out: $0.22 |
 | meta.llama3-1-8b-instruct-v1:0:128k | bedrock | In: text; Out: text | function_calling, streaming | 128000 | 4096 | In: $0.22, Out: $0.22 |
 | meta.llama3-2-11b-instruct-v1:0 | bedrock | In: text, image; Out: text | function_calling, vision | 128000 | 4096 | In: $0.16, Out: $0.16 |
-| meta.llama3-2-11b-instruct-v1:0:128k | bedrock | In: text, image; Out: text | function_calling, vision, streaming | 128000 | 4096 | In: $0.16, Out: $0.16 |
 | us.meta.llama3-2-11b-instruct-v1:0 | bedrock | In: text, image; Out: text | function_calling, vision, streaming | 128000 | 4096 | In: $0.16, Out: $0.16 |
-| meta.llama3-2-1b-instruct-v1:0 | bedrock | In: text; Out: text | function_calling | 131000 | 4096 | In: $0.10, Out: $0.10 |
-| meta.llama3-2-1b-instruct-v1:0:128k | bedrock | In: text; Out: text | function_calling, streaming | 128000 | 4096 | In: $0.10, Out: $0.10 |
+| meta.llama3-2-11b-instruct-v1:0:128k | bedrock | In: text, image; Out: text | function_calling, vision, streaming | 128000 | 4096 | In: $0.16, Out: $0.16 |
 | us.meta.llama3-2-1b-instruct-v1:0 | bedrock | In: text; Out: text | function_calling, streaming | 131000 | 4096 | In: $0.10, Out: $0.10 |
+| meta.llama3-2-1b-instruct-v1:0:128k | bedrock | In: text; Out: text | function_calling, streaming | 128000 | 4096 | In: $0.10, Out: $0.10 |
+| meta.llama3-2-1b-instruct-v1:0 | bedrock | In: text; Out: text | function_calling | 131000 | 4096 | In: $0.10, Out: $0.10 |
+| us.meta.llama3-2-3b-instruct-v1:0 | bedrock | In: text; Out: text | function_calling, streaming | 131000 | 4096 | In: $0.15, Out: $0.15 |
 | meta.llama3-2-3b-instruct-v1:0 | bedrock | In: text; Out: text | function_calling | 131000 | 4096 | In: $0.15, Out: $0.15 |
 | meta.llama3-2-3b-instruct-v1:0:128k | bedrock | In: text; Out: text | function_calling, streaming | 128000 | 4096 | In: $0.15, Out: $0.15 |
-| us.meta.llama3-2-3b-instruct-v1:0 | bedrock | In: text; Out: text | function_calling, streaming | 131000 | 4096 | In: $0.15, Out: $0.15 |
-| meta.llama3-2-90b-instruct-v1:0 | bedrock | In: text, image; Out: text | function_calling, vision | 128000 | 4096 | In: $0.72, Out: $0.72 |
 | meta.llama3-2-90b-instruct-v1:0:128k | bedrock | In: text, image; Out: text | function_calling, vision, streaming | 128000 | 4096 | In: $0.72, Out: $0.72 |
 | us.meta.llama3-2-90b-instruct-v1:0 | bedrock | In: text, image; Out: text | function_calling, vision, streaming | 128000 | 4096 | In: $0.72, Out: $0.72 |
-| meta.llama3-3-70b-instruct-v1:0 | bedrock | In: text; Out: text | function_calling | 128000 | 4096 | In: $0.72, Out: $0.72 |
+| meta.llama3-2-90b-instruct-v1:0 | bedrock | In: text, image; Out: text | function_calling, vision | 128000 | 4096 | In: $0.72, Out: $0.72 |
 | meta.llama3-3-70b-instruct-v1:0:128k | bedrock | In: text; Out: text | function_calling, streaming | 128000 | 4096 | In: $0.72, Out: $0.72 |
 | us.meta.llama3-3-70b-instruct-v1:0 | bedrock | In: text; Out: text | function_calling, streaming | 128000 | 4096 | In: $0.72, Out: $0.72 |
-| meta.llama4-maverick-17b-instruct-v1:0 | bedrock | In: text, image; Out: text | function_calling, vision | 1000000 | 16384 | In: $0.24, Out: $0.97 |
+| meta.llama3-3-70b-instruct-v1:0 | bedrock | In: text; Out: text | function_calling | 128000 | 4096 | In: $0.72, Out: $0.72 |
 | us.meta.llama4-maverick-17b-instruct-v1:0 | bedrock | In: text, image; Out: text | function_calling, vision, streaming | 1000000 | 16384 | In: $0.24, Out: $0.97 |
-| meta.llama4-scout-17b-instruct-v1:0 | bedrock | In: text, image; Out: text | function_calling, vision | 3500000 | 16384 | In: $0.17, Out: $0.66 |
+| meta.llama4-maverick-17b-instruct-v1:0 | bedrock | In: text, image; Out: text | function_calling, vision | 1000000 | 16384 | In: $0.24, Out: $0.97 |
 | us.meta.llama4-scout-17b-instruct-v1:0 | bedrock | In: text, image; Out: text | function_calling, vision, streaming | 3500000 | 16384 | In: $0.17, Out: $0.66 |
+| meta.llama4-scout-17b-instruct-v1:0 | bedrock | In: text, image; Out: text | function_calling, vision | 3500000 | 16384 | In: $0.17, Out: $0.66 |
 | mistral.magistral-small-2509 | bedrock | In: text, image; Out: text | function_calling, structured_output, reasoning, vision, streaming | 128000 | 40000 | In: $0.50, Out: $1.50 |
 | minimax.minimax-m2 | bedrock | In: text; Out: text | function_calling, reasoning, streaming | 204608 | 128000 | In: $0.30, Out: $1.20 |
 | minimax.minimax-m2.1 | bedrock | In: text; Out: text | function_calling, reasoning, streaming | 204800 | 131072 | In: $0.30, Out: $1.20 |
@@ -1546,25 +1547,25 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | amazon.nova-2-lite-v1:0 | bedrock | In: text, image, video; Out: text | function_calling, vision | 128000 | 4096 | In: $0.33, Out: $2.75 |
 | us.amazon.nova-2-lite-v1:0 | bedrock | In: text, image, video; Out: text | function_calling, vision, streaming | 128000 | 4096 | In: $0.33, Out: $2.75 |
 | amazon.nova-2-sonic-v1:0 | bedrock | In: audio; Out: audio, text | streaming, function_calling | - | - | - |
-| amazon.nova-lite-v1:0 | bedrock | In: text, image, video; Out: text | function_calling, vision | 300000 | 8192 | In: $0.06, Out: $0.24, Cache Read: $0.02 |
 | us.amazon.nova-lite-v1:0 | bedrock | In: text, image, video; Out: text | function_calling, vision, streaming | 300000 | 8192 | In: $0.06, Out: $0.24, Cache Read: $0.02 |
-| amazon.nova-micro-v1:0 | bedrock | In: text; Out: text | function_calling | 128000 | 8192 | In: $0.04, Out: $0.14, Cache Read: $0.01 |
+| amazon.nova-lite-v1:0 | bedrock | In: text, image, video; Out: text | function_calling, vision | 300000 | 8192 | In: $0.06, Out: $0.24, Cache Read: $0.02 |
 | us.amazon.nova-micro-v1:0 | bedrock | In: text; Out: text | function_calling, streaming | 128000 | 8192 | In: $0.04, Out: $0.14, Cache Read: $0.01 |
+| amazon.nova-micro-v1:0 | bedrock | In: text; Out: text | function_calling | 128000 | 8192 | In: $0.04, Out: $0.14, Cache Read: $0.01 |
+| amazon.nova-premier-v1:0:8k | bedrock | In: text, image, video; Out: text | function_calling, reasoning, vision, streaming | 8000 | 16384 | In: $2.50, Out: $12.50 |
+| us.amazon.nova-premier-v1:0 | bedrock | In: text, image, video; Out: text | function_calling, reasoning, vision, streaming | 1000000 | 16384 | In: $2.50, Out: $12.50 |
 | amazon.nova-premier-v1:0 | bedrock | In: text, image, video; Out: text | function_calling, reasoning, vision | 1000000 | 16384 | In: $2.50, Out: $12.50 |
 | amazon.nova-premier-v1:0:1000k | bedrock | In: text, image, video; Out: text | function_calling, reasoning, vision, streaming | 1000000 | 16384 | In: $2.50, Out: $12.50 |
 | amazon.nova-premier-v1:0:20k | bedrock | In: text, image, video; Out: text | function_calling, reasoning, vision, streaming | 20000 | 16384 | In: $2.50, Out: $12.50 |
-| amazon.nova-premier-v1:0:8k | bedrock | In: text, image, video; Out: text | function_calling, reasoning, vision, streaming | 8000 | 16384 | In: $2.50, Out: $12.50 |
 | amazon.nova-premier-v1:0:mm | bedrock | In: text, image, video; Out: text | streaming, function_calling | - | - | - |
-| us.amazon.nova-premier-v1:0 | bedrock | In: text, image, video; Out: text | function_calling, reasoning, vision, streaming | 1000000 | 16384 | In: $2.50, Out: $12.50 |
-| amazon.nova-pro-v1:0 | bedrock | In: text, image, video; Out: text | function_calling, vision | 300000 | 8192 | In: $0.80, Out: $3.20, Cache Read: $0.20 |
 | us.amazon.nova-pro-v1:0 | bedrock | In: text, image, video; Out: text | function_calling, vision, streaming | 300000 | 8192 | In: $0.80, Out: $3.20, Cache Read: $0.20 |
-| us.writer.palmyra-x4-v1:0 | bedrock | In: text; Out: text | function_calling, reasoning, streaming | 122880 | 8192 | In: $2.50, Out: $10.00 |
+| amazon.nova-pro-v1:0 | bedrock | In: text, image, video; Out: text | function_calling, vision | 300000 | 8192 | In: $0.80, Out: $3.20, Cache Read: $0.20 |
 | writer.palmyra-x4-v1:0 | bedrock | In: text; Out: text | function_calling, reasoning | 122880 | 8192 | In: $2.50, Out: $10.00 |
-| us.writer.palmyra-x5-v1:0 | bedrock | In: text; Out: text | function_calling, reasoning, streaming | 1040000 | 8192 | In: $0.60, Out: $6.00 |
+| us.writer.palmyra-x4-v1:0 | bedrock | In: text; Out: text | function_calling, reasoning, streaming | 122880 | 8192 | In: $2.50, Out: $10.00 |
 | writer.palmyra-x5-v1:0 | bedrock | In: text; Out: text | function_calling, reasoning | 1040000 | 8192 | In: $0.60, Out: $6.00 |
+| us.writer.palmyra-x5-v1:0 | bedrock | In: text; Out: text | function_calling, reasoning, streaming | 1040000 | 8192 | In: $0.60, Out: $6.00 |
 | us.twelvelabs.pegasus-1-2-v1:0 | bedrock | In: text, video; Out: text | streaming, function_calling | - | - | - |
-| mistral.pixtral-large-2502-v1:0 | bedrock | In: text, image; Out: text | function_calling, vision | 128000 | 8192 | In: $2.00, Out: $6.00 |
 | us.mistral.pixtral-large-2502-v1:0 | bedrock | In: text, image; Out: text | function_calling, vision, streaming | 128000 | 8192 | In: $2.00, Out: $6.00 |
+| mistral.pixtral-large-2502-v1:0 | bedrock | In: text, image; Out: text | function_calling, vision | 128000 | 8192 | In: $2.00, Out: $6.00 |
 | qwen.qwen3-next-80b-a3b | bedrock | In: text; Out: text | function_calling, structured_output, streaming | 262000 | 262000 | In: $0.14, Out: $1.40 |
 | qwen.qwen3-vl-235b-a22b | bedrock | In: text, image; Out: text | function_calling, structured_output, vision, streaming | 262000 | 262000 | In: $0.30, Out: $1.50 |
 | qwen.qwen3-235b-a22b-2507-v1:0 | bedrock | In: text; Out: text | function_calling, structured_output, streaming | 262144 | 131072 | In: $0.22, Out: $0.88 |
@@ -1622,7 +1623,6 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | gemini-2.5-flash-lite-preview-09-2025 | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision | 1048576 | 65536 | In: $0.10, Out: $0.40, Cache Read: $0.02 |
 | gemini-2.5-flash-native-audio-latest | gemini | In: -; Out: - | function_calling, structured_output, vision | 131072 | 8192 | In: $0.08, Out: $0.30 |
 | gemini-2.5-flash-native-audio-preview-09-2025 | gemini | In: -; Out: - | function_calling, structured_output, vision | 131072 | 8192 | In: $0.08, Out: $0.30 |
-| gemini-2.5-flash-native-audio-preview-12-2025 | gemini | In: -; Out: - | function_calling, structured_output, vision | 131072 | 8192 | In: $0.08, Out: $0.30 |
 | gemini-2.5-flash-preview-04-17 | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, reasoning, vision | 1048576 | 65536 | In: $0.15, Out: $0.60, Cache Read: $0.04 |
 | gemini-2.5-flash-preview-05-20 | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision | 1048576 | 65536 | In: $0.15, Out: $0.60, Cache Read: $0.04 |
 | gemini-2.5-flash-preview-09-2025 | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache Read: $0.08 |
@@ -1635,10 +1635,10 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | gemini-3-pro-preview | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision | 1000000 | 64000 | In: $2.00, Out: $12.00, Cache Read: $0.20 |
 | gemini-3.1-flash-image-preview | gemini | In: text, image, pdf; Out: text, image | reasoning, vision, function_calling, structured_output | 131072 | 32768 | In: $0.25, Out: $60.00 |
 | gemini-3.1-flash-lite-preview | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision | 1048576 | 65536 | In: $0.25, Out: $1.50, Cache Read: $0.02, Cache Write: $1.00 |
-| gemini-3.1-flash-live-preview | gemini | In: -; Out: - | function_calling, structured_output, vision | 131072 | 65536 | In: $0.08, Out: $0.30 |
 | gemini-3.1-flash-tts-preview | gemini | In: -; Out: - | function_calling, structured_output, vision | 8192 | 16384 | In: $0.08, Out: $0.30 |
 | gemini-3.1-pro-preview | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision | 1048576 | 65536 | In: $2.00, Out: $12.00, Cache Read: $0.20 |
 | gemini-3.1-pro-preview-customtools | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision | 1048576 | 65536 | In: $2.00, Out: $12.00, Cache Read: $0.20 |
+| gemini-3.5-flash | gemini | In: -; Out: - | function_calling, structured_output, vision | 1048576 | 65536 | In: $0.08, Out: $0.30 |
 | gemini-embedding-2 | gemini | In: -; Out: - | function_calling, structured_output, vision | 8192 | 1 | - |
 | gemini-embedding-2-preview | gemini | In: -; Out: - | function_calling, structured_output, vision | 8192 | 1 | - |
 | gemini-flash-latest | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache Read: $0.08 |
@@ -1680,11 +1680,11 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | mistral-large-latest | mistral | In: text, image; Out: text | function_calling, vision, streaming, structured_output, batch, fine_tuning | 262144 | 262144 | In: $0.50, Out: $1.50 |
 | mistral-large-2411 | mistral | In: text; Out: text | function_calling, streaming, structured_output, batch, fine_tuning | 131072 | 16384 | In: $2.00, Out: $6.00 |
 | mistral-large-2512 | mistral | In: text, image; Out: text | function_calling, vision, streaming, structured_output, batch, fine_tuning | 262144 | 262144 | In: $0.50, Out: $1.50 |
+| mistral-medium-3.5 | mistral | In: text; Out: text | streaming, function_calling, structured_output, vision, batch, fine_tuning | 32768 | 8192 | - |
 | mistral-medium | mistral | In: text; Out: text | streaming, function_calling, structured_output, vision, batch, fine_tuning | 32768 | 8192 | - |
+| mistral-medium-c21211-r0-75 | mistral | In: text; Out: text | streaming, function_calling, structured_output, vision, batch, fine_tuning | 32768 | 8192 | - |
 | mistral-medium-3 | mistral | In: text; Out: text | streaming, function_calling, structured_output, vision, batch, fine_tuning | 32768 | 8192 | - |
 | mistral-medium-3-5 | mistral | In: text; Out: text | streaming, function_calling, structured_output, vision, batch, fine_tuning | 32768 | 8192 | - |
-| mistral-medium-3.5 | mistral | In: text; Out: text | streaming, function_calling, structured_output, vision, batch, fine_tuning | 32768 | 8192 | - |
-| mistral-medium-c21211-r0-75 | mistral | In: text; Out: text | streaming, function_calling, structured_output, vision, batch, fine_tuning | 32768 | 8192 | - |
 | mistral-medium-latest | mistral | In: text, image; Out: text | function_calling, structured_output, reasoning, vision, streaming, batch, fine_tuning | 262144 | 262144 | In: $1.50, Out: $7.50 |
 | mistral-medium-2505 | mistral | In: text, image; Out: text | function_calling, vision, streaming, structured_output, batch, fine_tuning | 131072 | 131072 | In: $0.40, Out: $2.00 |
 | mistral-medium-2508 | mistral | In: text, image; Out: text | function_calling, vision, streaming, structured_output, batch, fine_tuning | 262144 | 262144 | In: $0.40, Out: $2.00 |
@@ -2254,7 +2254,6 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | gemini-2.5-flash-lite-preview-09-2025 | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision | 1048576 | 65536 | In: $0.10, Out: $0.40, Cache Read: $0.02 |
 | gemini-2.5-flash-native-audio-latest | gemini | In: -; Out: - | function_calling, structured_output, vision | 131072 | 8192 | In: $0.08, Out: $0.30 |
 | gemini-2.5-flash-native-audio-preview-09-2025 | gemini | In: -; Out: - | function_calling, structured_output, vision | 131072 | 8192 | In: $0.08, Out: $0.30 |
-| gemini-2.5-flash-native-audio-preview-12-2025 | gemini | In: -; Out: - | function_calling, structured_output, vision | 131072 | 8192 | In: $0.08, Out: $0.30 |
 | gemini-2.5-flash-preview-05-20 | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision | 1048576 | 65536 | In: $0.15, Out: $0.60, Cache Read: $0.04 |
 | gemini-2.5-flash-preview-09-2025 | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache Read: $0.08 |
 | gemini-2.5-flash-preview-tts | gemini | In: text; Out: audio | function_calling, structured_output, vision | 8000 | 16000 | In: $0.50, Out: $10.00 |
@@ -2265,11 +2264,12 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | gemini-3-flash-preview | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision | 1048576 | 65536 | In: $0.50, Out: $3.00, Cache Read: $0.05 |
 | gemini-3-pro-preview | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision | 1000000 | 64000 | In: $2.00, Out: $12.00, Cache Read: $0.20 |
 | gemini-3.1-flash-image-preview | gemini | In: text, image, pdf; Out: text, image | reasoning, vision, function_calling, structured_output | 131072 | 32768 | In: $0.25, Out: $60.00 |
+| gemini-3.1-flash-lite | gemini | In: -; Out: - | structured_output, vision | 1048576 | 65536 | In: $0.08, Out: $0.30 |
 | gemini-3.1-flash-lite-preview | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision | 1048576 | 65536 | In: $0.25, Out: $1.50, Cache Read: $0.02, Cache Write: $1.00 |
-| gemini-3.1-flash-live-preview | gemini | In: -; Out: - | function_calling, structured_output, vision | 131072 | 65536 | In: $0.08, Out: $0.30 |
 | gemini-3.1-flash-tts-preview | gemini | In: -; Out: - | function_calling, structured_output, vision | 8192 | 16384 | In: $0.08, Out: $0.30 |
 | gemini-3.1-pro-preview | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision | 1048576 | 65536 | In: $2.00, Out: $12.00, Cache Read: $0.20 |
 | gemini-3.1-pro-preview-customtools | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision | 1048576 | 65536 | In: $2.00, Out: $12.00, Cache Read: $0.20 |
+| gemini-3.5-flash | gemini | In: -; Out: - | function_calling, structured_output, vision | 1048576 | 65536 | In: $0.08, Out: $0.30 |
 | gemini-embedding-2 | gemini | In: -; Out: - | function_calling, structured_output, vision | 8192 | 1 | - |
 | gemini-embedding-2-preview | gemini | In: -; Out: - | function_calling, structured_output, vision | 8192 | 1 | - |
 | gemini-flash-latest | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache Read: $0.08 |
@@ -2306,8 +2306,8 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | mistral-large-latest | mistral | In: text, image; Out: text | function_calling, vision, streaming, structured_output, batch, fine_tuning | 262144 | 262144 | In: $0.50, Out: $1.50 |
 | mistral-large-2411 | mistral | In: text; Out: text | function_calling, streaming, structured_output, batch, fine_tuning | 131072 | 16384 | In: $2.00, Out: $6.00 |
 | mistral-large-2512 | mistral | In: text, image; Out: text | function_calling, vision, streaming, structured_output, batch, fine_tuning | 262144 | 262144 | In: $0.50, Out: $1.50 |
-| mistral-medium | mistral | In: text; Out: text | streaming, function_calling, structured_output, vision, batch, fine_tuning | 32768 | 8192 | - |
 | mistral-medium-3 | mistral | In: text; Out: text | streaming, function_calling, structured_output, vision, batch, fine_tuning | 32768 | 8192 | - |
+| mistral-medium | mistral | In: text; Out: text | streaming, function_calling, structured_output, vision, batch, fine_tuning | 32768 | 8192 | - |
 | mistral-medium-3-5 | mistral | In: text; Out: text | streaming, function_calling, structured_output, vision, batch, fine_tuning | 32768 | 8192 | - |
 | mistral-medium-3.5 | mistral | In: text; Out: text | streaming, function_calling, structured_output, vision, batch, fine_tuning | 32768 | 8192 | - |
 | mistral-medium-c21211-r0-75 | mistral | In: text; Out: text | streaming, function_calling, structured_output, vision, batch, fine_tuning | 32768 | 8192 | - |
@@ -2723,12 +2723,12 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 
 | Model | Provider | I/O | Capabilities | Context | Max Output | Standard Pricing (per 1M tokens) |
 | :-- | :-- | :-- | :-- | --: | --: | :-- |
-| anthropic.claude-3-sonnet-20240229-v1:0 | bedrock | In: text, image; Out: text | streaming, function_calling | - | - | - |
 | anthropic.claude-3-sonnet-20240229-v1:0:200k | bedrock | In: text, image; Out: text | streaming, function_calling | - | - | - |
 | anthropic.claude-3-sonnet-20240229-v1:0:28k | bedrock | In: text, image; Out: text | streaming, function_calling | - | - | - |
+| anthropic.claude-3-sonnet-20240229-v1:0 | bedrock | In: text, image; Out: text | streaming, function_calling | - | - | - |
+| anthropic.claude-3-haiku-20240307-v1:0:48k | bedrock | In: text, image, pdf; Out: text | function_calling, vision, streaming | 48000 | 4096 | In: $0.25, Out: $1.25 |
 | anthropic.claude-3-haiku-20240307-v1:0 | bedrock | In: text, image, pdf; Out: text | function_calling, vision, streaming | 200000 | 4096 | In: $0.25, Out: $1.25 |
 | anthropic.claude-3-haiku-20240307-v1:0:200k | bedrock | In: text, image, pdf; Out: text | function_calling, vision, streaming | 200000 | 4096 | In: $0.25, Out: $1.25 |
-| anthropic.claude-3-haiku-20240307-v1:0:48k | bedrock | In: text, image, pdf; Out: text | function_calling, vision, streaming | 48000 | 4096 | In: $0.25, Out: $1.25 |
 | anthropic.claude-3-5-haiku-20241022-v1:0 | bedrock | In: text, image, pdf; Out: text | function_calling, vision, streaming | 200000 | 8192 | In: $0.80, Out: $4.00, Cache Read: $0.08, Cache Write: $1.00 |
 | us.anthropic.claude-haiku-4-5-20251001-v1:0 | bedrock | In: text, image, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming | 200000 | 64000 | In: $1.00, Out: $5.00, Cache Read: $0.10, Cache Write: $1.25 |
 | us.anthropic.claude-opus-4-20250514-v1:0 | bedrock | In: text, image, pdf; Out: text | function_calling, reasoning, vision, streaming | 200000 | 32000 | In: $15.00, Out: $75.00, Cache Read: $1.50, Cache Write: $18.75 |
@@ -2762,16 +2762,16 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | meta.llama3-1-70b-instruct-v1:0:128k | bedrock | In: text; Out: text | function_calling, streaming | 128000 | 4096 | In: $0.72, Out: $0.72 |
 | meta.llama3-1-8b-instruct-v1:0 | bedrock | In: text; Out: text | function_calling, streaming | 128000 | 4096 | In: $0.22, Out: $0.22 |
 | meta.llama3-1-8b-instruct-v1:0:128k | bedrock | In: text; Out: text | function_calling, streaming | 128000 | 4096 | In: $0.22, Out: $0.22 |
-| meta.llama3-2-11b-instruct-v1:0:128k | bedrock | In: text, image; Out: text | function_calling, vision, streaming | 128000 | 4096 | In: $0.16, Out: $0.16 |
 | us.meta.llama3-2-11b-instruct-v1:0 | bedrock | In: text, image; Out: text | function_calling, vision, streaming | 128000 | 4096 | In: $0.16, Out: $0.16 |
-| meta.llama3-2-1b-instruct-v1:0:128k | bedrock | In: text; Out: text | function_calling, streaming | 128000 | 4096 | In: $0.10, Out: $0.10 |
+| meta.llama3-2-11b-instruct-v1:0:128k | bedrock | In: text, image; Out: text | function_calling, vision, streaming | 128000 | 4096 | In: $0.16, Out: $0.16 |
 | us.meta.llama3-2-1b-instruct-v1:0 | bedrock | In: text; Out: text | function_calling, streaming | 131000 | 4096 | In: $0.10, Out: $0.10 |
-| meta.llama3-2-3b-instruct-v1:0:128k | bedrock | In: text; Out: text | function_calling, streaming | 128000 | 4096 | In: $0.15, Out: $0.15 |
+| meta.llama3-2-1b-instruct-v1:0:128k | bedrock | In: text; Out: text | function_calling, streaming | 128000 | 4096 | In: $0.10, Out: $0.10 |
 | us.meta.llama3-2-3b-instruct-v1:0 | bedrock | In: text; Out: text | function_calling, streaming | 131000 | 4096 | In: $0.15, Out: $0.15 |
+| meta.llama3-2-3b-instruct-v1:0:128k | bedrock | In: text; Out: text | function_calling, streaming | 128000 | 4096 | In: $0.15, Out: $0.15 |
 | meta.llama3-2-90b-instruct-v1:0:128k | bedrock | In: text, image; Out: text | function_calling, vision, streaming | 128000 | 4096 | In: $0.72, Out: $0.72 |
 | us.meta.llama3-2-90b-instruct-v1:0 | bedrock | In: text, image; Out: text | function_calling, vision, streaming | 128000 | 4096 | In: $0.72, Out: $0.72 |
-| meta.llama3-3-70b-instruct-v1:0:128k | bedrock | In: text; Out: text | function_calling, streaming | 128000 | 4096 | In: $0.72, Out: $0.72 |
 | us.meta.llama3-3-70b-instruct-v1:0 | bedrock | In: text; Out: text | function_calling, streaming | 128000 | 4096 | In: $0.72, Out: $0.72 |
+| meta.llama3-3-70b-instruct-v1:0:128k | bedrock | In: text; Out: text | function_calling, streaming | 128000 | 4096 | In: $0.72, Out: $0.72 |
 | us.meta.llama4-maverick-17b-instruct-v1:0 | bedrock | In: text, image; Out: text | function_calling, vision, streaming | 1000000 | 16384 | In: $0.24, Out: $0.97 |
 | us.meta.llama4-scout-17b-instruct-v1:0 | bedrock | In: text, image; Out: text | function_calling, vision, streaming | 3500000 | 16384 | In: $0.17, Out: $0.66 |
 | mistral.magistral-small-2509 | bedrock | In: text, image; Out: text | function_calling, structured_output, reasoning, vision, streaming | 128000 | 40000 | In: $0.50, Out: $1.50 |
@@ -2796,9 +2796,9 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | us.amazon.nova-micro-v1:0 | bedrock | In: text; Out: text | function_calling, streaming | 128000 | 8192 | In: $0.04, Out: $0.14, Cache Read: $0.01 |
 | amazon.nova-premier-v1:0:1000k | bedrock | In: text, image, video; Out: text | function_calling, reasoning, vision, streaming | 1000000 | 16384 | In: $2.50, Out: $12.50 |
 | amazon.nova-premier-v1:0:20k | bedrock | In: text, image, video; Out: text | function_calling, reasoning, vision, streaming | 20000 | 16384 | In: $2.50, Out: $12.50 |
-| amazon.nova-premier-v1:0:8k | bedrock | In: text, image, video; Out: text | function_calling, reasoning, vision, streaming | 8000 | 16384 | In: $2.50, Out: $12.50 |
-| amazon.nova-premier-v1:0:mm | bedrock | In: text, image, video; Out: text | streaming, function_calling | - | - | - |
 | us.amazon.nova-premier-v1:0 | bedrock | In: text, image, video; Out: text | function_calling, reasoning, vision, streaming | 1000000 | 16384 | In: $2.50, Out: $12.50 |
+| amazon.nova-premier-v1:0:mm | bedrock | In: text, image, video; Out: text | streaming, function_calling | - | - | - |
+| amazon.nova-premier-v1:0:8k | bedrock | In: text, image, video; Out: text | function_calling, reasoning, vision, streaming | 8000 | 16384 | In: $2.50, Out: $12.50 |
 | us.amazon.nova-pro-v1:0 | bedrock | In: text, image, video; Out: text | function_calling, vision, streaming | 300000 | 8192 | In: $0.80, Out: $3.20, Cache Read: $0.20 |
 | us.writer.palmyra-x4-v1:0 | bedrock | In: text; Out: text | function_calling, reasoning, streaming | 122880 | 8192 | In: $2.50, Out: $10.00 |
 | us.writer.palmyra-x5-v1:0 | bedrock | In: text; Out: text | function_calling, reasoning, streaming | 1040000 | 8192 | In: $0.60, Out: $6.00 |
@@ -2837,11 +2837,11 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | mistral-large-latest | mistral | In: text, image; Out: text | function_calling, vision, streaming, structured_output, batch, fine_tuning | 262144 | 262144 | In: $0.50, Out: $1.50 |
 | mistral-large-2411 | mistral | In: text; Out: text | function_calling, streaming, structured_output, batch, fine_tuning | 131072 | 16384 | In: $2.00, Out: $6.00 |
 | mistral-large-2512 | mistral | In: text, image; Out: text | function_calling, vision, streaming, structured_output, batch, fine_tuning | 262144 | 262144 | In: $0.50, Out: $1.50 |
+| mistral-medium-c21211-r0-75 | mistral | In: text; Out: text | streaming, function_calling, structured_output, vision, batch, fine_tuning | 32768 | 8192 | - |
 | mistral-medium | mistral | In: text; Out: text | streaming, function_calling, structured_output, vision, batch, fine_tuning | 32768 | 8192 | - |
 | mistral-medium-3 | mistral | In: text; Out: text | streaming, function_calling, structured_output, vision, batch, fine_tuning | 32768 | 8192 | - |
 | mistral-medium-3-5 | mistral | In: text; Out: text | streaming, function_calling, structured_output, vision, batch, fine_tuning | 32768 | 8192 | - |
 | mistral-medium-3.5 | mistral | In: text; Out: text | streaming, function_calling, structured_output, vision, batch, fine_tuning | 32768 | 8192 | - |
-| mistral-medium-c21211-r0-75 | mistral | In: text; Out: text | streaming, function_calling, structured_output, vision, batch, fine_tuning | 32768 | 8192 | - |
 | mistral-medium-latest | mistral | In: text, image; Out: text | function_calling, structured_output, reasoning, vision, streaming, batch, fine_tuning | 262144 | 262144 | In: $1.50, Out: $7.50 |
 | mistral-medium-2505 | mistral | In: text, image; Out: text | function_calling, vision, streaming, structured_output, batch, fine_tuning | 131072 | 131072 | In: $0.40, Out: $2.00 |
 | mistral-medium-2508 | mistral | In: text, image; Out: text | function_calling, vision, streaming, structured_output, batch, fine_tuning | 262144 | 262144 | In: $0.40, Out: $2.00 |
@@ -3311,10 +3311,10 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | mistral-large-latest | mistral | In: text, image; Out: text | function_calling, vision, streaming, structured_output, batch, fine_tuning | 262144 | 262144 | In: $0.50, Out: $1.50 |
 | mistral-large-2411 | mistral | In: text; Out: text | function_calling, streaming, structured_output, batch, fine_tuning | 131072 | 16384 | In: $2.00, Out: $6.00 |
 | mistral-large-2512 | mistral | In: text, image; Out: text | function_calling, vision, streaming, structured_output, batch, fine_tuning | 262144 | 262144 | In: $0.50, Out: $1.50 |
-| mistral-medium | mistral | In: text; Out: text | streaming, function_calling, structured_output, vision, batch, fine_tuning | 32768 | 8192 | - |
-| mistral-medium-3 | mistral | In: text; Out: text | streaming, function_calling, structured_output, vision, batch, fine_tuning | 32768 | 8192 | - |
-| mistral-medium-3-5 | mistral | In: text; Out: text | streaming, function_calling, structured_output, vision, batch, fine_tuning | 32768 | 8192 | - |
 | mistral-medium-3.5 | mistral | In: text; Out: text | streaming, function_calling, structured_output, vision, batch, fine_tuning | 32768 | 8192 | - |
+| mistral-medium-3-5 | mistral | In: text; Out: text | streaming, function_calling, structured_output, vision, batch, fine_tuning | 32768 | 8192 | - |
+| mistral-medium-3 | mistral | In: text; Out: text | streaming, function_calling, structured_output, vision, batch, fine_tuning | 32768 | 8192 | - |
+| mistral-medium | mistral | In: text; Out: text | streaming, function_calling, structured_output, vision, batch, fine_tuning | 32768 | 8192 | - |
 | mistral-medium-c21211-r0-75 | mistral | In: text; Out: text | streaming, function_calling, structured_output, vision, batch, fine_tuning | 32768 | 8192 | - |
 | mistral-medium-latest | mistral | In: text, image; Out: text | function_calling, structured_output, reasoning, vision, streaming, batch, fine_tuning | 262144 | 262144 | In: $1.50, Out: $7.50 |
 | mistral-medium-2505 | mistral | In: text, image; Out: text | function_calling, vision, streaming, structured_output, batch, fine_tuning | 131072 | 131072 | In: $0.40, Out: $2.00 |
@@ -3367,12 +3367,12 @@ Models that can process images:
 | claude-sonnet-4-6 | anthropic | In: text, image, pdf; Out: text | function_calling, reasoning, vision | 1000000 | 64000 | In: $3.00, Out: $15.00, Cache Read: $0.30, Cache Write: $3.75 |
 | au.anthropic.claude-opus-4-6-v1 | bedrock | In: text, image, pdf; Out: text | function_calling, structured_output, reasoning, vision | 1000000 | 128000 | In: $16.50, Out: $82.50, Cache Read: $1.65, Cache Write: $20.62 |
 | au.anthropic.claude-sonnet-4-6 | bedrock | In: text, image, pdf; Out: text | function_calling, structured_output, reasoning, vision | 1000000 | 128000 | In: $3.30, Out: $16.50, Cache Read: $0.33, Cache Write: $4.12 |
-| anthropic.claude-3-sonnet-20240229-v1:0 | bedrock | In: text, image; Out: text | streaming, function_calling | - | - | - |
-| anthropic.claude-3-sonnet-20240229-v1:0:200k | bedrock | In: text, image; Out: text | streaming, function_calling | - | - | - |
 | anthropic.claude-3-sonnet-20240229-v1:0:28k | bedrock | In: text, image; Out: text | streaming, function_calling | - | - | - |
+| anthropic.claude-3-sonnet-20240229-v1:0:200k | bedrock | In: text, image; Out: text | streaming, function_calling | - | - | - |
+| anthropic.claude-3-sonnet-20240229-v1:0 | bedrock | In: text, image; Out: text | streaming, function_calling | - | - | - |
+| anthropic.claude-3-haiku-20240307-v1:0:48k | bedrock | In: text, image, pdf; Out: text | function_calling, vision, streaming | 48000 | 4096 | In: $0.25, Out: $1.25 |
 | anthropic.claude-3-haiku-20240307-v1:0 | bedrock | In: text, image, pdf; Out: text | function_calling, vision, streaming | 200000 | 4096 | In: $0.25, Out: $1.25 |
 | anthropic.claude-3-haiku-20240307-v1:0:200k | bedrock | In: text, image, pdf; Out: text | function_calling, vision, streaming | 200000 | 4096 | In: $0.25, Out: $1.25 |
-| anthropic.claude-3-haiku-20240307-v1:0:48k | bedrock | In: text, image, pdf; Out: text | function_calling, vision, streaming | 48000 | 4096 | In: $0.25, Out: $1.25 |
 | anthropic.claude-3-5-haiku-20241022-v1:0 | bedrock | In: text, image, pdf; Out: text | function_calling, vision, streaming | 200000 | 8192 | In: $0.80, Out: $4.00, Cache Read: $0.08, Cache Write: $1.00 |
 | anthropic.claude-haiku-4-5-20251001-v1:0 | bedrock | In: text, image, pdf; Out: text | function_calling, structured_output, reasoning, vision | 200000 | 64000 | In: $1.00, Out: $5.00, Cache Read: $0.10, Cache Write: $1.25 |
 | eu.anthropic.claude-haiku-4-5-20251001-v1:0 | bedrock | In: text, image, pdf; Out: text | function_calling, structured_output, reasoning, vision | 200000 | 64000 | In: $1.00, Out: $5.00, Cache Read: $0.10, Cache Write: $1.25 |
@@ -3414,34 +3414,34 @@ Models that can process images:
 | google.gemma-3-12b-it | bedrock | In: text, image; Out: text | structured_output, vision, streaming, function_calling | 131072 | 8192 | In: $0.05, Out: $0.10 |
 | google.gemma-3-27b-it | bedrock | In: text, image; Out: text | function_calling, structured_output, vision, streaming | 202752 | 8192 | In: $0.12, Out: $0.20 |
 | moonshotai.kimi-k2.5 | bedrock | In: text, image; Out: text | function_calling, reasoning, vision, streaming | 256000 | 256000 | In: $0.60, Out: $3.00 |
+| us.meta.llama3-2-11b-instruct-v1:0 | bedrock | In: text, image; Out: text | function_calling, vision, streaming | 128000 | 4096 | In: $0.16, Out: $0.16 |
 | meta.llama3-2-11b-instruct-v1:0 | bedrock | In: text, image; Out: text | function_calling, vision | 128000 | 4096 | In: $0.16, Out: $0.16 |
 | meta.llama3-2-11b-instruct-v1:0:128k | bedrock | In: text, image; Out: text | function_calling, vision, streaming | 128000 | 4096 | In: $0.16, Out: $0.16 |
-| us.meta.llama3-2-11b-instruct-v1:0 | bedrock | In: text, image; Out: text | function_calling, vision, streaming | 128000 | 4096 | In: $0.16, Out: $0.16 |
 | meta.llama3-2-90b-instruct-v1:0 | bedrock | In: text, image; Out: text | function_calling, vision | 128000 | 4096 | In: $0.72, Out: $0.72 |
-| meta.llama3-2-90b-instruct-v1:0:128k | bedrock | In: text, image; Out: text | function_calling, vision, streaming | 128000 | 4096 | In: $0.72, Out: $0.72 |
 | us.meta.llama3-2-90b-instruct-v1:0 | bedrock | In: text, image; Out: text | function_calling, vision, streaming | 128000 | 4096 | In: $0.72, Out: $0.72 |
+| meta.llama3-2-90b-instruct-v1:0:128k | bedrock | In: text, image; Out: text | function_calling, vision, streaming | 128000 | 4096 | In: $0.72, Out: $0.72 |
 | meta.llama4-maverick-17b-instruct-v1:0 | bedrock | In: text, image; Out: text | function_calling, vision | 1000000 | 16384 | In: $0.24, Out: $0.97 |
 | us.meta.llama4-maverick-17b-instruct-v1:0 | bedrock | In: text, image; Out: text | function_calling, vision, streaming | 1000000 | 16384 | In: $0.24, Out: $0.97 |
-| meta.llama4-scout-17b-instruct-v1:0 | bedrock | In: text, image; Out: text | function_calling, vision | 3500000 | 16384 | In: $0.17, Out: $0.66 |
 | us.meta.llama4-scout-17b-instruct-v1:0 | bedrock | In: text, image; Out: text | function_calling, vision, streaming | 3500000 | 16384 | In: $0.17, Out: $0.66 |
+| meta.llama4-scout-17b-instruct-v1:0 | bedrock | In: text, image; Out: text | function_calling, vision | 3500000 | 16384 | In: $0.17, Out: $0.66 |
 | mistral.magistral-small-2509 | bedrock | In: text, image; Out: text | function_calling, structured_output, reasoning, vision, streaming | 128000 | 40000 | In: $0.50, Out: $1.50 |
 | mistral.ministral-3-3b-instruct | bedrock | In: text, image; Out: text | function_calling, structured_output, vision, streaming | 256000 | 8192 | In: $0.10, Out: $0.10 |
 | mistral.mistral-large-3-675b-instruct | bedrock | In: text, image; Out: text | function_calling, structured_output, vision, streaming | 256000 | 8192 | In: $0.50, Out: $1.50 |
 | nvidia.nemotron-nano-12b-v2 | bedrock | In: text, image; Out: text | function_calling, structured_output, vision, streaming | 128000 | 4096 | In: $0.20, Out: $0.60 |
-| amazon.nova-2-lite-v1:0 | bedrock | In: text, image, video; Out: text | function_calling, vision | 128000 | 4096 | In: $0.33, Out: $2.75 |
 | us.amazon.nova-2-lite-v1:0 | bedrock | In: text, image, video; Out: text | function_calling, vision, streaming | 128000 | 4096 | In: $0.33, Out: $2.75 |
+| amazon.nova-2-lite-v1:0 | bedrock | In: text, image, video; Out: text | function_calling, vision | 128000 | 4096 | In: $0.33, Out: $2.75 |
 | amazon.nova-lite-v1:0 | bedrock | In: text, image, video; Out: text | function_calling, vision | 300000 | 8192 | In: $0.06, Out: $0.24, Cache Read: $0.02 |
 | us.amazon.nova-lite-v1:0 | bedrock | In: text, image, video; Out: text | function_calling, vision, streaming | 300000 | 8192 | In: $0.06, Out: $0.24, Cache Read: $0.02 |
-| amazon.nova-premier-v1:0 | bedrock | In: text, image, video; Out: text | function_calling, reasoning, vision | 1000000 | 16384 | In: $2.50, Out: $12.50 |
-| amazon.nova-premier-v1:0:1000k | bedrock | In: text, image, video; Out: text | function_calling, reasoning, vision, streaming | 1000000 | 16384 | In: $2.50, Out: $12.50 |
 | amazon.nova-premier-v1:0:20k | bedrock | In: text, image, video; Out: text | function_calling, reasoning, vision, streaming | 20000 | 16384 | In: $2.50, Out: $12.50 |
-| amazon.nova-premier-v1:0:8k | bedrock | In: text, image, video; Out: text | function_calling, reasoning, vision, streaming | 8000 | 16384 | In: $2.50, Out: $12.50 |
-| amazon.nova-premier-v1:0:mm | bedrock | In: text, image, video; Out: text | streaming, function_calling | - | - | - |
 | us.amazon.nova-premier-v1:0 | bedrock | In: text, image, video; Out: text | function_calling, reasoning, vision, streaming | 1000000 | 16384 | In: $2.50, Out: $12.50 |
-| amazon.nova-pro-v1:0 | bedrock | In: text, image, video; Out: text | function_calling, vision | 300000 | 8192 | In: $0.80, Out: $3.20, Cache Read: $0.20 |
+| amazon.nova-premier-v1:0:mm | bedrock | In: text, image, video; Out: text | streaming, function_calling | - | - | - |
+| amazon.nova-premier-v1:0:8k | bedrock | In: text, image, video; Out: text | function_calling, reasoning, vision, streaming | 8000 | 16384 | In: $2.50, Out: $12.50 |
+| amazon.nova-premier-v1:0:1000k | bedrock | In: text, image, video; Out: text | function_calling, reasoning, vision, streaming | 1000000 | 16384 | In: $2.50, Out: $12.50 |
+| amazon.nova-premier-v1:0 | bedrock | In: text, image, video; Out: text | function_calling, reasoning, vision | 1000000 | 16384 | In: $2.50, Out: $12.50 |
 | us.amazon.nova-pro-v1:0 | bedrock | In: text, image, video; Out: text | function_calling, vision, streaming | 300000 | 8192 | In: $0.80, Out: $3.20, Cache Read: $0.20 |
-| mistral.pixtral-large-2502-v1:0 | bedrock | In: text, image; Out: text | function_calling, vision | 128000 | 8192 | In: $2.00, Out: $6.00 |
+| amazon.nova-pro-v1:0 | bedrock | In: text, image, video; Out: text | function_calling, vision | 300000 | 8192 | In: $0.80, Out: $3.20, Cache Read: $0.20 |
 | us.mistral.pixtral-large-2502-v1:0 | bedrock | In: text, image; Out: text | function_calling, vision, streaming | 128000 | 8192 | In: $2.00, Out: $6.00 |
+| mistral.pixtral-large-2502-v1:0 | bedrock | In: text, image; Out: text | function_calling, vision | 128000 | 8192 | In: $2.00, Out: $6.00 |
 | qwen.qwen3-vl-235b-a22b | bedrock | In: text, image; Out: text | function_calling, structured_output, vision, streaming | 262000 | 262000 | In: $0.30, Out: $1.50 |
 | stability.sd3-5-large-v1:0 | bedrock | In: text, image; Out: image | function_calling | - | - | - |
 | us.stability.stable-conservative-upscale-v1:0 | bedrock | In: text, image; Out: image | function_calling | - | - | - |
@@ -3889,9 +3889,9 @@ Models that can process PDF documents:
 | claude-sonnet-4-6 | anthropic | In: text, image, pdf; Out: text | function_calling, reasoning, vision | 1000000 | 64000 | In: $3.00, Out: $15.00, Cache Read: $0.30, Cache Write: $3.75 |
 | au.anthropic.claude-opus-4-6-v1 | bedrock | In: text, image, pdf; Out: text | function_calling, structured_output, reasoning, vision | 1000000 | 128000 | In: $16.50, Out: $82.50, Cache Read: $1.65, Cache Write: $20.62 |
 | au.anthropic.claude-sonnet-4-6 | bedrock | In: text, image, pdf; Out: text | function_calling, structured_output, reasoning, vision | 1000000 | 128000 | In: $3.30, Out: $16.50, Cache Read: $0.33, Cache Write: $4.12 |
-| anthropic.claude-3-haiku-20240307-v1:0 | bedrock | In: text, image, pdf; Out: text | function_calling, vision, streaming | 200000 | 4096 | In: $0.25, Out: $1.25 |
 | anthropic.claude-3-haiku-20240307-v1:0:200k | bedrock | In: text, image, pdf; Out: text | function_calling, vision, streaming | 200000 | 4096 | In: $0.25, Out: $1.25 |
 | anthropic.claude-3-haiku-20240307-v1:0:48k | bedrock | In: text, image, pdf; Out: text | function_calling, vision, streaming | 48000 | 4096 | In: $0.25, Out: $1.25 |
+| anthropic.claude-3-haiku-20240307-v1:0 | bedrock | In: text, image, pdf; Out: text | function_calling, vision, streaming | 200000 | 4096 | In: $0.25, Out: $1.25 |
 | anthropic.claude-3-5-haiku-20241022-v1:0 | bedrock | In: text, image, pdf; Out: text | function_calling, vision, streaming | 200000 | 8192 | In: $0.80, Out: $4.00, Cache Read: $0.08, Cache Write: $1.00 |
 | anthropic.claude-haiku-4-5-20251001-v1:0 | bedrock | In: text, image, pdf; Out: text | function_calling, structured_output, reasoning, vision | 200000 | 64000 | In: $1.00, Out: $5.00, Cache Read: $0.10, Cache Write: $1.25 |
 | eu.anthropic.claude-haiku-4-5-20251001-v1:0 | bedrock | In: text, image, pdf; Out: text | function_calling, structured_output, reasoning, vision | 200000 | 64000 | In: $1.00, Out: $5.00, Cache Read: $0.10, Cache Write: $1.25 |
@@ -4034,13 +4034,13 @@ Models that generate embeddings:
 | :-- | :-- | :-- | :-- | --: | --: | :-- |
 | cohere.embed-english-v3 | bedrock | In: text; Out: embeddings | function_calling | - | - | - |
 | cohere.embed-english-v3:0:512 | bedrock | In: text; Out: embeddings | function_calling | - | - | - |
-| cohere.embed-multilingual-v3 | bedrock | In: text; Out: embeddings | function_calling | - | - | - |
 | cohere.embed-multilingual-v3:0:512 | bedrock | In: text; Out: embeddings | function_calling | - | - | - |
+| cohere.embed-multilingual-v3 | bedrock | In: text; Out: embeddings | function_calling | - | - | - |
 | us.cohere.embed-v4:0 | bedrock | In: text, image; Out: embeddings | function_calling | 128000 | - | - |
-| amazon.titan-embed-text-v1 | bedrock | In: text; Out: embeddings | function_calling | - | - | - |
 | amazon.titan-embed-text-v1:2:8k | bedrock | In: text; Out: embeddings | function_calling | - | - | - |
-| amazon.titan-embed-image-v1 | bedrock | In: text, image; Out: embeddings | function_calling | - | - | - |
+| amazon.titan-embed-text-v1 | bedrock | In: text; Out: embeddings | function_calling | - | - | - |
 | amazon.titan-embed-image-v1:0 | bedrock | In: text, image; Out: embeddings | function_calling | - | - | - |
+| amazon.titan-embed-image-v1 | bedrock | In: text, image; Out: embeddings | function_calling | - | - | - |
 | amazon.titan-embed-text-v2:0 | bedrock | In: text; Out: embeddings | function_calling | - | - | - |
 | amazon.titan-embed-g1-text-02 | bedrock | In: text; Out: embeddings | function_calling | - | - | - |
 | gemini-embedding-001 | gemini | In: text; Out: embeddings | - | 2048 | 3072 | In: $0.15 |
