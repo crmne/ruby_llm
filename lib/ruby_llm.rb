@@ -29,7 +29,8 @@ loader.inflector.inflect(
   'perplexity' => 'Perplexity',
   'ruby_llm' => 'RubyLLM',
   'vertexai' => 'VertexAI',
-  'xai' => 'XAI'
+  'astraflow' => 'Astraflow',
+    'xai' => 'XAI'
 )
 loader.ignore("#{__dir__}/tasks")
 loader.ignore("#{__dir__}/generators")
@@ -95,6 +96,7 @@ module RubyLLM
 end
 
 RubyLLM::Provider.register :anthropic, RubyLLM::Providers::Anthropic
+RubyLLM::Provider.register :astraflow, RubyLLM::Providers::Astraflow
 RubyLLM::Provider.register :azure, RubyLLM::Providers::Azure
 RubyLLM::Provider.register :bedrock, RubyLLM::Providers::Bedrock
 RubyLLM::Provider.register :deepseek, RubyLLM::Providers::DeepSeek
