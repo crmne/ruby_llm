@@ -229,7 +229,7 @@ module RubyLLM
     def validate_paint_inputs!(with:, mask:)
       return if with.nil? && mask.nil?
 
-      raise UnsupportedAttachmentError, "#{name} does not support image references in paint"
+      raise UnsupportedAttachmentError, 'image reference'
     end
 
     def build_audio_file_part(file_path)

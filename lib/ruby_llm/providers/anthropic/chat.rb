@@ -31,13 +31,9 @@ module RubyLLM
         def build_system_content(system_messages)
           return [] if system_messages.empty?
 
-          if system_messages.length > 1
-            RubyLLM.logger.warn(
-              "Anthropic's Claude implementation only supports a single system message. " \
-              'Multiple system messages will be combined into one.'
-            )
-          end
-
+          # Anthropic's `system` parameter accepts an array of text content blocks
+          # (each optionally with cache_control); each :system message becomes its
+          # own block in the resulting array.
           system_messages.flat_map do |msg|
             content = msg.content
 

@@ -38,12 +38,11 @@ STRUCTURED_OUTPUT_MODELS = filter_local_providers(structured_output_models).free
 
 thinking_models = [
   { provider: :anthropic, model: 'claude-haiku-4-5' },
-  { provider: :azure, model: 'grok-4-fast-reasoning' },
   { provider: :bedrock, model: 'claude-haiku-4-5' },
   { provider: :deepseek, model: 'deepseek-reasoner' },
   { provider: :gemini, model: 'gemini-3-flash-preview' },
   { provider: :gpustack, model: 'qwen3' },
-  { provider: :mistral, model: 'magistral-small-latest' },
+  { provider: :mistral, model: 'mistral-small-latest' },
   { provider: :ollama, model: 'qwen3' },
   { provider: :openai, model: 'gpt-5.4' },
   { provider: :openrouter, model: 'claude-haiku-4-5' },
@@ -60,6 +59,16 @@ PDF_MODELS = [
   { provider: :openai, model: 'gpt-5-nano' },
   { provider: :openrouter, model: 'gemini-2.5-flash' },
   { provider: :vertexai, model: 'gemini-2.5-flash' }
+].freeze
+
+DOCUMENT_MODELS = [
+  { provider: :bedrock, model: 'claude-sonnet-4-5' },
+  { provider: :mistral, model: 'mistral-small-latest' },
+  { provider: :perplexity, model: 'sonar-pro' }
+].freeze
+
+SPREADSHEET_MODELS = [
+  { provider: :bedrock, model: 'claude-sonnet-4-5' }
 ].freeze
 
 vision_models = [

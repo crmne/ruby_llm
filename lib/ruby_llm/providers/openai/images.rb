@@ -48,27 +48,24 @@ module RubyLLM
           payload = params.merge(
             model: model,
             prompt: prompt,
-            image: build_upload_parts(with, label: 'images'),
+            image: build_upload_parts(with),
             n: 1
           )
-          payload[:mask] = build_upload_part(mask, label: 'mask') if mask
+          payload[:mask] = build_upload_part(mask) if mask
           payload
         end
 
-        def build_upload_parts(sources, label:)
+        def build_upload_parts(sources)
           Array(sources).filter_map do |source|
             next if blank_attachment?(source)
 
-            build_upload_part(source, label:)
+            build_upload_part(source)
           end
         end
 
-        def build_upload_part(source, label:)
+        def build_upload_part(source)
           attachment = Attachment.new(source)
-          unless attachment.image?
-            raise UnsupportedAttachmentError,
-                  "OpenAI image editing only supports image attachments for #{label}"
-          end
+          raise UnsupportedAttachmentError, attachment.mime_type unless attachment.image?
 
           Faraday::UploadIO.new(StringIO.new(attachment.content), attachment.mime_type, attachment.filename)
         end

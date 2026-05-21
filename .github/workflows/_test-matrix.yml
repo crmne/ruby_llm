@@ -52,6 +52,9 @@ jobs:
           bundle install
           bundle exec appraisal ${{ matrix.rails-version }} bundle install
 
+      - name: Run eager-load guard (appraisal)
+        run: bundle exec appraisal ${{ matrix.rails-version }} ruby -e "require 'ruby_llm'; Zeitwerk::Loader.eager_load_all"
+
       - name: Run tests
         if: matrix.ruby-version != '4.0' || matrix.rails-version != 'rails-8.1'
         run: bundle exec appraisal ${{ matrix.rails-version }} bin/rspec-queue

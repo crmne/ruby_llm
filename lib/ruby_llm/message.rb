@@ -66,12 +66,24 @@ module RubyLLM
       tokens&.cache_creation
     end
 
+    def cache_read_tokens
+      tokens&.cache_read
+    end
+
+    def cache_write_tokens
+      tokens&.cache_write
+    end
+
     def thinking_tokens
       tokens&.thinking
     end
 
     def reasoning_tokens
       tokens&.thinking
+    end
+
+    def cost(model: nil)
+      Cost.new(tokens:, model: model || model_info)
     end
 
     def to_h
@@ -89,6 +101,14 @@ module RubyLLM
 
     def instance_variables
       super - [:@raw]
+    end
+
+    def model_info
+      return unless model_id
+
+      @model_info ||= RubyLLM.models.find(model_id)
+    rescue ModelNotFoundError
+      nil
     end
 
     private

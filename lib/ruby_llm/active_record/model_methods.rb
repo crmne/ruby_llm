@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require 'active_support/concern'
+require 'active_support/core_ext/module/delegation'
+
 module RubyLLM
   module ActiveRecord
     # Methods mixed into model registry models.
@@ -68,8 +71,11 @@ module RubyLLM
 
       delegate :supports?, :supports_vision?, :supports_functions?, :type,
                :input_price_per_million, :output_price_per_million,
+               :cache_read_input_price_per_million, :cache_write_input_price_per_million,
+               :cached_input_price_per_million, :cache_creation_input_price_per_million,
                :function_calling?, :structured_output?, :batch?,
                :reasoning?, :citations?, :streaming?, :provider_class, :label,
+               :cost_for,
                to: :to_llm
     end
   end

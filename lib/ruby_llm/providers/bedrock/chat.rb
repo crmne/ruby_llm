@@ -56,7 +56,7 @@ module RubyLLM
             content: parse_text_content(content_blocks),
             thinking: Thinking.build(text: thinking_text, signature: thinking_signature),
             tool_calls: parse_tool_calls(content_blocks),
-            input_tokens: usage['inputTokens'],
+            input_tokens: input_tokens(usage),
             output_tokens: usage['outputTokens'],
             cached_tokens: usage['cacheReadInputTokens'],
             cache_creation_tokens: usage['cacheWriteInputTokens'],
@@ -64,6 +64,13 @@ module RubyLLM
             model_id: data['modelId'],
             raw: response
           )
+        end
+
+        def input_tokens(usage)
+          input_tokens = usage['inputTokens']
+          return unless input_tokens
+
+          [input_tokens.to_i - usage['cacheReadInputTokens'].to_i - usage['cacheWriteInputTokens'].to_i, 0].max
         end
 
         def render_messages(messages)

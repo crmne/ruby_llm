@@ -172,6 +172,7 @@ RSpec.describe RubyLLM::Models do
           input: 1.25,
           output: 5.0,
           cache_read: 0.5,
+          cache_write: 2.5,
           reasoning: 10.0
         },
         limit: {
@@ -201,7 +202,8 @@ RSpec.describe RubyLLM::Models do
           standard: {
             input_per_million: 1.25,
             output_per_million: 5.0,
-            cached_input_per_million: 0.5,
+            cache_read_input_per_million: 0.5,
+            cache_write_input_per_million: 2.5,
             reasoning_output_per_million: 10.0
           }
         }
