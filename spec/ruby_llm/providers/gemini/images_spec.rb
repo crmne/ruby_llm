@@ -57,15 +57,25 @@ RSpec.describe RubyLLM::Providers::Gemini::Images do
     end
   end
 
-  describe '#render_image_payload (Gemini Image with unmapped size)' do
+  describe '#render_image_payload (Gemini Image size: handling)' do
+    it 'translates DALL-E-style WxH strings via SIZE_TO_ASPECT_RATIO' do
+      payload = host.render_image_payload('a panda', model: 'gemini-2.5-flash-image', size: '1792x1024')
+
+      expect(payload.dig(:generationConfig, :imageConfig, :aspectRatio)).to eq('16:9')
+    end
+
+    it 'passes native Gemini aspectRatio strings through unchanged' do
+      %w[1:1 2:3 3:4 4:5 9:16 16:9 21:9].each do |ratio|
+        payload = host.render_image_payload('a panda', model: 'gemini-2.5-flash-image', size: ratio)
+
+        expect(payload.dig(:generationConfig, :imageConfig, :aspectRatio)).to eq(ratio)
+      end
+    end
+
     it 'defaults aspectRatio to 1:1 and logs a debug message for an unknown size string' do
       allow(RubyLLM.logger).to receive(:debug).and_yield
 
-      payload = host.render_image_payload(
-        'a panda',
-        model: 'gemini-2.5-flash-image',
-        size: '999x999'
-      )
+      payload = host.render_image_payload('a panda', model: 'gemini-2.5-flash-image', size: '999x999')
 
       expect(payload.dig(:generationConfig, :imageConfig, :aspectRatio)).to eq('1:1')
       expect(RubyLLM.logger).to have_received(:debug).at_least(:once)

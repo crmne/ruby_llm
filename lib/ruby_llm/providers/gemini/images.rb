@@ -117,11 +117,19 @@ module RubyLLM
           end
         end
 
+        # Accepts three input shapes for `size:`:
+        #   - DALL-E-style WxH strings (e.g. '1024x1024') — translated via SIZE_TO_ASPECT_RATIO
+        #   - Native Gemini aspect-ratio strings (e.g. '1:1', '21:9', '4:5') — passed through
+        #   - Anything else — defaults to '1:1' with a debug log
+        #
+        # The pass-through avoids hardcoding the full set of supported ratios.
+        # See https://ai.google.dev/gemini-api/docs/image-generation
         def aspect_ratio_for(size)
-          SIZE_TO_ASPECT_RATIO[size] || begin
-            RubyLLM.logger.debug { "Unmapped size #{size}; defaulting Gemini aspectRatio to 1:1" }
-            '1:1'
-          end
+          return SIZE_TO_ASPECT_RATIO[size] if SIZE_TO_ASPECT_RATIO.key?(size)
+          return size if size.is_a?(String) && size.match?(/\A\d+:\d+\z/)
+
+          RubyLLM.logger.debug { "Unmapped size #{size}; defaulting Gemini aspectRatio to 1:1" }
+          '1:1'
         end
 
         def parse_gemini_image_response(response, model:)
