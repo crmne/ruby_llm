@@ -61,6 +61,16 @@ PDF_MODELS = [
   { provider: :vertexai, model: 'gemini-2.5-flash' }
 ].freeze
 
+DOCUMENT_MODELS = [
+  { provider: :bedrock, model: 'claude-sonnet-4-5' },
+  { provider: :mistral, model: 'mistral-small-latest' },
+  { provider: :perplexity, model: 'sonar-pro' }
+].freeze
+
+SPREADSHEET_MODELS = [
+  { provider: :bedrock, model: 'claude-sonnet-4-5' }
+].freeze
+
 vision_models = [
   { provider: :anthropic, model: 'claude-haiku-4-5' },
   { provider: :azure, model: 'grok-4-1-fast-non-reasoning' },

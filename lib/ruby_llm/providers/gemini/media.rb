@@ -16,17 +16,21 @@ module RubyLLM
           parts << format_text(content.text) if content.text
 
           content.attachments.each do |attachment|
-            case attachment.type
-            when :text
-              parts << format_text_file(attachment)
-            when :unknown
-              raise UnsupportedAttachmentError, attachment.mime_type
-            else
-              parts << format_attachment(attachment)
-            end
+            parts << format_content_attachment(attachment)
           end
 
           parts
+        end
+
+        def format_content_attachment(attachment)
+          case attachment.type
+          when :text
+            format_text_file(attachment)
+          when :document, :unknown
+            raise UnsupportedAttachmentError, attachment.mime_type
+          else
+            format_attachment(attachment)
+          end
         end
 
         def format_attachment(attachment)

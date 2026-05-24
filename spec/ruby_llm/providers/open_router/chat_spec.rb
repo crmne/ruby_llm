@@ -58,6 +58,32 @@ RSpec.describe RubyLLM::Providers::OpenRouter::Chat do
     end
   end
 
+  describe '.format_messages' do
+    it 'opts OpenRouter into native file parts for PDF attachments' do
+      content = RubyLLM::Content.new('Summarize this file')
+      content.add_attachment(StringIO.new('pdf bytes'), filename: 'proposal.pdf')
+
+      messages = [RubyLLM::Message.new(role: :user, content:)]
+
+      formatted = described_class.format_messages(messages)
+
+      expect(formatted.dig(0, :content, 1, :type)).to eq('file')
+      expect(formatted.dig(0, :content, 1, :file, :filename)).to eq('proposal.pdf')
+    end
+
+    it 'keeps non-PDF documents disabled for OpenRouter chat completions' do
+      content = RubyLLM::Content.new('Summarize this file')
+      content.add_attachment(StringIO.new('docx bytes'), filename: 'proposal.docx')
+
+      expect do
+        described_class.format_messages([RubyLLM::Message.new(role: :user, content:)])
+      end.to raise_error(
+        RubyLLM::UnsupportedAttachmentError,
+        %r{Unsupported attachment type: application/vnd.openxmlformats-officedocument.wordprocessingml.document}
+      )
+    end
+  end
+
   describe '.render_payload' do
     let(:model) { instance_double(RubyLLM::Model::Info, id: 'anthropic/claude-haiku-4.5') }
     let(:messages) { [RubyLLM::Message.new(role: :user, content: 'Hello')] }

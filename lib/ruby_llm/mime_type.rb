@@ -27,6 +27,13 @@ module RubyLLM
       type == 'application/pdf'
     end
 
+    def document?(type)
+      return false if pdf?(type) || text?(type)
+
+      DOCUMENT_MIME_TYPES.include?(type) ||
+        DOCUMENT_MIME_PREFIXES.any? { |prefix| type.start_with?(prefix) }
+    end
+
     def text?(type)
       type.start_with?('text/') ||
         TEXT_SUFFIXES.any? { |suffix| type.end_with?(suffix) } ||
@@ -66,6 +73,24 @@ module RubyLLM
       'application/x-yaml',          # Common non-standard for YAML
       'application/yaml',            # Standard for YAML
       'application/toml'             # TOML configuration files
+    ].freeze
+
+    DOCUMENT_MIME_TYPES = [
+      'application/msword',
+      'application/rtf',
+      'application/vnd.apple.keynote',
+      'application/vnd.apple.numbers',
+      'application/vnd.apple.pages',
+      'application/vnd.google-apps.document',
+      'application/vnd.google-apps.presentation',
+      'application/vnd.google-apps.spreadsheet',
+      'application/vnd.ms-excel',
+      'application/vnd.ms-powerpoint'
+    ].freeze
+
+    DOCUMENT_MIME_PREFIXES = [
+      'application/vnd.openxmlformats-officedocument.',
+      'application/vnd.oasis.opendocument.'
     ].freeze
   end
 end

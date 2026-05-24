@@ -52,7 +52,7 @@ module RubyLLM
         end
 
         def format_content_with_thinking(msg)
-          formatted_content = OpenAI::Media.format_content(msg.content)
+          formatted_content = Mistral::Media.format_content(msg.content)
           return formatted_content unless msg.role == :assistant && msg.thinking
 
           content_blocks = build_thinking_blocks(msg.thinking)
