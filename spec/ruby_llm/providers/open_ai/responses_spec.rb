@@ -125,6 +125,12 @@ RSpec.describe RubyLLM::Providers::OpenAI::Responses do
   end
 
   describe '#format_responses_input tool round-trip' do
+    it 'renders assistant text content as an output_text item' do
+      input = provider.send(:format_responses_input, [RubyLLM::Message.new(role: :assistant, content: 'Done.')])
+
+      expect(input).to eq([{ role: 'assistant', content: [{ type: 'output_text', text: 'Done.' }] }])
+    end
+
     it 'emits function_call for assistant tool calls and function_call_output for tool results' do
       call = RubyLLM::ToolCall.new(id: 'call_1', name: 'weather', arguments: { 'city' => 'Paris' })
       conversation = [
@@ -183,6 +189,10 @@ RSpec.describe RubyLLM::Providers::OpenAI::Responses do
       expect do
         provider.send(:parse_responses_response, instance_double(Faraday::Response, body:))
       end.to raise_error(RubyLLM::Error, /boom/)
+    end
+
+    it 'returns nil for an empty body' do
+      expect(provider.send(:parse_responses_response, instance_double(Faraday::Response, body: {}))).to be_nil
     end
   end
 
