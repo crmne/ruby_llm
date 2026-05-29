@@ -99,7 +99,8 @@ module RubyLLM
       faraday.request :multipart
       faraday.request :json
       faraday.response :json
-      faraday.adapter :net_http
+      adapter = @config.respond_to?(:faraday_adapter) ? @config.faraday_adapter : :net_http
+      faraday.adapter(adapter || :net_http)
       faraday.use :llm_errors, provider: @provider
     end
 

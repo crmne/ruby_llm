@@ -54,6 +54,7 @@ module RubyLLM
     option :http_proxy, nil
 
     option :logger, nil
+    option :faraday_adapter, :net_http
     option :log_file, -> { $stdout }
     option :log_level, -> { ENV['RUBYLLM_DEBUG'] ? Logger::DEBUG : Logger::INFO }
     option :log_stream_debug, -> { ENV['RUBYLLM_STREAM_DEBUG'] == 'true' }

@@ -524,6 +524,7 @@ RubyLLM.configure do |config|
   config.retry_backoff_factor = Integer
   config.retry_interval_randomness = Float
   config.http_proxy = String
+  config.faraday_adapter = Symbol # Defaults to :net_http
 
   # Logging
   config.logger = Logger
