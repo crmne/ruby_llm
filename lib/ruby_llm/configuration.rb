@@ -56,6 +56,7 @@ module RubyLLM
 
     option :logger, nil
     option :instrumenter, nil
+    option :deprecation_behavior, :warn
     option :faraday_adapter, :net_http
     option :log_file, -> { $stdout }
     option :log_level, -> { ENV['RUBYLLM_DEBUG'] ? Logger::DEBUG : Logger::INFO }

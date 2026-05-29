@@ -189,6 +189,14 @@ Your existing 1.6 app continues working without any changes. You'll see a deprec
 !!! RubyLLM's legacy acts_as API is deprecated and will be removed in RubyLLM 2.0.0.
 ```
 
+You can silence or raise RubyLLM deprecations while upgrading:
+
+```ruby
+RubyLLM.configure do |config|
+  config.deprecation_behavior = :silence # or :raise
+end
+```
+
 ## What's New in 1.7
 
 Among other features, the DB-backed model registry replaces simple string fields with proper ActiveRecord associations. Additionally, the `acts_as` helpers have been redesigned with a more Rails-like API.

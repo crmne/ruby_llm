@@ -222,7 +222,7 @@ module RubyLLM
       end
 
       def create_user_message(content, with: nil)
-        RubyLLM.logger.warn(
+        RubyLLM.deprecator.warn(
           '`create_user_message` is deprecated and will be removed in RubyLLM 2.0. ' \
           'Use `add_message(role: :user, content: ...)` instead.'
         )

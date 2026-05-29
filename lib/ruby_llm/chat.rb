@@ -305,7 +305,7 @@ module RubyLLM
     end
 
     def warn_legacy_callback_deprecation(legacy_name, additive_name)
-      RubyLLM.logger.warn(
+      RubyLLM.deprecator.warn(
         "`#{legacy_name}` is deprecated and will be removed in RubyLLM 2.0. " \
         "Use `#{additive_name}` instead."
       )

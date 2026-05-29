@@ -41,6 +41,10 @@ loader.setup
 # A delightful Ruby interface to modern AI language models.
 module RubyLLM
   class << self
+    def deprecator
+      @deprecator ||= Deprecator.new
+    end
+
     def instrument(...)
       Instrumentation.instrument(...)
     end
