@@ -14,16 +14,6 @@ module RubyLLM
         # rubocop:disable Metrics/ParameterLists,Metrics/PerceivedComplexity
         def render_payload(messages, tools:, temperature:, model:, stream: false, schema: nil,
                            thinking: nil, tool_prefs: nil)
-          # reasoning_effort + function tools is unsupported on /v1/chat/completions
-          # (OpenAI 400s, "use /v1/responses"). Transparently route that combo to
-          # the Responses API. The flag is read back by completion_url and
-          # parse_completion_response within this same Provider#complete call.
-          @openai_responses_mode = responses_api?(tools: tools, thinking: thinking)
-          if @openai_responses_mode
-            return render_responses_payload(messages, tools: tools, model: model, stream: stream,
-                                                      schema: schema, thinking: thinking, tool_prefs: tool_prefs)
-          end
-
           tool_prefs ||= {}
           payload = {
             model: model.id,

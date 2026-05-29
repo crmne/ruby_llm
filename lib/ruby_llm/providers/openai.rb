@@ -15,6 +15,25 @@ module RubyLLM
       include OpenAI::Media
       include OpenAI::Transcription
 
+      # reasoning_effort + function tools is unsupported on /v1/chat/completions
+      # (OpenAI 400s, "use /v1/responses instead"). When a turn requests thinking
+      # AND ships tools, render the Responses-API payload instead; the flag is read
+      # back by completion_url / parse_completion_response within this same
+      # Provider#complete call. Routing lives here (not in OpenAI::Chat) so the
+      # module-function render_payload stays pure chat/completions, while the
+      # OpenAI::Responses helpers resolve against this instance (which mixes both in).
+      def render_payload(messages, tools:, temperature:, model:, stream: false, schema: nil, # rubocop:disable Metrics/ParameterLists
+                         thinking: nil, tool_prefs: nil)
+        # Only the genuine OpenAI provider has /v1/responses — subclasses
+        # (Azure/OpenRouter/Mistral/Perplexity/xAI/GPUStack) keep chat/completions.
+        @openai_responses_mode = instance_of?(RubyLLM::Providers::OpenAI) &&
+                                 responses_api?(tools: tools, thinking: thinking)
+        return super unless @openai_responses_mode
+
+        render_responses_payload(messages, tools: tools, model: model, stream: stream,
+                                           schema: schema, thinking: thinking, tool_prefs: tool_prefs)
+      end
+
       # Streaming over the Responses API uses a different SSE event set than
       # chat/completions and is not implemented yet. Reasoning+tools turns route
       # to Responses (see OpenAI::Responses#responses_api?), so guard streaming
