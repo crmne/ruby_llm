@@ -122,6 +122,24 @@ RSpec.describe RubyLLM::Providers::OpenAI::Responses do
       expect(result[:text]).to eq(format: { type: 'json_schema', name: 'S', schema: { 'type' => 'object' },
                                             strict: true })
     end
+
+    it 'omits :reasoning when no effort is given' do
+      result = provider.send(
+        :render_responses_payload,
+        system_and_user, tools: {}, model: model, stream: false, schema: nil, thinking: nil, tool_prefs: {}
+      )
+      expect(result).not_to have_key(:reasoning)
+    end
+
+    it 'maps tool_prefs choice and parallel calls onto the payload' do
+      result = provider.send(
+        :render_responses_payload,
+        system_and_user, tools: tools, model: model, stream: false, schema: nil, thinking: effort,
+                         tool_prefs: { choice: 'weather', calls: :many }
+      )
+      expect(result[:tool_choice]).to eq(type: 'function', name: 'weather')
+      expect(result[:parallel_tool_calls]).to be(true)
+    end
   end
 
   describe '#format_responses_input tool round-trip' do
@@ -193,6 +211,36 @@ RSpec.describe RubyLLM::Providers::OpenAI::Responses do
 
     it 'returns nil for an empty body' do
       expect(provider.send(:parse_responses_response, instance_double(Faraday::Response, body: {}))).to be_nil
+    end
+
+    it 'skips unknown items, non-output_text / non-summary_text blocks, and empty tool args' do
+      body = {
+        'model' => 'gpt-5.5',
+        'output' => [
+          { 'type' => 'web_search_call' },
+          { 'type' => 'reasoning', 'summary' => [{ 'type' => 'other' }, { 'type' => 'summary_text', 'text' => 'r' }] },
+          { 'type' => 'function_call', 'call_id' => 'c1', 'name' => 'noop', 'arguments' => '' },
+          { 'type' => 'message', 'content' => [{ 'type' => 'refusal' }, { 'type' => 'output_text', 'text' => 'hi' }] }
+        ],
+        'usage' => {}
+      }
+      message = provider.send(:parse_responses_response, instance_double(Faraday::Response, body:))
+
+      expect(message.content).to eq('hi')
+      expect(message.thinking.text).to eq('r')
+      expect(message.tool_calls['c1'].arguments).to eq({})
+    end
+
+    it 'returns nil content when the output is only a function_call' do
+      body = {
+        'model' => 'gpt-5.5',
+        'output' => [{ 'type' => 'function_call', 'call_id' => 'c', 'name' => 'f', 'arguments' => '{}' }],
+        'usage' => {}
+      }
+      message = provider.send(:parse_responses_response, instance_double(Faraday::Response, body:))
+
+      expect(message.content.to_s).to eq('')
+      expect(message.tool_calls['c'].name).to eq('f')
     end
   end
 
