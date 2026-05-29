@@ -21,6 +21,11 @@ RSpec.describe RubyLLM::Providers::OpenAI::Responses do
   class BareOpenAISub < RubyLLM::Providers::OpenAI # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
   end
 
+  class RespParamsTool < RubyLLM::Tool # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
+    description 'Tool carrying provider-specific params'
+    with_params(metadata: { source: 'test' })
+  end
+
   let(:provider) { RubyLLM::Providers::OpenAI.allocate }
   let(:model) { instance_double(RubyLLM::Model::Info, id: 'gpt-5.5') }
   let(:effort) { RubyLLM::Thinking::Config.new(effort: :high) }
@@ -191,6 +196,25 @@ RSpec.describe RubyLLM::Providers::OpenAI::Responses do
       }
       message = provider.send(:parse_completion_response, instance_double(Faraday::Response, body:))
       expect(message.content).to eq('ok')
+    end
+  end
+
+  describe '#responses_tool_for' do
+    it 'deep-merges provider_params into the flat tool definition' do
+      definition = provider.send(:responses_tool_for, RespParamsTool.new)
+
+      expect(definition[:type]).to eq('function')
+      expect(definition[:metadata]).to eq(source: 'test')
+    end
+  end
+
+  describe '#responses_text_content' do
+    it 'reads .text from Content objects' do
+      expect(provider.send(:responses_text_content, RubyLLM::Content.new('hi'))).to eq('hi')
+    end
+
+    it 'falls back to to_s for plain values' do
+      expect(provider.send(:responses_text_content, 42)).to eq('42')
     end
   end
 
