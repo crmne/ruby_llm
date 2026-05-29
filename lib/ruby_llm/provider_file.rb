@@ -22,9 +22,9 @@ module RubyLLM
       provider_instance.file_info(file_id)
     end
 
-    def self.download(file_id, provider:, context: nil, **options)
+    def self.download(file_id, provider:, context: nil, **options, &)
       provider_instance = resolve_provider(provider:, context:)
-      provider_instance.download_file(file_id, **options)
+      provider_instance.download_file(file_id, **options, &)
     end
 
     def self.resolve_provider(provider:, context:)
