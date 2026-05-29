@@ -5,6 +5,7 @@ module RubyLLM
     # OpenAI API integration.
     class OpenAI < Provider
       include OpenAI::Chat
+      include OpenAI::Responses
       include OpenAI::Embeddings
       include OpenAI::Models
       include OpenAI::Moderation
@@ -13,6 +14,18 @@ module RubyLLM
       include OpenAI::Images
       include OpenAI::Media
       include OpenAI::Transcription
+
+      # Streaming over the Responses API uses a different SSE event set than
+      # chat/completions and is not implemented yet. Reasoning+tools turns route
+      # to Responses (see OpenAI::Responses#responses_api?), so guard streaming
+      # there explicitly instead of mis-parsing chat/completions events.
+      def stream_response(connection, payload, additional_headers = {}, &)
+        if @openai_responses_mode
+          raise RubyLLM::Error.new(nil, 'OpenAI Responses streaming not implemented yet; call without a block')
+        end
+
+        super
+      end
 
       def api_base
         @config.openai_api_base || 'https://api.openai.com/v1'
