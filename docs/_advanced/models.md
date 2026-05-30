@@ -277,6 +277,32 @@ end
 *   It directs those requests to your specified URL instead of `https://api.openai.com/v1`.
 *   See [Configuration Guide]({% link _getting_started/configuration.md %}).
 
+#### Example: Tuning Engines
+
+If your Ruby or Rails app uses [Tuning Engines](https://www.tuningengines.com/) as a governed OpenAI-compatible endpoint, configure RubyLLM's OpenAI adapter with your Tuning Engines inference key and base URL:
+
+```ruby
+# config/initializers/ruby_llm.rb
+RubyLLM.configure do |config|
+  config.openai_api_key = ENV["TUNING_ENGINES_API_KEY"]
+  config.openai_api_base = "https://api.tuningengines.com/v1"
+end
+```
+
+Then use the model name exposed by your Tuning Engines tenant:
+
+```ruby
+chat = RubyLLM.chat(
+  model: ENV.fetch("TUNING_ENGINES_MODEL", "gpt-4o-mini"),
+  provider: :openai,
+  assume_model_exists: true
+)
+
+puts chat.ask("Explain Rails concerns in one paragraph.").content
+```
+
+This keeps your RubyLLM code unchanged while Tuning Engines handles model routing, policy controls, audit logs, traces, approvals, and cost visibility centrally.
+
 ### Assuming Model Existence (`assume_model_exists`)
 
 To use a model identifier not listed in RubyLLM's registry, use the `assume_model_exists: true` flag. This tells RubyLLM to bypass its validation check.
