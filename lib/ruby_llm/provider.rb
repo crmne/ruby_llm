@@ -262,7 +262,9 @@ module RubyLLM
       missing = configuration_requirements.reject { |req| @config.send(req) }
       return if missing.empty?
 
-      raise ConfigurationError, "Missing configuration for #{name}: #{missing.join(', ')}"
+      raise ConfigurationError,
+            "Missing configuration for #{name}: #{missing.join(', ')}. " \
+            'Set these keys on RubyLLM.config before using this provider.'
     end
 
     def maybe_normalize_temperature(temperature, _model)
