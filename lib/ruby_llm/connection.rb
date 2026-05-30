@@ -1,5 +1,11 @@
 # frozen_string_literal: true
 
+require 'faraday'
+require 'faraday/multipart'
+require 'faraday/retry'
+require 'ruby_llm/error_middleware'
+require 'timeout'
+
 module RubyLLM
   # Connection class for managing API connections to various providers.
   class Connection
