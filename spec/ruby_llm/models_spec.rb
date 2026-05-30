@@ -51,6 +51,13 @@ RSpec.describe RubyLLM::Models do
       expect(provider_counts.keys).to include('openai', 'anthropic')
     end
 
+    it 'preserves class-level Enumerable delegation' do
+      openai_models = described_class.select { |model| model.provider == 'openai' }
+
+      expect(openai_models).to all(have_attributes(provider: 'openai'))
+      expect(described_class.count).to eq(RubyLLM.models.count)
+    end
+
     it 'filters by vision support' do
       vision_models = RubyLLM.models.select(&:supports_vision?)
       expect(vision_models).to all(have_attributes(supports_vision?: true))

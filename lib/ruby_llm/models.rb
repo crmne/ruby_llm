@@ -34,8 +34,32 @@ module RubyLLM
       ollama
       gpustack
     ].freeze
+    INSTANCE_DELEGATES = (Enumerable.instance_methods(false) + %i[
+      all
+      each
+      find
+      chat_models
+      embedding_models
+      audio_models
+      image_models
+      by_family
+      by_provider
+      load_from_json!
+      load_from_database!
+      save_to_json
+    ]).uniq.freeze
 
     class << self
+      INSTANCE_DELEGATES.each do |method_name|
+        define_method(method_name) do |*args, **kwargs, &block|
+          if kwargs.empty?
+            instance.public_send(method_name, *args, &block)
+          else
+            instance.public_send(method_name, *args, **kwargs, &block)
+          end
+        end
+      end
+
       def instance
         @instance ||= new
       end
@@ -151,18 +175,6 @@ module RubyLLM
           provider_instance = provider_class.new(config)
         end
         [model, provider_instance]
-      end
-
-      def method_missing(method, ...)
-        if instance.respond_to?(method)
-          instance.send(method, ...)
-        else
-          super
-        end
-      end
-
-      def respond_to_missing?(method, include_private = false)
-        instance.respond_to?(method, include_private) || super
       end
 
       def fetch_models_dev_models(existing_models) # rubocop:disable Metrics/PerceivedComplexity
