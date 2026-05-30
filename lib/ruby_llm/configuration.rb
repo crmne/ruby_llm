@@ -45,6 +45,7 @@ module RubyLLM
     option :model_registry_class, 'Model'
 
     option :use_new_acts_as, false
+    option :model_registry_source, nil
 
     option :request_timeout, 300
     option :max_retries, 3

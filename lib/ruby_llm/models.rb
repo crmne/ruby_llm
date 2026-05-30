@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require 'date'
+require 'json'
+
 module RubyLLM
   # Registry of available AI models and their capabilities.
   class Models
@@ -42,6 +45,14 @@ module RubyLLM
       end
 
       def load_models(file = RubyLLM.config.model_registry_file)
+        source = RubyLLM.config.model_registry_source
+        if source && file == RubyLLM.config.model_registry_file
+          models = source.read
+          return models if models.any?
+
+          RubyLLM.logger.debug { 'Model registry source is empty, falling back to JSON registry' }
+        end
+
         read_from_json(file)
       end
 
@@ -53,7 +64,13 @@ module RubyLLM
         []
       end
 
+      def read_from_database
+        ModelRegistry::ActiveRecordSource.new.read
+      end
+
       def refresh!(remote_only: false)
+        # Replaces the process-wide model registry. Call save_to_json when the
+        # refreshed registry should also be persisted.
         existing_models = load_existing_models
 
         provider_fetch = fetch_provider_models(remote_only: remote_only)
@@ -412,10 +429,19 @@ module RubyLLM
       @models = self.class.filter_models(models || self.class.load_models)
     end
 
+    # Replaces this registry instance with models loaded from JSON.
     def load_from_json!(file = RubyLLM.config.model_registry_file)
       @models = self.class.read_from_json(file)
     end
 
+    # Replaces this registry instance with models loaded from the configured
+    # ActiveRecord model class.
+    def load_from_database!
+      @models = self.class.read_from_database
+    end
+
+    # Persists this registry instance to JSON without changing the global
+    # RubyLLM.models instance.
     def save_to_json(file = RubyLLM.config.model_registry_file)
       File.write(file, JSON.pretty_generate(all.map(&:to_h)))
     end
