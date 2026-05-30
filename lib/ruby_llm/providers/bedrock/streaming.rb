@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 
+require 'base64'
+require 'faraday'
+require 'json'
+
 module RubyLLM
   module Providers
     class Bedrock

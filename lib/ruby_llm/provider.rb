@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require 'json'
+require 'ruby_llm/error'
+
 module RubyLLM
   # Base class for LLM providers.
   class Provider
@@ -233,6 +236,10 @@ module RubyLLM
     end
 
     def build_audio_file_part(file_path)
+      require 'faraday/multipart'
+      require 'marcel'
+      require 'pathname'
+
       expanded_path = File.expand_path(file_path)
       mime_type = Marcel::MimeType.for(Pathname.new(expanded_path))
 

@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 
+require 'event_stream_parser'
+require 'faraday'
+require 'json'
+
 module RubyLLM
   # Handles streaming responses from AI providers.
   module Streaming

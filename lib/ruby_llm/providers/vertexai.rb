@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'stringio'
+
 module RubyLLM
   module Providers
     # Google Vertex AI implementation
