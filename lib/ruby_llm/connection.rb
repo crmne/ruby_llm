@@ -40,14 +40,14 @@ module RubyLLM
 
     def post(url, payload, &)
       @connection.post url, payload do |req|
-        req.headers.merge! @provider.headers if @provider.respond_to?(:headers)
+        req.headers.merge! provider_headers
         yield req if block_given?
       end
     end
 
     def get(url, &)
       @connection.get url do |req|
-        req.headers.merge! @provider.headers if @provider.respond_to?(:headers)
+        req.headers.merge! provider_headers
         yield req if block_given?
       end
     end
@@ -57,6 +57,10 @@ module RubyLLM
     end
 
     private
+
+    def provider_headers
+      @provider.respond_to?(:headers) ? @provider.headers : {}
+    end
 
     def setup_timeout(faraday)
       faraday.options.timeout = @config.request_timeout
