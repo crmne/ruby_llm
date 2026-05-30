@@ -156,7 +156,7 @@ module RubyLLM
         if assume_exists
           raise ArgumentError, 'Provider must be specified if assume_exists is true' unless provider
 
-          provider_class ||= raise(Error, "Unknown provider: #{provider.to_sym}")
+          provider_class ||= raise_unknown_provider(provider)
           provider_instance = provider_class.new(config)
 
           model = if provider_instance.local?
@@ -170,8 +170,7 @@ module RubyLLM
           model ||= Model::Info.default(model_id, provider_instance.slug)
         else
           model = Models.find model_id, provider
-          provider_class = Provider.providers[model.provider.to_sym] || raise(Error,
-                                                                              "Unknown provider: #{model.provider}")
+          provider_class = Provider.providers[model.provider.to_sym] || raise_unknown_provider(model.provider)
           provider_instance = provider_class.new(config)
         end
         [model, provider_instance]
@@ -208,6 +207,11 @@ module RubyLLM
         existing_models = instance&.all
         existing_models = read_from_json if existing_models.nil? || existing_models.empty?
         existing_models
+      end
+
+      def raise_unknown_provider(provider)
+        available = Provider.providers.keys.join(', ')
+        raise Error, "Unknown provider: #{provider.inspect}. Available providers: #{available}"
       end
 
       def log_provider_fetch(provider_fetch)
@@ -513,7 +517,7 @@ module RubyLLM
       resolved_id = resolve_bedrock_region_id(resolved_id) if provider.to_s == 'bedrock'
       all.find { |m| m.id == resolved_id && m.provider == provider.to_s } ||
         all.find { |m| m.id == model_id && m.provider == provider.to_s } ||
-        raise(ModelNotFoundError, "Unknown model: #{model_id} for provider: #{provider}")
+        raise_model_not_found(model_id, provider: provider)
     end
 
     def resolve_bedrock_region_id(model_id)
@@ -538,7 +542,21 @@ module RubyLLM
       alias_matches = all.select { |m| m.id == resolved_id }
       return preferred_match(alias_matches) if alias_matches.any?
 
-      raise(ModelNotFoundError, "Unknown model: #{model_id}")
+      raise_model_not_found(model_id)
+    end
+
+    def raise_model_not_found(model_id, provider: nil)
+      message = "Unknown model: #{model_id.inspect}"
+      message = "#{message} for provider: #{provider.inspect}" if provider
+
+      raise ModelNotFoundError, "#{message}. #{refresh_registry_guidance}"
+    end
+
+    def refresh_registry_guidance
+      rails_model = RubyLLM.config.model_registry_class
+      'If the model exists at the provider, refresh the registry with `RubyLLM.models.refresh!` ' \
+        'and persist it with `RubyLLM.models.save_to_json`. ' \
+        "Rails model registries can call `#{rails_model}.refresh!` instead."
     end
 
     def preferred_match(candidates)

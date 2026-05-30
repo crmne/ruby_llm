@@ -88,7 +88,24 @@ RSpec.describe RubyLLM::Models do
     it 'raises ModelNotFoundError for unknown models' do
       expect do
         RubyLLM.models.find('nonexistent-model-12345')
-      end.to raise_error(RubyLLM::ModelNotFoundError)
+      end.to raise_error(RubyLLM::ModelNotFoundError) { |error|
+        expect(error.message).to include('Unknown model: "nonexistent-model-12345"')
+        expect(error.message).to include('RubyLLM.models.refresh!')
+        expect(error.message).to include('RubyLLM.models.save_to_json')
+        expect(error.message).to include('Model.refresh!')
+        expect(error.message).not_to include('Known')
+      }
+    end
+
+    it 'includes provider-specific refresh guidance for unknown models' do
+      expect do
+        RubyLLM.models.find('nonexistent-model-12345', 'openai')
+      end.to raise_error(RubyLLM::ModelNotFoundError) { |error|
+        expect(error.message).to include('Unknown model: "nonexistent-model-12345" for provider: "openai"')
+        expect(error.message).to include('RubyLLM.models.refresh!')
+        expect(error.message).to include('Model.refresh!')
+        expect(error.message).not_to include('Known')
+      }
     end
   end
 
