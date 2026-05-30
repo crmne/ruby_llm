@@ -21,8 +21,28 @@ RSpec.describe RubyLLM::Configuration do
         :request_timeout,
         :default_model,
         :model_registry_file,
+        :use_new_acts_as,
         :openai_api_key,
         :openrouter_api_base
+      )
+    end
+
+    it 'keeps use_new_acts_as as the canonical acts_as API selector' do
+      config.use_new_acts_as = true
+
+      expect(config.use_new_acts_as).to be(true)
+    end
+
+    it 'warns but preserves log_regexp_timeout when regexp timeouts are unsupported' do
+      allow(Regexp).to receive(:respond_to?).and_call_original
+      allow(Regexp).to receive(:respond_to?).with(:timeout).and_return(false)
+      allow(RubyLLM.logger).to receive(:warn)
+
+      config.log_regexp_timeout = 5.0
+
+      expect(config.log_regexp_timeout).to eq(5.0)
+      expect(RubyLLM.logger).to have_received(:warn).with(
+        "log_regexp_timeout is not supported on Ruby #{RUBY_VERSION}"
       )
     end
   end

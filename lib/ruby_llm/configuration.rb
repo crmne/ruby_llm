@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'logger'
+
 module RubyLLM
   # Global configuration for RubyLLM
   class Configuration
@@ -9,7 +11,8 @@ module RubyLLM
         key = key.to_sym
         return if options.include?(key)
 
-        send(:attr_accessor, key)
+        attr_accessor key
+
         option_keys << key
         defaults[key] = default
       end
