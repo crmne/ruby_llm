@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'base64'
+
 module RubyLLM
   # Represents a generated image from an AI model.
   class Image
