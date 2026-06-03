@@ -16,6 +16,7 @@ module RubyLLM
       'amazon-bedrock' => 'bedrock',
       'deepseek' => 'deepseek',
       'mistral' => 'mistral',
+      'ollama-cloud' => 'ollama_cloud',
       'openrouter' => 'openrouter',
       'perplexity' => 'perplexity'
     }.freeze
