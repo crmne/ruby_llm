@@ -54,7 +54,7 @@ module RubyLLM
           }
 
           thinking_payload = build_thinking_payload(thinking)
-          payload[:thinking] = thinking_payload if thinking_payload
+          payload.merge!(thinking_payload) if thinking_payload
 
           payload
         end
@@ -68,7 +68,7 @@ module RubyLLM
           end
           payload[:system] = system_content unless system_content.empty?
           payload[:temperature] = temperature unless temperature.nil?
-          payload[:output_config] = build_output_config(schema) if schema
+          payload[:output_config] = payload.fetch(:output_config, {}).merge(build_output_config(schema)) if schema
         end
 
         def build_output_config(schema)
@@ -235,12 +235,29 @@ module RubyLLM
           return nil unless thinking&.enabled?
 
           budget = resolve_budget(thinking)
-          raise ArgumentError, 'Anthropic thinking requires a budget' if budget.nil?
+          if budget
+            return {
+              thinking: {
+                type: 'enabled',
+                budget_tokens: budget
+              }
+            }
+          end
+
+          effort = resolve_effort(thinking)
+          raise ArgumentError, 'Anthropic thinking requires an effort or a budget' if effort.nil?
+          return nil if effort == 'none'
 
           {
-            type: 'enabled',
-            budget_tokens: budget
+            thinking: { type: 'adaptive' },
+            output_config: { effort: effort }
           }
+        end
+
+        def resolve_effort(thinking)
+          effort = thinking.respond_to?(:effort) ? thinking.effort : nil
+          effort = effort.to_s if effort
+          effort.nil? || effort.empty? ? nil : effort
         end
 
         def resolve_budget(thinking)

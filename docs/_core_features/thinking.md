@@ -116,8 +116,8 @@ end
 
 ## Provider Notes
 
-- Claude uses a thinking budget and can return both text and signature.
-- Anthropic requires a thinking budget.
+- Claude supports budget or effort depending on the model, and can return both text and signature.
+- Anthropic requires a thinking budget or effort, depending on the model.
 - Bedrock thinking params are model-dependent; models may accept budget, effort, or provider-specific fields.
 - Gemini 2.5 uses a token budget; Gemini 3 uses effort levels.
 - OpenAI reasoning models accept `effort` but may not return thinking text or signatures.

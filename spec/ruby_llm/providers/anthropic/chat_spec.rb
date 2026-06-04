@@ -207,6 +207,73 @@ RSpec.describe RubyLLM::Providers::Anthropic::Chat do
     end
   end
 
+  describe '.render_payload with thinking' do
+    let(:model) { instance_double(RubyLLM::Model::Info, id: 'claude-opus-4-7', max_tokens: nil) }
+    let(:user_message) { RubyLLM::Message.new(role: :user, content: 'Hello') }
+
+    def render(thinking:, schema: nil)
+      described_class.render_payload(
+        [user_message],
+        tools: {},
+        temperature: nil,
+        model: model,
+        stream: false,
+        schema: schema,
+        thinking: thinking
+      )
+    end
+
+    it 'sends enabled thinking with budget_tokens when a budget is given' do
+      payload = render(thinking: RubyLLM::Thinking::Config.new(budget: 2048))
+
+      expect(payload[:thinking]).to eq(type: 'enabled', budget_tokens: 2048)
+      expect(payload).not_to have_key(:output_config)
+    end
+
+    it 'sends adaptive thinking with output_config effort when an effort is given' do
+      payload = render(thinking: RubyLLM::Thinking::Config.new(effort: :medium))
+
+      expect(payload[:thinking]).to eq(type: 'adaptive')
+      expect(payload[:output_config]).to eq(effort: 'medium')
+    end
+
+    it 'prefers budget over effort when both are given' do
+      payload = render(thinking: RubyLLM::Thinking::Config.new(effort: :high, budget: 2048))
+
+      expect(payload[:thinking]).to eq(type: 'enabled', budget_tokens: 2048)
+      expect(payload).not_to have_key(:output_config)
+    end
+
+    it 'omits thinking when effort is none' do
+      payload = render(thinking: RubyLLM::Thinking::Config.new(effort: :none))
+
+      expect(payload).not_to have_key(:thinking)
+      expect(payload).not_to have_key(:output_config)
+    end
+
+    it 'omits thinking when no thinking config is given' do
+      payload = render(thinking: nil)
+
+      expect(payload).not_to have_key(:thinking)
+      expect(payload).not_to have_key(:output_config)
+    end
+
+    it 'merges effort with schema output_config' do
+      schema = {
+        name: 'response',
+        schema: { type: 'object', properties: { name: { type: 'string' } } }
+      }
+
+      payload = render(thinking: RubyLLM::Thinking::Config.new(effort: :low), schema: schema)
+
+      expect(payload[:thinking]).to eq(type: 'adaptive')
+      expect(payload[:output_config]).to eq(
+        effort: 'low',
+        format: { type: 'json_schema', schema: { type: 'object', properties: { name: { type: 'string' } } } }
+      )
+    end
+  end
+
   describe '.parse_completion_response' do
     it 'captures cache usage metrics on the message' do
       response_body = {
