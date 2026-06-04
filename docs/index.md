@@ -2,7 +2,7 @@
 layout: default
 title: RubyLLM
 nav_order: 1
-description: One beautiful Ruby framework for all major AI providers. Easily build chatbots, AI agents, RAG applications, content generators, and every Ruby AI workflow in between.
+description: One beautiful Ruby framework for all major AI providers. Easily build chatbots, AI agents, RAG applications, content generators, and everything in between.
 permalink: /
 redirect_from:
  - /guides/

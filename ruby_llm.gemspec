@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = 'One beautiful Ruby framework for all major AI providers.'
   spec.description   = 'One beautiful Ruby framework for all major AI providers. Easily build chatbots, ' \
-                       'AI agents, RAG applications, content generators, and every Ruby AI workflow in between. ' \
+                       'AI agents, RAG applications, content generators, and everything in between. ' \
                        'Features chat (text, images, audio, PDFs), image generation, embeddings, tools ' \
                        '(function calling), structured output, Rails ' \
                        'integration, and streaming. Works with OpenAI, Anthropic, Google Gemini, AWS Bedrock, ' \
