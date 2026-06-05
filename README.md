@@ -5,8 +5,7 @@
   <img src="/docs/assets/images/logotype.svg" alt="RubyLLM" height="120" width="250">
 </picture>
 
-<strong>
-A single, beautiful Ruby framework for all major AI providers. Easily build chatbots, AI agents, RAG applications, content generators, and every AI workflow you can think of.
+<strong>A single, beautiful Ruby framework for all major AI providers. Easily build chatbots, AI agents, RAG applications, content generators, and every AI workflow you can think of.
 </strong>
 
 Battle tested at [<picture><source media="(prefers-color-scheme: dark)" srcset="/docs/assets/images/external/partners/chatwithwork-logotype-dark.svg"><img src="/docs/assets/images/external/partners/chatwithwork-logotype.svg" alt="Chat with Work" height="30" align="absmiddle"></picture>](https://chatwithwork.com) - *Fully private work AI*
