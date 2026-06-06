@@ -6,7 +6,7 @@ permalink: /about/
 nav_exclude: true
 search_exclude: true
 entity_type: Organization
-image: /assets/images/logotype.jpg
+image: /assets/images/logotype.svg
 topics:
   - Ruby
   - Large language models
