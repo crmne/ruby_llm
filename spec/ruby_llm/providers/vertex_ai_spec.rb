@@ -15,9 +15,12 @@ RSpec.describe RubyLLM::Providers::VertexAI do
       retry_backoff_factor: 2,
       http_proxy: nil,
       vertexai_location: location,
-      vertexai_project_id: 'test-project'
+      vertexai_project_id: 'test-project',
+      vertexai_api_base: vertexai_api_base
     )
   end
+
+  let(:vertexai_api_base) { nil }
 
   describe '#api_base' do
     context 'when location is global' do
@@ -33,6 +36,15 @@ RSpec.describe RubyLLM::Providers::VertexAI do
 
       it 'uses the correct api_base with location prefix' do
         expect(provider.api_base).to eq('https://us-central1-aiplatform.googleapis.com/v1beta1')
+      end
+    end
+
+    context 'when vertexai_api_base is set' do
+      let(:location) { 'us-central1' }
+      let(:vertexai_api_base) { 'https://vertex-proxy.example.com/v1beta1' }
+
+      it 'uses the custom API URL' do
+        expect(provider.api_base).to eq('https://vertex-proxy.example.com/v1beta1')
       end
     end
   end

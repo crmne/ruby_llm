@@ -11,7 +11,7 @@ module RubyLLM
       include Bedrock::Streaming
 
       def api_base
-        "https://bedrock-runtime.#{bedrock_region}.amazonaws.com"
+        @config.bedrock_api_base || "https://bedrock-runtime.#{bedrock_region}.amazonaws.com"
       end
 
       def headers
@@ -54,7 +54,7 @@ module RubyLLM
 
       class << self
         def configuration_options
-          %i[bedrock_api_key bedrock_secret_key bedrock_region bedrock_session_token]
+          %i[bedrock_api_key bedrock_secret_key bedrock_region bedrock_session_token bedrock_api_base]
         end
 
         def configuration_requirements

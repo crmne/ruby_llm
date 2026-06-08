@@ -23,6 +23,8 @@ module RubyLLM
       end
 
       def api_base
+        return @config.vertexai_api_base if @config.vertexai_api_base
+
         if @config.vertexai_location.to_s == 'global'
           'https://aiplatform.googleapis.com/v1beta1'
         else
@@ -43,7 +45,7 @@ module RubyLLM
 
       class << self
         def configuration_options
-          %i[vertexai_project_id vertexai_location vertexai_service_account_key]
+          %i[vertexai_project_id vertexai_location vertexai_service_account_key vertexai_api_base]
         end
 
         def configuration_requirements
