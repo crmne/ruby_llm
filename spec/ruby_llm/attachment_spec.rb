@@ -39,4 +39,14 @@ RSpec.describe RubyLLM::Attachment do
     expect(attachment).to be_text
     expect(attachment).not_to be_document
   end
+
+  it 'treats partially loaded ActiveStorage constants as unavailable' do
+    stub_const('ActiveStorage', Module.new)
+    stub_const('ActiveStorage::Blob', Class.new)
+
+    attachment = described_class.new(StringIO.new('notes'), filename: 'notes.txt')
+
+    expect(attachment).not_to be_active_storage
+    expect(attachment.content).to eq('notes')
+  end
 end

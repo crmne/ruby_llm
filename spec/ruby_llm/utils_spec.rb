@@ -35,6 +35,16 @@ RSpec.describe RubyLLM::Utils do
     end
   end
 
+  describe '.safe_constantize' do
+    it 'resolves loaded constants' do
+      expect(described_class.safe_constantize('RubyLLM::Utils')).to eq(described_class)
+    end
+
+    it 'returns nil when any constant segment is missing' do
+      expect(described_class.safe_constantize('RubyLLM::Missing::Constant')).to be_nil
+    end
+  end
+
   describe '.parse_iso_date_prefix' do
     it 'parses a full ISO date' do
       expect(described_class.parse_iso_date_prefix('2025-09-15')).to eq(Date.new(2025, 9, 15))
