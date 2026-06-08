@@ -166,6 +166,22 @@ transcription.segments.each do |segment|
 end
 ```
 
+For OpenAI word-level timestamps, request verbose JSON with word granularity:
+
+```ruby
+transcription = RubyLLM.transcribe(
+  "interview.mp3",
+  model: "whisper-1",
+  provider: :openai,
+  response_format: "verbose_json",
+  timestamp_granularities: ["word"]
+)
+
+transcription.words.each do |word|
+  puts "#{word['start']}s - #{word['end']}s: #{word['word']}"
+end
+```
+
 ## Handling Longer Files
 
 The default timeout is 5 minutes. Increase it for longer audio:
