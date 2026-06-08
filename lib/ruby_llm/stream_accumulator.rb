@@ -21,6 +21,7 @@ module RubyLLM
       @inside_think_tag = false
       @pending_think_tag = +''
       @latest_tool_call_id = nil
+      @tool_call_ids_by_index = {}
     end
 
     def add(chunk)
@@ -75,43 +76,54 @@ module RubyLLM
       end
     end
 
-    def accumulate_tool_calls(new_tool_calls) # rubocop:disable Metrics/PerceivedComplexity
+    def accumulate_tool_calls(new_tool_calls)
       RubyLLM.logger.debug { "Accumulating tool calls: #{new_tool_calls}" } if RubyLLM.config.log_stream_debug
-      new_tool_calls.each_value do |tool_call|
+      new_tool_calls.each do |stream_key, tool_call|
         if tool_call.id
-          tool_call_id = tool_call.id.empty? ? SecureRandom.uuid : tool_call.id
-          tool_call_arguments = tool_call.arguments
-          if tool_call_arguments.nil? || (tool_call_arguments.respond_to?(:empty?) && tool_call_arguments.empty?)
-            tool_call_arguments = +''
-          end
-          @tool_calls[tool_call.id] = ToolCall.new(
-            id: tool_call_id,
-            name: tool_call.name,
-            arguments: tool_call_arguments,
-            thought_signature: tool_call.thought_signature
-          )
-          @latest_tool_call_id = tool_call.id
+          start_tool_call(stream_key, tool_call)
         else
-          existing = @tool_calls[@latest_tool_call_id]
-          if existing
-            fragment = tool_call.arguments
-            fragment = '' if fragment.nil?
-            existing.arguments << fragment
-            if tool_call.thought_signature && existing.thought_signature.nil?
-              existing.thought_signature = tool_call.thought_signature
-            end
-          end
+          append_tool_call_fragment(stream_key, tool_call)
         end
       end
     end
 
-    def find_tool_call(tool_call_id)
-      if tool_call_id.nil?
-        @tool_calls[@latest_tool_call]
-      else
-        @latest_tool_call_id = tool_call_id
-        @tool_calls[tool_call_id]
-      end
+    def start_tool_call(stream_key, tool_call)
+      tool_call_id = tool_call.id.empty? ? SecureRandom.uuid : tool_call.id
+      tool_call_key = tool_call.id
+
+      @tool_calls[tool_call_key] = ToolCall.new(
+        id: tool_call_id,
+        name: tool_call.name,
+        arguments: initial_tool_call_arguments(tool_call),
+        thought_signature: tool_call.thought_signature
+      )
+      @tool_call_ids_by_index[stream_key] = tool_call_key unless stream_key.nil?
+      @latest_tool_call_id = tool_call_key
+    end
+
+    def initial_tool_call_arguments(tool_call)
+      arguments = tool_call.arguments
+      return +'' if arguments.nil? || (arguments.respond_to?(:empty?) && arguments.empty?)
+
+      arguments
+    end
+
+    def append_tool_call_fragment(stream_key, tool_call)
+      existing = find_tool_call(stream_key)
+      return unless existing
+
+      fragment = tool_call.arguments
+      fragment = '' if fragment.nil?
+      existing.arguments << fragment
+      return unless tool_call.thought_signature && existing.thought_signature.nil?
+
+      existing.thought_signature = tool_call.thought_signature
+    end
+
+    def find_tool_call(stream_key)
+      return @tool_calls[@latest_tool_call_id] if stream_key.nil?
+
+      @tool_calls[@tool_call_ids_by_index[stream_key]] || @tool_calls[stream_key]
     end
 
     def count_tokens(chunk)

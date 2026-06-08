@@ -72,10 +72,27 @@ module RubyLLM
 
         def extract_tool_calls(data)
           if json_delta?(data)
-            { nil => ToolCall.new(id: nil, name: nil, arguments: data.dig('delta', 'partial_json')) }
+            extract_tool_call_delta(data)
+          elsif content_block_start?(data)
+            extract_tool_call_start(data)
           else
             parse_tool_calls(data['content_block'])
           end
+        end
+
+        def extract_tool_call_delta(data)
+          { data['index'] => ToolCall.new(id: nil, name: nil, arguments: data.dig('delta', 'partial_json')) }
+        end
+
+        def extract_tool_call_start(data)
+          tool_calls = parse_tool_calls(data['content_block'])
+          return tool_calls if tool_calls.nil? || data['index'].nil?
+
+          { data['index'] => tool_calls.values.first }
+        end
+
+        def content_block_start?(data)
+          data['type'] == 'content_block_start'
         end
 
         def parse_tool_calls(content_blocks)

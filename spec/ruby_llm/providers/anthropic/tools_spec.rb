@@ -190,6 +190,51 @@ RSpec.describe RubyLLM::Providers::Anthropic::Tools do
     end
   end
 
+  describe '#extract_tool_calls' do
+    let(:extractor) do
+      Class.new do
+        include RubyLLM::Providers::Anthropic::Streaming
+        include RubyLLM::Providers::Anthropic::Tools
+      end.new
+    end
+
+    it 'keys streaming tool call starts by content block index' do
+      data = {
+        'type' => 'content_block_start',
+        'index' => 2,
+        'content_block' => {
+          'type' => 'tool_use',
+          'id' => 'tool_2',
+          'name' => 'search',
+          'input' => {}
+        }
+      }
+
+      tool_calls = extractor.send(:extract_tool_calls, data)
+
+      expect(tool_calls.keys).to eq([2])
+      expect(tool_calls[2].id).to eq('tool_2')
+      expect(tool_calls[2].name).to eq('search')
+    end
+
+    it 'keys streaming tool call argument deltas by content block index' do
+      data = {
+        'type' => 'content_block_delta',
+        'index' => 2,
+        'delta' => {
+          'type' => 'input_json_delta',
+          'partial_json' => '{"query":"market news"}'
+        }
+      }
+
+      tool_calls = extractor.send(:extract_tool_calls, data)
+
+      expect(tool_calls.keys).to eq([2])
+      expect(tool_calls[2].id).to be_nil
+      expect(tool_calls[2].arguments).to eq('{"query":"market news"}')
+    end
+  end
+
   describe '.parse_tool_calls' do
     it 'parses multiple tool calls from content blocks' do
       content_blocks = [
