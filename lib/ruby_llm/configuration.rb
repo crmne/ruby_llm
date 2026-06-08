@@ -58,6 +58,7 @@ module RubyLLM
     option :retry_backoff_factor, 2
     option :retry_interval_randomness, 0.5
     option :http_proxy, nil
+    option :tool_concurrency, false
 
     option :logger, nil
     option :instrumenter, nil

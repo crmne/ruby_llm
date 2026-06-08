@@ -118,6 +118,23 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
   end
 
   describe 'tool usage' do
+    it 'uses configured and per-chat tool concurrency' do
+      original_tool_concurrency = RubyLLM.config.tool_concurrency
+      RubyLLM.config.tool_concurrency = true
+
+      chat = Chat.create!(model: model)
+
+      expect(chat.to_llm.concurrency).to eq(:threads)
+
+      chat.with_tools(Calculator, concurrency: :fibers)
+      expect(chat.to_llm.concurrency).to eq(:fibers)
+
+      chat.with_tools(Calculator, concurrency: false)
+      expect(chat.to_llm.concurrency).to be_nil
+    ensure
+      RubyLLM.config.tool_concurrency = original_tool_concurrency
+    end
+
     it 'persists tool calls' do
       chat = Chat.create!(model: model)
       chat.with_tool(Calculator)

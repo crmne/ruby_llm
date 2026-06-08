@@ -7,7 +7,7 @@ module RubyLLM
   class Chat
     include Enumerable
 
-    attr_reader :model, :messages, :tools, :tool_prefs, :params, :headers, :schema
+    attr_reader :model, :messages, :tools, :tool_prefs, :params, :headers, :schema, :concurrency
 
     def initialize(model: nil, provider: nil, assume_model_exists: false, context: nil)
       if assume_model_exists && !provider
@@ -22,6 +22,7 @@ module RubyLLM
       @messages = []
       @tools = {}
       @tool_prefs = { choice: nil, calls: nil }
+      @concurrency = normalize_tool_concurrency(@config.tool_concurrency)
       @params = {}
       @headers = {}
       @schema = nil
@@ -54,19 +55,21 @@ module RubyLLM
       self
     end
 
-    def with_tool(tool, choice: nil, calls: nil)
+    def with_tool(tool, choice: nil, calls: nil, concurrency: @concurrency)
       unless tool.nil?
         tool_instance = tool.is_a?(Class) ? tool.new : tool
         @tools[tool_instance.name.to_sym] = tool_instance
       end
       update_tool_options(choice:, calls:)
+      update_tool_concurrency(concurrency)
       self
     end
 
-    def with_tools(*tools, replace: false, choice: nil, calls: nil)
+    def with_tools(*tools, replace: false, choice: nil, calls: nil, concurrency: @concurrency)
       @tools.clear if replace
       tools.compact.each { |tool| with_tool tool }
       update_tool_options(choice:, calls:)
+      update_tool_concurrency(concurrency)
       self
     end
 
@@ -327,23 +330,60 @@ module RubyLLM
     end
 
     def handle_tool_calls(response, &)
-      halt_result = nil
-
-      response.tool_calls.each_value do |tool_call|
-        run_callbacks(:before_message, :new_message)
-        run_callbacks(:before_tool_call, :tool_call, tool_call)
-        result = execute_tool tool_call
-        run_callbacks(:after_tool_result, :tool_result, result)
-        tool_payload = result.is_a?(Tool::Halt) ? result.content : result
-        content = content_like?(tool_payload) ? tool_payload : tool_payload.to_s
-        message = add_message role: :tool, content:, tool_call_id: tool_call.id
-        run_callbacks(:after_message, :end_message, message)
-
-        halt_result = result if result.is_a?(Tool::Halt)
-      end
+      halt_result = if concurrency
+                      handle_concurrent_tool_calls(response.tool_calls)
+                    else
+                      handle_sequential_tool_calls(response.tool_calls)
+                    end
 
       reset_tool_choice if forced_tool_choice?
       halt_result || complete(&)
+    end
+
+    def handle_sequential_tool_calls(tool_calls)
+      halt_result = nil
+
+      tool_calls.each_value do |tool_call|
+        run_callbacks(:before_message, :new_message)
+        result = execute_tool_with_callbacks(tool_call)
+        add_tool_result_message(tool_call, result)
+        halt_result = result if result.is_a?(Tool::Halt)
+      end
+
+      halt_result
+    end
+
+    def handle_concurrent_tool_calls(tool_calls)
+      halt_result = nil
+
+      execute_tools_concurrently(tool_calls).each do |tool_call, result|
+        run_callbacks(:before_message, :new_message)
+        add_tool_result_message(tool_call, result)
+        halt_result = result if result.is_a?(Tool::Halt)
+      end
+
+      halt_result
+    end
+
+    def execute_tools_concurrently(tool_calls)
+      ToolConcurrency.run(concurrency, tool_calls) do |tool_call|
+        execute_tool_with_callbacks(tool_call)
+      end
+    end
+
+    def execute_tool_with_callbacks(tool_call)
+      run_callbacks(:before_tool_call, :tool_call, tool_call)
+      result = execute_tool tool_call
+      run_callbacks(:after_tool_result, :tool_result, result)
+      result
+    end
+
+    def add_tool_result_message(tool_call, result)
+      tool_payload = result.is_a?(Tool::Halt) ? result.content : result
+      content = content_like?(tool_payload) ? tool_payload : tool_payload.to_s
+      message = add_message role: :tool, content:, tool_call_id: tool_call.id
+      run_callbacks(:after_message, :end_message, message)
+      message
     end
 
     def execute_tool(tool_call)
@@ -391,6 +431,22 @@ module RubyLLM
       end
 
       @tool_prefs[:calls] = normalize_calls(calls) unless calls.nil?
+    end
+
+    def update_tool_concurrency(concurrency)
+      @concurrency = normalize_tool_concurrency(concurrency)
+    end
+
+    def normalize_tool_concurrency(concurrency)
+      return nil if concurrency.nil? || concurrency == false
+      return :threads if concurrency == true
+
+      normalized = concurrency.to_sym
+      return normalized if ToolConcurrency.supported?(normalized)
+
+      raise ArgumentError,
+            "Unknown tool concurrency: #{concurrency.inspect}. " \
+            "Available modes: #{ToolConcurrency.modes.join(', ')}"
     end
 
     def normalize_calls(calls)

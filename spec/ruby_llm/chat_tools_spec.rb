@@ -128,6 +128,49 @@ RSpec.describe RubyLLM::Chat do
     end
   end
 
+  class ConcurrentProbeTool < RubyLLM::Tool # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
+    description 'Records concurrent execution'
+    param :label
+    param :delay, type: :number, required: false
+
+    State = Struct.new(:running, :max_running, :mutex) # rubocop:disable RSpec/LeakyConstantDeclaration
+
+    class << self
+      attr_reader :state
+
+      def reset!
+        @state = State.new(0, 0, Mutex.new)
+      end
+
+      def start
+        state.mutex.synchronize do
+          state.running += 1
+          state.max_running = [state.max_running, state.running].max
+        end
+      end
+
+      def finish
+        state.mutex.synchronize do
+          state.running -= 1
+        end
+      end
+
+      def max_running
+        state.max_running
+      end
+    end
+
+    reset!
+
+    def execute(label:, delay: 0.01)
+      self.class.start
+      sleep delay
+      "finished #{label}"
+    ensure
+      self.class.finish
+    end
+  end
+
   def assistant_tool_call_messages(chat)
     chat.messages.select { |message| message.role == :assistant && message.tool_call? }
   end
@@ -151,6 +194,14 @@ RSpec.describe RubyLLM::Chat do
     chat.messages.reverse.find do |message|
       message.role == :tool && message.tool_call_id == tool_call.id
     end
+  end
+
+  def stub_tool_response(chat, tool_calls)
+    provider = chat.instance_variable_get(:@provider)
+    allow(provider).to receive(:complete).and_return(
+      RubyLLM::Message.new(role: :assistant, content: '', tool_calls:),
+      RubyLLM::Message.new(role: :assistant, content: 'done')
+    )
   end
 
   describe 'tool choice normalization' do
@@ -569,6 +620,53 @@ RSpec.describe RubyLLM::Chat do
       chat.ask('Roll a die for me')
 
       expect(call_order).to eq(%i[tool_call tool_result])
+    end
+  end
+
+  describe 'concurrent tool execution' do
+    let(:tool_calls) do
+      {
+        'call_1' => RubyLLM::ToolCall.new(
+          id: 'call_1',
+          name: 'concurrent_probe',
+          arguments: { label: 'slow', delay: 0.05 }
+        ),
+        'call_2' => RubyLLM::ToolCall.new(
+          id: 'call_2',
+          name: 'concurrent_probe',
+          arguments: { label: 'fast', delay: 0.01 }
+        )
+      }
+    end
+
+    before do
+      ConcurrentProbeTool.reset!
+    end
+
+    it 'executes multiple tool calls concurrently' do
+      chat = RubyLLM.chat.with_tool(ConcurrentProbeTool, concurrency: true)
+      stub_tool_response(chat, tool_calls)
+
+      chat.ask('Run the tools')
+
+      tool_messages = chat.messages.select { |message| message.role == :tool }
+      expect(ConcurrentProbeTool.max_running).to eq(2)
+      expect(chat.concurrency).to eq(:threads)
+      expect(tool_messages.map(&:tool_call_id)).to eq(%w[call_1 call_2])
+      expect(tool_messages.map(&:content)).to eq(['finished slow', 'finished fast'])
+    end
+
+    it 'executes multiple tool calls with fibers' do
+      chat = RubyLLM.chat.with_tool(ConcurrentProbeTool, concurrency: :fibers)
+      stub_tool_response(chat, tool_calls)
+
+      chat.ask('Run the tools')
+
+      tool_messages = chat.messages.select { |message| message.role == :tool }
+      expect(ConcurrentProbeTool.max_running).to eq(2)
+      expect(chat.concurrency).to eq(:fibers)
+      expect(tool_messages.map(&:tool_call_id)).to eq(%w[call_1 call_2])
+      expect(tool_messages.map(&:content)).to eq(['finished slow', 'finished fast'])
     end
   end
 

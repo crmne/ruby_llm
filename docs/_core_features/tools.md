@@ -343,7 +343,7 @@ Valid values:
 
 #### "Parallel" Tool Calling (`calls`)
 
-> Providers usually call this **parallel tool calling**. We call it `calls` because "parallel" can be misleading: tools are not executed in parallel unless the tool executor itself is parallelized. `calls` describes the actual behavior directly: `:many` means multiple tool calls in one assistant response, `:one` means one tool call in one assistant response.
+> Providers usually call this **parallel tool calling**. We call it `calls` because "parallel" can be misleading: tools are not executed in parallel unless RubyLLM is configured to run them concurrently. `calls` describes the actual behavior directly: `:many` means multiple tool calls in one assistant response, `:one` means one tool call in one assistant response.
 {: .note }
 
 Use `calls` to control how many tool calls the model may return in a single assistant response.
@@ -367,6 +367,57 @@ If `calls` is not provided, RubyLLM uses provider/model defaults, which are usua
 
 > Tool choice and call-count controls are provider/model dependent.
 {: .note }
+
+### Concurrent Tool Execution
+{: .d-inline-block }
+
+v1.16.0+
+{: .label .label-green }
+
+When a model returns multiple tool calls in one response, RubyLLM executes them sequentially by default. For I/O-bound tools, opt in to concurrent execution:
+
+```ruby
+chat.with_tools(Weather, StockPrice, Currency, concurrency: true)
+```
+
+`concurrency: true` uses Ruby threads and requires no extra dependencies. You can also choose a mode explicitly:
+
+```ruby
+chat.with_tools(Weather, StockPrice, Currency, concurrency: :threads)
+chat.with_tools(Weather, StockPrice, Currency, concurrency: :fibers)
+```
+
+The `:fibers` mode uses the optional `async` gem:
+
+```ruby
+gem "async"
+```
+
+Enable concurrent tool execution globally:
+
+```ruby
+RubyLLM.configure do |config|
+  config.tool_concurrency = true
+end
+```
+
+Use `:threads`, `:fibers`, `true`, or `false`.
+
+Override it per chat when needed:
+
+```ruby
+chat.with_tools(Weather, StockPrice, concurrency: false)
+```
+
+Rails chat records use the same setting and override:
+
+```ruby
+chat_record.with_tools(Weather, StockPrice, concurrency: false)
+chat_record.with_tools(Weather, StockPrice, concurrency: :threads)
+chat_record.with_tools(Weather, StockPrice, concurrency: :fibers)
+```
+
+Tool results are added back to the conversation in the model's original tool-call order.
 
 ### Model Compatibility
 
