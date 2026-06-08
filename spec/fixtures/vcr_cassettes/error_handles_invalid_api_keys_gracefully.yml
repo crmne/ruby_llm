@@ -8,7 +8,7 @@ http_interactions:
       string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":"Hello"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -23,7 +23,7 @@ http_interactions:
       message: Unauthorized
     headers:
       Date:
-      - Thu, 02 Apr 2026 11:22:48 GMT
+      - Mon, 08 Jun 2026 18:45:44 GMT
       Content-Type:
       - application/json; charset=utf-8
       Content-Length:
@@ -43,6 +43,9 @@ http_interactions:
       - max-age=31536000; includeSubDomains; preload
       Vary:
       - Origin
+      Access-Control-Expose-Headers:
+      - CF-Ray
+      - CF-Ray
       X-Content-Type-Options:
       - nosniff
       X-Openai-Proxy-Wasm:
@@ -62,5 +65,5 @@ http_interactions:
                 "code": "invalid_api_key"
             }
         }
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+  recorded_at: Mon, 08 Jun 2026 18:45:44 GMT
 recorded_with: VCR 6.4.0

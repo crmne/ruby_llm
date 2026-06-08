@@ -9,7 +9,7 @@ http_interactions:
         the square root of 64? Answer with a JSON object with the key `result`."}],"stream":false,"response_format":{"type":"json_object"}}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 06 May 2026 23:51:26 GMT
+      - Mon, 08 Jun 2026 18:45:48 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -42,11 +42,13 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Access-Control-Expose-Headers:
+      - CF-Ray
+      - CF-Ray
       - X-Request-ID
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '1792'
+      - '1976'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
@@ -75,9 +77,9 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-DcgJRS5Rm8Kqs6ssEpV2QXbtgw1JI",
+          "id": "chatcmpl-DoZGkJ8SICUs11wcToWCsswp9cjaq",
           "object": "chat.completion",
-          "created": 1778111485,
+          "created": 1780944346,
           "model": "gpt-5-nano-2025-08-07",
           "choices": [
             {
@@ -93,14 +95,14 @@ http_interactions:
           ],
           "usage": {
             "prompt_tokens": 26,
-            "completion_tokens": 207,
-            "total_tokens": 233,
+            "completion_tokens": 143,
+            "total_tokens": 169,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
             },
             "completion_tokens_details": {
-              "reasoning_tokens": 192,
+              "reasoning_tokens": 128,
               "audio_tokens": 0,
               "accepted_prediction_tokens": 0,
               "rejected_prediction_tokens": 0
@@ -109,5 +111,5 @@ http_interactions:
           "service_tier": "default",
           "system_fingerprint": null
         }
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+  recorded_at: Mon, 08 Jun 2026 18:45:48 GMT
 recorded_with: VCR 6.4.0

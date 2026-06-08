@@ -14,7 +14,7 @@ http_interactions:
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -29,7 +29,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 06 May 2026 23:52:50 GMT
+      - Mon, 08 Jun 2026 18:46:31 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -47,11 +47,13 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Access-Control-Expose-Headers:
+      - CF-Ray
+      - CF-Ray
       - X-Request-ID
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '2875'
+      - '2919'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
@@ -80,9 +82,9 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-DcgKlSf5Zdl4BFvJLBPySXH917gos",
+          "id": "chatcmpl-DoZHQdDpZGtVlN3pc2UBwGHRvCnvf",
           "object": "chat.completion",
-          "created": 1778111567,
+          "created": 1780944388,
           "model": "gpt-5-nano-2025-08-07",
           "choices": [
             {
@@ -92,7 +94,7 @@ http_interactions:
                 "content": null,
                 "tool_calls": [
                   {
-                    "id": "call_5Brxo90SHuOxfJol2Pubf4BX",
+                    "id": "call_GOotzq3y3C45fdLNjm8SXXRo",
                     "type": "function",
                     "function": {
                       "name": "weather",
@@ -100,7 +102,7 @@ http_interactions:
                     }
                   },
                   {
-                    "id": "call_SRydeRpiPuKkNTBwOHKgFDLX",
+                    "id": "call_6IvZGzhTPoSUAGUWnRx0po6X",
                     "type": "function",
                     "function": {
                       "name": "best_language_to_learn",
@@ -116,14 +118,14 @@ http_interactions:
           ],
           "usage": {
             "prompt_tokens": 194,
-            "completion_tokens": 191,
-            "total_tokens": 385,
+            "completion_tokens": 255,
+            "total_tokens": 449,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
             },
             "completion_tokens_details": {
-              "reasoning_tokens": 128,
+              "reasoning_tokens": 192,
               "audio_tokens": 0,
               "accepted_prediction_tokens": 0,
               "rejected_prediction_tokens": 0
@@ -132,7 +134,7 @@ http_interactions:
           "service_tier": "default",
           "system_fingerprint": null
         }
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+  recorded_at: Mon, 08 Jun 2026 18:46:31 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/chat/completions
@@ -140,15 +142,15 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"gpt-5-nano","messages":[{"role":"user","content":"What''s
         the weather in Berlin (52.5200, 13.4050) and what''s the best language to
-        learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_5Brxo90SHuOxfJol2Pubf4BX","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}},{"id":"call_SRydeRpiPuKkNTBwOHKgFDLX","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_5Brxo90SHuOxfJol2Pubf4BX"},{"role":"tool","content":"Ruby","tool_call_id":"call_SRydeRpiPuKkNTBwOHKgFDLX"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_GOotzq3y3C45fdLNjm8SXXRo","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}},{"id":"call_6IvZGzhTPoSUAGUWnRx0po6X","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_GOotzq3y3C45fdLNjm8SXXRo"},{"role":"tool","content":"Ruby","tool_call_id":"call_6IvZGzhTPoSUAGUWnRx0po6X"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}},{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -163,7 +165,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 06 May 2026 23:52:55 GMT
+      - Mon, 08 Jun 2026 18:46:34 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -181,11 +183,13 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Access-Control-Expose-Headers:
+      - CF-Ray
+      - CF-Ray
       - X-Request-ID
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '3821'
+      - '2816'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
@@ -213,6 +217,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        ewogICJpZCI6ICJjaGF0Y21wbC1EY2dLcGo2Z2xreGxSWVczeDJMN3hPZEw3QzN4ViIsCiAgIm9iamVjdCI6ICJjaGF0LmNvbXBsZXRpb24iLAogICJjcmVhdGVkIjogMTc3ODExMTU3MSwKICAibW9kZWwiOiAiZ3B0LTUtbmFuby0yMDI1LTA4LTA3IiwKICAiY2hvaWNlcyI6IFsKICAgIHsKICAgICAgImluZGV4IjogMCwKICAgICAgIm1lc3NhZ2UiOiB7CiAgICAgICAgInJvbGUiOiAiYXNzaXN0YW50IiwKICAgICAgICAiY29udGVudCI6ICItIEJlcmxpbiB3ZWF0aGVyICg1Mi41MjAwLCAxMy40MDUwKTogMTXCsEMsIHdpbmQgMTAga20vaC5cbi0gQmVzdCBsYW5ndWFnZSB0byBsZWFybjogUnVieS5cblxuV291bGQgeW91IGxpa2UgbW9yZSBsYW5ndWFnZSBvcHRpb25zIG9yIGRldGFpbHMgb24gd2h5IFJ1YnkgbWlnaHQgYmUgYSBnb29kIGNob2ljZT8iLAogICAgICAgICJyZWZ1c2FsIjogbnVsbCwKICAgICAgICAiYW5ub3RhdGlvbnMiOiBbXQogICAgICB9LAogICAgICAiZmluaXNoX3JlYXNvbiI6ICJzdG9wIgogICAgfQogIF0sCiAgInVzYWdlIjogewogICAgInByb21wdF90b2tlbnMiOiAyOTQsCiAgICAiY29tcGxldGlvbl90b2tlbnMiOiAzNzksCiAgICAidG90YWxfdG9rZW5zIjogNjczLAogICAgInByb21wdF90b2tlbnNfZGV0YWlscyI6IHsKICAgICAgImNhY2hlZF90b2tlbnMiOiAwLAogICAgICAiYXVkaW9fdG9rZW5zIjogMAogICAgfSwKICAgICJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjogewogICAgICAicmVhc29uaW5nX3Rva2VucyI6IDMyMCwKICAgICAgImF1ZGlvX3Rva2VucyI6IDAsCiAgICAgICJhY2NlcHRlZF9wcmVkaWN0aW9uX3Rva2VucyI6IDAsCiAgICAgICJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6IDAKICAgIH0KICB9LAogICJzZXJ2aWNlX3RpZXIiOiAiZGVmYXVsdCIsCiAgInN5c3RlbV9maW5nZXJwcmludCI6IG51bGwKfQo=
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+        ewogICJpZCI6ICJjaGF0Y21wbC1Eb1pIVVkxSlZrV3Q2MGpQT0NucExhaXRNWG9vYyIsCiAgIm9iamVjdCI6ICJjaGF0LmNvbXBsZXRpb24iLAogICJjcmVhdGVkIjogMTc4MDk0NDM5MiwKICAibW9kZWwiOiAiZ3B0LTUtbmFuby0yMDI1LTA4LTA3IiwKICAiY2hvaWNlcyI6IFsKICAgIHsKICAgICAgImluZGV4IjogMCwKICAgICAgIm1lc3NhZ2UiOiB7CiAgICAgICAgInJvbGUiOiAiYXNzaXN0YW50IiwKICAgICAgICAiY29udGVudCI6ICItIEJlcmxpbiB3ZWF0aGVyICg1Mi41MjAwLCAxMy40MDUwKTogMTXCsEMsIHdpbmQgMTAga20vaC5cbi0gQmVzdCBsYW5ndWFnZSB0byBsZWFybjogUnVieS5cblxuV2FudCBhIGxvbmdlciBmb3JlY2FzdCBvciBzdWdnZXN0aW9ucyB0YWlsb3JlZCB0byB5b3VyIGdvYWxzIChjYXJlZXIsIHRyYXZlbCwgZXRjLik/IEkgY2FuIGV4cGFuZC4iLAogICAgICAgICJyZWZ1c2FsIjogbnVsbCwKICAgICAgICAiYW5ub3RhdGlvbnMiOiBbXQogICAgICB9LAogICAgICAiZmluaXNoX3JlYXNvbiI6ICJzdG9wIgogICAgfQogIF0sCiAgInVzYWdlIjogewogICAgInByb21wdF90b2tlbnMiOiAyOTQsCiAgICAiY29tcGxldGlvbl90b2tlbnMiOiAyNTYsCiAgICAidG90YWxfdG9rZW5zIjogNTUwLAogICAgInByb21wdF90b2tlbnNfZGV0YWlscyI6IHsKICAgICAgImNhY2hlZF90b2tlbnMiOiAwLAogICAgICAiYXVkaW9fdG9rZW5zIjogMAogICAgfSwKICAgICJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjogewogICAgICAicmVhc29uaW5nX3Rva2VucyI6IDE5MiwKICAgICAgImF1ZGlvX3Rva2VucyI6IDAsCiAgICAgICJhY2NlcHRlZF9wcmVkaWN0aW9uX3Rva2VucyI6IDAsCiAgICAgICJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6IDAKICAgIH0KICB9LAogICJzZXJ2aWNlX3RpZXIiOiAiZGVmYXVsdCIsCiAgInN5c3RlbV9maW5nZXJwcmludCI6IG51bGwKfQo=
+  recorded_at: Mon, 08 Jun 2026 18:46:34 GMT
 recorded_with: VCR 6.4.0

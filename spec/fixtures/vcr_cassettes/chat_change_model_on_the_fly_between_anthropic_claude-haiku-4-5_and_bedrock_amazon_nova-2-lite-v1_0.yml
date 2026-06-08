@@ -9,7 +9,7 @@ http_interactions:
         with exactly: FOUR"}]}],"stream":false,"max_tokens":64000,"temperature":0.0}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       X-Api-Key:
       - "<ANTHROPIC_API_KEY>"
       Anthropic-Version:
@@ -26,7 +26,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 06 May 2026 23:57:32 GMT
+      - Mon, 08 Jun 2026 18:48:12 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -38,25 +38,25 @@ http_interactions:
       Anthropic-Ratelimit-Input-Tokens-Remaining:
       - '450000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-05-06T23:57:32Z'
+      - '2026-06-08T18:48:12Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
       - '90000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
       - '90000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-05-06T23:57:32Z'
+      - '2026-06-08T18:48:12Z'
       Anthropic-Ratelimit-Requests-Limit:
       - '1000'
       Anthropic-Ratelimit-Requests-Remaining:
       - '999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-05-06T23:57:32Z'
+      - '2026-06-08T18:48:11Z'
       Anthropic-Ratelimit-Tokens-Limit:
       - '540000'
       Anthropic-Ratelimit-Tokens-Remaining:
       - '540000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-05-06T23:57:32Z'
+      - '2026-06-08T18:48:12Z'
       Request-Id:
       - "<REQUEST_ID>"
       Strict-Transport-Security:
@@ -64,11 +64,9 @@ http_interactions:
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
       Traceresponse:
-      - 00-cb55b12e25b446330770c8e9c769c905-ce61637161f68e78-01
+      - 00-33dbdc771d69fed374a64cacbd5ef8be-2467d784e4b504dd-01
       Server:
       - cloudflare
-      X-Envoy-Upstream-Service-Time:
-      - '499'
       Vary:
       - Accept-Encoding
       Cf-Cache-Status:
@@ -83,8 +81,8 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_013shNXEiV1oUHj1DQ7YLx46","type":"message","role":"assistant","content":[{"type":"text","text":"FOUR"}],"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":13,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":5,"service_tier":"standard","inference_geo":"not_available"}}'
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_015Psqtx1tFMCEPUVWNssdYG","type":"message","role":"assistant","content":[{"type":"text","text":"FOUR"}],"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":13,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":5,"service_tier":"standard","inference_geo":"not_available"}}'
+  recorded_at: Mon, 08 Jun 2026 18:48:12 GMT
 - request:
     method: post
     uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.amazon.nova-2-lite-v1:0/converse
@@ -95,9 +93,9 @@ http_interactions:
         with exactly: EIGHT"}]}],"inferenceConfig":{"temperature":0.0}}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       X-Amz-Date:
-      - 20260506T235733Z
+      - 20260608T184812Z
       X-Amz-Content-Sha256:
       - 333dfd1586b2db6e0fafa9b8fe21186addfce6c3214497fc9f9321fadb245d77
       Authorization:
@@ -115,7 +113,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 06 May 2026 23:57:33 GMT
+      - Mon, 08 Jun 2026 18:48:13 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -123,9 +121,9 @@ http_interactions:
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - f36fa66e-8a91-4c88-a7ea-527dc4ac184f
+      - da61532a-6528-4461-95f8-6456067a2ac5
     body:
       encoding: UTF-8
-      string: '{"metrics":{"latencyMs":288},"output":{"message":{"content":[{"text":"EIGHT"}],"role":"assistant"}},"stopReason":"end_turn","usage":{"inputTokens":64,"outputTokens":5,"serverToolUsage":{},"totalTokens":69}}'
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+      string: '{"metrics":{"latencyMs":388},"output":{"message":{"content":[{"text":"EIGHT"}],"role":"assistant"}},"stopReason":"end_turn","usage":{"inputTokens":64,"outputTokens":5,"serverToolUsage":{},"totalTokens":69}}'
+  recorded_at: Mon, 08 Jun 2026 18:48:13 GMT
 recorded_with: VCR 6.4.0

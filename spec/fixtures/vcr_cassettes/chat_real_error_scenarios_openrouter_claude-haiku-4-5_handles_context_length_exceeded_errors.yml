@@ -8,7 +8,7 @@ http_interactions:
       string: '{"model":"anthropic/claude-haiku-4.5","messages":[{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"Hi"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -23,7 +23,7 @@ http_interactions:
       message: Bad Request
     headers:
       Date:
-      - Wed, 06 May 2026 23:52:18 GMT
+      - Mon, 08 Jun 2026 18:46:43 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -50,6 +50,13 @@ http_interactions:
       string: '{"error":{"message":"This endpoint''s maximum context length is 200000
         tokens. However, you requested about 2500021 tokens (2500021 of text input).
         Please reduce the length of either one, or use the context-compression plugin
-        to compress your prompt automatically.","code":400,"metadata":{"provider_name":null}},"user_id":"user_2w02ZGxKw2KeeHUGGzosck1DmmN"}'
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+        to compress your prompt automatically.","code":400,"metadata":{"provider_name":null,"previous_errors":[{"code":400,"message":"This
+        endpoint''s maximum context length is 200000 tokens. However, you requested
+        about 2500021 tokens (2500021 of text input). Please reduce the length of
+        either one, or use the context-compression plugin to compress your prompt
+        automatically."},{"code":400,"message":"This endpoint''s maximum context length
+        is 200000 tokens. However, you requested about 2500021 tokens (2500021 of
+        text input). Please reduce the length of either one, or use the context-compression
+        plugin to compress your prompt automatically."}]}},"user_id":"user_2w02ZGxKw2KeeHUGGzosck1DmmN"}'
+  recorded_at: Mon, 08 Jun 2026 18:46:43 GMT
 recorded_with: VCR 6.4.0

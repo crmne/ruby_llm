@@ -11,7 +11,7 @@ http_interactions:
         expression to evaluate"}},"required":["expression"],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -26,7 +26,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 02 Apr 2026 11:23:23 GMT
+      - Mon, 08 Jun 2026 18:46:04 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -44,11 +44,13 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Access-Control-Expose-Headers:
+      - CF-Ray
+      - CF-Ray
       - X-Request-ID
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '330'
+      - '4022'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
@@ -77,9 +79,9 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-DQAQtsTTpy6DY7UwqYu7aTGkfADrG",
+          "id": "chatcmpl-DoZH1CN1YElXXd3VX3ZCZouJrVEiS",
           "object": "chat.completion",
-          "created": 1775129003,
+          "created": 1780944363,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
@@ -89,7 +91,7 @@ http_interactions:
                 "content": null,
                 "tool_calls": [
                   {
-                    "id": "call_nlQlv2hPGEfkf8JbGkSSl7hT",
+                    "id": "call_rAAQSY6q8ZPdtScuEWWNp9v8",
                     "type": "function",
                     "function": {
                       "name": "calculator",
@@ -120,22 +122,22 @@ http_interactions:
             }
           },
           "service_tier": "default",
-          "system_fingerprint": "fp_ce3966f242"
+          "system_fingerprint": "fp_97e92d7018"
         }
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+  recorded_at: Mon, 08 Jun 2026 18:46:04 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":"What''s
-        123 * 456?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_nlQlv2hPGEfkf8JbGkSSl7hT","type":"function","function":{"name":"calculator","arguments":"{\"expression\":\"123
-        * 456\"}"}}]},{"role":"tool","content":"56088","tool_call_id":"call_nlQlv2hPGEfkf8JbGkSSl7hT"}],"stream":false,"tools":[{"type":"function","function":{"name":"calculator","description":"Performs
+        123 * 456?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_rAAQSY6q8ZPdtScuEWWNp9v8","type":"function","function":{"name":"calculator","arguments":"{\"expression\":\"123
+        * 456\"}"}}]},{"role":"tool","content":"56088","tool_call_id":"call_rAAQSY6q8ZPdtScuEWWNp9v8"}],"stream":false,"tools":[{"type":"function","function":{"name":"calculator","description":"Performs
         basic arithmetic","parameters":{"type":"object","properties":{"expression":{"type":"string","description":"Math
         expression to evaluate"}},"required":["expression"],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -150,7 +152,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 02 Apr 2026 11:23:24 GMT
+      - Mon, 08 Jun 2026 18:46:05 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -168,11 +170,13 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Access-Control-Expose-Headers:
+      - CF-Ray
+      - CF-Ray
       - X-Request-ID
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '214'
+      - '806'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
@@ -201,16 +205,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-DQAQtFvBKRUuACzdy4yh2estF8wMJ",
+          "id": "chatcmpl-DoZH3OTE4tfFHeOKaCqhU736NBYvv",
           "object": "chat.completion",
-          "created": 1775129003,
+          "created": 1780944365,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
               "index": 0,
               "message": {
                 "role": "assistant",
-                "content": "123 multiplied by 456 equals 56088.",
+                "content": "The result of multiplying 123 by 456 is 56088.",
                 "refusal": null,
                 "annotations": []
               },
@@ -220,8 +224,8 @@ http_interactions:
           ],
           "usage": {
             "prompt_tokens": 79,
-            "completion_tokens": 11,
-            "total_tokens": 90,
+            "completion_tokens": 15,
+            "total_tokens": 94,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
@@ -234,7 +238,7 @@ http_interactions:
             }
           },
           "service_tier": "default",
-          "system_fingerprint": "fp_c37b9b873d"
+          "system_fingerprint": "fp_97e92d7018"
         }
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+  recorded_at: Mon, 08 Jun 2026 18:46:05 GMT
 recorded_with: VCR 6.4.0

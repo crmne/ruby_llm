@@ -13,7 +13,7 @@ http_interactions:
         window to schedule"}},"required":["window"],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -28,7 +28,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 07 May 2026 00:01:18 GMT
+      - Mon, 08 Jun 2026 18:50:48 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -46,11 +46,13 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Access-Control-Expose-Headers:
+      - CF-Ray
+      - CF-Ray
       - X-Request-ID
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '3506'
+      - '3257'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
@@ -79,9 +81,9 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-DcgSwrS8yLtzDDXAMqIzfYRCYEYfA",
+          "id": "chatcmpl-DoZLZARgl5BBlOUbc1kwjCNKFdG2x",
           "object": "chat.completion",
-          "created": 1778112074,
+          "created": 1780944645,
           "model": "gpt-5-nano-2025-08-07",
           "choices": [
             {
@@ -91,7 +93,7 @@ http_interactions:
                 "content": null,
                 "tool_calls": [
                   {
-                    "id": "call_RowTcWM2FNRItjli7WaVRhYq",
+                    "id": "call_wHrhd8yWtGbbEpcfAhGhZmvC",
                     "type": "function",
                     "function": {
                       "name": "object_params",
@@ -123,5 +125,5 @@ http_interactions:
           "service_tier": "default",
           "system_fingerprint": null
         }
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+  recorded_at: Mon, 08 Jun 2026 18:50:48 GMT
 recorded_with: VCR 6.4.0

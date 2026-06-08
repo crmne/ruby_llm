@@ -11,7 +11,7 @@ http_interactions:
         of tags to combine","items":{"type":"string"}}},"required":["tags"],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -26,7 +26,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 07 May 2026 00:00:44 GMT
+      - Mon, 08 Jun 2026 18:50:20 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -44,11 +44,13 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Access-Control-Expose-Headers:
+      - CF-Ray
+      - CF-Ray
       - X-Request-ID
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '3278'
+      - '2039'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
@@ -77,9 +79,9 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-DcgSPFJeVKYxajFOlTDGwmft0dP5L",
+          "id": "chatcmpl-DoZL88YS24A9F1beYmX187BANrepA",
           "object": "chat.completion",
-          "created": 1778112041,
+          "created": 1780944618,
           "model": "gpt-5-nano-2025-08-07",
           "choices": [
             {
@@ -89,7 +91,7 @@ http_interactions:
                 "content": null,
                 "tool_calls": [
                   {
-                    "id": "call_QQEJijIB5GvFElNpK86GDVNg",
+                    "id": "call_DlNc5Dt01yk5FIBYE0pmLZ0S",
                     "type": "function",
                     "function": {
                       "name": "array_params",
@@ -105,14 +107,14 @@ http_interactions:
           ],
           "usage": {
             "prompt_tokens": 150,
-            "completion_tokens": 346,
-            "total_tokens": 496,
+            "completion_tokens": 218,
+            "total_tokens": 368,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
             },
             "completion_tokens_details": {
-              "reasoning_tokens": 320,
+              "reasoning_tokens": 192,
               "audio_tokens": 0,
               "accepted_prediction_tokens": 0,
               "rejected_prediction_tokens": 0
@@ -121,5 +123,5 @@ http_interactions:
           "service_tier": "default",
           "system_fingerprint": null
         }
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+  recorded_at: Mon, 08 Jun 2026 18:50:20 GMT
 recorded_with: VCR 6.4.0

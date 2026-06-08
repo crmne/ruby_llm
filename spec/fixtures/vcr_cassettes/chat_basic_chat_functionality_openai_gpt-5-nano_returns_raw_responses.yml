@@ -9,7 +9,7 @@ http_interactions:
         the capital of France?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 06 May 2026 23:54:40 GMT
+      - Mon, 08 Jun 2026 18:46:50 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -42,11 +42,13 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Access-Control-Expose-Headers:
+      - CF-Ray
+      - CF-Ray
       - X-Request-ID
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '2675'
+      - '1133'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
@@ -75,16 +77,16 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-DcgMXYcBtuFhknZx0gmTXxECjrqP4",
+          "id": "chatcmpl-DoZHlC9nCPtpIdhtRBOKyo0fqC6O0",
           "object": "chat.completion",
-          "created": 1778111677,
+          "created": 1780944409,
           "model": "gpt-5-nano-2025-08-07",
           "choices": [
             {
               "index": 0,
               "message": {
                 "role": "assistant",
-                "content": "Paris",
+                "content": "Paris.",
                 "refusal": null,
                 "annotations": []
               },
@@ -93,14 +95,14 @@ http_interactions:
           ],
           "usage": {
             "prompt_tokens": 13,
-            "completion_tokens": 266,
-            "total_tokens": 279,
+            "completion_tokens": 75,
+            "total_tokens": 88,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
             },
             "completion_tokens_details": {
-              "reasoning_tokens": 256,
+              "reasoning_tokens": 64,
               "audio_tokens": 0,
               "accepted_prediction_tokens": 0,
               "rejected_prediction_tokens": 0
@@ -109,5 +111,5 @@ http_interactions:
           "service_tier": "default",
           "system_fingerprint": null
         }
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+  recorded_at: Mon, 08 Jun 2026 18:46:50 GMT
 recorded_with: VCR 6.4.0
