@@ -16,7 +16,7 @@ module RubyLLM
 
           content = []
 
-          content << Media.format_text(msg.content) unless msg.content.nil? || msg.content.empty?
+          append_formatted_content(content, msg.content) unless msg.content.nil? || msg.content.empty?
 
           msg.tool_calls.each_value do |tool_call|
             content << format_tool_use_block(tool_call)
@@ -42,6 +42,15 @@ module RubyLLM
             name: tool_call.name,
             input: tool_call.arguments
           }
+        end
+
+        def append_formatted_content(content_blocks, content)
+          formatted_content = Media.format_content(content)
+          if formatted_content.is_a?(Array)
+            content_blocks.concat(formatted_content)
+          else
+            content_blocks << formatted_content
+          end
         end
 
         def format_tool_result_block(msg)

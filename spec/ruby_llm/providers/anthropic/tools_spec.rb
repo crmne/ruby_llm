@@ -92,6 +92,26 @@ RSpec.describe RubyLLM::Providers::Anthropic::Tools do
       end
     end
 
+    it 'formats Content attachments before tool calls' do
+      text_path = File.expand_path('../../../fixtures/ruby.txt', __dir__)
+      content = RubyLLM::Content.new('Read this before calling the tool', text_path)
+      msg = instance_double(RubyLLM::Message,
+                            content: content,
+                            tool_calls: {
+                              'tool_123' => instance_double(RubyLLM::ToolCall,
+                                                            id: 'tool_123',
+                                                            name: 'test_tool',
+                                                            arguments: { 'arg1' => 'value1' })
+                            })
+
+      formatted = tools.format_tool_call(msg)
+
+      expect(formatted[:content].first).to eq({ type: 'text', text: 'Read this before calling the tool' })
+      expect(formatted[:content].second).to include(type: 'text')
+      expect(formatted[:content].second[:text]).to include("<file name='ruby.txt' mime_type='text/plain'>")
+      expect(formatted[:content].third).to include(type: 'tool_use', id: 'tool_123')
+    end
+
     it 'formats messages with multiple tool calls correctly' do
       tool_calls = {
         'tool_1' => RubyLLM::ToolCall.new(id: 'tool_1', name: 'dice_roll', arguments: {}),

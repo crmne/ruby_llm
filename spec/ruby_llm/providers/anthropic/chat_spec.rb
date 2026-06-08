@@ -77,6 +77,31 @@ RSpec.describe RubyLLM::Providers::Anthropic::Chat do
     end
   end
 
+  describe '.format_message' do
+    it 'formats Content attachments before tool calls' do
+      text_path = File.expand_path('../../../fixtures/ruby.txt', __dir__)
+      tool_calls = {
+        'tool_123' => RubyLLM::ToolCall.new(
+          id: 'tool_123',
+          name: 'test_tool',
+          arguments: { 'arg1' => 'value1' }
+        )
+      }
+      message = RubyLLM::Message.new(
+        role: :assistant,
+        content: RubyLLM::Content.new('Read this before calling the tool', text_path),
+        tool_calls: tool_calls
+      )
+
+      formatted = described_class.format_message(message)
+
+      expect(formatted[:content].first).to eq({ type: 'text', text: 'Read this before calling the tool' })
+      expect(formatted[:content].second).to include(type: 'text')
+      expect(formatted[:content].second[:text]).to include("<file name='ruby.txt' mime_type='text/plain'>")
+      expect(formatted[:content].third).to include(type: 'tool_use', id: 'tool_123')
+    end
+  end
+
   describe '.render_payload' do
     let(:model) { instance_double(RubyLLM::Model::Info, id: 'claude-sonnet-4-5', max_tokens: nil) }
 

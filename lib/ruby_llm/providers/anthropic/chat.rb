@@ -171,7 +171,7 @@ module RubyLLM
           end
 
           content_blocks = prepend_thinking_block([], msg, thinking_enabled)
-          content_blocks << Media.format_text(msg.content) unless msg.content.nil? || msg.content.empty?
+          append_formatted_content(content_blocks, msg.content) unless msg.content.nil? || msg.content.empty?
 
           msg.tool_calls.each_value do |tool_call|
             content_blocks << {
