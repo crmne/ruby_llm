@@ -8,7 +8,7 @@ http_interactions:
       string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Content-Type:
       - application/x-www-form-urlencoded
       Accept-Encoding:
@@ -20,12 +20,12 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Expires:
-      - Mon, 01 Jan 1990 00:00:00 GMT
-      Date:
-      - Thu, 07 May 2026 00:00:47 GMT
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
+      Date:
+      - Mon, 08 Jun 2026 17:09:21 GMT
+      Expires:
+      - Mon, 01 Jan 1990 00:00:00 GMT
       Pragma:
       - no-cache
       Content-Type:
@@ -56,7 +56,7 @@ http_interactions:
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+  recorded_at: Mon, 08 Jun 2026 17:09:21 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -68,7 +68,7 @@ http_interactions:
         of tags to combine","items":{"type":"STRING"}}},"required":["tags"]}}]}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -89,7 +89,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Thu, 07 May 2026 00:00:48 GMT
+      - Mon, 08 Jun 2026 17:09:25 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -121,18 +121,18 @@ http_interactions:
                         ]
                       }
                     },
-                    "thoughtSignature": "CokCAY89a19+CFAz/Be89w5CH+1hX4M4ALOyCMnLEX5x00gBlJylT5yvGTa41PgOLx5vV9o4GjEFZ9ia6eHIg9VvSaf7oCw8gmI4g3kW1wZrl+mD8dB9pyFRmM0fi3AqAAGK/wm6Koq5JsRQ31qqEWLHQzN0zGUEb9YoLRaZPzMKZyM2Ch6R9KAqNYh2n56EA5FYQQmV2oGlekwsBTUi8hPAv0QvaVxurIn2RLHFmTi8mBJjrh8Cx+pUiaVUPhVIpTIrWX0V4Igwb78DiKLOdHJ8fm6cdCY6PkR0E6auxRCe8p9J+haQmQ+B4qmd6aRA9/37zY4S6YuwjCdQ3ZMDQdAPEsAGRD8lgHhXlA=="
+                    "thoughtSignature": "CswCAY89a1+qgmdpB6eR9ENNFVSGg/ZI5GCZkMRzMrpGeMs4rs2GXGNzfwdKj5tlu01X6l9/2qdnL0F+rSh0uV+8sg+mJZ2NImoBL0kW7oVxarS7XK7sgjqW6HG7+89fBk9uGZrw+Ylq1XmvAKKFKbGXOAlSMUlZaNZGxUqeur2bjwQvzmFra2zPKh97LywY2hWhkfRXE3aDs5g10YIA26nuLVafaKWACX60FUzqphJw9IwlJXXIIUQxw9x14VgJ0/8/VmFJRWZJQTLWGV2gT1Ye0WG37WQZD08ABJAtdickOBqXCA+YFBucYtS7z9Lx3c2ciuK0zxKkVQ+Yimg38PGWvRK/Ayv7atkNjWUHMQj13HT+2Tw2shHQ/HklOtYYMn08clhiqFZYTw/dfZHx/ojhLPsCaE8RVxr1Wid/8n+Q17rZ5WDRhAJazYmFRJg="
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -3.1953385670979819
+              "avgLogprobs": -1.7578107515970867
             }
           ],
           "usageMetadata": {
             "promptTokenCount": 37,
             "candidatesTokenCount": 6,
-            "totalTokenCount": 99,
+            "totalTokenCount": 119,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -146,11 +146,11 @@ http_interactions:
                 "tokenCount": 6
               }
             ],
-            "thoughtsTokenCount": 56
+            "thoughtsTokenCount": 76
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-05-07T00:00:47.302685Z",
-          "responseId": "L9b7ad28Ermtz_IP3c-IiA4"
+          "createTime": "2026-06-08T17:09:21.763278Z",
+          "responseId": "Qfcmao7LLsKC6dgPvOHBmQ8"
         }
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+  recorded_at: Mon, 08 Jun 2026 17:09:25 GMT
 recorded_with: VCR 6.4.0

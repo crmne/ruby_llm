@@ -9,11 +9,14 @@ RSpec.describe RubyLLM::Configuration do
     it 'applies core default values' do
       expect(config.model_registry_class).to eq('Model')
       expect(config.use_new_acts_as).to be(false)
+      expect(config.model_registry_source).to be_nil
       expect(config.request_timeout).to eq(300)
       expect(config.max_retries).to eq(3)
       expect(config.retry_interval).to eq(0.1)
       expect(config.retry_backoff_factor).to eq(2)
       expect(config.retry_interval_randomness).to eq(0.5)
+      expect(config.deprecation_behavior).to eq(:warn)
+      expect(config.faraday_adapter).to eq(:net_http)
     end
 
     it 'exposes a discoverable options API' do
@@ -21,8 +24,28 @@ RSpec.describe RubyLLM::Configuration do
         :request_timeout,
         :default_model,
         :model_registry_file,
+        :use_new_acts_as,
         :openai_api_key,
         :openrouter_api_base
+      )
+    end
+
+    it 'keeps use_new_acts_as as the canonical acts_as API selector' do
+      config.use_new_acts_as = true
+
+      expect(config.use_new_acts_as).to be(true)
+    end
+
+    it 'warns but preserves log_regexp_timeout when regexp timeouts are unsupported' do
+      allow(Regexp).to receive(:respond_to?).and_call_original
+      allow(Regexp).to receive(:respond_to?).with(:timeout).and_return(false)
+      allow(RubyLLM.logger).to receive(:warn)
+
+      config.log_regexp_timeout = 5.0
+
+      expect(config.log_regexp_timeout).to eq(5.0)
+      expect(RubyLLM.logger).to have_received(:warn).with(
+        "log_regexp_timeout is not supported on Ruby #{RUBY_VERSION}"
       )
     end
   end

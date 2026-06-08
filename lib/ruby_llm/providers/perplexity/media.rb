@@ -48,8 +48,6 @@ module RubyLLM
         end
 
         def format_text_attachment(attachment)
-          return format_document(attachment) if supported_file?(attachment)
-
           OpenAI::Media.format_text_file(attachment)
         end
 

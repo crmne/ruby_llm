@@ -31,6 +31,7 @@ RSpec.describe RubyLLM::Chat do
         model = 'gpt-4.1-nano' if provider == :openai # gpt-5 sets temperature to 1.0
         skip 'Perplexity reports different token counts for streaming vs non-streaming' if provider == :perplexity
         skip 'Azure reports different token counts for streaming vs non-streaming' if provider == :azure
+        skip 'xAI reports different token counts for streaming vs non-streaming' if provider == :xai
 
         chat = RubyLLM.chat(model: model, provider: provider).with_temperature(0.0)
         chunks = []

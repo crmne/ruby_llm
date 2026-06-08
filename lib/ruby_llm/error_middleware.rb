@@ -1,0 +1,80 @@
+# frozen_string_literal: true
+
+require 'faraday'
+require 'ruby_llm/error'
+
+module RubyLLM
+  # Faraday middleware that maps provider-specific API errors to RubyLLM errors.
+  class ErrorMiddleware < Faraday::Middleware
+    def initialize(app, options = {})
+      super(app)
+      @provider = options[:provider]
+    end
+
+    def call(env)
+      @app.call(env).on_complete do |response|
+        self.class.parse_error(provider: @provider, response: response)
+      end
+    end
+
+    class << self
+      CONTEXT_LENGTH_PATTERNS = [
+        /context length/i,
+        /context window/i,
+        /maximum context/i,
+        /request too large/i,
+        /too many tokens/i,
+        /token count exceeds/i,
+        /input[_\s-]?token/i,
+        /input or output tokens? must be reduced/i,
+        /reduce the length of messages/i
+      ].freeze
+
+      def parse_error(provider:, response:) # rubocop:disable Metrics/PerceivedComplexity
+        message = provider&.parse_error(response)
+
+        case response.status
+        when 200..399
+          message
+        when 400
+          if context_length_exceeded?(message)
+            raise ContextLengthExceededError.new(response, message || 'Context length exceeded')
+          end
+
+          raise BadRequestError.new(response, message || 'Invalid request - please check your input')
+        when 401
+          raise UnauthorizedError.new(response, message || 'Invalid API key - check your credentials')
+        when 402
+          raise PaymentRequiredError.new(response, message || 'Payment required - please top up your account')
+        when 403
+          raise ForbiddenError.new(response,
+                                   message || 'Forbidden - you do not have permission to access this resource')
+        when 429
+          if context_length_exceeded?(message)
+            raise ContextLengthExceededError.new(response, message || 'Context length exceeded')
+          end
+
+          raise RateLimitError.new(response, message || 'Rate limit exceeded - please wait a moment')
+        when 500
+          raise ServerError.new(response, message || 'API server error - please try again')
+        when 502..504
+          raise ServiceUnavailableError.new(response, message || 'API server unavailable - please try again later')
+        when 529
+          raise OverloadedError.new(response, message || 'Service overloaded - please try again later')
+        else
+          raise Error.new(response, message || 'An unknown error occurred')
+        end
+      end
+
+      private
+
+      def context_length_exceeded?(message)
+        return false if message.to_s.empty?
+
+        CONTEXT_LENGTH_PATTERNS.any? { |pattern| message.match?(pattern) }
+      end
+    end
+  end
+end
+
+Faraday::Middleware.register_middleware(llm_errors: RubyLLM::ErrorMiddleware)

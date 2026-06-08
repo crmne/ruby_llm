@@ -10,7 +10,7 @@
   align-items: center;
   flex-wrap: wrap;
   gap: 1em;
-  margin-bottom: 1em;
+  margin: 1.5rem 0 1rem;
 }
 
 .provider-logo {
@@ -36,6 +36,69 @@
   align-items: center;
   flex-wrap: wrap;
   gap: 0.2em;
+}
+
+.hero-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin: 1.25rem 0 1rem;
+}
+
+.hero-actions .btn {
+  margin: 0;
+}
+
+.proof-strip {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.55rem 0.9rem;
+  margin: 1rem 0 1.75rem;
+  color: rgba(20, 20, 20, 0.7);
+  font-size: 0.9rem;
+  line-height: 1.2;
+}
+
+.proof-strip .badge-container {
+  margin: 0;
+}
+
+.proof-strip img {
+  display: block;
+}
+
+.trendshift-badge img {
+  width: 160px;
+  height: auto;
+}
+
+.partner-proof {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin: -0.25rem 0 1.75rem;
+  color: rgba(20, 20, 20, 0.7);
+  font-size: 1rem;
+  line-height: 1.3;
+}
+
+.partner-proof .chatwithwork-logo {
+  height: 1.45em;
+  vertical-align: middle;
+}
+
+.partner-proof em {
+  font-size: 0.9em;
+  opacity: 0.8;
+}
+
+.demo-video {
+  width: 100%;
+  border-radius: 8px;
+  margin-bottom: 1rem;
 }
 
 .main-content {
@@ -81,6 +144,14 @@
 }
 
 @media (prefers-color-scheme: dark) {
+  .proof-strip {
+    color: rgba(255, 255, 255, 0.72);
+  }
+
+  .partner-proof {
+    color: rgba(255, 255, 255, 0.72);
+  }
+
   .page-copy-button {
     border-color: rgba(255, 255, 255, 0.25);
     color: rgba(255, 255, 255, 0.9);
@@ -121,9 +192,6 @@
   .provider-logo img[src*="/openai.svg"],
   .provider-logo img[src*="/xai.svg"],
   .provider-logo img[src*="/openrouter.svg"],
-  .chatwithwork-logo {
-    filter: invert(1);
-  }
 
   // Switch to dark mode logo in sidebar
   .site-logo {

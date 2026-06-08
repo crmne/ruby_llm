@@ -21,21 +21,16 @@ RSpec.describe RubyLLM::Providers::Bedrock::Media do
       )
     end
 
-    it 'uses Bedrock document blocks for supported text file formats' do
-      content = RubyLLM::Content.new('Summarize this file')
-      content.add_attachment(StringIO.new('notes'), filename: 'notes.txt')
+    it 'keeps text file formats as text blocks' do
+      %w[csv txt md html json].each do |extension|
+        content = RubyLLM::Content.new('Summarize this file')
+        content.add_attachment(StringIO.new('notes'), filename: "notes.#{extension}")
 
-      rendered = described_class.render_content(content)
+        rendered = described_class.render_content(content)
+        attachment = content.attachments.first
 
-      expect(rendered.second).to eq(
-        document: {
-          format: 'txt',
-          name: 'notes',
-          source: {
-            bytes: Base64.strict_encode64('notes')
-          }
-        }
-      )
+        expect(rendered.second).to eq(text: attachment.for_llm)
+      end
     end
 
     it 'raises an actionable error for document formats Bedrock does not accept' do

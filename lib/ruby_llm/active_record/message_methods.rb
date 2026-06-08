@@ -122,11 +122,78 @@ module RubyLLM
         RubyLLM::Content.new(content_value).tap do |content_obj|
           @_tempfiles = []
 
-          attachments.each do |attachment|
-            tempfile = download_attachment(attachment)
-            content_obj.add_attachment(tempfile, filename: attachment.filename.to_s)
+          attachment_sources.each do |attachment, attachable|
+            add_attachment_to_content(content_obj, attachment, attachable)
           end
         end
+      end
+
+      def attachment_sources
+        change = pending_attachment_change
+        return attachments.map { |attachment| [attachment, nil] } unless pending_attachment_change?(change)
+
+        change.attachments.zip(change.attachables)
+      end
+
+      def pending_attachment_change
+        attachment_changes['attachments'] if respond_to?(:attachment_changes)
+      end
+
+      def pending_attachment_change?(change)
+        change.respond_to?(:attachments) && change.respond_to?(:attachables)
+      end
+
+      def add_attachment_to_content(content_obj, attachment, attachable)
+        if pending_upload_attachable?(attachable)
+          add_pending_upload_attachment(content_obj, attachable)
+        else
+          tempfile = download_attachment(attachment)
+          content_obj.add_attachment(tempfile, filename: attachment.filename.to_s)
+        end
+      end
+
+      def pending_upload_attachable?(attachable)
+        return false if attachable.nil? || attachable.is_a?(String)
+        return false if instance_of_class?(attachable, 'ActiveStorage::Blob')
+
+        uploaded_file?(attachable) || active_storage_upload_hash?(attachable) ||
+          attachable.is_a?(File) || pathname?(attachable)
+      end
+
+      def uploaded_file?(attachable)
+        instance_of_class?(attachable, 'ActionDispatch::Http::UploadedFile') ||
+          instance_of_class?(attachable, 'Rack::Test::UploadedFile')
+      end
+
+      def active_storage_upload_hash?(attachable)
+        attachable.is_a?(Hash) && attachment_hash_io(attachable).present?
+      end
+
+      def pathname?(attachable)
+        defined?(Pathname) && attachable.is_a?(Pathname)
+      end
+
+      def add_pending_upload_attachment(content_obj, attachable)
+        if attachable.is_a?(Hash)
+          content_obj.add_attachment(attachment_hash_io(attachable), filename: attachment_hash_filename(attachable))
+        else
+          content_obj.add_attachment(attachable)
+        end
+      end
+
+      def attachment_hash_io(attachable)
+        attachable[:io] || attachable['io']
+      end
+
+      def attachment_hash_filename(attachable)
+        filename = attachable[:filename] || attachable['filename']
+        filename&.to_s
+      end
+
+      def instance_of_class?(object, class_name)
+        Object.const_get(class_name).then { |klass| object.is_a?(klass) }
+      rescue NameError
+        false
       end
 
       def download_attachment(attachment)

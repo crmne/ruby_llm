@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Upgrading
-nav_order: 6
+nav_order: 7
 description: Upgrade guides for changes in data formats
 redirect_from:
   - /upgrading-to-1-7
@@ -187,6 +187,14 @@ Your existing 1.6 app continues working without any changes. You'll see a deprec
 
 ```
 !!! RubyLLM's legacy acts_as API is deprecated and will be removed in RubyLLM 2.0.0.
+```
+
+You can silence or raise RubyLLM deprecations while upgrading:
+
+```ruby
+RubyLLM.configure do |config|
+  config.deprecation_behavior = :silence # or :raise
+end
 ```
 
 ## What's New in 1.7

@@ -24,7 +24,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
     expect(messages_helper).not_to include('def llm_model_info(model)')
   end
 
-  def expect_generated_view_set(
+  def expect_generated_view_set( # rubocop:disable Metrics/AbcSize
     base_path:,
     chats_target:,
     form_partial_path:,

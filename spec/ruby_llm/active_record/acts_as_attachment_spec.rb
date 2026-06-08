@@ -90,6 +90,33 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       expect(response.content).to be_present
     end
 
+    it 'uses the original upload for ask with attachments inside a transaction' do
+      chat = Chat.create!(model: model)
+      captured_messages = nil
+
+      allow_any_instance_of(RubyLLM::Providers::OpenAI).to receive(:complete) do |_provider, messages, **| # rubocop:disable RSpec/AnyInstance
+        captured_messages = messages
+        RubyLLM::Message.new(role: :assistant, content: 'I can see it')
+      end
+      allow_any_instance_of(ActiveStorage::Attachment).to receive(:download) # rubocop:disable RSpec/AnyInstance
+        .and_raise(ActiveStorage::FileNotFoundError)
+
+      image_upload = uploaded_file(image_path, 'image/png')
+
+      response = nil
+      Chat.transaction do
+        response = chat.ask('What do you see?', with: image_upload)
+      end
+
+      user_message = chat.messages.find_by(role: 'user')
+      llm_user_message = captured_messages.find { |message| message.role == :user }
+
+      expect(user_message.attachments.count).to eq(1)
+      expect(llm_user_message.content.attachments.first.filename).to eq(image_upload.original_filename)
+      expect(llm_user_message.content.attachments.first.content).to eq(File.binread(image_path))
+      expect(response.content).to eq('I can see it')
+    end
+
     it 'ignores leading blank multipart attachment entries for create_user_message' do
       chat = Chat.create!(model: model)
       image_upload = uploaded_file(image_path, 'image/png')

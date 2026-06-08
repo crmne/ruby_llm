@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'base64'
 require 'pathname'
 require 'uri'
 
@@ -10,6 +11,12 @@ module RubyLLM
 
     DOCUMENT_EXTENSIONS = %w[
       doc docx dot key numbers odp ods odt pages pot pps ppt pptx rtf xls xlsx
+    ].freeze
+    ACTIVE_STORAGE_CLASS_NAMES = %w[
+      ActiveStorage::Blob
+      ActiveStorage::Attachment
+      ActiveStorage::Attached::One
+      ActiveStorage::Attached::Many
     ].freeze
 
     def initialize(source, filename: nil)
@@ -33,12 +40,7 @@ module RubyLLM
     end
 
     def active_storage?
-      return false unless defined?(ActiveStorage)
-
-      @source.is_a?(ActiveStorage::Blob) ||
-        @source.is_a?(ActiveStorage::Attachment) ||
-        @source.is_a?(ActiveStorage::Attached::One) ||
-        @source.is_a?(ActiveStorage::Attached::Many)
+      ACTIVE_STORAGE_CLASS_NAMES.any? { |class_name| source_is_a?(class_name) }
     end
 
     def content
@@ -163,8 +165,6 @@ module RubyLLM
     end
 
     def load_content_from_active_storage
-      return unless defined?(ActiveStorage)
-
       @content = active_storage_blob&.download
     end
 
@@ -201,23 +201,24 @@ module RubyLLM
     end
 
     def extract_filename_from_active_storage
-      return 'attachment' unless defined?(ActiveStorage)
-
       active_storage_blob&.filename&.to_s || 'attachment'
     end
 
     def active_storage_content_type
-      return unless defined?(ActiveStorage)
-
       active_storage_blob&.content_type
     end
 
     def active_storage_blob
-      case @source
-      when ActiveStorage::Blob then @source
-      when ActiveStorage::Attachment, ActiveStorage::Attached::One then @source.blob
-      when ActiveStorage::Attached::Many then @source.blobs.first
-      end
+      return @source if source_is_a?('ActiveStorage::Blob')
+      return @source.blob if source_is_a?('ActiveStorage::Attachment')
+      return @source.blob if source_is_a?('ActiveStorage::Attached::One')
+
+      @source.blobs.first if source_is_a?('ActiveStorage::Attached::Many')
+    end
+
+    def source_is_a?(class_name)
+      klass = RubyLLM::Utils.safe_constantize(class_name)
+      klass ? @source.is_a?(klass) : false
     end
   end
 end

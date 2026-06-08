@@ -125,6 +125,7 @@ module RubyLLM
         record
       end
 
+      # Mutates persisted instructions on the configured chat record.
       def sync_instructions!(chat_or_id, **kwargs)
         raise ArgumentError, 'chat_model must be configured to use sync_instructions!' unless resolved_chat_model
 

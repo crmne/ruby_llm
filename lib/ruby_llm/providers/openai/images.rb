@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require 'faraday'
+require 'stringio'
+
 module RubyLLM
   module Providers
     class OpenAI

@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require 'json'
+require 'securerandom'
+
 module RubyLLM
   # Assembles streaming responses from LLMs into complete messages.
   class StreamAccumulator

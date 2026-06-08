@@ -36,4 +36,28 @@ RSpec.describe RubyLLM::Providers::VertexAI do
       end
     end
   end
+
+  describe '#render_payload' do
+    let(:location) { 'us-central1' }
+
+    it 'formats tool responses with a Vertex AI content role' do
+      model = instance_double(RubyLLM::Model::Info, id: 'gemini-3.1-flash-lite-preview')
+      messages = [
+        RubyLLM::Message.new(role: :user, content: 'What is the weather?'),
+        RubyLLM::Message.new(
+          role: :assistant,
+          content: '',
+          tool_calls: {
+            'call_1' => RubyLLM::ToolCall.new(id: 'call_1', name: 'weather', arguments: {})
+          }
+        ),
+        RubyLLM::Message.new(role: :tool, content: 'Sunny', tool_call_id: 'call_1')
+      ]
+
+      payload = provider.send(:render_payload, messages, tools: {}, temperature: nil, model:)
+
+      expect(payload.dig(:contents, 2, :role)).to eq('user')
+      expect(payload.dig(:contents, 2, :parts, 0, :functionResponse, :name)).to eq('weather')
+    end
+  end
 end

@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require 'date'
+require 'json'
+
 module RubyLLM
   # Registry of available AI models and their capabilities.
   class Models
@@ -14,8 +17,12 @@ module RubyLLM
       'deepseek' => 'deepseek',
       'mistral' => 'mistral',
       'openrouter' => 'openrouter',
-      'perplexity' => 'perplexity'
+      'perplexity' => 'perplexity',
+      'xai' => 'xai'
     }.freeze
+    MODELS_DEV_INPUT_MODALITIES = %w[text image audio pdf video file].freeze
+    MODELS_DEV_OUTPUT_MODALITIES = %w[text image audio video embeddings moderation].freeze
+    MODELS_DEV_AUTHORITY_CAPABILITIES = %w[function_calling structured_output reasoning vision].freeze
     PROVIDER_PREFERENCE = %w[
       openai
       anthropic
@@ -31,8 +38,32 @@ module RubyLLM
       ollama
       gpustack
     ].freeze
+    INSTANCE_DELEGATES = (Enumerable.instance_methods(false) + %i[
+      all
+      each
+      find
+      chat_models
+      embedding_models
+      audio_models
+      image_models
+      by_family
+      by_provider
+      load_from_json!
+      load_from_database!
+      save_to_json
+    ]).uniq.freeze
 
     class << self
+      INSTANCE_DELEGATES.each do |method_name|
+        define_method(method_name) do |*args, **kwargs, &block|
+          if kwargs.empty?
+            instance.public_send(method_name, *args, &block)
+          else
+            instance.public_send(method_name, *args, **kwargs, &block)
+          end
+        end
+      end
+
       def instance
         @instance ||= new
       end
@@ -42,6 +73,14 @@ module RubyLLM
       end
 
       def load_models(file = RubyLLM.config.model_registry_file)
+        source = RubyLLM.config.model_registry_source
+        if source && file == RubyLLM.config.model_registry_file
+          models = source.read
+          return models if models.any?
+
+          RubyLLM.logger.debug { 'Model registry source is empty, falling back to JSON registry' }
+        end
+
         read_from_json(file)
       end
 
@@ -53,17 +92,26 @@ module RubyLLM
         []
       end
 
+      def read_from_database
+        ModelRegistry::ActiveRecordSource.new.read
+      end
+
       def refresh!(remote_only: false)
-        existing_models = load_existing_models
+        # Replaces the process-wide model registry. Call save_to_json when the
+        # refreshed registry should also be persisted.
+        RubyLLM.instrument('models.refresh.ruby_llm', remote_only:) do |payload|
+          existing_models = load_existing_models
 
-        provider_fetch = fetch_provider_models(remote_only: remote_only)
-        log_provider_fetch(provider_fetch)
+          provider_fetch = fetch_provider_models(remote_only: remote_only)
+          log_provider_fetch(provider_fetch)
 
-        models_dev_fetch = fetch_models_dev_models(existing_models)
-        log_models_dev_fetch(models_dev_fetch)
+          models_dev_fetch = fetch_models_dev_models(existing_models)
+          log_models_dev_fetch(models_dev_fetch)
 
-        merged_models = merge_with_existing(existing_models, provider_fetch, models_dev_fetch)
-        @instance = new(merged_models)
+          merged_models = merge_with_existing(existing_models, provider_fetch, models_dev_fetch)
+          payload[:model_count] = merged_models.size
+          @instance = new(merged_models)
+        end
       end
 
       def fetch_provider_models(remote_only: true) # rubocop:disable Metrics/PerceivedComplexity
@@ -115,7 +163,7 @@ module RubyLLM
         if assume_exists
           raise ArgumentError, 'Provider must be specified if assume_exists is true' unless provider
 
-          provider_class ||= raise(Error, "Unknown provider: #{provider.to_sym}")
+          provider_class ||= raise_unknown_provider(provider)
           provider_instance = provider_class.new(config)
 
           model = if provider_instance.local?
@@ -129,23 +177,10 @@ module RubyLLM
           model ||= Model::Info.default(model_id, provider_instance.slug)
         else
           model = Models.find model_id, provider
-          provider_class = Provider.providers[model.provider.to_sym] || raise(Error,
-                                                                              "Unknown provider: #{model.provider}")
+          provider_class = Provider.providers[model.provider.to_sym] || raise_unknown_provider(model.provider)
           provider_instance = provider_class.new(config)
         end
         [model, provider_instance]
-      end
-
-      def method_missing(method, ...)
-        if instance.respond_to?(method)
-          instance.send(method, ...)
-        else
-          super
-        end
-      end
-
-      def respond_to_missing?(method, include_private = false)
-        instance.respond_to?(method, include_private) || super
       end
 
       def fetch_models_dev_models(existing_models) # rubocop:disable Metrics/PerceivedComplexity
@@ -179,6 +214,11 @@ module RubyLLM
         existing_models = instance&.all
         existing_models = read_from_json if existing_models.nil? || existing_models.empty?
         existing_models
+      end
+
+      def raise_unknown_provider(provider)
+        available = Provider.providers.keys.join(', ')
+        raise Error, "Unknown provider: #{provider.inspect}. Available providers: #{available}"
       end
 
       def log_provider_fetch(provider_fetch)
@@ -288,7 +328,8 @@ module RubyLLM
         data[:modalities] = provider_model.modalities.to_h if blank_value?(data[:modalities])
         data[:pricing] = provider_model.pricing.to_h if blank_value?(data[:pricing])
         data[:metadata] = provider_model.metadata.merge(data[:metadata] || {})
-        data[:capabilities] = (models_dev_model.capabilities + provider_model.capabilities).uniq
+        provider_capabilities = provider_model.capabilities - MODELS_DEV_AUTHORITY_CAPABILITIES
+        data[:capabilities] = (models_dev_model.capabilities + provider_capabilities).uniq
         normalize_embedding_modalities(data)
         Model::Info.new(data)
       end
@@ -327,7 +368,7 @@ module RubyLLM
           name: model_data[:name] || model_data[:id],
           provider: provider_slug,
           family: model_data[:family],
-          created_at: created_date ? "#{created_date} 00:00:00 UTC" : nil,
+          created_at: Utils.iso_date_prefix_to_utc_midnight_string(created_date),
           context_window: model_data.dig(:limit, :context),
           max_output_tokens: model_data.dig(:limit, :output),
           knowledge_cutoff: normalize_models_dev_knowledge(model_data[:knowledge]),
@@ -345,7 +386,7 @@ module RubyLLM
         capabilities = []
         capabilities << 'function_calling' if model_data[:tool_call]
         capabilities << 'structured_output' if model_data[:structured_output]
-        capabilities << 'reasoning' if model_data[:reasoning]
+        capabilities << 'reasoning' if model_data[:reasoning] || model_data[:reasoning_options]
         capabilities << 'vision' if modalities[:input].intersect?(%w[image video pdf])
         capabilities.uniq
       end
@@ -382,6 +423,7 @@ module RubyLLM
           last_updated: model_data[:last_updated],
           status: model_data[:status],
           interleaved: model_data[:interleaved],
+          reasoning_options: model_data[:reasoning_options],
           cost: model_data[:cost],
           limit: model_data[:limit],
           knowledge: model_data[:knowledge]
@@ -393,8 +435,8 @@ module RubyLLM
         normalized = { input: [], output: [] }
         return normalized unless modalities
 
-        normalized[:input] = Array(modalities[:input]).compact
-        normalized[:output] = Array(modalities[:output]).compact
+        normalized[:input] = Array(modalities[:input]).compact & MODELS_DEV_INPUT_MODALITIES
+        normalized[:output] = Array(modalities[:output]).compact & MODELS_DEV_OUTPUT_MODALITIES
         normalized
       end
 
@@ -412,10 +454,19 @@ module RubyLLM
       @models = self.class.filter_models(models || self.class.load_models)
     end
 
+    # Replaces this registry instance with models loaded from JSON.
     def load_from_json!(file = RubyLLM.config.model_registry_file)
       @models = self.class.read_from_json(file)
     end
 
+    # Replaces this registry instance with models loaded from the configured
+    # ActiveRecord model class.
+    def load_from_database!
+      @models = self.class.read_from_database
+    end
+
+    # Persists this registry instance to JSON without changing the global
+    # RubyLLM.models instance.
     def save_to_json(file = RubyLLM.config.model_registry_file)
       File.write(file, JSON.pretty_generate(all.map(&:to_h)))
     end
@@ -475,7 +526,7 @@ module RubyLLM
       resolved_id = resolve_bedrock_region_id(resolved_id) if provider.to_s == 'bedrock'
       all.find { |m| m.id == resolved_id && m.provider == provider.to_s } ||
         all.find { |m| m.id == model_id && m.provider == provider.to_s } ||
-        raise(ModelNotFoundError, "Unknown model: #{model_id} for provider: #{provider}")
+        raise_model_not_found(model_id, provider: provider)
     end
 
     def resolve_bedrock_region_id(model_id)
@@ -500,7 +551,21 @@ module RubyLLM
       alias_matches = all.select { |m| m.id == resolved_id }
       return preferred_match(alias_matches) if alias_matches.any?
 
-      raise(ModelNotFoundError, "Unknown model: #{model_id}")
+      raise_model_not_found(model_id)
+    end
+
+    def raise_model_not_found(model_id, provider: nil)
+      message = "Unknown model: #{model_id.inspect}"
+      message = "#{message} for provider: #{provider.inspect}" if provider
+
+      raise ModelNotFoundError, "#{message}. #{refresh_registry_guidance}"
+    end
+
+    def refresh_registry_guidance
+      rails_model = RubyLLM.config.model_registry_class
+      'If the model exists at the provider, refresh the registry with `RubyLLM.models.refresh!` ' \
+        'and persist it with `RubyLLM.models.save_to_json`. ' \
+        "Rails model registries can call `#{rails_model}.refresh!` instead."
     end
 
     def preferred_match(candidates)

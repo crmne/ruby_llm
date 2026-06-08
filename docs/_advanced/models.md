@@ -2,7 +2,7 @@
 layout: default
 title: Model Registry
 nav_order: 4
-description: Access hundreds of AI models from all major providers with one simple API
+description: Access hundreds of AI models from all major AI providers with one Ruby framework
 redirect_from:
   - /guides/models
 ---

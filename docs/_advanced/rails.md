@@ -293,6 +293,14 @@ RubyLLM.configure do |config|
 end
 ```
 
+### Instrumentation
+{: .d-inline-block }
+
+v1.16.0+
+{: .label .label-green }
+
+Rails apps automatically emit RubyLLM events through `ActiveSupport::Notifications`. See [Instrumentation]({% link _advanced/instrumentation.md %}) for events, payloads, and non-Rails instrumenters.
+
 ### Fiber-Safe ActiveRecord Connections for Async/Fiber Workloads
 {: .d-inline-block }
 
@@ -573,9 +581,9 @@ When using the Model registry (created by default by the generator), your chats 
 ```ruby
 # String automatically resolves to Model record
 chat = Chat.create!(model: '{{ site.models.openai_standard }}')
-chat.model # => #<Model model_id: "gpt-4o", provider: "openai">
-chat.model.name # => "GPT-4"
-chat.model.context_window # => 128000
+chat.model # => #<Model model_id: "{{ site.models.openai_standard }}", provider: "openai">
+chat.model.name # => "GPT-5.4"
+chat.model.context_window # => 1050000
 chat.model.supports_vision # => true
 
 # Populate/refresh models from models.json (v1.13+)

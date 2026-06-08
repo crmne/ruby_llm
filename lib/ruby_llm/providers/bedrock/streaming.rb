@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 
+require 'base64'
+require 'faraday'
+require 'json'
+
 module RubyLLM
   module Providers
     class Bedrock
@@ -224,6 +228,7 @@ module RubyLLM
 
           reasoning_text = reasoning_content['reasoningText'] || {}
           return reasoning_text['text'] if reasoning_text['text']
+          return reasoning_content['text'] if reasoning_content['text']
           return event.dig('delta', 'thinking') if event.dig('delta', 'type') == 'thinking_delta'
 
           nil
@@ -244,6 +249,7 @@ module RubyLLM
           reasoning_content = delta['reasoningContent'] || {}
           reasoning_text = reasoning_content['reasoningText'] || {}
           return reasoning_text['signature'] if reasoning_text['signature']
+          return reasoning_content['signature'] if reasoning_content['signature']
           return event.dig('delta', 'signature') if event.dig('delta', 'type') == 'signature_delta'
 
           nil

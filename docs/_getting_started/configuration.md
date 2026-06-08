@@ -416,7 +416,7 @@ end
 
 ### Initializer Load Timing Issue with `use_new_acts_as`
 
-**Important**: If you're using `use_new_acts_as = true` (from upgrading to 1.7+), you **cannot** set it in an initializer. Rails loads models before initializers run, so the legacy `acts_as` module will already be included by the time your initializer executes.
+**Important**: If you're using `config.use_new_acts_as = true` (from upgrading to 1.7+), you **cannot** set it in an initializer. Rails loads models before initializers run, so the legacy `acts_as` module will already be included by the time your initializer executes.
 
 Instead, configure it in `config/application.rb` **before** the `Application` class:
 
@@ -524,16 +524,19 @@ RubyLLM.configure do |config|
   config.retry_backoff_factor = Integer
   config.retry_interval_randomness = Float
   config.http_proxy = String
+  config.faraday_adapter = Symbol # Defaults to :net_http
 
   # Logging
   config.logger = Logger
+  config.instrumenter = Object # Responds to instrument(name, payload) { ... }
+  config.deprecation_behavior = :warn # :warn, :silence, or :raise
   config.log_file = String
   config.log_level = Symbol
   config.log_stream_debug = Boolean
   config.log_regexp_timeout = Numeric  # v1.13.0+ (Ruby 3.2+ support)
 
   # Rails integration
-  config.use_new_acts_as = Boolean
+  config.use_new_acts_as = true or false
 end
 ```
 

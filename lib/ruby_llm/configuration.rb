@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'logger'
+
 module RubyLLM
   # Global configuration for RubyLLM
   class Configuration
@@ -9,7 +11,8 @@ module RubyLLM
         key = key.to_sym
         return if options.include?(key)
 
-        send(:attr_accessor, key)
+        attr_accessor key
+
         option_keys << key
         defaults[key] = default
       end
@@ -42,6 +45,7 @@ module RubyLLM
     option :model_registry_class, 'Model'
 
     option :use_new_acts_as, false
+    option :model_registry_source, nil
 
     option :request_timeout, 300
     option :max_retries, 3
@@ -51,6 +55,9 @@ module RubyLLM
     option :http_proxy, nil
 
     option :logger, nil
+    option :instrumenter, nil
+    option :deprecation_behavior, :warn
+    option :faraday_adapter, :net_http
     option :log_file, -> { $stdout }
     option :log_level, -> { ENV['RUBYLLM_DEBUG'] ? Logger::DEBUG : Logger::INFO }
     option :log_stream_debug, -> { ENV['RUBYLLM_STREAM_DEBUG'] == 'true' }

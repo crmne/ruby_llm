@@ -2,8 +2,18 @@
 
 module RubyLLM
   module Model
-    # A dynamic class for storing non-zero pricing values with flexible attribute access
+    # Stores non-zero pricing values for a single pricing tier.
     class PricingTier
+      ATTRIBUTES = %i[
+        input_per_million
+        output_per_million
+        cache_read_input_per_million
+        cache_write_input_per_million
+        cached_input_per_million
+        cache_creation_input_per_million
+        reasoning_output_per_million
+      ].freeze
+
       def initialize(data = {})
         @values = {}
 
@@ -12,17 +22,18 @@ module RubyLLM
         end
       end
 
-      def method_missing(method, *args)
-        if method.to_s.end_with?('=')
-          key = method.to_s.chomp('=').to_sym
-          @values[key] = args.first if args.first && args.first != 0.0
-        elsif @values.key?(method)
-          @values[method]
+      ATTRIBUTES.each do |attribute|
+        define_method(attribute) do
+          @values[attribute]
+        end
+
+        define_method("#{attribute}=") do |value|
+          @values[attribute] = value if value && value != 0.0
         end
       end
 
-      def respond_to_missing?(method, include_private = false)
-        method.to_s.end_with?('=') || @values.key?(method.to_sym) || super
+      def [](key)
+        @values[key.to_sym]
       end
 
       def to_h

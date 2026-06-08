@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require 'base64'
+require 'stringio'
+
 module RubyLLM
   module Providers
     class Gemini # rubocop:disable Style/Documentation

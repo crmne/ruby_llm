@@ -202,17 +202,21 @@ RSpec.describe RubyLLM::Providers::OpenAI::Chat do
       )
     end
 
-    it 'uses Perplexity file_url parts for supported text file attachments' do
+    it 'keeps Perplexity text file attachments as text parts' do
       provider = RubyLLM::Providers::Perplexity.allocate
-      content = RubyLLM::Content.new('Summarize this file')
-      content.add_attachment(StringIO.new('notes'), filename: 'notes.txt')
 
-      formatted = provider.send(:format_messages, [RubyLLM::Message.new(role: :user, content:)])
+      %w[csv txt md html json].each do |extension|
+        content = RubyLLM::Content.new('Summarize this file')
+        content.add_attachment(StringIO.new('notes'), filename: "notes.#{extension}")
 
-      expect(formatted.dig(0, :content, 1)).to eq(
-        type: 'file_url',
-        file_url: { url: Base64.strict_encode64('notes') }
-      )
+        formatted = provider.send(:format_messages, [RubyLLM::Message.new(role: :user, content:)])
+        attachment = content.attachments.first
+
+        expect(formatted.dig(0, :content, 1)).to eq(
+          type: 'text',
+          text: attachment.for_llm
+        )
+      end
     end
 
     it 'keeps unsupported files disabled for xAI' do

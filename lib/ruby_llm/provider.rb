@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require 'json'
+require 'ruby_llm/error'
+
 module RubyLLM
   # Base class for LLM providers.
   class Provider
@@ -233,6 +236,10 @@ module RubyLLM
     end
 
     def build_audio_file_part(file_path)
+      require 'faraday/multipart'
+      require 'marcel'
+      require 'pathname'
+
       expanded_path = File.expand_path(file_path)
       mime_type = Marcel::MimeType.for(Pathname.new(expanded_path))
 
@@ -255,7 +262,9 @@ module RubyLLM
       missing = configuration_requirements.reject { |req| @config.send(req) }
       return if missing.empty?
 
-      raise ConfigurationError, "Missing configuration for #{name}: #{missing.join(', ')}"
+      raise ConfigurationError,
+            "Missing configuration for #{name}: #{missing.join(', ')}. " \
+            'Set these keys on RubyLLM.config before using this provider.'
     end
 
     def maybe_normalize_temperature(temperature, _model)

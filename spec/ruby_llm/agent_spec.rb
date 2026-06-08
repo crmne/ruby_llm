@@ -155,6 +155,33 @@ RSpec.describe RubyLLM::Agent do
     expect(agent.cost.total).to eq(0.005)
   end
 
+  it 'uses the agent chat model for cost when the response model id cannot be resolved' do
+    model = RubyLLM::Model::Info.new(
+      id: 'priced-model',
+      name: 'Priced Model',
+      provider: 'openai',
+      pricing: {
+        text_tokens: {
+          standard: {
+            input_per_million: 1.0,
+            output_per_million: 2.0
+          }
+        }
+      }
+    )
+
+    chat = RubyLLM::Chat.allocate
+    chat.instance_variable_set(:@model, model)
+    chat.instance_variable_set(:@messages, [])
+    agent = Class.new(described_class).new(chat:)
+
+    response = agent.add_message(role: :assistant, content: 'Hi', input_tokens: 1_000, output_tokens: 2_000,
+                                 model_id: 'provider-backend-version')
+
+    expect(agent.model.cost_for(response).total).to eq(0.005)
+    expect(agent.cost.total).to eq(0.005)
+  end
+
   it 'delegates callback hooks to the underlying chat' do
     fake_chat = Class.new do
       attr_reader :events
