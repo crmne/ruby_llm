@@ -41,7 +41,7 @@ module RubyLLM
           when :pdf, :document
             render_document_attachment(attachment, used_document_names:)
           when :text
-            render_text_attachment(attachment, used_document_names:)
+            render_text_attachment(attachment)
           else
             raise UnsupportedAttachmentError, attachment.mime_type
           end
@@ -60,9 +60,7 @@ module RubyLLM
           }
         end
 
-        def render_text_attachment(attachment, used_document_names:)
-          return render_document_attachment(attachment, used_document_names:) if supported_document_format?(attachment)
-
+        def render_text_attachment(attachment)
           { text: attachment.for_llm }
         end
 
