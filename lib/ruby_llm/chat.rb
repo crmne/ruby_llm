@@ -152,7 +152,7 @@ module RubyLLM
     end
 
     def cost
-      Cost.aggregate(messages.map(&:cost))
+      Cost.aggregate(messages.map { |message| message.cost(model: message.model_info || model) })
     end
 
     def complete(&)
