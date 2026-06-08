@@ -65,8 +65,8 @@ module RubyLLM
           m.context_window = model_info.context_window
           m.max_output_tokens = model_info.max_output_tokens
           m.capabilities = model_info.capabilities || []
-          m.modalities = model_info.modalities || {}
-          m.pricing = model_info.pricing || {}
+          m.modalities = model_info.modalities.to_h
+          m.pricing = model_info.pricing.to_h
           m.metadata = model_info.metadata || {}
         end
 

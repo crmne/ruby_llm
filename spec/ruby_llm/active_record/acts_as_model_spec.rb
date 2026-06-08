@@ -305,6 +305,41 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
         chat.to_llm
       end
 
+      it 'persists created model attributes using JSON-serializable hashes' do
+        model_info = RubyLLM::Model::Info.new(
+          id: 'priced-registry-model',
+          name: 'Priced Registry Model',
+          provider: 'openai',
+          modalities: { input: %w[text image], output: %w[text] },
+          capabilities: ['streaming'],
+          pricing: {
+            text_tokens: {
+              standard: {
+                input_per_million: 1.25,
+                output_per_million: 5.0
+              }
+            }
+          }
+        )
+        allow(RubyLLM::Models).to receive(:resolve).and_return([model_info, nil])
+
+        chat = chat_class.create!(model_id: 'priced-registry-model')
+        created_model = chat.model.reload
+
+        expect(created_model.modalities).to eq(
+          'input' => %w[text image],
+          'output' => %w[text]
+        )
+        expect(created_model.pricing).to eq(
+          'text_tokens' => {
+            'standard' => {
+              'input_per_million' => 1.25,
+              'output_per_million' => 5.0
+            }
+          }
+        )
+      end
+
       it 'fails when model does not exist' do
         expect { chat_class.create!(model_id: 'non-existent') }.to raise_error(RubyLLM::ModelNotFoundError)
       end
