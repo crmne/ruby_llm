@@ -123,7 +123,7 @@ end
 - OpenAI reasoning models accept `effort` but may not return thinking text or signatures.
 - Perplexity sonar reasoning models stream `<think>` blocks inside content; RubyLLM extracts them after the response completes.
 - Mistral Magistral models always think and ignore `with_thinking` params. Non-magistral models warn if you pass them.
-- Ollama's Qwen3 models think by default and only accept `effort: :none` to disable thinking.
+- Ollama and GPUStack local-model thinking controls vary by backend and model. RubyLLM does not translate them; pass backend params explicitly with `with_params`.
 - Anthropic and Ollama integrations currently do not report thinking token counts.
 
 ## Next Steps

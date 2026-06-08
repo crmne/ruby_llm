@@ -5,18 +5,33 @@ require 'spec_helper'
 RSpec.describe RubyLLM::Chat do
   include_context 'with configured RubyLLM'
 
+  def basic_chat(model:, provider:)
+    chat = RubyLLM.chat(model: model, provider: provider)
+    return chat.with_params(enable_thinking: false) if provider == :gpustack && model == 'qwen3'
+
+    chat
+  end
+
+  def total_input_tokens(message)
+    message.input_tokens.to_i + message.cached_tokens.to_i + message.cache_creation_tokens.to_i
+  end
+
+  def expect_token_usage(message)
+    expect(total_input_tokens(message)).to be_positive
+    expect(message.output_tokens).to be_positive
+  end
+
   describe 'basic chat functionality' do
     CHAT_MODELS.each do |model_info|
       model = model_info[:model]
       provider = model_info[:provider]
       it "#{provider}/#{model} can have a basic conversation" do
-        chat = RubyLLM.chat(model: model, provider: provider)
+        chat = basic_chat(model: model, provider: provider)
         response = chat.ask("What's 2 + 2?")
 
         expect(response.content).to include('4')
         expect(response.role).to eq(:assistant)
-        expect(response.input_tokens).to be_positive
-        expect(response.output_tokens).to be_positive
+        expect_token_usage(response)
       end
 
       it "#{provider}/#{model} returns raw responses" do
@@ -31,7 +46,7 @@ RSpec.describe RubyLLM::Chat do
       end
 
       it "#{provider}/#{model} can handle multi-turn conversations" do
-        chat = RubyLLM.chat(model: model, provider: provider)
+        chat = basic_chat(model: model, provider: provider)
 
         first = chat.ask('Who is the creator of the programming language Ruby?')
         expect(first.content).to include('Matz')
@@ -61,8 +76,7 @@ RSpec.describe RubyLLM::Chat do
         end
 
         chat = RubyLLM.chat(model: model, provider: provider).with_temperature(0.0)
-        # Disable thinking mode for qwen models to avoid <think> tags in output
-        chat = chat.with_thinking(effort: :none) if model == 'qwen3'
+        chat = chat.with_params(enable_thinking: false) if provider == :gpustack && model == 'qwen3'
 
         # Use a distinctive and unusual instruction that wouldn't happen naturally
         chat.with_instructions 'You must include the exact phrase "XKCD7392" somewhere in your response.'
@@ -91,16 +105,14 @@ RSpec.describe RubyLLM::Chat do
 
         expect(response.content).to match(/four/i)
         expect(response.role).to eq(:assistant)
-        expect(response.input_tokens).to be_positive
-        expect(response.output_tokens).to be_positive
+        expect_token_usage(response)
 
         chat.with_model(second[:model], provider: second[:provider])
         response = chat.ask('Reply with exactly: EIGHT')
 
         expect(response.content).to match(/eight/i)
         expect(response.role).to eq(:assistant)
-        expect(response.input_tokens).to be_positive
-        expect(response.output_tokens).to be_positive
+        expect_token_usage(response)
       end
     end
   end

@@ -2,7 +2,7 @@
 layout: default
 title: Available Models
 nav_order: 1
-description: Browse 1165 AI models across 11 providers (not including local providers). Updated 2026-06-08.
+description: Browse 1166 AI models across 11 providers (not including local providers). Updated 2026-06-08.
 redirect_from:
   - /guides/available-models
 ---
@@ -836,7 +836,7 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | whisper-1 | openai | In: -; Out: - | - | - | - | In: $0.01, Out: $0.01 |
 
 
-### OpenRouter (340)
+### OpenRouter (341)
 
 | Model | Provider | I/O | Capabilities | Context | Max Output | Standard Pricing (per 1M tokens) |
 | :-- | :-- | :-- | :-- | --: | --: | :-- |
@@ -1067,6 +1067,7 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | nvidia/nemotron-nano-12b-v2-vl:free | openrouter | In: text, image, video; Out: text | function_calling, reasoning, vision, streaming | 128000 | 128000 | - |
 | nvidia/nemotron-nano-9b-v2:free | openrouter | In: text; Out: text | function_calling, structured_output, reasoning, streaming | 128000 | 128000 | - |
 | nvidia/nemotron-nano-9b-v2 | openrouter | In: text; Out: text | function_calling, reasoning, streaming, predicted_outputs | 131072 | 16384 | In: $0.04, Out: $0.16 |
+| nex-agi/nex-n2-pro:free | openrouter | In: text, image; Out: text | streaming, function_calling, structured_output | 262144 | 262144 | - |
 | amazon/nova-2-lite-v1 | openrouter | In: text, image, video, pdf; Out: text | function_calling, reasoning, vision, streaming | 1000000 | 65535 | In: $0.30, Out: $2.50 |
 | amazon/nova-lite-v1 | openrouter | In: text, image; Out: text | function_calling, vision, streaming | 300000 | 5120 | In: $0.06, Out: $0.24 |
 | amazon/nova-micro-v1 | openrouter | In: text; Out: text | function_calling, streaming | 128000 | 5120 | In: $0.04, Out: $0.14 |
@@ -1270,7 +1271,7 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 
 ## Models by Capability
 
-### Function Calling (701)
+### Function Calling (702)
 
 | Model | Provider | I/O | Capabilities | Context | Max Output | Standard Pricing (per 1M tokens) |
 | :-- | :-- | :-- | :-- | --: | --: | :-- |
@@ -1834,6 +1835,7 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | nvidia/nemotron-nano-12b-v2-vl:free | openrouter | In: text, image, video; Out: text | function_calling, reasoning, vision, streaming | 128000 | 128000 | - |
 | nvidia/nemotron-nano-9b-v2:free | openrouter | In: text; Out: text | function_calling, structured_output, reasoning, streaming | 128000 | 128000 | - |
 | nvidia/nemotron-nano-9b-v2 | openrouter | In: text; Out: text | function_calling, reasoning, streaming, predicted_outputs | 131072 | 16384 | In: $0.04, Out: $0.16 |
+| nex-agi/nex-n2-pro:free | openrouter | In: text, image; Out: text | streaming, function_calling, structured_output | 262144 | 262144 | - |
 | amazon/nova-2-lite-v1 | openrouter | In: text, image, video, pdf; Out: text | function_calling, reasoning, vision, streaming | 1000000 | 65535 | In: $0.30, Out: $2.50 |
 | amazon/nova-lite-v1 | openrouter | In: text, image; Out: text | function_calling, vision, streaming | 300000 | 5120 | In: $0.06, Out: $0.24 |
 | amazon/nova-micro-v1 | openrouter | In: text; Out: text | function_calling, streaming | 128000 | 5120 | In: $0.04, Out: $0.14 |
@@ -1977,7 +1979,7 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | grok-build-0.1 | xai | In: text, image, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming | 256000 | 256000 | In: $1.00, Out: $2.00, Cache Read: $0.20 |
 
 
-### Structured Output (468)
+### Structured Output (469)
 
 | Model | Provider | I/O | Capabilities | Context | Max Output | Standard Pricing (per 1M tokens) |
 | :-- | :-- | :-- | :-- | --: | --: | :-- |
@@ -2363,6 +2365,7 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | nvidia/nemotron-3-super-120b-a12b:free | openrouter | In: text; Out: text | function_calling, structured_output, reasoning, streaming | 262144 | 262144 | - |
 | nvidia/nemotron-3-ultra-550b-a55b | openrouter | In: text; Out: text | function_calling, structured_output, reasoning, streaming, predicted_outputs | 262144 | 16384 | In: $0.50, Out: $2.50, Cache Read: $0.15 |
 | nvidia/nemotron-nano-9b-v2:free | openrouter | In: text; Out: text | function_calling, structured_output, reasoning, streaming | 128000 | 128000 | - |
+| nex-agi/nex-n2-pro:free | openrouter | In: text, image; Out: text | streaming, function_calling, structured_output | 262144 | 262144 | - |
 | allenai/olmo-3-32b-think | openrouter | In: text; Out: text | structured_output, reasoning, streaming, predicted_outputs | 65536 | 65536 | In: $0.15, Out: $0.50 |
 | ~openai/gpt-latest | openrouter | In: pdf, image, text; Out: text | function_calling, structured_output, reasoning, vision, streaming | 1050000 | 128000 | In: $5.00, Out: $30.00, Cache Read: $0.50 |
 | ~openai/gpt-mini-latest | openrouter | In: pdf, image, text; Out: text | function_calling, structured_output, reasoning, vision, streaming | 400000 | 128000 | In: $0.75, Out: $4.50, Cache Read: $0.08 |
@@ -2451,7 +2454,7 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | grok-build-0.1 | xai | In: text, image, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming | 256000 | 256000 | In: $1.00, Out: $2.00, Cache Read: $0.20 |
 
 
-### Streaming (520)
+### Streaming (521)
 
 | Model | Provider | I/O | Capabilities | Context | Max Output | Standard Pricing (per 1M tokens) |
 | :-- | :-- | :-- | :-- | --: | --: | :-- |
@@ -2823,6 +2826,7 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 | nvidia/nemotron-nano-12b-v2-vl:free | openrouter | In: text, image, video; Out: text | function_calling, reasoning, vision, streaming | 128000 | 128000 | - |
 | nvidia/nemotron-nano-9b-v2:free | openrouter | In: text; Out: text | function_calling, structured_output, reasoning, streaming | 128000 | 128000 | - |
 | nvidia/nemotron-nano-9b-v2 | openrouter | In: text; Out: text | function_calling, reasoning, streaming, predicted_outputs | 131072 | 16384 | In: $0.04, Out: $0.16 |
+| nex-agi/nex-n2-pro:free | openrouter | In: text, image; Out: text | streaming, function_calling, structured_output | 262144 | 262144 | - |
 | amazon/nova-2-lite-v1 | openrouter | In: text, image, video, pdf; Out: text | function_calling, reasoning, vision, streaming | 1000000 | 65535 | In: $0.30, Out: $2.50 |
 | amazon/nova-lite-v1 | openrouter | In: text, image; Out: text | function_calling, vision, streaming | 300000 | 5120 | In: $0.06, Out: $0.24 |
 | amazon/nova-micro-v1 | openrouter | In: text; Out: text | function_calling, streaming | 128000 | 5120 | In: $0.04, Out: $0.14 |
@@ -3025,7 +3029,7 @@ See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#ref
 
 ## Models by Modality
 
-### Vision Models (399)
+### Vision Models (400)
 
 Models that can process images:
 
@@ -3342,6 +3346,7 @@ Models that can process images:
 | nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free | openrouter | In: text, image, video, audio; Out: text | function_calling, reasoning, vision, streaming | 256000 | 65536 | - |
 | nvidia/nemotron-3.5-content-safety:free | openrouter | In: text, image; Out: text | reasoning, vision, streaming | 128000 | 8192 | - |
 | nvidia/nemotron-nano-12b-v2-vl:free | openrouter | In: text, image, video; Out: text | function_calling, reasoning, vision, streaming | 128000 | 128000 | - |
+| nex-agi/nex-n2-pro:free | openrouter | In: text, image; Out: text | streaming, function_calling, structured_output | 262144 | 262144 | - |
 | amazon/nova-2-lite-v1 | openrouter | In: text, image, video, pdf; Out: text | function_calling, reasoning, vision, streaming | 1000000 | 65535 | In: $0.30, Out: $2.50 |
 | amazon/nova-lite-v1 | openrouter | In: text, image; Out: text | function_calling, vision, streaming | 300000 | 5120 | In: $0.06, Out: $0.24 |
 | amazon/nova-premier-v1 | openrouter | In: text, image; Out: text | function_calling, vision, streaming | 1000000 | 32000 | In: $2.50, Out: $12.50, Cache Read: $0.62 |

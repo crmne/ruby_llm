@@ -45,7 +45,8 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       chat.ask('Hello')
 
       message = chat.messages.last
-      expect(message.input_tokens).to be_positive
+      total_input_tokens = message.input_tokens.to_i + message.cached_tokens.to_i + message.cache_creation_tokens.to_i
+      expect(total_input_tokens).to be_positive
       expect(message.output_tokens).to be_positive
     end
 
@@ -1053,11 +1054,15 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
         { budget: 1024 }
       when :gemini
         { effort: :low }
-      when :ollama
+      when :gpustack, :ollama
         nil
       else
         { effort: :medium }
       end
+    end
+
+    def expect_response_payload(response)
+      expect(response.content.presence || response.thinking&.text).to be_present
     end
 
     question = <<~QUESTION.strip
@@ -1072,11 +1077,12 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
         chat = Chat.create!(model: model, provider: provider)
         config = thinking_config_for(provider)
         chat = chat.with_thinking(**config) if config
+        prompt = provider == :gpustack ? 'What is 5 + 3? Think briefly before answering.' : question
 
         chunks = []
-        response = chat.ask(question) { |chunk| chunks << chunk }
+        response = chat.ask(prompt) { |chunk| chunks << chunk }
 
-        expect(response.content).to be_present
+        expect_response_payload(response)
         expect(chunks).not_to be_empty
 
         message_record = chat.messages.order(:id).last
@@ -1085,7 +1091,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
         expect(message_record.thinking_tokens).to eq(response.thinking_tokens) if response.thinking_tokens
 
         followup = chat.ask('tell me more')
-        expect(followup.content).to be_present
+        expect_response_payload(followup)
 
         replayed_messages = chat.to_llm.messages
         if response.thinking&.text

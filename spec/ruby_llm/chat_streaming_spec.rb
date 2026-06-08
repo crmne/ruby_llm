@@ -6,6 +6,13 @@ RSpec.describe RubyLLM::Chat do
   include_context 'with configured RubyLLM'
   include StreamingErrorHelpers
 
+  def token_count_chat(model:, provider:)
+    chat = RubyLLM.chat(model: model, provider: provider).with_temperature(0.0)
+    return chat.with_params(enable_thinking: false) if provider == :gpustack && model == 'qwen3'
+
+    chat
+  end
+
   describe 'streaming responses' do
     CHAT_MODELS.each do |model_info|
       model = model_info[:model]
@@ -32,15 +39,18 @@ RSpec.describe RubyLLM::Chat do
         skip 'Perplexity reports different token counts for streaming vs non-streaming' if provider == :perplexity
         skip 'Azure reports different token counts for streaming vs non-streaming' if provider == :azure
         skip 'xAI reports different token counts for streaming vs non-streaming' if provider == :xai
+        if provider == :gpustack && model == 'qwen3'
+          skip 'GPUStack/Qwen3 reports different token counts for streaming vs non-streaming'
+        end
 
-        chat = RubyLLM.chat(model: model, provider: provider).with_temperature(0.0)
+        chat = token_count_chat(model: model, provider: provider)
         chunks = []
 
         stream_message = chat.ask('Count from 1 to 3') do |chunk|
           chunks << chunk
         end
 
-        chat = RubyLLM.chat(model: model, provider: provider).with_temperature(0.0)
+        chat = token_count_chat(model: model, provider: provider)
         sync_message = chat.ask('Count from 1 to 3')
 
         expect(sync_message.input_tokens).to be_within(1).of(stream_message.input_tokens)
