@@ -42,4 +42,32 @@ RSpec.describe RubyLLM::Providers::Gemini::Media do
       )
     end
   end
+
+  describe '#build_response_content' do
+    it 'parses inline image responses as content attachments' do
+      provider = RubyLLM::Providers::Gemini.allocate
+      image_bytes = "\x89PNG\r\n\x1A\n".b
+
+      content = provider.build_response_content(
+        [
+          {
+            'inlineData' => {
+              'mimeType' => 'image/png',
+              'data' => Base64.strict_encode64(image_bytes)
+            }
+          }
+        ]
+      )
+
+      expect(content).to be_a(RubyLLM::Content)
+      expect(content.text).to be_nil
+      expect(content.attachments.size).to eq(1)
+
+      attachment = content.attachments.first
+      expect(attachment.filename).to eq('gemini_attachment_1.png')
+      expect(attachment.mime_type).to eq('image/png')
+      expect(attachment.content).to eq(image_bytes)
+      expect(RubyLLM::Message.new(role: :assistant, content: content).content).to be_a(RubyLLM::Content)
+    end
+  end
 end

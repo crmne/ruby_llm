@@ -14,7 +14,7 @@ module RubyLLM
     end
 
     def add_attachment(source, filename: nil)
-      @attachments << Attachment.new(source, filename:)
+      @attachments << build_attachment(source, filename:)
       self
     end
 
@@ -32,6 +32,16 @@ module RubyLLM
     end
 
     private
+
+    def build_attachment(source, filename: nil)
+      if source.is_a?(Attachment)
+        return source unless filename
+
+        return Attachment.new(source.source, filename:)
+      end
+
+      Attachment.new(source, filename:)
+    end
 
     def process_attachments_array_or_string(attachments)
       Utils.to_safe_array(attachments).each do |file|

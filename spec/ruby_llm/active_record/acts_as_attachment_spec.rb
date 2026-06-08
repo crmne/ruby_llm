@@ -117,6 +117,40 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       expect(response.content).to eq('I can see it')
     end
 
+    it 'persists Gemini inline image responses as ActiveStorage attachments' do
+      chat = Chat.create!(model: 'gemini-2.5-flash-image')
+                 .with_params(generationConfig: { responseModalities: ['image'] })
+      image_bytes = File.binread(image_path)
+
+      allow_any_instance_of(RubyLLM::Providers::Gemini).to receive(:complete) do |provider, *_args, **_kwargs| # rubocop:disable RSpec/AnyInstance
+        content = provider.build_response_content(
+          [
+            {
+              'inlineData' => {
+                'mimeType' => 'image/png',
+                'data' => Base64.strict_encode64(image_bytes)
+              }
+            }
+          ]
+        )
+
+        RubyLLM::Message.new(role: :assistant, content:)
+      end
+
+      response = nil
+      expect { response = chat.ask('A cute puppy', with: [image_path]) }.not_to raise_error
+
+      assistant_message = chat.messages.where(role: 'assistant').last
+      expect(response.content).to be_a(RubyLLM::Content)
+      expect(response.content.attachments.first.content).to eq(image_bytes)
+      expect(assistant_message.content).to be_nil
+      expect(assistant_message.content_raw).to be_nil
+      expect(assistant_message.attachments.count).to eq(1)
+      expect(assistant_message.attachments.first.filename.to_s).to eq('gemini_attachment_1.png')
+      expect(assistant_message.attachments.first.blob.content_type).to eq('image/png')
+      expect(assistant_message.attachments.first.download).to eq(image_bytes)
+    end
+
     it 'ignores leading blank multipart attachment entries for create_user_message' do
       chat = Chat.create!(model: model)
       image_upload = uploaded_file(image_path, 'image/png')

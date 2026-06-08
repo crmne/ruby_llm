@@ -78,7 +78,7 @@ module RubyLLM
         text = nil if text.empty?
         return text if attachments.empty?
 
-        Content.new(text:, attachments:)
+        Content.new(text, attachments)
       end
 
       def build_inline_attachment(inline_data, index)
