@@ -517,7 +517,7 @@ RSpec.describe RubyLLM::Providers::Gemini::Chat do
 
       expect(result.length).to eq(3)
       tool_response = result.last
-      expect(tool_response[:role]).to eq('function')
+      expect(tool_response[:role]).to eq('user')
       expect(tool_response[:parts].length).to eq(2)
       expect(tool_response[:parts][0][:functionResponse][:name]).to eq('weather')
       expect(tool_response[:parts][1][:functionResponse][:name]).to eq('best_language_to_learn')

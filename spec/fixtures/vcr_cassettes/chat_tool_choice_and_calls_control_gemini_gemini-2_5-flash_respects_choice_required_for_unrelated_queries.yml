@@ -12,7 +12,7 @@ http_interactions:
         13.4050)"}},"required":["latitude","longitude"]}}]}],"toolConfig":{"functionCallingConfig":{"mode":"any"}}}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       X-Goog-Api-Key:
       - "<GEMINI_API_KEY>"
       Content-Type:
@@ -35,7 +35,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Thu, 07 May 2026 00:04:38 GMT
+      - Mon, 08 Jun 2026 17:10:00 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -45,7 +45,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=929
+      - gfet4t7; dur=1122
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -62,11 +62,11 @@ http_interactions:
                     "functionCall": {
                       "name": "weather",
                       "args": {
-                        "latitude": "41.9028",
-                        "longitude": "12.4964"
+                        "longitude": "12.4964",
+                        "latitude": "41.9028"
                       }
                     },
-                    "thoughtSignature": "CqADAQw51seH44sm4QVOlTGv6P6WcrHhc9rxlW3rc72stBAlG3p9TkOVyU6VCVKg/JWe7DDoUX/oQV02texmakXpp0V23t/bMTva4ogec/+Fm2zuCxxdvgJ+Fu/Jq/D69f4wLuSyywq6EzvYL/5ehpy00C3EvOUk1AMaLI1j+sBX2/uvohqPakL34y/Nzjhnl2Kg3WxUY7J22RWrZZX12otCd3FtgCnCOeDyONBxH293lWpG6ZgVi0vdqQlI+c2tJSXPDBknbU1maZdWFQVtfMC9I5Smrv7B1tQtkaPlgEQpGT0EZn8Qeq1au1GoZngHETpcxaz597v/Qd02CFvTBZeJJJze9xO1gMaXj/VBa+bf4rBT3VM7p/7ruxvXpiiw6UuhYIVBll7G8EDY3wwnRyQKIRd87dwtAMQY90S8gA61HnVFt2hQEX3HGspcffbQSQ3KoAEqwrjKtSv/qyWAWiIrehbvdQF36N6leMpVySHZ/Hhmqxv8Qgo4np8T2WtgBdo1nE/4Ig8qv6mMjG1Pip1p+tnkzIUxhVZ2edvgzk92zEI="
+                    "thoughtSignature": "CoYDAQw51sfsk9G5Yuv6D0bvICCd1jh9ps/yZLmppcmDLkny7kEQfLQjrJLmrUQwC7iavFTdPHIyujDppsTROLQIGzvqhIIzqGkdy+6e95a5Y03UtcKO4RR6FcW4HxU0Lu5VBIvOlhIZtSaCd7bC27eKnBh/DLJ4gUJwvRXNfalegwuYtujB5usbojPouORQn/gWSH6z8lut9J0KJQynf0BPQq4VlLO70HqHs58YosYBfiD8bmbfxrHZYHEVsozPPRwaGKdPjNeDdYjbqqGGGm2SHlfaozjsvCftjJiDElLB4AE3tfjbKTOf4OW56T9VsveVgBGdRIUIGADtPGLY8/3hfW66FHJWF8EH3N4xOPI8g8F5u7XBcDiwYnxzcy+bgOjrZ6YO0D6OtZT73IEfJggLTLvPEKsi/MSEWvJ63HAINGW+1BQPR67AL1Gxg+vKq/VJXfDkpeMHeEHOsZ1fwj6St25tBldzt/EaVVBeLjMbctK76b94+PH+RGXigiPyaEqMyZP9/ym2"
                   }
                 ],
                 "role": "model"
@@ -79,34 +79,34 @@ http_interactions:
           "usageMetadata": {
             "promptTokenCount": 84,
             "candidatesTokenCount": 30,
-            "totalTokenCount": 180,
+            "totalTokenCount": 178,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
                 "tokenCount": 84
               }
             ],
-            "thoughtsTokenCount": 66,
+            "thoughtsTokenCount": 64,
             "serviceTier": "standard"
           },
           "modelVersion": "gemini-2.5-flash",
-          "responseId": "Fdf7aaXQL_i1nsEPnvml0AI"
+          "responseId": "Z_cmat_aHq_DnsEPqL6kmQ4"
         }
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+  recorded_at: Mon, 08 Jun 2026 17:10:00 GMT
 - request:
     method: post
     uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"When was the fall of
-        Rome?"}]},{"role":"model","parts":[{"functionCall":{"name":"weather","args":{"latitude":"41.9028","longitude":"12.4964"}},"thoughtSignature":"CqADAQw51seH44sm4QVOlTGv6P6WcrHhc9rxlW3rc72stBAlG3p9TkOVyU6VCVKg/JWe7DDoUX/oQV02texmakXpp0V23t/bMTva4ogec/+Fm2zuCxxdvgJ+Fu/Jq/D69f4wLuSyywq6EzvYL/5ehpy00C3EvOUk1AMaLI1j+sBX2/uvohqPakL34y/Nzjhnl2Kg3WxUY7J22RWrZZX12otCd3FtgCnCOeDyONBxH293lWpG6ZgVi0vdqQlI+c2tJSXPDBknbU1maZdWFQVtfMC9I5Smrv7B1tQtkaPlgEQpGT0EZn8Qeq1au1GoZngHETpcxaz597v/Qd02CFvTBZeJJJze9xO1gMaXj/VBa+bf4rBT3VM7p/7ruxvXpiiw6UuhYIVBll7G8EDY3wwnRyQKIRd87dwtAMQY90S8gA61HnVFt2hQEX3HGspcffbQSQ3KoAEqwrjKtSv/qyWAWiIrehbvdQF36N6leMpVySHZ/Hhmqxv8Qgo4np8T2WtgBdo1nE/4Ig8qv6mMjG1Pip1p+tnkzIUxhVZ2edvgzk92zEI="}]},{"role":"function","parts":[{"functionResponse":{"name":"weather","response":{"name":"weather","content":[{"text":"Current
+        Rome?"}]},{"role":"model","parts":[{"functionCall":{"name":"weather","args":{"longitude":"12.4964","latitude":"41.9028"}},"thoughtSignature":"CoYDAQw51sfsk9G5Yuv6D0bvICCd1jh9ps/yZLmppcmDLkny7kEQfLQjrJLmrUQwC7iavFTdPHIyujDppsTROLQIGzvqhIIzqGkdy+6e95a5Y03UtcKO4RR6FcW4HxU0Lu5VBIvOlhIZtSaCd7bC27eKnBh/DLJ4gUJwvRXNfalegwuYtujB5usbojPouORQn/gWSH6z8lut9J0KJQynf0BPQq4VlLO70HqHs58YosYBfiD8bmbfxrHZYHEVsozPPRwaGKdPjNeDdYjbqqGGGm2SHlfaozjsvCftjJiDElLB4AE3tfjbKTOf4OW56T9VsveVgBGdRIUIGADtPGLY8/3hfW66FHJWF8EH3N4xOPI8g8F5u7XBcDiwYnxzcy+bgOjrZ6YO0D6OtZT73IEfJggLTLvPEKsi/MSEWvJ63HAINGW+1BQPR67AL1Gxg+vKq/VJXfDkpeMHeEHOsZ1fwj6St25tBldzt/EaVVBeLjMbctK76b94+PH+RGXigiPyaEqMyZP9/ym2"}]},{"role":"user","parts":[{"functionResponse":{"name":"weather","response":{"name":"weather","content":[{"text":"Current
         weather at 41.9028, 12.4964: 15°C, Wind: 10 km/h"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"OBJECT","properties":{"latitude":{"type":"STRING","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"STRING","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"]}}]}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       X-Goog-Api-Key:
       - "<GEMINI_API_KEY>"
       Content-Type:
@@ -129,7 +129,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Thu, 07 May 2026 00:04:39 GMT
+      - Mon, 08 Jun 2026 17:10:01 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -139,7 +139,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=443
+      - gfet4t7; dur=820
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -153,7 +153,7 @@ http_interactions:
               "content": {
                 "parts": [
                   {
-                    "text": "I am sorry, I cannot answer historical questions. I can only provide current weather information for a location.\n"
+                    "text": "I am sorry, but I cannot answer historical questions like \"When was the fall of Rome?\". My purpose is to provide weather information."
                   }
                 ],
                 "role": "model"
@@ -164,8 +164,8 @@ http_interactions:
           ],
           "usageMetadata": {
             "promptTokenCount": 171,
-            "candidatesTokenCount": 21,
-            "totalTokenCount": 192,
+            "candidatesTokenCount": 27,
+            "totalTokenCount": 198,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
@@ -175,7 +175,7 @@ http_interactions:
             "serviceTier": "standard"
           },
           "modelVersion": "gemini-2.5-flash",
-          "responseId": "Ftf7aZmqMciP28oP7O-h4Qw"
+          "responseId": "aPcmaranK-OxkdUPjuid0QE"
         }
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+  recorded_at: Mon, 08 Jun 2026 17:10:01 GMT
 recorded_with: VCR 6.4.0

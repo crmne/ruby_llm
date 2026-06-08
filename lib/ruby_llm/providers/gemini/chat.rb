@@ -72,8 +72,7 @@ module RubyLLM
         def format_role(role)
           case role
           when :assistant then 'model'
-          when :system then 'user'
-          when :tool then 'function'
+          when :system, :tool then 'user'
           else role.to_s
           end
         end
@@ -314,7 +313,7 @@ module RubyLLM
           end
 
           def build_tool_response(parts)
-            { role: 'function', parts: parts }
+            { role: 'user', parts: parts }
           end
 
           def remember_tool_calls
