@@ -4,6 +4,12 @@ require 'spec_helper'
 
 RSpec.describe RubyLLM::Providers::OpenRouter::Chat do
   describe '.parse_completion_response' do
+    it 'returns nil for a nil response body' do
+      response = instance_double(Faraday::Response, body: nil)
+
+      expect(described_class.parse_completion_response(response)).to be_nil
+    end
+
     it 'normalizes cached prompt tokens out of input tokens' do
       response_body = {
         'model' => 'openai/gpt-4.1-nano',
