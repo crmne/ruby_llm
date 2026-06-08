@@ -248,6 +248,14 @@ RSpec.describe RubyLLM::Models do
       expect(data[:created_at]).to eq('2025-03-01 00:00:00 UTC')
     end
 
+    it 'normalizes month-only release dates to the first day of the month' do
+      model_data_with_release_date = model_data.merge(release_date: '2025-09')
+      data = described_class.models_dev_model_to_info(model_data_with_release_date, 'openai', 'openai')
+
+      expect(data[:created_at]).to eq('2025-09-01 00:00:00 UTC')
+      expect { RubyLLM::Model::Info.new(data) }.not_to raise_error
+    end
+
     it 'falls back to last_updated cast to midnight as created_at when release_date is missing' do
       model_data_with_release_date = model_data.merge(release_date: nil, last_updated: '2025-03-01')
       data = described_class.models_dev_model_to_info(model_data_with_release_date, 'openai', 'openai')

@@ -363,7 +363,7 @@ module RubyLLM
           name: model_data[:name] || model_data[:id],
           provider: provider_slug,
           family: model_data[:family],
-          created_at: created_date ? "#{created_date} 00:00:00 UTC" : nil,
+          created_at: Utils.iso_date_prefix_to_utc_midnight_string(created_date),
           context_window: model_data.dig(:limit, :context),
           max_output_tokens: model_data.dig(:limit, :output),
           knowledge_cutoff: normalize_models_dev_knowledge(model_data[:knowledge]),
