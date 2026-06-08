@@ -27,7 +27,8 @@ module RubyLLM
         /token count exceeds/i,
         /input[_\s-]?token/i,
         /input or output tokens? must be reduced/i,
-        /reduce the length of messages/i
+        /reduce the length of messages/i,
+        /prompt is too long/i
       ].freeze
 
       def parse_error(provider:, response:) # rubocop:disable Metrics/PerceivedComplexity
