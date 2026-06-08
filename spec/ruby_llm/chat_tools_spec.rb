@@ -652,8 +652,8 @@ RSpec.describe RubyLLM::Chat do
       tool_messages = chat.messages.select { |message| message.role == :tool }
       expect(ConcurrentProbeTool.max_running).to eq(2)
       expect(chat.concurrency).to eq(:threads)
-      expect(tool_messages.map(&:tool_call_id)).to eq(%w[call_1 call_2])
-      expect(tool_messages.map(&:content)).to eq(['finished slow', 'finished fast'])
+      expect(tool_messages.map(&:tool_call_id)).to eq(%w[call_2 call_1])
+      expect(tool_messages.map(&:content)).to eq(['finished fast', 'finished slow'])
     end
 
     it 'executes multiple tool calls with fibers' do
@@ -665,8 +665,38 @@ RSpec.describe RubyLLM::Chat do
       tool_messages = chat.messages.select { |message| message.role == :tool }
       expect(ConcurrentProbeTool.max_running).to eq(2)
       expect(chat.concurrency).to eq(:fibers)
-      expect(tool_messages.map(&:tool_call_id)).to eq(%w[call_1 call_2])
-      expect(tool_messages.map(&:content)).to eq(['finished slow', 'finished fast'])
+      expect(tool_messages.map(&:tool_call_id)).to eq(%w[call_2 call_1])
+      expect(tool_messages.map(&:content)).to eq(['finished fast', 'finished slow'])
+    end
+
+    it 'adds concurrent tool result messages as each call finishes before resuming the model' do
+      chat = RubyLLM.chat.with_tool(ConcurrentProbeTool, concurrency: true)
+      provider = chat.instance_variable_get(:@provider)
+      events = []
+      complete_calls = 0
+
+      allow(provider).to receive(:complete) do |messages, **_kwargs|
+        complete_calls += 1
+
+        if complete_calls == 1
+          RubyLLM::Message.new(role: :assistant, content: '', tool_calls:)
+        else
+          events << [:follow_up, messages.select(&:tool_result?).map(&:tool_call_id)]
+          RubyLLM::Message.new(role: :assistant, content: 'done')
+        end
+      end
+
+      chat.after_message do |message|
+        events << [:tool_message, message.tool_call_id] if message.tool_result?
+      end
+
+      chat.ask('Run the tools')
+
+      expect(events).to eq([
+                             [:tool_message, 'call_2'],
+                             [:tool_message, 'call_1'],
+                             [:follow_up, %w[call_2 call_1]]
+                           ])
     end
   end
 

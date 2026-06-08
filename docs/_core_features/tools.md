@@ -417,7 +417,8 @@ chat_record.with_tools(Weather, StockPrice, concurrency: :threads)
 chat_record.with_tools(Weather, StockPrice, concurrency: :fibers)
 ```
 
-Tool results are added back to the conversation in the model's original tool-call order.
+With concurrency enabled, tool results are added back to the conversation as each tool finishes. RubyLLM waits
+for all tool results before asking the model for the next response.
 
 ### Model Compatibility
 

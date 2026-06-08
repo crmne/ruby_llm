@@ -356,7 +356,7 @@ module RubyLLM
     def handle_concurrent_tool_calls(tool_calls)
       halt_result = nil
 
-      execute_tools_concurrently(tool_calls).each do |tool_call, result|
+      execute_tools_concurrently(tool_calls) do |tool_call, result|
         run_callbacks(:before_message, :new_message)
         add_tool_result_message(tool_call, result)
         halt_result = result if result.is_a?(Tool::Halt)
@@ -365,8 +365,8 @@ module RubyLLM
       halt_result
     end
 
-    def execute_tools_concurrently(tool_calls)
-      ToolConcurrency.run(concurrency, tool_calls) do |tool_call|
+    def execute_tools_concurrently(tool_calls, &on_result)
+      ToolConcurrency.run(concurrency, tool_calls, on_result:) do |tool_call|
         execute_tool_with_callbacks(tool_call)
       end
     end
