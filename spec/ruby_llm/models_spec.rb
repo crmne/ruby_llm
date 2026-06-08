@@ -188,10 +188,14 @@ RSpec.describe RubyLLM::Models do
         family: 'gpt-test',
         last_updated: '2025-02-01',
         knowledge: '2024-01-01',
-        modalities: { input: %w[text image], output: ['text'] },
+        modalities: { input: %w[text image], output: %w[text pdf] },
         tool_call: true,
         structured_output: true,
         reasoning: false,
+        reasoning_options: [
+          { type: 'effort', values: %w[low high] },
+          { type: 'budget_tokens', min: 1024 }
+        ],
         cost: {
           input: 1.25,
           output: 5.0,
@@ -220,7 +224,8 @@ RSpec.describe RubyLLM::Models do
       )
 
       expect(data[:modalities]).to eq(input: %w[text image], output: ['text'])
-      expect(data[:capabilities]).to match_array(%w[function_calling structured_output vision])
+      expect(data[:capabilities]).to match_array(%w[function_calling reasoning structured_output vision])
+      expect(data).not_to have_key(:reasoning_options)
       expect(data[:pricing]).to eq(
         text_tokens: {
           standard: {
@@ -240,6 +245,37 @@ RSpec.describe RubyLLM::Models do
       expect(data[:metadata][:cost]).to eq(model_data[:cost])
       expect(data[:metadata][:limit]).to eq(model_data[:limit])
       expect(data[:metadata][:knowledge]).to eq(model_data[:knowledge])
+      expect(data[:metadata][:reasoning_options]).to eq(
+        [
+          { type: 'effort', values: %w[low high] },
+          { type: 'budget_tokens', min: 1024 }
+        ]
+      )
+    end
+
+    it 'keeps models.dev authoritative for overlapping capabilities when merging provider metadata' do
+      models_dev_model = RubyLLM::Model::Info.new(
+        id: 'test-model',
+        name: 'Test Model',
+        provider: 'xai',
+        context_window: 1000,
+        max_output_tokens: 100,
+        modalities: { input: ['text'], output: ['text'] },
+        capabilities: ['function_calling'],
+        metadata: { source: 'models.dev' }
+      )
+      provider_model = RubyLLM::Model::Info.new(
+        id: 'test-model',
+        name: 'Test Model',
+        provider: 'xai',
+        context_window: 1000,
+        max_output_tokens: 100,
+        capabilities: %w[streaming function_calling reasoning vision structured_output]
+      )
+
+      merged = described_class.add_provider_metadata(models_dev_model, provider_model)
+
+      expect(merged.capabilities).to contain_exactly('function_calling', 'streaming')
     end
 
     it 'uses release_date cast to midnight as created_at' do

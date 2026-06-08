@@ -31,4 +31,10 @@ RSpec.describe RubyLLM::Chat do
     expect(chat.model.id).to eq('us.anthropic.claude-sonnet-4-20250514-v1:0')
     expect(chat.model.provider).to eq('bedrock')
   end
+
+  it 'resolves xAI provider aliases' do
+    chat = RubyLLM.chat(model: 'grok-4-1-fast-non-reasoning', provider: :xai)
+    expect(chat.model.id).to eq('grok-4.3')
+    expect(chat.model.provider).to eq('xai')
+  end
 end

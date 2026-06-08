@@ -38,7 +38,7 @@ redirect_from:
 </div>
 
 <p class="partner-proof">
-  Battle tested at <a href="https://chatwithwork.com"><img src="/assets/images/external/partners/chatwithwork-logotype.svg" alt="Chat with Work" class="chatwithwork-logo"></a> <em>- Fully private work AI</em>
+  Battle tested at <a href="https://chatwithwork.com"><picture><source media="(prefers-color-scheme: dark)" srcset="https://chatwithwork.com/logotype-dark.svg"><img src="https://chatwithwork.com/logotype.svg" alt="Chat with Work" class="chatwithwork-logo"></picture></a> <em>- Fully private work AI</em>
 </p>
 
 ## Build a working Ruby AI chat in two minutes

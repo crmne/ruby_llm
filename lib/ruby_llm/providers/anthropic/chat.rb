@@ -53,8 +53,7 @@ module RubyLLM
             max_tokens: model.max_tokens || 4096
           }
 
-          thinking_payload = build_thinking_payload(thinking)
-          payload[:thinking] = thinking_payload if thinking_payload
+          add_thinking_fields(payload, thinking, model)
 
           payload
         end
@@ -68,7 +67,7 @@ module RubyLLM
           end
           payload[:system] = system_content unless system_content.empty?
           payload[:temperature] = temperature unless temperature.nil?
-          payload[:output_config] = build_output_config(schema) if schema
+          payload[:output_config] = payload.fetch(:output_config, {}).merge(build_output_config(schema)) if schema
         end
 
         def build_output_config(schema)
@@ -231,16 +230,55 @@ module RubyLLM
           end
         end
 
-        def build_thinking_payload(thinking)
+        def add_thinking_fields(payload, thinking, model)
+          thinking_payload = build_thinking_payload(thinking, model)
+          return unless thinking_payload
+
+          payload[:thinking] = thinking_payload[:thinking] if thinking_payload[:thinking]
+          return unless thinking_payload[:output_config]
+
+          payload[:output_config] = payload.fetch(:output_config, {}).merge(thinking_payload[:output_config])
+        end
+
+        def build_thinking_payload(thinking, model)
           return nil unless thinking&.enabled?
 
-          budget = resolve_budget(thinking)
-          raise ArgumentError, 'Anthropic thinking requires a budget' if budget.nil?
+          effort = resolve_effort(thinking)
+          return nil if effort == 'none'
 
+          budget = resolve_budget(thinking)
+          if budget
+            return enabled_thinking_payload(budget) if model.reasoning_option('budget_tokens')
+
+            raise ArgumentError, "Anthropic thinking budget is not supported for #{model.id}"
+          end
+
+          raise ArgumentError, 'Anthropic adaptive thinking requires an effort' if effort.nil?
+          return adaptive_thinking_payload(effort) if model.reasoning_option('effort')
+
+          raise ArgumentError, "Anthropic thinking effort is not supported for #{model.id}"
+        end
+
+        def enabled_thinking_payload(budget)
           {
-            type: 'enabled',
-            budget_tokens: budget
+            thinking: {
+              type: 'enabled',
+              budget_tokens: budget
+            }
           }
+        end
+
+        def adaptive_thinking_payload(effort)
+          {
+            thinking: { type: 'adaptive' },
+            output_config: { effort: effort }
+          }
+        end
+
+        def resolve_effort(thinking)
+          effort = thinking.respond_to?(:effort) ? thinking.effort : nil
+          effort = effort.to_s if effort
+          effort.nil? || effort.empty? ? nil : effort
         end
 
         def resolve_budget(thinking)

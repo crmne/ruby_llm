@@ -17,8 +17,12 @@ module RubyLLM
       'deepseek' => 'deepseek',
       'mistral' => 'mistral',
       'openrouter' => 'openrouter',
-      'perplexity' => 'perplexity'
+      'perplexity' => 'perplexity',
+      'xai' => 'xai'
     }.freeze
+    MODELS_DEV_INPUT_MODALITIES = %w[text image audio pdf video file].freeze
+    MODELS_DEV_OUTPUT_MODALITIES = %w[text image audio video embeddings moderation].freeze
+    MODELS_DEV_AUTHORITY_CAPABILITIES = %w[function_calling structured_output reasoning vision].freeze
     PROVIDER_PREFERENCE = %w[
       openai
       anthropic
@@ -324,7 +328,8 @@ module RubyLLM
         data[:modalities] = provider_model.modalities.to_h if blank_value?(data[:modalities])
         data[:pricing] = provider_model.pricing.to_h if blank_value?(data[:pricing])
         data[:metadata] = provider_model.metadata.merge(data[:metadata] || {})
-        data[:capabilities] = (models_dev_model.capabilities + provider_model.capabilities).uniq
+        provider_capabilities = provider_model.capabilities - MODELS_DEV_AUTHORITY_CAPABILITIES
+        data[:capabilities] = (models_dev_model.capabilities + provider_capabilities).uniq
         normalize_embedding_modalities(data)
         Model::Info.new(data)
       end
@@ -381,7 +386,7 @@ module RubyLLM
         capabilities = []
         capabilities << 'function_calling' if model_data[:tool_call]
         capabilities << 'structured_output' if model_data[:structured_output]
-        capabilities << 'reasoning' if model_data[:reasoning]
+        capabilities << 'reasoning' if model_data[:reasoning] || model_data[:reasoning_options]
         capabilities << 'vision' if modalities[:input].intersect?(%w[image video pdf])
         capabilities.uniq
       end
@@ -418,6 +423,7 @@ module RubyLLM
           last_updated: model_data[:last_updated],
           status: model_data[:status],
           interleaved: model_data[:interleaved],
+          reasoning_options: model_data[:reasoning_options],
           cost: model_data[:cost],
           limit: model_data[:limit],
           knowledge: model_data[:knowledge]
@@ -429,8 +435,8 @@ module RubyLLM
         normalized = { input: [], output: [] }
         return normalized unless modalities
 
-        normalized[:input] = Array(modalities[:input]).compact
-        normalized[:output] = Array(modalities[:output]).compact
+        normalized[:input] = Array(modalities[:input]).compact & MODELS_DEV_INPUT_MODALITIES
+        normalized[:output] = Array(modalities[:output]).compact & MODELS_DEV_OUTPUT_MODALITIES
         normalized
       end
 

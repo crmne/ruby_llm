@@ -5,11 +5,11 @@ http_interactions:
     uri: https://api.x.ai/v1/chat/completions
     body:
       encoding: UTF-8
-      string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"user","content":"What''s
-        2 + 2?"}],"stream":false}'
+      string: '{"model":"grok-4.3","messages":[{"role":"user","content":"What''s 2
+        + 2?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,37 +24,39 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 06 May 2026 23:56:52 GMT
+      - Mon, 08 Jun 2026 16:10:31 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Strict-Transport-Security:
+      - max-age=31536000
       Set-Cookie:
       - "<COOKIE>"
       X-Ratelimit-Limit-Tokens:
       - '10000000'
       X-Ratelimit-Remaining-Tokens:
-      - '9999183'
+      - '10000000'
       X-Zero-Data-Retention:
       - 'false'
       X-Ratelimit-Limit-Requests:
       - '1800'
       X-Ratelimit-Remaining-Requests:
-      - '1799'
-      X-Metrics-Ttft-Ms:
-      - '176.8'
-      X-Metrics-E2e-Ms:
-      - '309.1'
-      Strict-Transport-Security:
-      - max-age=31536000
-      X-Request-Id:
-      - "<X_REQUEST_ID>"
-      Traceparent:
-      - 00-946be0e014b5bf3f83cd4b477aac7253-57b3908800025f53-01
+      - '1800'
       Cf-Cache-Status:
       - DYNAMIC
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      X-Metrics-Ttft-Ms:
+      - '199.7'
+      X-Metrics-Mean-Itl-Ms:
+      - '5.1'
+      X-Metrics-E2e-Ms:
+      - '874.4'
+      Traceparent:
+      - 00-cf8f7e1bbbe5c823888e249ed3a42411-00c4953f0002ad18-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
@@ -67,6 +69,8 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"49f92b89-a573-ed09-f2ae-60ce91bff8b5","object":"chat.completion","created":1778111811,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"4","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":175,"completion_tokens":1,"total_tokens":176,"prompt_tokens_details":{"text_tokens":175,"audio_tokens":0,"image_tokens":0,"cached_tokens":161},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":113500},"system_fingerprint":"fp_b9ff9b81b3"}'
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+      string: '{"id":"90807bcd-2c53-997c-a49c-32249e695133","object":"chat.completion","created":1780935030,"model":"grok-4.3","choices":[{"index":0,"message":{"role":"assistant","content":"4","reasoning_content":"The
+        question is \"What''s 2 + 2?\" This is a straightforward math question. The
+        answer is 4.\n","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":137,"completion_tokens":1,"total_tokens":254,"prompt_tokens_details":{"text_tokens":137,"audio_tokens":0,"image_tokens":0,"cached_tokens":128},"completion_tokens_details":{"reasoning_tokens":116,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":3293500},"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}'
+  recorded_at: Mon, 08 Jun 2026 16:10:31 GMT
 recorded_with: VCR 6.4.0

@@ -54,6 +54,7 @@ RSpec.describe RubyLLM::Chat do
         if %i[perplexity mistral].include?(provider)
           skip 'Provider API does not allow system messages after user/assistant messages'
         end
+        skip 'xAI may retain prior instruction artifacts from conversation history' if provider == :xai
 
         if provider == :ollama && model == 'qwen3'
           skip 'ollama/qwen3 includes thinking tags even with enable_thinking: false'

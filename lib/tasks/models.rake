@@ -467,10 +467,38 @@ def generate_aliases # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComple
     }
   end
 
+  add_xai_aliases(aliases, models['xai'])
+
   sorted_aliases = aliases.sort.to_h
   File.write(RubyLLM::Aliases.aliases_file, JSON.pretty_generate(sorted_aliases))
 
   puts "Generated #{sorted_aliases.size} aliases"
+end
+
+def add_xai_aliases(aliases, xai_models)
+  return unless xai_models.include?('grok-4.3')
+
+  %w[
+    grok-latest
+    grok-3
+    grok-3-latest
+    grok-3-mini
+    grok-3-mini-latest
+    grok-4
+    grok-4-latest
+    grok-4-fast
+    grok-4-fast-reasoning
+    grok-4-fast-reasoning-latest
+    grok-4-fast-non-reasoning
+    grok-4-fast-non-reasoning-latest
+    grok-4-1-fast
+    grok-4-1-fast-reasoning
+    grok-4-1-fast-reasoning-latest
+    grok-4-1-fast-non-reasoning
+    grok-4-1-fast-non-reasoning-latest
+  ].each do |alias_key|
+    aliases[alias_key] ||= { 'xai' => 'grok-4.3' }
+  end
 end
 
 def group_anthropic_models_by_base_name(anthropic_models)
@@ -519,12 +547,12 @@ def find_best_bedrock_model(anthropic_model, bedrock_models) # rubocop:disable M
                  when 'claude-instant-v1', 'claude-instant'
                    'claude-instant'
                  else
-                   extract_base_name(anthropic_model)
+                   anthropic_model
                  end
 
   matching_models = bedrock_models.select do |bedrock_model|
-    model_without_prefix = bedrock_model.sub(/^(?:us\.)?anthropic\./, '')
-    model_without_prefix.start_with?(base_pattern)
+    model_without_prefix = bedrock_model.sub(/^(?:(?:[a-z]{2}|global)\.)?anthropic\./, '')
+    model_without_prefix.match?(/\A#{Regexp.escape(base_pattern)}(?:-v\d+|:\d+k|$)/)
   end
 
   return nil if matching_models.empty?
