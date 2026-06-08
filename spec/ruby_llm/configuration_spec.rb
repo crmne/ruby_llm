@@ -36,6 +36,20 @@ RSpec.describe RubyLLM::Configuration do
       expect(config.use_new_acts_as).to be(true)
     end
 
+    it 'normalizes blank strings to nil' do
+      config.openai_api_base = ''
+      config.anthropic_api_key = " \t\n"
+
+      expect(config.openai_api_base).to be_nil
+      expect(config.anthropic_api_key).to be_nil
+    end
+
+    it 'preserves non-blank strings' do
+      config.openai_api_base = 'https://openai-compatible.example.com/v1'
+
+      expect(config.openai_api_base).to eq('https://openai-compatible.example.com/v1')
+    end
+
     it 'warns but preserves log_regexp_timeout when regexp timeouts are unsupported' do
       allow(Regexp).to receive(:respond_to?).and_call_original
       allow(Regexp).to receive(:respond_to?).with(:timeout).and_return(false)

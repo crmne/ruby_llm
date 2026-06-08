@@ -11,7 +11,12 @@ module RubyLLM
         key = key.to_sym
         return if options.include?(key)
 
-        attr_accessor key
+        attr_reader key
+
+        define_method("#{key}=") do |value|
+          value = nil if value.is_a?(String) && value.strip.empty?
+          instance_variable_set(:"@#{key}", value)
+        end
 
         option_keys << key
         defaults[key] = default

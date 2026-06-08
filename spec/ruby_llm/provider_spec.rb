@@ -44,6 +44,35 @@ RSpec.describe RubyLLM::Provider do
     end
   end
 
+  describe '.configured?' do
+    it 'treats blank required configuration as missing' do
+      provider_class = Class.new(described_class) do
+        class << self
+          def configuration_options
+            %i[blank_test_api_key]
+          end
+
+          def configuration_requirements
+            %i[blank_test_api_key]
+          end
+        end
+      end
+
+      RubyLLM::Configuration.register_provider_options(provider_class.configuration_options)
+      config = RubyLLM::Configuration.new
+      config.blank_test_api_key = ''
+
+      expect(provider_class.configured?(config)).to be(false)
+    ensure
+      RubyLLM::Configuration.send(:option_keys).delete(:blank_test_api_key)
+      RubyLLM::Configuration.send(:defaults).delete(:blank_test_api_key)
+      RubyLLM::Configuration.class_eval do
+        remove_method :blank_test_api_key if method_defined?(:blank_test_api_key)
+        remove_method :blank_test_api_key= if method_defined?(:blank_test_api_key=)
+      end
+    end
+  end
+
   describe 'provider configuration schema' do
     it 'keeps requirements as a subset of declared configuration options' do
       described_class.providers.each_value do |provider_class|
