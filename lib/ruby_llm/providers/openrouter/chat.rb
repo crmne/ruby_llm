@@ -30,31 +30,6 @@ module RubyLLM
           payload[:response_format][:json_schema][:schema] = schema_def
         end
 
-        def input_tokens(usage)
-          return usage['prompt_cache_miss_tokens'] if usage['prompt_cache_miss_tokens']
-
-          prompt_tokens = usage['prompt_tokens']
-          return unless prompt_tokens
-
-          [prompt_tokens.to_i - cache_read_tokens(usage).to_i - cache_write_tokens(usage).to_i, 0].max
-        end
-
-        def output_tokens(usage)
-          OpenAI::Chat.output_tokens(usage)
-        end
-
-        def cache_read_tokens(usage)
-          usage.dig('prompt_tokens_details', 'cached_tokens') || usage['prompt_cache_hit_tokens']
-        end
-
-        def cache_write_tokens(usage)
-          usage.dig('prompt_tokens_details', 'cache_write_tokens') || 0
-        end
-
-        def thinking_tokens(usage)
-          OpenAI::Chat.thinking_tokens(usage)
-        end
-
         def format_messages(messages)
           messages.map do |msg|
             {
@@ -63,19 +38,6 @@ module RubyLLM
               tool_calls: OpenAI::Tools.format_tool_calls(msg.tool_calls),
               tool_call_id: msg.tool_call_id
             }.compact.merge(format_thinking(msg))
-          end
-        end
-
-        def format_content(content)
-          OpenAI::Media.format_content(content)
-        end
-
-        def format_role(role)
-          case role
-          when :system
-            @config.openai_use_system_role ? 'system' : 'developer'
-          else
-            role.to_s
           end
         end
 
