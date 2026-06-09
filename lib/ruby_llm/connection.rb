@@ -28,8 +28,7 @@ module RubyLLM
       @provider = provider
       @config = config
 
-      ensure_configured!
-      @connection ||= Faraday.new(provider.api_base) do |faraday|
+      @connection = Faraday.new(provider.api_base) do |faraday|
         setup_timeout(faraday)
         setup_logging(faraday)
         setup_retry(faraday)
@@ -140,20 +139,6 @@ module RubyLLM
         RubyLLM::ServiceUnavailableError,
         RubyLLM::OverloadedError
       ]
-    end
-
-    def ensure_configured!
-      return if @provider.configured?
-
-      missing = @provider.configuration_requirements.reject { |req| @config.send(req) }
-      config_block = <<~RUBY
-        RubyLLM.configure do |config|
-          #{missing.map { |key| "config.#{key} = ENV['#{key.to_s.upcase}']" }.join("\n  ")}
-        end
-      RUBY
-
-      raise ConfigurationError,
-            "#{@provider.name} provider is not configured. Add this to your initialization:\n\n#{config_block}"
     end
   end
 end

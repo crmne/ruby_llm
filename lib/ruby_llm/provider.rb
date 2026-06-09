@@ -99,7 +99,7 @@ module RubyLLM
     end
 
     def configured?
-      configuration_requirements.all? { |req| @config.send(req) }
+      self.class.configured?(@config)
     end
 
     def local?
@@ -259,12 +259,17 @@ module RubyLLM
     end
 
     def ensure_configured!
+      return if configured?
+
       missing = configuration_requirements.reject { |req| @config.send(req) }
-      return if missing.empty?
+      config_block = <<~RUBY
+        RubyLLM.configure do |config|
+          #{missing.map { |key| "config.#{key} = ENV['#{key.to_s.upcase}']" }.join("\n  ")}
+        end
+      RUBY
 
       raise ConfigurationError,
-            "Missing configuration for #{name}: #{missing.join(', ')}. " \
-            'Set these keys on RubyLLM.config before using this provider.'
+            "#{name} provider is not configured. Add this to your initialization:\n\n#{config_block}"
     end
 
     def maybe_normalize_temperature(temperature, _model)
