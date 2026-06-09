@@ -28,11 +28,7 @@ module RubyLLM
     end
 
     def content
-      if @content.is_a?(Content) && @content.text && @content.attachments.empty?
-        @content.text
-      else
-        @content
-      end
+      @content.is_a?(Content) ? @content.format : @content
     end
 
     def tool_call?
