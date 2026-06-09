@@ -7,7 +7,6 @@ module RubyLLM
 
     def initialize(config)
       @config = config
-      @connections = {}
     end
 
     def chat(*args, **kwargs, &)
@@ -22,8 +21,12 @@ module RubyLLM
       Image.paint(*args, **kwargs, context: self, &)
     end
 
-    def connection_for(provider_instance)
-      provider_instance.connection
+    def moderate(*args, **kwargs, &)
+      Moderation.moderate(*args, **kwargs, context: self, &)
+    end
+
+    def transcribe(*args, **kwargs, &)
+      Transcription.transcribe(*args, **kwargs, context: self, &)
     end
   end
 end
