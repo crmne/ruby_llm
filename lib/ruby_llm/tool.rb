@@ -134,12 +134,11 @@ module RubyLLM
       return nil if required_keywords.empty? && optional_keywords.empty? && accepts_positional_arguments
 
       argument_keys = arguments.keys
-      missing_keyword = first_missing_keyword(required_keywords, argument_keys)
+      missing_keyword = (required_keywords - argument_keys).first
       return "missing keyword: #{missing_keyword}" if missing_keyword
       return nil if accepts_extra_keywords
 
-      allowed_keywords = required_keywords + optional_keywords
-      unknown_keyword = first_unknown_keyword(argument_keys, allowed_keywords)
+      unknown_keyword = (argument_keys - (required_keywords + optional_keywords)).first
       return "unknown keyword: #{unknown_keyword}" if unknown_keyword
 
       nil
@@ -155,14 +154,6 @@ module RubyLLM
       end
 
       [required_keywords, optional_keywords, accepts_extra_keywords, accepts_positional_arguments]
-    end
-
-    def first_missing_keyword(required_keywords, argument_keys)
-      (required_keywords - argument_keys).first
-    end
-
-    def first_unknown_keyword(argument_keys, allowed_keywords)
-      (argument_keys - allowed_keywords).first
     end
 
     def inferred_parameters
