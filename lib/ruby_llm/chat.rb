@@ -164,8 +164,44 @@ module RubyLLM
       Cost.aggregate(messages.map { |message| message.cost(model: message.model_info || model) })
     end
 
-    def complete(&)
-      instrument_completion(&)
+    def complete(&block)
+      result = nil
+      payload = {
+        chat: self,
+        provider: @provider.slug,
+        provider_class: @provider.class.name,
+        model: @model.id,
+        model_info: @model,
+        input_messages: messages.dup,
+        message_count: messages.size,
+        tools: tools.keys,
+        tool_choice: tool_prefs[:choice],
+        tool_call_limit: tool_prefs[:calls],
+        temperature: @temperature,
+        params: params,
+        schema: schema,
+        thinking: @thinking,
+        streaming: block_given?
+      }
+
+      RubyLLM.instrument('chat.ruby_llm', payload, config: @config) do |event|
+        result = complete_once(&block)
+        event[:response] = result
+        event[:messages_after] = messages.dup
+        event[:response_role] = result.role if result.respond_to?(:role)
+
+        if result.respond_to?(:tool_call?)
+          event[:response_model] = result.model_id
+          event[:tool_call] = result.tool_call?
+          event[:tool_calls] = result.tool_calls
+          event[:input_tokens] = result.input_tokens
+          event[:output_tokens] = result.output_tokens
+          event[:cached_tokens] = result.cached_tokens
+          event[:cache_creation_tokens] = result.cache_creation_tokens
+          event[:thinking_tokens] = result.thinking_tokens
+        end
+      end
+      result
     end
 
     def add_message(message_or_attributes)
@@ -240,47 +276,6 @@ module RubyLLM
       else
         response
       end
-    end
-
-    def instrument_completion(&block)
-      result = nil
-      streaming = block_given?
-      payload = {
-        chat: self,
-        provider: @provider.slug,
-        provider_class: @provider.class.name,
-        model: @model.id,
-        model_info: @model,
-        input_messages: messages.dup,
-        message_count: messages.size,
-        tools: tools.keys,
-        tool_choice: tool_prefs[:choice],
-        tool_call_limit: tool_prefs[:calls],
-        temperature: @temperature,
-        params: params,
-        schema: schema,
-        thinking: @thinking,
-        streaming: streaming
-      }
-
-      RubyLLM.instrument('chat.ruby_llm', payload, config: @config) do |event|
-        result = complete_once(&block)
-        event[:response] = result
-        event[:messages_after] = messages.dup
-        event[:response_role] = result.role if result.respond_to?(:role)
-
-        if result.respond_to?(:tool_call?)
-          event[:response_model] = result.model_id
-          event[:tool_call] = result.tool_call?
-          event[:tool_calls] = result.tool_calls
-          event[:input_tokens] = result.input_tokens
-          event[:output_tokens] = result.output_tokens
-          event[:cached_tokens] = result.cached_tokens
-          event[:cache_creation_tokens] = result.cache_creation_tokens
-          event[:thinking_tokens] = result.thinking_tokens
-        end
-      end
-      result
     end
 
     def provider_completion(&)
