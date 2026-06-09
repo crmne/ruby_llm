@@ -135,7 +135,8 @@ module RubyLLM
     private
 
     def determine_mime_type
-      return @mime_type = active_storage_content_type if active_storage? && active_storage_content_type.present?
+      content_type = active_storage? ? active_storage_content_type : nil
+      return @mime_type = content_type unless content_type.to_s.empty?
 
       @mime_type = RubyLLM::MimeType.for(url? ? nil : @source, name: @filename)
       @mime_type = RubyLLM::MimeType.for(content) if @mime_type == 'application/octet-stream'
