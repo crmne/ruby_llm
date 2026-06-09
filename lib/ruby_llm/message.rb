@@ -91,7 +91,8 @@ module RubyLLM
       }.merge(tokens ? tokens.to_h : {}).compact
     end
 
-    def instance_variables
+    # Keeps the raw Faraday response out of pretty-printed output.
+    def pretty_print_instance_variables
       super - [:@raw]
     end
 

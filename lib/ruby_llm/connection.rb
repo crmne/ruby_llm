@@ -55,7 +55,8 @@ module RubyLLM
       end
     end
 
-    def instance_variables
+    # Keeps the config and Faraday internals out of pretty-printed output.
+    def pretty_print_instance_variables
       super - %i[@config @connection]
     end
 

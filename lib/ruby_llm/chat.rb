@@ -215,7 +215,8 @@ module RubyLLM
       @messages.clear
     end
 
-    def instance_variables
+    # Keeps the connection and config dumps out of pretty-printed output.
+    def pretty_print_instance_variables
       super - %i[@connection @config]
     end
 
