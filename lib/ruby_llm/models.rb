@@ -97,8 +97,12 @@ module RubyLLM
       end
 
       def refresh!(remote_only: false)
-        # Replaces the process-wide model registry. Call save_to_json when the
-        # refreshed registry should also be persisted.
+        instance.refresh!(remote_only: remote_only)
+      end
+
+      # Fetches and merges the latest models. Call save_to_json when the
+      # refreshed registry should also be persisted.
+      def fetch_merged_models(remote_only: false)
         RubyLLM.instrument('models.refresh.ruby_llm', remote_only:) do |payload|
           existing_models = load_existing_models
 
@@ -110,7 +114,7 @@ module RubyLLM
 
           merged_models = merge_with_existing(existing_models, provider_fetch, models_dev_fetch)
           payload[:model_count] = merged_models.size
-          @instance = new(merged_models)
+          merged_models
         end
       end
 
@@ -506,7 +510,8 @@ module RubyLLM
     end
 
     def refresh!(remote_only: false)
-      self.class.refresh!(remote_only: remote_only)
+      @models = self.class.fetch_merged_models(remote_only: remote_only)
+      self
     end
 
     def resolve(model_id, provider: nil, assume_exists: false, config: nil)
