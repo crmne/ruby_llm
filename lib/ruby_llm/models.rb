@@ -154,19 +154,14 @@ module RubyLLM
       def resolve(model_id, provider: nil, assume_exists: false, config: nil) # rubocop:disable Metrics/PerceivedComplexity
         config ||= RubyLLM.config
         provider_class = provider ? Provider.providers[provider.to_sym] : nil
-
-        if provider_class
-          temp_instance = provider_class.new(config)
-          assume_exists = true if temp_instance.local? || temp_instance.assume_models_exist?
-        end
+        assume_exists = true if provider_class&.local? || provider_class&.assume_models_exist?
 
         if assume_exists
           raise ArgumentError, 'Provider must be specified if assume_exists is true' unless provider
 
           provider_class ||= raise_unknown_provider(provider)
-          provider_instance = provider_class.new(config)
 
-          model = if provider_instance.local?
+          model = if provider_class.local?
                     begin
                       Models.find(model_id, provider)
                     rescue ModelNotFoundError
@@ -174,13 +169,12 @@ module RubyLLM
                     end
                   end
 
-          model ||= Model::Info.default(model_id, provider_instance.slug)
+          model ||= Model::Info.default(model_id, provider_class.slug)
         else
           model = Models.find model_id, provider
           provider_class = Provider.providers[model.provider.to_sym] || raise_unknown_provider(model.provider)
-          provider_instance = provider_class.new(config)
         end
-        [model, provider_instance]
+        [model, provider_class.new(config)]
       end
 
       def fetch_models_dev_models(existing_models) # rubocop:disable Metrics/PerceivedComplexity
