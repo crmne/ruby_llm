@@ -8,14 +8,6 @@ module RubyLLM
 
     module_function
 
-    def modes
-      MODES
-    end
-
-    def supported?(name)
-      MODES.include?(name)
-    end
-
     def run(mode, tool_calls, on_result: nil, &)
       case mode
       when :threads

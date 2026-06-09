@@ -441,11 +441,11 @@ module RubyLLM
       return :threads if concurrency == true
 
       normalized = concurrency.to_sym
-      return normalized if ToolConcurrency.supported?(normalized)
+      return normalized if ToolConcurrency::MODES.include?(normalized)
 
       raise ArgumentError,
             "Unknown tool concurrency: #{concurrency.inspect}. " \
-            "Available modes: #{ToolConcurrency.modes.join(', ')}"
+            "Available modes: #{ToolConcurrency::MODES.join(', ')}"
     end
 
     def normalize_calls(calls)
