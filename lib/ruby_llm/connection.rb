@@ -40,7 +40,7 @@ module RubyLLM
     def post(url, payload, &)
       instrument_request(:post, url) do
         @connection.post url, payload do |req|
-          req.headers.merge! provider_headers
+          req.headers.merge! @provider.headers
           yield req if block_given?
         end
       end
@@ -49,7 +49,7 @@ module RubyLLM
     def get(url, &)
       instrument_request(:get, url) do
         @connection.get url do |req|
-          req.headers.merge! provider_headers
+          req.headers.merge! @provider.headers
           yield req if block_given?
         end
       end
@@ -62,13 +62,9 @@ module RubyLLM
 
     private
 
-    def provider_headers
-      @provider.respond_to?(:headers) ? @provider.headers : {}
-    end
-
     def instrument_request(method, url)
       payload = {
-        provider: @provider.respond_to?(:slug) ? @provider.slug : @provider.class.name,
+        provider: @provider.slug,
         method: method,
         url: url
       }
@@ -117,8 +113,7 @@ module RubyLLM
       faraday.request :multipart
       faraday.request :json
       faraday.response :json
-      adapter = @config.respond_to?(:faraday_adapter) ? @config.faraday_adapter : :net_http
-      faraday.adapter(adapter || :net_http)
+      faraday.adapter(@config.faraday_adapter)
       faraday.use :llm_errors, provider: @provider
     end
 

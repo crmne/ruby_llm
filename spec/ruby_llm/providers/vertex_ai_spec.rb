@@ -14,6 +14,7 @@ RSpec.describe RubyLLM::Providers::VertexAI do
       retry_interval_randomness: 0.5,
       retry_backoff_factor: 2,
       http_proxy: nil,
+      faraday_adapter: :net_http,
       vertexai_location: location,
       vertexai_project_id: 'test-project',
       vertexai_api_base: vertexai_api_base
