@@ -9,6 +9,13 @@ module RubyLLM
       hash[key.to_sym] || hash[key.to_s]
     end
 
+    # Acronym-aware underscoring: 'HTTPProxyTool' -> 'http_proxy_tool'.
+    def underscore(name)
+      name.gsub(/([A-Z]+)([A-Z][a-z])/, '\1_\2')
+          .gsub(/([a-z\d])([A-Z])/, '\1_\2')
+          .downcase
+    end
+
     def to_safe_array(item)
       case item
       when Array

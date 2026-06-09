@@ -334,11 +334,7 @@ module RubyLLM
 
       def prompt_agent_path
         class_name = name || 'agent'
-        class_name.gsub('::', '/')
-                  .gsub(/([A-Z]+)([A-Z][a-z])/, '\1_\2')
-                  .gsub(/([a-z\d])([A-Z])/, '\1_\2')
-                  .tr('-', '_')
-                  .downcase
+        Utils.underscore(class_name.gsub('::', '/')).tr('-', '_')
       end
 
       def prompt_root

@@ -481,10 +481,7 @@ module RubyLLM
     end
 
     def classify_tool_name(class_name)
-      class_name.split('::').last
-                .gsub(/([a-z\d])([A-Z])/, '\1_\2')
-                .downcase
-                .to_sym
+      Utils.underscore(class_name.split('::').last).delete_suffix('_tool').to_sym
     end
 
     def forced_tool_choice?
