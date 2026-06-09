@@ -36,6 +36,83 @@ RSpec.describe RubyLLM::Agent do
     expect(chat.messages.first.content).to eq('RubyLLM::Chat')
   end
 
+  it 'forwards choice: from the tools macro positional form to with_tools' do
+    tool_class = Class.new(RubyLLM::Tool) do
+      def name = 'echo_tool'
+    end
+
+    agent_class = Class.new(RubyLLM::Agent) do
+      model 'gpt-4.1-nano'
+      tools tool_class, choice: :required
+    end
+
+    chat = agent_class.chat
+
+    expect(chat.tools.keys).to include(:echo_tool)
+    expect(chat.tool_prefs[:choice]).to eq(:required)
+  end
+
+  it 'forwards choice: from the tools macro block form to with_tools' do
+    tool_class = Class.new(RubyLLM::Tool) do
+      def name = 'echo_tool'
+    end
+
+    agent_class = Class.new(RubyLLM::Agent) do
+      model 'gpt-4.1-nano'
+      tools(choice: :required) { [tool_class.new] }
+    end
+
+    chat = agent_class.chat
+
+    expect(chat.tools.keys).to include(:echo_tool)
+    expect(chat.tool_prefs[:choice]).to eq(:required)
+  end
+
+  it 'forwards calls: from the tools macro to with_tools' do
+    tool_class = Class.new(RubyLLM::Tool) do
+      def name = 'echo_tool'
+    end
+
+    agent_class = Class.new(RubyLLM::Agent) do
+      model 'gpt-4.1-nano'
+      tools tool_class, calls: :one
+    end
+
+    chat = agent_class.chat
+
+    expect(chat.tool_prefs[:calls]).to eq(:one)
+  end
+
+  it 'keeps the zero-arg tools reader returning the configured tool list' do
+    tool_class = Class.new(RubyLLM::Tool) do
+      def name = 'echo_tool'
+    end
+
+    agent_class = Class.new(RubyLLM::Agent) do
+      model 'gpt-4.1-nano'
+      tools tool_class, choice: :required
+    end
+
+    expect(agent_class.tools).to eq([tool_class])
+  end
+
+  it 'leaves tool prefs unset when no options are given' do
+    tool_class = Class.new(RubyLLM::Tool) do
+      def name = 'echo_tool'
+    end
+
+    agent_class = Class.new(RubyLLM::Agent) do
+      model 'gpt-4.1-nano'
+      tools tool_class
+    end
+
+    chat = agent_class.chat
+
+    expect(chat.tools.keys).to include(:echo_tool)
+    expect(chat.tool_prefs[:choice]).to be_nil
+    expect(chat.tool_prefs[:calls]).to be_nil
+  end
+
   it 'raises when instructions default prompt is missing' do
     agent_class = Class.new(RubyLLM::Agent) do
       model 'gpt-4.1-nano'

@@ -116,6 +116,19 @@ class CriticAgent < RubyLLM::Agent
 end
 ```
 
+`tools` accepts the same `choice:` and `calls:` options as `with_tools`, forwarding them to the underlying chat:
+
+```ruby
+class WeatherAgent < RubyLLM::Agent
+  tools Weather, Calculator, choice: :required
+end
+
+# Block form works too:
+class WeatherAgent < RubyLLM::Agent
+  tools(choice: :required) { [Weather.new, Calculator.new] }
+end
+```
+
 ## Runtime Context and Inputs
 
 Agents support runtime-evaluated values using blocks and lambdas.
