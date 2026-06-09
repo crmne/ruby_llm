@@ -151,15 +151,20 @@ module RubyLLM
         ERB.new(File.read(path)).result_with_hash(resolved_locals)
       end
 
-      private
+      def partition_inputs(kwargs)
+        input_values = {}
+        chat_options = {}
 
-      def with_rails_chat_record(method_name, **kwargs)
-        raise ArgumentError, 'chat_model must be configured to use create/create!' unless resolved_chat_model
+        kwargs.each do |key, value|
+          symbolized_key = key.to_sym
+          if inputs.include?(symbolized_key)
+            input_values[symbolized_key] = value
+          else
+            chat_options[symbolized_key] = value
+          end
+        end
 
-        input_values, chat_options = partition_inputs(kwargs)
-        record = resolved_chat_model.public_send(method_name, **chat_kwargs, **chat_options)
-        apply_configuration(record, input_values:, persist_instructions: true) if record
-        record
+        [input_values, chat_options]
       end
 
       def apply_configuration(chat_object, input_values:, persist_instructions:)
@@ -174,6 +179,17 @@ module RubyLLM
         apply_params(llm_chat, runtime)
         apply_headers(llm_chat, runtime)
         apply_schema(llm_chat, runtime)
+      end
+
+      private
+
+      def with_rails_chat_record(method_name, **kwargs)
+        raise ArgumentError, 'chat_model must be configured to use create/create!' unless resolved_chat_model
+
+        input_values, chat_options = partition_inputs(kwargs)
+        record = resolved_chat_model.public_send(method_name, **chat_kwargs, **chat_options)
+        apply_configuration(record, input_values:, persist_instructions: true) if record
+        record
       end
 
       def apply_context(llm_chat)
@@ -296,22 +312,6 @@ module RubyLLM
         base.merge(evaluated)
       end
 
-      def partition_inputs(kwargs)
-        input_values = {}
-        chat_options = {}
-
-        kwargs.each do |key, value|
-          symbolized_key = key.to_sym
-          if inputs.include?(symbolized_key)
-            input_values[symbolized_key] = value
-          else
-            chat_options[symbolized_key] = value
-          end
-        end
-
-        [input_values, chat_options]
-      end
-
       def runtime_context(chat:, inputs:)
         agent_class = self
         Object.new.tap do |runtime|
@@ -356,10 +356,10 @@ module RubyLLM
     end
 
     def initialize(chat: nil, inputs: nil, persist_instructions: true, **kwargs)
-      input_values, chat_options = self.class.send(:partition_inputs, kwargs)
+      input_values, chat_options = self.class.partition_inputs(kwargs)
       @chat = chat || RubyLLM.chat(**self.class.chat_kwargs, **chat_options)
-      self.class.send(:apply_configuration, @chat, input_values: input_values.merge(inputs || {}),
-                                                   persist_instructions:)
+      self.class.apply_configuration(@chat, input_values: input_values.merge(inputs || {}),
+                                            persist_instructions:)
     end
 
     attr_reader :chat
