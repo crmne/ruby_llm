@@ -326,13 +326,11 @@ module RubyLLM
     end
 
     def wrap_streaming_block(&block)
-      return nil unless block_given?
+      return nil unless block
 
       run_callbacks(:before_message, :new_message)
 
-      proc do |chunk|
-        block.call chunk
-      end
+      block
     end
 
     def handle_tool_calls(response, &)
