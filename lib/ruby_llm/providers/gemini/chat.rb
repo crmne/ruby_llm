@@ -111,7 +111,7 @@ module RubyLLM
 
           Message.new(
             role: :assistant,
-            content: extract_text_parts(parts) || parse_content(data),
+            content: parse_content(data),
             thinking: Thinking.build(
               text: extract_thought_parts(parts),
               signature: extract_thought_signature(parts)
@@ -155,12 +155,6 @@ module RubyLLM
           return '' unless non_thought_parts.any?
 
           build_response_content(non_thought_parts)
-        end
-
-        def extract_text_parts(parts)
-          text_parts = parts.reject { |p| p['thought'] }
-          content = text_parts.filter_map { |p| p['text'] }.join
-          content.empty? ? nil : content
         end
 
         def extract_thought_parts(parts)
