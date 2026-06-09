@@ -17,7 +17,7 @@ module RubyLLM
           usage = data['usage'] || {}
           delta = data.dig('choices', 0, 'delta') || {}
           content_source = delta['content'] || data.dig('choices', 0, 'message', 'content')
-          content, thinking_from_blocks = OpenAI::Chat.extract_content_and_thinking(content_source)
+          content, thinking_from_blocks = extract_content_and_thinking(content_source)
 
           Chunk.new(
             role: :assistant,
@@ -28,11 +28,11 @@ module RubyLLM
               signature: delta['reasoning_signature']
             ),
             tool_calls: parse_tool_calls(delta['tool_calls'], parse_arguments: false),
-            input_tokens: OpenAI::Chat.input_tokens(usage),
-            output_tokens: OpenAI::Chat.output_tokens(usage),
-            cached_tokens: OpenAI::Chat.cache_read_tokens(usage),
-            cache_creation_tokens: OpenAI::Chat.cache_write_tokens(usage),
-            thinking_tokens: OpenAI::Chat.thinking_tokens(usage)
+            input_tokens: input_tokens(usage),
+            output_tokens: output_tokens(usage),
+            cached_tokens: cache_read_tokens(usage),
+            cache_creation_tokens: cache_write_tokens(usage),
+            thinking_tokens: thinking_tokens(usage)
           )
         end
 
