@@ -8,6 +8,19 @@ module RubyLLM
         module_function
 
         def format_content(content, document_attachments: :pdf, image_attachments: true, audio_attachments: true)
+          format_parts(content) do |attachment|
+            format_attachment(
+              attachment,
+              document_attachments:,
+              image_attachments:,
+              audio_attachments:
+            )
+          end
+        end
+
+        # Shared preamble and attachment loop for OpenAI-compatible providers.
+        # The block formats a single attachment in the provider's dialect.
+        def format_parts(content)
           if content.is_a?(RubyLLM::Content::Raw)
             value = content.value
             return value.is_a?(Hash) ? value.to_json : value
@@ -19,12 +32,7 @@ module RubyLLM
           parts << format_text(content.text) if content.text
 
           content.attachments.each do |attachment|
-            parts << format_attachment(
-              attachment,
-              document_attachments:,
-              image_attachments:,
-              audio_attachments:
-            )
+            parts << yield(attachment)
           end
 
           parts
