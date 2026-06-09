@@ -33,12 +33,8 @@ module RubyLLM
       end
 
       def headers
-        if defined?(VCR) && !VCR.current_cassette.recording?
-          { 'Authorization' => 'Bearer test-token' }
-        else
-          initialize_authorizer unless @authorizer
-          @authorizer.apply({})
-        end
+        initialize_authorizer unless @authorizer
+        @authorizer.apply({})
       rescue Google::Auth::AuthorizationError => e
         raise UnauthorizedError.new(nil, "Invalid Google Cloud credentials for Vertex AI: #{e.message}")
       end
