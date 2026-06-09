@@ -1,12 +1,14 @@
 # frozen_string_literal: true
 
 require 'active_support/concern'
+require 'ruby_llm/active_record/attachment_helpers'
 
 module RubyLLM
   module ActiveRecord
     # Methods mixed into chat models.
     module ChatMethods
       extend ActiveSupport::Concern
+      include AttachmentHelpers
 
       included do
         before_save :resolve_model_from_strings
@@ -400,65 +402,6 @@ module RubyLLM
 
         tool_call = message_with_tool_call.tool_calls_association.find_by(tool_call_id: tool_call_id)
         tool_call&.id
-      end
-
-      def persist_content(message_record, attachments)
-        return unless message_record.respond_to?(:attachments)
-
-        attachables = prepare_for_active_storage(attachments)
-        message_record.attachments.attach(attachables) if attachables.any?
-      end
-
-      def prepare_for_active_storage(attachments)
-        Utils.to_safe_array(attachments).filter_map do |attachment|
-          case attachment
-          when ActionDispatch::Http::UploadedFile, ActiveStorage::Blob
-            attachment
-          when ActiveStorage::Attachment, ActiveStorage::Attached::One, ActiveStorage::Attached::Many
-            active_storage_blobs(attachment)
-          when Hash
-            attachment.values.map { |v| prepare_for_active_storage(v) }
-          else
-            convert_to_active_storage_format(attachment)
-          end
-        end.flatten.compact
-      end
-
-      def convert_to_active_storage_format(source)
-        return if source.blank?
-
-        attachment = source.is_a?(RubyLLM::Attachment) ? source : RubyLLM::Attachment.new(source)
-
-        if attachment.active_storage?
-          active_storage_blobs(attachment.source)
-        else
-          {
-            io: StringIO.new(attachment.content),
-            filename: attachment.filename,
-            content_type: attachment.mime_type
-          }
-        end
-      rescue StandardError => e
-        RubyLLM.logger.warn "Failed to process attachment #{source}: #{e.message}"
-        nil
-      end
-
-      def active_storage_blobs(attachment)
-        case attachment
-        when ActiveStorage::Blob then attachment
-        when ActiveStorage::Attachment, ActiveStorage::Attached::One then attachment.blob
-        when ActiveStorage::Attached::Many then attachment.blobs
-        end
-      end
-
-      def build_content(message, attachments)
-        return message if content_like?(message)
-
-        RubyLLM::Content.new(message, attachments)
-      end
-
-      def content_like?(object)
-        object.is_a?(RubyLLM::Content) || object.is_a?(RubyLLM::Content::Raw)
       end
 
       def prepare_content_for_storage(content)
