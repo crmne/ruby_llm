@@ -42,13 +42,6 @@ module RubyLLM
 
         private
 
-        def determine_model_type(model)
-          return 'embedding' if model['categories']&.include?('embedding')
-          return 'chat' if model['categories']&.include?('llm')
-
-          'other'
-        end
-
         def build_capabilities(model) # rubocop:disable Metrics/PerceivedComplexity
           capabilities = []
 
