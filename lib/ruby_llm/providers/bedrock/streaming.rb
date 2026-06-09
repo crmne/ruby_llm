@@ -18,10 +18,9 @@ module RubyLLM
         def stream_response(connection, payload, additional_headers = {}, &block)
           accumulator = StreamAccumulator.new
           decoder = event_stream_decoder
-          request_payload = api_payload(payload)
-          body = JSON.generate(request_payload)
+          body = JSON.generate(payload)
 
-          response = connection.post(stream_url, request_payload) do |req|
+          response = connection.post(stream_url, payload) do |req|
             req.headers.merge!(sign_headers('POST', stream_url, body))
             req.headers.merge!(additional_headers) unless additional_headers.empty?
             req.headers['Accept'] = 'application/vnd.amazon.eventstream'

@@ -88,12 +88,6 @@ module RubyLLM
       def model_supports_top_k?(model)
         Bedrock::Models.reasoning_embedded?(model)
       end
-
-      def api_payload(payload)
-        cleaned = RubyLLM::Utils.deep_symbolize_keys(RubyLLM::Utils.deep_dup(payload))
-        cleaned.delete(:tools)
-        cleaned
-      end
     end
   end
 end

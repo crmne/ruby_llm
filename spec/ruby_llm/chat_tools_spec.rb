@@ -487,6 +487,8 @@ RSpec.describe RubyLLM::Chat do
         extracted = case provider
                     when :gemini, :vertexai
                       captured_payload.dig(:tools, 0, :functionDeclarations, 0, :cache_control)
+                    when :bedrock
+                      captured_payload.dig(:toolConfig, :tools, 0, :cache_control)
                     else
                       captured_payload.dig(:tools, 0, :cache_control)
                     end

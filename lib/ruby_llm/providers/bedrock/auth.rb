@@ -12,11 +12,10 @@ module RubyLLM
         private
 
         def signed_post(connection, url, payload, additional_headers = {})
-          request_payload = api_payload(payload)
-          body = JSON.generate(request_payload)
+          body = JSON.generate(payload)
           signed_headers = sign_headers('POST', url, body)
 
-          response = connection.post(url, request_payload) do |req|
+          response = connection.post(url, payload) do |req|
             req.headers.merge!(signed_headers)
             req.headers.merge!(additional_headers) unless additional_headers.empty?
             yield req if block_given?

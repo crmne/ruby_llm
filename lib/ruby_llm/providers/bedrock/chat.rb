@@ -30,10 +30,7 @@ module RubyLLM
           payload[:inferenceConfig] = render_inference_config(model, temperature)
 
           tool_config = render_tool_config(tools, tool_prefs)
-          if tool_config
-            payload[:toolConfig] = tool_config
-            payload[:tools] = tool_config[:tools] # Internal mirror for shared payload inspections in specs.
-          end
+          payload[:toolConfig] = tool_config if tool_config
 
           additional_fields = render_additional_model_request_fields(thinking)
           payload[:additionalModelRequestFields] = additional_fields if additional_fields
