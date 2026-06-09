@@ -44,7 +44,13 @@ module RubyLLM
     alias say ask
 
     def with_instructions(instructions, append: false, replace: nil)
-      append ||= (replace == false) unless replace.nil?
+      unless replace.nil?
+        RubyLLM.deprecator.warn(
+          '`replace:` is deprecated and will be removed in RubyLLM 2.0. ' \
+          '`with_instructions` replaces by default; use `append: true` to append.'
+        )
+        append ||= replace == false
+      end
 
       if append
         append_system_instruction(instructions)
