@@ -66,14 +66,6 @@ module RubyLLM
       Base64.strict_encode64(content)
     end
 
-    def save(path)
-      return unless io_like?
-
-      File.open(path, 'w') do |f|
-        f.puts(@source.read)
-      end
-    end
-
     def for_llm
       case type
       when :text
