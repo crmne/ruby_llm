@@ -87,6 +87,30 @@ RSpec.describe RubyLLM::Agent do
     expect(loose_chat.schema).to be_nil
   end
 
+  it 'supports lambda schemas without DSL fallback' do
+    agent_class = Class.new(RubyLLM::Agent) do
+      model 'gpt-4.1-nano'
+      inputs :strict
+
+      schema lambda {
+        if strict
+          {
+            type: 'object',
+            properties: { answer: { type: 'string' } },
+            required: ['answer'],
+            additionalProperties: false
+          }
+        end
+      }
+    end
+
+    strict_chat = agent_class.chat(strict: true)
+    loose_chat = agent_class.chat(strict: false)
+
+    expect(strict_chat.schema).to include(name: 'response', strict: true, schema: include(type: 'object'))
+    expect(loose_chat.schema).to be_nil
+  end
+
   it 'can ask using the first configured chat model' do
     model_info = CHAT_MODELS.first
 

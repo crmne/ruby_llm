@@ -221,12 +221,22 @@ module RubyLLM
       def resolved_schema_value(runtime)
         value = schema
         return value unless value.is_a?(Proc)
+        return evaluate(value, runtime) if value.lambda?
 
-        evaluate(value, runtime)
+        resolved = evaluate(value, runtime)
+        warn_dynamic_schema_block_deprecation
+        resolved
       rescue NoMethodError => e
         raise unless e.receiver.equal?(runtime)
 
         RubyLLM::Schema.create(&value)
+      end
+
+      def warn_dynamic_schema_block_deprecation
+        RubyLLM.deprecator.warn(
+          'Dynamic `schema` blocks that reference agent inputs are deprecated; in RubyLLM 2.0 ' \
+          'a bare block will always be treated as Schema DSL. Use a lambda instead: `schema -> { ... }`.'
+        )
       end
 
       def llm_chat_for(chat_object)
