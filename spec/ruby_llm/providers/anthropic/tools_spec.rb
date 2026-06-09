@@ -5,7 +5,8 @@ require 'spec_helper'
 RSpec.describe RubyLLM::Providers::Anthropic::Tools do
   let(:tools) { described_class }
 
-  describe '.format_tool_call' do
+  describe '#format_tool_call_with_thinking' do
+    let(:provider) { RubyLLM::Providers::Anthropic.allocate }
     let(:msg) do
       instance_double(RubyLLM::Message,
                       content: 'Some content',
@@ -17,8 +18,12 @@ RSpec.describe RubyLLM::Providers::Anthropic::Tools do
                       })
     end
 
+    def format_tool_call(msg)
+      provider.send(:format_tool_call_with_thinking, msg, false)
+    end
+
     it 'formats a message with content and tool call' do
-      result = tools.format_tool_call(msg)
+      result = format_tool_call(msg)
 
       expect(result).to eq({
                              role: 'assistant',
@@ -47,7 +52,7 @@ RSpec.describe RubyLLM::Providers::Anthropic::Tools do
       end
 
       it 'formats a message with only tool call' do
-        result = tools.format_tool_call(msg)
+        result = format_tool_call(msg)
 
         expect(result).to eq({
                                role: 'assistant',
@@ -76,7 +81,7 @@ RSpec.describe RubyLLM::Providers::Anthropic::Tools do
       end
 
       it 'formats a message with only tool call' do
-        result = tools.format_tool_call(msg)
+        result = format_tool_call(msg)
 
         expect(result).to eq({
                                role: 'assistant',
@@ -104,7 +109,7 @@ RSpec.describe RubyLLM::Providers::Anthropic::Tools do
                                                             arguments: { 'arg1' => 'value1' })
                             })
 
-      formatted = tools.format_tool_call(msg)
+      formatted = format_tool_call(msg)
 
       expect(formatted[:content].first).to eq({ type: 'text', text: 'Read this before calling the tool' })
       expect(formatted[:content].second).to include(type: 'text')
@@ -125,7 +130,7 @@ RSpec.describe RubyLLM::Providers::Anthropic::Tools do
         tool_calls: tool_calls
       )
 
-      formatted = described_class.format_tool_call(msg)
+      formatted = format_tool_call(msg)
 
       expect(formatted[:role]).to eq('assistant')
       expect(formatted[:content].size).to eq(4) # 1 text + 3 tool_use blocks
@@ -150,7 +155,7 @@ RSpec.describe RubyLLM::Providers::Anthropic::Tools do
         tool_calls: tool_calls
       )
 
-      formatted = described_class.format_tool_call(msg)
+      formatted = format_tool_call(msg)
 
       expect(formatted[:role]).to eq('assistant')
       expect(formatted[:content].size).to eq(1) # Only tool_use block, no text

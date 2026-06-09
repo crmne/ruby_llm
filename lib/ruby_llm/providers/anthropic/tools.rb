@@ -11,46 +11,11 @@ module RubyLLM
           blocks.select { |c| c['type'] == 'tool_use' }
         end
 
-        def format_tool_call(msg)
-          return { role: 'assistant', content: msg.content.value } if msg.content.is_a?(RubyLLM::Content::Raw)
-
-          content = []
-
-          append_formatted_content(content, msg.content) unless msg.content.nil? || msg.content.empty?
-
-          msg.tool_calls.each_value do |tool_call|
-            content << format_tool_use_block(tool_call)
-          end
-
-          {
-            role: 'assistant',
-            content:
-          }
-        end
-
         def format_tool_result(msg)
           {
             role: 'user',
             content: msg.content.is_a?(RubyLLM::Content::Raw) ? msg.content.value : [format_tool_result_block(msg)]
           }
-        end
-
-        def format_tool_use_block(tool_call)
-          {
-            type: 'tool_use',
-            id: tool_call.id,
-            name: tool_call.name,
-            input: tool_call.arguments
-          }
-        end
-
-        def append_formatted_content(content_blocks, content)
-          formatted_content = Media.format_content(content)
-          if formatted_content.is_a?(Array)
-            content_blocks.concat(formatted_content)
-          else
-            content_blocks << formatted_content
-          end
         end
 
         def format_tool_result_block(msg)
