@@ -19,8 +19,7 @@ module RubyLLM
         output: options[:output_tokens],
         cached: options[:cached_tokens],
         cache_creation: options[:cache_creation_tokens],
-        thinking: options[:thinking_tokens],
-        reasoning: options[:reasoning_tokens]
+        thinking: options[:thinking_tokens]
       )
       @raw = options[:raw]
       @thinking = options[:thinking]
@@ -73,10 +72,6 @@ module RubyLLM
     end
 
     def thinking_tokens
-      tokens&.thinking
-    end
-
-    def reasoning_tokens
       tokens&.thinking
     end
 
