@@ -56,11 +56,7 @@ module RubyLLM
     class << self
       INSTANCE_DELEGATES.each do |method_name|
         define_method(method_name) do |*args, **kwargs, &block|
-          if kwargs.empty?
-            instance.public_send(method_name, *args, &block)
-          else
-            instance.public_send(method_name, *args, **kwargs, &block)
-          end
+          instance.public_send(method_name, *args, **kwargs, &block)
         end
       end
 
@@ -104,7 +100,7 @@ module RubyLLM
       # refreshed registry should also be persisted.
       def fetch_merged_models(remote_only: false)
         RubyLLM.instrument('models.refresh.ruby_llm', remote_only:) do |payload|
-          existing_models = load_existing_models
+          existing_models = read_existing_models
 
           provider_fetch = fetch_provider_models(remote_only: remote_only)
           log_provider_fetch(provider_fetch)
@@ -118,41 +114,19 @@ module RubyLLM
         end
       end
 
-      def fetch_provider_models(remote_only: true) # rubocop:disable Metrics/PerceivedComplexity
+      def fetch_provider_models(remote_only: true)
         config = RubyLLM.config
-        provider_classes = remote_only ? Provider.remote_providers.values : Provider.providers.values
-        configured_classes = if remote_only
-                               Provider.configured_remote_providers(config)
-                             else
-                               Provider.configured_providers(config)
-                             end
-        configured = configured_classes.select { |klass| provider_classes.include?(klass) }
-        result = {
-          models: [],
-          fetched_providers: [],
-          configured_names: configured.map(&:name),
-          failed: []
-        }
+        providers = remote_only ? Provider.configured_remote_providers(config) : Provider.configured_providers(config)
+        result = { models: [], fetched_providers: [], configured_names: providers.map(&:name), failed: [] }
 
-        provider_classes.each do |provider_class|
-          next if remote_only && provider_class.local?
-          next unless provider_class.configured?(config)
-
-          begin
-            result[:models].concat(provider_class.new(config).list_models)
-            result[:fetched_providers] << provider_class.slug
-          rescue StandardError => e
-            result[:failed] << { name: provider_class.name, slug: provider_class.slug, error: e }
-          end
+        providers.each do |provider_class|
+          result[:models].concat(provider_class.new(config).list_models)
+          result[:fetched_providers] << provider_class.slug
+        rescue StandardError => e
+          result[:failed] << { name: provider_class.name, slug: provider_class.slug, error: e }
         end
 
-        result[:fetched_providers].uniq!
         result
-      end
-
-      # Backwards-compatible wrapper used by specs.
-      def fetch_from_providers(remote_only: true)
-        fetch_provider_models(remote_only: remote_only)[:models]
       end
 
       def resolve(model_id, provider: nil, assume_exists: false, config: nil) # rubocop:disable Metrics/PerceivedComplexity
@@ -208,7 +182,7 @@ module RubyLLM
         }
       end
 
-      def load_existing_models
+      def read_existing_models
         existing_models = instance&.all
         existing_models = read_from_json if existing_models.nil? || existing_models.empty?
         existing_models
