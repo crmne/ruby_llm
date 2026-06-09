@@ -8,7 +8,10 @@ redirect_from:
 ---
 
 # {{ page.title }}
-{: .no_toc }
+{: .no_toc .d-inline-block }
+
+v1.16.0+
+{: .label .label-green }
 
 {{ page.description }}.
 {: .fs-6 .fw-300 }
@@ -29,10 +32,6 @@ After reading this guide, you will know:
 *   Which payload fields may contain sensitive application data.
 
 ## Rails
-{: .d-inline-block }
-
-v1.16.0+
-{: .label .label-green }
 
 Rails apps automatically emit RubyLLM events through `ActiveSupport::Notifications`. Subscribe to them the same way you would subscribe to Rails framework events:
 
