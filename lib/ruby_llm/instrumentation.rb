@@ -6,31 +6,20 @@ module RubyLLM
   module Instrumentation
     module_function
 
-    def instrument(name, payload = nil, config: nil, **attributes)
-      payload = build_payload(payload, attributes)
-      instrumenter = instrumenter_for(config)
-      return yield(payload) if block_given? && !instrumenter
-
-      unless instrumenter.respond_to?(:instrument)
-        return yield(payload) if block_given?
-
-        return
-      end
-
-      if block_given?
-        instrumenter.instrument(name, payload) { yield(payload) }
-      else
-        instrumenter.instrument(name, payload)
-      end
-    end
-
-    def build_payload(payload, attributes)
+    def instrument(name, payload = nil, config: nil, **attributes) # rubocop:disable Metrics/PerceivedComplexity
       payload ||= {}
-      attributes.empty? ? payload : payload.merge(attributes)
-    end
+      payload = payload.merge(attributes) unless attributes.empty?
+      instrumenter = (config || RubyLLM.config).instrumenter
 
-    def instrumenter_for(config)
-      (config || RubyLLM.config).instrumenter
+      if instrumenter.respond_to?(:instrument)
+        if block_given?
+          instrumenter.instrument(name, payload) { yield(payload) }
+        else
+          instrumenter.instrument(name, payload)
+        end
+      elsif block_given?
+        yield(payload)
+      end
     end
   end
 end
