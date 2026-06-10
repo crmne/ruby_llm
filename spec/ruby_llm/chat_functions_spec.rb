@@ -121,6 +121,75 @@ RSpec.describe RubyLLM::Chat do
         /Invalid calls value/
       )
     end
+
+    it 'stores tool concurrency preferences' do
+      chat = described_class.new
+
+      chat.with_tools(concurrency: true)
+
+      expect(chat.concurrency).to eq(:threads)
+    end
+
+    it 'accepts explicit tool concurrency modes' do
+      chat = described_class.new
+
+      chat.with_tools(concurrency: :fibers)
+      expect(chat.concurrency).to eq(:fibers)
+
+      chat.with_tools(concurrency: :threads)
+      expect(chat.concurrency).to eq(:threads)
+    end
+
+    it 'clears tool concurrency preferences' do
+      chat = described_class.new
+
+      chat.with_tools(concurrency: true)
+      chat.with_tools(concurrency: false)
+
+      expect(chat.concurrency).to be_nil
+    end
+
+    it 'raises for unknown tool concurrency' do
+      chat = described_class.new
+
+      expect { chat.with_tools(concurrency: :warp_speed) }.to raise_error(
+        ArgumentError,
+        /Unknown tool concurrency/
+      )
+    end
+
+    it 'uses the configured tool concurrency by default' do
+      original_tool_concurrency = RubyLLM.config.tool_concurrency
+      RubyLLM.config.tool_concurrency = true
+
+      chat = described_class.new
+
+      expect(chat.concurrency).to eq(:threads)
+    ensure
+      RubyLLM.config.tool_concurrency = original_tool_concurrency
+    end
+
+    it 'accepts explicit configured tool concurrency modes' do
+      original_tool_concurrency = RubyLLM.config.tool_concurrency
+      RubyLLM.config.tool_concurrency = :fibers
+
+      chat = described_class.new
+
+      expect(chat.concurrency).to eq(:fibers)
+    ensure
+      RubyLLM.config.tool_concurrency = original_tool_concurrency
+    end
+
+    it 'allows chats to override configured tool concurrency' do
+      original_tool_concurrency = RubyLLM.config.tool_concurrency
+      RubyLLM.config.tool_concurrency = true
+
+      chat = described_class.new.with_tools(concurrency: false)
+
+      expect(chat.concurrency).to be_nil
+    ensure
+      RubyLLM.config.tool_concurrency = original_tool_concurrency
+    end
   end
 
   describe '#with_model' do

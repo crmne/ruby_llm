@@ -19,8 +19,7 @@ module RubyLLM
         output: options[:output_tokens],
         cached: options[:cached_tokens],
         cache_creation: options[:cache_creation_tokens],
-        thinking: options[:thinking_tokens],
-        reasoning: options[:reasoning_tokens]
+        thinking: options[:thinking_tokens]
       )
       @raw = options[:raw]
       @thinking = options[:thinking]
@@ -29,11 +28,7 @@ module RubyLLM
     end
 
     def content
-      if @content.is_a?(Content) && @content.text && @content.attachments.empty?
-        @content.text
-      else
-        @content
-      end
+      @content.is_a?(Content) ? @content.format : @content
     end
 
     def tool_call?
@@ -76,10 +71,6 @@ module RubyLLM
       tokens&.thinking
     end
 
-    def reasoning_tokens
-      tokens&.thinking
-    end
-
     def cost(model: nil)
       Cost.new(tokens:, model: model || model_info)
     end
@@ -96,7 +87,8 @@ module RubyLLM
       }.merge(tokens ? tokens.to_h : {}).compact
     end
 
-    def instance_variables
+    # Keeps the raw Faraday response out of pretty-printed output.
+    def pretty_print_instance_variables
       super - [:@raw]
     end
 

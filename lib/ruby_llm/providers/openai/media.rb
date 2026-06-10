@@ -7,7 +7,20 @@ module RubyLLM
       module Media
         module_function
 
-        def format_content(content) # rubocop:disable Metrics/PerceivedComplexity
+        def format_content(content, document_attachments: :pdf, image_attachments: true, audio_attachments: true)
+          format_parts(content) do |attachment|
+            format_attachment(
+              attachment,
+              document_attachments:,
+              image_attachments:,
+              audio_attachments:
+            )
+          end
+        end
+
+        # Shared preamble and attachment loop for OpenAI-compatible providers.
+        # The block formats a single attachment in the provider's dialect.
+        def format_parts(content)
           if content.is_a?(RubyLLM::Content::Raw)
             value = content.value
             return value.is_a?(Hash) ? value.to_json : value
@@ -19,21 +32,29 @@ module RubyLLM
           parts << format_text(content.text) if content.text
 
           content.attachments.each do |attachment|
-            case attachment.type
-            when :image
-              parts << format_image(attachment)
-            when :pdf
-              parts << format_pdf(attachment)
-            when :audio
-              parts << format_audio(attachment)
-            when :text
-              parts << format_text_file(attachment)
-            else
-              raise UnsupportedAttachmentError, attachment.type
-            end
+            parts << yield(attachment)
           end
 
           parts
+        end
+
+        def format_attachment(attachment, document_attachments:, image_attachments:, audio_attachments:)
+          case attachment.type
+          when :image
+            raise UnsupportedAttachmentError, attachment.mime_type unless image_attachments
+
+            format_image(attachment)
+          when :audio
+            raise UnsupportedAttachmentError, attachment.mime_type unless audio_attachments
+
+            format_audio(attachment)
+          when :pdf, :document
+            format_document_attachment(attachment, document_attachments)
+          when :text
+            format_text_file(attachment)
+          else
+            raise UnsupportedAttachmentError, attachment.mime_type
+          end
         end
 
         def format_image(image)
@@ -45,12 +66,12 @@ module RubyLLM
           }
         end
 
-        def format_pdf(pdf)
+        def format_document(document)
           {
             type: 'file',
             file: {
-              filename: pdf.filename,
-              file_data: pdf.for_llm
+              filename: document.filename,
+              file_data: document.for_llm
             }
           }
         end
@@ -77,6 +98,13 @@ module RubyLLM
             type: 'text',
             text: text
           }
+        end
+
+        def format_document_attachment(attachment, strategy)
+          return format_document(attachment) if strategy == :all
+          return format_document(attachment) if strategy == :pdf && attachment.pdf?
+
+          raise UnsupportedAttachmentError, attachment.mime_type
         end
       end
     end

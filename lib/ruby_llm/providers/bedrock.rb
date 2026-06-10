@@ -11,7 +11,7 @@ module RubyLLM
       include Bedrock::Streaming
 
       def api_base
-        "https://bedrock-runtime.#{bedrock_region}.amazonaws.com"
+        @config.bedrock_api_base || "https://bedrock-runtime.#{bedrock_region}.amazonaws.com"
       end
 
       def headers
@@ -54,7 +54,7 @@ module RubyLLM
 
       class << self
         def configuration_options
-          %i[bedrock_api_key bedrock_secret_key bedrock_region bedrock_session_token]
+          %i[bedrock_api_key bedrock_secret_key bedrock_region bedrock_session_token bedrock_api_base]
         end
 
         def configuration_requirements
@@ -68,8 +68,8 @@ module RubyLLM
         @config.bedrock_region
       end
 
-      def sync_response(connection, payload, additional_headers = {})
-        signed_post(connection, completion_url, payload, additional_headers)
+      def sync_response(payload, additional_headers = {})
+        signed_post(completion_url, payload, additional_headers)
       end
 
       def normalize_params(params, model:)
@@ -87,12 +87,6 @@ module RubyLLM
 
       def model_supports_top_k?(model)
         Bedrock::Models.reasoning_embedded?(model)
-      end
-
-      def api_payload(payload)
-        cleaned = RubyLLM::Utils.deep_symbolize_keys(RubyLLM::Utils.deep_dup(payload))
-        cleaned.delete(:tools)
-        cleaned
       end
     end
   end

@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'securerandom'
+
 module RubyLLM
   module Providers
     class Gemini

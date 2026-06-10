@@ -148,6 +148,105 @@ RSpec.describe RubyLLM::Providers::OpenAI::Chat do
     end
   end
 
+  describe '.format_messages' do
+    it 'opts OpenAI into native file parts for PDF attachments' do
+      content = RubyLLM::Content.new('Summarize this file')
+      content.add_attachment(StringIO.new('pdf bytes'), filename: 'proposal.pdf')
+
+      messages = [RubyLLM::Message.new(role: :user, content:)]
+
+      formatted = RubyLLM::Providers::OpenAI.allocate.send(:format_messages, messages)
+
+      expect(formatted.dig(0, :content, 1, :type)).to eq('file')
+      expect(formatted.dig(0, :content, 1, :file, :filename)).to eq('proposal.pdf')
+    end
+
+    it 'keeps non-PDF documents disabled for OpenAI chat completions' do
+      expect do
+        RubyLLM::Providers::OpenAI.allocate.send(:format_messages, [docx_message])
+      end.to raise_error(
+        RubyLLM::UnsupportedAttachmentError,
+        %r{Unsupported attachment type: application/vnd.openxmlformats-officedocument.wordprocessingml.document}
+      )
+    end
+
+    it 'keeps unsupported files disabled for DeepSeek' do
+      provider = RubyLLM::Providers::DeepSeek.allocate
+
+      expect do
+        provider.send(:format_messages, [docx_message])
+      end.to raise_error(
+        RubyLLM::UnsupportedAttachmentError,
+        %r{Unsupported attachment type: application/vnd.openxmlformats-officedocument.wordprocessingml.document}
+      )
+    end
+
+    it 'keeps image attachments disabled for DeepSeek' do
+      provider = RubyLLM::Providers::DeepSeek.allocate
+      content = RubyLLM::Content.new('Describe this')
+      content.add_attachment(StringIO.new('png bytes'), filename: 'image.png')
+
+      expect do
+        provider.send(:format_messages, [RubyLLM::Message.new(role: :user, content:)])
+      end.to raise_error(RubyLLM::UnsupportedAttachmentError, %r{Unsupported attachment type: image/png})
+    end
+
+    it 'uses Perplexity file_url parts for supported file attachments' do
+      provider = RubyLLM::Providers::Perplexity.allocate
+
+      formatted = provider.send(:format_messages, [docx_message])
+
+      expect(formatted.dig(0, :content, 1)).to eq(
+        type: 'file_url',
+        file_url: { url: Base64.strict_encode64('docx bytes') }
+      )
+    end
+
+    it 'keeps Perplexity text file attachments as text parts' do
+      provider = RubyLLM::Providers::Perplexity.allocate
+
+      %w[csv txt md html json].each do |extension|
+        content = RubyLLM::Content.new('Summarize this file')
+        content.add_attachment(StringIO.new('notes'), filename: "notes.#{extension}")
+
+        formatted = provider.send(:format_messages, [RubyLLM::Message.new(role: :user, content:)])
+        attachment = content.attachments.first
+
+        expect(formatted.dig(0, :content, 1)).to eq(
+          type: 'text',
+          text: attachment.for_llm
+        )
+      end
+    end
+
+    it 'keeps unsupported files disabled for xAI' do
+      provider = RubyLLM::Providers::XAI.allocate
+
+      expect do
+        provider.send(:format_messages, [docx_message])
+      end.to raise_error(
+        RubyLLM::UnsupportedAttachmentError,
+        %r{Unsupported attachment type: application/vnd.openxmlformats-officedocument.wordprocessingml.document}
+      )
+    end
+
+    it 'keeps PDF file parts disabled for xAI chat completions' do
+      provider = RubyLLM::Providers::XAI.allocate
+      content = RubyLLM::Content.new('Summarize this file')
+      content.add_attachment(StringIO.new('pdf bytes'), filename: 'proposal.pdf')
+
+      expect do
+        provider.send(:format_messages, [RubyLLM::Message.new(role: :user, content:)])
+      end.to raise_error(RubyLLM::UnsupportedAttachmentError, %r{Unsupported attachment type: application/pdf})
+    end
+
+    def docx_message
+      content = RubyLLM::Content.new('Summarize this file')
+      content.add_attachment(StringIO.new('docx bytes'), filename: 'proposal.docx')
+      RubyLLM::Message.new(role: :user, content:)
+    end
+  end
+
   describe '.render_payload' do
     let(:model) { instance_double(RubyLLM::Model::Info, id: 'gpt-4o') }
     let(:messages) { [RubyLLM::Message.new(role: :user, content: 'Hello')] }

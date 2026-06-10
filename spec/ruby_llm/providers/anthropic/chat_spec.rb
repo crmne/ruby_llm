@@ -77,6 +77,31 @@ RSpec.describe RubyLLM::Providers::Anthropic::Chat do
     end
   end
 
+  describe '.format_message' do
+    it 'formats Content attachments before tool calls' do
+      text_path = File.expand_path('../../../fixtures/ruby.txt', __dir__)
+      tool_calls = {
+        'tool_123' => RubyLLM::ToolCall.new(
+          id: 'tool_123',
+          name: 'test_tool',
+          arguments: { 'arg1' => 'value1' }
+        )
+      }
+      message = RubyLLM::Message.new(
+        role: :assistant,
+        content: RubyLLM::Content.new('Read this before calling the tool', text_path),
+        tool_calls: tool_calls
+      )
+
+      formatted = described_class.format_message(message)
+
+      expect(formatted[:content].first).to eq({ type: 'text', text: 'Read this before calling the tool' })
+      expect(formatted[:content].second).to include(type: 'text')
+      expect(formatted[:content].second[:text]).to include("<file name='ruby.txt' mime_type='text/plain'>")
+      expect(formatted[:content].third).to include(type: 'tool_use', id: 'tool_123')
+    end
+  end
+
   describe '.render_payload' do
     let(:model) { instance_double(RubyLLM::Model::Info, id: 'claude-sonnet-4-5', max_tokens: nil) }
 
@@ -207,7 +232,132 @@ RSpec.describe RubyLLM::Providers::Anthropic::Chat do
     end
   end
 
-  describe '.parse_completion_response' do
+  describe '.render_payload with thinking' do
+    let(:user_message) { RubyLLM::Message.new(role: :user, content: 'Hello') }
+
+    def render_payload(model_id:, thinking:, schema: nil, reasoning_options: [])
+      model = RubyLLM::Model::Info.new(
+        id: model_id,
+        provider: 'anthropic',
+        metadata: { reasoning_options: reasoning_options }
+      )
+
+      described_class.render_payload(
+        [user_message],
+        tools: {},
+        temperature: nil,
+        model: model,
+        stream: false,
+        schema: schema,
+        thinking: thinking
+      )
+    end
+
+    def effort_option(*values)
+      { type: 'effort', values: values.map(&:to_s) }
+    end
+
+    def budget_option
+      { type: 'budget_tokens', min: 1024 }
+    end
+
+    it 'sends manual thinking with budget_tokens for budget-only Claude models' do
+      payload = render_payload(
+        model_id: 'claude-sonnet-4-5',
+        thinking: RubyLLM::Thinking::Config.new(budget: 2048),
+        reasoning_options: [budget_option]
+      )
+
+      expect(payload[:thinking]).to eq(type: 'enabled', budget_tokens: 2048)
+      expect(payload).not_to have_key(:output_config)
+    end
+
+    it 'sends adaptive thinking with effort for effort-only Claude models' do
+      payload = render_payload(
+        model_id: 'claude-opus-4-7',
+        thinking: RubyLLM::Thinking::Config.new(effort: :xhigh),
+        reasoning_options: [effort_option(:low, :medium, :high, :xhigh, :max)]
+      )
+
+      expect(payload[:thinking]).to eq(type: 'adaptive')
+      expect(payload[:output_config]).to eq(effort: 'xhigh')
+    end
+
+    it 'sends adaptive thinking with effort for Claude models that support both thinking options' do
+      payload = render_payload(
+        model_id: 'claude-opus-4-6',
+        thinking: RubyLLM::Thinking::Config.new(effort: :medium),
+        reasoning_options: [effort_option(:low, :medium, :high, :max), budget_option]
+      )
+
+      expect(payload[:thinking]).to eq(type: 'adaptive')
+      expect(payload[:output_config]).to eq(effort: 'medium')
+    end
+
+    it 'sends manual thinking with budget for Claude models that support both thinking options' do
+      payload = render_payload(
+        model_id: 'claude-sonnet-4-6',
+        thinking: RubyLLM::Thinking::Config.new(budget: 4096),
+        reasoning_options: [effort_option(:low, :medium, :high, :max), budget_option]
+      )
+
+      expect(payload[:thinking]).to eq(type: 'enabled', budget_tokens: 4096)
+      expect(payload).not_to have_key(:output_config)
+    end
+
+    it 'merges adaptive thinking effort with schema output_config' do
+      schema = {
+        name: 'response',
+        schema: { type: 'object', properties: { name: { type: 'string' } } }
+      }
+
+      payload = render_payload(
+        model_id: 'claude-opus-4-7',
+        thinking: RubyLLM::Thinking::Config.new(effort: :high),
+        schema: schema,
+        reasoning_options: [effort_option(:low, :medium, :high, :xhigh, :max)]
+      )
+
+      expect(payload[:thinking]).to eq(type: 'adaptive')
+      expect(payload[:output_config]).to eq(
+        effort: 'high',
+        format: { type: 'json_schema', schema: { type: 'object', properties: { name: { type: 'string' } } } }
+      )
+    end
+
+    it 'omits thinking when effort is none' do
+      payload = render_payload(
+        model_id: 'claude-opus-4-7',
+        thinking: RubyLLM::Thinking::Config.new(effort: :none),
+        reasoning_options: [effort_option(:low, :medium, :high, :xhigh, :max)]
+      )
+
+      expect(payload).not_to have_key(:thinking)
+      expect(payload).not_to have_key(:output_config)
+    end
+
+    it 'raises when a budget is used with effort-only Claude models' do
+      expect do
+        render_payload(
+          model_id: 'claude-opus-4-7',
+          thinking: RubyLLM::Thinking::Config.new(budget: 2048),
+          reasoning_options: [effort_option(:low, :medium, :high, :xhigh, :max)]
+        )
+      end.to raise_error(ArgumentError, /budget is not supported/)
+    end
+
+    it 'raises when effort is used with budget-only Claude models' do
+      expect do
+        render_payload(
+          model_id: 'claude-sonnet-4-5',
+          thinking: RubyLLM::Thinking::Config.new(effort: :medium),
+          reasoning_options: [budget_option]
+        )
+      end.to raise_error(ArgumentError, /effort is not supported/)
+    end
+  end
+
+  describe '#parse_completion_response' do
     it 'captures cache usage metrics on the message' do
       response_body = {
         'model' => 'claude-sonnet-4-5-20250929',
@@ -222,7 +372,7 @@ RSpec.describe RubyLLM::Providers::Anthropic::Chat do
 
       response = instance_double(Faraday::Response, body: response_body)
 
-      message = described_class.parse_completion_response(response)
+      message = RubyLLM::Providers::Anthropic.allocate.send(:parse_completion_response, response)
 
       expect(message.input_tokens).to eq(42)
       expect(message.output_tokens).to eq(5)

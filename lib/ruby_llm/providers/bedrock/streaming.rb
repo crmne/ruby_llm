@@ -1,23 +1,28 @@
 # frozen_string_literal: true
 
+require 'base64'
+require 'faraday'
+require 'json'
+
 module RubyLLM
   module Providers
     class Bedrock
       # Streaming implementation for Bedrock ConverseStream (AWS Event Stream).
       module Streaming
+        ErrorResponse = Struct.new(:body, :status)
+
         private
 
         def stream_url
           "/model/#{@model.id}/converse-stream"
         end
 
-        def stream_response(connection, payload, additional_headers = {}, &block)
+        def stream_response(payload, additional_headers = {}, &block)
           accumulator = StreamAccumulator.new
           decoder = event_stream_decoder
-          request_payload = api_payload(payload)
-          body = JSON.generate(request_payload)
+          body = JSON.generate(payload)
 
-          response = connection.post(stream_url, request_payload) do |req|
+          response = @connection.post(stream_url, payload) do |req|
             req.headers.merge!(sign_headers('POST', stream_url, body))
             req.headers.merge!(additional_headers) unless additional_headers.empty?
             req.headers['Accept'] = 'application/vnd.amazon.eventstream'
@@ -88,7 +93,7 @@ module RubyLLM
         def raise_streaming_chunk_error(payload)
           parsed = JSON.parse(payload)
           message = parsed.dig('error', 'message') || parsed['message'] || 'Bedrock streaming error'
-          response = Struct.new(:body, :status).new({ 'message' => message }, 500)
+          response = ErrorResponse.new({ 'message' => message }, 500)
           ErrorMiddleware.parse_error(provider: self, response: response)
         rescue JSON::ParserError
           nil
@@ -130,18 +135,18 @@ module RubyLLM
         def build_chunk(event)
           raise_stream_error(event) if stream_error_event?(event)
 
-          metadata_usage, usage, message_usage = event_usage(event)
+          metadata_usage, usage = event_usage(event)
 
           Chunk.new(
             role: :assistant,
-            model_id: event['modelId'] || event.dig('message', 'model') || @model&.id,
+            model_id: event['modelId'] || @model&.id,
             content: extract_content_delta(event),
             thinking: Thinking.build(
               text: extract_thinking_delta(event),
               signature: extract_thinking_signature(event)
             ),
             tool_calls: extract_tool_calls(event),
-            input_tokens: extract_input_tokens(metadata_usage, usage, message_usage),
+            input_tokens: extract_input_tokens(metadata_usage, usage),
             output_tokens: extract_output_tokens(metadata_usage, usage),
             cached_tokens: extract_cached_tokens(metadata_usage, usage),
             cache_creation_tokens: extract_cache_creation_tokens(metadata_usage, usage),
@@ -152,34 +157,29 @@ module RubyLLM
         def event_usage(event)
           [
             event.dig('metadata', 'usage') || {},
-            event['usage'] || {},
-            event.dig('message', 'usage') || {}
+            event['usage'] || {}
           ]
         end
 
-        def extract_input_tokens(metadata_usage, usage, message_usage)
+        def extract_input_tokens(metadata_usage, usage)
           bedrock_usage = metadata_usage['inputTokens'] ? metadata_usage : usage
-          return Bedrock::Chat.input_tokens(bedrock_usage) if bedrock_usage['inputTokens']
-
-          message_usage['input_tokens']
+          Bedrock::Chat.input_tokens(bedrock_usage) if bedrock_usage['inputTokens']
         end
 
         def extract_output_tokens(metadata_usage, usage)
-          metadata_usage['outputTokens'] || usage['outputTokens'] || usage['output_tokens']
+          metadata_usage['outputTokens'] || usage['outputTokens']
         end
 
         def extract_cached_tokens(metadata_usage, usage)
-          metadata_usage['cacheReadInputTokens'] || usage['cacheReadInputTokens'] || usage['cache_read_input_tokens']
+          metadata_usage['cacheReadInputTokens'] || usage['cacheReadInputTokens']
         end
 
         def extract_cache_creation_tokens(metadata_usage, usage)
-          metadata_usage['cacheWriteInputTokens'] || usage['cacheWriteInputTokens'] ||
-            usage['cache_creation_input_tokens']
+          metadata_usage['cacheWriteInputTokens'] || usage['cacheWriteInputTokens']
         end
 
         def extract_reasoning_tokens(metadata_usage, usage)
-          metadata_usage['reasoningTokens'] || usage['reasoningTokens'] ||
-            usage.dig('output_tokens_details', 'thinking_tokens')
+          metadata_usage['reasoningTokens'] || usage['reasoningTokens']
         end
 
         def stream_error_event?(event)
@@ -189,7 +189,7 @@ module RubyLLM
         def raise_stream_error(event)
           if event['type'] == 'error'
             message = event.dig('error', 'message') || 'Bedrock streaming error'
-            response = Struct.new(:body, :status).new({ 'message' => message }, 500)
+            response = ErrorResponse.new({ 'message' => message }, 500)
             ErrorMiddleware.parse_error(provider: self, response: response)
             return
           end
@@ -205,28 +205,19 @@ module RubyLLM
                    else 500
                    end
 
-          response = Struct.new(:body, :status).new({ 'message' => message }, status)
+          response = ErrorResponse.new({ 'message' => message }, status)
           ErrorMiddleware.parse_error(provider: self, response: response)
         end
 
         def extract_content_delta(event)
-          delta = normalized_delta(event)
-          return delta['text'] if delta['text']
-
-          return event.dig('delta', 'text') if event.dig('delta', 'type') == 'text_delta'
-
-          nil
+          normalized_delta(event)['text']
         end
 
         def extract_thinking_delta(event)
-          delta = normalized_delta(event)
-          reasoning_content = delta['reasoningContent'] || {}
+          reasoning_content = normalized_delta(event)['reasoningContent'] || {}
 
           reasoning_text = reasoning_content['reasoningText'] || {}
-          return reasoning_text['text'] if reasoning_text['text']
-          return event.dig('delta', 'thinking') if event.dig('delta', 'type') == 'thinking_delta'
-
-          nil
+          reasoning_text['text'] || reasoning_content['text']
         end
 
         def extract_thinking_signature(event)
@@ -240,13 +231,9 @@ module RubyLLM
         end
 
         def extract_signature_from_delta(event)
-          delta = normalized_delta(event)
-          reasoning_content = delta['reasoningContent'] || {}
+          reasoning_content = normalized_delta(event)['reasoningContent'] || {}
           reasoning_text = reasoning_content['reasoningText'] || {}
-          return reasoning_text['signature'] if reasoning_text['signature']
-          return event.dig('delta', 'signature') if event.dig('delta', 'type') == 'signature_delta'
-
-          nil
+          reasoning_text['signature'] || reasoning_content['signature']
         end
 
         def extract_signature_from_start(event)
@@ -268,37 +255,29 @@ module RubyLLM
         end
 
         def tool_call_start_event?(event)
-          event['contentBlockStart'] || event['start'] || event.dig('content_block', 'tool_use')
+          event['contentBlockStart'] || event['start']
         end
 
         def tool_call_delta_event?(event)
-          event['contentBlockDelta'] || event.dig('delta', 'toolUse') || event.dig('delta', 'tool_use') ||
-            event.dig('delta', 'partial_json')
+          event['contentBlockDelta'] || event.dig('delta', 'toolUse')
         end
 
         def extract_tool_call_start(event)
-          tool_use = event.dig('contentBlockStart', 'start', 'toolUse')
-          tool_use ||= event.dig('start', 'toolUse')
-          tool_use ||= event.dig('content_block', 'tool_use') if event['type'] == 'content_block_start'
+          tool_use = event.dig('contentBlockStart', 'start', 'toolUse') || event.dig('start', 'toolUse')
           return nil unless tool_use
 
-          tool_use_id = tool_use['toolUseId'] || tool_use['id']
-          tool_name = tool_use['name']
-          tool_input = tool_use['input'] || {}
-
+          tool_use_id = tool_use['toolUseId']
           {
             tool_use_id => ToolCall.new(
               id: tool_use_id,
-              name: tool_name,
-              arguments: tool_input
+              name: tool_use['name'],
+              arguments: tool_use['input'] || {}
             )
           }
         end
 
         def extract_tool_call_delta(event)
           input = normalized_delta(event).dig('toolUse', 'input')
-          input ||= normalized_delta(event).dig('tool_use', 'input')
-          input ||= event.dig('delta', 'partial_json') if event.dig('delta', 'type') == 'input_json_delta'
           return nil unless input
 
           { nil => ToolCall.new(id: nil, name: nil, arguments: input) }

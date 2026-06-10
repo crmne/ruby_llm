@@ -8,7 +8,7 @@ module RubyLLM
       include XAI::Models
 
       def api_base
-        'https://api.x.ai/v1'
+        @config.xai_api_base || 'https://api.x.ai/v1'
       end
 
       def headers
@@ -20,7 +20,7 @@ module RubyLLM
 
       class << self
         def configuration_options
-          %i[xai_api_key]
+          %i[xai_api_key xai_api_base]
         end
 
         def configuration_requirements

@@ -53,8 +53,7 @@ module RubyLLM
             max_tokens: model.max_tokens || 4096
           }
 
-          thinking_payload = build_thinking_payload(thinking)
-          payload[:thinking] = thinking_payload if thinking_payload
+          add_thinking_fields(payload, thinking, model)
 
           payload
         end
@@ -68,7 +67,7 @@ module RubyLLM
           end
           payload[:system] = system_content unless system_content.empty?
           payload[:temperature] = temperature unless temperature.nil?
-          payload[:output_config] = build_output_config(schema) if schema
+          payload[:output_config] = payload.fetch(:output_config, {}).merge(build_output_config(schema)) if schema
         end
 
         def build_output_config(schema)
@@ -109,11 +108,6 @@ module RubyLLM
 
         def build_message(data, content, thinking, thinking_signature, tool_use_blocks, response) # rubocop:disable Metrics/ParameterLists
           usage = data['usage'] || {}
-          cached_tokens = usage['cache_read_input_tokens']
-          cache_creation_tokens = usage['cache_creation_input_tokens']
-          if cache_creation_tokens.nil? && usage['cache_creation'].is_a?(Hash)
-            cache_creation_tokens = usage['cache_creation'].values.compact.sum
-          end
           thinking_tokens = usage.dig('output_tokens_details', 'thinking_tokens') ||
                             usage.dig('output_tokens_details', 'reasoning_tokens') ||
                             usage['thinking_tokens'] ||
@@ -126,8 +120,8 @@ module RubyLLM
             tool_calls: Tools.parse_tool_calls(tool_use_blocks),
             input_tokens: usage['input_tokens'],
             output_tokens: usage['output_tokens'],
-            cached_tokens: cached_tokens,
-            cache_creation_tokens: cache_creation_tokens,
+            cached_tokens: extract_cached_tokens(data),
+            cache_creation_tokens: extract_cache_creation_tokens(data),
             thinking_tokens: thinking_tokens,
             model_id: data['model'],
             raw: response
@@ -172,7 +166,7 @@ module RubyLLM
           end
 
           content_blocks = prepend_thinking_block([], msg, thinking_enabled)
-          content_blocks << Media.format_text(msg.content) unless msg.content.nil? || msg.content.empty?
+          append_formatted_content(content_blocks, msg.content) unless msg.content.nil? || msg.content.empty?
 
           msg.tool_calls.each_value do |tool_call|
             content_blocks << {
@@ -231,21 +225,58 @@ module RubyLLM
           end
         end
 
-        def build_thinking_payload(thinking)
+        def add_thinking_fields(payload, thinking, model)
+          thinking_payload = build_thinking_payload(thinking, model)
+          return unless thinking_payload
+
+          payload[:thinking] = thinking_payload[:thinking] if thinking_payload[:thinking]
+          return unless thinking_payload[:output_config]
+
+          payload[:output_config] = payload.fetch(:output_config, {}).merge(thinking_payload[:output_config])
+        end
+
+        def build_thinking_payload(thinking, model)
           return nil unless thinking&.enabled?
 
-          budget = resolve_budget(thinking)
-          raise ArgumentError, 'Anthropic thinking requires a budget' if budget.nil?
+          effort = resolve_effort(thinking)
+          return nil if effort == 'none'
 
+          budget = resolve_budget(thinking)
+          if budget
+            return enabled_thinking_payload(budget) if model.reasoning_option('budget_tokens')
+
+            raise ArgumentError, "Anthropic thinking budget is not supported for #{model.id}"
+          end
+
+          raise ArgumentError, 'Anthropic adaptive thinking requires an effort' if effort.nil?
+          return adaptive_thinking_payload(effort) if model.reasoning_option('effort')
+
+          raise ArgumentError, "Anthropic thinking effort is not supported for #{model.id}"
+        end
+
+        def enabled_thinking_payload(budget)
           {
-            type: 'enabled',
-            budget_tokens: budget
+            thinking: {
+              type: 'enabled',
+              budget_tokens: budget
+            }
           }
         end
 
+        def adaptive_thinking_payload(effort)
+          {
+            thinking: { type: 'adaptive' },
+            output_config: { effort: effort }
+          }
+        end
+
+        def resolve_effort(thinking)
+          effort = thinking.effort.to_s
+          effort.empty? ? nil : effort
+        end
+
         def resolve_budget(thinking)
-          budget = thinking.respond_to?(:budget) ? thinking.budget : thinking
-          budget.is_a?(Integer) ? budget : nil
+          thinking.budget
         end
       end
     end

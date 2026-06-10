@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'json'
+
 module RubyLLM
   module Providers
     class OpenAI
@@ -40,13 +42,6 @@ module RubyLLM
           return definition if tool.provider_params.empty?
 
           RubyLLM::Utils.deep_merge(definition, tool.provider_params)
-        end
-
-        def param_schema(param)
-          {
-            type: param.type,
-            description: param.description
-          }.compact
         end
 
         def format_tool_calls(tool_calls)

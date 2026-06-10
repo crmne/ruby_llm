@@ -7,15 +7,8 @@ module RubyLLM
       module Chat
         module_function
 
-        def format_messages(messages)
-          messages.map do |msg|
-            {
-              role: format_role(msg.role),
-              content: Ollama::Media.format_content(msg.content),
-              tool_calls: format_tool_calls(msg.tool_calls),
-              tool_call_id: msg.tool_call_id
-            }.compact.merge(OpenAI::Chat.format_thinking(msg))
-          end
+        def format_content(content)
+          Ollama::Media.format_content(content)
         end
 
         def format_role(role)

@@ -68,6 +68,21 @@ RSpec.describe RubyLLM::Providers::Mistral::Chat do
     end
   end
 
+  describe '#format_content_with_thinking' do
+    it 'formats arbitrary document attachments with Mistral document_url parts' do
+      content = RubyLLM::Content.new('Summarize this file')
+      content.add_attachment(StringIO.new('docx bytes'), filename: 'proposal.docx')
+      message = RubyLLM::Message.new(role: :user, content:)
+
+      formatted = provider.send(:format_content_with_thinking, message)
+
+      expect(formatted.second).to eq(
+        type: 'document_url',
+        document_url: "data:application/vnd.openxmlformats-officedocument.wordprocessingml.document;base64,#{Base64.strict_encode64('docx bytes')}" # rubocop:disable Layout/LineLength
+      )
+    end
+  end
+
   describe '#build_tool_choice' do
     it 'maps required tool choice to the Mistral any mode' do
       expect(provider.send(:build_tool_choice, :required)).to eq('any')

@@ -60,6 +60,7 @@ module RubyLLM
             language: data['language'],
             duration: data['duration'],
             segments: data['segments'],
+            words: data['words'],
             input_tokens: usage['input_tokens'] || usage['prompt_tokens'],
             output_tokens: usage['output_tokens'] || usage['completion_tokens']
           )

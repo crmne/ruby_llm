@@ -9,7 +9,7 @@ http_interactions:
         2 + 2?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 06 May 2026 23:54:31 GMT
+      - Mon, 08 Jun 2026 18:46:30 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -32,27 +32,27 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '019dffb6-ec1b-7ce2-b072-3af65f5a9612'
+      - '019ea88e-c9e0-7240-bf1f-5f8dd342b458'
       X-Kong-Request-Id:
-      - '019dffb6-ec1b-7ce2-b072-3af65f5a9612'
+      - '019ea88e-c9e0-7240-bf1f-5f8dd342b458'
       X-Ratelimit-Limit-Tokens-Minute:
-      - '2000000'
+      - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '1996095'
+      - '97370'
       X-Ratelimit-Tokens-Query-Cost:
       - '32'
       X-Ratelimit-Limit-Req-Minute:
-      - '1500'
+      - '100'
       X-Ratelimit-Remaining-Req-Minute:
-      - '1493'
+      - '87'
       X-Envoy-Upstream-Service-Time:
-      - '312'
+      - '240'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '312'
+      - '240'
       X-Kong-Proxy-Latency:
       - '13'
       Set-Cookie:
@@ -70,7 +70,7 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"63fe79849e26409f89b1f2ea021dfe72","created":1778111671,"model":"mistral-small-latest","usage":{"prompt_tokens":23,"total_tokens":32,"completion_tokens":9,"prompt_tokens_details":{"cached_tokens":0}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"2
-        + 2 equals **4**."}}]}'
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+      string: '{"id":"fb0a2e254b084dc6822aac98ba87ed7c","created":1780944390,"model":"mistral-small-latest","usage":{"prompt_tokens":23,"total_tokens":32,"completion_tokens":9,"prompt_tokens_details":{"cached_tokens":0}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"2
+        + 2 = **4**."}}]}'
+  recorded_at: Mon, 08 Jun 2026 18:46:30 GMT
 recorded_with: VCR 6.4.0

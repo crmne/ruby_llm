@@ -24,10 +24,6 @@ module RubyLLM
         end
       end
 
-      def configured?
-        self.class.configured?(@config)
-      end
-
       def azure_endpoint(kind)
         parts = azure_base_parts
 

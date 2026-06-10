@@ -33,11 +33,11 @@ RSpec.describe RubyLLM::Models do
       end
     end
 
-    describe '.fetch_from_providers' do
+    describe '.fetch_provider_models' do
       it 'defaults to remote_only: true' do
         allow(RubyLLM::Provider).to receive_messages(remote_providers: {}, configured_remote_providers: [])
 
-        described_class.fetch_from_providers
+        described_class.fetch_provider_models
 
         expect(RubyLLM::Provider).to have_received(:configured_remote_providers)
       end
@@ -45,7 +45,7 @@ RSpec.describe RubyLLM::Models do
       it 'can include local providers with remote_only: false' do
         allow(RubyLLM::Provider).to receive_messages(providers: {}, configured_providers: [])
 
-        described_class.fetch_from_providers(remote_only: false)
+        described_class.fetch_provider_models(remote_only: false)
 
         expect(RubyLLM::Provider).to have_received(:configured_providers)
       end

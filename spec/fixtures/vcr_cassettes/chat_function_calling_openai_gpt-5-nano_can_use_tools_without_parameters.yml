@@ -10,7 +10,7 @@ http_interactions:
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 06 May 2026 23:55:44 GMT
+      - Mon, 08 Jun 2026 18:47:38 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -43,11 +43,13 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Access-Control-Expose-Headers:
+      - CF-Ray
+      - CF-Ray
       - X-Request-ID
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '2167'
+      - '3910'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
@@ -76,9 +78,9 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-DcgNaLrYb0vCffX90dOaTlshyallr",
+          "id": "chatcmpl-DoZIUsmWykUFrVXkvFUB27ZA1X0s5",
           "object": "chat.completion",
-          "created": 1778111742,
+          "created": 1780944454,
           "model": "gpt-5-nano-2025-08-07",
           "choices": [
             {
@@ -88,7 +90,7 @@ http_interactions:
                 "content": null,
                 "tool_calls": [
                   {
-                    "id": "call_BXGqbSaxN381bgYYiPNvGX8k",
+                    "id": "call_zLj0Ezd2yMwgEOfggbBOC5lS",
                     "type": "function",
                     "function": {
                       "name": "best_language_to_learn",
@@ -104,14 +106,14 @@ http_interactions:
           ],
           "usage": {
             "prompt_tokens": 129,
-            "completion_tokens": 214,
-            "total_tokens": 343,
+            "completion_tokens": 470,
+            "total_tokens": 599,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
             },
             "completion_tokens_details": {
-              "reasoning_tokens": 192,
+              "reasoning_tokens": 448,
               "audio_tokens": 0,
               "accepted_prediction_tokens": 0,
               "rejected_prediction_tokens": 0
@@ -120,18 +122,18 @@ http_interactions:
           "service_tier": "default",
           "system_fingerprint": null
         }
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+  recorded_at: Mon, 08 Jun 2026 18:47:38 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"gpt-5-nano","messages":[{"role":"user","content":"What''s
-        the best language to learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_BXGqbSaxN381bgYYiPNvGX8k","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call_BXGqbSaxN381bgYYiPNvGX8k"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_zLj0Ezd2yMwgEOfggbBOC5lS","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call_zLj0Ezd2yMwgEOfggbBOC5lS"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -146,7 +148,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 06 May 2026 23:55:51 GMT
+      - Mon, 08 Jun 2026 18:47:48 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -164,11 +166,13 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Access-Control-Expose-Headers:
+      - CF-Ray
+      - CF-Ray
       - X-Request-ID
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '7417'
+      - '9748'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
@@ -196,6 +200,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        ewogICJpZCI6ICJjaGF0Y21wbC1EY2dOYzQ1QVBhUHM3bGJzQzNSMnh0YmlhQUU4UiIsCiAgIm9iamVjdCI6ICJjaGF0LmNvbXBsZXRpb24iLAogICJjcmVhdGVkIjogMTc3ODExMTc0NCwKICAibW9kZWwiOiAiZ3B0LTUtbmFuby0yMDI1LTA4LTA3IiwKICAiY2hvaWNlcyI6IFsKICAgIHsKICAgICAgImluZGV4IjogMCwKICAgICAgIm1lc3NhZ2UiOiB7CiAgICAgICAgInJvbGUiOiAiYXNzaXN0YW50IiwKICAgICAgICAiY29udGVudCI6ICJSdWJ5IGlzIGEgZ3JlYXQgcGljayB0byBzdGFydCB3aXRoLCBlc3BlY2lhbGx5IGlmIHlvdSB3YW50IGEgYmVnaW5uZXItZnJpZW5kbHkgbGFuZ3VhZ2Ugd2l0aCBhIHByb2R1Y3RpdmUgd2ViIGRldmVsb3BtZW50IHRvb2xraXQuXG5cbldoeSBSdWJ5IGNhbiBiZSBhIGdvb2QgY2hvaWNlOlxuLSBSZWFkYWJsZSwgY2xlYW4gc3ludGF4IHRoYXTigJlzIGZyaWVuZGx5IGZvciBiZWdpbm5lcnMuXG4tIFN0cm9uZyBlY29zeXN0ZW0gZm9yIHdlYiBkZXZlbG9wbWVudCAobm90YWJseSBSdWJ5IG9uIFJhaWxzKSB3aGljaCBoZWxwcyB5b3UgYnVpbGQgYXBwcyBxdWlja2x5LlxuLSBHcmVhdCBjb21tdW5pdHkgYW5kIGxvdHMgb2YgbGVhcm5pbmcgcmVzb3VyY2VzLlxuXG5BIHF1aWNrIGNhdmVhdDog4oCcdGhlIGJlc3QgbGFuZ3VhZ2XigJ0gZGVwZW5kcyBvbiB5b3VyIGdvYWxzLiBJZiB5b3XigJlyZSBhaW1pbmcgZm9yOlxuLSBEYXRhIHNjaWVuY2Ugb3IgbWFjaGluZSBsZWFybmluZzogUHl0aG9uIGlzIHVzdWFsbHkgdG9wLlxuLSBGcm9udC1lbmQgd2ViIGRldmVsb3BtZW50OiBKYXZhU2NyaXB0IChhbmQgVHlwZVNjcmlwdCkgaXMgZXNzZW50aWFsLlxuLSBTeXN0ZW1zIHByb2dyYW1taW5nIG9yIHBlcmZvcm1hbmNlLWZvY3VzZWQgd29yazogUnVzdCBvciBHbyBtaWdodCBiZSBiZXR0ZXIuXG4tIE1vYmlsZSBhcHBzOiBTd2lmdCAoaU9TKSBvciBLb3RsaW4gKEFuZHJvaWQpLlxuXG5JZiB5b3Ugd2FudCB0byBwcm9jZWVkIHdpdGggUnVieSwgSSBjYW4gaGVscCB5b3Ugc2V0IHVwIGEgcGxhbjpcbi0gSW5zdGFsbCBSdWJ5ICh2aWEgcmJlbnYgb3IgUlZNKSwgbGVhcm4gYmFzaWMgc3ludGF4LCBhbmQgYnVpbGQgYSBzbWFsbCBDTEkgYXBwLlxuLSBFeHBsb3JlIFJhaWxzIG9yIFNpbmF0cmEgZm9yIHdlYiBkZXZlbG9wbWVudC5cbi0gV29yayBvbiBhIHNpbXBsZSBwcm9qZWN0IChsaWtlIGEgYmxvZyBvciB0by1kbyBhcHApIHRvIHByYWN0aWNlIENSVUQsIHJvdXRpbmcsIGFuZCBkYXRhYmFzZXMuXG4tIFVzZSBiZWdpbm5lci1mcmllbmRseSByZXNvdXJjZXMgKGUuZy4sIFRoZSBPZGluIFByb2plY3QsIExlYXJuIEVub3VnaCBSdWJ5LCBSYWlscyBHdWlkZXMsIEV4ZXJjaXNtKS5cblxuV2hhdCBhcmUgeW91ciBnb2FscyBhbmQgcHJlZmVycmVkIGxlYXJuaW5nIHN0eWxlPyBJIGNhbiB0YWlsb3IgYSBmb2N1c2VkIHBsYW4gZm9yIHlvdS4iLAogICAgICAgICJyZWZ1c2FsIjogbnVsbCwKICAgICAgICAiYW5ub3RhdGlvbnMiOiBbXQogICAgICB9LAogICAgICAiZmluaXNoX3JlYXNvbiI6ICJzdG9wIgogICAgfQogIF0sCiAgInVzYWdlIjogewogICAgInByb21wdF90b2tlbnMiOiAxNjAsCiAgICAiY29tcGxldGlvbl90b2tlbnMiOiA4NTAsCiAgICAidG90YWxfdG9rZW5zIjogMTAxMCwKICAgICJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOiB7CiAgICAgICJjYWNoZWRfdG9rZW5zIjogMCwKICAgICAgImF1ZGlvX3Rva2VucyI6IDAKICAgIH0sCiAgICAiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6IHsKICAgICAgInJlYXNvbmluZ190b2tlbnMiOiA1NzYsCiAgICAgICJhdWRpb190b2tlbnMiOiAwLAogICAgICAiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOiAwLAogICAgICAicmVqZWN0ZWRfcHJlZGljdGlvbl90b2tlbnMiOiAwCiAgICB9CiAgfSwKICAic2VydmljZV90aWVyIjogImRlZmF1bHQiLAogICJzeXN0ZW1fZmluZ2VycHJpbnQiOiBudWxsCn0K
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+        ewogICJpZCI6ICJjaGF0Y21wbC1Eb1pJWWlXSG5mbXBRdlZJRTMxVzBweHlad3I4bSIsCiAgIm9iamVjdCI6ICJjaGF0LmNvbXBsZXRpb24iLAogICJjcmVhdGVkIjogMTc4MDk0NDQ1OCwKICAibW9kZWwiOiAiZ3B0LTUtbmFuby0yMDI1LTA4LTA3IiwKICAiY2hvaWNlcyI6IFsKICAgIHsKICAgICAgImluZGV4IjogMCwKICAgICAgIm1lc3NhZ2UiOiB7CiAgICAgICAgInJvbGUiOiAiYXNzaXN0YW50IiwKICAgICAgICAiY29udGVudCI6ICJSdWJ5LlxuXG5XaHkgUnVieSBjYW4gYmUgYSBncmVhdCBmaXJzdCBsYW5ndWFnZTpcbi0gQmVnaW5uZXItZnJpZW5kbHkgc3ludGF4IHRoYXQncyByZWFkYWJsZSBhbmQgZXhwcmVzc2l2ZS5cbi0gRmFzdCB0byBnZXQgc21hbGwgcHJvamVjdHMgZ29pbmcsIGVzcGVjaWFsbHkgZm9yIHdlYiBhcHBzIHdpdGggUnVieSBvbiBSYWlscy5cbi0gU3Ryb25nLCBmcmllbmRseSBjb21tdW5pdHkgYW5kIGxvdHMgb2YgYmVnaW5uZXItZnJpZW5kbHkgcmVzb3VyY2VzLlxuLSBHb29kIGZvciBsZWFybmluZyBjb3JlIHByb2dyYW1taW5nIGNvbmNlcHRzIChvYmplY3Qtb3JpZW50ZWQgcHJvZ3JhbW1pbmcsIGJsb2NrcywgaXRlcmF0b3JzKSB0aGF0IHRyYW5zZmVyIHRvIG90aGVyIGxhbmd1YWdlcy5cblxuTm90ZXM6XG4tIOKAnEJlc3TigJ0gZGVwZW5kcyBvbiB5b3VyIGdvYWxzLiBJZiB5b3XigJlyZSBhaW1pbmcgZm9yIGRhdGEgc2NpZW5jZSwgUHl0aG9uIGlzIG9mdGVuIGEgYmV0dGVyIGJldC4gSWYgeW91IHdhbnQgbW9iaWxlIGFwcHMsIGNvbnNpZGVyIFN3aWZ0L0tvdGxpbi4gSWYgeW914oCZcmUgaW50byBzeXN0ZW1zIG9yIHBlcmZvcm1hbmNlLCBSdXN0L0dvIG1pZ2h0IGJlIGJldHRlci5cblxuUXVpY2sgc3RhcnRlciBwbGFuOlxuLSBJbnN0YWxsIFJ1YnkgKHZpYSByYmVudiBvciBSVk0sIHRoZW4gUnVieSB2ZXJzaW9uIG1hbmFnZXIgdXNhZ2UpLlxuLSBMZWFybiBiYXNpY3M6IHZhcmlhYmxlcywgY29udHJvbCBmbG93LCBtZXRob2RzLCBjbGFzc2VzLCBhcnJheXMvaGFzaGVzLlxuLSBCdWlsZCBzb21ldGhpbmcgc21hbGw6IGEgQ0xJIHRvb2wgb3IgYSBzaW1wbGUgUmFpbHMgYXBwIHRvIGxlYXJuIHRoZSB3ZWIgd29ya2Zsb3cuXG4tIFByYWN0aWNlIHByb2JsZW1zIG9yIHNtYWxsIHByb2plY3RzIHRvIHNvbGlkaWZ5IHN5bnRheCAoRXhlcmNpc20gUnVieSB0cmFjaywgTGVldENvZGUsIENvZGV3YXJzKS5cbi0gRXhwbG9yZSBSYWlscyBpZiB5b3XigJlyZSB3ZWItZm9jdXNlZDogUmFpbHMgR3VpZGVzIGFuZCBHZXR0aW5nIFN0YXJ0ZWQgZ3VpZGVzLlxuXG5JZiB5b3Ugc2hhcmUgeW91ciBnb2FscyAod2ViIGRldiwgZGF0YSwgbW9iaWxlLCBldGMuKSwgSSBjYW4gdGFpbG9yIGEgbGVhcm5pbmcgcGF0aCBmb3IgeW91LiIsCiAgICAgICAgInJlZnVzYWwiOiBudWxsLAogICAgICAgICJhbm5vdGF0aW9ucyI6IFtdCiAgICAgIH0sCiAgICAgICJmaW5pc2hfcmVhc29uIjogInN0b3AiCiAgICB9CiAgXSwKICAidXNhZ2UiOiB7CiAgICAicHJvbXB0X3Rva2VucyI6IDE2MCwKICAgICJjb21wbGV0aW9uX3Rva2VucyI6IDExNTEsCiAgICAidG90YWxfdG9rZW5zIjogMTMxMSwKICAgICJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOiB7CiAgICAgICJjYWNoZWRfdG9rZW5zIjogMCwKICAgICAgImF1ZGlvX3Rva2VucyI6IDAKICAgIH0sCiAgICAiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6IHsKICAgICAgInJlYXNvbmluZ190b2tlbnMiOiA4OTYsCiAgICAgICJhdWRpb190b2tlbnMiOiAwLAogICAgICAiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOiAwLAogICAgICAicmVqZWN0ZWRfcHJlZGljdGlvbl90b2tlbnMiOiAwCiAgICB9CiAgfSwKICAic2VydmljZV90aWVyIjogImRlZmF1bHQiLAogICJzeXN0ZW1fZmluZ2VycHJpbnQiOiBudWxsCn0K
+  recorded_at: Mon, 08 Jun 2026 18:47:48 GMT
 recorded_with: VCR 6.4.0

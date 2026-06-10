@@ -24,4 +24,12 @@ RSpec.configure do |config|
 
     FileUtils.rm_f(cassette_path) if example.exception
   end
+
+  # Replaying VertexAI cassettes must not hit Google auth; live recording still does.
+  config.before do
+    unless VCR.current_cassette&.recording?
+      allow_any_instance_of(RubyLLM::Providers::VertexAI) # rubocop:disable RSpec/AnyInstance
+        .to receive(:headers).and_return({ 'Authorization' => 'Bearer test-token' })
+    end
+  end
 end

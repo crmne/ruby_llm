@@ -8,7 +8,7 @@ http_interactions:
       string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Content-Type:
       - application/x-www-form-urlencoded
       Accept-Encoding:
@@ -20,12 +20,12 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Date:
-      - Thu, 07 May 2026 00:00:05 GMT
-      Expires:
-      - Mon, 01 Jan 1990 00:00:00 GMT
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
+      Expires:
+      - Mon, 01 Jan 1990 00:00:00 GMT
+      Date:
+      - Mon, 08 Jun 2026 17:09:13 GMT
       Pragma:
       - no-cache
       Content-Type:
@@ -56,7 +56,7 @@ http_interactions:
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+  recorded_at: Mon, 08 Jun 2026 17:09:13 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -68,7 +68,7 @@ http_interactions:
         a single six-sided die and returns the result","parameters":{"type":"OBJECT","properties":{},"required":[]}}]}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -89,7 +89,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Thu, 07 May 2026 00:00:06 GMT
+      - Mon, 08 Jun 2026 17:09:14 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -116,18 +116,18 @@ http_interactions:
                       "name": "dice_roll",
                       "args": {}
                     },
-                    "thoughtSignature": "CoIBAY89a18iFJQidYUjkWM3yX1V8NM7oKLp9vfqjTU73nUB4cA7l2qdNjdgAEIGYV4tmP1ldXhwB0ybwjmhdeaNXOn1KST1Zt0HjOlrl+ZY42g0B0A9r1YLiNLedl2urJHAXMB2XVXaKfsoar7xFkklmzXOhavRXoP9biDQPCX5m0CKCQ=="
+                    "thoughtSignature": "CroBAY89a18b//Z3UMMXShHQAgs7csshnNNFuG0fuhJUSdq/pln0mIVlGV3ScFnYZ2Tkydi2udjiZPhyxV6RLG6duseyO3teepFUKJubzK/J0HP2olW+6wmhz8UsHDbocGVvJ7OVXvlLkWBcm47VKJbV1pUmsKG2huntN6Pg0ocQfw1mJmomXpCr40MSAZOz/MTBukxpiN5ZQ4zxcLiQpSva7ZbML9dtcQ46zpHCh1c6+5VyJXfrlyQQNCch"
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -1.1632993221282959
+              "avgLogprobs": -4.0166114171346026
             }
           ],
           "usageMetadata": {
             "promptTokenCount": 43,
             "candidatesTokenCount": 3,
-            "totalTokenCount": 72,
+            "totalTokenCount": 84,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -141,13 +141,13 @@ http_interactions:
                 "tokenCount": 3
               }
             ],
-            "thoughtsTokenCount": 26
+            "thoughtsTokenCount": 38
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-05-07T00:00:05.567152Z",
-          "responseId": "Bdb7afDOIsPJhcIP_oiG-A0"
+          "createTime": "2026-06-08T17:09:13.166438Z",
+          "responseId": "OfcmaqaUCqDSwOYPmJjiiA4"
         }
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+  recorded_at: Mon, 08 Jun 2026 17:09:14 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -155,12 +155,12 @@ http_interactions:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"You must call the dice_roll
         tool exactly 3 times when asked to roll dice 3 times."}]},{"role":"user","parts":[{"text":"Roll
-        the dice 3 times"}]},{"role":"model","parts":[{"functionCall":{"name":"dice_roll","args":{}},"thoughtSignature":"CoIBAY89a18iFJQidYUjkWM3yX1V8NM7oKLp9vfqjTU73nUB4cA7l2qdNjdgAEIGYV4tmP1ldXhwB0ybwjmhdeaNXOn1KST1Zt0HjOlrl+ZY42g0B0A9r1YLiNLedl2urJHAXMB2XVXaKfsoar7xFkklmzXOhavRXoP9biDQPCX5m0CKCQ=="}]},{"role":"function","parts":[{"functionResponse":{"name":"dice_roll","response":{"name":"dice_roll","content":[{"text":"{roll:
+        the dice 3 times"}]},{"role":"model","parts":[{"functionCall":{"name":"dice_roll","args":{}},"thoughtSignature":"CroBAY89a18b//Z3UMMXShHQAgs7csshnNNFuG0fuhJUSdq/pln0mIVlGV3ScFnYZ2Tkydi2udjiZPhyxV6RLG6duseyO3teepFUKJubzK/J0HP2olW+6wmhz8UsHDbocGVvJ7OVXvlLkWBcm47VKJbV1pUmsKG2huntN6Pg0ocQfw1mJmomXpCr40MSAZOz/MTBukxpiN5ZQ4zxcLiQpSva7ZbML9dtcQ46zpHCh1c6+5VyJXfrlyQQNCch"}]},{"role":"user","parts":[{"functionResponse":{"name":"dice_roll","response":{"name":"dice_roll","content":[{"text":"{roll:
         1}"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"dice_roll","description":"Rolls
         a single six-sided die and returns the result","parameters":{"type":"OBJECT","properties":{},"required":[]}}]}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -181,7 +181,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Thu, 07 May 2026 00:00:07 GMT
+      - Mon, 08 Jun 2026 17:09:17 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -212,18 +212,18 @@ http_interactions:
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.057267963886260986
+              "avgLogprobs": -0.071491335829099015
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 87,
+            "promptTokenCount": 99,
             "candidatesTokenCount": 3,
-            "totalTokenCount": 90,
+            "totalTokenCount": 102,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 87
+                "tokenCount": 99
               }
             ],
             "candidatesTokensDetails": [
@@ -234,10 +234,10 @@ http_interactions:
             ]
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-05-07T00:00:06.491591Z",
-          "responseId": "Btb7aceAHrmtz_IP3c-IiA4"
+          "createTime": "2026-06-08T17:09:14.235465Z",
+          "responseId": "OvcmasmvDsKC6dgPvOHBmQ8"
         }
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+  recorded_at: Mon, 08 Jun 2026 17:09:17 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -245,13 +245,13 @@ http_interactions:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"You must call the dice_roll
         tool exactly 3 times when asked to roll dice 3 times."}]},{"role":"user","parts":[{"text":"Roll
-        the dice 3 times"}]},{"role":"model","parts":[{"functionCall":{"name":"dice_roll","args":{}},"thoughtSignature":"CoIBAY89a18iFJQidYUjkWM3yX1V8NM7oKLp9vfqjTU73nUB4cA7l2qdNjdgAEIGYV4tmP1ldXhwB0ybwjmhdeaNXOn1KST1Zt0HjOlrl+ZY42g0B0A9r1YLiNLedl2urJHAXMB2XVXaKfsoar7xFkklmzXOhavRXoP9biDQPCX5m0CKCQ=="}]},{"role":"function","parts":[{"functionResponse":{"name":"dice_roll","response":{"name":"dice_roll","content":[{"text":"{roll:
-        1}"}]}}}]},{"role":"model","parts":[{"functionCall":{"name":"dice_roll","args":{}}}]},{"role":"function","parts":[{"functionResponse":{"name":"dice_roll","response":{"name":"dice_roll","content":[{"text":"{roll:
+        the dice 3 times"}]},{"role":"model","parts":[{"functionCall":{"name":"dice_roll","args":{}},"thoughtSignature":"CroBAY89a18b//Z3UMMXShHQAgs7csshnNNFuG0fuhJUSdq/pln0mIVlGV3ScFnYZ2Tkydi2udjiZPhyxV6RLG6duseyO3teepFUKJubzK/J0HP2olW+6wmhz8UsHDbocGVvJ7OVXvlLkWBcm47VKJbV1pUmsKG2huntN6Pg0ocQfw1mJmomXpCr40MSAZOz/MTBukxpiN5ZQ4zxcLiQpSva7ZbML9dtcQ46zpHCh1c6+5VyJXfrlyQQNCch"}]},{"role":"user","parts":[{"functionResponse":{"name":"dice_roll","response":{"name":"dice_roll","content":[{"text":"{roll:
+        1}"}]}}}]},{"role":"model","parts":[{"functionCall":{"name":"dice_roll","args":{}}}]},{"role":"user","parts":[{"functionResponse":{"name":"dice_roll","response":{"name":"dice_roll","content":[{"text":"{roll:
         2}"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"dice_roll","description":"Rolls
         a single six-sided die and returns the result","parameters":{"type":"OBJECT","properties":{},"required":[]}}]}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -272,7 +272,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Thu, 07 May 2026 00:00:08 GMT
+      - Mon, 08 Jun 2026 17:09:18 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -303,18 +303,18 @@ http_interactions:
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.0061085193107525511
+              "avgLogprobs": -0.00033542696231355268
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 105,
+            "promptTokenCount": 117,
             "candidatesTokenCount": 3,
-            "totalTokenCount": 108,
+            "totalTokenCount": 120,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 105
+                "tokenCount": 117
               }
             ],
             "candidatesTokensDetails": [
@@ -325,10 +325,10 @@ http_interactions:
             ]
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-05-07T00:00:07.595992Z",
-          "responseId": "B9b7aZiwJMPJhcIP_oiG-A0"
+          "createTime": "2026-06-08T17:09:17.484214Z",
+          "responseId": "PfcmavbGHaDSwOYPmJjiiA4"
         }
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+  recorded_at: Mon, 08 Jun 2026 17:09:18 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -336,14 +336,14 @@ http_interactions:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"You must call the dice_roll
         tool exactly 3 times when asked to roll dice 3 times."}]},{"role":"user","parts":[{"text":"Roll
-        the dice 3 times"}]},{"role":"model","parts":[{"functionCall":{"name":"dice_roll","args":{}},"thoughtSignature":"CoIBAY89a18iFJQidYUjkWM3yX1V8NM7oKLp9vfqjTU73nUB4cA7l2qdNjdgAEIGYV4tmP1ldXhwB0ybwjmhdeaNXOn1KST1Zt0HjOlrl+ZY42g0B0A9r1YLiNLedl2urJHAXMB2XVXaKfsoar7xFkklmzXOhavRXoP9biDQPCX5m0CKCQ=="}]},{"role":"function","parts":[{"functionResponse":{"name":"dice_roll","response":{"name":"dice_roll","content":[{"text":"{roll:
-        1}"}]}}}]},{"role":"model","parts":[{"functionCall":{"name":"dice_roll","args":{}}}]},{"role":"function","parts":[{"functionResponse":{"name":"dice_roll","response":{"name":"dice_roll","content":[{"text":"{roll:
-        2}"}]}}}]},{"role":"model","parts":[{"functionCall":{"name":"dice_roll","args":{}}}]},{"role":"function","parts":[{"functionResponse":{"name":"dice_roll","response":{"name":"dice_roll","content":[{"text":"{roll:
+        the dice 3 times"}]},{"role":"model","parts":[{"functionCall":{"name":"dice_roll","args":{}},"thoughtSignature":"CroBAY89a18b//Z3UMMXShHQAgs7csshnNNFuG0fuhJUSdq/pln0mIVlGV3ScFnYZ2Tkydi2udjiZPhyxV6RLG6duseyO3teepFUKJubzK/J0HP2olW+6wmhz8UsHDbocGVvJ7OVXvlLkWBcm47VKJbV1pUmsKG2huntN6Pg0ocQfw1mJmomXpCr40MSAZOz/MTBukxpiN5ZQ4zxcLiQpSva7ZbML9dtcQ46zpHCh1c6+5VyJXfrlyQQNCch"}]},{"role":"user","parts":[{"functionResponse":{"name":"dice_roll","response":{"name":"dice_roll","content":[{"text":"{roll:
+        1}"}]}}}]},{"role":"model","parts":[{"functionCall":{"name":"dice_roll","args":{}}}]},{"role":"user","parts":[{"functionResponse":{"name":"dice_roll","response":{"name":"dice_roll","content":[{"text":"{roll:
+        2}"}]}}}]},{"role":"model","parts":[{"functionCall":{"name":"dice_roll","args":{}}}]},{"role":"user","parts":[{"functionResponse":{"name":"dice_roll","response":{"name":"dice_roll","content":[{"text":"{roll:
         3}"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"dice_roll","description":"Rolls
         a single six-sided die and returns the result","parameters":{"type":"OBJECT","properties":{},"required":[]}}]}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -364,7 +364,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Thu, 07 May 2026 00:00:09 GMT
+      - Mon, 08 Jun 2026 17:09:19 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -387,35 +387,35 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "I rolled the dice three times. The results are 1, 2, and 3."
+                    "text": "I rolled the dice 3 times and got 1, 2, and 3."
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.16084322929382325
+              "avgLogprobs": -0.048897969095330486
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 123,
-            "candidatesTokenCount": 20,
-            "totalTokenCount": 143,
+            "promptTokenCount": 135,
+            "candidatesTokenCount": 19,
+            "totalTokenCount": 154,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 123
+                "tokenCount": 135
               }
             ],
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 20
+                "tokenCount": 19
               }
             ]
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-05-07T00:00:08.444431Z",
-          "responseId": "CNb7aY-QG9mhz_IPvuLH-AE"
+          "createTime": "2026-06-08T17:09:18.914623Z",
+          "responseId": "Pvcmar_pN7LRwOYPpp_qyQ4"
         }
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+  recorded_at: Mon, 08 Jun 2026 17:09:19 GMT
 recorded_with: VCR 6.4.0

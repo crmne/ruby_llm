@@ -5,7 +5,8 @@ require 'spec_helper'
 RSpec.describe RubyLLM::Providers::Anthropic::Tools do
   let(:tools) { described_class }
 
-  describe '.format_tool_call' do
+  describe '#format_tool_call_with_thinking' do
+    let(:provider) { RubyLLM::Providers::Anthropic.allocate }
     let(:msg) do
       instance_double(RubyLLM::Message,
                       content: 'Some content',
@@ -17,8 +18,12 @@ RSpec.describe RubyLLM::Providers::Anthropic::Tools do
                       })
     end
 
+    def format_tool_call(msg)
+      provider.send(:format_tool_call_with_thinking, msg, false)
+    end
+
     it 'formats a message with content and tool call' do
-      result = tools.format_tool_call(msg)
+      result = format_tool_call(msg)
 
       expect(result).to eq({
                              role: 'assistant',
@@ -47,7 +52,7 @@ RSpec.describe RubyLLM::Providers::Anthropic::Tools do
       end
 
       it 'formats a message with only tool call' do
-        result = tools.format_tool_call(msg)
+        result = format_tool_call(msg)
 
         expect(result).to eq({
                                role: 'assistant',
@@ -76,7 +81,7 @@ RSpec.describe RubyLLM::Providers::Anthropic::Tools do
       end
 
       it 'formats a message with only tool call' do
-        result = tools.format_tool_call(msg)
+        result = format_tool_call(msg)
 
         expect(result).to eq({
                                role: 'assistant',
@@ -92,6 +97,26 @@ RSpec.describe RubyLLM::Providers::Anthropic::Tools do
       end
     end
 
+    it 'formats Content attachments before tool calls' do
+      text_path = File.expand_path('../../../fixtures/ruby.txt', __dir__)
+      content = RubyLLM::Content.new('Read this before calling the tool', text_path)
+      msg = instance_double(RubyLLM::Message,
+                            content: content,
+                            tool_calls: {
+                              'tool_123' => instance_double(RubyLLM::ToolCall,
+                                                            id: 'tool_123',
+                                                            name: 'test_tool',
+                                                            arguments: { 'arg1' => 'value1' })
+                            })
+
+      formatted = format_tool_call(msg)
+
+      expect(formatted[:content].first).to eq({ type: 'text', text: 'Read this before calling the tool' })
+      expect(formatted[:content].second).to include(type: 'text')
+      expect(formatted[:content].second[:text]).to include("<file name='ruby.txt' mime_type='text/plain'>")
+      expect(formatted[:content].third).to include(type: 'tool_use', id: 'tool_123')
+    end
+
     it 'formats messages with multiple tool calls correctly' do
       tool_calls = {
         'tool_1' => RubyLLM::ToolCall.new(id: 'tool_1', name: 'dice_roll', arguments: {}),
@@ -105,7 +130,7 @@ RSpec.describe RubyLLM::Providers::Anthropic::Tools do
         tool_calls: tool_calls
       )
 
-      formatted = described_class.format_tool_call(msg)
+      formatted = format_tool_call(msg)
 
       expect(formatted[:role]).to eq('assistant')
       expect(formatted[:content].size).to eq(4) # 1 text + 3 tool_use blocks
@@ -130,7 +155,7 @@ RSpec.describe RubyLLM::Providers::Anthropic::Tools do
         tool_calls: tool_calls
       )
 
-      formatted = described_class.format_tool_call(msg)
+      formatted = format_tool_call(msg)
 
       expect(formatted[:role]).to eq('assistant')
       expect(formatted[:content].size).to eq(1) # Only tool_use block, no text
@@ -187,6 +212,51 @@ RSpec.describe RubyLLM::Providers::Anthropic::Tools do
                                }
                              ]
                            })
+    end
+  end
+
+  describe '#extract_tool_calls' do
+    let(:extractor) do
+      Class.new do
+        include RubyLLM::Providers::Anthropic::Streaming
+        include RubyLLM::Providers::Anthropic::Tools
+      end.new
+    end
+
+    it 'keys streaming tool call starts by content block index' do
+      data = {
+        'type' => 'content_block_start',
+        'index' => 2,
+        'content_block' => {
+          'type' => 'tool_use',
+          'id' => 'tool_2',
+          'name' => 'search',
+          'input' => {}
+        }
+      }
+
+      tool_calls = extractor.send(:extract_tool_calls, data)
+
+      expect(tool_calls.keys).to eq([2])
+      expect(tool_calls[2].id).to eq('tool_2')
+      expect(tool_calls[2].name).to eq('search')
+    end
+
+    it 'keys streaming tool call argument deltas by content block index' do
+      data = {
+        'type' => 'content_block_delta',
+        'index' => 2,
+        'delta' => {
+          'type' => 'input_json_delta',
+          'partial_json' => '{"query":"market news"}'
+        }
+      }
+
+      tool_calls = extractor.send(:extract_tool_calls, data)
+
+      expect(tool_calls.keys).to eq([2])
+      expect(tool_calls[2].id).to be_nil
+      expect(tool_calls[2].arguments).to eq('{"query":"market news"}')
     end
   end
 

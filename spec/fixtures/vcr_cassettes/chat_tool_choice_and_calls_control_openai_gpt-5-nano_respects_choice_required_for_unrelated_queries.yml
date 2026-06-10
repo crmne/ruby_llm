@@ -12,7 +12,7 @@ http_interactions:
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}],"tool_choice":"required"}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 07 May 2026 00:05:39 GMT
+      - Mon, 08 Jun 2026 18:52:14 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -45,11 +45,13 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Access-Control-Expose-Headers:
+      - CF-Ray
+      - CF-Ray
       - X-Request-ID
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '8971'
+      - '4398'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
@@ -78,9 +80,9 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-DcgX4XEfj3VwhMgMUoBWYLsPQe2uE",
+          "id": "chatcmpl-DoZMxsZSWADiiS3MEB1X0PMZiCGqw",
           "object": "chat.completion",
-          "created": 1778112330,
+          "created": 1780944731,
           "model": "gpt-5-nano-2025-08-07",
           "choices": [
             {
@@ -90,7 +92,7 @@ http_interactions:
                 "content": null,
                 "tool_calls": [
                   {
-                    "id": "call_Eo7TmY8nwQ2J5o2xRzPqbtH7",
+                    "id": "call_JcUz2wZMtFcoFOWmP0LTDGhl",
                     "type": "function",
                     "function": {
                       "name": "weather",
@@ -106,14 +108,14 @@ http_interactions:
           ],
           "usage": {
             "prompt_tokens": 158,
-            "completion_tokens": 736,
-            "total_tokens": 894,
+            "completion_tokens": 544,
+            "total_tokens": 702,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
             },
             "completion_tokens_details": {
-              "reasoning_tokens": 704,
+              "reasoning_tokens": 512,
               "audio_tokens": 0,
               "accepted_prediction_tokens": 0,
               "rejected_prediction_tokens": 0
@@ -122,21 +124,21 @@ http_interactions:
           "service_tier": "default",
           "system_fingerprint": null
         }
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+  recorded_at: Mon, 08 Jun 2026 18:52:14 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"gpt-5-nano","messages":[{"role":"user","content":"When was
-        the fall of Rome?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_Eo7TmY8nwQ2J5o2xRzPqbtH7","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}"}}]},{"role":"tool","content":"Current
-        weather at 41.9028, 12.4964: 15°C, Wind: 10 km/h","tool_call_id":"call_Eo7TmY8nwQ2J5o2xRzPqbtH7"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        the fall of Rome?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_JcUz2wZMtFcoFOWmP0LTDGhl","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"41.9028\",\"longitude\":\"12.4964\"}"}}]},{"role":"tool","content":"Current
+        weather at 41.9028, 12.4964: 15°C, Wind: 10 km/h","tool_call_id":"call_JcUz2wZMtFcoFOWmP0LTDGhl"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -151,7 +153,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 07 May 2026 00:05:44 GMT
+      - Mon, 08 Jun 2026 18:52:22 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -169,11 +171,13 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Access-Control-Expose-Headers:
+      - CF-Ray
+      - CF-Ray
       - X-Request-ID
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '5502'
+      - '7396'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
@@ -201,6 +205,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        ewogICJpZCI6ICJjaGF0Y21wbC1EY2dYRDNmU0RFTkRNWlVTajVVT05PM2Ixbjd2cyIsCiAgIm9iamVjdCI6ICJjaGF0LmNvbXBsZXRpb24iLAogICJjcmVhdGVkIjogMTc3ODExMjMzOSwKICAibW9kZWwiOiAiZ3B0LTUtbmFuby0yMDI1LTA4LTA3IiwKICAiY2hvaWNlcyI6IFsKICAgIHsKICAgICAgImluZGV4IjogMCwKICAgICAgIm1lc3NhZ2UiOiB7CiAgICAgICAgInJvbGUiOiAiYXNzaXN0YW50IiwKICAgICAgICAiY29udGVudCI6ICJUaGVyZSBpc27igJl0IGEgc2luZ2xlIGRhdGUgZm9yIOKAnHRoZSBmYWxsIG9mIFJvbWUs4oCdIGJlY2F1c2UgaXQgZGVwZW5kcyBvbiB3aGF0IHlvdSBtZWFuLlxuXG4tIFdlc3Rlcm4gUm9tYW4gRW1waXJlOiBjb21tb25seSBkYXRlZCB0byA0NzYgQ0UsIHdoZW4gdGhlIGxhc3QgZW1wZXJvciwgUm9tdWx1cyBBdWd1c3R1bHVzLCB3YXMgZGVwb3NlZCBieSBPZG9hY2VyLlxuLSBFYXN0ZXJuIFJvbWFuIEVtcGlyZSAoQnl6YW50aW5lIEVtcGlyZSk6IHBlcnNpc3RlZCB1bnRpbCAxNDUzIENFLCB3aGVuIENvbnN0YW50aW5vcGxlIGZlbGwgdG8gdGhlIE90dG9tYW4gVHVya3MuXG4tIE9mdGVuLCBleHBlcnRzIG5vdGUgZWFybGllciB0dXJuaW5nIHBvaW50cyAoZS5nLiwgdGhlIFNhY2sgb2YgUm9tZSBpbiA0MTAgQ0UpIGFzIHBhcnQgb2YgdGhlIGJyb2FkZXIgZGVjbGluZSwgd2hpY2ggd2FzIGdyYWR1YWwgcmF0aGVyIHRoYW4gYSBzaW5nbGUgZXZlbnQuIiwKICAgICAgICAicmVmdXNhbCI6IG51bGwsCiAgICAgICAgImFubm90YXRpb25zIjogW10KICAgICAgfSwKICAgICAgImZpbmlzaF9yZWFzb24iOiAic3RvcCIKICAgIH0KICBdLAogICJ1c2FnZSI6IHsKICAgICJwcm9tcHRfdG9rZW5zIjogMjE5LAogICAgImNvbXBsZXRpb25fdG9rZW5zIjogNjM1LAogICAgInRvdGFsX3Rva2VucyI6IDg1NCwKICAgICJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOiB7CiAgICAgICJjYWNoZWRfdG9rZW5zIjogMCwKICAgICAgImF1ZGlvX3Rva2VucyI6IDAKICAgIH0sCiAgICAiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6IHsKICAgICAgInJlYXNvbmluZ190b2tlbnMiOiA1MTIsCiAgICAgICJhdWRpb190b2tlbnMiOiAwLAogICAgICAiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOiAwLAogICAgICAicmVqZWN0ZWRfcHJlZGljdGlvbl90b2tlbnMiOiAwCiAgICB9CiAgfSwKICAic2VydmljZV90aWVyIjogImRlZmF1bHQiLAogICJzeXN0ZW1fZmluZ2VycHJpbnQiOiBudWxsCn0K
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+        ewogICJpZCI6ICJjaGF0Y21wbC1Eb1pOMUNRbHdqbDExSTJxbEx5VWR2dGpMWXVVUiIsCiAgIm9iamVjdCI6ICJjaGF0LmNvbXBsZXRpb24iLAogICJjcmVhdGVkIjogMTc4MDk0NDczNSwKICAibW9kZWwiOiAiZ3B0LTUtbmFuby0yMDI1LTA4LTA3IiwKICAiY2hvaWNlcyI6IFsKICAgIHsKICAgICAgImluZGV4IjogMCwKICAgICAgIm1lc3NhZ2UiOiB7CiAgICAgICAgInJvbGUiOiAiYXNzaXN0YW50IiwKICAgICAgICAiY29udGVudCI6ICJUaGUgZmFsbCBvZiBSb21lIGlzIHVzdWFsbHkgcmVhZCBpbiB0d28gd2F5czpcblxuLSBXZXN0ZXJuIFJvbWFuIEVtcGlyZTogNDc2IENFIOKAlCBSb211bHVzIEF1Z3VzdHVsdXMgd2FzIGRlcG9zZWQgYnkgT2RvYWNlciwgdHJhZGl0aW9uYWxseSBtYXJraW5nIHRoZSBlbmQgb2YgdGhlIFdlc3Rlcm4gRW1waXJlLlxuLSBFYXN0ZXJuIFJvbWFuIEVtcGlyZSAoQnl6YW50aW5lIEVtcGlyZSk6IDE0NTMgQ0Ug4oCUIENvbnN0YW50aW5vcGxlIGZlbGwgdG8gdGhlIE90dG9tYW4gVHVya3MsIG1hcmtpbmcgdGhlIGVuZCBvZiB0aGUgQnl6YW50aW5lIEVtcGlyZS5cblxuTm90ZTogbWFueSBoaXN0b3JpYW5zIHZpZXcgUm9tZeKAmXMgZGVjbGluZSBhcyBhIGdyYWR1YWwgcHJvY2VzcyByYXRoZXIgdGhhbiBhIHNpbmdsZSBkYXRlLiIsCiAgICAgICAgInJlZnVzYWwiOiBudWxsLAogICAgICAgICJhbm5vdGF0aW9ucyI6IFtdCiAgICAgIH0sCiAgICAgICJmaW5pc2hfcmVhc29uIjogInN0b3AiCiAgICB9CiAgXSwKICAidXNhZ2UiOiB7CiAgICAicHJvbXB0X3Rva2VucyI6IDIxOSwKICAgICJjb21wbGV0aW9uX3Rva2VucyI6IDgwMywKICAgICJ0b3RhbF90b2tlbnMiOiAxMDIyLAogICAgInByb21wdF90b2tlbnNfZGV0YWlscyI6IHsKICAgICAgImNhY2hlZF90b2tlbnMiOiAwLAogICAgICAiYXVkaW9fdG9rZW5zIjogMAogICAgfSwKICAgICJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjogewogICAgICAicmVhc29uaW5nX3Rva2VucyI6IDcwNCwKICAgICAgImF1ZGlvX3Rva2VucyI6IDAsCiAgICAgICJhY2NlcHRlZF9wcmVkaWN0aW9uX3Rva2VucyI6IDAsCiAgICAgICJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6IDAKICAgIH0KICB9LAogICJzZXJ2aWNlX3RpZXIiOiAiZGVmYXVsdCIsCiAgInN5c3RlbV9maW5nZXJwcmludCI6IG51bGwKfQo=
+  recorded_at: Mon, 08 Jun 2026 18:52:22 GMT
 recorded_with: VCR 6.4.0

@@ -10,6 +10,10 @@ module RubyLLM
         def format_role(role)
           role.to_s
         end
+
+        def format_content(content)
+          Perplexity::Media.format_content(content)
+        end
       end
     end
   end

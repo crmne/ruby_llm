@@ -2,6 +2,7 @@
 
 require 'active_support/concern'
 require 'active_support/inflector'
+require 'ruby_llm/active_record/attachment_helpers'
 
 module RubyLLM
   module ActiveRecord
@@ -84,6 +85,7 @@ module RubyLLM
     # Methods mixed into chat models.
     module ChatLegacyMethods
       extend ActiveSupport::Concern
+      include AttachmentHelpers
 
       class_methods do
         attr_reader :tool_call_class
@@ -222,7 +224,7 @@ module RubyLLM
       end
 
       def create_user_message(content, with: nil)
-        RubyLLM.logger.warn(
+        RubyLLM.deprecator.warn(
           '`create_user_message` is deprecated and will be removed in RubyLLM 2.0. ' \
           'Use `add_message(role: :user, content: ...)` instead.'
         )
@@ -326,12 +328,12 @@ module RubyLLM
       end
 
       def setup_persistence_callbacks
-        return @chat if @chat.instance_variable_get(:@_persistence_callbacks_setup)
+        return @chat if @persistence_callbacks_setup
 
         @chat.before_message { persist_new_message }
         @chat.after_message { |msg| persist_message_completion(msg) }
 
-        @chat.instance_variable_set(:@_persistence_callbacks_setup, true)
+        @persistence_callbacks_setup = true
         @chat
       end
 
@@ -380,65 +382,6 @@ module RubyLLM
         self.class.tool_call_class.constantize.find_by(tool_call_id: tool_call_id)&.id
       end
 
-      def persist_content(message_record, attachments)
-        return unless message_record.respond_to?(:attachments)
-
-        attachables = prepare_for_active_storage(attachments)
-        message_record.attachments.attach(attachables) if attachables.any?
-      end
-
-      def prepare_for_active_storage(attachments)
-        Utils.to_safe_array(attachments).filter_map do |attachment|
-          case attachment
-          when ActionDispatch::Http::UploadedFile, ActiveStorage::Blob
-            attachment
-          when ActiveStorage::Attachment, ActiveStorage::Attached::One, ActiveStorage::Attached::Many
-            active_storage_blobs(attachment)
-          when Hash
-            attachment.values.map { |v| prepare_for_active_storage(v) }
-          else
-            convert_to_active_storage_format(attachment)
-          end
-        end.flatten.compact
-      end
-
-      def convert_to_active_storage_format(source)
-        return if source.blank?
-
-        attachment = source.is_a?(RubyLLM::Attachment) ? source : RubyLLM::Attachment.new(source)
-
-        if attachment.active_storage?
-          active_storage_blobs(attachment.source)
-        else
-          {
-            io: StringIO.new(attachment.content),
-            filename: attachment.filename,
-            content_type: attachment.mime_type
-          }
-        end
-      rescue StandardError => e
-        RubyLLM.logger.warn "Failed to process attachment #{source}: #{e.message}"
-        nil
-      end
-
-      def active_storage_blobs(attachment)
-        case attachment
-        when ActiveStorage::Blob then attachment
-        when ActiveStorage::Attachment, ActiveStorage::Attached::One then attachment.blob
-        when ActiveStorage::Attached::Many then attachment.blobs
-        end
-      end
-
-      def build_content(message, attachments)
-        return message if content_like?(message)
-
-        RubyLLM::Content.new(message, attachments)
-      end
-
-      def content_like?(object)
-        object.is_a?(RubyLLM::Content) || object.is_a?(RubyLLM::Content::Raw)
-      end
-
       def prepare_content_for_storage(content)
         attachments = nil
 
@@ -456,6 +399,7 @@ module RubyLLM
     # Methods mixed into message models.
     module MessageLegacyMethods
       extend ActiveSupport::Concern
+      include AttachmentHelpers
 
       class_methods do
         attr_reader :chat_class, :tool_call_class, :chat_foreign_key, :tool_call_foreign_key
@@ -505,25 +449,10 @@ module RubyLLM
         RubyLLM::Content.new(text_content).tap do |content_obj|
           @_tempfiles = []
 
-          attachments.each do |attachment|
-            tempfile = download_attachment(attachment)
-            content_obj.add_attachment(tempfile, filename: attachment.filename.to_s)
+          attachment_sources.each do |attachment, attachable|
+            add_attachment_to_content(content_obj, attachment, attachable)
           end
         end
-      end
-
-      def download_attachment(attachment)
-        ext = File.extname(attachment.filename.to_s)
-        basename = File.basename(attachment.filename.to_s, ext)
-        tempfile = Tempfile.new([basename, ext])
-        tempfile.binmode
-
-        attachment.download { |chunk| tempfile.write(chunk) }
-
-        tempfile.flush
-        tempfile.rewind
-        @_tempfiles << tempfile
-        tempfile
       end
     end
   end

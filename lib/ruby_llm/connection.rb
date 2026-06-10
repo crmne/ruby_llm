@@ -1,5 +1,11 @@
 # frozen_string_literal: true
 
+require 'faraday'
+require 'faraday/multipart'
+require 'faraday/retry'
+require 'ruby_llm/error_middleware'
+require 'timeout'
+
 module RubyLLM
   # Connection class for managing API connections to various providers.
   class Connection
@@ -22,8 +28,7 @@ module RubyLLM
       @provider = provider
       @config = config
 
-      ensure_configured!
-      @connection ||= Faraday.new(provider.api_base) do |faraday|
+      @connection = Faraday.new(provider.api_base) do |faraday|
         setup_timeout(faraday)
         setup_logging(faraday)
         setup_retry(faraday)
@@ -33,24 +38,43 @@ module RubyLLM
     end
 
     def post(url, payload, &)
-      @connection.post url, payload do |req|
-        req.headers.merge! @provider.headers if @provider.respond_to?(:headers)
-        yield req if block_given?
+      instrument_request(:post, url) do
+        @connection.post url, payload do |req|
+          req.headers.merge! @provider.headers
+          yield req if block_given?
+        end
       end
     end
 
     def get(url, &)
-      @connection.get url do |req|
-        req.headers.merge! @provider.headers if @provider.respond_to?(:headers)
-        yield req if block_given?
+      instrument_request(:get, url) do
+        @connection.get url do |req|
+          req.headers.merge! @provider.headers
+          yield req if block_given?
+        end
       end
     end
 
-    def instance_variables
+    # Keeps the config and Faraday internals out of pretty-printed output.
+    def pretty_print_instance_variables
       super - %i[@config @connection]
     end
 
     private
+
+    def instrument_request(method, url)
+      payload = {
+        provider: @provider.slug,
+        method: method,
+        url: url
+      }
+
+      RubyLLM.instrument('request.ruby_llm', payload, config: @config) do
+        response = yield
+        payload[:status] = response.status if response.respond_to?(:status)
+        response
+      end
+    end
 
     def setup_timeout(faraday)
       faraday.options.timeout = @config.request_timeout
@@ -89,7 +113,7 @@ module RubyLLM
       faraday.request :multipart
       faraday.request :json
       faraday.response :json
-      faraday.adapter :net_http
+      faraday.adapter(@config.faraday_adapter)
       faraday.use :llm_errors, provider: @provider
     end
 
@@ -111,20 +135,6 @@ module RubyLLM
         RubyLLM::ServiceUnavailableError,
         RubyLLM::OverloadedError
       ]
-    end
-
-    def ensure_configured!
-      return if @provider.configured?
-
-      missing = @provider.configuration_requirements.reject { |req| @config.send(req) }
-      config_block = <<~RUBY
-        RubyLLM.configure do |config|
-          #{missing.map { |key| "config.#{key} = ENV['#{key.to_s.upcase}']" }.join("\n  ")}
-        end
-      RUBY
-
-      raise ConfigurationError,
-            "#{@provider.name} provider is not configured. Add this to your initialization:\n\n#{config_block}"
     end
   end
 end

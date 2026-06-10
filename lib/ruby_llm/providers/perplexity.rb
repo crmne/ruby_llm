@@ -8,7 +8,7 @@ module RubyLLM
       include Perplexity::Models
 
       def api_base
-        'https://api.perplexity.ai'
+        @config.perplexity_api_base || 'https://api.perplexity.ai'
       end
 
       def headers
@@ -24,7 +24,7 @@ module RubyLLM
         end
 
         def configuration_options
-          %i[perplexity_api_key]
+          %i[perplexity_api_key perplexity_api_base]
         end
 
         def configuration_requirements

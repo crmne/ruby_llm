@@ -8,6 +8,7 @@ RSpec.describe RubyLLM::Providers::Gemini::Streaming do
   let(:test_obj) do
     Object.new.tap do |obj|
       obj.extend(RubyLLM::Providers::Gemini::Tools)
+      obj.extend(RubyLLM::Providers::Gemini::Chat)
       obj.extend(described_class)
     end
   end

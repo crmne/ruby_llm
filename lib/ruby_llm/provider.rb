@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require 'json'
+require 'ruby_llm/error'
+
 module RubyLLM
   # Base class for LLM providers.
   class Provider
@@ -57,9 +60,9 @@ module RubyLLM
       )
 
       if block_given?
-        stream_response @connection, payload, headers, &
+        stream_response payload, headers, &
       else
-        sync_response @connection, payload, headers
+        sync_response payload, headers
       end
     end
     # rubocop:enable Metrics/ParameterLists
@@ -96,15 +99,11 @@ module RubyLLM
     end
 
     def configured?
-      configuration_requirements.all? { |req| @config.send(req) }
+      self.class.configured?(@config)
     end
 
     def local?
       self.class.local?
-    end
-
-    def remote?
-      self.class.remote?
     end
 
     def assume_models_exist?
@@ -120,7 +119,9 @@ module RubyLLM
         error = body['error']
         return error if error.is_a?(String)
 
-        body.dig('error', 'message')
+        [body.dig('error', 'message'), body['message'], body['detail']].find do |message|
+          message.is_a?(String)
+        end
       when Array
         body.map do |part|
           error = part['error']
@@ -194,11 +195,6 @@ module RubyLLM
         providers[name.to_sym]
       end
 
-      def for(model)
-        model_info = Models.find(model)
-        resolve model_info.provider
-      end
-
       def providers
         @providers ||= {}
       end
@@ -229,10 +225,14 @@ module RubyLLM
     def validate_paint_inputs!(with:, mask:)
       return if with.nil? && mask.nil?
 
-      raise UnsupportedAttachmentError, "#{name} does not support image references in paint"
+      raise UnsupportedAttachmentError, 'image reference'
     end
 
     def build_audio_file_part(file_path)
+      require 'faraday/multipart'
+      require 'marcel'
+      require 'pathname'
+
       expanded_path = File.expand_path(file_path)
       mime_type = Marcel::MimeType.for(Pathname.new(expanded_path))
 
@@ -252,18 +252,25 @@ module RubyLLM
     end
 
     def ensure_configured!
-      missing = configuration_requirements.reject { |req| @config.send(req) }
-      return if missing.empty?
+      return if configured?
 
-      raise ConfigurationError, "Missing configuration for #{name}: #{missing.join(', ')}"
+      missing = configuration_requirements.reject { |req| @config.send(req) }
+      config_block = <<~RUBY
+        RubyLLM.configure do |config|
+          #{missing.map { |key| "config.#{key} = ENV['#{key.to_s.upcase}']" }.join("\n  ")}
+        end
+      RUBY
+
+      raise ConfigurationError,
+            "#{name} provider is not configured. Add this to your initialization:\n\n#{config_block}"
     end
 
     def maybe_normalize_temperature(temperature, _model)
       temperature
     end
 
-    def sync_response(connection, payload, additional_headers = {})
-      response = connection.post completion_url, payload do |req|
+    def sync_response(payload, additional_headers = {})
+      response = @connection.post completion_url, payload do |req|
         req.headers = additional_headers.merge(req.headers) unless additional_headers.empty?
       end
       parse_completion_response response

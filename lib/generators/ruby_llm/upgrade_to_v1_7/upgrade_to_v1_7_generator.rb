@@ -6,7 +6,7 @@ require_relative '../generator_helpers'
 
 module RubyLLM
   module Generators
-    # Generator to upgrade existing RubyLLM apps to v1.7 with new Rails-like API
+    # Generator to upgrade existing RubyLLM apps to v1.7 with association-based Rails API
     class UpgradeToV17Generator < Rails::Generators::Base
       include Rails::Generators::Migration
       include RubyLLM::Generators::GeneratorHelpers
@@ -24,7 +24,7 @@ module RubyLLM
 
       argument :model_mappings, type: :array, default: [], banner: 'chat:ChatName message:MessageName ...'
 
-      desc 'Upgrades existing RubyLLM apps to v1.7 with new Rails-like API\n' \
+      desc 'Upgrades existing RubyLLM apps to v1.7 with association-based Rails API\n' \
            'Usage: bin/rails g ruby_llm:upgrade_to_v1_7 [chat:ChatName] [message:MessageName] ...'
 
       def self.next_migration_number(dirname)
@@ -78,7 +78,7 @@ module RubyLLM
         return if initializer_content.include?('config.use_new_acts_as')
 
         inject_into_file initializer_path, before: /^end/ do
-          lines = ["\n  # Enable the new Rails-like API", '  config.use_new_acts_as = true']
+          lines = ["\n  # Enable the association-based Rails API", '  config.use_new_acts_as = true']
           lines << "  config.model_registry_class = \"#{model_model_name}\"" if model_model_name != 'Model'
           lines << "\n"
           lines.join("\n")

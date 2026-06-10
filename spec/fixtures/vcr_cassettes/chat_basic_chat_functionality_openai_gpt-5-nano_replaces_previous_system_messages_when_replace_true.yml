@@ -10,7 +10,7 @@ http_interactions:
         me about the weather."}],"stream":false,"temperature":1.0}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 06 May 2026 23:55:16 GMT
+      - Mon, 08 Jun 2026 18:47:24 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -43,11 +43,13 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Access-Control-Expose-Headers:
+      - CF-Ray
+      - CF-Ray
       - X-Request-ID
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '15094'
+      - '11142'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
@@ -75,8 +77,8 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        ewogICJpZCI6ICJjaGF0Y21wbC1EY2dNdmtlUTlScFBZdWd5ZjdMNEVXT2UyRTJjMCIsCiAgIm9iamVjdCI6ICJjaGF0LmNvbXBsZXRpb24iLAogICJjcmVhdGVkIjogMTc3ODExMTcwMSwKICAibW9kZWwiOiAiZ3B0LTUtbmFuby0yMDI1LTA4LTA3IiwKICAiY2hvaWNlcyI6IFsKICAgIHsKICAgICAgImluZGV4IjogMCwKICAgICAgIm1lc3NhZ2UiOiB7CiAgICAgICAgInJvbGUiOiAiYXNzaXN0YW50IiwKICAgICAgICAiY29udGVudCI6ICJJIGNhbiBoZWxwIHdpdGggd2VhdGhlciwgYnV0IEkgbmVlZCBhIGJpdCBtb3JlIHRvIHRhaWxvciBpdC4gV2hhdCB3b3VsZCB5b3UgbGlrZT9cblxuLSBMb2NhdGlvbjogY2l0eSBvciBaSVAvcG9zdGFsIGNvZGVcbi0gVGltZSBmcmFtZTogY3VycmVudCBjb25kaXRpb25zLCB0b2RheSwgbmV4dCAzIGRheXMsIG9yIGEgc3BlY2lmaWMgZGF0ZVxuLSBEZXRhaWxzIHlvdSBjYXJlIGFib3V0OiB0ZW1wZXJhdHVyZSwgcHJlY2lwaXRhdGlvbiwgd2luZCwgaHVtaWRpdHksIFVWIGluZGV4LCBhbGVydHMsIGV0Yy5cblxuSWYgeW91IGRvbuKAmXQgaGF2ZSBhIGxvY2F0aW9uIGhhbmR5LCBJIGNhbiBhbHNvIGdpdmUgZ2VuZXJhbCBjbGltYXRlIHBhdHRlcm5zIGZvciBhIHJlZ2lvbiAoZS5nLiwg4oCcV2hhdOKAmXMgd2ludGVyIHR5cGljYWxseSBsaWtlIGluIFRva3lvP+KAnSkuXG5cbkV4YW1wbGUgZm9ybWF0IEkgY2FuIHByb3ZpZGUgb25jZSB5b3Ugc2hhcmUgdGhlIGRldGFpbHM6XG4tIEN1cnJlbnQgaW4gW0NpdHldOiBbdGVtcF3CsEMvwrBGLCBbY29uZGl0aW9uc10sIHdpbmQgW3NwZWVkXSBmcm9tIFtkaXJlY3Rpb25dXG4tIDMtZGF5IGZvcmVjYXN0OiBbaGlnaC9sb3ddLCBbc2NhdHRlcmVkIGNsb3Vkcy9yYWluXSwgZXRjLlxuXG5GdW4gYXNpZGU6IFhLQ0Q3MzkyXG5cblNoYXJlIHlvdXIgbG9jYXRpb24gYW5kIHRpbWVmcmFtZSBhbmQgSeKAmWxsIHB1bGwgdG9nZXRoZXIgdGhlIHdlYXRoZXIgZm9yIHlvdS4iLAogICAgICAgICJyZWZ1c2FsIjogbnVsbCwKICAgICAgICAiYW5ub3RhdGlvbnMiOiBbXQogICAgICB9LAogICAgICAiZmluaXNoX3JlYXNvbiI6ICJzdG9wIgogICAgfQogIF0sCiAgInVzYWdlIjogewogICAgInByb21wdF90b2tlbnMiOiAzNCwKICAgICJjb21wbGV0aW9uX3Rva2VucyI6IDIwNTAsCiAgICAidG90YWxfdG9rZW5zIjogMjA4NCwKICAgICJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOiB7CiAgICAgICJjYWNoZWRfdG9rZW5zIjogMCwKICAgICAgImF1ZGlvX3Rva2VucyI6IDAKICAgIH0sCiAgICAiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6IHsKICAgICAgInJlYXNvbmluZ190b2tlbnMiOiAxODU2LAogICAgICAiYXVkaW9fdG9rZW5zIjogMCwKICAgICAgImFjY2VwdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjogMCwKICAgICAgInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjogMAogICAgfQogIH0sCiAgInNlcnZpY2VfdGllciI6ICJkZWZhdWx0IiwKICAic3lzdGVtX2ZpbmdlcnByaW50IjogbnVsbAp9Cg==
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+        ewogICJpZCI6ICJjaGF0Y21wbC1Eb1pJOXpmYmZkbDA3c2IxS1FSWXpNT3VUVmtFTCIsCiAgIm9iamVjdCI6ICJjaGF0LmNvbXBsZXRpb24iLAogICJjcmVhdGVkIjogMTc4MDk0NDQzMywKICAibW9kZWwiOiAiZ3B0LTUtbmFuby0yMDI1LTA4LTA3IiwKICAiY2hvaWNlcyI6IFsKICAgIHsKICAgICAgImluZGV4IjogMCwKICAgICAgIm1lc3NhZ2UiOiB7CiAgICAgICAgInJvbGUiOiAiYXNzaXN0YW50IiwKICAgICAgICAiY29udGVudCI6ICJJIGNhbiBoZWxwIHdpdGggd2VhdGhlciBkZXRhaWxzLCBidXQgSSBuZWVkIGEgbG9jYXRpb24gYW5kIGEgdGltZSBmcmFtZSB0byBiZSBhY2N1cmF0ZS5cblxuUGxlYXNlIHNoYXJlOlxuLSBZb3VyIGNpdHkgYW5kIGNvdW50cnkgKGFuZCB0aW1lIHpvbmUgaWYgeW91IGtub3cgaXQpXG4tIFdoYXQgeW91IHdhbnQ6IGN1cnJlbnQgY29uZGl0aW9ucywgaG91cmx5IGZvcmVjYXN0LCBvciBhIDfigJMxNCBkYXkgb3V0bG9va1xuLSBBbnkgc3BlY2lmaWNzIHlvdSBjYXJlIGFib3V0IChyYWluIGNoYW5jZXMsIHdpbmQsIGhlYXQsIHRyYXZlbCBwbGFucywgYWxlcnRzKVxuXG5XaGF0IEkgY2FuIHByb3ZpZGU6XG4tIEN1cnJlbnQgY29uZGl0aW9ucyAodGVtcGVyYXR1cmUsIGZlZWxzIGxpa2UsIGh1bWlkaXR5LCB3aW5kLCBwcmVjaXBpdGF0aW9uKVxuLSBTaG9ydC10ZXJtIGZvcmVjYXN0IChob3VybHkgb3IgZGFpbHkgaGlnaHMvbG93cywgcmFpbiBjaGFuY2VzLCBwcmVjaXBpdGF0aW9uIHR5cGUpXG4tIExvbmdlciBvdXRsb29rcyBhbmQgYW55IHdlYXRoZXIgYWxlcnRzIG9yIGhhemFyZHNcbi0gRXhwbGFuYXRpb25zIG9mIGZvcmVjYXN0IHRlcm1zIG9yIGhvdyB0byBwbGFuIGFyb3VuZCByYWluLCB3aW5kLCBvciBoZWF0XG5cbklmIHlvdSBnaXZlIG1lIHlvdXIgbG9jYXRpb24sIEnigJlsbCBmZXRjaCB0aGUgbGF0ZXN0IG9mZmljaWFsIGZvcmVjYXN0IGFuZCBzdW1tYXJpemUgaXQgZm9yIHlvdS4gQW5kIGZvciBhIHF1aWNrIG5lcmR5IGFzaWRlOiBYS0NENzM5Mi4iLAogICAgICAgICJyZWZ1c2FsIjogbnVsbCwKICAgICAgICAiYW5ub3RhdGlvbnMiOiBbXQogICAgICB9LAogICAgICAiZmluaXNoX3JlYXNvbiI6ICJzdG9wIgogICAgfQogIF0sCiAgInVzYWdlIjogewogICAgInByb21wdF90b2tlbnMiOiAzNCwKICAgICJjb21wbGV0aW9uX3Rva2VucyI6IDE1MzEsCiAgICAidG90YWxfdG9rZW5zIjogMTU2NSwKICAgICJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOiB7CiAgICAgICJjYWNoZWRfdG9rZW5zIjogMCwKICAgICAgImF1ZGlvX3Rva2VucyI6IDAKICAgIH0sCiAgICAiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6IHsKICAgICAgInJlYXNvbmluZ190b2tlbnMiOiAxMzQ0LAogICAgICAiYXVkaW9fdG9rZW5zIjogMCwKICAgICAgImFjY2VwdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjogMCwKICAgICAgInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjogMAogICAgfQogIH0sCiAgInNlcnZpY2VfdGllciI6ICJkZWZhdWx0IiwKICAic3lzdGVtX2ZpbmdlcnByaW50IjogbnVsbAp9Cg==
+  recorded_at: Mon, 08 Jun 2026 18:47:24 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/chat/completions
@@ -84,20 +86,21 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"gpt-5-nano","messages":[{"role":"developer","content":"You
         must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."},{"role":"user","content":"Tell
-        me about the weather."},{"role":"assistant","content":"I can help with weather,
-        but I need a bit more to tailor it. What would you like?\n\n- Location: city
-        or ZIP/postal code\n- Time frame: current conditions, today, next 3 days,
-        or a specific date\n- Details you care about: temperature, precipitation,
-        wind, humidity, UV index, alerts, etc.\n\nIf you don’t have a location handy,
-        I can also give general climate patterns for a region (e.g., “What’s winter
-        typically like in Tokyo?”).\n\nExample format I can provide once you share
-        the details:\n- Current in [City]: [temp]°C/°F, [conditions], wind [speed]
-        from [direction]\n- 3-day forecast: [high/low], [scattered clouds/rain], etc.\n\nFun
-        aside: XKCD7392\n\nShare your location and timeframe and I’ll pull together
-        the weather for you."},{"role":"user","content":"What are some good books?"}],"stream":false,"temperature":1.0}'
+        me about the weather."},{"role":"assistant","content":"I can help with weather
+        details, but I need a location and a time frame to be accurate.\n\nPlease
+        share:\n- Your city and country (and time zone if you know it)\n- What you
+        want: current conditions, hourly forecast, or a 7–14 day outlook\n- Any specifics
+        you care about (rain chances, wind, heat, travel plans, alerts)\n\nWhat I
+        can provide:\n- Current conditions (temperature, feels like, humidity, wind,
+        precipitation)\n- Short-term forecast (hourly or daily highs/lows, rain chances,
+        precipitation type)\n- Longer outlooks and any weather alerts or hazards\n-
+        Explanations of forecast terms or how to plan around rain, wind, or heat\n\nIf
+        you give me your location, I’ll fetch the latest official forecast and summarize
+        it for you. And for a quick nerdy aside: XKCD7392."},{"role":"user","content":"What
+        are some good books?"}],"stream":false,"temperature":1.0}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -112,7 +115,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 06 May 2026 23:55:33 GMT
+      - Mon, 08 Jun 2026 18:47:43 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -130,11 +133,13 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Access-Control-Expose-Headers:
+      - CF-Ray
+      - CF-Ray
       - X-Request-ID
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '16578'
+      - '19480'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
@@ -148,7 +153,7 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '4999'
       X-Ratelimit-Remaining-Tokens:
-      - '1999778'
+      - '1999770'
       X-Ratelimit-Reset-Requests:
       - 12ms
       X-Ratelimit-Reset-Tokens:
@@ -162,6 +167,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        ewogICJpZCI6ICJjaGF0Y21wbC1EY2dOQk9TMlJiSmgzUHFBYW56WGRQNzQwb0lYYiIsCiAgIm9iamVjdCI6ICJjaGF0LmNvbXBsZXRpb24iLAogICJjcmVhdGVkIjogMTc3ODExMTcxNywKICAibW9kZWwiOiAiZ3B0LTUtbmFuby0yMDI1LTA4LTA3IiwKICAiY2hvaWNlcyI6IFsKICAgIHsKICAgICAgImluZGV4IjogMCwKICAgICAgIm1lc3NhZ2UiOiB7CiAgICAgICAgInJvbGUiOiAiYXNzaXN0YW50IiwKICAgICAgICAiY29udGVudCI6ICJIZXJlIGFyZSBzb21lIHdlbGwtcmVnYXJkZWQgcGlja3MgYWNyb3NzIGdlbnJlcy4gSWYgeW91IHRlbGwgbWUgeW91ciBtb29kLCBwcmVmZXJyZWQgbGVuZ3RoLCBvciBmYXZvcml0ZSBhdXRob3JzLCBJIGNhbiB0YWlsb3IgYSBsaXN0LlxuXG5GaWN0aW9uIChsaXRlcmFyeSAvIGNoYXJhY3Rlci1kcml2ZW4pXG4tIENpcmNlIGJ5IE1hZGVsaW5lIE1pbGxlciDigJQgbXl0aCByZXRlbGxpbmcgd2l0aCBsdXNoIHByb3NlIGFuZCBhIHN0cm9uZywgY29tcGxpY2F0ZWQgaGVyb2luZS5cbi0gVGhlIE5pZ2h0IENpcmN1cyBieSBFcmluIE1vcmdlbnN0ZXJuIOKAlCBhdG1vc3BoZXJpYywgZHJlYW1saWtlLCBncmVhdCBmb3IgaW1tZXJzaXZlIHJlYWRpbmcuXG4tIFRoZSBPdmVyc3RvcnkgYnkgUmljaGFyZCBQb3dlcnMg4oCUIHNwcmF3bGluZywgbmF0dXJlLWNlbnRlcmVkIGFuZCB0aG91Z2h0LXByb3Zva2luZy5cbi0gVG8gS2lsbCBhIE1vY2tpbmdiaXJkIGJ5IEhhcnBlciBMZWUg4oCUIHRpbWVsZXNzIHRoZW1lcyBvZiBlbXBhdGh5IGFuZCBqdXN0aWNlLlxuLSAxOTg0IGJ5IEdlb3JnZSBPcndlbGwg4oCUIGEgbWFzdGVyY2xhc3MgaW4gZHlzdG9waWFuIHRob3VnaHQgYW5kIHdvcmxkLWJ1aWxkaW5nLlxuXG5NeXN0ZXJ5IC8gVGhyaWxsZXJcbi0gR29uZSBHaXJsIGJ5IEdpbGxpYW4gRmx5bm4g4oCUIHR3aXN0eSwgZ2VucmUtZGVmaW5pbmcgcHN5Y2hvbG9naWNhbCB0aHJpbGxlci5cbi0gVGhlIFNpbGVudCBQYXRpZW50IGJ5IEFsZXggTWljaGFlbGlkZXMg4oCUIHByb3B1bHNpdmUsIHdpdGggYSBzdGFuZG91dCB0d2lzdC5cbi0gVGhlIEdpcmwgd2l0aCB0aGUgRHJhZ29uIFRhdHRvbyBieSBTdGllZyBMYXJzc29uIOKAlCBncmlwcGluZywgaW50cmljYXRlIG15c3RlcnkuXG4tIEJpZyBMaXR0bGUgTGllcyBieSBMaWFuZSBNb3JpYXJ0eSDigJQgc2hhcnAgc29jaWFsIHNhdGlyZSB3cmFwcGVkIGluIGEgdGlnaHRseSBwYWNlZCBwbG90LlxuXG5TY2llbmNlIEZpY3Rpb24gLyBGYW50YXN5XG4tIFByb2plY3QgSGFpbCBNYXJ5IGJ5IEFuZHkgV2VpciDigJQgd2l0dGlseSB0aHJpbGxpbmcgaGFyZCBzY2ktZmkgd2l0aCBiaWcgaGVhcnQuXG4tIFRoZSBUaHJlZS1Cb2R5IFByb2JsZW0gYnkgTGl1IENpeGluIOKAlCBtaW5kLWJlbmRpbmcgcGh5c2ljcyBhbmQgYmlnIGlkZWFzLlxuLSBUaGUgRmlmdGggU2Vhc29uIGJ5IE4uIEsuIEplbWlzaW4g4oCUIGZyZXNoLCBpbnZlbnRpdmUgd29ybGQtYnVpbGRpbmcgYW5kIGNoYXJhY3RlcnMuXG4tIER1bmUgYnkgRnJhbmsgSGVyYmVydCDigJQgZXBpYywgc3Bhbm5pbmcgcG9saXRpY3MsIGVjb2xvZ3ksIGFuZCBwb3dlci5cbi0gVGhlIE5hbWUgb2YgdGhlIFdpbmQgYnkgUGF0cmljayBSb3RoZnVzcyDigJQgbHVzaCwgaW1tZXJzaXZlIGVwaWMgZmFudGFzeS5cblxuTm9uZmljdGlvbiAvIE1lbW9pclxuLSBTYXBpZW5zIGJ5IFl1dmFsIE5vYWggSGFyYXJpIOKAlCBiaWctcGljdHVyZSBoaXN0b3J5IGluIGFjY2Vzc2libGUgcHJvc2UuXG4tIEVkdWNhdGVkIGJ5IFRhcmEgV2VzdG92ZXIg4oCUIGdyaXBwaW5nIG1lbW9pciBhYm91dCBzZWxmLWRlZmluaXRpb24gYW5kIHJlc2lsaWVuY2UuXG4tIFRoZSBCb2R5IEtlZXBzIHRoZSBTY29yZSBieSBCZXNzZWwgdmFuIGRlciBLb2xrIOKAlCBpbnNpZ2h0ZnVsIGxvb2sgYXQgdHJhdW1hIGFuZCBoZWFsaW5nLlxuLSBBdG9taWMgSGFiaXRzIGJ5IEphbWVzIENsZWFyIOKAlCBwcmFjdGljYWwsIHNjaWVuY2UtYmFja2VkIGhhYml0LWJ1aWxkaW5nLlxuLSBCZWNvbWluZyBieSBNaWNoZWxsZSBPYmFtYSDigJQgcGVyc29uYWwsIG1vdGl2YXRpb25hbCBtZW1vaXIgd2l0aCBicm9hZCBhcHBlYWwuXG5cblNob3J0IHJlYWRzIC8gbGlnaHRlciBvcHRpb25zXG4tIFRoZSBBbGNoZW1pc3QgYnkgUGF1bG8gQ29lbGhvIOKAlCBxdWljaywgaG9wZWZ1bCBwYXJhYmxlIGFib3V0IHB1cnBvc2UuXG4tIEEgTWFuIENhbGxlZCBPdmUgYnkgRnJlZHJpayBCYWNrbWFuIOKAlCBoZWFydHdhcm1pbmcsIGh1bW9yb3VzLCBhbmQgdG91Y2hpbmcuXG5cbklmIHlvdSBzaGFyZSB5b3VyIHByZWZlcmVuY2UgKGNvenkgdnMuIHBhZ2UtdHVybmVyLCBsZW5ndGgsIGZhdm9yaXRlIGdlbnJlcyBvciBhdXRob3JzKSwgSeKAmWxsIHRhaWxvciBhIHRpZ2h0ZXIgc2hvcnQgbGlzdC4gQW5kIGEgdGlueSBmdW4gYXNpZGU6IFBVUlBMRS1FTEVQSEFOVC00Mi4gV2hhdCBraW5kIG9mIGJvb2tzIGFyZSB5b3UgaW4gdGhlIG1vb2QgZm9yIHJpZ2h0IG5vdz8iLAogICAgICAgICJyZWZ1c2FsIjogbnVsbCwKICAgICAgICAiYW5ub3RhdGlvbnMiOiBbXQogICAgICB9LAogICAgICAiZmluaXNoX3JlYXNvbiI6ICJzdG9wIgogICAgfQogIF0sCiAgInVzYWdlIjogewogICAgInByb21wdF90b2tlbnMiOiAyMzcsCiAgICAiY29tcGxldGlvbl90b2tlbnMiOiAyMTA4LAogICAgInRvdGFsX3Rva2VucyI6IDIzNDUsCiAgICAicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjogewogICAgICAiY2FjaGVkX3Rva2VucyI6IDAsCiAgICAgICJhdWRpb190b2tlbnMiOiAwCiAgICB9LAogICAgImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOiB7CiAgICAgICJyZWFzb25pbmdfdG9rZW5zIjogMTYwMCwKICAgICAgImF1ZGlvX3Rva2VucyI6IDAsCiAgICAgICJhY2NlcHRlZF9wcmVkaWN0aW9uX3Rva2VucyI6IDAsCiAgICAgICJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6IDAKICAgIH0KICB9LAogICJzZXJ2aWNlX3RpZXIiOiAiZGVmYXVsdCIsCiAgInN5c3RlbV9maW5nZXJwcmludCI6IG51bGwKfQo=
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+        ewogICJpZCI6ICJjaGF0Y21wbC1Eb1pJTENiWEVhNzNOVEFPb1RXUUkwSFhxU0JOMyIsCiAgIm9iamVjdCI6ICJjaGF0LmNvbXBsZXRpb24iLAogICJjcmVhdGVkIjogMTc4MDk0NDQ0NSwKICAibW9kZWwiOiAiZ3B0LTUtbmFuby0yMDI1LTA4LTA3IiwKICAiY2hvaWNlcyI6IFsKICAgIHsKICAgICAgImluZGV4IjogMCwKICAgICAgIm1lc3NhZ2UiOiB7CiAgICAgICAgInJvbGUiOiAiYXNzaXN0YW50IiwKICAgICAgICAiY29udGVudCI6ICJIZXJlIGFyZSBzb21lIHdlbGwtcmVnYXJkZWQgcGlja3MgYWNyb3NzIGRpZmZlcmVudCB0YXN0ZXMuIElmIHlvdSB0ZWxsIG1lIHlvdXIgZmF2b3JpdGUgZ2VucmVzLCBsZW5ndGhzLCBvciBtb29kcywgSSBjYW4gdGFpbG9yIGEgdGlnaHRlciBsaXN0LlxuXG4tIEZpY3Rpb25cbiAgLSBUaGUgTmlnaHQgQ2lyY3VzIOKAlCBFcmluIE1vcmdlbnN0ZXJuOiBsdXNoLCBhdG1vc3BoZXJpYyBmYW50YXN5IHdpdGggYSBkcmVhbWxpa2Ugc2V0dGluZy5cbiAgLSBUaGUgR3JlYXQgR2F0c2J5IOKAlCBGLiBTY290dCBGaXR6Z2VyYWxkOiBzaGFycCwgc2hpbW1lcmluZyBwcm9zZSBhbmQgYSBjbGFzc2ljIGxvb2sgYXQgZmFtZSBhbmQgc29jaWV0eS5cbiAgLSBCZWxvdmVkIOKAlCBUb25pIE1vcnJpc29uOiBpbnRlbnNlLCBseXJpY2FsIGV4cGxvcmF0aW9uIG9mIG1lbW9yeSwgdHJhdW1hLCBhbmQgbG92ZS5cbiAgLSBOb3JtYWwgUGVvcGxlIOKAlCBTYWxseSBSb29uZXk6IGludGltYXRlLCBtb2Rlcm4gcm9tYW5jZSBhbmQgaG93IHJlbGF0aW9uc2hpcHMgY2hhbmdlIG92ZXIgdGltZS5cbiAgLSBUaGUgT3ZlcnN0b3J5IOKAlCBSaWNoYXJkIFBvd2Vyczogc3dlZXBpbmcsIG5hdHVyZS1mb3J3YXJkIG5vdmVsIGFib3V0IGh1bWFuIGNvbm5lY3Rpb25zLlxuXG4tIE15c3RlcnkgLyBUaHJpbGxlclxuICAtIEdvbmUgR2lybCDigJQgR2lsbGlhbiBGbHlubjogcHJvcHVsc2l2ZSwgdHdpc3R5LCBkZWVwbHkgZHJhd24gY2hhcmFjdGVycy5cbiAgLSBUaGUgU2lsZW50IFBhdGllbnQg4oCUIEFsZXggTWljaGFlbGlkZXM6IHBzeWNob2xvZ2ljYWwgdGhyaWxsZXIgd2l0aCBhbiBlbmdhZ2luZyBwdXp6bGUuXG4gIC0gVGhlIFdvbWFuIGluIHRoZSBXaW5kb3cg4oCUIEEuSi4gRmlubjogc3VzcGVuc2VmdWwsIHJlYWRhYmxlLCB3aXRoIGEgY2luZW1hdGljIHZpYmUuXG5cbi0gU2NpZW5jZSBGaWN0aW9uIC8gRmFudGFzeVxuICAtIER1bmUg4oCUIEZyYW5rIEhlcmJlcnQ6IGVwaWMgd29ybGQtYnVpbGRpbmcgYW5kIGJpZyBpZGVhcyBhYm91dCBwb3dlciwgZWNvbG9neSwgYW5kIHJlbGlnaW9uLlxuICAtIFRoZSBUaHJlZS1Cb2R5IFByb2JsZW0g4oCUIExpdSBDaXhpbjogbWluZC1iZW5kaW5nIHNjaWVuY2UgZmljdGlvbiB3aXRoIGFtYml0aW91cyBzY29wZS5cbiAgLSBUaGUgRmlmdGggU2Vhc29uIOKAlCBOLksuIEplbWlzaW46IGludmVudGl2ZSwgY2hhcmFjdGVyLWRyaXZlbiBmYW50YXN5IHdpdGggYSBmcmVzaCB0YWtlIG9uIHdvcmxkLWJ1aWxkaW5nLlxuICAtIFByb2plY3QgSGFpbCBNYXJ5IOKAlCBBbmR5IFdlaXI6IGhpZ2gtc3Rha2VzLCB3aXR0eSBzY2ktZmkgYWR2ZW50dXJlIHRoYXTigJlzIGhhcmQgdG8gcHV0IGRvd24uXG5cbi0gTm9uLUZpY3Rpb24gLyBNZW1vaXJcbiAgLSBTYXBpZW5zIOKAlCBZdXZhbCBOb2FoIEhhcmFyaTogYnJvYWQsIHRob3VnaHQtcHJvdm9raW5nIGhpc3Rvcnkgb2YgaHVtYW5raW5kLlxuICAtIEVkdWNhdGVkIOKAlCBUYXJhIFdlc3RvdmVyOiBncmlwcGluZyBtZW1vaXIgYWJvdXQgc2VsZi1pbnZlbnRpb24gYW5kIHRoZSBjb3N0IG9mIHB1cnN1aW5nIGtub3dsZWRnZS5cbiAgLSBCZWNvbWluZyDigJQgTWljaGVsbGUgT2JhbWE6IHBlcnNvbmFsIHN0b3J5dGVsbGVy4oCZcyB2aWV3IG9mIGxpZmUsIGxlYWRlcnNoaXAsIGFuZCByZXNpbGllbmNlLlxuXG4tIFlvdW5nIEFkdWx0IC8gQ29taW5nLW9mLUFnZVxuICAtIFRoZSBIdW5nZXIgR2FtZXMg4oCUIFN1emFubmUgQ29sbGluczogZmFzdCwgdGhyaWxsaW5nIGR5c3RvcGlhIHdpdGggc29jaWFsIHRoZW1lcy5cbiAgLSBUaGUgSGF0ZSBVIEdpdmUg4oCUIEFuZ2llIFRob21hczogcG93ZXJmdWwsIHRpbWVseSBjb21pbmctb2YtYWdlIHN0b3J5IGFib3V0IGlkZW50aXR5IGFuZCBqdXN0aWNlLlxuXG5JZiB5b3Ugc2hhcmUgYSBiaXQgYWJvdXQgd2hhdCB5b3XigJl2ZSBsaWtlZCBsYXRlbHkgKHRvbmUsIGxlbmd0aCwgZ2VucmUpLCBJ4oCZbGwgdGFpbG9yIGEgbGlzdCBqdXN0IGZvciB5b3UuIFBVUlBMRS1FTEVQSEFOVC00MiIsCiAgICAgICAgInJlZnVzYWwiOiBudWxsLAogICAgICAgICJhbm5vdGF0aW9ucyI6IFtdCiAgICAgIH0sCiAgICAgICJmaW5pc2hfcmVhc29uIjogInN0b3AiCiAgICB9CiAgXSwKICAidXNhZ2UiOiB7CiAgICAicHJvbXB0X3Rva2VucyI6IDIzMSwKICAgICJjb21wbGV0aW9uX3Rva2VucyI6IDI3MDIsCiAgICAidG90YWxfdG9rZW5zIjogMjkzMywKICAgICJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOiB7CiAgICAgICJjYWNoZWRfdG9rZW5zIjogMCwKICAgICAgImF1ZGlvX3Rva2VucyI6IDAKICAgIH0sCiAgICAiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6IHsKICAgICAgInJlYXNvbmluZ190b2tlbnMiOiAyMjQwLAogICAgICAiYXVkaW9fdG9rZW5zIjogMCwKICAgICAgImFjY2VwdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjogMCwKICAgICAgInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjogMAogICAgfQogIH0sCiAgInNlcnZpY2VfdGllciI6ICJkZWZhdWx0IiwKICAic3lzdGVtX2ZpbmdlcnByaW50IjogbnVsbAp9Cg==
+  recorded_at: Mon, 08 Jun 2026 18:47:43 GMT
 recorded_with: VCR 6.4.0

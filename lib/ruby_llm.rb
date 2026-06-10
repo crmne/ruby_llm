@@ -12,6 +12,7 @@ require 'securerandom'
 require 'date'
 require 'time'
 require 'zeitwerk'
+require 'ruby_llm/error'
 
 loader = Zeitwerk::Loader.for_gem
 loader.inflector.inflect(
@@ -39,9 +40,15 @@ loader.setup
 
 # A delightful Ruby interface to modern AI language models.
 module RubyLLM
-  class Error < StandardError; end
-
   class << self
+    def deprecator
+      @deprecator ||= Deprecator.new
+    end
+
+    def instrument(...)
+      Instrumentation.instrument(...)
+    end
+
     def context
       context_config = config.dup
       yield context_config if block_given?

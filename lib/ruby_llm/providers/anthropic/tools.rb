@@ -11,36 +11,10 @@ module RubyLLM
           blocks.select { |c| c['type'] == 'tool_use' }
         end
 
-        def format_tool_call(msg)
-          return { role: 'assistant', content: msg.content.value } if msg.content.is_a?(RubyLLM::Content::Raw)
-
-          content = []
-
-          content << Media.format_text(msg.content) unless msg.content.nil? || msg.content.empty?
-
-          msg.tool_calls.each_value do |tool_call|
-            content << format_tool_use_block(tool_call)
-          end
-
-          {
-            role: 'assistant',
-            content:
-          }
-        end
-
         def format_tool_result(msg)
           {
             role: 'user',
             content: msg.content.is_a?(RubyLLM::Content::Raw) ? msg.content.value : [format_tool_result_block(msg)]
-          }
-        end
-
-        def format_tool_use_block(tool_call)
-          {
-            type: 'tool_use',
-            id: tool_call.id,
-            name: tool_call.name,
-            input: tool_call.arguments
           }
         end
 
@@ -72,10 +46,27 @@ module RubyLLM
 
         def extract_tool_calls(data)
           if json_delta?(data)
-            { nil => ToolCall.new(id: nil, name: nil, arguments: data.dig('delta', 'partial_json')) }
+            extract_tool_call_delta(data)
+          elsif content_block_start?(data)
+            extract_tool_call_start(data)
           else
             parse_tool_calls(data['content_block'])
           end
+        end
+
+        def extract_tool_call_delta(data)
+          { data['index'] => ToolCall.new(id: nil, name: nil, arguments: data.dig('delta', 'partial_json')) }
+        end
+
+        def extract_tool_call_start(data)
+          tool_calls = parse_tool_calls(data['content_block'])
+          return tool_calls if tool_calls.nil? || data['index'].nil?
+
+          { data['index'] => tool_calls.values.first }
+        end
+
+        def content_block_start?(data)
+          data['type'] == 'content_block_start'
         end
 
         def parse_tool_calls(content_blocks)

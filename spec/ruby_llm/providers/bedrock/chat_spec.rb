@@ -30,9 +30,9 @@ RSpec.describe RubyLLM::Providers::Bedrock::Chat do
     end
   end
 
-  describe '.render_tool_result_content' do
+  describe '.format_tool_result_content' do
     it 'uses a placeholder when the tool returns no content' do
-      result = described_class.render_tool_result_content('')
+      result = described_class.format_tool_result_content('')
 
       expect(result).to eq([{ text: '(no output)' }])
     end

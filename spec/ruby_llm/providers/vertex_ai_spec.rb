@@ -14,10 +14,14 @@ RSpec.describe RubyLLM::Providers::VertexAI do
       retry_interval_randomness: 0.5,
       retry_backoff_factor: 2,
       http_proxy: nil,
+      faraday_adapter: :net_http,
       vertexai_location: location,
-      vertexai_project_id: 'test-project'
+      vertexai_project_id: 'test-project',
+      vertexai_api_base: vertexai_api_base
     )
   end
+
+  let(:vertexai_api_base) { nil }
 
   describe '#api_base' do
     context 'when location is global' do
@@ -34,6 +38,39 @@ RSpec.describe RubyLLM::Providers::VertexAI do
       it 'uses the correct api_base with location prefix' do
         expect(provider.api_base).to eq('https://us-central1-aiplatform.googleapis.com/v1beta1')
       end
+    end
+
+    context 'when vertexai_api_base is set' do
+      let(:location) { 'us-central1' }
+      let(:vertexai_api_base) { 'https://vertex-proxy.example.com/v1beta1' }
+
+      it 'uses the custom API URL' do
+        expect(provider.api_base).to eq('https://vertex-proxy.example.com/v1beta1')
+      end
+    end
+  end
+
+  describe '#render_payload' do
+    let(:location) { 'us-central1' }
+
+    it 'formats tool responses with a Vertex AI content role' do
+      model = instance_double(RubyLLM::Model::Info, id: 'gemini-3.1-flash-lite-preview')
+      messages = [
+        RubyLLM::Message.new(role: :user, content: 'What is the weather?'),
+        RubyLLM::Message.new(
+          role: :assistant,
+          content: '',
+          tool_calls: {
+            'call_1' => RubyLLM::ToolCall.new(id: 'call_1', name: 'weather', arguments: {})
+          }
+        ),
+        RubyLLM::Message.new(role: :tool, content: 'Sunny', tool_call_id: 'call_1')
+      ]
+
+      payload = provider.send(:render_payload, messages, tools: {}, temperature: nil, model:)
+
+      expect(payload.dig(:contents, 2, :role)).to eq('user')
+      expect(payload.dig(:contents, 2, :parts, 0, :functionResponse, :name)).to eq('weather')
     end
   end
 end

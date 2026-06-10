@@ -23,8 +23,14 @@ RSpec.describe RubyLLM::Chat do
     chat = described_class.new(model: 'gpt-4.1-nano')
     allow(RubyLLM.logger).to receive(:warn)
 
-    chat.on_new_message { calls << :first }
-    chat.on_new_message { calls << :second }
+    original_behavior = RubyLLM.config.deprecation_behavior
+    begin
+      RubyLLM.config.deprecation_behavior = :warn
+      chat.on_new_message { calls << :first }
+      chat.on_new_message { calls << :second }
+    ensure
+      RubyLLM.config.deprecation_behavior = original_behavior
+    end
 
     chat.instance_variable_get(:@on)[:new_message].call
 

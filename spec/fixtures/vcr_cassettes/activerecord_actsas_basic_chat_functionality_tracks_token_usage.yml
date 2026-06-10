@@ -8,7 +8,7 @@ http_interactions:
       string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":"Hello"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -23,7 +23,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 02 Apr 2026 11:23:16 GMT
+      - Mon, 08 Jun 2026 18:45:44 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -41,11 +41,13 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Access-Control-Expose-Headers:
+      - CF-Ray
+      - CF-Ray
       - X-Request-ID
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '195'
+      - '932'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
@@ -59,7 +61,7 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '4999'
       X-Ratelimit-Remaining-Tokens:
-      - '1999996'
+      - '1999995'
       X-Ratelimit-Reset-Requests:
       - 12ms
       X-Ratelimit-Reset-Tokens:
@@ -74,9 +76,9 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-DQAQmJG3jUnVvbMdl9Vz7tAKj1TFC",
+          "id": "chatcmpl-DoZGhbFzDPkn5w4N84f8YN3F7nEgf",
           "object": "chat.completion",
-          "created": 1775128996,
+          "created": 1780944343,
           "model": "gpt-4.1-nano-2025-04-14",
           "choices": [
             {
@@ -107,7 +109,7 @@ http_interactions:
             }
           },
           "service_tier": "default",
-          "system_fingerprint": "fp_a597f3a3b1"
+          "system_fingerprint": "fp_96f2a865f6"
         }
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+  recorded_at: Mon, 08 Jun 2026 18:45:44 GMT
 recorded_with: VCR 6.4.0

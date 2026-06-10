@@ -714,7 +714,7 @@ end
 chat.ask "What is metaprogramming in Ruby?"
 ```
 
-The older `on_new_message`, `on_end_message`, `on_tool_call`, and `on_tool_result` handlers are still available and keep their replacing behavior. RubyLLM logs a deprecation warning when one of these handlers is used; prefer the additive Rails-style callbacks for new code.
+The older `on_new_message`, `on_end_message`, `on_tool_call`, and `on_tool_result` handlers are still available and keep their replacing behavior. RubyLLM emits a deprecation warning when one of these handlers is used; prefer the additive Rails-style callbacks for new code.
 
 ## Raw Responses
 

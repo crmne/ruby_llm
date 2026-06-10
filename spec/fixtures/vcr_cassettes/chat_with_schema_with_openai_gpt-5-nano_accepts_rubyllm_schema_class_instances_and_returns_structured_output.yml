@@ -9,7 +9,7 @@ http_interactions:
         a person named Alice who is 28 years old"}],"stream":false,"response_format":{"type":"json_schema","json_schema":{"name":"PersonSchemaClass","schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"number"}},"required":["name","age"],"additionalProperties":false},"strict":true}}}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 06 May 2026 23:53:07 GMT
+      - Mon, 08 Jun 2026 18:46:34 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -42,11 +42,13 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Access-Control-Expose-Headers:
+      - CF-Ray
+      - CF-Ray
       - X-Request-ID
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '3051'
+      - '3072'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
@@ -75,9 +77,9 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-DcgL2WThzvXB5FTtEDFdXRRT7L7OY",
+          "id": "chatcmpl-DoZHUvAXXyuVL735YMveXQ7i8HumT",
           "object": "chat.completion",
-          "created": 1778111584,
+          "created": 1780944392,
           "model": "gpt-5-nano-2025-08-07",
           "choices": [
             {
@@ -109,5 +111,5 @@ http_interactions:
           "service_tier": "default",
           "system_fingerprint": null
         }
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+  recorded_at: Mon, 08 Jun 2026 18:46:34 GMT
 recorded_with: VCR 6.4.0
