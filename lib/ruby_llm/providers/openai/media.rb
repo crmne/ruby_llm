@@ -76,10 +76,6 @@ module RubyLLM
           }
         end
 
-        def format_pdf(pdf)
-          format_document(pdf)
-        end
-
         def format_text_file(text_file)
           {
             type: 'text',
