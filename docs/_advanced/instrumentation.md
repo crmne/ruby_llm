@@ -87,6 +87,9 @@ RubyLLM emits these events:
 *   `chat.ruby_llm` - chat completion metadata including model, provider, messages, response, and token usage
 *   `tool_call.ruby_llm` - tool name, arguments, and result
 *   `embedding.ruby_llm` - embedding model, input, result, token usage, and vector dimensions
+*   `image.ruby_llm` - image generation model, prompt, size, and result
+*   `moderation.ruby_llm` - moderation model, input, result, and flagged status
+*   `transcription.ruby_llm` - transcription model, language, result, and token usage
 *   `models.refresh.ruby_llm` - model registry refresh metadata
 
 ## Payloads
