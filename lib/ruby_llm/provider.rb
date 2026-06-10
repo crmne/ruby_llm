@@ -119,7 +119,9 @@ module RubyLLM
         error = body['error']
         return error if error.is_a?(String)
 
-        body.dig('error', 'message')
+        [body.dig('error', 'message'), body['message'], body['detail']].find do |message|
+          message.is_a?(String)
+        end
       when Array
         body.map do |part|
           error = part['error']
