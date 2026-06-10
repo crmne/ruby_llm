@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'active_support/concern'
+require 'ruby_llm/active_record/attachment_helpers'
 require 'ruby_llm/active_record/payload_helpers'
 
 module RubyLLM
@@ -9,9 +10,18 @@ module RubyLLM
     module MessageMethods
       extend ActiveSupport::Concern
       include PayloadHelpers
+      include AttachmentHelpers
 
-      class_methods do
-        attr_reader :chat_class, :tool_call_class, :chat_foreign_key, :tool_call_foreign_key
+      def chat_association
+        send(chat_association_name)
+      end
+
+      def tool_calls_association
+        send(tool_calls_association_name)
+      end
+
+      def model_association
+        send(model_association_name)
       end
 
       def to_llm
@@ -28,8 +38,8 @@ module RubyLLM
 
       def thinking
         RubyLLM::Thinking.build(
-          text: thinking_text_value,
-          signature: thinking_signature_value
+          text: optional_column(:thinking_text),
+          signature: optional_column(:thinking_signature)
         )
       end
 
@@ -37,9 +47,9 @@ module RubyLLM
         RubyLLM::Tokens.build(
           input: input_tokens,
           output: output_tokens,
-          cached: cached_value,
-          cache_creation: cache_creation_value,
-          thinking: thinking_tokens_value
+          cached: optional_column(:cached_tokens),
+          cache_creation: optional_column(:cache_creation_tokens),
+          thinking: optional_column(:thinking_tokens)
         )
       end
 
@@ -48,11 +58,11 @@ module RubyLLM
       end
 
       def cache_read_tokens
-        cached_value
+        optional_column(:cached_tokens)
       end
 
       def cache_write_tokens
-        cache_creation_value
+        optional_column(:cache_creation_tokens)
       end
 
       def to_partial_path
@@ -73,24 +83,8 @@ module RubyLLM
 
       private
 
-      def thinking_text_value
-        has_attribute?(:thinking_text) ? self[:thinking_text] : nil
-      end
-
-      def thinking_signature_value
-        has_attribute?(:thinking_signature) ? self[:thinking_signature] : nil
-      end
-
-      def cached_value
-        has_attribute?(:cached_tokens) ? self[:cached_tokens] : nil
-      end
-
-      def cache_creation_value
-        has_attribute?(:cache_creation_tokens) ? self[:cache_creation_tokens] : nil
-      end
-
-      def thinking_tokens_value
-        has_attribute?(:thinking_tokens) ? self[:thinking_tokens] : nil
+      def optional_column(name)
+        self[name] if has_attribute?(name)
       end
 
       def extract_tool_calls
@@ -126,88 +120,6 @@ module RubyLLM
             add_attachment_to_content(content_obj, attachment, attachable)
           end
         end
-      end
-
-      def attachment_sources
-        change = pending_attachment_change
-        return attachments.map { |attachment| [attachment, nil] } unless pending_attachment_change?(change)
-
-        change.attachments.zip(change.attachables)
-      end
-
-      def pending_attachment_change
-        attachment_changes['attachments'] if respond_to?(:attachment_changes)
-      end
-
-      def pending_attachment_change?(change)
-        change.respond_to?(:attachments) && change.respond_to?(:attachables)
-      end
-
-      def add_attachment_to_content(content_obj, attachment, attachable)
-        if pending_upload_attachable?(attachable)
-          add_pending_upload_attachment(content_obj, attachable)
-        else
-          tempfile = download_attachment(attachment)
-          content_obj.add_attachment(tempfile, filename: attachment.filename.to_s)
-        end
-      end
-
-      def pending_upload_attachable?(attachable)
-        return false if attachable.nil? || attachable.is_a?(String)
-        return false if instance_of_class?(attachable, 'ActiveStorage::Blob')
-
-        uploaded_file?(attachable) || active_storage_upload_hash?(attachable) ||
-          attachable.is_a?(File) || pathname?(attachable)
-      end
-
-      def uploaded_file?(attachable)
-        instance_of_class?(attachable, 'ActionDispatch::Http::UploadedFile') ||
-          instance_of_class?(attachable, 'Rack::Test::UploadedFile')
-      end
-
-      def active_storage_upload_hash?(attachable)
-        attachable.is_a?(Hash) && attachment_hash_io(attachable).present?
-      end
-
-      def pathname?(attachable)
-        defined?(Pathname) && attachable.is_a?(Pathname)
-      end
-
-      def add_pending_upload_attachment(content_obj, attachable)
-        if attachable.is_a?(Hash)
-          content_obj.add_attachment(attachment_hash_io(attachable), filename: attachment_hash_filename(attachable))
-        else
-          content_obj.add_attachment(attachable)
-        end
-      end
-
-      def attachment_hash_io(attachable)
-        attachable[:io] || attachable['io']
-      end
-
-      def attachment_hash_filename(attachable)
-        filename = attachable[:filename] || attachable['filename']
-        filename&.to_s
-      end
-
-      def instance_of_class?(object, class_name)
-        Object.const_get(class_name).then { |klass| object.is_a?(klass) }
-      rescue NameError
-        false
-      end
-
-      def download_attachment(attachment)
-        ext = File.extname(attachment.filename.to_s)
-        basename = File.basename(attachment.filename.to_s, ext)
-        tempfile = Tempfile.new([basename, ext])
-        tempfile.binmode
-
-        attachment.download { |chunk| tempfile.write(chunk) }
-
-        tempfile.flush
-        tempfile.rewind
-        @_tempfiles << tempfile
-        tempfile
       end
     end
   end

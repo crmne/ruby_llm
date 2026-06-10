@@ -49,7 +49,7 @@ module RubyLLM
     option :model_registry_file, -> { File.expand_path('models.json', __dir__) }
     option :model_registry_class, 'Model'
 
-    option :use_new_acts_as, false
+    option :use_new_acts_as, true
     option :model_registry_source, nil
 
     option :request_timeout, 300
@@ -77,18 +77,14 @@ module RubyLLM
     end
 
     def instance_variables
-      super.reject { |ivar| ivar.to_s.match?(/_id|_key|_secret|_token$/) }
+      super.reject { |ivar| ivar.to_s.match?(/(_id|_key|_secret|_token)$/) }
     end
 
     def log_regexp_timeout=(value)
-      if value.nil?
-        @log_regexp_timeout = nil
-      elsif Regexp.respond_to?(:timeout)
-        @log_regexp_timeout = value
-      else
+      if value && !Regexp.respond_to?(:timeout)
         RubyLLM.logger.warn("log_regexp_timeout is not supported on Ruby #{RUBY_VERSION}")
-        @log_regexp_timeout = value
       end
+      @log_regexp_timeout = value
     end
   end
 end

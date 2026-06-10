@@ -44,7 +44,13 @@ module RubyLLM
     alias say ask
 
     def with_instructions(instructions, append: false, replace: nil)
-      append ||= (replace == false) unless replace.nil?
+      unless replace.nil?
+        RubyLLM.deprecator.warn(
+          '`replace:` is deprecated and will be removed in RubyLLM 2.0. ' \
+          '`with_instructions` replaces by default; use `append: true` to append.'
+        )
+        append ||= replace == false
+      end
 
       if append
         append_system_instruction(instructions)
@@ -158,8 +164,44 @@ module RubyLLM
       Cost.aggregate(messages.map { |message| message.cost(model: message.model_info || model) })
     end
 
-    def complete(&)
-      instrument_completion(&)
+    def complete(&block)
+      result = nil
+      payload = {
+        chat: self,
+        provider: @provider.slug,
+        provider_class: @provider.class.name,
+        model: @model.id,
+        model_info: @model,
+        input_messages: messages.dup,
+        message_count: messages.size,
+        tools: tools.keys,
+        tool_choice: tool_prefs[:choice],
+        tool_call_limit: tool_prefs[:calls],
+        temperature: @temperature,
+        params: params,
+        schema: schema,
+        thinking: @thinking,
+        streaming: block_given?
+      }
+
+      RubyLLM.instrument('chat.ruby_llm', payload, config: @config) do |event|
+        result = complete_once(&block)
+        event[:response] = result
+        event[:messages_after] = messages.dup
+        event[:response_role] = result.role if result.respond_to?(:role)
+
+        if result.respond_to?(:tool_call?)
+          event[:response_model] = result.model_id
+          event[:tool_call] = result.tool_call?
+          event[:tool_calls] = result.tool_calls
+          event[:input_tokens] = result.input_tokens
+          event[:output_tokens] = result.output_tokens
+          event[:cached_tokens] = result.cached_tokens
+          event[:cache_creation_tokens] = result.cache_creation_tokens
+          event[:thinking_tokens] = result.thinking_tokens
+        end
+      end
+      result
     end
 
     def add_message(message_or_attributes)
@@ -173,7 +215,8 @@ module RubyLLM
       @messages.clear
     end
 
-    def instance_variables
+    # Keeps the connection and config dumps out of pretty-printed output.
+    def pretty_print_instance_variables
       super - %i[@connection @config]
     end
 
@@ -236,47 +279,6 @@ module RubyLLM
       end
     end
 
-    def instrument_completion(&block)
-      result = nil
-      streaming = block_given?
-      payload = {
-        chat: self,
-        provider: @provider.slug,
-        provider_class: @provider.class.name,
-        model: @model.id,
-        model_info: @model,
-        input_messages: messages.dup,
-        message_count: messages.size,
-        tools: tools.keys,
-        tool_choice: tool_prefs[:choice],
-        tool_call_limit: tool_prefs[:calls],
-        temperature: @temperature,
-        params: params,
-        schema: schema,
-        thinking: @thinking,
-        streaming: streaming
-      }
-
-      RubyLLM.instrument('chat.ruby_llm', payload, config: @config) do |event|
-        result = complete_once(&block)
-        event[:response] = result
-        event[:messages_after] = messages.dup
-        event[:response_role] = result.role if result.respond_to?(:role)
-
-        if result.respond_to?(:tool_call?)
-          event[:response_model] = result.model_id
-          event[:tool_call] = result.tool_call?
-          event[:tool_calls] = result.tool_calls
-          event[:input_tokens] = result.input_tokens
-          event[:output_tokens] = result.output_tokens
-          event[:cached_tokens] = result.cached_tokens
-          event[:cache_creation_tokens] = result.cache_creation_tokens
-          event[:thinking_tokens] = result.thinking_tokens
-        end
-      end
-      result
-    end
-
     def provider_completion(&)
       @provider.complete(
         messages,
@@ -320,13 +322,11 @@ module RubyLLM
     end
 
     def wrap_streaming_block(&block)
-      return nil unless block_given?
+      return nil unless block
 
       run_callbacks(:before_message, :new_message)
 
-      proc do |chunk|
-        block.call chunk
-      end
+      block
     end
 
     def handle_tool_calls(response, &)
@@ -356,7 +356,7 @@ module RubyLLM
     def handle_concurrent_tool_calls(tool_calls)
       halt_result = nil
 
-      execute_tools_concurrently(tool_calls).each do |tool_call, result|
+      execute_tools_concurrently(tool_calls) do |tool_call, result|
         run_callbacks(:before_message, :new_message)
         add_tool_result_message(tool_call, result)
         halt_result = result if result.is_a?(Tool::Halt)
@@ -365,8 +365,8 @@ module RubyLLM
       halt_result
     end
 
-    def execute_tools_concurrently(tool_calls)
-      ToolConcurrency.run(concurrency, tool_calls) do |tool_call|
+    def execute_tools_concurrently(tool_calls, &on_result)
+      ToolConcurrency.run(concurrency, tool_calls, on_result:) do |tool_call|
         execute_tool_with_callbacks(tool_call)
       end
     end
@@ -442,11 +442,11 @@ module RubyLLM
       return :threads if concurrency == true
 
       normalized = concurrency.to_sym
-      return normalized if ToolConcurrency.supported?(normalized)
+      return normalized if ToolConcurrency::MODES.include?(normalized)
 
       raise ArgumentError,
             "Unknown tool concurrency: #{concurrency.inspect}. " \
-            "Available modes: #{ToolConcurrency.modes.join(', ')}"
+            "Available modes: #{ToolConcurrency::MODES.join(', ')}"
     end
 
     def normalize_calls(calls)
@@ -475,10 +475,7 @@ module RubyLLM
     end
 
     def classify_tool_name(class_name)
-      class_name.split('::').last
-                .gsub(/([a-z\d])([A-Z])/, '\1_\2')
-                .downcase
-                .to_sym
+      Utils.underscore(class_name.split('::').last).delete_suffix('_tool').to_sym
     end
 
     def forced_tool_choice?

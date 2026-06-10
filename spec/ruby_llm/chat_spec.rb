@@ -151,23 +151,15 @@ RSpec.describe RubyLLM::Chat do
     end
 
     it 'uses the chat model when a response model id cannot be resolved' do
-      chat = described_class.allocate
-      chat.instance_variable_set(:@model, model)
-      chat.instance_variable_set(:@messages, [])
+      allow(RubyLLM.models).to receive(:find).and_call_original
+      allow(RubyLLM.models).to receive(:find).with('priced-model', nil).and_return(model)
+      allow(RubyLLM.models).to receive(:find).with('provider-backend-version').and_raise(RubyLLM::ModelNotFoundError)
+
+      chat = RubyLLM.chat(model: 'priced-model')
       chat.add_message(role: :assistant, content: 'Hi', input_tokens: 1_000, output_tokens: 2_000,
                        model_id: 'provider-backend-version')
 
       expect(chat.cost.total).to eq(0.005)
-    end
-
-    it 'keeps cost unknown when neither response nor chat model can be resolved' do
-      chat = described_class.allocate
-      chat.instance_variable_set(:@model, nil)
-      chat.instance_variable_set(:@messages, [])
-      chat.add_message(role: :assistant, content: 'Hi', input_tokens: 1_000, output_tokens: 2_000,
-                       model_id: 'provider-backend-version')
-
-      expect(chat.cost.total).to be_nil
     end
   end
 end

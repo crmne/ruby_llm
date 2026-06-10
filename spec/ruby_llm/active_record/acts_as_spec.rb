@@ -176,29 +176,17 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
 
   describe 'model associations' do
     context 'when model registry is configured' do
-      before do
-        # Only set up if Model class exists (from dummy app)
-        next unless defined?(Model)
-
-        # Model should already exist from before(:all) which loaded from JSON
-      end
-
       it 'associates chat with model' do
-        skip 'Model not available' unless defined?(Model) && Model.table_exists?
-
         chat = Chat.create!(model: 'gpt-4.1-nano')
-        expect(chat).to respond_to(:model)
-        expect(chat.model&.name).to match(/^GPT-4.1 [Nn]ano$/) if chat.model
+
+        expect(chat.model.name).to match(/^GPT-4.1 [Nn]ano$/)
       end
 
       it 'associates messages with model' do
-        skip 'Model not available' unless defined?(Model) && Model.table_exists?
-
         chat = Chat.create!(model: 'gpt-4.1-nano')
         chat.ask('Hello')
 
-        message = chat.messages.last
-        expect(message).to respond_to(:model) if defined?(Message.model)
+        expect(chat.messages.last.model).to eq(chat.model)
       end
     end
   end

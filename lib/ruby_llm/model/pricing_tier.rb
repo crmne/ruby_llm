@@ -9,16 +9,23 @@ module RubyLLM
         output_per_million
         cache_read_input_per_million
         cache_write_input_per_million
-        cached_input_per_million
-        cache_creation_input_per_million
         reasoning_output_per_million
       ].freeze
+
+      LEGACY_KEYS = {
+        cached_input_per_million: :cache_read_input_per_million,
+        cache_creation_input_per_million: :cache_write_input_per_million
+      }.freeze
 
       def initialize(data = {})
         @values = {}
 
         data.each do |key, value|
-          @values[key.to_sym] = value if value && value != 0.0
+          next unless value && value != 0.0
+
+          key = key.to_sym
+          canonical = LEGACY_KEYS.fetch(key, key)
+          @values[canonical] = value unless LEGACY_KEYS.key?(key) && @values.key?(canonical)
         end
       end
 
@@ -26,14 +33,6 @@ module RubyLLM
         define_method(attribute) do
           @values[attribute]
         end
-
-        define_method("#{attribute}=") do |value|
-          @values[attribute] = value if value && value != 0.0
-        end
-      end
-
-      def [](key)
-        @values[key.to_sym]
       end
 
       def to_h

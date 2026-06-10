@@ -43,16 +43,12 @@ module RubyLLM
       end
     end
 
-    def self.vector_dimensions(vectors)
-      return unless vectors.is_a?(Array)
-
+    private_class_method def self.vector_dimensions(vectors)
       vector = vectors.first.is_a?(Array) ? vectors.first : vectors
-      vector.length if vector.respond_to?(:length)
+      vector.length
     end
 
-    def self.embedding_count(vectors)
-      return unless vectors.is_a?(Array)
-
+    private_class_method def self.embedding_count(vectors)
       vectors.first.is_a?(Array) ? vectors.size : 1
     end
   end

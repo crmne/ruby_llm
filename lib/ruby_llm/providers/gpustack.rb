@@ -3,10 +3,8 @@
 module RubyLLM
   module Providers
     # GPUStack API integration based on Ollama.
-    class GPUStack < OpenAI
-      include GPUStack::Chat
+    class GPUStack < Ollama
       include GPUStack::Models
-      include GPUStack::Media
 
       def api_base
         @config.gpustack_api_base
@@ -25,16 +23,8 @@ module RubyLLM
           %i[gpustack_api_base gpustack_api_key]
         end
 
-        def local?
-          true
-        end
-
         def configuration_requirements
           %i[gpustack_api_base]
-        end
-
-        def capabilities
-          GPUStack::Capabilities
         end
       end
     end

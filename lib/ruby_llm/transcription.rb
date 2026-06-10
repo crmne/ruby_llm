@@ -16,21 +16,33 @@ module RubyLLM
       @output_tokens = attributes[:output_tokens]
     end
 
-    def self.transcribe(audio_file, **kwargs)
-      model = kwargs.delete(:model)
-      language = kwargs.delete(:language)
-      provider = kwargs.delete(:provider)
-      assume_model_exists = kwargs.delete(:assume_model_exists) { false }
-      context = kwargs.delete(:context)
-      options = kwargs
-
+    def self.transcribe(audio_file, # rubocop:disable Metrics/ParameterLists
+                        model: nil,
+                        language: nil,
+                        provider: nil,
+                        assume_model_exists: false,
+                        context: nil,
+                        **options)
       config = context&.config || RubyLLM.config
       model ||= config.default_transcription_model
       model, provider_instance = Models.resolve(model, provider: provider, assume_exists: assume_model_exists,
                                                        config: config)
-      model_id = model.id
+      payload = {
+        provider: provider_instance.slug,
+        provider_class: provider_instance.class.name,
+        model: model.id,
+        model_info: model,
+        language: language
+      }
 
-      provider_instance.transcribe(audio_file, model: model_id, language:, **options)
+      RubyLLM.instrument('transcription.ruby_llm', payload, config: config) do |event|
+        result = provider_instance.transcribe(audio_file, model: model.id, language:, **options)
+        event[:result] = result
+        event[:response_model] = result.model
+        event[:input_tokens] = result.input_tokens
+        event[:output_tokens] = result.output_tokens
+        result
+      end
     end
   end
 end

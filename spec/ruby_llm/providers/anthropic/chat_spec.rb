@@ -357,7 +357,7 @@ RSpec.describe RubyLLM::Providers::Anthropic::Chat do
     end
   end
 
-  describe '.parse_completion_response' do
+  describe '#parse_completion_response' do
     it 'captures cache usage metrics on the message' do
       response_body = {
         'model' => 'claude-sonnet-4-5-20250929',
@@ -372,7 +372,7 @@ RSpec.describe RubyLLM::Providers::Anthropic::Chat do
 
       response = instance_double(Faraday::Response, body: response_body)
 
-      message = described_class.parse_completion_response(response)
+      message = RubyLLM::Providers::Anthropic.allocate.send(:parse_completion_response, response)
 
       expect(message.input_tokens).to eq(42)
       expect(message.output_tokens).to eq(5)

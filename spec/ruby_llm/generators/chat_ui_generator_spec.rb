@@ -68,7 +68,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
     tool_partial = File.read(File.join(base_path, 'messages/_tool.html.erb'))
     expect(tool_partial).to include('render tool_result_partial(tool), tool: tool')
     tool_calls_partial = File.read(File.join(base_path, 'messages/_tool_calls.html.erb'))
-    expect(tool_calls_partial).to include('tool_calls: tool_calls, tool_call: tool_call')
+    expect(tool_calls_partial).to include('message: message, tool_call: tool_call')
     expect(tool_calls_partial).to include('local_assigns[:message]')
     tool_calls_default = File.read(File.join(base_path, 'messages/tool_calls/_default.html.erb'))
     expect(tool_calls_default).to include('message_tool_call_<%= tool_call.id %>')

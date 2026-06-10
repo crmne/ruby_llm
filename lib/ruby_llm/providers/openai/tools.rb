@@ -44,13 +44,6 @@ module RubyLLM
           RubyLLM::Utils.deep_merge(definition, tool.provider_params)
         end
 
-        def param_schema(param)
-          {
-            type: param.type,
-            description: param.description
-          }.compact
-        end
-
         def format_tool_calls(tool_calls)
           return nil unless tool_calls&.any?
 

@@ -280,8 +280,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
           assume_model_exists: false
         ).and_return(
           instance_double(RubyLLM::Chat, reset_messages!: nil, add_message: nil,
-                                         instance_variable_get: {}, on_new_message: nil, on_end_message: nil,
-                                         instance_variable_set: nil)
+                                         before_message: nil, after_message: nil)
         )
 
         chat.to_llm
@@ -298,8 +297,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
           assume_model_exists: false
         ).and_return(
           instance_double(RubyLLM::Chat, reset_messages!: nil, add_message: nil,
-                                         instance_variable_get: {}, on_new_message: nil, on_end_message: nil,
-                                         instance_variable_set: nil)
+                                         before_message: nil, after_message: nil)
         )
 
         chat.to_llm

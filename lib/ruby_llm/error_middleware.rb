@@ -31,39 +31,42 @@ module RubyLLM
         /prompt is too long/i
       ].freeze
 
-      def parse_error(provider:, response:) # rubocop:disable Metrics/PerceivedComplexity
+      RATE_LIMIT_PATTERNS = [
+        /rate limit/i,
+        /per minute/i,
+        /per hour/i,
+        /per day/i
+      ].freeze
+
+      def parse_error(provider:, response:)
         message = provider&.parse_error(response)
 
         case response.status
         when 200..399
           message
         when 400
-          if context_length_exceeded?(message)
-            raise ContextLengthExceededError.new(response, message || 'Context length exceeded')
-          end
+          raise ContextLengthExceededError.new(response, message) if context_length_exceeded?(message)
 
-          raise BadRequestError.new(response, message || 'Invalid request - please check your input')
+          raise BadRequestError.new(response, message)
         when 401
-          raise UnauthorizedError.new(response, message || 'Invalid API key - check your credentials')
+          raise UnauthorizedError.new(response, message)
         when 402
-          raise PaymentRequiredError.new(response, message || 'Payment required - please top up your account')
+          raise PaymentRequiredError.new(response, message)
         when 403
-          raise ForbiddenError.new(response,
-                                   message || 'Forbidden - you do not have permission to access this resource')
+          raise ForbiddenError.new(response, message)
         when 429
-          if context_length_exceeded?(message)
-            raise ContextLengthExceededError.new(response, message || 'Context length exceeded')
-          end
+          raise RateLimitError.new(response, message) if rate_limited?(message)
+          raise ContextLengthExceededError.new(response, message) if context_length_exceeded?(message)
 
-          raise RateLimitError.new(response, message || 'Rate limit exceeded - please wait a moment')
+          raise RateLimitError.new(response, message)
         when 500
-          raise ServerError.new(response, message || 'API server error - please try again')
+          raise ServerError.new(response, message)
         when 502..504
-          raise ServiceUnavailableError.new(response, message || 'API server unavailable - please try again later')
+          raise ServiceUnavailableError.new(response, message)
         when 529
-          raise OverloadedError.new(response, message || 'Service overloaded - please try again later')
+          raise OverloadedError.new(response, message)
         else
-          raise Error.new(response, message || 'An unknown error occurred')
+          raise Error.new(response, message)
         end
       end
 
@@ -73,6 +76,12 @@ module RubyLLM
         return false if message.to_s.empty?
 
         CONTEXT_LENGTH_PATTERNS.any? { |pattern| message.match?(pattern) }
+      end
+
+      def rate_limited?(message)
+        return false if message.to_s.empty?
+
+        RATE_LIMIT_PATTERNS.any? { |pattern| message.match?(pattern) }
       end
     end
   end

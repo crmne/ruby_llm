@@ -285,9 +285,6 @@ RubyLLM.configure do |config|
   config.anthropic_api_key = ENV['ANTHROPIC_API_KEY']
   config.gemini_api_key = ENV['GEMINI_API_KEY']
 
-  # New apps: Use modern API (generator adds this)
-  config.use_new_acts_as = true
-
   # For custom Model class names (defaults to 'Model')
   # config.model_registry_class = 'AIModel'
 end
@@ -320,13 +317,6 @@ Why: Rails defaults to thread-based connection isolation. In fiber-heavy flows, 
 {: .note }
 
 ### Setting Up Models with `acts_as` Helpers
-
-> **New in v1.7.0:** Rails-like `acts_as` API with association names!
-> - **New apps**: Generator sets `config.use_new_acts_as = true` for modern API
-> - **Existing apps**: Continue using legacy API (with deprecation warning)
-> - **Migrate today**: Set `config.use_new_acts_as = true` to use the better API
-> - **Legacy API removed in 2.0**: The new API will become the only option
-{: .warning }
 
 Add RubyLLM capabilities to your models:
 
@@ -380,7 +370,7 @@ end
 Pre-1.7.0 or opt-in
 {: .label .label-yellow }
 
-> Default behavior for existing apps. Set `config.use_new_acts_as = true` to upgrade! Legacy API will be removed in 2.0.
+> Set `config.use_new_acts_as = false` to stay with this API until it will be removed in 2.0.
 {: .note }
 
 ```ruby

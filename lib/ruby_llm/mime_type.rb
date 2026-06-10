@@ -40,7 +40,7 @@ module RubyLLM
         NON_TEXT_PREFIX_TEXT_MIME_TYPES.include?(type)
     end
 
-    # MIME types that have a text/ prefix but need to be handled differently
+    # Structured-syntax suffixes (+json, +xml, ...) that mark a non-text/ type as text.
     TEXT_SUFFIXES = ['+json', '+xml', '+html', '+yaml', '+csv', '+plain', '+javascript', '+svg'].freeze
 
     # MIME types that don't have a text/ prefix but should be treated as text

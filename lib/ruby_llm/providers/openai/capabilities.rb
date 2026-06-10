@@ -262,11 +262,6 @@ module RubyLLM
           family = model_family(model_id).to_sym
           PRICES.fetch(family, {})
         end
-
-        module_function :context_window_for, :max_tokens_for, :critical_capabilities_for, :pricing_for,
-                        :model_family, :supports_vision?, :supports_functions?, :supports_structured_output?,
-                        :input_price_for, :output_price_for, :cached_input_price_for, :image_model?,
-                        :image_pricing_for, :price_for, :family_prices
       end
     end
   end

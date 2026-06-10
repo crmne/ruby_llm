@@ -67,75 +67,41 @@ RSpec.describe RubyLLM::Chat do
       context "with #{provider}/#{model}" do
         let(:chat) { RubyLLM.chat(model: model, provider: provider) }
 
-        describe 'Faraday version 1' do # rubocop:disable RSpec/NestedGroups
-          before do
-            stub_const('Faraday::VERSION', '1.10.0')
-          end
+        { '1' => '1.10.0', '2' => '2.0.0' }.each do |major, faraday_version|
+          describe "Faraday version #{major}" do # rubocop:disable RSpec/NestedGroups
+            before do
+              stub_const('Faraday::VERSION', faraday_version)
+            end
 
-          it "#{provider}/#{model} supports handling streaming error chunks" do
-            # Testing if error handling is now implemented
+            it "#{provider}/#{model} supports handling streaming error chunks" do
+              # Testing if error handling is now implemented
 
-            stub_error_response(provider, :chunk)
+              stub_error_response(provider, :chunk)
 
-            chunks = []
+              chunks = []
 
-            expect do
-              chat.ask('Count from 1 to 3') do |chunk|
-                chunks << chunk
-              end
-            end.to raise_error(expected_error_for(provider))
-          end
+              expect do
+                chat.ask('Count from 1 to 3') do |chunk|
+                  chunks << chunk
+                end
+              end.to raise_error(expected_error_for(provider))
+            end
 
-          it "#{provider}/#{model} supports handling streaming error events" do
-            skip 'Bedrock uses AWS Event Stream format, not SSE events' if provider == :bedrock
+            it "#{provider}/#{model} supports handling streaming error events" do
+              skip 'Bedrock uses AWS Event Stream format, not SSE events' if provider == :bedrock
 
-            # Testing if error handling is now implemented
+              # Testing if error handling is now implemented
 
-            stub_error_response(provider, :event)
+              stub_error_response(provider, :event)
 
-            chunks = []
+              chunks = []
 
-            expect do
-              chat.ask('Count from 1 to 3') do |chunk|
-                chunks << chunk
-              end
-            end.to raise_error(expected_error_for(provider))
-          end
-        end
-
-        describe 'Faraday version 2' do # rubocop:disable RSpec/NestedGroups
-          before do
-            stub_const('Faraday::VERSION', '2.0.0')
-          end
-
-          it "#{provider}/#{model} supports handling streaming error chunks" do
-            # Testing if error handling is now implemented
-
-            stub_error_response(provider, :chunk)
-
-            chunks = []
-
-            expect do
-              chat.ask('Count from 1 to 3') do |chunk|
-                chunks << chunk
-              end
-            end.to raise_error(expected_error_for(provider))
-          end
-
-          it "#{provider}/#{model} supports handling streaming error events" do
-            skip 'Bedrock uses AWS Event Stream format, not SSE events' if provider == :bedrock
-
-            # Testing if error handling is now implemented
-
-            stub_error_response(provider, :event)
-
-            chunks = []
-
-            expect do
-              chat.ask('Count from 1 to 3') do |chunk|
-                chunks << chunk
-              end
-            end.to raise_error(expected_error_for(provider))
+              expect do
+                chat.ask('Count from 1 to 3') do |chunk|
+                  chunks << chunk
+                end
+              end.to raise_error(expected_error_for(provider))
+            end
           end
         end
       end
