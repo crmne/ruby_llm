@@ -49,7 +49,7 @@ module RubyLLM
     option :model_registry_file, -> { File.expand_path('models.json', __dir__) }
     option :model_registry_class, 'Model'
 
-    option :use_new_acts_as, false
+    option :use_new_acts_as, true
     option :model_registry_source, nil
 
     option :request_timeout, 300
