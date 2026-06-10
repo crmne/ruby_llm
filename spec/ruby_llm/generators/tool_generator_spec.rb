@@ -52,6 +52,7 @@ RSpec.describe RubyLLM::Generators::ToolGenerator, :generator, type: :generator 
       expect(tool_call_partial).to include('message: tool_calls')
       expect(tool_call_partial).to include('Weather Call')
       expect(tool_call_partial).to include('tool_call.arguments.map')
+      expect(tool_call_partial).to include('message_tool_call_<%= tool_call.id %>')
       expect(tool_call_partial).not_to include('render "messages/tool_calls/default"')
       expect(tool_call_partial).not_to include('<%%')
 
@@ -59,6 +60,7 @@ RSpec.describe RubyLLM::Generators::ToolGenerator, :generator, type: :generator 
       expect(tool_result_partial).to include('tool.tool_error_message')
       expect(tool_result_partial).to include('Weather Result')
       expect(tool_result_partial).to include('tool.content.presence || "(no output)"')
+      expect(tool_result_partial).to include('message_tool_result_<%= tool.id %>')
       expect(tool_result_partial).not_to include('render "messages/tool_results/default", tool: tool')
       expect(tool_result_partial).not_to include('<%%')
     end

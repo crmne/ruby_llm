@@ -2,7 +2,7 @@
 <%% if tool_call_error.present? %>
   <%%= render "messages/error", message: tool_calls, title: "Tool Call Error", error_message: tool_call_error %>
 <%% else %>
-  <div id="message_<%%= tool_calls.id %>" class="message"
+  <div id="message_tool_call_<%%= tool_call.id %>" class="message"
        style="margin-bottom: 20px; padding: 10px; border-left: 3px solid #6b7280; background: #f9fafb;">
     <div style="font-weight: bold; margin-bottom: 5px;"><%= tool_display_name %> Call</div>
     <pre style="white-space: pre-wrap; margin: 0;"><%%= tool_call.name %>(<%%= tool_call.arguments.map { |k, v| "#{k}: #{v.inspect}" }.join(", ") %>)</pre>
