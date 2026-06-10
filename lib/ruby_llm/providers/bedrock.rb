@@ -68,8 +68,8 @@ module RubyLLM
         @config.bedrock_region
       end
 
-      def sync_response(connection, payload, additional_headers = {})
-        signed_post(connection, completion_url, payload, additional_headers)
+      def sync_response(payload, additional_headers = {})
+        signed_post(completion_url, payload, additional_headers)
       end
 
       def normalize_params(params, model:)

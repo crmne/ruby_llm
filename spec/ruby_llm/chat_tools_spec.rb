@@ -475,7 +475,7 @@ RSpec.describe RubyLLM::Chat do
         provider_instance = chat.instance_variable_get(:@provider)
         captured_payload = nil
 
-        allow(provider_instance).to receive(:sync_response) do |_connection, payload, _|
+        allow(provider_instance).to receive(:sync_response) do |payload, _headers|
           captured_payload = payload
           RubyLLM::Message.new(role: :assistant, content: 'ok')
         end

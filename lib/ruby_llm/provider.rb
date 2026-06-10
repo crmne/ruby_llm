@@ -60,9 +60,9 @@ module RubyLLM
       )
 
       if block_given?
-        stream_response @connection, payload, headers, &
+        stream_response payload, headers, &
       else
-        sync_response @connection, payload, headers
+        sync_response payload, headers
       end
     end
     # rubocop:enable Metrics/ParameterLists
@@ -104,10 +104,6 @@ module RubyLLM
 
     def local?
       self.class.local?
-    end
-
-    def remote?
-      self.class.remote?
     end
 
     def assume_models_exist?
@@ -197,11 +193,6 @@ module RubyLLM
         providers[name.to_sym]
       end
 
-      def for(model)
-        model_info = Models.find(model)
-        resolve model_info.provider
-      end
-
       def providers
         @providers ||= {}
       end
@@ -276,8 +267,8 @@ module RubyLLM
       temperature
     end
 
-    def sync_response(connection, payload, additional_headers = {})
-      response = connection.post completion_url, payload do |req|
+    def sync_response(payload, additional_headers = {})
+      response = @connection.post completion_url, payload do |req|
         req.headers = additional_headers.merge(req.headers) unless additional_headers.empty?
       end
       parse_completion_response response
