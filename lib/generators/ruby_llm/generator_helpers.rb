@@ -35,18 +35,22 @@ module RubyLLM
         define_method("#{type}_variable_name") do
           variable_name_for(send("#{type}_model_name"))
         end
+      end
 
-        define_method("#{type}_controller_class_name") do
-          controller_class_name_for(send("#{type}_model_name"))
-        end
+      def chat_controller_class_name
+        controller_class_name_for(chat_model_name)
+      end
 
-        define_method("#{type}_job_class_name") do
-          "#{variable_name_for(send("#{type}_model_name")).camelize}ResponseJob"
-        end
+      def message_controller_class_name
+        controller_class_name_for(message_model_name)
+      end
 
-        define_method("#{type}_partial") do
-          partial_path_for(send("#{type}_model_name"))
-        end
+      def model_controller_class_name
+        controller_class_name_for(model_model_name)
+      end
+
+      def chat_job_class_name
+        "#{chat_variable_name.camelize}ResponseJob"
       end
 
       def acts_as_chat_declaration
@@ -210,12 +214,6 @@ module RubyLLM
         else
           "#{model_name.pluralize}Controller"
         end
-      end
-
-      # Convert model name to partial path
-      # e.g., "LLM::Message" -> "llm/message" (not "llm_message")
-      def partial_path_for(model_name)
-        "#{model_name.underscore.pluralize}/#{model_name.demodulize.underscore}"
       end
     end
   end
