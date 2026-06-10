@@ -9,32 +9,15 @@ module RubyLLM
     attr_reader :tokens, :model, :category
 
     def self.aggregate(costs)
-      costs = costs.compact.select(&:tokens?)
-      return new(amounts: {}, has_tokens: false) if costs.empty?
-
-      missing = COMPONENTS.select do |component|
-        costs.any? { |cost| cost.missing?(component) }
-      end
-
-      amounts = COMPONENTS.to_h do |component|
-        [component, missing.include?(component) ? nil : aggregate_component(costs, component)]
-      end
-
-      new(amounts:, missing:, has_tokens: true)
+      Aggregate.build(costs)
     end
 
-    # rubocop:disable Metrics/ParameterLists
-    def initialize(tokens: nil, model: nil, amounts: nil, missing: [], has_tokens: nil, category: :text_tokens,
-                   input_details: nil)
+    def initialize(tokens: nil, model: nil, category: :text_tokens, input_details: nil)
       @tokens = tokens
       @model = normalize_model(model)
-      @amounts = amounts
-      @missing = missing
-      @has_tokens = has_tokens
       @category = category.to_sym
       @input_details = input_details
     end
-    # rubocop:enable Metrics/ParameterLists
 
     def input
       amount_for(:input)
@@ -83,13 +66,10 @@ module RubyLLM
     end
 
     def tokens?
-      return @has_tokens unless @has_tokens.nil?
-
       COMPONENTS.any? { |component| !tokens_for(component).nil? }
     end
 
     def missing?(component)
-      return @missing.include?(component) if aggregate?
       return image_input_missing? if component == :input && detailed_image_input?
       return false if component == :thinking && !thinking_priced_separately?
 
@@ -97,15 +77,70 @@ module RubyLLM
       tokens.to_i.positive? && price_for(component).nil?
     end
 
-    private_class_method def self.aggregate_component(costs, component)
-      values = costs.filter_map { |cost| cost.public_send(component) }
-      values.empty? ? nil : values.sum
+    # Sum of several per-message costs, with amounts precomputed at build time.
+    class Aggregate
+      def self.build(costs)
+        costs = costs.compact.select(&:tokens?)
+
+        missing = COMPONENTS.select do |component|
+          costs.any? { |cost| cost.missing?(component) }
+        end
+
+        amounts = COMPONENTS.to_h do |component|
+          values = costs.filter_map { |cost| cost.public_send(component) }
+          [component, missing.include?(component) || values.empty? ? nil : values.sum]
+        end
+
+        new(amounts:, missing:, tokens: costs.any?)
+      end
+
+      def initialize(amounts:, missing:, tokens:)
+        @amounts = amounts
+        @missing = missing
+        @tokens = tokens
+      end
+
+      COMPONENTS.each do |component|
+        define_method(component) { @amounts[component] }
+      end
+
+      alias reasoning thinking
+      alias cached_input cache_read
+      alias cache_creation cache_write
+
+      def total
+        return nil unless tokens?
+        return nil if @missing.any?
+
+        costs = COMPONENTS.filter_map { |component| public_send(component) }
+        return nil if costs.empty?
+
+        costs.sum
+      end
+
+      def to_h
+        {
+          input: input,
+          output: output,
+          cache_read: cache_read,
+          cache_write: cache_write,
+          thinking: thinking,
+          total: total
+        }.compact
+      end
+
+      def tokens?
+        @tokens
+      end
+
+      def missing?(component)
+        @missing.include?(component)
+      end
     end
 
     private
 
     def amount_for(component)
-      return @amounts[component] if aggregate?
       return image_input_amount if component == :input && detailed_image_input?
 
       token_count = tokens_for(component)
@@ -118,10 +153,6 @@ module RubyLLM
       return nil unless price
 
       token_count * price / PER_MILLION
-    end
-
-    def aggregate?
-      !@amounts.nil?
     end
 
     def tokens_for(component)
