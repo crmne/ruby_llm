@@ -407,7 +407,7 @@ RSpec.describe RubyLLM::Providers::Gemini::Chat do
     end
 
     it 'uses responseJsonSchema for Gemini 2.5 models' do
-      model = instance_double(RubyLLM::Model::Info, id: 'gemini-2.5-flash', metadata: {})
+      model = instance_double(RubyLLM::Model::Info, id: 'gemini-2.5-flash', family: nil, metadata: {})
 
       payload = test_obj.send(:render_payload, messages, tools:, temperature: nil, model:, schema:)
 
@@ -422,7 +422,7 @@ RSpec.describe RubyLLM::Providers::Gemini::Chat do
     end
 
     it 'unwraps wrapper schemas for responseJsonSchema' do
-      model = instance_double(RubyLLM::Model::Info, id: 'gemini-3.0-pro', metadata: {})
+      model = instance_double(RubyLLM::Model::Info, id: 'gemini-3.0-pro', family: nil, metadata: {})
       wrapped_schema = {
         name: 'PersonSchema',
         schema: {
@@ -445,7 +445,7 @@ RSpec.describe RubyLLM::Providers::Gemini::Chat do
     end
 
     it 'falls back to responseSchema for non-2.5 models' do
-      model = instance_double(RubyLLM::Model::Info, id: 'gemini-2.0-flash', metadata: {})
+      model = instance_double(RubyLLM::Model::Info, id: 'gemini-2.0-flash', family: nil, metadata: {})
 
       payload = test_obj.send(:render_payload, messages, tools:, temperature: nil, model:, schema:)
 
@@ -455,7 +455,7 @@ RSpec.describe RubyLLM::Providers::Gemini::Chat do
     end
 
     it 'treats newer Gemini versions as JSON schema capable' do
-      model = instance_double(RubyLLM::Model::Info, id: 'gemini-3.0-pro', metadata: {})
+      model = instance_double(RubyLLM::Model::Info, id: 'gemini-3.0-pro', family: nil, metadata: {})
 
       payload = test_obj.send(:render_payload, messages, tools:, temperature: nil, model:, schema:)
 
@@ -464,7 +464,7 @@ RSpec.describe RubyLLM::Providers::Gemini::Chat do
     end
 
     it 'expands referenced definitions when using responseSchema' do
-      model = instance_double(RubyLLM::Model::Info, id: 'gemini-2.0-flash', metadata: {})
+      model = instance_double(RubyLLM::Model::Info, id: 'gemini-2.0-flash', family: nil, metadata: {})
       schema_with_defs = {
         type: 'object',
         properties: {

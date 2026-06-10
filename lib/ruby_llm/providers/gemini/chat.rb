@@ -42,31 +42,16 @@ module RubyLLM
         def build_thinking_config(_model, thinking)
           config = { includeThoughts: true }
 
-          config[:thinkingLevel] = resolve_effort_level(thinking) if thinking&.effort
-          config[:thinkingBudget] = resolve_budget(thinking) if thinking&.budget
+          config[:thinkingLevel] = thinking.effort if thinking.effort
+          config[:thinkingBudget] = thinking.budget if thinking.budget.is_a?(Integer)
 
           config
-        end
-
-        def resolve_effort_level(thinking)
-          thinking.respond_to?(:effort) ? thinking.effort : thinking
-        end
-
-        def resolve_budget(thinking)
-          budget = thinking.respond_to?(:budget) ? thinking.budget : thinking
-          budget.is_a?(Integer) ? budget : nil
         end
 
         private
 
         def format_messages(messages)
-          formatter = MessageFormatter.new(
-            messages,
-            format_role: method(:format_role),
-            format_parts: method(:format_parts),
-            format_tool_result: method(:format_tool_result)
-          )
-          formatter.format
+          MessageFormatter.new(self, messages).format
         end
 
         def format_role(role)
@@ -121,7 +106,7 @@ module RubyLLM
             output_tokens: calculate_output_tokens(data),
             cached_tokens: data.dig('usageMetadata', 'cachedContentTokenCount'),
             thinking_tokens: data.dig('usageMetadata', 'thoughtsTokenCount'),
-            model_id: data['modelVersion'] || response.env.url.path.split('/')[3].split(':')[0],
+            model_id: data['modelVersion'] || @model,
             raw: response
           )
         end
@@ -201,13 +186,14 @@ module RubyLLM
         def gemini_version(model)
           return nil unless model
 
+          metadata = model.metadata
           candidates = [
-            safe_string(model.id),
-            safe_string(model.respond_to?(:family) ? model.family : nil),
-            safe_string(model_metadata_value(model, :version)),
-            safe_string(model_metadata_value(model, 'version')),
-            safe_string(model_metadata_value(model, :description))
-          ].compact
+            model.id,
+            model.family,
+            metadata[:version],
+            metadata['version'],
+            metadata[:description]
+          ].compact.map(&:to_s)
 
           candidates.each do |candidate|
             version = extract_version(candidate)
@@ -215,19 +201,6 @@ module RubyLLM
           end
 
           nil
-        end
-
-        def model_metadata_value(model, key)
-          return unless model.respond_to?(:metadata)
-
-          metadata = model.metadata
-          return unless metadata.is_a?(Hash)
-
-          metadata[key] || metadata[key.to_s]
-        end
-
-        def safe_string(value)
-          value&.to_s
         end
 
         def extract_version(text)
@@ -255,13 +228,11 @@ module RubyLLM
 
         # formats a message
         class MessageFormatter
-          def initialize(messages, format_role:, format_parts:, format_tool_result:)
+          def initialize(provider, messages)
+            @provider = provider
             @messages = messages
             @index = 0
             @tool_call_names = {}
-            @format_role = format_role
-            @format_parts = format_parts
-            @format_tool_result = format_tool_result
           end
 
           def format
@@ -318,13 +289,13 @@ module RubyLLM
 
           def build_standard_message(message)
             {
-              role: @format_role.call(message.role),
-              parts: @format_parts.call(message)
+              role: @provider.send(:format_role, message.role),
+              parts: @provider.send(:format_parts, message)
             }
           end
 
           def format_tool_result(message, tool_name)
-            @format_tool_result.call(message, tool_name)
+            @provider.send(:format_tool_result, message, tool_name)
           end
         end
 
