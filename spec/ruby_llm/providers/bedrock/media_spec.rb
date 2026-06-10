@@ -3,12 +3,12 @@
 require 'spec_helper'
 
 RSpec.describe RubyLLM::Providers::Bedrock::Media do
-  describe '.render_content' do
+  describe '.format_content' do
     it 'renders supported Office documents as Bedrock document blocks' do
       content = RubyLLM::Content.new('Summarize this file')
       content.add_attachment(StringIO.new('docx bytes'), filename: 'proposal.docx')
 
-      rendered = described_class.render_content(content)
+      rendered = described_class.format_content(content)
 
       expect(rendered.second).to eq(
         document: {
@@ -26,7 +26,7 @@ RSpec.describe RubyLLM::Providers::Bedrock::Media do
         content = RubyLLM::Content.new('Summarize this file')
         content.add_attachment(StringIO.new('notes'), filename: "notes.#{extension}")
 
-        rendered = described_class.render_content(content)
+        rendered = described_class.format_content(content)
         attachment = content.attachments.first
 
         expect(rendered.second).to eq(text: attachment.for_llm)
@@ -38,7 +38,7 @@ RSpec.describe RubyLLM::Providers::Bedrock::Media do
       content.add_attachment(StringIO.new('pptx bytes'), filename: 'deck.pptx')
 
       expect do
-        described_class.render_content(content)
+        described_class.format_content(content)
       end.to raise_error(
         RubyLLM::UnsupportedAttachmentError,
         %r{Unsupported attachment type: application/vnd.openxmlformats-officedocument.presentationml.presentation}

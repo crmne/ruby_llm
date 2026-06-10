@@ -21,18 +21,18 @@ module RubyLLM
           @used_document_names = {}
           system_messages, chat_messages = messages.partition { |msg| msg.role == :system }
           payload = {
-            messages: render_messages(chat_messages)
+            messages: format_messages(chat_messages)
           }
 
-          system_blocks = render_system(system_messages)
+          system_blocks = format_system(system_messages)
           payload[:system] = system_blocks unless system_blocks.empty?
 
-          payload[:inferenceConfig] = render_inference_config(model, temperature)
+          payload[:inferenceConfig] = format_inference_config(model, temperature)
 
-          tool_config = render_tool_config(tools, tool_prefs)
+          tool_config = format_tool_config(tools, tool_prefs)
           payload[:toolConfig] = tool_config if tool_config
 
-          additional_fields = render_additional_model_request_fields(thinking)
+          additional_fields = format_additional_model_request_fields(thinking)
           payload[:additionalModelRequestFields] = additional_fields if additional_fields
 
           output_config = build_output_config(schema)
@@ -72,13 +72,13 @@ module RubyLLM
           [input_tokens.to_i - usage['cacheReadInputTokens'].to_i - usage['cacheWriteInputTokens'].to_i, 0].max
         end
 
-        def render_messages(messages)
+        def format_messages(messages)
           rendered = []
           tool_result_blocks = []
 
           messages.each do |msg|
             if msg.tool_result?
-              tool_result_blocks << render_tool_result_block(msg)
+              tool_result_blocks << format_tool_result_block(msg)
               next
             end
 
@@ -87,7 +87,7 @@ module RubyLLM
               tool_result_blocks = []
             end
 
-            message = render_non_tool_message(msg)
+            message = format_non_tool_message(msg)
             rendered << message if message
           end
 
@@ -95,29 +95,29 @@ module RubyLLM
           rendered
         end
 
-        def render_non_tool_message(msg)
-          content = render_message_content(msg)
+        def format_non_tool_message(msg)
+          content = format_message_content(msg)
           return nil if content.empty?
 
           {
-            role: render_role(msg.role),
+            role: format_role(msg.role),
             content: content
           }
         end
 
-        def render_message_content(msg)
+        def format_message_content(msg)
           if msg.content.is_a?(RubyLLM::Content::Raw)
-            return render_raw_content(msg.content) if msg.role == :assistant
+            return format_raw_content(msg.content) if msg.role == :assistant
 
-            return sanitize_non_assistant_raw_blocks(render_raw_content(msg.content))
+            return sanitize_non_assistant_raw_blocks(format_raw_content(msg.content))
           end
 
           blocks = []
 
-          thinking_block = render_thinking_block(msg.thinking)
+          thinking_block = format_thinking_block(msg.thinking)
           blocks << thinking_block if msg.role == :assistant && thinking_block
 
-          text_and_media_blocks = Media.render_content(msg.content, used_document_names: @used_document_names)
+          text_and_media_blocks = Media.format_content(msg.content, used_document_names: @used_document_names)
           blocks.concat(text_and_media_blocks) if text_and_media_blocks
 
           if msg.tool_call?
@@ -135,7 +135,7 @@ module RubyLLM
           blocks
         end
 
-        def render_raw_content(content)
+        def format_raw_content(content)
           value = content.value
           value.is_a?(Array) ? value : [value]
         end
@@ -149,24 +149,24 @@ module RubyLLM
           end
         end
 
-        def render_tool_result_block(msg)
+        def format_tool_result_block(msg)
           {
             toolResult: {
               toolUseId: msg.tool_call_id,
-              content: render_tool_result_content(msg.content)
+              content: format_tool_result_content(msg.content)
             }
           }
         end
 
-        def render_tool_result_content(content)
-          return render_raw_tool_result_content(content.value) if content.is_a?(RubyLLM::Content::Raw)
+        def format_tool_result_content(content)
+          return format_raw_tool_result_content(content.value) if content.is_a?(RubyLLM::Content::Raw)
           return [{ json: content }] if content.is_a?(Hash) || content.is_a?(Array)
-          return render_content_tool_result_content(content) if content.is_a?(RubyLLM::Content)
+          return format_content_tool_result_content(content) if content.is_a?(RubyLLM::Content)
 
           [text_tool_result_block(content)]
         end
 
-        def render_content_tool_result_content(content)
+        def format_content_tool_result_content(content)
           blocks = []
           blocks << text_tool_result_block(content.text) unless content.text.to_s.empty?
           content.attachments.each { |attachment| blocks << text_tool_result_block(attachment.for_llm) }
@@ -179,7 +179,7 @@ module RubyLLM
           { text: text }
         end
 
-        def render_raw_tool_result_content(raw_value)
+        def format_raw_tool_result_content(raw_value)
           blocks = raw_value.is_a?(Array) ? raw_value : [raw_value]
 
           normalized = blocks.filter_map do |block|
@@ -202,38 +202,38 @@ module RubyLLM
           end
         end
 
-        def render_role(role)
+        def format_role(role)
           case role
           when :assistant then 'assistant'
           else 'user'
           end
         end
 
-        def render_system(messages)
-          messages.flat_map { |msg| Media.render_content(msg.content, used_document_names: @used_document_names) }
+        def format_system(messages)
+          messages.flat_map { |msg| Media.format_content(msg.content, used_document_names: @used_document_names) }
         end
 
-        def render_inference_config(_model, temperature)
+        def format_inference_config(_model, temperature)
           config = {}
           config[:temperature] = temperature unless temperature.nil?
           config
         end
 
-        def render_tool_config(tools, tool_prefs)
+        def format_tool_config(tools, tool_prefs)
           return nil if tools.empty?
 
           config = {
-            tools: tools.values.map { |tool| render_tool(tool) }
+            tools: tools.values.map { |tool| format_tool(tool) }
           }
 
           return config if tool_prefs.nil? || tool_prefs[:choice].nil?
 
-          tool_choice = render_tool_choice(tool_prefs[:choice])
+          tool_choice = format_tool_choice(tool_prefs[:choice])
           config[:toolChoice] = tool_choice if tool_choice
           config
         end
 
-        def render_tool_choice(choice)
+        def format_tool_choice(choice)
           case choice
           when :auto
             { auto: {} }
@@ -246,7 +246,7 @@ module RubyLLM
           end
         end
 
-        def render_tool(tool)
+        def format_tool(tool)
           input_schema = tool.params_schema || RubyLLM::Tool::SchemaDefinition.from_parameters(tool.parameters)&.json_schema
 
           tool_spec = {
@@ -264,10 +264,10 @@ module RubyLLM
           RubyLLM::Utils.deep_merge(tool_spec, tool.provider_params)
         end
 
-        def render_additional_model_request_fields(thinking)
+        def format_additional_model_request_fields(thinking)
           fields = {}
 
-          reasoning_fields = render_reasoning_fields(thinking)
+          reasoning_fields = format_reasoning_fields(thinking)
           fields = RubyLLM::Utils.deep_merge(fields, reasoning_fields) if reasoning_fields
 
           fields.empty? ? nil : fields
@@ -293,7 +293,7 @@ module RubyLLM
           }
         end
 
-        def render_reasoning_fields(thinking)
+        def format_reasoning_fields(thinking)
           return nil unless thinking&.enabled?
 
           effort_config = effort_reasoning_config(thinking)
@@ -320,7 +320,7 @@ module RubyLLM
           { reasoning_config: { type: 'enabled', budget_tokens: budget } }
         end
 
-        def render_thinking_block(thinking)
+        def format_thinking_block(thinking)
           return nil unless thinking
 
           if thinking.text
