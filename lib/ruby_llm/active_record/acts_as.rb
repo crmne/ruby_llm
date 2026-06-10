@@ -36,18 +36,6 @@ module RubyLLM
                      class_name: self.model_class,
                      foreign_key: model_foreign_key,
                      optional: true
-
-          define_method :messages_association do
-            send(messages_association_name)
-          end
-
-          define_method :model_association do
-            send(model_association_name)
-          end
-
-          define_method :'model_association=' do |value|
-            send("#{model_association_name}=", value)
-          end
         end
 
         def acts_as_model(chats: :chats, chat_class: nil, chats_foreign_key: nil)
@@ -63,10 +51,6 @@ module RubyLLM
           validates :name, presence: true
 
           has_many chats, class_name: self.chat_class, foreign_key: chats_foreign_key
-
-          define_method :chats_association do
-            send(chats_association_name)
-          end
         end
 
         def acts_as_message(chat: :chat, chat_class: nil, chat_foreign_key: nil, touch_chat: false, # rubocop:disable Metrics/ParameterLists
@@ -110,18 +94,6 @@ module RubyLLM
                      optional: true
 
           delegate :tool_call?, :tool_result?, to: :to_llm
-
-          define_method :chat_association do
-            send(chat_association_name)
-          end
-
-          define_method :tool_calls_association do
-            send(tool_calls_association_name)
-          end
-
-          define_method :model_association do
-            send(model_association_name)
-          end
         end
 
         def acts_as_tool_call(message: :message, message_class: nil, message_foreign_key: nil, # rubocop:disable Metrics/ParameterLists
@@ -143,14 +115,6 @@ module RubyLLM
                   class_name: self.result_class,
                   foreign_key: result_foreign_key,
                   dependent: :nullify
-
-          define_method :message_association do
-            send(message_association_name)
-          end
-
-          define_method :result_association do
-            send(result_association_name)
-          end
         end
       end
     end

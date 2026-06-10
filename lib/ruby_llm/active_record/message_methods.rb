@@ -12,8 +12,16 @@ module RubyLLM
       include PayloadHelpers
       include AttachmentHelpers
 
-      class_methods do
-        attr_reader :chat_class, :tool_call_class, :chat_foreign_key, :tool_call_foreign_key
+      def chat_association
+        send(chat_association_name)
+      end
+
+      def tool_calls_association
+        send(tool_calls_association_name)
+      end
+
+      def model_association
+        send(model_association_name)
       end
 
       def to_llm
@@ -30,8 +38,8 @@ module RubyLLM
 
       def thinking
         RubyLLM::Thinking.build(
-          text: thinking_text_value,
-          signature: thinking_signature_value
+          text: optional_column(:thinking_text),
+          signature: optional_column(:thinking_signature)
         )
       end
 
@@ -39,9 +47,9 @@ module RubyLLM
         RubyLLM::Tokens.build(
           input: input_tokens,
           output: output_tokens,
-          cached: cached_value,
-          cache_creation: cache_creation_value,
-          thinking: thinking_tokens_value
+          cached: optional_column(:cached_tokens),
+          cache_creation: optional_column(:cache_creation_tokens),
+          thinking: optional_column(:thinking_tokens)
         )
       end
 
@@ -50,11 +58,11 @@ module RubyLLM
       end
 
       def cache_read_tokens
-        cached_value
+        optional_column(:cached_tokens)
       end
 
       def cache_write_tokens
-        cache_creation_value
+        optional_column(:cache_creation_tokens)
       end
 
       def to_partial_path
@@ -75,24 +83,8 @@ module RubyLLM
 
       private
 
-      def thinking_text_value
-        has_attribute?(:thinking_text) ? self[:thinking_text] : nil
-      end
-
-      def thinking_signature_value
-        has_attribute?(:thinking_signature) ? self[:thinking_signature] : nil
-      end
-
-      def cached_value
-        has_attribute?(:cached_tokens) ? self[:cached_tokens] : nil
-      end
-
-      def cache_creation_value
-        has_attribute?(:cache_creation_tokens) ? self[:cache_creation_tokens] : nil
-      end
-
-      def thinking_tokens_value
-        has_attribute?(:thinking_tokens) ? self[:thinking_tokens] : nil
+      def optional_column(name)
+        self[name] if has_attribute?(name)
       end
 
       def extract_tool_calls

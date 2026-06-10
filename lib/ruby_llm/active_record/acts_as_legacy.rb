@@ -328,12 +328,12 @@ module RubyLLM
       end
 
       def setup_persistence_callbacks
-        return @chat if @chat.instance_variable_get(:@_persistence_callbacks_setup)
+        return @chat if @persistence_callbacks_setup
 
         @chat.before_message { persist_new_message }
         @chat.after_message { |msg| persist_message_completion(msg) }
 
-        @chat.instance_variable_set(:@_persistence_callbacks_setup, true)
+        @persistence_callbacks_setup = true
         @chat
       end
 

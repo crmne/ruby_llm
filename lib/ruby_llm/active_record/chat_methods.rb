@@ -16,11 +16,22 @@ module RubyLLM
 
       attr_accessor :assume_model_exists, :context
 
-      def model=(value)
-        @model_string = value if value.is_a?(String)
-        return if value.is_a?(String)
+      def messages_association
+        send(messages_association_name)
+      end
 
-        if self.class.model_association_name == :model
+      def model_association
+        send(model_association_name)
+      end
+
+      def model_association=(value)
+        send("#{model_association_name}=", value)
+      end
+
+      def model=(value)
+        if value.is_a?(String)
+          @model_string = value
+        elsif self.class.model_association_name == :model
           super
         else
           self.model_association = value
@@ -42,42 +53,6 @@ module RubyLLM
       def provider
         model_association&.provider
       end
-
-      private
-
-      def resolve_model_from_strings # rubocop:disable Metrics/PerceivedComplexity
-        config = context&.config || RubyLLM.config
-        @model_string ||= config.default_model unless model_association
-        return unless @model_string
-
-        model_info, _provider = Models.resolve(
-          @model_string,
-          provider: @provider_string,
-          assume_exists: assume_model_exists || false,
-          config: config
-        )
-
-        model_class = self.class.model_class.constantize
-        model_record = model_class.find_or_create_by!(
-          model_id: model_info.id,
-          provider: model_info.provider
-        ) do |m|
-          m.name = model_info.name || model_info.id
-          m.family = model_info.family
-          m.context_window = model_info.context_window
-          m.max_output_tokens = model_info.max_output_tokens
-          m.capabilities = model_info.capabilities || []
-          m.modalities = model_info.modalities.to_h
-          m.pricing = model_info.pricing.to_h
-          m.metadata = model_info.metadata || {}
-        end
-
-        self.model_association = model_record
-        @model_string = nil
-        @provider_string = nil
-      end
-
-      public
 
       def to_llm
         model_record = model_association
@@ -209,8 +184,8 @@ module RubyLLM
           attrs[parent_tool_call_assoc.foreign_key] = tool_call_id if tool_call_id
         end
 
+        attrs[:content_raw] = content_raw if messages_association.klass.column_names.include?('content_raw')
         message_record = messages_association.create!(attrs)
-        message_record.update!(content_raw:) if message_record.respond_to?(:content_raw=)
 
         persist_content(message_record, attachments) if attachments.present?
         persist_tool_calls(llm_message.tool_calls, message_record:) if llm_message.tool_calls.present?
@@ -243,6 +218,38 @@ module RubyLLM
 
       private
 
+      def resolve_model_from_strings # rubocop:disable Metrics/PerceivedComplexity
+        config = context&.config || RubyLLM.config
+        @model_string ||= config.default_model unless model_association
+        return unless @model_string
+
+        model_info, _provider = Models.resolve(
+          @model_string,
+          provider: @provider_string,
+          assume_exists: assume_model_exists || false,
+          config: config
+        )
+
+        model_class = self.class.model_class.constantize
+        model_record = model_class.find_or_create_by!(
+          model_id: model_info.id,
+          provider: model_info.provider
+        ) do |m|
+          m.name = model_info.name || model_info.id
+          m.family = model_info.family
+          m.context_window = model_info.context_window
+          m.max_output_tokens = model_info.max_output_tokens
+          m.capabilities = model_info.capabilities || []
+          m.modalities = model_info.modalities.to_h
+          m.pricing = model_info.pricing.to_h
+          m.metadata = model_info.metadata || {}
+        end
+
+        self.model_association = model_record
+        @model_string = nil
+        @provider_string = nil
+      end
+
       def cleanup_failed_messages
         RubyLLM.logger.warn "RubyLLM: API call failed, destroying message: #{@message.id}"
         @message.destroy
@@ -270,12 +277,12 @@ module RubyLLM
       end
 
       def setup_persistence_callbacks
-        return @chat if @chat.instance_variable_get(:@_persistence_callbacks_setup)
+        return @chat if @persistence_callbacks_setup
 
         @chat.before_message { persist_new_message }
         @chat.after_message { |msg| persist_message_completion(msg) }
 
-        @chat.instance_variable_set(:@_persistence_callbacks_setup, true)
+        @persistence_callbacks_setup = true
         @chat
       end
 
