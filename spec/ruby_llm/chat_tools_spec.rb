@@ -2,8 +2,8 @@
 
 require 'spec_helper'
 
-def supports_functions?(provider, model)
-  return false if RubyLLM::Provider.providers[provider]&.local?
+def skip_unless_supports_functions(provider, model)
+  return if RubyLLM::Provider.providers[provider]&.local?
 
   model_info = RubyLLM.models.find(model)
   skip "#{model} doesn't support function calling" unless model_info&.supports_functions?
@@ -188,14 +188,6 @@ RSpec.describe RubyLLM::Chat do
     arguments.respond_to?(:transform_keys) ? arguments.transform_keys(&:to_s) : arguments
   end
 
-  def tool_result_message_for(chat, tool_call)
-    return nil unless tool_call
-
-    chat.messages.reverse.find do |message|
-      message.role == :tool && message.tool_call_id == tool_call.id
-    end
-  end
-
   def stub_tool_response(chat, tool_calls)
     provider = chat.instance_variable_get(:@provider)
     allow(provider).to receive(:complete).and_return(
@@ -217,7 +209,7 @@ RSpec.describe RubyLLM::Chat do
       model = model_info[:model]
       provider = model_info[:provider]
       it "#{provider}/#{model} can use tools" do
-        supports_functions? provider, model
+        skip_unless_supports_functions(provider, model)
 
         skip 'Flaky test for deepseek - model asks for clarification instead of exec tools' if provider == :deepseek
 
@@ -275,7 +267,7 @@ RSpec.describe RubyLLM::Chat do
         model = model_info[:model]
 
         it "#{provider}/#{model} includes thought signatures for tool calls" do
-          supports_functions? provider, model
+          skip_unless_supports_functions(provider, model)
 
           chat = RubyLLM.chat(model: model, provider: provider)
                         .with_thinking(effort: :low)
@@ -296,7 +288,7 @@ RSpec.describe RubyLLM::Chat do
       provider = model_info[:provider]
       model = 'claude-sonnet-4-5' if provider == :bedrock # haiku can't do parallel tool calls
       it "#{provider}/#{model} can use parallel tool calls" do
-        supports_functions? provider, model
+        skip_unless_supports_functions(provider, model)
         skip 'gpustack/qwen3 does not support parallel tool calls properly' if provider == :gpustack && model == 'qwen3'
 
         chat = RubyLLM.chat(model: model, provider: provider)
@@ -319,7 +311,7 @@ RSpec.describe RubyLLM::Chat do
       model = model_info[:model]
       provider = model_info[:provider]
       it "#{provider}/#{model} can use tools in multi-turn conversations" do
-        supports_functions? provider, model
+        skip_unless_supports_functions(provider, model)
 
         skip 'Flaky test for deepseek' if provider == :deepseek
 
@@ -342,7 +334,7 @@ RSpec.describe RubyLLM::Chat do
       model = model_info[:model]
       provider = model_info[:provider]
       it "#{provider}/#{model} can use tools without parameters" do
-        supports_functions? provider, model
+        skip_unless_supports_functions(provider, model)
 
         chat = RubyLLM.chat(model: model, provider: provider)
                       .with_tool(BestLanguageToLearn)
@@ -357,7 +349,7 @@ RSpec.describe RubyLLM::Chat do
       model = model_info[:model]
       provider = model_info[:provider]
       it "#{provider}/#{model} can use tools without parameters in multi-turn streaming conversations" do
-        supports_functions? provider, model
+        skip_unless_supports_functions(provider, model)
         if provider == :gpustack && model == 'qwen3'
           skip 'gpustack/qwen3 does not support streaming tool calls properly'
         end
@@ -393,7 +385,7 @@ RSpec.describe RubyLLM::Chat do
       model = model_info[:model]
       provider = model_info[:provider]
       it "#{provider}/#{model} can use tools with multi-turn streaming conversations" do
-        supports_functions? provider, model
+        skip_unless_supports_functions(provider, model)
         if provider == :azure
           skip 'Azure rate-limits this multi-turn streaming tool scenario under the parallel live suite'
         end
@@ -432,7 +424,7 @@ RSpec.describe RubyLLM::Chat do
       model = model_info[:model]
       provider = model_info[:provider]
       it "#{provider}/#{model} can handle multiple tool calls in a single response" do
-        supports_functions? provider, model
+        skip_unless_supports_functions(provider, model)
 
         skip 'Flaky test for gpustack/qwen3' if provider == :gpustack && model == 'qwen3'
 
@@ -445,17 +437,13 @@ RSpec.describe RubyLLM::Chat do
         # Track tool calls to ensure all 3 are executed
         tool_call_count = 0
 
-        original_execute = DiceRoll.instance_method(:execute)
-        DiceRoll.define_method(:execute) do |**|
+        allow_any_instance_of(DiceRoll).to receive(:execute) do # rubocop:disable RSpec/AnyInstance
           tool_call_count += 1
           # Return a fixed result for VCR consistency
           { roll: tool_call_count }
         end
 
         response = chat.ask('Roll the dice 3 times')
-
-        # Restore original method
-        DiceRoll.define_method(:execute, original_execute)
 
         # Verify all 3 tool calls were made
         expect(tool_call_count).to eq(3)
@@ -466,7 +454,7 @@ RSpec.describe RubyLLM::Chat do
       end
 
       it "#{provider}/#{model} can handle with_params" do
-        supports_functions? provider, model
+        skip_unless_supports_functions(provider, model)
 
         chat = RubyLLM.chat(model: model, provider: provider)
                       .with_tool(ParamsTool)
@@ -501,7 +489,7 @@ RSpec.describe RubyLLM::Chat do
       model = model_info[:model]
       provider = model_info[:provider]
       it "#{provider}/#{model} handles array params" do
-        supports_functions? provider, model
+        skip_unless_supports_functions(provider, model)
 
         chat = RubyLLM.chat(model: model, provider: provider)
                       .with_tool(ArrayParamsTool)
@@ -526,7 +514,7 @@ RSpec.describe RubyLLM::Chat do
       model = model_info[:model]
       provider = model_info[:provider]
       it "#{provider}/#{model} handles anyOf params" do
-        supports_functions? provider, model
+        skip_unless_supports_functions(provider, model)
 
         chat = RubyLLM.chat(model: model, provider: provider)
                       .with_tool(AnyOfParamsTool)
@@ -552,7 +540,7 @@ RSpec.describe RubyLLM::Chat do
       model = model_info[:model]
       provider = model_info[:provider]
       it "#{provider}/#{model} handles object params" do
-        supports_functions? provider, model
+        skip_unless_supports_functions(provider, model)
 
         chat = RubyLLM.chat(model: model, provider: provider)
                       .with_tool(ObjectParamsTool)
@@ -707,7 +695,7 @@ RSpec.describe RubyLLM::Chat do
       model = model_info[:model]
       provider = model_info[:provider]
       it "#{provider}/#{model} preserves Content objects returned from tools" do
-        supports_functions? provider, model
+        skip_unless_supports_functions(provider, model)
 
         # Skip providers that don't support images in tool results
         skip "#{provider} doesn't support images in tool results" if provider.in?(%i[deepseek gpustack bedrock])
@@ -738,23 +726,13 @@ RSpec.describe RubyLLM::Chat do
     end
 
     it 'does not continue conversation after halt' do
-      call_count = 0
-      original_complete = described_class.instance_method(:complete)
-
-      # Monkey-patch to count complete calls
-      described_class.define_method(:complete) do |&block|
-        call_count += 1
-        original_complete.bind_call(self, &block)
-      end
-
       chat = RubyLLM.chat.with_tool(HaltingTool)
+      allow(chat).to receive(:complete).and_call_original
+
       response = chat.ask('Execute the halting tool')
 
-      # Restore original method
-      described_class.define_method(:complete, original_complete)
-
-      # Should only call complete once (initial), not twice (no continuation)
-      expect(call_count).to eq(1)
+      # Only the initial completion runs; halt stops the continuation.
+      expect(chat).to have_received(:complete).once
       expect(response).to be_a(RubyLLM::Tool::Halt)
     end
 
@@ -799,10 +777,7 @@ RSpec.describe RubyLLM::Chat do
       provider = model_info[:provider]
 
       it "#{provider}/#{model} respects choice: :none" do
-        unless RubyLLM::Provider.providers[provider]&.local?
-          model_info = RubyLLM.models.find(model)
-          skip "#{model} doesn't support function calling" unless model_info&.supports_functions?
-        end
+        skip_unless_supports_functions(provider, model)
 
         provider_class = provider ? RubyLLM::Provider.providers[provider.to_sym] : nil
         skip "#{provider} doesn't support tool choice" unless provider_class&.capabilities&.supports_tool_choice?(model)
@@ -824,10 +799,7 @@ RSpec.describe RubyLLM::Chat do
       end
 
       it "#{provider}/#{model} respects choice: :required for unrelated queries" do
-        unless RubyLLM::Provider.providers[provider]&.local?
-          model_info = RubyLLM.models.find(model)
-          skip "#{model} doesn't support function calling" unless model_info&.supports_functions?
-        end
+        skip_unless_supports_functions(provider, model)
 
         provider_class = provider ? RubyLLM::Provider.providers[provider.to_sym] : nil
         skip "#{provider} doesn't support tool choice" unless provider_class&.capabilities&.supports_tool_choice?(model)
@@ -847,10 +819,7 @@ RSpec.describe RubyLLM::Chat do
       end
 
       it "#{provider}/#{model} respects specific tool choice" do
-        unless RubyLLM::Provider.providers[provider]&.local?
-          model_info = RubyLLM.models.find(model)
-          skip "#{model} doesn't support function calling" unless model_info&.supports_functions?
-        end
+        skip_unless_supports_functions(provider, model)
 
         provider_class = provider ? RubyLLM::Provider.providers[provider.to_sym] : nil
         skip "#{provider} doesn't support tool choice" unless provider_class&.capabilities&.supports_tool_choice?(model)
@@ -870,10 +839,7 @@ RSpec.describe RubyLLM::Chat do
       end
 
       it "#{provider}/#{model} respects calls: :one for sequential execution" do
-        unless RubyLLM::Provider.providers[provider]&.local?
-          model_info = RubyLLM.models.find(model)
-          skip "#{model} doesn't support function calling" unless model_info&.supports_functions?
-        end
+        skip_unless_supports_functions(provider, model)
 
         if provider == :azure
           skip 'Azure rate-limits this multi-turn tool-control scenario under the parallel live suite'

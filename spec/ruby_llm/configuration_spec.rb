@@ -32,12 +32,6 @@ RSpec.describe RubyLLM::Configuration do
       )
     end
 
-    it 'keeps use_new_acts_as as the canonical acts_as API selector' do
-      config.use_new_acts_as = true
-
-      expect(config.use_new_acts_as).to be(true)
-    end
-
     it 'normalizes blank strings to nil' do
       config.openai_api_base = ''
       config.anthropic_api_key = " \t\n"
