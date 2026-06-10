@@ -303,9 +303,8 @@ module RubyLLM
         end
 
         def effort_reasoning_config(thinking)
-          effort = thinking.respond_to?(:effort) ? thinking.effort : nil
-          effort = effort.to_s if effort
-          return nil if effort.nil? || effort.empty? || effort == 'none'
+          effort = thinking.effort.to_s
+          return nil if effort.empty? || effort == 'none'
 
           if reasoning_embedded?(@model)
             { reasoning_config: { type: 'enabled', reasoning_effort: effort } }
@@ -315,7 +314,7 @@ module RubyLLM
         end
 
         def budget_reasoning_config(thinking)
-          budget = thinking.respond_to?(:budget) ? thinking.budget : thinking
+          budget = thinking.budget
           return nil unless budget.is_a?(Integer)
 
           { reasoning_config: { type: 'enabled', budget_tokens: budget } }

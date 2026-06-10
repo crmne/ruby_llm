@@ -108,11 +108,6 @@ module RubyLLM
 
         def build_message(data, content, thinking, thinking_signature, tool_use_blocks, response) # rubocop:disable Metrics/ParameterLists
           usage = data['usage'] || {}
-          cached_tokens = usage['cache_read_input_tokens']
-          cache_creation_tokens = usage['cache_creation_input_tokens']
-          if cache_creation_tokens.nil? && usage['cache_creation'].is_a?(Hash)
-            cache_creation_tokens = usage['cache_creation'].values.compact.sum
-          end
           thinking_tokens = usage.dig('output_tokens_details', 'thinking_tokens') ||
                             usage.dig('output_tokens_details', 'reasoning_tokens') ||
                             usage['thinking_tokens'] ||
@@ -125,8 +120,8 @@ module RubyLLM
             tool_calls: Tools.parse_tool_calls(tool_use_blocks),
             input_tokens: usage['input_tokens'],
             output_tokens: usage['output_tokens'],
-            cached_tokens: cached_tokens,
-            cache_creation_tokens: cache_creation_tokens,
+            cached_tokens: extract_cached_tokens(data),
+            cache_creation_tokens: extract_cache_creation_tokens(data),
             thinking_tokens: thinking_tokens,
             model_id: data['model'],
             raw: response
@@ -276,14 +271,12 @@ module RubyLLM
         end
 
         def resolve_effort(thinking)
-          effort = thinking.respond_to?(:effort) ? thinking.effort : nil
-          effort = effort.to_s if effort
-          effort.nil? || effort.empty? ? nil : effort
+          effort = thinking.effort.to_s
+          effort.empty? ? nil : effort
         end
 
         def resolve_budget(thinking)
-          budget = thinking.respond_to?(:budget) ? thinking.budget : thinking
-          budget.is_a?(Integer) ? budget : nil
+          thinking.budget
         end
       end
     end
