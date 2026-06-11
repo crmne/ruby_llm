@@ -7,11 +7,23 @@ module RubyLLM
     # Google Vertex AI implementation
     class VertexAI < Provider
       protocol :gemini, VertexAI::Gemini
+      protocol :anthropic, VertexAI::Anthropic
 
       SCOPES = [
         'https://www.googleapis.com/auth/cloud-platform',
         'https://www.googleapis.com/auth/generative-language.retriever'
       ].freeze
+
+      # Vertex AI hosts models from several publishers, each speaking its
+      # native protocol.
+      def protocol_for(model, **)
+        model.id.start_with?('claude') ? protocols[:anthropic] : super
+      end
+
+      def model_path(model, publisher: 'google')
+        "projects/#{@config.vertexai_project_id}/locations/#{@config.vertexai_location}" \
+          "/publishers/#{publisher}/models/#{model}"
+      end
 
       def initialize(config)
         super

@@ -8,7 +8,7 @@ module RubyLLM
         module_function
 
         def embedding_url(model:)
-          "#{model_path(model)}:predict"
+          "#{@provider.model_path(model)}:predict"
         end
 
         def render_embedding_payload(text, model:, dimensions:) # rubocop:disable Lint/UnusedMethodArgument
