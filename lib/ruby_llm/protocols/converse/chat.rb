@@ -13,7 +13,13 @@ module RubyLLM
         module_function
 
         def completion_url
-          "/model/#{@model.id}/converse"
+          "/model/#{escape_model_id(@model.id)}/converse"
+        end
+
+        # Application inference profile ARNs contain '/', but Bedrock expects the model id
+        # to remain one path segment.
+        def escape_model_id(model_id)
+          model_id.to_s.gsub('/', '%2F')
         end
 
         # rubocop:disable Metrics/ParameterLists,Lint/UnusedMethodArgument

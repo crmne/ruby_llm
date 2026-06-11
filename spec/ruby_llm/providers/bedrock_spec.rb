@@ -160,4 +160,42 @@ RSpec.describe RubyLLM::Providers::Bedrock do
       expect(provider.protocol_for(model)).to eq(RubyLLM::Protocols::Converse)
     end
   end
+
+  describe 'model id path encoding' do
+    let(:converse) { RubyLLM::Protocols::Converse.allocate }
+    let(:arn) { 'arn:aws:bedrock:us-west-2:123:application-inference-profile/p' }
+
+    def with_model(id)
+      converse.instance_variable_set(:@model, instance_double(RubyLLM::Model, id: id))
+    end
+
+    it 'keeps an application inference profile ARN as a single path segment in the converse URL' do
+      with_model(arn)
+      expect(converse.send(:completion_url)).to eq(
+        '/model/arn:aws:bedrock:us-west-2:123:application-inference-profile%2Fp/converse'
+      )
+    end
+
+    it 'encodes the ARN for the converse-stream URL too' do
+      with_model(arn)
+      expect(converse.send(:stream_url)).to eq(
+        '/model/arn:aws:bedrock:us-west-2:123:application-inference-profile%2Fp/converse-stream'
+      )
+    end
+
+    it 'leaves ordinary model ids (including a ":" version suffix) unchanged' do
+      with_model('us.anthropic.claude-sonnet-4-5-20250929-v1:0')
+      expect(converse.send(:completion_url)).to eq(
+        '/model/us.anthropic.claude-sonnet-4-5-20250929-v1:0/converse'
+      )
+    end
+
+    it 'signs the ARN as one segment (SigV4 canonical path double-encodes "/", not truncates)' do
+      with_model(arn)
+      path = URI.parse(converse.send(:completion_url)).path
+      expect(described_class.allocate.send(:canonical_uri, path)).to eq(
+        '/model/arn%3Aaws%3Abedrock%3Aus-west-2%3A123%3Aapplication-inference-profile%252Fp/converse'
+      )
+    end
+  end
 end
