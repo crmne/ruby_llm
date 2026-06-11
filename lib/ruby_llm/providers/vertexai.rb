@@ -5,9 +5,8 @@ require 'stringio'
 module RubyLLM
   module Providers
     # Google Vertex AI implementation
-    class VertexAI < Gemini
-      include VertexAI::Embeddings
-      include VertexAI::Models
+    class VertexAI < Provider
+      protocol :gemini, VertexAI::Gemini
 
       SCOPES = [
         'https://www.googleapis.com/auth/cloud-platform',
@@ -29,14 +28,6 @@ module RubyLLM
         end
       end
 
-      def completion_url
-        "#{model_path(@model)}:generateContent"
-      end
-
-      def stream_url
-        "#{model_path(@model)}:streamGenerateContent?alt=sse"
-      end
-
       def headers
         initialize_authorizer unless @authorizer
         @authorizer.apply({})
@@ -55,15 +46,6 @@ module RubyLLM
       end
 
       private
-
-      def model_path(model)
-        "projects/#{@config.vertexai_project_id}/locations/#{@config.vertexai_location}" \
-          "/publishers/google/models/#{model}"
-      end
-
-      def transcription_url(model)
-        "#{model_path(model)}:generateContent"
-      end
 
       def initialize_authorizer
         require 'googleauth'

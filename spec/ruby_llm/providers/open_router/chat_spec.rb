@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 RSpec.describe RubyLLM::Providers::OpenRouter::Chat do
-  let(:provider) { RubyLLM::Providers::OpenRouter.allocate }
+  let(:provider) { RubyLLM::Providers::OpenRouter::ChatCompletions.allocate }
 
   describe '#parse_completion_response' do
     it 'returns nil for a nil response body' do

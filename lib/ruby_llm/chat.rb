@@ -28,6 +28,7 @@ module RubyLLM
       @schema = nil
       @thinking = nil
       @citations = false
+      @protocol = nil
       @on = {
         new_message: nil,
         end_message: nil,
@@ -112,6 +113,11 @@ module RubyLLM
 
     def with_params(**params)
       @params = params
+      self
+    end
+
+    def with_protocol(protocol)
+      @protocol = protocol
       self
     end
 
@@ -298,6 +304,7 @@ module RubyLLM
         schema: @schema,
         thinking: @thinking,
         citations: @citations,
+        protocol: @protocol,
         &wrap_streaming_block(&)
       )
     end

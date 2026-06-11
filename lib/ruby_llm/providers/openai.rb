@@ -4,15 +4,7 @@ module RubyLLM
   module Providers
     # OpenAI API integration.
     class OpenAI < Provider
-      include OpenAI::Chat
-      include OpenAI::Embeddings
-      include OpenAI::Models
-      include OpenAI::Moderation
-      include OpenAI::Streaming
-      include OpenAI::Tools
-      include OpenAI::Images
-      include OpenAI::Media
-      include OpenAI::Transcription
+      protocol :chat_completions, Protocols::ChatCompletions
 
       def api_base
         @config.openai_api_base || 'https://api.openai.com/v1'
@@ -24,10 +16,6 @@ module RubyLLM
           'OpenAI-Organization' => @config.openai_organization_id,
           'OpenAI-Project' => @config.openai_project_id
         }.compact
-      end
-
-      def maybe_normalize_temperature(temperature, model)
-        OpenAI::Temperature.normalize(temperature, model.id)
       end
 
       class << self

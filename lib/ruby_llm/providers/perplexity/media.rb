@@ -10,14 +10,14 @@ module RubyLLM
         SUPPORTED_DOCUMENT_EXTENSIONS = %w[pdf doc docx txt rtf].freeze
 
         def format_content(content)
-          OpenAI::Media.format_parts(content) do |attachment|
+          Protocols::ChatCompletions::Media.format_parts(content) do |attachment|
             case attachment.type
             when :image
-              OpenAI::Media.format_image(attachment)
+              Protocols::ChatCompletions::Media.format_image(attachment)
             when :pdf, :document
               format_document(attachment)
             when :text
-              OpenAI::Media.format_text_file(attachment)
+              Protocols::ChatCompletions::Media.format_text_file(attachment)
             else
               raise UnsupportedAttachmentError, attachment.mime_type
             end

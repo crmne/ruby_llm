@@ -311,7 +311,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
 
     it 'persists raw content blocks separately from plain text' do
       chat = Chat.create!(model: anthropic_model)
-      raw_block = RubyLLM::Providers::Anthropic::Content.new('Cache me once', cache: true)
+      raw_block = RubyLLM::Protocols::Anthropic::Content.new('Cache me once', cache: true)
 
       message = chat.add_message(role: :user, content: raw_block)
 

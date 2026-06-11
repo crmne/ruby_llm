@@ -16,7 +16,7 @@ module RubyLLM
             {
               role: format_role(msg.role),
               content: format_content_with_thinking(msg),
-              tool_calls: OpenAI::Tools.format_tool_calls(msg.tool_calls),
+              tool_calls: Protocols::ChatCompletions::Tools.format_tool_calls(msg.tool_calls),
               tool_call_id: msg.tool_call_id
             }.compact
           end
@@ -36,7 +36,7 @@ module RubyLLM
         def build_tool_choice(tool_choice)
           return 'any' if tool_choice == :required
 
-          OpenAI::Tools.build_tool_choice(tool_choice)
+          Protocols::ChatCompletions::Tools.build_tool_choice(tool_choice)
         end
 
         def normalize_required_tool_choice(payload)

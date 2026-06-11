@@ -67,7 +67,8 @@ RSpec.describe RubyLLM::Providers::VertexAI do
         RubyLLM::Message.new(role: :tool, content: 'Sunny', tool_call_id: 'call_1')
       ]
 
-      payload = provider.send(:render_payload, messages, tools: {}, temperature: nil, model:)
+      protocol = RubyLLM::Providers::VertexAI::Gemini.new(provider, model)
+      payload = protocol.send(:render_payload, messages, tools: {}, temperature: nil, model:)
 
       expect(payload.dig(:contents, 2, :role)).to eq('user')
       expect(payload.dig(:contents, 2, :parts, 0, :functionResponse, :name)).to eq('weather')

@@ -3,9 +3,14 @@
 module RubyLLM
   module Providers
     # xAI API integration
-    class XAI < OpenAI
-      include XAI::Chat
-      include XAI::Models
+    class XAI < Provider
+      # xAI's dialect of the Chat Completions API.
+      class ChatCompletions < Protocols::ChatCompletions
+        include XAI::Chat
+        include XAI::Models
+      end
+
+      protocol :chat_completions, ChatCompletions
 
       def api_base
         @config.xai_api_base || 'https://api.x.ai/v1'

@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 RSpec.describe RubyLLM::Providers::GPUStack do
-  let(:provider) { described_class.allocate }
+  let(:provider) { described_class::ChatCompletions.allocate }
 
   describe '#format_messages' do
     it 'includes empty content when replaying a thinking-only assistant message' do

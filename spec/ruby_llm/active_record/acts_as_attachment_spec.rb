@@ -122,8 +122,9 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
                  .with_params(generationConfig: { responseModalities: ['image'] })
       image_bytes = File.binread(image_path)
 
-      allow_any_instance_of(RubyLLM::Providers::Gemini).to receive(:complete) do |provider, *_args, **_kwargs| # rubocop:disable RSpec/AnyInstance
-        content = provider.build_response_content(
+      allow_any_instance_of(RubyLLM::Providers::Gemini).to receive(:complete) do |_provider, *_args, **_kwargs| # rubocop:disable RSpec/AnyInstance
+        content = RubyLLM::Protocols::Gemini.allocate.send(
+          :build_response_content,
           [
             {
               'inlineData' => {
