@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Upgrading
-nav_order: 7
+nav_order: 8
 description: Upgrade guides for changes in data formats
 redirect_from:
   - /upgrading-to-1-7
@@ -22,6 +22,42 @@ redirect_from:
 
 This guide focuses on upgrade-impacting changes: migrations, token semantics, deprecations, and compatibility notes. It is not a complete changelog. For every feature, fix, and patch note, see the [GitHub releases](https://github.com/crmne/ruby_llm/releases).
 {: .note }
+
+---
+# Upgrade to 2.0
+
+## Providers and Protocols Split
+
+RubyLLM 2.0 separates providers (host, auth, catalog) from protocols (wire format). The public chat API is unchanged — `RubyLLM.chat`, `with_params`, `embed`, `paint`, and the Rails integration all work as before. Two things changed underneath:
+
+**OpenAI now defaults to the Responses API.** This unlocks reasoning models with tools and extended thinking together. To stay on Chat Completions:
+
+```ruby
+RubyLLM.configure do |config|
+  config.openai_protocol = :chat_completions
+end
+
+# or per chat
+RubyLLM.chat(model: 'gpt-5.4').with_protocol(:chat_completions)
+```
+
+If you pass Chat Completions–only params via `with_params` (like `response_format`), either switch those chats to `:chat_completions` or use the Responses API equivalents (`text: { format: ... }`).
+
+**Wire-format internals moved to `RubyLLM::Protocols`.** `RubyLLM::Providers::OpenAI::Chat` and sibling modules are now `RubyLLM::Protocols::ChatCompletions::Chat` and friends; Anthropic, Gemini, and Bedrock Converse internals moved the same way. Provider classes no longer inherit from each other (`Mistral < OpenAI` is gone) — a provider declares its protocols instead.
+
+If you maintain a provider gem, subclass a protocol for your dialect and declare it in a thin provider:
+
+```ruby
+class MyProvider < RubyLLM::Provider
+  class ChatCompletions < RubyLLM::Protocols::ChatCompletions
+    # your overrides
+  end
+
+  protocol :chat_completions, ChatCompletions
+end
+```
+
+See [Protocols]({% link _advanced/protocols.md %}) for the full picture.
 
 ---
 # Upgrade to 1.17
