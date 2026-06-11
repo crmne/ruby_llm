@@ -112,4 +112,50 @@ RSpec.describe RubyLLM::Providers::Bedrock do
       expect(headers['X-Amz-Security-Token']).to eq('provider-token')
     end
   end
+
+  describe 'model id path encoding' do
+    # completion_url/stream_url read only @model, and canonical_uri is a pure path
+    # transform, so allocate uninitialized instances to keep these tests focused and
+    # credential/connection-free.
+    let(:converse) { RubyLLM::Protocols::Converse.allocate }
+    let(:arn) { 'arn:aws:bedrock:us-west-2:123:application-inference-profile/p' }
+
+    def with_model(id)
+      converse.instance_variable_set(:@model, instance_double(RubyLLM::Model::Info, id: id))
+    end
+
+    it 'keeps an application inference profile ARN as a single path segment in the converse URL' do
+      with_model(arn)
+      # The ARN's internal "/" is percent-encoded so it is not parsed as a path separator
+      # (which would truncate the modelId to ".../application-inference-profile").
+      expect(converse.send(:completion_url)).to eq(
+        '/model/arn:aws:bedrock:us-west-2:123:application-inference-profile%2Fp/converse'
+      )
+    end
+
+    it 'encodes the ARN for the converse-stream URL too' do
+      with_model(arn)
+      expect(converse.send(:stream_url)).to eq(
+        '/model/arn:aws:bedrock:us-west-2:123:application-inference-profile%2Fp/converse-stream'
+      )
+    end
+
+    it 'leaves ordinary model ids (including a ":" version suffix) unchanged' do
+      with_model('us.anthropic.claude-sonnet-4-5-20250929-v1:0')
+      expect(converse.send(:completion_url)).to eq(
+        '/model/us.anthropic.claude-sonnet-4-5-20250929-v1:0/converse'
+      )
+    end
+
+    it 'signs the ARN as one segment (SigV4 canonical path double-encodes "/", not truncates)' do
+      with_model(arn)
+      path = URI.parse(converse.send(:completion_url)).path
+      # canonical_uri re-encodes each segment, turning the already-encoded "%2F" into
+      # "%252F" — so the profile id stays inside the modelId segment rather than becoming
+      # its own path segment, keeping the signed path consistent with the sent path.
+      expect(described_class.allocate.send(:canonical_uri, path)).to eq(
+        '/model/arn%3Aaws%3Abedrock%3Aus-west-2%3A123%3Aapplication-inference-profile%252Fp/converse'
+      )
+    end
+  end
 end

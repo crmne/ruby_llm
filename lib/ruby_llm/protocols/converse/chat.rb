@@ -12,7 +12,20 @@ module RubyLLM
         module_function
 
         def completion_url
-          "/model/#{@model.id}/converse"
+          "/model/#{escape_model_id(@model.id)}/converse"
+        end
+
+        # An application inference profile is referenced by its ARN, which contains a "/"
+        # (".../application-inference-profile/<id>"). Left raw, that "/" is parsed as a path
+        # separator in both the request URL and the SigV4 canonical path (Auth#canonical_uri),
+        # so AWS receives a truncated, invalid modelId ("The provided model identifier is
+        # invalid"). Percent-encoding the "/" keeps the id a single path segment; canonical_uri
+        # then re-encodes per segment, double-encoding it as SigV4 requires for non-S3 services,
+        # so the signed and sent paths stay consistent. This is a no-op for ordinary model ids,
+        # which contain no "/"; other characters such as ":" (e.g. "...-v1:0") are valid within
+        # a path segment and continue to be handled by canonical_uri unchanged.
+        def escape_model_id(model_id)
+          model_id.to_s.gsub('/', '%2F')
         end
 
         # rubocop:disable Metrics/ParameterLists,Lint/UnusedMethodArgument
