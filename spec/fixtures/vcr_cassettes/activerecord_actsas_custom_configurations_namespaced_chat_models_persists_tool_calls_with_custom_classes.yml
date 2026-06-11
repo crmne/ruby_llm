@@ -2,13 +2,13 @@
 http_interactions:
 - request:
     method: post
-    uri: https://api.openai.com/v1/chat/completions
+    uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":"What''s
-        123 * 456?"}],"stream":false,"tools":[{"type":"function","function":{"name":"calculator","description":"Performs
+      string: '{"model":"gpt-4.1-nano","input":[{"role":"user","content":"What''s
+        123 * 456?"}],"stream":false,"store":false,"tools":[{"type":"function","name":"calculator","description":"Performs
         basic arithmetic","parameters":{"type":"object","properties":{"expression":{"type":"string","description":"Math
-        expression to evaluate"}},"required":["expression"],"additionalProperties":false,"strict":true}}}]}'
+        expression to evaluate"}},"required":["expression"],"additionalProperties":false,"strict":true}}]}'
     headers:
       User-Agent:
       - Faraday v2.14.2
@@ -26,7 +26,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 08 Jun 2026 18:46:04 GMT
+      - Thu, 11 Jun 2026 20:15:53 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -50,13 +50,11 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '4022'
+      - '790'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
       - '2020-10-01'
-      X-Openai-Proxy-Wasm:
-      - v0.1
       X-Ratelimit-Limit-Requests:
       - '5000'
       X-Ratelimit-Limit-Tokens:
@@ -64,11 +62,11 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '4999'
       X-Ratelimit-Remaining-Tokens:
-      - '1999993'
+      - '1999736'
       X-Ratelimit-Reset-Requests:
       - 12ms
       X-Ratelimit-Reset-Tokens:
-      - 0s
+      - 7ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Set-Cookie:
@@ -77,64 +75,105 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: |
+      string: |-
         {
-          "id": "chatcmpl-DoZH1CN1YElXXd3VX3ZCZouJrVEiS",
-          "object": "chat.completion",
-          "created": 1780944363,
+          "id": "resp_0e41e392b6cf1b2f016a2b17789e488192abcffe815497880a",
+          "object": "response",
+          "created_at": 1781208952,
+          "status": "completed",
+          "background": false,
+          "billing": {
+            "payer": "developer"
+          },
+          "completed_at": 1781208953,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
           "model": "gpt-4.1-nano-2025-04-14",
-          "choices": [
+          "moderation": null,
+          "output": [
             {
-              "index": 0,
-              "message": {
-                "role": "assistant",
-                "content": null,
-                "tool_calls": [
-                  {
-                    "id": "call_rAAQSY6q8ZPdtScuEWWNp9v8",
-                    "type": "function",
-                    "function": {
-                      "name": "calculator",
-                      "arguments": "{\"expression\":\"123 * 456\"}"
-                    }
-                  }
-                ],
-                "refusal": null,
-                "annotations": []
-              },
-              "logprobs": null,
-              "finish_reason": "tool_calls"
+              "id": "fc_0e41e392b6cf1b2f016a2b1778ffcc819298f2762d82a2e400",
+              "type": "function_call",
+              "status": "completed",
+              "arguments": "{\"expression\":\"123*456\"}",
+              "call_id": "call_qmySHTeN4F8uHQCasso7Mjdn",
+              "name": "calculator"
             }
           ],
-          "usage": {
-            "prompt_tokens": 53,
-            "completion_tokens": 17,
-            "total_tokens": 70,
-            "prompt_tokens_details": {
-              "cached_tokens": 0,
-              "audio_tokens": 0
-            },
-            "completion_tokens_details": {
-              "reasoning_tokens": 0,
-              "audio_tokens": 0,
-              "accepted_prediction_tokens": 0,
-              "rejected_prediction_tokens": 0
-            }
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": "in_memory",
+          "reasoning": {
+            "context": null,
+            "effort": null,
+            "summary": null
           },
+          "safety_identifier": null,
           "service_tier": "default",
-          "system_fingerprint": "fp_97e92d7018"
+          "store": false,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tools": [
+            {
+              "type": "function",
+              "description": "Performs basic arithmetic",
+              "name": "calculator",
+              "parameters": {
+                "type": "object",
+                "properties": {
+                  "expression": {
+                    "type": "string",
+                    "description": "Math expression to evaluate"
+                  }
+                },
+                "required": [
+                  "expression"
+                ],
+                "additionalProperties": false,
+                "strict": true
+              },
+              "strict": true
+            }
+          ],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 47,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens": 17,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 64
+          },
+          "user": null,
+          "metadata": {}
         }
-  recorded_at: Mon, 08 Jun 2026 18:46:04 GMT
+  recorded_at: Thu, 11 Jun 2026 20:15:53 GMT
 - request:
     method: post
-    uri: https://api.openai.com/v1/chat/completions
+    uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":"What''s
-        123 * 456?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_rAAQSY6q8ZPdtScuEWWNp9v8","type":"function","function":{"name":"calculator","arguments":"{\"expression\":\"123
-        * 456\"}"}}]},{"role":"tool","content":"56088","tool_call_id":"call_rAAQSY6q8ZPdtScuEWWNp9v8"}],"stream":false,"tools":[{"type":"function","function":{"name":"calculator","description":"Performs
+      string: '{"model":"gpt-4.1-nano","input":[{"role":"user","content":"What''s
+        123 * 456?"},{"type":"function_call","call_id":"call_qmySHTeN4F8uHQCasso7Mjdn","name":"calculator","arguments":"{\"expression\":\"123*456\"}"},{"type":"function_call_output","call_id":"call_qmySHTeN4F8uHQCasso7Mjdn","output":"56088"}],"stream":false,"store":false,"tools":[{"type":"function","name":"calculator","description":"Performs
         basic arithmetic","parameters":{"type":"object","properties":{"expression":{"type":"string","description":"Math
-        expression to evaluate"}},"required":["expression"],"additionalProperties":false,"strict":true}}}]}'
+        expression to evaluate"}},"required":["expression"],"additionalProperties":false,"strict":true}}]}'
     headers:
       User-Agent:
       - Faraday v2.14.2
@@ -152,7 +191,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 08 Jun 2026 18:46:05 GMT
+      - Thu, 11 Jun 2026 20:15:54 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -176,13 +215,11 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '806'
+      - '536'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
       - '2020-10-01'
-      X-Openai-Proxy-Wasm:
-      - v0.1
       X-Ratelimit-Limit-Requests:
       - '5000'
       X-Ratelimit-Limit-Tokens:
@@ -190,11 +227,11 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '4999'
       X-Ratelimit-Remaining-Tokens:
-      - '1999990'
+      - '1999712'
       X-Ratelimit-Reset-Requests:
       - 12ms
       X-Ratelimit-Reset-Tokens:
-      - 0s
+      - 8ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Set-Cookie:
@@ -203,42 +240,100 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: |
+      string: |-
         {
-          "id": "chatcmpl-DoZH3OTE4tfFHeOKaCqhU736NBYvv",
-          "object": "chat.completion",
-          "created": 1780944365,
+          "id": "resp_0c8280351a83ba05016a2b1779988081918682c636d3a4367c",
+          "object": "response",
+          "created_at": 1781208953,
+          "status": "completed",
+          "background": false,
+          "billing": {
+            "payer": "developer"
+          },
+          "completed_at": 1781208954,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
           "model": "gpt-4.1-nano-2025-04-14",
-          "choices": [
+          "moderation": null,
+          "output": [
             {
-              "index": 0,
-              "message": {
-                "role": "assistant",
-                "content": "The result of multiplying 123 by 456 is 56088.",
-                "refusal": null,
-                "annotations": []
-              },
-              "logprobs": null,
-              "finish_reason": "stop"
+              "id": "msg_0c8280351a83ba05016a2b1779eb1c8191b044ffcee2de0ab7",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "The result of 123 multiplied by 456 is 56,088."
+                }
+              ],
+              "role": "assistant"
             }
           ],
-          "usage": {
-            "prompt_tokens": 79,
-            "completion_tokens": 15,
-            "total_tokens": 94,
-            "prompt_tokens_details": {
-              "cached_tokens": 0,
-              "audio_tokens": 0
-            },
-            "completion_tokens_details": {
-              "reasoning_tokens": 0,
-              "audio_tokens": 0,
-              "accepted_prediction_tokens": 0,
-              "rejected_prediction_tokens": 0
-            }
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": "in_memory",
+          "reasoning": {
+            "context": null,
+            "effort": null,
+            "summary": null
           },
+          "safety_identifier": null,
           "service_tier": "default",
-          "system_fingerprint": "fp_97e92d7018"
+          "store": false,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tools": [
+            {
+              "type": "function",
+              "description": "Performs basic arithmetic",
+              "name": "calculator",
+              "parameters": {
+                "type": "object",
+                "properties": {
+                  "expression": {
+                    "type": "string",
+                    "description": "Math expression to evaluate"
+                  }
+                },
+                "required": [
+                  "expression"
+                ],
+                "additionalProperties": false,
+                "strict": true
+              },
+              "strict": true
+            }
+          ],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 71,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens": 17,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 88
+          },
+          "user": null,
+          "metadata": {}
         }
-  recorded_at: Mon, 08 Jun 2026 18:46:05 GMT
+  recorded_at: Thu, 11 Jun 2026 20:15:54 GMT
 recorded_with: VCR 6.4.0

@@ -2,11 +2,11 @@
 http_interactions:
 - request:
     method: post
-    uri: https://api.openai.com/v1/chat/completions
+    uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-5-nano","messages":[{"role":"user","content":"Generate
-        a person named Alice who is 28 years old"}],"stream":false,"response_format":{"type":"json_schema","json_schema":{"name":"PersonSchemaClass","schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"number"}},"required":["name","age"],"additionalProperties":false},"strict":true}}}'
+      string: '{"model":"gpt-5-nano","input":[{"role":"user","content":"Generate a
+        person named Alice who is 28 years old"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"text":{"format":{"type":"json_schema","name":"PersonSchemaClass","schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"number"}},"required":["name","age"],"additionalProperties":false},"strict":true}}}'
     headers:
       User-Agent:
       - Faraday v2.14.2
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 08 Jun 2026 18:46:34 GMT
+      - Thu, 11 Jun 2026 20:09:53 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -48,13 +48,11 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '3072'
+      - '2618'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
       - '2020-10-01'
-      X-Openai-Proxy-Wasm:
-      - v0.1
       X-Ratelimit-Limit-Requests:
       - '5000'
       X-Ratelimit-Limit-Tokens:
@@ -62,7 +60,7 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '4999'
       X-Ratelimit-Remaining-Tokens:
-      - '1999985'
+      - '1999968'
       X-Ratelimit-Reset-Requests:
       - 12ms
       X-Ratelimit-Reset-Tokens:
@@ -75,41 +73,105 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: |
+      string: |-
         {
-          "id": "chatcmpl-DoZHUvAXXyuVL735YMveXQ7i8HumT",
-          "object": "chat.completion",
-          "created": 1780944392,
+          "id": "resp_0f8a10596ab8b435016a2b160e8ba88191ba36596e9d5d310c",
+          "object": "response",
+          "created_at": 1781208590,
+          "status": "completed",
+          "background": false,
+          "billing": {
+            "payer": "developer"
+          },
+          "completed_at": 1781208593,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
           "model": "gpt-5-nano-2025-08-07",
-          "choices": [
+          "moderation": null,
+          "output": [
             {
-              "index": 0,
-              "message": {
-                "role": "assistant",
-                "content": "{\"name\":\"Alice\",\"age\":28}",
-                "refusal": null,
-                "annotations": []
-              },
-              "finish_reason": "stop"
+              "id": "rs_0f8a10596ab8b435016a2b160f3b288191838877d95601bcb5",
+              "type": "reasoning",
+              "content": [],
+              "encrypted_content": "gAAAAABqKxYRJkrPhmXuNS07gLLemgEPQV9jiJIv3XQz9v6szG4G6FCWi38b8lb7QnS44Vz4En_G8EQbL8Bp_YjS3CNi63eWcWYp9qzC-5mR2lixmAZ2-Oy9ss_uVNH9uYs4uIifzPuIupCgfp5Y6btxqNhjAJZfmwFiSbtlUbQfSdBIcrPqVS0lggQA8o-XJR3KkJB9EYtKTje-RVo8buTe7tZujFlRr0w1KtpjfnPKQlW0ZhjbzfEy1XCTwl73RcuIISrFb3cus6hZHF-og3D3nXSbk9xGdkKNhw_l5IfjvIMxbtz92Iu6x0WhLTqvnFrAzxRSzqF-_gA10nTYTQYVh6_xazvCEBD9gpnRzGqm_or35WpVx-TcdFIVNTdiXrOjd45dY-WJS7oXcDRsFqump-ZQBwOYF7vDhYZMUipTMgNzNuq3KP833Iv3sZ2qOgy2xFE9_S9dZroB3MIqJ3AO8YobyuxoM2nJ_6SjC_iSzzKGCddu2KRJR_5WaBSUW2_YvZ6a9vfu3X2S_wYvvXfHKURF-dE3gTiTRtIKY61rP6L8Yr8N9hRr49mu5azi6xo3GnXmM6JPtvMd2vmBvScBKaURbOOTptheeILNYPyFJwtf_dRXjwnL3j3dipUE-7P8ycJBOTmXwjLNSXFyW_J_S5Dban-n0fvCgMoKB8Sxd41cLla6YajNjrqV9J3_H32fUmkjd4WIDRhOycu5w33gk2Kyr-RngtbuT-CBB6DQ_EqeDcf0IEV2O0ym4ELdFF1oub3irRh9ROtVWWZtTyj6Ber8LCiepVjKo82Tsn0uatq07tpVwRAb8Gh0FA_sW-pxavAq3d60auoxNfGpi7sDCXE8_E9KIu8gGdHWwgFkrM2fnxIg91a3tcobRXNY1H2ONtIY4tcfiPOL4Ve42cQ_Z_wu88MPSwt5xyufyFJoztlaVkn8LTy05G8P8EaXxkwnHSbOWvZjj3045BcOmImdBeDFjEMaEfBWcPKOGFI0ORvjtk35XhNa4zLq1-VgyrLxkT0jwAyb-DEGsg-5WFfM51P7guA1K287Jh4U2hvNjfy8VDgw5ByFfKqc1C4-j9bXaNfnxqO5tSie2erSTqpOXYMVatOhj7OJlV68Q66hkuz7kl2DfVKnpNrTJT2nKqBtWwp1WcX43smf2R0fWNo2MXvEM8_TbNz_ZS1PTHNvjkHOKGbJaJpqltPD1g844aTeum1TWHiPHRZyATAQlSrVOQXfjcojri5SdFPY-o6nByQ_4Vd9VD_AoQhOKJ6p9uagsKAicF9ue_ZyZ52vuVq7Qu6R95rIL3-izwuJjORX7Ps_-lQYDAMm5n0m23T63VAa32hYC0M2aMXdjmHQfuu407LwgefNjAdNTj2NjdxYKm05mANauwsXQZ-ZWinH8kAijkJTlIqaZoeP0mMwgHi2rl0KsTaex8B0ZpVGNeGty8Gt5Dy2_EiO3_uooPBmXKQQy8ygPhjA_EplRZafeH_SKoutcDaQ2mcxo7Il_Pxk9NgPyyzmIN2nFGWAGiCvA_OooqiygZ4pYLqwlp6h-8KOhJTGdDsjm03XKzJqLOGpSttVTfBDHspE3mf9lOxuP93R1PSNWBs2qzWmdxAx_w5l6srrgg13BKRVDG3E4YaBgZiJ3P-IWEhCegZWm67WJi2xOZ-6L3DjZO2ezONUY9K5Bu_Jqcz98JG6hLt78wsjWqDykacMgH2FehH_tZeEgl4brZv6XihLl7_I3VuwdD9PqDYpjvfEWsOW3fhigjacUlgkjBXvSkQ5FlyOvDAdj7It2FruWNGLDhZqT0GS9-3_dsyh5mCHwMNV4YmYJtErfhEA3b2sCqESlPnCE7Kplx96DdFdKZo0rqFW9t-OQRL_p5CIcEdSXtdCT8a7sYytOO0b6EuDfrGWG5C4eKfrRx9Jl6_1Dqj8rP5rcP-Rj8ZcJxeNfl_H9GN2xeIxZa2iQOPXtV0QOjIV1HGPyOc4LBzlERg3WXHHDG7XX5y62I9J-oJRry5lxaWB6QdoZGmbDNe0mMwZgdAwrW24V38DGcAUKqOScMzNE6fqLIVWVgsuxWwmKGMgL8nVIIy-IJU3bxE2MwAC55C3Kh8_C-ZZqeb4mfZ8clTEdpLfstrqGXa3tKCwKfwlW2W882kvOm34daj70OiZL17KWFfttd7Joz2U-6LfCh2TTBklKG2THYEv3hZEd8g0LS7Ft9Z10n4-h84FRYqKafZWj2asDWmREFtYJ3IX7DkTUCFnX4Bg9b_wkCbvcMjDfiVGC-XcJpxyR0VplehvzkDPqc49bMVVY7pneNmckh_obevS7KjiZCDh25pmLE3jog==",
+              "summary": []
+            },
+            {
+              "id": "msg_0f8a10596ab8b435016a2b1610b4088191b17bee4e7720aed0",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "{\"name\":\"Alice\",\"age\":28}"
+                }
+              ],
+              "role": "assistant"
             }
           ],
-          "usage": {
-            "prompt_tokens": 51,
-            "completion_tokens": 279,
-            "total_tokens": 330,
-            "prompt_tokens_details": {
-              "cached_tokens": 0,
-              "audio_tokens": 0
-            },
-            "completion_tokens_details": {
-              "reasoning_tokens": 256,
-              "audio_tokens": 0,
-              "accepted_prediction_tokens": 0,
-              "rejected_prediction_tokens": 0
-            }
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": "in_memory",
+          "reasoning": {
+            "context": "current_turn",
+            "effort": "medium",
+            "summary": null
           },
+          "safety_identifier": null,
           "service_tier": "default",
-          "system_fingerprint": null
+          "store": false,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "json_schema",
+              "description": null,
+              "name": "PersonSchemaClass",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "age": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "name",
+                  "age"
+                ],
+                "additionalProperties": false
+              },
+              "strict": true
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tools": [],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 47,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens": 249,
+            "output_tokens_details": {
+              "reasoning_tokens": 192
+            },
+            "total_tokens": 296
+          },
+          "user": null,
+          "metadata": {}
         }
-  recorded_at: Mon, 08 Jun 2026 18:46:34 GMT
+  recorded_at: Thu, 11 Jun 2026 20:09:53 GMT
 recorded_with: VCR 6.4.0

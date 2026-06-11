@@ -2,10 +2,10 @@
 http_interactions:
 - request:
     method: post
-    uri: https://api.openai.com/v1/chat/completions
+    uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-5-nano","messages":[{"role":"user","content":"Hello"}],"stream":false}'
+      string: '{"model":"gpt-5-nano","input":[{"role":"user","content":"Hello"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
     headers:
       User-Agent:
       - Faraday v2.14.2
@@ -23,11 +23,11 @@ http_interactions:
       message: Unauthorized
     headers:
       Date:
-      - Mon, 08 Jun 2026 18:45:36 GMT
+      - Thu, 11 Jun 2026 20:09:20 GMT
       Content-Type:
-      - application/json; charset=utf-8
+      - application/json
       Content-Length:
-      - '261'
+      - '240'
       Connection:
       - keep-alive
       Set-Cookie:
@@ -41,29 +41,32 @@ http_interactions:
       - cloudflare
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
-      Vary:
-      - Origin
+      Www-Authenticate:
+      - Bearer realm="OpenAI API"
+      X-Content-Type-Options:
+      - nosniff
       Access-Control-Expose-Headers:
       - CF-Ray
       - CF-Ray
-      X-Content-Type-Options:
-      - nosniff
-      X-Openai-Proxy-Wasm:
-      - v0.1
+      - X-Request-ID
+      Openai-Processing-Ms:
+      - '20'
+      Openai-Version:
+      - '2020-10-01'
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: UTF-8
-      string: |
+      string: |-
         {
-            "error": {
-                "message": "Incorrect API key provided: invalid-key. You can find your API key at https://platform.openai.com/account/api-keys.",
-                "type": "invalid_request_error",
-                "param": null,
-                "code": "invalid_api_key"
-            }
+          "error": {
+            "message": "Incorrect API key provided: invalid-key. You can find your API key at https://platform.openai.com/account/api-keys.",
+            "type": "invalid_request_error",
+            "param": null,
+            "code": "invalid_api_key"
+          }
         }
-  recorded_at: Mon, 08 Jun 2026 18:45:36 GMT
+  recorded_at: Thu, 11 Jun 2026 20:09:20 GMT
 recorded_with: VCR 6.4.0

@@ -2,15 +2,15 @@
 http_interactions:
 - request:
     method: post
-    uri: https://api.openai.com/v1/chat/completions
+    uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-5-nano","messages":[{"role":"user","content":"Call the
-        object params tool with window start 2025-01-01 and end 2025-01-02 and include
-        the result."}],"stream":false,"tools":[{"type":"function","function":{"name":"object_params","description":"Uses
+      string: '{"model":"gpt-5-nano","input":[{"role":"user","content":"Call the object
+        params tool with window start 2025-01-01 and end 2025-01-02 and include the
+        result."}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"object_params","description":"Uses
         params DSL object support","parameters":{"type":"object","properties":{"window":{"type":"object","properties":{"start":{"type":"string","description":"ISO
         start"},"end":{"type":"string","description":"ISO end"}},"required":["start","end"],"additionalProperties":false,"description":"Time
-        window to schedule"}},"required":["window"],"additionalProperties":false,"strict":true}}}]}'
+        window to schedule"}},"required":["window"],"additionalProperties":false,"strict":true}}]}'
     headers:
       User-Agent:
       - Faraday v2.14.2
@@ -28,7 +28,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 08 Jun 2026 18:50:48 GMT
+      - Thu, 11 Jun 2026 20:10:57 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -52,13 +52,11 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '3257'
+      - '2698'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
       - '2020-10-01'
-      X-Openai-Proxy-Wasm:
-      - v0.1
       X-Ratelimit-Limit-Requests:
       - '5000'
       X-Ratelimit-Limit-Tokens:
@@ -66,7 +64,7 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '4999'
       X-Ratelimit-Remaining-Tokens:
-      - '1999973'
+      - '2000000'
       X-Ratelimit-Reset-Requests:
       - 12ms
       X-Ratelimit-Reset-Tokens:
@@ -79,51 +77,116 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: |
+      string: |-
         {
-          "id": "chatcmpl-DoZLZARgl5BBlOUbc1kwjCNKFdG2x",
-          "object": "chat.completion",
-          "created": 1780944645,
+          "id": "resp_02c88f3ebc54862d016a2b164ef91481a29b12690e66fd6618",
+          "object": "response",
+          "created_at": 1781208654,
+          "status": "completed",
+          "background": false,
+          "billing": {
+            "payer": "developer"
+          },
+          "completed_at": 1781208657,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
           "model": "gpt-5-nano-2025-08-07",
-          "choices": [
+          "moderation": null,
+          "output": [
             {
-              "index": 0,
-              "message": {
-                "role": "assistant",
-                "content": null,
-                "tool_calls": [
-                  {
-                    "id": "call_wHrhd8yWtGbbEpcfAhGhZmvC",
-                    "type": "function",
-                    "function": {
-                      "name": "object_params",
-                      "arguments": "{\"window\":{\"start\":\"2025-01-01\",\"end\":\"2025-01-02\"}}"
-                    }
-                  }
-                ],
-                "refusal": null,
-                "annotations": []
-              },
-              "finish_reason": "tool_calls"
+              "id": "rs_02c88f3ebc54862d016a2b164f611c81a2b0f022a089640ab9",
+              "type": "reasoning",
+              "content": [],
+              "encrypted_content": "gAAAAABqKxZRcBRWZCwcYjDxPGciZxKpMitj8AFAcJVtZ8NJGnrfhSB1stleEHjkW0M0mpFU-zlD3iT_9pXk60oawPXLGoaGK8oIDqHNSNvgZNvNPMvj0UZay8E3-EWtP0hhU3j4ZZYopPoo9KUS0ssA95QJOqNIay898SZXcgGmA1sZ7BnDmhzBUSptOf-Uorm_3XmZFl9q4AcYy2x7GGIEka0U66ZbljH-aPnCczHAv48CQRVS03v6nlWS_6aeM_ZyCYJedSwkmILNsuBYDc0074gjaqbtdJHRqJqjP8C2VzbSNF8by3WzOXKf-3VPg-8oGurAven2Mv1QyZ6zFCXdyutw1uhlswiF_U0FWvZLLScA1VMjYiEUz23HMUoi7E0o9P5jtKNBp3QshvnYgPndlCgpIjcNVlCo2BO14ntir14wOUxTS_OWAQ208hFJipgAC9X6PH6DP7AmxaQ1fQ7nQRxcZnMPLqbx45xcAF-EMeTcBrUmAoZVmybIML3gc3nQafWirovPwRl6JeufY6r2yPSsEtD7onJ44vVaFmOwgTryK2tzpjZCSLn8RtYHVcBvA3MKUU6WSz-2m9BZS9X3v33dwe5o19UWW0OqAwgyrN38vca9lE9KRIlbCzDP6LgdTIp3w94b4nTMsocQWayDzZs0K19nCyOpVJokXCBEDrYeRYoNbYZRK0N8AaZBcBQ9AEhOtPX8Si-FvMEkOaQ2xX2fRKjjebwIaLKASeZEZm0swWPqZdutu5h1e7NLfWrGEGH2XgmAaCwFoVNKphmfpxM2gphSLvT78Af31uabRuTPZGCevgcUYwyjCl_AvrRDn66S4bFvr_H9NRQHn_JECxsC2obgNpdfQU8KesSf0mNK4ckODnbpohL7_MAF1EnGTb0lYEkzdiCikXNnZX5rGmuqzAdOpzL7wJhLP-CymsUqPve3kYn16aJlk_DFmGAtR9NjrLO3Z_kB_ewsvm3fm2IIEjQr9S0XmhFRp8-eznCjo_MqJMBQOXzOtJEYN9tEpngQjy8SyVLpvo1lNP3frnbNBa0Xcvv5OFgiQyAaGRDpwTE1HQlxeArXupAJazq7C0DhaAgwL07vKEbfm45q-nQsMZK_GdaaQWfisvMbGDt-kn3ded9iMf_K3c79XVrDlwnFWBfLpBi8G0gmGOMGGih2VZGJsHhR9g4ONqdZiLLe2iksvWobFJ-L-BYAZtkBue34rgVL2_gPD2FnJZDWzujuuOxAvc3hI3iXIkwwP1NQWIDCUZFfS804nQ23cmoFPpIhBBrZL_RxdMolBH3QyPZ6jNa1Id6GEJrjetEczLHRC0peq4vy2Vn1dxoGZhDgr_ADsXaYpr_RKam5OLbTM5DuztPJdyMf3PiSCLBOap1vtC9ItRxeXyAraoGSwh2fwZMUeOlab7W_1sd0MrZvMTUy4gibQtFf6ARRNA0LHXUg1eQDO3R6pXc0DmHH3awQ3gqGMd3KFumeb4bxhNXf1ywJZlPjEPCH-BTDhdAXP2roF0K98ujgcXi_VJeO8NzdIsrrx97-QXe-pbLMJbNx8FHQBH2x0LJaaXwyCTip2-i0-qfj25WU0hjTZO4Aa99IIiCq8Nz0WVSEYwSZScKYKytuNmlqjhCwcGUkElDMZ5xPl7gvag2O1-1dEuOUVPO1lyPXjwHrT4MmVJfyrmB-CJLdPhZZxBIvJdR2uyFSBVrJryUss5ldGvmWCuAHBoDLBSjWfAV3WGaHQoNgP2z39ZFcpCX4WEZKTddRq60QN3zKh89NxTHm5jMnn4dG9HzrNrj8c14w5zF6YAHL4wMdhja6EEtk5tmzr598w4ZAdKdC7dnntmoHhPZ04nFC0NukqrsBlb4RORalIqr9w9JLJOGE864cplKnXl4YSL0jd6iCUo_RlCB6yRhmjItGlsOtznRohJlbv0KuyDiAKahHsXfknTTBHuEBCdiVmmALO5n9YTzwKhFIQpgIrnvKtReP5kH-zJLFGyFzeDaHx83HXTauOCp7fVckay8_VR3nDOeuuLscjXeEER4FPj11IWrFylkNcKjT79KxJIHhPl8cSVNawuaKF4T99Ksw4jKZX2tQRGw-3AzXdQQ12DXhOFYr8Xm_uitC5ogYISDfAS-jiAIDOW-sNGc_vVZPePf-RKWL26ed4x9lOsDxlXGf0gAeMJ_0xl03hF-TdRFCsLi1ngrBS3sox5QcikLo0KZyD5fx3Xaqo478Y5LZD10ctBqQcPk8Pv8MZk4MtgIQwad1obPXj2-t6bIhjCWdpDdeW41oNl1PyZxkjJbqzLPForYiZ6PreLFDoiqPPP0bwRuj5pU62sFUFU9LiZTLMjQ9v-FiwmVWvU7RZRv4vMH6JRfGGZXve8TaPuCzlLubxZFn0NLf0imrRdeX90DLQ-MFIynL7TWKU5BMdmufPlZED3u7V9apRj1x1Or0poJGf9NMOcqokOeuxr2m8bss4a1Zgo4jwVajEkcVJHP-f82dQwaUGnJGd8Kx",
+              "summary": []
+            },
+            {
+              "id": "fc_02c88f3ebc54862d016a2b165124d881a28daf290237db0877",
+              "type": "function_call",
+              "status": "completed",
+              "arguments": "{\"window\":{\"start\":\"2025-01-01\",\"end\":\"2025-01-02\"}}",
+              "call_id": "call_UG13KybHck8dpfmAY9UoGeJN",
+              "name": "object_params"
             }
           ],
-          "usage": {
-            "prompt_tokens": 173,
-            "completion_tokens": 231,
-            "total_tokens": 404,
-            "prompt_tokens_details": {
-              "cached_tokens": 0,
-              "audio_tokens": 0
-            },
-            "completion_tokens_details": {
-              "reasoning_tokens": 192,
-              "audio_tokens": 0,
-              "accepted_prediction_tokens": 0,
-              "rejected_prediction_tokens": 0
-            }
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": "in_memory",
+          "reasoning": {
+            "context": "current_turn",
+            "effort": "medium",
+            "summary": null
           },
+          "safety_identifier": null,
           "service_tier": "default",
-          "system_fingerprint": null
+          "store": false,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tools": [
+            {
+              "type": "function",
+              "description": "Uses params DSL object support",
+              "name": "object_params",
+              "parameters": {
+                "type": "object",
+                "properties": {
+                  "window": {
+                    "type": "object",
+                    "properties": {
+                      "start": {
+                        "type": "string",
+                        "description": "ISO start"
+                      },
+                      "end": {
+                        "type": "string",
+                        "description": "ISO end"
+                      }
+                    },
+                    "required": [
+                      "start",
+                      "end"
+                    ],
+                    "additionalProperties": false,
+                    "description": "Time window to schedule"
+                  }
+                },
+                "required": [
+                  "window"
+                ],
+                "additionalProperties": false,
+                "strict": true
+              },
+              "strict": true
+            }
+          ],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 91,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens": 332,
+            "output_tokens_details": {
+              "reasoning_tokens": 256
+            },
+            "total_tokens": 423
+          },
+          "user": null,
+          "metadata": {}
         }
-  recorded_at: Mon, 08 Jun 2026 18:50:48 GMT
+  recorded_at: Thu, 11 Jun 2026 20:10:57 GMT
 recorded_with: VCR 6.4.0

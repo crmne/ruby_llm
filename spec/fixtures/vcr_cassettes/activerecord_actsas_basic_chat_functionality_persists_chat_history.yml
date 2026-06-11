@@ -2,11 +2,11 @@
 http_interactions:
 - request:
     method: post
-    uri: https://api.openai.com/v1/chat/completions
+    uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":"What''s
-        your favorite Ruby feature?"}],"stream":false}'
+      string: '{"model":"gpt-4.1-nano","input":[{"role":"user","content":"What''s
+        your favorite Ruby feature?"}],"stream":false,"store":false}'
     headers:
       User-Agent:
       - Faraday v2.14.2
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 08 Jun 2026 18:45:42 GMT
+      - Thu, 11 Jun 2026 20:15:35 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -48,13 +48,11 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '6755'
+      - '1943'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
       - '2020-10-01'
-      X-Openai-Proxy-Wasm:
-      - v0.1
       X-Ratelimit-Limit-Requests:
       - '5000'
       X-Ratelimit-Limit-Tokens:
@@ -62,7 +60,7 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '4999'
       X-Ratelimit-Remaining-Tokens:
-      - '1999989'
+      - '1999968'
       X-Ratelimit-Reset-Requests:
       - 12ms
       X-Ratelimit-Reset-Tokens:
@@ -75,42 +73,79 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: |
+      string: |-
         {
-          "id": "chatcmpl-DoZGa7Fn4BisTdGc6GragIjnD6Vdu",
-          "object": "chat.completion",
-          "created": 1780944336,
+          "id": "resp_044288e1f7dc94d3016a2b1765727481a19929d4abf9739761",
+          "object": "response",
+          "created_at": 1781208933,
+          "status": "completed",
+          "background": false,
+          "billing": {
+            "payer": "developer"
+          },
+          "completed_at": 1781208935,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
           "model": "gpt-4.1-nano-2025-04-14",
-          "choices": [
+          "moderation": null,
+          "output": [
             {
-              "index": 0,
-              "message": {
-                "role": "assistant",
-                "content": "That's a great question! One of my favorite Ruby features is its elegant and expressive syntax, particularly the use of blocks. Blocks allow for concise and readable code when working with iteration, callbacks, or defining DSLs (Domain Specific Languages). For example:\n\n```ruby\n[1, 2, 3].each do |number|\n  puts number * 2\nend\n```\n\nThis combination of simplicity and power makes Ruby both beginner-friendly and highly adaptable for complex tasks. The way Ruby emphasizes developer happiness through such features is truly inspiring!",
-                "refusal": null,
-                "annotations": []
-              },
-              "logprobs": null,
-              "finish_reason": "stop"
+              "id": "msg_044288e1f7dc94d3016a2b17666af081a18575b85eb15ade03",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "I find the flexibility of Ruby's metaprogramming capabilities particularly fascinating. Features like dynamic method definitions and `method_missing` allow developers to write very elegant and DRY (Don't Repeat Yourself) code. They enable the creation of domain-specific languages (DSLs) and reduce boilerplate, making code more expressive and concise. How about you? Do you have a favorite Ruby feature?"
+                }
+              ],
+              "role": "assistant"
             }
           ],
-          "usage": {
-            "prompt_tokens": 13,
-            "completion_tokens": 109,
-            "total_tokens": 122,
-            "prompt_tokens_details": {
-              "cached_tokens": 0,
-              "audio_tokens": 0
-            },
-            "completion_tokens_details": {
-              "reasoning_tokens": 0,
-              "audio_tokens": 0,
-              "accepted_prediction_tokens": 0,
-              "rejected_prediction_tokens": 0
-            }
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": "in_memory",
+          "reasoning": {
+            "context": null,
+            "effort": null,
+            "summary": null
           },
+          "safety_identifier": null,
           "service_tier": "default",
-          "system_fingerprint": "fp_2a936cdc50"
+          "store": false,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tools": [],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 13,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens": 78,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 91
+          },
+          "user": null,
+          "metadata": {}
         }
-  recorded_at: Mon, 08 Jun 2026 18:45:42 GMT
+  recorded_at: Thu, 11 Jun 2026 20:15:35 GMT
 recorded_with: VCR 6.4.0

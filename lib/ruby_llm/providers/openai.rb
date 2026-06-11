@@ -4,10 +4,16 @@ module RubyLLM
   module Providers
     # OpenAI API integration.
     class OpenAI < Provider
+      protocol :responses, Protocols::Responses
       protocol :chat_completions, Protocols::ChatCompletions
 
       def api_base
         @config.openai_api_base || 'https://api.openai.com/v1'
+      end
+
+      # Audio, realtime, and search-preview models only exist on Chat Completions.
+      def protocol_for(model, **)
+        model.id.match?(/audio|realtime|search-preview/) ? protocols[:chat_completions] : super
       end
 
       def headers

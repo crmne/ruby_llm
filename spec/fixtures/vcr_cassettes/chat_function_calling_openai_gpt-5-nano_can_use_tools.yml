@@ -2,14 +2,14 @@
 http_interactions:
 - request:
     method: post
-    uri: https://api.openai.com/v1/chat/completions
+    uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-5-nano","messages":[{"role":"user","content":"What''s
-        the weather in Berlin? (52.5200, 13.4050)"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+      string: '{"model":"gpt-5-nano","input":[{"role":"user","content":"What''s the
+        weather in Berlin? (52.5200, 13.4050)"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
-        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}]}'
     headers:
       User-Agent:
       - Faraday v2.14.2
@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 08 Jun 2026 18:45:48 GMT
+      - Thu, 11 Jun 2026 20:09:23 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -51,13 +51,11 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '2245'
+      - '2349'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
       - '2020-10-01'
-      X-Openai-Proxy-Wasm:
-      - v0.1
       X-Ratelimit-Limit-Requests:
       - '5000'
       X-Ratelimit-Limit-Tokens:
@@ -65,7 +63,7 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '4999'
       X-Ratelimit-Remaining-Tokens:
-      - '1999986'
+      - '2000000'
       X-Ratelimit-Reset-Requests:
       - 12ms
       X-Ratelimit-Reset-Tokens:
@@ -78,64 +76,119 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: |
+      string: |-
         {
-          "id": "chatcmpl-DoZGkW92bJs1WYrrlED1pRiYvqKTR",
-          "object": "chat.completion",
-          "created": 1780944346,
+          "id": "resp_044042210f8b7b67016a2b15f0f95c81a3997babd014e7b013",
+          "object": "response",
+          "created_at": 1781208560,
+          "status": "completed",
+          "background": false,
+          "billing": {
+            "payer": "developer"
+          },
+          "completed_at": 1781208563,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
           "model": "gpt-5-nano-2025-08-07",
-          "choices": [
+          "moderation": null,
+          "output": [
             {
-              "index": 0,
-              "message": {
-                "role": "assistant",
-                "content": null,
-                "tool_calls": [
-                  {
-                    "id": "call_wt1a0BOrZKusGEuAeJpFIFej",
-                    "type": "function",
-                    "function": {
-                      "name": "weather",
-                      "arguments": "{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"
-                    }
-                  }
-                ],
-                "refusal": null,
-                "annotations": []
-              },
-              "finish_reason": "tool_calls"
+              "id": "rs_044042210f8b7b67016a2b15f14cf881a381c203066d789ed1",
+              "type": "reasoning",
+              "content": [],
+              "encrypted_content": "gAAAAABqKxXzu0CX0rjWwHqX8BufpLJZJaFuZsBib0xVhBJERG_S8SKITCa3WQujiAkN7R7tVdjsp0krMV_vNmLVwI0h01sq2NzsU6JGhcz0xu_JRKBIbhv2wfV1WDocG4zZwumRckuuvGIRZax57z-W0-eFr_n-uvXTo8lxHu0ULCFTq6Gr_wp-hyL1uDX95CXejhfPKxiP7qLJGpU-y1b8QLJnLhigXTBiBv0aDds1QVePnvvd8ZHlexGKFRmAJUQR1sZ-zhItBW9bsAIm4mHJaQKj44FInYd9lA9oT1U9OgvhBErzuzj7JhcTaG-7J4EKR8BcAkl3Jwem9YIN-hA8IKddFvGUl_KDlGrpNYgKgT2U7NCnyskkWOalEWaJa4rx5pohzKwMxAlCt2TFiYNcOgPy7-iS5eHkISdG6KGL80N2EZDp8Bumv0PHdxwNUrEcWOli3EbgwTs7Qe-4BB47mg7_ufflrgpM9waOrEclPdZQ1YJbvwRifT5zwA5-rpyhX5MrIoWicSj9qNFxfN4oJwKJEkEcVPZIXcpukaB5-tZHnEFku3Ucfi24UmtrBGAsRliWtFqNPEq9o9VJSUx4Ak4sJyY3LCH1pTXQvVsLShT06kKNU5sGnwRI3HIE5zxhN3rKPSjkPebY3TG9NmcEskREw010oyhwKOufytdg22Ya3pTJ7-a0gOqSlTrw9uinULzau0tgi2s3g4ZachVxOo29zehjdjfltM1_7v3voW49N0sDt2QjaEUjDYUf6hNVTJqhqnyHgLs6C0jrgYF0zUII5c-X41oHnaDfNINW1tJVHtQMGfHfJrfOt2BnHFnYbLT-yuezhzjqOH4UV0k35udLAcBLVJdKVhWqxjifQBugnqhWhv9pr7q3F99ovUoQ_G1uTJnPR9eNPCPPon5q1JQjQDvoQogkxnUXUNEeaQbftwWcuUUL0iYg7ee1m5eyAHCYqpa4JaQUPiDvtgiZYA7o-RhN-z6T7oT6QzigUfi0iwtCWl5679voYF1RJDOJs_Cjwd4txXCk60LK2UZdOicZsZivvnokXe8UAx_h9DVOTYkMMHA_aj1wmuVNNuYI3xrPoGNbE8JXE7n9Ayc1lsP1mZPiZkKSRjlym0PAJ44H_vWE_7RpHwfZ3DEBIEksmXuJi2XIL2XTALRjRraAC_OEg0t6or6ZfwmQqaRtjvAvQQWz60W6LVTaYI6TfTYHrrIeThV6LvZDQLZ613FwXHpxym9J8oXVHI_izXZsxVMb84_l1jKib6jRniQYpw8uob39J_-WnTS0Gyj38tr0ezoELQNY_LV8fMwBrTRqFe62DJMXhidIvCMsrBe6MZQoNkAVXSqTvFv8Z-zqMZjHeFD5fAdRqjsxosZe7iHZRAo879E7xJPsmdyelxZjHsU1o9LMpgjcDTTRhFbW2Xs4WDKzTimcIhEtZkz2RSd75pkJiDGjyIvUkN52c4ELC4kRoGG0jzM2XSycUyxH4DWjZJrCfk-oqPedU2x2VyYu6Zk7F5D7bsjjh_SXgABKRuuF2QkyJeEeBLqjjCt35TA1dVNpgaB6sDwSux4dUImnDMVR_K9fL6rsDEUTlqNu99iVV_FvR0e1e9NN93hLOSVglWvkAYksAMzrQDCn5kWnlR2vDXirR4bPJz45yue4CA7DKN1bJUAg_ie9vPCyJMIXBEwtRlsqE7z1bq0xbuCR5mN2psRtoFQjfRm4fwqKeqE3k_SPfzjAe8OjgSTgnkNngeXtIeA21y64Pk_X1CsZ718xGM62943oA3M_NocNZMDKqhlMIImA8kqbKo-Oi0rdkt44iD-VX3wuCQFeo6S_VAJsyOeMqHDvVvp6J2z8qGQNp6EaNJ7InOaeM1yxJ_F2n-gxhaI7jv_PdlBZ5lLywQaWQ90HOxhBpkKt3TgOwcwmqPakK5PtxLxNjQ6dBGnK0NqQaFfVoScnvsh4lwYt8b4zqX7LzstWlkZhGzNSgErBiKm3psfbS6zfV_PdCLqD2Kqyo6Y3BWQWqBSJMWOO3i-BRzVCnKaNtCHhyYGgCub5GniLR1-hwyUd-E4-oOjjiRktpfRzj8d56KEagwNez3Dz30Sya2GkT-oAjQ0JzMbx_RFKfekfS--jUqLiDrzweI9_DUXnS1sUKG9R6TE94BE6NzcYQkCGvP68fwjPlB-sYcd7Tl7wIuLpl2U3UV1SqbLjHIAUC_6g4ADt1l0MpYxHRNQZEKWr-JkmWauOBECLuqswXoHxgb7ItcupsNAcVeJ0ctSOd3XcV85n7RsE63TynSKvE1pmQ0g8LFBR3rbSSy74kQUM2DEHHNXzp4rylOB5BG77ilqJYdYLcl-Ag1Ui8-Lv4iDwfbsG6BNbnTu01UegN0Dq5__7f8ytXgB2-H-hjMR_0myWq-YCyD_G_9oZocye9Rei7ojbN4NXt-Z6MmSZiOxQcyLRoaKYlbn84OdZk3dT3vLmTY8UglWZ9DT5AT3hQOgEh-QDgIqwjt6Wm7D7mJtU",
+              "summary": []
+            },
+            {
+              "id": "fc_044042210f8b7b67016a2b15f2ee7881a3918e70acc6decc3b",
+              "type": "function_call",
+              "status": "completed",
+              "arguments": "{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}",
+              "call_id": "call_ID0buE92wLmD0Cfe9syrhNU3",
+              "name": "weather"
             }
           ],
-          "usage": {
-            "prompt_tokens": 169,
-            "completion_tokens": 160,
-            "total_tokens": 329,
-            "prompt_tokens_details": {
-              "cached_tokens": 0,
-              "audio_tokens": 0
-            },
-            "completion_tokens_details": {
-              "reasoning_tokens": 128,
-              "audio_tokens": 0,
-              "accepted_prediction_tokens": 0,
-              "rejected_prediction_tokens": 0
-            }
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": "in_memory",
+          "reasoning": {
+            "context": "current_turn",
+            "effort": "medium",
+            "summary": null
           },
+          "safety_identifier": null,
           "service_tier": "default",
-          "system_fingerprint": null
+          "store": false,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tools": [
+            {
+              "type": "function",
+              "description": "Gets current weather for a location",
+              "name": "weather",
+              "parameters": {
+                "type": "object",
+                "properties": {
+                  "latitude": {
+                    "type": "string",
+                    "description": "Latitude (e.g., 52.5200)"
+                  },
+                  "longitude": {
+                    "type": "string",
+                    "description": "Longitude (e.g., 13.4050)"
+                  }
+                },
+                "required": [
+                  "latitude",
+                  "longitude"
+                ],
+                "additionalProperties": false,
+                "strict": true
+              },
+              "strict": true
+            }
+          ],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 87,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens": 279,
+            "output_tokens_details": {
+              "reasoning_tokens": 192
+            },
+            "total_tokens": 366
+          },
+          "user": null,
+          "metadata": {}
         }
-  recorded_at: Mon, 08 Jun 2026 18:45:48 GMT
+  recorded_at: Thu, 11 Jun 2026 20:09:23 GMT
 - request:
     method: post
-    uri: https://api.openai.com/v1/chat/completions
+    uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-5-nano","messages":[{"role":"user","content":"What''s
-        the weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"call_wt1a0BOrZKusGEuAeJpFIFej","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_wt1a0BOrZKusGEuAeJpFIFej"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+      string: '{"model":"gpt-5-nano","input":[{"role":"user","content":"What''s the
+        weather in Berlin? (52.5200, 13.4050)"},{"type":"reasoning","summary":[],"encrypted_content":"gAAAAABqKxXzu0CX0rjWwHqX8BufpLJZJaFuZsBib0xVhBJERG_S8SKITCa3WQujiAkN7R7tVdjsp0krMV_vNmLVwI0h01sq2NzsU6JGhcz0xu_JRKBIbhv2wfV1WDocG4zZwumRckuuvGIRZax57z-W0-eFr_n-uvXTo8lxHu0ULCFTq6Gr_wp-hyL1uDX95CXejhfPKxiP7qLJGpU-y1b8QLJnLhigXTBiBv0aDds1QVePnvvd8ZHlexGKFRmAJUQR1sZ-zhItBW9bsAIm4mHJaQKj44FInYd9lA9oT1U9OgvhBErzuzj7JhcTaG-7J4EKR8BcAkl3Jwem9YIN-hA8IKddFvGUl_KDlGrpNYgKgT2U7NCnyskkWOalEWaJa4rx5pohzKwMxAlCt2TFiYNcOgPy7-iS5eHkISdG6KGL80N2EZDp8Bumv0PHdxwNUrEcWOli3EbgwTs7Qe-4BB47mg7_ufflrgpM9waOrEclPdZQ1YJbvwRifT5zwA5-rpyhX5MrIoWicSj9qNFxfN4oJwKJEkEcVPZIXcpukaB5-tZHnEFku3Ucfi24UmtrBGAsRliWtFqNPEq9o9VJSUx4Ak4sJyY3LCH1pTXQvVsLShT06kKNU5sGnwRI3HIE5zxhN3rKPSjkPebY3TG9NmcEskREw010oyhwKOufytdg22Ya3pTJ7-a0gOqSlTrw9uinULzau0tgi2s3g4ZachVxOo29zehjdjfltM1_7v3voW49N0sDt2QjaEUjDYUf6hNVTJqhqnyHgLs6C0jrgYF0zUII5c-X41oHnaDfNINW1tJVHtQMGfHfJrfOt2BnHFnYbLT-yuezhzjqOH4UV0k35udLAcBLVJdKVhWqxjifQBugnqhWhv9pr7q3F99ovUoQ_G1uTJnPR9eNPCPPon5q1JQjQDvoQogkxnUXUNEeaQbftwWcuUUL0iYg7ee1m5eyAHCYqpa4JaQUPiDvtgiZYA7o-RhN-z6T7oT6QzigUfi0iwtCWl5679voYF1RJDOJs_Cjwd4txXCk60LK2UZdOicZsZivvnokXe8UAx_h9DVOTYkMMHA_aj1wmuVNNuYI3xrPoGNbE8JXE7n9Ayc1lsP1mZPiZkKSRjlym0PAJ44H_vWE_7RpHwfZ3DEBIEksmXuJi2XIL2XTALRjRraAC_OEg0t6or6ZfwmQqaRtjvAvQQWz60W6LVTaYI6TfTYHrrIeThV6LvZDQLZ613FwXHpxym9J8oXVHI_izXZsxVMb84_l1jKib6jRniQYpw8uob39J_-WnTS0Gyj38tr0ezoELQNY_LV8fMwBrTRqFe62DJMXhidIvCMsrBe6MZQoNkAVXSqTvFv8Z-zqMZjHeFD5fAdRqjsxosZe7iHZRAo879E7xJPsmdyelxZjHsU1o9LMpgjcDTTRhFbW2Xs4WDKzTimcIhEtZkz2RSd75pkJiDGjyIvUkN52c4ELC4kRoGG0jzM2XSycUyxH4DWjZJrCfk-oqPedU2x2VyYu6Zk7F5D7bsjjh_SXgABKRuuF2QkyJeEeBLqjjCt35TA1dVNpgaB6sDwSux4dUImnDMVR_K9fL6rsDEUTlqNu99iVV_FvR0e1e9NN93hLOSVglWvkAYksAMzrQDCn5kWnlR2vDXirR4bPJz45yue4CA7DKN1bJUAg_ie9vPCyJMIXBEwtRlsqE7z1bq0xbuCR5mN2psRtoFQjfRm4fwqKeqE3k_SPfzjAe8OjgSTgnkNngeXtIeA21y64Pk_X1CsZ718xGM62943oA3M_NocNZMDKqhlMIImA8kqbKo-Oi0rdkt44iD-VX3wuCQFeo6S_VAJsyOeMqHDvVvp6J2z8qGQNp6EaNJ7InOaeM1yxJ_F2n-gxhaI7jv_PdlBZ5lLywQaWQ90HOxhBpkKt3TgOwcwmqPakK5PtxLxNjQ6dBGnK0NqQaFfVoScnvsh4lwYt8b4zqX7LzstWlkZhGzNSgErBiKm3psfbS6zfV_PdCLqD2Kqyo6Y3BWQWqBSJMWOO3i-BRzVCnKaNtCHhyYGgCub5GniLR1-hwyUd-E4-oOjjiRktpfRzj8d56KEagwNez3Dz30Sya2GkT-oAjQ0JzMbx_RFKfekfS--jUqLiDrzweI9_DUXnS1sUKG9R6TE94BE6NzcYQkCGvP68fwjPlB-sYcd7Tl7wIuLpl2U3UV1SqbLjHIAUC_6g4ADt1l0MpYxHRNQZEKWr-JkmWauOBECLuqswXoHxgb7ItcupsNAcVeJ0ctSOd3XcV85n7RsE63TynSKvE1pmQ0g8LFBR3rbSSy74kQUM2DEHHNXzp4rylOB5BG77ilqJYdYLcl-Ag1Ui8-Lv4iDwfbsG6BNbnTu01UegN0Dq5__7f8ytXgB2-H-hjMR_0myWq-YCyD_G_9oZocye9Rei7ojbN4NXt-Z6MmSZiOxQcyLRoaKYlbn84OdZk3dT3vLmTY8UglWZ9DT5AT3hQOgEh-QDgIqwjt6Wm7D7mJtU"},{"type":"function_call","call_id":"call_ID0buE92wLmD0Cfe9syrhNU3","name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"},{"type":"function_call_output","call_id":"call_ID0buE92wLmD0Cfe9syrhNU3","output":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
-        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}]}'
     headers:
       User-Agent:
       - Faraday v2.14.2
@@ -153,7 +206,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 08 Jun 2026 18:45:53 GMT
+      - Thu, 11 Jun 2026 20:09:25 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -177,13 +230,11 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '4523'
+      - '2465'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
       - '2020-10-01'
-      X-Openai-Proxy-Wasm:
-      - v0.1
       X-Ratelimit-Limit-Requests:
       - '5000'
       X-Ratelimit-Limit-Tokens:
@@ -191,7 +242,7 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '4999'
       X-Ratelimit-Remaining-Tokens:
-      - '1999969'
+      - '2000000'
       X-Ratelimit-Reset-Requests:
       - 12ms
       X-Ratelimit-Reset-Tokens:
@@ -204,7 +255,112 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        ewogICJpZCI6ICJjaGF0Y21wbC1Eb1pHbXRtT3hXOEs1NFFFNk4xV2tvblhZWlpoWiIsCiAgIm9iamVjdCI6ICJjaGF0LmNvbXBsZXRpb24iLAogICJjcmVhdGVkIjogMTc4MDk0NDM0OCwKICAibW9kZWwiOiAiZ3B0LTUtbmFuby0yMDI1LTA4LTA3IiwKICAiY2hvaWNlcyI6IFsKICAgIHsKICAgICAgImluZGV4IjogMCwKICAgICAgIm1lc3NhZ2UiOiB7CiAgICAgICAgInJvbGUiOiAiYXNzaXN0YW50IiwKICAgICAgICAiY29udGVudCI6ICJCZXJsaW4gKDUyLjUyMDAsIDEzLjQwNTApOiAxNcKwQywgV2luZCAxMCBrbS9oLiIsCiAgICAgICAgInJlZnVzYWwiOiBudWxsLAogICAgICAgICJhbm5vdGF0aW9ucyI6IFtdCiAgICAgIH0sCiAgICAgICJmaW5pc2hfcmVhc29uIjogInN0b3AiCiAgICB9CiAgXSwKICAidXNhZ2UiOiB7CiAgICAicHJvbXB0X3Rva2VucyI6IDIzMCwKICAgICJjb21wbGV0aW9uX3Rva2VucyI6IDM1MiwKICAgICJ0b3RhbF90b2tlbnMiOiA1ODIsCiAgICAicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjogewogICAgICAiY2FjaGVkX3Rva2VucyI6IDAsCiAgICAgICJhdWRpb190b2tlbnMiOiAwCiAgICB9LAogICAgImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOiB7CiAgICAgICJyZWFzb25pbmdfdG9rZW5zIjogMzIwLAogICAgICAiYXVkaW9fdG9rZW5zIjogMCwKICAgICAgImFjY2VwdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjogMCwKICAgICAgInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjogMAogICAgfQogIH0sCiAgInNlcnZpY2VfdGllciI6ICJkZWZhdWx0IiwKICAic3lzdGVtX2ZpbmdlcnByaW50IjogbnVsbAp9Cg==
-  recorded_at: Mon, 08 Jun 2026 18:45:53 GMT
+      string: |-
+        {
+          "id": "resp_00604e9ac1772860016a2b15f37d288192ace67c11d45c5bab",
+          "object": "response",
+          "created_at": 1781208563,
+          "status": "completed",
+          "background": false,
+          "billing": {
+            "payer": "developer"
+          },
+          "completed_at": 1781208565,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
+          "model": "gpt-5-nano-2025-08-07",
+          "moderation": null,
+          "output": [
+            {
+              "id": "rs_00604e9ac1772860016a2b15f41770819283731d16a7c11009",
+              "type": "reasoning",
+              "content": [],
+              "encrypted_content": "gAAAAABqKxX1JOp3MtSZ4OLvSOBySYYUmAsMcLKcPRyF9cf2ZYmxWoFW3Zl4itsqqaBvPbQMOm-GjMn5VBV_YBo8g4dlg3Ekrfq6YnORO2NmNMd9UlKZWlPVzPWP8LtrzJeeNHU9hKXzUmviEIJ_wdyHo7GFISICzePyVvrjwvX7TuPascL8V-XQGXBtvH5qR6mwnKhOVR5f8uscfch7nezIPZMe2OrBjxPbEA1MaXBoVnZ5sQnwnFwUgoT6-t43k_p0YkyLuRLEmrFqKlEM8KX2JU-AeNAElkHHC2fsAa-U5_1DKI74eV9YRyRAOAiLhsVxijV_XJm0hq8VHrPngFVPIVQzwKMIOsLiquRS-iA8KcPWoEPPSjg1ZDW-JHuZCiDQVoJ3kowfIM5OuY4Z_RFh9V-M8wqwGAPd8q1E2I2j0LE075hO-Y3rGRyAMP4AH_XB_jkjgqN26fZT1Qejqhwnva2_vg6wHNfeyE0jt5lJtmANilhErqkm1Nxn_p7a-yckoLCok8n9cwXtU8_3MV_LwSrOwIz4KRc6AIP1K_o68CBWInckVFfAk9gknQXCs0Qk-Hl3O1nyZbyODlP6WOhkjVUHNacA-accSinwKausVsZcJVGLJ860oP062qVAXuyvQYRYDItg6zBAGru80VGDbkZtsZhdiHjSjC5sTTDsQKAV71Zg54WYmy0Zq3eQ3FgnHz02VlRI8HQkORswOrf4U0euI1lUFEH6ojU69ZJLFZ65jqlo72dO9wfB4ysNPLbzJ_uDD7OMHjyILCcOB2nbjJVTUNZQZ5mGuG_DjPczujJDwBfiod6eJxbtQaXE07PQnxBwBPNRAeQXjzS1gPPzex2tCbkE-PvmDvvkx9Q3DT6PVrUfydpDtApNdekVa5Pn-hKPx5Rxz6YFAl36kNm_vuU98QAOG_ffFm5VQ98uSTZJCnXdIaJN13PZa4_3sKOZe5Zut3zqYyElgmhg07BrXO2lf88Q6jbJfUp7A7Y1QpeHz34kpNEFm7KG4Feh5DimREebMjJ0z604NiVAASTqekMRn5m4gniW4NEshQK2RIqFrNsHne9eLa_iNq7gpHWf0bc8mpr44vWNLBPbF2qN5dIcrs4Ubd6d-tf7iSXkXacU_4D7XiJVWl5SRDTtNpDeyyBoJum8EOcAl9nDtCAntDwhkMRA_nsRAcoN-Y1AVcKsm-l-omSQWMYitOACKF-KbWA96aKEG-BGpxHMHfuT-S8kdDY74XZTN4Y0eglbhS1cmQ3r78IUIaPgjvJvehDugxQlmS30gHFJQfzkuJYJkrRLttyiCcOPsqifsWMNCx_ZuVWgVoh5V3CANRxFjtQtIr7bG5TeMK0ZsBgr5GnVCosv1soZZ2EMeEKFYO_NyBNuGDK642iRdLtXE33IXmmWnt6vZYnSpALKmlfW_ZbHLCFND6Yt0xgiJ42zUMPPeYKqaz7CfFE53Vcr0EZ9WlLFxjZSoiX1PzbFSgVwy2kPUDZywllr1nczKXH-suWZYZZ3Bj6phzvncsjhesTbG8RcWEo2jmFuZtFPzWXw1ck8ZiqrouZiLCOKFke-Xrp2xI4RyTtUXhnmEKqxq16923JrjQVp54eWwb6EqqjQt5h_4eM2dz7AqCyv6-qc-cOLNsrtB3BWfIfDAKoLREt1rr0AE-LWEExMc6hB8QcNHG0TCiBsRvqRpOlpy30OT4Hi9Sdp_tUJnyE5gPQGUlSXwbEiggxTQzew9DBQCSTLU59p0O35ssZEVuhrAB3bbgS0ra8uqcvpIJva65KXPV8YewrOk8SPRVzBvRN9aa59sj-mi9Lk_pEy5FEyenyTz4S6dNezGy1YGIOd0lI4hiME_cFY-4M8lkJKdcLimqGZ5sRKrcXgSp9VMot--YWdXFF3djQUR_ajFI8nccl849OMc72aSFLOF6tjCwcZBGMQpRRB_miQrWaDM1U75CZtZLsI4n_eLqQngmQx8AXIzViww-FvwIf984n-s65RQP5oRQz7lpI17vvgVi7ZLvVoWI0Z6_6SsqNC-tc6-aZXy9UWtJH9Z7Ui842Ll6k1FkPU0sOENJLJQuKeAR2mTE4vdp6wD-GnTRK22QZ-ALgBfvxhh8jEmDC6CBeAkeIUqe6ghJpry-CaJFSGzfTZOJU5a9cO8jbSZhWg4tHdFBLumfEnE6xEYY4kjm9cLz61_7SLOXPuiLnZXLK3mmctpCdvW_l2DcTy2kzygII=",
+              "summary": []
+            },
+            {
+              "id": "msg_00604e9ac1772860016a2b15f57bb88192936285bd8c19dd0b",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "Current weather in Berlin (52.5200, 13.4050): 15\u00b0C, wind 10 km/h."
+                }
+              ],
+              "role": "assistant"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": "in_memory",
+          "reasoning": {
+            "context": "current_turn",
+            "effort": "medium",
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": false,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tools": [
+            {
+              "type": "function",
+              "description": "Gets current weather for a location",
+              "name": "weather",
+              "parameters": {
+                "type": "object",
+                "properties": {
+                  "latitude": {
+                    "type": "string",
+                    "description": "Latitude (e.g., 52.5200)"
+                  },
+                  "longitude": {
+                    "type": "string",
+                    "description": "Longitude (e.g., 13.4050)"
+                  }
+                },
+                "required": [
+                  "latitude",
+                  "longitude"
+                ],
+                "additionalProperties": false,
+                "strict": true
+              },
+              "strict": true
+            }
+          ],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 398,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens": 292,
+            "output_tokens_details": {
+              "reasoning_tokens": 256
+            },
+            "total_tokens": 690
+          },
+          "user": null,
+          "metadata": {}
+        }
+  recorded_at: Thu, 11 Jun 2026 20:09:25 GMT
 recorded_with: VCR 6.4.0
