@@ -69,6 +69,44 @@ module RubyLLM
     end
     # rubocop:enable Metrics/ParameterLists
 
+    # The request a completion call would send, without sending it.
+    # rubocop:disable Metrics/ParameterLists
+    def render(messages, tools:, temperature:, model:, params: {}, schema: nil, thinking: nil,
+               citations: false, tool_prefs: nil, protocol: nil)
+      protocol_class = resolve_protocol(protocol, model, tools:, schema:, thinking:, tool_prefs:, citations:)
+      protocol_class.new(self, model).render(
+        messages,
+        tools: tools,
+        tool_prefs: tool_prefs,
+        temperature: temperature,
+        params: params,
+        schema: schema,
+        thinking: thinking,
+        citations: citations
+      )
+    end
+    # rubocop:enable Metrics/ParameterLists
+
+    def batches?
+      default_protocol.public_method_defined?(:create_batch)
+    end
+
+    def create_batch(requests)
+      default_protocol.new(self).create_batch(requests)
+    end
+
+    def find_batch(id)
+      default_protocol.new(self).find_batch(id)
+    end
+
+    def cancel_batch(id)
+      default_protocol.new(self).cancel_batch(id)
+    end
+
+    def batch_results(id)
+      default_protocol.new(self).batch_results(id)
+    end
+
     def list_models
       default_protocol.new(self).list_models
     end
@@ -178,6 +216,11 @@ module RubyLLM
 
       def resolve(name)
         providers[name.to_sym]
+      end
+
+      def resolve!(name)
+        providers[name.to_sym] ||
+          raise(Error, "Unknown provider: #{name.inspect}. Available providers: #{providers.keys.join(', ')}")
       end
 
       def providers

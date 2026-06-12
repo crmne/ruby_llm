@@ -79,7 +79,7 @@ RSpec.describe RubyLLM::Chat do
           content: '{'
         )
 
-        response = chat.complete
+        response = chat.generate
 
         json_response = JSON.parse('{' + response.content) # rubocop:disable Style/StringConcatenation
         expect(json_response).to eq({ 'result' => 8 })
@@ -106,7 +106,7 @@ RSpec.describe RubyLLM::Chat do
           content: '{'
         )
 
-        response = chat.complete
+        response = chat.generate
 
         json_response = JSON.parse('{' + response.content) # rubocop:disable Style/StringConcatenation
         expect(json_response).to eq({ 'result' => 8 })

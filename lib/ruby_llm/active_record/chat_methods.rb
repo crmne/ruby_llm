@@ -207,11 +207,33 @@ module RubyLLM
       end
 
       def ask(message = nil, with: nil, &)
-        add_message(role: :user, content: build_content(message, with))
+        ask_later(message, with: with)
         complete(&)
       end
 
       alias say ask
+
+      def ask_later(message = nil, with: nil)
+        add_message(role: :user, content: build_content(message, with))
+        self
+      end
+
+      def generate(...)
+        to_llm.generate(...)
+      end
+
+      def run_tools
+        to_llm.run_tools
+        self
+      end
+
+      def step(...)
+        to_llm.step(...)
+      end
+
+      def complete?
+        to_llm.complete?
+      end
 
       def complete(...)
         to_llm.complete(...)
@@ -349,38 +371,14 @@ module RubyLLM
         @message = messages_association.create!(role: :assistant, content: '')
       end
 
-      # rubocop:disable Metrics/PerceivedComplexity
       def persist_message_completion(message)
         return unless message
 
         tool_call_id = find_tool_call_id(message.tool_call_id) if message.tool_call_id
+        content_text, attachments_to_persist, content_raw = prepare_content_for_storage(message.content)
+        attrs = completion_attributes(message, content_text, tool_call_id)
 
         transaction do
-          content_text, attachments_to_persist, content_raw = prepare_content_for_storage(message.content)
-
-          attrs = {
-            role: message.role,
-            content: content_text,
-            input_tokens: message.input_tokens,
-            output_tokens: message.output_tokens
-          }
-          attrs[:cached_tokens] = message.cached_tokens if @message.has_attribute?(:cached_tokens)
-          if @message.has_attribute?(:cache_creation_tokens)
-            attrs[:cache_creation_tokens] = message.cache_creation_tokens
-          end
-          attrs[:thinking_text] = message.thinking&.text if @message.has_attribute?(:thinking_text)
-          attrs[:thinking_signature] = message.thinking&.signature if @message.has_attribute?(:thinking_signature)
-          attrs[:thinking_tokens] = message.thinking_tokens if @message.has_attribute?(:thinking_tokens)
-          attrs[:citations] = message.citations.map(&:to_h).presence if @message.has_attribute?(:citations)
-
-          # Add model association dynamically
-          attrs[self.class.model_association_name] = model_association
-
-          if tool_call_id
-            parent_tool_call_assoc = @message.class.reflect_on_association(:parent_tool_call)
-            attrs[parent_tool_call_assoc.foreign_key] = tool_call_id
-          end
-
           @message.assign_attributes(attrs)
           @message.content_raw = content_raw if @message.respond_to?(:content_raw=)
           @message.save!
@@ -388,6 +386,24 @@ module RubyLLM
           persist_content(@message, attachments_to_persist) if attachments_to_persist
           persist_tool_calls(message.tool_calls) if message.tool_calls.present?
         end
+      end
+
+      # rubocop:disable Metrics/PerceivedComplexity
+      def completion_attributes(message, content_text, tool_call_id)
+        attrs = { role: message.role, content: content_text,
+                  input_tokens: message.input_tokens, output_tokens: message.output_tokens }
+        attrs[:cached_tokens] = message.cached_tokens if @message.has_attribute?(:cached_tokens)
+        attrs[:cache_creation_tokens] = message.cache_creation_tokens if @message.has_attribute?(:cache_creation_tokens)
+        attrs[:thinking_text] = message.thinking&.text if @message.has_attribute?(:thinking_text)
+        attrs[:thinking_signature] = message.thinking&.signature if @message.has_attribute?(:thinking_signature)
+        attrs[:thinking_tokens] = message.thinking_tokens if @message.has_attribute?(:thinking_tokens)
+        attrs[:citations] = message.citations.map(&:to_h).presence if @message.has_attribute?(:citations)
+        attrs[self.class.model_association_name] = model_association
+        if tool_call_id
+          parent_tool_call_assoc = @message.class.reflect_on_association(:parent_tool_call)
+          attrs[parent_tool_call_assoc.foreign_key] = tool_call_id
+        end
+        attrs
       end
       # rubocop:enable Metrics/PerceivedComplexity
 

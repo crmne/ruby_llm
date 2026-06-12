@@ -277,33 +277,6 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       llm_chat = chat.instance_variable_get(:@chat)
       expect(llm_chat.tools.keys).to include(:calculator, :weather)
     end
-
-    it 'handles halt mechanism in tools' do
-      # Define a tool that uses halt
-      stub_const('HaltingTool', Class.new(RubyLLM::Tool) do
-        description 'A tool that halts'
-        param :input, desc: 'Input text'
-
-        def execute(input:)
-          halt("Halted with: #{input}")
-        end
-      end)
-
-      chat = Chat.create!(model: model)
-      chat.with_tool(HaltingTool)
-
-      # Mock the tool execution to test halt behavior
-      allow_any_instance_of(HaltingTool).to receive(:execute).and_return( # rubocop:disable RSpec/AnyInstance
-        RubyLLM::Tool::Halt.new('Halted response')
-      )
-
-      # When a tool returns halt, the conversation should stop
-      response = chat.ask("Use the halting tool with 'test'")
-
-      # The response should be the halt result, not additional AI commentary
-      expect(response).to be_a(RubyLLM::Tool::Halt)
-      expect(response.content).to eq('Halted response')
-    end
   end
 
   describe 'raw content support' do
@@ -342,6 +315,45 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       message = chat.create_user_message('hello')
       expect(message.role).to eq('user')
       expect(message.content).to eq('hello')
+    end
+  end
+
+  describe 'batch staging and collection' do
+    it 'submits records directly and persists batch answers' do
+      chats = [
+        Chat.create!(model: 'claude-haiku-4-5').ask_later('What is 2 + 2? Just the number.'),
+        Chat.create!(model: 'claude-haiku-4-5').ask_later('Name the largest planet in our solar system. One word.')
+      ]
+
+      batch = RubyLLM.batch(chats)
+      40.times do
+        break if batch.complete?
+
+        sleep 15 if VCR.current_cassette.recording?
+      end
+      batch.messages
+
+      expect(chats.first.messages.reload.pluck(:role)).to eq(%w[user assistant])
+      expect(chats.first.messages.last.content).to include('4')
+      expect(chats.second.messages.last.content).to match(/jupiter/i)
+      expect(chats.first.messages.last.input_tokens).to be_positive
+    end
+
+    it 'stages questions with ask_later and persists batch answers through add_completion' do
+      chat = Chat.create!(model: model)
+      chat.ask_later('What is 2 + 2?')
+
+      expect(chat).not_to be_complete
+      expect(chat.messages.pluck(:role)).to eq(['user'])
+
+      chat.to_llm.add_completion(
+        RubyLLM::Message.new(role: :assistant, content: '4', input_tokens: 10, output_tokens: 1, model_id: model)
+      )
+
+      expect(chat.messages.reload.pluck(:role)).to eq(%w[user assistant])
+      expect(chat.messages.last.content).to eq('4')
+      expect(chat.messages.last.input_tokens).to eq(10)
+      expect(chat).to be_complete
     end
   end
 

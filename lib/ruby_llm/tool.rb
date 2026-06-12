@@ -17,19 +17,6 @@ module RubyLLM
 
   # Base class for creating tools that AI models can use
   class Tool
-    # Stops conversation continuation after tool execution
-    class Halt
-      attr_reader :content
-
-      def initialize(content)
-        @content = content
-      end
-
-      def to_s
-        @content.to_s
-      end
-    end
-
     POSITIONAL_PARAMETER_KINDS = %i[req opt rest].freeze
 
     class << self
@@ -115,10 +102,6 @@ module RubyLLM
     end
 
     protected
-
-    def halt(message)
-      Halt.new(message)
-    end
 
     def normalize_args(args)
       return {} if args.nil?

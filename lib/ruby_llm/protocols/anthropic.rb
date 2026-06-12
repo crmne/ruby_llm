@@ -4,6 +4,7 @@ module RubyLLM
   module Protocols
     # The Anthropic Messages API.
     class Anthropic < Protocol
+      include Anthropic::Batches
       include Anthropic::Chat
       include Anthropic::Embeddings
       include Anthropic::Media

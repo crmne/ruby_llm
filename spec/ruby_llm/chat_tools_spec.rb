@@ -46,24 +46,6 @@ RSpec.describe RubyLLM::Chat do
     end
   end
 
-  class HaltingTool < RubyLLM::Tool # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
-    description 'A tool that halts conversation continuation'
-
-    def execute
-      halt 'Task completed successfully'
-    end
-  end
-
-  class HandoffTool < RubyLLM::Tool # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
-    description 'Delegates to a sub-agent and halts'
-    param :query, desc: 'Query to pass to sub-agent'
-
-    def execute(query:)
-      sub_result = "Sub-agent handled: #{query}"
-      halt sub_result
-    end
-  end
-
   class ContentReturningTool < RubyLLM::Tool # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
     description 'Returns a Content object with text and attachments'
     param :query, desc: 'Query to process'
@@ -93,7 +75,7 @@ RSpec.describe RubyLLM::Chat do
     end
 
     def execute(tags:)
-      halt "Combined tags: #{tags.join(', ')}"
+      "Combined tags: #{tags.join(', ')}"
     end
   end
 
@@ -109,7 +91,7 @@ RSpec.describe RubyLLM::Chat do
     end
 
     def execute(task:, status:)
-      halt "Task \"#{task}\" status #{status}"
+      "Task \"#{task}\" status #{status}"
     end
   end
 
@@ -124,7 +106,7 @@ RSpec.describe RubyLLM::Chat do
     end
 
     def execute(window:)
-      halt "Window from #{window['start']} to #{window['end']}"
+      "Window from #{window['start']} to #{window['end']}"
     end
   end
 
@@ -496,11 +478,9 @@ RSpec.describe RubyLLM::Chat do
                       .with_tool(ArrayParamsTool)
         chat = chat.with_params(enable_thinking: false) if model == 'qwen3'
 
-        response = chat.ask(
+        chat.ask_later(
           'Call the array params tool with tags ["red","blue"] and tell me the combined tags.'
-        )
-
-        expect(response).to be_a(RubyLLM::Tool::Halt)
+        ).generate
 
         _message, tool_call = last_tool_call(chat)
         expect(tool_call).not_to be_nil
@@ -521,11 +501,9 @@ RSpec.describe RubyLLM::Chat do
                       .with_tool(AnyOfParamsTool)
         chat = chat.with_params(enable_thinking: false) if model == 'qwen3'
 
-        response = chat.ask(
+        chat.ask_later(
           'Call the any-of params tool for task "Review PR" with status "pending" and report the result.'
-        )
-
-        expect(response).to be_a(RubyLLM::Tool::Halt)
+        ).generate
 
         _message, tool_call = last_tool_call(chat)
         expect(tool_call).not_to be_nil
@@ -547,11 +525,9 @@ RSpec.describe RubyLLM::Chat do
                       .with_tool(ObjectParamsTool)
         chat = chat.with_params(enable_thinking: false) if model == 'qwen3'
 
-        response = chat.ask(
+        chat.ask_later(
           'Call the object params tool with window start 2025-01-01 and end 2025-01-02 and include the result.'
-        )
-
-        expect(response).to be_a(RubyLLM::Tool::Halt)
+        ).generate
 
         _message, tool_call = last_tool_call(chat)
         expect(tool_call).not_to be_nil
@@ -714,61 +690,6 @@ RSpec.describe RubyLLM::Chat do
         expect(tool_message.content.attachments.first).to be_a(RubyLLM::Attachment)
         expect(tool_message.content.attachments.first.filename).to eq('ruby.png')
       end
-    end
-  end
-
-  describe 'halt functionality' do
-    it 'returns Halt object when tool halts' do
-      chat = RubyLLM.chat.with_tool(HaltingTool)
-      response = chat.ask('Execute the halting tool')
-
-      expect(response).to be_a(RubyLLM::Tool::Halt)
-      expect(response.content).to eq('Task completed successfully')
-    end
-
-    it 'does not continue conversation after halt' do
-      chat = RubyLLM.chat.with_tool(HaltingTool)
-      allow(chat).to receive(:complete).and_call_original
-
-      response = chat.ask('Execute the halting tool')
-
-      # Only the initial completion runs; halt stops the continuation.
-      expect(chat).to have_received(:complete).once
-      expect(response).to be_a(RubyLLM::Tool::Halt)
-    end
-
-    it 'returns sub-agent result through halt' do
-      chat = RubyLLM.chat.with_tool(HandoffTool)
-      provider = chat.instance_variable_get(:@provider)
-      tool_call = RubyLLM::ToolCall.new(
-        id: 'call_1',
-        name: 'handoff',
-        arguments: { 'query' => 'Please handle this query: What is Ruby?' }
-      )
-
-      allow(provider).to receive(:complete).and_return(
-        RubyLLM::Message.new(
-          role: :assistant,
-          content: '',
-          tool_calls: { tool_call.id => tool_call }
-        )
-      )
-
-      response = chat.ask('Please handle this query: What is Ruby?')
-
-      expect(response).to be_a(RubyLLM::Tool::Halt)
-      expect(response.content).to include('Sub-agent handled')
-      expect(response.content).to include('What is Ruby?')
-    end
-
-    it 'adds halt content to conversation history' do
-      chat = RubyLLM.chat.with_tool(HaltingTool)
-      chat.ask('Execute the halting tool')
-
-      # Check that the tool result was added to messages
-      tool_message = chat.messages.find { |m| m.role == :tool }
-      expect(tool_message).not_to be_nil
-      expect(tool_message.content).to eq('Task completed successfully')
     end
   end
 

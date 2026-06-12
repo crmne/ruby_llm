@@ -13,6 +13,10 @@ module RubyLLM
       Chat.new(*args, **kwargs, context: self, &)
     end
 
+    def batch(chats_or_id, provider: nil)
+      RubyLLM.batch(chats_or_id, provider:, context: self)
+    end
+
     def embed(*args, **kwargs, &)
       Embedding.embed(*args, **kwargs, context: self, &)
     end

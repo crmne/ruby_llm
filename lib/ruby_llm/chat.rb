@@ -7,7 +7,7 @@ module RubyLLM
   class Chat
     include Enumerable
 
-    attr_reader :model, :messages, :tools, :tool_prefs, :params, :headers, :schema, :concurrency
+    attr_reader :model, :provider, :messages, :tools, :tool_prefs, :params, :headers, :schema, :concurrency
 
     def initialize(model: nil, provider: nil, assume_model_exists: false, context: nil)
       if assume_model_exists && !provider
@@ -39,11 +39,67 @@ module RubyLLM
     end
 
     def ask(message = nil, with: nil, &)
-      add_message role: :user, content: build_content(message, with)
+      ask_later(message, with: with)
       complete(&)
     end
 
     alias say ask
+
+    # Stages a question without asking it, leaving the chat for `complete`, a
+    # single `step`, or a provider-side batch via RubyLLM.batch.
+    def ask_later(message = nil, with: nil)
+      add_message role: :user, content: build_content(message, with)
+      self
+    end
+
+    # Calls the model once and appends its response. The model's move.
+    def generate(&block)
+      result = nil
+      payload = instrumentation_payload(streaming: block_given?)
+
+      RubyLLM.instrument('chat.ruby_llm', payload, config: @config) do |event|
+        result = provider_completion(&block)
+        run_callbacks(:before_message, :new_message) unless block_given?
+        normalize_schema_response(result)
+        add_message result
+        run_callbacks(:after_message, :end_message, result)
+        record_completion_event(event, result)
+      end
+      result
+    end
+
+    # Executes the pending tool calls and appends their results, without asking
+    # the model to respond. Our move; the chat is then ready for the next
+    # `generate`, or the next batch round.
+    def run_tools
+      execute_pending_tool_calls(messages.last) if messages.last&.tool_call?
+      self
+    end
+
+    # Advances the conversation by one move: runs the pending tools if the model
+    # asked for them, otherwise generates the next response. Returns nil once
+    # there is nothing left to do.
+    def step(&)
+      return if complete?
+
+      messages.last&.tool_call? ? run_tools : generate(&)
+    end
+
+    # Runs the agentic loop to completion: step until nothing is left.
+    def complete(&)
+      step(&) until complete?
+      messages.last
+    end
+
+    # Whether the model owes this chat nothing more: nothing is staged, or it
+    # answered without calling a tool.
+    def complete?
+      last = messages.last
+      return true if last.nil?
+      return false if %i[user tool].include?(last.role)
+
+      !last.tool_call?
+    end
 
     def with_instructions(instructions, append: false, replace: nil)
       unless replace.nil?
@@ -176,51 +232,36 @@ module RubyLLM
       Cost.aggregate(messages.map { |message| message.cost(model: message.model_info || model) })
     end
 
-    def complete(&block)
-      result = nil
-      payload = {
-        chat: self,
-        provider: @provider.slug,
-        provider_class: @provider.class.name,
-        model: @model.id,
-        model_info: @model,
-        input_messages: messages.dup,
-        message_count: messages.size,
-        tools: tools.keys,
-        tool_choice: tool_prefs[:choice],
-        tool_call_limit: tool_prefs[:calls],
-        temperature: @temperature,
-        params: params,
-        schema: schema,
-        thinking: @thinking,
-        citations: @citations,
-        streaming: block_given?
-      }
-
-      RubyLLM.instrument('chat.ruby_llm', payload, config: @config) do |event|
-        result = complete_once(&block)
-        event[:response] = result
-        event[:messages_after] = messages.dup
-        event[:response_role] = result.role if result.respond_to?(:role)
-
-        if result.respond_to?(:tool_call?)
-          event[:response_model] = result.model_id
-          event[:tool_call] = result.tool_call?
-          event[:tool_calls] = result.tool_calls
-          event[:input_tokens] = result.input_tokens
-          event[:output_tokens] = result.output_tokens
-          event[:cached_tokens] = result.cached_tokens
-          event[:cache_creation_tokens] = result.cache_creation_tokens
-          event[:thinking_tokens] = result.thinking_tokens
-        end
-      end
-      result
-    end
-
     def add_message(message_or_attributes)
       message = message_or_attributes.is_a?(Message) ? message_or_attributes : Message.new(message_or_attributes)
       messages << message
       message
+    end
+
+    # Receives a completion produced out-of-band (e.g. by a batch), running the
+    # same callbacks as a synchronous completion so persistence works unchanged.
+    def add_completion(response)
+      run_callbacks(:before_message, :new_message)
+      normalize_schema_response(response)
+      add_message response
+      run_callbacks(:after_message, :end_message, response)
+      response
+    end
+
+    # The request this chat would send for its next completion.
+    def render
+      @provider.render(
+        messages,
+        tools: @tools,
+        tool_prefs: @tool_prefs,
+        temperature: @temperature,
+        model: @model,
+        params: @params,
+        schema: @schema,
+        thinking: @thinking,
+        citations: @citations,
+        protocol: @protocol
+      )
     end
 
     # Mutates this chat by removing all in-memory messages.
@@ -275,21 +316,41 @@ module RubyLLM
       self
     end
 
-    def complete_once(&)
-      response = provider_completion(&)
+    def instrumentation_payload(streaming:)
+      {
+        chat: self,
+        provider: @provider.slug,
+        provider_class: @provider.class.name,
+        model: @model.id,
+        model_info: @model,
+        input_messages: messages.dup,
+        message_count: messages.size,
+        tools: tools.keys,
+        tool_choice: tool_prefs[:choice],
+        tool_call_limit: tool_prefs[:calls],
+        temperature: @temperature,
+        params: params,
+        schema: schema,
+        thinking: @thinking,
+        citations: @citations,
+        streaming: streaming
+      }
+    end
 
-      run_callbacks(:before_message, :new_message) unless block_given?
+    def record_completion_event(event, result)
+      event[:response] = result
+      event[:messages_after] = messages.dup
+      event[:response_role] = result.role if result.respond_to?(:role)
+      return unless result.respond_to?(:tool_call?)
 
-      normalize_schema_response(response)
-
-      add_message response
-      run_callbacks(:after_message, :end_message, response)
-
-      if response.tool_call?
-        handle_tool_calls(response, &)
-      else
-        response
-      end
+      event[:response_model] = result.model_id
+      event[:tool_call] = result.tool_call?
+      event[:tool_calls] = result.tool_calls
+      event[:input_tokens] = result.input_tokens
+      event[:output_tokens] = result.output_tokens
+      event[:cached_tokens] = result.cached_tokens
+      event[:cache_creation_tokens] = result.cache_creation_tokens
+      event[:thinking_tokens] = result.thinking_tokens
     end
 
     def provider_completion(&)
@@ -344,40 +405,29 @@ module RubyLLM
       block
     end
 
-    def handle_tool_calls(response, &)
-      halt_result = if concurrency
-                      handle_concurrent_tool_calls(response.tool_calls)
-                    else
-                      handle_sequential_tool_calls(response.tool_calls)
-                    end
+    def execute_pending_tool_calls(response)
+      if concurrency
+        handle_concurrent_tool_calls(response.tool_calls)
+      else
+        handle_sequential_tool_calls(response.tool_calls)
+      end
 
       reset_tool_choice if forced_tool_choice?
-      halt_result || complete(&)
     end
 
     def handle_sequential_tool_calls(tool_calls)
-      halt_result = nil
-
       tool_calls.each_value do |tool_call|
         run_callbacks(:before_message, :new_message)
         result = execute_tool_with_callbacks(tool_call)
         add_tool_result_message(tool_call, result)
-        halt_result = result if result.is_a?(Tool::Halt)
       end
-
-      halt_result
     end
 
     def handle_concurrent_tool_calls(tool_calls)
-      halt_result = nil
-
       execute_tools_concurrently(tool_calls) do |tool_call, result|
         run_callbacks(:before_message, :new_message)
         add_tool_result_message(tool_call, result)
-        halt_result = result if result.is_a?(Tool::Halt)
       end
-
-      halt_result
     end
 
     def execute_tools_concurrently(tool_calls, &on_result)
@@ -394,8 +444,7 @@ module RubyLLM
     end
 
     def add_tool_result_message(tool_call, result)
-      tool_payload = result.is_a?(Tool::Halt) ? result.content : result
-      content = content_like?(tool_payload) ? tool_payload : tool_payload.to_s
+      content = content_like?(result) ? result : result.to_s
       message = add_message role: :tool, content:, tool_call_id: tool_call.id
       run_callbacks(:after_message, :end_message, message)
       message
@@ -427,7 +476,7 @@ module RubyLLM
       RubyLLM.instrument('tool_call.ruby_llm', payload, config: @config) do |event|
         result = tool.call(args)
         event[:result] = result
-        event[:result_content] = result.is_a?(Tool::Halt) ? result.content : result
+        event[:result_content] = result
         event[:result_class] = result.class.name
         result
       end

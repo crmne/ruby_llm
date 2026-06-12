@@ -137,7 +137,7 @@ module RubyLLM
         if assume_exists
           raise ArgumentError, 'Provider must be specified if assume_exists is true' unless provider
 
-          provider_class ||= raise_unknown_provider(provider)
+          provider_class ||= Provider.resolve!(provider)
 
           model = if provider_class.local?
                     begin
@@ -150,7 +150,7 @@ module RubyLLM
           model ||= Model::Info.default(model_id, provider_class.slug)
         else
           model = Models.find model_id, provider
-          provider_class = Provider.providers[model.provider.to_sym] || raise_unknown_provider(model.provider)
+          provider_class = Provider.resolve!(model.provider)
         end
         [model, provider_class.new(config)]
       end
@@ -186,11 +186,6 @@ module RubyLLM
         existing_models = instance&.all
         existing_models = read_from_json if existing_models.nil? || existing_models.empty?
         existing_models
-      end
-
-      def raise_unknown_provider(provider)
-        available = Provider.providers.keys.join(', ')
-        raise Error, "Unknown provider: #{provider.inspect}. Available providers: #{available}"
       end
 
       def log_provider_fetch(provider_fetch)

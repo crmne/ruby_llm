@@ -59,6 +59,14 @@ module RubyLLM
       Chat.new(...)
     end
 
+    def batch(chats_or_id, provider: nil, context: nil)
+      if chats_or_id.is_a?(String)
+        Batch.find(chats_or_id, provider:, context:)
+      else
+        Batch.submit(chats_or_id)
+      end
+    end
+
     def embed(...)
       Embedding.embed(...)
     end

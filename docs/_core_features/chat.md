@@ -79,6 +79,41 @@ end
 
 Each time you call `ask`, RubyLLM sends the entire conversation history to the AI provider. This allows the model to understand the full context of your conversation, enabling natural follow-up questions and maintaining coherent dialogue.
 
+## Driving the Loop Yourself
+
+`ask` sends your message and runs the conversation to completion: it calls the model, runs any [tools]({% link _core_features/tools.md %}) the model asks for, and calls the model again until it answers without a tool. When you need to control that loop, for example to run each turn as its own background job, set an iteration budget, or stop and resume on another machine, `Chat` exposes it as named verbs:
+
+* `generate` runs the model once and appends its response (the model's move). It returns the response.
+* `run_tools` executes the tool calls the model asked for and appends their results (your move). It makes no model call and returns the chat.
+* `step` does whichever move is next: `run_tools` if tools are pending, otherwise `generate`. It returns `nil` once there is nothing left.
+* `complete` steps until done. This is what `ask` calls, and it returns the final response.
+* `complete?` is true when the model answered without calling a tool.
+
+So the agentic loop is just `step` until `complete?`:
+
+```ruby
+chat = RubyLLM.chat.with_tool(Weather).ask_later("What's the weather in Paris?")
+
+chat.step until chat.complete?  # generate, run_tools, generate
+chat.messages.last.content      # => "It's 15°C and partly cloudy in Paris."
+```
+
+`ask_later` stages the question without sending it, so `ask` is `ask_later` then `complete`.
+
+Because each `step` is a discrete move, you can persist the chat between steps and resume it elsewhere. Run one turn per background job, enforce a wall-clock budget, or pause for a deploy and pick up on another machine:
+
+```ruby
+class AgentTurnJob < ApplicationJob
+  def perform(chat_id)
+    chat = Chat.find(chat_id)
+    chat.step
+    AgentTurnJob.perform_later(chat_id) unless chat.complete?
+  end
+end
+```
+
+[Batches]({% link _core_features/batches.md %}) are the same idea at scale: a batch is `generate` deferred for many chats at once, with `run_tools` run locally between rounds.
+
 ## Guiding AI Behavior with System Prompts
 
 System prompts, also called instructions, allow you to set the overall behavior, personality, and constraints for the AI assistant. These instructions persist throughout the conversation and help ensure consistent responses.

@@ -215,6 +215,8 @@ response = chat.with_schema(ProductSchema).ask "Analyze this product", with: "pr
 * **Async:** Fiber-based concurrency
 * **Model registry:** 800+ models with capability detection and pricing
 * **Extended thinking:** Control, view, and persist model deliberation
+* **Citations:** Normalized source citations from documents, search, and grounding
+* **Batches:** Provider-side batch processing at half price with `RubyLLM.batch`
 * **Providers:** OpenAI, xAI, Anthropic, Gemini, VertexAI, Bedrock, DeepSeek, Mistral, Ollama, OpenRouter, Perplexity, GPUStack, and any OpenAI-compatible API
 
 ## Installation

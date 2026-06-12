@@ -380,6 +380,7 @@ module RubyLLM
                    :with_model, :with_temperature, :with_thinking, :with_citations, :with_context, :with_params,
                    :with_headers, :with_schema, :on_new_message, :on_end_message, :on_tool_call, :on_tool_result,
                    :before_message, :after_message, :before_tool_call, :after_tool_result, :each, :complete,
-                   :add_message, :reset_messages!, :cost
+                   :complete?, :ask_later, :generate, :run_tools, :step, :add_message, :add_completion,
+                   :reset_messages!, :cost
   end
 end

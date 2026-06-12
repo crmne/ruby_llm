@@ -439,6 +439,8 @@ When you `ask` a question that the model determines requires a tool:
 
 This entire multi-step process happens behind the scenes within a single `chat.ask` call when a tool is invoked.
 
+For full control over the loop the tool execution flow runs (running each turn as its own job, setting an iteration budget, or stopping and resuming elsewhere), see [Driving the Loop Yourself]({% link _core_features/chat.md %}#driving-the-loop-yourself).
+
 ## Monitoring Tool Calls with Callbacks
 
 You can monitor tool execution using additive callbacks to track when tools are called and what they return. Available from v1.15+.
@@ -502,7 +504,7 @@ chat.ask("Check weather for every major city...")
 v1.9.0+
 {: .label .label-green }
 
-Some providers accept additional metadata alongside the JSON Schema—for example, Anthropic’s `cache_control` hints. Use `with_params` to declare these once on the tool class and RubyLLM will merge them into the payload when the provider supports the keys.
+Some providers accept additional metadata alongside the JSON Schema, for example Anthropic’s `cache_control` hints. Use `with_params` to declare these once on the tool class and RubyLLM will merge them into the payload when the provider supports the keys.
 
 ```ruby
 class TodoTool < RubyLLM::Tool
@@ -521,59 +523,7 @@ class TodoTool < RubyLLM::Tool
 end
 ```
 
-Provider metadata is passed through verbatim—turn on `RUBYLLM_DEBUG=true` if you want to inspect the final payload while experimenting.
-
-## Advanced: Halting Tool Continuation
-
-After a tool executes, the LLM normally continues the conversation to explain what happened. In rare cases, you might want to skip this and return the tool result directly.
-
-### What halt does
-
-The `halt` helper stops the LLM from continuing after your tool:
-
-```ruby
-class SaveFileTool < RubyLLM::Tool
-  description "Save content to a file"
-  param :path, desc: "File path"
-  param :content, desc: "File content"
-
-  def execute(path:, content:)
-    File.write(path, content)
-    halt "Saved to #{path}"  # Returns this directly, no LLM commentary
-  end
-end
-
-# Without halt: LLM adds "I've successfully saved the file to config.yml..."
-# With halt: Just returns "Saved to config.yml"
-```
-
-### When you might use it
-
-- **Token savings:** Skip the LLM's summary for simple confirmations
-- **Sub-agent delegation:** When another agent fully handles the response
-- **Precise responses:** When you need exact output without LLM interpretation
-
-> The LLM's continuation is usually helpful - it provides context and natural language formatting. Only use `halt` when you specifically need to bypass this behavior.
-{: .warning }
-
-### Example with sub-agents
-
-```ruby
-class DelegateTool < RubyLLM::Tool
-  description "Delegate to expert"
-  param :query, desc: "The query"
-
-  def execute(query:)
-    response = RubyLLM.chat
-      .with_instructions("You are an expert...")
-      .ask(query) { |chunk| print chunk }  # Stream to user
-    halt response.content  # Skip router's commentary
-  end
-end
-```
-
-> **Sub-agents work perfectly without halt!** You can create sub-agents and stream their responses without using `halt`. The router will simply summarize what the sub-agent said, which is often helpful. Use `halt` only when you specifically want to skip the router's summary.
-{: .note }
+Provider metadata is passed through verbatim. Turn on `RUBYLLM_DEBUG=true` if you want to inspect the final payload while experimenting.
 
 ## Model Context Protocol (MCP) Support
 
