@@ -13,7 +13,7 @@ module RubyLLM
           'v1/models'
         end
 
-        def parse_list_models_response(response, slug, _capabilities)
+        def parse_list_models_response(response, slug, capabilities)
           Array(response.body['data']).map do |model_data|
             model_id = model_data['id']
 
@@ -22,6 +22,7 @@ module RubyLLM
               name: model_data['display_name'] || model_id,
               provider: slug,
               created_at: Time.parse(model_data['created_at']),
+              capabilities: capabilities.critical_capabilities_for(model_id),
               metadata: {}
             )
           end

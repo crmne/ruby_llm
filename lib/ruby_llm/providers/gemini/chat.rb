@@ -14,9 +14,10 @@ module RubyLLM
           "models/#{@model}:generateContent"
         end
 
-        # rubocop:disable Metrics/ParameterLists,Lint/UnusedMethodArgument
+        # rubocop:disable Metrics/ParameterLists,Metrics/PerceivedComplexity,Lint/UnusedMethodArgument
         def render_payload(messages, tools:, temperature:, model:, stream: false, schema: nil,
-                           thinking: nil, tool_prefs: nil)
+                           thinking: nil, citations: false, tool_prefs: nil)
+          warn_unsupported_citations(model) if citations && !model.citations?
           tool_prefs ||= {}
           @model = model.id
           payload = {
@@ -37,7 +38,14 @@ module RubyLLM
 
           payload
         end
-        # rubocop:enable Metrics/ParameterLists,Lint/UnusedMethodArgument
+        # rubocop:enable Metrics/ParameterLists,Metrics/PerceivedComplexity,Lint/UnusedMethodArgument
+
+        def warn_unsupported_citations(model)
+          RubyLLM.logger.warn(
+            "#{model.id} does not support citations according to the model registry. " \
+            'Gemini citations come from Google Search grounding: with_params(tools: [{ google_search: {} }]).'
+          )
+        end
 
         def build_thinking_config(_model, thinking)
           config = { includeThoughts: true }
@@ -93,10 +101,12 @@ module RubyLLM
           data = response.body
           parts = data.dig('candidates', 0, 'content', 'parts') || []
           tool_calls = extract_tool_calls(data)
+          content = parse_content(data)
 
           Message.new(
             role: :assistant,
-            content: parse_content(data),
+            content: content,
+            citations: extract_citations(data, content),
             thinking: Thinking.build(
               text: extract_thought_parts(parts),
               signature: extract_thought_signature(parts)
@@ -140,6 +150,60 @@ module RubyLLM
           return '' unless non_thought_parts.any?
 
           build_response_content(non_thought_parts)
+        end
+
+        # Normalizes grounding metadata (Google Search grounding) into citations.
+        def extract_citations(data, content)
+          metadata = data.dig('candidates', 0, 'groundingMetadata')
+          return [] unless metadata
+
+          chunks = metadata['groundingChunks'] || []
+          supports = metadata['groundingSupports'] || []
+          return chunk_citations(chunks) if supports.empty?
+
+          supports.flat_map { |support| support_citations(support, chunks, content) }
+        end
+
+        def support_citations(support, chunks, content)
+          segment = support['segment'] || {}
+          end_index = segment['endIndex']
+          start_index = segment['startIndex'] || (0 if end_index)
+
+          Array(support['groundingChunkIndices']).filter_map do |index|
+            source = chunk_source(chunks[index])
+            next unless source
+
+            Citation.new(
+              url: source['uri'],
+              title: source['title'],
+              text: segment['text'],
+              start_index: byte_to_char_index(content, start_index),
+              end_index: byte_to_char_index(content, end_index),
+              source_index: index
+            )
+          end
+        end
+
+        def chunk_citations(chunks)
+          chunks.each_with_index.filter_map do |chunk, index|
+            source = chunk_source(chunk)
+            next unless source
+
+            Citation.new(url: source['uri'], title: source['title'], source_index: index)
+          end
+        end
+
+        def chunk_source(chunk)
+          return nil unless chunk.is_a?(Hash)
+
+          chunk['web'] || chunk['retrievedContext']
+        end
+
+        # Grounding segment indices are byte offsets into the UTF-8 response text.
+        def byte_to_char_index(content, byte_index)
+          return nil unless content.is_a?(String) && byte_index
+
+          content.byteslice(0, byte_index)&.length
         end
 
         def extract_thought_parts(parts)

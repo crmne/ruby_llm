@@ -24,6 +24,22 @@ This guide focuses on upgrade-impacting changes: migrations, token semantics, de
 {: .note }
 
 ---
+# Upgrade to 1.17
+
+## How to Upgrade
+
+```bash
+# Run the upgrade generator
+bin/rails generate ruby_llm:upgrade_to_v1_17
+
+# Run migrations
+bin/rails db:migrate
+```
+
+That's it! The generator adds a JSON `citations` column to your messages table so [citations]({% link _core_features/citations.md %}) are persisted with each assistant message.
+
+The column is optional — without it, citations remain available on in-memory responses but aren't saved.
+
 # Upgrade to 1.15
 
 ## How to Upgrade

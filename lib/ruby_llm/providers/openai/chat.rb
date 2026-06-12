@@ -13,7 +13,8 @@ module RubyLLM
 
         # rubocop:disable Metrics/ParameterLists,Metrics/PerceivedComplexity
         def render_payload(messages, tools:, temperature:, model:, stream: false, schema: nil,
-                           thinking: nil, tool_prefs: nil)
+                           thinking: nil, citations: false, tool_prefs: nil)
+          warn_unsupported_citations(model) if citations && !model.citations?
           tool_prefs ||= {}
           payload = {
             model: model.id,
@@ -51,6 +52,13 @@ module RubyLLM
         end
         # rubocop:enable Metrics/ParameterLists,Metrics/PerceivedComplexity
 
+        def warn_unsupported_citations(model)
+          RubyLLM.logger.warn(
+            "#{model.id} does not support citations according to the model registry. " \
+            'with_citations may have no effect.'
+          )
+        end
+
         def parse_completion_response(response)
           data = response.body
           return if data.nil? || data.empty?
@@ -69,6 +77,7 @@ module RubyLLM
           Message.new(
             role: :assistant,
             content: content,
+            citations: extract_citations(message_data, data, content),
             thinking: Thinking.build(text: thinking_text, signature: thinking_signature),
             tool_calls: parse_tool_calls(message_data['tool_calls']),
             input_tokens: input_tokens(usage),
@@ -119,6 +128,60 @@ module RubyLLM
 
         def thinking_tokens(usage)
           usage.dig('completion_tokens_details', 'reasoning_tokens') || usage['reasoning_tokens']
+        end
+
+        def extract_citations(message_data, data, content)
+          annotations = parse_annotations(message_data['annotations'], content)
+          return annotations if annotations.any?
+
+          parse_root_citations(data)
+        end
+
+        def parse_annotations(annotations, content)
+          Array(annotations).filter_map do |annotation|
+            details = annotation['url_citation']
+            next unless details.is_a?(Hash)
+
+            start_index = details['start_index']
+            end_index = details['end_index']
+
+            Citation.new(
+              url: details['url'],
+              title: details['title'],
+              text: annotated_text(content, start_index, end_index),
+              start_index: start_index,
+              end_index: end_index
+            )
+          end
+        end
+
+        def annotated_text(content, start_index, end_index)
+          return nil unless content.is_a?(String) && start_index && end_index
+
+          content[start_index...end_index]
+        end
+
+        # Perplexity and xAI return search citations at the root of the response.
+        def parse_root_citations(data)
+          search_results = data['search_results']
+          return parse_search_results(search_results) if search_results.is_a?(Array) && search_results.any?
+
+          Array(data['citations']).each_with_index.filter_map do |url, index|
+            Citation.new(url: url, source_index: index) if url.is_a?(String)
+          end
+        end
+
+        def parse_search_results(results)
+          results.each_with_index.filter_map do |result, index|
+            next unless result.is_a?(Hash)
+
+            Citation.new(
+              url: result['url'],
+              title: result['title'],
+              cited_text: result['snippet'],
+              source_index: index
+            )
+          end
         end
 
         def format_messages(messages)

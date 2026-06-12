@@ -13,16 +13,24 @@ module RubyLLM
 
         # rubocop:disable Metrics/ParameterLists
         def render_payload(messages, tools:, temperature:, model:, stream: false,
-                           schema: nil, thinking: nil, tool_prefs: nil)
+                           schema: nil, thinking: nil, citations: false, tool_prefs: nil)
+          warn_unsupported_citations(model) if citations && !model.citations?
           tool_prefs ||= {}
           system_messages, chat_messages = separate_messages(messages)
           system_content = build_system_content(system_messages)
 
-          build_base_payload(chat_messages, model, stream, thinking).tap do |payload|
+          build_base_payload(chat_messages, model, stream, thinking, citations: citations).tap do |payload|
             add_optional_fields(payload, system_content:, tools:, tool_prefs:, temperature:, schema:)
           end
         end
         # rubocop:enable Metrics/ParameterLists
+
+        def warn_unsupported_citations(model)
+          RubyLLM.logger.warn(
+            "#{model.id} does not support citations according to the model registry. " \
+            'with_citations may have no effect.'
+          )
+        end
 
         def separate_messages(messages)
           messages.partition { |msg| msg.role == :system }
@@ -45,10 +53,10 @@ module RubyLLM
           end
         end
 
-        def build_base_payload(chat_messages, model, stream, thinking)
+        def build_base_payload(chat_messages, model, stream, thinking, citations: false)
           payload = {
             model: model.id,
-            messages: chat_messages.map { |msg| format_message(msg, thinking: thinking) },
+            messages: chat_messages.map { |msg| format_message(msg, thinking: thinking, citations: citations) },
             stream: stream,
             max_tokens: model.max_tokens || 4096
           }
@@ -81,17 +89,54 @@ module RubyLLM
           data = response.body
           content_blocks = data['content'] || []
 
-          text_content = extract_text_content(content_blocks)
+          text_content, citations = extract_text_and_citations(content_blocks)
           thinking_content = extract_thinking_content(content_blocks)
           thinking_signature = extract_thinking_signature(content_blocks)
           tool_use_blocks = Tools.find_tool_uses(content_blocks)
 
-          build_message(data, text_content, thinking_content, thinking_signature, tool_use_blocks, response)
+          build_message(data, text_content, citations, thinking_content, thinking_signature, tool_use_blocks,
+                        response)
         end
 
-        def extract_text_content(blocks)
-          text_blocks = blocks.select { |c| c['type'] == 'text' }
-          text_blocks.map { |c| c['text'] }.join
+        def extract_text_and_citations(blocks)
+          text = +''
+          citations = []
+
+          blocks.each do |block|
+            next unless block['type'] == 'text'
+
+            block_text = block['text'].to_s
+            Array(block['citations']).each do |citation|
+              citations << parse_citation(citation, text: block_text,
+                                                    start_index: text.length,
+                                                    end_index: text.length + block_text.length)
+            end
+            text << block_text
+          end
+
+          [text, citations]
+        end
+
+        def parse_citation(data, text: nil, start_index: nil, end_index: nil)
+          end_page = data['end_page_number']
+
+          Citation.new(
+            url: citation_url(data),
+            title: data['document_title'] || data['title'],
+            cited_text: data['cited_text'],
+            text: text,
+            start_index: start_index,
+            end_index: end_index,
+            source_index: data['document_index'] || data['search_result_index'],
+            start_page: data['start_page_number'],
+            end_page: end_page && (end_page - 1)
+          )
+        end
+
+        # Search result citations carry the developer-provided source string.
+        def citation_url(data)
+          url = data['url'] || data['source']
+          url if url&.match?(%r{\Ahttps?://})
         end
 
         def extract_thinking_content(blocks)
@@ -106,7 +151,7 @@ module RubyLLM
           thinking_block&.dig('signature') || thinking_block&.dig('data')
         end
 
-        def build_message(data, content, thinking, thinking_signature, tool_use_blocks, response) # rubocop:disable Metrics/ParameterLists
+        def build_message(data, content, citations, thinking, thinking_signature, tool_use_blocks, response) # rubocop:disable Metrics/ParameterLists
           usage = data['usage'] || {}
           thinking_tokens = usage.dig('output_tokens_details', 'thinking_tokens') ||
                             usage.dig('output_tokens_details', 'reasoning_tokens') ||
@@ -116,6 +161,7 @@ module RubyLLM
           Message.new(
             role: :assistant,
             content: content,
+            citations: citations,
             thinking: Thinking.build(text: thinking, signature: thinking_signature),
             tool_calls: Tools.parse_tool_calls(tool_use_blocks),
             input_tokens: usage['input_tokens'],
@@ -128,7 +174,7 @@ module RubyLLM
           )
         end
 
-        def format_message(msg, thinking: nil)
+        def format_message(msg, thinking: nil, citations: false)
           thinking_enabled = thinking&.enabled?
 
           if msg.tool_call?
@@ -136,11 +182,11 @@ module RubyLLM
           elsif msg.tool_result?
             Tools.format_tool_result(msg)
           else
-            format_basic_message_with_thinking(msg, thinking_enabled)
+            format_basic_message_with_thinking(msg, thinking_enabled, citations: citations)
           end
         end
 
-        def format_basic_message_with_thinking(msg, thinking_enabled)
+        def format_basic_message_with_thinking(msg, thinking_enabled, citations: false)
           content_blocks = []
 
           if msg.role == :assistant && thinking_enabled
@@ -148,7 +194,7 @@ module RubyLLM
             content_blocks << thinking_block if thinking_block
           end
 
-          append_formatted_content(content_blocks, msg.content)
+          append_formatted_content(content_blocks, msg.content, citations: citations)
 
           {
             role: convert_role(msg.role),
@@ -209,8 +255,8 @@ module RubyLLM
           end
         end
 
-        def append_formatted_content(content_blocks, content)
-          formatted_content = Media.format_content(content)
+        def append_formatted_content(content_blocks, content, citations: false)
+          formatted_content = Media.format_content(content, citations: citations)
           if formatted_content.is_a?(Array)
             content_blocks.concat(formatted_content)
           else

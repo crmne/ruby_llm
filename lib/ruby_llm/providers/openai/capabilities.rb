@@ -153,6 +153,8 @@ module RubyLLM
           capabilities << 'structured_output' if supports_structured_output?(model_id)
           capabilities << 'vision' if supports_vision?(model_id)
           capabilities << 'reasoning' if model_id.match?(/o\d|gpt-5|codex/)
+          # Web search models return url_citation annotations.
+          capabilities << 'citations' if model_id.match?(/search-(?:preview|api)/)
           capabilities
         end
 

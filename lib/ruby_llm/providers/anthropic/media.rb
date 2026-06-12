@@ -7,7 +7,7 @@ module RubyLLM
       module Media
         module_function
 
-        def format_content(content) # rubocop:disable Metrics/PerceivedComplexity
+        def format_content(content, citations: false) # rubocop:disable Metrics/PerceivedComplexity
           return content.value if content.is_a?(RubyLLM::Content::Raw)
           return [format_text(content.to_json)] if content.is_a?(Hash) || content.is_a?(Array)
           return [format_text(content)] unless content.is_a?(RubyLLM::Content)
@@ -20,9 +20,9 @@ module RubyLLM
             when :image
               parts << format_image(attachment)
             when :pdf
-              parts << format_pdf(attachment)
+              parts << format_pdf(attachment, citations: citations)
             when :text
-              parts << format_text_file(attachment)
+              parts << (citations ? format_text_document(attachment) : format_text_file(attachment))
             else
               raise UnsupportedAttachmentError, attachment.mime_type
             end
@@ -59,23 +59,27 @@ module RubyLLM
           end
         end
 
-        def format_pdf(pdf)
+        def format_pdf(pdf, citations: false)
+          document = {
+            type: 'document',
+            source: pdf_source(pdf)
+          }
+
+          enable_citations(document, pdf) if citations
+          document
+        end
+
+        def pdf_source(pdf)
           if pdf.url?
             {
-              type: 'document',
-              source: {
-                type: 'url',
-                url: pdf.source.to_s
-              }
+              type: 'url',
+              url: pdf.source.to_s
             }
           else
             {
-              type: 'document',
-              source: {
-                type: 'base64',
-                media_type: pdf.mime_type,
-                data: pdf.encoded
-              }
+              type: 'base64',
+              media_type: pdf.mime_type,
+              data: pdf.encoded
             }
           end
         end
@@ -85,6 +89,26 @@ module RubyLLM
             type: 'text',
             text: text_file.for_llm
           }
+        end
+
+        # Text attachments become citable documents when citations are enabled.
+        def format_text_document(text_file)
+          document = {
+            type: 'document',
+            source: {
+              type: 'text',
+              media_type: 'text/plain',
+              data: text_file.content
+            }
+          }
+
+          enable_citations(document, text_file)
+          document
+        end
+
+        def enable_citations(document, attachment)
+          document[:title] = attachment.filename if attachment.filename
+          document[:citations] = { enabled: true }
         end
       end
     end

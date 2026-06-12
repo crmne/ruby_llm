@@ -1091,4 +1091,21 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       end
     end
   end
+
+  describe 'citations persistence' do
+    let(:facts_path) { File.expand_path('../../fixtures/facts.txt', __dir__) }
+
+    it 'persists citations and replays them on reload' do
+      chat = Chat.create!(model: 'claude-haiku-4-5', provider: 'anthropic')
+      chat.with_citations
+
+      response = chat.ask('Who created Ruby? Use the document.', with: facts_path)
+
+      expect(response.citations).not_to be_empty
+
+      message_record = chat.messages.order(:id).last
+      expect(message_record.citations).to eq(response.citations)
+      expect(Chat.find(chat.id).messages.order(:id).last.to_llm.citations).to eq(response.citations)
+    end
+  end
 end

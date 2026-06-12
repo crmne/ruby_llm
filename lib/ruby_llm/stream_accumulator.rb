@@ -10,6 +10,7 @@ module RubyLLM
 
     def initialize
       @content = +''
+      @citations = []
       @thinking_text = +''
       @thinking_signature = nil
       @tool_calls = {}
@@ -29,6 +30,7 @@ module RubyLLM
       @model_id ||= chunk.model_id
 
       handle_chunk_content(chunk)
+      accumulate_citations(chunk.citations)
       append_thinking_from_chunk(chunk)
       count_tokens chunk
       RubyLLM.logger.debug { inspect } if RubyLLM.config.log_stream_debug
@@ -38,6 +40,7 @@ module RubyLLM
       Message.new(
         role: :assistant,
         content: content.empty? ? nil : content,
+        citations: resolved_citations,
         thinking: Thinking.build(
           text: @thinking_text.empty? ? nil : @thinking_text,
           signature: @thinking_signature
@@ -56,6 +59,24 @@ module RubyLLM
     end
 
     private
+
+    # Providers like Perplexity repeat the full citation list on every chunk.
+    def accumulate_citations(new_citations)
+      new_citations.each do |citation|
+        @citations << citation unless @citations.include?(citation)
+      end
+    end
+
+    def resolved_citations
+      @citations.map { |citation| resolve_citation_text(citation) }
+    end
+
+    def resolve_citation_text(citation)
+      return citation if citation.text || citation.start_index.nil? || citation.end_index.nil?
+
+      span = content[citation.start_index...citation.end_index]
+      span ? Citation.new(citation.to_h.merge(text: span)) : citation
+    end
 
     def tool_calls_from_stream
       tool_calls.transform_values do |tc|

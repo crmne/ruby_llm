@@ -27,6 +27,7 @@ module RubyLLM
       @headers = {}
       @schema = nil
       @thinking = nil
+      @citations = false
       @on = {
         new_message: nil,
         end_message: nil,
@@ -94,6 +95,11 @@ module RubyLLM
       raise ArgumentError, 'with_thinking requires :effort or :budget' if effort.nil? && budget.nil?
 
       @thinking = Thinking::Config.new(effort: effort, budget: budget)
+      self
+    end
+
+    def with_citations(enabled = true) # rubocop:disable Style/OptionalBooleanParameter
+      @citations = enabled
       self
     end
 
@@ -181,6 +187,7 @@ module RubyLLM
         params: params,
         schema: schema,
         thinking: @thinking,
+        citations: @citations,
         streaming: block_given?
       }
 
@@ -290,6 +297,7 @@ module RubyLLM
         headers: @headers,
         schema: @schema,
         thinking: @thinking,
+        citations: @citations,
         &wrap_streaming_block(&)
       )
     end

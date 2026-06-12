@@ -20,7 +20,7 @@ module RubyLLM
 
       # rubocop:disable Metrics/ParameterLists
       def complete(messages, tools:, temperature:, model:, params: {}, headers: {}, schema: nil, thinking: nil,
-                   tool_prefs: nil, &)
+                   citations: false, tool_prefs: nil, &)
         normalized_params = normalize_params(params, model:)
 
         super(
@@ -33,6 +33,7 @@ module RubyLLM
           headers: headers,
           schema: schema,
           thinking: thinking,
+          citations: citations,
           &
         )
       end

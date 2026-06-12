@@ -733,6 +733,7 @@ This guide covered the core `Chat` interface. Now you might want to explore:
 
 *   [Working with Models]({% link _advanced/models.md %}): Learn how to choose the best model and handle custom endpoints.
 *   [Using Tools]({% link _core_features/tools.md %}): Enable the AI to call your Ruby code.
+*   [Citations]({% link _core_features/citations.md %}): Get verifiable answers backed by your documents and web sources.
 *   [Streaming Responses]({% link _core_features/streaming.md %}): Get real-time feedback from the AI.
 *   [Rails Integration]({% link _advanced/rails.md %}): Persist your chat conversations easily.
 *   [Error Handling]({% link _advanced/error-handling.md %}): Build robust applications that handle API issues.

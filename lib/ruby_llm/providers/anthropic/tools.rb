@@ -25,7 +25,23 @@ module RubyLLM
           {
             type: 'tool_result',
             tool_use_id: msg.tool_call_id,
-            content: Media.format_content(content)
+            content: format_tool_result_content(content)
+          }
+        end
+
+        def format_tool_result_content(content)
+          return content.results.map { |result| search_result_block(result) } if content.is_a?(RubyLLM::SearchResults)
+
+          Media.format_content(content)
+        end
+
+        def search_result_block(result)
+          {
+            type: 'search_result',
+            source: result[:url] || result[:title],
+            title: result[:title],
+            content: [{ type: 'text', text: result[:text] }],
+            citations: { enabled: true }
           }
         end
 

@@ -15,7 +15,8 @@ module RubyLLM
 
         # rubocop:disable Metrics/ParameterLists,Lint/UnusedMethodArgument
         def render_payload(messages, tools:, temperature:, model:, stream: false,
-                           schema: nil, thinking: nil, tool_prefs: nil)
+                           schema: nil, thinking: nil, citations: false, tool_prefs: nil)
+          warn_unsupported_citations(model) if citations
           tool_prefs ||= {}
           @model = model
           @used_document_names = {}
@@ -41,6 +42,12 @@ module RubyLLM
           payload
         end
         # rubocop:enable Metrics/ParameterLists,Lint/UnusedMethodArgument
+
+        def warn_unsupported_citations(model)
+          RubyLLM.logger.warn(
+            "RubyLLM does not support citations on Bedrock yet. Ignoring with_citations for #{model.id}."
+          )
+        end
 
         def parse_completion_response(response)
           data = response.body

@@ -23,6 +23,7 @@ module RubyLLM
             role: :assistant,
             model_id: data['model'],
             content: content,
+            citations: extract_chunk_citations(delta, data),
             thinking: Thinking.build(
               text: thinking_from_blocks || delta['reasoning_content'] || delta['reasoning'],
               signature: delta['reasoning_signature']
@@ -34,6 +35,13 @@ module RubyLLM
             cache_creation_tokens: cache_write_tokens(usage),
             thinking_tokens: thinking_tokens(usage)
           )
+        end
+
+        def extract_chunk_citations(delta, data)
+          annotations = parse_annotations(delta['annotations'], nil)
+          return annotations if annotations.any?
+
+          parse_root_citations(data)
         end
 
         def parse_streaming_error(data)

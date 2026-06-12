@@ -35,7 +35,7 @@ RSpec.describe RubyLLM::Providers::Anthropic::Models do
       expect(model.family).to be_nil
       expect(model.context_window).to be_nil
       expect(model.max_output_tokens).to be_nil
-      expect(model.capabilities).to eq([])
+      expect(model.capabilities).to eq(['citations'])
       expect(model.pricing.to_h).to eq({})
     end
   end

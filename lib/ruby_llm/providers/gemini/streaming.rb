@@ -18,6 +18,7 @@ module RubyLLM
             role: :assistant,
             model_id: data['modelVersion'],
             content: extract_text_content(parts),
+            citations: extract_citations(data, nil),
             thinking: Thinking.build(
               text: extract_thought_parts(parts),
               signature: extract_thought_signature(parts)

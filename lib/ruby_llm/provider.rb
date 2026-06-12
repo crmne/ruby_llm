@@ -42,7 +42,7 @@ module RubyLLM
 
     # rubocop:disable Metrics/ParameterLists
     def complete(messages, tools:, temperature:, model:, params: {}, headers: {}, schema: nil, thinking: nil,
-                 tool_prefs: nil, &)
+                 citations: false, tool_prefs: nil, &)
       normalized_temperature = maybe_normalize_temperature(temperature, model)
 
       payload = Utils.deep_merge(
@@ -54,7 +54,8 @@ module RubyLLM
           model: model,
           stream: block_given?,
           schema: schema,
-          thinking: thinking
+          thinking: thinking,
+          citations: citations
         ),
         params
       )

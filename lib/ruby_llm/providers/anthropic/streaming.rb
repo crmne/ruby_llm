@@ -20,6 +20,7 @@ module RubyLLM
             role: :assistant,
             model_id: extract_model_id(data),
             content: extract_content_delta(data, delta_type),
+            citations: extract_citations_delta(data, delta_type),
             thinking: Thinking.build(
               text: extract_thinking_delta(data, delta_type),
               signature: extract_signature_delta(data, delta_type)
@@ -36,6 +37,13 @@ module RubyLLM
           return data.dig('delta', 'text') if delta_type == 'text_delta'
 
           nil
+        end
+
+        def extract_citations_delta(data, delta_type)
+          return nil unless delta_type == 'citations_delta'
+
+          citation = data.dig('delta', 'citation')
+          citation ? [Chat.parse_citation(citation)] : nil
         end
 
         def extract_thinking_delta(data, delta_type)

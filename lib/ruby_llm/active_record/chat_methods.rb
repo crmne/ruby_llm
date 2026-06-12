@@ -118,6 +118,11 @@ module RubyLLM
         self
       end
 
+      def with_citations(...)
+        to_llm.with_citations(...)
+        self
+      end
+
       def with_params(...)
         to_llm.with_params(...)
         self
@@ -366,6 +371,7 @@ module RubyLLM
           attrs[:thinking_text] = message.thinking&.text if @message.has_attribute?(:thinking_text)
           attrs[:thinking_signature] = message.thinking&.signature if @message.has_attribute?(:thinking_signature)
           attrs[:thinking_tokens] = message.thinking_tokens if @message.has_attribute?(:thinking_tokens)
+          attrs[:citations] = message.citations.map(&:to_h).presence if @message.has_attribute?(:citations)
 
           # Add model association dynamically
           attrs[self.class.model_association_name] = model_association
