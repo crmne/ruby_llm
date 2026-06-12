@@ -26,6 +26,9 @@ This guide focuses on upgrade-impacting changes: migrations, token semantics, de
 ---
 # Upgrade to 2.0
 
+2.0 is currently in development
+{: .note }
+
 ## How to Upgrade
 
 ```bash
