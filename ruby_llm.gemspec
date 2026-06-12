@@ -8,10 +8,10 @@ Gem::Specification.new do |spec|
   spec.authors       = ['Carmine Paolino']
   spec.email         = ['carmine@paolino.me']
 
-  spec.summary       = 'A single, beautiful Ruby framework for all major AI providers.'
-  spec.description   = 'A single, beautiful Ruby framework for all major AI providers. ' \
-                       'Easily build chatbots, AI agents, RAG applications, content generators, ' \
-                       'and every AI workflow you can think of. ' \
+  spec.summary       = 'One delightful Ruby framework for every major AI provider.'
+  spec.description   = "Ruby's AI agent framework. One delightful API for every major AI provider. " \
+                       'Build AI agents, chatbots, RAG apps, and multimodal workflows ' \
+                       'in beautiful, expressive code. ' \
                        'Features chat (text, images, audio, PDFs), image generation, embeddings, tools ' \
                        '(function calling), structured output, Rails ' \
                        'integration, and streaming. Works with OpenAI, Anthropic, Google Gemini, AWS Bedrock, ' \
