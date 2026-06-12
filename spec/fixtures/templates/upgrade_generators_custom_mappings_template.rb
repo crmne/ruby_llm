@@ -70,5 +70,5 @@ after_bundle do
   generate 'ruby_llm:upgrade_to_v1_7', 'chat:Conversation', 'message:ChatMessage'
   generate 'ruby_llm:upgrade_to_v1_9', 'message:ChatMessage'
   generate 'ruby_llm:upgrade_to_v1_14'
-  generate 'ruby_llm:upgrade_to_v1_17', 'message:ChatMessage'
+  generate 'ruby_llm:upgrade_to_v2_0', 'message:ChatMessage'
 end

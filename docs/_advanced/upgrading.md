@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Upgrading
-nav_order: 8
+nav_order: 7
 description: Upgrade guides for changes in data formats
 redirect_from:
   - /upgrading-to-1-7
@@ -25,6 +25,18 @@ This guide focuses on upgrade-impacting changes: migrations, token semantics, de
 
 ---
 # Upgrade to 2.0
+
+## How to Upgrade
+
+```bash
+# Run the upgrade generator
+bin/rails generate ruby_llm:upgrade_to_v2_0
+
+# Run migrations
+bin/rails db:migrate
+```
+
+The generator adds a JSON `citations` column to your messages table so [citations]({% link _core_features/citations.md %}) are persisted with each assistant message. The column is optional — without it, citations remain available on in-memory responses but aren't saved.
 
 ## Providers and Protocols Split
 
@@ -57,25 +69,9 @@ class MyProvider < RubyLLM::Provider
 end
 ```
 
-See [Protocols]({% link _advanced/protocols.md %}) for the full picture.
+For routing details and per-chat overrides, see [Choosing the Wire Protocol]({% link _core_features/chat.md %}#choosing-the-wire-protocol).
 
 ---
-# Upgrade to 1.17
-
-## How to Upgrade
-
-```bash
-# Run the upgrade generator
-bin/rails generate ruby_llm:upgrade_to_v1_17
-
-# Run migrations
-bin/rails db:migrate
-```
-
-That's it! The generator adds a JSON `citations` column to your messages table so [citations]({% link _core_features/citations.md %}) are persisted with each assistant message.
-
-The column is optional — without it, citations remain available on in-memory responses but aren't saved.
-
 # Upgrade to 1.15
 
 ## How to Upgrade

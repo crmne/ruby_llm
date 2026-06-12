@@ -10,7 +10,7 @@ redirect_from:
 # {{ page.title }}
 {: .d-inline-block .no_toc }
 
-New in 1.17
+New in 2.0
 {: .label .label-green }
 
 {{ page.description }}
@@ -197,7 +197,7 @@ chat_record.messages.last.citations # => [RubyLLM::Citation, ...]
 Run the upgrade generator:
 
 ```bash
-rails generate ruby_llm:upgrade_to_v1_17
+rails generate ruby_llm:upgrade_to_v2_0
 rails db:migrate
 ```
 

@@ -1,4 +1,4 @@
-class AddRubyLlmV117Columns < ActiveRecord::Migration<%= migration_version %>
+class AddRubyLlmV20Columns < ActiveRecord::Migration<%= migration_version %>
   def change
     unless column_exists?(:<%= message_table_name %>, :citations)
       add_column :<%= message_table_name %>, :citations, :json

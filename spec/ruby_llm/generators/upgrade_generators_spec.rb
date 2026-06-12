@@ -5,7 +5,7 @@ require 'fileutils'
 require 'generators/ruby_llm/upgrade_to_v1_7/upgrade_to_v1_7_generator'
 require 'generators/ruby_llm/upgrade_to_v1_9/upgrade_to_v1_9_generator'
 require 'generators/ruby_llm/upgrade_to_v1_14/upgrade_to_v1_14_generator'
-require 'generators/ruby_llm/upgrade_to_v1_17/upgrade_to_v1_17_generator'
+require 'generators/ruby_llm/upgrade_to_v2_0/upgrade_to_v2_0_generator'
 require_relative '../../support/generator_test_helpers'
 
 RSpec.describe 'RubyLLM upgrade generators', :generator, type: :generator do # rubocop:disable RSpec/DescribeClass
@@ -89,9 +89,9 @@ RSpec.describe 'RubyLLM upgrade generators', :generator, type: :generator do # r
       end
     end
 
-    it 'creates the expected v1.17 migration file' do
+    it 'creates the expected v2.0 migration file' do
       within_test_app(app_path) do
-        migration_path = migrations_containing('add_ruby_llm_v1_17_columns').first
+        migration_path = migrations_containing('add_ruby_llm_v2_0_columns').first
         expect(migration_path).not_to be_nil
 
         migration = File.read(migration_path)
@@ -183,9 +183,9 @@ RSpec.describe 'RubyLLM upgrade generators', :generator, type: :generator do # r
       end
     end
 
-    it 'creates a v1.17 migration targeting the mapped message table' do
+    it 'creates a v2.0 migration targeting the mapped message table' do
       within_test_app(app_path) do
-        migration_path = migrations_containing('add_ruby_llm_v1_17_columns').first
+        migration_path = migrations_containing('add_ruby_llm_v2_0_columns').first
         expect(migration_path).not_to be_nil
 
         migration = File.read(migration_path)

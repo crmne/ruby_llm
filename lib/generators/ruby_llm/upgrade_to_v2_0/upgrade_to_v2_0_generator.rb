@@ -6,17 +6,17 @@ require_relative '../generator_helpers'
 
 module RubyLLM
   module Generators
-    # Generator to add the v1.17 citations column to existing apps.
-    class UpgradeToV117Generator < Rails::Generators::Base
+    # Generator to add the v2.0 citations column to existing apps.
+    class UpgradeToV20Generator < Rails::Generators::Base
       include Rails::Generators::Migration
       include RubyLLM::Generators::GeneratorHelpers
 
-      namespace 'ruby_llm:upgrade_to_v1_17'
+      namespace 'ruby_llm:upgrade_to_v2_0'
       source_root File.expand_path('templates', __dir__)
 
       argument :model_mappings, type: :array, default: [], banner: 'message:MessageName'
 
-      desc 'Adds the citations column introduced in v1.17.0'
+      desc 'Adds the citations column introduced in v2.0'
 
       def self.next_migration_number(dirname)
         ::ActiveRecord::Generators::Base.next_migration_number(dirname)
@@ -25,8 +25,8 @@ module RubyLLM
       def create_migration_file
         parse_model_mappings
 
-        migration_template 'add_v1_17_message_columns.rb.tt',
-                           'db/migrate/add_ruby_llm_v1_17_columns.rb',
+        migration_template 'add_v2_0_message_columns.rb.tt',
+                           'db/migrate/add_ruby_llm_v2_0_columns.rb',
                            migration_version: migration_version,
                            message_table_name: message_table_name
       end
@@ -40,7 +40,7 @@ module RubyLLM
           2. Run: bin/rails db:migrate
           3. Restart your application server
 
-          📚 See the v1.17.0 release notes for details on citations support.
+          📚 See the v2.0 release notes for details on citations support.
 
         INSTRUCTIONS
       end
