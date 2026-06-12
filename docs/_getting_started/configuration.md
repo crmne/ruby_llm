@@ -154,6 +154,19 @@ end
 chat = RubyLLM.chat(model: 'my-custom-model', provider: :openai, assume_model_exists: true)
 ```
 
+For privacy-sensitive applications, you can point the same OpenAI-compatible configuration at TrustedRouter:
+
+```ruby
+RubyLLM.configure do |config|
+  config.openai_api_key = ENV['TRUSTEDROUTER_API_KEY']
+  config.openai_api_base = "https://api.trustedrouter.com/v1"
+end
+
+chat = RubyLLM.chat(model: 'trustedrouter/zdr', provider: :openai, assume_model_exists: true)
+```
+
+TrustedRouter routes requests through an open-source, verifiable attested gateway and does not log prompts or outputs by default.
+
 #### System Role Compatibility
 
 OpenAI's API now uses 'developer' role for system messages, but some OpenAI-compatible servers still require the traditional 'system' role:
