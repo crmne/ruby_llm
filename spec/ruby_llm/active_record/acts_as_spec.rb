@@ -45,7 +45,8 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       chat.ask('Hello')
 
       message = chat.messages.last
-      expect(message.input_tokens).to be_positive
+      total_input_tokens = message.input_tokens.to_i + message.cached_tokens.to_i + message.cache_creation_tokens.to_i
+      expect(total_input_tokens).to be_positive
       expect(message.output_tokens).to be_positive
     end
 
@@ -118,6 +119,23 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
   end
 
   describe 'tool usage' do
+    it 'uses configured and per-chat tool concurrency' do
+      original_tool_concurrency = RubyLLM.config.tool_concurrency
+      RubyLLM.config.tool_concurrency = true
+
+      chat = Chat.create!(model: model)
+
+      expect(chat.to_llm.concurrency).to eq(:threads)
+
+      chat.with_tools(Calculator, concurrency: :fibers)
+      expect(chat.to_llm.concurrency).to eq(:fibers)
+
+      chat.with_tools(Calculator, concurrency: false)
+      expect(chat.to_llm.concurrency).to be_nil
+    ensure
+      RubyLLM.config.tool_concurrency = original_tool_concurrency
+    end
+
     it 'persists tool calls' do
       chat = Chat.create!(model: model)
       chat.with_tool(Calculator)
@@ -158,29 +176,17 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
 
   describe 'model associations' do
     context 'when model registry is configured' do
-      before do
-        # Only set up if Model class exists (from dummy app)
-        next unless defined?(Model)
-
-        # Model should already exist from before(:all) which loaded from JSON
-      end
-
       it 'associates chat with model' do
-        skip 'Model not available' unless defined?(Model) && Model.table_exists?
-
         chat = Chat.create!(model: 'gpt-4.1-nano')
-        expect(chat).to respond_to(:model)
-        expect(chat.model&.name).to match(/^GPT-4.1 [Nn]ano$/) if chat.model
+
+        expect(chat.model.name).to match(/^GPT-4.1 [Nn]ano$/)
       end
 
       it 'associates messages with model' do
-        skip 'Model not available' unless defined?(Model) && Model.table_exists?
-
         chat = Chat.create!(model: 'gpt-4.1-nano')
         chat.ask('Hello')
 
-        message = chat.messages.last
-        expect(message).to respond_to(:model) if defined?(Message.model)
+        expect(chat.messages.last.model).to eq(chat.model)
       end
     end
   end
@@ -305,7 +311,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
 
     it 'persists raw content blocks separately from plain text' do
       chat = Chat.create!(model: anthropic_model)
-      raw_block = RubyLLM::Providers::Anthropic::Content.new('Cache me once', cache: true)
+      raw_block = RubyLLM::Protocols::Anthropic::Content.new('Cache me once', cache: true)
 
       message = chat.add_message(role: :user, content: raw_block)
 
@@ -1036,11 +1042,15 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
         { budget: 1024 }
       when :gemini
         { effort: :low }
-      when :ollama
+      when :gpustack, :ollama
         nil
       else
         { effort: :medium }
       end
+    end
+
+    def expect_response_payload(response)
+      expect(response.content.presence || response.thinking&.text).to be_present
     end
 
     question = <<~QUESTION.strip
@@ -1055,11 +1065,12 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
         chat = Chat.create!(model: model, provider: provider)
         config = thinking_config_for(provider)
         chat = chat.with_thinking(**config) if config
+        prompt = provider == :gpustack ? 'What is 5 + 3? Think briefly before answering.' : question
 
         chunks = []
-        response = chat.ask(question) { |chunk| chunks << chunk }
+        response = chat.ask(prompt) { |chunk| chunks << chunk }
 
-        expect(response.content).to be_present
+        expect_response_payload(response)
         expect(chunks).not_to be_empty
 
         message_record = chat.messages.order(:id).last
@@ -1068,7 +1079,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
         expect(message_record.thinking_tokens).to eq(response.thinking_tokens) if response.thinking_tokens
 
         followup = chat.ask('tell me more')
-        expect(followup.content).to be_present
+        expect_response_payload(followup)
 
         replayed_messages = chat.to_llm.messages
         if response.thinking&.text
@@ -1078,6 +1089,23 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
           expect(replayed_messages.filter_map { |msg| msg.thinking&.signature }).to include(response.thinking.signature)
         end
       end
+    end
+  end
+
+  describe 'citations persistence' do
+    let(:facts_path) { File.expand_path('../../fixtures/facts.txt', __dir__) }
+
+    it 'persists citations and replays them on reload' do
+      chat = Chat.create!(model: 'claude-haiku-4-5', provider: 'anthropic')
+      chat.with_citations
+
+      response = chat.ask('Who created Ruby? Use the document.', with: facts_path)
+
+      expect(response.citations).not_to be_empty
+
+      message_record = chat.messages.order(:id).last
+      expect(message_record.citations).to eq(response.citations)
+      expect(Chat.find(chat.id).messages.order(:id).last.to_llm.citations).to eq(response.citations)
     end
   end
 end

@@ -8,7 +8,7 @@ http_interactions:
       string: '{"contents":[{"role":"user","parts":[{"text":"What''s 2 + 2?"}]}],"generationConfig":{}}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       X-Goog-Api-Key:
       - "<GEMINI_API_KEY>"
       Content-Type:
@@ -31,7 +31,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 06 May 2026 23:54:09 GMT
+      - Mon, 08 Jun 2026 17:08:10 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -41,7 +41,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=776
+      - gfet4t7; dur=500
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -55,7 +55,7 @@ http_interactions:
               "content": {
                 "parts": [
                   {
-                    "text": "2 + 2 = 4"
+                    "text": "2 + 2 = **4**"
                   }
                 ],
                 "role": "model"
@@ -66,19 +66,19 @@ http_interactions:
           ],
           "usageMetadata": {
             "promptTokenCount": 10,
-            "candidatesTokenCount": 7,
-            "totalTokenCount": 42,
+            "candidatesTokenCount": 8,
+            "totalTokenCount": 38,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
                 "tokenCount": 10
               }
             ],
-            "thoughtsTokenCount": 25,
+            "thoughtsTokenCount": 20,
             "serviceTier": "standard"
           },
           "modelVersion": "gemini-2.5-flash",
-          "responseId": "oNT7aZ7xO9GMkdUP2YWDiAI"
+          "responseId": "-vYmaorlBfznvdIP37-wwQk"
         }
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+  recorded_at: Mon, 08 Jun 2026 17:08:10 GMT
 recorded_with: VCR 6.4.0

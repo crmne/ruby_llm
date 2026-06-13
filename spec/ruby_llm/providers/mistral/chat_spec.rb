@@ -3,11 +3,7 @@
 require 'spec_helper'
 
 RSpec.describe RubyLLM::Providers::Mistral::Chat do
-  let(:provider) do
-    Class.new(RubyLLM::Providers::OpenAI) do
-      include RubyLLM::Providers::Mistral::Chat
-    end.allocate
-  end
+  let(:provider) { RubyLLM::Providers::Mistral::ChatCompletions.allocate }
 
   let(:messages) { [RubyLLM::Message.new(role: :user, content: 'Hello')] }
 

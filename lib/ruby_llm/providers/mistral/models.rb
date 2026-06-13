@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'time'
+
 module RubyLLM
   module Providers
     class Mistral
@@ -9,12 +11,6 @@ module RubyLLM
 
         def models_url
           'models'
-        end
-
-        def headers(config)
-          {
-            'Authorization' => "Bearer #{config.mistral_api_key}"
-          }
         end
 
         def parse_list_models_response(response, slug, capabilities)

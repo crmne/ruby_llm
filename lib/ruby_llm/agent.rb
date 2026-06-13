@@ -19,6 +19,7 @@ module RubyLLM
         subclass.instance_variable_set(:@instructions, @instructions)
         subclass.instance_variable_set(:@temperature, @temperature)
         subclass.instance_variable_set(:@thinking, @thinking)
+        subclass.instance_variable_set(:@citations, @citations)
         subclass.instance_variable_set(:@params, (@params || {}).dup)
         subclass.instance_variable_set(:@headers, (@headers || {}).dup)
         subclass.instance_variable_set(:@schema, @schema)
@@ -57,6 +58,12 @@ module RubyLLM
         return @thinking if effort.nil? && budget.nil?
 
         @thinking = { effort: effort, budget: budget }
+      end
+
+      def citations(value = nil)
+        return @citations if value.nil?
+
+        @citations = value
       end
 
       def params(**params, &block)
@@ -125,6 +132,7 @@ module RubyLLM
         record
       end
 
+      # Mutates persisted instructions on the configured chat record.
       def sync_instructions!(chat_or_id, **kwargs)
         raise ArgumentError, 'chat_model must be configured to use sync_instructions!' unless resolved_chat_model
 
@@ -150,15 +158,20 @@ module RubyLLM
         ERB.new(File.read(path)).result_with_hash(resolved_locals)
       end
 
-      private
+      def partition_inputs(kwargs)
+        input_values = {}
+        chat_options = {}
 
-      def with_rails_chat_record(method_name, **kwargs)
-        raise ArgumentError, 'chat_model must be configured to use create/create!' unless resolved_chat_model
+        kwargs.each do |key, value|
+          symbolized_key = key.to_sym
+          if inputs.include?(symbolized_key)
+            input_values[symbolized_key] = value
+          else
+            chat_options[symbolized_key] = value
+          end
+        end
 
-        input_values, chat_options = partition_inputs(kwargs)
-        record = resolved_chat_model.public_send(method_name, **chat_kwargs, **chat_options)
-        apply_configuration(record, input_values:, persist_instructions: true) if record
-        record
+        [input_values, chat_options]
       end
 
       def apply_configuration(chat_object, input_values:, persist_instructions:)
@@ -170,9 +183,21 @@ module RubyLLM
         apply_tools(llm_chat, runtime)
         apply_temperature(llm_chat)
         apply_thinking(llm_chat)
+        apply_citations(llm_chat)
         apply_params(llm_chat, runtime)
         apply_headers(llm_chat, runtime)
         apply_schema(llm_chat, runtime)
+      end
+
+      private
+
+      def with_rails_chat_record(method_name, **kwargs)
+        raise ArgumentError, 'chat_model must be configured to use create/create!' unless resolved_chat_model
+
+        input_values, chat_options = partition_inputs(kwargs)
+        record = resolved_chat_model.public_send(method_name, **chat_kwargs, **chat_options)
+        apply_configuration(record, input_values:, persist_instructions: true) if record
+        record
       end
 
       def apply_context(llm_chat)
@@ -202,6 +227,10 @@ module RubyLLM
         llm_chat.with_thinking(**thinking) if thinking
       end
 
+      def apply_citations(llm_chat)
+        llm_chat.with_citations(citations) unless citations.nil?
+      end
+
       def apply_params(llm_chat, runtime)
         value = evaluate(params, runtime)
         llm_chat.with_params(**value) if value && !value.empty?
@@ -220,12 +249,22 @@ module RubyLLM
       def resolved_schema_value(runtime)
         value = schema
         return value unless value.is_a?(Proc)
+        return evaluate(value, runtime) if value.lambda?
 
-        evaluate(value, runtime)
+        resolved = evaluate(value, runtime)
+        warn_dynamic_schema_block_deprecation
+        resolved
       rescue NoMethodError => e
         raise unless e.receiver.equal?(runtime)
 
         RubyLLM::Schema.create(&value)
+      end
+
+      def warn_dynamic_schema_block_deprecation
+        RubyLLM.deprecator.warn(
+          'Dynamic `schema` blocks that reference agent inputs are deprecated; in RubyLLM 2.0 ' \
+          'a bare block will always be treated as Schema DSL. Use a lambda instead: `schema -> { ... }`.'
+        )
       end
 
       def llm_chat_for(chat_object)
@@ -285,22 +324,6 @@ module RubyLLM
         base.merge(evaluated)
       end
 
-      def partition_inputs(kwargs)
-        input_values = {}
-        chat_options = {}
-
-        kwargs.each do |key, value|
-          symbolized_key = key.to_sym
-          if inputs.include?(symbolized_key)
-            input_values[symbolized_key] = value
-          else
-            chat_options[symbolized_key] = value
-          end
-        end
-
-        [input_values, chat_options]
-      end
-
       def runtime_context(chat:, inputs:)
         agent_class = self
         Object.new.tap do |runtime|
@@ -323,11 +346,7 @@ module RubyLLM
 
       def prompt_agent_path
         class_name = name || 'agent'
-        class_name.gsub('::', '/')
-                  .gsub(/([A-Z]+)([A-Z][a-z])/, '\1_\2')
-                  .gsub(/([a-z\d])([A-Z])/, '\1_\2')
-                  .tr('-', '_')
-                  .downcase
+        Utils.underscore(class_name.gsub('::', '/')).tr('-', '_')
       end
 
       def prompt_root
@@ -349,18 +368,18 @@ module RubyLLM
     end
 
     def initialize(chat: nil, inputs: nil, persist_instructions: true, **kwargs)
-      input_values, chat_options = self.class.send(:partition_inputs, kwargs)
+      input_values, chat_options = self.class.partition_inputs(kwargs)
       @chat = chat || RubyLLM.chat(**self.class.chat_kwargs, **chat_options)
-      self.class.send(:apply_configuration, @chat, input_values: input_values.merge(inputs || {}),
-                                                   persist_instructions:)
+      self.class.apply_configuration(@chat, input_values: input_values.merge(inputs || {}),
+                                            persist_instructions:)
     end
 
     attr_reader :chat
 
     def_delegators :chat, :model, :messages, :tools, :params, :headers, :schema, :ask, :say, :with_tool, :with_tools,
-                   :with_model, :with_temperature, :with_thinking, :with_context, :with_params, :with_headers,
-                   :with_schema, :on_new_message, :on_end_message, :on_tool_call, :on_tool_result, :before_message,
-                   :after_message, :before_tool_call, :after_tool_result, :each, :complete, :add_message,
-                   :reset_messages!, :cost
+                   :with_model, :with_temperature, :with_thinking, :with_citations, :with_context, :with_params,
+                   :with_headers, :with_schema, :on_new_message, :on_end_message, :on_tool_call, :on_tool_result,
+                   :before_message, :after_message, :before_tool_call, :after_tool_result, :each, :complete,
+                   :add_message, :reset_messages!, :cost
   end
 end

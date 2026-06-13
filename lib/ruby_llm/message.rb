@@ -5,7 +5,7 @@ module RubyLLM
   class Message
     ROLES = %i[system user assistant tool].freeze
 
-    attr_reader :role, :model_id, :tool_calls, :tool_call_id, :raw, :thinking, :tokens
+    attr_reader :role, :model_id, :tool_calls, :tool_call_id, :raw, :thinking, :tokens, :citations
     attr_writer :content
 
     def initialize(options = {})
@@ -19,21 +19,17 @@ module RubyLLM
         output: options[:output_tokens],
         cached: options[:cached_tokens],
         cache_creation: options[:cache_creation_tokens],
-        thinking: options[:thinking_tokens],
-        reasoning: options[:reasoning_tokens]
+        thinking: options[:thinking_tokens]
       )
       @raw = options[:raw]
       @thinking = options[:thinking]
+      @citations = Array(options[:citations])
 
       ensure_valid_role
     end
 
     def content
-      if @content.is_a?(Content) && @content.text && @content.attachments.empty?
-        @content.text
-      else
-        @content
-      end
+      @content.is_a?(Content) ? @content.format : @content
     end
 
     def tool_call?
@@ -76,10 +72,6 @@ module RubyLLM
       tokens&.thinking
     end
 
-    def reasoning_tokens
-      tokens&.thinking
-    end
-
     def cost(model: nil)
       Cost.new(tokens:, model: model || model_info)
     end
@@ -92,11 +84,13 @@ module RubyLLM
         tool_calls: tool_calls,
         tool_call_id: tool_call_id,
         thinking: thinking&.text,
-        thinking_signature: thinking&.signature
+        thinking_signature: thinking&.signature,
+        citations: citations.empty? ? nil : citations.map(&:to_h)
       }.merge(tokens ? tokens.to_h : {}).compact
     end
 
-    def instance_variables
+    # Keeps the raw Faraday response out of pretty-printed output.
+    def pretty_print_instance_variables
       super - [:@raw]
     end
 

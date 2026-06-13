@@ -2,14 +2,14 @@
 http_interactions:
 - request:
     method: post
-    uri: https://api.openai.com/v1/chat/completions
+    uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-5-nano","messages":[{"role":"user","content":"Who is
-        the creator of the programming language Ruby?"}],"stream":false}'
+      string: '{"model":"gpt-5-nano","input":[{"role":"user","content":"Who is the
+        creator of the programming language Ruby?"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 06 May 2026 23:54:42 GMT
+      - Thu, 11 Jun 2026 20:09:31 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -42,17 +42,17 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Access-Control-Expose-Headers:
+      - CF-Ray
+      - CF-Ray
       - X-Request-ID
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '2047'
+      - '3061'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
       - '2020-10-01'
-      X-Openai-Proxy-Wasm:
-      - v0.1
       X-Ratelimit-Limit-Requests:
       - '5000'
       X-Ratelimit-Limit-Tokens:
@@ -60,7 +60,7 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '4999'
       X-Ratelimit-Remaining-Tokens:
-      - '1999985'
+      - '2000000'
       X-Ratelimit-Reset-Requests:
       - 12ms
       X-Ratelimit-Reset-Tokens:
@@ -73,56 +73,100 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: |
+      string: |-
         {
-          "id": "chatcmpl-DcgMaF6n4Yel9pZ97pKeGVGsT64cu",
-          "object": "chat.completion",
-          "created": 1778111680,
+          "id": "resp_0133f5509e4a6d13016a2b15f817f481a2a991823b0a02c263",
+          "object": "response",
+          "created_at": 1781208568,
+          "status": "completed",
+          "background": false,
+          "billing": {
+            "payer": "developer"
+          },
+          "completed_at": 1781208570,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
           "model": "gpt-5-nano-2025-08-07",
-          "choices": [
+          "moderation": null,
+          "output": [
             {
-              "index": 0,
-              "message": {
-                "role": "assistant",
-                "content": "Yukihiro Matsumoto (often called Matz), a Japanese programmer, created the Ruby programming language (first released in 1995).",
-                "refusal": null,
-                "annotations": []
-              },
-              "finish_reason": "stop"
+              "id": "rs_0133f5509e4a6d13016a2b15f8750881a28be7fc522af92ee1",
+              "type": "reasoning",
+              "content": [],
+              "encrypted_content": "gAAAAABqKxX7wvpjMw-VLExOZfEp9sU94Bl-gUZUQprRPFnv0spLRLsBywg105u1XPveFRilYa6xeIv4lmRSpMfIearExV9znxeInTba9nu89357vvIBSdm2CChT2_pf4ndcQ99BRB6BQMjMJuaaYOMk8iFsFlvtNE0POfKY_r2d--V-4PDYW7r9OpcTF5wVf26GSes9izbRQxgqXVNY9bTuDRJsTo8WRpqQJ5qGDYuaurPGQE7gmOSU4YJW7SUBxWDyBRHCxMbxlP7HVYl1qa3IATWPHh1_kqhrsixsCi1oDOCFUe8I7apvCDJOl5jFyd4NRWMxZCKoKhh6_9BNp4e6Yv94aGSb3sll2VI20quNTo0FYvJLVhqdSFIPSyYjmUR1ok1kQk3gjfH_2Uv4soTHx-vMQWUadPy2LPJHfqpnr9OeS1dQYGcOQPI9hhC67brjoPJW6rvWhYcJKpTpMt3yHMYk20Ez0mZlFX4lwSu5flA_Y4EaSJ2iQwtS_JtyAPqYvAH1dLfSoWHJ9SX9_8TnT-njfNlmHQimDi7lmFZsIna08ThRv9kCJ_WAIRkzckK1kWfcS7kodvINQ8IPRrmY19l9u61sNaiceo98Tbj8NROMTxQJRZKh-aOoHjhv96J6WCiabZudcTxe-l-SLws2zzCjvckxB5tCpyXtOTHe9H6nTANalh762vHQWtIUGN33zXax3yamo4R7IVcFLpJZ6Smf4dZJ3aLr01z-kdF45lbYv_9EEOPHXQiUy-q0VNn8aua1OiTUc0gqo3jQPkdT2xbIYCdbKUtIfQfCRbw4xQhsTMteGmS9IzhdTZ3zLghbXGlzt5UmIbSjn1MnRC6u6tPCEVgxpMXBs4NXKIgHW-NLUHfQFzDNf_hmgq3gxKMZc8L-v-YR1zRYiezoWAm6jhvudOo8e9JZvYbqF2euClAROi2u8I6zZwY-g2ZJdBZi65lL-OSMJImovSOpOW2H6uxJr8MQ-_Wumu6feyIOi881nLkPrAZIkPCPi42Ba2WaWfbReyYV-sicrqA9aRlWDwpCnEE2qyPY3koFZ4K9ars8rAFUHX7O9NLVvsVm1I08jon3r-KN1Td6s5c317zXfmWd7OkkG11JrbLmUpZ9Uth30pSSza_nTy46vRD9t_Freox0ZoZ2Rll_QnhyBNolAdYffcI5tENIy7aTw9rWTzLFD0yvRAO5zA9YxAidjqUqT6Y9jHNtTT-qsdNtdSU2VD7mo7OBtt07O3T2LTGeldfNAcfM1dd3y7XZrUaTC5wzOdfADwujXCKoJp9KBAicbk7qTKcm9Q4MosT8wk-d8uUGWorR4qlhmzUm7XxhLni7aRwLXO-23TmV_moazshePVMQrQgrFW56XkRl-gyb_hJeslYVu9UmWTFqLZp7qkDZopcmXFNFYbR47JCrRNmSFQl2VyaaGEHq3Tsb5TCRSDttRB27Xm8mGzcKwAqOfwMfFo6rnQMMgqiOkmqdbvTeHox_CUdJ95BqG3JWpAJl07xEaEOG8Kfavpv_H_qGMmhVTrjrZsI4XHINr-gveF4BfREYaXt7DqYA3gB3yOO4A-qJBGMSaqCrsE7QoAHn0r-zgcXqjecSlSh1zxFDWT7tCivDQuZeoIIGYBBIIuo5xEoDnNqpElzanuspCtOkBE60gf25Z0ZoRUlAQjqIwZH3cqSvKYyPydyGaxt59jVoaUuKSQhYDEcltEJiwRKI9yTu6c_7s3vRFFaUyR6DHSw768VnbqQsGcZ90lcgAnkLe955sHH2AGPzlQNsw_ai12iJyZNM53Z-vu3N5l834f9M2h_TQXe14iQyHukJrCs71GMECcnINefMR-k8U6Sv_CVEW_fuJQ4GaIdAV2sNU9iqyFBv-CjLpVeYQGaaE6rjO2WEkb1t2xR4FezHlpRZtCXkoSHqinhcdsC9MmB3sUJFsH1lvU1zUP-tqi9ZX6a4RaxTd_ULszw=",
+              "summary": []
+            },
+            {
+              "id": "msg_0133f5509e4a6d13016a2b15fa7b1481a297e75c2a80e87b68",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "Yukihiro Matsumoto (often called \"Matz\"). He created Ruby in 1995."
+                }
+              ],
+              "role": "assistant"
             }
           ],
-          "usage": {
-            "prompt_tokens": 16,
-            "completion_tokens": 231,
-            "total_tokens": 247,
-            "prompt_tokens_details": {
-              "cached_tokens": 0,
-              "audio_tokens": 0
-            },
-            "completion_tokens_details": {
-              "reasoning_tokens": 192,
-              "audio_tokens": 0,
-              "accepted_prediction_tokens": 0,
-              "rejected_prediction_tokens": 0
-            }
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": "in_memory",
+          "reasoning": {
+            "context": "current_turn",
+            "effort": "medium",
+            "summary": null
           },
+          "safety_identifier": null,
           "service_tier": "default",
-          "system_fingerprint": null
+          "store": false,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tools": [],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 16,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens": 217,
+            "output_tokens_details": {
+              "reasoning_tokens": 128
+            },
+            "total_tokens": 233
+          },
+          "user": null,
+          "metadata": {}
         }
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+  recorded_at: Thu, 11 Jun 2026 20:09:31 GMT
 - request:
     method: post
-    uri: https://api.openai.com/v1/chat/completions
+    uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-5-nano","messages":[{"role":"user","content":"Who is
-        the creator of the programming language Ruby?"},{"role":"assistant","content":"Yukihiro
-        Matsumoto (often called Matz), a Japanese programmer, created the Ruby programming
-        language (first released in 1995)."},{"role":"user","content":"What year did
-        he create Ruby?"}],"stream":false}'
+      string: '{"model":"gpt-5-nano","input":[{"role":"user","content":"Who is the
+        creator of the programming language Ruby?"},{"type":"reasoning","summary":[],"encrypted_content":"gAAAAABqKxX7wvpjMw-VLExOZfEp9sU94Bl-gUZUQprRPFnv0spLRLsBywg105u1XPveFRilYa6xeIv4lmRSpMfIearExV9znxeInTba9nu89357vvIBSdm2CChT2_pf4ndcQ99BRB6BQMjMJuaaYOMk8iFsFlvtNE0POfKY_r2d--V-4PDYW7r9OpcTF5wVf26GSes9izbRQxgqXVNY9bTuDRJsTo8WRpqQJ5qGDYuaurPGQE7gmOSU4YJW7SUBxWDyBRHCxMbxlP7HVYl1qa3IATWPHh1_kqhrsixsCi1oDOCFUe8I7apvCDJOl5jFyd4NRWMxZCKoKhh6_9BNp4e6Yv94aGSb3sll2VI20quNTo0FYvJLVhqdSFIPSyYjmUR1ok1kQk3gjfH_2Uv4soTHx-vMQWUadPy2LPJHfqpnr9OeS1dQYGcOQPI9hhC67brjoPJW6rvWhYcJKpTpMt3yHMYk20Ez0mZlFX4lwSu5flA_Y4EaSJ2iQwtS_JtyAPqYvAH1dLfSoWHJ9SX9_8TnT-njfNlmHQimDi7lmFZsIna08ThRv9kCJ_WAIRkzckK1kWfcS7kodvINQ8IPRrmY19l9u61sNaiceo98Tbj8NROMTxQJRZKh-aOoHjhv96J6WCiabZudcTxe-l-SLws2zzCjvckxB5tCpyXtOTHe9H6nTANalh762vHQWtIUGN33zXax3yamo4R7IVcFLpJZ6Smf4dZJ3aLr01z-kdF45lbYv_9EEOPHXQiUy-q0VNn8aua1OiTUc0gqo3jQPkdT2xbIYCdbKUtIfQfCRbw4xQhsTMteGmS9IzhdTZ3zLghbXGlzt5UmIbSjn1MnRC6u6tPCEVgxpMXBs4NXKIgHW-NLUHfQFzDNf_hmgq3gxKMZc8L-v-YR1zRYiezoWAm6jhvudOo8e9JZvYbqF2euClAROi2u8I6zZwY-g2ZJdBZi65lL-OSMJImovSOpOW2H6uxJr8MQ-_Wumu6feyIOi881nLkPrAZIkPCPi42Ba2WaWfbReyYV-sicrqA9aRlWDwpCnEE2qyPY3koFZ4K9ars8rAFUHX7O9NLVvsVm1I08jon3r-KN1Td6s5c317zXfmWd7OkkG11JrbLmUpZ9Uth30pSSza_nTy46vRD9t_Freox0ZoZ2Rll_QnhyBNolAdYffcI5tENIy7aTw9rWTzLFD0yvRAO5zA9YxAidjqUqT6Y9jHNtTT-qsdNtdSU2VD7mo7OBtt07O3T2LTGeldfNAcfM1dd3y7XZrUaTC5wzOdfADwujXCKoJp9KBAicbk7qTKcm9Q4MosT8wk-d8uUGWorR4qlhmzUm7XxhLni7aRwLXO-23TmV_moazshePVMQrQgrFW56XkRl-gyb_hJeslYVu9UmWTFqLZp7qkDZopcmXFNFYbR47JCrRNmSFQl2VyaaGEHq3Tsb5TCRSDttRB27Xm8mGzcKwAqOfwMfFo6rnQMMgqiOkmqdbvTeHox_CUdJ95BqG3JWpAJl07xEaEOG8Kfavpv_H_qGMmhVTrjrZsI4XHINr-gveF4BfREYaXt7DqYA3gB3yOO4A-qJBGMSaqCrsE7QoAHn0r-zgcXqjecSlSh1zxFDWT7tCivDQuZeoIIGYBBIIuo5xEoDnNqpElzanuspCtOkBE60gf25Z0ZoRUlAQjqIwZH3cqSvKYyPydyGaxt59jVoaUuKSQhYDEcltEJiwRKI9yTu6c_7s3vRFFaUyR6DHSw768VnbqQsGcZ90lcgAnkLe955sHH2AGPzlQNsw_ai12iJyZNM53Z-vu3N5l834f9M2h_TQXe14iQyHukJrCs71GMECcnINefMR-k8U6Sv_CVEW_fuJQ4GaIdAV2sNU9iqyFBv-CjLpVeYQGaaE6rjO2WEkb1t2xR4FezHlpRZtCXkoSHqinhcdsC9MmB3sUJFsH1lvU1zUP-tqi9ZX6a4RaxTd_ULszw="},{"role":"assistant","content":[{"type":"output_text","text":"Yukihiro
+        Matsumoto (often called \"Matz\"). He created Ruby in 1995."}]},{"role":"user","content":"What
+        year did he create Ruby?"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -137,7 +181,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 06 May 2026 23:54:44 GMT
+      - Thu, 11 Jun 2026 20:09:50 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -155,17 +199,17 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Access-Control-Expose-Headers:
+      - CF-Ray
+      - CF-Ray
       - X-Request-ID
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '2110'
+      - '19421'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
       - '2020-10-01'
-      X-Openai-Proxy-Wasm:
-      - v0.1
       X-Ratelimit-Limit-Requests:
       - '5000'
       X-Ratelimit-Limit-Tokens:
@@ -173,11 +217,11 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '4999'
       X-Ratelimit-Remaining-Tokens:
-      - '1999944'
+      - '1999673'
       X-Ratelimit-Reset-Requests:
       - 12ms
       X-Ratelimit-Reset-Tokens:
-      - 1ms
+      - 9ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Set-Cookie:
@@ -186,7 +230,86 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        ewogICJpZCI6ICJjaGF0Y21wbC1EY2dNY3JlQ0dJTmRsZFgwSWFkUFdUWkN3VllOQiIsCiAgIm9iamVjdCI6ICJjaGF0LmNvbXBsZXRpb24iLAogICJjcmVhdGVkIjogMTc3ODExMTY4MiwKICAibW9kZWwiOiAiZ3B0LTUtbmFuby0yMDI1LTA4LTA3IiwKICAiY2hvaWNlcyI6IFsKICAgIHsKICAgICAgImluZGV4IjogMCwKICAgICAgIm1lc3NhZ2UiOiB7CiAgICAgICAgInJvbGUiOiAiYXNzaXN0YW50IiwKICAgICAgICAiY29udGVudCI6ICIxOTk1IOKAlCBSdWJ5IHdhcyBmaXJzdCByZWxlYXNlZCB0aGF0IHllYXIgYnkgWXVraWhpcm8gTWF0c3Vtb3RvLiIsCiAgICAgICAgInJlZnVzYWwiOiBudWxsLAogICAgICAgICJhbm5vdGF0aW9ucyI6IFtdCiAgICAgIH0sCiAgICAgICJmaW5pc2hfcmVhc29uIjogInN0b3AiCiAgICB9CiAgXSwKICAidXNhZ2UiOiB7CiAgICAicHJvbXB0X3Rva2VucyI6IDYzLAogICAgImNvbXBsZXRpb25fdG9rZW5zIjogMjE4LAogICAgInRvdGFsX3Rva2VucyI6IDI4MSwKICAgICJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOiB7CiAgICAgICJjYWNoZWRfdG9rZW5zIjogMCwKICAgICAgImF1ZGlvX3Rva2VucyI6IDAKICAgIH0sCiAgICAiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6IHsKICAgICAgInJlYXNvbmluZ190b2tlbnMiOiAxOTIsCiAgICAgICJhdWRpb190b2tlbnMiOiAwLAogICAgICAiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOiAwLAogICAgICAicmVqZWN0ZWRfcHJlZGljdGlvbl90b2tlbnMiOiAwCiAgICB9CiAgfSwKICAic2VydmljZV90aWVyIjogImRlZmF1bHQiLAogICJzeXN0ZW1fZmluZ2VycHJpbnQiOiBudWxsCn0K
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+      string: |-
+        {
+          "id": "resp_07f20b412165fdf2016a2b15fb46e481a08dcecb1595344e08",
+          "object": "response",
+          "created_at": 1781208571,
+          "status": "completed",
+          "background": false,
+          "billing": {
+            "payer": "developer"
+          },
+          "completed_at": 1781208590,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
+          "model": "gpt-5-nano-2025-08-07",
+          "moderation": null,
+          "output": [
+            {
+              "id": "rs_07f20b412165fdf2016a2b15fbbfe081a0a7e04cb28f9377a5",
+              "type": "reasoning",
+              "content": [],
+              "encrypted_content": "gAAAAABqKxYOCdSmlSajjMGFG3mBTcxRc7RBgJSYJCuexeFZKawVq4EaekhEj5KXutG-ayDs0hiADsR8uXMV-BX7onm7kt4skWUXEfwt_ci5Lb8gLrLakDrSTnyxz2BnQB9wyFhZmZaRfevZLuNZYUMalfPvfe7Zw9pEHTCtIquyGI2qpiFxhYN0ztnxV-5p2lmjp1v8ZUGv4Ml2Ua7dESf0yy9wsEmSsjo1z1P2NHNE_4xyeoRPi9-0uD4jeQvQsSrCZsA3VtWBgKY6QjgEUr8M0pAx5kmkReksBu_Ss4Fg-2tr4H9Di0uhBkhgrccIO6nrnQhoICiwLbZD3BsIwK9U-h-uJchX6byC5pHWYPawZad7lR6KPzbBj6MRtcPDakqTPJ0jmS63PJBOWJZW85BgF0ssw6NZ_rcfsvtZ0KwiIepZ8VwXW1gOk7sm_JVb5g0dTczy44th6keahVoyYeDC2muz0irDhOy7rZwzQwAiMdpmd_mkVWx7q7-T4OHMOa7XOb2F4si8fuImW2qsGApNQ-LSuKmEjFl8gXh87PkCkXZDnWZS5zUViq1idZQZ5uiUaSTBz6DbQFi76J8MsDERxm7Ial-WJDSfhp_pO4bCMIqVUiptuBKWCzcX657kzgopRS1esUZyperYCTZmB3dWVP3f_QpH2rR1HiOlmYYVyBWp2OS-ZWTTqaNf4U8eqgsylXsqnoWCSXbq8rs6WrU6waPqieQtwvZZbsoZTZdqgSgSu0osJRB4KLwTFMBJdUXuVt72Im0yZJoylJ_z5HFLnyHlWWuroFXzP3tE-QQh-JDt97HETC4PPr1MNwMfW2RqGYsddaVHsnH3OIB8J0dYP0lWuYFY3hPe3KjQDiwreEnizOSGXhUGJxQX1_7jfnZgz4krVFJCnTcr8fZkqPmdLQC7oIhWuI6YC6wLcpGcpwCdO4osOP0gGNrxH-WXrNeu_vZea40NcIIvZOhoLJAmMa5nqzLYq9eQeJHhzUmav12o7yuwyfnQQV5FWkCntijwNVTbHaYabh7D7qxksyMM9eMFu2l2MyF1rckkGY-UhtloToODSr6UOPimsu9hZ_E9dk8tdaFEhfcJXa5JpaH1gk1m9yRmCgxncNGkZlN7E9HqxH9YV-vTMx4mx9WYBx-NgfG8xNvHftgpm0DiP-UvDTkTjNN67z2SwJUusit0D9HLWrtlu6JrwzTnhzS0WW1wpfJoutiIv7dJtdPGBZgMkBZDB6QtDE1oinOj2sU2EfEJIfCCwPJAhnqdrPyZRkAJoIgS4N7iIPofWnSQHeYVrJgXBDxFPCU_Cb4LBCRA1kZCMMtboSbvGIqW10NgfuJeYNm5Z-E4BzpScLflGcsz-LSRNd4nHJBIEeFr1Ti2m2B_mlx9idzB1TCHi3XkP6z_A9Ja9iSopr0oBqWKXcGP2UfTjtIdwL0MfS2TqRdx3LI1Q32S-3wancmLFKl3PAr59jDx8JpnnEzE8OXFOrQOQ1IGo1X0JXNmddkl9uZf5r4i7qUYsy4OUbBMFAUCDn0fncDJWITcAi50XpJwngQvPvEaudY33pwZ-xEJR0gJPzQfO7HHt3SBcVWPDfUSpiR1dKafUgq7FLrNmB2RjqayizYAQkL6uzb23cL6ZU_zIQUNP3zycCC7u46STYXRvaLxvbpBcXMIX-G_Ww-7zTDmOJtg0EELjMM2ygjgoTk0LaP1ksZk0qqkE3aF04ov1Mz8lZuwlI6KjUNeW9nOkUgudL1pR6uLvUMbGL9wQvgIoXBLvjEJ49C44TfU2bZPqGHKm7LXdOVEOWSTHh7_Ls424e-6K69KLCPfM1ZjS-LonoYwHpNKFv51I9NVDT_l_WSJVzyEj1E4YRfuSDFEHFzPvkuSnn5xZa7h7Ci6p3MjyON2EoggYr6Q6lbt7FXW3MJ8ChEqh3MrJ0OVx49C4CPOLLerdZKaVXbREqE2tc9G15q-P72S0Z_J8VKtS7DNTuCx2o60BhX0AK2es44Fofj-4xggTAk3LRavIIKt9WZJ36rwTLG0EBjq3PbC_5Q_5isA6FTzYymiczX6ShfhkhsxJhWvfYDMD10JlGjmxG7E_ke47DR7nGjoE_zz7XxcEdgpVQU8KVw4tilcsvs_F01Q3WoKKAm3bNEeO9vWwkbnAtbyGXN6Nl51rr90zCjAXnRWDjJOO6a9aL0nSrRaJWDdSmDM5Mpzd4G-MUZJnhFD4yb1vT0e3uDGNPmMuLCEXkr9_a7faO3y4xS_t4N3YCwbyvrAV8mSCptdi8AuqPYqRQ6FZZIMO9Bjw3Isp2R4aJ5noc5RcB2Ig0-J8wnB2GDwARNnLPgxik4bFNFyAD0yeItlwEsvEhftI9cMUjRxlfb0seJZ5PK2UXQeKwGvMHGOMRIKovUsl-zTyDedsLPGul1qzN1bOYd-IPhpfA91dXLhOBKV8ZonP2OCJK0aZb_DojBufENjtyR5Ak5WjxNxXCYQR9WDeznXjRV5pvdJm3rwAwELvDPPX8HpK7nfyDedn__iD60-Df4H2ORV7OCckeiKiP91W5GuQAZXf50RKVBYgWl1IWTvmp8kf-IXzwexNkn3S1VyVMLO35DyQyfk9ydfG_3bJIrk1hGB52L54kNWHULWFzDhCoFRHs-yPlvkNL0HTMGbLFaoE4AkP3Qzv385rxLoFdT9zMxnTz6bIQe61LSVsaBXQDavc29p8X6IzzOyojVZC8_d8qPIE9ZIBfuAOKv-zPdHsHYP0KYzv_BScSEu8GwZYYD1_bAhCH9ECYaBmV3cF1wt7eAZEHJFDebwpOaXCTllQrW0b-JbVAVWf4Erf6PRvd7RKRVdPioixzUnkdJ_2jvT3b4cQvGrlNPnPO9aF-m-WOfKI_IUbdNKmPTjiXK51BmQ_frTNNAqvWIJDYKJ5l52NHXK4S7p9_FveqHqWE3RBYInga4TylbvLXdxVFV2uzsZw4i6xDXtKQNjXcPtV8oWtD0nRjmsA_B7uLmR4MGukNqyoojkCPME_q2HkDYZZBIRnoELrp-oGmghaWUiSvuDx1dRdRFR3wtUnhGGG7k81ly_lXL4CsZN5hqye0J2yBdCo9aKZcnjaVnY3VWafSt1ZSBO9D7aa0A66gmStqkUeVht8soMDNqcgE70wqvXo4QDRhxI44VGm6-zY4KFOLthXBKw5h93yVNqO81YHDXKBZreS3qpaU3vEj1EAIfsi9sMG9O0wd2sLewyUC7hG-ercblN0THKsWHsJsQB4qS1U-DNpdJe0uY7e97QYBpPFKm6q9t0JwGIe7-beeRYUM4s5KBrKWmLazZ1ppVQdzeBBZq5Wc3MB6Z7Wh5NAaGNer68x5M0uh8IyPcSkThy6EBGWa6WzAGzcqPUWTyK6mbLVsxcVAWMTHUktJXc8lnPjlb0y2xGPpkyHzqcEClaW4JQdPRcGDY2Q5UbUNyeXOayp-RcX4eAMySOLjvZMDfK2KW27KqRvd5MvuwrnjVdJF8hVl6kADHu_F7ZM8QH5J6YoyY3NSNaZl_wt494GYWQnOvbKldE44Tugu5epdf8QA==",
+              "summary": []
+            },
+            {
+              "id": "msg_07f20b412165fdf2016a2b15ff853481a09c60b470da75f861",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "1995."
+                }
+              ],
+              "role": "assistant"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": "in_memory",
+          "reasoning": {
+            "context": "current_turn",
+            "effort": "medium",
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": false,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tools": [],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 55,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens": 544,
+            "output_tokens_details": {
+              "reasoning_tokens": 512
+            },
+            "total_tokens": 599
+          },
+          "user": null,
+          "metadata": {}
+        }
+  recorded_at: Thu, 11 Jun 2026 20:09:50 GMT
 recorded_with: VCR 6.4.0

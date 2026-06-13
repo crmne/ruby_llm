@@ -3,8 +3,13 @@
 module RubyLLM
   module Providers
     # DeepSeek API integration.
-    class DeepSeek < OpenAI
-      include DeepSeek::Chat
+    class DeepSeek < Provider
+      # DeepSeek's dialect of the Chat Completions API.
+      class ChatCompletions < Protocols::ChatCompletions
+        include DeepSeek::Chat
+      end
+
+      protocol :chat_completions, ChatCompletions
 
       def api_base
         @config.deepseek_api_base || 'https://api.deepseek.com'

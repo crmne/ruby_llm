@@ -8,7 +8,7 @@ module RubyLLM
         module_function
 
         def embedding_url(model:)
-          "projects/#{@config.vertexai_project_id}/locations/#{@config.vertexai_location}/publishers/google/models/#{model}:predict" # rubocop:disable Layout/LineLength
+          "#{@provider.model_path(model)}:predict"
         end
 
         def render_embedding_payload(text, model:, dimensions:) # rubocop:disable Lint/UnusedMethodArgument

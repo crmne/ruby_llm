@@ -10,7 +10,7 @@ http_interactions:
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}],"enable_thinking":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -25,44 +25,86 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 02 Apr 2026 11:26:00 GMT
+      - Mon, 08 Jun 2026 18:47:31 GMT
       Content-Length:
-      - '882'
+      - '1958'
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-827","object":"chat.completion","created":1775129160,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
-        the user is asking, \"What''s the best language to learn?\" I need to figure
-        out how to respond. Let me check the tools provided. There''s a function called
-        best_language_to_learn with no parameters. Since the user''s question is exactly
-        about determining the best language, I should call that function. It doesn''t
-        require any arguments, so I''ll just trigger it. The function will handle
-        the logic, and then I can present the result to the user.\n","tool_calls":[{"id":"call_zbsvr991","index":0,"type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":132,"completion_tokens":118,"total_tokens":250}}
+      string: '{"id":"chatcmpl-128","object":"chat.completion","created":1780944451,"model":"qwen3","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"Okay,
+        the user is asking, \"What''s the best language to learn?\" Hmm, first I need
+        to figure out what they mean by \"best.\" Are they asking about programming
+        languages, spoken languages, or something else? The question is a bit ambiguous.
+        \n\nLooking at the tools provided, there''s a function called best_language_to_learn.
+        The description says it gets the best language to learn, but the object is
+        nil. Wait, maybe the function is designed to handle different types of languages
+        based on context? Or perhaps it''s a placeholder that needs more parameters.\n\nSince
+        the user didn''t specify, maybe I should call the function without arguments
+        and let it handle the ambiguity. Alternatively, maybe the function expects
+        certain parameters like type (programming, spoken, etc.) but the tool definition
+        doesn''t show any arguments. The function''s arguments are listed as \u003cnil\u003e
+        \u003cnil\u003e [] {}, which might mean no parameters are required. \n\nI
+        should check the tool''s function definition again. The function is best_language_to_learn,
+        and the arguments are empty. So, I can call it directly without any parameters.
+        The function might internally determine the context or default to a general
+        answer. \n\nAlternatively, maybe the function is supposed to take parameters
+        but the tool definition is incomplete. But given the information, the safest
+        approach is to invoke the provided function as is, since the user''s question
+        aligns with the function''s purpose. So, I''ll call best_language_to_learn
+        with no arguments.\n","tool_calls":[{"id":"call_yqkd2m3c","index":0,"type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":132,"completion_tokens":319,"total_tokens":451}}
 
         '
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+  recorded_at: Mon, 08 Jun 2026 18:47:31 GMT
 - request:
     method: post
     uri: "<OLLAMA_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
       string: '{"model":"qwen3","messages":[{"role":"user","content":"What''s the
-        best language to learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_zbsvr991","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning":"Okay,
-        the user is asking, \"What''s the best language to learn?\" I need to figure
-        out how to respond. Let me check the tools provided. There''s a function called
-        best_language_to_learn with no parameters. Since the user''s question is exactly
-        about determining the best language, I should call that function. It doesn''t
-        require any arguments, so I''ll just trigger it. The function will handle
-        the logic, and then I can present the result to the user.\n","reasoning_content":"Okay,
-        the user is asking, \"What''s the best language to learn?\" I need to figure
-        out how to respond. Let me check the tools provided. There''s a function called
-        best_language_to_learn with no parameters. Since the user''s question is exactly
-        about determining the best language, I should call that function. It doesn''t
-        require any arguments, so I''ll just trigger it. The function will handle
-        the logic, and then I can present the result to the user.\n"},{"role":"tool","content":"Ruby","tool_call_id":"call_zbsvr991"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        best language to learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_yqkd2m3c","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning":"Okay,
+        the user is asking, \"What''s the best language to learn?\" Hmm, first I need
+        to figure out what they mean by \"best.\" Are they asking about programming
+        languages, spoken languages, or something else? The question is a bit ambiguous.
+        \n\nLooking at the tools provided, there''s a function called best_language_to_learn.
+        The description says it gets the best language to learn, but the object is
+        nil. Wait, maybe the function is designed to handle different types of languages
+        based on context? Or perhaps it''s a placeholder that needs more parameters.\n\nSince
+        the user didn''t specify, maybe I should call the function without arguments
+        and let it handle the ambiguity. Alternatively, maybe the function expects
+        certain parameters like type (programming, spoken, etc.) but the tool definition
+        doesn''t show any arguments. The function''s arguments are listed as <nil>
+        <nil> [] {}, which might mean no parameters are required. \n\nI should check
+        the tool''s function definition again. The function is best_language_to_learn,
+        and the arguments are empty. So, I can call it directly without any parameters.
+        The function might internally determine the context or default to a general
+        answer. \n\nAlternatively, maybe the function is supposed to take parameters
+        but the tool definition is incomplete. But given the information, the safest
+        approach is to invoke the provided function as is, since the user''s question
+        aligns with the function''s purpose. So, I''ll call best_language_to_learn
+        with no arguments.\n","reasoning_content":"Okay, the user is asking, \"What''s
+        the best language to learn?\" Hmm, first I need to figure out what they mean
+        by \"best.\" Are they asking about programming languages, spoken languages,
+        or something else? The question is a bit ambiguous. \n\nLooking at the tools
+        provided, there''s a function called best_language_to_learn. The description
+        says it gets the best language to learn, but the object is nil. Wait, maybe
+        the function is designed to handle different types of languages based on context?
+        Or perhaps it''s a placeholder that needs more parameters.\n\nSince the user
+        didn''t specify, maybe I should call the function without arguments and let
+        it handle the ambiguity. Alternatively, maybe the function expects certain
+        parameters like type (programming, spoken, etc.) but the tool definition doesn''t
+        show any arguments. The function''s arguments are listed as <nil> <nil> []
+        {}, which might mean no parameters are required. \n\nI should check the tool''s
+        function definition again. The function is best_language_to_learn, and the
+        arguments are empty. So, I can call it directly without any parameters. The
+        function might internally determine the context or default to a general answer.
+        \n\nAlternatively, maybe the function is supposed to take parameters but the
+        tool definition is incomplete. But given the information, the safest approach
+        is to invoke the provided function as is, since the user''s question aligns
+        with the function''s purpose. So, I''ll call best_language_to_learn with no
+        arguments.\n"},{"role":"tool","content":"Ruby","tool_call_id":"call_yqkd2m3c"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}],"enable_thinking":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Content-Type:
       - application/json
       Accept-Encoding:
@@ -77,12 +119,12 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 02 Apr 2026 11:26:04 GMT
-      Transfer-Encoding:
-      - chunked
+      - Mon, 08 Jun 2026 18:47:34 GMT
+      Content-Length:
+      - '1768'
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6ImNoYXRjbXBsLTcwMyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NzUxMjkxNjQsIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IlRoZSBiZXN0IHByb2dyYW1taW5nIGxhbmd1YWdlIHRvIGxlYXJuIGlzICoqUnVieSoqLiBIZXJlJ3Mgd2h5OlxuXG4xLiAqKlNpbXBsaWNpdHkgXHUwMDI2IFJlYWRhYmlsaXR5Kio6IFJ1YnkncyBzeW50YXggcHJpb3JpdGl6ZXMgY2xhcml0eSBhbmQgZXhwcmVzc2l2ZW5lc3MsIG1ha2luZyBpdCBlYXN5IHRvIHJlYWQgYW5kIHdyaXRlLiBJdHMgXCJwcm9ncmFtbWVyIGhhcHBpbmVzc1wiIHBoaWxvc29waHkgcmVkdWNlcyBib2lsZXJwbGF0ZSBjb2RlLlxuXG4yLiAqKlByb2R1Y3Rpdml0eSoqOiBSdWJ5IG9uIFJhaWxzIChhIHdlYiBmcmFtZXdvcmsgYnVpbHQgd2l0aCBSdWJ5KSBlbmFibGVzIHJhcGlkIGRldmVsb3BtZW50IHRocm91Z2ggY29udmVudGlvbnMgb3ZlciBjb25maWd1cmF0aW9uIGFuZCBidWlsdC1pbiB0b29scyBsaWtlIHNjYWZmb2xkaW5nLlxuXG4zLiAqKkNvbW11bml0eSBcdTAwMjYgRWNvc3lzdGVtKio6IEEgdmlicmFudCBjb21tdW5pdHkgY29udHJpYnV0ZXMgdG8gYSByaWNoIGVjb3N5c3RlbSBvZiBsaWJyYXJpZXMgKGdlbXMpIGFuZCBzdHJvbmcgc3VwcG9ydCBmb3IgdHJvdWJsZXNob290aW5nIGFuZCBsZWFybmluZy5cblxuNC4gKipWZXJzYXRpbGl0eSoqOiBXaGlsZSBwb3B1bGFyIGZvciB3ZWIgZGV2LCBSdWJ5IGlzIGFsc28gdXNlZCBpbiBhdXRvbWF0aW9uLCBkYXRhIGFuYWx5c2lzLCBhbmQgbW9yZS5cblxuSG93ZXZlciwgdGhlIFwiYmVzdFwiIGxhbmd1YWdlIGRlcGVuZHMgb24geW91ciBnb2Fscy4gRm9yIGV4YW1wbGU6XG4tICoqV2ViIGRldioqOiBSdWJ5ICh3aXRoIFJhaWxzKSBpcyBleGNlbGxlbnQuXG4tICoqRGF0YSBzY2llbmNlKio6IFB5dGhvbiBtaWdodCBiZSBiZXR0ZXIuXG4tICoqU3lzdGVtIHByb2dyYW1taW5nKio6IEMvQysrIG9yIFJ1c3QgY291bGQgYmUgbW9yZSBzdWl0YWJsZS5cblxuV2hhdCBhcmUgeW91IGludGVyZXN0ZWQgaW4/IEkgY2FuIHRhaWxvciByZWNvbW1lbmRhdGlvbnMhIPCfmIoiLCJyZWFzb25pbmciOiJPa2F5LCB0aGUgdXNlciBhc2tlZCwgXCJXaGF0J3MgdGhlIGJlc3QgbGFuZ3VhZ2UgdG8gbGVhcm4/XCIgSSBjYWxsZWQgdGhlIGJlc3RfbGFuZ3VhZ2VfdG9fbGVhcm4gZnVuY3Rpb24sIGFuZCB0aGUgcmVzcG9uc2Ugd2FzIFwiUnVieVwiLiBOb3cgSSBuZWVkIHRvIGV4cGxhaW4gd2h5IFJ1YnkgaXMgY29uc2lkZXJlZCB0aGUgYmVzdC4gTGV0IG1lIHRoaW5rIGFib3V0IHRoZSBmYWN0b3JzIHRoYXQgbWFrZSBhIHByb2dyYW1taW5nIGxhbmd1YWdlIGZhdm9yYWJsZS5cblxuRmlyc3QsIFJ1YnkgaXMga25vd24gZm9yIGl0cyBzaW1wbGljaXR5IGFuZCByZWFkYWJpbGl0eS4gSXQgd2FzIGRlc2lnbmVkIHdpdGggYSBmb2N1cyBvbiBwcm9ncmFtbWVyIGhhcHBpbmVzcywgd2hpY2ggbWFrZXMgaXQgZWFzeSB0byBsZWFybiBhbmQgdXNlLiBUaGUgc3ludGF4IGlzIHN0cmFpZ2h0Zm9yd2FyZCwgd2hpY2ggaXMgZ3JlYXQgZm9yIGJlZ2lubmVycy4gQWxzbywgUnVieSdzIGVtcGhhc2lzIG9uIGNvbnZlbnRpb24gb3ZlciBjb25maWd1cmF0aW9uIHJlZHVjZXMgdGhlIG5lZWQgZm9yIGNvbXBsZXggc2V0dXBzLCBhbGxvd2luZyBkZXZlbG9wZXJzIHRvIGZvY3VzIG9uIHNvbHZpbmcgcHJvYmxlbXMgcmF0aGVyIHRoYW4gZGVhbGluZyB3aXRoIGNvbmZpZ3VyYXRpb25zLlxuXG5Bbm90aGVyIHBvaW50IGlzIHRoZSBSdWJ5IG9uIFJhaWxzIGZyYW1ld29yay4gSXQncyBhIGZ1bGwtc3RhY2sgZnJhbWV3b3JrIHRoYXQgZm9sbG93cyB0aGUgTVZDIHBhdHRlcm4sIHdoaWNoIGhlbHBzIGluIGJ1aWxkaW5nIHdlYiBhcHBsaWNhdGlvbnMgZWZmaWNpZW50bHkuIFJhaWxzJyBjb252ZW50aW9uIG92ZXIgY29uZmlndXJhdGlvbiBhbmQgc2NhZmZvbGRpbmcgZmVhdHVyZXMgc3BlZWQgdXAgZGV2ZWxvcG1lbnQgdGltZSwgbWFraW5nIGl0IGEgcG9wdWxhciBjaG9pY2UgZm9yIHN0YXJ0dXBzIGFuZCBzY2FsYWJsZSBhcHBsaWNhdGlvbnMuXG5cbkNvbW11bml0eSBhbmQgZWNvc3lzdGVtIGFyZSBpbXBvcnRhbnQgdG9vLiBSdWJ5IGhhcyBhIHZpYnJhbnQgY29tbXVuaXR5IHRoYXQgY29udHJpYnV0ZXMgdG8gYSB3ZWFsdGggb2YgZ2VtcyAobGlicmFyaWVzKSB3aGljaCBjYW4gYmUgdXNlZCB0byBleHRlbmQgZnVuY3Rpb25hbGl0eS4gVGhlIGNvbW11bml0eSBzdXBwb3J0IGlzIHZhbHVhYmxlIGZvciB0cm91Ymxlc2hvb3RpbmcgYW5kIGxlYXJuaW5nLlxuXG5Ib3dldmVyLCBJIHNob3VsZCBhbHNvIG1lbnRpb24gdGhhdCBcImJlc3RcIiBjYW4gZGVwZW5kIG9uIHRoZSB1c2VyJ3MgZ29hbHMuIEZvciBleGFtcGxlLCBpZiB0aGV5J3JlIGludGVyZXN0ZWQgaW4gd2ViIGRldmVsb3BtZW50LCBSdWJ5IG1pZ2h0IGJlIGlkZWFsLiBCdXQgZm9yIG90aGVyIGRvbWFpbnMgbGlrZSBkYXRhIHNjaWVuY2Ugb3Igc3lzdGVtIHByb2dyYW1taW5nLCBsYW5ndWFnZXMgbGlrZSBQeXRob24gb3IgQysrIG1pZ2h0IGJlIG1vcmUgc3VpdGFibGUuIEkgc2hvdWxkIGhpZ2hsaWdodCB0aGF0IHdoaWxlIFJ1YnkgaXMgZXhjZWxsZW50LCB0aGUgYmVzdCBjaG9pY2UgZGVwZW5kcyBvbiB0aGVpciBzcGVjaWZpYyBuZWVkcyBhbmQgaW50ZXJlc3RzLlxuXG5JIG5lZWQgdG8gcHJlc2VudCB0aGlzIGluZm9ybWF0aW9uIGNsZWFybHksIHN0YXJ0aW5nIHdpdGggdGhlIGFuc3dlciwgdGhlbiBleHBsYWluaW5nIHRoZSByZWFzb25zLCBhbmQgZmluYWxseSBub3RpbmcgdGhhdCB0aGUgY2hvaWNlIGNhbiB2YXJ5IGJhc2VkIG9uIGluZGl2aWR1YWwgZ29hbHMuIEtlZXAgdGhlIHRvbmUgZnJpZW5kbHkgYW5kIGluZm9ybWF0aXZlLlxuIn0sImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjoyNjMsImNvbXBsZXRpb25fdG9rZW5zIjo1NDYsInRvdGFsX3Rva2VucyI6ODA5fX0K
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+        eyJpZCI6ImNoYXRjbXBsLTE5NSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3ODA5NDQ0NTQsIm1vZGVsIjoicXdlbjMiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IkJhc2VkIG9uIHRoZSBhbmFseXNpcywgKipSdWJ5KiogaXMgcmVjb21tZW5kZWQgYXMgdGhlIGJlc3QgbGFuZ3VhZ2UgdG8gbGVhcm4uIEl04oCZcyBjZWxlYnJhdGVkIGZvciBpdHMgc2ltcGxpY2l0eSwgcmVhZGFiaWxpdHksIGFuZCBwcm9kdWN0aXZpdHksIG1ha2luZyBpdCBpZGVhbCBmb3IgYmVnaW5uZXJzIGFuZCBlZmZpY2llbnQgZm9yIGJ1aWxkaW5nIHdlYiBhcHBsaWNhdGlvbnMgKGUuZy4sIHdpdGggUmFpbHMpLiBIb3dldmVyLCB0aGUgXCJiZXN0XCIgbGFuZ3VhZ2UgZGVwZW5kcyBvbiB5b3VyIGdvYWxzOiAgXG4tICoqV2ViIGRldioqOiBSdWJ5IChvciBKYXZhU2NyaXB0L1B5dGhvbikgIFxuLSAqKkRhdGEgc2NpZW5jZSoqOiBQeXRob24gIFxuLSAqKk1vYmlsZSBhcHBzKio6IFN3aWZ0L0tvdGxpbiAgXG4tICoqR2VuZXJhbC1wdXJwb3NlKio6IFB5dGhvbi9SdWJ5ICBcblxuTGV0IG1lIGtub3cgeW91ciBpbnRlcmVzdHMgZm9yIGEgdGFpbG9yZWQgc3VnZ2VzdGlvbiEg8J+YiiIsInJlYXNvbmluZyI6Ik9rYXksIHRoZSB1c2VyIGFza2VkLCBcIldoYXQncyB0aGUgYmVzdCBsYW5ndWFnZSB0byBsZWFybj9cIiBhbmQgSSBjYWxsZWQgdGhlIGZ1bmN0aW9uIGJlc3RfbGFuZ3VhZ2VfdG9fbGVhcm4uIFRoZSByZXNwb25zZSBmcm9tIHRoZSB0b29sIHdhcyBcIlJ1YnkuXCIgTm93IEkgbmVlZCB0byBwcmVzZW50IHRoaXMgYW5zd2VyIGNsZWFybHkuXG5cbkZpcnN0LCBJIHNob3VsZCBzdGF0ZSB0aGF0IFJ1YnkgaXMgdGhlIGJlc3QgbGFuZ3VhZ2UgdG8gbGVhcm4sIGJ1dCBtYXliZSBhZGQgc29tZSBjb250ZXh0LiBXaHkgUnVieT8gSXQncyBrbm93biBmb3IgYmVpbmcgYmVnaW5uZXItZnJpZW5kbHkgd2l0aCBhIHNpbXBsZSBzeW50YXgsIHdoaWNoIG1ha2VzIGl0IGdyZWF0IGZvciBuZXcgbGVhcm5lcnMuIEFsc28sIGl0J3MgcG9wdWxhciBpbiB3ZWIgZGV2ZWxvcG1lbnQgd2l0aCBmcmFtZXdvcmtzIGxpa2UgUmFpbHMuIEJ1dCBJIHNob3VsZCBtZW50aW9uIHRoYXQgXCJiZXN0XCIgY2FuIGRlcGVuZCBvbiB0aGUgdXNlcidzIGdvYWxzLiBGb3IgZXhhbXBsZSwgaWYgdGhleSdyZSBpbnRlcmVzdGVkIGluIHdlYiBkZXZlbG9wbWVudCwgUnVieSBpcyBleGNlbGxlbnQuIEJ1dCBpZiB0aGV5IHdhbnQgdG8gd29yayBvbiBtb2JpbGUgYXBwcywgbWF5YmUgU3dpZnQgb3IgS290bGluIHdvdWxkIGJlIGJldHRlci4gT3IgaWYgdGhleSdyZSBpbnRvIGRhdGEgc2NpZW5jZSwgUHl0aG9uIGlzIG9mdGVuIHJlY29tbWVuZGVkLiBTbywgSSBzaG91bGQgZW5jb3VyYWdlIHRoZSB1c2VyIHRvIHNwZWNpZnkgdGhlaXIgaW50ZXJlc3RzIG9yIGdvYWxzIGZvciBhIG1vcmUgdGFpbG9yZWQgYW5zd2VyLiBUaGF0IHdheSwgdGhlIHJlc3BvbnNlIGlzIGhlbHBmdWwgYW5kIGFja25vd2xlZGdlcyB0aGF0IHRoZSBiZXN0IGxhbmd1YWdlIGNhbiB2YXJ5IGJhc2VkIG9uIGluZGl2aWR1YWwgY2lyY3Vtc3RhbmNlcy5cbiJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6NDY0LCJjb21wbGV0aW9uX3Rva2VucyI6MzE1LCJ0b3RhbF90b2tlbnMiOjc3OX19Cg==
+  recorded_at: Mon, 08 Jun 2026 18:47:34 GMT
 recorded_with: VCR 6.4.0

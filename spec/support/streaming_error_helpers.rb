@@ -15,7 +15,7 @@ module StreamingErrorHelpers
       expected_error: RubyLLM::OverloadedError
     },
     openai: {
-      url: 'https://api.openai.com/v1/chat/completions',
+      url: 'https://api.openai.com/v1/responses',
       error_response: {
         error: {
           message: 'The server is temporarily overloaded. Please try again later.',
@@ -166,7 +166,7 @@ module StreamingErrorHelpers
       url: lambda {
         provider = RubyLLM::Providers::Azure.new(RubyLLM.config)
         base = provider.api_base.to_s.sub(/\?.*\z/, '').sub(%r{/+\z}, '')
-        path = provider.completion_url
+        path = RubyLLM::Providers::Azure::ChatCompletions.new(provider).completion_url
         next path if path.start_with?('http')
         next base if path.empty?
 

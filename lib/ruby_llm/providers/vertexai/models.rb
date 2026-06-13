@@ -67,7 +67,7 @@ module RubyLLM
             Model::Info.new(
               id: model_id,
               name: model_id,
-              provider: slug,
+              provider: @provider.slug,
               family: determine_model_family(model_id),
               created_at: nil,
               context_window: nil,
@@ -86,7 +86,7 @@ module RubyLLM
           Model::Info.new(
             id: model_id,
             name: model_id,
-            provider: slug,
+            provider: @provider.slug,
             family: determine_model_family(model_id),
             created_at: nil,
             context_window: nil,

@@ -35,6 +35,50 @@ RSpec.describe RubyLLM::Utils do
     end
   end
 
+  describe '.safe_constantize' do
+    it 'resolves loaded constants' do
+      expect(described_class.safe_constantize('RubyLLM::Utils')).to eq(described_class)
+    end
+
+    it 'returns nil when any constant segment is missing' do
+      expect(described_class.safe_constantize('RubyLLM::Missing::Constant')).to be_nil
+    end
+  end
+
+  describe '.parse_iso_date_prefix' do
+    it 'parses a full ISO date' do
+      expect(described_class.parse_iso_date_prefix('2025-09-15')).to eq(Date.new(2025, 9, 15))
+    end
+
+    it 'normalizes a month-only ISO date to the first day of the month' do
+      expect(described_class.parse_iso_date_prefix('2025-09')).to eq(Date.new(2025, 9, 1))
+    end
+
+    it 'normalizes a year-only ISO date to the first day of the year' do
+      expect(described_class.parse_iso_date_prefix('2025')).to eq(Date.new(2025, 1, 1))
+    end
+
+    it 'returns nil for blank and invalid values' do
+      expect(described_class.parse_iso_date_prefix('')).to be_nil
+      expect(described_class.parse_iso_date_prefix('2025-13')).to be_nil
+    end
+  end
+
+  describe '.iso_date_prefix_to_utc_midnight_string' do
+    it 'formats a full ISO date as a UTC midnight timestamp' do
+      expect(described_class.iso_date_prefix_to_utc_midnight_string('2025-09-15')).to eq('2025-09-15 00:00:00 UTC')
+    end
+
+    it 'formats a partial ISO date as a UTC midnight timestamp' do
+      expect(described_class.iso_date_prefix_to_utc_midnight_string('2025-09')).to eq('2025-09-01 00:00:00 UTC')
+    end
+
+    it 'returns nil for blank and invalid values' do
+      expect(described_class.iso_date_prefix_to_utc_midnight_string('')).to be_nil
+      expect(described_class.iso_date_prefix_to_utc_midnight_string('2025-13')).to be_nil
+    end
+  end
+
   describe '.deep_merge' do
     it 'merges nested hashes without mutating the originals' do
       original = { config: { retries: 3, timeout: 5 }, mode: :safe }

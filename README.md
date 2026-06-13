@@ -5,9 +5,10 @@
   <img src="/docs/assets/images/logotype.svg" alt="RubyLLM" height="120" width="250">
 </picture>
 
-<strong>One *beautiful* Ruby API for GPT, Claude, Gemini, and more.</strong>
+<strong>One <em>delightful</em> Ruby framework for every major AI provider. Build AI agents, chatbots, RAG apps, and multimodal workflows in beautiful, expressive code.
+</strong>
 
-Battle tested at [<picture><source media="(prefers-color-scheme: dark)" srcset="https://chatwithwork.com/logotype-dark.svg"><img src="https://chatwithwork.com/logotype.svg" alt="Chat with Work" height="30" align="absmiddle"></picture>](https://chatwithwork.com) — *Your AI coworker*
+Battle tested at [<picture><source media="(prefers-color-scheme: dark)" srcset="https://chatwithwork.com/logotype-dark.svg"><img src="https://chatwithwork.com/logotype.svg" alt="Chat with Work" height="30" align="absmiddle"></picture>](https://chatwithwork.com) - *Fully private work AI*
 
 [![Gem Version](https://badge.fury.io/rb/ruby_llm.svg)](https://badge.fury.io/rb/ruby_llm)
 [![Ruby Style Guide](https://img.shields.io/badge/code_style-rubocop-brightgreen.svg)](https://github.com/rubocop/rubocop)
@@ -24,7 +25,7 @@ Battle tested at [<picture><source media="(prefers-color-scheme: dark)" srcset="
 
 Build chatbots, AI agents, RAG applications. Works with OpenAI, xAI, Anthropic, Google, AWS, local models, and any OpenAI-compatible API.
 
-## From zero to AI chat app in under two minutes
+## Build a working Ruby AI chat in two minutes
 
 https://github.com/user-attachments/assets/65422091-9338-47da-a303-92b918bd1345
 
@@ -32,7 +33,7 @@ https://github.com/user-attachments/assets/65422091-9338-47da-a303-92b918bd1345
 
 Every AI provider ships their own bloated client. Different APIs. Different response formats. Different conventions. It's exhausting.
 
-RubyLLM gives you one beautiful API for all of them. Same interface whether you're using GPT, Claude, or your local Ollama. Just three dependencies: Faraday, Zeitwerk, and Marcel. That's it.
+RubyLLM gives you one beautiful framework for all of them. Same interface whether you're using GPT, Claude, or your local Ollama. Just three dependencies: Faraday, Zeitwerk, and Marcel. That's it.
 
 ## Show me the code
 
@@ -138,6 +139,7 @@ response = chat.with_schema(ProductSchema).ask "Analyze this product", with: "pr
 * **Async:** Fiber-based concurrency
 * **Model registry:** 800+ models with capability detection and pricing
 * **Extended thinking:** Control, view, and persist model deliberation
+* **Citations:** Normalized source citations from documents, search, and grounding
 * **Providers:** OpenAI, xAI, Anthropic, Gemini, VertexAI, Bedrock, DeepSeek, Mistral, Ollama, OpenRouter, Perplexity, GPUStack, and any OpenAI-compatible API
 
 ## Installation

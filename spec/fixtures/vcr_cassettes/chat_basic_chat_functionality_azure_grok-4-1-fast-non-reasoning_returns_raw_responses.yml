@@ -9,7 +9,7 @@ http_interactions:
         is the capital of France?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Api-Key:
       - "<AZURE_API_KEY>"
       Content-Type:
@@ -37,18 +37,18 @@ http_interactions:
       - access-control-request-headers
       Request-Context:
       - appId=
-      Traceparent:
-      - 00-eb165e875d7e4f3eabfe6cc93af6cc4d-5f2a63a500022e88-00
       X-Ms-Rai-Invoked:
-      - 'true'
+      - 'false'
+      Traceparent:
+      - 00-95192a5052b54b1abc0d9ccfeab2d662-3b163ff5000067ec-00
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Xai-Model-Address:
       - http://localhost:9988
       X-Ms-Client-Request-Id:
-      - eb165e87-5d7e-4f3e-abfe-6cc93af6cc4d
+      - 95192a50-52b5-4b1a-bc0d-9ccfeab2d662
       Azureml-Model-Session:
-      - d20260429215123-f480a160
+      - d20260601175039-cf414bb2
       Azureai-Requested-Tier:
       - default
       Azureai-Processed-Tier:
@@ -58,7 +58,7 @@ http_interactions:
       X-Ratelimit-Key:
       - grok-4-1-fast-non-reasoning
       X-Ratelimit-Remaining-Requests:
-      - '49'
+      - '48'
       X-Ratelimit-Reset-Requests:
       - '1'
       X-Ratelimit-Limit-Requests:
@@ -75,8 +75,10 @@ http_interactions:
       - '50000'
       X-Ratelimit-Renewalperiod-Tokens:
       - '60'
+      Azureai-Fe-Is-Streaming:
+      - 'False'
       Apim-Request-Id:
-      - eb165e87-5d7e-4f3e-abfe-6cc93af6cc4d
+      - 95192a50-52b5-4b1a-bc0d-9ccfeab2d662
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Ms-Deployment-Name:
@@ -86,9 +88,10 @@ http_interactions:
       X-Ms-Region:
       - West Europe
       Date:
-      - Wed, 06 May 2026 23:52:15 GMT
+      - Mon, 08 Jun 2026 18:45:50 GMT
     body:
-      encoding: UTF-8
-      string: '{"id":"ac958814-19ae-48a2-8902-c27bc0983f0b","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"Paris"},"finish_reason":"stop","content_filter_results":{}}],"usage":{"prompt_tokens":7,"completion_tokens":1,"total_tokens":8,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":0,"audio_tokens":0,"text_tokens":7,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1778111536,"object":"chat.completion","prompt_filter_results":null}'
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImQwMmQ4MzE4LTdlNGYtNDQ4My1hNDM5LWVlZmQ1ODI4MzY3ZSIsIm1vZGVsIjoiZ3Jvay00LTEtZmFzdC1ub24tcmVhc29uaW5nIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJQYXJpcyBpcyB0aGUgY2FwaXRhbCBvZiBGcmFuY2UuIFxuXG5UaGlzIGlzIGEgd2VsbC1lc3RhYmxpc2hlZCBmYWN0OiBQYXJpcyBoYXMgYmVlbiB0aGUgcG9saXRpY2FsLCBjdWx0dXJhbCwgYW5kIGVjb25vbWljIGNlbnRlciBvZiBGcmFuY2Ugc2luY2UgdGhlIE1pZGRsZSBBZ2VzLCBvZmZpY2lhbGx5IHNlcnZpbmcgYXMgdGhlIGNhcGl0YWwgdW5kZXIgdGhlIEZyZW5jaCBtb25hcmNoeSwgdGhyb3VnaCB0aGUgUmV2b2x1dGlvbiwgTmFwb2xlb24sIGFuZCBhbGwgc3Vic2VxdWVudCByZXB1YmxpY3MuIEl0J3MgaG9tZSB0byB0aGUgbmF0aW9uYWwgZ292ZXJubWVudCwgaW5jbHVkaW5nIHRoZSDDiWx5c8OpZSBQYWxhY2UgKHByZXNpZGVudGlhbCByZXNpZGVuY2UpLCB0aGUgQXNzZW1ibMOpZSBOYXRpb25hbGUsIGFuZCB0aGUgU8OpbmF0LiBGb3IgdmVyaWZpY2F0aW9uLCByZWxpYWJsZSBzb3VyY2VzIGxpa2UgdGhlIEZyZW5jaCBnb3Zlcm5tZW50J3Mgb2ZmaWNpYWwgd2Vic2l0ZSAoZWx5c2VlLmZyKSwgQnJpdGFubmljYSwgb3IgQ0lBIFdvcmxkIEZhY3Rib29rIGFsbCBjb25maXJtIFBhcmlzIGFzIHRoZSBjYXBpdGFsLiJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCIsImNvbnRlbnRfZmlsdGVyX3Jlc3VsdHMiOnt9fV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjcsImNvbXBsZXRpb25fdG9rZW5zIjoxMTIsInRvdGFsX3Rva2VucyI6MTE5LCJhdWRpb19wcm9tcHRfdG9rZW5zIjowLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MTYxLCJhdWRpb190b2tlbnMiOjAsInRleHRfdG9rZW5zIjo3LCJpbWFnZV90b2tlbnMiOjB9LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjAsImF1ZGlvX3Rva2VucyI6MCwiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjAsInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowfSwibnVtX3NvdXJjZXNfdXNlZCI6MH0sImNyZWF0ZWQiOjE3ODA5NDQzNDksIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsInByb21wdF9maWx0ZXJfcmVzdWx0cyI6bnVsbH0=
+  recorded_at: Mon, 08 Jun 2026 18:45:51 GMT
 recorded_with: VCR 6.4.0

@@ -1,0 +1,160 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.openai.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-4o-mini-search-preview","messages":[{"role":"user","content":"What
+        is the latest stable version of Ruby? Cite your sources."}],"stream":false,"web_search_options":{}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.2
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 10 Jun 2026 14:06:41 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Cf-Ray:
+      - "<CF_RAY>"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Access-Control-Expose-Headers:
+      - CF-Ray
+      - CF-Ray
+      - X-Request-ID
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '20593'
+      Openai-Project:
+      - proj_61L3Oqt640dKU0CASS2iOj8Q
+      Openai-Version:
+      - '2020-10-01'
+      X-Openai-Proxy-Wasm:
+      - v0.1
+      X-Ratelimit-Limit-Requests:
+      - '500'
+      X-Ratelimit-Limit-Tokens:
+      - '45000'
+      X-Ratelimit-Remaining-Requests:
+      - '499'
+      X-Ratelimit-Remaining-Tokens:
+      - '44982'
+      X-Ratelimit-Reset-Requests:
+      - 120ms
+      X-Ratelimit-Reset-Tokens:
+      - 24ms
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Set-Cookie:
+      - "<COOKIE>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "id": "chatcmpl-15a062cd-6168-46e6-bd92-d5d40effd108",
+          "object": "chat.completion",
+          "created": 1781100380,
+          "model": "gpt-4o-mini-search-preview-2025-03-11",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "As of June 10, 2026, the latest stable version of Ruby is 4.0.5, released on May 19, 2026. ([ruby-lang.org](https://www.ruby-lang.org/?utm_source=openai)) This version is currently supported until March 31, 2029. ([eosl.date](https://eosl.date/eol/product/ruby/?utm_source=openai))\n\nRuby 4.0.5 is the most recent stable release, following the major Ruby 4.0 release on December 25, 2025. ([ruby-lang.org](https://www.ruby-lang.org/?utm_source=openai)) Prior to Ruby 4.0, the latest stable version was Ruby 3.4.9, released on March 11, 2026. ([eosl.date](https://eosl.date/eol/product/ruby/?utm_source=openai))\n\nFor more information on Ruby's release history and support status, you can refer to the official Ruby website. ([ruby-lang.org](https://www.ruby-lang.org/?utm_source=openai)) ",
+                "refusal": null,
+                "annotations": [
+                  {
+                    "type": "url_citation",
+                    "url_citation": {
+                      "end_index": 154,
+                      "start_index": 91,
+                      "title": "Ruby Programming Language",
+                      "url": "https://www.ruby-lang.org/?utm_source=openai"
+                    }
+                  },
+                  {
+                    "type": "url_citation",
+                    "url_citation": {
+                      "end_index": 281,
+                      "start_index": 213,
+                      "title": "Ruby End of Life (EOL) Dates and End of Support (EOS) Dates | 4.0.5 - May 2026 Release",
+                      "url": "https://eosl.date/eol/product/ruby/?utm_source=openai"
+                    }
+                  },
+                  {
+                    "type": "url_citation",
+                    "url_citation": {
+                      "end_index": 451,
+                      "start_index": 388,
+                      "title": "Ruby Programming Language",
+                      "url": "https://www.ruby-lang.org/?utm_source=openai"
+                    }
+                  },
+                  {
+                    "type": "url_citation",
+                    "url_citation": {
+                      "end_index": 609,
+                      "start_index": 541,
+                      "title": "Ruby End of Life (EOL) Dates and End of Support (EOS) Dates | 4.0.5 - May 2026 Release",
+                      "url": "https://eosl.date/eol/product/ruby/?utm_source=openai"
+                    }
+                  },
+                  {
+                    "type": "url_citation",
+                    "url_citation": {
+                      "end_index": 785,
+                      "start_index": 722,
+                      "title": "Ruby Programming Language",
+                      "url": "https://www.ruby-lang.org/?utm_source=openai"
+                    }
+                  }
+                ]
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 13,
+            "completion_tokens": 229,
+            "total_tokens": 242,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "audio_tokens": 0
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "audio_tokens": 0,
+              "accepted_prediction_tokens": 0,
+              "rejected_prediction_tokens": 0
+            }
+          },
+          "system_fingerprint": ""
+        }
+  recorded_at: Wed, 10 Jun 2026 14:06:41 GMT
+recorded_with: VCR 6.4.0

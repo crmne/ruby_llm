@@ -9,34 +9,9 @@ module RubyLLM
     module ActsAs
       extend ActiveSupport::Concern
 
-      # When ActsAs is included, ensure models are loaded from database
       def self.included(base)
         super
-        # Monkey-patch Models to use database when ActsAs is active
-        RubyLLM::Models.class_eval do
-          def self.load_models
-            database_models = read_from_database
-            return database_models if database_models.any?
-
-            RubyLLM.logger.debug { 'Model registry is empty in database, falling back to JSON registry' }
-            read_from_json
-          rescue StandardError => e
-            RubyLLM.logger.debug { "Failed to load models from database: #{e.message}, falling back to JSON" }
-            read_from_json
-          end
-
-          def self.read_from_database
-            model_class = RubyLLM.config.model_registry_class
-            model_class = model_class.constantize if model_class.is_a?(String)
-            return [] unless model_class.table_exists?
-
-            model_class.all.map(&:to_llm)
-          end
-
-          def load_from_database!
-            @models = self.class.read_from_database
-          end
-        end
+        RubyLLM.config.model_registry_source ||= RubyLLM::ModelRegistry::ActiveRecordSource.new
       end
 
       class_methods do # rubocop:disable Metrics/BlockLength
@@ -61,18 +36,6 @@ module RubyLLM
                      class_name: self.model_class,
                      foreign_key: model_foreign_key,
                      optional: true
-
-          define_method :messages_association do
-            send(messages_association_name)
-          end
-
-          define_method :model_association do
-            send(model_association_name)
-          end
-
-          define_method :'model_association=' do |value|
-            send("#{model_association_name}=", value)
-          end
         end
 
         def acts_as_model(chats: :chats, chat_class: nil, chats_foreign_key: nil)
@@ -88,10 +51,6 @@ module RubyLLM
           validates :name, presence: true
 
           has_many chats, class_name: self.chat_class, foreign_key: chats_foreign_key
-
-          define_method :chats_association do
-            send(chats_association_name)
-          end
         end
 
         def acts_as_message(chat: :chat, chat_class: nil, chat_foreign_key: nil, touch_chat: false, # rubocop:disable Metrics/ParameterLists
@@ -135,18 +94,6 @@ module RubyLLM
                      optional: true
 
           delegate :tool_call?, :tool_result?, to: :to_llm
-
-          define_method :chat_association do
-            send(chat_association_name)
-          end
-
-          define_method :tool_calls_association do
-            send(tool_calls_association_name)
-          end
-
-          define_method :model_association do
-            send(model_association_name)
-          end
         end
 
         def acts_as_tool_call(message: :message, message_class: nil, message_foreign_key: nil, # rubocop:disable Metrics/ParameterLists
@@ -168,14 +115,6 @@ module RubyLLM
                   class_name: self.result_class,
                   foreign_key: result_foreign_key,
                   dependent: :nullify
-
-          define_method :message_association do
-            send(message_association_name)
-          end
-
-          define_method :result_association do
-            send(result_association_name)
-          end
         end
       end
     end

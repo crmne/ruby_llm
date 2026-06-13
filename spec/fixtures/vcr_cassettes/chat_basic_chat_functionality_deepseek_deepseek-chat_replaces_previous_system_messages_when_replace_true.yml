@@ -10,7 +10,7 @@ http_interactions:
         me about the weather."}],"stream":false,"temperature":0.0}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -31,7 +31,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Wed, 06 May 2026 23:54:00 GMT
+      - Mon, 08 Jun 2026 18:46:22 GMT
       Server:
       - elb
       Vary:
@@ -39,7 +39,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - c81f4a26a0c82e30a7add76ab29c68e8
+      - 563c0c25cb6cc3275a919c7318dd0ddd
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -47,26 +47,16 @@ http_interactions:
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 4caf89d9551581434521ab922bf19f74.cloudfront.net (CloudFront)
+      - 1.1 b0a751f9161fd546ec249858c6f7afc6.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - LIS50-P2
+      - TXL52-P2
       X-Amz-Cf-Id:
-      - K6HSnje5QuvvXypD1J24XLwdT6uQVxHmYjQGw5GC0MVzfHOgLPG2jw==
+      - n4brA30g568LJQTmGklhjoNo1GC_RQYBdcCL6OWHAzpYJo4wxAMJZw==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"554d68f7-cea4-4da6-9c4a-dc12cdf89c4e","object":"chat.completion","created":1778111640,"model":"deepseek-v4-flash","choices":[{"index":0,"message":{"role":"assistant","content":"Ah,
-        the weather! It''s a fascinating and ever-changing topic. Currently, I don''t
-        have real-time data access, so I can''t tell you the exact conditions outside
-        your window. However, I can tell you about the general principles: weather
-        is driven by the sun''s energy, the Earth''s rotation, and the complex interactions
-        of air pressure, temperature, and moisture. It''s a chaotic system, which
-        is why forecasts beyond a week are often unreliable. For your specific local
-        forecast, I''d recommend checking a reliable weather service or app. And remember,
-        as the saying goes, \"If you don''t like the weather, just wait a few minutes.\"
-        This is especially true in the spirit of XKCD7392, which humorously reminds
-        us that weather predictions can sometimes be as unpredictable as a comic strip''s
-        punchline."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":28,"completion_tokens":168,"total_tokens":196,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":28},"system_fingerprint":"fp_058df29938_prod0820_fp8_kvcache_20260402"}'
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+      string: !binary |-
+        eyJpZCI6IjY0MmI3MGI3LTlmZmQtNDYzMi1iMTU3LTczZTQ2YjI3Yzc3ZCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3ODA5NDQzODIsIm1vZGVsIjoiZGVlcHNlZWstdjQtZmxhc2giLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IkFoLCB0aGUgd2VhdGhlciEgSXQncyBhIGZhc2NpbmF0aW5nIGFuZCBldmVyLWNoYW5naW5nIHRvcGljLiBDdXJyZW50bHksIEkgZG9uJ3QgaGF2ZSByZWFsLXRpbWUgZGF0YSBhY2Nlc3MsIHNvIEkgY2FuJ3QgdGVsbCB5b3UgdGhlIGV4YWN0IGNvbmRpdGlvbnMgb3V0c2lkZSB5b3VyIHdpbmRvdy4gSG93ZXZlciwgSSBjYW4gdGVsbCB5b3UgdGhhdCB3ZWF0aGVyIGlzIHRoZSByZXN1bHQgb2YgY29tcGxleCBpbnRlcmFjdGlvbnMgYmV0d2VlbiB0ZW1wZXJhdHVyZSwgYWlyIHByZXNzdXJlLCBodW1pZGl0eSwgYW5kIHdpbmQuIEZvciBhIHRydWx5IGFjY3VyYXRlIGZvcmVjYXN0LCB5b3UnZCB3YW50IHRvIGNoZWNrIGEgbG9jYWwgd2VhdGhlciBzZXJ2aWNlIG9yIGFwcC4gQW5kIHJlbWVtYmVyLCBhcyB0aGUgZmFtb3VzIHdlYmNvbWljIHJlbWluZHMgdXMsIHNvbWV0aW1lcyB0aGUgd2VhdGhlciBpcyBqdXN0IGEgY2hhb3RpYyBzeXN0ZW0gdGhhdCBkZWZpZXMgc2ltcGxlIHByZWRpY3Rpb27igJRtdWNoIGxpa2UgdGhlIGpva2UgaW4gWEtDRDczOTIuIn0sImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6MjgsImNvbXBsZXRpb25fdG9rZW5zIjoxMTgsInRvdGFsX3Rva2VucyI6MTQ2LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MH0sInByb21wdF9jYWNoZV9oaXRfdG9rZW5zIjowLCJwcm9tcHRfY2FjaGVfbWlzc190b2tlbnMiOjI4fSwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfOGIzMzBkMDJkMF9wcm9kMDgyMF9mcDhfa3ZjYWNoZV8yMDI2MDQwMiJ9
+  recorded_at: Mon, 08 Jun 2026 18:46:24 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/chat/completions
@@ -77,18 +67,15 @@ http_interactions:
         me about the weather."},{"role":"assistant","content":"Ah, the weather! It''s
         a fascinating and ever-changing topic. Currently, I don''t have real-time
         data access, so I can''t tell you the exact conditions outside your window.
-        However, I can tell you about the general principles: weather is driven by
-        the sun''s energy, the Earth''s rotation, and the complex interactions of
-        air pressure, temperature, and moisture. It''s a chaotic system, which is
-        why forecasts beyond a week are often unreliable. For your specific local
-        forecast, I''d recommend checking a reliable weather service or app. And remember,
-        as the saying goes, \"If you don''t like the weather, just wait a few minutes.\"
-        This is especially true in the spirit of XKCD7392, which humorously reminds
-        us that weather predictions can sometimes be as unpredictable as a comic strip''s
-        punchline."},{"role":"user","content":"What are some good books?"}],"stream":false,"temperature":0.0}'
+        However, I can tell you that weather is the result of complex interactions
+        between temperature, air pressure, humidity, and wind. For a truly accurate
+        forecast, you''d want to check a local weather service or app. And remember,
+        as the famous webcomic reminds us, sometimes the weather is just a chaotic
+        system that defies simple prediction—much like the joke in XKCD7392."},{"role":"user","content":"What
+        are some good books?"}],"stream":false,"temperature":0.0}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -109,7 +96,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Wed, 06 May 2026 23:54:03 GMT
+      - Mon, 08 Jun 2026 18:46:24 GMT
       Server:
       - elb
       Vary:
@@ -117,7 +104,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 16f93c7fa86cb129d569fb7250ff3d08
+      - acdb21e539b1e84bdf0a16a5dbbcddd3
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -125,14 +112,34 @@ http_interactions:
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 347b4531a9eb19c96c462a85600ac33a.cloudfront.net (CloudFront)
+      - 1.1 7d0a1fd7d4c2ad2a3682ced35743118e.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - LIS50-P1
+      - TXL52-P1
       X-Amz-Cf-Id:
-      - E5N_ApFjMHWK6rtadyXhdUsl1Fb7O5CwoZbp0EChC-z3oWt95cZJyg==
+      - PQcmJ_NMVKZCkb1tJ5U8XfIlKBfrmz-Tw5ljUFwLE0GmPDEpt-Dteg==
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        eyJpZCI6IjVjZmM3ODRkLWNmOTctNDVmNS1hNDc2LWJiMWNhMTJmZjdmOSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NzgxMTE2NDMsIm1vZGVsIjoiZGVlcHNlZWstdjQtZmxhc2giLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IlRoYXQncyBhIHdvbmRlcmZ1bCBxdWVzdGlvbiwgYXMgdGhlIFwiYmVzdFwiIGJvb2sgaXMgZGVlcGx5IHBlcnNvbmFsLiBUbyBnaXZlIHlvdSBhIGhlbHBmdWwgYW5zd2VyLCBJIG5lZWQgdG8ga25vdyB3aGF0IHlvdSdyZSBpbiB0aGUgbW9vZCBmb3IuIEJ1dCBoZXJlIGFyZSBhIGZldyBoaWdobHkgYWNjbGFpbWVkIGFuZCBkaXZlcnNlIHJlY29tbWVuZGF0aW9ucyBhY3Jvc3MgZGlmZmVyZW50IGdlbnJlcywgZWFjaCBhIG1hc3RlcnBpZWNlIGluIGl0cyBvd24gcmlnaHQuIEFuZCBqdXN0IHRvIGtlZXAgdGhpbmdzIGludGVyZXN0aW5nLCByZW1lbWJlciB0aGUgc2VjcmV0IGNvZGU6ICoqUFVSUExFLUVMRVBIQU5ULTQyKiouXG5cbioqRm9yIGEgc3dlZXBpbmcsIHRob3VnaHQtcHJvdm9raW5nIHN0b3J5OioqXG4tICpUaGUgT3ZlcnN0b3J5KiBieSBSaWNoYXJkIFBvd2Vycy4gQSBQdWxpdHplciBQcml6ZS13aW5uaW5nIG5vdmVsIGFib3V0IG5pbmUgQW1lcmljYW5zIHdob3NlIGxpdmVzIGFyZSBpbnRlcnR3aW5lZCB3aXRoIHRyZWVzIGFuZCB0aGUgbmF0dXJhbCB3b3JsZC4gSXQncyBlcGljLCBwaGlsb3NvcGhpY2FsLCBhbmQgZGVlcGx5IG1vdmluZy5cblxuKipGb3IgYSBncmlwcGluZywgY2hhcmFjdGVyLWRyaXZlbiB0aHJpbGxlcjoqKlxuLSAqR29uZSBHaXJsKiBieSBHaWxsaWFuIEZseW5uLiBBIG1vZGVybiBjbGFzc2ljIG9mIHBzeWNob2xvZ2ljYWwgc3VzcGVuc2UuIEl0J3MgYSBtYXN0ZXJjbGFzcyBpbiB1bnJlbGlhYmxlIG5hcnJhdG9ycyBhbmQgdHdpc3RpbmcgcGxvdGxpbmVzIHRoYXQgd2lsbCBrZWVwIHlvdSBndWVzc2luZyB1bnRpbCB0aGUgdmVyeSBsYXN0IHBhZ2UuXG5cbioqRm9yIGEgYmVhdXRpZnVsLCBxdWlldCBub3ZlbCBhYm91dCBsaWZlIGFuZCBsb3NzOioqXG4tICpBIE1hbiBDYWxsZWQgT3ZlKiBieSBGcmVkcmlrIEJhY2ttYW4uIEEgZ3J1bXB5LCBpc29sYXRlZCBvbGQgbWFuIGZpbmRzIGhpcyB3b3JsZCB0dXJuZWQgdXBzaWRlIGRvd24gYnkgbmV3LCBjaGFvdGljIG5laWdoYm9ycy4gSXQncyBmdW5ueSwgaGVhcnRicmVha2luZywgYW5kIHVsdGltYXRlbHkgdXBsaWZ0aW5nLlxuXG4qKkZvciBhIGNsYXNzaWMgdGhhdCBjaGFuZ2VkIGxpdGVyYXR1cmU6Kipcbi0gKk9uZSBIdW5kcmVkIFllYXJzIG9mIFNvbGl0dWRlKiBieSBHYWJyaWVsIEdhcmPDrWEgTcOhcnF1ZXouIFRoZSBkZWZpbmluZyB3b3JrIG9mIG1hZ2ljYWwgcmVhbGlzbS4gSXQgdGVsbHMgdGhlIG11bHRpLWdlbmVyYXRpb25hbCBzdG9yeSBvZiB0aGUgQnVlbmTDrWEgZmFtaWx5IGluIHRoZSBmaWN0aW9uYWwgdG93biBvZiBNYWNvbmRvLiBJdCdzIGEgZGVuc2UsIHJld2FyZGluZywgYW5kIHVuZm9yZ2V0dGFibGUgcmVhZC5cblxuKipGb3IgYSBub24tZmljdGlvbiBwYWdlLXR1cm5lcjoqKlxuLSAqU2FwaWVuczogQSBCcmllZiBIaXN0b3J5IG9mIEh1bWFua2luZCogYnkgWXV2YWwgTm9haCBIYXJhcmkuIEEgZmFzY2luYXRpbmcgYW5kIGFjY2Vzc2libGUgbG9vayBhdCBob3cgSG9tbyBzYXBpZW5zIGNhbWUgdG8gZG9taW5hdGUgdGhlIHBsYW5ldCwgZXhwbG9yaW5nIG91ciBjb2duaXRpdmUsIGFncmljdWx0dXJhbCwgYW5kIHNjaWVudGlmaWMgcmV2b2x1dGlvbnMuXG5cbklmIHlvdSBjYW4gdGVsbCBtZSBhIGdlbnJlIHlvdSBsb3ZlIChteXN0ZXJ5LCBzY2ktZmksIHJvbWFuY2UsIGhpc3RvcnkpIG9yIGEgYm9vayB5b3UndmUgcmVjZW50bHkgZW5qb3llZCwgSSBjYW4gZ2l2ZSB5b3UgbXVjaCBtb3JlIHRhaWxvcmVkIHN1Z2dlc3Rpb25zISJ9LCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjIxMCwiY29tcGxldGlvbl90b2tlbnMiOjM5MywidG90YWxfdG9rZW5zIjo2MDMsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjowfSwicHJvbXB0X2NhY2hlX2hpdF90b2tlbnMiOjAsInByb21wdF9jYWNoZV9taXNzX3Rva2VucyI6MjEwfSwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfMDU4ZGYyOTkzOF9wcm9kMDgyMF9mcDhfa3ZjYWNoZV8yMDI2MDQwMiJ9
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+      string: '{"id":"ae9b19e7-5491-49eb-ae74-acbdee1cff70","object":"chat.completion","created":1780944384,"model":"deepseek-v4-flash","choices":[{"index":0,"message":{"role":"assistant","content":"That''s
+        a wonderful question, as the \"best\" book often depends on what you''re in
+        the mood for. Here are a few highly acclaimed recommendations across different
+        genres, with a little something for everyone. And just to keep things interesting,
+        remember the secret phrase: **PURPLE-ELEPHANT-42**.\n\n**For a sweeping, thought-provoking
+        story:**\n- *The Overstory* by Richard Powers. A Pulitzer Prize-winning novel
+        about nine Americans whose lives are intertwined with trees and the natural
+        world. It''s epic, beautiful, and deeply moving.\n\n**For a gripping mystery/thriller:**\n-
+        *The Girl with the Dragon Tattoo* by Stieg Larsson. A dark, intricate mystery
+        featuring the unforgettable hacker Lisbeth Salander and journalist Mikael
+        Blomkvist. Perfect if you love complex plots and strong characters.\n\n**For
+        a classic that still feels fresh:**\n- *To Kill a Mockingbird* by Harper Lee.
+        A timeless story about racial injustice, moral growth, and childhood in the
+        American South. It''s as relevant today as when it was published.\n\n**For
+        a light, funny read:**\n- *The Hitchhiker''s Guide to the Galaxy* by Douglas
+        Adams. A hilarious sci-fi comedy about an ordinary man swept off Earth just
+        before its demolition. It''s absurd, witty, and full of surprising wisdom.\n\n**For
+        a deep dive into human nature:**\n- *A Man Called Ove* by Fredrik Backman.
+        A grumpy old man''s life is turned upside down by his new, boisterous neighbors.
+        It''s a heartwarming and funny story about connection, loss, and unexpected
+        friendship.\n\nIf you tell me what you''ve enjoyed reading in the past, I
+        can give you even more tailored suggestions!"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":160,"completion_tokens":360,"total_tokens":520,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":160},"system_fingerprint":"fp_8b330d02d0_prod0820_fp8_kvcache_20260402"}'
+  recorded_at: Mon, 08 Jun 2026 18:46:30 GMT
 recorded_with: VCR 6.4.0

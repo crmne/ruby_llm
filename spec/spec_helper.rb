@@ -18,3 +18,5 @@ require_relative 'support/rubyllm_configuration'
 require_relative 'support/vcr_configuration'
 require_relative 'support/models_to_test'
 require_relative 'support/streaming_error_helpers'
+
+RubyLLM.config.deprecation_behavior = ENV['RUBYLLM_STRICT_DEPRECATIONS'] == 'true' ? :raise : :silence
