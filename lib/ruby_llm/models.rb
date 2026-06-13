@@ -23,17 +23,18 @@ module RubyLLM
     MODELS_DEV_INPUT_MODALITIES = %w[text image audio pdf video file].freeze
     MODELS_DEV_OUTPUT_MODALITIES = %w[text image audio video embeddings moderation].freeze
     MODELS_DEV_AUTHORITY_CAPABILITIES = %w[function_calling structured_output reasoning vision].freeze
+    # First-party providers outrank the aggregators that resell their models.
     PROVIDER_PREFERENCE = %w[
       openai
       anthropic
       gemini
-      vertexai
-      bedrock
-      openrouter
       deepseek
       mistral
       perplexity
       xai
+      vertexai
+      bedrock
+      openrouter
       azure
       ollama
       gpustack
@@ -82,8 +83,7 @@ module RubyLLM
 
       def read_from_json(file = RubyLLM.config.model_registry_file)
         data = File.exist?(file) ? File.read(file) : '[]'
-        models = JSON.parse(data, symbolize_names: true).map { |model| Model::Info.new(model) }
-        filter_models(models)
+        JSON.parse(data, symbolize_names: true).map { |model| Model::Info.new(model) }
       rescue JSON::ParserError
         []
       end
@@ -245,13 +245,7 @@ module RubyLLM
           end
         end
 
-        filter_models(models).sort_by { |m| [m.provider, m.id] }
-      end
-
-      def filter_models(models)
-        models.reject do |model|
-          model.provider.to_s == 'vertexai' && model.id.to_s.include?('/')
-        end
+        models.sort_by { |m| [m.provider, m.id] }
       end
 
       def find_models_dev_model(key, models_dev_by_key)
@@ -336,7 +330,7 @@ module RubyLLM
                        .find { |value| !value.to_s.strip.empty? }
 
         data = {
-          id: model_data[:id],
+          id: models_dev_model_id(model_data[:id], provider_slug),
           name: model_data[:name] || model_data[:id],
           provider: provider_slug,
           family: model_data[:family],
@@ -352,6 +346,14 @@ module RubyLLM
 
         normalize_embedding_modalities(data)
         data
+      end
+
+      # models.dev pins Vertex AI models to a version (claude-haiku-4-5@20251001);
+      # Vertex AI serves them by bare name.
+      def models_dev_model_id(id, provider_slug)
+        return id unless provider_slug == 'vertexai'
+
+        id&.split('@')&.first
       end
 
       def models_dev_capabilities(model_data, modalities)
@@ -423,7 +425,7 @@ module RubyLLM
     end
 
     def initialize(models = nil)
-      @models = self.class.filter_models(models || self.class.load_models)
+      @models = models || self.class.load_models
     end
 
     # Replaces this registry instance with models loaded from JSON.
@@ -516,15 +518,15 @@ module RubyLLM
       Providers::Bedrock::Models.normalize_inference_profile_id(model_id, inference_types, region)
     end
 
+    # A name can be one provider's exact id and another's alias:
+    # claude-3-5-haiku is exact on vertexai, an alias on anthropic.
+    # Provider preference settles it, not the kind of match.
     def find_without_provider(model_id)
-      exact_matches = all.select { |m| m.id == model_id }
-      return preferred_match(exact_matches) if exact_matches.any?
-
       resolved_id = Aliases.resolve(model_id)
-      alias_matches = all.select { |m| m.id == resolved_id }
-      return preferred_match(alias_matches) if alias_matches.any?
+      matches = all.select { |m| [model_id, resolved_id].include?(m.id) }
+                   .sort_by { |m| m.id == model_id ? 0 : 1 }
 
-      raise_model_not_found(model_id)
+      preferred_match(matches) || raise_model_not_found(model_id)
     end
 
     def raise_model_not_found(model_id, provider: nil)

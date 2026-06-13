@@ -1,0 +1,160 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.x.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"grok-4.3","messages":[{"role":"system","content":"You must
+        call the dice_roll tool exactly 3 times when asked to roll dice 3 times."},{"role":"user","content":"Roll
+        the dice 3 times"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
+        a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.2
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sat, 13 Jun 2026 11:35:04 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Strict-Transport-Security:
+      - max-age=31536000
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Ratelimit-Limit-Tokens:
+      - '10000000'
+      X-Ratelimit-Remaining-Tokens:
+      - '10000000'
+      X-Zero-Data-Retention:
+      - 'false'
+      X-Ratelimit-Limit-Requests:
+      - '1800'
+      X-Ratelimit-Remaining-Requests:
+      - '1800'
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      X-Metrics-Ttft-Ms:
+      - '260.8'
+      X-Metrics-Mean-Itl-Ms:
+      - '5.6'
+      X-Metrics-E2e-Ms:
+      - '1907.2'
+      Traceparent:
+      - 00-e8528ea19b4e0df5fe4582efa17b76f7-d426cea60000dfdc-01
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"49f28369-263c-9d0f-b719-53326256cbdc","object":"chat.completion","created":1781350503,"model":"grok-4.3","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning_content":"The
+        instruction is: \"You must call the dice_roll tool exactly 3 times when asked
+        to roll dice 3 times.\"\n","tool_calls":[{"id":"call-57a3ddf5-2f2d-4a30-97ce-8dcd6ea7f4ac-0","function":{"name":"dice_roll","arguments":"{}"},"type":"function"},{"id":"call-57a3ddf5-2f2d-4a30-97ce-8dcd6ea7f4ac-1","function":{"name":"dice_roll","arguments":"{}"},"type":"function"},{"id":"call-57a3ddf5-2f2d-4a30-97ce-8dcd6ea7f4ac-2","function":{"name":"dice_roll","arguments":"{}"},"type":"function"}],"refusal":null},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":256,"completion_tokens":15,"total_tokens":519,"prompt_tokens_details":{"text_tokens":256,"audio_tokens":0,"image_tokens":0,"cached_tokens":128},"completion_tokens_details":{"reasoning_tokens":248,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":8431000},"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}'
+  recorded_at: Sat, 13 Jun 2026 11:35:04 GMT
+- request:
+    method: post
+    uri: https://api.x.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"grok-4.3","messages":[{"role":"system","content":"You must
+        call the dice_roll tool exactly 3 times when asked to roll dice 3 times."},{"role":"user","content":"Roll
+        the dice 3 times"},{"role":"assistant","content":"","tool_calls":[{"id":"call-57a3ddf5-2f2d-4a30-97ce-8dcd6ea7f4ac-0","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call-57a3ddf5-2f2d-4a30-97ce-8dcd6ea7f4ac-1","type":"function","function":{"name":"dice_roll","arguments":"{}"}},{"id":"call-57a3ddf5-2f2d-4a30-97ce-8dcd6ea7f4ac-2","type":"function","function":{"name":"dice_roll","arguments":"{}"}}],"reasoning":"The
+        instruction is: \"You must call the dice_roll tool exactly 3 times when asked
+        to roll dice 3 times.\"\n","reasoning_content":"The instruction is: \"You
+        must call the dice_roll tool exactly 3 times when asked to roll dice 3 times.\"\n"},{"role":"tool","content":"{roll:
+        1}","tool_call_id":"call-57a3ddf5-2f2d-4a30-97ce-8dcd6ea7f4ac-0"},{"role":"tool","content":"{roll:
+        2}","tool_call_id":"call-57a3ddf5-2f2d-4a30-97ce-8dcd6ea7f4ac-1"},{"role":"tool","content":"{roll:
+        3}","tool_call_id":"call-57a3ddf5-2f2d-4a30-97ce-8dcd6ea7f4ac-2"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
+        a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.2
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sat, 13 Jun 2026 11:35:06 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Strict-Transport-Security:
+      - max-age=31536000
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Ratelimit-Limit-Tokens:
+      - '10000000'
+      X-Ratelimit-Remaining-Tokens:
+      - '10000000'
+      X-Zero-Data-Retention:
+      - 'false'
+      X-Ratelimit-Limit-Requests:
+      - '1800'
+      X-Ratelimit-Remaining-Requests:
+      - '1800'
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      X-Metrics-Ttft-Ms:
+      - '189.5'
+      X-Metrics-Mean-Itl-Ms:
+      - '5.6'
+      X-Metrics-E2e-Ms:
+      - '1408.9'
+      Traceparent:
+      - 00-83fa799c5b653f4d101f8f5e08f2448c-ddf15e0b0009a55f-01
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"5940cce9-3bea-9208-bfdc-4dd1423d3c5e","object":"chat.completion","created":1781350505,"model":"grok-4.3","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        results of the three dice rolls are: 1, 2, 3.","reasoning_content":"The user
+        asked to \"Roll the dice 3 times.\" The instructions say: \"You must call
+        the dice_roll tool exactly 3 times when asked to roll dice 3 times.\"\n","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":303,"completion_tokens":18,"total_tokens":467,"prompt_tokens_details":{"text_tokens":303,"audio_tokens":0,"image_tokens":0,"cached_tokens":256},"completion_tokens_details":{"reasoning_tokens":146,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":5199500},"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}'
+  recorded_at: Sat, 13 Jun 2026 11:35:06 GMT
+recorded_with: VCR 6.4.0

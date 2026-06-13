@@ -12,19 +12,6 @@ RSpec.describe RubyLLM::Models do
   end
 
   describe 'filtering and chaining' do
-    it 'excludes slash-based vertexai models from the registry' do
-      models = described_class.new(
-        [
-          RubyLLM::Model::Info.new(id: 'deepseek-ai/deepseek-v3.1-maas', name: 'DeepSeek', provider: 'vertexai'),
-          RubyLLM::Model::Info.new(id: 'gemini-2.5-flash', name: 'Gemini', provider: 'vertexai'),
-          RubyLLM::Model::Info.new(id: 'deepseek-ai/deepseek-v3.1-maas', name: 'DeepSeek', provider: 'openrouter')
-        ]
-      )
-
-      expect(models.by_provider('vertexai').map(&:id)).to eq(['gemini-2.5-flash'])
-      expect(models.by_provider('openrouter').map(&:id)).to eq(['deepseek-ai/deepseek-v3.1-maas'])
-    end
-
     it 'filters models by provider' do
       openai_models = RubyLLM.models.by_provider('openai')
       expect(openai_models.all).to all(have_attributes(provider: 'openai'))
@@ -120,6 +107,12 @@ RSpec.describe RubyLLM::Models do
       # Only use alias when exact match isn't found
       chat_model = RubyLLM.chat(model: 'claude-3-5-haiku')
       expect(chat_model.model.id).to eq('claude-3-5-haiku-20241022')
+    end
+
+    it 'prefers the first-party provider when an aggregator serves the same name' do
+      expect(RubyLLM.models.find('claude-3-5-haiku').provider).to eq('anthropic')
+      expect(RubyLLM.models.find('mistral-medium-3').provider).to eq('mistral')
+      expect(RubyLLM.models.find('gemini-2.5-flash').provider).to eq('gemini')
     end
 
     it 'prefers bedrock region-resolved inference profile IDs over exact unprefixed IDs' do

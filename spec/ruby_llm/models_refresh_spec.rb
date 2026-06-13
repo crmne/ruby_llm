@@ -58,6 +58,13 @@ RSpec.describe RubyLLM::Models do
       end
     end
 
+    it 'lists Vertex AI models by their actual name, never a version-pinned id' do
+      vertexai_ids = models_data.select { |m| m['provider'] == 'vertexai' }.map { |m| m['id'] }
+
+      expect(vertexai_ids).not_to be_empty
+      expect(vertexai_ids).to all(satisfy { |id| !id.include?('@') })
+    end
+
     it 'ensures all models have capabilities as an array' do
       models_data.each do |model|
         expect(model['capabilities']).to be_an(Array),
@@ -76,6 +83,20 @@ RSpec.describe RubyLLM::Models do
 
       expect(providers_with_issues).to be_empty,
                                        "Providers with mixed capability types: #{providers_with_issues}"
+    end
+  end
+
+  describe '.models_dev_model_id' do
+    it 'strips the version pin from Vertex AI ids so they match the provider names' do
+      expect(described_class.send(:models_dev_model_id, 'claude-haiku-4-5@20251001', 'vertexai'))
+        .to eq('claude-haiku-4-5')
+      expect(described_class.send(:models_dev_model_id, 'claude-opus-4-6@default', 'vertexai'))
+        .to eq('claude-opus-4-6')
+    end
+
+    it 'leaves bare ids and other providers untouched' do
+      expect(described_class.send(:models_dev_model_id, 'gemini-2.5-flash', 'vertexai')).to eq('gemini-2.5-flash')
+      expect(described_class.send(:models_dev_model_id, 'some@thing', 'gemini')).to eq('some@thing')
     end
   end
 

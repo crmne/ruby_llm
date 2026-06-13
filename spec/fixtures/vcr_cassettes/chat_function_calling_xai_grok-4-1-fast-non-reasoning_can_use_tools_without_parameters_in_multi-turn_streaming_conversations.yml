@@ -1,0 +1,332 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.x.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"grok-4.3","messages":[{"role":"system","content":"You must
+        use tools whenever possible."},{"role":"user","content":"What''s the best
+        language to learn?"}],"stream":true,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}],"stream_options":{"include_usage":true}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.2
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sat, 13 Jun 2026 11:33:38 GMT
+      Content-Type:
+      - text/event-stream
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-cache
+      X-Zero-Data-Retention:
+      - 'false'
+      X-Ratelimit-Limit-Tokens:
+      - '10000000'
+      X-Ratelimit-Remaining-Tokens:
+      - '10000000'
+      X-Ratelimit-Limit-Requests:
+      - '1800'
+      X-Ratelimit-Remaining-Requests:
+      - '1800'
+      Strict-Transport-Security:
+      - max-age=31536000
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Traceparent:
+      - 00-5d4a384390f635b2868122557b9e204b-4f37d5b20008e873-01
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: UTF-8
+      string: |+
+        data: {"id":"4177d353-e6bc-9351-8eae-7eecb0148c69","object":"chat.completion.chunk","created":1781350419,"model":"grok-4.3","choices":[{"index":0,"delta":{"reasoning_content":"The","role":"assistant"}}],"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}
+
+        data: {"id":"4177d353-e6bc-9351-8eae-7eecb0148c69","object":"chat.completion.chunk","created":1781350419,"model":"grok-4.3","choices":[{"index":0,"delta":{"reasoning_content":" question"}}],"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}
+
+        data: {"id":"4177d353-e6bc-9351-8eae-7eecb0148c69","object":"chat.completion.chunk","created":1781350419,"model":"grok-4.3","choices":[{"index":0,"delta":{"reasoning_content":" is"}}],"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}
+
+        data: {"id":"4177d353-e6bc-9351-8eae-7eecb0148c69","object":"chat.completion.chunk","created":1781350419,"model":"grok-4.3","choices":[{"index":0,"delta":{"reasoning_content":":"}}],"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}
+
+        data: {"id":"4177d353-e6bc-9351-8eae-7eecb0148c69","object":"chat.completion.chunk","created":1781350419,"model":"grok-4.3","choices":[{"index":0,"delta":{"reasoning_content":" \""}}],"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}
+
+        data: {"id":"4177d353-e6bc-9351-8eae-7eecb0148c69","object":"chat.completion.chunk","created":1781350419,"model":"grok-4.3","choices":[{"index":0,"delta":{"reasoning_content":"What's"}}],"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}
+
+        data: {"id":"4177d353-e6bc-9351-8eae-7eecb0148c69","object":"chat.completion.chunk","created":1781350419,"model":"grok-4.3","choices":[{"index":0,"delta":{"reasoning_content":" the"}}],"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}
+
+        data: {"id":"4177d353-e6bc-9351-8eae-7eecb0148c69","object":"chat.completion.chunk","created":1781350419,"model":"grok-4.3","choices":[{"index":0,"delta":{"reasoning_content":" best"}}],"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}
+
+        data: {"id":"4177d353-e6bc-9351-8eae-7eecb0148c69","object":"chat.completion.chunk","created":1781350419,"model":"grok-4.3","choices":[{"index":0,"delta":{"reasoning_content":" language"}}],"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}
+
+        data: {"id":"4177d353-e6bc-9351-8eae-7eecb0148c69","object":"chat.completion.chunk","created":1781350419,"model":"grok-4.3","choices":[{"index":0,"delta":{"reasoning_content":" to"}}],"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}
+
+        data: {"id":"4177d353-e6bc-9351-8eae-7eecb0148c69","object":"chat.completion.chunk","created":1781350419,"model":"grok-4.3","choices":[{"index":0,"delta":{"reasoning_content":" learn"}}],"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}
+
+        data: {"id":"4177d353-e6bc-9351-8eae-7eecb0148c69","object":"chat.completion.chunk","created":1781350419,"model":"grok-4.3","choices":[{"index":0,"delta":{"reasoning_content":"?\"\n"}}],"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}
+
+        data: {"id":"4177d353-e6bc-9351-8eae-7eecb0148c69","object":"chat.completion.chunk","created":1781350420,"model":"grok-4.3","choices":[{"index":0,"delta":{"tool_calls":[{"id":"call-9bcd8a30-c011-4897-a907-8e2fa663159c-0","function":{"name":"best_language_to_learn","arguments":"{}"},"index":0,"type":"function"}]}}],"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}
+
+        data: {"id":"4177d353-e6bc-9351-8eae-7eecb0148c69","object":"chat.completion.chunk","created":1781350420,"model":"grok-4.3","choices":[{"index":0,"delta":{},"finish_reason":"tool_calls"}],"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}
+
+        data: {"id":"4177d353-e6bc-9351-8eae-7eecb0148c69","object":"chat.completion.chunk","created":1781350420,"model":"grok-4.3","choices":[],"usage":{"prompt_tokens":242,"completion_tokens":8,"total_tokens":402,"prompt_tokens_details":{"text_tokens":242,"audio_tokens":0,"image_tokens":0,"cached_tokens":128},"completion_tokens_details":{"reasoning_tokens":152,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":5681000},"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}
+
+        data: [DONE]
+
+  recorded_at: Sat, 13 Jun 2026 11:33:40 GMT
+- request:
+    method: post
+    uri: https://api.x.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"grok-4.3","messages":[{"role":"system","content":"You must
+        use tools whenever possible."},{"role":"user","content":"What''s the best
+        language to learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"call-9bcd8a30-c011-4897-a907-8e2fa663159c-0","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning":"The
+        question is: \"What''s the best language to learn?\"\n","reasoning_content":"The
+        question is: \"What''s the best language to learn?\"\n"},{"role":"tool","content":"Ruby","tool_call_id":"call-9bcd8a30-c011-4897-a907-8e2fa663159c-0"}],"stream":true,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}],"stream_options":{"include_usage":true}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.2
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sat, 13 Jun 2026 11:33:40 GMT
+      Content-Type:
+      - text/event-stream
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-cache
+      X-Zero-Data-Retention:
+      - 'false'
+      X-Ratelimit-Limit-Tokens:
+      - '10000000'
+      X-Ratelimit-Remaining-Tokens:
+      - '10000000'
+      X-Ratelimit-Limit-Requests:
+      - '1800'
+      X-Ratelimit-Remaining-Requests:
+      - '1800'
+      Strict-Transport-Security:
+      - max-age=31536000
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Traceparent:
+      - 00-dac0409961808286f2bff0a1cf578a90-d97213850000cde7-01
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: UTF-8
+      string: |+
+        data: {"id":"d9861030-08e7-98b0-a761-128d45252714","object":"chat.completion.chunk","created":1781350421,"model":"grok-4.3","choices":[{"index":0,"delta":{"reasoning_content":"The","role":"assistant"}}],"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}
+
+        data: {"id":"d9861030-08e7-98b0-a761-128d45252714","object":"chat.completion.chunk","created":1781350421,"model":"grok-4.3","choices":[{"index":0,"delta":{"reasoning_content":" tool"}}],"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}
+
+        data: {"id":"d9861030-08e7-98b0-a761-128d45252714","object":"chat.completion.chunk","created":1781350421,"model":"grok-4.3","choices":[{"index":0,"delta":{"reasoning_content":" returned"}}],"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}
+
+        data: {"id":"d9861030-08e7-98b0-a761-128d45252714","object":"chat.completion.chunk","created":1781350421,"model":"grok-4.3","choices":[{"index":0,"delta":{"reasoning_content":" \""}}],"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}
+
+        data: {"id":"d9861030-08e7-98b0-a761-128d45252714","object":"chat.completion.chunk","created":1781350421,"model":"grok-4.3","choices":[{"index":0,"delta":{"reasoning_content":"Ruby"}}],"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}
+
+        data: {"id":"d9861030-08e7-98b0-a761-128d45252714","object":"chat.completion.chunk","created":1781350421,"model":"grok-4.3","choices":[{"index":0,"delta":{"reasoning_content":"\"."}}],"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}
+
+        data: {"id":"d9861030-08e7-98b0-a761-128d45252714","object":"chat.completion.chunk","created":1781350421,"model":"grok-4.3","choices":[{"index":0,"delta":{"reasoning_content":" So"}}],"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}
+
+        data: {"id":"d9861030-08e7-98b0-a761-128d45252714","object":"chat.completion.chunk","created":1781350421,"model":"grok-4.3","choices":[{"index":0,"delta":{"reasoning_content":" the"}}],"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}
+
+        data: {"id":"d9861030-08e7-98b0-a761-128d45252714","object":"chat.completion.chunk","created":1781350421,"model":"grok-4.3","choices":[{"index":0,"delta":{"reasoning_content":" best"}}],"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}
+
+        data: {"id":"d9861030-08e7-98b0-a761-128d45252714","object":"chat.completion.chunk","created":1781350421,"model":"grok-4.3","choices":[{"index":0,"delta":{"reasoning_content":" language"}}],"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}
+
+        data: {"id":"d9861030-08e7-98b0-a761-128d45252714","object":"chat.completion.chunk","created":1781350421,"model":"grok-4.3","choices":[{"index":0,"delta":{"reasoning_content":" to"}}],"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}
+
+        data: {"id":"d9861030-08e7-98b0-a761-128d45252714","object":"chat.completion.chunk","created":1781350421,"model":"grok-4.3","choices":[{"index":0,"delta":{"reasoning_content":" learn"}}],"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}
+
+        data: {"id":"d9861030-08e7-98b0-a761-128d45252714","object":"chat.completion.chunk","created":1781350421,"model":"grok-4.3","choices":[{"index":0,"delta":{"reasoning_content":" is"}}],"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}
+
+        data: {"id":"d9861030-08e7-98b0-a761-128d45252714","object":"chat.completion.chunk","created":1781350421,"model":"grok-4.3","choices":[{"index":0,"delta":{"reasoning_content":" Ruby"}}],"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}
+
+        data: {"id":"d9861030-08e7-98b0-a761-128d45252714","object":"chat.completion.chunk","created":1781350421,"model":"grok-4.3","choices":[{"index":0,"delta":{"reasoning_content":".\n"}}],"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}
+
+        data: {"id":"d9861030-08e7-98b0-a761-128d45252714","object":"chat.completion.chunk","created":1781350421,"model":"grok-4.3","choices":[{"index":0,"delta":{"content":"Ruby"}}],"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}
+
+        data: {"id":"d9861030-08e7-98b0-a761-128d45252714","object":"chat.completion.chunk","created":1781350421,"model":"grok-4.3","choices":[{"index":0,"delta":{"content":"."}}],"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}
+
+        data: {"id":"d9861030-08e7-98b0-a761-128d45252714","object":"chat.completion.chunk","created":1781350421,"model":"grok-4.3","choices":[{"index":0,"delta":{},"finish_reason":"stop"}],"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}
+
+        data: {"id":"d9861030-08e7-98b0-a761-128d45252714","object":"chat.completion.chunk","created":1781350421,"model":"grok-4.3","choices":[],"usage":{"prompt_tokens":257,"completion_tokens":2,"total_tokens":324,"prompt_tokens_details":{"text_tokens":257,"audio_tokens":0,"image_tokens":0,"cached_tokens":192},"completion_tokens_details":{"reasoning_tokens":65,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":2871500},"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}
+
+        data: [DONE]
+
+  recorded_at: Sat, 13 Jun 2026 11:33:41 GMT
+- request:
+    method: post
+    uri: https://api.x.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"grok-4.3","messages":[{"role":"system","content":"You must
+        use tools whenever possible."},{"role":"user","content":"What''s the best
+        language to learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"call-9bcd8a30-c011-4897-a907-8e2fa663159c-0","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning":"The
+        question is: \"What''s the best language to learn?\"\n","reasoning_content":"The
+        question is: \"What''s the best language to learn?\"\n"},{"role":"tool","content":"Ruby","tool_call_id":"call-9bcd8a30-c011-4897-a907-8e2fa663159c-0"},{"role":"assistant","content":"Ruby.","reasoning":"The
+        tool returned \"Ruby\". So the best language to learn is Ruby.\n","reasoning_content":"The
+        tool returned \"Ruby\". So the best language to learn is Ruby.\n"},{"role":"user","content":"Tell
+        me again: what''s the best language to learn?"}],"stream":true,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}],"stream_options":{"include_usage":true}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.2
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sat, 13 Jun 2026 11:33:42 GMT
+      Content-Type:
+      - text/event-stream
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-cache
+      X-Zero-Data-Retention:
+      - 'false'
+      X-Ratelimit-Limit-Tokens:
+      - '10000000'
+      X-Ratelimit-Remaining-Tokens:
+      - '10000000'
+      X-Ratelimit-Limit-Requests:
+      - '1800'
+      X-Ratelimit-Remaining-Requests:
+      - '1800'
+      Strict-Transport-Security:
+      - max-age=31536000
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Traceparent:
+      - 00-cc92cc4e0d5fa49899432af5288a31eb-2017606c00000d9f-01
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: UTF-8
+      string: |+
+        data: {"id":"aeb01e08-285a-9913-8562-431057d8708d","object":"chat.completion.chunk","created":1781350422,"model":"grok-4.3","choices":[{"index":0,"delta":{"reasoning_content":"The","role":"assistant"}}],"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}
+
+        data: {"id":"aeb01e08-285a-9913-8562-431057d8708d","object":"chat.completion.chunk","created":1781350422,"model":"grok-4.3","choices":[{"index":0,"delta":{"reasoning_content":" user"}}],"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}
+
+        data: {"id":"aeb01e08-285a-9913-8562-431057d8708d","object":"chat.completion.chunk","created":1781350422,"model":"grok-4.3","choices":[{"index":0,"delta":{"reasoning_content":" is"}}],"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}
+
+        data: {"id":"aeb01e08-285a-9913-8562-431057d8708d","object":"chat.completion.chunk","created":1781350422,"model":"grok-4.3","choices":[{"index":0,"delta":{"reasoning_content":" asking"}}],"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}
+
+        data: {"id":"aeb01e08-285a-9913-8562-431057d8708d","object":"chat.completion.chunk","created":1781350422,"model":"grok-4.3","choices":[{"index":0,"delta":{"reasoning_content":":"}}],"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}
+
+        data: {"id":"aeb01e08-285a-9913-8562-431057d8708d","object":"chat.completion.chunk","created":1781350422,"model":"grok-4.3","choices":[{"index":0,"delta":{"reasoning_content":" \""}}],"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}
+
+        data: {"id":"aeb01e08-285a-9913-8562-431057d8708d","object":"chat.completion.chunk","created":1781350422,"model":"grok-4.3","choices":[{"index":0,"delta":{"reasoning_content":"Tell"}}],"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}
+
+        data: {"id":"aeb01e08-285a-9913-8562-431057d8708d","object":"chat.completion.chunk","created":1781350422,"model":"grok-4.3","choices":[{"index":0,"delta":{"reasoning_content":" me"}}],"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}
+
+        data: {"id":"aeb01e08-285a-9913-8562-431057d8708d","object":"chat.completion.chunk","created":1781350422,"model":"grok-4.3","choices":[{"index":0,"delta":{"reasoning_content":" again"}}],"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}
+
+        data: {"id":"aeb01e08-285a-9913-8562-431057d8708d","object":"chat.completion.chunk","created":1781350422,"model":"grok-4.3","choices":[{"index":0,"delta":{"reasoning_content":":"}}],"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}
+
+        data: {"id":"aeb01e08-285a-9913-8562-431057d8708d","object":"chat.completion.chunk","created":1781350422,"model":"grok-4.3","choices":[{"index":0,"delta":{"reasoning_content":" what's"}}],"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}
+
+        data: {"id":"aeb01e08-285a-9913-8562-431057d8708d","object":"chat.completion.chunk","created":1781350422,"model":"grok-4.3","choices":[{"index":0,"delta":{"reasoning_content":" the"}}],"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}
+
+        data: {"id":"aeb01e08-285a-9913-8562-431057d8708d","object":"chat.completion.chunk","created":1781350422,"model":"grok-4.3","choices":[{"index":0,"delta":{"reasoning_content":" best"}}],"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}
+
+        data: {"id":"aeb01e08-285a-9913-8562-431057d8708d","object":"chat.completion.chunk","created":1781350422,"model":"grok-4.3","choices":[{"index":0,"delta":{"reasoning_content":" language"}}],"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}
+
+        data: {"id":"aeb01e08-285a-9913-8562-431057d8708d","object":"chat.completion.chunk","created":1781350422,"model":"grok-4.3","choices":[{"index":0,"delta":{"reasoning_content":" to"}}],"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}
+
+        data: {"id":"aeb01e08-285a-9913-8562-431057d8708d","object":"chat.completion.chunk","created":1781350422,"model":"grok-4.3","choices":[{"index":0,"delta":{"reasoning_content":" learn"}}],"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}
+
+        data: {"id":"aeb01e08-285a-9913-8562-431057d8708d","object":"chat.completion.chunk","created":1781350422,"model":"grok-4.3","choices":[{"index":0,"delta":{"reasoning_content":"?\"\n"}}],"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}
+
+        data: {"id":"aeb01e08-285a-9913-8562-431057d8708d","object":"chat.completion.chunk","created":1781350424,"model":"grok-4.3","choices":[{"index":0,"delta":{"content":"Ruby"}}],"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}
+
+        data: {"id":"aeb01e08-285a-9913-8562-431057d8708d","object":"chat.completion.chunk","created":1781350424,"model":"grok-4.3","choices":[{"index":0,"delta":{},"finish_reason":"stop"}],"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}
+
+        data: {"id":"aeb01e08-285a-9913-8562-431057d8708d","object":"chat.completion.chunk","created":1781350424,"model":"grok-4.3","choices":[],"usage":{"prompt_tokens":278,"completion_tokens":1,"total_tokens":608,"prompt_tokens_details":{"text_tokens":278,"audio_tokens":0,"image_tokens":0,"cached_tokens":256},"completion_tokens_details":{"reasoning_tokens":329,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":9037000},"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}
+
+        data: [DONE]
+
+  recorded_at: Sat, 13 Jun 2026 11:33:45 GMT
+recorded_with: VCR 6.4.0
+...

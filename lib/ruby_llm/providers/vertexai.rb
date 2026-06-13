@@ -8,6 +8,8 @@ module RubyLLM
     class VertexAI < Provider
       protocol :gemini, VertexAI::Gemini
       protocol :anthropic, VertexAI::Anthropic
+      protocol :mistral, VertexAI::Mistral
+      protocol :chat_completions, VertexAI::ChatCompletions
 
       SCOPES = [
         'https://www.googleapis.com/auth/cloud-platform',
@@ -15,14 +17,23 @@ module RubyLLM
       ].freeze
 
       # Vertex AI hosts models from several publishers, each speaking its
-      # native protocol.
+      # native protocol. Publisher-prefixed ids are MaaS models served
+      # through the OpenAI-compatible endpoint.
       def protocol_for(model, **)
-        model.id.start_with?('claude') ? protocols[:anthropic] : super
+        case model.id
+        when %r{/} then protocols[:chat_completions]
+        when /\Aclaude/ then protocols[:anthropic]
+        when VertexAI::Mistral::MODELS then protocols[:mistral]
+        else super
+        end
+      end
+
+      def location_path
+        "projects/#{@config.vertexai_project_id}/locations/#{@config.vertexai_location}"
       end
 
       def model_path(model, publisher: 'google')
-        "projects/#{@config.vertexai_project_id}/locations/#{@config.vertexai_location}" \
-          "/publishers/#{publisher}/models/#{model}"
+        "#{location_path}/publishers/#{publisher}/models/#{model}"
       end
 
       def initialize(config)

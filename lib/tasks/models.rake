@@ -389,6 +389,7 @@ def generate_aliases # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComple
     aliases[base_name] = { 'anthropic' => latest_model }
     aliases[base_name]['openrouter'] = openrouter_model if openrouter_model
     aliases[base_name]['bedrock'] = bedrock_model if bedrock_model
+    aliases[base_name]['vertexai'] = base_name if models['vertexai'].include?(base_name)
     aliases[base_name]['azure'] = latest_model if models['azure'].include?(latest_model)
   end
 
@@ -411,6 +412,7 @@ def generate_aliases # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComple
     aliases[anthropic_name] = { 'bedrock' => bedrock_model }
     aliases[anthropic_name]['anthropic'] = anthropic_name if models['anthropic'].include?(anthropic_name)
     aliases[anthropic_name]['openrouter'] = openrouter_model if openrouter_model
+    aliases[anthropic_name]['vertexai'] = anthropic_name if models['vertexai'].include?(anthropic_name)
   end
 
   # Gemini models (also map to vertexai)
@@ -468,11 +470,52 @@ def generate_aliases # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComple
   end
 
   add_xai_aliases(aliases, models['xai'])
+  add_vertexai_aliases(aliases, models)
 
   sorted_aliases = aliases.sort.to_h
   File.write(RubyLLM::Aliases.aliases_file, JSON.pretty_generate(sorted_aliases))
 
   puts "Generated #{sorted_aliases.size} aliases"
+end
+
+# VertexAI serves Anthropic and Gemini (handled above), Mistral, and a roster of
+# open-weights models as managed services. The latter two want their own aliases:
+# the MaaS models so users reach them by a clean name instead of the
+# publisher/name-maas id, and Mistral so it groups with the Mistral API.
+def add_vertexai_aliases(aliases, models)
+  add_vertexai_maas_aliases(aliases, models)
+  add_vertexai_mistral_aliases(aliases, models)
+end
+
+# OpenRouter's prefix for each open-weights publisher VertexAI hosts as MaaS.
+VERTEXAI_OPENROUTER_PUBLISHERS = {
+  'meta' => 'meta-llama', 'deepseek-ai' => 'deepseek', 'qwen' => 'qwen',
+  'openai' => 'openai', 'zai-org' => 'z-ai', 'moonshotai' => 'moonshotai', 'google' => 'google'
+}.freeze
+
+def add_vertexai_maas_aliases(aliases, models)
+  models['vertexai'].grep(%r{/}).each do |model|
+    publisher, bare = model.split('/', 2)
+    alias_key = bare.delete_suffix('-maas')
+
+    entry = (aliases[alias_key] ||= {})
+    entry['vertexai'] ||= model
+    openrouter_model = "#{VERTEXAI_OPENROUTER_PUBLISHERS[publisher]}/#{alias_key}"
+    entry['openrouter'] ||= openrouter_model if models['openrouter'].include?(openrouter_model)
+  end
+end
+
+def add_vertexai_mistral_aliases(aliases, models)
+  models['vertexai'].grep(/\A(mistral|ministral|codestral)/).each do |model|
+    openrouter_model = "mistralai/#{model}"
+    siblings = {}
+    siblings['mistral'] = model if models['mistral'].include?(model)
+    siblings['openrouter'] = openrouter_model if models['openrouter'].include?(openrouter_model)
+    next if siblings.empty?
+
+    entry = (aliases[model] ||= { 'vertexai' => model })
+    siblings.each { |provider, id| entry[provider] ||= id }
+  end
 end
 
 def add_xai_aliases(aliases, xai_models)

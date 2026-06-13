@@ -1,0 +1,80 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.x.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"grok-4.3","messages":[{"role":"user","content":"Call the
+        any-of params tool for task \"Review PR\" with status \"pending\" and report
+        the result."}],"stream":false,"tools":[{"type":"function","function":{"name":"any_of_params","description":"Uses
+        params DSL any_of support","parameters":{"type":"object","properties":{"task":{"type":"string","description":"Task
+        description"},"status":{"description":"Optional task status","anyOf":[{"type":"string","enum":["pending","done"]},{"type":"null"}]}},"required":["task","status"],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.2
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sat, 13 Jun 2026 11:34:03 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Strict-Transport-Security:
+      - max-age=31536000
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Ratelimit-Limit-Tokens:
+      - '10000000'
+      X-Ratelimit-Remaining-Tokens:
+      - '10000000'
+      X-Zero-Data-Retention:
+      - 'false'
+      X-Ratelimit-Limit-Requests:
+      - '1800'
+      X-Ratelimit-Remaining-Requests:
+      - '1800'
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      X-Metrics-Ttft-Ms:
+      - '443.2'
+      X-Metrics-Mean-Itl-Ms:
+      - '6.5'
+      X-Metrics-E2e-Ms:
+      - '2032.8'
+      Traceparent:
+      - 00-f6a29b7458689640422eb5b52b5f275d-b9ea5715000731ac-01
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"f34b6a8c-e6da-9af0-9bc8-44809f4e1988","object":"chat.completion","created":1781350441,"model":"grok-4.3","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning_content":"The
+        task is: \"Call the any-of params tool for task \"Review PR\" with status
+        \"pending\" and report the result.\"\n","tool_calls":[{"id":"call-06b359c5-92c8-4709-9057-74ab2c8ff955-0","function":{"name":"any_of_params","arguments":"{\"task\":\"Review
+        PR\",\"status\":\"pending\"}"},"type":"function"}],"refusal":null},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":303,"completion_tokens":19,"total_tokens":541,"prompt_tokens_details":{"text_tokens":303,"audio_tokens":0,"image_tokens":0,"cached_tokens":128},"completion_tokens_details":{"reasoning_tokens":219,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":8393500},"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}'
+  recorded_at: Sat, 13 Jun 2026 11:34:03 GMT
+recorded_with: VCR 6.4.0

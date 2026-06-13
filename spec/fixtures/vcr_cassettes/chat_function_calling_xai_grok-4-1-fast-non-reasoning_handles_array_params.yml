@@ -1,0 +1,78 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.x.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"grok-4.3","messages":[{"role":"user","content":"Call the
+        array params tool with tags [\"red\",\"blue\"] and tell me the combined tags."}],"stream":false,"tools":[{"type":"function","function":{"name":"array_params","description":"Uses
+        params DSL array support","parameters":{"type":"object","properties":{"tags":{"type":"array","description":"List
+        of tags to combine","items":{"type":"string"}}},"required":["tags"],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.2
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sat, 13 Jun 2026 11:33:59 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Strict-Transport-Security:
+      - max-age=31536000
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Ratelimit-Limit-Tokens:
+      - '10000000'
+      X-Ratelimit-Remaining-Tokens:
+      - '10000000'
+      X-Zero-Data-Retention:
+      - 'false'
+      X-Ratelimit-Limit-Requests:
+      - '1800'
+      X-Ratelimit-Remaining-Requests:
+      - '1800'
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      X-Metrics-Ttft-Ms:
+      - '318.0'
+      X-Metrics-Mean-Itl-Ms:
+      - '5.4'
+      X-Metrics-E2e-Ms:
+      - '2594.4'
+      Traceparent:
+      - 00-84f3f2f3d00dc8f3db655bd50fa710b7-ec0ac93f000078c0-01
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"ae0d3c00-e47d-9386-84be-fcc1786f640f","object":"chat.completion","created":1781350437,"model":"grok-4.3","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning_content":"The
+        task is: \"Call the array params tool with tags [\"red\",\"blue\"] and tell
+        me the combined tags.\"\n","tool_calls":[{"id":"call-0e3ff74e-34b2-49e3-85d0-d3bcfa507ffd-0","function":{"name":"array_params","arguments":"{\"tags\":[\"red\",\"blue\"]}"},"type":"function"}],"refusal":null},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":270,"completion_tokens":14,"total_tokens":681,"prompt_tokens_details":{"text_tokens":270,"audio_tokens":0,"image_tokens":0,"cached_tokens":128},"completion_tokens_details":{"reasoning_tokens":397,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":12306000},"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}'
+  recorded_at: Sat, 13 Jun 2026 11:33:59 GMT
+recorded_with: VCR 6.4.0

@@ -322,7 +322,14 @@ chat = RubyLLM.chat(model: 'qwen3', provider: :ollama)
 v2.0+
 {: .label .label-green }
 
-Some providers speak more than one wire protocol. OpenAI defaults to the Responses API and routes audio models to Chat Completions; Vertex AI speaks Gemini for Google models and Anthropic for Claude models. RubyLLM picks the right protocol per request — override it per chat or app-wide:
+Some providers speak more than one wire protocol. OpenAI defaults to the Responses API and routes audio models to Chat Completions; Vertex AI speaks Gemini for Google models, Anthropic for Claude, Mistral for Mistral, and Chat Completions for the publisher-prefixed MaaS models. RubyLLM picks the right protocol per request:
+
+```ruby
+chat = RubyLLM.chat(model: 'claude-opus-4-6', provider: :vertexai)               # speaks Anthropic
+chat = RubyLLM.chat(model: 'meta/llama-3.3-70b-instruct-maas', provider: :vertexai) # speaks Chat Completions
+```
+
+Override it per chat or app-wide:
 
 ```ruby
 chat = RubyLLM.chat(model: 'gpt-5.4').with_protocol(:chat_completions)

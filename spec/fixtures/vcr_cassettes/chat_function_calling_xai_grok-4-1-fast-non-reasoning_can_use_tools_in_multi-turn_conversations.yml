@@ -1,0 +1,328 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.x.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"grok-4.3","messages":[{"role":"user","content":"What''s the
+        weather in Berlin? (52.5200, 13.4050)"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.2
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sat, 13 Jun 2026 11:32:57 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Strict-Transport-Security:
+      - max-age=31536000
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Ratelimit-Limit-Tokens:
+      - '10000000'
+      X-Ratelimit-Remaining-Tokens:
+      - '10000000'
+      X-Zero-Data-Retention:
+      - 'false'
+      X-Ratelimit-Limit-Requests:
+      - '1800'
+      X-Ratelimit-Remaining-Requests:
+      - '1800'
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      X-Metrics-Ttft-Ms:
+      - '235.1'
+      X-Metrics-Mean-Itl-Ms:
+      - '10.5'
+      X-Metrics-E2e-Ms:
+      - '1614.0'
+      Traceparent:
+      - 00-bcfbac5ef4b5b41a8960b1d498c6485d-e1117455000fcec5-01
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"20e18813-3920-99f4-b20d-32fddb90f4cf","object":"chat.completion","created":1781350376,"model":"grok-4.3","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning_content":"The
+        question is: \"What''s the weather in Berlin? (52.5200, 13.4050)\"\n","tool_calls":[{"id":"call-93366d35-f6c4-476d-8a1a-6d14400cd516-0","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"},"type":"function"}],"refusal":null},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":293,"completion_tokens":22,"total_tokens":420,"prompt_tokens_details":{"text_tokens":293,"audio_tokens":0,"image_tokens":0,"cached_tokens":256},"completion_tokens_details":{"reasoning_tokens":105,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":4149500},"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}'
+  recorded_at: Sat, 13 Jun 2026 11:32:57 GMT
+- request:
+    method: post
+    uri: https://api.x.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"grok-4.3","messages":[{"role":"user","content":"What''s the
+        weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"call-93366d35-f6c4-476d-8a1a-6d14400cd516-0","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}],"reasoning":"The
+        question is: \"What''s the weather in Berlin? (52.5200, 13.4050)\"\n","reasoning_content":"The
+        question is: \"What''s the weather in Berlin? (52.5200, 13.4050)\"\n"},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call-93366d35-f6c4-476d-8a1a-6d14400cd516-0"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.2
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sat, 13 Jun 2026 11:32:59 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Strict-Transport-Security:
+      - max-age=31536000
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Ratelimit-Limit-Tokens:
+      - '10000000'
+      X-Ratelimit-Remaining-Tokens:
+      - '10000000'
+      X-Zero-Data-Retention:
+      - 'false'
+      X-Ratelimit-Limit-Requests:
+      - '1800'
+      X-Ratelimit-Remaining-Requests:
+      - '1800'
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      X-Metrics-Ttft-Ms:
+      - '614.3'
+      X-Metrics-Mean-Itl-Ms:
+      - '7.6'
+      X-Metrics-E2e-Ms:
+      - '1483.9'
+      Traceparent:
+      - 00-d8856386eb2baa15e74bf3c29476018d-1f5ea95700038094-01
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6IjkyZTkwNTQ2LTRmNWYtOTkzNC05ZTQ1LTllN2FlNDA3NzVkNiIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3ODEzNTAzNzgsIm1vZGVsIjoiZ3Jvay00LjMiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IlRoZSBjdXJyZW50IHdlYXRoZXIgaW4gQmVybGluIChhdCBjb29yZGluYXRlcyA1Mi41MjAwLCAxMy40MDUwKSBpcyAxNcKwQyB3aXRoIHdpbmQgYXQgMTAga20vaC4iLCJyZWFzb25pbmdfY29udGVudCI6IlRoZSB0b29sIHJldHVybmVkOiBcIkN1cnJlbnQgd2VhdGhlciBhdCA1Mi41MjAwLCAxMy40MDUwOiAxNcKwQywgV2luZDogMTAga20vaFwiXG4iLCJyZWZ1c2FsIjpudWxsfSwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjM0MiwiY29tcGxldGlvbl90b2tlbnMiOjMyLCJ0b3RhbF90b2tlbnMiOjQxOCwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7InRleHRfdG9rZW5zIjozNDIsImF1ZGlvX3Rva2VucyI6MCwiaW1hZ2VfdG9rZW5zIjowLCJjYWNoZWRfdG9rZW5zIjozMjB9LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjQ0LCJhdWRpb190b2tlbnMiOjAsImFjY2VwdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowLCJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6MH0sIm51bV9zb3VyY2VzX3VzZWQiOjAsImNvc3RfaW5fdXNkX3RpY2tzIjoyODE1MDAwfSwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfZWIzYzAwM2ZjNjZjMTRlZCIsInNlcnZpY2VfdGllciI6ImRlZmF1bHQifQ==
+  recorded_at: Sat, 13 Jun 2026 11:32:59 GMT
+- request:
+    method: post
+    uri: https://api.x.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"grok-4.3","messages":[{"role":"user","content":"What''s the
+        weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"call-93366d35-f6c4-476d-8a1a-6d14400cd516-0","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}],"reasoning":"The
+        question is: \"What''s the weather in Berlin? (52.5200, 13.4050)\"\n","reasoning_content":"The
+        question is: \"What''s the weather in Berlin? (52.5200, 13.4050)\"\n"},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call-93366d35-f6c4-476d-8a1a-6d14400cd516-0"},{"role":"assistant","content":"The
+        current weather in Berlin (at coordinates 52.5200, 13.4050) is 15°C with wind
+        at 10 km/h.","reasoning":"The tool returned: \"Current weather at 52.5200,
+        13.4050: 15°C, Wind: 10 km/h\"\n","reasoning_content":"The tool returned:
+        \"Current weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h\"\n"},{"role":"user","content":"What''s
+        the weather in Paris? (48.8575, 2.3514)"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.2
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sat, 13 Jun 2026 11:33:01 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Strict-Transport-Security:
+      - max-age=31536000
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Ratelimit-Limit-Tokens:
+      - '10000000'
+      X-Ratelimit-Remaining-Tokens:
+      - '10000000'
+      X-Zero-Data-Retention:
+      - 'false'
+      X-Ratelimit-Limit-Requests:
+      - '1800'
+      X-Ratelimit-Remaining-Requests:
+      - '1800'
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      X-Metrics-Ttft-Ms:
+      - '359.6'
+      X-Metrics-Mean-Itl-Ms:
+      - '7.2'
+      X-Metrics-E2e-Ms:
+      - '2004.3'
+      Traceparent:
+      - 00-e14e843fe44f1ae4c642c792f4c606aa-dfcb239c002c7219-01
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"af13c3e4-df80-9f15-91a9-7c2607073b02","object":"chat.completion","created":1781350380,"model":"grok-4.3","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning_content":"The
+        user is asking for the weather in Paris at coordinates (48.8575, 2.3514).
+        The available tool is \"weather\", which takes latitude and longitude.\n","tool_calls":[{"id":"call-30879847-e757-432d-b89b-aed3243b13f1-1","function":{"name":"weather","arguments":"{\"latitude\":\"48.8575\",\"longitude\":\"2.3514\"}"},"type":"function"}],"refusal":null},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":400,"completion_tokens":22,"total_tokens":605,"prompt_tokens_details":{"text_tokens":400,"audio_tokens":0,"image_tokens":0,"cached_tokens":320},"completion_tokens_details":{"reasoning_tokens":183,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":6765000},"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}'
+  recorded_at: Sat, 13 Jun 2026 11:33:01 GMT
+- request:
+    method: post
+    uri: https://api.x.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"grok-4.3","messages":[{"role":"user","content":"What''s the
+        weather in Berlin? (52.5200, 13.4050)"},{"role":"assistant","content":"","tool_calls":[{"id":"call-93366d35-f6c4-476d-8a1a-6d14400cd516-0","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}],"reasoning":"The
+        question is: \"What''s the weather in Berlin? (52.5200, 13.4050)\"\n","reasoning_content":"The
+        question is: \"What''s the weather in Berlin? (52.5200, 13.4050)\"\n"},{"role":"tool","content":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call-93366d35-f6c4-476d-8a1a-6d14400cd516-0"},{"role":"assistant","content":"The
+        current weather in Berlin (at coordinates 52.5200, 13.4050) is 15°C with wind
+        at 10 km/h.","reasoning":"The tool returned: \"Current weather at 52.5200,
+        13.4050: 15°C, Wind: 10 km/h\"\n","reasoning_content":"The tool returned:
+        \"Current weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h\"\n"},{"role":"user","content":"What''s
+        the weather in Paris? (48.8575, 2.3514)"},{"role":"assistant","content":"","tool_calls":[{"id":"call-30879847-e757-432d-b89b-aed3243b13f1-1","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"48.8575\",\"longitude\":\"2.3514\"}"}}],"reasoning":"The
+        user is asking for the weather in Paris at coordinates (48.8575, 2.3514).
+        The available tool is \"weather\", which takes latitude and longitude.\n","reasoning_content":"The
+        user is asking for the weather in Paris at coordinates (48.8575, 2.3514).
+        The available tool is \"weather\", which takes latitude and longitude.\n"},{"role":"tool","content":"Current
+        weather at 48.8575, 2.3514: 15°C, Wind: 10 km/h","tool_call_id":"call-30879847-e757-432d-b89b-aed3243b13f1-1"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.2
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sat, 13 Jun 2026 11:33:03 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Strict-Transport-Security:
+      - max-age=31536000
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Ratelimit-Limit-Tokens:
+      - '10000000'
+      X-Ratelimit-Remaining-Tokens:
+      - '10000000'
+      X-Zero-Data-Retention:
+      - 'false'
+      X-Ratelimit-Limit-Requests:
+      - '1800'
+      X-Ratelimit-Remaining-Requests:
+      - '1800'
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      X-Metrics-Ttft-Ms:
+      - '314.6'
+      X-Metrics-Mean-Itl-Ms:
+      - '6.8'
+      X-Metrics-E2e-Ms:
+      - '1380.8'
+      Traceparent:
+      - 00-12b305a79696e767e8d793bed5b68294-9ccfaa9f00022dd0-01
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6IjQzZTAyZjU4LTkwZTYtOTllMS1iMThiLWUzMTQ4YmUwYmQ3ZCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3ODEzNTAzODIsIm1vZGVsIjoiZ3Jvay00LjMiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IlRoZSBjdXJyZW50IHdlYXRoZXIgaW4gUGFyaXMgKGF0IGNvb3JkaW5hdGVzIDQ4Ljg1NzUsIDIuMzUxNCkgaXMgMTXCsEMgd2l0aCB3aW5kIGF0IDEwIGttL2guIiwicmVhc29uaW5nX2NvbnRlbnQiOiJUaGUgdG9vbCByZXR1cm5lZDogXCJDdXJyZW50IHdlYXRoZXIgYXQgNDguODU3NSwgMi4zNTE0OiAxNcKwQywgV2luZDogMTAga20vaFwiXG4iLCJyZWZ1c2FsIjpudWxsfSwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjQ0OSwiY29tcGxldGlvbl90b2tlbnMiOjMyLCJ0b3RhbF90b2tlbnMiOjU2OSwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7InRleHRfdG9rZW5zIjo0NDksImF1ZGlvX3Rva2VucyI6MCwiaW1hZ2VfdG9rZW5zIjowLCJjYWNoZWRfdG9rZW5zIjozODR9LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjg4LCJhdWRpb190b2tlbnMiOjAsImFjY2VwdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowLCJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6MH0sIm51bV9zb3VyY2VzX3VzZWQiOjAsImNvc3RfaW5fdXNkX3RpY2tzIjo0NTgwNTAwfSwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfZWIzYzAwM2ZjNjZjMTRlZCIsInNlcnZpY2VfdGllciI6ImRlZmF1bHQifQ==
+  recorded_at: Sat, 13 Jun 2026 11:33:03 GMT
+recorded_with: VCR 6.4.0

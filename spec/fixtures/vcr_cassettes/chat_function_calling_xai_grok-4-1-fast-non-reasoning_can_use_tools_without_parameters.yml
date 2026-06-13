@@ -1,0 +1,151 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.x.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"grok-4.3","messages":[{"role":"user","content":"What''s the
+        best language to learn?"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.2
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sat, 13 Jun 2026 11:33:16 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Strict-Transport-Security:
+      - max-age=31536000
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Ratelimit-Limit-Tokens:
+      - '10000000'
+      X-Ratelimit-Remaining-Tokens:
+      - '10000000'
+      X-Zero-Data-Retention:
+      - 'false'
+      X-Ratelimit-Limit-Requests:
+      - '1800'
+      X-Ratelimit-Remaining-Requests:
+      - '1800'
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      X-Metrics-Ttft-Ms:
+      - '293.0'
+      X-Metrics-Mean-Itl-Ms:
+      - '6.3'
+      X-Metrics-E2e-Ms:
+      - '1417.7'
+      Traceparent:
+      - 00-9754b3f3dd2d6216327acf9279750f09-e1117455000fd124-01
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"64dd6b6f-a30d-9ee2-a182-7e177317e1cc","object":"chat.completion","created":1781350395,"model":"grok-4.3","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning_content":"The
+        question is: \"What''s the best language to learn?\"\n","tool_calls":[{"id":"call-489a1f51-3b1c-42df-a977-23b193e32605-0","function":{"name":"best_language_to_learn","arguments":"{}"},"type":"function"}],"refusal":null},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":232,"completion_tokens":8,"total_tokens":397,"prompt_tokens_details":{"text_tokens":232,"audio_tokens":0,"image_tokens":0,"cached_tokens":128},"completion_tokens_details":{"reasoning_tokens":157,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":5681000},"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}'
+  recorded_at: Sat, 13 Jun 2026 11:33:16 GMT
+- request:
+    method: post
+    uri: https://api.x.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"grok-4.3","messages":[{"role":"user","content":"What''s the
+        best language to learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"call-489a1f51-3b1c-42df-a977-23b193e32605-0","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning":"The
+        question is: \"What''s the best language to learn?\"\n","reasoning_content":"The
+        question is: \"What''s the best language to learn?\"\n"},{"role":"tool","content":"Ruby","tool_call_id":"call-489a1f51-3b1c-42df-a977-23b193e32605-0"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.2
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sat, 13 Jun 2026 11:33:17 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Strict-Transport-Security:
+      - max-age=31536000
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Ratelimit-Limit-Tokens:
+      - '10000000'
+      X-Ratelimit-Remaining-Tokens:
+      - '10000000'
+      X-Zero-Data-Retention:
+      - 'false'
+      X-Ratelimit-Limit-Requests:
+      - '1800'
+      X-Ratelimit-Remaining-Requests:
+      - '1800'
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      X-Metrics-Ttft-Ms:
+      - '342.3'
+      X-Metrics-Mean-Itl-Ms:
+      - '5.5'
+      X-Metrics-E2e-Ms:
+      - '933.4'
+      Traceparent:
+      - 00-c4a62d80044386c716ebe7f907b7d199-c005452a0006155e-01
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"bb301cb2-bf95-9b78-bece-73968f4500db","object":"chat.completion","created":1781350396,"model":"grok-4.3","choices":[{"index":0,"message":{"role":"assistant","content":"Ruby","reasoning_content":"The
+        tool returned \"Ruby\". So the best language to learn is Ruby.\n","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":247,"completion_tokens":1,"total_tokens":312,"prompt_tokens_details":{"text_tokens":247,"audio_tokens":0,"image_tokens":0,"cached_tokens":192},"completion_tokens_details":{"reasoning_tokens":64,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":2696500},"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}'
+  recorded_at: Sat, 13 Jun 2026 11:33:17 GMT
+recorded_with: VCR 6.4.0
