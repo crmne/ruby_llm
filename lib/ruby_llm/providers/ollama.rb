@@ -3,10 +3,15 @@
 module RubyLLM
   module Providers
     # Ollama API integration.
-    class Ollama < OpenAI
-      include Ollama::Chat
-      include Ollama::Media
-      include Ollama::Models
+    class Ollama < Provider
+      # Ollama's dialect of the Chat Completions API.
+      class ChatCompletions < Protocols::ChatCompletions
+        include Ollama::Chat
+        include Ollama::Media
+        include Ollama::Models
+      end
+
+      protocol :chat_completions, ChatCompletions
 
       def api_base
         @config.ollama_api_base

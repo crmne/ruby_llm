@@ -19,6 +19,7 @@ module RubyLLM
         subclass.instance_variable_set(:@instructions, @instructions)
         subclass.instance_variable_set(:@temperature, @temperature)
         subclass.instance_variable_set(:@thinking, @thinking)
+        subclass.instance_variable_set(:@citations, @citations)
         subclass.instance_variable_set(:@params, (@params || {}).dup)
         subclass.instance_variable_set(:@headers, (@headers || {}).dup)
         subclass.instance_variable_set(:@schema, @schema)
@@ -57,6 +58,12 @@ module RubyLLM
         return @thinking if effort.nil? && budget.nil?
 
         @thinking = { effort: effort, budget: budget }
+      end
+
+      def citations(value = nil)
+        return @citations if value.nil?
+
+        @citations = value
       end
 
       def params(**params, &block)
@@ -176,6 +183,7 @@ module RubyLLM
         apply_tools(llm_chat, runtime)
         apply_temperature(llm_chat)
         apply_thinking(llm_chat)
+        apply_citations(llm_chat)
         apply_params(llm_chat, runtime)
         apply_headers(llm_chat, runtime)
         apply_schema(llm_chat, runtime)
@@ -217,6 +225,10 @@ module RubyLLM
 
       def apply_thinking(llm_chat)
         llm_chat.with_thinking(**thinking) if thinking
+      end
+
+      def apply_citations(llm_chat)
+        llm_chat.with_citations(citations) unless citations.nil?
       end
 
       def apply_params(llm_chat, runtime)
@@ -365,9 +377,9 @@ module RubyLLM
     attr_reader :chat
 
     def_delegators :chat, :model, :messages, :tools, :params, :headers, :schema, :ask, :say, :with_tool, :with_tools,
-                   :with_model, :with_temperature, :with_thinking, :with_context, :with_params, :with_headers,
-                   :with_schema, :on_new_message, :on_end_message, :on_tool_call, :on_tool_result, :before_message,
-                   :after_message, :before_tool_call, :after_tool_result, :each, :complete, :add_message,
-                   :reset_messages!, :cost
+                   :with_model, :with_temperature, :with_thinking, :with_citations, :with_context, :with_params,
+                   :with_headers, :with_schema, :on_new_message, :on_end_message, :on_tool_call, :on_tool_result,
+                   :before_message, :after_message, :before_tool_call, :after_tool_result, :each, :complete,
+                   :add_message, :reset_messages!, :cost
   end
 end

@@ -9,36 +9,6 @@ module RubyLLM
     class Bedrock
       # SigV4 authentication helpers for Bedrock.
       module Auth
-        private
-
-        def signed_post(url, payload, additional_headers = {})
-          body = JSON.generate(payload)
-          signed_headers = sign_headers('POST', url, body)
-
-          response = @connection.post(url, payload) do |req|
-            req.headers.merge!(signed_headers)
-            req.headers.merge!(additional_headers) unless additional_headers.empty?
-            yield req if block_given?
-          end
-
-          parse_completion_response(response)
-        end
-
-        def signed_get(base_url, url)
-          conn = Connection.basic do |f|
-            f.request :json
-            f.response :json
-            f.adapter :net_http
-            f.use :llm_errors, provider: self
-          end
-
-          conn.url_prefix = base_url
-
-          conn.get(url) do |req|
-            req.headers.merge!(sign_headers('GET', url, '', base_url: base_url))
-          end
-        end
-
         def sign_headers(method, path, body, base_url: api_base)
           now = Time.now.utc
           amz_date = now.strftime('%Y%m%dT%H%M%SZ')
@@ -87,6 +57,23 @@ module RubyLLM
                                "SignedHeaders=#{signed_headers}, Signature=#{signature}",
             'Content-Type' => 'application/json'
           }.compact
+        end
+
+        private
+
+        def signed_get(base_url, url)
+          conn = Connection.basic do |f|
+            f.request :json
+            f.response :json
+            f.adapter :net_http
+            f.use :llm_errors, provider: self
+          end
+
+          conn.url_prefix = base_url
+
+          conn.get(url) do |req|
+            req.headers.merge!(sign_headers('GET', url, '', base_url: base_url))
+          end
         end
 
         def canonical_query_string(raw_query)

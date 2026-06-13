@@ -2,12 +2,12 @@
 http_interactions:
 - request:
     method: post
-    uri: https://api.openai.com/v1/chat/completions
+    uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-5-nano","messages":[{"role":"user","content":[{"type":"text","text":"What''s
-        in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
-        is the best.</file>"}]}],"stream":false}'
+      string: '{"model":"gpt-5-nano","input":[{"role":"user","content":[{"type":"input_text","text":"What''s
+        in this file?"},{"type":"input_text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
+        is the best.</file>"}]}],"stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
     headers:
       User-Agent:
       - Faraday v2.14.2
@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 08 Jun 2026 18:46:29 GMT
+      - Thu, 11 Jun 2026 20:09:25 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -49,13 +49,11 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '3843'
+      - '3738'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
       - '2020-10-01'
-      X-Openai-Proxy-Wasm:
-      - v0.1
       X-Ratelimit-Limit-Requests:
       - '5000'
       X-Ratelimit-Limit-Tokens:
@@ -63,11 +61,11 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '4999'
       X-Ratelimit-Remaining-Tokens:
-      - '1999975'
+      - '1999885'
       X-Ratelimit-Reset-Requests:
       - 12ms
       X-Ratelimit-Reset-Tokens:
-      - 0s
+      - 3ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Set-Cookie:
@@ -76,54 +74,99 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: |
+      string: |-
         {
-          "id": "chatcmpl-DoZHOtDomxT3EkM4XSIlBRCg6Ft6r",
-          "object": "chat.completion",
-          "created": 1780944386,
+          "id": "resp_0af5651b1e7147d5016a2b15f1f64881a09078e1e6af2475d3",
+          "object": "response",
+          "created_at": 1781208562,
+          "status": "completed",
+          "background": false,
+          "billing": {
+            "payer": "developer"
+          },
+          "completed_at": 1781208565,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
           "model": "gpt-5-nano-2025-08-07",
-          "choices": [
+          "moderation": null,
+          "output": [
             {
-              "index": 0,
-              "message": {
-                "role": "assistant",
-                "content": "The file ruby.txt (text/plain) contains the sentence: Ruby is the best.",
-                "refusal": null,
-                "annotations": []
-              },
-              "finish_reason": "stop"
+              "id": "rs_0af5651b1e7147d5016a2b15f28e2c81a08ddfa1674725b000",
+              "type": "reasoning",
+              "content": [],
+              "encrypted_content": "gAAAAABqKxX1Nxjo7iYEgIZiD06AL_mDhcTMHNiTEQ9JAq0jXz55jjJnx5oMasFoPZpNvmeq6uEfP0G9JxDKVfEN1vR5oabbCNMEvBOkwGClzd0gEJp8aFp9vrGgIL9Lv0t8G_v_ECfqi23d_U0-yDSISf1QtsLu1QN6fFTUMEwdLy1ZmNdhF2yZ8yB_wgHSL6hlQAGWGQeFtkHxPkEfleREGWxbk8TqHD7aEylHA4CmK79YhEaWmjjP4BDgDp-MxAG3e4Ow8h9_sBf77K4tE6LnUSr_0NHuVQe5HGQ1aCh_4nWischGlYiMulWtAYjBdysis3byHzuT8S2AirCMwh3G_jkBEARC5xPgg6QgW5uYTX1ChZMlaBHvjd3P3utW-Tb0wpS_4fOOvLluxSIbbBLyWkCDni9XfR3jS-Yz8QA5S-TiBw384AFXuOxqfPzN6VrNGrzlNJ3ad-a8kICpFec-peYVIVtCBTmIGzgBKM1ppQzaMDAo-Ew9RBuKsqEVAHeDjN-J22fafGPkTvCnErZkFWA1AGvjWQ2lcOQkziGc6F9vYtZFFL8I0vtFXIjs2AZstjc7fWAHtKOTziojN2c66JrXg-IfBJLyXNBNvpSUlT_1n8REcygAt39fYiYRr8U_azoyj6hAqh2Eey9oa4qnraobsddXF4F9HKIAMWLj9pk3pvadEkS1qpyZAgJ6h5ehZKn3F81xVS1Bb72d2AeqoDHlujGApF6f-cCPh-PhOWG8mhJICGcKIkXWQWDny0Y1Oh7qxuSlhmjGUpoXLlVbDwInS_AqdzbvONqVWTOfh-oYqg0yfyWZoUNuNRL030hfIFxICD5lAQya1-1fF6FLhcoa02YH9wAfvkesaXGa36JIlHC0LsBZ1E8oVFY-e_zmNqrcC42za8qndC3Qpq-bsvUKCk94qKarr9iQaefVg9kdijNnrR7zSWLw15Se9Anm8wQTAQ4-KrJ9rMUp6QePIazUGKSTffFGl0yt-aivqWPAX5ojGkQBiDcEpNZkLAI-D5SKJTuvxSdX0Bg2XAmUx-ITWUqrQ0lqm0C5ZbfZhEV3XHIgP9q53PlNxK7YWJyrEoWCwxk0O1qM9G3XtSEvHnw5yQHpucuPh_-N8wYxbhNlyS3O64ff7fo-x03qePsOqyvNHoYaWeSWZeW8-oLXyPUBYVa74Gf25UAGiQNDLRElzkO3R3wZrUSw_pe5nMPj4vfwXElSoYcjODEuVuhlQ8Ii_Gq20dgdFHTlsnw3xdc32wAGJsj_hTmYx7a0hGsMQcUUZR1IcINIeTxycSSSsDBlDWAlPys2b_WPDznkhYvk_lCAB8POUgED03MrJT0LOfE8YrcX6qgJJMfmDB8aOv1XKf51ALTgrB_4iOqHbyJ-qFnPKjw2XrwO2bIgriklcFhVNDa8J5oijt0AHcMxDEm71uYLlyVrMHUHE83BLhhnFfvFh0YB9sQOEgakBrGDLEWLh0sXQXGCtfbVCLiq1LxKW8_K4_zeCPdeKPMAoUwFBWuWUNXoDE_mdKtbRPFx9porucqQ9v03L4aWFo5CcAa0W-85iUaQt5pRmaBTd8d-tUw1GxtRMtzWXgzDyll2_bideQWffb7v7WWONqTMx9ZyYBr9F20WjRHRGKZl1nDnTBtUuQS902RuV3afxiWpWpcDPKBu3eufloPGGkbXe3zF1uqaldajv4ThBfh_yTAmLtAtUODQHkwXbTrmtSLKDX0s2qcSXBRJOel32nhH4ub_M2pUXME-PrX7d7c4QR0KtWncEQIYy2DfRbLG32bj3MNUWBWRJmr64fXaqc5vpWSXnVgrHFQrZGVvhZRkuGwU_D-iNJkpwKtFtrSGD7Qis1HiNMRLUR2gmFOz8A8PLrdlbIPe00ig_isDkOKqgbIBmVTmAxMoYWbYFD9boJPBxvnFIK2NXxUQdTxYeDxZKvbTgXVwt3qtpnDD-POVSUwFM0dRSZSwFt-kZK8Oeqb_W-P7LCwWKGn0kkOTrBem9XjW4LOcV_n9to3QkNEel23ZJPSxHLy8hCt91bueMWG6YgdQhMmyCeSHL1T43UrOR2qx491JvnjGvAmhPm6O3cDZhrQzJ39SCkFdqBdEVGjzctCIXUmpmLwpFjzadZctuScmhWMZrvVjyEBfj3qNP-NkW4CPxUiw3ddGs1f6xNJ63XpyG3Rahc_uegpl31xNWuwtKncQh4CBi_kvHW9o2LI1WgWj12pPVOvYwVPuoE-ruaZNtjDzOWLbyQSvr-ndQEzvPu8KtvqU_Fta_tNnw4Jre1niEa4YYgFhE7yyN9xm46i7yfwYG0GKw7JTT6oHarnRlJxU9ToACPOGE98ApqNyd6z00nziKiIkBAejReLPL2Bs7ZB_37d2W36xQPTi_G-Fx1ZqK_OtNmi_Q07ECFj2OUsfJXz5pxcKXQY4L5mZHRJNHE6A2eV4_2rfbdA1IGnNF8r88ei1kahwZ50ytipywFHbHikKgrW42h0olP1Jv-iQ4lfSH3JHDvSau-chJxRgc-U1R3PfAAHFTK0WIBl4FuyYO0w4BekHoUf9ni-Ct6Y7uAxfkB0pUVfJPIjPGIUdJDwfrtnoRlyKuhnJnEv6hTPov4ySgoHnVON5FaHwEkEJ6laMkW-rVjZ6vRVLVFI1enFGh88u6kLxys21GzgiMIeCjBITt-OrZwnnlbGSgnZFjL7vpIcC7802WbrxK9FXZiF2yCIxoSUVIACXduJuFPMWgCWQWHrmcWcUPzpyfj3lY-Azr-8v0kdTzqF5Q5xjHuCJwnAqe9PT_H0mIZTXI207-pyYYhnUtH5OBFgXuNDJhx--",
+              "summary": []
+            },
+            {
+              "id": "msg_0af5651b1e7147d5016a2b15f5310c81a080acb4c4e7f071c9",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "- File: ruby.txt (text/plain)\n- Contents: Ruby is the best."
+                }
+              ],
+              "role": "assistant"
             }
           ],
-          "usage": {
-            "prompt_tokens": 30,
-            "completion_tokens": 410,
-            "total_tokens": 440,
-            "prompt_tokens_details": {
-              "cached_tokens": 0,
-              "audio_tokens": 0
-            },
-            "completion_tokens_details": {
-              "reasoning_tokens": 384,
-              "audio_tokens": 0,
-              "accepted_prediction_tokens": 0,
-              "rejected_prediction_tokens": 0
-            }
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": "in_memory",
+          "reasoning": {
+            "context": "current_turn",
+            "effort": "medium",
+            "summary": null
           },
+          "safety_identifier": null,
           "service_tier": "default",
-          "system_fingerprint": null
+          "store": false,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tools": [],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 30,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens": 332,
+            "output_tokens_details": {
+              "reasoning_tokens": 256
+            },
+            "total_tokens": 362
+          },
+          "user": null,
+          "metadata": {}
         }
-  recorded_at: Mon, 08 Jun 2026 18:46:29 GMT
+  recorded_at: Thu, 11 Jun 2026 20:09:25 GMT
 - request:
     method: post
-    uri: https://api.openai.com/v1/chat/completions
+    uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-5-nano","messages":[{"role":"user","content":[{"type":"text","text":"What''s
-        in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
-        is the best.</file>"}]},{"role":"assistant","content":"The file ruby.txt (text/plain)
-        contains the sentence: Ruby is the best."},{"role":"user","content":[{"type":"text","text":"and
-        in this one?"},{"type":"text","text":"<file name=''ruby.xml'' mime_type=''application/xml''><truism>Ruby
-        is the best</truism></file>"}]}],"stream":false}'
+      string: '{"model":"gpt-5-nano","input":[{"role":"user","content":[{"type":"input_text","text":"What''s
+        in this file?"},{"type":"input_text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
+        is the best.</file>"}]},{"type":"reasoning","summary":[],"encrypted_content":"gAAAAABqKxX1Nxjo7iYEgIZiD06AL_mDhcTMHNiTEQ9JAq0jXz55jjJnx5oMasFoPZpNvmeq6uEfP0G9JxDKVfEN1vR5oabbCNMEvBOkwGClzd0gEJp8aFp9vrGgIL9Lv0t8G_v_ECfqi23d_U0-yDSISf1QtsLu1QN6fFTUMEwdLy1ZmNdhF2yZ8yB_wgHSL6hlQAGWGQeFtkHxPkEfleREGWxbk8TqHD7aEylHA4CmK79YhEaWmjjP4BDgDp-MxAG3e4Ow8h9_sBf77K4tE6LnUSr_0NHuVQe5HGQ1aCh_4nWischGlYiMulWtAYjBdysis3byHzuT8S2AirCMwh3G_jkBEARC5xPgg6QgW5uYTX1ChZMlaBHvjd3P3utW-Tb0wpS_4fOOvLluxSIbbBLyWkCDni9XfR3jS-Yz8QA5S-TiBw384AFXuOxqfPzN6VrNGrzlNJ3ad-a8kICpFec-peYVIVtCBTmIGzgBKM1ppQzaMDAo-Ew9RBuKsqEVAHeDjN-J22fafGPkTvCnErZkFWA1AGvjWQ2lcOQkziGc6F9vYtZFFL8I0vtFXIjs2AZstjc7fWAHtKOTziojN2c66JrXg-IfBJLyXNBNvpSUlT_1n8REcygAt39fYiYRr8U_azoyj6hAqh2Eey9oa4qnraobsddXF4F9HKIAMWLj9pk3pvadEkS1qpyZAgJ6h5ehZKn3F81xVS1Bb72d2AeqoDHlujGApF6f-cCPh-PhOWG8mhJICGcKIkXWQWDny0Y1Oh7qxuSlhmjGUpoXLlVbDwInS_AqdzbvONqVWTOfh-oYqg0yfyWZoUNuNRL030hfIFxICD5lAQya1-1fF6FLhcoa02YH9wAfvkesaXGa36JIlHC0LsBZ1E8oVFY-e_zmNqrcC42za8qndC3Qpq-bsvUKCk94qKarr9iQaefVg9kdijNnrR7zSWLw15Se9Anm8wQTAQ4-KrJ9rMUp6QePIazUGKSTffFGl0yt-aivqWPAX5ojGkQBiDcEpNZkLAI-D5SKJTuvxSdX0Bg2XAmUx-ITWUqrQ0lqm0C5ZbfZhEV3XHIgP9q53PlNxK7YWJyrEoWCwxk0O1qM9G3XtSEvHnw5yQHpucuPh_-N8wYxbhNlyS3O64ff7fo-x03qePsOqyvNHoYaWeSWZeW8-oLXyPUBYVa74Gf25UAGiQNDLRElzkO3R3wZrUSw_pe5nMPj4vfwXElSoYcjODEuVuhlQ8Ii_Gq20dgdFHTlsnw3xdc32wAGJsj_hTmYx7a0hGsMQcUUZR1IcINIeTxycSSSsDBlDWAlPys2b_WPDznkhYvk_lCAB8POUgED03MrJT0LOfE8YrcX6qgJJMfmDB8aOv1XKf51ALTgrB_4iOqHbyJ-qFnPKjw2XrwO2bIgriklcFhVNDa8J5oijt0AHcMxDEm71uYLlyVrMHUHE83BLhhnFfvFh0YB9sQOEgakBrGDLEWLh0sXQXGCtfbVCLiq1LxKW8_K4_zeCPdeKPMAoUwFBWuWUNXoDE_mdKtbRPFx9porucqQ9v03L4aWFo5CcAa0W-85iUaQt5pRmaBTd8d-tUw1GxtRMtzWXgzDyll2_bideQWffb7v7WWONqTMx9ZyYBr9F20WjRHRGKZl1nDnTBtUuQS902RuV3afxiWpWpcDPKBu3eufloPGGkbXe3zF1uqaldajv4ThBfh_yTAmLtAtUODQHkwXbTrmtSLKDX0s2qcSXBRJOel32nhH4ub_M2pUXME-PrX7d7c4QR0KtWncEQIYy2DfRbLG32bj3MNUWBWRJmr64fXaqc5vpWSXnVgrHFQrZGVvhZRkuGwU_D-iNJkpwKtFtrSGD7Qis1HiNMRLUR2gmFOz8A8PLrdlbIPe00ig_isDkOKqgbIBmVTmAxMoYWbYFD9boJPBxvnFIK2NXxUQdTxYeDxZKvbTgXVwt3qtpnDD-POVSUwFM0dRSZSwFt-kZK8Oeqb_W-P7LCwWKGn0kkOTrBem9XjW4LOcV_n9to3QkNEel23ZJPSxHLy8hCt91bueMWG6YgdQhMmyCeSHL1T43UrOR2qx491JvnjGvAmhPm6O3cDZhrQzJ39SCkFdqBdEVGjzctCIXUmpmLwpFjzadZctuScmhWMZrvVjyEBfj3qNP-NkW4CPxUiw3ddGs1f6xNJ63XpyG3Rahc_uegpl31xNWuwtKncQh4CBi_kvHW9o2LI1WgWj12pPVOvYwVPuoE-ruaZNtjDzOWLbyQSvr-ndQEzvPu8KtvqU_Fta_tNnw4Jre1niEa4YYgFhE7yyN9xm46i7yfwYG0GKw7JTT6oHarnRlJxU9ToACPOGE98ApqNyd6z00nziKiIkBAejReLPL2Bs7ZB_37d2W36xQPTi_G-Fx1ZqK_OtNmi_Q07ECFj2OUsfJXz5pxcKXQY4L5mZHRJNHE6A2eV4_2rfbdA1IGnNF8r88ei1kahwZ50ytipywFHbHikKgrW42h0olP1Jv-iQ4lfSH3JHDvSau-chJxRgc-U1R3PfAAHFTK0WIBl4FuyYO0w4BekHoUf9ni-Ct6Y7uAxfkB0pUVfJPIjPGIUdJDwfrtnoRlyKuhnJnEv6hTPov4ySgoHnVON5FaHwEkEJ6laMkW-rVjZ6vRVLVFI1enFGh88u6kLxys21GzgiMIeCjBITt-OrZwnnlbGSgnZFjL7vpIcC7802WbrxK9FXZiF2yCIxoSUVIACXduJuFPMWgCWQWHrmcWcUPzpyfj3lY-Azr-8v0kdTzqF5Q5xjHuCJwnAqe9PT_H0mIZTXI207-pyYYhnUtH5OBFgXuNDJhx--"},{"role":"assistant","content":[{"type":"output_text","text":"-
+        File: ruby.txt (text/plain)\n- Contents: Ruby is the best."}]},{"role":"user","content":[{"type":"input_text","text":"and
+        in this one?"},{"type":"input_text","text":"<file name=''ruby.xml'' mime_type=''application/xml''><truism>Ruby
+        is the best</truism></file>"}]}],"stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
     headers:
       User-Agent:
       - Faraday v2.14.2
@@ -141,7 +184,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 08 Jun 2026 18:46:33 GMT
+      - Thu, 11 Jun 2026 20:09:42 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -165,13 +208,11 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '3874'
+      - '17000'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
       - '2020-10-01'
-      X-Openai-Proxy-Wasm:
-      - v0.1
       X-Ratelimit-Limit-Requests:
       - '5000'
       X-Ratelimit-Limit-Tokens:
@@ -179,11 +220,11 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '4999'
       X-Ratelimit-Remaining-Tokens:
-      - '1999929'
+      - '1999769'
       X-Ratelimit-Reset-Requests:
       - 12ms
       X-Ratelimit-Reset-Tokens:
-      - 2ms
+      - 6ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Set-Cookie:
@@ -192,41 +233,86 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: |
+      string: |-
         {
-          "id": "chatcmpl-DoZHSt4Twj16r6NDmK5WsqhQHNWNy",
-          "object": "chat.completion",
-          "created": 1780944390,
+          "id": "resp_053f2cd1200f7d48016a2b15f5be0081a2ad21f7f224da3b66",
+          "object": "response",
+          "created_at": 1781208565,
+          "status": "completed",
+          "background": false,
+          "billing": {
+            "payer": "developer"
+          },
+          "completed_at": 1781208582,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
           "model": "gpt-5-nano-2025-08-07",
-          "choices": [
+          "moderation": null,
+          "output": [
             {
-              "index": 0,
-              "message": {
-                "role": "assistant",
-                "content": "The file ruby.xml (application/xml) contains the XML element: <truism>Ruby is the best</truism> (i.e., the root element truism with the text \"Ruby is the best\").",
-                "refusal": null,
-                "annotations": []
-              },
-              "finish_reason": "stop"
+              "id": "rs_053f2cd1200f7d48016a2b15f6020881a2b3fc61c8b42dabe4",
+              "type": "reasoning",
+              "content": [],
+              "encrypted_content": "gAAAAABqKxYGB5EEg-M4xC2FilPGegJj9nF8UYhQkCm4mJLiLJUzgmWOCj5KREmQyPNW0PEd79eYPR8Ee2EJ0Q0M2mtvBJQM_5m4YWaNQSjTH1C6omCUCN4mg-roPZtX51y6_ytIaFXliG1pyozgXvdFTKDF6bcZO48UqXyK-PnUJbl3nCjvRhKKP0AE75ZHW0mgRUj3CNdTd616OUErb7FBOzXwDDOSWPCl-DKh7OtqsFe88YIirW7jSfapddcvIki6_eZhDT6xDFaD9qqBN_Ho0ZMI_qqmp7h3DCiIwZm6qJXuPSli8XG64GR_W8vwWB3sBILMPbGqjnvrhdNPH7fhAUOY--4SH75XPL1ApA5SuDIn0BVEmN29sPWajFm2MZ2jt-NmWUpKShdQ-og4IL5fcETHXXedtiCMfvcznZ9pBhNyh-Y33AyHBUrT9MLTw58j9GQQb-OA4v2V_gsb4PtdqhEuIbXpy_yR8-HniLykBLwct1577ADKhFzQsyHB10NRDg0MtGcvYXQTJ0dI6qc22Sspgm7zTjl3gmR4EPipDn3zNsYLns5W4vWhOLLlLdEz9_IMf4bWoXzDLDUXy5j59kLpVMSkkZuJVg5kqcv8Yxi21-0yZ_rNE_XI731pauA6sqiMBVUQ_S2b-e5BBLB5I71drR_oxc24-CDpNCi8mMwfq3hU0Yxdh54RbIFxRyJ8xZKwdokE-XvXQFs8nMVwFc7CdZU8fX-wqDYnnwojIvApTmqGUESTGfG-pi4_5NbmGGCl20irVkggy6EQQZ6ysnKiDPblBgscHQG9dd5asx86wLx3G0kz7sxcgSF1okmSSaK2WoOPleBzUgq1OA2J05xGJlcL43T8UxoJY3DBTv4tqe7TSGR230Bggx3x74HJ0H5sHM3XF8Tnm_hE3ffaej-HKwHfAVuvhx_6ZUOeqBd4bHjZrMa72aQgogmB61BtVxxBorLgknokplUSFd9uckkhw_HRcLufhD9j6hSaVHWuLWd9ZU286yeqD4ICx7FQ4n-lrR2_TauSKEW1UrOQ2iheKczpEOjfCuPxSWXK9G7DoQnhdakvO-392WrRnWNqv2u1M8DloF9DT1srwIhlUMUwLF-sjyhd0AUgO7jKk3h1m094YhZFW0vMt_LNikx4ymgaJ3x0vM6dNzON-0Iu1hDrElDCQ5NWjOWDEmjyJrVXEI6--WK2mdEXcL3tf-upzHdHJ2Xfg8Krw_i1WzebzViZ8wk42hg_BurLZAY-93y9GKgYPRAy9vC-AN1AGenD2YJw-zWaLVsPwhS3dZl379Rk8MAdtD7VWc0vZXd289p6fihvBXz4ZWXOVjt9-dAFnstZqMB0-bonYM06YgZCSRkaWuD2mh5Sdaw4pgegHF9JCyb7Vaco7uzEPQ4gJ8PXwybhMy-NrllJhf8BfDz-Lmp7j32PKopEL-UjtxHh36YPiDYN9akAUPZSyqRI0N5PekO5mXDFJxRo5viBpOKLhGF_dRUKumxlUFtUKHkqIIshUmFEAHHPj5eDjG_1Ys1Dbkeou2TqE4Lv8vVJnaz6XdGA8WyfevWCHz_9ausqGOXvys3TyKG7BwHyt15PZTnzDl3vdv6a6joV81nFDGoPebS6H054O4DJIHn_q-9bf2C6BTxpfVtQHuXHBwl8EjiSnsUAxh2DMrA-rs9XOKIbTpejSCntKIkS3b8fRSk3WT1E_wLHjAxQSARuOFvPku_mKDH2oQiD8a4rwA-JDNJwzzsJxsrqDWTQMNDF31vt_H3IYg7iU9T5h6eUqDOlCjKAY5uLst_aMYjYZBanRkaDKnPrA2vOmoEqhcrccZqZ3F4OqBPcvDvg5jk3qh80NkxGLCDkTwiLKJFlW_xk4ZS9tVyeKF7PGcnRNvLTfK-LfX6frVmJVhukDG_7L3fap0dlN232zaiDCzFw5VWTTTw5vtj-48CgD7Oo72zwLX6yMWJ2TGa58pQZ2eB0bz3V47vS0iR7hGpVZleu5bRtFMswshIboN-QfcUmI53xrbpWnMGyh1sNOEckAU-eEL2gKVqNIv9ssNwTvH7wzVZKxkMvrZCp_T53QSps-0FMMZRtSmiZnfYIaSREG8mPwZcuadR3d-_Wzxl2qY8d8F_hW5UDv5jItfoKuP69qhowPJrQ70ZXMa-zSb-MZj_z9nlTlAGfOEN-ZpTu5CzjG1YUb71LLe8gNwGapMBE6AMJZza_x9nbfpsA0PWFiL_mPPgksgIoM1he6ZAZSBTo_p0d5Tv0369670KjmUUXmkpNFNTmjWkuFqcOHfX4X_1lUY4HvGfi1ZBS_WIyXlSXkIzIZoYTEr7E_TqR4ZKE1X2o4v33PTiPLcPoW4rJuENI_0Fumdh30yxXda7a_tyWl_FaICn5h0_looEOOofduqDdYi_CQs8JJNdcU1mgnxvMk0KzylHbKzCTb1iWQvrLSqhr_NpkPlvR-BrmkSwrYfVBe4nnzeeWNUBV9zZKscRgwXQrGvi1IFHbeLU59EYWAxIyCHsntUT6Pk4mYH8d7IxhGIole0F0_t2W68MDW3XDB780KxuCcUj7lOp5dRqqtUGCDwXU5rPUqna82OBSuuIWC28NU3bWPq9V4PfYj3GvVxWI1UOvTbqNlHoNvqV0lKdjvzoHuUJHmPWPY4U-lBCvpHKx5T5T39tn82oWPAWt3GaexiF9oUCaz46CJbmwVb740tXUBYtb0sDbeyJ6VZDxORbixEbsY6babElcorNmwqSk554tNf5mjdflVP3e8HDsA53R1pKK_DnbcE3aHRtSvQYxqiuTxBCOKHg2U6DQ0DCUGyDjolhkpNjn2nFo3F5by5s-Yd5GZQLCWHZ0uXjV37kRc_VVLwpm3fR_hPgxpyBVsAbkG7SKtGCTHna-HzMw6zF6yBWjWrRzlq8SjZr2uJQuRg9KvazeDaZhNn_7h__oyyHAjjFvEc-efItAZMXycyk-hLLymQEOMIVVoXOZ7gFAabgMdy4eA-C_KbjgZUIj_VyO5L9NoUw6Nx4-hEog4e-tCn9h-RKglSznb4Op5iZycB8soXXbCIeLnRYPPFotB8j1ILEjEAwmZRcXTAbgISAiUn85qhxJr1h9WU5y9hnpHXXV3rRacsgr8UYT36dRX82f75czUX50R74uV1eDuvkGHpO30w0d07b2GIO3L9i9X-Km_SpdIT9sUcPUoNXu_yf2c33hMnHSOhi2URTy9x3t-j3mkeaYTA==",
+              "summary": []
+            },
+            {
+              "id": "msg_053f2cd1200f7d48016a2b15fac87081a289feb8293022714b",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "- File: ruby.xml (application/xml)\n- Contents: <truism>Ruby is the best</truism>"
+                }
+              ],
+              "role": "assistant"
             }
           ],
-          "usage": {
-            "prompt_tokens": 87,
-            "completion_tokens": 436,
-            "total_tokens": 523,
-            "prompt_tokens_details": {
-              "cached_tokens": 0,
-              "audio_tokens": 0
-            },
-            "completion_tokens_details": {
-              "reasoning_tokens": 384,
-              "audio_tokens": 0,
-              "accepted_prediction_tokens": 0,
-              "rejected_prediction_tokens": 0
-            }
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": "in_memory",
+          "reasoning": {
+            "context": "current_turn",
+            "effort": "medium",
+            "summary": null
           },
+          "safety_identifier": null,
           "service_tier": "default",
-          "system_fingerprint": null
+          "store": false,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tools": [],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 87,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens": 448,
+            "output_tokens_details": {
+              "reasoning_tokens": 384
+            },
+            "total_tokens": 535
+          },
+          "user": null,
+          "metadata": {}
         }
-  recorded_at: Mon, 08 Jun 2026 18:46:33 GMT
+  recorded_at: Thu, 11 Jun 2026 20:09:42 GMT
 recorded_with: VCR 6.4.0

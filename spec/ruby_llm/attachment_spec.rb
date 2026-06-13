@@ -23,6 +23,19 @@ RSpec.describe RubyLLM::Attachment do
     expect(stdout.strip).to eq('ruby.txt,text/plain')
   end
 
+  it 'normalizes text file content to UTF-8' do
+    attachment = described_class.new(File.expand_path('../fixtures/ruby.txt', __dir__))
+
+    expect(attachment.content.encoding).to eq(Encoding::UTF_8)
+    expect(attachment.content).to be_valid_encoding
+  end
+
+  it 'keeps binary attachment content untouched' do
+    attachment = described_class.new(File.expand_path('../fixtures/ruby.png', __dir__))
+
+    expect(attachment.content.encoding).to eq(Encoding::ASCII_8BIT)
+  end
+
   it 'classifies rich document files semantically' do
     attachment = described_class.new(StringIO.new('docx bytes'), filename: 'proposal.docx')
 

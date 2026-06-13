@@ -311,7 +311,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
 
     it 'persists raw content blocks separately from plain text' do
       chat = Chat.create!(model: anthropic_model)
-      raw_block = RubyLLM::Providers::Anthropic::Content.new('Cache me once', cache: true)
+      raw_block = RubyLLM::Protocols::Anthropic::Content.new('Cache me once', cache: true)
 
       message = chat.add_message(role: :user, content: raw_block)
 
@@ -1089,6 +1089,23 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
           expect(replayed_messages.filter_map { |msg| msg.thinking&.signature }).to include(response.thinking.signature)
         end
       end
+    end
+  end
+
+  describe 'citations persistence' do
+    let(:facts_path) { File.expand_path('../../fixtures/facts.txt', __dir__) }
+
+    it 'persists citations and replays them on reload' do
+      chat = Chat.create!(model: 'claude-haiku-4-5', provider: 'anthropic')
+      chat.with_citations
+
+      response = chat.ask('Who created Ruby? Use the document.', with: facts_path)
+
+      expect(response.citations).not_to be_empty
+
+      message_record = chat.messages.order(:id).last
+      expect(message_record.citations).to eq(response.citations)
+      expect(Chat.find(chat.id).messages.order(:id).last.to_llm.citations).to eq(response.citations)
     end
   end
 end

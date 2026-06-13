@@ -8,12 +8,12 @@ module RubyLLM
         module_function
 
         def format_content(content)
-          OpenAI::Media.format_parts(content) do |attachment|
+          Protocols::ChatCompletions::Media.format_parts(content) do |attachment|
             case attachment.type
             when :image
               format_image(attachment)
             when :text
-              OpenAI::Media.format_text_file(attachment)
+              Protocols::ChatCompletions::Media.format_text_file(attachment)
             else
               raise UnsupportedAttachmentError, attachment.mime_type
             end

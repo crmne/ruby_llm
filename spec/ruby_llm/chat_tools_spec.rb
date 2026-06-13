@@ -461,9 +461,10 @@ RSpec.describe RubyLLM::Chat do
                       .with_instructions('You must call the params tool.')
 
         provider_instance = chat.instance_variable_get(:@provider)
+        protocol_class = provider_instance.protocols.values.first
         captured_payload = nil
 
-        allow(provider_instance).to receive(:sync_response) do |payload, _headers|
+        allow_any_instance_of(protocol_class).to receive(:sync_response) do |_protocol, payload, _headers| # rubocop:disable RSpec/AnyInstance
           captured_payload = payload
           RubyLLM::Message.new(role: :assistant, content: 'ok')
         end

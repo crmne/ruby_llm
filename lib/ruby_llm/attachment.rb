@@ -44,21 +44,8 @@ module RubyLLM
     end
 
     def content
-      return @content if defined?(@content) && !@content.nil?
-
-      if url?
-        fetch_content
-      elsif path?
-        load_content_from_path
-      elsif active_storage?
-        load_content_from_active_storage
-      elsif io_like?
-        load_content_from_io
-      else
-        RubyLLM.logger.warn "Source is neither a URL, path, ActiveStorage, nor IO-like: #{@source.class}"
-        nil
-      end
-
+      load_content if !defined?(@content) || @content.nil?
+      normalize_text_encoding
       @content
     end
 
@@ -133,6 +120,29 @@ module RubyLLM
     end
 
     private
+
+    def load_content
+      if url?
+        fetch_content
+      elsif path?
+        load_content_from_path
+      elsif active_storage?
+        load_content_from_active_storage
+      elsif io_like?
+        load_content_from_io
+      else
+        RubyLLM.logger.warn "Source is neither a URL, path, ActiveStorage, nor IO-like: #{@source.class}"
+        nil
+      end
+    end
+
+    # Text content is loaded as binary; retag it so payloads serialize as UTF-8.
+    def normalize_text_encoding
+      return unless text? && @content.is_a?(String) && @content.encoding == Encoding::ASCII_8BIT
+
+      text = @content.dup.force_encoding(Encoding::UTF_8)
+      @content = text.valid_encoding? ? text : text.scrub
+    end
 
     def determine_mime_type
       content_type = active_storage? ? active_storage_content_type : nil

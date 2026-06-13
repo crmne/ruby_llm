@@ -5,14 +5,25 @@ require 'stringio'
 module RubyLLM
   module Providers
     # Google Vertex AI implementation
-    class VertexAI < Gemini
-      include VertexAI::Embeddings
-      include VertexAI::Models
+    class VertexAI < Provider
+      protocol :gemini, VertexAI::Gemini
+      protocol :anthropic, VertexAI::Anthropic
 
       SCOPES = [
         'https://www.googleapis.com/auth/cloud-platform',
         'https://www.googleapis.com/auth/generative-language.retriever'
       ].freeze
+
+      # Vertex AI hosts models from several publishers, each speaking its
+      # native protocol.
+      def protocol_for(model, **)
+        model.id.start_with?('claude') ? protocols[:anthropic] : super
+      end
+
+      def model_path(model, publisher: 'google')
+        "projects/#{@config.vertexai_project_id}/locations/#{@config.vertexai_location}" \
+          "/publishers/#{publisher}/models/#{model}"
+      end
 
       def initialize(config)
         super
@@ -27,14 +38,6 @@ module RubyLLM
         else
           "https://#{@config.vertexai_location}-aiplatform.googleapis.com/v1beta1"
         end
-      end
-
-      def completion_url
-        "#{model_path(@model)}:generateContent"
-      end
-
-      def stream_url
-        "#{model_path(@model)}:streamGenerateContent?alt=sse"
       end
 
       def headers
@@ -55,15 +58,6 @@ module RubyLLM
       end
 
       private
-
-      def model_path(model)
-        "projects/#{@config.vertexai_project_id}/locations/#{@config.vertexai_location}" \
-          "/publishers/google/models/#{model}"
-      end
-
-      def transcription_url(model)
-        "#{model_path(model)}:generateContent"
-      end
 
       def initialize_authorizer
         require 'googleauth'

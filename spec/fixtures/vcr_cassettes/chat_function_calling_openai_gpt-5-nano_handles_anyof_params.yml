@@ -2,14 +2,14 @@
 http_interactions:
 - request:
     method: post
-    uri: https://api.openai.com/v1/chat/completions
+    uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-5-nano","messages":[{"role":"user","content":"Call the
-        any-of params tool for task \"Review PR\" with status \"pending\" and report
-        the result."}],"stream":false,"tools":[{"type":"function","function":{"name":"any_of_params","description":"Uses
+      string: '{"model":"gpt-5-nano","input":[{"role":"user","content":"Call the any-of
+        params tool for task \"Review PR\" with status \"pending\" and report the
+        result."}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"any_of_params","description":"Uses
         params DSL any_of support","parameters":{"type":"object","properties":{"task":{"type":"string","description":"Task
-        description"},"status":{"description":"Optional task status","anyOf":[{"type":"string","enum":["pending","done"]},{"type":"null"}]}},"required":["task","status"],"additionalProperties":false,"strict":true}}}]}'
+        description"},"status":{"description":"Optional task status","anyOf":[{"type":"string","enum":["pending","done"]},{"type":"null"}]}},"required":["task","status"],"additionalProperties":false,"strict":true}}]}'
     headers:
       User-Agent:
       - Faraday v2.14.2
@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 08 Jun 2026 18:50:34 GMT
+      - Thu, 11 Jun 2026 20:10:54 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -51,13 +51,11 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '3434'
+      - '1952'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
       - '2020-10-01'
-      X-Openai-Proxy-Wasm:
-      - v0.1
       X-Ratelimit-Limit-Requests:
       - '5000'
       X-Ratelimit-Limit-Tokens:
@@ -65,7 +63,7 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '4999'
       X-Ratelimit-Remaining-Tokens:
-      - '1999974'
+      - '2000000'
       X-Ratelimit-Reset-Requests:
       - 12ms
       X-Ratelimit-Reset-Tokens:
@@ -78,51 +76,117 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: |
+      string: |-
         {
-          "id": "chatcmpl-DoZLLvQ45zyVCwrUR6TNZvDznW7YU",
-          "object": "chat.completion",
-          "created": 1780944631,
+          "id": "resp_0241dd9de1f64d7b016a2b164c8c1c81a08273f301662c6872",
+          "object": "response",
+          "created_at": 1781208652,
+          "status": "completed",
+          "background": false,
+          "billing": {
+            "payer": "developer"
+          },
+          "completed_at": 1781208654,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
           "model": "gpt-5-nano-2025-08-07",
-          "choices": [
+          "moderation": null,
+          "output": [
             {
-              "index": 0,
-              "message": {
-                "role": "assistant",
-                "content": null,
-                "tool_calls": [
-                  {
-                    "id": "call_DNnSX5cVmAuM0zfLjGObUIWD",
-                    "type": "function",
-                    "function": {
-                      "name": "any_of_params",
-                      "arguments": "{\"task\":\"Review PR\",\"status\":\"pending\"}"
-                    }
-                  }
-                ],
-                "refusal": null,
-                "annotations": []
-              },
-              "finish_reason": "tool_calls"
+              "id": "rs_0241dd9de1f64d7b016a2b164cdb0c81a0a5cb74a194635d92",
+              "type": "reasoning",
+              "content": [],
+              "encrypted_content": "gAAAAABqKxZOTPZXBkUgSOtFrcwFowzxIn6E9939NRr0ITR5ZEy78htAhBDbOmSPa8FdfHU3bViTLciT5x4cVoZB5466Rq1By1OMBcIeMYIsOdijjas98OGLquhWg1NxrL8womFcDNgzyqoWvnxZ-EgzQ73UaLgCb32MAKTaMuxnIVotdLn_VhSEoBOAtqAcbNq1WOrqobMROP1Lrom4FBs2HjEbgRFgVJdg9YjUMsHRW_beJ0rgCX4HI4ETTsyKdNGe41VglwjoDAy40VUBtJgUEIB_ckDX9IrAmrT0ZrV9Zn5Tb8mhNZraeuIn2c_Kw1mKdIHIbgQjSz2tSpleDKMj5CIaX_logXP87nNu2W4Lvwm19IsCXD8HMGCuNKRMdZ5WzUzet1NbhUqDVcu7if5IYvvq65sIJnO4vDE70D_NWqa3KV_McpLnfMbzwUOxdUkGecUnDE3NIbT1jmrTOexQP-2aA0jLiV3HGv8Kfu3KXgA8qUcM1pZH3BkriEkA3Hyn_MVrxR_W0w6OoAY7_wMXBi8TVqgDIyB7vzEkhGc-2oFX3O6Erl9ebmLLh89-ahK5QWR1jB6K5fDbwgNJyg1DGX6yJwZQj6JbNxqZVvA_3vev4noVTTTtBJ_8bSJY3ha0QCVHCM-03T8SfPAmbe-indyfy4VDC8XXW1yN2HjHUuoTihg3HJ58CqwxThTLc_zCCQq2PVZUMlltGifeZ4O19ga-5VppeeLDSv7mT-rgq0aHHgP9RF76bMO6WzXWABF8PTIAfUaaREtPFJskomvv5Y6kscmycmmAP7i2QCTxkex5iX4uX4pve3wXlwZ3Dkep6uoBxRRAWxQwU2mELIWSHxAdujCg3023ZXNAlhwwmFqIytOIISEFM-kLYG7JvKlpqlfPv6BLHPIDuCUw0JY-g0f5TUvapYE6gfLCCR_1WeuKi0ZrAOGQemxo7Cau7Y3WTVGytqma46wNIgPWGuggYFA8uB2Z_vaBr6-tqlj1wIWB-l8248kf96f9ktNAT9m-cO_3WfVDBwNhdcaD1wrRFV50zX_9y9RCskbwjPfTDd9LzXFFxkWhq33iJfBPIJ07oceI0aiBVsqE0h6RkC8fNGMNg8jB3kkN8MpvAOji5ksXUJ6OXX-x-TN31jvgsExhDlau-n0Zd5rXFD9F_ovfQ2WK7jt0tQSL6-PoF3jdP8ugv7LPGHaiJdg3zEThyA8sMwBoDRONzUbciadxcU-R5oR_3KtjPi97rioX4EQ2CISwyN50DV4ryVdaKcRuiI2w3UBL6DV2GcBXbGvR0qOMIRUTSGtXoprhQupalClCZtD11YS5KFCqJvnEKbjj96kwHjwGKlh6XJQcUVyo0izLZNVUcw95zfm92KN8Xbp5Ck8WZ-aAw6hVQh_EWVVtSpBJCmUc8yBF1cu7In0cnJy_wLLPW-hktKXgzW-90BNAp6Swfu9LuT__ffls7CU6vUY26ugLLTJfnHm3PSkEfZ9V86JkX7t3PMyReTjotFjJmxbpdSrZuWeFTW5qNgnwF6n0BtOVx3Dva7EfkCBxyOrbzMmWlprqo6fd-wyVO0V2bfNtHQ3NsEskmZ7LlcUmvW0zBCytupQMxSwbx86IJjZIedh3MMV3pX7yzQOEvm_kkmu-1fdVulV14YegdDjnoFLvyOKoWjF4-LeKaOs7JxB-zDULhatHxdq5nJN1ia26kkKweB8hXF9THr2nmbRrZNCat1hR-Ux9XOhNIBL6v4v-psiMWr-dyKBhLYuWKxMsfvB_xeCF5Hi-XwfP7UQIUYbaA8Vkd-VfgmitrotRxrfn39B-sOdXL59tVtgsHY2M4PDp3HYgHwAxRK8yh2b0rs8hmGb1zwtQ3-T4X7G7W3KL5xgO2cpg26tDTe8_qJVf9WzLzfPrv-0PxgT8EEoGGhURaph5Rh1oz09eFseElDaDx1cdiQ5PQkG-tR5hQBcMNKiOy16MTEtNTmzvlWIf89t8kKcWJ25vheEyiAh0U_RD1E25zmqY3sf8yGNOiN2odlWS127bFJUepGHFZOIaWgHP3pWQceWyUTr3M5mjLGPHzq98HkwAF_oIwUOn80wJ4SHpQhGhoMc=",
+              "summary": []
+            },
+            {
+              "id": "fc_0241dd9de1f64d7b016a2b164e2a5081a097139c254bba3f6a",
+              "type": "function_call",
+              "status": "completed",
+              "arguments": "{\"task\":\"Review PR\",\"status\":\"pending\"}",
+              "call_id": "call_gdL8CX62wCsOig4I2cbxlkia",
+              "name": "any_of_params"
             }
           ],
-          "usage": {
-            "prompt_tokens": 168,
-            "completion_tokens": 221,
-            "total_tokens": 389,
-            "prompt_tokens_details": {
-              "cached_tokens": 0,
-              "audio_tokens": 0
-            },
-            "completion_tokens_details": {
-              "reasoning_tokens": 192,
-              "audio_tokens": 0,
-              "accepted_prediction_tokens": 0,
-              "rejected_prediction_tokens": 0
-            }
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": "in_memory",
+          "reasoning": {
+            "context": "current_turn",
+            "effort": "medium",
+            "summary": null
           },
+          "safety_identifier": null,
           "service_tier": "default",
-          "system_fingerprint": null
+          "store": false,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tools": [
+            {
+              "type": "function",
+              "description": "Uses params DSL any_of support",
+              "name": "any_of_params",
+              "parameters": {
+                "type": "object",
+                "properties": {
+                  "task": {
+                    "type": "string",
+                    "description": "Task description"
+                  },
+                  "status": {
+                    "description": "Optional task status",
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "enum": [
+                          "pending",
+                          "done"
+                        ]
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "task",
+                  "status"
+                ],
+                "additionalProperties": false,
+                "strict": true
+              },
+              "strict": true
+            }
+          ],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 86,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens": 215,
+            "output_tokens_details": {
+              "reasoning_tokens": 128
+            },
+            "total_tokens": 301
+          },
+          "user": null,
+          "metadata": {}
         }
-  recorded_at: Mon, 08 Jun 2026 18:50:34 GMT
+  recorded_at: Thu, 11 Jun 2026 20:10:54 GMT
 recorded_with: VCR 6.4.0

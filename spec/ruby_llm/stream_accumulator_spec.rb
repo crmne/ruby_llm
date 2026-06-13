@@ -42,5 +42,28 @@ RSpec.describe RubyLLM::StreamAccumulator do
         'date' => '2026-03-31'
       )
     end
+
+    it 'deduplicates citations repeated across chunks' do
+      accumulator = described_class.new
+      citation = RubyLLM::Citation.new(url: 'https://example.com', title: 'Example')
+
+      accumulator.add(RubyLLM::Chunk.new(role: :assistant, content: 'Hello', citations: [citation]))
+      accumulator.add(RubyLLM::Chunk.new(role: :assistant, content: ' world', citations: [citation]))
+
+      message = accumulator.to_message(nil)
+      expect(message.citations).to eq([citation])
+    end
+
+    it 'resolves citation text spans from the accumulated content' do
+      accumulator = described_class.new
+      citation = RubyLLM::Citation.new(url: 'https://example.com', start_index: 6, end_index: 11)
+
+      accumulator.add(RubyLLM::Chunk.new(role: :assistant, content: 'Hello cited world'))
+      accumulator.add(RubyLLM::Chunk.new(role: :assistant, content: nil, citations: [citation]))
+
+      message = accumulator.to_message(nil)
+      expect(message.citations.first.text).to eq('cited')
+      expect(message.citations.first.url).to eq('https://example.com')
+    end
   end
 end

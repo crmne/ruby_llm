@@ -7,6 +7,7 @@ class <%= create_migration_class_name(message_table_name) %> < ActiveRecord::Mig
       t.text :thinking_text
       t.text :thinking_signature
       t.integer :thinking_tokens
+      t.json :citations
       t.integer :input_tokens
       t.integer :output_tokens
       t.integer :cached_tokens

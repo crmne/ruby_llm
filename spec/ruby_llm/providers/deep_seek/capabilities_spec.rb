@@ -49,7 +49,7 @@ RSpec.describe RubyLLM::Providers::DeepSeek::Capabilities do
         }
       )
 
-      model = RubyLLM::Providers::OpenAI::Models.parse_list_models_response(
+      model = RubyLLM::Protocols::ChatCompletions::Models.parse_list_models_response(
         response,
         'deepseek',
         described_class

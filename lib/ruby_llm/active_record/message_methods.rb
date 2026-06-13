@@ -29,6 +29,7 @@ module RubyLLM
           role: role.to_sym,
           content: extract_content,
           thinking: thinking,
+          citations: citations,
           tokens: tokens,
           tool_calls: extract_tool_calls,
           tool_call_id: extract_tool_call_id,
@@ -41,6 +42,10 @@ module RubyLLM
           text: optional_column(:thinking_text),
           signature: optional_column(:thinking_signature)
         )
+      end
+
+      def citations
+        Array(optional_column(:citations)).map { |citation| RubyLLM::Citation.from_h(citation) }
       end
 
       def tokens

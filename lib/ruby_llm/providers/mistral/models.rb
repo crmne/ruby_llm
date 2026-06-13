@@ -13,12 +13,6 @@ module RubyLLM
           'models'
         end
 
-        def headers(config)
-          {
-            'Authorization' => "Bearer #{config.mistral_api_key}"
-          }
-        end
-
         def parse_list_models_response(response, slug, capabilities)
           Array(response.body['data']).map do |model_data|
             model_id = model_data['id']

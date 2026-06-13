@@ -17,7 +17,8 @@ RSpec.describe RubyLLM::Providers::VertexAI do
       faraday_adapter: :net_http,
       vertexai_location: location,
       vertexai_project_id: 'test-project',
-      vertexai_api_base: vertexai_api_base
+      vertexai_api_base: vertexai_api_base,
+      vertexai_protocol: nil
     )
   end
 
@@ -67,10 +68,53 @@ RSpec.describe RubyLLM::Providers::VertexAI do
         RubyLLM::Message.new(role: :tool, content: 'Sunny', tool_call_id: 'call_1')
       ]
 
-      payload = provider.send(:render_payload, messages, tools: {}, temperature: nil, model:)
+      protocol = RubyLLM::Providers::VertexAI::Gemini.new(provider, model)
+      payload = protocol.send(:render_payload, messages, tools: {}, temperature: nil, model:)
 
       expect(payload.dig(:contents, 2, :role)).to eq('user')
       expect(payload.dig(:contents, 2, :parts, 0, :functionResponse, :name)).to eq('weather')
+    end
+  end
+
+  describe '#protocol_for' do
+    let(:location) { 'us-east5' }
+
+    it 'routes claude models to the Anthropic protocol' do
+      model = instance_double(RubyLLM::Model::Info, id: 'claude-haiku-4-5@20251001')
+
+      expect(provider.protocol_for(model)).to eq(RubyLLM::Providers::VertexAI::Anthropic)
+    end
+
+    it 'routes google models to the Gemini protocol' do
+      model = instance_double(RubyLLM::Model::Info, id: 'gemini-2.5-flash')
+
+      expect(provider.protocol_for(model)).to eq(RubyLLM::Providers::VertexAI::Gemini)
+    end
+  end
+
+  describe 'Anthropic protocol dialect' do
+    let(:location) { 'us-east5' }
+    let(:model) { instance_double(RubyLLM::Model::Info, id: 'claude-haiku-4-5@20251001', max_tokens: 4096) }
+    let(:protocol) { RubyLLM::Providers::VertexAI::Anthropic.new(provider, model) }
+
+    it 'speaks to rawPredict under the anthropic publisher' do
+      expect(protocol.send(:completion_url)).to eq(
+        'projects/test-project/locations/us-east5/publishers/anthropic/models/claude-haiku-4-5@20251001:rawPredict'
+      )
+      expect(protocol.send(:stream_url)).to eq(
+        'projects/test-project/locations/us-east5/publishers/anthropic/models/' \
+        'claude-haiku-4-5@20251001:streamRawPredict'
+      )
+    end
+
+    it 'swaps the model key for anthropic_version' do
+      messages = [RubyLLM::Message.new(role: :user, content: 'hi')]
+
+      payload = protocol.send(:render_payload, messages, tools: {}, temperature: nil, model:)
+
+      expect(payload[:model]).to be_nil
+      expect(payload[:anthropic_version]).to eq('vertex-2023-10-16')
+      expect(payload.dig(:messages, 0, :role)).to eq('user')
     end
   end
 end

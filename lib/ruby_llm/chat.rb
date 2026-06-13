@@ -27,6 +27,8 @@ module RubyLLM
       @headers = {}
       @schema = nil
       @thinking = nil
+      @citations = false
+      @protocol = nil
       @on = {
         new_message: nil,
         end_message: nil,
@@ -97,6 +99,11 @@ module RubyLLM
       self
     end
 
+    def with_citations(enabled = true) # rubocop:disable Style/OptionalBooleanParameter
+      @citations = enabled
+      self
+    end
+
     def with_context(context)
       @context = context
       @config = context.config
@@ -106,6 +113,11 @@ module RubyLLM
 
     def with_params(**params)
       @params = params
+      self
+    end
+
+    def with_protocol(protocol)
+      @protocol = protocol
       self
     end
 
@@ -181,6 +193,7 @@ module RubyLLM
         params: params,
         schema: schema,
         thinking: @thinking,
+        citations: @citations,
         streaming: block_given?
       }
 
@@ -290,6 +303,8 @@ module RubyLLM
         headers: @headers,
         schema: @schema,
         thinking: @thinking,
+        citations: @citations,
+        protocol: @protocol,
         &wrap_streaming_block(&)
       )
     end

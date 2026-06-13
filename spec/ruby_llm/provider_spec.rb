@@ -239,4 +239,48 @@ RSpec.describe RubyLLM::Provider do
       end
     end
   end
+
+  describe 'protocol resolution' do
+    let(:provider) { RubyLLM::Providers::OpenAI.new(config_for(:openai)) }
+    let(:model) { instance_double(RubyLLM::Model::Info, id: 'gpt-5.4') }
+
+    it 'defaults to the first declared protocol' do
+      expect(RubyLLM::Providers::OpenAI.default_protocol).to eq(:responses)
+      expect(RubyLLM::Providers::Mistral.default_protocol).to eq(:chat_completions)
+    end
+
+    it 'routes through protocol_for by default' do
+      expect(provider.send(:resolve_protocol, nil, model)).to eq(RubyLLM::Protocols::Responses)
+    end
+
+    it 'routes chat-completions-only models away from the default' do
+      audio = instance_double(RubyLLM::Model::Info, id: 'gpt-audio-mini')
+
+      expect(provider.send(:resolve_protocol, nil, audio)).to eq(RubyLLM::Protocols::ChatCompletions)
+    end
+
+    it 'prefers the configured protocol over routing' do
+      config = config_for(:openai)
+      config.openai_protocol = :chat_completions
+
+      provider = RubyLLM::Providers::OpenAI.new(config)
+
+      expect(provider.send(:resolve_protocol, nil, model)).to eq(RubyLLM::Protocols::ChatCompletions)
+    end
+
+    it 'prefers an explicit protocol over the configured one' do
+      config = config_for(:openai)
+      config.openai_protocol = :chat_completions
+
+      provider = RubyLLM::Providers::OpenAI.new(config)
+
+      expect(provider.send(:resolve_protocol, :responses, model)).to eq(RubyLLM::Protocols::Responses)
+    end
+
+    it 'raises on protocols the provider does not speak' do
+      expect do
+        provider.send(:resolve_protocol, :gemini, model)
+      end.to raise_error(RubyLLM::Error, /gemini is not a protocol of OpenAI\. Available: responses, chat_completions/)
+    end
+  end
 end

@@ -300,10 +300,14 @@ The `with_temperature` method returns the chat instance, allowing you to chain m
 Different providers offer unique features and parameters. The `with_params` method lets you access these provider-specific capabilities while maintaining RubyLLM's unified interface. Parameters passed via `with_params` will override any defaults set by RubyLLM, giving you full control over the API request payload.
 
 ```ruby
-# response_format parameter is supported by :openai, :ollama, :deepseek
-chat = RubyLLM.chat.with_params(response_format: { type: 'json_object' })
+# JSON object mode on the Responses API (OpenAI's default protocol)
+chat = RubyLLM.chat.with_params(text: { format: { type: 'json_object' } })
 response = chat.ask "What is the square root of 64? Answer with a JSON object with the key `result`."
 puts JSON.parse(response.content)
+
+# The same option on Chat Completions providers like :ollama and :deepseek
+chat = RubyLLM.chat(model: 'qwen3', provider: :ollama)
+              .with_params(response_format: { type: 'json_object' })
 ```
 
 > **With great power comes great responsibility:** The `with_params` method can override any part of the request payload, including critical parameters like model, max_tokens, or tools. Use it carefully to avoid unintended behavior. Always verify that your overrides are compatible with the provider's API. To debug and see the exact request being sent, set the environment variable `RUBYLLM_DEBUG=true`.
@@ -311,6 +315,24 @@ puts JSON.parse(response.content)
 
 > Available parameters vary by provider and model. Always consult the provider's documentation for supported features. RubyLLM passes these parameters through without validation, so incorrect parameters may cause API errors. Parameters from `with_params` take precedence over RubyLLM's defaults, allowing you to override any aspect of the request payload.
 {: .warning }
+
+### Choosing the Wire Protocol
+{: .d-inline-block }
+
+v2.0+
+{: .label .label-green }
+
+Some providers speak more than one wire protocol. OpenAI defaults to the Responses API and routes audio models to Chat Completions; Vertex AI speaks Gemini for Google models and Anthropic for Claude models. RubyLLM picks the right protocol per request — override it per chat or app-wide:
+
+```ruby
+chat = RubyLLM.chat(model: 'gpt-5.4').with_protocol(:chat_completions)
+
+RubyLLM.configure do |config|
+  config.openai_protocol = :chat_completions
+end
+```
+
+Unknown protocol names raise immediately, listing what the provider speaks.
 
 ## Raw Content Blocks
 {: .d-inline-block }
@@ -733,6 +755,7 @@ This guide covered the core `Chat` interface. Now you might want to explore:
 
 *   [Working with Models]({% link _advanced/models.md %}): Learn how to choose the best model and handle custom endpoints.
 *   [Using Tools]({% link _core_features/tools.md %}): Enable the AI to call your Ruby code.
+*   [Citations]({% link _core_features/citations.md %}): Get verifiable answers backed by your documents and web sources.
 *   [Streaming Responses]({% link _core_features/streaming.md %}): Get real-time feedback from the AI.
 *   [Rails Integration]({% link _advanced/rails.md %}): Persist your chat conversations easily.
 *   [Error Handling]({% link _advanced/error-handling.md %}): Build robust applications that handle API issues.

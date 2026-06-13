@@ -9,7 +9,7 @@ module RubyLLM
 
         # rubocop:disable Metrics/ParameterLists
         def render_payload(messages, tools:, temperature:, model:, stream: false, schema: nil,
-                           thinking: nil, tool_prefs: nil)
+                           thinking: nil, citations: false, tool_prefs: nil)
           payload = super
           payload.delete(:reasoning_effort)
           strip_schema_strict(payload)
