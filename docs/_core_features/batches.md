@@ -156,36 +156,45 @@ end
 
 ## Rails Integration
 
-Batch results flow through the same callbacks as synchronous responses, so `acts_as_chat` persistence works unchanged. `ask_later` works on your records too, and `RubyLLM.batch` takes the records directly: staged questions and collected answers land in the database with tokens and model attached.
+Batch results flow through the same callbacks as synchronous responses, so `acts_as_chat` persistence works unchanged. `ask_later`, `run_tools`, and `complete?` all work on your records, so staged questions and collected answers land in the database with tokens and model attached.
 
-Add a `batch_id` column to your chats (`add_column :chats, :batch_id, :string`) so a later job can find them:
+The one new thing a batch needs is somewhere to keep its id while the provider works. The installer generates a `Batch` model for exactly that:
+
+```ruby
+class Batch < ApplicationRecord
+  acts_as_batch
+end
+```
+
+It stores only the provider's batch id and the chats it's processing; the conversations themselves stay in your existing `chats` and `messages` tables. (Upgrading an app from 1.x? `bin/rails generate ruby_llm:upgrade_to_v2_0` adds the `batches` table.)
+
+`Batch.create!` sends the staged chats to the provider and persists the record in one step:
 
 ```ruby
 chats = tickets.map do |ticket|
   Chat.create!(model: "claude-haiku-4-5").ask_later(ticket.body)
 end
 
-batch = RubyLLM.batch(chats)
-Chat.where(id: chats).update_all(batch_id: batch.id)
-BatchPollJob.perform_later(batch.id, provider: :anthropic)
+batch = Batch.create!(chats: chats)
+BatchPollJob.perform_later(batch.id)
 ```
 
-When polling from another process, the original chat objects are gone; append the messages yourself:
+A job in another process looks the batch up, checks on it, and collects:
 
 ```ruby
 class BatchPollJob < ApplicationJob
-  def perform(batch_id, provider:)
-    batch = RubyLLM.batch(batch_id, provider: provider)
-    return self.class.set(wait: 10.minutes).perform_later(batch_id, provider: provider) unless batch.complete?
+  def perform(batch_id)
+    batch = Batch.find(batch_id)
+    return self.class.set(wait: 10.minutes).perform_later(batch_id) unless batch.complete?
 
-    Chat.where(batch_id: batch_id).order(:id).zip(batch.messages) do |chat, message|
-      chat.to_llm.add_completion(message) if message
-    end
+    batch.messages
   end
 end
 ```
 
-`add_completion` is the out-of-band counterpart to a synchronous response: it appends the message and fires the persistence callbacks.
+`batch.messages` appends each answer to its chat and persists it, so the conversations come back complete with no bookkeeping on your side. It is idempotent: an answered chat ends on an assistant message, so re-running the job (a retry, an at-least-once queue) never appends an answer twice. As it polls, `complete?` caches the provider's status onto the record, so the batches still in flight are just `Batch.where(completed: false)`. Stop a running batch with `batch.cancel`.
+
+Tools work the same way they do for plain chats. Because the records carry the whole conversation, a poll job can `run_tools` on the collected chats and submit the ones still awaiting the model as the next batch, running an agentic workload across batches at batch prices.
 
 ## Provider Notes
 

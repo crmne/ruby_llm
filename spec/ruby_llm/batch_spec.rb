@@ -79,6 +79,27 @@ RSpec.describe RubyLLM::Batch do
       batch.messages
       expect(provider).to have_received(:batch_results).once
     end
+
+    it 'does not re-deliver a tool-call answer after its tools have run' do
+      chat = RubyLLM.chat(model: model).ask_later('Look it up.')
+      provider = chat.provider
+      answer = RubyLLM::Message.new(
+        role: :assistant, content: nil, input_tokens: 1, output_tokens: 1,
+        tool_calls: { 'toolu_1' => RubyLLM::ToolCall.new(id: 'toolu_1', name: 'lookup', arguments: {}) }
+      )
+      allow(provider).to receive(:batch_results).and_return([[0, answer]])
+
+      collect = lambda do
+        described_class.new(provider:, chats: [chat], id: 'msgbatch_test', status: 'ended', completed: true).messages
+      end
+
+      collect.call # first delivery appends the tool-call answer
+      # the app runs the tool, appending a result and moving the chat on
+      chat.add_message(RubyLLM::Message.new(role: :tool, content: 'done', tool_call_id: 'toolu_1'))
+      collect.call # a redelivered poll re-collects the same batch
+
+      expect(chat.messages.count(&:tool_call?)).to eq(1)
+    end
   end
 
   context 'with anthropic/claude-haiku-4-5' do

@@ -21,6 +21,7 @@ if defined?(Rails::Railtie)
           require 'ruby_llm/active_record/message_methods'
           require 'ruby_llm/active_record/model_methods'
           require 'ruby_llm/active_record/tool_call_methods'
+          require 'ruby_llm/active_record/batch_methods'
 
           if RubyLLM.config.use_new_acts_as
             require 'ruby_llm/active_record/acts_as'

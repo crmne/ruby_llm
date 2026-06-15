@@ -9,7 +9,8 @@ module RubyLLM
           chat: 'Chat',
           message: 'Message',
           tool_call: 'ToolCall',
-          model: 'Model'
+          model: 'Model',
+          batch: 'Batch'
         }
 
         model_mappings.each do |mapping|
@@ -22,7 +23,7 @@ module RubyLLM
         @model_names
       end
 
-      %i[chat message tool_call model].each do |type|
+      %i[chat message tool_call model batch].each do |type|
         define_method("#{type}_model_name") do
           @model_names ||= parse_model_mappings
           @model_names[type]
@@ -86,6 +87,13 @@ module RubyLLM
         "acts_as_model#{" #{params.join(', ')}" if params.any?}"
       end
 
+      def acts_as_batch_declaration
+        params = []
+        params << "chat_class: '#{chat_model_name}'" if chat_model_name != 'Chat'
+
+        "acts_as_batch#{" #{params.join(', ')}" if params.any?}"
+      end
+
       def acts_as_tool_call_declaration
         params = []
 
@@ -99,7 +107,8 @@ module RubyLLM
       def create_namespace_modules
         namespaces = []
 
-        [chat_model_name, message_model_name, tool_call_model_name, model_model_name].each do |model_name|
+        [chat_model_name, message_model_name, tool_call_model_name, model_model_name,
+         batch_model_name].each do |model_name|
           if model_name.include?('::')
             namespace = model_name.split('::').first
             namespaces << namespace unless namespaces.include?(namespace)

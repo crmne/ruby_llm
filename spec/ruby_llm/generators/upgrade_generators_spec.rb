@@ -96,6 +96,7 @@ RSpec.describe 'RubyLLM upgrade generators', :generator, type: :generator do # r
 
         migration = File.read(migration_path)
         expect(migration).to include('add_column :messages, :citations, :json')
+        expect(migration).to include('create_table :batches')
       end
     end
   end
@@ -190,6 +191,7 @@ RSpec.describe 'RubyLLM upgrade generators', :generator, type: :generator do # r
 
         migration = File.read(migration_path)
         expect(migration).to include('add_column :chat_messages, :citations, :json')
+        expect(migration).to include('create_table :batches')
       end
     end
   end

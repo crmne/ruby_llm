@@ -28,7 +28,8 @@ module RubyLLM
         migration_template 'add_v2_0_message_columns.rb.tt',
                            'db/migrate/add_ruby_llm_v2_0_columns.rb',
                            migration_version: migration_version,
-                           message_table_name: message_table_name
+                           message_table_name: message_table_name,
+                           batch_table_name: batch_table_name
       end
 
       def show_next_steps

@@ -96,6 +96,13 @@ module RubyLLM
           delegate :tool_call?, :tool_result?, to: :to_llm
         end
 
+        def acts_as_batch(chat_class: 'Chat')
+          include RubyLLM::ActiveRecord::BatchMethods
+
+          class_attribute :batch_chat_class
+          self.batch_chat_class = chat_class.to_s
+        end
+
         def acts_as_tool_call(message: :message, message_class: nil, message_foreign_key: nil, # rubocop:disable Metrics/ParameterLists
                               result: :result, result_class: nil, result_foreign_key: nil)
           include RubyLLM::ActiveRecord::ToolCallMethods

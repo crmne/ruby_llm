@@ -95,10 +95,11 @@ module RubyLLM
     # answered without calling a tool.
     def complete?
       last = messages.last
-      return true if last.nil?
-      return false if %i[user tool].include?(last.role)
-
-      !last.tool_call?
+      case last&.role
+      when nil then true
+      when :user, :tool then false
+      else !last.tool_call?
+      end
     end
 
     def with_instructions(instructions, append: false, replace: nil)

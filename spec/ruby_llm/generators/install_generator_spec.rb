@@ -31,6 +31,7 @@ RSpec.describe RubyLLM::Generators::InstallGenerator, :generator, type: :generat
         expect(File.exist?('app/models/message.rb')).to be true
         expect(File.exist?('app/models/model.rb')).to be true
         expect(File.exist?('app/models/tool_call.rb')).to be true
+        expect(File.exist?('app/models/batch.rb')).to be true
         expect(File.exist?('app/agents/.gitkeep')).to be true
         expect(File.exist?('app/tools/.gitkeep')).to be true
         expect(File.exist?('app/schemas/.gitkeep')).to be true
@@ -45,6 +46,7 @@ RSpec.describe RubyLLM::Generators::InstallGenerator, :generator, type: :generat
         expect(migrations.any? { |f| f.include?('create_messages') }).to be true
         expect(migrations.any? { |f| f.include?('create_tool_calls') }).to be true
         expect(migrations.any? { |f| f.include?('create_models') }).to be true
+        expect(migrations.any? { |f| f.include?('create_batches') }).to be true
         expect(migrations.any? { |f| f.include?('add_references_to_chats_tool_calls_and_messages') }).to be true
       end
     end
@@ -95,6 +97,9 @@ RSpec.describe RubyLLM::Generators::InstallGenerator, :generator, type: :generat
 
         tool_call_model = File.read('app/models/tool_call.rb')
         expect(tool_call_model).to include('acts_as_tool_call')
+
+        batch_model = File.read('app/models/batch.rb')
+        expect(batch_model).to include('acts_as_batch')
       end
     end
 
@@ -184,6 +189,10 @@ RSpec.describe RubyLLM::Generators::InstallGenerator, :generator, type: :generat
         expect(tool_call_model).to include('message: :llm_message')
         expect(tool_call_model).to include("message_class: 'Llm::Message'")
         expect(tool_call_model).to include('result_foreign_key: :llm_tool_call_id')
+
+        batch_model = File.read('app/models/batch.rb')
+        expect(batch_model).to include('acts_as_batch')
+        expect(batch_model).to include("chat_class: 'Llm::Chat'")
       end
     end
 

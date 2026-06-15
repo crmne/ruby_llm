@@ -6,6 +6,8 @@ module RubyLLM
   # Persist the id, reload from any process, and collect the messages once
   # processing ends.
   class Batch
+    AWAITING_ROLES = %i[user tool].freeze
+
     attr_reader :id, :status, :request_counts, :chats
 
     class << self
@@ -41,10 +43,8 @@ module RubyLLM
 
       private
 
-      # Ready for the model to respond: a staged question or run tool results
-      # sit at the tail, with nothing left to run first.
       def awaiting_model?(chat)
-        !chat.complete? && %i[user tool].include?(chat.messages.last&.role)
+        !chat.complete? && AWAITING_ROLES.include?(chat.messages.last&.role)
       end
 
       def shared_provider(chats)
@@ -64,9 +64,7 @@ module RubyLLM
       apply(**attributes)
     end
 
-    # Whether the batch has finished processing. Reloads from the provider until
-    # it ends, then caches; poll this in a loop and it stops hitting the network
-    # once processing is done.
+    # Reloads from the provider until the batch ends, then caches.
     def complete?
       return true if @completed
 
@@ -84,10 +82,15 @@ module RubyLLM
       self
     end
 
-    # The batch's messages, in submission order, nil where a request failed.
-    # Each message is also appended to its chat when the chats are at hand.
+    # The answers in submission order, nil where a request failed, each also
+    # appended to its chat. Cached only once the batch ends, so polling early
+    # keeps reading fresh.
     def messages
-      @messages ||= collect_messages
+      return @messages if @messages
+
+      collected = collect_messages
+      @messages = collected if @completed
+      collected
     end
 
     private
@@ -105,10 +108,25 @@ module RubyLLM
 
       results.each do |index, message|
         messages[index] = message
-        chats[index].add_completion(message) if chats && message
+        add_answer(chats&.[](index), message)
       end
 
       messages
+    end
+
+    def add_answer(chat, message)
+      chat.add_completion(message) if message && chat && !already_in_chat?(chat, message)
+    end
+
+    # A plain answer is the chat's last message once it arrives. A tool-call
+    # answer is not: running its tools adds messages after it, so we match on its
+    # tool-call ids instead.
+    def already_in_chat?(chat, message)
+      if message.tool_call?
+        chat.messages.any? { |m| m.tool_call? && m.tool_calls.keys.intersect?(message.tool_calls.keys) }
+      else
+        !AWAITING_ROLES.include?(chat.messages.last&.role)
+      end
     end
   end
 end
