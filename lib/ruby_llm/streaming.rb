@@ -165,10 +165,16 @@ module RubyLLM
 
       def v2_on_data(on_chunk, on_failed_response)
         proc do |chunk, _bytes, env|
-          if env&.status == 200
-            on_chunk.call(chunk, env)
-          else
+          # A nil env means the status is not yet known (Faraday 2 with the
+          # net_http adapter passes nil during streaming) — treat the chunk as a
+          # normal response chunk. Only a present env reporting a non-200 status
+          # is a real failure. Gating on `env&.status == 200` would route every
+          # chunk to the failure handler whenever env is nil, discarding the
+          # entire streamed response.
+          if env && env.status != 200
             on_failed_response.call(chunk, env)
+          else
+            on_chunk.call(chunk, env)
           end
         end
       end
