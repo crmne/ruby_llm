@@ -33,10 +33,15 @@ module RubyLLM
               end
             else
               req.options.on_data = proc do |chunk, _bytes, env|
-                if env&.status == 200
-                  parse_stream_chunk(decoder, chunk, accumulator, &block)
-                else
+                # A nil env means the status is not yet known (Faraday 2 with the
+                # net_http adapter passes nil during streaming) — process the chunk
+                # normally. Only a present env reporting a non-200 status is a real
+                # failure. Gating on `env&.status == 200` would discard every chunk
+                # whenever env is nil, yielding an empty streamed response.
+                if env && env.status != 200
                   handle_failed_stream(chunk, env)
+                else
+                  parse_stream_chunk(decoder, chunk, accumulator, &block)
                 end
               end
             end
