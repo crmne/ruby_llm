@@ -17,14 +17,6 @@ module RubyLLM
           payload[:normalize] = true
           payload
         end
-
-        def parse_embedding_response(response, model:, text:) # rubocop:disable Lint/UnusedMethodArgument
-          data = response.body
-          vectors = data['embedding']
-          input_tokens = data['inputTextTokenCount'] || 0
-
-          Embedding.new(vectors:, model:, input_tokens:)
-        end
       end
     end
   end
