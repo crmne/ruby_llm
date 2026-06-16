@@ -4,12 +4,7 @@ module RubyLLM
   module Providers
     # Anthropic Claude API integration.
     class Anthropic < Provider
-      include Anthropic::Chat
-      include Anthropic::Embeddings
-      include Anthropic::Media
-      include Anthropic::Models
-      include Anthropic::Streaming
-      include Anthropic::Tools
+      protocol :anthropic, Protocols::Anthropic
 
       def api_base
         @config.anthropic_api_base || 'https://api.anthropic.com'

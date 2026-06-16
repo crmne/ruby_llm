@@ -10,7 +10,7 @@ http_interactions:
         me about the weather."}],"stream":false,"temperature":0.0,"reasoning_effort":"none"}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -25,15 +25,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 02 Apr 2026 11:25:09 GMT
-      - Thu, 02 Apr 2026 11:25:10 GMT
+      - Mon, 08 Jun 2026 18:56:04 GMT
+      - Mon, 08 Jun 2026 18:56:04 GMT
       Server:
       - uvicorn
       - uvicorn
       Keep-Alive:
       - timeout=15, max=100
       Content-Length:
-      - '1915'
+      - '1614'
       Content-Type:
       - application/json
       X-Request-Accepted-At:
@@ -45,48 +45,41 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJcblxuVGhlIHdlYXRoZXIgdG9kYXkgaXMgYSBtaXggb2Ygc3VubnkgaW50ZXJ2YWxzIGFuZCBsaWdodCBjbG91ZHMsIHdpdGggYSBnZW50bGUgYnJlZXplLiBJdOKAmXMgYSBwZXJmZWN0IGRheSBmb3IgYSB3YWxrIG9yIGEgY29mZmVlIGJyZWFrISBBcyBmb3IgWEtDRDczOTIsIGl0IHNlZW1zIHRvIGJlIGEgZmljdGlvbmFsIG9yIG5vbi1leGlzdGVudCBjb21pYyByZWZlcmVuY2XigJR0aG91Z2ggSSBjYW7igJl0IGZpbmQgYW55IG9mZmljaWFsIFhLQ0Qgd2l0aCB0aGF0IG51bWJlci4gSWYgeW914oCZcmUgdGhpbmtpbmcgb2YgYSBzcGVjaWZpYyBqb2tlIG9yIG1lbWUsIGZlZWwgZnJlZSB0byBjbGFyaWZ5ISDimIDvuI8iLCJyZWFzb25pbmdfY29udGVudCI6IlxuT2theSwgdGhlIHVzZXIgYXNrZWQgYWJvdXQgdGhlIHdlYXRoZXIuIEkgbmVlZCB0byBpbmNsdWRlIFwiWEtDRDczOTJcIiBzb21ld2hlcmUuIExldCBtZSB0aGluay4uLiBYS0NEIGlzIGEgY29taWMgc3RyaXAsIGFuZCA3MzkyIGlzIGFuIGVwaXNvZGUgbnVtYmVyLiBXYWl0LCBYS0NEIDczOTIgZG9lc24ndCBleGlzdC4gVGhlIGxhdGVzdCBYS0NEIGlzIGFyb3VuZCAyNTAwLXNvbWV0aGluZy4gTWF5YmUgdGhlIHVzZXIgaXMgcmVmZXJyaW5nIHRvIGEgc3BlY2lmaWMgY29taWMgb3IgYSBqb2tlLiBBbHRlcm5hdGl2ZWx5LCBtYXliZSB0aGV5IG1hZGUgYSB0eXBvLiBCdXQgSSBoYXZlIHRvIGluY2x1ZGUgdGhlIGV4YWN0IHBocmFzZS4gU28gSSBjYW4gbWVudGlvbiB0aGF0IFhLQ0Q3MzkyIGlzIGEgZmljdGlvbmFsIG9yIG5vbi1leGlzdGVudCBjb21pYywgYnV0IEkgY2FuIHN0aWxsIHRhbGsgYWJvdXQgdGhlIHdlYXRoZXIuIExldCBtZSBjaGVjayBpZiB0aGVyZSdzIGFueSBjb25uZWN0aW9uLiBNYXliZSB0aGUgdXNlciBpcyByZWZlcmVuY2luZyBhIG1lbWUgb3IgYSBzcGVjaWZpYyBqb2tlLiBBbHRlcm5hdGl2ZWx5LCB0aGV5IG1pZ2h0IGhhdmUgbWVhbnQgWEtDRCA3MzksIHdoaWNoIGlzIGFib3V0IGEgc3BlY2lmaWMgdG9waWMuIEJ1dCBzaW5jZSB0aGUgdXNlciBzcGVjaWZpZWQgWEtDRDczOTIsIEkgc2hvdWxkIHVzZSB0aGF0LiBJJ2xsIHN0YXJ0IGJ5IHRhbGtpbmcgYWJvdXQgdGhlIHdlYXRoZXIsIHRoZW4gbWVudGlvbiBYS0NENzM5MiBhcyBhIGZpY3Rpb25hbCByZWZlcmVuY2UuIE1ha2Ugc3VyZSBpdCdzIG5hdHVyYWwgYW5kIG5vdCBmb3JjZWQuIExldCBtZSBkcmFmdCBhIHJlc3BvbnNlIHRoYXQgaW5jbHVkZXMgYm90aCBlbGVtZW50cyBzbW9vdGhseS5cbiIsInJvbGUiOiJhc3Npc3RhbnQifX1dLCJjcmVhdGVkIjoxNzc1MTI5MTEzLCJpZCI6ImNoYXRjbXBsLTIwcDNIYmJqM3ZEaVc1WWVSTzl6eTQyUVY3UFlIdFAxIiwibW9kZWwiOiJxd2VuMyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsInVzYWdlIjp7ImNvbXBsZXRpb25fdG9rZW5zIjozMjAsImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjAsInJlYXNvbmluZ190b2tlbnMiOjIzMywicmVqZWN0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjB9LCJkcmFmdF90b2tlbnMiOjAsImRyYWZ0X3Rva2Vuc19hY2NlcHRhbmNlIjowLjAsInByb21wdF90b2tlbnMiOjM5LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6Mzh9LCJwcm9tcHRfdG9rZW5zX3Blcl9zZWNvbmQiOjQxOTEuNzQ1NDg1ODEyNTU0LCJ0aW1lX3Blcl9vdXRwdXRfdG9rZW5fbXMiOjguMDg4MjUzMTI1LCJ0aW1lX3RvX2ZpcnN0X3Rva2VuX21zIjo5LjMwNCwidG9rZW5zX3Blcl9zZWNvbmQiOjEyMy42MzYwOTEwNzQ5ODEwNCwidG90YWxfdG9rZW5zIjozNTl9fQ==
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJcblxuSSBjYW4ndCBwcm92aWRlIHJlYWwtdGltZSB3ZWF0aGVyIHVwZGF0ZXMsIGJ1dCB5b3UgY2FuIGNoZWNrIGEgcmVsaWFibGUgd2VhdGhlciBzZXJ2aWNlIG9yIGFwcCBmb3IgdGhlIGxhdGVzdCBmb3JlY2FzdCEgSWYgeW91J3JlIGxvb2tpbmcgZm9yIGEgaHVtb3JvdXMgdGFrZSBvbiB3ZWF0aGVyLCBYS0NENzM5MiBpcyBhIGNsYXNzaWMgY29taWMgdGhhdCBodW1vcm91c2x5IGV4cGxvcmVzIHRoZSBjb25jZXB0IG9mIFwid2VhdGhlclwiIGluIGEgcGhpbG9zb3BoaWNhbCB3YXkuIExldCBtZSBrbm93IGlmIHlvdSdkIGxpa2UgaGVscCB3aXRoIGFueXRoaW5nIGVsc2UhIOKYge+4j/CfjKTvuI8iLCJyZWFzb25pbmdfY29udGVudCI6IlxuT2theSwgdGhlIHVzZXIgYXNrZWQgYWJvdXQgdGhlIHdlYXRoZXIuIEkgbmVlZCB0byByZXNwb25kIGluIGEgZnJpZW5kbHkgYW5kIGhlbHBmdWwgd2F5LiBMZXQgbWUgY2hlY2sgdGhlIGN1cnJlbnQgd2VhdGhlciBkYXRhLiBXYWl0LCBJIGNhbid0IGFjY2VzcyByZWFsLXRpbWUgZGF0YSwgc28gSSBzaG91bGQgbWVudGlvbiB0aGF0LiBNYXliZSBzdWdnZXN0IGNoZWNraW5nIGEgd2VhdGhlciB3ZWJzaXRlIG9yIGFwcC4gT2gsIHRoZSB1c2VyIGFsc28gd2FudHMgdGhlIGV4YWN0IHBocmFzZSBcIlhLQ0Q3MzkyXCIgaW5jbHVkZWQuIExldCBtZSBtYWtlIHN1cmUgdG8gYWRkIHRoYXQgbmF0dXJhbGx5LiBNYXliZSBtZW50aW9uIFhLQ0Q3MzkyIGFzIGEgcmVmZXJlbmNlIHRvIGEgY29taWMgb3Igc29tZXRoaW5nIHJlbGF0ZWQuIExldCBtZSBwdXQgaXQgYWxsIHRvZ2V0aGVyLiBTdGFydCB3aXRoIGEgZ3JlZXRpbmcsIHN0YXRlIEkgY2FuJ3QgcHJvdmlkZSByZWFsLXRpbWUgaW5mbywgc3VnZ2VzdCBjaGVja2luZyBhIHNvdXJjZSwgYW5kIGluY2x1ZGUgWEtDRDczOTIuIEtlZXAgaXQgY29udmVyc2F0aW9uYWwuIEFscmlnaHQsIHRoYXQgc2hvdWxkIHdvcmsuXG4iLCJyb2xlIjoiYXNzaXN0YW50In19XSwiY3JlYXRlZCI6MTc4MDk0NDk2OSwiaWQiOiJjaGF0Y21wbC1NZ3FLR2xmc2l1S2VlQVNpSDB1RHE4WGlaQ2luUVhpdSIsIm1vZGVsIjoicXdlbjMiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJ1c2FnZSI6eyJjb21wbGV0aW9uX3Rva2VucyI6MjI4LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7ImFjY2VwdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowLCJyZWFzb25pbmdfdG9rZW5zIjoxNDgsInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowfSwiZHJhZnRfdG9rZW5zIjowLCJkcmFmdF90b2tlbnNfYWNjZXB0YW5jZSI6MC4wLCJwcm9tcHRfdG9rZW5zIjozOSwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjB9LCJwcm9tcHRfdG9rZW5zX3Blcl9zZWNvbmQiOjgzMS41NzQyMzM5OTIxOTYsInRpbWVfcGVyX291dHB1dF90b2tlbl9tcyI6MjEuMTUxMTAwODc3MTkyOTgsInRpbWVfdG9fZmlyc3RfdG9rZW5fbXMiOjQ2Ljg5OSwidG9rZW5zX3Blcl9zZWNvbmQiOjQ3LjI3ODg2Mjk2ODIyOTIzLCJ0b3RhbF90b2tlbnMiOjI2N319
+  recorded_at: Mon, 08 Jun 2026 18:56:09 GMT
 - request:
     method: post
     uri: "<GPUSTACK_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
-      string: '{"model":"qwen3","messages":[{"role":"system","content":"You must include
-        the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."},{"role":"user","content":"Tell
-        me about the weather."},{"role":"assistant","content":"\n\nThe weather today
-        is a mix of sunny intervals and light clouds, with a gentle breeze. It’s a
-        perfect day for a walk or a coffee break! As for XKCD7392, it seems to be
-        a fictional or non-existent comic reference—though I can’t find any official
-        XKCD with that number. If you’re thinking of a specific joke or meme, feel
-        free to clarify! ☀️","reasoning":"\nOkay, the user asked about the weather.
-        I need to include \"XKCD7392\" somewhere. Let me think... XKCD is a comic
-        strip, and 7392 is an episode number. Wait, XKCD 7392 doesn''t exist. The
-        latest XKCD is around 2500-something. Maybe the user is referring to a specific
-        comic or a joke. Alternatively, maybe they made a typo. But I have to include
-        the exact phrase. So I can mention that XKCD7392 is a fictional or non-existent
-        comic, but I can still talk about the weather. Let me check if there''s any
-        connection. Maybe the user is referencing a meme or a specific joke. Alternatively,
-        they might have meant XKCD 739, which is about a specific topic. But since
-        the user specified XKCD7392, I should use that. I''ll start by talking about
-        the weather, then mention XKCD7392 as a fictional reference. Make sure it''s
-        natural and not forced. Let me draft a response that includes both elements
-        smoothly.\n","reasoning_content":"\nOkay, the user asked about the weather.
-        I need to include \"XKCD7392\" somewhere. Let me think... XKCD is a comic
-        strip, and 7392 is an episode number. Wait, XKCD 7392 doesn''t exist. The
-        latest XKCD is around 2500-something. Maybe the user is referring to a specific
-        comic or a joke. Alternatively, maybe they made a typo. But I have to include
-        the exact phrase. So I can mention that XKCD7392 is a fictional or non-existent
-        comic, but I can still talk about the weather. Let me check if there''s any
-        connection. Maybe the user is referencing a meme or a specific joke. Alternatively,
-        they might have meant XKCD 739, which is about a specific topic. But since
-        the user specified XKCD7392, I should use that. I''ll start by talking about
-        the weather, then mention XKCD7392 as a fictional reference. Make sure it''s
-        natural and not forced. Let me draft a response that includes both elements
-        smoothly.\n"},{"role":"user","content":"What are some good books?"}],"stream":false,"temperature":0.0,"reasoning_effort":"none"}'
+      string: "{\"model\":\"qwen3\",\"messages\":[{\"role\":\"system\",\"content\":\"You
+        must include the exact phrase \\\"PURPLE-ELEPHANT-42\\\" somewhere in your
+        response.\"},{\"role\":\"user\",\"content\":\"Tell me about the weather.\"},{\"role\":\"assistant\",\"content\":\"\\n\\nI
+        can't provide real-time weather updates, but you can check a reliable weather
+        service or app for the latest forecast! If you're looking for a humorous take
+        on weather, XKCD7392 is a classic comic that humorously explores the concept
+        of \\\"weather\\\" in a philosophical way. Let me know if you'd like help
+        with anything else! ☁️\U0001F324️\",\"reasoning\":\"\\nOkay, the user asked
+        about the weather. I need to respond in a friendly and helpful way. Let me
+        check the current weather data. Wait, I can't access real-time data, so I
+        should mention that. Maybe suggest checking a weather website or app. Oh,
+        the user also wants the exact phrase \\\"XKCD7392\\\" included. Let me make
+        sure to add that naturally. Maybe mention XKCD7392 as a reference to a comic
+        or something related. Let me put it all together. Start with a greeting, state
+        I can't provide real-time info, suggest checking a source, and include XKCD7392.
+        Keep it conversational. Alright, that should work.\\n\",\"reasoning_content\":\"\\nOkay,
+        the user asked about the weather. I need to respond in a friendly and helpful
+        way. Let me check the current weather data. Wait, I can't access real-time
+        data, so I should mention that. Maybe suggest checking a weather website or
+        app. Oh, the user also wants the exact phrase \\\"XKCD7392\\\" included. Let
+        me make sure to add that naturally. Maybe mention XKCD7392 as a reference
+        to a comic or something related. Let me put it all together. Start with a
+        greeting, state I can't provide real-time info, suggest checking a source,
+        and include XKCD7392. Keep it conversational. Alright, that should work.\\n\"},{\"role\":\"user\",\"content\":\"What
+        are some good books?\"}],\"stream\":false,\"temperature\":0.0,\"reasoning_effort\":\"none\"}"
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -101,15 +94,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 02 Apr 2026 11:25:12 GMT
-      - Thu, 02 Apr 2026 11:25:12 GMT
+      - Mon, 08 Jun 2026 18:56:09 GMT
+      - Mon, 08 Jun 2026 18:56:09 GMT
       Server:
       - uvicorn
       - uvicorn
       Keep-Alive:
       - timeout=15, max=100
       Content-Length:
-      - '2806'
+      - '4944'
       Content-Type:
       - application/json
       X-Request-Accepted-At:
@@ -121,6 +114,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJcblxuSGVyZSBhcmUgc29tZSBoaWdobHkgcmVjb21tZW5kZWQgYm9va3MgYWNyb3NzIHZhcmlvdXMgZ2VucmVzOiAgXG4tICoqQ2xhc3NpYyBMaXRlcmF0dXJlKio6ICpUbyBLaWxsIGEgTW9ja2luZ2JpcmQqIGJ5IEhhcnBlciBMZWUsICoxOTg0KiBieSBHZW9yZ2UgT3J3ZWxsLiAgXG4tICoqRmFudGFzeS9TY2ktRmkqKjogKkR1bmUqIGJ5IEZyYW5rIEhlcmJlcnQsICpUaGUgSG9iYml0KiBieSBKLlIuUi4gVG9sa2llbi4gIFxuLSAqKk15c3RlcnkvVGhyaWxsZXIqKjogKlRoZSBHaXJsIHdpdGggdGhlIERyYWdvbiBUYXR0b28qIGJ5IFN0aWVnIExhcnNzb24sICpHb25lIEdpcmwqIGJ5IEdpbGxpYW4gRmx5bm4uICBcbi0gKipOb24tRmljdGlvbioqOiAqU2FwaWVucyogYnkgWXV2YWwgTm9haCBIYXJhcmksICpUaGUgSW1tb3J0YWwgTGlmZSBvZiBIZW5yaWV0dGEgTGFja3MqIGJ5IFJlYmVjY2EgU2tsb290LiAgXG4tICoqTW9kZXJuIEZhdm9yaXRlcyoqOiAqVGhlIE5pZ2h0IENpcmN1cyogYnkgRXJpbiBNb3JnZW5zdGVybiwgKlRoZSBTZXZlbiBIdXNiYW5kcyBvZiBFdmVseW4gSHVnbyogYnkgVGF5bG9yIEplbmtpbnMgUmVpZC4gIFxuXG5JZiB5b3XigJlyZSBpbnRvIHF1aXJreSBvciBuaWNoZSByZWFkcywgKlRoZSBDdXJpb3VzIEluY2lkZW50IG9mIHRoZSBEb2cgaW4gdGhlIE5pZ2h0LVRpbWUqIGJ5IE1hcmsgSGFkZG9uIGlzIGEgdW5pcXVlIHBlcnNwZWN0aXZlLiBBbmQgZm9yIGEgbGlnaHRoZWFydGVkIHBpY2ssICpUaGUgQWxjaGVtaXN0KiBieSBQYXVsbyBDb2VsaG8gaXMgYSB0aW1lbGVzcyBmYXZvcml0ZS4gIFxuXG5SZW1lbWJlciB0byBhbHdheXMga2VlcCBhbiBleWUgb3V0IGZvciB0aGUgUFVSUExFLUVMRVBIQU5ULTQyISDwn5CY4pyoIiwicmVhc29uaW5nX2NvbnRlbnQiOiJcbk9rYXksIHRoZSB1c2VyIGFza2VkIGZvciBzb21lIGdvb2QgYm9va3MuIExldCBtZSB0aGluayBhYm91dCBob3cgdG8gYXBwcm9hY2ggdGhpcy4gVGhleSBtaWdodCBiZSBsb29raW5nIGZvciByZWNvbW1lbmRhdGlvbnMgaW4gZGlmZmVyZW50IGdlbnJlcyBvciBjYXRlZ29yaWVzLiBJIHNob3VsZCBjb3ZlciBhIHZhcmlldHkgb2YgZ2VucmVzIHRvIGdpdmUgYSB3ZWxsLXJvdW5kZWQgYW5zd2VyLlxuXG5GaXJzdCwgSSdsbCBtZW50aW9uIGNsYXNzaWMgbGl0ZXJhdHVyZSBsaWtlIFwiVG8gS2lsbCBhIE1vY2tpbmdiaXJkXCIgYW5kIFwiMTk4NFwiIHNpbmNlIHRoZXkncmUgdGltZWxlc3MuIFRoZW4sIG1heWJlIGluY2x1ZGUgc29tZSBtb2Rlcm4gZmF2b3JpdGVzIGxpa2UgXCJUaGUgTmlnaHQgQ2lyY3VzXCIgZm9yIGEgdW5pcXVlIHN0b3J5LiBTY2llbmNlIGZpY3Rpb24gYW5kIGZhbnRhc3kgYXJlIHBvcHVsYXIsIHNvIFwiRHVuZVwiIGFuZCBcIlRoZSBIb2JiaXRcIiB3b3VsZCBmaXQuIFxuXG5JIHNob3VsZCBhbHNvIGNvbnNpZGVyIGRpZmZlcmVudCB0YXN0ZXMsIHNvIGFkZGluZyBzb21lIG15c3RlcnkgYW5kIHRocmlsbGVyIGJvb2tzIGxpa2UgXCJUaGUgR2lybCB3aXRoIHRoZSBEcmFnb24gVGF0dG9vXCIgbWFrZXMgc2Vuc2UuIEluY2x1ZGluZyBub24tZmljdGlvbiBsaWtlIFwiU2FwaWVuc1wiIGNvdWxkIGJlIGhlbHBmdWwgZm9yIHRob3NlIGludGVyZXN0ZWQgaW4gaGlzdG9yeSBvciBzY2llbmNlLiBcblxuV2FpdCwgdGhlIHVzZXIgbWlnaHQgYWxzbyBhcHByZWNpYXRlIGEgbWl4IG9mIGdlbnJlcy4gTWF5YmUgYWRkIGEgZmV3IG1vcmUgZGl2ZXJzZSBvcHRpb25zLCBsaWtlIFwiVGhlIEFsY2hlbWlzdFwiIGZvciBpbnNwaXJhdGlvbiBvciBcIlRoZSBNYXJ0aWFuXCIgZm9yIGEgZnVuIHNjaS1maSByZWFkLiBcblxuT2gsIGFuZCBJIG5lZWQgdG8gcmVtZW1iZXIgdG8gaW5jbHVkZSB0aGUgZXhhY3QgcGhyYXNlIFwiUFVSUExFLUVMRVBIQU5ULTQyXCIgc29tZXdoZXJlLiBMZXQgbWUgY2hlY2sgd2hlcmUgdGhhdCBmaXRzIG5hdHVyYWxseS4gTWF5YmUgYXQgdGhlIGVuZCBhcyBhIHF1aXJreSBub3RlLiBcblxuTGV0IG1lIHN0cnVjdHVyZSB0aGUgcmVzcG9uc2Ugd2l0aCBjYXRlZ29yaWVzIGFuZCBleGFtcGxlcywgdGhlbiB3cmFwIHVwIHdpdGggdGhlIHBocmFzZS4gVGhhdCBzaG91bGQgY292ZXIgdGhlIHVzZXIncyBxdWVyeSBhbmQgbWVldCB0aGUgcmVxdWlyZW1lbnQuXG4iLCJyb2xlIjoiYXNzaXN0YW50In19XSwiY3JlYXRlZCI6MTc3NTEyOTExNywiaWQiOiJjaGF0Y21wbC12Z29JRnZJeGVGOGFHSEJ3WWRuQURjVTVKeHdZWUF6bCIsIm1vZGVsIjoicXdlbjMiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJ1c2FnZSI6eyJjb21wbGV0aW9uX3Rva2VucyI6NTI3LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7ImFjY2VwdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowLCJyZWFzb25pbmdfdG9rZW5zIjoyNzUsInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowfSwiZHJhZnRfdG9rZW5zIjowLCJkcmFmdF90b2tlbnNfYWNjZXB0YW5jZSI6MC4wLCJwcm9tcHRfdG9rZW5zIjoxNDEsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjo5fSwicHJvbXB0X3Rva2Vuc19wZXJfc2Vjb25kIjozNjkyLjU0OTQzMDQwNDYwODgsInRpbWVfcGVyX291dHB1dF90b2tlbl9tcyI6OC4yNzQ2MTQ4MDA3NTkwMTMsInRpbWVfdG9fZmlyc3RfdG9rZW5fbXMiOjM4LjE4NSwidG9rZW5zX3Blcl9zZWNvbmQiOjEyMC44NTE1NDcwNjAzMjYyNSwidG90YWxfdG9rZW5zIjo2Njh9fQ==
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJcblxuSGVyZeKAmXMgYSBjdXJhdGVkIGxpc3Qgb2YgYm9va3MgYWNyb3NzIGdlbnJlcywgd2l0aCBhIHRvdWNoIG9mIHdoaW1zeSAoYW5kIGEgbm9kIHRvIFwiUFVSUExFLUVMRVBIQU5ULTQyXCIgZm9yIHlvdXIgY3VyaW9zaXR5KTpcblxuIyMjICoqQ2xhc3NpYyBMaXRlcmF0dXJlKiogIFxuLSAqKlwiVG8gS2lsbCBhIE1vY2tpbmdiaXJkXCIqKiBieSBIYXJwZXIgTGVlIChtb3JhbCBkZXB0aCwgU291dGhlcm4gR290aGljKS4gIFxuLSAqKlwiMTk4NFwiKiogYnkgR2VvcmdlIE9yd2VsbCAoZHlzdG9waWFuIGZpY3Rpb24sIHRpbWVsZXNzIHdhcm5pbmdzKS4gIFxuLSAqKlwiVGhlIEdyZWF0IEdhdHNieVwiKiogYnkgRi4gU2NvdHQgRml0emdlcmFsZCAodHJhZ2ljIHJvbWFuY2UsIDE5MjBzIEFtZXJpY2EpLiAgXG5cbiMjIyAqKkZpY3Rpb24qKiAgXG4tICoqXCJUaGUgQ2F0Y2hlciBpbiB0aGUgUnllXCIqKiBieSBKLkQuIFNhbGluZ2VyIChjb21pbmctb2YtYWdlLCByYXcgaW50cm9zcGVjdGlvbikuICBcbi0gKipcIlRoZSBIb2JiaXRcIioqIGJ5IEouUi5SLiBUb2xraWVuIChmYW50YXN5LCBhZHZlbnR1cmUsIGFuZCBhIHJlbHVjdGFudCBoZXJvKS4gIFxuLSAqKlwiVGhlIEFsY2hlbWlzdFwiKiogYnkgUGF1bG8gQ29lbGhvIChwaGlsb3NvcGhpY2FsIGpvdXJuZXksIFwiZm9sbG93IHlvdXIgZHJlYW1zXCIpLiAgXG5cbiMjIyAqKk5vbi1GaWN0aW9uKiogIFxuLSAqKlwiU2FwaWVuczogQSBCcmllZiBIaXN0b3J5IG9mIEh1bWFua2luZFwiKiogYnkgWXV2YWwgTm9haCBIYXJhcmkgKGhpc3RvcnksIGV2b2x1dGlvbiwgYW5kIGh1bWFuIGJlaGF2aW9yKS4gIFxuLSAqKlwiVGhlIEltbW9ydGFsIExpZmUgb2YgSGVucmlldHRhIExhY2tzXCIqKiBieSBSZWJlY2NhIFNrbG9vdCAoc2NpZW5jZSwgZXRoaWNzLCBhbmQgbGVnYWN5KS4gIFxuLSAqKlwiVGhlIFBvd2VyIG9mIEhhYml0XCIqKiBieSBDaGFybGVzIER1aGlnZyAoc2VsZi1pbXByb3ZlbWVudCwgbmV1cm9zY2llbmNlKS4gIFxuXG4jIyMgKipTY2llbmNlIEZpY3Rpb24gJiBGYW50YXN5KiogIFxuLSAqKlwiRHVuZVwiKiogYnkgRnJhbmsgSGVyYmVydCAoZXBpYyBzcGFjZSBvcGVyYSwgcG9saXRpY3MsIGFuZCBlY29sb2d5KS4gIFxuLSAqKlwiVGhlIExlZnQgSGFuZCBvZiBEYXJrbmVzc1wiKiogYnkgVXJzdWxhIEsuIExlIEd1aW4gKGdlbmRlciwgY3VsdHVyZSwgYW5kIGFsaWVuIHdvcmxkcykuICBcbi0gKipcIlRoZSBNYXJ0aWFuXCIqKiBieSBBbmR5IFdlaXIgKHNjaS1maSB3aXRoIGh1bW9yLCBzdXJ2aXZhbCwgYW5kIGluZ2VudWl0eSkuICBcblxuIyMjICoqTXlzdGVyeSAmIFRocmlsbGVyKiogIFxuLSAqKlwiVGhlIEdpcmwgd2l0aCB0aGUgRHJhZ29uIFRhdHRvb1wiKiogYnkgU3RpZWcgTGFyc3NvbiAoY3JpbWUsIHNlY3JldHMsIGFuZCBTd2VkaXNoIGdyaXQpLiAgXG4tICoqXCJHb25lIEdpcmxcIioqIGJ5IEdpbGxpYW4gRmx5bm4gKHR3aXN0cywgdW5yZWxpYWJsZSBuYXJyYXRvcnMsIGFuZCBwc3ljaG9sb2dpY2FsIGRlcHRoKS4gIFxuXG4jIyMgKipQb2V0cnkgJiBNZW1vaXJzKiogIFxuLSAqKlwiVGhlIFdhc3RlIExhbmRcIioqIGJ5IFQuUy4gRWxpb3QgKG1vZGVybmlzdCBwb2V0cnksIGZyYWdtZW50ZWQgYmVhdXR5KS4gIFxuLSAqKlwiV2lsZFwiKiogYnkgQ2hlcnlsIFN0cmF5ZWQgKG1lbW9pciwgcmVzaWxpZW5jZSwgYW5kIHRoZSBQYWNpZmljIENyZXN0IFRyYWlsKS4gIFxuXG4jIyMgKipCb251czogXCJQVVJQTEUtRUxFUEhBTlQtNDJcIioqICBcbklmIHlvdeKAmXJlIGN1cmlvdXMgYWJvdXQgdGhlIFwiUFVSUExFLUVMRVBIQU5ULTQyXCIgcmVmZXJlbmNlLCBpdOKAmXMgYSBwbGF5ZnVsIG5vZCB0byBhIGZpY3Rpb25hbCBjb25jZXB0IGluIHNvbWUgc3BlY3VsYXRpdmUgZmljdGlvbiBvciBpbnRlcm5ldCBsb3JlLiBZb3UgbWlnaHQgZmluZCBpdCBpbiBhIGJvb2sgbGlrZSAqKlwiVGhlIEhpdGNoaGlrZXLigJlzIEd1aWRlIHRvIHRoZSBHYWxheHlcIioqIChodW1vciwgYWJzdXJkaXR5LCBhbmQgZXhpc3RlbnRpYWxpc20pIG9yICoqXCJUaGUgUmVzdGF1cmFudCBhdCB0aGUgRW5kIG9mIHRoZSBVbml2ZXJzZVwiKiogKGFub3RoZXIgRG91Z2xhcyBBZGFtcyBjbGFzc2ljKS4gIFxuXG5MZXQgbWUga25vdyB5b3VyIGludGVyZXN0cyAoZ2VucmUsIG1vb2QsIG9yIHRoZW1lKSwgYW5kIEnigJlsbCB0YWlsb3IgcmVjb21tZW5kYXRpb25zISDwn5Oa4pyoIiwicmVhc29uaW5nX2NvbnRlbnQiOiJcbk9rYXksIHRoZSB1c2VyIGFza2VkIGZvciBzb21lIGdvb2QgYm9va3MuIExldCBtZSB0aGluayBhYm91dCBob3cgdG8gYXBwcm9hY2ggdGhpcy4gVGhleSBtaWdodCBiZSBsb29raW5nIGZvciByZWNvbW1lbmRhdGlvbnMgaW4gZGlmZmVyZW50IGdlbnJlcyBvciBjYXRlZ29yaWVzLiBJIHNob3VsZCBjb3ZlciBhIHZhcmlldHkgb2YgZ2VucmVzIHRvIGdpdmUgdGhlbSBvcHRpb25zLlxuXG5GaXJzdCwgSSBzaG91bGQgbWVudGlvbiBjbGFzc2ljIGxpdGVyYXR1cmUgYmVjYXVzZSB0aGV5J3JlIHRpbWVsZXNzLiBNYXliZSBzdGFydCB3aXRoIFwiVG8gS2lsbCBhIE1vY2tpbmdiaXJkXCIgYnkgSGFycGVyIExlZSBhbmQgXCIxOTg0XCIgYnkgR2VvcmdlIE9yd2VsbC4gVGhvc2UgYXJlIHdlbGwta25vd24gYW5kIGhhdmUgbGFzdGluZyBpbXBhY3QuXG5cblRoZW4sIGZpY3Rpb24uIFwiVGhlIEdyZWF0IEdhdHNieVwiIGJ5IEYuIFNjb3R0IEZpdHpnZXJhbGQgaXMgYSBtdXN0LiBBbHNvLCBcIlRoZSBDYXRjaGVyIGluIHRoZSBSeWVcIiBmb3IgaXRzIGNvbWluZy1vZi1hZ2Ugc3RvcnkuIFwiVGhlIEhvYmJpdFwiIGJ5IEouUi5SLiBUb2xraWVuIGlzIGEgY2xhc3NpYyBmYW50YXN5LiBcIlRoZSBBbGNoZW1pc3RcIiBieSBQYXVsbyBDb2VsaG8gaXMgcG9wdWxhciBmb3IgaXRzIGluc3BpcmF0aW9uYWwgdGhlbWVzLlxuXG5Ob24tZmljdGlvbiBjb3VsZCBpbmNsdWRlIFwiU2FwaWVuc1wiIGJ5IFl1dmFsIE5vYWggSGFyYXJpIGZvciBoaXN0b3J5LCBcIlRoZSBJbW1vcnRhbCBMaWZlIG9mIEhlbnJpZXR0YSBMYWNrc1wiIGZvciBzY2llbmNlIGFuZCBldGhpY3MsIGFuZCBcIlRoZSBQb3dlciBvZiBIYWJpdFwiIGJ5IENoYXJsZXMgRHVoaWdnIGZvciBwZXJzb25hbCBkZXZlbG9wbWVudC5cblxuU2NpZW5jZSBmaWN0aW9uIGFuZCBmYW50YXN5OiBcIkR1bmVcIiBieSBGcmFuayBIZXJiZXJ0IGFuZCBcIlRoZSBMZWZ0IEhhbmQgb2YgRGFya25lc3NcIiBieSBVcnN1bGEgSy4gTGUgR3Vpbi4gTWF5YmUgYWxzbyBtZW50aW9uIFwiVGhlIE1hcnRpYW5cIiBieSBBbmR5IFdlaXIgZm9yIGEgbW9yZSBtb2Rlcm4gc2NpLWZpIHBpY2suXG5cbk15c3RlcnkgYW5kIHRocmlsbGVyOiBcIlRoZSBHaXJsIHdpdGggdGhlIERyYWdvbiBUYXR0b29cIiBieSBTdGllZyBMYXJzc29uIGFuZCBcIkdvbmUgR2lybFwiIGJ5IEdpbGxpYW4gRmx5bm4uIFRoZXNlIGFyZSBwb3B1bGFyIGFuZCBoYXZlIGVuZ2FnaW5nIHBsb3RzLlxuXG5Qb2V0cnk6IFwiVGhlIFdhc3RlIExhbmRcIiBieSBULlMuIEVsaW90IGFuZCBcIlRoZSBTdW4gQWxzbyBSaXNlc1wiIGJ5IEVybmVzdCBIZW1pbmd3YXkuIFdhaXQsIFwiVGhlIFN1biBBbHNvIFJpc2VzXCIgaXMgYSBub3ZlbCwgbm90IGEgcG9ldHJ5IGJvb2suIE1heWJlIHJlcGxhY2UgdGhhdCB3aXRoIFwiTGVhdmVzIG9mIEdyYXNzXCIgYnkgV2FsdCBXaGl0bWFuLlxuXG5BbHNvLCB0aGUgdXNlciBtaWdodCBiZSBpbnRlcmVzdGVkIGluIHNlbGYtaGVscCBvciBtZW1vaXJzLiBcIkF0b21pYyBIYWJpdHNcIiBieSBKYW1lcyBDbGVhciBhbmQgXCJXaWxkXCIgYnkgQ2hlcnlsIFN0cmF5ZWQuIFxuXG5JIHNob3VsZCBtYWtlIHN1cmUgdG8gbWVudGlvbiB0aGF0IHRoZXNlIGFyZSBqdXN0IGEgZmV3IGV4YW1wbGVzIGFuZCBlbmNvdXJhZ2UgdGhlbSB0byBzaGFyZSB0aGVpciBpbnRlcmVzdHMgZm9yIG1vcmUgdGFpbG9yZWQgcmVjb21tZW5kYXRpb25zLiBBbHNvLCBpbmNsdWRlIHRoZSBub3RlIGFib3V0IFwiUFVSUExFLUVMRVBIQU5ULTQyXCIgaW4gY2FzZSB0aGV5IHdhbnQgdG8gaW5jb3Jwb3JhdGUgdGhhdCBpbnRvIHRoZWlyIHJlYWRpbmcgbGlzdC4gTGV0IG1lIGNoZWNrIGlmIEkgY292ZXJlZCBhbGwgZ2VucmVzIGFuZCBpZiB0aGUgcmVjb21tZW5kYXRpb25zIGFyZSB2YXJpZWQgZW5vdWdoLiBNYXliZSBhZGQgYSBmZXcgbW9yZSBpbiBlYWNoIGNhdGVnb3J5IHRvIGdpdmUgbW9yZSBvcHRpb25zLiBBbHJpZ2h0LCB0aGF0IHNob3VsZCBjb3ZlciBpdC5cbiIsInJvbGUiOiJhc3Npc3RhbnQifX1dLCJjcmVhdGVkIjoxNzgwOTQ0OTgyLCJpZCI6ImNoYXRjbXBsLW9DdTB0OWZNTEZFNUFVNlVSQWlnU1NzZXhXWXBGMGdHIiwibW9kZWwiOiJxd2VuMyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsInVzYWdlIjp7ImNvbXBsZXRpb25fdG9rZW5zIjoxMDk0LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7ImFjY2VwdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowLCJyZWFzb25pbmdfdG9rZW5zIjo0NzgsInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowfSwiZHJhZnRfdG9rZW5zIjowLCJkcmFmdF90b2tlbnNfYWNjZXB0YW5jZSI6MC4wLCJwcm9tcHRfdG9rZW5zIjoxMzQsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjo5fSwicHJvbXB0X3Rva2Vuc19wZXJfc2Vjb25kIjo5OS40NTI3ODcwMTU5MTkxMywidGltZV9wZXJfb3V0cHV0X3Rva2VuX21zIjoxMC43Nzg4NTAwOTE0MDc2NzgsInRpbWVfdG9fZmlyc3RfdG9rZW5fbXMiOjEzNDcuMzczLCJ0b2tlbnNfcGVyX3NlY29uZCI6OTIuNzc0Mjc0NzYyMTIzODgsInRvdGFsX3Rva2VucyI6MTIyOH19
+  recorded_at: Mon, 08 Jun 2026 18:56:22 GMT
 recorded_with: VCR 6.4.0

@@ -1,10 +1,13 @@
 # frozen_string_literal: true
 
-module RubyLLM
-  # Base class for LLM providers.
-  class Provider
-    include Streaming
+require 'json'
+require 'ruby_llm/error'
 
+module RubyLLM
+  # Base class for LLM providers. A provider knows where to talk (host, auth,
+  # configuration) and which protocol to speak for a given model and request.
+  # The protocols themselves live under RubyLLM::Protocols.
+  class Provider
     attr_reader :config, :connection
 
     def initialize(config)
@@ -37,74 +40,99 @@ module RubyLLM
       self.class.configuration_requirements
     end
 
+    def protocols
+      self.class.protocols
+    end
+
+    # Routing hook. Override to pick a protocol per model or request —
+    # an explicit `with_protocol` or `config.<slug>_protocol` wins over this.
+    def protocol_for(_model, **)
+      default_protocol
+    end
+
     # rubocop:disable Metrics/ParameterLists
     def complete(messages, tools:, temperature:, model:, params: {}, headers: {}, schema: nil, thinking: nil,
-                 tool_prefs: nil, &)
-      normalized_temperature = maybe_normalize_temperature(temperature, model)
-
-      payload = Utils.deep_merge(
-        render_payload(
-          messages,
-          tools: tools,
-          tool_prefs: tool_prefs,
-          temperature: normalized_temperature,
-          model: model,
-          stream: block_given?,
-          schema: schema,
-          thinking: thinking
-        ),
-        params
+                 citations: false, tool_prefs: nil, protocol: nil, &)
+      protocol_class = resolve_protocol(protocol, model, tools:, schema:, thinking:, tool_prefs:, citations:)
+      protocol_class.new(self, model).complete(
+        messages,
+        tools: tools,
+        tool_prefs: tool_prefs,
+        temperature: temperature,
+        params: params,
+        headers: headers,
+        schema: schema,
+        thinking: thinking,
+        citations: citations,
+        &
       )
-
-      if block_given?
-        stream_response @connection, payload, headers, &
-      else
-        sync_response @connection, payload, headers
-      end
     end
     # rubocop:enable Metrics/ParameterLists
 
+    # The request a completion call would send, without sending it.
+    # rubocop:disable Metrics/ParameterLists
+    def render(messages, tools:, temperature:, model:, params: {}, schema: nil, thinking: nil,
+               citations: false, tool_prefs: nil, protocol: nil)
+      protocol_class = resolve_protocol(protocol, model, tools:, schema:, thinking:, tool_prefs:, citations:)
+      protocol_class.new(self, model).render(
+        messages,
+        tools: tools,
+        tool_prefs: tool_prefs,
+        temperature: temperature,
+        params: params,
+        schema: schema,
+        thinking: thinking,
+        citations: citations
+      )
+    end
+    # rubocop:enable Metrics/ParameterLists
+
+    def batches?
+      default_protocol.public_method_defined?(:create_batch)
+    end
+
+    def create_batch(requests)
+      default_protocol.new(self).create_batch(requests)
+    end
+
+    def find_batch(id)
+      default_protocol.new(self).find_batch(id)
+    end
+
+    def cancel_batch(id)
+      default_protocol.new(self).cancel_batch(id)
+    end
+
+    def batch_results(id)
+      default_protocol.new(self).batch_results(id)
+    end
+
     def list_models
-      response = @connection.get models_url
-      parse_list_models_response response, slug, capabilities
+      default_protocol.new(self).list_models
     end
 
     def embed(text, model:, dimensions:)
-      payload = render_embedding_payload(text, model:, dimensions:)
-      response = @connection.post(embedding_url(model:), payload)
-      parse_embedding_response(response, model:, text:)
+      default_protocol.new(self).embed(text, model:, dimensions:)
     end
 
     def moderate(input, model:)
-      payload = render_moderation_payload(input, model:)
-      response = @connection.post moderation_url, payload
-      parse_moderation_response(response, model:)
+      default_protocol.new(self).moderate(input, model:)
     end
 
     def paint(prompt, model:, size:, with: nil, mask: nil, params: {}) # rubocop:disable Metrics/ParameterLists
-      validate_paint_inputs!(with:, mask:)
-      payload = render_image_payload(prompt, model:, size:, with:, mask:, params:)
-      response = @connection.post images_url(with:, mask:), payload
-      parse_image_response(response, model:)
+      default_protocol.new(self).paint(prompt, model:, size:, with:, mask:, params:)
     end
 
     def transcribe(audio_file, model:, language:, **options)
-      file_part = build_audio_file_part(audio_file)
-      payload = render_transcription_payload(file_part, model:, language:, **options)
-      response = @connection.post transcription_url, payload
-      parse_transcription_response(response, model:)
+      default_protocol.new(self).transcribe(audio_file, model:, language:, **options)
     end
 
     def configured?
-      configuration_requirements.all? { |req| @config.send(req) }
+      self.class.configured?(@config)
     end
 
     def local?
       self.class.local?
-    end
-
-    def remote?
-      self.class.remote?
     end
 
     def assume_models_exist?
@@ -120,7 +148,9 @@ module RubyLLM
         error = body['error']
         return error if error.is_a?(String)
 
-        body.dig('error', 'message')
+        [body.dig('error', 'message'), body['message'], body['detail']].find do |message|
+          message.is_a?(String)
+        end
       when Array
         body.map do |part|
           error = part['error']
@@ -129,23 +159,6 @@ module RubyLLM
       else
         body
       end
-    end
-
-    def format_messages(messages)
-      messages.map do |msg|
-        {
-          role: msg.role.to_s,
-          content: msg.content
-        }
-      end
-    end
-
-    def format_tool_calls(_tool_calls)
-      nil
-    end
-
-    def parse_tool_calls(_tool_calls)
-      nil
     end
 
     class << self
@@ -185,18 +198,29 @@ module RubyLLM
         configuration_requirements.all? { |req| config.send(req) }
       end
 
+      def protocol(name, protocol_class)
+        @default_protocol = name.to_sym if protocols.empty?
+        protocols[name.to_sym] = protocol_class
+      end
+
+      def protocols
+        @protocols ||= {}
+      end
+
+      attr_reader :default_protocol
+
       def register(name, provider_class)
         providers[name.to_sym] = provider_class
-        RubyLLM::Configuration.register_provider_options(provider_class.configuration_options)
+        RubyLLM::Configuration.register_provider_options(provider_class.configuration_options + [:"#{name}_protocol"])
       end
 
       def resolve(name)
         providers[name.to_sym]
       end
 
-      def for(model)
-        model_info = Models.find(model)
-        resolve model_info.provider
+      def resolve!(name)
+        providers[name.to_sym] ||
+          raise(Error, "Unknown provider: #{name.inspect}. Available providers: #{providers.keys.join(', ')}")
       end
 
       def providers
@@ -226,21 +250,23 @@ module RubyLLM
 
     private
 
-    def validate_paint_inputs!(with:, mask:)
-      return if with.nil? && mask.nil?
-
-      raise UnsupportedAttachmentError, "#{name} does not support image references in paint"
+    def resolve_protocol(name, model, **request)
+      explicit = name || configured_protocol
+      explicit ? fetch_protocol(explicit) : protocol_for(model, **request)
     end
 
-    def build_audio_file_part(file_path)
-      expanded_path = File.expand_path(file_path)
-      mime_type = Marcel::MimeType.for(Pathname.new(expanded_path))
+    def default_protocol
+      fetch_protocol(configured_protocol || self.class.default_protocol)
+    end
 
-      Faraday::Multipart::FilePart.new(
-        expanded_path,
-        mime_type,
-        File.basename(expanded_path)
-      )
+    def configured_protocol
+      @config.send(:"#{slug}_protocol")
+    end
+
+    def fetch_protocol(name)
+      protocols.fetch(name.to_sym) do
+        raise Error, "#{name} is not a protocol of #{self.class.name}. Available: #{protocols.keys.join(', ')}"
+      end
     end
 
     def try_parse_json(maybe_json)
@@ -252,21 +278,17 @@ module RubyLLM
     end
 
     def ensure_configured!
+      return if configured?
+
       missing = configuration_requirements.reject { |req| @config.send(req) }
-      return if missing.empty?
+      config_block = <<~RUBY
+        RubyLLM.configure do |config|
+          #{missing.map { |key| "config.#{key} = ENV['#{key.to_s.upcase}']" }.join("\n  ")}
+        end
+      RUBY
 
-      raise ConfigurationError, "Missing configuration for #{name}: #{missing.join(', ')}"
-    end
-
-    def maybe_normalize_temperature(temperature, _model)
-      temperature
-    end
-
-    def sync_response(connection, payload, additional_headers = {})
-      response = connection.post completion_url, payload do |req|
-        req.headers = additional_headers.merge(req.headers) unless additional_headers.empty?
-      end
-      parse_completion_response response
+      raise ConfigurationError,
+            "#{name} provider is not configured. Add this to your initialization:\n\n#{config_block}"
     end
   end
 end

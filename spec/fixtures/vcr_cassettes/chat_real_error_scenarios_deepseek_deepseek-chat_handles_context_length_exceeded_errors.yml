@@ -8,7 +8,7 @@ http_interactions:
       string: '{"model":"deepseek-chat","messages":[{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"Hi"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -29,7 +29,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Wed, 06 May 2026 23:52:00 GMT
+      - Mon, 08 Jun 2026 19:34:19 GMT
       Server:
       - elb
       Vary:
@@ -37,7 +37,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - b50ba7457c4715c4b64e21727fe791a9
+      - 20f7a0db0e3f4d45c852a9c27a2d1ade
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -45,15 +45,15 @@ http_interactions:
       X-Cache:
       - Error from cloudfront
       Via:
-      - 1.1 9d8f6ab0f40af181f480715564d5e94c.cloudfront.net (CloudFront)
+      - 1.1 edd1b5bc7d0087f00636fe3b7878b848.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - LIS50-P2
+      - TXL52-P2
       X-Amz-Cf-Id:
-      - SVWpuFoMcL6QN9GQvM7NM1BerJsboCSalpV7uxpw7zNxwgeBt4aBzQ==
+      - HeIkH-EWgA1hy8mzRfg8LIRNueuTYO0vSXG_xvsg8vycpkBPn4ejiA==
     body:
       encoding: UTF-8
-      string: '{"error":{"message":"This model''s maximum context length is 1048576
+      string: '{"error":{"message":"This model''s maximum context length is 1048565
         tokens. However, you requested 1250025 tokens (1250025 in the messages, 0
         in the completion). Please reduce the length of the messages or completion.","type":"invalid_request_error","param":null,"code":"invalid_request_error"}}'
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+  recorded_at: Mon, 08 Jun 2026 19:34:19 GMT
 recorded_with: VCR 6.4.0

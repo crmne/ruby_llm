@@ -7,10 +7,6 @@ module RubyLLM
       module Streaming
         module_function
 
-        def stream_url
-          completion_url
-        end
-
         def build_chunk(data)
           usage = data['usage'] || {}
           delta = data.dig('choices', 0, 'delta') || {}
@@ -23,49 +19,13 @@ module RubyLLM
               text: extract_thinking_text(delta),
               signature: extract_thinking_signature(delta)
             ),
-            tool_calls: OpenAI::Tools.parse_tool_calls(delta['tool_calls'], parse_arguments: false),
-            input_tokens: OpenRouter::Chat.input_tokens(usage),
-            output_tokens: OpenRouter::Chat.output_tokens(usage),
-            cached_tokens: OpenRouter::Chat.cache_read_tokens(usage),
-            cache_creation_tokens: OpenRouter::Chat.cache_write_tokens(usage),
-            thinking_tokens: OpenRouter::Chat.thinking_tokens(usage)
+            tool_calls: parse_tool_calls(delta['tool_calls'], parse_arguments: false),
+            input_tokens: input_tokens(usage),
+            output_tokens: output_tokens(usage),
+            cached_tokens: cache_read_tokens(usage),
+            cache_creation_tokens: cache_write_tokens(usage),
+            thinking_tokens: thinking_tokens(usage)
           )
-        end
-
-        def parse_streaming_error(data)
-          OpenAI::Streaming.parse_streaming_error(data)
-        end
-
-        def extract_thinking_text(delta)
-          candidate = delta['reasoning']
-          return candidate if candidate.is_a?(String)
-
-          details = delta['reasoning_details']
-          return nil unless details.is_a?(Array)
-
-          text = details.filter_map do |detail|
-            case detail['type']
-            when 'reasoning.text'
-              detail['text']
-            when 'reasoning.summary'
-              detail['summary']
-            end
-          end.join
-
-          text.empty? ? nil : text
-        end
-
-        def extract_thinking_signature(delta)
-          details = delta['reasoning_details']
-          return nil unless details.is_a?(Array)
-
-          signature = details.filter_map do |detail|
-            detail['signature'] if detail['signature'].is_a?(String)
-          end.first
-          return signature if signature
-
-          encrypted = details.find { |detail| detail['type'] == 'reasoning.encrypted' && detail['data'].is_a?(String) }
-          encrypted&.dig('data')
         end
       end
     end

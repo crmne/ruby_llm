@@ -2,42 +2,25 @@
 
 module RubyLLM
   module Providers
-    # AWS Bedrock Converse API integration.
+    # AWS Bedrock integration.
     class Bedrock < Provider
       include Bedrock::Auth
-      include Bedrock::Chat
       include Bedrock::Embeddings
-      include Bedrock::Media
       include Bedrock::Models
-      include Bedrock::Streaming
+
+      protocol :converse, Protocols::Converse
 
       def api_base
-        "https://bedrock-runtime.#{bedrock_region}.amazonaws.com"
+        @config.bedrock_api_base || "https://bedrock-runtime.#{bedrock_region}.amazonaws.com"
       end
 
       def headers
         {}
       end
 
-      # rubocop:disable Metrics/ParameterLists
-      def complete(messages, tools:, temperature:, model:, params: {}, headers: {}, schema: nil, thinking: nil,
-                   tool_prefs: nil, &)
-        normalized_params = normalize_params(params, model:)
-
-        super(
-          messages,
-          tools: tools,
-          tool_prefs: tool_prefs,
-          temperature: temperature,
-          model: model,
-          params: normalized_params,
-          headers: headers,
-          schema: schema,
-          thinking: thinking,
-          &
-        )
+      def complete(messages, model:, params: {}, **rest, &)
+        super(messages, model:, params: normalize_params(params, model:), **rest, &)
       end
-      # rubocop:enable Metrics/ParameterLists
 
       def parse_error(response)
         return if response.body.nil? || response.body.empty?
@@ -76,7 +59,7 @@ module RubyLLM
 
       class << self
         def configuration_options
-          %i[bedrock_api_key bedrock_secret_key bedrock_region bedrock_session_token]
+          %i[bedrock_api_key bedrock_secret_key bedrock_region bedrock_session_token bedrock_api_base]
         end
 
         def configuration_requirements
@@ -88,10 +71,6 @@ module RubyLLM
 
       def bedrock_region
         @config.bedrock_region
-      end
-
-      def sync_response(connection, payload, additional_headers = {})
-        signed_post(connection, completion_url, payload, additional_headers)
       end
 
       def normalize_params(params, model:)
@@ -109,12 +88,6 @@ module RubyLLM
 
       def model_supports_top_k?(model)
         Bedrock::Models.reasoning_embedded?(model)
-      end
-
-      def api_payload(payload)
-        cleaned = RubyLLM::Utils.deep_symbolize_keys(RubyLLM::Utils.deep_dup(payload))
-        cleaned.delete(:tools)
-        cleaned
       end
     end
   end

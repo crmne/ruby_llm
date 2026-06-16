@@ -11,7 +11,7 @@ http_interactions:
         of tags to combine","items":{"type":"string"}}},"required":["tags"],"additionalProperties":false,"strict":true}}}],"enable_thinking":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -26,15 +26,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 02 Apr 2026 11:29:58 GMT
-      - Thu, 02 Apr 2026 11:29:59 GMT
+      - Mon, 08 Jun 2026 18:50:13 GMT
+      - Mon, 08 Jun 2026 18:50:13 GMT
       Server:
       - uvicorn
       - uvicorn
       Keep-Alive:
       - timeout=15, max=100
       Content-Length:
-      - '1707'
+      - '1855'
       Content-Type:
       - application/json
       X-Request-Accepted-At:
@@ -48,15 +48,17 @@ http_interactions:
       string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"content":null,"reasoning_content":"\nOkay,
         the user wants me to call the array_params function with the tags [\"red\",
         \"blue\"] and get the combined tags. Let me check the function definition.
-        The function takes an object with a property \"tags\" which is an array of
+        The function takes an object with a \"tags\" property, which is an array of
         strings. The required parameter is \"tags\", and it''s strictly typed. So
         I need to structure the arguments correctly. The user provided the tags as
-        a list, so I should pass them as a JSON object with the key \"tags\" and the
-        array as the value. The function should return the combined tags, which in
-        this case would just be the array joined somehow, but the function''s description
-        says it uses the params DSL array support. Since the user asked to call the
-        function with those tags, I just need to make sure the arguments are correctly
-        formatted. No other parameters are needed. Alright, I''ll generate the tool
-        call with the tags array.\n","role":"assistant","tool_calls":[{"function":{"arguments":"{\"tags\":[\"red\",\"blue\"]}","name":"array_params"},"id":"call-rEA0Alej4sNFACKW282746HdYGIyszpo","type":"function"}]}}],"created":1775129401,"id":"chatcmpl-AkAshtKoeSXdQal9CxlCKtehY56WwwII","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":209,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":184,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":237,"prompt_tokens_details":{"cached_tokens":0},"prompt_tokens_per_second":3860.689385547664,"time_per_output_token_ms":10.314765550239235,"time_to_first_token_ms":61.388,"tokens_per_second":96.94839840318102,"total_tokens":446}}'
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+        a list, so I should pass them as a JSON array. The function''s purpose is
+        to combine these tags, so the output should be the array joined or processed
+        somehow. But since the function''s description says it uses the params DSL
+        array support, maybe it just returns the combined array. I need to make sure
+        the arguments are correctly formatted as a JSON object with the tags array.
+        Let me verify the parameters again: the function expects \"tags\" as an array
+        of strings. The user''s input is [\"red\", \"blue\"], which fits. So the tool
+        call should be {\"name\": \"array_params\", \"arguments\": {\"tags\": [\"red\",
+        \"blue\"]}}. That should do it.\n","role":"assistant","tool_calls":[{"function":{"arguments":"{\"tags\":[\"red\",\"blue\"]}","name":"array_params"},"id":"call-tgExFAsPlzouSmHvquvivMPy7HEQRGer","type":"function"}]}}],"created":1780944615,"id":"chatcmpl-pqKvddGXngAByVNcqxYEikC45MWHOp5j","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":250,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":225,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":237,"prompt_tokens_details":{"cached_tokens":0},"prompt_tokens_per_second":2478.0167501385386,"time_per_output_token_ms":8.473608,"time_to_first_token_ms":95.641,"tokens_per_second":118.01348374859917,"total_tokens":487}}'
+  recorded_at: Mon, 08 Jun 2026 18:50:15 GMT
 recorded_with: VCR 6.4.0

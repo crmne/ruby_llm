@@ -2,14 +2,13 @@
 http_interactions:
 - request:
     method: post
-    uri: https://api.openai.com/v1/chat/completions
+    uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-5.4","messages":[{"role":"user","content":"What is 5
-        + 3?"}],"stream":false,"reasoning_effort":"medium"}'
+      string: '{"model":"gpt-5.4","input":[{"role":"user","content":"What is 5 + 3?"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"reasoning":{"effort":"medium"}}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,7 +23,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 06 May 2026 23:54:56 GMT
+      - Thu, 11 Jun 2026 20:09:36 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -42,17 +41,17 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Access-Control-Expose-Headers:
+      - CF-Ray
+      - CF-Ray
       - X-Request-ID
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '460'
+      - '586'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
       - '2020-10-01'
-      X-Openai-Proxy-Wasm:
-      - v0.1
       X-Ratelimit-Limit-Requests:
       - '5000'
       X-Ratelimit-Limit-Tokens:
@@ -60,7 +59,7 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '4999'
       X-Ratelimit-Remaining-Tokens:
-      - '999994'
+      - '1000000'
       X-Ratelimit-Reset-Requests:
       - 12ms
       X-Ratelimit-Reset-Tokens:
@@ -73,54 +72,92 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: |
+      string: |-
         {
-          "id": "chatcmpl-DcgMphqKPjHLi7iMFbgOFCm6lmjMh",
-          "object": "chat.completion",
-          "created": 1778111695,
+          "id": "resp_00a2eb39e288605b016a2b16003a3081a1ae07d9d08cbdb4aa",
+          "object": "response",
+          "created_at": 1781208576,
+          "status": "completed",
+          "background": false,
+          "billing": {
+            "payer": "developer"
+          },
+          "completed_at": 1781208576,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
           "model": "gpt-5.4-2026-03-05",
-          "choices": [
+          "moderation": null,
+          "output": [
             {
-              "index": 0,
-              "message": {
-                "role": "assistant",
-                "content": "8",
-                "refusal": null,
-                "annotations": []
-              },
-              "finish_reason": "stop"
+              "id": "msg_00a2eb39e288605b016a2b16009a0881a1874d20f65fec9f89",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "8"
+                }
+              ],
+              "phase": "final_answer",
+              "role": "assistant"
             }
           ],
-          "usage": {
-            "prompt_tokens": 14,
-            "completion_tokens": 4,
-            "total_tokens": 18,
-            "prompt_tokens_details": {
-              "cached_tokens": 0,
-              "audio_tokens": 0
-            },
-            "completion_tokens_details": {
-              "reasoning_tokens": 0,
-              "audio_tokens": 0,
-              "accepted_prediction_tokens": 0,
-              "rejected_prediction_tokens": 0
-            }
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": "24h",
+          "reasoning": {
+            "context": "current_turn",
+            "effort": "medium",
+            "summary": null
           },
+          "safety_identifier": null,
           "service_tier": "default",
-          "system_fingerprint": null
+          "store": false,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tools": [],
+          "top_logprobs": 0,
+          "top_p": 0.98,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 14,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens": 5,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 19
+          },
+          "user": null,
+          "metadata": {}
         }
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+  recorded_at: Thu, 11 Jun 2026 20:09:36 GMT
 - request:
     method: post
-    uri: https://api.openai.com/v1/chat/completions
+    uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-5.4","messages":[{"role":"user","content":"What is 5
-        + 3?"},{"role":"assistant","content":"8"},{"role":"user","content":"Now multiply
-        that by 2"}],"stream":false,"reasoning_effort":"medium"}'
+      string: '{"model":"gpt-5.4","input":[{"role":"user","content":"What is 5 + 3?"},{"role":"assistant","content":[{"type":"output_text","text":"8"}]},{"role":"user","content":"Now
+        multiply that by 2"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"reasoning":{"effort":"medium"}}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -135,7 +172,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 06 May 2026 23:54:57 GMT
+      - Thu, 11 Jun 2026 20:09:37 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -153,17 +190,17 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Access-Control-Expose-Headers:
+      - CF-Ray
+      - CF-Ray
       - X-Request-ID
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '855'
+      - '865'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
       - '2020-10-01'
-      X-Openai-Proxy-Wasm:
-      - v0.1
       X-Ratelimit-Limit-Requests:
       - '5000'
       X-Ratelimit-Limit-Tokens:
@@ -171,7 +208,7 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '4999'
       X-Ratelimit-Remaining-Tokens:
-      - '999986'
+      - '1000000'
       X-Ratelimit-Reset-Requests:
       - 12ms
       X-Ratelimit-Reset-Tokens:
@@ -184,41 +221,87 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: |
+      string: |-
         {
-          "id": "chatcmpl-DcgMqAtXNecSMgEIRvAlLEDpzoY7T",
-          "object": "chat.completion",
-          "created": 1778111696,
+          "id": "resp_0554648ce0e386ef016a2b1600fba8819fbcf7a63609490874",
+          "object": "response",
+          "created_at": 1781208576,
+          "status": "completed",
+          "background": false,
+          "billing": {
+            "payer": "developer"
+          },
+          "completed_at": 1781208577,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
           "model": "gpt-5.4-2026-03-05",
-          "choices": [
+          "moderation": null,
+          "output": [
             {
-              "index": 0,
-              "message": {
-                "role": "assistant",
-                "content": "16",
-                "refusal": null,
-                "annotations": []
-              },
-              "finish_reason": "stop"
+              "id": "rs_0554648ce0e386ef016a2b16016444819f84c7f297db6a8e75",
+              "type": "reasoning",
+              "content": [],
+              "encrypted_content": "gAAAAABqKxYBT9KFUnvy9-OzGGJXcwtRAnieuflFEka-JvBJqg5XT0jgxwgAO1OTDCU_kjKyWRyWy0lAdPZdSYevYJSmKzgoxZTkyPx7xuK8G7JQnH1u7JowzBSDhF78IvS2s1zuMq-ATBuhwr-XZB7_Fy4KD3czSHWwidjpg-0jk987v-y7_HC6nmENgfm1Z6aiXaYl00q3yoDK5xV0TQ4y92B-mVB60Xd9BGYt1EMFajDMHHmgRsHxBOCZiAyJrFaLL69DgeK5Ke9ggZT3H2iSSRI5P8FykzgkDs89vkKZ4RLjAyo81sQADBhYiwMfBwuoHIIB8GvzQ0ycWT3nkPZC3y8O6OeaUnOMo-TD-wCQQ16jO1y5vwBYAP-E4eyLfbmEIWu9awy5pGH3Fk2dQ8tAH84isGqoicE0VJTEmyjp4jZ4PtR3Mmn2tD0UKttY_tQWUXRoinry-S7p10Gbe0FAhUJrXrjrUXVXcPlsygx7fVlhXgWmp4gc9J9th6FIme5w1b4UgzEh6PS2sfxptNxqZVZ_m8PQrME0GBBMc6zbhFbdXoImZ_x-VycVJfE4NzCC7Bea9V5BcBXQYmY0MIiARIp4gnWrUw6csTPAYUf4ospTi-sd-P2N5KefiHlaVV-Ccj7RQZPL82Tea5ffaoLQmhzeKBRvYI4GVlpvfaKe46UjJ6WxV7KepwQPdOCIoqQBst-V0yjiezP055eRr9jcIlOKZqHICZoSO4Pjc5yEGtT_fIZjjlSk9EK-5RhMbekX5uXZcM6hqBSIvYBYVmfkziqoJfA60Wsj9RzSL1-nZE75rUkFl51mSbIeY3Ze5BSFqMWnGucRkz6Vvj093mZeF52jRiTJ-D5AGMX1Ae_94T0uSREpVnZFUA7dzeJFOBHJzaIDX_dcHeSl2MDR2HtSOIUcaN7DkZlavqMXVbLC6fiRUxBmuq61O11_Eis-381J9yDBxkaZ",
+              "summary": []
+            },
+            {
+              "id": "msg_0554648ce0e386ef016a2b16017c84819f96d138271525b9a5",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "16"
+                }
+              ],
+              "phase": "final_answer",
+              "role": "assistant"
             }
           ],
-          "usage": {
-            "prompt_tokens": 31,
-            "completion_tokens": 24,
-            "total_tokens": 55,
-            "prompt_tokens_details": {
-              "cached_tokens": 0,
-              "audio_tokens": 0
-            },
-            "completion_tokens_details": {
-              "reasoning_tokens": 14,
-              "audio_tokens": 0,
-              "accepted_prediction_tokens": 0,
-              "rejected_prediction_tokens": 0
-            }
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": "24h",
+          "reasoning": {
+            "context": "current_turn",
+            "effort": "medium",
+            "summary": null
           },
+          "safety_identifier": null,
           "service_tier": "default",
-          "system_fingerprint": null
+          "store": false,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tools": [],
+          "top_logprobs": 0,
+          "top_p": 0.98,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 31,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens": 17,
+            "output_tokens_details": {
+              "reasoning_tokens": 10
+            },
+            "total_tokens": 48
+          },
+          "user": null,
+          "metadata": {}
         }
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+  recorded_at: Thu, 11 Jun 2026 20:09:37 GMT
 recorded_with: VCR 6.4.0

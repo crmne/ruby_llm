@@ -87,6 +87,30 @@ RSpec.describe RubyLLM::Agent do
     expect(loose_chat.schema).to be_nil
   end
 
+  it 'supports lambda schemas without DSL fallback' do
+    agent_class = Class.new(RubyLLM::Agent) do
+      model 'gpt-4.1-nano'
+      inputs :strict
+
+      schema lambda {
+        if strict
+          {
+            type: 'object',
+            properties: { answer: { type: 'string' } },
+            required: ['answer'],
+            additionalProperties: false
+          }
+        end
+      }
+    end
+
+    strict_chat = agent_class.chat(strict: true)
+    loose_chat = agent_class.chat(strict: false)
+
+    expect(strict_chat.schema).to include(name: 'response', strict: true, schema: include(type: 'object'))
+    expect(loose_chat.schema).to be_nil
+  end
+
   it 'can ask using the first configured chat model' do
     model_info = CHAT_MODELS.first
 
@@ -152,6 +176,33 @@ RSpec.describe RubyLLM::Agent do
     agent.add_message(role: :assistant, content: 'Hi', input_tokens: 1_000, output_tokens: 2_000,
                       model_id: 'priced-model')
 
+    expect(agent.cost.total).to eq(0.005)
+  end
+
+  it 'uses the agent chat model for cost when the response model id cannot be resolved' do
+    model = RubyLLM::Model::Info.new(
+      id: 'priced-model',
+      name: 'Priced Model',
+      provider: 'openai',
+      pricing: {
+        text_tokens: {
+          standard: {
+            input_per_million: 1.0,
+            output_per_million: 2.0
+          }
+        }
+      }
+    )
+
+    chat = RubyLLM::Chat.allocate
+    chat.instance_variable_set(:@model, model)
+    chat.instance_variable_set(:@messages, [])
+    agent = Class.new(described_class).new(chat:)
+
+    response = agent.add_message(role: :assistant, content: 'Hi', input_tokens: 1_000, output_tokens: 2_000,
+                                 model_id: 'provider-backend-version')
+
+    expect(agent.model.cost_for(response).total).to eq(0.005)
     expect(agent.cost.total).to eq(0.005)
   end
 

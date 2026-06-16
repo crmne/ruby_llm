@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require 'json'
+require 'securerandom'
+
 module RubyLLM
   # Assembles streaming responses from LLMs into complete messages.
   class StreamAccumulator
@@ -7,6 +10,7 @@ module RubyLLM
 
     def initialize
       @content = +''
+      @citations = []
       @thinking_text = +''
       @thinking_signature = nil
       @tool_calls = {}
@@ -18,6 +22,7 @@ module RubyLLM
       @inside_think_tag = false
       @pending_think_tag = +''
       @latest_tool_call_id = nil
+      @tool_call_ids_by_index = {}
     end
 
     def add(chunk)
@@ -25,6 +30,7 @@ module RubyLLM
       @model_id ||= chunk.model_id
 
       handle_chunk_content(chunk)
+      accumulate_citations(chunk.citations)
       append_thinking_from_chunk(chunk)
       count_tokens chunk
       RubyLLM.logger.debug { inspect } if RubyLLM.config.log_stream_debug
@@ -34,6 +40,7 @@ module RubyLLM
       Message.new(
         role: :assistant,
         content: content.empty? ? nil : content,
+        citations: resolved_citations,
         thinking: Thinking.build(
           text: @thinking_text.empty? ? nil : @thinking_text,
           signature: @thinking_signature
@@ -52,6 +59,24 @@ module RubyLLM
     end
 
     private
+
+    # Providers like Perplexity repeat the full citation list on every chunk.
+    def accumulate_citations(new_citations)
+      new_citations.each do |citation|
+        @citations << citation unless @citations.include?(citation)
+      end
+    end
+
+    def resolved_citations
+      @citations.map { |citation| resolve_citation_text(citation) }
+    end
+
+    def resolve_citation_text(citation)
+      return citation if citation.text || citation.start_index.nil? || citation.end_index.nil?
+
+      span = content[citation.start_index...citation.end_index]
+      span ? Citation.new(citation.to_h.merge(text: span)) : citation
+    end
 
     def tool_calls_from_stream
       tool_calls.transform_values do |tc|
@@ -72,43 +97,54 @@ module RubyLLM
       end
     end
 
-    def accumulate_tool_calls(new_tool_calls) # rubocop:disable Metrics/PerceivedComplexity
+    def accumulate_tool_calls(new_tool_calls)
       RubyLLM.logger.debug { "Accumulating tool calls: #{new_tool_calls}" } if RubyLLM.config.log_stream_debug
-      new_tool_calls.each_value do |tool_call|
+      new_tool_calls.each do |stream_key, tool_call|
         if tool_call.id
-          tool_call_id = tool_call.id.empty? ? SecureRandom.uuid : tool_call.id
-          tool_call_arguments = tool_call.arguments
-          if tool_call_arguments.nil? || (tool_call_arguments.respond_to?(:empty?) && tool_call_arguments.empty?)
-            tool_call_arguments = +''
-          end
-          @tool_calls[tool_call.id] = ToolCall.new(
-            id: tool_call_id,
-            name: tool_call.name,
-            arguments: tool_call_arguments,
-            thought_signature: tool_call.thought_signature
-          )
-          @latest_tool_call_id = tool_call.id
+          start_tool_call(stream_key, tool_call)
         else
-          existing = @tool_calls[@latest_tool_call_id]
-          if existing
-            fragment = tool_call.arguments
-            fragment = '' if fragment.nil?
-            existing.arguments << fragment
-            if tool_call.thought_signature && existing.thought_signature.nil?
-              existing.thought_signature = tool_call.thought_signature
-            end
-          end
+          append_tool_call_fragment(stream_key, tool_call)
         end
       end
     end
 
-    def find_tool_call(tool_call_id)
-      if tool_call_id.nil?
-        @tool_calls[@latest_tool_call]
-      else
-        @latest_tool_call_id = tool_call_id
-        @tool_calls[tool_call_id]
-      end
+    def start_tool_call(stream_key, tool_call)
+      tool_call_id = tool_call.id.empty? ? SecureRandom.uuid : tool_call.id
+      tool_call_key = tool_call.id
+
+      @tool_calls[tool_call_key] = ToolCall.new(
+        id: tool_call_id,
+        name: tool_call.name,
+        arguments: initial_tool_call_arguments(tool_call),
+        thought_signature: tool_call.thought_signature
+      )
+      @tool_call_ids_by_index[stream_key] = tool_call_key unless stream_key.nil?
+      @latest_tool_call_id = tool_call_key
+    end
+
+    def initial_tool_call_arguments(tool_call)
+      arguments = tool_call.arguments
+      return +'' if arguments.nil? || (arguments.respond_to?(:empty?) && arguments.empty?)
+
+      arguments
+    end
+
+    def append_tool_call_fragment(stream_key, tool_call)
+      existing = find_tool_call(stream_key)
+      return unless existing
+
+      fragment = tool_call.arguments
+      fragment = '' if fragment.nil?
+      existing.arguments << fragment
+      return unless tool_call.thought_signature && existing.thought_signature.nil?
+
+      existing.thought_signature = tool_call.thought_signature
+    end
+
+    def find_tool_call(stream_key)
+      return @tool_calls[@latest_tool_call_id] if stream_key.nil?
+
+      @tool_calls[@tool_call_ids_by_index[stream_key]] || @tool_calls[stream_key]
     end
 
     def count_tokens(chunk)

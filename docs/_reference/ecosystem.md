@@ -30,6 +30,8 @@ After reading this guide, you will know:
 * How `RubyLLM::Monitoring` provides dashboards and alerts for RubyLLM activity
 * How `RubyLLM::RedCandle` enables local model execution from Ruby
 * How OpenTelemetry instrumentation for RubyLLM provides observability into your LLM applications
+* How to test application code by stubbing responses with `RubyLLM::Test`
+* How `RubyLLM::Contract` adds runtime contracts, model-escalating retries, and regression evals on top of RubyLLM
 * Where to find community projects and how to contribute your own
 
 ## RubyLLM::Schema
@@ -279,6 +281,126 @@ gem install ruby_llm-tribunal
 ```
 
 For detailed documentation and examples, visit the [RubyLLM::Tribunal repository](https://github.com/Alqemist-labs/ruby_llm-tribunal).
+
+---
+
+## RubyLLM::Contract
+
+**Contracts and Evals for LLM Outputs**
+
+[`RubyLLM::Contract`](https://github.com/justi/ruby_llm-contract) wraps `RubyLLM::Chat` with input/output contracts, business-rule validation, retry with model escalation, pre-flight cost ceilings, and a regression-eval framework. It catches schema-valid-but-logically-wrong output before it reaches your code.
+
+### Why Use RubyLLM::Contract?
+
+LLMs can return JSON that looks correct - valid shape, right types, right fields - while being silently wrong in ways schema validation alone doesn't catch. You often need:
+
+- Business rules that schema can't express
+- Retry with model escalation when a cheap model's output fails the contract
+- Regression evals with baselines to block prompt regressions in CI
+- Pre-flight cost ceilings so a large input doesn't blow your budget
+
+### Key Features
+
+- Class-based DSL: `prompt`, `output_schema`, `validate`, `retry_policy`, `max_cost`
+- Schema validation via [`RubyLLM::Schema`](https://github.com/danielfriis/ruby_llm-schema) with client-side verification
+- Model escalation on validation failure and pre-flight refusal on cost limits
+- LLM-as-judge checks and a regression eval framework with frozen datasets and baselines
+- Pipeline composition with fail-fast and per-step models
+- RSpec / Minitest matchers (`pass_eval`, `satisfy_contract`, `stub_step`)
+
+`RubyLLM::Contract` is runtime - it gates the LLM call and retries on failure - while [`RubyLLM::Tribunal`](https://github.com/Alqemist-labs/ruby_llm-tribunal) grades outputs at test time; the two compose well in the same project.
+
+### Installation
+
+```bash
+gem install ruby_llm-contract
+```
+
+For detailed documentation and examples, visit the [RubyLLM::Contract repository](https://github.com/justi/ruby_llm-contract).
+
+---
+
+## RubyLLM::TopSecret
+
+**Automatically filter sensitive information from RubyLLM conversations using Top Secret.**
+
+[`RubyLLM::TopSecret`](https://github.com/thoughtbot/ruby_llm-top_secret) automatically filters sensitive information from your conversations using [`Top Secret`](https://github.com/thoughtbot/top_secret).
+
+### Why Use RubyLLM::TopSecret?
+
+If you're working in a regulated industry, or have general privacy concerns,
+you should be cautious about what data you send to an LLM. `RubyLLM::TopSecret`
+not only filters sensitive information before sending it to a provider,
+but it also restores the filtered response server-side.
+
+### Key Features
+
+- Supports in-memory and Active Record backed chats
+- Opt-in first architecture
+
+### Installation
+
+```bash
+gem install ruby_llm-top_secret
+```
+
+## Usage
+
+```ruby
+RubyLLM::TopSecret.with_filtering do
+  chat = RubyLLM.chat
+  response = chat.ask("My name is Ralph and my email is ralph@thoughtbot.com")
+
+  # The provider receives: "My name is [PERSON_1] and my email is [EMAIL_1]"
+  # The response comes back with placeholders restored:
+  puts response.content
+  # => "Nice to meet you, Ralph!"
+end
+```
+
+For detailed documentation and examples, visit the [RubyLLM::TopSecret repository](https://github.com/thoughtbot/ruby_llm-top_secret?tab=readme-ov-file).
+
+---
+
+## RubyLLM::Test
+
+**Test Application Code by Stubbing LLM Responses**
+
+[`RubyLLM::Test`](https://github.com/RockSolt/ruby_llm-test) allows you to stub LLM responses in your tests, making it easier to test application logic without relying on calls to external systems.
+
+### Why Use RubyLLM::Test?
+
+When writing tests for code that interacts with LLMs, you may want to:
+
+- Ensure your application logic behaves correctly without making real API calls
+- Test edge cases and error handling
+- Control the responses from the LLM for deterministic tests
+
+### Key Features
+
+- Clear syntax for defining stubs and expected responses
+- Support for multiple stubs in a single test
+- Validate arguments, such as model or tool calls, passed to the LLM
+- Works with RSpec and Minitest
+
+### Usage
+
+```ruby
+RubyLLM::Test.stub_response("Outlook good")
+
+chat = RubyLLM.chat
+response = chat.ask "What are the odds this works?"
+
+assert_equal "Outlook good", response.content
+```
+
+### Installation
+
+Add the gem to the test group in your Gemfile, or install it directly:
+
+```bash
+gem install ruby_llm-test
+```
 
 ---
 

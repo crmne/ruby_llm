@@ -12,19 +12,6 @@ RSpec.describe RubyLLM::Models do
   end
 
   describe 'filtering and chaining' do
-    it 'excludes slash-based vertexai models from the registry' do
-      models = described_class.new(
-        [
-          RubyLLM::Model::Info.new(id: 'deepseek-ai/deepseek-v3.1-maas', name: 'DeepSeek', provider: 'vertexai'),
-          RubyLLM::Model::Info.new(id: 'gemini-2.5-flash', name: 'Gemini', provider: 'vertexai'),
-          RubyLLM::Model::Info.new(id: 'deepseek-ai/deepseek-v3.1-maas', name: 'DeepSeek', provider: 'openrouter')
-        ]
-      )
-
-      expect(models.by_provider('vertexai').map(&:id)).to eq(['gemini-2.5-flash'])
-      expect(models.by_provider('openrouter').map(&:id)).to eq(['deepseek-ai/deepseek-v3.1-maas'])
-    end
-
     it 'filters models by provider' do
       openai_models = RubyLLM.models.by_provider('openai')
       expect(openai_models.all).to all(have_attributes(provider: 'openai'))
@@ -49,6 +36,13 @@ RSpec.describe RubyLLM::Models do
 
       # There should be models from at least OpenAI and Anthropic
       expect(provider_counts.keys).to include('openai', 'anthropic')
+    end
+
+    it 'preserves class-level Enumerable delegation' do
+      openai_models = described_class.select { |model| model.provider == 'openai' }
+
+      expect(openai_models).to all(have_attributes(provider: 'openai'))
+      expect(described_class.count).to eq(RubyLLM.models.count)
     end
 
     it 'filters by vision support' do
@@ -81,7 +75,24 @@ RSpec.describe RubyLLM::Models do
     it 'raises ModelNotFoundError for unknown models' do
       expect do
         RubyLLM.models.find('nonexistent-model-12345')
-      end.to raise_error(RubyLLM::ModelNotFoundError)
+      end.to raise_error(RubyLLM::ModelNotFoundError) { |error|
+        expect(error.message).to include('Unknown model: "nonexistent-model-12345"')
+        expect(error.message).to include('RubyLLM.models.refresh!')
+        expect(error.message).to include('RubyLLM.models.save_to_json')
+        expect(error.message).to include('Model.refresh!')
+        expect(error.message).not_to include('Known')
+      }
+    end
+
+    it 'includes provider-specific refresh guidance for unknown models' do
+      expect do
+        RubyLLM.models.find('nonexistent-model-12345', 'openai')
+      end.to raise_error(RubyLLM::ModelNotFoundError) { |error|
+        expect(error.message).to include('Unknown model: "nonexistent-model-12345" for provider: "openai"')
+        expect(error.message).to include('RubyLLM.models.refresh!')
+        expect(error.message).to include('Model.refresh!')
+        expect(error.message).not_to include('Known')
+      }
     end
   end
 
@@ -96,6 +107,12 @@ RSpec.describe RubyLLM::Models do
       # Only use alias when exact match isn't found
       chat_model = RubyLLM.chat(model: 'claude-3-5-haiku')
       expect(chat_model.model.id).to eq('claude-3-5-haiku-20241022')
+    end
+
+    it 'prefers the first-party provider when an aggregator serves the same name' do
+      expect(RubyLLM.models.find('claude-3-5-haiku').provider).to eq('anthropic')
+      expect(RubyLLM.models.find('mistral-medium-3').provider).to eq('mistral')
+      expect(RubyLLM.models.find('gemini-2.5-flash').provider).to eq('gemini')
     end
 
     it 'prefers bedrock region-resolved inference profile IDs over exact unprefixed IDs' do
@@ -164,10 +181,14 @@ RSpec.describe RubyLLM::Models do
         family: 'gpt-test',
         last_updated: '2025-02-01',
         knowledge: '2024-01-01',
-        modalities: { input: %w[text image], output: ['text'] },
+        modalities: { input: %w[text image], output: %w[text pdf] },
         tool_call: true,
         structured_output: true,
         reasoning: false,
+        reasoning_options: [
+          { type: 'effort', values: %w[low high] },
+          { type: 'budget_tokens', min: 1024 }
+        ],
         cost: {
           input: 1.25,
           output: 5.0,
@@ -196,7 +217,8 @@ RSpec.describe RubyLLM::Models do
       )
 
       expect(data[:modalities]).to eq(input: %w[text image], output: ['text'])
-      expect(data[:capabilities]).to match_array(%w[function_calling structured_output vision])
+      expect(data[:capabilities]).to match_array(%w[function_calling reasoning structured_output vision])
+      expect(data).not_to have_key(:reasoning_options)
       expect(data[:pricing]).to eq(
         text_tokens: {
           standard: {
@@ -216,12 +238,51 @@ RSpec.describe RubyLLM::Models do
       expect(data[:metadata][:cost]).to eq(model_data[:cost])
       expect(data[:metadata][:limit]).to eq(model_data[:limit])
       expect(data[:metadata][:knowledge]).to eq(model_data[:knowledge])
+      expect(data[:metadata][:reasoning_options]).to eq(
+        [
+          { type: 'effort', values: %w[low high] },
+          { type: 'budget_tokens', min: 1024 }
+        ]
+      )
+    end
+
+    it 'keeps models.dev authoritative for overlapping capabilities when merging provider metadata' do
+      models_dev_model = RubyLLM::Model::Info.new(
+        id: 'test-model',
+        name: 'Test Model',
+        provider: 'xai',
+        context_window: 1000,
+        max_output_tokens: 100,
+        modalities: { input: ['text'], output: ['text'] },
+        capabilities: ['function_calling'],
+        metadata: { source: 'models.dev' }
+      )
+      provider_model = RubyLLM::Model::Info.new(
+        id: 'test-model',
+        name: 'Test Model',
+        provider: 'xai',
+        context_window: 1000,
+        max_output_tokens: 100,
+        capabilities: %w[streaming function_calling reasoning vision structured_output]
+      )
+
+      merged = described_class.add_provider_metadata(models_dev_model, provider_model)
+
+      expect(merged.capabilities).to contain_exactly('function_calling', 'streaming')
     end
 
     it 'uses release_date cast to midnight as created_at' do
       model_data_with_release_date = model_data.merge(release_date: '2025-03-01')
       data = described_class.models_dev_model_to_info(model_data_with_release_date, 'openai', 'openai')
       expect(data[:created_at]).to eq('2025-03-01 00:00:00 UTC')
+    end
+
+    it 'normalizes month-only release dates to the first day of the month' do
+      model_data_with_release_date = model_data.merge(release_date: '2025-09')
+      data = described_class.models_dev_model_to_info(model_data_with_release_date, 'openai', 'openai')
+
+      expect(data[:created_at]).to eq('2025-09-01 00:00:00 UTC')
+      expect { RubyLLM::Model::Info.new(data) }.not_to raise_error
     end
 
     it 'falls back to last_updated cast to midnight as created_at when release_date is missing' do

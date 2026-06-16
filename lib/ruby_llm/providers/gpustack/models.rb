@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'time'
+
 module RubyLLM
   module Providers
     class GPUStack
@@ -39,13 +41,6 @@ module RubyLLM
         end
 
         private
-
-        def determine_model_type(model)
-          return 'embedding' if model['categories']&.include?('embedding')
-          return 'chat' if model['categories']&.include?('llm')
-
-          'other'
-        end
 
         def build_capabilities(model) # rubocop:disable Metrics/PerceivedComplexity
           capabilities = []

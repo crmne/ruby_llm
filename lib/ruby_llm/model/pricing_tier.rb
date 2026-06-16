@@ -2,27 +2,37 @@
 
 module RubyLLM
   module Model
-    # A dynamic class for storing non-zero pricing values with flexible attribute access
+    # Stores non-zero pricing values for a single pricing tier.
     class PricingTier
+      ATTRIBUTES = %i[
+        input_per_million
+        output_per_million
+        cache_read_input_per_million
+        cache_write_input_per_million
+        reasoning_output_per_million
+      ].freeze
+
+      LEGACY_KEYS = {
+        cached_input_per_million: :cache_read_input_per_million,
+        cache_creation_input_per_million: :cache_write_input_per_million
+      }.freeze
+
       def initialize(data = {})
         @values = {}
 
         data.each do |key, value|
-          @values[key.to_sym] = value if value && value != 0.0
+          next unless value && value != 0.0
+
+          key = key.to_sym
+          canonical = LEGACY_KEYS.fetch(key, key)
+          @values[canonical] = value unless LEGACY_KEYS.key?(key) && @values.key?(canonical)
         end
       end
 
-      def method_missing(method, *args)
-        if method.to_s.end_with?('=')
-          key = method.to_s.chomp('=').to_sym
-          @values[key] = args.first if args.first && args.first != 0.0
-        elsif @values.key?(method)
-          @values[method]
+      ATTRIBUTES.each do |attribute|
+        define_method(attribute) do
+          @values[attribute]
         end
-      end
-
-      def respond_to_missing?(method, include_private = false)
-        method.to_s.end_with?('=') || @values.key?(method.to_sym) || super
       end
 
       def to_h

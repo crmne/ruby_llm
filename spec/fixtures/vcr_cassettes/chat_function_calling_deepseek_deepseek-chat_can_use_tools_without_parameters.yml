@@ -10,7 +10,7 @@ http_interactions:
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -31,7 +31,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Wed, 06 May 2026 23:55:35 GMT
+      - Mon, 08 Jun 2026 18:47:22 GMT
       Server:
       - elb
       Vary:
@@ -39,7 +39,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 30e395d7d937134873d0f20eceff6037
+      - 0f64bb28cf655124dd99200d698f3f39
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -47,28 +47,28 @@ http_interactions:
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 c4504f90976c7a2d304935682aa2414c.cloudfront.net (CloudFront)
+      - 1.1 bdd9bc79dc1b6d281d32deec57de395e.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - LIS50-P2
+      - TXL52-P1
       X-Amz-Cf-Id:
-      - kKgW8EkjdeNBsOvI0uf0IJK051KZHYcwJDW-B0PLJVTL0XtqP9WViA==
+      - pCs5EuPGBHIvGRM2JnVgkv8ueJYjfwlmVeAf57q1nZUKYU5xlm6wvw==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"e41caf68-89e1-4659-a07f-f2645d4913a8","object":"chat.completion","created":1778111735,"model":"deepseek-v4-flash","choices":[{"index":0,"message":{"role":"assistant","content":"Let
-        me find out for you!","tool_calls":[{"index":0,"id":"call_00_gAUGfH58n6v2a04IB1894503","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":284,"completion_tokens":38,"total_tokens":322,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":284},"system_fingerprint":"fp_058df29938_prod0820_fp8_kvcache_20260402"}'
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+      string: '{"id":"777db9f0-1bb5-4a9a-bf9b-8ca1d4ff8d8d","object":"chat.completion","created":1780944442,"model":"deepseek-v4-flash","choices":[{"index":0,"message":{"role":"assistant","content":"Let
+        me look that up for you!","tool_calls":[{"index":0,"id":"call_00_FM2VUz8fu2T0M7NlJq6I2583","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":284,"completion_tokens":39,"total_tokens":323,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":284},"system_fingerprint":"fp_8b330d02d0_prod0820_fp8_kvcache_20260402"}'
+  recorded_at: Mon, 08 Jun 2026 18:47:24 GMT
 - request:
     method: post
     uri: https://api.deepseek.com/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"deepseek-chat","messages":[{"role":"user","content":"What''s
-        the best language to learn?"},{"role":"assistant","content":"Let me find out
-        for you!","tool_calls":[{"id":"call_00_gAUGfH58n6v2a04IB1894503","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call_00_gAUGfH58n6v2a04IB1894503"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn?"},{"role":"assistant","content":"Let me look that
+        up for you!","tool_calls":[{"id":"call_00_FM2VUz8fu2T0M7NlJq6I2583","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call_00_FM2VUz8fu2T0M7NlJq6I2583"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -89,7 +89,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Wed, 06 May 2026 23:55:37 GMT
+      - Mon, 08 Jun 2026 18:47:24 GMT
       Server:
       - elb
       Vary:
@@ -97,7 +97,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 99d363b3e1ba742128d57d24d7311347
+      - 3290e509e2b5f9023ae5fa41d9789d97
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -105,14 +105,14 @@ http_interactions:
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 f2dd3b65381fad5aad94ac94ad7043f8.cloudfront.net (CloudFront)
+      - 1.1 d077d74d15e2c3435bd1f89969817190.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - LIS50-P1
+      - TXL52-P2
       X-Amz-Cf-Id:
-      - DZfYIDZ7LLckNUqUpkGE-T9f-Su_4rHzerodVBJNrN-fyWx3JejLGg==
+      - bJoRyCoWSVl3UjabwH4UA8lZQFH2-rh0Y8cQOW8DCCvcT4hnXJclMA==
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6ImZhMzc2NGQ2LTk3OGEtNDU5NS1hZDI2LTA3YTlmMGVhODU1MCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NzgxMTE3MzcsIm1vZGVsIjoiZGVlcHNlZWstdjQtZmxhc2giLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IlRoZSBiZXN0IGxhbmd1YWdlIHRvIGxlYXJuIGlzICoqUnVieSoqISDwn46JXG5cblJ1YnkgaXMgYSBmYW50YXN0aWMgY2hvaWNlIGZvciBzZXZlcmFsIHJlYXNvbnM6XG4tICoqQmVnaW5uZXItZnJpZW5kbHkqKjogSXQgaGFzIGEgY2xlYW4sIHJlYWRhYmxlIHN5bnRheCB0aGF0J3MgZWFzeSB0byBwaWNrIHVwLlxuLSAqKlByb2R1Y3RpdmUqKjogS25vd24gZm9yIGl0cyBlbGVnYW50IGRlc2lnbiwgeW91IGNhbiBhY2NvbXBsaXNoIGEgbG90IHdpdGggbWluaW1hbCBjb2RlLlxuLSAqKlN0cm9uZyBjb21tdW5pdHkqKjogVGhlcmUncyBhIHdlbGNvbWluZyBlY29zeXN0ZW0gd2l0aCBncmVhdCByZXNvdXJjZXMgYW5kIGxpYnJhcmllcy5cbi0gKipXZWIgZGV2ZWxvcG1lbnQgcG93ZXJob3VzZSoqOiBSdWJ5IG9uIFJhaWxzLCBpdHMgbW9zdCBmYW1vdXMgZnJhbWV3b3JrLCBoYXMgYmVlbiB1c2VkIHRvIGJ1aWxkIG1ham9yIHdlYnNpdGVzIGxpa2UgR2l0SHViLCBTaG9waWZ5LCBhbmQgQWlyYm5iLlxuXG5IYXBweSBjb2RpbmchIPCfmoAifSwibG9ncHJvYnMiOm51bGwsImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjozMzQsImNvbXBsZXRpb25fdG9rZW5zIjoxMTQsInRvdGFsX3Rva2VucyI6NDQ4LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MjU2fSwicHJvbXB0X2NhY2hlX2hpdF90b2tlbnMiOjI1NiwicHJvbXB0X2NhY2hlX21pc3NfdG9rZW5zIjo3OH0sInN5c3RlbV9maW5nZXJwcmludCI6ImZwXzA1OGRmMjk5MzhfcHJvZDA4MjBfZnA4X2t2Y2FjaGVfMjAyNjA0MDIifQ==
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+        eyJpZCI6Ijk4MmMxOTkyLThmMTUtNGJlNi1iNTQ2LTdiNGIxOWViNWJiNSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3ODA5NDQ0NDQsIm1vZGVsIjoiZGVlcHNlZWstdjQtZmxhc2giLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IlRoZSBiZXN0IGxhbmd1YWdlIHRvIGxlYXJuIGlzICoqUnVieSoqISDwn46JXG5cblJ1YnkgaXMgYSBncmVhdCBjaG9pY2UgZm9yIHNldmVyYWwgcmVhc29uczpcblxuLSAqKlJlYWRhYmxlICYgRWxlZ2FudCoqIOKAkyBJdHMgc3ludGF4IGlzIHZlcnkgY2xlYW4gYW5kIGludHVpdGl2ZSwgbWFraW5nIGl0IGdyZWF0IGZvciBiZWdpbm5lcnMuXG4tICoqUHJvZHVjdGl2ZSoqIOKAkyBZb3UgY2FuIGJ1aWxkIHRoaW5ncyBxdWlja2x5IHdpdGggbGVzcyBjb2RlIGNvbXBhcmVkIHRvIG1hbnkgb3RoZXIgbGFuZ3VhZ2VzLlxuLSAqKlN0cm9uZyBDb21tdW5pdHkqKiDigJMgUnVieSBoYXMgYSB3ZWxjb21pbmcsIHN1cHBvcnRpdmUgY29tbXVuaXR5IGFuZCB0b25zIG9mIGxlYXJuaW5nIHJlc291cmNlcy5cbi0gKipXZWIgRGV2ZWxvcG1lbnQqKiDigJMgSXQncyB0aGUgbGFuZ3VhZ2UgYmVoaW5kIFJ1Ynkgb24gUmFpbHMsIG9uZSBvZiB0aGUgbW9zdCBwb3B1bGFyIHdlYiBmcmFtZXdvcmtzLlxuXG5XaGV0aGVyIHlvdSdyZSBqdXN0IHN0YXJ0aW5nIG91dCBvciBhZGRpbmcgdG8geW91ciBza2lsbHNldCwgUnVieSBpcyBhIGZhbnRhc3RpYyBvcHRpb24hIFdvdWxkIHlvdSBsaWtlIHRvIGtub3cgbW9yZSBhYm91dCBnZXR0aW5nIHN0YXJ0ZWQgd2l0aCBSdWJ5PyJ9LCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6InN0b3AifV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjMzNSwiY29tcGxldGlvbl90b2tlbnMiOjEzOCwidG90YWxfdG9rZW5zIjo0NzMsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjoyNTZ9LCJwcm9tcHRfY2FjaGVfaGl0X3Rva2VucyI6MjU2LCJwcm9tcHRfY2FjaGVfbWlzc190b2tlbnMiOjc5fSwic3lzdGVtX2ZpbmdlcnByaW50IjoiZnBfOGIzMzBkMDJkMF9wcm9kMDgyMF9mcDhfa3ZjYWNoZV8yMDI2MDQwMiJ9
+  recorded_at: Mon, 08 Jun 2026 18:47:27 GMT
 recorded_with: VCR 6.4.0

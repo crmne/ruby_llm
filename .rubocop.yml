@@ -14,15 +14,19 @@ AllCops:
   SuggestExtensions: false
 
 Metrics/ClassLength:
-  Enabled: false
+  Max: 550
 Metrics/AbcSize:
-  Enabled: false
+  Max: 80
 Metrics/CyclomaticComplexity:
-  Enabled: false
+  Max: 25
 Metrics/MethodLength:
-  Enabled: false
+  Max: 80
+  CountAsOne:
+    - array
+    - hash
+    - heredoc
 Metrics/ModuleLength:
-  Enabled: false
+  Max: 550
 Performance/CollectionLiteralInLoop:
   Exclude:
     - spec/**/*

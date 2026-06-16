@@ -92,6 +92,7 @@ For example, `model` maps to `RubyLLM.chat(model:, provider:, ...)`, `tools` map
 * `instructions` (see [Chat Basics]({% link _core_features/chat.md %}))
 * `temperature` (see [Chat Basics]({% link _core_features/chat.md %}))
 * `thinking` (see [Thinking]({% link _core_features/thinking.md %}))
+* `citations` (see [Citations]({% link _core_features/citations.md %}))
 * `params` (see [Chat Basics]({% link _core_features/chat.md %}))
 * `headers` (see [Chat Basics]({% link _core_features/chat.md %}))
 * `schema` (see [Chat Basics]({% link _core_features/chat.md %}))
@@ -245,7 +246,7 @@ Delegated methods include:
 * `ask`, `say`, `complete`
 * `add_message`, `reset_messages!`, `each`
 * `with_tool`, `with_tools`
-* `with_model`, `with_temperature`, `with_thinking`, `with_context`
+* `with_model`, `with_temperature`, `with_thinking`, `with_citations`, `with_context`
 * `with_params`, `with_headers`, `with_schema`
 * `before_message`, `after_message`, `before_tool_call`, `after_tool_result` (v1.15+)
 * Deprecated replacing callbacks: `on_new_message`, `on_end_message`, `on_tool_call`, `on_tool_result`

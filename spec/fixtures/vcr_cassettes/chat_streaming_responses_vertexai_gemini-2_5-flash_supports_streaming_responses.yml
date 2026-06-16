@@ -8,7 +8,7 @@ http_interactions:
       string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Content-Type:
       - application/x-www-form-urlencoded
       Accept-Encoding:
@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Pragma:
-      - no-cache
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
       Date:
-      - Wed, 06 May 2026 23:51:47 GMT
+      - Mon, 08 Jun 2026 17:08:16 GMT
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
+      Pragma:
+      - no-cache
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -56,7 +56,7 @@ http_interactions:
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+  recorded_at: Mon, 08 Jun 2026 17:08:16 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:streamGenerateContent?alt=sse
@@ -65,7 +65,7 @@ http_interactions:
       string: '{"contents":[{"role":"user","parts":[{"text":"Count from 1 to 3"}]}],"generationConfig":{}}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -90,7 +90,7 @@ http_interactions:
       Transfer-Encoding:
       - chunked
       Date:
-      - Wed, 06 May 2026 23:51:48 GMT
+      - Mon, 08 Jun 2026 17:08:16 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -106,10 +106,10 @@ http_interactions:
       string: "data: {\"candidates\": [{\"content\": {\"role\": \"model\",\"parts\":
         [{\"text\": \"1\\n2\\n3\"}]},\"finishReason\": \"STOP\"}],\"usageMetadata\":
         {\"promptTokenCount\": 7,\"candidatesTokenCount\": 5,\"totalTokenCount\":
-        32,\"trafficType\": \"ON_DEMAND\",\"promptTokensDetails\": [{\"modality\":
+        36,\"trafficType\": \"ON_DEMAND\",\"promptTokensDetails\": [{\"modality\":
         \"TEXT\",\"tokenCount\": 7}],\"candidatesTokensDetails\": [{\"modality\":
-        \"TEXT\",\"tokenCount\": 5}],\"thoughtsTokenCount\": 20},\"modelVersion\":
-        \"gemini-2.5-flash\",\"createTime\": \"2026-05-06T23:51:47.641681Z\",\"responseId\":
-        \"E9T7aZGVJ77YvdIPyc6vuQU\"}\r\n\r\n"
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+        \"TEXT\",\"tokenCount\": 5}],\"thoughtsTokenCount\": 24},\"modelVersion\":
+        \"gemini-2.5-flash\",\"createTime\": \"2026-06-08T17:08:16.361168Z\",\"responseId\":
+        \"APcmatCFFv2JkuwP3vDsoAw\"}\r\n\r\n"
+  recorded_at: Mon, 08 Jun 2026 17:08:16 GMT
 recorded_with: VCR 6.4.0

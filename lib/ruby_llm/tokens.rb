@@ -5,30 +5,25 @@ module RubyLLM
   class Tokens
     attr_reader :input, :output, :cached, :cache_creation, :thinking
 
-    # rubocop:disable Metrics/ParameterLists
-    def initialize(input: nil, output: nil, cached: nil, cache_creation: nil, thinking: nil, reasoning: nil)
+    def initialize(input: nil, output: nil, cached: nil, cache_creation: nil, thinking: nil)
       @input = input
       @output = output
       @cached = cached
       @cache_creation = cache_creation
-      @thinking = thinking || reasoning
+      @thinking = thinking
     end
-    # rubocop:enable Metrics/ParameterLists
 
-    # rubocop:disable Metrics/ParameterLists
-    def self.build(input: nil, output: nil, cached: nil, cache_creation: nil, thinking: nil, reasoning: nil)
-      return nil if [input, output, cached, cache_creation, thinking, reasoning].all?(&:nil?)
+    def self.build(input: nil, output: nil, cached: nil, cache_creation: nil, thinking: nil)
+      return nil if [input, output, cached, cache_creation, thinking].all?(&:nil?)
 
       new(
         input: input,
         output: output,
         cached: cached,
         cache_creation: cache_creation,
-        thinking: thinking,
-        reasoning: reasoning
+        thinking: thinking
       )
     end
-    # rubocop:enable Metrics/ParameterLists
 
     def to_h
       {
@@ -38,10 +33,6 @@ module RubyLLM
         cache_creation_tokens: cache_creation,
         thinking_tokens: thinking
       }.compact
-    end
-
-    def reasoning
-      thinking
     end
 
     def cache_read

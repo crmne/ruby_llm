@@ -61,6 +61,16 @@ PDF_MODELS = [
   { provider: :vertexai, model: 'gemini-2.5-flash' }
 ].freeze
 
+DOCUMENT_MODELS = [
+  { provider: :bedrock, model: 'claude-sonnet-4-5' },
+  { provider: :mistral, model: 'mistral-small-latest' },
+  { provider: :perplexity, model: 'sonar-pro' }
+].freeze
+
+SPREADSHEET_MODELS = [
+  { provider: :bedrock, model: 'claude-sonnet-4-5' }
+].freeze
+
 vision_models = [
   { provider: :anthropic, model: 'claude-haiku-4-5' },
   { provider: :azure, model: 'grok-4-1-fast-non-reasoning' },
@@ -81,7 +91,7 @@ VIDEO_MODELS = [
 ].freeze
 
 AUDIO_MODELS = [
-  { provider: :openai, model: 'gpt-4o-mini-audio-preview' },
+  { provider: :openai, model: 'gpt-audio-mini' },
   { provider: :gemini, model: 'gemini-2.5-flash' }
 ].freeze
 
@@ -102,7 +112,6 @@ TRANSCRIPTION_MODELS = [
 ].freeze
 
 image_generation_models = [
-  { provider: :openai, model: 'dall-e-3', supports_size: true },
   { provider: :openai, model: 'gpt-image-1', supports_size: false },
   { provider: :gemini, model: 'imagen-4.0-generate-001', supports_size: false },
   { provider: :openrouter, model: 'google/gemini-2.5-flash-image', supports_size: false }

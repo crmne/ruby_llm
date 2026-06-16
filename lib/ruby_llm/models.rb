@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require 'date'
+require 'json'
+
 module RubyLLM
   # Registry of available AI models and their capabilities.
   class Models
@@ -14,25 +17,50 @@ module RubyLLM
       'deepseek' => 'deepseek',
       'mistral' => 'mistral',
       'openrouter' => 'openrouter',
-      'perplexity' => 'perplexity'
+      'perplexity' => 'perplexity',
+      'xai' => 'xai'
     }.freeze
+    MODELS_DEV_INPUT_MODALITIES = %w[text image audio pdf video file].freeze
+    MODELS_DEV_OUTPUT_MODALITIES = %w[text image audio video embeddings moderation].freeze
+    MODELS_DEV_AUTHORITY_CAPABILITIES = %w[function_calling structured_output reasoning vision].freeze
+    # First-party providers outrank the aggregators that resell their models.
     PROVIDER_PREFERENCE = %w[
       openai
       anthropic
       gemini
-      vertexai
-      bedrock
-      openrouter
       deepseek
       mistral
       perplexity
       xai
+      vertexai
+      bedrock
+      openrouter
       azure
       ollama
       gpustack
     ].freeze
+    INSTANCE_DELEGATES = (Enumerable.instance_methods(false) + %i[
+      all
+      each
+      find
+      chat_models
+      embedding_models
+      audio_models
+      image_models
+      by_family
+      by_provider
+      load_from_json!
+      load_from_database!
+      save_to_json
+    ]).uniq.freeze
 
     class << self
+      INSTANCE_DELEGATES.each do |method_name|
+        define_method(method_name) do |*args, **kwargs, &block|
+          instance.public_send(method_name, *args, **kwargs, &block)
+        end
+      end
+
       def instance
         @instance ||= new
       end
@@ -42,83 +70,76 @@ module RubyLLM
       end
 
       def load_models(file = RubyLLM.config.model_registry_file)
+        source = RubyLLM.config.model_registry_source
+        if source && file == RubyLLM.config.model_registry_file
+          models = source.read
+          return models if models.any?
+
+          RubyLLM.logger.debug { 'Model registry source is empty, falling back to JSON registry' }
+        end
+
         read_from_json(file)
       end
 
       def read_from_json(file = RubyLLM.config.model_registry_file)
         data = File.exist?(file) ? File.read(file) : '[]'
-        models = JSON.parse(data, symbolize_names: true).map { |model| Model::Info.new(model) }
-        filter_models(models)
+        JSON.parse(data, symbolize_names: true).map { |model| Model::Info.new(model) }
       rescue JSON::ParserError
         []
       end
 
-      def refresh!(remote_only: false)
-        existing_models = load_existing_models
-
-        provider_fetch = fetch_provider_models(remote_only: remote_only)
-        log_provider_fetch(provider_fetch)
-
-        models_dev_fetch = fetch_models_dev_models(existing_models)
-        log_models_dev_fetch(models_dev_fetch)
-
-        merged_models = merge_with_existing(existing_models, provider_fetch, models_dev_fetch)
-        @instance = new(merged_models)
+      def read_from_database
+        ModelRegistry::ActiveRecordSource.new.read
       end
 
-      def fetch_provider_models(remote_only: true) # rubocop:disable Metrics/PerceivedComplexity
+      def refresh!(remote_only: false)
+        instance.refresh!(remote_only: remote_only)
+      end
+
+      # Fetches and merges the latest models. Call save_to_json when the
+      # refreshed registry should also be persisted.
+      def fetch_merged_models(remote_only: false)
+        RubyLLM.instrument('models.refresh.ruby_llm', remote_only:) do |payload|
+          existing_models = read_existing_models
+
+          provider_fetch = fetch_provider_models(remote_only: remote_only)
+          log_provider_fetch(provider_fetch)
+
+          models_dev_fetch = fetch_models_dev_models(existing_models)
+          log_models_dev_fetch(models_dev_fetch)
+
+          merged_models = merge_with_existing(existing_models, provider_fetch, models_dev_fetch)
+          payload[:model_count] = merged_models.size
+          merged_models
+        end
+      end
+
+      def fetch_provider_models(remote_only: true)
         config = RubyLLM.config
-        provider_classes = remote_only ? Provider.remote_providers.values : Provider.providers.values
-        configured_classes = if remote_only
-                               Provider.configured_remote_providers(config)
-                             else
-                               Provider.configured_providers(config)
-                             end
-        configured = configured_classes.select { |klass| provider_classes.include?(klass) }
-        result = {
-          models: [],
-          fetched_providers: [],
-          configured_names: configured.map(&:name),
-          failed: []
-        }
+        providers = remote_only ? Provider.configured_remote_providers(config) : Provider.configured_providers(config)
+        result = { models: [], fetched_providers: [], configured_names: providers.map(&:name), failed: [] }
 
-        provider_classes.each do |provider_class|
-          next if remote_only && provider_class.local?
-          next unless provider_class.configured?(config)
-
-          begin
-            result[:models].concat(provider_class.new(config).list_models)
-            result[:fetched_providers] << provider_class.slug
-          rescue StandardError => e
-            result[:failed] << { name: provider_class.name, slug: provider_class.slug, error: e }
-          end
+        providers.each do |provider_class|
+          result[:models].concat(provider_class.new(config).list_models)
+          result[:fetched_providers] << provider_class.slug
+        rescue StandardError => e
+          result[:failed] << { name: provider_class.name, slug: provider_class.slug, error: e }
         end
 
-        result[:fetched_providers].uniq!
         result
-      end
-
-      # Backwards-compatible wrapper used by specs.
-      def fetch_from_providers(remote_only: true)
-        fetch_provider_models(remote_only: remote_only)[:models]
       end
 
       def resolve(model_id, provider: nil, assume_exists: false, config: nil) # rubocop:disable Metrics/PerceivedComplexity
         config ||= RubyLLM.config
         provider_class = provider ? Provider.providers[provider.to_sym] : nil
-
-        if provider_class
-          temp_instance = provider_class.new(config)
-          assume_exists = true if temp_instance.local? || temp_instance.assume_models_exist?
-        end
+        assume_exists = true if provider_class&.local? || provider_class&.assume_models_exist?
 
         if assume_exists
           raise ArgumentError, 'Provider must be specified if assume_exists is true' unless provider
 
-          provider_class ||= raise(Error, "Unknown provider: #{provider.to_sym}")
-          provider_instance = provider_class.new(config)
+          provider_class ||= Provider.resolve!(provider)
 
-          model = if provider_instance.local?
+          model = if provider_class.local?
                     begin
                       Models.find(model_id, provider)
                     rescue ModelNotFoundError
@@ -126,26 +147,12 @@ module RubyLLM
                     end
                   end
 
-          model ||= Model::Info.default(model_id, provider_instance.slug)
+          model ||= Model::Info.default(model_id, provider_class.slug)
         else
           model = Models.find model_id, provider
-          provider_class = Provider.providers[model.provider.to_sym] || raise(Error,
-                                                                              "Unknown provider: #{model.provider}")
-          provider_instance = provider_class.new(config)
+          provider_class = Provider.resolve!(model.provider)
         end
-        [model, provider_instance]
-      end
-
-      def method_missing(method, ...)
-        if instance.respond_to?(method)
-          instance.send(method, ...)
-        else
-          super
-        end
-      end
-
-      def respond_to_missing?(method, include_private = false)
-        instance.respond_to?(method, include_private) || super
+        [model, provider_class.new(config)]
       end
 
       def fetch_models_dev_models(existing_models) # rubocop:disable Metrics/PerceivedComplexity
@@ -175,7 +182,7 @@ module RubyLLM
         }
       end
 
-      def load_existing_models
+      def read_existing_models
         existing_models = instance&.all
         existing_models = read_from_json if existing_models.nil? || existing_models.empty?
         existing_models
@@ -233,13 +240,7 @@ module RubyLLM
           end
         end
 
-        filter_models(models).sort_by { |m| [m.provider, m.id] }
-      end
-
-      def filter_models(models)
-        models.reject do |model|
-          model.provider.to_s == 'vertexai' && model.id.to_s.include?('/')
-        end
+        models.sort_by { |m| [m.provider, m.id] }
       end
 
       def find_models_dev_model(key, models_dev_by_key)
@@ -288,7 +289,8 @@ module RubyLLM
         data[:modalities] = provider_model.modalities.to_h if blank_value?(data[:modalities])
         data[:pricing] = provider_model.pricing.to_h if blank_value?(data[:pricing])
         data[:metadata] = provider_model.metadata.merge(data[:metadata] || {})
-        data[:capabilities] = (models_dev_model.capabilities + provider_model.capabilities).uniq
+        provider_capabilities = provider_model.capabilities - MODELS_DEV_AUTHORITY_CAPABILITIES
+        data[:capabilities] = (models_dev_model.capabilities + provider_capabilities).uniq
         normalize_embedding_modalities(data)
         Model::Info.new(data)
       end
@@ -323,11 +325,11 @@ module RubyLLM
                        .find { |value| !value.to_s.strip.empty? }
 
         data = {
-          id: model_data[:id],
+          id: models_dev_model_id(model_data[:id], provider_slug),
           name: model_data[:name] || model_data[:id],
           provider: provider_slug,
           family: model_data[:family],
-          created_at: created_date ? "#{created_date} 00:00:00 UTC" : nil,
+          created_at: Utils.iso_date_prefix_to_utc_midnight_string(created_date),
           context_window: model_data.dig(:limit, :context),
           max_output_tokens: model_data.dig(:limit, :output),
           knowledge_cutoff: normalize_models_dev_knowledge(model_data[:knowledge]),
@@ -341,11 +343,19 @@ module RubyLLM
         data
       end
 
+      # models.dev pins Vertex AI models to a version (claude-haiku-4-5@20251001);
+      # Vertex AI serves them by bare name.
+      def models_dev_model_id(id, provider_slug)
+        return id unless provider_slug == 'vertexai'
+
+        id&.split('@')&.first
+      end
+
       def models_dev_capabilities(model_data, modalities)
         capabilities = []
         capabilities << 'function_calling' if model_data[:tool_call]
         capabilities << 'structured_output' if model_data[:structured_output]
-        capabilities << 'reasoning' if model_data[:reasoning]
+        capabilities << 'reasoning' if model_data[:reasoning] || model_data[:reasoning_options]
         capabilities << 'vision' if modalities[:input].intersect?(%w[image video pdf])
         capabilities.uniq
       end
@@ -382,6 +392,7 @@ module RubyLLM
           last_updated: model_data[:last_updated],
           status: model_data[:status],
           interleaved: model_data[:interleaved],
+          reasoning_options: model_data[:reasoning_options],
           cost: model_data[:cost],
           limit: model_data[:limit],
           knowledge: model_data[:knowledge]
@@ -393,8 +404,8 @@ module RubyLLM
         normalized = { input: [], output: [] }
         return normalized unless modalities
 
-        normalized[:input] = Array(modalities[:input]).compact
-        normalized[:output] = Array(modalities[:output]).compact
+        normalized[:input] = Array(modalities[:input]).compact & MODELS_DEV_INPUT_MODALITIES
+        normalized[:output] = Array(modalities[:output]).compact & MODELS_DEV_OUTPUT_MODALITIES
         normalized
       end
 
@@ -409,13 +420,22 @@ module RubyLLM
     end
 
     def initialize(models = nil)
-      @models = self.class.filter_models(models || self.class.load_models)
+      @models = models || self.class.load_models
     end
 
+    # Replaces this registry instance with models loaded from JSON.
     def load_from_json!(file = RubyLLM.config.model_registry_file)
       @models = self.class.read_from_json(file)
     end
 
+    # Replaces this registry instance with models loaded from the configured
+    # ActiveRecord model class.
+    def load_from_database!
+      @models = self.class.read_from_database
+    end
+
+    # Persists this registry instance to JSON without changing the global
+    # RubyLLM.models instance.
     def save_to_json(file = RubyLLM.config.model_registry_file)
       File.write(file, JSON.pretty_generate(all.map(&:to_h)))
     end
@@ -461,7 +481,8 @@ module RubyLLM
     end
 
     def refresh!(remote_only: false)
-      self.class.refresh!(remote_only: remote_only)
+      @models = self.class.fetch_merged_models(remote_only: remote_only)
+      self
     end
 
     def resolve(model_id, provider: nil, assume_exists: false, config: nil)
@@ -475,7 +496,7 @@ module RubyLLM
       resolved_id = resolve_bedrock_region_id(resolved_id) if provider.to_s == 'bedrock'
       all.find { |m| m.id == resolved_id && m.provider == provider.to_s } ||
         all.find { |m| m.id == model_id && m.provider == provider.to_s } ||
-        raise(ModelNotFoundError, "Unknown model: #{model_id} for provider: #{provider}")
+        raise_model_not_found(model_id, provider: provider)
     end
 
     def resolve_bedrock_region_id(model_id)
@@ -492,15 +513,29 @@ module RubyLLM
       Providers::Bedrock::Models.normalize_inference_profile_id(model_id, inference_types, region)
     end
 
+    # A name can be one provider's exact id and another's alias:
+    # claude-3-5-haiku is exact on vertexai, an alias on anthropic.
+    # Provider preference settles it, not the kind of match.
     def find_without_provider(model_id)
-      exact_matches = all.select { |m| m.id == model_id }
-      return preferred_match(exact_matches) if exact_matches.any?
-
       resolved_id = Aliases.resolve(model_id)
-      alias_matches = all.select { |m| m.id == resolved_id }
-      return preferred_match(alias_matches) if alias_matches.any?
+      matches = all.select { |m| [model_id, resolved_id].include?(m.id) }
+                   .sort_by { |m| m.id == model_id ? 0 : 1 }
 
-      raise(ModelNotFoundError, "Unknown model: #{model_id}")
+      preferred_match(matches) || raise_model_not_found(model_id)
+    end
+
+    def raise_model_not_found(model_id, provider: nil)
+      message = "Unknown model: #{model_id.inspect}"
+      message = "#{message} for provider: #{provider.inspect}" if provider
+
+      raise ModelNotFoundError, "#{message}. #{refresh_registry_guidance}"
+    end
+
+    def refresh_registry_guidance
+      rails_model = RubyLLM.config.model_registry_class
+      'If the model exists at the provider, refresh the registry with `RubyLLM.models.refresh!` ' \
+        'and persist it with `RubyLLM.models.save_to_json`. ' \
+        "Rails model registries can call `#{rails_model}.refresh!` instead."
     end
 
     def preferred_match(candidates)
