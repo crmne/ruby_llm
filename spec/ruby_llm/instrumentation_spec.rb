@@ -149,8 +149,9 @@ RSpec.describe RubyLLM::Instrumentation do
     context = RubyLLM.context { |config| config.instrumenter = instrumenter }
     model = instance_double(RubyLLM::Model::Info, id: 'text-embedding-3-small', provider: 'openai')
     provider = instance_double(RubyLLM::Provider, slug: 'openai')
+    provider_class = class_double(RubyLLM::Provider, display_name: 'OpenAI')
     embedding = RubyLLM::Embedding.new(vectors: [[0.1, 0.2, 0.3]], model: 'text-embedding-3-small', input_tokens: 8)
-    allow(provider).to receive(:embed).and_return(embedding)
+    allow(provider).to receive_messages(embed: embedding, class: provider_class)
     allow(RubyLLM::Models).to receive(:resolve).and_return([model, provider])
 
     result = context.embed(['hello'], model: 'text-embedding-3-small')
@@ -160,6 +161,7 @@ RSpec.describe RubyLLM::Instrumentation do
     expect(event_name).to eq('embedding.ruby_llm')
     expect(payload).to include(
       provider: 'openai',
+      provider_class: 'OpenAI',
       model: 'text-embedding-3-small',
       input: ['hello'],
       result: embedding,
