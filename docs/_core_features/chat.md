@@ -377,10 +377,6 @@ end
 Unknown protocol names raise immediately, listing what the provider speaks.
 
 ## Raw Content Blocks
-{: .d-inline-block }
-
-v1.9.0+
-{: .label .label-green }
 
 Most of the time you can rely on RubyLLM to format messages for each provider. When you need to send a custom payload as content,  wrap it in `RubyLLM::Content::Raw`. The block is forwarded verbatim, with no additional processing.
 
@@ -398,10 +394,6 @@ chat.ask(raw_block)
 Use raw blocks sparingly: they bypass cross-provider safeguards, so it is your responsibility to ensure the payload matches the provider's expectations. `Chat#ask`, `Chat#add_message`, tool results, and streaming accumulators all understand `Content::Raw` values.
 
 ### Anthropic Prompt Caching
-{: .d-inline-block }
-
-v1.9.0+
-{: .label .label-green }
 
 One use case for Raw Content Blocks is Anthropic Prompt Caching.
 
@@ -778,7 +770,7 @@ end
 chat.ask "What is metaprogramming in Ruby?"
 ```
 
-The older `on_new_message`, `on_end_message`, `on_tool_call`, and `on_tool_result` handlers are still available and keep their replacing behavior. RubyLLM emits a deprecation warning when one of these handlers is used; prefer the additive Rails-style callbacks for new code.
+Each callback is additive — register as many as you like, and they run alongside RubyLLM's own bookkeeping (such as the Rails persistence callbacks). The older replacing handlers (`on_new_message`, `on_end_message`, `on_tool_call`, `on_tool_result`) were removed in 2.0.
 
 ## Raw Responses
 

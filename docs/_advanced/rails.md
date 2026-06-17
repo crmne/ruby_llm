@@ -115,10 +115,6 @@ bin/rails generate ruby_llm:chat_ui chat:Conversation message:ChatMessage model:
 ```
 
 ### Conventional Directory Structure
-{: .d-inline-block }
-
-v1.14.0+
-{: .label .label-green }
 
 RubyLLM's Rails generators now establish a default app structure:
 
@@ -145,10 +141,6 @@ For prompt lookup, RubyLLM uses class name conventions:
 See the [Agents guide]({% link _core_features/agents.md %}#default-instructions-prompt) for how `instructions` rendering works.
 
 ### Rails Generators for Agents, Tools, and Schemas
-{: .d-inline-block }
-
-v1.14.0+
-{: .label .label-green }
 
 Alongside `ruby_llm:install` and `ruby_llm:chat_ui`, Rails apps can generate starter classes for common AI building blocks:
 
@@ -165,10 +157,6 @@ What each generator creates:
 - `ruby_llm:schema`: `app/schemas/product_schema.rb`
 
 ### Chat UI View Conventions
-{: .d-inline-block }
-
-v1.14.0+
-{: .label .label-green }
 
 The generated chat UI follows one convention: each message partial uses the local that matches its partial name.
 
@@ -252,10 +240,6 @@ end
 This `:attachments` association is only required on RubyLLM message records. The ActiveStorage attachments you pass to `with:` from your own models can use any name.
 
 ### Working with Raw Provider Payloads, Anthropic Prompt Caching
-{: .d-inline-block }
-
-v1.9.0+
-{: .label .label-green }
 
 Providers like Anthropic expose advanced features (prompt caching, fine-grained metadata) by embedding rich structures inside each prompt block. Use `RubyLLM::Content::Raw` to persist those blocks alongside your conversation history:
 
@@ -271,7 +255,7 @@ chat.ask(raw_block)
 
 The v1.9 schema adds a `content_raw` column so raw payloads live alongside the plain-text `content` field. When you load messages via `acts_as_message`, RubyLLM reconstructs the original `Content::Raw` automatically.
 
-> Existing apps: run `bin/rails generate ruby_llm:upgrade_to_v1_9` to add cached-token tracking and raw content storage columns introduced in v1.9.0. New apps will get the proper columns from the install generator.
+> Existing apps: the cached-token and raw-content columns were introduced in v1.9.0. Upgrade one minor version at a time (see the [Upgrading guide]({% link _advanced/upgrading.md %})); new apps get the proper columns from the install generator.
 {: .note }
 
 ### Configuring RubyLLM
@@ -291,10 +275,6 @@ end
 ```
 
 ### Instrumentation
-{: .d-inline-block }
-
-v1.16.0+
-{: .label .label-green }
 
 Rails apps automatically emit RubyLLM events through `ActiveSupport::Notifications`. See [Instrumentation]({% link _advanced/instrumentation.md %}) for events, payloads, and non-Rails instrumenters.
 
@@ -321,10 +301,6 @@ Why: Rails defaults to thread-based connection isolation. In fiber-heavy flows, 
 Add RubyLLM capabilities to your models:
 
 #### With Model Registry (Default for new apps)
-{: .d-inline-block }
-
-Available in v1.7.0+
-{: .label .label-green }
 
 ```ruby
 # app/models/chat.rb
@@ -364,45 +340,7 @@ class Model < ApplicationRecord
 end
 ```
 
-#### Legacy Mode (Without Model Registry)
-{: .d-inline-block }
-
-Pre-1.7.0 or opt-in
-{: .label .label-yellow }
-
-> Set `config.use_new_acts_as = false` to stay with this API until it will be removed in 2.0.
-{: .note }
-
-```ruby
-# app/models/chat.rb
-class Chat < ApplicationRecord
-  # Legacy API style - requires explicit class names
-  acts_as_chat message_class: 'Message',
-               tool_call_class: 'ToolCall'
-end
-
-# app/models/message.rb
-class Message < ApplicationRecord
-  # Legacy API style - all class names and foreign keys explicit
-  acts_as_message chat_class: 'Chat',
-                  chat_foreign_key: 'chat_id',
-                  tool_call_class: 'ToolCall'
-end
-
-# app/models/tool_call.rb
-class ToolCall < ApplicationRecord
-  acts_as_tool_call message_class: 'Message',
-                    message_foreign_key: 'message_id'
-end
-
-# Note: No Model class in legacy mode - uses string fields instead
-```
-
 ### Provider Overrides
-{: .d-inline-block }
-
-Available in v1.7.0+
-{: .label .label-green }
 
 Route models through different providers dynamically:
 
@@ -418,10 +356,6 @@ chat.ask("Hello!")
 ```
 
 ### Custom Contexts and Dynamic Models
-{: .d-inline-block }
-
-Available in v1.7.0+
-{: .label .label-green }
 
 #### Using Custom Contexts
 
@@ -440,14 +374,6 @@ chat = Chat.create!(
   model: '{{ site.models.openai_standard }}',
   context: custom_context
 )
-```
-
-**Legacy mode (when using `--skip-model-registry`):**
-
-```ruby
-# In legacy mode, you can set context after creation
-chat = Chat.create!(model: 'gpt-4')
-chat.with_context(custom_context)  # This method only exists in legacy mode
 ```
 
 > **Warning:** Context is not persisted. Set it after reloading chats.
@@ -536,10 +462,6 @@ puts "Conversation length: #{chat_record.messages.count}" # => 4
 ```
 
 ### Token Usage and Costs
-{: .d-inline-block }
-
-v1.15+
-{: .label .label-green }
 
 Persisted chats and messages expose the same normalized token and cost helpers as regular RubyLLM objects:
 
@@ -561,10 +483,6 @@ chat_record.cost.total
 RubyLLM normalizes provider-specific cache accounting before persisting token counts. See [Tracking Token Usage]({% link _core_features/chat.md %}#tracking-token-usage) for the provider comparison table.
 
 ### Database Model Registry
-{: .d-inline-block }
-
-Available in v1.7.0+
-{: .label .label-green }
 
 When using the Model registry (created by default by the generator), your chats and messages get associations to model records:
 
@@ -1001,10 +919,6 @@ The `acts_as` helpers integrate seamlessly with standard Rails patterns. Add ass
 If your application uses different model names, you can configure the `acts_as` helpers accordingly:
 
 #### With Model Registry
-{: .d-inline-block }
-
-Available in v1.7.0+
-{: .label .label-green }
 
 ```ruby
 # app/models/conversation.rb (instead of Chat)
@@ -1075,33 +989,6 @@ class Llm::ToolCall < ApplicationRecord
   acts_as_tool_call message: :llm_message,
                     message_class: 'Llm::Message',
                     result_foreign_key: :llm_tool_call_id
-end
-```
-
-#### Legacy Mode
-{: .d-inline-block }
-
-Pre-1.7.0 or opt-in
-{: .label .label-yellow }
-
-```ruby
-# app/models/conversation.rb
-class Conversation < ApplicationRecord
-  acts_as_chat message_class: 'ChatMessage',
-               tool_call_class: 'AiToolCall'
-end
-
-# app/models/chat_message.rb
-class ChatMessage < ApplicationRecord
-  acts_as_message chat_class: 'Conversation',
-                  chat_foreign_key: 'conversation_id',
-                  tool_call_class: 'AiToolCall'
-end
-
-# app/models/ai_tool_call.rb
-class AiToolCall < ApplicationRecord
-  acts_as_tool_call message_class: 'ChatMessage',
-                    message_foreign_key: 'chat_message_id'
 end
 ```
 

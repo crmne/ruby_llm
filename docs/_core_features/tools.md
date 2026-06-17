@@ -100,10 +100,6 @@ RubyLLM ships with three complementary approaches:
 Start with the method signature. Add `param` when a flat argument needs a description, type, or optionality that is not obvious from Ruby alone. Use the `params` DSL whenever you need nested objects, arrays, enums, or union types.
 
 ### Signature Inference
-{: .d-inline-block }
-
-v1.15.0+
-{: .label .label-green }
 
 When a tool has no `param` or `params` declaration, RubyLLM builds a JSON Schema from `execute` keyword arguments:
 
@@ -139,10 +135,6 @@ end
 ```
 
 ### params DSL
-{: .d-inline-block }
-
-v1.9.0+
-{: .label .label-green }
 
 When you need nested objects, arrays, enums, or union types, the `params do ... end` DSL produces the JSON Schema that function-calling models expect while staying Ruby-flavoured.
 
@@ -173,10 +165,6 @@ end
 RubyLLM bundles the DSL through [`ruby_llm-schema`](https://github.com/danielfriis/ruby_llm-schema), so every project has the same schema builders out of the box.
 
 ### Supplying JSON Schema Manually
-{: .d-inline-block }
-
-v1.9.0+
-{: .label .label-green }
 
 Prefer to own the JSON Schema yourself? Pass a schema hash (or a class/object responding to `#to_json_schema`) directly to `params`:
 
@@ -304,10 +292,6 @@ puts response.content
 ```
 
 ### Tool Call Controls
-{: .d-inline-block }
-
-v1.13.0+
-{: .label .label-green }
 
 Control tool behavior with two options:
 - `choice` controls which tools the model is allowed/required to use.
@@ -369,10 +353,6 @@ If `calls` is not provided, RubyLLM uses provider/model defaults, which are usua
 {: .note }
 
 ### Concurrent Tool Execution
-{: .d-inline-block }
-
-v1.16.0+
-{: .label .label-green }
 
 When a model returns multiple tool calls in one response, RubyLLM executes them sequentially by default. For I/O-bound tools, opt in to concurrent execution:
 
@@ -499,10 +479,6 @@ chat.ask("Check weather for every major city...")
 ## Advanced Tool Metadata
 
 ### Provider-Specific Parameters
-{: .d-inline-block }
-
-v1.9.0+
-{: .label .label-green }
 
 Some providers accept additional metadata alongside the JSON Schema, for example Anthropic’s `cache_control` hints. Use `with_params` to declare these once on the tool class and RubyLLM will merge them into the payload when the provider supports the keys.
 

@@ -172,10 +172,6 @@ end
 By default, RubyLLM uses the 'developer' role (matching OpenAI's current API). Set `openai_use_system_role` to true for compatibility with servers that still expect 'system'.
 
 ### Gemini API Versions
-{: .d-inline-block }
-
-v1.9.0+
-{: .label .label-green }
 
 Gemini offers two API versions: `v1` (stable) and `v1beta` (early access). RubyLLM defaults to `v1beta` for access to the latest features, but you can switch to `v1` to support older models:
 
@@ -189,10 +185,6 @@ end
 Some models are only available on specific API versions. For example, `gemini-1.5-flash-8b` requires `v1`. Check the [Gemini API documentation](https://ai.google.dev/gemini-api/docs/api-versions) for version-specific model availability.
 
 ### Provider-Specific API Base URLs
-{: .d-inline-block }
-
-v1.16+
-{: .label .label-green }
 
 Every provider exposes a provider-specific `*_api_base` setting in v1.16+. Use these when routing a native provider API through a proxy, gateway, private network endpoint, or compatible service:
 
@@ -439,36 +431,6 @@ RubyLLM.configure do |config|
 end
 ```
 
-### Initializer Load Timing Issue with `use_new_acts_as`
-
-**Important**: If you're using `config.use_new_acts_as = false`, you **cannot** set it in an initializer. Rails loads models before initializers run, so the new `acts_as` module will already be included by the time your initializer executes.
-
-Instead, configure it in `config/application.rb` **before** the `Application` class:
-
-```ruby
-# config/application.rb
-require_relative "boot"
-require "rails/all"
-
-# Configure RubyLLM before Rails::Application is inherited
-RubyLLM.configure do |config|
-  config.use_new_acts_as = false
-end
-
-module YourApp
-  class Application < Rails::Application
-    # ...
-  end
-end
-```
-
-This ensures RubyLLM is configured before ActiveRecord loads your models. Other configuration options (API keys, timeouts, etc.) can still go in your initializer.
-
-> The legacy API will be removed in RubyLLM 2.0
-{: .note }
-
-See the [Upgrading guide]({% link _advanced/upgrading.md %}#troubleshooting) for more details.
-
 ## Configuration Reference
 
 Here's a complete reference of all configuration options:
@@ -564,9 +526,6 @@ RubyLLM.configure do |config|
   config.log_level = Symbol
   config.log_stream_debug = Boolean
   config.log_regexp_timeout = Numeric  # v1.13.0+ (Ruby 3.2+ support)
-
-  # Rails integration
-  config.use_new_acts_as = true or false
 end
 ```
 

@@ -197,7 +197,7 @@ chat_record.messages.last.citations # => [RubyLLM::Citation, ...]
 Run the upgrade generator:
 
 ```bash
-rails generate ruby_llm:upgrade_to_v2_0
+rails generate ruby_llm:upgrade
 rails db:migrate
 ```
 
