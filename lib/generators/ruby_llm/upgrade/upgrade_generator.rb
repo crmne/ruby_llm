@@ -6,17 +6,18 @@ require_relative '../generator_helpers'
 
 module RubyLLM
   module Generators
-    # Generator to add v1.9 columns (cached tokens + raw content support) to existing apps.
-    class UpgradeToV19Generator < Rails::Generators::Base
+    # Brings an existing app's schema up to date with the latest RubyLLM version.
+    # Run it after upgrading the gem; it always targets the current release.
+    class UpgradeGenerator < Rails::Generators::Base
       include Rails::Generators::Migration
       include RubyLLM::Generators::GeneratorHelpers
 
-      namespace 'ruby_llm:upgrade_to_v1_9'
+      namespace 'ruby_llm:upgrade'
       source_root File.expand_path('templates', __dir__)
 
       argument :model_mappings, type: :array, default: [], banner: 'message:MessageName'
 
-      desc 'Adds cached token columns and raw content storage fields introduced in v1.9.0'
+      desc 'Adds the columns and tables introduced in the latest RubyLLM version (v2.0: citations + batches)'
 
       def self.next_migration_number(dirname)
         ::ActiveRecord::Generators::Base.next_migration_number(dirname)
@@ -25,10 +26,11 @@ module RubyLLM
       def create_migration_file
         parse_model_mappings
 
-        migration_template 'add_v1_9_message_columns.rb.tt',
-                           'db/migrate/add_ruby_llm_v1_9_columns.rb',
+        migration_template 'add_v2_0_message_columns.rb.tt',
+                           'db/migrate/add_ruby_llm_v2_0_columns.rb',
                            migration_version: migration_version,
-                           message_table_name: message_table_name
+                           message_table_name: message_table_name,
+                           batch_table_name: batch_table_name
       end
 
       def show_next_steps
@@ -40,7 +42,7 @@ module RubyLLM
           2. Run: bin/rails db:migrate
           3. Restart your application server
 
-          📚 See the v1.9.0 release notes for details on cached token tracking and raw content support.
+          📚 See the v2.0 release notes for details on citations support.
 
         INSTRUCTIONS
       end

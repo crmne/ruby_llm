@@ -77,7 +77,7 @@ RSpec.describe RubyLLM::Generators::InstallGenerator, :generator, type: :generat
         expect(File.exist?('config/initializers/ruby_llm.rb')).to be true
         initializer = File.read('config/initializers/ruby_llm.rb')
         expect(initializer).to include('RubyLLM.configure')
-        # use_new_acts_as defaults to true, so the generator no longer emits it
+        # use_new_acts_as no longer exists in 2.0; the generator does not emit it
         expect(initializer).not_to include('config.use_new_acts_as')
         # Default Model class doesn't need explicit config
         expect(initializer).not_to include('config.model_registry_class')
