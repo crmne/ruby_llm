@@ -1,11 +1,13 @@
 # frozen_string_literal: true
 
+require 'json'
+
 module RubyLLM
   # Represents a conversation with an AI model
   class Chat
     include Enumerable
 
-    attr_reader :model, :messages, :tools, :tool_prefs, :params, :headers, :schema
+    attr_reader :model, :provider, :messages, :tools, :tool_prefs, :params, :headers, :schema, :concurrency
 
     def initialize(model: nil, provider: nil, assume_model_exists: false, context: nil)
       if assume_model_exists && !provider
@@ -20,29 +22,81 @@ module RubyLLM
       @messages = []
       @tools = {}
       @tool_prefs = { choice: nil, calls: nil }
+      @concurrency = normalize_tool_concurrency(@config.tool_concurrency)
       @params = {}
       @headers = {}
       @schema = nil
       @thinking = nil
-      @on = {
-        new_message: nil,
-        end_message: nil,
-        tool_call: nil,
-        tool_result: nil
-      }
+      @citations = false
+      @protocol = nil
       @callbacks = Hash.new { |callbacks, name| callbacks[name] = [] }
     end
 
     def ask(message = nil, with: nil, &)
-      add_message role: :user, content: build_content(message, with)
+      ask_later(message, with: with)
       complete(&)
     end
 
     alias say ask
 
-    def with_instructions(instructions, append: false, replace: nil)
-      append ||= (replace == false) unless replace.nil?
+    # Stages a question without asking it, leaving the chat for `complete`, a
+    # single `step`, or a provider-side batch via RubyLLM.batch.
+    def ask_later(message = nil, with: nil)
+      add_message role: :user, content: build_content(message, with)
+      self
+    end
 
+    # Calls the model once and appends its response. The model's move.
+    def generate(&block)
+      result = nil
+      payload = instrumentation_payload(streaming: block_given?)
+
+      RubyLLM.instrument('chat.ruby_llm', payload, config: @config) do |event|
+        result = provider_completion(&block)
+        run_callbacks(:before_message) unless block_given?
+        normalize_schema_response(result)
+        add_message result
+        run_callbacks(:after_message, result)
+        record_completion_event(event, result)
+      end
+      result
+    end
+
+    # Executes the pending tool calls and appends their results, without asking
+    # the model to respond. Our move; the chat is then ready for the next
+    # `generate`, or the next batch round.
+    def run_tools
+      execute_pending_tool_calls(messages.last) if messages.last&.tool_call?
+      self
+    end
+
+    # Advances the conversation by one move: runs the pending tools if the model
+    # asked for them, otherwise generates the next response. Returns nil once
+    # there is nothing left to do.
+    def step(&)
+      return if complete?
+
+      messages.last&.tool_call? ? run_tools : generate(&)
+    end
+
+    # Runs the agentic loop to completion: step until nothing is left.
+    def complete(&)
+      step(&) until complete?
+      messages.last
+    end
+
+    # Whether the model owes this chat nothing more: nothing is staged, or it
+    # answered without calling a tool.
+    def complete?
+      last = messages.last
+      case last&.role
+      when nil then true
+      when :user, :tool then false
+      else !last.tool_call?
+      end
+    end
+
+    def with_instructions(instructions, append: false)
       if append
         append_system_instruction(instructions)
       else
@@ -52,19 +106,21 @@ module RubyLLM
       self
     end
 
-    def with_tool(tool, choice: nil, calls: nil)
+    def with_tool(tool, choice: nil, calls: nil, concurrency: @concurrency)
       unless tool.nil?
         tool_instance = tool.is_a?(Class) ? tool.new : tool
         @tools[tool_instance.name.to_sym] = tool_instance
       end
       update_tool_options(choice:, calls:)
+      update_tool_concurrency(concurrency)
       self
     end
 
-    def with_tools(*tools, replace: false, choice: nil, calls: nil)
+    def with_tools(*tools, replace: false, choice: nil, calls: nil, concurrency: @concurrency)
       @tools.clear if replace
       tools.compact.each { |tool| with_tool tool }
       update_tool_options(choice:, calls:)
+      update_tool_concurrency(concurrency)
       self
     end
 
@@ -86,6 +142,11 @@ module RubyLLM
       self
     end
 
+    def with_citations(enabled = true) # rubocop:disable Style/OptionalBooleanParameter
+      @citations = enabled
+      self
+    end
+
     def with_context(context)
       @context = context
       @config = context.config
@@ -95,6 +156,11 @@ module RubyLLM
 
     def with_params(**params)
       @params = params
+      self
+    end
+
+    def with_protocol(protocol)
+      @protocol = protocol
       self
     end
 
@@ -111,22 +177,6 @@ module RubyLLM
       )
 
       self
-    end
-
-    def on_new_message(&)
-      set_legacy_callback(:new_message, :on_new_message, :before_message, &)
-    end
-
-    def on_end_message(&)
-      set_legacy_callback(:end_message, :on_end_message, :after_message, &)
-    end
-
-    def on_tool_call(&)
-      set_legacy_callback(:tool_call, :on_tool_call, :before_tool_call, &)
-    end
-
-    def on_tool_result(&)
-      set_legacy_callback(:tool_result, :on_tool_result, :after_tool_result, &)
     end
 
     def before_message(&)
@@ -150,41 +200,7 @@ module RubyLLM
     end
 
     def cost
-      Cost.aggregate(messages.map(&:cost))
-    end
-
-    def complete(&)
-      response = @provider.complete(
-        messages,
-        tools: @tools,
-        tool_prefs: @tool_prefs,
-        temperature: @temperature,
-        model: @model,
-        params: @params,
-        headers: @headers,
-        schema: @schema,
-        thinking: @thinking,
-        &wrap_streaming_block(&)
-      )
-
-      run_callbacks(:before_message, :new_message) unless block_given?
-
-      if @schema && response.content.is_a?(String) && !response.tool_call?
-        begin
-          response.content = JSON.parse(response.content)
-        rescue JSON::ParserError
-          # If parsing fails, keep content as string
-        end
-      end
-
-      add_message response
-      run_callbacks(:after_message, :end_message, response)
-
-      if response.tool_call?
-        handle_tool_calls(response, &)
-      else
-        response
-      end
+      Cost.aggregate(messages.map { |message| message.cost(model: message.model_info || model) })
     end
 
     def add_message(message_or_attributes)
@@ -193,11 +209,39 @@ module RubyLLM
       message
     end
 
+    # Receives a completion produced out-of-band (e.g. by a batch), running the
+    # same callbacks as a synchronous completion so persistence works unchanged.
+    def add_completion(response)
+      run_callbacks(:before_message)
+      normalize_schema_response(response)
+      add_message response
+      run_callbacks(:after_message, response)
+      response
+    end
+
+    # The request this chat would send for its next completion.
+    def render
+      @provider.render(
+        messages,
+        tools: @tools,
+        tool_prefs: @tool_prefs,
+        temperature: @temperature,
+        model: @model,
+        params: @params,
+        schema: @schema,
+        thinking: @thinking,
+        citations: @citations,
+        protocol: @protocol
+      )
+    end
+
+    # Mutates this chat by removing all in-memory messages.
     def reset_messages!
       @messages.clear
     end
 
-    def instance_variables
+    # Keeps the connection and config dumps out of pretty-printed output.
+    def pretty_print_instance_variables
       super - %i[@connection @config]
     end
 
@@ -243,53 +287,123 @@ module RubyLLM
       self
     end
 
-    def set_legacy_callback(name, legacy_name, additive_name, &block)
-      warn_legacy_callback_deprecation(legacy_name, additive_name) if block
-
-      @on[name] = block
-      self
+    def instrumentation_payload(streaming:)
+      {
+        chat: self,
+        provider: @provider.slug,
+        provider_class: @provider.class.display_name,
+        model: @model.id,
+        model_info: @model,
+        input_messages: messages.dup,
+        message_count: messages.size,
+        tools: tools.keys,
+        tool_choice: tool_prefs[:choice],
+        tool_call_limit: tool_prefs[:calls],
+        temperature: @temperature,
+        params: params,
+        schema: schema,
+        thinking: @thinking,
+        citations: @citations,
+        streaming: streaming
+      }
     end
 
-    def warn_legacy_callback_deprecation(legacy_name, additive_name)
-      RubyLLM.logger.warn(
-        "`#{legacy_name}` is deprecated and will be removed in RubyLLM 2.0. " \
-        "Use `#{additive_name}` instead."
+    def record_completion_event(event, result)
+      event[:response] = result
+      event[:messages_after] = messages.dup
+      event[:response_role] = result.role if result.respond_to?(:role)
+      return unless result.respond_to?(:tool_call?)
+
+      event[:response_model] = result.model_id
+      event[:tool_call] = result.tool_call?
+      event[:tool_calls] = result.tool_calls
+      event[:input_tokens] = result.input_tokens
+      event[:output_tokens] = result.output_tokens
+      event[:cached_tokens] = result.cached_tokens
+      event[:cache_creation_tokens] = result.cache_creation_tokens
+      event[:thinking_tokens] = result.thinking_tokens
+    end
+
+    def provider_completion(&)
+      @provider.complete(
+        messages,
+        tools: @tools,
+        tool_prefs: @tool_prefs,
+        temperature: @temperature,
+        model: @model,
+        params: @params,
+        headers: @headers,
+        schema: @schema,
+        thinking: @thinking,
+        citations: @citations,
+        protocol: @protocol,
+        &wrap_streaming_block(&)
       )
     end
 
-    def run_callbacks(name, legacy_name, *args)
+    def normalize_schema_response(response)
+      return unless @schema && response.content.is_a?(String) && !response.tool_call?
+
+      response.content = JSON.parse(response.content)
+    rescue JSON::ParserError
+      # If parsing fails, keep content as string.
+    end
+
+    def run_callbacks(name, *args)
       @callbacks[name].each { |callback| callback.call(*args) }
-      @on[legacy_name]&.call(*args)
     end
 
     def wrap_streaming_block(&block)
-      return nil unless block_given?
+      return nil unless block
 
-      run_callbacks(:before_message, :new_message)
+      run_callbacks(:before_message)
 
-      proc do |chunk|
-        block.call chunk
-      end
+      block
     end
 
-    def handle_tool_calls(response, &)
-      halt_result = nil
-
-      response.tool_calls.each_value do |tool_call|
-        run_callbacks(:before_message, :new_message)
-        run_callbacks(:before_tool_call, :tool_call, tool_call)
-        result = execute_tool tool_call
-        run_callbacks(:after_tool_result, :tool_result, result)
-        tool_payload = result.is_a?(Tool::Halt) ? result.content : result
-        content = content_like?(tool_payload) ? tool_payload : tool_payload.to_s
-        message = add_message role: :tool, content:, tool_call_id: tool_call.id
-        run_callbacks(:after_message, :end_message, message)
-
-        halt_result = result if result.is_a?(Tool::Halt)
+    def execute_pending_tool_calls(response)
+      if concurrency
+        handle_concurrent_tool_calls(response.tool_calls)
+      else
+        handle_sequential_tool_calls(response.tool_calls)
       end
 
       reset_tool_choice if forced_tool_choice?
-      halt_result || complete(&)
+    end
+
+    def handle_sequential_tool_calls(tool_calls)
+      tool_calls.each_value do |tool_call|
+        run_callbacks(:before_message)
+        result = execute_tool_with_callbacks(tool_call)
+        add_tool_result_message(tool_call, result)
+      end
+    end
+
+    def handle_concurrent_tool_calls(tool_calls)
+      execute_tools_concurrently(tool_calls) do |tool_call, result|
+        run_callbacks(:before_message)
+        add_tool_result_message(tool_call, result)
+      end
+    end
+
+    def execute_tools_concurrently(tool_calls, &on_result)
+      ToolConcurrency.run(concurrency, tool_calls, on_result:) do |tool_call|
+        execute_tool_with_callbacks(tool_call)
+      end
+    end
+
+    def execute_tool_with_callbacks(tool_call)
+      run_callbacks(:before_tool_call, tool_call)
+      result = execute_tool tool_call
+      run_callbacks(:after_tool_result, result)
+      result
+    end
+
+    def add_tool_result_message(tool_call, result)
+      content = content_like?(result) ? result : result.to_s
+      message = add_message role: :tool, content:, tool_call_id: tool_call.id
+      run_callbacks(:after_message, message)
+      message
     end
 
     def execute_tool(tool_call)
@@ -302,7 +416,26 @@ module RubyLLM
       end
 
       args = tool_call.arguments
-      tool.call(args)
+      payload = {
+        chat: self,
+        provider: @provider.slug,
+        provider_class: @provider.class.display_name,
+        model: @model.id,
+        model_info: @model,
+        tool: tool,
+        tool_call: tool_call,
+        tool_name: tool.name,
+        tool_arguments: args,
+        tool_call_id: tool_call.id
+      }
+
+      RubyLLM.instrument('tool_call.ruby_llm', payload, config: @config) do |event|
+        result = tool.call(args)
+        event[:result] = result
+        event[:result_content] = result
+        event[:result_class] = result.class.name
+        result
+      end
     end
 
     def update_tool_options(choice:, calls:)
@@ -318,6 +451,22 @@ module RubyLLM
       end
 
       @tool_prefs[:calls] = normalize_calls(calls) unless calls.nil?
+    end
+
+    def update_tool_concurrency(concurrency)
+      @concurrency = normalize_tool_concurrency(concurrency)
+    end
+
+    def normalize_tool_concurrency(concurrency)
+      return nil if concurrency.nil? || concurrency == false
+      return :threads if concurrency == true
+
+      normalized = concurrency.to_sym
+      return normalized if ToolConcurrency::MODES.include?(normalized)
+
+      raise ArgumentError,
+            "Unknown tool concurrency: #{concurrency.inspect}. " \
+            "Available modes: #{ToolConcurrency::MODES.join(', ')}"
     end
 
     def normalize_calls(calls)
@@ -346,10 +495,7 @@ module RubyLLM
     end
 
     def classify_tool_name(class_name)
-      class_name.split('::').last
-                .gsub(/([a-z\d])([A-Z])/, '\1_\2')
-                .downcase
-                .to_sym
+      Utils.underscore(class_name.split('::').last).delete_suffix('_tool').to_sym
     end
 
     def forced_tool_choice?

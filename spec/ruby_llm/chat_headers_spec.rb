@@ -49,13 +49,13 @@ RSpec.describe RubyLLM::Chat do
         provider = chat.instance_variable_get(:@provider)
 
         # Mock provider headers
-        allow(provider).to receive_messages(
-          headers: {
-            'X-Api-Key' => 'provider-key',
-            'Content-Type' => 'application/json'
-          },
-          parse_completion_response: RubyLLM::Message.new(role: :assistant, content: 'Test')
+        allow(provider).to receive(:headers).and_return(
+          'X-Api-Key' => 'provider-key',
+          'Content-Type' => 'application/json'
         )
+        allow_any_instance_of(RubyLLM::Protocols::ChatCompletions) # rubocop:disable RSpec/AnyInstance
+          .to receive(:parse_completion_response)
+          .and_return(RubyLLM::Message.new(role: :assistant, content: 'Test'))
 
         # Set user headers that try to override provider headers
         chat.with_headers(

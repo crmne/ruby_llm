@@ -9,10 +9,7 @@ redirect_from:
 ---
 
 # {{ page.title }}
-{: .d-inline-block .no_toc }
-
-v1.9.0+
-{: .label .label-green }
+{: .no_toc }
 
 {{ page.description }}
 {: .fs-6 .fw-300 }
@@ -163,6 +160,22 @@ puts "Duration: #{transcription.duration} seconds"
 
 transcription.segments.each do |segment|
   puts "#{segment['start']}s - #{segment['end']}s: #{segment['text']}"
+end
+```
+
+For OpenAI word-level timestamps, request verbose JSON with word granularity:
+
+```ruby
+transcription = RubyLLM.transcribe(
+  "interview.mp3",
+  model: "whisper-1",
+  provider: :openai,
+  response_format: "verbose_json",
+  timestamp_granularities: ["word"]
+)
+
+transcription.words.each do |word|
+  puts "#{word['start']}s - #{word['end']}s: #{word['word']}"
 end
 ```
 

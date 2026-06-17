@@ -1,0 +1,28 @@
+class AddRubyLlmV20Columns < ActiveRecord::Migration<%= migration_version %>
+  def change
+    unless column_exists?(:<%= message_table_name %>, :citations)
+      add_column :<%= message_table_name %>, :citations, :json
+    end
+
+    reversible do |dir|
+      dir.up do
+        next if table_exists?(:<%= batch_table_name %>)
+
+        create_table :<%= batch_table_name %> do |t|
+          t.string :provider_batch_id, null: false
+          t.string :provider, null: false
+          t.string :status
+          t.boolean :completed, null: false, default: false
+<% if postgresql? -%>
+          t.jsonb :chat_ids, default: []
+<% else -%>
+          t.json :chat_ids
+<% end -%>
+          t.timestamps
+        end
+      end
+
+      dir.down { drop_table :<%= batch_table_name %> if table_exists?(:<%= batch_table_name %>) }
+    end
+  end
+end

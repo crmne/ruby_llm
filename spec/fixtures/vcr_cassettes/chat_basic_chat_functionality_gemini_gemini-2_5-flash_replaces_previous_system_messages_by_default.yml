@@ -1,0 +1,170 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"You must include the
+        exact phrase \"XKCD7392\" somewhere in your response."}]},{"role":"user","parts":[{"text":"Tell
+        me about the weather."}]}],"generationConfig":{"temperature":0.0}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.2
+      X-Goog-Api-Key:
+      - "<GEMINI_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      X-Gemini-Service-Tier:
+      - standard
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Mon, 08 Jun 2026 17:08:22 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Server-Timing:
+      - gfet4t7; dur=3844
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicGFydHMiOiBbCiAgICAgICAgICB7CiAgICAgICAgICAgICJ0ZXh0IjogIlRoZSB3ZWF0aGVyIGlzIHRoZSBzdGF0ZSBvZiB0aGUgYXRtb3NwaGVyZSBhdCBhIHBhcnRpY3VsYXIgcGxhY2UgYW5kIHRpbWUsIGVuY29tcGFzc2luZyBlbGVtZW50cyBsaWtlIHRlbXBlcmF0dXJlLCBodW1pZGl0eSwgcHJlY2lwaXRhdGlvbiwgd2luZCwgYW5kIGF0bW9zcGhlcmljIHByZXNzdXJlLiBJdCdzIGEgZHluYW1pYyBhbmQgZXZlci1jaGFuZ2luZyBzeXN0ZW0gZHJpdmVuIHByaW1hcmlseSBieSB0aGUgc3VuJ3MgZW5lcmd5IGhlYXRpbmcgdGhlIEVhcnRoIHVuZXZlbmx5LCB3aGljaCBpbiB0dXJuIGNyZWF0ZXMgZGlmZmVyZW5jZXMgaW4gYWlyIHByZXNzdXJlIGFuZCBkcml2ZXMgYWlyIG1vdmVtZW50LlxuXG5IZXJlJ3MgYSBicmVha2Rvd24gb2Ygd2hhdCBtYWtlcyB1cCB0aGUgd2VhdGhlcjpcblxuKiAgICoqVGVtcGVyYXR1cmU6KiogSG93IGhvdCBvciBjb2xkIGl0IGlzLCBtZWFzdXJlZCBieSB0aGVybW9tZXRlcnMuIFRoaXMgaXMgaW5mbHVlbmNlZCBieSB0aGUgc3VuJ3MgYW5nbGUsIGNsb3VkIGNvdmVyLCBhbmQgcHJveGltaXR5IHRvIGxhcmdlIGJvZGllcyBvZiB3YXRlci5cbiogICAqKlByZWNpcGl0YXRpb246KiogQW55IGZvcm0gb2Ygd2F0ZXIgdGhhdCBmYWxscyBmcm9tIHRoZSBhdG1vc3BoZXJlIHRvIHRoZSBFYXJ0aCdzIHN1cmZhY2UsIGluY2x1ZGluZyByYWluLCBzbm93LCBzbGVldCwgb3IgaGFpbC4gVGhpcyBvY2N1cnMgd2hlbiB3YXRlciB2YXBvciBpbiB0aGUgY2xvdWRzIGNvbmRlbnNlcyBhbmQgYmVjb21lcyB0b28gaGVhdnkgdG8gcmVtYWluIHN1c3BlbmRlZC5cbiogICAqKldpbmQ6KiogVGhlIG1vdmVtZW50IG9mIGFpciwgY2F1c2VkIGJ5IGRpZmZlcmVuY2VzIGluIGF0bW9zcGhlcmljIHByZXNzdXJlLiBBaXIgZmxvd3MgZnJvbSBhcmVhcyBvZiBoaWdoIHByZXNzdXJlIHRvIGFyZWFzIG9mIGxvdyBwcmVzc3VyZS4gV2luZCBzcGVlZCBhbmQgZGlyZWN0aW9uIGFyZSBjcnVjaWFsIGZvciB1bmRlcnN0YW5kaW5nIHdlYXRoZXIgcGF0dGVybnMuXG4qICAgKipIdW1pZGl0eToqKiBUaGUgYW1vdW50IG9mIHdhdGVyIHZhcG9yIGluIHRoZSBhaXIuIEhpZ2ggaHVtaWRpdHkgY2FuIG1ha2UgaXQgZmVlbCBtdWdneSwgd2hpbGUgbG93IGh1bWlkaXR5IGNhbiBtYWtlIHRoZSBhaXIgZmVlbCBkcnkuXG4qICAgKipBdG1vc3BoZXJpYyBQcmVzc3VyZToqKiBUaGUgd2VpZ2h0IG9mIHRoZSBhaXIgYWJvdmUgYSBnaXZlbiBwb2ludC4gSGlnaCBwcmVzc3VyZSBnZW5lcmFsbHkgYnJpbmdzIGNsZWFyLCBzdGFibGUgd2VhdGhlciwgd2hpbGUgbG93IHByZXNzdXJlIGlzIG9mdGVuIGFzc29jaWF0ZWQgd2l0aCBjbG91ZHMsIHByZWNpcGl0YXRpb24sIGFuZCBzdG9ybXMuXG4qICAgKipDbG91ZCBDb3ZlcjoqKiBUaGUgYW1vdW50IG9mIHRoZSBza3kgY292ZXJlZCBieSBjbG91ZHMuIENsb3VkcyBwbGF5IGEgdml0YWwgcm9sZSBpbiByZWd1bGF0aW5nIHRlbXBlcmF0dXJlIGFuZCBwcm9kdWNpbmcgcHJlY2lwaXRhdGlvbi5cblxuV2VhdGhlciBwYXR0ZXJucyBhcmUgaW5jcmVkaWJseSBjb21wbGV4IGFuZCBhcmUgaW5mbHVlbmNlZCBieSA8R09PR0xFX0NMT1VEX0xPQ0FUSU9OPiBmYWN0b3JzIGxpa2Ugb2NlYW4gY3VycmVudHMgKGUuZy4sIEVsIE5pw7FvKSwgamV0IHN0cmVhbXMsIGFuZCB0aGUgRWFydGgncyByb3RhdGlvbiAoQ29yaW9saXMgZWZmZWN0KS4gTWV0ZW9yb2xvZ2lzdHMgdXNlIGEgdmFyaWV0eSBvZiB0b29scywgZnJvbSBzYXRlbGxpdGVzIGFuZCByYWRhciB0byBncm91bmQtYmFzZWQgc2Vuc29ycyBhbmQgY29tcHV0ZXIgbW9kZWxzLCB0byBmb3JlY2FzdCB0aGVzZSBjaGFuZ2VzLiBVbmRlcnN0YW5kaW5nIHRoZXNlIGVsZW1lbnRzIGhlbHBzIHVzIHByZWRpY3QgZXZlcnl0aGluZyBmcm9tIGEgc3VubnkgZGF5IHRvIGEgc2V2ZXJlIHRodW5kZXJzdG9ybS5cblxuRm9yIHNwZWNpZmljLCByZWFsLXRpbWUgd2VhdGhlciBpbmZvcm1hdGlvbiwgeW91J2QgdHlwaWNhbGx5IGNoZWNrIGEgbG9jYWwgZm9yZWNhc3QsIGFzIGNvbmRpdGlvbnMgdmFyeSBncmVhdGx5IGJ5IGxvY2F0aW9uIGFuZCB0aW1lLiBJZiB5b3UncmUgbG9va2luZyBmb3IgYSBzcGVjaWZpYyB3ZWF0aGVyIHBoZW5vbWVub24gb3IgYSBkZWVwIGRpdmUgaW50byBtZXRlb3JvbG9naWNhbCBkYXRhLCB5b3UgbWlnaHQgZXZlbiBmaW5kIHlvdXJzZWxmIGFuYWx5emluZyBjb21wbGV4IGNoYXJ0cyBhbmQgbW9kZWxzLCBwZXJoYXBzIGV2ZW4gcmVmZXJlbmNpbmcgYSBzcGVjaWZpYyBkYXRhIHBvaW50IGxpa2UgWEtDRDczOTIgaW4gYSBoeXBvdGhldGljYWwgd2VhdGhlciBzaW11bGF0aW9uLiIKICAgICAgICAgIH0KICAgICAgICBdLAogICAgICAgICJyb2xlIjogIm1vZGVsIgogICAgICB9LAogICAgICAiZmluaXNoUmVhc29uIjogIlNUT1AiLAogICAgICAiaW5kZXgiOiAwCiAgICB9CiAgXSwKICAidXNhZ2VNZXRhZGF0YSI6IHsKICAgICJwcm9tcHRUb2tlbkNvdW50IjogMjcsCiAgICAiY2FuZGlkYXRlc1Rva2VuQ291bnQiOiA0NzMsCiAgICAidG90YWxUb2tlbkNvdW50IjogNjczLAogICAgInByb21wdFRva2Vuc0RldGFpbHMiOiBbCiAgICAgIHsKICAgICAgICAibW9kYWxpdHkiOiAiVEVYVCIsCiAgICAgICAgInRva2VuQ291bnQiOiAyNwogICAgICB9CiAgICBdLAogICAgInRob3VnaHRzVG9rZW5Db3VudCI6IDE3MywKICAgICJzZXJ2aWNlVGllciI6ICJzdGFuZGFyZCIKICB9LAogICJtb2RlbFZlcnNpb24iOiAiZ2VtaW5pLTIuNS1mbGFzaCIsCiAgInJlc3BvbnNlSWQiOiAiQXZjbWF2N05McXo0bnNFUF9veVFnUXciCn0K
+  recorded_at: Mon, 08 Jun 2026 17:08:22 GMT
+- request:
+    method: post
+    uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"You must include the
+        exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."}]},{"role":"user","parts":[{"text":"Tell
+        me about the weather."}]},{"role":"model","parts":[{"text":"The weather is
+        the state of the atmosphere at a particular place and time, encompassing elements
+        like temperature, humidity, precipitation, wind, and atmospheric pressure.
+        It''s a dynamic and ever-changing system driven primarily by the sun''s energy
+        heating the Earth unevenly, which in turn creates differences in air pressure
+        and drives air movement.\n\nHere''s a breakdown of what makes up the weather:\n\n*   **Temperature:**
+        How hot or cold it is, measured by thermometers. This is influenced by the
+        sun''s angle, cloud cover, and proximity to large bodies of water.\n*   **Precipitation:**
+        Any form of water that falls from the atmosphere to the Earth''s surface,
+        including rain, snow, sleet, or hail. This occurs when water vapor in the
+        clouds condenses and becomes too heavy to remain suspended.\n*   **Wind:**
+        The movement of air, caused by differences in atmospheric pressure. Air flows
+        from areas of high pressure to areas of low pressure. Wind speed and direction
+        are crucial for understanding weather patterns.\n*   **Humidity:** The amount
+        of water vapor in the air. High humidity can make it feel muggy, while low
+        humidity can make the air feel dry.\n*   **Atmospheric Pressure:** The weight
+        of the air above a given point. High pressure generally brings clear, stable
+        weather, while low pressure is often associated with clouds, precipitation,
+        and storms.\n*   **Cloud Cover:** The amount of the sky covered by clouds.
+        Clouds play a vital role in regulating temperature and producing precipitation.\n\nWeather
+        patterns are incredibly complex and are influenced by <GOOGLE_CLOUD_LOCATION>
+        factors like ocean currents (e.g., El Niño), jet streams, and the Earth''s
+        rotation (Coriolis effect). Meteorologists use a variety of tools, from satellites
+        and radar to ground-based sensors and computer models, to forecast these changes.
+        Understanding these elements helps us predict everything from a sunny day
+        to a severe thunderstorm.\n\nFor specific, real-time weather information,
+        you''d typically check a local forecast, as conditions vary greatly by location
+        and time. If you''re looking for a specific weather phenomenon or a deep dive
+        into meteorological data, you might even find yourself analyzing complex charts
+        and models, perhaps even referencing a specific data point like XKCD7392 in
+        a hypothetical weather simulation."}]},{"role":"user","parts":[{"text":"What
+        are some good books?"}]}],"generationConfig":{"temperature":0.0}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.2
+      X-Goog-Api-Key:
+      - "<GEMINI_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      X-Gemini-Service-Tier:
+      - standard
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Mon, 08 Jun 2026 17:08:30 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Server-Timing:
+      - gfet4t7; dur=8026
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "candidates": [
+            {
+              "content": {
+                "parts": [
+                  {
+                    "text": "That's a fantastic question, though \"good\" can mean so many different things depending on your taste! To give you a diverse selection, here are some highly regarded books across various genres that often resonate with readers:\n\n**Literary Fiction & Classics:**\n\n1.  **\"To Kill a Mockingbird\" by Harper Lee:** A timeless classic exploring themes of racial injustice, childhood innocence, and morality in the American South. It's a powerful and moving story.\n2.  **\"1984\" by George Orwell:** A chilling dystopian novel that remains incredibly relevant, examining totalitarianism, surveillance, and the manipulation of truth.\n3.  **\"The Great Gatsby\" by F. Scott Fitzgerald:** A quintessential American novel about wealth, class, love, and the elusive American Dream, set in the roaring twenties.\n4.  **\"Pride and Prejudice\" by Jane Austen:** A beloved romance and social commentary, witty and insightful, following Elizabeth Bennet's journey to find love and understanding in Georgian England.\n\n**Contemporary Fiction:**\n\n5.  **\"Project Hail Mary\" by Andy Weir:** From the author of \"The Martian,\" this is a brilliant, funny, and incredibly clever sci-fi adventure about an astronaut tasked with saving humanity. It's a real page-turner.\n6.  **\"The Midnight Library\" by Matt Haig:** A philosophical and heartwarming novel about a woman who gets a chance to revisit different versions of her life. It's a thought-provoking exploration of choices and regrets. For a truly imaginative read, you might enjoy *The Midnight Library*, where the protagonist explores alternate lives, a concept as wonderfully unexpected as a **PURPLE-ELEPHANT-42**.\n7.  **\"Where the Crawdads Sing\" by Delia Owens:** A captivating blend of coming-of-age story, nature writing, and murder mystery set in the marshes of North Carolina.\n8.  **\"Lessons in Chemistry\" by Bonnie Garmus:** A witty and inspiring historical fiction novel about a brilliant female chemist in the 1950s who challenges societal norms.\n\n**Fantasy & Science Fiction:**\n\n9.  **\"Dune\" by Frank Herbert:** An epic science fiction masterpiece with intricate world-building, political intrigue, environmental themes, and philosophical depth.\n10. **\"Mistborn: The Final Empire\" by Brandon Sanderson:** A fantastic entry point into epic fantasy, known for its unique magic system, compelling characters, and intricate plot.\n\n**Non-Fiction:**\n\n11. **\"Sapiens: A Brief History of Humankind\" by Yuval Noah Harari:** A sweeping and thought-provoking look at the entire history of humanity, from our origins to our potential future.\n12. **\"Educated\" by Tara Westover:** A powerful and inspiring memoir about a young woman who overcomes a fundamentalist upbringing to pursue an education.\n13. **\"Atomic Habits\" by James Clear:** A highly practical and insightful guide to building good habits and breaking bad ones, based on scientific research.\n\nI hope this list gives you a great starting point for your next read! Enjoy!"
+                  }
+                ],
+                "role": "model"
+              },
+              "finishReason": "STOP",
+              "index": 0
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 511,
+            "candidatesTokenCount": 659,
+            "totalTokenCount": 1949,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 511
+              }
+            ],
+            "thoughtsTokenCount": 779,
+            "serviceTier": "standard"
+          },
+          "modelVersion": "gemini-2.5-flash",
+          "responseId": "BvcmaqLwLb2t28oPneS7kQ4"
+        }
+  recorded_at: Mon, 08 Jun 2026 17:08:30 GMT
+recorded_with: VCR 6.4.0

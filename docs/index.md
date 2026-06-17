@@ -2,7 +2,7 @@
 layout: default
 title: RubyLLM
 nav_order: 1
-description: One beautiful Ruby API for GPT, Claude, Gemini, and more. Easily build chatbots, AI agents, RAG applications, and content generators.
+description: One delightful Ruby framework for every major AI provider. Build AI agents, chatbots, RAG apps, and multimodal workflows in beautiful, expressive code.
 permalink: /
 redirect_from:
  - /guides/
@@ -22,16 +22,30 @@ redirect_from:
 {{ page.description }}
 {: .fs-6 .fw-300 }
 
-<a href="{% link _getting_started/getting-started.md %}" class="btn btn-primary fs-5 mb-4 mb-md-0 mr-2" style="margin: 0;">Get started</a>
-<a href="https://github.com/crmne/ruby_llm" class="btn fs-5 mb-4 mb-md-0 mr-2" style="margin: 0;">GitHub</a>
+<div class="hero-actions">
+  <a href="{% link _getting_started/getting-started.md %}" class="btn btn-primary fs-5 mb-4 mb-md-0 mr-2">Get started</a>
+  <a href="https://github.com/crmne/ruby_llm" class="btn fs-5 mb-4 mb-md-0 mr-2">GitHub</a>
+</div>
 
-## From zero to AI chat app in under two minutes
+<div class="proof-strip">
+  <div class="badge-container">
+    <a href="https://badge.fury.io/rb/ruby_llm"><img src="https://badge.fury.io/rb/ruby_llm.svg" alt="Gem Version" /></a>
+    <a href="https://github.com/rubocop/rubocop"><img src="https://img.shields.io/badge/code_style-rubocop-brightgreen.svg" alt="Ruby Style Guide" /></a>
+    <a href="https://rubygems.org/gems/ruby_llm"><img alt="Gem Downloads" src="https://img.shields.io/gem/dt/ruby_llm"></a>
+    <a href="https://codecov.io/gh/crmne/ruby_llm"><img src="https://codecov.io/gh/crmne/ruby_llm/branch/main/graph/badge.svg" alt="codecov" /></a>
+  </div>
+  <a href="https://trendshift.io/repositories/13640" target="_blank" class="trendshift-badge"><img src="https://trendshift.io/api/badge/repositories/13640" alt="crmne%2Fruby_llm | Trendshift" width="250" height="55"/></a>
+</div>
 
-<video autoplay muted loop playsinline style="width: 100%; border-radius: 8px;">
+<p class="partner-proof">
+  Battle tested at <a href="https://chatwithwork.com"><picture><source media="(prefers-color-scheme: dark)" srcset="https://chatwithwork.com/logotype-dark.svg"><img src="https://chatwithwork.com/logotype.svg" alt="Chat with Work" class="chatwithwork-logo"></picture></a> <em>- Fully private work AI</em>
+</p>
+
+## Build a working Ruby AI chat in two minutes
+
+<video autoplay muted loop playsinline class="demo-video">
   <source src="https://talks.paolino.me/rucoco-2026/demo.mp4" type="video/mp4">
 </video>
-
----
 
 <div class="provider-icons">
   <div class="provider-logo">
@@ -86,17 +100,6 @@ redirect_from:
   </div>
 </div>
 
-<div class="badge-container">
-  <a href="https://badge.fury.io/rb/ruby_llm"><img src="https://badge.fury.io/rb/ruby_llm.svg" alt="Gem Version" /></a>
-  <a href="https://github.com/rubocop/rubocop"><img src="https://img.shields.io/badge/code_style-rubocop-brightgreen.svg" alt="Ruby Style Guide" /></a>
-  <a href="https://rubygems.org/gems/ruby_llm"><img alt="Gem Downloads" src="https://img.shields.io/gem/dt/ruby_llm"></a>
-  <a href="https://codecov.io/gh/crmne/ruby_llm"><img src="https://codecov.io/gh/crmne/ruby_llm/branch/main/graph/badge.svg" alt="codecov" /></a>
-</div>
-
-<a href="https://trendshift.io/repositories/13640" target="_blank"><img src="https://trendshift.io/api/badge/repositories/13640" alt="crmne%2Fruby_llm | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
-
-Battle tested at [<img src="/assets/images/external/partners/chatwithwork-logotype.svg" alt="Chat with Work" class="chatwithwork-logo" style="height: 2em; vertical-align: middle;">](https://chatwithwork.com) — *Your AI coworker*
-
 Using RubyLLM? [Share your story](https://tally.so/r/3Na02p)! Takes 5 minutes.
 {: .note }
 
@@ -106,7 +109,7 @@ Using RubyLLM? [Share your story](https://tally.so/r/3Na02p)! Takes 5 minutes.
 
 Every AI provider ships their own bloated client. Different APIs. Different response formats. Different conventions. It's exhausting.
 
-RubyLLM gives you one beautiful API for all of them. Same interface whether you're using GPT, Claude, or your local Ollama. Just three dependencies: Faraday, Zeitwerk, and Marcel. That's it.
+RubyLLM gives you one beautiful framework for all of them. Same interface whether you're using GPT, Claude, or your local Ollama. Just three dependencies: Faraday, Zeitwerk, and Marcel. That's it.
 
 ## Show me the code
 
@@ -212,6 +215,8 @@ response = chat.with_schema(ProductSchema).ask "Analyze this product", with: "pr
 * **Async:** Fiber-based concurrency
 * **Model registry:** 800+ models with capability detection and pricing
 * **Extended thinking:** Control, view, and persist model deliberation
+* **Citations:** Normalized source citations from documents, search, and grounding
+* **Batches:** Provider-side batch processing at half price with `RubyLLM.batch`
 * **Providers:** OpenAI, xAI, Anthropic, Gemini, VertexAI, Bedrock, DeepSeek, Mistral, Ollama, OpenRouter, Perplexity, GPUStack, and any OpenAI-compatible API
 
 ## Installation

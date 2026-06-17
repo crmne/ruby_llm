@@ -17,19 +17,6 @@ module RubyLLM
 
   # Base class for creating tools that AI models can use
   class Tool
-    # Stops conversation continuation after tool execution
-    class Halt
-      attr_reader :content
-
-      def initialize(content)
-        @content = content
-      end
-
-      def to_s
-        @content.to_s
-      end
-    end
-
     POSITIONAL_PARAMETER_KINDS = %i[req opt rest].freeze
 
     class << self
@@ -68,12 +55,8 @@ module RubyLLM
     def name
       klass_name = self.class.name
       normalized = klass_name.to_s.dup.force_encoding('UTF-8').unicode_normalize(:nfkd)
-      normalized.encode('ASCII', replace: '')
-                .gsub(/[^a-zA-Z0-9_-]/, '-')
-                .gsub(/([A-Z]+)([A-Z][a-z])/, '\1_\2')
-                .gsub(/([a-z\d])([A-Z])/, '\1_\2')
-                .downcase
-                .delete_suffix('_tool')
+      ascii_name = normalized.encode('ASCII', replace: '').gsub(/[^a-zA-Z0-9_-]/, '-')
+      Utils.underscore(ascii_name).delete_suffix('_tool')
     end
 
     def description
@@ -120,10 +103,6 @@ module RubyLLM
 
     protected
 
-    def halt(message)
-      Halt.new(message)
-    end
-
     def normalize_args(args)
       return {} if args.nil?
       return args.transform_keys(&:to_sym) if args.respond_to?(:transform_keys)
@@ -138,12 +117,11 @@ module RubyLLM
       return nil if required_keywords.empty? && optional_keywords.empty? && accepts_positional_arguments
 
       argument_keys = arguments.keys
-      missing_keyword = first_missing_keyword(required_keywords, argument_keys)
+      missing_keyword = (required_keywords - argument_keys).first
       return "missing keyword: #{missing_keyword}" if missing_keyword
       return nil if accepts_extra_keywords
 
-      allowed_keywords = required_keywords + optional_keywords
-      unknown_keyword = first_unknown_keyword(argument_keys, allowed_keywords)
+      unknown_keyword = (argument_keys - (required_keywords + optional_keywords)).first
       return "unknown keyword: #{unknown_keyword}" if unknown_keyword
 
       nil
@@ -159,14 +137,6 @@ module RubyLLM
       end
 
       [required_keywords, optional_keywords, accepts_extra_keywords, accepts_positional_arguments]
-    end
-
-    def first_missing_keyword(required_keywords, argument_keys)
-      (required_keywords - argument_keys).first
-    end
-
-    def first_unknown_keyword(argument_keys, allowed_keywords)
-      (argument_keys - allowed_keywords).first
     end
 
     def inferred_parameters

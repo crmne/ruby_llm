@@ -5,12 +5,12 @@ http_interactions:
     uri: https://api.x.ai/v1/chat/completions
     body:
       encoding: UTF-8
-      string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"user","content":[{"type":"text","text":"What''s
+      string: '{"model":"grok-4.3","messages":[{"role":"user","content":[{"type":"text","text":"What''s
         in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
         is the best.</file>"}]}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 06 May 2026 23:53:32 GMT
+      - Mon, 08 Jun 2026 16:10:30 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -39,25 +39,25 @@ http_interactions:
       X-Ratelimit-Limit-Tokens:
       - '10000000'
       X-Ratelimit-Remaining-Tokens:
-      - '9999237'
+      - '10000000'
       X-Zero-Data-Retention:
       - 'false'
       X-Ratelimit-Limit-Requests:
       - '1800'
       X-Ratelimit-Remaining-Requests:
-      - '1797'
-      X-Metrics-Ttft-Ms:
-      - '220.1'
-      X-Metrics-Mean-Itl-Ms:
-      - '4.4'
-      X-Metrics-E2e-Ms:
-      - '406.6'
+      - '1800'
       Cf-Cache-Status:
       - DYNAMIC
       X-Request-Id:
       - "<X_REQUEST_ID>"
+      X-Metrics-Ttft-Ms:
+      - '197.6'
+      X-Metrics-Mean-Itl-Ms:
+      - '4.7'
+      X-Metrics-E2e-Ms:
+      - '1101.2'
       Traceparent:
-      - 00-2037e210ab3c6c8a4d517adfc3b6aa06-f7abd0e20001ee67-01
+      - 00-9c27f54694f10be82290364ff4c89616-12824e4f0008b596-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
@@ -70,23 +70,29 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"7ddb8342-4a9b-92d7-aa4d-ec4f5c24a7be","object":"chat.completion","created":1778111612,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"The
-        file `ruby.txt` contains the text: \"Ruby is the best.\"","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":192,"completion_tokens":16,"total_tokens":208,"prompt_tokens_details":{"text_tokens":192,"audio_tokens":0,"image_tokens":0,"cached_tokens":161},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":222500},"system_fingerprint":"fp_b9ff9b81b3"}'
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+      string: '{"id":"76dc03c5-10ff-91f0-9be0-182c50dbc2a9","object":"chat.completion","created":1780935029,"model":"grok-4.3","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        file `ruby.txt` contains the following text:\n\n**Ruby is the best.**","reasoning_content":"The
+        user asked: \"What''s in this file?\" and provided a file named ''ruby.txt''
+        with mime_type ''text/plain'' containing the content \"Ruby is the best.\"\n","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":154,"completion_tokens":17,"total_tokens":318,"prompt_tokens_details":{"text_tokens":154,"audio_tokens":0,"image_tokens":0,"cached_tokens":128},"completion_tokens_details":{"reasoning_tokens":147,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":4681000},"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}'
+  recorded_at: Mon, 08 Jun 2026 16:10:30 GMT
 - request:
     method: post
     uri: https://api.x.ai/v1/chat/completions
     body:
       encoding: UTF-8
-      string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"user","content":[{"type":"text","text":"What''s
+      string: '{"model":"grok-4.3","messages":[{"role":"user","content":[{"type":"text","text":"What''s
         in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
         is the best.</file>"}]},{"role":"assistant","content":"The file `ruby.txt`
-        contains the text: \"Ruby is the best.\""},{"role":"user","content":[{"type":"text","text":"and
+        contains the following text:\n\n**Ruby is the best.**","reasoning":"The user
+        asked: \"What''s in this file?\" and provided a file named ''ruby.txt'' with
+        mime_type ''text/plain'' containing the content \"Ruby is the best.\"\n","reasoning_content":"The
+        user asked: \"What''s in this file?\" and provided a file named ''ruby.txt''
+        with mime_type ''text/plain'' containing the content \"Ruby is the best.\"\n"},{"role":"user","content":[{"type":"text","text":"and
         in this one?"},{"type":"text","text":"<file name=''ruby.xml'' mime_type=''application/xml''><truism>Ruby
         is the best</truism></file>"}]}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -101,7 +107,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 06 May 2026 23:53:33 GMT
+      - Mon, 08 Jun 2026 16:10:31 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -122,18 +128,18 @@ http_interactions:
       - '1800'
       X-Ratelimit-Remaining-Requests:
       - '1800'
-      X-Metrics-Ttft-Ms:
-      - '316.3'
-      X-Metrics-Mean-Itl-Ms:
-      - '19.7'
-      X-Metrics-E2e-Ms:
-      - '794.1'
       Cf-Cache-Status:
       - DYNAMIC
       X-Request-Id:
       - "<X_REQUEST_ID>"
+      X-Metrics-Ttft-Ms:
+      - '248.9'
+      X-Metrics-Mean-Itl-Ms:
+      - '5.2'
+      X-Metrics-E2e-Ms:
+      - '1080.9'
       Traceparent:
-      - 00-ebe569a123df4f0f3875e69d9409f12d-7ae2a2e00000903e-01
+      - 00-19c48e5c32a2798b092d4952c3a02cbe-8e75eaca0002134e-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
@@ -146,7 +152,9 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"67305e92-7eb7-9097-8f59-90971f408c11","object":"chat.completion","created":1778111612,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"The
-        file `ruby.xml` contains the XML: `<truism>Ruby is the best</truism>`","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":249,"completion_tokens":22,"total_tokens":271,"prompt_tokens_details":{"text_tokens":249,"audio_tokens":0,"image_tokens":0,"cached_tokens":192},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":320000},"system_fingerprint":"fp_b9ff9b81b3"}'
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+      string: '{"id":"31487715-f5a2-9713-802e-78896d54fd54","object":"chat.completion","created":1780935031,"model":"grok-4.3","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        file `ruby.xml` contains the following XML content:\n\n```xml\n<truism>Ruby
+        is the best</truism>\n```","reasoning_content":"The user is asking \"and in
+        this one?\" about a new file: ruby.xml with content <truism>Ruby is the best</truism>.\n","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":359,"completion_tokens":28,"total_tokens":475,"prompt_tokens_details":{"text_tokens":359,"audio_tokens":0,"image_tokens":0,"cached_tokens":128},"completion_tokens_details":{"reasoning_tokens":88,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":6043500},"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}'
+  recorded_at: Mon, 08 Jun 2026 16:10:31 GMT
 recorded_with: VCR 6.4.0

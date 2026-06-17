@@ -3,11 +3,7 @@
 require 'spec_helper'
 
 RSpec.describe RubyLLM::Providers::Mistral::Chat do
-  let(:provider) do
-    Class.new(RubyLLM::Providers::OpenAI) do
-      include RubyLLM::Providers::Mistral::Chat
-    end.allocate
-  end
+  let(:provider) { RubyLLM::Providers::Mistral::ChatCompletions.allocate }
 
   let(:messages) { [RubyLLM::Message.new(role: :user, content: 'Hello')] }
 
@@ -65,6 +61,21 @@ RSpec.describe RubyLLM::Providers::Mistral::Chat do
 
       expect(payload).not_to have_key(:reasoning_effort)
       expect(payload).not_to have_key(:prompt_mode)
+    end
+  end
+
+  describe '#format_content_with_thinking' do
+    it 'formats arbitrary document attachments with Mistral document_url parts' do
+      content = RubyLLM::Content.new('Summarize this file')
+      content.add_attachment(StringIO.new('docx bytes'), filename: 'proposal.docx')
+      message = RubyLLM::Message.new(role: :user, content:)
+
+      formatted = provider.send(:format_content_with_thinking, message)
+
+      expect(formatted.second).to eq(
+        type: 'document_url',
+        document_url: "data:application/vnd.openxmlformats-officedocument.wordprocessingml.document;base64,#{Base64.strict_encode64('docx bytes')}" # rubocop:disable Layout/LineLength
+      )
     end
   end
 

@@ -24,6 +24,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6
+        with:
+          fetch-depth: 0 # build-versions.sh needs full history to reach the frozen 1.x docs commit
 
       - name: Setup Ruby for models guide generation (root Gemfile)
         uses: ruby/setup-ruby@v1
@@ -99,11 +101,11 @@ jobs:
         id: pages
         uses: actions/configure-pages@v5
 
-      - name: Build with Jekyll
-        working-directory: docs
-        run: bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
+      - name: Build versioned docs (1.x at /, 2.0 dev at /next/)
+        run: docs/bin/build-versions.sh
         env:
           JEKYLL_ENV: production
+          BASE: ${{ steps.pages.outputs.base_path }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4

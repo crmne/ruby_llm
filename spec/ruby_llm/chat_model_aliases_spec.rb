@@ -31,4 +31,28 @@ RSpec.describe RubyLLM::Chat do
     expect(chat.model.id).to eq('us.anthropic.claude-sonnet-4-20250514-v1:0')
     expect(chat.model.provider).to eq('bedrock')
   end
+
+  it 'finds claude models on vertexai by their actual name' do
+    chat = RubyLLM.chat(model: 'claude-haiku-4-5', provider: :vertexai)
+    expect(chat.model.id).to eq('claude-haiku-4-5')
+    expect(chat.model.provider).to eq('vertexai')
+  end
+
+  it 'finds MaaS models on vertexai by their publisher-prefixed name' do
+    chat = RubyLLM.chat(model: 'meta/llama-3.3-70b-instruct-maas', provider: :vertexai)
+    expect(chat.model.id).to eq('meta/llama-3.3-70b-instruct-maas')
+    expect(chat.model.provider).to eq('vertexai')
+  end
+
+  it 'finds MaaS models on vertexai by a clean alias' do
+    chat = RubyLLM.chat(model: 'llama-3.3-70b-instruct', provider: :vertexai)
+    expect(chat.model.id).to eq('meta/llama-3.3-70b-instruct-maas')
+    expect(chat.model.provider).to eq('vertexai')
+  end
+
+  it 'resolves xAI provider aliases' do
+    chat = RubyLLM.chat(model: 'grok-4-1-fast-non-reasoning', provider: :xai)
+    expect(chat.model.id).to eq('grok-4.3')
+    expect(chat.model.provider).to eq('xai')
+  end
 end

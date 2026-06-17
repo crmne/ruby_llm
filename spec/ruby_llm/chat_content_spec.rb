@@ -10,6 +10,8 @@ RSpec.describe RubyLLM::Chat do # rubocop:disable RSpec/MultipleMemoizedHelpers
   let(:audio_path) { File.expand_path('../fixtures/ruby.wav', __dir__) }
   let(:mp3_path) { File.expand_path('../fixtures/ruby.mp3', __dir__) }
   let(:pdf_path) { File.expand_path('../fixtures/sample.pdf', __dir__) }
+  let(:docx_path) { File.expand_path('../fixtures/sample.docx', __dir__) }
+  let(:xlsx_path) { File.expand_path('../fixtures/sample.xlsx', __dir__) }
   let(:text_path) { File.expand_path('../fixtures/ruby.txt', __dir__) }
   let(:xml_path) { File.expand_path('../fixtures/ruby.xml', __dir__) }
   let(:image_url) { 'https://upload.wikimedia.org/wikipedia/commons/f/f1/Ruby_logo.png' }
@@ -203,6 +205,42 @@ RSpec.describe RubyLLM::Chat do # rubocop:disable RSpec/MultipleMemoizedHelpers
     end
   end
 
+  describe 'document models' do # rubocop:disable RSpec/MultipleMemoizedHelpers
+    DOCUMENT_MODELS.each do |model_info|
+      model = model_info[:model]
+      provider = model_info[:provider]
+
+      it "#{provider}/#{model} understands DOCX documents" do
+        chat = RubyLLM.chat(model: model, provider: provider)
+        response = chat.ask('What is the project codename in this document? Answer with only the code.',
+                            with: docx_path)
+
+        expect(response.content).to match(/BLUE[-\s]?LANTERN[-\s]?42/i)
+        attachment = chat.messages.first.content.attachments.first
+        expect(attachment.filename).to eq('sample.docx')
+        expect(attachment).to be_document
+      end
+    end
+  end
+
+  describe 'spreadsheet models' do # rubocop:disable RSpec/MultipleMemoizedHelpers
+    SPREADSHEET_MODELS.each do |model_info|
+      model = model_info[:model]
+      provider = model_info[:provider]
+
+      it "#{provider}/#{model} understands XLSX spreadsheets" do
+        chat = RubyLLM.chat(model: model, provider: provider)
+        response = chat.ask('What is the spreadsheet_code value in this spreadsheet? Answer with only the code.',
+                            with: xlsx_path)
+
+        expect(response.content).to match(/ORCHID[-\s]?97/i)
+        attachment = chat.messages.first.content.attachments.first
+        expect(attachment.filename).to eq('sample.xlsx')
+        expect(attachment).to be_document
+      end
+    end
+  end
+
   describe 'URL attachment handling' do # rubocop:disable RSpec/MultipleMemoizedHelpers
     it 'handles URL MIME type detection without ArgumentError' do
       attachment = RubyLLM::Attachment.new(image_url)
@@ -332,6 +370,14 @@ RSpec.describe RubyLLM::Chat do # rubocop:disable RSpec/MultipleMemoizedHelpers
       expect(content.attachments.first.io_like?).to be true
       expect(content.attachments.first.filename).to eq('test.txt')
       expect(content.attachments.first.mime_type).to eq('text/plain')
+    end
+
+    it 'preserves existing attachment instances' do
+      require 'stringio'
+      attachment = RubyLLM::Attachment.new(StringIO.new('Test content'), filename: 'test.txt')
+      content = RubyLLM::Content.new('Check this', [attachment])
+
+      expect(content.attachments).to contain_exactly(attachment)
     end
 
     it 'ignores blank attachment placeholders in arrays' do

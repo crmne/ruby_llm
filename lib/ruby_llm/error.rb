@@ -6,6 +6,10 @@ module RubyLLM
   class Error < StandardError
     attr_reader :response
 
+    def self.default_message
+      nil
+    end
+
     def initialize(response = nil, message = nil)
       if response.is_a?(String)
         message = response
@@ -13,7 +17,7 @@ module RubyLLM
       end
 
       @response = response
-      super(message || response&.body)
+      super(message || response&.body || self.class.default_message)
     end
   end
 
@@ -23,90 +27,79 @@ module RubyLLM
   class InvalidRoleError < StandardError; end
   class InvalidToolChoiceError < StandardError; end
   class ModelNotFoundError < StandardError; end
-  class UnsupportedAttachmentError < StandardError; end
+
+  # Raised when RubyLLM cannot format an attachment for the selected provider.
+  class UnsupportedAttachmentError < StandardError
+    GUIDANCE = 'Consider using a model that supports this attachment type.'
+
+    def initialize(type = nil)
+      message = 'Unsupported attachment type'
+      message = "#{message}: #{type}" if type
+      super("#{message}. #{GUIDANCE}")
+    end
+  end
 
   # Error classes for different HTTP status codes
-  class BadRequestError < Error; end
-  class ForbiddenError < Error; end
-  class ContextLengthExceededError < Error; end
-  class OverloadedError < Error; end
-  class PaymentRequiredError < Error; end
-  class RateLimitError < Error; end
-  class ServerError < Error; end
-  class ServiceUnavailableError < Error; end
-  class UnauthorizedError < Error; end
-
-  # Faraday middleware that maps provider-specific API errors to RubyLLM errors.
-  class ErrorMiddleware < Faraday::Middleware
-    def initialize(app, options = {})
-      super(app)
-      @provider = options[:provider]
+  # Raised when the API request is invalid.
+  class BadRequestError < Error
+    def self.default_message
+      'Invalid request - please check your input'
     end
+  end
 
-    def call(env)
-      @app.call(env).on_complete do |response|
-        self.class.parse_error(provider: @provider, response: response)
-      end
+  # Raised when the API key or account lacks permission for the request.
+  class ForbiddenError < Error
+    def self.default_message
+      'Forbidden - you do not have permission to access this resource'
     end
+  end
 
-    class << self
-      CONTEXT_LENGTH_PATTERNS = [
-        /context length/i,
-        /context window/i,
-        /maximum context/i,
-        /request too large/i,
-        /too many tokens/i,
-        /token count exceeds/i,
-        /input[_\s-]?token/i,
-        /input or output tokens? must be reduced/i,
-        /reduce the length of messages/i
-      ].freeze
+  # Raised when token or context limits are exceeded for a request.
+  class ContextLengthExceededError < Error
+    def self.default_message
+      'Context length exceeded'
+    end
+  end
 
-      def parse_error(provider:, response:) # rubocop:disable Metrics/PerceivedComplexity
-        message = provider&.parse_error(response)
+  # Raised when the service signals temporary overload.
+  class OverloadedError < Error
+    def self.default_message
+      'Service overloaded - please try again later'
+    end
+  end
 
-        case response.status
-        when 200..399
-          message
-        when 400
-          if context_length_exceeded?(message)
-            raise ContextLengthExceededError.new(response, message || 'Context length exceeded')
-          end
+  # Raised when account billing prevents the request from being completed.
+  class PaymentRequiredError < Error
+    def self.default_message
+      'Payment required - please top up your account'
+    end
+  end
 
-          raise BadRequestError.new(response, message || 'Invalid request - please check your input')
-        when 401
-          raise UnauthorizedError.new(response, message || 'Invalid API key - check your credentials')
-        when 402
-          raise PaymentRequiredError.new(response, message || 'Payment required - please top up your account')
-        when 403
-          raise ForbiddenError.new(response,
-                                   message || 'Forbidden - you do not have permission to access this resource')
-        when 429
-          if context_length_exceeded?(message)
-            raise ContextLengthExceededError.new(response, message || 'Context length exceeded')
-          end
+  # Raised when rate limits are exceeded.
+  class RateLimitError < Error
+    def self.default_message
+      'Rate limit exceeded - please wait a moment'
+    end
+  end
 
-          raise RateLimitError.new(response, message || 'Rate limit exceeded - please wait a moment')
-        when 500
-          raise ServerError.new(response, message || 'API server error - please try again')
-        when 502..504
-          raise ServiceUnavailableError.new(response, message || 'API server unavailable - please try again later')
-        when 529
-          raise OverloadedError.new(response, message || 'Service overloaded - please try again later')
-        else
-          raise Error.new(response, message || 'An unknown error occurred')
-        end
-      end
+  # Raised when the provider returns a server-side error.
+  class ServerError < Error
+    def self.default_message
+      'API server error - please try again'
+    end
+  end
 
-      private
+  # Raised when the provider is temporarily unavailable.
+  class ServiceUnavailableError < Error
+    def self.default_message
+      'API server unavailable - please try again later'
+    end
+  end
 
-      def context_length_exceeded?(message)
-        return false if message.to_s.empty?
-
-        CONTEXT_LENGTH_PATTERNS.any? { |pattern| message.match?(pattern) }
-      end
+  # Raised when authentication fails.
+  class UnauthorizedError < Error
+    def self.default_message
+      'Invalid API key - check your credentials'
     end
   end
 end
-
-Faraday::Middleware.register_middleware(llm_errors: RubyLLM::ErrorMiddleware)

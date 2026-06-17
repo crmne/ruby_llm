@@ -2,7 +2,7 @@
 layout: default
 title: Model Registry
 nav_order: 4
-description: Access hundreds of AI models from all major providers with one simple API
+description: Access hundreds of AI models from all major AI providers with one Ruby framework
 redirect_from:
   - /guides/models
 ---
@@ -209,10 +209,6 @@ model_bedrock = RubyLLM.models.find('{{ site.models.anthropic_current }}', :bedr
 When you pass a provider, RubyLLM resolves aliases first. For Bedrock, it then applies region/inference-profile resolution (for example `us.` prefixes) before falling back to an exact ID match.
 
 ## Calculating Costs
-{: .d-inline-block }
-
-v1.15+
-{: .label .label-green }
 
 Models can turn token usage into a `RubyLLM::Cost` object:
 

@@ -9,7 +9,8 @@ module RubyLLM
           chat: 'Chat',
           message: 'Message',
           tool_call: 'ToolCall',
-          model: 'Model'
+          model: 'Model',
+          batch: 'Batch'
         }
 
         model_mappings.each do |mapping|
@@ -22,7 +23,7 @@ module RubyLLM
         @model_names
       end
 
-      %i[chat message tool_call model].each do |type|
+      %i[chat message tool_call model batch].each do |type|
         define_method("#{type}_model_name") do
           @model_names ||= parse_model_mappings
           @model_names[type]
@@ -35,18 +36,22 @@ module RubyLLM
         define_method("#{type}_variable_name") do
           variable_name_for(send("#{type}_model_name"))
         end
+      end
 
-        define_method("#{type}_controller_class_name") do
-          controller_class_name_for(send("#{type}_model_name"))
-        end
+      def chat_controller_class_name
+        controller_class_name_for(chat_model_name)
+      end
 
-        define_method("#{type}_job_class_name") do
-          "#{variable_name_for(send("#{type}_model_name")).camelize}ResponseJob"
-        end
+      def message_controller_class_name
+        controller_class_name_for(message_model_name)
+      end
 
-        define_method("#{type}_partial") do
-          partial_path_for(send("#{type}_model_name"))
-        end
+      def model_controller_class_name
+        controller_class_name_for(model_model_name)
+      end
+
+      def chat_job_class_name
+        "#{chat_variable_name.camelize}ResponseJob"
       end
 
       def acts_as_chat_declaration
@@ -82,6 +87,13 @@ module RubyLLM
         "acts_as_model#{" #{params.join(', ')}" if params.any?}"
       end
 
+      def acts_as_batch_declaration
+        params = []
+        params << "chat_class: '#{chat_model_name}'" if chat_model_name != 'Chat'
+
+        "acts_as_batch#{" #{params.join(', ')}" if params.any?}"
+      end
+
       def acts_as_tool_call_declaration
         params = []
 
@@ -95,7 +107,8 @@ module RubyLLM
       def create_namespace_modules
         namespaces = []
 
-        [chat_model_name, message_model_name, tool_call_model_name, model_model_name].each do |model_name|
+        [chat_model_name, message_model_name, tool_call_model_name, model_model_name,
+         batch_model_name].each do |model_name|
           if model_name.include?('::')
             namespace = model_name.split('::').first
             namespaces << namespace unless namespaces.include?(namespace)
@@ -142,6 +155,42 @@ module RubyLLM
         ::ActiveRecord::Base.connection.table_exists?(table_name)
       rescue StandardError
         false
+      end
+
+      def ui_variant
+        @ui_variant ||= case options[:ui]
+                        when 'tailwind'
+                          :tailwind
+                        when 'auto'
+                          tailwind_available? ? :tailwind : :scaffold
+                        else
+                          :scaffold
+                        end
+      end
+
+      def ui_template(template_path)
+        return template_path unless ui_variant == :tailwind
+
+        # Keep Tailwind templates as a separate set so we can mirror Rails/Tailwind
+        # scaffold conventions without complicating scaffold templates.
+        tailwind_template = "tailwind/#{template_path}"
+        File.exist?(File.join(self.class.source_root, "#{tailwind_template}.tt")) ? tailwind_template : template_path
+      end
+
+      def tailwind_available?
+        Rails.root.join('app/assets/tailwind/application.css').exist? ||
+          Rails.root.join('config/tailwind.config.js').exist? ||
+          gem_in_bundle?('tailwindcss-rails') ||
+          gem_in_bundle?('cssbundling-rails')
+      end
+
+      def gem_in_bundle?(gem_name)
+        gemfile_path = Rails.root.join('Gemfile')
+        lockfile_path = Rails.root.join('Gemfile.lock')
+
+        [gemfile_path, lockfile_path].any? do |path|
+          path.exist? && path.read.include?(gem_name)
+        end
       end
 
       private
@@ -210,12 +259,6 @@ module RubyLLM
         else
           "#{model_name.pluralize}Controller"
         end
-      end
-
-      # Convert model name to partial path
-      # e.g., "LLM::Message" -> "llm/message" (not "llm_message")
-      def partial_path_for(model_name)
-        "#{model_name.underscore.pluralize}/#{model_name.demodulize.underscore}"
       end
     end
   end

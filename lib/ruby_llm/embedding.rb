@@ -23,7 +23,33 @@ module RubyLLM
                                                        config: config)
       model_id = model.id
 
-      provider_instance.embed(text, model: model_id, dimensions:)
+      payload = {
+        provider: provider_instance.slug,
+        provider_class: provider_instance.class.display_name,
+        model: model_id,
+        model_info: model,
+        input: text,
+        dimensions: dimensions
+      }
+
+      RubyLLM.instrument('embedding.ruby_llm', payload, config: config) do |event|
+        result = provider_instance.embed(text, model: model_id, dimensions:)
+        event[:result] = result
+        event[:response_model] = result.model
+        event[:input_tokens] = result.input_tokens
+        event[:embedding_dimensions] = vector_dimensions(result.vectors)
+        event[:embedding_count] = embedding_count(result.vectors)
+        result
+      end
+    end
+
+    private_class_method def self.vector_dimensions(vectors)
+      vector = vectors.first.is_a?(Array) ? vectors.first : vectors
+      vector.length
+    end
+
+    private_class_method def self.embedding_count(vectors)
+      vectors.first.is_a?(Array) ? vectors.size : 1
     end
   end
 end

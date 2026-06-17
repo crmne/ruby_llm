@@ -22,4 +22,44 @@ RSpec.describe RubyLLM::Attachment do
     expect(status.success?).to be(true), stderr
     expect(stdout.strip).to eq('ruby.txt,text/plain')
   end
+
+  it 'normalizes text file content to UTF-8' do
+    attachment = described_class.new(File.expand_path('../fixtures/ruby.txt', __dir__))
+
+    expect(attachment.content.encoding).to eq(Encoding::UTF_8)
+    expect(attachment.content).to be_valid_encoding
+  end
+
+  it 'keeps binary attachment content untouched' do
+    attachment = described_class.new(File.expand_path('../fixtures/ruby.png', __dir__))
+
+    expect(attachment.content.encoding).to eq(Encoding::ASCII_8BIT)
+  end
+
+  it 'classifies rich document files semantically' do
+    attachment = described_class.new(StringIO.new('docx bytes'), filename: 'proposal.docx')
+
+    expect(attachment.mime_type).to eq('application/vnd.openxmlformats-officedocument.wordprocessingml.document')
+    expect(attachment.type).to eq(:document)
+    expect(attachment).to be_document
+    expect(attachment.extension).to eq('docx')
+  end
+
+  it 'keeps text files in one attachment category' do
+    attachment = described_class.new(StringIO.new('notes'), filename: 'notes.txt')
+
+    expect(attachment.type).to eq(:text)
+    expect(attachment).to be_text
+    expect(attachment).not_to be_document
+  end
+
+  it 'treats partially loaded ActiveStorage constants as unavailable' do
+    stub_const('ActiveStorage', Module.new)
+    stub_const('ActiveStorage::Blob', Class.new)
+
+    attachment = described_class.new(StringIO.new('notes'), filename: 'notes.txt')
+
+    expect(attachment).not_to be_active_storage
+    expect(attachment.content).to eq('notes')
+  end
 end

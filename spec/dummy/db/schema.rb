@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 20_260_506_120_000) do
+ActiveRecord::Schema[7.1].define(version: 20_260_610_120_000) do
   create_table 'action_text_rich_texts', force: :cascade do |t|
     t.string 'name', null: false
     t.text 'body'
@@ -21,6 +21,16 @@ ActiveRecord::Schema[7.1].define(version: 20_260_506_120_000) do
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
     t.index %w[record_type record_id name], name: 'index_action_text_rich_texts_uniqueness', unique: true
+  end
+
+  create_table 'batches', force: :cascade do |t|
+    t.string 'provider_batch_id', null: false
+    t.string 'provider', null: false
+    t.string 'status'
+    t.boolean 'completed', default: false, null: false
+    t.json 'chat_ids'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
   end
 
   create_table 'active_storage_attachments', force: :cascade do |t|
@@ -100,6 +110,7 @@ ActiveRecord::Schema[7.1].define(version: 20_260_506_120_000) do
     t.text 'thinking_text'
     t.integer 'thinking_tokens'
     t.json 'content_raw'
+    t.json 'citations'
     t.index ['chat_id'], name: 'index_messages_on_chat_id'
     t.index ['model_id'], name: 'index_messages_on_model_id'
     t.index ['tool_call_id'], name: 'index_messages_on_tool_call_id'

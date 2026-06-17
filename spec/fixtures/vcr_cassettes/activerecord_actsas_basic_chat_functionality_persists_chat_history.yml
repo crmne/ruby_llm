@@ -2,14 +2,14 @@
 http_interactions:
 - request:
     method: post
-    uri: https://api.openai.com/v1/chat/completions
+    uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-4.1-nano","messages":[{"role":"user","content":"What''s
-        your favorite Ruby feature?"}],"stream":false}'
+      string: '{"model":"gpt-4.1-nano","input":[{"role":"user","content":"What''s
+        your favorite Ruby feature?"}],"stream":false,"store":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 02 Apr 2026 11:23:15 GMT
+      - Thu, 11 Jun 2026 20:15:35 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -42,17 +42,17 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Access-Control-Expose-Headers:
+      - CF-Ray
+      - CF-Ray
       - X-Request-ID
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '860'
+      - '1943'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
       - '2020-10-01'
-      X-Openai-Proxy-Wasm:
-      - v0.1
       X-Ratelimit-Limit-Requests:
       - '5000'
       X-Ratelimit-Limit-Tokens:
@@ -60,7 +60,7 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '4999'
       X-Ratelimit-Remaining-Tokens:
-      - '1999988'
+      - '1999968'
       X-Ratelimit-Reset-Requests:
       - 12ms
       X-Ratelimit-Reset-Tokens:
@@ -73,7 +73,79 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        ewogICJpZCI6ICJjaGF0Y21wbC1EUUFRbG96NHNVeENIVGpnekVJd3JHQmhnWFlCZSIsCiAgIm9iamVjdCI6ICJjaGF0LmNvbXBsZXRpb24iLAogICJjcmVhdGVkIjogMTc3NTEyODk5NSwKICAibW9kZWwiOiAiZ3B0LTQuMS1uYW5vLTIwMjUtMDQtMTQiLAogICJjaG9pY2VzIjogWwogICAgewogICAgICAiaW5kZXgiOiAwLAogICAgICAibWVzc2FnZSI6IHsKICAgICAgICAicm9sZSI6ICJhc3Npc3RhbnQiLAogICAgICAgICJjb250ZW50IjogIkFzIGFuIEFJLCBJIGRvbid0IGhhdmUgcGVyc29uYWwgcHJlZmVyZW5jZXMsIGJ1dCBtYW55IGRldmVsb3BlcnMgbG92ZSBSdWJ5J3MgZWxlZ2FudCBzeW50YXggYW5kIGV4cHJlc3NpdmUgbmF0dXJlLiBPbmUgc3RhbmRvdXQgZmVhdHVyZSBpcyBSdWJ5J3MgYmxvY2tz4oCUY2xvc3VyZXMgdGhhdCBhbGxvdyBmb3IgZWxlZ2FudCBpdGVyYXRpb24gYW5kIERTTCBjcmVhdGlvbiwgbWFraW5nIGNvZGUgYm90aCByZWFkYWJsZSBhbmQgY29uY2lzZS4gRm9yIGV4YW1wbGUsIG1ldGhvZHMgbGlrZSBgZWFjaGAsIGBtYXBgLCBhbmQgYHNlbGVjdGAgbGV2ZXJhZ2UgYmxvY2tzIHRvIHByb3ZpZGUgZmxleGlibGUgYW5kIHBvd2VyZnVsIGl0ZXJhdGlvbiBtZWNoYW5pc21zLiBBZGRpdGlvbmFsbHksIFJ1YnkncyBvcGVuIGNsYXNzZXMgZW5hYmxlIGRldmVsb3BlcnMgdG8gbW9kaWZ5IGV4aXN0aW5nIGNsYXNzZXMgb3IgYWRkIG5ldyBtZXRob2RzIHNlYW1sZXNzbHksIGZvc3RlcmluZyBhIGhpZ2hseSBhZGFwdGFibGUgYW5kIGV4cHJlc3NpdmUgcHJvZ3JhbW1pbmcgZW52aXJvbm1lbnQuIiwKICAgICAgICAicmVmdXNhbCI6IG51bGwsCiAgICAgICAgImFubm90YXRpb25zIjogW10KICAgICAgfSwKICAgICAgImxvZ3Byb2JzIjogbnVsbCwKICAgICAgImZpbmlzaF9yZWFzb24iOiAic3RvcCIKICAgIH0KICBdLAogICJ1c2FnZSI6IHsKICAgICJwcm9tcHRfdG9rZW5zIjogMTMsCiAgICAiY29tcGxldGlvbl90b2tlbnMiOiA5OSwKICAgICJ0b3RhbF90b2tlbnMiOiAxMTIsCiAgICAicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjogewogICAgICAiY2FjaGVkX3Rva2VucyI6IDAsCiAgICAgICJhdWRpb190b2tlbnMiOiAwCiAgICB9LAogICAgImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOiB7CiAgICAgICJyZWFzb25pbmdfdG9rZW5zIjogMCwKICAgICAgImF1ZGlvX3Rva2VucyI6IDAsCiAgICAgICJhY2NlcHRlZF9wcmVkaWN0aW9uX3Rva2VucyI6IDAsCiAgICAgICJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6IDAKICAgIH0KICB9LAogICJzZXJ2aWNlX3RpZXIiOiAiZGVmYXVsdCIsCiAgInN5c3RlbV9maW5nZXJwcmludCI6ICJmcF9hNTk3ZjNhM2IxIgp9Cg==
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+      string: |-
+        {
+          "id": "resp_044288e1f7dc94d3016a2b1765727481a19929d4abf9739761",
+          "object": "response",
+          "created_at": 1781208933,
+          "status": "completed",
+          "background": false,
+          "billing": {
+            "payer": "developer"
+          },
+          "completed_at": 1781208935,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
+          "model": "gpt-4.1-nano-2025-04-14",
+          "moderation": null,
+          "output": [
+            {
+              "id": "msg_044288e1f7dc94d3016a2b17666af081a18575b85eb15ade03",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "I find the flexibility of Ruby's metaprogramming capabilities particularly fascinating. Features like dynamic method definitions and `method_missing` allow developers to write very elegant and DRY (Don't Repeat Yourself) code. They enable the creation of domain-specific languages (DSLs) and reduce boilerplate, making code more expressive and concise. How about you? Do you have a favorite Ruby feature?"
+                }
+              ],
+              "role": "assistant"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": "in_memory",
+          "reasoning": {
+            "context": null,
+            "effort": null,
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": false,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tools": [],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 13,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens": 78,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 91
+          },
+          "user": null,
+          "metadata": {}
+        }
+  recorded_at: Thu, 11 Jun 2026 20:15:35 GMT
 recorded_with: VCR 6.4.0

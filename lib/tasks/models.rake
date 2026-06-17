@@ -32,11 +32,6 @@ namespace :models do
   end
 end
 
-# Keep aliases:generate for backwards compatibility
-namespace :aliases do
-  task generate: ['models:aliases']
-end
-
 def configure_from_env
   RubyLLM.configure do |config|
     config.anthropic_api_key = ENV.fetch('ANTHROPIC_API_KEY', nil)
@@ -332,8 +327,8 @@ def standard_pricing_display(model)
   parts = [
     pricing_part(pricing_data, :input_per_million, 'In'),
     pricing_part(pricing_data, :output_per_million, 'Out'),
-    pricing_part(pricing_data, %i[cache_read_input_per_million cached_input_per_million], 'Cache Read'),
-    pricing_part(pricing_data, %i[cache_write_input_per_million cache_creation_input_per_million], 'Cache Write')
+    pricing_part(pricing_data, :cache_read_input_per_million, 'Cache Read'),
+    pricing_part(pricing_data, :cache_write_input_per_million, 'Cache Write')
   ].compact
 
   return parts.join(', ') if parts.any?
@@ -348,7 +343,7 @@ def pricing_part(pricing_data, key, label)
   "#{label}: $#{format('%.2f', pricing_data[key])}"
 end
 
-def generate_aliases # rubocop:disable Metrics/PerceivedComplexity
+def generate_aliases # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
   models = Hash.new { |h, k| h[k] = [] }
 
   RubyLLM.models.all.each do |model|
@@ -389,6 +384,7 @@ def generate_aliases # rubocop:disable Metrics/PerceivedComplexity
     aliases[base_name] = { 'anthropic' => latest_model }
     aliases[base_name]['openrouter'] = openrouter_model if openrouter_model
     aliases[base_name]['bedrock'] = bedrock_model if bedrock_model
+    aliases[base_name]['vertexai'] = base_name if models['vertexai'].include?(base_name)
     aliases[base_name]['azure'] = latest_model if models['azure'].include?(latest_model)
   end
 
@@ -411,6 +407,7 @@ def generate_aliases # rubocop:disable Metrics/PerceivedComplexity
     aliases[anthropic_name] = { 'bedrock' => bedrock_model }
     aliases[anthropic_name]['anthropic'] = anthropic_name if models['anthropic'].include?(anthropic_name)
     aliases[anthropic_name]['openrouter'] = openrouter_model if openrouter_model
+    aliases[anthropic_name]['vertexai'] = anthropic_name if models['vertexai'].include?(anthropic_name)
   end
 
   # Gemini models (also map to vertexai)
@@ -467,10 +464,79 @@ def generate_aliases # rubocop:disable Metrics/PerceivedComplexity
     }
   end
 
+  add_xai_aliases(aliases, models['xai'])
+  add_vertexai_aliases(aliases, models)
+
   sorted_aliases = aliases.sort.to_h
   File.write(RubyLLM::Aliases.aliases_file, JSON.pretty_generate(sorted_aliases))
 
   puts "Generated #{sorted_aliases.size} aliases"
+end
+
+# VertexAI serves Anthropic and Gemini (handled above), Mistral, and a roster of
+# open-weights models as managed services. The latter two want their own aliases:
+# the MaaS models so users reach them by a clean name instead of the
+# publisher/name-maas id, and Mistral so it groups with the Mistral API.
+def add_vertexai_aliases(aliases, models)
+  add_vertexai_maas_aliases(aliases, models)
+  add_vertexai_mistral_aliases(aliases, models)
+end
+
+# OpenRouter's prefix for each open-weights publisher VertexAI hosts as MaaS.
+VERTEXAI_OPENROUTER_PUBLISHERS = {
+  'meta' => 'meta-llama', 'deepseek-ai' => 'deepseek', 'qwen' => 'qwen',
+  'openai' => 'openai', 'zai-org' => 'z-ai', 'moonshotai' => 'moonshotai', 'google' => 'google'
+}.freeze
+
+def add_vertexai_maas_aliases(aliases, models)
+  models['vertexai'].grep(%r{/}).each do |model|
+    publisher, bare = model.split('/', 2)
+    alias_key = bare.delete_suffix('-maas')
+
+    entry = (aliases[alias_key] ||= {})
+    entry['vertexai'] ||= model
+    openrouter_model = "#{VERTEXAI_OPENROUTER_PUBLISHERS[publisher]}/#{alias_key}"
+    entry['openrouter'] ||= openrouter_model if models['openrouter'].include?(openrouter_model)
+  end
+end
+
+def add_vertexai_mistral_aliases(aliases, models)
+  models['vertexai'].grep(/\A(mistral|ministral|codestral)/).each do |model|
+    openrouter_model = "mistralai/#{model}"
+    siblings = {}
+    siblings['mistral'] = model if models['mistral'].include?(model)
+    siblings['openrouter'] = openrouter_model if models['openrouter'].include?(openrouter_model)
+    next if siblings.empty?
+
+    entry = (aliases[model] ||= { 'vertexai' => model })
+    siblings.each { |provider, id| entry[provider] ||= id }
+  end
+end
+
+def add_xai_aliases(aliases, xai_models)
+  return unless xai_models.include?('grok-4.3')
+
+  %w[
+    grok-latest
+    grok-3
+    grok-3-latest
+    grok-3-mini
+    grok-3-mini-latest
+    grok-4
+    grok-4-latest
+    grok-4-fast
+    grok-4-fast-reasoning
+    grok-4-fast-reasoning-latest
+    grok-4-fast-non-reasoning
+    grok-4-fast-non-reasoning-latest
+    grok-4-1-fast
+    grok-4-1-fast-reasoning
+    grok-4-1-fast-reasoning-latest
+    grok-4-1-fast-non-reasoning
+    grok-4-1-fast-non-reasoning-latest
+  ].each do |alias_key|
+    aliases[alias_key] ||= { 'xai' => 'grok-4.3' }
+  end
 end
 
 def group_anthropic_models_by_base_name(anthropic_models)
@@ -519,12 +585,12 @@ def find_best_bedrock_model(anthropic_model, bedrock_models) # rubocop:disable M
                  when 'claude-instant-v1', 'claude-instant'
                    'claude-instant'
                  else
-                   extract_base_name(anthropic_model)
+                   anthropic_model
                  end
 
   matching_models = bedrock_models.select do |bedrock_model|
-    model_without_prefix = bedrock_model.sub(/^(?:us\.)?anthropic\./, '')
-    model_without_prefix.start_with?(base_pattern)
+    model_without_prefix = bedrock_model.sub(/^(?:(?:[a-z]{2}|global)\.)?anthropic\./, '')
+    model_without_prefix.match?(/\A#{Regexp.escape(base_pattern)}(?:-v\d+|:\d+k|$)/)
   end
 
   return nil if matching_models.empty?

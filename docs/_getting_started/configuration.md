@@ -63,6 +63,7 @@ RubyLLM.configure do |config|
   config.bedrock_secret_key = ENV['AWS_SECRET_ACCESS_KEY']
   config.bedrock_region = ENV['AWS_REGION'] # Required for Bedrock
   config.bedrock_session_token = ENV['AWS_SESSION_TOKEN'] # For temporary credentials
+  config.bedrock_api_base = ENV['BEDROCK_API_BASE'] # v1.16+ (optional custom Bedrock endpoint)
 
   # DeepSeek
   config.deepseek_api_key = ENV['DEEPSEEK_API_KEY']
@@ -78,6 +79,7 @@ RubyLLM.configure do |config|
 
   # Mistral
   config.mistral_api_key = ENV['MISTRAL_API_KEY']
+  config.mistral_api_base = ENV['MISTRAL_API_BASE'] # v1.16+ (optional custom Mistral endpoint)
 
   # Ollama
   config.ollama_api_base = 'http://localhost:11434/v1'
@@ -93,14 +95,17 @@ RubyLLM.configure do |config|
 
   # Perplexity
   config.perplexity_api_key = ENV['PERPLEXITY_API_KEY']
+  config.perplexity_api_base = ENV['PERPLEXITY_API_BASE'] # v1.16+ (optional custom Perplexity endpoint)
 
   # Vertex AI
   config.vertexai_project_id = ENV['GOOGLE_CLOUD_PROJECT'] # Available in v1.7.0+
   config.vertexai_location = ENV['GOOGLE_CLOUD_LOCATION']
   config.vertexai_service_account_key = ENV['VERTEXAI_SERVICE_ACCOUNT_KEY'] # Optional: service account JSON key
+  config.vertexai_api_base = ENV['VERTEXAI_API_BASE'] # v1.16+ (optional custom Vertex AI endpoint)
 
   # xAI
   config.xai_api_key = ENV['XAI_API_KEY'] # Available in v1.11.0+
+  config.xai_api_base = ENV['XAI_API_BASE'] # v1.16+ (optional custom xAI endpoint)
 end
 ```
 
@@ -167,10 +172,6 @@ end
 By default, RubyLLM uses the 'developer' role (matching OpenAI's current API). Set `openai_use_system_role` to true for compatibility with servers that still expect 'system'.
 
 ### Gemini API Versions
-{: .d-inline-block }
-
-v1.9.0+
-{: .label .label-green }
 
 Gemini offers two API versions: `v1` (stable) and `v1beta` (early access). RubyLLM defaults to `v1beta` for access to the latest features, but you can switch to `v1` to support older models:
 
@@ -182,6 +183,22 @@ end
 ```
 
 Some models are only available on specific API versions. For example, `gemini-1.5-flash-8b` requires `v1`. Check the [Gemini API documentation](https://ai.google.dev/gemini-api/docs/api-versions) for version-specific model availability.
+
+### Provider-Specific API Base URLs
+
+Every provider exposes a provider-specific `*_api_base` setting in v1.16+. Use these when routing a native provider API through a proxy, gateway, private network endpoint, or compatible service:
+
+```ruby
+RubyLLM.configure do |config|
+  config.perplexity_api_base = ENV['PERPLEXITY_API_BASE']
+  config.mistral_api_base = ENV['MISTRAL_API_BASE']
+  config.xai_api_base = ENV['XAI_API_BASE']
+  config.bedrock_api_base = ENV['BEDROCK_API_BASE']
+  config.vertexai_api_base = ENV['VERTEXAI_API_BASE']
+end
+```
+
+Blank strings are treated as unset, so environment variables can be wired directly without causing invalid URL errors.
 
 ## Default Models
 
@@ -414,36 +431,6 @@ RubyLLM.configure do |config|
 end
 ```
 
-### Initializer Load Timing Issue with `use_new_acts_as`
-
-**Important**: If you're using `use_new_acts_as = true` (from upgrading to 1.7+), you **cannot** set it in an initializer. Rails loads models before initializers run, so the legacy `acts_as` module will already be included by the time your initializer executes.
-
-Instead, configure it in `config/application.rb` **before** the `Application` class:
-
-```ruby
-# config/application.rb
-require_relative "boot"
-require "rails/all"
-
-# Configure RubyLLM before Rails::Application is inherited
-RubyLLM.configure do |config|
-  config.use_new_acts_as = true
-end
-
-module YourApp
-  class Application < Rails::Application
-    # ...
-  end
-end
-```
-
-This ensures RubyLLM is configured before ActiveRecord loads your models. Other configuration options (API keys, timeouts, etc.) can still go in your initializer.
-
-> This limitation exists because both legacy and new `acts_as` APIs need to coexist during the 1.x series. It will be resolved in RubyLLM 2.0 when the legacy API is removed.
-{: .note }
-
-See the [Upgrading guide]({% link _advanced/upgrading.md %}#troubleshooting) for more details.
-
 ## Configuration Reference
 
 Here's a complete reference of all configuration options:
@@ -464,6 +451,7 @@ RubyLLM.configure do |config|
   config.bedrock_secret_key = String
   config.bedrock_region = String
   config.bedrock_session_token = String
+  config.bedrock_api_base = String  # v1.16+
 
   # DeepSeek
   config.deepseek_api_key = String
@@ -479,6 +467,7 @@ RubyLLM.configure do |config|
 
   # Mistral
   config.mistral_api_key = String
+  config.mistral_api_base = String  # v1.16+
 
   # Ollama
   config.ollama_api_base = String
@@ -497,14 +486,17 @@ RubyLLM.configure do |config|
 
   # Perplexity
   config.perplexity_api_key = String
+  config.perplexity_api_base = String  # v1.16+
 
   # Vertex AI
   config.vertexai_project_id = String  # GCP project ID
   config.vertexai_location = String     # e.g., 'us-central1'
   config.vertexai_service_account_key = String # Optional: service account JSON key (ADC used when unset)
+  config.vertexai_api_base = String  # v1.16+
 
   # xAI
   config.xai_api_key = String
+  config.xai_api_base = String  # v1.16+
 
   # Default Models
   config.default_model = String
@@ -524,16 +516,16 @@ RubyLLM.configure do |config|
   config.retry_backoff_factor = Integer
   config.retry_interval_randomness = Float
   config.http_proxy = String
+  config.faraday_adapter = Symbol # Defaults to :net_http
 
   # Logging
   config.logger = Logger
+  config.instrumenter = Object # Responds to instrument(name, payload) { ... }
+  config.deprecation_behavior = :warn # :warn, :silence, or :raise
   config.log_file = String
   config.log_level = Symbol
   config.log_stream_debug = Boolean
   config.log_regexp_timeout = Numeric  # v1.13.0+ (Ruby 3.2+ support)
-
-  # Rails integration
-  config.use_new_acts_as = Boolean
 end
 ```
 

@@ -10,7 +10,7 @@ http_interactions:
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Api-Key:
       - "<AZURE_API_KEY>"
       Content-Type:
@@ -38,18 +38,18 @@ http_interactions:
       - access-control-request-headers
       Request-Context:
       - appId=
-      Traceparent:
-      - 00-c7cf6d566b2149499c72ad0cf4f8652e-e87a0cc800002859-00
       X-Ms-Rai-Invoked:
-      - 'true'
+      - 'false'
+      Traceparent:
+      - 00-a7fa6027b0bf4788a762606ce61b0c0c-3e827f500007fc42-00
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Xai-Model-Address:
       - http://localhost:9988
       X-Ms-Client-Request-Id:
-      - c7cf6d56-6b21-4949-9c72-ad0cf4f8652e
+      - a7fa6027-b0bf-4788-a762-606ce61b0c0c
       Azureml-Model-Session:
-      - d20260429222844-bf683bdf
+      - d20260601171731-6dffbbdc
       Azureai-Requested-Tier:
       - default
       Azureai-Processed-Tier:
@@ -76,8 +76,10 @@ http_interactions:
       - '50000'
       X-Ratelimit-Renewalperiod-Tokens:
       - '60'
+      Azureai-Fe-Is-Streaming:
+      - 'False'
       Apim-Request-Id:
-      - c7cf6d56-6b21-4949-9c72-ad0cf4f8652e
+      - a7fa6027-b0bf-4788-a762-606ce61b0c0c
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Ms-Deployment-Name:
@@ -87,22 +89,22 @@ http_interactions:
       X-Ms-Region:
       - West Europe
       Date:
-      - Wed, 06 May 2026 23:55:25 GMT
+      - Sat, 13 Jun 2026 11:33:08 GMT
     body:
       encoding: UTF-8
-      string: '{"id":"42ab8138-770a-4517-9bfe-19039d785651","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"call_90052528","index":0,"type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"finish_reason":"tool_calls","content_filter_results":{}}],"usage":{"prompt_tokens":198,"completion_tokens":18,"total_tokens":216,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":0,"audio_tokens":0,"text_tokens":198,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1778111725,"object":"chat.completion","prompt_filter_results":null}'
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+      string: '{"id":"81fe9e77-0bb7-4c2a-9beb-520127c368ce","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"call_00767164","index":0,"type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"finish_reason":"tool_calls","content_filter_results":{}}],"usage":{"prompt_tokens":198,"completion_tokens":18,"total_tokens":216,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":314,"audio_tokens":0,"text_tokens":198,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1781350389,"object":"chat.completion","prompt_filter_results":null}'
+  recorded_at: Sat, 13 Jun 2026 11:33:09 GMT
 - request:
     method: post
     uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
     body:
       encoding: UTF-8
       string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"user","content":"What''s
-        the best language to learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_90052528","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call_90052528"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_00767164","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call_00767164"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Api-Key:
       - "<AZURE_API_KEY>"
       Content-Type:
@@ -130,18 +132,18 @@ http_interactions:
       - access-control-request-headers
       Request-Context:
       - appId=
-      Traceparent:
-      - 00-1445e9a4790e4aeb9d503c529855f69d-7f0222a70000220b-00
       X-Ms-Rai-Invoked:
-      - 'true'
+      - 'false'
+      Traceparent:
+      - 00-91ae91d441324b94a54a06dd3b3cee32-86549cd500050b38-00
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Xai-Model-Address:
       - http://localhost:9988
       X-Ms-Client-Request-Id:
-      - 1445e9a4-790e-4aeb-9d50-3c529855f69d
+      - 91ae91d4-4132-4b94-a54a-06dd3b3cee32
       Azureml-Model-Session:
-      - d20260429222844-bf683bdf
+      - d20260601171731-6dffbbdc
       Azureai-Requested-Tier:
       - default
       Azureai-Processed-Tier:
@@ -168,8 +170,10 @@ http_interactions:
       - '50000'
       X-Ratelimit-Renewalperiod-Tokens:
       - '60'
+      Azureai-Fe-Is-Streaming:
+      - 'False'
       Apim-Request-Id:
-      - 1445e9a4-790e-4aeb-9d50-3c529855f69d
+      - 91ae91d4-4132-4b94-a54a-06dd3b3cee32
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Ms-Deployment-Name:
@@ -179,12 +183,14 @@ http_interactions:
       X-Ms-Region:
       - West Europe
       Date:
-      - Wed, 06 May 2026 23:55:32 GMT
+      - Sat, 13 Jun 2026 11:33:13 GMT
     body:
       encoding: UTF-8
-      string: '{"id":"d8b7a3ea-8129-451a-86bb-aba9a729ba7c","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"**Ruby**
-        is the best language to learn! It''s elegant, beginner-friendly, and powers
-        web apps like those built with Ruby on Rails. Great for quick prototyping
-        and fun coding."},"finish_reason":"stop","content_filter_results":{}}],"usage":{"prompt_tokens":228,"completion_tokens":36,"total_tokens":264,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":0,"audio_tokens":0,"text_tokens":228,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1778111731,"object":"chat.completion","prompt_filter_results":null}'
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+      string: '{"id":"b2d55fa0-506b-483e-b5d1-38f60a381956","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"**Ruby**
+        is the best language to learn! It''s elegant, beginner-friendly with its readable
+        syntax (inspired by natural language), and powers fun web apps like those
+        built with Ruby on Rails. Great for quick prototyping and has a vibrant community.
+        If you''re into web dev or scripting, start here over more verbose options
+        like Java. What''s your goal for learning?"},"finish_reason":"stop","content_filter_results":{}}],"usage":{"prompt_tokens":228,"completion_tokens":72,"total_tokens":300,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":366,"audio_tokens":0,"text_tokens":228,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1781350393,"object":"chat.completion","prompt_filter_results":null}'
+  recorded_at: Sat, 13 Jun 2026 11:33:14 GMT
 recorded_with: VCR 6.4.0

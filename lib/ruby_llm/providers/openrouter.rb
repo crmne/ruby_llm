@@ -3,11 +3,16 @@
 module RubyLLM
   module Providers
     # OpenRouter API integration.
-    class OpenRouter < OpenAI
-      include OpenRouter::Chat
-      include OpenRouter::Models
-      include OpenRouter::Streaming
-      include OpenRouter::Images
+    class OpenRouter < Provider
+      # OpenRouter's dialect of the Chat Completions API.
+      class ChatCompletions < Protocols::ChatCompletions
+        include OpenRouter::Chat
+        include OpenRouter::Images
+        include OpenRouter::Models
+        include OpenRouter::Streaming
+      end
+
+      protocol :chat_completions, ChatCompletions
 
       def api_base
         @config.openrouter_api_base || 'https://openrouter.ai/api/v1'
@@ -35,6 +40,16 @@ module RubyLLM
         end
       end
 
+      class << self
+        def configuration_options
+          %i[openrouter_api_key openrouter_api_base]
+        end
+
+        def configuration_requirements
+          %i[openrouter_api_key]
+        end
+      end
+
       private
 
       def parse_error_part_message(part)
@@ -46,16 +61,6 @@ module RubyLLM
         return [message, raw_message].compact.join(' - ') if raw_message
 
         message
-      end
-
-      class << self
-        def configuration_options
-          %i[openrouter_api_key openrouter_api_base]
-        end
-
-        def configuration_requirements
-          %i[openrouter_api_key]
-        end
       end
     end
   end

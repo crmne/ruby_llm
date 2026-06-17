@@ -2,14 +2,14 @@
 http_interactions:
 - request:
     method: post
-    uri: https://api.openai.com/v1/chat/completions
+    uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-5-nano","messages":[{"role":"user","content":"What''s
-        2 + 2?"}],"stream":false}'
+      string: '{"model":"gpt-5-nano","input":[{"role":"user","content":"What''s 2
+        + 2?"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 06 May 2026 23:54:37 GMT
+      - Thu, 11 Jun 2026 20:09:24 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -42,17 +42,17 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Access-Control-Expose-Headers:
+      - CF-Ray
+      - CF-Ray
       - X-Request-ID
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '2327'
+      - '2047'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
       - '2020-10-01'
-      X-Openai-Proxy-Wasm:
-      - v0.1
       X-Ratelimit-Limit-Requests:
       - '5000'
       X-Ratelimit-Limit-Tokens:
@@ -60,7 +60,7 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '4999'
       X-Ratelimit-Remaining-Tokens:
-      - '1999994'
+      - '1999996'
       X-Ratelimit-Reset-Requests:
       - 12ms
       X-Ratelimit-Reset-Tokens:
@@ -73,41 +73,86 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: |
+      string: |-
         {
-          "id": "chatcmpl-DcgMUWuM6YhTafCqcZDUs5Phg7KRQ",
-          "object": "chat.completion",
-          "created": 1778111674,
+          "id": "resp_002b6f8a1a793208016a2b15f279d4819286deaf865c9fc0c4",
+          "object": "response",
+          "created_at": 1781208562,
+          "status": "completed",
+          "background": false,
+          "billing": {
+            "payer": "developer"
+          },
+          "completed_at": 1781208564,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
           "model": "gpt-5-nano-2025-08-07",
-          "choices": [
+          "moderation": null,
+          "output": [
             {
-              "index": 0,
-              "message": {
-                "role": "assistant",
-                "content": "2 + 2 = 4.",
-                "refusal": null,
-                "annotations": []
-              },
-              "finish_reason": "stop"
+              "id": "rs_002b6f8a1a793208016a2b15f2dab88192b65280b53eebd79b",
+              "type": "reasoning",
+              "content": [],
+              "encrypted_content": "gAAAAABqKxX0JJHrKiYmP__mzv_sPQ5DIRNOCzxscIkEKJjZR4p176FzaKtRlhVBODqgYl6SLS8mgYGUF0jei1LOEs7G6XxF6gyxE7hYxaqMilubhnLrFLIIQRsJkBaAipjeJlyWGa9U3orcLE3yP7-2eeXN6HPA8qNTuiU0EQK4xVJSGBQd7KinmCj7h5lwoi0RdRmB_Op5TqG8v5jDdch21gGjLsl3TWKHJ194t1_pycBw6GAXXFRqich7h7nYHp51jeoZm0v4oNjS_-spXEGBwN6LijL_PvM7WGYBAtoh_yyOAxE5K-MpNbpdCMi4Lxaw7tStUyS-wS58zqzSCdKhaYFqVVC-BqNeK1ayo0guU8i4F8MPoovE6Gl-fWXlWdUd5AJJ2dEA6xu8mzIffLUQLBCga4xYmIHoekKLgCQdJyWio5x28DR-EZyLXbRPsc64-q7EqMmp3k939thCCwM7kJ6uVifbyr5Mcf0KaSvJlrvfssy819IbCiuJcrvXc8m5ZkjMXDHjJtFU6FjIzdrFmsyXVF70oaks3oVjkjFw8C8-uHofEiTeFkwHCb3E-lpgg1FPnv6SzeGxfDegPPg81NdQc9KuHH3ohuOYx0AOqCR_WvYfTfMiCBYHc0o6Zd62Zc6w8AynQQ_9xi9azh7xtBOoMVcA16OM2mrxWlBLWTrdhzBQcHhc4g4VHOwKl6lHiKj605B5bYgE790c18lrQHSP64LcROzGiaJVvl2L9FV15uz1OViTQuU9bmqIqH3HfCLW7dsVze9ATIuNPw5ErLnzKW0VFAmhM0y0csVC1-sTGXXiDQAnYs3uHD9UKjnTdnwQtF8IKsWiu_RKRJzsTywnn2gwfyVVEJ8VqsRNQe6dk0jGEzZXtDO3bR5cav_Ca9CTyuJbsc5ZPVb7KLpZbtyaupMOJQAlRgH6d1dLrf1QVM3QPtJxWeWDvOzOLYJW0pZYEAZ3AF7GAWR80XfdUHkNEobCmjCgapKr95h2KuXR5bipeS3SRiT8ei9bTSeymW_dG5dc1JTXlPmaimNfayk2_G4GNb0EWoaKNHlzb9lRPzSrYXfhwNodqEZ98jjVK9rVtu0RQUw6JS1fQumSVv7i_FbGTuCUmuqsjHZKshijmlG8wqCj1Vya5titc3uACNI4HIOOI5DP5BrdiHq02pJpvld7EGggHF9T6SIiGs4avOZKFCkM3-oLYnXolW8eeiUU_wxcupPU-VOZp2eX5L3saNdJUObjCFcZuzWOPBsiML25GjT_6uGO6WjGZnQV1BYBllGnPR4eX5JqHpOQ0OitmQbT-i2NNmyMO-__m_8dRPdt_p-vPcdKuBdc-QNqUz7g5uarbt9KLjcij21PF8ePZAhcEN7MryLLGLhQWAz025ZF8coMe_D5vlmZ2gbRSxCDuynhhRv1cTFadqz3yoVZ97QWiCwCsQtwykfP27jh1sNpKrgAOsgqW5xHWvi2iLGJ58xQmy-PTZw1LchhSrAAfFSlO0Thh29yv91lr3cYfeNcDh7zpHu205o_y_nkJaG9199RDLwD8i9IIYuz0zI24ikb_Izn4bTwfUrYJ3lsh_yYga9ysQ440FC_WCwQCPikEZOOdkS82opyOlp8TmNguVL7Dl1_ly9gMv_VasgDKVRxClownqw2JxwiyJ6bj1D6ykuQT9wC4l7Jx1rOmcaXZ2VpOX3LLRGuogam08zpEBKmC4XGgL4LQIgeWXTVtFTRAa0_nBGsXUi7s7WMw7KflxtQ-nVUeMrBh-ltENPxkcObNq-ItebwW6dV5eWRk3Bcf62vLEZugY9xAf2EjMHdYjw8iiv7p8GNrtjvyrwdxDdbTyWl717h5Nosw1cfRIpMuVI5B03rWkCIPdU-2evNFfaYrth884nfNOcCYpSZKm9vy-yPOIeGrESwknP4NFpocjmzwCAqPH7RJ0zc43_2WqIUnMt-NZKt6YJ2VZKyelBKejxRusy3toToIIu-fbJLOo5kGyx40fRVLUPHoPZP_oSmRWrcGG-bDO-Jz9pSwUxHgeo=",
+              "summary": []
+            },
+            {
+              "id": "msg_002b6f8a1a793208016a2b15f4632c8192a34d1c577882ae14",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "4"
+                }
+              ],
+              "role": "assistant"
             }
           ],
-          "usage": {
-            "prompt_tokens": 13,
-            "completion_tokens": 209,
-            "total_tokens": 222,
-            "prompt_tokens_details": {
-              "cached_tokens": 0,
-              "audio_tokens": 0
-            },
-            "completion_tokens_details": {
-              "reasoning_tokens": 192,
-              "audio_tokens": 0,
-              "accepted_prediction_tokens": 0,
-              "rejected_prediction_tokens": 0
-            }
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": "in_memory",
+          "reasoning": {
+            "context": "current_turn",
+            "effort": "medium",
+            "summary": null
           },
+          "safety_identifier": null,
           "service_tier": "default",
-          "system_fingerprint": null
+          "store": false,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tools": [],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 13,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens": 221,
+            "output_tokens_details": {
+              "reasoning_tokens": 192
+            },
+            "total_tokens": 234
+          },
+          "user": null,
+          "metadata": {}
         }
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+  recorded_at: Thu, 11 Jun 2026 20:09:24 GMT
 recorded_with: VCR 6.4.0

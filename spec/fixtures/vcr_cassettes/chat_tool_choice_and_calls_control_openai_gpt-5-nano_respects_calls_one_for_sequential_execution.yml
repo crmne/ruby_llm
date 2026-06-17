@@ -2,20 +2,20 @@
 http_interactions:
 - request:
     method: post
-    uri: https://api.openai.com/v1/chat/completions
+    uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-5-nano","messages":[{"role":"developer","content":"You
+      string: '{"model":"gpt-5-nano","input":[{"role":"user","content":"What''s the
+        weather in Berlin and what''s the best programming language?"}],"instructions":"You
         must use both the weather tool for Berlin (52.5200, 13.4050) and the best
-        language tool."},{"role":"user","content":"What''s the weather in Berlin and
-        what''s the best programming language?"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        language tool.","stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
-        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}},{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
-        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}],"parallel_tool_calls":false}'
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}},{"type":"function","name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}],"parallel_tool_calls":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -30,7 +30,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 07 May 2026 00:06:15 GMT
+      - Thu, 11 Jun 2026 20:11:36 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -48,17 +48,17 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Access-Control-Expose-Headers:
+      - CF-Ray
+      - CF-Ray
       - X-Request-ID
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '3488'
+      - '1454'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
       - '2020-10-01'
-      X-Openai-Proxy-Wasm:
-      - v0.1
       X-Ratelimit-Limit-Requests:
       - '5000'
       X-Ratelimit-Limit-Tokens:
@@ -66,11 +66,11 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '4999'
       X-Ratelimit-Remaining-Tokens:
-      - '1999956'
+      - '2000000'
       X-Ratelimit-Reset-Requests:
       - 12ms
       X-Ratelimit-Reset-Tokens:
-      - 1ms
+      - 0s
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Set-Cookie:
@@ -79,197 +79,138 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: |
+      string: |-
         {
-          "id": "chatcmpl-DcgXjaLHMs36Kn5QI95VM4RPwkKSp",
-          "object": "chat.completion",
-          "created": 1778112371,
+          "id": "resp_0ea676409cafe7b6016a2b16768e8081a0b5495895faf5871c",
+          "object": "response",
+          "created_at": 1781208694,
+          "status": "completed",
+          "background": false,
+          "billing": {
+            "payer": "developer"
+          },
+          "completed_at": 1781208695,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "incomplete_details": null,
+          "instructions": "You must use both the weather tool for Berlin (52.5200, 13.4050) and the best language tool.",
+          "max_output_tokens": null,
+          "max_tool_calls": null,
           "model": "gpt-5-nano-2025-08-07",
-          "choices": [
+          "moderation": null,
+          "output": [
             {
-              "index": 0,
-              "message": {
-                "role": "assistant",
-                "content": null,
-                "tool_calls": [
-                  {
-                    "id": "call_3aIK9ivI1lOyoutCphM6u5DI",
-                    "type": "function",
-                    "function": {
-                      "name": "weather",
-                      "arguments": "{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"
-                    }
-                  }
-                ],
-                "refusal": null,
-                "annotations": []
-              },
-              "finish_reason": "tool_calls"
+              "id": "rs_0ea676409cafe7b6016a2b1676d9e481a0b5e9eaf92d7b6517",
+              "type": "reasoning",
+              "content": [],
+              "encrypted_content": "gAAAAABqKxZ3Sv5ygT8ji1bC-eIi7ruk9HQ01UlEIYdJ_Lv3V_XeliAmIn53EeKUI0_QCFQdozVIaJh0Ev0TNbGBAYixMxNTuXN9s8ihrU_HSRUPLreK6IM3GH8IH5dymta5FgwSKzdL8TPw6XPVF8ZvpLqRoNvfnqBmK0c9tOCPGq86odEHBlLmUpHeDa-dPbOJQRSo2p6BD3T5CB6RrU2Zab3hC6w7nY80jjDJ2hf7RN1lS6K0QouLNQ4sxlkfoFsMddOJwBVQbq_DvmL81mqN2BKo7BXHhodUV5iJ41Nv42EzhmfqAOoiCjC2mserC5qYgxB9OKlddTnPff3XkEqwsQNHW72Ia7uGqIkG5jKD5zmeTEgYBpZxc7pH54l-Yw-4somDGG_nX1DyBRcC6YF3ucXl-4EGPm2UlidY_cVjeVOv4BnSQTHLKfw_kbAG-beWvhZbjg7HomIM2JzFTtTnbx5EnvPRCosFm7TAHXP_b9pngZOYpRmGHiqEIGqAOtxJQp0EGh7jwCEtoAglHuOylAnpwQZkAYrekmZozdQDHPFgKNvBNMtJbTX7JPMFWk3qQdmhKVDira2oPp9wh1ehr75IgiSa_zEfrUhcnQedl3bB7GUCTsZDGeYYSW4bEcLlbLfDRtORh8HtQIQct3FTXX4GnamQzWQD26QVkpaQV5wc0Z3KGpA9nJL3A9pnlY-QjJ7dosM64aKjO6It8Qi1FnyxenybKA2OlqWp1Zwl1iEPCjBrlvwUmxuLdlyhW2R6-lEBigDThbIsEVogcOnlpuYdOsfTdCjoZ9AwMzvY2TwrCnKuSVTnhSQyRtQoErpMVOTSxj886GzkZI07ug0qfhQ_fDofb-5E6xbLT5CYwnSXM-mXp7_GqWi_GpSnQYXbi6Mu0nQdyXYO5gkslbLCdpNeL9gCpkzLBfwfHhSRGsOZaU4kU1jFIAQVkc8wZrftJLdvuiMQQGckNzgTNuZvKLTwajxHcEhJhV_JX30EacNzkoMOprmVTPfIRHeEqDQwTvgHN4hyH6I0tjJT2dDkw51T5bOn2qpzP41r5Tqq-gq1QVnjZTy5Aypec23BP7dKzMzc4GMdAIenRitlxNcnrvK7oZfozlPlGw1Z1NjLSJVmshuDLDrNPyGcUmM6OncQ7FSDpH-azDeyO1ZgXjKNzcw09y07Q16Ycqzf0rZyaP_lmVv0aKTjaxgsUzfvdTwe5W6nE_7Vdt1Ebon-LuAiamIAGnMTSB13kINGkUAhTWy8xjs9h1fip4fyRamD7nWcz6UYjBm2L0Fd_MNFlr2-NiWC5qDAXdxrOcbxIRLoo-vzH4JzDOuXfDWJFyh6juC3M_u3zmCrXTeabyZogkVjU289pk0uq7qpQlGfMcfKvG_e7WzzO8aRyalow53aKtug-ds4kKEQGi95Wkizi-Wujhwjhh-w0Em5ge84xXz9WntrAgrhXKwFidYD2WcFsYMMVqCqavFo-9eS_NPyUEk7219jRSjYoh8y8mciExj2CeDzcOI6vIVPjlUzeg-PTUsQBiRSSeGWlG3W6ldXbdD3bI9nfO736dFLxsN2qleym1wyfFxJDm5gmuok1XBt3kmRtQsmrCuhU93HMsaJ-aJxbGPGMbG1Edr4Jy0xzv_5gJeiwyxXFkOtQzqzKR6U5DoS0_JYasG_NL6Eg4z0I-TMcJvmO4GCIRUKJ7WJDSCEYoY0xt7f2lg1zn8bY-8E_C9dno0dx4rIsW9E_MwF5rqf8iU2JVItoMUEJZstYj1UPCZKYcQHXivc0B1YmTDHiqMPnnTgd7c-PuGRziEkzkecUE8jHbuWulkcekkWgsN2nicM6CiiBAs=",
+              "summary": []
+            },
+            {
+              "id": "fc_0ea676409cafe7b6016a2b1677c18c81a0858d217f73894817",
+              "type": "function_call",
+              "status": "completed",
+              "arguments": "{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}",
+              "call_id": "call_Mhu65PiyfGn4YnVC8SjZgNcS",
+              "name": "weather"
             }
           ],
-          "usage": {
-            "prompt_tokens": 211,
-            "completion_tokens": 224,
-            "total_tokens": 435,
-            "prompt_tokens_details": {
-              "cached_tokens": 0,
-              "audio_tokens": 0
-            },
-            "completion_tokens_details": {
-              "reasoning_tokens": 192,
-              "audio_tokens": 0,
-              "accepted_prediction_tokens": 0,
-              "rejected_prediction_tokens": 0
-            }
+          "parallel_tool_calls": false,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": "in_memory",
+          "reasoning": {
+            "context": "current_turn",
+            "effort": "medium",
+            "summary": null
           },
+          "safety_identifier": null,
           "service_tier": "default",
-          "system_fingerprint": null
-        }
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
-- request:
-    method: post
-    uri: https://api.openai.com/v1/chat/completions
-    body:
-      encoding: UTF-8
-      string: '{"model":"gpt-5-nano","messages":[{"role":"developer","content":"You
-        must use both the weather tool for Berlin (52.5200, 13.4050) and the best
-        language tool."},{"role":"user","content":"What''s the weather in Berlin and
-        what''s the best programming language?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_3aIK9ivI1lOyoutCphM6u5DI","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_3aIK9ivI1lOyoutCphM6u5DI"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
-        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
-        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
-        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}},{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
-        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}],"parallel_tool_calls":false}'
-    headers:
-      User-Agent:
-      - Faraday v2.14.1
-      Authorization:
-      - Bearer <AUTH_TOKEN>
-      Content-Type:
-      - application/json
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Date:
-      - Thu, 07 May 2026 00:06:17 GMT
-      Content-Type:
-      - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Cf-Ray:
-      - "<CF_RAY>"
-      Cf-Cache-Status:
-      - DYNAMIC
-      Server:
-      - cloudflare
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
-      X-Content-Type-Options:
-      - nosniff
-      Access-Control-Expose-Headers:
-      - X-Request-ID
-      Openai-Organization:
-      - "<OPENAI_ORGANIZATION>"
-      Openai-Processing-Ms:
-      - '1741'
-      Openai-Project:
-      - proj_61L3Oqt640dKU0CASS2iOj8Q
-      Openai-Version:
-      - '2020-10-01'
-      X-Openai-Proxy-Wasm:
-      - v0.1
-      X-Ratelimit-Limit-Requests:
-      - '5000'
-      X-Ratelimit-Limit-Tokens:
-      - '2000000'
-      X-Ratelimit-Remaining-Requests:
-      - '4999'
-      X-Ratelimit-Remaining-Tokens:
-      - '1999940'
-      X-Ratelimit-Reset-Requests:
-      - 12ms
-      X-Ratelimit-Reset-Tokens:
-      - 1ms
-      X-Request-Id:
-      - "<X_REQUEST_ID>"
-      Set-Cookie:
-      - "<COOKIE>"
-      Alt-Svc:
-      - h3=":443"; ma=86400
-    body:
-      encoding: ASCII-8BIT
-      string: |
-        {
-          "id": "chatcmpl-DcgXnNVr4oMPO0YuHIyRk2M92nR8l",
-          "object": "chat.completion",
-          "created": 1778112375,
-          "model": "gpt-5-nano-2025-08-07",
-          "choices": [
+          "store": false,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tools": [
             {
-              "index": 0,
-              "message": {
-                "role": "assistant",
-                "content": null,
-                "tool_calls": [
-                  {
-                    "id": "call_ERXbw9iyYYlPZ17QrKxSsNh4",
-                    "type": "function",
-                    "function": {
-                      "name": "best_language_to_learn",
-                      "arguments": "{}"
-                    }
+              "type": "function",
+              "description": "Gets current weather for a location",
+              "name": "weather",
+              "parameters": {
+                "type": "object",
+                "properties": {
+                  "latitude": {
+                    "type": "string",
+                    "description": "Latitude (e.g., 52.5200)"
+                  },
+                  "longitude": {
+                    "type": "string",
+                    "description": "Longitude (e.g., 13.4050)"
                   }
+                },
+                "required": [
+                  "latitude",
+                  "longitude"
                 ],
-                "refusal": null,
-                "annotations": []
+                "additionalProperties": false,
+                "strict": true
               },
-              "finish_reason": "tool_calls"
+              "strict": true
+            },
+            {
+              "type": "function",
+              "description": "Gets the best language to learn",
+              "name": "best_language_to_learn",
+              "parameters": {
+                "type": "object",
+                "properties": {},
+                "required": [],
+                "additionalProperties": false,
+                "strict": true
+              },
+              "strict": true
             }
           ],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
           "usage": {
-            "prompt_tokens": 272,
-            "completion_tokens": 16,
-            "total_tokens": 288,
-            "prompt_tokens_details": {
-              "cached_tokens": 0,
-              "audio_tokens": 0
+            "input_tokens": 208,
+            "input_tokens_details": {
+              "cached_tokens": 0
             },
-            "completion_tokens_details": {
-              "reasoning_tokens": 0,
-              "audio_tokens": 0,
-              "accepted_prediction_tokens": 0,
-              "rejected_prediction_tokens": 0
-            }
+            "output_tokens": 164,
+            "output_tokens_details": {
+              "reasoning_tokens": 128
+            },
+            "total_tokens": 372
           },
-          "service_tier": "default",
-          "system_fingerprint": null
+          "user": null,
+          "metadata": {}
         }
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+  recorded_at: Thu, 11 Jun 2026 20:11:36 GMT
 - request:
     method: post
-    uri: https://api.openai.com/v1/chat/completions
+    uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-5-nano","messages":[{"role":"developer","content":"You
-        must use both the weather tool for Berlin (52.5200, 13.4050) and the best
-        language tool."},{"role":"user","content":"What''s the weather in Berlin and
-        what''s the best programming language?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_3aIK9ivI1lOyoutCphM6u5DI","type":"function","function":{"name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"}}]},{"role":"tool","content":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h","tool_call_id":"call_3aIK9ivI1lOyoutCphM6u5DI"},{"role":"assistant","content":"","tool_calls":[{"id":"call_ERXbw9iyYYlPZ17QrKxSsNh4","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call_ERXbw9iyYYlPZ17QrKxSsNh4"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+      string: '{"model":"gpt-5-nano","input":[{"role":"user","content":"What''s the
+        weather in Berlin and what''s the best programming language?"},{"type":"reasoning","summary":[],"encrypted_content":"gAAAAABqKxZ3Sv5ygT8ji1bC-eIi7ruk9HQ01UlEIYdJ_Lv3V_XeliAmIn53EeKUI0_QCFQdozVIaJh0Ev0TNbGBAYixMxNTuXN9s8ihrU_HSRUPLreK6IM3GH8IH5dymta5FgwSKzdL8TPw6XPVF8ZvpLqRoNvfnqBmK0c9tOCPGq86odEHBlLmUpHeDa-dPbOJQRSo2p6BD3T5CB6RrU2Zab3hC6w7nY80jjDJ2hf7RN1lS6K0QouLNQ4sxlkfoFsMddOJwBVQbq_DvmL81mqN2BKo7BXHhodUV5iJ41Nv42EzhmfqAOoiCjC2mserC5qYgxB9OKlddTnPff3XkEqwsQNHW72Ia7uGqIkG5jKD5zmeTEgYBpZxc7pH54l-Yw-4somDGG_nX1DyBRcC6YF3ucXl-4EGPm2UlidY_cVjeVOv4BnSQTHLKfw_kbAG-beWvhZbjg7HomIM2JzFTtTnbx5EnvPRCosFm7TAHXP_b9pngZOYpRmGHiqEIGqAOtxJQp0EGh7jwCEtoAglHuOylAnpwQZkAYrekmZozdQDHPFgKNvBNMtJbTX7JPMFWk3qQdmhKVDira2oPp9wh1ehr75IgiSa_zEfrUhcnQedl3bB7GUCTsZDGeYYSW4bEcLlbLfDRtORh8HtQIQct3FTXX4GnamQzWQD26QVkpaQV5wc0Z3KGpA9nJL3A9pnlY-QjJ7dosM64aKjO6It8Qi1FnyxenybKA2OlqWp1Zwl1iEPCjBrlvwUmxuLdlyhW2R6-lEBigDThbIsEVogcOnlpuYdOsfTdCjoZ9AwMzvY2TwrCnKuSVTnhSQyRtQoErpMVOTSxj886GzkZI07ug0qfhQ_fDofb-5E6xbLT5CYwnSXM-mXp7_GqWi_GpSnQYXbi6Mu0nQdyXYO5gkslbLCdpNeL9gCpkzLBfwfHhSRGsOZaU4kU1jFIAQVkc8wZrftJLdvuiMQQGckNzgTNuZvKLTwajxHcEhJhV_JX30EacNzkoMOprmVTPfIRHeEqDQwTvgHN4hyH6I0tjJT2dDkw51T5bOn2qpzP41r5Tqq-gq1QVnjZTy5Aypec23BP7dKzMzc4GMdAIenRitlxNcnrvK7oZfozlPlGw1Z1NjLSJVmshuDLDrNPyGcUmM6OncQ7FSDpH-azDeyO1ZgXjKNzcw09y07Q16Ycqzf0rZyaP_lmVv0aKTjaxgsUzfvdTwe5W6nE_7Vdt1Ebon-LuAiamIAGnMTSB13kINGkUAhTWy8xjs9h1fip4fyRamD7nWcz6UYjBm2L0Fd_MNFlr2-NiWC5qDAXdxrOcbxIRLoo-vzH4JzDOuXfDWJFyh6juC3M_u3zmCrXTeabyZogkVjU289pk0uq7qpQlGfMcfKvG_e7WzzO8aRyalow53aKtug-ds4kKEQGi95Wkizi-Wujhwjhh-w0Em5ge84xXz9WntrAgrhXKwFidYD2WcFsYMMVqCqavFo-9eS_NPyUEk7219jRSjYoh8y8mciExj2CeDzcOI6vIVPjlUzeg-PTUsQBiRSSeGWlG3W6ldXbdD3bI9nfO736dFLxsN2qleym1wyfFxJDm5gmuok1XBt3kmRtQsmrCuhU93HMsaJ-aJxbGPGMbG1Edr4Jy0xzv_5gJeiwyxXFkOtQzqzKR6U5DoS0_JYasG_NL6Eg4z0I-TMcJvmO4GCIRUKJ7WJDSCEYoY0xt7f2lg1zn8bY-8E_C9dno0dx4rIsW9E_MwF5rqf8iU2JVItoMUEJZstYj1UPCZKYcQHXivc0B1YmTDHiqMPnnTgd7c-PuGRziEkzkecUE8jHbuWulkcekkWgsN2nicM6CiiBAs="},{"type":"function_call","call_id":"call_Mhu65PiyfGn4YnVC8SjZgNcS","name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"},{"type":"function_call_output","call_id":"call_Mhu65PiyfGn4YnVC8SjZgNcS","output":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}],"instructions":"You must
+        use both the weather tool for Berlin (52.5200, 13.4050) and the best language
+        tool.","stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
-        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}},{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
-        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}],"parallel_tool_calls":false}'
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}},{"type":"function","name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}],"parallel_tool_calls":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -284,7 +225,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 07 May 2026 00:06:20 GMT
+      - Thu, 11 Jun 2026 20:11:37 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -302,17 +243,17 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Access-Control-Expose-Headers:
+      - CF-Ray
+      - CF-Ray
       - X-Request-ID
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '3345'
+      - '1114'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
       - '2020-10-01'
-      X-Openai-Proxy-Wasm:
-      - v0.1
       X-Ratelimit-Limit-Requests:
       - '5000'
       X-Ratelimit-Limit-Tokens:
@@ -320,11 +261,11 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '4999'
       X-Ratelimit-Remaining-Tokens:
-      - '1999937'
+      - '2000000'
       X-Ratelimit-Reset-Requests:
       - 12ms
       X-Ratelimit-Reset-Tokens:
-      - 1ms
+      - 0s
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Set-Cookie:
@@ -333,7 +274,313 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        ewogICJpZCI6ICJjaGF0Y21wbC1EY2dYcFlWMG9GdWd5TXplMWZXdE5Xekg1TWZOdSIsCiAgIm9iamVjdCI6ICJjaGF0LmNvbXBsZXRpb24iLAogICJjcmVhdGVkIjogMTc3ODExMjM3NywKICAibW9kZWwiOiAiZ3B0LTUtbmFuby0yMDI1LTA4LTA3IiwKICAiY2hvaWNlcyI6IFsKICAgIHsKICAgICAgImluZGV4IjogMCwKICAgICAgIm1lc3NhZ2UiOiB7CiAgICAgICAgInJvbGUiOiAiYXNzaXN0YW50IiwKICAgICAgICAiY29udGVudCI6ICItIFdlYXRoZXIgaW4gQmVybGluOiAxNcKwQywgd2luZCAxMCBrbS9oLlxuLSBCZXN0IHByb2dyYW1taW5nIGxhbmd1YWdlIHRvIGxlYXJuOiBSdWJ5LiIsCiAgICAgICAgInJlZnVzYWwiOiBudWxsLAogICAgICAgICJhbm5vdGF0aW9ucyI6IFtdCiAgICAgIH0sCiAgICAgICJmaW5pc2hfcmVhc29uIjogInN0b3AiCiAgICB9CiAgXSwKICAidXNhZ2UiOiB7CiAgICAicHJvbXB0X3Rva2VucyI6IDMwMywKICAgICJjb21wbGV0aW9uX3Rva2VucyI6IDI4OSwKICAgICJ0b3RhbF90b2tlbnMiOiA1OTIsCiAgICAicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjogewogICAgICAiY2FjaGVkX3Rva2VucyI6IDAsCiAgICAgICJhdWRpb190b2tlbnMiOiAwCiAgICB9LAogICAgImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOiB7CiAgICAgICJyZWFzb25pbmdfdG9rZW5zIjogMjU2LAogICAgICAiYXVkaW9fdG9rZW5zIjogMCwKICAgICAgImFjY2VwdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjogMCwKICAgICAgInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjogMAogICAgfQogIH0sCiAgInNlcnZpY2VfdGllciI6ICJkZWZhdWx0IiwKICAic3lzdGVtX2ZpbmdlcnByaW50IjogbnVsbAp9Cg==
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+      string: |-
+        {
+          "id": "resp_03ce67c6d9f85432016a2b1678874c81a2a8d2e7cf9b3c86e4",
+          "object": "response",
+          "created_at": 1781208696,
+          "status": "completed",
+          "background": false,
+          "billing": {
+            "payer": "developer"
+          },
+          "completed_at": 1781208697,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "incomplete_details": null,
+          "instructions": "You must use both the weather tool for Berlin (52.5200, 13.4050) and the best language tool.",
+          "max_output_tokens": null,
+          "max_tool_calls": null,
+          "model": "gpt-5-nano-2025-08-07",
+          "moderation": null,
+          "output": [
+            {
+              "id": "fc_03ce67c6d9f85432016a2b1679460c81a2926e1c83d1585f08",
+              "type": "function_call",
+              "status": "completed",
+              "arguments": "{}",
+              "call_id": "call_Y9cs7wfn32XCqNvr7aE51jik",
+              "name": "best_language_to_learn"
+            }
+          ],
+          "parallel_tool_calls": false,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": "in_memory",
+          "reasoning": {
+            "context": "current_turn",
+            "effort": "medium",
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": false,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tools": [
+            {
+              "type": "function",
+              "description": "Gets current weather for a location",
+              "name": "weather",
+              "parameters": {
+                "type": "object",
+                "properties": {
+                  "latitude": {
+                    "type": "string",
+                    "description": "Latitude (e.g., 52.5200)"
+                  },
+                  "longitude": {
+                    "type": "string",
+                    "description": "Longitude (e.g., 13.4050)"
+                  }
+                },
+                "required": [
+                  "latitude",
+                  "longitude"
+                ],
+                "additionalProperties": false,
+                "strict": true
+              },
+              "strict": true
+            },
+            {
+              "type": "function",
+              "description": "Gets the best language to learn",
+              "name": "best_language_to_learn",
+              "parameters": {
+                "type": "object",
+                "properties": {},
+                "required": [],
+                "additionalProperties": false,
+                "strict": true
+              },
+              "strict": true
+            }
+          ],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 404,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens": 17,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 421
+          },
+          "user": null,
+          "metadata": {}
+        }
+  recorded_at: Thu, 11 Jun 2026 20:11:37 GMT
+- request:
+    method: post
+    uri: https://api.openai.com/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-5-nano","input":[{"role":"user","content":"What''s the
+        weather in Berlin and what''s the best programming language?"},{"type":"reasoning","summary":[],"encrypted_content":"gAAAAABqKxZ3Sv5ygT8ji1bC-eIi7ruk9HQ01UlEIYdJ_Lv3V_XeliAmIn53EeKUI0_QCFQdozVIaJh0Ev0TNbGBAYixMxNTuXN9s8ihrU_HSRUPLreK6IM3GH8IH5dymta5FgwSKzdL8TPw6XPVF8ZvpLqRoNvfnqBmK0c9tOCPGq86odEHBlLmUpHeDa-dPbOJQRSo2p6BD3T5CB6RrU2Zab3hC6w7nY80jjDJ2hf7RN1lS6K0QouLNQ4sxlkfoFsMddOJwBVQbq_DvmL81mqN2BKo7BXHhodUV5iJ41Nv42EzhmfqAOoiCjC2mserC5qYgxB9OKlddTnPff3XkEqwsQNHW72Ia7uGqIkG5jKD5zmeTEgYBpZxc7pH54l-Yw-4somDGG_nX1DyBRcC6YF3ucXl-4EGPm2UlidY_cVjeVOv4BnSQTHLKfw_kbAG-beWvhZbjg7HomIM2JzFTtTnbx5EnvPRCosFm7TAHXP_b9pngZOYpRmGHiqEIGqAOtxJQp0EGh7jwCEtoAglHuOylAnpwQZkAYrekmZozdQDHPFgKNvBNMtJbTX7JPMFWk3qQdmhKVDira2oPp9wh1ehr75IgiSa_zEfrUhcnQedl3bB7GUCTsZDGeYYSW4bEcLlbLfDRtORh8HtQIQct3FTXX4GnamQzWQD26QVkpaQV5wc0Z3KGpA9nJL3A9pnlY-QjJ7dosM64aKjO6It8Qi1FnyxenybKA2OlqWp1Zwl1iEPCjBrlvwUmxuLdlyhW2R6-lEBigDThbIsEVogcOnlpuYdOsfTdCjoZ9AwMzvY2TwrCnKuSVTnhSQyRtQoErpMVOTSxj886GzkZI07ug0qfhQ_fDofb-5E6xbLT5CYwnSXM-mXp7_GqWi_GpSnQYXbi6Mu0nQdyXYO5gkslbLCdpNeL9gCpkzLBfwfHhSRGsOZaU4kU1jFIAQVkc8wZrftJLdvuiMQQGckNzgTNuZvKLTwajxHcEhJhV_JX30EacNzkoMOprmVTPfIRHeEqDQwTvgHN4hyH6I0tjJT2dDkw51T5bOn2qpzP41r5Tqq-gq1QVnjZTy5Aypec23BP7dKzMzc4GMdAIenRitlxNcnrvK7oZfozlPlGw1Z1NjLSJVmshuDLDrNPyGcUmM6OncQ7FSDpH-azDeyO1ZgXjKNzcw09y07Q16Ycqzf0rZyaP_lmVv0aKTjaxgsUzfvdTwe5W6nE_7Vdt1Ebon-LuAiamIAGnMTSB13kINGkUAhTWy8xjs9h1fip4fyRamD7nWcz6UYjBm2L0Fd_MNFlr2-NiWC5qDAXdxrOcbxIRLoo-vzH4JzDOuXfDWJFyh6juC3M_u3zmCrXTeabyZogkVjU289pk0uq7qpQlGfMcfKvG_e7WzzO8aRyalow53aKtug-ds4kKEQGi95Wkizi-Wujhwjhh-w0Em5ge84xXz9WntrAgrhXKwFidYD2WcFsYMMVqCqavFo-9eS_NPyUEk7219jRSjYoh8y8mciExj2CeDzcOI6vIVPjlUzeg-PTUsQBiRSSeGWlG3W6ldXbdD3bI9nfO736dFLxsN2qleym1wyfFxJDm5gmuok1XBt3kmRtQsmrCuhU93HMsaJ-aJxbGPGMbG1Edr4Jy0xzv_5gJeiwyxXFkOtQzqzKR6U5DoS0_JYasG_NL6Eg4z0I-TMcJvmO4GCIRUKJ7WJDSCEYoY0xt7f2lg1zn8bY-8E_C9dno0dx4rIsW9E_MwF5rqf8iU2JVItoMUEJZstYj1UPCZKYcQHXivc0B1YmTDHiqMPnnTgd7c-PuGRziEkzkecUE8jHbuWulkcekkWgsN2nicM6CiiBAs="},{"type":"function_call","call_id":"call_Mhu65PiyfGn4YnVC8SjZgNcS","name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"},{"type":"function_call_output","call_id":"call_Mhu65PiyfGn4YnVC8SjZgNcS","output":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"},{"type":"function_call","call_id":"call_Y9cs7wfn32XCqNvr7aE51jik","name":"best_language_to_learn","arguments":"{}"},{"type":"function_call_output","call_id":"call_Y9cs7wfn32XCqNvr7aE51jik","output":"Ruby"}],"instructions":"You
+        must use both the weather tool for Berlin (52.5200, 13.4050) and the best
+        language tool.","stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}},{"type":"function","name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}],"parallel_tool_calls":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.2
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 11 Jun 2026 20:11:40 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Cf-Ray:
+      - "<CF_RAY>"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Access-Control-Expose-Headers:
+      - CF-Ray
+      - CF-Ray
+      - X-Request-ID
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '2280'
+      Openai-Project:
+      - proj_61L3Oqt640dKU0CASS2iOj8Q
+      Openai-Version:
+      - '2020-10-01'
+      X-Ratelimit-Limit-Requests:
+      - '5000'
+      X-Ratelimit-Limit-Tokens:
+      - '2000000'
+      X-Ratelimit-Remaining-Requests:
+      - '4999'
+      X-Ratelimit-Remaining-Tokens:
+      - '1999910'
+      X-Ratelimit-Reset-Requests:
+      - 12ms
+      X-Ratelimit-Reset-Tokens:
+      - 2ms
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Set-Cookie:
+      - "<COOKIE>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "id": "resp_0da7a429266e83e2016a2b1679c834819c84d9ae8ba4485f23",
+          "object": "response",
+          "created_at": 1781208697,
+          "status": "completed",
+          "background": false,
+          "billing": {
+            "payer": "developer"
+          },
+          "completed_at": 1781208699,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "incomplete_details": null,
+          "instructions": "You must use both the weather tool for Berlin (52.5200, 13.4050) and the best language tool.",
+          "max_output_tokens": null,
+          "max_tool_calls": null,
+          "model": "gpt-5-nano-2025-08-07",
+          "moderation": null,
+          "output": [
+            {
+              "id": "rs_0da7a429266e83e2016a2b167a184c819c8bc59e1e2ac53e96",
+              "type": "reasoning",
+              "content": [],
+              "encrypted_content": "gAAAAABqKxZ8Dgj3JQZoc6leeMPnifblbwVOqu_rTPMtW_eQ0Yceq6aE3FOCLsVWU-Uxthp7J7AAASQLCHD0IDIc-WTXI4VaCUDUpujyy0IcBTwPd_ZLvUGRBhjJblu2zcYLY_Sxzyc3I3vYB_P9yVvxH0NnSMkZncLNRqEkY2yjui1cCdczV8xHXDXspyPP1uce7zT8O5yhZYBei5yOFEKwlisnuZ_L_3Riqc9LWS2sJAmOp945817rMS09ZmS9GTtJ0VywDvaJsc-RvjHgEavnvrEcgLano1BXNRXXlbGr9-TBNQJX7a45-8uvkyoWXN2Db0JS6AZ3ksfI5MhsX-wgsPeowDlmLSlxZ44S2UPq2GKoUDDUgOtlUeH5hXYVYgfi72AyRvSUU3rpVvR4sG_KOBH0Rr0GZpLtFoAEGc8f6DFHLnePBpJJhoy6Lqn7t_CC2BixEWGV2RdQnNPObavCY_pgRsksNAEPs6izms7dhyYMHKG4BXL390qHZdhmrlghZQ2s8K6GMnjoaB8iLc4UTdse1krKpd1uVLVXNDHTXYTCMyCwvq0VSJBYyhC-PIt3B8muL0MEfw-lS_9BtiNrY7By1IwWp2q7VvItXG_PTEa69VO0-eqUdrXLifRwBtN0eApg1aB5VWaNHnKnuDJaIxCcVXI_LCTW19CjiaSvE_2jQoAnJpueMNRs_owYPAsAY6S4DnoDYvHFjC1IvQJ3eFPq2ARxN3pX5XdP4zWy8fIuKdeDPS1VRsr6f6wbdNo8VCTAISQ55dJqe87jsReDmorquIxEQ94pguSwBxp8ulJQ45CGAthD4GPpzSZnOb1T5UlMZK4lnITC_kWN-qDSYZ667V24fxcsQI28xpRuygDmNAfK5xNuv-N7V5148Dr5wSnfjAEyuwCjXFoMUvqCLWwtqObzX3Q5ehotkovXBiyBiPwUv1RKU0t5gwL52dwJU8fxqwuREXsOV2uGTzo5v6yf9q1pPnLvUXeq6T3VFp3FAXFEBYGJDQutr-HiPFv8swtoQv3KsmGkeBmUWCxqY9qQtLt54rtPt2wdP5IlswD3uiW15KGdFVUR8qojReLcsah3r2OGBBWHhqfJTb1bSnJ4by3WW32hdictL9CtWKlvKpwrHWzRik4Af2oetj9fw95l8e25cG6Svu-5KuruCdDB_L7oKvO_ARpBInQuzgZXSY7InKoJwZf8qQu5VbBLyw-E0VX5gdJ7Rz7yQ-30KVmcHMfJBSwfbChk7lkFxSyiBXQcHkKPsfFQ7T21r8jgaFEBdxREvuyjSCbutNMElgRDvQKLrN__a65XpZYO3z_4owryukhDbSM66LQD4yWwvU0swDttxD9w8kR5y4xqVTw-eUcf6oDz0AeI5NH17nPWMEtLL6anvTr5hLQh-HSn4RJ_GANMldzSEc1wNGqNjejIHkuYOn4GOFIN_AA3Wd4lUdg1OzSlNdUFgVaGbcAtViw7Njzx_zZdgf5kIWhLkVUeHO5hVDU6fva6ctZqRHrJFS2B4o3B1uiT1AXD5ON0fCoMvlfbiKAJOKFVN8I-SGaltuvHsWb8mjhzZaUbdk7uXyFe9qmOIP-dUG--z8aaSYKTaw-nWOknynmF-67ydn5vHKdsEyNO0gY1T5jxJkrp-exZHqLT_Xrr5NbngmGidarDTeWK-Pe7Q4PUIUcjAnGP_6vajb8EsRzwcWKiE8SruwEpKfSVQsaHL1m7cWmIcnCnQcHtgncHbTs0ssjTX_N-l9IxpYXpjR7bHk1fVSw73pNR4X3pAwfRzGrpfSxf_pxpN6CVEVJ-PPh80rl8_fRPsEIgmw23aWY_3wvHcxLDQNHTTgPvJP0ZjYvDPAdOfpHoSdjkCBZZdgtZlAYl-gWpnmmoKRtjierXx4dSakr_3PXTvWhlUZsbcviCAVyyPiSS8VWQ8lxlq-_K1S2O0HgBWj0qPKywdbmqRwPu0xKxpcAx5mfJTm50mLT5Y5PbtzPCLXzQ7QV1wJ4TZ-wj9uVgRWrGn-3xeHNvbDoKUikbQENRSTYe_pGDVy0R2fdrW6VgA_q-MGpZHoawPq61s42OICi0slRa6eOV1iR7O1uWS8qpEfYiq7M-IcakCNAEOnHqWwqoHCwbT9Og35H0dq-obkSBqyTvMTelFUqrFvXqCyvnLGMuKWWtF0vfK78f4UsvJrbxqbOu_ySWJex4ChZ1F16q3kpb2UlqdvOI6diaxndvnWjY4KjEjrBsapyok-2tmWeNPuiF7yCwB75qUJ_QEgneycYLo4IXBI1_XCT6jUfiqCBh67zED7Z1kCXwg_LncrBlQkZR3vzyp0CQ3eGpMFiz8AK88JjTLnuKAsz0gNvgQGYlYd2n1wxhZlDrwS_e-vEMMdVHHlIjebVBfXwUjgCHau5k22sKqEkrNVOTiE8VO251yhu5FunoLUtb1xpruaFts8iNEZpmiaIOA_UIaBBR0w==",
+              "summary": []
+            },
+            {
+              "id": "msg_0da7a429266e83e2016a2b167b83f0819c9d87e1efc98ab55a",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "- Berlin weather (52.5200, 13.4050): 15\u00b0C, wind 10 km/h\n- Best programming language to learn (per the tool): Ruby\n\nNote: \"Best\" is subjective\u2014Ruby is a solid choice for beginners and web development (e.g., Ruby on Rails)."
+                }
+              ],
+              "role": "assistant"
+            }
+          ],
+          "parallel_tool_calls": false,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": "in_memory",
+          "reasoning": {
+            "context": "current_turn",
+            "effort": "medium",
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": false,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tools": [
+            {
+              "type": "function",
+              "description": "Gets current weather for a location",
+              "name": "weather",
+              "parameters": {
+                "type": "object",
+                "properties": {
+                  "latitude": {
+                    "type": "string",
+                    "description": "Latitude (e.g., 52.5200)"
+                  },
+                  "longitude": {
+                    "type": "string",
+                    "description": "Longitude (e.g., 13.4050)"
+                  }
+                },
+                "required": [
+                  "latitude",
+                  "longitude"
+                ],
+                "additionalProperties": false,
+                "strict": true
+              },
+              "strict": true
+            },
+            {
+              "type": "function",
+              "description": "Gets the best language to learn",
+              "name": "best_language_to_learn",
+              "parameters": {
+                "type": "object",
+                "properties": {},
+                "required": [],
+                "additionalProperties": false,
+                "strict": true
+              },
+              "strict": true
+            }
+          ],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 433,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens": 314,
+            "output_tokens_details": {
+              "reasoning_tokens": 192
+            },
+            "total_tokens": 747
+          },
+          "user": null,
+          "metadata": {}
+        }
+  recorded_at: Thu, 11 Jun 2026 20:11:40 GMT
 recorded_with: VCR 6.4.0

@@ -1,19 +1,40 @@
 # frozen_string_literal: true
 
+require 'stringio'
+
 module RubyLLM
   module Providers
     # Google Vertex AI implementation
-    class VertexAI < Gemini
-      include VertexAI::Chat
-      include VertexAI::Streaming
-      include VertexAI::Embeddings
-      include VertexAI::Models
-      include VertexAI::Transcription
+    class VertexAI < Provider
+      protocol :gemini, VertexAI::Gemini
+      protocol :anthropic, VertexAI::Anthropic
+      protocol :mistral, VertexAI::Mistral
+      protocol :chat_completions, VertexAI::ChatCompletions
 
       SCOPES = [
         'https://www.googleapis.com/auth/cloud-platform',
         'https://www.googleapis.com/auth/generative-language.retriever'
       ].freeze
+
+      # Vertex AI hosts models from several publishers, each speaking its
+      # native protocol. Publisher-prefixed ids are MaaS models served
+      # through the OpenAI-compatible endpoint.
+      def protocol_for(model, **)
+        case model.id
+        when %r{/} then protocols[:chat_completions]
+        when /\Aclaude/ then protocols[:anthropic]
+        when VertexAI::Mistral::MODELS then protocols[:mistral]
+        else super
+        end
+      end
+
+      def location_path
+        "projects/#{@config.vertexai_project_id}/locations/#{@config.vertexai_location}"
+      end
+
+      def model_path(model, publisher: 'google')
+        "#{location_path}/publishers/#{publisher}/models/#{model}"
+      end
 
       def initialize(config)
         super
@@ -21,6 +42,8 @@ module RubyLLM
       end
 
       def api_base
+        return @config.vertexai_api_base if @config.vertexai_api_base
+
         if @config.vertexai_location.to_s == 'global'
           'https://aiplatform.googleapis.com/v1beta1'
         else
@@ -29,19 +52,15 @@ module RubyLLM
       end
 
       def headers
-        if defined?(VCR) && !VCR.current_cassette.recording?
-          { 'Authorization' => 'Bearer test-token' }
-        else
-          initialize_authorizer unless @authorizer
-          @authorizer.apply({})
-        end
+        initialize_authorizer unless @authorizer
+        @authorizer.apply({})
       rescue Google::Auth::AuthorizationError => e
         raise UnauthorizedError.new(nil, "Invalid Google Cloud credentials for Vertex AI: #{e.message}")
       end
 
       class << self
         def configuration_options
-          %i[vertexai_project_id vertexai_location vertexai_service_account_key]
+          %i[vertexai_project_id vertexai_location vertexai_service_account_key vertexai_api_base]
         end
 
         def configuration_requirements

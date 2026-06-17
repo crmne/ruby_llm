@@ -11,9 +11,9 @@ http_interactions:
         description"},"status":{"description":"Optional task status","anyOf":[{"type":"string","enum":["pending","done"]},{"type":"null"}]}},"required":["task","status"],"additionalProperties":false,"strict":true}}}}]}}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       X-Amz-Date:
-      - 20260507T000054Z
+      - 20260608T185022Z
       X-Amz-Content-Sha256:
       - cc32dde93a2baf52b1abfc50fbd1cef53f31649e30baf13286bdd54d367188be
       Authorization:
@@ -31,18 +31,18 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 07 May 2026 00:00:55 GMT
+      - Mon, 08 Jun 2026 18:50:23 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '335'
+      - '323'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 6c73e957-b711-40cc-bfbe-4f8761038e7b
+      - d415caa3-1a3c-4aa6-b679-abdf0f9a273c
     body:
       encoding: UTF-8
-      string: '{"metrics":{"latencyMs":489},"output":{"message":{"content":[{"text":""},{"toolUse":{"input":{"task":"Review
-        PR","status":"pending"},"name":"any_of_params","toolUseId":"tooluse_4cuVy0hKddPCxDdJIvVNkB"}}],"role":"assistant"}},"stopReason":"tool_use","usage":{"inputTokens":995,"outputTokens":38,"serverToolUsage":{},"totalTokens":1033}}'
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+      string: '{"metrics":{"latencyMs":648},"output":{"message":{"content":[{"toolUse":{"input":{"task":"Review
+        PR","status":"pending"},"name":"any_of_params","toolUseId":"tooluse_xm6aEHat4DFiNp9lQs8avs"}}],"role":"assistant"}},"stopReason":"tool_use","usage":{"inputTokens":995,"outputTokens":38,"serverToolUsage":{},"totalTokens":1033}}'
+  recorded_at: Mon, 08 Jun 2026 18:50:24 GMT
 recorded_with: VCR 6.4.0
