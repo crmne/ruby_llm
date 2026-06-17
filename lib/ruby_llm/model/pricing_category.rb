@@ -31,9 +31,6 @@ module RubyLLM
         standard&.reasoning_output_per_million
       end
 
-      alias cached_input cache_read_input
-      alias cache_creation_input cache_write_input
-
       def to_h
         result = {}
         result[:standard] = standard.to_h if standard

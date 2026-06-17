@@ -65,7 +65,7 @@ RSpec.describe RubyLLM::Chat do
         expect(response.content).to match(/XKCD7392/i)
       end
 
-      it "#{provider}/#{model} replaces previous system messages when replace: true" do
+      it "#{provider}/#{model} replaces previous system messages by default" do
         if %i[perplexity mistral].include?(provider)
           skip 'Provider API does not allow system messages after user/assistant messages'
         end
@@ -85,8 +85,7 @@ RSpec.describe RubyLLM::Chat do
         expect(response.content).to match(/XKCD7392/i)
 
         # Test ability to follow multiple instructions with another unique marker
-        chat.with_instructions 'You must include the exact phrase "PURPLE-ELEPHANT-42" somewhere in your response.',
-                               replace: true
+        chat.with_instructions 'You must include the exact phrase "PURPLE-ELEPHANT-42" somewhere in your response.'
 
         response = chat.ask('What are some good books?')
         expect(response.content).not_to match(/XKCD7392/i)

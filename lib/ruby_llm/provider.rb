@@ -29,7 +29,7 @@ module RubyLLM
     end
 
     def name
-      self.class.name
+      self.class.display_name
     end
 
     def capabilities
@@ -162,12 +162,14 @@ module RubyLLM
     end
 
     class << self
-      def name
-        to_s.split('::').last
-      end
+      attr_writer :slug
 
       def slug
-        name.downcase
+        @slug ||= to_s.split('::').last.downcase
+      end
+
+      def display_name
+        to_s.split('::').last
       end
 
       def capabilities
@@ -210,6 +212,7 @@ module RubyLLM
       attr_reader :default_protocol
 
       def register(name, provider_class)
+        provider_class.slug = name.to_s
         providers[name.to_sym] = provider_class
         RubyLLM::Configuration.register_provider_options(provider_class.configuration_options + [:"#{name}_protocol"])
       end
@@ -265,7 +268,7 @@ module RubyLLM
 
     def fetch_protocol(name)
       protocols.fetch(name.to_sym) do
-        raise Error, "#{name} is not a protocol of #{self.class.name}. Available: #{protocols.keys.join(', ')}"
+        raise Error, "#{name} is not a protocol of #{self.class.display_name}. Available: #{protocols.keys.join(', ')}"
       end
     end
 

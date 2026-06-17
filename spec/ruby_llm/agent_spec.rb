@@ -63,30 +63,6 @@ RSpec.describe RubyLLM::Agent do
     )
   end
 
-  it 'supports runtime-evaluated schema blocks that return a schema value' do
-    agent_class = Class.new(RubyLLM::Agent) do
-      model 'gpt-4.1-nano'
-      inputs :strict
-
-      schema do
-        if strict
-          {
-            type: 'object',
-            properties: { answer: { type: 'string' } },
-            required: ['answer'],
-            additionalProperties: false
-          }
-        end
-      end
-    end
-
-    strict_chat = agent_class.chat(strict: true)
-    loose_chat = agent_class.chat(strict: false)
-
-    expect(strict_chat.schema).to include(name: 'response', strict: true, schema: include(type: 'object'))
-    expect(loose_chat.schema).to be_nil
-  end
-
   it 'supports lambda schemas without DSL fallback' do
     agent_class = Class.new(RubyLLM::Agent) do
       model 'gpt-4.1-nano'
@@ -214,26 +190,6 @@ RSpec.describe RubyLLM::Agent do
         @events = []
       end
 
-      def on_new_message(&)
-        @events << :new_message
-        self
-      end
-
-      def on_end_message(&)
-        @events << :end_message
-        self
-      end
-
-      def on_tool_call(&)
-        @events << :tool_call
-        self
-      end
-
-      def on_tool_result(&)
-        @events << :tool_result
-        self
-      end
-
       def before_message(&)
         @events << :before_message
         self
@@ -257,19 +213,11 @@ RSpec.describe RubyLLM::Agent do
 
     agent = Class.new(described_class).new(chat: fake_chat)
 
-    expect(agent.on_new_message { :ok }).to eq(fake_chat)
-    expect(agent.on_end_message { :ok }).to eq(fake_chat)
-    expect(agent.on_tool_call { :ok }).to eq(fake_chat)
-    expect(agent.on_tool_result { :ok }).to eq(fake_chat)
     expect(agent.before_message { :ok }).to eq(fake_chat)
     expect(agent.after_message { :ok }).to eq(fake_chat)
     expect(agent.before_tool_call { :ok }).to eq(fake_chat)
     expect(agent.after_tool_result { :ok }).to eq(fake_chat)
     expect(fake_chat.events).to eq(%i[
-                                     new_message
-                                     end_message
-                                     tool_call
-                                     tool_result
                                      before_message
                                      after_message
                                      before_tool_call

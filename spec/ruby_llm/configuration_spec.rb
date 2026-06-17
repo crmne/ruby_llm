@@ -8,7 +8,6 @@ RSpec.describe RubyLLM::Configuration do
 
     it 'applies core default values' do
       expect(config.model_registry_class).to eq('Model')
-      expect(config.use_new_acts_as).to be(true)
       expect(config.model_registry_source).to be_nil
       expect(config.request_timeout).to eq(300)
       expect(config.max_retries).to eq(3)
@@ -26,7 +25,6 @@ RSpec.describe RubyLLM::Configuration do
         :tool_concurrency,
         :default_model,
         :model_registry_file,
-        :use_new_acts_as,
         :openai_api_key,
         :openrouter_api_base
       )

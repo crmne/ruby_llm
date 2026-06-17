@@ -112,7 +112,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       chat.with_instructions('Be concise', append: true)
       expect(chat.messages.where(role: 'system').count).to eq(2)
 
-      chat.with_instructions('Be awesome', replace: true)
+      chat.with_instructions('Be awesome')
       expect(chat.messages.where(role: 'system').count).to eq(1)
       expect(chat.messages.find_by(role: 'system').content).to eq('Be awesome')
     end
@@ -309,7 +309,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       expect(message.cache_write_tokens).to eq(7)
     end
 
-    it 'keeps create_user_message as a deprecated compatibility wrapper' do
+    it 'keeps create_user_message as a convenience wrapper for add_message' do
       chat = Chat.create!(model: anthropic_model)
 
       message = chat.create_user_message('hello')
@@ -758,27 +758,26 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
   end
 
   describe 'event callbacks' do
-    it 'keeps on_new_message replacing while preserving persistence callbacks' do
-      user_callback_called = false
-      second_user_callback_called = false
+    it 'runs additive callbacks while preserving persistence callbacks' do
+      first_callback_called = false
+      second_callback_called = false
       end_callback_called = false
-      allow(RubyLLM.logger).to receive(:warn)
 
       chat = Chat.create!(model: model)
       provider = chat.to_llm.instance_variable_get(:@provider)
       allow(provider).to receive(:complete).and_return(RubyLLM::Message.new(role: :assistant, content: 'Hello back'))
 
       # Set user callbacks before calling ask
-      chat.on_new_message { user_callback_called = true }
-      chat.on_new_message { second_user_callback_called = true }
-      chat.on_end_message { end_callback_called = true }
+      chat.before_message { first_callback_called = true }
+      chat.before_message { second_callback_called = true }
+      chat.after_message { end_callback_called = true }
 
       # Call ask which triggers to_llm and sets up persistence callbacks
       chat.ask('Hello')
 
-      # on_* callbacks replace each other, but persistence uses additive callbacks.
-      expect(user_callback_called).to be false
-      expect(second_user_callback_called).to be true
+      # Additive callbacks all run, and persistence callbacks coexist with them.
+      expect(first_callback_called).to be true
+      expect(second_callback_called).to be true
       expect(end_callback_called).to be true
       expect(chat.messages.count).to eq(2) # Persistence still works
     end
@@ -789,9 +788,8 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       llm_chat = chat.to_llm
       provider = llm_chat.instance_variable_get(:@provider)
       allow(provider).to receive(:complete).and_return(RubyLLM::Message.new(role: :assistant, content: 'Hello back'))
-      allow(RubyLLM.logger).to receive(:warn)
 
-      llm_chat.on_new_message { user_callback_called = true }
+      llm_chat.before_message { user_callback_called = true }
 
       expect { chat.ask('Hello') }.not_to raise_error
       expect(user_callback_called).to be true
@@ -799,15 +797,14 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       expect(chat.messages.last.content).to eq('Hello back')
     end
 
-    it 'calls on_tool_call and on_tool_result callbacks' do
+    it 'calls before_tool_call and after_tool_result callbacks' do
       tool_call_received = nil
       tool_result_received = nil
-      allow(RubyLLM.logger).to receive(:warn)
 
       chat = Chat.create!(model: model)
                  .with_tool(Calculator)
-                 .on_tool_call { |tc| tool_call_received = tc }
-                 .on_tool_result { |result| tool_result_received = result }
+                 .before_tool_call { |tc| tool_call_received = tc }
+                 .after_tool_result { |result| tool_result_received = result }
 
       chat.ask('What is 2 + 2?')
 

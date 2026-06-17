@@ -22,7 +22,7 @@ module RubyLLM
                                                        config: config)
       payload = {
         provider: provider_instance.slug,
-        provider_class: provider_instance.class.name,
+        provider_class: provider_instance.class.display_name,
         model: model.id,
         model_info: model,
         prompt: prompt,

@@ -72,19 +72,17 @@ module RubyLLM
         setup_persistence_callbacks
       end
 
-      def with_instructions(instructions, append: false, replace: nil)
-        append = append_instructions?(append:, replace:)
+      def with_instructions(instructions, append: false)
         persist_system_instruction(instructions, append:)
 
-        to_llm.with_instructions(instructions, append:, replace:)
+        to_llm.with_instructions(instructions, append:)
         self
       end
 
-      def with_runtime_instructions(instructions, append: false, replace: nil)
-        append = append_instructions?(append:, replace:)
+      def with_runtime_instructions(instructions, append: false)
         store_runtime_instruction(instructions, append:)
 
-        to_llm.with_instructions(instructions, append:, replace:)
+        to_llm.with_instructions(instructions, append:)
         self
       end
 
@@ -138,16 +136,6 @@ module RubyLLM
         self
       end
 
-      def on_new_message(&)
-        to_llm.on_new_message(&)
-        self
-      end
-
-      def on_end_message(&)
-        to_llm.on_end_message(&)
-        self
-      end
-
       def before_message(...)
         to_llm.before_message(...)
         self
@@ -165,16 +153,6 @@ module RubyLLM
 
       def after_tool_result(...)
         to_llm.after_tool_result(...)
-        self
-      end
-
-      def on_tool_call(...)
-        to_llm.on_tool_call(...)
-        self
-      end
-
-      def on_tool_result(...)
-        to_llm.on_tool_result(...)
         self
       end
 
@@ -324,12 +302,6 @@ module RubyLLM
         primary_message = system_messages.shift
         primary_message.update!(content: instructions) if primary_message.content != instructions
         system_messages.each(&:destroy!)
-      end
-
-      def append_instructions?(append:, replace:)
-        return append if replace.nil?
-
-        append || (replace == false)
       end
 
       def persist_system_instruction(instructions, append:)

@@ -193,7 +193,8 @@ RSpec.describe RubyLLM::Provider do
     it 'keeps requirements as a subset of declared configuration options' do
       described_class.providers.each_value do |provider_class|
         missing = provider_class.configuration_requirements - provider_class.configuration_options
-        expect(missing).to be_empty, "#{provider_class.name} is missing options for requirements: #{missing.inspect}"
+        expect(missing).to be_empty,
+                           "#{provider_class.display_name} is missing options for requirements: #{missing.inspect}"
       end
     end
 

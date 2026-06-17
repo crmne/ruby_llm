@@ -39,11 +39,6 @@ module RubyLLM
       amount_for(:thinking)
     end
 
-    alias reasoning thinking
-
-    alias cached_input cache_read
-    alias cache_creation cache_write
-
     def total
       return nil unless tokens?
       return nil if COMPONENTS.any? { |component| missing?(component) }
@@ -103,10 +98,6 @@ module RubyLLM
       COMPONENTS.each do |component|
         define_method(component) { @amounts[component] }
       end
-
-      alias reasoning thinking
-      alias cached_input cache_read
-      alias cache_creation cache_write
 
       def total
         return nil unless tokens?
