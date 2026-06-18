@@ -6,7 +6,6 @@ unless ENV['SKIP_COVERAGE']
 
     add_filter '/spec/'
     add_filter '/vendor/'
-    add_filter 'acts_as_legacy.rb'
     add_filter '/lib/generators/'
 
     enable_coverage :branch

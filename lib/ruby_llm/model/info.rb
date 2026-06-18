@@ -51,7 +51,7 @@ module RubyLLM
       end
 
       def label
-        provider_name = provider_class&.name || provider
+        provider_name = provider_class&.display_name || provider
         "#{provider_name} - #{display_name}"
       end
 
@@ -94,9 +94,6 @@ module RubyLLM
       def cache_write_input_price_per_million
         pricing.text_tokens.cache_write_input
       end
-
-      alias cached_input_price_per_million cache_read_input_price_per_million
-      alias cache_creation_input_price_per_million cache_write_input_price_per_million
 
       def cost_for(tokens)
         tokens = tokens.tokens if tokens.respond_to?(:tokens)

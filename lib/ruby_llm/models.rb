@@ -117,13 +117,13 @@ module RubyLLM
       def fetch_provider_models(remote_only: true)
         config = RubyLLM.config
         providers = remote_only ? Provider.configured_remote_providers(config) : Provider.configured_providers(config)
-        result = { models: [], fetched_providers: [], configured_names: providers.map(&:name), failed: [] }
+        result = { models: [], fetched_providers: [], configured_names: providers.map(&:display_name), failed: [] }
 
         providers.each do |provider_class|
           result[:models].concat(provider_class.new(config).list_models)
           result[:fetched_providers] << provider_class.slug
         rescue StandardError => e
-          result[:failed] << { name: provider_class.name, slug: provider_class.slug, error: e }
+          result[:failed] << { name: provider_class.display_name, slug: provider_class.slug, error: e }
         end
 
         result

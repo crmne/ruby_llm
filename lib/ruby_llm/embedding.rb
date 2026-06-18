@@ -25,7 +25,7 @@ module RubyLLM
 
       payload = {
         provider: provider_instance.slug,
-        provider_class: provider_instance.class.name,
+        provider_class: provider_instance.class.display_name,
         model: model_id,
         model_info: model,
         input: text,

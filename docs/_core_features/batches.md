@@ -166,7 +166,7 @@ class Batch < ApplicationRecord
 end
 ```
 
-It stores only the provider's batch id and the chats it's processing; the conversations themselves stay in your existing `chats` and `messages` tables. (Upgrading an app from 1.x? `bin/rails generate ruby_llm:upgrade_to_v2_0` adds the `batches` table.)
+It stores only the provider's batch id and the chats it's processing; the conversations themselves stay in your existing `chats` and `messages` tables. (Upgrading an app from 1.x? `bin/rails generate ruby_llm:upgrade` adds the `batches` table.)
 
 `Batch.create!` sends the staged chats to the provider and persists the record in one step:
 

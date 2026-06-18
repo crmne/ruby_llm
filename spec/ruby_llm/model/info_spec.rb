@@ -274,8 +274,6 @@ RSpec.describe RubyLLM::Model::Info do
 
       expect(info.cache_read_input_price_per_million).to eq(0.5)
       expect(info.cache_write_input_price_per_million).to eq(2.5)
-      expect(info.cached_input_price_per_million).to eq(0.5)
-      expect(info.cache_creation_input_price_per_million).to eq(2.5)
     end
   end
 

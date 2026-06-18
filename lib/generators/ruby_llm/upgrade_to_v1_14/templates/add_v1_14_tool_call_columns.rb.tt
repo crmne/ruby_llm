@@ -1,7 +1,0 @@
-class AddRubyLlmV114Columns < ActiveRecord::Migration<%= migration_version %>
-  def change
-    if column_exists?(:<%= tool_call_table_name %>, :thought_signature, :string)
-      change_column :<%= tool_call_table_name %>, :thought_signature, :text
-    end
-  end
-end

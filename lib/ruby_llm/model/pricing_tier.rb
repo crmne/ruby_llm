@@ -12,20 +12,13 @@ module RubyLLM
         reasoning_output_per_million
       ].freeze
 
-      LEGACY_KEYS = {
-        cached_input_per_million: :cache_read_input_per_million,
-        cache_creation_input_per_million: :cache_write_input_per_million
-      }.freeze
-
       def initialize(data = {})
         @values = {}
 
         data.each do |key, value|
           next unless value && value != 0.0
 
-          key = key.to_sym
-          canonical = LEGACY_KEYS.fetch(key, key)
-          @values[canonical] = value unless LEGACY_KEYS.key?(key) && @values.key?(canonical)
+          @values[key.to_sym] = value
         end
       end
 

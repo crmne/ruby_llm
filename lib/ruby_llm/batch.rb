@@ -22,7 +22,7 @@ module RubyLLM
         end
 
         provider = shared_provider(chats)
-        payload = { provider: provider.slug, provider_class: provider.class.name, requests: chats.size }
+        payload = { provider: provider.slug, provider_class: provider.class.display_name, requests: chats.size }
         RubyLLM.instrument('batch.ruby_llm', payload, config: provider.config) do |event|
           requests = chats.each_with_index.map do |chat, index|
             { custom_id: index.to_s, params: chat.render }

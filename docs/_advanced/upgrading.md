@@ -29,17 +29,53 @@ This guide focuses on upgrade-impacting changes: migrations, token semantics, de
 2.0 is currently in development
 {: .note }
 
+Upgrade one minor version at a time.
+{: .important }
+
+RubyLLM follows the same discipline as Rails itself: bump one release at a time, run that release's migrations, and clear any deprecations before moving on. If you're several versions behind, get to the **latest 1.x first** (each section below documents what changed and ships the generator for that step), then upgrade to 2.0. RubyLLM 2.0 carries a single `ruby_llm:upgrade` generator that always targets the current release — it does not bundle the older per-version generators.
+
 ## How to Upgrade
 
 ```bash
-# Run the upgrade generator
-bin/rails generate ruby_llm:upgrade_to_v2_0
-
-# Run migrations
+# After bumping the gem to 2.0
+bin/rails generate ruby_llm:upgrade
 bin/rails db:migrate
 ```
 
-The generator adds a JSON `citations` column to your messages table so [citations]({% link _core_features/citations.md %}) are persisted with each assistant message. The column is optional — without it, citations remain available on in-memory responses but aren't saved.
+The generator adds a JSON `citations` column to your messages table so [citations]({% link _core_features/citations.md %}) are persisted with each assistant message, and creates the `batches` table for [provider-side batches]({% link _core_features/batches.md %}). Both are optional — without them, citations stay on in-memory responses and batches aren't persisted.
+
+## Breaking Changes
+
+**The legacy `acts_as` API and `config.use_new_acts_as` are gone.** The association-based `acts_as` (the default since 1.7) is now the only API. **Remove `config.use_new_acts_as` from your initializer** — the option no longer exists, and an app that still sets it raises `NoMethodError` on boot. If you were still on the legacy API (`use_new_acts_as = false`), migrate your models to the association-based API (see [Upgrade to 1.7](#upgrade-to-17)) while on the latest 1.x, before upgrading.
+
+**The overriding `on_*` callbacks were removed.** `on_new_message`, `on_end_message`, `on_tool_call`, and `on_tool_result` are gone. Use the additive Rails-style callbacks, which can be registered more than once and run alongside RubyLLM's own persistence callbacks:
+
+```ruby
+chat.before_message { ... }      # was on_new_message
+chat.after_message { ... }       # was on_end_message
+chat.before_tool_call { ... }    # was on_tool_call
+chat.after_tool_result { ... }   # was on_tool_result
+```
+
+**`with_instructions(replace:)` was removed.** `with_instructions` replaces by default; pass `append: true` to add without replacing:
+
+```ruby
+chat.with_instructions("...", replace: true)   # before
+chat.with_instructions("...")                  # now — replaces by default
+chat.with_instructions("...", append: true)    # add another system message
+```
+
+**Agent `schema` blocks are always the Schema DSL.** A bare `schema do ... end` block is always interpreted as a [RubyLLM::Schema]({% link _core_features/agents.md %}#structured-output). For a schema computed from the agent's inputs at runtime, pass a lambda:
+
+```ruby
+schema do                                            # Schema DSL — static shape
+  string :answer
+end
+
+schema -> { strict ? StrictSchema : LooseSchema }    # dynamic — evaluated per run
+```
+
+**Cache pricing helpers use canonical names only.** The `cached_input*` / `cache_creation*` aliases on `Cost`, `Model::Info`, and `acts_as_model` records were removed. Use `cache_read*` / `cache_write*` (e.g. `model.cache_read_input_price_per_million`, `cost.cache_read`). Token-count helpers like `message.cached_tokens` are unchanged.
 
 ## Providers and Protocols Split
 
@@ -381,46 +417,6 @@ The chat UI works with your existing Chat and Message models and includes:
 - Markdown rendering
 - Code syntax highlighting
 - Responsive design
-
-## Troubleshooting
-
-### Config must be set before models load
-
-If you're setting `use_new_acts_as = true` in an initializer (like `config/initializers/ruby_llm.rb`), it won't work. Rails loads models before initializers run, causing various issues:
-
-**Symptoms:**
-- Legacy `acts_as` module gets included even though you set `use_new_acts_as = true`
-- `undefined local variable or method 'acts_as_model'` error during migration
-- Errors referencing `lib/ruby_llm/active_record/acts_as_legacy.rb` in backtraces
-- Works in development/staging but fails in production
-
-**Solution:**
-
-Add the configuration to `config/application.rb` **before** your Application class:
-
-```ruby
-# config/application.rb
-require_relative "boot"
-require "rails/all"
-
-# Configure RubyLLM before Rails::Application is inherited
-RubyLLM.configure do |config|
-  config.use_new_acts_as = true
-end
-
-module YourApp
-  class Application < Rails::Application
-    # ...
-  end
-end
-```
-
-This ensures RubyLLM is configured before ActiveRecord loads your models. Other configuration options (API keys, timeouts, etc.) can still go in your initializer.
-
-> This limitation exists because both legacy and new `acts_as` APIs need to coexist during the 1.x series. It will be resolved in RubyLLM 2.0 when the legacy API is removed.
-{: .note }
-
-See the [Configuration guide]({% link _getting_started/configuration.md %}#initializer-load-timing-issue-with-use_new_acts_as) for more details.
 
 ## New Applications
 
