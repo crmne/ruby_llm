@@ -9,10 +9,7 @@ redirect_from:
 ---
 
 # {{ page.title }}
-{: .d-inline-block .no_toc }
-
-New in 1.10
-{: .label .label-green }
+{: .no_toc }
 
 {{ page.description }}
 {: .fs-6 .fw-300 }

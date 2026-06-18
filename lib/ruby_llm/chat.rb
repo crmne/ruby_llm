@@ -29,12 +29,6 @@ module RubyLLM
       @thinking = nil
       @citations = false
       @protocol = nil
-      @on = {
-        new_message: nil,
-        end_message: nil,
-        tool_call: nil,
-        tool_result: nil
-      }
       @callbacks = Hash.new { |callbacks, name| callbacks[name] = [] }
     end
 
@@ -59,10 +53,10 @@ module RubyLLM
 
       RubyLLM.instrument('chat.ruby_llm', payload, config: @config) do |event|
         result = provider_completion(&block)
-        run_callbacks(:before_message, :new_message) unless block_given?
+        run_callbacks(:before_message) unless block_given?
         normalize_schema_response(result)
         add_message result
-        run_callbacks(:after_message, :end_message, result)
+        run_callbacks(:after_message, result)
         record_completion_event(event, result)
       end
       result
@@ -102,15 +96,7 @@ module RubyLLM
       end
     end
 
-    def with_instructions(instructions, append: false, replace: nil)
-      unless replace.nil?
-        RubyLLM.deprecator.warn(
-          '`replace:` is deprecated and will be removed in RubyLLM 2.0. ' \
-          '`with_instructions` replaces by default; use `append: true` to append.'
-        )
-        append ||= replace == false
-      end
-
+    def with_instructions(instructions, append: false)
       if append
         append_system_instruction(instructions)
       else
@@ -193,22 +179,6 @@ module RubyLLM
       self
     end
 
-    def on_new_message(&)
-      set_legacy_callback(:new_message, :on_new_message, :before_message, &)
-    end
-
-    def on_end_message(&)
-      set_legacy_callback(:end_message, :on_end_message, :after_message, &)
-    end
-
-    def on_tool_call(&)
-      set_legacy_callback(:tool_call, :on_tool_call, :before_tool_call, &)
-    end
-
-    def on_tool_result(&)
-      set_legacy_callback(:tool_result, :on_tool_result, :after_tool_result, &)
-    end
-
     def before_message(&)
       add_callback(:before_message, &)
     end
@@ -242,10 +212,10 @@ module RubyLLM
     # Receives a completion produced out-of-band (e.g. by a batch), running the
     # same callbacks as a synchronous completion so persistence works unchanged.
     def add_completion(response)
-      run_callbacks(:before_message, :new_message)
+      run_callbacks(:before_message)
       normalize_schema_response(response)
       add_message response
-      run_callbacks(:after_message, :end_message, response)
+      run_callbacks(:after_message, response)
       response
     end
 
@@ -321,7 +291,7 @@ module RubyLLM
       {
         chat: self,
         provider: @provider.slug,
-        provider_class: @provider.class.name,
+        provider_class: @provider.class.display_name,
         model: @model.id,
         model_info: @model,
         input_messages: messages.dup,
@@ -379,29 +349,14 @@ module RubyLLM
       # If parsing fails, keep content as string.
     end
 
-    def set_legacy_callback(name, legacy_name, additive_name, &block)
-      warn_legacy_callback_deprecation(legacy_name, additive_name) if block
-
-      @on[name] = block
-      self
-    end
-
-    def warn_legacy_callback_deprecation(legacy_name, additive_name)
-      RubyLLM.deprecator.warn(
-        "`#{legacy_name}` is deprecated and will be removed in RubyLLM 2.0. " \
-        "Use `#{additive_name}` instead."
-      )
-    end
-
-    def run_callbacks(name, legacy_name, *args)
+    def run_callbacks(name, *args)
       @callbacks[name].each { |callback| callback.call(*args) }
-      @on[legacy_name]&.call(*args)
     end
 
     def wrap_streaming_block(&block)
       return nil unless block
 
-      run_callbacks(:before_message, :new_message)
+      run_callbacks(:before_message)
 
       block
     end
@@ -418,7 +373,7 @@ module RubyLLM
 
     def handle_sequential_tool_calls(tool_calls)
       tool_calls.each_value do |tool_call|
-        run_callbacks(:before_message, :new_message)
+        run_callbacks(:before_message)
         result = execute_tool_with_callbacks(tool_call)
         add_tool_result_message(tool_call, result)
       end
@@ -426,7 +381,7 @@ module RubyLLM
 
     def handle_concurrent_tool_calls(tool_calls)
       execute_tools_concurrently(tool_calls) do |tool_call, result|
-        run_callbacks(:before_message, :new_message)
+        run_callbacks(:before_message)
         add_tool_result_message(tool_call, result)
       end
     end
@@ -438,16 +393,16 @@ module RubyLLM
     end
 
     def execute_tool_with_callbacks(tool_call)
-      run_callbacks(:before_tool_call, :tool_call, tool_call)
+      run_callbacks(:before_tool_call, tool_call)
       result = execute_tool tool_call
-      run_callbacks(:after_tool_result, :tool_result, result)
+      run_callbacks(:after_tool_result, result)
       result
     end
 
     def add_tool_result_message(tool_call, result)
       content = content_like?(result) ? result : result.to_s
       message = add_message role: :tool, content:, tool_call_id: tool_call.id
-      run_callbacks(:after_message, :end_message, message)
+      run_callbacks(:after_message, message)
       message
     end
 
@@ -464,7 +419,7 @@ module RubyLLM
       payload = {
         chat: self,
         provider: @provider.slug,
-        provider_class: @provider.class.name,
+        provider_class: @provider.class.display_name,
         model: @model.id,
         model_info: @model,
         tool: tool,

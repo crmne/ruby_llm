@@ -216,7 +216,7 @@ RSpec.describe RubyLLM::Chat do
 
         chat = RubyLLM.chat(model: model, provider: provider)
                       .with_tool(Weather)
-                      .on_tool_result { |result| tool_results_received << result }
+                      .after_tool_result { |result| tool_results_received << result }
 
         final_answer = 'The `list_tools` tool is not supported, but I see you have the `weather` tool.'
         allow(chat.instance_variable_get(:@provider)).to receive(:complete).and_return(
@@ -542,12 +542,12 @@ RSpec.describe RubyLLM::Chat do
   end
 
   describe 'tool call callbacks' do
-    it 'calls on_tool_call callback when tools are used' do
+    it 'calls before_tool_call callback when tools are used' do
       tool_calls_received = []
 
       chat = RubyLLM.chat
                     .with_tool(Weather)
-                    .on_tool_call { |tool_call| tool_calls_received << tool_call }
+                    .before_tool_call { |tool_call| tool_calls_received << tool_call }
 
       response = chat.ask("What's the weather in Berlin? (52.5200, 13.4050)")
 
@@ -559,12 +559,12 @@ RSpec.describe RubyLLM::Chat do
       expect(response.content).to include('10')
     end
 
-    it 'calls on_tool_result callback when tools return results' do
+    it 'calls after_tool_result callback when tools return results' do
       tool_results_received = []
 
       chat = RubyLLM.chat
                     .with_tool(Weather)
-                    .on_tool_result { |result| tool_results_received << result }
+                    .after_tool_result { |result| tool_results_received << result }
 
       response = chat.ask("What's the weather in Berlin? (52.5200, 13.4050)")
 
@@ -576,13 +576,13 @@ RSpec.describe RubyLLM::Chat do
       expect(response.content).to include('10')
     end
 
-    it 'calls both on_tool_call and on_tool_result callbacks in order' do
+    it 'calls both before_tool_call and after_tool_result callbacks in order' do
       call_order = []
 
       chat = RubyLLM.chat
                     .with_tool(DiceRoll)
-                    .on_tool_call { |_| call_order << :tool_call }
-                    .on_tool_result { |_| call_order << :tool_result }
+                    .before_tool_call { |_| call_order << :tool_call }
+                    .after_tool_result { |_| call_order << :tool_result }
 
       chat.ask('Roll a die for me')
 
@@ -710,7 +710,7 @@ RSpec.describe RubyLLM::Chat do
                       .with_tool(Weather, choice: :none)
 
         tool_called = false
-        chat.on_tool_call do |_tool_call|
+        chat.before_tool_call do |_tool_call|
           tool_called = true
         end
 
@@ -730,7 +730,7 @@ RSpec.describe RubyLLM::Chat do
                       .with_tool(Weather, choice: :required)
 
         tool_called = false
-        chat.on_tool_call do |_tool_call|
+        chat.before_tool_call do |_tool_call|
           tool_called = true
         end
 
@@ -750,7 +750,7 @@ RSpec.describe RubyLLM::Chat do
                       .with_tool(Weather, choice: :weather)
 
         tool_called = false
-        chat.on_tool_call do |_tool_call|
+        chat.before_tool_call do |_tool_call|
           tool_called = true
         end
 
@@ -778,7 +778,7 @@ RSpec.describe RubyLLM::Chat do
                         'You must use both the weather tool for Berlin (52.5200, 13.4050) and the best language tool.'
                       )
 
-        chat.on_end_message do |message|
+        chat.after_message do |message|
           expect(message.tool_calls.length).to eq(1) if message.tool_call?
         end
 

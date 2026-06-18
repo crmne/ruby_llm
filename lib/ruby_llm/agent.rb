@@ -251,20 +251,7 @@ module RubyLLM
         return value unless value.is_a?(Proc)
         return evaluate(value, runtime) if value.lambda?
 
-        resolved = evaluate(value, runtime)
-        warn_dynamic_schema_block_deprecation
-        resolved
-      rescue NoMethodError => e
-        raise unless e.receiver.equal?(runtime)
-
         RubyLLM::Schema.create(&value)
-      end
-
-      def warn_dynamic_schema_block_deprecation
-        RubyLLM.deprecator.warn(
-          'Dynamic `schema` blocks that reference agent inputs are deprecated; in RubyLLM 2.0 ' \
-          'a bare block will always be treated as Schema DSL. Use a lambda instead: `schema -> { ... }`.'
-        )
       end
 
       def llm_chat_for(chat_object)
@@ -378,7 +365,7 @@ module RubyLLM
 
     def_delegators :chat, :model, :messages, :tools, :params, :headers, :schema, :ask, :say, :with_tool, :with_tools,
                    :with_model, :with_temperature, :with_thinking, :with_citations, :with_context, :with_params,
-                   :with_headers, :with_schema, :on_new_message, :on_end_message, :on_tool_call, :on_tool_result,
+                   :with_headers, :with_schema,
                    :before_message, :after_message, :before_tool_call, :after_tool_result, :each, :complete,
                    :complete?, :ask_later, :generate, :run_tools, :step, :add_message, :add_completion,
                    :reset_messages!, :cost
