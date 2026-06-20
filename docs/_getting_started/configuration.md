@@ -93,6 +93,10 @@ RubyLLM.configure do |config|
   config.openrouter_api_key = ENV['OPENROUTER_API_KEY']
   config.openrouter_api_base = ENV['OPENROUTER_API_BASE'] # Available in v1.13.0+ (optional custom OpenRouter endpoint)
 
+  # Requesty (https://requesty.ai) - OpenAI-compatible router
+  config.requesty_api_key = ENV['REQUESTY_API_KEY']
+  config.requesty_api_base = ENV['REQUESTY_API_BASE'] # Optional custom Requesty endpoint (defaults to https://router.requesty.ai/v1)
+
   # Perplexity
   config.perplexity_api_key = ENV['PERPLEXITY_API_KEY']
   config.perplexity_api_base = ENV['PERPLEXITY_API_BASE'] # v1.16+ (optional custom Perplexity endpoint)
@@ -483,6 +487,10 @@ RubyLLM.configure do |config|
   # OpenRouter
   config.openrouter_api_key = String
   config.openrouter_api_base = String  # v1.13.0+
+
+  # Requesty
+  config.requesty_api_key = String
+  config.requesty_api_base = String  # optional, defaults to https://router.requesty.ai/v1
 
   # Perplexity
   config.perplexity_api_key = String
