@@ -62,6 +62,12 @@ RSpec.describe RubyLLM::Provider do
         custom: 'https://openrouter-proxy.example.com/api/v1',
         default: 'https://openrouter.ai/api/v1'
       },
+      requesty: {
+        provider: RubyLLM::Providers::Requesty,
+        key: :requesty_api_base,
+        custom: 'https://requesty-proxy.example.com/v1',
+        default: 'https://router.requesty.ai/v1'
+      },
       perplexity: {
         provider: RubyLLM::Providers::Perplexity,
         key: :perplexity_api_base,
@@ -108,6 +114,8 @@ RSpec.describe RubyLLM::Provider do
         config.openai_api_key = 'openai-key'
       when :openrouter
         config.openrouter_api_key = 'openrouter-key'
+      when :requesty
+        config.requesty_api_key = 'requesty-key'
       when :perplexity
         config.perplexity_api_key = 'perplexity-key'
       when :vertexai
