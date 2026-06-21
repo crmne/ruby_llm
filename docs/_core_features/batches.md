@@ -61,7 +61,7 @@ batch.id     # => "msgbatch_01EhcDuvb5XfWqcdJArbsfNX"
 batch.status # => "in_progress"
 ```
 
-Chats in one batch can use different models, instructions, schemas, and parameters; each request stands alone:
+Chats in one Anthropic or xAI batch can use different models, instructions, schemas, and parameters; each request stands alone:
 
 ```ruby
 chats = tickets.map do |ticket|
@@ -72,6 +72,8 @@ end
 
 batch = RubyLLM.batch(chats)
 ```
+
+OpenAI, Azure OpenAI, Mistral, Gemini, Vertex AI, and Bedrock batch jobs are model-scoped, so those providers require one model per batch. Split mixed-model work into one batch per model.
 
 One provider per batch, though: submitting chats from different providers raises `ArgumentError`.
 
@@ -108,7 +110,7 @@ chats.first.ask "Shorter, please."
 
 Requests can fail individually (or expire at the 24-hour deadline) without failing the batch. Failed slots are `nil` in `messages` (details go to the log), and their chats stay awaiting a response; resubmit them in a fresh batch or finish them synchronously with `complete`.
 
-Batch results arrive as JSONL rather than individual HTTP responses, so `message.raw` on a batch message wraps only the result body: `raw.body` works as usual, but there is no `status` or `headers`.
+Batch results arrive as JSONL rather than individual HTTP responses, so `message.raw` on a batch message is the provider result body hash, not a Faraday response with `status` or `headers`.
 
 You can stop a running batch with `batch.cancel`; already-processed requests still return results.
 
@@ -199,7 +201,14 @@ Tools work the same way they do for plain chats. Because the records carry the w
 ## Provider Notes
 
 * **Anthropic:** up to 100,000 requests or 256 MB per batch. Mixed models in one batch are supported. Request validation is asynchronous: a malformed request comes back as a failed result after the batch ends, not as a submission error. Results stay downloadable for 29 days.
-* **Other providers:** not supported yet. `RubyLLM.batch` raises `RubyLLM::Error` for providers without batch support.
+* **OpenAI:** uses the file-backed Batch API. RubyLLM supports Responses and Chat Completions payloads, and enforces OpenAI's one-model-per-file rule. Provider files are also available through `RubyLLM.upload` and `RubyLLM.download`.
+* **Azure OpenAI / Foundry:** uses the OpenAI-style file-backed batch workflow under `/openai/v1`. Your Azure deployment must be a batch-capable deployment type. Provider files are also available through `RubyLLM.upload` and `RubyLLM.download`.
+* **Mistral:** uses inline batch jobs for Chat Completions. One model per batch is required. Mistral provider files are available through `RubyLLM.upload` and `RubyLLM.download`.
+* **Gemini:** uses inline `generateContent` batches. One model per batch is required.
+* **Vertex AI:** uses `batchPredictionJobs` with Google Cloud Storage through the same storage-backed file protocol as `RubyLLM.upload`. Configure `vertexai_batch_gcs_uri` with a `gs://bucket/prefix`; the configured credentials need permission to create batch prediction jobs and read/write that bucket. RubyLLM supports Vertex Gemini, Anthropic Claude, and MaaS chat batches; Vertex-hosted Mistral batches are not wired yet.
+* **Bedrock:** uses Model Invocation Jobs with Converse payloads and S3 through the same storage-backed file protocol as `RubyLLM.upload`. Configure `bedrock_batch_s3_uri` and `bedrock_batch_role_arn`; the role must allow Bedrock to read the input prefix and write results. Bedrock batch inference does not support tools or structured output, so RubyLLM rejects those requests before submission.
+* **xAI:** uses native batch containers with chat completion requests. Each request carries its own model, and results are paginated and can be collected before every request has finished. xAI provider files are available through `RubyLLM.upload` and `RubyLLM.download`.
+* **Other providers:** not supported by RubyLLM batches yet. `RubyLLM.batch` raises `RubyLLM::Error` for providers without batch support.
 
 ## Next Steps
 

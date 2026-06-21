@@ -4,7 +4,7 @@ module RubyLLM
   module Providers
     # Native Gemini API implementation
     class Gemini < Provider
-      protocol :gemini, Protocols::Gemini
+      protocol :gemini, Protocols::Gemini, batches: Protocols::Gemini::Batches
       files Protocols::Gemini::Files
 
       def api_base

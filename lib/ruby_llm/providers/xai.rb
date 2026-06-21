@@ -4,13 +4,7 @@ module RubyLLM
   module Providers
     # xAI API integration
     class XAI < Provider
-      # xAI's dialect of the Chat Completions API.
-      class ChatCompletions < Protocols::ChatCompletions
-        include XAI::Chat
-        include XAI::Models
-      end
-
-      protocol :chat_completions, ChatCompletions
+      protocol :chat_completions, ChatCompletions, batches: XAI::ChatCompletions::Batches
       files XAI::Files
 
       def api_base

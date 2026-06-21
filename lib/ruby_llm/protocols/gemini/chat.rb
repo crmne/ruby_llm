@@ -97,7 +97,10 @@ module RubyLLM
         end
 
         def parse_completion_response(response)
-          data = response.body
+          parse_completion_body(response.body, raw: response)
+        end
+
+        def parse_completion_body(data, raw:)
           parts = data.dig('candidates', 0, 'content', 'parts') || []
           tool_calls = extract_tool_calls(data)
           content = parse_content(data)
@@ -116,7 +119,7 @@ module RubyLLM
             cached_tokens: data.dig('usageMetadata', 'cachedContentTokenCount'),
             thinking_tokens: data.dig('usageMetadata', 'thoughtsTokenCount'),
             model_id: data['modelVersion'] || @model&.id,
-            raw: response
+            raw: raw
           )
         end
 

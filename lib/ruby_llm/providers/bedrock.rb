@@ -7,11 +7,15 @@ module RubyLLM
       include Bedrock::Auth
       include Bedrock::Models
 
-      protocol :converse, Protocols::Converse
+      protocol :converse, Protocols::Converse, batches: Protocols::Converse::Batches
       files Bedrock::Files
 
       def api_base
         @config.bedrock_api_base || "https://bedrock-runtime.#{bedrock_region}.amazonaws.com"
+      end
+
+      def control_api_base
+        @config.bedrock_api_base || "https://bedrock.#{bedrock_region}.amazonaws.com"
       end
 
       def headers
@@ -45,6 +49,7 @@ module RubyLLM
             bedrock_session_token
             bedrock_api_base
             bedrock_batch_s3_uri
+            bedrock_batch_role_arn
           ]
         end
 
@@ -73,7 +78,7 @@ module RubyLLM
       end
 
       def model_supports_top_k?(model)
-        Bedrock::Models.reasoning_embedded?(model)
+        Protocols::Converse.reasoning_embedded?(model)
       end
     end
   end

@@ -59,9 +59,20 @@ module RubyLLM
           }.compact
         end
 
+        def signed_get(base_url, url)
+          signed_request(:get, base_url, url)
+        end
+
+        def signed_post(base_url, url, payload)
+          body = JSON.generate(payload)
+          signed_request(:post, base_url, url, body:, payload:)
+        end
+
         private
 
-        def signed_get(base_url, url)
+        def signed_request(method, base_url, url, **options)
+          body = options.fetch(:body, '')
+          payload = options[:payload]
           conn = Connection.basic do |f|
             f.request :json
             f.response :json
@@ -71,8 +82,8 @@ module RubyLLM
 
           conn.url_prefix = base_url
 
-          conn.get(url) do |req|
-            req.headers.merge!(sign_headers('GET', url, '', base_url: base_url))
+          conn.public_send(method, url, payload) do |req|
+            req.headers.merge!(sign_headers(method.to_s.upcase, url, body, base_url:))
           end
         end
 

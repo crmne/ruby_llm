@@ -4,7 +4,10 @@ module RubyLLM
   module Providers
     # Azure AI Foundry / OpenAI-compatible API integration.
     class Azure < Provider
-      protocol :chat_completions, Azure::ChatCompletions
+      DEFAULT_CHAT_API_VERSION = '2024-05-01-preview'
+      DEFAULT_MODELS_API_VERSION = 'preview'
+
+      protocol :chat_completions, Azure::ChatCompletions, batches: Azure::ChatCompletions::Batches
       files Azure::Files
 
       def api_base

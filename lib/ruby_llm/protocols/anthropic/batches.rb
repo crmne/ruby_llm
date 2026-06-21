@@ -6,11 +6,10 @@ module RubyLLM
       # The Message Batches API: Messages requests processed together,
       # asynchronously, at half price.
       module Batches
-        # Stands in for the Faraday response parse_completion_response expects.
-        Result = Struct.new(:body)
-        private_constant :Result
+        include RubyLLM::Batch::Helpers
 
         def create_batch(requests)
+          requests = requests.map { |request| request.slice(:custom_id, :params) }
           response = @connection.post batches_url, { requests: requests }
           parse_batch_response response.body
         end
@@ -50,14 +49,14 @@ module RubyLLM
         end
 
         def parse_batch_result(line)
-          index = Integer(line['custom_id'])
+          index = batch_result_index(line['custom_id'])
           result = line['result']
 
           if result['type'] == 'succeeded'
-            [index, parse_completion_response(Result.new(result['message']))]
+            body = result['message']
+            [index, parse_completion_body(body, raw: body)]
           else
-            RubyLLM.logger.warn ["Batch request #{line['custom_id']} #{result['type']}",
-                                 result.dig('error', 'error', 'message')].compact.join(': ')
+            batch_failure(line['custom_id'], result.dig('error', 'error', 'message'), status: result['type'])
             [index, nil]
           end
         end

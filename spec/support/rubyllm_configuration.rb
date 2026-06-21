@@ -18,6 +18,7 @@ RSpec.shared_context 'with configured RubyLLM' do
       config.bedrock_region = 'us-west-2'
       config.bedrock_secret_key = ENV.fetch('AWS_SECRET_ACCESS_KEY', 'test')
       config.bedrock_session_token = ENV.fetch('AWS_SESSION_TOKEN', nil)
+      config.bedrock_batch_role_arn = ENV.fetch('BEDROCK_BATCH_ROLE_ARN', 'arn:aws:iam::123456789012:role/BedrockBatch')
       config.bedrock_batch_s3_uri = ENV.fetch('BEDROCK_BATCH_S3_URI', 's3://ruby-llm-test/batches')
       config.deepseek_api_base = ENV.fetch('DEEPSEEK_API_BASE', nil)
       config.deepseek_api_key = ENV.fetch('DEEPSEEK_API_KEY', 'test')

@@ -88,23 +88,29 @@ module RubyLLM
     # rubocop:enable Metrics/ParameterLists
 
     def batches?
-      default_protocol.public_method_defined?(:create_batch)
+      batch_protocol.public_method_defined?(:create_batch)
     end
 
     def create_batch(requests)
-      default_protocol.new(self).create_batch(requests)
+      protocol = batch_protocol_for(requests)
+      ensure_batches_supported!(protocol)
+      protocol.new(self).create_batch(requests).merge(batch_protocol: protocol)
     end
 
     def find_batch(id)
-      default_protocol.new(self).find_batch(id)
+      ensure_batches_supported!
+      batch_protocol.new(self).find_batch(id)
     end
 
     def cancel_batch(id)
-      default_protocol.new(self).cancel_batch(id)
+      ensure_batches_supported!
+      batch_protocol.new(self).cancel_batch(id)
     end
 
-    def batch_results(id)
-      default_protocol.new(self).batch_results(id)
+    def batch_results(id, batch_protocol: nil)
+      protocol = batch_protocol || self.batch_protocol
+      ensure_batches_supported!(protocol)
+      protocol.new(self).batch_results(id)
     end
 
     def files?
@@ -225,9 +231,10 @@ module RubyLLM
         configuration_requirements.all? { |req| config.send(req) }
       end
 
-      def protocol(name, protocol_class)
+      def protocol(name, protocol_class, batches: nil)
         @default_protocol = name.to_sym if protocols.empty?
         protocols[name.to_sym] = protocol_class
+        batch_protocol(name, batches) if batches
       end
 
       def files(protocol_class)
@@ -236,6 +243,14 @@ module RubyLLM
 
       def protocols
         @protocols ||= {}
+      end
+
+      def batch_protocol(name, batches)
+        batch_protocols[name.to_sym] = Class.new(protocols.fetch(name.to_sym)) { include batches }
+      end
+
+      def batch_protocols
+        @batch_protocols ||= {}
       end
 
       def register(name, provider_class)
@@ -280,6 +295,10 @@ module RubyLLM
 
     private
 
+    def ensure_batches_supported!(protocol = batch_protocol)
+      raise Error, "#{slug} doesn't support batch requests" unless protocol.public_method_defined?(:create_batch)
+    end
+
     def ensure_files_supported!
       return if file_protocol
 
@@ -293,6 +312,18 @@ module RubyLLM
 
     def default_protocol
       fetch_protocol(configured_protocol || self.class.default_protocol)
+    end
+
+    def batch_protocol
+      batch_protocol_for_name(self.class.default_protocol) || fetch_protocol(self.class.default_protocol)
+    end
+
+    def batch_protocol_for(_requests)
+      batch_protocol
+    end
+
+    def batch_protocol_for_name(name)
+      self.class.batch_protocols[name.to_sym]
     end
 
     def file_protocol

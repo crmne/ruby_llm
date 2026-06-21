@@ -6,10 +6,10 @@ module RubyLLM
   module Providers
     # Google Vertex AI implementation
     class VertexAI < Provider
-      protocol :gemini, VertexAI::Gemini
-      protocol :anthropic, VertexAI::Anthropic
+      protocol :gemini, VertexAI::Gemini, batches: VertexAI::Gemini::Batches
+      protocol :anthropic, VertexAI::Anthropic, batches: VertexAI::Anthropic::Batches
       protocol :mistral, VertexAI::Mistral
-      protocol :chat_completions, VertexAI::ChatCompletions
+      protocol :chat_completions, VertexAI::ChatCompletions, batches: VertexAI::ChatCompletions::Batches
       files VertexAI::Files
 
       SCOPES = [
@@ -40,6 +40,29 @@ module RubyLLM
       def initialize(config)
         super
         @authorizer = nil
+      end
+
+      def batch_protocol
+        batch_protocol_for_name(:gemini)
+      end
+
+      def batch_protocol_for(requests)
+        models = requests.map { |request| request.fetch(:model) }.uniq
+        raise Error, 'vertexai batch requests must use one model per submission' unless models.one?
+
+        protocol_name = batch_protocol_name_for(models.first)
+        protocol = batch_protocol_for_name(protocol_name)
+        return protocol if protocol
+
+        raise Error, 'vertexai batch requests currently support Gemini, Anthropic, and MaaS chat models'
+      end
+      private :batch_protocol, :batch_protocol_for
+
+      def find_batch(id)
+        batch = super
+        protocol = batch_protocol_for_model_path(batch[:model])
+
+        protocol ? batch.merge(batch_protocol: protocol) : batch
       end
 
       def api_base
@@ -91,6 +114,28 @@ module RubyLLM
       rescue LoadError
         raise Error,
               'The googleauth gem ~> 1.15 is required for Vertex AI. Please add it to your Gemfile: gem "googleauth"'
+      end
+
+      def batch_protocol_name_for(model)
+        case model
+        when %r{/} then :chat_completions
+        when /\Aclaude/ then :anthropic
+        when VertexAI::Mistral::MODELS then :mistral
+        else :gemini
+        end
+      end
+
+      def batch_protocol_for_model_path(model_path)
+        case model_path.to_s
+        when %r{/publishers/google/models/}, %r{\Apublishers/google/models/}
+          batch_protocol_for_name(:gemini)
+        when %r{/publishers/anthropic/models/}, %r{\Apublishers/anthropic/models/}
+          batch_protocol_for_name(:anthropic)
+        when %r{/publishers/mistralai/models/}, %r{\Apublishers/mistralai/models/}
+          nil
+        when %r{/publishers/[^/]+/models/}, %r{\Apublishers/[^/]+/models/}
+          batch_protocol_for_name(:chat_completions)
+        end
       end
     end
   end
