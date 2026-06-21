@@ -16,6 +16,7 @@ module RubyLLM
         super
         subclass.instance_variable_set(:@chat_kwargs, (@chat_kwargs || {}).dup)
         subclass.instance_variable_set(:@tools, (@tools || []).dup)
+        subclass.instance_variable_set(:@tool_options, (@tool_options || {}).dup)
         subclass.instance_variable_set(:@instructions, @instructions)
         subclass.instance_variable_set(:@temperature, @temperature)
         subclass.instance_variable_set(:@thinking, @thinking)
@@ -33,10 +34,15 @@ module RubyLLM
         @chat_kwargs = options
       end
 
-      def tools(*tools, &block)
-        return @tools || [] if tools.empty? && !block_given?
+      def tools(*tools, choice: nil, calls: nil, &block)
+        return @tools || [] if tools.empty? && !block_given? && choice.nil? && calls.nil?
 
         @tools = block_given? ? block : tools.flatten
+        @tool_options = { choice:, calls: }.compact
+      end
+
+      def tool_options
+        @tool_options || {}
       end
 
       def instructions(text = nil, **prompt_locals, &block)
@@ -216,7 +222,9 @@ module RubyLLM
 
       def apply_tools(llm_chat, runtime)
         tools_to_apply = Array(evaluate(tools, runtime))
-        llm_chat.with_tools(*tools_to_apply) unless tools_to_apply.empty?
+        return if tools_to_apply.empty?
+
+        llm_chat.with_tools(*tools_to_apply, **tool_options)
       end
 
       def apply_temperature(llm_chat)
