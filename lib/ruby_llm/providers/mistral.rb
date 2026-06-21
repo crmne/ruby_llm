@@ -13,6 +13,7 @@ module RubyLLM
       end
 
       protocol :chat_completions, ChatCompletions
+      files Mistral::Files
 
       def api_base
         @config.mistral_api_base || 'https://api.mistral.ai/v1'

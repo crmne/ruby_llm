@@ -11,6 +11,7 @@ module RubyLLM
       end
 
       protocol :chat_completions, ChatCompletions
+      files XAI::Files
 
       def api_base
         @config.xai_api_base || 'https://api.x.ai/v1'

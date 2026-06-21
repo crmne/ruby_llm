@@ -18,6 +18,7 @@ RSpec.shared_context 'with configured RubyLLM' do
       config.bedrock_region = 'us-west-2'
       config.bedrock_secret_key = ENV.fetch('AWS_SECRET_ACCESS_KEY', 'test')
       config.bedrock_session_token = ENV.fetch('AWS_SESSION_TOKEN', nil)
+      config.bedrock_batch_s3_uri = ENV.fetch('BEDROCK_BATCH_S3_URI', 's3://ruby-llm-test/batches')
       config.deepseek_api_base = ENV.fetch('DEEPSEEK_API_BASE', nil)
       config.deepseek_api_key = ENV.fetch('DEEPSEEK_API_KEY', 'test')
       config.gemini_api_key = ENV.fetch('GEMINI_API_KEY', 'test')
@@ -37,6 +38,7 @@ RSpec.shared_context 'with configured RubyLLM' do
       config.retry_interval = 0
       config.retry_interval_randomness = 0
       config.vertexai_location = ENV.fetch('GOOGLE_CLOUD_LOCATION', 'global')
+      config.vertexai_batch_gcs_uri = ENV.fetch('VERTEXAI_BATCH_GCS_URI', 'gs://ruby-llm-test/batches')
       config.vertexai_project_id = ENV.fetch('GOOGLE_CLOUD_PROJECT', 'test-project')
       config.vertexai_service_account_key = ENV.fetch('VERTEXAI_SERVICE_ACCOUNT_KEY', nil)
       config.xai_api_key = ENV.fetch('XAI_API_KEY', 'test')

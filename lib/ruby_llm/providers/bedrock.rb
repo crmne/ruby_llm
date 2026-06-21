@@ -8,6 +8,7 @@ module RubyLLM
       include Bedrock::Models
 
       protocol :converse, Protocols::Converse
+      files Bedrock::Files
 
       def api_base
         @config.bedrock_api_base || "https://bedrock-runtime.#{bedrock_region}.amazonaws.com"
@@ -37,7 +38,14 @@ module RubyLLM
 
       class << self
         def configuration_options
-          %i[bedrock_api_key bedrock_secret_key bedrock_region bedrock_session_token bedrock_api_base]
+          %i[
+            bedrock_api_key
+            bedrock_secret_key
+            bedrock_region
+            bedrock_session_token
+            bedrock_api_base
+            bedrock_batch_s3_uri
+          ]
         end
 
         def configuration_requirements

@@ -107,6 +107,10 @@ module RubyLLM
       default_protocol.new(self).batch_results(id)
     end
 
+    def files?
+      !!file_protocol
+    end
+
     def list_models
       default_protocol.new(self).list_models
     end
@@ -125,6 +129,26 @@ module RubyLLM
 
     def transcribe(audio_file, model:, language:, **options)
       default_protocol.new(self).transcribe(audio_file, model:, language:, **options)
+    end
+
+    def upload_file(file, **options)
+      ensure_files_supported!
+      file_protocol.new(self).upload(file, **options)
+    end
+
+    def find_file(file_id)
+      ensure_files_supported!
+      file_protocol.new(self).find(file_id)
+    end
+
+    def download_file(file_id)
+      ensure_files_supported!
+      file_protocol.new(self).download(file_id)
+    end
+
+    def list_file_uris(uri)
+      ensure_files_supported!
+      file_protocol.new(self).list_uris(uri)
     end
 
     def configured?
@@ -162,6 +186,7 @@ module RubyLLM
     end
 
     class << self
+      attr_reader :default_protocol, :file_protocol
       attr_writer :slug
 
       def slug
@@ -205,11 +230,13 @@ module RubyLLM
         protocols[name.to_sym] = protocol_class
       end
 
+      def files(protocol_class)
+        @file_protocol = protocol_class
+      end
+
       def protocols
         @protocols ||= {}
       end
-
-      attr_reader :default_protocol
 
       def register(name, provider_class)
         provider_class.slug = name.to_s
@@ -253,6 +280,12 @@ module RubyLLM
 
     private
 
+    def ensure_files_supported!
+      return if file_protocol
+
+      raise Error, "#{slug} doesn't support file uploads"
+    end
+
     def resolve_protocol(name, model, **request)
       explicit = name || configured_protocol
       explicit ? fetch_protocol(explicit) : protocol_for(model, **request)
@@ -260,6 +293,10 @@ module RubyLLM
 
     def default_protocol
       fetch_protocol(configured_protocol || self.class.default_protocol)
+    end
+
+    def file_protocol
+      self.class.file_protocol
     end
 
     def configured_protocol

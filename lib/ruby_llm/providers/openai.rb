@@ -6,6 +6,7 @@ module RubyLLM
     class OpenAI < Provider
       protocol :responses, Protocols::Responses
       protocol :chat_completions, Protocols::ChatCompletions
+      files Protocols::OpenAI::Files
 
       def api_base
         @config.openai_api_base || 'https://api.openai.com/v1'

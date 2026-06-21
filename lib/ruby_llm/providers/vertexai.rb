@@ -10,6 +10,7 @@ module RubyLLM
       protocol :anthropic, VertexAI::Anthropic
       protocol :mistral, VertexAI::Mistral
       protocol :chat_completions, VertexAI::ChatCompletions
+      files VertexAI::Files
 
       SCOPES = [
         'https://www.googleapis.com/auth/cloud-platform',
@@ -60,7 +61,13 @@ module RubyLLM
 
       class << self
         def configuration_options
-          %i[vertexai_project_id vertexai_location vertexai_service_account_key vertexai_api_base]
+          %i[
+            vertexai_project_id
+            vertexai_location
+            vertexai_service_account_key
+            vertexai_api_base
+            vertexai_batch_gcs_uri
+          ]
         end
 
         def configuration_requirements

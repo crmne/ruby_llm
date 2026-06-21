@@ -83,6 +83,14 @@ module RubyLLM
       Transcription.transcribe(...)
     end
 
+    def upload(...)
+      UploadedFile.upload(...)
+    end
+
+    def download(...)
+      UploadedFile.download(...)
+    end
+
     def models
       Models.instance
     end
