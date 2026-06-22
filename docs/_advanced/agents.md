@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Agents
-nav_order: 6
+nav_order: 2
 description: Define reusable AI assistants with class-based configuration, runtime context, and prompt conventions
 ---
 
@@ -265,13 +265,10 @@ end
 Then you can:
 
 ```ruby
-# Create persisted chat with agent configuration applied
 chat = WorkAssistant.create!(user: current_user)
 
-# Load existing persisted chat with runtime config applied (no DB write)
 chat = WorkAssistant.find(params[:id])
 
-# Explicitly persist/sync the current agent instructions if you've modified them
 WorkAssistant.sync_instructions!(chat)
 ```
 

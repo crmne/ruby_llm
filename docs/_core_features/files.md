@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Files
-nav_order: 11
+nav_order: 7
 description: Upload provider-managed files for APIs that require file IDs
 ---
 

@@ -1,7 +1,8 @@
 ---
 layout: default
 title: Citations
-nav_order: 9
+parent: "Chat"
+nav_order: 5
 description: Get verifiable answers with normalized citations pointing at documents and web sources, on every provider that supports them
 redirect_from:
   - /guides/citations
@@ -34,7 +35,7 @@ After reading this guide, you will know:
 
 ## What are Citations?
 
-Citations link spans of a model's answer back to the source material that supports them — a document you attached, or a web page found through search or grounding. They make answers verifiable and reduce hallucinations, and providers parse them server-side so cited quotes are guaranteed to exist in the source.
+Citations link spans of a model's answer back to the source material that supports them - a document you attached, or a web page found through search or grounding. They make answers verifiable and reduce hallucinations, and providers parse them server-side so cited quotes are guaranteed to exist in the source.
 
 Every provider returns citations in a different shape. RubyLLM normalizes all of them into `RubyLLM::Citation` objects on `response.citations`, so your rendering code never branches on provider.
 
@@ -67,7 +68,7 @@ response.citations.first.end_page   # => 5
 ```
 
 {: .note }
-Document citations are currently supported by Anthropic. RubyLLM checks the [model registry]({% link _advanced/models.md %}) and logs a warning when you request citations from a model that can't return them. Citations from search and grounding are always parsed regardless (see below).
+Document citations are currently supported by Anthropic. RubyLLM checks the [model registry]({% link _reference/models.md %}) and logs a warning when you request citations from a model that can't return them. Citations from search and grounding are always parsed regardless (see below).
 
 ## Citing Tool Results (RAG)
 
@@ -101,7 +102,7 @@ On Anthropic these become native citable search result blocks. Other providers r
 
 ## Citing the Web
 
-When a provider searches the web, RubyLLM parses the resulting citations automatically — no `with_citations` needed. Enable search the way each provider expects:
+When a provider searches the web, RubyLLM parses the resulting citations automatically - no `with_citations` needed. Enable search the way each provider expects:
 
 ```ruby
 # Perplexity searches by default
@@ -211,7 +212,7 @@ class AddCitationsToMessages < ActiveRecord::Migration[7.1]
 end
 ```
 
-Without the column, everything still works — citations just aren't persisted.
+Without the column, everything still works - citations just aren't persisted.
 
 ## Provider Notes
 

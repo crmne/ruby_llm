@@ -1,7 +1,7 @@
 ---
 layout: default
 title: RubyLLM Ecosystem
-nav_order: 3
+nav_order: 5
 description: Extend RubyLLM with MCP servers, structured schemas, instrumentation, monitoring and community-built tools for production AI apps.
 ---
 
@@ -352,7 +352,6 @@ RubyLLM::TopSecret.with_filtering do
   response = chat.ask("My name is Ralph and my email is ralph@thoughtbot.com")
 
   # The provider receives: "My name is [PERSON_1] and my email is [EMAIL_1]"
-  # The response comes back with placeholders restored:
   puts response.content
   # => "Nice to meet you, Ralph!"
 end

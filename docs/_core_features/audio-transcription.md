@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Audio Transcription
-nav_order: 6
+nav_order: 5
 description: Convert speech to text with support for multiple languages and speaker diarization
 redirect_from:
   - /guides/audio-transcription
@@ -120,7 +120,6 @@ transcription = RubyLLM.transcribe(
   speaker_references: ["alice-voice.wav", "bob-voice.wav"]
 )
 
-# Now segments use the provided names
 # Alice: Hi everyone.
 # Bob: Happy to be here.
 ```

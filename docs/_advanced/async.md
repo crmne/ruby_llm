@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Scale with Async
-nav_order: 2
+nav_order: 5
 description: Handle hundreds of concurrent AI requests on modest hardware. Ruby's async ecosystem meets AI.
 redirect_from:
   - /guides/async
@@ -60,12 +60,9 @@ The beautiful part: RubyLLM automatically becomes non-blocking when used in an a
 require 'async'
 require 'ruby_llm'
 
-# This is all you need for concurrent LLM calls
 Async do
   10.times.map do
     Async do
-      # RubyLLM automatically becomes non-blocking
-      # because Net::HTTP knows how to yield to fibers
       message = RubyLLM.chat.ask "Explain quantum computing"
       puts message.content
     end
@@ -94,7 +91,6 @@ def process_questions(questions)
       end
     end
 
-    # Wait for all tasks and return results
     tasks.map(&:wait)
   end.result
 end
@@ -129,7 +125,6 @@ def generate_embeddings(texts, batch_size: 100)
       embeddings.concat(task.wait)
     end
 
-    # Return text-embedding pairs
     texts.zip(embeddings)
   end.result
 end
@@ -254,8 +249,6 @@ class DocumentAnalyzerJob < ApplicationJob
   def perform(document_id)
     document = Document.find(document_id)
 
-    # This automatically runs in an async context!
-    # No need to wrap in Async blocks
     response = RubyLLM.chat.ask("Analyze: #{document.content}")
 
     document.update!(
@@ -271,15 +264,12 @@ end
 You don't have to go all-in. Use async-job only for LLM operations while keeping your existing job processor for everything else:
 
 ```ruby
-# Keep your existing adapter as default
 config.active_job.queue_adapter = :solid_queue  # or :sidekiq, :good_job, etc.
 
-# Base class for all LLM jobs
 class LLMJob < ApplicationJob
   self.queue_adapter = :async_job
 end
 
-# LLM jobs inherit the async adapter
 class ChatResponseJob < LLMJob
   def perform(conversation_id, message)
     # Runs with async-job - perfect for streaming
@@ -288,7 +278,6 @@ class ChatResponseJob < LLMJob
   end
 end
 
-# Regular jobs use your default adapter
 class ImageProcessingJob < ApplicationJob
   def perform(image_id)
     # Runs with solid_queue - better for CPU work
@@ -316,7 +305,6 @@ class RateLimitedProcessor
     Async do
       items.map do |item|
         Async do
-          # Only 10 items processed at once
           @semaphore.acquire do
             response = RubyLLM.chat.ask("Process: #{item}")
             { item: item, result: response.content }
@@ -327,7 +315,6 @@ class RateLimitedProcessor
   end
 end
 
-# Usage
 processor = RateLimitedProcessor.new(max_concurrent: 5)
 items = ["Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 6"]
 results = processor.process_items(items)

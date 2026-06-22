@@ -2,7 +2,8 @@
 layout: default
 title: Chat
 nav_order: 1
-description: Learn how to have conversations with AI models, work with different providers, and handle multi-modal inputs
+has_children: true
+description: Learn how to have conversations with AI models, work with different providers, and attach files like images and PDFs
 redirect_from:
   - /guides/chat
 ---
@@ -23,14 +24,12 @@ redirect_from:
 
 After reading this guide, you will know:
 
-* How to start and continue conversations with AI models
-* How to select and work with different models and providers
-* How to guide AI behavior with system prompts
-* How to work with images, audio, documents, and other file types
-* How to control response creativity and format
-* How to get structured output with JSON schemas
-* How to track token usage and costs
-* How to handle streaming responses and events
+* How to start and continue conversations with AI models.
+* How to guide AI behavior with system prompts.
+* How to select and work with different models and providers.
+* How to control response creativity with temperature.
+* How to read the raw provider response.
+* Where to go for file attachments, request control, token tracking, and event handlers.
 
 ## Starting a Conversation
 
@@ -39,14 +38,11 @@ When you want to interact with an AI model, you create a chat instance. The simp
 ```ruby
 chat = RubyLLM.chat
 
-# The ask method sends a user message and returns the assistant's response
 response = chat.ask "Explain the concept of 'Convention over Configuration' in Rails."
 
-# The response is a RubyLLM::Message object
 puts response.content
 # => "Convention over Configuration (CoC) is a core principle of Ruby on Rails..."
 
-# The response object contains metadata
 puts "Model Used: #{response.model_id}"
 puts "Tokens Used: #{response.tokens.input} input, #{response.tokens.output} output"
 puts "Cache Reads: #{response.tokens.cache_read}" # v1.15+
@@ -57,17 +53,17 @@ The `ask` method adds your message to the conversation history with the `:user` 
 
 The `say` method is an alias for `ask`, so you can use whichever feels more natural in your code.
 
+When the model uses [tools]({% link _core_features/tools.md %}), `ask` runs the conversation to completion: it calls the model, runs any tools the model asks for, and calls the model again until it answers without a tool. When you need to control that loop yourself, see [Driving the Loop Yourself]({% link _advanced/agentic-workflows.md %}#driving-the-loop-yourself).
+
 ## Continuing the Conversation
 
 One of the key features of chat-based AI models is their ability to maintain context across multiple exchanges. The `Chat` object automatically manages this conversation history for you.
 
 ```ruby
-# Continuing the previous chat...
 response = chat.ask "Can you give a specific example in Rails?"
 puts response.content
 # => "Certainly! A classic example is database table naming..."
 
-# Access the full conversation history
 chat.messages.each do |message|
   puts "[#{message.role.to_s.upcase}] #{message.content.lines.first.strip}"
 end
@@ -79,41 +75,6 @@ end
 
 Each time you call `ask`, RubyLLM sends the entire conversation history to the AI provider. This allows the model to understand the full context of your conversation, enabling natural follow-up questions and maintaining coherent dialogue.
 
-## Driving the Loop Yourself
-
-`ask` sends your message and runs the conversation to completion: it calls the model, runs any [tools]({% link _core_features/tools.md %}) the model asks for, and calls the model again until it answers without a tool. When you need to control that loop, for example to run each turn as its own background job, set an iteration budget, or stop and resume on another machine, `Chat` exposes it as named verbs:
-
-* `generate` runs the model once and appends its response (the model's move). It returns the response.
-* `run_tools` executes the tool calls the model asked for and appends their results (your move). It makes no model call and returns the chat.
-* `step` does whichever move is next: `run_tools` if tools are pending, otherwise `generate`. It returns `nil` once there is nothing left.
-* `complete` steps until done. This is what `ask` calls, and it returns the final response.
-* `complete?` is true when the model answered without calling a tool.
-
-So the agentic loop is just `step` until `complete?`:
-
-```ruby
-chat = RubyLLM.chat.with_tool(Weather).ask_later("What's the weather in Paris?")
-
-chat.step until chat.complete?  # generate, run_tools, generate
-chat.messages.last.content      # => "It's 15°C and partly cloudy in Paris."
-```
-
-`ask_later` stages the question without sending it, so `ask` is `ask_later` then `complete`.
-
-Because each `step` is a discrete move, you can persist the chat between steps and resume it elsewhere. Run one turn per background job, enforce a wall-clock budget, or pause for a deploy and pick up on another machine:
-
-```ruby
-class AgentTurnJob < ApplicationJob
-  def perform(chat_id)
-    chat = Chat.find(chat_id)
-    chat.step
-    AgentTurnJob.perform_later(chat_id) unless chat.complete?
-  end
-end
-```
-
-[Batches]({% link _core_features/batches.md %}) are the same idea at scale: a batch is `generate` deferred for many chats at once, with `run_tools` run locally between rounds.
-
 ## Guiding AI Behavior with System Prompts
 
 System prompts, also called instructions, allow you to set the overall behavior, personality, and constraints for the AI assistant. These instructions persist throughout the conversation and help ensure consistent responses.
@@ -121,7 +82,6 @@ System prompts, also called instructions, allow you to set the overall behavior,
 ```ruby
 chat = RubyLLM.chat
 
-# Set the initial instruction
 chat.with_instructions "You are a helpful assistant that explains Ruby concepts simply, like explaining to a five-year-old."
 
 response = chat.ask "What is a variable?"
@@ -141,7 +101,7 @@ chat.with_instructions "Use exactly one short paragraph.", append: true
 
 System prompts are added to the conversation as messages with the `:system` role and are sent with every request to the AI provider. This ensures the model always considers your instructions when generating responses.
 
-> When using the [Rails Integration]({% link _advanced/rails.md %}), system messages are persisted in your database along with user and assistant messages, maintaining the full conversation context.
+When using the [Rails Integration]({% link _advanced/rails.md %}), system messages are persisted in your database along with user and assistant messages, maintaining the full conversation context.
 {: .note }
 
 ## Working with Different Models
@@ -149,11 +109,9 @@ System prompts are added to the conversation as messages with the `:system` role
 RubyLLM supports over 600 models from various providers. While `RubyLLM.chat` uses your configured default model, you can specify different models:
 
 ```ruby
-# Use a specific model via ID or alias
 chat_claude = RubyLLM.chat(model: '{{ site.models.anthropic_current }}')
 chat_gemini = RubyLLM.chat(model: '{{ site.models.gemini_current_latest }}')
 
-# Change the model on an existing chat instance
 chat = RubyLLM.chat(model: '{{ site.models.default_chat }}')
 response1 = chat.ask "Initial question..."
 
@@ -161,152 +119,9 @@ chat.with_model('{{ site.models.anthropic_latest }}')
 response2 = chat.ask "Follow-up question..."
 ```
 
-For detailed information about model selection, capabilities, aliases, and working with custom models, see the [Working with Models Guide]({% link _advanced/models.md %}).
+For detailed information about model selection, capabilities, aliases, and working with custom models, see [Working with Models]({% link _reference/models.md %}). For exactly how a name becomes a model and provider, see [Model Resolution]({% link _reference/model-resolution.md %}).
 
-## Multi-modal Conversations
-
-Many modern AI models can process multiple types of input beyond just text. RubyLLM provides a unified interface for working with images, audio, documents, and other file types through the `with:` parameter.
-
-### Working with Images
-
-Vision-capable models can analyze images, answer questions about visual content, and even compare multiple images.
-
-```ruby
-# Ensure you select a vision-capable model
-chat = RubyLLM.chat(model: '{{ site.models.openai_vision }}')
-
-# Ask about a local image file
-response = chat.ask "Describe this logo.", with: "path/to/ruby_logo.png"
-puts response.content
-
-# Ask about an image from a URL
-response = chat.ask "What kind of architecture is shown here?", with: "https://example.com/eiffel_tower.jpg"
-puts response.content
-
-# Send multiple images
-response = chat.ask "Compare the user interfaces in these two screenshots.", with: ["screenshot_v1.png", "screenshot_v2.png"]
-puts response.content
-```
-
-### Working with Videos
-
-You can also analyze video files or URLs with video-capable models. RubyLLM will automatically detect video files and handle them appropriately.
-
-```ruby
-# Ask about a local video file
-chat = RubyLLM.chat(model: 'gemini-2.5-flash')
-response = chat.ask "What happens in this video?", with: "path/to/demo.mp4"
-puts response.content
-
-# Ask about a video from a URL
-response = chat.ask "Summarize the main events in this video.", with: "https://example.com/demo_video.mp4"
-puts response.content
-
-# Combine videos with other file types
-response = chat.ask "Analyze these files for visual content.", with: ["diagram.png", "demo.mp4", "notes.txt"]
-puts response.content
-```
-
-> Supported video formats include .mp4, .mov, .avi, .webm, and others (provider-dependent).
->
-> Only Google Gemini and VertexAI models currently support video input.
->
-> Large video files may be subject to size or duration limits imposed by the provider.
-{: .note }
-
-RubyLLM automatically handles image encoding and formatting for each provider's API. Local images are read and encoded as needed, while URLs are passed directly when supported by the provider.
-
-### Working with Audio
-
-Audio-capable models can transcribe speech, analyze audio content, and answer questions about what they hear. Currently, models like `{{ site.models.openai_audio }}` and Google's `gemini-2.5` series of models support audio input.
-
-```ruby
-chat = RubyLLM.chat(model: '{{ site.models.openai_audio }}') # Use an audio-capable model
-
-# Transcribe or ask questions about audio content
-response = chat.ask "Please transcribe this meeting recording.", with: "path/to/meeting.mp3"
-puts response.content
-
-# Ask follow-up questions based on the audio context
-response = chat.ask "What were the main action items discussed?"
-puts response.content
-
-# Gemini example
-gemini_chat = RubyLLM.chat(model: 'gemini-2.5-flash')
-response = gemini_chat.ask "Summarize this podcast.", with: "path/to/podcast.mp3"
-puts response.content
-```
-
-### Working with Text Files
-
-You can provide text files directly to models for analysis, summarization, or question answering. This works with any text-based format including plain text, code files, CSV, JSON, and more.
-
-```ruby
-chat = RubyLLM.chat(model: '{{ site.models.anthropic_current }}')
-
-# Analyze a text file
-response = chat.ask "Summarize the key points in this document.", with: "path/to/document.txt"
-puts response.content
-
-# Ask questions about code files
-response = chat.ask "Explain what this Ruby file does.", with: "app/models/user.rb"
-puts response.content
-```
-
-### Working with PDFs
-
-PDF support allows models to analyze complex documents including reports, manuals, and research papers. Currently, Claude 3+ and Gemini models offer the best PDF support.
-
-```ruby
-# Use a model that supports PDFs
-chat = RubyLLM.chat(model: '{{ site.models.anthropic_newest }}')
-
-# Ask about a local PDF
-response = chat.ask "Summarize the key findings in this research paper.", with: "path/to/paper.pdf"
-puts response.content
-
-# Ask about a PDF via URL
-response = chat.ask "What are the terms and conditions outlined here?", with: "https://example.com/terms.pdf"
-puts response.content
-
-# Combine text and PDF context
-response = chat.ask "Based on section 3 of this document, what is the warranty period?", with: "manual.pdf"
-puts response.content
-```
-
-> Be mindful of provider-specific limits. For example, Anthropic Claude models currently have a 10MB per-file size limit, and the total size/token count of all PDFs must fit within the model's context window (e.g., 200,000 tokens for Claude 3 models).
-{: .note }
-
-### Automatic File Type Detection
-
-RubyLLM automatically detects file types based on extensions and content, so you can pass files directly without specifying the type:
-
-```ruby
-chat = RubyLLM.chat(model: '{{ site.models.anthropic_current }}')
-
-# Single file - type automatically detected
-response = chat.ask "What's in this file?", with: "path/to/document.pdf"
-
-# Multiple files of different types
-response = chat.ask "Analyze these files", with: [
-  "diagram.png",
-  "report.pdf",
-  "meeting_notes.txt",
-  "recording.mp3"
-]
-
-# Still works with the explicit hash format if needed
-response = chat.ask "What's in this image?", with: { image: "photo.jpg" }
-```
-
-**Supported file types:**
-- **Images:** .jpg, .jpeg, .png, .gif, .webp, .bmp
-- **Videos:** .mp4, .mov, .avi, .webm
-- **Audio:** .mp3, .wav, .m4a, .ogg, .flac
-- **Documents:** .pdf, .txt, .md, .csv, .json, .xml
-- **Code:** .rb, .py, .js, .html, .css (and many others)
-
-## Controlling Response Behavior
+## Controlling Responses
 
 ### Temperature and Creativity
 
@@ -317,12 +132,10 @@ The temperature parameter controls the randomness of the model's responses. Unde
 * **High temperature (0.8 - 1.0)**: More creative and varied responses. Use for brainstorming, creative writing, or when you want diverse outputs.
 
 ```ruby
-# Create a chat with low temperature for factual answers
 factual_chat = RubyLLM.chat.with_temperature(0.2)
 response1 = factual_chat.ask "What is the boiling point of water at sea level in Celsius?"
 puts response1.content
 
-# Create a chat with high temperature for creative writing
 creative_chat = RubyLLM.chat.with_temperature(0.9)
 response2 = creative_chat.ask "Write a short poem about the color blue."
 puts response2.content
@@ -330,447 +143,7 @@ puts response2.content
 
 The `with_temperature` method returns the chat instance, allowing you to chain multiple configuration calls together.
 
-### Provider-Specific Parameters
-
-Different providers offer unique features and parameters. The `with_params` method lets you access these provider-specific capabilities while maintaining RubyLLM's unified interface. Parameters passed via `with_params` will override any defaults set by RubyLLM, giving you full control over the API request payload.
-
-```ruby
-# JSON object mode on the Responses API (OpenAI's default protocol)
-chat = RubyLLM.chat.with_params(text: { format: { type: 'json_object' } })
-response = chat.ask "What is the square root of 64? Answer with a JSON object with the key `result`."
-puts JSON.parse(response.content)
-
-# The same option on Chat Completions providers like :ollama and :deepseek
-chat = RubyLLM.chat(model: 'qwen3', provider: :ollama)
-              .with_params(response_format: { type: 'json_object' })
-```
-
-> **With great power comes great responsibility:** The `with_params` method can override any part of the request payload, including critical parameters like model, max_tokens, or tools. Use it carefully to avoid unintended behavior. Always verify that your overrides are compatible with the provider's API. To debug and see the exact request being sent, set the environment variable `RUBYLLM_DEBUG=true`.
-{: .warning }
-
-> Available parameters vary by provider and model. Always consult the provider's documentation for supported features. RubyLLM passes these parameters through without validation, so incorrect parameters may cause API errors. Parameters from `with_params` take precedence over RubyLLM's defaults, allowing you to override any aspect of the request payload.
-{: .warning }
-
-### Choosing the Wire Protocol
-{: .d-inline-block }
-
-v2.0+
-{: .label .label-green }
-
-Some providers speak more than one wire protocol. OpenAI defaults to the Responses API and routes audio models to Chat Completions; Vertex AI speaks Gemini for Google models, Anthropic for Claude, Mistral for Mistral, and Chat Completions for the publisher-prefixed MaaS models. RubyLLM picks the right protocol per request:
-
-```ruby
-chat = RubyLLM.chat(model: 'claude-opus-4-6', provider: :vertexai)               # speaks Anthropic
-chat = RubyLLM.chat(model: 'meta/llama-3.3-70b-instruct-maas', provider: :vertexai) # speaks Chat Completions
-```
-
-Override it per chat or app-wide:
-
-```ruby
-chat = RubyLLM.chat(model: 'gpt-5.4').with_protocol(:chat_completions)
-
-RubyLLM.configure do |config|
-  config.openai_protocol = :chat_completions
-end
-```
-
-Unknown protocol names raise immediately, listing what the provider speaks.
-
-## Raw Content Blocks
-
-Most of the time you can rely on RubyLLM to format messages for each provider. When you need to send a custom payload as content,  wrap it in `RubyLLM::Content::Raw`. The block is forwarded verbatim, with no additional processing.
-
-```ruby
-raw_block = RubyLLM::Content::Raw.new([
-  { type: 'text', text: 'Reusable analysis prompt' },
-  { type: 'text', text: "Today's request: #{summary}" }
-])
-
-chat = RubyLLM.chat
-chat.add_message(role: :system, content: raw_block)
-chat.ask(raw_block)
-```
-
-Use raw blocks sparingly: they bypass cross-provider safeguards, so it is your responsibility to ensure the payload matches the provider's expectations. `Chat#ask`, `Chat#add_message`, tool results, and streaming accumulators all understand `Content::Raw` values.
-
-### Anthropic Prompt Caching
-
-One use case for Raw Content Blocks is Anthropic Prompt Caching.
-
-Anthropic lets you mark individual prompt blocks for caching, which can dramatically reduce costs on long conversations. RubyLLM provides a convenience builder that returns a `Content::Raw` instance with the proper structure:
-
-```ruby
-system_block = RubyLLM::Providers::Anthropic::Content.new(
-  "You are a release-notes assistant. Always group changes by subsystem.",
-  cache: true # shorthand for cache_control: { type: 'ephemeral' }
-)
-
-chat = RubyLLM.chat(model: '{{ site.models.anthropic_latest }}')
-chat.add_message(role: :system, content: system_block)
-
-response = chat.ask(
-  RubyLLM::Providers::Anthropic::Content.new(
-    "Summarize the API changes in this diff.",
-    cache_control: { type: 'ephemeral', ttl: '1h' }
-  )
-)
-```
-
-Need something even more custom? Build the payload manually and wrap it in `Content::Raw`:
-
-```ruby
-raw_prompt = RubyLLM::Content::Raw.new([
-  { type: 'text', text: File.read('/a/large/file'), cache_control: { type: 'ephemeral' } },
-  { type: 'text', text: "Today's request: #{summary}" }
-])
-
-chat.ask(raw_prompt)
-```
-
-The same idea applies to tool definitions:
-
-```ruby
-class ChangelogTool < RubyLLM::Tool
-  description "Formats commits into human-readable changelog entries."
-  param :commits, type: :array, desc: "List of commits to summarize"
-
-  with_params cache_control: { type: 'ephemeral' }
-
-  def execute(commits:)
-    # ...
-  end
-end
-```
-
-Providers that do not understand these extra fields silently ignore them, so you can reuse the same tools across models.
-See the [Tool Provider Parameters]({% link _core_features/tools.md %}#provider-specific-parameters) section for more detail.
-
-### Custom HTTP Headers
-
-Some providers offer beta features or special capabilities through custom HTTP headers. The `with_headers` method lets you add these headers to your API requests while maintaining RubyLLM's security model.
-
-```ruby
-# Enable Anthropic's beta features
-chat = RubyLLM.chat(model: '{{ site.models.anthropic_current }}')
-      .with_headers('anthropic-beta' => 'fine-grained-tool-streaming-2025-05-14')
-
-response = chat.ask "Tell me about the weather"
-```
-
-Headers are merged with provider defaults, with provider headers taking precedence for security. This means you can't override authentication or critical headers, but you can add supplementary headers for optional features.
-
-```ruby
-# Chain with other configuration methods
-chat = RubyLLM.chat
-      .with_temperature(0.5)
-      .with_headers('X-Custom-Feature' => 'enabled')
-      .with_params(max_tokens: 1000)
-```
-
-> Use custom headers with caution. They may enable experimental features that could change or be removed without notice. Always refer to your provider's documentation for supported headers and their behavior.
-{: .warning }
-
-## Getting Structured Output
-
-When building applications, you often need AI responses in a specific format for parsing and processing. RubyLLM provides two approaches: JSON mode for valid JSON output, and structured output for guaranteed schema compliance.
-
-> JSON mode (using `with_params(response_format: { type: 'json_object' })`) guarantees valid JSON but not any specific structure. Structured output (`with_schema`) guarantees the response matches your exact schema with required fields and types. Use structured output when you need predictable, validated responses.
-{: .note }
-
-```ruby
-# JSON mode - guarantees valid JSON, but no specific structure
-chat = RubyLLM.chat.with_params(response_format: { type: 'json_object' })
-response = chat.ask("List 3 programming languages with their year created. Return as JSON.")
-# Could return any valid JSON structure
-
-# Structured output - guarantees exact schema
-class LanguagesSchema < RubyLLM::Schema
-  array :languages do
-    object do
-      string :name
-      integer :year
-    end
-  end
-end
-
-chat = RubyLLM.chat.with_schema(LanguagesSchema)
-response = chat.ask("List 3 programming languages with their year created")
-# Always returns: {"languages" => [{"name" => "...", "year" => ...}, ...]}
-```
-
-### Using RubyLLM::Schema (Recommended)
-
-The easiest way to define schemas is with the [RubyLLM::Schema](https://github.com/danielfriis/ruby_llm-schema) gem:
-
-```ruby
-# First, add to your Gemfile:
-# gem 'ruby_llm-schema'
-#
-# Then in your code:
-require 'ruby_llm/schema'
-
-# Define your schema as a class
-class PersonSchema < RubyLLM::Schema
-  string :name, description: "Person's full name"
-  integer :age, description: "Person's age in years"
-  string :city, required: false, description: "City where they live"
-end
-
-# Use it with a chat
-chat = RubyLLM.chat
-response = chat.with_schema(PersonSchema).ask("Generate a person named Alice who is 30 years old")
-
-# The response is automatically parsed from JSON
-puts response.content # => {"name" => "Alice", "age" => 30}
-puts response.content.class # => Hash
-```
-
-> RubyLLM::Schema classes automatically use their class name (e.g., `PersonSchema`) as the schema name in API requests, which can help the model better understand the expected output structure.
-{: .note }
-
-### Using Manual JSON Schemas
-
-If you prefer not to use RubyLLM::Schema, you can provide a JSON Schema directly:
-
-```ruby
-person_schema = {
-  type: 'object',
-  properties: {
-    name: { type: 'string' },
-    age: { type: 'integer' },
-    hobbies: {
-      type: 'array',
-      items: { type: 'string' }
-    }
-  },
-  required: ['name', 'age', 'hobbies'],
-  additionalProperties: false  # Required for OpenAI structured output
-}
-
-chat = RubyLLM.chat
-response = chat.with_schema(person_schema).ask("Generate a person who likes Ruby")
-
-# Response is automatically parsed
-puts response.content
-# => {"name" => "Bob", "age" => 25, "hobbies" => ["Ruby programming", "Open source"]}
-```
-
-> **OpenAI Requirement:** When using manual JSON schemas with OpenAI, you must include `additionalProperties: false` in your schema objects. RubyLLM::Schema handles this automatically.
-{: .warning }
-
-#### Custom Schema Names
-
-By default, schemas are named 'response' in API requests. You can provide a custom name that can influence model behavior and aid debugging:
-
-```ruby
-# Provide a custom name with the full format
-person_schema = {
-  name: 'PersonSchema',
-  schema: {
-    type: 'object',
-    properties: {
-      name: { type: 'string' },
-      age: { type: 'integer' }
-    },
-    required: ['name', 'age'],
-    additionalProperties: false
-  }
-}
-
-chat = RubyLLM.chat
-response = chat.with_schema(person_schema).ask("Generate a person")
-```
-
-Custom schema names are useful for:
-- **Influencing model behavior** - Descriptive names can help the model better understand the expected output structure
-- **Debugging and logging** - Identifying which schema was used in API requests
-
-### Complex Nested Schemas
-
-Structured output supports complex nested objects and arrays:
-
-```ruby
-class CompanySchema < RubyLLM::Schema
-  string :name, description: "Company name"
-
-  array :employees do
-    object do
-      string :name
-      string :role, enum: ["developer", "designer", "manager"]
-      array :skills, of: :string
-    end
-  end
-
-  object :metadata do
-    integer :founded
-    string :industry
-  end
-end
-
-chat = RubyLLM.chat
-response = chat.with_schema(CompanySchema).ask("Generate a small tech startup")
-
-# Access nested data
-response.content["employees"].each do |employee|
-  puts "#{employee['name']} - #{employee['role']}"
-end
-```
-
-### Provider Support
-
-Not all models support structured output. Currently supported:
-- **OpenAI**: GPT-4o, GPT-4o-mini, and newer models
-- **Anthropic**: Claude 4.5+ models (Haiku, Sonnet, Opus)
-- **Gemini**: Gemini 1.5 Pro/Flash and newer
-
-Models that don't support structured output:
-
-```ruby
-chat = RubyLLM.chat(model: '{{ site.models.openai_legacy }}')
-chat.with_schema(schema)
-response = chat.ask('Generate a person')
-# Provider will return an error if unsupported
-```
-
-### Multi-turn Conversations with Schemas
-
-You can add or remove schemas during a conversation:
-
-```ruby
-# Start with a schema
-chat = RubyLLM.chat
-chat.with_schema(PersonSchema)
-person = chat.ask("Generate a person")
-
-# Remove the schema for free-form responses
-chat.with_schema(nil)
-analysis = chat.ask("Tell me about this person's potential career paths")
-
-# Add a different schema
-class CareerPlanSchema < RubyLLM::Schema
-  string :title
-  array :steps, of: :string
-  integer :years_required
-end
-
-chat.with_schema(CareerPlanSchema)
-career = chat.ask("Now structure a career plan")
-
-puts person.content
-puts analysis.content
-puts career.content
-```
-
-## Tracking Token Usage
-
-Understanding token usage is important for managing costs and staying within context limits. Each `RubyLLM::Message` returned by `ask` includes token counts.
-
-```ruby
-response = chat.ask "Explain the Ruby Global Interpreter Lock (GIL)."
-
-input_tokens = response.tokens.input   # Standard input tokens
-output_tokens = response.tokens.output # Billable output tokens
-cache_read_tokens = response.tokens.cache_read # Tokens served from the provider's prompt cache - v1.15+
-cache_write_tokens = response.tokens.cache_write # Tokens written to cache - v1.15+
-thinking_tokens = response.tokens.thinking # Thinking tokens when providers report them - v1.10.0+
-request_side_input_tokens = input_tokens.to_i + cache_read_tokens.to_i + cache_write_tokens.to_i
-
-puts "Input Tokens: #{input_tokens}"
-puts "Output Tokens: #{output_tokens}"
-puts "Cache Read Tokens: #{cache_read_tokens}" # v1.15+
-puts "Cache Write Tokens: #{cache_write_tokens}" # v1.15+
-puts "Thinking Tokens: #{thinking_tokens}" # v1.10.0+
-puts "Request-side Input Tokens: #{request_side_input_tokens}" # v1.15+
-puts "Standard Tokens for this turn: #{input_tokens.to_i + output_tokens.to_i}"
-
-# Cost for this turn - v1.15+
-puts "Input Cost: $#{format('%.6f', response.cost.input)}" if response.cost.input
-puts "Output Cost: $#{format('%.6f', response.cost.output)}" if response.cost.output
-puts "Cache Read Cost: $#{format('%.6f', response.cost.cache_read)}" if response.cost.cache_read
-puts "Cache Write Cost: $#{format('%.6f', response.cost.cache_write)}" if response.cost.cache_write
-puts "Thinking Cost: $#{format('%.6f', response.cost.thinking)}" if response.cost.thinking
-puts "Total Cost: $#{format('%.6f', response.cost.total)}" if response.cost.total
-
-# Total tokens for the entire conversation so far
-total_conversation_tokens = chat.messages.sum do |msg|
-  msg.tokens&.input.to_i + msg.tokens&.output.to_i + msg.tokens&.cache_read.to_i + msg.tokens&.cache_write.to_i
-end
-puts "Total Conversation Tokens: #{total_conversation_tokens}"
-
-# Total cost for the entire conversation so far - v1.15+
-puts "Total Conversation Cost: $#{format('%.6f', chat.cost.total)}" if chat.cost.total
-```
-
-RubyLLM handles provider token differences for you. From v1.15 onward, `tokens.input` means the standard input bucket used for pricing. Cache activity is exposed separately as `tokens.cache_read` and `tokens.cache_write`, even when the provider includes those tokens in a raw prompt total.
-
-| Provider | Raw provider usage | RubyLLM exposes |
-| --- | --- | --- |
-| OpenAI, Azure OpenAI, xAI, OpenAI-compatible | `prompt_tokens` can include `prompt_tokens_details.cached_tokens`; cache writes may appear as `cache_write_tokens`. | `tokens.input` excludes cache reads and writes. `tokens.cache_read` and `tokens.cache_write` receive the cache buckets. |
-| DeepSeek | `prompt_tokens` is split into `prompt_cache_hit_tokens` and `prompt_cache_miss_tokens`. | `tokens.input` is cache misses. `tokens.cache_read` is cache hits. |
-| OpenRouter | `prompt_tokens` can include cached tokens and cache-write tokens in `prompt_tokens_details`. | `tokens.input` excludes both cache buckets. `tokens.cache_read` and `tokens.cache_write` receive the cache buckets. |
-| Anthropic | `input_tokens` is already separate from `cache_read_input_tokens` and `cache_creation_input_tokens` or the `cache_creation` breakdown. | `tokens.input` passes through. Cache buckets map to `tokens.cache_read` and `tokens.cache_write`. |
-| Bedrock | `inputTokens` includes `cacheReadInputTokens` and `cacheWriteInputTokens`. | `tokens.input` excludes both cache buckets. Cache buckets are exposed separately. |
-| Gemini and Vertex AI | `promptTokenCount` includes `cachedContentTokenCount`. | `tokens.input` excludes cached content. `tokens.cache_read` receives cached content tokens. |
-| Providers without cache fields | Only standard input and output usage is reported. | Cache buckets stay `nil`; `tokens.input` stays as the provider input count. |
-
-This means the same RubyLLM code works across providers: `tokens.input` for standard input, `tokens.output` for output, `tokens.cache_read` for prompt cache reads, and `tokens.cache_write` for prompt cache writes. To display the full request-side input activity, add `tokens.input + tokens.cache_read + tokens.cache_write`.
-
-The top-level token helpers remain available for compatibility with v1.9.0+ code, but new code should prefer `response.tokens.*`.
-
-Thinking token usage is available via `response.tokens.thinking` when providers report it. For most providers, thinking/reasoning tokens are a breakdown of output work, not an extra bucket to add yourself. RubyLLM keeps `tokens.output` as the billable output bucket: OpenAI-style providers that include reasoning in completion tokens stay as-is, while OpenAI-compatible providers that report reasoning outside completion tokens are normalized so `tokens.output` includes the billable generated total.
-
-When a model has distinct reasoning-token pricing, `response.cost.thinking` prices that bucket separately. Otherwise, thinking tokens are treated as part of `response.cost.output` and `response.cost.thinking` stays `nil`.
-
-Cost helpers are available from v1.15+. RubyLLM uses token usage from the provider and pricing from the model registry. If the registry is missing pricing for tokens that were used, the affected cost and `cost.total` return `nil` instead of pretending the cost was zero. These helpers cover token-priced conversation usage; provider-specific add-ons such as search-query charges are left to the provider's raw usage payload.
-
-Refer to the [Working with Models Guide]({% link _advanced/models.md %}) for details on accessing model-specific pricing.
-
-## Chat Event Handlers
-
-You can register blocks to be called when certain events occur during the chat lifecycle. This is particularly useful for UI updates, logging, analytics, or building real-time chat interfaces.
-
-### Available Event Handlers
-
-RubyLLM provides two callback styles. The `on_*` handlers replace any previously registered handler for the same event, which is useful when you want to override behavior. The Rails-style `before_*` and `after_*` callbacks are additive, so multiple registrations for the same event all run. Additive callbacks are available from v1.15+.
-
-```ruby
-chat = RubyLLM.chat
-
-# Called at first chunk received from the assistant
-chat.before_message do
-  print "Assistant > "
-end
-
-# Called after the complete assistant message (including tool calls/results) is received
-chat.after_message do |message|
-  puts "Response complete!"
-  # Note: message might be nil if an error occurred during the request
-  if message&.tokens&.output
-    tokens =
-      message.tokens.input.to_i +
-      message.tokens.output.to_i +
-      message.tokens.cache_read.to_i +
-      message.tokens.cache_write.to_i
-
-    puts "Used #{tokens} tokens"
-  end
-end
-
-# Called when the AI decides to use a tool
-chat.before_tool_call do |tool_call|
-  puts "AI is calling tool: #{tool_call.name} with arguments: #{tool_call.arguments}"
-end
-
-# Called after a tool returns its result
-chat.after_tool_result do |result|
-  puts "Tool returned: #{result}"
-end
-
-# These callbacks work for both streaming and non-streaming requests
-chat.ask "What is metaprogramming in Ruby?"
-```
-
-Each callback is additive — register as many as you like, and they run alongside RubyLLM's own bookkeeping (such as the Rails persistence callbacks). The older replacing handlers (`on_new_message`, `on_end_message`, `on_tool_call`, `on_tool_result`) were removed in 2.0.
+For provider-specific request options, wire protocols, raw content blocks, and custom HTTP headers, see [Advanced Request Control]({% link _core_features/chat-request-control.md %}).
 
 ## Raw Responses
 
@@ -783,13 +156,22 @@ puts response.raw.body
 
 The raw response is a `Faraday::Response` object, which you can use to access the headers, body, and status code.
 
+## Going Further
+
+This page covers the core `Chat` interface. Each facet of a conversation has its own focused guide:
+
+* [Attachments]({% link _core_features/attachments.md %}) - attach images, video, audio, text files, and PDFs to a message.
+* [Streaming]({% link _core_features/streaming.md %}) - display responses in real time as they are generated.
+* [Structured Output]({% link _core_features/structured-output.md %}) - get responses that match an exact JSON schema.
+* [Extended Thinking]({% link _core_features/thinking.md %}) - give reasoning models room to deliberate and read their thinking.
+* [Citations]({% link _core_features/citations.md %}) - get verifiable answers backed by your documents and web sources.
+* [Advanced Request Control]({% link _core_features/chat-request-control.md %}) - provider-specific parameters, wire protocols, raw content blocks, and custom headers.
+* [Token Usage and Cost]({% link _core_features/chat-tokens.md %}) - read per-turn and per-conversation token counts and costs.
+* [Chat Event Handlers]({% link _core_features/chat-callbacks.md %}) - hook into the chat lifecycle for UI updates, logging, and analytics.
+
 ## Next Steps
 
-This guide covered the core `Chat` interface. Now you might want to explore:
-
-*   [Working with Models]({% link _advanced/models.md %}): Learn how to choose the best model and handle custom endpoints.
-*   [Using Tools]({% link _core_features/tools.md %}): Enable the AI to call your Ruby code.
-*   [Citations]({% link _core_features/citations.md %}): Get verifiable answers backed by your documents and web sources.
-*   [Streaming Responses]({% link _core_features/streaming.md %}): Get real-time feedback from the AI.
-*   [Rails Integration]({% link _advanced/rails.md %}): Persist your chat conversations easily.
-*   [Error Handling]({% link _advanced/error-handling.md %}): Build robust applications that handle API issues.
+* [Using Tools]({% link _core_features/tools.md %}) - enable the AI to call your Ruby code.
+* [Working with Models]({% link _reference/models.md %}) - choose the best model and handle custom endpoints.
+* [Rails Integration]({% link _advanced/rails.md %}) - persist your chat conversations easily.
+* [Error Handling]({% link _advanced/error-handling.md %}) - build robust applications that handle API issues.

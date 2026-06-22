@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Batches
-nav_order: 10
+nav_order: 4
 description: Answer thousands of chats at half price with provider-side batch processing
 ---
 
@@ -119,7 +119,7 @@ Token usage on batch results is billed at half the standard rates. `message.cost
 
 ## Tools in Batches
 
-A batch generates one model turn. When the model asks for a tool, the round ends there (providers can't call your Ruby code) and the response comes back with `tool_call?` true. You drive the rest of the [agentic loop]({% link _core_features/chat.md %}#driving-the-loop-yourself) yourself between rounds:
+A batch generates one model turn. When the model asks for a tool, the round ends there (providers can't call your Ruby code) and the response comes back with `tool_call?` true. You drive the rest of the [agentic loop]({% link _advanced/agentic-workflows.md %}#driving-the-loop-yourself) yourself between rounds:
 
 * `chat.complete` runs the tools and finishes the conversation synchronously, at standard prices.
 * `chat.run_tools` runs the tools and stops, leaving the chat ready for the model again, i.e. for the next batch.
