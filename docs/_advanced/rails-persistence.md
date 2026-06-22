@@ -103,6 +103,33 @@ chat_record.ask "Tell me more about that city"
 puts "Conversation length: #{chat_record.messages.count}" # => 4
 ```
 
+### Separate User and LLM Transcripts
+
+The `acts_as_chat` association is the transcript RubyLLM persists and sends to the provider. The optional `ruby_llm:chat_ui` generator renders that same association by default.
+
+If your app needs separate user-visible and model-visible transcripts, point `acts_as_chat` at the model-visible association. This is useful for chat compaction, moderation, redaction, or any workflow where the LLM should see a different transcript from the user. In this setup, `messages` is whatever you show the user, while `llm_messages` is whatever you show the LLM:
+
+For plain Ruby chats, see [Replacing the LLM Transcript]({% link _core_features/chat.md %}#advanced-replacing-the-llm-transcript).
+
+```ruby
+class Conversation < ApplicationRecord
+  has_many :messages
+
+  acts_as_chat messages: :llm_messages,
+               message_class: "LlmMessage"
+end
+```
+
+Your custom UI renders `conversation.messages`. RubyLLM persists and sends `conversation.llm_messages`:
+
+```ruby
+conversation.llm_messages.destroy_all
+conversation.llm_messages.create!(role: :system, content: summary)
+conversation.llm_messages.create!(role: :user, content: latest_user_message)
+
+conversation.complete
+```
+
 ### Token Usage and Costs
 
 Persisted chats and messages expose the same normalized token and cost helpers as regular RubyLLM objects:

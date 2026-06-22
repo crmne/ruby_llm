@@ -245,6 +245,55 @@ RSpec.describe RubyLLM::Chat do
     end
   end
 
+  describe '#messages=' do
+    it 'replaces the transcript with coerced messages' do
+      chat = described_class.new
+      old_message = chat.add_message(role: :user, content: 'Old')
+      assistant_message = RubyLLM::Message.new(role: :assistant, content: 'Answer')
+      record = double(to_llm: RubyLLM::Message.new(role: :user, content: 'From record'))
+
+      chat.messages = [
+        { role: :system, content: 'Instructions' },
+        assistant_message,
+        record
+      ]
+
+      expect(chat.messages).not_to include(old_message)
+      expect(chat.messages[1]).to be(assistant_message)
+      expect(chat.messages.map(&:role)).to eq(%i[system assistant user])
+      expect(chat.messages.map(&:content)).to eq(['Instructions', 'Answer', 'From record'])
+    end
+
+    it 'accepts a single message payload' do
+      chat = described_class.new
+
+      chat.messages = { role: :user, content: 'Only message' }
+
+      expect(chat.messages.size).to eq(1)
+      expect(chat.messages.first).to be_a(RubyLLM::Message)
+      expect(chat.messages.first.content).to eq('Only message')
+    end
+
+    it 'clears the transcript when assigned nil' do
+      chat = described_class.new
+      chat.add_message(role: :user, content: 'Hello')
+
+      chat.messages = nil
+
+      expect(chat.messages).to be_empty
+    end
+
+    it 'does not use the assigned array as backing storage' do
+      chat = described_class.new
+      assigned = [RubyLLM::Message.new(role: :user, content: 'Hello')]
+
+      chat.messages = assigned
+      assigned << RubyLLM::Message.new(role: :assistant, content: 'Leaked')
+
+      expect(chat.messages.map(&:content)).to eq(['Hello'])
+    end
+  end
+
   describe '#each' do
     it 'iterates through messages' do
       chat = described_class.new

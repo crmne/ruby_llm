@@ -156,6 +156,17 @@ puts response.raw.body
 
 The raw response is a `Faraday::Response` object, which you can use to access the headers, body, and status code.
 
+## Advanced: Replacing the LLM Transcript
+
+For advanced context management, `chat.messages` is whatever you show the LLM. Your application can keep and render a different user-visible transcript if needed. This is useful for chat compaction, moderation, redaction, or any workflow where the LLM should see a different transcript from the user.
+
+```ruby
+messages_for_model = chat.messages.last(4)
+chat.messages = messages_for_model
+```
+
+For persisted Rails chats, see [Separate User and LLM Transcripts]({% link _advanced/rails-persistence.md %}#separate-user-and-llm-transcripts).
+
 ## Going Further
 
 This page covers the core `Chat` interface. Each facet of a conversation has its own focused guide:

@@ -241,7 +241,7 @@ Delegated methods include:
 * `model`, `messages`, `tools`, `params`, `headers`, `schema`
 * `cost` (v1.15+)
 * `ask`, `say`, `complete`
-* `add_message`, `reset_messages!`, `each`
+* `add_message`, `each`
 * `with_tool`, `with_tools`
 * `with_model`, `with_temperature`, `with_thinking`, `with_citations`, `with_context`
 * `with_params`, `with_headers`, `with_schema`
