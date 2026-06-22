@@ -165,6 +165,7 @@ RSpec.describe RubyLLM::UploadedFile::Protocol do
         bedrock_api_key: 'key',
         bedrock_secret_key: 'secret',
         bedrock_session_token: nil,
+        bedrock_credential_provider: nil,
         bedrock_region: 'us-west-2',
         bedrock_batch_s3_uri: 's3://ruby-llm-batches/test'
       )
@@ -200,6 +201,16 @@ RSpec.describe RubyLLM::UploadedFile::Protocol do
       allow(protocol).to receive(:require).with('aws-sdk-s3').and_raise(LoadError)
 
       expect { protocol.send(:s3_client) }.to raise_error(RubyLLM::Error, /aws-sdk-s3/)
+    end
+
+    it 'passes credential providers to aws-sdk-s3' do
+      credential_provider = Object.new
+      allow(config).to receive(:bedrock_credential_provider).and_return(credential_provider)
+
+      expect(protocol.send(:s3_client_options)).to eq(
+        region: 'us-west-2',
+        credentials: credential_provider
+      )
     end
   end
 

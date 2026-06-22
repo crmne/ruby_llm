@@ -47,6 +47,7 @@ module RubyLLM
             bedrock_secret_key
             bedrock_region
             bedrock_session_token
+            bedrock_credential_provider
             bedrock_api_base
             bedrock_batch_s3_uri
             bedrock_batch_role_arn
@@ -54,14 +55,48 @@ module RubyLLM
         end
 
         def configuration_requirements
-          %i[bedrock_api_key bedrock_secret_key bedrock_region]
+          %i[bedrock_region]
         end
+
+        def configured?(config)
+          !!(config.bedrock_region && credentials_configured?(config))
+        end
+
+        def credentials_configured?(config)
+          return credential_provider?(config) if config.bedrock_credential_provider
+
+          !!(config.bedrock_api_key && config.bedrock_secret_key)
+        end
+
+        private
+
+        def credential_provider?(config)
+          config.bedrock_credential_provider&.respond_to?(:credentials)
+        end
+      end
+
+      def ensure_configured!
+        return if configured?
+
+        missing = []
+        missing << :bedrock_region unless @config.bedrock_region
+        missing << bedrock_credentials_requirement unless self.class.credentials_configured?(@config)
+
+        raise ConfigurationError, "Missing configuration for Bedrock: #{missing.join(', ')}"
       end
 
       private
 
       def bedrock_region
         @config.bedrock_region
+      end
+
+      def bedrock_credentials_requirement
+        if @config.bedrock_credential_provider
+          'bedrock_credential_provider responding to #credentials'
+        else
+          'bedrock_credential_provider or bedrock_api_key + bedrock_secret_key'
+        end
       end
 
       def normalize_params(params, model:)

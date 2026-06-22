@@ -46,6 +46,7 @@ RubyLLM.configure do |config|
   config.bedrock_secret_key = String
   config.bedrock_region = String
   config.bedrock_session_token = String
+  config.bedrock_credential_provider = Object # Aws::CredentialProvider
   config.bedrock_api_base = String  # v1.16+
 
   # DeepSeek

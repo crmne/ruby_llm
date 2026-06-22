@@ -44,6 +44,12 @@ RSpec.describe RubyLLM::Configuration do
       expect(config.openai_api_base).to eq('https://openai-compatible.example.com/v1')
     end
 
+    it 'omits credential providers from instance variables' do
+      config.bedrock_credential_provider = Object.new
+
+      expect(config.instance_variables).not_to include(:@bedrock_credential_provider)
+    end
+
     it 'warns but preserves log_regexp_timeout when regexp timeouts are unsupported' do
       allow(Regexp).to receive(:respond_to?).and_call_original
       allow(Regexp).to receive(:respond_to?).with(:timeout).and_return(false)

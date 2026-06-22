@@ -74,15 +74,26 @@ module RubyLLM
         def s3_client
           require 'aws-sdk-s3'
 
-          ::Aws::S3::Client.new(
-            access_key_id: @config.bedrock_api_key,
-            secret_access_key: @config.bedrock_secret_key,
-            session_token: @config.bedrock_session_token,
-            region: @config.bedrock_region
-          )
+          ::Aws::S3::Client.new(**s3_client_options)
         rescue LoadError
           raise Error, 'The aws-sdk-s3 gem is required for Bedrock file uploads. ' \
                        'Please add it to your Gemfile: gem "aws-sdk-s3"'
+        end
+
+        def s3_client_options
+          options = { region: @config.bedrock_region }
+
+          if @config.bedrock_credential_provider
+            options[:credentials] = @config.bedrock_credential_provider
+          else
+            options.merge!(
+              access_key_id: @config.bedrock_api_key,
+              secret_access_key: @config.bedrock_secret_key,
+              session_token: @config.bedrock_session_token
+            )
+          end
+
+          options
         end
 
         def parse_s3_uri(uri)

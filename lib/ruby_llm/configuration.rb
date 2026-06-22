@@ -76,7 +76,7 @@ module RubyLLM
     end
 
     def instance_variables
-      super.reject { |ivar| ivar.to_s.match?(/(_id|_key|_secret|_token)$/) }
+      super.reject { |ivar| ivar.to_s.match?(/(_id|_key|_secret|_token|_credential_provider)$/) }
     end
 
     def log_regexp_timeout=(value)

@@ -3,7 +3,7 @@ layout: default
 title: Provider Setup and Custom Endpoints
 parent: Configuration
 nav_order: 1
-description: Per-provider API keys, organization headers, Vertex AI authentication, and OpenAI-compatible custom endpoints.
+description: Per-provider API keys, organization headers, Bedrock and Vertex AI authentication, and OpenAI-compatible custom endpoints.
 ---
 
 # {{ page.title }}
@@ -24,7 +24,7 @@ After reading this guide, you will know:
 
 * How to configure API keys for every supported provider.
 * How to set OpenAI organization and project headers.
-* How to authenticate with Vertex AI using ADC or a service account key.
+* How to authenticate with Bedrock credential providers and Vertex AI service accounts.
 * How to connect to OpenAI-compatible and custom endpoints.
 
 ## API Keys
@@ -47,6 +47,7 @@ RubyLLM.configure do |config|
   config.bedrock_secret_key = ENV['AWS_SECRET_ACCESS_KEY']
   config.bedrock_region = ENV['AWS_REGION'] # Required for Bedrock
   config.bedrock_session_token = ENV['AWS_SESSION_TOKEN'] # For temporary credentials
+  # config.bedrock_credential_provider = Aws::InstanceProfileCredentials.new # Optional Aws::CredentialProvider
   config.bedrock_api_base = ENV['BEDROCK_API_BASE'] # v1.16+ (optional custom Bedrock endpoint)
 
   # DeepSeek
@@ -95,6 +96,21 @@ end
 
 > Attempting to use an unconfigured provider will raise `RubyLLM::ConfigurationError`. Only configure what you need.
 {: .note }
+
+## Bedrock Credential Providers
+
+For IAM roles, assume-role flows, and rotating credentials, configure an AWS SDK credential provider instead of static keys:
+
+```ruby
+require 'aws-sdk-core'
+
+RubyLLM.configure do |config|
+  config.bedrock_region = 'us-east-1'
+  config.bedrock_credential_provider = Aws::InstanceProfileCredentials.new
+end
+```
+
+`bedrock_credential_provider` can be any object that responds to `#credentials`, including `Aws::AssumeRoleCredentials` and `Aws::SharedCredentials`. When it is set, RubyLLM uses it instead of `bedrock_api_key`, `bedrock_secret_key`, and `bedrock_session_token`.
 
 ## OpenAI Organization & Project Headers
 

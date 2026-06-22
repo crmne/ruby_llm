@@ -60,4 +60,4 @@ File IDs are provider-owned, so persist the provider alongside any file id you s
 * **Mistral:** uses the Mistral Files API. `purpose:` is optional but useful for batch, fine-tuning, and OCR.
 * **xAI:** uses the xAI Files API. `purpose:` is not required; `expires_after:` is accepted.
 * **Vertex AI:** uploads to Google Cloud Storage and returns a `gs://...` URI. Configure `vertexai_batch_gcs_uri`; add `google-cloud-storage` to your Gemfile when using uploads or downloads.
-* **Bedrock:** uploads to S3 and returns an `s3://...` URI. Configure `bedrock_batch_s3_uri`; add `aws-sdk-s3` to your Gemfile when using uploads or downloads.
+* **Bedrock:** uploads to S3 and returns an `s3://...` URI. Configure `bedrock_batch_s3_uri`; add `aws-sdk-s3` to your Gemfile when using uploads or downloads. S3 uses your static Bedrock keys or `bedrock_credential_provider`.

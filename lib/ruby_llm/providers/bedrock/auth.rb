@@ -9,7 +9,10 @@ module RubyLLM
     class Bedrock
       # SigV4 authentication helpers for Bedrock.
       module Auth
+        Credentials = Struct.new(:access_key_id, :secret_access_key, :session_token, keyword_init: true)
+
         def sign_headers(method, path, body, base_url: api_base)
+          credentials = bedrock_credentials
           now = Time.now.utc
           amz_date = now.strftime('%Y%m%dT%H%M%SZ')
           date_stamp = now.strftime('%Y%m%d')
@@ -24,7 +27,7 @@ module RubyLLM
             'x-amz-content-sha256' => payload_hash,
             'x-amz-date' => amz_date
           }
-          headers['x-amz-security-token'] = @config.bedrock_session_token if @config.bedrock_session_token
+          headers['x-amz-security-token'] = credentials.session_token if credentials.session_token
 
           signed_headers = headers.keys.sort.join(';')
           canonical_headers = headers.keys.sort.map { |key| "#{key}:#{headers[key].to_s.strip}\n" }.join
@@ -46,14 +49,14 @@ module RubyLLM
             Digest::SHA256.hexdigest(canonical_request)
           ].join("\n")
 
-          signing_key = signing_key(date_stamp)
+          signing_key = signing_key(date_stamp, credentials.secret_access_key)
           signature = OpenSSL::HMAC.hexdigest('sha256', signing_key, string_to_sign)
 
           {
             'X-Amz-Date' => amz_date,
             'X-Amz-Content-Sha256' => payload_hash,
-            'X-Amz-Security-Token' => @config.bedrock_session_token,
-            'Authorization' => "AWS4-HMAC-SHA256 Credential=#{@config.bedrock_api_key}/#{credential_scope}, " \
+            'X-Amz-Security-Token' => credentials.session_token,
+            'Authorization' => "AWS4-HMAC-SHA256 Credential=#{credentials.access_key_id}/#{credential_scope}, " \
                                "SignedHeaders=#{signed_headers}, Signature=#{signature}",
             'Content-Type' => 'application/json'
           }.compact
@@ -108,8 +111,25 @@ module RubyLLM
           URI.encode_www_form_component(text.to_s).gsub('+', '%20').gsub('%7E', '~')
         end
 
-        def signing_key(date_stamp)
-          k_date = OpenSSL::HMAC.digest('sha256', "AWS4#{@config.bedrock_secret_key}", date_stamp)
+        def bedrock_credentials
+          provider = @config.bedrock_credential_provider
+          if provider
+            unless provider.respond_to?(:credentials)
+              raise ConfigurationError, 'bedrock_credential_provider must respond to #credentials'
+            end
+
+            return provider.credentials
+          end
+
+          Credentials.new(
+            access_key_id: @config.bedrock_api_key,
+            secret_access_key: @config.bedrock_secret_key,
+            session_token: @config.bedrock_session_token
+          )
+        end
+
+        def signing_key(date_stamp, secret_access_key)
+          k_date = OpenSSL::HMAC.digest('sha256', "AWS4#{secret_access_key}", date_stamp)
           k_region = OpenSSL::HMAC.digest('sha256', k_date, bedrock_region)
           k_service = OpenSSL::HMAC.digest('sha256', k_region, 'bedrock')
           OpenSSL::HMAC.digest('sha256', k_service, 'aws4_request')
