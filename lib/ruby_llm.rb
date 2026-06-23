@@ -68,6 +68,10 @@ module RubyLLM
       Transcription.transcribe(...)
     end
 
+    def render_prompt(name, **locals)
+      Prompt.render(name, **locals)
+    end
+
     def models
       Models.instance
     end
