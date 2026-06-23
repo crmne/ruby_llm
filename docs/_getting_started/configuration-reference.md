@@ -98,6 +98,7 @@ RubyLLM.configure do |config|
   config.default_model = String
   config.default_embedding_model = String
   config.default_image_model = String
+  config.default_speech_model = String
   config.default_moderation_model = String
   config.default_transcription_model = String
 

@@ -133,6 +133,10 @@ module RubyLLM
       default_protocol.new(self).paint(prompt, model:, size:, with:, mask:, params:)
     end
 
+    def speak(input, model:, voice:, format:, params: {}, **options) # rubocop:disable Metrics/ParameterLists
+      default_protocol.new(self).speak(input, model:, voice:, format:, params:, **options)
+    end
+
     def transcribe(audio_file, model:, language:, **options)
       default_protocol.new(self).transcribe(audio_file, model:, language:, **options)
     end

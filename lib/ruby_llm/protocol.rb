@@ -75,6 +75,12 @@ module RubyLLM
       parse_image_response(response, model:)
     end
 
+    def speak(input, model:, voice:, format:, params: {}, **options) # rubocop:disable Metrics/ParameterLists
+      payload = render_speech_payload(input, model:, voice:, format:, params:, **options)
+      response = @connection.post speech_url(model:), payload
+      parse_speech_response(response, model:, voice:, format:)
+    end
+
     def transcribe(audio_file, model:, language:, **options)
       file_part = build_audio_file_part(audio_file)
       payload = render_transcription_payload(file_part, model:, language:, **options)

@@ -66,6 +66,7 @@ RubyLLM.configure do |config|
   config.default_model = '{{ site.models.anthropic_current }}'           # For RubyLLM.chat
   config.default_embedding_model = '{{ site.models.embedding_large }}'  # For RubyLLM.embed
   config.default_image_model = 'dall-e-3'              # For RubyLLM.paint
+  config.default_speech_model = '{{ site.models.default_speech }}'       # For RubyLLM.speak
 end
 ```
 
@@ -73,6 +74,7 @@ Defaults if not configured:
 - Chat: `{{ site.models.default_chat }}`
 - Embeddings: `{{ site.models.default_embedding }}`
 - Images: `{{ site.models.default_image }}`
+- Speech: `{{ site.models.default_speech }}`
 
 ## Rails Integration
 
