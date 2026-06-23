@@ -12,6 +12,7 @@ module RubyLLM
       include ChatCompletions::Tools
       include ChatCompletions::Images
       include ChatCompletions::Media
+      include ChatCompletions::Speech
       include ChatCompletions::Transcription
 
       def maybe_normalize_temperature(temperature, model)

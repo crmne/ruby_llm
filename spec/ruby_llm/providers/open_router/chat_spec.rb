@@ -66,6 +66,22 @@ RSpec.describe RubyLLM::Providers::OpenRouter::Chat do
     end
   end
 
+  describe '#build_chunk' do
+    it 'preserves raw finish reasons on streaming chunks' do
+      chunk = provider.send(
+        :build_chunk,
+        {
+          'model' => 'openai/gpt-4.1-nano',
+          'choices' => [
+            { 'delta' => { 'content' => '' }, 'finish_reason' => 'tool_calls' }
+          ]
+        }
+      )
+
+      expect(chunk.finish_reason).to eq('tool_calls')
+    end
+  end
+
   describe '#format_messages' do
     it 'opts OpenRouter into native file parts for PDF attachments' do
       content = RubyLLM::Content.new('Summarize this file')

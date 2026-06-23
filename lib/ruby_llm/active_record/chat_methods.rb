@@ -157,6 +157,7 @@ module RubyLLM
         content_text, attachments, content_raw = prepare_content_for_storage(llm_message.content)
 
         attrs = { role: llm_message.role, content: content_text }
+        add_finish_reason_attribute(attrs, llm_message, messages_association.klass)
         parent_tool_call_assoc = messages_association.klass.reflect_on_association(:parent_tool_call)
         if parent_tool_call_assoc && llm_message.tool_call_id
           tool_call_id = find_tool_call_id(llm_message.tool_call_id)
@@ -366,6 +367,7 @@ module RubyLLM
         attrs[:thinking_signature] = message.thinking&.signature if @message.has_attribute?(:thinking_signature)
         attrs[:thinking_tokens] = message.thinking_tokens if @message.has_attribute?(:thinking_tokens)
         attrs[:citations] = message.citations.map(&:to_h).presence if @message.has_attribute?(:citations)
+        attrs[:finish_reason] = message.finish_reason if @message.has_attribute?(:finish_reason)
         attrs[self.class.model_association_name] = model_association
         if tool_call_id
           parent_tool_call_assoc = @message.class.reflect_on_association(:parent_tool_call)
@@ -385,6 +387,12 @@ module RubyLLM
           attributes[:tool_call_id] = attributes.delete(:id)
           message_record.tool_calls_association.create!(**attributes)
         end
+      end
+
+      def add_finish_reason_attribute(attrs, message, message_class)
+        return unless message_class.column_names.include?('finish_reason')
+
+        attrs[:finish_reason] = message.finish_reason
       end
 
       def find_tool_call_id(tool_call_id)

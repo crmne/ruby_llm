@@ -31,12 +31,24 @@ module RubyLLM
       @source.is_a?(URI) || (@source.is_a?(String) && @source.match?(%r{^https?://}))
     end
 
+    def provider_file?
+      @source.is_a?(UploadedFile)
+    end
+
+    def provider_file_id
+      @source.id if provider_file?
+    end
+
+    def provider_file_uri
+      @source.uri if provider_file?
+    end
+
     def path?
-      @source.is_a?(Pathname) || (@source.is_a?(String) && !url?)
+      !provider_file? && (@source.is_a?(Pathname) || (@source.is_a?(String) && !url?))
     end
 
     def io_like?
-      @source.respond_to?(:read) && !path? && !active_storage?
+      @source.respond_to?(:read) && !path? && !active_storage? && !provider_file?
     end
 
     def active_storage?
@@ -44,6 +56,10 @@ module RubyLLM
     end
 
     def content
+      if provider_file?
+        raise Error, "Provider-managed file #{provider_file_id} cannot be read as inline attachment content"
+      end
+
       load_content if !defined?(@content) || @content.nil?
       normalize_text_encoding
       @content
@@ -119,7 +135,41 @@ module RubyLLM
       { type: type, source: @source }
     end
 
+    def byte_size
+      file_byte_size || loaded_byte_size || content_byte_size
+    end
+
     private
+
+    def file_byte_size
+      return @source.byte_size if provider_file?
+      return File.size(@source) if path?
+
+      active_storage_byte_size || io_byte_size
+    end
+
+    def active_storage_byte_size
+      blob = active_storage_blob
+      blob.byte_size if blob.respond_to?(:byte_size)
+    end
+
+    def io_byte_size
+      return unless io_like?
+
+      return @source.size if @source.respond_to?(:size)
+
+      @source.stat.size if @source.respond_to?(:stat) && @source.stat.respond_to?(:size)
+    end
+
+    def loaded_byte_size
+      @content.bytesize if defined?(@content) && @content
+    end
+
+    def content_byte_size
+      return nil if url?
+
+      content&.bytesize
+    end
 
     def load_content
       if url?
@@ -145,6 +195,8 @@ module RubyLLM
     end
 
     def determine_mime_type
+      return @mime_type = provider_file_mime_type if provider_file? && provider_file_mime_type
+
       content_type = active_storage? ? active_storage_content_type : nil
       return @mime_type = content_type unless content_type.to_s.empty?
 
@@ -184,6 +236,8 @@ module RubyLLM
     def source_filename
       if url?
         File.basename(@source.path).to_s
+      elsif provider_file?
+        @source.filename.to_s
       elsif path?
         @source.basename.to_s
       elsif io_like?
@@ -209,6 +263,10 @@ module RubyLLM
 
     def active_storage_content_type
       active_storage_blob&.content_type
+    end
+
+    def provider_file_mime_type
+      @source.mime_type || RubyLLM::MimeType.for(nil, name: @source.filename)
     end
 
     def active_storage_blob

@@ -419,6 +419,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
           t.integer :output_tokens
           t.integer :cached_tokens
           t.integer :cache_creation_tokens
+          t.string :finish_reason
           t.references :bot_tool_call
           t.timestamps
         end
@@ -497,6 +498,16 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
 
         bot_chat.with_model('claude-3-5-haiku-20241022')
         expect(bot_chat.reload.model_id).to eq('claude-3-5-haiku-20241022')
+      end
+
+      it 'round-trips finish reasons when the message table has a column' do
+        bot_chat = Assistants::BotChat.create!(model: model)
+        message = bot_chat.add_message(
+          RubyLLM::Message.new(role: :assistant, content: 'Done', finish_reason: 'length')
+        )
+
+        expect(message.finish_reason).to eq('length')
+        expect(message.to_llm.finish_reason).to eq('length')
       end
 
       it 'cleans up incomplete tool interactions with custom message association name' do

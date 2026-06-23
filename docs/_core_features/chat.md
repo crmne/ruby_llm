@@ -156,6 +156,28 @@ puts response.raw.body
 
 The raw response is a `Faraday::Response` object, which you can use to access the headers, body, and status code.
 
+## Finish Reasons
+
+Responses expose `finish_reason` when the provider reports why the model stopped. RubyLLM preserves the provider value as-is and provides predicate methods for common cases.
+
+```ruby
+response = chat.ask("Summarize this in one paragraph")
+
+if response.max_tokens?
+  puts "The response hit a token limit."
+elsif response.content_filtered?
+  puts "The provider filtered the response."
+elsif response.tool_call_stop?
+  puts "The model requested a tool call."
+elsif response.stopped?
+  puts "The model finished normally."
+end
+
+response.finish_reason # Raw provider value, such as "stop", "max_tokens", or "MAX_TOKENS"
+```
+
+Provider names differ: OpenAI Chat Completions may return `tool_calls`, Anthropic may return `max_tokens`, Gemini may return `MAX_TOKENS`, and Bedrock may return `stopReason` values such as `end_turn`. Finish reasons describe completed provider responses; failed requests still raise RubyLLM error classes. RubyLLM does not send `finish_reason` back to providers when replaying conversation history.
+
 ## Advanced: Replacing the LLM Transcript
 
 For advanced context management, `chat.messages` is whatever you show the LLM. Your application can keep and render a different user-visible transcript if needed. This is useful for chat compaction, moderation, redaction, or any workflow where the LLM should see a different transcript from the user.

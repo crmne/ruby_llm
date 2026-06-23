@@ -41,6 +41,25 @@ RSpec.describe RubyLLM::Protocols::Gemini::Media do
         text: "<file name='note.txt' mime_type='text/plain'>hello</file>"
       )
     end
+
+    it 'formats provider-managed files as file_data parts' do
+      file = RubyLLM::UploadedFile.new(
+        id: 'files/abc',
+        filename: 'video.mp4',
+        mime_type: 'video/mp4',
+        uri: 'https://generativelanguage.googleapis.com/v1beta/files/abc'
+      )
+      content = RubyLLM::Content.new('Watch this', file)
+
+      parts = described_class.format_content(content)
+
+      expect(parts.second).to eq(
+        file_data: {
+          mime_type: 'video/mp4',
+          file_uri: 'https://generativelanguage.googleapis.com/v1beta/files/abc'
+        }
+      )
+    end
   end
 
   describe '#build_response_content' do

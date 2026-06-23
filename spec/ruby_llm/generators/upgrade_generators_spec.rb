@@ -30,13 +30,14 @@ RSpec.describe 'RubyLLM upgrade generator', :generator, type: :generator do # ru
       GeneratorTestHelpers.cleanup_test_app(File.join(Dir.tmpdir, 'test_upgrade_generator_default'))
     end
 
-    it 'creates the v2.0 migration adding citations and the batches table' do
+    it 'creates the v2.0 migration adding message columns and the batches table' do
       within_test_app(app_path) do
         migration_path = migrations_containing('add_ruby_llm_v2_0_columns').first
         expect(migration_path).not_to be_nil
 
         migration = File.read(migration_path)
         expect(migration).to include('add_column :messages, :citations, :json')
+        expect(migration).to include('add_column :messages, :finish_reason, :string')
         expect(migration).to include('create_table :batches')
       end
     end
@@ -67,6 +68,7 @@ RSpec.describe 'RubyLLM upgrade generator', :generator, type: :generator do # ru
 
         migration = File.read(migration_path)
         expect(migration).to include('add_column :chat_messages, :citations, :json')
+        expect(migration).to include('add_column :chat_messages, :finish_reason, :string')
         expect(migration).to include('create_table :batches')
       end
     end

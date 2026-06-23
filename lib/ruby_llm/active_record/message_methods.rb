@@ -33,6 +33,7 @@ module RubyLLM
           tokens: tokens,
           tool_calls: extract_tool_calls,
           tool_call_id: extract_tool_call_id,
+          finish_reason: optional_column(:finish_reason),
           model_id: model_association&.model_id
         )
       end
@@ -114,16 +115,14 @@ module RubyLLM
         return RubyLLM::Content::Raw.new(content_raw) if has_attribute?(:content_raw) && content_raw.present?
 
         content_value = content
-        content_value = content_value.to_plain_text if content_value.respond_to?(:to_plain_text)
+        content_text = plain_text_content(content_value)
+        action_text_attachments = action_text_attachment_sources(content_value)
 
-        return content_value unless respond_to?(:attachments) && attachments.attached?
+        return content_text unless content_attachments?(action_text_attachments)
 
-        RubyLLM::Content.new(content_value).tap do |content_obj|
+        RubyLLM::Content.new(content_text).tap do |content_obj|
           @_tempfiles = []
-
-          attachment_sources.each do |attachment, attachable|
-            add_attachment_to_content(content_obj, attachment, attachable)
-          end
+          add_content_attachments(content_obj, action_text_attachments)
         end
       end
     end

@@ -30,5 +30,37 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Media do
         %r{Unsupported attachment type: application/vnd.openxmlformats-officedocument.wordprocessingml.document}
       )
     end
+
+    it 'formats provider-managed PDFs as document file sources' do
+      file = RubyLLM::UploadedFile.new(id: 'file_123', filename: 'proposal.pdf', mime_type: 'application/pdf')
+      content = RubyLLM::Content.new('Summarize this', file)
+
+      blocks = described_class.format_content(content, citations: true)
+
+      expect(blocks.second).to eq(
+        type: 'document',
+        source: {
+          type: 'file',
+          file_id: 'file_123'
+        },
+        title: 'proposal.pdf',
+        citations: { enabled: true }
+      )
+    end
+
+    it 'formats provider-managed images as image file sources' do
+      file = RubyLLM::UploadedFile.new(id: 'file_456', filename: 'chart.png', mime_type: 'image/png')
+      content = RubyLLM::Content.new('Describe this', file)
+
+      blocks = described_class.format_content(content)
+
+      expect(blocks.second).to eq(
+        type: 'image',
+        source: {
+          type: 'file',
+          file_id: 'file_456'
+        }
+      )
+    end
   end
 end

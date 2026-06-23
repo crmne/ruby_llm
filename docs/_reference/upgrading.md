@@ -42,7 +42,7 @@ bin/rails generate ruby_llm:upgrade
 bin/rails db:migrate
 ```
 
-The generator adds a JSON `citations` column to your messages table so [citations]({% link _core_features/citations.md %}) are persisted with each assistant message, and creates the `batches` table for [provider-side batches]({% link _advanced/batches.md %}). Both are optional - without them, citations stay on in-memory responses and batches aren't persisted.
+The generator adds a JSON `citations` column and string `finish_reason` column to your messages table so [citations]({% link _core_features/citations.md %}) and provider stop reasons are persisted with each assistant message. It also creates the `batches` table for [provider-side batches]({% link _advanced/batches.md %}). These are optional - without them, citations and finish reasons stay on in-memory responses and batches aren't persisted.
 
 ## Breaking Changes
 

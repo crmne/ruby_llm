@@ -3,6 +3,25 @@
 require 'spec_helper'
 
 RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
+  describe '.parse_completion_response' do
+    it 'preserves raw stop_reason as finish_reason' do
+      protocol = RubyLLM::Protocols::Anthropic.allocate
+      response = instance_double(
+        Faraday::Response,
+        body: {
+          'model' => 'claude-sonnet-4-5',
+          'content' => [{ 'type' => 'text', 'text' => 'Hello' }],
+          'stop_reason' => 'max_tokens',
+          'usage' => {}
+        }
+      )
+
+      message = protocol.send(:parse_completion_response, response)
+
+      expect(message.finish_reason).to eq('max_tokens')
+    end
+  end
+
   describe '.build_system_content' do
     let(:logger) { instance_double(Logger, info: nil, debug: nil, error: nil, warn: nil) }
 
@@ -99,6 +118,15 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
       expect(formatted[:content].second).to include(type: 'text')
       expect(formatted[:content].second[:text]).to include("<file name='ruby.txt' mime_type='text/plain'>")
       expect(formatted[:content].third).to include(type: 'tool_use', id: 'tool_123')
+    end
+
+    it 'does not send finish_reason back to the provider' do
+      message = RubyLLM::Message.new(role: :assistant, content: 'Done', finish_reason: 'MAX_TOKENS')
+
+      formatted = described_class.format_message(message)
+
+      expect(formatted).not_to have_key(:finish_reason)
+      expect(formatted[:content].first).to eq({ type: 'text', text: 'Done' })
     end
   end
 

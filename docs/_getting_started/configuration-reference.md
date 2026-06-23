@@ -98,6 +98,7 @@ RubyLLM.configure do |config|
   config.default_model = String
   config.default_embedding_model = String
   config.default_image_model = String
+  config.default_speech_model = String
   config.default_moderation_model = String
   config.default_transcription_model = String
 
@@ -113,6 +114,7 @@ RubyLLM.configure do |config|
   config.retry_interval_randomness = Float
   config.http_proxy = String
   config.faraday_adapter = Symbol # Defaults to :net_http
+  config.auto_upload_large_files = Boolean
 
   # Logging
   config.logger = Logger

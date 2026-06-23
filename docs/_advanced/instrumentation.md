@@ -86,6 +86,7 @@ RubyLLM emits these events:
 *   `embedding.ruby_llm` - embedding model, input, result, token usage, and vector dimensions
 *   `image.ruby_llm` - image generation model, prompt, size, and result
 *   `moderation.ruby_llm` - moderation model, input, result, and flagged status
+*   `speech.ruby_llm` - speech generation model, input, voice, format, and audio byte size
 *   `transcription.ruby_llm` - transcription model, language, result, and token usage
 *   `models.refresh.ruby_llm` - model registry refresh metadata
 

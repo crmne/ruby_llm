@@ -44,6 +44,7 @@ module RubyLLM
     option :default_embedding_model, 'text-embedding-3-small'
     option :default_moderation_model, 'omni-moderation-latest'
     option :default_image_model, 'gpt-image-1.5'
+    option :default_speech_model, 'gpt-4o-mini-tts'
     option :default_transcription_model, 'whisper-1'
 
     option :model_registry_file, -> { File.expand_path('models.json', __dir__) }
@@ -58,6 +59,7 @@ module RubyLLM
     option :retry_interval_randomness, 0.5
     option :http_proxy, nil
     option :tool_concurrency, false
+    option :auto_upload_large_files, true
 
     option :logger, nil
     option :instrumenter, nil

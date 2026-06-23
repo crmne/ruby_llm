@@ -14,7 +14,7 @@ New in 2.0
 {{ page.description }}
 {: .fs-6 .fw-300 }
 
-Provider-managed files are different from chat attachments. Use `with:` when a file belongs in the prompt. Use `RubyLLM.upload` when the provider API asks for a stored file ID or URI.
+Provider-managed files are different from inline chat attachments. Use `with:` for normal prompt files. RubyLLM automatically promotes large eligible local attachments to provider-managed files when the selected provider can reference stored files in chat. Use `RubyLLM.upload` when you want to upload once and reuse the same provider file ID or URI yourself.
 
 ## Uploading
 
@@ -42,6 +42,38 @@ file = RubyLLM.upload(io, provider: :openai, purpose: "batch", filename: "batch.
 
 OpenAI and Azure require `purpose:` because their Files API requires it: `assistants`, `batch`, `fine-tune`, `vision`, `user_data`, or `evals`. Mistral accepts `purpose:` for batch, fine-tuning, and OCR workflows. Other providers infer the file use from the API call that later references the file.
 
+## Using Files in Chat
+
+Pass an uploaded file through `with:` to reuse it by provider-managed ID or URI:
+
+```ruby
+file = RubyLLM.upload("large-report.pdf", provider: :openai, purpose: "user_data")
+
+chat = RubyLLM.chat(model: "gpt-5-nano", provider: :openai)
+chat.ask("Summarize the financial risks.", with: file)
+```
+
+For Gemini and Vertex AI, uploaded files are referenced by URI:
+
+```ruby
+file = RubyLLM.upload("demo.mp4", provider: :gemini)
+
+chat = RubyLLM.chat(model: "gemini-2.5-flash", provider: :gemini)
+chat.ask("What happens in this video?", with: file)
+```
+
+## Large Chat Attachments
+
+When `config.auto_upload_large_files` is true, RubyLLM uploads oversized local attachments before storing the message and replaces them with a provider-managed file reference. The original chat message then contains the provider file ID or URI instead of inline bytes.
+
+```ruby
+RubyLLM.configure do |config|
+  config.auto_upload_large_files = true
+end
+```
+
+Automatic uploads are enabled only for providers and protocols that can reference stored files in chat. Other providers keep their existing inline behavior and still raise provider errors when a request exceeds that provider's limits.
+
 ## Finding and Downloading
 
 ```ruby
@@ -53,11 +85,17 @@ File IDs are provider-owned, so persist the provider alongside any file id you s
 
 ## Provider Notes
 
-* **OpenAI:** stores files through the OpenAI Files API. `purpose:` is required.
-* **Azure OpenAI / Foundry:** uses the OpenAI-compatible Files API under `/openai/v1`. `purpose:` is required.
-* **Anthropic:** uses the beta Files API. Downloads only work for downloadable files, such as files created by skills or code execution.
-* **Gemini:** uses the Gemini Files API. Uploaded files return a `files/...` id and `uri`.
-* **Mistral:** uses the Mistral Files API. `purpose:` is optional but useful for batch, fine-tuning, and OCR.
-* **xAI:** uses the xAI Files API. `purpose:` is not required; `expires_after:` is accepted.
-* **Vertex AI:** uploads to Google Cloud Storage and returns a `gs://...` URI. Configure `vertexai_batch_gcs_uri`; add `google-cloud-storage` to your Gemfile when using uploads or downloads.
-* **Bedrock:** uploads to S3 and returns an `s3://...` URI. Configure `bedrock_batch_s3_uri`; add `aws-sdk-s3` to your Gemfile when using uploads or downloads. S3 uses your static Bedrock keys or `bedrock_credential_provider`.
+| Provider | Files API limit | Chat file references | Automatic large attachments |
+| --- | --- | --- | --- |
+| OpenAI | 512 MB per file; `purpose:` required | PDF files by `file_id` in Responses and Chat Completions | PDFs above 50 MB, uploaded with `purpose: "user_data"` |
+| Azure OpenAI / Foundry | 512 MB per API upload for assistants and fine-tuning; `purpose:` required | Upload/find/download only; Azure chat file references are not enabled | No |
+| Anthropic | 500 MB per file; beta Files API | Images, PDFs, and text files by `file_id` | Images, PDFs, and text files above 24 MB |
+| Gemini | 2 GB per file, 20 GB per project, 48-hour retention | Media, PDFs, and text files by Files API URI | Supported attachments above 20 MB |
+| Mistral | 512 MB per file | Upload/find/download for batch, fine-tuning, OCR, and retrieval workflows | No |
+| xAI | 48 MB per file | Upload/find/download only in RubyLLM's current xAI Chat Completions protocol | No |
+| OpenRouter | 100 MB per file | PDF files by `file_id` in Chat Completions file parts | PDFs above 50 MB |
+| Vertex AI | Google Cloud Storage backed; Gemini `fileData` supports large `gs://` inputs | Gemini models by `gs://` URI; batch workflows also use GCS | Supported Gemini attachments above 7 MB |
+| Bedrock | S3 backed | Supported Converse document formats by S3 URI | Supported documents above 4.5 MB |
+| DeepSeek, GPUStack, Ollama, Perplexity | No provider-managed Files API in RubyLLM | Inline/provider-specific attachment behavior only | No |
+
+Downloads depend on the provider. Anthropic and OpenRouter only allow downloading files created server-side; uploaded files are not downloadable through their Files APIs.

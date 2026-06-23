@@ -13,6 +13,7 @@ module RubyLLM
       end
 
       protocol :chat_completions, ChatCompletions
+      files OpenRouter::Files
 
       def api_base
         @config.openrouter_api_base || 'https://openrouter.ai/api/v1'

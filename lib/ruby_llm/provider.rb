@@ -87,6 +87,19 @@ module RubyLLM
     end
     # rubocop:enable Metrics/ParameterLists
 
+    def preprocess_message(message, model:, protocol: nil)
+      protocol_class = resolve_protocol(
+        protocol,
+        model,
+        tools: {},
+        schema: nil,
+        thinking: nil,
+        tool_prefs: nil,
+        citations: false
+      )
+      protocol_class.new(self, model).preprocess_message(message)
+    end
+
     def batches?
       batch_protocol.public_method_defined?(:create_batch)
     end
@@ -131,6 +144,10 @@ module RubyLLM
 
     def paint(prompt, model:, size:, with: nil, mask: nil, params: {}) # rubocop:disable Metrics/ParameterLists
       default_protocol.new(self).paint(prompt, model:, size:, with:, mask:, params:)
+    end
+
+    def speak(input, model:, voice:, format:, params: {}, **options) # rubocop:disable Metrics/ParameterLists
+      default_protocol.new(self).speak(input, model:, voice:, format:, params:, **options)
     end
 
     def transcribe(audio_file, model:, language:, **options)

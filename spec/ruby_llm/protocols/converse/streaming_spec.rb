@@ -42,6 +42,34 @@ RSpec.describe RubyLLM::Protocols::Converse::Streaming do
     expect(chunk.thinking.signature).to eq('thinking-signature')
   end
 
+  it 'preserves raw stopReason from messageStop events' do
+    event = {
+      'messageStop' => {
+        'stopReason' => 'max_tokens'
+      }
+    }
+
+    chunk = streaming.send(:build_chunk, event)
+
+    expect(chunk.finish_reason).to eq('max_tokens')
+  end
+
+  it 'extracts thinking tokens from nested usage output token details' do
+    event = {
+      'metadata' => {
+        'usage' => {
+          'inputTokens' => 10,
+          'outputTokens' => 5,
+          'outputTokensDetails' => { 'reasoningTokens' => 7 }
+        }
+      }
+    }
+
+    chunk = streaming.send(:build_chunk, event)
+
+    expect(chunk.thinking_tokens).to eq(7)
+  end
+
   it 'accumulates Bedrock Converse Stream thinking deltas into the final message' do
     accumulator = RubyLLM::StreamAccumulator.new
     text_event = {

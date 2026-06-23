@@ -32,7 +32,7 @@ After reading this guide, you will know:
 
 Send images, audio, video, documents, and other files to a model alongside your question. RubyLLM takes them all through one `with:` parameter, whatever the provider underneath.
 
-The attachments described here travel inline with the request. To upload a file once and reuse it across many requests by reference, use provider-managed file IDs instead - see [Files]({% link _core_features/files.md %}).
+Small attachments travel inline with the request. For large eligible local files, RubyLLM can upload through the provider's Files API and send a file ID or URI instead. To upload once and reuse the same provider-managed file across many requests, see [Files]({% link _core_features/files.md %}).
 {: .note }
 
 ### Working with Images
@@ -72,7 +72,7 @@ Supported video formats include .mp4, .mov, .avi, .webm, and others (provider-de
 
 Only Google Gemini and VertexAI models currently support video input.
 
-Large video files may be subject to size or duration limits imposed by the provider.
+Large video files may be uploaded through the provider Files API when the selected provider supports stored file references in chat.
 {: .note }
 
 RubyLLM automatically handles image encoding and formatting for each provider's API. Local images are read and encoded as needed, while URLs are passed directly when supported by the provider.
@@ -126,7 +126,7 @@ response = chat.ask "Based on section 3 of this document, what is the warranty p
 puts response.content
 ```
 
-Be mindful of provider-specific limits. For example, Anthropic Claude models currently have a 10MB per-file size limit, and the total size/token count of all PDFs must fit within the model's context window (e.g., 200,000 tokens for Claude 3 models).
+Be mindful of provider-specific limits. Large PDFs may be uploaded through the provider Files API when the selected provider supports stored file references in chat. The document still has to fit the model's context and modality limits.
 {: .note }
 
 ### Automatic File Type Detection

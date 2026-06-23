@@ -33,7 +33,8 @@ module RubyLLM
             output_tokens: output_tokens(usage),
             cached_tokens: cache_read_tokens(usage),
             cache_creation_tokens: cache_write_tokens(usage),
-            thinking_tokens: thinking_tokens(usage)
+            thinking_tokens: thinking_tokens(usage),
+            finish_reason: data.dig('choices', 0, 'finish_reason')
           )
         end
 
