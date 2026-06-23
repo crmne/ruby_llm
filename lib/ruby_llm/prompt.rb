@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require 'erb'
+require 'pathname'
+
 module RubyLLM
   # Renders ERB prompt templates from the prompts directory.
   class Prompt

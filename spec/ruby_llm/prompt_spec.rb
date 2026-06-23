@@ -56,4 +56,20 @@ RSpec.describe RubyLLM::Prompt do
       expect(prompt.path).to eq(prompt_dir.join('greeting.txt.erb'))
     end
   end
+
+  describe 'RubyLLM.render_prompt' do
+    it 'renders a prompt with locals through the top-level entrypoint' do
+      create_prompt('friend', 'Hello, <%= name %>!')
+      expect(RubyLLM.render_prompt('friend', name: 'Andrey')).to eq('Hello, Andrey!')
+    end
+
+    it 'renders a nested prompt path' do
+      create_prompt('work_assistant/instructions', 'You assist <%= user %>.')
+      expect(RubyLLM.render_prompt('work_assistant/instructions', user: 'Bob')).to eq('You assist Bob.')
+    end
+
+    it 'raises PromptNotFoundError for missing prompts' do
+      expect { RubyLLM.render_prompt('nonexistent') }.to raise_error(RubyLLM::PromptNotFoundError)
+    end
+  end
 end

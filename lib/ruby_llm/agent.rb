@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-require 'erb'
 require 'forwardable'
-require 'pathname'
 require 'ruby_llm/schema'
 
 module RubyLLM
@@ -184,7 +182,7 @@ module RubyLLM
 
       def render_prompt(name, chat:, inputs:, locals:)
         resolved_locals = resolve_prompt_locals(locals, runtime: runtime_context(chat:, inputs:), chat:, inputs:)
-        Prompt.new("#{prompt_agent_path}/#{name}").render(**resolved_locals)
+        RubyLLM.render_prompt("#{prompt_agent_path}/#{name}", **resolved_locals)
       end
 
       def partition_inputs(kwargs)
