@@ -403,6 +403,153 @@ gem install ruby_llm-test
 
 ---
 
+## RubyLLM::Instructor
+
+**Structured, Validated Outputs with Automatic Retry**
+
+[`RubyLLM::Instructor`](https://github.com/washu/ruby_llm-instructor) returns fully-hydrated, validated Ruby objects from LLM calls. Define a plain Ruby class or ActiveModel, pass it as `response_model`, and get back an instance of that class — with validation errors automatically fed back to the LLM for retry.
+
+### Why Use RubyLLM::Instructor?
+
+Structured output gets you JSON in the right shape, but it doesn't guarantee the *values* are valid. When extracting data from unstructured text, you often need:
+
+- Domain validation (phone formats, presence, numeric ranges) enforced before the result reaches your code
+- Automatic re-prompting with the specific validation errors when the model gets it wrong
+- Real Ruby objects, not hashes, as the return value
+
+`RubyLLM::Instructor` closes the loop between schema, validation, and retry.
+
+### Key Features
+
+- Duck-typed response models — no base class or mixin required
+- Schema inferred automatically from `attr_accessor` or ActiveModel attributes
+- ActiveModel validations run on every response; errors are sent back to the LLM on retry
+- Works with every provider `ruby_llm` supports — same code for OpenAI, Anthropic, Gemini, and more
+- Integrates with `RubyLLM::Schema` for explicit schema control
+
+### Installation
+
+```
+gem install ruby_llm-instructor
+```
+
+For detailed documentation and examples, visit the [RubyLLM::Instructor repository](https://github.com/washu/ruby_llm-instructor).
+
+---
+
+## RubyLLM::Registry
+
+**Local-First, Versioned Prompt Storage and Rendering**
+
+[`RubyLLM::Registry`](https://github.com/washu/ruby_llm-registry) treats prompts as immutable, semantically versioned artifacts stored outside your application code — with label resolution, ERB rendering, and revision diffing.
+
+### Why Use RubyLLM::Registry?
+
+Prompts embedded in code change silently with every deploy. In production you need:
+
+- A history of every prompt revision, with the ability to pin or roll back
+- Environment labels like `production` and `staging` that move independently of code
+- Validation that every required variable is supplied before a prompt is rendered
+- Diffs between revisions so you can see exactly what changed
+
+`RubyLLM::Registry` provides all of this with a filesystem-first design and zero required infrastructure.
+
+### Key Features
+
+- Semantic versioning per prompt (`v1.0.0.md`, `v1.2.3.md`) with latest/pinned/label resolution
+- YAML front matter for labels, required variables, and metadata
+- ERB template rendering with required-variable validation
+- Export/import as YAML, JSON, or Markdown
+- Field and body diffs between prompt revisions
+- Optional, lazily-loaded backends: SQLite, ActiveRecord, MongoDB, or S3
+
+### Installation
+
+```
+gem install ruby_llm-registry
+```
+
+For detailed documentation and examples, visit the [RubyLLM::Registry repository](https://github.com/washu/ruby_llm-registry).
+
+---
+
+## RubyLLM::Tokenizer
+
+**Local, Model-Aware Token Counting and Truncation**
+
+[`RubyLLM::Tokenizer`](https://github.com/washu/ruby_llm-tokenizer) maps model identifiers (`gpt-4o`, `llama-3`, `mistral`, …) to the correct tokenizer and counts, analyzes, or truncates text against a model's context window — entirely locally, without an API call.
+
+### Why Use RubyLLM::Tokenizer?
+
+Token counts drive cost, context-window budgeting, and chunking decisions, but each model family uses a different tokenizer. You often need to:
+
+- Count tokens before sending a request, to estimate cost or enforce budgets
+- Truncate logs, documents, or chat history to fit a context window — keeping the newest or oldest content
+- Inspect exactly how a model tokenizes a string when debugging prompts
+
+`RubyLLM::Tokenizer` does all of this with the right tokenizer for each model, selected automatically.
+
+### Key Features
+
+- Unified facade over Hugging Face `tokenizers`, `tiktoken_ruby`, and SentencePiece bindings
+- Automatic model-to-tokenizer mapping for major model families
+- `count`, `analyze` (ids, tokens, encoding), and `truncate` APIs
+- Context-window truncation with `:truncate_left` / `:truncate_right` overflow strategies
+- Streaming/`Enumerable` input support — truncate huge files without materializing them
+- No Rust toolchain required — cross-compiled binaries inherited from upstream gems
+
+### Installation
+
+```
+gem install ruby_llm-tokenizer
+```
+
+For detailed documentation and examples, visit the [RubyLLM::Tokenizer repository](https://github.com/washu/ruby_llm-tokenizer).
+
+---
+
+## RubyLLM::Turbovec
+
+**Embeddable, In-Process Quantized Vector Search**
+
+[`RubyLLM::Turbovec`](https://github.com/washu/ruby_llm-turbovec) is a native Rust extension (built with `magnus` and `rb-sys`) that wraps the [`turbovec`](https://crates.io/crates/turbovec) crate, providing fast quantized vector search inside your Ruby process — no external vector database required.
+
+### Why Use RubyLLM::Turbovec?
+
+Most vector search options in Ruby require running and connecting to a separate service (Qdrant, Milvus) or a Postgres extension (pgvector). For many RAG and semantic-search workloads you'd rather:
+
+- Embed the index directly in your application process, with no network hop or service to operate
+- Persist an index to disk and reload it, like a file-backed store
+- Keep stable external IDs alongside vectors so search results map back to your records
+- Sustain read-heavy search traffic without a global lock bottleneck
+
+`RubyLLM::Turbovec` is the in-process, file-backed option for those cases.
+
+### Key Features
+
+- Native Rust extension wrapping the real `turbovec` crate via `magnus`/`rb-sys`
+- Positional index (`TurboQuantIndex`) and stable ID-based index (`IdMapIndex`)
+- Quantized vectors for compact memory footprint
+- Disk persistence with `write`/`load` (`.tv` / `.tvim`)
+- Read/write lock around the underlying indexes so concurrent reads avoid a single global mutex
+- `cargo test --locked` runs against the native crate in CI, not just the Ruby wrapper
+
+### Installation
+
+```
+gem install ruby_llm-turbovec
+```
+
+Requires a Rust toolchain, as the native extension compiles during installation.
+
+For detailed documentation and examples, visit the [RubyLLM::Turbovec repository](https://github.com/washu/ruby_llm-turbovec).
+
+---
+
+
+
+
+
 ## Community Projects
 
 The RubyLLM ecosystem is growing! If you've built a library or tool that extends RubyLLM, we'd love to hear about it. Consider:
