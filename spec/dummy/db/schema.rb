@@ -13,6 +13,16 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.1].define(version: 20_260_610_120_000) do
+  create_table 'action_text_rich_texts', force: :cascade do |t|
+    t.string 'name', null: false
+    t.text 'body'
+    t.string 'record_type', null: false
+    t.bigint 'record_id', null: false
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index %w[record_type record_id name], name: 'index_action_text_rich_texts_uniqueness', unique: true
+  end
+
   create_table 'batches', force: :cascade do |t|
     t.string 'provider_batch_id', null: false
     t.string 'provider', null: false

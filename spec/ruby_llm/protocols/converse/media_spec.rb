@@ -21,6 +21,30 @@ RSpec.describe RubyLLM::Protocols::Converse::Media do
       )
     end
 
+    it 'renders provider-managed documents as S3 document blocks' do
+      file = RubyLLM::UploadedFile.new(
+        id: 's3://ruby-llm-test/uploads/report.pdf',
+        uri: 's3://ruby-llm-test/uploads/report.pdf',
+        filename: 'report.pdf',
+        mime_type: 'application/pdf'
+      )
+      content = RubyLLM::Content.new('Summarize this file', file)
+
+      rendered = described_class.format_content(content)
+
+      expect(rendered.second).to eq(
+        document: {
+          format: 'pdf',
+          name: 'report',
+          source: {
+            s3Location: {
+              uri: 's3://ruby-llm-test/uploads/report.pdf'
+            }
+          }
+        }
+      )
+    end
+
     it 'keeps text file formats as text blocks' do
       %w[csv txt md html json].each do |extension|
         content = RubyLLM::Content.new('Summarize this file')

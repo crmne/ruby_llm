@@ -60,6 +60,7 @@ Key attributes of a `Chunk`:
 *   `chunk.tokens&.input`: Standard input tokens for the request (often `nil` until the final chunk). From v1.15 onward, cache reads and writes are exposed separately as `chunk.tokens&.cache_read` and `chunk.tokens&.cache_write` when providers report them.
 *   `chunk.tokens&.output`: Cumulative billable output tokens *up to this chunk* (behavior varies by provider, often only accurate in the final chunk). From v1.15 onward, this includes thinking/reasoning tokens when the provider bills them as output.
 *   `chunk.thinking`: Optional thinking output when providers stream it.
+*   `chunk.finish_reason`: Provider-reported reason the model stopped, usually only present on the final chunk. Chunks also support finish-reason predicates such as `chunk.max_tokens?`, `chunk.content_filtered?`, `chunk.tool_call_stop?`, and `chunk.stopped?`.
 
 > Do not rely on token counts being present or accurate in every chunk. They are typically finalized only in the last chunk or the final returned message.
 {: .warning }
@@ -90,6 +91,7 @@ total_tokens =
   final_message.tokens.cache_write.to_i
 
 puts "Total Tokens: #{total_tokens}"
+puts "Finish Reason: #{final_message.finish_reason}"
 ```
 
 This allows you to easily get the final result for storage or further processing, even after handling the stream for UI purposes.

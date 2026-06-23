@@ -16,6 +16,11 @@ module RubyLLM
           parts << format_text(content.text) if content.text
 
           content.attachments.each do |attachment|
+            if attachment.provider_file?
+              parts << format_provider_file(attachment, citations: citations)
+              next
+            end
+
             case attachment.type
             when :image
               parts << format_image(attachment)
@@ -57,6 +62,30 @@ module RubyLLM
               }
             }
           end
+        end
+
+        def format_provider_file(file, citations: false)
+          return format_provider_image(file) if file.image?
+
+          document = {
+            type: 'document',
+            source: {
+              type: 'file',
+              file_id: file.provider_file_id
+            }
+          }
+          enable_citations(document, file) if citations
+          document
+        end
+
+        def format_provider_image(image)
+          {
+            type: 'image',
+            source: {
+              type: 'file',
+              file_id: image.provider_file_id
+            }
+          }
         end
 
         def format_pdf(pdf, citations: false)

@@ -28,6 +28,64 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
       expect(message.cached_tokens).to eq(40)
       expect(message.cache_creation_tokens).to eq(10)
     end
+
+    it 'preserves raw stopReason as finish_reason' do
+      response_body = {
+        'modelId' => 'amazon.nova-lite-v1:0',
+        'output' => {
+          'message' => {
+            'content' => [{ 'text' => 'Hi!' }]
+          }
+        },
+        'stopReason' => 'guardrail_intervened',
+        'usage' => {}
+      }
+
+      response = instance_double(Faraday::Response, body: response_body)
+      message = described_class.parse_completion_response(response)
+
+      expect(message.finish_reason).to eq('guardrail_intervened')
+    end
+
+    it 'extracts thinking tokens from top-level reasoningTokens' do
+      response_body = {
+        'output' => {
+          'message' => {
+            'content' => [{ 'text' => 'Hi!' }]
+          }
+        },
+        'usage' => {
+          'inputTokens' => 10,
+          'outputTokens' => 5,
+          'reasoningTokens' => 7
+        }
+      }
+
+      response = instance_double(Faraday::Response, body: response_body)
+      message = described_class.parse_completion_response(response)
+
+      expect(message.thinking_tokens).to eq(7)
+    end
+
+    it 'extracts thinking tokens from outputTokensDetails reasoningTokens' do
+      response_body = {
+        'output' => {
+          'message' => {
+            'content' => [{ 'text' => 'Hi!' }]
+          }
+        },
+        'usage' => {
+          'inputTokens' => 10,
+          'outputTokens' => 5,
+          'outputTokensDetails' => { 'reasoningTokens' => 7 }
+        }
+      }
+
+      response = instance_double(Faraday::Response, body: response_body)
+      message = described_class.parse_completion_response(response)
+
+      expect(message.thinking_tokens).to eq(7)
+    end
   end
 
   describe '.format_tool_result_content' do
@@ -126,6 +184,15 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
         payload = render_payload(schema: nil)
         expect(payload).not_to have_key(:outputConfig)
       end
+    end
+
+    it 'does not send finish_reason back to the provider' do
+      message = RubyLLM::Message.new(role: :assistant, content: 'Done', finish_reason: 'MAX_TOKENS')
+
+      payload = render_payload([message], schema: nil)
+
+      expect(payload[:messages].first).not_to have_key(:finishReason)
+      expect(payload[:messages].first[:content]).to eq([{ text: 'Done' }])
     end
   end
 end

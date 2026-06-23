@@ -37,10 +37,22 @@ module RubyLLM
         end
 
         def format_attachment(attachment)
+          return format_file_data(attachment) if attachment.provider_file?
+
           {
             inline_data: {
               mime_type: attachment.mime_type,
               data: attachment.encoded
+            }
+          }
+        end
+
+        def format_file_data(attachment)
+          uri = attachment.provider_file_uri || attachment.provider_file_id
+          {
+            file_data: {
+              mime_type: attachment.mime_type,
+              file_uri: uri
             }
           }
         end

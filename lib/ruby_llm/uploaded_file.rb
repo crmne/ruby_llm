@@ -5,11 +5,12 @@ require 'stringio'
 module RubyLLM
   # Metadata for a file stored by a provider.
   class UploadedFile
-    attr_reader :id, :filename, :byte_size, :created_at, :expires_at, :status, :mime_type, :purpose, :uri,
+    attr_reader :id, :provider, :filename, :byte_size, :created_at, :expires_at, :status, :mime_type, :purpose, :uri,
                 :downloadable, :metadata
 
     def initialize(id:, **attributes)
       @id = id
+      @provider = attributes[:provider]
       @filename = attributes[:filename]
       @byte_size = attributes[:byte_size]
       @created_at = attributes[:created_at]
@@ -118,7 +119,7 @@ module RubyLLM
       end
 
       def uploaded_file(data, **attributes)
-        UploadedFile.new(**attributes, metadata: data)
+        UploadedFile.new(**attributes, provider: @provider.slug, metadata: data)
       end
 
       def with_file_body(attachment, &)

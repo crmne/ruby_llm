@@ -39,6 +39,8 @@ module RubyLLM
         end
 
         def format_attachment(attachment, document_attachments:, image_attachments:, audio_attachments:)
+          return format_provider_file(attachment, document_attachments:) if attachment.provider_file?
+
           case attachment.type
           when :image
             raise UnsupportedAttachmentError, attachment.mime_type unless image_attachments
@@ -72,6 +74,17 @@ module RubyLLM
             file: {
               filename: document.filename,
               file_data: document.for_llm
+            }
+          }
+        end
+
+        def format_provider_file(file, document_attachments:)
+          raise UnsupportedAttachmentError, file.mime_type if document_attachments == :none
+
+          {
+            type: 'file',
+            file: {
+              file_id: file.provider_file_id
             }
           }
         end

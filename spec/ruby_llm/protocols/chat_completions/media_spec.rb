@@ -36,6 +36,29 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Media do
       )
     end
 
+    it 'formats provider-managed files as file_id parts when file attachments are enabled' do
+      file = RubyLLM::UploadedFile.new(id: 'file_123', filename: 'proposal.pdf', mime_type: 'application/pdf')
+      content = RubyLLM::Content.new('Summarize this file', file)
+
+      formatted = described_class.format_content(content)
+
+      expect(formatted.second).to eq(
+        type: 'file',
+        file: {
+          file_id: 'file_123'
+        }
+      )
+    end
+
+    it 'keeps provider-managed file parts disabled when the provider opts out' do
+      file = RubyLLM::UploadedFile.new(id: 'file_123', filename: 'proposal.pdf', mime_type: 'application/pdf')
+      content = RubyLLM::Content.new('Summarize this file', file)
+
+      expect do
+        described_class.format_content(content, document_attachments: :none)
+      end.to raise_error(RubyLLM::UnsupportedAttachmentError, %r{application/pdf})
+    end
+
     it 'raises an actionable error for arbitrary files unless the provider opts in' do
       content = RubyLLM::Content.new('Summarize this file')
       content.add_attachment(StringIO.new('docx bytes'), filename: 'proposal.docx')

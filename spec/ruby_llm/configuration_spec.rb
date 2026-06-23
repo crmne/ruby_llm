@@ -24,6 +24,7 @@ RSpec.describe RubyLLM::Configuration do
         :request_timeout,
         :tool_concurrency,
         :default_model,
+        :default_speech_model,
         :model_registry_file,
         :openai_api_key,
         :openrouter_api_base

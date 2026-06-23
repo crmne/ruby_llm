@@ -13,8 +13,22 @@ module RubyLLM
 
     def call(env)
       @app.call(env).on_complete do |response|
-        self.class.parse_error(provider: @provider, response: response)
+        self.class.parse_error(provider: @provider, response: streaming_error_response(response))
       end
+    end
+
+    private
+
+    def streaming_error_response(response)
+      stored_response = if response.respond_to?(:env) && response.env.respond_to?(:[])
+                          response.env[:streaming_error_response]
+                        elsif response.respond_to?(:[])
+                          response[:streaming_error_response]
+                        end
+
+      stored_response || response
+    rescue NameError
+      response
     end
 
     class << self

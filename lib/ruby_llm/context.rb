@@ -29,6 +29,10 @@ module RubyLLM
       Moderation.moderate(*args, **kwargs, context: self, &)
     end
 
+    def speak(*args, **kwargs, &)
+      Speech.speak(*args, **kwargs, context: self, &)
+    end
+
     def transcribe(*args, **kwargs, &)
       Transcription.transcribe(*args, **kwargs, context: self, &)
     end

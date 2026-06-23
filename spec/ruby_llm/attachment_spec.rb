@@ -53,6 +53,32 @@ RSpec.describe RubyLLM::Attachment do
     expect(attachment).not_to be_document
   end
 
+  it 'wraps provider-managed files without reading inline content' do
+    file = RubyLLM::UploadedFile.new(
+      id: 'file_123',
+      provider: 'anthropic',
+      filename: 'proposal.pdf',
+      byte_size: 1234,
+      mime_type: 'application/pdf'
+    )
+
+    attachment = described_class.new(file)
+
+    expect(attachment).to be_provider_file
+    expect(attachment.provider_file_id).to eq('file_123')
+    expect(attachment.filename).to eq('proposal.pdf')
+    expect(attachment.mime_type).to eq('application/pdf')
+    expect(attachment.byte_size).to eq(1234)
+    expect { attachment.content }.to raise_error(RubyLLM::Error, /cannot be read as inline/)
+  end
+
+  it 'does not fetch URL content to determine byte size' do
+    attachment = described_class.new('https://example.com/report.pdf')
+    allow(RubyLLM::Connection).to receive(:basic).and_raise('unexpected network request')
+
+    expect(attachment.byte_size).to be_nil
+  end
+
   it 'treats partially loaded ActiveStorage constants as unavailable' do
     stub_const('ActiveStorage', Module.new)
     stub_const('ActiveStorage::Blob', Class.new)

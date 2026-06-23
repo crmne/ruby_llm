@@ -5,6 +5,9 @@ module RubyLLM
     class Anthropic
       # Chat methods for the Anthropic API implementation
       module Chat
+        ANTHROPIC_INLINE_REQUEST_LIMIT = 24 * 1024 * 1024
+        ANTHROPIC_FILE_UPLOAD_LIMIT = 500 * 1024 * 1024
+
         module_function
 
         def completion_url
@@ -76,6 +79,22 @@ module RubyLLM
           payload[:system] = system_content unless system_content.empty?
           payload[:temperature] = temperature unless temperature.nil?
           payload[:output_config] = payload.fetch(:output_config, {}).merge(build_output_config(schema)) if schema
+        end
+
+        def supports_provider_file_references?
+          true
+        end
+
+        def default_large_file_upload_threshold
+          ANTHROPIC_INLINE_REQUEST_LIMIT
+        end
+
+        def provider_file_upload_limit
+          ANTHROPIC_FILE_UPLOAD_LIMIT
+        end
+
+        def provider_file_attachable?(attachment)
+          attachment.image? || attachment.pdf? || attachment.text?
         end
 
         def build_output_config(schema)
@@ -172,6 +191,7 @@ module RubyLLM
             cached_tokens: extract_cached_tokens(data),
             cache_creation_tokens: extract_cache_creation_tokens(data),
             thinking_tokens: thinking_tokens,
+            finish_reason: data['stop_reason'],
             model_id: data['model'],
             raw: raw
           )

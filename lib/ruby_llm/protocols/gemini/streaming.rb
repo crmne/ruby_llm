@@ -27,6 +27,7 @@ module RubyLLM
             output_tokens: extract_output_tokens(data),
             cached_tokens: data.dig('usageMetadata', 'cachedContentTokenCount'),
             thinking_tokens: data.dig('usageMetadata', 'thoughtsTokenCount'),
+            finish_reason: data.dig('candidates', 0, 'finishReason'),
             tool_calls: extract_tool_calls(data)
           )
         end

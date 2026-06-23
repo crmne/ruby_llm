@@ -522,9 +522,37 @@ RSpec.describe RubyLLM::Protocols::Gemini::Chat do
       expect(tool_response[:parts][0][:functionResponse][:name]).to eq('weather')
       expect(tool_response[:parts][1][:functionResponse][:name]).to eq('best_language_to_learn')
     end
+
+    it 'does not send finish_reason back to the provider' do
+      messages = [RubyLLM::Message.new(role: :assistant, content: 'Done', finish_reason: 'max_tokens')]
+
+      result = test_obj.send(:format_messages, messages)
+
+      expect(result.first).not_to have_key(:finishReason)
+      expect(result.first[:parts]).to eq([{ text: 'Done' }])
+    end
   end
 
   describe '#parse_completion_response' do
+    it 'preserves raw finishReason' do
+      response = instance_double(
+        Faraday::Response,
+        body: {
+          'candidates' => [
+            {
+              'finishReason' => 'SAFETY',
+              'content' => { 'parts' => [{ 'text' => 'No' }] }
+            }
+          ]
+        }
+      )
+
+      provider = RubyLLM::Protocols::Gemini.allocate
+      message = provider.send(:parse_completion_response, response)
+
+      expect(message.finish_reason).to eq('SAFETY')
+    end
+
     it 'keeps thought-only parts out of assistant content' do
       response = Struct.new(:body, :env).new(
         {

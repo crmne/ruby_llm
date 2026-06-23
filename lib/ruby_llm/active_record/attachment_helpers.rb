@@ -70,6 +70,48 @@ module RubyLLM
         object.is_a?(RubyLLM::Content) || object.is_a?(RubyLLM::Content::Raw)
       end
 
+      def plain_text_content(content_value)
+        return content_value.to_plain_text if content_value.respond_to?(:to_plain_text)
+
+        content_value
+      end
+
+      def action_text_attachment_sources(content_value)
+        return [] unless content_value.respond_to?(:body)
+
+        body = content_value.body
+        return [] unless body.respond_to?(:attachables)
+
+        body.attachables.flat_map { |attachable| action_text_attachable_sources(attachable) }.compact
+      end
+
+      def action_text_attachable_sources(attachable)
+        source = active_storage_blobs(attachable)
+        source ||= attachable.blob if attachable.respond_to?(:blob)
+
+        Utils.to_safe_array(source)
+      end
+
+      def content_attachments?(action_text_attachments)
+        action_text_attachments.any? || active_storage_attachments?
+      end
+
+      def active_storage_attachments?
+        respond_to?(:attachments) && attachments.attached?
+      end
+
+      def add_content_attachments(content_obj, action_text_attachments)
+        action_text_attachments.each do |attachment|
+          content_obj.add_attachment(attachment)
+        end
+
+        return unless active_storage_attachments?
+
+        attachment_sources.each do |attachment, attachable|
+          add_attachment_to_content(content_obj, attachment, attachable)
+        end
+      end
+
       def attachment_sources
         change = pending_attachment_change
         return attachments.map { |attachment| [attachment, nil] } unless pending_attachment_change?(change)

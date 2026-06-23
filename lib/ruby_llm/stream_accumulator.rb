@@ -19,6 +19,7 @@ module RubyLLM
       @cached_tokens = nil
       @cache_creation_tokens = nil
       @thinking_tokens = nil
+      @finish_reason = nil
       @inside_think_tag = false
       @pending_think_tag = +''
       @latest_tool_call_id = nil
@@ -32,6 +33,7 @@ module RubyLLM
       handle_chunk_content(chunk)
       accumulate_citations(chunk.citations)
       append_thinking_from_chunk(chunk)
+      @finish_reason = chunk.finish_reason if chunk.finish_reason
       count_tokens chunk
       RubyLLM.logger.debug { inspect } if RubyLLM.config.log_stream_debug
     end
@@ -52,6 +54,7 @@ module RubyLLM
           cache_creation: @cache_creation_tokens,
           thinking: @thinking_tokens
         ),
+        finish_reason: @finish_reason,
         model_id: model_id,
         tool_calls: tool_calls_from_stream,
         raw: response
