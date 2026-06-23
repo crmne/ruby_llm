@@ -42,14 +42,6 @@ RSpec.describe RubyLLM::Cost do
       expect(cost.total).to be_within(0.0000000001).of(0.000775)
     end
 
-    it 'keeps backwards-compatible cache cost aliases' do
-      tokens = RubyLLM::Tokens.new(input: 1_000, cached: 300, cache_creation: 100)
-      cost = described_class.new(tokens:, model:)
-
-      expect(cost.cached_input).to eq(cost.cache_read)
-      expect(cost.cache_creation).to eq(cost.cache_write)
-    end
-
     it 'calculates image costs from text and image input details' do
       image_model = RubyLLM::Model::Info.new(
         id: 'image-model',
@@ -91,7 +83,6 @@ RSpec.describe RubyLLM::Cost do
 
       expect(cost.output).to be_within(0.0000000001).of(0.002612)
       expect(cost.thinking).to be_nil
-      expect(cost.reasoning).to be_nil
       expect(cost.total).to be_within(0.0000000001).of(0.002662)
     end
 
@@ -139,27 +130,6 @@ RSpec.describe RubyLLM::Cost do
       expect(cost.output).to eq(0.012)
       expect(cost.thinking).to be_nil
       expect(cost.total).to eq(0.012)
-    end
-
-    it 'reads legacy cache pricing keys' do
-      legacy_model = RubyLLM::Model::Info.new(
-        id: 'legacy-priced-model',
-        name: 'Legacy Priced Model',
-        provider: 'openai',
-        pricing: {
-          text_tokens: {
-            standard: {
-              cached_input_per_million: 0.25,
-              cache_creation_input_per_million: 1.25
-            }
-          }
-        }
-      )
-      tokens = RubyLLM::Tokens.new(cached: 300, cache_creation: 100)
-      cost = described_class.new(tokens:, model: legacy_model)
-
-      expect(cost.cache_read).to be_within(0.0000000001).of(0.000075)
-      expect(cost.cache_write).to be_within(0.0000000001).of(0.000125)
     end
 
     it 'returns nil when pricing is missing for tokens that were used' do

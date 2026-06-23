@@ -23,7 +23,7 @@ module RubyLLM
         end
 
         def format_content(content)
-          OpenAI::Media.format_content(
+          Protocols::ChatCompletions::Media.format_content(
             content,
             document_attachments: :none,
             image_attachments: false,

@@ -5,7 +5,7 @@ module RubyLLM
     # Information about an AI model's capabilities, pricing, and metadata.
     class Info
       attr_reader :id, :name, :provider, :family, :created_at, :context_window, :max_output_tokens, :knowledge_cutoff,
-                  :modalities, :capabilities, :pricing, :metadata
+                  :modalities, :capabilities, :pricing, :metadata, :reasoning_options
 
       # Create a default model with assumed capabilities
       def self.default(model_id, provider)
@@ -31,7 +31,9 @@ module RubyLLM
         @modalities = Modalities.new(data[:modalities] || {})
         @capabilities = data[:capabilities] || []
         @pricing = Pricing.new(data[:pricing] || {})
-        @metadata = data[:metadata] || {}
+        @metadata = data[:metadata]&.dup || {}
+        @reasoning_options = normalize_reasoning_options(reasoning_options_from(data))
+        store_reasoning_options_metadata
       end
 
       def supports?(capability)
@@ -49,7 +51,7 @@ module RubyLLM
       end
 
       def label
-        provider_name = provider_class&.name || provider
+        provider_name = provider_class&.display_name || provider
         "#{provider_name} - #{display_name}"
       end
 
@@ -59,6 +61,14 @@ module RubyLLM
 
       def supports_vision?
         modalities.input.include?('image')
+      end
+
+      def reasoning_option(type)
+        reasoning_options.find { |option| option[:type] == type.to_s }
+      end
+
+      def reasoning_option_values(type)
+        Array(reasoning_option(type)&.fetch(:values, nil))
       end
 
       def supports_video?
@@ -84,9 +94,6 @@ module RubyLLM
       def cache_write_input_price_per_million
         pricing.text_tokens.cache_write_input
       end
-
-      alias cached_input_price_per_million cache_read_input_price_per_million
-      alias cache_creation_input_price_per_million cache_write_input_price_per_million
 
       def cost_for(tokens)
         tokens = tokens.tokens if tokens.respond_to?(:tokens)
@@ -124,6 +131,30 @@ module RubyLLM
           pricing: pricing.to_h,
           metadata: metadata
         }
+      end
+
+      private
+
+      def reasoning_options_from(data)
+        data[:reasoning_options] || metadata[:reasoning_options] || metadata['reasoning_options']
+      end
+
+      def store_reasoning_options_metadata
+        return unless reasoning_options.any?
+
+        metadata.delete('reasoning_options')
+        metadata[:reasoning_options] = reasoning_options
+      end
+
+      def normalize_reasoning_options(options)
+        Array(options).filter_map do |option|
+          next unless option.is_a?(Hash)
+
+          normalized = option.to_h.transform_keys(&:to_sym)
+          normalized[:type] = normalized[:type].to_s if normalized[:type]
+          normalized[:values] = Array(normalized[:values]).map(&:to_s) if normalized.key?(:values)
+          normalized
+        end
       end
     end
   end

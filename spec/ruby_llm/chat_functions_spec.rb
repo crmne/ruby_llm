@@ -121,6 +121,75 @@ RSpec.describe RubyLLM::Chat do
         /Invalid calls value/
       )
     end
+
+    it 'stores tool concurrency preferences' do
+      chat = described_class.new
+
+      chat.with_tools(concurrency: true)
+
+      expect(chat.concurrency).to eq(:threads)
+    end
+
+    it 'accepts explicit tool concurrency modes' do
+      chat = described_class.new
+
+      chat.with_tools(concurrency: :fibers)
+      expect(chat.concurrency).to eq(:fibers)
+
+      chat.with_tools(concurrency: :threads)
+      expect(chat.concurrency).to eq(:threads)
+    end
+
+    it 'clears tool concurrency preferences' do
+      chat = described_class.new
+
+      chat.with_tools(concurrency: true)
+      chat.with_tools(concurrency: false)
+
+      expect(chat.concurrency).to be_nil
+    end
+
+    it 'raises for unknown tool concurrency' do
+      chat = described_class.new
+
+      expect { chat.with_tools(concurrency: :warp_speed) }.to raise_error(
+        ArgumentError,
+        /Unknown tool concurrency/
+      )
+    end
+
+    it 'uses the configured tool concurrency by default' do
+      original_tool_concurrency = RubyLLM.config.tool_concurrency
+      RubyLLM.config.tool_concurrency = true
+
+      chat = described_class.new
+
+      expect(chat.concurrency).to eq(:threads)
+    ensure
+      RubyLLM.config.tool_concurrency = original_tool_concurrency
+    end
+
+    it 'accepts explicit configured tool concurrency modes' do
+      original_tool_concurrency = RubyLLM.config.tool_concurrency
+      RubyLLM.config.tool_concurrency = :fibers
+
+      chat = described_class.new
+
+      expect(chat.concurrency).to eq(:fibers)
+    ensure
+      RubyLLM.config.tool_concurrency = original_tool_concurrency
+    end
+
+    it 'allows chats to override configured tool concurrency' do
+      original_tool_concurrency = RubyLLM.config.tool_concurrency
+      RubyLLM.config.tool_concurrency = true
+
+      chat = described_class.new.with_tools(concurrency: false)
+
+      expect(chat.concurrency).to be_nil
+    ensure
+      RubyLLM.config.tool_concurrency = original_tool_concurrency
+    end
   end
 
   describe '#with_model' do
@@ -173,6 +242,55 @@ RSpec.describe RubyLLM::Chat do
 
       expect(chat.instance_variable_get(:@temperature)).to eq(0.8)
       expect(result).to eq(chat) # Should return self for chaining
+    end
+  end
+
+  describe '#messages=' do
+    it 'replaces the transcript with coerced messages' do
+      chat = described_class.new
+      old_message = chat.add_message(role: :user, content: 'Old')
+      assistant_message = RubyLLM::Message.new(role: :assistant, content: 'Answer')
+      record = double(to_llm: RubyLLM::Message.new(role: :user, content: 'From record'))
+
+      chat.messages = [
+        { role: :system, content: 'Instructions' },
+        assistant_message,
+        record
+      ]
+
+      expect(chat.messages).not_to include(old_message)
+      expect(chat.messages[1]).to be(assistant_message)
+      expect(chat.messages.map(&:role)).to eq(%i[system assistant user])
+      expect(chat.messages.map(&:content)).to eq(['Instructions', 'Answer', 'From record'])
+    end
+
+    it 'accepts a single message payload' do
+      chat = described_class.new
+
+      chat.messages = { role: :user, content: 'Only message' }
+
+      expect(chat.messages.size).to eq(1)
+      expect(chat.messages.first).to be_a(RubyLLM::Message)
+      expect(chat.messages.first.content).to eq('Only message')
+    end
+
+    it 'clears the transcript when assigned nil' do
+      chat = described_class.new
+      chat.add_message(role: :user, content: 'Hello')
+
+      chat.messages = nil
+
+      expect(chat.messages).to be_empty
+    end
+
+    it 'does not use the assigned array as backing storage' do
+      chat = described_class.new
+      assigned = [RubyLLM::Message.new(role: :user, content: 'Hello')]
+
+      chat.messages = assigned
+      assigned << RubyLLM::Message.new(role: :assistant, content: 'Leaked')
+
+      expect(chat.messages.map(&:content)).to eq(['Hello'])
     end
   end
 

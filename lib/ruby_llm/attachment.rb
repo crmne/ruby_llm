@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'base64'
 require 'pathname'
 require 'uri'
 
@@ -10,6 +11,12 @@ module RubyLLM
 
     DOCUMENT_EXTENSIONS = %w[
       doc docx dot key numbers odp ods odt pages pot pps ppt pptx rtf xls xlsx
+    ].freeze
+    ACTIVE_STORAGE_CLASS_NAMES = %w[
+      ActiveStorage::Blob
+      ActiveStorage::Attachment
+      ActiveStorage::Attached::One
+      ActiveStorage::Attached::Many
     ].freeze
 
     def initialize(source, filename: nil)
@@ -24,52 +31,42 @@ module RubyLLM
       @source.is_a?(URI) || (@source.is_a?(String) && @source.match?(%r{^https?://}))
     end
 
+    def provider_file?
+      @source.is_a?(UploadedFile)
+    end
+
+    def provider_file_id
+      @source.id if provider_file?
+    end
+
+    def provider_file_uri
+      @source.uri if provider_file?
+    end
+
     def path?
-      @source.is_a?(Pathname) || (@source.is_a?(String) && !url?)
+      !provider_file? && (@source.is_a?(Pathname) || (@source.is_a?(String) && !url?))
     end
 
     def io_like?
-      @source.respond_to?(:read) && !path? && !active_storage?
+      @source.respond_to?(:read) && !path? && !active_storage? && !provider_file?
     end
 
     def active_storage?
-      return false unless defined?(ActiveStorage)
-
-      @source.is_a?(ActiveStorage::Blob) ||
-        @source.is_a?(ActiveStorage::Attachment) ||
-        @source.is_a?(ActiveStorage::Attached::One) ||
-        @source.is_a?(ActiveStorage::Attached::Many)
+      ACTIVE_STORAGE_CLASS_NAMES.any? { |class_name| source_is_a?(class_name) }
     end
 
     def content
-      return @content if defined?(@content) && !@content.nil?
-
-      if url?
-        fetch_content
-      elsif path?
-        load_content_from_path
-      elsif active_storage?
-        load_content_from_active_storage
-      elsif io_like?
-        load_content_from_io
-      else
-        RubyLLM.logger.warn "Source is neither a URL, path, ActiveStorage, nor IO-like: #{@source.class}"
-        nil
+      if provider_file?
+        raise Error, "Provider-managed file #{provider_file_id} cannot be read as inline attachment content"
       end
 
+      load_content if !defined?(@content) || @content.nil?
+      normalize_text_encoding
       @content
     end
 
     def encoded
       Base64.strict_encode64(content)
-    end
-
-    def save(path)
-      return unless io_like?
-
-      File.open(path, 'w') do |f|
-        f.puts(@source.read)
-      end
     end
 
     def for_llm
@@ -138,10 +135,70 @@ module RubyLLM
       { type: type, source: @source }
     end
 
+    def byte_size
+      file_byte_size || loaded_byte_size || content_byte_size
+    end
+
     private
 
+    def file_byte_size
+      return @source.byte_size if provider_file?
+      return File.size(@source) if path?
+
+      active_storage_byte_size || io_byte_size
+    end
+
+    def active_storage_byte_size
+      blob = active_storage_blob
+      blob.byte_size if blob.respond_to?(:byte_size)
+    end
+
+    def io_byte_size
+      return unless io_like?
+
+      return @source.size if @source.respond_to?(:size)
+
+      @source.stat.size if @source.respond_to?(:stat) && @source.stat.respond_to?(:size)
+    end
+
+    def loaded_byte_size
+      @content.bytesize if defined?(@content) && @content
+    end
+
+    def content_byte_size
+      return nil if url?
+
+      content&.bytesize
+    end
+
+    def load_content
+      if url?
+        fetch_content
+      elsif path?
+        load_content_from_path
+      elsif active_storage?
+        load_content_from_active_storage
+      elsif io_like?
+        load_content_from_io
+      else
+        RubyLLM.logger.warn "Source is neither a URL, path, ActiveStorage, nor IO-like: #{@source.class}"
+        nil
+      end
+    end
+
+    # Text content is loaded as binary; retag it so payloads serialize as UTF-8.
+    def normalize_text_encoding
+      return unless text? && @content.is_a?(String) && @content.encoding == Encoding::ASCII_8BIT
+
+      text = @content.dup.force_encoding(Encoding::UTF_8)
+      @content = text.valid_encoding? ? text : text.scrub
+    end
+
     def determine_mime_type
-      return @mime_type = active_storage_content_type if active_storage? && active_storage_content_type.present?
+      return @mime_type = provider_file_mime_type if provider_file? && provider_file_mime_type
+
+      content_type = active_storage? ? active_storage_content_type : nil
+      return @mime_type = content_type unless content_type.to_s.empty?
 
       @mime_type = RubyLLM::MimeType.for(url? ? nil : @source, name: @filename)
       @mime_type = RubyLLM::MimeType.for(content) if @mime_type == 'application/octet-stream'
@@ -163,8 +220,6 @@ module RubyLLM
     end
 
     def load_content_from_active_storage
-      return unless defined?(ActiveStorage)
-
       @content = active_storage_blob&.download
     end
 
@@ -181,6 +236,8 @@ module RubyLLM
     def source_filename
       if url?
         File.basename(@source.path).to_s
+      elsif provider_file?
+        @source.filename.to_s
       elsif path?
         @source.basename.to_s
       elsif io_like?
@@ -201,23 +258,28 @@ module RubyLLM
     end
 
     def extract_filename_from_active_storage
-      return 'attachment' unless defined?(ActiveStorage)
-
       active_storage_blob&.filename&.to_s || 'attachment'
     end
 
     def active_storage_content_type
-      return unless defined?(ActiveStorage)
-
       active_storage_blob&.content_type
     end
 
+    def provider_file_mime_type
+      @source.mime_type || RubyLLM::MimeType.for(nil, name: @source.filename)
+    end
+
     def active_storage_blob
-      case @source
-      when ActiveStorage::Blob then @source
-      when ActiveStorage::Attachment, ActiveStorage::Attached::One then @source.blob
-      when ActiveStorage::Attached::Many then @source.blobs.first
-      end
+      return @source if source_is_a?('ActiveStorage::Blob')
+      return @source.blob if source_is_a?('ActiveStorage::Attachment')
+      return @source.blob if source_is_a?('ActiveStorage::Attached::One')
+
+      @source.blobs.first if source_is_a?('ActiveStorage::Attached::Many')
+    end
+
+    def source_is_a?(class_name)
+      klass = RubyLLM::Utils.safe_constantize(class_name)
+      klass ? @source.is_a?(klass) : false
     end
   end
 end

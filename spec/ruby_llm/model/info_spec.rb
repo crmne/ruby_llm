@@ -18,7 +18,13 @@ RSpec.describe RubyLLM::Model::Info do
       modalities: { input: %w[text image], output: %w[text] },
       capabilities: %w[function_calling streaming vision structured_output],
       pricing: { text_tokens: { standard: { input: 2.50, output: 10.00 } } },
-      metadata: { description: 'A test model' }
+      metadata: {
+        description: 'A test model',
+        reasoning_options: [
+          { type: 'effort', values: %w[low medium high] },
+          { type: 'budget_tokens', min: 1024 }
+        ]
+      }
     }
   end
 
@@ -60,6 +66,7 @@ RSpec.describe RubyLLM::Model::Info do
 
       expect(minimal.capabilities).to eq([])
       expect(minimal.metadata).to eq({})
+      expect(minimal.reasoning_options).to eq([])
       expect(minimal.modalities.input).to eq([])
     end
   end
@@ -106,6 +113,81 @@ RSpec.describe RubyLLM::Model::Info do
     it 'returns false when image is not in input modalities' do
       text_only = described_class.new(data.merge(modalities: { input: %w[text], output: %w[text] }))
       expect(text_only.supports_vision?).to be false
+    end
+  end
+
+  describe '#reasoning_options' do
+    it 'normalizes metadata reasoning options' do
+      expect(info.reasoning_options).to eq(
+        [
+          { type: 'effort', values: %w[low medium high] },
+          { type: 'budget_tokens', min: 1024 }
+        ]
+      )
+    end
+
+    it 'accepts top-level reasoning options and stores them in metadata' do
+      top_level_info = described_class.new(
+        data.merge(
+          reasoning_options: [
+            { 'type' => 'effort', 'values' => %i[low high] }
+          ],
+          metadata: {}
+        )
+      )
+
+      expect(top_level_info.reasoning_options).to eq([{ type: 'effort', values: %w[low high] }])
+      expect(top_level_info.metadata[:reasoning_options]).to eq([{ type: 'effort', values: %w[low high] }])
+    end
+
+    it 'accepts string-keyed metadata reasoning options' do
+      legacy_info = described_class.new(
+        data.merge(
+          metadata: {
+            'reasoning_options' => [
+              { 'type' => 'effort', 'values' => %i[low high] }
+            ]
+          }
+        )
+      )
+
+      expect(legacy_info.reasoning_options).to eq([{ type: 'effort', values: %w[low high] }])
+    end
+
+    it 'prefers top-level reasoning options over metadata when both are present' do
+      info = described_class.new(
+        data.merge(
+          reasoning_options: [
+            { 'type' => 'effort', 'values' => %w[low high] }
+          ],
+          metadata: {
+            reasoning_options: [
+              { 'type' => 'budget_tokens', 'min' => 1024 }
+            ]
+          }
+        )
+      )
+
+      expect(info.reasoning_options).to eq([{ type: 'effort', values: %w[low high] }])
+    end
+
+    it 'normalizes option values to strings' do
+      symbol_info = described_class.new(
+        data.merge(
+          metadata: {
+            reasoning_options: [
+              { 'type' => 'effort', 'values' => %i[low high] }
+            ]
+          }
+        )
+      )
+
+      expect(symbol_info.reasoning_options).to eq([{ type: 'effort', values: %w[low high] }])
+    end
+
+    it 'returns option values by type' do
+      expect(info.reasoning_option_values(:effort)).to eq(%w[low medium high])
+      expect(info.reasoning_option_values(:budget_tokens)).to eq([])
     end
   end
 
@@ -192,8 +274,6 @@ RSpec.describe RubyLLM::Model::Info do
 
       expect(info.cache_read_input_price_per_million).to eq(0.5)
       expect(info.cache_write_input_price_per_million).to eq(2.5)
-      expect(info.cached_input_price_per_million).to eq(0.5)
-      expect(info.cache_creation_input_price_per_million).to eq(2.5)
     end
   end
 
@@ -226,6 +306,13 @@ RSpec.describe RubyLLM::Model::Info do
       expect(hash[:modalities]).to be_a(Hash)
       expect(hash[:pricing]).to be_a(Hash)
       expect(hash[:capabilities]).to include('function_calling')
+      expect(hash).not_to have_key(:reasoning_options)
+      expect(hash[:metadata][:reasoning_options]).to eq(
+        [
+          { type: 'effort', values: %w[low medium high] },
+          { type: 'budget_tokens', min: 1024 }
+        ]
+      )
     end
   end
 end

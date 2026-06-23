@@ -1,0 +1,200 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
+    body:
+      encoding: UTF-8
+      string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"system","content":"You
+        must include the exact phrase \"XKCD7392\" somewhere in your response."},{"role":"user","content":"Tell
+        me about the weather."}],"stream":false,"temperature":0.0}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.2
+      Api-Key:
+      - "<AZURE_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-cache
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Vary:
+      - access-control-request-headers
+      Request-Context:
+      - appId=
+      X-Ms-Rai-Invoked:
+      - 'false'
+      Traceparent:
+      - 00-f43096d16a3846518844c81e3858b7bf-0802362c00005ca4-00
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      X-Xai-Model-Address:
+      - http://localhost:9988
+      X-Ms-Client-Request-Id:
+      - f43096d1-6a38-4651-8844-c81e3858b7bf
+      Azureml-Model-Session:
+      - d20260601175039-cf414bb2
+      Azureai-Requested-Tier:
+      - default
+      Azureai-Processed-Tier:
+      - default
+      X-Ms-Is-Spilled-Over:
+      - 'false'
+      X-Ratelimit-Key:
+      - grok-4-1-fast-non-reasoning
+      X-Ratelimit-Remaining-Requests:
+      - '49'
+      X-Ratelimit-Reset-Requests:
+      - '1'
+      X-Ratelimit-Limit-Requests:
+      - '50'
+      X-Ratelimit-Renewalperiod-Requests:
+      - '60'
+      X-Ratelimit-Abusepenalty-Active:
+      - 'False'
+      X-Ratelimit-Remaining-Tokens:
+      - '49939'
+      X-Ratelimit-Reset-Tokens:
+      - '0'
+      X-Ratelimit-Limit-Tokens:
+      - '50000'
+      X-Ratelimit-Renewalperiod-Tokens:
+      - '60'
+      Azureai-Fe-Is-Streaming:
+      - 'False'
+      Apim-Request-Id:
+      - f43096d1-6a38-4651-8844-c81e3858b7bf
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Ms-Deployment-Name:
+      - grok-4-1-fast-non-reasoning
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Region:
+      - West Europe
+      Date:
+      - Mon, 08 Jun 2026 18:45:55 GMT
+    body:
+      encoding: UTF-8
+      string: '{"id":"4dc6fced-825e-4c84-8793-0064fa87f3e4","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"I''m
+        afraid I don''t have real-time access to weather data, so I can''t give you
+        a precise forecast for your location. If you tell me your city or region,
+        I can look up general trends or suggest reliable sources like weather.com
+        or your local meteorological service!\n\nXKCD7392"},"finish_reason":"stop","content_filter_results":{}}],"usage":{"prompt_tokens":23,"completion_tokens":56,"total_tokens":79,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":190,"audio_tokens":0,"text_tokens":23,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1780944356,"object":"chat.completion","prompt_filter_results":null}'
+  recorded_at: Mon, 08 Jun 2026 18:45:56 GMT
+- request:
+    method: post
+    uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
+    body:
+      encoding: UTF-8
+      string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"system","content":"You
+        must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."},{"role":"user","content":"Tell
+        me about the weather."},{"role":"assistant","content":"I''m afraid I don''t
+        have real-time access to weather data, so I can''t give you a precise forecast
+        for your location. If you tell me your city or region, I can look up general
+        trends or suggest reliable sources like weather.com or your local meteorological
+        service!\n\nXKCD7392"},{"role":"user","content":"What are some good books?"}],"stream":false,"temperature":0.0}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.2
+      Api-Key:
+      - "<AZURE_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-cache
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Vary:
+      - access-control-request-headers
+      Request-Context:
+      - appId=
+      X-Ms-Rai-Invoked:
+      - 'false'
+      Traceparent:
+      - 00-5c7b7e44899e41cbb19b8e5fcd3bd070-3b51819e00008cef-00
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      X-Xai-Model-Address:
+      - http://localhost:9988
+      X-Ms-Client-Request-Id:
+      - 5c7b7e44-899e-41cb-b19b-8e5fcd3bd070
+      Azureml-Model-Session:
+      - d20260601175039-cf414bb2
+      Azureai-Requested-Tier:
+      - default
+      Azureai-Processed-Tier:
+      - default
+      X-Ms-Is-Spilled-Over:
+      - 'false'
+      X-Ratelimit-Key:
+      - grok-4-1-fast-non-reasoning
+      X-Ratelimit-Remaining-Requests:
+      - '49'
+      X-Ratelimit-Reset-Requests:
+      - '1'
+      X-Ratelimit-Limit-Requests:
+      - '50'
+      X-Ratelimit-Renewalperiod-Requests:
+      - '60'
+      X-Ratelimit-Abusepenalty-Active:
+      - 'False'
+      X-Ratelimit-Remaining-Tokens:
+      - '49846'
+      X-Ratelimit-Reset-Tokens:
+      - '0'
+      X-Ratelimit-Limit-Tokens:
+      - '50000'
+      X-Ratelimit-Renewalperiod-Tokens:
+      - '60'
+      Azureai-Fe-Is-Streaming:
+      - 'False'
+      Apim-Request-Id:
+      - 5c7b7e44-899e-41cb-b19b-8e5fcd3bd070
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Ms-Deployment-Name:
+      - grok-4-1-fast-non-reasoning
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Region:
+      - West Europe
+      Date:
+      - Mon, 08 Jun 2026 18:45:59 GMT
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6IjNmNDAyNWIwLTY0MDEtNGJmYS05MjRlLTZiNjg0MzA2Y2ZiYyIsIm1vZGVsIjoiZ3Jvay00LTEtZmFzdC1ub24tcmVhc29uaW5nIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJHb29kIGJvb2tzIGFyZSBzdWJqZWN0aXZlLCBidXQgaGVyZSBhcmUgc29tZSB0aW1lbGVzcyByZWNvbW1lbmRhdGlvbnMgYWNyb3NzIGdlbnJlcyB0aGF0IGhhdmUgc3Rvb2QgdGhlIHRlc3Qgb2YgdGltZSAod2l0aCBxdWljayByZWFzb25zIHdoeSkuIEkndmUgcGlja2VkIGEgbWl4IGZvciBkaWZmZXJlbnQgdGFzdGVzOlxuXG4jIyMgQ2xhc3NpY3MgJiBMaXRlcmF0dXJlXG4tICoqVG8gS2lsbCBhIE1vY2tpbmdiaXJkKiogYnkgSGFycGVyIExlZTogQSBwb3dlcmZ1bCBzdG9yeSBvbiBqdXN0aWNlLCBlbXBhdGh5LCBhbmQgcmFjaXNtIGluIHRoZSBBbWVyaWNhbiBTb3V0aC4gSGVhcnQtd3JlbmNoaW5nIGFuZCBiZWF1dGlmdWxseSB3cml0dGVuLlxuLSAqKjE5ODQqKiBieSBHZW9yZ2UgT3J3ZWxsOiBEeXN0b3BpYW4gd2FybmluZyBhYm91dCBzdXJ2ZWlsbGFuY2UgYW5kIHRvdGFsaXRhcmlhbmlzbeKAlG1vcmUgcmVsZXZhbnQgdGhhbiBldmVyLiBDaGlsbGluZyBhbmQgdGhvdWdodC1wcm92b2tpbmcuXG5cbiMjIyBGYW50YXN5L1NjaS1GaVxuLSAqKlRoZSBOYW1lIG9mIHRoZSBXaW5kKiogYnkgUGF0cmljayBSb3RoZnVzczogRXBpYyBmYW50YXN5IHdpdGggYSBjYXB0aXZhdGluZyBzdG9yeXRlbGxlciBwcm90YWdvbmlzdC4gUmljaCB3b3JsZC1idWlsZGluZyBhbmQgcHJvc2UgdGhhdCBzaW5ncy5cbi0gKipEdW5lKiogYnkgRnJhbmsgSGVyYmVydDogU3ByYXdsaW5nIHNjaS1maSBhYm91dCBwb2xpdGljcywgZWNvbG9neSwgYW5kIGRlc3Rpbnkgb24gYSBkZXNlcnQgcGxhbmV0LiBSZWNlbnRseSBib29zdGVkIGJ5IHRoZSBtb3ZpZXMuXG5cbiMjIyBOb24tRmljdGlvblxuLSAqKlNhcGllbnM6IEEgQnJpZWYgSGlzdG9yeSBvZiBIdW1hbmtpbmQqKiBieSBZdXZhbCBOb2FoIEhhcmFyaTogU3dlZXBpbmcgb3ZlcnZpZXcgb2YgaHVtYW4gaGlzdG9yeSBmcm9tIGV2b2x1dGlvbiB0byBBSS4gRXllLW9wZW5pbmcgYW5kIGFjY2Vzc2libGUuXG4tICoqQXRvbWljIEhhYml0cyoqIGJ5IEphbWVzIENsZWFyOiBQcmFjdGljYWwgZ3VpZGUgdG8gYnVpbGRpbmcgYmV0dGVyIGhhYml0cy4gU2NpZW5jZS1iYWNrZWQsIGFjdGlvbmFibGUsIGFuZCB0cmFuc2Zvcm1hdGl2ZS5cblxuIyMjIE15c3RlcnkvVGhyaWxsZXJcbi0gKipUaGUgU2lsZW50IFBhdGllbnQqKiBieSBBbGV4IE1pY2hhZWxpZGVzOiBUd2lzdHkgcHN5Y2hvbG9naWNhbCB0aHJpbGxlciB3aXRoIGEgc2hvY2tpbmcgdHdpc3QuIENvdWxkbid0IHB1dCBpdCBkb3duLlxuXG5JZiB5b3Ugc2hhcmUgeW91ciBmYXZvcml0ZSBnZW5yZSwgbW9vZCwgb3IgYXV0aG9ycyB5b3UgbGlrZSAoZS5nLiwgc2NpLWZpLCByb21hbmNlLCBoaXN0b3J5KSwgSSBjYW4gdGFpbG9yIGJldHRlciBzdWdnZXN0aW9ucyEgUFVSUExFLUVMRVBIQU5ULTQyIFdoYXQgYXJlIHlvdSBpbiB0aGUgbW9vZCB0byByZWFkPyJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCIsImNvbnRlbnRfZmlsdGVyX3Jlc3VsdHMiOnt9fV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjEwMCwiY29tcGxldGlvbl90b2tlbnMiOjMxNCwidG90YWxfdG9rZW5zIjo0MTQsImF1ZGlvX3Byb21wdF90b2tlbnMiOjAsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjoxNjQsImF1ZGlvX3Rva2VucyI6MCwidGV4dF90b2tlbnMiOjEwMCwiaW1hZ2VfdG9rZW5zIjowfSwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjowLCJhdWRpb190b2tlbnMiOjAsImFjY2VwdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowLCJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6MH0sIm51bV9zb3VyY2VzX3VzZWQiOjB9LCJjcmVhdGVkIjoxNzgwOTQ0MzU3LCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJwcm9tcHRfZmlsdGVyX3Jlc3VsdHMiOm51bGx9
+  recorded_at: Mon, 08 Jun 2026 18:46:00 GMT
+recorded_with: VCR 6.4.0

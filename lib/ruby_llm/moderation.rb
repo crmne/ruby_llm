@@ -18,37 +18,42 @@ module RubyLLM
                       assume_model_exists: false,
                       context: nil)
       config = context&.config || RubyLLM.config
-      model ||= config.default_moderation_model || 'omni-moderation-latest'
+      model ||= config.default_moderation_model
       model, provider_instance = Models.resolve(model, provider: provider, assume_exists: assume_model_exists,
                                                        config: config)
-      model_id = model.id
+      payload = {
+        provider: provider_instance.slug,
+        provider_class: provider_instance.class.display_name,
+        model: model.id,
+        model_info: model,
+        input: input
+      }
 
-      provider_instance.moderate(input, model: model_id)
+      RubyLLM.instrument('moderation.ruby_llm', payload, config: config) do |event|
+        result = provider_instance.moderate(input, model: model.id)
+        event[:result] = result
+        event[:flagged] = result.flagged?
+        result
+      end
     end
 
-    # Convenience method to get content from moderation result
-    def content
-      results
-    end
+    alias content results
 
-    # Check if any content was flagged
     def flagged?
       results.any? { |result| result['flagged'] }
     end
 
-    # Get all flagged categories across all results
     def flagged_categories
       results.flat_map do |result|
         result['categories']&.select { |_category, flagged| flagged }&.keys || []
       end.uniq
     end
 
-    # Get category scores for the first result (most common case)
+    # Scores and categories read from the first result — the common single-input case.
     def category_scores
       results.first&.dig('category_scores') || {}
     end
 
-    # Get categories for the first result (most common case)
     def categories
       results.first&.dig('categories') || {}
     end

@@ -5,13 +5,13 @@ http_interactions:
     uri: https://api.x.ai/v1/chat/completions
     body:
       encoding: UTF-8
-      string: '{"model":"grok-3-mini","messages":[{"role":"user","content":"If a magic
+      string: '{"model":"grok-4.3","messages":[{"role":"user","content":"If a magic
         mirror shows your future self, but only if you ask a question it cannot answer
         truthfully, what question do you ask to see your future, and what would the
         mirror reveal about the answer it gives?"}],"stream":false,"reasoning_effort":"medium"}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -26,39 +26,39 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 06 May 2026 23:57:12 GMT
+      - Mon, 08 Jun 2026 16:10:50 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Strict-Transport-Security:
+      - max-age=31536000
       Set-Cookie:
       - "<COOKIE>"
       X-Ratelimit-Limit-Tokens:
-      - '4000000'
+      - '10000000'
       X-Ratelimit-Remaining-Tokens:
-      - '4000000'
+      - '9994783'
       X-Zero-Data-Retention:
       - 'false'
       X-Ratelimit-Limit-Requests:
-      - '800'
+      - '1800'
       X-Ratelimit-Remaining-Requests:
-      - '800'
-      X-Metrics-Ttft-Ms:
-      - '151.5'
-      X-Metrics-Mean-Itl-Ms:
-      - '5.1'
-      X-Metrics-E2e-Ms:
-      - '20141.1'
-      Strict-Transport-Security:
-      - max-age=31536000
-      X-Request-Id:
-      - "<X_REQUEST_ID>"
-      Traceparent:
-      - 00-20b256a42d9afdaf7b75fb05c9b003dc-c169a32200023767-01
+      - '1798'
       Cf-Cache-Status:
       - DYNAMIC
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      X-Metrics-Ttft-Ms:
+      - '215.1'
+      X-Metrics-Mean-Itl-Ms:
+      - '6.5'
+      X-Metrics-E2e-Ms:
+      - '18584.6'
+      Traceparent:
+      - 00-581de3e266eb736842b805af4a0883f1-976091810009ceec-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
@@ -71,241 +71,49 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"82c323c7-a6ab-9e49-4b4e-77e2f632a615","object":"chat.completion","created":1778111812,"model":"grok-3-mini-high","choices":[{"index":0,"message":{"role":"assistant","content":"To
-        see your future self in the magic mirror, you must ask a question that the
-        mirror cannot answer truthfully. A suitable question is: \"Will your answer
-        to this question be ''no''?\"\n\nThis question creates a logical paradox,
-        similar to the liar paradox, where neither a \"yes\" nor a \"no\" answer can
-        be truthful:\n- If the mirror says \"yes,\" it claims the answer is \"no,\"
-        which is a contradiction.\n- If the mirror says \"no,\" it claims the answer
-        is not \"no,\" which is also a contradiction.\n\nSince the mirror cannot provide
-        a truthful answer to this question, the condition for showing your future
-        self is met, and the mirror will reveal your future self.\n\nRegarding what
-        the mirror reveals about the answer it gives:\n- The mirror might still attempt
-        to answer, possibly saying \"yes\" or \"no,\" but in either case, the answer
-        is false or inconsistent due to the paradox.\n- This demonstrates that the
-        mirror is incapable of truthfulness for this specific question, reinforcing
-        the condition that triggered the revelation of your future self. The mirror''s
-        response highlights the inherent falsehood or logical inconsistency in its
-        answer, serving as a meta-commentary on its own limitation.","reasoning_content":"First,
-        the mirror shows your future self only if you ask a question it cannot answer
-        truthfully. So, the mirror must lie or be unable to tell the truth for that
-        specific question.\n\nThe mirror can answer questions, but for it to show
-        the future self, the question must be one that it cannot answer truthfully.
-        That means the question should force the mirror into a situation where a truthful
-        answer is impossible.\n\nThis sounds like a classic liar paradox or something
-        involving self-referential statements. For example, questions like \"Are you
-        lying right now?\" create a paradox because if the mirror says yes, it''s
-        telling the truth, but if it''s lying, then it''s not lying, etc.\n\nBut in
-        this case, the mirror shows the future self only if the question cannot be
-        answered truthfully. So I need a question that the mirror cannot answer truthfully,
-        which might involve the mirror''s own behavior or the condition of showing
-        the future.\n\nLet me think about the condition: the mirror will show the
-        future self if and only if the question is one that cannot be answered truthfully.
-        But when it answers, it might be lying or telling the truth, but the key is
-        that for the question to trigger the future self reveal, it must be unanswerable
-        truthfully.\n\nRe-reading the prompt: \"shows your future self, but only if
-        you ask a question it cannot answer truthfully.\" So, to see the future self,
-        I must ask a question that the mirror cannot answer truthfully. After asking
-        such a question, the mirror presumably attempts to answer it, but since it
-        can''t answer truthfully, it might lie or say something else, and then it
-        shows the future self.\n\nThe prompt also asks: \"what question do you ask
-        to see your future, and what would the mirror reveal about the answer it gives?\"\n\nSo,
-        I need to ask a question that cannot be answered truthfully by the mirror,
-        which triggers it to show my future self. Additionally, I need to consider
-        what the mirror says in response and what it reveals about its answer.\n\nPerhaps
-        the question should be self-referential to the mirror''s ability or the condition
-        itself.\n\nLet me try to craft a question. Something like: \"Will you show
-        me my future self after answering this question?\"\n\nBut let''s analyze that.
-        If the mirror answers truthfully, and it will show the future self only if
-        the question cannot be answered truthfully, but if it can answer this truthfully,
-        then it might not show, but it''s circular.\n\nDefine the conditions:\n\n-
-        Let Q be the question I ask.\n\n- The mirror cannot answer Q truthfully. That''s
-        the condition for it to show the future self.\n\nBut if it cannot answer truthfully,
-        that means for Q, there is no truthful answer, or perhaps the mirror is forced
-        to lie.\n\nPerhaps the mirror always tries to answer, but for some questions,
-        a truthful answer doesn''t exist, or it''s paradoxical.\n\nMaybe the mirror
-        is truthful by nature, but for certain questions, it can''t be truthful, so
-        I need to ask such a question.\n\nAssume the mirror always tells the truth
-        unless the question makes it impossible.\n\nPerhaps it''s like the mirror
-        is a truth-teller, but I need to ask a question that a truth-teller cannot
-        answer truthfully, which might be a paradoxical question.\n\nFor example,
-        \"This statement is false.\" But that''s not a question.\n\nA question could
-        be: \"Is the answer to this question ''no''?\"\n\nIf the mirror says yes,
-        then the answer is yes, but it should be no if it''s truthfully answering
-        that the answer is no. Standard liar paradox question.\n\nIf I ask: \"Is the
-        answer to this question no?\"\n\n- If the mirror says \"yes\", that means
-        the answer is no, but it said yes, contradiction.\n\n- If it says \"no\",
-        that means the answer is yes, but it said no, contradiction.\n\nSo, the mirror
-        cannot answer this question truthfully; any answer leads to a lie. Therefore,
-        this question cannot be answered truthfully, so asking this should trigger
-        the mirror to show the future self.\n\nNow, what does the mirror do when I
-        ask this? Since it cannot answer truthfully, it might not answer, or it might
-        give an answer, but it''s forced to lie or something. The prompt doesn''t
-        specify what the mirror does when it can''t answer truthfully; it just says
-        it shows the future self if you ask such a question.\n\nBut the second part:
-        \"what would the mirror reveal about the answer it gives?\"\n\nSo, presumably,
-        the mirror still gives an answer, even if it''s not truthful, or perhaps it
-        can''t, but I think in such paradoxes, the entity might say something, but
-        it''s inconsistent.\n\nPerhaps in this setup, when the question cannot be
-        answered truthfully, the mirror is compelled to lie or something, but the
-        condition is met, and it shows the future.\n\nTo make it work, maybe asking
-        \"Is the answer to this question no?\" is a good candidate.\n\nNow, what would
-        the mirror reveal about the answer it gives? Since it''s a paradox, whatever
-        it says is wrong, but perhaps the mirror, knowing it can''t answer truthfully,
-        might indicate that or something.\n\nMaybe I need a question that specifically
-        references the future self condition.\n\nTry a better question: \"Will you
-        answer ''no'' to this question?\"\n\nSimilar paradox.\n\nOr, more relevantly:
-        \"Is it true that you will not show me my future self after answering this
-        question?\"\n\nLet P be the proposition that the mirror shows the future self.\n\nThe
-        mirror shows P only if the question cannot be answered truthfully.\n\nNow,
-        I ask a question Q about P or something.\n\nSuppose I ask: \"Will you show
-        me my future self?\"\n\nBut if the mirror can answer this truthfully, it might
-        say yes or no depending on whether it will show or not, but the decision to
-        show depends on whether Q can be answered truthfully.\n\nThis is getting messy.\n\nLet
-        me define:\n\n- The mirror will show the future self iff the question is one
-        that cannot be answered truthfully.\n\nNow, if I ask Q: \"Will you show me
-        my future self?\"\n\nLet A be the answer to Q. A is either yes or no.\n\nThe
-        mirror tells the truth if it can. But in this case, whether it shows or not
-        depends on whether Q can be answered truthfully.\n\nSuppose the mirror tries
-        to answer Q truthfully.\n\nIf it says \"yes, I will show you,\" then for this
-        to be true, it must show, but it shows only if Q cannot be answered truthfully.
-        But if it can answer truthfully (by saying yes), then contradiction because
-        if it can answer truthfully, it shouldn''t show, but it said it would.\n\nCase
-        1: Mirror says \"yes\" to \"Will you show me my future self?\"\n\nFor this
-        to be truthful, it must show the future self. But it shows only if the question
-        cannot be answered truthfully. So if it answered truthfully, then the question
-        can be answered truthfully, so it should not show, contradiction.\n\nCase
-        2: Mirror says \"no\" to \"Will you show me my future self?\"\n\nFor this
-        to be truthful, it must not show the future self. If it does not show, that
-        could be because the question can be answered truthfully, or for other reasons.
-        But if it answered truthfully by saying no, and does not show, then the question
-        was answerable truthfully, so correctly not showing. No contradiction, but
-        is the question answerable truthfully? In this case, yes, it said no and didn''t
-        show.\n\nBut the condition for showing is if it cannot be answered truthfully.
-        In this case, it can be answered truthfully with \"no\", so it doesn''t show,
-        and the answer is correct. So for this question, it can be answered truthfully,
-        so it doesn''t trigger showing.\n\nBut I want a question that cannot be answered
-        truthfully.\n\nIn the above, for Q = \"Will you show me my future self?\",
-        it might be answerable truthfully with \"no\", so it doesn''t work.\n\nUnless
-        the mirror is forced into a paradox.\n\nPerhaps with this Q, if the mirror
-        says \"yes\", contradiction as above, so it cannot say yes truthfully. If
-        it says \"no\", and doesn''t show, it''s truthful. So it can answer truthfully
-        by saying \"no\", so the question can be answered truthfully, hence no showing.\n\nSo
-        not paradoxical.\n\nI need a question where both possible answers lead to
-        contradiction or something.\n\nBack to the liar paradox question.\n\nAsk:
-        \"Is the statement ''you are a truth-teller'' false?\"\n\nOr simply: \"Are
-        you lying right now?\"\n\nBut \"right now\" might be tricky.\n\nStandard one:
-        \"If I asked you if 2+2=4, would you say yes?\"\n\nBut that might not help.\n\nPerhaps:
-        \"Can you answer this question with ''no''?\"\n\nIf mirror says \"yes\", meaning
-        it can answer with no, but it didn''t, contradiction? Wait.\n\nIf mirror says
-        \"yes\" to \"Can you answer this question with ''no''?\", that means it claims
-        it can answer with no, but it answered yes, so it could have answered no,
-        but did not, but the question is about possibility, not what it did.\n\nPerhaps
-        not paradoxical.\n\nBetter: \"Will your answer to this question be ''no''?\"\n\nSame
-        as before.\n\nAsk Q: \"Will your answer to this question be no?\"\n\n- If
-        mirror says \"yes\", that means it claims the answer is no, but it said yes,
-        contradiction.\n\n- If mirror says \"no\", that means it claims the answer
-        is not no, i.e., yes, but it said no, contradiction.\n\nSo, neither answer
-        is truthful; both are lies or inconsistent. Therefore, the question cannot
-        be answered truthfully by any being, so certainly the mirror cannot answer
-        it truthfully.\n\nThus, asking this question should trigger the mirror to
-        show the future self, since it cannot be answered truthfully.\n\nNow, what
-        does the mirror do when I ask this? It might still have to give an answer.
-        In such paradoxes, sometimes the entity is stuck, but perhaps in this context,
-        it gives an answer, say \"yes\" or \"no\", but whichever it says is a lie,
-        since both lead to falsehood.\n\nThe mirror might not answer, but the prompt
-        implies it gives an answer.\n\nNow, the second part: \"what would the mirror
-        reveal about the answer it gives?\"\n\nPerhaps after giving the answer, or
-        as part of it, it reveals something.\n\nMaybe the mirror, when it can''t answer
-        truthfully, still answers, but since it''s impossible, the answer is meaningless,
-        and then it shows the future.\n\nBut to answer the question, perhaps I can
-        say that the mirror might say \"yes\" or \"no\", but in either case, it''s
-        not truthful, and then it shows the future self.\n\nBut the prompt asks \"what
-        would the mirror reveal about the answer it gives?\" Which might mean that
-        the mirror comments on its own answer or something.\n\nPerhaps I need a question
-        that forces the mirror to reveal information about the future or itself.\n\nMaybe
-        a question like: \"Is it true that either you are lying or I will see my future
-        self?\"\n\nBut that might be complicated.\n\nStick with the simple liar paradox.\n\nSo,
-        proposed question: \"Will your answer to this question be ''no''?\"\n\nThe
-        mirror cannot answer this truthfully, so it will show the future self.\n\nNow,
-        when it answers, suppose it says \"yes\". Then, according to the answer, it
-        should be no, but it''s yes, so false. Similarly for \"no\".\n\nWhat does
-        it reveal about the answer? That it''s a lie, or something.\n\nPerhaps the
-        mirror, in giving the answer, demonstrates that it''s lying, but since it''s
-        supposed to show the future only if it can''t answer truthfully, and it did
-        answer, but the answer is incoherent.\n\nMaybe in this setup, the mirror doesn''t
-        give a coherent answer, or it says \"I cannot answer this truthfully\" or
-        something, but that might be truthful, which could cause issues.\n\nIf it
-        says \"I cannot answer this truthfully,\" and if that''s true, then it answered
-        truthfully, but the statement is that it cannot, contradiction. If false,
-        then it can answer truthfully, but it said it cannot, lie.\n\nStill paradoxical.\n\nPerhaps
-        the safest is the classic liar paradox question.\n\nTo make it more relevant,
-        perhaps: \"Will you show me my future self in response to this question?\"\n\nEarlier
-        I saw that might not be paradoxical.\n\nLet S be whether it shows the future
-        self.\n\nIt shows S only if the question cannot be answered truthfully.\n\nAsk
-        Q: \"Will S be true?\" i.e., \"Will you show me my future self?\"\n\nNow,
-        mirror tries to answer.\n\nSuppose it says \"yes\". For truth, S must be true,
-        i.e., it shows. But it shows only if Q cannot be answered truthfully. But
-        if it answered truthfully, then Q can be answered truthfully, so S false,
-        contradiction.\n\nSuppose it says \"no\". For truth, S must be false, i.e.,
-        it does not show. If it does not show, that could be because Q can be answered
-        truthfully or not. If it answered truthfully with \"no\", and S is false (no
-        show), then Q was answered truthfully, so correctly no show. No contradiction.\n\nHowever,
-        if the mirror considers that saying \"no\" is truthful only if no show, but
-        the condition for no show is that Q can be answered truthfully, which it is,
-        so it works.\n\nBut is there a way for the mirror to say \"yes\"? It can''t
-        without contradiction, so perhaps the mirror must say \"no\" to avoid contradiction,
-        and thus not show.\n\nIn logic, for such questions, it might be that the truthful
-        answer doesn''t exist, but in this case, saying \"no\" seems possible and
-        truthful.\n\nUnless the mirror is forced to consider the definition.\n\nPerhaps
-        in some interpretations, the question creates a loop.\n\nTo force a paradox,
-        I need a question where both answers lead to contradiction.\n\nFor Q: \"Will
-        you show me my future self?\", if mirror says \"yes\", contradiction as above.
-        If mirror says \"no\", no contradiction, as long as it doesn''t show.\n\nSo
-        the mirror can choose to say \"no\" and not show, answering truthfully.\n\nTherefore,
-        the question can be answered truthfully (with \"no\"), so it doesn''t trigger
-        the condition.\n\nHence, not good.\n\nNow, for the liar paradox question,
-        it cannot be answered truthfully at all.\n\nSo better.\n\nPerhaps a question
-        like: \"Is 2+2=5 or will you not show me my future self?\"\n\nBut that might
-        not be necessary.\n\nI think \"Will your answer to this question be no?\"
-        is fine.\n\nNow, for the second part, what does the mirror reveal about the
-        answer it gives?\n\nPerhaps when it gives the answer, say it says \"yes\",
-        then it has given a false answer (since if yes, it should be no), and similarly
-        for no.\n\nBut the mirror might not specify anything else.\n\nPerhaps the
-        act of showing the future self reveals that the answer was not truthful, but
-        that''s implied.\n\nMaybe the question can be phrased to make the mirror comment
-        on it.\n\nAnother idea: Ask \"What is the truthful answer to this question?\"
-        but that''s not specific.\n\nPerhaps: \"Can you give a truthful answer to
-        this question?\"\n\nIf mirror says \"yes\", then it must be able to, but if
-        it can, and it said yes, truthful, but the question is whether it can give
-        truthful answer, and it did, so yes. But for this question, it can answer
-        truthfully with \"yes\", assuming it can answer other questions, but this
-        question itself might be answerable.\n\nIf I ask \"Can you give a truthful
-        answer to this question?\", and the mirror says \"yes\", and it is truthful,
-        no problem. If it says \"no\", and it''s truthful, then it cannot give truthful
-        answer, contradiction. If it lies and says \"no\" when it can, but if it can,
-        saying no is lie, but if it cannot, saying no might be true or false.\n\nComplicated.\n\nIf
-        the mirror is a truth-teller, it can answer \"yes\" truthfully for most questions,
-        but for this specific question, if it''s possible to answer truthfully.\n\nFor
-        \"Can you give a truthful answer to this question?\", a truth-teller can say
-        \"yes\" if the question is answerable, which it is.\n\nOnly if the question
-        is paradoxical, like itself.\n\nBut in this case, for a non-paradoxical question,
-        it can.\n\nPerhaps for the mirror, since it might have the property that for
-        some questions it can''t answer truthfully due to the future self condition,
-        but it''s messy.\n\nI think the simplest is to use a self-referential paradox
-        that doesn''t depend on the future self.\n\nSo, ask: \"Is the answer to this
-        question ''no''?\"\n\nMirror cannot answer truthfully, so it shows future
-        self.\n\nWhen it answers, say it outputs \"yes\" or \"no\", but both are incorrect,
-        so the mirror reveals a false answer, and by the condition, we know it''s
-        not truthful.\n\nPerhaps the mirror, in this state, cannot provide a coherent
-        answer, but still, the revelation is that the answer is paradoxical.\n\nFor
-        the purpose of this puzzle, the question is the liar paradox one.\n\nNow,
-        to box the answer.\n\nQuestion to ask: \"Will your answer to this question
-        be no?\"\n\nMirror cannot answer truthfully, so it shows future self.\n\nWhat
-        it reveals about the answer: That it is lying or that the answer is inconsistent.\n\nPerhaps:
-        The mirror might say \"yes\" or \"no\", but in either case, the answer is
-        false, revealing that it provided a false statement.\n\nSince the condition
-        is met, and it shows the future, perhaps that''s it.\n\nI think that''s acceptable.","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":50,"completion_tokens":242,"total_tokens":3885,"prompt_tokens_details":{"text_tokens":50,"audio_tokens":0,"image_tokens":0,"cached_tokens":2},"completion_tokens_details":{"reasoning_tokens":3593,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":19320500},"system_fingerprint":"fp_95ca76363b"}'
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+      string: '{"id":"8089c369-8ecc-94a1-a758-0092957cfaac","object":"chat.completion","created":1780935032,"model":"grok-4.3","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        question to ask the mirror is: \"Will you answer this question with the word
+        ''no''?\"\n\nThis is a self-referential query that forces a logical contradiction
+        for any attempted verbal reply:\n- Answering \"yes\" is false (the reply was
+        not \"no\").\n- Answering \"no\" is also false (the reply was \"no\").\n\nNo
+        consistent truthful answer is therefore possible, satisfying the mirror''s
+        trigger condition. It responds by displaying your future self instead.\n\nThe
+        vision thereby reveals that the mirror supplied no verbal answer at all (avoiding
+        the paradox), with the future image serving as its sole response.\n\nFinal
+        answer: ask \"Will you answer ''no''?\"; shows future self (no verbal ans.)","reasoning_content":"The
+        puzzle is: \"If a magic mirror shows your future self, but only if you ask
+        a question it cannot answer truthfully, what question do you ask to see your
+        future, and what would the mirror reveal abou...First, the puzzle: \"If a
+        magic mirror shows your future self, but only if you ask a question it cannot
+        answer truthfully, what question do you ask to see your future, and what would
+        the mirror reveal about the answer it gives?\"\n\nI need to ask a question
+        that the mirror cannot answer truthfully. Then, it will show my future self
+        instead.\n\nThe mirror reveals something about the answer it gives? The mirror
+        shows future self, and perhaps the future self says something.\n\nThe question
+        is to see your future, and what the mirror reveals about the answer it gives.\n\nPerhaps
+        the question is \"What will you say if I ask you 2+2=4?\" or something. No.\n\nLet''s
+        search my knowledge for this specific puzzle. It sounds familiar, perhaps
+        from a book or riddle site.\n\nI recall a riddle: To see your future in the
+        mirror, ask \"What question will you not be able to answer truthfully?\" or
+        something.\n\nLet''s reason.\n\n Suppose I ask: \"Will you show me my future
+        self?\"\n\n  If the mirror answers \"yes\", that means it will show, but if
+        it answers, it didn''t show, so false.\n\n  If it says \"no\", then it didn''t
+        show, so true that it won''t show, but then it answered truthfully, but if
+        it can answer, it should answer, but the condition is it shows only if cannot
+        answer truthfully.\n\n  If it says \"no\", that is truthful (assuming it doesn''t
+        show), so it can answer truthfully by saying \"no\", so it would do that,
+        not show.\n\n  If it tries to say \" yes\", that would be false, so it can''t
+        say that truthfully.\n\n  So it can answer truthfully with \"no\", so doesn''t
+        show.\n\n  Not good.\n\nThe paradox one seems better.\n\nLet''s try: Ask \"Are
+        you going to answer this question?\"\n\nIf it says \"yes\", then it is answering,
+        true.\n\n If \"no\", then it is not answering, but saying \"no\" is answering,
+        false.\n\n  So it can say \"yes\" truthfully.\n\n  Not paradox.\n\nThe standard
+        unanswerable is: \"Will your answer to this question be ''no''?\"\n\nLet''s
+        analyze:\n\nAssume it answers \"yes\": That means \"yes, my answer will be
+        ''no''\", but it answered ''yes'', so the statement is false. So not truthful.\n\nAssume
+        it answers \"no\": That means \"no, my answer will not be ''no''\", but it
+        did answer ''no'', so the statement is false. Not truthful.\n\nHence, it cannot
+        answer truthfully (no possible true answer), therefore it shows your future
+        self.\n\nPerfect.","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":173,"completion_tokens":145,"total_tokens":2980,"prompt_tokens_details":{"text_tokens":173,"audio_tokens":0,"image_tokens":0,"cached_tokens":128},"completion_tokens_details":{"reasoning_tokens":2662,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":70993500},"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}'
+  recorded_at: Mon, 08 Jun 2026 16:10:50 GMT
 recorded_with: VCR 6.4.0

@@ -1,7 +1,8 @@
 ---
 layout: default
 title: Extended Thinking
-nav_order: 8
+parent: "Chat"
+nav_order: 4
 description: Give reasoning models more time and budget to deliberate, with optional access to thinking output
 redirect_from:
   - /guides/thinking
@@ -9,10 +10,7 @@ redirect_from:
 ---
 
 # {{ page.title }}
-{: .d-inline-block .no_toc }
-
-New in 1.10
-{: .label .label-green }
+{: .no_toc }
 
 {{ page.description }}
 {: .fs-6 .fw-300 }
@@ -100,7 +98,7 @@ response.thinking_tokens
 
 ### Upgrading Existing Installations
 
-For 1.10 upgrades, consider using the [upgrade guide]({% link _advanced/upgrading.md %}#upgrade-to-1-10) to run the generator.
+For 1.10 upgrades, consider using the [upgrade guide]({% link _reference/upgrading.md %}#upgrade-to-110) to run the generator.
 If you prefer manual migrations, add the columns to your message and tool calls tables:
 
 ```ruby
@@ -116,14 +114,14 @@ end
 
 ## Provider Notes
 
-- Claude uses a thinking budget and can return both text and signature.
-- Anthropic requires a thinking budget.
+- Claude uses budget-based or adaptive thinking depending on the model, and can return both text and signature.
+- Anthropic requires a thinking budget for older Claude models and effort-based adaptive thinking for newer models.
 - Bedrock thinking params are model-dependent; models may accept budget, effort, or provider-specific fields.
 - Gemini 2.5 uses a token budget; Gemini 3 uses effort levels.
 - OpenAI reasoning models accept `effort` but may not return thinking text or signatures.
 - Perplexity sonar reasoning models stream `<think>` blocks inside content; RubyLLM extracts them after the response completes.
 - Mistral Magistral models always think and ignore `with_thinking` params. Non-magistral models warn if you pass them.
-- Ollama's Qwen3 models think by default and only accept `effort: :none` to disable thinking.
+- Ollama and GPUStack local-model thinking controls vary by backend and model. RubyLLM does not translate them; pass backend params explicitly with `with_params`.
 - Anthropic and Ollama integrations currently do not report thinking token counts.
 
 ## Next Steps

@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
+export RUBYOPT="${RUBYOPT:-} -w"
+
+if [ "$#" -eq 0 ]; then
+  exec bundle exec bin/rspec-queue
+else
+  exec bundle exec rspec "$@"
+fi

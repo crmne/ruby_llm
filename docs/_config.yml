@@ -1,5 +1,5 @@
 title: RubyLLM
-description: One beautiful API for ChatGPT, Claude, Gemini, and more. Chat, images, embeddings, tools.
+description: Ruby's AI agent framework. One delightful API for OpenAI, Anthropic, Gemini, Bedrock, and every major provider. Agents, chat, RAG, multimodal, Rails.
 url: https://rubyllm.com
 baseurl: /
 lang: en-US
@@ -26,13 +26,13 @@ collections:
 just_the_docs:
   collections:
     getting_started:
-      name: Getting Started
+      name: Start Here
       nav_fold: false
     core_features:
       name: Core Features
       nav_fold: false
     advanced:
-      name: Advanced
+      name: Building Real Apps
       nav_fold: false
     reference:
       name: Reference
@@ -149,8 +149,8 @@ ai_visible_content:
     alternate_names:
       - ruby_llm
       - Ruby LLM
-    description: one consistent Ruby API for chat, image generation, embeddings, transcription, moderation, tools, agents, structured output, streaming, and Rails integration across OpenAI, Anthropic, Gemini, Bedrock, DeepSeek, Mistral, Ollama, OpenRouter, Perplexity, GPUStack, xAI, and OpenAI-compatible providers.
-    image: /assets/images/logotype.jpg
+    description: one consistent Ruby framework for chat, image generation, embeddings, speech generation, transcription, moderation, tools, agents, structured output, streaming, and Rails integration across OpenAI, Anthropic, Gemini, Bedrock, DeepSeek, Mistral, Ollama, OpenRouter, Perplexity, GPUStack, xAI, and OpenAI-compatible providers.
+    image: /assets/images/logotype.svg
     same_as:
       - https://github.com/crmne/ruby_llm
       - https://rubygems.org/gems/ruby_llm
@@ -198,7 +198,7 @@ ai_visible_content:
   llms_txt:
     enabled: true
     title: RubyLLM Documentation
-    description: Developer documentation for RubyLLM, a Ruby library for building AI applications with chat, agents, tools, embeddings, image generation, audio transcription, moderation, streaming, and Rails integration.
+    description: Developer documentation for RubyLLM, a Ruby library for building AI applications with chat, agents, tools, embeddings, image generation, speech generation, audio transcription, moderation, streaming, and Rails integration.
     include_full_text: true
     sections:
       - heading: Canonical Resources
@@ -208,7 +208,7 @@ ai_visible_content:
           - RubyGems package: https://rubygems.org/gems/ruby_llm
       - heading: Primary Topics
         content: |
-          RubyLLM covers provider-agnostic AI application development in Ruby, including OpenAI, Anthropic, Gemini, Bedrock, DeepSeek, Mistral, Ollama, OpenRouter, Perplexity, GPUStack, xAI, OpenAI-compatible APIs, agents, tools, structured output, embeddings, image generation, audio transcription, moderation, streaming, Rails integration, async workloads, model registry usage, and upgrade guidance.
+          RubyLLM covers provider-agnostic AI application development in Ruby, including OpenAI, Anthropic, Gemini, Bedrock, DeepSeek, Mistral, Ollama, OpenRouter, Perplexity, GPUStack, xAI, OpenAI-compatible APIs, agents, tools, structured output, embeddings, image generation, speech generation, audio transcription, moderation, streaming, Rails integration, async workloads, model registry usage, and upgrade guidance.
   linking:
     enable_entity_links: false
     apply_to_metadata: false
@@ -242,7 +242,7 @@ og_image:
     - advanced
     - reference
   image:
-    path: "assets/images/logotype.jpg"
+    path: "assets/images/logotype.svg"
     width: 290
     height: 100
   domain: "rubyllm.com"
@@ -271,6 +271,7 @@ models:
   default_chat: "gpt-5-nano"
   default_embedding: "text-embedding-3-small"
   default_image: "gpt-image-1.5"
+  default_speech: "gpt-4o-mini-tts"
 
   # OpenAI models
   openai_latest: "gpt-5.4"
@@ -279,6 +280,7 @@ models:
   openai_tools: "gpt-5.4"
   openai_mini: "gpt-5-mini"
   openai_audio: "gpt-4o-audio-preview"
+  openai_speech: "gpt-4o-mini-tts"
   openai_legacy: "gpt-3.5-turbo" # schema unsupported
   openai_standard: "gpt-5.4"
 
@@ -302,6 +304,10 @@ models:
   image_openai: "gpt-image-1.5"
   image_dalle: "dall-e-3"
   image_google: "imagen-3.0-generate-002"
+
+  # Speech generation models
+  speech_openai: "gpt-4o-mini-tts"
+  speech_google: "gemini-2.5-flash-preview-tts"
 
   # Local/Other models
   local_llama: "llama-3"

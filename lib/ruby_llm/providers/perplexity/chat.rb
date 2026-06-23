@@ -11,15 +11,8 @@ module RubyLLM
           role.to_s
         end
 
-        def format_messages(messages)
-          messages.map do |msg|
-            {
-              role: format_role(msg.role),
-              content: Perplexity::Media.format_content(msg.content),
-              tool_calls: OpenAI::Tools.format_tool_calls(msg.tool_calls),
-              tool_call_id: msg.tool_call_id
-            }.compact.merge(OpenAI::Chat.format_thinking(msg))
-          end
+        def format_content(content)
+          Perplexity::Media.format_content(content)
         end
       end
     end

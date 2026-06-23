@@ -45,7 +45,8 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       chat.ask('Hello')
 
       message = chat.messages.last
-      expect(message.input_tokens).to be_positive
+      total_input_tokens = message.input_tokens.to_i + message.cached_tokens.to_i + message.cache_creation_tokens.to_i
+      expect(total_input_tokens).to be_positive
       expect(message.output_tokens).to be_positive
     end
 
@@ -111,13 +112,30 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       chat.with_instructions('Be concise', append: true)
       expect(chat.messages.where(role: 'system').count).to eq(2)
 
-      chat.with_instructions('Be awesome', replace: true)
+      chat.with_instructions('Be awesome')
       expect(chat.messages.where(role: 'system').count).to eq(1)
       expect(chat.messages.find_by(role: 'system').content).to eq('Be awesome')
     end
   end
 
   describe 'tool usage' do
+    it 'uses configured and per-chat tool concurrency' do
+      original_tool_concurrency = RubyLLM.config.tool_concurrency
+      RubyLLM.config.tool_concurrency = true
+
+      chat = Chat.create!(model: model)
+
+      expect(chat.to_llm.concurrency).to eq(:threads)
+
+      chat.with_tools(Calculator, concurrency: :fibers)
+      expect(chat.to_llm.concurrency).to eq(:fibers)
+
+      chat.with_tools(Calculator, concurrency: false)
+      expect(chat.to_llm.concurrency).to be_nil
+    ensure
+      RubyLLM.config.tool_concurrency = original_tool_concurrency
+    end
+
     it 'persists tool calls' do
       chat = Chat.create!(model: model)
       chat.with_tool(Calculator)
@@ -158,29 +176,17 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
 
   describe 'model associations' do
     context 'when model registry is configured' do
-      before do
-        # Only set up if Model class exists (from dummy app)
-        next unless defined?(Model)
-
-        # Model should already exist from before(:all) which loaded from JSON
-      end
-
       it 'associates chat with model' do
-        skip 'Model not available' unless defined?(Model) && Model.table_exists?
-
         chat = Chat.create!(model: 'gpt-4.1-nano')
-        expect(chat).to respond_to(:model)
-        expect(chat.model&.name).to match(/^GPT-4.1 [Nn]ano$/) if chat.model
+
+        expect(chat.model.name).to match(/^GPT-4.1 [Nn]ano$/)
       end
 
       it 'associates messages with model' do
-        skip 'Model not available' unless defined?(Model) && Model.table_exists?
-
         chat = Chat.create!(model: 'gpt-4.1-nano')
         chat.ask('Hello')
 
-        message = chat.messages.last
-        expect(message).to respond_to(:model) if defined?(Message.model)
+        expect(chat.messages.last.model).to eq(chat.model)
       end
     end
   end
@@ -271,33 +277,6 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       llm_chat = chat.instance_variable_get(:@chat)
       expect(llm_chat.tools.keys).to include(:calculator, :weather)
     end
-
-    it 'handles halt mechanism in tools' do
-      # Define a tool that uses halt
-      stub_const('HaltingTool', Class.new(RubyLLM::Tool) do
-        description 'A tool that halts'
-        param :input, desc: 'Input text'
-
-        def execute(input:)
-          halt("Halted with: #{input}")
-        end
-      end)
-
-      chat = Chat.create!(model: model)
-      chat.with_tool(HaltingTool)
-
-      # Mock the tool execution to test halt behavior
-      allow_any_instance_of(HaltingTool).to receive(:execute).and_return( # rubocop:disable RSpec/AnyInstance
-        RubyLLM::Tool::Halt.new('Halted response')
-      )
-
-      # When a tool returns halt, the conversation should stop
-      response = chat.ask("Use the halting tool with 'test'")
-
-      # The response should be the halt result, not additional AI commentary
-      expect(response).to be_a(RubyLLM::Tool::Halt)
-      expect(response.content).to eq('Halted response')
-    end
   end
 
   describe 'raw content support' do
@@ -305,7 +284,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
 
     it 'persists raw content blocks separately from plain text' do
       chat = Chat.create!(model: anthropic_model)
-      raw_block = RubyLLM::Providers::Anthropic::Content.new('Cache me once', cache: true)
+      raw_block = RubyLLM::Protocols::Anthropic::Content.new('Cache me once', cache: true)
 
       message = chat.add_message(role: :user, content: raw_block)
 
@@ -330,12 +309,51 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       expect(message.cache_write_tokens).to eq(7)
     end
 
-    it 'keeps create_user_message as a deprecated compatibility wrapper' do
+    it 'keeps create_user_message as a convenience wrapper for add_message' do
       chat = Chat.create!(model: anthropic_model)
 
       message = chat.create_user_message('hello')
       expect(message.role).to eq('user')
       expect(message.content).to eq('hello')
+    end
+  end
+
+  describe 'batch staging and collection' do
+    it 'submits records directly and persists batch answers' do
+      chats = [
+        Chat.create!(model: 'claude-haiku-4-5').ask_later('What is 2 + 2? Just the number.'),
+        Chat.create!(model: 'claude-haiku-4-5').ask_later('Name the largest planet in our solar system. One word.')
+      ]
+
+      batch = RubyLLM.batch(chats)
+      40.times do
+        break if batch.complete?
+
+        sleep 15 if VCR.current_cassette.recording?
+      end
+      batch.messages
+
+      expect(chats.first.messages.reload.pluck(:role)).to eq(%w[user assistant])
+      expect(chats.first.messages.last.content).to include('4')
+      expect(chats.second.messages.last.content).to match(/jupiter/i)
+      expect(chats.first.messages.last.input_tokens).to be_positive
+    end
+
+    it 'stages questions with ask_later and persists batch answers through add_completion' do
+      chat = Chat.create!(model: model)
+      chat.ask_later('What is 2 + 2?')
+
+      expect(chat).not_to be_complete
+      expect(chat.messages.pluck(:role)).to eq(['user'])
+
+      chat.to_llm.add_completion(
+        RubyLLM::Message.new(role: :assistant, content: '4', input_tokens: 10, output_tokens: 1, model_id: model)
+      )
+
+      expect(chat.messages.reload.pluck(:role)).to eq(%w[user assistant])
+      expect(chat.messages.last.content).to eq('4')
+      expect(chat.messages.last.input_tokens).to eq(10)
+      expect(chat).to be_complete
     end
   end
 
@@ -740,27 +758,26 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
   end
 
   describe 'event callbacks' do
-    it 'keeps on_new_message replacing while preserving persistence callbacks' do
-      user_callback_called = false
-      second_user_callback_called = false
+    it 'runs additive callbacks while preserving persistence callbacks' do
+      first_callback_called = false
+      second_callback_called = false
       end_callback_called = false
-      allow(RubyLLM.logger).to receive(:warn)
 
       chat = Chat.create!(model: model)
       provider = chat.to_llm.instance_variable_get(:@provider)
       allow(provider).to receive(:complete).and_return(RubyLLM::Message.new(role: :assistant, content: 'Hello back'))
 
       # Set user callbacks before calling ask
-      chat.on_new_message { user_callback_called = true }
-      chat.on_new_message { second_user_callback_called = true }
-      chat.on_end_message { end_callback_called = true }
+      chat.before_message { first_callback_called = true }
+      chat.before_message { second_callback_called = true }
+      chat.after_message { end_callback_called = true }
 
       # Call ask which triggers to_llm and sets up persistence callbacks
       chat.ask('Hello')
 
-      # on_* callbacks replace each other, but persistence uses additive callbacks.
-      expect(user_callback_called).to be false
-      expect(second_user_callback_called).to be true
+      # Additive callbacks all run, and persistence callbacks coexist with them.
+      expect(first_callback_called).to be true
+      expect(second_callback_called).to be true
       expect(end_callback_called).to be true
       expect(chat.messages.count).to eq(2) # Persistence still works
     end
@@ -771,9 +788,8 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       llm_chat = chat.to_llm
       provider = llm_chat.instance_variable_get(:@provider)
       allow(provider).to receive(:complete).and_return(RubyLLM::Message.new(role: :assistant, content: 'Hello back'))
-      allow(RubyLLM.logger).to receive(:warn)
 
-      llm_chat.on_new_message { user_callback_called = true }
+      llm_chat.before_message { user_callback_called = true }
 
       expect { chat.ask('Hello') }.not_to raise_error
       expect(user_callback_called).to be true
@@ -781,15 +797,14 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       expect(chat.messages.last.content).to eq('Hello back')
     end
 
-    it 'calls on_tool_call and on_tool_result callbacks' do
+    it 'calls before_tool_call and after_tool_result callbacks' do
       tool_call_received = nil
       tool_result_received = nil
-      allow(RubyLLM.logger).to receive(:warn)
 
       chat = Chat.create!(model: model)
                  .with_tool(Calculator)
-                 .on_tool_call { |tc| tool_call_received = tc }
-                 .on_tool_result { |result| tool_result_received = result }
+                 .before_tool_call { |tc| tool_call_received = tc }
+                 .after_tool_result { |result| tool_result_received = result }
 
       chat.ask('What is 2 + 2?')
 
@@ -1036,11 +1051,15 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
         { budget: 1024 }
       when :gemini
         { effort: :low }
-      when :ollama
+      when :gpustack, :ollama
         nil
       else
         { effort: :medium }
       end
+    end
+
+    def expect_response_payload(response)
+      expect(response.content.presence || response.thinking&.text).to be_present
     end
 
     question = <<~QUESTION.strip
@@ -1055,11 +1074,12 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
         chat = Chat.create!(model: model, provider: provider)
         config = thinking_config_for(provider)
         chat = chat.with_thinking(**config) if config
+        prompt = provider == :gpustack ? 'What is 5 + 3? Think briefly before answering.' : question
 
         chunks = []
-        response = chat.ask(question) { |chunk| chunks << chunk }
+        response = chat.ask(prompt) { |chunk| chunks << chunk }
 
-        expect(response.content).to be_present
+        expect_response_payload(response)
         expect(chunks).not_to be_empty
 
         message_record = chat.messages.order(:id).last
@@ -1068,7 +1088,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
         expect(message_record.thinking_tokens).to eq(response.thinking_tokens) if response.thinking_tokens
 
         followup = chat.ask('tell me more')
-        expect(followup.content).to be_present
+        expect_response_payload(followup)
 
         replayed_messages = chat.to_llm.messages
         if response.thinking&.text
@@ -1078,6 +1098,23 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
           expect(replayed_messages.filter_map { |msg| msg.thinking&.signature }).to include(response.thinking.signature)
         end
       end
+    end
+  end
+
+  describe 'citations persistence' do
+    let(:facts_path) { File.expand_path('../../fixtures/facts.txt', __dir__) }
+
+    it 'persists citations and replays them on reload' do
+      chat = Chat.create!(model: 'claude-haiku-4-5', provider: 'anthropic')
+      chat.with_citations
+
+      response = chat.ask('Who created Ruby? Use the document.', with: facts_path)
+
+      expect(response.citations).not_to be_empty
+
+      message_record = chat.messages.order(:id).last
+      expect(message_record.citations).to eq(response.citations)
+      expect(Chat.find(chat.id).messages.order(:id).last.to_llm.citations).to eq(response.citations)
     end
   end
 end

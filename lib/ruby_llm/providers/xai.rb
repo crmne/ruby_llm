@@ -3,12 +3,12 @@
 module RubyLLM
   module Providers
     # xAI API integration
-    class XAI < OpenAI
-      include XAI::Chat
-      include XAI::Models
+    class XAI < Provider
+      protocol :chat_completions, ChatCompletions, batches: XAI::ChatCompletions::Batches
+      files XAI::Files
 
       def api_base
-        'https://api.x.ai/v1'
+        @config.xai_api_base || 'https://api.x.ai/v1'
       end
 
       def headers
@@ -20,7 +20,7 @@ module RubyLLM
 
       class << self
         def configuration_options
-          %i[xai_api_key]
+          %i[xai_api_key xai_api_base]
         end
 
         def configuration_requirements

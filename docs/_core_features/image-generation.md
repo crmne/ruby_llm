@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Image Generation
-nav_order: 5
+nav_order: 4
 description: Generate images from text descriptions using AI models like DALL-E 3 and Imagen
 redirect_from:
   - /guides/image-generation
@@ -38,7 +38,6 @@ After reading this guide, you will know:
 The simplest way to generate an image is using the global `RubyLLM.paint` method:
 
 ```ruby
-# Generate an image using the default image model
 image = RubyLLM.paint("A photorealistic image of a red panda coding Ruby on a laptop")
 
 # For models returning a URL:
@@ -65,10 +64,6 @@ puts "Model Used: #{image.model_id}"
 The `paint` method abstracts the differences between provider APIs.
 
 ## Token Usage and Costs
-{: .d-inline-block }
-
-v1.15+
-{: .label .label-green }
 
 When providers return image token usage, images expose the same cost shape as chats and messages:
 
@@ -86,10 +81,6 @@ image.cost.total
 Image costs use provider usage data plus pricing from the model registry. For models that report separate text and image input token details, RubyLLM applies the right pricing bucket to each part and returns the combined value as `image.cost.input`.
 
 ## Editing Existing Images
-{: .d-inline-block }
-
-v1.15+
-{: .label .label-green }
 
 Some models, such as OpenAI's GPT Image models, can edit an existing image instead of generating from scratch. Use `with:` to pass one or more source images, and `mask:` when you want to constrain which parts of the image may change.
 
@@ -130,13 +121,11 @@ image = RubyLLM.paint(
 By default, RubyLLM uses the model specified in `config.default_image_model`, but you can specify a different one.
 
 ```ruby
-# Explicitly use GPT-Image-1
 image_dalle = RubyLLM.paint(
   "Impressionist painting of a Parisian cafe",
   model: "{{ site.models.image_openai }}"
 )
 
-# Use Google's Imagen 3
 image_imagen = RubyLLM.paint(
   "Cyberpunk city street at night, raining, neon signs",
   model: "{{ site.models.image_google }}"
@@ -159,7 +148,7 @@ RubyLLM.configure do |config|
 end
 ```
 
-Refer to the [Working with Models Guide]({% link _advanced/models.md %}) and the [Available Models Guide]({% link _reference/available-models.md %}) to find image models.
+Refer to the [Working with Models Guide]({% link _reference/models.md %}) and the [Available Models Guide]({% link _reference/available-models.md %}) to find image models. See [Model Resolution]({% link _reference/model-resolution.md %}) for how a model name and provider resolve, including unlisted models.
 
 ## Image Sizes
 
@@ -201,10 +190,8 @@ The `RubyLLM::Image` object provides access to the generated image data and meta
 The `save` method works regardless of whether the image was delivered via URL or Base64. It fetches the data if necessary and writes it to the specified file path.
 
 ```ruby
-# Generate an image
 image = RubyLLM.paint("A steampunk mechanical owl")
 
-# Save the image to a local file
 begin
   saved_path = image.save("steampunk_owl.png")
   puts "Image saved to #{saved_path}"
@@ -252,7 +239,6 @@ def generate_and_attach_image(product, prompt)
 
   puts "Image attached successfully."
 
-  # Optionally save metadata
   product.update(
     image_prompt: prompt,
     image_revised_prompt: image.revised_prompt,
@@ -260,13 +246,10 @@ def generate_and_attach_image(product, prompt)
   )
 rescue RubyLLM::Error => e
   puts "Image generation failed: #{e.message}"
-  # Handle error appropriately
 rescue => e
   puts "Failed to attach image: #{e.message}"
-  # Handle attachment error
 end
 
-# Usage:
 # product = Product.find(1)
 # generate_and_attach_image(product, "A sleek, modern logo for 'RubyLLM'")
 ```

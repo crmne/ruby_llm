@@ -10,7 +10,7 @@ http_interactions:
         is the best.</file>"}]}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -25,48 +25,31 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 06 May 2026 23:53:11 GMT
+      - Mon, 08 Jun 2026 18:46:55 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
       Server:
       - cloudflare
       X-Ppl-Region:
       - us-east-1
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      - "<COOKIE>"
       Strict-Transport-Security:
       - max-age=15552000; includeSubDomains; preload
+      Cf-Cache-Status:
+      - DYNAMIC
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"8a174e07-8c77-447d-a100-8f91ea273710","model":"sonar","created":1778111591,"usage":{"prompt_tokens":26,"completion_tokens":109,"total_tokens":135,"search_context_size":"low","cost":{"input_tokens_cost":0.00003,"output_tokens_cost":0.00011,"request_cost":0.005,"total_cost":0.00513}},"citations":["https://www.scaler.com/topics/ruby-file/","https://betterstack.com/community/guides/scaling-ruby/files-in-ruby/","https://tjay.dev/howto-working-efficiently-with-large-files-in-ruby/","https://ruby-doc.org/core-2.5.5/File.html"],"search_results":[{"title":"Read
-        & Write Files in Ruby - Scaler Topics","url":"https://www.scaler.com/topics/ruby-file/","date":"2023-07-18","last_updated":"2026-02-13","snippet":"This
-        article will explore various methods and techniques to perform file input/output
-        (I/O) operations in Ruby.","source":"web"},{"title":"Working With Files in
-        Ruby: A Complete Guide - Better Stack","url":"https://betterstack.com/community/guides/scaling-ruby/files-in-ruby/","date":"2025-08-27","last_updated":"2026-04-25","snippet":"This
-        guide covers essential file operations in Ruby through practical examples,
-        from basic file reading and writing to directory traversal, ...","source":"web"},{"title":"HowTo:
-        Working efficiently with large files in Ruby","url":"https://tjay.dev/howto-working-efficiently-with-large-files-in-ruby/","date":"2019-09-02","last_updated":"2025-09-17","snippet":"Readlines
-        method which reads the entire file''s content, splits it line by line and
-        returns an Array of Strings where one element is one line from the file.","source":"web"},{"title":"Class:
-        File (Ruby 2.5.5)","url":"https://ruby-doc.org/core-2.5.5/File.html","date":"2021-12-06","last_updated":"2026-03-28","snippet":"A
-        File is an abstraction of any file object accessible by the program and is
-        closely associated with class IO . File includes the methods of module FileTest
-        ...","source":"web"}],"object":"chat.completion","choices":[{"index":0,"message":{"role":"assistant","content":"The
-        file `ruby.txt` contains the following text:\n\n```\nRuby is the best.\n```\n\nThis
-        is a simple plain text file with a single line of content. In Ruby, you could
-        read it like this:\n\n```ruby\ncontent = File.read(''ruby.txt'')\nputs content  #
-        Output: Ruby is the best.\n```\n\nOr using a block for auto-closing:\n\n```ruby\nFile.open(''ruby.txt'',
-        ''r'') do |file|\n  puts file.read  # Output: Ruby is the best.\nend\n```"},"delta":{"role":"assistant","content":""},"finish_reason":"stop"}]}'
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+      string: !binary |-
+        eyJpZCI6IjVhMGQ1NWUxLTNhYmYtNDdhZS05MjdiLWFhMjgzOGJiMjc0MSIsIm1vZGVsIjoic29uYXIiLCJjcmVhdGVkIjoxNzgwOTQ0NDE1LCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjoyNiwiY29tcGxldGlvbl90b2tlbnMiOjE0LCJ0b3RhbF90b2tlbnMiOjQwLCJzZWFyY2hfY29udGV4dF9zaXplIjoibG93IiwiY29zdCI6eyJpbnB1dF90b2tlbnNfY29zdCI6MC4wMDAwMywib3V0cHV0X3Rva2Vuc19jb3N0IjowLjAwMDAxLCJyZXF1ZXN0X2Nvc3QiOjAuMDA1LCJ0b3RhbF9jb3N0IjowLjAwNTA0fX0sImNpdGF0aW9ucyI6WyJodHRwOi8vbWlra2VyLmdpdGh1Yi5pby8yMDEzLzEwLzMwL2dldC10aGUtdHJ1ZS1taW1lLXR5cGUtb2YtYS1maWxlLWluLXJ1YnkuaHRtbCIsImh0dHBzOi8vZ2l0aHViLmNvbS9yYWlscy9tYXJjZWwiLCJodHRwczovL3d3dy5yYWlsc2Nhcm1hLmNvbS9ibG9nL2hvdy10by1yZWFkLWFuZC13cml0ZS1maWxlcy1pbi1ydWJ5LXdpdGgtZXhhbXBsZXMvIiwiaHR0cHM6Ly9kb2NzLnJ1YnktbGFuZy5vcmcvZW4vMy40L0ZpbGUuaHRtbCIsImh0dHBzOi8vcnVieS1kb2Mub3JnL2NvcmUtMi41LjUvRmlsZS5odG1sIiwiaHR0cHM6Ly93d3cueW91dHViZS5jb20vd2F0Y2g/dj1XNUMxUEtPRE9nVSIsImh0dHBzOi8vZm9ydW0udXBjYXNlLmNvbS90L3Byb3Blcmx5LWRpYWdub3NpbmctdGhlLXNvdXJjZS1vZi1maWxlLW1pbWUtdHlwZS1wcm9ibGVtcy1pbnNpZGUtcmFpbHMvODg1Il0sInNlYXJjaF9yZXN1bHRzIjpbeyJ0aXRsZSI6IkdldCB0aGUgdHJ1ZSBtaW1lIHR5cGUgb2YgYSBmaWxlIGluIFJ1YnkiLCJ1cmwiOiJodHRwOi8vbWlra2VyLmdpdGh1Yi5pby8yMDEzLzEwLzMwL2dldC10aGUtdHJ1ZS1taW1lLXR5cGUtb2YtYS1maWxlLWluLXJ1YnkuaHRtbCIsImRhdGUiOiIyMDEzLTEwLTMwIiwibGFzdF91cGRhdGVkIjoiMjAyNS0wMS0wNCIsInNuaXBwZXQiOiJZb3UgY2FuIGdldCB0aGUgdHJ1ZSBtaW1lIHR5cGUgYnkgdXNpbmcgdGhlIHNoZWxsIGNvbW1hbmQgZmlsZS4gdHJ1ZV9taW1lX3R5cGUgPSBgZmlsZSAtLW1pbWUgLWIgbXA0LXJlbmFtZWQtdG8ubXAzYC5jaG9tcCAjID0+IHZpZGVvL21wNDsgY2hhcnNldD1iaW5hcnkiLCJzb3VyY2UiOiJ3ZWIifSx7InRpdGxlIjoiR2l0SHViIC0gcmFpbHMvbWFyY2VsOiBGaW5kIHRoZSBtaW1lIHR5cGUgb2YgZmlsZXMsIGV4YW1pbmluZyBmaWxlIC4uLiIsInVybCI6Imh0dHBzOi8vZ2l0aHViLmNvbS9yYWlscy9tYXJjZWwiLCJkYXRlIjoiMjAxNy0wMi0yMiIsImxhc3RfdXBkYXRlZCI6IjIwMjUtMDktMjAiLCJzbmlwcGV0IjoiTWFyY2VsIGNob29zZXMgdGhlIG1vc3QgYXBwcm9wcmlhdGUgY29udGVudCB0eXBlIGZvciBhIGZpbGUgYnkgaW5zcGVjdGluZyBpdHMgY29udGVudHMsIHRoZSBkZWNsYXJlZCBNSU1FIHR5cGUgKHBlcmhhcHMgcGFzc2VkIGFzIGEgQ29udGVudC1UeXBlIGhlYWRlciksIGFuZMKgLi4uIiwic291cmNlIjoid2ViIn0seyJ0aXRsZSI6IkhvdyBUbyBSZWFkIGFuZCBXcml0ZSBGaWxlcyBpbiBSdWJ5IChXaXRoIEV4YW1wbGVzKSAtIFJhaWxzQ2FybWEiLCJ1cmwiOiJodHRwczovL3d3dy5yYWlsc2Nhcm1hLmNvbS9ibG9nL2hvdy10by1yZWFkLWFuZC13cml0ZS1maWxlcy1pbi1ydWJ5LXdpdGgtZXhhbXBsZXMvIiwiZGF0ZSI6IjIwMjYtMDEtMDYiLCJsYXN0X3VwZGF0ZWQiOiIyMDI2LTA2LTA4Iiwic25pcHBldCI6IkxlYXJuIGhvdyB0byByZWFkIGFuZCB3cml0ZSBmaWxlcyBpbiBSdWJ5IHdpdGggY2xlYXIgZXhhbXBsZXMgY292ZXJpbmcgRmlsZS5yZWFkLCBGaWxlLndyaXRlLCBibG9ja3MsIGFuZCBiZXN0IHByYWN0aWNlcy4iLCJzb3VyY2UiOiJ3ZWIifSx7InRpdGxlIjoiY2xhc3MgRmlsZSAtIERvY3VtZW50YXRpb24gZm9yIFJ1YnkgMy40IiwidXJsIjoiaHR0cHM6Ly9kb2NzLnJ1YnktbGFuZy5vcmcvZW4vMy40L0ZpbGUuaHRtbCIsImxhc3RfdXBkYXRlZCI6IjIwMjYtMDMtMTkiLCJzbmlwcGV0IjoiY2xhc3MgRmlsZTogQSBcXEZpbGUgb2JqZWN0IGlzIGEgcmVwcmVzZW50YXRpb24gb2YgYSBmaWxlIGluIHRoZSB1bmRlcmx5aW5nIHBsYXRmb3JtLiBDbGFzcyBcXEZpbGUgZXh0ZW5kcyBtb2R1bGUgRmlsZVRlc3QsIHN1cHBvcnRpbmcgc3VjaCBzaW5nbGV0b24gbWV0aG9kc8KgLi4uIiwic291cmNlIjoid2ViIn0seyJ0aXRsZSI6IkNsYXNzOiBGaWxlIChSdWJ5IDIuNS41KSIsInVybCI6Imh0dHBzOi8vcnVieS1kb2Mub3JnL2NvcmUtMi41LjUvRmlsZS5odG1sIiwiZGF0ZSI6IjIwMjEtMTItMDYiLCJsYXN0X3VwZGF0ZWQiOiIyMDI2LTAzLTI4Iiwic25pcHBldCI6IkEgRmlsZSBpcyBhbiBhYnN0cmFjdGlvbiBvZiBhbnkgZmlsZSBvYmplY3QgYWNjZXNzaWJsZSBieSB0aGUgcHJvZ3JhbSBhbmQgaXMgY2xvc2VseSBhc3NvY2lhdGVkIHdpdGggY2xhc3MgSU8gLiBGaWxlIGluY2x1ZGVzIHRoZSBtZXRob2RzIG9mIG1vZHVsZSBGaWxlVGVzdMKgLi4uIiwic291cmNlIjoid2ViIn0seyJ0aXRsZSI6IlJlYWRpbmcgYW5kIFdyaXRpbmcgdG8gRmlsZXMgaW4gUnVieSBmb3IgQmVnaW5uZXJzIDE2IC0gWW91VHViZSIsInVybCI6Imh0dHBzOi8vd3d3LnlvdXR1YmUuY29tL3dhdGNoP3Y9VzVDMVBLT0RPZ1UiLCJkYXRlIjoiMjAyMy0xMS0xMyIsImxhc3RfdXBkYXRlZCI6IjIwMjYtMDYtMDEiLCJzbmlwcGV0IjoiSSdtIGJhY2sgZnJvbSBteSBicmVhayB3aXRoIGEgbmV3IHZpZGVvIG9uIFJlYWRpbmcgYW5kIFdyaXRpbmcgKEFuZCBBcHBlbmRpbmcpIHRvIGZpbGVzIGluIFJ1YnkgZm9yIEJlZ2lubmVycyEgQ2hlY2tvdXQgbXkgY291cnNlKHMpIGF0OsKgLi4uIiwic291cmNlIjoid2ViIn0seyJ0aXRsZSI6IlByb3Blcmx5IERpYWdub3NpbmcgdGhlIHNvdXJjZSBvZiBmaWxlIE1JTUUtdHlwZSBwcm9ibGVtcyBpbnNpZGUgLi4uIiwidXJsIjoiaHR0cHM6Ly9mb3J1bS51cGNhc2UuY29tL3QvcHJvcGVybHktZGlhZ25vc2luZy10aGUtc291cmNlLW9mLWZpbGUtbWltZS10eXBlLXByb2JsZW1zLWluc2lkZS1yYWlscy84ODUiLCJkYXRlIjoiMjAxMy0wOS0yNSIsImxhc3RfdXBkYXRlZCI6IjIwMjYtMDMtMTAiLCJzbmlwcGV0IjoiUHJvYmxlbSBJIGhhdmUgYSBsb3Qgb2YgZmlsZXMgYmVpbmcgcmVjb2duaXplZCBhcyBhcHBsaWNhdGlvbi9vY2V0LXN0cmVhbSBpbnN0ZWFkIG9mIGFwcGxpY2F0aW9uL3gtcGhvdG9zaG9wLCB0ZXh0L3J1YnkgYW5kIG1hbnkgZmlsZXMnwqAuLi4iLCJzb3VyY2UiOiJ3ZWIifV0sIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiVGhlIGZpbGUgY29udGFpbnMgdGhlIHBsYWluIHRleHQgKirigJxSdWJ5IGlzIHRoZSBiZXN0LuKAnSoqIn0sImRlbHRhIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiIn0sImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dfQ==
+  recorded_at: Mon, 08 Jun 2026 18:46:55 GMT
 - request:
     method: post
     uri: https://api.perplexity.ai/chat/completions
@@ -74,17 +57,13 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"sonar","messages":[{"role":"user","content":[{"type":"text","text":"What''s
         in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
-        is the best.</file>"}]},{"role":"assistant","content":"The file `ruby.txt`
-        contains the following text:\n\n```\nRuby is the best.\n```\n\nThis is a simple
-        plain text file with a single line of content. In Ruby, you could read it
-        like this:\n\n```ruby\ncontent = File.read(''ruby.txt'')\nputs content  #
-        Output: Ruby is the best.\n```\n\nOr using a block for auto-closing:\n\n```ruby\nFile.open(''ruby.txt'',
-        ''r'') do |file|\n  puts file.read  # Output: Ruby is the best.\nend\n```"},{"role":"user","content":[{"type":"text","text":"and
+        is the best.</file>"}]},{"role":"assistant","content":"The file contains the
+        plain text **“Ruby is the best.”**"},{"role":"user","content":[{"type":"text","text":"and
         in this one?"},{"type":"text","text":"<file name=''ruby.xml'' mime_type=''application/xml''><truism>Ruby
         is the best</truism></file>"}]}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -99,36 +78,29 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 06 May 2026 23:53:15 GMT
+      - Mon, 08 Jun 2026 18:46:57 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
       Server:
       - cloudflare
       X-Ppl-Region:
       - us-east-1
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
-      - "<COOKIE>"
       Strict-Transport-Security:
       - max-age=15552000; includeSubDomains; preload
+      Cf-Cache-Status:
+      - DYNAMIC
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"a92e9312-2b5d-4071-b847-e60dce733b65","model":"sonar","created":1778111595,"usage":{"prompt_tokens":165,"completion_tokens":165,"total_tokens":330,"search_context_size":"low","cost":{"input_tokens_cost":0.00016,"output_tokens_cost":0.00016,"request_cost":0.005,"total_cost":0.00533}},"citations":[],"search_results":[],"object":"chat.completion","choices":[{"index":0,"message":{"role":"assistant","content":"The
-        file `ruby.xml` contains the following XML content:\n\n```xml\n<truism>Ruby
-        is the best</truism>\n```\n\nThis is a minimal XML document with a single
-        root element `<truism>` wrapping the text \"Ruby is the best\". It''s valid
-        XML (application/xml MIME type).\n\nIn Ruby, you could parse it using Nokogiri
-        (a popular XML library):\n\n```ruby\nrequire ''nokogiri''\n\ndoc = Nokogiri::XML(File.read(''ruby.xml''))\nputs
-        doc.text  # Output: Ruby is the best\n```\n\nOr with the built-in REXML:\n\n```ruby\nrequire
-        ''rexml/document''\n\ndoc = REXML::Document.new(File.read(''ruby.xml''))\nputs
-        doc.root.text  # Output: Ruby is the best\n```"},"delta":{"role":"assistant","content":""},"finish_reason":"stop"}]}'
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+      string: !binary |-
+        eyJpZCI6IjcwNDEwOTA3LWQ0ZWEtNDk4ZS05YTIxLTU5YzY5MjU5MGFjZiIsIm1vZGVsIjoic29uYXIiLCJjcmVhdGVkIjoxNzgwOTQ0NDE3LCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjo3MCwiY29tcGxldGlvbl90b2tlbnMiOjI4LCJ0b3RhbF90b2tlbnMiOjk4LCJzZWFyY2hfY29udGV4dF9zaXplIjoibG93IiwiY29zdCI6eyJpbnB1dF90b2tlbnNfY29zdCI6MC4wMDAwNywib3V0cHV0X3Rva2Vuc19jb3N0IjowLjAwMDAzLCJyZXF1ZXN0X2Nvc3QiOjAuMDA1LCJ0b3RhbF9jb3N0IjowLjAwNTF9fSwiY2l0YXRpb25zIjpbImh0dHBzOi8vd3d3LnJ1YnktZm9ydW0uY29tL3QvcnVieS1hbmQteG1sLzIxMTQ1OSIsImh0dHBzOi8vd3d3LnhtbC5jb20vcHViL2EvMjAwNS8xMS8wOS9yZXhtbC1wcm9jZXNzaW5nLXhtbC1pbi1ydWJ5Lmh0bWwiLCJodHRwczovL3d3dy55b3V0dWJlLmNvbS93YXRjaD92PVlNQlQ0dHhPWld3IiwiaHR0cHM6Ly9naXRodWIuY29tL29obGVyNTUvb3giLCJodHRwczovL3d3dy41OGJpdHMuY29tL2Jsb2cvZ2V0dGluZy1zdGFydGVkLW5va29naXJpLXhtbC1ydWJ5IiwiaHR0cHM6Ly9zZWFzaWRldGVzdGluZy5jb20vMjAyNC8wMi8wNi9hZHJlc3NpbmctYS1ub2RlLWluLXhtbC8iLCJodHRwczovL25va29naXJpLm9yZy9yZG9jL05va29naXJpL1hNTC9Eb2N1bWVudCJdLCJzZWFyY2hfcmVzdWx0cyI6W3sidGl0bGUiOiJSdWJ5IGFuZCBYTUwiLCJ1cmwiOiJodHRwczovL3d3dy5ydWJ5LWZvcnVtLmNvbS90L3J1YnktYW5kLXhtbC8yMTE0NTkiLCJkYXRlIjoiMjAxMS0wOS0wNCIsImxhc3RfdXBkYXRlZCI6IjIwMjYtMDMtMTMiLCJzbmlwcGV0IjoiSGkgRXZlcnlvbmUsIEkgYW0gbmV3IHRvIFJ1YnkgYW5kIHRyeWluZyB0byB1c2UgaXQgdG8gcGFyc2UgWE1MIGZpbGVzIHNvIHRoYXQgSSBjYW4gdmVyaWZ5IHRoYXQgbmFtZS92YWx1ZSBwYWlycyBpbiB0d28gKG9yIG1vcmUpIFhNTCBmaWxlcyAuLi4iLCJzb3VyY2UiOiJ3ZWIifSx7InRpdGxlIjoiUkVYTUw6IFByb2Nlc3NpbmcgWE1MIGluIFJ1YnkiLCJ1cmwiOiJodHRwczovL3d3dy54bWwuY29tL3B1Yi9hLzIwMDUvMTEvMDkvcmV4bWwtcHJvY2Vzc2luZy14bWwtaW4tcnVieS5odG1sIiwiZGF0ZSI6IjIwMDUtMTEtMDkiLCJsYXN0X3VwZGF0ZWQiOiIyMDI2LTA1LTEyIiwic25pcHBldCI6IlJFWE1MIChSdWJ5IEVsZWN0cmljIFhNTCkgaXMgdGhlIFhNTCBwcm9jZXNzb3Igb2YgY2hvaWNlIGZvciBSdWJ5IHByb2dyYW1tZXJzLiBJdCBjb21lcyBidW5kbGVkIHdpdGggdGhlIHN0YW5kYXJkIFJ1YnkgZGlzdHJpYnV0aW9uLiBJdCdzIGZhc3QsIHdyaXR0ZW4gaW4gUnVieS4iLCJzb3VyY2UiOiJ3ZWIifSx7InRpdGxlIjoiUnVieSBOb2tvZ2lyaSBDcmVhdGUgWE1MIEZpbGUgLSBZb3VUdWJlIiwidXJsIjoiaHR0cHM6Ly93d3cueW91dHViZS5jb20vd2F0Y2g/dj1ZTUJUNHR4T1pXdyIsImRhdGUiOiIyMDE2LTA4LTEzIiwibGFzdF91cGRhdGVkIjoiMjAyNS0xMC0yOSIsInNuaXBwZXQiOiJDb21tZW50cyDCtyBSdWJ5IE5va29naXJpIEdldCBBbGwgSHlwZXJsaW5rcyDCtyBIb3cgdG8gVXNlIEZ1bmN0aW9uYWwgUHJvZ3JhbW1pbmcgaW4gUnVieSB3aXRoIFhNTCDCtyBSdWJ5IFByb2dyYW1taW5nIHwgSW4gT25lIFZpZGVvIMK3IFJ1YnlDb25mIDIwMTkgLSAuLi4iLCJzb3VyY2UiOiJ3ZWIifSx7InRpdGxlIjoib2hsZXI1NS9veDogUnVieSBPcHRpbWl6ZWQgWE1MIFBhcnNlciAtIEdpdEh1YiIsInVybCI6Imh0dHBzOi8vZ2l0aHViLmNvbS9vaGxlcjU1L294IiwiZGF0ZSI6IjIwMTEtMDItMDkiLCJsYXN0X3VwZGF0ZWQiOiIyMDI2LTA0LTE3Iiwic25pcHBldCI6Ik94IGhhbmRsZXMgWE1MIGRvY3VtZW50cyBpbiB0aHJlZSB3YXlzLiBJdCBpcyBhIGdlbmVyaWMgWE1MIHBhcnNlciBhbmQgd3JpdGVyLCBhIGZhc3QgT2JqZWN0IC8gWE1MIG1hcnNoYWxsZXIsIGFuZCBhIHN0cmVhbSBTQVggcGFyc2VyLiIsInNvdXJjZSI6IndlYiJ9LHsidGl0bGUiOiJHZXR0aW5nIFN0YXJ0ZWQgd2l0aCBOb2tvZ2lyaSBhbmQgWE1MIGluIFJ1YnkgLSA1OGJpdHMiLCJ1cmwiOiJodHRwczovL3d3dy41OGJpdHMuY29tL2Jsb2cvZ2V0dGluZy1zdGFydGVkLW5va29naXJpLXhtbC1ydWJ5IiwiZGF0ZSI6IjIwMTItMDYtMTMiLCJsYXN0X3VwZGF0ZWQiOiIyMDI2LTA1LTEzIiwic25pcHBldCI6IkhlcmUncyBhIHNob3J0IHBvc3Qgb24gZ2V0dGluZyBzdGFydGVkIHdpdGggTm9rb2dpcmkgLSBhIFJ1YnkgZ2VtIHRoYXQgd3JhcHMgbGlieG1sLiBJJ20gd3JpdGluZyB0aGlzIGJlY2F1c2Ugd2VsbCwgLi4uIiwic291cmNlIjoid2ViIn0seyJ0aXRsZSI6IkZpbmQgYSBub2RlJ3MgcGF0aCBpbiBhbiBYTUwgZG9jdW1lbnQgdXNpbmcgUnVieSwgTm9rb2dpcmkgYW5kIFByeSIsInVybCI6Imh0dHBzOi8vc2Vhc2lkZXRlc3RpbmcuY29tLzIwMjQvMDIvMDYvYWRyZXNzaW5nLWEtbm9kZS1pbi14bWwvIiwiZGF0ZSI6IjIwMjQtMDItMDYiLCJsYXN0X3VwZGF0ZWQiOiIyMDI2LTAzLTE0Iiwic25pcHBldCI6Ikkgd2FudGVkIHRvIGFkZHJlc3MgYSBnaXZlbiBYTUwgbm9kZSBvZiB3aGljaCBJIGtuZXcgdGhlIG5hbWUgd2l0aCBzb21ldGhpbmcgdGhhdCByZXNlbWJsZWQgYSBwYXRoIGluIGEgZm9sZGVyIHN0cnVjdHVyZS4iLCJzb3VyY2UiOiJ3ZWIifSx7InRpdGxlIjoiY2xhc3MgTm9rb2dpcmk6OlhNTDo6RG9jdW1lbnQgLSBSRG9jIERvY3VtZW50YXRpb24iLCJ1cmwiOiJodHRwczovL25va29naXJpLm9yZy9yZG9jL05va29naXJpL1hNTC9Eb2N1bWVudCIsImRhdGUiOiIyMDA5LTA0LTIzIiwibGFzdF91cGRhdGVkIjoiMjAyNS0wOC0zMSIsInNuaXBwZXQiOiJjbGFzcyBOb2tvZ2lyaTo6WE1MOjpEb2N1bWVudDogRG9jdW1lbnQgaXMgdGhlIG1haW4gZW50cnkgcG9pbnQgZm9yIGRlYWxpbmcgd2l0aCBcXFhNTCBkb2N1bWVudHMuIFRoZSBEb2N1bWVudCBpcyBjcmVhdGVkIGJ5IHBhcnNpbmcgXFxYTUwgY29udGVudCBmcm9tIGEgLi4uIiwic291cmNlIjoid2ViIn1dLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6Ikl0IGNvbnRhaW5zIHRoZSBYTUwgZWxlbWVudCAqKmA8dHJ1aXNtPmAqKiB3aXRoIHRoZSB0ZXh0ICoq4oCcUnVieSBpcyB0aGUgYmVzdOKAnSoqLlsyXVs3XSJ9LCJkZWx0YSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IiJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XX0=
+  recorded_at: Mon, 08 Jun 2026 18:46:57 GMT
 recorded_with: VCR 6.4.0

@@ -372,6 +372,14 @@ RSpec.describe RubyLLM::Chat do # rubocop:disable RSpec/MultipleMemoizedHelpers
       expect(content.attachments.first.mime_type).to eq('text/plain')
     end
 
+    it 'preserves existing attachment instances' do
+      require 'stringio'
+      attachment = RubyLLM::Attachment.new(StringIO.new('Test content'), filename: 'test.txt')
+      content = RubyLLM::Content.new('Check this', [attachment])
+
+      expect(content.attachments).to contain_exactly(attachment)
+    end
+
     it 'ignores blank attachment placeholders in arrays' do
       tempfile = Tempfile.new(['ruby', '.png'])
       tempfile.binmode

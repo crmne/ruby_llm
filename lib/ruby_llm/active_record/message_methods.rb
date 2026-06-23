@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'active_support/concern'
+require 'ruby_llm/active_record/attachment_helpers'
 require 'ruby_llm/active_record/payload_helpers'
 
 module RubyLLM
@@ -9,9 +10,18 @@ module RubyLLM
     module MessageMethods
       extend ActiveSupport::Concern
       include PayloadHelpers
+      include AttachmentHelpers
 
-      class_methods do
-        attr_reader :chat_class, :tool_call_class, :chat_foreign_key, :tool_call_foreign_key
+      def chat_association
+        send(chat_association_name)
+      end
+
+      def tool_calls_association
+        send(tool_calls_association_name)
+      end
+
+      def model_association
+        send(model_association_name)
       end
 
       def to_llm
@@ -19,6 +29,7 @@ module RubyLLM
           role: role.to_sym,
           content: extract_content,
           thinking: thinking,
+          citations: citations,
           tokens: tokens,
           tool_calls: extract_tool_calls,
           tool_call_id: extract_tool_call_id,
@@ -28,18 +39,22 @@ module RubyLLM
 
       def thinking
         RubyLLM::Thinking.build(
-          text: thinking_text_value,
-          signature: thinking_signature_value
+          text: optional_column(:thinking_text),
+          signature: optional_column(:thinking_signature)
         )
+      end
+
+      def citations
+        Array(optional_column(:citations)).map { |citation| RubyLLM::Citation.from_h(citation) }
       end
 
       def tokens
         RubyLLM::Tokens.build(
           input: input_tokens,
           output: output_tokens,
-          cached: cached_value,
-          cache_creation: cache_creation_value,
-          thinking: thinking_tokens_value
+          cached: optional_column(:cached_tokens),
+          cache_creation: optional_column(:cache_creation_tokens),
+          thinking: optional_column(:thinking_tokens)
         )
       end
 
@@ -48,11 +63,11 @@ module RubyLLM
       end
 
       def cache_read_tokens
-        cached_value
+        optional_column(:cached_tokens)
       end
 
       def cache_write_tokens
-        cache_creation_value
+        optional_column(:cache_creation_tokens)
       end
 
       def to_partial_path
@@ -73,24 +88,8 @@ module RubyLLM
 
       private
 
-      def thinking_text_value
-        has_attribute?(:thinking_text) ? self[:thinking_text] : nil
-      end
-
-      def thinking_signature_value
-        has_attribute?(:thinking_signature) ? self[:thinking_signature] : nil
-      end
-
-      def cached_value
-        has_attribute?(:cached_tokens) ? self[:cached_tokens] : nil
-      end
-
-      def cache_creation_value
-        has_attribute?(:cache_creation_tokens) ? self[:cache_creation_tokens] : nil
-      end
-
-      def thinking_tokens_value
-        has_attribute?(:thinking_tokens) ? self[:thinking_tokens] : nil
+      def optional_column(name)
+        self[name] if has_attribute?(name)
       end
 
       def extract_tool_calls
@@ -115,32 +114,15 @@ module RubyLLM
         return RubyLLM::Content::Raw.new(content_raw) if has_attribute?(:content_raw) && content_raw.present?
 
         content_value = content
-        content_value = content_value.to_plain_text if content_value.respond_to?(:to_plain_text)
+        content_text = plain_text_content(content_value)
+        action_text_attachments = action_text_attachment_sources(content_value)
 
-        return content_value unless respond_to?(:attachments) && attachments.attached?
+        return content_text unless content_attachments?(action_text_attachments)
 
-        RubyLLM::Content.new(content_value).tap do |content_obj|
+        RubyLLM::Content.new(content_text).tap do |content_obj|
           @_tempfiles = []
-
-          attachments.each do |attachment|
-            tempfile = download_attachment(attachment)
-            content_obj.add_attachment(tempfile, filename: attachment.filename.to_s)
-          end
+          add_content_attachments(content_obj, action_text_attachments)
         end
-      end
-
-      def download_attachment(attachment)
-        ext = File.extname(attachment.filename.to_s)
-        basename = File.basename(attachment.filename.to_s, ext)
-        tempfile = Tempfile.new([basename, ext])
-        tempfile.binmode
-
-        attachment.download { |chunk| tempfile.write(chunk) }
-
-        tempfile.flush
-        tempfile.rewind
-        @_tempfiles << tempfile
-        tempfile
       end
     end
   end

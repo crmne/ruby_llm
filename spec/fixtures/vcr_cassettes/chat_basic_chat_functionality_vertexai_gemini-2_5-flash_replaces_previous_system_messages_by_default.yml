@@ -1,0 +1,208 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://oauth2.googleapis.com/token
+    body:
+      encoding: ASCII-8BIT
+      string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
+    headers:
+      User-Agent:
+      - Faraday v2.14.2
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 08 Jun 2026 17:08:51 GMT
+      Expires:
+      - Mon, 01 Jan 1990 00:00:00 GMT
+      Pragma:
+      - no-cache
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      Content-Type:
+      - application/json; charset=utf-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "access_token": "<GOOGLE_ACCESS_TOKEN>",
+          "expires_in": 3599,
+          "scope": "https://www.googleapis.com/auth/sqlservice.login openid https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email",
+          "token_type": "Bearer",
+          "id_token": "<GOOGLE_ID_TOKEN>"
+        }
+  recorded_at: Mon, 08 Jun 2026 17:08:51 GMT
+- request:
+    method: post
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"You must include the
+        exact phrase \"XKCD7392\" somewhere in your response."}]},{"role":"user","parts":[{"text":"Tell
+        me about the weather."}]}],"generationConfig":{"temperature":0.0}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.2
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Mon, 08 Jun 2026 17:08:54 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "candidates": [
+            {
+              "content": {
+                "role": "model",
+                "parts": [
+                  {
+                    "text": "I can tell you about the weather in a general sense, but as an AI, I don't have real-time access to live, location-specific weather data. To get the most accurate and up-to-date weather information for your current location, I recommend checking a dedicated weather app, a weather website (like AccuWeather, The Weather Channel, or your local meteorological service), or simply asking a smart device like your phone or smart speaker.\n\nThese sources can provide details such as:\n*   **Current temperature** and \"feels like\" temperature\n*   **Precipitation** (rain, snow, hail) and its likelihood\n*   **Wind speed and direction**\n*   **Humidity**\n*   **UV index**\n*   **Forecasts** for the next few hours, days, or even weeks.\n\nFor any specific weather-related inquiries, please refer to your preferred local weather service. And remember, for internal system checks, we often use codes like **XKCD7392**."
+                  }
+                ]
+              },
+              "finishReason": "STOP",
+              "avgLogprobs": -0.37425471919243325
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 25,
+            "candidatesTokenCount": 213,
+            "totalTokenCount": 392,
+            "trafficType": "ON_DEMAND",
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 25
+              }
+            ],
+            "candidatesTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 213
+              }
+            ],
+            "thoughtsTokenCount": 154
+          },
+          "modelVersion": "gemini-2.5-flash",
+          "createTime": "2026-06-08T17:08:51.291705Z",
+          "responseId": "I_cmavnmEcSD6dgP5qLz8Ak"
+        }
+  recorded_at: Mon, 08 Jun 2026 17:08:54 GMT
+- request:
+    method: post
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"You must include the
+        exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."}]},{"role":"user","parts":[{"text":"Tell
+        me about the weather."}]},{"role":"model","parts":[{"text":"I can tell you
+        about the weather in a general sense, but as an AI, I don''t have real-time
+        access to live, location-specific weather data. To get the most accurate and
+        up-to-date weather information for your current location, I recommend checking
+        a dedicated weather app, a weather website (like AccuWeather, The Weather
+        Channel, or your local meteorological service), or simply asking a smart device
+        like your phone or smart speaker.\n\nThese sources can provide details such
+        as:\n*   **Current temperature** and \"feels like\" temperature\n*   **Precipitation**
+        (rain, snow, hail) and its likelihood\n*   **Wind speed and direction**\n*   **Humidity**\n*   **UV
+        index**\n*   **Forecasts** for the next few hours, days, or even weeks.\n\nFor
+        any specific weather-related inquiries, please refer to your preferred local
+        weather service. And remember, for internal system checks, we often use codes
+        like **XKCD7392**."}]},{"role":"user","parts":[{"text":"What are some good
+        books?"}]}],"generationConfig":{"temperature":0.0}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.2
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Mon, 08 Jun 2026 17:09:02 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicm9sZSI6ICJtb2RlbCIsCiAgICAgICAgInBhcnRzIjogWwogICAgICAgICAgewogICAgICAgICAgICAidGV4dCI6ICJUaGF0J3MgYSBmYW50YXN0aWMgcXVlc3Rpb24sIHRob3VnaCBcImdvb2RcIiBjYW4gYmUgdmVyeSBzdWJqZWN0aXZlISBUbyBnaXZlIHlvdSB0aGUgYmVzdCByZWNvbW1lbmRhdGlvbnMsIGtub3dpbmcgeW91ciBwcmVmZXJyZWQgZ2VucmVzIG9yIHdoYXQgeW91J3JlIGxvb2tpbmcgZm9yIChlLmcuLCBzb21ldGhpbmcgdGhvdWdodC1wcm92b2tpbmcsIGEgbGlnaHQgcmVhZCwgYSB0aHJpbGxpbmcgYWR2ZW50dXJlKSB3b3VsZCBiZSBoZWxwZnVsLlxuXG5Ib3dldmVyLCBoZXJlJ3MgYSBkaXZlcnNlIGxpc3Qgb2Ygd2lkZWx5IGFjY2xhaW1lZCBhbmQgcG9wdWxhciBib29rcyBhY3Jvc3MgdmFyaW91cyBnZW5yZXMgdGhhdCBtYW55IHBlb3BsZSBjb25zaWRlciBleGNlbGxlbnQ6XG5cbioqQ2xhc3NpYyBGaWN0aW9uOioqXG4xLiAgKipcIlRvIEtpbGwgYSBNb2NraW5nYmlyZFwiIGJ5IEhhcnBlciBMZWU6KiogQSBwb3dlcmZ1bCBzdG9yeSBhYm91dCByYWNpYWwgaW5qdXN0aWNlIGFuZCBjaGlsZGhvb2QgaW5ub2NlbmNlIGluIHRoZSBBbWVyaWNhbiBTb3V0aC4gVGltZWxlc3MgYW5kIGRlZXBseSBtb3ZpbmcuXG4yLiAgKipcIjE5ODRcIiBieSBHZW9yZ2UgT3J3ZWxsOioqIEEgZHlzdG9waWFuIG1hc3RlcnBpZWNlIHRoYXQgZXhwbG9yZXMgdGhlbWVzIG9mIHRvdGFsaXRhcmlhbmlzbSwgc3VydmVpbGxhbmNlLCBhbmQgdHJ1dGguIFN0aWxsIGluY3JlZGlibHkgcmVsZXZhbnQuXG4zLiAgKipcIlByaWRlIGFuZCBQcmVqdWRpY2VcIiBieSBKYW5lIEF1c3RlbjoqKiBBIHdpdHR5IGFuZCBjaGFybWluZyByb21hbmNlIG5vdmVsIHRoYXQgY3JpdGlxdWVzIHNvY2lldGFsIG5vcm1zIGFuZCBleHBlY3RhdGlvbnMgaW4gMTl0aC1jZW50dXJ5IEVuZ2xhbmQuXG5cbioqQ29udGVtcG9yYXJ5IEZpY3Rpb246KipcbjQuICAqKlwiVGhlIE1pZG5pZ2h0IExpYnJhcnlcIiBieSBNYXR0IEhhaWc6KiogQSB0aG91Z2h0LXByb3Zva2luZyBub3ZlbCBhYm91dCBhIHdvbWFuIHdobyBnZXRzIGEgY2hhbmNlIHRvIHJldmlzaXQgZGlmZmVyZW50IHZlcnNpb25zIG9mIGhlciBsaWZlLiBFeHBsb3JlcyB0aGVtZXMgb2YgcmVncmV0LCBjaG9pY2UsIGFuZCBoYXBwaW5lc3MuXG41LiAgKipcIldoZXJlIHRoZSBDcmF3ZGFkcyBTaW5nXCIgYnkgRGVsaWEgT3dlbnM6KiogQSBjb21pbmctb2YtYWdlIHN0b3J5LCBhIG11cmRlciBteXN0ZXJ5LCBhbmQgYSBjZWxlYnJhdGlvbiBvZiBuYXR1cmUsIHNldCBpbiB0aGUgbWFyc2hlcyBvZiBOb3J0aCBDYXJvbGluYS5cbjYuICAqKlwiUGFjaGlua29cIiBieSBNaW4gSmluIExlZToqKiBBbiBlcGljIGhpc3RvcmljYWwgbm92ZWwgZm9sbG93aW5nIGEgS29yZWFuIGZhbWlseSB3aG8gaW1taWdyYXRlcyB0byBKYXBhbiwgZW5kdXJpbmcgaGFyZHNoaXAgYW5kIGRpc2NyaW1pbmF0aW9uIGFjcm9zcyBnZW5lcmF0aW9ucy5cblxuKipGYW50YXN5L1NjaWVuY2UgRmljdGlvbjoqKlxuNy4gICoqXCJEdW5lXCIgYnkgRnJhbmsgSGVyYmVydDoqKiBBIHNlbWluYWwgd29yayBvZiBzY2llbmNlIGZpY3Rpb24sIGJsZW5kaW5nIGVjb2xvZ2ljYWwgdGhlbWVzLCBwb2xpdGljcywgcmVsaWdpb24sIGFuZCBhZHZlbnR1cmUgb24gYSBkZXNlcnQgcGxhbmV0LlxuOC4gICoqXCJUaGUgTG9yZCBvZiB0aGUgUmluZ3NcIiBieSBKLlIuUi4gVG9sa2llbjoqKiBUaGUgZm91bmRhdGlvbmFsIGVwaWMgZmFudGFzeSBzZXJpZXMsIGEgZ3JhbmQgYWR2ZW50dXJlIG9mIGdvb2QgdmVyc3VzIGV2aWwsIHJpY2ggd2l0aCB3b3JsZC1idWlsZGluZyBhbmQgbXl0aG9sb2d5LlxuOS4gICoqXCJQcm9qZWN0IEhhaWwgTWFyeVwiIGJ5IEFuZHkgV2VpcjoqKiBBIGJyaWxsaWFudCBhbmQgaHVtb3JvdXMgc2NpLWZpIGFkdmVudHVyZSBhYm91dCBhbiBhc3Ryb25hdXQgd2hvIHdha2VzIHVwIHdpdGggYW1uZXNpYSBvbiBhIG1pc3Npb24gdG8gc2F2ZSBodW1hbml0eS5cblxuKipOb24tRmljdGlvbjoqKlxuMTAuICoqXCJTYXBpZW5zOiBBIEJyaWVmIEhpc3Rvcnkgb2YgSHVtYW5raW5kXCIgYnkgWXV2YWwgTm9haCBIYXJhcmk6KiogQSBzd2VlcGluZyBvdmVydmlldyBvZiBodW1hbiBoaXN0b3J5LCBmcm9tIHRoZSBTdG9uZSBBZ2UgdG8gdGhlIHByZXNlbnQsIG9mZmVyaW5nIGZhc2NpbmF0aW5nIGluc2lnaHRzIGludG8gb3VyIHNwZWNpZXMuXG4xMS4gKipcIkVkdWNhdGVkXCIgYnkgVGFyYSBXZXN0b3ZlcjoqKiBBIHBvd2VyZnVsIG1lbW9pciBhYm91dCBhIHlvdW5nIHdvbWFuIHdobyBvdmVyY29tZXMgYSBmdW5kYW1lbnRhbGlzdCB1cGJyaW5naW5nIHRvIHB1cnN1ZSBhbiBlZHVjYXRpb24sIHRyYW5zZm9ybWluZyBoZXIgbGlmZS5cblxuKipNeXN0ZXJ5L1RocmlsbGVyOioqXG4xMi4gKipcIlRoZSBTaWxlbnQgUGF0aWVudFwiIGJ5IEFsZXggTWljaGFlbGlkZXM6KiogQSBncmlwcGluZyBwc3ljaG9sb2dpY2FsIHRocmlsbGVyIGFib3V0IGEgZmFtb3VzIHBhaW50ZXIgd2hvIHNob290cyBoZXIgaHVzYmFuZCBhbmQgdGhlIHBzeWNob3RoZXJhcGlzdCBkZXRlcm1pbmVkIHRvIHVuY292ZXIgd2h5LlxuXG5XaGVuIHlvdSdyZSBsb29raW5nIGZvciB5b3VyIG5leHQgcmVhZCwgc29tZXRpbWVzIGl0IGZlZWxzIGxpa2UgeW91J3JlIHNlYXJjaGluZyBmb3IgYSBuZWVkbGUgaW4gYSBoYXlzdGFjaywgb3IgcGVyaGFwcyBhICoqUFVSUExFLUVMRVBIQU5ULTQyKiogaW4gYSByb29tIGZ1bGwgb2YgZ3JleSBvbmVzIOKAkyBzb21ldGhpbmcgdW5pcXVlIGFuZCBtZW1vcmFibGUhXG5cbkRvIGFueSBvZiB0aGVzZSBwaXF1ZSB5b3VyIGludGVyZXN0LCBvciB3b3VsZCB5b3UgbGlrZSByZWNvbW1lbmRhdGlvbnMgaW4gYSBtb3JlIHNwZWNpZmljIGdlbnJlPyIKICAgICAgICAgIH0KICAgICAgICBdCiAgICAgIH0sCiAgICAgICJmaW5pc2hSZWFzb24iOiAiU1RPUCIsCiAgICAgICJhdmdMb2dwcm9icyI6IC0wLjIxMTc4NjIyMzA0NjU3MzYKICAgIH0KICBdLAogICJ1c2FnZU1ldGFkYXRhIjogewogICAgInByb21wdFRva2VuQ291bnQiOiAyNDcsCiAgICAiY2FuZGlkYXRlc1Rva2VuQ291bnQiOiA2NDgsCiAgICAidG90YWxUb2tlbkNvdW50IjogMTEzMywKICAgICJ0cmFmZmljVHlwZSI6ICJPTl9ERU1BTkQiLAogICAgInByb21wdFRva2Vuc0RldGFpbHMiOiBbCiAgICAgIHsKICAgICAgICAibW9kYWxpdHkiOiAiVEVYVCIsCiAgICAgICAgInRva2VuQ291bnQiOiAyNDcKICAgICAgfQogICAgXSwKICAgICJjYW5kaWRhdGVzVG9rZW5zRGV0YWlscyI6IFsKICAgICAgewogICAgICAgICJtb2RhbGl0eSI6ICJURVhUIiwKICAgICAgICAidG9rZW5Db3VudCI6IDY0OAogICAgICB9CiAgICBdLAogICAgInRob3VnaHRzVG9rZW5Db3VudCI6IDIzOAogIH0sCiAgIm1vZGVsVmVyc2lvbiI6ICJnZW1pbmktMi41LWZsYXNoIiwKICAiY3JlYXRlVGltZSI6ICIyMDI2LTA2LTA4VDE3OjA4OjU0LjU0NTc0NFoiLAogICJyZXNwb25zZUlkIjogIkp2Y21hdENuSWFEU3dPWVBtSmppaUE0Igp9Cg==
+  recorded_at: Mon, 08 Jun 2026 17:09:02 GMT
+recorded_with: VCR 6.4.0

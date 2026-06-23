@@ -1,7 +1,8 @@
 ---
 layout: default
 title: Stream Responses
-nav_order: 3
+parent: "Chat"
+nav_order: 2
 description: Learn how to display AI responses in real-time as they're generated
 redirect_from:
   - /guides/streaming
@@ -39,7 +40,6 @@ chat = RubyLLM.chat
 
 puts "Assistant:"
 chat.ask "Write a short story about a adventurous ruby gem." do |chunk|
-  # The block receives RubyLLM::Chunk objects as they arrive
   print chunk.content # Print content fragment immediately
 end
 # => (Output appears incrementally) Once upon a time, in the vast digital...
@@ -77,7 +77,6 @@ final_message = chat.ask "Write a short haiku about programming." do |chunk|
   print chunk.content
 end
 
-# The block finishes, and ask returns the complete message
 puts "\n--- Final Message ---"
 puts final_message.content
 # => Code flows like water,
@@ -112,7 +111,6 @@ class ChatStreamJob < ApplicationJob
     chat = Chat.find(chat_id) # Assuming acts_as_chat model
     full_response = ""
 
-    # Broadcast an initial placeholder
     Turbo::StreamsChannel.broadcast_replace_to(
       "chat_#{chat.id}",
       target: stream_target_id,
@@ -122,7 +120,6 @@ class ChatStreamJob < ApplicationJob
 
     chat.ask(user_message) do |chunk|
       full_response << (chunk.content || "")
-      # Broadcast updates, replacing the placeholder content
       Turbo::StreamsChannel.broadcast_replace_to(
         "chat_#{chat.id}",
         target: stream_target_id,
@@ -146,7 +143,7 @@ end
 # ChatStreamJob.perform_later(chat.id, params[:message], target_id)
 ```
 
-See the [Rails Integration Guide]({% link _advanced/rails.md %}#streaming-responses-with-hotwireturbo) for more detailed examples.
+See [Streaming with Hotwire/Turbo]({% link _advanced/rails-streaming.md %}) for more detailed examples.
 
 ### Sinatra with Server-Sent Events (SSE)
 
@@ -163,13 +160,10 @@ get '/stream_chat' do
     chat = RubyLLM.chat
     begin
       chat.ask(params[:prompt] || "Tell me a fun fact.") do |chunk|
-        # Send each content chunk as an SSE data event
         out << "data: #{chunk.content.to_json}\n\n" if chunk.content
       end
-      # Signal completion
       out << "event: complete\ndata: {}\n\n"
     rescue => e
-      # Signal error
       out << "event: error\ndata: #{ { error: e.message }.to_json }\n\n"
     ensure
       out.close
@@ -188,7 +182,6 @@ begin
   puts "Assistant:"
   chat.ask("Generate a very long response...") do |chunk|
     print chunk.content
-    # Potential error occurs here
   end
 rescue RubyLLM::Error => e
   puts "\n--- Error during streaming ---"

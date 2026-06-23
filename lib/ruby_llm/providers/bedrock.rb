@@ -2,41 +2,29 @@
 
 module RubyLLM
   module Providers
-    # AWS Bedrock Converse API integration.
+    # AWS Bedrock integration.
     class Bedrock < Provider
       include Bedrock::Auth
-      include Bedrock::Chat
-      include Bedrock::Media
       include Bedrock::Models
-      include Bedrock::Streaming
+
+      protocol :converse, Protocols::Converse, batches: Protocols::Converse::Batches
+      files Bedrock::Files
 
       def api_base
-        "https://bedrock-runtime.#{bedrock_region}.amazonaws.com"
+        @config.bedrock_api_base || "https://bedrock-runtime.#{bedrock_region}.amazonaws.com"
+      end
+
+      def control_api_base
+        @config.bedrock_api_base || "https://bedrock.#{bedrock_region}.amazonaws.com"
       end
 
       def headers
         {}
       end
 
-      # rubocop:disable Metrics/ParameterLists
-      def complete(messages, tools:, temperature:, model:, params: {}, headers: {}, schema: nil, thinking: nil,
-                   tool_prefs: nil, &)
-        normalized_params = normalize_params(params, model:)
-
-        super(
-          messages,
-          tools: tools,
-          tool_prefs: tool_prefs,
-          temperature: temperature,
-          model: model,
-          params: normalized_params,
-          headers: headers,
-          schema: schema,
-          thinking: thinking,
-          &
-        )
+      def complete(messages, model:, params: {}, **rest, &)
+        super(messages, model:, params: normalize_params(params, model:), **rest, &)
       end
-      # rubocop:enable Metrics/ParameterLists
 
       def parse_error(response)
         return if response.body.nil? || response.body.empty?
@@ -54,12 +42,47 @@ module RubyLLM
 
       class << self
         def configuration_options
-          %i[bedrock_api_key bedrock_secret_key bedrock_region bedrock_session_token]
+          %i[
+            bedrock_api_key
+            bedrock_secret_key
+            bedrock_region
+            bedrock_session_token
+            bedrock_credential_provider
+            bedrock_api_base
+            bedrock_batch_s3_uri
+            bedrock_batch_role_arn
+          ]
         end
 
         def configuration_requirements
-          %i[bedrock_api_key bedrock_secret_key bedrock_region]
+          %i[bedrock_region]
         end
+
+        def configured?(config)
+          !!(config.bedrock_region && credentials_configured?(config))
+        end
+
+        def credentials_configured?(config)
+          return credential_provider?(config) if config.bedrock_credential_provider
+
+          !!(config.bedrock_api_key && config.bedrock_secret_key)
+        end
+
+        private
+
+        def credential_provider?(config)
+          config.bedrock_credential_provider&.respond_to?(:credentials)
+        end
+      end
+
+      def ensure_configured!
+        return if configured?
+
+        missing = []
+        missing << :bedrock_region unless @config.bedrock_region
+        missing << bedrock_credentials_requirement unless self.class.credentials_configured?(@config)
+
+        raise ConfigurationError, "Missing configuration for Bedrock: #{missing.join(', ')}"
       end
 
       private
@@ -68,8 +91,12 @@ module RubyLLM
         @config.bedrock_region
       end
 
-      def sync_response(connection, payload, additional_headers = {})
-        signed_post(connection, completion_url, payload, additional_headers)
+      def bedrock_credentials_requirement
+        if @config.bedrock_credential_provider
+          'bedrock_credential_provider responding to #credentials'
+        else
+          'bedrock_credential_provider or bedrock_api_key + bedrock_secret_key'
+        end
       end
 
       def normalize_params(params, model:)
@@ -86,13 +113,7 @@ module RubyLLM
       end
 
       def model_supports_top_k?(model)
-        Bedrock::Models.reasoning_embedded?(model)
-      end
-
-      def api_payload(payload)
-        cleaned = RubyLLM::Utils.deep_symbolize_keys(RubyLLM::Utils.deep_dup(payload))
-        cleaned.delete(:tools)
-        cleaned
+        Protocols::Converse.reasoning_embedded?(model)
       end
     end
   end

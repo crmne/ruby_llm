@@ -8,7 +8,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -29,39 +29,39 @@ http_interactions:
       X-Origin-Cache:
       - HIT
       Last-Modified:
-      - Tue, 05 May 2026 02:26:38 GMT
+      - Thu, 04 Jun 2026 23:49:36 GMT
       Access-Control-Allow-Origin:
       - "*"
       Etag:
-      - W/"69f9555e-9c6"
+      - W/"6a220f10-9c6"
       Expires:
-      - Thu, 07 May 2026 00:01:24 GMT
+      - Mon, 08 Jun 2026 16:20:31 GMT
       Cache-Control:
       - max-age=600
       X-Proxy-Cache:
       - MISS
       X-Github-Request-Id:
-      - 8CA8:1519:3A7294A:3B13014:69FBD3FC
+      - 8D16:192FC2:9BCB79:9D09A2:6A26E977
       Accept-Ranges:
       - bytes
+      Age:
+      - '0'
       Date:
-      - Wed, 06 May 2026 23:53:33 GMT
+      - Mon, 08 Jun 2026 16:10:31 GMT
       Via:
       - 1.1 varnish
-      Age:
-      - '77'
       X-Served-By:
-      - cache-lis1490029-LIS
+      - cache-ber1080057-BER
       X-Cache:
-      - HIT
+      - MISS
       X-Cache-Hits:
-      - '1'
+      - '0'
       X-Timer:
-      - S1778111614.601700,VS0,VE1
+      - S1780935032.876027,VS0,VE113
       Vary:
       - Accept-Encoding
       X-Fastly-Request-Id:
-      - a25fd05998ce0bb4caa61a51352170abaa6ad7e7
+      - 14f0baaa47232c7bba6f4879ce71d6921728717c
     body:
       encoding: ASCII-8BIT
       string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
@@ -97,13 +97,13 @@ http_interactions:
         \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
         WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
         FOR A PARTICULAR\n     PURPOSE.\n"
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+  recorded_at: Mon, 08 Jun 2026 16:10:31 GMT
 - request:
     method: post
     uri: https://api.x.ai/v1/chat/completions
     body:
       encoding: UTF-8
-      string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"user","content":[{"type":"text","text":"What''s
+      string: '{"model":"grok-4.3","messages":[{"role":"user","content":[{"type":"text","text":"What''s
         in this file?"},{"type":"text","text":"<file name=''license.txt'' mime_type=''text/plain''>Ruby
         is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
         can redistribute it and/or modify it under either the terms of the\n2-clause
@@ -140,7 +140,7 @@ http_interactions:
         A PARTICULAR\n     PURPOSE.\n</file>"}]}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -155,7 +155,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 06 May 2026 23:53:36 GMT
+      - Mon, 08 Jun 2026 16:10:33 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -169,25 +169,25 @@ http_interactions:
       X-Ratelimit-Limit-Tokens:
       - '10000000'
       X-Ratelimit-Remaining-Tokens:
-      - '10000000'
+      - '9999745'
       X-Zero-Data-Retention:
       - 'false'
       X-Ratelimit-Limit-Requests:
       - '1800'
       X-Ratelimit-Remaining-Requests:
-      - '1800'
-      X-Metrics-Ttft-Ms:
-      - '155.8'
-      X-Metrics-Mean-Itl-Ms:
-      - '9.5'
-      X-Metrics-E2e-Ms:
-      - '2857.5'
+      - '1798'
       Cf-Cache-Status:
       - DYNAMIC
       X-Request-Id:
       - "<X_REQUEST_ID>"
+      X-Metrics-Ttft-Ms:
+      - '322.5'
+      X-Metrics-Mean-Itl-Ms:
+      - '4.4'
+      X-Metrics-E2e-Ms:
+      - '1519.8'
       Traceparent:
-      - 00-4f84c14640f7731b303e2b4e3a5da0e0-767dfab9000174f2-01
+      - 00-fcad666940e0e422603443acea2dbd08-59e8a38d00011e1e-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
@@ -201,6 +201,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6IjBkOTEzNGYxLTA1NDAtOWUxMi1iZWUwLTdiYzIxZmQ4OWNjMyIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3NzgxMTE2MTMsIm1vZGVsIjoiZ3Jvay00LTEtZmFzdC1ub24tcmVhc29uaW5nIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJUaGlzIGlzIHRoZSAqKlJ1YnkgTGljZW5zZSoqIChhbHNvIGtub3duIGFzIHRoZSBSdWJ5IExpY2Vuc2Ugb3IgbWF0eidzIGxpY2Vuc2UpLCBhIHBlcm1pc3NpdmUgb3Blbi1zb3VyY2UgbGljZW5zZSBmb3IgdGhlIFJ1YnkgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UsIGNvcHlyaWdodGVkIGJ5IFl1a2loaXJvIE1hdHN1bW90byAobWF0eikuXG5cbiMjIyBLZXkgUGVybWlzc2lvbnMgKGluIHBsYWluIEVuZ2xpc2gpOlxuLSAqKkZyZWUgcmVkaXN0cmlidXRpb24qKjogWW91IGNhbiBjb3B5IGFuZCBzaGFyZSB0aGUgc291cmNlIGNvZGUgdmVyYmF0aW0sIGFzIGxvbmcgYXMgeW91IGtlZXAgYWxsIG9yaWdpbmFsIGNvcHlyaWdodCBub3RpY2VzIGFuZCBkaXNjbGFpbWVycy5cbi0gKipNb2RpZmljYXRpb24gYWxsb3dlZCoqOiBZb3UgY2FuIG1vZGlmeSBpdCwgYnV0IG11c3QgZG8gKiphdCBsZWFzdCBvbmUqKiBvZjpcbiAgLSBNYWtlIG1vZHMgcHVibGljIChlLmcuLCBwb3N0IHRvIFVzZW5ldCkgb3IgbGV0IHRoZSBhdXRob3IgaW5jbHVkZSB0aGVtLlxuICAtIFVzZSBtb2RpZmllZCB2ZXJzaW9uIG9ubHkgaW50ZXJuYWxseSBpbiB5b3VyIG9yZy5cbiAgLSBOYW1lIG5vbi1zdGFuZGFyZCBiaW5hcmllcyBkaWZmZXJlbnRseSBhbmQgcG9pbnQgdG8gb3JpZ2luYWwgc291cmNlLlxuICAtIEFycmFuZ2UgZGlyZWN0bHkgd2l0aCB0aGUgYXV0aG9yLlxuLSAqKkJpbmFyeSBkaXN0cmlidXRpb24qKjogU2ltaWxhciBydWxlcyBhcHBseeKAlGluY2x1ZGUgc291cmNlIGFjY2VzcyBpbnN0cnVjdGlvbnMgb3IgdGhlIHNvdXJjZSBpdHNlbGYuXG4tICoqRW1iZWRkaW5nIE9LKio6IFlvdSBjYW4gaW5jbHVkZSBtb2RpZmllZCBwYXJ0cyBpbiBvdGhlciBzb2Z0d2FyZSAoZXZlbiBjb21tZXJjaWFsKSwgYnV0IGNoZWNrIGBMRUdBTGAgZmlsZSBmb3IgdGhpcmQtcGFydHkgZmlsZXMgd2l0aCBkaWZmZXJlbnQgdGVybXMuXG4tICoqU2NyaXB0cy9saWJyYXJpZXMqKjogR2VuZXJhdGVkIG91dHB1dHMgYXJlbid0IGF1dG9tYXRpY2FsbHkgY292ZXJlZCBieSB0aGlzIGxpY2Vuc2UuXG4tICoqTm8gd2FycmFudHkqKjogUHJvdmlkZWQgXCJBUyBJU1wiIHdpdGggbm8gZ3VhcmFudGVlcy5cblxuSXQncyBjb21wYXRpYmxlIHdpdGggYm90aCB0aGUgMi1jbGF1c2UgQlNEIGxpY2Vuc2UgKEJTREwpIGFuZCB0aGlzIGN1c3RvbSB0ZXh0LiBUaGlzIGxpY2Vuc2UgaGFzIGVuYWJsZWQgUnVieSdzIHdpZGVzcHJlYWQgdXNlIGluIHByb2plY3RzIGxpa2UgUnVieSBvbiBSYWlscy4gRm9yIGZ1bGwgbGVnYWwgZGV0YWlscywgYWx3YXlzIGNvbnN1bHQgYSBsYXd5ZXIsIGJ1dCBpdCdzIGRlc2lnbmVkIHRvIGJlIHZlcnkgZGV2ZWxvcGVyLWZyaWVuZGx5LiIsInJlZnVzYWwiOm51bGx9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6NjkyLCJjb21wbGV0aW9uX3Rva2VucyI6Mjc4LCJ0b3RhbF90b2tlbnMiOjk3MCwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7InRleHRfdG9rZW5zIjo2OTIsImF1ZGlvX3Rva2VucyI6MCwiaW1hZ2VfdG9rZW5zIjowLCJjYWNoZWRfdG9rZW5zIjoxNjF9LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjAsImF1ZGlvX3Rva2VucyI6MCwiYWNjZXB0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjAsInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowfSwibnVtX3NvdXJjZXNfdXNlZCI6MCwiY29zdF9pbl91c2RfdGlja3MiOjI1MzI1MDB9LCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9iOWZmOWI4MWIzIn0=
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+        eyJpZCI6Ijk2MDFkYmE2LTFmNGUtOTMyZC04YWYyLWE5YjJlMWQ4YTg4MSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3ODA5MzUwMzIsIm1vZGVsIjoiZ3Jvay00LjMiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IlRoaXMgaXMgdGhlICoqUnVieSBMaWNlbnNlKiogKGBsaWNlbnNlLnR4dGApIOKAlCB0aGUgb2ZmaWNpYWwgbGljZW5zaW5nIHRlcm1zIGZvciB0aGUgUnVieSBwcm9ncmFtbWluZyBsYW5ndWFnZSwgd3JpdHRlbiBieSBZdWtpaGlybyBNYXRzdW1vdG8uXG5cbiMjIyBLZXkgcG9pbnRzOlxuXG4tIFJ1YnkgaXMgKipmcmVlIHNvZnR3YXJlKiogYW5kIGNhbiBiZSByZWRpc3RyaWJ1dGVkIG9yIG1vZGlmaWVkLlxuLSBJdCBhbGxvd3MgZHVhbCBsaWNlbnNpbmc6IGVpdGhlciB1bmRlciB0aGUgKioyLWNsYXVzZSBCU0QgTGljZW5zZSoqIG9yIHRoZSBjb25kaXRpb25zIGxpc3RlZCBpbiB0aGlzIGZpbGUuXG4tIFRoZSB0ZXJtcyBjb3ZlcjpcbiAgLSBNYWtpbmcgdmVyYmF0aW0gY29waWVzXG4gIC0gTW9kaWZ5aW5nIHRoZSBzb2Z0d2FyZSAod2l0aCBjb25kaXRpb25zIGxpa2UgbWFraW5nIGNoYW5nZXMgcHVibGljLCB1c2luZyBpdCBpbnRlcm5hbGx5LCBvciByZW5hbWluZyBiaW5hcmllcylcbiAgLSBEaXN0cmlidXRpbmcgYmluYXJpZXMgb3Igb2JqZWN0IGNvZGVcbiAgLSBFbWJlZGRpbmcgcGFydHMgb2YgUnVieSBpbiBvdGhlciBzb2Z0d2FyZVxuICAtIFNjcmlwdHMgYW5kIGdlbmVyYXRlZCBmaWxlcyBhcmUgKipub3QqKiBjb3ZlcmVkIGJ5IFJ1YnnigJlzIGNvcHlyaWdodFxuLSBJdCBpbmNsdWRlcyB0aGUgc3RhbmRhcmQgKipcIkFTIElTXCIgZGlzY2xhaW1lcioqIHdpdGggbm8gd2FycmFudGllcy5cblxuVGhpcyBpcyB0aGUgbGljZW5zZSB0aGF0IGdvdmVybnMgdGhlIGRpc3RyaWJ1dGlvbiBhbmQgdXNlIG9mIHRoZSBSdWJ5IGludGVycHJldGVyIGFuZCBzdGFuZGFyZCBsaWJyYXJ5LiIsInJlYXNvbmluZ19jb250ZW50IjoiVGhlIHVzZXIgaXMgYXNraW5nIFwiV2hhdCdzIGluIHRoaXMgZmlsZT9cIiBhbmQgaGFzIHByb3ZpZGVkIHRoZSBjb250ZW50IG9mIGEgZmlsZSBuYW1lZCAnbGljZW5zZS50eHQnIHdpdGggbWltZV90eXBlICd0ZXh0L3BsYWluJy5cbiIsInJlZnVzYWwiOm51bGx9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6NjU0LCJjb21wbGV0aW9uX3Rva2VucyI6MTcxLCJ0b3RhbF90b2tlbnMiOjg5NSwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7InRleHRfdG9rZW5zIjo2NTQsImF1ZGlvX3Rva2VucyI6MCwiaW1hZ2VfdG9rZW5zIjowLCJjYWNoZWRfdG9rZW5zIjoxMjh9LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjcwLCJhdWRpb190b2tlbnMiOjAsImFjY2VwdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowLCJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6MH0sIm51bV9zb3VyY2VzX3VzZWQiOjAsImNvc3RfaW5fdXNkX3RpY2tzIjoxMjg1NjAwMH0sInN5c3RlbV9maW5nZXJwcmludCI6ImZwX2ViM2MwMDNmYzY2YzE0ZWQiLCJzZXJ2aWNlX3RpZXIiOiJkZWZhdWx0In0=
+  recorded_at: Mon, 08 Jun 2026 16:10:33 GMT
 recorded_with: VCR 6.4.0

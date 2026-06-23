@@ -1,9 +1,41 @@
 # frozen_string_literal: true
 
+require 'base64'
+
 module RubyLLM
   # Represents a generated image from an AI model.
   class Image
     attr_reader :url, :data, :mime_type, :revised_prompt, :model_id, :usage
+
+    def self.paint(prompt, # rubocop:disable Metrics/ParameterLists
+                   model: nil,
+                   provider: nil,
+                   assume_model_exists: false,
+                   size: '1024x1024',
+                   context: nil,
+                   with: nil,
+                   mask: nil,
+                   params: {})
+      config = context&.config || RubyLLM.config
+      model ||= config.default_image_model
+      model, provider_instance = Models.resolve(model, provider: provider, assume_exists: assume_model_exists,
+                                                       config: config)
+      payload = {
+        provider: provider_instance.slug,
+        provider_class: provider_instance.class.display_name,
+        model: model.id,
+        model_info: model,
+        prompt: prompt,
+        size: size
+      }
+
+      RubyLLM.instrument('image.ruby_llm', payload, config: config) do |event|
+        result = provider_instance.paint(prompt, model: model.id, size:, with:, mask:, params:)
+        event[:result] = result
+        event[:response_model] = result.model_id
+        result
+      end
+    end
 
     def initialize(url: nil, data: nil, mime_type: nil, revised_prompt: nil, model_id: nil, usage: {}) # rubocop:disable Metrics/ParameterLists
       @url = url
@@ -32,28 +64,10 @@ module RubyLLM
       path
     end
 
-    def self.paint(prompt, # rubocop:disable Metrics/ParameterLists
-                   model: nil,
-                   provider: nil,
-                   assume_model_exists: false,
-                   size: '1024x1024',
-                   context: nil,
-                   with: nil,
-                   mask: nil,
-                   params: {})
-      config = context&.config || RubyLLM.config
-      model ||= config.default_image_model
-      model, provider_instance = Models.resolve(model, provider: provider, assume_exists: assume_model_exists,
-                                                       config: config)
-      model_id = model.id
-
-      provider_instance.paint(prompt, model: model_id, size:, with:, mask:, params:)
-    end
-
     def tokens
       @tokens ||= Tokens.build(
-        input: usage_value('input_tokens'),
-        output: usage_value('output_tokens')
+        input: usage['input_tokens'],
+        output: usage['output_tokens']
       )
     end
 
@@ -72,11 +86,7 @@ module RubyLLM
     private
 
     def input_tokens_details
-      usage_value('input_tokens_details')
-    end
-
-    def usage_value(key)
-      usage[key] || usage[key.to_sym]
+      usage['input_tokens_details']
     end
   end
 end
