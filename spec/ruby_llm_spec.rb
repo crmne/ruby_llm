@@ -8,14 +8,15 @@ RSpec.describe RubyLLM do
     let(:log_file) { double }
     let(:log_level) { double }
 
-    before do
+    around do |example|
+      original_config = described_class.instance_variable_get(:@config)
+      original_logger = described_class.instance_variable_get(:@logger)
       described_class.instance_variable_set(:@config, nil)
       described_class.instance_variable_set(:@logger, nil)
-    end
-
-    after do
-      described_class.instance_variable_set(:@config, nil)
-      described_class.instance_variable_set(:@logger, nil)
+      example.run
+    ensure
+      described_class.instance_variable_set(:@config, original_config)
+      described_class.instance_variable_set(:@logger, original_logger)
     end
 
     context 'with configuration options' do
