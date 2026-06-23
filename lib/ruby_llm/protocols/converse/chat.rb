@@ -61,6 +61,7 @@ module RubyLLM
 
           Message.new(
             role: :assistant,
+            model_id: data['modelId'] || @model&.id,
             content: parse_text_content(content_blocks),
             thinking: Thinking.build(text: thinking_text, signature: thinking_signature),
             tool_calls: parse_tool_calls(content_blocks),
@@ -69,7 +70,6 @@ module RubyLLM
             cached_tokens: usage['cacheReadInputTokens'],
             cache_creation_tokens: usage['cacheWriteInputTokens'],
             thinking_tokens: usage['reasoningTokens'],
-            model_id: data['modelId'],
             raw: raw
           )
         end
