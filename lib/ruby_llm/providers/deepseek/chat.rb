@@ -11,13 +11,6 @@ module RubyLLM
           role.to_s
         end
 
-        # `deepseek-reasoner` rejects multi-turn requests where any prior
-        # assistant message is missing `reasoning_content`, with:
-        #   "The `reasoning_content` in the thinking mode must be passed
-        #    back to the API."
-        # The OpenAI default omits the key when no thinking text was
-        # captured (e.g. a short turn that only emitted tool calls), so
-        # always emit it here — empty string when absent.
         def format_thinking(msg)
           return {} unless msg.role == :assistant
 
