@@ -191,6 +191,7 @@ module RubyLLM
             cached_tokens: extract_cached_tokens(data),
             cache_creation_tokens: extract_cache_creation_tokens(data),
             thinking_tokens: thinking_tokens,
+            finish_reason: data['stop_reason'],
             model_id: data['model'],
             raw: raw
           )

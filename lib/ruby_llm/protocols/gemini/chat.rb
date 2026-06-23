@@ -138,6 +138,7 @@ module RubyLLM
             output_tokens: calculate_output_tokens(data),
             cached_tokens: data.dig('usageMetadata', 'cachedContentTokenCount'),
             thinking_tokens: data.dig('usageMetadata', 'thoughtsTokenCount'),
+            finish_reason: data.dig('candidates', 0, 'finishReason'),
             model_id: data['modelVersion'] || @model&.id,
             raw: raw
           )

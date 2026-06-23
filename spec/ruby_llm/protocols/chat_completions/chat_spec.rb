@@ -33,6 +33,36 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Chat do
       expect(message.cache_creation_tokens).to eq(0)
     end
 
+    it 'preserves raw finish reasons' do
+      response_body = {
+        'model' => 'gpt-4.1-nano',
+        'choices' => [
+          {
+            'finish_reason' => 'tool_calls',
+            'message' => {
+              'role' => 'assistant',
+              'content' => '',
+              'tool_calls' => [
+                {
+                  'id' => 'call_1',
+                  'type' => 'function',
+                  'function' => { 'name' => 'weather', 'arguments' => '{}' }
+                }
+              ]
+            }
+          }
+        ]
+      }
+
+      response = instance_double(Faraday::Response, body: response_body)
+      allow(described_class).to receive(:parse_tool_calls).and_return(
+        'call_1' => RubyLLM::ToolCall.new(id: 'call_1', name: 'weather', arguments: {})
+      )
+      message = described_class.parse_completion_response(response)
+
+      expect(message.finish_reason).to eq('tool_calls')
+    end
+
     it 'normalizes DeepSeek cache hit and miss usage fields' do
       response_body = {
         'model' => 'deepseek-chat',
@@ -159,6 +189,14 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Chat do
 
       expect(formatted.dig(0, :content, 1, :type)).to eq('file')
       expect(formatted.dig(0, :content, 1, :file, :filename)).to eq('proposal.pdf')
+    end
+
+    it 'does not send finish_reason back to the provider' do
+      message = RubyLLM::Message.new(role: :assistant, content: 'Done', finish_reason: 'MAX_TOKENS')
+
+      formatted = RubyLLM::Protocols::ChatCompletions.allocate.send(:format_messages, [message])
+
+      expect(formatted.first).not_to have_key(:finish_reason)
     end
 
     it 'keeps non-PDF documents disabled for OpenAI chat completions' do

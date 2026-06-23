@@ -61,6 +61,16 @@ RSpec.describe RubyLLM::Generators::InstallGenerator, :generator, type: :generat
       end
     end
 
+    it 'adds finish_reason to message storage' do
+      within_test_app(app_path) do
+        migration = Dir.glob('db/migrate/*create_messages.rb').first
+        expect(migration).to be_present
+
+        content = File.read(migration)
+        expect(content).to include('t.string :finish_reason')
+      end
+    end
+
     it 'keeps create_models migration schema-only' do
       within_test_app(app_path) do
         migration = Dir.glob('db/migrate/*create_models.rb').first

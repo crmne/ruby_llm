@@ -65,5 +65,15 @@ RSpec.describe RubyLLM::StreamAccumulator do
       expect(message.citations.first.text).to eq('cited')
       expect(message.citations.first.url).to eq('https://example.com')
     end
+
+    it 'preserves the final non-nil finish reason' do
+      accumulator = described_class.new
+
+      accumulator.add(RubyLLM::Chunk.new(role: :assistant, content: 'Hello'))
+      accumulator.add(RubyLLM::Chunk.new(role: :assistant, content: nil, finish_reason: 'tool_use'))
+
+      message = accumulator.to_message(nil)
+      expect(message.finish_reason).to eq('tool_use')
+    end
   end
 end

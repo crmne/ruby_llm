@@ -150,8 +150,13 @@ module RubyLLM
             output_tokens: extract_output_tokens(metadata_usage, usage),
             cached_tokens: extract_cached_tokens(metadata_usage, usage),
             cache_creation_tokens: extract_cache_creation_tokens(metadata_usage, usage),
-            thinking_tokens: extract_reasoning_tokens(metadata_usage, usage)
+            thinking_tokens: extract_reasoning_tokens(metadata_usage, usage),
+            finish_reason: extract_finish_reason(event)
           )
+        end
+
+        def extract_finish_reason(event)
+          event.dig('messageStop', 'stopReason') || event['stopReason']
         end
 
         def event_usage(event)

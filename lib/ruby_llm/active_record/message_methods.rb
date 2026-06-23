@@ -33,6 +33,7 @@ module RubyLLM
           tokens: tokens,
           tool_calls: extract_tool_calls,
           tool_call_id: extract_tool_call_id,
+          finish_reason: optional_column(:finish_reason),
           model_id: model_association&.model_id
         )
       end

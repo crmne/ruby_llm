@@ -4,6 +4,10 @@ class AddRubyLlmV20Columns < ActiveRecord::Migration<%= migration_version %>
       add_column :<%= message_table_name %>, :citations, :json
     end
 
+    unless column_exists?(:<%= message_table_name %>, :finish_reason)
+      add_column :<%= message_table_name %>, :finish_reason, :string
+    end
+
     reversible do |dir|
       dir.up do
         next if table_exists?(:<%= batch_table_name %>)

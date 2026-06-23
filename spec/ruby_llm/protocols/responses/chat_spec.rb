@@ -54,7 +54,7 @@ RSpec.describe RubyLLM::Protocols::Responses::Chat do
     it 'replays assistant text as output_text content' do
       messages = [
         RubyLLM::Message.new(role: :user, content: 'hi'),
-        RubyLLM::Message.new(role: :assistant, content: 'Hello!')
+        RubyLLM::Message.new(role: :assistant, content: 'Hello!', finish_reason: 'MAX_TOKENS')
       ]
 
       payload = render_payload(messages)
@@ -102,7 +102,10 @@ RSpec.describe RubyLLM::Protocols::Responses::Chat do
 
   describe '#parse_completion_response' do
     def response_with(output, usage: {})
-      instance_double(Faraday::Response, body: { 'model' => 'gpt-5-nano', 'output' => output, 'usage' => usage })
+      instance_double(
+        Faraday::Response,
+        body: { 'model' => 'gpt-5-nano', 'output' => output, 'usage' => usage, 'status' => 'completed' }
+      )
     end
 
     it 'joins output_text parts into content' do
@@ -158,6 +161,33 @@ RSpec.describe RubyLLM::Protocols::Responses::Chat do
       expect(message.output_tokens).to eq(7)
       expect(message.cached_tokens).to eq(4)
       expect(message.thinking_tokens).to eq(3)
+    end
+
+    it 'does not synthesize finish_reason for completed function calls' do
+      response = response_with([
+                                 { 'type' => 'function_call', 'call_id' => 'call_1', 'name' => 'weather',
+                                   'arguments' => '{}' }
+                               ])
+
+      message = protocol.send(:parse_completion_response, response)
+
+      expect(message.finish_reason).to be_nil
+    end
+
+    it 'preserves incomplete_details reason as finish_reason when present' do
+      response = instance_double(
+        Faraday::Response,
+        body: {
+          'model' => 'gpt-5-nano',
+          'output' => [],
+          'status' => 'incomplete',
+          'incomplete_details' => { 'reason' => 'max_output_tokens' }
+        }
+      )
+
+      message = protocol.send(:parse_completion_response, response)
+
+      expect(message.finish_reason).to eq('max_output_tokens')
     end
   end
 end

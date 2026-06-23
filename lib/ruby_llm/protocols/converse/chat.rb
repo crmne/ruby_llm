@@ -83,6 +83,7 @@ module RubyLLM
             cached_tokens: usage['cacheReadInputTokens'],
             cache_creation_tokens: usage['cacheWriteInputTokens'],
             thinking_tokens: usage['reasoningTokens'],
+            finish_reason: data['stopReason'],
             model_id: data['modelId'],
             raw: raw
           )

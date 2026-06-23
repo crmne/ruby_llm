@@ -141,6 +141,7 @@ message.tokens.input       # Standard input tokens
 message.tokens.output      # Billable output tokens
 message.tokens.cache_read  # Prompt cache reads
 message.tokens.cache_write # Prompt cache writes
+message.finish_reason      # Provider-reported reason the model stopped
 
 message.cost.total
 message.cost.thinking # When the model has distinct reasoning-token pricing
@@ -150,6 +151,8 @@ chat_record.cost.total
 `cache_read_tokens` and `cache_write_tokens` are aliases for the existing v1.9 `cached_tokens` and `cache_creation_tokens` columns, so apps that already ran the v1.9 migration do not need another migration for these names.
 
 RubyLLM normalizes provider-specific cache accounting before persisting token counts. See [Token Usage and Cost]({% link _core_features/chat-tokens.md %}) for the provider comparison table.
+
+`finish_reason` is persisted when your message table has a string column with that name. New installs include it, and the upgrade generator adds it for existing apps.
 
 ### Database Model Registry
 

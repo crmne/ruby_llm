@@ -17,7 +17,8 @@ module RubyLLM
 
       argument :model_mappings, type: :array, default: [], banner: 'message:MessageName'
 
-      desc 'Adds the columns and tables introduced in the latest RubyLLM version (v2.0: citations + batches)'
+      desc 'Adds the columns and tables introduced in the latest RubyLLM version ' \
+           '(v2.0: citations, finish reasons, batches)'
 
       def self.next_migration_number(dirname)
         ::ActiveRecord::Generators::Base.next_migration_number(dirname)
@@ -42,7 +43,7 @@ module RubyLLM
           2. Run: bin/rails db:migrate
           3. Restart your application server
 
-          📚 See the v2.0 release notes for details on citations support.
+          📚 See the v2.0 release notes for details on citations, finish reasons, and batches support.
 
         INSTRUCTIONS
       end

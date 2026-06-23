@@ -68,6 +68,7 @@ module RubyLLM
             tool_calls: parse_function_calls(output),
             model_id: data['model'],
             raw: raw,
+            finish_reason: data.dig('incomplete_details', 'reason'),
             **parse_usage(data['usage'] || {})
           )
         end
