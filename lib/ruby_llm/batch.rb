@@ -25,7 +25,7 @@ module RubyLLM
         payload = { provider: provider.slug, provider_class: provider.class.display_name, requests: chats.size }
         RubyLLM.instrument('batch.ruby_llm', payload, config: provider.config) do |event|
           requests = chats.each_with_index.map do |chat, index|
-            { custom_id: index.to_s, params: chat.render }
+            { custom_id: index.to_s, model: chat.model.id, params: chat.render }
           end
           batch = new(provider:, chats:, **provider.create_batch(requests))
           event[:batch_id] = batch.id
@@ -38,6 +38,8 @@ module RubyLLM
 
         config = context&.config || RubyLLM.config
         provider = Provider.resolve!(provider).new(config)
+        raise Error, "#{provider.slug} doesn't support batch requests" unless provider.batches?
+
         new(provider:, **provider.find_batch(id))
       end
 
@@ -58,10 +60,11 @@ module RubyLLM
       end
     end
 
-    def initialize(provider:, chats: nil, **attributes)
+    def initialize(provider:, chats: nil, batch_protocol: nil, **attributes)
       @provider = provider
       @chats = chats
-      apply(**attributes)
+      @batch_protocol = batch_protocol
+      apply(attributes)
     end
 
     # Reloads from the provider until the batch ends, then caches.
@@ -73,12 +76,12 @@ module RubyLLM
     end
 
     def reload
-      apply(**@provider.find_batch(id))
+      apply(@provider.find_batch(id))
       self
     end
 
     def cancel
-      apply(**@provider.cancel_batch(id))
+      apply(@provider.cancel_batch(id))
       self
     end
 
@@ -95,15 +98,16 @@ module RubyLLM
 
     private
 
-    def apply(id:, status:, completed:, request_counts: nil)
-      @id = id
-      @status = status
-      @completed = completed
-      @request_counts = request_counts
+    def apply(attributes)
+      @id = attributes.fetch(:id)
+      @status = attributes.fetch(:status)
+      @completed = attributes.fetch(:completed)
+      @request_counts = attributes[:request_counts]
+      @batch_protocol = attributes[:batch_protocol] if attributes[:batch_protocol]
     end
 
     def collect_messages
-      results = @provider.batch_results(id)
+      results = @provider.batch_results(id, batch_protocol: @batch_protocol)
       messages = Array.new(chats&.size || (results.map(&:first).max.to_i + 1))
 
       results.each do |index, message|
@@ -126,6 +130,41 @@ module RubyLLM
         chat.messages.any? { |m| m.tool_call? && m.tool_calls.keys.intersect?(message.tool_calls.keys) }
       else
         !AWAITING_ROLES.include?(chat.messages.last&.role)
+      end
+    end
+
+    # Shared mechanics for provider-side batch APIs.
+    module Helpers
+      private
+
+      def batch_result_index(id)
+        Integer(id)
+      end
+
+      def batch_failure(custom_id, detail, status: 'failed')
+        RubyLLM.logger.warn ["Batch request #{custom_id} #{status}", detail].compact.join(': ')
+      end
+
+      def batch_error_message(line)
+        error = line['error']
+        return error if error.is_a?(String)
+
+        error&.dig('message') ||
+          line['error_message'] ||
+          line.dig('response', 'body', 'error', 'message') ||
+          line.dig('response', 'error', 'message')
+      end
+
+      def single_batch_model!(requests, provider_name)
+        models = requests.map { |request| request.fetch(:model) }.uniq
+        return models.first if models.one?
+
+        raise Error, "#{provider_name} batch requests must use one model per submission"
+      end
+
+      def batch_params(request, except: [])
+        excluded = (Array(except) + [:stream]).map(&:to_s)
+        request.fetch(:params).reject { |key, _| excluded.include?(key.to_s) }
       end
     end
   end

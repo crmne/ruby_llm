@@ -118,7 +118,7 @@ def display_model_stats
   provider_counts = @models.all.group_by(&:provider).transform_values(&:count)
 
   RubyLLM::Provider.providers.each do |sym, provider_class|
-    name = provider_class.name
+    name = provider_class.display_name
     count = provider_counts[sym.to_s] || 0
     status = status(sym)
     puts "  #{name}: #{count} models #{status}"
@@ -148,7 +148,7 @@ def generate_models_markdown
     ---
     layout: default
     title: Available Models
-    nav_order: 1
+    nav_order: 2
     description: Browse #{total_models} AI models across #{provider_count} providers (not including local providers). Updated #{generated_on}.
     redirect_from:
       - /guides/available-models
@@ -180,7 +180,7 @@ def generate_models_markdown
     Model.refresh!
     ```
 
-    See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#refreshing-the-registry).
+    See [Working with Models: Refreshing the Registry]({% link _reference/models.md %}#refreshing-the-registry).
 
     ## Models by Provider
 
@@ -202,7 +202,7 @@ def generate_provider_sections
     next if models.none?
 
     <<~PROVIDER
-      ### #{provider_class.name} (#{models.count})
+      ### #{provider_class.display_name} (#{models.count})
 
       #{models_table(models)}
     PROVIDER

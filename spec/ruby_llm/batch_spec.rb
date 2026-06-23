@@ -35,10 +35,49 @@ RSpec.describe RubyLLM::Batch do
       expect { RubyLLM.batch(chats) }.to raise_error(ArgumentError, /one provider/)
     end
 
+    it 'rejects mixed models for model-scoped providers' do
+      chats = [
+        RubyLLM.chat(model: 'gpt-5-nano').ask_later('Hi'),
+        RubyLLM.chat(model: 'gpt-5-mini').ask_later('Hi')
+      ]
+
+      expect { RubyLLM.batch(chats) }.to raise_error(RubyLLM::Error, /one model/)
+    end
+
     it 'rejects providers without batch support' do
-      chats = [RubyLLM.chat(model: 'gemini-2.5-flash').ask_later('Hi')]
+      chats = [RubyLLM.chat(model: 'deepseek-chat').ask_later('Hi')]
 
       expect { RubyLLM.batch(chats) }.to raise_error(RubyLLM::Error, /batch/)
+    end
+
+    it 'routes Vertex AI batches by protocol' do
+      provider = RubyLLM::Provider.resolve!(:vertexai).new(RubyLLM.config)
+
+      expect(provider.batches?).to be(true)
+      expect(provider.send(:batch_protocol_for, [{ model: 'gemini-2.5-flash', params: {} }]))
+        .to be < RubyLLM::Providers::VertexAI::Gemini
+      expect(provider.send(:batch_protocol_for, [{ model: 'claude-haiku-4-5', params: {} }]))
+        .to be < RubyLLM::Providers::VertexAI::Anthropic
+      expect(provider.send(:batch_protocol_for, [{ model: 'meta/llama-3.3-70b-instruct-maas', params: {} }]))
+        .to be < RubyLLM::Providers::VertexAI::ChatCompletions
+      expect { provider.send(:batch_protocol_for, [{ model: 'mistral-small-2503', params: {} }]) }
+        .to raise_error(RubyLLM::Error, /Gemini, Anthropic, and MaaS/)
+    end
+
+    it 'passes rendered params and model ids to provider batch implementations' do
+      chat = RubyLLM.chat(model: 'mistral-small-latest').ask_later('Hi')
+      allow(chat.provider).to receive(:create_batch) do |requests|
+        expect(requests.first).to include(
+          custom_id: '0',
+          model: 'mistral-small-latest',
+          params: include(:model, :messages)
+        )
+        { id: 'batch_test', status: 'RUNNING', completed: false }
+      end
+
+      RubyLLM.batch(chat)
+
+      expect(chat.provider).to have_received(:create_batch)
     end
   end
 

@@ -6,9 +6,6 @@ module RubyLLM
       # Azure's dialect of the Chat Completions API. Endpoints depend on how
       # the configured api_base is shaped (deployment, resource, or openai/v1).
       class ChatCompletions < Protocols::ChatCompletions
-        AZURE_DEFAULT_CHAT_API_VERSION = '2024-05-01-preview'
-        AZURE_DEFAULT_MODELS_API_VERSION = 'preview'
-
         include Azure::Chat
         include Azure::Embeddings
         include Azure::Media
@@ -32,29 +29,7 @@ module RubyLLM
         private
 
         def azure_base_parts
-          @azure_base_parts ||= begin
-            raw_base = @provider.api_base.to_s.sub(%r{/+\z}, '')
-            version = raw_base[/[?&]api-version=([^&]+)/i, 1]
-            path_base = raw_base.sub(/\?.*\z/, '')
-
-            mode = if path_base.include?('/chat/completions')
-                     :chat_endpoint
-                   elsif path_base.include?('/openai/deployments/')
-                     :deployment_base
-                   elsif path_base.include?('/openai/v1')
-                     :openai_v1_base
-                   else
-                     :resource_base
-                   end
-
-            {
-              raw_base: raw_base,
-              path_base: path_base,
-              root: azure_host_root(path_base),
-              mode: mode,
-              version: version
-            }
-          end
+          @provider.azure_base_parts
         end
 
         def chat_endpoint(parts)
@@ -62,11 +37,11 @@ module RubyLLM
           when :chat_endpoint
             ''
           when :deployment_base
-            with_api_version('chat/completions', parts[:version] || AZURE_DEFAULT_CHAT_API_VERSION)
+            with_api_version('chat/completions', parts[:version] || Azure::DEFAULT_CHAT_API_VERSION)
           when :openai_v1_base
             with_api_version('chat/completions', parts[:version])
           else
-            with_api_version('models/chat/completions', parts[:version] || AZURE_DEFAULT_CHAT_API_VERSION)
+            with_api_version('models/chat/completions', parts[:version] || Azure::DEFAULT_CHAT_API_VERSION)
           end
         end
 
@@ -82,9 +57,9 @@ module RubyLLM
         def models_endpoint(parts)
           case parts[:mode]
           when :openai_v1_base
-            with_api_version('models', parts[:version] || AZURE_DEFAULT_MODELS_API_VERSION)
+            with_api_version('models', parts[:version] || Azure::DEFAULT_MODELS_API_VERSION)
           else
-            "#{parts[:root]}/openai/v1/models?api-version=#{parts[:version] || AZURE_DEFAULT_MODELS_API_VERSION}"
+            "#{parts[:root]}/openai/v1/models?api-version=#{parts[:version] || Azure::DEFAULT_MODELS_API_VERSION}"
           end
         end
 
@@ -93,10 +68,6 @@ module RubyLLM
 
           separator = path.include?('?') ? '&' : '?'
           "#{path}#{separator}api-version=#{version}"
-        end
-
-        def azure_host_root(base_without_query)
-          base_without_query.sub(%r{/(models|openai)/.*\z}, '').sub(%r{/+\z}, '')
         end
       end
     end

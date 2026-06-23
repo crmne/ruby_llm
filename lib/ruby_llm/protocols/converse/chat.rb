@@ -49,7 +49,10 @@ module RubyLLM
         end
 
         def parse_completion_response(response)
-          data = response.body
+          parse_completion_body(response.body, raw: response)
+        end
+
+        def parse_completion_body(data, raw:)
           return if data.nil? || data.empty?
 
           content_blocks = data.dig('output', 'message', 'content') || []
@@ -67,7 +70,7 @@ module RubyLLM
             cache_creation_tokens: usage['cacheWriteInputTokens'],
             thinking_tokens: usage['reasoningTokens'],
             model_id: data['modelId'],
-            raw: response
+            raw: raw
           )
         end
 
@@ -312,7 +315,7 @@ module RubyLLM
           effort = thinking.effort.to_s
           return nil if effort.empty? || effort == 'none'
 
-          if Providers::Bedrock::Models.reasoning_embedded?(@model)
+          if Converse.reasoning_embedded?(@model)
             { reasoning_config: { type: 'enabled', reasoning_effort: effort } }
           else
             { reasoning_effort: effort }

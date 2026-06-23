@@ -73,8 +73,6 @@ RubyLLM needs API keys for the AI providers you want to use. Configure them once
 require 'ruby_llm'
 
 RubyLLM.configure do |config|
-  # Add keys ONLY for the providers you intend to use.
-  # Using environment variables is highly recommended.
   config.openai_api_key = ENV.fetch('OPENAI_API_KEY', nil)
   # config.anthropic_api_key = ENV.fetch('ANTHROPIC_API_KEY', nil)
 end
@@ -88,13 +86,10 @@ end
 Interact with language models using `RubyLLM.chat`.
 
 ```ruby
-# Create a chat instance (uses the configured default model)
 chat = RubyLLM.chat
 
-# Ask a question
 response = chat.ask "What is Ruby on Rails?"
 
-# The response is a RubyLLM::Message object
 puts response.content
 # => "Ruby on Rails, often shortened to Rails, is a server-side web application..."
 ```
@@ -106,7 +101,6 @@ RubyLLM handles the conversation history automatically. See the [Chatting with A
 Generate images using models like DALL-E 3 via `RubyLLM.paint`.
 
 ```ruby
-# Generate an image (uses the default image model)
 image = RubyLLM.paint("A photorealistic red panda coding Ruby")
 
 # Access the image URL (or Base64 data depending on provider)
@@ -117,7 +111,6 @@ else
   puts "Image data received (Base64)."
 end
 
-# Save the image locally
 image.save("red_panda.png")
 ```
 
@@ -128,14 +121,12 @@ Learn more in the [Image Generation Guide]({% link _core_features/image-generati
 Create numerical vector representations of text using `RubyLLM.embed`.
 
 ```ruby
-# Create an embedding (uses the default embedding model)
 embedding = RubyLLM.embed("Ruby is optimized for programmer happiness.")
 
 # Access the vector (an array of floats)
 vector = embedding.vectors
 puts "Vector dimension: #{vector.length}" # e.g., 1536
 
-# Access metadata
 puts "Model used: #{embedding.model}"
 ```
 
@@ -146,7 +137,7 @@ Explore further in the [Embeddings Guide]({% link _core_features/embeddings.md %
 You've covered the basics! Now you're ready to explore RubyLLM's features in more detail:
 
 *   [Chatting with AI Models]({% link _core_features/chat.md %})
-*   [Working with Models]({% link _advanced/models.md %}) (Choosing models, custom endpoints)
+*   [Working with Models]({% link _reference/models.md %}) (Choosing models, custom endpoints)
 *   [Using Tools]({% link _core_features/tools.md %}) (Letting AI call your code)
 *   [Streaming Responses]({% link _core_features/streaming.md %})
 *   [Rails Integration]({% link _advanced/rails.md %})

@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Agents
-nav_order: 6
+nav_order: 2
 description: Define reusable AI assistants with class-based configuration, runtime context, and prompt conventions
 ---
 
@@ -241,7 +241,7 @@ Delegated methods include:
 * `model`, `messages`, `tools`, `params`, `headers`, `schema`
 * `cost` (v1.15+)
 * `ask`, `say`, `complete`
-* `add_message`, `reset_messages!`, `each`
+* `add_message`, `each`
 * `with_tool`, `with_tools`
 * `with_model`, `with_temperature`, `with_thinking`, `with_citations`, `with_context`
 * `with_params`, `with_headers`, `with_schema`
@@ -265,13 +265,10 @@ end
 Then you can:
 
 ```ruby
-# Create persisted chat with agent configuration applied
 chat = WorkAssistant.create!(user: current_user)
 
-# Load existing persisted chat with runtime config applied (no DB write)
 chat = WorkAssistant.find(params[:id])
 
-# Explicitly persist/sync the current agent instructions if you've modified them
 WorkAssistant.sync_instructions!(chat)
 ```
 

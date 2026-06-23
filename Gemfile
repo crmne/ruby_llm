@@ -6,6 +6,7 @@ gemspec
 
 group :development do # rubocop:disable Metrics/BlockLength
   gem 'appraisal'
+  gem 'archspec'
   gem 'async', platform: :mri
   gem 'bundler', '>= 2.0'
   gem 'colorize'
