@@ -279,8 +279,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
           provider: :openai,
           assume_model_exists: false
         ).and_return(
-          instance_double(RubyLLM::Chat, reset_messages!: nil, add_message: nil,
-                                         before_message: nil, after_message: nil)
+          instance_double(RubyLLM::Chat, 'messages=': nil, before_message: nil, after_message: nil)
         )
 
         chat.to_llm
@@ -296,8 +295,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
           provider: :anthropic,
           assume_model_exists: false
         ).and_return(
-          instance_double(RubyLLM::Chat, reset_messages!: nil, add_message: nil,
-                                         before_message: nil, after_message: nil)
+          instance_double(RubyLLM::Chat, 'messages=': nil, before_message: nil, after_message: nil)
         )
 
         chat.to_llm

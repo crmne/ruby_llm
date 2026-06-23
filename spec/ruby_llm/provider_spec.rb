@@ -89,6 +89,7 @@ RSpec.describe RubyLLM::Provider do
       when :anthropic
         config.anthropic_api_key = 'anthropic-key'
       when :azure
+        config.azure_api_base = 'https://azure-resource.example.com'
         config.azure_api_key = 'azure-key'
       when :bedrock
         config.bedrock_api_key = 'bedrock-key'
@@ -99,10 +100,12 @@ RSpec.describe RubyLLM::Provider do
       when :gemini
         config.gemini_api_key = 'gemini-key'
       when :gpustack
+        config.gpustack_api_base = 'https://gpustack.example.com/v1'
         config.gpustack_api_key = 'gpustack-key'
       when :mistral
         config.mistral_api_key = 'mistral-key'
       when :ollama
+        config.ollama_api_base = 'https://ollama.example.com/v1'
         config.ollama_api_key = 'ollama-key'
       when :openai
         config.openai_api_key = 'openai-key'
@@ -282,6 +285,39 @@ RSpec.describe RubyLLM::Provider do
       expect do
         provider.send(:resolve_protocol, :gemini, model)
       end.to raise_error(RubyLLM::Error, /gemini is not a protocol of OpenAI\. Available: responses, chat_completions/)
+    end
+
+    it 'uses Responses as the default batch protocol' do
+      config = config_for(:openai)
+      config.openai_protocol = :chat_completions
+
+      provider = RubyLLM::Providers::OpenAI.new(config)
+
+      expect(provider.send(:batch_protocol)).to be < RubyLLM::Protocols::Responses
+      expect(provider.send(:batch_protocol)).to be_public_method_defined(:create_batch)
+    end
+
+    it 'routes OpenAI batches by rendered payload shape' do
+      expect(provider.send(:batch_protocol_for, [{ params: { input: 'hi' } }]))
+        .to be < RubyLLM::Protocols::Responses
+      expect(provider.send(:batch_protocol_for, [{ params: { messages: [] } }]))
+        .to be < RubyLLM::Protocols::ChatCompletions
+      expect do
+        provider.send(:batch_protocol_for, [
+                        { params: { input: 'hi' } },
+                        { params: { messages: [] } }
+                      ])
+      end.to raise_error(RubyLLM::Error, /one endpoint/)
+    end
+  end
+
+  describe 'file protocol resolution' do
+    it 'exposes provider-managed files only where implemented' do
+      file_providers = %i[anthropic azure bedrock gemini mistral openai vertexai xai]
+
+      described_class.providers.each do |slug, provider_class|
+        expect(provider_class.new(config_for(slug)).files?).to eq(file_providers.include?(slug))
+      end
     end
   end
 end

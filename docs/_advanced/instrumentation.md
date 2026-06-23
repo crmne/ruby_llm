@@ -1,7 +1,7 @@
 ---
 layout: default
-title: Instrumentation
-nav_order: 5
+title: Instrumentation and Observability
+nav_order: 6
 description: Observe RubyLLM requests, chats, tool calls, embeddings, and model refreshes
 redirect_from:
   - /guides/instrumentation
@@ -74,7 +74,7 @@ RubyLLM.configure do |config|
 end
 ```
 
-You can also set `instrumenter` on a [context]({% link _getting_started/configuration.md %}#contexts-isolated-configurations) when you only want instrumentation around a specific operation.
+You can also set `instrumenter` on a [context]({% link _getting_started/configuration-connection.md %}#contexts-isolated-configurations) when you only want instrumentation around a specific operation.
 
 ## Events
 

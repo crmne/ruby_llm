@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Upgrading
-nav_order: 7
+nav_order: 4
 description: Upgrade guides for changes in data formats
 redirect_from:
   - /upgrading-to-1-7
@@ -32,7 +32,7 @@ This guide focuses on upgrade-impacting changes: migrations, token semantics, de
 Upgrade one minor version at a time.
 {: .important }
 
-RubyLLM follows the same discipline as Rails itself: bump one release at a time, run that release's migrations, and clear any deprecations before moving on. If you're several versions behind, get to the **latest 1.x first** (each section below documents what changed and ships the generator for that step), then upgrade to 2.0. RubyLLM 2.0 carries a single `ruby_llm:upgrade` generator that always targets the current release — it does not bundle the older per-version generators.
+RubyLLM follows the same discipline as Rails itself: bump one release at a time, run that release's migrations, and clear any deprecations before moving on. If you're several versions behind, get to the **latest 1.x first** (each section below documents what changed and ships the generator for that step), then upgrade to 2.0. RubyLLM 2.0 carries a single `ruby_llm:upgrade` generator that always targets the current release - it does not bundle the older per-version generators.
 
 ## How to Upgrade
 
@@ -42,11 +42,11 @@ bin/rails generate ruby_llm:upgrade
 bin/rails db:migrate
 ```
 
-The generator adds a JSON `citations` column to your messages table so [citations]({% link _core_features/citations.md %}) are persisted with each assistant message, and creates the `batches` table for [provider-side batches]({% link _core_features/batches.md %}). Both are optional — without them, citations stay on in-memory responses and batches aren't persisted.
+The generator adds a JSON `citations` column to your messages table so [citations]({% link _core_features/citations.md %}) are persisted with each assistant message, and creates the `batches` table for [provider-side batches]({% link _advanced/batches.md %}). Both are optional - without them, citations stay on in-memory responses and batches aren't persisted.
 
 ## Breaking Changes
 
-**The legacy `acts_as` API and `config.use_new_acts_as` are gone.** The association-based `acts_as` (the default since 1.7) is now the only API. **Remove `config.use_new_acts_as` from your initializer** — the option no longer exists, and an app that still sets it raises `NoMethodError` on boot. If you were still on the legacy API (`use_new_acts_as = false`), migrate your models to the association-based API (see [Upgrade to 1.7](#upgrade-to-17)) while on the latest 1.x, before upgrading.
+**The legacy `acts_as` API and `config.use_new_acts_as` are gone.** The association-based `acts_as` (the default since 1.7) is now the only API. **Remove `config.use_new_acts_as` from your initializer** - the option no longer exists, and an app that still sets it raises `NoMethodError` on boot. If you were still on the legacy API (`use_new_acts_as = false`), migrate your models to the association-based API (see [Upgrade to 1.7](#upgrade-to-17)) while on the latest 1.x, before upgrading.
 
 **The overriding `on_*` callbacks were removed.** `on_new_message`, `on_end_message`, `on_tool_call`, and `on_tool_result` are gone. Use the additive Rails-style callbacks, which can be registered more than once and run alongside RubyLLM's own persistence callbacks:
 
@@ -61,25 +61,25 @@ chat.after_tool_result { ... }   # was on_tool_result
 
 ```ruby
 chat.with_instructions("...", replace: true)   # before
-chat.with_instructions("...")                  # now — replaces by default
+chat.with_instructions("...")                  # now - replaces by default
 chat.with_instructions("...", append: true)    # add another system message
 ```
 
-**Agent `schema` blocks are always the Schema DSL.** A bare `schema do ... end` block is always interpreted as a [RubyLLM::Schema]({% link _core_features/agents.md %}#structured-output). For a schema computed from the agent's inputs at runtime, pass a lambda:
+**Agent `schema` blocks are always the Schema DSL.** A bare `schema do ... end` block is always interpreted as a [RubyLLM::Schema]({% link _core_features/structured-output.md %}). For a schema computed from the agent's inputs at runtime, pass a lambda:
 
 ```ruby
-schema do                                            # Schema DSL — static shape
+schema do                                            # Schema DSL - static shape
   string :answer
 end
 
-schema -> { strict ? StrictSchema : LooseSchema }    # dynamic — evaluated per run
+schema -> { strict ? StrictSchema : LooseSchema }    # dynamic - evaluated per run
 ```
 
 **Cache pricing helpers use canonical names only.** The `cached_input*` / `cache_creation*` aliases on `Cost`, `Model::Info`, and `acts_as_model` records were removed. Use `cache_read*` / `cache_write*` (e.g. `model.cache_read_input_price_per_million`, `cost.cache_read`). Token-count helpers like `message.cached_tokens` are unchanged.
 
 ## Providers and Protocols Split
 
-RubyLLM 2.0 separates providers (host, auth, catalog) from protocols (wire format). The public chat API is unchanged — `RubyLLM.chat`, `with_params`, `embed`, `paint`, and the Rails integration all work as before. Two things changed underneath:
+RubyLLM 2.0 separates providers (host, auth, catalog) from protocols (wire format). The public chat API is unchanged - `RubyLLM.chat`, `with_params`, `embed`, `paint`, and the Rails integration all work as before. Two things changed underneath:
 
 **OpenAI now defaults to the Responses API.** This unlocks reasoning models with tools and extended thinking together. To stay on Chat Completions:
 
@@ -92,9 +92,9 @@ end
 RubyLLM.chat(model: 'gpt-5.4').with_protocol(:chat_completions)
 ```
 
-If you pass Chat Completions–only params via `with_params` (like `response_format`), either switch those chats to `:chat_completions` or use the Responses API equivalents (`text: { format: ... }`).
+If you pass Chat Completions-only params via `with_params` (like `response_format`), either switch those chats to `:chat_completions` or use the Responses API equivalents (`text: { format: ... }`).
 
-**Wire-format internals moved to `RubyLLM::Protocols`.** `RubyLLM::Providers::OpenAI::Chat` and sibling modules are now `RubyLLM::Protocols::ChatCompletions::Chat` and friends; Anthropic, Gemini, and Bedrock Converse internals moved the same way. Provider classes no longer inherit from each other (`Mistral < OpenAI` is gone) — a provider declares its protocols instead.
+**Wire-format internals moved to `RubyLLM::Protocols`.** `RubyLLM::Providers::OpenAI::Chat` and sibling modules are now `RubyLLM::Protocols::ChatCompletions::Chat` and friends; Anthropic, Gemini, and Bedrock Converse internals moved the same way. Provider classes no longer inherit from each other (`Mistral < OpenAI` is gone) - a provider declares its protocols instead.
 
 If you maintain a provider gem, subclass a protocol for your dialect and declare it in a thin provider:
 
@@ -108,7 +108,7 @@ class MyProvider < RubyLLM::Provider
 end
 ```
 
-For routing details and per-chat overrides, see [Choosing the Wire Protocol]({% link _core_features/chat.md %}#choosing-the-wire-protocol).
+For routing details and per-chat overrides, see [Choosing the Wire Protocol]({% link _core_features/chat-request-control.md %}#choosing-the-wire-protocol).
 
 ---
 # Upgrade to 1.15
@@ -164,17 +164,14 @@ Cost helpers are available from 1.15 onward. They return `nil` for any cost buck
 
 `tokens.thinking` remains available from 1.10. From 1.15 onward, `tokens.output` is normalized as the billable output bucket. Do not add `tokens.thinking` to `tokens.output` yourself; RubyLLM includes thinking in output when the provider bills it as output, and exposes `cost.thinking` only for models with distinct reasoning-token pricing.
 
-See [Tracking Token Usage]({% link _core_features/chat.md %}#tracking-token-usage) for the provider comparison table and the exact normalized token semantics RubyLLM exposes.
+See [Tracking Token Usage]({% link _core_features/chat-tokens.md %}#tracking-token-usage) for the provider comparison table and the exact normalized token semantics RubyLLM exposes.
 
 # Upgrade to 1.14
 
 ## How to Upgrade
 
 ```bash
-# Run the upgrade generator
 bin/rails generate ruby_llm:upgrade_to_v1_14
-
-# Run migrations
 bin/rails db:migrate
 ```
 
@@ -193,10 +190,7 @@ Among other features:
 ## How to Upgrade
 
 ```bash
-# Run the upgrade generator
 bin/rails generate ruby_llm:upgrade_to_v1_10
-
-# Run migrations
 bin/rails db:migrate
 ```
 
@@ -217,22 +211,19 @@ Among other features:
 ## How to Upgrade
 
 ```bash
-# Run the upgrade generator
 bin/rails generate ruby_llm:upgrade_to_v1_9
-
-# Run migrations
 bin/rails db:migrate
 ```
 
 That's it! The generator:
 - Adds the `cached_tokens` and `cache_creation_tokens` columns for tracking accessed cached tokens and created cache tokens respectively.
-- Adds the `content_raw` column for the new [Raw Content Blocks]({% link _core_features/chat.md %}#raw-content-blocks) feature
+- Adds the `content_raw` column for the new [Raw Content Blocks]({% link _core_features/chat-request-control.md %}#raw-content-blocks) feature
 
 ## What's New in 1.9
 
 Among other features:
 
-- [Raw Content Blocks]({% link _core_features/chat.md %}#raw-content-blocks) to pass content verbatim to an LLM, e.g. useful to enable Anthropic Prompt Caching.
+- [Raw Content Blocks]({% link _core_features/chat-request-control.md %}#raw-content-blocks) to pass content verbatim to an LLM, e.g. useful to enable Anthropic Prompt Caching.
 - Cached token tracking to accurately track costs given cache hits
 
 # Upgrade to 1.7
@@ -244,10 +235,7 @@ Upgrade to the DB-backed model registry for better data integrity and rich model
 ### From 1.6 to 1.7 (2 commands)
 
 ```bash
-# Run the upgrade generator
 bin/rails generate ruby_llm:upgrade_to_v1_7
-
-# Run migrations
 bin/rails db:migrate
 ```
 

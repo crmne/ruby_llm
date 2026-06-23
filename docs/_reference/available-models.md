@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Available Models
-nav_order: 1
+nav_order: 2
 description: Browse 1185 AI models across 11 providers (not including local providers). Updated 2026-06-13.
 redirect_from:
   - /guides/available-models
@@ -33,7 +33,7 @@ RubyLLM.models.refresh!
 Model.refresh!
 ```
 
-See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#refreshing-the-registry).
+See [Working with Models: Refreshing the Registry]({% link _reference/models.md %}#refreshing-the-registry).
 
 ## Models by Provider
 

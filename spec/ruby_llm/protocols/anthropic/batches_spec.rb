@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 RSpec.describe RubyLLM::Protocols::Anthropic::Batches do
-  let(:protocol) { RubyLLM::Protocols::Anthropic.allocate }
+  let(:protocol) { RubyLLM::Providers::Anthropic.batch_protocols.fetch(:anthropic).allocate }
 
   describe '#parse_batch_response' do
     it 'normalizes the batch attributes' do

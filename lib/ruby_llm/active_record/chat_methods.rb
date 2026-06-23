@@ -61,12 +61,8 @@ module RubyLLM
           provider: model_record.provider.to_sym,
           assume_model_exists: assume_model_exists || false
         )
-        @chat.reset_messages!
-
         ordered_messages = order_messages_for_llm(messages_association.to_a)
-        ordered_messages.each do |msg|
-          @chat.add_message(msg.to_llm)
-        end
+        @chat.messages = ordered_messages
         reapply_runtime_instructions(@chat)
 
         setup_persistence_callbacks

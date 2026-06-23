@@ -8,6 +8,13 @@ module RubyLLM
       include Converse::Media
       include Converse::Streaming
 
+      def self.reasoning_embedded?(model)
+        metadata = RubyLLM::Utils.deep_symbolize_keys(model.metadata || {})
+        converse = metadata[:converse] || {}
+        reasoning_supported = converse[:reasoningSupported] || {}
+        reasoning_supported[:embedded] || false
+      end
+
       private
 
       def sync_response(payload, additional_headers = {})

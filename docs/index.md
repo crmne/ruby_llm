@@ -2,7 +2,7 @@
 layout: default
 title: RubyLLM
 nav_order: 1
-description: One delightful Ruby framework for every major AI provider. Build AI agents, chatbots, RAG apps, and multimodal workflows in beautiful, expressive code.
+description: One delightful Ruby framework for every major AI provider. Build AI agents, chatbots, RAG apps, and apps that work with images, audio, and documents in beautiful, expressive code.
 permalink: /
 redirect_from:
  - /guides/
@@ -41,7 +41,7 @@ redirect_from:
   Battle tested at <a href="https://chatwithwork.com"><picture><source media="(prefers-color-scheme: dark)" srcset="https://chatwithwork.com/logotype-dark.svg"><img src="https://chatwithwork.com/logotype.svg" alt="Chat with Work" class="chatwithwork-logo"></picture></a> <em>- Fully private work AI</em>
 </p>
 
-## Build a working Ruby AI chat in two minutes
+## Build a working Ruby AI chat in 5 minutes
 
 <video autoplay muted loop playsinline class="demo-video">
   <source src="https://talks.paolino.me/rucoco-2026/demo.mp4" type="video/mp4">

@@ -1,7 +1,8 @@
 ---
 layout: default
 title: Extended Thinking
-nav_order: 8
+parent: "Chat"
+nav_order: 4
 description: Give reasoning models more time and budget to deliberate, with optional access to thinking output
 redirect_from:
   - /guides/thinking
@@ -97,7 +98,7 @@ response.thinking_tokens
 
 ### Upgrading Existing Installations
 
-For 1.10 upgrades, consider using the [upgrade guide]({% link _advanced/upgrading.md %}#upgrade-to-1-10) to run the generator.
+For 1.10 upgrades, consider using the [upgrade guide]({% link _reference/upgrading.md %}#upgrade-to-110) to run the generator.
 If you prefer manual migrations, add the columns to your message and tool calls tables:
 
 ```ruby

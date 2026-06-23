@@ -43,10 +43,13 @@ module RubyLLM
         # rubocop:enable Metrics/ParameterLists,Metrics/PerceivedComplexity
 
         def parse_completion_response(response)
-          data = response.body
+          parse_completion_body(response.body, raw: response)
+        end
+
+        def parse_completion_body(data, raw:)
           return if data.nil? || data.empty?
 
-          raise Error.new(response, data.dig('error', 'message')) if data.dig('error', 'message')
+          raise Error.new(raw, data.dig('error', 'message')) if data.dig('error', 'message')
 
           output = data['output'] || []
           content = parse_output_text(output)
@@ -61,7 +64,7 @@ module RubyLLM
             ),
             tool_calls: parse_function_calls(output),
             model_id: data['model'],
-            raw: response,
+            raw: raw,
             **parse_usage(data['usage'] || {})
           )
         end
