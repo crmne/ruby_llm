@@ -5,7 +5,7 @@
     title: "Tool Result Error",
     error_message: error_message %>
 <%% else %>
-  <div id="<%= message_variable_name %>_<%%= tool.id %>" class="<%= message_variable_name %>"
+  <div id="<%= message_variable_name %>_tool_result_<%%= tool.id %>" class="<%= message_variable_name %>"
        style="margin-bottom: 20px; padding: 10px; border-left: 3px solid #6b7280; background: #f9fafb;">
     <div style="font-weight: bold; margin-bottom: 5px;">Tool</div>
     <pre style="white-space: pre-wrap; margin: 0;"><%%= tool.content.presence || "(no output)" %></pre>

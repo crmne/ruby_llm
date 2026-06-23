@@ -1,4 +1,4 @@
-<div id="<%= message_variable_name %>_<%%= message.id %>" class="<%= message_variable_name %>"
+<div id="<%= message_variable_name %>_tool_call_<%%= tool_call.id %>" class="<%= message_variable_name %>"
      style="margin-bottom: 20px; padding: 10px; border-left: 3px solid #6b7280; background: #f9fafb;">
   <div style="font-weight: bold; margin-bottom: 5px;">Tool Call</div>
   <pre style="white-space: pre-wrap; margin: 0;"><%%= tool_call.name %>(<%%= tool_call.arguments.map { |k, v| "#{k}: #{v.inspect}" }.join(", ") %>)</pre>
