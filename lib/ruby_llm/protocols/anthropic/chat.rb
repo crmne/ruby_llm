@@ -5,6 +5,9 @@ module RubyLLM
     class Anthropic
       # Chat methods for the Anthropic API implementation
       module Chat
+        ANTHROPIC_INLINE_REQUEST_LIMIT = 24 * 1024 * 1024
+        ANTHROPIC_FILE_UPLOAD_LIMIT = 500 * 1024 * 1024
+
         module_function
 
         def completion_url
@@ -78,6 +81,22 @@ module RubyLLM
           payload[:output_config] = payload.fetch(:output_config, {}).merge(build_output_config(schema)) if schema
         end
 
+        def supports_provider_file_references?
+          true
+        end
+
+        def default_large_file_upload_threshold
+          ANTHROPIC_INLINE_REQUEST_LIMIT
+        end
+
+        def provider_file_upload_limit
+          ANTHROPIC_FILE_UPLOAD_LIMIT
+        end
+
+        def provider_file_attachable?(attachment)
+          attachment.image? || attachment.pdf? || attachment.text?
+        end
+
         def build_output_config(schema)
           normalized = RubyLLM::Utils.deep_dup(schema[:schema])
           normalized.delete(:strict)
@@ -86,7 +105,10 @@ module RubyLLM
         end
 
         def parse_completion_response(response)
-          data = response.body
+          parse_completion_body(response.body, raw: response)
+        end
+
+        def parse_completion_body(data, raw:)
           content_blocks = data['content'] || []
 
           text_content, citations = extract_text_and_citations(content_blocks)
@@ -95,7 +117,7 @@ module RubyLLM
           tool_use_blocks = Tools.find_tool_uses(content_blocks)
 
           build_message(data, text_content, citations, thinking_content, thinking_signature, tool_use_blocks,
-                        response)
+                        raw)
         end
 
         def extract_text_and_citations(blocks)
@@ -151,7 +173,7 @@ module RubyLLM
           thinking_block&.dig('signature') || thinking_block&.dig('data')
         end
 
-        def build_message(data, content, citations, thinking, thinking_signature, tool_use_blocks, response) # rubocop:disable Metrics/ParameterLists
+        def build_message(data, content, citations, thinking, thinking_signature, tool_use_blocks, raw) # rubocop:disable Metrics/ParameterLists
           usage = data['usage'] || {}
           thinking_tokens = usage.dig('output_tokens_details', 'thinking_tokens') ||
                             usage.dig('output_tokens_details', 'reasoning_tokens') ||
@@ -170,7 +192,7 @@ module RubyLLM
             cache_creation_tokens: extract_cache_creation_tokens(data),
             thinking_tokens: thinking_tokens,
             model_id: data['model'],
-            raw: response
+            raw: raw
           )
         end
 

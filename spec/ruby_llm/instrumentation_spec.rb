@@ -172,4 +172,33 @@ RSpec.describe RubyLLM::Instrumentation do
     )
     expect(payload).not_to have_key(:operation)
   end
+
+  it 'emits speech events with output metadata' do
+    instrumenter = CaptureInstrumenter.new
+    context = RubyLLM.context { |config| config.instrumenter = instrumenter }
+    model = instance_double(RubyLLM::Model::Info, id: 'gpt-4o-mini-tts', provider: 'openai')
+    provider = instance_double(RubyLLM::Provider, slug: 'openai')
+    provider_class = class_double(RubyLLM::Provider, display_name: 'OpenAI')
+    speech = RubyLLM::Speech.new(data: 'audio bytes', model: 'gpt-4o-mini-tts', voice: 'alloy', format: 'mp3')
+    allow(provider).to receive_messages(speak: speech, class: provider_class)
+    allow(RubyLLM::Models).to receive(:resolve).and_return([model, provider])
+
+    result = context.speak('hello', model: 'gpt-4o-mini-tts')
+
+    event_name, payload = instrumenter.events.last
+    expect(result).to eq(speech)
+    expect(event_name).to eq('speech.ruby_llm')
+    expect(payload).to include(
+      provider: 'openai',
+      provider_class: 'OpenAI',
+      model: 'gpt-4o-mini-tts',
+      input: 'hello',
+      result: speech,
+      response_model: 'gpt-4o-mini-tts',
+      voice: 'alloy',
+      format: 'mp3',
+      audio_bytes: 11
+    )
+    expect(payload).not_to have_key(:operation)
+  end
 end

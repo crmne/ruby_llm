@@ -24,6 +24,7 @@ RSpec.describe RubyLLM::Configuration do
         :request_timeout,
         :tool_concurrency,
         :default_model,
+        :default_speech_model,
         :model_registry_file,
         :openai_api_key,
         :openrouter_api_base
@@ -42,6 +43,12 @@ RSpec.describe RubyLLM::Configuration do
       config.openai_api_base = 'https://openai-compatible.example.com/v1'
 
       expect(config.openai_api_base).to eq('https://openai-compatible.example.com/v1')
+    end
+
+    it 'omits credential providers from instance variables' do
+      config.bedrock_credential_provider = Object.new
+
+      expect(config.instance_variables).not_to include(:@bedrock_credential_provider)
     end
 
     it 'warns but preserves log_regexp_timeout when regexp timeouts are unsupported' do

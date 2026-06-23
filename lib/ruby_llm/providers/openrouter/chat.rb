@@ -5,6 +5,9 @@ module RubyLLM
     class OpenRouter
       # Chat methods of the OpenRouter API integration
       module Chat
+        OPENROUTER_INLINE_FILE_THRESHOLD = 50 * 1024 * 1024
+        OPENROUTER_FILE_UPLOAD_LIMIT = 100 * 1024 * 1024
+
         module_function
 
         # rubocop:disable Metrics/ParameterLists
@@ -59,6 +62,22 @@ module RubyLLM
           end
 
           details.empty? ? {} : { reasoning_details: details }
+        end
+
+        def supports_provider_file_references?
+          true
+        end
+
+        def default_large_file_upload_threshold
+          OPENROUTER_INLINE_FILE_THRESHOLD
+        end
+
+        def provider_file_upload_limit
+          OPENROUTER_FILE_UPLOAD_LIMIT
+        end
+
+        def provider_file_attachable?(attachment)
+          attachment.pdf?
         end
 
         def extract_thinking_text(message_data)

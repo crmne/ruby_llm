@@ -2,7 +2,7 @@
 layout: default
 title: RubyLLM
 nav_order: 1
-description: One delightful Ruby framework for every major AI provider. Build AI agents, chatbots, RAG apps, and multimodal workflows in beautiful, expressive code.
+description: One delightful Ruby framework for every major AI provider. Build AI agents, chatbots, RAG apps, and apps that work with images, audio, and documents in beautiful, expressive code.
 permalink: /
 redirect_from:
  - /guides/
@@ -41,7 +41,7 @@ redirect_from:
   Battle tested at <a href="https://chatwithwork.com"><picture><source media="(prefers-color-scheme: dark)" srcset="https://chatwithwork.com/logotype-dark.svg"><img src="https://chatwithwork.com/logotype.svg" alt="Chat with Work" class="chatwithwork-logo"></picture></a> <em>- Fully private work AI</em>
 </p>
 
-## Build a working Ruby AI chat in two minutes
+## Build a working Ruby AI chat in 5 minutes
 
 <video autoplay muted loop playsinline class="demo-video">
   <source src="https://talks.paolino.me/rucoco-2026/demo.mp4" type="video/mp4">
@@ -156,6 +156,12 @@ RubyLLM.transcribe "meeting.wav"
 ```
 
 ```ruby
+# Turn text into speech
+speech = RubyLLM.speak "Hello, welcome to RubyLLM!"
+speech.save "welcome.mp3"
+```
+
+```ruby
 # Moderate content for safety
 RubyLLM.moderate "Check if this text is safe"
 ```
@@ -202,7 +208,7 @@ response = chat.with_schema(ProductSchema).ask "Analyze this product", with: "pr
 
 * **Chat:** Conversational AI with `RubyLLM.chat`
 * **Vision:** Analyze images and videos
-* **Audio:** Transcribe and understand speech with `RubyLLM.transcribe`
+* **Audio:** Transcribe speech with `RubyLLM.transcribe` and generate it with `RubyLLM.speak`
 * **Documents:** Extract from PDFs, CSVs, JSON, any file type
 * **Image generation:** Create images with `RubyLLM.paint`
 * **Embeddings:** Generate embeddings with `RubyLLM.embed`

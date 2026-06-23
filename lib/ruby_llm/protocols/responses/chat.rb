@@ -9,6 +9,9 @@ module RubyLLM
           'responses'
         end
 
+        OPENAI_INLINE_FILE_LIMIT = 50 * 1024 * 1024
+        OPENAI_FILE_UPLOAD_LIMIT = 512 * 1024 * 1024
+
         module_function
 
         # rubocop:disable Metrics/ParameterLists,Metrics/PerceivedComplexity
@@ -43,10 +46,13 @@ module RubyLLM
         # rubocop:enable Metrics/ParameterLists,Metrics/PerceivedComplexity
 
         def parse_completion_response(response)
-          data = response.body
+          parse_completion_body(response.body, raw: response)
+        end
+
+        def parse_completion_body(data, raw:)
           return if data.nil? || data.empty?
 
-          raise Error.new(response, data.dig('error', 'message')) if data.dig('error', 'message')
+          raise Error.new(raw, data.dig('error', 'message')) if data.dig('error', 'message')
 
           output = data['output'] || []
           content = parse_output_text(output)
@@ -61,7 +67,7 @@ module RubyLLM
             ),
             tool_calls: parse_function_calls(output),
             model_id: data['model'],
-            raw: response,
+            raw: raw,
             **parse_usage(data['usage'] || {})
           )
         end
@@ -201,6 +207,26 @@ module RubyLLM
 
         def parse_reasoning_signature(output)
           output.find { |item| item['type'] == 'reasoning' }&.dig('encrypted_content')
+        end
+
+        def supports_provider_file_references?
+          true
+        end
+
+        def default_large_file_upload_threshold
+          OPENAI_INLINE_FILE_LIMIT
+        end
+
+        def provider_file_upload_limit
+          OPENAI_FILE_UPLOAD_LIMIT
+        end
+
+        def provider_file_attachable?(attachment)
+          attachment.pdf?
+        end
+
+        def provider_file_upload_options(_attachment)
+          { purpose: 'user_data' }
         end
       end
     end

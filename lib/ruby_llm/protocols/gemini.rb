@@ -11,6 +11,7 @@ module RubyLLM
       include Gemini::Models
       include Gemini::Streaming
       include Gemini::Tools
+      include Gemini::Speech
       include Gemini::Transcription
     end
   end

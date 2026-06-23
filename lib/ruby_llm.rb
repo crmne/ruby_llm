@@ -79,8 +79,20 @@ module RubyLLM
       Image.paint(...)
     end
 
+    def speak(...)
+      Speech.speak(...)
+    end
+
     def transcribe(...)
       Transcription.transcribe(...)
+    end
+
+    def upload(...)
+      UploadedFile.upload(...)
+    end
+
+    def download(...)
+      UploadedFile.download(...)
     end
 
     def models

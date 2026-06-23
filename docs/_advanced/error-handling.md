@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Error Handling
-nav_order: 3
+nav_order: 7
 description: Learn how to handle errors gracefully when working with AI providers
 redirect_from:
   - /guides/error-handling
@@ -63,12 +63,9 @@ begin
   response = chat.ask "Translate 'hello' to French."
   puts response.content
 rescue RubyLLM::Error => e
-  # Generic handling for API errors
   puts "An API error occurred: #{e.message}"
-  # Log the error for debugging
   # logger.error "RubyLLM API Error: #{e.class} - #{e.message}"
 rescue RubyLLM::ConfigurationError => e
-  # Handle missing configuration
   puts "Configuration missing: #{e.message}"
   # Abort or prompt for configuration
 end
@@ -103,7 +100,6 @@ rescue RubyLLM::BadRequestError => e
 rescue RubyLLM::ModelNotFoundError => e
   puts "Error: #{e.message}. Check available models with RubyLLM.models.all"
 rescue RubyLLM::Error => e
-  # Catch any other API errors
   puts "An unexpected API error occurred: #{e.message}"
 end
 ```
@@ -118,7 +114,6 @@ begin
   response = chat.ask "Some specific query"
 rescue RubyLLM::ForbiddenError => e
   puts "Access forbidden: #{e.message}"
-  # Inspect the raw response body for provider-specific details
   if e.response&.body&.include?('invalid_organization')
     puts "Hint: Check if your API key is enabled for the correct OpenAI organization."
   end
@@ -181,7 +176,6 @@ When building [Tools]({% link _core_features/tools.md %}), you need to decide ho
       def execute(query:)
         User.find_by_sql(query) # Example query
       rescue ActiveRecord::ConnectionNotEstablished => e
-        # This is likely an application-level problem, not something the LLM can fix.
         raise e # Let the application's error handling take over.
       rescue StandardError => e
         # Maybe return less critical errors to the LLM
@@ -223,7 +217,6 @@ If you encounter unexpected errors or behavior, enable debug logging by setting 
 
 ```bash
 export RUBYLLM_DEBUG=true
-# Now run your Ruby script or Rails server
 ```
 
 This will cause RubyLLM to log detailed information about API requests and responses, including headers and bodies (with sensitive data like API keys filtered), which can be invaluable for troubleshooting.

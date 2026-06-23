@@ -120,13 +120,6 @@ module RubyLLM
           major > 4 || (major == 4 && minor >= 5)
         end
 
-        def reasoning_embedded?(model)
-          metadata = RubyLLM::Utils.deep_symbolize_keys(model.metadata || {})
-          converse = metadata[:converse] || {}
-          reasoning_supported = converse[:reasoningSupported] || {}
-          reasoning_supported[:embedded] || false
-        end
-
         def parse_context_window(model_data)
           value = model_data.dig('description', 'maxContextWindow')
           return unless value.is_a?(String)

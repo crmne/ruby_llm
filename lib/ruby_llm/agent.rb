@@ -368,6 +368,6 @@ module RubyLLM
                    :with_headers, :with_schema,
                    :before_message, :after_message, :before_tool_call, :after_tool_result, :each, :complete,
                    :complete?, :ask_later, :generate, :run_tools, :step, :add_message, :add_completion,
-                   :reset_messages!, :cost
+                   :cost
   end
 end

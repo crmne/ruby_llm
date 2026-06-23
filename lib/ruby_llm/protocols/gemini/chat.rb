@@ -8,6 +8,10 @@ module RubyLLM
     class Gemini
       # Chat methods for the Gemini API implementation
       module Chat
+        GEMINI_INLINE_FILE_THRESHOLD = 20 * 1024 * 1024
+        VERTEX_INLINE_FILE_THRESHOLD = 7 * 1024 * 1024
+        GEMINI_FILE_UPLOAD_LIMIT = 2 * 1024 * 1024 * 1024
+
         module_function
 
         def completion_url
@@ -55,6 +59,22 @@ module RubyLLM
           config
         end
 
+        def supports_provider_file_references?
+          true
+        end
+
+        def default_large_file_upload_threshold
+          @provider.slug == 'vertexai' ? VERTEX_INLINE_FILE_THRESHOLD : GEMINI_INLINE_FILE_THRESHOLD
+        end
+
+        def provider_file_upload_limit
+          GEMINI_FILE_UPLOAD_LIMIT
+        end
+
+        def provider_file_attachable?(attachment)
+          attachment.image? || attachment.video? || attachment.audio? || attachment.pdf? || attachment.text?
+        end
+
         private
 
         def format_messages(messages)
@@ -97,7 +117,10 @@ module RubyLLM
         end
 
         def parse_completion_response(response)
-          data = response.body
+          parse_completion_body(response.body, raw: response)
+        end
+
+        def parse_completion_body(data, raw:)
           parts = data.dig('candidates', 0, 'content', 'parts') || []
           tool_calls = extract_tool_calls(data)
           content = parse_content(data)
@@ -116,7 +139,7 @@ module RubyLLM
             cached_tokens: data.dig('usageMetadata', 'cachedContentTokenCount'),
             thinking_tokens: data.dig('usageMetadata', 'thoughtsTokenCount'),
             model_id: data['modelVersion'] || @model&.id,
-            raw: response
+            raw: raw
           )
         end
 

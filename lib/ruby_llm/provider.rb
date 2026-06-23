@@ -87,24 +87,47 @@ module RubyLLM
     end
     # rubocop:enable Metrics/ParameterLists
 
+    def preprocess_message(message, model:, protocol: nil)
+      protocol_class = resolve_protocol(
+        protocol,
+        model,
+        tools: {},
+        schema: nil,
+        thinking: nil,
+        tool_prefs: nil,
+        citations: false
+      )
+      protocol_class.new(self, model).preprocess_message(message)
+    end
+
     def batches?
-      default_protocol.public_method_defined?(:create_batch)
+      batch_protocol.public_method_defined?(:create_batch)
     end
 
     def create_batch(requests)
-      default_protocol.new(self).create_batch(requests)
+      protocol = batch_protocol_for(requests)
+      ensure_batches_supported!(protocol)
+      protocol.new(self).create_batch(requests).merge(batch_protocol: protocol)
     end
 
     def find_batch(id)
-      default_protocol.new(self).find_batch(id)
+      ensure_batches_supported!
+      batch_protocol.new(self).find_batch(id)
     end
 
     def cancel_batch(id)
-      default_protocol.new(self).cancel_batch(id)
+      ensure_batches_supported!
+      batch_protocol.new(self).cancel_batch(id)
     end
 
-    def batch_results(id)
-      default_protocol.new(self).batch_results(id)
+    def batch_results(id, batch_protocol: nil)
+      protocol = batch_protocol || self.batch_protocol
+      ensure_batches_supported!(protocol)
+      protocol.new(self).batch_results(id)
+    end
+
+    def files?
+      !!file_protocol
     end
 
     def list_models
@@ -123,8 +146,32 @@ module RubyLLM
       default_protocol.new(self).paint(prompt, model:, size:, with:, mask:, params:)
     end
 
+    def speak(input, model:, voice:, format:, params: {}, **options) # rubocop:disable Metrics/ParameterLists
+      default_protocol.new(self).speak(input, model:, voice:, format:, params:, **options)
+    end
+
     def transcribe(audio_file, model:, language:, **options)
       default_protocol.new(self).transcribe(audio_file, model:, language:, **options)
+    end
+
+    def upload_file(file, **options)
+      ensure_files_supported!
+      file_protocol.new(self).upload(file, **options)
+    end
+
+    def find_file(file_id)
+      ensure_files_supported!
+      file_protocol.new(self).find(file_id)
+    end
+
+    def download_file(file_id)
+      ensure_files_supported!
+      file_protocol.new(self).download(file_id)
+    end
+
+    def list_file_uris(uri)
+      ensure_files_supported!
+      file_protocol.new(self).list_uris(uri)
     end
 
     def configured?
@@ -162,6 +209,7 @@ module RubyLLM
     end
 
     class << self
+      attr_reader :default_protocol, :file_protocol
       attr_writer :slug
 
       def slug
@@ -200,16 +248,27 @@ module RubyLLM
         configuration_requirements.all? { |req| config.send(req) }
       end
 
-      def protocol(name, protocol_class)
+      def protocol(name, protocol_class, batches: nil)
         @default_protocol = name.to_sym if protocols.empty?
         protocols[name.to_sym] = protocol_class
+        batch_protocol(name, batches) if batches
+      end
+
+      def files(protocol_class)
+        @file_protocol = protocol_class
       end
 
       def protocols
         @protocols ||= {}
       end
 
-      attr_reader :default_protocol
+      def batch_protocol(name, batches)
+        batch_protocols[name.to_sym] = Class.new(protocols.fetch(name.to_sym)) { include batches }
+      end
+
+      def batch_protocols
+        @batch_protocols ||= {}
+      end
 
       def register(name, provider_class)
         provider_class.slug = name.to_s
@@ -253,6 +312,16 @@ module RubyLLM
 
     private
 
+    def ensure_batches_supported!(protocol = batch_protocol)
+      raise Error, "#{slug} doesn't support batch requests" unless protocol.public_method_defined?(:create_batch)
+    end
+
+    def ensure_files_supported!
+      return if file_protocol
+
+      raise Error, "#{slug} doesn't support file uploads"
+    end
+
     def resolve_protocol(name, model, **request)
       explicit = name || configured_protocol
       explicit ? fetch_protocol(explicit) : protocol_for(model, **request)
@@ -260,6 +329,22 @@ module RubyLLM
 
     def default_protocol
       fetch_protocol(configured_protocol || self.class.default_protocol)
+    end
+
+    def batch_protocol
+      batch_protocol_for_name(self.class.default_protocol) || fetch_protocol(self.class.default_protocol)
+    end
+
+    def batch_protocol_for(_requests)
+      batch_protocol
+    end
+
+    def batch_protocol_for_name(name)
+      self.class.batch_protocols[name.to_sym]
+    end
+
+    def file_protocol
+      self.class.file_protocol
     end
 
     def configured_protocol

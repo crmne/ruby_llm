@@ -108,6 +108,29 @@ RSpec.describe RubyLLM::Providers::VertexAI do
     end
   end
 
+  describe '#find_batch' do
+    let(:location) { 'us-central1' }
+    let(:connection) { instance_double(RubyLLM::Connection) }
+
+    before do
+      provider.instance_variable_set(:@connection, connection)
+    end
+
+    it 'recovers the Anthropic batch parser from the stored model path' do
+      allow(connection).to receive(:get).and_return(
+        instance_double(Faraday::Response, body: {
+                          'name' => 'projects/test/locations/us-central1/batchPredictionJobs/123',
+                          'state' => 'JOB_STATE_SUCCEEDED',
+                          'model' => 'projects/test/locations/us-central1/publishers/anthropic/models/claude-haiku-4-5'
+                        })
+      )
+
+      batch = provider.find_batch('123')
+
+      expect(batch[:batch_protocol]).to be < RubyLLM::Providers::VertexAI::Anthropic
+    end
+  end
+
   describe '#list_models' do
     let(:location) { 'us-central1' }
     let(:connection) { instance_double(RubyLLM::Connection) }

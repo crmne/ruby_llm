@@ -203,8 +203,13 @@ module RubyLLM
       Cost.aggregate(messages.map { |message| message.cost(model: message.model_info || model) })
     end
 
+    def messages=(new_messages)
+      @messages = message_list(new_messages).map { |message| coerce_message(message) }
+    end
+
     def add_message(message_or_attributes)
-      message = message_or_attributes.is_a?(Message) ? message_or_attributes : Message.new(message_or_attributes)
+      message = coerce_message(message_or_attributes)
+      message = @provider.preprocess_message(message, model: @model, protocol: @protocol) if @provider
       messages << message
       message
     end
@@ -235,17 +240,31 @@ module RubyLLM
       )
     end
 
-    # Mutates this chat by removing all in-memory messages.
-    def reset_messages!
-      @messages.clear
-    end
-
     # Keeps the connection and config dumps out of pretty-printed output.
     def pretty_print_instance_variables
       super - %i[@connection @config]
     end
 
     private
+
+    def message_list(new_messages)
+      return [] if new_messages.nil?
+      if new_messages.is_a?(Hash) || new_messages.is_a?(Message) || new_messages.respond_to?(:to_llm)
+        return [new_messages]
+      end
+
+      new_messages.respond_to?(:to_a) ? new_messages.to_a : [new_messages]
+    end
+
+    def coerce_message(message_or_attributes)
+      message = if message_or_attributes.respond_to?(:to_llm)
+                  message_or_attributes.to_llm
+                else
+                  message_or_attributes
+                end
+
+      message.is_a?(Message) ? message : Message.new(message)
+    end
 
     def normalize_schema_payload(raw_schema)
       return nil if raw_schema.nil?
