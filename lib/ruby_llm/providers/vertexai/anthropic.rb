@@ -20,6 +20,10 @@ module RubyLLM
           payload.delete(:model)
           payload.merge(anthropic_version: ANTHROPIC_VERSION)
         end
+
+        def supports_provider_file_references?
+          false
+        end
       end
     end
   end

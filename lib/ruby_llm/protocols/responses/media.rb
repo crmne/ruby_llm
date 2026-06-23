@@ -22,6 +22,8 @@ module RubyLLM
         end
 
         def format_attachment(attachment)
+          return format_provider_file(attachment) if attachment.provider_file?
+
           case attachment.type
           when :image
             format_image(attachment)
@@ -48,6 +50,13 @@ module RubyLLM
             type: 'input_file',
             filename: document.filename,
             file_data: document.for_llm
+          }
+        end
+
+        def format_provider_file(file)
+          {
+            type: 'input_file',
+            file_id: file.provider_file_id
           }
         end
       end

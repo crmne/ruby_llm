@@ -209,6 +209,7 @@ module RubyLLM
 
     def add_message(message_or_attributes)
       message = coerce_message(message_or_attributes)
+      message = @provider.preprocess_message(message, model: @model, protocol: @protocol) if @provider
       messages << message
       message
     end

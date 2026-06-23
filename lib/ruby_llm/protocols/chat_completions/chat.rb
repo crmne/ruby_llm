@@ -5,6 +5,9 @@ module RubyLLM
     class ChatCompletions
       # Chat methods of the OpenAI API integration
       module Chat
+        OPENAI_INLINE_FILE_LIMIT = 50 * 1024 * 1024
+        OPENAI_FILE_UPLOAD_LIMIT = 512 * 1024 * 1024
+
         def completion_url
           'chat/completions'
         end
@@ -226,6 +229,26 @@ module RubyLLM
           return nil unless thinking
 
           thinking.respond_to?(:effort) ? thinking.effort : thinking
+        end
+
+        def supports_provider_file_references?
+          @provider.slug == 'openai'
+        end
+
+        def default_large_file_upload_threshold
+          OPENAI_INLINE_FILE_LIMIT
+        end
+
+        def provider_file_upload_limit
+          OPENAI_FILE_UPLOAD_LIMIT
+        end
+
+        def provider_file_attachable?(attachment)
+          attachment.pdf?
+        end
+
+        def provider_file_upload_options(_attachment)
+          { purpose: 'user_data' }
         end
 
         def format_thinking(msg)

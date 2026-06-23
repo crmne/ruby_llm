@@ -313,7 +313,7 @@ RSpec.describe RubyLLM::Provider do
 
   describe 'file protocol resolution' do
     it 'exposes provider-managed files only where implemented' do
-      file_providers = %i[anthropic azure bedrock gemini mistral openai vertexai xai]
+      file_providers = %i[anthropic azure bedrock gemini mistral openai openrouter vertexai xai]
 
       described_class.providers.each do |slug, provider_class|
         expect(provider_class.new(config_for(slug)).files?).to eq(file_providers.include?(slug))

@@ -8,6 +8,10 @@ module RubyLLM
     class Gemini
       # Chat methods for the Gemini API implementation
       module Chat
+        GEMINI_INLINE_FILE_THRESHOLD = 20 * 1024 * 1024
+        VERTEX_INLINE_FILE_THRESHOLD = 7 * 1024 * 1024
+        GEMINI_FILE_UPLOAD_LIMIT = 2 * 1024 * 1024 * 1024
+
         module_function
 
         def completion_url
@@ -53,6 +57,22 @@ module RubyLLM
           config[:thinkingBudget] = thinking.budget if thinking.budget.is_a?(Integer)
 
           config
+        end
+
+        def supports_provider_file_references?
+          true
+        end
+
+        def default_large_file_upload_threshold
+          @provider.slug == 'vertexai' ? VERTEX_INLINE_FILE_THRESHOLD : GEMINI_INLINE_FILE_THRESHOLD
+        end
+
+        def provider_file_upload_limit
+          GEMINI_FILE_UPLOAD_LIMIT
+        end
+
+        def provider_file_attachable?(attachment)
+          attachment.image? || attachment.video? || attachment.audio? || attachment.pdf? || attachment.text?
         end
 
         private

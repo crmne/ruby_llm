@@ -96,7 +96,72 @@ module RubyLLM
       @provider.parse_error(response)
     end
 
+    def preprocess_message(message)
+      return message unless auto_upload_large_files?
+      return message unless message.role == :user
+      return message unless message.content.is_a?(Content)
+
+      attachments = message.content.attachments
+      uploaded = attachments.map { |attachment| preprocess_attachment(attachment) }
+      return message if uploaded == attachments
+
+      message.dup.tap do |copy|
+        copy.content = Content.new(message.content.text, uploaded)
+      end
+    end
+
     private
+
+    def auto_upload_large_files?
+      @config.auto_upload_large_files && @provider.files? && supports_provider_file_references?
+    end
+
+    def supports_provider_file_references?
+      false
+    end
+
+    def preprocess_attachment(attachment)
+      return attachment if attachment.provider_file?
+      return attachment unless upload_large_attachment?(attachment)
+
+      ensure_provider_file_size!(attachment)
+      Attachment.new(@provider.upload_file(attachment, **provider_file_upload_options(attachment)))
+    end
+
+    def upload_large_attachment?(attachment)
+      size = attachment.byte_size
+      size && size > default_large_file_upload_threshold && provider_file_attachable?(attachment)
+    end
+
+    def default_large_file_upload_threshold
+      Float::INFINITY
+    end
+
+    def provider_file_upload_limit
+      nil
+    end
+
+    def provider_file_attachable?(_attachment)
+      false
+    end
+
+    def provider_file_upload_options(_attachment)
+      {}
+    end
+
+    def ensure_provider_file_size!(attachment)
+      limit = provider_file_upload_limit
+      return unless limit && attachment.byte_size.to_i > limit
+
+      raise Error, "#{@provider.name} file uploads support files up to #{format_bytes(limit)}; " \
+                   "#{attachment.filename} is #{format_bytes(attachment.byte_size)}"
+    end
+
+    def format_bytes(bytes)
+      return 'unknown size' unless bytes
+
+      "#{(bytes.to_f / (1024 * 1024)).round(1)} MB"
+    end
 
     def validate_paint_inputs!(with:, mask:)
       return if with.nil? && mask.nil?

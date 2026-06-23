@@ -40,6 +40,7 @@ RSpec.describe RubyLLM::UploadedFile::Protocol do
 
       expect(file).to have_attributes(
         id: 'file_123',
+        provider: 'openai',
         filename: 'batch.jsonl',
         byte_size: 123,
         created_at: Time.at(1_700_000_000),
@@ -87,6 +88,35 @@ RSpec.describe RubyLLM::UploadedFile::Protocol do
 
       expect(payload).to have_key(:file)
       expect(payload).not_to have_key(:purpose)
+    end
+  end
+
+  describe RubyLLM::Providers::OpenRouter::Files do
+    let(:provider) do
+      RubyLLM::Providers::OpenRouter.new(
+        RubyLLM::Configuration.new.tap { |config| config.openrouter_api_key = 'test' }
+      )
+    end
+    let(:protocol) { described_class.new(provider) }
+
+    it 'normalizes file metadata' do
+      file = protocol.send(:parse_file_response, {
+                             'id' => 'file_123',
+                             'filename' => 'document.pdf',
+                             'mime_type' => 'application/pdf',
+                             'size_bytes' => 1024,
+                             'created_at' => '2025-01-01T00:00:00Z',
+                             'downloadable' => false
+                           })
+
+      expect(file).to have_attributes(
+        id: 'file_123',
+        provider: 'openrouter',
+        filename: 'document.pdf',
+        byte_size: 1024,
+        mime_type: 'application/pdf',
+        downloadable: false
+      )
     end
   end
 

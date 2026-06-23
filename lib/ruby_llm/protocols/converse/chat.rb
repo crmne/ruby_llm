@@ -7,6 +7,8 @@ module RubyLLM
     class Converse
       # Chat methods for Bedrock Converse API.
       module Chat
+        BEDROCK_INLINE_DOCUMENT_LIMIT = 4_500_000
+
         module_function
 
         def completion_url
@@ -46,6 +48,18 @@ module RubyLLM
           RubyLLM.logger.warn(
             "RubyLLM does not support citations on Bedrock yet. Ignoring with_citations for #{model.id}."
           )
+        end
+
+        def supports_provider_file_references?
+          true
+        end
+
+        def default_large_file_upload_threshold
+          BEDROCK_INLINE_DOCUMENT_LIMIT
+        end
+
+        def provider_file_attachable?(attachment)
+          attachment.pdf? || attachment.document? || attachment.text?
         end
 
         def parse_completion_response(response)

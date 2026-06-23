@@ -35,6 +35,8 @@ module RubyLLM
         end
 
         def format_attachment(attachment, used_document_names:)
+          return format_provider_file_attachment(attachment, used_document_names:) if attachment.provider_file?
+
           case attachment.type
           when :image
             format_image_attachment(attachment)
@@ -76,6 +78,23 @@ module RubyLLM
               name: document_name,
               source: {
                 bytes: attachment.encoded
+              }
+            }
+          }
+        end
+
+        def format_provider_file_attachment(attachment, used_document_names:)
+          raise UnsupportedAttachmentError, attachment.mime_type unless supported_document_format?(attachment)
+
+          document_name = unique_document_name(sanitize_document_name(attachment.filename), used_document_names)
+          {
+            document: {
+              format: document_format(attachment),
+              name: document_name,
+              source: {
+                s3Location: {
+                  uri: attachment.provider_file_uri || attachment.provider_file_id
+                }
               }
             }
           }

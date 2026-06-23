@@ -87,6 +87,19 @@ module RubyLLM
     end
     # rubocop:enable Metrics/ParameterLists
 
+    def preprocess_message(message, model:, protocol: nil)
+      protocol_class = resolve_protocol(
+        protocol,
+        model,
+        tools: {},
+        schema: nil,
+        thinking: nil,
+        tool_prefs: nil,
+        citations: false
+      )
+      protocol_class.new(self, model).preprocess_message(message)
+    end
+
     def batches?
       batch_protocol.public_method_defined?(:create_batch)
     end

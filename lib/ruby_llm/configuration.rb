@@ -59,6 +59,7 @@ module RubyLLM
     option :retry_interval_randomness, 0.5
     option :http_proxy, nil
     option :tool_concurrency, false
+    option :auto_upload_large_files, true
 
     option :logger, nil
     option :instrumenter, nil

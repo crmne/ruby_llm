@@ -114,6 +114,7 @@ RubyLLM.configure do |config|
   config.retry_interval_randomness = Float
   config.http_proxy = String
   config.faraday_adapter = Symbol # Defaults to :net_http
+  config.auto_upload_large_files = Boolean
 
   # Logging
   config.logger = Logger
