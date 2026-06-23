@@ -3,6 +3,32 @@
 require 'spec_helper'
 
 RSpec.describe RubyLLM::ErrorMiddleware do
+  describe '#call' do
+    it 'uses a parsed streaming error response when on_complete receives a consumed body' do
+      parsed_response = Faraday::Env.from(
+        status: 402,
+        body: { 'error' => { 'message' => 'Your credit balance is too low' } }
+      )
+      completed_response = Faraday::Env.from(status: 400, body: '')
+      completed_response[:streaming_error_response] = parsed_response
+
+      app_response = instance_double(Faraday::Response)
+      app = ->(_env) { app_response }
+      provider = instance_double(RubyLLM::Provider)
+
+      allow(app_response).to receive(:on_complete).and_yield(completed_response)
+      allow(provider).to receive(:parse_error) do |response|
+        response.body.dig('error', 'message') if response.body.is_a?(Hash)
+      end
+
+      middleware = described_class.new(app, provider: provider)
+
+      expect do
+        middleware.call(Faraday::Env.new)
+      end.to raise_error(RubyLLM::PaymentRequiredError, 'Your credit balance is too low')
+    end
+  end
+
   describe '.parse_error' do
     let(:provider) { instance_double(RubyLLM::Provider, parse_error: 'provider error') }
 
