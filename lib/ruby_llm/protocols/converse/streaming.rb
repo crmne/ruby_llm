@@ -184,7 +184,7 @@ module RubyLLM
         end
 
         def extract_reasoning_tokens(metadata_usage, usage)
-          metadata_usage['reasoningTokens'] || usage['reasoningTokens']
+          Chat.reasoning_tokens(metadata_usage) || Chat.reasoning_tokens(usage)
         end
 
         def stream_error_event?(event)

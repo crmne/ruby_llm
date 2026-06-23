@@ -82,7 +82,7 @@ module RubyLLM
             output_tokens: usage['outputTokens'],
             cached_tokens: usage['cacheReadInputTokens'],
             cache_creation_tokens: usage['cacheWriteInputTokens'],
-            thinking_tokens: usage['reasoningTokens'],
+            thinking_tokens: reasoning_tokens(usage),
             finish_reason: data['stopReason'],
             model_id: data['modelId'],
             raw: raw
@@ -94,6 +94,10 @@ module RubyLLM
           return unless input_tokens
 
           [input_tokens.to_i - usage['cacheReadInputTokens'].to_i - usage['cacheWriteInputTokens'].to_i, 0].max
+        end
+
+        def reasoning_tokens(usage)
+          usage['reasoningTokens'] || usage.dig('outputTokensDetails', 'reasoningTokens')
         end
 
         def format_messages(messages)

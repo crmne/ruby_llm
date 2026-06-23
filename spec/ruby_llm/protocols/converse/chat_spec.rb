@@ -46,6 +46,46 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
 
       expect(message.finish_reason).to eq('guardrail_intervened')
     end
+
+    it 'extracts thinking tokens from top-level reasoningTokens' do
+      response_body = {
+        'output' => {
+          'message' => {
+            'content' => [{ 'text' => 'Hi!' }]
+          }
+        },
+        'usage' => {
+          'inputTokens' => 10,
+          'outputTokens' => 5,
+          'reasoningTokens' => 7
+        }
+      }
+
+      response = instance_double(Faraday::Response, body: response_body)
+      message = described_class.parse_completion_response(response)
+
+      expect(message.thinking_tokens).to eq(7)
+    end
+
+    it 'extracts thinking tokens from outputTokensDetails reasoningTokens' do
+      response_body = {
+        'output' => {
+          'message' => {
+            'content' => [{ 'text' => 'Hi!' }]
+          }
+        },
+        'usage' => {
+          'inputTokens' => 10,
+          'outputTokens' => 5,
+          'outputTokensDetails' => { 'reasoningTokens' => 7 }
+        }
+      }
+
+      response = instance_double(Faraday::Response, body: response_body)
+      message = described_class.parse_completion_response(response)
+
+      expect(message.thinking_tokens).to eq(7)
+    end
   end
 
   describe '.format_tool_result_content' do
