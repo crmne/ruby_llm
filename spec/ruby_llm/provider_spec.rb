@@ -68,6 +68,12 @@ RSpec.describe RubyLLM::Provider do
         custom: 'https://perplexity-proxy.example.com',
         default: 'https://api.perplexity.ai'
       },
+      twelvelabs: {
+        provider: RubyLLM::Providers::TwelveLabs,
+        key: :twelvelabs_api_base,
+        custom: 'https://twelvelabs-proxy.example.com/v1.3',
+        default: 'https://api.twelvelabs.io/v1.3'
+      },
       vertexai: {
         provider: RubyLLM::Providers::VertexAI,
         key: :vertexai_api_base,
@@ -113,6 +119,8 @@ RSpec.describe RubyLLM::Provider do
         config.openrouter_api_key = 'openrouter-key'
       when :perplexity
         config.perplexity_api_key = 'perplexity-key'
+      when :twelvelabs
+        config.twelvelabs_api_key = 'twelvelabs-key'
       when :vertexai
         config.vertexai_project_id = 'vertex-project'
         config.vertexai_location = 'us-east1'
