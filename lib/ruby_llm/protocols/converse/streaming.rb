@@ -14,7 +14,7 @@ module RubyLLM
         private
 
         def stream_url
-          "/model/#{@model.id}/converse-stream"
+          "/model/#{escape_model_id(@model.id)}/converse-stream"
         end
 
         def stream_response(payload, additional_headers = {}, &block)
