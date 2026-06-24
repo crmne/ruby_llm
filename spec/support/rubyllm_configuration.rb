@@ -38,6 +38,7 @@ RSpec.shared_context 'with configured RubyLLM' do
       config.retry_backoff_factor = 0
       config.retry_interval = 0
       config.retry_interval_randomness = 0
+      config.twelvelabs_api_key = ENV.fetch('TWELVELABS_API_KEY', 'test')
       config.vertexai_location = ENV.fetch('GOOGLE_CLOUD_LOCATION', 'global')
       config.vertexai_batch_gcs_uri = ENV.fetch('VERTEXAI_BATCH_GCS_URI', 'gs://ruby-llm-test/batches')
       config.vertexai_project_id = ENV.fetch('GOOGLE_CLOUD_PROJECT', 'test-project')

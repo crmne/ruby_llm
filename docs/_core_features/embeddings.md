@@ -83,7 +83,24 @@ embedding_custom = RubyLLM.embed(
   provider: :openai,
   assume_model_exists: true
 )
+
+# TwelveLabs Marengo multimodal embeddings (512 dimensions)
+embedding_twelvelabs = RubyLLM.embed(
+  "a cat playing piano",
+  model: "marengo3.0",
+  provider: :twelvelabs
+)
 ```
+
+TwelveLabs is an opt-in provider for multimodal (video) embeddings. Configure it with your API key:
+
+```ruby
+RubyLLM.configure do |config|
+  config.twelvelabs_api_key = ENV["TWELVELABS_API_KEY"]
+end
+```
+
+Marengo returns a single 512-dimensional float vector and accepts one text input per call. Grab a free API key at [twelvelabs.io](https://twelvelabs.io).
 
 You can configure the default embedding model globally:
 
