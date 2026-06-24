@@ -81,6 +81,7 @@ module RubyLLM
       super.reject { |ivar| ivar.to_s.match?(/(_id|_key|_secret|_token|_credential_provider)$/) }
     end
 
+    remove_method :log_regexp_timeout=
     def log_regexp_timeout=(value)
       if value && !Regexp.respond_to?(:timeout)
         RubyLLM.logger.warn("log_regexp_timeout is not supported on Ruby #{RUBY_VERSION}")
