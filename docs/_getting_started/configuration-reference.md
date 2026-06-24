@@ -84,6 +84,10 @@ RubyLLM.configure do |config|
   config.perplexity_api_key = String
   config.perplexity_api_base = String  # v1.16+
 
+  # TwelveLabs (multimodal/video embeddings via Marengo)
+  config.twelvelabs_api_key = String
+  config.twelvelabs_api_base = String
+
   # Vertex AI
   config.vertexai_project_id = String  # GCP project ID
   config.vertexai_location = String     # e.g., 'us-central1'
