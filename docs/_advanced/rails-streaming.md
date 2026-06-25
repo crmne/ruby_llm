@@ -88,11 +88,8 @@ class ChatStreamJob < ApplicationJob
     chat = Chat.find(chat_id)
 
     chat.complete do |chunk|
-      # Get the assistant message record (created before streaming starts)
-      assistant_message = chat.messages.last
-      if chunk.content && assistant_message
-        assistant_message.broadcast_append_chunk(chunk.content)
-      end
+      # chat.message is the assistant record created before streaming starts
+      chat.message.broadcast_append_chunk(chunk.content) if chunk.content.present?
     end
   end
 end

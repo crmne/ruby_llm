@@ -768,6 +768,77 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     end
   end
 
+  describe 'persisted assistant message reader' do
+    it 'is nil before a completion and points at the assistant record afterwards' do
+      chat = Chat.create!(model: model)
+      provider = chat.to_llm.instance_variable_get(:@provider)
+      allow(provider).to receive(:complete).and_return(RubyLLM::Message.new(role: :assistant, content: 'Hello back'))
+
+      expect(chat.message).to be_nil
+
+      chat.ask('Hello')
+
+      expect(chat.message).to be_a(Message)
+      expect(chat.message.role).to eq('assistant')
+      expect(chat.message.content).to eq('Hello back')
+      expect(chat.message).to eq(chat.messages.order(:id).last)
+    end
+
+    it 'is available inside the streaming block as the in-progress assistant record' do
+      chat = Chat.create!(model: model)
+      llm_chat = chat.to_llm
+      provider = llm_chat.instance_variable_get(:@provider)
+
+      allow(provider).to receive(:complete) do |*, &block|
+        block&.call(RubyLLM::Chunk.new(role: :assistant, content: 'Hel'))
+        block&.call(RubyLLM::Chunk.new(role: :assistant, content: 'lo'))
+        RubyLLM::Message.new(role: :assistant, content: 'Hello')
+      end
+
+      messages_seen = []
+      chat.ask('Hi') do |_chunk|
+        messages_seen << chat.message
+      end
+
+      expect(messages_seen.size).to eq(2)
+      expect(messages_seen).to all(be_a(Message))
+      expect(messages_seen.map(&:id).uniq).to eq([chat.message.id])
+      expect(chat.message.role).to eq('assistant')
+      expect(chat.message.content).to eq('Hello')
+    end
+
+    it 'reassigns message on each tool-flow assistant turn' do
+      chat = Chat.create!(model: model).with_tool(Calculator)
+      llm_chat = chat.to_llm
+      provider = llm_chat.instance_variable_get(:@provider)
+
+      tool_call = RubyLLM::ToolCall.new(id: 'call_1', name: 'calculator', arguments: { expression: '2 + 2' })
+      call_count = 0
+      assistant_ids_during_stream = []
+
+      allow(provider).to receive(:complete) do |*, &block|
+        call_count += 1
+        if call_count == 1
+          block&.call(RubyLLM::Chunk.new(role: :assistant, content: nil, tool_calls: { 'call_1' => tool_call }))
+          RubyLLM::Message.new(role: :assistant, content: nil, tool_calls: { 'call_1' => tool_call })
+        else
+          block&.call(RubyLLM::Chunk.new(role: :assistant, content: '4'))
+          RubyLLM::Message.new(role: :assistant, content: '4')
+        end
+      end
+
+      chat.ask('What is 2 + 2?') do |_chunk|
+        assistant_ids_during_stream << chat.message.id if chat.message
+      end
+
+      assistant_messages = chat.messages.where(role: :assistant).order(:id)
+      expect(assistant_messages.count).to be >= 2
+      expect(assistant_ids_during_stream).not_to be_empty
+      expect(chat.message).to eq(assistant_messages.last)
+      expect(chat.message.content).to eq('4')
+    end
+  end
+
   describe 'event callbacks' do
     it 'runs additive callbacks while preserving persistence callbacks' do
       first_callback_called = false
