@@ -195,7 +195,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         class_name: 'class ChatResponseJob',
         lookup_line: 'chat = Chat.find(chat_id)',
         ask_line: 'chat.ask(content)',
-        last_message_line: 'message = chat.messages.last'
+        last_message_line: 'chat.message.broadcast_append_chunk(chunk.content)'
       },
       functionality_example: 'chat functionality works correctly',
       functionality_script: <<~RUBY
@@ -271,7 +271,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         class_name: 'class LlmChatResponseJob',
         lookup_line: 'llm_chat = Llm::Chat.find(llm_chat_id)',
         ask_line: 'llm_chat.ask(content)',
-        last_message_line: 'llm_message = llm_chat.llm_messages.last'
+        last_message_line: 'llm_chat.message.broadcast_append_chunk(chunk.content)'
       },
       extra_view_example: 'views use correct partial paths',
       extra_view_assertions: lambda do

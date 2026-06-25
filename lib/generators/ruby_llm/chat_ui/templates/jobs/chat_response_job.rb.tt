@@ -4,8 +4,7 @@ class <%= chat_job_class_name %> < ApplicationJob
 
     <%= chat_variable_name %>.ask(content) do |chunk|
       if chunk.content && !chunk.content.empty?
-        <%= message_variable_name %> = <%= chat_variable_name %>.<%= message_table_name %>.last
-        <%= message_variable_name %>.broadcast_append_chunk(chunk.content)
+        <%= chat_variable_name %>.message.broadcast_append_chunk(chunk.content)
       end
     end
   end

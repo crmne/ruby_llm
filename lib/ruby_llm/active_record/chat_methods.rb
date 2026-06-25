@@ -16,6 +16,11 @@ module RubyLLM
 
       attr_accessor :assume_model_exists, :context
 
+      # The assistant message record currently being persisted during a complete/ask call.
+      # Set by persist_new_message before streaming starts; reassigned on each tool-flow turn.
+      # Useful for broadcasting streamed chunks without relying on messages.last.
+      attr_reader :message
+
       def messages_association
         send(messages_association_name)
       end
