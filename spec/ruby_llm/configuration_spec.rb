@@ -27,6 +27,7 @@ RSpec.describe RubyLLM::Configuration do
         :default_speech_model,
         :model_registry_file,
         :openai_api_key,
+        :llm_gateway_api_base,
         :openrouter_api_base
       )
     end
