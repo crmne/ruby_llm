@@ -134,8 +134,8 @@ module RubyLLM
       default_protocol.new(self).list_models
     end
 
-    def embed(text, model:, dimensions:)
-      default_protocol.new(self).embed(text, model:, dimensions:)
+    def embed(text, model:, dimensions:, **provider_params)
+      default_protocol.new(self).embed(text, model:, dimensions:, **provider_params)
     end
 
     def moderate(input, model:)

@@ -11,10 +11,15 @@ module RubyLLM
           "#{@provider.model_path(model)}:predict"
         end
 
-        def render_embedding_payload(text, model:, dimensions:) # rubocop:disable Lint/UnusedMethodArgument
-          {
-            instances: [text].flatten.map { |t| { content: t.to_s } }
-          }.tap do |payload|
+        def render_embedding_payload(text, model:, dimensions:, task_type: nil, title: nil, **) # rubocop:disable Lint/UnusedMethodArgument
+          instances = [text].flatten.map do |t|
+            instance = { content: t.to_s }
+            instance[:task_type] = task_type if task_type
+            instance[:title] = title if title
+            instance
+          end
+
+          { instances: instances }.tap do |payload|
             payload[:parameters] = { outputDimensionality: dimensions } if dimensions
           end
         end
