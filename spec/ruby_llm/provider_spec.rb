@@ -56,6 +56,12 @@ RSpec.describe RubyLLM::Provider do
         custom: 'https://openai-proxy.example.com/v1',
         default: 'https://api.openai.com/v1'
       },
+      llm_gateway: {
+        provider: RubyLLM::Providers::LLMGateway,
+        key: :llm_gateway_api_base,
+        custom: 'https://llm-gateway-proxy.example.com/v1',
+        default: 'https://api.llmgateway.io/v1'
+      },
       openrouter: {
         provider: RubyLLM::Providers::OpenRouter,
         key: :openrouter_api_base,
@@ -102,6 +108,8 @@ RSpec.describe RubyLLM::Provider do
       when :gpustack
         config.gpustack_api_base = 'https://gpustack.example.com/v1'
         config.gpustack_api_key = 'gpustack-key'
+      when :llm_gateway
+        config.llm_gateway_api_key = 'llm-gateway-key'
       when :mistral
         config.mistral_api_key = 'mistral-key'
       when :ollama
@@ -313,7 +321,7 @@ RSpec.describe RubyLLM::Provider do
 
   describe 'file protocol resolution' do
     it 'exposes provider-managed files only where implemented' do
-      file_providers = %i[anthropic azure bedrock gemini mistral openai openrouter vertexai xai]
+      file_providers = %i[anthropic azure bedrock gemini llm_gateway mistral openai openrouter vertexai xai]
 
       described_class.providers.each do |slug, provider_class|
         expect(provider_class.new(config_for(slug)).files?).to eq(file_providers.include?(slug))

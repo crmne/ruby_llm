@@ -35,6 +35,7 @@ module RubyLLM
       vertexai
       bedrock
       openrouter
+      llm_gateway
       azure
       ollama
       gpustack
