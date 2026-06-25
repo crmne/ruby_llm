@@ -11,7 +11,7 @@ module RubyLLM
           "models/#{model}:batchEmbedContents"
         end
 
-        def render_embedding_payload(text, model:, dimensions:)
+        def render_embedding_payload(text, model:, dimensions:, **)
           { requests: [text].flatten.map { |t| single_embedding_payload(t, model:, dimensions:) } }
         end
 

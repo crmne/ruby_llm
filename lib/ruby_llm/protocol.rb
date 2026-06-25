@@ -56,8 +56,8 @@ module RubyLLM
       parse_list_models_response response, @provider.slug, @provider.capabilities
     end
 
-    def embed(text, model:, dimensions:)
-      payload = render_embedding_payload(text, model:, dimensions:)
+    def embed(text, model:, dimensions:, **provider_params)
+      payload = render_embedding_payload(text, model:, dimensions:, **provider_params)
       response = @connection.post(embedding_url(model:), payload)
       parse_embedding_response(response, model:, text:)
     end
