@@ -30,6 +30,7 @@ module RubyLLM
                    format: nil,
                    context: nil,
                    params: {},
+                   metadata: nil,
                    **options)
       config = context&.config || RubyLLM.config
       model ||= config.default_speech_model
@@ -43,7 +44,8 @@ module RubyLLM
         model_info: model,
         input: input,
         voice: voice,
-        format: format
+        format: format,
+        metadata: Metadata.coerce(metadata)
       }
 
       RubyLLM.instrument('speech.ruby_llm', payload, config: config) do |event|

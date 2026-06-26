@@ -16,7 +16,8 @@ module RubyLLM
                       model: nil,
                       provider: nil,
                       assume_model_exists: false,
-                      context: nil)
+                      context: nil,
+                      metadata: nil)
       config = context&.config || RubyLLM.config
       model ||= config.default_moderation_model
       model, provider_instance = Models.resolve(model, provider: provider, assume_exists: assume_model_exists,
@@ -26,7 +27,8 @@ module RubyLLM
         provider_class: provider_instance.class.display_name,
         model: model.id,
         model_info: model,
-        input: input
+        input: input,
+        metadata: Metadata.coerce(metadata)
       }
 
       RubyLLM.instrument('moderation.ruby_llm', payload, config: config) do |event|

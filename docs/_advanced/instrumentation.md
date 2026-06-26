@@ -25,6 +25,7 @@ After reading this guide, you will know:
 
 *   How to subscribe to RubyLLM events in Rails.
 *   How to connect RubyLLM instrumentation outside Rails.
+*   How to attach per-call metadata for observability attribution.
 *   Which events RubyLLM emits.
 *   Which payload fields may contain sensitive application data.
 
@@ -45,6 +46,36 @@ end
 ```
 
 When an instrumented block raises, Rails adds the standard `:exception` and `:exception_object` payload keys.
+
+## Per-call metadata
+
+Attach caller attribution with `with_metadata` on chat (and agents / ActiveRecord chat models). Metadata is **not** sent to providers — it only rides along on instrumentation payloads so subscribers can attribute metrics and traces without monkey-patching core classes.
+
+```ruby
+RubyLLM.chat
+  .with_metadata(namespace: :chat_session, tags: { academy_id: 42 })
+  .with_instructions(instructions)
+  .ask(message)
+```
+
+Successive `with_metadata` calls merge tags and replace `namespace` when a new one is given. One-shot APIs (`embed`, `paint`, `moderate`, `speak`, `transcribe`) accept a `metadata:` keyword (`RubyLLM::Metadata` or a hash with `:namespace` / `:tags`).
+
+```ruby
+# config/initializers/ruby_llm_instrumentation.rb
+ActiveSupport::Notifications.subscribe('chat.ruby_llm') do |_name, _start, _finish, _id, payload|
+  metadata = payload[:metadata]
+  next unless metadata
+
+  Appsignal.increment_counter("#{metadata.namespace}_requests", 1, metadata.tags)
+  Appsignal.add_distribution_value(
+    "#{metadata.namespace}_input_tokens",
+    payload[:input_tokens],
+    metadata.tags
+  )
+end
+```
+
+Use metadata for observability attribution only. Provider request options still go through `with_params` / keyword arguments; configuration scoping still uses [contexts]({% link _getting_started/configuration-connection.md %}#contexts-isolated-configurations).
 
 ## Outside Rails
 

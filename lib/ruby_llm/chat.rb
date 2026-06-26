@@ -7,7 +7,8 @@ module RubyLLM
   class Chat
     include Enumerable
 
-    attr_reader :model, :provider, :messages, :tools, :tool_prefs, :params, :headers, :schema, :concurrency
+    attr_reader :model, :provider, :messages, :tools, :tool_prefs, :params, :headers, :schema, :concurrency,
+                :metadata
 
     def initialize(model: nil, provider: nil, assume_model_exists: false, context: nil)
       if assume_model_exists && !provider
@@ -29,6 +30,7 @@ module RubyLLM
       @thinking = nil
       @citations = false
       @protocol = nil
+      @metadata = nil
       @callbacks = Hash.new { |callbacks, name| callbacks[name] = [] }
     end
 
@@ -151,6 +153,18 @@ module RubyLLM
       @context = context
       @config = context.config
       with_model(@model.id, provider: @provider.slug, assume_exists: true)
+      self
+    end
+
+    # Attaches caller attribution for observability. Not sent to providers —
+    # only included in instrumentation payloads (distinct from with_params /
+    # with_context). Successive calls merge tags and replace namespace when given.
+    def with_metadata(namespace: nil, tags: {})
+      @metadata = if @metadata
+                    @metadata.merge(namespace: namespace, tags: tags)
+                  else
+                    Metadata.new(namespace: namespace, tags: tags)
+                  end
       self
     end
 
@@ -323,7 +337,8 @@ module RubyLLM
         schema: schema,
         thinking: @thinking,
         citations: @citations,
-        streaming: streaming
+        streaming: streaming,
+        metadata: metadata
       }
     end
 
@@ -445,7 +460,8 @@ module RubyLLM
         tool_call: tool_call,
         tool_name: tool.name,
         tool_arguments: args,
-        tool_call_id: tool_call.id
+        tool_call_id: tool_call.id,
+        metadata: metadata
       }
 
       RubyLLM.instrument('tool_call.ruby_llm', payload, config: @config) do |event|
