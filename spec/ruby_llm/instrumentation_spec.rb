@@ -87,12 +87,47 @@ RSpec.describe RubyLLM::Instrumentation do
       cached_tokens: 2,
       thinking_tokens: 1,
       temperature: 0.2,
-      streaming: false
+      streaming: false,
+      metadata: nil
     )
     expect(payload).not_to have_key(:operation)
     expect(payload).not_to have_key(:result)
     expect(payload[:input_messages].first.content).to eq('Hello')
     expect(payload[:messages_after].last.content).to eq('done')
+  end
+
+  it 'includes with_metadata in chat and tool_call instrumentation payloads' do
+    stub_const('MetadataProbeTool', Class.new(RubyLLM::Tool) do
+      param :value
+
+      def execute(value:)
+        "tool #{value}"
+      end
+    end)
+    instrumenter = CaptureInstrumenter.new
+    context = RubyLLM.context { |config| config.instrumenter = instrumenter }
+    tool_call = RubyLLM::ToolCall.new(id: 'call_1', name: 'metadata_probe', arguments: { value: 'ok' })
+    tool_message = RubyLLM::Message.new(role: :assistant, content: nil, tool_calls: { 'call_1' => tool_call })
+    final_message = RubyLLM::Message.new(role: :assistant, content: 'complete')
+    chat = context.chat(model: 'gpt-4.1-nano')
+                   .with_metadata(namespace: :summary, tags: { type: 'doc' })
+                   .with_metadata(tags: { academy_id: 42 })
+                   .with_tool(MetadataProbeTool)
+    provider = chat.instance_variable_get(:@provider)
+    allow(provider).to receive(:complete).and_return(tool_message, final_message)
+
+    chat.ask('Use the tool')
+
+    expect(chat.metadata.namespace).to eq(:summary)
+    expect(chat.metadata.tags).to eq(type: 'doc', academy_id: 42)
+
+    chat_payload = instrumenter.events.find { |name, _| name == 'chat.ruby_llm' }.last
+    expect(chat_payload[:metadata]).to eq(chat.metadata)
+    expect(chat_payload[:metadata].namespace).to eq(:summary)
+    expect(chat_payload[:metadata].tags).to include(type: 'doc', academy_id: 42)
+
+    tool_payload = instrumenter.events.find { |name, _| name == 'tool_call.ruby_llm' }.last
+    expect(tool_payload[:metadata]).to eq(chat.metadata)
   end
 
   it 'marks streaming chat events when a block is passed' do
@@ -154,7 +189,8 @@ RSpec.describe RubyLLM::Instrumentation do
     allow(provider).to receive_messages(embed: embedding, class: provider_class)
     allow(RubyLLM::Models).to receive(:resolve).and_return([model, provider])
 
-    result = context.embed(['hello'], model: 'text-embedding-3-small')
+    result = context.embed(['hello'], model: 'text-embedding-3-small',
+                                      metadata: { namespace: :search, tags: { index: 'docs' } })
 
     event_name, payload = instrumenter.events.last
     expect(result).to eq(embedding)
@@ -170,6 +206,9 @@ RSpec.describe RubyLLM::Instrumentation do
       embedding_dimensions: 3,
       embedding_count: 1
     )
+    expect(payload[:metadata]).to be_a(RubyLLM::Metadata)
+    expect(payload[:metadata].namespace).to eq(:search)
+    expect(payload[:metadata].tags).to eq(index: 'docs')
     expect(payload).not_to have_key(:operation)
   end
 

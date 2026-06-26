@@ -363,9 +363,9 @@ module RubyLLM
 
     attr_reader :chat
 
-    def_delegators :chat, :model, :messages, :tools, :params, :headers, :schema, :ask, :say, :with_tool, :with_tools,
-                   :with_model, :with_temperature, :with_thinking, :with_citations, :with_context, :with_params,
-                   :with_headers, :with_schema,
+    def_delegators :chat, :model, :messages, :tools, :params, :headers, :schema, :metadata, :ask, :say, :with_tool,
+                   :with_tools, :with_model, :with_temperature, :with_thinking, :with_citations, :with_context,
+                   :with_metadata, :with_params, :with_headers, :with_schema,
                    :before_message, :after_message, :before_tool_call, :after_tool_result, :each, :complete,
                    :complete?, :ask_later, :generate, :run_tools, :step, :add_message, :add_completion,
                    :cost

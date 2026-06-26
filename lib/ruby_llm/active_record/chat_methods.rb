@@ -122,6 +122,11 @@ module RubyLLM
         self
       end
 
+      def with_metadata(...)
+        to_llm.with_metadata(...)
+        self
+      end
+
       def with_headers(...)
         to_llm.with_headers(...)
         self

@@ -22,6 +22,7 @@ module RubyLLM
                         provider: nil,
                         assume_model_exists: false,
                         context: nil,
+                        metadata: nil,
                         **options)
       config = context&.config || RubyLLM.config
       model ||= config.default_transcription_model
@@ -32,7 +33,8 @@ module RubyLLM
         provider_class: provider_instance.class.display_name,
         model: model.id,
         model_info: model,
-        language: language
+        language: language,
+        metadata: Metadata.coerce(metadata)
       }
 
       RubyLLM.instrument('transcription.ruby_llm', payload, config: config) do |event|

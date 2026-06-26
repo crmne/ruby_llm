@@ -15,7 +15,8 @@ module RubyLLM
                    context: nil,
                    with: nil,
                    mask: nil,
-                   params: {})
+                   params: {},
+                   metadata: nil)
       config = context&.config || RubyLLM.config
       model ||= config.default_image_model
       model, provider_instance = Models.resolve(model, provider: provider, assume_exists: assume_model_exists,
@@ -26,7 +27,8 @@ module RubyLLM
         model: model.id,
         model_info: model,
         prompt: prompt,
-        size: size
+        size: size,
+        metadata: Metadata.coerce(metadata)
       }
 
       RubyLLM.instrument('image.ruby_llm', payload, config: config) do |event|
