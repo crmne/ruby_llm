@@ -90,10 +90,11 @@ module RubyLLM
         end
 
         def input_tokens(usage)
-          input_tokens = usage['inputTokens']
-          return unless input_tokens
-
-          [input_tokens.to_i - usage['cacheReadInputTokens'].to_i - usage['cacheWriteInputTokens'].to_i, 0].max
+          # AWS Bedrock reports inputTokens as already non-cached; cacheReadInputTokens and
+          # cacheWriteInputTokens are separate buckets, not folded into inputTokens. Subtracting
+          # them (as inclusive providers require) understates input and floors to zero on cache
+          # hits. See https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-caching.html
+          usage['inputTokens']
         end
 
         def reasoning_tokens(usage)

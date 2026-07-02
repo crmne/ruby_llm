@@ -4,7 +4,9 @@ require 'spec_helper'
 
 RSpec.describe RubyLLM::Protocols::Converse::Chat do
   describe '.parse_completion_response' do
-    it 'normalizes cache read and write tokens out of input tokens' do
+    it 'exposes AWS inputTokens as-is (already non-cached) and keeps cache buckets separate' do
+      # Per AWS, inputTokens already excludes cache; a real payload sends the non-cached count
+      # directly, with cache read/write reported separately.
       response_body = {
         'modelId' => 'anthropic.claude-sonnet-4-5-20250929-v1:0',
         'output' => {
@@ -13,7 +15,7 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
           }
         },
         'usage' => {
-          'inputTokens' => 100,
+          'inputTokens' => 50,
           'outputTokens' => 5,
           'cacheReadInputTokens' => 40,
           'cacheWriteInputTokens' => 10
@@ -27,6 +29,30 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
       expect(message.output_tokens).to eq(5)
       expect(message.cached_tokens).to eq(40)
       expect(message.cache_creation_tokens).to eq(10)
+    end
+
+    it 'does not subtract cache buckets or floor to zero when the cached prefix exceeds fresh input' do
+      response_body = {
+        'modelId' => 'anthropic.claude-sonnet-4-5-20250929-v1:0',
+        'output' => {
+          'message' => {
+            'content' => [{ 'text' => 'Hi!' }]
+          }
+        },
+        'usage' => {
+          'inputTokens' => 3,
+          'outputTokens' => 5,
+          'cacheReadInputTokens' => 7714,
+          'cacheWriteInputTokens' => 327
+        }
+      }
+
+      response = instance_double(Faraday::Response, body: response_body)
+      message = described_class.parse_completion_response(response)
+
+      expect(message.input_tokens).to eq(3)
+      expect(message.cached_tokens).to eq(7714)
+      expect(message.cache_creation_tokens).to eq(327)
     end
 
     it 'preserves raw stopReason as finish_reason' do
