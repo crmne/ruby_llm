@@ -4,6 +4,26 @@ require 'spec_helper'
 
 RSpec.describe RubyLLM::StreamAccumulator do
   describe '#add' do
+    it 'ignores an empty model_id from an initial chunk' do
+      accumulator = described_class.new
+
+      accumulator.add(RubyLLM::Chunk.new(role: :assistant, content: '', model_id: ''))
+      accumulator.add(RubyLLM::Chunk.new(role: :assistant, content: 'Hi', model_id: 'gpt-5.4-2026-03-05'))
+
+      message = accumulator.to_message(nil)
+      expect(message.model_id).to eq('gpt-5.4-2026-03-05')
+    end
+
+    it 'keeps the first non-empty model_id' do
+      accumulator = described_class.new
+
+      accumulator.add(RubyLLM::Chunk.new(role: :assistant, content: 'Hi', model_id: 'model-a'))
+      accumulator.add(RubyLLM::Chunk.new(role: :assistant, content: '!', model_id: 'model-b'))
+
+      message = accumulator.to_message(nil)
+      expect(message.model_id).to eq('model-a')
+    end
+
     it 'handles tool call deltas that omit arguments' do
       accumulator = described_class.new
       tool_call = RubyLLM::ToolCall.new(id: 'call_1', name: 'weather', arguments: nil)
