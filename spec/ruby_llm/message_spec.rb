@@ -4,7 +4,7 @@ require 'spec_helper'
 
 RSpec.describe RubyLLM::Message do
   let(:model) do
-    RubyLLM::Model::Info.new(
+    RubyLLM::Model.new(
       id: 'priced-model',
       name: 'Priced Model',
       provider: 'openai',
@@ -31,6 +31,22 @@ RSpec.describe RubyLLM::Message do
       message = described_class.new(role: :assistant, content: nil, tool_calls: nil)
 
       expect(message.content).to be_nil
+    end
+  end
+
+  describe '#cache_until_here!' do
+    it 'marks the message as a cache boundary' do
+      message = described_class.new(role: :user, content: 'hello')
+
+      expect(message.cache_until_here?).to be false
+      expect(message.cache_until_here!).to eq(message)
+      expect(message.cache_until_here?).to be true
+    end
+
+    it 'can be initialized as a cache boundary' do
+      message = described_class.new(role: :user, content: 'hello', cache_until_here: true)
+
+      expect(message.cache_until_here?).to be true
     end
   end
 
@@ -91,6 +107,12 @@ RSpec.describe RubyLLM::Message do
 
       expect(message.finish_reason).to eq('length')
       expect(message.to_h[:finish_reason]).to eq('length')
+    end
+
+    it 'includes cache_until_here when marked' do
+      message = described_class.new(role: :user, content: 'Hello').cache_until_here!
+
+      expect(message.to_h[:cache_until_here]).to be true
     end
   end
 

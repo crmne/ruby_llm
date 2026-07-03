@@ -61,8 +61,7 @@ module RubyLLM
           provider: model_record.provider.to_sym,
           assume_model_exists: assume_model_exists || false
         )
-        ordered_messages = order_messages_for_llm(messages_association.to_a)
-        @chat.messages = ordered_messages
+        @chat.messages = eager_load_messages
         reapply_runtime_instructions(@chat)
 
         setup_persistence_callbacks
@@ -102,6 +101,11 @@ module RubyLLM
         self
       end
 
+      def with_fallbacks(...)
+        to_llm.with_fallbacks(...)
+        self
+      end
+
       def with_temperature(...)
         to_llm.with_temperature(...)
         self
@@ -114,6 +118,16 @@ module RubyLLM
 
       def with_citations(...)
         to_llm.with_citations(...)
+        self
+      end
+
+      def with_caching(...)
+        to_llm.with_caching(...)
+        self
+      end
+
+      def without_caching
+        to_llm.without_caching
         self
       end
 
@@ -152,12 +166,23 @@ module RubyLLM
         self
       end
 
+      def before_fallback(...)
+        to_llm.before_fallback(...)
+        self
+      end
+
+      def after_fallback(...)
+        to_llm.after_fallback(...)
+        self
+      end
+
       def add_message(message_or_attributes)
         llm_message = message_or_attributes.is_a?(RubyLLM::Message) ? message_or_attributes : RubyLLM::Message.new(message_or_attributes)
         content_text, attachments, content_raw = prepare_content_for_storage(llm_message.content)
 
         attrs = { role: llm_message.role, content: content_text }
         add_finish_reason_attribute(attrs, llm_message, messages_association.klass)
+        attrs[:cache_until_here] = llm_message.cache_until_here?
         parent_tool_call_assoc = messages_association.klass.reflect_on_association(:parent_tool_call)
         if parent_tool_call_assoc && llm_message.tool_call_id
           tool_call_id = find_tool_call_id(llm_message.tool_call_id)
@@ -171,6 +196,19 @@ module RubyLLM
         persist_tool_calls(llm_message.tool_calls, message_record:) if llm_message.tool_calls.present?
 
         message_record
+      end
+
+      def cache_until_here!
+        message_record = messages_association.order(:id).last
+        if message_record
+          message_record.cache_until_here!
+        elsif @chat&.messages&.any?
+          @chat.cache_until_here!
+        else
+          raise ArgumentError, 'No messages to cache'
+        end
+
+        self
       end
 
       def cost
@@ -220,7 +258,7 @@ module RubyLLM
 
       private
 
-      def resolve_model_from_strings # rubocop:disable Metrics/PerceivedComplexity
+      def resolve_model_from_strings
         config = context&.config || RubyLLM.config
         @model_string ||= config.default_model unless model_association
         return unless @model_string
@@ -232,22 +270,7 @@ module RubyLLM
           config: config
         )
 
-        model_class = self.class.model_class.constantize
-        model_record = model_class.find_or_create_by!(
-          model_id: model_info.id,
-          provider: model_info.provider
-        ) do |m|
-          m.name = model_info.name || model_info.id
-          m.family = model_info.family
-          m.context_window = model_info.context_window
-          m.max_output_tokens = model_info.max_output_tokens
-          m.capabilities = model_info.capabilities || []
-          m.modalities = model_info.modalities.to_h
-          m.pricing = model_info.pricing.to_h
-          m.metadata = model_info.metadata || {}
-        end
-
-        self.model_association = model_record
+        self.model_association = find_or_create_model_record(model_info)
         @model_string = nil
         @provider_string = nil
       end
@@ -259,7 +282,7 @@ module RubyLLM
 
       def cleanup_orphaned_tool_results # rubocop:disable Metrics/PerceivedComplexity
         messages_association.reload
-        last = messages_association.order(:id).last
+        last = eager_load_messages.max_by(&:id)
 
         return unless last&.tool_call? || last&.tool_result?
 
@@ -278,6 +301,45 @@ module RubyLLM
         end
       end
 
+      def eager_load_messages
+        assoc = messages_association
+        messages = assoc.to_a
+        return messages unless assoc.respond_to?(:klass)
+
+        msg_class = assoc.klass
+        associations = [
+          msg_class.tool_calls_association_name,
+          :parent_tool_call,
+          msg_class.model_association_name
+        ].compact
+
+        ::ActiveRecord::Associations::Preloader.new(records: messages, associations: associations).call
+        messages
+      end
+
+      def find_or_create_model_record(model_info)
+        model_class = self.class.model_class.constantize
+        model_class.find_or_create_by!(
+          model_id: model_info.id,
+          provider: model_info.provider
+        ) do |m|
+          m.name = model_info.name || model_info.id
+          m.family = model_info.family
+          m.context_window = model_info.context_window
+          m.max_output_tokens = model_info.max_output_tokens
+          m.capabilities = model_info.capabilities || []
+          m.modalities = model_info.modalities.to_h
+          m.pricing = model_info.pricing.to_h
+          m.metadata = model_info.metadata || {}
+        end
+      end
+
+      def current_llm_model_association(_message = nil)
+        model_info = @chat&.model
+
+        model_info ? find_or_create_model_record(model_info) : model_association
+      end
+
       def setup_persistence_callbacks
         return @chat if @persistence_callbacks_setup
 
@@ -289,16 +351,8 @@ module RubyLLM
       end
 
       def replace_persisted_system_instructions(instructions)
-        system_messages = messages_association.where(role: :system).order(:id).to_a
-
-        if system_messages.empty?
-          messages_association.create!(role: :system, content: instructions)
-          return
-        end
-
-        primary_message = system_messages.shift
-        primary_message.update!(content: instructions) if primary_message.content != instructions
-        system_messages.each(&:destroy!)
+        messages_association.where(role: :system).destroy_all
+        messages_association.create!(role: :system, content: instructions)
       end
 
       def persist_system_instruction(instructions, append:)
@@ -309,11 +363,6 @@ module RubyLLM
             replace_persisted_system_instructions(instructions)
           end
         end
-      end
-
-      def order_messages_for_llm(messages)
-        system_messages, non_system_messages = messages.partition { |msg| msg.role.to_s == 'system' }
-        system_messages + non_system_messages
       end
 
       def runtime_instructions
@@ -337,7 +386,15 @@ module RubyLLM
       end
 
       def persist_new_message
-        @message = messages_association.create!(role: :assistant, content: '')
+        if @message&.persisted? && @message.content.blank? &&
+           !@message.tool_calls_association.exists? &&
+           (!@message.respond_to?(:content_raw) || @message.content_raw.blank?)
+          @message.destroy
+        end
+
+        attrs = { role: :assistant, content: '' }
+        attrs[self.class.model_association_name] = current_llm_model_association
+        @message = messages_association.create!(attrs)
       end
 
       def persist_message_completion(message)
@@ -368,7 +425,8 @@ module RubyLLM
         attrs[:thinking_tokens] = message.thinking_tokens if @message.has_attribute?(:thinking_tokens)
         attrs[:citations] = message.citations.map(&:to_h).presence if @message.has_attribute?(:citations)
         attrs[:finish_reason] = message.finish_reason if @message.has_attribute?(:finish_reason)
-        attrs[self.class.model_association_name] = model_association
+        attrs[:cache_until_here] = message.cache_until_here?
+        attrs[self.class.model_association_name] = current_llm_model_association(message)
         if tool_call_id
           parent_tool_call_assoc = @message.class.reflect_on_association(:parent_tool_call)
           attrs[parent_tool_call_assoc.foreign_key] = tool_call_id

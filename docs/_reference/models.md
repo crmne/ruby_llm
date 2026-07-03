@@ -27,7 +27,7 @@ After reading this guide, you will know:
 *   How RubyLLM discovers and registers models.
 *   How to refresh the registry from provider APIs and persist it to disk.
 *   How to find and filter available models by provider, type, or capabilities.
-*   What `Model::Info` exposes about a model's capabilities and pricing.
+*   What `RubyLLM::Model` exposes about a model's capabilities and pricing.
 *   How to use model aliases and resolve the same alias across providers.
 
 ## The Model Registry
@@ -157,7 +157,7 @@ puts "Found #{openai_vision_models.count} OpenAI vision models."
 
 ### Finding a Specific Model
 
-Use `find` to get a `Model::Info` object containing details about a specific model.
+Use `find` to get a `RubyLLM::Model` object containing details about a specific model.
 
 ```ruby
 model_info = RubyLLM.models.find('{{ site.models.openai_tools }}')

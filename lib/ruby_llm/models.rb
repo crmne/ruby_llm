@@ -83,7 +83,7 @@ module RubyLLM
 
       def read_from_json(file = RubyLLM.config.model_registry_file)
         data = File.exist?(file) ? File.read(file) : '[]'
-        JSON.parse(data, symbolize_names: true).map { |model| Model::Info.new(model) }
+        JSON.parse(data, symbolize_names: true).map { |model| Model.new(model) }
       rescue JSON::ParserError
         []
       end
@@ -147,7 +147,7 @@ module RubyLLM
                     end
                   end
 
-          model ||= Model::Info.default(model_id, provider_class.slug)
+          model ||= Model.default(model_id, provider_class.slug)
         else
           model = Models.find model_id, provider
           provider_class = Provider.resolve!(model.provider)
@@ -170,7 +170,7 @@ module RubyLLM
           next [] unless provider_slug
 
           (provider_data[:models] || {}).values.map do |model_data|
-            Model::Info.new(models_dev_model_to_info(model_data, provider_slug, provider_key.to_s))
+            Model.new(models_dev_model_attributes(model_data, provider_slug, provider_key.to_s))
           end
         end
         { models: models.reject { |model| model.provider.nil? || model.id.nil? }, fetched: true }
@@ -259,7 +259,7 @@ module RubyLLM
           if bedrock_model
             data = bedrock_model.to_h.merge(id: model_id)
             data[:context_window] = context_override if context_override
-            return Model::Info.new(data)
+            return Model.new(data)
           end
         end
 
@@ -270,7 +270,7 @@ module RubyLLM
         return unless gemini_model
 
         # Return Gemini's models.dev data but with VertexAI as provider
-        Model::Info.new(gemini_model.to_h.merge(provider: 'vertexai'))
+        Model.new(gemini_model.to_h.merge(provider: 'vertexai'))
       end
 
       def index_by_key(models)
@@ -292,7 +292,7 @@ module RubyLLM
         provider_capabilities = provider_model.capabilities - MODELS_DEV_AUTHORITY_CAPABILITIES
         data[:capabilities] = (models_dev_model.capabilities + provider_capabilities).uniq
         normalize_embedding_modalities(data)
-        Model::Info.new(data)
+        Model.new(data)
       end
 
       def normalize_embedding_modalities(data)
@@ -317,7 +317,7 @@ module RubyLLM
         false
       end
 
-      def models_dev_model_to_info(model_data, provider_slug, provider_key)
+      def models_dev_model_attributes(model_data, provider_slug, provider_key)
         modalities = normalize_models_dev_modalities(model_data[:modalities])
         capabilities = models_dev_capabilities(model_data, modalities)
 

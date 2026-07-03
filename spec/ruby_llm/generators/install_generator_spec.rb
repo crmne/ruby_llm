@@ -71,6 +71,16 @@ RSpec.describe RubyLLM::Generators::InstallGenerator, :generator, type: :generat
       end
     end
 
+    it 'adds cache_until_here to message storage' do
+      within_test_app(app_path) do
+        migration = Dir.glob('db/migrate/*create_messages.rb').first
+        expect(migration).to be_present
+
+        content = File.read(migration)
+        expect(content).to include('t.boolean :cache_until_here')
+      end
+    end
+
     it 'keeps create_models migration schema-only' do
       within_test_app(app_path) do
         migration = Dir.glob('db/migrate/*create_models.rb').first

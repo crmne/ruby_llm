@@ -5,7 +5,7 @@ require 'spec_helper'
 RSpec.describe RubyLLM::Protocols::Anthropic::Streaming do
   let(:protocol) do
     RubyLLM::Protocols::Anthropic.allocate.tap do |object|
-      object.instance_variable_set(:@model, instance_double(RubyLLM::Model::Info, id: 'claude-sonnet-4-5'))
+      object.instance_variable_set(:@model, instance_double(RubyLLM::Model, id: 'claude-sonnet-4-5'))
     end
   end
 

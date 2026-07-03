@@ -94,6 +94,30 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
         ]
       )
     end
+
+    it 'adds cache_control to a system message marked as a cache boundary' do
+      msg = RubyLLM::Message.new(role: :system, content: 'Stable instructions').cache_until_here!
+
+      blocks = described_class.build_system_content([msg])
+
+      expect(blocks).to eq(
+        [
+          {
+            type: 'text',
+            text: 'Stable instructions',
+            cache_control: { type: 'ephemeral' }
+          }
+        ]
+      )
+    end
+
+    it 'uses configured cache_control for a system cache boundary' do
+      msg = RubyLLM::Message.new(role: :system, content: 'Stable instructions').cache_until_here!
+
+      blocks = described_class.build_system_content([msg], caching: { ttl: '1h' })
+
+      expect(blocks.dig(0, :cache_control)).to eq(type: 'ephemeral', ttl: '1h')
+    end
   end
 
   describe '.format_message' do
@@ -128,10 +152,18 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
       expect(formatted).not_to have_key(:finish_reason)
       expect(formatted[:content].first).to eq({ type: 'text', text: 'Done' })
     end
+
+    it 'adds cache_control to a user message marked as a cache boundary' do
+      message = RubyLLM::Message.new(role: :user, content: 'Long context').cache_until_here!
+
+      formatted = described_class.format_message(message)
+
+      expect(formatted[:content].last).to include(cache_control: { type: 'ephemeral' })
+    end
   end
 
   describe '.render_payload' do
-    let(:model) { instance_double(RubyLLM::Model::Info, id: 'claude-sonnet-4-5', max_tokens: nil) }
+    let(:model) { instance_double(RubyLLM::Model, id: 'claude-sonnet-4-5', max_tokens: nil) }
 
     it 'embeds raw system content blocks unchanged' do
       system_raw = RubyLLM::Protocols::Anthropic::Content.new(
@@ -153,6 +185,51 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
 
       expect(payload[:system]).to eq(system_raw.value)
       expect(payload[:messages].first[:content]).to eq([{ type: 'text', text: 'Hello there' }])
+    end
+
+    it 'adds top-level automatic cache_control when caching is enabled without explicit boundaries' do
+      payload = described_class.render_payload(
+        [RubyLLM::Message.new(role: :user, content: 'Hello there')],
+        tools: {},
+        temperature: nil,
+        model: model,
+        stream: false,
+        schema: nil,
+        caching: { ttl: '1h' }
+      )
+
+      expect(payload[:cache_control]).to eq(type: 'ephemeral', ttl: '1h')
+    end
+
+    it 'does not add top-level cache_control when an explicit boundary is present' do
+      message = RubyLLM::Message.new(role: :user, content: 'Long context').cache_until_here!
+
+      payload = described_class.render_payload(
+        [message],
+        tools: {},
+        temperature: nil,
+        model: model,
+        stream: false,
+        schema: nil,
+        caching: { ttl: '1h' }
+      )
+
+      expect(payload).not_to have_key(:cache_control)
+      expect(payload.dig(:messages, 0, :content, -1, :cache_control)).to eq(type: 'ephemeral', ttl: '1h')
+    end
+
+    it 'rejects caching options it cannot render' do
+      expect do
+        described_class.render_payload(
+          [RubyLLM::Message.new(role: :user, content: 'Hello there')],
+          tools: {},
+          temperature: nil,
+          model: model,
+          stream: false,
+          schema: nil,
+          caching: { retention: '24h' }
+        )
+      end.to raise_error(ArgumentError, /Anthropic prompt caching accepts :ttl/)
     end
 
     it 'includes output_config when schema is provided' do
@@ -264,7 +341,7 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
     let(:user_message) { RubyLLM::Message.new(role: :user, content: 'Hello') }
 
     def render_payload(model_id:, thinking:, schema: nil, reasoning_options: [])
-      model = RubyLLM::Model::Info.new(
+      model = RubyLLM::Model.new(
         id: model_id,
         provider: 'anthropic',
         metadata: { reasoning_options: reasoning_options }

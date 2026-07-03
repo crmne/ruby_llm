@@ -2,7 +2,7 @@
 layout: default
 title: Chat Event Handlers
 parent: "Chat"
-nav_order: 8
+nav_order: 9
 description: Hook into the chat lifecycle with additive callbacks for UI updates, logging, and analytics
 ---
 
@@ -26,6 +26,7 @@ After reading this guide, you will know:
 * How the `before_*` and `after_*` callbacks differ from the older `on_*` handlers.
 * How to read token usage inside an `after_message` callback.
 * How to observe tool calls and tool results as they happen.
+* How to observe model fallback attempts.
 * When callbacks fire for streaming versus non-streaming requests.
 
 ## Chat Event Handlers
@@ -69,9 +70,21 @@ chat.after_tool_result do |result|
   puts "Tool returned: #{result}"
 end
 
-# These callbacks work for both streaming and non-streaming requests
+# Called before RubyLLM tries a fallback model
+chat.before_fallback do |fallback|
+  puts "Falling back from #{fallback.from.id} to #{fallback.to.id}"
+end
+
+# Called after a fallback model succeeds or fails
+chat.after_fallback do |fallback|
+  puts "Fallback #{fallback.succeeded? ? 'succeeded' : 'failed'}"
+end
+
+# Message callbacks work for both streaming and non-streaming requests
 chat.ask "What is metaprogramming in Ruby?"
 ```
+
+Fallback callbacks run around each fallback attempt. `before_fallback` fires after the current model fails and before RubyLLM tries the fallback model. `after_fallback` fires when that fallback attempt succeeds or fails. The callback receives a `RubyLLM::Fallback` with `from`, `to`, `error`, `attempt`, `response`, `fallback_error`, `streaming?`, and `chunks_yielded?`.
 
 Each callback is additive - register as many as you like, and they run alongside RubyLLM's own bookkeeping (such as the Rails persistence callbacks). The older replacing handlers (`on_new_message`, `on_end_message`, `on_tool_call`, `on_tool_result`) were removed in 2.0.
 
@@ -80,4 +93,5 @@ Each callback is additive - register as many as you like, and they run alongside
 * [Chat]({% link _core_features/chat.md %}) - the core conversation interface these events fire on.
 * [Streaming]({% link _core_features/streaming.md %}) - stream chunks as the assistant generates them.
 * [Tools]({% link _core_features/tools.md %}) - define the tools whose calls and results these callbacks observe.
+* [Error Handling]({% link _advanced/error-handling.md %}#model-fallbacks) - configure model fallbacks and fallback error handling.
 * [Rails Integration]({% link _advanced/rails.md %}) - see how persistence callbacks run alongside your own.

@@ -59,6 +59,13 @@ RSpec.describe RubyLLM::Chat do
     it 'is complete on a chat with only instructions' do
       expect(chat.with_instructions('Be terse.')).to be_complete
     end
+
+    it 'ignores trailing instructions when deciding whether the model owes a response' do
+      chat.ask_later('Echo "hello" back to me.')
+      chat.with_instructions('Be terse.')
+
+      expect(chat).not_to be_complete
+    end
   end
 
   describe '#generate' do

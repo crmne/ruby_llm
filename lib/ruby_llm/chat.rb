@@ -7,7 +7,8 @@ module RubyLLM
   class Chat
     include Enumerable
 
-    attr_reader :model, :provider, :messages, :tools, :tool_prefs, :params, :headers, :schema, :concurrency
+    attr_reader :model, :provider, :messages, :tools, :tool_prefs, :params, :headers, :schema, :concurrency,
+                :caching, :fallbacks, :fallback_errors
 
     def initialize(model: nil, provider: nil, assume_model_exists: false, context: nil)
       if assume_model_exists && !provider
@@ -28,7 +29,10 @@ module RubyLLM
       @schema = nil
       @thinking = nil
       @citations = false
+      @caching = nil
       @protocol = nil
+      @fallbacks = []
+      @fallback_errors = Fallback::DEFAULT_ERRORS
       @callbacks = Hash.new { |callbacks, name| callbacks[name] = [] }
     end
 
@@ -47,26 +51,18 @@ module RubyLLM
     end
 
     # Calls the model once and appends its response. The model's move.
-    def generate(&block)
-      result = nil
-      payload = instrumentation_payload(streaming: block_given?)
+    def generate(&)
+      return generate_once(&) if fallbacks.empty?
 
-      RubyLLM.instrument('chat.ruby_llm', payload, config: @config) do |event|
-        result = provider_completion(&block)
-        run_callbacks(:before_message) unless block_given?
-        normalize_schema_response(result)
-        add_message result
-        run_callbacks(:after_message, result)
-        record_completion_event(event, result)
-      end
-      result
+      with_model_restored { generate_with_fallbacks(&) }
     end
 
     # Executes the pending tool calls and appends their results, without asking
     # the model to respond. Our move; the chat is then ready for the next
     # `generate`, or the next batch round.
     def run_tools
-      execute_pending_tool_calls(messages.last) if messages.last&.tool_call?
+      message = last_non_system_message
+      execute_pending_tool_calls(message) if message&.tool_call?
       self
     end
 
@@ -76,19 +72,19 @@ module RubyLLM
     def step(&)
       return if complete?
 
-      messages.last&.tool_call? ? run_tools : generate(&)
+      last_non_system_message&.tool_call? ? run_tools : generate(&)
     end
 
     # Runs the agentic loop to completion: step until nothing is left.
     def complete(&)
       step(&) until complete?
-      messages.last
+      last_non_system_message || messages.last
     end
 
     # Whether the model owes this chat nothing more: nothing is staged, or it
     # answered without calling a tool.
     def complete?
-      last = messages.last
+      last = last_non_system_message
       case last&.role
       when nil then true
       when :user, :tool then false
@@ -97,12 +93,7 @@ module RubyLLM
     end
 
     def with_instructions(instructions, append: false)
-      if append
-        append_system_instruction(instructions)
-      else
-        replace_system_instruction(instructions)
-      end
-
+      append ? append_system_instruction(instructions) : replace_system_instruction(instructions)
       self
     end
 
@@ -130,6 +121,12 @@ module RubyLLM
       self
     end
 
+    def with_fallbacks(*models, on: Fallback::DEFAULT_ERRORS)
+      @fallbacks = models.flatten.compact.map { |model| Fallback.build(model) }
+      @fallback_errors = Array(on).flatten.compact
+      self
+    end
+
     def with_temperature(temperature)
       @temperature = temperature
       self
@@ -144,6 +141,16 @@ module RubyLLM
 
     def with_citations(enabled = true) # rubocop:disable Style/OptionalBooleanParameter
       @citations = enabled
+      self
+    end
+
+    def with_caching(**options)
+      @caching = options.transform_keys(&:to_sym).freeze
+      self
+    end
+
+    def without_caching
+      @caching = nil
       self
     end
 
@@ -195,6 +202,14 @@ module RubyLLM
       add_callback(:after_tool_result, &)
     end
 
+    def before_fallback(&)
+      add_callback(:before_fallback, &)
+    end
+
+    def after_fallback(&)
+      add_callback(:after_fallback, &)
+    end
+
     def each(&)
       messages.each(&)
     end
@@ -212,6 +227,14 @@ module RubyLLM
       message = @provider.preprocess_message(message, model: @model, protocol: @protocol) if @provider
       messages << message
       message
+    end
+
+    def cache_until_here!
+      message = messages.last
+      raise ArgumentError, 'No messages to cache' unless message
+
+      message.cache_until_here!
+      self
     end
 
     # Receives a completion produced out-of-band (e.g. by a batch), running the
@@ -236,6 +259,7 @@ module RubyLLM
         schema: @schema,
         thinking: @thinking,
         citations: @citations,
+        caching: @caching,
         protocol: @protocol
       )
     end
@@ -306,6 +330,21 @@ module RubyLLM
       self
     end
 
+    def generate_once(stream_tracker: nil, &block)
+      result = nil
+      payload = instrumentation_payload(streaming: block_given?)
+
+      RubyLLM.instrument('chat.ruby_llm', payload, config: @config) do |event|
+        result = provider_completion(stream_tracker:, &block)
+        run_callbacks(:before_message) unless block_given?
+        normalize_schema_response(result)
+        add_message result
+        run_callbacks(:after_message, result)
+        record_completion_event(event, result)
+      end
+      result
+    end
+
     def instrumentation_payload(streaming:)
       {
         chat: self,
@@ -323,6 +362,7 @@ module RubyLLM
         schema: schema,
         thinking: @thinking,
         citations: @citations,
+        caching: @caching,
         streaming: streaming
       }
     end
@@ -343,7 +383,92 @@ module RubyLLM
       event[:thinking_tokens] = result.thinking_tokens
     end
 
-    def provider_completion(&)
+    def generate_with_fallbacks(&block)
+      fallback_queue = fallbacks.dup
+      attempt = 0
+      active_fallback = nil
+      streaming = block_given?
+
+      loop do
+        chunks_yielded = false
+
+        begin
+          result = generate_once(stream_tracker: proc { chunks_yielded = true }, &block)
+          finish_fallback(active_fallback, response: result)
+          return result
+        rescue StandardError => e
+          raise e unless fallback_error?(e)
+
+          finish_fallback(active_fallback, fallback_error: e)
+          active_fallback, attempt = fallback_to_next_model!(
+            fallback_queue,
+            error: e,
+            attempt: attempt,
+            streaming: streaming,
+            chunks_yielded: chunks_yielded
+          )
+        end
+      end
+    end
+
+    def with_model_restored
+      original_model = @model
+      original_provider = @provider
+      original_connection = @connection
+
+      yield
+    ensure
+      @model = original_model
+      @provider = original_provider
+      @connection = original_connection
+    end
+
+    def switch_to_fallback_model(fallback)
+      return with_resolved_model(fallback.model) if fallback.model
+
+      with_model(fallback.id, provider: fallback.provider)
+    end
+
+    def with_resolved_model(model)
+      provider_class = Provider.resolve!(model.provider)
+      @model = model
+      @provider = provider_class.new(@config)
+      @connection = @provider.connection
+      self
+    end
+
+    def fallback_to_next_model!(fallback_queue, error:, attempt:, streaming:, chunks_yielded:)
+      fallback = fallback_queue.shift
+      raise error unless fallback
+
+      attempt += 1
+      from_model = @model
+      switch_to_fallback_model(fallback)
+      fallback = fallback.with_attempt(
+        chat: self,
+        error: error,
+        from: from_model,
+        to: @model,
+        attempt: attempt,
+        streaming: streaming,
+        chunks_yielded: chunks_yielded
+      )
+      run_callbacks(:before_fallback, fallback)
+      [fallback, attempt]
+    end
+
+    def finish_fallback(fallback, response: nil, fallback_error: nil)
+      return unless fallback
+
+      fallback.finish(response: response, fallback_error: fallback_error)
+      run_callbacks(:after_fallback, fallback)
+    end
+
+    def fallback_error?(error)
+      fallback_errors.any? { |error_class| error.is_a?(error_class) }
+    end
+
+    def provider_completion(stream_tracker: nil, &)
       @provider.complete(
         messages,
         tools: @tools,
@@ -355,8 +480,9 @@ module RubyLLM
         schema: @schema,
         thinking: @thinking,
         citations: @citations,
+        caching: @caching,
         protocol: @protocol,
-        &wrap_streaming_block(&)
+        &wrap_streaming_block(stream_tracker:, &)
       )
     end
 
@@ -372,12 +498,15 @@ module RubyLLM
       @callbacks[name].each { |callback| callback.call(*args) }
     end
 
-    def wrap_streaming_block(&block)
+    def wrap_streaming_block(stream_tracker: nil, &block)
       return nil unless block
 
       run_callbacks(:before_message)
 
-      block
+      proc do |chunk|
+        stream_tracker&.call(chunk)
+        block.call(chunk)
+      end
     end
 
     def execute_pending_tool_calls(response)
@@ -525,6 +654,10 @@ module RubyLLM
       @tool_prefs[:choice] = nil
     end
 
+    def last_non_system_message
+      messages.reverse.find { |message| message.role != :system }
+    end
+
     def build_content(message, attachments)
       return message if content_like?(message)
 
@@ -536,22 +669,14 @@ module RubyLLM
     end
 
     def append_system_instruction(instructions)
-      system_messages, non_system_messages = @messages.partition { |msg| msg.role == :system }
-      system_messages << Message.new(role: :system, content: instructions)
-      @messages = system_messages + non_system_messages
+      message = Message.new(role: :system, content: instructions)
+      @messages << message
+      message
     end
 
     def replace_system_instruction(instructions)
-      system_messages, non_system_messages = @messages.partition { |msg| msg.role == :system }
-
-      if system_messages.empty?
-        system_messages = [Message.new(role: :system, content: instructions)]
-      else
-        system_messages.first.content = instructions
-        system_messages = [system_messages.first]
-      end
-
-      @messages = system_messages + non_system_messages
+      @messages.reject! { |msg| msg.role == :system }
+      append_system_instruction(instructions)
     end
   end
 end

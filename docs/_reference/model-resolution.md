@@ -30,7 +30,7 @@ After reading this guide, you will know:
 
 ## Overview
 
-Every entry point that takes a `model:` argument runs the same resolution. `RubyLLM.chat`, `RubyLLM.embed`, and `RubyLLM.paint` all hand the name to the registry, which returns two things: a `RubyLLM::Model::Info` describing the model, and the provider instance that will serve it.
+Every entry point that takes a `model:` argument runs the same resolution. `RubyLLM.chat`, `RubyLLM.embed`, and `RubyLLM.paint` all hand the name to the registry, which returns two things: a `RubyLLM::Model` describing the model, and the provider instance that will serve it.
 
 ```ruby
 chat = RubyLLM.chat(model: "claude-sonnet-4-5")
@@ -58,11 +58,11 @@ An alias is a stable, friendly name that maps to a provider's exact, versioned m
 
 ```json
 {
-  "claude-3-5-haiku": {
-    "anthropic": "claude-3-5-haiku-20241022",
-    "openrouter": "anthropic/claude-3.5-haiku",
-    "bedrock": "anthropic.claude-3-5-haiku-20241022-v1:0",
-    "vertexai": "claude-3-5-haiku"
+  "claude-haiku-4-5": {
+    "anthropic": "claude-haiku-4-5-20251001",
+    "bedrock": "anthropic.claude-haiku-4-5-20251001-v1:0",
+    "vertexai": "claude-haiku-4-5",
+    "azure": "claude-haiku-4-5-20251001"
   }
 }
 ```
@@ -70,8 +70,8 @@ An alias is a stable, friendly name that maps to a provider's exact, versioned m
 When you name a provider, RubyLLM uses that provider's entry. Without a provider, it uses the first entry listed for the alias:
 
 ```ruby
-RubyLLM.chat(model: "claude-3-5-haiku")                   # resolves to anthropic's claude-3-5-haiku-20241022
-RubyLLM.chat(model: "claude-3-5-haiku", provider: :bedrock) # resolves to anthropic.claude-3-5-haiku-20241022-v1:0
+RubyLLM.chat(model: "claude-haiku-4-5")                   # resolves to anthropic's claude-haiku-4-5-20251001
+RubyLLM.chat(model: "claude-haiku-4-5", provider: :bedrock) # resolves to us.anthropic.claude-haiku-4-5-20251001-v1:0
 ```
 
 A name that isn't in the alias table is passed through unchanged, so exact model IDs always work.
@@ -118,8 +118,8 @@ Bedrock adds one more step. Its model IDs carry a region prefix and may require 
 ```ruby
 RubyLLM.configure { |config| config.bedrock_region = "us-east-1" }
 
-chat = RubyLLM.chat(model: "claude-3-5-haiku", provider: :bedrock)
-chat.model.id  # => "us.anthropic.claude-3-5-haiku-20241022-v1:0"  (region prefix applied)
+chat = RubyLLM.chat(model: "claude-haiku-4-5", provider: :bedrock)
+chat.model.id  # => "us.anthropic.claude-haiku-4-5-20251001-v1:0"  (region prefix applied)
 ```
 
 RubyLLM only applies the prefix when a matching regional model exists in the registry, and normalizes the inference-profile form from the model's metadata. See [Custom Endpoints and Unlisted Models]({% link _reference/custom-endpoints.md %}) for routing the same model through a different provider.
@@ -136,7 +136,7 @@ chat = RubyLLM.chat(
 )
 ```
 
-RubyLLM then builds a synthetic `Model::Info` with assumed capabilities (`function_calling`, `streaming`, `vision`, `structured_output`) and a metadata warning, because it can't know the real ones:
+RubyLLM then builds a synthetic `RubyLLM::Model` with assumed capabilities (`function_calling`, `streaming`, `vision`, `structured_output`) and a metadata warning, because it can't know the real ones:
 
 ```ruby
 chat.model.capabilities  # => ["function_calling", "streaming", "vision", "structured_output"]

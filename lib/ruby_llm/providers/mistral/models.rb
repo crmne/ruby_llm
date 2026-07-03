@@ -20,7 +20,7 @@ module RubyLLM
             release_date = capabilities.release_date_for(model_id)
             created_at = release_date ? Time.parse(release_date) : nil
 
-            Model::Info.new(
+            Model.new(
               id: model_id,
               name: capabilities.format_display_name(model_id),
               provider: slug,

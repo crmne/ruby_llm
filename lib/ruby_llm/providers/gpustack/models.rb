@@ -16,7 +16,7 @@ module RubyLLM
         def parse_list_models_response(response, slug, _capabilities)
           items = response.body['items'] || []
           items.map do |model|
-            Model::Info.new(
+            Model.new(
               id: model['name'],
               name: model['name'],
               created_at: model['created_at'] ? Time.parse(model['created_at']) : nil,

@@ -11,12 +11,13 @@ module RubyLLM
 
         OPENAI_INLINE_FILE_LIMIT = 50 * 1024 * 1024
         OPENAI_FILE_UPLOAD_LIMIT = 512 * 1024 * 1024
+        PROMPT_CACHE_OPTIONS = %i[key retention].freeze
 
         module_function
 
         # rubocop:disable Metrics/ParameterLists,Metrics/PerceivedComplexity
         def render_payload(messages, tools:, temperature:, model:, stream: false, schema: nil,
-                           thinking: nil, citations: false, tool_prefs: nil)
+                           thinking: nil, citations: false, caching: nil, tool_prefs: nil)
           warn_unsupported_citations(model) if citations && !model.citations?
           tool_prefs ||= {}
           payload = {
@@ -40,6 +41,7 @@ module RubyLLM
 
           effort = resolve_effort(thinking)
           payload[:reasoning] = { effort: effort } if effort
+          payload.merge!(prompt_cache_params(caching)) if caching
 
           payload
         end
@@ -83,6 +85,28 @@ module RubyLLM
 
         def reasoning_model?(model_id)
           model_id.match?(/^o\d|^gpt-5/)
+        end
+
+        def prompt_cache_params(caching)
+          options = prompt_cache_options(caching)
+
+          {}.tap do |params|
+            params[:prompt_cache_key] = options[:key] if options[:key]
+            params[:prompt_cache_retention] = options[:retention] if options[:retention]
+          end
+        end
+
+        def prompt_cache_options(caching)
+          options = caching.to_h.transform_keys(&:to_sym)
+          unsupported = options.keys - PROMPT_CACHE_OPTIONS
+          return options if unsupported.empty?
+
+          raise ArgumentError,
+                "Responses prompt caching accepts :key and :retention, got #{format_cache_option_keys(unsupported)}"
+        end
+
+        def format_cache_option_keys(keys)
+          keys.map { |key| ":#{key}" }.join(', ')
         end
 
         def parse_usage(usage)

@@ -27,7 +27,7 @@ module RubyLLM
           model_id = model_id_with_region(model_data['modelId'], model_data)
           converse_data = model_data['converse'] || {}
 
-          Model::Info.new(
+          Model.new(
             id: model_id,
             name: model_data['modelName'],
             provider: slug,

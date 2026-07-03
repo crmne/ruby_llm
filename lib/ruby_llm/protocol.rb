@@ -18,11 +18,10 @@ module RubyLLM
 
     # rubocop:disable Metrics/ParameterLists
     def complete(messages, tools:, temperature:, params: {}, headers: {}, schema: nil, thinking: nil,
-                 citations: false, tool_prefs: nil, &)
+                 citations: false, caching: nil, tool_prefs: nil, &)
       payload = render(
-        messages,
-        tools:, tool_prefs:, temperature:, params:, schema:, thinking:, citations:,
-        stream: block_given?
+        messages, tools:, tool_prefs:, temperature:, params:, schema:, thinking:, citations:, caching:,
+                  stream: block_given?
       )
 
       if block_given?
@@ -33,7 +32,7 @@ module RubyLLM
     end
 
     def render(messages, tools:, temperature:, params: {}, schema: nil, thinking: nil,
-               citations: false, tool_prefs: nil, stream: false)
+               citations: false, caching: nil, tool_prefs: nil, stream: false)
       Utils.deep_merge(
         render_payload(
           messages,
@@ -44,7 +43,8 @@ module RubyLLM
           stream: stream,
           schema: schema,
           thinking: thinking,
-          citations: citations
+          citations: citations,
+          caching: caching
         ),
         params
       )

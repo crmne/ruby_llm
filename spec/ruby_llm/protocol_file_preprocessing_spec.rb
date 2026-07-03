@@ -5,7 +5,7 @@ require 'spec_helper'
 RSpec.describe RubyLLM::Protocol do
   include_context 'with configured RubyLLM'
 
-  let(:model) { instance_double(RubyLLM::Model::Info, id: 'test-model') }
+  let(:model) { instance_double(RubyLLM::Model, id: 'test-model') }
 
   it 'uploads oversized Gemini attachments and stores a provider-file attachment' do
     provider = RubyLLM::Providers::Gemini.new(RubyLLM.config)

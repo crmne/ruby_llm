@@ -6,7 +6,7 @@ RSpec.describe RubyLLM::Protocols::Converse::Streaming do
   let(:streaming) do
     Object.new.tap do |object|
       object.extend(described_class)
-      object.instance_variable_set(:@model, instance_double(RubyLLM::Model::Info, id: 'bedrock-test-model'))
+      object.instance_variable_set(:@model, instance_double(RubyLLM::Model, id: 'bedrock-test-model'))
     end
   end
 

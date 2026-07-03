@@ -106,23 +106,23 @@ RSpec.describe RubyLLM::Models do
 
       # Only use alias when exact match isn't found
       chat_model = RubyLLM.chat(model: 'claude-3-5-haiku')
-      expect(chat_model.model.id).to eq('claude-3-5-haiku-20241022')
+      expect(chat_model.model.id).to eq('claude-3-5-haiku')
     end
 
     it 'prefers the first-party provider when an aggregator serves the same name' do
-      expect(RubyLLM.models.find('claude-3-5-haiku').provider).to eq('anthropic')
+      expect(RubyLLM.models.find('claude-haiku-4-5').provider).to eq('anthropic')
       expect(RubyLLM.models.find('mistral-medium-3').provider).to eq('mistral')
       expect(RubyLLM.models.find('gemini-2.5-flash').provider).to eq('gemini')
     end
 
     it 'prefers bedrock region-resolved inference profile IDs over exact unprefixed IDs' do
-      unprefixed = RubyLLM::Model::Info.new(
+      unprefixed = RubyLLM::Model.new(
         id: 'meta.llama4-maverick-17b-instruct-v1:0',
         name: 'Llama 4 Maverick',
         provider: 'bedrock',
         metadata: {}
       )
-      prefixed = RubyLLM::Model::Info.new(
+      prefixed = RubyLLM::Model.new(
         id: 'us.meta.llama4-maverick-17b-instruct-v1:0',
         name: 'Llama 4 Maverick',
         provider: 'bedrock',
@@ -173,7 +173,7 @@ RSpec.describe RubyLLM::Models do
     end
   end
 
-  describe '.models_dev_model_to_info' do
+  describe '.models_dev_model_attributes' do
     let(:model_data) do
       {
         id: 'gpt-test-1',
@@ -203,8 +203,8 @@ RSpec.describe RubyLLM::Models do
       }
     end
 
-    it 'converts models.dev payload into a Model::Info-compatible hash' do
-      data = described_class.models_dev_model_to_info(model_data, 'openai', 'openai')
+    it 'converts models.dev payload into a Model attributes hash' do
+      data = described_class.models_dev_model_attributes(model_data, 'openai', 'openai')
 
       expect(data).to include(
         id: 'gpt-test-1',
@@ -247,7 +247,7 @@ RSpec.describe RubyLLM::Models do
     end
 
     it 'keeps models.dev authoritative for overlapping capabilities when merging provider metadata' do
-      models_dev_model = RubyLLM::Model::Info.new(
+      models_dev_model = RubyLLM::Model.new(
         id: 'test-model',
         name: 'Test Model',
         provider: 'xai',
@@ -257,7 +257,7 @@ RSpec.describe RubyLLM::Models do
         capabilities: ['function_calling'],
         metadata: { source: 'models.dev' }
       )
-      provider_model = RubyLLM::Model::Info.new(
+      provider_model = RubyLLM::Model.new(
         id: 'test-model',
         name: 'Test Model',
         provider: 'xai',
@@ -273,27 +273,27 @@ RSpec.describe RubyLLM::Models do
 
     it 'uses release_date cast to midnight as created_at' do
       model_data_with_release_date = model_data.merge(release_date: '2025-03-01')
-      data = described_class.models_dev_model_to_info(model_data_with_release_date, 'openai', 'openai')
+      data = described_class.models_dev_model_attributes(model_data_with_release_date, 'openai', 'openai')
       expect(data[:created_at]).to eq('2025-03-01 00:00:00 UTC')
     end
 
     it 'normalizes month-only release dates to the first day of the month' do
       model_data_with_release_date = model_data.merge(release_date: '2025-09')
-      data = described_class.models_dev_model_to_info(model_data_with_release_date, 'openai', 'openai')
+      data = described_class.models_dev_model_attributes(model_data_with_release_date, 'openai', 'openai')
 
       expect(data[:created_at]).to eq('2025-09-01 00:00:00 UTC')
-      expect { RubyLLM::Model::Info.new(data) }.not_to raise_error
+      expect { RubyLLM::Model.new(data) }.not_to raise_error
     end
 
     it 'falls back to last_updated cast to midnight as created_at when release_date is missing' do
       model_data_with_release_date = model_data.merge(release_date: nil, last_updated: '2025-03-01')
-      data = described_class.models_dev_model_to_info(model_data_with_release_date, 'openai', 'openai')
+      data = described_class.models_dev_model_attributes(model_data_with_release_date, 'openai', 'openai')
       expect(data[:created_at]).to eq('2025-03-01 00:00:00 UTC')
     end
 
     it 'keeps created_at nil when both release_date and last_updated are missing' do
       model_data_without_dates = model_data.merge(release_date: nil, last_updated: nil)
-      data = described_class.models_dev_model_to_info(model_data_without_dates, 'openai', 'openai')
+      data = described_class.models_dev_model_attributes(model_data_without_dates, 'openai', 'openai')
 
       expect(data[:created_at]).to be_nil
     end
@@ -376,7 +376,7 @@ RSpec.describe RubyLLM::Models do
 
       model_info, provider_instance = RubyLLM.models.resolve(model_id, provider: provider)
 
-      expect(model_info).to be_a(RubyLLM::Model::Info)
+      expect(model_info).to be_a(RubyLLM::Model)
       expect(model_info.id).to eq(model_id)
       expect(model_info.provider).to eq(provider)
       expect(provider_instance).to be_a(RubyLLM::Provider)
@@ -387,7 +387,7 @@ RSpec.describe RubyLLM::Models do
 
       model_info, provider_instance = RubyLLM.models.resolve(model_id)
 
-      expect(model_info).to be_a(RubyLLM::Model::Info)
+      expect(model_info).to be_a(RubyLLM::Model)
       expect(model_info.id).to eq(model_id)
       expect(provider_instance).to be_a(RubyLLM::Provider)
     end
@@ -402,7 +402,7 @@ RSpec.describe RubyLLM::Models do
         assume_exists: true
       )
 
-      expect(model_info).to be_a(RubyLLM::Model::Info)
+      expect(model_info).to be_a(RubyLLM::Model)
       expect(model_info.id).to eq(model_id)
       expect(model_info.provider).to eq(provider)
       expect(provider_instance).to be_a(RubyLLM::Provider)

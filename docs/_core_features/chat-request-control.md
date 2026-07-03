@@ -2,7 +2,7 @@
 layout: default
 title: Advanced Request Control
 parent: "Chat"
-nav_order: 6
+nav_order: 7
 description: Reach provider-specific features with custom parameters, wire protocols, raw content blocks, and HTTP headers
 ---
 
@@ -25,7 +25,6 @@ After reading this guide, you will know:
 * How to pass provider-specific parameters with `with_params`.
 * How to choose the wire protocol a provider speaks.
 * How to send a raw content payload with `Content::Raw`.
-* How to use Anthropic prompt caching to reduce costs.
 * How to add custom HTTP headers to a request.
 
 ## Provider-Specific Parameters
@@ -80,8 +79,8 @@ Most of the time you can rely on RubyLLM to format messages for each provider. W
 
 ```ruby
 raw_block = RubyLLM::Content::Raw.new([
-  { type: 'text', text: 'Reusable analysis prompt' },
-  { type: 'text', text: "Today's request: #{summary}" }
+  { type: 'text', text: 'Analyze this request using the provider-native block below.' },
+  { type: 'custom_context', data: provider_specific_payload }
 ])
 
 chat = RubyLLM.chat
@@ -89,41 +88,7 @@ chat.add_message(role: :system, content: raw_block)
 chat.ask(raw_block)
 ```
 
-Use raw blocks sparingly: they bypass cross-provider safeguards, so it is your responsibility to ensure the payload matches the provider's expectations. `Chat#ask`, `Chat#add_message`, tool results, and streaming accumulators all understand `Content::Raw` values.
-
-### Anthropic Prompt Caching
-
-One use case for Raw Content Blocks is Anthropic Prompt Caching.
-
-Anthropic lets you mark individual prompt blocks for caching, which can dramatically reduce costs on long conversations. RubyLLM provides a convenience builder that returns a `Content::Raw` instance with the proper structure:
-
-```ruby
-system_block = RubyLLM::Providers::Anthropic::Content.new(
-  "You are a release-notes assistant. Always group changes by subsystem.",
-  cache: true # shorthand for cache_control: { type: 'ephemeral' }
-)
-
-chat = RubyLLM.chat(model: '{{ site.models.anthropic_latest }}')
-chat.add_message(role: :system, content: system_block)
-
-response = chat.ask(
-  RubyLLM::Providers::Anthropic::Content.new(
-    "Summarize the API changes in this diff.",
-    cache_control: { type: 'ephemeral', ttl: '1h' }
-  )
-)
-```
-
-Need something even more custom? Build the payload manually and wrap it in `Content::Raw`:
-
-```ruby
-raw_prompt = RubyLLM::Content::Raw.new([
-  { type: 'text', text: File.read('/a/large/file'), cache_control: { type: 'ephemeral' } },
-  { type: 'text', text: "Today's request: #{summary}" }
-])
-
-chat.ask(raw_prompt)
-```
+Use raw blocks sparingly: they bypass cross-provider safeguards, so it is your responsibility to ensure the payload matches the provider's expectations. `Chat#ask`, `Chat#add_message`, tool results, and streaming accumulators all understand `Content::Raw` values. For prompt reuse, prefer [Prompt Caching]({% link _core_features/prompt-caching.md %}).
 
 The same idea applies to tool definitions:
 

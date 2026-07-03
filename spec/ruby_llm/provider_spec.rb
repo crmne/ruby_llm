@@ -246,7 +246,7 @@ RSpec.describe RubyLLM::Provider do
 
   describe 'protocol resolution' do
     let(:provider) { RubyLLM::Providers::OpenAI.new(config_for(:openai)) }
-    let(:model) { instance_double(RubyLLM::Model::Info, id: 'gpt-5.4') }
+    let(:model) { instance_double(RubyLLM::Model, id: 'gpt-5.4') }
 
     it 'defaults to the first declared protocol' do
       expect(RubyLLM::Providers::OpenAI.default_protocol).to eq(:responses)
@@ -258,7 +258,7 @@ RSpec.describe RubyLLM::Provider do
     end
 
     it 'routes chat-completions-only models away from the default' do
-      audio = instance_double(RubyLLM::Model::Info, id: 'gpt-audio-mini')
+      audio = instance_double(RubyLLM::Model, id: 'gpt-audio-mini')
 
       expect(provider.send(:resolve_protocol, nil, audio)).to eq(RubyLLM::Protocols::ChatCompletions)
     end

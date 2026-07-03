@@ -2,7 +2,7 @@
 layout: default
 title: Token Usage and Cost
 parent: "Chat"
-nav_order: 7
+nav_order: 8
 description: Read per-turn and per-conversation token counts and costs, with normalized cache and thinking buckets across providers
 ---
 

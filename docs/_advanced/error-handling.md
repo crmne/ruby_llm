@@ -27,6 +27,7 @@ After reading this guide, you will know:
 *   How to rescue specific types of errors.
 *   How to access details from the original API response.
 *   How errors are handled during streaming.
+*   How to fall back to another model when a provider has a transient failure.
 *   Best practices for handling errors within Tools.
 *   RubyLLM's automatic retry behavior.
 *   How to enable debug logging.
@@ -147,6 +148,60 @@ end
 ```
 
 Your block will execute for chunks received *before* the error. The final return value of `ask` when an error occurs during streaming might be unpredictable (often `nil`), so rely on the rescued exception for error handling.
+
+## Model Fallbacks
+
+Use `with_fallbacks` when you want RubyLLM to try another model after the current model fails with a transient provider or network error.
+
+```ruby
+chat = RubyLLM.chat(model: "gpt-4.1")
+              .with_fallbacks("gpt-4.1-mini", "claude-haiku-4-5")
+
+response = chat.ask("Summarize this incident report.")
+```
+
+Fallbacks are tried in order. The fallback only applies to that generation attempt; after the response finishes or the error bubbles up, the chat returns to its original model.
+
+By default, fallbacks handle rate limits, server errors, service unavailable errors, overload errors, timeouts, and connection failures. Pass `on:` to choose the errors yourself:
+
+```ruby
+chat.with_fallbacks(
+  "gpt-4.1-mini",
+  on: [RubyLLM::RateLimitError, RubyLLM::ServiceUnavailableError]
+)
+```
+
+Fallbacks can be model IDs or `RubyLLM::Model` objects:
+
+```ruby
+chat.with_fallbacks(
+  RubyLLM.models.find("claude-haiku-4-5", :anthropic)
+)
+```
+
+### Fallback Callbacks
+
+Use `before_fallback` and `after_fallback` to observe each fallback attempt:
+
+```ruby
+chat.before_fallback do |fallback|
+  Rails.logger.info(
+    "Falling back from #{fallback.from.id} to #{fallback.to.id}: #{fallback.error.class}"
+  )
+end
+
+chat.after_fallback do |fallback|
+  if fallback.succeeded?
+    Rails.logger.info("Fallback succeeded with #{fallback.to.id}")
+  else
+    Rails.logger.warn("Fallback failed with #{fallback.fallback_error.class}")
+  end
+end
+```
+
+The callback receives a `RubyLLM::Fallback` with the configured target (`id`, `provider`, `model`) and the runtime attempt details (`from`, `to`, `error`, `attempt`, `response`, `fallback_error`, `streaming?`, and `chunks_yielded?`).
+
+When streaming has already yielded chunks before a fallback-worthy error, RubyLLM cannot take those chunks back. It starts a new assistant message lifecycle for the fallback response, and `fallback.chunks_yielded?` lets your UI or logs distinguish that case.
 
 ## Handling Errors Within Tools
 

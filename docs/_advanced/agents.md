@@ -93,9 +93,18 @@ For example, `model` maps to `RubyLLM.chat(model:, provider:, ...)`, `tools` map
 * `params` (see [Chat Basics]({% link _core_features/chat.md %}))
 * `headers` (see [Chat Basics]({% link _core_features/chat.md %}))
 * `schema` (see [Chat Basics]({% link _core_features/chat.md %}))
+* `fallbacks` (see [Model Fallbacks]({% link _advanced/error-handling.md %}#model-fallbacks))
 * `context` (see [Configuration]({% link _getting_started/configuration.md %}))
 * `chat_model` (Rails-backed mode)
 * `inputs` (declared runtime inputs)
+
+`tools` accepts the same options as `with_tools`:
+
+```ruby
+class WorkAssistant < RubyLLM::Agent
+  tools SearchDocs, LookupAccount, choice: :auto, calls: :one
+end
+```
 
 `schema` supports:
 
@@ -113,6 +122,38 @@ class CriticAgent < RubyLLM::Agent
   end
 end
 ```
+
+### Model Fallbacks
+
+Use `fallbacks` to give every chat created by the agent the same ordered fallback models:
+
+```ruby
+class WorkAssistant < RubyLLM::Agent
+  model "gpt-4.1"
+  fallbacks "gpt-4.1-mini", "claude-haiku-4-5"
+end
+```
+
+You can also customize which errors trigger fallback:
+
+```ruby
+class WorkAssistant < RubyLLM::Agent
+  model "gpt-4.1"
+  fallbacks "gpt-4.1-mini",
+            on: [RubyLLM::RateLimitError, RubyLLM::ServiceUnavailableError]
+end
+```
+
+Fallbacks can be model IDs or `RubyLLM::Model` objects:
+
+```ruby
+class WorkAssistant < RubyLLM::Agent
+  model "gpt-4.1"
+  fallbacks RubyLLM.models.find("claude-haiku-4-5", :anthropic)
+end
+```
+
+This works for both `WorkAssistant.chat` and Rails-backed agents configured with `chat_model`.
 
 ## Runtime Context and Inputs
 
@@ -244,8 +285,8 @@ Delegated methods include:
 * `add_message`, `each`
 * `with_tool`, `with_tools`
 * `with_model`, `with_temperature`, `with_thinking`, `with_citations`, `with_context`
-* `with_params`, `with_headers`, `with_schema`
-* `before_message`, `after_message`, `before_tool_call`, `after_tool_result`
+* `with_params`, `with_headers`, `with_schema`, `with_fallbacks`
+* `before_message`, `after_message`, `before_tool_call`, `after_tool_result`, `before_fallback`, `after_fallback`
 
 You can always access the wrapped chat object directly via `agent.chat`.
 

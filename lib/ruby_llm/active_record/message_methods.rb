@@ -34,8 +34,18 @@ module RubyLLM
           tool_calls: extract_tool_calls,
           tool_call_id: extract_tool_call_id,
           finish_reason: optional_column(:finish_reason),
-          model_id: model_association&.model_id
+          model_id: model_association&.model_id,
+          cache_until_here: cache_until_here?
         )
+      end
+
+      def cache_until_here!
+        update!(cache_until_here: true)
+        self
+      end
+
+      def cache_until_here?
+        cache_until_here
       end
 
       def thinking

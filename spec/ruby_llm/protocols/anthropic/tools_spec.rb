@@ -8,18 +8,23 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Tools do
   describe '#format_tool_call_with_thinking' do
     let(:provider) { RubyLLM::Protocols::Anthropic.allocate }
     let(:msg) do
+      message_double(content: 'Some content')
+    end
+
+    def format_tool_call(msg)
+      provider.send(:format_tool_call_with_thinking, msg, false)
+    end
+
+    def message_double(content:)
       instance_double(RubyLLM::Message,
-                      content: 'Some content',
+                      content: content,
+                      cache_until_here?: false,
                       tool_calls: {
                         'tool_123' => instance_double(RubyLLM::ToolCall,
                                                       id: 'tool_123',
                                                       name: 'test_tool',
                                                       arguments: { 'arg1' => 'value1' })
                       })
-    end
-
-    def format_tool_call(msg)
-      provider.send(:format_tool_call_with_thinking, msg, false)
     end
 
     it 'formats a message with content and tool call' do
@@ -41,14 +46,7 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Tools do
 
     context 'when message has no content' do
       let(:msg) do
-        instance_double(RubyLLM::Message,
-                        content: nil,
-                        tool_calls: {
-                          'tool_123' => instance_double(RubyLLM::ToolCall,
-                                                        id: 'tool_123',
-                                                        name: 'test_tool',
-                                                        arguments: { 'arg1' => 'value1' })
-                        })
+        message_double(content: nil)
       end
 
       it 'formats a message with only tool call' do
@@ -70,14 +68,7 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Tools do
 
     context 'when message has empty content' do
       let(:msg) do
-        instance_double(RubyLLM::Message,
-                        content: '',
-                        tool_calls: {
-                          'tool_123' => instance_double(RubyLLM::ToolCall,
-                                                        id: 'tool_123',
-                                                        name: 'test_tool',
-                                                        arguments: { 'arg1' => 'value1' })
-                        })
+        message_double(content: '')
       end
 
       it 'formats a message with only tool call' do
@@ -100,14 +91,7 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Tools do
     it 'formats Content attachments before tool calls' do
       text_path = File.expand_path('../../../fixtures/ruby.txt', __dir__)
       content = RubyLLM::Content.new('Read this before calling the tool', text_path)
-      msg = instance_double(RubyLLM::Message,
-                            content: content,
-                            tool_calls: {
-                              'tool_123' => instance_double(RubyLLM::ToolCall,
-                                                            id: 'tool_123',
-                                                            name: 'test_tool',
-                                                            arguments: { 'arg1' => 'value1' })
-                            })
+      msg = message_double(content: content)
 
       formatted = format_tool_call(msg)
 
