@@ -4,11 +4,10 @@ require 'spec_helper'
 
 RSpec.describe RubyLLM::Protocols::Responses::Chat do
   let(:protocol) { RubyLLM::Protocols::Responses.allocate }
-  let(:model) { instance_double(RubyLLM::Model::Info, id: 'gpt-5-nano') }
+  let(:model) { instance_double(RubyLLM::Model, id: 'gpt-5-nano') }
 
-  def render_payload(messages, tools: {}, schema: nil, thinking: nil, stream: false)
-    protocol.send(:render_payload, messages, tools:, temperature: nil, model:, stream:, schema:, thinking:,
-                                             tool_prefs: nil)
+  def render_payload(messages, tools: {}, stream: false, **options)
+    protocol.send(:render_payload, messages, tools:, temperature: nil, model:, stream:, tool_prefs: nil, **options)
   end
 
   describe '#render_payload' do
@@ -97,6 +96,16 @@ RSpec.describe RubyLLM::Protocols::Responses::Chat do
       payload = render_payload([RubyLLM::Message.new(role: :user, content: 'hi')], thinking: thinking)
 
       expect(payload[:reasoning]).to eq({ effort: 'low' })
+    end
+
+    it 'renders prompt cache params for any Responses-compatible provider' do
+      payload = render_payload(
+        [RubyLLM::Message.new(role: :user, content: 'hi')],
+        caching: { key: 'repo:ruby_llm', retention: '24h' }
+      )
+
+      expect(payload[:prompt_cache_key]).to eq('repo:ruby_llm')
+      expect(payload[:prompt_cache_retention]).to eq('24h')
     end
   end
 

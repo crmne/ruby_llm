@@ -18,6 +18,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
         t.string :role
         t.text :content
         t.json :content_raw
+        t.boolean :cache_until_here, null: false, default: false
         t.references :model
         t.integer :input_tokens
         t.integer :output_tokens

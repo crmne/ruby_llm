@@ -116,6 +116,17 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       expect(chat.messages.where(role: 'system').count).to eq(1)
       expect(chat.messages.find_by(role: 'system').content).to eq('Be awesome')
     end
+
+    it 'keeps system messages in chronological order' do
+      chat = Chat.create!(model: model)
+
+      chat.add_message(role: :user, content: 'Hi')
+      chat.add_message(role: :assistant, content: 'Hello')
+      chat.with_instructions('System')
+
+      expect(chat.messages.map(&:role)).to eq(%w[user assistant system])
+      expect(chat.to_llm.messages.map(&:role)).to eq(%i[user assistant system])
+    end
   end
 
   describe 'tool usage' do
@@ -159,8 +170,8 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       chat = Chat.create!(model: model)
       chat.ask('Hello')
 
-      chat.with_model('claude-3-5-haiku-20241022')
-      expect(chat.reload.model_id).to eq('claude-3-5-haiku-20241022')
+      chat.with_model('claude-haiku-4-5')
+      expect(chat.reload.model_id).to eq('claude-haiku-4-5')
     end
   end
 
@@ -280,7 +291,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
   end
 
   describe 'raw content support' do
-    let(:anthropic_model) { 'claude-3-5-haiku-20241022' }
+    let(:anthropic_model) { 'claude-haiku-4-5' }
 
     it 'persists raw content blocks separately from plain text' do
       chat = Chat.create!(model: anthropic_model)
@@ -307,6 +318,38 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       expect(llm_message.cache_creation_tokens).to eq(7)
       expect(message.cache_read_tokens).to eq(42)
       expect(message.cache_write_tokens).to eq(7)
+    end
+
+    it 'persists cache boundaries on messages' do
+      chat = Chat.create!(model: anthropic_model)
+      message = chat.add_message(role: :user, content: 'Long context')
+
+      expect(message.cache_until_here!).to eq(message)
+      expect(message.reload.cache_until_here?).to be true
+      expect(message.to_llm.cache_until_here?).to be true
+    end
+
+    it 'marks the latest persisted chat message as a cache boundary' do
+      chat = Chat.create!(model: anthropic_model)
+
+      chat.ask_later('Long context').cache_until_here!
+
+      expect(chat.messages.last.cache_until_here?).to be true
+      expect(chat.to_llm.messages.last.cache_until_here?).to be true
+    end
+
+    it 'delegates prompt caching config to the LLM chat' do
+      chat = Chat.create!(model: anthropic_model)
+
+      expect(chat.with_caching(ttl: '1h')).to eq(chat)
+      expect(chat.to_llm.caching).to eq(ttl: '1h')
+    end
+
+    it 'clears runtime prompt caching config from the LLM chat' do
+      chat = Chat.create!(model: anthropic_model).with_caching(ttl: '1h')
+
+      expect(chat.without_caching).to eq(chat)
+      expect(chat.to_llm.caching).to be_nil
     end
 
     it 'keeps create_user_message as a convenience wrapper for add_message' do
@@ -414,6 +457,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
           t.string :role
           t.text :content
           t.json :content_raw
+          t.boolean :cache_until_here, null: false, default: false
           t.string :model_id
           t.integer :input_tokens
           t.integer :output_tokens
@@ -496,8 +540,8 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
         bot_chat = Assistants::BotChat.create!(model: model)
         bot_chat.ask('Hello')
 
-        bot_chat.with_model('claude-3-5-haiku-20241022')
-        expect(bot_chat.reload.model_id).to eq('claude-3-5-haiku-20241022')
+        bot_chat.with_model('claude-haiku-4-5')
+        expect(bot_chat.reload.model_id).to eq('claude-haiku-4-5')
       end
 
       it 'round-trips finish reasons when the message table has a column' do
@@ -825,6 +869,42 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     end
   end
 
+  describe 'streaming fallback persistence' do
+    it 'replaces a blank streamed placeholder with the fallback assistant row' do
+      chat = Chat.create!(model: model)
+      llm_chat = chat.to_llm
+
+      chat.send(:persist_new_message)
+      placeholder_id = chat.instance_variable_get(:@message).id
+
+      llm_chat.with_model('claude-haiku-4-5', provider: :anthropic)
+      chat.send(:persist_new_message)
+      fallback_message = chat.instance_variable_get(:@message)
+
+      expect(Message.exists?(placeholder_id)).to be false
+      expect(fallback_message.model.model_id).to eq('claude-haiku-4-5-20251001')
+      expect(fallback_message.model.provider).to eq('anthropic')
+    end
+
+    it 'keeps a partial streamed primary row and starts fallback in a new row' do
+      chat = Chat.create!(model: model)
+      llm_chat = chat.to_llm
+
+      chat.send(:persist_new_message)
+      partial_message = chat.instance_variable_get(:@message)
+      partial_message.update!(content: 'primary partial')
+
+      llm_chat.with_model('claude-haiku-4-5', provider: :anthropic)
+      chat.send(:persist_new_message)
+      fallback_message = chat.instance_variable_get(:@message)
+
+      expect(Message.exists?(partial_message.id)).to be true
+      expect(partial_message.reload.model.model_id).to eq(model)
+      expect(fallback_message.id).not_to eq(partial_message.id)
+      expect(fallback_message.model.model_id).to eq('claude-haiku-4-5-20251001')
+    end
+  end
+
   describe 'error recovery' do
     it 'does not clean up complete tool interactions when error occurs after tool execution' do
       chat = Chat.create!(model: model)
@@ -908,6 +988,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
             t.string :role
             t.text :content
             t.json :content_raw
+            t.boolean :cache_until_here, null: false, default: false
             t.string :model_id
             t.integer :input_tokens
             t.integer :output_tokens
@@ -1052,6 +1133,52 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
 
       expect(chat.model_id).to eq('us.anthropic.claude-haiku-4-5-20251001-v1:0')
       expect(chat.provider).to eq('bedrock')
+    end
+  end
+
+  describe 'strict_loading compatibility' do
+    # Verify that to_llm and cleanup_orphaned_tool_results eager-load message
+    # associations, preventing N+1 queries with strict_loading enabled.
+
+    let(:strict_loading_state) { {} }
+
+    let!(:chat_with_tool_calls) do
+      chat = Chat.create!(model: model)
+      chat.messages.create!(role: 'user', content: "What's 2 + 2?")
+      assistant_msg = chat.messages.create!(role: 'assistant', content: nil)
+      tool_call = assistant_msg.tool_calls.create!(
+        tool_call_id: 'call_strict_1',
+        name: 'calculator',
+        arguments: { expression: '2 + 2' }.to_json
+      )
+      chat.messages.create!(role: 'tool', content: '4', parent_tool_call: tool_call)
+      chat.messages.create!(role: 'assistant', content: 'The answer is 4.')
+      chat
+    end
+
+    before do
+      strict_loading_state[:by_default] = ApplicationRecord.strict_loading_by_default
+      if ApplicationRecord.respond_to?(:strict_loading_mode)
+        strict_loading_state[:mode] = ApplicationRecord.strict_loading_mode
+      end
+
+      ApplicationRecord.strict_loading_by_default = true
+      ApplicationRecord.strict_loading_mode = :n_plus_one_only if ApplicationRecord.respond_to?(:strict_loading_mode=)
+    end
+
+    after do
+      ApplicationRecord.strict_loading_by_default = strict_loading_state[:by_default]
+      if ApplicationRecord.respond_to?(:strict_loading_mode=)
+        ApplicationRecord.strict_loading_mode = strict_loading_state[:mode]
+      end
+    end
+
+    it 'to_llm does not raise StrictLoadingViolationError' do
+      expect { chat_with_tool_calls.reload.to_llm }.not_to raise_error
+    end
+
+    it 'cleanup_orphaned_tool_results does not raise StrictLoadingViolationError' do
+      expect { chat_with_tool_calls.reload.send(:cleanup_orphaned_tool_results) }.not_to raise_error
     end
   end
 

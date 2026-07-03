@@ -4,6 +4,7 @@ class <%= create_migration_class_name(message_table_name) %> < ActiveRecord::Mig
       t.string :role, null: false
       t.text :content
       t.json :content_raw
+      t.boolean :cache_until_here, null: false, default: false
       t.text :thinking_text
       t.text :thinking_signature
       t.integer :thinking_tokens

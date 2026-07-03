@@ -5,8 +5,9 @@
   <img src="/docs/assets/images/logotype.svg" alt="RubyLLM" height="120" width="250">
 </picture>
 
-<strong>One <em>delightful</em> Ruby framework for every major AI provider. Build AI agents, chatbots, RAG apps, and multimodal workflows in beautiful, expressive code.
-</strong>
+<strong>Build AI features the Ruby way</strong>
+
+<p>A <em>delightful</em> Ruby AI framework that feels at home in Rails. Switch models without rewriting your code, then scale to production with everything from Chats and Tools to Agents, RAG, and Workflows.</p>
 
 Battle tested at [<picture><source media="(prefers-color-scheme: dark)" srcset="https://chatwithwork.com/logotype-dark.svg"><img src="https://chatwithwork.com/logotype.svg" alt="Chat with Work" height="30" align="absmiddle"></picture>](https://chatwithwork.com) - *Fully private work AI*
 
@@ -23,7 +24,7 @@ Battle tested at [<picture><source media="(prefers-color-scheme: dark)" srcset="
 
 ---
 
-Build chatbots, AI agents, RAG applications. Works with OpenAI, xAI, Anthropic, Google, AWS, local models, and any OpenAI-compatible API.
+Build AI features in Ruby: chats, agents, tools, RAG, and agentic workflows. Works with OpenAI, xAI, Anthropic, Google, AWS, local models, and any OpenAI-compatible API.
 
 ## Build a working Ruby AI chat in two minutes
 

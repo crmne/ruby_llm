@@ -55,7 +55,7 @@ RSpec.describe RubyLLM::Providers::VertexAI do
     let(:location) { 'us-central1' }
 
     it 'formats tool responses with a Vertex AI content role' do
-      model = instance_double(RubyLLM::Model::Info, id: 'gemini-3.1-flash-lite-preview')
+      model = instance_double(RubyLLM::Model, id: 'gemini-3.1-flash-lite-preview')
       messages = [
         RubyLLM::Message.new(role: :user, content: 'What is the weather?'),
         RubyLLM::Message.new(
@@ -80,14 +80,14 @@ RSpec.describe RubyLLM::Providers::VertexAI do
     let(:location) { 'us-central1' }
 
     it 'routes claude models to the Anthropic protocol' do
-      model = instance_double(RubyLLM::Model::Info, id: 'claude-haiku-4-5')
+      model = instance_double(RubyLLM::Model, id: 'claude-haiku-4-5')
 
       expect(provider.protocol_for(model)).to eq(RubyLLM::Providers::VertexAI::Anthropic)
     end
 
     it 'routes mistral models to the Mistral protocol' do
       %w[mistral-small-2503 ministral-3 codestral-2].each do |id|
-        model = instance_double(RubyLLM::Model::Info, id: id)
+        model = instance_double(RubyLLM::Model, id: id)
 
         expect(provider.protocol_for(model)).to eq(RubyLLM::Providers::VertexAI::Mistral)
       end
@@ -95,14 +95,14 @@ RSpec.describe RubyLLM::Providers::VertexAI do
 
     it 'routes publisher-prefixed MaaS models to the Chat Completions protocol' do
       %w[meta/llama-3.3-70b-instruct-maas google/gemma-4-26b-a4b-it-maas].each do |id|
-        model = instance_double(RubyLLM::Model::Info, id: id)
+        model = instance_double(RubyLLM::Model, id: id)
 
         expect(provider.protocol_for(model)).to eq(RubyLLM::Providers::VertexAI::ChatCompletions)
       end
     end
 
     it 'routes google models to the Gemini protocol' do
-      model = instance_double(RubyLLM::Model::Info, id: 'gemini-2.5-flash')
+      model = instance_double(RubyLLM::Model, id: 'gemini-2.5-flash')
 
       expect(provider.protocol_for(model)).to eq(RubyLLM::Providers::VertexAI::Gemini)
     end
@@ -246,7 +246,7 @@ RSpec.describe RubyLLM::Providers::VertexAI do
 
   describe 'Anthropic protocol dialect' do
     let(:location) { 'us-east5' }
-    let(:model) { instance_double(RubyLLM::Model::Info, id: 'claude-haiku-4-5', max_tokens: 4096) }
+    let(:model) { instance_double(RubyLLM::Model, id: 'claude-haiku-4-5', max_tokens: 4096) }
     let(:protocol) { RubyLLM::Providers::VertexAI::Anthropic.new(provider, model) }
 
     it 'speaks to rawPredict under the anthropic publisher' do
@@ -271,7 +271,7 @@ RSpec.describe RubyLLM::Providers::VertexAI do
 
   describe 'Mistral protocol dialect' do
     let(:location) { 'us-central1' }
-    let(:model) { instance_double(RubyLLM::Model::Info, id: 'mistral-medium-3', max_tokens: 4096) }
+    let(:model) { instance_double(RubyLLM::Model, id: 'mistral-medium-3', max_tokens: 4096) }
     let(:protocol) { RubyLLM::Providers::VertexAI::Mistral.new(provider, model) }
 
     it 'reuses the Mistral dialect' do
@@ -299,7 +299,7 @@ RSpec.describe RubyLLM::Providers::VertexAI do
 
   describe 'Chat Completions protocol dialect' do
     let(:location) { 'us-central1' }
-    let(:model) { instance_double(RubyLLM::Model::Info, id: 'meta/llama-3.3-70b-instruct-maas', max_tokens: 4096) }
+    let(:model) { instance_double(RubyLLM::Model, id: 'meta/llama-3.3-70b-instruct-maas', max_tokens: 4096) }
     let(:protocol) { RubyLLM::Providers::VertexAI::ChatCompletions.new(provider, model) }
 
     it 'speaks to the OpenAI-compatible endpoint' do

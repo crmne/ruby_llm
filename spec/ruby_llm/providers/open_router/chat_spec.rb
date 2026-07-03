@@ -106,10 +106,26 @@ RSpec.describe RubyLLM::Providers::OpenRouter::Chat do
         %r{Unsupported attachment type: application/vnd.openxmlformats-officedocument.wordprocessingml.document}
       )
     end
+
+    it 'adds cache_control to a message marked as a cache boundary' do
+      message = RubyLLM::Message.new(role: :user, content: 'Long context').cache_until_here!
+
+      formatted = provider.send(:format_messages, [message])
+
+      expect(formatted.dig(0, :content, -1)).to include(cache_control: { type: 'ephemeral' })
+    end
+
+    it 'uses configured cache_control for a cache boundary' do
+      message = RubyLLM::Message.new(role: :user, content: 'Long context').cache_until_here!
+
+      formatted = provider.send(:format_messages, [message], caching: { ttl: '1h' })
+
+      expect(formatted.dig(0, :content, -1, :cache_control)).to eq(type: 'ephemeral', ttl: '1h')
+    end
   end
 
   describe '#render_payload' do
-    let(:model) { instance_double(RubyLLM::Model::Info, id: 'anthropic/claude-haiku-4.5') }
+    let(:model) { instance_double(RubyLLM::Model, id: 'anthropic/claude-haiku-4.5') }
     let(:messages) { [RubyLLM::Message.new(role: :user, content: 'Hello')] }
 
     before do
@@ -168,6 +184,50 @@ RSpec.describe RubyLLM::Providers::OpenRouter::Chat do
       expect(payload[:response_format][:json_schema][:name]).to eq('PersonSchema')
       expect(payload[:response_format][:json_schema][:schema]).to eq(schema[:schema])
       expect(payload[:response_format][:json_schema][:strict]).to be(false)
+    end
+
+    it 'adds top-level automatic cache_control when caching is enabled without explicit boundaries' do
+      payload = provider.send(
+        :render_payload,
+        messages,
+        tools: {},
+        temperature: nil,
+        model: model,
+        stream: false,
+        caching: { ttl: '1h' }
+      )
+
+      expect(payload[:cache_control]).to eq(type: 'ephemeral', ttl: '1h')
+    end
+
+    it 'does not add top-level cache_control when an explicit boundary is present' do
+      messages = [RubyLLM::Message.new(role: :user, content: 'Long context').cache_until_here!]
+
+      payload = provider.send(
+        :render_payload,
+        messages,
+        tools: {},
+        temperature: nil,
+        model: model,
+        stream: false,
+        caching: { ttl: '1h' }
+      )
+
+      expect(payload).not_to have_key(:cache_control)
+    end
+
+    it 'rejects caching options it cannot render' do
+      expect do
+        provider.send(
+          :render_payload,
+          messages,
+          tools: {},
+          temperature: nil,
+          model: model,
+          stream: false,
+          caching: { retention: '24h' }
+        )
+      end.to raise_error(ArgumentError, /OpenRouter prompt caching accepts :ttl/)
     end
   end
 end

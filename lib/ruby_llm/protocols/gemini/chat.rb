@@ -20,13 +20,15 @@ module RubyLLM
 
         # rubocop:disable Metrics/ParameterLists,Metrics/PerceivedComplexity,Lint/UnusedMethodArgument
         def render_payload(messages, tools:, temperature:, model:, stream: false, schema: nil,
-                           thinking: nil, citations: false, tool_prefs: nil)
+                           thinking: nil, citations: false, caching: nil, tool_prefs: nil)
           warn_unsupported_citations(model) if citations && !model.citations?
           tool_prefs ||= {}
           payload = {
-            contents: format_messages(messages),
+            contents: format_messages(messages.reject { |msg| msg.role == :system }),
             generationConfig: {}
           }
+          system_instruction = format_system_instruction(messages)
+          payload[:systemInstruction] = system_instruction if system_instruction
 
           payload[:generationConfig][:temperature] = temperature unless temperature.nil?
 
@@ -76,6 +78,15 @@ module RubyLLM
         end
 
         private
+
+        def format_system_instruction(messages)
+          parts = messages.select { |msg| msg.role == :system }.filter_map do |msg|
+            text = msg.content.is_a?(Content) ? msg.content.text : msg.content.to_s
+            { text: text } unless text.empty?
+          end
+
+          { parts: parts } if parts.any?
+        end
 
         def format_messages(messages)
           MessageFormatter.new(self, messages).format

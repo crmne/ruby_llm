@@ -118,7 +118,7 @@ RSpec.describe RubyLLM::Chat do
 
   describe '#cost' do
     let(:model) do
-      RubyLLM::Model::Info.new(
+      RubyLLM::Model.new(
         id: 'priced-model',
         name: 'Priced Model',
         provider: 'openai',

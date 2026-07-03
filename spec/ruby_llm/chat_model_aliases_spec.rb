@@ -20,8 +20,8 @@ RSpec.describe RubyLLM::Chat do
   end
 
   it 'finds models by alias and provider' do
-    chat = RubyLLM.chat(model: 'claude-3-5-haiku', provider: :bedrock)
-    expect(chat.model.id).to eq('anthropic.claude-3-5-haiku-20241022-v1:0')
+    chat = RubyLLM.chat(model: 'claude-haiku-4-5', provider: :bedrock)
+    expect(chat.model.id).to eq('us.anthropic.claude-haiku-4-5-20251001-v1:0')
     expect(chat.model.provider).to eq('bedrock')
   end
 

@@ -4,7 +4,7 @@ require 'spec_helper'
 
 RSpec.describe RubyLLM::Cost do
   let(:model) do
-    RubyLLM::Model::Info.new(
+    RubyLLM::Model.new(
       id: 'priced-model',
       name: 'Priced Model',
       provider: 'openai',
@@ -43,7 +43,7 @@ RSpec.describe RubyLLM::Cost do
     end
 
     it 'calculates image costs from text and image input details' do
-      image_model = RubyLLM::Model::Info.new(
+      image_model = RubyLLM::Model.new(
         id: 'image-model',
         name: 'Image Model',
         provider: 'openai',
@@ -87,7 +87,7 @@ RSpec.describe RubyLLM::Cost do
     end
 
     it 'prices thinking tokens separately when the model has distinct reasoning pricing' do
-      reasoning_model = RubyLLM::Model::Info.new(
+      reasoning_model = RubyLLM::Model.new(
         id: 'reasoning-priced-model',
         name: 'Reasoning Priced Model',
         provider: 'perplexity',
@@ -111,7 +111,7 @@ RSpec.describe RubyLLM::Cost do
     end
 
     it 'does not double-count thinking tokens when reasoning pricing matches output pricing' do
-      inclusive_model = RubyLLM::Model::Info.new(
+      inclusive_model = RubyLLM::Model.new(
         id: 'inclusive-reasoning-model',
         name: 'Inclusive Reasoning Model',
         provider: 'openrouter',
@@ -133,7 +133,7 @@ RSpec.describe RubyLLM::Cost do
     end
 
     it 'returns nil when pricing is missing for tokens that were used' do
-      incomplete_model = RubyLLM::Model::Info.new(
+      incomplete_model = RubyLLM::Model.new(
         id: 'incomplete-model',
         name: 'Incomplete Model',
         provider: 'openai',
@@ -148,7 +148,7 @@ RSpec.describe RubyLLM::Cost do
     end
 
     it 'does not require pricing for token buckets that were not used' do
-      input_only_model = RubyLLM::Model::Info.new(
+      input_only_model = RubyLLM::Model.new(
         id: 'input-only-model',
         name: 'Input Only Model',
         provider: 'openai',

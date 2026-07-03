@@ -67,4 +67,4 @@ If pricing is incomplete for tokens that were used, the affected cost and `cost.
 ## Next Steps
 
 *   [Token Usage and Cost]({% link _core_features/chat-tokens.md %}) - how RubyLLM normalizes token counts across providers.
-*   [Working with Models]({% link _reference/models.md %}) - explore the registry and the `Model::Info` pricing fields behind `cost_for`.
+*   [Working with Models]({% link _reference/models.md %}) - explore the registry and the `RubyLLM::Model` pricing fields behind `cost_for`.

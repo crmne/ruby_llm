@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module RubyLLM
-  module Model
+  class Model
     # Represents pricing tiers for different usage categories (standard and batch)
     class PricingCategory
       attr_reader :standard, :batch

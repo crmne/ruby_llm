@@ -105,7 +105,7 @@ RSpec.describe RubyLLM::UploadedFile do
   end
 
   def stub_default_model_provider(provider, config: RubyLLM.config)
-    model = instance_double(RubyLLM::Model::Info)
+    model = instance_double(RubyLLM::Model)
     allow(RubyLLM::Models).to receive(:resolve).with(config.default_model, config:).and_return([model, provider])
   end
 end

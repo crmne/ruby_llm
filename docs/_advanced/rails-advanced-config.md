@@ -3,7 +3,7 @@ layout: default
 title: Advanced Rails Configuration
 parent: "Rails Integration"
 nav_order: 4
-description: Route models through different providers, use per-tenant contexts, persist raw payloads, and run fiber-safe.
+description: Route models through different providers, use per-tenant contexts, persist cache boundaries and raw payloads, and run fiber-safe.
 ---
 
 # {{ page.title }}
@@ -25,10 +25,10 @@ After reading this guide, you will know:
 *   How to route a model through a different provider per chat.
 *   How to use per-tenant API keys with custom contexts.
 *   How to create chats for models that aren't in the registry.
-*   How to persist raw provider payloads for features like Anthropic prompt caching.
+*   How to persist cache boundaries and raw provider payloads.
 *   How to run ActiveRecord safely inside fiber-based async workloads.
 
-Once the basics are in place, RubyLLM gives you fine-grained control over how persisted chats reach providers. This guide covers the configuration you reach for in production: routing models through alternate providers, isolating credentials per tenant, persisting provider-specific payloads, and keeping ActiveRecord connections correct under async workloads.
+Once the basics are in place, RubyLLM gives you fine-grained control over how persisted chats reach providers. This guide covers the configuration you reach for in production: routing models through alternate providers, isolating credentials per tenant, persisting cache boundaries and provider-specific payloads, and keeping ActiveRecord connections correct under async workloads.
 
 ## Provider Overrides
 
@@ -113,24 +113,26 @@ chat.assume_model_exists = true
 chat.with_model('another-experimental-model', provider: 'openrouter')
 ```
 
-## Working with Raw Provider Payloads, Anthropic Prompt Caching
+## Working with Prompt Caching
 
-Providers like Anthropic expose advanced features (prompt caching, fine-grained metadata) by embedding rich structures inside each prompt block. Use `RubyLLM::Content::Raw` to persist those blocks alongside your conversation history:
+Prompt caching configuration is applied to the underlying LLM chat, and explicit boundaries are persisted on messages. Mark the stable part of the conversation, then continue normally:
 
 ```ruby
-raw_block = RubyLLM::Content::Raw.new([
-  { type: 'text', text: 'Reusable analysis prompt', cache_control: { type: 'ephemeral' } },
-  { type: 'text', text: "Today's request: #{summary}" }
-])
-
 chat = Chat.create!(model: 'claude-sonnet-4-5')
-chat.ask(raw_block)
+chat.with_caching(ttl: "1h")
+chat.with_instructions('Reusable analysis prompt').cache_until_here!
+chat.add_message(role: :user, content: long_context).cache_until_here!
+chat.ask("Today's request: #{summary}")
 ```
 
-The v1.9 schema adds a `content_raw` column so raw payloads live alongside the plain-text `content` field. When you load messages via `acts_as_message`, RubyLLM reconstructs the original `Content::Raw` automatically.
-
-Existing apps: the cached-token and raw-content columns were introduced in v1.9.0. Upgrade one minor version at a time (see the [Upgrading guide]({% link _reference/upgrading.md %})); new apps get the proper columns from the install generator.
+Existing apps: run the latest upgrade generator after updating RubyLLM so message tables include `cache_until_here` and the other current persistence columns. New apps get the proper columns from the install generator.
 {: .note }
+
+See [Prompt Caching]({% link _core_features/prompt-caching.md %}) for provider behavior.
+
+## Working with Raw Provider Payloads
+
+For provider-specific payloads that RubyLLM should not reshape, use `RubyLLM::Content::Raw`. The `content_raw` column stores those blocks alongside plain text content, and `acts_as_message` reconstructs the original `Content::Raw` automatically.
 
 ## Fiber-Safe ActiveRecord Connections for Async/Fiber Workloads
 {: .d-inline-block }

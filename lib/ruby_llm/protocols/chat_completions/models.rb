@@ -15,7 +15,7 @@ module RubyLLM
           Array(response.body['data']).map do |model_data|
             model_id = model_data['id']
 
-            Model::Info.new(
+            Model.new(
               id: model_id,
               name: model_id,
               provider: slug,

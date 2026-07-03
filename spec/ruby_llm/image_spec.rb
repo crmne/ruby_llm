@@ -49,7 +49,7 @@ RSpec.describe RubyLLM::Image do
 
   describe '#cost' do
     it 'returns a RubyLLM::Cost with the same shape as chat and message costs' do
-      model_info = RubyLLM::Model::Info.new(
+      model_info = RubyLLM::Model.new(
         id: model,
         name: 'GPT Image 1',
         provider: 'openai',

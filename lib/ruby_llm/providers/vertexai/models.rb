@@ -99,7 +99,7 @@ module RubyLLM
 
         def build_known_models
           KNOWN_GOOGLE_MODELS.map do |model_id|
-            Model::Info.new(
+            Model.new(
               id: model_id,
               name: model_id,
               provider: @provider.slug,
@@ -118,7 +118,7 @@ module RubyLLM
         end
 
         def build_model_from_api_data(model_data, model_id)
-          Model::Info.new(
+          Model.new(
             id: model_id,
             name: model_id,
             provider: @provider.slug,
