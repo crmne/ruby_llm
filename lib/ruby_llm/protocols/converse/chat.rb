@@ -8,6 +8,7 @@ module RubyLLM
       # Chat methods for Bedrock Converse API.
       module Chat
         BEDROCK_INLINE_DOCUMENT_LIMIT = 4_500_000
+        PROMPT_CACHE_OPTIONS = %i[ttl].freeze
 
         module_function
 
@@ -17,16 +18,18 @@ module RubyLLM
 
         # rubocop:disable Metrics/ParameterLists,Lint/UnusedMethodArgument
         def render_payload(messages, tools:, temperature:, model:, stream: false,
-                           schema: nil, thinking: nil, citations: false, tool_prefs: nil)
+                           schema: nil, thinking: nil, citations: false, caching: nil, tool_prefs: nil)
           warn_unsupported_citations(model) if citations
           tool_prefs ||= {}
           @used_document_names = {}
           system_messages, chat_messages = messages.partition { |msg| msg.role == :system }
+          prompt_cache_options(caching)
+          automatic_cache_target = automatic_cache_target(system_messages, chat_messages, caching)
           payload = {
-            messages: format_messages(chat_messages)
+            messages: format_messages(chat_messages, caching:, automatic_cache_target:)
           }
 
-          system_blocks = format_system(system_messages)
+          system_blocks = format_system(system_messages, caching:, automatic_cache_target:)
           payload[:system] = system_blocks unless system_blocks.empty?
 
           payload[:inferenceConfig] = format_inference_config(model, temperature)
@@ -100,7 +103,7 @@ module RubyLLM
           usage['reasoningTokens'] || usage.dig('outputTokensDetails', 'reasoningTokens')
         end
 
-        def format_messages(messages)
+        def format_messages(messages, caching: nil, automatic_cache_target: nil)
           rendered = []
           tool_result_blocks = []
 
@@ -115,7 +118,7 @@ module RubyLLM
               tool_result_blocks = []
             end
 
-            message = format_non_tool_message(msg)
+            message = format_non_tool_message(msg, caching:, automatic_cache_target:)
             rendered << message if message
           end
 
@@ -123,8 +126,8 @@ module RubyLLM
           rendered
         end
 
-        def format_non_tool_message(msg)
-          content = format_message_content(msg)
+        def format_non_tool_message(msg, caching: nil, automatic_cache_target: nil)
+          content = format_message_content(msg, caching:, automatic_cache_target:)
           return nil if content.empty?
 
           {
@@ -133,20 +136,12 @@ module RubyLLM
           }
         end
 
-        def format_message_content(msg)
-          if msg.content.is_a?(RubyLLM::Content::Raw)
-            return format_raw_content(msg.content) if msg.role == :assistant
-
-            return sanitize_non_assistant_raw_blocks(format_raw_content(msg.content))
-          end
-
-          blocks = []
-
-          thinking_block = format_thinking_block(msg.thinking)
-          blocks << thinking_block if msg.role == :assistant && thinking_block
-
-          text_and_media_blocks = Media.format_content(msg.content, used_document_names: @used_document_names)
-          blocks.concat(text_and_media_blocks) if text_and_media_blocks
+        def format_message_content(msg, caching: nil, automatic_cache_target: nil)
+          blocks = if msg.content.is_a?(RubyLLM::Content::Raw)
+                     format_raw_message_content(msg)
+                   else
+                     format_structured_message_content(msg)
+                   end
 
           if msg.tool_call?
             msg.tool_calls.each_value do |tool_call|
@@ -159,13 +154,33 @@ module RubyLLM
               }
             end
           end
+          blocks << converse_cache_block_for(caching) if cache_boundary?(msg, automatic_cache_target)
+
+          blocks
+        end
+
+        def format_raw_message_content(msg)
+          blocks = format_raw_content(msg.content)
+          return blocks if msg.role == :assistant
+
+          sanitize_non_assistant_raw_blocks(blocks)
+        end
+
+        def format_structured_message_content(msg)
+          blocks = []
+
+          thinking_block = format_thinking_block(msg.thinking)
+          blocks << thinking_block if msg.role == :assistant && thinking_block
+
+          text_and_media_blocks = Media.format_content(msg.content, used_document_names: @used_document_names)
+          blocks.concat(text_and_media_blocks) if text_and_media_blocks
 
           blocks
         end
 
         def format_raw_content(content)
           value = content.value
-          value.is_a?(Array) ? value : [value]
+          value.is_a?(Array) ? value.dup : [value]
         end
 
         def sanitize_non_assistant_raw_blocks(blocks)
@@ -237,8 +252,48 @@ module RubyLLM
           end
         end
 
-        def format_system(messages)
-          messages.flat_map { |msg| Media.format_content(msg.content, used_document_names: @used_document_names) }
+        def format_system(messages, caching: nil, automatic_cache_target: nil)
+          messages.flat_map do |msg|
+            blocks = Media.format_content(msg.content, used_document_names: @used_document_names)
+            cache_boundary?(msg, automatic_cache_target) ? blocks + [converse_cache_block_for(caching)] : blocks
+          end
+        end
+
+        def automatic_cache_target(system_messages, chat_messages, caching)
+          return unless caching
+          return if (system_messages + chat_messages).any?(&:cache_until_here?)
+
+          (chat_messages.reverse + system_messages.reverse).find { |msg| cacheable_message?(msg) }
+        end
+
+        def cacheable_message?(message)
+          !message.tool_result?
+        end
+
+        def cache_boundary?(message, automatic_cache_target)
+          message.cache_until_here? || message.equal?(automatic_cache_target)
+        end
+
+        def converse_cache_block_for(caching)
+          options = prompt_cache_options(caching)
+          point = { type: 'default' }
+          point[:ttl] = options[:ttl] if options[:ttl]
+          { cachePoint: point }
+        end
+
+        def prompt_cache_options(caching)
+          return {} unless caching
+
+          options = caching.to_h.transform_keys(&:to_sym)
+          unsupported = options.keys - PROMPT_CACHE_OPTIONS
+          return options if unsupported.empty?
+
+          raise ArgumentError,
+                "Bedrock Converse prompt caching accepts :ttl, got #{format_cache_option_keys(unsupported)}"
+        end
+
+        def format_cache_option_keys(keys)
+          keys.map { |key| ":#{key}" }.join(', ')
         end
 
         def format_inference_config(_model, temperature)

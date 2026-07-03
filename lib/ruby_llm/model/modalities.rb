@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module RubyLLM
-  module Model
+  class Model
     # Holds and manages input and output modalities for a language model
     class Modalities
       attr_reader :input, :output

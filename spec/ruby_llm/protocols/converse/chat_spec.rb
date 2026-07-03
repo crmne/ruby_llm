@@ -98,7 +98,7 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
 
   describe '.render_payload' do
     let(:model) do
-      instance_double(RubyLLM::Model::Info,
+      instance_double(RubyLLM::Model,
                       id: 'anthropic.claude-haiku-4-5-20251001-v1:0',
                       max_tokens: nil,
                       metadata: {})
@@ -115,6 +115,65 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
 
     def render_payload(messages = [], **overrides)
       described_class.render_payload(messages, **base_args, **overrides)
+    end
+
+    it 'appends cachePoint to a system message marked as a cache boundary' do
+      message = RubyLLM::Message.new(role: :system, content: 'Stable instructions').cache_until_here!
+
+      payload = render_payload([message, RubyLLM::Message.new(role: :user, content: 'Hi')])
+
+      expect(payload[:system].last).to eq(cachePoint: { type: 'default' })
+    end
+
+    it 'appends cachePoint to a user message marked as a cache boundary' do
+      message = RubyLLM::Message.new(role: :user, content: 'Long context').cache_until_here!
+
+      payload = render_payload([message])
+
+      expect(payload.dig(:messages, 0, :content).last).to eq(cachePoint: { type: 'default' })
+    end
+
+    it 'appends cachePoint to raw content marked as a cache boundary' do
+      content = RubyLLM::Content::Raw.new([{ text: 'Raw context' }])
+      message = RubyLLM::Message.new(role: :user, content: content).cache_until_here!
+
+      payload = render_payload([message])
+
+      expect(payload.dig(:messages, 0, :content)).to eq([{ text: 'Raw context' }, { cachePoint: { type: 'default' } }])
+    end
+
+    it 'uses configured ttl for an explicit cache boundary' do
+      message = RubyLLM::Message.new(role: :user, content: 'Long context').cache_until_here!
+
+      payload = render_payload([message], caching: { ttl: '1h' })
+
+      expect(payload.dig(:messages, 0, :content).last).to eq(cachePoint: { type: 'default', ttl: '1h' })
+    end
+
+    it 'adds an automatic cachePoint to the last cacheable message when caching is enabled' do
+      first = RubyLLM::Message.new(role: :user, content: 'Stable context')
+      second = RubyLLM::Message.new(role: :user, content: 'Latest question')
+
+      payload = render_payload([first, second], caching: { ttl: '1h' })
+
+      expect(payload.dig(:messages, 0, :content).last).not_to have_key(:cachePoint)
+      expect(payload.dig(:messages, 1, :content).last).to eq(cachePoint: { type: 'default', ttl: '1h' })
+    end
+
+    it 'does not add automatic cachePoint when an explicit boundary exists' do
+      first = RubyLLM::Message.new(role: :user, content: 'Stable context').cache_until_here!
+      second = RubyLLM::Message.new(role: :user, content: 'Latest question')
+
+      payload = render_payload([first, second], caching: { ttl: '1h' })
+
+      expect(payload.dig(:messages, 0, :content).last).to eq(cachePoint: { type: 'default', ttl: '1h' })
+      expect(payload.dig(:messages, 1, :content).last).not_to have_key(:cachePoint)
+    end
+
+    it 'rejects caching options it cannot render' do
+      expect do
+        render_payload(caching: { retention: '24h' })
+      end.to raise_error(ArgumentError, /Bedrock Converse prompt caching accepts :ttl/)
     end
 
     context 'when schema is provided' do

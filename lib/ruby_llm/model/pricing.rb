@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module RubyLLM
-  module Model
+  class Model
     # A collection that manages and provides access to different categories of pricing information
     class Pricing
       CATEGORIES = %i[text_tokens images audio_tokens embeddings].freeze

@@ -46,11 +46,11 @@ RSpec.describe RubyLLM::Context do
   describe 'context chat operations' do
     it 'creates a chat with context-specific configuration' do
       context = RubyLLM.context do |config|
-        config.default_model = 'claude-3-5-haiku-20241022'
+        config.default_model = 'claude-haiku-4-5'
       end
 
       chat = context.chat
-      expect(chat.model.id).to eq('claude-3-5-haiku-20241022')
+      expect(chat.model.id).to eq('claude-haiku-4-5')
 
       # Ensure global config wasn't affected
       global_chat = RubyLLM.chat
@@ -78,8 +78,8 @@ RSpec.describe RubyLLM::Context do
         config.default_model = 'gpt-4.1-nano'
       end
 
-      chat = context.chat(model: 'claude-3-5-haiku-20241022')
-      expect(chat.model.id).to eq('claude-3-5-haiku-20241022')
+      chat = context.chat(model: 'claude-haiku-4-5')
+      expect(chat.model.id).to eq('claude-haiku-4-5')
     end
   end
 
@@ -115,7 +115,7 @@ RSpec.describe RubyLLM::Context do
       end
 
       context2 = RubyLLM.context do |config|
-        config.default_model = 'claude-3-5-haiku-20241022'
+        config.default_model = 'claude-haiku-4-5'
       end
 
       chat1 = context1.chat
@@ -124,7 +124,7 @@ RSpec.describe RubyLLM::Context do
       expect(chat1.model.id).to eq('gpt-4.1-nano')
       expect(context1.config.log_regexp_timeout).to eq(5.0)
 
-      expect(chat2.model.id).to eq('claude-3-5-haiku-20241022')
+      expect(chat2.model.id).to eq('claude-haiku-4-5')
       expected_timeout = Regexp.respond_to?(:timeout) ? (Regexp.timeout || 1.0) : nil
       expect(context2.config.log_regexp_timeout).to eq(expected_timeout)
     end

@@ -143,7 +143,7 @@ puts response2.content
 
 The `with_temperature` method returns the chat instance, allowing you to chain multiple configuration calls together.
 
-For provider-specific request options, wire protocols, raw content blocks, and custom HTTP headers, see [Advanced Request Control]({% link _core_features/chat-request-control.md %}).
+For provider-specific request options, wire protocols, raw content blocks, and custom HTTP headers, see [Advanced Request Control]({% link _core_features/chat-request-control.md %}). For prompt reuse, see [Prompt Caching]({% link _core_features/prompt-caching.md %}).
 
 ## Raw Responses
 
@@ -198,6 +198,7 @@ This page covers the core `Chat` interface. Each facet of a conversation has its
 * [Structured Output]({% link _core_features/structured-output.md %}) - get responses that match an exact JSON schema.
 * [Extended Thinking]({% link _core_features/thinking.md %}) - give reasoning models room to deliberate and read their thinking.
 * [Citations]({% link _core_features/citations.md %}) - get verifiable answers backed by your documents and web sources.
+* [Prompt Caching]({% link _core_features/prompt-caching.md %}) - reuse stable prompt prefixes automatically or with explicit boundaries.
 * [Advanced Request Control]({% link _core_features/chat-request-control.md %}) - provider-specific parameters, wire protocols, raw content blocks, and custom headers.
 * [Token Usage and Cost]({% link _core_features/chat-tokens.md %}) - read per-turn and per-conversation token counts and costs.
 * [Chat Event Handlers]({% link _core_features/chat-callbacks.md %}) - hook into the chat lifecycle for UI updates, logging, and analytics.

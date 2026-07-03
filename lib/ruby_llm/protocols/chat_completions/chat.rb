@@ -7,6 +7,7 @@ module RubyLLM
       module Chat
         OPENAI_INLINE_FILE_LIMIT = 50 * 1024 * 1024
         OPENAI_FILE_UPLOAD_LIMIT = 512 * 1024 * 1024
+        PROMPT_CACHE_OPTIONS = %i[key retention].freeze
 
         def completion_url
           'chat/completions'
@@ -16,12 +17,12 @@ module RubyLLM
 
         # rubocop:disable Metrics/ParameterLists,Metrics/PerceivedComplexity
         def render_payload(messages, tools:, temperature:, model:, stream: false, schema: nil,
-                           thinking: nil, citations: false, tool_prefs: nil)
+                           thinking: nil, citations: false, caching: nil, tool_prefs: nil)
           warn_unsupported_citations(model) if citations && !model.citations?
           tool_prefs ||= {}
           payload = {
             model: model.id,
-            messages: format_messages(messages),
+            messages: format_messages(messages, caching: caching),
             stream: stream
           }
 
@@ -51,6 +52,7 @@ module RubyLLM
           payload[:reasoning_effort] = effort if effort
 
           payload[:stream_options] = { include_usage: true } if stream
+          payload.merge!(prompt_cache_params(caching)) if caching
           payload
         end
         # rubocop:enable Metrics/ParameterLists,Metrics/PerceivedComplexity
@@ -191,18 +193,46 @@ module RubyLLM
           end
         end
 
-        def format_messages(messages)
-          messages.map do |msg|
+        def prompt_cache_params(caching)
+          options = prompt_cache_options(caching)
+
+          {}.tap do |params|
+            params[:prompt_cache_key] = options[:key] if options[:key]
+            params[:prompt_cache_retention] = options[:retention] if options[:retention]
+          end
+        end
+
+        def prompt_cache_options(caching)
+          options = caching.to_h.transform_keys(&:to_sym)
+          unsupported = options.keys - PROMPT_CACHE_OPTIONS
+          return options if unsupported.empty?
+
+          raise ArgumentError,
+                'Chat Completions prompt caching accepts :key and :retention, ' \
+                "got #{format_cache_option_keys(unsupported)}"
+        end
+
+        def format_cache_option_keys(keys)
+          keys.map { |key| ":#{key}" }.join(', ')
+        end
+
+        def format_messages(messages, caching: nil)
+          messages_for_provider(messages).map do |msg|
             {
               role: format_role(msg.role),
-              content: format_message_content(msg),
+              content: format_message_content(msg, caching: caching),
               tool_calls: format_tool_calls(msg.tool_calls),
               tool_call_id: msg.tool_call_id
             }.compact.merge(format_thinking(msg))
           end
         end
 
-        def format_message_content(msg)
+        def messages_for_provider(messages)
+          system_messages, other_messages = messages.partition { |msg| msg.role == :system }
+          system_messages + other_messages
+        end
+
+        def format_message_content(msg, **)
           content = format_content(msg.content)
           return '' if content.nil? && thinking_only_assistant_message?(msg)
 

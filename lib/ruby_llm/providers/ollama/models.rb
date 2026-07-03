@@ -12,7 +12,7 @@ module RubyLLM
         def parse_list_models_response(response, slug, _capabilities)
           data = response.body['data'] || []
           data.map do |model|
-            Model::Info.new(
+            Model.new(
               id: model['id'],
               name: model['id'],
               provider: slug,

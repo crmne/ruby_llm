@@ -95,6 +95,10 @@ module RubyLLM
       UploadedFile.download(...)
     end
 
+    def render_prompt(name, **locals)
+      Prompt.render(name, **locals)
+    end
+
     def models
       Models.instance
     end

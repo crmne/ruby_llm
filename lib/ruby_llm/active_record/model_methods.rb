@@ -53,7 +53,7 @@ module RubyLLM
       end
 
       def to_llm
-        RubyLLM::Model::Info.new(
+        RubyLLM::Model.new(
           id: model_id,
           name: name,
           provider: provider,

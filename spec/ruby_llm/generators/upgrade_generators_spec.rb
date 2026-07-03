@@ -38,6 +38,7 @@ RSpec.describe 'RubyLLM upgrade generator', :generator, type: :generator do # ru
         migration = File.read(migration_path)
         expect(migration).to include('add_column :messages, :citations, :json')
         expect(migration).to include('add_column :messages, :finish_reason, :string')
+        expect(migration).to include('add_column :messages, :cache_until_here, :boolean')
         expect(migration).to include('create_table :batches')
       end
     end
@@ -69,6 +70,7 @@ RSpec.describe 'RubyLLM upgrade generator', :generator, type: :generator do # ru
         migration = File.read(migration_path)
         expect(migration).to include('add_column :chat_messages, :citations, :json')
         expect(migration).to include('add_column :chat_messages, :finish_reason, :string')
+        expect(migration).to include('add_column :chat_messages, :cache_until_here, :boolean')
         expect(migration).to include('create_table :batches')
       end
     end

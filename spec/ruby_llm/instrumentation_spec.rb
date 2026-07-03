@@ -147,7 +147,7 @@ RSpec.describe RubyLLM::Instrumentation do
   it 'emits embedding events with usage and vector dimensions' do
     instrumenter = CaptureInstrumenter.new
     context = RubyLLM.context { |config| config.instrumenter = instrumenter }
-    model = instance_double(RubyLLM::Model::Info, id: 'text-embedding-3-small', provider: 'openai')
+    model = instance_double(RubyLLM::Model, id: 'text-embedding-3-small', provider: 'openai')
     provider = instance_double(RubyLLM::Provider, slug: 'openai')
     provider_class = class_double(RubyLLM::Provider, display_name: 'OpenAI')
     embedding = RubyLLM::Embedding.new(vectors: [[0.1, 0.2, 0.3]], model: 'text-embedding-3-small', input_tokens: 8)
@@ -176,7 +176,7 @@ RSpec.describe RubyLLM::Instrumentation do
   it 'emits speech events with output metadata' do
     instrumenter = CaptureInstrumenter.new
     context = RubyLLM.context { |config| config.instrumenter = instrumenter }
-    model = instance_double(RubyLLM::Model::Info, id: 'gpt-4o-mini-tts', provider: 'openai')
+    model = instance_double(RubyLLM::Model, id: 'gpt-4o-mini-tts', provider: 'openai')
     provider = instance_double(RubyLLM::Provider, slug: 'openai')
     provider_class = class_double(RubyLLM::Provider, display_name: 'OpenAI')
     speech = RubyLLM::Speech.new(data: 'audio bytes', model: 'gpt-4o-mini-tts', voice: 'alloy', format: 'mp3')

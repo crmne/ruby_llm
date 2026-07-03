@@ -35,6 +35,7 @@ module RubyLLM
       @thinking = options[:thinking]
       @citations = Array(options[:citations])
       @finish_reason = options[:finish_reason]
+      @cache_until_here = options.fetch(:cache_until_here, false)
 
       ensure_valid_role
     end
@@ -103,6 +104,15 @@ module RubyLLM
       Cost.new(tokens:, model: model || model_info)
     end
 
+    def cache_until_here!
+      @cache_until_here = true
+      self
+    end
+
+    def cache_until_here?
+      @cache_until_here
+    end
+
     def to_h
       {
         role: role,
@@ -113,7 +123,8 @@ module RubyLLM
         thinking: thinking&.text,
         thinking_signature: thinking&.signature,
         citations: citations.empty? ? nil : citations.map(&:to_h),
-        finish_reason: finish_reason
+        finish_reason: finish_reason,
+        cache_until_here: cache_until_here? || nil
       }.merge(tokens ? tokens.to_h : {}).compact
     end
 

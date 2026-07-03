@@ -103,6 +103,25 @@ chat_record.ask "Tell me more about that city"
 puts "Conversation length: #{chat_record.messages.count}" # => 4
 ```
 
+### Model Fallbacks
+
+Persisted chats expose the same fallback API as plain `RubyLLM::Chat`:
+
+```ruby
+chat_record = Chat.find(params[:id])
+
+chat_record.with_fallbacks("gpt-4.1-mini", "claude-haiku-4-5")
+chat_record.before_fallback do |fallback|
+  Rails.logger.info "Falling back from #{fallback.from.id} to #{fallback.to.id}"
+end
+
+chat_record.ask("Summarize this support conversation.")
+```
+
+Fallback configuration is applied to the in-memory `to_llm` chat for that record. It is not stored in the `chats` table, so reapply it when you load the record again, or use an [Agent]({% link _advanced/agents.md %}) to centralize fallback configuration.
+
+When a fallback response is persisted, RubyLLM associates that assistant message with the fallback model. During streaming, if the primary model already produced partial content, the fallback response starts a new assistant message row rather than overwriting the partial primary row.
+
 ### Separate User and LLM Transcripts
 
 The `acts_as_chat` association is the transcript RubyLLM persists and sends to the provider. The optional `ruby_llm:chat_ui` generator renders that same association by default.

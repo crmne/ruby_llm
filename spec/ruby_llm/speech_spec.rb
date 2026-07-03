@@ -7,7 +7,7 @@ RSpec.describe RubyLLM::Speech do
 
   describe '.speak' do
     it 'uses the configured default speech model' do
-      model = instance_double(RubyLLM::Model::Info, id: 'gpt-4o-mini-tts', provider: 'openai')
+      model = instance_double(RubyLLM::Model, id: 'gpt-4o-mini-tts', provider: 'openai')
       provider = instance_double(RubyLLM::Provider, slug: 'openai')
       provider_class = class_double(RubyLLM::Provider, display_name: 'OpenAI')
       speech = described_class.new(data: 'audio bytes', model: 'gpt-4o-mini-tts', voice: 'alloy', format: 'mp3')
@@ -36,7 +36,7 @@ RSpec.describe RubyLLM::Speech do
       context = RubyLLM.context do |config|
         config.default_speech_model = 'tts-1'
       end
-      model = instance_double(RubyLLM::Model::Info, id: 'tts-1', provider: 'openai')
+      model = instance_double(RubyLLM::Model, id: 'tts-1', provider: 'openai')
       provider = instance_double(RubyLLM::Provider, slug: 'openai')
       provider_class = class_double(RubyLLM::Provider, display_name: 'OpenAI')
       speech = described_class.new(data: 'audio bytes', model: 'tts-1', voice: 'alloy', format: 'mp3')

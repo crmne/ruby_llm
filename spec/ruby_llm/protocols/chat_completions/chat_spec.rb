@@ -179,6 +179,19 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Chat do
   end
 
   describe '.format_messages' do
+    it 'renders system messages before conversation messages' do
+      messages = [
+        RubyLLM::Message.new(role: :user, content: 'Hi'),
+        RubyLLM::Message.new(role: :system, content: 'Be brief.')
+      ]
+      protocol = RubyLLM::Protocols::ChatCompletions.allocate
+      protocol.instance_variable_set(:@config, RubyLLM.config)
+
+      formatted = protocol.send(:format_messages, messages)
+
+      expect(formatted.map { |message| message[:role] }).to eq(%w[developer user])
+    end
+
     it 'opts OpenAI into native file parts for PDF attachments' do
       content = RubyLLM::Content.new('Summarize this file')
       content.add_attachment(StringIO.new('pdf bytes'), filename: 'proposal.pdf')
@@ -286,11 +299,25 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Chat do
   end
 
   describe '.render_payload' do
-    let(:model) { instance_double(RubyLLM::Model::Info, id: 'gpt-4o') }
+    let(:model) { instance_double(RubyLLM::Model, id: 'gpt-4o') }
     let(:messages) { [RubyLLM::Message.new(role: :user, content: 'Hello')] }
 
     before do
       allow(described_class).to receive(:format_messages).and_return([{ role: 'user', content: 'Hello' }])
+    end
+
+    it 'renders prompt cache params for any Chat Completions-compatible provider' do
+      payload = described_class.render_payload(
+        messages,
+        tools: {},
+        temperature: nil,
+        model: model,
+        stream: false,
+        caching: { key: 'repo:ruby_llm', retention: '24h' }
+      )
+
+      expect(payload[:prompt_cache_key]).to eq('repo:ruby_llm')
+      expect(payload[:prompt_cache_retention]).to eq('24h')
     end
 
     context 'with schema' do

@@ -2,8 +2,8 @@
 
 require 'spec_helper'
 
-RSpec.describe RubyLLM::Model::Info do
-  subject(:info) { described_class.new(data) }
+RSpec.describe RubyLLM::Model do
+  subject(:model) { described_class.new(data) }
 
   let(:data) do
     {
@@ -30,7 +30,7 @@ RSpec.describe RubyLLM::Model::Info do
 
   describe '#initialize' do
     it 'assigns basic attributes' do
-      expect(info).to have_attributes(
+      expect(model).to have_attributes(
         id: 'gpt-5',
         name: 'GPT-5',
         provider: 'openai',
@@ -41,24 +41,24 @@ RSpec.describe RubyLLM::Model::Info do
     end
 
     it 'parses created_at and knowledge_cutoff' do
-      expect(info.created_at).to be_a(Time)
-      expect(info.knowledge_cutoff).to be_a(Date)
+      expect(model.created_at).to be_a(Time)
+      expect(model.knowledge_cutoff).to be_a(Date)
     end
 
     it 'normalizes time to UTC' do
-      info = described_class.new(created_at: '2026-02-20 00:00:00 +0700')
-      expect(info.created_at).to be_utc
-      expect(info.created_at).to eq Time.new(2026, 2, 19, 17, 0, 0, '+00:00')
+      model = described_class.new(created_at: '2026-02-20 00:00:00 +0700')
+      expect(model.created_at).to be_utc
+      expect(model.created_at).to eq Time.new(2026, 2, 19, 17, 0, 0, '+00:00')
     end
 
     it 'builds modalities' do
-      expect(info.modalities).to be_a(RubyLLM::Model::Modalities)
-      expect(info.modalities.input).to eq(%w[text image])
-      expect(info.modalities.output).to eq(%w[text])
+      expect(model.modalities).to be_a(RubyLLM::Model::Modalities)
+      expect(model.modalities.input).to eq(%w[text image])
+      expect(model.modalities.output).to eq(%w[text])
     end
 
     it 'builds pricing' do
-      expect(info.pricing).to be_a(RubyLLM::Model::Pricing)
+      expect(model.pricing).to be_a(RubyLLM::Model::Pricing)
     end
 
     it 'defaults missing optional fields' do
@@ -72,42 +72,42 @@ RSpec.describe RubyLLM::Model::Info do
   end
 
   describe '.default' do
-    subject(:default_info) { described_class.default('my-custom-model', 'openai') }
+    subject(:default_model) { described_class.default('my-custom-model', 'openai') }
 
-    it 'creates an info with assumed capabilities' do
-      expect(default_info).to have_attributes(
+    it 'creates a model with assumed capabilities' do
+      expect(default_model).to have_attributes(
         id: 'my-custom-model',
         provider: 'openai'
       )
-      expect(default_info.capabilities).to include('function_calling', 'streaming')
-      expect(default_info.metadata).to have_key(:warning)
+      expect(default_model.capabilities).to include('function_calling', 'streaming')
+      expect(default_model.metadata).to have_key(:warning)
     end
   end
 
   describe '#supports?' do
     it 'returns true for included capabilities' do
-      expect(info.supports?(:function_calling)).to be true
-      expect(info.supports?('streaming')).to be true
+      expect(model.supports?(:function_calling)).to be true
+      expect(model.supports?('streaming')).to be true
     end
 
     it 'returns false for missing capabilities' do
-      expect(info.supports?(:batch)).to be false
+      expect(model.supports?(:batch)).to be false
     end
   end
 
   describe 'capability predicates' do
     it 'responds to dynamic capability methods' do
-      expect(info.function_calling?).to be true
-      expect(info.structured_output?).to be true
-      expect(info.streaming?).to be true
-      expect(info.batch?).to be false
-      expect(info.reasoning?).to be false
+      expect(model.function_calling?).to be true
+      expect(model.structured_output?).to be true
+      expect(model.streaming?).to be true
+      expect(model.batch?).to be false
+      expect(model.reasoning?).to be false
     end
   end
 
   describe '#supports_vision?' do
     it 'returns true when image is in input modalities' do
-      expect(info.supports_vision?).to be true
+      expect(model.supports_vision?).to be true
     end
 
     it 'returns false when image is not in input modalities' do
@@ -118,7 +118,7 @@ RSpec.describe RubyLLM::Model::Info do
 
   describe '#reasoning_options' do
     it 'normalizes metadata reasoning options' do
-      expect(info.reasoning_options).to eq(
+      expect(model.reasoning_options).to eq(
         [
           { type: 'effort', values: %w[low medium high] },
           { type: 'budget_tokens', min: 1024 }
@@ -127,7 +127,7 @@ RSpec.describe RubyLLM::Model::Info do
     end
 
     it 'accepts top-level reasoning options and stores them in metadata' do
-      top_level_info = described_class.new(
+      top_level_model = described_class.new(
         data.merge(
           reasoning_options: [
             { 'type' => 'effort', 'values' => %i[low high] }
@@ -136,12 +136,12 @@ RSpec.describe RubyLLM::Model::Info do
         )
       )
 
-      expect(top_level_info.reasoning_options).to eq([{ type: 'effort', values: %w[low high] }])
-      expect(top_level_info.metadata[:reasoning_options]).to eq([{ type: 'effort', values: %w[low high] }])
+      expect(top_level_model.reasoning_options).to eq([{ type: 'effort', values: %w[low high] }])
+      expect(top_level_model.metadata[:reasoning_options]).to eq([{ type: 'effort', values: %w[low high] }])
     end
 
     it 'accepts string-keyed metadata reasoning options' do
-      legacy_info = described_class.new(
+      legacy_model = described_class.new(
         data.merge(
           metadata: {
             'reasoning_options' => [
@@ -151,11 +151,11 @@ RSpec.describe RubyLLM::Model::Info do
         )
       )
 
-      expect(legacy_info.reasoning_options).to eq([{ type: 'effort', values: %w[low high] }])
+      expect(legacy_model.reasoning_options).to eq([{ type: 'effort', values: %w[low high] }])
     end
 
     it 'prefers top-level reasoning options over metadata when both are present' do
-      info = described_class.new(
+      model = described_class.new(
         data.merge(
           reasoning_options: [
             { 'type' => 'effort', 'values' => %w[low high] }
@@ -168,11 +168,11 @@ RSpec.describe RubyLLM::Model::Info do
         )
       )
 
-      expect(info.reasoning_options).to eq([{ type: 'effort', values: %w[low high] }])
+      expect(model.reasoning_options).to eq([{ type: 'effort', values: %w[low high] }])
     end
 
     it 'normalizes option values to strings' do
-      symbol_info = described_class.new(
+      symbol_model = described_class.new(
         data.merge(
           metadata: {
             reasoning_options: [
@@ -182,18 +182,18 @@ RSpec.describe RubyLLM::Model::Info do
         )
       )
 
-      expect(symbol_info.reasoning_options).to eq([{ type: 'effort', values: %w[low high] }])
+      expect(symbol_model.reasoning_options).to eq([{ type: 'effort', values: %w[low high] }])
     end
 
     it 'returns option values by type' do
-      expect(info.reasoning_option_values(:effort)).to eq(%w[low medium high])
-      expect(info.reasoning_option_values(:budget_tokens)).to eq([])
+      expect(model.reasoning_option_values(:effort)).to eq(%w[low medium high])
+      expect(model.reasoning_option_values(:budget_tokens)).to eq([])
     end
   end
 
   describe '#type' do
     it 'returns chat for text output models' do
-      expect(info.type).to eq('chat')
+      expect(model.type).to eq('chat')
     end
 
     it 'returns embedding for output models that include embeddings' do
@@ -234,32 +234,32 @@ RSpec.describe RubyLLM::Model::Info do
 
   describe '#display_name' do
     it 'returns the name' do
-      expect(info.display_name).to eq('GPT-5')
+      expect(model.display_name).to eq('GPT-5')
     end
   end
 
   describe '#label' do
     it 'returns provider and display name' do
-      expect(info.label).to eq('OpenAI - GPT-5')
+      expect(model.label).to eq('OpenAI - GPT-5')
     end
   end
 
   describe '#max_tokens' do
     it 'returns max_output_tokens' do
-      expect(info.max_tokens).to eq(128_000)
+      expect(model.max_tokens).to eq(128_000)
     end
   end
 
   describe '#input_price_per_million and #output_price_per_million' do
     it 'delegates to pricing' do
-      expect(info.input_price_per_million).to eq(info.pricing.text_tokens.input)
-      expect(info.output_price_per_million).to eq(info.pricing.text_tokens.output)
+      expect(model.input_price_per_million).to eq(model.pricing.text_tokens.input)
+      expect(model.output_price_per_million).to eq(model.pricing.text_tokens.output)
     end
   end
 
   describe 'cache price helpers' do
     it 'delegates to cache read and write pricing' do
-      info = described_class.new(
+      model = described_class.new(
         data.merge(
           pricing: {
             text_tokens: {
@@ -272,14 +272,14 @@ RSpec.describe RubyLLM::Model::Info do
         )
       )
 
-      expect(info.cache_read_input_price_per_million).to eq(0.5)
-      expect(info.cache_write_input_price_per_million).to eq(2.5)
+      expect(model.cache_read_input_price_per_million).to eq(0.5)
+      expect(model.cache_write_input_price_per_million).to eq(2.5)
     end
   end
 
   describe '#cost_for' do
     it 'builds a Cost for the supplied tokens' do
-      info = described_class.new(
+      model = described_class.new(
         data.merge(
           pricing: {
             text_tokens: {
@@ -293,13 +293,13 @@ RSpec.describe RubyLLM::Model::Info do
       )
       tokens = RubyLLM::Tokens.new(input: 1_000, output: 2_000)
 
-      expect(info.cost_for(tokens).total).to eq(0.0225)
+      expect(model.cost_for(tokens).total).to eq(0.0225)
     end
   end
 
   describe '#to_h' do
     it 'returns a hash representation' do
-      hash = info.to_h
+      hash = model.to_h
 
       expect(hash[:id]).to eq('gpt-5')
       expect(hash[:provider]).to eq('openai')

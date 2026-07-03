@@ -195,9 +195,9 @@ RSpec.describe RubyLLM::Chat do
   describe '#with_model' do
     it 'changes the model and returns self' do
       chat = described_class.new(model: 'gpt-4.1-nano')
-      result = chat.with_model('claude-3-5-haiku-20241022')
+      result = chat.with_model('claude-haiku-4-5')
 
-      expect(chat.model.id).to eq('claude-3-5-haiku-20241022')
+      expect(chat.model.id).to eq('claude-haiku-4-5')
       expect(result).to eq(chat) # Should return self for chaining
     end
   end
@@ -224,14 +224,23 @@ RSpec.describe RubyLLM::Chat do
       expect(system_messages.map(&:content)).to eq(['Be helpful', 'Be concise'])
     end
 
-    it 'keeps system instructions at the top of message history' do
+    it 'keeps system instructions in chronological message history' do
       chat = described_class.new
 
       chat.add_message(role: :user, content: 'Hi')
       chat.add_message(role: :assistant, content: 'Hello')
       chat.with_instructions('System')
 
-      expect(chat.messages.map(&:role)).to eq(%i[system user assistant])
+      expect(chat.messages.map(&:role)).to eq(%i[user assistant system])
+    end
+
+    it 'continues a staged user turn when instructions are added after it' do
+      chat = described_class.new
+
+      chat.ask_later('Hi')
+      chat.with_instructions('Be brief')
+
+      expect(chat).not_to be_complete
     end
   end
 

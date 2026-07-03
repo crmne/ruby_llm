@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module RubyLLM
-  module Model
+  class Model
     # Stores non-zero pricing values for a single pricing tier.
     class PricingTier
       ATTRIBUTES = %i[
