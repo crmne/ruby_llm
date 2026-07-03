@@ -1,0 +1,52 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.perplexity.ai/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"sonar","messages":[{"role":"user","content":"What is the
+        Ruby programming language?"}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.2
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 10 Jun 2026 14:06:13 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      Server:
+      - cloudflare
+      X-Ppl-Region:
+      - us-east-1
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      Cf-Cache-Status:
+      - DYNAMIC
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6IjA0NWVkM2M2LTQzZTktNGExYS04OTRlLTNiY2RjNTVhYTRjMSIsIm1vZGVsIjoic29uYXIiLCJjcmVhdGVkIjoxNzgxMTAwMzczLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjo4LCJjb21wbGV0aW9uX3Rva2VucyI6MTc4LCJ0b3RhbF90b2tlbnMiOjE4Niwic2VhcmNoX2NvbnRleHRfc2l6ZSI6ImxvdyIsImNvc3QiOnsiaW5wdXRfdG9rZW5zX2Nvc3QiOjAuMDAwMDEsIm91dHB1dF90b2tlbnNfY29zdCI6MC4wMDAxOCwicmVxdWVzdF9jb3N0IjowLjAwNSwidG90YWxfY29zdCI6MC4wMDUxOX19LCJjaXRhdGlvbnMiOlsiaHR0cHM6Ly9lbi53aWtpcGVkaWEub3JnL3dpa2kvUnVieV8ocHJvZ3JhbW1pbmdfbGFuZ3VhZ2UpIiwiaHR0cHM6Ly93d3cuZ2Vla3Nmb3JnZWVrcy5vcmcvcnVieS9ydWJ5LXByb2dyYW1taW5nLWxhbmd1YWdlLyIsImh0dHBzOi8vd3d3Lm9yYWNsZS5jb20vZGV2ZWxvcGVyL3doYXQtaXMtcnVieS1mb3ItZGV2ZWxvcGVycy8iLCJodHRwczovL3d3dy5ydWJ5LWxhbmcub3JnL2VuLyIsImh0dHBzOi8vZGV2LnRvL2tvcHlsb3ZfdmxhZC93aHktaS1sb3ZlLXJ1YnktNDRnOSIsImh0dHBzOi8vd3d3LnlvdXR1YmUuY29tL3dhdGNoP3Y9VVltMGtmblJUSmsiXSwic2VhcmNoX3Jlc3VsdHMiOlt7InRpdGxlIjoiUnVieSAocHJvZ3JhbW1pbmcgbGFuZ3VhZ2UpIC0gV2lraXBlZGlhIiwidXJsIjoiaHR0cHM6Ly9lbi53aWtpcGVkaWEub3JnL3dpa2kvUnVieV8ocHJvZ3JhbW1pbmdfbGFuZ3VhZ2UpIiwiZGF0ZSI6IjIwMDEtMTAtMTciLCJsYXN0X3VwZGF0ZWQiOiIyMDI2LTA2LTAyIiwic25pcHBldCI6IlJ1YnkgaXMgYSBnZW5lcmFsLXB1cnBvc2UgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UgZGVzaWduZWQgd2l0aCBhbiBlbXBoYXNpcyBvbiBwcm9ncmFtbWluZyBwcm9kdWN0aXZpdHkgYW5kIHNpbXBsaWNpdHkuIEluIFJ1YnksIGV2ZXJ5dGhpbmcgaXMgYW4gb2JqZWN0LCIsInNvdXJjZSI6IndlYiJ9LHsidGl0bGUiOiJSdWJ5IFByb2dyYW1taW5nIExhbmd1YWdlIC0gR2Vla3Nmb3JHZWVrcyIsInVybCI6Imh0dHBzOi8vd3d3LmdlZWtzZm9yZ2Vla3Mub3JnL3J1YnkvcnVieS1wcm9ncmFtbWluZy1sYW5ndWFnZS8iLCJkYXRlIjoiMjAyNS0wOS0wNCIsImxhc3RfdXBkYXRlZCI6IjIwMjYtMDYtMTAiLCJzbmlwcGV0IjoiUnVieSBpcyBhIHBvcHVsYXIgYmFja2VuZCBwcm9ncmFtbWluZyBsYW5ndWFnZSwgd2lkZWx5IHVzZWQgZm9yIGJ1aWxkaW5nIG1vZGVybiBhcHBsaWNhdGlvbnMgYW5kIHNlcnZpY2VzLiBJdCBtYWtlcyBkZXZlbG9wbWVudCBmYXN0ZXIsIGVhc2llcizCoC4uLiIsInNvdXJjZSI6IndlYiJ9LHsidGl0bGUiOiJXaGF0IGlzIFJ1Ynk/IC0gT3JhY2xlIiwidXJsIjoiaHR0cHM6Ly93d3cub3JhY2xlLmNvbS9kZXZlbG9wZXIvd2hhdC1pcy1ydWJ5LWZvci1kZXZlbG9wZXJzLyIsImRhdGUiOiIyMDI0LTA2LTEwIiwibGFzdF91cGRhdGVkIjoiMjAyNi0wNi0wOCIsInNuaXBwZXQiOiJSdWJ5IGlzIGEgc2NyaXB0aW5nIGxhbmd1YWdlIGRlc2lnbmVkIGZvciBmcm9udC0gYW5kIGJhY2stZW5kIHdlYiBkZXZlbG9wbWVudCwgYXMgd2VsbCBhcyBvdGhlciBzaW1pbGFyIGFwcGxpY2F0aW9ucy4gSXQncyBhIHJvYnVzdCwgZHluYW1pY2FsbHkgdHlwZWQsIG9iamVjdC3CoC4uLiIsInNvdXJjZSI6IndlYiJ9LHsidGl0bGUiOiJSdWJ5IFByb2dyYW1taW5nIExhbmd1YWdlIiwidXJsIjoiaHR0cHM6Ly93d3cucnVieS1sYW5nLm9yZy9lbi8iLCJsYXN0X3VwZGF0ZWQiOiIyMDI2LTA1LTIwIiwic25pcHBldCI6Ik5hdHVyYWwgc3ludGF4IGxpa2Ugc3Bva2VuIGxhbmd1YWdlLiBSdWJ5IGhhcyBhIHNpbXBsZSBhbmQgaW50dWl0aXZlIHN5bnRheCB0aGF0IHJlYWRzIGxpa2UgbmF0dXJhbCBsYW5ndWFnZS4iLCJzb3VyY2UiOiJ3ZWIifSx7InRpdGxlIjoiV2h5IEkgbG92ZSBSdWJ5IC0gREVWIENvbW11bml0eSIsInVybCI6Imh0dHBzOi8vZGV2LnRvL2tvcHlsb3ZfdmxhZC93aHktaS1sb3ZlLXJ1YnktNDRnOSIsImRhdGUiOiIyMDI0LTAzLTA0IiwibGFzdF91cGRhdGVkIjoiMjAyNS0xMS0yOSIsInNuaXBwZXQiOiJSdWJ5IGlzIGEgZ2VuZXJhbC1wdXJwb3NlIGxhbmd1YWdlLiBZb3UgY2FuIHVzZSBpdCBmb3IgYWxsIHNvcnRzIG9mIHRoaW5ncywgZnJvbSB3cml0aW5nIHN5c3RlbSBhZG1pbmlzdHJhdGlvbiBzY3JpcHRzIHRvIHByb2dyYW0gZWxlY3Ryb25pY3MuIiwic291cmNlIjoid2ViIn0seyJ0aXRsZSI6IlJ1YnkgaW4gMTAwIFNlY29uZHMgLSBZb3VUdWJlIiwidXJsIjoiaHR0cHM6Ly93d3cueW91dHViZS5jb20vd2F0Y2g/dj1VWW0wa2ZuUlRKayIsImRhdGUiOiIyMDIyLTAxLTMxIiwibGFzdF91cGRhdGVkIjoiMjAyNi0wNS0xNyIsInNuaXBwZXQiOiJSdWJ5IGlzIGEgZHluYW1pYyBwcm9ncmFtbWluZyBsYW5ndWFnZSBtb3N0IHdlbGwta25vdyBmb3IgcG93ZXJpbmcgdGhlIFJ1Ynkgb24gUmFpbHMgZnVsbHN0YWNrIHdlYiBmcmFtZXdvcmsuIExlYXJuIHdoeSBkZXZlbG9wZXJzIGxvdmUgdGhlwqAuLi4iLCJzb3VyY2UiOiJ3ZWIifV0sIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNob2ljZXMiOlt7ImluZGV4IjowLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiKipSdWJ5KiogaXMgYSAqKmdlbmVyYWwtcHVycG9zZSwgaW50ZXJwcmV0ZWQsIGR5bmFtaWNhbGx5IHR5cGVkIHByb2dyYW1taW5nIGxhbmd1YWdlKiogZGVzaWduZWQgd2l0aCBhIHN0cm9uZyBlbXBoYXNpcyBvbiAqKnNpbXBsaWNpdHksIHJlYWRhYmlsaXR5LCBhbmQgZGV2ZWxvcGVyIHByb2R1Y3Rpdml0eSoqLlsxXVszXVs0XVxuXG5JdCB3YXMgY3JlYXRlZCBpbiB0aGUgKiptaWQtMTk5MHMgYnkgWXVraWhpcm8g4oCcTWF0euKAnSBNYXRzdW1vdG8qKiBpbiBKYXBhbi5bMV1bM10gUnVieSBpcyAqKm9iamVjdC1vcmllbnRlZCoq4oCUaW4gUnVieSwgYWxtb3N0IGV2ZXJ5dGhpbmcgaXMgYW4gb2JqZWN04oCUYW5kIGl0IGFsc28gc3VwcG9ydHMgKipwcm9jZWR1cmFsKiogYW5kICoqZnVuY3Rpb25hbCoqIHByb2dyYW1taW5nIHN0eWxlcy5bMV1cblxuUnVieSBpcyBlc3BlY2lhbGx5IHdlbGwga25vd24gZm9yICoqd2ViIGRldmVsb3BtZW50KiosIGxhcmdlbHkgYmVjYXVzZSBvZiB0aGUgKipSdWJ5IG9uIFJhaWxzKiogZnJhbWV3b3JrLCBidXQgaXQgaXMgYWxzbyB1c2VkIGZvciAqKmF1dG9tYXRpb24sIHNjcmlwdGluZywgRGV2T3BzLCBjb21tYW5kLWxpbmUgdG9vbHMsIGRhdGEgcHJvY2Vzc2luZywgYW5kIHdlYiBzY3JhcGluZyoqLlsyXVszXVxuXG5BIGtleSBpZGVhIGJlaGluZCBSdWJ5IGlzIHRoYXQgaXRzIHN5bnRheCBzaG91bGQgZmVlbCAqKm5hdHVyYWwgYW5kIGludHVpdGl2ZSoqLCBhbG1vc3QgbGlrZSBwbGFpbiBFbmdsaXNoLls0XVszXSJ9LCJkZWx0YSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IiJ9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XX0=
+  recorded_at: Wed, 10 Jun 2026 14:06:13 GMT
+recorded_with: VCR 6.4.0

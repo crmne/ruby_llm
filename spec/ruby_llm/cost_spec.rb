@@ -4,7 +4,7 @@ require 'spec_helper'
 
 RSpec.describe RubyLLM::Cost do
   let(:model) do
-    RubyLLM::Model::Info.new(
+    RubyLLM::Model.new(
       id: 'priced-model',
       name: 'Priced Model',
       provider: 'openai',
@@ -42,16 +42,8 @@ RSpec.describe RubyLLM::Cost do
       expect(cost.total).to be_within(0.0000000001).of(0.000775)
     end
 
-    it 'keeps backwards-compatible cache cost aliases' do
-      tokens = RubyLLM::Tokens.new(input: 1_000, cached: 300, cache_creation: 100)
-      cost = described_class.new(tokens:, model:)
-
-      expect(cost.cached_input).to eq(cost.cache_read)
-      expect(cost.cache_creation).to eq(cost.cache_write)
-    end
-
     it 'calculates image costs from text and image input details' do
-      image_model = RubyLLM::Model::Info.new(
+      image_model = RubyLLM::Model.new(
         id: 'image-model',
         name: 'Image Model',
         provider: 'openai',
@@ -91,12 +83,11 @@ RSpec.describe RubyLLM::Cost do
 
       expect(cost.output).to be_within(0.0000000001).of(0.002612)
       expect(cost.thinking).to be_nil
-      expect(cost.reasoning).to be_nil
       expect(cost.total).to be_within(0.0000000001).of(0.002662)
     end
 
     it 'prices thinking tokens separately when the model has distinct reasoning pricing' do
-      reasoning_model = RubyLLM::Model::Info.new(
+      reasoning_model = RubyLLM::Model.new(
         id: 'reasoning-priced-model',
         name: 'Reasoning Priced Model',
         provider: 'perplexity',
@@ -120,7 +111,7 @@ RSpec.describe RubyLLM::Cost do
     end
 
     it 'does not double-count thinking tokens when reasoning pricing matches output pricing' do
-      inclusive_model = RubyLLM::Model::Info.new(
+      inclusive_model = RubyLLM::Model.new(
         id: 'inclusive-reasoning-model',
         name: 'Inclusive Reasoning Model',
         provider: 'openrouter',
@@ -141,29 +132,8 @@ RSpec.describe RubyLLM::Cost do
       expect(cost.total).to eq(0.012)
     end
 
-    it 'reads legacy cache pricing keys' do
-      legacy_model = RubyLLM::Model::Info.new(
-        id: 'legacy-priced-model',
-        name: 'Legacy Priced Model',
-        provider: 'openai',
-        pricing: {
-          text_tokens: {
-            standard: {
-              cached_input_per_million: 0.25,
-              cache_creation_input_per_million: 1.25
-            }
-          }
-        }
-      )
-      tokens = RubyLLM::Tokens.new(cached: 300, cache_creation: 100)
-      cost = described_class.new(tokens:, model: legacy_model)
-
-      expect(cost.cache_read).to be_within(0.0000000001).of(0.000075)
-      expect(cost.cache_write).to be_within(0.0000000001).of(0.000125)
-    end
-
     it 'returns nil when pricing is missing for tokens that were used' do
-      incomplete_model = RubyLLM::Model::Info.new(
+      incomplete_model = RubyLLM::Model.new(
         id: 'incomplete-model',
         name: 'Incomplete Model',
         provider: 'openai',
@@ -178,7 +148,7 @@ RSpec.describe RubyLLM::Cost do
     end
 
     it 'does not require pricing for token buckets that were not used' do
-      input_only_model = RubyLLM::Model::Info.new(
+      input_only_model = RubyLLM::Model.new(
         id: 'input-only-model',
         name: 'Input Only Model',
         provider: 'openai',

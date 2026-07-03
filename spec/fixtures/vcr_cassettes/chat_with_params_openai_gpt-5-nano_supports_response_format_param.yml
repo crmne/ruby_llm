@@ -2,14 +2,14 @@
 http_interactions:
 - request:
     method: post
-    uri: https://api.openai.com/v1/chat/completions
+    uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-5-nano","messages":[{"role":"user","content":"What is
-        the square root of 64? Answer with a JSON object with the key `result`."}],"stream":false,"response_format":{"type":"json_object"}}'
+      string: '{"model":"gpt-5-nano","input":[{"role":"user","content":"What is the
+        square root of 64? Answer with a JSON object with the key `result`."}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"text":{"format":{"type":"json_object"}}}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 06 May 2026 23:51:26 GMT
+      - Thu, 11 Jun 2026 20:17:14 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -42,17 +42,17 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Access-Control-Expose-Headers:
+      - CF-Ray
+      - CF-Ray
       - X-Request-ID
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '1792'
+      - '2202'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
       - '2020-10-01'
-      X-Openai-Proxy-Wasm:
-      - v0.1
       X-Ratelimit-Limit-Requests:
       - '5000'
       X-Ratelimit-Limit-Tokens:
@@ -60,11 +60,11 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '4999'
       X-Ratelimit-Remaining-Tokens:
-      - '1999978'
+      - '1999918'
       X-Ratelimit-Reset-Requests:
       - 12ms
       X-Ratelimit-Reset-Tokens:
-      - 0s
+      - 2ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Set-Cookie:
@@ -73,41 +73,86 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: |
+      string: |-
         {
-          "id": "chatcmpl-DcgJRS5Rm8Kqs6ssEpV2QXbtgw1JI",
-          "object": "chat.completion",
-          "created": 1778111485,
+          "id": "resp_0ae7c08e276e6b04016a2b17c833d8819ea2f373a469d3562c",
+          "object": "response",
+          "created_at": 1781209032,
+          "status": "completed",
+          "background": false,
+          "billing": {
+            "payer": "developer"
+          },
+          "completed_at": 1781209034,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
           "model": "gpt-5-nano-2025-08-07",
-          "choices": [
+          "moderation": null,
+          "output": [
             {
-              "index": 0,
-              "message": {
-                "role": "assistant",
-                "content": "{\"result\": 8}",
-                "refusal": null,
-                "annotations": []
-              },
-              "finish_reason": "stop"
+              "id": "rs_0ae7c08e276e6b04016a2b17c871c4819ea285ad921a374999",
+              "type": "reasoning",
+              "content": [],
+              "encrypted_content": "gAAAAABqKxfKB8NSc8wlIx2r7ZSn3cIAcw3ar26ogKEJWwu9ztg7qztRSd56tcvv1aZdwHP25cFNhGRT97PvHrHIigqfYGGybAPi4S6-RouUE2H-x6B7JhyMvP8AK_mPGeaXcY5HA32XW3JJRyOD6jPz7rnUgTK9f8ikoHhtNC0PFD33nOmOdv157_wycGfBfqRq1NKZMnTuwu_2B3mMWSqlmjuxjOxgdR_A_4Auf3v7Tr-OjFeO4FjamVqV9SkRu9NNODqHPx7Alph23j5u-RxZ_3CNS3qHwlfbaOXpKbX9nV6mR3FQeo9wWJW7U-5aD5c9L7Irk9Oj5AjM7R9IaYNkkSqoA3Z6gt__nBupvSZlYG9tZwbcNstEM0M_godlmKTHhivmWLPlNgxOEQMmqsLYryv-EeSmh6fgMULtqZYMzLOvoqPzD3Zre2HbRt6jRbD5erwcXCqK7c_DlrW2yttUf-qlaRSvYOD81s-IXDVBiLe4RCCxBDXyAUleNj3_ri7JR5LZTGyF7yBNTjz4piRfFZm0Nx6mXB81d5biF7p8zImnDjhRkpGv_-GQmDj5bGR6NfQ6BtQ0GwG98zvZ5_3C1M7rJaQJHjEORZXCijlBNqBbwJ9kGDw5lYd2L-G-LfE7QavjaGC1cluya3UW8Z0eA7rzVDiJmQzqg66ogRQmezQOaa-6PUSfau02ygGX4ziuRezXptAOzr680hZ8w40hPsld6D0NvtujMLjx7PS602_1r6ZeFDNLGxYhzynuziYen2K5CQc9jaPCG1EOCT2jMMgW7x0n5cVh2t0Z_KMAV5kLWEAtf9uaBsG01qKN1cg12m9WElDuqQOgB3dInNdGygMAzxxIXC3JUIyQ3vGqSEuRKK4K_UXFtYfylCECj9afGPtd0eM_AqKkKndkEsjNYlTR2go89mcU4GOCRjj0bApAdelnqFbnquXNOqpCH9HTIAvfG-X-DFEcpxuuE6k0okaHvYi353sE3tXXBAtNDBWrpyubc5MWWtcJhlUwWQ4bbY3ZBHJ_Wrg8n13LVId5bG4Hk1Cxd4-hnYyQPw8VG1A38NFcbRFKEKucov6zAXLMYv2Xx0UR6QOhKTAjoc-GHFrqMNlN5YUiAs3P7t2iYMkY5gEmWlyR8Og94mXebmXwlIX7yDwRyi_PdY-t30F8047o_xvHDwDAa8HBGuFDu7dGnqJQpeEoywz8E_pxvHj_1COzsvwMNxCqGLZ2ZBZmY3YLUWnb6SXuFpAGI3juGiE2Q0YD6e2gqm2gDxfJZZ-soML6uDmjvGnj2vhi-_Qv9fjDCmBxk5XCetRVu5ebkUyBw2tU4xd8TJGu3DLBbRWOEVFjmx_w8bZKLDSNl7GfyqQp5V7ZKFU4eTLdJa9lJm5V3G4nMpnDQf_UdXcofVS8GU4hEdekiVvD3WIjh9HKObOTrqb_qABx9KbqFfX9J9UfAshHolrnffP_x1SnTQlBzn9FsrN6oEXgqk7fCJ6iiyKVVZcXJbfunuKbJbzzIuVAvAm-v7TFSNdmdkwoeu5YSf9koaAVce6wMen6nArew5xeGgIdiFBGjpU8E8jRP7QTmhPYxw5IhnSib_oj7q84QKXiQs0716syIT2kc1b_pRFmimOSIwmhQxTsxWACbXkFYkeyrg4r_77M2TSA_Xzm8ED8H8IDY4g1PJUKCTMpdKFFKAFFvovUkOG5merwaEDsSZhQ1qi-MtII-o1bJrlyC0pTTkOVGiK9WYn_mH8C05iy1zQMaoj8UMuvGxNVAmWWSb16PjGYdVB9M39fMBg-FuKssqIq5fhD976IH9M0DzWei0FwgInn4IveALHo6t8CdqQlRm3mN3BrLEy7n4sJdWfv5C9TJ_SlvOJOOFi8soSc2OAki7Fi8c6n8R0MKdlcTd7gcSgNVOeKzMK-3KYvKSEPmRb7c1SK8e-lFrI6XV0Z55PHAOdVoWJkXE1lvRdWwY5tWcALS6kn1PiebvACGA1bvEj04WH7Gi27maadD77K5-sWLQplbg9XAZ-Ut2CbT2KYa1z5qbqHjZphV575CgUf_iNNLNzE_cLdPrefsmALnS7wtc9SmElCdkN78MsRBmTRB13gBDuwgcAbonhZp37gKr-ZMYNcWEDsZ-ezjYaUhlQnu0u5sI23fNvDO4Hp-NXPFAJWSk_fb3s5Tv2s1WBw3TKgb8Q3Tt3jHgfC9j1jFP5EorSRYAWvJ5fjKbYJRhmlgkC44IIM1Do5y18qAQysqk0ykM_Dre0AyDk9zMFZ3eEgWKMMxkBQwu3ADE48Ye5cDH8l-6fF9VbJAe2d_F0VcsQcen9PmPSYycvThQAnVtNu5GoPXEvZ_B_yN5Zd5zwoUfeopWlqo_XwBlpy0Qa9UskvnHM01wCV5u0pmH7bU1FBYmGalplfrnszpzagjdiUOBs34LXR5cN4Y4sMmSOyC-sqkbH71exhJaSZOBYkK1hg1fH5zSzgvkZnAlgrQaObYa1npNrn9mbStKJeXe8M04JEWPcu2yHshmkx0XrGqBnuIULPP_J69R1MfGp5I_L_r6kF2ggZVhZEsZftVC4GucVz",
+              "summary": []
+            },
+            {
+              "id": "msg_0ae7c08e276e6b04016a2b17ca15c4819eb1a0ddca550f9975",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "{\"result\": 8}"
+                }
+              ],
+              "role": "assistant"
             }
           ],
-          "usage": {
-            "prompt_tokens": 26,
-            "completion_tokens": 207,
-            "total_tokens": 233,
-            "prompt_tokens_details": {
-              "cached_tokens": 0,
-              "audio_tokens": 0
-            },
-            "completion_tokens_details": {
-              "reasoning_tokens": 192,
-              "audio_tokens": 0,
-              "accepted_prediction_tokens": 0,
-              "rejected_prediction_tokens": 0
-            }
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": "in_memory",
+          "reasoning": {
+            "context": "current_turn",
+            "effort": "medium",
+            "summary": null
           },
+          "safety_identifier": null,
           "service_tier": "default",
-          "system_fingerprint": null
+          "store": false,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "json_object"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tools": [],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 26,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens": 299,
+            "output_tokens_details": {
+              "reasoning_tokens": 256
+            },
+            "total_tokens": 325
+          },
+          "user": null,
+          "metadata": {}
         }
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+  recorded_at: Thu, 11 Jun 2026 20:17:14 GMT
 recorded_with: VCR 6.4.0

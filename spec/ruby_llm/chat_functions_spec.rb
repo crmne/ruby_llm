@@ -20,6 +20,18 @@ RSpec.describe RubyLLM::Chat do
         chat.with_tool(RubyLLM::Tool)
       end.not_to raise_error
     end
+
+    it 'ignores nil tools' do
+      chat = described_class.new
+      tool = Class.new(RubyLLM::Tool) do
+        def name = 'tool1'
+      end
+
+      chat.with_tool(tool.new)
+      chat.with_tool(nil)
+
+      expect(chat.tools.keys).to eq([:tool1])
+    end
   end
 
   describe '#with_tools' do
@@ -83,6 +95,27 @@ RSpec.describe RubyLLM::Chat do
       expect(chat.tools).to be_empty
     end
 
+    it 'clears all tools and tool options with nil' do
+      chat = described_class.new
+
+      tool1 = Class.new(RubyLLM::Tool) do
+        def name = 'tool1'
+      end
+
+      chat.with_tools(tool1.new, calls: :one, concurrency: true)
+      chat.with_tools(nil)
+
+      expect(chat.tools).to be_empty
+      expect(chat.tool_prefs).to eq(choice: nil, calls: nil)
+      expect(chat.concurrency).to be_nil
+    end
+
+    it 'rejects combining nil with tool options' do
+      chat = described_class.new
+
+      expect { chat.with_tools(nil, choice: :auto) }.to raise_error(ArgumentError, /cannot be combined/)
+    end
+
     it 'clears all tools when called with no arguments and replace: true' do
       chat = described_class.new
 
@@ -121,15 +154,92 @@ RSpec.describe RubyLLM::Chat do
         /Invalid calls value/
       )
     end
+
+    it 'stores tool concurrency preferences' do
+      chat = described_class.new
+
+      chat.with_tools(concurrency: true)
+
+      expect(chat.concurrency).to eq(:threads)
+    end
+
+    it 'accepts explicit tool concurrency modes' do
+      chat = described_class.new
+
+      chat.with_tools(concurrency: :fibers)
+      expect(chat.concurrency).to eq(:fibers)
+
+      chat.with_tools(concurrency: :threads)
+      expect(chat.concurrency).to eq(:threads)
+    end
+
+    it 'clears tool concurrency preferences' do
+      chat = described_class.new
+
+      chat.with_tools(concurrency: true)
+      chat.with_tools(concurrency: false)
+
+      expect(chat.concurrency).to be_nil
+    end
+
+    it 'raises for unknown tool concurrency' do
+      chat = described_class.new
+
+      expect { chat.with_tools(concurrency: :warp_speed) }.to raise_error(
+        ArgumentError,
+        /Unknown tool concurrency/
+      )
+    end
+
+    it 'uses the configured tool concurrency by default' do
+      original_tool_concurrency = RubyLLM.config.tool_concurrency
+      RubyLLM.config.tool_concurrency = true
+
+      chat = described_class.new
+
+      expect(chat.concurrency).to eq(:threads)
+    ensure
+      RubyLLM.config.tool_concurrency = original_tool_concurrency
+    end
+
+    it 'accepts explicit configured tool concurrency modes' do
+      original_tool_concurrency = RubyLLM.config.tool_concurrency
+      RubyLLM.config.tool_concurrency = :fibers
+
+      chat = described_class.new
+
+      expect(chat.concurrency).to eq(:fibers)
+    ensure
+      RubyLLM.config.tool_concurrency = original_tool_concurrency
+    end
+
+    it 'allows chats to override configured tool concurrency' do
+      original_tool_concurrency = RubyLLM.config.tool_concurrency
+      RubyLLM.config.tool_concurrency = true
+
+      chat = described_class.new.with_tools(concurrency: false)
+
+      expect(chat.concurrency).to be_nil
+    ensure
+      RubyLLM.config.tool_concurrency = original_tool_concurrency
+    end
   end
 
   describe '#with_model' do
     it 'changes the model and returns self' do
       chat = described_class.new(model: 'gpt-4.1-nano')
-      result = chat.with_model('claude-3-5-haiku-20241022')
+      result = chat.with_model('claude-haiku-4-5')
 
-      expect(chat.model.id).to eq('claude-3-5-haiku-20241022')
+      expect(chat.model.id).to eq('claude-haiku-4-5')
       expect(result).to eq(chat) # Should return self for chaining
+    end
+
+    it 'resets to the configured default model with nil' do
+      chat = described_class.new(model: 'claude-haiku-4-5')
+
+      chat.with_model(nil)
+
+      expect(chat.model.id).to eq(RubyLLM.config.default_model)
     end
   end
 
@@ -155,14 +265,32 @@ RSpec.describe RubyLLM::Chat do
       expect(system_messages.map(&:content)).to eq(['Be helpful', 'Be concise'])
     end
 
-    it 'keeps system instructions at the top of message history' do
+    it 'keeps system instructions in chronological message history' do
       chat = described_class.new
 
       chat.add_message(role: :user, content: 'Hi')
       chat.add_message(role: :assistant, content: 'Hello')
       chat.with_instructions('System')
 
-      expect(chat.messages.map(&:role)).to eq(%i[system user assistant])
+      expect(chat.messages.map(&:role)).to eq(%i[user assistant system])
+    end
+
+    it 'continues a staged user turn when instructions are added after it' do
+      chat = described_class.new
+
+      chat.ask_later('Hi')
+      chat.with_instructions('Be brief')
+
+      expect(chat).not_to be_complete
+    end
+
+    it 'clears system instructions with nil' do
+      chat = described_class.new
+
+      chat.with_instructions('Be helpful')
+      chat.with_instructions(nil)
+
+      expect(chat.messages.select { |msg| msg.role == :system }).to be_empty
     end
   end
 
@@ -173,6 +301,73 @@ RSpec.describe RubyLLM::Chat do
 
       expect(chat.instance_variable_get(:@temperature)).to eq(0.8)
       expect(result).to eq(chat) # Should return self for chaining
+    end
+
+    it 'clears the temperature with nil' do
+      chat = described_class.new.with_temperature(0.8)
+
+      chat.with_temperature(nil)
+
+      expect(chat.instance_variable_get(:@temperature)).to be_nil
+    end
+  end
+
+  describe '#with_protocol' do
+    it 'clears the explicit protocol with nil' do
+      chat = described_class.new.with_protocol(:chat_completions)
+
+      chat.with_protocol(nil)
+
+      expect(chat.instance_variable_get(:@protocol)).to be_nil
+    end
+  end
+
+  describe '#messages=' do
+    it 'replaces the transcript with coerced messages' do
+      chat = described_class.new
+      old_message = chat.add_message(role: :user, content: 'Old')
+      assistant_message = RubyLLM::Message.new(role: :assistant, content: 'Answer')
+      record = double(to_llm: RubyLLM::Message.new(role: :user, content: 'From record'))
+
+      chat.messages = [
+        { role: :system, content: 'Instructions' },
+        assistant_message,
+        record
+      ]
+
+      expect(chat.messages).not_to include(old_message)
+      expect(chat.messages[1]).to be(assistant_message)
+      expect(chat.messages.map(&:role)).to eq(%i[system assistant user])
+      expect(chat.messages.map(&:content)).to eq(['Instructions', 'Answer', 'From record'])
+    end
+
+    it 'accepts a single message payload' do
+      chat = described_class.new
+
+      chat.messages = { role: :user, content: 'Only message' }
+
+      expect(chat.messages.size).to eq(1)
+      expect(chat.messages.first).to be_a(RubyLLM::Message)
+      expect(chat.messages.first.content).to eq('Only message')
+    end
+
+    it 'clears the transcript when assigned nil' do
+      chat = described_class.new
+      chat.add_message(role: :user, content: 'Hello')
+
+      chat.messages = nil
+
+      expect(chat.messages).to be_empty
+    end
+
+    it 'does not use the assigned array as backing storage' do
+      chat = described_class.new
+      assigned = [RubyLLM::Message.new(role: :user, content: 'Hello')]
+
+      chat.messages = assigned
+      assigned << RubyLLM::Message.new(role: :assistant, content: 'Leaked')
+
+      expect(chat.messages.map(&:content)).to eq(['Hello'])
     end
   end
 

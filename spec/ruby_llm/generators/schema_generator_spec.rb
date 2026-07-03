@@ -38,9 +38,9 @@ RSpec.describe RubyLLM::Generators::SchemaGenerator, :generator, type: :generato
       output, status = run_rails_generate('ruby_llm:schema', 'Product')
       expect(status.success?).to be(true), output
 
-      expect(File.exist?('app/schemas/product.rb')).to be true
+      expect(File.exist?('app/schemas/product_schema.rb')).to be true
 
-      schema_class = File.read('app/schemas/product.rb')
+      schema_class = File.read('app/schemas/product_schema.rb')
       expect(schema_class).to include('class ProductSchema < RubyLLM::Schema')
       expect(schema_class).not_to include('define do')
     end

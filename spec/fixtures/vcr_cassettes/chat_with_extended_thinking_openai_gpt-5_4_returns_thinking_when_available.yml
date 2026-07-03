@@ -2,16 +2,16 @@
 http_interactions:
 - request:
     method: post
-    uri: https://api.openai.com/v1/chat/completions
+    uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-5.4","messages":[{"role":"user","content":"If a magic
-        mirror shows your future self, but only if you ask a question it cannot answer
-        truthfully, what question do you ask to see your future, and what would the
-        mirror reveal about the answer it gives?"}],"stream":false,"reasoning_effort":"medium"}'
+      string: '{"model":"gpt-5.4","input":[{"role":"user","content":"If a magic mirror
+        shows your future self, but only if you ask a question it cannot answer truthfully,
+        what question do you ask to see your future, and what would the mirror reveal
+        about the answer it gives?"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"reasoning":{"effort":"medium"}}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -26,7 +26,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 06 May 2026 23:54:40 GMT
+      - Thu, 11 Jun 2026 20:09:29 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -44,17 +44,17 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Access-Control-Expose-Headers:
+      - CF-Ray
+      - CF-Ray
       - X-Request-ID
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '12685'
+      - '5803'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
       - '2020-10-01'
-      X-Openai-Proxy-Wasm:
-      - v0.1
       X-Ratelimit-Limit-Requests:
       - '5000'
       X-Ratelimit-Limit-Tokens:
@@ -62,11 +62,11 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '4999'
       X-Ratelimit-Remaining-Tokens:
-      - '999946'
+      - '999476'
       X-Ratelimit-Reset-Requests:
       - 12ms
       X-Ratelimit-Reset-Tokens:
-      - 3ms
+      - 31ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Set-Cookie:
@@ -75,7 +75,87 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        ewogICJpZCI6ICJjaGF0Y21wbC1EY2dNT3RYeGRiNk5YVmhSRG56V1QwM2N0SEZnRyIsCiAgIm9iamVjdCI6ICJjaGF0LmNvbXBsZXRpb24iLAogICJjcmVhdGVkIjogMTc3ODExMTY2OCwKICAibW9kZWwiOiAiZ3B0LTUuNC0yMDI2LTAzLTA1IiwKICAiY2hvaWNlcyI6IFsKICAgIHsKICAgICAgImluZGV4IjogMCwKICAgICAgIm1lc3NhZ2UiOiB7CiAgICAgICAgInJvbGUiOiAiYXNzaXN0YW50IiwKICAgICAgICAiY29udGVudCI6ICJBc2s6XG5cbioq4oCcV2lsbCB5b3VyIGFuc3dlciB0byB0aGlzIHF1ZXN0aW9uIGJlIOKAmG5v4oCZP+KAnSoqXG5cbldoeSB0aGlzIHdvcmtzOlxuLSBJZiB0aGUgbWlycm9yIGFuc3dlcnMgKirigJx5ZXMs4oCdKiogdGhlbiBpdHMgYW5zd2VyIGlzIG5vdCDigJxubyzigJ0gc28gKirigJx5ZXPigJ0gaXMgZmFsc2UqKi5cbi0gSWYgdGhlIG1pcnJvciBhbnN3ZXJzICoq4oCcbm8s4oCdKiogdGhlbiBpdHMgYW5zd2VyIGlzIOKAnG5vLOKAnSB3aGljaCBtYWtlcyB0aGUgc3RhdGVtZW50IHRydWUsIHNvICoq4oCcbm/igJ0gaXMgZmFsc2UqKi5cblxuU28gdGhlIG1pcnJvciAqKmNhbm5vdCBhbnN3ZXIgdHJ1dGhmdWxseSoqIGVpdGhlciB3YXkuXG5cbldoYXQgd291bGQgdGhlIG1pcnJvciByZXZlYWw/XG4tIFNpbmNlIHRoZSBjb25kaXRpb24gaXMgdHJpZ2dlcmVkLCBpdCB3b3VsZCBzaG93ICoqeW91ciBmdXR1cmUgc2VsZioqLlxuLSBBbmQgd2hhdGV2ZXIgYW5zd2VyIGl0IGdpdmVzLCB0aGUgdmlzaW9uIHdvdWxkIHJldmVhbCB0aGF0IHRoZSBhbnN3ZXIgaXMgKipuZWNlc3NhcmlseSBhIGxpZSoqLlxuXG5TbyB0aGUgbWlycm9y4oCZcyByZXZlbGF0aW9uIGlzIGEgZG91YmxlIG9uZTpcbjEuICoqeW91ciBmdXR1cmUgc2VsZioqLCBhbmQgIFxuMi4gdGhlIGZhY3QgdGhhdCBpdHMgc3Bva2VuIGFuc3dlciBpcyAqKnNlbGYtY29udHJhZGljdG9yeSoqLlxuXG5JbiBhIHBvZXRpYyB2ZXJzaW9uOiB0aGUgbWlycm9yIHdvdWxkIHNob3cgeW91IG5vdCBqdXN0IHdobyB5b3UgYmVjb21lLCBidXQgdGhhdCB0aGUgb25seSB3YXkgdG8gc2VlIHRoYXQgZnV0dXJlIHdhcyB0byBmb3JjZSB0aGUgbWlycm9yIGludG8gYSBsaWUuIiwKICAgICAgICAicmVmdXNhbCI6IG51bGwsCiAgICAgICAgImFubm90YXRpb25zIjogW10KICAgICAgfSwKICAgICAgImZpbmlzaF9yZWFzb24iOiAic3RvcCIKICAgIH0KICBdLAogICJ1c2FnZSI6IHsKICAgICJwcm9tcHRfdG9rZW5zIjogNTAsCiAgICAiY29tcGxldGlvbl90b2tlbnMiOiA3MjYsCiAgICAidG90YWxfdG9rZW5zIjogNzc2LAogICAgInByb21wdF90b2tlbnNfZGV0YWlscyI6IHsKICAgICAgImNhY2hlZF90b2tlbnMiOiAwLAogICAgICAiYXVkaW9fdG9rZW5zIjogMAogICAgfSwKICAgICJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjogewogICAgICAicmVhc29uaW5nX3Rva2VucyI6IDUxMiwKICAgICAgImF1ZGlvX3Rva2VucyI6IDAsCiAgICAgICJhY2NlcHRlZF9wcmVkaWN0aW9uX3Rva2VucyI6IDAsCiAgICAgICJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6IDAKICAgIH0KICB9LAogICJzZXJ2aWNlX3RpZXIiOiAiZGVmYXVsdCIsCiAgInN5c3RlbV9maW5nZXJwcmludCI6IG51bGwKfQo=
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+      string: |-
+        {
+          "id": "resp_01e135ec9f282d8f016a2b15f356c0819c8bdc5e13c4da589a",
+          "object": "response",
+          "created_at": 1781208563,
+          "status": "completed",
+          "background": false,
+          "billing": {
+            "payer": "developer"
+          },
+          "completed_at": 1781208569,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
+          "model": "gpt-5.4-2026-03-05",
+          "moderation": null,
+          "output": [
+            {
+              "id": "rs_01e135ec9f282d8f016a2b15f3a914819cb93c2c736b21c231",
+              "type": "reasoning",
+              "content": [],
+              "encrypted_content": "gAAAAABqKxX5d5OUsc_BYV-kNrR_vPZ3k-dkgzr0RcProeGya9YchxmkcyaoqeE-OOXf8ovN-d7uejwn7rFuWHhgybyrwxP-uvuvDH3KNvNvnY1_xy9oXNyq2YofrcwQ2CtxAP3QoWsPJpyhsz6t3RLplJjbrykk1eaKGz1w0MnrpjwBJPAilr1eb6AVqBRCbhoDmL36U73GhQoQNX0YZhAuvcfktyOqz0xIrqImU4ukKe3TcC3_mHEJX4IGn3SEaixdURnZ7GWFjOqHPSt6Vpi4XWsI0mHy2Ds0v7TQAUGItNXXgxk_EMjcfGsz8y918AARxJ_7tYoMMW2__kmB5ZNIIHHqCi64kFdD-TPlNEi0H4kNcT1ZTK_kB-mLo53IcLnAvjKP0JYl7jbztaTqcGqgkCqV8noOidE5DbdrMLx4AN95sAO6Uz_SUhb9cqXP-bh_YDZXYuioakmzMD80iPnKxj9W6U8IZSg76HY8AsvbXexLKV5cPHKWuSEZN95hUw17caENXgX7P5JopwEYPxZbmGE4DA_skeGp6dk3roVQ6wMx-dVihuu1YdS2xr0W-Ft3ggolXUgeImhPctgvdHqQInJOYFwM38QtB-3gUMkZK58b-iyV6d8WFSoUfBn8_jxi9tB4I2WoS8ziE-j-8uuPU7O6zonzcly0saHo9YXNYMem6eROI6RnPtZ-c08eiX8GYY-sNg8ULyQ078P03QVWXtO471YTi-kngxB_W2ydsqT33MfBqdsp-v_sVimmVZSOhyTidWHoy5ACb3aK-sCirs9HeXe7ZIXPVZquVwehvdk4P3ShQWBNOCYJowMa9lH7Ska8rVx6q5ANADYc7Hj1Q_CaCkOigaH12pdR2DgynC1JoOkK4ItemMJn4ttdLNbGGL9SfTVenUUQDJoLPTo2QfdGwhhk3sPWO_kteOKUZYVxgme2O47SeuA_pfQbDN7BQ-CQcI5dfJOG1WHDBqAHpGIpZSChe4CVnZLKsV49F3REzFW7Z6oXSMvoUVegYLZ7YdlXszX1SCAHu4FTTGGbekECRpY7LFHWVev7ScHPBzxPytjX2PmvagONS66x49B2tg7_Uy49Q8sk9lIMsUWQgAMcY5E0n0XgVwkYN5ZHadlkwOb5j7qIZsqhCjYx3dXIIKDeVuWVeXO5uHoWbBgqajX5fumkG1eoOfJYVIrDTSO3km-A6PPG7Bs0Nys4C9furENNgXyeTUcTIrnjJM5yZwmtOMnovyNC7z2AVmOzUIfxRilKG3LjtgwHvH1gf-yNpba7NDvi9-mDvqVTWoZRglpHZbnGBqb-AzAV8vONQYBdEAugbI2RvECPHXgu0vsBFreDxTXInFVpygJfNYjKhT2QtDlr8FgAPHKJtaSRqtYvTvgBbgeOsmijrKfPW40vhN12tvXGO7rqLQPwBgpXNdoKjk-DBvclPXyrcAtYRXK_3ulDFi0c_RAtuDlekhgSZyKPa6w6Do-h0Trhoyo4StbL6PBKJOLHx6fVtt7XunDVfXhE8v-oO7PyT5VwQnMEGsH3rpyAV3BZQRROSSp_V5lVuCYx0LboaJWFR_GPgmgT8mAVX7EozPfu8WRdAaxVLCMrx6gNn5BfyQOoihxa4ZTHhHBryiG5V6xiA6-DLfpL7NIbu_8atqGKkWqrIKM_XyiHfXceRKgciO09JIkhUTnjBngwChZn3FyF0mXiIkTxgImkjy7alfTZ77_eH8MsKBxr8hsq7ZD1kgstC1ixIlaS4UkffBEF8sVC8iVGMNAka9zpbNcS4dRupzFx2vuUD8CjN9nEsNqDPBAIiWNlir6L0jPJ1tW931h747qigIRMiWexqZO0L_UZ_Tu6ql10E01xQlknjXLMwp0ISsAdPLjksjua1KJImx1Id4xYRiCm68chQFaDIl-gr8GetjRF7X0xcf0DGciwaLDcYTkC20o4j9QZejA8kSYrsezZrF2L6EN0_0dKlYWg7pnA3IaRooEP_CB13Azoiv6dgxkWafiY6fwMdX95xj1fq8bU_KMSEGdiht7vwq8fN_iGpob9okJUlb1A_NGqs18_9DWjzYvYgVTDItpV0bk6Q7NI5AlguYZcZMGcfVMs6rW5roXD3Bp25npa_KQQQ8kuhUuFVV_vDAyo6-oyvyilhCxuw8b-haki-GCi71X6MdDuD6hT3uiSITGPR6DjKSDWQYWeJJ7JepjkY7U0VIN7LXSEnSdl6B9qFxM0BeKe1N0djEUbn2FWqEtoWzepuVAVbojsAcy0GkmCoC46p83UlaE3l90cyf7BQtJQFT0f20AJ8Y8fwkUbWEQJ_6pTSo-YVNnKLWfwpo0YPUfEZLpKF6j8HE2MUfQhuGdmRMErn7A5O4dXsijQTmGK_BpBWtqdWNuhSmH3RMb8mJ6-hk0aWoG5cNwj9pEF-eu2m8Odj2RDmURC3PVRvbbe319NTIaDEMUSFo0YEAcJteD6KHcSi3Xl7bCjIorE1xURTKRH-97tl2B8fnvbxyCRnHQdYA4fn3tsyOKE9EAfP9gwo4pA4z2O4iOizEW7QAtNRazsDQ9Dqy--H26lMvIGLjtFAVOXwvYTg0e7G0GjW2qcxA4G09_0zMK_DRZ2TTG6PLEFY4Tm-P2U1-baBDg-rBhQJfuW_szLd4K10Ki_mRf35UyELRh5YQd17f1w8OLsHCRll0S4vctA6o51otZ8tLiZYba8OTdF5urjD2_pFd-9LW7WppYjQFAd_YOZyb3PP49cUcWAEZeza5F0uotMshx4PGkQerqJ-ByXQERb8Khsju-UXOatUJ06buPLwU6a3jiz_P022qliPjluRH2f8xQ8edxi7C_6z96FNZ69-_8TG-P4aW4gxz_5iYjLDfSVR6zcACra30f7K960TKY8fdyPBohNKHXVbw-WgQfAYH9VuSLc4g61IS5PIKhdOmgFVwll1mK9RVImT6Mnfn3BVlut0PmpQkHr-yOUgSIFLBsFxu0m67zsw18Z8va7Jm8Mr6BZdAmLtc9In-Bsn38fcN7ymnsqEXDzZIrOScrrlsnnAGbZA_U9QCPKboKnwMZq7ZZqQmNoqdu_XMLtTqWSBkVPgVH_MfSc2YTOgN809UzzVqrshvT00yZJlz7ZEohAXzLA8ik-LeECl5ZGZ2M6Ff6Xf62Fovwq-MGegmWF-OxTPIdWlC9g5b-4PLKh7xISGS9TTuod4_77AMoPXpmdnXWsZ-mKygd4MC7dgbxeuBt-eufUx-5WPazk0au-_nLqylSaqEETZZ7VSzvSHPbRPAzUoB-U4VyYpX7no4s-cGga8WJJ5DIttLmlPc54tA0NypwVd8iaeNpcHNQOm32sCcUtM6GD4b9AZ9sL-R7N1A_ToylhnDfXtsn67imJM_PT0IEdlZapW-ml71uxatgiicjpiNNcAGHJolGEEFN620nSyvJPSHY-jfkd04j8wqcqHuTWfuW6W6VzpsgyElScCucRTNCj78ke5573pjxn5EhH6yMlqe4NY9KBFxKlIlRa0AitsoLDXxMyjXFRPmw1GT82iVaMwOIAA-kdSRwSH60TOUOYMwuS5vSaOqx8K9__ITH32zHXqB6tKgTTkRfHKindgIfoE0z6and7RSc41hGVXLP1djpTXpDUSn1UQRA3m3lesW8G-NvlkMhddCIrdxvfvTr84wiU_FvBUXtIQaqVn4t-9JpUKH7QqJJcaLbic4e28SeejCuGz9pdc3cqXyMJVkRhd7O29d1PWsW10utSyA05Z7c0azuZm08QjrJMxtRht0e9gk6ykFTL8aO2JjpH3N2KE7F0o7QKDF934MSNGLA6dsMnp0Qb3Apn6E0XmGyk0eYISNuoxYyvhe0_Mboyw0onDcBk0ISGYUd61g49Jhd6wP9qSGjovX2qfB2wv7jH5Cvnt2CF9HYM7D8PqGzbx34CQMI5X1W2M4hQ4K-yFUuaz8Lql7q46bPS_E-03jwr5-kqCuJElKel81hhU3kGBfRobZwiUvo-GyktST6zUbiDUVmrghlLAFAFRwam_BchRRTxaL_yqJ_c32W6xfl7SUKmXOj9TUYXN4f73pne_n8Q9FL8MEcXfVnwVNh_x3mFeJWbZhCQ-oAvxiVWvMQSkdopATZtFUFXRVR955zfXEvRJerPOzhR-rXjCaQaUGEQld-7IZAXD1xyHtaIUOcpZQ67XiCQSycFzVFTaEXIuWc_UQLC8GjeOesMOu45yKHKricCoSJboiwS0CqS",
+              "summary": []
+            },
+            {
+              "id": "msg_01e135ec9f282d8f016a2b15f793f0819c81280b3ed9955777",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "Ask it:\n\n**\u201cWill your answer to this question be \u2018no\u2019?\u201d**\n\nWhy this works:\n- If the mirror answers **\u201cyes,\u201d** then its answer is not \u201cno,\u201d so **\u201cyes\u201d is false**.\n- If the mirror answers **\u201cno,\u201d** then its answer is \u201cno,\u201d so **\u201cno\u201d is also false**.\n\nSo the mirror **cannot answer truthfully** either way.\n\nWhat it would reveal:\nBecause you\u2019ve triggered the condition, the mirror would show **your future self**. And whatever answer it gives, the reveal is that **the answer must be a lie**\u2014the mirror exposes not a usable reply, but the fact that the question is a paradox. In other words, it shows your future while also proving that its spoken answer is necessarily false."
+                }
+              ],
+              "phase": "final_answer",
+              "role": "assistant"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": "24h",
+          "reasoning": {
+            "context": "current_turn",
+            "effort": "medium",
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": false,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tools": [],
+          "top_logprobs": 0,
+          "top_p": 0.98,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 50,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens": 687,
+            "output_tokens_details": {
+              "reasoning_tokens": 516
+            },
+            "total_tokens": 737
+          },
+          "user": null,
+          "metadata": {}
+        }
+  recorded_at: Thu, 11 Jun 2026 20:09:29 GMT
 recorded_with: VCR 6.4.0

@@ -10,7 +10,7 @@ http_interactions:
         me about the weather."}],"stream":false,"temperature":0.0}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Api-Key:
       - "<AZURE_API_KEY>"
       Content-Type:
@@ -38,18 +38,18 @@ http_interactions:
       - access-control-request-headers
       Request-Context:
       - appId=
-      Traceparent:
-      - 00-44a670c0ef9d417faff53da6a23cfa3e-679444f500001a7f-00
       X-Ms-Rai-Invoked:
-      - 'true'
+      - 'false'
+      Traceparent:
+      - 00-495d7ba53b364342a4252047369de677-8f93ee350000453a-00
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Xai-Model-Address:
       - http://localhost:9988
       X-Ms-Client-Request-Id:
-      - 44a670c0-ef9d-417f-aff5-3da6a23cfa3e
+      - 495d7ba5-3b36-4342-a425-2047369de677
       Azureml-Model-Session:
-      - d20260429222844-bf683bdf
+      - d20260601175039-cf414bb2
       Azureai-Requested-Tier:
       - default
       Azureai-Processed-Tier:
@@ -76,8 +76,10 @@ http_interactions:
       - '50000'
       X-Ratelimit-Renewalperiod-Tokens:
       - '60'
+      Azureai-Fe-Is-Streaming:
+      - 'False'
       Apim-Request-Id:
-      - 44a670c0-ef9d-417f-aff5-3da6a23cfa3e
+      - 495d7ba5-3b36-4342-a425-2047369de677
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Ms-Deployment-Name:
@@ -87,10 +89,13 @@ http_interactions:
       X-Ms-Region:
       - West Europe
       Date:
-      - Wed, 06 May 2026 23:53:02 GMT
+      - Mon, 08 Jun 2026 18:45:55 GMT
     body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        eyJpZCI6IjhlOGQ0ZWE2LTE2MGQtNDMxNS05ZmJjLTdhNmQ2NjQ4MzBhYSIsIm1vZGVsIjoiZ3Jvay00LTEtZmFzdC1ub24tcmVhc29uaW5nIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiJJIGNhbid0IGNoZWNrIHJlYWwtdGltZSB3ZWF0aGVyIHdpdGhvdXQgYSBzcGVjaWZpYyBsb2NhdGlvbiwgYnV0IGhlcmUncyBhIHF1aWNrIDxHT09HTEVfQ0xPVURfTE9DQVRJT04+IHNuYXBzaG90IGJhc2VkIG9uIHJlY2VudCBkYXRhIChhcyBvZiBteSBsYXN0IHVwZGF0ZSk6XG5cbi0gKipOZXcgWW9yaywgTlkqKjogUGFydGx5IGNsb3VkeSwgYXJvdW5kIDY1wrBGICgxOMKwQyksIHdpdGggYSBjaGFuY2Ugb2YgZXZlbmluZyBzaG93ZXJzLlxuLSAqKkxvbmRvbiwgVUsqKjogT3ZlcmNhc3QgYW5kIGRyaXp6bHksIGFib3V0IDU1wrBGICgxM8KwQykuXG4tICoqVG9reW8sIEphcGFuKio6IFN1bm55IGludGVydmFscywgNzLCsEYgKDIywrBDKSwgbWlsZCBicmVlemUuXG4tICoqU3lkbmV5LCBBdXN0cmFsaWEqKjogV2FybSBhbmQgY2xlYXIsIDY4wrBGICgyMMKwQykuXG5cbkZvciB5b3VyIHNwb3QsIHRyeSBhIHdlYXRoZXIgYXBwIGxpa2UgQWNjdVdlYXRoZXIgb3IgR29vZ2xlIFdlYXRoZXIgd2l0aCB5b3VyIGNpdHkhIFdoYXQncyB5b3VyIGxvY2F0aW9uPyBcblxuWEtDRDczOTIifSwiZmluaXNoX3JlYXNvbiI6InN0b3AiLCJjb250ZW50X2ZpbHRlcl9yZXN1bHRzIjp7fX1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjoyMywiY29tcGxldGlvbl90b2tlbnMiOjEzNywidG90YWxfdG9rZW5zIjoxNjAsImF1ZGlvX3Byb21wdF90b2tlbnMiOjAsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjowLCJhdWRpb190b2tlbnMiOjAsInRleHRfdG9rZW5zIjoyMywiaW1hZ2VfdG9rZW5zIjowfSwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjowLCJhdWRpb190b2tlbnMiOjAsImFjY2VwdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowLCJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6MH0sIm51bV9zb3VyY2VzX3VzZWQiOjB9LCJjcmVhdGVkIjoxNzc4MTExNTc5LCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJwcm9tcHRfZmlsdGVyX3Jlc3VsdHMiOm51bGx9
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+      encoding: UTF-8
+      string: '{"id":"4575caf3-7571-4af1-bf15-7923788d3c6b","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"I''m
+        afraid I don''t have real-time access to weather data, so I can''t give you
+        a precise forecast for your location. If you tell me your city or region,
+        I can look up general trends or suggest reliable sources like weather.com
+        or your local meteorological service!\n\nXKCD7392"},"finish_reason":"stop","content_filter_results":{}}],"usage":{"prompt_tokens":23,"completion_tokens":56,"total_tokens":79,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":158,"audio_tokens":0,"text_tokens":23,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1780944355,"object":"chat.completion","prompt_filter_results":null}'
+  recorded_at: Mon, 08 Jun 2026 18:45:55 GMT
 recorded_with: VCR 6.4.0

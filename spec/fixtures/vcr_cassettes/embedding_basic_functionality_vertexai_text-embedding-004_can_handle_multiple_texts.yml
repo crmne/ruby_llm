@@ -8,7 +8,7 @@ http_interactions:
       string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Content-Type:
       - application/x-www-form-urlencoded
       Accept-Encoding:
@@ -22,10 +22,10 @@ http_interactions:
     headers:
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
-      Date:
-      - Wed, 06 May 2026 23:51:57 GMT
       Pragma:
       - no-cache
+      Date:
+      - Mon, 08 Jun 2026 17:08:41 GMT
       Expires:
       - Mon, 01 Jan 1990 00:00:00 GMT
       Content-Type:
@@ -56,7 +56,7 @@ http_interactions:
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+  recorded_at: Mon, 08 Jun 2026 17:08:41 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/text-embedding-004:predict
@@ -65,7 +65,7 @@ http_interactions:
       string: '{"instances":[{"content":"Ruby"},{"content":"Python"},{"content":"JavaScript"}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -86,7 +86,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 06 May 2026 23:52:08 GMT
+      - Mon, 08 Jun 2026 17:08:52 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -106,6 +106,10 @@ http_interactions:
           "predictions": [
             {
               "embeddings": {
+                "statistics": {
+                  "truncated": false,
+                  "token_count": 1
+                },
                 "values": [
                   -0.0071573383174836636,
                   0.01143405307084322,
@@ -875,11 +879,7 @@ http_interactions:
                   0.02526424266397953,
                   0.0099949613213539124,
                   -0.016448808833956718
-                ],
-                "statistics": {
-                  "truncated": false,
-                  "token_count": 1
-                }
+                ]
               }
             },
             {
@@ -2443,5 +2443,5 @@ http_interactions:
             "billableCharacterCount": 20
           }
         }
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+  recorded_at: Mon, 08 Jun 2026 17:08:52 GMT
 recorded_with: VCR 6.4.0

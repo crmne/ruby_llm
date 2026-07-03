@@ -24,7 +24,7 @@ module RubyLLM
               }
             ],
             modalities: %w[image text]
-          }
+          }.merge(params)
         end
 
         def parse_image_response(response, model:)

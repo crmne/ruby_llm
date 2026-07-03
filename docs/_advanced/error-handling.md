@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Error Handling
-nav_order: 3
+nav_order: 7
 description: Learn how to handle errors gracefully when working with AI providers
 redirect_from:
   - /guides/error-handling
@@ -27,6 +27,7 @@ After reading this guide, you will know:
 *   How to rescue specific types of errors.
 *   How to access details from the original API response.
 *   How errors are handled during streaming.
+*   How to fall back to another model when a provider has a transient failure.
 *   Best practices for handling errors within Tools.
 *   RubyLLM's automatic retry behavior.
 *   How to enable debug logging.
@@ -63,12 +64,9 @@ begin
   response = chat.ask "Translate 'hello' to French."
   puts response.content
 rescue RubyLLM::Error => e
-  # Generic handling for API errors
   puts "An API error occurred: #{e.message}"
-  # Log the error for debugging
   # logger.error "RubyLLM API Error: #{e.class} - #{e.message}"
 rescue RubyLLM::ConfigurationError => e
-  # Handle missing configuration
   puts "Configuration missing: #{e.message}"
   # Abort or prompt for configuration
 end
@@ -103,7 +101,6 @@ rescue RubyLLM::BadRequestError => e
 rescue RubyLLM::ModelNotFoundError => e
   puts "Error: #{e.message}. Check available models with RubyLLM.models.all"
 rescue RubyLLM::Error => e
-  # Catch any other API errors
   puts "An unexpected API error occurred: #{e.message}"
 end
 ```
@@ -118,7 +115,6 @@ begin
   response = chat.ask "Some specific query"
 rescue RubyLLM::ForbiddenError => e
   puts "Access forbidden: #{e.message}"
-  # Inspect the raw response body for provider-specific details
   if e.response&.body&.include?('invalid_organization')
     puts "Hint: Check if your API key is enabled for the correct OpenAI organization."
   end
@@ -153,6 +149,60 @@ end
 
 Your block will execute for chunks received *before* the error. The final return value of `ask` when an error occurs during streaming might be unpredictable (often `nil`), so rely on the rescued exception for error handling.
 
+## Model Fallbacks
+
+Use `with_fallbacks` when you want RubyLLM to try another model after the current model fails with a transient provider or network error.
+
+```ruby
+chat = RubyLLM.chat(model: "gpt-4.1")
+              .with_fallbacks("gpt-4.1-mini", "claude-haiku-4-5")
+
+response = chat.ask("Summarize this incident report.")
+```
+
+Fallbacks are tried in order. The fallback only applies to that generation attempt; after the response finishes or the error bubbles up, the chat returns to its original model.
+
+By default, fallbacks handle rate limits, server errors, service unavailable errors, overload errors, timeouts, and connection failures. Pass `on:` to choose the errors yourself:
+
+```ruby
+chat.with_fallbacks(
+  "gpt-4.1-mini",
+  on: [RubyLLM::RateLimitError, RubyLLM::ServiceUnavailableError]
+)
+```
+
+Fallbacks can be model IDs or `RubyLLM::Model` objects:
+
+```ruby
+chat.with_fallbacks(
+  RubyLLM.models.find("claude-haiku-4-5", :anthropic)
+)
+```
+
+### Fallback Callbacks
+
+Use `before_fallback` and `after_fallback` to observe each fallback attempt:
+
+```ruby
+chat.before_fallback do |fallback|
+  Rails.logger.info(
+    "Falling back from #{fallback.from.id} to #{fallback.to.id}: #{fallback.error.class}"
+  )
+end
+
+chat.after_fallback do |fallback|
+  if fallback.succeeded?
+    Rails.logger.info("Fallback succeeded with #{fallback.to.id}")
+  else
+    Rails.logger.warn("Fallback failed with #{fallback.fallback_error.class}")
+  end
+end
+```
+
+The callback receives a `RubyLLM::Fallback` with the configured target (`id`, `provider`, `model`) and the runtime attempt details (`from`, `to`, `error`, `attempt`, `response`, `fallback_error`, `streaming?`, and `chunks_yielded?`).
+
+When streaming has already yielded chunks before a fallback-worthy error, RubyLLM cannot take those chunks back. It starts a new assistant message lifecycle for the fallback response, and `fallback.chunks_yielded?` lets your UI or logs distinguish that case.
+
 ## Handling Errors Within Tools
 
 When building [Tools]({% link _core_features/tools.md %}), you need to decide how errors within the tool's `execute` method should be handled:
@@ -181,7 +231,6 @@ When building [Tools]({% link _core_features/tools.md %}), you need to decide ho
       def execute(query:)
         User.find_by_sql(query) # Example query
       rescue ActiveRecord::ConnectionNotEstablished => e
-        # This is likely an application-level problem, not something the LLM can fix.
         raise e # Let the application's error handling take over.
       rescue StandardError => e
         # Maybe return less critical errors to the LLM
@@ -223,7 +272,6 @@ If you encounter unexpected errors or behavior, enable debug logging by setting 
 
 ```bash
 export RUBYLLM_DEBUG=true
-# Now run your Ruby script or Rails server
 ```
 
 This will cause RubyLLM to log detailed information about API requests and responses, including headers and bodies (with sensitive data like API keys filtered), which can be invaluable for troubleshooting.

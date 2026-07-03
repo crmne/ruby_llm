@@ -2,16 +2,6 @@
 
 require 'spec_helper'
 
-RSpec::Matchers.define :include_words do |*words|
-  match do |actual|
-    words.all? { |word| actual.downcase.include?(word.downcase) }
-  end
-
-  failure_message do |actual|
-    "expected '#{actual}' to include all words: #{words.join(', ')}"
-  end
-end
-
 RSpec::Matchers.define :look_like_json do
   match do |actual|
     actual.strip.start_with?('{', '[')

@@ -8,7 +8,7 @@ http_interactions:
       string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Content-Type:
       - application/x-www-form-urlencoded
       Accept-Encoding:
@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Expires:
-      - Mon, 01 Jan 1990 00:00:00 GMT
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
+      Date:
+      - Mon, 08 Jun 2026 17:10:07 GMT
       Pragma:
       - no-cache
-      Date:
-      - Thu, 07 May 2026 00:06:41 GMT
+      Expires:
+      - Mon, 01 Jan 1990 00:00:00 GMT
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login openid https://www.googleapis.com/auth/userinfo.email",
+          "scope": "https://www.googleapis.com/auth/sqlservice.login openid https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+  recorded_at: Mon, 08 Jun 2026 17:10:07 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -69,7 +69,7 @@ http_interactions:
         13.4050)"}},"required":["latitude","longitude"]}}]}],"toolConfig":{"functionCallingConfig":{"mode":"any"}}}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -90,7 +90,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Thu, 07 May 2026 00:06:42 GMT
+      - Mon, 08 Jun 2026 17:10:08 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -116,22 +116,22 @@ http_interactions:
                     "functionCall": {
                       "name": "weather",
                       "args": {
-                        "latitude": "example",
-                        "longitude": "example"
+                        "latitude": "52.5200",
+                        "longitude": "13.4050"
                       }
                     },
-                    "thoughtSignature": "CpYCAY89a1/NR7eaUyxO310g19mNJKyKg1sLgX/kroDWQHWpuEbkuVbETU5RCX4ucBi55FeXQL6MKpZGRkd3uLCr8G2PojyrKCxMZKCFyf3WSzggmk44elb61cZsM11oieW/+af7KSRkqvLLCvENbuPhka2lX5lBU0nOuEqyU0qpIdqcmjd37g8LC5eKZxul4QpyQL6cIWSAsQUQYhDwGDSs7aupi0h11IxqIhJ5JTHuLtvBWuwazrjc0QfjA598AMwG4kcniV+11jimnhbrgUDpNGjrDZYempVnljODqzRjwk+xjtKPCor8ZHQDB1tMmRAHIAfe1PDep5koj4hIQyOAnrBhGw20VCPMk2uVXFXp0I66It0T+js="
+                    "thoughtSignature": "CpQDAY89a1+HF43Z93EVuAS5b+FJEngWyFiF++dffEgZS24nCJlM0KtD7SwmqN/Xh4Qsvf/IMYUOcl4tAd3XnoYy1HP7AM7DICfMGASMjLKi8cnb/wVunGM/M8rJbfVDpj2LNj7fTAv5TUE6+ccUDcLyvVLucLx3ff7Yp4yun6sujbZO3a2sDruOGdu/isOM41RNdDLdMvHmMmhD3fdvYH70wunjjlXTvghJvvsz18gbw1H/vX50mijWqauftWNQpCxASrMKxoegPlOXLHqZ+OVlY7a1Tbow7QQNHq4kr87eApu7Exq/V67MdNo3i4JGgtuq3iF0OLr4FeN/DKszlG8js3bs07YDQYqMOsBRYIZTOpSXYTIqYAsmhZdwvIZ/3Syo6zyT0ArD638PPWG38c7N+bfucNAI3NcIicVQq6h0lLwhpRdFUnjwFDVUSHt8ZKBlxzXFV8wF2bxUvm5dVPgbVjNpIIVnWD6UZEHrtCZlNhw6nnpUNkp1ueuckHD3YbQD7iku8Ep99b33YWCpQC2uy5sScaE="
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -4.0103134155273441
+              "avgLogprobs": -0.91004220177145567
             }
           ],
           "usageMetadata": {
             "promptTokenCount": 51,
-            "candidatesTokenCount": 5,
-            "totalTokenCount": 104,
+            "candidatesTokenCount": 17,
+            "totalTokenCount": 151,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -142,30 +142,30 @@ http_interactions:
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 5
+                "tokenCount": 17
               }
             ],
-            "thoughtsTokenCount": 48
+            "thoughtsTokenCount": 83
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-05-07T00:06:42.256884Z",
-          "responseId": "ktf7afTWD8PJhcIP_oiG-A0"
+          "createTime": "2026-06-08T17:10:07.221763Z",
+          "responseId": "b_cmasPEDfjIwOYPqMj6wAM"
         }
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+  recorded_at: Mon, 08 Jun 2026 17:10:08 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"When was the fall of
-        Rome?"}]},{"role":"model","parts":[{"functionCall":{"name":"weather","args":{"latitude":"example","longitude":"example"}},"thoughtSignature":"CpYCAY89a1/NR7eaUyxO310g19mNJKyKg1sLgX/kroDWQHWpuEbkuVbETU5RCX4ucBi55FeXQL6MKpZGRkd3uLCr8G2PojyrKCxMZKCFyf3WSzggmk44elb61cZsM11oieW/+af7KSRkqvLLCvENbuPhka2lX5lBU0nOuEqyU0qpIdqcmjd37g8LC5eKZxul4QpyQL6cIWSAsQUQYhDwGDSs7aupi0h11IxqIhJ5JTHuLtvBWuwazrjc0QfjA598AMwG4kcniV+11jimnhbrgUDpNGjrDZYempVnljODqzRjwk+xjtKPCor8ZHQDB1tMmRAHIAfe1PDep5koj4hIQyOAnrBhGw20VCPMk2uVXFXp0I66It0T+js="}]},{"role":"function","parts":[{"functionResponse":{"name":"weather","response":{"name":"weather","content":[{"text":"Current
-        weather at example, example: 15°C, Wind: 10 km/h"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"weather","description":"Gets
+        Rome?"}]},{"role":"model","parts":[{"functionCall":{"name":"weather","args":{"latitude":"52.5200","longitude":"13.4050"}},"thoughtSignature":"CpQDAY89a1+HF43Z93EVuAS5b+FJEngWyFiF++dffEgZS24nCJlM0KtD7SwmqN/Xh4Qsvf/IMYUOcl4tAd3XnoYy1HP7AM7DICfMGASMjLKi8cnb/wVunGM/M8rJbfVDpj2LNj7fTAv5TUE6+ccUDcLyvVLucLx3ff7Yp4yun6sujbZO3a2sDruOGdu/isOM41RNdDLdMvHmMmhD3fdvYH70wunjjlXTvghJvvsz18gbw1H/vX50mijWqauftWNQpCxASrMKxoegPlOXLHqZ+OVlY7a1Tbow7QQNHq4kr87eApu7Exq/V67MdNo3i4JGgtuq3iF0OLr4FeN/DKszlG8js3bs07YDQYqMOsBRYIZTOpSXYTIqYAsmhZdwvIZ/3Syo6zyT0ArD638PPWG38c7N+bfucNAI3NcIicVQq6h0lLwhpRdFUnjwFDVUSHt8ZKBlxzXFV8wF2bxUvm5dVPgbVjNpIIVnWD6UZEHrtCZlNhw6nnpUNkp1ueuckHD3YbQD7iku8Ep99b33YWCpQC2uy5sScaE="}]},{"role":"user","parts":[{"functionResponse":{"name":"weather","response":{"name":"weather","content":[{"text":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"OBJECT","properties":{"latitude":{"type":"STRING","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"STRING","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"]}}]}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -186,7 +186,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Thu, 07 May 2026 00:06:43 GMT
+      - Mon, 08 Jun 2026 17:10:11 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -209,35 +209,35 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "I am sorry, but I cannot answer historical questions. I can only provide current weather information for a given location."
+                    "text": "The fall of the Western Roman Empire is traditionally dated to 476 CE, when the last Western Roman Emperor, Romulus Augustulus, was deposed by the Germanic chieftain Odoacer. However, the decline of the Roman Empire was a gradual process that occurred over several centuries.\n"
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.28576546129973041
+              "avgLogprobs": -0.10029831425897007
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 130,
-            "candidatesTokenCount": 23,
-            "totalTokenCount": 153,
+            "promptTokenCount": 191,
+            "candidatesTokenCount": 58,
+            "totalTokenCount": 249,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 130
+                "tokenCount": 191
               }
             ],
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 23
+                "tokenCount": 58
               }
             ]
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-05-07T00:06:43.057448Z",
-          "responseId": "k9f7aejAA73nvNkPgLmFiQs"
+          "createTime": "2026-06-08T17:10:08.422309Z",
+          "responseId": "cPcmaqXjGf2JkuwP3vDsoAw"
         }
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+  recorded_at: Mon, 08 Jun 2026 17:10:11 GMT
 recorded_with: VCR 6.4.0

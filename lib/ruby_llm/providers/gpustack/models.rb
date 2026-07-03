@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'time'
+
 module RubyLLM
   module Providers
     class GPUStack
@@ -14,7 +16,7 @@ module RubyLLM
         def parse_list_models_response(response, slug, _capabilities)
           items = response.body['items'] || []
           items.map do |model|
-            Model::Info.new(
+            Model.new(
               id: model['name'],
               name: model['name'],
               created_at: model['created_at'] ? Time.parse(model['created_at']) : nil,
@@ -39,13 +41,6 @@ module RubyLLM
         end
 
         private
-
-        def determine_model_type(model)
-          return 'embedding' if model['categories']&.include?('embedding')
-          return 'chat' if model['categories']&.include?('llm')
-
-          'other'
-        end
 
         def build_capabilities(model) # rubocop:disable Metrics/PerceivedComplexity
           capabilities = []

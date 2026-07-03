@@ -37,9 +37,6 @@ module RubyLLM
 
           Please run the install generator first:
             bin/rails generate ruby_llm:install#{arg_string}
-
-          Or if upgrading from <= 1.6.x, run the upgrade generator:
-            bin/rails generate ruby_llm:upgrade_to_v1_7#{arg_string}
         ERROR
       end
 
@@ -208,47 +205,11 @@ module RubyLLM
 
       private
 
-      def ui_variant
-        @ui_variant ||= case options[:ui]
-                        when 'tailwind'
-                          :tailwind
-                        when 'auto'
-                          tailwind_available? ? :tailwind : :scaffold
-                        else
-                          :scaffold
-                        end
-      end
-
-      def ui_template(template_path)
-        return template_path unless ui_variant == :tailwind
-
-        # Keep Tailwind templates as a separate set so we can mirror Rails/Tailwind
-        # scaffold conventions without complicating scaffold templates.
-        tailwind_template = "tailwind/#{template_path}"
-        File.exist?(File.join(self.class.source_root, "#{tailwind_template}.tt")) ? tailwind_template : template_path
-      end
-
       def message_helper_module_name
         if message_model_name.include?('::')
           "#{message_model_name.deconstantize}::#{message_model_name.demodulize.pluralize}Helper"
         else
           "#{message_model_name.pluralize}Helper"
-        end
-      end
-
-      def tailwind_available?
-        Rails.root.join('app/assets/tailwind/application.css').exist? ||
-          Rails.root.join('config/tailwind.config.js').exist? ||
-          gem_in_bundle?('tailwindcss-rails') ||
-          gem_in_bundle?('cssbundling-rails')
-      end
-
-      def gem_in_bundle?(gem_name)
-        gemfile_path = Rails.root.join('Gemfile')
-        lockfile_path = Rails.root.join('Gemfile.lock')
-
-        [gemfile_path, lockfile_path].any? do |path|
-          path.exist? && path.read.include?(gem_name)
         end
       end
     end

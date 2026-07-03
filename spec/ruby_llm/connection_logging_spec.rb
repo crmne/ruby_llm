@@ -22,7 +22,8 @@ RSpec.describe RubyLLM::Connection do
         retry_interval_randomness: 0.5,
         retry_backoff_factor: 2,
         http_proxy: nil,
-        log_regexp_timeout: 1.0
+        log_regexp_timeout: 1.0,
+        faraday_adapter: :net_http
       )
     end
 
@@ -48,6 +49,14 @@ RSpec.describe RubyLLM::Connection do
       options = middleware.instance_variable_get(:@formatter).instance_variable_get(:@options)
 
       expect(options[:bodies]).to be(true)
+    end
+
+    it 'uses the configured Faraday adapter' do
+      allow(config).to receive(:faraday_adapter).and_return(:test)
+
+      connection = described_class.new(provider, config).connection
+
+      expect(connection.builder.adapter).to eq(Faraday::Adapter::Test)
     end
   end
 end

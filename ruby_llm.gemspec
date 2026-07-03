@@ -8,10 +8,11 @@ Gem::Specification.new do |spec|
   spec.authors       = ['Carmine Paolino']
   spec.email         = ['carmine@paolino.me']
 
-  spec.summary       = 'One beautiful Ruby API for GPT, Claude, Gemini, and more.'
-  spec.description   = 'One beautiful Ruby API for GPT, Claude, Gemini, and more. Easily build chatbots, ' \
-                       'AI agents, RAG applications, and content generators. Features chat (text, images, audio, ' \
-                       'PDFs), image generation, embeddings, tools (function calling), structured output, Rails ' \
+  spec.summary       = 'Build AI features the Ruby way: a delightful Ruby AI framework for every major AI provider.'
+  spec.description   = 'Build AI features the Ruby way. A delightful Ruby AI framework that feels at home in ' \
+                       'Rails: switch models without rewriting your code, then scale from a single call to ' \
+                       'production agents, RAG, and workflows. Features chat (text, images, audio, PDFs), ' \
+                       'image generation, embeddings, tools (function calling), structured output, Rails ' \
                        'integration, and streaming. Works with OpenAI, Anthropic, Google Gemini, AWS Bedrock, ' \
                        'DeepSeek, Mistral, Ollama (local models), OpenRouter, Perplexity, GPUStack, and any ' \
                        'OpenAI-compatible API. Minimal dependencies - just Faraday, Zeitwerk, and Marcel.'

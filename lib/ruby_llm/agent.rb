@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-require 'erb'
 require 'forwardable'
-require 'pathname'
 require 'ruby_llm/schema'
 
 module RubyLLM
@@ -11,20 +9,32 @@ module RubyLLM
     extend Forwardable
     include Enumerable
 
+    DUPED_INHERITED_CONFIG = {
+      :@chat_kwargs => {},
+      :@tools => [],
+      :@tool_options => {},
+      :@caching => nil,
+      :@params => {},
+      :@headers => {},
+      :@input_names => [],
+      :@fallbacks => [],
+      :@fallback_options => {}
+    }.freeze
+    COPIED_INHERITED_CONFIG = %i[
+      @instructions
+      @temperature
+      @thinking
+      @citations
+      @schema
+      @context
+      @chat_model
+    ].freeze
+    private_constant :DUPED_INHERITED_CONFIG, :COPIED_INHERITED_CONFIG
+
     class << self
       def inherited(subclass)
         super
-        subclass.instance_variable_set(:@chat_kwargs, (@chat_kwargs || {}).dup)
-        subclass.instance_variable_set(:@tools, (@tools || []).dup)
-        subclass.instance_variable_set(:@instructions, @instructions)
-        subclass.instance_variable_set(:@temperature, @temperature)
-        subclass.instance_variable_set(:@thinking, @thinking)
-        subclass.instance_variable_set(:@params, (@params || {}).dup)
-        subclass.instance_variable_set(:@headers, (@headers || {}).dup)
-        subclass.instance_variable_set(:@schema, @schema)
-        subclass.instance_variable_set(:@context, @context)
-        subclass.instance_variable_set(:@chat_model, @chat_model)
-        subclass.instance_variable_set(:@input_names, (@input_names || []).dup)
+        copy_inherited_config_to(subclass)
       end
 
       def model(model_id = nil, **options)
@@ -32,10 +42,15 @@ module RubyLLM
         @chat_kwargs = options
       end
 
-      def tools(*tools, &block)
-        return @tools || [] if tools.empty? && !block_given?
+      def tools(*tools, **options, &block)
+        return @tools || [] if tools.empty? && options.empty? && !block_given?
 
         @tools = block_given? ? block : tools.flatten
+        @tool_options = options
+      end
+
+      def tool_options
+        @tool_options || {}
       end
 
       def instructions(text = nil, **prompt_locals, &block)
@@ -59,6 +74,18 @@ module RubyLLM
         @thinking = { effort: effort, budget: budget }
       end
 
+      def citations(value = nil)
+        return @citations if value.nil?
+
+        @citations = value
+      end
+
+      def caching(**options, &block)
+        return @caching if options.empty? && !block_given?
+
+        @caching = block_given? ? block : options
+      end
+
       def params(**params, &block)
         return @params || {} if params.empty? && !block_given?
 
@@ -76,6 +103,19 @@ module RubyLLM
 
         @schema = block_given? ? block : value
       end
+
+      def fallbacks(*models, **options)
+        return @fallbacks || [] if models.empty? && options.empty?
+
+        @fallbacks = models.flatten.compact
+        @fallback_options = options
+      end
+
+      def fallback_options
+        @fallback_options || {}
+      end
+
+      private :tool_options, :fallback_options
 
       def context(value = nil)
         return @context if value.nil?
@@ -125,6 +165,7 @@ module RubyLLM
         record
       end
 
+      # Mutates persisted instructions on the configured chat record.
       def sync_instructions!(chat_or_id, **kwargs)
         raise ArgumentError, 'chat_model must be configured to use sync_instructions!' unless resolved_chat_model
 
@@ -140,25 +181,24 @@ module RubyLLM
       end
 
       def render_prompt(name, chat:, inputs:, locals:)
-        path = prompt_path_for(name)
-        unless File.exist?(path)
-          raise RubyLLM::PromptNotFoundError,
-                "Prompt file not found for #{self}: #{path}. Create the file or use inline instructions."
-        end
-
         resolved_locals = resolve_prompt_locals(locals, runtime: runtime_context(chat:, inputs:), chat:, inputs:)
-        ERB.new(File.read(path)).result_with_hash(resolved_locals)
+        RubyLLM.render_prompt("#{prompt_agent_path}/#{name}", **resolved_locals)
       end
 
-      private
+      def partition_inputs(kwargs)
+        input_values = {}
+        chat_options = {}
 
-      def with_rails_chat_record(method_name, **kwargs)
-        raise ArgumentError, 'chat_model must be configured to use create/create!' unless resolved_chat_model
+        kwargs.each do |key, value|
+          symbolized_key = key.to_sym
+          if inputs.include?(symbolized_key)
+            input_values[symbolized_key] = value
+          else
+            chat_options[symbolized_key] = value
+          end
+        end
 
-        input_values, chat_options = partition_inputs(kwargs)
-        record = resolved_chat_model.public_send(method_name, **chat_kwargs, **chat_options)
-        apply_configuration(record, input_values:, persist_instructions: true) if record
-        record
+        [input_values, chat_options]
       end
 
       def apply_configuration(chat_object, input_values:, persist_instructions:)
@@ -170,9 +210,34 @@ module RubyLLM
         apply_tools(llm_chat, runtime)
         apply_temperature(llm_chat)
         apply_thinking(llm_chat)
+        apply_citations(llm_chat)
+        apply_caching(llm_chat, runtime)
         apply_params(llm_chat, runtime)
         apply_headers(llm_chat, runtime)
         apply_schema(llm_chat, runtime)
+        apply_fallbacks(llm_chat)
+      end
+
+      private
+
+      def copy_inherited_config_to(subclass)
+        DUPED_INHERITED_CONFIG.each do |ivar, default|
+          value = instance_variable_defined?(ivar) ? instance_variable_get(ivar) : default
+          subclass.instance_variable_set(ivar, value.respond_to?(:dup) ? value.dup : value)
+        end
+
+        COPIED_INHERITED_CONFIG.each do |ivar|
+          subclass.instance_variable_set(ivar, instance_variable_get(ivar))
+        end
+      end
+
+      def with_rails_chat_record(method_name, **kwargs)
+        raise ArgumentError, 'chat_model must be configured to use create/create!' unless resolved_chat_model
+
+        input_values, chat_options = partition_inputs(kwargs)
+        record = resolved_chat_model.public_send(method_name, **chat_kwargs, **chat_options)
+        apply_configuration(record, input_values:, persist_instructions: true) if record
+        record
       end
 
       def apply_context(llm_chat)
@@ -190,8 +255,8 @@ module RubyLLM
       end
 
       def apply_tools(llm_chat, runtime)
-        tools_to_apply = Array(evaluate(tools, runtime))
-        llm_chat.with_tools(*tools_to_apply) unless tools_to_apply.empty?
+        tools_to_apply = Array(evaluate(tools, runtime)).compact
+        llm_chat.with_tools(*tools_to_apply, **tool_options) if tools_to_apply.any? || tool_options.any?
       end
 
       def apply_temperature(llm_chat)
@@ -200,6 +265,15 @@ module RubyLLM
 
       def apply_thinking(llm_chat)
         llm_chat.with_thinking(**thinking) if thinking
+      end
+
+      def apply_citations(llm_chat)
+        llm_chat.with_citations(citations) unless citations.nil?
+      end
+
+      def apply_caching(llm_chat, runtime)
+        value = evaluate(caching, runtime)
+        llm_chat.with_caching(**value) if value
       end
 
       def apply_params(llm_chat, runtime)
@@ -217,13 +291,14 @@ module RubyLLM
         llm_chat.with_schema(value) if value
       end
 
+      def apply_fallbacks(llm_chat)
+        llm_chat.with_fallbacks(*fallbacks, **fallback_options) if fallbacks.any?
+      end
+
       def resolved_schema_value(runtime)
         value = schema
         return value unless value.is_a?(Proc)
-
-        evaluate(value, runtime)
-      rescue NoMethodError => e
-        raise unless e.receiver.equal?(runtime)
+        return evaluate(value, runtime) if value.lambda?
 
         RubyLLM::Schema.create(&value)
       end
@@ -246,13 +321,24 @@ module RubyLLM
       end
 
       def resolved_instructions_value(chat_object, runtime, inputs:)
-        value = evaluate(@instructions, runtime)
+        value = evaluate(instructions_config, runtime)
         return value unless prompt_instruction?(value)
 
         runtime.prompt(
           value[:prompt],
           **resolve_prompt_locals(value[:locals] || {}, runtime:, chat: chat_object, inputs:)
         )
+      end
+
+      def instructions_config
+        return @instructions unless @instructions.nil?
+        return unless default_instructions_prompt_exists?
+
+        { prompt: 'instructions', locals: {} }
+      end
+
+      def default_instructions_prompt_exists?
+        name && File.exist?(Prompt.new("#{prompt_agent_path}/instructions").path)
       end
 
       def prompt_instruction?(value)
@@ -285,22 +371,6 @@ module RubyLLM
         base.merge(evaluated)
       end
 
-      def partition_inputs(kwargs)
-        input_values = {}
-        chat_options = {}
-
-        kwargs.each do |key, value|
-          symbolized_key = key.to_sym
-          if inputs.include?(symbolized_key)
-            input_values[symbolized_key] = value
-          else
-            chat_options[symbolized_key] = value
-          end
-        end
-
-        [input_values, chat_options]
-      end
-
       def runtime_context(chat:, inputs:)
         agent_class = self
         Object.new.tap do |runtime|
@@ -315,27 +385,9 @@ module RubyLLM
         end
       end
 
-      def prompt_path_for(name)
-        filename = name.to_s
-        filename += '.txt.erb' unless filename.end_with?('.txt.erb')
-        prompt_root.join(prompt_agent_path, filename)
-      end
-
       def prompt_agent_path
         class_name = name || 'agent'
-        class_name.gsub('::', '/')
-                  .gsub(/([A-Z]+)([A-Z][a-z])/, '\1_\2')
-                  .gsub(/([a-z\d])([A-Z])/, '\1_\2')
-                  .tr('-', '_')
-                  .downcase
-      end
-
-      def prompt_root
-        if defined?(Rails) && Rails.respond_to?(:root) && Rails.root
-          Rails.root.join('app/prompts')
-        else
-          Pathname.new(Dir.pwd).join('app/prompts')
-        end
+        Utils.underscore(class_name.gsub('::', '/')).tr('-', '_')
       end
 
       def resolved_chat_model
@@ -349,18 +401,20 @@ module RubyLLM
     end
 
     def initialize(chat: nil, inputs: nil, persist_instructions: true, **kwargs)
-      input_values, chat_options = self.class.send(:partition_inputs, kwargs)
+      input_values, chat_options = self.class.partition_inputs(kwargs)
       @chat = chat || RubyLLM.chat(**self.class.chat_kwargs, **chat_options)
-      self.class.send(:apply_configuration, @chat, input_values: input_values.merge(inputs || {}),
-                                                   persist_instructions:)
+      self.class.apply_configuration(@chat, input_values: input_values.merge(inputs || {}),
+                                            persist_instructions:)
     end
 
     attr_reader :chat
 
-    def_delegators :chat, :model, :messages, :tools, :params, :headers, :schema, :ask, :say, :with_tool, :with_tools,
-                   :with_model, :with_temperature, :with_thinking, :with_context, :with_params, :with_headers,
-                   :with_schema, :on_new_message, :on_end_message, :on_tool_call, :on_tool_result, :before_message,
-                   :after_message, :before_tool_call, :after_tool_result, :each, :complete, :add_message,
-                   :reset_messages!, :cost
+    def_delegators :chat, :model, :messages, :tools, :params, :headers, :schema, :caching, :ask, :say, :with_tool,
+                   :with_tools, :with_model, :with_temperature, :with_thinking, :with_citations, :with_caching,
+                   :with_context, :with_params, :with_headers, :with_schema, :with_fallbacks, :before_message,
+                   :after_message, :before_tool_call, :after_tool_result, :before_fallback, :after_fallback, :each,
+                   :complete,
+                   :complete?, :ask_later, :generate, :run_tools, :step, :add_message, :add_completion,
+                   :cost
   end
 end

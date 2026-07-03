@@ -1,7 +1,8 @@
 ---
 layout: default
 title: Stream Responses
-nav_order: 3
+parent: "Chat"
+nav_order: 2
 description: Learn how to display AI responses in real-time as they're generated
 redirect_from:
   - /guides/streaming
@@ -39,7 +40,6 @@ chat = RubyLLM.chat
 
 puts "Assistant:"
 chat.ask "Write a short story about a adventurous ruby gem." do |chunk|
-  # The block receives RubyLLM::Chunk objects as they arrive
   print chunk.content # Print content fragment immediately
 end
 # => (Output appears incrementally) Once upon a time, in the vast digital...
@@ -60,6 +60,7 @@ Key attributes of a `Chunk`:
 *   `chunk.tokens&.input`: Standard input tokens for the request (often `nil` until the final chunk). From v1.15 onward, cache reads and writes are exposed separately as `chunk.tokens&.cache_read` and `chunk.tokens&.cache_write` when providers report them.
 *   `chunk.tokens&.output`: Cumulative billable output tokens *up to this chunk* (behavior varies by provider, often only accurate in the final chunk). From v1.15 onward, this includes thinking/reasoning tokens when the provider bills them as output.
 *   `chunk.thinking`: Optional thinking output when providers stream it.
+*   `chunk.finish_reason`: Provider-reported reason the model stopped, usually only present on the final chunk. Chunks also support finish-reason predicates such as `chunk.max_tokens?`, `chunk.content_filtered?`, `chunk.tool_call_stop?`, and `chunk.stopped?`.
 
 > Do not rely on token counts being present or accurate in every chunk. They are typically finalized only in the last chunk or the final returned message.
 {: .warning }
@@ -77,7 +78,6 @@ final_message = chat.ask "Write a short haiku about programming." do |chunk|
   print chunk.content
 end
 
-# The block finishes, and ask returns the complete message
 puts "\n--- Final Message ---"
 puts final_message.content
 # => Code flows like water,
@@ -91,6 +91,7 @@ total_tokens =
   final_message.tokens.cache_write.to_i
 
 puts "Total Tokens: #{total_tokens}"
+puts "Finish Reason: #{final_message.finish_reason}"
 ```
 
 This allows you to easily get the final result for storage or further processing, even after handling the stream for UI purposes.
@@ -112,7 +113,6 @@ class ChatStreamJob < ApplicationJob
     chat = Chat.find(chat_id) # Assuming acts_as_chat model
     full_response = ""
 
-    # Broadcast an initial placeholder
     Turbo::StreamsChannel.broadcast_replace_to(
       "chat_#{chat.id}",
       target: stream_target_id,
@@ -122,7 +122,6 @@ class ChatStreamJob < ApplicationJob
 
     chat.ask(user_message) do |chunk|
       full_response << (chunk.content || "")
-      # Broadcast updates, replacing the placeholder content
       Turbo::StreamsChannel.broadcast_replace_to(
         "chat_#{chat.id}",
         target: stream_target_id,
@@ -146,7 +145,7 @@ end
 # ChatStreamJob.perform_later(chat.id, params[:message], target_id)
 ```
 
-See the [Rails Integration Guide]({% link _advanced/rails.md %}#streaming-responses-with-hotwireturbo) for more detailed examples.
+See [Streaming with Hotwire/Turbo]({% link _advanced/rails-streaming.md %}) for more detailed examples.
 
 ### Sinatra with Server-Sent Events (SSE)
 
@@ -163,13 +162,10 @@ get '/stream_chat' do
     chat = RubyLLM.chat
     begin
       chat.ask(params[:prompt] || "Tell me a fun fact.") do |chunk|
-        # Send each content chunk as an SSE data event
         out << "data: #{chunk.content.to_json}\n\n" if chunk.content
       end
-      # Signal completion
       out << "event: complete\ndata: {}\n\n"
     rescue => e
-      # Signal error
       out << "event: error\ndata: #{ { error: e.message }.to_json }\n\n"
     ensure
       out.close
@@ -188,7 +184,6 @@ begin
   puts "Assistant:"
   chat.ask("Generate a very long response...") do |chunk|
     print chunk.content
-    # Potential error occurs here
   end
 rescue RubyLLM::Error => e
   puts "\n--- Error during streaming ---"

@@ -5,123 +5,35 @@ module RubyLLM
     class OpenRouter
       # Chat methods of the OpenRouter API integration
       module Chat
+        OPENROUTER_INLINE_FILE_THRESHOLD = 50 * 1024 * 1024
+        OPENROUTER_FILE_UPLOAD_LIMIT = 100 * 1024 * 1024
+        CACHE_CONTROL_TYPE = 'ephemeral'
+        PROMPT_CACHE_OPTIONS = %i[ttl].freeze
+
         module_function
 
-        # rubocop:disable Metrics/ParameterLists,Metrics/PerceivedComplexity
+        # rubocop:disable Metrics/ParameterLists
         def render_payload(messages, tools:, temperature:, model:, stream: false, schema: nil,
-                           thinking: nil, tool_prefs: nil)
-          tool_prefs ||= {}
-          payload = {
-            model: model.id,
-            messages: format_messages(messages),
-            stream: stream
-          }
-
-          payload[:temperature] = temperature unless temperature.nil?
-          if tools.any?
-            payload[:tools] = tools.map { |_, tool| OpenAI::Tools.tool_for(tool) }
-            payload[:tool_choice] = OpenAI::Tools.build_tool_choice(tool_prefs[:choice]) unless tool_prefs[:choice].nil?
-            payload[:parallel_tool_calls] = tool_prefs[:calls] == :many unless tool_prefs[:calls].nil?
-          end
-
-          if schema
-            schema_name = schema[:name]
-            schema_def = RubyLLM::Utils.deep_dup(schema[:schema])
-            if schema_def.is_a?(Hash)
-              schema_def.delete(:strict)
-              schema_def.delete('strict')
-            end
-            strict = schema[:strict]
-            payload[:response_format] = {
-              type: 'json_schema',
-              json_schema: {
-                name: schema_name,
-                schema: schema_def,
-                strict: strict
-              }
-            }
-          end
+                           thinking: nil, citations: false, caching: nil, tool_prefs: nil)
+          payload = super
+          payload.delete(:reasoning_effort)
+          strip_schema_strict(payload)
 
           reasoning = build_reasoning(thinking)
           payload[:reasoning] = reasoning if reasoning
-
-          payload[:stream_options] = { include_usage: true } if stream
+          payload[:cache_control] = prompt_cache_control(caching) if caching && !cache_boundaries?(messages)
           payload
         end
-        # rubocop:enable Metrics/ParameterLists,Metrics/PerceivedComplexity
+        # rubocop:enable Metrics/ParameterLists
 
-        def parse_completion_response(response)
-          data = response.body
-          return if data.empty?
+        def strip_schema_strict(payload)
+          schema_def = payload.dig(:response_format, :json_schema, :schema)
+          return unless schema_def.is_a?(Hash)
 
-          raise Error.new(response, data.dig('error', 'message')) if data.dig('error', 'message')
-
-          message_data = data.dig('choices', 0, 'message')
-          return unless message_data
-
-          usage = data['usage'] || {}
-          thinking_tokens = thinking_tokens(usage)
-          thinking_text = extract_thinking_text(message_data)
-          thinking_signature = extract_thinking_signature(message_data)
-
-          Message.new(
-            role: :assistant,
-            content: message_data['content'],
-            thinking: Thinking.build(text: thinking_text, signature: thinking_signature),
-            tool_calls: OpenAI::Tools.parse_tool_calls(message_data['tool_calls']),
-            input_tokens: input_tokens(usage),
-            output_tokens: output_tokens(usage),
-            cached_tokens: cache_read_tokens(usage),
-            cache_creation_tokens: cache_write_tokens(usage),
-            thinking_tokens: thinking_tokens,
-            model_id: data['model'],
-            raw: response
-          )
-        end
-
-        def input_tokens(usage)
-          return usage['prompt_cache_miss_tokens'] if usage['prompt_cache_miss_tokens']
-
-          prompt_tokens = usage['prompt_tokens']
-          return unless prompt_tokens
-
-          [prompt_tokens.to_i - cache_read_tokens(usage).to_i - cache_write_tokens(usage).to_i, 0].max
-        end
-
-        def output_tokens(usage)
-          OpenAI::Chat.output_tokens(usage)
-        end
-
-        def cache_read_tokens(usage)
-          usage.dig('prompt_tokens_details', 'cached_tokens') || usage['prompt_cache_hit_tokens']
-        end
-
-        def cache_write_tokens(usage)
-          usage.dig('prompt_tokens_details', 'cache_write_tokens') || 0
-        end
-
-        def thinking_tokens(usage)
-          OpenAI::Chat.thinking_tokens(usage)
-        end
-
-        def format_messages(messages)
-          messages.map do |msg|
-            {
-              role: format_role(msg.role),
-              content: OpenAI::Media.format_content(msg.content),
-              tool_calls: OpenAI::Tools.format_tool_calls(msg.tool_calls),
-              tool_call_id: msg.tool_call_id
-            }.compact.merge(format_thinking(msg))
-          end
-        end
-
-        def format_role(role)
-          case role
-          when :system
-            @config.openai_use_system_role ? 'system' : 'developer'
-          else
-            role.to_s
-          end
+          schema_def = RubyLLM::Utils.deep_dup(schema_def)
+          schema_def.delete(:strict)
+          schema_def.delete('strict')
+          payload[:response_format][:json_schema][:schema] = schema_def
         end
 
         def build_reasoning(thinking)
@@ -153,6 +65,66 @@ module RubyLLM
           end
 
           details.empty? ? {} : { reasoning_details: details }
+        end
+
+        def format_message_content(msg, caching: nil)
+          content = super
+          msg.cache_until_here? ? inject_cache_control(content, caching:) : content
+        end
+
+        def inject_cache_control(content, caching: nil)
+          blocks = content.is_a?(Array) ? content.dup : [{ type: 'text', text: content }]
+          return blocks if blocks.empty?
+
+          last = blocks.last
+          return blocks unless last.is_a?(Hash)
+          return blocks if last[:cache_control] || last['cache_control']
+
+          blocks[-1] = last.merge(cache_control: prompt_cache_control(caching))
+          blocks
+        end
+
+        def prompt_cache_control(caching = nil)
+          options = prompt_cache_options(caching)
+
+          { type: CACHE_CONTROL_TYPE }.tap do |control|
+            control[:ttl] = options[:ttl] if options[:ttl]
+          end
+        end
+
+        def prompt_cache_options(caching)
+          return {} unless caching
+
+          options = caching.to_h.transform_keys(&:to_sym)
+          unsupported = options.keys - PROMPT_CACHE_OPTIONS
+          return options if unsupported.empty?
+
+          raise ArgumentError,
+                "OpenRouter prompt caching accepts :ttl, got #{format_cache_option_keys(unsupported)}"
+        end
+
+        def format_cache_option_keys(keys)
+          keys.map { |key| ":#{key}" }.join(', ')
+        end
+
+        def cache_boundaries?(messages)
+          messages.any?(&:cache_until_here?)
+        end
+
+        def supports_provider_file_references?
+          true
+        end
+
+        def default_large_file_upload_threshold
+          OPENROUTER_INLINE_FILE_THRESHOLD
+        end
+
+        def provider_file_upload_limit
+          OPENROUTER_FILE_UPLOAD_LIMIT
+        end
+
+        def provider_file_attachable?(attachment)
+          attachment.pdf?
         end
 
         def extract_thinking_text(message_data)

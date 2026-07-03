@@ -12,7 +12,7 @@ http_interactions:
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}],"tool_choice":"none"}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 07 May 2026 00:04:43 GMT
+      - Mon, 08 Jun 2026 18:51:52 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -35,29 +35,29 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '019dffc0-3a46-705c-a0f7-850ddaaaa491'
+      - '019ea893-b1a8-774c-8566-2e6ce16a4a88'
       X-Kong-Request-Id:
-      - '019dffc0-3a46-705c-a0f7-850ddaaaa491'
+      - '019ea893-b1a8-774c-8566-2e6ce16a4a88'
       X-Ratelimit-Limit-Tokens-Minute:
-      - '2000000'
+      - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '1999527'
+      - '99391'
       X-Ratelimit-Tokens-Query-Cost:
-      - '473'
+      - '156'
       X-Ratelimit-Limit-Req-Minute:
-      - '1500'
+      - '100'
       X-Ratelimit-Remaining-Req-Minute:
-      - '1499'
+      - '96'
       X-Envoy-Upstream-Service-Time:
-      - '2107'
+      - '665'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '2108'
+      - '666'
       X-Kong-Proxy-Latency:
-      - '16'
+      - '18'
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
@@ -73,7 +73,11 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        eyJpZCI6ImY0NDE2NTc1ZTY3ZDQyNDViYjViZTFhZjcxZGUwMzUyIiwiY3JlYXRlZCI6MTc3ODExMjI4MSwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsInVzYWdlIjp7InByb21wdF90b2tlbnMiOjE1OSwidG90YWxfdG9rZW5zIjo0NzMsImNvbXBsZXRpb25fdG9rZW5zIjozMTQsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjowfX0sIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNob2ljZXMiOlt7ImluZGV4IjowLCJmaW5pc2hfcmVhc29uIjoic3RvcCIsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsInRvb2xfY2FsbHMiOm51bGwsImNvbnRlbnQiOiJJJ2xsIGNoZWNrIHRoZSBjdXJyZW50IHdlYXRoZXIgZm9yIEJlcmxpbiB1c2luZyB0aGUgY29vcmRpbmF0ZXMgeW91IHByb3ZpZGVkLiBPbmUgbW9tZW50LCBwbGVhc2UuIPCfjKTvuI9cblxuTGV0IG1lIGZldGNoIHRoZSB3ZWF0aGVyIGRhdGEgZm9yIHlvdS4gSSdsbCB1c2UgdGhlIGNvb3JkaW5hdGVzICg1Mi41MjAwLCAxMy40MDUwKSB0byBnZXQgdGhlIG1vc3QgYWNjdXJhdGUgaW5mb3JtYXRpb24uIEknbGwgaGF2ZSB0aGF0IGZvciB5b3UgaW4ganVzdCBhIG1vbWVudC4g8J+MpO+4j1xuXG5MZXQgbWUgcmV0cmlldmUgdGhlIGN1cnJlbnQgd2VhdGhlciBmb3IgQmVybGluLiBJJ2xsIHVzZSB0aGUgY29vcmRpbmF0ZXMgeW91IHByb3ZpZGVkIHRvIGdldCB0aGUgbW9zdCBhY2N1cmF0ZSBpbmZvcm1hdGlvbi4gT25lIG1vbWVudCwgcGxlYXNlLiDwn4yk77iPXG5cbkxldCBtZSBmZXRjaCB0aGUgd2VhdGhlciBkYXRhIGZvciBCZXJsaW4gdXNpbmcgdGhlIGNvb3JkaW5hdGVzIHlvdSBwcm92aWRlZC4gT25lIG1vbWVudCwgcGxlYXNlLiDwn4yk77iPXG5cbkxldCBtZSBnZXQgdGhlIGN1cnJlbnQgd2VhdGhlciBmb3IgQmVybGluIHVzaW5nIHRoZSBjb29yZGluYXRlcyB5b3UgcHJvdmlkZWQuIEknbGwgaGF2ZSB0aGF0IGZvciB5b3UgaW4ganVzdCBhIG1vbWVudC4g8J+MpO+4j1xuXG5MZXQgbWUgY2hlY2sgdGhlIGN1cnJlbnQgd2VhdGhlciBmb3IgQmVybGluIHVzaW5nIHRoZSBjb29yZGluYXRlcyB5b3UgcHJvdmlkZWQuIE9uZSBtb21lbnQsIHBsZWFzZS4g8J+MpO+4j1xuXG5MZXQgbWUgcmV0cmlldmUgdGhlIGN1cnJlbnQgd2VhdGhlciBmb3IgQmVybGluIHVzaW5nIHRoZSBjb29yZGluYXRlcyB5b3UgcHJvdmlkZWQuIEknbGwgaGF2ZSB0aGF0IGZvciB5b3UgaW4ganVzdCBhIG1vbWVudC4g8J+MpO+4j1xuXG5MZXQgbWUgZ2V0IHRoZSB3ZWF0aGVyIGZvciBCZXJsaW4gdXNpbmcgdGhlIGNvb3JkaW5hdGVzIHlvdSBwcm92aWRlZC4gT25lIG1vbWVudCwgcGxlYXNlLiDwn4yk77iPXG5cbkxldCBtZSBmZXRjaCB0aGUgY3VycmVudCB3ZWF0aGVyIGZvciBCZXJsaW4gdXNpbmcgdGhlIGNvb3JkaW5hdGVzIHlvdSBwcm92aWRlZC4gSSdsbCBoYXZlIHRoYXQgZm9yIHlvdSBpbiBqdXN0IGEgbW9tZW50LiDwn4yk77iPXG5cbkxldCBtZSBjaGVjayB0aGUgY3VycmVudCB3ZWF0aGVyIGZvciBCZXJsaW4gdXNpbmcgdGhlIGNvb3JkaW5hdGVzIHlvdSBwcm92aWRlZC4gT25lIG1vbWVudCwgcGxlYXNlLiDwn4ykIn19XX0=
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+      string: '{"id":"14c59eb8d46d4574b5f17f2372b4d2d1","created":1780944712,"model":"mistral-small-latest","usage":{"prompt_tokens":40,"total_tokens":156,"completion_tokens":116,"prompt_tokens_details":{"cached_tokens":0}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"I
+        can''t provide real-time weather data, but you can check the current weather
+        in Berlin (coordinates: 52.5200, 13.4050) using a reliable weather service
+        like:\n\n- [Weather.com](https://weather.com)\n- [AccuWeather](https://www.accuweather.com)\n-
+        [OpenWeatherMap](https://openweathermap.org)\n- [Weather Underground](https://www.wunderground.com)\n\nWould
+        you like me to guide you on how to use one of these services?"}}]}'
+  recorded_at: Mon, 08 Jun 2026 18:51:52 GMT
 recorded_with: VCR 6.4.0

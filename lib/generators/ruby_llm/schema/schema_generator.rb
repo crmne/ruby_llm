@@ -13,13 +13,17 @@ module RubyLLM
       desc 'Creates a RubyLLM schema class'
 
       def create_schema_file
-        template 'schema.rb.tt', File.join('app/schemas', class_path, "#{file_name}.rb")
+        template 'schema.rb.tt', File.join('app/schemas', class_path, "#{schema_file_name}.rb")
       end
 
       private
 
       def schema_class_name
         class_name.end_with?('Schema') ? class_name : "#{class_name}Schema"
+      end
+
+      def schema_file_name
+        schema_class_name.demodulize.underscore
       end
     end
   end

@@ -8,15 +8,26 @@ module RubyLLM
         module_function
 
         def embedding_url(model:)
-          "projects/#{@config.vertexai_project_id}/locations/#{@config.vertexai_location}/publishers/google/models/#{model}:predict" # rubocop:disable Layout/LineLength
+          "#{@provider.model_path(model)}:predict"
         end
 
-        def render_embedding_payload(text, model:, dimensions:) # rubocop:disable Lint/UnusedMethodArgument
-          {
-            instances: [text].flatten.map { |t| { content: t.to_s } }
+        def render_embedding_payload(text, model:, dimensions:, params: {}) # rubocop:disable Lint/UnusedMethodArgument
+          params = params.dup
+          task_type = params.delete(:task_type) || params.delete('task_type')
+          title = params.delete(:title) || params.delete('title')
+
+          payload = {
+            instances: [text].flatten.map do |t|
+              { content: t.to_s }.tap do |instance|
+                instance[:task_type] = task_type if task_type
+                instance[:title] = title if title
+              end
+            end
           }.tap do |payload|
             payload[:parameters] = { outputDimensionality: dimensions } if dimensions
           end
+
+          Utils.deep_merge(payload, params)
         end
 
         def parse_embedding_response(response, model:, text:)

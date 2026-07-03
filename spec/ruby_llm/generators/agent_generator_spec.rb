@@ -45,7 +45,7 @@ RSpec.describe RubyLLM::Generators::AgentGenerator, :generator, type: :generator
       expect(agent_class).to include('class SupportAgent < RubyLLM::Agent')
       expect(agent_class).to include("Change `Chat` to your app's chat model for Rails persistence.")
       expect(agent_class).to include('chat_model Chat')
-      expect(agent_class).to include('instructions')
+      expect(agent_class).not_to include("\n  instructions")
     end
   end
 end

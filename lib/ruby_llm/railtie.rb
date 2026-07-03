@@ -10,6 +10,10 @@ if defined?(Rails::Railtie)
         end
       end
 
+      initializer 'ruby_llm.instrumentation' do
+        RubyLLM.config.instrumenter ||= ActiveSupport::Notifications
+      end
+
       initializer 'ruby_llm.active_record' do
         ActiveSupport.on_load :active_record do
           require 'ruby_llm/active_record/payload_helpers'
@@ -17,19 +21,10 @@ if defined?(Rails::Railtie)
           require 'ruby_llm/active_record/message_methods'
           require 'ruby_llm/active_record/model_methods'
           require 'ruby_llm/active_record/tool_call_methods'
+          require 'ruby_llm/active_record/batch_methods'
 
-          if RubyLLM.config.use_new_acts_as
-            require 'ruby_llm/active_record/acts_as'
-            ::ActiveRecord::Base.include RubyLLM::ActiveRecord::ActsAs
-          else
-            require 'ruby_llm/active_record/acts_as_legacy'
-            ::ActiveRecord::Base.include RubyLLM::ActiveRecord::ActsAsLegacy
-
-            Rails.logger.warn(
-              "\n!!! RubyLLM's legacy acts_as API is deprecated and will be removed in RubyLLM 2.0.0. " \
-              "Please consult the migration guide at https://rubyllm.com/upgrading-to-1-7/\n"
-            )
-          end
+          require 'ruby_llm/active_record/acts_as'
+          ::ActiveRecord::Base.include RubyLLM::ActiveRecord::ActsAs
         end
       end
 

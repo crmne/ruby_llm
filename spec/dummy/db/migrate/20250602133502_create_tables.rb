@@ -33,6 +33,7 @@ class CreateTables < ActiveRecord::Migration[7.0]
       t.string :role
       t.text :content
       t.json :content_raw
+      t.boolean :cache_until_here, null: false, default: false
       t.references :model, foreign_key: true
       t.integer :input_tokens
       t.integer :output_tokens

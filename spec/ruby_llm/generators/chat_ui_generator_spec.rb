@@ -24,7 +24,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
     expect(messages_helper).not_to include('def llm_model_info(model)')
   end
 
-  def expect_generated_view_set(
+  def expect_generated_view_set( # rubocop:disable Metrics/AbcSize
     base_path:,
     chats_target:,
     form_partial_path:,
@@ -68,7 +68,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
     tool_partial = File.read(File.join(base_path, 'messages/_tool.html.erb'))
     expect(tool_partial).to include('render tool_result_partial(tool), tool: tool')
     tool_calls_partial = File.read(File.join(base_path, 'messages/_tool_calls.html.erb'))
-    expect(tool_calls_partial).to include('tool_calls: tool_calls, tool_call: tool_call')
+    expect(tool_calls_partial).to include('message: message, tool_call: tool_call')
     expect(tool_calls_partial).to include('local_assigns[:message]')
     tool_results_default = File.read(File.join(base_path, 'messages/tool_results/_default.html.erb'))
     expect(tool_results_default).to include('tool.tool_error_message')

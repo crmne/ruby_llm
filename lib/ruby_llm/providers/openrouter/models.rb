@@ -34,7 +34,7 @@ module RubyLLM
 
             capabilities = supported_parameters_to_capabilities(model_data['supported_parameters'])
 
-            Model::Info.new(
+            Model.new(
               id: model_data['id'],
               name: model_data['name'],
               provider: slug,

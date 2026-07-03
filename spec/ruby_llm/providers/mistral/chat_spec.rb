@@ -3,16 +3,12 @@
 require 'spec_helper'
 
 RSpec.describe RubyLLM::Providers::Mistral::Chat do
-  let(:provider) do
-    Class.new(RubyLLM::Providers::OpenAI) do
-      include RubyLLM::Providers::Mistral::Chat
-    end.allocate
-  end
+  let(:provider) { RubyLLM::Providers::Mistral::ChatCompletions.allocate }
 
   let(:messages) { [RubyLLM::Message.new(role: :user, content: 'Hello')] }
 
-  def render_payload(model_id:, thinking:)
-    model = instance_double(RubyLLM::Model::Info, id: model_id)
+  def render_payload(model_id:, thinking: nil, caching: nil, messages: self.messages)
+    model = instance_double(RubyLLM::Model, id: model_id)
 
     provider.send(
       :render_payload,
@@ -21,11 +17,36 @@ RSpec.describe RubyLLM::Providers::Mistral::Chat do
       temperature: nil,
       model: model,
       stream: false,
-      thinking: thinking
+      thinking: thinking,
+      caching: caching
     )
   end
 
   describe '#render_payload' do
+    it 'renders system messages before conversation messages for Mistral' do
+      payload = render_payload(
+        model_id: 'mistral-small-latest',
+        messages: [
+          RubyLLM::Message.new(role: :user, content: 'Hello'),
+          RubyLLM::Message.new(role: :system, content: 'Be terse.')
+        ]
+      )
+
+      expect(payload[:messages].map { |message| message[:role] }).to eq(%w[system user])
+    end
+
+    it 'renders Mistral prompt cache key' do
+      payload = render_payload(model_id: 'mistral-large-latest', caching: { key: 'support-session-42' })
+
+      expect(payload[:prompt_cache_key]).to eq('support-session-42')
+    end
+
+    it 'rejects caching options Mistral cannot render' do
+      expect do
+        render_payload(model_id: 'mistral-large-latest', caching: { retention: '24h' })
+      end.to raise_error(ArgumentError, /Mistral prompt caching accepts :key/)
+    end
+
     it 'enables prompt-mode reasoning for native Magistral models' do
       payload = render_payload(
         model_id: 'magistral-small-latest',
@@ -65,6 +86,21 @@ RSpec.describe RubyLLM::Providers::Mistral::Chat do
 
       expect(payload).not_to have_key(:reasoning_effort)
       expect(payload).not_to have_key(:prompt_mode)
+    end
+  end
+
+  describe '#format_content_with_thinking' do
+    it 'formats arbitrary document attachments with Mistral document_url parts' do
+      content = RubyLLM::Content.new('Summarize this file')
+      content.add_attachment(StringIO.new('docx bytes'), filename: 'proposal.docx')
+      message = RubyLLM::Message.new(role: :user, content:)
+
+      formatted = provider.send(:format_content_with_thinking, message)
+
+      expect(formatted.second).to eq(
+        type: 'document_url',
+        document_url: "data:application/vnd.openxmlformats-officedocument.wordprocessingml.document;base64,#{Base64.strict_encode64('docx bytes')}" # rubocop:disable Layout/LineLength
+      )
     end
   end
 

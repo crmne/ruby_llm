@@ -3,13 +3,12 @@
 module RubyLLM
   module Providers
     # Mistral API integration.
-    class Mistral < OpenAI
-      include Mistral::Chat
-      include Mistral::Models
-      include Mistral::Embeddings
+    class Mistral < Provider
+      protocol :chat_completions, ChatCompletions, batches: Mistral::ChatCompletions::Batches
+      files Mistral::Files
 
       def api_base
-        'https://api.mistral.ai/v1'
+        @config.mistral_api_base || 'https://api.mistral.ai/v1'
       end
 
       def headers
@@ -24,7 +23,7 @@ module RubyLLM
         end
 
         def configuration_options
-          %i[mistral_api_key]
+          %i[mistral_api_key mistral_api_base]
         end
 
         def configuration_requirements

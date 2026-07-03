@@ -5,11 +5,11 @@ http_interactions:
     uri: https://api.x.ai/v1/chat/completions
     body:
       encoding: UTF-8
-      string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"user","content":"What
-        is the capital of France?"}],"stream":false}'
+      string: '{"model":"grok-4.3","messages":[{"role":"user","content":"What is the
+        capital of France?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 06 May 2026 23:56:52 GMT
+      - Mon, 08 Jun 2026 16:10:32 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -38,23 +38,25 @@ http_interactions:
       X-Ratelimit-Limit-Tokens:
       - '10000000'
       X-Ratelimit-Remaining-Tokens:
-      - '9999190'
+      - '10000000'
       X-Zero-Data-Retention:
       - 'false'
       X-Ratelimit-Limit-Requests:
       - '1800'
       X-Ratelimit-Remaining-Requests:
       - '1799'
-      X-Metrics-Ttft-Ms:
-      - '204.2'
-      X-Metrics-E2e-Ms:
-      - '303.8'
       Cf-Cache-Status:
       - DYNAMIC
       X-Request-Id:
       - "<X_REQUEST_ID>"
+      X-Metrics-Ttft-Ms:
+      - '217.7'
+      X-Metrics-Mean-Itl-Ms:
+      - '4.8'
+      X-Metrics-E2e-Ms:
+      - '929.5'
       Traceparent:
-      - 00-b0a9abae542f94640acb2d9dfb4b1d32-659e7a5600001c1d-01
+      - 00-eb52aa98e3b8d19619f8967b3f1cbfb9-eead202d0017a392-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
@@ -67,6 +69,7 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"fa70a789-f7e4-9cbb-a218-4d78a3ae662a","object":"chat.completion","created":1778111812,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"Paris","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":175,"completion_tokens":1,"total_tokens":176,"prompt_tokens_details":{"text_tokens":175,"audio_tokens":0,"image_tokens":0,"cached_tokens":164},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":109000},"system_fingerprint":"fp_b9ff9b81b3"}'
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+      string: '{"id":"59b02a3c-5ed1-9780-87ac-2cb5e6113a77","object":"chat.completion","created":1780935031,"model":"grok-4.3","choices":[{"index":0,"message":{"role":"assistant","content":"Paris.","reasoning_content":"The
+        question is: \"What is the capital of France?\"\n","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":137,"completion_tokens":2,"total_tokens":251,"prompt_tokens_details":{"text_tokens":137,"audio_tokens":0,"image_tokens":0,"cached_tokens":128},"completion_tokens_details":{"reasoning_tokens":112,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":3218500},"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}'
+  recorded_at: Mon, 08 Jun 2026 16:10:32 GMT
 recorded_with: VCR 6.4.0

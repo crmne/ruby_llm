@@ -11,7 +11,7 @@
 <p>Using <strong><%%= @<%= chat_variable_name %>.<%= model_table_name.singularize %>&.label || default_model_display_name %></strong></p>
 
 <div id="<%= message_table_name %>">
-  <%% @<%= chat_variable_name %>.<%= message_table_name %>.where.not(id: nil).each do |<%= message_variable_name %>| %>
+  <%% @<%= chat_variable_name %>.<%= message_table_name %>.each do |<%= message_variable_name %>| %>
     <%%= render <%= message_variable_name %> %>
   <%% end %>
 </div>

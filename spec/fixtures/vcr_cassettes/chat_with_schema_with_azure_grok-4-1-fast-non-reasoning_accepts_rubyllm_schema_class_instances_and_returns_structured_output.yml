@@ -9,7 +9,7 @@ http_interactions:
         a person named Alice who is 28 years old"}],"stream":false,"response_format":{"type":"json_schema","json_schema":{"name":"PersonSchemaClass","schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"number"}},"required":["name","age"],"additionalProperties":false},"strict":true}}}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Api-Key:
       - "<AZURE_API_KEY>"
       Content-Type:
@@ -37,18 +37,18 @@ http_interactions:
       - access-control-request-headers
       Request-Context:
       - appId=
-      Traceparent:
-      - 00-cb72742785b44c53a9fcb8ed1bd5685f-e5c05707000576bb-00
       X-Ms-Rai-Invoked:
-      - 'true'
+      - 'false'
+      Traceparent:
+      - 00-c611579670cd4c588fcba37f16ddd63c-b60fedd400148bde-00
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Xai-Model-Address:
       - http://localhost:9988
       X-Ms-Client-Request-Id:
-      - cb727427-85b4-4c53-a9fc-b8ed1bd5685f
+      - c6115796-70cd-4c58-8fcb-a37f16ddd63c
       Azureml-Model-Session:
-      - d20260429215123-f480a160
+      - d20260601175039-cf414bb2
       Azureai-Requested-Tier:
       - default
       Azureai-Processed-Tier:
@@ -58,9 +58,9 @@ http_interactions:
       X-Ratelimit-Key:
       - grok-4-1-fast-non-reasoning
       X-Ratelimit-Remaining-Requests:
-      - '49'
+      - '46'
       X-Ratelimit-Reset-Requests:
-      - '1'
+      - '4'
       X-Ratelimit-Limit-Requests:
       - '50'
       X-Ratelimit-Renewalperiod-Requests:
@@ -75,8 +75,10 @@ http_interactions:
       - '50000'
       X-Ratelimit-Renewalperiod-Tokens:
       - '60'
+      Azureai-Fe-Is-Streaming:
+      - 'False'
       Apim-Request-Id:
-      - cb727427-85b4-4c53-a9fc-b8ed1bd5685f
+      - c6115796-70cd-4c58-8fcb-a37f16ddd63c
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Ms-Deployment-Name:
@@ -86,9 +88,9 @@ http_interactions:
       X-Ms-Region:
       - West Europe
       Date:
-      - Wed, 06 May 2026 23:52:13 GMT
+      - Mon, 08 Jun 2026 18:45:43 GMT
     body:
       encoding: UTF-8
-      string: '{"id":"19cd6d6a-05f9-41b8-a666-8acd2139d6ce","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"{\"name\":\"Alice\",\"age\":28}"},"finish_reason":"stop","content_filter_results":{}}],"usage":{"prompt_tokens":84,"completion_tokens":9,"total_tokens":93,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":0,"audio_tokens":0,"text_tokens":84,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1778111534,"object":"chat.completion","prompt_filter_results":null}'
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+      string: '{"id":"376c3dc3-e5f0-4751-b1a9-74d76e10d57e","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"{\"name\":\"Alice\",\"age\":28}"},"finish_reason":"stop","content_filter_results":{}}],"usage":{"prompt_tokens":84,"completion_tokens":9,"total_tokens":93,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":179,"audio_tokens":0,"text_tokens":84,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1780944343,"object":"chat.completion","prompt_filter_results":null}'
+  recorded_at: Mon, 08 Jun 2026 18:45:44 GMT
 recorded_with: VCR 6.4.0

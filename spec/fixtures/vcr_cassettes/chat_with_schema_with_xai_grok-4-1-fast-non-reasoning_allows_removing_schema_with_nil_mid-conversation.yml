@@ -5,11 +5,11 @@ http_interactions:
     uri: https://api.x.ai/v1/chat/completions
     body:
       encoding: UTF-8
-      string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"user","content":"Generate
+      string: '{"model":"grok-4.3","messages":[{"role":"user","content":"Generate
         a person named Bob"}],"stream":false,"response_format":{"type":"json_schema","json_schema":{"name":"response","schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"integer"}},"required":["name","age"],"additionalProperties":false},"strict":true}}}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 06 May 2026 23:53:16 GMT
+      - Mon, 08 Jun 2026 16:10:32 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -45,18 +45,18 @@ http_interactions:
       - '1800'
       X-Ratelimit-Remaining-Requests:
       - '1800'
-      X-Metrics-Ttft-Ms:
-      - '410.9'
-      X-Metrics-Mean-Itl-Ms:
-      - '2.0'
-      X-Metrics-E2e-Ms:
-      - '568.9'
       Cf-Cache-Status:
       - DYNAMIC
       X-Request-Id:
       - "<X_REQUEST_ID>"
+      X-Metrics-Ttft-Ms:
+      - '597.5'
+      X-Metrics-Mean-Itl-Ms:
+      - '4.0'
+      X-Metrics-E2e-Ms:
+      - '1758.6'
       Traceparent:
-      - 00-883cc876d2d860a1cbe1bd650356f555-8783b0aa0001b5e9-01
+      - 00-20208e0abb45a602c46ef6bffa088e79-01a4a66b0006f7d7-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
@@ -69,19 +69,23 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"c7bc2457-6a50-9ef5-b42b-d157465ca66d","object":"chat.completion","created":1778111595,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"{\"name\":\"Bob\",\"age\":30}","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":246,"completion_tokens":9,"total_tokens":255,"prompt_tokens_details":{"text_tokens":246,"audio_tokens":0,"image_tokens":0,"cached_tokens":163},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":292500},"system_fingerprint":"fp_b9ff9b81b3"}'
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+      string: '{"id":"2a3c14cb-4d5b-9238-9900-765e5720485e","object":"chat.completion","created":1780935030,"model":"grok-4.3","choices":[{"index":0,"message":{"role":"assistant","content":"{\n  \"name\":
+        \"Bob\",\n  \"age\": 30\n}","reasoning_content":"The user says: \"Generate
+        a person named Bob\"\n","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":186,"completion_tokens":16,"total_tokens":452,"prompt_tokens_details":{"text_tokens":186,"audio_tokens":0,"image_tokens":0,"cached_tokens":128},"completion_tokens_details":{"reasoning_tokens":250,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":7631000},"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}'
+  recorded_at: Mon, 08 Jun 2026 16:10:32 GMT
 - request:
     method: post
     uri: https://api.x.ai/v1/chat/completions
     body:
       encoding: UTF-8
-      string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"user","content":"Generate
-        a person named Bob"},{"role":"assistant","content":"{\"name\":\"Bob\",\"age\":30}"},{"role":"user","content":"Now
-        just tell me about Ruby"}],"stream":false}'
+      string: '{"model":"grok-4.3","messages":[{"role":"user","content":"Generate
+        a person named Bob"},{"role":"assistant","content":"{\"name\":\"Bob\",\"age\":30}","reasoning":"The
+        user says: \"Generate a person named Bob\"\n","reasoning_content":"The user
+        says: \"Generate a person named Bob\"\n"},{"role":"user","content":"Now just
+        tell me about Ruby"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -96,7 +100,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 06 May 2026 23:53:17 GMT
+      - Mon, 08 Jun 2026 16:10:36 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -117,18 +121,18 @@ http_interactions:
       - '1800'
       X-Ratelimit-Remaining-Requests:
       - '1800'
-      X-Metrics-Ttft-Ms:
-      - '238.8'
-      X-Metrics-Mean-Itl-Ms:
-      - '11.7'
-      X-Metrics-E2e-Ms:
-      - '888.6'
       Cf-Cache-Status:
       - DYNAMIC
       X-Request-Id:
       - "<X_REQUEST_ID>"
+      X-Metrics-Ttft-Ms:
+      - '185.7'
+      X-Metrics-Mean-Itl-Ms:
+      - '5.1'
+      X-Metrics-E2e-Ms:
+      - '4391.9'
       Traceparent:
-      - 00-4312538f89b13e3ad5b00b2931b50587-32d5f57f0001e3b9-01
+      - 00-31c144749f450c2578ff4d5395079005-88f2d5af00075271-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
@@ -141,8 +145,7 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"1ce92eb0-2c40-999b-8ef9-74d3e3aa9506","object":"chat.completion","created":1778111596,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"{\"name\":\"Ruby\",\"age\":28,\"occupation\":\"Software
-        Developer\",\"hobbies\":[\"Coding\",\"Hiking\",\"Reading Sci-Fi\"],\"personality\":\"Adventurous
-        and witty, with a passion for open-source projects and weekend getaways.\"}","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":199,"completion_tokens":48,"total_tokens":247,"prompt_tokens_details":{"text_tokens":199,"audio_tokens":0,"image_tokens":0,"cached_tokens":161},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":396500},"system_fingerprint":"fp_b9ff9b81b3"}'
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+      string: !binary |-
+        eyJpZCI6IjQ2MWI0M2RlLThkNjMtOTFkOC1hMmRjLTZlZTRkYmJiNTJiZSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3ODA5MzUwMzIsIm1vZGVsIjoiZ3Jvay00LjMiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IntcIm5hbWVcIjpcIlJ1YnlcIixcImFnZVwiOjI4fSIsInJlYXNvbmluZ19jb250ZW50IjoiVGhlIHVzZXIgc2FpZDogXCJOb3cganVzdCB0ZWxsIG1lIGFib3V0IFJ1YnlcIlxuUnVieSBpcyBhIHByb2dyYW1taW5nIGxhbmd1YWdlIGFuZCBvcGVuLXNvdXJjZSBvYmplY3Qtb3JpZW50ZWQgc2NyaXB0aW5nIGxhbmd1YWdlLiBJdCdzIGtub3duIGZvciBpdHMgc2ltcGxpY2l0eSBhbmQgcmVhZGFiaWxpdHksIG9mdGVuIHVzZWQgZm9yIHdlYiBkZXZlbG9wbWVudCwgc2NyaXB0aW5nLCBhbmQgRGV2T3BzLiBDcmVhdGVkIGJ5IFl1a2loaXJvIE1hdHN1bW90byBpbiAxOTk1LCBpdCdzIHRoZSBiYXNpcyBmb3IgUmFpbHMgZnJhbWV3b3JrLiBcblxuIyMgRXhwbGFuYXRpb25cblxuVGhlIHJlc3BvbnNlIGJlZ2lucyBieSBpZGVudGlmeWluZyBSdWJ5IGFzIGEgZHluYW1pY2FsbHkgdHlwZWQgb2JqZWN0LW9yaWVudGVkIHNjcmlwdGluZyBsYW5ndWFnZSwgZGlyZWN0bHkgYWRkcmVzc2luZyB0aGUgcXVlcnnigJlzIHJlcXVlc3QgZm9yIOKAnGluZm9ybWF0aW9uIGFib3V0IFJ1YnnigJ0gaW4gYSBjb25jaXNlLCBzZWxmLWNvbnRhaW5lZCBtYW5uZXIuIiwicmVmdXNhbCI6bnVsbH0sImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjoxNTgsImNvbXBsZXRpb25fdG9rZW5zIjo5LCJ0b3RhbF90b2tlbnMiOjk0OCwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7InRleHRfdG9rZW5zIjoxNTgsImF1ZGlvX3Rva2VucyI6MCwiaW1hZ2VfdG9rZW5zIjowLCJjYWNoZWRfdG9rZW5zIjoxMjh9LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjc4MSwiYXVkaW9fdG9rZW5zIjowLCJhY2NlcHRlZF9wcmVkaWN0aW9uX3Rva2VucyI6MCwicmVqZWN0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjB9LCJudW1fc291cmNlc191c2VkIjowLCJjb3N0X2luX3VzZF90aWNrcyI6MjAzODEwMDB9LCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9lYjNjMDAzZmM2NmMxNGVkIiwic2VydmljZV90aWVyIjoiZGVmYXVsdCJ9
+  recorded_at: Mon, 08 Jun 2026 16:10:36 GMT
 recorded_with: VCR 6.4.0

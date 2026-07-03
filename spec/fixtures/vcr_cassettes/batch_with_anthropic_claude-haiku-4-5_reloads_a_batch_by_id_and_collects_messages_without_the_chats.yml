@@ -1,0 +1,464 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.anthropic.com/v1/messages/batches
+    body:
+      encoding: UTF-8
+      string: '{"requests":[{"custom_id":"0","params":{"model":"claude-haiku-4-5","messages":[{"role":"user","content":[{"type":"text","text":"What
+        is 3 + 3? Just the number."}]}],"stream":false,"max_tokens":64000}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.2
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Anthropic-Version:
+      - '2023-06-01'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 12 Jun 2026 11:22:50 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Request-Id:
+      - "<REQUEST_ID>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Anthropic-Organization-Id:
+      - "<ANTHROPIC_ORGANIZATION_ID>"
+      Server:
+      - cloudflare
+      Vary:
+      - Accept-Encoding
+      Server-Timing:
+      - x-originResponse;dur=686
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Content-Security-Policy:
+      - default-src 'none'; frame-ancestors 'none'
+      X-Robots-Tag:
+      - none
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"msgbatch_01MNtso6sdXQPYYRmzwB75gf","type":"message_batch","processing_status":"in_progress","request_counts":{"processing":1,"succeeded":0,"errored":0,"canceled":0,"expired":0},"ended_at":null,"created_at":"2026-06-12T11:22:50.320457+00:00","expires_at":"2026-06-13T11:22:50.320457+00:00","archived_at":null,"cancel_initiated_at":null,"results_url":null}'
+  recorded_at: Fri, 12 Jun 2026 11:22:50 GMT
+- request:
+    method: get
+    uri: https://api.anthropic.com/v1/messages/batches/msgbatch_01MNtso6sdXQPYYRmzwB75gf
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.14.2
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Anthropic-Version:
+      - '2023-06-01'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 12 Jun 2026 11:22:50 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Retry-After:
+      - '10'
+      Request-Id:
+      - "<REQUEST_ID>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Anthropic-Organization-Id:
+      - "<ANTHROPIC_ORGANIZATION_ID>"
+      Server:
+      - cloudflare
+      Vary:
+      - Accept-Encoding
+      Server-Timing:
+      - x-originResponse;dur=26
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Content-Security-Policy:
+      - default-src 'none'; frame-ancestors 'none'
+      X-Robots-Tag:
+      - none
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"msgbatch_01MNtso6sdXQPYYRmzwB75gf","type":"message_batch","processing_status":"in_progress","request_counts":{"processing":1,"succeeded":0,"errored":0,"canceled":0,"expired":0},"ended_at":null,"created_at":"2026-06-12T11:22:50.320457+00:00","expires_at":"2026-06-13T11:22:50.320457+00:00","archived_at":null,"cancel_initiated_at":null,"results_url":null}'
+  recorded_at: Fri, 12 Jun 2026 11:22:50 GMT
+- request:
+    method: get
+    uri: https://api.anthropic.com/v1/messages/batches/msgbatch_01MNtso6sdXQPYYRmzwB75gf
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.14.2
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Anthropic-Version:
+      - '2023-06-01'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 12 Jun 2026 11:23:05 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Retry-After:
+      - '10'
+      Request-Id:
+      - "<REQUEST_ID>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Anthropic-Organization-Id:
+      - "<ANTHROPIC_ORGANIZATION_ID>"
+      Server:
+      - cloudflare
+      Vary:
+      - Accept-Encoding
+      Server-Timing:
+      - x-originResponse;dur=26
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Content-Security-Policy:
+      - default-src 'none'; frame-ancestors 'none'
+      X-Robots-Tag:
+      - none
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"msgbatch_01MNtso6sdXQPYYRmzwB75gf","type":"message_batch","processing_status":"in_progress","request_counts":{"processing":1,"succeeded":0,"errored":0,"canceled":0,"expired":0},"ended_at":null,"created_at":"2026-06-12T11:22:50.320457+00:00","expires_at":"2026-06-13T11:22:50.320457+00:00","archived_at":null,"cancel_initiated_at":null,"results_url":null}'
+  recorded_at: Fri, 12 Jun 2026 11:23:05 GMT
+- request:
+    method: get
+    uri: https://api.anthropic.com/v1/messages/batches/msgbatch_01MNtso6sdXQPYYRmzwB75gf
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.14.2
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Anthropic-Version:
+      - '2023-06-01'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 12 Jun 2026 11:23:21 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Retry-After:
+      - '10'
+      Request-Id:
+      - "<REQUEST_ID>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Anthropic-Organization-Id:
+      - "<ANTHROPIC_ORGANIZATION_ID>"
+      Server:
+      - cloudflare
+      Vary:
+      - Accept-Encoding
+      Server-Timing:
+      - x-originResponse;dur=73
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Content-Security-Policy:
+      - default-src 'none'; frame-ancestors 'none'
+      X-Robots-Tag:
+      - none
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"msgbatch_01MNtso6sdXQPYYRmzwB75gf","type":"message_batch","processing_status":"in_progress","request_counts":{"processing":1,"succeeded":0,"errored":0,"canceled":0,"expired":0},"ended_at":null,"created_at":"2026-06-12T11:22:50.320457+00:00","expires_at":"2026-06-13T11:22:50.320457+00:00","archived_at":null,"cancel_initiated_at":null,"results_url":null}'
+  recorded_at: Fri, 12 Jun 2026 11:23:21 GMT
+- request:
+    method: get
+    uri: https://api.anthropic.com/v1/messages/batches/msgbatch_01MNtso6sdXQPYYRmzwB75gf
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.14.2
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Anthropic-Version:
+      - '2023-06-01'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 12 Jun 2026 11:23:36 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Retry-After:
+      - '10'
+      Request-Id:
+      - "<REQUEST_ID>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Anthropic-Organization-Id:
+      - "<ANTHROPIC_ORGANIZATION_ID>"
+      Server:
+      - cloudflare
+      Vary:
+      - Accept-Encoding
+      Server-Timing:
+      - x-originResponse;dur=67
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Content-Security-Policy:
+      - default-src 'none'; frame-ancestors 'none'
+      X-Robots-Tag:
+      - none
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"msgbatch_01MNtso6sdXQPYYRmzwB75gf","type":"message_batch","processing_status":"in_progress","request_counts":{"processing":1,"succeeded":0,"errored":0,"canceled":0,"expired":0},"ended_at":null,"created_at":"2026-06-12T11:22:50.320457+00:00","expires_at":"2026-06-13T11:22:50.320457+00:00","archived_at":null,"cancel_initiated_at":null,"results_url":null}'
+  recorded_at: Fri, 12 Jun 2026 11:23:36 GMT
+- request:
+    method: get
+    uri: https://api.anthropic.com/v1/messages/batches/msgbatch_01MNtso6sdXQPYYRmzwB75gf
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.14.2
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Anthropic-Version:
+      - '2023-06-01'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 12 Jun 2026 11:23:51 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Request-Id:
+      - "<REQUEST_ID>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Anthropic-Organization-Id:
+      - "<ANTHROPIC_ORGANIZATION_ID>"
+      Server:
+      - cloudflare
+      Vary:
+      - Accept-Encoding
+      Server-Timing:
+      - x-originResponse;dur=60
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Content-Security-Policy:
+      - default-src 'none'; frame-ancestors 'none'
+      X-Robots-Tag:
+      - none
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"msgbatch_01MNtso6sdXQPYYRmzwB75gf","type":"message_batch","processing_status":"ended","request_counts":{"processing":0,"succeeded":1,"errored":0,"canceled":0,"expired":0},"ended_at":"2026-06-12T11:23:39.132689+00:00","created_at":"2026-06-12T11:22:50.320457+00:00","expires_at":"2026-06-13T11:22:50.320457+00:00","archived_at":null,"cancel_initiated_at":null,"results_url":"https://api.anthropic.com/v1/messages/batches/msgbatch_01MNtso6sdXQPYYRmzwB75gf/results"}'
+  recorded_at: Fri, 12 Jun 2026 11:23:51 GMT
+- request:
+    method: get
+    uri: https://api.anthropic.com/v1/messages/batches/msgbatch_01MNtso6sdXQPYYRmzwB75gf
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.14.2
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Anthropic-Version:
+      - '2023-06-01'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 12 Jun 2026 11:23:51 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Request-Id:
+      - "<REQUEST_ID>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Anthropic-Organization-Id:
+      - "<ANTHROPIC_ORGANIZATION_ID>"
+      Server:
+      - cloudflare
+      Vary:
+      - Accept-Encoding
+      Server-Timing:
+      - x-originResponse;dur=85
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Content-Security-Policy:
+      - default-src 'none'; frame-ancestors 'none'
+      X-Robots-Tag:
+      - none
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"msgbatch_01MNtso6sdXQPYYRmzwB75gf","type":"message_batch","processing_status":"ended","request_counts":{"processing":0,"succeeded":1,"errored":0,"canceled":0,"expired":0},"ended_at":"2026-06-12T11:23:39.132689+00:00","created_at":"2026-06-12T11:22:50.320457+00:00","expires_at":"2026-06-13T11:22:50.320457+00:00","archived_at":null,"cancel_initiated_at":null,"results_url":"https://api.anthropic.com/v1/messages/batches/msgbatch_01MNtso6sdXQPYYRmzwB75gf/results"}'
+  recorded_at: Fri, 12 Jun 2026 11:23:51 GMT
+- request:
+    method: get
+    uri: https://api.anthropic.com/v1/messages/batches/msgbatch_01MNtso6sdXQPYYRmzwB75gf/results
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.14.2
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Anthropic-Version:
+      - '2023-06-01'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 12 Jun 2026 11:23:52 GMT
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Content-Disposition:
+      - attachment; filename*=utf-8''msgbatch_01MNtso6sdXQPYYRmzwB75gf_results.jsonl
+      Request-Id:
+      - "<REQUEST_ID>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Anthropic-Organization-Id:
+      - "<ANTHROPIC_ORGANIZATION_ID>"
+      Server:
+      - cloudflare
+      Vary:
+      - Accept-Encoding
+      Server-Timing:
+      - x-originResponse;dur=147
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Content-Security-Policy:
+      - default-src 'none'; frame-ancestors 'none'
+      X-Robots-Tag:
+      - none
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"custom_id":"0","result":{"type":"succeeded","message":{"model":"claude-haiku-4-5-20251001","id":"msg_01M1727Xt4AcBCWdUadiqD2D","type":"message","role":"assistant","content":[{"type":"text","text":"6"}],"stop_reason":"end_turn","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":20,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":5,"service_tier":"batch","inference_geo":"not_available"}}}}
+
+        '
+  recorded_at: Fri, 12 Jun 2026 11:23:52 GMT
+recorded_with: VCR 6.4.0

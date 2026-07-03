@@ -23,7 +23,7 @@ module RubyLLM
         end
 
         def create_model_info(id, slug, capabilities)
-          Model::Info.new(
+          Model.new(
             id: id,
             name: id,
             provider: slug,

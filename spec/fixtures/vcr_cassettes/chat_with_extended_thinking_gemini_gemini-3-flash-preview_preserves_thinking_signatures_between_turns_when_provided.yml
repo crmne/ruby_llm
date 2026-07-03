@@ -8,7 +8,7 @@ http_interactions:
       string: '{"contents":[{"role":"user","parts":[{"text":"What is 5 + 3?"}]}],"generationConfig":{"thinkingConfig":{"includeThoughts":true,"thinkingLevel":"low"}}}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       X-Goog-Api-Key:
       - "<GEMINI_API_KEY>"
       Content-Type:
@@ -31,7 +31,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Wed, 06 May 2026 23:54:18 GMT
+      - Mon, 08 Jun 2026 17:08:35 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -41,97 +41,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=1557
-      Alt-Svc:
-      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
-      Transfer-Encoding:
-      - chunked
-    body:
-      encoding: ASCII-8BIT
-      string: |
-        {
-          "candidates": [
-            {
-              "content": {
-                "parts": [
-                  {
-                    "text": "Here's my thought process, distilled:\n\n**Calculating a Simple Sum**\n\nOkay, the user wants the sum of 5 and 3. That's straightforward. I'll just use the standard addition operation: 5 + 3. The answer is obviously 8. Done.\n\n\n",
-                    "thought": true
-                  },
-                  {
-                    "text": "5 + 3 = 8",
-                    "thoughtSignature": "EmkKZwEMOdbHudnbMaKw+h607YscnZ5b86zsX606ghyu8eXwCuIoKks9pMuJTirivo0YIKGCZFn0gQgk5pYSYLkBT76X8mNwCPqvwuqBRaiKuMz7eVJO//BMUWAtJfF52BymWYIICPZhpjA="
-                  }
-                ],
-                "role": "model"
-              },
-              "finishReason": "STOP",
-              "index": 0
-            }
-          ],
-          "usageMetadata": {
-            "promptTokenCount": 9,
-            "candidatesTokenCount": 7,
-            "totalTokenCount": 39,
-            "promptTokensDetails": [
-              {
-                "modality": "TEXT",
-                "tokenCount": 9
-              }
-            ],
-            "thoughtsTokenCount": 23,
-            "serviceTier": "standard"
-          },
-          "modelVersion": "gemini-3-flash-preview",
-          "responseId": "qNT7afeGOer0kdUP-LLTiQM"
-        }
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
-- request:
-    method: post
-    uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent
-    body:
-      encoding: UTF-8
-      string: '{"contents":[{"role":"user","parts":[{"text":"What is 5 + 3?"}]},{"role":"model","parts":[{"thought":true,"text":"Here''s
-        my thought process, distilled:\n\n**Calculating a Simple Sum**\n\nOkay, the
-        user wants the sum of 5 and 3. That''s straightforward. I''ll just use the
-        standard addition operation: 5 + 3. The answer is obviously 8. Done.\n\n\n","thoughtSignature":"EmkKZwEMOdbHudnbMaKw+h607YscnZ5b86zsX606ghyu8eXwCuIoKks9pMuJTirivo0YIKGCZFn0gQgk5pYSYLkBT76X8mNwCPqvwuqBRaiKuMz7eVJO//BMUWAtJfF52BymWYIICPZhpjA="},{"text":"5
-        + 3 = 8"}]},{"role":"user","parts":[{"text":"Now multiply that by 2"}]}],"generationConfig":{"thinkingConfig":{"includeThoughts":true,"thinkingLevel":"low"}}}'
-    headers:
-      User-Agent:
-      - Faraday v2.14.1
-      X-Goog-Api-Key:
-      - "<GEMINI_API_KEY>"
-      Content-Type:
-      - application/json
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      X-Gemini-Service-Tier:
-      - standard
-      Content-Type:
-      - application/json; charset=UTF-8
-      Vary:
-      - Origin
-      - Referer
-      - X-Origin
-      Date:
-      - Wed, 06 May 2026 23:54:19 GMT
-      Server:
-      - scaffolding on HTTPServer2
-      X-Xss-Protection:
-      - '0'
-      X-Frame-Options:
-      - SAMEORIGIN
-      X-Content-Type-Options:
-      - nosniff
-      Server-Timing:
-      - gfet4t7; dur=1495
+      - gfet4t7; dur=1681
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -139,6 +49,62 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicGFydHMiOiBbCiAgICAgICAgICB7CiAgICAgICAgICAgICJ0ZXh0IjogIioqRG91YmxpbmcgRG93biBvbiB0aGUgUmVzdWx0KipcblxuT2theSwgc28gdGhlIGxhc3QgdGhpbmcgSSBmaWd1cmVkIG91dCB3YXMgYSB2YWx1ZSBvZiA4LiBOb3csIEkgbmVlZCB0byB0YWtlIHRoYXQgYW5kIGRvdWJsZSBpdC4gSXQncyBhIHNpbXBsZSBtdWx0aXBsaWNhdGlvbiwgcmVhbGx5LiBNeSBjdXJyZW50IG9wZXJhdGlvbiBpcyBkZWZpbmVkIGFzIHRoZSBwcmV2aW91cyByZXN1bHQgKDgpIG11bHRpcGxpZWQgYnkgMi4gVGhpcyBpcyBzdHJhaWdodGZvcndhcmQ7IDggbXVsdGlwbGllZCBieSAyIGdpdmVzIG1lIGEgZmluYWwgcmVzdWx0IG9mIDE2LiBUaGF0J3MgdGhlIG5ldyBmaWd1cmUgSSdtIHdvcmtpbmcgd2l0aC5cblxuXG4iLAogICAgICAgICAgICAidGhvdWdodCI6IHRydWUKICAgICAgICAgIH0sCiAgICAgICAgICB7CiAgICAgICAgICAgICJ0ZXh0IjogIjggw5cgMiA9IDE2IiwKICAgICAgICAgICAgInRob3VnaHRTaWduYXR1cmUiOiAiRXAwQkNwb0JBUXc1MXNjSDRBL09MOGwydU5acWlxQ2xYOGFJQVRNcnVRdXhiS21VYkNRTm1iQi90S3NmTm11SXpGY3VZb2Ftc05jQjdBOTZqRDVnaVFsVHJETlJCMEl1TUtNc1ZDY1lMVHlMZURuRFluVXBmZzYxeDlUSWxaRUtpZDdPTEdCKy9jVVV5WExOMTB0NWNRVHV5ZGpoL2VyOTJQWnl3dHJLSS9DZS9hT25Td3VOU1l5U0JyUzVIUzZwc3JORVlMY1A4bzFqeTVxejE1ME9QQT09IgogICAgICAgICAgfQogICAgICAgIF0sCiAgICAgICAgInJvbGUiOiAibW9kZWwiCiAgICAgIH0sCiAgICAgICJmaW5pc2hSZWFzb24iOiAiU1RPUCIsCiAgICAgICJpbmRleCI6IDAKICAgIH0KICBdLAogICJ1c2FnZU1ldGFkYXRhIjogewogICAgInByb21wdFRva2VuQ291bnQiOiA4NiwKICAgICJjYW5kaWRhdGVzVG9rZW5Db3VudCI6IDgsCiAgICAidG90YWxUb2tlbkNvdW50IjogMTI2LAogICAgInByb21wdFRva2Vuc0RldGFpbHMiOiBbCiAgICAgIHsKICAgICAgICAibW9kYWxpdHkiOiAiVEVYVCIsCiAgICAgICAgInRva2VuQ291bnQiOiA4NgogICAgICB9CiAgICBdLAogICAgInRob3VnaHRzVG9rZW5Db3VudCI6IDMyLAogICAgInNlcnZpY2VUaWVyIjogInN0YW5kYXJkIgogIH0sCiAgIm1vZGVsVmVyc2lvbiI6ICJnZW1pbmktMy1mbGFzaC1wcmV2aWV3IiwKICAicmVzcG9uc2VJZCI6ICJxdFQ3YVpUQ0lwLXpuc0VQNXNTazZROCIKfQo=
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicGFydHMiOiBbCiAgICAgICAgICB7CiAgICAgICAgICAgICJ0ZXh0IjogIioqQ2FsY3VsYXRpbmcgYSBTaW1wbGUgU3VtKipcblxuT2theSwgc28gSSBzZWUgdGhlIHVzZXIgd2FudHMgdGhlIHN1bSBvZiA1IGFuZCAzLiBOb3RoaW5nIHRvbyBjb21wbGV4IGhlcmUsIHRoaXMgaXMgc3RyYWlnaHQtdXAgYWRkaXRpb24uIExldCBtZSBxdWlja2x5IGZvcm11bGF0ZSB0aGUgcHJvYmxlbTogNSBwbHVzIDMuIEFscmlnaHQsIHRoZSBjYWxjdWxhdGlvbiBpcyBwcmV0dHkgc3RyYWlnaHRmb3J3YXJkIOKAkyBJIGtub3cgdGhlIGFuc3dlciBpcyA4LlxuXG5cbiIsCiAgICAgICAgICAgICJ0aG91Z2h0IjogdHJ1ZQogICAgICAgICAgfSwKICAgICAgICAgIHsKICAgICAgICAgICAgInRleHQiOiAiNSArIDMgPSA4IiwKICAgICAgICAgICAgInRob3VnaHRTaWduYXR1cmUiOiAiRW5NS2NRRU1PZGJIWWJVOTRvcm5UOWtkU3A3ck1sUXNNbitvdHBWZ1huSkNEbTcvWmVsZXpzZ004bWxOcU1BRDBKS2NTSU51V2RnL2ovRjV0emlhSURBOHRKazFVRGRSMEhOL0UvQWVISjdQOEd6ZDEwanFzTkNBN1N2aWxhTlU5WUNCTVd2Um9JbENSZWJva2k0SGE5ZCtpVFNIIgogICAgICAgICAgfQogICAgICAgIF0sCiAgICAgICAgInJvbGUiOiAibW9kZWwiCiAgICAgIH0sCiAgICAgICJmaW5pc2hSZWFzb24iOiAiU1RPUCIsCiAgICAgICJpbmRleCI6IDAKICAgIH0KICBdLAogICJ1c2FnZU1ldGFkYXRhIjogewogICAgInByb21wdFRva2VuQ291bnQiOiA5LAogICAgImNhbmRpZGF0ZXNUb2tlbkNvdW50IjogNywKICAgICJ0b3RhbFRva2VuQ291bnQiOiA0MiwKICAgICJwcm9tcHRUb2tlbnNEZXRhaWxzIjogWwogICAgICB7CiAgICAgICAgIm1vZGFsaXR5IjogIlRFWFQiLAogICAgICAgICJ0b2tlbkNvdW50IjogOQogICAgICB9CiAgICBdLAogICAgInRob3VnaHRzVG9rZW5Db3VudCI6IDI2LAogICAgInNlcnZpY2VUaWVyIjogInN0YW5kYXJkIgogIH0sCiAgIm1vZGVsVmVyc2lvbiI6ICJnZW1pbmktMy1mbGFzaC1wcmV2aWV3IiwKICAicmVzcG9uc2VJZCI6ICJFZmNtYXFmMEhKbUJ4czBQMmZPby1ROCIKfQo=
+  recorded_at: Mon, 08 Jun 2026 17:08:35 GMT
+- request:
+    method: post
+    uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"What is 5 + 3?"}]},{"role":"model","parts":[{"thought":true,"text":"**Calculating
+        a Simple Sum**\n\nOkay, so I see the user wants the sum of 5 and 3. Nothing
+        too complex here, this is straight-up addition. Let me quickly formulate the
+        problem: 5 plus 3. Alright, the calculation is pretty straightforward – I
+        know the answer is 8.\n\n\n","thoughtSignature":"EnMKcQEMOdbHYbU94ornT9kdSp7rMlQsMn+otpVgXnJCDm7/ZelezsgM8mlNqMAD0JKcSINuWdg/j/F5tziaIDA8tJk1UDdR0HN/E/AeHJ7P8Gzd10jqsNCA7SvilaNU9YCBMWvRoIlCReboki4Ha9d+iTSH"},{"text":"5
+        + 3 = 8"}]},{"role":"user","parts":[{"text":"Now multiply that by 2"}]}],"generationConfig":{"thinkingConfig":{"includeThoughts":true,"thinkingLevel":"low"}}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.2
+      X-Goog-Api-Key:
+      - "<GEMINI_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      X-Gemini-Service-Tier:
+      - standard
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Mon, 08 Jun 2026 17:08:36 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Server-Timing:
+      - gfet4t7; dur=1680
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        ewogICJjYW5kaWRhdGVzIjogWwogICAgewogICAgICAiY29udGVudCI6IHsKICAgICAgICAicGFydHMiOiBbCiAgICAgICAgICB7CiAgICAgICAgICAgICJ0ZXh0IjogIioqQ2FsY3VsYXRpbmcgdGhlIE5leHQgU3RlcCoqXG5cbk9rYXksIHNvIHRoZSBsYXN0IGNhbGN1bGF0aW9uIHlpZWxkZWQgYSByZXN1bHQgb2YgOC4gTm93LCBJIG5lZWQgdG8gdGFrZSB0aGF0IGFuZCBwZXJmb3JtIGFub3RoZXIgb3BlcmF0aW9uLiBUaGUgcHJvbXB0IHNwZWNpZmllcyBtdWx0aXBsaWNhdGlvbiB0aGlzIHRpbWUuIEknbSBiZWluZyBhc2tlZCB0byBtdWx0aXBseSB0aGUgcHJldmlvdXMgcmVzdWx0LCA4LCBieSAyLiBUaGlzIGlzIHN0cmFpZ2h0Zm9yd2FyZDogOCBtdWx0aXBsaWVkIGJ5IDIuIFRoYXQgZ2l2ZXMgbWUgMTYuIFNvIHRoZSBuZXh0IHN0ZXAgaXMgMTYuXG5cblxuIiwKICAgICAgICAgICAgInRob3VnaHQiOiB0cnVlCiAgICAgICAgICB9LAogICAgICAgICAgewogICAgICAgICAgICAidGV4dCI6ICI4IMOXIDIgPSAxNiIsCiAgICAgICAgICAgICJ0aG91Z2h0U2lnbmF0dXJlIjogIkV1UUJDdUVCQVF3NTFzZlBGL1ZRc0I0NVgydFQySndiU3cwcFlmMFJ3SVEvd0I2dkhOeTlGZWptdGdyTENiaFJMeEFIVHBjZWR3bm5ITERBUlAxNnBiZjVyOGtKcTBiQ2xtZHFqM1FEWEt2WkxZYnhWUzM0OWt0a1RnNkhrUy9FTWZpMDA1QjJFQXFyVDZqREtNNG1sTnpwVFlpOXMxOGwxYVRVOXFmdEhNTUtyZHUyVkQ5cjIwejI1NUpwajd5aUlzMFdVOUt1K2lieEdsRmJmeDRiTFA0eGRvNTFiUlZyaUNEUnd4YXRHQnQzOEp5VHNyU2FIdk41aVdOWkRFS01iZTBSU1h5UkQvbmdJa2hScEJEbXNJT3R3dnVnZ0IxVzg2azJTRTI5YndyMGVrc0lRL0prIgogICAgICAgICAgfQogICAgICAgIF0sCiAgICAgICAgInJvbGUiOiAibW9kZWwiCiAgICAgIH0sCiAgICAgICJmaW5pc2hSZWFzb24iOiAiU1RPUCIsCiAgICAgICJpbmRleCI6IDAKICAgIH0KICBdLAogICJ1c2FnZU1ldGFkYXRhIjogewogICAgInByb21wdFRva2VuQ291bnQiOiA5MCwKICAgICJjYW5kaWRhdGVzVG9rZW5Db3VudCI6IDgsCiAgICAidG90YWxUb2tlbkNvdW50IjogMTUyLAogICAgInByb21wdFRva2Vuc0RldGFpbHMiOiBbCiAgICAgIHsKICAgICAgICAibW9kYWxpdHkiOiAiVEVYVCIsCiAgICAgICAgInRva2VuQ291bnQiOiA5MAogICAgICB9CiAgICBdLAogICAgInRob3VnaHRzVG9rZW5Db3VudCI6IDU0LAogICAgInNlcnZpY2VUaWVyIjogInN0YW5kYXJkIgogIH0sCiAgIm1vZGVsVmVyc2lvbiI6ICJnZW1pbmktMy1mbGFzaC1wcmV2aWV3IiwKICAicmVzcG9uc2VJZCI6ICJFX2NtYW9mZkQ3Ymx4TjhQMVp2ZTRBcyIKfQo=
+  recorded_at: Mon, 08 Jun 2026 17:08:36 GMT
 recorded_with: VCR 6.4.0

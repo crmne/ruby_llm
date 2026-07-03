@@ -58,6 +58,13 @@ RSpec.describe RubyLLM::Models do
       end
     end
 
+    it 'lists Vertex AI models by their actual name, never a version-pinned id' do
+      vertexai_ids = models_data.select { |m| m['provider'] == 'vertexai' }.map { |m| m['id'] }
+
+      expect(vertexai_ids).not_to be_empty
+      expect(vertexai_ids).to all(satisfy { |id| !id.include?('@') })
+    end
+
     it 'ensures all models have capabilities as an array' do
       models_data.each do |model|
         expect(model['capabilities']).to be_an(Array),
@@ -76,6 +83,20 @@ RSpec.describe RubyLLM::Models do
 
       expect(providers_with_issues).to be_empty,
                                        "Providers with mixed capability types: #{providers_with_issues}"
+    end
+  end
+
+  describe '.models_dev_model_id' do
+    it 'strips the version pin from Vertex AI ids so they match the provider names' do
+      expect(described_class.send(:models_dev_model_id, 'claude-haiku-4-5@20251001', 'vertexai'))
+        .to eq('claude-haiku-4-5')
+      expect(described_class.send(:models_dev_model_id, 'claude-opus-4-6@default', 'vertexai'))
+        .to eq('claude-opus-4-6')
+    end
+
+    it 'leaves bare ids and other providers untouched' do
+      expect(described_class.send(:models_dev_model_id, 'gemini-2.5-flash', 'vertexai')).to eq('gemini-2.5-flash')
+      expect(described_class.send(:models_dev_model_id, 'some@thing', 'gemini')).to eq('some@thing')
     end
   end
 
@@ -99,14 +120,14 @@ RSpec.describe RubyLLM::Models do
 
     let(:mock_provider_models) do
       [
-        RubyLLM::Model::Info.new(
+        RubyLLM::Model.new(
           id: 'test-model-1',
           name: 'Test Model 1',
           provider: 'openai',
           capabilities: %w[chat streaming function_calling],
           modalities: { input: %w[text], output: %w[text] }
         ),
-        RubyLLM::Model::Info.new(
+        RubyLLM::Model.new(
           id: 'test-model-2',
           name: 'Test Model 2',
           provider: 'anthropic',
@@ -120,7 +141,7 @@ RSpec.describe RubyLLM::Models do
       models = described_class.refresh!
 
       expect(models).to be_a(described_class)
-      expect(models.all).to all(be_a(RubyLLM::Model::Info))
+      expect(models.all).to all(be_a(RubyLLM::Model))
 
       models.all.each do |model|
         expect(model.capabilities).to be_an(Array)
@@ -150,10 +171,10 @@ RSpec.describe RubyLLM::Models do
     end
   end
 
-  describe 'Model::Info capabilities handling' do
+  describe 'Model capabilities handling' do
     context 'when capabilities is an array' do
       let(:model) do
-        RubyLLM::Model::Info.new(
+        RubyLLM::Model.new(
           id: 'test-model',
           name: 'Test Model',
           provider: 'test',
@@ -181,13 +202,13 @@ RSpec.describe RubyLLM::Models do
     context 'when capabilities is accidentally a hash (bug scenario)' do
       it 'handles hash capabilities gracefully' do
         # This test documents the current behavior with hash capabilities
-        # The Model::Info class expects an array, so passing a hash should either:
+        # The Model class expects an array, so passing a hash should either:
         # 1. Be converted to an array
         # 2. Raise an error
         # 3. Be handled gracefully
 
         expect do
-          RubyLLM::Model::Info.new(
+          RubyLLM::Model.new(
             id: 'test-model',
             name: 'Test Model',
             provider: 'test',

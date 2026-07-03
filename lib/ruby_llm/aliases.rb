@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'json'
+
 module RubyLLM
   # Manages model aliases for provider-specific versions
   class Aliases
@@ -30,6 +32,7 @@ module RubyLLM
         end
       end
 
+      # Replaces the cached alias map from aliases.json.
       def reload!
         @aliases = load_aliases
       end

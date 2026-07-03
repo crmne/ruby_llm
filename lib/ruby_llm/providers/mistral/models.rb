@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'time'
+
 module RubyLLM
   module Providers
     class Mistral
@@ -11,12 +13,6 @@ module RubyLLM
           'models'
         end
 
-        def headers(config)
-          {
-            'Authorization' => "Bearer #{config.mistral_api_key}"
-          }
-        end
-
         def parse_list_models_response(response, slug, capabilities)
           Array(response.body['data']).map do |model_data|
             model_id = model_data['id']
@@ -24,7 +20,7 @@ module RubyLLM
             release_date = capabilities.release_date_for(model_id)
             created_at = release_date ? Time.parse(release_date) : nil
 
-            Model::Info.new(
+            Model.new(
               id: model_id,
               name: capabilities.format_display_name(model_id),
               provider: slug,

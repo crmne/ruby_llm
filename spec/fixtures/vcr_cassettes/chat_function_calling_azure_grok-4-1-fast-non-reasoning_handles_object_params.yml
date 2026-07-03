@@ -13,7 +13,7 @@ http_interactions:
         window to schedule"}},"required":["window"],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Api-Key:
       - "<AZURE_API_KEY>"
       Content-Type:
@@ -41,18 +41,18 @@ http_interactions:
       - access-control-request-headers
       Request-Context:
       - appId=
-      Traceparent:
-      - 00-fad1d8e54cc64b20a60c2547feace180-73e7cfb30000032f-00
       X-Ms-Rai-Invoked:
-      - 'true'
+      - 'false'
+      Traceparent:
+      - 00-de32e2920af94b7fbc0cf3f8522eb30b-7d3e72530005d1c6-00
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Xai-Model-Address:
       - http://localhost:9988
       X-Ms-Client-Request-Id:
-      - fad1d8e5-4cc6-4b20-a60c-2547feace180
+      - de32e292-0af9-4b7f-bc0c-f3f8522eb30b
       Azureml-Model-Session:
-      - d20260429215123-f480a160
+      - d20260601171731-6dffbbdc
       Azureai-Requested-Tier:
       - default
       Azureai-Processed-Tier:
@@ -79,8 +79,10 @@ http_interactions:
       - '50000'
       X-Ratelimit-Renewalperiod-Tokens:
       - '60'
+      Azureai-Fe-Is-Streaming:
+      - 'False'
       Apim-Request-Id:
-      - fad1d8e5-4cc6-4b20-a60c-2547feace180
+      - de32e292-0af9-4b7f-bc0c-f3f8522eb30b
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Ms-Deployment-Name:
@@ -90,9 +92,9 @@ http_interactions:
       X-Ms-Region:
       - West Europe
       Date:
-      - Thu, 07 May 2026 00:21:31 GMT
+      - Sat, 13 Jun 2026 11:34:05 GMT
     body:
       encoding: UTF-8
-      string: '{"id":"544ae166-6756-4bd6-87ba-d787cdc06ce5","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"call_23478344","index":0,"type":"function","function":{"name":"object_params","arguments":"{\"window\":{\"start\":\"2025-01-01\",\"end\":\"2025-01-02\"}}"}}]},"finish_reason":"tool_calls","content_filter_results":{}}],"usage":{"prompt_tokens":266,"completion_tokens":46,"total_tokens":312,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":0,"audio_tokens":0,"text_tokens":266,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1778113290,"object":"chat.completion","prompt_filter_results":null}'
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+      string: '{"id":"5dbbb03d-d49a-44a4-8bbd-6cabb6e2cd19","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"call_80701024","index":0,"type":"function","function":{"name":"object_params","arguments":"{\"window\":{\"start\":\"2025-01-01\",\"end\":\"2025-01-02\"}}"}}]},"finish_reason":"tool_calls","content_filter_results":{}}],"usage":{"prompt_tokens":266,"completion_tokens":42,"total_tokens":308,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":314,"audio_tokens":0,"text_tokens":266,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1781350446,"object":"chat.completion","prompt_filter_results":null}'
+  recorded_at: Sat, 13 Jun 2026 11:34:06 GMT
 recorded_with: VCR 6.4.0

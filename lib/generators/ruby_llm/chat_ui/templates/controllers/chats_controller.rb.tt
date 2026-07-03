@@ -22,7 +22,7 @@ class <%= chat_controller_class_name %> < ApplicationController
   end
 
   def show
-    @<%= message_variable_name %> = @<%= chat_variable_name %>.<%= message_table_name %>.build
+    @<%= message_variable_name %> = <%= message_model_name %>.new
   end
 
   def destroy

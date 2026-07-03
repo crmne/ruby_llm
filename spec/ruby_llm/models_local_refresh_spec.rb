@@ -33,11 +33,11 @@ RSpec.describe RubyLLM::Models do
       end
     end
 
-    describe '.fetch_from_providers' do
+    describe '.fetch_provider_models' do
       it 'defaults to remote_only: true' do
         allow(RubyLLM::Provider).to receive_messages(remote_providers: {}, configured_remote_providers: [])
 
-        described_class.fetch_from_providers
+        described_class.fetch_provider_models
 
         expect(RubyLLM::Provider).to have_received(:configured_remote_providers)
       end
@@ -45,7 +45,7 @@ RSpec.describe RubyLLM::Models do
       it 'can include local providers with remote_only: false' do
         allow(RubyLLM::Provider).to receive_messages(providers: {}, configured_providers: [])
 
-        described_class.fetch_from_providers(remote_only: false)
+        described_class.fetch_provider_models(remote_only: false)
 
         expect(RubyLLM::Provider).to have_received(:configured_providers)
       end
@@ -72,9 +72,10 @@ RSpec.describe RubyLLM::Models do
           }
         )
 
-        models = ollama.parse_list_models_response(response, 'ollama', nil)
+        protocol = RubyLLM::Providers::Ollama::ChatCompletions.new(ollama)
+        models = protocol.parse_list_models_response(response, 'ollama', nil)
         expect(models).to be_an(Array)
-        expect(models.first).to be_a(RubyLLM::Model::Info)
+        expect(models.first).to be_a(RubyLLM::Model)
         expect(models.first.id).to eq('llama3:latest')
         expect(models.first.provider).to eq('ollama')
         expect(models.first.capabilities).to include('streaming', 'function_calling', 'vision')
@@ -100,7 +101,7 @@ RSpec.describe RubyLLM::Models do
 
         allow_any_instance_of(RubyLLM::Providers::Ollama).to( # rubocop:disable RSpec/AnyInstance
           receive(:list_models).and_return([
-                                             RubyLLM::Model::Info.new(
+                                             RubyLLM::Model.new(
                                                id: 'test-model',
                                                provider: 'ollama',
                                                name: 'Test Model',

@@ -9,7 +9,7 @@ http_interactions:
         2?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,15 +24,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 02 Apr 2026 11:24:45 GMT
-      - Thu, 02 Apr 2026 11:24:45 GMT
+      - Mon, 08 Jun 2026 18:54:32 GMT
+      - Mon, 08 Jun 2026 18:54:32 GMT
       Server:
       - uvicorn
       - uvicorn
       Keep-Alive:
       - timeout=15, max=100
       Content-Length:
-      - '2441'
+      - '2069'
       Content-Type:
       - application/json
       X-Request-Accepted-At:
@@ -42,31 +42,8 @@ http_interactions:
       Access-Control-Allow-Origin:
       - "*"
     body:
-      encoding: UTF-8
-      string: '{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"\n\n2
-        + 2 equals **4**. \n\nThis is a basic arithmetic operation where adding two
-        numbers (2 and 2) results in their sum, which is 4.","reasoning_content":"\nOkay,
-        the user asked, \"What''s 2 + 2?\" That''s a pretty straightforward question.
-        Let me make sure I understand it correctly. They''re asking for the sum of
-        2 and 2. I know that in basic arithmetic, adding two numbers together gives
-        their total. So, 2 plus 2 should be 4. But wait, maybe they want a more detailed
-        explanation? Let me think.\n\nHmm, the user might be testing if I can handle
-        simple math problems, or maybe they''re just curious. Either way, the answer
-        is 4. But perhaps I should break it down. Let me recall the addition process.
-        When you add two numbers, you combine their quantities. So, if you have two
-        objects and add two more, you end up with four. \n\nWait, but is there any
-        chance they''re using a different base or something? Like in some contexts,
-        numbers can be represented differently, but unless specified, I should assume
-        base 10. So, 2 + 2 in base 10 is definitely 4. \n\nAnother angle: maybe they''re
-        looking for a visual representation? Like, drawing two apples and two apples,
-        then counting them all. But the question is pretty direct, so a simple answer
-        should suffice. \n\nI should also consider if there''s any trick or hidden
-        meaning. Sometimes people ask simple questions to see if the AI is paying
-        attention. But in this case, the answer is pretty clear. \n\nLet me double-check.
-        2 + 2 equals 4. Yes, that''s correct. No need for any complex calculations
-        here. The user probably expects a quick answer. \n\nI guess the best approach
-        is to state the answer clearly and concisely, maybe with a brief explanation
-        to ensure clarity. But since the question is straightforward, keeping it simple
-        would be best.\n","role":"assistant"}}],"created":1775129091,"id":"chatcmpl-6qapkycSqhM4DSQoK8MGLqXmluJWfeNw","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":416,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":377,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":16,"prompt_tokens_details":{"cached_tokens":0},"prompt_tokens_per_second":691.1148546499071,"time_per_output_token_ms":12.921572115384615,"time_to_first_token_ms":23.151,"tokens_per_second":77.38996393553266,"total_tokens":432}}'
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJcblxuVGhlIHN1bSBvZiAyIGFuZCAyIGlzICoqNCoqLiBcblxuJCRcbjIgKyAyID0gNFxuJCRcblxuTGV0IG1lIGtub3cgaWYgeW91IG5lZWQgaGVscCB3aXRoIGFueXRoaW5nIGVsc2UhIPCfmIoiLCJyZWFzb25pbmdfY29udGVudCI6IlxuT2theSwgdGhlIHVzZXIgYXNrZWQsIFwiV2hhdCdzIDIgKyAyP1wiIFRoYXQncyBhIHByZXR0eSBzdHJhaWdodGZvcndhcmQgbWF0aCBxdWVzdGlvbi4gTGV0IG1lIHRoaW5rIGFib3V0IGhvdyB0byBhcHByb2FjaCB0aGlzLlxuXG5GaXJzdCwgSSBrbm93IHRoYXQgMiArIDIgaXMgYSBiYXNpYyBhcml0aG1ldGljIHByb2JsZW0uIEluIGVsZW1lbnRhcnkgbWF0aCwgYWRkaXRpb24gaXMgb25lIG9mIHRoZSBmdW5kYW1lbnRhbCBvcGVyYXRpb25zLiBTbywgYWRkaW5nIDIgYW5kIDIgdG9nZXRoZXIgc2hvdWxkIGJlIHNpbXBsZS4gTGV0IG1lIHZlcmlmeSB0aGF0LiBcblxuMiArIDIgZXF1YWxzIDQuIFRoYXQncyBjb3JyZWN0LiBCdXQgd2FpdCwgbWF5YmUgdGhlIHVzZXIgaXMgdGVzdGluZyBpZiBJIGNhbiBoYW5kbGUgc2ltcGxlIHF1ZXN0aW9ucyBvciBpZiB0aGVyZSdzIGEgdHJpY2sgaGVyZS4gU29tZXRpbWVzIHBlb3BsZSBtaWdodCBhc2sgc2ltcGxlIHF1ZXN0aW9ucyB0byBzZWUgaG93IHRoZSBBSSByZXNwb25kcy4gQnV0IGluIHRoaXMgY2FzZSwgdGhlIHF1ZXN0aW9uIGlzIHByZXR0eSBkaXJlY3QuIFxuXG5JIHNob3VsZCBtYWtlIHN1cmUgdGhlcmUncyBubyBoaWRkZW4gY29udGV4dC4gVGhlIHVzZXIgZGlkbid0IG1lbnRpb24gYW55IHNwZWNpZmljIGNvbnRleHQsIGxpa2UgZGlmZmVyZW50IG51bWJlciBiYXNlcyBvciBhbnkgb3RoZXIgb3BlcmF0aW9ucy4gU28sIGFzc3VtaW5nIGl0J3MgaW4gYmFzZSAxMCwgdGhlIGFuc3dlciBpcyA0LiBcblxuQWxzbywgY29uc2lkZXJpbmcgdGhlIHVzZXIgbWlnaHQgYmUgYSBzdHVkZW50IGxlYXJuaW5nIGJhc2ljIG1hdGgsIG9yIHBlcmhhcHMgc29tZW9uZSB3aG8ganVzdCBuZWVkcyBjb25maXJtYXRpb24uIEVpdGhlciB3YXksIHRoZSBhbnN3ZXIgaXMgc3RyYWlnaHRmb3J3YXJkLiBcblxuSSBzaG91bGQgcmVzcG9uZCBjbGVhcmx5IGFuZCBjb25jaXNlbHkuIE1heWJlIGFkZCBhIGZyaWVuZGx5IG5vdGUgdG8gc2hvdyB0aGF0IEknbSBoZWxwZnVsLiBMZXQgbWUgY2hlY2sgaWYgdGhlcmUncyBhbnkgb3RoZXIgcG9zc2libGUgaW50ZXJwcmV0YXRpb24uIEZvciBleGFtcGxlLCBpbiBzb21lIGNvbnRleHRzLCBsaWtlIHByb2dyYW1taW5nIG9yIGRpZmZlcmVudCBtYXRoZW1hdGljYWwgc3lzdGVtcywgYnV0IHVubGVzcyBzcGVjaWZpZWQsIHRoZSBzdGFuZGFyZCBhbnN3ZXIgaXMgNC4gXG5cblNvLCB0aGUgZmluYWwgYW5zd2VyIGlzIDQuIEknbGwgcHJlc2VudCBpdCBpbiBhIGJveCBhcyByZXF1ZXN0ZWQuXG4iLCJyb2xlIjoiYXNzaXN0YW50In19XSwiY3JlYXRlZCI6MTc4MDk0NDg4NCwiaWQiOiJjaGF0Y21wbC1WeU9NdFAwaFJpUUZodEM4azZ1eDVwazc3cDREbzQ5TyIsIm1vZGVsIjoicXdlbjMiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJ1c2FnZSI6eyJjb21wbGV0aW9uX3Rva2VucyI6MzM1LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7ImFjY2VwdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowLCJyZWFzb25pbmdfdG9rZW5zIjoyOTMsInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowfSwiZHJhZnRfdG9rZW5zIjowLCJkcmFmdF90b2tlbnNfYWNjZXB0YW5jZSI6MC4wLCJwcm9tcHRfdG9rZW5zIjoxNiwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjB9LCJwcm9tcHRfdG9rZW5zX3Blcl9zZWNvbmQiOjU2MC4yMDQ0NzQ2MzMyNDExLCJ0aW1lX3Blcl9vdXRwdXRfdG9rZW5fbXMiOjMyLjI0MjYwMjk4NTA3NDYyNiwidGltZV90b19maXJzdF90b2tlbl9tcyI6MjguNTYxLCJ0b2tlbnNfcGVyX3NlY29uZCI6MzEuMDE0ODY1NjU2NTYzNDEsInRvdGFsX3Rva2VucyI6MzUxfX0=
+  recorded_at: Mon, 08 Jun 2026 18:54:44 GMT
 recorded_with: VCR 6.4.0

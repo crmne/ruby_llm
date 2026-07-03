@@ -2,14 +2,14 @@
 http_interactions:
 - request:
     method: post
-    uri: https://api.openai.com/v1/chat/completions
+    uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-5-nano","messages":[{"role":"user","content":"What is
-        the capital of France?"}],"stream":false}'
+      string: '{"model":"gpt-5-nano","input":[{"role":"user","content":"What is the
+        capital of France?"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 06 May 2026 23:54:40 GMT
+      - Thu, 11 Jun 2026 20:09:27 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -42,17 +42,17 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Access-Control-Expose-Headers:
+      - CF-Ray
+      - CF-Ray
       - X-Request-ID
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '2675'
+      - '2923'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
       - '2020-10-01'
-      X-Openai-Proxy-Wasm:
-      - v0.1
       X-Ratelimit-Limit-Requests:
       - '5000'
       X-Ratelimit-Limit-Tokens:
@@ -60,7 +60,7 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '4999'
       X-Ratelimit-Remaining-Tokens:
-      - '1999990'
+      - '2000000'
       X-Ratelimit-Reset-Requests:
       - 12ms
       X-Ratelimit-Reset-Tokens:
@@ -73,41 +73,86 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: |
+      string: |-
         {
-          "id": "chatcmpl-DcgMXYcBtuFhknZx0gmTXxECjrqP4",
-          "object": "chat.completion",
-          "created": 1778111677,
+          "id": "resp_0a1524cf20973a0c016a2b15f5205c81a1abc97bee5fd35de3",
+          "object": "response",
+          "created_at": 1781208565,
+          "status": "completed",
+          "background": false,
+          "billing": {
+            "payer": "developer"
+          },
+          "completed_at": 1781208567,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
           "model": "gpt-5-nano-2025-08-07",
-          "choices": [
+          "moderation": null,
+          "output": [
             {
-              "index": 0,
-              "message": {
-                "role": "assistant",
-                "content": "Paris",
-                "refusal": null,
-                "annotations": []
-              },
-              "finish_reason": "stop"
+              "id": "rs_0a1524cf20973a0c016a2b15f5905881a19881266017508938",
+              "type": "reasoning",
+              "content": [],
+              "encrypted_content": "gAAAAABqKxX3FKrsJOynnEl4v4yfM7dbkQQ4wPhVBmBfiB1Wx4xddEZUVFx5ytkmDZ93jOSc7GCdUBJbu0tx5kbqzFXtFtm9cpN8CflfKjms4Aev93mpRwb5Os-uSkZTf94HmTIE7oU0bJslYAfPNlt4Qf0pdd1R_RgiUWJfs4buL7-rfK2Dw8CFncxkmcOC_8fQLY08bb1x0Tb_o3gG-UzXsUGYbuBUxhWdOVUi0OTissrym5lePqvIubJLy_nr9ve1p7OHlNLJa0SmXRC503R02SdiD5MjA7UT_YuWEyO_QXOFCxOxGYCpXzgpovk7mQV1nVFoPld-Rxc2TGSr9-beqY1UiYQMRPIUmeo6NldaD5JIT2pn5PLJkyUH6oKlr7LtmDmeANTqE1AUsGz0aH3akY_fsFx4E2kQPLrFHXZX5OPHJz-v5j0i1lRuhe081q4AiXWyNTNCgzDTf0UcIkcMy07Wo9WvI_U0nFZlwQSPZr-ulzd2FT4X1f0cFD77d3LmtiGEu13dvB5EuPHNcYygytmjwFDTLDqT1fVxj6_MZg98V4MKtl3-d5onmj6T0Tfh8Od35dob9l-Fs0OgeL0haF0unen3ygZNfIZGTy9Yc1d5YZACSRLvjFmofoJ66nJpRqRZXI6gVS8jV2F8BaqAtQAuEIRKJylP-SjOplnNSYOs0bG6_92eWV61Q0PGjFpVlEltCAsnNkHYqbtlNVv0f85chN62RuWUr7fP9PticbC9QimCGzzW_DGH-GmtZ245anqOJNMi7j5ibUrvdLiBaSe2RxcDk5Q7f62lGRI4UqIvEW19ZLjiFQKzCyEP19ByVOgqSzFy1Lp1vIeBVxUzJ-vJdWQNHIw_PtWYnPYnPgIeSsalQC3ApRFUJoMejHZ3iKFaxuyxYeng8PgsE8nl8AXAHB0k9wbLwJPfV2tqIYwr3ruphxlTf7ehPniQng58tekJwtvOEa2ZPYZ_9rElhM6cXu3CrJ9X-KZs8qLR9cwm0mbEEGgSI4-jfnfqVne3SUuU4nn-hYaGxyE-yktLlukB2_zA-ona7VV5yhC1-cAvhh_XGFnbaRYJQxUYRFBIDhVecjo2O1ZenpS_CywHu6OUGfymkFgXBA8HVlcrAb1M950WVe_xP2rwgYsL1UoZ9oO8mbLgPTJtFuG9RvQB33q2QcUC9tZ3tDg8t7qhfVcrPLkzH60I29A2GEWIFTICdNjiyX-N-_WYt1uci6p22KGQM8ybbgCKzM1knIyMmiAh45vK7kX606WoarhzPng8koYD2i_Z0_n5uy60wLxmxijnQ_dtUeofU-eCie8jeLbuos3btpEzKtgDYf-yDZJWLTT3oUrxLLjeA9cuNa_ISr-UOocYbM1DBG45QD6FeQHmM1c9SjtQMk--PpTC9sp7dCtl6otN80cBdOMXYgsMh8YoHgXkwb2iLSJ99pFE0fLDlCDmwyJm0-RDQ0nwntmP5RC9xpi3VUP1yjhVyk_MnKIj3JGU3Md2wYOXRwRc9VrqY8sXFJGUXoF_lFt5poVNDNhH372QQSoZp3rLL280oKm-JenlRlrA2-i_acPqPST0PyA8i7kuuVlgbauWZ6hNKNM3UdW_nrE1aq4MiIZFvbYVwGhK2Xpb-e5YHLfVd-EgfwE5JYTrwwzbDr-RC3G8uYqVMGxFOCho0AyqiJ308vJRIWHU4KiDxISkJST4msjsbhgKho3QvSlJ8hZfA5OIY2n5ESDuOxSct0P1U-b7i93_dXh4FToljjOb7kxMzsYcpEUfcWCm8HKmRW9TELpZY95XFrULd4GjnilARJ6rGuwqaO-vgvDGiCLtNt_tMddg9a7gbpvxZDR6XSbBePViYFCZ4bMO7uMwPk9C5UDgrV7Sk4cWV_ajgto2hDhVSKQ0q7yJKcidRMr2_PWP7pOS-jyu-gr7UinUSiQNLNR5KGdLiTSU4eoI0Higmo7W8dE1hDQWShPHTP32EUqAghhCXQE91pFOnCh-SIFCz1QjMjug1pRHkq4nz3Uo1SHiCJKx6zjilBo=",
+              "summary": []
+            },
+            {
+              "id": "msg_0a1524cf20973a0c016a2b15f7491481a18c5ae52f702e011f",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "Paris."
+                }
+              ],
+              "role": "assistant"
             }
           ],
-          "usage": {
-            "prompt_tokens": 13,
-            "completion_tokens": 266,
-            "total_tokens": 279,
-            "prompt_tokens_details": {
-              "cached_tokens": 0,
-              "audio_tokens": 0
-            },
-            "completion_tokens_details": {
-              "reasoning_tokens": 256,
-              "audio_tokens": 0,
-              "accepted_prediction_tokens": 0,
-              "rejected_prediction_tokens": 0
-            }
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": "in_memory",
+          "reasoning": {
+            "context": "current_turn",
+            "effort": "medium",
+            "summary": null
           },
+          "safety_identifier": null,
           "service_tier": "default",
-          "system_fingerprint": null
+          "store": false,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tools": [],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 13,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens": 186,
+            "output_tokens_details": {
+              "reasoning_tokens": 128
+            },
+            "total_tokens": 199
+          },
+          "user": null,
+          "metadata": {}
         }
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+  recorded_at: Thu, 11 Jun 2026 20:09:27 GMT
 recorded_with: VCR 6.4.0

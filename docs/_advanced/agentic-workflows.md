@@ -1,7 +1,8 @@
 ---
 layout: default
 title: Agentic Workflows
-nav_order: 5
+nav_order: 3
+has_children: true
 description: Build workflow-oriented AI systems with plain Ruby orchestration, from routing and parallelization to RAG
 ---
 
@@ -21,14 +22,52 @@ description: Build workflow-oriented AI systems with plain Ruby orchestration, f
 
 After reading this guide, you will know:
 
-* How to implement common workflow patterns with plain Ruby classes
-* How to compose sequential, routing, parallel, and fan-in workflows
-* How to use evaluator loops when output quality needs iteration
-* How to implement RAG as part of a workflow
+* How to drive the agentic loop yourself, one move at a time.
+* How to run each turn as its own background job and resume elsewhere.
+* How to implement common workflow patterns with plain Ruby classes.
+* How to compose sequential, routing, parallel, and fan-in workflows.
+* When to reach for an evaluator loop to iterate on output quality.
+
+A workflow is just orchestration code that coordinates one or more agents. In practice, this is often a small Ruby class with a single public method, plus a loop you control. Before you build a multi-agent workflow, it helps to understand how a single agent's turn-by-turn loop runs, so you can pause it, persist it, and resume it on demand.
+
+## Driving the Loop Yourself
+
+`ask` sends your message and runs the conversation to completion: it calls the model, runs any [tools]({% link _core_features/tools.md %}) the model asks for, and calls the model again until it answers without a tool. When you need to control that loop, for example to run each turn as its own background job, set an iteration budget, or stop and resume on another machine, `Chat` exposes it as named verbs:
+
+* `generate` runs the model once and appends its response (the model's move). It returns the response.
+* `run_tools` executes the tool calls the model asked for and appends their results (your move). It makes no model call and returns the chat.
+* `step` does whichever move is next: `run_tools` if tools are pending, otherwise `generate`. It returns `nil` once there is nothing left.
+* `complete` steps until done. This is what `ask` calls, and it returns the final response.
+* `complete?` is true when the model answered without calling a tool.
+
+So the agentic loop is just `step` until `complete?`:
+
+```ruby
+chat = RubyLLM.chat.with_tool(Weather).ask_later("What's the weather in Paris?")
+
+chat.step until chat.complete?  # generate, run_tools, generate
+chat.messages.last.content      # => "It's 15°C and partly cloudy in Paris."
+```
+
+`ask_later` stages the question without sending it, so `ask` is `ask_later` then `complete`.
+
+Because each `step` is a discrete move, you can persist the chat between steps and resume it elsewhere. Run one turn per background job, enforce a wall-clock budget, or pause for a deploy and pick up on another machine:
+
+```ruby
+class AgentTurnJob < ApplicationJob
+  def perform(chat_id)
+    chat = Chat.find(chat_id)
+    chat.step
+    AgentTurnJob.perform_later(chat_id) unless chat.complete?
+  end
+end
+```
+
+[Batches]({% link _advanced/batches.md %}) are the same idea at scale: a batch is `generate` deferred for many chats at once, with `run_tools` run locally between rounds.
 
 ## Workflow Patterns
 
-A workflow is just orchestration code that coordinates one or more agents. In practice, this is often a small Ruby class with a single public method.
+With the loop in hand, you can compose agents into larger systems. Each pattern below is a small, plain Ruby class - no framework, just orchestration.
 
 ### Sequential Workflow
 
@@ -52,7 +91,6 @@ class ResearchWriterWorkflow
   end
 end
 
-# Usage
 workflow = ResearchWriterWorkflow.new
 article = workflow.create_article("Ruby 3.3 features")
 ```
@@ -103,10 +141,11 @@ class ModelRouterWorkflow
   end
 end
 
-# Usage
 workflow = ModelRouterWorkflow.new
 response = workflow.call("Write a Ruby function to parse JSON")
 ```
+
+To hand the *same ongoing conversation* to a specialist instead of picking an agent up front, see [Agent Handoffs]({% link _advanced/agent-handoffs.md %}).
 
 ### Parallel Workflow
 
@@ -143,10 +182,8 @@ class ParallelAnalyzer
   end
 end
 
-# Usage
 analyzer = ParallelAnalyzer.new
 insights = analyzer.analyze("Your text here...")
-# All three analyses run concurrently
 ```
 
 ### Fan-Out/Fan-In Workflow
@@ -191,7 +228,6 @@ class CodeReviewSystem
   end
 end
 
-# Usage
 reviewer = CodeReviewSystem.new
 summary = reviewer.review_code("def calculate(x); x * 2; end")
 ```
@@ -241,93 +277,13 @@ class EvaluatorOptimizerWorkflow
   end
 end
 
-# Usage
 workflow = EvaluatorOptimizerWorkflow.new
 final = workflow.call("Write a concise onboarding email for a new API customer")
 ```
 
-## RAG as a Workflow Step
+## Retrieval-Augmented Generation
 
-RAG is often just one step in a larger workflow: retrieve relevant context, then answer with that context.
-
-### Setup
-
-```ruby
-# Gemfile
-gem 'neighbor'
-gem 'ruby_llm'
-
-# Generate migration for pgvector
-bin/rails generate neighbor:vector
-bin/rails db:migrate
-
-# Create documents table
-class CreateDocuments < ActiveRecord::Migration[7.1]
-  def change
-    create_table :documents do |t|
-      t.text :content
-      t.string :title
-      t.vector :embedding, limit: 1536 # OpenAI embedding size
-      t.timestamps
-    end
-
-    add_index :documents, :embedding, using: :hnsw, opclass: :vector_l2_ops
-  end
-end
-```
-
-### Document Model with Embeddings
-
-```ruby
-class Document < ApplicationRecord
-  has_neighbors :embedding
-
-  before_save :generate_embedding, if: :content_changed?
-
-  private
-
-  def generate_embedding
-    response = RubyLLM.embed(content)
-    self.embedding = response.vectors
-  end
-end
-```
-
-### Retrieval Tool
-
-```ruby
-class DocumentSearch < RubyLLM::Tool
-  description "Searches knowledge base for relevant information"
-  param :query, desc: "Search query"
-
-  def execute(query:)
-    embedding = RubyLLM.embed(query).vectors
-
-    documents = Document.nearest_neighbors(
-      :embedding,
-      embedding,
-      distance: "euclidean"
-    ).limit(3)
-
-    documents.map do |doc|
-      "#{doc.title}: #{doc.content.truncate(500)}"
-    end.join("\n\n---\n\n")
-  end
-end
-```
-
-### Answering Agent
-
-```ruby
-class SupportWithDocsAgent < RubyLLM::Agent
-  tools DocumentSearch
-  instructions "Search for context before answering. Cite sources."
-end
-
-# Usage
-agent = SupportWithDocsAgent.new
-response = agent.ask("What is our refund policy?").content
-```
+RAG is often just one step in a larger workflow: retrieve relevant context, then answer with that context. See [Retrieval-Augmented Generation (RAG)]({% link _advanced/rag.md %}) for the full pattern.
 
 ## Error Handling
 
@@ -341,7 +297,9 @@ See the [Error Handling section in Tools]({% link _core_features/tools.md %}#err
 
 ## Next Steps
 
-* [Agents]({% link _core_features/agents.md %}) - Define reusable agent classes
-* [Using Tools]({% link _core_features/tools.md %}) - Add capabilities and external actions
-* [Scale with Async]({% link _advanced/async.md %}) - Run concurrent workflow steps
-* [Error Handling]({% link _advanced/error-handling.md %}) - Build resilient systems
+* [Agent Handoffs]({% link _advanced/agent-handoffs.md %}) - Hand an ongoing conversation to a specialist agent.
+* [Retrieval-Augmented Generation (RAG)]({% link _advanced/rag.md %}) - Ground answers in your own documents.
+* [Agents]({% link _advanced/agents.md %}) - Define reusable agent classes.
+* [Tools]({% link _core_features/tools.md %}) - Add capabilities and external actions.
+* [Scale with Async]({% link _advanced/async.md %}) - Run concurrent workflow steps.
+* [Error Handling]({% link _advanced/error-handling.md %}) - Build resilient systems.

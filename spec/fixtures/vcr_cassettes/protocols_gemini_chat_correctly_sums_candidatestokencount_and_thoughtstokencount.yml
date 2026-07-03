@@ -1,0 +1,85 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"What is 2+2? Think step
+        by step."}]}],"generationConfig":{}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.2
+      X-Goog-Api-Key:
+      - "<GEMINI_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      X-Gemini-Service-Tier:
+      - standard
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Mon, 08 Jun 2026 17:08:10 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Server-Timing:
+      - gfet4t7; dur=1845
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "candidates": [
+            {
+              "content": {
+                "parts": [
+                  {
+                    "text": "Let's break it down:\n\n1.  You have a quantity of **2**.\n2.  You are adding another quantity of **2** to it.\n3.  Counting them together: If you have two items, and you get two more items, you now have a total of one, two, three, four items.\n\nSo, 2 + 2 = **4**."
+                  }
+                ],
+                "role": "model"
+              },
+              "finishReason": "STOP",
+              "index": 0
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 13,
+            "candidatesTokenCount": 83,
+            "totalTokenCount": 254,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 13
+              }
+            ],
+            "thoughtsTokenCount": 158,
+            "serviceTier": "standard"
+          },
+          "modelVersion": "gemini-2.5-flash",
+          "responseId": "-PYmaorhOKXMnsEPlsaWqA8"
+        }
+  recorded_at: Mon, 08 Jun 2026 17:08:10 GMT
+recorded_with: VCR 6.4.0

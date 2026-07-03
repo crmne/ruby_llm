@@ -21,7 +21,7 @@ RSpec.describe RubyLLM::Providers::Perplexity::Models do
       sonar = models.find { |model| model.id == 'sonar' }
       expect(sonar.context_window).to eq(128_000)
       expect(sonar.max_output_tokens).to eq(4096)
-      expect(sonar.capabilities).to eq(['vision'])
+      expect(sonar.capabilities).to eq(%w[citations vision])
       expect(sonar.pricing.to_h).to eq(
         text_tokens: {
           standard: {
@@ -32,7 +32,7 @@ RSpec.describe RubyLLM::Providers::Perplexity::Models do
       )
 
       reasoning = models.find { |model| model.id == 'sonar-reasoning' }
-      expect(reasoning.capabilities).to contain_exactly('vision', 'reasoning')
+      expect(reasoning.capabilities).to contain_exactly('citations', 'vision', 'reasoning')
     end
   end
 end

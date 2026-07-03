@@ -56,6 +56,37 @@ RSpec.describe RubyLLM::Agent do
     FileUtils.rm_rf(prompt_dir) if prompt_dir
   end
 
+  it 'loads instructions.txt.erb automatically when a named agent has no instructions macro' do
+    prompt_dir = write_prompt(
+      'spec_implicit_rails_prompt_agent',
+      'Implicit prompt for chat <%= chat.id %>'
+    )
+
+    agent_class = Class.new(RubyLLM::Agent) do
+      chat_model Chat
+      model 'gpt-4.1-nano'
+    end
+
+    stub_const('SpecImplicitRailsPromptAgent', agent_class)
+
+    chat = SpecImplicitRailsPromptAgent.create!
+    expect(chat.messages.find_by(role: 'system').content).to eq("Implicit prompt for chat #{chat.id}")
+  ensure
+    FileUtils.rm_rf(prompt_dir) if prompt_dir
+  end
+
+  it 'does not add instructions when no instructions macro or conventional prompt exists' do
+    agent_class = Class.new(RubyLLM::Agent) do
+      chat_model Chat
+      model 'gpt-4.1-nano'
+    end
+
+    stub_const('SpecNoInstructionsAgent', agent_class)
+
+    chat = SpecNoInstructionsAgent.create!
+    expect(chat.messages.where(role: 'system')).to be_empty
+  end
+
   it 'raises when instructions prompt shorthand file is missing' do
     agent_class = Class.new(RubyLLM::Agent) do
       chat_model Chat

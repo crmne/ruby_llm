@@ -3,12 +3,17 @@
 module RubyLLM
   module Providers
     # Perplexity API integration.
-    class Perplexity < OpenAI
-      include Perplexity::Chat
-      include Perplexity::Models
+    class Perplexity < Provider
+      # Perplexity's dialect of the Chat Completions API.
+      class ChatCompletions < Protocols::ChatCompletions
+        include Perplexity::Chat
+        include Perplexity::Models
+      end
+
+      protocol :chat_completions, ChatCompletions
 
       def api_base
-        'https://api.perplexity.ai'
+        @config.perplexity_api_base || 'https://api.perplexity.ai'
       end
 
       def headers
@@ -16,20 +21,6 @@ module RubyLLM
           'Authorization' => "Bearer #{@config.perplexity_api_key}",
           'Content-Type' => 'application/json'
         }
-      end
-
-      class << self
-        def capabilities
-          Perplexity::Capabilities
-        end
-
-        def configuration_options
-          %i[perplexity_api_key]
-        end
-
-        def configuration_requirements
-          %i[perplexity_api_key]
-        end
       end
 
       def parse_error(response)
@@ -46,6 +37,20 @@ module RubyLLM
           end
         end
         super
+      end
+
+      class << self
+        def capabilities
+          Perplexity::Capabilities
+        end
+
+        def configuration_options
+          %i[perplexity_api_key perplexity_api_base]
+        end
+
+        def configuration_requirements
+          %i[perplexity_api_key]
+        end
       end
     end
   end

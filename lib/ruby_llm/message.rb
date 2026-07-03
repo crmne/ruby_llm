@@ -4,8 +4,18 @@ module RubyLLM
   # A single message in a chat conversation.
   class Message
     ROLES = %i[system user assistant tool].freeze
+    STOPPED_FINISH_REASONS = %w[stop end_turn stop_sequence].freeze
+    MAX_TOKENS_FINISH_REASONS = %w[length max_tokens max_output_tokens model_context_window_exceeded].freeze
+    TOOL_CALL_FINISH_REASONS = %w[tool_calls tool_use function_call].freeze
+    CONTENT_FILTERED_FINISH_REASONS = %w[
+      blocklist content_filter content_filtered guardrail_intervened image_recitation image_safety
+      model_armor prohibited_content recitation safety spii
+    ].freeze
+    private_constant :STOPPED_FINISH_REASONS, :MAX_TOKENS_FINISH_REASONS, :TOOL_CALL_FINISH_REASONS,
+                     :CONTENT_FILTERED_FINISH_REASONS
 
-    attr_reader :role, :model_id, :tool_calls, :tool_call_id, :raw, :thinking, :tokens
+    attr_reader :role, :model_id, :tool_calls, :tool_call_id, :raw, :thinking, :tokens, :citations,
+                :finish_reason
     attr_writer :content
 
     def initialize(options = {})
@@ -19,21 +29,19 @@ module RubyLLM
         output: options[:output_tokens],
         cached: options[:cached_tokens],
         cache_creation: options[:cache_creation_tokens],
-        thinking: options[:thinking_tokens],
-        reasoning: options[:reasoning_tokens]
+        thinking: options[:thinking_tokens]
       )
       @raw = options[:raw]
       @thinking = options[:thinking]
+      @citations = Array(options[:citations])
+      @finish_reason = options[:finish_reason]
+      @cache_until_here = options.fetch(:cache_until_here, false)
 
       ensure_valid_role
     end
 
     def content
-      if @content.is_a?(Content) && @content.text && @content.attachments.empty?
-        @content.text
-      else
-        @content
-      end
+      @content.is_a?(Content) ? @content.format : @content
     end
 
     def tool_call?
@@ -46,6 +54,22 @@ module RubyLLM
 
     def tool_results
       content if tool_result?
+    end
+
+    def stopped?
+      finish_reason_in?(STOPPED_FINISH_REASONS)
+    end
+
+    def max_tokens?
+      finish_reason_in?(MAX_TOKENS_FINISH_REASONS)
+    end
+
+    def tool_call_stop?
+      finish_reason_in?(TOOL_CALL_FINISH_REASONS)
+    end
+
+    def content_filtered?
+      finish_reason_in?(CONTENT_FILTERED_FINISH_REASONS)
     end
 
     def input_tokens
@@ -76,12 +100,17 @@ module RubyLLM
       tokens&.thinking
     end
 
-    def reasoning_tokens
-      tokens&.thinking
-    end
-
     def cost(model: nil)
       Cost.new(tokens:, model: model || model_info)
+    end
+
+    def cache_until_here!
+      @cache_until_here = true
+      self
+    end
+
+    def cache_until_here?
+      @cache_until_here
     end
 
     def to_h
@@ -92,11 +121,15 @@ module RubyLLM
         tool_calls: tool_calls,
         tool_call_id: tool_call_id,
         thinking: thinking&.text,
-        thinking_signature: thinking&.signature
+        thinking_signature: thinking&.signature,
+        citations: citations.empty? ? nil : citations.map(&:to_h),
+        finish_reason: finish_reason,
+        cache_until_here: cache_until_here? || nil
       }.merge(tokens ? tokens.to_h : {}).compact
     end
 
-    def instance_variables
+    # Keeps the raw Faraday response out of pretty-printed output.
+    def pretty_print_instance_variables
       super - [:@raw]
     end
 
@@ -109,6 +142,14 @@ module RubyLLM
     end
 
     private
+
+    def finish_reason_in?(reasons)
+      reasons.include?(finish_reason_key)
+    end
+
+    def finish_reason_key
+      finish_reason.to_s.downcase.tr('-', '_')
+    end
 
     def normalize_content(content, role:, tool_calls:)
       return '' if role == :assistant && content.nil? && tool_calls && !tool_calls.empty?

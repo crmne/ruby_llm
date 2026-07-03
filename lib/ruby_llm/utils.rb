@@ -9,6 +9,13 @@ module RubyLLM
       hash[key.to_sym] || hash[key.to_s]
     end
 
+    # Acronym-aware underscoring: 'HTTPProxyTool' -> 'http_proxy_tool'.
+    def underscore(name)
+      name.gsub(/([A-Z]+)([A-Z][a-z])/, '\1_\2')
+          .gsub(/([a-z\d])([A-Z])/, '\1_\2')
+          .downcase
+    end
+
     def to_safe_array(item)
       case item
       when Array
@@ -30,6 +37,45 @@ module RubyLLM
       return unless value
 
       value.is_a?(Date) ? value : Date.parse(value.to_s)
+    end
+
+    def safe_constantize(name)
+      parts = name.to_s.split('::').reject(&:empty?)
+      return if parts.empty?
+
+      namespace = Object
+      until parts.empty?
+        const_name = parts.shift
+        return unless namespace.const_defined?(const_name, false)
+
+        namespace = namespace.const_get(const_name, false)
+      end
+      namespace
+    rescue NameError
+      nil
+    end
+
+    def parse_iso_date_prefix(value)
+      return value if value.is_a?(Date)
+
+      date = value.to_s.strip
+      return if date.empty?
+
+      case date
+      when /\A\d{4}-\d{2}-\d{2}\z/
+        Date.iso8601(date)
+      when /\A\d{4}-\d{2}\z/
+        Date.iso8601("#{date}-01")
+      when /\A\d{4}\z/
+        Date.iso8601("#{date}-01-01")
+      end
+    rescue ArgumentError
+      nil
+    end
+
+    def iso_date_prefix_to_utc_midnight_string(value)
+      date = parse_iso_date_prefix(value)
+      "#{date.strftime('%Y-%m-%d')} 00:00:00 UTC" if date
     end
 
     def deep_merge(original, overrides)

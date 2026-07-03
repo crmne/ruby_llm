@@ -10,7 +10,7 @@ http_interactions:
         is the best.</file>"}]}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 06 May 2026 23:52:40 GMT
+      - Mon, 08 Jun 2026 18:46:04 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -33,29 +33,29 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '019dffb5-38a5-7ff5-8ff6-2e20cb42b50e'
+      - '019ea88e-6184-76c5-8521-c88bd32eeae2'
       X-Kong-Request-Id:
-      - '019dffb5-38a5-7ff5-8ff6-2e20cb42b50e'
+      - '019ea88e-6184-76c5-8521-c88bd32eeae2'
       X-Ratelimit-Limit-Tokens-Minute:
-      - '2000000'
+      - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '1998996'
+      - '99172'
       X-Ratelimit-Tokens-Query-Cost:
       - '60'
       X-Ratelimit-Limit-Req-Minute:
-      - '1500'
+      - '100'
       X-Ratelimit-Remaining-Req-Minute:
-      - '1491'
+      - '92'
       X-Envoy-Upstream-Service-Time:
-      - '298'
+      - '258'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '299'
+      - '259'
       X-Kong-Proxy-Latency:
-      - '16'
+      - '12'
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
@@ -71,9 +71,9 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"f4c422e912a2494faccea395a6d03194","created":1778111559,"model":"mistral-small-latest","usage":{"prompt_tokens":41,"total_tokens":60,"completion_tokens":19,"prompt_tokens_details":{"cached_tokens":0}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
+      string: '{"id":"42cf4229bd2541aeb3883172ecce7473","created":1780944363,"model":"mistral-small-latest","usage":{"prompt_tokens":41,"total_tokens":60,"completion_tokens":19,"prompt_tokens_details":{"cached_tokens":0}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
         file `ruby.txt` contains the following text:\n\n```\nRuby is the best.\n```"}}]}'
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+  recorded_at: Mon, 08 Jun 2026 18:46:04 GMT
 - request:
     method: post
     uri: https://api.mistral.ai/v1/chat/completions
@@ -87,7 +87,7 @@ http_interactions:
         is the best</truism></file>"}]}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -102,7 +102,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 06 May 2026 23:52:40 GMT
+      - Mon, 08 Jun 2026 18:46:04 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -110,29 +110,29 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '019dffb5-3a53-76df-9343-dc58c70306f6'
+      - '019ea88e-62e2-7cab-9f16-07cdd0799b90'
       X-Kong-Request-Id:
-      - '019dffb5-3a53-76df-9343-dc58c70306f6'
+      - '019ea88e-62e2-7cab-9f16-07cdd0799b90'
       X-Ratelimit-Limit-Tokens-Minute:
-      - '2000000'
+      - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '1998849'
+      - '99050'
       X-Ratelimit-Tokens-Query-Cost:
       - '122'
       X-Ratelimit-Limit-Req-Minute:
-      - '1500'
+      - '100'
       X-Ratelimit-Remaining-Req-Minute:
-      - '1490'
+      - '91'
       X-Envoy-Upstream-Service-Time:
-      - '298'
+      - '313'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '299'
+      - '314'
       X-Kong-Proxy-Latency:
-      - '38'
+      - '14'
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
@@ -148,8 +148,8 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"7b25654a80c8400481359ac3ca6af0bd","created":1778111560,"model":"mistral-small-latest","usage":{"prompt_tokens":93,"total_tokens":122,"completion_tokens":29,"prompt_tokens_details":{"cached_tokens":0}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
+      string: '{"id":"0c2663988a464addb38a454bf453ead4","created":1780944364,"model":"mistral-small-latest","usage":{"prompt_tokens":93,"total_tokens":122,"completion_tokens":29,"prompt_tokens_details":{"cached_tokens":0}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
         file `ruby.xml` contains the following XML content:\n\n```xml\n<truism>Ruby
         is the best</truism>\n```"}}]}'
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+  recorded_at: Mon, 08 Jun 2026 18:46:04 GMT
 recorded_with: VCR 6.4.0

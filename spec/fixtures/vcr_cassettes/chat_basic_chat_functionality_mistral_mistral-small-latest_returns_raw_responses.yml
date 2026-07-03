@@ -9,7 +9,7 @@ http_interactions:
         is the capital of France?"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 06 May 2026 23:54:32 GMT
+      - Mon, 08 Jun 2026 18:46:31 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -32,29 +32,29 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '019dffb6-ede9-7c7b-a014-16cb13ac8962'
+      - '019ea88e-cb4d-7e76-9a9e-c5cb6f7d38e3'
       X-Kong-Request-Id:
-      - '019dffb6-ede9-7c7b-a014-16cb13ac8962'
+      - '019ea88e-cb4d-7e76-9a9e-c5cb6f7d38e3'
       X-Ratelimit-Limit-Tokens-Minute:
-      - '2000000'
+      - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '1996052'
+      - '97307'
       X-Ratelimit-Tokens-Query-Cost:
-      - '60'
+      - '63'
       X-Ratelimit-Limit-Req-Minute:
-      - '1500'
+      - '100'
       X-Ratelimit-Remaining-Req-Minute:
-      - '1492'
+      - '86'
       X-Envoy-Upstream-Service-Time:
-      - '344'
+      - '412'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '345'
+      - '413'
       X-Kong-Proxy-Latency:
-      - '26'
+      - '18'
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
@@ -70,9 +70,9 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"95d85f719f004df3b01ba91a352618bf","created":1778111671,"model":"mistral-small-latest","usage":{"prompt_tokens":22,"total_tokens":60,"completion_tokens":38,"prompt_tokens_details":{"cached_tokens":0}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
+      string: '{"id":"11ab51ef3b5245218bded00b67bde791","created":1780944391,"model":"mistral-small-latest","usage":{"prompt_tokens":22,"total_tokens":63,"completion_tokens":41,"prompt_tokens_details":{"cached_tokens":0}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
         capital of France is **Paris**. It is the largest city in France and serves
         as the country''s political, economic, and cultural center.\n\nWould you like
-        more details about Paris?"}}]}'
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+        to know more about Paris or France?"}}]}'
+  recorded_at: Mon, 08 Jun 2026 18:46:31 GMT
 recorded_with: VCR 6.4.0

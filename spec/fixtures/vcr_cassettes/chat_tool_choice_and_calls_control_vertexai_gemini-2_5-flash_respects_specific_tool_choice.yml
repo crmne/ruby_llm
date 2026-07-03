@@ -8,7 +8,7 @@ http_interactions:
       string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Content-Type:
       - application/x-www-form-urlencoded
       Accept-Encoding:
@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Expires:
-      - Mon, 01 Jan 1990 00:00:00 GMT
       Date:
-      - Thu, 07 May 2026 00:06:45 GMT
+      - Mon, 08 Jun 2026 17:10:12 GMT
       Cache-Control:
       - no-cache, no-store, max-age=0, must-revalidate
       Pragma:
       - no-cache
+      Expires:
+      - Mon, 01 Jan 1990 00:00:00 GMT
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,11 +52,11 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login",
+          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/sqlservice.login openid",
           "token_type": "Bearer",
           "id_token": "<GOOGLE_ID_TOKEN>"
         }
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+  recorded_at: Mon, 08 Jun 2026 17:10:12 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
@@ -68,7 +68,7 @@ http_interactions:
         13.4050)"}},"required":["latitude","longitude"]}}]}],"toolConfig":{"functionCallingConfig":{"mode":"any","allowedFunctionNames":["weather"]}}}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -89,7 +89,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Thu, 07 May 2026 00:06:46 GMT
+      - Mon, 08 Jun 2026 17:10:17 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -115,22 +115,22 @@ http_interactions:
                     "functionCall": {
                       "name": "weather",
                       "args": {
-                        "longitude": "12.496422",
+                        "longitude": "12.4964",
                         "latitude": "41.9028"
                       }
                     },
-                    "thoughtSignature": "CqQCAY89a1+QlLBgA/2iVZ+lqsBV0C6lKzL1qCjpQIQjzckl+9kbpS+P3QiYQHXHjgmbvkBZb4PLY58KMOyU1SGe+Gg7PQ3Y7ufNo2MvBSpn9JWyB7rcbQqGYzaOwl1z4mz32CeUteR3rIW3RE6zamjyzaGVWXzzCzbp0Kbd73aEwuQB2iauql8BmlVYgtcijRsXf88Ofe6NsORfY1swSM39KjPkvcY024h4ybGJortfe3d9ssfHvTgitD5aiY04hxLLsT+8arya7JdUfMyCV6/D/zFvRbFaKtd8DAq5/RwkyEnexPUSJ4sS3FrM3dDdkyiOQqpCdnHods4bdzqTUET8/+0r1F3osW1PlOlD+kFr55hawHFcn9bD4KauRqli4lSinuaVQA=="
+                    "thoughtSignature": "CqYDAY89a1+u84C1nOngcFrw1fQo1mAqJEhRVpXy0KjQkj7F/oV6ww7V1DliaBQgMNvVMAd3JtHqdoaqqoN2MvHmiln/MWeKimmHijLy9eSu0LNP2+yH+OuIPm2xnNTBsNhzd1/jlVs0a7IY5HgtVt9XKBwDXXAwcgiDTI0e++2Sy/rubVYTIi/FMBtA8pcAsB4F0Ph1L5/unfOaPR6ZEizkhqkDSrHGawq5JATrMQzEewlBKLo+j2Z6ONte61HpUVj8CVr+QR6jEL5vGuEO9LxFcsBIEfFDVszxos/YW4VtO2yEQu1J1iw3wB9cbkJ+GvL/v+Y9PpbwNyGEcwq6OSPV1+C8gwcBJRwPQGkzb9qVM+OfGkkAU9aVDQ7EMsPHq6/9T4bnWe1znTHsRxRPoLluhepWTRLFXNP/ADgkKBY6qT4sNmzoeceEOfv8RE4fzQl7u8qKFzX4qKm5pvXXH16JjCf69vpdE8XjZgvh2o/nYu6bqeovCL8waYo25FLYLjirE8yjvfoqYZulWp3RU+N4o7oZ4/dcedsQ9d7kLptyrul7FATe3Bc="
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.65469862285413238
+              "avgLogprobs": -1.2466267978443819
             }
           ],
           "usageMetadata": {
             "promptTokenCount": 52,
-            "candidatesTokenCount": 19,
-            "totalTokenCount": 120,
+            "candidatesTokenCount": 17,
+            "totalTokenCount": 135,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
@@ -141,29 +141,29 @@ http_interactions:
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 19
+                "tokenCount": 17
               }
             ],
-            "thoughtsTokenCount": 49
+            "thoughtsTokenCount": 66
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-05-07T00:06:45.266171Z",
-          "responseId": "ldf7abufENjQxN8P0ZCzoAw"
+          "createTime": "2026-06-08T17:10:13.049263Z",
+          "responseId": "dfcmau-AA6DSwOYPmJjiiA4"
         }
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+  recorded_at: Mon, 08 Jun 2026 17:10:17 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
     body:
       encoding: UTF-8
-      string: '{"contents":[{"role":"user","parts":[{"text":"What''s the fall of Rome?"}]},{"role":"model","parts":[{"functionCall":{"name":"weather","args":{"longitude":"12.496422","latitude":"41.9028"}},"thoughtSignature":"CqQCAY89a1+QlLBgA/2iVZ+lqsBV0C6lKzL1qCjpQIQjzckl+9kbpS+P3QiYQHXHjgmbvkBZb4PLY58KMOyU1SGe+Gg7PQ3Y7ufNo2MvBSpn9JWyB7rcbQqGYzaOwl1z4mz32CeUteR3rIW3RE6zamjyzaGVWXzzCzbp0Kbd73aEwuQB2iauql8BmlVYgtcijRsXf88Ofe6NsORfY1swSM39KjPkvcY024h4ybGJortfe3d9ssfHvTgitD5aiY04hxLLsT+8arya7JdUfMyCV6/D/zFvRbFaKtd8DAq5/RwkyEnexPUSJ4sS3FrM3dDdkyiOQqpCdnHods4bdzqTUET8/+0r1F3osW1PlOlD+kFr55hawHFcn9bD4KauRqli4lSinuaVQA=="}]},{"role":"function","parts":[{"functionResponse":{"name":"weather","response":{"name":"weather","content":[{"text":"Current
-        weather at 41.9028, 12.496422: 15°C, Wind: 10 km/h"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"weather","description":"Gets
+      string: '{"contents":[{"role":"user","parts":[{"text":"What''s the fall of Rome?"}]},{"role":"model","parts":[{"functionCall":{"name":"weather","args":{"longitude":"12.4964","latitude":"41.9028"}},"thoughtSignature":"CqYDAY89a1+u84C1nOngcFrw1fQo1mAqJEhRVpXy0KjQkj7F/oV6ww7V1DliaBQgMNvVMAd3JtHqdoaqqoN2MvHmiln/MWeKimmHijLy9eSu0LNP2+yH+OuIPm2xnNTBsNhzd1/jlVs0a7IY5HgtVt9XKBwDXXAwcgiDTI0e++2Sy/rubVYTIi/FMBtA8pcAsB4F0Ph1L5/unfOaPR6ZEizkhqkDSrHGawq5JATrMQzEewlBKLo+j2Z6ONte61HpUVj8CVr+QR6jEL5vGuEO9LxFcsBIEfFDVszxos/YW4VtO2yEQu1J1iw3wB9cbkJ+GvL/v+Y9PpbwNyGEcwq6OSPV1+C8gwcBJRwPQGkzb9qVM+OfGkkAU9aVDQ7EMsPHq6/9T4bnWe1znTHsRxRPoLluhepWTRLFXNP/ADgkKBY6qT4sNmzoeceEOfv8RE4fzQl7u8qKFzX4qKm5pvXXH16JjCf69vpdE8XjZgvh2o/nYu6bqeovCL8waYo25FLYLjirE8yjvfoqYZulWp3RU+N4o7oZ4/dcedsQ9d7kLptyrul7FATe3Bc="}]},{"role":"user","parts":[{"functionResponse":{"name":"weather","response":{"name":"weather","content":[{"text":"Current
+        weather at 41.9028, 12.4964: 15°C, Wind: 10 km/h"}]}}}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"OBJECT","properties":{"latitude":{"type":"STRING","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"STRING","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"]}}]}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -184,7 +184,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Thu, 07 May 2026 00:06:48 GMT
+      - Mon, 08 Jun 2026 17:10:20 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -207,35 +207,35 @@ http_interactions:
                 "role": "model",
                 "parts": [
                   {
-                    "text": "The fall of Rome is a complex historical event with many contributing factors, including economic problems, political instability, overexpansion, and barbarian invasions. Historians generally mark the end of the Western Roman Empire in 476 CE when the last Western Roman Emperor, Romulus Augustulus, was deposed by the Germanic chieftain Odoacer. However, the Eastern Roman (Byzantine) Empire continued for another thousand years.\n\nWhat aspects of the fall of Rome are you most interested in? For example, are you curious about:\n*   The key dates and events?\n*   The primary causes?\n*   The consequences and legacy?\n*   Specific figures involved?"
+                    "text": "The fall of Rome is a complex historical event that historians generally date to 476 CE when the last Western Roman Emperor, Romulus Augustulus, was deposed by the Germanic chieftain Odoacer. However, the \"fall\" was a long process rather than a single event, influenced by a multitude of factors including:\n\n*   **Economic troubles:** Inflation, over-taxation, and a decline in trade weakened the empire's financial stability.\n*   **Military overextension and barbarian invasions:** The empire became too large to effectively defend, and constant pressure from Germanic tribes (Goths, Vandals, Huns) led to significant territorial losses and military defeats.\n*   **Political instability and corruption:** Frequent changes in emperors, civil wars, and a decline in civic virtue led to a weakening of central authority.\n*   **Social and cultural changes:** A decline in public health, a widening gap between rich and poor, and a shift in cultural values also contributed to the empire's decline.\n\nIt's important to distinguish between the Western Roman Empire, which fell in 476 CE, and the Eastern Roman Empire (also known as the Byzantine Empire), which continued to thrive for another thousand years until its conquest by the Ottoman Turks in 1453.\n\nDo you have any specific aspects of the fall of Rome you'd like to know more about?\n"
                   }
                 ]
               },
               "finishReason": "STOP",
-              "avgLogprobs": -0.26614938062780041
+              "avgLogprobs": -0.20161214460406388
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 162,
-            "candidatesTokenCount": 136,
-            "totalTokenCount": 298,
+            "promptTokenCount": 175,
+            "candidatesTokenCount": 285,
+            "totalTokenCount": 460,
             "trafficType": "ON_DEMAND",
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 162
+                "tokenCount": 175
               }
             ],
             "candidatesTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 136
+                "tokenCount": 285
               }
             ]
           },
           "modelVersion": "gemini-2.5-flash",
-          "createTime": "2026-05-07T00:06:47.195909Z",
-          "responseId": "l9f7acX6C4GBhcIPu4evuQI"
+          "createTime": "2026-06-08T17:10:18.013440Z",
+          "responseId": "evcmaoBp2M3A5g_Lw9jQCw"
         }
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+  recorded_at: Mon, 08 Jun 2026 17:10:20 GMT
 recorded_with: VCR 6.4.0

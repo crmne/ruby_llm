@@ -10,7 +10,7 @@ http_interactions:
         me about the weather."}],"stream":false,"temperature":0.0}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 06 May 2026 23:54:34 GMT
+      - Mon, 08 Jun 2026 18:46:34 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -33,29 +33,29 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '019dffb6-f6f0-7595-b23c-88744bc120ac'
+      - '019ea88e-d2a2-7ffd-819b-f67b92f38656'
       X-Kong-Request-Id:
-      - '019dffb6-f6f0-7595-b23c-88744bc120ac'
+      - '019ea88e-d2a2-7ffd-819b-f67b92f38656'
       X-Ratelimit-Limit-Tokens-Minute:
-      - '2000000'
+      - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '1994522'
+      - '96912'
       X-Ratelimit-Tokens-Query-Cost:
-      - '86'
+      - '112'
       X-Ratelimit-Limit-Req-Minute:
-      - '1500'
+      - '100'
       X-Ratelimit-Remaining-Req-Minute:
-      - '1485'
+      - '83'
       X-Envoy-Upstream-Service-Time:
-      - '466'
+      - '1996'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '467'
+      - '1996'
       X-Kong-Proxy-Latency:
-      - '14'
+      - '11'
       Set-Cookie:
       - "<COOKIE>"
       - "<COOKIE>"
@@ -71,9 +71,10 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"58fc72a55b9b4b2fab56d651820296c5","created":1778111674,"model":"mistral-small-latest","usage":{"prompt_tokens":43,"total_tokens":86,"completion_tokens":43,"prompt_tokens_details":{"cached_tokens":0}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
-        weather today is quite pleasant with a mix of sun and clouds. Temperatures
-        are moderate, and there''s a light breeze. It''s a great day to be outdoors!
-        XKCD7392"}}]}'
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+      string: '{"id":"16a02bdcb3b34e0db0d26be1a9edf765","created":1780944394,"model":"mistral-small-latest","usage":{"prompt_tokens":43,"total_tokens":112,"completion_tokens":69,"prompt_tokens_details":{"cached_tokens":0}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
+        weather today is quite pleasant, with a mix of sun and clouds. The temperature
+        is moderate, and there''s a light breeze. It''s a great day to be outdoors!
+        Just remember, as the wise folks at XKCD7392 would say, \"Weather is just
+        nature''s way of keeping you on your toes.\""}}]}'
+  recorded_at: Mon, 08 Jun 2026 18:46:34 GMT
 recorded_with: VCR 6.4.0

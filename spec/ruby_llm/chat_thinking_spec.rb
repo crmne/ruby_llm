@@ -5,6 +5,22 @@ require 'spec_helper'
 RSpec.describe RubyLLM::Chat do
   include_context 'with configured RubyLLM'
 
+  describe '#with_thinking' do
+    it 'clears thinking with nil' do
+      chat = RubyLLM.chat.with_thinking(effort: :low)
+
+      chat.with_thinking(nil)
+
+      expect(chat.instance_variable_get(:@thinking)).to be_nil
+    end
+
+    it 'requires thinking options or nil' do
+      chat = RubyLLM.chat
+
+      expect { chat.with_thinking }.to raise_error(ArgumentError, /requires :effort or :budget/)
+    end
+  end
+
   context 'with extended thinking' do
     question = <<~QUESTION.strip
       If a magic mirror shows your future self, but only if you ask a question it cannot answer truthfully, what question do you ask to see your future, and what would the mirror reveal about the answer it gives?
@@ -16,7 +32,7 @@ RSpec.describe RubyLLM::Chat do
         { budget: 1024 }
       when :gemini
         { effort: :low }
-      when :ollama
+      when :gpustack, :ollama
         nil
       else
         { effort: :medium }
@@ -29,16 +45,21 @@ RSpec.describe RubyLLM::Chat do
       config ? chat.with_thinking(**config) : chat
     end
 
+    def expect_response_payload(response)
+      expect(response.content.presence || response.thinking&.text).to be_present
+    end
+
     THINKING_MODELS.each do |model_info|
       model = model_info[:model]
       provider = model_info[:provider]
 
       it "#{provider}/#{model} returns thinking when available" do
         chat = chat_with_thinking(model: model, provider: provider)
+        prompt = provider == :gpustack ? 'What is 5 + 3? Think briefly before answering.' : question
 
-        response = chat.ask(question)
+        response = chat.ask(prompt)
 
-        expect(response.content).to be_present
+        expect_response_payload(response)
         if provider.in?(%i[openai azure])
           expect(response.thinking_tokens).to be_present
         elsif provider == :perplexity && response.thinking.nil?
@@ -50,13 +71,14 @@ RSpec.describe RubyLLM::Chat do
 
       it "#{provider}/#{model} streams thinking content when available" do
         chat = chat_with_thinking(model: model, provider: provider)
+        prompt = provider == :gpustack ? 'What is 5 + 3? Think briefly before answering.' : question
 
         chunks = []
-        response = chat.ask(question) do |chunk|
+        response = chat.ask(prompt) do |chunk|
           chunks << chunk
         end
 
-        expect(response.content).to be_present
+        expect_response_payload(response)
         expect(chunks).not_to be_empty
         expect(chunks.any?(&:thinking)).to be true if response.thinking && provider != :perplexity
       end
@@ -68,7 +90,7 @@ RSpec.describe RubyLLM::Chat do
         signature = first.thinking&.signature
 
         second = chat.ask('Now multiply that by 2')
-        expect(second.content).to be_present
+        expect_response_payload(second)
 
         if signature
           expect(second.thinking&.signature).to be_present

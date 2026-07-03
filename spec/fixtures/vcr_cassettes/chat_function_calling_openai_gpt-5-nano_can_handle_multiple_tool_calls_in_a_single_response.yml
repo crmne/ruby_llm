@@ -2,16 +2,16 @@
 http_interactions:
 - request:
     method: post
-    uri: https://api.openai.com/v1/chat/completions
+    uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-5-nano","messages":[{"role":"developer","content":"You
-        must call the dice_roll tool exactly 3 times when asked to roll dice 3 times."},{"role":"user","content":"Roll
-        the dice 3 times"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
-        a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
+      string: '{"model":"gpt-5-nano","input":[{"role":"user","content":"Roll the dice
+        3 times"}],"instructions":"You must call the dice_roll tool exactly 3 times
+        when asked to roll dice 3 times.","stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"dice_roll","description":"Rolls
+        a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -26,7 +26,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 06 May 2026 23:59:47 GMT
+      - Thu, 11 Jun 2026 20:10:44 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -44,17 +44,17 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Access-Control-Expose-Headers:
+      - CF-Ray
+      - CF-Ray
       - X-Request-ID
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '5514'
+      - '5845'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
       - '2020-10-01'
-      X-Openai-Proxy-Wasm:
-      - v0.1
       X-Ratelimit-Limit-Requests:
       - '5000'
       X-Ratelimit-Limit-Tokens:
@@ -62,7 +62,191 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '4999'
       X-Ratelimit-Remaining-Tokens:
-      - '1999970'
+      - '1999799'
+      X-Ratelimit-Reset-Requests:
+      - 12ms
+      X-Ratelimit-Reset-Tokens:
+      - 6ms
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Set-Cookie:
+      - "<COOKIE>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "id": "resp_0c03e0615fa4518e016a2b163f23ec81a0a29c96056b6b9c87",
+          "object": "response",
+          "created_at": 1781208639,
+          "status": "completed",
+          "background": false,
+          "billing": {
+            "payer": "developer"
+          },
+          "completed_at": 1781208644,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "incomplete_details": null,
+          "instructions": "You must call the dice_roll tool exactly 3 times when asked to roll dice 3 times.",
+          "max_output_tokens": null,
+          "max_tool_calls": null,
+          "model": "gpt-5-nano-2025-08-07",
+          "moderation": null,
+          "output": [
+            {
+              "id": "rs_0c03e0615fa4518e016a2b163f839081a0adda65a49aabe122",
+              "type": "reasoning",
+              "content": [],
+              "encrypted_content": "gAAAAABqKxZEf7zon0FXodzMb81qNr0Q-dJXqaqEhVda0EeRAzNaua7YzXm3Qss8hTBj2pE2EqiOBBQn41FDOB8ceaaCPhpRaFvGjO76gih7XsB3kePonI8IXpXSViH_o5dhOJDkG_AnmnVDts2pse6Y0e-CDbMcoY8XcSud0tGfzFx6fTa1T2rpJt1CLURd4P2tgNbFaAhVpFgemyhV--QCgU-oMHw1qdExNz2OSXS90P_2k-MtKMyD-yy-ycwMKhCa2AwphPQ_CCkX37WGk3lNrY-3gGhHQMwxTk3Upofs_THaiN3msb41LDcM2Ejmq62XMIb9GBKFNucDaTX6VVkhQsOrABACAjFQ_ZltpMp4s3g8Y9CeAnqpMh1cFlvqScyEpcnnBK16jC15CQw2vw0tCiOZUhPaA2LhbZV84OiPFsRgTzy_FIcdSFuJv-a4lzm26AHdzS3Ifu0z6gVqw9KsNZ77_dW0zcCmYpCBY7rP_mgi__rvvFGFsRmGuQyklSAtDRARyqQNkVJMsYc5H6zVnlEKHHiIVIJVMIDs_8x71wT5Bro2Ybau6-IPv-NubVQ_sNmOO4jzYHihMIG9nw6kAoGXiRKCXNlGLv8lhcvpNxvjCHGpRJ_2XY9c1XlYZnHihganNaPl0mlGQYf7FLdh6PAOXmwShrrnjzAmORJiclnj9eyYo0h5Hx0sF8oC_j9px_Qh2-7IBbZ5bWEEPLf4nY49YdMycAWhQlYhj7bLcseafi7DhUov6evO8Z2QNMa5G5XRGWGIw44Z9twpAhfBd29K2o9pmxK8AydKFjbHS-oX5fvdygoDVJx9jTXMqEm8A1Jid8hvziUkcp01RzXv0DVb6YjQZ9eG2p4iekqIlB5CP5qaMJQunnMtIX9YffArOGFyufHrAXvAkDqZs4tjTMVf2zCTV632evg1ti3SFExelBt08NgUs-OP-EQGqE2WJr0u7v2_MFSIV7czvEz01R_tG_d7-etwE5v6eU-GSOTtLobnbeO5jedTvwQkJr8FX6N3Qo9EoyYND6OSJLC1ILF3PcgbEozxn_wx_hRYC7S8LtUHhlHCsDfljzjqp81CHqSaQ6_0b_4mNFQvqwlPtim009ATjKkwHJUm1fG9rNK9X4GBky8XYfcgSqEVw14FNIjom7Pdz2zTtStXNOfUh8WE8PD81XUvrpuIDkSOHf-veLIeNcvRxpgMlegRgCiIVkw5RFbAPnrPgwCBrcMdvMWmKU6fyDbACDjWjCNpj_PhiyhcS-0f_vUpEU7ELJt_5j1XEs0cbUkgSohpmLOVVJxDieax0xr02EbdI70a4N5sLTjT-9ZcJOB2gXYY2xmqE6s8_phsCEu04Cl6wW7km6Q33gFc8tMiXgAVS83A5CtJNpZ43wkHShkrde3U2eRV3AqyVo7xZ9FGov4OkXY-Qb71_KGhHKpXSgIUMOLhmel3vKsHWPDWhIFAeqi04rvJPoKJGZ8fBmbmXW5nS5UVrETA05XCi4xV9fltVOe32XSIgD0gqsT1YepOUDnnxr1OA2ePKmz8rEP1PZh0wKuEZw41TB8GBXjGq2J0AiDKzRzktK0haJw54TBAcMJ0qLpapaV0o0_6VtQ5OSQ4-fAfxNmVZxXZfFqyp8xqts3sesiseLAK4Jact5gBALvnqPGJfE6Nb_nlQxpDMFkqMoI5cH7FLgsD46R9V0rExBtyAIB1rmZO_bmwmegd-gCBPDvmq-koeCXet02aSmm5yprlRGNPla-sYjto30lVtQMm7_w5XIk926RjeFLhCk8nXIlmwm07IXgFzocaQQO5Xp7-vrOdM_fwvrAB5UDC9E8cglfvCc5b6ZHHIeKgxOP9eKT5McYRu_M62r3VzCpTBp1k2tcxUOUQr08tib7Ao4uOVWdq3cDQAPtRQvtffLE2bDBzHdDZNhkHQLcaCTvbCghi_YR_KL6WbAVq3aNmLlSRtWCT8bLDRj-DJ7FEu-bQW1yWNVt-D_YSIELMa9MuCBubVZC5u8WVlR079p9A9F3k-EOU1Yptsf7WNA8XzpiTkVzHCu4t8Ky5YQra8gth8mGK-qWRY1jp4eIZhSSKtKsRKUrdRmqz3GKqObHNlaBvkCkA4j3lVxORsr0GyU3fpNPqLF74BkTy1DuFT3zsg2ymoyK-nFelo8ihdHow8uq3aY4QZzVy2hWVfcu_MV7IgZqHyRyJc4k5G0u-f2oDfLx6P0YhEPx3Uazza87x_9xci_wOnu4TOAJQT0CO9F9p1TliRs8TgXAVksEXrV0MQtOVYPhQu15MSq-_tkRf3nNqXw3697V6oPJFfaTSrNMm_OfNU_JNy9Rp_lGJJwt9_1ju4Yh29JHGTQu5cYRSmH7vk3fJd5woqLgSHaLSgmZQkD4qjpoVCXl3Q8psG5BObO2AOTjRcLBmQL6CDtt6X08xfKfUxaJe14vKlFXNBfgAagrG7U9Ss0A6QwFg0ruzBtw12hSdC0caYZQjumYbZieHHc3ODJNKfq6kryzm8cXppp6Cy8b1vZfQTFYNQ51OOpwwV4HzdPIc0-A6lFI7B8FFqmvEo6aKptaEiEtWJ1vwOEIUyMqgE10Zt6yMtJkWWJOPaumgL7QZdKbP5tXQ3LH_m7aZtcn1rDZB9XIeGzMGAnE4t3oB3Xuwpr4LhE1CI2CfKxBkV2westqgrMzYDEwxMTd95f9vr3CfTRD_1jfZYiJSY0ZO7CiIY9DUXqmW1222Dg-lXq1Q5ux3g82H-CBl73GQxA6dn8QWNbWbhLE6KM2RWHXQ14thv8kSz7Jrn7vrgKnslWtZwIbpW4BSujgcqkQTU9Y48EQMxOsDrT8lX9b_ZR6zRCgtbsFF6lT4_GSh6Phx_7G3kJxHUYS_33Rvgs3Soi7vL-rHq4QzRi3Uq4Grw6tQ89natQ5aLAKFaTLqPv2GVkvCce-T0L5HjlEP6upkqlSIx-oHhHq1lg5V_PHb_BLQseuv2haX10aSvOKhYlahTbBJlEjkikio4LDZ60jF60Wxm9JRAl7p563g-nP9syNeIw3RpBLlm6ldrFzL96br-btPbxsescwAIu6Su25svIVe9h0-1ah5WtjnAjqG52JCvlrIqpXVR1GQy2yDYHQnc395HMD_Fw_R81VWdjNUBE9_pSuVF8JILfmWZ299B-bREssuHp5ycEc8g_VJJxbMdK2TwbQjDm2cR_Yw1s6q0yMqLaMsmGi8iYnzA7ZWH5P_nd3IXYZsd3A0q08Ul39SXGMOMCh22yY77-ayeRHMazWZJPYYxa-S2AydRSisNKDIOsWT0GT_CW_xdlSjNTZZxOLLW-Obl_5jo2bxBHEsfCY5gZO9h32ghczz2iWJeZlpWVbexz6nnDkcWtgbmch-8t46LT5N5Mc56ebLcahiwycWo-Fae_CUNr9InkDFR-dhpL1-FRB2uB1CjFA6w6TVGaKEurcXvy6uPqrGq9gE_JUYXnsM49ztOdFDbCLDSMdz0MqYBAkKrQjap4Tme-xhQyIjZVAVmGUxpUrQ3BLNfpU4ASshE7-QHck9kNMQLl39PCPDt4lgSgN4zflUnJ6vR3w-OHA13taYO8Ht7WfeRF3r6QIfS-NiOMqtXRI1BaPVEJUsco2CQjPxzkSSRk_XwAveDhwzzk9vqOLxULqISF24JroD8BhpX5NiHTgSVDG6v6eZr5tt9gLVngsl2LeOEuUewFsvfoRUSKUC7Az0jMGl5Ni8mRmciV3QrZGxQPmhsSqMxUnGt1Ouy9FzcKA4_LlgvEqhUPLYDtmjgHNlrppVh_IjbkI_LpQTCiva8CdHnr9S_Ca4pt2y_ja56xsINJvdPYe5BaMFWgyzGo2LManFEg2oMNjuLnsVBedqZM6541R7kaINg-iyCdoaMZhL7iQRRnuFCywuP-YqrPUjm_jbx6jVPxcBwoCbuihjibbpLKq59VpkeOKqgZTUOwqHZ-ELOcjDj42sd1AatzbTpBSLMEVgwLjBBUvznxVCsH4vKYjfMAgbH0x7YvgcjISLacZTpv1_E4NmyrNu_ETvlootXhDKkaC68oDFVTT_PDvLeeQ3LR7KNJMUL5ZiYxm4KS548X4ACTI1dkj5ctxh0eHHersZLuDyKCpIA2yev1_8gxgMIcBcfYh5JMFMdP44JrvoXRMUYs8su6V9q-3nk1sROw-Zh4dAKDEJVJkA-V-ZqiM026dHy75hGBUA6fdCxeCOOztgt4vbPzxomkfGH41dKizwAbf7DDyb7Ojtt_tFcMkDBVPpG4xEeemlJp7PJkrz2VgdSrrMKqxYTm6VM-KGvaFG8lRCtE_dN0-a9ilHVgPprD8_B5F3RwK6H3ksKPvy33KnsViy4yW88m4vsxgSNMi9rD0IFWGfCXjh7PnnG0TLrUE17qSTa06TCmqoEY-J3BBFZE4MxKKAa6I1DMhxsGOn2tZLPk2SiSV5zB-6D3IQNwcqfL3LJfJ-LDGsl0lJEBbF2RACdYJVELjh-_taFrUf5x2__xMC67fmdSXgsGvRJJLpptOVS2KrZSoe68MQepowYTbj2TBn7WjBGX_W3dh1ci5YnTf77YcR69VYNvNSgnE6_HEORSc4C0etiKXf_bVePdH0sjxJpRmgmfnl7QPMeR4qx74dlrxv9bRljuxttyHGT6kTsy6QJBDpBnZazypoxyCM1S5RsqO5it3Yj7aMnlqcuDnBiYn47qt5n5qnmt6-5rh7IssZyEsPWA102cWoK2Y_TuYdGcGRAO1Qr7su8qKczgHnBj_KUhMyMN7I3WR7GOnTUNETJ14BsWoq6MKXnsGvpkW7QORMoPX3ZigZL8Lo6Noxd2lwhRa0FyONmnszRTIS__4uj_DUFFtosfgIUWrLF2GW7iHBBRWbB1OSPxwyE0yxAKWiGYsKxuTUgNfB6I-B_zMkckD8-rvpAOtUaL88xMcwQh6BTlDR1Q5LgIRhgXS-zvaHfesTLe9G6yQGX7FmwAnBRbMedUBGEGlS1-c7eOrG49DAvudlLw8J",
+              "summary": []
+            },
+            {
+              "id": "fc_0c03e0615fa4518e016a2b1644b9f481a0b91e6d26ab3161a2",
+              "type": "function_call",
+              "status": "completed",
+              "arguments": "{}",
+              "call_id": "call_LBb363ZG1KOe6j1sanHgQcv2",
+              "name": "dice_roll"
+            },
+            {
+              "id": "fc_0c03e0615fa4518e016a2b1644ba1c81a08c9583affbf7ebe6",
+              "type": "function_call",
+              "status": "completed",
+              "arguments": "{}",
+              "call_id": "call_9oAVtx0faLIX7CRp9P5bvDCf",
+              "name": "dice_roll"
+            },
+            {
+              "id": "fc_0c03e0615fa4518e016a2b1644ba2881a08a55d4a76e65830e",
+              "type": "function_call",
+              "status": "completed",
+              "arguments": "{}",
+              "call_id": "call_F724vJpMwjZ0QZSH55VhYuHr",
+              "name": "dice_roll"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": "in_memory",
+          "reasoning": {
+            "context": "current_turn",
+            "effort": "medium",
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": false,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tools": [
+            {
+              "type": "function",
+              "description": "Rolls a single six-sided die and returns the result",
+              "name": "dice_roll",
+              "parameters": {
+                "type": "object",
+                "properties": {},
+                "required": [],
+                "additionalProperties": false,
+                "strict": true
+              },
+              "strict": true
+            }
+          ],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 71,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens": 697,
+            "output_tokens_details": {
+              "reasoning_tokens": 576
+            },
+            "total_tokens": 768
+          },
+          "user": null,
+          "metadata": {}
+        }
+  recorded_at: Thu, 11 Jun 2026 20:10:45 GMT
+- request:
+    method: post
+    uri: https://api.openai.com/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-5-nano","input":[{"role":"user","content":"Roll the dice
+        3 times"},{"type":"reasoning","summary":[],"encrypted_content":"gAAAAABqKxZEf7zon0FXodzMb81qNr0Q-dJXqaqEhVda0EeRAzNaua7YzXm3Qss8hTBj2pE2EqiOBBQn41FDOB8ceaaCPhpRaFvGjO76gih7XsB3kePonI8IXpXSViH_o5dhOJDkG_AnmnVDts2pse6Y0e-CDbMcoY8XcSud0tGfzFx6fTa1T2rpJt1CLURd4P2tgNbFaAhVpFgemyhV--QCgU-oMHw1qdExNz2OSXS90P_2k-MtKMyD-yy-ycwMKhCa2AwphPQ_CCkX37WGk3lNrY-3gGhHQMwxTk3Upofs_THaiN3msb41LDcM2Ejmq62XMIb9GBKFNucDaTX6VVkhQsOrABACAjFQ_ZltpMp4s3g8Y9CeAnqpMh1cFlvqScyEpcnnBK16jC15CQw2vw0tCiOZUhPaA2LhbZV84OiPFsRgTzy_FIcdSFuJv-a4lzm26AHdzS3Ifu0z6gVqw9KsNZ77_dW0zcCmYpCBY7rP_mgi__rvvFGFsRmGuQyklSAtDRARyqQNkVJMsYc5H6zVnlEKHHiIVIJVMIDs_8x71wT5Bro2Ybau6-IPv-NubVQ_sNmOO4jzYHihMIG9nw6kAoGXiRKCXNlGLv8lhcvpNxvjCHGpRJ_2XY9c1XlYZnHihganNaPl0mlGQYf7FLdh6PAOXmwShrrnjzAmORJiclnj9eyYo0h5Hx0sF8oC_j9px_Qh2-7IBbZ5bWEEPLf4nY49YdMycAWhQlYhj7bLcseafi7DhUov6evO8Z2QNMa5G5XRGWGIw44Z9twpAhfBd29K2o9pmxK8AydKFjbHS-oX5fvdygoDVJx9jTXMqEm8A1Jid8hvziUkcp01RzXv0DVb6YjQZ9eG2p4iekqIlB5CP5qaMJQunnMtIX9YffArOGFyufHrAXvAkDqZs4tjTMVf2zCTV632evg1ti3SFExelBt08NgUs-OP-EQGqE2WJr0u7v2_MFSIV7czvEz01R_tG_d7-etwE5v6eU-GSOTtLobnbeO5jedTvwQkJr8FX6N3Qo9EoyYND6OSJLC1ILF3PcgbEozxn_wx_hRYC7S8LtUHhlHCsDfljzjqp81CHqSaQ6_0b_4mNFQvqwlPtim009ATjKkwHJUm1fG9rNK9X4GBky8XYfcgSqEVw14FNIjom7Pdz2zTtStXNOfUh8WE8PD81XUvrpuIDkSOHf-veLIeNcvRxpgMlegRgCiIVkw5RFbAPnrPgwCBrcMdvMWmKU6fyDbACDjWjCNpj_PhiyhcS-0f_vUpEU7ELJt_5j1XEs0cbUkgSohpmLOVVJxDieax0xr02EbdI70a4N5sLTjT-9ZcJOB2gXYY2xmqE6s8_phsCEu04Cl6wW7km6Q33gFc8tMiXgAVS83A5CtJNpZ43wkHShkrde3U2eRV3AqyVo7xZ9FGov4OkXY-Qb71_KGhHKpXSgIUMOLhmel3vKsHWPDWhIFAeqi04rvJPoKJGZ8fBmbmXW5nS5UVrETA05XCi4xV9fltVOe32XSIgD0gqsT1YepOUDnnxr1OA2ePKmz8rEP1PZh0wKuEZw41TB8GBXjGq2J0AiDKzRzktK0haJw54TBAcMJ0qLpapaV0o0_6VtQ5OSQ4-fAfxNmVZxXZfFqyp8xqts3sesiseLAK4Jact5gBALvnqPGJfE6Nb_nlQxpDMFkqMoI5cH7FLgsD46R9V0rExBtyAIB1rmZO_bmwmegd-gCBPDvmq-koeCXet02aSmm5yprlRGNPla-sYjto30lVtQMm7_w5XIk926RjeFLhCk8nXIlmwm07IXgFzocaQQO5Xp7-vrOdM_fwvrAB5UDC9E8cglfvCc5b6ZHHIeKgxOP9eKT5McYRu_M62r3VzCpTBp1k2tcxUOUQr08tib7Ao4uOVWdq3cDQAPtRQvtffLE2bDBzHdDZNhkHQLcaCTvbCghi_YR_KL6WbAVq3aNmLlSRtWCT8bLDRj-DJ7FEu-bQW1yWNVt-D_YSIELMa9MuCBubVZC5u8WVlR079p9A9F3k-EOU1Yptsf7WNA8XzpiTkVzHCu4t8Ky5YQra8gth8mGK-qWRY1jp4eIZhSSKtKsRKUrdRmqz3GKqObHNlaBvkCkA4j3lVxORsr0GyU3fpNPqLF74BkTy1DuFT3zsg2ymoyK-nFelo8ihdHow8uq3aY4QZzVy2hWVfcu_MV7IgZqHyRyJc4k5G0u-f2oDfLx6P0YhEPx3Uazza87x_9xci_wOnu4TOAJQT0CO9F9p1TliRs8TgXAVksEXrV0MQtOVYPhQu15MSq-_tkRf3nNqXw3697V6oPJFfaTSrNMm_OfNU_JNy9Rp_lGJJwt9_1ju4Yh29JHGTQu5cYRSmH7vk3fJd5woqLgSHaLSgmZQkD4qjpoVCXl3Q8psG5BObO2AOTjRcLBmQL6CDtt6X08xfKfUxaJe14vKlFXNBfgAagrG7U9Ss0A6QwFg0ruzBtw12hSdC0caYZQjumYbZieHHc3ODJNKfq6kryzm8cXppp6Cy8b1vZfQTFYNQ51OOpwwV4HzdPIc0-A6lFI7B8FFqmvEo6aKptaEiEtWJ1vwOEIUyMqgE10Zt6yMtJkWWJOPaumgL7QZdKbP5tXQ3LH_m7aZtcn1rDZB9XIeGzMGAnE4t3oB3Xuwpr4LhE1CI2CfKxBkV2westqgrMzYDEwxMTd95f9vr3CfTRD_1jfZYiJSY0ZO7CiIY9DUXqmW1222Dg-lXq1Q5ux3g82H-CBl73GQxA6dn8QWNbWbhLE6KM2RWHXQ14thv8kSz7Jrn7vrgKnslWtZwIbpW4BSujgcqkQTU9Y48EQMxOsDrT8lX9b_ZR6zRCgtbsFF6lT4_GSh6Phx_7G3kJxHUYS_33Rvgs3Soi7vL-rHq4QzRi3Uq4Grw6tQ89natQ5aLAKFaTLqPv2GVkvCce-T0L5HjlEP6upkqlSIx-oHhHq1lg5V_PHb_BLQseuv2haX10aSvOKhYlahTbBJlEjkikio4LDZ60jF60Wxm9JRAl7p563g-nP9syNeIw3RpBLlm6ldrFzL96br-btPbxsescwAIu6Su25svIVe9h0-1ah5WtjnAjqG52JCvlrIqpXVR1GQy2yDYHQnc395HMD_Fw_R81VWdjNUBE9_pSuVF8JILfmWZ299B-bREssuHp5ycEc8g_VJJxbMdK2TwbQjDm2cR_Yw1s6q0yMqLaMsmGi8iYnzA7ZWH5P_nd3IXYZsd3A0q08Ul39SXGMOMCh22yY77-ayeRHMazWZJPYYxa-S2AydRSisNKDIOsWT0GT_CW_xdlSjNTZZxOLLW-Obl_5jo2bxBHEsfCY5gZO9h32ghczz2iWJeZlpWVbexz6nnDkcWtgbmch-8t46LT5N5Mc56ebLcahiwycWo-Fae_CUNr9InkDFR-dhpL1-FRB2uB1CjFA6w6TVGaKEurcXvy6uPqrGq9gE_JUYXnsM49ztOdFDbCLDSMdz0MqYBAkKrQjap4Tme-xhQyIjZVAVmGUxpUrQ3BLNfpU4ASshE7-QHck9kNMQLl39PCPDt4lgSgN4zflUnJ6vR3w-OHA13taYO8Ht7WfeRF3r6QIfS-NiOMqtXRI1BaPVEJUsco2CQjPxzkSSRk_XwAveDhwzzk9vqOLxULqISF24JroD8BhpX5NiHTgSVDG6v6eZr5tt9gLVngsl2LeOEuUewFsvfoRUSKUC7Az0jMGl5Ni8mRmciV3QrZGxQPmhsSqMxUnGt1Ouy9FzcKA4_LlgvEqhUPLYDtmjgHNlrppVh_IjbkI_LpQTCiva8CdHnr9S_Ca4pt2y_ja56xsINJvdPYe5BaMFWgyzGo2LManFEg2oMNjuLnsVBedqZM6541R7kaINg-iyCdoaMZhL7iQRRnuFCywuP-YqrPUjm_jbx6jVPxcBwoCbuihjibbpLKq59VpkeOKqgZTUOwqHZ-ELOcjDj42sd1AatzbTpBSLMEVgwLjBBUvznxVCsH4vKYjfMAgbH0x7YvgcjISLacZTpv1_E4NmyrNu_ETvlootXhDKkaC68oDFVTT_PDvLeeQ3LR7KNJMUL5ZiYxm4KS548X4ACTI1dkj5ctxh0eHHersZLuDyKCpIA2yev1_8gxgMIcBcfYh5JMFMdP44JrvoXRMUYs8su6V9q-3nk1sROw-Zh4dAKDEJVJkA-V-ZqiM026dHy75hGBUA6fdCxeCOOztgt4vbPzxomkfGH41dKizwAbf7DDyb7Ojtt_tFcMkDBVPpG4xEeemlJp7PJkrz2VgdSrrMKqxYTm6VM-KGvaFG8lRCtE_dN0-a9ilHVgPprD8_B5F3RwK6H3ksKPvy33KnsViy4yW88m4vsxgSNMi9rD0IFWGfCXjh7PnnG0TLrUE17qSTa06TCmqoEY-J3BBFZE4MxKKAa6I1DMhxsGOn2tZLPk2SiSV5zB-6D3IQNwcqfL3LJfJ-LDGsl0lJEBbF2RACdYJVELjh-_taFrUf5x2__xMC67fmdSXgsGvRJJLpptOVS2KrZSoe68MQepowYTbj2TBn7WjBGX_W3dh1ci5YnTf77YcR69VYNvNSgnE6_HEORSc4C0etiKXf_bVePdH0sjxJpRmgmfnl7QPMeR4qx74dlrxv9bRljuxttyHGT6kTsy6QJBDpBnZazypoxyCM1S5RsqO5it3Yj7aMnlqcuDnBiYn47qt5n5qnmt6-5rh7IssZyEsPWA102cWoK2Y_TuYdGcGRAO1Qr7su8qKczgHnBj_KUhMyMN7I3WR7GOnTUNETJ14BsWoq6MKXnsGvpkW7QORMoPX3ZigZL8Lo6Noxd2lwhRa0FyONmnszRTIS__4uj_DUFFtosfgIUWrLF2GW7iHBBRWbB1OSPxwyE0yxAKWiGYsKxuTUgNfB6I-B_zMkckD8-rvpAOtUaL88xMcwQh6BTlDR1Q5LgIRhgXS-zvaHfesTLe9G6yQGX7FmwAnBRbMedUBGEGlS1-c7eOrG49DAvudlLw8J"},{"type":"function_call","call_id":"call_LBb363ZG1KOe6j1sanHgQcv2","name":"dice_roll","arguments":"{}"},{"type":"function_call","call_id":"call_9oAVtx0faLIX7CRp9P5bvDCf","name":"dice_roll","arguments":"{}"},{"type":"function_call","call_id":"call_F724vJpMwjZ0QZSH55VhYuHr","name":"dice_roll","arguments":"{}"},{"type":"function_call_output","call_id":"call_LBb363ZG1KOe6j1sanHgQcv2","output":"{roll:
+        1}"},{"type":"function_call_output","call_id":"call_9oAVtx0faLIX7CRp9P5bvDCf","output":"{roll:
+        2}"},{"type":"function_call_output","call_id":"call_F724vJpMwjZ0QZSH55VhYuHr","output":"{roll:
+        3}"}],"instructions":"You must call the dice_roll tool exactly 3 times when
+        asked to roll dice 3 times.","stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"dice_roll","description":"Rolls
+        a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.2
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 11 Jun 2026 20:10:48 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Cf-Ray:
+      - "<CF_RAY>"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Access-Control-Expose-Headers:
+      - CF-Ray
+      - CF-Ray
+      - X-Request-ID
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Processing-Ms:
+      - '3079'
+      Openai-Project:
+      - proj_61L3Oqt640dKU0CASS2iOj8Q
+      Openai-Version:
+      - '2020-10-01'
+      X-Ratelimit-Limit-Requests:
+      - '5000'
+      X-Ratelimit-Limit-Tokens:
+      - '2000000'
+      X-Ratelimit-Remaining-Requests:
+      - '4999'
+      X-Ratelimit-Remaining-Tokens:
+      - '2000000'
       X-Ratelimit-Reset-Requests:
       - 12ms
       X-Ratelimit-Reset-Tokens:
@@ -75,413 +259,100 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: |
+      string: |-
         {
-          "id": "chatcmpl-DcgRSE3DIfEHCkRTla5HYUxveCxym",
-          "object": "chat.completion",
-          "created": 1778111982,
+          "id": "resp_0eea90282a6e3dcf016a2b164538488192a5577783a663f4ae",
+          "object": "response",
+          "created_at": 1781208645,
+          "status": "completed",
+          "background": false,
+          "billing": {
+            "payer": "developer"
+          },
+          "completed_at": 1781208648,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "incomplete_details": null,
+          "instructions": "You must call the dice_roll tool exactly 3 times when asked to roll dice 3 times.",
+          "max_output_tokens": null,
+          "max_tool_calls": null,
           "model": "gpt-5-nano-2025-08-07",
-          "choices": [
+          "moderation": null,
+          "output": [
             {
-              "index": 0,
-              "message": {
-                "role": "assistant",
-                "content": null,
-                "tool_calls": [
-                  {
-                    "id": "call_iZvDPKI9XBxFHXJTpyi8PWwh",
-                    "type": "function",
-                    "function": {
-                      "name": "dice_roll",
-                      "arguments": "{}"
-                    }
-                  }
-                ],
-                "refusal": null,
-                "annotations": []
-              },
-              "finish_reason": "tool_calls"
+              "id": "rs_0eea90282a6e3dcf016a2b16458b60819286488a7efce216fd",
+              "type": "reasoning",
+              "content": [],
+              "encrypted_content": "gAAAAABqKxZIjkqKiPncrogWKtX1OLAb52pGlP2QnHCLxlvMCD3vHOo6f3c9rcAlvmGbUTrXANRWIShcnUld8m0lDDeVJ7siYlnCRU7q1ABMz9qLDSjjacxVOhJgktjvChUqwW7tbvLJpf_wCKp8-IjCU1Prm8ROc34sMZ5_1PRfqG3K-PX3kyCYEEBxdAdTxosqUWe_Y4V19bimtSEA-rHCO-ky92iuDZcXayXyz9Lzut5XaxwL76-st61J7nSYFtwtgmqKQAWpI6nG7j9q6YUZL9qBVdkQ46s8XFfr3iSLNq7N8cgtCkDaxlJDCGImy8bXjautmjwKuOGFYTi09-UbU7Qttm2fmcLcikoTJIWfttQ28IANQcNHiDk4tVqh_Kq3GoZesxtz_p6pBLYBrsADrI9J2dwDrRAMQlo5Ym4bGiD5R2F-CFEjE9CDYBxcQHBrAkin6usMcwaSlRtQyKAVFPYim87ypMVcG3D3jDeNYFIw7XBPyolhYNmho9wkeOjyKMsViDomF0s1ME-7l9pATvuLVOesh3jT-_oV2vrOE_Mjw_SKDInbF-3yp1Vu_LRDAvz3NQhh5AhhGI6csjKtPg_opDl57cE16L-FW97onaoef99pdb7szkUYXqreO-otY4ORdk2hz6_OrHZZFeOPrRMIbzKiq8OYdi6rxL1EfLHySG6URTqj7JBpVGzqZlkVzLpCiPwOagFJSKRmLOT4ZWdusM0MOX0Mh5CNNK5snSmafN6tmGr6YcawHT3Zum8YUCoI02TQDjF5p8OwaeXvCGCFOGWe06N8Dyc2ay4O1ynd6MBeIwXhTB_zyhArTKXLJFYhXxRbP7trWAQcELJ4tqaMs9MM47fhcWH0b9826Lc1RnHfbudqSisadNLGw9Au-itMjgG0IHKw5V51qNHkwOPPMrRboG3Pk8mYypAoL2YWZdI94HmDOddxIO2NFbYeat0mjhU7qtBT9wDI6VwAMGgEY_nXPX4RBUzTbTVaWdKa3AwVhly_w6G9dfS34IXFLxnRTSqCBRIHiomNbB4Xho4XVLalMHRbQA3j13NXdPbyd0N02E0SCkfaAl-W6ny9ammXpXHFP-0YETmFuE2EzkHXYJXzpaWOPxUKqynNI95DlOYryHC25LHLdQA7OCX100p33N-WTSsZtwqkFrHbWTgjnP3C-2QxlYCW6xFlZEhq2nnjpMGJ7_qSVemUIdMV4yEguKkttgkqtska9iUY88kvpWwJldPCi3Z6y0mTK06rWCmaSGMwrth38mPqd0_kOUoiW-Fve6jlgLn_QR0R3_Yg1uc_xPl-4w08TVVoP4Z04rOd2IMoIf_CQFKNUNCvtXvQysIR6TaHVB51PCFIMy4dhndchlw043MnkiKwcKn7JcJg_IQFZkvRJHxJDmw_bQumMmUqWUrql0rUqSMsARy-RdNdiN6yPtn4snHH-mOiEEPjqq44wj1ILBFLa5zBiv9TUwGYDCOeoCXEpnxKf26IkA5pFK-9mW9BTsKHOuqQ1U-CwiP2fSocAcL9CU_sI7h-Nmm-_JFDT7g7uGszZz-gKCXAl8fFXPhU4cgPLOagoydS6S4rbxddHlUipFqW6EBVRPVu4ZGpSeDHbOMpN_eFTGYHRUtyXa0frAdhKlOqgOAOiUB9mZS58xWeuFGToRo_mBxIxBCIv2DCfUQcKWE_qwyot9Kz52eztAagsyQTFnhUzeYazexZ4EyZJUwU_DHsGELrcx7lHDIaJZmfWg6wMWyFNcuXXi6T8mB-XoT4nWdUfPGqBF8VDi_2AmLY5lphVbBufU2boQtoIdTiH7qclwhHBkuILV3h3qTOOX6_HV2Ifb-7yJAi0Ice0aRniErmgSnpRGbSP2pfe8CEo6xayQ2lUL3q9ZUHVVEVNSzYlCI3lSvdp72MUp1ZMxuFpfX-AR5Fvpxl0vgPvdrhy8qgQNctjS9yF53ZulHEhLR1hfU_DwvUc0Bq1TsByKVcFhrHrtQjO55bxZWWdDBtzfWCUgPkaNLNApv0lv5vKf_4LRkvBeQtMa2G-b4ljLvQ8VZAYHDM2XxVfLXKQ76fHqS6npjbQ_1dYmup6pGARRai1_n3ra7hnN3faFBnTC1m4FBKiSziEtrDL4M38rRgU9v8jDJBzBD6UtI6zfjnjzCqye11bpoQGLvQ7j-xg3Rmlag5pHOBsOPq163dYzCjeZZN19JP_4co0ERRwWUXecM4q4bA9t9DecN7N4J4R_HarEu8kpBwm-zX2rRLZq_28i_CTTAbf4W4myIQBWRbRTwj4eLCHzBSxSrlu7nvuQyo6KnFmUSEr6LcSAeWv_IckqMes4jXpsAiFlSAdyffQUpeq_zfYgHvSKfqNLqeqO5Q09VYGj5IY3fKT25vHcfHLqJ6YIzSIF9AWOoH_Tcgr0F_7H1--t_aGCLGj4my7sO9gV5L7Bl6ggFtE2YR8HzhxWV1qDGx0A==",
+              "summary": []
+            },
+            {
+              "id": "msg_0eea90282a6e3dcf016a2b1647c314819288e5bbfad684d6b3",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "Here are the three rolls:\n- Roll 1: 1\n- Roll 2: 2\n- Roll 3: 3\n\nTotal: 6\n\nWant to roll again or roll with different dice?"
+                }
+              ],
+              "role": "assistant"
             }
           ],
-          "usage": {
-            "prompt_tokens": 152,
-            "completion_tokens": 788,
-            "total_tokens": 940,
-            "prompt_tokens_details": {
-              "cached_tokens": 0,
-              "audio_tokens": 0
-            },
-            "completion_tokens_details": {
-              "reasoning_tokens": 768,
-              "audio_tokens": 0,
-              "accepted_prediction_tokens": 0,
-              "rejected_prediction_tokens": 0
-            }
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": "in_memory",
+          "reasoning": {
+            "context": "current_turn",
+            "effort": "medium",
+            "summary": null
           },
+          "safety_identifier": null,
           "service_tier": "default",
-          "system_fingerprint": null
-        }
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
-- request:
-    method: post
-    uri: https://api.openai.com/v1/chat/completions
-    body:
-      encoding: UTF-8
-      string: '{"model":"gpt-5-nano","messages":[{"role":"developer","content":"You
-        must call the dice_roll tool exactly 3 times when asked to roll dice 3 times."},{"role":"user","content":"Roll
-        the dice 3 times"},{"role":"assistant","content":"","tool_calls":[{"id":"call_iZvDPKI9XBxFHXJTpyi8PWwh","type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},{"role":"tool","content":"{roll:
-        1}","tool_call_id":"call_iZvDPKI9XBxFHXJTpyi8PWwh"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
-        a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
-    headers:
-      User-Agent:
-      - Faraday v2.14.1
-      Authorization:
-      - Bearer <AUTH_TOKEN>
-      Content-Type:
-      - application/json
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Date:
-      - Wed, 06 May 2026 23:59:54 GMT
-      Content-Type:
-      - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Cf-Ray:
-      - "<CF_RAY>"
-      Cf-Cache-Status:
-      - DYNAMIC
-      Server:
-      - cloudflare
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
-      X-Content-Type-Options:
-      - nosniff
-      Access-Control-Expose-Headers:
-      - X-Request-ID
-      Openai-Organization:
-      - "<OPENAI_ORGANIZATION>"
-      Openai-Processing-Ms:
-      - '7369'
-      Openai-Project:
-      - proj_61L3Oqt640dKU0CASS2iOj8Q
-      Openai-Version:
-      - '2020-10-01'
-      X-Openai-Proxy-Wasm:
-      - v0.1
-      X-Ratelimit-Limit-Requests:
-      - '5000'
-      X-Ratelimit-Limit-Tokens:
-      - '2000000'
-      X-Ratelimit-Remaining-Requests:
-      - '4999'
-      X-Ratelimit-Remaining-Tokens:
-      - '1999967'
-      X-Ratelimit-Reset-Requests:
-      - 12ms
-      X-Ratelimit-Reset-Tokens:
-      - 0s
-      X-Request-Id:
-      - "<X_REQUEST_ID>"
-      Set-Cookie:
-      - "<COOKIE>"
-      Alt-Svc:
-      - h3=":443"; ma=86400
-    body:
-      encoding: ASCII-8BIT
-      string: |
-        {
-          "id": "chatcmpl-DcgRXLGC2YKBXU3kwABJx3tzDdRq8",
-          "object": "chat.completion",
-          "created": 1778111987,
-          "model": "gpt-5-nano-2025-08-07",
-          "choices": [
+          "store": false,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tools": [
             {
-              "index": 0,
-              "message": {
-                "role": "assistant",
-                "content": null,
-                "tool_calls": [
-                  {
-                    "id": "call_gFxalCCjj1KmblVJiQR4l0yb",
-                    "type": "function",
-                    "function": {
-                      "name": "dice_roll",
-                      "arguments": "{}"
-                    }
-                  }
-                ],
-                "refusal": null,
-                "annotations": []
+              "type": "function",
+              "description": "Rolls a single six-sided die and returns the result",
+              "name": "dice_roll",
+              "parameters": {
+                "type": "object",
+                "properties": {},
+                "required": [],
+                "additionalProperties": false,
+                "strict": true
               },
-              "finish_reason": "tool_calls"
+              "strict": true
             }
           ],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
           "usage": {
-            "prompt_tokens": 183,
-            "completion_tokens": 980,
-            "total_tokens": 1163,
-            "prompt_tokens_details": {
-              "cached_tokens": 0,
-              "audio_tokens": 0
+            "input_tokens": 801,
+            "input_tokens_details": {
+              "cached_tokens": 0
             },
-            "completion_tokens_details": {
-              "reasoning_tokens": 960,
-              "audio_tokens": 0,
-              "accepted_prediction_tokens": 0,
-              "rejected_prediction_tokens": 0
-            }
-          },
-          "service_tier": "default",
-          "system_fingerprint": null
-        }
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
-- request:
-    method: post
-    uri: https://api.openai.com/v1/chat/completions
-    body:
-      encoding: UTF-8
-      string: '{"model":"gpt-5-nano","messages":[{"role":"developer","content":"You
-        must call the dice_roll tool exactly 3 times when asked to roll dice 3 times."},{"role":"user","content":"Roll
-        the dice 3 times"},{"role":"assistant","content":"","tool_calls":[{"id":"call_iZvDPKI9XBxFHXJTpyi8PWwh","type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},{"role":"tool","content":"{roll:
-        1}","tool_call_id":"call_iZvDPKI9XBxFHXJTpyi8PWwh"},{"role":"assistant","content":"","tool_calls":[{"id":"call_gFxalCCjj1KmblVJiQR4l0yb","type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},{"role":"tool","content":"{roll:
-        2}","tool_call_id":"call_gFxalCCjj1KmblVJiQR4l0yb"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
-        a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
-    headers:
-      User-Agent:
-      - Faraday v2.14.1
-      Authorization:
-      - Bearer <AUTH_TOKEN>
-      Content-Type:
-      - application/json
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Date:
-      - Wed, 06 May 2026 23:59:56 GMT
-      Content-Type:
-      - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Cf-Ray:
-      - "<CF_RAY>"
-      Cf-Cache-Status:
-      - DYNAMIC
-      Server:
-      - cloudflare
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
-      X-Content-Type-Options:
-      - nosniff
-      Access-Control-Expose-Headers:
-      - X-Request-ID
-      Openai-Organization:
-      - "<OPENAI_ORGANIZATION>"
-      Openai-Processing-Ms:
-      - '966'
-      Openai-Project:
-      - proj_61L3Oqt640dKU0CASS2iOj8Q
-      Openai-Version:
-      - '2020-10-01'
-      X-Openai-Proxy-Wasm:
-      - v0.1
-      X-Ratelimit-Limit-Requests:
-      - '5000'
-      X-Ratelimit-Limit-Tokens:
-      - '2000000'
-      X-Ratelimit-Remaining-Requests:
-      - '4999'
-      X-Ratelimit-Remaining-Tokens:
-      - '1999963'
-      X-Ratelimit-Reset-Requests:
-      - 12ms
-      X-Ratelimit-Reset-Tokens:
-      - 1ms
-      X-Request-Id:
-      - "<X_REQUEST_ID>"
-      Set-Cookie:
-      - "<COOKIE>"
-      Alt-Svc:
-      - h3=":443"; ma=86400
-    body:
-      encoding: ASCII-8BIT
-      string: |
-        {
-          "id": "chatcmpl-DcgRf1twYS0GNj5g1EUeKh8a8J1RI",
-          "object": "chat.completion",
-          "created": 1778111995,
-          "model": "gpt-5-nano-2025-08-07",
-          "choices": [
-            {
-              "index": 0,
-              "message": {
-                "role": "assistant",
-                "content": null,
-                "tool_calls": [
-                  {
-                    "id": "call_ljVNAXSWxXpPGKkVTZyRDLvg",
-                    "type": "function",
-                    "function": {
-                      "name": "dice_roll",
-                      "arguments": "{}"
-                    }
-                  }
-                ],
-                "refusal": null,
-                "annotations": []
-              },
-              "finish_reason": "tool_calls"
-            }
-          ],
-          "usage": {
-            "prompt_tokens": 214,
-            "completion_tokens": 14,
-            "total_tokens": 228,
-            "prompt_tokens_details": {
-              "cached_tokens": 0,
-              "audio_tokens": 0
+            "output_tokens": 364,
+            "output_tokens_details": {
+              "reasoning_tokens": 256
             },
-            "completion_tokens_details": {
-              "reasoning_tokens": 0,
-              "audio_tokens": 0,
-              "accepted_prediction_tokens": 0,
-              "rejected_prediction_tokens": 0
-            }
+            "total_tokens": 1165
           },
-          "service_tier": "default",
-          "system_fingerprint": null
+          "user": null,
+          "metadata": {}
         }
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
-- request:
-    method: post
-    uri: https://api.openai.com/v1/chat/completions
-    body:
-      encoding: UTF-8
-      string: '{"model":"gpt-5-nano","messages":[{"role":"developer","content":"You
-        must call the dice_roll tool exactly 3 times when asked to roll dice 3 times."},{"role":"user","content":"Roll
-        the dice 3 times"},{"role":"assistant","content":"","tool_calls":[{"id":"call_iZvDPKI9XBxFHXJTpyi8PWwh","type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},{"role":"tool","content":"{roll:
-        1}","tool_call_id":"call_iZvDPKI9XBxFHXJTpyi8PWwh"},{"role":"assistant","content":"","tool_calls":[{"id":"call_gFxalCCjj1KmblVJiQR4l0yb","type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},{"role":"tool","content":"{roll:
-        2}","tool_call_id":"call_gFxalCCjj1KmblVJiQR4l0yb"},{"role":"assistant","content":"","tool_calls":[{"id":"call_ljVNAXSWxXpPGKkVTZyRDLvg","type":"function","function":{"name":"dice_roll","arguments":"{}"}}]},{"role":"tool","content":"{roll:
-        3}","tool_call_id":"call_ljVNAXSWxXpPGKkVTZyRDLvg"}],"stream":false,"tools":[{"type":"function","function":{"name":"dice_roll","description":"Rolls
-        a single six-sided die and returns the result","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
-    headers:
-      User-Agent:
-      - Faraday v2.14.1
-      Authorization:
-      - Bearer <AUTH_TOKEN>
-      Content-Type:
-      - application/json
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Date:
-      - Wed, 06 May 2026 23:59:59 GMT
-      Content-Type:
-      - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      Cf-Ray:
-      - "<CF_RAY>"
-      Cf-Cache-Status:
-      - DYNAMIC
-      Server:
-      - cloudflare
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
-      X-Content-Type-Options:
-      - nosniff
-      Access-Control-Expose-Headers:
-      - X-Request-ID
-      Openai-Organization:
-      - "<OPENAI_ORGANIZATION>"
-      Openai-Processing-Ms:
-      - '2998'
-      Openai-Project:
-      - proj_61L3Oqt640dKU0CASS2iOj8Q
-      Openai-Version:
-      - '2020-10-01'
-      X-Openai-Proxy-Wasm:
-      - v0.1
-      X-Ratelimit-Limit-Requests:
-      - '5000'
-      X-Ratelimit-Limit-Tokens:
-      - '2000000'
-      X-Ratelimit-Remaining-Requests:
-      - '4999'
-      X-Ratelimit-Remaining-Tokens:
-      - '1999958'
-      X-Ratelimit-Reset-Requests:
-      - 12ms
-      X-Ratelimit-Reset-Tokens:
-      - 1ms
-      X-Request-Id:
-      - "<X_REQUEST_ID>"
-      Set-Cookie:
-      - "<COOKIE>"
-      Alt-Svc:
-      - h3=":443"; ma=86400
-    body:
-      encoding: ASCII-8BIT
-      string: |
-        {
-          "id": "chatcmpl-DcgRgOZmSaPu6kEIgVl9T949f2MK9",
-          "object": "chat.completion",
-          "created": 1778111996,
-          "model": "gpt-5-nano-2025-08-07",
-          "choices": [
-            {
-              "index": 0,
-              "message": {
-                "role": "assistant",
-                "content": "Roll results: 1, 2, 3\nTotal: 6\n\nWould you like to roll again?",
-                "refusal": null,
-                "annotations": []
-              },
-              "finish_reason": "stop"
-            }
-          ],
-          "usage": {
-            "prompt_tokens": 245,
-            "completion_tokens": 289,
-            "total_tokens": 534,
-            "prompt_tokens_details": {
-              "cached_tokens": 0,
-              "audio_tokens": 0
-            },
-            "completion_tokens_details": {
-              "reasoning_tokens": 256,
-              "audio_tokens": 0,
-              "accepted_prediction_tokens": 0,
-              "rejected_prediction_tokens": 0
-            }
-          },
-          "service_tier": "default",
-          "system_fingerprint": null
-        }
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+  recorded_at: Thu, 11 Jun 2026 20:10:48 GMT
 recorded_with: VCR 6.4.0

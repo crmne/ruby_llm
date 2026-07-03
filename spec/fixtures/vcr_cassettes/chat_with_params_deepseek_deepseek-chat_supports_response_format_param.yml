@@ -9,7 +9,7 @@ http_interactions:
         is the square root of 64? Answer with a JSON object with the key `result`."}],"stream":false,"response_format":{"type":"json_object"}}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -30,7 +30,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Wed, 06 May 2026 23:51:22 GMT
+      - Mon, 08 Jun 2026 18:45:37 GMT
       Server:
       - elb
       Vary:
@@ -38,7 +38,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 444eaa28eca68bbb6bcf842c9a155014
+      - bb836d17c5f91b3f38ffb246678f57fb
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -46,14 +46,14 @@ http_interactions:
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 a48f09960f130cb6049f12b379cf591e.cloudfront.net (CloudFront)
+      - 1.1 36e42f052a24feab91529d442c70cf34.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - LIS50-P1
+      - TXL50-P1
       X-Amz-Cf-Id:
-      - zjWlr7sanbQH7MzGuU7dPhw4BqFUkOo8igLI9m_zKKl_ia4g4O5zZg==
+      - wt0qb8LfBXN9RDqWNm9Y2k_3_7eW5uNhWY9bUWNqXbot2K1oBzPypg==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"5dd7fcf4-231c-4ae2-97ab-29fc599483ff","object":"chat.completion","created":1778111482,"model":"deepseek-v4-flash","choices":[{"index":0,"message":{"role":"assistant","content":"{\"result\":
-        8}"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":44,"completion_tokens":6,"total_tokens":50,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":44},"system_fingerprint":"fp_058df29938_prod0820_fp8_kvcache_20260402"}'
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+      string: '{"id":"505035b0-8daa-4423-b304-cf0d06f358a7","object":"chat.completion","created":1780944337,"model":"deepseek-v4-flash","choices":[{"index":0,"message":{"role":"assistant","content":"{\n  \"result\":
+        8\n}"},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":44,"completion_tokens":9,"total_tokens":53,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":44},"system_fingerprint":"fp_8b330d02d0_prod0820_fp8_kvcache_20260402"}'
+  recorded_at: Mon, 08 Jun 2026 18:45:38 GMT
 recorded_with: VCR 6.4.0

@@ -36,7 +36,8 @@ module RubyLLM
         end
 
         def critical_capabilities_for(model_id)
-          capabilities = []
+          # Every Perplexity model returns search result citations.
+          capabilities = ['citations']
           capabilities << 'vision' if model_id.match?(/sonar(?:-pro|-reasoning(?:-pro)?)?$/)
           capabilities << 'reasoning' if model_id.match?(/reasoning|deep-research/)
           capabilities

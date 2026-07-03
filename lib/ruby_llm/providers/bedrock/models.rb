@@ -10,7 +10,7 @@ module RubyLLM
         REGION_PREFIXES = %w[global us eu ap sa ca me af il].freeze
 
         def models_api_base
-          "https://bedrock.#{bedrock_region}.amazonaws.com"
+          @config.bedrock_api_base || "https://bedrock.#{bedrock_region}.amazonaws.com"
         end
 
         def models_url
@@ -27,7 +27,7 @@ module RubyLLM
           model_id = model_id_with_region(model_data['modelId'], model_data)
           converse_data = model_data['converse'] || {}
 
-          Model::Info.new(
+          Model.new(
             id: model_id,
             name: model_data['modelName'],
             provider: slug,
@@ -118,13 +118,6 @@ module RubyLLM
           major = match[1].to_i
           minor = match[2].to_i
           major > 4 || (major == 4 && minor >= 5)
-        end
-
-        def reasoning_embedded?(model)
-          metadata = RubyLLM::Utils.deep_symbolize_keys(model.metadata || {})
-          converse = metadata[:converse] || {}
-          reasoning_supported = converse[:reasoningSupported] || {}
-          reasoning_supported[:embedded] || false
         end
 
         def parse_context_window(model_data)

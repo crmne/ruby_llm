@@ -9,7 +9,7 @@ http_interactions:
         a person named John who is 30 years old"}],"stream":false,"response_format":{"type":"json_schema","json_schema":{"name":"response","schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"integer"}},"required":["name","age"],"additionalProperties":false},"strict":true}}}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Api-Key:
       - "<AZURE_API_KEY>"
       Content-Type:
@@ -37,18 +37,18 @@ http_interactions:
       - access-control-request-headers
       Request-Context:
       - appId=
-      Traceparent:
-      - 00-4058753ae3394e5a9d5e163bd26b0ade-679444f500001861-00
       X-Ms-Rai-Invoked:
-      - 'true'
+      - 'false'
+      Traceparent:
+      - 00-cdc9cd13042f41319c7e6c79113feac8-e3c6061f001072c8-00
       X-Request-Id:
       - "<X_REQUEST_ID>"
       X-Xai-Model-Address:
       - http://localhost:9988
       X-Ms-Client-Request-Id:
-      - 4058753a-e339-4e5a-9d5e-163bd26b0ade
+      - cdc9cd13-042f-4131-9c7e-6c79113feac8
       Azureml-Model-Session:
-      - d20260429222844-bf683bdf
+      - d20260601175039-cf414bb2
       Azureai-Requested-Tier:
       - default
       Azureai-Processed-Tier:
@@ -58,9 +58,9 @@ http_interactions:
       X-Ratelimit-Key:
       - grok-4-1-fast-non-reasoning
       X-Ratelimit-Remaining-Requests:
-      - '48'
+      - '49'
       X-Ratelimit-Reset-Requests:
-      - '2'
+      - '1'
       X-Ratelimit-Limit-Requests:
       - '50'
       X-Ratelimit-Renewalperiod-Requests:
@@ -68,15 +68,17 @@ http_interactions:
       X-Ratelimit-Abusepenalty-Active:
       - 'False'
       X-Ratelimit-Remaining-Tokens:
-      - '49771'
+      - '49905'
       X-Ratelimit-Reset-Tokens:
       - '0'
       X-Ratelimit-Limit-Tokens:
       - '50000'
       X-Ratelimit-Renewalperiod-Tokens:
       - '60'
+      Azureai-Fe-Is-Streaming:
+      - 'False'
       Apim-Request-Id:
-      - 4058753a-e339-4e5a-9d5e-163bd26b0ade
+      - cdc9cd13-042f-4131-9c7e-6c79113feac8
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Ms-Deployment-Name:
@@ -86,10 +88,9 @@ http_interactions:
       X-Ms-Region:
       - West Europe
       Date:
-      - Wed, 06 May 2026 23:51:34 GMT
+      - Mon, 08 Jun 2026 18:45:40 GMT
     body:
       encoding: UTF-8
-      string: '{"id":"aa1a4bda-6b34-45f2-88e5-9c087a31cf91","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"{\"name\":
-        \"John\", \"age\": 30}"},"finish_reason":"stop","content_filter_results":{}}],"usage":{"prompt_tokens":84,"completion_tokens":12,"total_tokens":96,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":0,"audio_tokens":0,"text_tokens":84,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1778111493,"object":"chat.completion","prompt_filter_results":null}'
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+      string: '{"id":"1407e2eb-a4ec-4d8f-a38b-a979b2ffab5f","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"{\"name\":\"John\",\"age\":30}"},"finish_reason":"stop","content_filter_results":{}}],"usage":{"prompt_tokens":84,"completion_tokens":9,"total_tokens":93,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":163,"audio_tokens":0,"text_tokens":84,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1780944341,"object":"chat.completion","prompt_filter_results":null}'
+  recorded_at: Mon, 08 Jun 2026 18:45:41 GMT
 recorded_with: VCR 6.4.0

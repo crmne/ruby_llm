@@ -14,6 +14,11 @@ module RubyLLM
         def supports_tool_parallel_control?(_model_id)
           true
         end
+
+        # All current Claude models support citations except Haiku 3.
+        def critical_capabilities_for(model_id)
+          model_id.include?('claude-3-haiku') ? [] : ['citations']
+        end
       end
     end
   end

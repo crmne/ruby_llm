@@ -8,7 +8,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -29,39 +29,39 @@ http_interactions:
       X-Origin-Cache:
       - HIT
       Last-Modified:
-      - Tue, 05 May 2026 02:26:38 GMT
+      - Thu, 04 Jun 2026 23:49:36 GMT
       Access-Control-Allow-Origin:
       - "*"
       Etag:
-      - W/"69f9555e-9c6"
+      - W/"6a220f10-9c6"
       Expires:
-      - Thu, 07 May 2026 00:01:24 GMT
+      - Thu, 11 Jun 2026 20:19:43 GMT
       Cache-Control:
       - max-age=600
       X-Proxy-Cache:
       - MISS
       X-Github-Request-Id:
-      - 8CA8:1519:3A7294A:3B13014:69FBD3FC
+      - 8592:1B2D0D:349EF7:351F62:6A2B1606
       Accept-Ranges:
       - bytes
+      Age:
+      - '0'
       Date:
-      - Wed, 06 May 2026 23:52:51 GMT
+      - Thu, 11 Jun 2026 20:09:43 GMT
       Via:
       - 1.1 varnish
-      Age:
-      - '35'
       X-Served-By:
-      - cache-lis1490028-LIS
+      - cache-ber1080043-BER
       X-Cache:
-      - HIT
+      - MISS
       X-Cache-Hits:
-      - '2'
+      - '0'
       X-Timer:
-      - S1778111572.683581,VS0,VE0
+      - S1781208583.968344,VS0,VE110
       Vary:
       - Accept-Encoding
       X-Fastly-Request-Id:
-      - '0895a0f18ed6a767b47f0cb3805238be1c41540e'
+      - e3ba3a422298ad0a4e53f98d380786ce46e1158c
     body:
       encoding: ASCII-8BIT
       string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
@@ -97,14 +97,14 @@ http_interactions:
         \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
         WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
         FOR A PARTICULAR\n     PURPOSE.\n"
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+  recorded_at: Thu, 11 Jun 2026 20:09:43 GMT
 - request:
     method: post
-    uri: https://api.openai.com/v1/chat/completions
+    uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"gpt-5-nano","messages":[{"role":"user","content":[{"type":"text","text":"What''s
-        in this file?"},{"type":"text","text":"<file name=''license.txt'' mime_type=''text/plain''>Ruby
+      string: '{"model":"gpt-5-nano","input":[{"role":"user","content":[{"type":"input_text","text":"What''s
+        in this file?"},{"type":"input_text","text":"<file name=''license.txt'' mime_type=''text/plain''>Ruby
         is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
         can redistribute it and/or modify it under either the terms of the\n2-clause
         BSDL (see the file BSDL), or the conditions below:\n\n  1. You may make and
@@ -137,10 +137,10 @@ http_interactions:
         aggregated with this\n     software.\n\n  6. THIS SOFTWARE IS PROVIDED \"AS
         IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING, WITHOUT
         LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-        A PARTICULAR\n     PURPOSE.\n</file>"}]}],"stream":false}'
+        A PARTICULAR\n     PURPOSE.\n</file>"}]}],"stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -155,7 +155,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 06 May 2026 23:53:02 GMT
+      - Thu, 11 Jun 2026 20:09:51 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -173,17 +173,17 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Access-Control-Expose-Headers:
+      - CF-Ray
+      - CF-Ray
       - X-Request-ID
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '10084'
+      - '7874'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
       - '2020-10-01'
-      X-Openai-Proxy-Wasm:
-      - v0.1
       X-Ratelimit-Limit-Requests:
       - '5000'
       X-Ratelimit-Limit-Tokens:
@@ -191,11 +191,11 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '4999'
       X-Ratelimit-Remaining-Tokens:
-      - '1999353'
+      - '1999044'
       X-Ratelimit-Reset-Requests:
       - 12ms
       X-Ratelimit-Reset-Tokens:
-      - 19ms
+      - 28ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Set-Cookie:
@@ -204,7 +204,86 @@ http_interactions:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        ewogICJpZCI6ICJjaGF0Y21wbC1EY2dLcWF2WFVZbDFUQWY5dG1QRW16ZldzUVgxSCIsCiAgIm9iamVjdCI6ICJjaGF0LmNvbXBsZXRpb24iLAogICJjcmVhdGVkIjogMTc3ODExMTU3MiwKICAibW9kZWwiOiAiZ3B0LTUtbmFuby0yMDI1LTA4LTA3IiwKICAiY2hvaWNlcyI6IFsKICAgIHsKICAgICAgImluZGV4IjogMCwKICAgICAgIm1lc3NhZ2UiOiB7CiAgICAgICAgInJvbGUiOiAiYXNzaXN0YW50IiwKICAgICAgICAiY29udGVudCI6ICJUaGlzIGlzIHRoZSBSdWJ5IGxpY2Vuc2UgdGV4dCAobGljZW5zZS50eHQpLlxuXG5LZXkgcG9pbnRzOlxuLSBJdOKAmXMgYSBkdWFsLWxpY2Vuc2UgbGljZW5zZTogeW91IGNhbiB1c2UgdGhlIDItY2xhdXNlIEJTRCBMaWNlbnNlIChCU0RMKSBvciB0aGUgc3BlY2lmaWMgdGVybXMgbGlzdGVkIGJlbG93LlxuLSBQdXJwb3NlOiB0byBwZXJtaXQgYnJvYWQgdXNlLCByZWRpc3RyaWJ1dGlvbiwgYW5kIG1vZGlmaWNhdGlvbiBvZiBSdWJ5LCB3aXRoIGNlcnRhaW4gY29uZGl0aW9ucy5cblxuTWFpbiBwZXJtaXNzaW9ucyBhbmQgY29uZGl0aW9ucyAoaGlnaGxpZ2h0cyBmcm9tIHRoZSBlbnVtZXJhdGVkIHNlY3Rpb25zKTpcbi0gVmVyYmF0aW0gY29waWVzOiBZb3UgbWF5IG1ha2UgYW5kIGdpdmUgYXdheSB2ZXJiYXRpbSBjb3BpZXMgb2YgdGhlIHNvdXJjZSB3aXRob3V0IHJlc3RyaWN0aW9uLCBhcyBsb25nIGFzIHlvdSBrZWVwIHRoZSBvcmlnaW5hbCBjb3B5cmlnaHQgbm90aWNlcyBhbmQgZGlzY2xhaW1lcnMuXG4tIE1vZGlmaWNhdGlvbnM6IFlvdSBtYXkgbW9kaWZ5IHRoZSBzb2Z0d2FyZSwgcHJvdmlkZWQgeW91IHNhdGlzZnkgYXQgbGVhc3Qgb25lIG9mIHRoZSBvcHRpb25zIChh4oCTZCkgbGlzdGVkIHVuZGVyIHNlY3Rpb24gMiAoZS5nLiwgcHVibGlzaCB5b3VyIG1vZGlmaWNhdGlvbnMgdG8gdGhlIHB1YmxpYyBkb21haW4gb3IgZnJlZWx5IGF2YWlsYWJsZSwgb3IgbGltaXQgdXNhZ2Ugd2l0aGluIHlvdXIgb3JnYW5pemF0aW9uLCBvciBvdGhlciBkaXN0cmlidXRpb24gYXJyYW5nZW1lbnRzIHdpdGggdGhlIGF1dGhvcikuXG4tIFJlZGlzdHJpYnV0aW9uIGluIGJpbmFyeS9vYmplY3QgZm9ybTogWW91IG1heSBkaXN0cmlidXRlIGJpbmFyaWVzIG9yIG9iamVjdCBjb2RlLCBwcm92aWRlZCB5b3UgbWVldCBhdCBsZWFzdCBvbmUgb2YgdGhlIG9wdGlvbnMgKGHigJNkKSBpbiBzZWN0aW9uIDMgKGUuZy4sIGFjY29tcGFueSB3aXRoIHNvdXJjZSwgb3IgcHJvdmlkZSBpbnN0cnVjdGlvbnMgb24gd2hlcmUgdG8gZ2V0IHRoZSBvcmlnaW5hbCBkaXN0cmlidXRpb24sIGV0Yy4pLlxuLSBJbmNsdWRpbmcgaW4gb3RoZXIgc29mdHdhcmU6IFlvdSBtYXkgbW9kaWZ5IGFuZCBpbmNsdWRlIHBhcnRzIG9mIHRoZSBzb2Z0d2FyZSBpbiBvdGhlciBzb2Z0d2FyZSAoZXZlbiBjb21tZXJjaWFsKS4gSG93ZXZlciwgc29tZSBmaWxlcyBtYXkgbm90IGJlIHdyaXR0ZW4gYnkgdGhlIGF1dGhvciwgc28gdGhvc2UgcGFydHMgYXJlbuKAmXQgY292ZXJlZCBieSB0aGVzZSB0ZXJtcyAoc2VlIExFR0FMIGZvciBkZXRhaWxzKS5cbi0gTm9uLWF1dGhvciBzY3JpcHRzL291dHB1dHM6IFNjcmlwdHMgYW5kIGxpYnJhcnkgZmlsZXMgdXNlZCBhcyBpbnB1dCBvciBwcm9kdWNlZCBhcyBvdXRwdXQgZG8gbm90IGF1dG9tYXRpY2FsbHkgZmFsbCB1bmRlciB0aGUgY29weXJpZ2h0IG9mIHRoZSBzb2Z0d2FyZTsgdGhleSBiZWxvbmcgdG8gd2hvZXZlciBnZW5lcmF0ZWQgdGhlbS5cbi0gV2FycmFudGllczogVGhlIHNvZnR3YXJlIGlzIHByb3ZpZGVkIOKAnEFTIElT4oCdIHdpdGhvdXQgd2FycmFudGllcyBvZiBhbnkga2luZC5cblxuRXh0cmEgbm90ZTpcbi0gSWYgdGhlcmUgYXJlIGZpbGVzIGluIHRoZSBkaXN0cmlidXRpb24gbm90IHdyaXR0ZW4gYnkgdGhlIGF1dGhvciwgc2VlIHRoZSBMRUdBTCBmaWxlIGZvciB0aGVpciBjb3B5aW5nIGNvbmRpdGlvbnMuXG5cbkJvdHRvbSBsaW5lOiBUaGlzIGlzIGEgcGVybWlzc2l2ZSBsaWNlbnNlIHRoYXQgYWxsb3dzIGJyb2FkIHVzZSBhbmQgcmVkaXN0cmlidXRpb24gb2YgUnVieSwgd2l0aCBzdGFuZGFyZCBCU0Qtc3R5bGUgYXR0cmlidXRpb24vZGlzY2xhaW1lciByZXF1aXJlbWVudHMgYW5kIHNvbWUgYWRkaXRpb25hbCBwcm92aXNpb25zIGFib3V0IG5vbi1hdXRob3IgZmlsZXMgYW5kIGNlcnRhaW4gZGlzdHJpYnV0aW9uIGFycmFuZ2VtZW50cy4iLAogICAgICAgICJyZWZ1c2FsIjogbnVsbCwKICAgICAgICAiYW5ub3RhdGlvbnMiOiBbXQogICAgICB9LAogICAgICAiZmluaXNoX3JlYXNvbiI6ICJzdG9wIgogICAgfQogIF0sCiAgInVzYWdlIjogewogICAgInByb21wdF90b2tlbnMiOiA1MzksCiAgICAiY29tcGxldGlvbl90b2tlbnMiOiAxMjk2LAogICAgInRvdGFsX3Rva2VucyI6IDE4MzUsCiAgICAicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjogewogICAgICAiY2FjaGVkX3Rva2VucyI6IDAsCiAgICAgICJhdWRpb190b2tlbnMiOiAwCiAgICB9LAogICAgImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOiB7CiAgICAgICJyZWFzb25pbmdfdG9rZW5zIjogODk2LAogICAgICAiYXVkaW9fdG9rZW5zIjogMCwKICAgICAgImFjY2VwdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjogMCwKICAgICAgInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjogMAogICAgfQogIH0sCiAgInNlcnZpY2VfdGllciI6ICJkZWZhdWx0IiwKICAic3lzdGVtX2ZpbmdlcnByaW50IjogbnVsbAp9Cg==
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+      string: |-
+        {
+          "id": "resp_031c568dcbe06d4c016a2b160748f881a09b7fae1cbdf8a24b",
+          "object": "response",
+          "created_at": 1781208583,
+          "status": "completed",
+          "background": false,
+          "billing": {
+            "payer": "developer"
+          },
+          "completed_at": 1781208591,
+          "error": null,
+          "frequency_penalty": 0.0,
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
+          "model": "gpt-5-nano-2025-08-07",
+          "moderation": null,
+          "output": [
+            {
+              "id": "rs_031c568dcbe06d4c016a2b16079e2c81a0bc567b0bc8d943d3",
+              "type": "reasoning",
+              "content": [],
+              "encrypted_content": "gAAAAABqKxYPEDLKAutl1W0388xS_kjOuKctrU5JUbb8oIipCuEPpRKyTsBUwk-7bePdRyUJv0zc7NCSW6dbK9UJzXzVA3J_UvnDzwix83e9qFwGpQboyskrMflArmUeal-Ebn4h2-ASR9m650Itb8ijcE9icCo_g35VfPpUT_SfAAV5F4BMYQYB85QegTjZ_kdaUW2Xu4go-ImWARbYQq1PF0vURfnvbaZX0MdT4PrevfRPkt9otA_lWAcws16PL2m5ivl6xOtCCSh1kgzROuVngjghLw1iOiY27c1nWjGhLoZur4PBJmvLKTAOwjRzCuCn1mj9zTxQTlQBtHo3NnVWMf6fvKC-DELOtqXYcqxp9O4NoRCiONU7uLgjxGIFq3METlNVqMSk_dg2JiEfapRD-kStdtoCwo02gsnGVXVOPsDdW8EAQPewhjKLRQEuyWmxxXxfsstAJEW3U1Qbb3h4I9Tkx4_vf2DtRkt_6h8_BllDCdTlKnob_OOQOSpTrqUii5VXANrBtCopQmlG5tgrORZ9eoKpTUZ4jdSJzARLgUFitTd43vPH3ecILwZMsoNLkDuDN1DvqbxBgwJXOGTqdR5fFVE7YMflUPj16URyDGpabnq6x0RtMlwZVtitrIOocBHulF9kdnAiuOFsaN2j77H2lBs37gcmbgFXxFpEoc_yMQ6jhXJte5gDbcFyVJqf7FVBhf1s-RAzzcNeyL7UVQ7_TvQff65QhS3IZBnoapfYjXSM3LU6fsTNEKNA_6krvPWDGty9WHI09u4ydYlYT6Tld5zw8ex1-gIeuakwJR5P42YT4YSffk0JZgvrfnubrZ1siKubSESAAoZD94jYwryw2d1AzbeWy1N87lkSO5rEvxfXkd44JFmCGjy1NybPX6tSWTW0DF3oPg5mmpANQV6wBujOlLDMHNtVnm5HE-nrXDanfOPWyjavfaTF6eJ7kZH-kTGOFcurOjzsd0qetHWiSVU5uWeJnbUJ0jgRNWFvhNWtpoBlLzavzndTEE1Sk7UeqaiAli0mtUUs-69TS-yHDpgt0F0ocg7lcbiWAWXkVW71BKAfRdzNd7M-qO0kzCCiu2jBI6MtTc_SMlyoTlYS8r4xys4fUNHHn54rQDyBeS8vC3I1HDTfyt-JTRShkNWGkDtuFjfTo7nWe8kg9l0rzjKJ9IxYtygShOZ3FkAti_vZmAt3i0QkU6uWvfWIsWqHKYQLGdrB9VtgNComMLB5SnMwyTz3oUUkoiWgwJHItVqhI1wFyt-iEvbutmc2kAZr43W6Oe-HsezFSR0c3j5V78GCIg2mcaQb4ROYxUZbFzZKIbmj57EL_XjHKC29nX5Ca8O3uSrHCkrIOtlg8rm0zCme1nfZV2E4oOK27j4tfYcodALDgjzpfzmbi573aKbM-x283gtBBo9eU_VlJS6Knqg5NO0XY-k98zrlUDYuBuzvesNr4LSZpTh3NZa6No3_XYecdDlDD4WnGSoNYCHzmcU5Z557H18-bBm6Wk_u5BmweoUgCxpfLmza_HSmVbxKe5NvFYFLR_w2dGnPu-a7AjCxjmRQP9c1GAqgLroiGl2zfmfpDI1GeTKO1wr48lOOfW5guXZp4A3mbwcPrvo43s2a44HO50pda6ZSmMtQo1atlYwYfrzcDEbYSfdkbzFo9zkd1-MFuiLYkcnBxF8GKDvyhkOrLq-Xtmsmby4T6ByLyXByYh9lfFdSGdRe08teODKznhdX3KI9DCXO2kRIiII3SqjaZQmglc0FZFfpyiB2LNgLmQ0BD02mWDARWtKZQ2Wu9ivWmB4cTi97kDIREZKTUvpjpX9ljYID75tD60e4hH6gfipdxuD-fc7H-mOuBakzex8EJ9clXNKnfYqKfRYYwMYn4pZiVvJfo_rUeaBt6ARcj4ZTQZ8YCeWnNrWARFPMqjThl9ZpFIn5XA-X3ogHRae6ON2xO3YFNvDSHoEggmfjLnTJum8s1c-jsNwfIRhdHNRQBvAlnJJczAEi6AgW7mL3kEiEgRh7XjboxWTlFqeC43mGOZRFTaXUCI61XdMZZBPqdzRDppu8qz_7Dz47F6kebo_Qt4WTx4JfLkW0b4mO_2dzpijkWxxddiBo2M65OLjKbzBXUfGfOBNyjkVm56LUeNzsVG2UWHeMj_AC78o56FkdgEdUygp53Xlsls7u04vvGNAGsJOVWNeF_A6Ur7fkM_LANiUCuB4972m7gPW65Q46604xJnPNuX2v0VC9c_0vHYUnnWJrd-mmqH5qLvwc2e0TV45UtcupKtXOYUz345DG2DNXVG-fylu8szCdviQKpQ6ij3ztjo-l1Jldma4h9xmBM2QWBlCcfk-ZlBWH6wYR7DdRpQeeZbFYy0p09Ye509x-wFtlHkZyBvc1eusSR1G1uOPWZQ4FmK_aGnKvaV3klOQ_u8UyOnp2rLOAKfaQKnMe8HswOUYXBUmgrHTfB_IuVizFUzzahbraEJB1XAMoNlrz2AYLpQOuUUI2kpN-_toSHItUrL0LFg2xt_3VLgAhgo0rlB8EOrxql4Gb4lKdwHTDBaYbTHZ_Stlmtd4TMEwxf2UqteUjmbb0ujuMqymAjHPIr_GGPet1XQlTkKvfAjPFJ0PSWeARHk9psNGQ6wKRXJCaem058bHmmOBF1XjyYQEiwiuRNT7nNqG1Za19o3EM-zemeCPlfEvNkWv_abK87x64THCYKRRLRCSlkYgBne4YCYkDxu0Z2cGUjnIF42Vj_QSt5WQX9nKgCPK5mWY5EirX7dQ2Ward-QZ7lmn5ZyoiVtHaSwU583qO-DYvsH2gTp7tiWgSfpQ68O4zxXxjic_zFHeWivSa7yDIsGETkAlQ882PhXXSDC41aO3RfOBMyqSjOaIcvKCpcOlTrF_rLnhVNZM04NDE4mKh1gxfp1BR3J_EZJnTubSiWRqFgWy33rfCF8ZeKTbqCu0b0oqIbtDt9m24asA8-GliMvAHXzdHDf0yYbC-mBQEbGS_xI6Z18rjW4KTM-lNkG8mCi71dVV3Gbg6GRn5S9ivrtEgJR5LDTcPG7zw2L3f3bbgHT9BDKkDGxnBXMXr3gvKhTbHhtQhvtAWurXQ8-9CtcGMVkm5TP1tkEx7zDHJPT5tuHc5bUmPJyTDSp3HubgdN6mI-khFSG-DSBki9o8jxYWJYJv8DC0txKvsOz2r3XXki9THQg68RtVcVQJvTj1_roBz-LAmZIWa6WVM3q3XZRPmui50QxLdjmQJE1DdErPyZyWnelED1RIfmPCPDdD5XkkHjUfoSFyPVhcdq2ebDe7ADGPsAliqM75eObB8wdyC5DYMI3QfPLEJrg-7xDGPyp-IdtzfaNVZxhKKFkwnxyW-ykPFGxB3FxuQstGnUZIYbfnN_sMPClFd55yPp_287iXt2tdOxtPNuXZg2hbpBsM_mDJCampcID6dYhfOGbVyewgqZc2SawW_5qgSnZTaPtBtW0XRheyBzS4pGHpZCKtt7Fg5QbLh9DigEe0dw5_r-a2pJs1O_gaqorpd3l90_Ci9PsOIJ3xpfhXq1zQ8stKUbSK0nAFBfh2EzWlcQg7iCqhvDgCQp_Aw38xjXXx9U-wLrHo2zIinJq6Uk2UyreqcoM0EGIQEpcvBYwfCnn-_0F4JC4aOGEWEQyrtwg94VLsvSYnusmNpXCHB84z1233DrMxlBdyNc37jmIuP8_Ig0npC4zBRjMdzrcXQLdYKDkLv6jEuBTrPxvJpGhjk63KfTPP1bMQA4DO_JqeyvbIbiPjuRdq8OHXpo3_2XiU2rco7eYflb5bd_0t5ykjzcqXJCfLTP--1KNwX4Sf8Jsi8DWjm1RHSYXpxghb6WlquxNsNdChkouq7CRtX4XZU-NYCfHFsS7GZdL2GYvVm1YxD-kUUMVb_W1SmgFKmmT2jwavfEw6Eg44HfzIH0qRe-pNDzCcd2WKrMAT_WOWJ-03yoyWojPYaZz_5q4i-P68axHhERipUDGx2RyyPNnV8TM3LGuxVPsmjHUkCFCPklZzybweWD7hNY642jLzuUxnCVx9ZXENpkjh5SIycB4iDm4tOX-y6cn6_C3Gyxv3lmotnfS-6nnITFcb8gPgTBiV1iqCCgxP7sT8KiIZGWrfiQXsyTnLCwGdQ_NGO3NjCyU3zr-EBznASi1FomFj2yPkl3bRf6Rw51aRh4jq7tQJjuMC13vL7ihX4f5LOw-qRl5MRZ34Cp9UnXE5d2QX-yNL75WL3gH5mohHsw31VFRo85qFIp2losssAVazH6AOXtpJYQa7N2wqcdnKprTMvbNBAYIkGkvXKrcKJj4Z143RIx10ylVbzsWmph_8xcQWjJ7qg21qGclE6OR0ha-adTPI_0F-PKKacy6rrEW29sb0b2LvFFWHYexdevUubmD2pmc_pNQhDAUwnqMrS1fJ0yR0Yr2a5nLZRCGl9RHud1lHcRGAEJ2wbMbro_TNqHxeO3FzFooOA1I_n8727QZ-VDDR4xpfc_mZb91aMKMQlvshISt_19CPBZT11TBczl3IPjJggKVFt3hR0Y4vFuF7NefOi8LkJy9Stcq0dnj3Kok8ozVK_0MLqKafqxQWm2xN7WE9UUSp3QL3nPJauFAqbN4KDz2mIUGgbiJABw36Z-i_6DSERMXb7nlzl6XNNg5VGpMGCrZrL1jAOuvstIVcJbJsIERAhnxUUxUtCJ9HN5lP79u5KZ1XKjOAZz9g0anHVM2zubWqRQH_U21K2T0-O5hhOcsZHnJsJH48ECgB0mmgzF-A9q6n8xLssjxZ9eaacv-srGcp--MLNaSGYBcqzgrynmFs0cAIVoslNESbajFcaeoPx1AVmwxqRbkX2H_NcxKVpch8_HvomY6TLNsTHx4enUxT13Y0x3ndwBhfB_FZdy7Lr7pKuukxABZylsEyXtuHXvb6AQ4x2jfYZlLF2fjhW-cj80gSGX57EMsopjn95OCXPC11Dtn8DJgKCnKekdA12KJgcse0RA6OZWLjMtXjZOD-oogEIcMkm6Ey4Iejh3MUTuIPhcRUMEiHKqNJQHsCmWmglf30q8aV5Df1YIviXEkL5M0SgoKqo40xCmmQlwDRv7LjTD-7y1xNFLMqbdYxN_p95q4anHgopMv5HtLOLkfCZUKTxoJ3FskjGcpS6B-19U3m6zXbxtPlW7p2KgC5OF_ci9vz4IC6UsaazuSabvkqvayPupARmfjAWjBZtTIypJdZo6PAE2mRJwvbSq1kx6A7BMRp8NbROTiZTJwANf_gm8b_yVR9pY5jt4U06dDV2KoXhmoXJObqfqr34UKDeNlT76Sbtw4STsDybH0IUrcz201aZTGLWJ6c3hfeKzAmVmAG0XLtLKIwF7At2fuzQYqR0gep08wP4YEbSXhsjb0nck65fXL7QkokMWrU9d7bw14gfIAhAngbMkMSExg_K8eb46N4sYJSXVXFfsAfvl8X7vBF1PlXqQdQKM22LB_ehnlhdaK0ZuWukjmRhrIPUcp9HILv1NMe-fK1rWsaCGFBL6DL5MaqSlbZaKByuYZT_YnsnAcEFqXQxQjsweYFtkcpEFRgLIGuheFjKCXuHbHtJs9SB2R9iQmvLj9d9H_aN-uC_C1A4PJoJ7XuZjjTiDi1f_0jl8x-3r9Qy_LpNr8N0kS6TGc5eCVxfJQzcZbrKlwnYPTj9asdP0p4P123XAoyv4xUQ8_72fqjb",
+              "summary": []
+            },
+            {
+              "id": "msg_031c568dcbe06d4c016a2b160c7ad481a0aa0de5205446073a",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "This is the Ruby license text (license.txt). It describes how you may use, modify, and distribute Ruby and parts of its distribution. It\u2019s a dual-licensed license: you may choose either the 2-clause BSD-like BSDL terms (see the BSDL file) or the conditions listed below.\n\nKey points:\n- You may copy verbatim any part of the software as long as you include the original copyright notices and disclaimers.\n- You may modify the software if you satisfy at least one of the options:\n  a) place your modifications in the Public Domain or freely distribute them (e.g., posting them publicly),\n  b) use the modified software only within your organization,\n  c) give non-standard binaries non-standard names with instructions on how to get the original,\n  d) arrange other terms with the author.\n- You may distribute the software in object/binary form if you satisfy at least one of:\n  a) distribute binaries and the library with instructions on where to get the original distribution,\n  b) accompany the distribution with the machine-readable source,\n  c) give non-standard binaries non-standard names with instructions to obtain the original distribution,\n  d) arrange other terms with the author.\n- You may modify and include parts of the software in other software (possibly commercial), but some files aren\u2019t written by the author and aren\u2019t covered by these terms; see LEGAL for those files and their conditions.\n- Scripts and library files that are input to or produced by the software do not automatically fall under its copyright; they belong to whoever generated them.\n- The software is provided \"as is\" without warranties of any kind.\n\nIf you want the exact legal terms, follow the two licensing options (BSDL or the detailed conditions listed). If you\u2019d like, I can boil this down to a shorter, one-page summary or pull out the key implications for a specific use case."
+                }
+              ],
+              "role": "assistant"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": "in_memory",
+          "reasoning": {
+            "context": "current_turn",
+            "effort": "medium",
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": false,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tools": [],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 539,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens": 1173,
+            "output_tokens_details": {
+              "reasoning_tokens": 768
+            },
+            "total_tokens": 1712
+          },
+          "user": null,
+          "metadata": {}
+        }
+  recorded_at: Thu, 11 Jun 2026 20:09:51 GMT
 recorded_with: VCR 6.4.0

@@ -10,7 +10,7 @@ http_interactions:
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}],"enable_thinking":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -25,15 +25,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 02 Apr 2026 11:25:51 GMT
-      - Thu, 02 Apr 2026 11:25:52 GMT
+      - Mon, 08 Jun 2026 18:55:43 GMT
+      - Mon, 08 Jun 2026 18:55:43 GMT
       Server:
       - uvicorn
       - uvicorn
       Keep-Alive:
       - timeout=15, max=100
       Content-Length:
-      - '1288'
+      - '2920'
       Content-Type:
       - application/json
       X-Request-Accepted-At:
@@ -45,38 +45,102 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"content":null,"reasoning_content":"\nOkay,
-        the user is asking, \"What''s the best language to learn?\" I need to figure
-        out how to respond. Let me check the tools provided. There''s a function called
-        best_language_to_learn with no parameters required. Since the function exists,
-        I should call it. The description says it gets the best language to learn,
-        so that''s exactly what the user needs. I don''t need to add any parameters
-        because the function doesn''t require any. I''ll just trigger the function
-        call.\n","role":"assistant","tool_calls":[{"function":{"arguments":"{}","name":"best_language_to_learn"},"id":"call-bHeSj51ppo9sMNBmgX1aTEf8mNroiHrh","type":"function"}]}}],"created":1775129153,"id":"chatcmpl-ctUkv4bJ6sSWOMPGApGvQiIck8CfjHox","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":121,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":102,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":209,"prompt_tokens_details":{"cached_tokens":3},"prompt_tokens_per_second":3789.93943350379,"time_per_output_token_ms":8.136719008264462,"time_to_first_token_ms":55.146,"tokens_per_second":122.89966004532053,"total_tokens":330}}'
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+        the user is asking, \"What''s the best language to learn?\" Let me think about
+        how to approach this.\n\nFirst, I need to consider the factors that determine
+        the best language. It depends on the learner''s goals. For example, if they''re
+        interested in business, English is crucial. For travel, maybe Spanish or French.
+        If they''re in a specific region, learning the local language makes sense.
+        Also, languages like Mandarin or Arabic might be recommended for cultural
+        or career reasons.\n\nBut the user hasn''t provided any context about their
+        interests, location, or goals. Without that, it''s hard to give a definitive
+        answer. The previous response mentioned \"best_language_to_learn\" as a tool,
+        but the function call example didn''t include parameters. Wait, the tool''s
+        parameters are empty, so maybe it''s designed to just return a general answer.
+        \n\nSince the user''s question is too broad, I should probably use the function
+        call to get a predefined answer. The tool might have a default response or
+        a list of top languages. Let me check the previous interaction. The assistant
+        used a tool call with an empty arguments object, so maybe that''s the way
+        to go. \n\nI should generate the function call without any arguments since
+        the parameters are required to be empty. Then, the response would be the answer
+        provided by the tool. The user might expect a list of top languages based
+        on various factors like demand, ease of learning, etc. \n\nAlternatively,
+        if I can answer directly using my knowledge, I could list languages like English,
+        Spanish, Mandarin, etc., but since the tool is available, maybe the system
+        prefers using it. However, the user might be testing if I can answer without
+        the tool. \n\nWait, the instructions say to reply with internal knowledge
+        directly if possible, otherwise use function calls. Since I can provide a
+        general answer, maybe I should do that. But the previous example used a tool
+        call. Hmm. \n\nThe user''s question is too vague, so the best approach is
+        to use the function call to get a structured answer. Let me proceed with the
+        tool call as per the example.\n","role":"assistant","tool_calls":[{"function":{"arguments":"{}","name":"best_language_to_learn"},"id":"call-Jv8HcaHnRYCdxjtkx2LAxRI8yvVdzFW2","type":"function"}]}}],"created":1780944952,"id":"chatcmpl-NtZqocDPULdrPQBYvC8s222q7wzwjkvp","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":450,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":431,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":209,"prompt_tokens_details":{"cached_tokens":66},"prompt_tokens_per_second":3994.953742640874,"time_per_output_token_ms":19.688824444444442,"time_to_first_token_ms":52.316,"tokens_per_second":50.790233963519746,"total_tokens":659}}'
+  recorded_at: Mon, 08 Jun 2026 18:55:52 GMT
 - request:
     method: post
     uri: "<GPUSTACK_API_BASE>/chat/completions"
     body:
       encoding: UTF-8
       string: '{"model":"qwen3","messages":[{"role":"user","content":"What''s the
-        best language to learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"call-bHeSj51ppo9sMNBmgX1aTEf8mNroiHrh","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning":"\nOkay,
-        the user is asking, \"What''s the best language to learn?\" I need to figure
-        out how to respond. Let me check the tools provided. There''s a function called
-        best_language_to_learn with no parameters required. Since the function exists,
-        I should call it. The description says it gets the best language to learn,
-        so that''s exactly what the user needs. I don''t need to add any parameters
-        because the function doesn''t require any. I''ll just trigger the function
-        call.\n","reasoning_content":"\nOkay, the user is asking, \"What''s the best
-        language to learn?\" I need to figure out how to respond. Let me check the
-        tools provided. There''s a function called best_language_to_learn with no
-        parameters required. Since the function exists, I should call it. The description
-        says it gets the best language to learn, so that''s exactly what the user
-        needs. I don''t need to add any parameters because the function doesn''t require
-        any. I''ll just trigger the function call.\n"},{"role":"tool","content":"Ruby","tool_call_id":"call-bHeSj51ppo9sMNBmgX1aTEf8mNroiHrh"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        best language to learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"call-Jv8HcaHnRYCdxjtkx2LAxRI8yvVdzFW2","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning":"\nOkay,
+        the user is asking, \"What''s the best language to learn?\" Let me think about
+        how to approach this.\n\nFirst, I need to consider the factors that determine
+        the best language. It depends on the learner''s goals. For example, if they''re
+        interested in business, English is crucial. For travel, maybe Spanish or French.
+        If they''re in a specific region, learning the local language makes sense.
+        Also, languages like Mandarin or Arabic might be recommended for cultural
+        or career reasons.\n\nBut the user hasn''t provided any context about their
+        interests, location, or goals. Without that, it''s hard to give a definitive
+        answer. The previous response mentioned \"best_language_to_learn\" as a tool,
+        but the function call example didn''t include parameters. Wait, the tool''s
+        parameters are empty, so maybe it''s designed to just return a general answer.
+        \n\nSince the user''s question is too broad, I should probably use the function
+        call to get a predefined answer. The tool might have a default response or
+        a list of top languages. Let me check the previous interaction. The assistant
+        used a tool call with an empty arguments object, so maybe that''s the way
+        to go. \n\nI should generate the function call without any arguments since
+        the parameters are required to be empty. Then, the response would be the answer
+        provided by the tool. The user might expect a list of top languages based
+        on various factors like demand, ease of learning, etc. \n\nAlternatively,
+        if I can answer directly using my knowledge, I could list languages like English,
+        Spanish, Mandarin, etc., but since the tool is available, maybe the system
+        prefers using it. However, the user might be testing if I can answer without
+        the tool. \n\nWait, the instructions say to reply with internal knowledge
+        directly if possible, otherwise use function calls. Since I can provide a
+        general answer, maybe I should do that. But the previous example used a tool
+        call. Hmm. \n\nThe user''s question is too vague, so the best approach is
+        to use the function call to get a structured answer. Let me proceed with the
+        tool call as per the example.\n","reasoning_content":"\nOkay, the user is
+        asking, \"What''s the best language to learn?\" Let me think about how to
+        approach this.\n\nFirst, I need to consider the factors that determine the
+        best language. It depends on the learner''s goals. For example, if they''re
+        interested in business, English is crucial. For travel, maybe Spanish or French.
+        If they''re in a specific region, learning the local language makes sense.
+        Also, languages like Mandarin or Arabic might be recommended for cultural
+        or career reasons.\n\nBut the user hasn''t provided any context about their
+        interests, location, or goals. Without that, it''s hard to give a definitive
+        answer. The previous response mentioned \"best_language_to_learn\" as a tool,
+        but the function call example didn''t include parameters. Wait, the tool''s
+        parameters are empty, so maybe it''s designed to just return a general answer.
+        \n\nSince the user''s question is too broad, I should probably use the function
+        call to get a predefined answer. The tool might have a default response or
+        a list of top languages. Let me check the previous interaction. The assistant
+        used a tool call with an empty arguments object, so maybe that''s the way
+        to go. \n\nI should generate the function call without any arguments since
+        the parameters are required to be empty. Then, the response would be the answer
+        provided by the tool. The user might expect a list of top languages based
+        on various factors like demand, ease of learning, etc. \n\nAlternatively,
+        if I can answer directly using my knowledge, I could list languages like English,
+        Spanish, Mandarin, etc., but since the tool is available, maybe the system
+        prefers using it. However, the user might be testing if I can answer without
+        the tool. \n\nWait, the instructions say to reply with internal knowledge
+        directly if possible, otherwise use function calls. Since I can provide a
+        general answer, maybe I should do that. But the previous example used a tool
+        call. Hmm. \n\nThe user''s question is too vague, so the best approach is
+        to use the function call to get a structured answer. Let me proceed with the
+        tool call as per the example.\n"},{"role":"tool","content":"Ruby","tool_call_id":"call-Jv8HcaHnRYCdxjtkx2LAxRI8yvVdzFW2"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}],"enable_thinking":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -91,124 +155,15 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 02 Apr 2026 11:25:52 GMT
-      - Thu, 02 Apr 2026 11:25:53 GMT
+      - Mon, 08 Jun 2026 18:55:52 GMT
+      - Mon, 08 Jun 2026 18:55:52 GMT
       Server:
       - uvicorn
       - uvicorn
       Keep-Alive:
       - timeout=15, max=100
       Content-Length:
-      - '2076'
-      Content-Type:
-      - application/json
-      X-Request-Accepted-At:
-      - "<X_REQUEST_ID>"
-      X-Request-Id:
-      - "<X_REQUEST_ID>"
-      Access-Control-Allow-Origin:
-      - "*"
-    body:
-      encoding: UTF-8
-      string: '{"choices":[{"finish_reason":"tool_calls","index":0,"message":{"content":null,"reasoning_content":"\nOkay,
-        the user asked, \"What''s the best language to learn?\" and I need to provide
-        an answer. Let me think about this.\n\nFirst, the available tools include
-        a function called best_language_to_learn. The description says it gets the
-        best language to learn, and it doesn''t require any parameters. Since the
-        user is asking exactly for the best language, using this function makes sense.
-        \n\nI should check if there''s any reason not to use the function. The function
-        doesn''t need any arguments, so there''s no confusion about parameters. The
-        user''s query is straightforward, so the function should handle it. \n\nWait,
-        maybe the function is designed to return the best language based on some criteria,
-        like popularity, versatility, or ease of learning. Since the user didn''t
-        specify any particular criteria, the function''s default behavior should cover
-        it. \n\nI don''t have any internal knowledge about programming languages''
-        rankings, so relying on the function''s output is better. The user might expect
-        an up-to-date answer, and the function could provide the latest information.
-        \n\nSo, the correct step is to call the best_language_to_learn function without
-        any arguments. There''s no need to explain or add anything else. Just trigger
-        the function call.\n","role":"assistant","tool_calls":[{"function":{"arguments":"{}","name":"best_language_to_learn"},"id":"call-Yq9mW69I6BteTMWDvlSRSOgSGUYtrbhq","type":"function"}]}}],"created":1775129156,"id":"chatcmpl-2dqKtR9xYeitzUqut2ZubdhKnAV5WLpT","model":"qwen3","object":"chat.completion","usage":{"completion_tokens":271,"completion_tokens_details":{"accepted_prediction_tokens":0,"reasoning_tokens":252,"rejected_prediction_tokens":0},"draft_tokens":0,"draft_tokens_acceptance":0.0,"prompt_tokens":220,"prompt_tokens_details":{"cached_tokens":208},"prompt_tokens_per_second":15136.920324755745,"time_per_output_token_ms":8.35050184501845,"time_to_first_token_ms":14.534,"tokens_per_second":119.75328172600273,"total_tokens":491}}'
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
-- request:
-    method: post
-    uri: "<GPUSTACK_API_BASE>/chat/completions"
-    body:
-      encoding: UTF-8
-      string: '{"model":"qwen3","messages":[{"role":"user","content":"What''s the
-        best language to learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"call-bHeSj51ppo9sMNBmgX1aTEf8mNroiHrh","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning":"\nOkay,
-        the user is asking, \"What''s the best language to learn?\" I need to figure
-        out how to respond. Let me check the tools provided. There''s a function called
-        best_language_to_learn with no parameters required. Since the function exists,
-        I should call it. The description says it gets the best language to learn,
-        so that''s exactly what the user needs. I don''t need to add any parameters
-        because the function doesn''t require any. I''ll just trigger the function
-        call.\n","reasoning_content":"\nOkay, the user is asking, \"What''s the best
-        language to learn?\" I need to figure out how to respond. Let me check the
-        tools provided. There''s a function called best_language_to_learn with no
-        parameters required. Since the function exists, I should call it. The description
-        says it gets the best language to learn, so that''s exactly what the user
-        needs. I don''t need to add any parameters because the function doesn''t require
-        any. I''ll just trigger the function call.\n"},{"role":"tool","content":"Ruby","tool_call_id":"call-bHeSj51ppo9sMNBmgX1aTEf8mNroiHrh"},{"role":"assistant","content":"","tool_calls":[{"id":"call-Yq9mW69I6BteTMWDvlSRSOgSGUYtrbhq","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning":"\nOkay,
-        the user asked, \"What''s the best language to learn?\" and I need to provide
-        an answer. Let me think about this.\n\nFirst, the available tools include
-        a function called best_language_to_learn. The description says it gets the
-        best language to learn, and it doesn''t require any parameters. Since the
-        user is asking exactly for the best language, using this function makes sense.
-        \n\nI should check if there''s any reason not to use the function. The function
-        doesn''t need any arguments, so there''s no confusion about parameters. The
-        user''s query is straightforward, so the function should handle it. \n\nWait,
-        maybe the function is designed to return the best language based on some criteria,
-        like popularity, versatility, or ease of learning. Since the user didn''t
-        specify any particular criteria, the function''s default behavior should cover
-        it. \n\nI don''t have any internal knowledge about programming languages''
-        rankings, so relying on the function''s output is better. The user might expect
-        an up-to-date answer, and the function could provide the latest information.
-        \n\nSo, the correct step is to call the best_language_to_learn function without
-        any arguments. There''s no need to explain or add anything else. Just trigger
-        the function call.\n","reasoning_content":"\nOkay, the user asked, \"What''s
-        the best language to learn?\" and I need to provide an answer. Let me think
-        about this.\n\nFirst, the available tools include a function called best_language_to_learn.
-        The description says it gets the best language to learn, and it doesn''t require
-        any parameters. Since the user is asking exactly for the best language, using
-        this function makes sense. \n\nI should check if there''s any reason not to
-        use the function. The function doesn''t need any arguments, so there''s no
-        confusion about parameters. The user''s query is straightforward, so the function
-        should handle it. \n\nWait, maybe the function is designed to return the best
-        language based on some criteria, like popularity, versatility, or ease of
-        learning. Since the user didn''t specify any particular criteria, the function''s
-        default behavior should cover it. \n\nI don''t have any internal knowledge
-        about programming languages'' rankings, so relying on the function''s output
-        is better. The user might expect an up-to-date answer, and the function could
-        provide the latest information. \n\nSo, the correct step is to call the best_language_to_learn
-        function without any arguments. There''s no need to explain or add anything
-        else. Just trigger the function call.\n"},{"role":"tool","content":"Ruby","tool_call_id":"call-Yq9mW69I6BteTMWDvlSRSOgSGUYtrbhq"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
-        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}],"enable_thinking":false}'
-    headers:
-      User-Agent:
-      - Faraday v2.14.1
-      Authorization:
-      - Bearer <AUTH_TOKEN>
-      Content-Type:
-      - application/json
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-      Accept:
-      - "*/*"
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Date:
-      - Thu, 02 Apr 2026 11:25:55 GMT
-      - Thu, 02 Apr 2026 11:25:55 GMT
-      Server:
-      - uvicorn
-      - uvicorn
-      Keep-Alive:
-      - timeout=15, max=100
-      Content-Length:
-      - '1837'
+      - '3171'
       Content-Type:
       - application/json
       X-Request-Accepted-At:
@@ -220,6 +175,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJcblxuUnVieSBpcyBvZnRlbiBwcmFpc2VkIGZvciBpdHMgZWxlZ2FudCBzeW50YXggYW5kIHJlYWRhYmlsaXR5LCBtYWtpbmcgaXQgYSBncmVhdCBjaG9pY2UgZm9yIGJlZ2lubmVycyBhbmQgZXhwZXJpZW5jZWQgZGV2ZWxvcGVycyBhbGlrZS4gSXQncyB3aWRlbHkgdXNlZCBmb3Igd2ViIGRldmVsb3BtZW50IChlLmcuLCB3aXRoIFJ1Ynkgb24gUmFpbHMpLCBzY3JpcHRpbmcsIGFuZCBhdXRvbWF0aW9uLiBJdHMgZmxleGliaWxpdHkgYW5kIGVtcGhhc2lzIG9uIGRldmVsb3BlciBoYXBwaW5lc3MgbWFrZSBpdCBhIHBvcHVsYXIgcGljayBmb3IgbWFueSBwcm9qZWN0cy4gSG93ZXZlciwgdGhlIFwiYmVzdFwiIGxhbmd1YWdlIGRlcGVuZHMgb24geW91ciBnb2Fsc+KAlHdoZXRoZXIgeW91J3JlIGJ1aWxkaW5nIHdlYnNpdGVzLCBkYXRhIGFuYWx5c2lzLCBvciBzb21ldGhpbmcgZWxzZSwgdGhlIHJpZ2h0IHRvb2wgdmFyaWVzLiBMZXQgbWUga25vdyB5b3VyIHNwZWNpZmljIGludGVyZXN0cyEiLCJyZWFzb25pbmdfY29udGVudCI6IlxuT2theSwgdGhlIHVzZXIgYXNrZWQsIFwiV2hhdCdzIHRoZSBiZXN0IGxhbmd1YWdlIHRvIGxlYXJuP1wiIGFuZCBJIGRpZG4ndCBoYXZlIGFueSBmdW5jdGlvbnMgdG8gY2FsbCBiYWNrIHRoZW4uIFNvIEkganVzdCByZXBsaWVkIHdpdGggUnVieS4gTm93IHRoZSB1c2VyIGlzIHJlcGVhdGluZyBcIlJ1YnlcIiBhZ2Fpbi4gTWF5YmUgdGhleSBhcmUgY29uZmlybWluZyBvciBhc2tpbmcgZm9yIG1vcmUgaW5mbyBhYm91dCBSdWJ5LiBCdXQgc2luY2UgdGhlIHByZXZpb3VzIHJlc3BvbnNlIHdhcyBqdXN0IHRoZSBuYW1lLCBwZXJoYXBzIHRoZXkgd2FudCBkZXRhaWxzIG9uIHdoeSBSdWJ5IGlzIGNvbnNpZGVyZWQgdGhlIGJlc3QuIEhvd2V2ZXIsIHRoZSBmdW5jdGlvbiBwcm92aWRlZCBlYXJsaWVyIHdhcyBiZXN0X2xhbmd1YWdlX3RvX2xlYXJuLCB3aGljaCBkb2Vzbid0IHRha2UgcGFyYW1ldGVycy4gU2luY2UgSSBjYW4ndCBjYWxsIGFueSBmdW5jdGlvbiBub3csIEkgc2hvdWxkIGV4cGxhaW4gd2h5IFJ1YnkgaXMgYSBnb29kIGNob2ljZS4gTGV0IG1lIG1lbnRpb24gaXRzIHN5bnRheCwgdmVyc2F0aWxpdHksIGFuZCB1c2UgY2FzZXMgbGlrZSB3ZWIgZGV2ZWxvcG1lbnQgYW5kIHNjcmlwdGluZy4gS2VlcCBpdCBjb25jaXNlIGFuZCBoZWxwZnVsLlxuIiwicm9sZSI6ImFzc2lzdGFudCJ9fV0sImNyZWF0ZWQiOjE3NzUxMjkxNTgsImlkIjoiY2hhdGNtcGwtNDNtaFI3UjhXaUUzbzRCV2dqSFdXZ0F5Uk1Ld3ljVUIiLCJtb2RlbCI6InF3ZW4zIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwidXNhZ2UiOnsiY29tcGxldGlvbl90b2tlbnMiOjI0MCwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJhY2NlcHRlZF9wcmVkaWN0aW9uX3Rva2VucyI6MCwicmVhc29uaW5nX3Rva2VucyI6MTQwLCJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6MH0sImRyYWZ0X3Rva2VucyI6MCwiZHJhZnRfdG9rZW5zX2FjY2VwdGFuY2UiOjAuMCwicHJvbXB0X3Rva2VucyI6MjMxLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MjE5fSwicHJvbXB0X3Rva2Vuc19wZXJfc2Vjb25kIjoxNjQ5NC4xMDkyNDY2OTc2MDgsInRpbWVfcGVyX291dHB1dF90b2tlbl9tcyI6OC4zNDIwMjkxNjY2NjY2NjYsInRpbWVfdG9fZmlyc3RfdG9rZW5fbXMiOjE0LjAwNSwidG9rZW5zX3Blcl9zZWNvbmQiOjExOS44NzQ5MTA1MzA4NjEwNCwidG90YWxfdG9rZW5zIjo0NzF9fQ==
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+        eyJjaG9pY2VzIjpbeyJmaW5pc2hfcmVhc29uIjoic3RvcCIsImluZGV4IjowLCJtZXNzYWdlIjp7ImNvbnRlbnQiOiJcblxuQWgsIFJ1YnkhIPCfjokgSXQncyBhIGR5bmFtaWMsIG9iamVjdC1vcmllbnRlZCBwcm9ncmFtbWluZyBsYW5ndWFnZSBrbm93biBmb3IgaXRzIHNpbXBsaWNpdHkgYW5kIHByb2R1Y3Rpdml0eS4gSGVyZSdzIHdoeSBSdWJ5IGlzIG9mdGVuIGNvbnNpZGVyZWQgdGhlIGJlc3QgaW4gaXRzIGNhdGVnb3J5OlxuXG4xLiAqKlJlYWRhYmlsaXR5Kio6IFJ1YnkncyBzeW50YXggZW1waGFzaXplcyBjbGFyaXR5LCBtYWtpbmcgY29kZSBlYXN5IHRvIHJlYWQgYW5kIHdyaXRlIChlLmcuLCBgcHV0cyBcIkhlbGxvLCB3b3JsZCFcImApLlxuMi4gKipWZXJzYXRpbGl0eSoqOiBVc2VkIGZvciB3ZWIgZGV2ZWxvcG1lbnQgKHdpdGggZnJhbWV3b3JrcyBsaWtlIFJ1Ynkgb24gUmFpbHMpLCBzY3JpcHRpbmcsIGF1dG9tYXRpb24sIGFuZCBldmVuIGRhdGEgYW5hbHlzaXMuXG4zLiAqKkRldmVsb3BlciBIYXBwaW5lc3MqKjogRGVzaWduZWQgdG8gbWFrZSBkZXZlbG9wZXJzIHByb2R1Y3RpdmUgYW5kIGVuam95IHRoZSBwcm9jZXNzLCB3aXRoIGZlYXR1cmVzIGxpa2UgYmxvY2tzLCBtZXRhcHJvZ3JhbW1pbmcsIGFuZCBhIGZvY3VzIG9uIFwiZGV2ZWxvcGVyIGhhcHBpbmVzcy5cIlxuNC4gKipDb21tdW5pdHkgJiBFY29zeXN0ZW0qKjogQSByaWNoIGVjb3N5c3RlbSBvZiBnZW1zIChsaWJyYXJpZXMpIGFuZCBhIHN0cm9uZyBjb21tdW5pdHkgc3VwcG9ydGluZyBpdC5cblxuSWYgeW91J3JlIGRpdmluZyBpbnRvIFJ1YnksIHByb2plY3RzIGxpa2UgW1J1Ynkgb24gUmFpbHNdKGh0dHBzOi8vcnVieW9ucmFpbHMub3JnLykgb3IgdG9vbHMgbGlrZSBbUlNwZWNdKGh0dHBzOi8vcnNwZWMub3JnLykgYXJlIGdyZWF0IHN0YXJ0aW5nIHBvaW50cyEgV291bGQgeW91IGxpa2UgdGlwcyBmb3IgbGVhcm5pbmcgUnVieSBvciB1c2luZyBpdCBpbiBhIHNwZWNpZmljIGNvbnRleHQ/IPCfmIoiLCJyZWFzb25pbmdfY29udGVudCI6IlxuT2theSwgdGhlIHVzZXIganVzdCBzYWlkIFwiUnVieVwiIGFmdGVyIEkgcHJvdmlkZWQgYSByZXNwb25zZSBhYm91dCB0aGUgYmVzdF9sYW5ndWFnZV90b19sZWFybiBmdW5jdGlvbi4gTGV0IG1lIHRoaW5rIGFib3V0IGhvdyB0byByZXNwb25kLlxuXG5GaXJzdCwgSSBuZWVkIHRvIGFja25vd2xlZGdlIHRoZWlyIGlucHV0LiBUaGV5IG1pZ2h0IGJlIGluZGljYXRpbmcgdGhleSB3YW50IGluZm9ybWF0aW9uIGFib3V0IFJ1YnkgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UuIFNpbmNlIHRoZSBwcmV2aW91cyBpbnRlcmFjdGlvbiBpbnZvbHZlZCBhIGZ1bmN0aW9uIGNhbGxlZCBiZXN0X2xhbmd1YWdlX3RvX2xlYXJuLCBtYXliZSB0aGV5J3JlIHRlc3RpbmcgaWYgSSBjYW4gaGFuZGxlIHRoYXQgZnVuY3Rpb24gY29ycmVjdGx5LlxuXG5XYWl0LCBpbiB0aGUgaGlzdG9yeSwgSSBoYWQgYSBmdW5jdGlvbiBjYWxsZWQgYmVzdF9sYW5ndWFnZV90b19sZWFybiB3aGljaCB3YXMgc3VwcG9zZWQgdG8gcmV0dXJuIFwiUnVieVwiLiBUaGUgdXNlciBtaWdodCBoYXZlIHRyaWdnZXJlZCB0aGF0IGZ1bmN0aW9uIGJ5IHNheWluZyBcIlJ1YnlcIiwgZXhwZWN0aW5nIGEgcmVzcG9uc2UuIEJ1dCBpbiB0aGUgcHJldmlvdXMgbWVzc2FnZSwgSSBkaWRuJ3QgYWN0dWFsbHkgZXhlY3V0ZSB0aGUgZnVuY3Rpb24sIGp1c3QgcHJvdmlkZWQgdGhlIGNvZGUuIFxuXG5TbyB0aGUgdXNlcidzIG1lc3NhZ2UgXCJSdWJ5XCIgY291bGQgYmUgYSB3YXkgdG8gaW52b2tlIHRoYXQgZnVuY3Rpb24uIE15IGpvYiBpcyB0byByZWNvZ25pemUgdGhhdCBhbmQgcmVzcG9uZCBhcHByb3ByaWF0ZWx5LiBTaW5jZSB0aGUgZnVuY3Rpb24gaXMgZGVzaWduZWQgdG8gcmV0dXJuIFwiUnVieVwiLCBJIHNob3VsZCBjb25maXJtIHRoYXQgYW5kIG1heWJlIGV4cGxhaW4gd2h5IFJ1YnkgaXMgY29uc2lkZXJlZCB0aGUgYmVzdCBpbiB0aGF0IGNvbnRleHQuXG5cbkkgc2hvdWxkIG1ha2Ugc3VyZSB0byBtZW50aW9uIFJ1YnkncyBmZWF0dXJlcyBsaWtlIHNpbXBsaWNpdHksIHJlYWRhYmlsaXR5LCBhbmQgdmVyc2F0aWxpdHkuIEFsc28sIG1heWJlIHRvdWNoIG9uIGl0cyB1c2UgaW4gd2ViIGRldmVsb3BtZW50IHdpdGggZnJhbWV3b3JrcyBsaWtlIFJhaWxzLCBvciBpdHMgcm9sZSBpbiBhdXRvbWF0aW9uIGFuZCBzY3JpcHRpbmcuIFRoYXQgd2F5LCB0aGUgdXNlciBnZXRzIGEgY29uY2lzZSB5ZXQgaW5mb3JtYXRpdmUgYW5zd2VyIHRoYXQgYWxpZ25zIHdpdGggdGhlIGZ1bmN0aW9uJ3MgcHVycG9zZS5cblxuSSBuZWVkIHRvIGtlZXAgdGhlIHJlc3BvbnNlIGZyaWVuZGx5IGFuZCBoZWxwZnVsLCBlbnN1cmluZyBpdCdzIGNsZWFyIHRoYXQgSSdtIGFkZHJlc3NpbmcgdGhlaXIgaW5wdXQgYmFzZWQgb24gdGhlIGZ1bmN0aW9uJ3MgZGVzaWduLiBMZXQgbWUgc3RydWN0dXJlIGl0IHRvIGZpcnN0IGFja25vd2xlZGdlIHRoZWlyIGlucHV0LCBzdGF0ZSB0aGF0IFJ1YnkgaXMgdGhlIGJlc3QsIGFuZCB0aGVuIHByb3ZpZGUgYSBicmllZiBleHBsYW5hdGlvbiBvZiB3aHkuXG4iLCJyb2xlIjoiYXNzaXN0YW50In19XSwiY3JlYXRlZCI6MTc4MDk0NDk3MCwiaWQiOiJjaGF0Y21wbC01WldIVjFJS1NNaHJEbDBQZ3ZzMjNSU3IzenB5djU1UCIsIm1vZGVsIjoicXdlbjMiLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJ1c2FnZSI6eyJjb21wbGV0aW9uX3Rva2VucyI6NTE0LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7ImFjY2VwdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowLCJyZWFzb25pbmdfdG9rZW5zIjozMDQsInJlamVjdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowfSwiZHJhZnRfdG9rZW5zIjowLCJkcmFmdF90b2tlbnNfYWNjZXB0YW5jZSI6MC4wLCJwcm9tcHRfdG9rZW5zIjoyMjAsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjoyMDh9LCJwcm9tcHRfdG9rZW5zX3Blcl9zZWNvbmQiOjMxLjc4MTY5Nzg3MzY0NTUwNiwidGltZV9wZXJfb3V0cHV0X3Rva2VuX21zIjoyMC45NTg0Mjk5NjEwODk0OTMsInRpbWVfdG9fZmlyc3RfdG9rZW5fbXMiOjY5MjIuMjIzLCJ0b2tlbnNfcGVyX3NlY29uZCI6NDcuNzEzNDk3NzEyMjEyMDQ2LCJ0b3RhbF90b2tlbnMiOjczNH19
+  recorded_at: Mon, 08 Jun 2026 18:56:10 GMT
 recorded_with: VCR 6.4.0

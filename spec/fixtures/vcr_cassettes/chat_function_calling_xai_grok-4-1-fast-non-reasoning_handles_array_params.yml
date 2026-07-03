@@ -5,14 +5,13 @@ http_interactions:
     uri: https://api.x.ai/v1/chat/completions
     body:
       encoding: UTF-8
-      string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"user","content":"Call
-        the array params tool with tags [\"red\",\"blue\"] and tell me the combined
-        tags."}],"stream":false,"tools":[{"type":"function","function":{"name":"array_params","description":"Uses
+      string: '{"model":"grok-4.3","messages":[{"role":"user","content":"Call the
+        array params tool with tags [\"red\",\"blue\"] and tell me the combined tags."}],"stream":false,"tools":[{"type":"function","function":{"name":"array_params","description":"Uses
         params DSL array support","parameters":{"type":"object","properties":{"tags":{"type":"array","description":"List
         of tags to combine","items":{"type":"string"}}},"required":["tags"],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -27,7 +26,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 07 May 2026 00:00:49 GMT
+      - Sat, 13 Jun 2026 11:33:59 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -41,23 +40,25 @@ http_interactions:
       X-Ratelimit-Limit-Tokens:
       - '10000000'
       X-Ratelimit-Remaining-Tokens:
-      - '9999155'
+      - '10000000'
       X-Zero-Data-Retention:
       - 'false'
       X-Ratelimit-Limit-Requests:
       - '1800'
       X-Ratelimit-Remaining-Requests:
       - '1800'
-      X-Metrics-Mean-Itl-Ms:
-      - '2.2'
-      X-Metrics-E2e-Ms:
-      - '1533.1'
       Cf-Cache-Status:
       - DYNAMIC
       X-Request-Id:
       - "<X_REQUEST_ID>"
+      X-Metrics-Ttft-Ms:
+      - '318.0'
+      X-Metrics-Mean-Itl-Ms:
+      - '5.4'
+      X-Metrics-E2e-Ms:
+      - '2594.4'
       Traceparent:
-      - 00-c8bc47b2d932007785eca89f96473a97-a5ef65bf0001a2ab-01
+      - 00-84f3f2f3d00dc8f3db655bd50fa710b7-ec0ac93f000078c0-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
@@ -70,6 +71,8 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"a581a0d4-d6de-93e7-a729-ebdb5f7c0a38","object":"chat.completion","created":1778112048,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"call_58260255","function":{"name":"array_params","arguments":"{\"tags\":[\"red\",\"blue\"]}"},"type":"function"}],"refusal":null},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":397,"completion_tokens":29,"total_tokens":426,"prompt_tokens_details":{"text_tokens":397,"audio_tokens":0,"image_tokens":0,"cached_tokens":158},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":702000},"system_fingerprint":"fp_b9ff9b81b3"}'
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+      string: '{"id":"ae0d3c00-e47d-9386-84be-fcc1786f640f","object":"chat.completion","created":1781350437,"model":"grok-4.3","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning_content":"The
+        task is: \"Call the array params tool with tags [\"red\",\"blue\"] and tell
+        me the combined tags.\"\n","tool_calls":[{"id":"call-0e3ff74e-34b2-49e3-85d0-d3bcfa507ffd-0","function":{"name":"array_params","arguments":"{\"tags\":[\"red\",\"blue\"]}"},"type":"function"}],"refusal":null},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":270,"completion_tokens":14,"total_tokens":681,"prompt_tokens_details":{"text_tokens":270,"audio_tokens":0,"image_tokens":0,"cached_tokens":128},"completion_tokens_details":{"reasoning_tokens":397,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":12306000},"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}'
+  recorded_at: Sat, 13 Jun 2026 11:33:59 GMT
 recorded_with: VCR 6.4.0

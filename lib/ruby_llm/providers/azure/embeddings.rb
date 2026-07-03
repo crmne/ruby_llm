@@ -11,12 +11,12 @@ module RubyLLM
           azure_endpoint(:embeddings)
         end
 
-        def render_embedding_payload(text, model:, dimensions:)
+        def render_embedding_payload(text, model:, dimensions:, params: {})
           {
             model: model,
             input: [text].flatten,
             dimensions: dimensions
-          }.compact
+          }.compact.merge(params)
         end
       end
     end

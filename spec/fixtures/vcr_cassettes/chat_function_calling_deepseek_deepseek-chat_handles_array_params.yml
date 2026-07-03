@@ -12,7 +12,7 @@ http_interactions:
         of tags to combine","items":{"type":"string"}}},"required":["tags"],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.1
+      - Faraday v2.14.2
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -33,7 +33,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Thu, 07 May 2026 00:00:38 GMT
+      - Mon, 08 Jun 2026 18:50:12 GMT
       Server:
       - elb
       Vary:
@@ -41,7 +41,7 @@ http_interactions:
       Access-Control-Allow-Credentials:
       - 'true'
       X-Ds-Trace-Id:
-      - 5b3ae1781c2580a087af1a0005765c3c
+      - ebc0e0fc4ca45c74860dd850dd4ba509
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -49,14 +49,14 @@ http_interactions:
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 dd9ad8cb4b8e0d6775772241747a2354.cloudfront.net (CloudFront)
+      - 1.1 a72eb0202062d45d797eac17e7ad6660.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - LIS50-P2
+      - TXL52-P1
       X-Amz-Cf-Id:
-      - 7YO97VL1LjvMem64pJ2f6U_MZ1q4W-xHMRXDw0AZUl8lV2r0TWIRxw==
+      - aUUutqBgS7t2zx7G2ABdXhMrV4mxmfMgYMlLVLR0-slSW-_5siYKWg==
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"b90c97ac-dedd-4842-8a2f-117b2771af20","object":"chat.completion","created":1778112038,"model":"deepseek-v4-flash","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"index":0,"id":"call_00_LqKW6MyN1lgY6CyjR5z44315","type":"function","function":{"name":"array_params","arguments":"{\"tags\":
-        [\"red\",\"blue\"]}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":321,"completion_tokens":47,"total_tokens":368,"prompt_tokens_details":{"cached_tokens":128},"prompt_cache_hit_tokens":128,"prompt_cache_miss_tokens":193},"system_fingerprint":"fp_058df29938_prod0820_fp8_kvcache_20260402"}'
-  recorded_at: Thu, 07 May 2026 00:37:16 GMT
+      string: '{"id":"3600263f-4059-476a-9988-f57d40c1e97d","object":"chat.completion","created":1780944612,"model":"deepseek-v4-flash","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"index":0,"id":"call_00_qqFO2kPoRsCKj1gErJfK8460","type":"function","function":{"name":"array_params","arguments":"{\"tags\":
+        [\"red\", \"blue\"]}"}}]},"logprobs":null,"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":321,"completion_tokens":48,"total_tokens":369,"prompt_tokens_details":{"cached_tokens":0},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":321},"system_fingerprint":"fp_8b330d02d0_prod0820_fp8_kvcache_20260402"}'
+  recorded_at: Mon, 08 Jun 2026 18:50:13 GMT
 recorded_with: VCR 6.4.0

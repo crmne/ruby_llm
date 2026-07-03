@@ -15,6 +15,20 @@ RSpec.describe RubyLLM::Chat do
       expect(chat.with_headers('X-Test' => 'test')).to eq(chat)
     end
 
+    it 'clears headers with nil' do
+      chat = RubyLLM.chat.with_headers('X-Test' => 'test')
+
+      chat.with_headers(nil)
+
+      expect(chat.headers).to eq({})
+    end
+
+    it 'requires headers or nil' do
+      chat = RubyLLM.chat
+
+      expect { chat.with_headers }.to raise_error(ArgumentError)
+    end
+
     it 'passes headers to provider complete method' do
       chat = RubyLLM.chat
       provider = chat.instance_variable_get(:@provider)
@@ -49,13 +63,13 @@ RSpec.describe RubyLLM::Chat do
         provider = chat.instance_variable_get(:@provider)
 
         # Mock provider headers
-        allow(provider).to receive_messages(
-          headers: {
-            'X-Api-Key' => 'provider-key',
-            'Content-Type' => 'application/json'
-          },
-          parse_completion_response: RubyLLM::Message.new(role: :assistant, content: 'Test')
+        allow(provider).to receive(:headers).and_return(
+          'X-Api-Key' => 'provider-key',
+          'Content-Type' => 'application/json'
         )
+        allow_any_instance_of(RubyLLM::Protocols::ChatCompletions) # rubocop:disable RSpec/AnyInstance
+          .to receive(:parse_completion_response)
+          .and_return(RubyLLM::Message.new(role: :assistant, content: 'Test'))
 
         # Set user headers that try to override provider headers
         chat.with_headers(

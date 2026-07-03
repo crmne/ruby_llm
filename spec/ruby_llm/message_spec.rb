@@ -4,7 +4,7 @@ require 'spec_helper'
 
 RSpec.describe RubyLLM::Message do
   let(:model) do
-    RubyLLM::Model::Info.new(
+    RubyLLM::Model.new(
       id: 'priced-model',
       name: 'Priced Model',
       provider: 'openai',
@@ -31,6 +31,22 @@ RSpec.describe RubyLLM::Message do
       message = described_class.new(role: :assistant, content: nil, tool_calls: nil)
 
       expect(message.content).to be_nil
+    end
+  end
+
+  describe '#cache_until_here!' do
+    it 'marks the message as a cache boundary' do
+      message = described_class.new(role: :user, content: 'hello')
+
+      expect(message.cache_until_here?).to be false
+      expect(message.cache_until_here!).to eq(message)
+      expect(message.cache_until_here?).to be true
+    end
+
+    it 'can be initialized as a cache boundary' do
+      message = described_class.new(role: :user, content: 'hello', cache_until_here: true)
+
+      expect(message.cache_until_here?).to be true
     end
   end
 
@@ -82,6 +98,57 @@ RSpec.describe RubyLLM::Message do
       expect(message.cache_write_tokens).to eq(7)
       expect(message.tokens.cache_read).to eq(42)
       expect(message.tokens.cache_write).to eq(7)
+    end
+  end
+
+  describe '#to_h' do
+    it 'includes finish_reason when present' do
+      message = described_class.new(role: :assistant, content: 'Hello', finish_reason: 'length')
+
+      expect(message.finish_reason).to eq('length')
+      expect(message.to_h[:finish_reason]).to eq('length')
+    end
+
+    it 'includes cache_until_here when marked' do
+      message = described_class.new(role: :user, content: 'Hello').cache_until_here!
+
+      expect(message.to_h[:cache_until_here]).to be true
+    end
+  end
+
+  describe 'finish reason predicates' do
+    {
+      stopped?: %w[stop end_turn STOP stop_sequence],
+      max_tokens?: %w[length max_tokens MAX_TOKENS max_output_tokens model_context_window_exceeded],
+      tool_call_stop?: %w[tool_calls tool_use function_call],
+      content_filtered?: %w[
+        content_filter content-filter SAFETY guardrail_intervened RECITATION BLOCKLIST
+        PROHIBITED_CONTENT SPII image_safety model_armor
+      ]
+    }.each do |predicate, finish_reasons|
+      it "returns true for #{predicate} when finish_reason matches common provider values" do
+        finish_reasons.each do |finish_reason|
+          message = described_class.new(role: :assistant, content: 'Hello', finish_reason: finish_reason)
+
+          expect(message.public_send(predicate)).to be(true)
+        end
+      end
+    end
+
+    it 'returns false when finish_reason is nil or unknown' do
+      nil_message = described_class.new(role: :assistant, content: 'Hello', finish_reason: nil)
+      unknown_message = described_class.new(role: :assistant, content: 'Hello', finish_reason: 'weird_provider_value')
+
+      %i[stopped? max_tokens? tool_call_stop? content_filtered?].each do |predicate|
+        expect(nil_message.public_send(predicate)).to be(false)
+        expect(unknown_message.public_send(predicate)).to be(false)
+      end
+    end
+
+    it 'is inherited by streaming chunks' do
+      chunk = RubyLLM::Chunk.new(role: :assistant, content: nil, finish_reason: 'MAX_TOKENS')
+
+      expect(chunk.max_tokens?).to be(true)
     end
   end
 end
