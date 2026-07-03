@@ -28,7 +28,7 @@ module RubyLLM
 
     def add(chunk)
       RubyLLM.logger.debug { chunk.inspect } if RubyLLM.config.log_stream_debug
-      @model_id ||= chunk.model_id
+      @model_id = chunk.model_id if @model_id.to_s.empty?
 
       handle_chunk_content(chunk)
       accumulate_citations(chunk.citations)
