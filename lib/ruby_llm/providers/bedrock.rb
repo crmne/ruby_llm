@@ -127,17 +127,28 @@ module RubyLLM
       # Returns true if the InvokeModel protocol should be used for this model.
       # `bedrock_use_invoke_model` can be:
       #   - false / nil  → always Converse (default)
-      #   - true         → InvokeModel for all Anthropic models
+      #   - true         → InvokeModel for all verifiably Anthropic models
       #   - Array        → InvokeModel when model.id is in the list
       #   - Proc/lambda  → InvokeModel when the callable returns truthy for model
+      #
+      # Vendor verification interacts with the selector in two tiers:
+      #   - Ids that are provably non-Anthropic (a known vendor prefix like amazon./meta.,
+      #     with or without a cross-region geo prefix) are never routed, under any selector —
+      #     the InvokeModel payload is Anthropic Messages format and would be rejected.
+      #   - Ids that cannot be verified either way — chiefly application-inference-profile
+      #     ARNs, whose Model::Info carries no provider_name metadata on the
+      #     assume_model_exists path — are routed when the selector opts in explicitly
+      #     (Array or Proc). An operator naming the exact id IS the verification. Only the
+      #     blanket `true` selector requires positive verification via anthropic_model?,
+      #     because it expresses "all Anthropic models", not "this specific model".
       def invoke_model?(model)
         selector = @config.bedrock_use_invoke_model
         return false unless selector
-        return false unless anthropic_model?(model)
+        return false if non_anthropic_model?(model)
 
         case selector
         when true
-          true
+          anthropic_model?(model)
         when Array
           selector.include?(model.id)
         else
@@ -145,8 +156,22 @@ module RubyLLM
         end
       end
 
-      NON_ANTHROPIC_PREFIXES = %w[amazon. meta. ai21. cohere. mistral. writer. stability.].freeze
-      private_constant :NON_ANTHROPIC_PREFIXES
+      NON_ANTHROPIC_VENDORS = %w[amazon meta ai21 cohere mistral writer stability].freeze
+      private_constant :NON_ANTHROPIC_VENDORS
+
+      # Matches known non-Anthropic vendor ids in both bare ("amazon.nova-pro-v1:0") and
+      # cross-region ("us.amazon.nova-pro-v1:0") forms.
+      NON_ANTHROPIC_PATTERN = /\A(?:[a-z0-9-]+\.)?(?:#{NON_ANTHROPIC_VENDORS.join('|')})\./
+      private_constant :NON_ANTHROPIC_PATTERN
+
+      # True only when the id provably belongs to a non-Anthropic vendor. ARNs return false:
+      # they don't encode the vendor, so they are "unverifiable", not "non-Anthropic".
+      def non_anthropic_model?(model)
+        id = model.id.to_s
+        return false if id.start_with?('arn:')
+
+        NON_ANTHROPIC_PATTERN.match?(id)
+      end
 
       def anthropic_model?(model)
         id = model.id.to_s
@@ -163,13 +188,15 @@ module RubyLLM
         # Application-inference-profile ARNs do not encode the underlying vendor in the ARN
         # string itself. When available, consult model.metadata[:provider_name] (populated
         # by Bedrock::Models for registered foundation models) to confirm the profile is
-        # Anthropic-backed. If that field is absent (e.g. a runtime-only ARN the registry
-        # has never seen), log a warning and refuse to route rather than silently forwarding
-        # an incompatible payload to a non-Anthropic model.
+        # Anthropic-backed. If that field is absent (e.g. an assume_model_exists chat, whose
+        # Model::Info carries no registry metadata), log a warning and refuse to route rather
+        # than silently forwarding an incompatible payload to a non-Anthropic model — the
+        # operator can still opt in explicitly via an Array or Proc selector (see
+        # invoke_model?).
         return arn_anthropic_model?(model, id) if id.start_with?('arn:')
 
         # Block known non-Anthropic Bedrock vendor prefixes (Nova, Llama, Jurassic, etc.).
-        return false if NON_ANTHROPIC_PREFIXES.any? { |pfx| id.start_with?(pfx) }
+        return false if NON_ANTHROPIC_PATTERN.match?(id)
 
         provider = model.respond_to?(:provider) ? model.provider : nil
         provider.to_s == 'anthropic'

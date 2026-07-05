@@ -235,6 +235,44 @@ RSpec.describe RubyLLM::Providers::Bedrock do
       end
     end
 
+    context 'with an unverifiable ARN id (no provider_name metadata)' do # rubocop:disable RSpec/MultipleMemoizedHelpers
+      before { allow(RubyLLM.logger).to receive(:warn) }
+
+      it 'routes to BedrockInvokeModel when an Array selector lists the ARN' do
+        provider = build_bedrock(use_invoke_model: [arn_id])
+        expect(provider.protocol_for(model_double(arn_id))).to be(RubyLLM::Protocols::BedrockInvokeModel)
+      end
+
+      it 'routes to BedrockInvokeModel when a Proc selector returns true' do
+        provider = build_bedrock(use_invoke_model: ->(_m) { true })
+        expect(provider.protocol_for(model_double(arn_id))).to be(RubyLLM::Protocols::BedrockInvokeModel)
+      end
+
+      it 'routes to Converse when a Proc selector returns false' do
+        provider = build_bedrock(use_invoke_model: ->(_m) { false })
+        expect(provider.protocol_for(model_double(arn_id))).to be(RubyLLM::Protocols::Converse)
+      end
+
+      it 'still requires positive verification under the blanket true selector' do
+        provider = build_bedrock(use_invoke_model: true)
+        expect(provider.protocol_for(model_double(arn_id))).to be(RubyLLM::Protocols::Converse)
+        expect(RubyLLM.logger).to have_received(:warn).with(/cannot verify.*Anthropic-backed/)
+      end
+    end
+
+    context 'with provably non-Anthropic ids under explicit selectors' do # rubocop:disable RSpec/MultipleMemoizedHelpers
+      it 'never routes a bare vendor id, even when an Array selector lists it' do
+        provider = build_bedrock(use_invoke_model: [nova_id])
+        expect(provider.protocol_for(model_double(nova_id))).to be(RubyLLM::Protocols::Converse)
+      end
+
+      it 'never routes a cross-region vendor id, even when a Proc selector returns true' do
+        provider = build_bedrock(use_invoke_model: ->(_m) { true })
+        expect(provider.protocol_for(model_double(us_nova_id))).to be(RubyLLM::Protocols::Converse)
+        expect(provider.protocol_for(model_double(llama_id))).to be(RubyLLM::Protocols::Converse)
+      end
+    end
+
     describe 'anthropic_model? directly' do # rubocop:disable RSpec/MultipleMemoizedHelpers
       let(:bedrock) { build_bedrock }
 
