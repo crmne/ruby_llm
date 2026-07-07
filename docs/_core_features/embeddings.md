@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Embeddings
-nav_order: 4
+nav_order: 3
 description: Transform text into numerical vectors for semantic search, recommendations, and content similarity
 redirect_from:
   - /guides/embeddings
@@ -35,14 +35,11 @@ After reading this guide, you will know:
 The simplest way to create an embedding is with the global `RubyLLM.embed` method:
 
 ```ruby
-# Create an embedding for a single text
 embedding = RubyLLM.embed("Ruby is a programmer's best friend")
 
-# The vector representation (an array of floats)
 vector = embedding.vectors
 puts "Vector dimension: #{vector.length}" # e.g., 1536 for {{ site.models.embedding_small }}
 
-# Access metadata
 puts "Model used: #{embedding.model}"
 puts "Input tokens: #{embedding.input_tokens}"
 ```
@@ -55,7 +52,6 @@ You can efficiently embed multiple texts in a single API call:
 texts = ["Ruby", "Python", "JavaScript"]
 embeddings = RubyLLM.embed(texts)
 
-# Each text gets its own vector within the `vectors` array
 puts "Number of vectors: #{embeddings.vectors.length}" # => 3
 puts "First vector dimensions: #{embeddings.vectors.first.length}"
 puts "Model used: #{embeddings.model}"
@@ -70,13 +66,11 @@ puts "Total input tokens: #{embeddings.input_tokens}"
 By default, RubyLLM uses a capable default embedding model (like OpenAI's `{{ site.models.embedding_small }}`), but you can specify a different one using the `model:` argument.
 
 ```ruby
-# Use a specific OpenAI model
 embedding_large = RubyLLM.embed(
   "This is a test sentence",
   model: "{{ site.models.embedding_large }}"
 )
 
-# Or use a Google model
 embedding_google = RubyLLM.embed(
   "This is another test sentence",
   model: "{{ site.models.embedding_google }}" # Google's model
@@ -99,7 +93,7 @@ RubyLLM.configure do |config|
 end
 ```
 
-Refer to the [Working with Models Guide]({% link _advanced/models.md %}) for details on finding available embedding models and their capabilities.
+Refer to the [Working with Models Guide]({% link _reference/models.md %}) for details on finding available embedding models and their capabilities, and to [Model Resolution]({% link _reference/model-resolution.md %}) for how `model:`, `provider:`, and `assume_model_exists:` resolve.
 
 ## Choosing Dimensions
 
@@ -120,6 +114,41 @@ This is particularly useful when:
 
 Note that not all models support custom dimensions. If you specify dimensions that aren't supported by the chosen model, RubyLLM will use the model's default dimensions.
 
+## Task Types
+
+Some providers tune embeddings for a specific task, such as indexing a document versus matching a search query. Pass `task_type:` with a value in the provider's own vocabulary and RubyLLM places it on the right request field for you.
+
+Vertex AI and Gemini accept values like `RETRIEVAL_QUERY`, `RETRIEVAL_DOCUMENT`, `SEMANTIC_SIMILARITY`, and `CLASSIFICATION`. On these providers you can also pass `title:` to label the document being embedded:
+
+```ruby
+embedding = RubyLLM.embed(
+  "RubyLLM makes provider APIs feel native to Ruby.",
+  model: "{{ site.models.embedding_google }}",
+  provider: :vertexai,
+  task_type: "RETRIEVAL_DOCUMENT",
+  title: "RubyLLM docs"
+)
+```
+
+Bedrock's Cohere models map `task_type:` to their `input_type` field, so pass values like `search_document`, `search_query`, or `classification`. Cohere has no title concept, so `title:` is ignored there.
+
+Providers that have no task concept, such as OpenAI, ignore both `task_type:` and `title:`.
+
+## Provider Options
+
+Use `provider_options:` for request fields in the provider's own vocabulary that are not first-class RubyLLM options. RubyLLM merges them into the rendered request as-is. For example, Vertex AI accepts request-level `parameters:`:
+
+```ruby
+embedding = RubyLLM.embed(
+  "RubyLLM makes provider APIs feel native to Ruby.",
+  model: "{{ site.models.embedding_google }}",
+  provider: :vertexai,
+  provider_options: { parameters: { autoTruncate: false } }
+)
+```
+
+Keys you pass replace what RubyLLM rendered, so `provider_options:` can override any field RubyLLM sets, including the task type. Reach for it only when a field has no first-class keyword like `task_type:` or `title:`.
+
 ## Using Embedding Results
 
 ### Vector Properties
@@ -129,14 +158,11 @@ The embedding result contains useful information:
 ```ruby
 embedding = RubyLLM.embed("Example text")
 
-# The vector representation
 puts embedding.vectors.class  # => Array
 puts embedding.vectors.first.class  # => Float
 
-# The vector dimensions
 puts embedding.vectors.first.length # => 1536
 
-# The model used
 puts embedding.model  # => "{{ site.models.embedding_small }}"
 ```
 
@@ -150,7 +176,6 @@ require 'matrix' # Ruby's built-in Vector class requires 'matrix'
 embedding1 = RubyLLM.embed("I love Ruby programming")
 embedding2 = RubyLLM.embed("Ruby is my favorite language")
 
-# Convert embedding vectors to Ruby Vector objects
 vector1 = Vector.elements(embedding1.vectors)
 vector2 = Vector.elements(embedding2.vectors)
 
@@ -166,9 +191,7 @@ Embedding API calls can fail for various reasons. Handle errors gracefully:
 ```ruby
 begin
   embedding = RubyLLM.embed("Your text here")
-  # Process embedding...
 rescue RubyLLM::Error => e
-  # Handle API errors
   puts "Embedding failed: #{e.message}"
 end
 ```
@@ -219,7 +242,6 @@ class Document < ApplicationRecord
   end
 end
 
-# Usage in controller or console:
 # Document.create(title: "Intro to Ruby", content: "Ruby is a dynamic language...")
 # results = Document.search_by_similarity("What is Ruby?")
 # results.each { |doc| puts "- #{doc.title}" }
@@ -228,10 +250,13 @@ end
 > This Rails example assumes you have the `pgvector` extension enabled in PostgreSQL and are using a gem like `neighbor` for ActiveRecord integration.
 {: .note }
 
+This covers storing and searching embeddings. To turn that store into a retrieval-augmented chat - a retrieval tool the model calls, plus an answering agent that cites its sources - see [Retrieval-Augmented Generation (RAG)]({% link _advanced/rag.md %}).
+
 ## Next Steps
 
 Now that you understand embeddings, you might want to explore:
 
+*   [Retrieval-Augmented Generation (RAG)]({% link _advanced/rag.md %}) to ground answers in your own documents.
 *   [Chatting with AI Models]({% link _core_features/chat.md %}) for interactive conversations.
 *   [Using Tools]({% link _core_features/tools.md %}) to extend AI capabilities.
 *   [Error Handling]({% link _advanced/error-handling.md %}) for building robust applications.

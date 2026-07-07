@@ -36,7 +36,7 @@ RSpec.describe RubyLLM::Protocols::Gemini::Models do
       expect(model.family).to be_nil
       expect(model.context_window).to eq(1_048_576)
       expect(model.max_output_tokens).to eq(8192)
-      expect(model.capabilities).to contain_exactly('function_calling', 'structured_output', 'vision')
+      expect(model.capabilities).to contain_exactly('function_calling', 'tool_choice', 'structured_output', 'vision')
       expect(model.pricing.to_h).to eq(
         text_tokens: {
           standard: {

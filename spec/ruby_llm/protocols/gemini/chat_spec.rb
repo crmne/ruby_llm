@@ -406,8 +406,21 @@ RSpec.describe RubyLLM::Protocols::Gemini::Chat do
       }
     end
 
+    it 'renders system messages as systemInstruction' do
+      model = instance_double(RubyLLM::Model, id: 'gemini-2.5-flash', family: nil, metadata: {})
+      messages = [
+        RubyLLM::Message.new(role: :user, content: 'Hi'),
+        RubyLLM::Message.new(role: :system, content: 'Be brief.')
+      ]
+
+      payload = test_obj.send(:render_payload, messages, tools:, temperature: nil, model:, schema: nil)
+
+      expect(payload[:systemInstruction]).to eq(parts: [{ text: 'Be brief.' }])
+      expect(payload[:contents].map { |message| message[:role] }).to eq(['user'])
+    end
+
     it 'uses responseJsonSchema for Gemini 2.5 models' do
-      model = instance_double(RubyLLM::Model::Info, id: 'gemini-2.5-flash', family: nil, metadata: {})
+      model = instance_double(RubyLLM::Model, id: 'gemini-2.5-flash', family: nil, metadata: {})
 
       payload = test_obj.send(:render_payload, messages, tools:, temperature: nil, model:, schema:)
 
@@ -422,7 +435,7 @@ RSpec.describe RubyLLM::Protocols::Gemini::Chat do
     end
 
     it 'unwraps wrapper schemas for responseJsonSchema' do
-      model = instance_double(RubyLLM::Model::Info, id: 'gemini-3.0-pro', family: nil, metadata: {})
+      model = instance_double(RubyLLM::Model, id: 'gemini-3.0-pro', family: nil, metadata: {})
       wrapped_schema = {
         name: 'PersonSchema',
         schema: {
@@ -445,7 +458,7 @@ RSpec.describe RubyLLM::Protocols::Gemini::Chat do
     end
 
     it 'falls back to responseSchema for non-2.5 models' do
-      model = instance_double(RubyLLM::Model::Info, id: 'gemini-2.0-flash', family: nil, metadata: {})
+      model = instance_double(RubyLLM::Model, id: 'gemini-2.0-flash', family: nil, metadata: {})
 
       payload = test_obj.send(:render_payload, messages, tools:, temperature: nil, model:, schema:)
 
@@ -455,7 +468,7 @@ RSpec.describe RubyLLM::Protocols::Gemini::Chat do
     end
 
     it 'treats newer Gemini versions as JSON schema capable' do
-      model = instance_double(RubyLLM::Model::Info, id: 'gemini-3.0-pro', family: nil, metadata: {})
+      model = instance_double(RubyLLM::Model, id: 'gemini-3.0-pro', family: nil, metadata: {})
 
       payload = test_obj.send(:render_payload, messages, tools:, temperature: nil, model:, schema:)
 
@@ -464,7 +477,7 @@ RSpec.describe RubyLLM::Protocols::Gemini::Chat do
     end
 
     it 'expands referenced definitions when using responseSchema' do
-      model = instance_double(RubyLLM::Model::Info, id: 'gemini-2.0-flash', family: nil, metadata: {})
+      model = instance_double(RubyLLM::Model, id: 'gemini-2.0-flash', family: nil, metadata: {})
       schema_with_defs = {
         type: 'object',
         properties: {
@@ -522,9 +535,37 @@ RSpec.describe RubyLLM::Protocols::Gemini::Chat do
       expect(tool_response[:parts][0][:functionResponse][:name]).to eq('weather')
       expect(tool_response[:parts][1][:functionResponse][:name]).to eq('best_language_to_learn')
     end
+
+    it 'does not send finish_reason back to the provider' do
+      messages = [RubyLLM::Message.new(role: :assistant, content: 'Done', finish_reason: 'max_tokens')]
+
+      result = test_obj.send(:format_messages, messages)
+
+      expect(result.first).not_to have_key(:finishReason)
+      expect(result.first[:parts]).to eq([{ text: 'Done' }])
+    end
   end
 
   describe '#parse_completion_response' do
+    it 'preserves raw finishReason' do
+      response = instance_double(
+        Faraday::Response,
+        body: {
+          'candidates' => [
+            {
+              'finishReason' => 'SAFETY',
+              'content' => { 'parts' => [{ 'text' => 'No' }] }
+            }
+          ]
+        }
+      )
+
+      provider = RubyLLM::Protocols::Gemini.allocate
+      message = provider.send(:parse_completion_response, response)
+
+      expect(message.finish_reason).to eq('SAFETY')
+    end
+
     it 'keeps thought-only parts out of assistant content' do
       response = Struct.new(:body, :env).new(
         {
@@ -598,7 +639,7 @@ RSpec.describe RubyLLM::Protocols::Gemini::Chat do
 
       expect(message.input_tokens).to eq(21)
       expect(message.output_tokens).to eq(8)
-      expect(message.cached_tokens).to eq(21)
+      expect(message.cache_read_tokens).to eq(21)
     end
   end
 

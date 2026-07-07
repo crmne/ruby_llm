@@ -65,10 +65,10 @@ RSpec.describe RubyLLM::Instrumentation do
     response = RubyLLM::Message.new(
       role: :assistant,
       content: 'done',
-      model_id: 'gpt-4.1-nano',
+      model: 'gpt-4.1-nano',
       input_tokens: 10,
       output_tokens: 5,
-      cached_tokens: 2,
+      cache_read_tokens: 2,
       thinking_tokens: 1
     )
     allow(provider).to receive(:complete).and_return(response)
@@ -84,7 +84,7 @@ RSpec.describe RubyLLM::Instrumentation do
       response_model: 'gpt-4.1-nano',
       input_tokens: 10,
       output_tokens: 5,
-      cached_tokens: 2,
+      cache_read_tokens: 2,
       thinking_tokens: 1,
       temperature: 0.2,
       streaming: false
@@ -100,7 +100,7 @@ RSpec.describe RubyLLM::Instrumentation do
     context = RubyLLM.context { |config| config.instrumenter = instrumenter }
     chat = context.chat(model: 'gpt-4.1-nano')
     provider = chat.instance_variable_get(:@provider)
-    response = RubyLLM::Message.new(role: :assistant, content: 'done', model_id: 'gpt-4.1-nano')
+    response = RubyLLM::Message.new(role: :assistant, content: 'done', model: 'gpt-4.1-nano')
     allow(provider).to receive(:complete).and_return(response)
 
     chat.ask('Hello') { |chunk| chunk }
@@ -111,7 +111,7 @@ RSpec.describe RubyLLM::Instrumentation do
 
   it 'emits tool call events with arguments and result' do
     stub_const('InstrumentationProbeTool', Class.new(RubyLLM::Tool) do
-      param :value
+      parameter :value
 
       def execute(value:)
         "tool #{value}"
@@ -122,7 +122,7 @@ RSpec.describe RubyLLM::Instrumentation do
     tool_call = RubyLLM::ToolCall.new(id: 'call_1', name: 'instrumentation_probe', arguments: { value: 'ok' })
     tool_message = RubyLLM::Message.new(role: :assistant, content: nil, tool_calls: { 'call_1' => tool_call })
     final_message = RubyLLM::Message.new(role: :assistant, content: 'complete')
-    chat = context.chat(model: 'gpt-4.1-nano').with_tool(InstrumentationProbeTool)
+    chat = context.chat(model: 'gpt-4.1-nano').with_tools(InstrumentationProbeTool)
     provider = chat.instance_variable_get(:@provider)
     allow(provider).to receive(:complete).and_return(tool_message, final_message)
 
@@ -147,10 +147,11 @@ RSpec.describe RubyLLM::Instrumentation do
   it 'emits embedding events with usage and vector dimensions' do
     instrumenter = CaptureInstrumenter.new
     context = RubyLLM.context { |config| config.instrumenter = instrumenter }
-    model = instance_double(RubyLLM::Model::Info, id: 'text-embedding-3-small', provider: 'openai')
+    model = instance_double(RubyLLM::Model, id: 'text-embedding-3-small', provider: 'openai')
     provider = instance_double(RubyLLM::Provider, slug: 'openai')
+    provider_class = class_double(RubyLLM::Provider, display_name: 'OpenAI')
     embedding = RubyLLM::Embedding.new(vectors: [[0.1, 0.2, 0.3]], model: 'text-embedding-3-small', input_tokens: 8)
-    allow(provider).to receive(:embed).and_return(embedding)
+    allow(provider).to receive_messages(embed: embedding, class: provider_class)
     allow(RubyLLM::Models).to receive(:resolve).and_return([model, provider])
 
     result = context.embed(['hello'], model: 'text-embedding-3-small')
@@ -160,6 +161,7 @@ RSpec.describe RubyLLM::Instrumentation do
     expect(event_name).to eq('embedding.ruby_llm')
     expect(payload).to include(
       provider: 'openai',
+      provider_class: 'OpenAI',
       model: 'text-embedding-3-small',
       input: ['hello'],
       result: embedding,
@@ -167,6 +169,35 @@ RSpec.describe RubyLLM::Instrumentation do
       input_tokens: 8,
       embedding_dimensions: 3,
       embedding_count: 1
+    )
+    expect(payload).not_to have_key(:operation)
+  end
+
+  it 'emits speech events with output metadata' do
+    instrumenter = CaptureInstrumenter.new
+    context = RubyLLM.context { |config| config.instrumenter = instrumenter }
+    model = instance_double(RubyLLM::Model, id: 'gpt-4o-mini-tts', provider: 'openai')
+    provider = instance_double(RubyLLM::Provider, slug: 'openai')
+    provider_class = class_double(RubyLLM::Provider, display_name: 'OpenAI')
+    speech = RubyLLM::Speech.new(data: 'audio bytes', model: 'gpt-4o-mini-tts', voice: 'alloy', format: 'mp3')
+    allow(provider).to receive_messages(speak: speech, class: provider_class)
+    allow(RubyLLM::Models).to receive(:resolve).and_return([model, provider])
+
+    result = context.speak('hello', model: 'gpt-4o-mini-tts')
+
+    event_name, payload = instrumenter.events.last
+    expect(result).to eq(speech)
+    expect(event_name).to eq('speech.ruby_llm')
+    expect(payload).to include(
+      provider: 'openai',
+      provider_class: 'OpenAI',
+      model: 'gpt-4o-mini-tts',
+      input: 'hello',
+      result: speech,
+      response_model: 'gpt-4o-mini-tts',
+      voice: 'alloy',
+      format: 'mp3',
+      audio_bytes: 11
     )
     expect(payload).not_to have_key(:operation)
   end

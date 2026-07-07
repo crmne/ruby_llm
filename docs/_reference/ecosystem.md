@@ -1,7 +1,7 @@
 ---
 layout: default
 title: RubyLLM Ecosystem
-nav_order: 3
+nav_order: 5
 description: Extend RubyLLM with MCP servers, structured schemas, instrumentation, monitoring and community-built tools for production AI apps.
 ---
 
@@ -120,12 +120,12 @@ When building LLM applications, you may need custom monitoring, analytics, or lo
 
 ### Supported Events
 
-- `complete_chat.ruby_llm` when `RubyLLM::Chat#ask` is called
-- `execute_tool.ruby_llm` when a tool call is executed
-- `embed_text.ruby_llm` when `RubyLLM::Embedding.embed` is called
-- `paint_image.ruby_llm` when `RubyLLM::Image.paint` is called
-- `moderate_text.ruby_llm` when `RubyLLM::Moderation.moderate` is called
-- `transcribe_audio.ruby_llm` when `RubyLLM::Transcription.transcribe` is called
+- `chat.ruby_llm` when `RubyLLM::Chat#ask` is called
+- `tool_call.ruby_llm` when a tool call is executed
+- `embedding.ruby_llm` when `RubyLLM::Embedding.embed` is called
+- `image.ruby_llm` when `RubyLLM::Image.paint` is called
+- `moderation.ruby_llm` when `RubyLLM::Moderation.moderate` is called
+- `transcription.ruby_llm` when `RubyLLM::Transcription.transcribe` is called
 
 ### Installation
 
@@ -352,7 +352,6 @@ RubyLLM::TopSecret.with_filtering do
   response = chat.ask("My name is Ralph and my email is ralph@thoughtbot.com")
 
   # The provider receives: "My name is [PERSON_1] and my email is [EMAIL_1]"
-  # The response comes back with placeholders restored:
   puts response.content
   # => "Nice to meet you, Ralph!"
 end

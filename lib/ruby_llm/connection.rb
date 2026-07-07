@@ -7,8 +7,7 @@ require 'ruby_llm/error_middleware'
 require 'timeout'
 
 module RubyLLM
-  # Connection class for managing API connections to various providers.
-  class Connection
+  class Connection # :nodoc:
     attr_reader :provider, :connection, :config
 
     def self.basic(&)

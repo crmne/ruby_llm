@@ -16,7 +16,7 @@ RSpec.describe 'acts_as_batch' do # rubocop:disable RSpec/DescribeClass
   # rubocop:enable RSpec/AnyInstance
 
   def answer(content)
-    RubyLLM::Message.new(role: :assistant, content: content, input_tokens: 5, output_tokens: 1, model_id: model)
+    RubyLLM::Message.new(role: :assistant, content: content, input_tokens: 5, output_tokens: 1, model: model)
   end
 
   it 'submits, persists the batch and its chats, and routes answers home' do
@@ -35,9 +35,10 @@ RSpec.describe 'acts_as_batch' do # rubocop:disable RSpec/DescribeClass
     expect(batch.provider_batch_id).to eq('msgbatch_1')
     expect(batch.provider).to eq('anthropic')
     expect(batch.chat_ids).to eq(chats.map(&:id))
+    expect(batch.chats).to eq(chats)
 
     # Poll from a fresh record, the way a job in another process would.
-    polled = Batch.find(batch.id)
+    polled = Batch.find(batch.id).refresh
     expect(polled).to be_complete
     expect(polled.status).to eq('ended')
 
@@ -58,7 +59,7 @@ RSpec.describe 'acts_as_batch' do # rubocop:disable RSpec/DescribeClass
     )
     batch = Batch.create!(chats: [chat])
 
-    Batch.find(batch.id).tap(&:complete?).messages # first poll
+    Batch.find(batch.id).refresh.messages # first poll
     Batch.find(batch.id).messages # retry: a fresh record re-collects
 
     expect(chat.messages.reload.where(role: 'assistant').count).to eq(1)

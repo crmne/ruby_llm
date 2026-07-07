@@ -4,15 +4,8 @@ module RubyLLM
   module Providers
     # Mistral API integration.
     class Mistral < Provider
-      # Mistral's dialect of the Chat Completions API.
-      class ChatCompletions < Protocols::ChatCompletions
-        include Mistral::Chat
-        include Mistral::Embeddings
-        include Mistral::Media
-        include Mistral::Models
-      end
-
-      protocol :chat_completions, ChatCompletions
+      protocol :chat_completions, ChatCompletions, batches: Mistral::ChatCompletions::Batches
+      files Mistral::Files
 
       def api_base
         @config.mistral_api_base || 'https://api.mistral.ai/v1'

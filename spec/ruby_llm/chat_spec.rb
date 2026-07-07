@@ -7,13 +7,13 @@ RSpec.describe RubyLLM::Chat do
 
   def basic_chat(model:, provider:)
     chat = RubyLLM.chat(model: model, provider: provider)
-    return chat.with_params(enable_thinking: false) if provider == :gpustack && model == 'qwen3'
+    return chat.with_provider_options(enable_thinking: false) if provider == :gpustack && model == 'qwen3'
 
     chat
   end
 
   def total_input_tokens(message)
-    message.input_tokens.to_i + message.cached_tokens.to_i + message.cache_creation_tokens.to_i
+    message.input_tokens.to_i + message.cache_read_tokens.to_i + message.cache_write_tokens.to_i
   end
 
   def expect_token_usage(message)
@@ -65,7 +65,7 @@ RSpec.describe RubyLLM::Chat do
         expect(response.content).to match(/XKCD7392/i)
       end
 
-      it "#{provider}/#{model} replaces previous system messages when replace: true" do
+      it "#{provider}/#{model} replaces previous system messages by default" do
         if %i[perplexity mistral].include?(provider)
           skip 'Provider API does not allow system messages after user/assistant messages'
         end
@@ -76,7 +76,7 @@ RSpec.describe RubyLLM::Chat do
         end
 
         chat = RubyLLM.chat(model: model, provider: provider).with_temperature(0.0)
-        chat = chat.with_params(enable_thinking: false) if provider == :gpustack && model == 'qwen3'
+        chat = chat.with_provider_options(enable_thinking: false) if provider == :gpustack && model == 'qwen3'
 
         # Use a distinctive and unusual instruction that wouldn't happen naturally
         chat.with_instructions 'You must include the exact phrase "XKCD7392" somewhere in your response.'
@@ -85,8 +85,7 @@ RSpec.describe RubyLLM::Chat do
         expect(response.content).to match(/XKCD7392/i)
 
         # Test ability to follow multiple instructions with another unique marker
-        chat.with_instructions 'You must include the exact phrase "PURPLE-ELEPHANT-42" somewhere in your response.',
-                               replace: true
+        chat.with_instructions 'You must include the exact phrase "PURPLE-ELEPHANT-42" somewhere in your response.'
 
         response = chat.ask('What are some good books?')
         expect(response.content).not_to match(/XKCD7392/i)
@@ -119,7 +118,7 @@ RSpec.describe RubyLLM::Chat do
 
   describe '#cost' do
     let(:model) do
-      RubyLLM::Model::Info.new(
+      RubyLLM::Model.new(
         id: 'priced-model',
         name: 'Priced Model',
         provider: 'openai',
@@ -141,9 +140,9 @@ RSpec.describe RubyLLM::Chat do
       chat = RubyLLM.chat(model: RubyLLM.config.default_model)
       chat.add_message(role: :user, content: 'Hello')
       chat.add_message(role: :assistant, content: 'Hi', input_tokens: 1_000, output_tokens: 2_000,
-                       model_id: 'priced-model')
+                       model: 'priced-model')
       chat.add_message(role: :assistant, content: 'Again', input_tokens: 500, output_tokens: 100,
-                       model_id: 'priced-model')
+                       model: 'priced-model')
 
       expect(chat.cost.input).to eq(0.0015)
       expect(chat.cost.output).to eq(0.0042)
@@ -157,9 +156,23 @@ RSpec.describe RubyLLM::Chat do
 
       chat = RubyLLM.chat(model: 'priced-model')
       chat.add_message(role: :assistant, content: 'Hi', input_tokens: 1_000, output_tokens: 2_000,
-                       model_id: 'provider-backend-version')
+                       model: 'provider-backend-version')
 
       expect(chat.cost.total).to eq(0.005)
+    end
+  end
+
+  describe '#tool_results' do
+    it 'links added messages so a call resolves its result messages' do
+      chat = RubyLLM.chat(model: RubyLLM.config.default_model)
+      call = chat.add_message(
+        role: :assistant,
+        content: '',
+        tool_calls: { 'call_1' => RubyLLM::ToolCall.new(id: 'call_1', name: 'weather', arguments: {}) }
+      )
+      result = chat.add_message(role: :tool, content: 'sunny', tool_call_id: 'call_1')
+
+      expect(call.tool_results).to eq([result])
     end
   end
 end

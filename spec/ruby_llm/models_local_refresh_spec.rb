@@ -75,7 +75,7 @@ RSpec.describe RubyLLM::Models do
         protocol = RubyLLM::Providers::Ollama::ChatCompletions.new(ollama)
         models = protocol.parse_list_models_response(response, 'ollama', nil)
         expect(models).to be_an(Array)
-        expect(models.first).to be_a(RubyLLM::Model::Info)
+        expect(models.first).to be_a(RubyLLM::Model)
         expect(models.first.id).to eq('llama3:latest')
         expect(models.first.provider).to eq('ollama')
         expect(models.first.capabilities).to include('streaming', 'function_calling', 'vision')
@@ -101,7 +101,7 @@ RSpec.describe RubyLLM::Models do
 
         allow_any_instance_of(RubyLLM::Providers::Ollama).to( # rubocop:disable RSpec/AnyInstance
           receive(:list_models).and_return([
-                                             RubyLLM::Model::Info.new(
+                                             RubyLLM::Model.new(
                                                id: 'test-model',
                                                provider: 'ollama',
                                                name: 'Test Model',

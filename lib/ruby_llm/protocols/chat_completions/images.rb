@@ -14,28 +14,28 @@ module RubyLLM
           editing?(with, mask) ? 'images/edits' : 'images/generations'
         end
 
-        def render_image_payload(prompt, model:, size:, with: nil, mask: nil, params: {}) # rubocop:disable Metrics/ParameterLists
-          return render_edit_payload(prompt, model:, with:, mask:, params:) if editing?(with, mask)
+        def render_image_payload(prompt, model:, size:, with: nil, mask: nil, provider_options: {}) # rubocop:disable Metrics/ParameterLists
+          return render_edit_payload(prompt, model:, with:, mask:, provider_options:) if editing?(with, mask)
 
           {
             model: model,
             prompt: prompt,
             n: 1,
             size: size
-          }.merge(params)
+          }.merge(provider_options)
         end
 
         def parse_image_response(response, model:)
           data = response.body
           image_data = Array(data['data']).first
 
-          raise Error.new(nil, 'Unexpected response format from OpenAI image API') unless image_data
+          raise Error, 'Unexpected response format from OpenAI image API' unless image_data
 
           Image.new(
             url: image_data['url'],
             mime_type: 'image/png', # DALL-E typically returns PNGs
             revised_prompt: image_data['revised_prompt'],
-            model_id: model,
+            model: model,
             data: image_data['b64_json'],
             usage: data['usage'] || {}
           )
@@ -47,15 +47,15 @@ module RubyLLM
           raise ArgumentError, 'with: is required when mask: is provided' if mask && !attachments?(with)
         end
 
-        def render_edit_payload(prompt, model:, with:, mask:, params:)
-          payload = params.merge(
+        def render_edit_payload(prompt, model:, with:, mask:, provider_options:)
+          payload = {
             model: model,
             prompt: prompt,
             image: build_upload_parts(with),
             n: 1
-          )
+          }
           payload[:mask] = build_upload_part(mask) if mask
-          payload
+          payload.merge(provider_options)
         end
 
         def build_upload_parts(sources)

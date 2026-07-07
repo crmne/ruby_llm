@@ -9,12 +9,16 @@ module RubyLLM
           'responses'
         end
 
+        OPENAI_INLINE_FILE_LIMIT = 50 * 1024 * 1024
+        OPENAI_FILE_UPLOAD_LIMIT = 512 * 1024 * 1024
+        PROMPT_CACHE_OPTIONS = %i[key retention].freeze
+
         module_function
 
         # rubocop:disable Metrics/ParameterLists,Metrics/PerceivedComplexity
-        def render_payload(messages, tools:, temperature:, model:, stream: false, schema: nil,
-                           thinking: nil, citations: false, tool_prefs: nil)
-          warn_unsupported_citations(model) if citations && !model.citations?
+        def render_payload(messages, tools:, temperature:, model:, stream: false, max_output_tokens: nil, schema: nil,
+                           thinking: nil, citations: false, caching: nil, tool_prefs: nil)
+          warn_unsupported_citations(model) if citations && !model.supports?(:citations)
           tool_prefs ||= {}
           payload = {
             model: model.id,
@@ -26,6 +30,7 @@ module RubyLLM
 
           payload[:include] = ['reasoning.encrypted_content'] if reasoning_model?(model.id)
           payload[:temperature] = temperature unless temperature.nil?
+          payload[:max_output_tokens] = max_output_tokens unless max_output_tokens.nil?
 
           if tools.any?
             payload[:tools] = tools.map { |_, tool| tool_for(tool) }
@@ -37,19 +42,19 @@ module RubyLLM
 
           effort = resolve_effort(thinking)
           payload[:reasoning] = { effort: effort } if effort
+          payload.merge!(prompt_cache_params(caching)) if caching
 
           payload
         end
         # rubocop:enable Metrics/ParameterLists,Metrics/PerceivedComplexity
 
-        def parse_completion_response(response)
-          data = response.body
-          return if data.nil? || data.empty?
-
-          raise Error.new(response, data.dig('error', 'message')) if data.dig('error', 'message')
+        def parse_completion_body(data, raw:)
+          raise Error.new(data.dig('error', 'message'), response: raw) if data.dig('error', 'message')
 
           output = data['output'] || []
           content = parse_output_text(output)
+
+          finish_reason = data.dig('incomplete_details', 'reason')
 
           Message.new(
             role: :assistant,
@@ -59,9 +64,10 @@ module RubyLLM
               text: parse_reasoning_summary(output),
               signature: parse_reasoning_signature(output)
             ),
-            tool_calls: parse_function_calls(output),
-            model_id: data['model'],
-            raw: response,
+            tool_calls: parse_function_calls(output, response: raw, finish_reason: finish_reason),
+            model: data['model'],
+            raw: raw,
+            finish_reason: finish_reason,
             **parse_usage(data['usage'] || {})
           )
         end
@@ -78,6 +84,28 @@ module RubyLLM
           model_id.match?(/^o\d|^gpt-5/)
         end
 
+        def prompt_cache_params(caching)
+          options = prompt_cache_options(caching)
+
+          {}.tap do |params|
+            params[:prompt_cache_key] = options[:key] if options[:key]
+            params[:prompt_cache_retention] = options[:retention] if options[:retention]
+          end
+        end
+
+        def prompt_cache_options(caching)
+          options = caching.to_h.transform_keys(&:to_sym)
+          unsupported = options.keys - PROMPT_CACHE_OPTIONS
+          return options if unsupported.empty?
+
+          raise ArgumentError,
+                "Responses prompt caching accepts :key and :retention, got #{format_cache_option_keys(unsupported)}"
+        end
+
+        def format_cache_option_keys(keys)
+          keys.map { |key| ":#{key}" }.join(', ')
+        end
+
         def parse_usage(usage)
           cached = usage.dig('input_tokens_details', 'cached_tokens')
           input = usage['input_tokens']
@@ -85,7 +113,7 @@ module RubyLLM
           {
             input_tokens: input && [input.to_i - cached.to_i, 0].max,
             output_tokens: usage['output_tokens'],
-            cached_tokens: cached,
+            cache_read_tokens: cached,
             thinking_tokens: usage.dig('output_tokens_details', 'reasoning_tokens')
           }
         end
@@ -101,7 +129,7 @@ module RubyLLM
 
         def format_instructions(messages)
           instructions = messages.select { |msg| msg.role == :system }.map do |msg|
-            msg.content.is_a?(Content) ? msg.content.text : msg.content.to_s
+            msg.content.to_s
           end
 
           instructions.empty? ? nil : instructions.join("\n\n")
@@ -114,16 +142,30 @@ module RubyLLM
         def format_item(msg)
           case msg.role
           when :tool
-            {
-              type: 'function_call_output',
-              call_id: msg.tool_call_id,
-              output: format_content(msg.content)
-            }
+            format_tool_items(msg)
           when :assistant
             format_assistant_items(msg)
           else
-            { role: 'user', content: format_content(msg.content) }
+            { role: 'user', content: format_content(msg.content, msg.attachments) }
           end
+        end
+
+        # Function call outputs are text-only on the wire, so tool attachments
+        # ride a user item spliced in right after the result.
+        def format_tool_items(msg)
+          items = [{
+            type: 'function_call_output',
+            call_id: msg.tool_call_id,
+            output: format_content(msg.content)
+          }]
+
+          if msg.attachments.any?
+            parts = [{ type: 'input_text', text: "Attachments from tool call #{msg.tool_call_id}:" }]
+            parts.concat(Media.format_content(nil, msg.attachments))
+            items << { role: 'user', content: parts }
+          end
+
+          items
         end
 
         def format_assistant_items(msg)
@@ -154,15 +196,11 @@ module RubyLLM
         end
 
         def format_output_content(msg)
-          text = msg.content.is_a?(Content) ? msg.content.text : msg.content
-          text = text.to_json if text.is_a?(Hash) || text.is_a?(Array)
-
-          [{ type: 'output_text', text: text }]
+          [{ type: 'output_text', text: msg.content }]
         end
 
         def empty_content?(content)
-          content.nil? || (content.is_a?(String) && content.strip.empty?) ||
-            (content.is_a?(Content) && content.text.nil?)
+          content.nil? || content.strip.empty?
         end
 
         def parse_output_text(output)
@@ -173,7 +211,7 @@ module RubyLLM
           texts.empty? ? nil : texts.join
         end
 
-        def parse_function_calls(output)
+        def parse_function_calls(output, response: nil, finish_reason: nil)
           calls = output.select { |item| item['type'] == 'function_call' }
           return nil if calls.empty?
 
@@ -185,10 +223,18 @@ module RubyLLM
               ToolCall.new(
                 id: call['call_id'],
                 name: call['name'],
-                arguments: arguments.nil? || arguments.empty? ? {} : JSON.parse(arguments)
+                arguments: parse_function_call_arguments(arguments, response: response, finish_reason: finish_reason)
               )
             ]
           end
+        end
+
+        def parse_function_call_arguments(arguments, response: nil, finish_reason: nil)
+          return {} if arguments.nil? || arguments.empty?
+
+          JSON.parse(arguments)
+        rescue JSON::ParserError => e
+          raise ToolCallParseError.new(response: response, finish_reason: finish_reason), cause: e
         end
 
         def parse_reasoning_summary(output)
@@ -201,6 +247,26 @@ module RubyLLM
 
         def parse_reasoning_signature(output)
           output.find { |item| item['type'] == 'reasoning' }&.dig('encrypted_content')
+        end
+
+        def supports_provider_file_references?
+          true
+        end
+
+        def default_large_file_upload_threshold
+          OPENAI_INLINE_FILE_LIMIT
+        end
+
+        def provider_file_upload_limit
+          OPENAI_FILE_UPLOAD_LIMIT
+        end
+
+        def provider_file_attachable?(attachment)
+          attachment.pdf?
+        end
+
+        def provider_file_upload_options(_attachment)
+          { purpose: 'user_data' }
         end
       end
     end

@@ -3,8 +3,7 @@
 require 'json'
 
 module RubyLLM
-  # Manages model aliases for provider-specific versions
-  class Aliases
+  class Aliases # :nodoc:
     class << self
       def resolve(model_id, provider = nil)
         return model_id unless aliases[model_id]
@@ -32,7 +31,6 @@ module RubyLLM
         end
       end
 
-      # Replaces the cached alias map from aliases.json.
       def reload!
         @aliases = load_aliases
       end

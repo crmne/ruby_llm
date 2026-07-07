@@ -17,7 +17,7 @@ module RubyLLM
           Array(response.body['data']).map do |model_data|
             model_id = model_data['id']
 
-            Model::Info.new(
+            Model.new(
               id: model_id,
               name: model_data['display_name'] || model_id,
               provider: slug,
@@ -40,11 +40,11 @@ module RubyLLM
           data.dig('message', 'usage', 'output_tokens') || data.dig('usage', 'output_tokens')
         end
 
-        def extract_cached_tokens(data)
+        def extract_cache_read_tokens(data)
           data.dig('message', 'usage', 'cache_read_input_tokens') || data.dig('usage', 'cache_read_input_tokens')
         end
 
-        def extract_cache_creation_tokens(data)
+        def extract_cache_write_tokens(data)
           direct = data.dig('message', 'usage',
                             'cache_creation_input_tokens') || data.dig('usage', 'cache_creation_input_tokens')
           return direct if direct

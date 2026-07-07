@@ -5,10 +5,7 @@ require 'tempfile'
 
 module RubyLLM
   module ActiveRecord
-    # Shared Active Storage handling for ActiveRecord-backed chats and
-    # messages: writing RubyLLM attachments into Active Storage and
-    # rebuilding RubyLLM::Content from stored attachments.
-    module AttachmentHelpers
+    module AttachmentHelpers # :nodoc:
       private
 
       def persist_content(message_record, attachments)
@@ -60,14 +57,41 @@ module RubyLLM
         end
       end
 
-      def build_content(message, attachments)
-        return message if content_like?(message)
+      def plain_text_content(content_value)
+        return content_value.to_plain_text if content_value.respond_to?(:to_plain_text)
 
-        RubyLLM::Content.new(message, attachments)
+        content_value
       end
 
-      def content_like?(object)
-        object.is_a?(RubyLLM::Content) || object.is_a?(RubyLLM::Content::Raw)
+      def action_text_attachment_sources(content_value)
+        return [] unless content_value.respond_to?(:body)
+
+        body = content_value.body
+        return [] unless body.respond_to?(:attachables)
+
+        body.attachables.flat_map { |attachable| action_text_attachable_sources(attachable) }.compact
+      end
+
+      def action_text_attachable_sources(attachable)
+        source = active_storage_blobs(attachable)
+        source ||= attachable.blob if attachable.respond_to?(:blob)
+
+        Utils.to_safe_array(source)
+      end
+
+      def content_attachments?(action_text_attachments)
+        action_text_attachments.any? || active_storage_attachments?
+      end
+
+      def active_storage_attachments?
+        respond_to?(:attachments) && attachments.attached?
+      end
+
+      def collect_attachments(action_text_attachments)
+        list = action_text_attachments.map { |source| RubyLLM::Attachment.new(source) }
+        return list unless active_storage_attachments?
+
+        list + attachment_sources.map { |attachment, attachable| stored_attachment(attachment, attachable) }
       end
 
       def attachment_sources
@@ -85,12 +109,12 @@ module RubyLLM
         change.respond_to?(:attachments) && change.respond_to?(:attachables)
       end
 
-      def add_attachment_to_content(content_obj, attachment, attachable)
+      def stored_attachment(attachment, attachable)
         if pending_upload_attachable?(attachable)
-          add_pending_upload_attachment(content_obj, attachable)
+          pending_upload_attachment(attachable)
         else
           tempfile = download_attachment(attachment)
-          content_obj.add_attachment(tempfile, filename: attachment.filename.to_s)
+          RubyLLM::Attachment.new(tempfile, filename: attachment.filename.to_s)
         end
       end
 
@@ -115,11 +139,11 @@ module RubyLLM
         defined?(Pathname) && attachable.is_a?(Pathname)
       end
 
-      def add_pending_upload_attachment(content_obj, attachable)
+      def pending_upload_attachment(attachable)
         if attachable.is_a?(Hash)
-          content_obj.add_attachment(attachment_hash_io(attachable), filename: attachment_hash_filename(attachable))
+          RubyLLM::Attachment.new(attachment_hash_io(attachable), filename: attachment_hash_filename(attachable))
         else
-          content_obj.add_attachment(attachable)
+          RubyLLM::Attachment.new(attachable)
         end
       end
 

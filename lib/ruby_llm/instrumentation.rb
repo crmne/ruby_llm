@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
 module RubyLLM
-  # Emits structured RubyLLM events without requiring a specific observability
-  # backend. Rails apps can use ActiveSupport::Notifications as the instrumenter.
-  module Instrumentation
+  module Instrumentation # :nodoc:
     module_function
 
     def instrument(name, payload = nil, config: nil, **attributes) # rubocop:disable Metrics/PerceivedComplexity

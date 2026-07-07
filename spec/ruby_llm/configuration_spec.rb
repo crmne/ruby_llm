@@ -8,7 +8,6 @@ RSpec.describe RubyLLM::Configuration do
 
     it 'applies core default values' do
       expect(config.model_registry_class).to eq('Model')
-      expect(config.use_new_acts_as).to be(true)
       expect(config.model_registry_source).to be_nil
       expect(config.request_timeout).to eq(300)
       expect(config.max_retries).to eq(3)
@@ -25,8 +24,8 @@ RSpec.describe RubyLLM::Configuration do
         :request_timeout,
         :tool_concurrency,
         :default_model,
+        :default_speech_model,
         :model_registry_file,
-        :use_new_acts_as,
         :openai_api_key,
         :openrouter_api_base
       )
@@ -46,6 +45,12 @@ RSpec.describe RubyLLM::Configuration do
       expect(config.openai_api_base).to eq('https://openai-compatible.example.com/v1')
     end
 
+    it 'omits credential providers from instance variables' do
+      config.bedrock_credential_provider = Object.new
+
+      expect(config.instance_variables).not_to include(:@bedrock_credential_provider)
+    end
+
     it 'warns but preserves log_regexp_timeout when regexp timeouts are unsupported' do
       allow(Regexp).to receive(:respond_to?).and_call_original
       allow(Regexp).to receive(:respond_to?).with(:timeout).and_return(false)
@@ -57,6 +62,13 @@ RSpec.describe RubyLLM::Configuration do
       expect(RubyLLM.logger).to have_received(:warn).with(
         "log_regexp_timeout is not supported on Ruby #{RUBY_VERSION}"
       )
+    end
+  end
+
+  describe 'method redefinition warnings' do
+    it 'does not emit method redefined warning for log_regexp_timeout=' do
+      warnings = `#{RbConfig.ruby} -W -e 'require "ruby_llm"' 2>&1`
+      expect(warnings).not_to include('method redefined')
     end
   end
 end

@@ -1,7 +1,8 @@
 ---
 layout: default
 title: Extended Thinking
-nav_order: 8
+parent: "Chat"
+nav_order: 4
 description: Give reasoning models more time and budget to deliberate, with optional access to thinking output
 redirect_from:
   - /guides/thinking
@@ -9,10 +10,7 @@ redirect_from:
 ---
 
 # {{ page.title }}
-{: .d-inline-block .no_toc }
-
-New in 1.10
-{: .label .label-green }
+{: .no_toc }
 
 {{ page.description }}
 {: .fs-6 .fw-300 }
@@ -59,6 +57,12 @@ chat.with_thinking(budget: 10_000)
 chat.with_thinking(effort: :none)
 ```
 
+Call `without_thinking` to clear the thinking configuration and return to the model's default behavior:
+
+```ruby
+chat.without_thinking
+```
+
 ### Effort and Budget
 
 Use `effort` to pick a qualitative depth (`:low`, `:medium`, `:high`) and `budget` for models that accept a token cap.
@@ -100,7 +104,7 @@ response.thinking_tokens
 
 ### Upgrading Existing Installations
 
-For 1.10 upgrades, consider using the [upgrade guide]({% link _advanced/upgrading.md %}#upgrade-to-1-10) to run the generator.
+For 1.10 upgrades, consider using the [upgrade guide]({% link _reference/upgrading.md %}#upgrade-to-110) to run the generator.
 If you prefer manual migrations, add the columns to your message and tool calls tables:
 
 ```ruby
@@ -123,7 +127,7 @@ end
 - OpenAI reasoning models accept `effort` but may not return thinking text or signatures.
 - Perplexity sonar reasoning models stream `<think>` blocks inside content; RubyLLM extracts them after the response completes.
 - Mistral Magistral models always think and ignore `with_thinking` params. Non-magistral models warn if you pass them.
-- Ollama and GPUStack local-model thinking controls vary by backend and model. RubyLLM does not translate them; pass backend params explicitly with `with_params`.
+- Ollama and GPUStack local-model thinking controls vary by backend and model. RubyLLM does not translate them; pass backend params explicitly with `with_provider_options`.
 - Anthropic and Ollama integrations currently do not report thinking token counts.
 
 ## Next Steps

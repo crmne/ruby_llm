@@ -73,7 +73,7 @@ RSpec.describe RubyLLM::Chat do
     it 'works with with_model method' do
       chat = RubyLLM.chat
 
-      chat.with_model(custom_model, provider: provider, assume_exists: true)
+      chat.with_model(custom_model, provider: provider, assume_model_exists: true)
 
       expect(chat.model.id).to eq(custom_model)
       expect(chat.model.provider).to eq(provider)

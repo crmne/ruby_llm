@@ -4,11 +4,10 @@ require 'spec_helper'
 
 RSpec.describe RubyLLM::Protocols::Responses::Chat do
   let(:protocol) { RubyLLM::Protocols::Responses.allocate }
-  let(:model) { instance_double(RubyLLM::Model::Info, id: 'gpt-5-nano') }
+  let(:model) { instance_double(RubyLLM::Model, id: 'gpt-5-nano') }
 
-  def render_payload(messages, tools: {}, schema: nil, thinking: nil, stream: false)
-    protocol.send(:render_payload, messages, tools:, temperature: nil, model:, stream:, schema:, thinking:,
-                                             tool_prefs: nil)
+  def render_payload(messages, tools: {}, stream: false, **options)
+    protocol.send(:render_payload, messages, tools:, temperature: nil, model:, stream:, tool_prefs: nil, **options)
   end
 
   describe '#render_payload' do
@@ -54,7 +53,7 @@ RSpec.describe RubyLLM::Protocols::Responses::Chat do
     it 'replays assistant text as output_text content' do
       messages = [
         RubyLLM::Message.new(role: :user, content: 'hi'),
-        RubyLLM::Message.new(role: :assistant, content: 'Hello!')
+        RubyLLM::Message.new(role: :assistant, content: 'Hello!', finish_reason: 'MAX_TOKENS')
       ]
 
       payload = render_payload(messages)
@@ -64,7 +63,7 @@ RSpec.describe RubyLLM::Protocols::Responses::Chat do
 
     it 'uses flat function definitions' do
       tool = instance_double(RubyLLM::Tool, name: 'weather', description: 'Looks up weather',
-                                            params_schema: { 'type' => 'object' }, provider_params: {})
+                                            parameters_schema: { 'type' => 'object' }, provider_options: {})
 
       payload = render_payload([RubyLLM::Message.new(role: :user, content: 'hi')], tools: { weather: tool })
 
@@ -98,11 +97,24 @@ RSpec.describe RubyLLM::Protocols::Responses::Chat do
 
       expect(payload[:reasoning]).to eq({ effort: 'low' })
     end
+
+    it 'renders prompt cache params for any Responses-compatible provider' do
+      payload = render_payload(
+        [RubyLLM::Message.new(role: :user, content: 'hi')],
+        caching: { key: 'repo:ruby_llm', retention: '24h' }
+      )
+
+      expect(payload[:prompt_cache_key]).to eq('repo:ruby_llm')
+      expect(payload[:prompt_cache_retention]).to eq('24h')
+    end
   end
 
   describe '#parse_completion_response' do
     def response_with(output, usage: {})
-      instance_double(Faraday::Response, body: { 'model' => 'gpt-5-nano', 'output' => output, 'usage' => usage })
+      instance_double(
+        Faraday::Response,
+        body: { 'model' => 'gpt-5-nano', 'output' => output, 'usage' => usage, 'status' => 'completed' }
+      )
     end
 
     it 'joins output_text parts into content' do
@@ -115,7 +127,7 @@ RSpec.describe RubyLLM::Protocols::Responses::Chat do
       message = protocol.send(:parse_completion_response, response)
 
       expect(message.content).to eq('Hello world')
-      expect(message.model_id).to eq('gpt-5-nano')
+      expect(message.model).to eq('gpt-5-nano')
     end
 
     it 'parses function calls keyed by call_id' do
@@ -129,6 +141,35 @@ RSpec.describe RubyLLM::Protocols::Responses::Chat do
       expect(message.tool_calls.keys).to eq(['call_1'])
       expect(message.tool_calls['call_1'].name).to eq('weather')
       expect(message.tool_calls['call_1'].arguments).to eq({ 'city' => 'Berlin' })
+    end
+
+    it 'wraps malformed function-call arguments in a RubyLLM error' do
+      response = instance_double(
+        Faraday::Response,
+        body: {
+          'model' => 'gpt-5-nano',
+          'output' => [
+            { 'type' => 'function_call', 'call_id' => 'call_1', 'name' => 'weather',
+              'arguments' => '{"city":"Berlin"' }
+          ],
+          'status' => 'incomplete',
+          'incomplete_details' => { 'reason' => 'max_output_tokens' }
+        }
+      )
+
+      error = nil
+
+      expect do
+        protocol.send(:parse_completion_response, response)
+      rescue RubyLLM::ToolCallParseError => e
+        error = e
+        raise
+      end.to raise_error(RubyLLM::ToolCallParseError)
+
+      expect(error).to be_a(RubyLLM::Error)
+      expect(error.response).to eq(response)
+      expect(error.finish_reason).to eq('max_output_tokens')
+      expect(error.cause).to be_a(JSON::ParserError)
     end
 
     it 'parses reasoning summaries and encrypted content into thinking' do
@@ -156,8 +197,35 @@ RSpec.describe RubyLLM::Protocols::Responses::Chat do
 
       expect(message.input_tokens).to eq(6)
       expect(message.output_tokens).to eq(7)
-      expect(message.cached_tokens).to eq(4)
+      expect(message.cache_read_tokens).to eq(4)
       expect(message.thinking_tokens).to eq(3)
+    end
+
+    it 'does not synthesize finish_reason for completed function calls' do
+      response = response_with([
+                                 { 'type' => 'function_call', 'call_id' => 'call_1', 'name' => 'weather',
+                                   'arguments' => '{}' }
+                               ])
+
+      message = protocol.send(:parse_completion_response, response)
+
+      expect(message.finish_reason).to be_nil
+    end
+
+    it 'preserves incomplete_details reason as finish_reason when present' do
+      response = instance_double(
+        Faraday::Response,
+        body: {
+          'model' => 'gpt-5-nano',
+          'output' => [],
+          'status' => 'incomplete',
+          'incomplete_details' => { 'reason' => 'max_output_tokens' }
+        }
+      )
+
+      message = protocol.send(:parse_completion_response, response)
+
+      expect(message.finish_reason).to eq('max_output_tokens')
     end
   end
 end

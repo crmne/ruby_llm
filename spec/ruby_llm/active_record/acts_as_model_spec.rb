@@ -15,7 +15,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     end
 
     let(:model_info) do
-      RubyLLM::Model::Info.new(
+      RubyLLM::Model.new(
         id: 'gpt-4',
         name: 'GPT-4',
         provider: 'openai',
@@ -91,15 +91,15 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
         )
       end
 
-      it 'converts to Model::Info with to_llm' do
+      it 'converts to Model with to_llm' do
         result = model.to_llm
-        expect(result).to be_a(RubyLLM::Model::Info)
+        expect(result).to be_a(RubyLLM::Model)
         expect(result.id).to eq('gpt-4')
         expect(result.name).to eq('GPT-4')
         expect(result.provider).to eq('openai')
       end
 
-      it 'creates from Model::Info with from_llm' do
+      it 'creates from Model with from_llm' do
         model = model_class.from_llm(model_info)
         expect(model.model_id).to eq('gpt-4')
         expect(model.name).to eq('GPT-4')
@@ -121,10 +121,8 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       it 'delegates capability checks' do
         expect(model.supports?('function_calling')).to be true
         expect(model.supports?('batch')).to be false
-        expect(model.supports_vision?).to be true
-        expect(model.supports_functions?).to be true
-        expect(model.function_calling?).to be true
-        expect(model.streaming?).to be true
+        expect(model.supports?('vision')).to be true
+        expect(model.supports?('streaming')).to be true
       end
 
       it 'delegates type detection' do
@@ -191,7 +189,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
         models = RubyLLM::Models.new
         found = models.find('test-model', 'openai')
 
-        expect(found).to be_a(RubyLLM::Model::Info)
+        expect(found).to be_a(RubyLLM::Model)
         expect(found.id).to eq('test-model')
         expect(found.provider).to eq('openai')
       end
@@ -277,10 +275,10 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
         expect(RubyLLM).to receive(:chat).with( # rubocop:disable RSpec/MessageSpies,RSpec/StubbedMock
           model: 'test-gpt',
           provider: :openai,
+          protocol: nil,
           assume_model_exists: false
         ).and_return(
-          instance_double(RubyLLM::Chat, reset_messages!: nil, add_message: nil,
-                                         before_message: nil, after_message: nil)
+          instance_double(RubyLLM::Chat, 'messages=': nil, before_message: nil, after_message: nil)
         )
 
         chat.to_llm
@@ -294,17 +292,17 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
         expect(RubyLLM).to receive(:chat).with( # rubocop:disable RSpec/MessageSpies,RSpec/StubbedMock
           model: 'test-claude',
           provider: :anthropic,
+          protocol: nil,
           assume_model_exists: false
         ).and_return(
-          instance_double(RubyLLM::Chat, reset_messages!: nil, add_message: nil,
-                                         before_message: nil, after_message: nil)
+          instance_double(RubyLLM::Chat, 'messages=': nil, before_message: nil, after_message: nil)
         )
 
         chat.to_llm
       end
 
       it 'persists created model attributes using JSON-serializable hashes' do
-        model_info = RubyLLM::Model::Info.new(
+        model_info = RubyLLM::Model.new(
           id: 'priced-registry-model',
           name: 'Priced Registry Model',
           provider: 'openai',

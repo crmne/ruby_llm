@@ -7,12 +7,16 @@ module RubyLLM
       module Transcription
         DEFAULT_PROMPT = 'Transcribe the provided audio and respond with only the transcript text.'
 
-        def transcribe(audio_file, model:, language:, **options)
+        # rubocop:disable Metrics/ParameterLists, Lint/UnusedMethodArgument
+        def transcribe(audio_file, model:, language:, format: nil, speaker_names: nil,
+                       speaker_references: nil, provider_options: {}, prompt: nil, temperature: nil)
           attachment = Attachment.new(audio_file)
-          payload = render_transcription_payload(attachment, language:, **options)
+          payload = render_transcription_payload(attachment, language:, format:, provider_options:, prompt:,
+                                                             temperature:)
           response = @connection.post(transcription_url(model), payload)
           parse_transcription_response(response, model:)
         end
+        # rubocop:enable Metrics/ParameterLists, Lint/UnusedMethodArgument
 
         private
 
@@ -20,8 +24,10 @@ module RubyLLM
           "models/#{model}:generateContent"
         end
 
-        def render_transcription_payload(attachment, language:, **options)
-          prompt = build_prompt(options[:prompt], language)
+        # rubocop:disable Metrics/ParameterLists
+        def render_transcription_payload(attachment, language:, format: nil, provider_options: {}, prompt: nil,
+                                         temperature: nil)
+          prompt = build_prompt(prompt, language)
           audio_part = format_audio_part(attachment)
 
           raise UnsupportedAttachmentError, attachment.mime_type unless attachment.audio?
@@ -35,24 +41,17 @@ module RubyLLM
                   audio_part
                 ]
               }
-            ]
+            ],
+            generationConfig: build_generation_config(format:, temperature:)
           }
 
-          generation_config = build_generation_config(options)
-          payload[:generationConfig] = generation_config unless generation_config.empty?
-          payload[:safetySettings] = options[:safety_settings] if options[:safety_settings]
-
-          payload
+          Utils.deep_merge(payload, provider_options)
         end
+        # rubocop:enable Metrics/ParameterLists
 
-        def build_generation_config(options)
-          config = {}
-          response_mime_type = options.fetch(:response_mime_type, 'text/plain')
-
-          config[:responseMimeType] = response_mime_type if response_mime_type
-          config[:temperature] = options[:temperature] if options.key?(:temperature)
-          config[:maxOutputTokens] = options[:max_output_tokens] if options[:max_output_tokens]
-
+        def build_generation_config(format:, temperature:)
+          config = { responseMimeType: format || 'text/plain' }
+          config[:temperature] = temperature if temperature
           config
         end
 

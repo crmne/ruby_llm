@@ -3,8 +3,7 @@
 require 'marcel'
 
 module RubyLLM
-  # MimeTypes module provides methods to handle MIME types using Marcel gem
-  module MimeType
+  module MimeType # :nodoc: all
     module_function
 
     def for(...)

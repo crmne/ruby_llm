@@ -11,8 +11,8 @@ module RubyLLM
           role.to_s
         end
 
-        def format_content(content)
-          Perplexity::Media.format_content(content)
+        def format_content(content, attachments = [])
+          Perplexity::Media.format_content(content, attachments)
         end
       end
     end

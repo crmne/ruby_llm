@@ -120,14 +120,14 @@ RSpec.describe RubyLLM::Models do
 
     let(:mock_provider_models) do
       [
-        RubyLLM::Model::Info.new(
+        RubyLLM::Model.new(
           id: 'test-model-1',
           name: 'Test Model 1',
           provider: 'openai',
           capabilities: %w[chat streaming function_calling],
           modalities: { input: %w[text], output: %w[text] }
         ),
-        RubyLLM::Model::Info.new(
+        RubyLLM::Model.new(
           id: 'test-model-2',
           name: 'Test Model 2',
           provider: 'anthropic',
@@ -141,7 +141,7 @@ RSpec.describe RubyLLM::Models do
       models = described_class.refresh!
 
       expect(models).to be_a(described_class)
-      expect(models.all).to all(be_a(RubyLLM::Model::Info))
+      expect(models.all).to all(be_a(RubyLLM::Model))
 
       models.all.each do |model|
         expect(model.capabilities).to be_an(Array)
@@ -171,10 +171,10 @@ RSpec.describe RubyLLM::Models do
     end
   end
 
-  describe 'Model::Info capabilities handling' do
+  describe 'Model capabilities handling' do
     context 'when capabilities is an array' do
       let(:model) do
-        RubyLLM::Model::Info.new(
+        RubyLLM::Model.new(
           id: 'test-model',
           name: 'Test Model',
           provider: 'test',
@@ -202,13 +202,13 @@ RSpec.describe RubyLLM::Models do
     context 'when capabilities is accidentally a hash (bug scenario)' do
       it 'handles hash capabilities gracefully' do
         # This test documents the current behavior with hash capabilities
-        # The Model::Info class expects an array, so passing a hash should either:
+        # The Model class expects an array, so passing a hash should either:
         # 1. Be converted to an array
         # 2. Raise an error
         # 3. Be handled gracefully
 
         expect do
-          RubyLLM::Model::Info.new(
+          RubyLLM::Model.new(
             id: 'test-model',
             name: 'Test Model',
             provider: 'test',

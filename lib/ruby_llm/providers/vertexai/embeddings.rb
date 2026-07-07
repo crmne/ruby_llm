@@ -11,13 +11,17 @@ module RubyLLM
           "#{@provider.model_path(model)}:predict"
         end
 
-        def render_embedding_payload(text, model:, dimensions:) # rubocop:disable Lint/UnusedMethodArgument
-          {
-            instances: [text].flatten.map { |t| { content: t.to_s } }
-          }.tap do |payload|
-            payload[:parameters] = { outputDimensionality: dimensions } if dimensions
+        # rubocop:disable Lint/UnusedMethodArgument, Metrics/ParameterLists
+        def render_embedding_payload(text, model:, dimensions:, task_type: nil, title: nil, provider_options: {})
+          instances = [text].flatten.map do |t|
+            { content: t.to_s, task_type: task_type, title: title }.compact
           end
+          payload = { instances: instances }
+          payload[:parameters] = { outputDimensionality: dimensions } if dimensions
+
+          Utils.deep_merge(payload, provider_options)
         end
+        # rubocop:enable Lint/UnusedMethodArgument, Metrics/ParameterLists
 
         def parse_embedding_response(response, model:, text:)
           predictions = response.body['predictions']

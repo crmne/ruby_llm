@@ -61,6 +61,7 @@ RSpec.describe RubyLLM::Protocols::Responses::Streaming do
                           'type' => 'response.completed',
                           'response' => {
                             'model' => 'gpt-5-nano',
+                            'status' => 'completed',
                             'usage' => {
                               'input_tokens' => 10,
                               'output_tokens' => 7,
@@ -70,10 +71,40 @@ RSpec.describe RubyLLM::Protocols::Responses::Streaming do
                           }
                         })
 
-    expect(chunk.model_id).to eq('gpt-5-nano')
+    expect(chunk.model).to eq('gpt-5-nano')
     expect(chunk.input_tokens).to eq(6)
     expect(chunk.output_tokens).to eq(7)
-    expect(chunk.cached_tokens).to eq(4)
+    expect(chunk.cache_read_tokens).to eq(4)
     expect(chunk.thinking_tokens).to eq(3)
+    expect(chunk.finish_reason).to be_nil
+  end
+
+  it 'does not synthesize finish_reason for completed function-call responses' do
+    chunk = build_chunk({
+                          'type' => 'response.completed',
+                          'response' => {
+                            'model' => 'gpt-5-nano',
+                            'status' => 'completed',
+                            'output' => [
+                              { 'type' => 'function_call', 'call_id' => 'call_1', 'name' => 'weather',
+                                'arguments' => '{}' }
+                            ]
+                          }
+                        })
+
+    expect(chunk.finish_reason).to be_nil
+  end
+
+  it 'preserves incomplete_details reason on completed events' do
+    chunk = build_chunk({
+                          'type' => 'response.completed',
+                          'response' => {
+                            'model' => 'gpt-5-nano',
+                            'status' => 'incomplete',
+                            'incomplete_details' => { 'reason' => 'max_output_tokens' }
+                          }
+                        })
+
+    expect(chunk.finish_reason).to eq('max_output_tokens')
   end
 end

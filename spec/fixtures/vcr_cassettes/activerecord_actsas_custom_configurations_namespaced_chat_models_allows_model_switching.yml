@@ -8,7 +8,7 @@ http_interactions:
       string: '{"model":"gpt-4.1-nano","input":[{"role":"user","content":"Hello"}],"stream":false,"store":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.2
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -23,7 +23,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 11 Jun 2026 20:15:54 GMT
+      - Thu, 02 Jul 2026 12:34:00 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -47,7 +47,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '483'
+      - '1678'
       Openai-Project:
       - proj_61L3Oqt640dKU0CASS2iOj8Q
       Openai-Version:
@@ -74,15 +74,15 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_034d88a3a000e070016a2b177a705c81a280b26ec5f7ba111f",
+          "id": "resp_0c9ad946341a6f88016a465ab74418819dbe4eef5d0412dc1c",
           "object": "response",
-          "created_at": 1781208954,
+          "created_at": 1782995639,
           "status": "completed",
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1781208954,
+          "completed_at": 1782995640,
           "error": null,
           "frequency_penalty": 0.0,
           "incomplete_details": null,
@@ -93,7 +93,7 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "msg_034d88a3a000e070016a2b177abf7881a2818dfbe52e214f52",
+              "id": "msg_0c9ad946341a6f88016a465ab8c0ec819d852d97bbdbbe14fd",
               "type": "message",
               "status": "completed",
               "content": [
@@ -128,6 +128,24 @@ http_interactions:
             "verbosity": "medium"
           },
           "tool_choice": "auto",
+          "tool_usage": {
+            "image_gen": {
+              "input_tokens": 0,
+              "input_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "output_tokens": 0,
+              "output_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "total_tokens": 0
+            },
+            "web_search": {
+              "num_requests": 0
+            }
+          },
           "tools": [],
           "top_logprobs": 0,
           "top_p": 1.0,
@@ -146,5 +164,5 @@ http_interactions:
           "user": null,
           "metadata": {}
         }
-  recorded_at: Thu, 11 Jun 2026 20:15:55 GMT
+  recorded_at: Thu, 02 Jul 2026 12:34:01 GMT
 recorded_with: VCR 6.4.0

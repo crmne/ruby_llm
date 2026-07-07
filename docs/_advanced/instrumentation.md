@@ -1,17 +1,14 @@
 ---
 layout: default
-title: Instrumentation
-nav_order: 5
+title: Instrumentation and Observability
+nav_order: 6
 description: Observe RubyLLM requests, chats, tool calls, embeddings, and model refreshes
 redirect_from:
   - /guides/instrumentation
 ---
 
 # {{ page.title }}
-{: .no_toc .d-inline-block }
-
-v1.16.0+
-{: .label .label-green }
+{: .no_toc }
 
 {{ page.description }}.
 {: .fs-6 .fw-300 }
@@ -77,7 +74,20 @@ RubyLLM.configure do |config|
 end
 ```
 
-You can also set `instrumenter` on a [context]({% link _getting_started/configuration.md %}#contexts-isolated-configurations) when you only want instrumentation around a specific operation.
+You can also set `instrumenter` on a [context]({% link _getting_started/configuration-connection.md %}#contexts-isolated-configurations) when you only want instrumentation around a specific operation.
+
+## Per-Call Metadata
+
+One-shot APIs accept `metadata:` for application observability data:
+
+```ruby
+RubyLLM.embed(
+  "A short document",
+  metadata: { account_id: current_account.id, feature: "search" }
+)
+```
+
+RubyLLM includes that value as `payload[:metadata]` on the emitted event. It is not sent to the provider. Use `provider_options:` for provider request fields, and `metadata:` for values your own instrumentation subscribers need.
 
 ## Events
 
@@ -89,6 +99,7 @@ RubyLLM emits these events:
 *   `embedding.ruby_llm` - embedding model, input, result, token usage, and vector dimensions
 *   `image.ruby_llm` - image generation model, prompt, size, and result
 *   `moderation.ruby_llm` - moderation model, input, result, and flagged status
+*   `speech.ruby_llm` - speech generation model, input, voice, format, and audio byte size
 *   `transcription.ruby_llm` - transcription model, language, result, and token usage
 *   `models.refresh.ruby_llm` - model registry refresh metadata
 

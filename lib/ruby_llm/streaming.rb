@@ -5,8 +5,7 @@ require 'faraday'
 require 'json'
 
 module RubyLLM
-  # Handles streaming responses from AI providers.
-  module Streaming
+  module Streaming # :nodoc: all
     module_function
 
     def stream_response(payload, additional_headers = {}, &block)
@@ -125,6 +124,7 @@ module RubyLLM
     def raise_stream_error(raw_data, parsed_data, env)
       status, _message = parse_streaming_error(raw_data)
       error_response = build_stream_error_response(parsed_data, env, status)
+      env[:streaming_error_response] = error_response if env.respond_to?(:[]=)
       ErrorMiddleware.parse_error(provider: self, response: error_response)
     end
 
@@ -136,7 +136,7 @@ module RubyLLM
     end
 
     def build_stream_error_response(parsed_data, env, status)
-      error_status = status || env&.status || 500
+      error_status = failed_http_status(env) || status || 500
 
       if faraday_1?
         Struct.new(:body, :status).new(parsed_data, error_status)
@@ -145,8 +145,14 @@ module RubyLLM
       end
     end
 
-    # Builds Faraday on_data handlers for different major versions.
-    module FaradayHandlers
+    def failed_http_status(env)
+      status = env&.status
+      return status if status&.>= 400
+
+      nil
+    end
+
+    module FaradayHandlers # :nodoc:
       module_function
 
       def build(faraday_v1:, on_chunk:, on_failed_response:)

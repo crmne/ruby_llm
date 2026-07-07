@@ -1,11 +1,11 @@
 <%% row_id = [<%= model_model_name.demodulize.underscore %>.provider, <%= model_model_name.demodulize.underscore %>.id].join("_").parameterize(separator: "_") %>
 <tr id="model_<%%= row_id %>">
   <td><%%= <%= model_model_name.demodulize.underscore %>.provider_class&.name || <%= model_model_name.demodulize.underscore %>.provider %></td>
-  <td><%%= <%= model_model_name.demodulize.underscore %>.display_name %></td>
+  <td><%%= <%= model_model_name.demodulize.underscore %>.name %></td>
   <td><%%= number_with_delimiter(<%= model_model_name.demodulize.underscore %>.context_window) if <%= model_model_name.demodulize.underscore %>.context_window %></td>
   <td>
-    <%% input = <%= model_model_name.demodulize.underscore %>.input_price_per_million %>
-    <%% output = <%= model_model_name.demodulize.underscore %>.output_price_per_million %>
+    <%% input = <%= model_model_name.demodulize.underscore %>.price(:input) %>
+    <%% output = <%= model_model_name.demodulize.underscore %>.price(:output) %>
     <%% if input && output %>
       $<%%= "%.2f" % input %> / $<%%= "%.2f" % output %>
     <%% end %>

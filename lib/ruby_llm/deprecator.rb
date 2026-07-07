@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
 module RubyLLM
-  # Owns RubyLLM deprecation warnings so applications and tests can decide how
-  # aggressively to handle compatibility paths.
-  class Deprecator
+  class Deprecator # :nodoc:
     def warn(message)
       case RubyLLM.config.deprecation_behavior
       when :silence
@@ -20,5 +18,12 @@ module RubyLLM
     end
   end
 
+  # Raised when a deprecated API is used and
+  # Configuration#deprecation_behavior is +:raise+. With the default
+  # +:warn+, deprecations are logged instead.
+  #
+  #   RubyLLM.configure do |config|
+  #     config.deprecation_behavior = :raise
+  #   end
   class DeprecationError < StandardError; end
 end

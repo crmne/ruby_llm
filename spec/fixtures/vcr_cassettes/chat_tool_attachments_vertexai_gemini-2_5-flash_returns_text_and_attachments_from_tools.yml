@@ -1,0 +1,239 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://oauth2.googleapis.com/token
+    body:
+      encoding: ASCII-8BIT
+      string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      Pragma:
+      - no-cache
+      Date:
+      - Fri, 03 Jul 2026 23:32:00 GMT
+      Expires:
+      - Mon, 01 Jan 1990 00:00:00 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "access_token": "<GOOGLE_ACCESS_TOKEN>",
+          "expires_in": 3599,
+          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/cloud-platform openid https://www.googleapis.com/auth/userinfo.email",
+          "token_type": "Bearer",
+          "id_token": "<GOOGLE_ID_TOKEN>"
+        }
+  recorded_at: Fri, 03 Jul 2026 23:32:00 GMT
+- request:
+    method: post
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"Use the file_fetch tool,
+        then tell me exactly what the fetched file says."}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"file_fetch","description":"Fetches
+        the requested file","parameters":{"type":"OBJECT","properties":{},"required":[]}}]}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Fri, 03 Jul 2026 23:32:01 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "candidates": [
+            {
+              "content": {
+                "role": "model",
+                "parts": [
+                  {
+                    "functionCall": {
+                      "name": "file_fetch",
+                      "args": {}
+                    },
+                    "thoughtSignature": "CpICAY89a18/g5hKiDUJxogLGL5r6QGQBfMZAgRq+86z2NfTudttgGS2MKM0WornWUmEBDAzPOk6V8BaUUSvTT/taR0bFpf866o2jAAW7I1X0fWBoDQU3M8TAkNw/mntX73i2gT3pYp3fpkF/oXuUM/idk//0Kg77HdLqPA65sem0UKBjJw2gwwpvBg65XSZ33cC5h2wlO9U2VbSCePe2iN+Z+Z0J0wAEQYqu8vJoYrRtfvb8nyNrzOqeh52huNhhvF7+5TMnlHwDTXhltNzanBng2gXMpoRqZA2cjKkV+U+nkOLP4epEcL6mt2x0SS3E0Jqwc4uoZDu3B6/A8hrup9pDJ3myvZJXAMxNFXIpW/TtcbMcQ=="
+                  }
+                ]
+              },
+              "finishReason": "STOP",
+              "avgLogprobs": -6.4964116414388018
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 26,
+            "candidatesTokenCount": 3,
+            "totalTokenCount": 88,
+            "trafficType": "ON_DEMAND",
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 26
+              }
+            ],
+            "candidatesTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 3
+              }
+            ],
+            "thoughtsTokenCount": 59
+          },
+          "modelVersion": "gemini-2.5-flash",
+          "createTime": "2026-07-03T23:32:00.951068Z",
+          "responseId": "cEZIapyGOsnCtfAPnbCvqA0"
+        }
+  recorded_at: Fri, 03 Jul 2026 23:32:01 GMT
+- request:
+    method: post
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"Use the file_fetch tool,
+        then tell me exactly what the fetched file says."}]},{"role":"model","parts":[{"functionCall":{"name":"file_fetch","args":{}},"thoughtSignature":"CpICAY89a18/g5hKiDUJxogLGL5r6QGQBfMZAgRq+86z2NfTudttgGS2MKM0WornWUmEBDAzPOk6V8BaUUSvTT/taR0bFpf866o2jAAW7I1X0fWBoDQU3M8TAkNw/mntX73i2gT3pYp3fpkF/oXuUM/idk//0Kg77HdLqPA65sem0UKBjJw2gwwpvBg65XSZ33cC5h2wlO9U2VbSCePe2iN+Z+Z0J0wAEQYqu8vJoYrRtfvb8nyNrzOqeh52huNhhvF7+5TMnlHwDTXhltNzanBng2gXMpoRqZA2cjKkV+U+nkOLP4epEcL6mt2x0SS3E0Jqwc4uoZDu3B6/A8hrup9pDJ3myvZJXAMxNFXIpW/TtcbMcQ=="}]},{"role":"user","parts":[{"functionResponse":{"name":"file_fetch","response":{"name":"file_fetch","content":[{"text":"Fetched
+        the file."}]}}},{"text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
+        is the best.</file>"}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"file_fetch","description":"Fetches
+        the requested file","parameters":{"type":"OBJECT","properties":{},"required":[]}}]}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Fri, 03 Jul 2026 23:32:02 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "candidates": [
+            {
+              "content": {
+                "role": "model",
+                "parts": [
+                  {
+                    "text": "The fetched file says: \"Ruby is the best.\"",
+                    "thoughtSignature": "Co0CAY89a1+8fpGcSZ1tpT6dn4s2V+RVNgA9+4Gi0ADH7nXHg1cPOt41UIxr63gJPoMkw6PZcI/ne8ypvqOJ8U/Dboi/P0e7eQazx/86ipWQMpg9K7TpIY70tO0HvER2wi5Fs9s1fhTgTlrZRqoMEWLV4UFNKYSJK1xhywaxJcoS3+dkV4RLlEGKDAN3fxoccgtxXn1Tel+2KVtZRpF+LPwmHphDhlRGxRx9hZHEbjyA+BBiNY5gCq6u76wFXoaH30rHirvzbJUOv9BEfOL0fnT1f6LEzs0BWjPCWtTSiHAV9iA4+f2gBm9BgV/fJDRPT8kMqfJuv0/1Mt8+7EmT9lCS8w/ThXefzXXkdxXrR5s="
+                  }
+                ]
+              },
+              "finishReason": "STOP",
+              "avgLogprobs": -1.5376280004327947
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 124,
+            "candidatesTokenCount": 11,
+            "totalTokenCount": 192,
+            "trafficType": "ON_DEMAND",
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 124
+              }
+            ],
+            "candidatesTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 11
+              }
+            ],
+            "thoughtsTokenCount": 57
+          },
+          "modelVersion": "gemini-2.5-flash",
+          "createTime": "2026-07-03T23:32:01.902125Z",
+          "responseId": "cUZIau2HN_z67PIP1sfukQw"
+        }
+  recorded_at: Fri, 03 Jul 2026 23:32:02 GMT
+recorded_with: VCR 6.4.0

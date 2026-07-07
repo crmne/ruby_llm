@@ -32,11 +32,6 @@ namespace :models do
   end
 end
 
-# Keep aliases:generate for backwards compatibility
-namespace :aliases do
-  task generate: ['models:aliases']
-end
-
 def configure_from_env
   RubyLLM.configure do |config|
     config.anthropic_api_key = ENV.fetch('ANTHROPIC_API_KEY', nil)
@@ -123,7 +118,7 @@ def display_model_stats
   provider_counts = @models.all.group_by(&:provider).transform_values(&:count)
 
   RubyLLM::Provider.providers.each do |sym, provider_class|
-    name = provider_class.name
+    name = provider_class.display_name
     count = provider_counts[sym.to_s] || 0
     status = status(sym)
     puts "  #{name}: #{count} models #{status}"
@@ -153,7 +148,7 @@ def generate_models_markdown
     ---
     layout: default
     title: Available Models
-    nav_order: 1
+    nav_order: 2
     description: Browse #{total_models} AI models across #{provider_count} providers (not including local providers). Updated #{generated_on}.
     redirect_from:
       - /guides/available-models
@@ -185,7 +180,7 @@ def generate_models_markdown
     Model.refresh!
     ```
 
-    See [Model Registry: Refreshing the Registry]({% link _advanced/models.md %}#refreshing-the-registry).
+    See [Working with Models: Refreshing the Registry]({% link _reference/models.md %}#refreshing-the-registry).
 
     ## Models by Provider
 
@@ -207,7 +202,7 @@ def generate_provider_sections
     next if models.none?
 
     <<~PROVIDER
-      ### #{provider_class.name} (#{models.count})
+      ### #{provider_class.display_name} (#{models.count})
 
       #{models_table(models)}
     PROVIDER
@@ -216,8 +211,8 @@ end
 
 def generate_capability_sections
   capabilities = {
-    'Function Calling' => RubyLLM.models.select(&:function_calling?),
-    'Structured Output' => RubyLLM.models.select(&:structured_output?),
+    'Function Calling' => RubyLLM.models.select { |m| m.supports?(:function_calling) },
+    'Structured Output' => RubyLLM.models.select { |m| m.supports?(:structured_output) },
     'Streaming' => RubyLLM.models.select { |m| m.capabilities.include?('streaming') },
     'Batch Processing' => RubyLLM.models.select { |m| m.capabilities.include?('batch') }
   }
@@ -332,8 +327,8 @@ def standard_pricing_display(model)
   parts = [
     pricing_part(pricing_data, :input_per_million, 'In'),
     pricing_part(pricing_data, :output_per_million, 'Out'),
-    pricing_part(pricing_data, %i[cache_read_input_per_million cached_input_per_million], 'Cache Read'),
-    pricing_part(pricing_data, %i[cache_write_input_per_million cache_creation_input_per_million], 'Cache Write')
+    pricing_part(pricing_data, :cache_read_input_per_million, 'Cache Read'),
+    pricing_part(pricing_data, :cache_write_input_per_million, 'Cache Write')
   ].compact
 
   return parts.join(', ') if parts.any?

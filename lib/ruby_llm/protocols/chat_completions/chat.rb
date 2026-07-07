@@ -5,6 +5,10 @@ module RubyLLM
     class ChatCompletions
       # Chat methods of the OpenAI API integration
       module Chat
+        OPENAI_INLINE_FILE_LIMIT = 50 * 1024 * 1024
+        OPENAI_FILE_UPLOAD_LIMIT = 512 * 1024 * 1024
+        PROMPT_CACHE_OPTIONS = %i[key retention].freeze
+
         def completion_url
           'chat/completions'
         end
@@ -12,17 +16,18 @@ module RubyLLM
         module_function
 
         # rubocop:disable Metrics/ParameterLists,Metrics/PerceivedComplexity
-        def render_payload(messages, tools:, temperature:, model:, stream: false, schema: nil,
-                           thinking: nil, citations: false, tool_prefs: nil)
-          warn_unsupported_citations(model) if citations && !model.citations?
+        def render_payload(messages, tools:, temperature:, model:, stream: false, max_output_tokens: nil, schema: nil,
+                           thinking: nil, citations: false, caching: nil, tool_prefs: nil)
+          warn_unsupported_citations(model) if citations && !model.supports?(:citations)
           tool_prefs ||= {}
           payload = {
             model: model.id,
-            messages: format_messages(messages),
+            messages: format_messages(messages, caching: caching),
             stream: stream
           }
 
           payload[:temperature] = temperature unless temperature.nil?
+          payload[:max_tokens] = max_output_tokens unless max_output_tokens.nil?
           if tools.any?
             payload[:tools] = tools.map { |_, tool| tool_for(tool) }
             payload[:tool_choice] = build_tool_choice(tool_prefs[:choice]) unless tool_prefs[:choice].nil?
@@ -48,6 +53,7 @@ module RubyLLM
           payload[:reasoning_effort] = effort if effort
 
           payload[:stream_options] = { include_usage: true } if stream
+          payload.merge!(prompt_cache_params(caching)) if caching
           payload
         end
         # rubocop:enable Metrics/ParameterLists,Metrics/PerceivedComplexity
@@ -59,11 +65,8 @@ module RubyLLM
           )
         end
 
-        def parse_completion_response(response)
-          data = response.body
-          return if data.nil? || data.empty?
-
-          raise Error.new(response, data.dig('error', 'message')) if data.dig('error', 'message')
+        def parse_completion_body(data, raw:)
+          raise Error.new(data.dig('error', 'message'), response: raw) if data.dig('error', 'message')
 
           message_data = data.dig('choices', 0, 'message')
           return unless message_data
@@ -74,19 +77,22 @@ module RubyLLM
           thinking_text = thinking_from_blocks || extract_thinking_text(message_data)
           thinking_signature = extract_thinking_signature(message_data)
 
+          finish_reason = data.dig('choices', 0, 'finish_reason')
+
           Message.new(
             role: :assistant,
             content: content,
             citations: extract_citations(message_data, data, content),
             thinking: Thinking.build(text: thinking_text, signature: thinking_signature),
-            tool_calls: parse_tool_calls(message_data['tool_calls']),
+            tool_calls: parse_tool_calls(message_data['tool_calls'], response: raw, finish_reason: finish_reason),
             input_tokens: input_tokens(usage),
             output_tokens: output_tokens(usage),
-            cached_tokens: cache_read_tokens(usage),
-            cache_creation_tokens: cache_write_tokens(usage),
+            cache_read_tokens: cache_read_tokens(usage),
+            cache_write_tokens: cache_write_tokens(usage),
             thinking_tokens: thinking_tokens,
-            model_id: data['model'],
-            raw: response
+            finish_reason: finish_reason,
+            model: data['model'],
+            raw: raw
           )
         end
 
@@ -184,19 +190,57 @@ module RubyLLM
           end
         end
 
-        def format_messages(messages)
-          messages.map do |msg|
-            {
-              role: format_role(msg.role),
-              content: format_message_content(msg),
-              tool_calls: format_tool_calls(msg.tool_calls),
-              tool_call_id: msg.tool_call_id
-            }.compact.merge(format_thinking(msg))
+        def prompt_cache_params(caching)
+          options = prompt_cache_options(caching)
+
+          {}.tap do |params|
+            params[:prompt_cache_key] = options[:key] if options[:key]
+            params[:prompt_cache_retention] = options[:retention] if options[:retention]
           end
         end
 
-        def format_message_content(msg)
-          content = format_content(msg.content)
+        def prompt_cache_options(caching)
+          options = caching.to_h.transform_keys(&:to_sym)
+          unsupported = options.keys - PROMPT_CACHE_OPTIONS
+          return options if unsupported.empty?
+
+          raise ArgumentError,
+                'Chat Completions prompt caching accepts :key and :retention, ' \
+                "got #{format_cache_option_keys(unsupported)}"
+        end
+
+        def format_cache_option_keys(keys)
+          keys.map { |key| ":#{key}" }.join(', ')
+        end
+
+        def format_messages(messages, caching: nil)
+          messages_for_provider(messages).flat_map do |msg|
+            formatted = {
+              role: format_role(msg.role),
+              content: format_message_content(msg, caching: caching),
+              tool_calls: format_tool_calls(msg.tool_calls),
+              tool_call_id: msg.tool_call_id
+            }.compact.merge(format_thinking(msg))
+
+            msg.tool_result? && msg.attachments.any? ? [formatted, tool_attachment_message(msg)] : [formatted]
+          end
+        end
+
+        # Chat Completions tool messages are text-only on the wire, so tool
+        # attachments ride a user message spliced in right after the result.
+        def tool_attachment_message(msg)
+          parts = [Media.format_text("Attachments from tool call #{msg.tool_call_id}:")]
+          parts.concat(format_content(nil, msg.attachments))
+          { role: 'user', content: parts }
+        end
+
+        def messages_for_provider(messages)
+          system_messages, other_messages = messages.partition { |msg| msg.role == :system }
+          system_messages + other_messages
+        end
+
+        def format_message_content(msg, **)
+          content = format_content(msg.content, msg.tool_result? ? [] : msg.attachments)
           return '' if content.nil? && thinking_only_assistant_message?(msg)
 
           content
@@ -206,8 +250,8 @@ module RubyLLM
           msg.role == :assistant && msg.thinking && !msg.tool_call?
         end
 
-        def format_content(content)
-          Media.format_content(content)
+        def format_content(content, attachments = [])
+          Media.format_content(content, attachments)
         end
 
         def format_role(role)
@@ -223,6 +267,26 @@ module RubyLLM
           return nil unless thinking
 
           thinking.respond_to?(:effort) ? thinking.effort : thinking
+        end
+
+        def supports_provider_file_references?
+          @provider.slug == 'openai'
+        end
+
+        def default_large_file_upload_threshold
+          OPENAI_INLINE_FILE_LIMIT
+        end
+
+        def provider_file_upload_limit
+          OPENAI_FILE_UPLOAD_LIMIT
+        end
+
+        def provider_file_attachable?(attachment)
+          attachment.pdf?
+        end
+
+        def provider_file_upload_options(_attachment)
+          { purpose: 'user_data' }
         end
 
         def format_thinking(msg)

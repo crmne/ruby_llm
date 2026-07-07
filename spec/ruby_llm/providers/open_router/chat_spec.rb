@@ -6,10 +6,12 @@ RSpec.describe RubyLLM::Providers::OpenRouter::Chat do
   let(:provider) { RubyLLM::Providers::OpenRouter::ChatCompletions.allocate }
 
   describe '#parse_completion_response' do
-    it 'returns nil for a nil response body' do
+    it 'raises RubyLLM::Error for a nil response body' do
       response = instance_double(Faraday::Response, body: nil)
 
-      expect(provider.send(:parse_completion_response, response)).to be_nil
+      expect do
+        provider.send(:parse_completion_response, response)
+      end.to raise_error(RubyLLM::Error, 'Provider returned an empty response body')
     end
 
     it 'normalizes cached prompt tokens out of input tokens' do
@@ -34,8 +36,8 @@ RSpec.describe RubyLLM::Providers::OpenRouter::Chat do
       message = provider.send(:parse_completion_response, response)
 
       expect(message.input_tokens).to eq(2)
-      expect(message.cached_tokens).to eq(6)
-      expect(message.cache_creation_tokens).to eq(4)
+      expect(message.cache_read_tokens).to eq(6)
+      expect(message.cache_write_tokens).to eq(4)
       expect(message.output_tokens).to eq(4)
     end
 
@@ -66,12 +68,27 @@ RSpec.describe RubyLLM::Providers::OpenRouter::Chat do
     end
   end
 
+  describe '#build_chunk' do
+    it 'preserves raw finish reasons on streaming chunks' do
+      chunk = provider.send(
+        :build_chunk,
+        {
+          'model' => 'openai/gpt-4.1-nano',
+          'choices' => [
+            { 'delta' => { 'content' => '' }, 'finish_reason' => 'tool_calls' }
+          ]
+        }
+      )
+
+      expect(chunk.finish_reason).to eq('tool_calls')
+    end
+  end
+
   describe '#format_messages' do
     it 'opts OpenRouter into native file parts for PDF attachments' do
-      content = RubyLLM::Content.new('Summarize this file')
-      content.add_attachment(StringIO.new('pdf bytes'), filename: 'proposal.pdf')
+      attachment = RubyLLM::Attachment.new(StringIO.new('pdf bytes'), filename: 'proposal.pdf')
 
-      messages = [RubyLLM::Message.new(role: :user, content:)]
+      messages = [RubyLLM::Message.new(role: :user, content: 'Summarize this file', attachments: [attachment])]
 
       formatted = provider.send(:format_messages, messages)
 
@@ -80,20 +97,36 @@ RSpec.describe RubyLLM::Providers::OpenRouter::Chat do
     end
 
     it 'keeps non-PDF documents disabled for OpenRouter chat completions' do
-      content = RubyLLM::Content.new('Summarize this file')
-      content.add_attachment(StringIO.new('docx bytes'), filename: 'proposal.docx')
+      attachment = RubyLLM::Attachment.new(StringIO.new('docx bytes'), filename: 'proposal.docx')
+      message = RubyLLM::Message.new(role: :user, content: 'Summarize this file', attachments: [attachment])
 
       expect do
-        provider.send(:format_messages, [RubyLLM::Message.new(role: :user, content:)])
+        provider.send(:format_messages, [message])
       end.to raise_error(
         RubyLLM::UnsupportedAttachmentError,
         %r{Unsupported attachment type: application/vnd.openxmlformats-officedocument.wordprocessingml.document}
       )
     end
+
+    it 'adds cache_control to a message marked as a cache boundary' do
+      message = RubyLLM::Message.new(role: :user, content: 'Long context').cache_until_here!
+
+      formatted = provider.send(:format_messages, [message])
+
+      expect(formatted.dig(0, :content, -1)).to include(cache_control: { type: 'ephemeral' })
+    end
+
+    it 'uses configured cache_control for a cache boundary' do
+      message = RubyLLM::Message.new(role: :user, content: 'Long context').cache_until_here!
+
+      formatted = provider.send(:format_messages, [message], caching: { ttl: '1h' })
+
+      expect(formatted.dig(0, :content, -1, :cache_control)).to eq(type: 'ephemeral', ttl: '1h')
+    end
   end
 
   describe '#render_payload' do
-    let(:model) { instance_double(RubyLLM::Model::Info, id: 'anthropic/claude-haiku-4.5') }
+    let(:model) { instance_double(RubyLLM::Model, id: 'anthropic/claude-haiku-4.5') }
     let(:messages) { [RubyLLM::Message.new(role: :user, content: 'Hello')] }
 
     before do
@@ -152,6 +185,50 @@ RSpec.describe RubyLLM::Providers::OpenRouter::Chat do
       expect(payload[:response_format][:json_schema][:name]).to eq('PersonSchema')
       expect(payload[:response_format][:json_schema][:schema]).to eq(schema[:schema])
       expect(payload[:response_format][:json_schema][:strict]).to be(false)
+    end
+
+    it 'adds top-level automatic cache_control when caching is enabled without explicit boundaries' do
+      payload = provider.send(
+        :render_payload,
+        messages,
+        tools: {},
+        temperature: nil,
+        model: model,
+        stream: false,
+        caching: { ttl: '1h' }
+      )
+
+      expect(payload[:cache_control]).to eq(type: 'ephemeral', ttl: '1h')
+    end
+
+    it 'does not add top-level cache_control when an explicit boundary is present' do
+      messages = [RubyLLM::Message.new(role: :user, content: 'Long context').cache_until_here!]
+
+      payload = provider.send(
+        :render_payload,
+        messages,
+        tools: {},
+        temperature: nil,
+        model: model,
+        stream: false,
+        caching: { ttl: '1h' }
+      )
+
+      expect(payload).not_to have_key(:cache_control)
+    end
+
+    it 'rejects caching options it cannot render' do
+      expect do
+        provider.send(
+          :render_payload,
+          messages,
+          tools: {},
+          temperature: nil,
+          model: model,
+          stream: false,
+          caching: { retention: '24h' }
+        )
+      end.to raise_error(ArgumentError, /OpenRouter prompt caching accepts :ttl/)
     end
   end
 end

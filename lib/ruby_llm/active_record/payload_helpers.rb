@@ -5,8 +5,7 @@ require 'json'
 
 module RubyLLM
   module ActiveRecord
-    # Shared helpers for parsing serialized payloads on ActiveRecord-backed models.
-    module PayloadHelpers
+    module PayloadHelpers # :nodoc:
       private
 
       def payload_error_message(value)

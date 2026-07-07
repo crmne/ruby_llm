@@ -37,9 +37,6 @@ module RubyLLM
 
           Please run the install generator first:
             bin/rails generate ruby_llm:install#{arg_string}
-
-          Or if upgrading from <= 1.6.x, run the upgrade generator:
-            bin/rails generate ruby_llm:upgrade_to_v1_7#{arg_string}
         ERROR
       end
 

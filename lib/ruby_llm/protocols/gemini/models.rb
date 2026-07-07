@@ -15,7 +15,7 @@ module RubyLLM
           Array(response.body['models']).map do |model_data|
             model_id = model_data['name'].gsub('models/', '')
 
-            Model::Info.new(
+            Model.new(
               id: model_id,
               name: model_data['displayName'] || model_id,
               provider: slug,

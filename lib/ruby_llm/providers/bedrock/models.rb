@@ -27,7 +27,7 @@ module RubyLLM
           model_id = model_id_with_region(model_data['modelId'], model_data)
           converse_data = model_data['converse'] || {}
 
-          Model::Info.new(
+          Model.new(
             id: model_id,
             name: model_data['modelName'],
             provider: slug,
@@ -53,6 +53,20 @@ module RubyLLM
         def model_id_with_region(model_id, model_data)
           inference_types = Array(model_data['inferenceTypesSupported'])
           normalize_inference_profile_id(model_id, inference_types, @config.bedrock_region)
+        end
+
+        def resolve_registry_id(model_id, models, config)
+          region = config.bedrock_region.to_s
+          return model_id if region.empty?
+
+          candidate_id = with_region_prefix(model_id, region)
+          return model_id if candidate_id == model_id
+
+          candidate = models.all.find { |m| m.provider == 'bedrock' && m.id == candidate_id }
+          return model_id unless candidate
+
+          inference_types = Array(candidate.metadata[:inference_types] || candidate.metadata['inference_types'])
+          normalize_inference_profile_id(model_id, inference_types, region)
         end
 
         def normalize_inference_profile_id(model_id, inference_types, region)
@@ -118,13 +132,6 @@ module RubyLLM
           major = match[1].to_i
           minor = match[2].to_i
           major > 4 || (major == 4 && minor >= 5)
-        end
-
-        def reasoning_embedded?(model)
-          metadata = RubyLLM::Utils.deep_symbolize_keys(model.metadata || {})
-          converse = metadata[:converse] || {}
-          reasoning_supported = converse[:reasoningSupported] || {}
-          reasoning_supported[:embedded] || false
         end
 
         def parse_context_window(model_data)

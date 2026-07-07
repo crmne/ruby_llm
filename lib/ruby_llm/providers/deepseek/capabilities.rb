@@ -20,14 +20,6 @@ module RubyLLM
           cache_read: 0.003625
         }.freeze
 
-        def supports_tool_choice?(_model_id)
-          true
-        end
-
-        def supports_tool_parallel_control?(_model_id)
-          false
-        end
-
         def context_window_for(_model_id)
           DEFAULT_CONTEXT_WINDOW
         end
@@ -38,7 +30,7 @@ module RubyLLM
 
         def critical_capabilities_for(model_id)
           v4_model = model_id.start_with?('deepseek-v4-')
-          capabilities = ['function_calling']
+          capabilities = %w[function_calling tool_choice]
           capabilities << 'structured_output' if v4_model
           capabilities << 'reasoning' if model_id == 'deepseek-reasoner' || v4_model
           capabilities

@@ -11,20 +11,23 @@ module RubyLLM
           'audio/transcriptions'
         end
 
-        def render_transcription_payload(file_part, model:, language:, **options)
+        # rubocop:disable Metrics/ParameterLists
+        def render_transcription_payload(file_part, model:, language:, format: nil, speaker_names: nil,
+                                         speaker_references: nil, provider_options: {}, prompt: nil,
+                                         temperature: nil)
           {
             model: model,
             file: file_part,
             language: language,
-            chunking_strategy: (options[:chunking_strategy] || 'auto' if supports_chunking_strategy?(model, options)),
-            response_format: response_format_for(model, options),
-            prompt: options[:prompt],
-            temperature: options[:temperature],
-            timestamp_granularities: options[:timestamp_granularities],
-            known_speaker_names: options[:speaker_names],
-            known_speaker_references: encode_speaker_references(options[:speaker_references])
-          }.compact
+            chunking_strategy: default_chunking_strategy(model),
+            response_format: format || default_response_format(model),
+            prompt: prompt,
+            temperature: temperature,
+            known_speaker_names: speaker_names,
+            known_speaker_references: encode_speaker_references(speaker_references)
+          }.compact.merge(provider_options)
         end
+        # rubocop:enable Metrics/ParameterLists
 
         def encode_speaker_references(references)
           return nil unless references
@@ -34,17 +37,12 @@ module RubyLLM
           end
         end
 
-        def response_format_for(model, options)
-          return options[:response_format] if options.key?(:response_format)
-
-          'diarized_json' if model.include?('diarize')
+        def default_chunking_strategy(model)
+          'auto' if model.include?('diarize')
         end
 
-        def supports_chunking_strategy?(model, options)
-          return false if model.start_with?('whisper')
-          return true if options.key?(:chunking_strategy)
-
-          model.include?('diarize')
+        def default_response_format(model)
+          'diarized_json' if model.include?('diarize')
         end
 
         def parse_transcription_response(response, model:)

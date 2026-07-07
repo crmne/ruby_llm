@@ -34,5 +34,11 @@ RSpec.describe RubyLLM::Transcription do
         RubyLLM.transcribe(audio_path, model: 'invalid-transcription-model')
       end.to raise_error(RubyLLM::ModelNotFoundError)
     end
+
+    it 'rejects unknown keyword arguments' do
+      expect do
+        RubyLLM.transcribe(audio_path, unsupported: true)
+      end.to raise_error(ArgumentError, /unknown keyword/)
+    end
   end
 end

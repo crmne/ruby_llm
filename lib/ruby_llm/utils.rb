@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 module RubyLLM
-  # Provides utility functions for data manipulation within the RubyLLM library
-  module Utils
+  module Utils # :nodoc:
     module_function
 
     def hash_get(hash, key)

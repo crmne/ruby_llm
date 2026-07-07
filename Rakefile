@@ -11,6 +11,12 @@ task :test do
   run_test_queue_rspec || abort('Tests failed')
 end
 
+desc 'Generate API documentation'
+task :rdoc do
+  sh 'docs/bin/build-api.sh', 'doc'
+end
+CLOBBER.include 'doc'
+
 desc 'Run overcommit hooks and update models'
 task :default do
   sh 'overcommit --run'

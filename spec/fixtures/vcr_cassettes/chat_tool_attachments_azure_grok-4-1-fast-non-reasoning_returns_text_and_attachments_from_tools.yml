@@ -1,0 +1,191 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
+    body:
+      encoding: UTF-8
+      string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"user","content":"Use
+        the file_fetch tool, then tell me exactly what the fetched file says."}],"stream":false,"tools":[{"type":"function","function":{"name":"file_fetch","description":"Fetches
+        the requested file","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Api-Key:
+      - "<AZURE_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-cache
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Vary:
+      - access-control-request-headers
+      X-Ms-Rai-Invoked:
+      - 'true'
+      Traceparent:
+      - 00-a96e30d312cd2067da7e658eb7c9f34e-d1ae7eca00298ee8-00
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      X-Xai-Model-Address:
+      - http://localhost:9988
+      X-Ms-Client-Request-Id:
+      - d0102356-e1b5-451d-a11a-ab16e1387299
+      Azureml-Model-Session:
+      - d20260623231153-a24584b0
+      Azureai-Requested-Tier:
+      - default
+      Azureai-Processed-Tier:
+      - default
+      X-Ms-Is-Spilled-Over:
+      - 'false'
+      X-Ratelimit-Key:
+      - grok-4-1-fast-non-reasoning
+      X-Ratelimit-Remaining-Requests:
+      - '49'
+      X-Ratelimit-Reset-Requests:
+      - '1'
+      X-Ratelimit-Limit-Requests:
+      - '50'
+      X-Ratelimit-Renewalperiod-Requests:
+      - '60'
+      X-Ratelimit-Abusepenalty-Active:
+      - 'False'
+      X-Ratelimit-Remaining-Tokens:
+      - '49906'
+      X-Ratelimit-Reset-Tokens:
+      - '0'
+      X-Ratelimit-Limit-Tokens:
+      - '50000'
+      X-Ratelimit-Renewalperiod-Tokens:
+      - '60'
+      Azureai-Fe-Is-Streaming:
+      - 'False'
+      Apim-Request-Id:
+      - d0102356-e1b5-451d-a11a-ab16e1387299
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Ms-Deployment-Name:
+      - grok-4-1-fast-non-reasoning
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Region:
+      - West Europe
+      Date:
+      - Fri, 03 Jul 2026 23:31:39 GMT
+    body:
+      encoding: UTF-8
+      string: '{"id":"eb7c0cec-1140-41fd-9a2c-9ce08489a1ae","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"call_99903259","index":0,"type":"function","function":{"name":"file_fetch","arguments":"{}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":203,"completion_tokens":15,"total_tokens":218,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":158,"audio_tokens":0,"text_tokens":203,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1783121499,"object":"chat.completion","prompt_filter_results":null}'
+  recorded_at: Fri, 03 Jul 2026 23:31:39 GMT
+- request:
+    method: post
+    uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
+    body:
+      encoding: UTF-8
+      string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"user","content":"Use
+        the file_fetch tool, then tell me exactly what the fetched file says."},{"role":"assistant","content":"","tool_calls":[{"id":"call_99903259","type":"function","function":{"name":"file_fetch","arguments":"{}"}}]},{"role":"tool","content":"Fetched
+        the file.","tool_call_id":"call_99903259"},{"role":"user","content":[{"type":"text","text":"Attachments
+        from tool call call_99903259:"},{"type":"text","text":"<file name=''ruby.txt''
+        mime_type=''text/plain''>Ruby is the best.</file>"}]}],"stream":false,"tools":[{"type":"function","function":{"name":"file_fetch","description":"Fetches
+        the requested file","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Api-Key:
+      - "<AZURE_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-cache
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - application/json
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Vary:
+      - access-control-request-headers
+      X-Ms-Rai-Invoked:
+      - 'true'
+      Traceparent:
+      - 00-e6d1d5e4affb297e4bb235f1e95b1d56-6d503a2800288082-00
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      X-Xai-Model-Address:
+      - http://localhost:9988
+      X-Ms-Client-Request-Id:
+      - 879e9475-b60c-44f2-9dd5-59a41ada7619
+      Azureml-Model-Session:
+      - d20260623231153-a24584b0
+      Azureai-Requested-Tier:
+      - default
+      Azureai-Processed-Tier:
+      - default
+      X-Ms-Is-Spilled-Over:
+      - 'false'
+      X-Ratelimit-Key:
+      - grok-4-1-fast-non-reasoning
+      X-Ratelimit-Remaining-Requests:
+      - '49'
+      X-Ratelimit-Reset-Requests:
+      - '1'
+      X-Ratelimit-Limit-Requests:
+      - '50'
+      X-Ratelimit-Renewalperiod-Requests:
+      - '60'
+      X-Ratelimit-Abusepenalty-Active:
+      - 'False'
+      X-Ratelimit-Remaining-Tokens:
+      - '49804'
+      X-Ratelimit-Reset-Tokens:
+      - '0'
+      X-Ratelimit-Limit-Tokens:
+      - '50000'
+      X-Ratelimit-Renewalperiod-Tokens:
+      - '60'
+      Azureai-Fe-Is-Streaming:
+      - 'False'
+      Apim-Request-Id:
+      - 879e9475-b60c-44f2-9dd5-59a41ada7619
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Ms-Deployment-Name:
+      - grok-4-1-fast-non-reasoning
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Region:
+      - West Europe
+      Date:
+      - Fri, 03 Jul 2026 23:31:39 GMT
+    body:
+      encoding: UTF-8
+      string: '{"id":"1e8d9faa-c262-4341-ad30-8114e42cfd6b","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        fetched file (ruby.txt) says exactly: \"Ruby is the best.\""},"finish_reason":"stop"}],"usage":{"prompt_tokens":267,"completion_tokens":16,"total_tokens":283,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":371,"audio_tokens":0,"text_tokens":267,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1783121499,"object":"chat.completion","prompt_filter_results":null}'
+  recorded_at: Fri, 03 Jul 2026 23:31:40 GMT
+recorded_with: VCR 6.4.0

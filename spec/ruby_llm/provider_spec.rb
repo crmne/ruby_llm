@@ -89,6 +89,7 @@ RSpec.describe RubyLLM::Provider do
       when :anthropic
         config.anthropic_api_key = 'anthropic-key'
       when :azure
+        config.azure_api_base = 'https://azure-resource.example.com'
         config.azure_api_key = 'azure-key'
       when :bedrock
         config.bedrock_api_key = 'bedrock-key'
@@ -99,10 +100,12 @@ RSpec.describe RubyLLM::Provider do
       when :gemini
         config.gemini_api_key = 'gemini-key'
       when :gpustack
+        config.gpustack_api_base = 'https://gpustack.example.com/v1'
         config.gpustack_api_key = 'gpustack-key'
       when :mistral
         config.mistral_api_key = 'mistral-key'
       when :ollama
+        config.ollama_api_base = 'https://ollama.example.com/v1'
         config.ollama_api_key = 'ollama-key'
       when :openai
         config.openai_api_key = 'openai-key'
@@ -115,6 +118,20 @@ RSpec.describe RubyLLM::Provider do
         config.vertexai_location = 'us-east1'
       when :xai
         config.xai_api_key = 'xai-key'
+      end
+    end
+  end
+
+  describe '#parse_error' do
+    it 'returns nil for empty error bodies on every provider' do
+      described_class.providers.each do |slug, provider_class|
+        provider = provider_class.new(config_for(slug))
+
+        [nil, '', {}, []].each do |body|
+          response = instance_double(Faraday::Response, body: body)
+
+          expect(provider.parse_error(response)).to be_nil
+        end
       end
     end
   end
@@ -193,7 +210,8 @@ RSpec.describe RubyLLM::Provider do
     it 'keeps requirements as a subset of declared configuration options' do
       described_class.providers.each_value do |provider_class|
         missing = provider_class.configuration_requirements - provider_class.configuration_options
-        expect(missing).to be_empty, "#{provider_class.name} is missing options for requirements: #{missing.inspect}"
+        expect(missing).to be_empty,
+                           "#{provider_class.display_name} is missing options for requirements: #{missing.inspect}"
       end
     end
 
@@ -242,7 +260,7 @@ RSpec.describe RubyLLM::Provider do
 
   describe 'protocol resolution' do
     let(:provider) { RubyLLM::Providers::OpenAI.new(config_for(:openai)) }
-    let(:model) { instance_double(RubyLLM::Model::Info, id: 'gpt-5.4') }
+    let(:model) { instance_double(RubyLLM::Model, id: 'gpt-5.4') }
 
     it 'defaults to the first declared protocol' do
       expect(RubyLLM::Providers::OpenAI.default_protocol).to eq(:responses)
@@ -254,7 +272,7 @@ RSpec.describe RubyLLM::Provider do
     end
 
     it 'routes chat-completions-only models away from the default' do
-      audio = instance_double(RubyLLM::Model::Info, id: 'gpt-audio-mini')
+      audio = instance_double(RubyLLM::Model, id: 'gpt-audio-mini')
 
       expect(provider.send(:resolve_protocol, nil, audio)).to eq(RubyLLM::Protocols::ChatCompletions)
     end
@@ -277,10 +295,94 @@ RSpec.describe RubyLLM::Provider do
       expect(provider.send(:resolve_protocol, :responses, model)).to eq(RubyLLM::Protocols::Responses)
     end
 
+    it 'routes one-shot APIs through protocol_for' do
+      routed_model = instance_double(RubyLLM::Model, id: 'gpt-audio-mini')
+      protocol = instance_double(
+        RubyLLM::Protocols::ChatCompletions,
+        embed: RubyLLM::Embedding.new(vectors: [0.1], model: routed_model.id),
+        moderate: RubyLLM::Moderation.new(id: 'modr_1', model: routed_model.id, results: []),
+        paint: RubyLLM::Image.new(model: routed_model.id),
+        speak: RubyLLM::Speech.new(data: 'audio', model: routed_model.id),
+        transcribe: RubyLLM::Transcription.new(text: 'transcript', model: routed_model.id)
+      )
+
+      allow(RubyLLM::Protocols::ChatCompletions).to receive(:new).with(provider, routed_model).and_return(protocol)
+
+      provider.embed('hello', model: routed_model, dimensions: nil)
+      provider.moderate('hello', model: routed_model)
+      provider.paint('hello', model: routed_model, size: '1024x1024')
+      provider.speak('hello', model: routed_model, voice: nil, format: nil)
+      provider.transcribe('audio.mp3', model: routed_model, language: nil)
+
+      expect(RubyLLM::Protocols::ChatCompletions).to have_received(:new).with(provider, routed_model).exactly(5).times
+      expect(protocol).to have_received(:embed)
+        .with('hello', model: routed_model.id, dimensions: nil, task_type: nil, title: nil, provider_options: {})
+      expect(protocol).to have_received(:moderate).with('hello', model: routed_model.id, provider_options: {})
+      expect(protocol).to have_received(:paint).with(
+        'hello',
+        model: routed_model.id,
+        size: '1024x1024',
+        with: nil,
+        mask: nil,
+        provider_options: {}
+      )
+      expect(protocol).to have_received(:speak).with(
+        'hello',
+        model: routed_model.id,
+        voice: nil,
+        format: nil,
+        provider_options: {}
+      )
+      expect(protocol).to have_received(:transcribe).with(
+        'audio.mp3',
+        model: routed_model.id,
+        language: nil,
+        provider_options: {},
+        prompt: nil,
+        temperature: nil,
+        format: nil,
+        speaker_names: nil,
+        speaker_references: nil
+      )
+    end
+
     it 'raises on protocols the provider does not speak' do
       expect do
         provider.send(:resolve_protocol, :gemini, model)
       end.to raise_error(RubyLLM::Error, /gemini is not a protocol of OpenAI\. Available: responses, chat_completions/)
+    end
+
+    it 'uses Responses as the default batch protocol' do
+      config = config_for(:openai)
+      config.openai_protocol = :chat_completions
+
+      provider = RubyLLM::Providers::OpenAI.new(config)
+
+      expect(provider.send(:batch_protocol)).to be < RubyLLM::Protocols::Responses
+      expect(provider.send(:batch_protocol)).to be_public_method_defined(:create_batch)
+    end
+
+    it 'routes OpenAI batches by rendered payload shape' do
+      expect(provider.send(:batch_protocol_for, [{ payload: { input: 'hi' } }]))
+        .to be < RubyLLM::Protocols::Responses
+      expect(provider.send(:batch_protocol_for, [{ payload: { messages: [] } }]))
+        .to be < RubyLLM::Protocols::ChatCompletions
+      expect do
+        provider.send(:batch_protocol_for, [
+                        { payload: { input: 'hi' } },
+                        { payload: { messages: [] } }
+                      ])
+      end.to raise_error(RubyLLM::Error, /one endpoint/)
+    end
+  end
+
+  describe 'file protocol resolution' do
+    it 'exposes provider-managed files only where implemented' do
+      file_providers = %i[anthropic azure bedrock gemini mistral openai openrouter vertexai xai]
+
+      described_class.providers.each do |slug, provider_class|
+        expect(provider_class.new(config_for(slug)).files?).to eq(file_providers.include?(slug))
+      end
     end
   end
 end

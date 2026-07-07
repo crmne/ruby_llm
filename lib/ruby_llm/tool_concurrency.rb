@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 module RubyLLM
-  # Runs multiple tool calls concurrently with Ruby's built-in threads or optional fibers.
-  module ToolConcurrency
+  module ToolConcurrency # :nodoc: all
     MODES = %i[threads fibers].freeze
     Result = Struct.new(:index, :tool_call, :value, :error, keyword_init: true)
 

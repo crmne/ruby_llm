@@ -5,33 +5,69 @@ module RubyLLM
     class Mistral
       # Chat methods for Mistral API
       module Chat
+        PROMPT_CACHE_OPTIONS = %i[key].freeze
+
         module_function
 
         def format_role(role)
           role.to_s
         end
 
-        def format_messages(messages)
-          messages.map do |msg|
-            {
+        def format_messages(messages, **)
+          messages_for_provider(messages).flat_map do |msg|
+            formatted = {
               role: format_role(msg.role),
               content: format_content_with_thinking(msg),
               tool_calls: Protocols::ChatCompletions::Tools.format_tool_calls(msg.tool_calls),
               tool_call_id: msg.tool_call_id
             }.compact
+
+            msg.tool_result? && msg.attachments.any? ? [formatted, tool_attachment_message(msg)] : [formatted]
           end
         end
 
+        def tool_attachment_message(msg)
+          parts = [Protocols::ChatCompletions::Media.format_text("Attachments from tool call #{msg.tool_call_id}:")]
+          parts.concat(Mistral::Media.format_content(nil, msg.attachments))
+          { role: 'user', content: parts }
+        end
+
+        def messages_for_provider(messages)
+          system_messages, other_messages = messages.partition { |msg| msg.role == :system }
+          system_messages + other_messages
+        end
+
         # rubocop:disable Metrics/ParameterLists
-        def render_payload(messages, tools:, temperature:, model:, stream: false,
-                           schema: nil, thinking: nil, citations: false, tool_prefs: nil)
+        def render_payload(messages, tools:, temperature:, model:, stream: false, max_output_tokens: nil,
+                           schema: nil, thinking: nil, citations: false, caching: nil, tool_prefs: nil)
           payload = super
           payload.delete(:stream_options)
           configure_thinking_payload(payload, model, thinking)
           normalize_required_tool_choice(payload)
+          payload.merge!(prompt_cache_params(caching)) if caching
           payload
         end
         # rubocop:enable Metrics/ParameterLists
+
+        def prompt_cache_params(caching)
+          options = prompt_cache_options(caching)
+
+          {}.tap do |params|
+            params[:prompt_cache_key] = options[:key] if options[:key]
+          end
+        end
+
+        def prompt_cache_options(caching)
+          options = caching.to_h.transform_keys(&:to_sym)
+          unsupported = options.keys - PROMPT_CACHE_OPTIONS
+          return options if unsupported.empty?
+
+          raise ArgumentError, "Mistral prompt caching accepts :key, got #{format_cache_option_keys(unsupported)}"
+        end
+
+        def format_cache_option_keys(keys)
+          keys.map { |key| ":#{key}" }.join(', ')
+        end
 
         def build_tool_choice(tool_choice)
           return 'any' if tool_choice == :required
@@ -52,7 +88,7 @@ module RubyLLM
         end
 
         def format_content_with_thinking(msg)
-          formatted_content = Mistral::Media.format_content(msg.content)
+          formatted_content = Mistral::Media.format_content(msg.content, msg.tool_result? ? [] : msg.attachments)
           return formatted_content unless msg.role == :assistant && msg.thinking
 
           content_blocks = build_thinking_blocks(msg.thinking)

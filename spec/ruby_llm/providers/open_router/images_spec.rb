@@ -54,7 +54,7 @@ RSpec.describe RubyLLM::Providers::OpenRouter::Images do
         expect(image.base64?).to be(true)
         expect(image.data).to eq('iVBORw0KGgoAAAANSUhEUgAAAAE=')
         expect(image.mime_type).to eq('image/png')
-        expect(image.model_id).to eq('test-model')
+        expect(image.model).to eq('test-model')
       end
     end
 

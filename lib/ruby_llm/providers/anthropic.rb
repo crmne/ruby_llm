@@ -4,7 +4,8 @@ module RubyLLM
   module Providers
     # Anthropic Claude API integration.
     class Anthropic < Provider
-      protocol :anthropic, Protocols::Anthropic
+      protocol :anthropic, Protocols::Anthropic, batches: Protocols::Anthropic::Batches
+      files Protocols::Anthropic::Files
 
       def api_base
         @config.anthropic_api_base || 'https://api.anthropic.com'

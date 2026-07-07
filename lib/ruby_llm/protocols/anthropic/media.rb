@@ -7,15 +7,16 @@ module RubyLLM
       module Media
         module_function
 
-        def format_content(content, citations: false) # rubocop:disable Metrics/PerceivedComplexity
-          return content.value if content.is_a?(RubyLLM::Content::Raw)
-          return [format_text(content.to_json)] if content.is_a?(Hash) || content.is_a?(Array)
-          return [format_text(content)] unless content.is_a?(RubyLLM::Content)
-
+        def format_content(content, attachments = [], citations: false)
           parts = []
-          parts << format_text(content.text) if content.text
+          parts << format_text(content) if content
 
-          content.attachments.each do |attachment|
+          attachments.each do |attachment|
+            if attachment.provider_file?
+              parts << format_provider_file(attachment, citations: citations)
+              next
+            end
+
             case attachment.type
             when :image
               parts << format_image(attachment)
@@ -57,6 +58,30 @@ module RubyLLM
               }
             }
           end
+        end
+
+        def format_provider_file(file, citations: false)
+          return format_provider_image(file) if file.image?
+
+          document = {
+            type: 'document',
+            source: {
+              type: 'file',
+              file_id: file.provider_file_id
+            }
+          }
+          enable_citations(document, file) if citations
+          document
+        end
+
+        def format_provider_image(image)
+          {
+            type: 'image',
+            source: {
+              type: 'file',
+              file_id: image.provider_file_id
+            }
+          }
         end
 
         def format_pdf(pdf, citations: false)

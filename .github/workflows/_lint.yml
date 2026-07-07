@@ -34,7 +34,7 @@ permissions:
 
 jobs:
   lint:
-    name: Lint (RuboCop)
+    name: Lint (RuboCop, ArchSpec)
     runs-on: ubuntu-latest
     env:
       BUNDLE_PATH: vendor/bundle
@@ -67,3 +67,7 @@ jobs:
       - name: Run RuboCop
         working-directory: ${{ inputs.working-directory }}
         run: bundle exec rubocop
+
+      - name: Run ArchSpec
+        working-directory: ${{ inputs.working-directory }}
+        run: bundle exec archspec check

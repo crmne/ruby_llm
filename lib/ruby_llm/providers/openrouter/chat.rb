@@ -5,17 +5,23 @@ module RubyLLM
     class OpenRouter
       # Chat methods of the OpenRouter API integration
       module Chat
+        OPENROUTER_INLINE_FILE_THRESHOLD = 50 * 1024 * 1024
+        OPENROUTER_FILE_UPLOAD_LIMIT = 100 * 1024 * 1024
+        CACHE_CONTROL_TYPE = 'ephemeral'
+        PROMPT_CACHE_OPTIONS = %i[ttl].freeze
+
         module_function
 
         # rubocop:disable Metrics/ParameterLists
-        def render_payload(messages, tools:, temperature:, model:, stream: false, schema: nil,
-                           thinking: nil, citations: false, tool_prefs: nil)
+        def render_payload(messages, tools:, temperature:, model:, stream: false, max_output_tokens: nil, schema: nil,
+                           thinking: nil, citations: false, caching: nil, tool_prefs: nil)
           payload = super
           payload.delete(:reasoning_effort)
           strip_schema_strict(payload)
 
           reasoning = build_reasoning(thinking)
           payload[:reasoning] = reasoning if reasoning
+          payload[:cache_control] = prompt_cache_control(caching) if caching && !cache_boundaries?(messages)
           payload
         end
         # rubocop:enable Metrics/ParameterLists
@@ -59,6 +65,66 @@ module RubyLLM
           end
 
           details.empty? ? {} : { reasoning_details: details }
+        end
+
+        def format_message_content(msg, caching: nil)
+          content = super
+          msg.cache_until_here? ? inject_cache_control(content, caching:) : content
+        end
+
+        def inject_cache_control(content, caching: nil)
+          blocks = content.is_a?(Array) ? content.dup : [{ type: 'text', text: content }]
+          return blocks if blocks.empty?
+
+          last = blocks.last
+          return blocks unless last.is_a?(Hash)
+          return blocks if last[:cache_control] || last['cache_control']
+
+          blocks[-1] = last.merge(cache_control: prompt_cache_control(caching))
+          blocks
+        end
+
+        def prompt_cache_control(caching = nil)
+          options = prompt_cache_options(caching)
+
+          { type: CACHE_CONTROL_TYPE }.tap do |control|
+            control[:ttl] = options[:ttl] if options[:ttl]
+          end
+        end
+
+        def prompt_cache_options(caching)
+          return {} unless caching
+
+          options = caching.to_h.transform_keys(&:to_sym)
+          unsupported = options.keys - PROMPT_CACHE_OPTIONS
+          return options if unsupported.empty?
+
+          raise ArgumentError,
+                "OpenRouter prompt caching accepts :ttl, got #{format_cache_option_keys(unsupported)}"
+        end
+
+        def format_cache_option_keys(keys)
+          keys.map { |key| ":#{key}" }.join(', ')
+        end
+
+        def cache_boundaries?(messages)
+          messages.any?(&:cache_until_here?)
+        end
+
+        def supports_provider_file_references?
+          true
+        end
+
+        def default_large_file_upload_threshold
+          OPENROUTER_INLINE_FILE_THRESHOLD
+        end
+
+        def provider_file_upload_limit
+          OPENROUTER_FILE_UPLOAD_LIMIT
+        end
+
+        def provider_file_attachable?(attachment)
+          attachment.pdf?
         end
 
         def extract_thinking_text(message_data)

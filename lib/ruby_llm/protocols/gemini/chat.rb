@@ -8,6 +8,10 @@ module RubyLLM
     class Gemini
       # Chat methods for the Gemini API implementation
       module Chat
+        GEMINI_INLINE_FILE_THRESHOLD = 20 * 1024 * 1024
+        VERTEX_INLINE_FILE_THRESHOLD = 7 * 1024 * 1024
+        GEMINI_FILE_UPLOAD_LIMIT = 2 * 1024 * 1024 * 1024
+
         module_function
 
         def completion_url
@@ -15,16 +19,19 @@ module RubyLLM
         end
 
         # rubocop:disable Metrics/ParameterLists,Metrics/PerceivedComplexity,Lint/UnusedMethodArgument
-        def render_payload(messages, tools:, temperature:, model:, stream: false, schema: nil,
-                           thinking: nil, citations: false, tool_prefs: nil)
-          warn_unsupported_citations(model) if citations && !model.citations?
+        def render_payload(messages, tools:, temperature:, model:, stream: false, max_output_tokens: nil, schema: nil,
+                           thinking: nil, citations: false, caching: nil, tool_prefs: nil)
+          warn_unsupported_citations(model) if citations && !model.supports?(:citations)
           tool_prefs ||= {}
           payload = {
-            contents: format_messages(messages),
+            contents: format_messages(messages.reject { |msg| msg.role == :system }),
             generationConfig: {}
           }
+          system_instruction = format_system_instruction(messages)
+          payload[:systemInstruction] = system_instruction if system_instruction
 
           payload[:generationConfig][:temperature] = temperature unless temperature.nil?
+          payload[:generationConfig][:maxOutputTokens] = max_output_tokens unless max_output_tokens.nil?
 
           payload[:generationConfig].merge!(structured_output_config(schema, model)) if schema
           payload[:generationConfig][:thinkingConfig] = build_thinking_config(model, thinking) if thinking&.enabled?
@@ -42,7 +49,8 @@ module RubyLLM
         def warn_unsupported_citations(model)
           RubyLLM.logger.warn(
             "#{model.id} does not support citations according to the model registry. " \
-            'Gemini citations come from Google Search grounding: with_params(tools: [{ google_search: {} }]).'
+            'Gemini citations come from Google Search grounding: ' \
+            'with_provider_options(tools: [{ google_search: {} }]).'
           )
         end
 
@@ -55,7 +63,32 @@ module RubyLLM
           config
         end
 
+        def supports_provider_file_references?
+          true
+        end
+
+        def default_large_file_upload_threshold
+          @provider.slug == 'vertexai' ? VERTEX_INLINE_FILE_THRESHOLD : GEMINI_INLINE_FILE_THRESHOLD
+        end
+
+        def provider_file_upload_limit
+          GEMINI_FILE_UPLOAD_LIMIT
+        end
+
+        def provider_file_attachable?(attachment)
+          attachment.image? || attachment.video? || attachment.audio? || attachment.pdf? || attachment.text?
+        end
+
         private
+
+        def format_system_instruction(messages)
+          parts = messages.select { |msg| msg.role == :system }.filter_map do |msg|
+            text = msg.content.to_s
+            { text: text } unless text.empty?
+          end
+
+          { parts: parts } if parts.any?
+        end
 
         def format_messages(messages)
           MessageFormatter.new(self, messages).format
@@ -84,8 +117,7 @@ module RubyLLM
 
           parts << build_thought_part(msg.thinking) if msg.role == :assistant && msg.thinking
 
-          content_parts = Media.format_content(msg.content)
-          parts.concat(content_parts.is_a?(Array) ? content_parts : [content_parts])
+          parts.concat(Media.format_content(msg.content, msg.attachments))
           parts
         end
 
@@ -96,15 +128,15 @@ module RubyLLM
           part
         end
 
-        def parse_completion_response(response)
-          data = response.body
+        def parse_completion_body(data, raw:)
           parts = data.dig('candidates', 0, 'content', 'parts') || []
           tool_calls = extract_tool_calls(data)
-          content = parse_content(data)
+          content, attachments = parse_content(data)
 
           Message.new(
             role: :assistant,
             content: content,
+            attachments: attachments,
             citations: extract_citations(data, content),
             thinking: Thinking.build(
               text: extract_thought_parts(parts),
@@ -113,10 +145,11 @@ module RubyLLM
             tool_calls: tool_calls,
             input_tokens: input_tokens(data),
             output_tokens: calculate_output_tokens(data),
-            cached_tokens: data.dig('usageMetadata', 'cachedContentTokenCount'),
+            cache_read_tokens: data.dig('usageMetadata', 'cachedContentTokenCount'),
             thinking_tokens: data.dig('usageMetadata', 'thoughtsTokenCount'),
-            model_id: data['modelVersion'] || @model&.id,
-            raw: response
+            finish_reason: data.dig('candidates', 0, 'finishReason'),
+            model: data['modelVersion'] || @model&.id,
+            raw: raw
           )
         end
 
@@ -138,15 +171,15 @@ module RubyLLM
 
         def parse_content(data)
           candidate = data.dig('candidates', 0)
-          return '' unless candidate
+          return ['', []] unless candidate
 
-          return '' if function_call?(candidate)
+          return ['', []] if function_call?(candidate)
 
           parts = candidate.dig('content', 'parts')
-          return '' unless parts&.any?
+          return ['', []] unless parts&.any?
 
           non_thought_parts = parts.reject { |part| part['thought'] }
-          return '' unless non_thought_parts.any?
+          return ['', []] unless non_thought_parts.any?
 
           build_response_content(non_thought_parts)
         end

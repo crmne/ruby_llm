@@ -5,6 +5,11 @@ module RubyLLM
     class Anthropic
       # Chat methods for the Anthropic API implementation
       module Chat
+        ANTHROPIC_INLINE_REQUEST_LIMIT = 24 * 1024 * 1024
+        ANTHROPIC_FILE_UPLOAD_LIMIT = 500 * 1024 * 1024
+        CACHE_CONTROL_TYPE = 'ephemeral'
+        PROMPT_CACHE_OPTIONS = %i[ttl].freeze
+
         module_function
 
         def completion_url
@@ -12,15 +17,18 @@ module RubyLLM
         end
 
         # rubocop:disable Metrics/ParameterLists
-        def render_payload(messages, tools:, temperature:, model:, stream: false,
-                           schema: nil, thinking: nil, citations: false, tool_prefs: nil)
-          warn_unsupported_citations(model) if citations && !model.citations?
+        def render_payload(messages, tools:, temperature:, model:, stream: false, max_output_tokens: nil,
+                           schema: nil, thinking: nil, citations: false, caching: nil, tool_prefs: nil)
+          warn_unsupported_citations(model) if citations && !model.supports?(:citations)
           tool_prefs ||= {}
           system_messages, chat_messages = separate_messages(messages)
-          system_content = build_system_content(system_messages)
+          explicit_boundaries = cache_boundaries?(messages)
+          system_content = build_system_content(system_messages, caching:)
 
-          build_base_payload(chat_messages, model, stream, thinking, citations: citations).tap do |payload|
+          build_base_payload(chat_messages, model, stream, thinking, citations: citations, caching:).tap do |payload|
+            payload[:max_tokens] = max_output_tokens if max_output_tokens
             add_optional_fields(payload, system_content:, tools:, tool_prefs:, temperature:, schema:)
+            payload[:cache_control] = prompt_cache_control(caching) if caching && !explicit_boundaries
           end
         end
         # rubocop:enable Metrics/ParameterLists
@@ -36,29 +44,26 @@ module RubyLLM
           messages.partition { |msg| msg.role == :system }
         end
 
-        def build_system_content(system_messages)
+        def build_system_content(system_messages, caching: nil)
           return [] if system_messages.empty?
 
           # Anthropic's `system` parameter accepts an array of text content blocks
           # (each optionally with cache_control); each :system message becomes its
           # own block in the resulting array.
           system_messages.flat_map do |msg|
-            content = msg.content
-
-            if content.is_a?(RubyLLM::Content::Raw)
-              content.value
-            else
-              Media.format_content(content)
-            end
+            blocks = Media.format_content(msg.content, msg.attachments).dup
+            msg.cache_until_here? ? inject_cache_control(blocks, caching:) : blocks
           end
         end
 
-        def build_base_payload(chat_messages, model, stream, thinking, citations: false)
+        def build_base_payload(chat_messages, model, stream, thinking, citations: false, caching: nil) # rubocop:disable Metrics/ParameterLists
           payload = {
             model: model.id,
-            messages: chat_messages.map { |msg| format_message(msg, thinking: thinking, citations: citations) },
+            messages: chat_messages.map do |msg|
+              format_message(msg, thinking: thinking, citations: citations, caching:)
+            end,
             stream: stream,
-            max_tokens: model.max_tokens || 4096
+            max_tokens: model.max_output_tokens || 4096
           }
 
           add_thinking_fields(payload, thinking, model)
@@ -78,6 +83,22 @@ module RubyLLM
           payload[:output_config] = payload.fetch(:output_config, {}).merge(build_output_config(schema)) if schema
         end
 
+        def supports_provider_file_references?
+          true
+        end
+
+        def default_large_file_upload_threshold
+          ANTHROPIC_INLINE_REQUEST_LIMIT
+        end
+
+        def provider_file_upload_limit
+          ANTHROPIC_FILE_UPLOAD_LIMIT
+        end
+
+        def provider_file_attachable?(attachment)
+          attachment.image? || attachment.pdf? || attachment.text?
+        end
+
         def build_output_config(schema)
           normalized = RubyLLM::Utils.deep_dup(schema[:schema])
           normalized.delete(:strict)
@@ -85,8 +106,7 @@ module RubyLLM
           { format: { type: 'json_schema', schema: normalized } }
         end
 
-        def parse_completion_response(response)
-          data = response.body
+        def parse_completion_body(data, raw:)
           content_blocks = data['content'] || []
 
           text_content, citations = extract_text_and_citations(content_blocks)
@@ -95,7 +115,7 @@ module RubyLLM
           tool_use_blocks = Tools.find_tool_uses(content_blocks)
 
           build_message(data, text_content, citations, thinking_content, thinking_signature, tool_use_blocks,
-                        response)
+                        raw)
         end
 
         def extract_text_and_citations(blocks)
@@ -151,7 +171,7 @@ module RubyLLM
           thinking_block&.dig('signature') || thinking_block&.dig('data')
         end
 
-        def build_message(data, content, citations, thinking, thinking_signature, tool_use_blocks, response) # rubocop:disable Metrics/ParameterLists
+        def build_message(data, content, citations, thinking, thinking_signature, tool_use_blocks, raw) # rubocop:disable Metrics/ParameterLists
           usage = data['usage'] || {}
           thinking_tokens = usage.dig('output_tokens_details', 'thinking_tokens') ||
                             usage.dig('output_tokens_details', 'reasoning_tokens') ||
@@ -166,27 +186,28 @@ module RubyLLM
             tool_calls: Tools.parse_tool_calls(tool_use_blocks),
             input_tokens: usage['input_tokens'],
             output_tokens: usage['output_tokens'],
-            cached_tokens: extract_cached_tokens(data),
-            cache_creation_tokens: extract_cache_creation_tokens(data),
+            cache_read_tokens: extract_cache_read_tokens(data),
+            cache_write_tokens: extract_cache_write_tokens(data),
             thinking_tokens: thinking_tokens,
-            model_id: data['model'],
-            raw: response
+            finish_reason: data['stop_reason'],
+            model: data['model'],
+            raw: raw
           )
         end
 
-        def format_message(msg, thinking: nil, citations: false)
+        def format_message(msg, thinking: nil, citations: false, caching: nil)
           thinking_enabled = thinking&.enabled?
 
           if msg.tool_call?
-            format_tool_call_with_thinking(msg, thinking_enabled)
+            format_tool_call_with_thinking(msg, thinking_enabled, caching:)
           elsif msg.tool_result?
             Tools.format_tool_result(msg)
           else
-            format_basic_message_with_thinking(msg, thinking_enabled, citations: citations)
+            format_basic_message_with_thinking(msg, thinking_enabled, citations: citations, caching:)
           end
         end
 
-        def format_basic_message_with_thinking(msg, thinking_enabled, citations: false)
+        def format_basic_message_with_thinking(msg, thinking_enabled, citations: false, caching: nil)
           content_blocks = []
 
           if msg.role == :assistant && thinking_enabled
@@ -194,7 +215,8 @@ module RubyLLM
             content_blocks << thinking_block if thinking_block
           end
 
-          append_formatted_content(content_blocks, msg.content, citations: citations)
+          append_formatted_content(content_blocks, msg, citations: citations)
+          inject_cache_control(content_blocks, caching:) if msg.cache_until_here?
 
           {
             role: convert_role(msg.role),
@@ -202,17 +224,9 @@ module RubyLLM
           }
         end
 
-        def format_tool_call_with_thinking(msg, thinking_enabled)
-          if msg.content.is_a?(RubyLLM::Content::Raw)
-            content_blocks = msg.content.value
-            content_blocks = [content_blocks] unless content_blocks.is_a?(Array)
-            content_blocks = prepend_thinking_block(content_blocks, msg, thinking_enabled)
-
-            return { role: 'assistant', content: content_blocks }
-          end
-
+        def format_tool_call_with_thinking(msg, thinking_enabled, caching: nil)
           content_blocks = prepend_thinking_block([], msg, thinking_enabled)
-          append_formatted_content(content_blocks, msg.content) unless msg.content.nil? || msg.content.empty?
+          append_formatted_content(content_blocks, msg) unless msg.content.nil? || msg.content.empty?
 
           msg.tool_calls.each_value do |tool_call|
             content_blocks << {
@@ -222,6 +236,7 @@ module RubyLLM
               input: tool_call.arguments
             }
           end
+          inject_cache_control(content_blocks, caching:) if msg.cache_until_here?
 
           {
             role: 'assistant',
@@ -255,13 +270,46 @@ module RubyLLM
           end
         end
 
-        def append_formatted_content(content_blocks, content, citations: false)
-          formatted_content = Media.format_content(content, citations: citations)
-          if formatted_content.is_a?(Array)
-            content_blocks.concat(formatted_content)
-          else
-            content_blocks << formatted_content
+        def append_formatted_content(content_blocks, msg, citations: false)
+          content_blocks.concat(Media.format_content(msg.content, msg.attachments, citations: citations))
+        end
+
+        def cache_boundaries?(messages)
+          messages.any?(&:cache_until_here?)
+        end
+
+        def inject_cache_control(blocks, caching: nil)
+          return blocks if blocks.empty?
+
+          last = blocks.last
+          return blocks if last.is_a?(Hash) && (last[:cache_control] || last['cache_control'])
+          return blocks unless last.is_a?(Hash)
+
+          blocks[-1] = last.merge(cache_control: prompt_cache_control(caching))
+          blocks
+        end
+
+        def prompt_cache_control(caching = nil)
+          options = prompt_cache_options(caching)
+
+          { type: CACHE_CONTROL_TYPE }.tap do |control|
+            control[:ttl] = options[:ttl] if options[:ttl]
           end
+        end
+
+        def prompt_cache_options(caching)
+          return {} unless caching
+
+          options = caching.to_h.transform_keys(&:to_sym)
+          unsupported = options.keys - PROMPT_CACHE_OPTIONS
+          return options if unsupported.empty?
+
+          raise ArgumentError,
+                "Anthropic prompt caching accepts :ttl, got #{format_cache_option_keys(unsupported)}"
+        end
+
+        def format_cache_option_keys(keys)
+          keys.map { |key| ":#{key}" }.join(', ')
         end
 
         def convert_role(role)

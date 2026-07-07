@@ -8,10 +8,7 @@ redirect_from:
 ---
 
 # {{ page.title }}
-{: .no_toc .d-inline-block }
-
-Available in v1.8.0+
-{: .label .label-green }
+{: .no_toc }
 
 {{ page.description }}
 {: .fs-6 .fw-300 }
@@ -38,22 +35,22 @@ After reading this guide, you will know:
 The simplest way to moderate content is using the global `RubyLLM.moderate` method:
 
 ```ruby
-# Moderate a text input
 result = RubyLLM.moderate("This is a safe message about Ruby programming")
 
-# Check if content was flagged
 puts result.flagged?  # => false
 
-# Access the full results
-puts result.results
-# => [{"flagged" => false, "categories" => {...}, "category_scores" => {...}}]
-
-# Get basic information
 puts "Moderation ID: #{result.id}"     # => "modr-ABC123..."
 puts "Model used: #{result.model}"     # => "omni-moderation-latest"
 ```
 
-The `moderate` method returns a `RubyLLM::Moderation` object containing the moderation results from the provider.
+The `moderate` method returns a `RubyLLM::Moderation` object. Its `results` method holds one `RubyLLM::Moderation::Result` per moderated input, each with `flagged?`, `categories` (the flagged category names), and `category_scores`:
+
+```ruby
+verdict = result.results.first
+verdict.flagged?         # => false
+verdict.categories       # => []
+verdict.category_scores  # => {"harassment" => 1.19e-05, "violence" => 0.0004, ...}
+```
 
 ## Understanding Moderation Results
 
@@ -62,7 +59,6 @@ Moderation results include categories and confidence scores for different types 
 ```ruby
 result = RubyLLM.moderate("Some user input text")
 
-# Check overall flagging status
 if result.flagged?
   puts "Content was flagged for: #{result.flagged_categories.join(', ')}"
 else
@@ -75,11 +71,11 @@ puts "Sexual content score: #{scores['sexual']}"
 puts "Harassment score: #{scores['harassment']}"
 puts "Violence score: #{scores['violence']}"
 
-# Get boolean flags for each category
-categories = result.categories
-puts "Contains hate speech: #{categories['hate']}"
-puts "Contains self-harm content: #{categories['self-harm']}"
+puts "Contains hate speech: #{result.flagged_categories.include?('hate')}"
+puts "Contains self-harm content: #{result.flagged_categories.include?('self-harm')}"
 ```
+
+`flagged?`, `flagged_categories`, and `category_scores` aggregate across all results: `flagged?` is true if any input was flagged, `flagged_categories` is the union of flagged category names, and `category_scores` keeps the highest score per category.
 
 ### Moderation Categories
 
@@ -102,13 +98,11 @@ Current moderation models typically check for these categories:
 You can also use the class method directly:
 
 ```ruby
-# Direct class method
 result = RubyLLM::Moderation.moderate("Your content here")
 
-# With explicit model specification
 result = RubyLLM.moderate(
   "User message",
-  model: "text-moderation-007",
+  model: "omni-moderation-latest",
   provider: "openai"
 )
 
@@ -122,18 +116,20 @@ result = RubyLLM.moderate(
 
 ## Choosing Models
 
-By default, RubyLLM uses OpenAI's latest moderation model (`omni-moderation-latest`), but you can specify different models:
+By default, RubyLLM uses OpenAI's `omni-moderation-latest`, but moderation is not OpenAI-only. Any provider that ships a moderation model works the same way - for example, Mistral's `mistral-moderation-latest`:
 
 ```ruby
-# Use a specific OpenAI moderation model
 result = RubyLLM.moderate(
   "Content to moderate",
-  model: "text-moderation-007"
+  model: "omni-moderation-latest"
+)
+result = RubyLLM.moderate(
+  "Content to moderate",
+  model: "mistral-moderation-latest"
 )
 
-# Configure the default moderation model globally
 RubyLLM.configure do |config|
-  config.default_moderation_model = "text-moderation-007"
+  config.default_moderation_model = "omni-moderation-latest"
 end
 ```
 
@@ -147,7 +143,6 @@ Use moderation as a safety layer before sending user input to LLMs:
 
 ```ruby
 def safe_chat_response(user_input)
-  # Check content safety first
   moderation = RubyLLM.moderate(user_input)
 
   if moderation.flagged?
@@ -158,7 +153,6 @@ def safe_chat_response(user_input)
     }
   end
 
-  # Content is safe, proceed with chat
   response = RubyLLM.chat.ask(user_input)
   {
     content: response.content,
@@ -176,7 +170,6 @@ def assess_content_risk(text)
   result = RubyLLM.moderate(text)
   scores = result.category_scores
 
-  # Custom thresholds for different risk levels
   high_risk = scores.any? { |_, score| score > 0.8 }
   medium_risk = scores.any? { |_, score| score > 0.5 }
 
@@ -190,7 +183,6 @@ def assess_content_risk(text)
   end
 end
 
-# Usage
 assessment = assess_content_risk("Some user input")
 puts "Risk level: #{assessment[:risk]}"
 puts "Action: #{assessment[:action]}"
@@ -226,7 +218,7 @@ end
 
 ## Configuration Requirements
 
-Content moderation currently requires an OpenAI API key:
+Moderation requires an API key for a provider that offers a moderation model. RubyLLM defaults to OpenAI's `omni-moderation-latest`, so configuring an OpenAI key is enough to get started:
 
 ```ruby
 RubyLLM.configure do |config|
@@ -234,6 +226,15 @@ RubyLLM.configure do |config|
 
   # Optional: set default moderation model
   config.default_moderation_model = "omni-moderation-latest"
+end
+```
+
+To moderate through Mistral instead, configure its key and set the default model to `mistral-moderation-latest`:
+
+```ruby
+RubyLLM.configure do |config|
+  config.mistral_api_key = ENV['MISTRAL_API_KEY']
+  config.default_moderation_model = "mistral-moderation-latest"
 end
 ```
 
@@ -265,7 +266,6 @@ def user_friendly_moderation(content)
 
   return { approved: true } unless result.flagged?
 
-  # Provide specific, actionable feedback
   categories = result.flagged_categories
   message = case
   when categories.include?('harassment')
@@ -304,7 +304,6 @@ class MessageController < ApplicationController
         categories: moderation_result.flagged_categories
       }, status: :unprocessable_entity
     else
-      # Process the safe message
       message = Message.create!(content: content, user: current_user)
       render json: message, status: :created
     end

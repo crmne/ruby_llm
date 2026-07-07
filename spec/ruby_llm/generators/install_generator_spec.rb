@@ -61,6 +61,26 @@ RSpec.describe RubyLLM::Generators::InstallGenerator, :generator, type: :generat
       end
     end
 
+    it 'adds finish_reason to message storage' do
+      within_test_app(app_path) do
+        migration = Dir.glob('db/migrate/*create_messages.rb').first
+        expect(migration).to be_present
+
+        content = File.read(migration)
+        expect(content).to include('t.string :finish_reason')
+      end
+    end
+
+    it 'adds cache_until_here to message storage' do
+      within_test_app(app_path) do
+        migration = Dir.glob('db/migrate/*create_messages.rb').first
+        expect(migration).to be_present
+
+        content = File.read(migration)
+        expect(content).to include('t.boolean :cache_until_here')
+      end
+    end
+
     it 'keeps create_models migration schema-only' do
       within_test_app(app_path) do
         migration = Dir.glob('db/migrate/*create_models.rb').first
@@ -77,7 +97,7 @@ RSpec.describe RubyLLM::Generators::InstallGenerator, :generator, type: :generat
         expect(File.exist?('config/initializers/ruby_llm.rb')).to be true
         initializer = File.read('config/initializers/ruby_llm.rb')
         expect(initializer).to include('RubyLLM.configure')
-        # use_new_acts_as defaults to true, so the generator no longer emits it
+        # use_new_acts_as no longer exists in 2.0; the generator does not emit it
         expect(initializer).not_to include('config.use_new_acts_as')
         # Default Model class doesn't need explicit config
         expect(initializer).not_to include('config.model_registry_class')
