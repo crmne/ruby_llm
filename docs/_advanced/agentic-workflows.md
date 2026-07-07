@@ -43,7 +43,7 @@ A workflow is just orchestration code that coordinates one or more agents. In pr
 So the agentic loop is just `step` until `complete?`:
 
 ```ruby
-chat = RubyLLM.chat.with_tool(Weather).ask_later("What's the weather in Paris?")
+chat = RubyLLM.chat.with_tools(Weather).ask_later("What's the weather in Paris?")
 
 chat.step until chat.complete?  # generate, run_tools, generate
 chat.messages.last.content      # => "It's 15°C and partly cloudy in Paris."

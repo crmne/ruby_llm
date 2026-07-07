@@ -85,34 +85,17 @@ RSpec.describe RubyLLM::Model do
   end
 
   describe '#supports?' do
-    it 'returns true for included capabilities' do
+    it 'returns true for included capabilities, as symbol or string' do
       expect(model.supports?(:function_calling)).to be true
       expect(model.supports?('streaming')).to be true
+      expect(model.supports?(:vision)).to be true
     end
 
-    it 'returns false for missing capabilities' do
+    it 'returns false for capabilities absent from the registry data' do
       expect(model.supports?(:batch)).to be false
-    end
-  end
 
-  describe 'capability predicates' do
-    it 'responds to dynamic capability methods' do
-      expect(model.function_calling?).to be true
-      expect(model.structured_output?).to be true
-      expect(model.streaming?).to be true
-      expect(model.batch?).to be false
-      expect(model.reasoning?).to be false
-    end
-  end
-
-  describe '#supports_vision?' do
-    it 'returns true when image is in input modalities' do
-      expect(model.supports_vision?).to be true
-    end
-
-    it 'returns false when image is not in input modalities' do
-      text_only = described_class.new(data.merge(modalities: { input: %w[text], output: %w[text] }))
-      expect(text_only.supports_vision?).to be false
+      text_only = described_class.new(data.merge(capabilities: %w[function_calling streaming structured_output]))
+      expect(text_only.supports?(:vision)).to be false
     end
   end
 
@@ -232,34 +215,20 @@ RSpec.describe RubyLLM::Model do
     end
   end
 
-  describe '#display_name' do
-    it 'returns the name' do
-      expect(model.display_name).to eq('GPT-5')
-    end
-  end
-
   describe '#label' do
-    it 'returns provider and display name' do
+    it 'returns the provider and model name' do
       expect(model.label).to eq('OpenAI - GPT-5')
     end
   end
 
-  describe '#max_tokens' do
-    it 'returns max_output_tokens' do
-      expect(model.max_tokens).to eq(128_000)
+  describe '#price' do
+    it 'returns the standard text-token price for a kind' do
+      expect(model.price(:input)).to eq(model.pricing.text_tokens.input)
+      expect(model.price(:output)).to eq(model.pricing.text_tokens.output)
     end
-  end
 
-  describe '#input_price_per_million and #output_price_per_million' do
-    it 'delegates to pricing' do
-      expect(model.input_price_per_million).to eq(model.pricing.text_tokens.input)
-      expect(model.output_price_per_million).to eq(model.pricing.text_tokens.output)
-    end
-  end
-
-  describe 'cache price helpers' do
-    it 'delegates to cache read and write pricing' do
-      model = described_class.new(
+    it 'reads cache read and write prices' do
+      cached = described_class.new(
         data.merge(
           pricing: {
             text_tokens: {
@@ -272,8 +241,12 @@ RSpec.describe RubyLLM::Model do
         )
       )
 
-      expect(model.cache_read_input_price_per_million).to eq(0.5)
-      expect(model.cache_write_input_price_per_million).to eq(2.5)
+      expect(cached.price(:cache_read)).to eq(0.5)
+      expect(cached.price(:cache_write)).to eq(2.5)
+    end
+
+    it 'raises for an unknown kind' do
+      expect { model.price(:bogus) }.to raise_error(ArgumentError, /Unknown price kind/)
     end
   end
 

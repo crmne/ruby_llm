@@ -31,13 +31,14 @@ RSpec.describe RubyLLM::Providers::VertexAI::Embeddings do
       )
     end
 
-    it 'uses params for VertexAI task_type and title' do
+    it 'adds task_type and title to each instance' do
       payload = protocol.send(
         :render_embedding_payload,
         %w[one two],
         model: 'gemini-embedding-001',
         dimensions: nil,
-        params: { task_type: 'RETRIEVAL_DOCUMENT', title: 'Docs' }
+        task_type: 'RETRIEVAL_DOCUMENT',
+        title: 'Docs'
       )
 
       expect(payload).to eq(
@@ -48,13 +49,31 @@ RSpec.describe RubyLLM::Providers::VertexAI::Embeddings do
       )
     end
 
-    it 'merges remaining params into the payload' do
+    it 'lets provider options override the rendered instances' do
+      payload = protocol.send(
+        :render_embedding_payload,
+        'one',
+        model: 'gemini-embedding-001',
+        dimensions: nil,
+        task_type: 'RETRIEVAL_DOCUMENT',
+        title: 'Docs',
+        provider_options: {
+          instances: [{ content: 'one', task_type: 'RETRIEVAL_QUERY' }]
+        }
+      )
+
+      expect(payload).to eq(
+        instances: [{ content: 'one', task_type: 'RETRIEVAL_QUERY' }]
+      )
+    end
+
+    it 'merges provider options into the payload' do
       payload = protocol.send(
         :render_embedding_payload,
         'hello',
         model: 'gemini-embedding-001',
         dimensions: nil,
-        params: { parameters: { autoTruncate: false } }
+        provider_options: { parameters: { autoTruncate: false } }
       )
 
       expect(payload).to eq(

@@ -42,7 +42,9 @@ bin/rails generate ruby_llm:upgrade
 bin/rails db:migrate
 ```
 
-The generator adds a JSON `citations` column and string `finish_reason` column to your messages table so [citations]({% link _core_features/citations.md %}) and provider stop reasons are persisted with each assistant message. It also adds `cache_until_here` for [prompt caching]({% link _core_features/prompt-caching.md %}), and creates the `batches` table for [provider-side batches]({% link _advanced/batches.md %}). These are optional - without them, citations and finish reasons stay on in-memory responses, cache boundaries stay on in-memory messages, and batches aren't persisted.
+The generator adds a JSON `citations` column and string `finish_reason` column to your messages table so [citations]({% link _core_features/citations.md %}) and provider stop reasons are persisted with each assistant message. It also adds `cache_until_here` for [prompt caching]({% link _core_features/prompt-caching.md %}), a `total_cost` and `cost_details` pair that freezes each message's [cost]({% link _reference/model-costs.md %}) at completion, creates the `batches` table for [provider-side batches]({% link _advanced/batches.md %}), and renames the cache token columns (`cached_tokens` to `cache_read_tokens`, `cache_creation_tokens` to `cache_write_tokens`). The new columns are optional - without them, citations and finish reasons stay on in-memory responses, cache boundaries stay on in-memory messages, costs are recomputed live, and batches aren't persisted.
+
+**Persisted costs are frozen at completion.** With the `total_cost` and `cost_details` columns, `message.cost` returns the cost recorded when the message completed instead of recomputing from current registry pricing, so refreshing the model registry no longer rewrites the cost of past chats. `total_cost` is a plain numeric column you can aggregate in SQL (`chat.messages.sum(:total_cost)`). Because history is now frozen, keep pricing current for new messages with a periodic `RubyLLM.models.refresh!` (see [Model Costs]({% link _reference/model-costs.md %})).
 
 ## Breaking Changes
 
@@ -75,7 +77,128 @@ end
 schema -> { strict ? StrictSchema : LooseSchema }    # dynamic - evaluated per run
 ```
 
-**Cache pricing helpers use canonical names only.** The `cached_input*` / `cache_creation*` aliases on `Cost`, `Model`, and `acts_as_model` records were removed. Use `cache_read*` / `cache_write*` (e.g. `model.cache_read_input_price_per_million`, `cost.cache_read`). Token-count helpers like `message.cached_tokens` are unchanged.
+**Cache naming is `cache_read` / `cache_write` everywhere.** The `cached_input*` / `cache_creation*` aliases on `Cost`, `Model`, and `acts_as_model` records were removed in favor of `cache_read*` / `cache_write*` (e.g. `model.price(:cache_read)`, `cost.cache_read`). Token counts now follow: `tokens.cached` and `tokens.cache_creation` are gone (`tokens.cache_read` / `tokens.cache_write`), and `message.cached_tokens` / `message.cache_creation_tokens` are gone (`message.cache_read_tokens` / `message.cache_write_tokens`). The upgrade generator renames the Rails columns to match.
+
+**One name per concept.** 2.0 renames the remaining stragglers so each concept has a single name across the gem:
+
+```ruby
+chat.with_model("gpt-5", assume_exists: true)      # before
+chat.with_model("gpt-5", assume_model_exists: true) # now - same name as RubyLLM.chat
+
+class Weather < RubyLLM::Tool
+  desc "Gets current weather"                       # before
+  description "Gets current weather"                # now
+  param :city, desc: "City name"                    # before
+  parameter :city, description: "City name"         # now
+  params do ... end                                 # before (whole-schema form)
+  parameters do ... end                             # now
+end
+
+response.model_id                                   # before
+response.model                                      # now - matches Embedding,
+image.model                                         # Transcription, and Moderation
+```
+
+**Error constructors take the message first.** `RubyLLM::Error.new` no longer takes the response as the first positional argument (and no longer guesses whether a String argument is a message). The message comes first, matching `StandardError`, and the response is a keyword: `RateLimitError.new("slow down", response: response)`.
+
+**Clearing settings uses `without_*`, on every setting.** The nil sentinels are gone; passing `nil` to any `with_*` raises an ArgumentError pointing at the `without_*` sibling:
+
+```ruby
+chat.with_tools(nil)            # before
+chat.without_tools              # now
+
+chat.with_thinking(nil)         # before
+chat.without_thinking           # now
+
+chat.with_instructions(nil)     # before (destroyed persisted system messages on records!)
+chat.without_instructions       # now - same effect, stated intent
+```
+
+The full family on Chat (mirrored on `acts_as_chat` records and agents): `without_tools`, `without_thinking`, `without_instructions`, `without_citations`, `without_temperature`, `without_schema`, `without_caching`, `without_provider_options`, `without_headers`, `without_fallbacks`, and `without_context`.
+
+**Protocol is part of model selection.** A model is identified by its name, provider, and wire protocol, so `protocol:` joins `provider:` as a keyword of `RubyLLM.chat`, `with_model`, and the agent `model` macro. The standalone `with_protocol` / `without_protocol` methods are gone:
+
+```ruby
+RubyLLM.chat(model: 'gpt-5.4').with_protocol(:responses)   # before
+RubyLLM.chat(model: 'gpt-5.4', protocol: :responses)       # now
+
+chat.with_model('gpt-5.4', protocol: :chat_completions)    # override on an existing chat
+
+class Support < RubyLLM::Agent
+  model 'gpt-5.4', provider: :openai, protocol: :responses
+end
+```
+
+Passing no `protocol:` uses the provider's default for that model (still overridable globally with `config.openai_protocol`). A bare `with_model('other')` resets the protocol to the default, the same way it re-resolves the provider.
+
+**Tools: one method for the set, one for the options.** `with_tool` (singular) is gone; `with_tools` takes one or many. The `replace:` flag is gone (replacing is a chain). And the `choice:` / `calls:` / `concurrency:` keywords moved off `with_tools` into `with_tool_options`, so declaring tools and steering how they run are separate calls:
+
+```ruby
+chat.with_tool(Weather)                                  # before
+chat.with_tools(Weather)                                 # now
+
+chat.with_tools(Search, Calculator, replace: true)       # before
+chat.without_tools.with_tools(Search, Calculator)        # now
+
+chat.with_tools(Weather, choice: :required, calls: 3)    # before
+chat.with_tools(Weather).with_tool_options(choice: :required, calls: 3)  # now
+```
+
+`without_tools` clears the set; `without_tool_options` resets choice, call limit, and concurrency. On agents the same split applies: the `tools` macro declares the set, the new `tool_options` macro carries `choice:` / `calls:` / `concurrency:` (previously `tools choice: :required` silently wiped the toolset).
+
+**`create_user_message` was removed.** Use `ask_later` (returns the chat, for staging) or `add_message(role: :user, content:, with:)` (returns the record).
+
+**`Tool.provider_options nil` raises.** Passing `nil` to the class macro was a no-op clear that made no sense on a class; it now raises. Call it with a hash to set provider metadata.
+
+**Zero prices mean free.** `model.pricing` used to drop 0.0 prices, making a free model indistinguishable from one with no pricing data. Zero now flows through as a real price (`cost.total` returns `0.0`); `nil` means the registry has no price.
+
+**The escape hatch is called `provider_options`.** Options in the provider's request vocabulary that RubyLLM does not abstract go through one named door, everywhere. `with_params` and the `params:` keyword are gone:
+
+```ruby
+chat.with_params(service_tier: "flex")              # before
+chat.with_provider_options(service_tier: "flex")    # now (reader: chat.provider_options)
+
+RubyLLM.embed(text, params: { dimensions: 512 })            # before
+RubyLLM.embed(text, provider_options: { dimensions: 512 })  # now - same on paint,
+                                                            # transcribe, moderate
+
+class Weather < RubyLLM::Tool
+  with_params cache_control: { type: "ephemeral" }          # before
+  provider_options cache_control: { type: "ephemeral" }     # now
+end
+
+class Support < RubyLLM::Agent
+  params service_tier: "flex"                       # before
+  provider_options service_tier: "flex"             # now
+end
+```
+
+Instrumentation subscribers: the event payload key `:params` is now `:provider_options`.
+
+`provider_options` is merged into the request verbatim, in the provider's own request shapes. RubyLLM no longer relocates, scrubs, or reinterprets provider-specific fields on the way through, so you write exactly what the provider documents (Amazon Nova's `top_k`, for example, is `additionalModelRequestFields: { inferenceConfig: { topK: ... } }`, its real nesting; the old code silently dropped a flat `top_k` here).
+
+**Shared media signatures carry only shared concepts.** `RubyLLM.transcribe` keeps `model:`, `language:`, `prompt:`, `temperature:`, and gains `format:` (the transcript format, provider-native values: `"diarized_json"` on OpenAI, a MIME type on Gemini) plus `speaker_names:` / `speaker_references:` (transcription-domain concepts; providers that cannot identify speakers ignore them). Wire-level knobs left the signature: OpenAI's `timestamp_granularities` and `chunking_strategy`, Gemini's `max_output_tokens` and `safety_settings` are passed through `provider_options:` in each provider's own request shape:
+
+```ruby
+RubyLLM.transcribe("call.wav", response_format: "srt")   # before
+RubyLLM.transcribe("call.wav", format: "srt")            # now
+
+RubyLLM.transcribe("talk.wav",
+  provider_options: { timestamp_granularities: ["word"] })            # OpenAI
+RubyLLM.transcribe("talk.wav", model: "gemini-2.5-flash",
+  provider_options: { generationConfig: { maxOutputTokens: 1000 } })  # Gemini
+```
+
+`RubyLLM.embed` gains `task_type:` and `title:` for task-typed embeddings (query vs document vs classification). Like `format:`, the value is provider-native and lands in the right place for each provider (VertexAI `task_type` per instance, Gemini `taskType` per request, Bedrock Cohere `input_type`); you no longer hand-build the `instances:` array:
+
+```ruby
+RubyLLM.embed(chunks, model: "gemini-embedding-001",
+              task_type: "RETRIEVAL_DOCUMENT", title: "Handbook")
+```
+
+**Results are typed, not raw provider hashes.** `Moderation#results` returns `Moderation::Result` objects (`flagged?`, `categories`, `category_scores`) instead of string-keyed OpenAI hashes, the top-level helpers aggregate consistently across all results, and the misleading `Moderation#content` alias is gone. `Image#usage` is no longer public; use `image.tokens` and `image.cost`. `Tool.parameters` as a public reader is gone (it is the whole-schema macro now); tools declare their arguments, they do not expose them.
+
+**Gems that build tools programmatically** (for example ruby_llm-mcp) need the same renames: `param` is `parameter`, `params` is `parameters`, `with_params` is `provider_options`.
 
 ## Providers and Protocols Split
 
@@ -88,11 +211,11 @@ RubyLLM.configure do |config|
   config.openai_protocol = :chat_completions
 end
 
-# or per chat
-RubyLLM.chat(model: 'gpt-5.4').with_protocol(:chat_completions)
+# or per chat, as part of model selection
+RubyLLM.chat(model: 'gpt-5.4', protocol: :chat_completions)
 ```
 
-If you pass Chat Completions-only params via `with_params` (like `response_format`), either switch those chats to `:chat_completions` or use the Responses API equivalents (`text: { format: ... }`).
+If you pass Chat Completions-only options via `with_provider_options` (like `response_format`), either switch those chats to `:chat_completions` or use the Responses API equivalents (`text: { format: ... }`).
 
 **Wire-format internals moved to `RubyLLM::Protocols`.** `RubyLLM::Providers::OpenAI::Chat` and sibling modules are now `RubyLLM::Protocols::ChatCompletions::Chat` and friends; Anthropic, Gemini, and Bedrock Converse internals moved the same way. Provider classes no longer inherit from each other (`Mistral < OpenAI` is gone) - a provider declares its protocols instead.
 
@@ -309,7 +432,7 @@ Chat.create!(model: "{{ site.models.anthropic_current }}", provider: "bedrock")
 **Model associations and queries**
 ```ruby
 Chat.joins(:model).where(models: { provider: 'anthropic' })
-Model.select { |m| m.supports_functions? }  # Use delegated methods
+Model.select { |m| m.supports?(:function_calling) }  # Use delegated methods
 ```
 
 **Model alias resolution**

@@ -63,7 +63,7 @@ RSpec.describe RubyLLM::Chat do
 
   def stub_model_resolution(id, provider, model, provider_instance)
     allow(RubyLLM::Models).to receive(:resolve)
-      .with(id, provider: provider, assume_exists: false, config: anything)
+      .with(id, provider: provider, assume_model_exists: false, config: anything)
       .and_return([model, provider_instance])
   end
 
@@ -83,12 +83,34 @@ RSpec.describe RubyLLM::Chat do
     expect(chat.fallback_errors).to eq(RubyLLM::Fallback::DEFAULT_ERRORS)
   end
 
+  it 'clears fallback models with without_fallbacks' do
+    chat = described_class.new(model: 'primary-model')
+                          .with_fallbacks('fallback-model', on: [RubyLLM::RateLimitError])
+
+    chat.without_fallbacks
+
+    expect(chat.fallbacks).to be_empty
+    expect(chat.fallback_errors).to eq(RubyLLM::Fallback::DEFAULT_ERRORS)
+  end
+
+  it 'rejects no arguments, pointing to without_fallbacks' do
+    chat = described_class.new(model: 'primary-model')
+
+    expect { chat.with_fallbacks }.to raise_error(ArgumentError, /without_fallbacks/)
+  end
+
+  it 'rejects nil, pointing to without_fallbacks' do
+    chat = described_class.new(model: 'primary-model')
+
+    expect { chat.with_fallbacks(nil) }.to raise_error(ArgumentError, /without_fallbacks/)
+  end
+
   it 'falls back on transient errors and restores the primary model' do
     chat = described_class.new(model: 'primary-model').with_fallbacks('fallback-model')
     allow(primary_provider).to receive(:complete)
-      .and_raise(RubyLLM::ServiceUnavailableError.new(nil, 'primary down'))
+      .and_raise(RubyLLM::ServiceUnavailableError.new('primary down'))
     allow(fallback_provider).to receive(:complete)
-      .and_return(RubyLLM::Message.new(role: :assistant, content: 'from fallback', model_id: 'fallback-model'))
+      .and_return(RubyLLM::Message.new(role: :assistant, content: 'from fallback', model: 'fallback-model'))
 
     chat.ask_later('Hello')
     response = chat.generate
@@ -96,15 +118,15 @@ RSpec.describe RubyLLM::Chat do
     expect(response.content).to eq('from fallback')
     expect(chat.model).to eq(primary_model)
     expect(chat.provider).to eq(primary_provider)
-    expect(chat.messages.last.model_id).to eq('fallback-model')
+    expect(chat.messages.last.model).to eq('fallback-model')
   end
 
   it 'tries fallback models in order' do
     chat = described_class.new(model: 'primary-model').with_fallbacks('fallback-model', 'second-fallback-model')
     allow(primary_provider).to receive(:complete)
-      .and_raise(RubyLLM::RateLimitError.new(nil, 'primary rate limited'))
+      .and_raise(RubyLLM::RateLimitError.new('primary rate limited'))
     allow(fallback_provider).to receive(:complete)
-      .and_raise(RubyLLM::OverloadedError.new(nil, 'fallback overloaded'))
+      .and_raise(RubyLLM::OverloadedError.new('fallback overloaded'))
     allow(second_fallback_provider).to receive(:complete)
       .and_return(RubyLLM::Message.new(role: :assistant, content: 'second fallback'))
 
@@ -120,7 +142,7 @@ RSpec.describe RubyLLM::Chat do
   it 'does not fallback on non-transient errors' do
     chat = described_class.new(model: 'primary-model').with_fallbacks('fallback-model')
     allow(primary_provider).to receive(:complete)
-      .and_raise(RubyLLM::BadRequestError.new(nil, 'bad request'))
+      .and_raise(RubyLLM::BadRequestError.new('bad request'))
     allow(fallback_provider).to receive(:complete)
 
     chat.ask_later('Hello')
@@ -133,7 +155,7 @@ RSpec.describe RubyLLM::Chat do
     chat = described_class.new(model: 'primary-model')
                           .with_fallbacks('fallback-model', on: RubyLLM::BadRequestError)
     allow(primary_provider).to receive(:complete)
-      .and_raise(RubyLLM::BadRequestError.new(nil, 'bad request'))
+      .and_raise(RubyLLM::BadRequestError.new('bad request'))
     allow(fallback_provider).to receive(:complete)
       .and_return(RubyLLM::Message.new(role: :assistant, content: 'ok'))
 
@@ -148,7 +170,7 @@ RSpec.describe RubyLLM::Chat do
     chat = described_class.new(model: 'primary-model')
                           .with_fallbacks(fallback_model)
     allow(primary_provider).to receive(:complete)
-      .and_raise(RubyLLM::ServerError.new(nil, 'primary failed'))
+      .and_raise(RubyLLM::ServerError.new('primary failed'))
     allow(fallback_provider).to receive(:complete)
       .and_return(RubyLLM::Message.new(role: :assistant, content: 'ok'))
     before_events = []
@@ -178,12 +200,12 @@ RSpec.describe RubyLLM::Chat do
   it 'starts a new streaming message lifecycle when fallback follows yielded chunks' do
     chat = described_class.new(model: 'primary-model').with_fallbacks('fallback-model')
     allow(primary_provider).to receive(:complete) do |_messages, **_kwargs, &block|
-      block.call(RubyLLM::Chunk.new(role: :assistant, content: 'primary partial', model_id: 'primary-model'))
-      raise RubyLLM::ServiceUnavailableError.new(nil, 'stream failed')
+      block.call(RubyLLM::Chunk.new(role: :assistant, content: 'primary partial', model: 'primary-model'))
+      raise RubyLLM::ServiceUnavailableError, 'stream failed'
     end
     allow(fallback_provider).to receive(:complete) do |_messages, **_kwargs, &block|
-      block.call(RubyLLM::Chunk.new(role: :assistant, content: 'fallback chunk', model_id: 'fallback-model'))
-      RubyLLM::Message.new(role: :assistant, content: 'fallback final', model_id: 'fallback-model')
+      block.call(RubyLLM::Chunk.new(role: :assistant, content: 'fallback chunk', model: 'fallback-model'))
+      RubyLLM::Message.new(role: :assistant, content: 'fallback final', model: 'fallback-model')
     end
 
     lifecycle = []

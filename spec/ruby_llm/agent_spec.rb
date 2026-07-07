@@ -25,9 +25,10 @@ RSpec.describe RubyLLM::Agent do
       model 'gpt-4.1-nano'
       inputs :display_name
       instructions { "Hello #{display_name}" }
-      tools(choice: :required, calls: :one) { [tool_class.new] }
+      tools { [tool_class.new] }
+      tool_options choice: :required, calls: :one
       caching { { ttl: '1h' } }
-      params { { max_tokens: 12 } }
+      provider_options { { max_tokens: 12 } }
     end
 
     chat = agent_class.chat(display_name: 'Ava')
@@ -38,7 +39,65 @@ RSpec.describe RubyLLM::Agent do
     expect(chat.tool_prefs).to include(choice: :required, calls: :one)
     expect(chat.caching).to eq(ttl: '1h')
     expect(chat.tool_prefs).to include(choice: :required, calls: :one)
-    expect(chat.params).to eq(max_tokens: 12)
+    expect(chat.provider_options).to eq(max_tokens: 12)
+  end
+
+  it 'applies max_output_tokens from the DSL macro' do
+    agent_class = Class.new(RubyLLM::Agent) do
+      model 'gpt-4.1-nano'
+      max_output_tokens 1000
+    end
+
+    expect(agent_class.chat.render[:max_output_tokens]).to eq(1000)
+  end
+
+  it 'applies tool_options separately from the declared tools' do
+    tool_class = Class.new(RubyLLM::Tool) do
+      def name = 'echo_tool'
+    end
+
+    agent_class = Class.new(RubyLLM::Agent) do
+      model 'gpt-4.1-nano'
+      tools tool_class.new
+      tool_options choice: :required, calls: :one, concurrency: :fibers
+    end
+
+    expect(agent_class.tool_options).to eq(choice: :required, calls: :one, concurrency: :fibers)
+
+    chat = agent_class.chat
+    expect(chat.tools.keys).to include(:echo_tool)
+    expect(chat.tool_prefs).to include(choice: :required, calls: :one)
+    expect(chat.concurrency).to eq(:fibers)
+  end
+
+  it 'forwards the protocol model option to new chats' do
+    agent_class = Class.new(RubyLLM::Agent) do
+      model 'gpt-5-nano', protocol: :chat_completions
+    end
+
+    expect(agent_class.chat.instance_variable_get(:@protocol)).to eq(:chat_completions)
+  end
+
+  it 'defers tool_options evaluation to a block' do
+    tool_class = Class.new(RubyLLM::Tool) do
+      def name = 'echo_tool'
+    end
+
+    agent_class = Class.new(RubyLLM::Agent) do
+      model 'gpt-4.1-nano'
+      tools tool_class.new
+      tool_options { { calls: :one } }
+    end
+
+    expect(agent_class.chat.tool_prefs[:calls]).to eq(:one)
+  end
+
+  it 'returns the configured model keywords from the bare model reader' do
+    agent_class = Class.new(RubyLLM::Agent) do
+      model 'gpt-4.1-nano', provider: :openai
+    end
+
+    expect(agent_class.model).to eq(model: 'gpt-4.1-nano', provider: :openai)
   end
 
   it 'exposes RubyLLM::Chat as chat in execution context for .chat' do
@@ -79,10 +138,27 @@ RSpec.describe RubyLLM::Agent do
     expect(agent.caching).to be_nil
   end
 
-  it 'raises when instructions default prompt is missing' do
+  it 'rejects nil caching on agent instances, pointing to without_caching' do
     agent_class = Class.new(RubyLLM::Agent) do
       model 'gpt-4.1-nano'
-      instructions
+    end
+    agent = agent_class.new
+
+    expect { agent.with_caching(nil) }.to raise_error(ArgumentError, /without_caching/)
+  end
+
+  it 'starts without instructions when the default prompt is missing' do
+    agent_class = Class.new(RubyLLM::Agent) do
+      model 'gpt-4.1-nano'
+    end
+
+    expect(agent_class.chat.messages).to be_empty
+  end
+
+  it 'raises when an explicitly referenced prompt is missing' do
+    agent_class = Class.new(RubyLLM::Agent) do
+      model 'gpt-4.1-nano'
+      instructions { prompt('instructions') }
     end
 
     expect { agent_class.chat }.to raise_error(RubyLLM::PromptNotFoundError, /Prompt file not found/)
@@ -225,7 +301,7 @@ RSpec.describe RubyLLM::Agent do
     agent = agent_class.new
 
     agent.add_message(role: :assistant, content: 'Hi', input_tokens: 1_000, output_tokens: 2_000,
-                      model_id: 'priced-model')
+                      model: 'priced-model')
 
     expect(agent.cost.total).to eq(0.005)
   end
@@ -251,7 +327,7 @@ RSpec.describe RubyLLM::Agent do
     agent = Class.new(described_class).new(chat:)
 
     response = agent.add_message(role: :assistant, content: 'Hi', input_tokens: 1_000, output_tokens: 2_000,
-                                 model_id: 'provider-backend-version')
+                                 model: 'provider-backend-version')
 
     expect(agent.model.cost_for(response).total).to eq(0.005)
     expect(agent.cost.total).to eq(0.005)
@@ -339,6 +415,15 @@ RSpec.describe RubyLLM::Agent do
 
     expect(child_class.chat.fallbacks.map(&:id)).to eq(['gpt-4.1-mini'])
     expect(child_class.chat.fallback_errors).to eq([RubyLLM::ServiceUnavailableError])
+  end
+
+  it 'raises when fallback options are set without any fallback models' do
+    expect do
+      Class.new(described_class) do
+        model 'gpt-4.1-nano'
+        fallbacks on: RubyLLM::RateLimitError
+      end
+    end.to raise_error(ArgumentError, /fallback model/)
   end
 
   it 'supports Enumerable by delegating each to chat' do

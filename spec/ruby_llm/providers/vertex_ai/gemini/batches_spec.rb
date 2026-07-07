@@ -34,7 +34,7 @@ RSpec.describe RubyLLM::Providers::VertexAI::Gemini::Batches do
     it 'adds the submission index as a request label' do
       request = {
         custom_id: '2',
-        params: {
+        payload: {
           contents: [{ role: 'user', parts: [{ text: 'Hi' }] }],
           labels: { existing: 'label' }
         }
@@ -52,8 +52,8 @@ RSpec.describe RubyLLM::Providers::VertexAI::Gemini::Batches do
   describe '#create_batch' do
     it 'rejects mixed-model jobs' do
       requests = [
-        { custom_id: '0', model: 'gemini-2.5-flash', params: {} },
-        { custom_id: '1', model: 'gemini-3-flash-preview', params: {} }
+        { custom_id: '0', model: 'gemini-2.5-flash', payload: {} },
+        { custom_id: '1', model: 'gemini-3-flash-preview', payload: {} }
       ]
 
       expect { protocol.create_batch(requests) }.to raise_error(RubyLLM::Error, /one model/)
@@ -63,7 +63,7 @@ RSpec.describe RubyLLM::Providers::VertexAI::Gemini::Batches do
       allow(config).to receive(:vertexai_batch_gcs_uri).and_return(nil)
 
       expect do
-        protocol.create_batch([{ custom_id: '0', model: 'gemini-2.5-flash', params: {} }])
+        protocol.create_batch([{ custom_id: '0', model: 'gemini-2.5-flash', payload: {} }])
       end.to raise_error(RubyLLM::ConfigurationError, /vertexai_batch_gcs_uri/)
     end
 
@@ -83,7 +83,7 @@ RSpec.describe RubyLLM::Providers::VertexAI::Gemini::Batches do
                               {
                                 custom_id: '0',
                                 model: 'gemini-2.5-flash',
-                                params: { contents: [{ role: 'user', parts: [{ text: 'Hi' }] }] }
+                                payload: { contents: [{ role: 'user', parts: [{ text: 'Hi' }] }] }
                               }
                             ])
 

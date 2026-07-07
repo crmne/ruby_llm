@@ -16,9 +16,9 @@ module RubyLLM
             parameters: ChatCompletions::Tools.parameters_schema_for(tool)
           }
 
-          return definition if tool.provider_params.empty?
+          return definition if tool.provider_options.empty?
 
-          RubyLLM::Utils.deep_merge(definition, tool.provider_params)
+          RubyLLM::Utils.deep_merge(definition, tool.provider_options)
         end
 
         def build_tool_choice(tool_choice)

@@ -48,7 +48,7 @@ module RubyLLM
         def build_completed_chunk(data)
           response = data['response'] || {}
 
-          chunk model_id: response['model'],
+          chunk model: response['model'],
                 finish_reason: response.dig('incomplete_details', 'reason'),
                 **parse_usage(response['usage'] || {})
         end

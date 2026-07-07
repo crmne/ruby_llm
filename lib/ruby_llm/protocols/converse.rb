@@ -18,12 +18,17 @@ module RubyLLM
       private
 
       def sync_response(payload, additional_headers = {})
+        response = signed_post(completion_url, payload, additional_headers)
+        parse_completion_response(response)
+      end
+
+      def signed_post(url, payload, additional_headers = {})
         body = JSON.generate(payload)
-        response = @connection.post(completion_url, payload) do |req|
-          req.headers.merge!(@provider.sign_headers('POST', completion_url, body))
+
+        @connection.post(url, payload) do |req|
+          req.headers.merge!(@provider.sign_headers('POST', url, body))
           req.headers.merge!(additional_headers) unless additional_headers.empty?
         end
-        parse_completion_response(response)
       end
     end
   end

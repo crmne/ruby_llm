@@ -51,7 +51,7 @@ module RubyLLM
             {
               batch_request_id: request[:custom_id],
               batch_request: {
-                chat_get_completion: batch_params(request)
+                chat_get_completion: batch_payload(request)
               }
             }
           end

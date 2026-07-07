@@ -39,14 +39,18 @@ result = RubyLLM.moderate("This is a safe message about Ruby programming")
 
 puts result.flagged?  # => false
 
-puts result.results
-# => [{"flagged" => false, "categories" => {...}, "category_scores" => {...}}]
-
 puts "Moderation ID: #{result.id}"     # => "modr-ABC123..."
 puts "Model used: #{result.model}"     # => "omni-moderation-latest"
 ```
 
-The `moderate` method returns a `RubyLLM::Moderation` object containing the moderation results from the provider.
+The `moderate` method returns a `RubyLLM::Moderation` object. Its `results` method holds one `RubyLLM::Moderation::Result` per moderated input, each with `flagged?`, `categories` (the flagged category names), and `category_scores`:
+
+```ruby
+verdict = result.results.first
+verdict.flagged?         # => false
+verdict.categories       # => []
+verdict.category_scores  # => {"harassment" => 1.19e-05, "violence" => 0.0004, ...}
+```
 
 ## Understanding Moderation Results
 
@@ -67,10 +71,11 @@ puts "Sexual content score: #{scores['sexual']}"
 puts "Harassment score: #{scores['harassment']}"
 puts "Violence score: #{scores['violence']}"
 
-categories = result.categories
-puts "Contains hate speech: #{categories['hate']}"
-puts "Contains self-harm content: #{categories['self-harm']}"
+puts "Contains hate speech: #{result.flagged_categories.include?('hate')}"
+puts "Contains self-harm content: #{result.flagged_categories.include?('self-harm')}"
 ```
+
+`flagged?`, `flagged_categories`, and `category_scores` aggregate across all results: `flagged?` is true if any input was flagged, `flagged_categories` is the union of flagged category names, and `category_scores` keeps the highest score per category.
 
 ### Moderation Categories
 

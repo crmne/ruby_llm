@@ -48,7 +48,7 @@ module RubyLLM
 
         def gemini_batch_request(request, model)
           {
-            request: batch_params(request).merge(model: "models/#{model}"),
+            request: batch_payload(request).merge(model: "models/#{model}"),
             metadata: {
               custom_id: request[:custom_id]
             }

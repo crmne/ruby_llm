@@ -33,17 +33,17 @@ RSpec.describe RubyLLM::Chat do # rubocop:disable RSpec/MultipleMemoizedHelpers
 
         expect(response.content).to be_present
         expect(response.content).not_to include('RubyLLM::Content')
-        expect(chat.messages.first.content).to be_a(RubyLLM::Content)
-        expect(chat.messages.first.content.attachments.first.filename).to eq('ruby.txt')
-        expect(chat.messages.first.content.attachments.first.mime_type).to eq('text/plain')
+        expect(chat.messages.first.content).to eq("What's in this file?")
+        expect(chat.messages.first.attachments.first.filename).to eq('ruby.txt')
+        expect(chat.messages.first.attachments.first.mime_type).to eq('text/plain')
 
         response = chat.ask('and in this one?', with: xml_path)
 
         expect(response.content).to be_present
         expect(response.content).not_to include('RubyLLM::Content')
-        expect(chat.messages[2].content).to be_a(RubyLLM::Content)
-        expect(chat.messages[2].content.attachments.first.filename).to eq('ruby.xml')
-        expect(chat.messages[2].content.attachments.first.mime_type).to eq('application/xml')
+        expect(chat.messages[2].content).to eq('and in this one?')
+        expect(chat.messages[2].attachments.first.filename).to eq('ruby.xml')
+        expect(chat.messages[2].attachments.first.mime_type).to eq('application/xml')
       end
 
       it "#{provider}/#{model} can understand remote text" do
@@ -52,9 +52,9 @@ RSpec.describe RubyLLM::Chat do # rubocop:disable RSpec/MultipleMemoizedHelpers
 
         expect(response.content).to be_present
         expect(response.content).not_to include('RubyLLM::Content')
-        expect(chat.messages.first.content).to be_a(RubyLLM::Content)
-        expect(chat.messages.first.content.attachments.first.filename).to eq('license.txt')
-        expect(chat.messages.first.content.attachments.first.mime_type).to eq('text/plain')
+        expect(chat.messages.first.content).to eq("What's in this file?")
+        expect(chat.messages.first.attachments.first.filename).to eq('license.txt')
+        expect(chat.messages.first.attachments.first.mime_type).to eq('text/plain')
       end
     end
   end
@@ -69,9 +69,9 @@ RSpec.describe RubyLLM::Chat do # rubocop:disable RSpec/MultipleMemoizedHelpers
 
         expect(response.content).to be_present
         expect(response.content).not_to include('RubyLLM::Content')
-        expect(chat.messages.first.content).to be_a(RubyLLM::Content)
-        expect(chat.messages.first.content.attachments.first.filename).to eq('ruby.png')
-        expect(chat.messages.first.content.attachments.first.mime_type).to eq('image/png')
+        expect(chat.messages.first.content).to eq('What do you see in this image?')
+        expect(chat.messages.first.attachments.first.filename).to eq('ruby.png')
+        expect(chat.messages.first.attachments.first.mime_type).to eq('image/png')
       end
 
       it "#{provider}/#{model} can understand remote images without extension" do
@@ -80,9 +80,9 @@ RSpec.describe RubyLLM::Chat do # rubocop:disable RSpec/MultipleMemoizedHelpers
 
         expect(response.content).to be_present
         expect(response.content).not_to include('RubyLLM::Content')
-        expect(chat.messages.first.content).to be_a(RubyLLM::Content)
-        expect(chat.messages.first.content.attachments.first.filename).to eq('jpeg')
-        expect(chat.messages.first.content.attachments.first.mime_type).to eq('image/jpeg')
+        expect(chat.messages.first.content).to eq('What do you see in this image?')
+        expect(chat.messages.first.attachments.first.filename).to eq('jpeg')
+        expect(chat.messages.first.attachments.first.mime_type).to eq('image/jpeg')
       end
     end
     model = VISION_MODELS.first[:model]
@@ -113,9 +113,9 @@ RSpec.describe RubyLLM::Chat do # rubocop:disable RSpec/MultipleMemoizedHelpers
 
         expect(response.content).to be_present
         expect(response.content).not_to include('RubyLLM::Content')
-        expect(chat.messages.first.content).to be_a(RubyLLM::Content)
-        expect(chat.messages.first.content.attachments.first.filename).to eq('ruby.mp4')
-        expect(chat.messages.first.content.attachments.first.mime_type).to eq('video/mp4')
+        expect(chat.messages.first.content).to eq('What do you see in this video?')
+        expect(chat.messages.first.attachments.first.filename).to eq('ruby.mp4')
+        expect(chat.messages.first.attachments.first.mime_type).to eq('video/mp4')
       end
 
       it "#{provider}/#{model} can understand remote videos without extension" do
@@ -124,9 +124,9 @@ RSpec.describe RubyLLM::Chat do # rubocop:disable RSpec/MultipleMemoizedHelpers
 
         expect(response.content).to be_present
         expect(response.content).not_to include('RubyLLM::Content')
-        expect(chat.messages.first.content).to be_a(RubyLLM::Content)
-        expect(chat.messages.first.content.attachments.first.filename).to eq('sample_640x360.mp4')
-        expect(chat.messages.first.content.attachments.first.mime_type).to eq('video/mp4')
+        expect(chat.messages.first.content).to eq('What do you see in this video?')
+        expect(chat.messages.first.attachments.first.filename).to eq('sample_640x360.mp4')
+        expect(chat.messages.first.attachments.first.mime_type).to eq('video/mp4')
       end
     end
   end
@@ -141,9 +141,9 @@ RSpec.describe RubyLLM::Chat do # rubocop:disable RSpec/MultipleMemoizedHelpers
 
         expect(response.content).to be_present
         expect(response.content).not_to include('RubyLLM::Content')
-        expect(chat.messages.first.content).to be_a(RubyLLM::Content)
-        expect(chat.messages.first.content.attachments.first.filename).to eq('ruby.wav')
-        expect(chat.messages.first.content.attachments.first.mime_type).to eq('audio/wav')
+        expect(chat.messages.first.content).to eq('What is being said?')
+        expect(chat.messages.first.attachments.first.filename).to eq('ruby.wav')
+        expect(chat.messages.first.attachments.first.mime_type).to eq('audio/wav')
       end
 
       it "#{provider}/#{model} can understand MP3 audio" do
@@ -152,10 +152,10 @@ RSpec.describe RubyLLM::Chat do # rubocop:disable RSpec/MultipleMemoizedHelpers
 
         expect(response.content).to be_present
         expect(response.content).not_to include('RubyLLM::Content')
-        expect(chat.messages.first.content).to be_a(RubyLLM::Content)
-        expect(chat.messages.first.content.attachments.first.filename).to eq('ruby.mp3')
-        expect(chat.messages.first.content.attachments.first.mime_type).to eq('audio/mpeg')
-        expect(chat.messages.first.content.attachments.first.format).to eq('mp3')
+        expect(chat.messages.first.content).to eq('What is being said?')
+        expect(chat.messages.first.attachments.first.filename).to eq('ruby.mp3')
+        expect(chat.messages.first.attachments.first.mime_type).to eq('audio/mpeg')
+        expect(chat.messages.first.attachments.first.format).to eq('mp3')
       end
     end
   end
@@ -169,8 +169,8 @@ RSpec.describe RubyLLM::Chat do # rubocop:disable RSpec/MultipleMemoizedHelpers
         response = chat.ask('Summarize this document', with: { pdf: pdf_path })
         expect(response.content).not_to be_empty
         expect(response.content).not_to include('RubyLLM::Content')
-        expect(chat.messages.first.content.attachments.first.filename).to eq('sample.pdf')
-        expect(chat.messages.first.content.attachments.first.mime_type).to eq('application/pdf')
+        expect(chat.messages.first.attachments.first.filename).to eq('sample.pdf')
+        expect(chat.messages.first.attachments.first.mime_type).to eq('application/pdf')
 
         response = chat.ask 'go on'
         expect(response.content).not_to be_empty
@@ -182,10 +182,10 @@ RSpec.describe RubyLLM::Chat do # rubocop:disable RSpec/MultipleMemoizedHelpers
         response = chat.ask('Compare these documents', with: [pdf_path, pdf_url])
         expect(response.content).not_to be_empty
         expect(response.content).not_to include('RubyLLM::Content')
-        expect(chat.messages.first.content.attachments.first.filename).to eq('sample.pdf')
-        expect(chat.messages.first.content.attachments.first.mime_type).to eq('application/pdf')
-        expect(chat.messages.first.content.attachments.second.filename).to eq('sample.pdf')
-        expect(chat.messages.first.content.attachments.second.mime_type).to eq('application/pdf')
+        expect(chat.messages.first.attachments.first.filename).to eq('sample.pdf')
+        expect(chat.messages.first.attachments.first.mime_type).to eq('application/pdf')
+        expect(chat.messages.first.attachments.second.filename).to eq('sample.pdf')
+        expect(chat.messages.first.attachments.second.mime_type).to eq('application/pdf')
 
         response = chat.ask 'go on'
         expect(response.content).not_to be_empty
@@ -196,11 +196,11 @@ RSpec.describe RubyLLM::Chat do # rubocop:disable RSpec/MultipleMemoizedHelpers
         response = chat.ask('Analyze these files', with: [image_path, pdf_path])
 
         expect(response.content).to be_present
-        expect(chat.messages.first.content).to be_a(RubyLLM::Content)
-        expect(chat.messages.first.content.attachments.first.filename).to eq('ruby.png')
-        expect(chat.messages.first.content.attachments.first.mime_type).to eq('image/png')
-        expect(chat.messages.first.content.attachments.second.filename).to eq('sample.pdf')
-        expect(chat.messages.first.content.attachments.second.mime_type).to eq('application/pdf')
+        expect(chat.messages.first.content).to eq('Analyze these files')
+        expect(chat.messages.first.attachments.first.filename).to eq('ruby.png')
+        expect(chat.messages.first.attachments.first.mime_type).to eq('image/png')
+        expect(chat.messages.first.attachments.second.filename).to eq('sample.pdf')
+        expect(chat.messages.first.attachments.second.mime_type).to eq('application/pdf')
       end
     end
   end
@@ -216,7 +216,7 @@ RSpec.describe RubyLLM::Chat do # rubocop:disable RSpec/MultipleMemoizedHelpers
                             with: docx_path)
 
         expect(response.content).to match(/BLUE[-\s]?LANTERN[-\s]?42/i)
-        attachment = chat.messages.first.content.attachments.first
+        attachment = chat.messages.first.attachments.first
         expect(attachment.filename).to eq('sample.docx')
         expect(attachment).to be_document
       end
@@ -234,7 +234,7 @@ RSpec.describe RubyLLM::Chat do # rubocop:disable RSpec/MultipleMemoizedHelpers
                             with: xlsx_path)
 
         expect(response.content).to match(/ORCHID[-\s]?97/i)
-        attachment = chat.messages.first.content.attachments.first
+        attachment = chat.messages.first.attachments.first
         expect(attachment.filename).to eq('sample.xlsx')
         expect(attachment).to be_document
       end
@@ -249,10 +249,10 @@ RSpec.describe RubyLLM::Chat do # rubocop:disable RSpec/MultipleMemoizedHelpers
     end
 
     it 'creates content with URL attachments' do
-      content = RubyLLM::Content.new('Describe this image', image_url)
+      message = RubyLLM::Message.new(role: :user, content: 'Describe this image', attachments: image_url)
 
-      expect(content.attachments).not_to be_empty
-      expect(content.attachments.first).to be_a(RubyLLM::Attachment)
+      expect(message.attachments).not_to be_empty
+      expect(message.attachments.first).to be_a(RubyLLM::Attachment)
     end
 
     it 'prevents ArgumentError: wrong number of arguments when processing URL attachments' do
@@ -362,22 +362,22 @@ RSpec.describe RubyLLM::Chat do # rubocop:disable RSpec/MultipleMemoizedHelpers
     it 'creates content with IO attachments' do
       require 'stringio'
       string_io = StringIO.new('Test content')
-      content = RubyLLM::Content.new('Check this')
-      content.add_attachment(string_io, filename: 'test.txt')
+      attachment = RubyLLM::Attachment.new(string_io, filename: 'test.txt')
+      message = RubyLLM::Message.new(role: :user, content: 'Check this', attachments: attachment)
 
-      expect(content.attachments).not_to be_empty
-      expect(content.attachments.first).to be_a(RubyLLM::Attachment)
-      expect(content.attachments.first.io_like?).to be true
-      expect(content.attachments.first.filename).to eq('test.txt')
-      expect(content.attachments.first.mime_type).to eq('text/plain')
+      expect(message.attachments).not_to be_empty
+      expect(message.attachments.first).to be_a(RubyLLM::Attachment)
+      expect(message.attachments.first.io_like?).to be true
+      expect(message.attachments.first.filename).to eq('test.txt')
+      expect(message.attachments.first.mime_type).to eq('text/plain')
     end
 
     it 'preserves existing attachment instances' do
       require 'stringio'
       attachment = RubyLLM::Attachment.new(StringIO.new('Test content'), filename: 'test.txt')
-      content = RubyLLM::Content.new('Check this', [attachment])
+      message = RubyLLM::Message.new(role: :user, content: 'Check this', attachments: [attachment])
 
-      expect(content.attachments).to contain_exactly(attachment)
+      expect(message.attachments).to contain_exactly(attachment)
     end
 
     it 'ignores blank attachment placeholders in arrays' do
@@ -392,17 +392,18 @@ RSpec.describe RubyLLM::Chat do # rubocop:disable RSpec/MultipleMemoizedHelpers
         type: 'image/png'
       )
 
-      expect { RubyLLM::Content.new('Check this', ['', uploaded_file]) }.not_to raise_error
+      expect { RubyLLM::Message.new(role: :user, content: 'Check this', attachments: ['', uploaded_file]) }
+        .not_to raise_error
 
-      content = RubyLLM::Content.new('Check this', ['', uploaded_file])
-      expect(content.attachments.size).to eq(1)
-      expect(content.attachments.first.filename).to eq('ruby.png')
+      message = RubyLLM::Message.new(role: :user, content: 'Check this', attachments: ['', uploaded_file])
+      expect(message.attachments.size).to eq(1)
+      expect(message.attachments.first.filename).to eq('ruby.png')
     end
 
     it 'ignores nil-only attachment entries' do
-      content = RubyLLM::Content.new('Check this', [nil, nil])
+      message = RubyLLM::Message.new(role: :user, content: 'Check this', attachments: [nil, nil])
 
-      expect(content.attachments).to be_empty
+      expect(message.attachments).to be_empty
     end
   end
 end

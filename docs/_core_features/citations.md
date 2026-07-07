@@ -58,6 +58,12 @@ response.citations.each do |citation|
 end
 ```
 
+Call `without_citations` to turn citations back off:
+
+```ruby
+chat.without_citations
+```
+
 This works with plain text files and PDFs. PDF citations include page numbers:
 
 ```ruby
@@ -77,7 +83,7 @@ When your tools fetch documents, e.g. from a vector store, Google Drive, a wiki,
 ```ruby
 class KnowledgeBase < RubyLLM::Tool
   description "Searches the company knowledge base"
-  param :query, desc: "What to look for"
+  parameter :query, description: "What to look for"
 
   def execute(query:)
     docs = MyVectorStore.search(query)
@@ -89,7 +95,7 @@ class KnowledgeBase < RubyLLM::Tool
 end
 
 response = RubyLLM.chat(model: 'claude-sonnet-4-5')
-  .with_tool(KnowledgeBase)
+  .with_tools(KnowledgeBase)
   .ask "Who created Ruby? Cite your sources."
 
 response.citations.first.url        # => the doc.link you provided
@@ -98,7 +104,7 @@ response.citations.first.cited_text # => the quoted passage
 
 A single result reads even simpler: `RubyLLM::SearchResults.new(title: "Q4 Report", url: report_url, text: report_text)`.
 
-On Anthropic these become native citable search result blocks. Other providers receive the same results as plain text, so your tools stay provider-agnostic.
+`SearchResults` serializes into the tool message as JSON with a `search_results` key. On Anthropic that shape becomes native citable search result blocks, including after the conversation is reloaded from the database. Other providers receive the same results as JSON text, so your tools stay provider-agnostic. A tool that returns the `{"search_results": [...]}` shape directly gets the same treatment; the class is just the convenient way to build and validate it.
 
 ## Citing the Web
 
@@ -111,12 +117,12 @@ response = RubyLLM.chat(model: 'sonar', provider: :perplexity)
 
 # Gemini with Google Search grounding
 response = RubyLLM.chat(model: 'gemini-2.5-flash')
-  .with_params(tools: [{ google_search: {} }])
+  .with_provider_options(tools: [{ google_search: {} }])
   .ask "What's the latest stable Ruby version?"
 
 # OpenAI with web search
 response = RubyLLM.chat(model: 'gpt-4o-mini-search-preview')
-  .with_params(web_search_options: {})
+  .with_provider_options(web_search_options: {})
   .ask "What's the latest stable Ruby version?"
 
 response.citations.map(&:url).uniq
@@ -220,7 +226,7 @@ Without the column, everything still works - citations just aren't persisted.
 - **OpenAI** (and Azure/OpenRouter) return `url_citation` annotations from web search, with response spans.
 - **Gemini / Vertex AI** return grounding metadata when the `google_search` tool is enabled. RubyLLM converts grounding byte offsets to character offsets for you.
 - **Perplexity** returns its search results on every response; `cited_text` carries the result snippet when available.
-- **xAI** returns a list of cited URLs when live search is enabled via `with_params`.
+- **xAI** returns a list of cited URLs when live search is enabled via `with_provider_options`.
 - **Bedrock, DeepSeek, Mistral, Ollama, GPUStack** don't currently surface citations through RubyLLM.
 
 ## Next Steps

@@ -81,6 +81,27 @@ RSpec.describe RubyLLM::Context do
       chat = context.chat(model: 'claude-haiku-4-5')
       expect(chat.model.id).to eq('claude-haiku-4-5')
     end
+
+    it 'returns a chat to the global configuration with without_context' do
+      context = RubyLLM.context do |config|
+        config.default_model = 'claude-haiku-4-5'
+      end
+      chat = context.chat
+
+      chat.without_context
+
+      expect(chat.instance_variable_get(:@context)).to be_nil
+      expect(chat.instance_variable_get(:@config)).to eq(RubyLLM.config)
+    end
+
+    it 'rejects nil, pointing to without_context' do
+      context = RubyLLM.context do |config|
+        config.default_model = 'claude-haiku-4-5'
+      end
+      chat = context.chat
+
+      expect { chat.with_context(nil) }.to raise_error(ArgumentError, /without_context/)
+    end
   end
 
   describe 'context embed operations' do

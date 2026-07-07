@@ -1,16 +1,52 @@
 # frozen_string_literal: true
 
 module RubyLLM
-  # A provider-side batch of chat completions: chats awaiting a response go in
-  # together, answers come back at batch prices, typically within hours.
-  # Persist the id, reload from any process, and collect the messages once
-  # processing ends.
+  # A Batch is a provider-side batch of chat completions: chats awaiting a
+  # response go in together, answers come back at batch prices, typically
+  # within hours. Persist the id, pick the batch back up from any process,
+  # and collect the messages once processing ends.
+  #
+  #   chats = documents.map do |doc|
+  #     RubyLLM.chat(model: "claude-haiku-4-5").ask_later(doc.text)
+  #   end
+  #   batch = RubyLLM.batch(chats)
+  #   batch.id                # => "msgbatch_01EhcDuvb5XfWqcdJArbsfNX"
+  #   batch.refresh.complete? # => false, check back later
+  #   batch.messages          # the responses, in submission order
+  #
   class Batch
-    AWAITING_ROLES = %i[user tool].freeze
+    AWAITING_ROLES = %i[user tool].freeze # :nodoc:
 
-    attr_reader :id, :status, :request_counts, :chats
+    # The provider's batch id. Persist it to load the batch again later
+    # from any process with ::find.
+    attr_reader :id
+
+    # The provider-reported status string, such as "in_progress".
+    # Refreshed by #refresh.
+    attr_reader :status
+
+    # The provider-reported request tallies by state, or +nil+ when the
+    # provider does not report them.
+    attr_reader :request_counts
+
+    # The submitted Chat objects in order, or +nil+ when the batch was
+    # loaded by id via ::find.
+    attr_reader :chats
 
     class << self
+      # Submits +chats+ to their shared provider as a batch and returns a
+      # new Batch. Accepts a single Chat or an array. Every chat must be
+      # awaiting the model (see Chat#ask_later), and all must use the same
+      # provider.
+      #
+      #   chats = tickets.map do |ticket|
+      #     RubyLLM.chat(model: "claude-haiku-4-5").ask_later(ticket.body)
+      #   end
+      #   batch = RubyLLM::Batch.submit(chats)
+      #   batch.status # => "in_progress"
+      #
+      # Raises ArgumentError if +chats+ is empty, mixes providers, or
+      # includes a chat that is not awaiting the model.
       def submit(chats)
         chats = chats.is_a?(Chat) ? [chats] : Array(chats)
         chats = chats.map { |chat| chat.respond_to?(:to_llm) ? chat.to_llm : chat }
@@ -25,7 +61,7 @@ module RubyLLM
         payload = { provider: provider.slug, provider_class: provider.class.display_name, requests: chats.size }
         RubyLLM.instrument('batch.ruby_llm', payload, config: provider.config) do |event|
           requests = chats.each_with_index.map do |chat, index|
-            { custom_id: index.to_s, model: chat.model.id, params: chat.render }
+            { custom_id: index.to_s, model: chat.model.id, payload: chat.render }
           end
           batch = new(provider:, chats:, **provider.create_batch(requests))
           event[:batch_id] = batch.id
@@ -33,6 +69,15 @@ module RubyLLM
         end
       end
 
+      # Returns a Batch reflecting the provider's current state for +id+.
+      # Use it to pick a batch back up from any process.
+      #
+      #   batch = RubyLLM::Batch.find("msgbatch_01EhcDuvb5XfWqcdJArbsfNX",
+      #                               provider: :anthropic)
+      #   batch.complete? # => true
+      #
+      # Pass +context:+ to use a Context in place of the global
+      # configuration. Raises ArgumentError if +provider+ is not given.
       def find(id, provider:, context: nil)
         raise ArgumentError, 'Provider must be specified to find a batch' unless provider
 
@@ -60,34 +105,46 @@ module RubyLLM
       end
     end
 
-    def initialize(provider:, chats: nil, batch_protocol: nil, **attributes)
+    def initialize(provider:, chats: nil, batch_protocol: nil, **attributes) # :nodoc:
       @provider = provider
       @chats = chats
       @batch_protocol = batch_protocol
       apply(attributes)
     end
 
-    # Reloads from the provider until the batch ends, then caches.
+    # Returns whether the batch has finished processing, as of the last
+    # state fetched from the provider. Never contacts the provider; poll
+    # with #refresh.
+    #
+    #   sleep 60 until batch.refresh.complete?
+    #
     def complete?
-      return true if @completed
-
-      reload
       @completed
     end
 
-    def reload
+    # Re-fetches the batch from the provider, updating #status,
+    # #request_counts, and #complete?. Returns +self+.
+    def refresh
       apply(@provider.find_batch(id))
       self
     end
 
+    # Asks the provider to cancel the batch and applies the new state.
+    # Requests already processed still return results. Returns +self+.
     def cancel
       apply(@provider.cancel_batch(id))
       self
     end
 
-    # The answers in submission order, nil where a request failed, each also
-    # appended to its chat. Cached only once the batch ends, so polling early
+    # Returns the answers in submission order, +nil+ where a request
+    # failed, each also appended to its chat. Fetches results from the
+    # provider; cached once #complete? is true, so collecting early
     # keeps reading fresh.
+    #
+    #   batch.messages.each do |message|
+    #     puts message.content
+    #   end
+    #
     def messages
       return @messages if @messages
 
@@ -133,8 +190,7 @@ module RubyLLM
       end
     end
 
-    # Shared mechanics for provider-side batch APIs.
-    module Helpers
+    module Helpers # :nodoc:
       private
 
       def batch_result_index(id)
@@ -162,9 +218,9 @@ module RubyLLM
         raise Error, "#{provider_name} batch requests must use one model per submission"
       end
 
-      def batch_params(request, except: [])
+      def batch_payload(request, except: [])
         excluded = (Array(except) + [:stream]).map(&:to_s)
-        request.fetch(:params).reject { |key, _| excluded.include?(key.to_s) }
+        request.fetch(:payload).reject { |key, _| excluded.include?(key.to_s) }
       end
     end
   end

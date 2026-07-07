@@ -79,7 +79,7 @@ module RubyLLM
         initialize_authorizer unless @authorizer
         @authorizer.apply({})
       rescue Google::Auth::AuthorizationError => e
-        raise UnauthorizedError.new(nil, "Invalid Google Cloud credentials for Vertex AI: #{e.message}")
+        raise UnauthorizedError, "Invalid Google Cloud credentials for Vertex AI: #{e.message}"
       end
 
       class << self

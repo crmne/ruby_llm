@@ -34,7 +34,7 @@ RSpec.describe RubyLLM::Protocols::Gemini::Streaming do
 
     expect(chunk.input_tokens).to eq(4)
     expect(chunk.output_tokens).to eq(4)
-    expect(chunk.cached_tokens).to eq(6)
+    expect(chunk.cache_read_tokens).to eq(6)
   end
 
   it 'preserves raw finishReason on chunks' do

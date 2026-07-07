@@ -9,8 +9,8 @@ module RubyLLM
 
         SUPPORTED_DOCUMENT_EXTENSIONS = %w[pdf doc docx txt rtf].freeze
 
-        def format_content(content)
-          Protocols::ChatCompletions::Media.format_parts(content) do |attachment|
+        def format_content(content, attachments = [])
+          Protocols::ChatCompletions::Media.format_parts(content, attachments) do |attachment|
             case attachment.type
             when :image
               Protocols::ChatCompletions::Media.format_image(attachment)

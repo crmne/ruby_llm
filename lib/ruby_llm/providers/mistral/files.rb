@@ -12,11 +12,15 @@ module RubyLLM
         end
 
         # rubocop:disable Lint/UnusedMethodArgument, Metrics/ParameterLists
-        def render_upload_payload(attachment, purpose: nil, expiry: nil, visibility: nil, expires_after: nil,
+        def render_upload_payload(attachment, purpose: nil, expires_in: nil, visibility: nil,
                                   display_name: nil, uri: nil, content_type: nil)
-          multipart_payload(attachment, purpose:, expiry:, visibility:)
+          multipart_payload(attachment, purpose:, expiry: expiry_hours(expires_in), visibility:)
         end
         # rubocop:enable Lint/UnusedMethodArgument, Metrics/ParameterLists
+
+        def expiry_hours(expires_in)
+          expires_in&.fdiv(3600)&.ceil
+        end
 
         def parse_file_response(data)
           uploaded_file(

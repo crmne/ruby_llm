@@ -5,12 +5,12 @@ require 'spec_helper'
 RSpec.describe RubyLLM::Providers::DeepSeek::Capabilities do
   describe '.critical_capabilities_for' do
     it 'restores critical metadata for current DeepSeek models' do
-      expect(described_class.critical_capabilities_for('deepseek-chat')).to eq(['function_calling'])
+      expect(described_class.critical_capabilities_for('deepseek-chat')).to eq(%w[function_calling tool_choice])
       expect(described_class.critical_capabilities_for('deepseek-reasoner')).to eq(
-        %w[function_calling reasoning]
+        %w[function_calling tool_choice reasoning]
       )
       expect(described_class.critical_capabilities_for('deepseek-v4-flash')).to eq(
-        %w[function_calling structured_output reasoning]
+        %w[function_calling tool_choice structured_output reasoning]
       )
     end
   end
@@ -59,7 +59,7 @@ RSpec.describe RubyLLM::Providers::DeepSeek::Capabilities do
       expect(model.provider).to eq('deepseek')
       expect(model.context_window).to eq(1_000_000)
       expect(model.max_output_tokens).to eq(384_000)
-      expect(model.capabilities).to eq(%w[function_calling structured_output reasoning])
+      expect(model.capabilities).to eq(%w[function_calling tool_choice structured_output reasoning])
       expect(model.pricing.to_h).to eq(described_class.pricing_for('deepseek-v4-pro'))
     end
   end

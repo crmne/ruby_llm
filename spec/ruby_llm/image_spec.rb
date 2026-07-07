@@ -71,7 +71,7 @@ RSpec.describe RubyLLM::Image do
       allow(RubyLLM.models).to receive(:find).with(model).and_return(model_info)
 
       image = described_class.new(
-        model_id: model,
+        model: model,
         usage: {
           'input_tokens' => 350,
           'input_tokens_details' => {
@@ -99,7 +99,7 @@ RSpec.describe RubyLLM::Image do
         image = RubyLLM.paint('a siamese cat', model: model, provider: provider)
 
         expect(image.mime_type).to include('image')
-        expect(image.model_id).to eq(model)
+        expect(image.model).to eq(model)
 
         save_and_verify_image image
       end
@@ -110,7 +110,7 @@ RSpec.describe RubyLLM::Image do
         image = RubyLLM.paint('a siamese cat', size: '1792x1024', model: model, provider: provider)
 
         expect(image.mime_type).to include('image')
-        expect(image.model_id).to eq(model)
+        expect(image.model).to eq(model)
 
         save_and_verify_image image
       end
@@ -127,8 +127,8 @@ RSpec.describe RubyLLM::Image do
 
       expect(image.base64?).to be(true)
       expect(image.mime_type).to eq('image/png')
-      expect(image.model_id).to eq(model)
-      expect(image.usage.dig('input_tokens_details', 'image_tokens')).to be > 0
+      expect(image.model).to eq(model)
+      expect(image.tokens.input).to be > 0
 
       save_and_verify_image image
     end
@@ -142,8 +142,8 @@ RSpec.describe RubyLLM::Image do
         expect(image.base64?).to be(true)
         expect(image.data).to be_present
         expect(image.mime_type).to eq('image/png')
-        expect(image.model_id).to eq(model)
-        expect(image.usage.dig('input_tokens_details', 'image_tokens')).to be > 0
+        expect(image.model).to eq(model)
+        expect(image.tokens.input).to be > 0
         expect(image.to_blob.bytesize).to be_positive
       end
 
@@ -158,13 +158,13 @@ RSpec.describe RubyLLM::Image do
           prompt,
           with: image_path,
           model: model,
-          params: { size: '1024x1024', quality: 'low' }
+          provider_options: { size: '1024x1024', quality: 'low' }
         )
 
         expect(image.base64?).to be(true)
         expect(image.data).to be_present
         expect(image.mime_type).to eq('image/png')
-        expect(image.usage['output_tokens']).to eq(272)
+        expect(image.tokens.output).to eq(272)
         expect(image.to_blob.bytesize).to be_positive
       end
     end

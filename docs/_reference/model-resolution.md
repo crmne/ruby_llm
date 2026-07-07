@@ -143,7 +143,7 @@ chat.model.capabilities  # => ["function_calling", "streaming", "vision", "struc
 chat.model.metadata      # => { warning: "Assuming model exists, capabilities may not be accurate" }
 ```
 
-You are responsible for using only the features the model actually supports. The same flag works on `RubyLLM.embed` and `RubyLLM.paint`, and on `with_model` as `assume_exists: true`.
+You are responsible for using only the features the model actually supports. The same flag works on `RubyLLM.embed`, `RubyLLM.paint`, and `with_model`.
 
 > Local providers like Ollama and GPUStack assume models exist automatically. You can pull and run any model name without registering it first, and you don't need to pass the flag.
 {: .note }

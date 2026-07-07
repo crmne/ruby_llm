@@ -17,7 +17,7 @@ module RubyLLM
         end
 
         # rubocop:disable Metrics/ParameterLists,Lint/UnusedMethodArgument
-        def render_payload(messages, tools:, temperature:, model:, stream: false,
+        def render_payload(messages, tools:, temperature:, model:, stream: false, max_output_tokens: nil,
                            schema: nil, thinking: nil, citations: false, caching: nil, tool_prefs: nil)
           warn_unsupported_citations(model) if citations
           tool_prefs ||= {}
@@ -32,7 +32,7 @@ module RubyLLM
           system_blocks = format_system(system_messages, caching:, automatic_cache_target:)
           payload[:system] = system_blocks unless system_blocks.empty?
 
-          payload[:inferenceConfig] = format_inference_config(model, temperature)
+          payload[:inferenceConfig] = format_inference_config(model, temperature, max_output_tokens)
 
           tool_config = format_tool_config(tools, tool_prefs)
           payload[:toolConfig] = tool_config if tool_config
@@ -65,13 +65,7 @@ module RubyLLM
           attachment.pdf? || attachment.document? || attachment.text?
         end
 
-        def parse_completion_response(response)
-          parse_completion_body(response.body, raw: response)
-        end
-
         def parse_completion_body(data, raw:)
-          return if data.nil? || data.empty?
-
           content_blocks = data.dig('output', 'message', 'content') || []
           usage = data['usage'] || {}
           thinking_text, thinking_signature = parse_thinking(content_blocks)
@@ -83,11 +77,11 @@ module RubyLLM
             tool_calls: parse_tool_calls(content_blocks),
             input_tokens: input_tokens(usage),
             output_tokens: usage['outputTokens'],
-            cached_tokens: usage['cacheReadInputTokens'],
-            cache_creation_tokens: usage['cacheWriteInputTokens'],
+            cache_read_tokens: usage['cacheReadInputTokens'],
+            cache_write_tokens: usage['cacheWriteInputTokens'],
             thinking_tokens: reasoning_tokens(usage),
             finish_reason: data['stopReason'],
-            model_id: data['modelId'],
+            model: data['modelId'],
             raw: raw
           )
         end
@@ -138,11 +132,7 @@ module RubyLLM
         end
 
         def format_message_content(msg, caching: nil, automatic_cache_target: nil)
-          blocks = if msg.content.is_a?(RubyLLM::Content::Raw)
-                     format_raw_message_content(msg)
-                   else
-                     format_structured_message_content(msg)
-                   end
+          blocks = format_structured_message_content(msg)
 
           if msg.tool_call?
             msg.tool_calls.each_value do |tool_call|
@@ -160,60 +150,28 @@ module RubyLLM
           blocks
         end
 
-        def format_raw_message_content(msg)
-          blocks = format_raw_content(msg.content)
-          return blocks if msg.role == :assistant
-
-          sanitize_non_assistant_raw_blocks(blocks)
-        end
-
         def format_structured_message_content(msg)
           blocks = []
 
           thinking_block = format_thinking_block(msg.thinking)
           blocks << thinking_block if msg.role == :assistant && thinking_block
 
-          text_and_media_blocks = Media.format_content(msg.content, used_document_names: @used_document_names)
-          blocks.concat(text_and_media_blocks) if text_and_media_blocks
+          blocks.concat(Media.format_content(msg.content, msg.attachments, used_document_names: @used_document_names))
 
           blocks
-        end
-
-        def format_raw_content(content)
-          value = content.value
-          value.is_a?(Array) ? value.dup : [value]
-        end
-
-        def sanitize_non_assistant_raw_blocks(blocks)
-          blocks.filter_map do |block|
-            next unless block.is_a?(Hash)
-            next if block.key?(:reasoningContent) || block.key?('reasoningContent')
-
-            block
-          end
         end
 
         def format_tool_result_block(msg)
           {
             toolResult: {
               toolUseId: msg.tool_call_id,
-              content: format_tool_result_content(msg.content)
+              content: format_tool_result_content(msg)
             }
           }
         end
 
-        def format_tool_result_content(content)
-          return format_raw_tool_result_content(content.value) if content.is_a?(RubyLLM::Content::Raw)
-          return [{ json: content }] if content.is_a?(Hash) || content.is_a?(Array)
-          return format_content_tool_result_content(content) if content.is_a?(RubyLLM::Content)
-
-          [text_tool_result_block(content)]
-        end
-
-        def format_content_tool_result_content(content)
-          blocks = []
-          blocks << text_tool_result_block(content.text) unless content.text.to_s.empty?
-          content.attachments.each { |attachment| blocks << text_tool_result_block(attachment.for_llm) }
+        def format_tool_result_content(msg)
+          blocks = Media.format_content(msg.content, msg.attachments, used_document_names: @used_document_names)
           blocks.empty? ? [text_tool_result_block(nil)] : blocks
         end
 
@@ -221,29 +179,6 @@ module RubyLLM
           text = text.to_s
           text = '(no output)' if text.empty?
           { text: text }
-        end
-
-        def format_raw_tool_result_content(raw_value)
-          blocks = raw_value.is_a?(Array) ? raw_value : [raw_value]
-
-          normalized = blocks.filter_map do |block|
-            normalize_tool_result_block(block)
-          end
-
-          normalized.empty? ? [{ text: raw_value.to_s }] : normalized
-        end
-
-        def normalize_tool_result_block(block)
-          return nil unless block.is_a?(Hash)
-          return block if tool_result_content_block?(block)
-
-          nil
-        end
-
-        def tool_result_content_block?(block)
-          %w[text json document image].any? do |key|
-            block.key?(key) || block.key?(key.to_sym)
-          end
         end
 
         def format_role(role)
@@ -255,7 +190,7 @@ module RubyLLM
 
         def format_system(messages, caching: nil, automatic_cache_target: nil)
           messages.flat_map do |msg|
-            blocks = Media.format_content(msg.content, used_document_names: @used_document_names)
+            blocks = Media.format_content(msg.content, msg.attachments, used_document_names: @used_document_names)
             cache_boundary?(msg, automatic_cache_target) ? blocks + [converse_cache_block_for(caching)] : blocks
           end
         end
@@ -297,9 +232,10 @@ module RubyLLM
           keys.map { |key| ":#{key}" }.join(', ')
         end
 
-        def format_inference_config(_model, temperature)
+        def format_inference_config(_model, temperature, max_output_tokens = nil)
           config = {}
           config[:temperature] = temperature unless temperature.nil?
+          config[:maxTokens] = max_output_tokens unless max_output_tokens.nil?
           config
         end
 
@@ -331,7 +267,8 @@ module RubyLLM
         end
 
         def format_tool(tool)
-          input_schema = tool.params_schema || RubyLLM::Tool::SchemaDefinition.from_parameters(tool.parameters)&.json_schema
+          input_schema = tool.parameters_schema ||
+                         RubyLLM::Tool::SchemaDefinition.from_parameters(tool.declared_parameters)&.json_schema
 
           tool_spec = {
             toolSpec: {
@@ -343,9 +280,9 @@ module RubyLLM
             }
           }
 
-          return tool_spec if tool.provider_params.empty?
+          return tool_spec if tool.provider_options.empty?
 
-          RubyLLM::Utils.deep_merge(tool_spec, tool.provider_params)
+          RubyLLM::Utils.deep_merge(tool_spec, tool.provider_options)
         end
 
         def format_additional_model_request_fields(thinking)

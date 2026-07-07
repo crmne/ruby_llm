@@ -7,8 +7,8 @@ module RubyLLM
       module Chat
         module_function
 
-        def format_content(content)
-          Ollama::Media.format_content(content)
+        def format_content(content, attachments = [])
+          Ollama::Media.format_content(content, attachments)
         end
 
         def format_role(role)

@@ -35,7 +35,7 @@ RSpec.describe RubyLLM::Providers::VertexAI::Anthropic::Batches do
     it 'wraps Anthropic payloads in request rows' do
       request = {
         custom_id: '1',
-        params: {
+        payload: {
           messages: [{ role: 'user', content: 'Hi' }],
           anthropic_version: 'vertex-2023-10-16',
           stream: false
@@ -66,7 +66,7 @@ RSpec.describe RubyLLM::Providers::VertexAI::Anthropic::Batches do
                               {
                                 custom_id: '0',
                                 model: 'claude-haiku-4-5',
-                                params: { messages: [{ role: 'user', content: 'Hi' }] }
+                                payload: { messages: [{ role: 'user', content: 'Hi' }] }
                               }
                             ])
 
@@ -80,7 +80,7 @@ RSpec.describe RubyLLM::Providers::VertexAI::Anthropic::Batches do
       allow(config).to receive(:vertexai_location).and_return('global')
 
       expect do
-        protocol.create_batch([{ custom_id: '0', model: 'claude-haiku-4-5', params: { messages: [] } }])
+        protocol.create_batch([{ custom_id: '0', model: 'claude-haiku-4-5', payload: { messages: [] } }])
       end.to raise_error(RubyLLM::ConfigurationError, /regional/)
     end
   end
@@ -100,7 +100,7 @@ RSpec.describe RubyLLM::Providers::VertexAI::Anthropic::Batches do
 
       expect(index).to eq(1)
       expect(message.content).to eq('Hello')
-      expect(message.model_id).to eq('claude-haiku-4-5')
+      expect(message.model).to eq('claude-haiku-4-5')
     end
   end
 end

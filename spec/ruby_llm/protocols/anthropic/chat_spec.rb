@@ -62,39 +62,6 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
       expect(logger).not_to have_received(:warn)
     end
 
-    it 'preserves per-block cache_control on Raw content alongside plain text' do
-      cached_raw = RubyLLM::Protocols::Anthropic::Content.new(
-        'Cached prefix.',
-        cache_control: { type: 'ephemeral' }
-      )
-      cached_msg = RubyLLM::Message.new(role: :system, content: cached_raw)
-      plain_msg = RubyLLM::Message.new(role: :system, content: 'Dynamic suffix.')
-
-      blocks = described_class.build_system_content([cached_msg, plain_msg])
-
-      expect(blocks).to eq(
-        [
-          { type: 'text', text: 'Cached prefix.', cache_control: { type: 'ephemeral' } },
-          { type: 'text', text: 'Dynamic suffix.' }
-        ]
-      )
-    end
-
-    it 'flattens mixed Raw-wrapped and plain string content into a single array' do
-      raw = RubyLLM::Content::Raw.new([{ type: 'text', text: 'Raw block.' }])
-      raw_msg = RubyLLM::Message.new(role: :system, content: raw)
-      plain_msg = RubyLLM::Message.new(role: :system, content: 'Plain block.')
-
-      blocks = described_class.build_system_content([raw_msg, plain_msg])
-
-      expect(blocks).to eq(
-        [
-          { type: 'text', text: 'Raw block.' },
-          { type: 'text', text: 'Plain block.' }
-        ]
-      )
-    end
-
     it 'adds cache_control to a system message marked as a cache boundary' do
       msg = RubyLLM::Message.new(role: :system, content: 'Stable instructions').cache_until_here!
 
@@ -121,7 +88,7 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
   end
 
   describe '.format_message' do
-    it 'formats Content attachments before tool calls' do
+    it 'formats attachments before tool calls' do
       text_path = File.expand_path('../../../fixtures/ruby.txt', __dir__)
       tool_calls = {
         'tool_123' => RubyLLM::ToolCall.new(
@@ -132,7 +99,8 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
       }
       message = RubyLLM::Message.new(
         role: :assistant,
-        content: RubyLLM::Content.new('Read this before calling the tool', text_path),
+        content: 'Read this before calling the tool',
+        attachments: [text_path],
         tool_calls: tool_calls
       )
 
@@ -163,29 +131,7 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
   end
 
   describe '.render_payload' do
-    let(:model) { instance_double(RubyLLM::Model, id: 'claude-sonnet-4-5', max_tokens: nil) }
-
-    it 'embeds raw system content blocks unchanged' do
-      system_raw = RubyLLM::Protocols::Anthropic::Content.new(
-        'avoid greetings',
-        cache_control: { type: 'ephemeral' }
-      )
-
-      system_message = RubyLLM::Message.new(role: :system, content: system_raw)
-      user_message = RubyLLM::Message.new(role: :user, content: 'Hello there')
-
-      payload = described_class.render_payload(
-        [system_message, user_message],
-        tools: {},
-        temperature: nil,
-        model: model,
-        stream: false,
-        schema: nil
-      )
-
-      expect(payload[:system]).to eq(system_raw.value)
-      expect(payload[:messages].first[:content]).to eq([{ type: 'text', text: 'Hello there' }])
-    end
+    let(:model) { instance_double(RubyLLM::Model, id: 'claude-sonnet-4-5', max_output_tokens: nil) }
 
     it 'adds top-level automatic cache_control when caching is enabled without explicit boundaries' do
       payload = described_class.render_payload(
@@ -481,8 +427,8 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
 
       expect(message.input_tokens).to eq(42)
       expect(message.output_tokens).to eq(5)
-      expect(message.cached_tokens).to eq(21)
-      expect(message.cache_creation_tokens).to eq(7)
+      expect(message.cache_read_tokens).to eq(21)
+      expect(message.cache_write_tokens).to eq(7)
     end
   end
 end

@@ -106,14 +106,6 @@ module RubyLLM
           embedding_ada
         ].freeze
 
-        def supports_tool_choice?(_model_id)
-          true
-        end
-
-        def supports_tool_parallel_control?(_model_id)
-          true
-        end
-
         def context_window_for(model_id)
           family = model_family(model_id)
           return nil if NIL_LIMIT_FAMILIES.include?(family)
@@ -149,7 +141,7 @@ module RubyLLM
 
         def critical_capabilities_for(model_id)
           capabilities = []
-          capabilities << 'function_calling' if supports_functions?(model_id)
+          capabilities.push('function_calling', 'tool_choice', 'parallel_tool_calls') if supports_functions?(model_id)
           capabilities << 'structured_output' if supports_structured_output?(model_id)
           capabilities << 'vision' if supports_vision?(model_id)
           capabilities << 'reasoning' if model_id.match?(/o\d|gpt-5|codex/)

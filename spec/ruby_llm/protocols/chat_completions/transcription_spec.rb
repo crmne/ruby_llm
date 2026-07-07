@@ -3,6 +3,56 @@
 require 'spec_helper'
 
 RSpec.describe RubyLLM::Protocols::ChatCompletions::Transcription do
+  describe '.render_transcription_payload' do
+    it 'defaults diarize models to diarized_json with auto chunking' do
+      payload = described_class.render_transcription_payload(
+        'file-part', model: 'gpt-4o-transcribe-diarize', language: nil
+      )
+
+      expect(payload).to eq(
+        model: 'gpt-4o-transcribe-diarize',
+        file: 'file-part',
+        chunking_strategy: 'auto',
+        response_format: 'diarized_json'
+      )
+    end
+
+    it 'sets no defaults for other models' do
+      payload = described_class.render_transcription_payload('file-part', model: 'whisper-1', language: 'en')
+
+      expect(payload).to eq(model: 'whisper-1', file: 'file-part', language: 'en')
+    end
+
+    it 'maps format to response_format' do
+      payload = described_class.render_transcription_payload(
+        'file-part', model: 'whisper-1', language: nil, format: 'verbose_json'
+      )
+
+      expect(payload[:response_format]).to eq('verbose_json')
+    end
+
+    it 'maps speaker names and references to the known speaker fields' do
+      reference = File.expand_path('../../../fixtures/ruby.wav', __dir__)
+      payload = described_class.render_transcription_payload(
+        'file-part', model: 'gpt-4o-transcribe-diarize', language: nil,
+                     speaker_names: ['Alice'], speaker_references: [reference]
+      )
+
+      expect(payload[:known_speaker_names]).to eq(['Alice'])
+      expect(payload[:known_speaker_references].length).to eq(1)
+    end
+
+    it 'merges provider options over rendered defaults' do
+      payload = described_class.render_transcription_payload(
+        'file-part', model: 'gpt-4o-transcribe-diarize', language: nil,
+                     provider_options: { chunking_strategy: { type: 'server_vad' }, response_format: 'json' }
+      )
+
+      expect(payload[:chunking_strategy]).to eq(type: 'server_vad')
+      expect(payload[:response_format]).to eq('json')
+    end
+  end
+
   describe '.parse_transcription_response' do
     it 'preserves word-level timestamp data from verbose transcription responses' do
       words = [

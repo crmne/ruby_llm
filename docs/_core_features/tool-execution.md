@@ -33,9 +33,16 @@ By default RubyLLM lets the model decide when to call tools and runs them sequen
 
 ## Tool Call Controls
 
-Control tool behavior with two options:
+`with_tools` sets which tools the model may call. `with_tool_options` controls how it uses them, with two options:
 - `choice` controls which tools the model is allowed/required to use.
 - `calls` controls how many tool calls can appear in one assistant response.
+
+The two concerns are separate, so you can change either without touching the other:
+
+```ruby
+chat.with_tools(Weather, Calculator)
+chat.with_tool_options(choice: :required, calls: :one)
+```
 
 ### Tool Choice (`choice`)
 
@@ -43,17 +50,17 @@ Use `choice` to control whether the model can call tools and which one it can ca
 
 ```ruby
 # Model decides if a tool is needed
-chat.with_tools(Weather, Calculator, choice: :auto)
+chat.with_tools(Weather, Calculator).with_tool_options(choice: :auto)
 
 # Model must call a tool
-chat.with_tools(Weather, Calculator, choice: :required)
+chat.with_tools(Weather, Calculator).with_tool_options(choice: :required)
 
 # Disable tool calls
-chat.with_tools(Weather, Calculator, choice: :none)
+chat.with_tools(Weather, Calculator).with_tool_options(choice: :none)
 
 # Force one specific tool (symbol or class)
-chat.with_tools(Weather, Calculator, choice: :weather)
-chat.with_tools(Weather, Calculator, choice: Weather)
+chat.with_tools(Weather, Calculator).with_tool_options(choice: :weather)
+chat.with_tools(Weather, Calculator).with_tool_options(choice: Weather)
 ```
 
 Valid values:
@@ -73,11 +80,11 @@ Valid values:
 Use `calls` to control how many tool calls the model may return in a single assistant response.
 
 ```ruby
-chat.with_tools(Weather, Calculator, calls: :many)
+chat.with_tools(Weather, Calculator).with_tool_options(calls: :many)
 
-chat.with_tools(Weather, Calculator, calls: :one)
+chat.with_tools(Weather, Calculator).with_tool_options(calls: :one)
 # equivalent:
-chat.with_tools(Weather, Calculator, calls: 1)
+chat.with_tools(Weather, Calculator).with_tool_options(calls: 1)
 ```
 
 Valid values:
@@ -95,14 +102,14 @@ If `calls` is not provided, RubyLLM uses provider/model defaults, which are usua
 When a model returns multiple tool calls in one response, RubyLLM executes them sequentially by default. For I/O-bound tools, opt in to concurrent execution:
 
 ```ruby
-chat.with_tools(Weather, StockPrice, Currency, concurrency: true)
+chat.with_tools(Weather, StockPrice, Currency).with_tool_options(concurrency: true)
 ```
 
 `concurrency: true` uses Ruby threads and requires no extra dependencies. You can also choose a mode explicitly:
 
 ```ruby
-chat.with_tools(Weather, StockPrice, Currency, concurrency: :threads)
-chat.with_tools(Weather, StockPrice, Currency, concurrency: :fibers)
+chat.with_tools(Weather, StockPrice, Currency).with_tool_options(concurrency: :threads)
+chat.with_tools(Weather, StockPrice, Currency).with_tool_options(concurrency: :fibers)
 ```
 
 The `:fibers` mode uses the optional `async` gem:
@@ -124,15 +131,22 @@ Use `:threads`, `:fibers`, `true`, or `false`.
 Override it per chat when needed:
 
 ```ruby
-chat.with_tools(Weather, StockPrice, concurrency: false)
+chat.with_tool_options(concurrency: false)
+```
+
+Call `without_tools` to clear the attached tool list. It leaves the options set with `with_tool_options` in place; call `without_tool_options` to reset `choice`, `calls`, and `concurrency`:
+
+```ruby
+chat.without_tools         # forget the tools, keep the options
+chat.without_tool_options  # reset choice, calls, and concurrency
 ```
 
 Rails chat records use the same setting and override:
 
 ```ruby
-chat_record.with_tools(Weather, StockPrice, concurrency: false)
-chat_record.with_tools(Weather, StockPrice, concurrency: :threads)
-chat_record.with_tools(Weather, StockPrice, concurrency: :fibers)
+chat_record.with_tools(Weather, StockPrice).with_tool_options(concurrency: false)
+chat_record.with_tools(Weather, StockPrice).with_tool_options(concurrency: :threads)
+chat_record.with_tools(Weather, StockPrice).with_tool_options(concurrency: :fibers)
 ```
 
 With concurrency enabled, tool results are added back to the conversation as each tool finishes. RubyLLM waits
@@ -148,7 +162,7 @@ You can monitor tool execution using additive callbacks to track when tools are 
 
 ```ruby
 chat = RubyLLM.chat(model: '{{ site.models.openai_tools }}')
-      .with_tool(Weather)
+      .with_tools(Weather)
       .before_tool_call do |tool_call|
         puts "Calling tool: #{tool_call.name}"
         puts "Arguments: #{tool_call.arguments}"
@@ -179,7 +193,7 @@ call_count = 0
 max_calls = 10
 
 chat = RubyLLM.chat(model: '{{ site.models.openai_tools }}')
-      .with_tool(Weather)
+      .with_tools(Weather)
       .before_tool_call do |tool_call|
         call_count += 1
         if call_count > max_calls

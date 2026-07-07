@@ -16,6 +16,12 @@ module RubyLLM
           "#{@provider.model_path(@model.id)}:streamGenerateContent?alt=sse"
         end
 
+        def images_url(with: nil, mask: nil) # rubocop:disable Lint/UnusedMethodArgument
+          id = model_id(@model)
+
+          "#{@provider.model_path(id)}:#{image_endpoint_action(id)}"
+        end
+
         private
 
         def transcription_url(model)

@@ -128,13 +128,15 @@ ffmpeg -f s16le -ar 24000 -ac 1 -i out.pcm out.wav
 
 ## Style
 
-Some providers accept extra speech controls. OpenAI supports `instructions:` and `speed:`:
+`RubyLLM.speak` keeps the options every provider understands as keywords: `model:`, `voice:`, and `format:`. Provider-specific speech controls go in `provider_options:`, a hash of options in the provider's own request vocabulary that RubyLLM merges into the request as-is. OpenAI supports `instructions:` and `speed:`:
 
 ```ruby
 RubyLLM.speak(
   "The build is green.",
-  instructions: "Speak with calm confidence.",
-  speed: 1.1
+  provider_options: {
+    instructions: "Speak with calm confidence.",
+    speed: 1.1
+  }
 )
 ```
 

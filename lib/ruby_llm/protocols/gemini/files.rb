@@ -6,7 +6,7 @@ module RubyLLM
       # Gemini Files API.
       class Files < UploadedFile::Protocol
         # rubocop:disable Lint/UnusedMethodArgument, Metrics/ParameterLists
-        def upload(file, filename: nil, display_name: nil, purpose: nil, expires_after: nil, expiry: nil,
+        def upload(file, filename: nil, display_name: nil, purpose: nil, expires_in: nil,
                    visibility: nil, uri: nil, content_type: nil)
           attachment = file_attachment(file, filename:)
           upload_url = start_resumable_upload(attachment, display_name: display_name || attachment.filename)

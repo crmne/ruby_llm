@@ -32,11 +32,11 @@ After reading this guide, you will know:
 
 When building applications, you often need AI responses in a specific format for parsing and processing. RubyLLM provides two approaches: JSON mode for valid JSON output, and structured output for guaranteed schema compliance.
 
-JSON mode (using `with_params(response_format: { type: 'json_object' })`) guarantees valid JSON but not any specific structure. Structured output (`with_schema`) guarantees the response matches your exact schema with required fields and types. Use structured output when you need predictable, validated responses.
+JSON mode (using `with_provider_options(response_format: { type: 'json_object' })`) guarantees valid JSON but not any specific structure. Structured output (`with_schema`) guarantees the response matches your exact schema with required fields and types. Use structured output when you need predictable, validated responses.
 {: .note }
 
 ```ruby
-chat = RubyLLM.chat.with_params(response_format: { type: 'json_object' })
+chat = RubyLLM.chat.with_provider_options(response_format: { type: 'json_object' })
 response = chat.ask("List 3 programming languages with their year created. Return as JSON.")
 
 class LanguagesSchema < RubyLLM::Schema
@@ -73,8 +73,8 @@ end
 chat = RubyLLM.chat
 response = chat.with_schema(PersonSchema).ask("Generate a person named Alice who is 30 years old")
 
-puts response.content # => {"name" => "Alice", "age" => 30}
-puts response.content.class # => Hash
+puts response.parsed # => {"name" => "Alice", "age" => 30}
+puts response.content # => '{"name":"Alice","age":30}'
 ```
 
 RubyLLM::Schema classes automatically use their class name (e.g., `PersonSchema`) as the schema name in API requests, which can help the model better understand the expected output structure.
@@ -102,7 +102,7 @@ person_schema = {
 chat = RubyLLM.chat
 response = chat.with_schema(person_schema).ask("Generate a person who likes Ruby")
 
-puts response.content
+puts response.parsed
 # => {"name" => "Bob", "age" => 25, "hobbies" => ["Ruby programming", "Open source"]}
 ```
 
@@ -160,7 +160,7 @@ end
 chat = RubyLLM.chat
 response = chat.with_schema(CompanySchema).ask("Generate a small tech startup")
 
-response.content["employees"].each do |employee|
+response.parsed["employees"].each do |employee|
   puts "#{employee['name']} - #{employee['role']}"
 end
 ```
@@ -191,7 +191,7 @@ chat.with_schema(PersonSchema)
 person = chat.ask("Generate a person")
 
 # Remove the schema for free-form responses
-chat.with_schema(nil)
+chat.without_schema
 analysis = chat.ask("Tell me about this person's potential career paths")
 
 class CareerPlanSchema < RubyLLM::Schema

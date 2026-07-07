@@ -59,7 +59,7 @@ Tools allow AI models to call Ruby code during conversations. This powerful feat
 
 ```ruby
 class Calculator < RubyLLM::Tool
-  desc "Performs basic arithmetic"
+  description "Performs basic arithmetic"
 
   def execute(expression:)
     { result: eval(expression) }
@@ -119,7 +119,7 @@ response = RubyLLM.chat.ask("Hello")
 
 chat = RubyLLM.chat(model: "{{ site.models.default_chat }}", temperature: 0.2)
   .with_instructions("You are a helpful assistant")
-  .with_tool(DatabaseQuery)
+  .with_tools(DatabaseQuery)
   .with_schema(ResponseFormat)
 ```
 
@@ -154,7 +154,7 @@ chat = RubyLLM.chat(
 
 Some services expose more than one API. A provider registers each protocol under a name with the `protocol` macro and routes each model to the right one through the `protocol_for` hook. OpenAI registers both `:responses` and `:chat_completions`, defaulting to Responses but sending audio, realtime, and search-preview models to Chat Completions. Vertex AI registers four protocols and routes by model ID.
 
-You can force a specific protocol per chat with `with_protocol`, or globally with the `<provider>_protocol` configuration option that every provider exposes:
+You can force a specific protocol per chat with the `protocol:` model option, or globally with the `<provider>_protocol` configuration option that every provider exposes:
 
 ```ruby
 RubyLLM.configure do |config|
@@ -168,9 +168,9 @@ Different models have different capabilities. Some support vision, others suppor
 
 ```ruby
 model_info = RubyLLM.models.find("{{ site.models.openai_tools }}")
-model_info.capabilities       # => ["function_calling", "streaming", "vision", "structured_output", ...]
-model_info.supports_vision?   # => true
-model_info.function_calling?  # => true
+model_info.capabilities          # => ["function_calling", "streaming", "vision", "structured_output", ...]
+model_info.supports?(:vision)    # => true
+model_info.supports?(:function_calling)  # => true
 ```
 
 ### Response Normalization

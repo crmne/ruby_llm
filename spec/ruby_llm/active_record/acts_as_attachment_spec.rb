@@ -61,8 +61,8 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       )
 
       llm_message = message.to_llm
-      expect(llm_message.content).to be_a(RubyLLM::Content)
-      expect(llm_message.content.attachments.first.mime_type).to eq('image/png')
+      expect(llm_message.content).to eq('Check this out')
+      expect(llm_message.attachments.first.mime_type).to eq('image/png')
     end
 
     it 'handles multiple attachments' do
@@ -112,18 +112,18 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       llm_user_message = captured_messages.find { |message| message.role == :user }
 
       expect(user_message.attachments.count).to eq(1)
-      expect(llm_user_message.content.attachments.first.filename).to eq(image_upload.original_filename)
-      expect(llm_user_message.content.attachments.first.content).to eq(File.binread(image_path))
+      expect(llm_user_message.attachments.first.filename).to eq(image_upload.original_filename)
+      expect(llm_user_message.attachments.first.content).to eq(File.binread(image_path))
       expect(response.content).to eq('I can see it')
     end
 
     it 'persists Gemini inline image responses as ActiveStorage attachments' do
       chat = Chat.create!(model: 'gemini-2.5-flash-image')
-                 .with_params(generationConfig: { responseModalities: ['image'] })
+                 .with_provider_options(generationConfig: { responseModalities: ['image'] })
       image_bytes = File.binread(image_path)
 
       allow_any_instance_of(RubyLLM::Providers::Gemini).to receive(:complete) do |_provider, *_args, **_kwargs| # rubocop:disable RSpec/AnyInstance
-        content = RubyLLM::Protocols::Gemini.allocate.send(
+        content, attachments = RubyLLM::Protocols::Gemini.allocate.send(
           :build_response_content,
           [
             {
@@ -135,29 +135,28 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
           ]
         )
 
-        RubyLLM::Message.new(role: :assistant, content:)
+        RubyLLM::Message.new(role: :assistant, content:, attachments:)
       end
 
       response = nil
       expect { response = chat.ask('A cute puppy', with: [image_path]) }.not_to raise_error
 
       assistant_message = chat.messages.where(role: 'assistant').last
-      expect(response.content).to be_a(RubyLLM::Content)
-      expect(response.content.attachments.first.content).to eq(image_bytes)
+      expect(response.content).to be_nil
+      expect(response.attachments.first.content).to eq(image_bytes)
       expect(assistant_message.content).to be_nil
-      expect(assistant_message.content_raw).to be_nil
       expect(assistant_message.attachments.count).to eq(1)
       expect(assistant_message.attachments.first.filename.to_s).to eq('gemini_attachment_1.png')
       expect(assistant_message.attachments.first.blob.content_type).to eq('image/png')
       expect(assistant_message.attachments.first.download).to eq(image_bytes)
     end
 
-    it 'ignores leading blank multipart attachment entries for create_user_message' do
+    it 'ignores leading blank multipart attachment entries for add_message' do
       chat = Chat.create!(model: model)
       image_upload = uploaded_file(image_path, 'image/png')
 
       expect do
-        chat.create_user_message('What do you see?', with: ['', image_upload])
+        chat.add_message(role: :user, content: 'What do you see?', attachments: ['', image_upload])
       end.not_to raise_error
 
       user_message = chat.messages.find_by(role: 'user')
@@ -174,7 +173,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       )
 
       expect do
-        chat.create_user_message('What do you see?', with: existing_blob)
+        chat.add_message(role: :user, content: 'What do you see?', attachments: existing_blob)
       end.not_to change(ActiveStorage::Blob, :count)
 
       user_message = chat.messages.find_by(role: 'user')
@@ -192,7 +191,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       )
 
       expect do
-        chat.create_user_message('What do you see?', with: host.file)
+        chat.add_message(role: :user, content: 'What do you see?', attachments: host.file)
       end.not_to change(ActiveStorage::Blob, :count)
 
       user_message = chat.messages.find_by(role: 'user')
@@ -210,7 +209,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       blob_ids = host.files.blobs.map(&:id)
 
       expect do
-        chat.create_user_message('Analyze these', with: host.files)
+        chat.add_message(role: :user, content: 'Analyze these', attachments: host.files)
       end.not_to change(ActiveStorage::Blob, :count)
 
       user_message = chat.messages.find_by(role: 'user')
@@ -233,7 +232,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       )
 
       llm_message = message.to_llm
-      attachment = llm_message.content.attachments.first
+      attachment = llm_message.attachments.first
       expect(attachment.type).to eq(:image)
     end
 
@@ -249,7 +248,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       )
 
       llm_message = message.to_llm
-      attachment = llm_message.content.attachments.first
+      attachment = llm_message.attachments.first
       expect(attachment.type).to eq(:video)
     end
 
@@ -264,7 +263,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       )
 
       llm_message = message.to_llm
-      attachment = llm_message.content.attachments.first
+      attachment = llm_message.attachments.first
       expect(attachment.type).to eq(:pdf)
     end
   end

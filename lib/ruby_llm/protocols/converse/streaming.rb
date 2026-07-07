@@ -139,7 +139,7 @@ module RubyLLM
 
           Chunk.new(
             role: :assistant,
-            model_id: event['modelId'] || @model&.id,
+            model: event['modelId'] || @model&.id,
             content: extract_content_delta(event),
             thinking: Thinking.build(
               text: extract_thinking_delta(event),
@@ -148,8 +148,8 @@ module RubyLLM
             tool_calls: extract_tool_calls(event),
             input_tokens: extract_input_tokens(metadata_usage, usage),
             output_tokens: extract_output_tokens(metadata_usage, usage),
-            cached_tokens: extract_cached_tokens(metadata_usage, usage),
-            cache_creation_tokens: extract_cache_creation_tokens(metadata_usage, usage),
+            cache_read_tokens: extract_cache_read_tokens(metadata_usage, usage),
+            cache_write_tokens: extract_cache_write_tokens(metadata_usage, usage),
             thinking_tokens: extract_reasoning_tokens(metadata_usage, usage),
             finish_reason: extract_finish_reason(event)
           )
@@ -175,11 +175,11 @@ module RubyLLM
           metadata_usage['outputTokens'] || usage['outputTokens']
         end
 
-        def extract_cached_tokens(metadata_usage, usage)
+        def extract_cache_read_tokens(metadata_usage, usage)
           metadata_usage['cacheReadInputTokens'] || usage['cacheReadInputTokens']
         end
 
-        def extract_cache_creation_tokens(metadata_usage, usage)
+        def extract_cache_write_tokens(metadata_usage, usage)
           metadata_usage['cacheWriteInputTokens'] || usage['cacheWriteInputTokens']
         end
 

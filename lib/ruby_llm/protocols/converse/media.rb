@@ -7,31 +7,14 @@ module RubyLLM
       module Media
         module_function
 
-        def format_content(content, used_document_names: nil)
-          return [] if empty_content?(content)
-          return format_raw_content(content) if content.is_a?(RubyLLM::Content::Raw)
-          return [{ text: content.to_json }] if content.is_a?(Hash) || content.is_a?(Array)
-          return [{ text: content }] unless content.is_a?(RubyLLM::Content)
-
-          format_content_object(content, used_document_names || {})
-        end
-
-        def empty_content?(content)
-          content.nil? || (content.respond_to?(:empty?) && content.empty?)
-        end
-
-        def format_content_object(content, used_document_names)
+        def format_content(content, attachments = [], used_document_names: nil)
+          used_document_names ||= {}
           blocks = []
-          blocks << { text: content.text } if content.text
-          content.attachments.each do |attachment|
+          blocks << { text: content } unless content.nil? || content.empty?
+          attachments.each do |attachment|
             blocks << format_attachment(attachment, used_document_names:)
           end
           blocks
-        end
-
-        def format_raw_content(content)
-          value = content.value
-          value.is_a?(Array) ? value : [value]
         end
 
         def format_attachment(attachment, used_document_names:)

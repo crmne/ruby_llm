@@ -5,11 +5,10 @@ require 'spec_helper'
 RSpec.describe RubyLLM::Protocols::Gemini::Media do
   describe '.format_content' do
     it 'raises a clear error for unsupported rich documents' do
-      content = RubyLLM::Content.new('Summarize this file')
-      content.add_attachment(StringIO.new('docx bytes'), filename: 'proposal.docx')
+      attachment = RubyLLM::Attachment.new(StringIO.new('docx bytes'), filename: 'proposal.docx')
 
       expect do
-        described_class.format_content(content)
+        described_class.format_content('Summarize this file', [attachment])
       end.to raise_error(
         RubyLLM::UnsupportedAttachmentError,
         %r{Unsupported attachment type: application/vnd.openxmlformats-officedocument.wordprocessingml.document}
@@ -17,10 +16,9 @@ RSpec.describe RubyLLM::Protocols::Gemini::Media do
     end
 
     it 'passes PDFs through as native inline data' do
-      content = RubyLLM::Content.new('Summarize this file')
-      content.add_attachment(StringIO.new('pdf bytes'), filename: 'proposal.pdf')
+      attachment = RubyLLM::Attachment.new(StringIO.new('pdf bytes'), filename: 'proposal.pdf')
 
-      parts = described_class.format_content(content)
+      parts = described_class.format_content('Summarize this file', [attachment])
 
       expect(parts.first).to eq(text: 'Summarize this file')
       expect(parts.second).to eq(
@@ -32,10 +30,9 @@ RSpec.describe RubyLLM::Protocols::Gemini::Media do
     end
 
     it 'keeps text files as text parts' do
-      content = RubyLLM::Content.new('Read this file')
-      content.add_attachment(StringIO.new('hello'), filename: 'note.txt')
+      attachment = RubyLLM::Attachment.new(StringIO.new('hello'), filename: 'note.txt')
 
-      parts = described_class.format_content(content)
+      parts = described_class.format_content('Read this file', [attachment])
 
       expect(parts.second).to eq(
         text: "<file name='note.txt' mime_type='text/plain'>hello</file>"
@@ -49,9 +46,7 @@ RSpec.describe RubyLLM::Protocols::Gemini::Media do
         mime_type: 'video/mp4',
         uri: 'https://generativelanguage.googleapis.com/v1beta/files/abc'
       )
-      content = RubyLLM::Content.new('Watch this', file)
-
-      parts = described_class.format_content(content)
+      parts = described_class.format_content('Watch this', RubyLLM::Attachment.wrap(file))
 
       expect(parts.second).to eq(
         file_data: {
@@ -63,11 +58,11 @@ RSpec.describe RubyLLM::Protocols::Gemini::Media do
   end
 
   describe '#build_response_content' do
-    it 'parses inline image responses as content attachments' do
+    it 'parses inline image responses as a text and attachments pair' do
       provider = RubyLLM::Protocols::Gemini.allocate
       image_bytes = "\x89PNG\r\n\x1A\n".b
 
-      content = provider.build_response_content(
+      text, attachments = provider.build_response_content(
         [
           {
             'inlineData' => {
@@ -78,15 +73,17 @@ RSpec.describe RubyLLM::Protocols::Gemini::Media do
         ]
       )
 
-      expect(content).to be_a(RubyLLM::Content)
-      expect(content.text).to be_nil
-      expect(content.attachments.size).to eq(1)
+      expect(text).to be_nil
+      expect(attachments.size).to eq(1)
 
-      attachment = content.attachments.first
+      attachment = attachments.first
       expect(attachment.filename).to eq('gemini_attachment_1.png')
       expect(attachment.mime_type).to eq('image/png')
       expect(attachment.content).to eq(image_bytes)
-      expect(RubyLLM::Message.new(role: :assistant, content: content).content).to be_a(RubyLLM::Content)
+
+      message = RubyLLM::Message.new(role: :assistant, content: text, attachments: attachments)
+      expect(message.content).to be_nil
+      expect(message.attachments).to eq(attachments)
     end
   end
 end

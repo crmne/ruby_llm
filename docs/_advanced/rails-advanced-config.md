@@ -130,9 +130,9 @@ Existing apps: run the latest upgrade generator after updating RubyLLM so messag
 
 See [Prompt Caching]({% link _core_features/prompt-caching.md %}) for provider behavior.
 
-## Working with Raw Provider Payloads
+## Working with Provider-Specific Payloads
 
-For provider-specific payloads that RubyLLM should not reshape, use `RubyLLM::Content::Raw`. The `content_raw` column stores those blocks alongside plain text content, and `acts_as_message` reconstructs the original `Content::Raw` automatically.
+Message content is always text: what you persist is the conversation, not a provider's wire format. When a request needs provider-specific blocks RubyLLM has not wrapped, use a [`before_request` hook]({% link _core_features/chat-request-control.md %}#request-hooks); it adjusts the rendered payload per request and stores nothing.
 
 ## Fiber-Safe ActiveRecord Connections for Async/Fiber Workloads
 {: .d-inline-block }

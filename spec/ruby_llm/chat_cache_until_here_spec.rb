@@ -12,6 +12,12 @@ RSpec.describe RubyLLM::Chat do
       expect(chat.caching).to eq(key: 'repo:ruby_llm', retention: '24h')
     end
 
+    it 'enables provider-default prompt caching without options' do
+      chat = RubyLLM.chat.with_caching
+
+      expect(chat.caching).to eq({})
+    end
+
     it 'replaces previous caching options' do
       chat = RubyLLM.chat.with_caching(key: 'repo:ruby_llm', retention: '24h')
 
@@ -45,11 +51,23 @@ RSpec.describe RubyLLM::Chat do
       expect { chat.render }.to raise_error(ArgumentError, /Anthropic prompt caching accepts :ttl/)
     end
 
-    it 'clears caching options explicitly' do
+    it 'clears caching options with without_caching' do
       chat = RubyLLM.chat.with_caching(ttl: '1h')
 
       expect(chat.without_caching).to eq(chat)
       expect(chat.caching).to be_nil
+    end
+
+    it 'rejects nil, pointing to without_caching' do
+      chat = RubyLLM.chat
+
+      expect { chat.with_caching(nil) }.to raise_error(ArgumentError, /without_caching/)
+    end
+
+    it 'rejects combining nil with caching options' do
+      chat = RubyLLM.chat
+
+      expect { chat.with_caching(nil, ttl: '1h') }.to raise_error(ArgumentError)
     end
 
     it 'renders OpenAI prompt cache controls as request params' do

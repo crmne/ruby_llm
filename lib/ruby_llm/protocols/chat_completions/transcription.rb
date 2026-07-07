@@ -11,25 +11,23 @@ module RubyLLM
           'audio/transcriptions'
         end
 
-        # rubocop:disable Lint/UnusedMethodArgument, Metrics/ParameterLists
-        def render_transcription_payload(file_part, model:, language:, params: {}, prompt: nil, temperature: nil,
-                                         response_format: nil, timestamp_granularities: nil, speaker_names: nil,
-                                         speaker_references: nil, chunking_strategy: nil, response_mime_type: nil,
-                                         max_output_tokens: nil, safety_settings: nil)
+        # rubocop:disable Metrics/ParameterLists
+        def render_transcription_payload(file_part, model:, language:, format: nil, speaker_names: nil,
+                                         speaker_references: nil, provider_options: {}, prompt: nil,
+                                         temperature: nil)
           {
             model: model,
             file: file_part,
             language: language,
-            chunking_strategy: resolved_chunking_strategy(model, chunking_strategy),
-            response_format: response_format_for(model, response_format),
+            chunking_strategy: default_chunking_strategy(model),
+            response_format: format || default_response_format(model),
             prompt: prompt,
             temperature: temperature,
-            timestamp_granularities: timestamp_granularities,
             known_speaker_names: speaker_names,
             known_speaker_references: encode_speaker_references(speaker_references)
-          }.compact.merge(params)
+          }.compact.merge(provider_options)
         end
-        # rubocop:enable Lint/UnusedMethodArgument, Metrics/ParameterLists
+        # rubocop:enable Metrics/ParameterLists
 
         def encode_speaker_references(references)
           return nil unless references
@@ -39,23 +37,12 @@ module RubyLLM
           end
         end
 
-        def resolved_chunking_strategy(model, chunking_strategy)
-          return unless supports_chunking_strategy?(model, chunking_strategy)
-
-          chunking_strategy || 'auto'
+        def default_chunking_strategy(model)
+          'auto' if model.include?('diarize')
         end
 
-        def response_format_for(model, response_format)
-          return response_format if response_format
-
+        def default_response_format(model)
           'diarized_json' if model.include?('diarize')
-        end
-
-        def supports_chunking_strategy?(model, chunking_strategy)
-          return false if model.start_with?('whisper')
-          return true if chunking_strategy
-
-          model.include?('diarize')
         end
 
         def parse_transcription_response(response, model:)

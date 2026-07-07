@@ -4,28 +4,16 @@ require 'spec_helper'
 
 RSpec.describe RubyLLM::Protocols::ChatCompletions::Media do
   describe '.format_content' do
-    it 'serializes raw hash payloads to JSON strings' do
-      raw = RubyLLM::Content::Raw.new({ country: 'France' })
+    it 'returns the content string unchanged when there are no attachments' do
+      formatted = described_class.format_content('Hello')
 
-      formatted = described_class.format_content(raw)
-
-      expect(formatted).to eq('{"country":"France"}')
-    end
-
-    it 'passes through raw array payloads without serialization' do
-      payload = [{ type: 'text', text: 'Hello' }]
-      raw = RubyLLM::Content::Raw.new(payload)
-
-      formatted = described_class.format_content(raw)
-
-      expect(formatted).to eq(payload)
+      expect(formatted).to eq('Hello')
     end
 
     it 'formats arbitrary files as file parts when the provider opts in' do
-      content = RubyLLM::Content.new('Summarize this file')
-      content.add_attachment(StringIO.new('docx bytes'), filename: 'proposal.docx')
+      attachment = RubyLLM::Attachment.new(StringIO.new('docx bytes'), filename: 'proposal.docx')
 
-      formatted = described_class.format_content(content, document_attachments: :all)
+      formatted = described_class.format_content('Summarize this file', [attachment], document_attachments: :all)
 
       expect(formatted.second).to eq(
         type: 'file',
@@ -38,9 +26,8 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Media do
 
     it 'formats provider-managed files as file_id parts when file attachments are enabled' do
       file = RubyLLM::UploadedFile.new(id: 'file_123', filename: 'proposal.pdf', mime_type: 'application/pdf')
-      content = RubyLLM::Content.new('Summarize this file', file)
 
-      formatted = described_class.format_content(content)
+      formatted = described_class.format_content('Summarize this file', RubyLLM::Attachment.wrap(file))
 
       expect(formatted.second).to eq(
         type: 'file',
@@ -52,19 +39,18 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Media do
 
     it 'keeps provider-managed file parts disabled when the provider opts out' do
       file = RubyLLM::UploadedFile.new(id: 'file_123', filename: 'proposal.pdf', mime_type: 'application/pdf')
-      content = RubyLLM::Content.new('Summarize this file', file)
 
       expect do
-        described_class.format_content(content, document_attachments: :none)
+        described_class.format_content('Summarize this file', RubyLLM::Attachment.wrap(file),
+                                       document_attachments: :none)
       end.to raise_error(RubyLLM::UnsupportedAttachmentError, %r{application/pdf})
     end
 
     it 'raises an actionable error for arbitrary files unless the provider opts in' do
-      content = RubyLLM::Content.new('Summarize this file')
-      content.add_attachment(StringIO.new('docx bytes'), filename: 'proposal.docx')
+      attachment = RubyLLM::Attachment.new(StringIO.new('docx bytes'), filename: 'proposal.docx')
 
       expect do
-        described_class.format_content(content)
+        described_class.format_content('Summarize this file', [attachment])
       end.to raise_error(
         RubyLLM::UnsupportedAttachmentError,
         %r{Unsupported attachment type: application/vnd.openxmlformats-officedocument.wordprocessingml.document}

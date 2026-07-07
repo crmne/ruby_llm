@@ -87,7 +87,7 @@ RubyLLM.embed(
 )
 ```
 
-RubyLLM includes that value as `payload[:metadata]` on the emitted event. It is not sent to the provider. Use `params:` for provider request fields, and `metadata:` for values your own instrumentation subscribers need.
+RubyLLM includes that value as `payload[:metadata]` on the emitted event. It is not sent to the provider. Use `provider_options:` for provider request fields, and `metadata:` for values your own instrumentation subscribers need.
 
 ## Events
 

@@ -11,21 +11,21 @@ module RubyLLM
           'moderations'
         end
 
-        def render_moderation_payload(input, model:, params: {})
+        def render_moderation_payload(input, model:, provider_options: {})
           {
             model: model,
             input: input
-          }.merge(params)
+          }.merge(provider_options)
         end
 
         def parse_moderation_response(response, model:)
           data = response.body
-          raise Error.new(response, data.dig('error', 'message')) if data.dig('error', 'message')
+          raise Error.new(data.dig('error', 'message'), response:) if data.dig('error', 'message')
 
           RubyLLM::Moderation.new(
             id: data['id'],
             model: model,
-            results: data['results'] || []
+            results: Array(data['results']).map { |result| RubyLLM::Moderation::Result.from_h(result) }
           )
         end
       end

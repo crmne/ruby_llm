@@ -24,11 +24,11 @@ module RubyLLM
       end
 
       def parse_error(response)
-        body = response.body
-        return if body.empty?
+        body = parse_error_body(response)
+        return unless body
 
         # If response is HTML (Perplexity returns HTML for auth errors)
-        if body.include?('<html>') && body.include?('<title>')
+        if body.is_a?(String) && body.include?('<html>') && body.include?('<title>')
           title_match = body.match(%r{<title>(.+?)</title>})
           if title_match
             message = title_match[1]

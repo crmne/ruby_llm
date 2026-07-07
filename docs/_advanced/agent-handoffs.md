@@ -59,7 +59,7 @@ If you would rather the agent decide mid-conversation, give it a single handoff 
 ```ruby
 class Handoff < RubyLLM::Tool
   description "Hand the conversation to the specialist who should answer next"
-  param :specialist, desc: "billing or technical"
+  parameter :specialist, description: "billing or technical"
   def execute(specialist:) = specialist
 end
 

@@ -9,8 +9,9 @@ RSpec.describe RubyLLM::Attachment do
     script = <<~'RUBY'
       require 'ruby_llm'
 
-      content = RubyLLM::Content.new('What is in this file?', 'spec/fixtures/ruby.txt')
-      attachment = content.attachments.first
+      message = RubyLLM::Message.new(role: :user, content: 'What is in this file?',
+                                     attachments: 'spec/fixtures/ruby.txt')
+      attachment = message.attachments.first
       puts "#{attachment.filename},#{attachment.mime_type}"
     RUBY
 

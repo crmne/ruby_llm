@@ -15,6 +15,26 @@ RSpec.describe RubyLLM::Chat do
       expect(chat.with_headers('X-Test' => 'test')).to eq(chat)
     end
 
+    it 'clears headers with without_headers' do
+      chat = RubyLLM.chat.with_headers('X-Test' => 'test')
+
+      chat.without_headers
+
+      expect(chat.headers).to eq({})
+    end
+
+    it 'rejects nil, pointing to without_headers' do
+      chat = RubyLLM.chat
+
+      expect { chat.with_headers(nil) }.to raise_error(ArgumentError, /without_headers/)
+    end
+
+    it 'requires headers' do
+      chat = RubyLLM.chat
+
+      expect { chat.with_headers }.to raise_error(ArgumentError)
+    end
+
     it 'passes headers to provider complete method' do
       chat = RubyLLM.chat
       provider = chat.instance_variable_get(:@provider)
@@ -35,10 +55,10 @@ RSpec.describe RubyLLM::Chat do
       chat = RubyLLM.chat
                     .with_temperature(0.5)
                     .with_headers('X-Test' => 'value')
-                    .with_params(max_tokens: 100)
+                    .with_provider_options(max_tokens: 100)
 
       expect(chat.headers).to eq('X-Test' => 'value')
-      expect(chat.params).to eq(max_tokens: 100)
+      expect(chat.provider_options).to eq(max_tokens: 100)
       expect(chat.instance_variable_get(:@temperature)).to eq(0.5)
     end
 

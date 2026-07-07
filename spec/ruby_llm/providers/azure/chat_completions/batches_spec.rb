@@ -29,8 +29,8 @@ RSpec.describe RubyLLM::Providers::Azure::ChatCompletions::Batches do
   describe '#create_batch' do
     it 'rejects mixed-model batches' do
       requests = [
-        { custom_id: '0', model: 'gpt-5-nano', params: { model: 'gpt-5-nano', messages: [] } },
-        { custom_id: '1', model: 'gpt-5-mini', params: { model: 'gpt-5-mini', messages: [] } }
+        { custom_id: '0', model: 'gpt-5-nano', payload: { model: 'gpt-5-nano', messages: [] } },
+        { custom_id: '1', model: 'gpt-5-mini', payload: { model: 'gpt-5-mini', messages: [] } }
       ]
 
       expect { protocol.create_batch(requests) }.to raise_error(RubyLLM::Error, /one model/)

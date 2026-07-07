@@ -64,6 +64,28 @@ cost.total
 
 If pricing is incomplete for tokens that were used, the affected cost and `cost.total` return `nil`. Cost helpers cover token-priced conversation usage; provider-specific add-ons such as search-query charges remain available in the provider's raw usage payload.
 
+## Recording Costs in Rails
+
+In a Rails app, `cost_for` prices token usage against the model registry's current pricing every time you call it. Persisted messages can freeze the cost instead. When your messages table has the optional `total_cost` and `cost_details` columns (included in new installs and added by the v2.0 upgrade generator), RubyLLM records each assistant message's cost at completion, and `message.cost` returns that recorded value rather than recomputing it. A later `RubyLLM.models.refresh!` that changes registry pricing then leaves historical costs untouched. See [Rails Persistence]({% link _advanced/rails-persistence.md %}#freezing-costs-at-completion) for the columns and query examples.
+
+## Keeping Registry Pricing Fresh
+
+Because recorded costs are frozen at completion, stale registry pricing only affects the cost of new messages, never messages you have already saved. To keep new costs accurate, refresh the registry on a schedule. A daily job is a good default; providers change prices infrequently.
+
+In a Rails app with the database-backed registry, `Model.refresh!` reloads pricing from the provider APIs and writes it to the `models` table:
+
+```ruby
+# lib/tasks/ruby_llm.rake
+namespace :ruby_llm do
+  desc 'Refresh the model registry pricing and capabilities'
+  task refresh_models: :environment do
+    Model.refresh!
+  end
+end
+```
+
+Run `bin/rails ruby_llm:refresh_models` from cron, or schedule the `Model.refresh!` call with your background job framework (GoodJob, Sidekiq, or similar). Without the database registry, call `RubyLLM.models.refresh!` directly. RubyLLM does not refresh the registry on its own; you choose the cadence.
+
 ## Next Steps
 
 *   [Token Usage and Cost]({% link _core_features/chat-tokens.md %}) - how RubyLLM normalizes token counts across providers.

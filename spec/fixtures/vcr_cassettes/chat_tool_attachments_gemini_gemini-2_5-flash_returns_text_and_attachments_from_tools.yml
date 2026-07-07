@@ -1,0 +1,180 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"Use the file_fetch tool,
+        then tell me exactly what the fetched file says."}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"file_fetch","description":"Fetches
+        the requested file","parameters":{"type":"OBJECT","properties":{},"required":[]}}]}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      X-Goog-Api-Key:
+      - "<GEMINI_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      X-Gemini-Service-Tier:
+      - standard
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Fri, 03 Jul 2026 23:31:43 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Server-Timing:
+      - gfet4t7; dur=1516
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "candidates": [
+            {
+              "content": {
+                "parts": [
+                  {
+                    "functionCall": {
+                      "name": "file_fetch",
+                      "args": {}
+                    },
+                    "thoughtSignature": "CtICAQw51sdLqbEFWLEEVrtx6dnW9TosA0UPRoYtUaFa55GpsGBqNu1t6CG+NdPSaj3Ql8EbcUgACczVv4iYgWeUFiMXQ/xbcVnVw7gH/S4xlmGCsdpm5CHAs+h60jJOt95tN/ayQAzvMOkV4SMaWsB9nWxMlX67RxIu8iUzP2KLzp+V8RNmolDIT7JohTTv/zjdlYNU1ff7+D2Xz55U183m1ES+AqbA5FxyWCG8hhBrGRA0Izlqxe/t08fu+hlM8Y0FPg7JCF54296s+vwoq20CHP1EVTqmg2Uh7dpO4A0AbHX2X2+m/GCTxu4es72RdeDly7RTd7v1abaUu6p2zNUj2noIWvU84Vyak/ZKD0iWocMLnFMHyuOgK4bXx0T39cj2bwZ1fzhcJoDAvwbN1erC4cNi0ym4lkPDu06jHB2TPXqZUcpPaTaDhpMvfhAOPq1jAKg="
+                  }
+                ],
+                "role": "model"
+              },
+              "finishReason": "STOP",
+              "index": 0,
+              "finishMessage": "Model generated function call(s)."
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 44,
+            "candidatesTokenCount": 10,
+            "totalTokenCount": 130,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 44
+              }
+            ],
+            "thoughtsTokenCount": 76,
+            "serviceTier": "standard"
+          },
+          "modelVersion": "gemini-2.5-flash",
+          "responseId": "XkZIaqCFMKXTxN8PldL4-A8"
+        }
+  recorded_at: Fri, 03 Jul 2026 23:31:43 GMT
+- request:
+    method: post
+    uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"Use the file_fetch tool,
+        then tell me exactly what the fetched file says."}]},{"role":"model","parts":[{"functionCall":{"name":"file_fetch","args":{}},"thoughtSignature":"CtICAQw51sdLqbEFWLEEVrtx6dnW9TosA0UPRoYtUaFa55GpsGBqNu1t6CG+NdPSaj3Ql8EbcUgACczVv4iYgWeUFiMXQ/xbcVnVw7gH/S4xlmGCsdpm5CHAs+h60jJOt95tN/ayQAzvMOkV4SMaWsB9nWxMlX67RxIu8iUzP2KLzp+V8RNmolDIT7JohTTv/zjdlYNU1ff7+D2Xz55U183m1ES+AqbA5FxyWCG8hhBrGRA0Izlqxe/t08fu+hlM8Y0FPg7JCF54296s+vwoq20CHP1EVTqmg2Uh7dpO4A0AbHX2X2+m/GCTxu4es72RdeDly7RTd7v1abaUu6p2zNUj2noIWvU84Vyak/ZKD0iWocMLnFMHyuOgK4bXx0T39cj2bwZ1fzhcJoDAvwbN1erC4cNi0ym4lkPDu06jHB2TPXqZUcpPaTaDhpMvfhAOPq1jAKg="}]},{"role":"user","parts":[{"functionResponse":{"name":"file_fetch","response":{"name":"file_fetch","content":[{"text":"Fetched
+        the file."}]}}},{"text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
+        is the best.</file>"}]}],"generationConfig":{},"tools":[{"functionDeclarations":[{"name":"file_fetch","description":"Fetches
+        the requested file","parameters":{"type":"OBJECT","properties":{},"required":[]}}]}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      X-Goog-Api-Key:
+      - "<GEMINI_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      X-Gemini-Service-Tier:
+      - standard
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Fri, 03 Jul 2026 23:31:44 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Server-Timing:
+      - gfet4t7; dur=874
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "candidates": [
+            {
+              "content": {
+                "parts": [
+                  {
+                    "text": "\n"
+                  },
+                  {
+                    "text": "The fetched file says: Ruby is the best.",
+                    "thoughtSignature": "CoAEAQw51sfu9BepqkITZLChowknx3NWO7TakApNhkG8VSERHpSfX+CV6E1o5oerdJFrAJCy/Cm4iq0bSv8pEkK3gZ4B0PVtTnqYJ7GJpB8gHbgjpyoKqoTynvSfJ+iyJ7YXFao4KsLjJi+OiCf60rID/4/MXH+t30PDw1GD0tHIyrbJOd2scsx/OBpPV8UBuX5SS6+dJaju+nydfGv7M0f5/yeAFW33YOFPJPtMYIt2/KHVVK6lftoZYXn/8VyXh8JEJ5gMZEeUOvDUpwZ0VHlpRlFsiSPsuRvVTl4VywGJdwldygg9kvN/yqjjlk7S/gcapIUydYe+igbsUnJRLrCbQg3XDdqTlet+zIe56FBnw9dfnkec3NBpPtYxVz17tWx7xhTovrT6x0++2+0fwqQMqPzDfXOM3YywbDKBzMZ5R2RNoM9rZVmaA7dRbzOueFHvw9hs/yU5v3Rgs2cK7xI2oNF31nxzFbEknIDULJI/0oDlt4nbw9uZjuuJ5+ouIqXkBMbNN9FeikwQxBS9n+SSep7D3YjK2KCsL8SSlk8F0kCVtPOB4vp4n+LCYXDXgxgVMi+8bRSfzl8gdRiC6aFyXx183aKLsS3O3ILn4Dv5CKi+uUDTiA4btBfvdwB1592wWxn6SrQEXVn/z9eeD19jj4OLj6VQIC9tJPEiQeGGxLA="
+                  }
+                ],
+                "role": "model"
+              },
+              "finishReason": "STOP",
+              "index": 0
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 106,
+            "candidatesTokenCount": 10,
+            "totalTokenCount": 246,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 106
+              }
+            ],
+            "thoughtsTokenCount": 130,
+            "serviceTier": "standard"
+          },
+          "modelVersion": "gemini-2.5-flash",
+          "responseId": "X0ZIaueXOfy-vdIPo8yIsAk"
+        }
+  recorded_at: Fri, 03 Jul 2026 23:31:44 GMT
+recorded_with: VCR 6.4.0

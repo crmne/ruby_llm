@@ -17,15 +17,16 @@ module RubyLLM
         end
 
         # rubocop:disable Metrics/ParameterLists
-        def render_payload(messages, tools:, temperature:, model:, stream: false,
+        def render_payload(messages, tools:, temperature:, model:, stream: false, max_output_tokens: nil,
                            schema: nil, thinking: nil, citations: false, caching: nil, tool_prefs: nil)
-          warn_unsupported_citations(model) if citations && !model.citations?
+          warn_unsupported_citations(model) if citations && !model.supports?(:citations)
           tool_prefs ||= {}
           system_messages, chat_messages = separate_messages(messages)
           explicit_boundaries = cache_boundaries?(messages)
           system_content = build_system_content(system_messages, caching:)
 
           build_base_payload(chat_messages, model, stream, thinking, citations: citations, caching:).tap do |payload|
+            payload[:max_tokens] = max_output_tokens if max_output_tokens
             add_optional_fields(payload, system_content:, tools:, tool_prefs:, temperature:, schema:)
             payload[:cache_control] = prompt_cache_control(caching) if caching && !explicit_boundaries
           end
@@ -50,7 +51,7 @@ module RubyLLM
           # (each optionally with cache_control); each :system message becomes its
           # own block in the resulting array.
           system_messages.flat_map do |msg|
-            blocks = content_blocks_for(msg.content)
+            blocks = Media.format_content(msg.content, msg.attachments).dup
             msg.cache_until_here? ? inject_cache_control(blocks, caching:) : blocks
           end
         end
@@ -62,7 +63,7 @@ module RubyLLM
               format_message(msg, thinking: thinking, citations: citations, caching:)
             end,
             stream: stream,
-            max_tokens: model.max_tokens || 4096
+            max_tokens: model.max_output_tokens || 4096
           }
 
           add_thinking_fields(payload, thinking, model)
@@ -103,10 +104,6 @@ module RubyLLM
           normalized.delete(:strict)
           normalized.delete('strict')
           { format: { type: 'json_schema', schema: normalized } }
-        end
-
-        def parse_completion_response(response)
-          parse_completion_body(response.body, raw: response)
         end
 
         def parse_completion_body(data, raw:)
@@ -189,11 +186,11 @@ module RubyLLM
             tool_calls: Tools.parse_tool_calls(tool_use_blocks),
             input_tokens: usage['input_tokens'],
             output_tokens: usage['output_tokens'],
-            cached_tokens: extract_cached_tokens(data),
-            cache_creation_tokens: extract_cache_creation_tokens(data),
+            cache_read_tokens: extract_cache_read_tokens(data),
+            cache_write_tokens: extract_cache_write_tokens(data),
             thinking_tokens: thinking_tokens,
             finish_reason: data['stop_reason'],
-            model_id: data['model'],
+            model: data['model'],
             raw: raw
           )
         end
@@ -218,7 +215,7 @@ module RubyLLM
             content_blocks << thinking_block if thinking_block
           end
 
-          append_formatted_content(content_blocks, msg.content, citations: citations)
+          append_formatted_content(content_blocks, msg, citations: citations)
           inject_cache_control(content_blocks, caching:) if msg.cache_until_here?
 
           {
@@ -228,17 +225,8 @@ module RubyLLM
         end
 
         def format_tool_call_with_thinking(msg, thinking_enabled, caching: nil)
-          if msg.content.is_a?(RubyLLM::Content::Raw)
-            content_blocks = msg.content.value
-            content_blocks = content_blocks.is_a?(Array) ? content_blocks.dup : [content_blocks]
-            content_blocks = prepend_thinking_block(content_blocks, msg, thinking_enabled)
-            inject_cache_control(content_blocks, caching:) if msg.cache_until_here?
-
-            return { role: 'assistant', content: content_blocks }
-          end
-
           content_blocks = prepend_thinking_block([], msg, thinking_enabled)
-          append_formatted_content(content_blocks, msg.content) unless msg.content.nil? || msg.content.empty?
+          append_formatted_content(content_blocks, msg) unless msg.content.nil? || msg.content.empty?
 
           msg.tool_calls.each_value do |tool_call|
             content_blocks << {
@@ -282,18 +270,8 @@ module RubyLLM
           end
         end
 
-        def append_formatted_content(content_blocks, content, citations: false)
-          formatted_content = Media.format_content(content, citations: citations)
-          if formatted_content.is_a?(Array)
-            content_blocks.concat(formatted_content)
-          else
-            content_blocks << formatted_content
-          end
-        end
-
-        def content_blocks_for(content)
-          blocks = content.is_a?(RubyLLM::Content::Raw) ? content.value : Media.format_content(content)
-          blocks.is_a?(Array) ? blocks.dup : [blocks]
+        def append_formatted_content(content_blocks, msg, citations: false)
+          content_blocks.concat(Media.format_content(msg.content, msg.attachments, citations: citations))
         end
 
         def cache_boundaries?(messages)

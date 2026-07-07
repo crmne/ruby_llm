@@ -87,6 +87,26 @@ RubyLLM.transcribe("conference.mp3", language: "fr")
 
 Use ISO 639-1 codes (en, es, fr, de, etc.).
 
+`RubyLLM.transcribe` keeps the transcription vocabulary as keywords: `model:`, `language:`, `prompt:`, `temperature:`, `format:`, `speaker_names:`, and `speaker_references:`. Providers ignore the keywords they do not support. Everything specific to one provider goes in `provider_options:`, a hash of options in the provider's own request vocabulary that RubyLLM merges into the rendered request as-is.
+
+## Output Formats
+
+The `format:` keyword selects the shape of the transcript you get back, using the provider's own values.
+
+OpenAI accepts `json`, `text`, `srt`, `vtt`, `verbose_json`, and `diarized_json`:
+
+```ruby
+RubyLLM.transcribe("interview.mp3", model: "whisper-1", format: "srt")
+```
+
+Gemini takes a MIME type:
+
+```ruby
+RubyLLM.transcribe("lecture.wav", model: "gemini-2.5-flash", format: "application/json")
+```
+
+When you omit `format:`, OpenAI's diarization models default to `diarized_json`, Gemini defaults to `text/plain`, and other OpenAI models use the API's default.
+
 ## Speaker Diarization
 
 The diarization model identifies different speakers:
@@ -110,7 +130,7 @@ end
 
 ### Identifying Known Speakers
 
-Provide 2-10 second reference clips to map speakers to names:
+Map speakers to names with the `speaker_names:` and `speaker_references:` keywords. Provide 2-10 second reference clips:
 
 ```ruby
 transcription = RubyLLM.transcribe(
@@ -124,7 +144,17 @@ transcription = RubyLLM.transcribe(
 # Bob: Happy to be here.
 ```
 
-Speaker references accept file paths, URLs, IO objects, or ActiveStorage attachments.
+Speaker references accept file paths, URLs, IO objects, or ActiveStorage attachments. Only OpenAI's diarization models use speaker names and references today; other providers ignore them.
+
+OpenAI's diarization models also send `chunking_strategy: "auto"` by default. Override it in OpenAI's own request shape through `provider_options:`:
+
+```ruby
+RubyLLM.transcribe(
+  "team-meeting.wav",
+  model: "gpt-4o-transcribe-diarize",
+  provider_options: { chunking_strategy: { type: "server_vad", threshold: 0.5 } }
+)
+```
 
 > **Note:** Gemini models currently return plain text transcripts without segment metadata. Use OpenAI's diarization models when you need speaker labels or timestamps.
 
@@ -148,6 +178,21 @@ RubyLLM.transcribe(
 
 Gemini treats transcription requests like any other conversation. Use the `prompt:` argument to steer formatting (for example, "Respond with plain text only."), and combine it with `language:` when you want a specific locale in the final transcript. RubyLLM automatically adds the language hint to the Gemini request.
 
+Use `format:` to pick the response MIME type. Everything else goes through `provider_options:` in Gemini's own request shape:
+
+```ruby
+RubyLLM.transcribe(
+  "lecture.wav",
+  model: "gemini-2.5-flash",
+  provider_options: {
+    generationConfig: { maxOutputTokens: 2048 },
+    safetySettings: [
+      { category: "HARM_CATEGORY_HARASSMENT", threshold: "BLOCK_NONE" }
+    ]
+  }
+)
+```
+
 ## Segments and Timestamps
 
 Access detailed timing information:
@@ -162,15 +207,15 @@ transcription.segments.each do |segment|
 end
 ```
 
-For OpenAI word-level timestamps, request verbose JSON with word granularity:
+For OpenAI word-level timestamps, request the `verbose_json` format and word granularity:
 
 ```ruby
 transcription = RubyLLM.transcribe(
   "interview.mp3",
   model: "whisper-1",
   provider: :openai,
-  response_format: "verbose_json",
-  timestamp_granularities: ["word"]
+  format: "verbose_json",
+  provider_options: { timestamp_granularities: ["word"] }
 )
 
 transcription.words.each do |word|

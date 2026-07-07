@@ -69,7 +69,7 @@ module RubyLLM
             custom_id: request[:custom_id],
             method: 'POST',
             url: batch_endpoint,
-            body: batch_params(request)
+            body: batch_payload(request)
           }
         end
 

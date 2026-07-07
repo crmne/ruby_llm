@@ -121,10 +121,8 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       it 'delegates capability checks' do
         expect(model.supports?('function_calling')).to be true
         expect(model.supports?('batch')).to be false
-        expect(model.supports_vision?).to be true
-        expect(model.supports_functions?).to be true
-        expect(model.function_calling?).to be true
-        expect(model.streaming?).to be true
+        expect(model.supports?('vision')).to be true
+        expect(model.supports?('streaming')).to be true
       end
 
       it 'delegates type detection' do
@@ -277,6 +275,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
         expect(RubyLLM).to receive(:chat).with( # rubocop:disable RSpec/MessageSpies,RSpec/StubbedMock
           model: 'test-gpt',
           provider: :openai,
+          protocol: nil,
           assume_model_exists: false
         ).and_return(
           instance_double(RubyLLM::Chat, 'messages=': nil, before_message: nil, after_message: nil)
@@ -293,6 +292,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
         expect(RubyLLM).to receive(:chat).with( # rubocop:disable RSpec/MessageSpies,RSpec/StubbedMock
           model: 'test-claude',
           provider: :anthropic,
+          protocol: nil,
           assume_model_exists: false
         ).and_return(
           instance_double(RubyLLM::Chat, 'messages=': nil, before_message: nil, after_message: nil)

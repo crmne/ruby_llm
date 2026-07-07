@@ -4,17 +4,67 @@ require 'active_support/concern'
 require 'active_support/inflector'
 
 module RubyLLM
+  # The Rails integration. Its concerns wire ActiveRecord models to
+  # RubyLLM's chats, messages, tool calls, batches, and model registry
+  # through the acts_as_* macros in ActsAs.
   module ActiveRecord
-    # Adds chat and message persistence capabilities to ActiveRecord models.
+    # ActsAs provides class macros that turn ActiveRecord models into
+    # persisted RubyLLM objects. It is included into ActiveRecord::Base
+    # when the gem loads inside a Rails application, so the macros are
+    # available in every model.
+    #
+    #   class Chat < ApplicationRecord
+    #     acts_as_chat
+    #   end
+    #
+    #   class Message < ApplicationRecord
+    #     acts_as_message
+    #   end
+    #
+    #   class ToolCall < ApplicationRecord
+    #     acts_as_tool_call
+    #   end
+    #
+    #   class Model < ApplicationRecord
+    #     acts_as_model
+    #   end
+    #
+    #   class Batch < ApplicationRecord
+    #     acts_as_batch
+    #   end
+    #
+    # A chat record then answers the full chat API (+ask+, +with_tools+,
+    # +with_schema+, and the rest) while saving every message to the
+    # database. See ChatMethods, MessageMethods, ToolCallMethods,
+    # ModelMethods, and BatchMethods for the methods each macro adds.
     module ActsAs
       extend ActiveSupport::Concern
 
-      def self.included(base)
+      def self.included(base) # :nodoc:
         super
         RubyLLM.config.model_registry_source ||= RubyLLM::ModelRegistry::ActiveRecordSource.new
       end
 
       class_methods do # rubocop:disable Metrics/BlockLength
+        # Turns the model into a persisted chat. Includes ChatMethods,
+        # adds an ordered +has_many+ for the messages, and an optional
+        # +belongs_to+ for the model record.
+        #
+        # The +messages:+ and +model:+ association names drive the
+        # defaults: class names are inferred from them, and foreign
+        # keys follow Rails conventions. The +message_class:+,
+        # +messages_foreign_key:+, +model_class:+, and
+        # +model_foreign_key:+ options override these defaults.
+        #
+        #   class Chat < ApplicationRecord
+        #     acts_as_chat
+        #   end
+        #
+        #   class Conversation < ApplicationRecord
+        #     acts_as_chat messages: :chat_messages,
+        #                  model: :ai_model
+        #   end
+        #
         def acts_as_chat(messages: :messages, message_class: nil, messages_foreign_key: nil, # rubocop:disable Metrics/ParameterLists
                          model: :model, model_class: nil, model_foreign_key: nil)
           include RubyLLM::ActiveRecord::ChatMethods
@@ -38,6 +88,23 @@ module RubyLLM
                      optional: true
         end
 
+        # Turns the model into a persisted registry entry for an LLM
+        # model. Includes ModelMethods, validates +model_id+, +provider+,
+        # and +name+, and adds a +has_many+ for the chats that use it.
+        #
+        # The chat class name is inferred from the +chats:+ association
+        # name, and the foreign key follows Rails conventions. The
+        # +chat_class:+ and +chats_foreign_key:+ options override these
+        # defaults.
+        #
+        #   class Model < ApplicationRecord
+        #     acts_as_model
+        #   end
+        #
+        #   class AiModel < ApplicationRecord
+        #     acts_as_model chats: :conversations
+        #   end
+        #
         def acts_as_model(chats: :chats, chat_class: nil, chats_foreign_key: nil)
           include RubyLLM::ActiveRecord::ModelMethods
 
@@ -53,6 +120,26 @@ module RubyLLM
           has_many chats, class_name: self.chat_class, foreign_key: chats_foreign_key
         end
 
+        # Turns the model into a persisted message. Includes
+        # MessageMethods and wires the chat, tool calls, parent tool
+        # call, tool results, and model associations.
+        #
+        # The +chat:+, +tool_calls:+, and +model:+ association names
+        # drive the defaults: class names are inferred from them, and
+        # foreign keys follow Rails conventions. The matching
+        # <tt>*_class:</tt> and <tt>*_foreign_key:</tt> options override
+        # these defaults. Pass <tt>touch_chat: true</tt> to touch the
+        # chat record when a message is saved or destroyed.
+        #
+        #   class Message < ApplicationRecord
+        #     acts_as_message
+        #   end
+        #
+        #   class ChatMessage < ApplicationRecord
+        #     acts_as_message chat: :conversation,
+        #                     tool_calls: :ai_tool_calls
+        #   end
+        #
         def acts_as_message(chat: :chat, chat_class: nil, chat_foreign_key: nil, touch_chat: false, # rubocop:disable Metrics/ParameterLists
                             tool_calls: :tool_calls, tool_call_class: nil, tool_calls_foreign_key: nil,
                             model: :model, model_class: nil, model_foreign_key: nil)
@@ -92,10 +179,18 @@ module RubyLLM
                      class_name: self.model_class,
                      foreign_key: model_foreign_key,
                      optional: true
-
-          delegate :tool_call?, :tool_result?, to: :to_llm
         end
 
+        # Turns the model into a persisted batch. Includes BatchMethods
+        # and records the chat class whose staged chats the batch
+        # submits, +Chat+ by default.
+        #
+        #   class Batch < ApplicationRecord
+        #     acts_as_batch
+        #   end
+        #
+        #   batch = Batch.create!(chats: chats)
+        #
         def acts_as_batch(chat_class: 'Chat')
           include RubyLLM::ActiveRecord::BatchMethods
 
@@ -103,6 +198,24 @@ module RubyLLM
           self.batch_chat_class = chat_class.to_s
         end
 
+        # Turns the model into a persisted tool call. Includes
+        # ToolCallMethods, adds a +belongs_to+ for the message that made
+        # the call and a +has_one+ for the message holding its result.
+        #
+        # The message class name is inferred from the +message:+
+        # association name, and the result class defaults to that same
+        # class. Foreign keys follow Rails conventions. The
+        # +message_class:+, +message_foreign_key:+, +result_class:+,
+        # and +result_foreign_key:+ options override these defaults.
+        #
+        #   class ToolCall < ApplicationRecord
+        #     acts_as_tool_call
+        #   end
+        #
+        #   class AiToolCall < ApplicationRecord
+        #     acts_as_tool_call message: :chat_message
+        #   end
+        #
         def acts_as_tool_call(message: :message, message_class: nil, message_foreign_key: nil, # rubocop:disable Metrics/ParameterLists
                               result: :result, result_class: nil, result_foreign_key: nil)
           include RubyLLM::ActiveRecord::ToolCallMethods

@@ -22,7 +22,7 @@ RSpec.describe RubyLLM::Providers::VertexAI::ChatCompletions::Batches do
     it 'uses OpenAI JSONL rows for MaaS chat models' do
       request = {
         custom_id: '2',
-        params: {
+        payload: {
           model: 'meta/llama-3.3-70b-instruct-maas',
           messages: [{ role: 'user', content: 'Hi' }],
           stream: false
@@ -69,7 +69,7 @@ RSpec.describe RubyLLM::Providers::VertexAI::ChatCompletions::Batches do
 
       expect(index).to eq(2)
       expect(message.content).to eq('Hello')
-      expect(message.model_id).to eq('meta/llama-3.3-70b-instruct-maas')
+      expect(message.model).to eq('meta/llama-3.3-70b-instruct-maas')
     end
   end
 end

@@ -68,6 +68,33 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Tools do
       expect(described_class.parse_tool_calls(nil)).to be_nil
       expect(described_class.parse_tool_calls([])).to be_nil
     end
+
+    it 'wraps malformed argument JSON in a RubyLLM error' do
+      response = instance_double(Faraday::Response)
+      tool_calls = [
+        {
+          'id' => 'call_123',
+          'function' => {
+            'name' => 'weather',
+            'arguments' => '{"location":"Berlin"'
+          }
+        }
+      ]
+
+      error = nil
+
+      expect do
+        described_class.parse_tool_calls(tool_calls, response: response, finish_reason: 'length')
+      rescue RubyLLM::ToolCallParseError => e
+        error = e
+        raise
+      end.to raise_error(RubyLLM::ToolCallParseError)
+
+      expect(error).to be_a(RubyLLM::Error)
+      expect(error.response).to eq(response)
+      expect(error.finish_reason).to eq('length')
+      expect(error.cause).to be_a(JSON::ParserError)
+    end
   end
 
   describe '.format_tool_calls' do

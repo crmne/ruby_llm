@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 20_260_610_120_000) do
+ActiveRecord::Schema[7.1].define(version: 20_260_704_130_000) do
   create_table 'action_text_rich_texts', force: :cascade do |t|
     t.string 'name', null: false
     t.text 'body'
@@ -104,14 +104,16 @@ ActiveRecord::Schema[7.1].define(version: 20_260_610_120_000) do
     t.integer 'tool_call_id'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
-    t.integer 'cached_tokens'
-    t.integer 'cache_creation_tokens'
+    t.integer 'cache_read_tokens'
+    t.integer 'cache_write_tokens'
     t.text 'thinking_signature'
     t.text 'thinking_text'
     t.integer 'thinking_tokens'
     t.json 'content_raw'
     t.json 'citations'
     t.boolean 'cache_until_here', default: false, null: false
+    t.decimal 'total_cost', precision: 16, scale: 10
+    t.json 'cost_details'
     t.index ['chat_id'], name: 'index_messages_on_chat_id'
     t.index ['model_id'], name: 'index_messages_on_model_id'
     t.index ['tool_call_id'], name: 'index_messages_on_tool_call_id'

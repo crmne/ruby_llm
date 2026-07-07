@@ -42,6 +42,18 @@ file = RubyLLM.upload(io, provider: :openai, purpose: "batch", filename: "batch.
 
 OpenAI and Azure require `purpose:` because their Files API requires it: `assistants`, `batch`, `fine-tune`, `vision`, `user_data`, or `evals`. Mistral accepts `purpose:` for batch, fine-tuning, and OCR workflows. Other providers infer the file use from the API call that later references the file.
 
+## Expiration
+
+Pass `expires_in:` with a number of seconds to have the provider delete the file automatically:
+
+```ruby
+file = RubyLLM.upload("batch.jsonl", purpose: "batch", expires_in: 24 * 60 * 60)
+
+file.expires_at # => 2026-07-05 12:00:00 +0000
+```
+
+RubyLLM translates the duration into each provider's wire format. OpenAI anchors the expiration to the upload time and accepts between 1 hour and 30 days. xAI takes the value as seconds from upload, in the same range. Mistral counts expiration in whole hours, so RubyLLM rounds `expires_in` up to the next hour. Providers without upload expiration ignore the option; Gemini files always expire after 48 hours.
+
 ## Using Files in Chat
 
 Pass an uploaded file through `with:` to reuse it by provider-managed ID or URI:

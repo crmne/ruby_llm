@@ -22,9 +22,10 @@ module RubyLLM
           payload
         end
 
-        def format_content(content)
+        def format_content(content, attachments = [])
           Protocols::ChatCompletions::Media.format_content(
             content,
+            attachments,
             document_attachments: :none,
             image_attachments: false,
             audio_attachments: false

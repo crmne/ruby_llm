@@ -79,17 +79,23 @@ One provider per batch, though: submitting chats from different providers raises
 
 ## Collecting the Answers
 
-Persist `batch.id` and walk away. From any process, any time later, look the batch up by id:
+Persist `batch.id` and walk away. From any process, any time later, look the batch up by id with `RubyLLM::Batch.find`:
 
 ```ruby
-batch = RubyLLM.batch("msgbatch_01EhcDuvb5XfWqcdJArbsfNX", provider: :anthropic)
+batch = RubyLLM::Batch.find("msgbatch_01EhcDuvb5XfWqcdJArbsfNX", provider: :anthropic)
 batch.complete? # => true
 ```
 
-In a long-running process, just keep asking: `complete?` reloads from the provider until the batch ends, then caches.
+`Batch.find` uses the global configuration. Pass `context:` to use an isolated [configuration context]({% link _getting_started/configuration-connection.md %}) instead:
 
 ```ruby
-batch.complete? # => false, check back later
+batch = RubyLLM::Batch.find(batch_id, provider: :anthropic, context: ctx)
+```
+
+`complete?` reads the batch's last known state without contacting the provider. In a long-running process, poll with `refresh`, which re-fetches the state from the provider and returns the batch:
+
+```ruby
+sleep 60 until batch.refresh.complete?
 ```
 
 Once processing ends, `messages` returns the responses in submission order:
@@ -135,7 +141,7 @@ loop do
   break if pending.empty?
 
   batch = RubyLLM.batch(pending)
-  sleep 60 until batch.complete?
+  sleep 60 until batch.refresh.complete?
 
   # batch.messages appends each answer to its chat; drop chats whose request
   # failed (a nil slot) so the loop can terminate.
@@ -187,14 +193,14 @@ A job in another process looks the batch up, checks on it, and collects:
 class BatchPollJob < ApplicationJob
   def perform(batch_id)
     batch = Batch.find(batch_id)
-    return self.class.set(wait: 10.minutes).perform_later(batch_id) unless batch.complete?
+    return self.class.set(wait: 10.minutes).perform_later(batch_id) unless batch.refresh.complete?
 
     batch.messages
   end
 end
 ```
 
-`batch.messages` appends each answer to its chat and persists it, so the conversations come back complete with no bookkeeping on your side. It is idempotent: an answered chat ends on an assistant message, so re-running the job (a retry, an at-least-once queue) never appends an answer twice. As it polls, `complete?` caches the provider's status onto the record, so the batches still in flight are just `Batch.where(completed: false)`. Stop a running batch with `batch.cancel`.
+`batch.messages` appends each answer to its chat and persists it, so the conversations come back complete with no bookkeeping on your side. It is idempotent: an answered chat ends on an assistant message, so re-running the job (a retry, an at-least-once queue) never appends an answer twice. Each `refresh` caches the provider's status onto the record, so the batches still in flight are just `Batch.where(completed: false)`, and a sweep is `Batch.where(completed: false).find_each(&:refresh)`. Stop a running batch with `batch.cancel`.
 
 Tools work the same way they do for plain chats. Because the records carry the whole conversation, a poll job can `run_tools` on the collected chats and submit the ones still awaiting the model as the next batch, running an agentic workload across batches at batch prices.
 

@@ -21,14 +21,14 @@ RSpec.describe RubyLLM::Protocol do
     )
     allow(provider).to receive(:upload_file).with(attachment).and_return(uploaded)
 
-    message = RubyLLM::Message.new(role: :user, content: RubyLLM::Content.new('Watch this', [attachment]))
+    message = RubyLLM::Message.new(role: :user, content: 'Watch this', attachments: [attachment])
 
     processed = protocol.preprocess_message(message)
 
     expect(processed).not_to be(message)
-    expect(processed.content.text).to eq('Watch this')
-    expect(processed.content.attachments.first).to be_provider_file
-    expect(processed.content.attachments.first.provider_file_id).to eq('files/abc')
+    expect(processed.content).to eq('Watch this')
+    expect(processed.attachments.first).to be_provider_file
+    expect(processed.attachments.first.provider_file_id).to eq('files/abc')
   end
 
   it 'leaves small Gemini attachments inline' do
@@ -38,7 +38,7 @@ RSpec.describe RubyLLM::Protocol do
     allow(attachment).to receive(:byte_size).and_return(1024)
     allow(provider).to receive(:upload_file)
 
-    message = RubyLLM::Message.new(role: :user, content: RubyLLM::Content.new('Watch this', [attachment]))
+    message = RubyLLM::Message.new(role: :user, content: 'Watch this', attachments: [attachment])
 
     expect(protocol.preprocess_message(message)).to be(message)
     expect(provider).not_to have_received(:upload_file)
@@ -57,11 +57,11 @@ RSpec.describe RubyLLM::Protocol do
     )
     allow(provider).to receive(:upload_file).with(attachment, purpose: 'user_data').and_return(uploaded)
 
-    message = RubyLLM::Message.new(role: :user, content: RubyLLM::Content.new('Summarize this', [attachment]))
+    message = RubyLLM::Message.new(role: :user, content: 'Summarize this', attachments: [attachment])
 
     processed = protocol.preprocess_message(message)
 
-    expect(processed.content.attachments.first.provider_file_id).to eq('file_123')
+    expect(processed.attachments.first.provider_file_id).to eq('file_123')
   end
 
   it 'raises before uploading files above the provider file limit' do
@@ -71,7 +71,7 @@ RSpec.describe RubyLLM::Protocol do
     allow(attachment).to receive(:byte_size).and_return(101 * 1024 * 1024)
     allow(provider).to receive(:upload_file)
 
-    message = RubyLLM::Message.new(role: :user, content: RubyLLM::Content.new('Summarize this', [attachment]))
+    message = RubyLLM::Message.new(role: :user, content: 'Summarize this', attachments: [attachment])
 
     expect { protocol.preprocess_message(message) }
       .to raise_error(RubyLLM::Error, /OpenRouter file uploads support files up to/)
@@ -85,7 +85,7 @@ RSpec.describe RubyLLM::Protocol do
     allow(attachment).to receive(:byte_size).and_return(30 * 1024 * 1024)
     allow(provider).to receive(:upload_file)
 
-    message = RubyLLM::Message.new(role: :user, content: RubyLLM::Content.new('Summarize this', [attachment]))
+    message = RubyLLM::Message.new(role: :user, content: 'Summarize this', attachments: [attachment])
 
     expect(protocol.preprocess_message(message)).to be(message)
     expect(provider).not_to have_received(:upload_file)

@@ -5,8 +5,7 @@ require 'faraday'
 require 'json'
 
 module RubyLLM
-  # Handles streaming responses from AI providers.
-  module Streaming
+  module Streaming # :nodoc: all
     module_function
 
     def stream_response(payload, additional_headers = {}, &block)
@@ -153,8 +152,7 @@ module RubyLLM
       nil
     end
 
-    # Builds Faraday on_data handlers for different major versions.
-    module FaradayHandlers
+    module FaradayHandlers # :nodoc:
       module_function
 
       def build(faraday_v1:, on_chunk:, on_failed_response:)

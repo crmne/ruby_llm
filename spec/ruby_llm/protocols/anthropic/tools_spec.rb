@@ -15,9 +15,10 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Tools do
       provider.send(:format_tool_call_with_thinking, msg, false)
     end
 
-    def message_double(content:)
+    def message_double(content:, attachments: [])
       instance_double(RubyLLM::Message,
                       content: content,
+                      attachments: attachments,
                       cache_until_here?: false,
                       tool_calls: {
                         'tool_123' => instance_double(RubyLLM::ToolCall,
@@ -88,10 +89,10 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Tools do
       end
     end
 
-    it 'formats Content attachments before tool calls' do
+    it 'formats attachments before tool calls' do
       text_path = File.expand_path('../../../fixtures/ruby.txt', __dir__)
-      content = RubyLLM::Content.new('Read this before calling the tool', text_path)
-      msg = message_double(content: content)
+      msg = message_double(content: 'Read this before calling the tool',
+                           attachments: RubyLLM::Attachment.wrap(text_path))
 
       formatted = format_tool_call(msg)
 
@@ -151,7 +152,8 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Tools do
     let(:msg) do
       instance_double(RubyLLM::Message,
                       tool_call_id: 'tool_123',
-                      content: 'Tool result')
+                      content: 'Tool result',
+                      attachments: [])
     end
 
     it 'formats a tool result message' do
@@ -177,7 +179,8 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Tools do
     it 'uses a placeholder when the tool returns no content' do
       msg = instance_double(RubyLLM::Message,
                             tool_call_id: 'tool_123',
-                            content: '')
+                            content: '',
+                            attachments: [])
 
       result = tools.format_tool_result(msg)
 

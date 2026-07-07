@@ -18,10 +18,7 @@ module RubyLLM
         def format_tool_call(msg) # rubocop:disable Metrics/PerceivedComplexity
           parts = []
 
-          if msg.content && !(msg.content.respond_to?(:empty?) && msg.content.empty?)
-            formatted_content = Media.format_content(msg.content)
-            parts.concat(formatted_content.is_a?(Array) ? formatted_content : [formatted_content])
-          end
+          parts.concat(Media.format_content(msg.content, msg.attachments)) if msg.content && !msg.content.empty?
 
           fallback_signature = msg.thinking&.signature
           used_fallback = false
@@ -49,9 +46,10 @@ module RubyLLM
         def format_tool_result(msg, function_name = nil)
           function_name ||= msg.tool_call_id
           content = msg.content
-          content = '(no output)' if content.nil? || (content.respond_to?(:empty?) && content.empty?)
+          content = nil if content && content.empty?
+          content = '(no output)' if content.nil? && msg.attachments.empty?
 
-          [{
+          parts = [{
             functionResponse: {
               name: function_name,
               response: {
@@ -60,6 +58,9 @@ module RubyLLM
               }
             }
           }]
+
+          msg.attachments.each { |attachment| parts << Media.format_content_attachment(attachment) }
+          parts
         end
 
         def extract_tool_calls(data) # rubocop:disable Metrics/PerceivedComplexity
@@ -92,8 +93,8 @@ module RubyLLM
         private
 
         def function_declaration_for(tool)
-          parameters_schema = tool.params_schema ||
-                              RubyLLM::Tool::SchemaDefinition.from_parameters(tool.parameters)&.json_schema
+          parameters_schema = tool.parameters_schema ||
+                              RubyLLM::Tool::SchemaDefinition.from_parameters(tool.declared_parameters)&.json_schema
 
           declaration = {
             name: tool.name,
@@ -102,9 +103,9 @@ module RubyLLM
 
           declaration[:parameters] = convert_tool_schema_to_gemini(parameters_schema) if parameters_schema
 
-          return declaration if tool.provider_params.empty?
+          return declaration if tool.provider_options.empty?
 
-          RubyLLM::Utils.deep_merge(declaration, tool.provider_params)
+          RubyLLM::Utils.deep_merge(declaration, tool.provider_options)
         end
 
         def convert_tool_schema_to_gemini(schema)

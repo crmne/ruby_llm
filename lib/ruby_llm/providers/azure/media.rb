@@ -7,8 +7,8 @@ module RubyLLM
       module Media
         module_function
 
-        def format_content(content)
-          Protocols::ChatCompletions::Media.format_parts(content) do |attachment|
+        def format_content(content, attachments = [])
+          Protocols::ChatCompletions::Media.format_parts(content, attachments) do |attachment|
             case attachment.type
             when :image
               format_image(attachment)

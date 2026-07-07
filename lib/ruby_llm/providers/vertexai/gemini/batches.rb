@@ -11,9 +11,9 @@ module RubyLLM
           private
 
           def vertex_batch_request(request)
-            params = RubyLLM::Utils.deep_stringify_keys(batch_params(request))
-            labels = params.fetch('labels', {}).merge('ruby_llm_batch_id' => request[:custom_id])
-            { request: params.merge('labels' => labels) }
+            payload = RubyLLM::Utils.deep_stringify_keys(batch_payload(request))
+            labels = payload.fetch('labels', {}).merge('ruby_llm_batch_id' => request[:custom_id])
+            { request: payload.merge('labels' => labels) }
           end
 
           def parse_vertex_batch_result(line, fallback_index)

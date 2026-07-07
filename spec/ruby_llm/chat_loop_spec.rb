@@ -7,14 +7,14 @@ RSpec.describe RubyLLM::Chat do
 
   class EchoTool < RubyLLM::Tool # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
     description 'Echoes the given text'
-    param :text, desc: 'Text to echo'
+    parameter :text, description: 'Text to echo'
 
     def execute(text:)
       text
     end
   end
 
-  let(:chat) { described_class.new(model: 'claude-haiku-4-5').with_tool(EchoTool) }
+  let(:chat) { described_class.new(model: 'claude-haiku-4-5').with_tools(EchoTool) }
   let(:answer_message) do
     RubyLLM::Message.new(role: :assistant, content: 'hello', input_tokens: 1, output_tokens: 1)
   end
@@ -170,7 +170,9 @@ RSpec.describe RubyLLM::Chat do
 
       chat.add_completion message
 
-      expect(message.content).to eq('answer' => 'hello')
+      # Content stays the raw JSON string; parsing lives in Message#parsed
+      expect(message.content).to eq('{"answer":"hello"}')
+      expect(message.parsed).to eq('answer' => 'hello')
     end
   end
 end

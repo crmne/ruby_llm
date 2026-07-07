@@ -5,6 +5,28 @@ require 'spec_helper'
 RSpec.describe RubyLLM::Chat do
   include_context 'with configured RubyLLM'
 
+  describe '#with_thinking' do
+    it 'clears thinking with without_thinking' do
+      chat = RubyLLM.chat.with_thinking(effort: :low)
+
+      chat.without_thinking
+
+      expect(chat.instance_variable_get(:@thinking)).to be_nil
+    end
+
+    it 'rejects nil, pointing to without_thinking' do
+      chat = RubyLLM.chat
+
+      expect { chat.with_thinking(nil) }.to raise_error(ArgumentError, /without_thinking/)
+    end
+
+    it 'requires thinking options' do
+      chat = RubyLLM.chat
+
+      expect { chat.with_thinking }.to raise_error(ArgumentError, /requires :effort or :budget/)
+    end
+  end
+
   context 'with extended thinking' do
     question = <<~QUESTION.strip
       If a magic mirror shows your future self, but only if you ask a question it cannot answer truthfully, what question do you ask to see your future, and what would the mirror reveal about the answer it gives?

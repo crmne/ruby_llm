@@ -63,7 +63,7 @@ RSpec.describe RubyLLM::Protocols::Responses::Chat do
 
     it 'uses flat function definitions' do
       tool = instance_double(RubyLLM::Tool, name: 'weather', description: 'Looks up weather',
-                                            params_schema: { 'type' => 'object' }, provider_params: {})
+                                            parameters_schema: { 'type' => 'object' }, provider_options: {})
 
       payload = render_payload([RubyLLM::Message.new(role: :user, content: 'hi')], tools: { weather: tool })
 
@@ -127,7 +127,7 @@ RSpec.describe RubyLLM::Protocols::Responses::Chat do
       message = protocol.send(:parse_completion_response, response)
 
       expect(message.content).to eq('Hello world')
-      expect(message.model_id).to eq('gpt-5-nano')
+      expect(message.model).to eq('gpt-5-nano')
     end
 
     it 'parses function calls keyed by call_id' do
@@ -141,6 +141,35 @@ RSpec.describe RubyLLM::Protocols::Responses::Chat do
       expect(message.tool_calls.keys).to eq(['call_1'])
       expect(message.tool_calls['call_1'].name).to eq('weather')
       expect(message.tool_calls['call_1'].arguments).to eq({ 'city' => 'Berlin' })
+    end
+
+    it 'wraps malformed function-call arguments in a RubyLLM error' do
+      response = instance_double(
+        Faraday::Response,
+        body: {
+          'model' => 'gpt-5-nano',
+          'output' => [
+            { 'type' => 'function_call', 'call_id' => 'call_1', 'name' => 'weather',
+              'arguments' => '{"city":"Berlin"' }
+          ],
+          'status' => 'incomplete',
+          'incomplete_details' => { 'reason' => 'max_output_tokens' }
+        }
+      )
+
+      error = nil
+
+      expect do
+        protocol.send(:parse_completion_response, response)
+      rescue RubyLLM::ToolCallParseError => e
+        error = e
+        raise
+      end.to raise_error(RubyLLM::ToolCallParseError)
+
+      expect(error).to be_a(RubyLLM::Error)
+      expect(error.response).to eq(response)
+      expect(error.finish_reason).to eq('max_output_tokens')
+      expect(error.cause).to be_a(JSON::ParserError)
     end
 
     it 'parses reasoning summaries and encrypted content into thinking' do
@@ -168,7 +197,7 @@ RSpec.describe RubyLLM::Protocols::Responses::Chat do
 
       expect(message.input_tokens).to eq(6)
       expect(message.output_tokens).to eq(7)
-      expect(message.cached_tokens).to eq(4)
+      expect(message.cache_read_tokens).to eq(4)
       expect(message.thinking_tokens).to eq(3)
     end
 

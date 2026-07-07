@@ -9,8 +9,8 @@ module RubyLLM
           azure_endpoint(:chat)
         end
 
-        def format_content(content)
-          Media.format_content(content)
+        def format_content(content, attachments = [])
+          Media.format_content(content, attachments)
         end
 
         def format_role(role)

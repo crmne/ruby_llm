@@ -77,7 +77,7 @@ end
 ```ruby
 class DocumentSearch < RubyLLM::Tool
   description "Searches knowledge base for relevant information"
-  param :query, desc: "Search query"
+  parameter :query, description: "Search query"
 
   def execute(query:)
     embedding = RubyLLM.embed(query).vectors

@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 module RubyLLM
-  # Sources for model registry data.
-  module ModelRegistry
-    # Reads model registry data from the configured JSON file.
-    class JsonSource
+  module ModelRegistry # :nodoc: all
+    class JsonSource # :nodoc:
       def initialize(file = nil)
         @file = file
       end
@@ -14,8 +12,7 @@ module RubyLLM
       end
     end
 
-    # Reads model registry data from the configured Active Record model class.
-    class ActiveRecordSource
+    class ActiveRecordSource # :nodoc:
       def read
         model_class = resolve_model_class
         return [] unless model_class.respond_to?(:table_exists?) && model_class.table_exists?

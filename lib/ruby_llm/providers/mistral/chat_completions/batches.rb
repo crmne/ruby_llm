@@ -44,7 +44,7 @@ module RubyLLM
           def mistral_batch_request(request)
             {
               custom_id: request[:custom_id],
-              body: batch_params(request, except: :model)
+              body: batch_payload(request, except: :model)
             }
           end
 

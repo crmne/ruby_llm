@@ -6,14 +6,14 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"messages":[{"role":"user","content":[{"text":"What is the square
-        root of 64? Answer with a JSON object with the key `result`."}]},{"role":"assistant","content":[{"text":"{"}]}],"inferenceConfig":{}}'
+        root of 64? Answer with a JSON object with the key `result`."}]},{"role":"assistant","content":[{"text":"{"}]}],"inferenceConfig":{},"additionalModelRequestFields":{"inferenceConfig":{"topK":5}}}'
     headers:
       User-Agent:
-      - Faraday v2.14.2
+      - Faraday v2.14.3
       X-Amz-Date:
-      - 20260608T184548Z
+      - 20260704T181332Z
       X-Amz-Content-Sha256:
-      - aa2e5bf46d1e8170019a72d8333135d1bf002f407792a4363717859bb8dcc887
+      - 853ef830b358b0bc6e27e877a4c0319d69f5cb0021cee1adc54e4312a4fca7f0
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
@@ -29,7 +29,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 08 Jun 2026 18:45:49 GMT
+      - Sat, 04 Jul 2026 18:13:33 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -37,10 +37,10 @@ http_interactions:
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - e405c1df-15cc-46d6-aebc-c1ede9d5e1a5
+      - 37905090-c511-4d23-9f97-add41ecfca1f
     body:
       encoding: UTF-8
-      string: '{"metrics":{"latencyMs":371},"output":{"message":{"content":[{"text":"
+      string: '{"metrics":{"latencyMs":479},"output":{"message":{"content":[{"text":"
         \"result\": 8 }"}],"role":"assistant"}},"stopReason":"end_turn","usage":{"inputTokens":68,"outputTokens":8,"serverToolUsage":{},"totalTokens":76}}'
-  recorded_at: Mon, 08 Jun 2026 18:45:49 GMT
+  recorded_at: Sat, 04 Jul 2026 18:13:33 GMT
 recorded_with: VCR 6.4.0

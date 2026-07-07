@@ -6,11 +6,11 @@ RSpec.describe RubyLLM::Protocols::Gemini::Batches do
   let(:protocol) { RubyLLM::Providers::Gemini.batch_protocols.fetch(:gemini).allocate }
 
   describe '#gemini_batch_request' do
-    it 'wraps rendered GenerateContent params with model and metadata' do
+    it 'wraps rendered GenerateContent payloads with model and metadata' do
       request = {
         custom_id: '0',
         model: 'gemini-2.5-flash',
-        params: {
+        payload: {
           contents: [{ role: 'user', parts: [{ text: 'Hi' }] }]
         }
       }
@@ -32,8 +32,8 @@ RSpec.describe RubyLLM::Protocols::Gemini::Batches do
   describe '#create_batch' do
     it 'rejects mixed-model jobs' do
       requests = [
-        { model: 'gemini-2.5-flash', params: {} },
-        { model: 'gemini-3-flash-preview', params: {} }
+        { model: 'gemini-2.5-flash', payload: {} },
+        { model: 'gemini-3-flash-preview', payload: {} }
       ]
 
       expect { protocol.create_batch(requests) }
@@ -83,7 +83,7 @@ RSpec.describe RubyLLM::Protocols::Gemini::Batches do
 
       expect(index).to eq(1)
       expect(message.content).to eq('Jupiter')
-      expect(message.model_id).to eq('gemini-2.5-flash')
+      expect(message.model).to eq('gemini-2.5-flash')
       expect(message.input_tokens).to eq(5)
     end
 

@@ -91,9 +91,8 @@ RSpec.describe RubyLLM::Providers::Mistral::Chat do
 
   describe '#format_content_with_thinking' do
     it 'formats arbitrary document attachments with Mistral document_url parts' do
-      content = RubyLLM::Content.new('Summarize this file')
-      content.add_attachment(StringIO.new('docx bytes'), filename: 'proposal.docx')
-      message = RubyLLM::Message.new(role: :user, content:)
+      attachment = RubyLLM::Attachment.new(StringIO.new('docx bytes'), filename: 'proposal.docx')
+      message = RubyLLM::Message.new(role: :user, content: 'Summarize this file', attachments: [attachment])
 
       formatted = provider.send(:format_content_with_thinking, message)
 

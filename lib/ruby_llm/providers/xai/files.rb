@@ -8,9 +8,9 @@ module RubyLLM
         private
 
         # rubocop:disable Lint/UnusedMethodArgument, Metrics/ParameterLists
-        def render_upload_payload(attachment, expires_after: nil, purpose: nil, expiry: nil, visibility: nil,
+        def render_upload_payload(attachment, purpose: nil, expires_in: nil, visibility: nil,
                                   display_name: nil, uri: nil, content_type: nil)
-          multipart_payload(attachment, expires_after:, purpose:)
+          multipart_payload(attachment, expires_after: expires_in, purpose:)
         end
         # rubocop:enable Lint/UnusedMethodArgument, Metrics/ParameterLists
 

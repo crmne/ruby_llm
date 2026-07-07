@@ -15,8 +15,12 @@ RSpec.describe RubyLLM::Moderation do
         expect(result).to be_a(described_class)
         expect(result.id).to be_present
         expect(result.model).to be_present
-        expect(result.results).to be_an(Array)
-        expect(result.content).to eq(result.results)
+        expect(result.results).to all(be_a(RubyLLM::Moderation::Result))
+
+        first = result.results.first
+        expect(first.flagged?).to be_in([true, false])
+        expect(first.categories).to all(be_a(String))
+        expect(first.category_scores.values).to all(be_a(Numeric))
       end
 
       it 'provides convenience methods for checking results' do
@@ -25,7 +29,7 @@ RSpec.describe RubyLLM::Moderation do
         expect(result.flagged?).to be_in([true, false])
         expect(result.flagged_categories).to be_an(Array)
         expect(result.category_scores).to be_a(Hash)
-        expect(result.categories).to be_a(Hash)
+        expect(result.category_scores.keys).to all(be_a(String))
       end
 
       it 'can be called directly on the Moderation class' do

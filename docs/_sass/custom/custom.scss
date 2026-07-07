@@ -110,37 +110,197 @@
   top: 0.2rem;
   right: 0;
   z-index: 2;
+  --copy-md-bg: #{$base-button-color};
+  --copy-md-bg-hover: #{$feedback-color};
+  --copy-md-menu-bg: #{$search-background-color};
+  --copy-md-menu-bg-hover: #{$feedback-color};
+  --copy-md-border: #{$border-color};
+  --copy-md-brand: #{$link-color};
+  --copy-md-text: #{$body-text-color};
+  --copy-md-text-strong: #{$body-heading-color};
+  --copy-md-text-muted: #{rgba($body-text-color, 0.72)};
+  --copy-md-focus-ring: #{rgba($link-color, 0.25)};
+  --copy-md-shadow: 0 8px 28px rgba(0, 0, 0, 0.18);
 }
 
-.page-copy-button {
+.vpi-copy,
+.vpi-check,
+.vpi-file-text,
+.vpi-chevron-down {
+  display: inline-block;
+  background-color: currentColor;
+  -webkit-mask: var(--icon) no-repeat center / contain;
+  mask: var(--icon) no-repeat center / contain;
+}
+
+.vpi-copy {
+  --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='black' stroke-linecap='round' stroke-linejoin='round' stroke-width='2'%3E%3Crect x='9' y='9' width='13' height='13' rx='2' ry='2'/%3E%3Cpath d='M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+.vpi-check {
+  --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='black' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m20 6l-11 11l-5-5'/%3E%3C/svg%3E");
+}
+
+.vpi-file-text {
+  --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='none' stroke='black' stroke-linecap='round' stroke-linejoin='round' stroke-width='2'%3E%3Cpath d='M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z'/%3E%3Cpolyline points='14 2 14 8 20 8'/%3E%3Cline x1='16' y1='13' x2='8' y2='13'/%3E%3Cline x1='16' y1='17' x2='8' y2='17'/%3E%3Cpolyline points='10 9 9 9 8 9'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+.vpi-chevron-down {
+  --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='black' stroke-linecap='round' stroke-linejoin='round' stroke-width='2.5' d='m6 9l6 6l6-6'/%3E%3C/svg%3E");
+}
+
+.copy-md-group {
+  position: relative;
+  display: inline-flex;
+  align-items: stretch;
+  flex-shrink: 0;
+  border: 1px solid var(--copy-md-border);
+  border-radius: 6px;
+  background: var(--copy-md-bg);
+  transition: border-color 0.25s, background-color 0.25s;
+}
+
+.copy-md-group:hover {
+  border-color: var(--copy-md-brand);
+  background: var(--copy-md-bg-hover);
+}
+
+.copy-md-btn {
   display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
-  padding: 0.35rem 0.7rem;
-  border: 1px solid rgba(20, 20, 20, 0.15);
-  border-radius: 999px;
+  gap: 6px;
+  padding: 4px 10px;
+  border: none;
+  border-radius: 6px 0 0 6px;
   background: transparent;
-  color: rgba(20, 20, 20, 0.85);
-  font-size: 0.75rem;
+  color: var(--copy-md-text);
+  font-size: 12px;
   font-weight: 600;
-  line-height: 1.1;
-  letter-spacing: 0.01em;
   cursor: pointer;
-  transition: background 120ms ease, border-color 120ms ease, color 120ms ease, transform 120ms ease;
+  transition: color 0.25s, background-color 0.25s;
+  white-space: nowrap;
 }
 
-.page-copy-button:hover {
-  background: rgba(20, 20, 20, 0.06);
-  border-color: rgba(20, 20, 20, 0.25);
+.copy-md-btn.copied,
+.copy-md-btn:hover {
+  color: var(--copy-md-text-strong);
+  background: var(--copy-md-bg-hover);
 }
 
-.page-copy-button:active {
-  transform: scale(0.97);
+.copy-md-btn:focus-visible,
+.copy-md-toggle:focus-visible {
+  position: relative;
+  z-index: 1;
+  outline: 2px solid var(--copy-md-focus-ring);
+  outline-offset: -2px;
 }
 
-.page-copy-button:focus-visible {
-  outline: 2px solid rgba(20, 20, 20, 0.35);
-  outline-offset: 2px;
+.copy-md-icon {
+  width: 14px;
+  height: 14px;
+}
+
+.copy-md-toggle {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 6px;
+  border: none;
+  border-left: 1px solid var(--copy-md-border);
+  border-radius: 0 6px 6px 0;
+  background: transparent;
+  color: var(--copy-md-text);
+  cursor: pointer;
+  transition: color 0.25s, background-color 0.25s;
+}
+
+.copy-md-toggle:hover {
+  color: var(--copy-md-text-strong);
+  background: var(--copy-md-bg-hover);
+}
+
+.copy-md-toggle .vpi-chevron-down {
+  width: 14px;
+  height: 14px;
+}
+
+.copy-md-toggle[aria-expanded="true"] .copy-md-chevron {
+  transform: rotate(180deg);
+}
+
+.copy-md-chevron {
+  transition: transform 0.2s;
+}
+
+.copy-md-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: 10;
+  min-width: 240px;
+  padding: 6px;
+  border: 1px solid var(--copy-md-border);
+  border-radius: 8px;
+  background: var(--copy-md-menu-bg);
+  box-shadow: var(--copy-md-shadow);
+}
+
+.copy-md-dropdown[aria-hidden="true"] {
+  display: none;
+}
+
+.copy-md-dropdown-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  width: 100%;
+  padding: 8px 10px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--copy-md-text-strong);
+  text-decoration: none;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+
+.copy-md-dropdown-item:hover {
+  background: var(--copy-md-menu-bg-hover);
+  color: var(--copy-md-text-strong);
+  text-decoration: none;
+}
+
+a.copy-md-dropdown-item,
+a.copy-md-dropdown-item:hover {
+  color: var(--copy-md-text-strong);
+  text-decoration: none;
+}
+
+.copy-md-dropdown-icon {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  color: var(--copy-md-text);
+}
+
+.copy-md-dropdown-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.copy-md-dropdown-title {
+  display: inline;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.copy-md-dropdown-desc {
+  font-size: 12px;
+  color: var(--copy-md-text-muted);
+  line-height: 1.3;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -152,19 +312,8 @@
     color: rgba(255, 255, 255, 0.72);
   }
 
-  .page-copy-button {
-    border-color: rgba(255, 255, 255, 0.25);
-    color: rgba(255, 255, 255, 0.9);
-    background: transparent;
-  }
-
-  .page-copy-button:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.35);
-  }
-
-  .page-copy-button:focus-visible {
-    outline-color: rgba(255, 255, 255, 0.5);
+  .page-actions {
+    --copy-md-shadow: 0 8px 28px rgba(0, 0, 0, 0.36);
   }
 }
 

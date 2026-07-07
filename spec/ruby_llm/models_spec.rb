@@ -46,13 +46,14 @@ RSpec.describe RubyLLM::Models do
     end
 
     it 'filters by vision support' do
-      vision_models = RubyLLM.models.select(&:supports_vision?)
-      expect(vision_models).to all(have_attributes(supports_vision?: true))
+      vision_models = RubyLLM.models.select { |m| m.supports?(:vision) }
+      expect(vision_models).not_to be_empty
+      expect(vision_models).to all(satisfy { |m| m.supports?(:vision) })
     end
 
     it 'filters by video support' do
-      video_models = RubyLLM.models.select(&:supports_video?)
-      expect(video_models).to all(have_attributes(supports_video?: true))
+      video_models = RubyLLM.models.select { |m| m.supports?(:video) }
+      expect(video_models).to all(satisfy { |m| m.supports?(:video) })
     end
   end
 
@@ -392,14 +393,14 @@ RSpec.describe RubyLLM::Models do
       expect(provider_instance).to be_a(RubyLLM::Provider)
     end
 
-    it 'resolves with assume_exists option' do
+    it 'resolves with assume_model_exists option' do
       model_id = 'custom-model'
       provider = 'openai'
 
       model_info, provider_instance = RubyLLM.models.resolve(
         model_id,
         provider: provider,
-        assume_exists: true
+        assume_model_exists: true
       )
 
       expect(model_info).to be_a(RubyLLM::Model)

@@ -71,10 +71,10 @@ RSpec.describe RubyLLM::Protocols::Responses::Streaming do
                           }
                         })
 
-    expect(chunk.model_id).to eq('gpt-5-nano')
+    expect(chunk.model).to eq('gpt-5-nano')
     expect(chunk.input_tokens).to eq(6)
     expect(chunk.output_tokens).to eq(7)
-    expect(chunk.cached_tokens).to eq(4)
+    expect(chunk.cache_read_tokens).to eq(4)
     expect(chunk.thinking_tokens).to eq(3)
     expect(chunk.finish_reason).to be_nil
   end

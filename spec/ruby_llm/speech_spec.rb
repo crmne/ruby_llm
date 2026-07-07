@@ -20,15 +20,15 @@ RSpec.describe RubyLLM::Speech do
       expect(RubyLLM::Models).to have_received(:resolve).with(
         'gpt-4o-mini-tts',
         provider: nil,
-        assume_exists: false,
+        assume_model_exists: false,
         config: RubyLLM.config
       )
       expect(provider).to have_received(:speak).with(
         'Hello',
-        model: 'gpt-4o-mini-tts',
+        model: model,
         voice: nil,
         format: nil,
-        params: {}
+        provider_options: {}
       )
     end
 
@@ -49,7 +49,7 @@ RSpec.describe RubyLLM::Speech do
       expect(RubyLLM::Models).to have_received(:resolve).with(
         'tts-1',
         provider: nil,
-        assume_exists: false,
+        assume_model_exists: false,
         config: context.config
       )
     end

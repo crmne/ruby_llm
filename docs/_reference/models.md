@@ -41,13 +41,13 @@ The registry stores crucial information about each model, including:
 *   **`type`**: The model's primary function (`chat`, `embedding`, etc.).
 *   **`name`**: A human-friendly name.
 *   **`context_window`**: Max input tokens (e.g., `128_000`).
-*   **`max_tokens`**: Max output tokens (e.g., `16_384`).
-*   **`supports_vision`**: If it can process images and videos.
-*   **`supports_functions`**: If it can use [Tools]({% link _core_features/tools.md %}).
-*   **`input_price_per_million`**: Cost in USD per 1 million input tokens.
-*   **`output_price_per_million`**: Cost in USD per 1 million output tokens.
-*   **`cache_read_input_price_per_million`**: Cost in USD per 1 million cache read tokens, when available. v1.15+
-*   **`cache_write_input_price_per_million`**: Cost in USD per 1 million cache write tokens, when available. v1.15+
+*   **`max_output_tokens`**: Max output tokens (e.g., `16_384`).
+*   **`supports?(:vision)`**: If it can process images and videos.
+*   **`supports?(:function_calling)`**: If it can use [Tools]({% link _core_features/tools.md %}).
+*   **`price(:input)`**: Cost in USD per 1 million input tokens.
+*   **`price(:output)`**: Cost in USD per 1 million output tokens.
+*   **`price(:cache_read)`**: Cost in USD per 1 million cache read tokens, when available.
+*   **`price(:cache_write)`**: Cost in USD per 1 million cache write tokens, when available.
 *   **`family`**: A broader classification (e.g., `gpt4o`).
 
 This registry allows RubyLLM to validate models, route requests correctly, provide capability information, and offer convenient filtering.

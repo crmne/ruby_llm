@@ -65,10 +65,10 @@ RSpec.describe RubyLLM::Instrumentation do
     response = RubyLLM::Message.new(
       role: :assistant,
       content: 'done',
-      model_id: 'gpt-4.1-nano',
+      model: 'gpt-4.1-nano',
       input_tokens: 10,
       output_tokens: 5,
-      cached_tokens: 2,
+      cache_read_tokens: 2,
       thinking_tokens: 1
     )
     allow(provider).to receive(:complete).and_return(response)
@@ -84,7 +84,7 @@ RSpec.describe RubyLLM::Instrumentation do
       response_model: 'gpt-4.1-nano',
       input_tokens: 10,
       output_tokens: 5,
-      cached_tokens: 2,
+      cache_read_tokens: 2,
       thinking_tokens: 1,
       temperature: 0.2,
       streaming: false
@@ -100,7 +100,7 @@ RSpec.describe RubyLLM::Instrumentation do
     context = RubyLLM.context { |config| config.instrumenter = instrumenter }
     chat = context.chat(model: 'gpt-4.1-nano')
     provider = chat.instance_variable_get(:@provider)
-    response = RubyLLM::Message.new(role: :assistant, content: 'done', model_id: 'gpt-4.1-nano')
+    response = RubyLLM::Message.new(role: :assistant, content: 'done', model: 'gpt-4.1-nano')
     allow(provider).to receive(:complete).and_return(response)
 
     chat.ask('Hello') { |chunk| chunk }
@@ -111,7 +111,7 @@ RSpec.describe RubyLLM::Instrumentation do
 
   it 'emits tool call events with arguments and result' do
     stub_const('InstrumentationProbeTool', Class.new(RubyLLM::Tool) do
-      param :value
+      parameter :value
 
       def execute(value:)
         "tool #{value}"
@@ -122,7 +122,7 @@ RSpec.describe RubyLLM::Instrumentation do
     tool_call = RubyLLM::ToolCall.new(id: 'call_1', name: 'instrumentation_probe', arguments: { value: 'ok' })
     tool_message = RubyLLM::Message.new(role: :assistant, content: nil, tool_calls: { 'call_1' => tool_call })
     final_message = RubyLLM::Message.new(role: :assistant, content: 'complete')
-    chat = context.chat(model: 'gpt-4.1-nano').with_tool(InstrumentationProbeTool)
+    chat = context.chat(model: 'gpt-4.1-nano').with_tools(InstrumentationProbeTool)
     provider = chat.instance_variable_get(:@provider)
     allow(provider).to receive(:complete).and_return(tool_message, final_message)
 

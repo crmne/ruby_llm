@@ -243,7 +243,7 @@ def protocol_for(model, **)
 end
 ```
 
-Selection follows a fixed precedence at request time: an explicit `with_protocol` (or `protocol:` argument) wins, then the `<provider>_protocol` configuration option, then your `protocol_for` hook. Because `register` adds an `acme_protocol` config option automatically, a user can override your routing globally:
+Selection follows a fixed precedence at request time: an explicit `protocol:` override on the chat wins, then the `<provider>_protocol` configuration option, then your `protocol_for` hook. Because `register` adds an `acme_protocol` config option automatically, a user can override your routing globally:
 
 ```ruby
 RubyLLM.configure do |config|

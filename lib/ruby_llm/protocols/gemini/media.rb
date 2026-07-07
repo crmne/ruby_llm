@@ -10,15 +10,11 @@ module RubyLLM
       module Media
         module_function
 
-        def format_content(content)
-          return content.value if content.is_a?(RubyLLM::Content::Raw)
-          return [format_text(content.to_json)] if content.is_a?(Hash) || content.is_a?(Array)
-          return [format_text(content)] unless content.is_a?(Content)
-
+        def format_content(content, attachments = [])
           parts = []
-          parts << format_text(content.text) if content.text
+          parts << format_text(content) if content
 
-          content.attachments.each do |attachment|
+          attachments.each do |attachment|
             parts << format_content_attachment(attachment)
           end
 
@@ -88,9 +84,7 @@ module RubyLLM
 
         text = text.join
         text = nil if text.empty?
-        return text if attachments.empty?
-
-        Content.new(text, attachments)
+        [text, attachments]
       end
 
       def build_inline_attachment(inline_data, index)

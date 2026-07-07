@@ -62,7 +62,7 @@ module RubyLLM
 
         def bedrock_batch_jsonl(requests)
           requests.map do |request|
-            JSON.generate(recordId: request[:custom_id], modelInput: batch_params(request))
+            JSON.generate(recordId: request[:custom_id], modelInput: batch_payload(request))
           end.join("\n")
         end
 
@@ -91,9 +91,9 @@ module RubyLLM
 
         def validate_bedrock_batch_requests!(requests)
           unsupported = requests.any? do |request|
-            params = request.fetch(:params)
-            params.key?(:toolConfig) || params.key?('toolConfig') ||
-              params.key?(:outputConfig) || params.key?('outputConfig')
+            payload = request.fetch(:payload)
+            payload.key?(:toolConfig) || payload.key?('toolConfig') ||
+              payload.key?(:outputConfig) || payload.key?('outputConfig')
           end
           return unless unsupported
 

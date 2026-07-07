@@ -6,7 +6,7 @@ module RubyLLM
       # S3-backed file storage for Bedrock batch input and output.
       class Files < UploadedFile::Protocol
         # rubocop:disable Lint/UnusedMethodArgument, Metrics/ParameterLists
-        def upload(file, uri: nil, filename: nil, content_type: nil, purpose: nil, expires_after: nil, expiry: nil,
+        def upload(file, uri: nil, filename: nil, content_type: nil, purpose: nil, expires_in: nil,
                    visibility: nil, display_name: nil)
           attachment = file_attachment(file, filename:)
           target_uri = uri || storage_uri_for(attachment)

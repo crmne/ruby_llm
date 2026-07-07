@@ -63,15 +63,15 @@ module RubyLLM
       end
 
       def batch_protocol_for(requests)
-        names = requests.map { |request| batch_protocol_name_for(request.fetch(:params)) }.uniq
+        names = requests.map { |request| batch_protocol_name_for(request.fetch(:payload)) }.uniq
         return batch_protocol_for_name(names.first) if names.one?
 
         raise Error, 'openai batch requests must target one endpoint per submission'
       end
 
-      def batch_protocol_name_for(params)
-        return :responses if params.key?(:input) || params.key?('input')
-        return :chat_completions if params.key?(:messages) || params.key?('messages')
+      def batch_protocol_name_for(payload)
+        return :responses if payload.key?(:input) || payload.key?('input')
+        return :chat_completions if payload.key?(:messages) || payload.key?('messages')
 
         raise Error, 'openai batch requests only support chat or responses payloads'
       end

@@ -28,7 +28,7 @@ After reading this guide, you will know:
 *   How to customize model and association names, including for namespaced models.
 *   How to override the persistence flow when you need content validations.
 
-The `acts_as` helpers turn ordinary ActiveRecord models into RubyLLM chats and messages. Once a model `acts_as_chat`, it gains the full chat API - `ask`, `with_tool`, `with_schema`, and the rest - while persisting every message to your database automatically. Start by declaring the helpers, then everything else in this guide builds on those four models.
+The `acts_as` helpers turn ordinary ActiveRecord models into RubyLLM chats and messages. Once a model `acts_as_chat`, it gains the full chat API - `ask`, `with_tools`, `with_schema`, and the rest - while persisting every message to your database automatically. Start by declaring the helpers, then everything else in this guide builds on those four models.
 
 ## Setting Up Models with `acts_as` Helpers
 
@@ -167,9 +167,34 @@ message.cost.thinking # When the model has distinct reasoning-token pricing
 chat_record.cost.total
 ```
 
-`cache_read_tokens` and `cache_write_tokens` are aliases for the existing v1.9 `cached_tokens` and `cache_creation_tokens` columns, so apps that already ran the v1.9 migration do not need another migration for these names.
+The `cache_read_tokens` and `cache_write_tokens` helpers read the columns of the same names. The v2.0 upgrade generator renames the v1.9 `cached_tokens` and `cache_creation_tokens` columns for you.
 
 RubyLLM normalizes provider-specific cache accounting before persisting token counts. See [Token Usage and Cost]({% link _core_features/chat-tokens.md %}) for the provider comparison table.
+
+#### Freezing Costs at Completion
+
+New installs add two optional message columns, and the v2.0 upgrade generator adds them to existing apps:
+
+*   `total_cost`, a `decimal(16, 10)` holding the response cost in USD.
+*   `cost_details`, a JSON column holding the per-component breakdown (input, output, cache read, cache write, thinking, total).
+
+When these columns exist, RubyLLM records each assistant message's cost at completion using the pricing in effect at that moment. `message.cost` then returns the recorded cost instead of recomputing it, so a later `RubyLLM.models.refresh!` that changes registry pricing does not rewrite historical costs. `chat_record.cost` sums the recorded per-message costs.
+
+```ruby
+message.total_cost   # => 0.00234 (numeric column, SQL-aggregatable)
+message.cost_details # => {"input" => 0.0012, "output" => 0.00114, "total" => 0.00234}
+message.cost.total   # => 0.00234 (frozen at completion, not recomputed)
+
+chat_record.messages.sum(:total_cost) # aggregate in SQL
+```
+
+Because `total_cost` is a plain numeric column, you can aggregate spend directly in the database:
+
+```ruby
+Chat.joins(:messages).where(messages: { role: 'assistant' }).sum('messages.total_cost')
+```
+
+If the columns are absent, `message.cost` computes live from the associated model record's current pricing, as it always has. Freezing history means stale registry pricing only affects new messages, so refresh the registry on a schedule. See [Model Costs]({% link _reference/model-costs.md %}) for the recommended refresh job.
 
 `finish_reason` is persisted when your message table has a string column with that name. New installs include it, and the upgrade generator adds it for existing apps.
 
@@ -223,7 +248,7 @@ Tools are Ruby classes that the AI can call. While the tool classes themselves a
 ```ruby
 class Weather < RubyLLM::Tool
   description "Gets current weather for a location"
-  param :city, desc: "City name"
+  parameter :city, description: "City name"
 
   def execute(city:)
     "The weather in #{city} is sunny and 22°C."
@@ -231,7 +256,7 @@ class Weather < RubyLLM::Tool
 end
 
 chat_record = Chat.create!(model: '{{ site.models.default_chat }}')
-chat_record.with_tool(Weather)
+chat_record.with_tools(Weather)
 
 response = chat_record.ask("What's the weather in Paris?")
 
@@ -305,7 +330,7 @@ chat_record.with_schema(PersonSchema)
 person = chat_record.ask("Generate a French person")
 
 # Remove the schema for analysis
-chat_record.with_schema(nil)
+chat_record.without_schema
 analysis = chat_record.ask("What's interesting about this person?")
 
 puts chat_record.messages.count # => 4
@@ -456,11 +481,11 @@ class Chat < ApplicationRecord
     # Fill in attributes and save once we have content
     @message.assign_attributes(
       content: message.content,
-      model: Model.find_by(model_id: message.model_id),
+      model: Model.find_by(model_id: message.model),
       input_tokens: message.tokens.input,
       output_tokens: message.tokens.output,
-      cached_tokens: message.tokens.cache_read,
-      cache_creation_tokens: message.tokens.cache_write
+      cache_read_tokens: message.tokens.cache_read,
+      cache_write_tokens: message.tokens.cache_write
     )
 
     @message.save!

@@ -20,14 +20,6 @@ module RubyLLM
           aqa: { input: 0.00, output: 0.00 }
         }.freeze
 
-        def supports_tool_choice?(_model_id)
-          true
-        end
-
-        def supports_tool_parallel_control?(_model_id)
-          false
-        end
-
         def context_window_for(model_id)
           case model_id
           when /gemini-2\.5-pro-exp-03-25/, /gemini-2\.0-flash/, /gemini-2\.0-flash-lite/, /gemini-1\.5-flash/,
@@ -57,7 +49,10 @@ module RubyLLM
 
         def critical_capabilities_for(model_id)
           capabilities = []
-          capabilities << 'function_calling' if supports_functions?(model_id)
+          if supports_functions?(model_id)
+            capabilities << 'function_calling'
+            capabilities << 'tool_choice'
+          end
           capabilities << 'structured_output' if supports_structured_output?(model_id)
           capabilities << 'vision' if supports_vision?(model_id)
           capabilities

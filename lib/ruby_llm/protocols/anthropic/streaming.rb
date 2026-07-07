@@ -24,7 +24,7 @@ module RubyLLM
 
           Chunk.new(
             role: :assistant,
-            model_id: extract_model_id(data),
+            model: extract_model_id(data),
             content: extract_content_delta(data, delta_type),
             citations: extract_citations_delta(data, delta_type),
             thinking: Thinking.build(
@@ -33,8 +33,8 @@ module RubyLLM
             ),
             input_tokens: extract_input_tokens(data),
             output_tokens: extract_output_tokens(data),
-            cached_tokens: extract_cached_tokens(data),
-            cache_creation_tokens: extract_cache_creation_tokens(data),
+            cache_read_tokens: extract_cache_read_tokens(data),
+            cache_write_tokens: extract_cache_write_tokens(data),
             tool_calls: extract_tool_calls(data),
             finish_reason: data.dig('delta', 'stop_reason')
           )

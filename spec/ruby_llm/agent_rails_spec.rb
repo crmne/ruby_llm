@@ -87,11 +87,11 @@ RSpec.describe RubyLLM::Agent do
     expect(chat.messages.where(role: 'system')).to be_empty
   end
 
-  it 'raises when instructions prompt shorthand file is missing' do
+  it 'raises when an explicitly referenced prompt file is missing' do
     agent_class = Class.new(RubyLLM::Agent) do
       chat_model Chat
       model 'gpt-4.1-nano'
-      instructions
+      instructions { prompt('instructions') }
     end
 
     expect { agent_class.create! }.to raise_error(RubyLLM::PromptNotFoundError, /Prompt file not found/)
@@ -244,6 +244,22 @@ RSpec.describe RubyLLM::Agent do
     created = SpecAssumeExistsInitAgent.create!
     reloaded = Chat.find(created.id)
     expect { SpecAssumeExistsInitAgent.new(chat: reloaded) }.not_to raise_error
+  end
+
+  it 'forwards the protocol model option to created and found Rails chat records' do
+    agent_class = Class.new(RubyLLM::Agent) do
+      chat_model Chat
+      model 'gpt-5-nano', protocol: :chat_completions
+      instructions 'Hello'
+    end
+
+    stub_const('SpecProtocolAgent', agent_class)
+
+    created = SpecProtocolAgent.create!
+    expect(created.to_llm.instance_variable_get(:@protocol)).to eq(:chat_completions)
+
+    found = SpecProtocolAgent.find(created.id)
+    expect(found.to_llm.instance_variable_get(:@protocol)).to eq(:chat_completions)
   end
 
   it 'raises when .sync_instructions! is used without chat_model' do

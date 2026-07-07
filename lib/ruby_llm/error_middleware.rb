@@ -4,8 +4,7 @@ require 'faraday'
 require 'ruby_llm/error'
 
 module RubyLLM
-  # Faraday middleware that maps provider-specific API errors to RubyLLM errors.
-  class ErrorMiddleware < Faraday::Middleware
+  class ErrorMiddleware < Faraday::Middleware # :nodoc: all
     def initialize(app, options = {})
       super(app)
       @provider = options[:provider]
@@ -59,28 +58,28 @@ module RubyLLM
         when 200..399
           message
         when 400
-          raise ContextLengthExceededError.new(response, message) if context_length_exceeded?(message)
+          raise ContextLengthExceededError.new(message, response:) if context_length_exceeded?(message)
 
-          raise BadRequestError.new(response, message)
+          raise BadRequestError.new(message, response:)
         when 401
-          raise UnauthorizedError.new(response, message)
+          raise UnauthorizedError.new(message, response:)
         when 402
-          raise PaymentRequiredError.new(response, message)
+          raise PaymentRequiredError.new(message, response:)
         when 403
-          raise ForbiddenError.new(response, message)
+          raise ForbiddenError.new(message, response:)
         when 429
-          raise RateLimitError.new(response, message) if rate_limited?(message)
-          raise ContextLengthExceededError.new(response, message) if context_length_exceeded?(message)
+          raise RateLimitError.new(message, response:) if rate_limited?(message)
+          raise ContextLengthExceededError.new(message, response:) if context_length_exceeded?(message)
 
-          raise RateLimitError.new(response, message)
+          raise RateLimitError.new(message, response:)
         when 500
-          raise ServerError.new(response, message)
+          raise ServerError.new(message, response:)
         when 502..504
-          raise ServiceUnavailableError.new(response, message)
+          raise ServiceUnavailableError.new(message, response:)
         when 529
-          raise OverloadedError.new(response, message)
+          raise OverloadedError.new(message, response:)
         else
-          raise Error.new(response, message)
+          raise Error.new(message, response:)
         end
       end
 

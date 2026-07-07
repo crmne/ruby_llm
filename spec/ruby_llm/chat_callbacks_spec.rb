@@ -47,7 +47,7 @@ RSpec.describe RubyLLM::Chat do
       tool_calls: { 'call_1' => tool_call }
     )
     final_message = RubyLLM::Message.new(role: :assistant, content: 'complete')
-    chat = described_class.new(model: 'gpt-4.1-nano').with_tool(CallbackProbeTool)
+    chat = described_class.new(model: 'gpt-4.1-nano').with_tools(CallbackProbeTool)
     stub_completion(chat, tool_message, final_message)
 
     chat.before_tool_call { |call| calls << [:before_tool_call, call.name] }

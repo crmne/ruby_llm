@@ -1,143 +1,139 @@
 (function () {
-  function isClipboardAvailable() {
-    return Boolean(
+  function writeToClipboard(text) {
+    if (
       window.isSecureContext &&
       window.navigator &&
       window.navigator.clipboard &&
       window.navigator.clipboard.writeText
-    );
-  }
-
-  function normalizeUrl(base, path) {
-    if (!base || !path) {
-      return null;
+    ) {
+      return window.navigator.clipboard.writeText(text);
     }
-    var trimmedBase = base.replace(/\/+$/, '');
-    var trimmedPath = path.replace(/^\/+/, '');
-    return trimmedBase + '/' + trimmedPath;
-  }
 
-  function setButtonLabel(button, label) {
-    button.textContent = label;
-  }
+    return new Promise(function (resolve, reject) {
+      var textarea = document.createElement('textarea');
+      textarea.value = text;
+      textarea.setAttribute('readonly', '');
+      textarea.style.position = 'fixed';
+      textarea.style.top = '-9999px';
+      document.body.appendChild(textarea);
+      textarea.select();
 
-  function restoreLabelAfterDelay(button, label, delay) {
-    window.setTimeout(function () {
-      if (!button.dataset || button.dataset.isBusy === 'true') {
-        return;
+      try {
+        if (document.execCommand('copy')) {
+          resolve();
+        } else {
+          reject(new Error('Copy command failed.'));
+        }
+      } catch (error) {
+        reject(error);
+      } finally {
+        document.body.removeChild(textarea);
       }
-      setButtonLabel(button, label);
-    }, delay);
+    });
   }
 
-  function setupButton(button) {
-    var base = button.dataset.markdownBase;
-    var path = button.dataset.markdownPath;
-    var defaultLabel = button.dataset.labelDefault || 'Copy page';
-    var successLabel = button.dataset.labelSuccess || 'Copied';
-    var errorLabel = button.dataset.labelError || 'Copy failed';
-
-    setButtonLabel(button, defaultLabel);
-
-    if (!isClipboardAvailable()) {
-      button.disabled = true;
-      button.title = 'Clipboard copy requires a secure context (HTTPS).';
+  function copyPageMarkdown(button) {
+    if (!button) {
       return;
     }
 
-    var sourceUrl = normalizeUrl(base, path);
-    if (!sourceUrl) {
-      button.disabled = true;
-      button.title = 'Missing markdown source configuration.';
+    var container = button.closest('.page-actions') || document;
+    var textarea = container.querySelector('.vp-raw-markdown');
+    if (!textarea) {
       return;
     }
 
-    function stripFrontMatter(markdown) {
-      var lines = markdown.split('\n');
-      if (lines.length < 3 || lines[0].trim() !== '---') {
-        return markdown;
-      }
+    var icon = button.querySelector('.copy-md-icon');
+    var label = button.querySelector('.copy-md-label');
 
-      var endIndex = -1;
-      for (var i = 1; i < lines.length; i += 1) {
-        if (lines[i].trim() === '---') {
-          endIndex = i;
-          break;
-        }
+    function setCopied(copied) {
+      button.classList.toggle('copied', copied);
+      if (icon) {
+        icon.classList.toggle('vpi-copy', !copied);
+        icon.classList.toggle('vpi-check', copied);
       }
-
-      if (endIndex === -1) {
-        return markdown;
+      if (label) {
+        label.textContent = copied ? 'Copied' : 'Copy page';
       }
-
-      return lines.slice(endIndex + 1).join('\n').replace(/^\n+/, '');
     }
 
-    window.fetch(sourceUrl, { cache: 'no-store' })
-      .then(function (response) {
-        if (!response.ok) {
-          throw new Error('Failed to fetch markdown source.');
+    writeToClipboard(textarea.value)
+      .then(function () {
+        setCopied(true);
+        if (button._copyTimeout) {
+          window.clearTimeout(button._copyTimeout);
         }
-        return response.text();
-      })
-      .then(function (markdown) {
-        button.dataset.markdownSource = stripFrontMatter(markdown);
+        button._copyTimeout = window.setTimeout(function () {
+          setCopied(false);
+        }, 2000);
       })
       .catch(function () {
-        button.dataset.markdownSource = '';
+        if (label) {
+          label.textContent = 'Copy failed';
+          window.setTimeout(function () {
+            label.textContent = 'Copy page';
+          }, 2500);
+        }
       });
+  }
 
-    button.addEventListener('click', function () {
-      if (button.dataset.isBusy === 'true') {
+  function setupCopyGroup(group) {
+    var copyButton = group.querySelector('.copy-md-btn');
+    var toggle = group.querySelector('.copy-md-toggle');
+    var dropdown = group.querySelector('.copy-md-dropdown');
+    var dropdownCopy = dropdown ? dropdown.querySelector('[data-action="copy"]') : null;
+
+    function setDropdownOpen(open) {
+      if (!dropdown || !toggle) {
         return;
       }
 
-      button.dataset.isBusy = 'true';
-      button.disabled = true;
-      setButtonLabel(button, 'Copying...');
+      dropdown.setAttribute('aria-hidden', String(!open));
+      toggle.setAttribute('aria-expanded', String(open));
+    }
 
-      var cachedMarkdown = button.dataset.markdownSource || '';
-      var copyPromise = cachedMarkdown
-        ? window.navigator.clipboard.writeText(cachedMarkdown)
-        : window.fetch(sourceUrl, { cache: 'no-store' })
-          .then(function (response) {
-            if (!response.ok) {
-              throw new Error('Failed to fetch markdown source.');
-            }
-            return response.text();
-          })
-          .then(function (markdown) {
-            var strippedMarkdown = stripFrontMatter(markdown);
-            button.dataset.markdownSource = strippedMarkdown;
-            return window.navigator.clipboard.writeText(strippedMarkdown);
-          });
+    function isDropdownOpen() {
+      return Boolean(dropdown && dropdown.getAttribute('aria-hidden') === 'false');
+    }
 
-      copyPromise
-        .then(function () {
-          setButtonLabel(button, successLabel);
-          button.title = 'Copied to clipboard.';
-          button.dataset.isBusy = 'false';
-          button.disabled = false;
-          restoreLabelAfterDelay(button, defaultLabel, 2000);
-        })
-        .catch(function () {
-          setButtonLabel(button, errorLabel);
-          button.title = 'Unable to copy markdown.';
-          button.dataset.isBusy = 'false';
-          button.disabled = false;
-          restoreLabelAfterDelay(button, defaultLabel, 2500);
-        });
+    if (copyButton) {
+      copyButton.addEventListener('click', function () {
+        copyPageMarkdown(copyButton);
+      });
+    }
+
+    if (toggle && dropdown) {
+      toggle.addEventListener('click', function (event) {
+        event.stopPropagation();
+        setDropdownOpen(!isDropdownOpen());
+      });
+    }
+
+    if (dropdownCopy) {
+      dropdownCopy.addEventListener('click', function () {
+        setDropdownOpen(false);
+        copyPageMarkdown(copyButton);
+      });
+    }
+
+    document.addEventListener('click', function (event) {
+      if (!dropdown || !toggle || !isDropdownOpen()) {
+        return;
+      }
+      if (!dropdown.contains(event.target) && !toggle.contains(event.target)) {
+        setDropdownOpen(false);
+      }
+    });
+
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape' && dropdown && toggle && isDropdownOpen()) {
+        setDropdownOpen(false);
+        toggle.focus();
+      }
     });
   }
 
   document.addEventListener('DOMContentLoaded', function () {
-    var buttons = document.querySelectorAll('.js-copy-page-markdown');
-    if (!buttons.length) {
-      return;
-    }
-
-    buttons.forEach(function (button) {
-      setupButton(button);
-    });
+    document.querySelectorAll('.copy-md-group').forEach(setupCopyGroup);
   });
 })();

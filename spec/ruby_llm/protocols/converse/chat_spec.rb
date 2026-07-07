@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 RSpec.describe RubyLLM::Protocols::Converse::Chat do
-  describe '.parse_completion_response' do
+  describe '.parse_completion_body' do
     it 'exposes AWS inputTokens as-is (already non-cached) and keeps cache buckets separate' do
       # Per AWS, inputTokens already excludes cache; a real payload sends the non-cached count
       # directly, with cache read/write reported separately.
@@ -23,12 +23,12 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
       }
 
       response = instance_double(Faraday::Response, body: response_body)
-      message = described_class.parse_completion_response(response)
+      message = described_class.parse_completion_body(response_body, raw: response)
 
       expect(message.input_tokens).to eq(50)
       expect(message.output_tokens).to eq(5)
-      expect(message.cached_tokens).to eq(40)
-      expect(message.cache_creation_tokens).to eq(10)
+      expect(message.cache_read_tokens).to eq(40)
+      expect(message.cache_write_tokens).to eq(10)
     end
 
     it 'does not subtract cache buckets or floor to zero when the cached prefix exceeds fresh input' do
@@ -48,11 +48,11 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
       }
 
       response = instance_double(Faraday::Response, body: response_body)
-      message = described_class.parse_completion_response(response)
+      message = described_class.parse_completion_body(response_body, raw: response)
 
       expect(message.input_tokens).to eq(3)
-      expect(message.cached_tokens).to eq(7714)
-      expect(message.cache_creation_tokens).to eq(327)
+      expect(message.cache_read_tokens).to eq(7714)
+      expect(message.cache_write_tokens).to eq(327)
     end
 
     it 'preserves raw stopReason as finish_reason' do
@@ -68,7 +68,7 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
       }
 
       response = instance_double(Faraday::Response, body: response_body)
-      message = described_class.parse_completion_response(response)
+      message = described_class.parse_completion_body(response_body, raw: response)
 
       expect(message.finish_reason).to eq('guardrail_intervened')
     end
@@ -88,7 +88,7 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
       }
 
       response = instance_double(Faraday::Response, body: response_body)
-      message = described_class.parse_completion_response(response)
+      message = described_class.parse_completion_body(response_body, raw: response)
 
       expect(message.thinking_tokens).to eq(7)
     end
@@ -108,7 +108,7 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
       }
 
       response = instance_double(Faraday::Response, body: response_body)
-      message = described_class.parse_completion_response(response)
+      message = described_class.parse_completion_body(response_body, raw: response)
 
       expect(message.thinking_tokens).to eq(7)
     end
@@ -116,7 +116,8 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
 
   describe '.format_tool_result_content' do
     it 'uses a placeholder when the tool returns no content' do
-      result = described_class.format_tool_result_content('')
+      msg = instance_double(RubyLLM::Message, content: '', attachments: [])
+      result = described_class.format_tool_result_content(msg)
 
       expect(result).to eq([{ text: '(no output)' }])
     end
@@ -126,7 +127,7 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
     let(:model) do
       instance_double(RubyLLM::Model,
                       id: 'anthropic.claude-haiku-4-5-20251001-v1:0',
-                      max_tokens: nil,
+                      max_output_tokens: nil,
                       metadata: {})
     end
 
@@ -157,15 +158,6 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
       payload = render_payload([message])
 
       expect(payload.dig(:messages, 0, :content).last).to eq(cachePoint: { type: 'default' })
-    end
-
-    it 'appends cachePoint to raw content marked as a cache boundary' do
-      content = RubyLLM::Content::Raw.new([{ text: 'Raw context' }])
-      message = RubyLLM::Message.new(role: :user, content: content).cache_until_here!
-
-      payload = render_payload([message])
-
-      expect(payload.dig(:messages, 0, :content)).to eq([{ text: 'Raw context' }, { cachePoint: { type: 'default' } }])
     end
 
     it 'uses configured ttl for an explicit cache boundary' do

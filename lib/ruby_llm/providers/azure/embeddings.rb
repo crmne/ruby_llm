@@ -11,13 +11,15 @@ module RubyLLM
           azure_endpoint(:embeddings)
         end
 
-        def render_embedding_payload(text, model:, dimensions:, params: {})
+        # rubocop:disable Lint/UnusedMethodArgument, Metrics/ParameterLists
+        def render_embedding_payload(text, model:, dimensions:, task_type: nil, title: nil, provider_options: {})
           {
             model: model,
             input: [text].flatten,
             dimensions: dimensions
-          }.compact.merge(params)
+          }.compact.merge(provider_options)
         end
+        # rubocop:enable Lint/UnusedMethodArgument, Metrics/ParameterLists
       end
     end
   end

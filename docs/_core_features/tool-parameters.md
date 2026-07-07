@@ -23,7 +23,7 @@ description: Declare tool arguments - from inferred signatures to full JSON Sche
 After reading this guide, you will know:
 
 * How RubyLLM infers parameters from an `execute` signature.
-* When to reach for the `param` helper versus the `params` DSL.
+* When to reach for the `parameter` helper versus the `parameters` DSL.
 * How to supply your own JSON Schema for full control.
 * How to return rich content, such as images and documents, from a tool.
 * How to inject dependencies through custom initialization.
@@ -36,18 +36,18 @@ The model only knows what arguments a tool accepts from the schema you give it. 
 RubyLLM ships with three complementary approaches:
 
 *   **Signature inference** for simple flat arguments.
-*   The **`param` helper** for quick, flat argument lists. (v1.0+)
-*   The **`params` DSL** for expressive, structured inputs. (v1.9+)
+*   The **`parameter` helper** for quick, flat argument lists.
+*   The **`parameters` DSL** for expressive, structured inputs.
 
-Start with the method signature. Add `param` when a flat argument needs a description, type, or optionality that is not obvious from Ruby alone. Use the `params` DSL whenever you need nested objects, arrays, enums, or union types.
+Start with the method signature. Add `parameter` when a flat argument needs a description, type, or optionality that is not obvious from Ruby alone. Use the `parameters` DSL whenever you need nested objects, arrays, enums, or union types.
 
 ### Signature Inference
 
-When a tool has no `param` or `params` declaration, RubyLLM builds a JSON Schema from `execute` keyword arguments:
+When a tool has no `parameter` or `parameters` declaration, RubyLLM builds a JSON Schema from `execute` keyword arguments:
 
 ```ruby
 class Weather < RubyLLM::Tool
-  desc "Gets current weather for a location"
+  description "Gets current weather for a location"
 
   def execute(latitude:, longitude:, units: "metric")
     # ...
@@ -59,16 +59,16 @@ Required keywords become required string parameters. Optional keywords become op
 
 Ruby method signatures do not expose reliable JSON Schema types or descriptions, so add explicit declarations when those details matter.
 
-### Using the `param` Helper for Simple Tools
+### Using the `parameter` Helper for Simple Tools
 
-If your tool just needs a few scalar arguments with descriptions or non-string types, use the `param` helper. RubyLLM translates these declarations into JSON Schema under the hood.
+If your tool just needs a few scalar arguments with descriptions or non-string types, use the `parameter` helper. RubyLLM translates these declarations into JSON Schema under the hood.
 
 ```ruby
 class Distance < RubyLLM::Tool
-  desc "Calculates distance between two cities"
-  param :origin, desc: "Origin city name"
-  param :destination, description: "Destination city name"
-  param :units, type: :string, desc: "Unit system (metric or imperial)", required: false
+  description "Calculates distance between two cities"
+  parameter :origin, description: "Origin city name"
+  parameter :destination, description: "Destination city name"
+  parameter :units, type: :string, description: "Unit system (metric or imperial)", required: false
 
   def execute(origin:, destination:, units: "metric")
     # ...
@@ -76,15 +76,15 @@ class Distance < RubyLLM::Tool
 end
 ```
 
-### params DSL
+### parameters DSL
 
-When you need nested objects, arrays, enums, or union types, the `params do ... end` DSL produces the JSON Schema that function-calling models expect while staying Ruby-flavoured.
+When you need nested objects, arrays, enums, or union types, the `parameters do ... end` DSL produces the JSON Schema that function-calling models expect while staying Ruby-flavoured.
 
 ```ruby
 class Scheduler < RubyLLM::Tool
-  desc "Books a meeting"
+  description "Books a meeting"
 
-  params do
+  parameters do
     object :window, description: "Time window to reserve" do
       string :start, description: "ISO8601 start time"
       string :finish, description: "ISO8601 end time"
@@ -108,13 +108,13 @@ RubyLLM bundles the DSL through [`ruby_llm-schema`](https://github.com/danielfri
 
 ### Supplying JSON Schema Manually
 
-Prefer to own the JSON Schema yourself? Pass a schema hash (or a class/object responding to `#to_json_schema`) directly to `params`:
+Prefer to own the JSON Schema yourself? Pass a schema hash (or a class/object responding to `#to_json_schema`) directly to `parameters`:
 
 ```ruby
 class Lookup < RubyLLM::Tool
   description "Performs catalog lookups"
 
-  params type: "object",
+  parameters type: "object",
     properties: {
       sku: { type: "string", description: "Product SKU" },
       locale: { type: "string", description: "Country code", default: "US" }
@@ -131,46 +131,44 @@ end
 
 RubyLLM normalizes symbol keys, deep duplicates the schema, and sends it to providers unchanged. This gives you full control when you need it.
 
-## Returning Rich Content from Tools
+## Returning Structured Results from Tools
 
-Tools can return `RubyLLM::Content` objects with file attachments, allowing you to pass images, documents, or other files from your tools to the AI model:
+Tool results are text. Strings are sent as-is; a Hash or Array return is serialized to JSON, which models read natively and which persists cleanly:
 
 ```ruby
-class AnalyzeTool < RubyLLM::Tool
-  description "Analyzes data and returns results with visualizations"
-  param :query, desc: "Analysis query"
+class InventoryTool < RubyLLM::Tool
+  description "Checks warehouse inventory"
+  parameter :sku, description: "Product SKU"
 
-  def execute(query:)
-    chart_path = generate_chart(query)
-
-    RubyLLM::Content.new(
-      "Analysis complete for: #{query}",
-      [chart_path]  # Attach the generated chart (array of paths/blobs)
-    )
-  end
-
-  private
-
-  def generate_chart(query)
-    # Your chart generation logic
-    "/tmp/chart_#{Time.now.to_i}.png"
+  def execute(sku:)
+    { sku: sku, in_stock: 42, warehouse: "AMS-1" }  # sent as JSON
   end
 end
-
-chat = RubyLLM.chat.with_tool(AnalyzeTool)
-response = chat.ask("Analyze sales trends for Q4")
 ```
 
-When a tool returns a `Content` object:
-- The text and attachments are preserved in the conversation history
-- Vision-capable models can see and analyze attached images
-- The AI can reference the attachments in its response
+To make results citable on providers with citation support, return a `RubyLLM::SearchResults`; see [Citations]({% link _core_features/citations.md %}).
 
-This is particularly useful for:
-- **Data visualization:** Return charts, graphs, or diagrams
-- **Document processing:** Pass PDFs or documents for the AI to analyze
-- **Image generation:** Return generated or processed images
-- **Mixed media workflows:** Combine text results with visual elements
+## Returning Attachments from Tools
+
+A tool message is text plus files, like any other message. Return `content, [attachments]` and each lands on the right field:
+
+```ruby
+class DocumentSearch < RubyLLM::Tool
+  description "Searches the company drive"
+  parameter :query, description: "What to look for"
+
+  def execute(query:)
+    doc = Drive.search(query).first
+    return "Found: #{doc.name}", [RubyLLM::Attachment.new(doc.download_path)]
+  end
+end
+```
+
+The rule underneath is by type, so every natural variation works: strings become the message content, `RubyLLM::Attachment` objects become its attachments. Return a bare attachment for a file-only result, or several attachments for multiple files. Arrays without attachments stay structured data and serialize to JSON as usual.
+
+Vision-capable models see the files: search tools can hand back the documents they found, chart tools their rendered graphs, browser tools their screenshots.
+
+RubyLLM renders tool attachments in each provider's shape. Anthropic and Bedrock Converse take them as native tool-result blocks; Gemini gets the media as parts alongside the function response; OpenAI tool results are text-only on the wire, so the files ride a user message spliced in right after the result. Providers that cannot take a file type at all (for example, images on DeepSeek) raise `UnsupportedAttachmentError` rather than silently dropping files.
 
 ## Custom Initialization
 
@@ -180,12 +178,12 @@ Tools can have custom initialization:
 class DocumentSearch < RubyLLM::Tool
   description "Searches documents by relevance"
 
-  param :query,
-    desc: "The search query"
+  parameter :query,
+    description: "The search query"
 
-  param :limit,
+  parameter :limit,
     type: :integer,
-    desc: "Maximum number of results",
+    description: "Maximum number of results",
     required: false
 
   def initialize(database)
@@ -198,7 +196,7 @@ class DocumentSearch < RubyLLM::Tool
 end
 
 search_tool = DocumentSearch.new(MyDatabase)
-chat.with_tool(search_tool)
+chat.with_tools(search_tool)
 ```
 
 Use custom initialization for dependencies and runtime state. If two tools need
@@ -209,17 +207,17 @@ parameter schema and `execute` signature stay together.
 
 ### Provider-Specific Parameters
 
-Some providers accept additional metadata alongside the JSON Schema, for example Anthropic's `cache_control` hints. Use `with_params` to declare these once on the tool class and RubyLLM will merge them into the payload when the provider supports the keys.
+Some providers accept additional metadata alongside the JSON Schema, for example Anthropic's `cache_control` hints. Use `provider_options` to declare these once on the tool class and RubyLLM will merge them into the payload when the provider supports the keys.
 
 ```ruby
 class TodoTool < RubyLLM::Tool
   description "Adds a task to the shared TODO list"
 
-  params do
+  parameters do
     string :title, description: "Human-friendly task description"
   end
 
-  with_params cache_control: { type: "ephemeral" }
+  provider_options cache_control: { type: "ephemeral" }
 
   def execute(title:)
     Todo.create!(title:)
@@ -229,6 +227,8 @@ end
 ```
 
 Provider metadata is passed through verbatim. Turn on `RUBYLLM_DEBUG=true` if you want to inspect the final payload while experimenting.
+
+Pass `nil` to `provider_options` to clear provider-specific tool options.
 
 ## Next Steps
 

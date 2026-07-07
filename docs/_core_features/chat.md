@@ -44,7 +44,7 @@ response = chat.ask "Explain the concept of 'Convention over Configuration' in R
 puts response.content
 # => "Convention over Configuration (CoC) is a core principle of Ruby on Rails..."
 
-puts "Model Used: #{response.model_id}"
+puts "Model Used: #{response.model}"
 puts "Tokens Used: #{response.tokens.input} input, #{response.tokens.output} output"
 puts "Cache Reads: #{response.tokens.cache_read}" # v1.15+
 puts "Cache Writes: #{response.tokens.cache_write}" # v1.15+
@@ -98,6 +98,9 @@ puts response.content
 
 # Append an additional system instruction only when needed
 chat.with_instructions "Use exactly one short paragraph.", append: true
+
+# Clear system instructions
+chat.without_instructions
 ```
 
 System prompts are added to the conversation as messages with the `:system` role and are sent with every request to the AI provider. This ensures the model always considers your instructions when generating responses.
@@ -122,6 +125,12 @@ chat.with_model('{{ site.models.anthropic_latest }}')
 response2 = chat.ask "Follow-up question..."
 ```
 
+Pass `nil` to return to your configured default model:
+
+```ruby
+chat.with_model(nil)
+```
+
 For detailed information about model selection, capabilities, aliases, and working with custom models, see [Working with Models]({% link _reference/models.md %}). For exactly how a name becomes a model and provider, see [Model Resolution]({% link _reference/model-resolution.md %}).
 
 ## Controlling Responses
@@ -144,7 +153,11 @@ response2 = creative_chat.ask "Write a short poem about the color blue."
 puts response2.content
 ```
 
-The `with_temperature` method returns the chat instance, allowing you to chain multiple configuration calls together.
+The `with_temperature` method returns the chat instance, allowing you to chain multiple configuration calls together. Call `without_temperature` to clear a temperature override:
+
+```ruby
+chat.without_temperature
+```
 
 For provider-specific request options, wire protocols, raw content blocks, and custom HTTP headers, see [Advanced Request Control]({% link _core_features/chat-request-control.md %}). For local ERB prompt templates, see [Prompt Rendering]({% link _core_features/prompt-rendering.md %}). For provider-side prompt reuse, see [Prompt Caching]({% link _core_features/prompt-caching.md %}).
 

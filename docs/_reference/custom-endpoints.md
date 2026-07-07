@@ -75,7 +75,7 @@ puts response.content
 chat.with_model(
   'gpt-5-alpha',
   provider: :openai,                # MUST specify provider
-  assume_exists: true
+  assume_model_exists: true
 )
 ```
 

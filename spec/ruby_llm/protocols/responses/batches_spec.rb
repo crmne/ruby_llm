@@ -33,7 +33,7 @@ RSpec.describe RubyLLM::Protocols::Responses::Batches do
                               {
                                 custom_id: '0',
                                 model: 'gpt-5-nano',
-                                params: { model: 'gpt-5-nano', input: 'hi', stream: false }
+                                payload: { model: 'gpt-5-nano', input: 'hi', stream: false }
                               }
                             ])
 
@@ -52,8 +52,8 @@ RSpec.describe RubyLLM::Protocols::Responses::Batches do
 
     it 'rejects mixed-model batches' do
       requests = [
-        { custom_id: '0', model: 'gpt-5-nano', params: { model: 'gpt-5-nano', input: 'hi' } },
-        { custom_id: '1', model: 'gpt-5-mini', params: { model: 'gpt-5-mini', input: 'hi' } }
+        { custom_id: '0', model: 'gpt-5-nano', payload: { model: 'gpt-5-nano', input: 'hi' } },
+        { custom_id: '1', model: 'gpt-5-mini', payload: { model: 'gpt-5-mini', input: 'hi' } }
       ]
 
       expect { protocol.create_batch(requests) }.to raise_error(RubyLLM::Error, /one model/)
@@ -62,7 +62,7 @@ RSpec.describe RubyLLM::Protocols::Responses::Batches do
 
   describe '#validate_batch_requests!' do
     it 'rejects unsupported payload shapes' do
-      expect { protocol.send(:validate_batch_requests!, [{ params: { messages: [] } }]) }
+      expect { protocol.send(:validate_batch_requests!, [{ payload: { messages: [] } }]) }
         .to raise_error(RubyLLM::Error, /responses payloads/)
     end
   end

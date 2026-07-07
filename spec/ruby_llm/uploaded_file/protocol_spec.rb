@@ -17,6 +17,14 @@ RSpec.describe RubyLLM::UploadedFile::Protocol do
       expect(payload.fetch(:purpose)).to eq('batch')
       expect(payload.fetch(:file).original_filename).to eq('ruby.txt')
       expect(payload.fetch(:file).local_path).to eq(fixture_path)
+      expect(payload).not_to have_key(:expires_after)
+    end
+
+    it 'translates expires_in to the anchored expires_after shape' do
+      payload = protocol.send(:render_upload_payload, RubyLLM::Attachment.new(fixture_path),
+                              purpose: 'batch', expires_in: 3600)
+
+      expect(payload.fetch(:expires_after)).to eq(anchor: 'created_at', seconds: 3600)
     end
 
     it 'requires a purpose' do
@@ -74,6 +82,14 @@ RSpec.describe RubyLLM::UploadedFile::Protocol do
 
       expect(payload.fetch(:purpose)).to eq('batch')
       expect(payload.fetch(:file).original_filename).to eq('ruby.txt')
+      expect(payload).not_to have_key(:expiry)
+    end
+
+    it 'translates expires_in to whole expiry hours, rounding up' do
+      payload = protocol.send(:render_upload_payload, RubyLLM::Attachment.new(fixture_path),
+                              purpose: 'batch', expires_in: 5400)
+
+      expect(payload.fetch(:expiry)).to eq(2)
     end
   end
 
@@ -88,6 +104,13 @@ RSpec.describe RubyLLM::UploadedFile::Protocol do
 
       expect(payload).to have_key(:file)
       expect(payload).not_to have_key(:purpose)
+      expect(payload).not_to have_key(:expires_after)
+    end
+
+    it 'passes expires_in as expires_after seconds' do
+      payload = protocol.send(:render_upload_payload, RubyLLM::Attachment.new(fixture_path), expires_in: 3600)
+
+      expect(payload.fetch(:expires_after)).to eq(3600)
     end
   end
 

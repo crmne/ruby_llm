@@ -13,7 +13,7 @@ module RubyLLM
           def vertex_batch_request(request)
             {
               custom_id: request[:custom_id],
-              request: batch_params(request)
+              request: batch_payload(request)
             }
           end
 
@@ -22,13 +22,13 @@ module RubyLLM
               raise ConfigurationError, 'vertexai Anthropic batches require a regional vertexai_location'
             end
 
-            return if requests.all? { |request| anthropic_batch_payload?(request.fetch(:params)) }
+            return if requests.all? { |request| anthropic_batch_payload?(request.fetch(:payload)) }
 
             raise Error, 'vertexai Anthropic batch requests require Anthropic message payloads'
           end
 
-          def anthropic_batch_payload?(params)
-            params.key?(:messages) || params.key?('messages')
+          def anthropic_batch_payload?(payload)
+            payload.key?(:messages) || payload.key?('messages')
           end
 
           def vertex_batch_model_path(model)

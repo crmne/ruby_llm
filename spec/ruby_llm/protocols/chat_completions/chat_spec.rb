@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 RSpec.describe RubyLLM::Protocols::ChatCompletions::Chat do
-  describe '.parse_completion_response' do
+  describe '.parse_completion_body' do
     it 'captures cached token information when present' do
       response_body = {
         'model' => 'gpt-4.1-nano',
@@ -25,12 +25,12 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Chat do
       response = instance_double(Faraday::Response, body: response_body)
       allow(described_class).to receive(:parse_tool_calls).and_return(nil)
 
-      message = described_class.parse_completion_response(response)
+      message = described_class.parse_completion_body(response_body, raw: response)
 
-      expect(message.cached_tokens).to eq(6)
+      expect(message.cache_read_tokens).to eq(6)
       expect(message.input_tokens).to eq(2)
       expect(message.output_tokens).to eq(4)
-      expect(message.cache_creation_tokens).to eq(0)
+      expect(message.cache_write_tokens).to eq(0)
     end
 
     it 'preserves raw finish reasons' do
@@ -58,7 +58,7 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Chat do
       allow(described_class).to receive(:parse_tool_calls).and_return(
         'call_1' => RubyLLM::ToolCall.new(id: 'call_1', name: 'weather', arguments: {})
       )
-      message = described_class.parse_completion_response(response)
+      message = described_class.parse_completion_body(response_body, raw: response)
 
       expect(message.finish_reason).to eq('tool_calls')
     end
@@ -85,12 +85,12 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Chat do
       response = instance_double(Faraday::Response, body: response_body)
       allow(described_class).to receive(:parse_tool_calls).and_return(nil)
 
-      message = described_class.parse_completion_response(response)
+      message = described_class.parse_completion_body(response_body, raw: response)
 
       expect(message.input_tokens).to eq(14)
-      expect(message.cached_tokens).to eq(192)
+      expect(message.cache_read_tokens).to eq(192)
       expect(message.output_tokens).to eq(4)
-      expect(message.cache_creation_tokens).to eq(0)
+      expect(message.cache_write_tokens).to eq(0)
     end
 
     it 'keeps OpenAI reasoning tokens inside completion output tokens' do
@@ -115,7 +115,7 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Chat do
       response = instance_double(Faraday::Response, body: response_body)
       allow(described_class).to receive(:parse_tool_calls).and_return(nil)
 
-      message = described_class.parse_completion_response(response)
+      message = described_class.parse_completion_body(response_body, raw: response)
 
       expect(message.output_tokens).to eq(1306)
       expect(message.thinking_tokens).to eq(1087)
@@ -143,7 +143,7 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Chat do
       response = instance_double(Faraday::Response, body: response_body)
       allow(described_class).to receive(:parse_tool_calls).and_return(nil)
 
-      message = described_class.parse_completion_response(response)
+      message = described_class.parse_completion_body(response_body, raw: response)
 
       expect(message.output_tokens).to eq(9928)
       expect(message.thinking_tokens).to eq(9827)
@@ -171,7 +171,7 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Chat do
       response = instance_double(Faraday::Response, body: response_body)
       allow(described_class).to receive(:parse_tool_calls).and_return(nil)
 
-      message = described_class.parse_completion_response(response)
+      message = described_class.parse_completion_body(response_body, raw: response)
 
       expect(message.output_tokens).to eq(11_395)
       expect(message.thinking_tokens).to eq(193_947)
@@ -193,10 +193,9 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Chat do
     end
 
     it 'opts OpenAI into native file parts for PDF attachments' do
-      content = RubyLLM::Content.new('Summarize this file')
-      content.add_attachment(StringIO.new('pdf bytes'), filename: 'proposal.pdf')
+      attachment = RubyLLM::Attachment.new(StringIO.new('pdf bytes'), filename: 'proposal.pdf')
 
-      messages = [RubyLLM::Message.new(role: :user, content:)]
+      messages = [RubyLLM::Message.new(role: :user, content: 'Summarize this file', attachments: [attachment])]
 
       formatted = RubyLLM::Protocols::ChatCompletions.allocate.send(:format_messages, messages)
 
@@ -234,11 +233,11 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Chat do
 
     it 'keeps image attachments disabled for DeepSeek' do
       provider = RubyLLM::Providers::DeepSeek::ChatCompletions.allocate
-      content = RubyLLM::Content.new('Describe this')
-      content.add_attachment(StringIO.new('png bytes'), filename: 'image.png')
+      attachment = RubyLLM::Attachment.new(StringIO.new('png bytes'), filename: 'image.png')
+      message = RubyLLM::Message.new(role: :user, content: 'Describe this', attachments: [attachment])
 
       expect do
-        provider.send(:format_messages, [RubyLLM::Message.new(role: :user, content:)])
+        provider.send(:format_messages, [message])
       end.to raise_error(RubyLLM::UnsupportedAttachmentError, %r{Unsupported attachment type: image/png})
     end
 
@@ -257,11 +256,10 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Chat do
       provider = RubyLLM::Providers::Perplexity::ChatCompletions.allocate
 
       %w[csv txt md html json].each do |extension|
-        content = RubyLLM::Content.new('Summarize this file')
-        content.add_attachment(StringIO.new('notes'), filename: "notes.#{extension}")
+        attachment = RubyLLM::Attachment.new(StringIO.new('notes'), filename: "notes.#{extension}")
+        message = RubyLLM::Message.new(role: :user, content: 'Summarize this file', attachments: [attachment])
 
-        formatted = provider.send(:format_messages, [RubyLLM::Message.new(role: :user, content:)])
-        attachment = content.attachments.first
+        formatted = provider.send(:format_messages, [message])
 
         expect(formatted.dig(0, :content, 1)).to eq(
           type: 'text',
@@ -283,18 +281,17 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Chat do
 
     it 'keeps PDF file parts disabled for xAI chat completions' do
       provider = RubyLLM::Providers::XAI::ChatCompletions.allocate
-      content = RubyLLM::Content.new('Summarize this file')
-      content.add_attachment(StringIO.new('pdf bytes'), filename: 'proposal.pdf')
+      attachment = RubyLLM::Attachment.new(StringIO.new('pdf bytes'), filename: 'proposal.pdf')
+      message = RubyLLM::Message.new(role: :user, content: 'Summarize this file', attachments: [attachment])
 
       expect do
-        provider.send(:format_messages, [RubyLLM::Message.new(role: :user, content:)])
+        provider.send(:format_messages, [message])
       end.to raise_error(RubyLLM::UnsupportedAttachmentError, %r{Unsupported attachment type: application/pdf})
     end
 
     def docx_message
-      content = RubyLLM::Content.new('Summarize this file')
-      content.add_attachment(StringIO.new('docx bytes'), filename: 'proposal.docx')
-      RubyLLM::Message.new(role: :user, content:)
+      attachment = RubyLLM::Attachment.new(StringIO.new('docx bytes'), filename: 'proposal.docx')
+      RubyLLM::Message.new(role: :user, content: 'Summarize this file', attachments: [attachment])
     end
   end
 

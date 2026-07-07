@@ -10,7 +10,7 @@ RSpec.describe RubyLLM::Providers::Mistral::ChatCompletions::Batches do
       request = {
         custom_id: '0',
         model: 'mistral-small-latest',
-        params: {
+        payload: {
           model: 'mistral-small-latest',
           messages: [{ role: 'user', content: 'Hi' }],
           stream: false
@@ -31,8 +31,8 @@ RSpec.describe RubyLLM::Providers::Mistral::ChatCompletions::Batches do
   describe '#create_batch' do
     it 'rejects mixed-model jobs' do
       requests = [
-        { model: 'mistral-small-latest', params: {} },
-        { model: 'mistral-large-latest', params: {} }
+        { model: 'mistral-small-latest', payload: {} },
+        { model: 'mistral-large-latest', payload: {} }
       ]
 
       expect { protocol.create_batch(requests) }
@@ -87,7 +87,7 @@ RSpec.describe RubyLLM::Providers::Mistral::ChatCompletions::Batches do
 
       expect(index).to eq(1)
       expect(message.content).to eq('Bonjour')
-      expect(message.model_id).to eq('mistral-small-latest')
+      expect(message.model).to eq('mistral-small-latest')
     end
   end
 end

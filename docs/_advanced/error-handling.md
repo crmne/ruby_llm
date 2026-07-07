@@ -34,29 +34,33 @@ After reading this guide, you will know:
 
 ## RubyLLM Error Hierarchy
 
-All errors raised directly by RubyLLM inherit from `RubyLLM::Error`. Specific errors map to common HTTP status codes or library-specific issues:
+Provider/API operation errors inherit from `RubyLLM::Error`. Local setup and programming errors inherit from `StandardError` directly, so rescue them separately when you need to handle them.
 
 ```ruby
-RubyLLM::Error                    # Base error class for API/network issues
+RubyLLM::Error                    # Base error class for provider-operation issues
     RubyLLM::BadRequestError      # 400: Invalid request parameters
     RubyLLM::UnauthorizedError    # 401: API key issues
     RubyLLM::PaymentRequiredError # 402: Billing issues
     RubyLLM::ForbiddenError       # 403: Permission issues
     RubyLLM::ContextLengthExceededError # Context/token limits exceeded (provider-specific)
+    RubyLLM::ToolCallParseError   # Provider returned malformed tool-call arguments
+    RubyLLM::UnsupportedAttachmentError # Attachment cannot be sent to this provider/model
     RubyLLM::RateLimitError       # 429: Rate limit exceeded
     RubyLLM::ServerError          # 500: Provider server error
     RubyLLM::ServiceUnavailableError # 502/503/504: Service unavailable
     RubyLLM::OverloadedError      # 529: Service overloaded (Specific providers)
 
-# Non-API Errors (inherit from StandardError)
+# Local Errors (inherit from StandardError)
 RubyLLM::ConfigurationError   # Missing required configuration (e.g., API key)
+RubyLLM::PromptNotFoundError  # Prompt file not found
 RubyLLM::ModelNotFoundError   # Requested model ID not found in registry
 RubyLLM::InvalidRoleError     # Invalid role symbol used for a message
+RubyLLM::InvalidToolChoiceError # Invalid tool choice option
 ```
 
 ## Basic Error Handling
 
-The fundamental way to handle errors is using Ruby's `begin`/`rescue` block. Catching the base `RubyLLM::Error` will handle most API-related issues.
+The fundamental way to handle errors is using Ruby's `begin`/`rescue` block. Catching the base `RubyLLM::Error` will handle most provider-operation issues.
 
 ```ruby
 begin

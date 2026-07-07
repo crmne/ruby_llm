@@ -1,16 +1,29 @@
 # frozen_string_literal: true
 
 module RubyLLM
-  # Represents provider thinking output.
+  # A Thinking holds the reasoning output a provider returned alongside a
+  # response. Instances appear on Message#thinking, and on Chunk#thinking
+  # while streaming, when the model exposes its thinking.
+  #
+  #   chat = RubyLLM.chat(model: 'claude-opus-4.5').with_thinking(effort: :high)
+  #   response = chat.ask "What is 15 * 23?"
+  #   response.thinking&.text
+  #   response.thinking&.signature
+  #
   class Thinking
-    attr_reader :text, :signature
+    # The reasoning text the provider returned, or +nil+.
+    attr_reader :text
 
-    def initialize(text: nil, signature: nil)
+    # The provider's opaque signature or encrypted reasoning payload for the
+    # thinking block, or +nil+. Shown as redacted in pretty-print output.
+    attr_reader :signature
+
+    def initialize(text: nil, signature: nil) # :nodoc:
       @text = text
       @signature = signature
     end
 
-    def self.build(text: nil, signature: nil)
+    def self.build(text: nil, signature: nil) # :nodoc:
       text = nil if text.is_a?(String) && text.empty?
       signature = nil if signature.is_a?(String) && signature.empty?
 
@@ -19,7 +32,7 @@ module RubyLLM
       new(text: text, signature: signature)
     end
 
-    def pretty_print(printer)
+    def pretty_print(printer) # :nodoc:
       printer.object_group(self) do
         printer.breakable
         printer.text 'text='
@@ -32,8 +45,7 @@ module RubyLLM
   end
 
   class Thinking
-    # Normalized config for thinking across providers.
-    class Config
+    class Config # :nodoc: all
       attr_reader :effort, :budget
 
       def initialize(effort: nil, budget: nil)

@@ -97,6 +97,7 @@ AUDIO_MODELS = [
 
 EMBEDDING_MODELS = [
   { provider: :azure, model: 'Cohere-embed-v3-english' },
+  { provider: :bedrock, model: 'amazon.titan-embed-text-v2:0' },
   { provider: :gemini, model: 'gemini-embedding-001' },
   { provider: :mistral, model: 'mistral-embed' },
   { provider: :openai, model: 'text-embedding-3-small' },
@@ -113,6 +114,8 @@ TRANSCRIPTION_MODELS = [
 image_generation_models = [
   { provider: :openai, model: 'gpt-image-1', supports_size: false },
   { provider: :gemini, model: 'imagen-4.0-generate-001', supports_size: false },
+  { provider: :gemini, model: 'gemini-3.1-flash-lite-image', supports_size: false },
+  { provider: :vertexai, model: 'gemini-3.1-flash-lite-image', supports_size: false },
   { provider: :openrouter, model: 'google/gemini-2.5-flash-image', supports_size: false }
 ].freeze
 IMAGE_GENERATION_MODELS = filter_local_providers(image_generation_models).freeze

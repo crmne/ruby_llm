@@ -4,24 +4,24 @@ require 'spec_helper'
 
 RSpec.describe RubyLLM::StreamAccumulator do
   describe '#add' do
-    it 'ignores an empty model_id from an initial chunk' do
+    it 'ignores an empty model id from an initial chunk' do
       accumulator = described_class.new
 
-      accumulator.add(RubyLLM::Chunk.new(role: :assistant, content: '', model_id: ''))
-      accumulator.add(RubyLLM::Chunk.new(role: :assistant, content: 'Hi', model_id: 'gpt-5.4-2026-03-05'))
+      accumulator.add(RubyLLM::Chunk.new(role: :assistant, content: '', model: ''))
+      accumulator.add(RubyLLM::Chunk.new(role: :assistant, content: 'Hi', model: 'gpt-5.4-2026-03-05'))
 
       message = accumulator.to_message(nil)
-      expect(message.model_id).to eq('gpt-5.4-2026-03-05')
+      expect(message.model).to eq('gpt-5.4-2026-03-05')
     end
 
-    it 'keeps the first non-empty model_id' do
+    it 'keeps the first non-empty model id' do
       accumulator = described_class.new
 
-      accumulator.add(RubyLLM::Chunk.new(role: :assistant, content: 'Hi', model_id: 'model-a'))
-      accumulator.add(RubyLLM::Chunk.new(role: :assistant, content: '!', model_id: 'model-b'))
+      accumulator.add(RubyLLM::Chunk.new(role: :assistant, content: 'Hi', model: 'model-a'))
+      accumulator.add(RubyLLM::Chunk.new(role: :assistant, content: '!', model: 'model-b'))
 
       message = accumulator.to_message(nil)
-      expect(message.model_id).to eq('model-a')
+      expect(message.model).to eq('model-a')
     end
 
     it 'handles tool call deltas that omit arguments' do
@@ -61,6 +61,34 @@ RSpec.describe RubyLLM::StreamAccumulator do
         'query' => 'market news',
         'date' => '2026-03-31'
       )
+    end
+
+    it 'wraps malformed streamed tool call arguments in a RubyLLM error' do
+      accumulator = described_class.new
+      response = instance_double(Faraday::Response)
+
+      accumulator.add(
+        RubyLLM::Chunk.new(
+          role: :assistant,
+          content: nil,
+          tool_calls: { 0 => RubyLLM::ToolCall.new(id: 'call_1', name: 'weather', arguments: '{"city":"Berlin"') }
+        )
+      )
+      accumulator.add(RubyLLM::Chunk.new(role: :assistant, content: nil, finish_reason: 'length'))
+
+      error = nil
+
+      expect do
+        accumulator.to_message(response)
+      rescue RubyLLM::ToolCallParseError => e
+        error = e
+        raise
+      end.to raise_error(RubyLLM::ToolCallParseError)
+
+      expect(error).to be_a(RubyLLM::Error)
+      expect(error.response).to eq(response)
+      expect(error.finish_reason).to eq('length')
+      expect(error.cause).to be_a(JSON::ParserError)
     end
 
     it 'deduplicates citations repeated across chunks' do

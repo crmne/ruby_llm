@@ -3,12 +3,58 @@
 require 'stringio'
 
 module RubyLLM
-  # Metadata for a file stored by a provider.
+  # An UploadedFile is the metadata record for a file stored with a provider
+  # through its Files API. Upload a file once with ::upload, then reuse its
+  # provider id or URI, for example as a chat attachment or in a batch.
+  #
+  #   file = RubyLLM.upload("batch.jsonl", purpose: "batch")
+  #   file.id         # => "file_..."
+  #   file.filename   # => "batch.jsonl"
+  #   file.byte_size  # => 1234
+  #
+  # File ids are provider-owned. Persist #provider alongside #id and pass it
+  # back when finding or downloading the file later.
   class UploadedFile
-    attr_reader :id, :provider, :filename, :byte_size, :created_at, :expires_at, :status, :mime_type, :purpose, :uri,
-                :downloadable, :metadata
+    # The provider-assigned file identifier, such as <tt>"file_..."</tt>.
+    attr_reader :id
 
-    def initialize(id:, **attributes)
+    # The slug of the provider that stores the file.
+    attr_reader :provider
+
+    # The filename reported by the provider.
+    attr_reader :filename
+
+    # The file size in bytes.
+    attr_reader :byte_size
+
+    # The Time the provider stored the file.
+    attr_reader :created_at
+
+    # The Time the provider will delete the file, or +nil+ if it does not
+    # expire.
+    attr_reader :expires_at
+
+    # The provider-reported processing status of the file.
+    attr_reader :status
+
+    # The MIME type of the stored file.
+    attr_reader :mime_type
+
+    # The purpose the file was uploaded for, such as <tt>"batch"</tt>, when
+    # the provider tracks one.
+    attr_reader :purpose
+
+    # The provider URI for the file, such as a Gemini Files API URI or a
+    # <tt>gs://</tt> or <tt>s3://</tt> location for storage-backed providers.
+    attr_reader :uri
+
+    # Whether the provider allows downloading the file's content.
+    attr_reader :downloadable
+
+    # The raw provider response data for the file, as a Hash.
+    attr_reader :metadata
+
+    def initialize(id:, **attributes) # :nodoc:
       @id = id
       @provider = attributes[:provider]
       @filename = attributes[:filename]
@@ -23,10 +69,7 @@ module RubyLLM
       @metadata = attributes[:metadata] || {}
     end
 
-    # Shared executor for provider-managed file APIs. The public API lives on
-    # UploadedFile; concrete wire formats live under their owning protocol or
-    # provider namespace.
-    class Protocol
+    class Protocol # :nodoc:
       attr_reader :provider, :config, :connection
 
       def initialize(provider)
@@ -35,10 +78,10 @@ module RubyLLM
         @connection = provider.connection
       end
 
-      def upload(file, filename: nil, purpose: nil, expires_after: nil, expiry: nil, visibility: nil, # rubocop:disable Metrics/ParameterLists
+      def upload(file, filename: nil, purpose: nil, expires_in: nil, visibility: nil, # rubocop:disable Metrics/ParameterLists
                  display_name: nil, uri: nil, content_type: nil)
         attachment = file_attachment(file, filename:)
-        options = { purpose:, expires_after:, expiry:, visibility:, display_name:, uri:, content_type: }.compact
+        options = { purpose:, expires_in:, visibility:, display_name:, uri:, content_type: }.compact
         response = @connection.post(files_url, render_upload_payload(attachment, **options)) do |request|
           request.headers.delete('Content-Type')
           upload_headers(request)
@@ -78,7 +121,7 @@ module RubyLLM
       end
 
       # rubocop:disable Lint/UnusedMethodArgument, Metrics/ParameterLists
-      def render_upload_payload(attachment, purpose: nil, expires_after: nil, expiry: nil, visibility: nil,
+      def render_upload_payload(attachment, purpose: nil, expires_in: nil, visibility: nil,
                                 display_name: nil, uri: nil, content_type: nil)
         { file: file_part(attachment) }
       end
@@ -142,18 +185,45 @@ module RubyLLM
       end
     end
 
-    def self.upload(file, provider: nil, context: nil, filename: nil, purpose: nil, expires_after: nil, expiry: nil, # rubocop:disable Metrics/ParameterLists
+    # Uploads +file+ to the provider's Files API and returns an UploadedFile.
+    # +file+ may be a path, an IO object, or an Attachment. When +provider:+
+    # is omitted, the provider of the configured default model is used.
+    # Also available as RubyLLM.upload.
+    #
+    #   RubyLLM::UploadedFile.upload("document.pdf", provider: :anthropic)
+    #   RubyLLM::UploadedFile.upload(io, provider: :openai, purpose: "batch",
+    #                                filename: "batch.jsonl")
+    #
+    # OpenAI and Azure require +purpose:+. Pass +expires_in:+ as a number of
+    # seconds to have the provider delete the file automatically; OpenAI,
+    # xAI, and Mistral support it, and Mistral rounds up to whole hours.
+    # The remaining keywords are provider-specific options: +visibility:+
+    # (Mistral), +display_name:+ (Gemini), and +uri:+ and +content_type:+
+    # (storage-backed providers such as Vertex AI and Bedrock).
+    def self.upload(file, provider: nil, context: nil, filename: nil, purpose: nil, expires_in: nil, # rubocop:disable Metrics/ParameterLists
                     visibility: nil, display_name: nil, uri: nil, content_type: nil)
-      options = { filename:, purpose:, expires_after:, expiry:, visibility:, display_name:, uri:, content_type: }
+      options = { filename:, purpose:, expires_in:, visibility:, display_name:, uri:, content_type: }
                 .compact
 
       provider_for(provider, context).upload_file(file, **options)
     end
 
+    # Fetches metadata for an existing provider file by +id+ and returns an
+    # UploadedFile. When +provider:+ is omitted, the provider of the
+    # configured default model is used.
+    #
+    #   file = RubyLLM::UploadedFile.find("file_123")
+    #
     def self.find(id, provider: nil, context: nil)
       provider_for(provider, context).find_file(id)
     end
 
+    # Downloads the content of the provider file +id+ and returns the raw
+    # body. Also available as RubyLLM.download.
+    #
+    #   content = RubyLLM.download(file.id)
+    #
+    # Not every provider allows downloads; see #downloadable.
     def self.download(id, provider: nil, context: nil)
       provider_for(provider, context).download_file(id)
     end

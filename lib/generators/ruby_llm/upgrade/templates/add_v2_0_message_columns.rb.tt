@@ -1,4 +1,4 @@
-class AddRubyLlmV20Columns < ActiveRecord::Migration<%= migration_version %>
+class <%= 'add_ruby_llm_v2_0_columns'.camelize %> < ActiveRecord::Migration<%= migration_version %>
   def change
     unless column_exists?(:<%= message_table_name %>, :citations)
       add_column :<%= message_table_name %>, :citations, :json
@@ -10,6 +10,24 @@ class AddRubyLlmV20Columns < ActiveRecord::Migration<%= migration_version %>
 
     unless column_exists?(:<%= message_table_name %>, :cache_until_here)
       add_column :<%= message_table_name %>, :cache_until_here, :boolean, null: false, default: false
+    end
+
+    unless column_exists?(:<%= message_table_name %>, :total_cost)
+      add_column :<%= message_table_name %>, :total_cost, :decimal, precision: 16, scale: 10
+    end
+
+    unless column_exists?(:<%= message_table_name %>, :cost_details)
+      add_column :<%= message_table_name %>, :cost_details, :json
+    end
+
+    if column_exists?(:<%= message_table_name %>, :cached_tokens) &&
+       !column_exists?(:<%= message_table_name %>, :cache_read_tokens)
+      rename_column :<%= message_table_name %>, :cached_tokens, :cache_read_tokens
+    end
+
+    if column_exists?(:<%= message_table_name %>, :cache_creation_tokens) &&
+       !column_exists?(:<%= message_table_name %>, :cache_write_tokens)
+      rename_column :<%= message_table_name %>, :cache_creation_tokens, :cache_write_tokens
     end
 
     reversible do |dir|

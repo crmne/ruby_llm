@@ -55,6 +55,20 @@ module RubyLLM
           normalize_inference_profile_id(model_id, inference_types, @config.bedrock_region)
         end
 
+        def resolve_registry_id(model_id, models, config)
+          region = config.bedrock_region.to_s
+          return model_id if region.empty?
+
+          candidate_id = with_region_prefix(model_id, region)
+          return model_id if candidate_id == model_id
+
+          candidate = models.all.find { |m| m.provider == 'bedrock' && m.id == candidate_id }
+          return model_id unless candidate
+
+          inference_types = Array(candidate.metadata[:inference_types] || candidate.metadata['inference_types'])
+          normalize_inference_profile_id(model_id, inference_types, region)
+        end
+
         def normalize_inference_profile_id(model_id, inference_types, region)
           return model_id unless inference_types.include?('INFERENCE_PROFILE')
           return model_id if inference_types.include?('ON_DEMAND')

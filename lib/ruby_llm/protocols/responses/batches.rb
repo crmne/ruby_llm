@@ -14,13 +14,13 @@ module RubyLLM
         end
 
         def validate_batch_requests!(requests)
-          return if requests.all? { |request| responses_payload?(request.fetch(:params)) }
+          return if requests.all? { |request| responses_payload?(request.fetch(:payload)) }
 
           raise Error, "#{@provider.slug} batch requests require responses payloads"
         end
 
-        def responses_payload?(params)
-          params.key?(:input) || params.key?('input')
+        def responses_payload?(payload)
+          payload.key?(:input) || payload.key?('input')
         end
 
         def parse_batch_completion_response(body)

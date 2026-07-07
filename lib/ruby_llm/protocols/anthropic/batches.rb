@@ -9,7 +9,7 @@ module RubyLLM
         include RubyLLM::Batch::Helpers
 
         def create_batch(requests)
-          requests = requests.map { |request| request.slice(:custom_id, :params) }
+          requests = requests.map { |request| { custom_id: request[:custom_id], params: request[:payload] } }
           response = @connection.post batches_url, { requests: requests }
           parse_batch_response response.body
         end

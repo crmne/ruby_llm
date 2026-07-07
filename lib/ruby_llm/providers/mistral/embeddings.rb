@@ -11,12 +11,14 @@ module RubyLLM
           'embeddings'
         end
 
-        def render_embedding_payload(text, model:, dimensions:, params: {}) # rubocop:disable Lint/UnusedMethodArgument
+        # rubocop:disable Lint/UnusedMethodArgument, Metrics/ParameterLists
+        def render_embedding_payload(text, model:, dimensions:, task_type: nil, title: nil, provider_options: {})
           {
             model: model,
             input: text
-          }.merge(params)
+          }.merge(provider_options)
         end
+        # rubocop:enable Lint/UnusedMethodArgument, Metrics/ParameterLists
 
         def parse_embedding_response(response, model:, text:)
           data = response.body

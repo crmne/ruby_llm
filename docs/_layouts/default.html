@@ -23,19 +23,38 @@ layout: table_wrappers
       {% include components/breadcrumbs.html %}
       <div id="main-content" class="main-content">
         <main>
-          {% if page.path and page.path contains ".md" %}
+          {% if page._raw_markdown and page._raw_markdown != "" %}
+            {% assign page_markdown_url = page.url | replace: '.html', '' | append: '.md' | replace: '/.md', '.md' %}
+            {% if page.url == '/' %}
+              {% assign page_markdown_url = '/index.md' %}
+            {% endif %}
             <div class="page-actions">
-              <button
-                type="button"
-                class="page-copy-button js-copy-page-markdown"
-                data-markdown-base="{{ site.markdown_source_base_url | escape }}"
-                data-markdown-path="{{ page.path | escape }}"
-                data-label-default="📋 Copy page"
-                data-label-success="✅ Copied!"
-                data-label-error="⚠ Copy failed"
-              >
-                <span class="page-copy-button__text">Copy page</span>
-              </button>
+              <textarea class="vp-raw-markdown" hidden aria-hidden="true">{{ page._raw_markdown | xml_escape }}</textarea>
+              <div class="copy-md-group">
+                <button class="copy-md-btn" type="button" title="Copy page as Markdown">
+                  <span class="vpi-copy copy-md-icon" aria-hidden="true"></span>
+                  <span class="copy-md-label" aria-live="polite">Copy page</span>
+                </button>
+                <button class="copy-md-toggle" type="button" aria-label="More options" aria-expanded="false">
+                  <span class="vpi-chevron-down copy-md-chevron"></span>
+                </button>
+                <div class="copy-md-dropdown vp-menu-transition" aria-hidden="true">
+                  <button class="copy-md-dropdown-item" type="button" data-action="copy">
+                    <span class="vpi-copy copy-md-dropdown-icon"></span>
+                    <div class="copy-md-dropdown-text">
+                      <span class="copy-md-dropdown-title">Copy page</span>
+                      <span class="copy-md-dropdown-desc">Copy page as Markdown for LLMs</span>
+                    </div>
+                  </button>
+                  <a class="copy-md-dropdown-item" href="{{ page_markdown_url | relative_url }}" target="_blank" rel="noreferrer">
+                    <span class="vpi-file-text copy-md-dropdown-icon"></span>
+                    <div class="copy-md-dropdown-text">
+                      <span class="copy-md-dropdown-title">View as Markdown</span>
+                      <span class="copy-md-dropdown-desc">View this page as plain text</span>
+                    </div>
+                  </a>
+                </div>
+              </div>
             </div>
           {% endif %}
 

@@ -6,10 +6,12 @@ RSpec.describe RubyLLM::Providers::OpenRouter::Chat do
   let(:provider) { RubyLLM::Providers::OpenRouter::ChatCompletions.allocate }
 
   describe '#parse_completion_response' do
-    it 'returns nil for a nil response body' do
+    it 'raises RubyLLM::Error for a nil response body' do
       response = instance_double(Faraday::Response, body: nil)
 
-      expect(provider.send(:parse_completion_response, response)).to be_nil
+      expect do
+        provider.send(:parse_completion_response, response)
+      end.to raise_error(RubyLLM::Error, 'Provider returned an empty response body')
     end
 
     it 'normalizes cached prompt tokens out of input tokens' do
@@ -34,8 +36,8 @@ RSpec.describe RubyLLM::Providers::OpenRouter::Chat do
       message = provider.send(:parse_completion_response, response)
 
       expect(message.input_tokens).to eq(2)
-      expect(message.cached_tokens).to eq(6)
-      expect(message.cache_creation_tokens).to eq(4)
+      expect(message.cache_read_tokens).to eq(6)
+      expect(message.cache_write_tokens).to eq(4)
       expect(message.output_tokens).to eq(4)
     end
 
@@ -84,10 +86,9 @@ RSpec.describe RubyLLM::Providers::OpenRouter::Chat do
 
   describe '#format_messages' do
     it 'opts OpenRouter into native file parts for PDF attachments' do
-      content = RubyLLM::Content.new('Summarize this file')
-      content.add_attachment(StringIO.new('pdf bytes'), filename: 'proposal.pdf')
+      attachment = RubyLLM::Attachment.new(StringIO.new('pdf bytes'), filename: 'proposal.pdf')
 
-      messages = [RubyLLM::Message.new(role: :user, content:)]
+      messages = [RubyLLM::Message.new(role: :user, content: 'Summarize this file', attachments: [attachment])]
 
       formatted = provider.send(:format_messages, messages)
 
@@ -96,11 +97,11 @@ RSpec.describe RubyLLM::Providers::OpenRouter::Chat do
     end
 
     it 'keeps non-PDF documents disabled for OpenRouter chat completions' do
-      content = RubyLLM::Content.new('Summarize this file')
-      content.add_attachment(StringIO.new('docx bytes'), filename: 'proposal.docx')
+      attachment = RubyLLM::Attachment.new(StringIO.new('docx bytes'), filename: 'proposal.docx')
+      message = RubyLLM::Message.new(role: :user, content: 'Summarize this file', attachments: [attachment])
 
       expect do
-        provider.send(:format_messages, [RubyLLM::Message.new(role: :user, content:)])
+        provider.send(:format_messages, [message])
       end.to raise_error(
         RubyLLM::UnsupportedAttachmentError,
         %r{Unsupported attachment type: application/vnd.openxmlformats-officedocument.wordprocessingml.document}

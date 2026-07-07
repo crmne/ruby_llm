@@ -10,7 +10,7 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Speech do
         model: 'gpt-4o-mini-tts',
         voice: nil,
         format: nil,
-        params: {}
+        provider_options: {}
       )
 
       expect(payload).to eq(
@@ -26,9 +26,7 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Speech do
         model: 'gpt-4o-mini-tts',
         voice: 'nova',
         format: 'wav',
-        params: { stream_format: 'audio' },
-        instructions: 'Speak warmly.',
-        speed: 1.2
+        provider_options: { instructions: 'Speak warmly.', speed: 1.2, stream_format: 'audio' }
       )
 
       expect(payload).to eq(

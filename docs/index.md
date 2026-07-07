@@ -169,7 +169,7 @@ RubyLLM.moderate "Check if this text is safe"
 ```ruby
 # Let AI use your code
 class Weather < RubyLLM::Tool
-  desc "Get current weather"
+  description "Get current weather"
 
   def execute(latitude:, longitude:)
     url = "https://api.open-meteo.com/v1/forecast?latitude=#{latitude}&longitude=#{longitude}&current=temperature_2m,wind_speed_10m"
@@ -177,7 +177,7 @@ class Weather < RubyLLM::Tool
   end
 end
 
-chat.with_tool(Weather).ask "What's the weather in Berlin?"
+chat.with_tools(Weather).ask "What's the weather in Berlin?"
 ```
 
 ```ruby

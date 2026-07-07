@@ -4,8 +4,7 @@ require 'erb'
 require 'pathname'
 
 module RubyLLM
-  # Renders ERB prompt templates from the prompts directory.
-  class Prompt
+  class Prompt # :nodoc:
     attr_reader :name, :path
 
     def initialize(name)

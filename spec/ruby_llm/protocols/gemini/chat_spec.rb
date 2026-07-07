@@ -639,7 +639,7 @@ RSpec.describe RubyLLM::Protocols::Gemini::Chat do
 
       expect(message.input_tokens).to eq(21)
       expect(message.output_tokens).to eq(8)
-      expect(message.cached_tokens).to eq(21)
+      expect(message.cache_read_tokens).to eq(21)
     end
   end
 

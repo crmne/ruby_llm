@@ -22,8 +22,8 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
         t.references :model
         t.integer :input_tokens
         t.integer :output_tokens
-        t.integer :cached_tokens
-        t.integer :cache_creation_tokens
+        t.integer :cache_read_tokens
+        t.integer :cache_write_tokens
         t.text :thinking_signature
         t.text :thinking_text
         t.integer :thinking_tokens
@@ -122,9 +122,8 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
 
         llm_message = message.to_llm
 
-        expect(llm_message.content).to be_a(RubyLLM::Content)
-        expect(llm_message.content.text).to eq('Rich text with attachment')
-        expect(llm_message.content.attachments.first.mime_type).to eq('text/plain')
+        expect(llm_message.content).to eq('Rich text with attachment')
+        expect(llm_message.attachments.first.mime_type).to eq('text/plain')
       end
 
       it 'extracts embedded Action Text attachments into RubyLLM::Content' do
@@ -138,11 +137,10 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
         llm_message = message.to_llm
 
         expect(message.content.body.attachables).to include(blob)
-        expect(llm_message.content).to be_a(RubyLLM::Content)
-        expect(llm_message.content.text).to include('See file:')
-        expect(llm_message.content.attachments.first.filename).to eq('embedded.txt')
-        expect(llm_message.content.attachments.first.mime_type).to eq('text/plain')
-        expect(llm_message.content.attachments.first.content).to eq('embedded file data')
+        expect(llm_message.content).to include('See file:')
+        expect(llm_message.attachments.first.filename).to eq('embedded.txt')
+        expect(llm_message.attachments.first.mime_type).to eq('text/plain')
+        expect(llm_message.attachments.first.content).to eq('embedded file data')
       end
     end
   end

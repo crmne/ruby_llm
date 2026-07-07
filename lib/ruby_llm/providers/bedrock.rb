@@ -8,7 +8,20 @@ module RubyLLM
       include Bedrock::Models
 
       protocol :converse, Protocols::Converse, batches: Protocols::Converse::Batches
+      protocol :titan_text_embeddings, Bedrock::TitanTextEmbeddings
+      protocol :titan_multimodal_embeddings, Bedrock::TitanMultimodalEmbeddings
+      protocol :cohere_embeddings, Bedrock::CohereEmbeddings
       files Bedrock::Files
+
+      def self.resolve_registry_id(model_id, models)
+        Models.resolve_registry_id(model_id, models, RubyLLM.config)
+      end
+
+      def protocol_for(model, operation: nil, **)
+        return embedding_protocol_for(model_id_for(model)) if operation == :embed
+
+        super
+      end
 
       def api_base
         @config.bedrock_api_base || "https://bedrock-runtime.#{bedrock_region}.amazonaws.com"
@@ -22,14 +35,10 @@ module RubyLLM
         {}
       end
 
-      def complete(messages, model:, params: {}, **rest, &)
-        super(messages, model:, params: normalize_params(params, model:), **rest, &)
-      end
-
       def parse_error(response)
-        return if response.body.nil? || response.body.empty?
+        body = parse_error_body(response)
+        return unless body
 
-        body = try_parse_json(response.body)
         return body if body.is_a?(String)
 
         body['message'] || body['Message'] || body['error'] || body['__type'] || super
@@ -99,21 +108,22 @@ module RubyLLM
         end
       end
 
-      def normalize_params(params, model:)
-        normalized = RubyLLM::Utils.deep_symbolize_keys(params || {})
-        additional_fields = normalized[:additionalModelRequestFields] || {}
-
-        top_k = normalized.delete(:top_k)
-        if !top_k.nil? && model_supports_top_k?(model)
-          additional_fields = RubyLLM::Utils.deep_merge(additional_fields, { top_k: top_k })
+      def embedding_protocol_for(model_id)
+        case model_id
+        when bedrock_model_id_pattern('amazon.titan-embed-image')
+          protocols[:titan_multimodal_embeddings]
+        when bedrock_model_id_pattern('amazon.titan-embed-g1-text'),
+             bedrock_model_id_pattern('amazon.titan-embed-text')
+          protocols[:titan_text_embeddings]
+        when bedrock_model_id_pattern('cohere.embed')
+          protocols[:cohere_embeddings]
+        else
+          raise Error, "Bedrock embeddings are not supported for #{model_id.inspect}"
         end
-
-        normalized[:additionalModelRequestFields] = additional_fields unless additional_fields.empty?
-        normalized
       end
 
-      def model_supports_top_k?(model)
-        Protocols::Converse.reasoning_embedded?(model)
+      def bedrock_model_id_pattern(prefix)
+        /\A(?:(?:#{Bedrock::Models::REGION_PREFIXES.join('|')})\.)?#{Regexp.escape(prefix)}/
       end
     end
   end

@@ -58,7 +58,7 @@ if image.revised_prompt
   # => "A photorealistic depiction of a red panda intently coding Ruby..."
 end
 
-puts "Model Used: #{image.model_id}"
+puts "Model Used: #{image.model}"
 ```
 
 The `paint` method abstracts the differences between provider APIs.
@@ -112,7 +112,7 @@ image = RubyLLM.paint(
   model: "gpt-image-1",
   with: "portrait.png",
   mask: "portrait-mask.png",
-  params: { size: "1024x1024" }
+  provider_options: { size: "1024x1024" }
 )
 ```
 
@@ -242,7 +242,7 @@ def generate_and_attach_image(product, prompt)
   product.update(
     image_prompt: prompt,
     image_revised_prompt: image.revised_prompt,
-    image_model: image.model_id
+    image_model: image.model
   )
 rescue RubyLLM::Error => e
   puts "Image generation failed: #{e.message}"

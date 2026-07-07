@@ -9,7 +9,7 @@ RSpec.describe RubyLLM::Batch do
 
   def wait_for(batch)
     40.times do
-      break if batch.complete?
+      break if batch.refresh.complete?
 
       sleep 15 if VCR.current_cassette.recording?
     end
@@ -54,23 +54,23 @@ RSpec.describe RubyLLM::Batch do
       provider = RubyLLM::Provider.resolve!(:vertexai).new(RubyLLM.config)
 
       expect(provider.batches?).to be(true)
-      expect(provider.send(:batch_protocol_for, [{ model: 'gemini-2.5-flash', params: {} }]))
+      expect(provider.send(:batch_protocol_for, [{ model: 'gemini-2.5-flash', payload: {} }]))
         .to be < RubyLLM::Providers::VertexAI::Gemini
-      expect(provider.send(:batch_protocol_for, [{ model: 'claude-haiku-4-5', params: {} }]))
+      expect(provider.send(:batch_protocol_for, [{ model: 'claude-haiku-4-5', payload: {} }]))
         .to be < RubyLLM::Providers::VertexAI::Anthropic
-      expect(provider.send(:batch_protocol_for, [{ model: 'meta/llama-3.3-70b-instruct-maas', params: {} }]))
+      expect(provider.send(:batch_protocol_for, [{ model: 'meta/llama-3.3-70b-instruct-maas', payload: {} }]))
         .to be < RubyLLM::Providers::VertexAI::ChatCompletions
-      expect { provider.send(:batch_protocol_for, [{ model: 'mistral-small-2503', params: {} }]) }
+      expect { provider.send(:batch_protocol_for, [{ model: 'mistral-small-2503', payload: {} }]) }
         .to raise_error(RubyLLM::Error, /Gemini, Anthropic, and MaaS/)
     end
 
-    it 'passes rendered params and model ids to provider batch implementations' do
+    it 'passes rendered payloads and model ids to provider batch implementations' do
       chat = RubyLLM.chat(model: 'mistral-small-latest').ask_later('Hi')
       allow(chat.provider).to receive(:create_batch) do |requests|
         expect(requests.first).to include(
           custom_id: '0',
           model: 'mistral-small-latest',
-          params: include(:model, :messages)
+          payload: include(:model, :messages)
         )
         { id: 'batch_test', status: 'RUNNING', completed: false }
       end
@@ -95,7 +95,7 @@ RSpec.describe RubyLLM::Batch do
 
   describe '.find' do
     it 'requires a provider' do
-      expect { RubyLLM.batch('msgbatch_123') }.to raise_error(ArgumentError, /Provider/)
+      expect { described_class.find('msgbatch_123', provider: nil) }.to raise_error(ArgumentError, /Provider/)
     end
   end
 
@@ -166,7 +166,7 @@ RSpec.describe RubyLLM::Batch do
       submitted = RubyLLM.batch([RubyLLM.chat(model: model).ask_later('What is 3 + 3? Just the number.')])
       wait_for submitted
 
-      batch = RubyLLM.batch(submitted.id, provider: :anthropic)
+      batch = described_class.find(submitted.id, provider: :anthropic)
 
       expect(batch).to be_complete
       expect(batch.messages.first.content).to include('6')

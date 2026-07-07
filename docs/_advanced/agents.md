@@ -43,7 +43,7 @@ end
 response = SupportAgent.new.ask "How do I reset my API key?"
 ```
 
-In other words, an agent is a named wrapper around the same configuration you would otherwise apply progressively with `chat.with_*` calls (`with_instructions`, `with_tools`, `with_params`, and so on).
+In other words, an agent is a named wrapper around the same configuration you would otherwise apply progressively with `chat.with_*` calls (`with_instructions`, `with_tools`, `with_provider_options`, and so on).
 
 Agents work in two modes:
 
@@ -75,22 +75,24 @@ class WorkAssistant < RubyLLM::Agent
   instructions "You are a helpful assistant."
   tools SearchDocs, LookupAccount
   temperature 0.2
-  params max_output_tokens: 256
+  max_output_tokens 256
 end
 ```
 
 Supported class macros:
 
 These macros use the same arguments you already know from `RubyLLM.chat(...)` and `Chat#with_*` methods.
-For example, `model` maps to `RubyLLM.chat(model:, provider:, ...)`, `tools` maps to `with_tools`, `instructions` maps to `with_instructions`, and so on.
+For example, `model` maps to `RubyLLM.chat(model:, provider:, ...)`, `tools` maps to `with_tools`, `tool_options` maps to `with_tool_options`, `instructions` maps to `with_instructions`, and so on.
 
-* `model` (see [Chat Basics]({% link _core_features/chat.md %}))
+* `model`, and its `provider:` and `protocol:` options (see [Chat Basics]({% link _core_features/chat.md %}) and [Request Control]({% link _core_features/chat-request-control.md %}#choosing-the-wire-protocol))
 * `tools` (see [Tools]({% link _core_features/tools.md %}))
+* `tool_options` (see [Controlling Tool Execution]({% link _core_features/tool-execution.md %}))
 * `instructions` (see [Chat Basics]({% link _core_features/chat.md %}))
 * `temperature` (see [Chat Basics]({% link _core_features/chat.md %}))
+* `max_output_tokens` (see [Request Control]({% link _core_features/chat-request-control.md %}))
 * `thinking` (see [Thinking]({% link _core_features/thinking.md %}))
 * `citations` (see [Citations]({% link _core_features/citations.md %}))
-* `params` (see [Chat Basics]({% link _core_features/chat.md %}))
+* `provider_options` (see [Request Control]({% link _core_features/chat-request-control.md %}))
 * `headers` (see [Chat Basics]({% link _core_features/chat.md %}))
 * `schema` (see [Chat Basics]({% link _core_features/chat.md %}))
 * `fallbacks` (see [Model Fallbacks]({% link _advanced/error-handling.md %}#model-fallbacks))
@@ -98,11 +100,12 @@ For example, `model` maps to `RubyLLM.chat(model:, provider:, ...)`, `tools` map
 * `chat_model` (Rails-backed mode)
 * `inputs` (declared runtime inputs)
 
-`tools` accepts the same options as `with_tools`:
+`tools` sets which tools the agent's chats may call. Use `tool_options` for `choice`, `calls`, and `concurrency`:
 
 ```ruby
 class WorkAssistant < RubyLLM::Agent
-  tools SearchDocs, LookupAccount, choice: :auto, calls: :one
+  tools SearchDocs, LookupAccount
+  tool_options choice: :auto, calls: :one
 end
 ```
 
@@ -216,14 +219,12 @@ RubyLLM looks for:
 
 * `app/prompts/work_assistant/instructions.txt.erb`
 
-If the file exists, it is rendered and used as instructions. If it does not exist and you did not call `instructions`, the agent starts without system instructions.
-
-Call `instructions` with no arguments when the prompt is required and a missing file should fail loudly:
+If the file exists, it is rendered and used as instructions automatically. If it does not exist and you did not set `instructions`, the agent starts without system instructions. To require a prompt and fail loudly when it is missing, reference it explicitly:
 
 ```ruby
 class WorkAssistant < RubyLLM::Agent
   chat_model Chat
-  instructions
+  instructions { prompt("instructions") }
 end
 ```
 
@@ -291,13 +292,13 @@ Agent instances delegate the full `RubyLLM::Chat` instance API to the underlying
 
 Delegated methods include:
 
-* `model`, `messages`, `tools`, `params`, `headers`, `schema`
+* `model`, `messages`, `tools`, `provider_options`, `headers`, `schema`
 * `cost` (v1.15+)
 * `ask`, `say`, `complete`
 * `add_message`, `each`
-* `with_tool`, `with_tools`
-* `with_model`, `with_temperature`, `with_thinking`, `with_citations`, `with_context`
-* `with_params`, `with_headers`, `with_schema`, `with_fallbacks`
+* `with_tools`, `without_tools`, `with_tool_options`, `without_tool_options`
+* `with_model`, `with_temperature`, `without_temperature`, `with_thinking`, `without_thinking`, `with_citations`, `without_citations`, `with_context`, `without_context`
+* `with_caching`, `without_caching`, `with_provider_options`, `without_provider_options`, `with_headers`, `without_headers`, `with_schema`, `without_schema`, `with_fallbacks`, `without_fallbacks`
 * `before_message`, `after_message`, `before_tool_call`, `after_tool_result`, `before_fallback`, `after_fallback`
 
 You can always access the wrapped chat object directly via `agent.chat`.

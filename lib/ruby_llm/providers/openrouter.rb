@@ -26,9 +26,9 @@ module RubyLLM
       end
 
       def parse_error(response)
-        return if response.body.empty?
+        body = parse_error_body(response)
+        return unless body
 
-        body = try_parse_json(response.body)
         case body
         when Hash
           parse_error_part_message body

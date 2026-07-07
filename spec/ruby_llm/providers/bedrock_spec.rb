@@ -112,4 +112,52 @@ RSpec.describe RubyLLM::Providers::Bedrock do
       expect(headers['X-Amz-Security-Token']).to eq('provider-token')
     end
   end
+
+  describe '#protocol_for' do
+    let(:provider) do
+      described_class.new(bedrock_config(api_key: 'static-key', secret_key: 'static-secret'))
+    end
+
+    it 'routes Titan text embedding models to the Titan text embedding protocol' do
+      %w[
+        amazon.titan-embed-g1-text-02
+        amazon.titan-embed-text-v1
+        amazon.titan-embed-text-v2:0
+      ].each do |id|
+        model = instance_double(RubyLLM::Model, id: id)
+
+        expect(provider.protocol_for(model, operation: :embed))
+          .to eq(RubyLLM::Providers::Bedrock::TitanTextEmbeddings)
+      end
+    end
+
+    it 'routes Titan multimodal embedding models to the Titan multimodal embedding protocol' do
+      model = instance_double(RubyLLM::Model, id: 'amazon.titan-embed-image-v1')
+
+      expect(provider.protocol_for(model, operation: :embed))
+        .to eq(RubyLLM::Providers::Bedrock::TitanMultimodalEmbeddings)
+    end
+
+    it 'routes Cohere embedding models to the Cohere embedding protocol' do
+      %w[cohere.embed-english-v3 us.cohere.embed-v4:0].each do |id|
+        model = instance_double(RubyLLM::Model, id: id)
+
+        expect(provider.protocol_for(model, operation: :embed))
+          .to eq(RubyLLM::Providers::Bedrock::CohereEmbeddings)
+      end
+    end
+
+    it 'raises clearly for unsupported Bedrock embedding models' do
+      model = instance_double(RubyLLM::Model, id: 'vendor.unknown-embed')
+
+      expect { provider.protocol_for(model, operation: :embed) }
+        .to raise_error(RubyLLM::Error, /Bedrock embeddings are not supported/)
+    end
+
+    it 'keeps chat routing on Converse' do
+      model = instance_double(RubyLLM::Model, id: 'anthropic.claude-haiku')
+
+      expect(provider.protocol_for(model)).to eq(RubyLLM::Protocols::Converse)
+    end
+  end
 end

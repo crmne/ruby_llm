@@ -4,11 +4,21 @@ require 'date'
 require 'json'
 
 module RubyLLM
-  # Registry of available AI models and their capabilities.
+  # A Models registry is the catalog of AI models RubyLLM knows about,
+  # including their capabilities, context windows, and pricing. The global
+  # registry is available through RubyLLM.models.
+  #
+  #   RubyLLM.models.find 'claude-sonnet-4-6'
+  #   RubyLLM.models.by_provider(:openai).chat_models
+  #   RubyLLM.models.refresh!
+  #
+  # Filter methods return new Models instances, so calls chain. Models is
+  # enumerable over its Model entries. Class-level calls such as
+  # Models.find delegate to the global registry.
   class Models
     include Enumerable
 
-    MODELS_DEV_PROVIDER_MAP = {
+    MODELS_DEV_PROVIDER_MAP = { # :nodoc:
       'openai' => 'openai',
       'anthropic' => 'anthropic',
       'google' => 'gemini',
@@ -20,9 +30,9 @@ module RubyLLM
       'perplexity' => 'perplexity',
       'xai' => 'xai'
     }.freeze
-    MODELS_DEV_INPUT_MODALITIES = %w[text image audio pdf video file].freeze
-    MODELS_DEV_OUTPUT_MODALITIES = %w[text image audio video embeddings moderation].freeze
-    MODELS_DEV_AUTHORITY_CAPABILITIES = %w[function_calling structured_output reasoning vision].freeze
+    MODELS_DEV_INPUT_MODALITIES = %w[text image audio pdf video file].freeze # :nodoc:
+    MODELS_DEV_OUTPUT_MODALITIES = %w[text image audio video embeddings moderation].freeze # :nodoc:
+    MODELS_DEV_AUTHORITY_CAPABILITIES = %w[function_calling structured_output reasoning vision].freeze # :nodoc:
     # First-party providers outrank the aggregators that resell their models.
     PROVIDER_PREFERENCE = %w[
       openai
@@ -38,7 +48,7 @@ module RubyLLM
       azure
       ollama
       gpustack
-    ].freeze
+    ].freeze # :nodoc:
     INSTANCE_DELEGATES = (Enumerable.instance_methods(false) + %i[
       all
       each
@@ -52,7 +62,7 @@ module RubyLLM
       load_from_json!
       load_from_database!
       save_to_json
-    ]).uniq.freeze
+    ]).uniq.freeze # :nodoc:
 
     class << self
       INSTANCE_DELEGATES.each do |method_name|
@@ -61,15 +71,15 @@ module RubyLLM
         end
       end
 
-      def instance
+      def instance # :nodoc:
         @instance ||= new
       end
 
-      def schema_file
+      def schema_file # :nodoc:
         File.expand_path('models_schema.json', __dir__)
       end
 
-      def load_models(file = RubyLLM.config.model_registry_file)
+      def load_models(file = RubyLLM.config.model_registry_file) # :nodoc:
         source = RubyLLM.config.model_registry_source
         if source && file == RubyLLM.config.model_registry_file
           models = source.read
@@ -81,24 +91,29 @@ module RubyLLM
         read_from_json(file)
       end
 
-      def read_from_json(file = RubyLLM.config.model_registry_file)
+      def read_from_json(file = RubyLLM.config.model_registry_file) # :nodoc:
         data = File.exist?(file) ? File.read(file) : '[]'
         JSON.parse(data, symbolize_names: true).map { |model| Model.new(model) }
       rescue JSON::ParserError
         []
       end
 
-      def read_from_database
+      def read_from_database # :nodoc:
         ModelRegistry::ActiveRecordSource.new.read
       end
 
+      # Refreshes the global model registry from provider APIs and the
+      # models.dev catalog. Returns the global Models instance. See
+      # #refresh! for the +remote_only:+ option.
       def refresh!(remote_only: false)
         instance.refresh!(remote_only: remote_only)
       end
 
+      # :stopdoc:
+
       # Fetches and merges the latest models. Call save_to_json when the
       # refreshed registry should also be persisted.
-      def fetch_merged_models(remote_only: false)
+      def fetch_merged_models(remote_only: false) # :nodoc:
         RubyLLM.instrument('models.refresh.ruby_llm', remote_only:) do |payload|
           existing_models = read_existing_models
 
@@ -114,7 +129,7 @@ module RubyLLM
         end
       end
 
-      def fetch_provider_models(remote_only: true)
+      def fetch_provider_models(remote_only: true) # :nodoc:
         config = RubyLLM.config
         providers = remote_only ? Provider.configured_remote_providers(config) : Provider.configured_providers(config)
         result = { models: [], fetched_providers: [], configured_names: providers.map(&:display_name), failed: [] }
@@ -129,13 +144,13 @@ module RubyLLM
         result
       end
 
-      def resolve(model_id, provider: nil, assume_exists: false, config: nil) # rubocop:disable Metrics/PerceivedComplexity
+      def resolve(model_id, provider: nil, assume_model_exists: false, config: nil) # rubocop:disable Metrics/PerceivedComplexity
         config ||= RubyLLM.config
         provider_class = provider ? Provider.providers[provider.to_sym] : nil
-        assume_exists = true if provider_class&.local? || provider_class&.assume_models_exist?
+        assume_model_exists = true if provider_class&.local? || provider_class&.assume_models_exist?
 
-        if assume_exists
-          raise ArgumentError, 'Provider must be specified if assume_exists is true' unless provider
+        if assume_model_exists
+          raise ArgumentError, 'Provider must be specified if assume_model_exists is true' unless provider
 
           provider_class ||= Provider.resolve!(provider)
 
@@ -182,13 +197,13 @@ module RubyLLM
         }
       end
 
-      def read_existing_models
+      def read_existing_models # :nodoc:
         existing_models = instance&.all
         existing_models = read_from_json if existing_models.nil? || existing_models.empty?
         existing_models
       end
 
-      def log_provider_fetch(provider_fetch)
+      def log_provider_fetch(provider_fetch) # :nodoc:
         RubyLLM.logger.info "Fetching models from providers: #{provider_fetch[:configured_names].join(', ')}"
         provider_fetch[:failed].each do |failure|
           RubyLLM.logger.warn(
@@ -198,13 +213,13 @@ module RubyLLM
         end
       end
 
-      def log_models_dev_fetch(models_dev_fetch)
+      def log_models_dev_fetch(models_dev_fetch) # :nodoc:
         return if models_dev_fetch[:fetched]
 
         RubyLLM.logger.warn('Using cached models.dev data due to fetch failure.')
       end
 
-      def merge_with_existing(existing_models, provider_fetch, models_dev_fetch)
+      def merge_with_existing(existing_models, provider_fetch, models_dev_fetch) # :nodoc:
         existing_by_provider = existing_models.group_by(&:provider)
         preserved_models = existing_by_provider
                            .except(*provider_fetch[:fetched_providers])
@@ -221,7 +236,7 @@ module RubyLLM
         merge_models(provider_models, models_dev_models)
       end
 
-      def merge_models(provider_models, models_dev_models)
+      def merge_models(provider_models, models_dev_models) # :nodoc:
         models_dev_by_key = index_by_key(models_dev_models)
         provider_by_key = index_by_key(provider_models)
 
@@ -243,7 +258,7 @@ module RubyLLM
         models.sort_by { |m| [m.provider, m.id] }
       end
 
-      def find_models_dev_model(key, models_dev_by_key)
+      def find_models_dev_model(key, models_dev_by_key) # :nodoc:
         # Direct match
         return models_dev_by_key[key] if models_dev_by_key[key]
 
@@ -273,7 +288,7 @@ module RubyLLM
         Model.new(gemini_model.to_h.merge(provider: 'vertexai'))
       end
 
-      def index_by_key(models)
+      def index_by_key(models) # :nodoc:
         models.to_h do |model|
           ["#{model.provider}:#{model.id}", model]
         end
@@ -295,7 +310,7 @@ module RubyLLM
         Model.new(data)
       end
 
-      def normalize_embedding_modalities(data)
+      def normalize_embedding_modalities(data) # :nodoc:
         return unless data[:id].to_s.include?('embedding')
 
         modalities = data[:modalities].to_h
@@ -304,7 +319,7 @@ module RubyLLM
         data[:modalities] = modalities
       end
 
-      def blank_value?(value)
+      def blank_value?(value) # :nodoc:
         return true if value.nil?
         return value.empty? if value.is_a?(String) || value.is_a?(Array)
 
@@ -317,7 +332,7 @@ module RubyLLM
         false
       end
 
-      def models_dev_model_attributes(model_data, provider_slug, provider_key)
+      def models_dev_model_attributes(model_data, provider_slug, provider_key) # :nodoc:
         modalities = normalize_models_dev_modalities(model_data[:modalities])
         capabilities = models_dev_capabilities(model_data, modalities)
 
@@ -345,22 +360,23 @@ module RubyLLM
 
       # models.dev pins Vertex AI models to a version (claude-haiku-4-5@20251001);
       # Vertex AI serves them by bare name.
-      def models_dev_model_id(id, provider_slug)
+      def models_dev_model_id(id, provider_slug) # :nodoc:
         return id unless provider_slug == 'vertexai'
 
         id&.split('@')&.first
       end
 
-      def models_dev_capabilities(model_data, modalities)
+      def models_dev_capabilities(model_data, modalities) # :nodoc:
         capabilities = []
         capabilities << 'function_calling' if model_data[:tool_call]
         capabilities << 'structured_output' if model_data[:structured_output]
         capabilities << 'reasoning' if model_data[:reasoning] || model_data[:reasoning_options]
         capabilities << 'vision' if modalities[:input].intersect?(%w[image video pdf])
+        capabilities << 'video' if modalities[:input].include?('video')
         capabilities.uniq
       end
 
-      def models_dev_pricing(cost)
+      def models_dev_pricing(cost) # :nodoc:
         return {} unless cost
 
         text_standard = {
@@ -382,7 +398,7 @@ module RubyLLM
         pricing
       end
 
-      def models_dev_metadata(model_data, provider_key)
+      def models_dev_metadata(model_data, provider_key) # :nodoc:
         metadata = {
           source: 'models.dev',
           provider_id: provider_key,
@@ -400,7 +416,7 @@ module RubyLLM
         metadata.compact
       end
 
-      def normalize_models_dev_modalities(modalities)
+      def normalize_models_dev_modalities(modalities) # :nodoc:
         normalized = { input: [], output: [] }
         return normalized unless modalities
 
@@ -409,7 +425,7 @@ module RubyLLM
         normalized
       end
 
-      def normalize_models_dev_knowledge(value)
+      def normalize_models_dev_knowledge(value) # :nodoc:
         return if value.nil?
         return value if value.is_a?(Date)
 
@@ -419,35 +435,57 @@ module RubyLLM
       end
     end
 
-    def initialize(models = nil)
+    # :startdoc:
+
+    def initialize(models = nil) # :nodoc:
       @models = models || self.class.load_models
     end
 
-    # Replaces this registry instance with models loaded from JSON.
+    # Replaces the models in this registry with those read from the JSON
+    # +file+. The default is the configured
+    # <tt>RubyLLM.config.model_registry_file</tt>.
     def load_from_json!(file = RubyLLM.config.model_registry_file)
       @models = self.class.read_from_json(file)
     end
 
-    # Replaces this registry instance with models loaded from the configured
-    # ActiveRecord model class.
+    # Replaces the models in this registry with rows read from the
+    # configured ActiveRecord model registry class
+    # (<tt>RubyLLM.config.model_registry_class</tt>).
     def load_from_database!
       @models = self.class.read_from_database
     end
 
-    # Persists this registry instance to JSON without changing the global
-    # RubyLLM.models instance.
+    # Writes this registry to +file+ as pretty-printed JSON. The default is
+    # the configured <tt>RubyLLM.config.model_registry_file</tt>.
+    #
+    #   RubyLLM.models.refresh!
+    #   RubyLLM.models.save_to_json
+    #
     def save_to_json(file = RubyLLM.config.model_registry_file)
       File.write(file, JSON.pretty_generate(all.map(&:to_h)))
     end
 
+    # Returns an array of all Model entries in this registry.
     def all
       @models
     end
 
+    # Yields each Model in the registry.
+    #
+    #   RubyLLM.models.each { |model| puts model.id }
+    #
     def each(&)
       all.each(&)
     end
 
+    # Returns the Model matching +model_id+, resolving aliases along the
+    # way. Without +provider+, picks the preferred provider that carries
+    # the model, first-party providers before aggregators. Raises
+    # RubyLLM::ModelNotFoundError if no model matches.
+    #
+    #   RubyLLM.models.find 'gpt-5.4'
+    #   RubyLLM.models.find 'claude-sonnet-4-6', :bedrock
+    #
     def find(model_id, provider = nil)
       if provider
         find_with_provider(model_id, provider)
@@ -456,61 +494,79 @@ module RubyLLM
       end
     end
 
+    # Returns a new Models registry containing only chat models.
     def chat_models
       self.class.new(all.select { |m| m.type == 'chat' })
     end
 
+    # Returns a new Models registry containing only embedding models.
     def embedding_models
       self.class.new(all.select { |m| m.type == 'embedding' || m.modalities.output.include?('embeddings') })
     end
 
+    # Returns a new Models registry containing only models with audio
+    # output.
     def audio_models
       self.class.new(all.select { |m| m.type == 'audio' || m.modalities.output.include?('audio') })
     end
 
+    # Returns a new Models registry containing only models with image
+    # output.
     def image_models
       self.class.new(all.select { |m| m.type == 'image' || m.modalities.output.include?('image') })
     end
 
+    # Returns a new Models registry containing only models in +family+.
+    #
+    #   RubyLLM.models.by_family('claude3_sonnet')
+    #
     def by_family(family)
       self.class.new(all.select { |m| m.family == family.to_s })
     end
 
+    # Returns a new Models registry containing only models from +provider+.
+    # Accepts a symbol or a string.
+    #
+    #   RubyLLM.models.by_provider(:openai).select(&:supports_vision?)
+    #
     def by_provider(provider)
       self.class.new(all.select { |m| m.provider == provider.to_s })
     end
 
+    # Replaces the models in this registry with fresh data fetched from the
+    # configured providers' APIs and the models.dev catalog, merged with the
+    # existing entries. Pass +remote_only:+ +true+ to skip local providers
+    # such as Ollama and GPUStack. Returns +self+.
+    #
+    # Only the in-memory registry changes. Call #save_to_json to persist.
+    #
+    #   RubyLLM.models.refresh!
+    #   RubyLLM.models.refresh!(remote_only: true).chat_models
+    #
     def refresh!(remote_only: false)
       @models = self.class.fetch_merged_models(remote_only: remote_only)
       self
     end
 
-    def resolve(model_id, provider: nil, assume_exists: false, config: nil)
-      self.class.resolve(model_id, provider: provider, assume_exists: assume_exists, config: config)
+    def resolve(model_id, provider: nil, assume_model_exists: false, config: nil) # :nodoc:
+      self.class.resolve(model_id, provider: provider, assume_model_exists: assume_model_exists, config: config)
     end
 
     private
 
     def find_with_provider(model_id, provider)
       resolved_id = Aliases.resolve(model_id, provider)
-      resolved_id = resolve_bedrock_region_id(resolved_id) if provider.to_s == 'bedrock'
+      resolved_id = resolve_provider_registry_id(resolved_id, provider)
       all.find { |m| m.id == resolved_id && m.provider == provider.to_s } ||
         all.find { |m| m.id == model_id && m.provider == provider.to_s } ||
         raise_model_not_found(model_id, provider: provider)
     end
 
-    def resolve_bedrock_region_id(model_id)
-      region = RubyLLM.config.bedrock_region.to_s
-      return model_id if region.empty?
+    def resolve_provider_registry_id(model_id, provider)
+      provider_class = Provider.resolve(provider)
+      return model_id unless provider_class
 
-      candidate_id = Providers::Bedrock::Models.with_region_prefix(model_id, region)
-      return model_id if candidate_id == model_id
-
-      candidate = all.find { |m| m.provider == 'bedrock' && m.id == candidate_id }
-      return model_id unless candidate
-
-      inference_types = Array(candidate.metadata[:inference_types] || candidate.metadata['inference_types'])
-      Providers::Bedrock::Models.normalize_inference_profile_id(model_id, inference_types, region)
+      provider_class.resolve_registry_id(model_id, self)
     end
 
     # A name can be one provider's exact id and another's alias:

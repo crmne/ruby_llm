@@ -14,25 +14,27 @@ module RubyLLM
         def format_tool_result(msg)
           {
             role: 'user',
-            content: msg.content.is_a?(RubyLLM::Content::Raw) ? msg.content.value : [format_tool_result_block(msg)]
+            content: [format_tool_result_block(msg)]
           }
         end
 
         def format_tool_result_block(msg)
-          content = msg.content
-          content = '(no output)' if content.nil? || (content.respond_to?(:empty?) && content.empty?)
-
           {
             type: 'tool_result',
             tool_use_id: msg.tool_call_id,
-            content: format_tool_result_content(content)
+            content: format_tool_result_content(msg)
           }
         end
 
-        def format_tool_result_content(content)
-          return content.results.map { |result| search_result_block(result) } if content.is_a?(RubyLLM::SearchResults)
+        def format_tool_result_content(msg)
+          search_results = RubyLLM::SearchResults.from_content(msg.content)
+          return search_results.results.map { |result| search_result_block(result) } if search_results
 
-          Media.format_content(content)
+          content = msg.content
+          content = nil if content && content.empty?
+          content = '(no output)' if content.nil? && msg.attachments.empty?
+
+          Media.format_content(content, msg.attachments)
         end
 
         def search_result_block(result)
@@ -46,8 +48,8 @@ module RubyLLM
         end
 
         def function_for(tool)
-          input_schema = tool.params_schema ||
-                         RubyLLM::Tool::SchemaDefinition.from_parameters(tool.parameters)&.json_schema
+          input_schema = tool.parameters_schema ||
+                         RubyLLM::Tool::SchemaDefinition.from_parameters(tool.declared_parameters)&.json_schema
 
           declaration = {
             name: tool.name,
@@ -55,9 +57,9 @@ module RubyLLM
             input_schema: input_schema || default_input_schema
           }
 
-          return declaration if tool.provider_params.empty?
+          return declaration if tool.provider_options.empty?
 
-          RubyLLM::Utils.deep_merge(declaration, tool.provider_params)
+          RubyLLM::Utils.deep_merge(declaration, tool.provider_options)
         end
 
         def extract_tool_calls(data)

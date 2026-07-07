@@ -15,18 +15,18 @@ module RubyLLM
               custom_id: request[:custom_id],
               method: 'POST',
               url: '/v1/chat/completions',
-              body: batch_params(request)
+              body: batch_payload(request)
             }
           end
 
           def validate_batch_requests!(requests)
-            return if requests.all? { |request| chat_completion_payload?(request.fetch(:params)) }
+            return if requests.all? { |request| chat_completion_payload?(request.fetch(:payload)) }
 
             raise Error, 'vertexai MaaS batch requests require chat completion payloads'
           end
 
-          def chat_completion_payload?(params)
-            params.key?(:messages) || params.key?('messages')
+          def chat_completion_payload?(payload)
+            payload.key?(:messages) || payload.key?('messages')
           end
 
           def vertex_batch_model_path(model)

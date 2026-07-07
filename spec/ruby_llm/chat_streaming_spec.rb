@@ -8,7 +8,7 @@ RSpec.describe RubyLLM::Chat do
 
   def token_count_chat(model:, provider:)
     chat = RubyLLM.chat(model: model, provider: provider).with_temperature(0.0)
-    return chat.with_params(enable_thinking: false) if provider == :gpustack && model == 'qwen3'
+    return chat.with_provider_options(enable_thinking: false) if provider == :gpustack && model == 'qwen3'
 
     chat
   end

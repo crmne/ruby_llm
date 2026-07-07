@@ -4,9 +4,9 @@ require 'spec_helper'
 
 RSpec.describe RubyLLM::Tool do
   describe '.description' do
-    it 'allows desc as a shorter alias' do
+    it 'sets and returns the tool description' do
       stub_const('DescribedTool', Class.new(described_class) do
-        desc 'Does a thing'
+        description 'Does a thing'
       end)
 
       expect(DescribedTool.description).to eq('Does a thing')
@@ -14,17 +14,24 @@ RSpec.describe RubyLLM::Tool do
     end
   end
 
-  describe '.param' do
-    it 'accepts description as an alias for desc' do
+  describe '.parameter' do
+    it 'accepts a description for the parameter' do
       stub_const('ParamDescriptionTool', Class.new(described_class) do
-        param :city, description: 'City name'
+        parameter :city, description: 'City name'
 
         def execute(city:)
           city
         end
       end)
 
-      expect(ParamDescriptionTool.parameters[:city].description).to eq('City name')
+      expect(ParamDescriptionTool.declared_parameters[:city].description).to eq('City name')
+    end
+  end
+
+  describe '.parameters' do
+    it 'requires a schema or a block' do
+      expect { Class.new(described_class).parameters }
+        .to raise_error(ArgumentError, /schema or a block/)
     end
   end
 
@@ -141,7 +148,7 @@ RSpec.describe RubyLLM::Tool do
     end
   end
 
-  describe '#params_schema' do
+  describe '#parameters_schema' do
     it 'infers flat string parameters from the execute keyword signature' do
       stub_const('InferredSignatureTool', Class.new(described_class) do
         def execute(query:, limit: '5')
@@ -149,7 +156,7 @@ RSpec.describe RubyLLM::Tool do
         end
       end)
 
-      expect(InferredSignatureTool.new.params_schema).to eq(
+      expect(InferredSignatureTool.new.parameters_schema).to eq(
         'type' => 'object',
         'properties' => {
           'query' => { 'type' => 'string' },
@@ -168,7 +175,7 @@ RSpec.describe RubyLLM::Tool do
         end
       end)
 
-      expect(EmptySignatureTool.new.params_schema).to eq(
+      expect(EmptySignatureTool.new.parameters_schema).to eq(
         'type' => 'object',
         'properties' => {},
         'required' => [],
@@ -179,14 +186,14 @@ RSpec.describe RubyLLM::Tool do
 
     it 'keeps explicit param declarations authoritative' do
       stub_const('ExplicitParamTool', Class.new(described_class) do
-        param :query, desc: 'Search query'
+        parameter :query, description: 'Search query'
 
         def execute(query:, internal:)
           [query, internal]
         end
       end)
 
-      expect(ExplicitParamTool.new.params_schema).to eq(
+      expect(ExplicitParamTool.new.parameters_schema).to eq(
         'type' => 'object',
         'properties' => {
           'query' => { 'type' => 'string', 'description' => 'Search query' }

@@ -15,14 +15,6 @@ module RubyLLM
           !model_id.match?(/embed|moderation|ocr|voxtral|transcriptions|mistral-(tiny|small)-(2312|2402)/)
         end
 
-        def supports_tool_choice?(_model_id)
-          true
-        end
-
-        def supports_tool_parallel_control?(_model_id)
-          true
-        end
-
         def supports_vision?(model_id)
           model_id.match?(/pixtral|mistral-small-(2503|2506)|mistral-medium/)
         end
@@ -102,7 +94,7 @@ module RubyLLM
           else
             capabilities = []
             capabilities << 'streaming' if supports_streaming?(model_id)
-            capabilities << 'function_calling' if supports_tools?(model_id)
+            capabilities.push('function_calling', 'tool_choice', 'parallel_tool_calls') if supports_tools?(model_id)
             capabilities << 'structured_output' if supports_json_mode?(model_id)
             capabilities << 'vision' if supports_vision?(model_id)
 

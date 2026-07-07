@@ -7,17 +7,12 @@ module RubyLLM
       module Media
         module_function
 
-        def format_content(content)
-          if content.is_a?(RubyLLM::Content::Raw)
-            value = content.value
-            return value.is_a?(Hash) ? value.to_json : value
-          end
-          return content.to_json if content.is_a?(Hash) || content.is_a?(Array)
-          return content unless content.is_a?(Content)
+        def format_content(content, attachments = [])
+          return content if attachments.empty?
 
           parts = []
-          parts << { type: 'input_text', text: content.text } if content.text
-          content.attachments.each { |attachment| parts << format_attachment(attachment) }
+          parts << { type: 'input_text', text: content } if content
+          attachments.each { |attachment| parts << format_attachment(attachment) }
           parts
         end
 

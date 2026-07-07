@@ -33,7 +33,7 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Batches do
                               {
                                 custom_id: '0',
                                 model: 'gpt-4o-mini-search-preview',
-                                params: {
+                                payload: {
                                   model: 'gpt-4o-mini-search-preview',
                                   messages: [{ role: 'user', content: 'Hi' }],
                                   stream: false
@@ -57,7 +57,7 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Batches do
 
   describe '#validate_batch_requests!' do
     it 'rejects unsupported payload shapes' do
-      expect { protocol.send(:validate_batch_requests!, [{ params: { input: 'hi' } }]) }
+      expect { protocol.send(:validate_batch_requests!, [{ payload: { input: 'hi' } }]) }
         .to raise_error(RubyLLM::Error, /chat completion payloads/)
     end
   end
@@ -65,8 +65,8 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Batches do
   describe '#single_batch_model!' do
     it 'rejects mixed-model batches' do
       requests = [
-        { custom_id: '0', model: 'gpt-5-nano', params: { input: 'hi' } },
-        { custom_id: '1', model: 'gpt-4o', params: { input: 'hi' } }
+        { custom_id: '0', model: 'gpt-5-nano', payload: { input: 'hi' } },
+        { custom_id: '1', model: 'gpt-4o', payload: { input: 'hi' } }
       ]
 
       expect { protocol.send(:single_batch_model!, requests, 'openai') }
@@ -109,7 +109,7 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Batches do
       message = protocol.send(:parse_batch_completion_response, body)
 
       expect(message.content).to eq('Hello')
-      expect(message.model_id).to eq('gpt-5-nano')
+      expect(message.model).to eq('gpt-5-nano')
       expect(message.input_tokens).to eq(2)
       expect(message.raw).to eq(body)
     end

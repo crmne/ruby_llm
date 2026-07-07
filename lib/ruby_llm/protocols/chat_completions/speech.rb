@@ -11,15 +11,13 @@ module RubyLLM
           'audio/speech'
         end
 
-        def render_speech_payload(input, model:, voice:, format:, params: {}, instructions: nil, speed: nil) # rubocop:disable Metrics/ParameterLists
+        def render_speech_payload(input, model:, voice:, format:, provider_options: {})
           {
             model: model,
             input: input,
             voice: voice || 'alloy',
-            response_format: format,
-            instructions: instructions,
-            speed: speed
-          }.compact.merge(params)
+            response_format: format
+          }.compact.merge(provider_options)
         end
 
         def parse_speech_response(response, model:, voice:, format:)

@@ -28,6 +28,9 @@ rsync -a --exclude='_site' --exclude='_data_serve' --exclude='vendor' --exclude=
 set_current "$next_src/_data/versions.yml" next
 ( cd "$next_src" && BUNDLE_GEMFILE="$gemfile" bundle exec jekyll build --baseurl "$BASE/next" -d "$next_out" --quiet )
 
+echo "==> Building API docs (RDoc) -> /next/api/"
+"$docs/bin/build-api.sh" "$next_out/api"
+
 echo "==> Building 1.x docs (frozen @ $ONE_X_REF) -> /"
 git -C "$repo_root" archive "$ONE_X_REF" docs/ | tar -x -C "$onex_src"
 cp "$docs/_includes/version_select.html" "$onex_src/docs/_includes/"

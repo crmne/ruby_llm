@@ -37,11 +37,14 @@ perl -0pi -e 's{(\{% include components/header.html %\}\n)}{$1    {% include ver
 ( cd "$onex/docs" && BUNDLE_GEMFILE="$docs/Gemfile" bundle exec jekyll build --baseurl /v1 -d "$site/v1" --quiet )
 rm -rf "$onex"
 
+echo "==> Building API docs (RDoc) -> /api/"
+"$docs/bin/build-api.sh" "$site/api"
+
 # Serve live; versions come from a temp data dir so the committed versions.yml stays untouched.
 mkdir -p "$docs/_data_serve"
 local_versions "$docs/_data_serve/versions.yml" next
 serve_cfg="$docs/_config_serve.yml"
-printf "data_dir: _data_serve\nkeep_files: ['.git', '.svn', 'v1']\n" > "$serve_cfg"
+printf "data_dir: _data_serve\nkeep_files: ['.git', '.svn', 'v1', 'api']\n" > "$serve_cfg"
 trap 'rm -rf "$docs/_data_serve" "$serve_cfg"' EXIT
 trap 'exit 130' INT
 trap 'exit 143' TERM

@@ -10,7 +10,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
 
   class Calculator < RubyLLM::Tool # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
     description 'Performs basic arithmetic'
-    param :expression, type: :string, desc: 'Math expression to evaluate'
+    parameter :expression, type: :string, description: 'Math expression to evaluate'
 
     def execute(expression:)
       eval(expression).to_s # rubocop:disable Security/Eval
@@ -45,7 +45,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       chat.ask('Hello')
 
       message = chat.messages.last
-      total_input_tokens = message.input_tokens.to_i + message.cached_tokens.to_i + message.cache_creation_tokens.to_i
+      total_input_tokens = message.input_tokens.to_i + message.cache_read_tokens.to_i + message.cache_write_tokens.to_i
       expect(total_input_tokens).to be_positive
       expect(message.output_tokens).to be_positive
     end
@@ -79,6 +79,134 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     end
   end
 
+  describe 'cost persistence' do
+    def priced_model(model_id, input:, output:)
+      Model.create!(
+        model_id: model_id, name: model_id, provider: 'openai',
+        pricing: { text_tokens: { standard: { input_per_million: input, output_per_million: output } } }
+      )
+    end
+
+    def complete_assistant_message(chat, input_tokens: 1_000, output_tokens: 2_000, content: 'Hi')
+      llm_message = RubyLLM::Message.new(
+        role: :assistant, content: content, model: chat.model_association.model_id,
+        input_tokens: input_tokens, output_tokens: output_tokens
+      )
+      chat.send(:persist_new_message)
+      chat.send(:persist_message_completion, llm_message)
+      chat.messages.reload.last
+    end
+
+    it 'records total_cost and cost_details when a message completes' do
+      chat = Chat.create!(model: priced_model('cost-write-model', input: 1.0, output: 2.0))
+      message = complete_assistant_message(chat)
+
+      expect(message.total_cost).to be_within(1e-9).of(0.005)
+      expect(message.cost_details).to include(
+        'input' => be_within(1e-9).of(0.001),
+        'output' => be_within(1e-9).of(0.004),
+        'total' => be_within(1e-9).of(0.005)
+      )
+      expect(message.cost.total).to eq(0.005)
+    end
+
+    it 'freezes the recorded cost against later pricing changes' do
+      model_record = priced_model('cost-freeze-model', input: 1.0, output: 2.0)
+      chat = Chat.create!(model: model_record)
+      message = complete_assistant_message(chat)
+
+      recorded_message_total = message.cost.total
+      recorded_chat_total = chat.cost.total
+
+      model_record.update!(
+        pricing: { text_tokens: { standard: { input_per_million: 100.0, output_per_million: 200.0 } } }
+      )
+      message.reload
+      chat.messages.reload
+
+      live_recompute = RubyLLM::Cost.new(tokens: message.tokens, model: message.model_association).total
+      expect(live_recompute).to eq(0.5)
+
+      expect(message.cost.total).to eq(recorded_message_total).and eq(0.005)
+      expect(chat.cost.total).to eq(recorded_chat_total).and eq(0.005)
+    end
+
+    it 'exposes total_cost as a SQL-aggregatable column' do
+      chat = Chat.create!(model: priced_model('cost-sql-model', input: 1.0, output: 2.0))
+      complete_assistant_message(chat)
+      complete_assistant_message(chat, input_tokens: 500, output_tokens: 1_000)
+
+      expect(chat.messages.sum(:total_cost)).to be_within(1e-9).of(0.0075)
+      expect(chat.messages.where('total_cost > 0').count).to eq(2)
+    end
+
+    it 'aggregates the frozen per-message costs into the chat cost' do
+      chat = Chat.create!(model: priced_model('cost-aggregate-model', input: 1.0, output: 2.0))
+      complete_assistant_message(chat)
+      complete_assistant_message(chat, input_tokens: 500, output_tokens: 1_000)
+
+      expect(chat.cost.total).to be_within(1e-9).of(0.0075)
+      expect(chat.cost.to_h).to include(
+        input: be_within(1e-9).of(0.0015),
+        output: be_within(1e-9).of(0.006),
+        total: be_within(1e-9).of(0.0075)
+      )
+    end
+  end
+
+  describe 'cost fallback without cost columns' do
+    before(:all) do # rubocop:disable RSpec/BeforeAfterAll
+      ActiveRecord::Migration.suppress_messages do
+        ActiveRecord::Migration.create_table :costless_chats, force: true do |t|
+          t.integer :model_id
+          t.timestamps
+        end
+
+        ActiveRecord::Migration.create_table :costless_messages, force: true do |t|
+          t.references :costless_chat
+          t.string :role
+          t.text :content
+          t.integer :model_id
+          t.integer :input_tokens
+          t.integer :output_tokens
+          t.integer :tool_call_id
+          t.timestamps
+        end
+      end
+    end
+
+    after(:all) do # rubocop:disable RSpec/BeforeAfterAll
+      ActiveRecord::Migration.suppress_messages do
+        ActiveRecord::Migration.drop_table :costless_messages, if_exists: true
+        ActiveRecord::Migration.drop_table :costless_chats, if_exists: true
+      end
+    end
+
+    class CostlessChat < ActiveRecord::Base # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
+      acts_as_chat messages: :costless_messages, message_class: 'CostlessMessage'
+    end
+
+    class CostlessMessage < ActiveRecord::Base # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
+      acts_as_message chat: :costless_chat, chat_class: 'CostlessChat'
+    end
+
+    it 'prices live from the model association' do
+      model_record = Model.create!(
+        model_id: 'cost-fallback-model', name: 'Fallback Model', provider: 'openai',
+        pricing: { text_tokens: { standard: { input_per_million: 1.0, output_per_million: 2.0 } } }
+      )
+      chat = CostlessChat.create!(model: model_record)
+      message = chat.costless_messages.create!(
+        role: 'assistant', content: 'Hi', model: model_record, input_tokens: 1_000, output_tokens: 2_000
+      )
+
+      expect(message.has_attribute?(:total_cost)).to be(false)
+      expect(message.has_attribute?(:cost_details)).to be(false)
+      expect(message.cost).to be_a(RubyLLM::Cost)
+      expect(message.cost.total).to eq(0.005)
+    end
+  end
+
   describe 'system messages' do
     it 'persists system messages' do
       chat = Chat.create!(model: model)
@@ -95,6 +223,27 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       chat.with_instructions('Be concise')
       expect(chat.messages.where(role: 'system').count).to eq(1)
       expect(chat.messages.find_by(role: 'system').content).to eq('Be concise')
+    end
+
+    it 'clears persisted system instructions with without_instructions' do
+      chat = Chat.create!(model: model)
+
+      chat.with_instructions('Be helpful')
+      chat.without_instructions
+
+      expect(chat.messages.where(role: 'system')).to be_empty
+      expect(chat.to_llm.messages.select { |msg| msg.role == :system }).to be_empty
+    end
+
+    it 'clears runtime instructions with nil and keeps persisted ones' do
+      chat = Chat.create!(model: model)
+
+      chat.with_instructions('Persisted rules')
+      chat.with_runtime_instructions('Runtime overlay')
+      chat.with_runtime_instructions(nil)
+
+      expect(chat.messages.where(role: 'system').pluck(:content)).to eq(['Persisted rules'])
+      expect(chat.to_llm.messages.select { |msg| msg.role == :system }.map(&:content)).to eq(['Persisted rules'])
     end
 
     it 'appends system messages when append: true' do
@@ -138,10 +287,10 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
 
       expect(chat.to_llm.concurrency).to eq(:threads)
 
-      chat.with_tools(Calculator, concurrency: :fibers)
+      chat.with_tools(Calculator).with_tool_options(concurrency: :fibers)
       expect(chat.to_llm.concurrency).to eq(:fibers)
 
-      chat.with_tools(Calculator, concurrency: false)
+      chat.with_tools(Calculator).with_tool_options(concurrency: false)
       expect(chat.to_llm.concurrency).to be_nil
     ensure
       RubyLLM.config.tool_concurrency = original_tool_concurrency
@@ -149,7 +298,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
 
     it 'persists tool calls' do
       chat = Chat.create!(model: model)
-      chat.with_tool(Calculator)
+      chat.with_tools(Calculator)
 
       chat.ask("What's 123 * 456?")
 
@@ -160,8 +309,84 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     it 'returns the chat instance for chaining' do
       chat = Chat.create!(model: model)
 
-      result = chat.with_tool(Calculator)
+      result = chat.with_tools(Calculator)
       expect(result).to eq(chat)
+    end
+
+    it 'supports dynamically adding tools during tool execution' do
+      dynamic_tool = Class.new(RubyLLM::Tool) do
+        description 'Searches for tools and makes them available'
+        parameter :query, type: :string, description: 'Search query'
+
+        attr_accessor :chat_ref
+
+        def execute(query:)
+          chat_ref.with_tools(Calculator)
+          "Found calculator tool for: #{query}"
+        end
+      end
+
+      chat = Chat.create!(model: model)
+      tool_instance = dynamic_tool.new
+      tool_instance.chat_ref = chat
+      chat.with_tools(tool_instance)
+
+      llm_chat = chat.instance_variable_get(:@chat)
+      provider = llm_chat.instance_variable_get(:@provider)
+      search_tool_call = RubyLLM::ToolCall.new(
+        id: 'call_1',
+        name: tool_instance.name,
+        arguments: { 'query' => 'calculator' }
+      )
+
+      messages_per_call = []
+      call_count = 0
+      allow(provider).to receive(:complete) do |messages, **_kwargs, &_block|
+        messages_per_call << messages.map { |message| message.role.to_s }
+        call_count += 1
+
+        if call_count == 1
+          RubyLLM::Message.new(
+            role: :assistant,
+            content: '',
+            tool_calls: { search_tool_call.id => search_tool_call }
+          )
+        else
+          RubyLLM::Message.new(role: :assistant, content: 'Found it!')
+        end
+      end
+
+      response = chat.ask('Find me a calculator')
+
+      expect(response.content).to eq('Found it!')
+      expect(messages_per_call[1]).to eq(%w[user assistant tool])
+    end
+  end
+
+  describe 'message tool predicates and rendering' do
+    let(:chat) { Chat.create!(model: model) }
+
+    it 'answers the tool predicates and partial path from the associations' do
+      user = chat.messages.create!(role: 'user', content: 'Hi')
+      call_msg = chat.messages.create!(role: 'assistant', content: nil)
+      tool_call = call_msg.tool_calls.create!(tool_call_id: 'call_1', name: 'search', arguments: {}.to_json)
+      result = chat.messages.create!(role: 'tool', content: 'done', parent_tool_call: tool_call)
+
+      expect([user.tool_call?, user.tool_result?, user.to_partial_path])
+        .to eq([false, false, 'messages/user'])
+      expect([call_msg.tool_call?, call_msg.tool_result?, call_msg.to_partial_path])
+        .to eq([true, false, 'messages/tool_calls'])
+      expect([result.tool_call?, result.tool_result?, result.to_partial_path])
+        .to eq([false, true, 'messages/tool'])
+    end
+
+    it 'renders the partial without building a RubyLLM::Message' do
+      call_msg = chat.messages.create!(role: 'assistant', content: nil)
+      call_msg.tool_calls.create!(tool_call_id: 'call_1', name: 'search', arguments: {}.to_json)
+      allow(call_msg).to receive(:to_llm)
+
+      expect(call_msg.to_partial_path).to eq('messages/tool_calls')
+      expect(call_msg).not_to have_received(:to_llm)
     end
   end
 
@@ -172,6 +397,15 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
 
       chat.with_model('claude-haiku-4-5')
       expect(chat.reload.model_id).to eq('claude-haiku-4-5')
+    end
+
+    it 'resets to the configured default model with nil' do
+      chat = Chat.create!(model: 'claude-haiku-4-5')
+
+      chat.with_model(nil)
+
+      expect(chat.reload.model_id).to eq(RubyLLM.config.default_model)
+      expect(chat.to_llm.model.id).to eq(RubyLLM.config.default_model)
     end
   end
 
@@ -221,15 +455,16 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
 
       response = chat.ask('Generate a person named Alice who is 25 years old')
 
-      # The response content should be parsed JSON
-      expect(response.content).to be_a(Hash)
-      expect(response.content['name']).to eq('Alice')
-      expect(response.content['age']).to eq(25)
+      # The response content is the raw JSON string, parsed exposes the Hash
+      expect(response.content).to be_a(String)
+      expect(response.parsed).to eq({ 'name' => 'Alice', 'age' => 25 })
 
       # Check that the message is saved in ActiveRecord with valid JSON
       saved_message = chat.messages.last
       expect(saved_message.role).to eq('assistant')
-      expect(saved_message.content_raw).to eq({ 'name' => 'Alice', 'age' => 25 })
+      expect(saved_message.content).to eq(response.content)
+      expect(saved_message.to_llm.content).to eq(response.content)
+      expect(saved_message.to_llm.parsed).to eq({ 'name' => 'Alice', 'age' => 25 })
     end
 
     it 'supports multi-turn conversations with structured responses' do
@@ -252,21 +487,21 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       # Second turn - this should not raise an error
       response = chat.ask('What about Berlin?')
 
-      expect(response.content).to be_a(Hash)
-      expect(response.content['country']).to eq('Germany')
+      expect(response.content).to be_a(String)
+      expect(response.parsed['country']).to eq('Germany')
     end
   end
 
   describe 'parameter passing' do
-    it 'supports with_params for provider-specific parameters' do
+    it 'supports with_provider_options for provider request options' do
       chat = Chat.create!(model: model)
 
-      result = chat.with_params(max_tokens: 100, temperature: 0.5)
+      result = chat.with_provider_options(max_tokens: 100, temperature: 0.5)
       expect(result).to eq(chat) # Should return self for chaining
 
-      # Verify params are passed through
+      # Verify provider options are passed through
       llm_chat = chat.instance_variable_get(:@chat)
-      expect(llm_chat.params).to eq(max_tokens: 100, temperature: 0.5)
+      expect(llm_chat.provider_options).to eq(max_tokens: 100, temperature: 0.5)
     end
   end
 
@@ -293,29 +528,15 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
   describe 'raw content support' do
     let(:anthropic_model) { 'claude-haiku-4-5' }
 
-    it 'persists raw content blocks separately from plain text' do
-      chat = Chat.create!(model: anthropic_model)
-      raw_block = RubyLLM::Protocols::Anthropic::Content.new('Cache me once', cache: true)
-
-      message = chat.add_message(role: :user, content: raw_block)
-
-      expect(message.content).to be_nil
-      expect(message.content_raw).to eq(JSON.parse(raw_block.value.to_json))
-
-      reconstructed = message.to_llm
-      expect(reconstructed.content).to be_a(RubyLLM::Content::Raw)
-      expect(reconstructed.content.value).to eq(JSON.parse(raw_block.value.to_json))
-    end
-
     it 'round-trips cached token metrics through ActiveRecord models' do
       chat = Chat.create!(model: anthropic_model)
       message = chat.messages.create!(role: 'assistant', content: 'Hi there',
-                                      cached_tokens: 42, cache_creation_tokens: 7)
+                                      cache_read_tokens: 42, cache_write_tokens: 7)
 
       llm_message = message.to_llm
 
-      expect(llm_message.cached_tokens).to eq(42)
-      expect(llm_message.cache_creation_tokens).to eq(7)
+      expect(llm_message.cache_read_tokens).to eq(42)
+      expect(llm_message.cache_write_tokens).to eq(7)
       expect(message.cache_read_tokens).to eq(42)
       expect(message.cache_write_tokens).to eq(7)
     end
@@ -352,12 +573,10 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       expect(chat.to_llm.caching).to be_nil
     end
 
-    it 'keeps create_user_message as a convenience wrapper for add_message' do
+    it 'rejects nil caching, pointing to without_caching' do
       chat = Chat.create!(model: anthropic_model)
 
-      message = chat.create_user_message('hello')
-      expect(message.role).to eq('user')
-      expect(message.content).to eq('hello')
+      expect { chat.with_caching(nil) }.to raise_error(ArgumentError, /without_caching/)
     end
   end
 
@@ -370,7 +589,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
 
       batch = RubyLLM.batch(chats)
       40.times do
-        break if batch.complete?
+        break if batch.refresh.complete?
 
         sleep 15 if VCR.current_cassette.recording?
       end
@@ -390,7 +609,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       expect(chat.messages.pluck(:role)).to eq(['user'])
 
       chat.to_llm.add_completion(
-        RubyLLM::Message.new(role: :assistant, content: '4', input_tokens: 10, output_tokens: 1, model_id: model)
+        RubyLLM::Message.new(role: :assistant, content: '4', input_tokens: 10, output_tokens: 1, model: model)
       )
 
       expect(chat.messages.reload.pluck(:role)).to eq(%w[user assistant])
@@ -418,7 +637,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       result = chat
                .with_temperature(0.5)
                .with_headers('X-Test' => 'value')
-               .with_tool(Calculator)
+               .with_tools(Calculator)
 
       expect(result).to eq(chat)
 
@@ -461,8 +680,8 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
           t.string :model_id
           t.integer :input_tokens
           t.integer :output_tokens
-          t.integer :cached_tokens
-          t.integer :cache_creation_tokens
+          t.integer :cache_read_tokens
+          t.integer :cache_write_tokens
           t.string :finish_reason
           t.references :bot_tool_call
           t.timestamps
@@ -517,7 +736,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
 
       it 'persists tool calls with custom classes' do
         bot_chat = Assistants::BotChat.create!(model: model)
-        bot_chat.with_tool(Calculator)
+        bot_chat.with_tools(Calculator)
 
         bot_chat.ask("What's 123 * 456?")
 
@@ -750,8 +969,8 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       )
 
       llm_message = message.to_llm
-      expect(llm_message.content).to be_a(RubyLLM::Content)
-      expect(llm_message.content.attachments.first.mime_type).to eq('image/png')
+      expect(llm_message.content).to eq('Check this out')
+      expect(llm_message.attachments.first.mime_type).to eq('image/png')
     end
 
     it 'handles multiple attachments' do
@@ -791,7 +1010,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
         )
 
         llm_message = message.to_llm
-        attachment = llm_message.content.attachments.first
+        attachment = llm_message.attachments.first
         expect(attachment.type).to eq(:image)
       end
 
@@ -806,7 +1025,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
         )
 
         llm_message = message.to_llm
-        attachment = llm_message.content.attachments.first
+        attachment = llm_message.attachments.first
         expect(attachment.type).to eq(:pdf)
       end
     end
@@ -857,7 +1076,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       tool_result_received = nil
 
       chat = Chat.create!(model: model)
-                 .with_tool(Calculator)
+                 .with_tools(Calculator)
                  .before_tool_call { |tc| tool_call_received = tc }
                  .after_tool_result { |result| tool_result_received = result }
 
@@ -992,8 +1211,8 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
             t.string :model_id
             t.integer :input_tokens
             t.integer :output_tokens
-            t.integer :cached_tokens
-            t.integer :cache_creation_tokens
+            t.integer :cache_read_tokens
+            t.integer :cache_write_tokens
             t.references :clanker_tool_call
             t.timestamps
           end

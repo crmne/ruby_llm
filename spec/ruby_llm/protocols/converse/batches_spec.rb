@@ -24,7 +24,7 @@ RSpec.describe RubyLLM::Protocols::Converse::Batches do
       jsonl = protocol.send(:bedrock_batch_jsonl, [
                               {
                                 custom_id: '0',
-                                params: { messages: [{ role: 'user', content: [{ text: 'Hi' }] }] }
+                                payload: { messages: [{ role: 'user', content: [{ text: 'Hi' }] }] }
                               }
                             ])
 
@@ -39,7 +39,7 @@ RSpec.describe RubyLLM::Protocols::Converse::Batches do
     it 'rejects tools and structured output' do
       expect do
         protocol.send(:validate_bedrock_batch_requests!, [
-                        { params: { toolConfig: { tools: [] } } }
+                        { payload: { toolConfig: { tools: [] } } }
                       ])
       end.to raise_error(RubyLLM::Error, /tools or structured output/)
     end
@@ -48,8 +48,8 @@ RSpec.describe RubyLLM::Protocols::Converse::Batches do
   describe '#create_batch' do
     it 'rejects mixed-model jobs' do
       requests = [
-        { custom_id: '0', model: 'anthropic.claude-haiku-4-5-20251001-v1:0', params: {} },
-        { custom_id: '1', model: 'amazon.nova-2-lite-v1:0', params: {} }
+        { custom_id: '0', model: 'anthropic.claude-haiku-4-5-20251001-v1:0', payload: {} },
+        { custom_id: '1', model: 'amazon.nova-2-lite-v1:0', payload: {} }
       ]
 
       expect { protocol.create_batch(requests) }.to raise_error(RubyLLM::Error, /one model/)
@@ -63,7 +63,7 @@ RSpec.describe RubyLLM::Protocols::Converse::Batches do
                                 {
                                   custom_id: '0',
                                   model: 'anthropic.claude-haiku-4-5-20251001-v1:0',
-                                  params: {}
+                                  payload: {}
                                 }
                               ])
       end.to raise_error(RubyLLM::ConfigurationError, /bedrock_batch_s3_uri/)
@@ -78,7 +78,7 @@ RSpec.describe RubyLLM::Protocols::Converse::Batches do
                                 {
                                   custom_id: '0',
                                   model: 'anthropic.claude-haiku-4-5-20251001-v1:0',
-                                  params: {}
+                                  payload: {}
                                 }
                               ])
       end.to raise_error(RubyLLM::ConfigurationError, /bedrock_batch_role_arn/)
@@ -104,7 +104,7 @@ RSpec.describe RubyLLM::Protocols::Converse::Batches do
                               {
                                 custom_id: '0',
                                 model: 'anthropic.claude-haiku-4-5-20251001-v1:0',
-                                params: { messages: [{ role: 'user', content: [{ text: 'Hi' }] }] }
+                                payload: { messages: [{ role: 'user', content: [{ text: 'Hi' }] }] }
                               }
                             ])
 
@@ -156,7 +156,7 @@ RSpec.describe RubyLLM::Protocols::Converse::Batches do
 
       expect(index).to eq(1)
       expect(message.content).to eq('Hello')
-      expect(message.model_id).to eq('anthropic.claude-haiku-4-5-20251001-v1:0')
+      expect(message.model).to eq('anthropic.claude-haiku-4-5-20251001-v1:0')
     end
   end
 end

@@ -114,23 +114,40 @@ This is particularly useful when:
 
 Note that not all models support custom dimensions. If you specify dimensions that aren't supported by the chosen model, RubyLLM will use the model's default dimensions.
 
-## Provider-Specific Params
+## Task Types
 
-Use `params:` for provider request fields that are not first-class RubyLLM options. For example, Vertex AI embeddings support `task_type` and `title`:
+Some providers tune embeddings for a specific task, such as indexing a document versus matching a search query. Pass `task_type:` with a value in the provider's own vocabulary and RubyLLM places it on the right request field for you.
+
+Vertex AI and Gemini accept values like `RETRIEVAL_QUERY`, `RETRIEVAL_DOCUMENT`, `SEMANTIC_SIMILARITY`, and `CLASSIFICATION`. On these providers you can also pass `title:` to label the document being embedded:
 
 ```ruby
 embedding = RubyLLM.embed(
   "RubyLLM makes provider APIs feel native to Ruby.",
   model: "{{ site.models.embedding_google }}",
   provider: :vertexai,
-  params: {
-    task_type: "RETRIEVAL_DOCUMENT",
-    title: "RubyLLM docs"
-  }
+  task_type: "RETRIEVAL_DOCUMENT",
+  title: "RubyLLM docs"
 )
 ```
 
-For Vertex AI, RubyLLM applies `task_type` and `title` to each embedding instance. Other `params:` keys are merged into the provider payload.
+Bedrock's Cohere models map `task_type:` to their `input_type` field, so pass values like `search_document`, `search_query`, or `classification`. Cohere has no title concept, so `title:` is ignored there.
+
+Providers that have no task concept, such as OpenAI, ignore both `task_type:` and `title:`.
+
+## Provider Options
+
+Use `provider_options:` for request fields in the provider's own vocabulary that are not first-class RubyLLM options. RubyLLM merges them into the rendered request as-is. For example, Vertex AI accepts request-level `parameters:`:
+
+```ruby
+embedding = RubyLLM.embed(
+  "RubyLLM makes provider APIs feel native to Ruby.",
+  model: "{{ site.models.embedding_google }}",
+  provider: :vertexai,
+  provider_options: { parameters: { autoTruncate: false } }
+)
+```
+
+Keys you pass replace what RubyLLM rendered, so `provider_options:` can override any field RubyLLM sets, including the task type. Reach for it only when a field has no first-class keyword like `task_type:` or `title:`.
 
 ## Using Embedding Results
 

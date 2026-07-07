@@ -211,8 +211,8 @@ end
 
 def generate_capability_sections
   capabilities = {
-    'Function Calling' => RubyLLM.models.select(&:function_calling?),
-    'Structured Output' => RubyLLM.models.select(&:structured_output?),
+    'Function Calling' => RubyLLM.models.select { |m| m.supports?(:function_calling) },
+    'Structured Output' => RubyLLM.models.select { |m| m.supports?(:structured_output) },
     'Streaming' => RubyLLM.models.select { |m| m.capabilities.include?('streaming') },
     'Batch Processing' => RubyLLM.models.select { |m| m.capabilities.include?('batch') }
   }

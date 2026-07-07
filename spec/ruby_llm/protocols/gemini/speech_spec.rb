@@ -12,7 +12,7 @@ RSpec.describe RubyLLM::Protocols::Gemini::Speech do
         model: 'gemini-2.5-flash-preview-tts',
         voice: nil,
         format: nil,
-        params: {}
+        provider_options: {}
       )
 
       expect(payload).to eq(

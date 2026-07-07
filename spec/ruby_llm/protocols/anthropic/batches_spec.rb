@@ -48,7 +48,7 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Batches do
 
       expect(index).to eq(1)
       expect(message.content).to eq('Jupiter')
-      expect(message.model_id).to eq('claude-haiku-4-5')
+      expect(message.model).to eq('claude-haiku-4-5')
       expect(message.input_tokens).to eq(10)
     end
 

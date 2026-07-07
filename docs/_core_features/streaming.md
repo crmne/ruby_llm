@@ -55,7 +55,7 @@ Key attributes of a `Chunk`:
 
 *   `chunk.content`: The text fragment received in this chunk (can be `nil` or empty for some chunks, especially those containing only metadata or tool calls).
 *   `chunk.role`: Always `:assistant` for streamed response chunks.
-*   `chunk.model_id`: The model generating the response (usually present).
+*   `chunk.model`: The model generating the response (usually present).
 *   `chunk.tool_calls`: A hash containing partial or complete tool call information if the model is invoking a [Tool]({% link _core_features/tools.md %}). The arguments might be streamed incrementally.
 *   `chunk.tokens&.input`: Standard input tokens for the request (often `nil` until the final chunk). From v1.15 onward, cache reads and writes are exposed separately as `chunk.tokens&.cache_read` and `chunk.tokens&.cache_write` when providers report them.
 *   `chunk.tokens&.output`: Cumulative billable output tokens *up to this chunk* (behavior varies by provider, often only accurate in the final chunk). From v1.15 onward, this includes thinking/reasoning tokens when the provider bills them as output.
@@ -205,7 +205,7 @@ When a chat interaction involves [Tools]({% link _core_features/tools.md %}), th
 4.  **Resumed Response Stream:** After the tool result is sent back to the model, streaming resumes, yielding chunks containing the model's final response incorporating the tool's output.
 
 ```ruby
-chat = RubyLLM.chat(model: '{{ site.models.openai_tools }}').with_tool(Weather) # Assumes Weather tool is defined
+chat = RubyLLM.chat(model: '{{ site.models.openai_tools }}').with_tools(Weather) # Assumes Weather tool is defined
 
 puts "Assistant:"
 chat.ask("What's the weather in Berlin (52.52, 13.40)?") do |chunk|

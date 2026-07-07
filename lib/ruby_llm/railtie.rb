@@ -2,8 +2,7 @@
 
 if defined?(Rails::Railtie)
   module RubyLLM
-    # Rails integration for RubyLLM
-    class Railtie < Rails::Railtie
+    class Railtie < Rails::Railtie # :nodoc:
       initializer 'ruby_llm.inflections' do
         ActiveSupport::Inflector.inflections(:en) do |inflect|
           inflect.acronym 'RubyLLM'

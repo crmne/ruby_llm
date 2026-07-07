@@ -11,11 +11,12 @@ module RubyLLM
           "models/#{model}:batchEmbedContents"
         end
 
-        def render_embedding_payload(text, model:, dimensions:, params: {})
-          Utils.deep_merge(
-            { requests: [text].flatten.map { |t| single_embedding_payload(t, model:, dimensions:) } },
-            params
-          )
+        def render_embedding_payload(text, model:, dimensions:, task_type: nil, title: nil, provider_options: {}) # rubocop:disable Metrics/ParameterLists
+          requests = [text].flatten.map do |t|
+            single_embedding_payload(t, model:, dimensions:, task_type:, title:)
+          end
+
+          Utils.deep_merge({ requests: requests }, provider_options)
         end
 
         def parse_embedding_response(response, model:, text:)
@@ -27,11 +28,13 @@ module RubyLLM
 
         private
 
-        def single_embedding_payload(text, model:, dimensions:)
+        def single_embedding_payload(text, model:, dimensions:, task_type: nil, title: nil)
           {
             model: "models/#{model}",
             content: { parts: [{ text: text.to_s }] },
-            outputDimensionality: dimensions
+            outputDimensionality: dimensions,
+            taskType: task_type,
+            title: title
           }.compact
         end
       end
