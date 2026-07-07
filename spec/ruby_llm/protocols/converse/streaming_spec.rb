@@ -7,6 +7,7 @@ RSpec.describe RubyLLM::Protocols::Converse::Streaming do
     Object.new.tap do |object|
       object.extend(described_class)
       object.instance_variable_set(:@model, instance_double(RubyLLM::Model, id: 'bedrock-test-model'))
+      object.define_singleton_method(:escape_model_id) { |id| id.to_s.gsub('/', '%2F') }
     end
   end
 
