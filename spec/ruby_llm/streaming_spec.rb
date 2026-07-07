@@ -78,16 +78,14 @@ RSpec.describe RubyLLM::Streaming do
 
   describe RubyLLM::Streaming::FaradayHandlers do
     describe '.v2_on_data' do
-      let(:on_chunk_calls) { [] }
-      let(:on_failed_calls) { [] }
-      let(:handler) do
-        described_class.v2_on_data(
-          ->(chunk, env) { on_chunk_calls << [chunk, env] },
-          ->(chunk, env) { on_failed_calls << [chunk, env] }
-        )
-      end
-
       it 'routes the chunk to on_chunk when env is nil (status unknown)' do
+        on_chunk_calls = []
+        on_failed_calls = []
+        handler = described_class.v2_on_data(
+          ->(chunk, faraday_env) { on_chunk_calls << [chunk, faraday_env] },
+          ->(chunk, faraday_env) { on_failed_calls << [chunk, faraday_env] }
+        )
+
         handler.call('frame', 5, nil)
 
         expect(on_chunk_calls).to eq([['frame', nil]])
@@ -95,18 +93,32 @@ RSpec.describe RubyLLM::Streaming do
       end
 
       it 'routes the chunk to on_chunk when env reports a 200 status' do
-        env = Struct.new(:status).new(200)
-        handler.call('frame', 5, env)
+        on_chunk_calls = []
+        on_failed_calls = []
+        ok_env = Struct.new(:status).new(200)
+        handler = described_class.v2_on_data(
+          ->(chunk, faraday_env) { on_chunk_calls << [chunk, faraday_env] },
+          ->(chunk, faraday_env) { on_failed_calls << [chunk, faraday_env] }
+        )
 
-        expect(on_chunk_calls).to eq([['frame', env]])
+        handler.call('frame', 5, ok_env)
+
+        expect(on_chunk_calls).to eq([['frame', ok_env]])
         expect(on_failed_calls).to be_empty
       end
 
       it 'routes the chunk to on_failed_response when env reports a non-200 status' do
-        env = Struct.new(:status).new(403)
-        handler.call('error-frame', 11, env)
+        on_chunk_calls = []
+        on_failed_calls = []
+        err_env = Struct.new(:status).new(403)
+        handler = described_class.v2_on_data(
+          ->(chunk, faraday_env) { on_chunk_calls << [chunk, faraday_env] },
+          ->(chunk, faraday_env) { on_failed_calls << [chunk, faraday_env] }
+        )
 
-        expect(on_failed_calls).to eq([['error-frame', env]])
+        handler.call('error-frame', 11, err_env)
+
+        expect(on_failed_calls).to eq([['error-frame', err_env]])
         expect(on_chunk_calls).to be_empty
       end
     end
