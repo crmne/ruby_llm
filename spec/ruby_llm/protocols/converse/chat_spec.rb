@@ -73,6 +73,25 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
       expect(message.finish_reason).to eq('guardrail_intervened')
     end
 
+    it 'falls back to the request model when Bedrock omits modelId' do
+      response_body = {
+        'output' => {
+          'message' => {
+            'content' => [{ 'text' => 'Hi!' }]
+          }
+        },
+        'usage' => {}
+      }
+
+      provider = double(config: RubyLLM.config, connection: nil)
+      model = instance_double(RubyLLM::Model, id: 'openai.gpt-oss-120b-1:0')
+      protocol = RubyLLM::Protocols::Converse.new(provider, model)
+      response = instance_double(Faraday::Response, body: response_body)
+      message = protocol.send(:parse_completion_body, response_body, raw: response)
+
+      expect(message.model).to eq('openai.gpt-oss-120b-1:0')
+    end
+
     it 'extracts thinking tokens from top-level reasoningTokens' do
       response_body = {
         'output' => {
