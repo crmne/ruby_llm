@@ -22,28 +22,22 @@ module RubyLLM
           decoder = event_stream_decoder
           body = JSON.generate(payload)
 
+          faraday_v1 = Faraday::VERSION.start_with?('1')
+          on_data = RubyLLM::Streaming::FaradayHandlers.build(
+            faraday_v1: faraday_v1,
+            on_chunk: ->(chunk, _env) { parse_stream_chunk(decoder, chunk, accumulator, &block) },
+            on_failed_response: ->(chunk, env) { handle_failed_stream(chunk, env) }
+          )
+
           response = @connection.post(stream_url, payload) do |req|
             req.headers.merge!(@provider.sign_headers('POST', stream_url, body))
             req.headers.merge!(additional_headers) unless additional_headers.empty?
             req.headers['Accept'] = 'application/vnd.amazon.eventstream'
 
-            if Faraday::VERSION.start_with?('1')
-              req.options[:on_data] = proc do |chunk, _size|
-                parse_stream_chunk(decoder, chunk, accumulator, &block)
-              end
+            if faraday_v1
+              req.options[:on_data] = on_data
             else
-              req.options.on_data = proc do |chunk, _bytes, env|
-                # A nil env means the status is not yet known (Faraday 2 with the
-                # net_http adapter passes nil during streaming) — process the chunk
-                # normally. Only a present env reporting a non-200 status is a real
-                # failure. Gating on `env&.status == 200` would discard every chunk
-                # whenever env is nil, yielding an empty streamed response.
-                if env && env.status != 200
-                  handle_failed_stream(chunk, env)
-                else
-                  parse_stream_chunk(decoder, chunk, accumulator, &block)
-                end
-              end
+              req.options.on_data = on_data
             end
           end
 
