@@ -20,6 +20,7 @@ module RubyLLM
         def stream_response(payload, additional_headers = {}, &block)
           accumulator = StreamAccumulator.new
           decoder = event_stream_decoder
+          thinking_state = {}
           body = JSON.generate(payload)
 
           response = @connection.post(stream_url, payload) do |req|
@@ -29,12 +30,12 @@ module RubyLLM
 
             if Faraday::VERSION.start_with?('1')
               req.options[:on_data] = proc do |chunk, _size|
-                parse_stream_chunk(decoder, chunk, accumulator, &block)
+                parse_stream_chunk(decoder, chunk, accumulator, thinking_state, &block)
               end
             else
               req.options.on_data = proc do |chunk, _bytes, env|
                 if env&.status == 200
-                  parse_stream_chunk(decoder, chunk, accumulator, &block)
+                  parse_stream_chunk(decoder, chunk, accumulator, thinking_state, &block)
                 else
                   handle_failed_stream(chunk, env)
                 end
@@ -64,11 +65,11 @@ module RubyLLM
           RubyLLM.logger.debug { "Failed Bedrock stream error chunk: #{chunk}" }
         end
 
-        def parse_stream_chunk(decoder, raw_chunk, accumulator)
+        def parse_stream_chunk(decoder, raw_chunk, accumulator, thinking_state)
           handle_non_eventstream_error_chunk(raw_chunk)
 
           decode_events(decoder, raw_chunk).each do |event|
-            chunk = build_chunk(event)
+            chunk = build_chunk(event, thinking_state)
             next unless chunk
 
             accumulator.add(chunk)
@@ -132,9 +133,10 @@ module RubyLLM
           nil
         end
 
-        def build_chunk(event)
+        def build_chunk(event, thinking_state = {})
           raise_stream_error(event) if stream_error_event?(event)
 
+          track_thinking_delta(event, thinking_state)
           metadata_usage, usage = event_usage(event)
 
           Chunk.new(
@@ -143,7 +145,8 @@ module RubyLLM
             content: extract_content_delta(event),
             thinking: Thinking.build(
               text: extract_thinking_delta(event),
-              signature: extract_thinking_signature(event)
+              signature: extract_thinking_signature(event),
+              blocks: extract_finalized_thinking_blocks(event, thinking_state)
             ),
             tool_calls: extract_tool_calls(event),
             input_tokens: extract_input_tokens(metadata_usage, usage),
@@ -153,6 +156,68 @@ module RubyLLM
             thinking_tokens: extract_reasoning_tokens(metadata_usage, usage),
             finish_reason: extract_finish_reason(event)
           )
+        end
+
+        # Bedrock Converse Stream splits each reasoningContent block across a contentBlockStart
+        # and one or more contentBlockDelta events, all sharing a contentBlockIndex, with no
+        # signal distinguishing a reasoning block from a text/tool_use block other than the
+        # presence of reasoningContent itself. State is created lazily, keyed by index, the
+        # first time reasoningContent appears for that index, and finalized into a single raw
+        # block — shaped exactly like the blocks Converse::Chat.parse_thinking captures from
+        # the non-streaming response — on that index's contentBlockStop
+        # (see extract_finalized_thinking_blocks).
+        def track_thinking_delta(event, thinking_state)
+          index, reasoning_content = thinking_delta_source(event)
+          return unless index && reasoning_content.is_a?(Hash)
+
+          state = (thinking_state[index] ||= { text: +'', signature: nil, redacted: nil })
+          apply_reasoning_content(state, reasoning_content)
+        end
+
+        def apply_reasoning_content(state, reasoning_content)
+          reasoning_text = reasoning_content['reasoningText'] || {}
+
+          text = reasoning_text['text'] || reasoning_content['text']
+          signature = reasoning_text['signature'] || reasoning_content['signature']
+          redacted = reasoning_content['redactedContent']
+
+          state[:text] << text if text.is_a?(String)
+          state[:signature] = signature if signature
+          state[:redacted] = state[:redacted].to_s + redacted if redacted
+        end
+
+        def thinking_delta_source(event)
+          start_index = event.dig('contentBlockStart', 'contentBlockIndex')
+          return [start_index, event.dig('contentBlockStart', 'start', 'reasoningContent')] if start_index
+
+          delta_index = event.dig('contentBlockDelta', 'contentBlockIndex')
+          [delta_index, normalized_delta(event)['reasoningContent']]
+        end
+
+        # A thinking block only finalizes here, on its content_block_stop. If the turn is
+        # truncated before this event arrives for a given index, that block is intentionally
+        # dropped rather than replayed signature-less — Anthropic rejects replay of a thinking
+        # block without a valid signature, so a half-formed block is worse than none.
+        def extract_finalized_thinking_blocks(event, thinking_state)
+          index = event.dig('contentBlockStop', 'contentBlockIndex')
+          return nil unless index
+
+          state = thinking_state.delete(index)
+          return nil unless state
+
+          block = finalize_thinking_block(state)
+          block ? [block] : nil
+        end
+
+        def finalize_thinking_block(state)
+          return { 'reasoningContent' => { 'redactedContent' => state[:redacted] } } if state[:redacted]
+          return nil if state[:text].empty? && state[:signature].nil?
+
+          {
+            'reasoningContent' => {
+              'reasoningText' => { 'text' => state[:text], 'signature' => state[:signature] }.compact
+            }
+          }
         end
 
         def extract_finish_reason(event)
