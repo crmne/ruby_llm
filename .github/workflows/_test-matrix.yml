@@ -8,9 +8,6 @@ on:
         required: false
         type: boolean
         default: false
-    secrets:
-      CODECOV_TOKEN:
-        required: false
 
 permissions:
   contents: read
@@ -65,15 +62,6 @@ jobs:
       - name: Run full test suite with coverage (latest Ruby/Rails)
         if: matrix.ruby-version == '4.0' && matrix.rails-version == 'rails-8.1'
         run: bundle exec appraisal ${{ matrix.rails-version }} bin/rspec-queue
-
-      - name: Upload coverage to Codecov
-        if: matrix.ruby-version == '4.0' && matrix.rails-version == 'rails-8.1'
-        uses: codecov/codecov-action@v5
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-        with:
-          files: ./coverage/coverage.xml
-          fail_ci_if_error: false
 
       - name: Run the test suite with Faraday v1
         if: matrix.ruby-version != '4.0'

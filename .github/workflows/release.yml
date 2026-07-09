@@ -88,23 +88,3 @@ jobs:
         env:
           GEM_HOST_API_KEY: "Bearer ${{ secrets.GITHUB_TOKEN }}"
           OWNER: ${{ github.repository_owner }}
-
-      - name: Publish to RubyGems
-        if: steps.check_version.outputs.version_changed == 'true'
-        run: |
-          mkdir -p $HOME/.gem
-          touch $HOME/.gem/credentials
-          chmod 0600 $HOME/.gem/credentials
-          printf -- "---\n:rubygems_api_key: ${GEM_HOST_API_KEY}\n" > $HOME/.gem/credentials
-          gem build *.gemspec
-          output=$(gem push *.gem 2>&1) || {
-            echo "$output"
-            if echo "$output" | grep -q "Repushing of gem versions is not allowed"; then
-              echo "Version already exists, skipping"
-              exit 0
-            else
-              exit 1
-            fi
-          }
-        env:
-          GEM_HOST_API_KEY: "${{ secrets.RUBYGEMS_AUTH_TOKEN }}"
