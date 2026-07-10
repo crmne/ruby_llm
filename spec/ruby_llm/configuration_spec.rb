@@ -65,6 +65,19 @@ RSpec.describe RubyLLM::Configuration do
     end
   end
 
+  describe 'log_file' do
+    it 'defaults to $stdout' do
+      expect(described_class.new.log_file).to eq($stdout)
+    end
+
+    it 'uses the RUBYLLM_LOG_FILE environment variable when set' do
+      allow(ENV).to receive(:fetch).and_call_original
+      allow(ENV).to receive(:fetch).with('RUBYLLM_LOG_FILE', nil).and_return('/tmp/ruby_llm.log')
+
+      expect(described_class.new.log_file).to eq('/tmp/ruby_llm.log')
+    end
+  end
+
   describe 'method redefinition warnings' do
     it 'does not emit method redefined warning for log_regexp_timeout=' do
       warnings = `#{RbConfig.ruby} -W -e 'require "ruby_llm"' 2>&1`
