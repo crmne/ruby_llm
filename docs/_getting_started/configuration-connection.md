@@ -102,7 +102,7 @@ end
 
 ```ruby
 RubyLLM.configure do |config|
-  config.log_file = '/var/log/ruby_llm.log'
+  config.log_file = '/var/log/ruby_llm.log'  # Or set RUBYLLM_LOG_FILE
   config.log_level = :info  # :debug, :info, :warn
 
   # Or use Rails logger
@@ -114,6 +114,10 @@ Log levels:
 - `:debug` - Detailed request/response information
 - `:info` - General operational information
 - `:warn` - Non-critical issues
+
+`log_file` notes:
+- Defaults to `$stdout`
+- Can also be set with `RUBYLLM_LOG_FILE=/path/to/file.log`
 
 You can also enable debug logging conditionally from an environment variable:
 
