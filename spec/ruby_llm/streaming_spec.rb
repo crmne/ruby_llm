@@ -64,6 +64,18 @@ RSpec.describe RubyLLM::Streaming do
     expect(response.body).to eq(parsed_error)
   end
 
+  it 'raises the provider error when a failed response body parses to a bare JSON string' do
+    failed_env = Faraday::Env.from(status: 404)
+
+    expect do
+      test_obj.send(:handle_failed_response, '"model unavailable"', +'', failed_env)
+    end.to raise_error(RubyLLM::Error)
+
+    response = failed_env[:streaming_error_response]
+    expect(response.status).to eq(404)
+    expect(response.body).to eq('model unavailable')
+  end
+
   # Faraday 2 with the net_http adapter invokes on_data with a nil env (the
   # status is not yet known mid-stream). The handler must process such chunks
   # normally rather than treating them as a failed response and discarding them.

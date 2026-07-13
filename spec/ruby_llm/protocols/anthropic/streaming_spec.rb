@@ -40,4 +40,30 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Streaming do
 
     expect(captured).to eq('identity')
   end
+
+  describe '#parse_streaming_error' do
+    it 'parses typed error objects' do
+      status, message = protocol.send(
+        :parse_streaming_error,
+        { type: 'error', error: { type: 'overloaded_error', message: 'Overloaded' } }.to_json
+      )
+
+      expect(status).to eq(529)
+      expect(message).to eq('Overloaded')
+    end
+
+    it 'handles a string error value' do
+      status, message = protocol.send(
+        :parse_streaming_error,
+        { type: 'error', error: 'Overloaded' }.to_json
+      )
+
+      expect(status).to eq(500)
+      expect(message).to eq('Overloaded')
+    end
+
+    it 'ignores a body that parses to a bare JSON string' do
+      expect(protocol.send(:parse_streaming_error, '"model unavailable (type: error)"')).to be_nil
+    end
+  end
 end
