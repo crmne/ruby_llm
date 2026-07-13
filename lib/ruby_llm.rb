@@ -16,6 +16,7 @@ require 'ruby_llm/error'
 
 loader = Zeitwerk::Loader.for_gem
 loader.inflector.inflect(
+  'atlascloud' => 'AtlasCloud',
   'azure' => 'Azure',
   'UI' => 'UI',
   'api' => 'API',
@@ -267,6 +268,7 @@ module RubyLLM
 end
 
 RubyLLM::Provider.register :anthropic, RubyLLM::Providers::Anthropic
+RubyLLM::Provider.register :atlascloud, RubyLLM::Providers::AtlasCloud
 RubyLLM::Provider.register :azure, RubyLLM::Providers::Azure
 RubyLLM::Provider.register :bedrock, RubyLLM::Providers::Bedrock
 RubyLLM::Provider.register :deepseek, RubyLLM::Providers::DeepSeek

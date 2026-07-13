@@ -11,6 +11,12 @@ RSpec.describe RubyLLM::Provider do
         custom: 'https://anthropic-proxy.example.com',
         default: 'https://api.anthropic.com'
       },
+      atlascloud: {
+        provider: RubyLLM::Providers::AtlasCloud,
+        key: :atlascloud_api_base,
+        custom: 'https://atlascloud-proxy.example.com/v1',
+        default: 'https://api.atlascloud.ai/v1'
+      },
       azure: {
         provider: RubyLLM::Providers::Azure,
         key: :azure_api_base,
@@ -88,6 +94,8 @@ RSpec.describe RubyLLM::Provider do
       case slug
       when :anthropic
         config.anthropic_api_key = 'anthropic-key'
+      when :atlascloud
+        config.atlascloud_api_key = 'atlascloud-key'
       when :azure
         config.azure_api_base = 'https://azure-resource.example.com'
         config.azure_api_key = 'azure-key'
@@ -217,6 +225,7 @@ RSpec.describe RubyLLM::Provider do
 
     it 'exposes aggregated provider options through Configuration' do
       expect(RubyLLM::Configuration.options).to include(
+        :atlascloud_api_base,
         :openrouter_api_base,
         :deepseek_api_base,
         :ollama_api_key
