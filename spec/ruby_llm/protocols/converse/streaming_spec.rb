@@ -209,6 +209,28 @@ RSpec.describe RubyLLM::Protocols::Converse::Streaming do
       expect(message.finish_reason).to eq('max_tokens')
     end
 
+    it 'finalizes a redacted thinking block via messageStop when Bedrock never sends its own contentBlockStop' do
+      events = [
+        { 'contentBlockStart' => { 'contentBlockIndex' => 0,
+                                   'start' => { 'reasoningContent' => { 'redactedContent' => 'opaque-blob-1' } } } },
+        # No contentBlockStop for index 0 — the next block starts immediately, as Bedrock has
+        # been observed to do for a redacted-thinking block with no visible content.
+        { 'contentBlockStart' => { 'contentBlockIndex' => 1,
+                                   'start' => { 'toolUse' => { 'toolUseId' => 'call_1', 'name' => 'search' } } } },
+        { 'contentBlockDelta' => { 'contentBlockIndex' => 1,
+                                   'delta' => { 'toolUse' => { 'input' => '{}' } } } },
+        { 'contentBlockStop' => { 'contentBlockIndex' => 1 } },
+        { 'messageStop' => { 'stopReason' => 'tool_use' } }
+      ]
+
+      message = accumulate(events)
+
+      expect(message.thinking.blocks).to eq(
+        [{ 'reasoningContent' => { 'redactedContent' => 'opaque-blob-1' } }]
+      )
+      expect(message.tool_calls['call_1'].name).to eq('search')
+    end
+
     it 'round-trips a streamed multi-block thinking turn through format_thinking_blocks unmodified' do
       events = [
         { 'contentBlockStart' => { 'contentBlockIndex' => 0,

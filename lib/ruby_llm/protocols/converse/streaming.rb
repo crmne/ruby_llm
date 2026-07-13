@@ -194,19 +194,44 @@ module RubyLLM
           [delta_index, normalized_delta(event)['reasoningContent']]
         end
 
-        # A thinking block only finalizes here, on its content_block_stop. If the turn is
-        # truncated before this event arrives for a given index, that block is intentionally
-        # dropped rather than replayed signature-less — Anthropic rejects replay of a thinking
-        # block without a valid signature, so a half-formed block is worse than none.
+        # A thinking block finalizes on its own content_block_stop. As a safety net, messageStop
+        # (end of the event stream, on ANY stopReason including truncation) also finalizes any
+        # block still open at that point IF it is structurally complete (has a signature or
+        # redacted-content marker) — Bedrock is not guaranteed to emit a content_block_stop for
+        # every index before the stream ends (observed for at least one redacted-thinking block
+        # immediately superseded by the next index's content_block_start with no stop in
+        # between). Without this net, such a block is dropped from thinking.blocks entirely,
+        # silently falling back to format_single_thinking_block's lossy text/signature
+        # reconstruction — which Anthropic rejects on replay ("Invalid `data` in
+        # `redacted_thinking` block") since a reconstructed single block does not match the raw
+        # shape the API originally sent.
+        #
+        # A block still open with neither a signature nor redacted content (text-only, or fully
+        # empty) is genuinely half-formed — e.g. truncated mid-thought before the model ever
+        # emitted its closing signature — and stays dropped: Anthropic rejects replay of a
+        # thinking block without a valid signature, so a half-formed block is worse than none.
         def extract_finalized_thinking_blocks(event, thinking_state)
           index = event.dig('contentBlockStop', 'contentBlockIndex')
-          return nil unless index
+          if index
+            state = thinking_state.delete(index)
+            return nil unless state
 
-          state = thinking_state.delete(index)
-          return nil unless state
+            block = finalize_thinking_block(state)
+            return block ? [block] : nil
+          end
 
-          block = finalize_thinking_block(state)
-          block ? [block] : nil
+          return nil unless event.key?('messageStop') && thinking_state.any?
+
+          finalize_remaining_thinking_blocks(thinking_state)
+        end
+
+        def finalize_remaining_thinking_blocks(thinking_state)
+          thinking_state.keys.sort.filter_map do |index|
+            state = thinking_state.delete(index)
+            next unless state[:redacted] || state[:signature]
+
+            finalize_thinking_block(state)
+          end.presence
         end
 
         def finalize_thinking_block(state)
