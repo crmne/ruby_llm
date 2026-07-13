@@ -61,7 +61,7 @@ RSpec.describe RubyLLM::Protocols::Responses::Chat do
       expect(payload[:input][1]).to eq({ role: 'assistant', content: [{ type: 'output_text', text: 'Hello!' }] })
     end
 
-    it 'uses flat function definitions' do
+    it 'uses flat non-strict function definitions' do
       tool = instance_double(RubyLLM::Tool, name: 'weather', description: 'Looks up weather',
                                             parameters_schema: { 'type' => 'object' }, provider_options: {})
 
@@ -71,8 +71,19 @@ RSpec.describe RubyLLM::Protocols::Responses::Chat do
                                       type: 'function',
                                       name: 'weather',
                                       description: 'Looks up weather',
-                                      parameters: { 'type' => 'object' }
+                                      parameters: { 'type' => 'object' },
+                                      strict: false
                                     }])
+    end
+
+    it 'lets tools opt into strict mode via provider_options' do
+      tool = instance_double(RubyLLM::Tool, name: 'weather', description: 'Looks up weather',
+                                            parameters_schema: { 'type' => 'object' },
+                                            provider_options: { strict: true })
+
+      payload = render_payload([RubyLLM::Message.new(role: :user, content: 'hi')], tools: { weather: tool })
+
+      expect(payload[:tools].first[:strict]).to be(true)
     end
 
     it 'renders structured output as a text format' do

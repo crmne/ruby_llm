@@ -230,6 +230,34 @@ Provider metadata is passed through verbatim. Turn on `RUBYLLM_DEBUG=true` if yo
 
 Pass `nil` to `provider_options` to clear provider-specific tool options.
 
+### Strict Mode on the OpenAI Responses API
+
+The Responses API defaults function tools to strict schema validation, forcing the model to emit **every** property on each call. RubyLLM sends `strict: false` so tools keep the Chat Completions behavior: parameters not in `required` can simply be omitted.
+
+To opt into [strict validation](https://platform.openai.com/docs/guides/function-calling#strict-mode) per tool:
+
+```ruby
+class Lookup < RubyLLM::Tool
+  description "Performs catalog lookups"
+
+  parameters type: "object",
+    properties: {
+      sku: { type: "string", description: "Product SKU" },
+      locale: { type: %w[string null], description: "Country code" }
+    },
+    required: %w[sku locale],
+    additionalProperties: false
+
+  provider_options strict: true
+
+  def execute(sku:, locale: nil)
+    # ...
+  end
+end
+```
+
+Strict mode requires every property in `required`; make optional parameters nullable instead.
+
 ## Next Steps
 
 *   [Controlling Tool Execution]({% link _core_features/tool-execution.md %}) - Steer tool choice, call counts, concurrency, and callbacks.
