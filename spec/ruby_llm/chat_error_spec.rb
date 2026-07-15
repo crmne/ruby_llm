@@ -109,6 +109,18 @@ RSpec.describe RubyLLM::Chat do
         expect(e.response).to be_present
       end
     end
+
+    it 'surfaces the finish_reason when the provider gives one' do
+      stub_request(:post, 'https://api.deepseek.com/chat/completions').to_return(
+        status: 200,
+        body: { choices: [{ finish_reason: 'content_filter' }] }.to_json,
+        headers: { 'Content-Type' => 'application/json' }
+      )
+
+      expect { chat.ask('Hello') }.to raise_error(
+        RubyLLM::Error, 'Provider returned no completion message (finish_reason: content_filter)'
+      )
+    end
   end
 
   describe '#add_message with nil' do

@@ -69,7 +69,7 @@ module RubyLLM
           raise Error.new(data.dig('error', 'message'), response: raw) if data.dig('error', 'message')
 
           message_data = data.dig('choices', 0, 'message')
-          return unless message_data
+          raise no_completion_message_error(data, raw) unless message_data
 
           usage = data['usage'] || {}
           thinking_tokens = thinking_tokens(usage)
@@ -94,6 +94,13 @@ module RubyLLM
             model: data['model'],
             raw: raw
           )
+        end
+
+        def no_completion_message_error(data, raw)
+          finish_reason = data.dig('choices', 0, 'finish_reason')
+          message = 'Provider returned no completion message'
+          message = "#{message} (finish_reason: #{finish_reason})" if finish_reason
+          Error.new(message, response: raw)
         end
 
         def input_tokens(usage)
