@@ -267,7 +267,10 @@ module RubyLLM
         raise Error.new('Provider returned an empty response body', response:)
       end
 
-      parse_completion_body(body, raw: response)
+      message = parse_completion_body(body, raw: response)
+      raise Error.new('Provider returned no completion message', response:) unless message
+
+      message
     end
   end
 end
