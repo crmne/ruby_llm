@@ -47,15 +47,18 @@ module RubyLLM
 
         def parse_streaming_error(data)
           error_data = JSON.parse(data)
-          return unless error_data['error']
+          return unless error_data.is_a?(Hash) && error_data['error']
 
-          case error_data.dig('error', 'type')
+          error = error_data['error']
+          return [500, error] unless error.is_a?(Hash)
+
+          case error['type']
           when 'server_error'
-            [500, error_data['error']['message']]
+            [500, error['message']]
           when 'rate_limit_exceeded', 'insufficient_quota'
-            [429, error_data['error']['message']]
+            [429, error['message']]
           else
-            [400, error_data['error']['message']]
+            [400, error['message']]
           end
         end
       end

@@ -106,5 +106,50 @@ RSpec.describe RubyLLM::Chat do
         end
       end
     end
+
+    context 'with non-Hash error bodies (deepseek/deepseek-chat)' do
+      let(:chat) { RubyLLM.chat(model: 'deepseek-chat', provider: :deepseek) }
+      let(:url) { 'https://api.deepseek.com/chat/completions' }
+
+      { '1' => '1.10.0', '2' => '2.0.0' }.each do |major, faraday_version|
+        describe "Faraday version #{major}" do # rubocop:disable RSpec/NestedGroups
+          before do
+            stub_const('Faraday::VERSION', faraday_version)
+          end
+
+          it 'surfaces the message when the error value is a string' do
+            stub_request(:post, url).to_return(
+              status: 500,
+              body: { error: 'The model is not available in your region.' }.to_json,
+              headers: { 'Content-Type' => 'application/json' }
+            )
+
+            expect do
+              chat.ask('Count from 1 to 3') { |chunk| chunk }
+            end.to raise_error(RubyLLM::ServerError, /not available in your region/)
+          end
+
+          it 'raises a server error when the body is a bare JSON string' do
+            stub_request(:post, url).to_return(
+              status: 500,
+              body: 'The upstream provider returned an error.'.to_json,
+              headers: { 'Content-Type' => 'application/json' }
+            )
+
+            # Faraday 1 streams the error body away before on_complete, so only
+            # the HTTP status is available to build the error message.
+            expected = if major == '1'
+                         [RubyLLM::ServerError]
+                       else
+                         [RubyLLM::ServerError, /upstream provider returned an error/]
+                       end
+
+            expect do
+              chat.ask('Count from 1 to 3') { |chunk| chunk }
+            end.to raise_error(*expected)
+          end
+        end
+      end
+    end
   end
 end
