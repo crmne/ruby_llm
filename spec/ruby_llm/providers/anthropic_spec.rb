@@ -11,6 +11,7 @@ RSpec.describe RubyLLM::Providers::Anthropic do
       request_timeout: 300,
       max_retries: 3,
       retry_interval: 0.1,
+      retry_max_interval: 30,
       retry_interval_randomness: 0.5,
       retry_backoff_factor: 2,
       http_proxy: nil,

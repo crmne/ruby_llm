@@ -8,6 +8,9 @@ module RubyLLM
       protocol :chat_completions, Protocols::ChatCompletions, batches: Protocols::ChatCompletions::Batches
       files Protocols::OpenAI::Files
 
+      RATE_LIMIT_RESET_HEADERS = %w[x-ratelimit-reset-requests x-ratelimit-reset-tokens].freeze
+      RESET_DURATION_UNITS = { 'h' => 3600, 'm' => 60, 's' => 1, 'ms' => 0.001 }.freeze
+
       def api_base
         @config.openai_api_base || 'https://api.openai.com/v1'
       end
@@ -23,6 +26,15 @@ module RubyLLM
           'OpenAI-Organization' => @config.openai_organization_id,
           'OpenAI-Project' => @config.openai_project_id
         }.compact
+      end
+
+      # OpenAI reports when each rate limit resets in its own headers,
+      # as durations like "6m0s", "7.66s" or "76ms".
+      def retry_delay(response)
+        headers = response.response_headers
+        return unless headers
+
+        RATE_LIMIT_RESET_HEADERS.filter_map { |header| parse_reset_duration(headers[header]) }.max
       end
 
       def find_batch(id)
@@ -57,6 +69,15 @@ module RubyLLM
       end
 
       private
+
+      def parse_reset_duration(value)
+        duration = value.to_s
+        parts = duration.scan(/(\d+(?:\.\d+)?)(ms|h|m|s)/)
+        return if parts.empty?
+        return unless parts.map { |amount, unit| "#{amount}#{unit}" }.join == duration
+
+        parts.sum { |amount, unit| amount.to_f * RESET_DURATION_UNITS[unit] }
+      end
 
       def batch_protocol
         batch_protocol_for_name(:responses)

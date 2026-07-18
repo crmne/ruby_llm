@@ -12,6 +12,7 @@ RSpec.describe RubyLLM::Configuration do
       expect(config.max_retries).to eq(3)
       expect(config.retry_interval).to eq(0.1)
       expect(config.retry_backoff_factor).to eq(2)
+      expect(config.retry_max_interval).to eq(30)
       expect(config.retry_interval_randomness).to eq(0.5)
       expect(config.tool_concurrency).to be(false)
       expect(config.deprecation_behavior).to eq(:warn)

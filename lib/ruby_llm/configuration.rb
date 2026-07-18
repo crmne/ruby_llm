@@ -163,6 +163,15 @@ module RubyLLM
     option :retry_interval_randomness, 0.5
 
     ##
+    # :attr_accessor: retry_max_interval
+    #
+    # Longest delay in seconds to wait between retries, including delays
+    # requested by the provider through rate-limit headers. When a
+    # provider asks for a longer wait, the request fails immediately
+    # instead of sleeping. Default: 30.
+    option :retry_max_interval, 30
+
+    ##
     # :attr_accessor: http_proxy
     #
     # Proxy URL for all requests, such as
