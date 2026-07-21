@@ -57,9 +57,7 @@ module RubyLLM
         def build_base_payload(chat_messages, model, stream, thinking, citations: false, caching: nil)
           payload = {
             model: model.id,
-            messages: chat_messages.map do |msg|
-              format_message(msg, thinking: thinking, citations: citations, caching:)
-            end,
+            messages: format_messages(chat_messages, thinking:, citations:, caching:),
             stream: stream,
             max_tokens: model.max_output_tokens || 4096
           }
@@ -67,6 +65,28 @@ module RubyLLM
           add_thinking_fields(payload, thinking, model)
 
           payload
+        end
+
+        def format_messages(messages, thinking: nil, citations: false, caching: nil)
+          rendered = []
+          tool_result_blocks = []
+
+          messages.each do |msg|
+            if msg.tool_result?
+              tool_result_blocks << Tools.format_tool_result_block(msg)
+              next
+            end
+
+            unless tool_result_blocks.empty?
+              rendered << { role: 'user', content: tool_result_blocks }
+              tool_result_blocks = []
+            end
+
+            rendered << format_message(msg, thinking:, citations:, caching:)
+          end
+
+          rendered << { role: 'user', content: tool_result_blocks } unless tool_result_blocks.empty?
+          rendered
         end
 
         def add_optional_fields(payload, system_content:, tools:, tool_prefs:, temperature:, schema: nil)
