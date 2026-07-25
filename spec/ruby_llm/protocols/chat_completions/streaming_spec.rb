@@ -33,6 +33,26 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Streaming do
       expect(message).to eq('Slow down')
     end
 
+    it 'reports a 500 for server errors' do
+      status, message = protocol.send(
+        :parse_streaming_error,
+        { error: { type: 'server_error', message: 'Internal error' } }.to_json
+      )
+
+      expect(status).to eq(500)
+      expect(message).to eq('Internal error')
+    end
+
+    it 'falls back to a 400 for other typed error objects' do
+      status, message = protocol.send(
+        :parse_streaming_error,
+        { error: { type: 'invalid_request_error', message: 'Bad request' } }.to_json
+      )
+
+      expect(status).to eq(400)
+      expect(message).to eq('Bad request')
+    end
+
     it 'handles a body that parses to a bare JSON string' do
       status, message = protocol.send(
         :parse_streaming_error,

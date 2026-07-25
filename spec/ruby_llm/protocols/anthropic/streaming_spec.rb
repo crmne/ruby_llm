@@ -52,6 +52,16 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Streaming do
       expect(message).to eq('Overloaded')
     end
 
+    it 'falls back to a 500 for other typed error objects' do
+      status, message = protocol.send(
+        :parse_streaming_error,
+        { type: 'error', error: { type: 'invalid_request_error', message: 'Bad request' } }.to_json
+      )
+
+      expect(status).to eq(500)
+      expect(message).to eq('Bad request')
+    end
+
     it 'handles a string error value' do
       status, message = protocol.send(
         :parse_streaming_error,
