@@ -28,6 +28,7 @@ loader.inflector.inflect(
   'openrouter' => 'OpenRouter',
   'pdf' => 'PDF',
   'perplexity' => 'Perplexity',
+  'provider_generator_cli' => 'ProviderGeneratorCLI',
   'ruby_llm' => 'RubyLLM',
   'vertexai' => 'VertexAI',
   'xai' => 'XAI'

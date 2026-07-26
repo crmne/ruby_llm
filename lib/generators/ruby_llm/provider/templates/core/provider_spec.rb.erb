@@ -1,0 +1,34 @@
+# frozen_string_literal: true
+
+require 'spec_helper'
+
+RSpec.describe RubyLLM::Providers::<%= class_name %> do
+  subject(:provider) { described_class.new(config) }
+
+  let(:config) do
+    RubyLLM::Configuration.new.tap do |provider_config|
+      provider_config.<%= api_key_config %> = 'test-key'
+      provider_config.<%= api_base_config %> = 'https://example.test/v1'
+    end
+  end
+
+  it 'registers a default protocol' do
+    expect(described_class.protocols).to include(<%= ":#{protocol_name}" %> => described_class::<%= protocol_class_name %>)
+  end
+
+  it 'declares provider configuration' do
+    expect(described_class.configuration_options).to eq(%i[<%= api_key_config %> <%= api_base_config %>])
+    expect(described_class.configuration_requirements).to eq(%i[<%= api_key_config %>])
+  end
+
+  it 'uses configured API base and bearer token' do
+    expect(provider.api_base).to eq('https://example.test/v1')
+    expect(provider.headers).to eq('Authorization' => 'Bearer test-key')
+  end
+<% if dynamic_models? -%>
+
+  it 'allows provider model ids missing from the registry' do
+    expect(described_class.assume_models_exist?).to be(true)
+  end
+<% end -%>
+end

@@ -1,0 +1,28 @@
+# frozen_string_literal: true
+
+module RubyLLM
+  module Providers
+    class <%= class_name %>
+      # Provider-specific model metadata fallbacks.
+      module Capabilities
+        module_function
+
+        def context_window_for(_model_id)
+          nil
+        end
+
+        def max_tokens_for(_model_id)
+          nil
+        end
+
+        def critical_capabilities_for(_model_id)
+          %w[function_calling streaming]
+        end
+
+        def pricing_for(_model_id)
+          {}
+        end
+      end
+    end
+  end
+end

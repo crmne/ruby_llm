@@ -1,0 +1,15 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require 'bundler/setup'
+require 'dotenv/load'
+require '<%= require_path %>'
+
+require 'irb'
+
+RubyLLM.configure do |config|
+  config.<%= api_key_config %> = ENV.fetch('<%= api_key_env %>', nil)
+  config.<%= api_base_config %> = ENV.fetch('<%= api_base_env %>', '<%= api_base %>')
+end
+
+IRB.start(__FILE__)

@@ -1,0 +1,40 @@
+# <%= gem_name %>
+
+RubyLLM provider gem for <%= class_name %>.
+
+## Installation
+
+Add this line to your application's Gemfile:
+
+```ruby
+gem '<%= gem_name %>'
+```
+
+Then configure the provider:
+
+```ruby
+require '<%= require_path %>'
+
+RubyLLM.configure do |config|
+  config.<%= api_key_config %> = ENV['<%= api_key_env %>']
+  config.<%= api_base_config %> = ENV.fetch('<%= api_base_env %>', '<%= api_base %>')
+end
+```
+
+## Usage
+
+```ruby
+chat = RubyLLM.chat(model: '<%= model %>', provider: :<%= slug %>)
+response = chat.ask('Hello')
+puts response.content
+```
+
+## Development
+
+```sh
+bin/setup
+bundle exec rake
+RUN_PROVIDER_INTEGRATION=true bundle exec rspec spec/ruby_llm/chat_spec.rb
+```
+
+Live specs are skipped unless `RUN_PROVIDER_INTEGRATION=true`.

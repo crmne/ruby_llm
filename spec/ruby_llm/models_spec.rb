@@ -374,6 +374,40 @@ RSpec.describe RubyLLM::Models do
   end
 
   describe '#resolve' do
+    before do
+      chat_completions = Class.new(RubyLLM::Protocols::ChatCompletions)
+      dynamic_provider = Class.new(RubyLLM::Provider) do
+        const_set(:ChatCompletions, chat_completions)
+
+        protocol :chat_completions, chat_completions
+
+        def api_base
+          'https://dynamic.example.test/v1'
+        end
+
+        class << self
+          def assume_models_exist?
+            true
+          end
+
+          def configuration_options
+            []
+          end
+
+          def configuration_requirements
+            []
+          end
+        end
+      end
+
+      stub_const('RubyLLM::Providers::RemoteDynamic', dynamic_provider)
+      RubyLLM::Provider.register :remote_dynamic, RubyLLM::Providers::RemoteDynamic
+    end
+
+    after do
+      RubyLLM::Provider.providers.delete(:remote_dynamic)
+    end
+
     it 'delegates to the class method when called on instance' do
       model_id = 'gpt-4o'
       provider = 'openai'
@@ -410,6 +444,45 @@ RSpec.describe RubyLLM::Models do
       expect(model_info.id).to eq(model_id)
       expect(model_info.provider).to eq(provider)
       expect(provider_instance).to be_a(RubyLLM::Provider)
+    end
+
+    it 'uses registry metadata before dynamic-provider fallback models' do
+      registry_model = RubyLLM::Model.new(
+        id: 'remote-dynamic-chat',
+        name: 'Remote Dynamic Chat',
+        provider: 'remote_dynamic',
+        context_window: 128_000,
+        max_output_tokens: 4096,
+        capabilities: %w[function_calling streaming],
+        pricing: {
+          text_tokens: {
+            standard: {
+              input_per_million: 0.1,
+              output_per_million: 0.2
+            }
+          }
+        },
+        metadata: { source: 'models.dev' }
+      )
+      described_class.instance_variable_set(:@instance, described_class.new([registry_model]))
+
+      model_info, provider_instance = described_class.resolve('remote-dynamic-chat', provider: :remote_dynamic)
+
+      expect(model_info).to eq(registry_model)
+      expect(model_info.context_window).to eq(128_000)
+      expect(model_info.metadata).to eq(source: 'models.dev')
+      expect(provider_instance).to be_a(RubyLLM::Providers::RemoteDynamic)
+    end
+
+    it 'falls back for unknown dynamic-provider model ids' do
+      described_class.instance_variable_set(:@instance, described_class.new([]))
+
+      model_info, provider_instance = described_class.resolve('unlisted-dynamic-chat', provider: :remote_dynamic)
+
+      expect(model_info.id).to eq('unlisted-dynamic-chat')
+      expect(model_info.provider).to eq('remote_dynamic')
+      expect(model_info.metadata).to include(warning: 'Assuming model exists, capabilities may not be accurate')
+      expect(provider_instance).to be_a(RubyLLM::Providers::RemoteDynamic)
     end
   end
 

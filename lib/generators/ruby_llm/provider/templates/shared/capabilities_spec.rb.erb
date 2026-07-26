@@ -1,0 +1,14 @@
+# frozen_string_literal: true
+
+require 'spec_helper'
+
+RSpec.describe RubyLLM::Providers::<%= class_name %>::Capabilities do
+  describe 'model metadata fallbacks' do
+    it 'returns conservative metadata for unknown models' do
+      expect(described_class.context_window_for('<%= model %>')).to be_nil
+      expect(described_class.max_tokens_for('<%= model %>')).to be_nil
+      expect(described_class.critical_capabilities_for('<%= model %>')).to eq(%w[function_calling streaming])
+      expect(described_class.pricing_for('<%= model %>')).to eq({})
+    end
+  end
+end

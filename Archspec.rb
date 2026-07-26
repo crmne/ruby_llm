@@ -91,7 +91,12 @@ component :rails_integration,
           ],
           namespace: 'RubyLLM::ActiveRecord'
 
-component :generators, in: 'lib/generators/**/*.rb'
+component :generators,
+          in: %w[
+            lib/generators/**/*.rb
+            lib/ruby_llm/provider_generator_cli.rb
+            lib/ruby_llm/provider_scaffold.rb
+          ]
 component :tasks, in: 'lib/tasks/**/*.rake'
 
 # OpenAI-specific shared wire mechanics, like the file-backed Batch API and the

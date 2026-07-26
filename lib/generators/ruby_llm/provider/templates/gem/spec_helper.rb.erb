@@ -1,0 +1,21 @@
+# frozen_string_literal: true
+
+require 'bundler/setup'
+require 'dotenv/load'
+require 'simplecov'
+require 'vcr'
+require '<%= require_path %>'
+require 'webmock/rspec'
+
+Dir[File.expand_path('support/**/*.rb', __dir__)].each { |file| require file }
+
+SimpleCov.start do
+  add_filter '/spec/'
+end
+
+RSpec.configure do |config|
+  config.disable_monkey_patching!
+  config.expect_with(:rspec) { |expectations| expectations.syntax = :expect }
+  config.order = :random
+  Kernel.srand config.seed
+end

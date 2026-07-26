@@ -169,13 +169,11 @@ module RubyLLM
 
           provider_class ||= Provider.resolve!(provider)
 
-          model = if provider_class.local?
-                    begin
-                      Models.find(model_id, provider)
-                    rescue ModelNotFoundError
-                      nil
-                    end
-                  end
+          model = begin
+            Models.find(model_id, provider)
+          rescue ModelNotFoundError
+            nil
+          end
 
           model ||= Model.default(model_id, provider_class.slug)
         else

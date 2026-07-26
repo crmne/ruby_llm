@@ -1,0 +1,14 @@
+# frozen_string_literal: true
+
+RSpec.shared_context 'with configured RubyLLM' do
+  before do
+    RubyLLM.configure do |config|
+      config.<%= api_key_config %> = ENV.fetch('<%= api_key_env %>', 'test')
+      config.<%= api_base_config %> = ENV.fetch('<%= api_base_env %>', '<%= api_base %>')
+      config.max_retries = 0
+      config.retry_backoff_factor = 0
+      config.retry_interval = 0
+      config.retry_interval_randomness = 0
+    end
+  end
+end

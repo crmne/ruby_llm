@@ -1,0 +1,17 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+$LOAD_PATH.unshift File.expand_path('../lib', __dir__)
+
+require 'ruby_llm/provider_generator_cli'
+
+begin
+  name, options = RubyLLM::ProviderGeneratorCLI.parse_options(ARGV, mode: 'core')
+rescue RubyLLM::ProviderGeneratorCLI::HelpRequested => e
+  puts e.message
+  exit 0
+end
+result = RubyLLM::ProviderScaffold.new(name, **options).generate!
+
+puts "Generated #{result.changed.size} core provider changes"
+puts "Skipped #{result.skipped.size} existing files" if result.skipped.any?

@@ -1,0 +1,31 @@
+PreCommit:
+  RuboCop:
+    enabled: true
+    auto_correct: true
+    on_warn: fail
+
+  Flay:
+    enabled: true
+    include:
+      - lib/**/*.rb
+      - spec/**/*.rb
+    mass_threshold: 70
+
+  ArchSpec:
+    enabled: true
+    command: ['bundle', 'exec', 'archspec', 'check']
+    on_warn: fail
+
+  RSpec:
+    enabled: true
+    command: ['bundle', 'exec', 'rspec']
+    on_warn: fail
+
+  TrailingWhitespace:
+    enabled: true
+    auto_correct: true
+
+  Gitleaks:
+    enabled: true
+    required_executable: gitleaks
+    command: ['gitleaks', 'protect', '--staged', '--redact', '--verbose']

@@ -1,0 +1,29 @@
+# frozen_string_literal: true
+
+require_relative 'lib/<%= require_path %>/version'
+
+Gem::Specification.new do |spec|
+  spec.name = '<%= gem_name %>'
+  spec.version = RubyLLM::<%= version_namespace %>::VERSION
+  spec.authors = ['<%= github_owner %>']
+  spec.email = ['maintainers@example.com']
+
+  spec.summary = 'RubyLLM provider for <%= class_name %>.'
+  spec.description = 'Adds <%= class_name %> provider support to RubyLLM.'
+  spec.homepage = 'https://github.com/<%= github_owner %>/<%= gem_name %>'
+  spec.license = 'MIT'
+  spec.required_ruby_version = '>= 3.1'
+
+  spec.metadata['homepage_uri'] = spec.homepage
+  spec.metadata['source_code_uri'] = spec.homepage
+  spec.metadata['changelog_uri'] = "#{spec.homepage}/releases"
+  spec.metadata['bug_tracker_uri'] = "#{spec.homepage}/issues"
+  spec.metadata['rubygems_mfa_required'] = 'true'
+
+  spec.files = Dir.glob('{lib,spec}/**/*') +
+               Dir.glob('.github/workflows/*.yml') +
+               %w[.env.example .flayignore .overcommit.yml .rspec .rubocop.yml Appraisals Archspec.rb LICENSE README.md]
+  spec.require_paths = ['lib']
+
+  spec.add_dependency 'ruby_llm', '>= <%= ruby_llm_minimum_version %>'
+end

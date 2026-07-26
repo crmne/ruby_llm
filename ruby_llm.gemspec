@@ -51,7 +51,9 @@ Gem::Specification.new do |spec|
   MESSAGE
 
   # Use Dir.glob to list all files within the lib directory
-  spec.files = Dir.glob('lib/**/*') + ['README.md', 'LICENSE', '.rdoc_options']
+  spec.files = Dir.glob('lib/**/*') + Dir.glob('exe/*') + ['README.md', 'LICENSE', '.rdoc_options']
+  spec.bindir = 'exe'
+  spec.executables = ['ruby_llm']
   spec.require_paths = ['lib']
 
   # Runtime dependencies

@@ -1,0 +1,41 @@
+# frozen_string_literal: true
+
+module RubyLLM
+  module Providers
+    # <%= provider_description %>
+    class <%= class_name %> < Provider
+      class <%= protocol_class_name %> < <%= protocol_superclass %>
+      end
+
+      protocol :<%= protocol_name %>, <%= protocol_class_name %>
+
+      def api_base
+        @config.<%= api_base_config %> || '<%= api_base %>'
+      end
+
+      def headers
+        { 'Authorization' => "Bearer #{@config.<%= api_key_config %>}" }
+      end
+
+      class << self
+        def capabilities
+          <%= class_name %>::Capabilities
+        end
+
+        def configuration_options
+          %i[<%= api_key_config %> <%= api_base_config %>]
+        end
+
+        def configuration_requirements
+          %i[<%= api_key_config %>]
+        end
+<% if dynamic_models? -%>
+
+        def assume_models_exist?
+          true
+        end
+<% end -%>
+      end
+    end
+  end
+end

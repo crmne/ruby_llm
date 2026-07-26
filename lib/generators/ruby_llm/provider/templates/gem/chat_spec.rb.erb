@@ -1,0 +1,21 @@
+# frozen_string_literal: true
+
+require 'spec_helper'
+
+RSpec.describe RubyLLM::Chat do
+  include_context 'with configured RubyLLM'
+
+  let(:model_id) { ENV.fetch('<%= env_prefix %>_MODEL', '<%= model %>') }
+
+  it 'generates a chat response', :vcr do
+    skip 'Set RUN_PROVIDER_INTEGRATION=true to run live provider specs' unless ENV['RUN_PROVIDER_INTEGRATION'] == 'true'
+
+    response = RubyLLM.chat(
+      model: model_id,
+      provider: :<%= slug %>,
+      assume_model_exists: true
+    ).ask('Reply with only the word ok.')
+
+    expect(response.content.to_s.downcase).to include('ok')
+  end
+end

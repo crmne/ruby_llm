@@ -1,0 +1,26 @@
+plugins:
+  - rubocop-performance
+  - rubocop-rake
+  - rubocop-rspec
+
+AllCops:
+  NewCops: enable
+  TargetRubyVersion: 3.1
+  Exclude:
+    - Archspec.rb
+    - vendor/**/*
+    - gemfiles/**/*
+  SuggestExtensions: false
+
+Metrics/AbcSize:
+  Max: 80
+Metrics/MethodLength:
+  Max: 40
+  CountAsOne:
+    - array
+    - hash
+    - heredoc
+RSpec/ExampleLength:
+  Enabled: false
+RSpec/MultipleExpectations:
+  Enabled: false
