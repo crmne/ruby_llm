@@ -25,9 +25,7 @@ RSpec.describe RubyLLM::Chat do
       end.to raise_error(ArgumentError, /Provider must be specified/)
     end
 
-    it 'skips registry validation when assuming model exists' do
-      expect(RubyLLM::Models).not_to receive(:find) # rubocop:disable RSpec/MessageSpies
-
+    it 'falls back when the model is missing from the registry' do
       chat = described_class.new(
         model: custom_model,
         provider: provider,

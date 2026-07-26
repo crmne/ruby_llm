@@ -37,6 +37,9 @@
 
 * **Core providers have a high acceptance bar.**
 * **For smaller or emerging providers, the preferred path is a community gem** rather than RubyLLM core.
+* Start a community integration with `bundle exec ruby_llm provider-gem NAME`. See the [Custom Providers and Protocols](https://rubyllm.com/custom-providers/) guide.
+* After a core provider has been discussed and approved, use `script/generate-provider NAME` to create the standard files and wiring.
+* Generated code is a starting point. A core provider PR must use the real API, replace example capabilities, cover normal and streaming chat with sanitized VCR cassettes, document its configuration, and identify its model-catalog source.
 
 ## Quick Start
 

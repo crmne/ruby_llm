@@ -4,7 +4,6 @@ require 'erb'
 require 'fileutils'
 require 'pathname'
 require 'ruby_llm/utils'
-require 'ruby_llm/version'
 
 module RubyLLM
   # Generates first-party providers and standalone provider gems.
@@ -24,7 +23,9 @@ module RubyLLM
 
     def initialize(name, **options)
       @name = name.to_s.strip
-      raise ArgumentError, 'provider name is required' if @name.empty?
+      unless @name.match?(/\A[A-Za-z][A-Za-z0-9_-]*\z/)
+        raise ArgumentError, 'provider name must start with a letter and contain only letters, numbers, - or _'
+      end
 
       @mode = normalize_option(options.fetch(:mode, :core), SUPPORTED_MODES, 'mode')
       @dialect = normalize_option(options.fetch(:dialect, :chat_completions), SUPPORTED_DIALECTS, 'dialect')
@@ -106,10 +107,6 @@ module RubyLLM
 
     def version_namespace
       class_name
-    end
-
-    def ruby_llm_minimum_version
-      RubyLLM::VERSION.split('.').first(2).join('.')
     end
 
     private
@@ -277,7 +274,7 @@ module RubyLLM
 
     def classify(value)
       words = value.to_s.tr('-', '_').split('_').reject(&:empty?)
-      return value if value.match?(/\A[A-Z][A-Za-z0-9:]*\z/)
+      return value if value.match?(/\A[A-Z][A-Za-z0-9]*\z/)
 
       words.map { |word| word[0].upcase + word[1..] }.join
     end

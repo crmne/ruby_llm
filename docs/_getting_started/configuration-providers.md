@@ -97,6 +97,21 @@ end
 > Attempting to use an unconfigured provider will raise `RubyLLM::ConfigurationError`. Only configure what you need.
 {: .note }
 
+## Ollama Cloud
+
+Ollama Cloud uses the existing Ollama provider against its remote OpenAI-compatible endpoint:
+
+```ruby
+RubyLLM.configure do |config|
+  config.ollama_api_base = 'https://ollama.com/v1'
+  config.ollama_api_key = ENV['OLLAMA_API_KEY']
+end
+
+RubyLLM.chat(model: 'gpt-oss:120b', provider: :ollama).ask('Hello from Ollama Cloud')
+```
+
+Use the model name returned by Ollama Cloud without the local `-cloud` suffix. You only need a separate custom provider when the service’s host, authentication, or wire format actually differs.
+
 ## Bedrock Credential Providers
 
 For IAM roles, assume-role flows, and rotating credentials, configure an AWS SDK credential provider instead of static keys:

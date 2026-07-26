@@ -17,7 +17,7 @@ RSpec.describe RubyLLM::Providers::<%= class_name %> do
   end
 
   it 'registers a default protocol' do
-    expect(described_class.protocols).to include(<%= ":#{protocol_name}" %> => described_class::<%= protocol_class_name %>)
+    expect(described_class.protocols).to include(<%= "#{protocol_name}:" %> described_class::<%= protocol_class_name %>)
   end
 
   it 'declares provider configuration' do

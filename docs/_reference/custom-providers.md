@@ -47,6 +47,21 @@ So before you write anything, decide which case you are in:
 
 We will build a fictional provider, `Acme`, that exposes an OpenAI-compatible Chat Completions API at `https://api.acme.ai/v1`, then show how to override the wire format when a dialect diverges.
 
+## Generate the Starting Point
+
+RubyLLM can generate a standalone provider gem with the provider, registration, configuration, capability fallbacks, specs, and CI already wired:
+
+```bash
+bundle exec ruby_llm provider-gem Acme \
+  --api-base https://api.acme.ai/v1 \
+  --model acme-large \
+  --github-owner your-github-org
+```
+
+The default dialect is `chat_completions`. Use `--dialect responses`, `anthropic`, `gemini`, `converse`, or `ollama` when the service speaks one of those existing APIs. The generated gem supports unlisted model ids by default; pass `--no-dynamic-models` when every model must come from the registry.
+
+The generator gives you a working integration skeleton, not a substitute for understanding the provider. Replace the example capability values, run the generated unit suite, and record the live chat and streaming specs against the real service before publishing.
+
 ## Adding a Provider
 
 A provider is a subclass of `RubyLLM::Provider`. The base class raises `NotImplementedError` from `api_base`, so that method is the one thing you must define; everything else has a sensible default you override as needed.

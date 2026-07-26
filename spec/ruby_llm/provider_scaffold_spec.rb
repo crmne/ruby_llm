@@ -18,7 +18,7 @@ RSpec.describe RubyLLM::ProviderScaffold do
         'OllamaCloud',
         mode: :gem,
         destination: dir,
-        api_base: 'https://ollama.com/api/openai/v1',
+        api_base: 'https://ollama.com/v1',
         model: 'gpt-oss-120b',
         github_owner: 'crmne'
       ).generate!
@@ -43,6 +43,17 @@ RSpec.describe RubyLLM::ProviderScaffold do
       expect(provider).to include('protocol :chat_completions, ChatCompletions')
       expect(provider).to include('def assume_models_exist?')
 
+      gemspec = File.read(File.join(dir, 'ruby_llm-ollama-cloud.gemspec'))
+      expect(gemspec).to include("spec.add_dependency 'ruby_llm', '>= 2.0'")
+
+      provider_spec = File.read(File.join(dir, 'spec/ruby_llm/providers/ollama_cloud_spec.rb'))
+      expect(provider_spec).to include('include(chat_completions: described_class::ChatCompletions)')
+
+      ci = File.read(File.join(dir, '.github/workflows/ci.yml'))
+      expect(ci).to include('appraisal: ["ruby-llm-latest", "ruby-llm-main"]')
+      expect(ci).to include('bundle exec appraisal generate')
+      expect(ci).to include('bundle exec appraisal ${{ matrix.appraisal }} bundle install')
+
       assert_generated_gem_boots
     end
 
@@ -53,7 +64,7 @@ RSpec.describe RubyLLM::ProviderScaffold do
         'OllamaCloud',
         mode: :core,
         destination: dir,
-        api_base: 'https://ollama.com/api/openai/v1',
+        api_base: 'https://ollama.com/v1',
         model: 'gpt-oss-120b',
         api_key_env: 'OLLAMA_CLOUD_API_KEY',
         api_base_env: 'OLLAMA_CLOUD_API_BASE',
@@ -80,12 +91,21 @@ RSpec.describe RubyLLM::ProviderScaffold do
       expect(provider).to include('class ChatCompletions < Ollama::ChatCompletions')
       expect(provider).to include('def assume_models_exist?')
 
+      provider_spec = File.read(File.join(dir, 'spec/ruby_llm/providers/ollama_cloud_spec.rb'))
+      expect(provider_spec).to include('include(chat_completions: described_class::ChatCompletions)')
+
       entrypoint = File.read(File.join(dir, 'lib/ruby_llm.rb'))
       expect(entrypoint).to include("'ollama_cloud' => 'OllamaCloud',")
       expect(entrypoint).to include('RubyLLM::Provider.register :ollama_cloud, RubyLLM::Providers::OllamaCloud')
 
       models = File.read(File.join(dir, 'lib/ruby_llm/models.rb'))
       expect(models).to include("'ollama-cloud' => 'ollama_cloud',")
+    end
+
+    it 'rejects names that could escape the destination' do
+      expect do
+        described_class.new('../Acme', mode: :gem, destination: dir)
+      end.to raise_error(ArgumentError, /provider name must start with a letter/)
     end
   end
 
@@ -112,7 +132,7 @@ RSpec.describe RubyLLM::ProviderScaffold do
 
       RubyLLM.configure do |config|
         config.ollama_cloud_api_key = 'test'
-        config.ollama_cloud_api_base = 'https://ollama.com/api/openai/v1'
+        config.ollama_cloud_api_base = 'https://ollama.com/v1'
       end
 
       model, provider = RubyLLM::Models.resolve('gpt-oss-120b', provider: :ollama_cloud)
