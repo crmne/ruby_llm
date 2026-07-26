@@ -18,7 +18,7 @@ module RubyLLM
       argument :model_mappings, type: :array, default: [], banner: 'message:MessageName'
 
       desc 'Adds the columns and tables introduced in the latest RubyLLM version ' \
-           '(v2.0: citations, finish reasons, prompt caching, batches)'
+           '(v2.0: citations, finish reasons, prompt caching, cancellation, batches)'
 
       def self.next_migration_number(dirname)
         ::ActiveRecord::Generators::Base.next_migration_number(dirname)
@@ -30,6 +30,7 @@ module RubyLLM
         migration_template 'add_v2_0_message_columns.rb.tt',
                            'db/migrate/add_ruby_llm_v2_0_columns.rb',
                            migration_version: migration_version,
+                           chat_table_name: chat_table_name,
                            message_table_name: message_table_name,
                            batch_table_name: batch_table_name
       end
@@ -43,7 +44,7 @@ module RubyLLM
           2. Run: bin/rails db:migrate
           3. Restart your application server
 
-          📚 See the v2.0 release notes for details on citations, finish reasons, prompt caching, and batches support.
+          📚 See the v2.0 release notes for details on citations, finish reasons, prompt caching, cancellation, and batches support.
 
         INSTRUCTIONS
       end

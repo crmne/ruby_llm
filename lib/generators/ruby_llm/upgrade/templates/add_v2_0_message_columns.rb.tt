@@ -1,5 +1,9 @@
 class <%= 'add_ruby_llm_v2_0_columns'.camelize %> < ActiveRecord::Migration<%= migration_version %>
   def change
+    unless column_exists?(:<%= chat_table_name %>, :cancelled)
+      add_column :<%= chat_table_name %>, :cancelled, :boolean, null: false, default: false
+    end
+
     unless column_exists?(:<%= message_table_name %>, :citations)
       add_column :<%= message_table_name %>, :citations, :json
     end

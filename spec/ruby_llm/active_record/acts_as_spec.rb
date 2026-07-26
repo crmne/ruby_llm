@@ -79,6 +79,53 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
     end
   end
 
+  describe 'cancellation' do
+    it 'persists cancellation requests on chat records' do
+      chat = Chat.create!(model: model)
+
+      expect(chat.cancel!).to be(chat)
+      expect(chat.reload.cancelled).to be(true)
+    end
+
+    it 'consumes a persisted cancellation request before the next model call' do
+      chat = Chat.create!(model: model)
+      chat.ask_later('Hello')
+      provider = chat.to_llm.provider
+      allow(provider).to receive(:complete)
+
+      Chat.find(chat.id).cancel!
+
+      expect { chat.complete }.to raise_error(RubyLLM::CancelledError, 'Chat generation cancelled')
+      expect(provider).not_to have_received(:complete)
+      expect(chat.reload.cancelled).to be(false)
+      expect(chat.messages.pluck(:role)).to eq(['user'])
+    end
+
+    it 'cleans up the pending assistant message when cancelled while streaming' do
+      stub_const('RubyLLM::ActiveRecord::ChatMethods::CANCELLATION_POLL_INTERVAL', 0.0)
+
+      chat = Chat.create!(model: model)
+      chat.ask_later('Hello')
+      provider = chat.to_llm.provider
+      allow(provider).to receive(:complete) do |_messages, **_kwargs, &block|
+        block.call(RubyLLM::Chunk.new(role: :assistant, content: 'one'))
+        Chat.find(chat.id).cancel!
+        block.call(RubyLLM::Chunk.new(role: :assistant, content: 'two'))
+        RubyLLM::Message.new(role: :assistant, content: 'done')
+      end
+
+      chunks = []
+
+      expect do
+        chat.complete { |chunk| chunks << chunk.content }
+      end.to raise_error(RubyLLM::CancelledError, 'Chat generation cancelled')
+
+      expect(chunks).to eq(['one'])
+      expect(chat.reload.cancelled).to be(false)
+      expect(chat.messages.order(:id).pluck(:role)).to eq(['user'])
+    end
+  end
+
   describe 'cost persistence' do
     def priced_model(model_id, input:, output:)
       Model.create!(
@@ -668,6 +715,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
       ActiveRecord::Migration.suppress_messages do
         ActiveRecord::Migration.create_table :bot_chats, force: true do |t|
           t.string :model_id
+          t.boolean :cancelled, null: false, default: false
           t.timestamps
         end
 

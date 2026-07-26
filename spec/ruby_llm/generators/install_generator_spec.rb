@@ -51,6 +51,16 @@ RSpec.describe RubyLLM::Generators::InstallGenerator, :generator, type: :generat
       end
     end
 
+    it 'adds cancellation state to chat storage' do
+      within_test_app(app_path) do
+        migration = Dir.glob('db/migrate/*create_chats.rb').first
+        expect(migration).to be_present
+
+        content = File.read(migration)
+        expect(content).to include('t.boolean :cancelled')
+      end
+    end
+
     it 'uses text for tool call thought signatures' do
       within_test_app(app_path) do
         migration = Dir.glob('db/migrate/*create_tool_calls.rb').first

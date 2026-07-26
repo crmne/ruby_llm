@@ -390,6 +390,28 @@ RSpec.describe RubyLLM::Agent do
                                    ])
   end
 
+  it 'delegates cancellation to the underlying chat' do
+    fake_chat = Class.new do
+      def initialize
+        @cancelled = false
+      end
+
+      def cancel!
+        @cancelled = true
+        self
+      end
+
+      def cancelled?
+        @cancelled
+      end
+    end.new
+
+    agent = Class.new(described_class).new(chat: fake_chat)
+
+    expect(agent.cancel!).to be(fake_chat)
+    expect(agent).to be_cancelled
+  end
+
   it 'applies class-configured fallbacks to new chats' do
     agent_class = Class.new(described_class) do
       model 'gpt-4.1-nano'

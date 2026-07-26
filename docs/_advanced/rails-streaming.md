@@ -127,6 +127,34 @@ This implementation provides:
 - Background processing to prevent timeouts
 - Automatic persistence of all messages and tool calls
 
+### Cancelling a Background Stream
+
+`acts_as_chat` stores cancellation requests on the chat record. A stop button can call `cancel!` from the web process while the background job is streaming. The job observes the request, clears it, and raises `RubyLLM::CancelledError`.
+
+```ruby
+# app/controllers/chats_controller.rb
+class ChatsController < ApplicationController
+  def cancel
+    Chat.find(params[:id]).cancel!
+    head :no_content
+  end
+end
+
+# app/jobs/chat_stream_job.rb
+class ChatStreamJob < ApplicationJob
+  def perform(chat_id)
+    chat = Chat.find(chat_id)
+
+    chat.complete do |chunk|
+      assistant_message = chat.messages.last
+      assistant_message&.broadcast_append_chunk(chunk.content) if chunk.content
+    end
+  rescue RubyLLM::CancelledError
+    # Broadcast cancelled UI state if your app needs it.
+  end
+end
+```
+
 ### Message Ordering Issues
 
 Action Cable processes messages concurrently, which can cause out-of-order delivery:

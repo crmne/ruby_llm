@@ -68,6 +68,68 @@ RSpec.describe RubyLLM::Chat do
     end
   end
 
+  describe '#cancel!' do
+    it 'marks the chat for one-shot cancellation' do
+      expect(chat.cancel!).to be(chat)
+      expect(chat).to be_cancelled
+    end
+
+    it 'raises before the next model request and clears the cancellation flag' do
+      allow(chat.provider).to receive(:complete)
+      chat.ask_later('Echo "hello" back to me.')
+      chat.cancel!
+
+      expect { chat.step }.to raise_error(RubyLLM::CancelledError, 'Chat generation cancelled')
+      expect(chat).not_to be_cancelled
+      expect(chat.provider).not_to have_received(:complete)
+    end
+
+    it 'raises while streaming when the block cancels the chat' do
+      allow(chat.provider).to receive(:complete) do |_messages, **_kwargs, &block|
+        block.call(RubyLLM::Chunk.new(role: :assistant, content: 'one'))
+        block.call(RubyLLM::Chunk.new(role: :assistant, content: 'two'))
+        answer_message
+      end
+
+      chat.ask_later('Count slowly.')
+      chunks = []
+
+      expect do
+        chat.complete do |chunk|
+          chunks << chunk.content
+          chat.cancel!
+        end
+      end.to raise_error(RubyLLM::CancelledError, 'Chat generation cancelled')
+
+      expect(chunks).to eq(['one'])
+      expect(chat).not_to be_cancelled
+      expect(chat.messages.map(&:role)).to eq([:user])
+    end
+
+    it 'raises before appending a non-streaming response when cancelled during the request' do
+      allow(chat.provider).to receive(:complete) do
+        chat.cancel!
+        answer_message
+      end
+
+      chat.ask_later('Echo "hello" back to me.')
+
+      expect { chat.generate }.to raise_error(RubyLLM::CancelledError, 'Chat generation cancelled')
+      expect(chat).not_to be_cancelled
+      expect(chat.messages.map(&:role)).to eq([:user])
+    end
+
+    it 'raises before executing pending tool calls' do
+      allow(chat.provider).to receive(:complete)
+      chat.ask_later('Echo "hello" back to me.')
+      chat.add_message tool_call_message
+      chat.cancel!
+
+      expect { chat.run_tools }.to raise_error(RubyLLM::CancelledError, 'Chat generation cancelled')
+      expect(chat.messages.last).to be_tool_call
+    end
+  end
+
   describe '#generate' do
     it 'calls the model once and appends the response' do
       allow(chat.provider).to receive(:complete).and_return(answer_message)

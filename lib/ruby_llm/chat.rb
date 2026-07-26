@@ -20,7 +20,7 @@ module RubyLLM
   # #step expose the individual moves of that loop.
   #
   # A Chat is Enumerable over its messages.
-  class Chat
+  class Chat # rubocop:disable Metrics/ClassLength
     include Enumerable
 
     # The Model the chat sends requests to.
@@ -88,6 +88,8 @@ module RubyLLM
       @fallbacks = []
       @fallback_errors = Fallback::DEFAULT_ERRORS
       @callbacks = Hash.new { |callbacks, name| callbacks[name] = [] }
+      @cancelled = false
+      @cancellation_checker = nil
     end
 
     # Adds +message+ to the conversation as a user message and runs the
@@ -126,6 +128,8 @@ module RubyLLM
     # Chunk objects. Tool calls in the response are not executed; that is
     # #run_tools.
     def generate(&)
+      raise_if_cancelled!
+
       return generate_once(&) if fallbacks.empty?
 
       with_model_restored { generate_with_fallbacks(&) }
@@ -136,6 +140,8 @@ module RubyLLM
     # nothing when no tool calls are pending. The chat is then ready for
     # the next #generate, or the next batch round. Returns +self+.
     def run_tools
+      raise_if_cancelled!
+
       message = last_non_system_message
       execute_pending_tool_calls(message) if message&.tool_call?
       self
@@ -147,6 +153,7 @@ module RubyLLM
     def step(&)
       return if complete?
 
+      raise_if_cancelled!
       last_non_system_message&.tool_call? ? run_tools : generate(&)
     end
 
@@ -167,6 +174,19 @@ module RubyLLM
       when :user, :tool then false
       else !last.tool_call?
       end
+    end
+
+    # Cancels the current in-flight chat operation. The next cancellation
+    # checkpoint raises CancelledError and clears the flag so the chat can be
+    # reused.
+    def cancel!
+      @cancelled = true
+      self
+    end
+
+    # Returns whether this in-memory chat has been marked for cancellation.
+    def cancelled?
+      @cancelled
     end
 
     # Sets the system instructions for the conversation, replacing any
@@ -681,12 +701,25 @@ module RubyLLM
       self
     end
 
+    attr_writer :cancellation_checker
+
+    def raise_if_cancelled!
+      external_cancelled = @cancellation_checker&.call
+      return unless @cancelled || external_cancelled
+
+      @cancelled = false
+      raise CancelledError
+    end
+
     def generate_once(stream_tracker: nil, &block)
+      raise_if_cancelled!
+
       result = nil
       payload = instrumentation_payload(streaming: block_given?)
 
       RubyLLM.instrument('chat.ruby_llm', payload, config: @config) do |event|
         result = provider_completion(stream_tracker:, &block)
+        raise_if_cancelled!
         run_callbacks(:before_message) unless block_given?
         add_message result
         run_callbacks(:after_message, result)
@@ -820,6 +853,8 @@ module RubyLLM
     end
 
     def provider_completion(stream_tracker: nil, &)
+      raise_if_cancelled!
+
       @provider.complete(
         messages,
         tools: @tools,
@@ -849,12 +884,16 @@ module RubyLLM
       run_callbacks(:before_message)
 
       proc do |chunk|
+        raise_if_cancelled!
         stream_tracker&.call(chunk)
         block.call(chunk)
+        raise_if_cancelled!
       end
     end
 
     def execute_pending_tool_calls(response)
+      raise_if_cancelled!
+
       if concurrency
         handle_concurrent_tool_calls(response.tool_calls)
       else
@@ -866,6 +905,7 @@ module RubyLLM
 
     def handle_sequential_tool_calls(tool_calls)
       tool_calls.each_value do |tool_call|
+        raise_if_cancelled!
         run_callbacks(:before_message)
         result = execute_tool_with_callbacks(tool_call)
         add_tool_result_message(tool_call, result)
@@ -874,6 +914,7 @@ module RubyLLM
 
     def handle_concurrent_tool_calls(tool_calls)
       execute_tools_concurrently(tool_calls) do |tool_call, result|
+        raise_if_cancelled!
         run_callbacks(:before_message)
         add_tool_result_message(tool_call, result)
       end
@@ -886,8 +927,10 @@ module RubyLLM
     end
 
     def execute_tool_with_callbacks(tool_call)
+      raise_if_cancelled!
       run_callbacks(:before_tool_call, tool_call)
       result = execute_tool tool_call
+      raise_if_cancelled!
       run_callbacks(:after_tool_result, result)
       result
     end

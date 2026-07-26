@@ -837,6 +837,16 @@ module RubyLLM
     # Returns whether the conversation needs no further work. See Chat#complete?.
 
     ##
+    # :method: cancel!
+    #
+    # Cancels the current in-flight chat operation. See Chat#cancel!.
+
+    ##
+    # :method: cancelled?
+    #
+    # Returns whether the chat has been marked for cancellation. See Chat#cancelled?.
+
+    ##
     # :method: ask_later
     #
     # Stages a question without asking it. See Chat#ask_later.
@@ -879,6 +889,6 @@ module RubyLLM
                    :without_provider_options, :with_headers, :without_headers, :with_schema, :without_schema,
                    :with_fallbacks, :without_fallbacks, :before_message, :after_message, :before_tool_call,
                    :after_tool_result, :before_fallback, :after_fallback, :each, :complete, :complete?, :ask_later,
-                   :generate, :run_tools, :step, :add_message, :add_completion, :cost
+                   :cancel!, :cancelled?, :generate, :run_tools, :step, :add_message, :add_completion, :cost
   end
 end

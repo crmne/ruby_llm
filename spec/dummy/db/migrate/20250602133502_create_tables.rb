@@ -25,6 +25,7 @@ class CreateTables < ActiveRecord::Migration[7.0]
 
     create_table :chats do |t|
       t.references :model, foreign_key: true
+      t.boolean :cancelled, null: false, default: false
       t.timestamps
     end
 

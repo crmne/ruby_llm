@@ -21,6 +21,8 @@ module RubyLLM
       extend ActiveSupport::Concern
       include AttachmentHelpers
 
+      CANCELLATION_POLL_INTERVAL = 1.0
+
       included do
         before_save :resolve_model_from_strings
       end
@@ -38,6 +40,26 @@ module RubyLLM
       # when building the underlying chat. Not persisted; set it again after
       # reloading the record.
       attr_accessor :context
+
+      # Requests cancellation of the current in-flight chat operation. The
+      # request is persisted so a background job can observe it from another
+      # process.
+      def cancel!
+        if persisted?
+          update_column(:cancelled, true)
+        else
+          self[:cancelled] = true
+        end
+
+        @chat&.cancel!
+        self
+      end
+
+      # Returns whether this record or its memoized in-memory chat has a
+      # pending cancellation request.
+      def cancelled?
+        @chat&.cancelled? || self[:cancelled]
+      end
 
       def messages_association # :nodoc:
         send(messages_association_name)
@@ -494,8 +516,12 @@ module RubyLLM
       # tool results, then re-raises the error.
       def complete(...)
         to_llm.complete(...)
+      rescue RubyLLM::CancelledError => e
+        cleanup_failed_messages(reason: 'chat cancelled') if @message&.persisted? && @message.content.blank?
+        cleanup_orphaned_tool_results
+        raise e
       rescue RubyLLM::Error => e
-        cleanup_failed_messages if @message&.persisted? && @message.content.blank?
+        cleanup_failed_messages(reason: 'API call failed') if @message&.persisted? && @message.content.blank?
         cleanup_orphaned_tool_results
         raise e
       end
@@ -519,8 +545,8 @@ module RubyLLM
         @provider_string = nil
       end
 
-      def cleanup_failed_messages
-        RubyLLM.logger.warn "RubyLLM: API call failed, destroying message: #{@message.id}"
+      def cleanup_failed_messages(reason:)
+        RubyLLM.logger.warn "RubyLLM: #{reason}, destroying message: #{@message.id}"
         @message.destroy
       end
 
@@ -593,6 +619,7 @@ module RubyLLM
           assume_model_exists: assume_model_exists || false
         )
         sync_messages(chat)
+        chat.send(:cancellation_checker=, proc { consume_persisted_cancellation_request })
         install_persistence_callbacks(chat)
       end
 
@@ -733,6 +760,33 @@ module RubyLLM
 
         tool_call = message_with_tool_call.tool_calls_association.find_by(tool_call_id: tool_call_id)
         tool_call&.id
+      end
+
+      def consume_persisted_cancellation_request
+        if self[:cancelled]
+          clear_cancellation_request
+          return :cancelled
+        end
+        return unless persisted?
+        return unless cancellation_poll_due?
+
+        return unless self.class.unscoped.where(self.class.primary_key => id).pick(:cancelled)
+
+        clear_cancellation_request
+        :cancelled
+      end
+
+      def clear_cancellation_request
+        self[:cancelled] = false
+        self.class.unscoped.where(self.class.primary_key => id).update_all(cancelled: false) if persisted?
+      end
+
+      def cancellation_poll_due?
+        now = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+        return false if @last_cancellation_poll_at && now - @last_cancellation_poll_at < CANCELLATION_POLL_INTERVAL
+
+        @last_cancellation_poll_at = now
+        true
       end
     end
   end

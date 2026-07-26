@@ -284,7 +284,13 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
           protocol: nil,
           assume_model_exists: false
         ).and_return(
-          instance_double(RubyLLM::Chat, 'messages=': nil, before_message: nil, after_message: nil)
+          instance_double(
+            RubyLLM::Chat,
+            'messages=': nil,
+            'cancellation_checker=': nil,
+            before_message: nil,
+            after_message: nil
+          )
         )
 
         chat.to_llm
@@ -301,7 +307,13 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
           protocol: nil,
           assume_model_exists: false
         ).and_return(
-          instance_double(RubyLLM::Chat, 'messages=': nil, before_message: nil, after_message: nil)
+          instance_double(
+            RubyLLM::Chat,
+            'messages=': nil,
+            'cancellation_checker=': nil,
+            before_message: nil,
+            after_message: nil
+          )
         )
 
         chat.to_llm
