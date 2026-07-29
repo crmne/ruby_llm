@@ -61,6 +61,10 @@ RubyLLM.configure do |config|
   config.gpustack_api_base = String
   config.gpustack_api_key = String
 
+  # MiniMax
+  config.minimax_api_key = String
+  config.minimax_api_base = String  # Optional regional endpoint
+
   # Mistral
   config.mistral_api_key = String
   config.mistral_api_base = String  # v1.16+

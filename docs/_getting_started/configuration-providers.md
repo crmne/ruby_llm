@@ -62,6 +62,10 @@ RubyLLM.configure do |config|
   config.gpustack_api_base = ENV['GPUSTACK_API_BASE']
   config.gpustack_api_key = ENV['GPUSTACK_API_KEY']
 
+  # MiniMax
+  config.minimax_api_key = ENV['MINIMAX_API_KEY']
+  config.minimax_api_base = ENV['MINIMAX_API_BASE'] # Optional regional endpoint (defaults to https://api.minimax.io/v1; use https://api.minimaxi.com/v1 in Mainland China)
+
   # Mistral
   config.mistral_api_key = ENV['MISTRAL_API_KEY']
   config.mistral_api_base = ENV['MISTRAL_API_BASE'] # v1.16+ (optional custom Mistral endpoint)
