@@ -324,13 +324,12 @@ module RubyLLM
           return nil unless thinking&.enabled?
 
           effort = thinking.effort.to_s
-          return nil if effort == 'none'
+          return nil if effort.empty? || effort == 'none'
 
           budget = reasoning_budget(thinking, effort, model, max_output_tokens)
           return { reasoning_config: { type: 'enabled', budget_tokens: budget } } if budget
-          return { reasoning_effort: effort } unless effort.empty?
 
-          nil
+          { reasoning_effort: effort }
         end
 
         def reasoning_budget(thinking, effort, model, max_output_tokens)
