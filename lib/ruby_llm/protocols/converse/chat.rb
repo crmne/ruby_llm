@@ -43,7 +43,7 @@ module RubyLLM
           tool_config = format_tool_config(tools, tool_prefs)
           payload[:toolConfig] = tool_config if tool_config
 
-          additional_fields = format_additional_model_request_fields(thinking)
+          additional_fields = format_additional_model_request_fields(thinking, model, max_output_tokens)
           payload[:additionalModelRequestFields] = additional_fields if additional_fields
 
           output_config = build_output_config(schema)
@@ -291,10 +291,10 @@ module RubyLLM
           RubyLLM::Utils.deep_merge(tool_spec, tool.provider_options)
         end
 
-        def format_additional_model_request_fields(thinking)
+        def format_additional_model_request_fields(thinking, model, max_output_tokens = nil)
           fields = {}
 
-          reasoning_fields = format_reasoning_fields(thinking)
+          reasoning_fields = format_reasoning_fields(thinking, model, max_output_tokens)
           fields = RubyLLM::Utils.deep_merge(fields, reasoning_fields) if reasoning_fields
 
           fields.empty? ? nil : fields
@@ -320,31 +320,56 @@ module RubyLLM
           }
         end
 
-        def format_reasoning_fields(thinking)
+        def format_reasoning_fields(thinking, model, max_output_tokens = nil)
           return nil unless thinking&.enabled?
 
-          effort_config = effort_reasoning_config(thinking)
-          return effort_config if effort_config
-
-          budget_reasoning_config(thinking)
-        end
-
-        def effort_reasoning_config(thinking)
           effort = thinking.effort.to_s
-          return nil if effort.empty? || effort == 'none'
+          return nil if effort == 'none'
 
-          if Converse.reasoning_embedded?(@model)
-            { reasoning_config: { type: 'enabled', reasoning_effort: effort } }
-          else
-            { reasoning_effort: effort }
-          end
+          budget = reasoning_budget(thinking, effort, model, max_output_tokens)
+          return { reasoning_config: { type: 'enabled', budget_tokens: budget } } if budget
+          return { reasoning_effort: effort } unless effort.empty?
+
+          nil
         end
 
-        def budget_reasoning_config(thinking)
-          budget = thinking.budget
-          return nil unless budget.is_a?(Integer)
+        def reasoning_budget(thinking, effort, model, max_output_tokens)
+          return thinking.budget if thinking.budget.is_a?(Integer)
+          return nil if effort.empty?
 
-          { reasoning_config: { type: 'enabled', budget_tokens: budget } }
+          schema = Converse.reasoning_budget_schema(model)
+          schema && effort_budget_tokens(effort, schema, max_output_tokens)
+        end
+
+        # Models that take a budget reject reasoning_effort, so effort has to become a budget.
+        # Bedrock names the levels of an enumerated budget after the efforts they stand for;
+        # otherwise the effort spans the range the schema allows.
+        def effort_budget_tokens(effort, schema, max_output_tokens)
+          minimum = schema[:minimum]
+          budget = enumerated_budget(effort, schema) || ranged_budget(effort, schema)
+          return nil unless budget
+
+          # Bedrock rejects a budget that leaves no room for the answer.
+          budget = max_output_tokens - 1 if max_output_tokens && budget >= max_output_tokens
+          minimum.is_a?(Integer) ? [budget, minimum].max : budget
+        end
+
+        def enumerated_budget(effort, schema)
+          levels = schema[:enum]
+          level = levels.is_a?(Hash) ? levels[effort.to_sym] : nil
+          level if level.is_a?(Integer)
+        end
+
+        def ranged_budget(effort, schema)
+          minimum = schema[:minimum]
+          maximum = schema[:maximum]
+          return nil unless minimum.is_a?(Integer) && maximum.is_a?(Integer)
+
+          case effort
+          when 'low' then minimum
+          when 'medium' then minimum + ((maximum - minimum) / 2)
+          else maximum
+          end
         end
 
         def format_thinking_block(thinking)
