@@ -250,6 +250,72 @@ RSpec.describe RubyLLM::Models do
       )
     end
 
+    it 'maps models.dev context tiers into text_tokens.long_context' do
+      model_data_with_tiers = model_data.merge(
+        cost: {
+          input: 5.0,
+          output: 30.0,
+          cache_read: 0.5,
+          cache_write: 6.25,
+          tiers: [
+            {
+              input: 10.0,
+              output: 45.0,
+              cache_read: 1.0,
+              cache_write: 12.5,
+              tier: { type: 'context', size: 272_000 }
+            }
+          ]
+        }
+      )
+
+      data = described_class.models_dev_model_attributes(model_data_with_tiers, 'openai', 'openai')
+
+      expect(data[:pricing]).to eq(
+        text_tokens: {
+          standard: {
+            input_per_million: 5.0,
+            output_per_million: 30.0,
+            cache_read_input_per_million: 0.5,
+            cache_write_input_per_million: 6.25
+          },
+          long_context: {
+            input_per_million: 10.0,
+            output_per_million: 45.0,
+            cache_read_input_per_million: 1.0,
+            cache_write_input_per_million: 12.5
+          },
+          long_context_threshold: 272_000
+        }
+      )
+    end
+
+    it 'falls back to context_over_200k when models.dev omits structured tiers' do
+      model_data_with_over = model_data.merge(
+        cost: {
+          input: 1.25,
+          output: 10.0,
+          cache_read: 0.125,
+          context_over_200k: {
+            input: 2.5,
+            output: 15.0,
+            cache_read: 0.25
+          }
+        }
+      )
+
+      data = described_class.models_dev_model_attributes(model_data_with_over, 'google', 'google')
+
+      expect(data[:pricing][:text_tokens]).to include(
+        long_context: {
+          input_per_million: 2.5,
+          output_per_million: 15.0,
+          cache_read_input_per_million: 0.25
+        },
+        long_context_threshold: 200_000
+      )
+    end
+
     it 'keeps models.dev authoritative for overlapping capabilities when merging provider metadata' do
       models_dev_model = RubyLLM::Model.new(
         id: 'test-model',

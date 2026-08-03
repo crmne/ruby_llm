@@ -268,6 +268,44 @@ RSpec.describe RubyLLM::Model do
 
       expect(model.cost_for(tokens).total).to eq(0.0225)
     end
+
+    it 'hydrates long_context pricing from metadata.cost when pricing lacks it' do
+      model = described_class.new(
+        data.merge(
+          pricing: {
+            text_tokens: {
+              standard: {
+                input_per_million: 5.0,
+                output_per_million: 30.0
+              }
+            }
+          },
+          metadata: {
+            cost: {
+              input: 5.0,
+              output: 30.0,
+              tiers: [
+                {
+                  input: 10.0,
+                  output: 45.0,
+                  tier: { type: 'context', size: 272_000 }
+                }
+              ]
+            }
+          }
+        )
+      )
+
+      expect(model.pricing.to_h[:text_tokens]).to include(
+        long_context: {
+          input_per_million: 10.0,
+          output_per_million: 45.0
+        },
+        long_context_threshold: 272_000
+      )
+      expect(model.cost_for(RubyLLM::Tokens.new(input: 500_000, output: 10_000)).total)
+        .to be_within(0.0000000001).of(5.45)
+    end
   end
 
   describe '#to_h' do

@@ -71,6 +71,10 @@ module RubyLLM
               end
             end
           end
+          integer :long_context_threshold,
+                  minimum: 0,
+                  required: false,
+                  description: 'Prompt size above which long_context rates apply'
         end
       end
     end

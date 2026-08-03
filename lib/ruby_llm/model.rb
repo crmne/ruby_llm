@@ -79,8 +79,8 @@ module RubyLLM
       @knowledge_cutoff = Utils.to_date(data[:knowledge_cutoff])
       @modalities = Modalities.new(data[:modalities] || {})
       @capabilities = data[:capabilities] || []
-      @pricing = Pricing.new(data[:pricing] || {})
       @metadata = data[:metadata]&.dup || {}
+      @pricing = Pricing.new(pricing_data_with_long_context(data[:pricing] || {}))
       @reasoning_options = normalize_reasoning_options(reasoning_options_from(data))
       store_reasoning_options_metadata
     end
@@ -183,6 +183,19 @@ module RubyLLM
     end
 
     private
+
+    def pricing_data_with_long_context(pricing)
+      pricing = RubyLLM::Utils.deep_symbolize_keys(RubyLLM::Utils.deep_dup(pricing))
+      text = pricing[:text_tokens] || {}
+      return pricing if text[:long_context]
+
+      rates, threshold = PricingCategory.long_context_from_cost(metadata[:cost] || metadata['cost'])
+      return pricing unless rates
+
+      pricing[:text_tokens] = text.merge(long_context: rates)
+      pricing[:text_tokens][:long_context_threshold] = threshold if threshold
+      pricing
+    end
 
     def reasoning_options_from(data)
       data[:reasoning_options] || metadata[:reasoning_options] || metadata['reasoning_options']
