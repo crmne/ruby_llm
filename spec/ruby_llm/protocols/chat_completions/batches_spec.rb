@@ -110,7 +110,7 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Batches do
 
       expect(message.content).to eq('Hello')
       expect(message.model).to eq('gpt-5-nano')
-      expect(message.input_tokens).to eq(2)
+      expect(message.tokens.input).to eq(2)
       expect(message.raw).to eq(body)
     end
   end

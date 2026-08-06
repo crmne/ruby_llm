@@ -637,9 +637,9 @@ RSpec.describe RubyLLM::Protocols::Gemini::Chat do
       provider = RubyLLM::Protocols::Gemini.allocate
       message = provider.send(:parse_completion_response, response)
 
-      expect(message.input_tokens).to eq(21)
-      expect(message.output_tokens).to eq(8)
-      expect(message.cache_read_tokens).to eq(21)
+      expect(message.tokens.input).to eq(21)
+      expect(message.tokens.output).to eq(8)
+      expect(message.tokens.cache_read).to eq(21)
     end
   end
 
@@ -654,6 +654,6 @@ RSpec.describe RubyLLM::Protocols::Gemini::Chat do
     thoughts_tokens = raw_body.dig('usageMetadata', 'thoughtsTokenCount') || 0
 
     # Verify our implementation correctly sums both token types
-    expect(response.output_tokens).to eq(candidates_tokens + thoughts_tokens)
+    expect(response.tokens.output).to eq(candidates_tokens + thoughts_tokens)
   end
 end

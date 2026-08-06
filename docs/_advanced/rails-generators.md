@@ -39,8 +39,10 @@ bin/rails generate ruby_llm:install
 ```
 
 The generator:
-- Creates migrations for Chat, Message, ToolCall, and Model tables
-- Sets up model files with appropriate `acts_as` declarations
+
+- Creates application migrations and models for Chat and Message
+- Creates one migration for RubyLLM's internal model, tool-call, usage, and batch tables
+- Adds the `acts_as_chat` and `acts_as_message` declarations
 - Installs ActiveStorage for file attachments
 - Configures the database model registry
 - Creates an initializer with sensible defaults
@@ -74,7 +76,7 @@ After running the generator, start your server and visit `http://localhost:3000/
 The UI generator also supports custom model names:
 
 ```bash
-bin/rails generate ruby_llm:chat_ui chat:Conversation message:ChatMessage model:AIModel
+bin/rails generate ruby_llm:chat_ui chat:Conversation message:ChatMessage
 ```
 
 ## Conventional Directory Structure
@@ -165,11 +167,11 @@ Turbo Stream templates used by the generated chat UI:
 The generator uses Rails-like syntax for custom model names:
 
 ```bash
-# Default - creates Chat, Message, ToolCall, Model
+# Default - creates the application Chat and Message models
 bin/rails generate ruby_llm:install
 
 bin/rails generate ruby_llm:install chat:Conversation message:ChatMessage
-bin/rails generate ruby_llm:install chat:Discussion message:DiscussionMessage tool_call:FunctionCall model:AIModel
+bin/rails generate ruby_llm:install chat:Discussion message:DiscussionMessage
 
 # Skip ActiveStorage if you don't need file attachments
 bin/rails generate ruby_llm:install --skip-active-storage

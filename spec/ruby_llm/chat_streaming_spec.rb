@@ -53,8 +53,8 @@ RSpec.describe RubyLLM::Chat do
         chat = token_count_chat(model: model, provider: provider)
         sync_message = chat.ask('Count from 1 to 3')
 
-        expect(sync_message.input_tokens).to be_within(1).of(stream_message.input_tokens)
-        expect(sync_message.output_tokens).to be_within(2).of(stream_message.output_tokens)
+        expect(sync_message.tokens.input).to be_within(1).of(stream_message.tokens.input)
+        expect(sync_message.tokens.output).to be_within(2).of(stream_message.tokens.output)
       end
     end
   end

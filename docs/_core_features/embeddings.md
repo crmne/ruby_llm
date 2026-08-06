@@ -41,7 +41,7 @@ vector = embedding.vectors
 puts "Vector dimension: #{vector.length}" # e.g., 1536 for {{ site.models.embedding_small }}
 
 puts "Model used: #{embedding.model}"
-puts "Input tokens: #{embedding.input_tokens}"
+puts "Input tokens: #{embedding.tokens.input}"
 ```
 
 ## Embedding Multiple Texts
@@ -55,7 +55,7 @@ embeddings = RubyLLM.embed(texts)
 puts "Number of vectors: #{embeddings.vectors.length}" # => 3
 puts "First vector dimensions: #{embeddings.vectors.first.length}"
 puts "Model used: #{embeddings.model}"
-puts "Total input tokens: #{embeddings.input_tokens}"
+puts "Total input tokens: #{embeddings.tokens.input}"
 ```
 
 > Batching multiple texts is generally more performant and cost-effective than making individual requests for each text.

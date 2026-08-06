@@ -49,7 +49,7 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Batches do
       expect(index).to eq(1)
       expect(message.content).to eq('Jupiter')
       expect(message.model).to eq('claude-haiku-4-5')
-      expect(message.input_tokens).to eq(10)
+      expect(message.tokens.input).to eq(10)
     end
 
     it 'logs and skips failed results' do

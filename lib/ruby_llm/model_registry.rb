@@ -103,35 +103,6 @@ module RubyLLM
       end
     end
 
-    class ActiveRecordStore
-      def read
-        model_class = resolve_model_class
-        return [] unless model_class.respond_to?(:table_exists?) && model_class.table_exists?
-
-        model_class.all.map(&:to_llm)
-      rescue StandardError => e
-        RubyLLM.logger.debug { "Failed to load models from database: #{e.message}, falling back to JSON" }
-        []
-      end
-
-      def write(registry)
-        resolve_model_class.save_to_database(registry)
-      end
-
-      def description
-        "database:#{RubyLLM.config.model_registry_class}"
-      end
-
-      private
-
-      def resolve_model_class
-        model_class = RubyLLM.config.model_registry_class
-        return model_class unless model_class.is_a?(String)
-
-        model_class.split('::').inject(Object) { |scope, name| scope.const_get(name) }
-      end
-    end
-
     module_function
 
     def read(file)

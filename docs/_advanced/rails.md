@@ -91,8 +91,6 @@ RubyLLM.configure do |config|
   config.anthropic_api_key = ENV['ANTHROPIC_API_KEY']
   config.gemini_api_key = ENV['GEMINI_API_KEY']
 
-  # For custom Model class names (defaults to 'Model')
-  # config.model_registry_class = 'AIModel'
 end
 ```
 
@@ -100,7 +98,7 @@ end
 
 Each part of Rails integration has its own focused guide:
 
-*   [Persistence with acts_as]({% link _advanced/rails-persistence.md %}) - wire up `acts_as_chat`, `acts_as_message`, and friends, then work with chats, tools, attachments, and structured output.
+*   [Persistence with acts_as]({% link _advanced/rails-persistence.md %}) - wire up `acts_as_chat` and `acts_as_message`, then work with chats, tools, usage, attachments, and structured output.
 *   [Streaming with Hotwire/Turbo]({% link _advanced/rails-streaming.md %}) - broadcast tokens in real time with Turbo Streams and background jobs.
 *   [Generators and App Conventions]({% link _advanced/rails-generators.md %}) - the install and chat UI generators, view conventions, and the conventional app directory structure.
 *   [Advanced Rails Configuration]({% link _advanced/rails-advanced-config.md %}) - provider overrides, custom contexts, raw provider payloads, and fiber-safe connections.

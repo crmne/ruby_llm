@@ -196,7 +196,7 @@ RSpec.describe RubyLLM::ModelRegistry do
     end
 
     it 'raises on a database write failure without changing the in-memory registry' do
-      store = instance_double(RubyLLM::ModelRegistry::ActiveRecordStore, write: nil, description: 'database:Model')
+      store = double('model registry store', write: nil, description: 'database:Model') # rubocop:disable RSpec/VerifiedDoubles
       allow(store).to receive(:write).and_raise('database unavailable')
       RubyLLM.config.model_registry_store = store
       allow(described_class).to receive_messages(
@@ -211,7 +211,7 @@ RSpec.describe RubyLLM::ModelRegistry do
     end
 
     it 'persists a candidate before changing the in-memory registry' do
-      store = instance_double(RubyLLM::ModelRegistry::ActiveRecordStore, description: 'database:Model')
+      store = double('model registry store', description: 'database:Model') # rubocop:disable RSpec/VerifiedDoubles
       RubyLLM.config.model_registry_store = store
       allow(described_class).to receive_messages(
         fetch_provider_models: empty_fetch,

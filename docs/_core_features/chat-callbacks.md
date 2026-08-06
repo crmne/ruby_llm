@@ -2,7 +2,7 @@
 layout: default
 title: Chat Event Handlers
 parent: "Chat"
-nav_order: 10
+nav_order: 11
 description: Hook into the chat lifecycle with additive callbacks for UI updates, logging, and analytics
 ---
 
@@ -24,7 +24,7 @@ After reading this guide, you will know:
 
 * Which lifecycle events you can register handlers for.
 * How the `before_*` and `after_*` callbacks differ from the older `on_*` handlers.
-* How to read token usage inside an `after_message` callback.
+* How chat callbacks differ from retry- and cancellation-safe usage instrumentation.
 * How to observe tool calls and tool results as they happen.
 * How to observe model fallback attempts.
 * When callbacks fire for streaming versus non-streaming requests.
@@ -48,8 +48,7 @@ end
 # Called after the complete assistant message (including tool calls/results) is received
 chat.after_message do |message|
   puts "Response complete!"
-  # Note: message might be nil if an error occurred during the request
-  if message&.tokens&.output
+  if message.tokens.output
     tokens =
       message.tokens.input.to_i +
       message.tokens.output.to_i +
@@ -86,12 +85,15 @@ chat.ask "What is metaprogramming in Ruby?"
 
 Fallback callbacks run around each fallback attempt. `before_fallback` fires after the current model fails and before RubyLLM tries the fallback model. `after_fallback` fires when that fallback attempt succeeds or fails. The callback receives a `RubyLLM::Fallback` with `from`, `to`, `error`, `attempt`, `response`, `fallback_error`, `streaming?`, and `chunks_yielded?`.
 
+`after_message` observes transcript changes. It cannot observe a cancelled attempt that produces no message. Subscribe to `usage.ruby_llm` when you need cost and usage events; it fires once per physical provider attempt, including retries and cancellations. See [Cost and Usage Tracking]({% link _core_features/cost-and-usage-tracking.md %}).
+
 Each callback is additive - register as many as you like, and they run alongside RubyLLM's own bookkeeping (such as the Rails persistence callbacks). The older replacing handlers (`on_new_message`, `on_end_message`, `on_tool_call`, `on_tool_result`) were removed in 2.0.
 
 ## Next Steps
 
 * [Chat]({% link _core_features/chat.md %}) - the core conversation interface these events fire on.
 * [Streaming]({% link _core_features/streaming.md %}) - stream chunks as the assistant generates them.
+* [Cost and Usage Tracking]({% link _core_features/cost-and-usage-tracking.md %}) - observe provider attempts independently from messages.
 * [Tools]({% link _core_features/tools.md %}) - define the tools whose calls and results these callbacks observe.
 * [Error Handling]({% link _advanced/error-handling.md %}#model-fallbacks) - configure model fallbacks and fallback error handling.
 * [Rails Integration]({% link _advanced/rails.md %}) - see how persistence callbacks run alongside your own.

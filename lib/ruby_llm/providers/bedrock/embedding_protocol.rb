@@ -15,10 +15,18 @@ module RubyLLM
 
         def parse_single_embedding_responses(responses, model:, text:)
           vectors = responses.map { |response| extract_embedding(response.body) }
-          input_tokens = responses.sum { |response| response.body['inputTextTokenCount'] || 0 }
+          input_tokens = Tokens.aggregate(embedding_attempt_tokens(responses)).input
           vectors = vectors.first unless text.is_a?(Array)
 
           Embedding.new(vectors:, model:, input_tokens:)
+        end
+
+        def record_embedding_attempt(response)
+          @usage_tracker&.succeed_attempts(tokens: embedding_attempt_tokens([response]))
+        end
+
+        def embedding_attempt_tokens(responses)
+          responses.map { |response| Tokens.build(input: response.body['inputTextTokenCount']) }
         end
 
         def deep_merge_provider_options(payload, provider_options)

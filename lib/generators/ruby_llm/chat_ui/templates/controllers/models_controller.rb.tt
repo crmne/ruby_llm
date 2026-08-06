@@ -4,11 +4,11 @@ class <%= model_controller_class_name %> < ApplicationController
   end
 
   def show
-    @<%= model_variable_name %> = <%= model_model_name %>.find(params[:id])
+    @<%= model_variable_name %> = RubyLLM.models.find(params[:id], params[:provider])
   end
 
   def refresh
-    <%= model_model_name %>.refresh!
+    RubyLLM.models.refresh!
     redirect_to <%= model_table_name %>_path, notice: "<%= model_model_name.pluralize %> refreshed successfully"
   end
 end

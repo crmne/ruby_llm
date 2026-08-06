@@ -10,11 +10,13 @@ module RubyLLM
         # rubocop:disable Metrics/ParameterLists, Lint/UnusedMethodArgument
         def transcribe(audio_file, model:, language:, format: nil, speaker_names: nil,
                        speaker_references: nil, provider_options: {}, prompt: nil, temperature: nil)
-          attachment = Attachment.new(audio_file)
-          payload = render_transcription_payload(attachment, language:, format:, provider_options:, prompt:,
-                                                             temperature:)
-          response = @connection.post(transcription_url(model), payload)
-          parse_transcription_response(response, model:)
+          track_usage(:transcription) do
+            attachment = Attachment.new(audio_file)
+            payload = render_transcription_payload(attachment, language:, format:, provider_options:, prompt:,
+                                                               temperature:)
+            response = @connection.post(transcription_url(model), payload, usage: @usage_tracker)
+            parse_transcription_response(response, model:)
+          end
         end
         # rubocop:enable Metrics/ParameterLists, Lint/UnusedMethodArgument
 

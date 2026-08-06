@@ -18,4 +18,4 @@ ActiveRecord::Tasks::DatabaseTasks.create_current
 ActiveRecord::Tasks::DatabaseTasks.load_schema_current
 
 RubyLLM.models.load_from_json!
-Model.save_to_database
+RubyLLM::ActiveRecord::Model.save_to_database

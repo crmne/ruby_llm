@@ -42,8 +42,6 @@ module RubyLLM
     end
 
     def self.build(input: nil, output: nil, cache_read: nil, cache_write: nil, thinking: nil) # :nodoc:
-      return nil if [input, output, cache_read, cache_write, thinking].all?(&:nil?)
-
       new(
         input: input,
         output: output,
@@ -51,6 +49,20 @@ module RubyLLM
         cache_write: cache_write,
         thinking: thinking
       )
+    end
+
+    # Sums token counts across provider attempts. A bucket remains +nil+ when
+    # no attempt reported it.
+    def self.aggregate(tokens)
+      tokens = Array(tokens).compact
+      return new if tokens.empty?
+      return tokens.first if tokens.one?
+
+      values = %i[input output cache_read cache_write thinking].to_h do |component|
+        reported = tokens.filter_map { |usage| usage.public_send(component) }
+        [component, reported.empty? ? nil : reported.sum]
+      end
+      build(**values)
     end
 
     # Returns the counts as a hash with keys +:input_tokens+,

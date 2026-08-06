@@ -104,7 +104,6 @@ RubyLLM.configure do |config|
 
   # Model Registry
   config.model_registry_file = String  # Writable registry cache; defaults to the OS user cache directory
-  config.model_registry_class = String
 
   # Connection Settings
   config.request_timeout = Integer

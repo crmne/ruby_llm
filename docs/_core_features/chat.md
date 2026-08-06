@@ -218,6 +218,7 @@ This page covers the core `Chat` interface. Each facet of a conversation has its
 * [Prompt Caching]({% link _core_features/prompt-caching.md %}) - reuse stable prompt prefixes automatically or with explicit boundaries.
 * [Advanced Request Control]({% link _core_features/chat-request-control.md %}) - provider-specific parameters, wire protocols, raw content blocks, and custom headers.
 * [Token Usage and Cost]({% link _core_features/chat-tokens.md %}) - read per-turn and per-conversation token counts and costs.
+* [Cost and Usage Tracking]({% link _core_features/cost-and-usage-tracking.md %}) - account for retries, cancellations, and provider attempts.
 * [Chat Event Handlers]({% link _core_features/chat-callbacks.md %}) - hook into the chat lifecycle for UI updates, logging, and analytics.
 
 ## Next Steps

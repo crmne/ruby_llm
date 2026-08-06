@@ -28,8 +28,6 @@ module RubyLLM
         args = []
         args << "chat:#{chat_model_name}" if chat_model_name != 'Chat'
         args << "message:#{message_model_name}" if message_model_name != 'Message'
-        args << "model:#{model_model_name}" if model_model_name != 'Model'
-        args << "tool_call:#{tool_call_model_name}" if tool_call_model_name != 'ToolCall'
         arg_string = args.any? ? " #{args.join(' ')}" : ''
 
         raise Thor::Error, <<~ERROR

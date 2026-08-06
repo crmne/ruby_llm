@@ -425,10 +425,10 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
 
       message = RubyLLM::Protocols::Anthropic.allocate.send(:parse_completion_response, response)
 
-      expect(message.input_tokens).to eq(42)
-      expect(message.output_tokens).to eq(5)
-      expect(message.cache_read_tokens).to eq(21)
-      expect(message.cache_write_tokens).to eq(7)
+      expect(message.tokens.input).to eq(42)
+      expect(message.tokens.output).to eq(5)
+      expect(message.tokens.cache_read).to eq(21)
+      expect(message.tokens.cache_write).to eq(7)
     end
   end
 end

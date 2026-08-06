@@ -11,6 +11,8 @@ module RubyLLM
   #   image.save("sunset.png")
   #
   class Image
+    include Usage::Result
+
     # The URL of the hosted image, for providers that return one, or +nil+.
     attr_reader :url
 
@@ -63,6 +65,7 @@ module RubyLLM
       model ||= config.default_image_model
       model, provider_instance = Models.resolve(model, provider: provider, assume_model_exists: assume_model_exists,
                                                        config: config)
+      empty_tokens = Tokens.new
       payload = {
         provider: provider_instance.slug,
         provider_class: provider_instance.class.display_name,
@@ -71,13 +74,17 @@ module RubyLLM
         prompt: prompt,
         size: size,
         provider_options: provider_options,
-        metadata: metadata
+        metadata: metadata,
+        tokens: empty_tokens,
+        cost: Cost.new(tokens: empty_tokens, model:, category: :images)
       }
 
       RubyLLM.instrument('image.ruby_llm', payload, config: config) do |event|
         result = provider_instance.paint(prompt, model:, size:, with:, mask:, provider_options:)
         event[:result] = result
         event[:response_model] = result.model
+        event[:tokens] = result.tokens
+        event[:cost] = result.cost
         result
       end
     end
@@ -89,7 +96,7 @@ module RubyLLM
       @mime_type = mime_type
       @revised_prompt = revised_prompt
       @model = model
-      @usage = usage
+      @raw_usage = usage
     end
     # :startdoc:
 
@@ -123,15 +130,17 @@ module RubyLLM
     end
 
     # Returns a Tokens with the input and output token counts reported
-    # by the provider, or +nil+ when the provider reported none.
+    # by the provider. Its fields are +nil+ when none were reported.
     #
     #   image.tokens.input
     #   image.tokens.output
     #
     def tokens
+      return ruby_llm_usage_tokens unless ruby_llm_usage_entries.empty?
+
       @tokens ||= Tokens.build(
-        input: usage['input_tokens'],
-        output: usage['output_tokens']
+        input: raw_usage['input_tokens'],
+        output: raw_usage['output_tokens']
       )
     end
 
@@ -140,6 +149,8 @@ module RubyLLM
     #   image.cost.total
     #
     def cost
+      return ruby_llm_usage_cost unless ruby_llm_usage_entries.empty?
+
       Cost.new(tokens:, model: model_info, category: :images, input_details: input_tokens_details)
     end
 
@@ -155,10 +166,10 @@ module RubyLLM
 
     private
 
-    attr_reader :usage
+    attr_reader :raw_usage
 
     def input_tokens_details
-      usage['input_tokens_details']
+      raw_usage['input_tokens_details']
     end
   end
 end

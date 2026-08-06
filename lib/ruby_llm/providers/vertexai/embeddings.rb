@@ -26,9 +26,17 @@ module RubyLLM
         def parse_embedding_response(response, model:, text:)
           predictions = response.body['predictions']
           vectors = predictions&.map { |p| p.dig('embeddings', 'values') }
+          input_tokens = embedding_input_tokens(predictions)
           vectors = vectors.first if vectors&.length == 1 && !text.is_a?(Array)
 
-          Embedding.new(vectors:, model:, input_tokens: 0)
+          Embedding.new(vectors:, model:, input_tokens:)
+        end
+
+        def embedding_input_tokens(predictions)
+          counts = Array(predictions).filter_map do |prediction|
+            prediction.dig('embeddings', 'statistics', 'token_count')
+          end
+          counts.sum unless counts.empty?
         end
       end
     end

@@ -13,12 +13,12 @@ RSpec.describe RubyLLM::Chat do
   end
 
   def total_input_tokens(message)
-    message.input_tokens.to_i + message.cache_read_tokens.to_i + message.cache_write_tokens.to_i
+    message.tokens.input.to_i + message.tokens.cache_read.to_i + message.tokens.cache_write.to_i
   end
 
   def expect_token_usage(message)
     expect(total_input_tokens(message)).to be_positive
-    expect(message.output_tokens).to be_positive
+    expect(message.tokens.output).to be_positive
   end
 
   describe 'basic chat functionality' do
@@ -116,7 +116,7 @@ RSpec.describe RubyLLM::Chat do
     end
   end
 
-  describe '#cost' do
+  describe '#tokens and #cost' do
     let(:model) do
       RubyLLM::Model.new(
         id: 'priced-model',
@@ -133,32 +133,40 @@ RSpec.describe RubyLLM::Chat do
       )
     end
 
-    it 'sums message costs for the conversation' do
+    it 'keeps manually added messages out of the conversation totals' do
       allow(RubyLLM.models).to receive(:find).and_call_original
       allow(RubyLLM.models).to receive(:find).with('priced-model').and_return(model)
 
       chat = RubyLLM.chat(model: RubyLLM.config.default_model)
       chat.add_message(role: :user, content: 'Hello')
-      chat.add_message(role: :assistant, content: 'Hi', input_tokens: 1_000, output_tokens: 2_000,
-                       model: 'priced-model')
-      chat.add_message(role: :assistant, content: 'Again', input_tokens: 500, output_tokens: 100,
-                       model: 'priced-model')
+      response = chat.add_message(role: :assistant, content: 'Hi', input_tokens: 1_000, output_tokens: 2_000,
+                                  model: 'priced-model')
 
-      expect(chat.cost.input).to eq(0.0015)
-      expect(chat.cost.output).to eq(0.0042)
-      expect(chat.cost.total).to eq(0.0057)
+      expect(response.tokens.to_h).to eq(input_tokens: 1_000, output_tokens: 2_000)
+      expect(response.cost.total).to eq(0.005)
+      expect(chat.tokens.to_h).to be_empty
+      expect(chat.cost.total).to be_nil
     end
 
-    it 'uses the chat model when a response model id cannot be resolved' do
+    it 'returns empty value objects before the chat has usage' do
+      chat = RubyLLM.chat(model: RubyLLM.config.default_model)
+
+      expect(chat.tokens).to be_a(RubyLLM::Tokens)
+      expect(chat.tokens.to_h).to be_empty
+      expect(chat.cost).to be_a(RubyLLM::Cost::Aggregate)
+      expect(chat.cost.total).to be_nil
+    end
+
+    it 'prices a response against a given model when its own model id cannot be resolved' do
       allow(RubyLLM.models).to receive(:find).and_call_original
       allow(RubyLLM.models).to receive(:find).with('priced-model', nil).and_return(model)
       allow(RubyLLM.models).to receive(:find).with('provider-backend-version').and_raise(RubyLLM::ModelNotFoundError)
 
       chat = RubyLLM.chat(model: 'priced-model')
-      chat.add_message(role: :assistant, content: 'Hi', input_tokens: 1_000, output_tokens: 2_000,
-                       model: 'provider-backend-version')
+      response = chat.add_message(role: :assistant, content: 'Hi', input_tokens: 1_000, output_tokens: 2_000,
+                                  model: 'provider-backend-version')
 
-      expect(chat.cost.total).to eq(0.005)
+      expect(response.cost(model: chat.model).total).to eq(0.005)
     end
   end
 

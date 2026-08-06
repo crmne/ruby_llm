@@ -84,7 +84,7 @@ RSpec.describe RubyLLM::Protocols::Gemini::Batches do
       expect(index).to eq(1)
       expect(message.content).to eq('Jupiter')
       expect(message.model).to eq('gemini-2.5-flash')
-      expect(message.input_tokens).to eq(5)
+      expect(message.tokens.input).to eq(5)
     end
 
     it 'falls back to the old metadata key and then position' do

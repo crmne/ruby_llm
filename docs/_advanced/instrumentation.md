@@ -38,8 +38,8 @@ ActiveSupport::Notifications.subscribe('chat.ruby_llm') do |_name, _start, _fini
   Rails.logger.info(
     provider: payload[:provider],
     model: payload[:model],
-    input_tokens: payload[:input_tokens],
-    output_tokens: payload[:output_tokens]
+    input_tokens: payload[:tokens].input,
+    output_tokens: payload[:tokens].output
   )
 end
 ```
@@ -94,6 +94,7 @@ RubyLLM includes that value as `payload[:metadata]` on the emitted event. It is 
 RubyLLM emits these events:
 
 *   `request.ruby_llm` - HTTP request metadata such as provider, method, URL, and status
+*   `usage.ruby_llm` - one finished provider attempt, including retries and cancellations, with status, tokens, and cost
 *   `chat.ruby_llm` - chat completion metadata including model, provider, messages, response, and token usage
 *   `tool_call.ruby_llm` - tool name, arguments, and result
 *   `embedding.ruby_llm` - embedding model, input, result, token usage, and vector dimensions
@@ -102,6 +103,30 @@ RubyLLM emits these events:
 *   `speech.ruby_llm` - speech generation model, input, voice, format, and audio byte size
 *   `transcription.ruby_llm` - transcription model, language, result, and token usage
 *   `models.refresh.ruby_llm` - model registry refresh metadata
+
+Every model operation event (`chat`, `embedding`, `image`, `moderation`, `speech`, and `transcription`) includes `payload[:tokens]` and `payload[:cost]`. Both value objects are always present; their individual fields may be `nil` when the provider did not report usage or RubyLLM could not price it.
+
+### Usage Events
+
+Subscribe to `usage.ruby_llm` for cost and usage tracking that survives transport retries and chat cancellation:
+
+```ruby
+ActiveSupport::Notifications.subscribe('usage.ruby_llm') do |event|
+  payload = event.payload
+
+  Rails.logger.info(
+    operation: payload[:operation],
+    provider: payload[:provider],
+    model: payload[:model],
+    status: payload[:status],
+    input_tokens: payload[:tokens].input,
+    output_tokens: payload[:tokens].output,
+    cost: payload[:cost].total
+  )
+end
+```
+
+This event fires once for every finished physical attempt. Its payload contains `operation`, `provider`, `model`, `status`, `tokens`, and `cost`. The values use the same objects as the rest of RubyLLM; the internal usage record is not part of the public API. Both objects are always present, while individual fields are `nil` when the provider supplied no defensible figure. See [Cost and Usage Tracking]({% link _core_features/cost-and-usage-tracking.md %}) for status semantics and Rails persistence.
 
 ## Payloads
 

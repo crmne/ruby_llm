@@ -1,6 +1,7 @@
 class <%= create_migration_class_name(chat_table_name) %> < ActiveRecord::Migration<%= migration_version %>
   def change
     create_table :<%= chat_table_name %> do |t|
+      t.references :ruby_llm_model, null: false, foreign_key: { to_table: :ruby_llm_models }, type: :<%= reference_type %>
       t.boolean :cancelled, null: false, default: false
       t.timestamps
     end

@@ -188,7 +188,7 @@ RSpec.describe RubyLLM::Cost do
 
   describe '.from_h' do
     it 'reads component amounts and total from a stored breakdown' do
-      cost = described_class.from_h('input' => 0.001, 'output' => 0.004, 'total' => 0.005)
+      cost = described_class.from_h({ 'input' => 0.001, 'output' => 0.004, 'total' => 0.005 })
 
       expect(cost.input).to eq(0.001)
       expect(cost.output).to eq(0.004)
@@ -197,9 +197,24 @@ RSpec.describe RubyLLM::Cost do
     end
 
     it 'accepts symbol keys' do
-      cost = described_class.from_h(input: 0.001, output: 0.004, total: 0.005)
+      cost = described_class.from_h({ input: 0.001, output: 0.004, total: 0.005 })
 
       expect(cost.total).to eq(0.005)
+    end
+
+    it 'preserves a recorded total when component costs were not stored' do
+      cost = described_class.from_h({ total: 0.005 })
+
+      expect(cost.total).to eq(0.005)
+    end
+
+    it 'keeps missing historical pricing missing when token usage is known' do
+      tokens = RubyLLM::Tokens.new(input: 10)
+      cost = described_class.from_h({}, tokens: tokens)
+
+      expect(cost.input).to be_nil
+      expect(cost.total).to be_nil
+      expect(cost).to be_missing(:input)
     end
 
     it 'round-trips a live cost through to_h' do
@@ -211,15 +226,15 @@ RSpec.describe RubyLLM::Cost do
     end
 
     it 'returns a nil total when the stored breakdown recorded no total' do
-      cost = described_class.from_h('input' => 0.001)
+      cost = described_class.from_h({ 'input' => 0.001 })
 
       expect(cost.input).to eq(0.001)
       expect(cost.total).to be_nil
     end
 
     it 'aggregates several stored costs' do
-      a = described_class.from_h('input' => 0.001, 'output' => 0.004, 'total' => 0.005)
-      b = described_class.from_h('input' => 0.0005, 'output' => 0.002, 'total' => 0.0025)
+      a = described_class.from_h({ 'input' => 0.001, 'output' => 0.004, 'total' => 0.005 })
+      b = described_class.from_h({ 'input' => 0.0005, 'output' => 0.002, 'total' => 0.0025 })
       aggregate = described_class.aggregate([a, b])
 
       expect(aggregate.input).to be_within(0.0000000001).of(0.0015)
@@ -228,7 +243,7 @@ RSpec.describe RubyLLM::Cost do
     end
 
     it 'aggregates a stored cost mixed with a live cost' do
-      stored = described_class.from_h('input' => 0.001, 'output' => 0.004, 'total' => 0.005)
+      stored = described_class.from_h({ 'input' => 0.001, 'output' => 0.004, 'total' => 0.005 })
       live = described_class.new(tokens: RubyLLM::Tokens.new(input: 1_000), model:)
       aggregate = described_class.aggregate([stored, live])
 

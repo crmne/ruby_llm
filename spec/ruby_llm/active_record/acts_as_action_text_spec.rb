@@ -9,7 +9,8 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
   before(:all) do # rubocop:disable RSpec/BeforeAfterAll
     ActiveRecord::Migration.suppress_messages do
       ActiveRecord::Migration.create_table :action_text_chats, force: true do |t|
-        t.references :model
+        t.references :ruby_llm_model
+        t.boolean :cancelled, null: false, default: false
         t.timestamps
       end
 
@@ -19,7 +20,8 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
         t.text :content
         t.json :content_raw
         t.boolean :cache_until_here, null: false, default: false
-        t.references :model
+        t.string :model_id
+        t.string :provider
         t.integer :input_tokens
         t.integer :output_tokens
         t.integer :cache_read_tokens
@@ -27,16 +29,6 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
         t.text :thinking_signature
         t.text :thinking_text
         t.integer :thinking_tokens
-        t.references :action_text_tool_call
-        t.timestamps
-      end
-
-      ActiveRecord::Migration.create_table :action_text_tool_calls, force: true do |t|
-        t.references :action_text_message
-        t.string :tool_call_id
-        t.string :name
-        t.text :thought_signature
-        t.json :arguments
         t.timestamps
       end
     end
@@ -44,9 +36,6 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
 
   after(:all) do # rubocop:disable RSpec/BeforeAfterAll
     ActiveRecord::Migration.suppress_messages do
-      if ActiveRecord::Base.connection.table_exists?(:action_text_tool_calls)
-        ActiveRecord::Migration.drop_table :action_text_tool_calls
-      end
       if ActiveRecord::Base.connection.table_exists?(:action_text_messages)
         ActiveRecord::Migration.drop_table :action_text_messages
       end
@@ -62,15 +51,9 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
 
   class ActionTextMessage < ActiveRecord::Base # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
     acts_as_message chat: :action_text_chat,
-                    chat_class: 'ActionTextChat',
-                    tool_calls: :action_text_tool_calls,
-                    tool_call_class: 'ActionTextToolCall'
+                    chat_class: 'ActionTextChat'
     has_rich_text :content
     has_many_attached :attachments
-  end
-
-  class ActionTextToolCall < ActiveRecord::Base # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
-    acts_as_tool_call message: :action_text_message, message_class: 'ActionTextMessage'
   end
 
   let(:chat) { ActionTextChat.create! }

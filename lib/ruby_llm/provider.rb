@@ -106,7 +106,7 @@ module RubyLLM
     # rubocop:disable Metrics/ParameterLists
     def complete(messages, tools:, temperature:, model:, provider_options: {}, headers: {}, schema: nil, # :nodoc:
                  max_output_tokens: nil, thinking: nil, citations: false, caching: nil, tool_prefs: nil,
-                 protocol: nil, before_request: [], &)
+                 protocol: nil, before_request: [], usage_recorder: nil, &)
       protocol_class = resolve_protocol(protocol, model, tools:, schema:, thinking:, tool_prefs:, citations:)
       protocol_class.new(self, model).complete(
         messages,
@@ -121,6 +121,7 @@ module RubyLLM
         citations: citations,
         caching: caching,
         before_request: before_request,
+        usage_recorder: usage_recorder,
         &
       )
     end
@@ -197,26 +198,33 @@ module RubyLLM
     # rubocop:disable Metrics/ParameterLists
     def embed(text, model:, dimensions:, task_type: nil, title: nil, provider_options: {}) # :nodoc:
       protocol = resolve_protocol(nil, model, operation: :embed)
-      protocol.new(self, model).embed(text, model: model_id_for(model), dimensions:, task_type:, title:,
-                                            provider_options:)
+      protocol.new(self, model).embed(
+        text, model: model_id_for(model), dimensions:, task_type:, title:, provider_options:
+      )
     end
     # rubocop:enable Metrics/ParameterLists
 
     def moderate(input, model:, with: [], provider_options: {}) # :nodoc:
       protocol = resolve_protocol(nil, model, operation: :moderate)
-      protocol.new(self, model).moderate(input, model: model_id_for(model), with:, provider_options:)
+      protocol.new(self, model).moderate(
+        input, model: model_id_for(model), with:, provider_options:
+      )
     end
 
     # rubocop:disable Metrics/ParameterLists
     def paint(prompt, model:, size:, with: nil, mask: nil, provider_options: {}) # :nodoc:
       protocol = resolve_protocol(nil, model, operation: :paint)
-      protocol.new(self, model).paint(prompt, model: model_id_for(model), size:, with:, mask:, provider_options:)
+      protocol.new(self, model).paint(
+        prompt, model: model_id_for(model), size:, with:, mask:, provider_options:
+      )
     end
     # rubocop:enable Metrics/ParameterLists
 
     def speak(input, model:, voice:, format:, provider_options: {}) # :nodoc:
       protocol = resolve_protocol(nil, model, operation: :speak)
-      protocol.new(self, model).speak(input, model: model_id_for(model), voice:, format:, provider_options:)
+      protocol.new(self, model).speak(
+        input, model: model_id_for(model), voice:, format:, provider_options:
+      )
     end
 
     # rubocop:disable Metrics/ParameterLists

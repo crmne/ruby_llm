@@ -37,7 +37,13 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs do
   end
 
   def attachment_host
-    attachment_host_class.create!
+    model_record = RubyLLM::ActiveRecord::Model.find_or_create_by!(
+      model_id: model,
+      provider: 'openai'
+    ) do |record|
+      record.name = model
+    end
+    attachment_host_class.create!(ruby_llm_model_id: model_record.id)
   end
 
   def attachment_host_class

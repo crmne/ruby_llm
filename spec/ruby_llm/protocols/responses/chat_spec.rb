@@ -195,10 +195,10 @@ RSpec.describe RubyLLM::Protocols::Responses::Chat do
 
       message = protocol.send(:parse_completion_response, response)
 
-      expect(message.input_tokens).to eq(6)
-      expect(message.output_tokens).to eq(7)
-      expect(message.cache_read_tokens).to eq(4)
-      expect(message.thinking_tokens).to eq(3)
+      expect(message.tokens.input).to eq(6)
+      expect(message.tokens.output).to eq(7)
+      expect(message.tokens.cache_read).to eq(4)
+      expect(message.tokens.thinking).to eq(3)
     end
 
     it 'does not synthesize finish_reason for completed function calls' do

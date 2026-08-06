@@ -111,13 +111,6 @@ module RubyLLM
     option :model_registry_file, -> { ModelRegistry.cache_path }
 
     ##
-    # :attr_accessor: model_registry_class
-    #
-    # Name of the ActiveRecord class backing the registry in Rails apps,
-    # as a string. Default: <tt>'Model'</tt>.
-    option :model_registry_class, 'Model'
-
-    ##
     # :attr_accessor: model_registry_store
     #
     # Store object the model registry reads from and persists to. Rails
@@ -126,6 +119,17 @@ module RubyLLM
     # Model entries, and may respond to +write(registry)+ to let
     # Models#refresh! persist. Default: +nil+ (use +model_registry_file+).
     option :model_registry_store, nil
+
+    # Optional persistence adapter installed by the Rails integration.
+    option :batch_store, nil # :nodoc:
+
+    # Keeps custom 1.x initializers bootable long enough to run the 2.0
+    # upgrade generator. The registry is always RubyLLM-owned in 2.0.
+    def model_registry_class=(_value) # :nodoc:
+      RubyLLM.deprecator.warn(
+        'config.model_registry_class is ignored in RubyLLM 2.0; remove it from your initializer'
+      )
+    end
 
     ##
     # :attr_accessor: request_timeout

@@ -121,6 +121,40 @@ RSpec.describe RubyLLM::Chat do
     expect(chat.messages.last.model).to eq('fallback-model')
   end
 
+  it 'links failed fallback attempts to the response they ultimately produce' do
+    chat = described_class.new(model: 'primary-model').with_fallbacks('fallback-model')
+    error = RubyLLM::ServiceUnavailableError.new('primary down')
+    allow(primary_provider).to receive(:complete) do |_messages, usage_recorder:, **|
+      tracker = RubyLLM.const_get(:Usage)::Tracker.new(
+        operation: :chat,
+        provider: primary_provider,
+        model: primary_model,
+        config: RubyLLM.config,
+        on_finish: usage_recorder
+      )
+      entry = tracker.start
+      tracker.fail_attempt(entry, error)
+      raise error
+    end
+    allow(fallback_provider).to receive(:complete) do |_messages, **|
+      RubyLLM::Message.new(
+        role: :assistant, content: 'from fallback', model: 'fallback-model', input_tokens: 4, output_tokens: 2
+      )
+    end
+
+    response = chat.ask('Hello')
+
+    entries = response.ruby_llm_usage_entries
+    expect(entries.map(&:status)).to eq(%i[failed succeeded])
+    expect(entries.map(&:model)).to eq(%w[primary-model fallback-model])
+    expect(entries.map(&:message)).to all(equal(response))
+    expect(chat.usage_entries).to eq(entries)
+    expect(response.tokens.to_h).to eq(input_tokens: 4, output_tokens: 2)
+    expect(response).not_to respond_to(:usage)
+    expect(chat.tokens.to_h).to eq(input_tokens: 4, output_tokens: 2)
+    expect(chat).not_to respond_to(:usage)
+  end
+
   it 'tries fallback models in order' do
     chat = described_class.new(model: 'primary-model').with_fallbacks('fallback-model', 'second-fallback-model')
     allow(primary_provider).to receive(:complete)

@@ -224,7 +224,7 @@ RSpec.describe RubyLLM::Provider do
 
       expect(RubyLLM::Configuration.options).to include(
         :request_timeout,
-        :model_registry_class
+        :model_registry_store
       )
     end
   end
@@ -306,7 +306,9 @@ RSpec.describe RubyLLM::Provider do
         transcribe: RubyLLM::Transcription.new(text: 'transcript', model: routed_model.id)
       )
 
-      allow(RubyLLM::Protocols::ChatCompletions).to receive(:new).with(provider, routed_model).and_return(protocol)
+      allow(RubyLLM::Protocols::ChatCompletions).to receive(:new)
+        .with(provider, routed_model)
+        .and_return(protocol)
 
       provider.embed('hello', model: routed_model, dimensions: nil)
       provider.moderate('hello', model: routed_model)
@@ -314,7 +316,9 @@ RSpec.describe RubyLLM::Provider do
       provider.speak('hello', model: routed_model, voice: nil, format: nil)
       provider.transcribe('audio.mp3', model: routed_model, language: nil)
 
-      expect(RubyLLM::Protocols::ChatCompletions).to have_received(:new).with(provider, routed_model).exactly(5).times
+      expect(RubyLLM::Protocols::ChatCompletions).to have_received(:new)
+        .with(provider, routed_model)
+        .exactly(5).times
       expect(protocol).to have_received(:embed)
         .with('hello', model: routed_model.id, dimensions: nil, task_type: nil, title: nil, provider_options: {})
       expect(protocol).to have_received(:moderate).with('hello', model: routed_model.id, with: [],

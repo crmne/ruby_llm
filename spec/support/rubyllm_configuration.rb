@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 RubyLLM.configure do |config|
-  config.model_registry_class = 'Model'
   config.max_retries = 0
   config.retry_backoff_factor = 0
   config.retry_interval = 0
@@ -28,7 +27,6 @@ RSpec.shared_context 'with configured RubyLLM' do
       # Disable retries in tests for deterministic, fast failures.
       config.max_retries = 0
       config.mistral_api_key = ENV.fetch('MISTRAL_API_KEY', 'test')
-      config.model_registry_class = 'Model'
       config.ollama_api_base = ENV.fetch('OLLAMA_API_BASE', 'http://localhost:11434/v1')
       config.ollama_api_key = ENV.fetch('OLLAMA_API_KEY', nil)
       config.openai_api_key = ENV.fetch('OPENAI_API_KEY', 'test')

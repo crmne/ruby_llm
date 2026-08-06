@@ -103,7 +103,7 @@ Once processing ends, `messages` returns the responses in submission order:
 ```ruby
 batch.messages.each do |message|
   message.content       # => "The document describes..."
-  message.input_tokens  # => 514
+  message.tokens.input  # => 514
 end
 ```
 
@@ -164,26 +164,18 @@ end
 
 ## Rails Integration
 
-Batch results flow through the same callbacks as synchronous responses, so `acts_as_chat` persistence works unchanged. `ask_later`, `run_tools`, and `complete?` all work on your records, so staged questions and collected answers land in the database with tokens and model attached.
+Batch results flow through the same callbacks as synchronous responses, so `acts_as_chat` persistence works unchanged. `ask_later`, `run_tools`, and `complete?` all work on your records, so staged questions and collected answers land in the database with their usage entries attached.
 
-The one new thing a batch needs is somewhere to keep its id while the provider works. The installer generates a `Batch` model for exactly that:
+The one new thing a batch needs is somewhere to keep its id while the provider works. RubyLLM stores that state internally when all inputs are persisted chats; the conversations themselves stay in your `chats` and `messages` tables. No application `Batch` model is required. (Upgrading an app from 1.x? `bin/rails generate ruby_llm:upgrade` creates the internal table.)
 
-```ruby
-class Batch < ApplicationRecord
-  acts_as_batch
-end
-```
-
-It stores only the provider's batch id and the chats it's processing; the conversations themselves stay in your existing `chats` and `messages` tables. (Upgrading an app from 1.x? `bin/rails generate ruby_llm:upgrade` adds the `batches` table.)
-
-`Batch.create!` sends the staged chats to the provider and persists the record in one step:
+`RubyLLM.batch` sends the staged chats to the provider and persists the batch state in one step:
 
 ```ruby
 chats = tickets.map do |ticket|
   Chat.create!(model: "claude-haiku-4-5").ask_later(ticket.body)
 end
 
-batch = Batch.create!(chats: chats)
+batch = RubyLLM.batch(chats)
 BatchPollJob.perform_later(batch.id)
 ```
 
@@ -192,7 +184,7 @@ A job in another process looks the batch up, checks on it, and collects:
 ```ruby
 class BatchPollJob < ApplicationJob
   def perform(batch_id)
-    batch = Batch.find(batch_id)
+    batch = RubyLLM::Batch.find(batch_id)
     return self.class.set(wait: 10.minutes).perform_later(batch_id) unless batch.refresh.complete?
 
     batch.messages
@@ -200,7 +192,7 @@ class BatchPollJob < ApplicationJob
 end
 ```
 
-`batch.messages` appends each answer to its chat and persists it, so the conversations come back complete with no bookkeeping on your side. It is idempotent: an answered chat ends on an assistant message, so re-running the job (a retry, an at-least-once queue) never appends an answer twice. Each `refresh` caches the provider's status onto the record, so the batches still in flight are just `Batch.where(completed: false)`, and a sweep is `Batch.where(completed: false).find_each(&:refresh)`. Stop a running batch with `batch.cancel`.
+`batch.messages` appends each answer to its chat and persists it, so the conversations come back complete with no bookkeeping on your side. It is idempotent: an answered chat ends on an assistant message, so re-running the job (a retry, an at-least-once queue) never appends an answer twice. Stop a running batch with `batch.cancel`.
 
 Tools work the same way they do for plain chats. Because the records carry the whole conversation, a poll job can `run_tools` on the collected chats and submit the ones still awaiting the model as the next batch, running an agentic workload across batches at batch prices.
 

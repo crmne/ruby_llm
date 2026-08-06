@@ -80,16 +80,22 @@ module RubyLLM
     # rubocop:disable Metrics/ParameterLists
 
     def complete(messages, tools:, temperature:, provider_options: {}, headers: {}, schema: nil, thinking: nil,
-                 max_output_tokens: nil, citations: false, caching: nil, tool_prefs: nil, before_request: [], &)
+                 max_output_tokens: nil, citations: false, caching: nil, tool_prefs: nil, before_request: [],
+                 usage_recorder: nil, &)
       payload = render(
         messages, tools:, tool_prefs:, temperature:, max_output_tokens:, provider_options:, schema:, thinking:,
                   citations:, caching:, before_request:, stream: block_given?
       )
 
-      if block_given?
-        stream_response payload, headers, &
-      else
-        sync_response payload, headers
+      track_usage(:chat, on_finish: usage_recorder) do
+        if block_given?
+          stream_response(payload, headers) do |chunk|
+            @usage_tracker.observe(chunk)
+            yield chunk
+          end
+        else
+          sync_response payload, headers
+        end
       end
     end
 
@@ -122,38 +128,48 @@ module RubyLLM
     end
 
     def embed(text, model:, dimensions:, task_type: nil, title: nil, provider_options: {}) # rubocop:disable Metrics/ParameterLists
-      payload = render_embedding_payload(text, model:, dimensions:, task_type:, title:, provider_options:)
-      response = @connection.post(embedding_url(model:), payload)
-      parse_embedding_response(response, model:, text:)
+      track_usage(:embedding) do
+        payload = render_embedding_payload(text, model:, dimensions:, task_type:, title:, provider_options:)
+        response = @connection.post(embedding_url(model:), payload, usage: @usage_tracker)
+        parse_embedding_response(response, model:, text:)
+      end
     end
 
     def moderate(input, model:, with: [], provider_options: {})
-      payload = render_moderation_payload(input, model:, with: Attachment.wrap(with), provider_options:)
-      response = @connection.post moderation_url, payload
-      parse_moderation_response(response, model:)
+      track_usage(:moderation) do
+        payload = render_moderation_payload(input, model:, with: Attachment.wrap(with), provider_options:)
+        response = @connection.post moderation_url, payload, usage: @usage_tracker
+        parse_moderation_response(response, model:)
+      end
     end
 
     def paint(prompt, model:, size:, with: nil, mask: nil, provider_options: {}) # rubocop:disable Metrics/ParameterLists
-      validate_paint_inputs!(with:, mask:)
-      payload = render_image_payload(prompt, model:, size:, with:, mask:, provider_options:)
-      response = @connection.post images_url(with:, mask:), payload
-      parse_image_response(response, model:)
+      track_usage(:image) do
+        validate_paint_inputs!(with:, mask:)
+        payload = render_image_payload(prompt, model:, size:, with:, mask:, provider_options:)
+        response = @connection.post images_url(with:, mask:), payload, usage: @usage_tracker
+        parse_image_response(response, model:)
+      end
     end
 
     def speak(input, model:, voice:, format:, provider_options: {})
-      payload = render_speech_payload(input, model:, voice:, format:, provider_options:)
-      response = @connection.post speech_url(model:), payload
-      parse_speech_response(response, model:, voice:, format:)
+      track_usage(:speech) do
+        payload = render_speech_payload(input, model:, voice:, format:, provider_options:)
+        response = @connection.post speech_url(model:), payload, usage: @usage_tracker
+        parse_speech_response(response, model:, voice:, format:)
+      end
     end
 
     def transcribe(audio_file, model:, language:, format: nil, speaker_names: nil, # rubocop:disable Metrics/ParameterLists
                    speaker_references: nil, provider_options: {}, prompt: nil, temperature: nil)
-      file_part = build_audio_file_part(audio_file)
-      payload = render_transcription_payload(file_part, model:, language:, format:, speaker_names:,
-                                                        speaker_references:, provider_options:, prompt:,
-                                                        temperature:)
-      response = @connection.post transcription_url, payload
-      parse_transcription_response(response, model:)
+      track_usage(:transcription) do
+        file_part = build_audio_file_part(audio_file)
+        payload = render_transcription_payload(file_part, model:, language:, format:, speaker_names:,
+                                                          speaker_references:, provider_options:, prompt:,
+                                                          temperature:)
+        response = @connection.post transcription_url, payload, usage: @usage_tracker
+        parse_transcription_response(response, model:)
+      end
     end
 
     def maybe_normalize_temperature(temperature, _model)
@@ -176,6 +192,24 @@ module RubyLLM
     end
 
     private
+
+    def track_usage(operation, on_finish: nil)
+      @usage_tracker = Usage::Tracker.new(
+        operation:,
+        provider: @provider,
+        model: @model,
+        config: @config,
+        on_finish:
+      )
+      result = yield
+      @usage_tracker.succeed(result)
+      result
+    rescue StandardError => e
+      @usage_tracker.fail_pending(e)
+      raise
+    ensure
+      @usage_tracker = nil
+    end
 
     def apply_before_request_hooks(payload, hooks)
       Array(hooks).each { |hook| hook.call(payload) }
@@ -255,7 +289,7 @@ module RubyLLM
     end
 
     def sync_response(payload, additional_headers = {})
-      response = @connection.post completion_url, payload do |req|
+      response = @connection.post completion_url, payload, usage: @usage_tracker do |req|
         req.headers = additional_headers.merge(req.headers) unless additional_headers.empty?
       end
       parse_completion_response response

@@ -156,11 +156,12 @@ module RubyLLM
     end
 
     def count_tokens(chunk)
-      @input_tokens = chunk.input_tokens if chunk.input_tokens
-      @output_tokens = chunk.output_tokens if chunk.output_tokens
-      @cache_read_tokens = chunk.cache_read_tokens if chunk.cache_read_tokens
-      @cache_write_tokens = chunk.cache_write_tokens if chunk.cache_write_tokens
-      @thinking_tokens = chunk.thinking_tokens if chunk.thinking_tokens
+      tokens = chunk.tokens
+      @input_tokens = tokens.input if tokens.input
+      @output_tokens = tokens.output if tokens.output
+      @cache_read_tokens = tokens.cache_read if tokens.cache_read
+      @cache_write_tokens = tokens.cache_write if tokens.cache_write
+      @thinking_tokens = tokens.thinking if tokens.thinking
     end
 
     def handle_chunk_content(chunk)

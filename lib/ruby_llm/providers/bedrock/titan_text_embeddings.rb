@@ -7,12 +7,14 @@ module RubyLLM
       class TitanTextEmbeddings < EmbeddingProtocol
         # rubocop:disable Lint/UnusedMethodArgument, Metrics/ParameterLists
         def embed(text, model:, dimensions:, task_type: nil, title: nil, provider_options: {})
-          responses = [text].flatten.map do |value|
-            payload = render_embedding_payload(value, dimensions:, provider_options:)
-            signed_post(embedding_url(model:), payload)
-          end
+          track_usage(:embedding) do
+            responses = [text].flatten.map do |value|
+              payload = render_embedding_payload(value, dimensions:, provider_options:)
+              signed_post(embedding_url(model:), payload).tap { |response| record_embedding_attempt(response) }
+            end
 
-          parse_single_embedding_responses(responses, model:, text:)
+            parse_single_embedding_responses(responses, model:, text:)
+          end
         end
         # rubocop:enable Lint/UnusedMethodArgument, Metrics/ParameterLists
 

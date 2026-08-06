@@ -15,7 +15,7 @@ module RubyLLM
         block.call chunk
       end
 
-      response = @connection.post stream_url, payload do |req|
+      response = @connection.post stream_url, payload, usage: @usage_tracker do |req|
         req.headers = additional_headers.merge(req.headers) unless additional_headers.empty?
         if faraday_1?
           req.options[:on_data] = on_data

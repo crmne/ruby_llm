@@ -11,6 +11,6 @@
     <%% end %>
   </td>
   <td class="px-3 py-2 text-sm">
-    <%%= link_to "Start <%= chat_table_name.singularize.humanize.downcase %>", new_<%= chat_variable_name %>_path(model: <%= model_model_name.demodulize.underscore %>.id), class: "text-blue-600 hover:text-blue-500" %>
+    <%%= link_to "Start <%= chat_table_name.singularize.humanize.downcase %>", new_<%= chat_variable_name %>_path(model: [<%= model_model_name.demodulize.underscore %>.provider, <%= model_model_name.demodulize.underscore %>.id].join(":")), class: "text-blue-600 hover:text-blue-500" %>
   </td>
 </tr>

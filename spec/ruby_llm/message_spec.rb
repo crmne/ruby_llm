@@ -141,19 +141,35 @@ RSpec.describe RubyLLM::Message do
     end
   end
 
-  describe 'cache token aliases' do
-    it 'exposes cache_read_tokens and cache_write_tokens' do
+  describe '#tokens' do
+    it 'always returns token and cost value objects' do
+      message = described_class.new(role: :user, content: 'Hello')
+
+      expect(message.tokens).to be_a(RubyLLM::Tokens)
+      expect(message.tokens.to_h).to be_empty
+      expect(message.cost).to be_a(RubyLLM::Cost)
+      expect(message.cost.total).to be_nil
+    end
+
+    it 'exposes every bucket through the token value only' do
       message = described_class.new(
         role: :assistant,
         content: 'Hello',
+        input_tokens: 10,
+        output_tokens: 4,
         cache_read_tokens: 42,
-        cache_write_tokens: 7
+        cache_write_tokens: 7,
+        thinking_tokens: 2
       )
 
-      expect(message.cache_read_tokens).to eq(42)
-      expect(message.cache_write_tokens).to eq(7)
+      expect(message.tokens.input).to eq(10)
+      expect(message.tokens.output).to eq(4)
       expect(message.tokens.cache_read).to eq(42)
       expect(message.tokens.cache_write).to eq(7)
+      expect(message.tokens.thinking).to eq(2)
+      expect(message).not_to respond_to(
+        :input_tokens, :output_tokens, :cache_read_tokens, :cache_write_tokens, :thinking_tokens, :usage
+      )
     end
   end
 

@@ -82,17 +82,19 @@ RSpec.describe RubyLLM::Instrumentation do
       model: 'gpt-4.1-nano',
       response: response,
       response_model: 'gpt-4.1-nano',
-      input_tokens: 10,
-      output_tokens: 5,
-      cache_read_tokens: 2,
-      thinking_tokens: 1,
+      tokens: response.tokens,
       temperature: 0.2,
       streaming: false
     )
     expect(payload).not_to have_key(:operation)
+    expect(payload[:cost].total).to eq(response.cost.total)
     expect(payload).not_to have_key(:result)
     expect(payload[:input_messages].first.content).to eq('Hello')
     expect(payload[:messages_after].last.content).to eq('done')
+
+    _usage_name, usage = instrumenter.events.find { |name, _event| name == 'usage.ruby_llm' }
+    expect(usage).to include(status: :succeeded, tokens: response.tokens)
+    expect(usage[:cost].total).to eq(response.cost.total)
   end
 
   it 'marks streaming chat events when a block is passed' do
@@ -107,6 +109,46 @@ RSpec.describe RubyLLM::Instrumentation do
 
     _event_name, payload = instrumenter.events.last
     expect(payload[:streaming]).to be(true)
+  end
+
+  it 'emits one usage event for every transport attempt' do
+    instrumenter = CaptureInstrumenter.new
+    context = RubyLLM.context do |config|
+      config.instrumenter = instrumenter
+      config.max_retries = 1
+    end
+    stub_request(:post, 'https://api.openai.com/v1/chat/completions')
+      .to_return(
+        {
+          status: 500,
+          headers: { 'Content-Type' => 'application/json' },
+          body: { error: { message: 'try again' } }.to_json
+        },
+        {
+          status: 200,
+          headers: { 'Content-Type' => 'application/json' },
+          body: {
+            model: 'gpt-4.1-nano',
+            choices: [{ message: { role: 'assistant', content: 'done' }, finish_reason: 'stop' }],
+            usage: { prompt_tokens: 5, completion_tokens: 2 }
+          }.to_json
+        }
+      )
+
+    context.chat(model: 'gpt-4.1-nano', provider: :openai, protocol: :chat_completions).ask('Hello')
+
+    events = instrumenter.events.select { |event| event.first == 'usage.ruby_llm' }
+    expect(events.map { |_name, payload| payload[:status] }).to eq(%i[failed succeeded])
+    expect(events.last.last).to include(
+      operation: :chat,
+      provider: 'openai',
+      model: 'gpt-4.1-nano',
+      status: :succeeded
+    )
+    expect(events.last.last[:tokens].to_h).to eq(input_tokens: 5, output_tokens: 2, cache_write_tokens: 0)
+    expect(events.last.last[:cost].total).to be_a(Numeric)
+    expect(events.last.last).not_to have_key(:usage_status)
+    expect(events.last.last).not_to have_key(:usage)
   end
 
   it 'emits tool call events with arguments and result' do
@@ -166,10 +208,11 @@ RSpec.describe RubyLLM::Instrumentation do
       input: ['hello'],
       result: embedding,
       response_model: 'text-embedding-3-small',
-      input_tokens: 8,
       embedding_dimensions: 3,
       embedding_count: 1
     )
+    expect(payload[:tokens].to_h).to eq(input_tokens: 8)
+    expect(payload[:cost]).to be_a(RubyLLM::Cost)
     expect(payload).not_to have_key(:operation)
   end
 
@@ -199,6 +242,8 @@ RSpec.describe RubyLLM::Instrumentation do
       format: 'mp3',
       audio_bytes: 11
     )
+    expect(payload[:tokens]).to be_a(RubyLLM::Tokens)
+    expect(payload[:cost]).to be_a(RubyLLM::Cost::Aggregate)
     expect(payload).not_to have_key(:operation)
   end
 end

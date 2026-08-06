@@ -48,14 +48,7 @@ module RubyLLM
       # Raises ArgumentError if +chats+ is empty, mixes providers, or
       # includes a chat that is not awaiting the model.
       def submit(chats)
-        chats = chats.is_a?(Chat) ? [chats] : Array(chats)
-        chats = chats.map { |chat| chat.respond_to?(:to_llm) ? chat.to_llm : chat }
-        raise ArgumentError, 'Cannot submit an empty batch' if chats.empty?
-
-        unless chats.all? { |chat| awaiting_model?(chat) }
-          raise ArgumentError,
-                'Every chat in a batch must be awaiting the model; stage one with ask_later, or run_tools first'
-        end
+        records, chats = normalize_chats(chats)
 
         provider = shared_provider(chats)
         payload = { provider: provider.slug, provider_class: provider.class.display_name, requests: chats.size }
@@ -63,7 +56,9 @@ module RubyLLM
           requests = chats.each_with_index.map do |chat, index|
             { custom_id: index.to_s, model: chat.model.id, payload: chat.render }
           end
-          batch = new(provider:, chats:, **provider.create_batch(requests))
+          store = provider.config.batch_store
+          batch = new(provider:, chats:, store:, **provider.create_batch(requests))
+          store&.persist(batch, records)
           event[:batch_id] = batch.id
           batch
         end
@@ -78,17 +73,35 @@ module RubyLLM
       #
       # Pass +context:+ to use a Context in place of the global
       # configuration. Raises ArgumentError if +provider+ is not given.
-      def find(id, provider:, context: nil)
-        raise ArgumentError, 'Provider must be specified to find a batch' unless provider
-
+      def find(id, provider: nil, context: nil)
         config = context&.config || RubyLLM.config
+        persisted = config.batch_store&.fetch(id, provider:, context:)
+        return persisted if persisted
+
+        unless provider
+          raise ArgumentError, 'Provider must be specified to find a batch that is not persisted by RubyLLM'
+        end
+
         provider = Provider.resolve!(provider).new(config)
         raise Error, "#{provider.slug} doesn't support batch requests" unless provider.batches?
 
-        new(provider:, **provider.find_batch(id))
+        new(provider:, store: config.batch_store, **provider.find_batch(id))
       end
 
       private
+
+      def normalize_chats(chats)
+        records = chats.is_a?(Chat) ? [chats] : Array(chats)
+        normalized = records.map { |chat| chat.respond_to?(:to_llm) ? chat.to_llm : chat }
+        raise ArgumentError, 'Cannot submit an empty batch' if normalized.empty?
+
+        unless normalized.all? { |chat| awaiting_model?(chat) }
+          raise ArgumentError,
+                'Every chat in a batch must be awaiting the model; stage one with ask_later, or run_tools first'
+        end
+
+        [records, normalized]
+      end
 
       def awaiting_model?(chat)
         !chat.complete? && AWAITING_ROLES.include?(chat.messages.last&.role)
@@ -105,12 +118,19 @@ module RubyLLM
       end
     end
 
-    def initialize(provider:, chats: nil, batch_protocol: nil, **attributes) # :nodoc:
+    def initialize(provider:, chats: nil, batch_protocol: nil, store: nil, **attributes) # :nodoc:
       @provider = provider
       @chats = chats
       @batch_protocol = batch_protocol
+      @store = store
       apply(attributes)
     end
+
+    def provider_slug
+      @provider.slug
+    end
+
+    attr_reader :batch_protocol
 
     # Returns whether the batch has finished processing, as of the last
     # state fetched from the provider. Never contacts the provider; poll
@@ -126,6 +146,7 @@ module RubyLLM
     # #request_counts, and #complete?. Returns +self+.
     def refresh
       apply(@provider.find_batch(id))
+      persist_state
       self
     end
 
@@ -133,6 +154,7 @@ module RubyLLM
     # Requests already processed still return results. Returns +self+.
     def cancel
       apply(@provider.cancel_batch(id))
+      persist_state
       self
     end
 
@@ -153,7 +175,21 @@ module RubyLLM
       collected
     end
 
+    # Returns token usage aggregated across the batch's collected responses.
+    def tokens
+      Tokens.aggregate(messages.compact.map(&:tokens))
+    end
+
+    # Returns cost aggregated across the batch's collected responses.
+    def cost
+      Cost.aggregate(messages.compact.map(&:cost))
+    end
+
     private
+
+    def persist_state
+      @store&.sync(self)
+    end
 
     def apply(attributes)
       @id = attributes.fetch(:id)

@@ -28,19 +28,12 @@ module RubyLLM
       end
 
       def create_migration_files
+        migration_template 'create_ruby_llm_records_migration.rb.tt',
+                           'db/migrate/create_ruby_llm_records.rb'
         migration_template 'create_chats_migration.rb.tt',
                            "db/migrate/create_#{chat_table_name}.rb"
         migration_template 'create_messages_migration.rb.tt',
                            "db/migrate/create_#{message_table_name}.rb"
-        migration_template 'create_tool_calls_migration.rb.tt',
-                           "db/migrate/create_#{tool_call_table_name}.rb"
-        migration_template 'create_models_migration.rb.tt',
-                           "db/migrate/create_#{model_table_name}.rb"
-        migration_template 'create_batches_migration.rb.tt',
-                           "db/migrate/create_#{batch_table_name}.rb"
-        migration_template 'add_references_to_chats_tool_calls_and_messages_migration.rb.tt',
-                           'db/migrate/add_references_to_' \
-                           "#{chat_table_name}_#{tool_call_table_name}_and_#{message_table_name}.rb"
       end
 
       def create_model_files
@@ -48,10 +41,6 @@ module RubyLLM
 
         template 'chat_model.rb.tt', "app/models/#{chat_model_name.underscore}.rb"
         template 'message_model.rb.tt', "app/models/#{message_model_name.underscore}.rb"
-        template 'tool_call_model.rb.tt', "app/models/#{tool_call_model_name.underscore}.rb"
-
-        template 'model_model.rb.tt', "app/models/#{model_model_name.underscore}.rb"
-        template 'batch_model.rb.tt', "app/models/#{batch_model_name.underscore}.rb"
       end
 
       def create_initializer

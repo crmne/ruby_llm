@@ -47,7 +47,7 @@ RSpec.describe RubyLLM::Providers::Bedrock::EmbeddingProtocol do
       )
 
       expect(embedding.vectors).to eq([0.1, 0.2])
-      expect(embedding.input_tokens).to eq(3)
+      expect(embedding.tokens.input).to eq(3)
     end
   end
 

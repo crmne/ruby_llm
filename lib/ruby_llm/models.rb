@@ -59,7 +59,7 @@ module RubyLLM
       by_family
       by_provider
       load_from_json!
-      load_from_database!
+      load_from_store!
       save_to_json
     ]).uniq.freeze # :nodoc:
 
@@ -462,11 +462,13 @@ module RubyLLM
       self
     end
 
-    # Replaces the models in this registry with rows read from the
-    # configured ActiveRecord model registry class
-    # (<tt>RubyLLM.config.model_registry_class</tt>).
-    def load_from_database!
-      @models = ModelRegistry::ActiveRecordStore.new.read
+    # Replaces the models in this registry with entries from the configured
+    # model-registry store.
+    def load_from_store!
+      store = RubyLLM.config.model_registry_store
+      raise ModelRegistryError, 'No model registry store is configured' unless store
+
+      @models = Array(store.read)
       self
     end
 

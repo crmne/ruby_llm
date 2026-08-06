@@ -24,7 +24,7 @@ module RubyLLM
       CANCELLATION_POLL_INTERVAL = 1.0
 
       included do
-        before_save :resolve_model_from_strings
+        before_save :resolve_model
       end
 
       # When +true+, skips the model registry lookup so unregistered model ids
@@ -65,32 +65,25 @@ module RubyLLM
         send(messages_association_name)
       end
 
-      def model_association # :nodoc:
-        send(model_association_name)
-      end
-
-      def model_association=(value) # :nodoc:
-        send("#{model_association_name}=", value)
-      end
-
-      # Sets the chat's model. A String is resolved to a model record before
-      # save; a model record is assigned directly.
+      # Sets the chat's model from an id, a RubyLLM::Model value, or the
+      # associated internal model record.
       #
       #   chat.model = 'gpt-5-nano'
       #
       def model=(value)
-        if value.is_a?(String)
-          @model_string = value
-        elsif self.class.model_association_name == :model
+        if value.is_a?(RubyLLM::ActiveRecord::Model)
+          @pending_model_id = nil
+          @pending_provider = nil
           super
         else
-          self.model_association = value
+          @pending_model_id = value.respond_to?(:id) ? value.id : value
+          @pending_provider = value.provider if value.respond_to?(:provider)
         end
       end
 
       # Stores +value+ as the model id, resolved to a model record before save.
       def model_id=(value)
-        @model_string = value
+        @pending_model_id = value
       end
 
       # Returns the model id of the associated model record, or +nil+.
@@ -98,18 +91,18 @@ module RubyLLM
       #   chat.model_id # => "gpt-5-nano"
       #
       def model_id
-        model_association&.model_id
+        model&.model_id || @pending_model_id
       end
 
       # Stores +value+ as the provider used when resolving the model id
       # before save.
       def provider=(value)
-        @provider_string = value
+        @pending_provider = value
       end
 
       # Returns the provider of the associated model record, or +nil+.
       def provider
-        model_association&.provider
+        model&.provider || @pending_provider
       end
 
       # Returns the underlying RubyLLM::Chat for this record, building it on
@@ -128,6 +121,23 @@ module RubyLLM
       def reload(...)
         super
         sync_messages if @chat
+        self
+      end
+
+      # Rebinds the underlying chat to +value+ so subsequent requests use its
+      # configuration. The Context itself is runtime-only and is not persisted.
+      def with_context(value)
+        raise ArgumentError, 'To return to the global configuration, use without_context' if value.nil?
+
+        self.context = value
+        @chat&.with_context(value)
+        self
+      end
+
+      # Returns the underlying chat to the global RubyLLM configuration.
+      def without_context
+        self.context = nil
+        @chat&.without_context
         self
       end
 
@@ -215,10 +225,9 @@ module RubyLLM
         self.provider = provider if provider
         self.protocol = protocol
         self.assume_model_exists = assume_model_exists
-        resolve_model_from_strings
+        resolve_model
         save!
-        to_llm.with_model(model_association.model_id, provider: model_association.provider.to_sym,
-                                                      protocol:, assume_model_exists:)
+        to_llm.with_model(model_id, provider: provider&.to_sym, protocol:, assume_model_exists:)
         self
       end
 
@@ -410,13 +419,11 @@ module RubyLLM
         attrs = { role: llm_message.role, content: llm_message.content }
         add_finish_reason_attribute(attrs, llm_message, messages_association.klass)
         attrs[:cache_until_here] = llm_message.cache_until_here?
-        parent_tool_call_assoc = messages_association.klass.reflect_on_association(:parent_tool_call)
-        if parent_tool_call_assoc && llm_message.tool_call_id
-          tool_call_id = find_tool_call_id(llm_message.tool_call_id)
-          attrs[parent_tool_call_assoc.foreign_key] = tool_call_id if tool_call_id
-        end
-
         message_record = messages_association.create!(attrs)
+
+        if llm_message.tool_call_id && (tool_call = find_tool_call(llm_message.tool_call_id))
+          tool_call.update!(result: message_record)
+        end
 
         persist_content(message_record, llm_message.attachments) if llm_message.attachments.any?
         persist_tool_calls(llm_message.tool_calls, message_record:) if llm_message.tool_calls.present?
@@ -445,13 +452,23 @@ module RubyLLM
         self
       end
 
-      # Returns a RubyLLM::Cost aggregating the costs of every persisted
-      # message.
+      # Returns token usage aggregated across every persisted usage entry,
+      # including retries and attempts that did not produce a message.
+      #
+      #   chat.tokens.input
+      #
+      def tokens
+        RubyLLM::Tokens.aggregate(ruby_llm_usages.map(&:tokens))
+      end
+
+      # Returns a RubyLLM::Cost aggregating every persisted usage entry,
+      # including retries and attempts that did not produce a message.
       #
       #   chat.cost.total
       #
       def cost
-        RubyLLM::Cost.aggregate(messages_association.map(&:cost))
+        records = ruby_llm_usages.to_a
+        RubyLLM::Cost.aggregate(records.map(&:cost), complete: records.all?(&:usage_available?))
       end
 
       # Persists +message+ as a user message, then runs the completion loop
@@ -479,7 +496,7 @@ module RubyLLM
         self
       end
 
-      # Makes a single model call, persists the response, and returns it as a
+      # Makes a single generation attempt, persists the response, and returns it as a
       # RubyLLM::Message. Tool calls in the response are not executed. See
       # RubyLLM::Chat#generate.
       def generate(...)
@@ -528,21 +545,81 @@ module RubyLLM
 
       private
 
-      def resolve_model_from_strings
+      def persist_usage_entry(entry)
+        tokens = entry.tokens
+        cost = entry.cost
+        attributes = {
+          operation: entry.operation,
+          provider: entry.provider,
+          model: entry.model,
+          status: entry.status,
+          input_tokens: tokens.input,
+          output_tokens: tokens.output,
+          cache_read_tokens: tokens.cache_read,
+          cache_write_tokens: tokens.cache_write,
+          thinking_tokens: tokens.thinking,
+          input_cost: cost.input,
+          output_cost: cost.output,
+          cache_read_cost: cost.cache_read,
+          cache_write_cost: cost.cache_write,
+          thinking_cost: cost.thinking,
+          total_cost: cost.total
+        }
+        record = ruby_llm_usages.create!(attributes)
+        usage_records_by_entry[entry] = record
+      end
+
+      def link_usage_entries(message)
+        message.ruby_llm_usage_entries.each do |entry|
+          record = usage_records_by_entry[entry]
+          record&.update!(message: @message)
+        end
+      end
+
+      def usage_records_by_entry
+        @usage_records_by_entry ||= {}.compare_by_identity
+      end
+
+      def resolve_model
         config = context&.config || RubyLLM.config
-        @model_string ||= config.default_model unless model_association
-        return unless @model_string
+        @pending_model_id ||= config.default_model unless model
+        return unless @pending_model_id
 
-        model_info, _provider = Models.resolve(
-          @model_string,
-          provider: @provider_string,
-          assume_model_exists: assume_model_exists || false,
-          config: config
-        )
+        model_info = resolve_model_info
 
-        self.model_association = find_or_create_model_record(model_info)
-        @model_string = nil
-        @provider_string = nil
+        self.model = find_or_create_model(model_info)
+        @pending_model_id = nil
+        @pending_provider = nil
+      end
+
+      def resolve_model_info
+        return RubyLLM.models.find(@pending_model_id, @pending_provider) unless assume_model_exists
+
+        raise ArgumentError, 'Provider must be specified if assume_model_exists is true' unless @pending_provider
+
+        begin
+          RubyLLM.models.find(@pending_model_id, @pending_provider)
+        rescue RubyLLM::ModelNotFoundError
+          RubyLLM::Model.default(@pending_model_id, @pending_provider)
+        end
+      end
+
+      def find_or_create_model(model_info)
+        RubyLLM::ActiveRecord::Model.find_or_create_by!(
+          model_id: model_info.id,
+          provider: model_info.provider
+        ) do |record|
+          record.name = model_info.name || model_info.id
+          record.family = model_info.family
+          record.model_created_at = model_info.created_at
+          record.context_window = model_info.context_window
+          record.max_output_tokens = model_info.max_output_tokens
+          record.knowledge_cutoff = model_info.knowledge_cutoff
+          record.capabilities = model_info.capabilities || []
+          record.modalities = model_info.modalities.to_h
+          record.pricing = model_info.pricing.to_h
+          record.metadata = model_info.metadata || {}
+        end
       end
 
       def cleanup_failed_messages(reason:)
@@ -559,13 +636,12 @@ module RubyLLM
         if last.tool_call?
           last.destroy
         elsif last.tool_result?
-          tool_call_message = last.parent_tool_call.message_association
-          expected_results = tool_call_message.tool_calls_association.pluck(:id)
-          fk_column = tool_call_message.class.reflections['tool_results'].foreign_key
-          actual_results = tool_call_message.tool_results.pluck(fk_column)
+          parent = last.ruby_llm_parent_tool_call
+          tool_call_message = parent.message
+          calls = tool_call_message.ruby_llm_tool_calls
 
-          if expected_results.sort != actual_results.sort
-            tool_call_message.tool_results.each(&:destroy)
+          if calls.any? { |call| call.result.nil? }
+            calls.filter_map(&:result).each(&:destroy)
             tool_call_message.destroy
           end
         end
@@ -576,61 +652,41 @@ module RubyLLM
         messages = assoc.to_a
         return messages unless assoc.respond_to?(:klass)
 
-        msg_class = assoc.klass
-        associations = [
-          msg_class.tool_calls_association_name,
-          :parent_tool_call,
-          msg_class.model_association_name
-        ].compact
+        associations = %i[ruby_llm_tool_calls ruby_llm_parent_tool_call ruby_llm_usages]
 
         ::ActiveRecord::Associations::Preloader.new(records: messages, associations: associations).call
         messages
       end
 
-      def find_or_create_model_record(model_info)
-        model_class = self.class.model_class.constantize
-        model_class.find_or_create_by!(
-          model_id: model_info.id,
-          provider: model_info.provider
-        ) do |m|
-          m.name = model_info.name || model_info.id
-          m.family = model_info.family
-          m.context_window = model_info.context_window
-          m.max_output_tokens = model_info.max_output_tokens
-          m.capabilities = model_info.capabilities || []
-          m.modalities = model_info.modalities.to_h
-          m.pricing = model_info.pricing.to_h
-          m.metadata = model_info.metadata || {}
-        end
-      end
-
-      def current_llm_model_association(_message = nil)
-        model_info = @chat&.model
-
-        model_info ? find_or_create_model_record(model_info) : model_association
-      end
-
       def build_llm_chat
-        model_record = model_association
         chat = (context || RubyLLM).chat(
-          model: model_record.model_id,
-          provider: model_record.provider.to_sym,
+          model: model_id,
+          provider: provider&.to_sym,
           protocol: protocol,
           assume_model_exists: assume_model_exists || false
         )
         sync_messages(chat)
-        chat.send(:cancellation_checker=, proc { consume_persisted_cancellation_request })
+        chat.cancellation_checker = proc { consume_persisted_cancellation_request }
         install_persistence_callbacks(chat)
       end
 
       def sync_messages(chat = @chat)
-        chat.messages = eager_load_messages
+        message_records = eager_load_messages
+        chat.messages = message_records
+        linked_entry_pairs = message_records.zip(chat.messages).flat_map do |record, message|
+          record.ruby_llm_usages.zip(message.ruby_llm_usage_entries)
+        end
+        linked_entries = linked_entry_pairs.to_h { |record, entry| [record.id, entry] }
+        chat.usage_entries = ruby_llm_usages.map do |record|
+          linked_entries.fetch(record.id) { record.to_entry }
+        end
         reapply_runtime_instructions(chat)
         chat
       end
 
       def install_persistence_callbacks(chat)
         chat.before_message { persist_new_message }
+        chat.usage_recorder = method(:persist_usage_entry)
         chat.after_message { |msg| persist_message_completion(msg) }
         chat
       end
@@ -677,89 +733,63 @@ module RubyLLM
       end
 
       def persist_new_message
-        @message.destroy if @message&.persisted? && @message.content.blank? && !@message.tool_calls_association.exists?
+        @message.destroy if @message&.persisted? && @message.content.blank? && !@message.ruby_llm_tool_calls.exists?
 
         attrs = { role: :assistant, content: '' }
-        attrs[self.class.model_association_name] = current_llm_model_association
         @message = messages_association.create!(attrs)
       end
 
       def persist_message_completion(message)
         return unless message
 
-        tool_call_id = find_tool_call_id(message.tool_call_id) if message.tool_call_id
-        attrs = completion_attributes(message, message.content, tool_call_id)
+        tool_call = find_tool_call(message.tool_call_id) if message.tool_call_id
+        attrs = completion_attributes(message, message.content)
 
         transaction do
           @message.assign_attributes(attrs)
           @message.save!
+          tool_call&.update!(result: @message)
 
           persist_content(@message, message.attachments) if message.attachments.any?
           persist_tool_calls(message.tool_calls) if message.tool_calls.present?
+          link_usage_entries(message)
         end
       end
 
-      # rubocop:disable Metrics/PerceivedComplexity
-      def completion_attributes(message, content_text, tool_call_id)
-        attrs = { role: message.role, content: content_text,
-                  input_tokens: message.input_tokens, output_tokens: message.output_tokens }
-        attrs[:cache_read_tokens] = message.cache_read_tokens if @message.has_attribute?(:cache_read_tokens)
-        attrs[:cache_write_tokens] = message.cache_write_tokens if @message.has_attribute?(:cache_write_tokens)
-        attrs[:thinking_text] = message.thinking&.text if @message.has_attribute?(:thinking_text)
-        attrs[:thinking_signature] = message.thinking&.signature if @message.has_attribute?(:thinking_signature)
-        attrs[:thinking_tokens] = message.thinking_tokens if @message.has_attribute?(:thinking_tokens)
-        attrs[:citations] = message.citations.map(&:to_h).presence if @message.has_attribute?(:citations)
-        attrs[:finish_reason] = message.finish_reason if @message.has_attribute?(:finish_reason)
-        attrs[:cache_until_here] = message.cache_until_here? if @message.has_attribute?(:cache_until_here)
-        model_record = current_llm_model_association(message)
-        attrs[self.class.model_association_name] = model_record
-        merge_cost_attributes(attrs, message, model_record)
-        if tool_call_id
-          parent_tool_call_assoc = @message.class.reflect_on_association(:parent_tool_call)
-          attrs[parent_tool_call_assoc.foreign_key] = tool_call_id
-        end
+      def completion_attributes(message, content_text)
+        attrs = { role: message.role, content: content_text }
+        assign_supported_attribute(attrs, :thinking_text, message.thinking&.text)
+        assign_supported_attribute(attrs, :thinking_signature, message.thinking&.signature)
+        assign_supported_attribute(attrs, :citations, message.citations.map(&:to_h).presence)
+        assign_supported_attribute(attrs, :finish_reason, message.finish_reason)
+        assign_supported_attribute(attrs, :cache_until_here, message.cache_until_here?)
         attrs
       end
-      # rubocop:enable Metrics/PerceivedComplexity
 
-      def merge_cost_attributes(attrs, message, model_record)
-        return unless @message.has_attribute?(:total_cost) || @message.has_attribute?(:cost_details)
-
-        cost = RubyLLM::Cost.new(tokens: message.tokens, model: model_record)
-        attrs[:total_cost] = cost.total if @message.has_attribute?(:total_cost)
-        attrs[:cost_details] = cost.to_h.presence if @message.has_attribute?(:cost_details)
+      def assign_supported_attribute(attributes, name, value)
+        attributes[name] = value if @message.has_attribute?(name)
       end
 
       def persist_tool_calls(tool_calls, message_record: @message)
-        tool_call_klass = message_record.tool_calls_association.klass
-        supports_thought_signature = tool_call_klass.column_names.include?('thought_signature')
-
         tool_calls.each_value do |tool_call|
           attributes = tool_call.to_h
-          attributes.delete(:thought_signature) unless supports_thought_signature
           attributes[:tool_call_id] = attributes.delete(:id)
-          message_record.tool_calls_association.create!(**attributes)
+          message_record.ruby_llm_tool_calls.create!(**attributes)
         end
       end
 
-      def add_finish_reason_attribute(attrs, message, message_class)
+      def add_finish_reason_attribute(attributes, message, message_class)
         return unless message_class.column_names.include?('finish_reason')
 
-        attrs[:finish_reason] = message.finish_reason
+        attributes[:finish_reason] = message.finish_reason
       end
 
-      def find_tool_call_id(tool_call_id)
-        messages = messages_association
-        message_class = messages.klass
-        tool_calls_assoc = message_class.tool_calls_association_name
-        tool_call_table_name = message_class.reflect_on_association(tool_calls_assoc).table_name
-
-        message_with_tool_call = messages.joins(tool_calls_assoc)
-                                         .find_by(tool_call_table_name => { tool_call_id: tool_call_id })
-        return nil unless message_with_tool_call
-
-        tool_call = message_with_tool_call.tool_calls_association.find_by(tool_call_id: tool_call_id)
-        tool_call&.id
+      def find_tool_call(tool_call_id)
+        RubyLLM::ActiveRecord::ToolCall.find_by(
+          tool_call_id: tool_call_id,
+          message_type: self.class.message_class.constantize.polymorphic_name,
+          message_id: messages_association.select(:id)
+        )
       end
 
       def consume_persisted_cancellation_request

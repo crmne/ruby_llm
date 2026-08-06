@@ -68,7 +68,7 @@ RSpec.describe RubyLLM::Protocols::Converse::Streaming do
 
     chunk = streaming.send(:build_chunk, event)
 
-    expect(chunk.thinking_tokens).to eq(7)
+    expect(chunk.tokens.thinking).to eq(7)
   end
 
   it 'accumulates Bedrock Converse Stream thinking deltas into the final message' do

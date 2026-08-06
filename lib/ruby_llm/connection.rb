@@ -4,6 +4,7 @@ require 'faraday'
 require 'faraday/multipart'
 require 'faraday/retry'
 require 'ruby_llm/error_middleware'
+require 'ruby_llm/usage_middleware'
 require 'timeout'
 
 module RubyLLM
@@ -36,10 +37,11 @@ module RubyLLM
       end
     end
 
-    def post(url, payload, &)
+    def post(url, payload, usage: nil, &)
       instrument_request(:post, url) do
         @connection.post url, payload do |req|
           req.headers.merge! @provider.headers
+          set_usage_tracker(req, usage) if usage
           yield req if block_given?
         end
       end
@@ -106,6 +108,7 @@ module RubyLLM
         methods: Faraday::Retry::Middleware::IDEMPOTENT_METHODS + [:post],
         exceptions: retry_exceptions
       }
+      faraday.use :llm_usage
     end
 
     def setup_middleware(faraday)
@@ -134,6 +137,11 @@ module RubyLLM
         RubyLLM::ServiceUnavailableError,
         RubyLLM::OverloadedError
       ]
+    end
+
+    def set_usage_tracker(request, tracker)
+      context = request.options.context ||= {}
+      context[UsageMiddleware::CONTEXT_KEY] = tracker
     end
   end
 end

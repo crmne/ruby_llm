@@ -112,6 +112,8 @@ RSpec.describe RubyLLM::Batch do
       batch = described_class.new(provider:, chats:, id: 'msgbatch_test', status: 'ended', completed: true)
 
       expect(batch.messages).to eq([nil, message])
+      expect(batch.tokens.to_h).to eq(input_tokens: 1, output_tokens: 1)
+      expect(batch.cost).to be_a(RubyLLM::Cost::Aggregate)
       expect(chats.first).not_to be_complete
       expect(chats.second.messages.last).to be(message)
 
@@ -158,7 +160,7 @@ RSpec.describe RubyLLM::Batch do
       expect(batch).to be_complete
       expect(batch.messages.first.content).to include('4')
       expect(batch.messages.second.content).to match(/jupiter/i)
-      expect(batch.messages.first.input_tokens).to be_positive
+      expect(batch.messages.first.tokens.input).to be_positive
       expect(chats.first.messages.map(&:role)).to eq(%i[system user assistant])
     end
 

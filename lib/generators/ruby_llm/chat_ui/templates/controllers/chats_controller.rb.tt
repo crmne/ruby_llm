@@ -7,14 +7,15 @@ class <%= chat_controller_class_name %> < ApplicationController
 
   def new
     @<%= chat_variable_name %> = <%= chat_model_name %>.new
-    @selected_model = params[:model]
+    @selected_model = params[:provider] ? [params[:provider], params[:model]].join(":") : params[:model]
     @chat_models = available_chat_models
   end
 
   def create
     prompt = params.dig(:<%= chat_variable_name %>, :prompt)
     if prompt.present?
-      @<%= chat_variable_name %> = <%= chat_model_name %>.create!(model: params.dig(:<%= chat_variable_name %>, :model).presence)
+      provider, model = params.dig(:<%= chat_variable_name %>, :model).to_s.split(":", 2)
+      @<%= chat_variable_name %> = <%= chat_model_name %>.create!(model: model.presence, provider: provider.presence)
       <%= chat_job_class_name %>.perform_later(@<%= chat_variable_name %>.id, prompt)
 
       redirect_to @<%= chat_variable_name %>, notice: "<%= chat_model_name.humanize %> was successfully created."

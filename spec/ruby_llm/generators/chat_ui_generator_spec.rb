@@ -74,7 +74,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
     expect(tool_results_default).to include('tool.tool_error_message')
     chat_form = File.read(File.join(base_path, 'chats/_form.html.erb'))
     expect(chat_form).to include('@chat_models.map')
-    expect(chat_form).to include('[model.label, model.id]')
+    expect(chat_form).to include('[model.label, [model.provider, model.id].join(":")]')
     expect(chat_form).to include('default_model_display_name')
     create_stream = File.read(File.join(base_path, 'messages/create.turbo_stream.erb'))
     expect(create_stream).to include(%(turbo_stream.replace "#{chats_target}"))
@@ -173,7 +173,8 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         '@chat_models = available_chat_models',
         'prompt = params.dig(:chat, :prompt)',
         'if prompt.present?',
-        '@chat = Chat.create!(model: params.dig(:chat, :model).presence)'
+        'provider, model = params.dig(:chat, :model).to_s.split(":", 2)',
+        '@chat = Chat.create!(model: model.presence, provider: provider.presence)'
       ],
       messages_controller_path: 'app/controllers/messages_controller.rb',
       messages_controller_expectations: [
@@ -231,9 +232,7 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       broadcasting_options: {
         path: 'app/models/llm/message.rb',
         acts_as_message_lines: [
-          "acts_as_message chat: :llm_chat, chat_class: 'Llm::Chat'",
-          "tool_calls: :llm_tool_calls, tool_call_class: 'Llm::ToolCall'",
-          "model: :llm_model, model_class: 'Llm::Model'"
+          "acts_as_message chat: :llm_chat, chat_class: 'Llm::Chat'"
         ],
         broadcasts_to_line: "broadcasts_to ->(llm_message) { \"llm_chat_\#{llm_message.llm_chat_id}\" }",
         broadcast_target_line: "broadcast_append_to \"llm_chat_\#{llm_chat_id}\"",
@@ -248,8 +247,8 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         '@chat_models = available_chat_models',
         'prompt = params.dig(:llm_chat, :prompt)',
         'if prompt.present?',
-        '@llm_chat = Llm::Chat.create!(model:',
-        'params.dig(:llm_chat, :model).presence)'
+        'provider, model = params.dig(:llm_chat, :model).to_s.split(":", 2)',
+        '@llm_chat = Llm::Chat.create!(model: model.presence, provider: provider.presence)'
       ],
       messages_controller_path: 'app/controllers/llm/messages_controller.rb',
       messages_controller_expectations: [

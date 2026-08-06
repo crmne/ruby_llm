@@ -60,7 +60,8 @@ loader.setup
 # Tool gives the model abilities. Subclass it, declare parameters,
 # implement +execute+, and pass it to Chat#with_tools. Agent packages a
 # configured chat (model, instructions, tools, schema) into a reusable
-# class.
+# class. Internally, accounting follows provider attempts rather than the
+# transcript so retries and cancellations remain visible in costs.
 #
 # == Beyond chat
 #
@@ -74,9 +75,9 @@ loader.setup
 #
 # == Rails
 #
-# +acts_as_chat+ persists conversations to Active Record, with siblings
-# for messages, tool calls, models, and batches. See
-# ActiveRecord::ActsAs.
+# +acts_as_chat+ and +acts_as_message+ keep application-owned conversation
+# records while RubyLLM privately persists usage, tool calls, models, and
+# batches. See ActiveRecord::ActsAs.
 #
 # == Configuration and models
 #

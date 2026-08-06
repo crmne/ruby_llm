@@ -15,6 +15,8 @@ module RubyLLM
   # usage (#tokens), reasoning output (#thinking), source citations
   # (#citations), and requested tool calls (#tool_calls).
   class Message
+    include Usage::Result
+
     # The valid message roles: +:system+, +:user+, +:assistant+, and +:tool+.
     ROLES = %i[system user assistant tool].freeze
 
@@ -58,10 +60,8 @@ module RubyLLM
     # provider returned none.
     attr_reader :thinking
 
-    # The token usage as a Tokens object, or +nil+ when the provider
-    # reported none.
-    attr_reader :tokens
-
+    # The token usage as a Tokens object. Its fields are +nil+ when the
+    # provider did not report them.
     # The source citations as an array of Citation objects, normalized
     # across providers.
     attr_reader :citations
@@ -93,6 +93,7 @@ module RubyLLM
       @thinking = options[:thinking]
       @citations = Array(options[:citations])
       @finish_reason = options[:finish_reason]
+      self.ruby_llm_usage_entries = options[:usage_entries] if options[:usage_entries]
       @cache_until_here = options.fetch(:cache_until_here, false)
 
       ensure_valid_role
@@ -159,32 +160,13 @@ module RubyLLM
       finish_reason_in?(CONTENT_FILTERED_FINISH_REASONS)
     end
 
-    # Returns the standard input token count, same as <tt>tokens.input</tt>.
-    def input_tokens
-      tokens&.input
-    end
+    # Returns usage aggregated across every provider attempt that produced this
+    # message. Messages constructed by hand report the token counts they were
+    # built with.
+    def tokens
+      return @tokens if ruby_llm_usage_entries.empty?
 
-    # Returns the billable output token count, same as
-    # <tt>tokens.output</tt>.
-    def output_tokens
-      tokens&.output
-    end
-
-    # Returns the prompt cache read token count, same as
-    # <tt>tokens.cache_read</tt>.
-    def cache_read_tokens
-      tokens&.cache_read
-    end
-
-    # Returns the prompt cache write token count, same as
-    # <tt>tokens.cache_write</tt>.
-    def cache_write_tokens
-      tokens&.cache_write
-    end
-
-    # Returns the reasoning token count, same as <tt>tokens.thinking</tt>.
-    def thinking_tokens
-      tokens&.thinking
+      ruby_llm_usage_tokens
     end
 
     # Returns a Cost pricing this message's token usage in US dollars.
@@ -193,6 +175,8 @@ module RubyLLM
     #   response.cost.total
     #
     def cost(model: nil)
+      return ruby_llm_usage_cost unless ruby_llm_usage_entries.empty?
+
       Cost.new(tokens:, model: model || model_info)
     end
 
@@ -229,7 +213,7 @@ module RubyLLM
         citations: list_to_h(citations),
         finish_reason: finish_reason,
         cache_until_here: cache_until_here? || nil
-      }.merge(tokens ? tokens.to_h : {}).compact
+      }.merge(tokens.to_h).compact
     end
 
     def pretty_print_instance_variables # :nodoc:

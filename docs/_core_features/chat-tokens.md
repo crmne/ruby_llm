@@ -2,7 +2,7 @@
 layout: default
 title: Token Usage and Cost
 parent: "Chat"
-nav_order: 9
+nav_order: 10
 description: Read per-turn and per-conversation token counts and costs, with normalized cache and thinking buckets across providers
 ---
 
@@ -23,14 +23,13 @@ description: Read per-turn and per-conversation token counts and costs, with nor
 After reading this guide, you will know:
 
 * How to read input, output, cache, and thinking token counts from a response.
-* How to compute token totals for a full conversation.
 * How to read per-turn and per-conversation costs.
 * How RubyLLM normalizes token buckets across providers.
 * How thinking and cache pricing are handled.
 
 ## Tracking Token Usage
 
-Understanding token usage is important for managing costs and staying within context limits. Each `RubyLLM::Message` returned by `ask` includes token counts.
+Understanding token usage is important for managing costs and staying within context limits. Usage belongs to provider attempts because retries and cancellations can consume tokens without adding another message. Messages aggregate the usage entries linked to them, so the familiar response API remains convenient.
 
 ```ruby
 response = chat.ask "Explain the Ruby Global Interpreter Lock (GIL)."
@@ -57,13 +56,10 @@ puts "Cache Write Cost: $#{format('%.6f', response.cost.cache_write)}" if respon
 puts "Thinking Cost: $#{format('%.6f', response.cost.thinking)}" if response.cost.thinking
 puts "Total Cost: $#{format('%.6f', response.cost.total)}" if response.cost.total
 
-total_conversation_tokens = chat.messages.sum do |msg|
-  msg.tokens&.input.to_i + msg.tokens&.output.to_i + msg.tokens&.cache_read.to_i + msg.tokens&.cache_write.to_i
-end
-puts "Total Conversation Tokens: #{total_conversation_tokens}"
-
 puts "Total Conversation Cost: $#{format('%.6f', chat.cost.total)}" if chat.cost.total
 ```
+
+`response.tokens` aggregates every transport attempt associated with the response. `chat.cost` aggregates the chat's whole internal ledger, including failed retries and cancelled attempts. See [Cost and Usage Tracking]({% link _core_features/cost-and-usage-tracking.md %}) for retries, cancellation, and per-attempt instrumentation.
 
 RubyLLM handles provider token differences for you. From v1.15 onward, `tokens.input` means the standard input bucket used for pricing. Cache activity is exposed separately as `tokens.cache_read` and `tokens.cache_write`, even when the provider includes those tokens in a raw prompt total.
 
@@ -79,8 +75,6 @@ RubyLLM handles provider token differences for you. From v1.15 onward, `tokens.i
 
 This means the same RubyLLM code works across providers: `tokens.input` for standard input, `tokens.output` for output, `tokens.cache_read` for prompt cache reads, and `tokens.cache_write` for prompt cache writes. To display the full request-side input activity, add `tokens.input + tokens.cache_read + tokens.cache_write`.
 
-The top-level token helpers remain available for compatibility with v1.9.0+ code, but new code should prefer `response.tokens.*`.
-
 Thinking token usage is available via `response.tokens.thinking` when providers report it. For most providers, thinking/reasoning tokens are a breakdown of output work, not an extra bucket to add yourself. RubyLLM keeps `tokens.output` as the billable output bucket: OpenAI-style providers that include reasoning in completion tokens stay as-is, while OpenAI-compatible providers that report reasoning outside completion tokens are normalized so `tokens.output` includes the billable generated total.
 
 When a model has distinct reasoning-token pricing, `response.cost.thinking` prices that bucket separately. Otherwise, thinking tokens are treated as part of `response.cost.output` and `response.cost.thinking` stays `nil`.
@@ -92,6 +86,7 @@ Refer to [Working with Models]({% link _reference/models.md %}) for details on a
 ## Next Steps
 
 * [Chat]({% link _core_features/chat.md %}) - the core conversation interface these counts come from.
+* [Cost and Usage Tracking]({% link _core_features/cost-and-usage-tracking.md %}) - account for retries and cancellations independently from messages.
 * [Working with Models]({% link _reference/models.md %}) - inspect model-specific pricing in the registry.
 * [Extended Thinking]({% link _core_features/thinking.md %}) - work with reasoning-capable models.
 * [Instrumentation and Observability]({% link _advanced/instrumentation.md %}) - emit token and cost metrics in production.

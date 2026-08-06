@@ -27,10 +27,10 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Chat do
 
       message = described_class.parse_completion_body(response_body, raw: response)
 
-      expect(message.cache_read_tokens).to eq(6)
-      expect(message.input_tokens).to eq(2)
-      expect(message.output_tokens).to eq(4)
-      expect(message.cache_write_tokens).to eq(0)
+      expect(message.tokens.cache_read).to eq(6)
+      expect(message.tokens.input).to eq(2)
+      expect(message.tokens.output).to eq(4)
+      expect(message.tokens.cache_write).to eq(0)
     end
 
     it 'preserves raw finish reasons' do
@@ -87,10 +87,10 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Chat do
 
       message = described_class.parse_completion_body(response_body, raw: response)
 
-      expect(message.input_tokens).to eq(14)
-      expect(message.cache_read_tokens).to eq(192)
-      expect(message.output_tokens).to eq(4)
-      expect(message.cache_write_tokens).to eq(0)
+      expect(message.tokens.input).to eq(14)
+      expect(message.tokens.cache_read).to eq(192)
+      expect(message.tokens.output).to eq(4)
+      expect(message.tokens.cache_write).to eq(0)
     end
 
     it 'keeps OpenAI reasoning tokens inside completion output tokens' do
@@ -117,8 +117,8 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Chat do
 
       message = described_class.parse_completion_body(response_body, raw: response)
 
-      expect(message.output_tokens).to eq(1306)
-      expect(message.thinking_tokens).to eq(1087)
+      expect(message.tokens.output).to eq(1306)
+      expect(message.tokens.thinking).to eq(1087)
     end
 
     it 'adds reasoning tokens to output for OpenAI-compatible providers that report them separately' do
@@ -145,8 +145,8 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Chat do
 
       message = described_class.parse_completion_body(response_body, raw: response)
 
-      expect(message.output_tokens).to eq(9928)
-      expect(message.thinking_tokens).to eq(9827)
+      expect(message.tokens.output).to eq(9928)
+      expect(message.tokens.thinking).to eq(9827)
     end
 
     it 'captures top-level reasoning tokens when providers report them outside completion details' do
@@ -173,8 +173,8 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Chat do
 
       message = described_class.parse_completion_body(response_body, raw: response)
 
-      expect(message.output_tokens).to eq(11_395)
-      expect(message.thinking_tokens).to eq(193_947)
+      expect(message.tokens.output).to eq(11_395)
+      expect(message.tokens.thinking).to eq(193_947)
     end
   end
 

@@ -49,7 +49,7 @@ RubyLLM.models.refresh!
 
 RubyLLM falls back to its bundled snapshot until the configured file exists. The first successful refresh creates the file, and later refreshes replace it. Use `RubyLLM.models.save_to_json('/another/path/models.json')` only when you want to export the currently loaded registry elsewhere.
 
-> With the Active Record integration, the models table is the registry. `RubyLLM.models.refresh!` updates it automatically. While the table is empty, RubyLLM falls back to the registry file, then to the bundled snapshot.
+> With the Active Record integration, RubyLLM's internal `ruby_llm_models` table is the registry. `RubyLLM.models.refresh!` updates it automatically. While the table is empty, RubyLLM falls back to the registry file, then to the bundled snapshot.
 {: .note }
 
 ## Connection Settings

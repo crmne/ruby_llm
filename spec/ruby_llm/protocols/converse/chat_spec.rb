@@ -25,10 +25,10 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
       response = instance_double(Faraday::Response, body: response_body)
       message = described_class.parse_completion_body(response_body, raw: response)
 
-      expect(message.input_tokens).to eq(50)
-      expect(message.output_tokens).to eq(5)
-      expect(message.cache_read_tokens).to eq(40)
-      expect(message.cache_write_tokens).to eq(10)
+      expect(message.tokens.input).to eq(50)
+      expect(message.tokens.output).to eq(5)
+      expect(message.tokens.cache_read).to eq(40)
+      expect(message.tokens.cache_write).to eq(10)
     end
 
     it 'does not subtract cache buckets or floor to zero when the cached prefix exceeds fresh input' do
@@ -50,9 +50,9 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
       response = instance_double(Faraday::Response, body: response_body)
       message = described_class.parse_completion_body(response_body, raw: response)
 
-      expect(message.input_tokens).to eq(3)
-      expect(message.cache_read_tokens).to eq(7714)
-      expect(message.cache_write_tokens).to eq(327)
+      expect(message.tokens.input).to eq(3)
+      expect(message.tokens.cache_read).to eq(7714)
+      expect(message.tokens.cache_write).to eq(327)
     end
 
     it 'preserves raw stopReason as finish_reason' do
@@ -109,7 +109,7 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
       response = instance_double(Faraday::Response, body: response_body)
       message = described_class.parse_completion_body(response_body, raw: response)
 
-      expect(message.thinking_tokens).to eq(7)
+      expect(message.tokens.thinking).to eq(7)
     end
 
     it 'extracts thinking tokens from outputTokensDetails reasoningTokens' do
@@ -129,7 +129,7 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
       response = instance_double(Faraday::Response, body: response_body)
       message = described_class.parse_completion_body(response_body, raw: response)
 
-      expect(message.thinking_tokens).to eq(7)
+      expect(message.tokens.thinking).to eq(7)
     end
   end
 

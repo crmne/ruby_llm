@@ -2,10 +2,15 @@
 
 require 'rails_helper'
 
-RSpec.describe 'acts_as_batch' do # rubocop:disable RSpec/DescribeClass
+RSpec.describe RubyLLM::Batch do # rubocop:disable RSpec/SpecFilePathFormat
   include_context 'with configured RubyLLM'
 
   let(:model) { 'claude-haiku-4-5' }
+
+  it 'uses the record itself as the Rails persistence adapter' do
+    expect(RubyLLM.config.batch_store).to eq(RubyLLM::ActiveRecord::Batch)
+    expect(RubyLLM::ActiveRecord.const_defined?(:BatchStore, false)).to be(false)
+  end
 
   # rubocop:disable RSpec/AnyInstance
   def stub_anthropic_batch(create:, find:, results:)
@@ -30,15 +35,16 @@ RSpec.describe 'acts_as_batch' do # rubocop:disable RSpec/DescribeClass
       results: [[0, answer('4')], [1, answer('Jupiter')]]
     )
 
-    batch = Batch.create!(chats: chats)
+    batch = RubyLLM.batch(chats)
 
-    expect(batch.provider_batch_id).to eq('msgbatch_1')
-    expect(batch.provider).to eq('anthropic')
-    expect(batch.chat_ids).to eq(chats.map(&:id))
-    expect(batch.chats).to eq(chats)
+    expect(batch.id).to eq('msgbatch_1')
+    record = RubyLLM::ActiveRecord::Batch.find_by!(provider_batch_id: batch.id)
+    expect(record.provider).to eq('anthropic')
+    expect(record.chat_ids).to eq(chats.map(&:id))
+    expect(record.chats).to eq(chats)
 
     # Poll from a fresh record, the way a job in another process would.
-    polled = Batch.find(batch.id).refresh
+    polled = described_class.find(batch.id).refresh
     expect(polled).to be_complete
     expect(polled.status).to eq('ended')
 
@@ -46,7 +52,7 @@ RSpec.describe 'acts_as_batch' do # rubocop:disable RSpec/DescribeClass
 
     expect(chats.first.messages.reload.pluck(:role)).to eq(%w[user assistant])
     expect(chats.first.messages.last.content).to eq('4')
-    expect(chats.first.messages.last.input_tokens).to eq(5)
+    expect(chats.first.messages.last.tokens.input).to eq(5)
     expect(chats.second.messages.reload.last.content).to eq('Jupiter')
   end
 
@@ -57,10 +63,10 @@ RSpec.describe 'acts_as_batch' do # rubocop:disable RSpec/DescribeClass
       find: { id: 'msgbatch_2', status: 'ended', completed: true },
       results: [[0, answer('4')]]
     )
-    batch = Batch.create!(chats: [chat])
+    batch = RubyLLM.batch([chat])
 
-    Batch.find(batch.id).refresh.messages # first poll
-    Batch.find(batch.id).messages # retry: a fresh record re-collects
+    described_class.find(batch.id).refresh.messages # first poll
+    described_class.find(batch.id).messages # retry: a fresh record re-collects
 
     expect(chat.messages.reload.where(role: 'assistant').count).to eq(1)
   end
@@ -75,11 +81,11 @@ RSpec.describe 'acts_as_batch' do # rubocop:disable RSpec/DescribeClass
       find: { id: 'msgbatch_3', status: 'ended', completed: true },
       results: [[0, answer('first')], [1, answer('second')]]
     )
-    batch = Batch.create!(chats: chats)
+    batch = RubyLLM.batch(chats)
 
     chats.first.destroy! # gone by the time the job polls
 
-    Batch.find(batch.id).messages
+    described_class.find(batch.id).messages
 
     # The survivor gets its own answer, not the deleted chat's.
     expect(chats.second.messages.reload.last.content).to eq('second')

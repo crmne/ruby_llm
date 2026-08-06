@@ -10,5 +10,5 @@
       $<%%= "%.2f" % input %> / $<%%= "%.2f" % output %>
     <%% end %>
   </td>
-  <td><%%= link_to "Start <%= chat_table_name.singularize.humanize.downcase %>", new_<%= chat_variable_name %>_path(model: <%= model_model_name.demodulize.underscore %>.id) %></td>
+  <td><%%= link_to "Start <%= chat_table_name.singularize.humanize.downcase %>", new_<%= chat_variable_name %>_path(model: [<%= model_model_name.demodulize.underscore %>.provider, <%= model_model_name.demodulize.underscore %>.id].join(":")) %></td>
 </tr>

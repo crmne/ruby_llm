@@ -1,58 +1,339 @@
-class <%= 'add_ruby_llm_v2_0_columns'.camelize %> < ActiveRecord::Migration<%= migration_version %>
-  def change
-    unless column_exists?(:<%= chat_table_name %>, :cancelled)
-      add_column :<%= chat_table_name %>, :cancelled, :boolean, null: false, default: false
-    end
+class AddRubyLlmV20Columns < ActiveRecord::Migration<%= migration_version %>
+  LEGACY_TOKEN_COLUMNS = %w[input_tokens output_tokens cache_read_tokens cache_write_tokens thinking_tokens].freeze
+  LEGACY_COST_COLUMNS = %w[total_cost cost_details].freeze
 
-    unless column_exists?(:<%= message_table_name %>, :citations)
-      add_column :<%= message_table_name %>, :citations, :json
-    end
+  def up
+    add_chat_and_message_columns
+    move_models
+    move_tool_calls
+    move_batches
+    create_usage_entries
+    backfill_usage_entries
+    remove_legacy_message_columns
+  end
 
-    unless column_exists?(:<%= message_table_name %>, :finish_reason)
-      add_column :<%= message_table_name %>, :finish_reason, :string
-    end
+  def down
+    raise ActiveRecord::IrreversibleMigration,
+          "RubyLLM v2 moves application-owned records into RubyLLM-owned tables"
+  end
 
+  private
+
+  def add_chat_and_message_columns
+    add_column :<%= chat_table_name %>, :cancelled, :boolean, null: false, default: false unless column_exists?(:<%= chat_table_name %>, :cancelled)
+
+    add_column :<%= message_table_name %>, :citations, :json unless column_exists?(:<%= message_table_name %>, :citations)
+    add_column :<%= message_table_name %>, :finish_reason, :string unless column_exists?(:<%= message_table_name %>, :finish_reason)
     unless column_exists?(:<%= message_table_name %>, :cache_until_here)
       add_column :<%= message_table_name %>, :cache_until_here, :boolean, null: false, default: false
     end
-
-    unless column_exists?(:<%= message_table_name %>, :total_cost)
-      add_column :<%= message_table_name %>, :total_cost, :decimal, precision: 16, scale: 10
-    end
-
-    unless column_exists?(:<%= message_table_name %>, :cost_details)
-      add_column :<%= message_table_name %>, :cost_details, :json
-    end
-
     if column_exists?(:<%= message_table_name %>, :cached_tokens) &&
        !column_exists?(:<%= message_table_name %>, :cache_read_tokens)
       rename_column :<%= message_table_name %>, :cached_tokens, :cache_read_tokens
     end
-
     if column_exists?(:<%= message_table_name %>, :cache_creation_tokens) &&
        !column_exists?(:<%= message_table_name %>, :cache_write_tokens)
       rename_column :<%= message_table_name %>, :cache_creation_tokens, :cache_write_tokens
     end
+  end
 
-    reversible do |dir|
-      dir.up do
-        next if table_exists?(:<%= batch_table_name %>)
+  def move_models
+    move_table(:<%= legacy_model_table_name %>, :ruby_llm_models) { create_models }
+    normalize_chat_model_reference(:<%= chat_table_name %>, :<%= legacy_model_foreign_key %>)
+    replace_message_model_reference(:<%= message_table_name %>, :<%= legacy_model_foreign_key %>)
+  end
 
-        create_table :<%= batch_table_name %> do |t|
-          t.string :provider_batch_id, null: false
-          t.string :provider, null: false
-          t.string :status
-          t.boolean :completed, null: false, default: false
-<% if postgresql? -%>
-          t.jsonb :chat_ids, default: []
-<% else -%>
-          t.json :chat_ids
-<% end -%>
-          t.timestamps
-        end
+  def create_models
+    create_table :ruby_llm_models do |t|
+      t.string :model_id, null: false
+      t.string :name, null: false
+      t.string :provider, null: false
+      t.string :family
+      t.datetime :model_created_at
+      t.integer :context_window
+      t.integer :max_output_tokens
+      t.date :knowledge_cutoff
+<% if postgresql? %>
+      t.jsonb :modalities, default: {}
+      t.jsonb :capabilities, default: []
+      t.jsonb :pricing, default: {}
+      t.jsonb :metadata, default: {}
+<% elsif mysql? %>
+      t.json :modalities
+      t.json :capabilities
+      t.json :pricing
+      t.json :metadata
+<% else %>
+      t.json :modalities, default: {}
+      t.json :capabilities, default: []
+      t.json :pricing, default: {}
+      t.json :metadata, default: {}
+<% end %>
+      t.timestamps
+      t.index [ :provider, :model_id ], unique: true
+      t.index :provider
+      t.index :family
+    end
+  end
+
+  def normalize_chat_model_reference(table, legacy_column)
+    return unless column_exists?(table, legacy_column)
+
+    column = connection.columns(table).find { |candidate| candidate.name == legacy_column.to_s }
+    model_primary_key = connection.primary_key(:ruby_llm_models)
+    model_key_column = connection.columns(:ruby_llm_models).find { |candidate| candidate.name == model_primary_key }
+    unless column.type == model_key_column.type
+      raise "Expected #{table}.#{legacy_column} to match ruby_llm_models.#{model_primary_key}"
+    end
+
+    if legacy_column != :ruby_llm_model_id
+      remove_foreign_key table, column: legacy_column if foreign_key_exists?(table, column: legacy_column)
+      remove_index table, legacy_column if index_exists?(table, legacy_column)
+      rename_column table, legacy_column, :ruby_llm_model_id
+    end
+
+    add_index table, :ruby_llm_model_id unless index_exists?(table, :ruby_llm_model_id)
+    unless foreign_key_exists?(table, :ruby_llm_models, column: :ruby_llm_model_id)
+      add_foreign_key table, :ruby_llm_models, column: :ruby_llm_model_id
+    end
+  end
+
+  def replace_message_model_reference(table, legacy_column)
+    return unless column_exists?(table, legacy_column)
+
+    add_column table, :provider, :string unless column_exists?(table, :provider)
+    column = connection.columns(table).find { |candidate| candidate.name == legacy_column.to_s }
+
+    if column.type == :string
+      rename_column table, legacy_column, :model_id if legacy_column != :model_id
+      add_index table, [ :provider, :model_id ] unless index_exists?(table, [ :provider, :model_id ])
+      return
+    end
+
+    add_column table, :ruby_llm_model_id, :string
+    records = migration_record(table)
+    migration_record(:ruby_llm_models).find_each do |model|
+      records.where(legacy_column => model.id).update_all(
+        ruby_llm_model_id: model.model_id,
+        provider: model.provider
+      )
+    end
+
+    remove_foreign_key table, column: legacy_column if foreign_key_exists?(table, column: legacy_column)
+    remove_index table, legacy_column if index_exists?(table, legacy_column)
+    remove_column table, legacy_column
+    rename_column table, :ruby_llm_model_id, :model_id
+    add_index table, [ :provider, :model_id ] unless index_exists?(table, [ :provider, :model_id ])
+  end
+
+  def move_tool_calls
+    move_table(:<%= legacy_tool_call_table_name %>, :ruby_llm_tool_calls) { create_tool_calls }
+    normalize_tool_calls
+  end
+
+  def create_tool_calls
+    create_table :ruby_llm_tool_calls do |t|
+      t.references :message, polymorphic: true, null: false, type: :<%= reference_type %>, index: false
+      t.references :result, polymorphic: true, type: :<%= reference_type %>, index: false
+      t.string :tool_call_id, null: false
+      t.string :name, null: false
+      t.text :thought_signature
+<% if postgresql? %>
+      t.jsonb :arguments, default: {}
+<% elsif mysql? %>
+      t.json :arguments
+<% else %>
+      t.json :arguments, default: {}
+<% end %>
+      t.timestamps
+    end
+  end
+
+  def normalize_tool_calls
+    table = :ruby_llm_tool_calls
+    legacy_message_column = :<%= legacy_tool_call_message_foreign_key %>
+
+    if legacy_message_column != :message_id && column_exists?(table, legacy_message_column)
+      remove_foreign_key table, column: legacy_message_column if foreign_key_exists?(table, column: legacy_message_column)
+      rename_column table, legacy_message_column, :message_id
+    end
+    remove_foreign_key table, column: :message_id if foreign_key_exists?(table, column: :message_id)
+
+    add_column table, :message_type, :string unless column_exists?(table, :message_type)
+    migration_record(table).where(message_type: nil).update_all(message_type: '<%= message_model_name %>')
+    change_column_null table, :message_type, false
+
+    add_column table, :result_type, :string unless column_exists?(table, :result_type)
+    add_column table, :result_id, :<%= reference_type %> unless column_exists?(table, :result_id)
+    backfill_tool_results
+
+    add_index table, [ :message_type, :message_id ] unless index_exists?(table, [ :message_type, :message_id ])
+    add_index table, [ :result_type, :result_id ] unless index_exists?(table, [ :result_type, :result_id ])
+    add_index table, :tool_call_id, unique: true unless index_exists?(table, :tool_call_id)
+    add_index table, :name unless index_exists?(table, :name)
+  end
+
+  def backfill_tool_results
+    result_column = :<%= legacy_message_tool_call_foreign_key %>
+    return unless column_exists?(:<%= message_table_name %>, result_column)
+
+    messages = migration_record(:<%= message_table_name %>)
+    tool_calls = migration_record(:ruby_llm_tool_calls)
+    messages.where.not(result_column => nil).pluck(messages.primary_key, result_column).each do |message_id, tool_call_id|
+      tool_calls.where(tool_calls.primary_key => tool_call_id).update_all(
+        result_id: message_id,
+        result_type: '<%= message_model_name %>'
+      )
+    end
+
+    remove_foreign_key :<%= message_table_name %>, column: result_column if foreign_key_exists?(:<%= message_table_name %>, column: result_column)
+    remove_index :<%= message_table_name %>, result_column if index_exists?(:<%= message_table_name %>, result_column)
+    remove_column :<%= message_table_name %>, result_column
+  end
+
+  def move_batches
+    move_table(:<%= legacy_batch_table_name %>, :ruby_llm_batches) { create_batches }
+    add_column :ruby_llm_batches, :chat_type, :string unless column_exists?(:ruby_llm_batches, :chat_type)
+    add_column :ruby_llm_batches, :batch_protocol, :string unless column_exists?(:ruby_llm_batches, :batch_protocol)
+    add_column :ruby_llm_batches, :request_counts, :json unless column_exists?(:ruby_llm_batches, :request_counts)
+    migration_record(:ruby_llm_batches).where(chat_type: nil).update_all(chat_type: '<%= chat_model_name %>')
+    add_index :ruby_llm_batches, [ :provider, :provider_batch_id ], unique: true unless index_exists?(:ruby_llm_batches, [ :provider, :provider_batch_id ])
+    add_index :ruby_llm_batches, :status unless index_exists?(:ruby_llm_batches, :status)
+  end
+
+  def create_batches
+    create_table :ruby_llm_batches do |t|
+      t.string :provider_batch_id, null: false
+      t.string :provider, null: false
+      t.string :status
+      t.boolean :completed, null: false, default: false
+      t.string :chat_type
+      t.string :batch_protocol
+<% if mysql? %>
+      t.json :chat_ids
+<% else %>
+      t.json :chat_ids, default: []
+<% end %>
+      t.json :request_counts
+      t.timestamps
+    end
+  end
+
+  def create_usage_entries
+    return if table_exists?(:ruby_llm_usage_entries)
+
+    create_table :ruby_llm_usage_entries do |t|
+      t.references :chat, polymorphic: true, null: false, type: :<%= reference_type %>, index: false
+      t.references :message, polymorphic: true, type: :<%= reference_type %>, index: false
+      t.string :operation, null: false
+      t.string :provider, null: false
+      t.string :model, null: false
+      t.string :status, null: false
+      t.integer :input_tokens
+      t.integer :output_tokens
+      t.integer :cache_read_tokens
+      t.integer :cache_write_tokens
+      t.integer :thinking_tokens
+      t.decimal :input_cost, precision: 16, scale: 10
+      t.decimal :output_cost, precision: 16, scale: 10
+      t.decimal :cache_read_cost, precision: 16, scale: 10
+      t.decimal :cache_write_cost, precision: 16, scale: 10
+      t.decimal :thinking_cost, precision: 16, scale: 10
+      t.decimal :total_cost, precision: 16, scale: 10
+      t.timestamps
+      t.index [ :chat_type, :chat_id ]
+      t.index [ :message_type, :message_id ]
+      t.index :status
+      t.check_constraint "operation IN ('chat', 'embedding', 'moderation', 'image', 'speech', 'transcription')"
+      t.check_constraint "status IN ('pending', 'succeeded', 'failed', 'cancelled')"
+    end
+  end
+
+  def backfill_usage_entries
+    present = LEGACY_TOKEN_COLUMNS.select { |column| column_exists?(:<%= message_table_name %>, column) }
+    return if present.empty?
+
+    entries = migration_record(:ruby_llm_usage_entries)
+    condition = present.map { |column| "#{column} IS NOT NULL" }.join(' OR ')
+    migration_record(:<%= message_table_name %>).where(condition).find_each do |message|
+      provider, model = message_model_identity(message)
+      next unless provider && model
+
+      entries.create!(legacy_usage_attributes(message, provider:, model:))
+    end
+  end
+
+  def message_model_identity(message)
+    identity = [ message['provider'], message['model_id'] ]
+    return identity if identity.all?
+
+    model_identities[chat_model_ids[message['<%= chat_table_name.singularize %>_id']]]
+  end
+
+  def model_identities
+    @model_identities ||= migration_record(:ruby_llm_models).all.to_h do |model|
+      [ model.id, [ model['provider'], model['model_id'] ] ]
+    end
+  end
+
+  def chat_model_ids
+    @chat_model_ids ||= if column_exists?(:<%= chat_table_name %>, :ruby_llm_model_id)
+      migration_record(:<%= chat_table_name %>).pluck(:id, :ruby_llm_model_id).to_h
+    else
+      {}
+    end
+  end
+
+  def legacy_usage_attributes(message, provider:, model:)
+    details = message['cost_details']
+    details = JSON.parse(details) if details.is_a?(String)
+    details ||= {}
+    {
+      chat_type: '<%= chat_model_name %>',
+      chat_id: message['<%= chat_table_name.singularize %>_id'],
+      message_type: '<%= message_model_name %>',
+      message_id: message.id,
+      operation: 'chat',
+      provider: provider,
+      model: model,
+      status: 'succeeded',
+      input_tokens: message['input_tokens'],
+      output_tokens: message['output_tokens'],
+      cache_read_tokens: message['cache_read_tokens'],
+      cache_write_tokens: message['cache_write_tokens'],
+      thinking_tokens: message['thinking_tokens'],
+      input_cost: details['input'],
+      output_cost: details['output'],
+      cache_read_cost: details['cache_read'],
+      cache_write_cost: details['cache_write'],
+      thinking_cost: details['thinking'],
+      total_cost: message['total_cost'] || details['total'],
+      created_at: message['created_at'],
+      updated_at: message['updated_at']
+    }
+  end
+
+  def remove_legacy_message_columns
+    (LEGACY_TOKEN_COLUMNS + LEGACY_COST_COLUMNS).each do |column|
+      remove_column :<%= message_table_name %>, column if column_exists?(:<%= message_table_name %>, column)
+    end
+  end
+
+  def move_table(source, target)
+    if source != target && table_exists?(source)
+      if table_exists?(target)
+        raise "Both #{source} and #{target} exist. Merge or remove one before running this migration."
       end
+      rename_table source, target
+    elsif !table_exists?(target)
+      yield
+    end
+  end
 
-      dir.down { drop_table :<%= batch_table_name %> if table_exists?(:<%= batch_table_name %>) }
+  def migration_record(table)
+    Class.new(ActiveRecord::Base) do
+      self.table_name = table.to_s
+      self.inheritance_column = :_type_disabled
     end
   end
 end

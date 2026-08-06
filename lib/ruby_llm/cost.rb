@@ -2,8 +2,8 @@
 
 module RubyLLM
   # A Cost prices token usage in US dollars using pricing from the model
-  # registry. Message#cost returns the cost of a single response, and
-  # Model#cost_for prices any token usage against a specific model.
+  # registry. Usage entries own accounting events; Message and Chat aggregate
+  # calls, and Model#cost_for prices any token usage against a specific model.
   #
   #   response = chat.ask "Summarize Ruby's object model."
   #   response.cost.total
@@ -23,29 +23,48 @@ module RubyLLM
     attr_reader :tokens, :model, :category # :nodoc:
 
     # Combines several costs into a Cost::Aggregate that sums each
-    # component across messages. Ignores +nil+ entries.
+    # component. Ignores +nil+ entries.
     #
     #   cost = RubyLLM::Cost.aggregate(messages.map(&:cost))
     #   cost.total
     #
-    def self.aggregate(costs)
-      Aggregate.build(costs)
+    def self.aggregate(costs, complete: true)
+      Aggregate.build(costs, complete:)
     end
 
     # Rebuilds a cost from a stored breakdown Hash, as produced by #to_h and
-    # persisted alongside a message. Keys may be Strings or Symbols. Returns a
+    # persisted alongside a usage entry. Keys may be Strings or Symbols. Returns a
     # Cost::Aggregate whose component readers return the recorded amounts and
     # whose #total equals the recorded +:total+.
     #
-    #   RubyLLM::Cost.from_h(message.cost_details).total
+    #   RubyLLM::Cost.from_h({ input: 0.0001, total: 0.0003 }).total
     #
-    def self.from_h(hash)
+    def self.from_h(hash, tokens: nil)
       amounts = COMPONENTS.to_h { |component| [component, hash[component] || hash[component.to_s]] }
       total_recorded = hash.key?(:total) || hash.key?('total')
-      missing = total_recorded ? [] : COMPONENTS.reject { |component| amounts[component] }
+      total = hash[:total] || hash['total'] if total_recorded
+      missing = missing_recorded_components(amounts, tokens, total_recorded)
+      tokens_present = recorded_tokens?(amounts, tokens, total_recorded)
 
-      Aggregate.new(amounts:, missing:, tokens: amounts.values.any? { |amount| !amount.nil? })
+      Aggregate.new(amounts:, missing:, tokens: tokens_present, complete: true, total:)
     end
+
+    def self.missing_recorded_components(amounts, tokens, total_recorded)
+      return [] if total_recorded
+      return COMPONENTS.reject { |component| amounts[component] } unless tokens
+
+      COMPONENTS.select do |component|
+        tokens.public_send(component).to_i.positive? && amounts[component].nil?
+      end
+    end
+    private_class_method :missing_recorded_components
+
+    def self.recorded_tokens?(amounts, tokens, total_recorded)
+      return COMPONENTS.any? { |component| !tokens.public_send(component).nil? } if tokens
+
+      amounts.values.any? { |amount| !amount.nil? } || total_recorded
+    end
+    private_class_method :recorded_tokens?
 
     def initialize(tokens: nil, model: nil, category: :text_tokens, input_details: nil) # :nodoc:
       @tokens = tokens
@@ -124,16 +143,16 @@ module RubyLLM
       tokens.to_i.positive? && price_for(component).nil?
     end
 
-    # An Aggregate is the combined cost of several messages, summing each
+    # An Aggregate is the combined cost of several calls, summing each
     # component across them. Chat#cost and Cost.aggregate return Aggregate
     # objects, which respond to the same component readers as Cost.
     #
     #   chat.cost.total
     #
     # A component returns +nil+ when pricing was missing for one of the
-    # messages, or when no message has a cost for that component.
+    # calls, or when no call has a cost for that component.
     class Aggregate
-      def self.build(costs) # :nodoc:
+      def self.build(costs, complete: true) # :nodoc:
         costs = costs.compact.select(&:tokens?)
 
         missing = COMPONENTS.select do |component|
@@ -145,13 +164,15 @@ module RubyLLM
           [component, missing.include?(component) || values.empty? ? nil : values.sum]
         end
 
-        new(amounts:, missing:, tokens: costs.any?)
+        new(amounts:, missing:, tokens: costs.any?, complete:)
       end
 
-      def initialize(amounts:, missing:, tokens:) # :nodoc:
+      def initialize(amounts:, missing:, tokens:, complete: true, total: nil) # :nodoc:
         @amounts = amounts
         @missing = missing
         @tokens = tokens
+        @complete = complete
+        @total = total
       end
 
       ##
@@ -191,8 +212,10 @@ module RubyLLM
       # when there is no token usage, or when pricing was missing for any
       # component.
       def total
+        return nil unless @complete
         return nil unless tokens?
         return nil if @missing.any?
+        return @total unless @total.nil?
 
         costs = COMPONENTS.filter_map { |component| public_send(component) }
         return nil if costs.empty?
@@ -259,9 +282,9 @@ module RubyLLM
     def price_for(component)
       case component
       when :input
-        text_pricing.input
+        image_cost? ? text_pricing.input : category_pricing.input
       when :output
-        output_pricing.output
+        image_cost? ? (image_pricing.output || text_pricing.output) : category_pricing.output
       when :cache_read
         text_pricing.cache_read_input
       when :cache_write
@@ -279,8 +302,14 @@ module RubyLLM
       model&.pricing&.images || RubyLLM::Model::PricingCategory.new
     end
 
-    def output_pricing
-      image_cost? && image_pricing.output ? image_pricing : text_pricing
+    def category_pricing
+      return text_pricing if category == :text_tokens
+      return image_pricing if image_cost?
+
+      pricing = model&.pricing
+      return RubyLLM::Model::PricingCategory.new unless pricing.respond_to?(category)
+
+      pricing.public_send(category)
     end
 
     def image_cost?

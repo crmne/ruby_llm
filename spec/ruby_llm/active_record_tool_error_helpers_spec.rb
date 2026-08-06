@@ -2,7 +2,6 @@
 
 require 'spec_helper'
 require 'ruby_llm/active_record/message_methods'
-require 'ruby_llm/active_record/tool_call_methods'
 
 RSpec.describe RubyLLM::ActiveRecord do
   describe RubyLLM::ActiveRecord::MessageMethods do
@@ -29,33 +28,6 @@ RSpec.describe RubyLLM::ActiveRecord do
     it 'returns nil for invalid content' do
       message_instance.content = 'not-json'
       expect(message_instance.tool_error_message).to be_nil
-    end
-  end
-
-  describe RubyLLM::ActiveRecord::ToolCallMethods do
-    subject(:tool_call_instance) { tool_call_class.new }
-
-    let(:tool_call_class) do
-      Class.new do
-        include RubyLLM::ActiveRecord::ToolCallMethods
-
-        attr_accessor :arguments
-      end
-    end
-
-    it 'extracts error from hash arguments' do
-      tool_call_instance.arguments = { error: 'bad params' }
-      expect(tool_call_instance.tool_error_message).to eq('bad params')
-    end
-
-    it 'extracts error from JSON string arguments' do
-      tool_call_instance.arguments = '{"error":"bad params"}'
-      expect(tool_call_instance.tool_error_message).to eq('bad params')
-    end
-
-    it 'returns nil for non-error arguments' do
-      tool_call_instance.arguments = { city: 'Berlin' }
-      expect(tool_call_instance.tool_error_message).to be_nil
     end
   end
 end

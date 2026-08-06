@@ -389,21 +389,20 @@ module RubyLLM
         [input_values, chat_options]
       end
 
-      def apply_configuration(chat_object, input_values:, persist_instructions:) # :nodoc:
-        runtime = runtime_context(chat: chat_object, inputs: input_values)
-        llm_chat = llm_chat_for(chat_object)
-
-        apply_context(llm_chat)
-        apply_instructions(chat_object, runtime, inputs: input_values, persist: persist_instructions)
-        apply_tools(llm_chat, runtime)
-        apply_passthrough_options(llm_chat)
-        apply_thinking(llm_chat)
-        apply_citations(llm_chat)
-        apply_caching(llm_chat, runtime)
-        apply_provider_options(llm_chat, runtime)
-        apply_headers(llm_chat, runtime)
-        apply_schema(llm_chat, runtime)
-        apply_fallbacks(llm_chat)
+      def apply_configuration(chat, input_values:, persist_instructions:) # :nodoc:
+        runtime = runtime_context(chat:, inputs: input_values)
+        apply_chat_options(chat)
+        apply_context(chat)
+        apply_instructions(chat, runtime, inputs: input_values, persist: persist_instructions)
+        apply_tools(chat, runtime)
+        apply_passthrough_options(chat)
+        apply_thinking(chat)
+        apply_citations(chat)
+        apply_caching(chat, runtime)
+        apply_provider_options(chat, runtime)
+        apply_headers(chat, runtime)
+        apply_schema(chat, runtime)
+        apply_fallbacks(chat)
       end
 
       private
@@ -428,67 +427,66 @@ module RubyLLM
         record
       end
 
-      def apply_context(llm_chat)
-        llm_chat.with_context(context) if context
+      def apply_context(chat)
+        chat.with_context(context) if context
       end
 
-      def apply_instructions(chat_object, runtime, inputs:, persist:)
-        value = resolved_instructions_value(chat_object, runtime, inputs:)
+      def apply_instructions(chat, runtime, inputs:, persist:)
+        value = resolved_instructions_value(chat, runtime, inputs:)
         return if value.nil?
 
-        target = instruction_target(chat_object, persist:)
-        return target.with_runtime_instructions(value) if use_runtime_instructions?(target, persist:)
+        return chat.with_runtime_instructions(value) if !persist && chat.respond_to?(:with_runtime_instructions)
 
-        target.with_instructions(value)
+        chat.with_instructions(value)
       end
 
-      def apply_tools(llm_chat, runtime)
+      def apply_tools(chat, runtime)
         tools_to_apply = Array(evaluate(tools, runtime)).compact
-        llm_chat.with_tools(*tools_to_apply) if tools_to_apply.any?
+        chat.with_tools(*tools_to_apply) if tools_to_apply.any?
 
         options = evaluate(tool_options, runtime)
-        llm_chat.with_tool_options(**options) if options && !options.empty?
+        chat.with_tool_options(**options) if options && !options.empty?
       end
 
-      def apply_passthrough_options(llm_chat)
+      def apply_passthrough_options(chat)
         PASSTHROUGH_OPTIONS.each do |option|
           value = instance_variable_get(:"@#{option}")
-          llm_chat.public_send(:"with_#{option}", value) unless value.nil?
+          chat.public_send(:"with_#{option}", value) unless value.nil?
         end
       end
 
-      def apply_thinking(llm_chat)
-        llm_chat.with_thinking(**thinking) if thinking
+      def apply_thinking(chat)
+        chat.with_thinking(**thinking) if thinking
       end
 
-      def apply_citations(llm_chat)
+      def apply_citations(chat)
         return if citations.nil?
 
-        citations ? llm_chat.with_citations : llm_chat.without_citations
+        citations ? chat.with_citations : chat.without_citations
       end
 
-      def apply_caching(llm_chat, runtime)
+      def apply_caching(chat, runtime)
         value = evaluate(caching, runtime)
-        llm_chat.with_caching(**value) if value
+        chat.with_caching(**value) if value
       end
 
-      def apply_provider_options(llm_chat, runtime)
+      def apply_provider_options(chat, runtime)
         value = evaluate(provider_options, runtime)
-        llm_chat.with_provider_options(**value) if value && !value.empty?
+        chat.with_provider_options(**value) if value && !value.empty?
       end
 
-      def apply_headers(llm_chat, runtime)
+      def apply_headers(chat, runtime)
         value = evaluate(headers, runtime)
-        llm_chat.with_headers(**value) if value && !value.empty?
+        chat.with_headers(**value) if value && !value.empty?
       end
 
-      def apply_schema(llm_chat, runtime)
+      def apply_schema(chat, runtime)
         value = resolved_schema_value(runtime)
-        llm_chat.with_schema(value) if value
+        chat.with_schema(value) if value
       end
 
-      def apply_fallbacks(llm_chat)
-        llm_chat.with_fallbacks(*fallbacks, **fallback_options) if fallbacks.any?
+      def apply_fallbacks(chat)
+        chat.with_fallbacks(*fallbacks, **fallback_options) if fallbacks.any?
       end
 
       def resolved_schema_value(runtime)
@@ -499,10 +497,9 @@ module RubyLLM
         RubyLLM::Schema.create(&value)
       end
 
-      def llm_chat_for(chat_object)
-        apply_assume_model_exists(chat_object)
-        apply_protocol(chat_object)
-        chat_object.respond_to?(:to_llm) ? chat_object.to_llm : chat_object
+      def apply_chat_options(chat)
+        apply_assume_model_exists(chat)
+        apply_protocol(chat)
       end
 
       def apply_assume_model_exists(chat_object)
@@ -548,24 +545,6 @@ module RubyLLM
 
       def prompt_instruction?(value)
         value.is_a?(Hash) && value[:prompt]
-      end
-
-      def instruction_target(chat_object, persist:)
-        if persist || !chat_object.respond_to?(:to_llm)
-          chat_object
-        else
-          runtime_instruction_target(chat_object)
-        end
-      end
-
-      def runtime_instruction_target(chat_object)
-        return chat_object if chat_object.respond_to?(:with_runtime_instructions)
-
-        chat_object.to_llm
-      end
-
-      def use_runtime_instructions?(target, persist:)
-        !persist && target.respond_to?(:with_runtime_instructions)
       end
 
       def resolve_prompt_locals(locals, runtime:, chat:, inputs:)
@@ -889,6 +868,6 @@ module RubyLLM
                    :without_provider_options, :with_headers, :without_headers, :with_schema, :without_schema,
                    :with_fallbacks, :without_fallbacks, :before_message, :after_message, :before_tool_call,
                    :after_tool_result, :before_fallback, :after_fallback, :each, :complete, :complete?, :ask_later,
-                   :cancel!, :cancelled?, :generate, :run_tools, :step, :add_message, :add_completion, :cost
+                   :cancel!, :cancelled?, :generate, :run_tools, :step, :add_message, :add_completion, :tokens, :cost
   end
 end

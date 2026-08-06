@@ -24,7 +24,7 @@ After reading this guide, you will know:
 
 *   How to turn a token usage payload into a `RubyLLM::Cost` object with `cost_for`.
 *   What normalized token buckets RubyLLM prices and exposes.
-*   How to read totals from messages, chats, and agents.
+*   How to read totals from usage entries, messages, chats, agents, and one-shot results.
 *   How to aggregate several cost objects with `RubyLLM::Cost.aggregate`.
 *   When a cost returns `nil` because pricing is incomplete.
 
@@ -51,9 +51,13 @@ Most applications use the shorter helpers on messages, chats, and agents:
 
 ```ruby
 response.cost.total
+chat.tokens.input
 chat.cost.total
+agent.tokens.input
 agent.cost.total
 ```
+
+These helpers aggregate usage entries rather than deriving spend from the transcript. That includes retry and cancellation usage which may not have produced a message. If any attempt has unavailable usage, `cost.total` is `nil`; reported token buckets and cost components remain readable. See [Cost and Usage Tracking]({% link _core_features/cost-and-usage-tracking.md %}) for the ledger and status semantics.
 
 To combine several cost objects yourself, use `RubyLLM::Cost.aggregate`:
 
@@ -66,13 +70,13 @@ If pricing is incomplete for tokens that were used, the affected cost and `cost.
 
 ## Recording Costs in Rails
 
-In a Rails app, `cost_for` prices token usage against the model registry's current pricing every time you call it. Persisted messages can freeze the cost instead. When your messages table has the optional `total_cost` and `cost_details` columns (included in new installs and added by the v2.0 upgrade generator), RubyLLM records each assistant message's cost at completion, and `message.cost` returns that recorded value rather than recomputing it. A later `RubyLLM.models.refresh!` that changes registry pricing then leaves historical costs untouched. See [Rails Persistence]({% link _advanced/rails-persistence.md %}#freezing-costs-at-completion) for the columns and query examples.
+In a Rails app, each internal usage row freezes its cost in normalized decimal columns. `message.cost` aggregates its linked attempts, while `chat.cost` combines the usage ledger with legacy messages that have no entries yet. A later `RubyLLM.models.refresh!` that changes registry pricing leaves recorded usage untouched. See [Rails Persistence]({% link _advanced/rails-persistence.md %}#cost-and-usage-tracking).
 
 ## Keeping Registry Pricing Fresh
 
-Because recorded costs are frozen at completion, stale registry pricing only affects the cost of new messages, never messages you have already saved. To keep new costs accurate, refresh the registry on a schedule. A daily job is a good default; providers change prices infrequently.
+Because recorded costs are frozen at completion, stale registry pricing only affects new attempts, never usage you have already saved. To keep new costs accurate, refresh the registry on a schedule. A daily job is a good default; providers change prices infrequently.
 
-In a Rails app with the database-backed registry, the same refresh call writes the new pricing to the `models` table:
+In a Rails app with the database-backed registry, the same refresh call writes the new pricing to RubyLLM's internal model table:
 
 ```ruby
 # lib/tasks/ruby_llm.rake

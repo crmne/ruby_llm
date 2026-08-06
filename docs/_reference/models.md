@@ -34,7 +34,7 @@ After reading this guide, you will know:
 
 RubyLLM maintains a registry of known AI models. Every gem includes a snapshot so a new installation works immediately. The latest published registry is also available at [`https://rubyllm.com/models.json`](https://rubyllm.com/models.json).
 
-In plain Ruby, RubyLLM uses the valid registry in your operating system's user cache when it exists, otherwise it uses the bundled snapshot. In Rails applications using `acts_as_model`, the database is authoritative once it has rows; while the table is empty, RubyLLM falls back to the registry file, then to the bundled snapshot.
+In plain Ruby, RubyLLM uses the valid registry in your operating system's user cache when it exists, otherwise it uses the bundled snapshot. In Rails applications, RubyLLM stores the registry in its internal `ruby_llm_models` table. Once that table has rows it is authoritative; while it is empty, RubyLLM falls back to the registry file, then to the bundled snapshot.
 
 The registry stores crucial information about each model, including:
 
@@ -66,7 +66,7 @@ Refresh models everywhere with one call:
 RubyLLM.models.refresh!
 ```
 
-The call has the same meaning in every environment. It replaces the in-memory registry and persists it to the active store: the platform cache in plain Ruby or the models table with the Active Record integration. You do not need a second save call.
+The call has the same meaning in every environment. It replaces the in-memory registry and persists it to the active store: the platform cache in plain Ruby or RubyLLM's internal model table with the Active Record integration. You do not need a second save call.
 
 RubyLLM does not refresh automatically. Network access and provider credentials remain explicit application concerns, and a missing-model lookup never triggers network I/O.
 
@@ -77,7 +77,7 @@ The `refresh!` method performs the following steps:
 1. **Fetches the published catalog**: Downloads the current registry from rubyllm.com, using its ETag when a file cache is active.
 2. **Discovers configured providers**: Queries configured provider APIs, including local providers by default.
 3. **Merges the data**: Keeps the published metadata while adding provider-specific or local discoveries.
-4. **Persists the result**: Atomically replaces the file cache, or updates the configured Active Record model inside a transaction.
+4. **Persists the result**: Atomically replaces the file cache, or updates RubyLLM's internal Active Record table inside a transaction.
 
 The method returns a chainable `Models` instance, allowing you to immediately query the updated registry:
 
@@ -132,9 +132,7 @@ bin/rails generate ruby_llm:install
 bin/rails db:migrate
 ```
 
-This creates the Model table and loads model data from the gem's registry.
-
-Refresh the database with the same public entry point used by plain Ruby:
+This creates RubyLLM's internal model table. Load or refresh it with the same public entry point used by plain Ruby:
 
 ```ruby
 RubyLLM.models.refresh!

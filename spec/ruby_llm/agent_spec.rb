@@ -278,7 +278,7 @@ RSpec.describe RubyLLM::Agent do
     expect(agent.messages.last.content).to eq('First')
   end
 
-  it 'exposes cost like RubyLLM::Chat' do
+  it 'keeps manual messages out of the usage ledger while they price themselves' do
     model = RubyLLM::Model.new(
       id: 'priced-model',
       name: 'Priced Model',
@@ -300,10 +300,13 @@ RSpec.describe RubyLLM::Agent do
     end
     agent = agent_class.new
 
-    agent.add_message(role: :assistant, content: 'Hi', input_tokens: 1_000, output_tokens: 2_000,
-                      model: 'priced-model')
+    response = agent.add_message(role: :assistant, content: 'Hi', input_tokens: 1_000, output_tokens: 2_000,
+                                 model: 'priced-model')
 
-    expect(agent.cost.total).to eq(0.005)
+    expect(response.tokens.to_h).to eq(input_tokens: 1_000, output_tokens: 2_000)
+    expect(response.cost.total).to eq(0.005)
+    expect(agent.tokens.to_h).to be_empty
+    expect(agent.cost.total).to be_nil
   end
 
   it 'uses the agent chat model for cost when the response model id cannot be resolved' do
@@ -324,13 +327,14 @@ RSpec.describe RubyLLM::Agent do
     chat = RubyLLM::Chat.allocate
     chat.instance_variable_set(:@model, model)
     chat.instance_variable_set(:@messages, [])
+    chat.instance_variable_set(:@usage_entries, [])
     agent = Class.new(described_class).new(chat:)
 
     response = agent.add_message(role: :assistant, content: 'Hi', input_tokens: 1_000, output_tokens: 2_000,
                                  model: 'provider-backend-version')
 
     expect(agent.model.cost_for(response).total).to eq(0.005)
-    expect(agent.cost.total).to eq(0.005)
+    expect(response.cost(model: agent.model).total).to eq(0.005)
   end
 
   it 'delegates callback hooks to the underlying chat' do

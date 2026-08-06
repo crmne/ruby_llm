@@ -35,10 +35,10 @@ RSpec.describe RubyLLM::Providers::OpenRouter::Chat do
       response = instance_double(Faraday::Response, body: response_body)
       message = provider.send(:parse_completion_response, response)
 
-      expect(message.input_tokens).to eq(2)
-      expect(message.cache_read_tokens).to eq(6)
-      expect(message.cache_write_tokens).to eq(4)
-      expect(message.output_tokens).to eq(4)
+      expect(message.tokens.input).to eq(2)
+      expect(message.tokens.cache_read).to eq(6)
+      expect(message.tokens.cache_write).to eq(4)
+      expect(message.tokens.output).to eq(4)
     end
 
     it 'normalizes OpenAI-compatible reasoning tokens that are reported outside completion tokens' do
@@ -63,8 +63,8 @@ RSpec.describe RubyLLM::Providers::OpenRouter::Chat do
       response = instance_double(Faraday::Response, body: response_body)
       message = provider.send(:parse_completion_response, response)
 
-      expect(message.output_tokens).to eq(2393)
-      expect(message.thinking_tokens).to eq(2185)
+      expect(message.tokens.output).to eq(2393)
+      expect(message.tokens.thinking).to eq(2185)
     end
   end
 

@@ -7,10 +7,12 @@ module RubyLLM
       class CohereEmbeddings < EmbeddingProtocol
         # rubocop:disable Lint/UnusedMethodArgument, Metrics/ParameterLists
         def embed(text, model:, dimensions:, task_type: nil, title: nil, provider_options: {})
-          payload = render_embedding_payload(text, model:, dimensions:, task_type:, provider_options:)
-          response = signed_post(embedding_url(model:), payload)
+          track_usage(:embedding) do
+            payload = render_embedding_payload(text, model:, dimensions:, task_type:, provider_options:)
+            response = signed_post(embedding_url(model:), payload)
 
-          parse_embedding_response(response, model:, text:)
+            parse_embedding_response(response, model:, text:)
+          end
         end
         # rubocop:enable Lint/UnusedMethodArgument, Metrics/ParameterLists
 
@@ -37,7 +39,7 @@ module RubyLLM
           vectors = vectors['float'] || vectors.values.first if vectors.is_a?(Hash)
           vectors = vectors.first unless text.is_a?(Array)
 
-          Embedding.new(vectors:, model:, input_tokens: 0)
+          Embedding.new(vectors:, model:)
         end
 
         def cohere_v4?(model)

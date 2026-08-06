@@ -79,8 +79,8 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Transcription do
       expect(transcription.text).to eq('Hello world')
       expect(transcription.words).to eq(words)
       expect(transcription.segments).to eq(response_body['segments'])
-      expect(transcription.input_tokens).to eq(12)
-      expect(transcription.output_tokens).to eq(3)
+      expect(transcription.tokens.input).to eq(12)
+      expect(transcription.tokens.output).to eq(3)
     end
   end
 end

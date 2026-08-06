@@ -7,9 +7,11 @@ module RubyLLM
   #   embedding = RubyLLM.embed("Ruby is a programmer's best friend")
   #   embedding.vectors.length  # => 1536
   #   embedding.model           # => "text-embedding-3-small"
-  #   embedding.input_tokens    # => 8
+  #   embedding.tokens.input    # => 8
   #
   class Embedding
+    include Usage::Result
+
     # The embedding vectors. A flat array of floats when a single text
     # was embedded, an array of such arrays when an array of texts was
     # embedded.
@@ -18,14 +20,30 @@ module RubyLLM
     # The id of the model that produced the vectors, as a String.
     attr_reader :model
 
-    # The number of input tokens consumed, or 0 when the provider
-    # reports no usage.
-    attr_reader :input_tokens
-
-    def initialize(vectors:, model:, input_tokens: 0) # :nodoc:
+    def initialize(vectors:, model:, input_tokens: nil) # :nodoc:
       @vectors = vectors
       @model = model
       @input_tokens = input_tokens
+    end
+
+    # Returns usage aggregated across every provider attempt.
+    def tokens
+      return ruby_llm_usage_tokens unless ruby_llm_usage_entries.empty?
+
+      Tokens.build(input: @input_tokens)
+    end
+
+    # Returns the embedding cost across every provider attempt.
+    def cost
+      return ruby_llm_usage_cost unless ruby_llm_usage_entries.empty?
+
+      Cost.new(tokens:, model: model_info, category: :embeddings)
+    end
+
+    def model_info # :nodoc:
+      @model_info ||= RubyLLM.models.find(model)
+    rescue ModelNotFoundError
+      nil
     end
 
     # Generates embeddings for +text+ and returns an Embedding. +text+
@@ -73,6 +91,7 @@ module RubyLLM
       model, provider_instance = Models.resolve(model, provider: provider, assume_model_exists: assume_model_exists,
                                                        config: config)
       model_id = model.id
+      empty_tokens = Tokens.new
 
       payload = {
         provider: provider_instance.slug,
@@ -84,14 +103,17 @@ module RubyLLM
         task_type: task_type,
         title: title,
         provider_options: provider_options,
-        metadata: metadata
+        metadata: metadata,
+        tokens: empty_tokens,
+        cost: Cost.new(tokens: empty_tokens, model:, category: :embeddings)
       }
 
       RubyLLM.instrument('embedding.ruby_llm', payload, config: config) do |event|
         result = provider_instance.embed(text, model:, dimensions:, task_type:, title:, provider_options:)
         event[:result] = result
         event[:response_model] = result.model
-        event[:input_tokens] = result.input_tokens
+        event[:tokens] = result.tokens
+        event[:cost] = result.cost
         event[:embedding_dimensions] = vector_dimensions(result.vectors)
         event[:embedding_count] = embedding_count(result.vectors)
         result

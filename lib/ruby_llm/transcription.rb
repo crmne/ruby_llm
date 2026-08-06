@@ -10,6 +10,8 @@ module RubyLLM
   #   transcription.model  # => "whisper-1"
   #
   class Transcription
+    include Usage::Result
+
     # The transcribed text.
     attr_reader :text
 
@@ -32,12 +34,6 @@ module RubyLLM
     # through +format:+ and +provider_options:+ on models that support them.
     attr_reader :words
 
-    # The number of input tokens reported by the provider, or +nil+.
-    attr_reader :input_tokens
-
-    # The number of output tokens reported by the provider, or +nil+.
-    attr_reader :output_tokens
-
     def initialize(text:, model:, **attributes) # :nodoc:
       @text = text
       @model = model
@@ -47,6 +43,26 @@ module RubyLLM
       @words = attributes[:words]
       @input_tokens = attributes[:input_tokens]
       @output_tokens = attributes[:output_tokens]
+    end
+
+    # Returns usage aggregated across every provider attempt.
+    def tokens
+      return ruby_llm_usage_tokens unless ruby_llm_usage_entries.empty?
+
+      Tokens.build(input: @input_tokens, output: @output_tokens)
+    end
+
+    # Returns the transcription cost across every provider attempt.
+    def cost
+      return ruby_llm_usage_cost unless ruby_llm_usage_entries.empty?
+
+      Cost.new(tokens:, model: model_info, category: :audio_tokens)
+    end
+
+    def model_info # :nodoc:
+      @model_info ||= RubyLLM.models.find(model)
+    rescue ModelNotFoundError
+      nil
     end
 
     # Transcribes +audio_file+ and returns a Transcription. The file may be
@@ -94,6 +110,7 @@ module RubyLLM
       model ||= config.default_transcription_model
       model, provider_instance = Models.resolve(model, provider: provider, assume_model_exists: assume_model_exists,
                                                        config: config)
+      empty_tokens = Tokens.new
       payload = {
         provider: provider_instance.slug,
         provider_class: provider_instance.class.display_name,
@@ -101,7 +118,9 @@ module RubyLLM
         model_info: model,
         language: language,
         provider_options: provider_options,
-        metadata: metadata
+        metadata: metadata,
+        tokens: empty_tokens,
+        cost: Cost.new(tokens: empty_tokens, model:, category: :audio_tokens)
       }
 
       RubyLLM.instrument('transcription.ruby_llm', payload, config: config) do |event|
@@ -110,8 +129,8 @@ module RubyLLM
                                                           temperature:)
         event[:result] = result
         event[:response_model] = result.model
-        event[:input_tokens] = result.input_tokens
-        event[:output_tokens] = result.output_tokens
+        event[:tokens] = result.tokens
+        event[:cost] = result.cost
         result
       end
     end

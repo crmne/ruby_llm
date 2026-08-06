@@ -16,11 +16,12 @@ if defined?(Rails::Railtie)
       initializer 'ruby_llm.active_record' do
         ActiveSupport.on_load :active_record do
           require 'ruby_llm/active_record/payload_helpers'
+          require 'ruby_llm/active_record/model'
+          require 'ruby_llm/active_record/tool_call'
+          require 'ruby_llm/active_record/usage'
+          require 'ruby_llm/active_record/batch'
           require 'ruby_llm/active_record/chat_methods'
           require 'ruby_llm/active_record/message_methods'
-          require 'ruby_llm/active_record/model_methods'
-          require 'ruby_llm/active_record/tool_call_methods'
-          require 'ruby_llm/active_record/batch_methods'
 
           require 'ruby_llm/active_record/acts_as'
           ::ActiveRecord::Base.include RubyLLM::ActiveRecord::ActsAs

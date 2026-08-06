@@ -16,7 +16,9 @@ RSpec.describe RubyLLM::Chat do
 
   let(:chat) { described_class.new(model: 'claude-haiku-4-5').with_tools(EchoTool) }
   let(:answer_message) do
-    RubyLLM::Message.new(role: :assistant, content: 'hello', input_tokens: 1, output_tokens: 1)
+    RubyLLM::Message.new(
+      role: :assistant, content: 'hello', model: 'claude-haiku-4-5', input_tokens: 1, output_tokens: 1
+    )
   end
 
   def tool_call_message(name: 'echo')
@@ -107,7 +109,7 @@ RSpec.describe RubyLLM::Chat do
     end
 
     it 'raises before appending a non-streaming response when cancelled during the request' do
-      allow(chat.provider).to receive(:complete) do
+      allow(chat.provider).to receive(:complete) do |_messages, **|
         chat.cancel!
         answer_message
       end
@@ -117,6 +119,7 @@ RSpec.describe RubyLLM::Chat do
       expect { chat.generate }.to raise_error(RubyLLM::CancelledError, 'Chat generation cancelled')
       expect(chat).not_to be_cancelled
       expect(chat.messages.map(&:role)).to eq([:user])
+      expect(chat.cost.total).to be_positive
     end
 
     it 'raises before executing pending tool calls' do

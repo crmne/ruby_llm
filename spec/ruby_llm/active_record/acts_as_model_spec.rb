@@ -1,417 +1,59 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
-require 'tempfile'
 
-RSpec.describe RubyLLM::ActiveRecord::ActsAs do
-  include_context 'with configured RubyLLM'
-
-  describe 'acts_as_model' do
-    let(:model_class) do
-      stub_const('TestModel', Class.new(ActiveRecord::Base) do
-        self.table_name = 'models'
-        acts_as_model
-      end)
-    end
-
-    let(:model_info) do
-      RubyLLM::Model.new(
-        id: 'gpt-4',
-        name: 'GPT-4',
-        provider: 'openai',
-        family: 'gpt4',
-        created_at: Time.now,
-        context_window: 128_000,
-        max_output_tokens: 4096,
-        knowledge_cutoff: Date.new(2023, 4, 1),
-        modalities: { input: %w[text image], output: %w[text] },
-        capabilities: %w[function_calling streaming vision],
-        pricing: { text_tokens: { input: 10, output: 30 } },
-        metadata: { version: '1.0' }
-      )
-    end
-
-    before do
-      ActiveRecord::Tasks::DatabaseTasks.drop_current
-      ActiveRecord::Tasks::DatabaseTasks.load_schema_current
-    end
-
-    after(:all) do # rubocop:disable RSpec/BeforeAfterAll
-      ActiveRecord::Tasks::DatabaseTasks.drop_current
-      ActiveRecord::Tasks::DatabaseTasks.load_schema_current
-      RubyLLM.models.load_from_json!
-      Model.save_to_database
-    end
-
-    describe 'model persistence' do
-      it 'syncs models from RubyLLM registry' do
-        allow(RubyLLM.models).to receive(:all).and_return([model_info])
-
-        expect { model_class.save_to_database }.to change(model_class, :count).from(0).to(1)
-
-        model = model_class.last
-        expect(model.model_id).to eq('gpt-4')
-        expect(model.name).to eq('GPT-4')
-        expect(model.provider).to eq('openai')
-      end
-
-      it 'updates existing models on sync' do
-        model_class.create!(
-          model_id: 'gpt-4',
-          name: 'Old Name',
-          provider: 'openai'
-        )
-
-        allow(RubyLLM.models).to receive(:all).and_return([model_info])
-
-        expect { model_class.save_to_database }.not_to(change(model_class, :count))
-
-        model = model_class.last
-        expect(model.name).to eq('GPT-4')
-      end
-
-      it 'uses the same refresh entry point as plain Ruby' do
-        allow(RubyLLM.models).to receive(:refresh!)
-
-        model_class.refresh!
-
-        expect(RubyLLM.models).to have_received(:refresh!).once
-      end
-    end
-
-    describe 'conversions' do
-      let(:model) do
-        model_class.create!(
-          model_id: 'gpt-4',
-          name: 'GPT-4',
-          provider: 'openai',
-          family: 'gpt4',
-          model_created_at: Time.now,
-          context_window: 128_000,
-          max_output_tokens: 4096,
-          knowledge_cutoff: Date.new(2023, 4, 1),
-          modalities: { input: %w[text image], output: %w[text] },
-          capabilities: %w[function_calling streaming vision],
-          pricing: { text_tokens: { input: 10, output: 30 } },
-          metadata: { version: '1.0' }
-        )
-      end
-
-      it 'converts to Model with to_llm' do
-        result = model.to_llm
-        expect(result).to be_a(RubyLLM::Model)
-        expect(result.id).to eq('gpt-4')
-        expect(result.name).to eq('GPT-4')
-        expect(result.provider).to eq('openai')
-      end
-
-      it 'creates from Model with from_llm' do
-        model = model_class.from_llm(model_info)
-        expect(model.model_id).to eq('gpt-4')
-        expect(model.name).to eq('GPT-4')
-        expect(model.provider).to eq('openai')
-      end
-    end
-
-    describe 'delegated methods' do
-      let(:model) do
-        model_class.create!(
-          model_id: 'gpt-4',
-          name: 'GPT-4',
-          provider: 'openai',
-          modalities: { input: %w[text image], output: %w[text] },
-          capabilities: %w[function_calling streaming vision]
-        )
-      end
-
-      it 'delegates capability checks' do
-        expect(model.supports?('function_calling')).to be true
-        expect(model.supports?('batch')).to be false
-        expect(model.supports?('vision')).to be true
-        expect(model.supports?('streaming')).to be true
-      end
-
-      it 'delegates type detection' do
-        expect(model.type).to eq('chat')
-      end
-
-      it 'delegates label formatting' do
-        expect(model.label).to eq('OpenAI - GPT-4')
-      end
-    end
-
-    describe 'validations' do
-      it 'requires model_id, name, and provider' do
-        model = model_class.new
-        expect(model).not_to be_valid
-        expect(model.errors[:model_id]).to include("can't be blank")
-        expect(model.errors[:name]).to include("can't be blank")
-        expect(model.errors[:provider]).to include("can't be blank")
-      end
-
-      it 'enforces uniqueness of model_id within provider scope' do
-        model_class.create!(model_id: 'test', name: 'Test', provider: 'openai')
-
-        duplicate = model_class.new(model_id: 'test', name: 'Test 2', provider: 'openai')
-        expect(duplicate).not_to be_valid
-        expect(duplicate.errors[:model_id]).to include('has already been taken')
-
-        different_provider = model_class.new(model_id: 'test', name: 'Test', provider: 'anthropic')
-        expect(different_provider).to be_valid
-      end
-    end
-
-    describe 'model registry integration' do
-      before do
-        RubyLLM.configure do |config|
-          config.model_registry_class = model_class
-        end
-      end
-
-      after do
-        RubyLLM.configure do |config|
-          config.model_registry_class = 'Model'
-        end
-      end
-
-      it 'loads models from database when configured' do
-        model_class.create!(
-          model_id: 'test-model',
-          name: 'Test Model',
-          provider: 'openai'
-        )
-
-        models = RubyLLM::Models.new
-        expect(models.all.map(&:id)).to include('test-model')
-      end
-
-      it 'finds models from database' do
-        model_class.create!(
-          model_id: 'test-model',
-          name: 'Test Model',
-          provider: 'openai'
-        )
-
-        models = RubyLLM::Models.new
-        found = models.find('test-model', 'openai')
-
-        expect(found).to be_a(RubyLLM::Model)
-        expect(found.id).to eq('test-model')
-        expect(found.provider).to eq('openai')
-      end
-
-      it 'falls back to JSON registry when model table is empty' do
-        with_temp_model_registry_file do
-          models = RubyLLM::Models.new
-          expect(models.find('json-fallback-model', 'openai').name).to eq('JSON Fallback Model')
-        end
-      end
-
-      it 'falls back to JSON registry when model table does not exist' do
-        allow(model_class).to receive(:table_exists?).and_return(false)
-
-        with_temp_model_registry_file do
-          models = RubyLLM::Models.new
-          expect(models.find('json-fallback-model', 'openai').name).to eq('JSON Fallback Model')
-        end
-      end
-    end
-
-    describe 'chat integration with model association' do
-      let(:chat_class) do
-        stub_const('TestChat', Class.new(ActiveRecord::Base) do
-          self.table_name = 'chats'
-          acts_as_chat(model: :model, model_class: 'TestModel')
-
-          # Mock the messages association since we're only testing model association
-          def messages
-            []
-          end
-        end)
-      end
-
-      before do
-        RubyLLM.configure do |config|
-          config.model_registry_class = model_class
-        end
-
-        # Recreate chats table (models table already exists from outer before block)
-        ActiveRecord::Base.connection.drop_table(:chats) if ActiveRecord::Base.connection.table_exists?(:chats)
-
-        ActiveRecord::Schema.define do
-          create_table :chats do |t|
-            t.references :model, foreign_key: true
-            t.timestamps
-          end
-        end
-
-        # Create models in DB
-        model_class.create!(
-          model_id: 'test-gpt',
-          name: 'Test GPT',
-          provider: 'openai',
-          capabilities: ['streaming']
-        )
-
-        model_class.create!(
-          model_id: 'test-claude',
-          name: 'Test Claude',
-          provider: 'anthropic',
-          capabilities: ['streaming']
-        )
-
-        # Reload models from database so RubyLLM.models knows about them
-        RubyLLM.models.load_from_database!
-      end
-
-      after do
-        RubyLLM.configure do |config|
-          config.model_registry_class = 'Model'
-        end
-      end
-
-      it 'resolves model from association when creating llm chat' do
-        chat = chat_class.create!(model_id: 'test-gpt')
-
-        # Verify association works
-        expect(chat.model).to be_present
-        expect(chat.model.provider).to eq('openai')
-
-        # Mock the chat creation to verify parameters
-        expect(RubyLLM).to receive(:chat).with( # rubocop:disable RSpec/MessageSpies,RSpec/StubbedMock
-          model: 'test-gpt',
-          provider: :openai,
-          protocol: nil,
-          assume_model_exists: false
-        ).and_return(
-          instance_double(
-            RubyLLM::Chat,
-            'messages=': nil,
-            'cancellation_checker=': nil,
-            before_message: nil,
-            after_message: nil
-          )
-        )
-
-        chat.to_llm
-      end
-
-      it 'uses different provider from model association' do
-        chat = chat_class.create!(model_id: 'test-claude')
-
-        expect(chat.model.provider).to eq('anthropic')
-
-        expect(RubyLLM).to receive(:chat).with( # rubocop:disable RSpec/MessageSpies,RSpec/StubbedMock
-          model: 'test-claude',
-          provider: :anthropic,
-          protocol: nil,
-          assume_model_exists: false
-        ).and_return(
-          instance_double(
-            RubyLLM::Chat,
-            'messages=': nil,
-            'cancellation_checker=': nil,
-            before_message: nil,
-            after_message: nil
-          )
-        )
-
-        chat.to_llm
-      end
-
-      it 'persists created model attributes using JSON-serializable hashes' do
-        model_info = RubyLLM::Model.new(
-          id: 'priced-registry-model',
-          name: 'Priced Registry Model',
-          provider: 'openai',
-          modalities: { input: %w[text image], output: %w[text] },
-          capabilities: ['streaming'],
-          pricing: {
-            text_tokens: {
-              standard: {
-                input_per_million: 1.25,
-                output_per_million: 5.0
-              }
-            }
-          }
-        )
-        allow(RubyLLM::Models).to receive(:resolve).and_return([model_info, nil])
-
-        chat = chat_class.create!(model_id: 'priced-registry-model')
-        created_model = chat.model.reload
-
-        expect(created_model.modalities).to eq(
-          'input' => %w[text image],
-          'output' => %w[text]
-        )
-        expect(created_model.pricing).to eq(
-          'text_tokens' => {
-            'standard' => {
-              'input_per_million' => 1.25,
-              'output_per_million' => 5.0
-            }
-          }
-        )
-      end
-
-      it 'fails when model does not exist' do
-        expect { chat_class.create!(model_id: 'non-existent') }.to raise_error(RubyLLM::ModelNotFoundError)
-      end
-
-      it 'creates model in database when assume_model_exists is true with provider' do
-        chat = chat_class.new(model_id: 'gpt-1999', provider: 'openai', assume_model_exists: true)
-        chat.save!
-
-        expect(chat.model).to be_present
-        expect(chat.model.model_id).to eq('gpt-1999')
-        expect(chat.model.provider).to eq('openai')
-
-        # Verify it was created in the database
-        db_model = model_class.find_by(model_id: 'gpt-1999', provider: 'openai')
-        expect(db_model).to be_present
-        expect(db_model.name).to eq('Gpt 1999') # Should use model_id as name when not found
-      end
-
-      it 'works with assume_model_exists and different provider' do
-        chat = chat_class.new(model_id: 'future-model-2050', provider: 'anthropic', assume_model_exists: true)
-        chat.save!
-
-        expect(chat.model).to be_present
-        expect(chat.model.model_id).to eq('future-model-2050')
-        expect(chat.model.provider).to eq('anthropic')
-
-        # Verify it was created in the database
-        db_model = model_class.find_by(model_id: 'future-model-2050', provider: 'anthropic')
-        expect(db_model).to be_present
-      end
-
-      it 'fails with assume_model_exists when provider is missing' do
-        chat = chat_class.new(model_id: 'mystery-model-3000', assume_model_exists: true)
-        expect { chat.save! }.to raise_error(ArgumentError, /Provider must be specified/)
-      end
-    end
+RSpec.describe RubyLLM::ActiveRecord::Model do # rubocop:disable RSpec/SpecFilePathFormat
+  let(:record_class) { described_class }
+  let(:model_info) do
+    RubyLLM::Model.new(
+      id: 'test-model',
+      name: 'Test Model',
+      provider: 'openai',
+      family: 'test',
+      context_window: 128_000,
+      modalities: { input: %w[text image], output: ['text'] },
+      capabilities: %w[function_calling vision],
+      pricing: { text_tokens: { standard: { input_per_million: 1.0, output_per_million: 2.0 } } }
+    )
   end
 
-  def with_temp_model_registry_file
-    original_file = RubyLLM.config.model_registry_file
-    temp_file = Tempfile.new(['ruby_llm_models', '.json'])
-    temp_file.write(
-      [
-        {
-          id: 'json-fallback-model',
-          name: 'JSON Fallback Model',
-          provider: 'openai',
-          modalities: { input: ['text'], output: ['text'] },
-          capabilities: ['streaming']
-        }
-      ].to_json
-    )
-    temp_file.flush
+  before { record_class.where(model_id: model_info.id, provider: model_info.provider).delete_all }
 
-    RubyLLM.configure { |config| config.model_registry_file = temp_file.path }
-    yield
-  ensure
-    RubyLLM.configure { |config| config.model_registry_file = original_file }
-    temp_file&.close!
+  it 'stores the registry in RubyLLM-owned records' do
+    registry = RubyLLM::Models.new([model_info])
+
+    described_class.write(registry)
+
+    record = record_class.find_by!(model_id: model_info.id, provider: model_info.provider)
+    expect(record.to_llm.to_h).to include(id: 'test-model', provider: 'openai')
+    expect(record.supports?(:vision)).to be(true)
+  end
+
+  it 'updates an existing provider and model pair' do
+    record_class.create!(model_id: model_info.id, provider: model_info.provider, name: 'Old')
+
+    described_class.write(RubyLLM::Models.new([model_info]))
+
+    expect(record_class.find_by!(model_id: model_info.id, provider: model_info.provider).name).to eq('Test Model')
+  end
+
+  it 'reads public RubyLLM::Model values' do
+    record_class.save_to_database(RubyLLM::Models.new([model_info]))
+
+    model = described_class.read.find { |candidate| candidate.id == model_info.id }
+
+    expect(model).to be_a(RubyLLM::Model)
+    expect(model.provider).to eq('openai')
+  end
+
+  it 'does not expose application acts_as macros for internal records' do
+    expect(ActiveRecord::Base).not_to respond_to(:acts_as_model)
+    expect(ActiveRecord::Base).not_to respond_to(:acts_as_tool_call)
+    expect(ActiveRecord::Base).not_to respond_to(:acts_as_batch)
+  end
+
+  it 'does not introduce an empty internal Active Record superclass' do
+    expect(RubyLLM::ActiveRecord.const_defined?(:Record, false)).to be(false)
+    expect(record_class.superclass).to eq(ActiveRecord::Base)
   end
 end

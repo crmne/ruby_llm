@@ -54,7 +54,7 @@ module RubyLLM
     # The Fallback models tried in order when generation fails.
     attr_reader :fallbacks
 
-    attr_reader :tool_prefs, :fallback_errors # :nodoc:
+    attr_reader :tool_prefs, :fallback_errors, :usage_entries # :nodoc:
 
     # Creates a chat with +model:+, or with the configured default model
     # when +model:+ is +nil+. Most code calls RubyLLM.chat instead.
@@ -77,6 +77,7 @@ module RubyLLM
       @temperature = nil
       @max_output_tokens = nil
       @messages = []
+      @usage_entries = []
       @tools = {}
       reset_tools
       @provider_options = {}
@@ -562,13 +563,22 @@ module RubyLLM
       messages.each(&)
     end
 
-    # Returns a Cost aggregating the cost of every message in the
-    # conversation, priced by each message's own model.
+    # Returns token usage aggregated across every provider attempt this chat
+    # has made, including retries and attempts that produced no message.
+    #
+    #   chat.tokens.input
+    #
+    def tokens
+      Tokens.aggregate(usage_entries.map(&:tokens))
+    end
+
+    # Returns a Cost aggregating every provider attempt this chat has made,
+    # including retries and attempts that produced no message.
     #
     #   chat.cost.total
     #
     def cost
-      Cost.aggregate(messages.map { |message| message.cost(model: message.model_info || model) })
+      Cost.aggregate(usage_entries.map(&:cost), complete: usage_entries.all?(&:usage_available?))
     end
 
     # Replaces the conversation with +new_messages+, coercing each element
@@ -577,6 +587,15 @@ module RubyLLM
     def messages=(new_messages)
       @messages = message_list(new_messages).map { |message| coerce_message(message) }
     end
+
+    # Replaces the usage ledger. Used by the Rails integration when
+    # rebuilding a persisted chat.
+    def usage_entries=(entries) # :nodoc:
+      @usage_entries = Array(entries)
+    end
+
+    # Hooks installed by the Rails integration.
+    attr_writer :cancellation_checker, :usage_recorder # :nodoc:
 
     # Appends a message to the conversation and returns it as a Message.
     # Accepts a Message, an attribute Hash, or a record responding to
@@ -606,6 +625,7 @@ module RubyLLM
     # Receives a completion produced out-of-band (e.g. by a batch), running the
     # same callbacks as a synchronous completion so persistence works unchanged.
     def add_completion(response) # :nodoc:
+      record_out_of_band_usage(response) if response.ruby_llm_usage_entries.empty?
       run_callbacks(:before_message)
       add_message response
       run_callbacks(:after_message, response)
@@ -701,8 +721,6 @@ module RubyLLM
       self
     end
 
-    attr_writer :cancellation_checker
-
     def raise_if_cancelled!
       external_cancelled = @cancellation_checker&.call
       return unless @cancelled || external_cancelled
@@ -711,15 +729,19 @@ module RubyLLM
       raise CancelledError
     end
 
-    def generate_once(stream_tracker: nil, &block)
+    def generate_once(stream_tracker: nil, usage_start: nil, &block)
       raise_if_cancelled!
 
       result = nil
+      entries_before = usage_entries.length
+      usage_start ||= entries_before
       payload = instrumentation_payload(streaming: block_given?)
 
       RubyLLM.instrument('chat.ruby_llm', payload, config: @config) do |event|
-        result = provider_completion(stream_tracker:, &block)
+        result = provider_completion(usage_recorder: method(:record_usage_entry), stream_tracker:, &block)
+        record_out_of_band_usage(result) if usage_entries.length == entries_before
         raise_if_cancelled!
+        link_completion_usage(result, usage_start)
         run_callbacks(:before_message) unless block_given?
         add_message result
         run_callbacks(:after_message, result)
@@ -729,6 +751,7 @@ module RubyLLM
     end
 
     def instrumentation_payload(streaming:)
+      empty_tokens = Tokens.new
       {
         chat: self,
         provider: @provider.slug,
@@ -747,7 +770,9 @@ module RubyLLM
         thinking: @thinking,
         citations: @citations,
         caching: @caching,
-        streaming: streaming
+        streaming: streaming,
+        tokens: empty_tokens,
+        cost: Cost.new(tokens: empty_tokens, model: @model)
       }
     end
 
@@ -755,16 +780,13 @@ module RubyLLM
       event[:response] = result
       event[:messages_after] = messages.dup
       event[:response_role] = result.role if result.respond_to?(:role)
+      event[:tokens] = result.tokens
+      event[:cost] = result.cost
       return unless result.respond_to?(:tool_call?)
 
       event[:response_model] = result.model
       event[:tool_call] = result.tool_call?
       event[:tool_calls] = result.tool_calls
-      event[:input_tokens] = result.input_tokens
-      event[:output_tokens] = result.output_tokens
-      event[:cache_read_tokens] = result.cache_read_tokens
-      event[:cache_write_tokens] = result.cache_write_tokens
-      event[:thinking_tokens] = result.thinking_tokens
     end
 
     def generate_with_fallbacks(&block)
@@ -772,12 +794,13 @@ module RubyLLM
       attempt = 0
       active_fallback = nil
       streaming = block_given?
+      usage_start = usage_entries.length
 
       loop do
         chunks_yielded = false
 
         begin
-          result = generate_once(stream_tracker: proc { chunks_yielded = true }, &block)
+          result = generate_once(stream_tracker: proc { chunks_yielded = true }, usage_start:, &block)
           finish_fallback(active_fallback, response: result)
           return result
         rescue StandardError => e
@@ -852,7 +875,7 @@ module RubyLLM
       fallback_errors.any? { |error_class| error.is_a?(error_class) }
     end
 
-    def provider_completion(stream_tracker: nil, &)
+    def provider_completion(usage_recorder:, stream_tracker: nil, &)
       raise_if_cancelled!
 
       @provider.complete(
@@ -870,8 +893,34 @@ module RubyLLM
         caching: @caching,
         protocol: @protocol,
         before_request: @callbacks[:before_request],
+        usage_recorder: usage_recorder,
         &wrap_streaming_block(stream_tracker:, &)
       )
+    end
+
+    def record_usage_entry(entry)
+      usage_entries << entry
+      @usage_recorder&.call(entry)
+      entry
+    end
+
+    def link_completion_usage(response, usage_start)
+      response.ruby_llm_usage_entries = usage_entries.drop(usage_start)
+    end
+
+    def record_out_of_band_usage(response)
+      entry = Usage::Entry.new(
+        operation: :chat,
+        provider: @provider.slug,
+        model: response.model || @model.id,
+        status: :succeeded,
+        tokens: response.tokens,
+        cost: response.cost,
+        message: response
+      )
+      response.ruby_llm_usage_entries = [entry]
+      Usage.instrument(entry, config: @config)
+      record_usage_entry(entry)
     end
 
     def run_callbacks(name, *args)

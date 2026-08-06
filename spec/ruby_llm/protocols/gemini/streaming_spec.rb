@@ -32,9 +32,9 @@ RSpec.describe RubyLLM::Protocols::Gemini::Streaming do
 
     chunk = test_obj.send(:build_chunk, data)
 
-    expect(chunk.input_tokens).to eq(4)
-    expect(chunk.output_tokens).to eq(4)
-    expect(chunk.cache_read_tokens).to eq(6)
+    expect(chunk.tokens.input).to eq(4)
+    expect(chunk.tokens.output).to eq(4)
+    expect(chunk.tokens.cache_read).to eq(6)
   end
 
   it 'preserves raw finishReason on chunks' do
@@ -64,6 +64,6 @@ RSpec.describe RubyLLM::Protocols::Gemini::Streaming do
     final_chunk = chunks.last
 
     # Also verify against the complete message
-    expect(response.output_tokens).to eq(final_chunk.output_tokens) if final_chunk.output_tokens
+    expect(response.tokens.output).to eq(final_chunk.tokens.output) if final_chunk.tokens.output
   end
 end

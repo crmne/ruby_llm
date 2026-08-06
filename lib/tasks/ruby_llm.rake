@@ -3,13 +3,9 @@
 namespace :ruby_llm do
   desc 'Load the selected model registry into the database'
   task load_models: :environment do
-    if RubyLLM.config.model_registry_class
-      RubyLLM.models.load_from_json!
-      model_class = RubyLLM.config.model_registry_class.constantize
-      model_class.save_to_database
-      puts "✅ Loaded #{model_class.count} models into database"
-    else
-      puts 'Model registry not configured. Run bin/rails generate ruby_llm:install'
-    end
+    RubyLLM.models.load_from_json!
+    model_class = RubyLLM::ActiveRecord::Model
+    model_class.save_to_database
+    puts "✅ Loaded #{model_class.count} models into database"
   end
 end

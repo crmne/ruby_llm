@@ -8,6 +8,8 @@ module RubyLLM
   #   speech.save "welcome.mp3"
   #
   class Speech
+    include Usage::Result
+
     # Maps audio format names to their MIME types.
     MIME_TYPES = {
       'aac' => 'audio/aac',
@@ -71,6 +73,7 @@ module RubyLLM
       model ||= config.default_speech_model
       model, provider_instance = Models.resolve(model, provider: provider, assume_model_exists: assume_model_exists,
                                                        config: config)
+      empty_tokens = Tokens.new
 
       payload = {
         provider: provider_instance.slug,
@@ -81,7 +84,9 @@ module RubyLLM
         voice: voice,
         format: format,
         provider_options: provider_options,
-        metadata: metadata
+        metadata: metadata,
+        tokens: empty_tokens,
+        cost: Cost.new(tokens: empty_tokens, model:, category: :audio_tokens)
       }
 
       RubyLLM.instrument('speech.ruby_llm', payload, config: config) do |event|
@@ -91,6 +96,8 @@ module RubyLLM
         event[:voice] = result.voice
         event[:format] = result.format
         event[:audio_bytes] = result.to_blob.bytesize
+        event[:tokens] = result.tokens
+        event[:cost] = result.cost
         result
       end
     end
@@ -98,6 +105,17 @@ module RubyLLM
     # Returns the raw audio bytes. Alias for #data, mirroring Image#to_blob.
     def to_blob
       data
+    end
+
+    # Returns provider-reported usage across every attempt. Its fields are
+    # +nil+ when the provider did not report any.
+    def tokens
+      ruby_llm_usage_tokens
+    end
+
+    # Returns the speech cost across every provider attempt.
+    def cost
+      ruby_llm_usage_cost
     end
 
     # Writes the audio to +path+ in binary mode and returns +path+.

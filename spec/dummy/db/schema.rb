@@ -1,18 +1,6 @@
 # frozen_string_literal: true
 
-# This file is auto-generated from the current state of the database. Instead
-# of editing this file, please use the migrations feature of Active Record to
-# incrementally modify your database, and then regenerate this schema definition.
-#
-# This file is the source Rails uses to define your schema when running `bin/rails
-# db:schema:load`. When creating a new database, `bin/rails db:schema:load` tends to
-# be faster and is potentially less error prone than running all of your
-# migrations from scratch. Old migrations may fail to apply correctly if those
-# migrations use external dependencies or application code.
-#
-# It's strongly recommended that you check this file into your version control system.
-
-ActiveRecord::Schema[7.1].define(version: 20_260_704_130_000) do
+ActiveRecord::Schema[7.1].define(version: 20_260_731_000_000) do
   create_table 'action_text_rich_texts', force: :cascade do |t|
     t.string 'name', null: false
     t.text 'body'
@@ -23,16 +11,6 @@ ActiveRecord::Schema[7.1].define(version: 20_260_704_130_000) do
     t.index %w[record_type record_id name], name: 'index_action_text_rich_texts_uniqueness', unique: true
   end
 
-  create_table 'batches', force: :cascade do |t|
-    t.string 'provider_batch_id', null: false
-    t.string 'provider', null: false
-    t.string 'status'
-    t.boolean 'completed', default: false, null: false
-    t.json 'chat_ids'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-  end
-
   create_table 'active_storage_attachments', force: :cascade do |t|
     t.string 'name', null: false
     t.string 'record_type', null: false
@@ -40,8 +18,7 @@ ActiveRecord::Schema[7.1].define(version: 20_260_704_130_000) do
     t.bigint 'blob_id', null: false
     t.datetime 'created_at', null: false
     t.index ['blob_id'], name: 'index_active_storage_attachments_on_blob_id'
-    t.index %w[record_type record_id name blob_id], name: 'index_active_storage_attachments_uniqueness',
-                                                    unique: true
+    t.index %w[record_type record_id name blob_id], name: 'index_active_storage_attachments_uniqueness', unique: true
   end
 
   create_table 'active_storage_blobs', force: :cascade do |t|
@@ -63,64 +40,33 @@ ActiveRecord::Schema[7.1].define(version: 20_260_704_130_000) do
   end
 
   create_table 'chats', force: :cascade do |t|
-    t.integer 'model_id'
+    t.integer 'ruby_llm_model_id', null: false
     t.boolean 'cancelled', default: false, null: false
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
-    t.index ['model_id'], name: 'index_chats_on_model_id'
-  end
-
-  create_table 'document_chats', force: :cascade do |t|
-    t.integer 'model_id'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.index ['model_id'], name: 'index_document_chats_on_model_id'
-  end
-
-  create_table 'document_messages', force: :cascade do |t|
-    t.integer 'document_chat_id'
-    t.string 'role'
-    t.text 'content'
-    t.json 'raw'
-    t.json 'tool_calls'
-    t.integer 'model_id'
-    t.integer 'input_tokens'
-    t.integer 'output_tokens'
-    t.integer 'total_tokens'
-    t.integer 'tool_call_id'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.index ['document_chat_id'], name: 'index_document_messages_on_document_chat_id'
-    t.index ['model_id'], name: 'index_document_messages_on_model_id'
-    t.index ['tool_call_id'], name: 'index_document_messages_on_tool_call_id'
+    t.index ['ruby_llm_model_id'], name: 'index_chats_on_ruby_llm_model_id'
   end
 
   create_table 'messages', force: :cascade do |t|
-    t.integer 'chat_id'
-    t.string 'role'
+    t.integer 'chat_id', null: false
+    t.string 'role', null: false
     t.text 'content'
-    t.integer 'model_id'
-    t.integer 'input_tokens'
-    t.integer 'output_tokens'
-    t.integer 'tool_call_id'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.integer 'cache_read_tokens'
-    t.integer 'cache_write_tokens'
+    t.string 'model_id'
+    t.string 'provider'
     t.text 'thinking_signature'
     t.text 'thinking_text'
-    t.integer 'thinking_tokens'
     t.json 'content_raw'
     t.json 'citations'
     t.boolean 'cache_until_here', default: false, null: false
-    t.decimal 'total_cost', precision: 16, scale: 10
-    t.json 'cost_details'
+    t.string 'finish_reason'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
     t.index ['chat_id'], name: 'index_messages_on_chat_id'
-    t.index ['model_id'], name: 'index_messages_on_model_id'
-    t.index ['tool_call_id'], name: 'index_messages_on_tool_call_id'
+    t.index %w[provider model_id], name: 'index_messages_on_provider_and_model_id'
+    t.index ['role'], name: 'index_messages_on_role'
   end
 
-  create_table 'models', force: :cascade do |t|
+  create_table 'ruby_llm_models', force: :cascade do |t|
     t.string 'model_id', null: false
     t.string 'name', null: false
     t.string 'provider', null: false
@@ -135,25 +81,95 @@ ActiveRecord::Schema[7.1].define(version: 20_260_704_130_000) do
     t.json 'metadata', default: {}
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
-    t.index ['family'], name: 'index_models_on_family'
-    t.index %w[provider model_id], name: 'index_models_on_provider_and_model_id', unique: true
-    t.index ['provider'], name: 'index_models_on_provider'
+    t.index ['family'], name: 'index_ruby_llm_models_on_family'
+    t.index %w[provider model_id], name: 'index_ruby_llm_models_on_provider_and_model_id', unique: true
+    t.index ['provider'], name: 'index_ruby_llm_models_on_provider'
   end
 
-  create_table 'tool_calls', force: :cascade do |t|
-    t.integer 'message_id'
-    t.string 'tool_call_id'
-    t.string 'name'
+  create_table 'ruby_llm_tool_calls', force: :cascade do |t|
+    t.string 'message_type', null: false
+    t.integer 'message_id', null: false
+    t.string 'result_type'
+    t.integer 'result_id'
+    t.string 'tool_call_id', null: false
+    t.string 'name', null: false
     t.text 'thought_signature'
-    t.json 'arguments'
+    t.json 'arguments', default: {}
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
-    t.index ['message_id'], name: 'index_tool_calls_on_message_id'
+    t.index %w[message_type message_id], name: 'index_ruby_llm_tool_calls_on_message'
+    t.index %w[result_type result_id], name: 'index_ruby_llm_tool_calls_on_result'
+    t.index ['tool_call_id'], name: 'index_ruby_llm_tool_calls_on_tool_call_id', unique: true
+  end
+
+  create_table 'ruby_llm_usage_entries', force: :cascade do |t|
+    t.string 'chat_type', null: false
+    t.integer 'chat_id', null: false
+    t.string 'message_type'
+    t.integer 'message_id'
+    t.string 'operation', null: false
+    t.string 'provider', null: false
+    t.string 'model', null: false
+    t.string 'status', null: false
+    t.integer 'input_tokens'
+    t.integer 'output_tokens'
+    t.integer 'cache_read_tokens'
+    t.integer 'cache_write_tokens'
+    t.integer 'thinking_tokens'
+    t.decimal 'input_cost', precision: 16, scale: 10
+    t.decimal 'output_cost', precision: 16, scale: 10
+    t.decimal 'cache_read_cost', precision: 16, scale: 10
+    t.decimal 'cache_write_cost', precision: 16, scale: 10
+    t.decimal 'thinking_cost', precision: 16, scale: 10
+    t.decimal 'total_cost', precision: 16, scale: 10
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index %w[chat_type chat_id], name: 'index_ruby_llm_usage_entries_on_chat'
+    t.index %w[message_type message_id], name: 'index_ruby_llm_usage_entries_on_message'
+    t.index ['status'], name: 'index_ruby_llm_usage_entries_on_status'
+  end
+
+  create_table 'ruby_llm_batches', force: :cascade do |t|
+    t.string 'provider_batch_id', null: false
+    t.string 'provider', null: false
+    t.string 'status'
+    t.boolean 'completed', default: false, null: false
+    t.string 'chat_type'
+    t.string 'batch_protocol'
+    t.json 'chat_ids', default: []
+    t.json 'request_counts'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index %w[provider provider_batch_id], name: 'index_ruby_llm_batches_on_provider_and_id', unique: true
+  end
+
+  create_table 'document_chats', force: :cascade do |t|
+    t.integer 'ruby_llm_model_id'
+    t.boolean 'cancelled', default: false, null: false
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index ['ruby_llm_model_id'], name: 'index_document_chats_on_ruby_llm_model_id'
+  end
+
+  create_table 'document_messages', force: :cascade do |t|
+    t.integer 'document_chat_id'
+    t.string 'role'
+    t.text 'content'
+    t.json 'raw'
+    t.string 'model_id'
+    t.string 'provider'
+    t.integer 'input_tokens'
+    t.integer 'output_tokens'
+    t.integer 'total_tokens'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index ['document_chat_id'], name: 'index_document_messages_on_document_chat_id'
   end
 
   add_foreign_key 'active_storage_attachments', 'active_storage_blobs', column: 'blob_id'
   add_foreign_key 'active_storage_variant_records', 'active_storage_blobs', column: 'blob_id'
-  add_foreign_key 'chats', 'models'
+  add_foreign_key 'chats', 'ruby_llm_models', column: 'ruby_llm_model_id'
+  add_foreign_key 'document_chats', 'ruby_llm_models', column: 'ruby_llm_model_id'
+  add_foreign_key 'messages', 'chats'
   add_foreign_key 'document_messages', 'document_chats'
-  add_foreign_key 'messages', 'models'
 end

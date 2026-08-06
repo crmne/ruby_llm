@@ -57,8 +57,8 @@ Key attributes of a `Chunk`:
 *   `chunk.role`: Always `:assistant` for streamed response chunks.
 *   `chunk.model`: The model generating the response (usually present).
 *   `chunk.tool_calls`: A hash containing partial or complete tool call information if the model is invoking a [Tool]({% link _core_features/tools.md %}). The arguments might be streamed incrementally.
-*   `chunk.tokens&.input`: Standard input tokens for the request (often `nil` until the final chunk). From v1.15 onward, cache reads and writes are exposed separately as `chunk.tokens&.cache_read` and `chunk.tokens&.cache_write` when providers report them.
-*   `chunk.tokens&.output`: Cumulative billable output tokens *up to this chunk* (behavior varies by provider, often only accurate in the final chunk). From v1.15 onward, this includes thinking/reasoning tokens when the provider bills them as output.
+*   `chunk.tokens.input`: Standard input tokens for the request (often `nil` until the final chunk). From v1.15 onward, cache reads and writes are exposed separately as `chunk.tokens.cache_read` and `chunk.tokens.cache_write` when providers report them.
+*   `chunk.tokens.output`: Cumulative billable output tokens *up to this chunk* (behavior varies by provider, often only accurate in the final chunk). From v1.15 onward, this includes thinking/reasoning tokens when the provider bills them as output.
 *   `chunk.thinking`: Optional thinking output when providers stream it.
 *   `chunk.finish_reason`: Provider-reported reason the model stopped, usually only present on the final chunk. Chunks also support finish-reason predicates such as `chunk.max_tokens?`, `chunk.content_filtered?`, `chunk.tool_call_stop?`, and `chunk.stopped?`.
 

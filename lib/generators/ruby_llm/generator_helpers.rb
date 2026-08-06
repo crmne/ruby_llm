@@ -4,26 +4,25 @@ module RubyLLM
   module Generators
     # Shared helpers for RubyLLM generators
     module GeneratorHelpers
+      APPLICATION_MODEL_TYPES = %w[chat message].freeze
+
       def parse_model_mappings
         @model_names = {
           chat: 'Chat',
-          message: 'Message',
-          tool_call: 'ToolCall',
-          model: 'Model',
-          batch: 'Batch'
+          message: 'Message'
         }
 
         model_mappings.each do |mapping|
           if mapping.include?(':')
             key, value = mapping.split(':', 2)
-            @model_names[key.to_sym] = value.classify
+            @model_names[key.to_sym] = value.classify if APPLICATION_MODEL_TYPES.include?(key)
           end
         end
 
         @model_names
       end
 
-      %i[chat message tool_call model batch].each do |type|
+      %i[chat message].each do |type|
         define_method("#{type}_model_name") do
           @model_names ||= parse_model_mappings
           @model_names[type]
@@ -37,6 +36,19 @@ module RubyLLM
           variable_name_for(send("#{type}_model_name"))
         end
       end
+
+      # Models remain a UI resource even though RubyLLM owns their persistence.
+      # Keep that resource beside a namespaced chat without implying that the
+      # application has a corresponding ActiveRecord model.
+      def model_model_name
+        return 'Model' unless chat_model_name.include?('::')
+
+        "#{chat_model_name.deconstantize}::Model"
+      end
+
+      def model_table_name = table_name_for(model_model_name)
+      def model_variable_name = variable_name_for(model_model_name)
+      def tool_call_variable_name = 'tool_call'
 
       def chat_controller_class_name
         controller_class_name_for(chat_model_name)
@@ -59,9 +71,6 @@ module RubyLLM
 
         add_association_params(params, :messages, message_table_name, message_model_name,
                                owner_table: chat_table_name, owner_model_name: chat_model_name, plural: true)
-        add_association_params(params, :model, model_table_name, model_model_name,
-                               owner_table: chat_table_name, owner_model_name: chat_model_name)
-
         "acts_as_chat#{" #{params.join(', ')}" if params.any?}"
       end
 
@@ -70,45 +79,13 @@ module RubyLLM
 
         add_association_params(params, :chat, chat_table_name, chat_model_name,
                                owner_table: message_table_name, owner_model_name: message_model_name)
-        add_association_params(params, :tool_calls, tool_call_table_name, tool_call_model_name,
-                               owner_table: message_table_name, owner_model_name: message_model_name, plural: true)
-        add_association_params(params, :model, model_table_name, model_model_name,
-                               owner_table: message_table_name, owner_model_name: message_model_name)
-
         "acts_as_message#{" #{params.join(', ')}" if params.any?}"
-      end
-
-      def acts_as_model_declaration
-        params = []
-
-        add_association_params(params, :chats, chat_table_name, chat_model_name,
-                               owner_table: model_table_name, owner_model_name: model_model_name, plural: true)
-
-        "acts_as_model#{" #{params.join(', ')}" if params.any?}"
-      end
-
-      def acts_as_batch_declaration
-        params = []
-        params << "chat_class: '#{chat_model_name}'" if chat_model_name != 'Chat'
-
-        "acts_as_batch#{" #{params.join(', ')}" if params.any?}"
-      end
-
-      def acts_as_tool_call_declaration
-        params = []
-
-        add_association_params(params, :message, message_table_name, message_model_name,
-                               owner_table: tool_call_table_name, owner_model_name: tool_call_model_name)
-        add_result_foreign_key_param(params)
-
-        "acts_as_tool_call#{" #{params.join(', ')}" if params.any?}"
       end
 
       def create_namespace_modules
         namespaces = []
 
-        [chat_model_name, message_model_name, tool_call_model_name, model_model_name,
-         batch_model_name].each do |model_name|
+        [chat_model_name, message_model_name].each do |model_name|
           if model_name.include?('::')
             namespace = model_name.split('::').first
             namespaces << namespace unless namespaces.include?(namespace)
@@ -133,6 +110,10 @@ module RubyLLM
 
       def migration_version
         "[#{Rails::VERSION::MAJOR}.#{Rails::VERSION::MINOR}]"
+      end
+
+      def reference_type
+        Rails.application.config.generators.options.dig(:active_record, :primary_key_type) || :bigint
       end
 
       def create_migration_class_name(table_name)
@@ -226,13 +207,6 @@ module RubyLLM
         return "#{association_name}_id" unless collection_association
 
         "#{owner_model_name.demodulize.underscore}_id"
-      end
-
-      def add_result_foreign_key_param(params)
-        foreign_key = "#{tool_call_table_name.singularize}_id"
-        default_foreign_key = "#{tool_call_model_name.demodulize.underscore}_id"
-
-        params << "result_foreign_key: :#{foreign_key}" if foreign_key != default_foreign_key
       end
 
       # Convert namespaced model names to proper table names

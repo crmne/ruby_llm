@@ -99,7 +99,7 @@ When using models not in the registry (e.g., new OpenRouter models), pass `assum
 chat = Chat.create!(
   model: 'experimental-llm-v2',
   provider: 'openrouter',
-  assume_model_exists: true  # Creates Model record automatically
+  assume_model_exists: true  # Skips registry validation
 )
 ```
 

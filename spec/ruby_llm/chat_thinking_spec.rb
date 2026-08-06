@@ -67,7 +67,7 @@ RSpec.describe RubyLLM::Chat do
 
         expect_response_payload(response)
         if provider.in?(%i[openai azure])
-          expect(response.thinking_tokens).to be_present
+          expect(response.tokens.thinking).to be_present
         elsif provider == :perplexity && response.thinking.nil?
           expect(response.content).to be_present
         else

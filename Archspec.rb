@@ -31,6 +31,7 @@ component :domain, in: %w[
   lib/ruby_llm/tool_call.rb
   lib/ruby_llm/tool_concurrency.rb
   lib/ruby_llm/transcription.rb
+  lib/ruby_llm/usage.rb
   lib/ruby_llm/uploaded_file.rb
   lib/ruby_llm/uploaded_file/**/*.rb
 ]
@@ -51,6 +52,7 @@ component :support, in: %w[
   lib/ruby_llm/error.rb
   lib/ruby_llm/error_middleware.rb
   lib/ruby_llm/instrumentation.rb
+  lib/ruby_llm/usage_middleware.rb
   lib/ruby_llm/mime_type.rb
   lib/ruby_llm/model.rb
   lib/ruby_llm/model/**/*.rb
@@ -135,6 +137,12 @@ protocols.cannot_reference_constants 'RubyLLM::Providers'
 # that also must not know protocols or concrete providers.
 domain.cannot_reference_constants 'RubyLLM::ActiveRecord'
 support.cannot_reference_constants 'RubyLLM::ActiveRecord', 'RubyLLM::Protocols', 'RubyLLM::Providers'
+
+# Conversion belongs to the Rails boundary. Plain Ruby objects may accept a
+# record that responds to #to_llm, but they never define persistence
+# conversion methods themselves.
+domain.methods.matching(/\A(to|from)_llm\z/)
+      .forbidden(because: 'convert Active Record values inside the Rails integration')
 
 # The Rails integration builds on the domain and support layers and delegates
 # through the Provider contract, not wire protocols or concrete adapters.

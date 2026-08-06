@@ -87,17 +87,16 @@ Some providers only expose thinking in the final response. In those cases, `resp
 
 ## ActiveRecord Integration
 
-When using `acts_as_chat` and `acts_as_message`, thinking output is persisted to the message table:
+When using `acts_as_chat` and `acts_as_message`, thinking content is persisted with the message while thinking-token accounting is stored in RubyLLM's internal usage ledger:
 
 ```ruby
 # Migration (generated automatically with new installs)
 # t.text :thinking_text
 # t.text :thinking_signature
-# t.integer :thinking_tokens
 
 response = chat_record.ask("Explain quantum entanglement")
 response.thinking&.text
-response.thinking_tokens
+response.tokens.thinking
 ```
 
 `thinking_tokens` is usually a breakdown of generated output work. From v1.15 onward, RubyLLM normalizes `output_tokens` as the billable output bucket, so you should not add `thinking_tokens` to `output_tokens` for cost calculations. When a model has distinct reasoning-token pricing, the cost is exposed separately as `response.cost.thinking`.
@@ -105,15 +104,13 @@ response.thinking_tokens
 ### Upgrading Existing Installations
 
 For 1.10 upgrades, consider using the [upgrade guide]({% link _reference/upgrading.md %}#upgrade-to-110) to run the generator.
-If you prefer manual migrations, add the columns to your message and tool calls tables:
+If you prefer manual migrations, add the content columns to your message table. RubyLLM's install or upgrade migration creates the internal tool-call and usage tables:
 
 ```ruby
 class AddThinkingToMessages < ActiveRecord::Migration[7.1]
   def change
     add_column :messages, :thinking_text, :text
     add_column :messages, :thinking_signature, :text
-    add_column :messages, :thinking_tokens, :integer
-    add_column :tool_calls, :thought_signature, :string
   end
 end
 ```
