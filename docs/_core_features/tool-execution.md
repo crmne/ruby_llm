@@ -134,11 +134,11 @@ Override it per chat when needed:
 chat.with_tool_options(concurrency: false)
 ```
 
-Call `without_tools` to clear the attached tool list. It leaves the options set with `with_tool_options` in place; call `without_tool_options` to reset `choice`, `calls`, and `concurrency`:
+Call `with_tools(nil)` to clear the attached tool list. It leaves the options set with `with_tool_options` in place; pass `nil` options to reset `choice`, `calls`, and `concurrency`:
 
 ```ruby
-chat.without_tools         # forget the tools, keep the options
-chat.without_tool_options  # reset choice, calls, and concurrency
+chat.with_tools(nil)       # forget the tools, keep the options
+chat.with_tool_options(choice: nil, calls: nil, concurrency: nil) # reset all three
 ```
 
 Rails chat records use the same setting and override:

@@ -134,17 +134,8 @@ RSpec.describe RubyLLM::Agent do
     end
     agent = agent_class.new
 
-    expect(agent.without_caching).to eq(agent.chat)
+    expect(agent.with_caching(nil)).to eq(agent.chat)
     expect(agent.caching).to be_nil
-  end
-
-  it 'rejects nil caching on agent instances, pointing to without_caching' do
-    agent_class = Class.new(RubyLLM::Agent) do
-      model 'gpt-4.1-nano'
-    end
-    agent = agent_class.new
-
-    expect { agent.with_caching(nil) }.to raise_error(ArgumentError, /without_caching/)
   end
 
   it 'starts without instructions when the default prompt is missing' do

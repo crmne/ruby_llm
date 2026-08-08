@@ -51,17 +51,11 @@ RSpec.describe RubyLLM::Chat do
       expect { chat.render }.to raise_error(ArgumentError, /Anthropic prompt caching accepts :ttl/)
     end
 
-    it 'clears caching options with without_caching' do
+    it 'clears caching options with with_caching(nil)' do
       chat = RubyLLM.chat.with_caching(ttl: '1h')
 
-      expect(chat.without_caching).to eq(chat)
+      expect(chat.with_caching(nil)).to eq(chat)
       expect(chat.caching).to be_nil
-    end
-
-    it 'rejects nil, pointing to without_caching' do
-      chat = RubyLLM.chat
-
-      expect { chat.with_caching(nil) }.to raise_error(ArgumentError, /without_caching/)
     end
 
     it 'rejects combining nil with caching options' do

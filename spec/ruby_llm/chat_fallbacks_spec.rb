@@ -83,26 +83,14 @@ RSpec.describe RubyLLM::Chat do
     expect(chat.fallback_errors).to eq(RubyLLM::Fallback::DEFAULT_ERRORS)
   end
 
-  it 'clears fallback models with without_fallbacks' do
+  it 'clears fallback models with with_fallbacks(nil)' do
     chat = described_class.new(model: 'primary-model')
                           .with_fallbacks('fallback-model', on: [RubyLLM::RateLimitError])
 
-    chat.without_fallbacks
+    chat.with_fallbacks(nil)
 
     expect(chat.fallbacks).to be_empty
     expect(chat.fallback_errors).to eq(RubyLLM::Fallback::DEFAULT_ERRORS)
-  end
-
-  it 'rejects no arguments, pointing to without_fallbacks' do
-    chat = described_class.new(model: 'primary-model')
-
-    expect { chat.with_fallbacks }.to raise_error(ArgumentError, /without_fallbacks/)
-  end
-
-  it 'rejects nil, pointing to without_fallbacks' do
-    chat = described_class.new(model: 'primary-model')
-
-    expect { chat.with_fallbacks(nil) }.to raise_error(ArgumentError, /without_fallbacks/)
   end
 
   it 'falls back on transient errors and restores the primary model' do

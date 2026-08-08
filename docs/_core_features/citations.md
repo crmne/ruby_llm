@@ -58,10 +58,10 @@ response.citations.each do |citation|
 end
 ```
 
-Call `without_citations` to turn citations back off:
+Pass `false` to turn citations back off:
 
 ```ruby
-chat.without_citations
+chat.with_citations(false)
 ```
 
 This works with plain text files and PDFs. PDF citations include page numbers:

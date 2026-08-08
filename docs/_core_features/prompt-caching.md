@@ -68,10 +68,10 @@ If you switch to a provider that needs different caching options, call `with_cac
 chat.with_caching(ttl: "1h")
 ```
 
-To disable caching for later requests, call `without_caching`:
+To disable caching for later requests, pass `nil`:
 
 ```ruby
-chat.without_caching
+chat.with_caching(nil)
 ```
 
 ## Explicit Cache Boundaries

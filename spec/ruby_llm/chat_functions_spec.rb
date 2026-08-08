@@ -54,15 +54,9 @@ RSpec.describe RubyLLM::Chat do
 
       expect(chat.with_tools(tool.new)).to be(chat)
     end
-
-    it 'rejects nil, pointing to without_tools' do
-      chat = described_class.new
-
-      expect { chat.with_tools(nil) }.to raise_error(ArgumentError, /without_tools/)
-    end
   end
 
-  describe '#without_tools' do
+  describe 'with_tools(nil)' do
     it 'replaces all tools when followed by with_tools' do
       chat = described_class.new
 
@@ -81,7 +75,7 @@ RSpec.describe RubyLLM::Chat do
       chat.with_tools(tool1.new, tool2.new)
       expect(chat.tools.size).to eq(2)
 
-      chat.without_tools.with_tools(tool3.new)
+      chat.with_tools(nil).with_tools(tool3.new)
 
       expect(chat.tools.keys).to eq([:tool3])
       expect(chat.tools.size).to eq(1)
@@ -95,7 +89,7 @@ RSpec.describe RubyLLM::Chat do
       end
 
       chat.with_tools(tool1.new).with_tool_options(calls: :one, concurrency: true)
-      chat.without_tools
+      chat.with_tools(nil)
 
       expect(chat.tools).to be_empty
       expect(chat.tool_prefs).to eq(choice: nil, calls: :one)
@@ -162,7 +156,7 @@ RSpec.describe RubyLLM::Chat do
       )
     end
 
-    it 'leaves options passed as nil unchanged' do
+    it 'leaves omitted options unchanged' do
       chat = described_class.new
 
       chat.with_tool_options(calls: :one, concurrency: :fibers)
@@ -212,7 +206,7 @@ RSpec.describe RubyLLM::Chat do
     end
   end
 
-  describe '#without_tool_options' do
+  describe 'with_tool_options nil resets' do
     it 'resets choice and calls to nil and concurrency to the configured default' do
       original_tool_concurrency = RubyLLM.config.tool_concurrency
       RubyLLM.config.tool_concurrency = :fibers
@@ -220,7 +214,7 @@ RSpec.describe RubyLLM::Chat do
       chat = described_class.new
       chat.with_tool_options(choice: :required, calls: :one, concurrency: :threads)
 
-      chat.without_tool_options
+      chat.with_tool_options(choice: nil, calls: nil, concurrency: nil)
 
       expect(chat.tool_prefs).to eq(choice: nil, calls: nil)
       expect(chat.concurrency).to eq(:fibers)
@@ -288,19 +282,13 @@ RSpec.describe RubyLLM::Chat do
       expect(chat).not_to be_complete
     end
 
-    it 'clears system instructions with without_instructions' do
+    it 'clears system instructions with with_instructions(nil)' do
       chat = described_class.new
 
       chat.with_instructions('Be helpful')
-      chat.without_instructions
+      chat.with_instructions(nil)
 
       expect(chat.messages.select { |msg| msg.role == :system }).to be_empty
-    end
-
-    it 'rejects nil, pointing to without_instructions' do
-      chat = described_class.new
-
-      expect { chat.with_instructions(nil) }.to raise_error(ArgumentError, /without_instructions/)
     end
   end
 
@@ -313,18 +301,12 @@ RSpec.describe RubyLLM::Chat do
       expect(result).to eq(chat) # Should return self for chaining
     end
 
-    it 'clears the temperature with without_temperature' do
+    it 'clears the temperature with with_temperature(nil)' do
       chat = described_class.new.with_temperature(0.8)
 
-      chat.without_temperature
+      chat.with_temperature(nil)
 
       expect(chat.instance_variable_get(:@temperature)).to be_nil
-    end
-
-    it 'rejects nil, pointing to without_temperature' do
-      chat = described_class.new
-
-      expect { chat.with_temperature(nil) }.to raise_error(ArgumentError, /without_temperature/)
     end
   end
 

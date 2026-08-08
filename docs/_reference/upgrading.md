@@ -111,7 +111,6 @@ Scan the table for anything your app uses, then read its section below.
 | Tool `desc` / `param` / `params` | `description` / `parameter` / `parameters` |
 | `response.model_id` | `response.model` |
 | `Error.new(response, "msg")` | `Error.new("msg", response: response)` |
-| `with_tools(nil)`, `with_thinking(nil)`, other `nil` clears | `without_tools`, `without_thinking`, the `without_*` family |
 | `with_protocol(:responses)` | `protocol:` keyword on `chat`, `with_model`, agent `model` |
 | `with_tool(Weather)` | `with_tools(Weather)` |
 | `with_tools(W, choice: :required, calls: 3)` | `with_tools(W).with_tool_options(choice: :required, calls: 3)` |
@@ -267,23 +266,6 @@ Error constructors take the message first. `RubyLLM::Error.new` no longer takes 
 
 Two hierarchy notes: `UnsupportedAttachmentError` now inherits from `RubyLLM::Error` (it was a bare `StandardError`), so a `rescue RubyLLM::Error` catches it; and malformed tool-call JSON from a provider raises the new `RubyLLM::ToolCallParseError` instead of a raw `JSON::ParserError`.
 
-### Clearing Settings with without_*
-
-Clearing settings uses `without_*`, on every setting. The nil sentinels are gone; passing `nil` to any `with_*` raises an ArgumentError pointing at the `without_*` sibling:
-
-```ruby
-chat.with_tools(nil)            # before
-chat.without_tools              # now
-
-chat.with_thinking(nil)         # before
-chat.without_thinking           # now
-
-chat.with_instructions(nil)     # before (destroyed persisted system messages on records!)
-chat.without_instructions       # now - same effect, stated intent
-```
-
-The full family on Chat (mirrored on `acts_as_chat` records and agents): `without_tools`, `without_thinking`, `without_instructions`, `without_citations`, `without_temperature`, `without_schema`, `without_caching`, `without_provider_options`, `without_headers`, `without_fallbacks`, and `without_context`.
-
 ### Protocol Joins Model Selection
 
 Protocol is part of model selection. A model is identified by its name, provider, and wire protocol, so `protocol:` joins `provider:` as a keyword of `RubyLLM.chat`, `with_model`, and the agent `model` macro. The standalone `with_protocol` / `without_protocol` methods are gone:
@@ -310,13 +292,13 @@ chat.with_tool(Weather)                                  # before
 chat.with_tools(Weather)                                 # now
 
 chat.with_tools(Search, Calculator, replace: true)       # before
-chat.without_tools.with_tools(Search, Calculator)        # now
+chat.with_tools(nil).with_tools(Search, Calculator)      # now
 
 chat.with_tools(Weather, choice: :required, calls: 3)    # before
 chat.with_tools(Weather).with_tool_options(choice: :required, calls: 3)  # now
 ```
 
-`without_tools` clears the set; `without_tool_options` resets choice, call limit, and concurrency. On agents the same split applies: the `tools` macro declares the set, the new `tool_options` macro carries `choice:` / `calls:` / `concurrency:` (previously `tools choice: :required` silently wiped the toolset).
+`with_tools(nil)` clears the set; passing `nil` options to `with_tool_options` resets choice, call limit, and concurrency. On agents the same split applies: the `tools` macro declares the set, the new `tool_options` macro carries `choice:` / `calls:` / `concurrency:` (previously `tools choice: :required` silently wiped the toolset).
 
 ### Tools No Longer Halt the Loop
 
@@ -336,7 +318,7 @@ break if done_condition                # your halt, outside the tool
 chat.step until chat.complete?         # or let it run to completion
 ```
 
-See [Driving the Loop Yourself]({% link _advanced/agentic-workflows.md %}#driving-the-loop-yourself) and [Agent Handoffs]({% link _advanced/agent-handoffs.md %}) for the patterns that replace halting, including mid-conversation handoff to another agent.
+See [Driving the Loop Yourself]({% link _advanced/agentic-workflows.md %}#driving-the-loop-yourself) and [Agent Handoffs]({% link _advanced/agentic-workflows.md %}#agent-handoffs) for the patterns that replace halting, including mid-conversation handoff to another agent.
 
 ### create_user_message Removed
 
@@ -490,7 +472,7 @@ Cost helpers are available from 1.15 onward. They return `nil` for any cost buck
 
 `tokens.thinking` remains available from 1.10. From 1.15 onward, `tokens.output` is normalized as the billable output bucket. Do not add `tokens.thinking` to `tokens.output` yourself; RubyLLM includes thinking in output when the provider bills it as output, and exposes `cost.thinking` only for models with distinct reasoning-token pricing.
 
-See [Tracking Token Usage]({% link _core_features/chat-tokens.md %}#tracking-token-usage) for the provider comparison table and the exact normalized token semantics RubyLLM exposes.
+See [Tokens and Costs]({% link _core_features/cost-and-usage-tracking.md %}#how-providers-are-normalized) for the provider comparison table and the exact normalized token semantics RubyLLM exposes.
 
 # Upgrade to 1.14
 

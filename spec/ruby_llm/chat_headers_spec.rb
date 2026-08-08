@@ -15,18 +15,12 @@ RSpec.describe RubyLLM::Chat do
       expect(chat.with_headers('X-Test' => 'test')).to eq(chat)
     end
 
-    it 'clears headers with without_headers' do
+    it 'clears headers with with_headers(nil)' do
       chat = RubyLLM.chat.with_headers('X-Test' => 'test')
 
-      chat.without_headers
+      chat.with_headers(nil)
 
       expect(chat.headers).to eq({})
-    end
-
-    it 'rejects nil, pointing to without_headers' do
-      chat = RubyLLM.chat
-
-      expect { chat.with_headers(nil) }.to raise_error(ArgumentError, /without_headers/)
     end
 
     it 'requires headers' do

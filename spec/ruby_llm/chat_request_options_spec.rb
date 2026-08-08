@@ -24,31 +24,21 @@ RSpec.describe RubyLLM::Chat do
       expect(payload.dig(:generationConfig, :maxOutputTokens)).to eq(1234)
     end
 
-    it 'clears the limit with without_max_output_tokens' do
+    it 'clears the limit with with_max_output_tokens(nil)' do
       payload = RubyLLM.chat(model: 'gpt-4.1-nano', provider: :openai)
-                       .with_max_output_tokens(1234).without_max_output_tokens.render
+                       .with_max_output_tokens(1234).with_max_output_tokens(nil).render
 
       expect(payload).not_to have_key(:max_output_tokens)
-    end
-
-    it 'rejects nil, pointing to without_max_output_tokens' do
-      expect { RubyLLM.chat.with_max_output_tokens(nil) }.to raise_error(ArgumentError, /without_max_output_tokens/)
     end
   end
 
   describe 'with params' do
-    it 'clears provider options with without_provider_options' do
+    it 'clears provider options with with_provider_options(nil)' do
       chat = RubyLLM.chat.with_provider_options(max_tokens: 100)
 
-      chat.without_provider_options
+      chat.with_provider_options(nil)
 
       expect(chat.provider_options).to eq({})
-    end
-
-    it 'rejects nil, pointing to without_provider_options' do
-      chat = RubyLLM.chat
-
-      expect { chat.with_provider_options(nil) }.to raise_error(ArgumentError, /without_provider_options/)
     end
 
     it 'requires provider options' do

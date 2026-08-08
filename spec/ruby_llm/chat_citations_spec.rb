@@ -28,10 +28,10 @@ RSpec.describe RubyLLM::Chat do
       expect(chat.instance_variable_get(:@citations)).to be(true)
     end
 
-    it 'disables citations with without_citations' do
+    it 'disables citations with with_citations(false)' do
       chat = RubyLLM.chat.with_citations
 
-      chat.without_citations
+      chat.with_citations(false)
 
       expect(chat.instance_variable_get(:@citations)).to be(false)
     end

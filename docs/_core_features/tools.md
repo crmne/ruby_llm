@@ -127,10 +127,10 @@ chat.with_tools(weather_tool)
 # Or add multiple: chat.with_tools(WeatherLookup, AnotherTool.new)
 
 # Replace all tools with new ones
-chat.without_tools.with_tools(NewTool, AnotherTool)
+chat.with_tools(nil).with_tools(NewTool, AnotherTool)
 
 # Clear all tools
-chat.without_tools
+chat.with_tools(nil)
 
 response = chat.ask "What's the current weather like in Berlin? (Lat: 52.52, Long: 13.40)"
 puts response.content

@@ -57,10 +57,10 @@ chat.with_thinking(budget: 10_000)
 chat.with_thinking(effort: :none)
 ```
 
-Call `without_thinking` to clear the thinking configuration and return to the model's default behavior:
+Pass nil options to clear the thinking configuration and return to the model's default behavior:
 
 ```ruby
-chat.without_thinking
+chat.with_thinking(effort: nil)
 ```
 
 ### Effort and Budget

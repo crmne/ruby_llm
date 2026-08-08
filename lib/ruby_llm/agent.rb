@@ -170,8 +170,8 @@ module RubyLLM
       end
 
       # Enables or disables citations for chats this agent builds, applied
-      # via Chat#with_citations or Chat#without_citations. Called with no
-      # argument, returns the configured value.
+      # via Chat#with_citations. Called with no argument, returns the
+      # configured value.
       #
       #   citations true
       #
@@ -460,9 +460,7 @@ module RubyLLM
       end
 
       def apply_citations(chat)
-        return if citations.nil?
-
-        citations ? chat.with_citations : chat.without_citations
+        chat.with_citations(citations) unless citations.nil?
       end
 
       def apply_caching(chat, runtime)
@@ -608,265 +606,12 @@ module RubyLLM
     # The wrapped Chat, or the chat record in Rails mode.
     attr_reader :chat
 
-    ##
-    # :method: model
-    #
-    # Returns the Model::Info of the chat's model. See Chat#model.
-
-    ##
-    # :method: messages
-    #
-    # Returns the messages exchanged so far. See Chat#messages.
-
-    ##
-    # :method: tools
-    #
-    # Returns the tools registered on the chat. See Chat#tools.
-
-    ##
-    # :method: provider_options
-    #
-    # Returns the provider request options set on the chat. See
-    # Chat#provider_options.
-
-    ##
-    # :method: headers
-    #
-    # Returns the custom HTTP headers set on the chat. See Chat#headers.
-
-    ##
-    # :method: schema
-    #
-    # Returns the structured output schema set on the chat. See Chat#schema.
-
-    ##
-    # :method: caching
-    #
-    # Returns the prompt caching configuration. See Chat#caching.
-
-    ##
-    # :method: ask
-    #
-    # Sends a user message and returns the model's final response. See Chat#ask.
-
-    ##
-    # :method: say
-    #
-    # Same as #ask. See Chat#say.
-
-    ##
-    # :method: with_tools
-    #
-    # Registers tools on the chat. See Chat#with_tools.
-
-    ##
-    # :method: without_tools
-    #
-    # Removes all tools from the chat. See Chat#without_tools.
-
-    ##
-    # :method: with_tool_options
-    #
-    # Configures how the model uses its tools. See Chat#with_tool_options.
-
-    ##
-    # :method: without_tool_options
-    #
-    # Resets the tool options. See Chat#without_tool_options.
-
-    ##
-    # :method: with_model
-    #
-    # Switches the chat to a different model. See Chat#with_model.
-
-    ##
-    # :method: with_temperature
-    #
-    # Sets the sampling temperature. See Chat#with_temperature.
-
-    ##
-    # :method: without_temperature
-    #
-    # Removes the temperature override. See Chat#without_temperature.
-
-    ##
-    # :method: with_thinking
-    #
-    # Adjusts thinking effort or budget. See Chat#with_thinking.
-
-    ##
-    # :method: without_thinking
-    #
-    # Clears the thinking configuration. See Chat#without_thinking.
-
-    ##
-    # :method: with_citations
-    #
-    # Enables citations. See Chat#with_citations.
-
-    ##
-    # :method: without_citations
-    #
-    # Disables citations. See Chat#without_citations.
-
-    ##
-    # :method: with_caching
-    #
-    # Configures prompt caching. See Chat#with_caching.
-
-    ##
-    # :method: without_caching
-    #
-    # Disables prompt caching. See Chat#without_caching.
-
-    ##
-    # :method: with_context
-    #
-    # Applies a configuration Context. See Chat#with_context.
-
-    ##
-    # :method: without_context
-    #
-    # Returns the chat to the global configuration. See Chat#without_context.
-
-    ##
-    # :method: with_provider_options
-    #
-    # Sets options in the provider's request vocabulary. See
-    # Chat#with_provider_options.
-
-    ##
-    # :method: without_provider_options
-    #
-    # Removes all provider request options. See Chat#without_provider_options.
-
-    ##
-    # :method: with_headers
-    #
-    # Sets custom HTTP headers. See Chat#with_headers.
-
-    ##
-    # :method: without_headers
-    #
-    # Removes all custom HTTP headers. See Chat#without_headers.
-
-    ##
-    # :method: with_schema
-    #
-    # Sets a structured output schema. See Chat#with_schema.
-
-    ##
-    # :method: without_schema
-    #
-    # Removes the structured output schema. See Chat#without_schema.
-
-    ##
-    # :method: with_fallbacks
-    #
-    # Configures fallback models. See Chat#with_fallbacks.
-
-    ##
-    # :method: without_fallbacks
-    #
-    # Removes all fallback models. See Chat#without_fallbacks.
-
-    ##
-    # :method: before_message
-    #
-    # Registers a callback run before each assistant message. See Chat#before_message.
-
-    ##
-    # :method: after_message
-    #
-    # Registers a callback run after each assistant message. See Chat#after_message.
-
-    ##
-    # :method: before_tool_call
-    #
-    # Registers a callback run before each tool call. See Chat#before_tool_call.
-
-    ##
-    # :method: after_tool_result
-    #
-    # Registers a callback run after each tool result. See Chat#after_tool_result.
-
-    ##
-    # :method: before_fallback
-    #
-    # Registers a callback run before trying a fallback model. See Chat#before_fallback.
-
-    ##
-    # :method: after_fallback
-    #
-    # Registers a callback run after a fallback attempt. See Chat#after_fallback.
-
-    ##
-    # :method: each
-    #
-    # Yields each message in the conversation. See Chat#each.
-
-    ##
-    # :method: complete
-    #
-    # Runs the agentic loop until nothing is left to do. See Chat#complete.
-
-    ##
-    # :method: complete?
-    #
-    # Returns whether the conversation needs no further work. See Chat#complete?.
-
-    ##
-    # :method: cancel!
-    #
-    # Cancels the current in-flight chat operation. See Chat#cancel!.
-
-    ##
-    # :method: cancelled?
-    #
-    # Returns whether the chat has been marked for cancellation. See Chat#cancelled?.
-
-    ##
-    # :method: ask_later
-    #
-    # Stages a question without asking it. See Chat#ask_later.
-
-    ##
-    # :method: generate
-    #
-    # Calls the model once and appends its response. See Chat#generate.
-
-    ##
-    # :method: run_tools
-    #
-    # Executes the pending tool calls and appends their results. See Chat#run_tools.
-
-    ##
-    # :method: step
-    #
-    # Advances the conversation by one move. See Chat#step.
-
-    ##
-    # :method: add_message
-    #
-    # Appends a message to the conversation. See Chat#add_message.
-
-    ##
-    # :method: add_completion
-    #
-    # Appends a completed response to the conversation. See Chat#add_completion.
-
-    ##
-    # :method: cost
-    #
-    # Returns the accumulated cost of the conversation. See Chat#cost.
-
+    # Agent instances delegate the Chat API to the wrapped #chat. Each
+    # delegated method behaves exactly as documented on Chat.
     def_delegators :chat, :model, :messages, :tools, :provider_options, :headers, :schema, :caching, :ask, :say,
-                   :with_tools, :without_tools, :with_tool_options, :without_tool_options, :with_model,
-                   :with_temperature, :without_temperature, :with_max_output_tokens, :without_max_output_tokens,
-                   :with_thinking, :without_thinking, :with_citations, :without_citations, :with_caching,
-                   :without_caching, :with_context, :without_context, :with_provider_options,
-                   :without_provider_options, :with_headers, :without_headers, :with_schema, :without_schema,
-                   :with_fallbacks, :without_fallbacks, :before_message, :after_message, :before_tool_call,
+                   :with_tools, :with_tool_options, :with_model, :with_temperature, :with_max_output_tokens,
+                   :with_thinking, :with_citations, :with_caching, :with_context, :with_provider_options,
+                   :with_headers, :with_schema, :with_fallbacks, :before_message, :after_message, :before_tool_call,
                    :after_tool_result, :before_fallback, :after_fallback, :each, :complete, :complete?, :ask_later,
                    :cancel!, :cancelled?, :generate, :run_tools, :step, :add_message, :add_completion, :tokens, :cost
   end

@@ -125,19 +125,12 @@ module RubyLLM
       end
 
       # Rebinds the underlying chat to +value+ so subsequent requests use its
-      # configuration. The Context itself is runtime-only and is not persisted.
+      # configuration. Pass +nil+ to return to the global RubyLLM
+      # configuration. The Context itself is runtime-only and is not
+      # persisted.
       def with_context(value)
-        raise ArgumentError, 'To return to the global configuration, use without_context' if value.nil?
-
         self.context = value
         @chat&.with_context(value)
-        self
-      end
-
-      # Returns the underlying chat to the global RubyLLM configuration.
-      def without_context
-        self.context = nil
-        @chat&.without_context
         self
       end
 
@@ -149,19 +142,13 @@ module RubyLLM
       #   chat.with_instructions "Use short bullet points.", append: true
       #
       def with_instructions(instructions, append: false)
-        raise ArgumentError, 'To remove instructions, use without_instructions' if instructions.nil?
-
-        persist_system_instruction(instructions, append:)
+        if instructions.nil?
+          clear_persisted_system_instructions
+        else
+          persist_system_instruction(instructions, append:)
+        end
 
         to_llm.with_instructions(instructions, append:)
-        self
-      end
-
-      # Deletes the persisted system messages and removes them from the
-      # underlying chat. Returns +self+.
-      def without_instructions
-        clear_persisted_system_instructions
-        to_llm.without_instructions
         self
       end
 
@@ -178,38 +165,22 @@ module RubyLLM
         self
       end
 
-      # Registers tools the model may call during the conversation. See
-      # RubyLLM::Chat#with_tools. Returns +self+.
-      #
-      #   chat.with_tools Weather
-      #
-      def with_tools(...)
-        to_llm.with_tools(...)
-        self
-      end
+      # Chat configuration and callback methods forwarded to the underlying
+      # RubyLLM::Chat. Each behaves exactly as documented on RubyLLM::Chat,
+      # then returns the record so calls chain.
+      CHAT_DELEGATES = %i[
+        with_tools with_tool_options with_fallbacks with_temperature
+        with_max_output_tokens with_thinking with_citations with_caching
+        with_provider_options with_headers with_schema
+        before_message after_message before_tool_call after_tool_result
+        before_fallback after_fallback
+      ].freeze
 
-      # Removes all registered tools, leaving the tool options unchanged.
-      # See RubyLLM::Chat#without_tools. Returns +self+.
-      def without_tools
-        to_llm.without_tools
-        self
-      end
-
-      # Configures how the model uses the registered tools. See
-      # RubyLLM::Chat#with_tool_options. Returns +self+.
-      #
-      #   chat.with_tools(Weather).with_tool_options(choice: :required)
-      #
-      def with_tool_options(...)
-        to_llm.with_tool_options(...)
-        self
-      end
-
-      # Resets the options set with #with_tool_options. See
-      # RubyLLM::Chat#without_tool_options. Returns +self+.
-      def without_tool_options
-        to_llm.without_tool_options
-        self
+      CHAT_DELEGATES.each do |name|
+        define_method(name) do |*args, **kwargs, &block|
+          to_llm.public_send(name, *args, **kwargs, &block)
+          self
+        end
       end
 
       # Switches the chat to +model_name+, resolving and saving the model
@@ -228,182 +199,6 @@ module RubyLLM
         resolve_model
         save!
         to_llm.with_model(model_id, provider: provider&.to_sym, protocol:, assume_model_exists:)
-        self
-      end
-
-      # Sets fallback models tried in order when the primary model fails.
-      # Not persisted; reapply after reloading the record. See
-      # RubyLLM::Chat#with_fallbacks. Returns +self+.
-      #
-      #   chat.with_fallbacks 'gpt-4.1-mini', 'claude-haiku-4-5'
-      #
-      def with_fallbacks(...)
-        to_llm.with_fallbacks(...)
-        self
-      end
-
-      # Removes all fallback models from the underlying chat. See
-      # RubyLLM::Chat#without_fallbacks. Returns +self+.
-      def without_fallbacks
-        to_llm.without_fallbacks
-        self
-      end
-
-      # Sets the sampling temperature on the underlying chat. See
-      # RubyLLM::Chat#with_temperature. Returns +self+.
-      def with_temperature(...)
-        to_llm.with_temperature(...)
-        self
-      end
-
-      # Caps the number of tokens the model may generate. See
-      # RubyLLM::Chat#with_max_output_tokens. Returns +self+.
-      def with_max_output_tokens(...)
-        to_llm.with_max_output_tokens(...)
-        self
-      end
-
-      # Removes the output token limit from the underlying chat. See
-      # RubyLLM::Chat#without_max_output_tokens. Returns +self+.
-      def without_max_output_tokens
-        to_llm.without_max_output_tokens
-        self
-      end
-
-      # Removes the temperature override from the underlying chat. See
-      # RubyLLM::Chat#without_temperature. Returns +self+.
-      def without_temperature
-        to_llm.without_temperature
-        self
-      end
-
-      # Configures extended thinking on the underlying chat. See
-      # RubyLLM::Chat#with_thinking. Returns +self+.
-      def with_thinking(...)
-        to_llm.with_thinking(...)
-        self
-      end
-
-      # Clears the thinking configuration on the underlying chat. See
-      # RubyLLM::Chat#without_thinking. Returns +self+.
-      def without_thinking
-        to_llm.without_thinking
-        self
-      end
-
-      # Enables citations on the underlying chat. See
-      # RubyLLM::Chat#with_citations. Returns +self+.
-      def with_citations
-        to_llm.with_citations
-        self
-      end
-
-      # Disables citations on the underlying chat. See
-      # RubyLLM::Chat#without_citations. Returns +self+.
-      def without_citations
-        to_llm.without_citations
-        self
-      end
-
-      # Configures prompt caching on the underlying chat. See
-      # RubyLLM::Chat#with_caching. Returns +self+.
-      def with_caching(...)
-        to_llm.with_caching(...)
-        self
-      end
-
-      # Disables prompt caching on the underlying chat. See
-      # RubyLLM::Chat#without_caching. Returns +self+.
-      def without_caching
-        to_llm.without_caching
-        self
-      end
-
-      # Sets options in the provider's request vocabulary on the underlying
-      # chat. See RubyLLM::Chat#with_provider_options. Returns +self+.
-      def with_provider_options(...)
-        to_llm.with_provider_options(...)
-        self
-      end
-
-      # Removes all provider request options from the underlying chat. See
-      # RubyLLM::Chat#without_provider_options. Returns +self+.
-      def without_provider_options
-        to_llm.without_provider_options
-        self
-      end
-
-      # Sets custom HTTP headers on the underlying chat. See
-      # RubyLLM::Chat#with_headers. Returns +self+.
-      def with_headers(...)
-        to_llm.with_headers(...)
-        self
-      end
-
-      # Removes all custom HTTP headers from the underlying chat. See
-      # RubyLLM::Chat#without_headers. Returns +self+.
-      def without_headers
-        to_llm.without_headers
-        self
-      end
-
-      # Sets a schema for structured output. See RubyLLM::Chat#with_schema.
-      # Returns +self+.
-      #
-      #   chat.with_schema(PersonSchema).ask "Generate a person from Paris"
-      #
-      def with_schema(...)
-        to_llm.with_schema(...)
-        self
-      end
-
-      # Removes the structured output schema from the underlying chat. See
-      # RubyLLM::Chat#without_schema. Returns +self+.
-      def without_schema
-        to_llm.without_schema
-        self
-      end
-
-      # Registers a callback run before each new message is appended to the
-      # conversation. See RubyLLM::Chat#before_message. Returns +self+.
-      def before_message(...)
-        to_llm.before_message(...)
-        self
-      end
-
-      # Registers a callback run with each message once it has been appended,
-      # including assistant responses and tool results. See
-      # RubyLLM::Chat#after_message. Returns +self+.
-      def after_message(...)
-        to_llm.after_message(...)
-        self
-      end
-
-      # Registers a callback run before each tool call executes.
-      # See RubyLLM::Chat#before_tool_call. Returns +self+.
-      def before_tool_call(...)
-        to_llm.before_tool_call(...)
-        self
-      end
-
-      # Registers a callback run after each tool call returns its result.
-      # See RubyLLM::Chat#after_tool_result. Returns +self+.
-      def after_tool_result(...)
-        to_llm.after_tool_result(...)
-        self
-      end
-
-      # Registers a callback run before a fallback model is tried.
-      # See RubyLLM::Chat#before_fallback. Returns +self+.
-      def before_fallback(...)
-        to_llm.before_fallback(...)
-        self
-      end
-
-      # Registers a callback run after a fallback attempt finishes.
-      # See RubyLLM::Chat#after_fallback. Returns +self+.
-      def after_fallback(...)
-        to_llm.after_fallback(...)
         self
       end
 
