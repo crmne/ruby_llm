@@ -161,4 +161,4 @@ Rails apps automatically emit RubyLLM events through `ActiveSupport::Notificatio
 *   [Persistence with acts_as]({% link _advanced/rails-persistence.md %}) - the models these configurations apply to.
 *   [Scale with Async]({% link _advanced/async.md %}) - run concurrent, fiber-based workloads at scale.
 *   [Instrumentation and Observability]({% link _advanced/instrumentation.md %}) - monitor and trace RubyLLM in production.
-*   [Token Usage and Cost]({% link _core_features/chat-tokens.md %}) - the full token and cost reference.
+*   [Tokens and Costs]({% link _core_features/cost-and-usage-tracking.md %}) - the full token and cost reference.

@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Retrieval-Augmented Generation (RAG)
-parent: "Agentic Workflows"
+parent: "Agents"
 nav_order: 2
 description: Retrieve relevant context from your own documents, then answer with that context
 ---

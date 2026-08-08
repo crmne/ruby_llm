@@ -100,6 +100,7 @@ Each part of Rails integration has its own focused guide:
 
 *   [Persistence with acts_as]({% link _advanced/rails-persistence.md %}) - wire up `acts_as_chat` and `acts_as_message`, then work with chats, tools, usage, attachments, and structured output.
 *   [Streaming with Hotwire/Turbo]({% link _advanced/rails-streaming.md %}) - broadcast tokens in real time with Turbo Streams and background jobs.
+*   [Durable agents with background jobs]({% link _advanced/agentic-workflows.md %}#driving-the-loop-yourself) - run each agent turn as its own job and survive deploys with ActiveJob Continuations.
 *   [Generators and App Conventions]({% link _advanced/rails-generators.md %}) - the install and chat UI generators, view conventions, and the conventional app directory structure.
 *   [Advanced Rails Configuration]({% link _advanced/rails-advanced-config.md %}) - provider overrides, custom contexts, raw provider payloads, and fiber-safe connections.
 

@@ -219,11 +219,11 @@ response = chat.with_schema(ProductSchema).ask "Analyze this product", with: "pr
 * **Streaming:** Real-time responses with blocks
 * **Rails:** ActiveRecord integration with `acts_as_chat`
 * **Async:** Fiber-based concurrency
-* **Model registry:** 800+ models with capability detection and pricing
+* **Model registry:** 1,100+ models with capability detection and pricing
 * **Extended thinking:** Control, view, and persist model deliberation
 * **Citations:** Normalized source citations from documents, search, and grounding
 * **Batches:** Provider-side batch processing at half price with `RubyLLM.batch`
-* **Providers:** OpenAI, xAI, Anthropic, Gemini, VertexAI, Bedrock, DeepSeek, Mistral, Ollama, OpenRouter, Perplexity, GPUStack, and any OpenAI-compatible API
+* **Providers:** OpenAI, Azure, xAI, Anthropic, Gemini, VertexAI, Bedrock, DeepSeek, Mistral, Ollama, OpenRouter, Perplexity, GPUStack, and any OpenAI-compatible API
 
 ## Installation
 

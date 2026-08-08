@@ -212,7 +212,7 @@ tenant_b_service = TenantService.new(tenant_b)
 
 ## Next Steps
 
-- [Configuration Reference]({% link _getting_started/configuration-reference.md %}) - the complete option list in one block.
+- [Configuration]({% link _getting_started/configuration.md %}#full-reference) - the complete option list in one block.
 - [Provider Setup and Custom Endpoints]({% link _getting_started/configuration-providers.md %}) - per-provider keys and OpenAI-compatible endpoints.
 - [Instrumentation and Observability]({% link _advanced/instrumentation.md %}) - hook RubyLLM into your metrics and tracing stack.
 - [Working with Models]({% link _reference/models.md %}) - discover, select, and refresh models.

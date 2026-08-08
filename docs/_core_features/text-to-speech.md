@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Text to Speech
-nav_order: 5
+nav_order: 6
 description: Convert text into spoken audio
 redirect_from:
   - /guides/text-to-speech

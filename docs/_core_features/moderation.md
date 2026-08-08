@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Moderation
-nav_order: 6
+nav_order: 7
 description: Identify potentially harmful content in text using AI moderation models before sending to LLMs
 redirect_from:
   - /guides/moderation
