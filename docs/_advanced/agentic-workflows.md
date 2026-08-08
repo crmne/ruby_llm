@@ -65,6 +65,30 @@ class AgentTurnJob < ApplicationJob
 end
 ```
 
+It is safe to interrupt the loop between moves. Each verb decides what to do next by reading the persisted messages, and `run_tools` skips tool calls that already have results. If a process dies after running one tool call of three, reloading the chat and calling `step` executes only the two remaining tool calls.
+
+On Rails 8.1 and later, [ActiveJob Continuations](https://api.rubyonrails.org/classes/ActiveJob/Continuable.html) builds on this to run agents that survive deploys. Checkpoint after each move; when the queue adapter interrupts the job during a restart, the job is requeued and the loop continues from the persisted messages:
+
+```ruby
+class AgentRunJob < ApplicationJob
+  include ActiveJob::Continuable
+
+  def perform(chat_id)
+    step :agent_loop do |job_step|
+      chat = Chat.find(chat_id)
+      until chat.complete?
+        chat.step
+        job_step.checkpoint!
+      end
+    end
+  end
+end
+```
+
+ActiveJob's `step` and the chat's `step` are unrelated methods. The job step wraps the whole loop, and each checkpoint marks a point where the job may be interrupted. The step does not need a cursor, because the persisted messages already record how far the loop has progressed.
+
+Interruption does not give you exactly-once execution. A job that dies after the model responds but before the message is saved repeats that model call when it resumes, and a job that dies after a tool runs but before its result is saved runs that tool again. Write tools so that running them twice is safe.
+
 [Batches]({% link _advanced/batches.md %}) are the same idea at scale: a batch is `generate` deferred for many chats at once, with `run_tools` run locally between rounds.
 
 ## Workflow Patterns

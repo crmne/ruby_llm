@@ -137,25 +137,27 @@ module RubyLLM
     end
 
     # Executes the tool calls pending in the latest response and appends
-    # their result messages, without asking the model to respond. Does
-    # nothing when no tool calls are pending. The chat is then ready for
-    # the next #generate, or the next batch round. Returns +self+.
+    # their result messages, without asking the model to respond. Tool
+    # calls that already have results are skipped, so a chat reloaded
+    # mid-round resumes with only the remaining tools. Does nothing when
+    # no tool calls are pending. The chat is then ready for the next
+    # #generate, or the next batch round. Returns +self+.
     def run_tools
       raise_if_cancelled!
 
-      message = last_non_system_message
-      execute_pending_tool_calls(message) if message&.tool_call?
+      message = pending_tool_response
+      execute_pending_tool_calls(message) if message
       self
     end
 
-    # Advances the conversation by one move: runs the pending tool calls if
-    # the model asked for them, otherwise generates the next response.
+    # Advances the conversation by one move: runs the pending tool calls
+    # if any are unanswered, otherwise generates the next response.
     # Returns +nil+ once there is nothing left to do.
     def step(&)
       return if complete?
 
       raise_if_cancelled!
-      last_non_system_message&.tool_call? ? run_tools : generate(&)
+      pending_tool_response ? run_tools : generate(&)
     end
 
     # Runs the agentic loop until #complete? is +true+ and returns the last
@@ -943,10 +945,11 @@ module RubyLLM
     def execute_pending_tool_calls(response)
       raise_if_cancelled!
 
+      pending = pending_tool_calls(response)
       if concurrency
-        handle_concurrent_tool_calls(response.tool_calls)
+        handle_concurrent_tool_calls(pending)
       else
-        handle_sequential_tool_calls(response.tool_calls)
+        handle_sequential_tool_calls(pending)
       end
 
       @tool_prefs[:choice] = nil if forced_tool_choice?
@@ -1092,6 +1095,16 @@ module RubyLLM
 
     def last_non_system_message
       messages.reverse.find { |message| message.role != :system }
+    end
+
+    def pending_tool_response
+      response = messages.reverse.find { |message| message.role != :system && !message.tool_result? }
+      response if response&.tool_call? && pending_tool_calls(response).any?
+    end
+
+    def pending_tool_calls(response)
+      answered = messages.filter_map { |message| message.tool_call_id if message.tool_result? }
+      response.tool_calls.except(*answered)
     end
   end
 end

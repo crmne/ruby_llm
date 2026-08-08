@@ -135,7 +135,7 @@ end
 
 RubyLLM automatically carries the current workflow and step through its own concurrent tool execution. A dashboard can reconstruct what ran from these events, but the API deliberately does not declare a static graph or represent branches that never executed.
 
-Workflows nest the way OpenTelemetry spans do. A `RubyLLM.workflow` call inside another workflow keeps its own identity: its events carry the inner `workflow_id` and `workflow_name`, plus `workflow_parent_id` and, when the nesting happened inside a step, `workflow_parent_step_id`. The outer workflow's context is restored when the inner block returns. This keeps independently instrumented code composable; a service object that declares its own workflow shows up as a sub-tree when a larger workflow calls it.
+Workflows can nest. A `RubyLLM.workflow` call inside another workflow keeps its own identity: its events carry the inner `workflow_id` and `workflow_name`, plus `workflow_parent_id` and, when the nesting happened inside a step, `workflow_parent_step_id`. The outer workflow's context is restored when the inner block returns. A service object that declares its own workflow therefore appears as a sub-tree when a larger workflow calls it, the same way nested spans appear in OpenTelemetry.
 
 Workflow context lasts exactly as long as the block. Work that resumes elsewhere, such as polling a [batch]({% link _advanced/batches.md %}) for results in a later job, is not tagged automatically; re-enter `RubyLLM.workflow` with the persisted ID to correlate it:
 

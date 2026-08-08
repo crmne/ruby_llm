@@ -29,6 +29,21 @@ RSpec.describe RubyLLM::Chat do
     )
   end
 
+  def multi_tool_call_message
+    RubyLLM::Message.new(
+      role: :assistant,
+      content: '',
+      tool_calls: {
+        'call_1' => RubyLLM::ToolCall.new(id: 'call_1', name: 'echo', arguments: { 'text' => 'first' }),
+        'call_2' => RubyLLM::ToolCall.new(id: 'call_2', name: 'echo', arguments: { 'text' => 'second' })
+      }
+    )
+  end
+
+  def tool_result_message(tool_call_id, content)
+    RubyLLM::Message.new(role: :tool, content: content, tool_call_id: tool_call_id)
+  end
+
   describe '#ask_later' do
     it 'stages the question without asking the model' do
       allow(chat.provider).to receive(:complete)
@@ -56,6 +71,14 @@ RSpec.describe RubyLLM::Chat do
 
       chat.add_completion answer_message
       expect(chat).to be_complete # answered, no tools
+    end
+
+    it 'is not complete while a tool round is partially answered' do
+      chat.ask_later('Echo twice.')
+      chat.add_message multi_tool_call_message
+      chat.add_message tool_result_message('call_1', 'first')
+
+      expect(chat).not_to be_complete
     end
 
     it 'is complete on a chat with only instructions' do
@@ -163,6 +186,28 @@ RSpec.describe RubyLLM::Chat do
 
       expect { chat.run_tools }.not_to(change { chat.messages.size })
     end
+
+    it 'executes only the tool calls that have no results yet' do
+      allow(chat.provider).to receive(:complete)
+      chat.ask_later('Echo twice.')
+      chat.add_message multi_tool_call_message
+      chat.add_message tool_result_message('call_1', 'first')
+
+      chat.run_tools
+
+      results = chat.messages.select(&:tool_result?)
+      expect(results.map(&:tool_call_id)).to eq(%w[call_1 call_2])
+      expect(results.last.content).to eq('second')
+    end
+
+    it 'does nothing when every tool call in the round is answered' do
+      chat.ask_later('Echo twice.')
+      chat.add_message multi_tool_call_message
+      chat.add_message tool_result_message('call_1', 'first')
+      chat.add_message tool_result_message('call_2', 'second')
+
+      expect { chat.run_tools }.not_to(change { chat.messages.size })
+    end
   end
 
   describe '#step' do
@@ -190,6 +235,28 @@ RSpec.describe RubyLLM::Chat do
 
       expect(chat.step).to be_nil
     end
+
+    it 'finishes an interrupted tool round before generating' do
+      allow(chat.provider).to receive(:complete)
+      chat.ask_later('Echo twice.')
+      chat.add_message multi_tool_call_message
+      chat.add_message tool_result_message('call_1', 'first')
+
+      chat.step
+
+      expect(chat.provider).not_to have_received(:complete)
+      expect(chat.messages.count(&:tool_result?)).to eq(2)
+    end
+
+    it 'generates once every tool call in the round is answered' do
+      allow(chat.provider).to receive(:complete).and_return(answer_message)
+      chat.ask_later('Echo twice.')
+      chat.add_message multi_tool_call_message
+      chat.add_message tool_result_message('call_1', 'first')
+      chat.add_message tool_result_message('call_2', 'second')
+
+      expect(chat.step).to be(answer_message)
+    end
   end
 
   describe '#complete' do
@@ -202,6 +269,19 @@ RSpec.describe RubyLLM::Chat do
 
       expect(response.content).to eq('hello')
       expect(chat.messages.map(&:role)).to eq(%i[user assistant tool assistant])
+      expect(chat.provider).to have_received(:complete).once
+    end
+
+    it 'resumes a chat interrupted between tool executions' do
+      allow(chat.provider).to receive(:complete).and_return(answer_message)
+      chat.ask_later('Echo twice.')
+      chat.add_message multi_tool_call_message
+      chat.add_message tool_result_message('call_1', 'first')
+
+      response = chat.complete
+
+      expect(response).to be(answer_message)
+      expect(chat.messages.map(&:role)).to eq(%i[user assistant tool tool assistant])
       expect(chat.provider).to have_received(:complete).once
     end
 
