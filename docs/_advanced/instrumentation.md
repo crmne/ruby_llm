@@ -76,6 +76,75 @@ end
 
 You can also set `instrumenter` on a [context]({% link _getting_started/configuration-connection.md %}#contexts-isolated-configurations) when you only want instrumentation around a specific operation.
 
+## Workflows and Steps
+
+Use `RubyLLM.workflow` to correlate all the RubyLLM activity produced by ordinary Ruby orchestration. It does not execute, route, retry, or persist the workflow; your Ruby code remains in charge:
+
+```ruby
+RubyLLM.workflow("Write article", id: "article-42") do |workflow|
+  notes = workflow.step("Research") do
+    ResearchAgent.new.ask("Research Ruby 3.3 features").content
+  end
+
+  workflow.step("Draft") do
+    WriterAgent.new.ask(notes).content
+  end
+end
+```
+
+The ID is optional. RubyLLM generates a UUID when it is omitted. Pass an application ID when you need to correlate the same logical workflow across logs, records, or background jobs.
+
+Pass `metadata:` to attach application data to the whole workflow:
+
+```ruby
+RubyLLM.workflow("Write article", metadata: { account_id: account.id }) do |workflow|
+  # ...
+end
+```
+
+Nested events receive it as `workflow_metadata`, a separate key from the per-call `metadata` payload described below, so the two never collide.
+
+`Context#workflow` provides the same API while using that context's instrumenter:
+
+```ruby
+tenant_llm.workflow("Answer support request", id: ticket.id) do |workflow|
+  workflow.step("Answer") { tenant_llm.chat.ask(ticket.question) }
+end
+```
+
+Every event inside the workflow receives `workflow_id` and `workflow_name`. Events inside a step also receive `workflow_step_id` and `workflow_step_name`. Nested steps include `workflow_step_parent_id`, allowing an instrumentation adapter to render the observed execution tree.
+
+The wrappers also emit `workflow.ruby_llm` and `workflow_step.ruby_llm` events around their blocks. Their timings and exception behavior therefore come from the configured instrumenter in exactly the same way as other RubyLLM block events.
+
+Branches, loops, fan-out, and fan-in stay as normal Ruby. For concurrent application code, start the step inside each task so the task establishes its own context:
+
+```ruby
+RubyLLM.workflow("Review code") do |workflow|
+  Async do |task|
+    security = task.async do
+      workflow.step("Security review") { SecurityAgent.new.ask(code) }
+    end
+    style = task.async do
+      workflow.step("Style review") { StyleAgent.new.ask(code) }
+    end
+
+    [security.wait, style.wait]
+  end.wait
+end
+```
+
+RubyLLM automatically carries the current workflow and step through its own concurrent tool execution. A dashboard can reconstruct what ran from these events, but the API deliberately does not declare a static graph or represent branches that never executed.
+
+Workflows nest the way OpenTelemetry spans do. A `RubyLLM.workflow` call inside another workflow keeps its own identity: its events carry the inner `workflow_id` and `workflow_name`, plus `workflow_parent_id` and, when the nesting happened inside a step, `workflow_parent_step_id`. The outer workflow's context is restored when the inner block returns. This keeps independently instrumented code composable; a service object that declares its own workflow shows up as a sub-tree when a larger workflow calls it.
+
+Workflow context lasts exactly as long as the block. Work that resumes elsewhere, such as polling a [batch]({% link _advanced/batches.md %}) for results in a later job, is not tagged automatically; re-enter `RubyLLM.workflow` with the persisted ID to correlate it:
+
+```ruby
+RubyLLM.workflow("Nightly summaries", id: batch_record.workflow_id) do |workflow|
+  workflow.step("Collect results") { RubyLLM::Batch.find(batch_record.batch_id, provider: :anthropic).messages }
+end
+```
+
 ## Per-Call Metadata
 
 One-shot APIs accept `metadata:` for application observability data:
@@ -93,6 +162,8 @@ RubyLLM includes that value as `payload[:metadata]` on the emitted event. It is 
 
 RubyLLM emits these events:
 
+*   `workflow.ruby_llm` - one named workflow block and its correlation ID
+*   `workflow_step.ruby_llm` - one named code region within a workflow
 *   `request.ruby_llm` - HTTP request metadata such as provider, method, URL, and status
 *   `usage.ruby_llm` - one finished provider attempt, including retries and cancellations, with status, tokens, and cost
 *   `chat.ruby_llm` - chat completion metadata including model, provider, messages, response, and token usage

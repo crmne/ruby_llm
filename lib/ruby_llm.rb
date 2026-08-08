@@ -113,6 +113,24 @@ module RubyLLM
       Context.new(context_config)
     end
 
+    # Runs ordinary Ruby code as a named, instrumented workflow. Every RubyLLM
+    # event emitted inside the block includes the workflow ID and name. Wrap
+    # meaningful regions with Workflow#step to add step correlation.
+    #
+    #   RubyLLM.workflow("Write article", id: "article-42") do |workflow|
+    #     notes = workflow.step("Research") { researcher.ask(topic).content }
+    #     workflow.step("Draft") { writer.ask(notes).content }
+    #   end
+    #
+    # If +id:+ is omitted, RubyLLM generates one. Pass +metadata:+ to attach
+    # application data to every nested event as +workflow_metadata+. Workflows
+    # may nest; an inner workflow keeps its own identity and records its
+    # parent as +workflow_parent_id+. The block's return value is returned
+    # unchanged.
+    def workflow(name, id: nil, metadata: nil, &)
+      Workflow.new(name, id:, metadata:, config: config).run(&)
+    end
+
     # Creates a Chat conversation. Arguments are forwarded to Chat.new:
     # +model:+, +provider:+, +assume_model_exists:+, and +context:+. With
     # no arguments, uses the configured default model.

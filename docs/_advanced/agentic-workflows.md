@@ -30,6 +30,8 @@ After reading this guide, you will know:
 
 A workflow is just orchestration code that coordinates one or more agents. In practice, this is often a small Ruby class with a single public method, plus a loop you control. Before you build a multi-agent workflow, it helps to understand how a single agent's turn-by-turn loop runs, so you can pause it, persist it, and resume it on demand.
 
+When you want to see the whole operation as one unit in your observability stack, wrap that Ruby code with `RubyLLM.workflow` and mark meaningful regions with `workflow.step`. These wrappers only add correlation to [instrumentation]({% link _advanced/instrumentation.md %}#workflows-and-steps); they do not introduce a workflow DSL or take over execution.
+
 ## Driving the Loop Yourself
 
 `ask` sends your message and runs the conversation to completion: it calls the model, runs any [tools]({% link _core_features/tools.md %}) the model asks for, and calls the model again until it answers without a tool. When you need to control that loop, for example to run each turn as its own background job, set an iteration budget, or stop and resume on another machine, `Chat` exposes it as named verbs:

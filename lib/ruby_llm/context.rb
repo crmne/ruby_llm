@@ -38,6 +38,12 @@ module RubyLLM
       Chat.new(*args, **kwargs, context: self, &)
     end
 
+    # Runs a named workflow using this context's instrumenter. Accepts the same
+    # arguments as RubyLLM.workflow.
+    def workflow(name, id: nil, metadata: nil, &)
+      Workflow.new(name, id:, metadata:, config: config).run(&)
+    end
+
     # Generates embeddings using this context's configuration.
     # Accepts the same arguments as RubyLLM.embed.
     def embed(*args, **kwargs, &)

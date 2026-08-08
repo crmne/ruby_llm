@@ -34,6 +34,7 @@ component :domain, in: %w[
   lib/ruby_llm/usage.rb
   lib/ruby_llm/uploaded_file.rb
   lib/ruby_llm/uploaded_file/**/*.rb
+  lib/ruby_llm/workflow.rb
 ]
 
 # Narrow views of two domain objects, so their surfaces can be related: the

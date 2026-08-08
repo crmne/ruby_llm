@@ -18,9 +18,14 @@ module RubyLLM
 
     def run_with_threads(tool_calls, on_result:, &execute)
       executor = rails_executor
+      workflow_context = Instrumentation.current_workflow
       queue = Queue.new
       threads = tool_calls.each_value.with_index.map do |tool_call, index|
-        thread = Thread.new { queue << capture_result(index, tool_call, executor, execute) }
+        thread = Thread.new do
+          Instrumentation.with_workflow(workflow_context) do
+            queue << capture_result(index, tool_call, executor, execute)
+          end
+        end
         thread.report_on_exception = false
         thread
       end
@@ -40,10 +45,15 @@ module RubyLLM
       end
 
       executor = rails_executor
+      workflow_context = Instrumentation.current_workflow
       Async do |task|
         queue = Async::Queue.new
         tasks = tool_calls.each_value.with_index.map do |tool_call, index|
-          task.async { queue << capture_result(index, tool_call, executor, execute) }
+          task.async do
+            Instrumentation.with_workflow(workflow_context) do
+              queue << capture_result(index, tool_call, executor, execute)
+            end
+          end
         end
 
         collect_results(queue, tasks.size, on_result:)

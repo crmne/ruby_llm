@@ -57,6 +57,19 @@ RSpec.describe RubyLLM::ToolConcurrency do
                           ])
   end
 
+  it 'propagates workflow context to threaded tool calls' do
+    workflow_context = { workflow_id: 'workflow-1', workflow_step_id: 'step-1' }.freeze
+    observed_contexts = Queue.new
+
+    RubyLLM::Instrumentation.with_workflow(workflow_context) do
+      described_class.run(:threads, tool_calls) do
+        observed_contexts << RubyLLM::Instrumentation.current_workflow
+      end
+    end
+
+    expect(Array.new(2) { observed_contexts.pop }).to all(eq(workflow_context))
+  end
+
   it 'wraps fiber tool calls with the Rails executor' do
     stub_rails_executor(executor)
 
@@ -87,5 +100,18 @@ RSpec.describe RubyLLM::ToolConcurrency do
                             [delayed_tool_calls[:slow], :slow],
                             [delayed_tool_calls[:fast], :fast]
                           ])
+  end
+
+  it 'propagates workflow context to fiber tool calls' do
+    workflow_context = { workflow_id: 'workflow-1', workflow_step_id: 'step-1' }.freeze
+    observed_contexts = Queue.new
+
+    RubyLLM::Instrumentation.with_workflow(workflow_context) do
+      described_class.run(:fibers, tool_calls) do
+        observed_contexts << RubyLLM::Instrumentation.current_workflow
+      end
+    end
+
+    expect(Array.new(2) { observed_contexts.pop }).to all(eq(workflow_context))
   end
 end
