@@ -8,9 +8,7 @@ class PersonSchemaClass < RubyLLM::Schema
   number :age
 end
 
-RSpec.describe RubyLLM::Chat do
-  include_context 'with configured RubyLLM'
-
+RSpec.describe RubyLLM::Chat, :live do
   describe '#with_schema' do
     let(:person_schema) do
       {

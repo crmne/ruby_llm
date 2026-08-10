@@ -2,9 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe RubyLLM::Chat do
-  include_context 'with configured RubyLLM'
-
+RSpec.describe RubyLLM::Chat, :live do
   describe '#with_max_output_tokens' do
     {
       openai: { model: 'gpt-4.1-nano', key: :max_output_tokens },

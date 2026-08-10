@@ -15,9 +15,7 @@ class KnowledgeBase < RubyLLM::Tool
   end
 end
 
-RSpec.describe RubyLLM::Chat do
-  include_context 'with configured RubyLLM'
-
+RSpec.describe RubyLLM::Chat, :live do
   let(:facts_path) { File.expand_path('../fixtures/facts.txt', __dir__) }
   let(:pdf_path) { File.expand_path('../fixtures/sample.pdf', __dir__) }
 

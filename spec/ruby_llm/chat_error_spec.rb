@@ -16,9 +16,7 @@ RSpec::Matchers.define :look_like_json do
   end
 end
 
-RSpec.describe RubyLLM::Chat do
-  include_context 'with configured RubyLLM'
-
+RSpec.describe RubyLLM::Chat, :live do
   describe 'error handling' do
     CHAT_MODELS.each do |model_info|
       model = model_info[:model]

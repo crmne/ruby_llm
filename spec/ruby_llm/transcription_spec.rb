@@ -2,9 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe RubyLLM::Transcription do
-  include_context 'with configured RubyLLM'
-
+RSpec.describe RubyLLM::Transcription, :live do
   let(:audio_path) { File.expand_path('../fixtures/ruby.wav', __dir__) }
 
   describe 'basic functionality' do

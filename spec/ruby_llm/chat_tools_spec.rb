@@ -16,9 +16,7 @@ rescue RubyLLM::ModelNotFoundError
   skip message
 end
 
-RSpec.describe RubyLLM::Chat do
-  include_context 'with configured RubyLLM'
-
+RSpec.describe RubyLLM::Chat, :live do
   class Weather < RubyLLM::Tool # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
     description 'Gets current weather for a location'
     parameter :latitude, description: 'Latitude (e.g., 52.5200)'

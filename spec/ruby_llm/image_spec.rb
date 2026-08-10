@@ -20,9 +20,7 @@ def save_and_verify_image(image)
   end
 end
 
-RSpec.describe RubyLLM::Image do
-  include_context 'with configured RubyLLM'
-
+RSpec.describe RubyLLM::Image, :live do
   def image_path
     File.expand_path('../fixtures/ruby.png', __dir__)
   end

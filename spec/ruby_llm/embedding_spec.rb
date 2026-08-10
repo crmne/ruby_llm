@@ -2,9 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe RubyLLM::Embedding do
-  include_context 'with configured RubyLLM'
-
+RSpec.describe RubyLLM::Embedding, :live do
   let(:test_text) { "Ruby is a programmer's best friend" }
   let(:test_texts) { %w[Ruby Python JavaScript] }
   let(:test_dimensions) { 768 }

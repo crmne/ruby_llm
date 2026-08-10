@@ -2,9 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe RubyLLM::Chat do
-  include_context 'with configured RubyLLM'
-
+RSpec.describe RubyLLM::Chat, :live do
   def basic_chat(model:, provider:)
     chat = RubyLLM.chat(model: model, provider: provider)
     return chat.with_provider_options(enable_thinking: false) if provider == :gpustack && model == 'qwen3'

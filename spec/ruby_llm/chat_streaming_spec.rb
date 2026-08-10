@@ -2,8 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe RubyLLM::Chat do
-  include_context 'with configured RubyLLM'
+RSpec.describe RubyLLM::Chat, :live do
   include StreamingErrorHelpers
 
   def token_count_chat(model:, provider:)
@@ -105,6 +104,20 @@ RSpec.describe RubyLLM::Chat do
           end
         end
       end
+    end
+  end
+
+  describe 'Gemini token accounting' do
+    it 'correctly sums candidatesTokenCount and thoughtsTokenCount in streaming' do
+      chat = RubyLLM.chat(model: 'gemini-2.5-flash', provider: :gemini)
+
+      chunks = []
+      response = chat.ask('What is 2+2? Think step by step.') do |chunk|
+        chunks << chunk
+      end
+
+      final_chunk = chunks.last
+      expect(response.tokens.output).to eq(final_chunk.tokens.output) if final_chunk.tokens.output
     end
   end
 end

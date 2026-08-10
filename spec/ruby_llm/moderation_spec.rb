@@ -2,9 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe RubyLLM::Moderation do
-  include_context 'with configured RubyLLM'
-
+RSpec.describe RubyLLM::Moderation, :live do
   let(:test_input) { 'This is a safe message' }
 
   describe '.moderate' do

@@ -317,4 +317,35 @@ RSpec.describe RubyLLM::Providers::VertexAI do
       expect(payload[:model]).to eq('meta/llama-3.3-70b-instruct-maas')
     end
   end
+
+  describe '#initialize_authorizer' do
+    include_context 'with configured RubyLLM'
+
+    let(:authorized_provider) { described_class.new(RubyLLM.config) }
+    let(:mock_credentials) do
+      instance_double(Google::Auth::GCECredentials, apply: { 'Authorization' => 'Bearer test-token' })
+    end
+
+    before do
+      require 'googleauth'
+      authorized_provider.instance_variable_set(:@authorizer, nil)
+    end
+
+    it 'passes scope as a positional Array argument to get_application_default' do
+      # Google::Auth.get_application_default expects scope as a positional argument.
+      # Passing `scope: [...]` becomes a Hash and raises on GCE:
+      # TypeError: Expected Array or String, got Hash
+      expected_scopes = [
+        'https://www.googleapis.com/auth/cloud-platform',
+        'https://www.googleapis.com/auth/generative-language.retriever'
+      ]
+
+      allow(Google::Auth).to receive(:get_application_default).and_return(mock_credentials)
+      RubyLLM.config.vertexai_service_account_key = nil
+
+      authorized_provider.send(:initialize_authorizer)
+
+      expect(Google::Auth).to have_received(:get_application_default).with(expected_scopes)
+    end
+  end
 end

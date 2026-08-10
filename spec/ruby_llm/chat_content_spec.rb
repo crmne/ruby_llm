@@ -2,9 +2,7 @@
 
 require 'spec_helper'
 require 'action_dispatch/http/upload'
-RSpec.describe RubyLLM::Chat do # rubocop:disable RSpec/MultipleMemoizedHelpers
-  include_context 'with configured RubyLLM'
-
+RSpec.describe RubyLLM::Chat, :live do # rubocop:disable RSpec/MultipleMemoizedHelpers
   let(:image_path) { File.expand_path('../fixtures/ruby.png', __dir__) }
   let(:video_path) { File.expand_path('../fixtures/ruby.mp4', __dir__) }
   let(:audio_path) { File.expand_path('../fixtures/ruby.wav', __dir__) }

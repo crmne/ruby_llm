@@ -2,9 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe RubyLLM::ActiveRecord::ActsAs do
-  include_context 'with configured RubyLLM'
-
+RSpec.describe RubyLLM::ActiveRecord::ActsAs, :live do
   let(:model) { 'gpt-4.1-nano' }
 
   def usage_tracker(provider, recorder)

@@ -2,9 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe RubyLLM::Batch do
-  include_context 'with configured RubyLLM'
-
+RSpec.describe RubyLLM::Batch, :live do
   let(:model) { 'claude-haiku-4-5' }
 
   def wait_for(batch)

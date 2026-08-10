@@ -3,9 +3,7 @@
 require 'spec_helper'
 require 'tmpdir'
 
-RSpec.describe RubyLLM::Agent do
-  include_context 'with configured RubyLLM'
-
+RSpec.describe RubyLLM::Agent, :live do
   def with_prompt_root
     tmpdir = Dir.mktmpdir
     prompt_root = Pathname.new(tmpdir).join('app/prompts')

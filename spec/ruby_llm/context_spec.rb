@@ -2,9 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe RubyLLM::Context do
-  include_context 'with configured RubyLLM'
-
+RSpec.describe RubyLLM::Context, :live do
   describe '#initialize' do
     it 'creates a copy of the global configuration' do
       # Get current config values
