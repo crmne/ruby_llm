@@ -7,6 +7,10 @@ unless ENV['SKIP_COVERAGE']
     add_filter '/spec/'
     add_filter '/vendor/'
     add_filter '/lib/generators/'
+    # Rake tasks are maintainer tooling and are not in spec.files, so they
+    # would otherwise be scored as if they shipped. Specs that load one still
+    # run; only the report ignores it.
+    add_filter '/tasks/'
 
     enable_coverage :branch
 
