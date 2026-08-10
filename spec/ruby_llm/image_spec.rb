@@ -177,5 +177,25 @@ RSpec.describe RubyLLM::Image, :live do
         end.to raise_error(Faraday::ResourceNotFound)
       end
     end
+
+    context 'with xAI reference images' do
+      it 'xai/grok-imagine-image-quality supports image edits with reference images' do
+        image = RubyLLM.paint(prompt, model: 'grok-imagine-image-quality', provider: :xai,
+                                      with: [image_path, image_path])
+
+        expect(image.url).to be_present
+        expect(image.mime_type).to include('image')
+        expect(image.model).to eq('grok-imagine-image-quality')
+
+        save_and_verify_image image
+      end
+
+      it 'xai/grok-imagine-image-quality rejects masks' do
+        expect do
+          RubyLLM.paint(prompt, model: 'grok-imagine-image-quality', provider: :xai,
+                                with: image_path, mask: image_path)
+        end.to raise_error(RubyLLM::Error, /mask/)
+      end
+    end
   end
 end
