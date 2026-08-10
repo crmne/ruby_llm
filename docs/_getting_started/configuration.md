@@ -150,6 +150,8 @@ RubyLLM.configure do |config|
   # OpenRouter
   config.openrouter_api_key = String
   config.openrouter_api_base = String  # v1.13.0+
+  config.openrouter_app_url = String   # App attribution URL sent as HTTP-Referer
+  config.openrouter_app_name = String  # App attribution name sent as X-OpenRouter-Title
 
   # Perplexity
   config.perplexity_api_key = String

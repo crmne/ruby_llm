@@ -34,7 +34,9 @@ module RubyLLM
 
       def headers
         {
-          'Authorization' => "Bearer #{@config.openrouter_api_key}"
+          'Authorization' => "Bearer #{@config.openrouter_api_key}",
+          'HTTP-Referer' => @config.openrouter_app_url || 'https://rubyllm.com',
+          'X-OpenRouter-Title' => @config.openrouter_app_name || 'RubyLLM'
         }
       end
 
@@ -56,7 +58,7 @@ module RubyLLM
 
       class << self
         def configuration_options
-          %i[openrouter_api_key openrouter_api_base]
+          %i[openrouter_api_key openrouter_api_base openrouter_app_url openrouter_app_name]
         end
 
         def configuration_requirements

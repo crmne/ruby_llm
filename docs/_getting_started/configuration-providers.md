@@ -77,6 +77,8 @@ RubyLLM.configure do |config|
   # OpenRouter
   config.openrouter_api_key = ENV['OPENROUTER_API_KEY']
   config.openrouter_api_base = ENV['OPENROUTER_API_BASE'] # Available in v1.13.0+ (optional custom OpenRouter endpoint)
+  config.openrouter_app_url = 'https://myapp.com' # Optional app attribution for OpenRouter rankings
+  config.openrouter_app_name = 'My App' # Optional app display name in OpenRouter rankings
 
   # Perplexity
   config.perplexity_api_key = ENV['PERPLEXITY_API_KEY']
