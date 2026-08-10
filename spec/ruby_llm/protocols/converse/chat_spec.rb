@@ -347,6 +347,14 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
         )
       end
 
+      it 'sends an explicit budget without requiring an effort' do
+        payload = render_payload(model: enumerated_budget_model, thinking: thinking(budget: 5000))
+
+        expect(payload[:additionalModelRequestFields]).to eq(
+          reasoning_config: { type: 'enabled', budget_tokens: 5000 }
+        )
+      end
+
       it 'maps effort for regional entries that carry no converse metadata of their own' do
         model = instance_double(RubyLLM::Model,
                                 id: 'eu.anthropic.claude-sonnet-5',

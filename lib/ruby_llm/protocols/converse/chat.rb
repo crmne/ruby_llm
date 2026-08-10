@@ -324,17 +324,16 @@ module RubyLLM
           return nil unless thinking&.enabled?
 
           effort = thinking.effort.to_s
-          return nil if effort.empty? || effort == 'none'
-
           budget = reasoning_budget(thinking, effort, model, max_output_tokens)
           return { reasoning_config: { type: 'enabled', budget_tokens: budget } } if budget
+          return nil if effort.empty? || effort == 'none'
 
           { reasoning_effort: effort }
         end
 
         def reasoning_budget(thinking, effort, model, max_output_tokens)
           return thinking.budget if thinking.budget.is_a?(Integer)
-          return nil if effort.empty?
+          return nil if effort.empty? || effort == 'none'
 
           schema = Converse.reasoning_budget_schema(model)
           schema && effort_budget_tokens(effort, schema, max_output_tokens)
