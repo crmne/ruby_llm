@@ -1,0 +1,59 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.deepseek.com/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"deepseek-v4-flash","messages":[{"role":"user","content":"What
+        is 2 + 2? Answer with just the number."}],"stream":false,"reasoning_effort":"high","thinking":{"type":"enabled"}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Date:
+      - Mon, 10 Aug 2026 22:19:07 GMT
+      Server:
+      - elb
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Credentials:
+      - 'true'
+      X-Ds-Trace-Id:
+      - 8fc1b30179cf5f9417fca70e990fd1cf
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 d077d74d15e2c3435bd1f89969817190.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - TXL52-P2
+      X-Amz-Cf-Id:
+      - 23cE3xYr-XA56m_XWaKiETCbTpQcnpQ8UJDuob_iiSQwIweoes-R-w==
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"2c181a80-6a33-49e6-8add-70999edef402","object":"chat.completion","created":1786400347,"model":"deepseek-v4-flash","choices":[{"index":0,"message":{"role":"assistant","content":"4","reasoning_content":"We
+        need answer simple. 2+2=4. Just number."},"logprobs":null,"finish_reason":"stop"}],"usage":{"prompt_tokens":97,"completion_tokens":17,"total_tokens":114,"prompt_tokens_details":{"cached_tokens":0},"completion_tokens_details":{"reasoning_tokens":15},"prompt_cache_hit_tokens":0,"prompt_cache_miss_tokens":97},"system_fingerprint":"fp_a18b46594c_prod0820_fp8_kvcache_20260402"}'
+  recorded_at: Mon, 10 Aug 2026 22:19:07 GMT
+recorded_with: VCR 6.4.0

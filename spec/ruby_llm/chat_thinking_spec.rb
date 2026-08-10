@@ -128,6 +128,26 @@ RSpec.describe RubyLLM::Chat, :live do
     end
   end
 
+  describe 'DeepSeek thinking control' do
+    it 'disables thinking for effort none' do
+      chat = RubyLLM.chat(model: 'deepseek-v4-flash', provider: :deepseek).with_thinking(effort: :none)
+
+      response = chat.ask('What is 2 + 2? Answer with just the number.')
+
+      expect(response.content).to be_present
+      expect(response.thinking).to be_nil
+    end
+
+    it 'returns reasoning content for effort high' do
+      chat = RubyLLM.chat(model: 'deepseek-v4-flash', provider: :deepseek).with_thinking(effort: :high)
+
+      response = chat.ask('What is 2 + 2? Answer with just the number.')
+
+      expect(response.content).to be_present
+      expect(response.thinking&.text).to be_present
+    end
+  end
+
   describe 'Gemini token accounting' do
     it 'correctly sums candidatesTokenCount and thoughtsTokenCount' do
       chat = RubyLLM.chat(model: 'gemini-2.5-flash', provider: :gemini)
