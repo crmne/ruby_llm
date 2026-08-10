@@ -2,7 +2,7 @@
 layout: default
 title: Available Models
 nav_order: 2
-description: Browse 1183 AI models across 11 remote providers. Updated 2026-08-10.
+description: Browse 1184 AI models across 11 remote providers. Updated 2026-08-10.
 redirect_from:
   - /guides/available-models
 ---
@@ -1185,7 +1185,7 @@ See [the models guide]({% link _advanced/models.md %}) for how refreshing works 
 | openai/o4-mini-deep-research | openrouter | In: pdf, image, text; Out: text | function_calling, structured_output, reasoning, vision, streaming | 200000 | 100000 | In: $2.00, Out: $8.00, Cache Read: $0.50 |
 
 
-### Perplexity (5)
+### Perplexity (6)
 
 | Model | Provider | I/O | Capabilities | Context | Max Output | Standard Pricing (per 1M tokens) |
 | :-- | :-- | :-- | :-- | --: | --: | :-- |
@@ -1193,7 +1193,8 @@ See [the models guide]({% link _advanced/models.md %}) for how refreshing works 
 | sonar | perplexity | In: text; Out: text | citations | 128000 | 4096 | In: $1.00, Out: $1.00 |
 | sonar-pro | perplexity | In: text, image; Out: text | vision, citations | 200000 | 8192 | In: $3.00, Out: $15.00 |
 | sonar-reasoning-pro | perplexity | In: text, image; Out: text | reasoning, vision, citations | 128000 | 4096 | In: $2.00, Out: $8.00 |
-| sonar-reasoning | perplexity | In: -; Out: - | citations, vision, reasoning | 128000 | 4096 | In: $1.00, Out: $5.00 |
+| pplx-embed-v1-0.6b | perplexity | In: text; Out: embeddings | - | 32768 | - | In: $0.00 |
+| pplx-embed-v1-4b | perplexity | In: text; Out: embeddings | - | 32768 | - | In: $0.03 |
 
 
 ### VertexAI (65)
@@ -3826,7 +3827,7 @@ Models that can process PDF documents:
 | grok-imagine-video | xai | In: text, image, video, pdf; Out: video | vision | 1024 | 0 | - |
 
 
-### Embedding Models (19)
+### Embedding Models (21)
 
 Models that generate embeddings:
 
@@ -3850,6 +3851,8 @@ Models that generate embeddings:
 | text-embedding-3-large | openai | In: text; Out: embeddings | - | 8191 | 3072 | In: $0.13 |
 | text-embedding-3-small | openai | In: text; Out: embeddings | - | 8191 | 1536 | In: $0.02 |
 | text-embedding-ada-002 | openai | In: text; Out: embeddings | - | 8192 | 1536 | In: $0.10 |
+| pplx-embed-v1-0.6b | perplexity | In: text; Out: embeddings | - | 32768 | - | In: $0.00 |
+| pplx-embed-v1-4b | perplexity | In: text; Out: embeddings | - | 32768 | - | In: $0.03 |
 | gemini-embedding-001 | vertexai | In: text; Out: embeddings | streaming | 2048 | 1 | In: $0.15 |
 
 

@@ -1,0 +1,55 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.perplexity.ai/v1/embeddings
+    body:
+      encoding: UTF-8
+      string: '{"model":"pplx-embed-v1-0.6b","input":"Ruby is a programmer''s best
+        friend"}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 10 Aug 2026 23:16:26 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Server:
+      - cloudflare
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Access-Control-Allow-Origin:
+      - "*"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"data":[{"embedding":"9sYAAzzy/vfgDQAeOgD2/w/yHd7gCg8D5woK2NcZ7NgQEfoAKin+0P38PgTlJx8LDRbkAQP9CNkYGAX5G+HiFxsZBiQj8QD+6tvaIQLV5gj8+B4c2f4uEQbi1gET9wEfCPTtE/P/Ef4AIPcTGDHE+uoi/EQE8/IkC+Dx9xAE+g/i+iMGBgfg8u8G+RMV7xTkCg7+CfMXJ9MIC+QFCwkh8fwGChoACPUbBP0T5wAS+yUTDfvk/vcOGgjx5e71AcMoKwDwBvzu8+UQCPfZHgH+7gD4ESsL5Poe+vT9DTPrIxMS+wL7B/4DBQDyEQIOC+vp9/4oAw7+GP8R8CkK7f4V/hr7E/r37xLyHPfU8+sHFB8K+vHd/zcFAxH5CustE//iDvj7/eIaCeInHdMZHgj7Fv8LGiP49uAcAObrAeMM3vDz/gob4+cl9QPzFQ0kPOsPABDFDSLpGwEA/An+8fDsC+0O3ub/6wYZAOsD0938FdEIIwXoGi/7ChIXAwYGCdQiIePwAA3pH9gL8RQT/AvhFiT1DAYB8QEQEgEN7vHZDukdC+L37vnaIxDm3v4I5N3mBjsC3ecZ6AAPAv8JMOUbEwz1AAkE2AHe1Qsb4AHe/9gFIQEFBuD77PwTDgAd/fryJhr6v9gOFxsOzCb9JgD/+urzIw4qAN4t/Bb+AeztBNgK/Bj16yge/QQH5vMOC9jW+REB8PSyG/b7AgUa9xDp9PQDCv4FKPMm4QPgFgX9Lujs8Qz45PruO/j/FfgJ7A0wCgQdCtgB6Qfc8S//F+zv8NgGEfH39uoIF+j8F9kV++4G4QfbKxb6HB3xHfDq9uPzCfj4/df5Fg0A/gYb3vwO59/6+/HZCwQc/PgMDOAhHfHlChYL8d340uMOFgcbBiD7Exvt6+f3/ObjFfn5E+4L+QPeCAcFACENCPAjHM8m9Q0J7Pf77AMZ7PAB9wbv8Ar//wf99/UTyPX64/kVC+Hv3gYF28cnEQAPI0AO8Bfy5+A05vXPFuvh4A4J5yQ1D/UXACMWBTvvEu/UBRkJ7d4IGQY14+PNMesQ8QD8G+7Q/Q4EAP8F9hL47ugS2w79Bg3+AAYIBvkbCQkM4/Dv0iHXAvby4yfkAPQVBiDu7e8O8g3o7/v99Rz7EAYZ7vTw1ff/+PryBxER1xwaCBYD9Pzw9gUmK+0rChgV4RUE+xX19/ExBycdD/kH5BQd/gfuBv0eCA7/DN8K//bp8QQc8QHW8gD88AYEEfr63efa8PkUEeoFCgQFzQ35CdgS5wv8IBX9Id038hrs/AYFAun02hsIAgfwBxf6AA3YE/DnHfbo5f4bNuMT9OnrDuoN5gv76N8QBSDy/Q3l3tMLJATa7wDO3w==","index":0,"object":"embedding"}],"model":"pplx-embed-v1-0.6b","object":"list","usage":{"cost":{"currency":"USD","input_cost":0.000000028,"total_cost":0.000000028},"prompt_tokens":7,"total_tokens":7}}
+
+        '
+  recorded_at: Mon, 10 Aug 2026 23:16:26 GMT
+recorded_with: VCR 6.4.0

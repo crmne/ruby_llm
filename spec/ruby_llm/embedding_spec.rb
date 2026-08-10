@@ -58,4 +58,24 @@ RSpec.describe RubyLLM::Embedding, :live do
       end
     end
   end
+
+  describe 'Perplexity int8 embeddings' do
+    it 'perplexity/pplx-embed-v1-0.6b decodes a single text into int8 vectors' do
+      embedding = RubyLLM.embed(test_text, model: 'pplx-embed-v1-0.6b', provider: :perplexity)
+      expect(embedding.vectors).to be_an(Array)
+      expect(embedding.vectors.length).to eq(1024)
+      expect(embedding.vectors.first).to be_an(Integer)
+      expect(embedding.vectors).to all(be_between(-128, 127))
+      expect(embedding.model).to eq('pplx-embed-v1-0.6b')
+      expect(embedding.tokens.input.to_i).to be > 0
+    end
+
+    it 'perplexity/pplx-embed-v1-0.6b handles multiple texts with custom dimensions' do
+      embeddings = RubyLLM.embed(test_texts, model: 'pplx-embed-v1-0.6b', provider: :perplexity, dimensions: 256)
+      expect(embeddings.vectors.size).to eq(3)
+      embeddings.vectors.each do |vector|
+        expect(vector.length).to eq(256)
+      end
+    end
+  end
 end

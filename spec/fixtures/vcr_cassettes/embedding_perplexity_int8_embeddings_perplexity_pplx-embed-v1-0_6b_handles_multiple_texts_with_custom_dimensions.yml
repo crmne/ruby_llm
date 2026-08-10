@@ -1,0 +1,54 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.perplexity.ai/v1/embeddings
+    body:
+      encoding: UTF-8
+      string: '{"model":"pplx-embed-v1-0.6b","input":["Ruby","Python","JavaScript"],"dimensions":256}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 10 Aug 2026 23:16:27 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Server:
+      - cloudflare
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Access-Control-Allow-Origin:
+      - "*"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"data":[{"embedding":"1/8A807U0Euwxfo5JgDoo/8KPCwm3lxiAPq8lu0gD60kOPQACD7YtfI6TOsn7frsDSPhwwTY98gwMw77PdqmGvX56U4f68/Qru+1OB7V9dnaMFgD4ApPIgzSDNpI9vHiILH4GN71z/YLkRsEWjbo/yYLAC7TyeMQ9swD5/HozznnLeLM98MU/vob//8x9grx7duz5gRARuNC/uM14rrf5u5JKv7n8hIH0Sz/4PfO1Kz67Cjr6doQ6RDHGyjmGa8NEN/10QzJ4g7sCAax8BIxtcwVEx4VHBUf9RMWEu8EEUXx6Qn/0RgHDOQDDOsT7dkD4cg09jz5LxT/5U/kSvE4Bg==","index":0,"object":"embedding"},{"embedding":"Hu4A1ypC2/fA9PPG+AD/L+4x/MDhAfU+txIizxscG+m68vIA6wXY6P/YEvYDNALP6Cjw/wLt+vHrDRMV/PShAQP1CiY26dzyBTzcKg3uEuPOIhgnEwQBHiUIwtgMCjwD7AEX6+sh8QkWsMMrIyPjCPwsBxL/+vPxQ8na+usQ8ertDyLm+//16eoiDwcT8C4L+BH4HB4cGAAM9vn4ENn47fT7A/cE3hn5ARcX+QvpBvQE6+PaCPf2HfzvAwXrFv8UAgHOAhUc9doJHf30/QPwF+XxMQYM/RIjLRUCLgH3FCEm8doIG//xEPjfMAgbGO/UyhMC/y4RFhzi5CrzBDP0GQ==","index":1,"object":"embedding"},{"embedding":"N/kAjFcSnjqm9Ba88wDT9fEuAenU0SNx5UhY2Asv567XCNQAXzXs7fHIZeTzLgGiCkgbGTQjJ+f0DRcR+DnHHPm8r/oTx7a/G1TLSCe1EaHmai0I6TYuMyPt2aDh2zP9Ixw3l+3N1Ss5l9Fa7QTSL/dtzOjcEs7LHv3FAwvB9fbk90Dq1OEj3hXbBxUA7A4JygbxIxpDTPq9CwP/5Mo07vv/FtPu5wTd2iIEF9rm8Ni6BurLwveyCzTkMBK3APvmB/PrHy3/GQPkHgHhG7nsBu33NSq4ID75OBDZEyQj0hInxe/IHSrr7kfQOPkas73lyDkKAg/6HznuIUS9GOfx7g==","index":2,"object":"embedding"}],"model":"pplx-embed-v1-0.6b","object":"list","usage":{"cost":{"currency":"USD","input_cost":0.000000012,"total_cost":0.000000012},"prompt_tokens":3,"total_tokens":3}}
+
+        '
+  recorded_at: Mon, 10 Aug 2026 23:16:27 GMT
+recorded_with: VCR 6.4.0

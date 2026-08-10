@@ -7,6 +7,7 @@ module RubyLLM
       # Perplexity's dialect of the Chat Completions API.
       class ChatCompletions < Protocols::ChatCompletions
         include Perplexity::Chat
+        include Perplexity::Embeddings
         include Perplexity::Models
       end
 

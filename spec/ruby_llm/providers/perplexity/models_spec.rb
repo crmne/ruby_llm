@@ -4,35 +4,41 @@ require 'spec_helper'
 
 RSpec.describe RubyLLM::Providers::Perplexity::Models do
   describe '#list_models' do
-    let(:provider_class) do
-      Class.new do
-        include RubyLLM::Providers::Perplexity::Models
-      end
+    let(:config) do
+      RubyLLM::Configuration.new.tap { |config| config.perplexity_api_key = ENV.fetch('PERPLEXITY_API_KEY', 'test') }
     end
+    let(:provider) { RubyLLM::Providers::Perplexity.new(config) }
 
-    it 'restores critical fallback metadata for the static catalog' do
-      models = provider_class.new.list_models
+    it 'lists the models endpoint catalog with the search and embedding models added' do
+      models = provider.list_models
 
-      expect(models.map(&:id)).to eq(
-        %w[sonar sonar-pro sonar-reasoning sonar-reasoning-pro sonar-deep-research]
-      )
+      ids = models.map(&:id)
+      expect(ids).to include('sonar', 'sonar-pro', 'sonar-reasoning-pro', 'sonar-deep-research',
+                             'pplx-embed-v1-0.6b', 'pplx-embed-v1-4b', 'perplexity/sonar')
+      expect(ids).not_to include('sonar-reasoning')
       expect(models).to all(have_attributes(provider: 'perplexity'))
 
       sonar = models.find { |model| model.id == 'sonar' }
       expect(sonar.context_window).to eq(128_000)
       expect(sonar.max_output_tokens).to eq(4096)
       expect(sonar.capabilities).to eq(%w[citations vision])
-      expect(sonar.pricing.to_h).to eq(
-        text_tokens: {
-          standard: {
-            input_per_million: 1.0,
-            output_per_million: 1.0
-          }
-        }
-      )
 
-      reasoning = models.find { |model| model.id == 'sonar-reasoning' }
-      expect(reasoning.capabilities).to contain_exactly('citations', 'vision', 'reasoning')
+      embedding = models.find { |model| model.id == 'pplx-embed-v1-0.6b' }
+      expect(embedding.type).to eq('embedding')
+      expect(embedding.pricing.to_h.dig(:text_tokens, :standard, :input_per_million)).to eq(0.004)
+
+      listed = models.find { |model| model.id == 'perplexity/sonar' }
+      expect(listed.pricing.to_h.dig(:text_tokens, :standard, :output_per_million)).to eq(2.5)
+    end
+
+    it 'falls back to the static list when the endpoint fails' do
+      allow(provider.connection).to receive(:get).and_raise(RubyLLM::Error.new(nil, response: nil))
+
+      models = provider.list_models
+
+      expect(models.map(&:id)).to eq(
+        %w[sonar sonar-pro sonar-reasoning-pro sonar-deep-research pplx-embed-v1-0.6b pplx-embed-v1-4b]
+      )
     end
   end
 

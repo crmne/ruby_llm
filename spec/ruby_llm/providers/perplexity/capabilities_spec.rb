@@ -7,9 +7,10 @@ RSpec.describe RubyLLM::Providers::Perplexity::Capabilities do
     {
       'sonar' => :sonar,
       'sonar-pro' => :sonar_pro,
-      'sonar-reasoning' => :sonar_reasoning,
       'sonar-reasoning-pro' => :sonar_reasoning_pro,
       'sonar-deep-research' => :sonar_deep_research,
+      'pplx-embed-v1-0.6b' => :pplx_embed_small,
+      'pplx-embed-v1-4b' => :pplx_embed_large,
       'sonar-experimental' => :unknown
     }.each do |model_id, expected|
       it "groups #{model_id} under #{expected}" do
@@ -22,6 +23,7 @@ RSpec.describe RubyLLM::Providers::Perplexity::Capabilities do
     it 'gives sonar-pro the larger window' do
       expect(described_class.context_window_for('sonar-pro')).to eq(200_000)
       expect(described_class.context_window_for('sonar')).to eq(128_000)
+      expect(described_class.context_window_for('pplx-embed-v1-0.6b')).to eq(32_768)
     end
   end
 
@@ -30,6 +32,7 @@ RSpec.describe RubyLLM::Providers::Perplexity::Capabilities do
       expect(described_class.max_tokens_for('sonar-pro')).to eq(8_192)
       expect(described_class.max_tokens_for('sonar-reasoning-pro')).to eq(8_192)
       expect(described_class.max_tokens_for('sonar')).to eq(4_096)
+      expect(described_class.max_tokens_for('pplx-embed-v1-4b')).to be_nil
     end
   end
 
@@ -37,6 +40,7 @@ RSpec.describe RubyLLM::Providers::Perplexity::Capabilities do
     it 'claims citations everywhere and reasoning where it applies' do
       expect(described_class.critical_capabilities_for('sonar')).to eq(%w[citations vision])
       expect(described_class.critical_capabilities_for('sonar-deep-research')).to eq(%w[citations reasoning])
+      expect(described_class.critical_capabilities_for('pplx-embed-v1-0.6b')).to eq([])
     end
   end
 
@@ -56,6 +60,15 @@ RSpec.describe RubyLLM::Providers::Perplexity::Capabilities do
     it 'falls back to the sonar rates for unknown models' do
       expect(described_class.pricing_for('sonar-experimental')).to eq(
         text_tokens: { standard: { input_per_million: 1.0, output_per_million: 1.0 } }
+      )
+    end
+
+    it 'prices embedding models on input only' do
+      expect(described_class.pricing_for('pplx-embed-v1-0.6b')).to eq(
+        text_tokens: { standard: { input_per_million: 0.004 } }
+      )
+      expect(described_class.pricing_for('pplx-embed-v1-4b')).to eq(
+        text_tokens: { standard: { input_per_million: 0.03 } }
       )
     end
   end
