@@ -37,8 +37,13 @@ module RubyLLM
           temperature
         end
 
+        USD_PER_TICK = 1e-10
+
         def parse_usage(usage)
-          super.merge(server_tool_use: server_side_tool_usage(usage))
+          super.merge(
+            server_tool_use: server_side_tool_usage(usage),
+            reported_cost: reported_cost_from_ticks(usage)
+          )
         end
 
         private
@@ -46,6 +51,11 @@ module RubyLLM
         def server_side_tool_usage(usage)
           counters = usage.slice(*SERVER_TOOL_USAGE_COUNTERS).reject { |_, count| count.to_i.zero? }
           counters.empty? ? nil : counters
+        end
+
+        def reported_cost_from_ticks(usage)
+          ticks = usage['cost_in_usd_ticks']
+          ticks ? ticks * USD_PER_TICK : nil
         end
       end
     end
