@@ -92,6 +92,36 @@ RSpec.describe RubyLLM::Embedding, :live do
     end
   end
 
+  describe 'Bedrock embedding dialects' do
+    it 'bedrock/us.cohere.embed-v4:0 embeds a single text' do
+      embedding = RubyLLM.embed(test_text, model: 'us.cohere.embed-v4:0', provider: :bedrock)
+
+      expect(embedding.vectors).to be_an(Array)
+      expect(embedding.vectors.first).to be_a(Float)
+      expect(embedding.model).to eq('us.cohere.embed-v4:0')
+    end
+
+    it 'bedrock/us.cohere.embed-v4:0 embeds multiple texts with custom dimensions' do
+      embeddings = RubyLLM.embed(test_texts, model: 'us.cohere.embed-v4:0', provider: :bedrock, dimensions: 512)
+
+      expect(embeddings.vectors.size).to eq(3)
+      embeddings.vectors.each do |vector|
+        expect(vector.length).to eq(512)
+      end
+    end
+
+    # Nova multimodal embeddings are not served in us-west-2 yet.
+    it 'bedrock/amazon.nova-2-multimodal-embeddings-v1:0 embeds a single text' do
+      context = RubyLLM.context { |config| config.bedrock_region = 'us-east-1' }
+      embedding = context.embed(test_text, model: 'amazon.nova-2-multimodal-embeddings-v1:0',
+                                           provider: :bedrock, assume_model_exists: true, dimensions: 256)
+
+      expect(embedding.vectors).to be_an(Array)
+      expect(embedding.vectors.length).to eq(256)
+      expect(embedding.model).to eq('amazon.nova-2-multimodal-embeddings-v1:0')
+    end
+  end
+
   describe 'Perplexity int8 embeddings' do
     it 'perplexity/pplx-embed-v1-0.6b decodes a single text into int8 vectors' do
       embedding = RubyLLM.embed(test_text, model: 'pplx-embed-v1-0.6b', provider: :perplexity)

@@ -12,6 +12,7 @@ module RubyLLM
       protocol :titan_text_embeddings, Bedrock::TitanTextEmbeddings
       protocol :titan_multimodal_embeddings, Bedrock::TitanMultimodalEmbeddings
       protocol :cohere_embeddings, Bedrock::CohereEmbeddings
+      protocol :nova_embeddings, Bedrock::NovaEmbeddings
       files Bedrock::Files
 
       def self.resolve_registry_id(model_id, models)
@@ -135,6 +136,8 @@ module RubyLLM
           protocols[:titan_text_embeddings]
         when bedrock_model_id_pattern('cohere.embed')
           protocols[:cohere_embeddings]
+        when bedrock_model_id_pattern('amazon.nova-2-multimodal-embeddings')
+          protocols[:nova_embeddings]
         else
           raise Error, "Bedrock embeddings are not supported for #{model_id.inspect}"
         end

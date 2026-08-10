@@ -147,6 +147,15 @@ RSpec.describe RubyLLM::Providers::Bedrock do
       end
     end
 
+    it 'routes Nova multimodal embedding models to the Nova embedding protocol' do
+      %w[amazon.nova-2-multimodal-embeddings-v1:0 us.amazon.nova-2-multimodal-embeddings-v1:0].each do |id|
+        model = instance_double(RubyLLM::Model, id: id)
+
+        expect(provider.protocol_for(model, operation: :embed))
+          .to eq(RubyLLM::Providers::Bedrock::NovaEmbeddings)
+      end
+    end
+
     it 'raises clearly for unsupported Bedrock embedding models' do
       model = instance_double(RubyLLM::Model, id: 'vendor.unknown-embed')
 
