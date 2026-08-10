@@ -12,6 +12,8 @@ module RubyLLM
   #   response.tokens.cache_write # prompt cache writes
   #
   class Tokens
+    include Inspectable
+
     # The number of standard (non-cached) input tokens, or +nil+ if the
     # provider did not report it.
     attr_reader :input
@@ -70,6 +72,10 @@ module RubyLLM
         cache_write_tokens: cache_write,
         thinking_tokens: thinking
       }.compact
+    end
+
+    def inspect_attributes # :nodoc:
+      to_h
     end
   end
 end

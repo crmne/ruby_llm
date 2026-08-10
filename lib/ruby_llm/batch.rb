@@ -15,6 +15,8 @@ module RubyLLM
   #   batch.messages          # the responses, in submission order
   #
   class Batch
+    include Inspectable
+
     AWAITING_ROLES = %i[user tool].freeze # :nodoc:
 
     # The provider's batch id. Persist it to load the batch again later
@@ -258,6 +260,10 @@ module RubyLLM
         excluded = (Array(except) + [:stream]).map(&:to_s)
         request.fetch(:payload).reject { |key, _| excluded.include?(key.to_s) }
       end
+    end
+
+    def inspect_attributes # :nodoc:
+      { id: id, status: status, chats: chats&.count }
     end
   end
 end

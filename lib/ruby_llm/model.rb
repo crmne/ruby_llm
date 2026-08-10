@@ -12,6 +12,8 @@ module RubyLLM
   #   model.supports?(:vision) # => true
   #
   class Model
+    include Inspectable
+
     # The provider's identifier for the model, e.g. <tt>"gpt-5.4"</tt>.
     attr_reader :id
 
@@ -202,6 +204,10 @@ module RubyLLM
         normalized[:values] = Array(normalized[:values]).map(&:to_s) if normalized.key?(:values)
         normalized
       end
+    end
+
+    def inspect_attributes # :nodoc:
+      { id: id, provider: provider, name: name }
     end
   end
 end

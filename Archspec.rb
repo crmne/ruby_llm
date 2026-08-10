@@ -59,6 +59,7 @@ component :support, in: %w[
   lib/ruby_llm/model/**/*.rb
   lib/ruby_llm/model_registry.rb
   lib/ruby_llm/models.rb
+  lib/ruby_llm/inspectable.rb
   lib/ruby_llm/utils.rb
   lib/ruby_llm/version.rb
 ]

@@ -32,6 +32,8 @@ module RubyLLM
   #
   # See the custom providers guide for the full walkthrough.
   class Provider
+    include Inspectable
+
     # The Configuration the provider was built with.
     attr_reader :config
 
@@ -532,6 +534,10 @@ module RubyLLM
 
       raise ConfigurationError,
             "#{name} provider is not configured. Add this to your initialization:\n\n#{config_block}"
+    end
+
+    def inspect_attributes # :nodoc:
+      { slug: slug }
     end
   end
 end

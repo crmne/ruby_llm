@@ -22,6 +22,7 @@ module RubyLLM
   # A Chat is Enumerable over its messages.
   class Chat # rubocop:disable Metrics/ClassLength
     include Enumerable
+    include Inspectable
 
     # The Model the chat sends requests to.
     attr_reader :model
@@ -562,11 +563,6 @@ module RubyLLM
       )
     end
 
-    # Keeps the connection and config dumps out of pretty-printed output.
-    def pretty_print_instance_variables # :nodoc:
-      super - %i[@connection @config]
-    end
-
     private
 
     def message_list(new_messages)
@@ -1005,6 +1001,10 @@ module RubyLLM
     def pending_tool_calls(response)
       answered = messages.filter_map { |message| message.tool_call_id if message.tool_result? }
       response.tool_calls.except(*answered)
+    end
+
+    def inspect_attributes # :nodoc:
+      { model: model.id, provider: provider.slug, messages: messages.count, tools: tools.keys }
     end
   end
 end

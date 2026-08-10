@@ -11,6 +11,7 @@ module RubyLLM
   #   image.save("sunset.png")
   #
   class Image
+    include Inspectable
     include Usage::Result
 
     # The URL of the hosted image, for providers that return one, or +nil+.
@@ -170,6 +171,16 @@ module RubyLLM
 
     def input_tokens_details
       raw_usage['input_tokens_details']
+    end
+
+    def inspect_attributes # :nodoc:
+      {
+        model: model,
+        mime_type: mime_type,
+        url: url,
+        data: data && "#{data.bytesize} bytes",
+        revised_prompt: revised_prompt
+      }
     end
   end
 end

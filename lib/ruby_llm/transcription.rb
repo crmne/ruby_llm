@@ -10,6 +10,7 @@ module RubyLLM
   #   transcription.model  # => "whisper-1"
   #
   class Transcription
+    include Inspectable
     include Usage::Result
 
     # The transcribed text.
@@ -133,6 +134,10 @@ module RubyLLM
         event[:cost] = result.cost
         result
       end
+    end
+
+    def inspect_attributes # :nodoc:
+      { text: text, model: model, language: language, duration: duration }
     end
   end
 end

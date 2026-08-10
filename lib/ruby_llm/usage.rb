@@ -53,6 +53,12 @@ module RubyLLM
       attr_reader :operation, :provider, :model, :status, :tokens, :cost
       attr_accessor :message
 
+      include Inspectable
+
+      def inspect_attributes # :nodoc:
+        { operation: operation, provider: provider, model: model, status: status, tokens: tokens }
+      end
+
       def initialize(operation:, provider:, model:, status: :pending, tokens: nil, cost: nil, message: nil)
         @operation = operation.to_sym
         @provider = provider.to_s

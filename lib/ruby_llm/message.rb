@@ -15,6 +15,7 @@ module RubyLLM
   # usage (#tokens), reasoning output (#thinking), source citations
   # (#citations), and requested tool calls (#tool_calls).
   class Message
+    include Inspectable
     include Usage::Result
 
     # The valid message roles: +:system+, +:user+, +:assistant+, and +:tool+.
@@ -216,10 +217,6 @@ module RubyLLM
       }.merge(tokens.to_h).compact
     end
 
-    def pretty_print_instance_variables # :nodoc:
-      super - %i[@raw @conversation]
-    end
-
     # Returns the Model record for #model from the model registry, or
     # +nil+ when the message has no model or the model is unknown.
     def model_info
@@ -255,6 +252,17 @@ module RubyLLM
 
     def ensure_valid_role
       raise InvalidRoleError, "Expected role to be one of: #{ROLES.join(', ')}" unless ROLES.include?(role)
+    end
+
+    def inspect_attributes # :nodoc:
+      {
+        role: role,
+        content: content,
+        tool_calls: tool_calls&.values&.map(&:name),
+        tool_call_id: tool_call_id,
+        model: model,
+        finish_reason: finish_reason
+      }
     end
   end
 end

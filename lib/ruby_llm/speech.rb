@@ -8,6 +8,7 @@ module RubyLLM
   #   speech.save "welcome.mp3"
   #
   class Speech
+    include Inspectable
     include Usage::Result
 
     # Maps audio format names to their MIME types.
@@ -125,6 +126,10 @@ module RubyLLM
     def save(path)
       File.binwrite(File.expand_path(path), to_blob)
       path
+    end
+
+    def inspect_attributes # :nodoc:
+      { model: model, voice: voice, format: format, data: data && "#{data.bytesize} bytes" }
     end
   end
 end
