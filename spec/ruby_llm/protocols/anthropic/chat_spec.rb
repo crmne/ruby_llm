@@ -133,6 +133,45 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
   describe '.render_payload' do
     let(:model) { instance_double(RubyLLM::Model, id: 'claude-sonnet-4-5', max_output_tokens: nil) }
 
+    it 'groups consecutive tool results into a single user message' do
+      tool_calls = {
+        'tool_1' => RubyLLM::ToolCall.new(id: 'tool_1', name: 'inspect', arguments: {}),
+        'tool_2' => RubyLLM::ToolCall.new(id: 'tool_2', name: 'date_calculator', arguments: {})
+      }
+      messages = [
+        RubyLLM::Message.new(role: :user, content: 'Check the date'),
+        RubyLLM::Message.new(role: :assistant, content: '', tool_calls: tool_calls),
+        RubyLLM::Message.new(role: :tool, content: 'Context inspected', tool_call_id: 'tool_1'),
+        RubyLLM::Message.new(role: :tool, content: '2026-07-21', tool_call_id: 'tool_2')
+      ]
+
+      payload = described_class.render_payload(
+        messages,
+        tools: {},
+        temperature: nil,
+        model: model,
+        stream: false,
+        schema: nil
+      )
+
+      expect(payload[:messages].length).to eq(3)
+      expect(payload[:messages].last).to eq(
+        role: 'user',
+        content: [
+          {
+            type: 'tool_result',
+            tool_use_id: 'tool_1',
+            content: [{ type: 'text', text: 'Context inspected' }]
+          },
+          {
+            type: 'tool_result',
+            tool_use_id: 'tool_2',
+            content: [{ type: 'text', text: '2026-07-21' }]
+          }
+        ]
+      )
+    end
+
     it 'adds top-level automatic cache_control when caching is enabled without explicit boundaries' do
       payload = described_class.render_payload(
         [RubyLLM::Message.new(role: :user, content: 'Hello there')],
