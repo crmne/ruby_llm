@@ -91,6 +91,15 @@ RSpec.describe RubyLLM::Batch do
   end
 
   describe '.find' do
+    # The batch store is global configuration, and the Rails integration
+    # installs one at boot; hand back whatever was there.
+    around do |example|
+      store = RubyLLM.config.batch_store
+      example.run
+    ensure
+      RubyLLM.config.batch_store = store
+    end
+
     it 'returns a batch the store already has' do
       persisted = described_class.allocate
       store = Class.new do
@@ -99,8 +108,6 @@ RSpec.describe RubyLLM::Batch do
       RubyLLM.config.batch_store = store
 
       expect(described_class.find('msgbatch_123')).to equal(persisted)
-    ensure
-      RubyLLM.config.batch_store = nil
     end
 
     it 'refuses a provider that has no batch API' do
