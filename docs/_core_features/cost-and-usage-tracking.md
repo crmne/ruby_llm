@@ -74,6 +74,18 @@ transcription.cost.total
 
 Cost helpers are available from v1.15+. RubyLLM uses token usage from the provider and pricing from the model registry. If the registry is missing pricing for tokens that were used, the affected cost and `cost.total` return `nil` instead of pretending the cost was zero. These helpers cover token-priced conversation usage; provider-specific add-ons such as search-query charges are left to the provider's raw usage payload.
 
+### Provider-Reported Costs
+
+Some providers report the exact amount a request cost. OpenRouter includes it on every chat, embedding, image, and transcription response. When a reported cost is present, `tokens.reported_cost` carries it and `cost.total` returns it instead of a registry-price estimate, so totals stay exact even for models the registry has no pricing for. Component costs such as `cost.input` are still estimated from registry pricing.
+
+```ruby
+chat = RubyLLM.chat(model: "claude-haiku-4-5", provider: :openrouter)
+response = chat.ask "Explain Ractors."
+
+response.tokens.reported_cost # exact request cost in USD, nil on providers that report none
+response.cost.total           # equals the reported cost when one is present
+```
+
 ## How Providers Are Normalized
 
 RubyLLM handles provider token differences for you. From v1.15 onward, `tokens.input` means the standard input bucket used for pricing. Cache activity is exposed separately as `tokens.cache_read` and `tokens.cache_write`, even when the provider includes those tokens in a raw prompt total.
