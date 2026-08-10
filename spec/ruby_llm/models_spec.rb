@@ -55,6 +55,11 @@ RSpec.describe RubyLLM::Models do
       video_models = RubyLLM.models.select { |m| m.supports?(:video) }
       expect(video_models).to all(satisfy { |m| m.supports?(:video) })
     end
+
+    it 'finds transcription support in the bundled registry' do
+      expect(RubyLLM.models.find('whisper-1', 'openai').supports?(:transcription)).to be(true)
+      expect(RubyLLM.models.find('gemini-2.5-flash', 'gemini').supports?(:transcription)).to be(true)
+    end
   end
 
   describe 'finding models' do
@@ -248,6 +253,46 @@ RSpec.describe RubyLLM::Models do
           { type: 'budget_tokens', min: 1024 }
         ]
       )
+    end
+
+    it 'derives transcription from audio input and text output' do
+      data = described_class.models_dev_model_attributes(
+        model_data.merge(modalities: { input: %w[text audio], output: ['text'] }),
+        'gemini',
+        'google'
+      )
+
+      expect(data[:capabilities]).to include('transcription')
+    end
+
+    it 'does not mark audio-output models as transcription models' do
+      data = described_class.models_dev_model_attributes(
+        model_data.merge(modalities: { input: ['text'], output: ['audio'] }),
+        'gemini',
+        'google'
+      )
+
+      expect(data[:capabilities]).not_to include('transcription')
+    end
+
+    it 'does not infer transcription for other providers' do
+      data = described_class.models_dev_model_attributes(
+        model_data.merge(modalities: { input: ['audio'], output: ['text'] }),
+        'openrouter',
+        'openrouter'
+      )
+
+      expect(data[:capabilities]).not_to include('transcription')
+    end
+
+    it 'does not mark multimodal embedding models as transcription models' do
+      data = described_class.models_dev_model_attributes(
+        model_data.merge(id: 'gemini-embedding-2', modalities: { input: ['audio'], output: ['text'] }),
+        'gemini',
+        'google'
+      )
+
+      expect(data[:capabilities]).not_to include('transcription')
     end
 
     it 'maps models.dev context tiers into text_tokens.long_context' do

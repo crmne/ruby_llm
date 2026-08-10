@@ -103,6 +103,12 @@ RSpec.describe RubyLLM::Providers::OpenAI::Capabilities do
       expect(described_class.critical_capabilities_for('gpt-4o-search-preview')).to include('citations')
     end
 
+    it 'adds transcription for speech-to-text models' do
+      %w[whisper-1 gpt-4o-transcribe gpt-4o-mini-transcribe].each do |model_id|
+        expect(described_class.critical_capabilities_for(model_id)).to include('transcription')
+      end
+    end
+
     it 'reports nothing for an embedding model' do
       expect(described_class.critical_capabilities_for('text-embedding-3-small')).to eq([])
     end
