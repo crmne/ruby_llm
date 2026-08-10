@@ -26,14 +26,10 @@ module RubyLLM
       status = response.respond_to?(:status) ? response.status : response[:status]
       return unless status == 429
 
-      delay = @provider&.retry_delay(response)
-      return unless delay
-
       headers = response[:response_headers]
-      return unless headers
-      return if headers['Retry-After']
-
-      headers['Retry-After'] = delay.to_s
+      if @provider && !headers['Retry-After'] && (delay = @provider.retry_delay(response))
+        headers['Retry-After'] = delay.to_s
+      end
     end
 
     def streaming_error_response(response)

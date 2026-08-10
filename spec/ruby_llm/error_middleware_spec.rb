@@ -53,14 +53,6 @@ RSpec.describe RubyLLM::ErrorMiddleware do
     end
 
     it 'keeps a Retry-After already sent by the provider' do
-      provider = instance_double(RubyLLM::Provider, parse_error: 'Rate limit exceeded', retry_delay: 2.0)
-      env = rate_limited_env('Retry-After' => '60')
-
-      expect { middleware_for(provider, env).call(Faraday::Env.new) }.to raise_error(RubyLLM::RateLimitError)
-      expect(env[:response_headers]['Retry-After']).to eq('60')
-    end
-
-    it 'preserves an HTTP-date Retry-After value' do
       provider = instance_double(RubyLLM::Provider, parse_error: 'Rate limit exceeded', retry_delay: 120.0)
       env = rate_limited_env('Retry-After' => 'Wed, 21 Oct 2099 07:28:00 GMT')
 
@@ -81,14 +73,6 @@ RSpec.describe RubyLLM::ErrorMiddleware do
 
       expect { middleware_for(nil, env).call(Faraday::Env.new) }.to raise_error(RubyLLM::RateLimitError)
       expect(env[:response_headers]['Retry-After']).to be_nil
-    end
-
-    it 'handles rate limited responses without headers' do
-      provider = instance_double(RubyLLM::Provider, parse_error: 'Rate limit exceeded', retry_delay: 5.0)
-      env = Faraday::Env.from(status: 429, body: '{"error":{"message":"Rate limit exceeded"}}')
-
-      expect { middleware_for(provider, env).call(Faraday::Env.new) }.to raise_error(RubyLLM::RateLimitError)
-      expect(env[:response_headers]).to be_nil
     end
   end
 

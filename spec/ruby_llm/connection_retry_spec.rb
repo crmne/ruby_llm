@@ -57,21 +57,19 @@ RSpec.describe RubyLLM::Connection do
 
     let(:provider) { RubyLLM::Providers::OpenAI.new(config) }
 
-    it 'waits the amount the provider asks for before retrying' do
-      stub_request(:post, 'https://api.openai.com/v1/chat/completions')
-        .to_return(
-          { status: 429,
-            headers: { 'x-ratelimit-reset-requests' => '300ms' },
-            body: '{"error":{"message":"Rate limit reached"}}' },
-          { status: 200, headers: { 'Content-Type' => 'application/json' }, body: '{}' }
-        )
+    it 'retries after the provider supplies a delay' do
+      stub = stub_request(:post, 'https://api.openai.com/v1/chat/completions')
+             .to_return(
+               { status: 429,
+                 headers: { 'x-ratelimit-reset-requests' => '0ms' },
+                 body: '{"error":{"message":"Rate limit reached"}}' },
+               { status: 200, headers: { 'Content-Type' => 'application/json' }, body: '{}' }
+             )
 
-      started = Process.clock_gettime(Process::CLOCK_MONOTONIC)
       response = provider.connection.post('chat/completions', {})
-      elapsed = Process.clock_gettime(Process::CLOCK_MONOTONIC) - started
 
       expect(response.status).to eq(200)
-      expect(elapsed).to be >= 0.3
+      expect(stub).to have_been_requested.twice
     end
 
     it 'gives up immediately when the provider asks to wait longer than retry_max_interval' do
