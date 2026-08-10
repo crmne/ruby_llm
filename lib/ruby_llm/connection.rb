@@ -100,6 +100,7 @@ module RubyLLM
       faraday.request :retry, {
         max: @config.max_retries,
         interval: @config.retry_interval,
+        max_interval: @config.retry_max_interval,
         interval_randomness: @config.retry_interval_randomness,
         backoff_factor: @config.retry_backoff_factor,
         methods: Faraday::Retry::Middleware::IDEMPOTENT_METHODS + [:post],

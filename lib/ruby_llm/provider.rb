@@ -68,6 +68,20 @@ module RubyLLM
       {}
     end
 
+    # Returns how many seconds the service asked us to wait before
+    # retrying a rate-limited request, or +nil+ when the response carries
+    # no timing information. The retry middleware already honors the
+    # standard <tt>Retry-After</tt> header; override this to read
+    # provider-specific rate-limit headers.
+    #
+    #   def retry_delay(response)
+    #     response.response_headers['x-acme-ratelimit-reset']&.to_f
+    #   end
+    #
+    def retry_delay(_response)
+      nil
+    end
+
     # Returns the provider slug, delegating to ::slug.
     def slug
       self.class.slug

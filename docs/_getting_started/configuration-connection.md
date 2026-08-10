@@ -68,8 +68,11 @@ RubyLLM.configure do |config|
   config.retry_interval = 0.1         # Initial retry delay in seconds (default: 0.1)
   config.retry_backoff_factor = 2     # Exponential backoff multiplier (default: 2)
   config.retry_interval_randomness = 0.5  # Jitter to prevent thundering herd (default: 0.5)
+  config.retry_max_interval = 30      # Longest delay to honor between retries (default: 30)
 end
 ```
+
+When a provider reports how long to wait through rate-limit headers -- the standard `Retry-After`, or OpenAI's `x-ratelimit-reset-requests` and `x-ratelimit-reset-tokens` -- retries wait that long instead of the backoff interval. If the requested wait exceeds `retry_max_interval`, the request fails immediately with `RubyLLM::RateLimitError` rather than sleeping.
 
 Example for high-latency connections:
 

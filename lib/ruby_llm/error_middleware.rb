@@ -12,11 +12,25 @@ module RubyLLM
 
     def call(env)
       @app.call(env).on_complete do |response|
+        apply_retry_delay(response)
         self.class.parse_error(provider: @provider, response: streaming_error_response(response))
       end
     end
 
     private
+
+    # The retry middleware only reads the standard Retry-After header, so
+    # provider-specific rate-limit headers are normalized into it here,
+    # where the provider is known.
+    def apply_retry_delay(response)
+      status = response.respond_to?(:status) ? response.status : response[:status]
+      return unless status == 429
+
+      headers = response[:response_headers]
+      if @provider && !headers['Retry-After'] && (delay = @provider.retry_delay(response))
+        headers['Retry-After'] = delay.to_s
+      end
+    end
 
     def streaming_error_response(response)
       stored_response = if response.respond_to?(:env) && response.env.respond_to?(:[])

@@ -29,6 +29,53 @@ RSpec.describe RubyLLM::ErrorMiddleware do
     end
   end
 
+  describe 'retry delay normalization' do
+    def middleware_for(provider, env)
+      app_response = instance_double(Faraday::Response)
+      allow(app_response).to receive(:on_complete).and_yield(env)
+      described_class.new(->(_env) { app_response }, provider: provider)
+    end
+
+    def rate_limited_env(headers)
+      Faraday::Env.from(
+        status: 429,
+        body: '{"error":{"message":"Rate limit exceeded"}}',
+        response_headers: Faraday::Utils::Headers.new(headers)
+      )
+    end
+
+    it 'copies the provider retry delay into Retry-After for the retry middleware' do
+      provider = instance_double(RubyLLM::Provider, parse_error: 'Rate limit exceeded', retry_delay: 12.5)
+      env = rate_limited_env({})
+
+      expect { middleware_for(provider, env).call(Faraday::Env.new) }.to raise_error(RubyLLM::RateLimitError)
+      expect(env[:response_headers]['Retry-After']).to eq('12.5')
+    end
+
+    it 'keeps a Retry-After already sent by the provider' do
+      provider = instance_double(RubyLLM::Provider, parse_error: 'Rate limit exceeded', retry_delay: 120.0)
+      env = rate_limited_env('Retry-After' => 'Wed, 21 Oct 2099 07:28:00 GMT')
+
+      expect { middleware_for(provider, env).call(Faraday::Env.new) }.to raise_error(RubyLLM::RateLimitError)
+      expect(env[:response_headers]['Retry-After']).to eq('Wed, 21 Oct 2099 07:28:00 GMT')
+    end
+
+    it 'leaves responses without provider timing information alone' do
+      provider = instance_double(RubyLLM::Provider, parse_error: 'Rate limit exceeded', retry_delay: nil)
+      env = rate_limited_env({})
+
+      expect { middleware_for(provider, env).call(Faraday::Env.new) }.to raise_error(RubyLLM::RateLimitError)
+      expect(env[:response_headers]['Retry-After']).to be_nil
+    end
+
+    it 'handles rate limited responses without a provider' do
+      env = rate_limited_env({})
+
+      expect { middleware_for(nil, env).call(Faraday::Env.new) }.to raise_error(RubyLLM::RateLimitError)
+      expect(env[:response_headers]['Retry-After']).to be_nil
+    end
+  end
+
   describe '.parse_error' do
     let(:provider) { instance_double(RubyLLM::Provider, parse_error: 'provider error') }
 

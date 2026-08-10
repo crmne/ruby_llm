@@ -19,6 +19,7 @@ RSpec.describe RubyLLM::Connection do
         request_timeout: 300,
         max_retries: 3,
         retry_interval: 0.1,
+        retry_max_interval: 30,
         retry_interval_randomness: 0.5,
         retry_backoff_factor: 2,
         http_proxy: nil,
@@ -33,6 +34,55 @@ RSpec.describe RubyLLM::Connection do
       retry_options = retry_handler.instance_variable_get(:@args).first
 
       expect(retry_options[:methods]).to include(:post)
+    end
+
+    it 'caps retry delays at retry_max_interval' do
+      connection = described_class.new(provider, config).connection
+      retry_handler = connection.builder.handlers.find { |handler| handler.klass == Faraday::Retry::Middleware }
+      retry_options = retry_handler.instance_variable_get(:@args).first
+
+      expect(retry_options[:max_interval]).to eq(30)
+    end
+  end
+
+  describe 'rate limit retry timing' do
+    let(:config) do
+      RubyLLM::Configuration.new.tap do |c|
+        c.openai_api_key = 'test-key'
+        c.max_retries = 1
+        c.retry_interval = 0
+        c.retry_interval_randomness = 0
+      end
+    end
+
+    let(:provider) { RubyLLM::Providers::OpenAI.new(config) }
+
+    it 'retries after the provider supplies a delay' do
+      stub = stub_request(:post, 'https://api.openai.com/v1/chat/completions')
+             .to_return(
+               { status: 429,
+                 headers: { 'x-ratelimit-reset-requests' => '0ms' },
+                 body: '{"error":{"message":"Rate limit reached"}}' },
+               { status: 200, headers: { 'Content-Type' => 'application/json' }, body: '{}' }
+             )
+
+      response = provider.connection.post('chat/completions', {})
+
+      expect(response.status).to eq(200)
+      expect(stub).to have_been_requested.twice
+    end
+
+    it 'gives up immediately when the provider asks to wait longer than retry_max_interval' do
+      config.retry_max_interval = 5
+      stub = stub_request(:post, 'https://api.openai.com/v1/chat/completions')
+             .to_return(
+               status: 429,
+               headers: { 'x-ratelimit-reset-requests' => '6m0s' },
+               body: '{"error":{"message":"Rate limit reached"}}'
+             )
+
+      expect { provider.connection.post('chat/completions', {}) }.to raise_error(RubyLLM::RateLimitError)
+      expect(stub).to have_been_requested.once
     end
   end
 end
