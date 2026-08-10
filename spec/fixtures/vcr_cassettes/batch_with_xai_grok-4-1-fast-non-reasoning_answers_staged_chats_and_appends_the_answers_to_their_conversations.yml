@@ -1,0 +1,355 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.x.ai/v1/batches
+    body:
+      encoding: UTF-8
+      string: '{"name":"ruby_llm_71f3ccb6e36a9864"}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 10 Aug 2026 19:28:45 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Zero-Data-Retention:
+      - 'false'
+      X-Data-Retention:
+      - general
+      X-Trace-Id:
+      - d2acfb6583b09dda9ab3cec52a5d0c60
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers, Accept-Encoding
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      X-Envoy-Upstream-Service-Time:
+      - '75'
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=31536000
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"batch_id":"batch_e2ec2463-0ff8-48df-8e9a-3e4112bdc812","name":"ruby_llm_71f3ccb6e36a9864","create_time":"2026-08-10","expire_time":"2026-09-09","create_api_key_id":"3a17dfeb-f886-479d-8d2e-ae6752427e96","cancel_time":null,"cancel_by_xai_message":null,"state":{"num_requests":0,"num_pending":0,"num_success":0,"num_error":0,"num_cancelled":0}}'
+  recorded_at: Mon, 10 Aug 2026 19:28:45 GMT
+- request:
+    method: post
+    uri: https://api.x.ai/v1/batches/batch_e2ec2463-0ff8-48df-8e9a-3e4112bdc812/requests
+    body:
+      encoding: UTF-8
+      string: '{"batch_requests":[{"batch_request_id":"0","batch_request":{"chat_get_completion":{"model":"grok-4.3","messages":[{"role":"user","content":"What
+        is 2 + 2? Just the number."}]}}},{"batch_request_id":"1","batch_request":{"chat_get_completion":{"model":"grok-4.3","messages":[{"role":"user","content":"Name
+        the largest planet in our solar system. One word."}]}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 10 Aug 2026 19:28:46 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '4'
+      Connection:
+      - keep-alive
+      X-Zero-Data-Retention:
+      - 'false'
+      X-Data-Retention:
+      - general
+      X-Trace-Id:
+      - c5a5372910d4ab814e31b319877d36ff
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      X-Envoy-Upstream-Service-Time:
+      - '504'
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=31536000
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: UTF-8
+      string: 'null'
+  recorded_at: Mon, 10 Aug 2026 19:28:46 GMT
+- request:
+    method: get
+    uri: https://api.x.ai/v1/batches/batch_e2ec2463-0ff8-48df-8e9a-3e4112bdc812
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 10 Aug 2026 19:28:48 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Zero-Data-Retention:
+      - 'false'
+      X-Data-Retention:
+      - general
+      X-Trace-Id:
+      - 69168d105640dc6c1ed91d56a42db8b5
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers, Accept-Encoding
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      X-Envoy-Upstream-Service-Time:
+      - '1947'
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=31536000
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"batch_id":"batch_e2ec2463-0ff8-48df-8e9a-3e4112bdc812","name":"ruby_llm_71f3ccb6e36a9864","create_time":"2026-08-10","expire_time":"2026-09-09","create_api_key_id":"3a17dfeb-f886-479d-8d2e-ae6752427e96","cancel_time":null,"cancel_by_xai_message":null,"state":{"num_requests":2,"num_pending":2,"num_success":0,"num_error":0,"num_cancelled":0}}'
+  recorded_at: Mon, 10 Aug 2026 19:28:48 GMT
+- request:
+    method: get
+    uri: https://api.x.ai/v1/batches/batch_e2ec2463-0ff8-48df-8e9a-3e4112bdc812
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 10 Aug 2026 19:28:49 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Zero-Data-Retention:
+      - 'false'
+      X-Data-Retention:
+      - general
+      X-Trace-Id:
+      - '080f7911fc6f99a326aebc6cd74020dc'
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers, Accept-Encoding
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      X-Envoy-Upstream-Service-Time:
+      - '1101'
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=31536000
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"batch_id":"batch_e2ec2463-0ff8-48df-8e9a-3e4112bdc812","name":"ruby_llm_71f3ccb6e36a9864","create_time":"2026-08-10","expire_time":"2026-09-09","create_api_key_id":"3a17dfeb-f886-479d-8d2e-ae6752427e96","cancel_time":null,"cancel_by_xai_message":null,"state":{"num_requests":2,"num_pending":2,"num_success":0,"num_error":0,"num_cancelled":0}}'
+  recorded_at: Mon, 10 Aug 2026 19:28:49 GMT
+- request:
+    method: get
+    uri: https://api.x.ai/v1/batches/batch_e2ec2463-0ff8-48df-8e9a-3e4112bdc812
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 10 Aug 2026 19:29:05 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Zero-Data-Retention:
+      - 'false'
+      X-Data-Retention:
+      - general
+      X-Trace-Id:
+      - bc70c5ecfb796ca580e1194ecb93c279
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers, Accept-Encoding
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      X-Envoy-Upstream-Service-Time:
+      - '224'
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=31536000
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"batch_id":"batch_e2ec2463-0ff8-48df-8e9a-3e4112bdc812","name":"ruby_llm_71f3ccb6e36a9864","create_time":"2026-08-10","expire_time":"2026-09-09","create_api_key_id":"3a17dfeb-f886-479d-8d2e-ae6752427e96","cancel_time":null,"cancel_by_xai_message":null,"state":{"num_requests":2,"num_pending":0,"num_success":2,"num_error":0,"num_cancelled":0}}'
+  recorded_at: Mon, 10 Aug 2026 19:29:05 GMT
+- request:
+    method: get
+    uri: https://api.x.ai/v1/batches/batch_e2ec2463-0ff8-48df-8e9a-3e4112bdc812/results?limit=100
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 10 Aug 2026 19:29:05 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Zero-Data-Retention:
+      - 'false'
+      X-Data-Retention:
+      - general
+      X-Trace-Id:
+      - 6cfa716fdb92c8da18e421210c885796
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers, Accept-Encoding
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      X-Envoy-Upstream-Service-Time:
+      - '425'
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=31536000
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"results":[{"batch_request_id":"0","batch_result":{"response":{"chat_get_completion":{"id":"61fc42e4-4dbf-9f7e-bc42-017cd785f082","object":"chat.completion","created":1786390126,"model":"grok-4.3","choices":[{"index":0,"message":{"role":"assistant","content":"4","reasoning_content":"The
+        user asked: \"What is 2 + 2? Just the number.\"\n","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":204,"completion_tokens":1,"total_tokens":347,"prompt_tokens_details":{"text_tokens":204,"audio_tokens":0,"image_tokens":0,"cached_tokens":192},"completion_tokens_details":{"reasoning_tokens":142,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":3287200},"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}}}},{"batch_request_id":"1","batch_result":{"response":{"chat_get_completion":{"id":"7db87acd-c1eb-9a53-88ce-493452ead9cd","object":"chat.completion","created":1786390128,"model":"grok-4.3","choices":[{"index":0,"message":{"role":"assistant","content":"Jupiter","reasoning_content":"The
+        question is: \"Name the largest planet in our solar system. One word.\"\n","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":204,"completion_tokens":2,"total_tokens":288,"prompt_tokens_details":{"text_tokens":204,"audio_tokens":0,"image_tokens":0,"cached_tokens":128},"completion_tokens_details":{"reasoning_tokens":82,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":2644800},"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}}}}],"pagination_token":null}'
+  recorded_at: Mon, 10 Aug 2026 19:29:05 GMT
+recorded_with: VCR 6.4.0

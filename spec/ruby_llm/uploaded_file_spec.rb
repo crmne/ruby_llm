@@ -2,8 +2,46 @@
 
 require 'spec_helper'
 
-RSpec.describe RubyLLM::UploadedFile do
-  include_context 'with configured RubyLLM'
+RSpec.describe RubyLLM::UploadedFile, :live do
+  let(:pdf_path) { File.expand_path('../fixtures/sample.pdf', __dir__) }
+
+  describe 'live uploads' do
+    # Mistral's Files API only accepts JSONL batches, fine-tune data, or OCR
+    # documents, so the PDF goes up with purpose: 'ocr' there.
+    [
+      { provider: :anthropic },
+      { provider: :gemini },
+      { provider: :mistral, options: { purpose: 'ocr' } },
+      { provider: :openai, options: { purpose: 'user_data' } },
+      { provider: :xai }
+    ].each do |upload_info|
+      provider = upload_info[:provider]
+      it "#{provider} uploads a PDF through the Files API" do
+        file = RubyLLM.upload(pdf_path, provider: provider, **upload_info.fetch(:options, {}))
+
+        expect(file.id).to be_present
+        expect(file.byte_size).to eq(File.size(pdf_path))
+      end
+    end
+
+    it 'openai/gpt-5-nano reuses an uploaded file in chat' do
+      file = RubyLLM.upload(pdf_path, provider: :openai, purpose: 'user_data')
+
+      response = RubyLLM.chat(model: 'gpt-5-nano', provider: :openai)
+                        .ask('Summarize this document in one sentence.', with: file)
+
+      expect(response.content).to match(/pdf|document|lorem|sample/i)
+    end
+
+    it 'gemini/gemini-2.5-flash reuses an uploaded file in chat' do
+      file = RubyLLM.upload(pdf_path, provider: :gemini)
+
+      response = RubyLLM.chat(model: 'gemini-2.5-flash', provider: :gemini)
+                        .ask('Summarize this document in one sentence.', with: file)
+
+      expect(response.content).to match(/pdf|document|lorem|sample/i)
+    end
+  end
 
   describe 'RubyLLM shortcuts' do
     it 'uploads through RubyLLM.upload' do
