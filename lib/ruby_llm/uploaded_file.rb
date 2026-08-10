@@ -161,7 +161,7 @@ module RubyLLM
       def timestamp(value)
         return if value.nil?
         return Time.at(value) if value.is_a?(Numeric)
-        return Time.at(value) if value.to_s.match?(/\A\d+\z/)
+        return Time.at(value.to_i) if value.to_s.match?(/\A\d+\z/)
 
         Time.iso8601(value.to_s)
       end

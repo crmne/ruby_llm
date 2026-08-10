@@ -419,6 +419,7 @@ RSpec.describe RubyLLM::UploadedFile::Protocol do
     it 'reads a timestamp in every shape providers send' do
       expect(protocol.send(:timestamp, nil)).to be_nil
       expect(protocol.send(:timestamp, 0)).to eq(Time.at(0))
+      expect(protocol.send(:timestamp, '1735689600')).to eq(Time.at(1_735_689_600))
       expect(protocol.send(:timestamp, '2025-01-01T00:00:00Z')).to eq(Time.utc(2025, 1, 1))
     end
 
