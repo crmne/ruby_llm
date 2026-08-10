@@ -755,7 +755,7 @@ module RubyLLM
 
     def build_schema_payload(schema, schema_def, strict)
       {
-        name: sanitize_schema_name(schema[:name] || 'response'),
+        name: sanitize_schema_name(schema[:name] || schema[:title] || 'response'),
         schema: schema_def,
         strict: strict.nil? || strict,
         description: schema[:description]

@@ -117,6 +117,29 @@ RSpec.describe RubyLLM::Chat, :live do
         expect(chat.schema[:name]).to eq('Some__Namespaced__Schema')
       end
 
+      it 'falls back to title for a bare JSON Schema document' do
+        chat = RubyLLM.chat
+        chat.with_schema({
+                           '$schema' => 'https://json-schema.org/draft/2020-12/schema',
+                           'title' => 'PersonSchema',
+                           'type' => 'object',
+                           'properties' => {}
+                         })
+
+        expect(chat.schema[:name]).to eq('PersonSchema')
+      end
+
+      it 'prefers name over title when both are present' do
+        chat = RubyLLM.chat
+        chat.with_schema({
+                           name: 'EnvelopeName',
+                           title: 'DocumentTitle',
+                           schema: { type: 'object', properties: {} }
+                         })
+
+        expect(chat.schema[:name]).to eq('EnvelopeName')
+      end
+
       it 'uses response as default name when no name is provided' do
         chat = RubyLLM.chat
         chat.with_schema({ type: 'object', properties: {} })
