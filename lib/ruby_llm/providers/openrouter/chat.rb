@@ -45,8 +45,11 @@ module RubyLLM
         end
 
         def format_thinking(msg)
+          return {} unless msg.role == :assistant
+          return { reasoning_details: msg.raw_reasoning } if msg.raw_reasoning
+
           thinking = msg.thinking
-          return {} unless thinking && msg.role == :assistant
+          return {} unless thinking
 
           details = []
           if thinking.text
@@ -159,6 +162,13 @@ module RubyLLM
 
           encrypted = details.find { |detail| detail['type'] == 'reasoning.encrypted' && detail['data'].is_a?(String) }
           encrypted&.dig('data')
+        end
+
+        # OpenRouter requires the reasoning_details array back untouched for
+        # signed reasoning to survive multi-turn tool calls.
+        def extract_raw_reasoning(message_data)
+          details = message_data['reasoning_details']
+          details if details.is_a?(Array) && !details.empty?
         end
       end
     end

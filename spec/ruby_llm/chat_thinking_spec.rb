@@ -206,6 +206,58 @@ RSpec.describe RubyLLM::Chat, :live do
     end
   end
 
+  describe 'OpenRouter reasoning_details round-trip' do
+    class ReasoningWeather < RubyLLM::Tool # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
+      description 'Gets current weather for a city'
+      parameter :city, description: 'City name (e.g., Berlin)'
+
+      def execute(city:)
+        "Current weather in #{city}: 15°C, cloudy"
+      end
+    end
+
+    let(:chat) do
+      RubyLLM.chat(model: 'claude-haiku-4-5', provider: :openrouter)
+             .with_thinking(budget: 2000)
+             .with_tools(ReasoningWeather)
+    end
+
+    it 'renders stored reasoning_details verbatim' do
+      details = [
+        { 'type' => 'reasoning.text', 'text' => 'Thinking about it.', 'signature' => 'sig',
+          'format' => 'anthropic-claude-v1', 'index' => 0 }
+      ]
+      chat = RubyLLM.chat(model: 'claude-haiku-4-5', provider: :openrouter)
+      chat.add_message(role: :user, content: 'Hi')
+      chat.add_message(RubyLLM::Message.new(role: :assistant, content: 'Hello!', raw_reasoning: details))
+
+      payload = chat.render
+
+      expect(payload[:messages].last[:reasoning_details]).to eq(details)
+    end
+
+    it 'replays reasoning_details across tool calls and turns' do
+      response = chat.ask('What is the weather in Berlin? Use the reasoning_weather tool.')
+
+      expect(response.content).to be_present
+      tool_call_message = chat.messages.find(&:tool_call?)
+      expect(tool_call_message.raw_reasoning).to be_present
+      expect(tool_call_message.raw_reasoning.first).to include('format', 'signature')
+
+      second = chat.ask('Should I bring an umbrella? Answer briefly.')
+      expect(second.content).to be_present
+    end
+
+    it 'accumulates reasoning_details while streaming tool calls' do
+      response = chat.ask('What is the weather in Berlin? Use the reasoning_weather tool.') { |_chunk| } # rubocop:disable Lint/EmptyBlock
+
+      expect(response.content).to be_present
+      tool_call_message = chat.messages.find(&:tool_call?)
+      expect(tool_call_message.raw_reasoning).to be_present
+      expect(tool_call_message.raw_reasoning.any? { |detail| detail['signature'] }).to be true
+    end
+  end
+
   describe 'Gemini token accounting' do
     it 'correctly sums candidatesTokenCount and thoughtsTokenCount' do
       chat = RubyLLM.chat(model: 'gemini-2.5-flash', provider: :gemini)

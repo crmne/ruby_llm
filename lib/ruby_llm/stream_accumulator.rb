@@ -21,6 +21,7 @@ module RubyLLM
       @server_tool_use = nil
       @server_tool_calls = []
       @raw_content = nil
+      @raw_reasoning = nil
       @finish_reason = nil
       @inside_think_tag = false
       @pending_think_tag = +''
@@ -37,6 +38,7 @@ module RubyLLM
       append_thinking_from_chunk(chunk)
       @server_tool_calls.concat(chunk.server_tool_calls)
       @raw_content = chunk.raw_content if chunk.raw_content
+      @raw_reasoning = chunk.raw_reasoning if chunk.raw_reasoning
       @finish_reason = chunk.finish_reason if chunk.finish_reason
       count_tokens chunk
       RubyLLM.logger.debug { inspect } if RubyLLM.config.log_stream_debug
@@ -61,6 +63,7 @@ module RubyLLM
         ),
         server_tool_calls: @server_tool_calls,
         raw_content: @raw_content,
+        raw_reasoning: @raw_reasoning,
         finish_reason: @finish_reason,
         model: model,
         tool_calls: tool_calls_from_stream(response),

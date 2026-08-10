@@ -84,6 +84,7 @@ module RubyLLM
             content: content,
             citations: extract_citations(message_data, data, content),
             thinking: Thinking.build(text: thinking_text, signature: thinking_signature),
+            raw_reasoning: extract_raw_reasoning(message_data),
             tool_calls: parse_tool_calls(message_data['tool_calls'], response: raw, finish_reason: finish_reason),
             input_tokens: input_tokens(usage),
             output_tokens: output_tokens(usage),
@@ -381,6 +382,10 @@ module RubyLLM
         def extract_thinking_signature(message_data)
           candidate = message_data['reasoning_signature'] || message_data['signature']
           candidate.is_a?(String) ? candidate : nil
+        end
+
+        def extract_raw_reasoning(_message_data)
+          nil
         end
 
         def extract_content_and_thinking(content)

@@ -1,0 +1,194 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://openrouter.ai/api/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"anthropic/claude-haiku-4.5","messages":[{"role":"user","content":"What
+        is the weather in Berlin? Use the reasoning_weather tool."}],"stream":false,"tools":[{"type":"function","function":{"name":"reasoning_weather","description":"Gets
+        current weather for a city","parameters":{"type":"object","properties":{"city":{"type":"string","description":"City
+        name (e.g., Berlin)"}},"required":["city"],"additionalProperties":false,"strict":true}}}],"reasoning":{"max_tokens":2000}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 10 Aug 2026 23:04:27 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Generation-Id:
+      - gen-1786403066-OADDQBeibVVL1Aa8aBi9
+      Access-Control-Expose-Headers:
+      - X-Generation-Id,X-Provider-Name,cf-ray
+      Set-Cookie:
+      - "<COOKIE>"
+      Permissions-Policy:
+      - payment=(self "https://checkout.stripe.com" "https://connect-js.stripe.com"
+        "https://js.stripe.com" "https://*.js.stripe.com" "https://hooks.stripe.com")
+      Referrer-Policy:
+      - no-referrer, strict-origin-when-cross-origin
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: "\n         \n\n         \n\n         \n{\"id\":\"gen-1786403066-OADDQBeibVVL1Aa8aBi9\",\"object\":\"chat.completion\",\"created\":1786403066,\"model\":\"anthropic/claude-haiku-4.5\",\"provider\":\"Amazon
+        Bedrock\",\"system_fingerprint\":null,\"service_tier\":null,\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"tool_calls\",\"native_finish_reason\":\"tool_use\",\"message\":{\"role\":\"assistant\",\"content\":null,\"refusal\":null,\"reasoning\":\"The
+        user is asking for the weather in Berlin and has explicitly asked me to use
+        the reasoning_weather tool. I have all the required parameters:\\n- city:
+        \\\"Berlin\\\"\\n\\nI'll call the reasoning_weather function with Berlin as
+        the city parameter.\",\"tool_calls\":[{\"type\":\"function\",\"index\":0,\"id\":\"toolu_bdrk_01ADw53o3uvrGvccVaVYUX4G\",\"function\":{\"name\":\"reasoning_weather\",\"arguments\":\"{\\\"city\\\":
+        \\\"Berlin\\\"}\"}}],\"reasoning_details\":[{\"type\":\"reasoning.text\",\"text\":\"The
+        user is asking for the weather in Berlin and has explicitly asked me to use
+        the reasoning_weather tool. I have all the required parameters:\\n- city:
+        \\\"Berlin\\\"\\n\\nI'll call the reasoning_weather function with Berlin as
+        the city parameter.\",\"format\":\"anthropic-claude-v1\",\"index\":0,\"signature\":\"EpYDCkgIEBABGAIqQPBwNAKYol3GqZmOMgJ47iL0PGL8h9D4BPnZ6e0E6QUino6rUyvis94RUsMABAigW02bpEgryq/ub5QGe0F/678SDBgoyZx8itHIIcquORoMWHJs4abBUWA2JMmPIjD3/IT9rJxjQUtnJPSZ3iG1IFVv4cXTiuPr0Z0ZjtrAwcVI2K3L97CXiq0SHFyekU4q+wHylzpTGzPpuReOUZXDwaVTyU/hbGWyO2IPVFQhAX7NNufeB4KXpTk+XDhYh1Cpr242EiKPJS0YEgggMZA/QnB5vYLoej5vWQxeWWLymcPT8xKTJRtx9frwVvbRgfseAxj7iHr4kADge5/8rS21yY3PYHCMz1L6BS8MysPoKXlG24RHHkiYJJ1O+HmiAfRTC/8twJrJHTuDq83cOFgXLMkhcg6ZysQ7drHbIch5Pty7RyfGN19L3EeoxSWh2MUqDvvw635tzk/yMzCuEPqyfqEm1C5jrdZBqx7o9YeWHlT2YzA+ztuVJASi+iX0ES3qg6ODtVMUkevPS1bdvRgB\"}]}}],\"usage\":{\"prompt_tokens\":626,\"completion_tokens\":113,\"total_tokens\":739,\"cost\":0.001191,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.001191,\"upstream_inference_prompt_cost\":0.000626,\"upstream_inference_completions_cost\":0.000565},\"completion_tokens_details\":{\"reasoning_tokens\":61,\"image_tokens\":0,\"audio_tokens\":0}}}"
+  recorded_at: Mon, 10 Aug 2026 23:04:27 GMT
+- request:
+    method: post
+    uri: https://openrouter.ai/api/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"anthropic/claude-haiku-4.5","messages":[{"role":"user","content":"What
+        is the weather in Berlin? Use the reasoning_weather tool."},{"role":"assistant","content":"","tool_calls":[{"id":"toolu_bdrk_01ADw53o3uvrGvccVaVYUX4G","type":"function","function":{"name":"reasoning_weather","arguments":"{\"city\":\"Berlin\"}"}}],"reasoning_details":[{"type":"reasoning.text","text":"The
+        user is asking for the weather in Berlin and has explicitly asked me to use
+        the reasoning_weather tool. I have all the required parameters:\n- city: \"Berlin\"\n\nI''ll
+        call the reasoning_weather function with Berlin as the city parameter.","format":"anthropic-claude-v1","index":0,"signature":"EpYDCkgIEBABGAIqQPBwNAKYol3GqZmOMgJ47iL0PGL8h9D4BPnZ6e0E6QUino6rUyvis94RUsMABAigW02bpEgryq/ub5QGe0F/678SDBgoyZx8itHIIcquORoMWHJs4abBUWA2JMmPIjD3/IT9rJxjQUtnJPSZ3iG1IFVv4cXTiuPr0Z0ZjtrAwcVI2K3L97CXiq0SHFyekU4q+wHylzpTGzPpuReOUZXDwaVTyU/hbGWyO2IPVFQhAX7NNufeB4KXpTk+XDhYh1Cpr242EiKPJS0YEgggMZA/QnB5vYLoej5vWQxeWWLymcPT8xKTJRtx9frwVvbRgfseAxj7iHr4kADge5/8rS21yY3PYHCMz1L6BS8MysPoKXlG24RHHkiYJJ1O+HmiAfRTC/8twJrJHTuDq83cOFgXLMkhcg6ZysQ7drHbIch5Pty7RyfGN19L3EeoxSWh2MUqDvvw635tzk/yMzCuEPqyfqEm1C5jrdZBqx7o9YeWHlT2YzA+ztuVJASi+iX0ES3qg6ODtVMUkevPS1bdvRgB"}]},{"role":"tool","content":"Current
+        weather in Berlin: 15°C, cloudy","tool_call_id":"toolu_bdrk_01ADw53o3uvrGvccVaVYUX4G"}],"stream":false,"tools":[{"type":"function","function":{"name":"reasoning_weather","description":"Gets
+        current weather for a city","parameters":{"type":"object","properties":{"city":{"type":"string","description":"City
+        name (e.g., Berlin)"}},"required":["city"],"additionalProperties":false,"strict":true}}}],"reasoning":{"max_tokens":2000}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 10 Aug 2026 23:04:28 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Generation-Id:
+      - gen-1786403067-Gtu4PkjVsiSniY3GdOdT
+      Access-Control-Expose-Headers:
+      - X-Generation-Id,X-Provider-Name,cf-ray
+      Set-Cookie:
+      - "<COOKIE>"
+      Permissions-Policy:
+      - payment=(self "https://checkout.stripe.com" "https://connect-js.stripe.com"
+        "https://js.stripe.com" "https://*.js.stripe.com" "https://hooks.stripe.com")
+      Referrer-Policy:
+      - no-referrer, strict-origin-when-cross-origin
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        CiAgICAgICAgIAoKICAgICAgICAgCnsiaWQiOiJnZW4tMTc4NjQwMzA2Ny1HdHU0UGtqVnNpU25pWTNHZE9kVCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3ODY0MDMwNjcsIm1vZGVsIjoiYW50aHJvcGljL2NsYXVkZS1oYWlrdS00LjUiLCJwcm92aWRlciI6IkFtYXpvbiBCZWRyb2NrIiwic3lzdGVtX2ZpbmdlcnByaW50IjpudWxsLCJzZXJ2aWNlX3RpZXIiOm51bGwsImNob2ljZXMiOlt7ImluZGV4IjowLCJsb2dwcm9icyI6bnVsbCwiZmluaXNoX3JlYXNvbiI6InN0b3AiLCJuYXRpdmVfZmluaXNoX3JlYXNvbiI6ImVuZF90dXJuIiwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IlRoZSBjdXJyZW50IHdlYXRoZXIgaW4gQmVybGluIGlzICoqMTXCsEMgKDU5wrBGKSBhbmQgY2xvdWR5KiouIEl0J3MgYSBtaWxkLCBvdmVyY2FzdCBkYXkgaW4gQmVybGluLiIsInJlZnVzYWwiOm51bGwsInJlYXNvbmluZyI6bnVsbH19XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6NzYyLCJjb21wbGV0aW9uX3Rva2VucyI6MzQsInRvdGFsX3Rva2VucyI6Nzk2LCJjb3N0IjowLjAwMDkzMiwiaXNfYnlvayI6ZmFsc2UsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjowLCJjYWNoZV93cml0ZV90b2tlbnMiOjAsImF1ZGlvX3Rva2VucyI6MCwidmlkZW9fdG9rZW5zIjowfSwiY29zdF9kZXRhaWxzIjp7InVwc3RyZWFtX2luZmVyZW5jZV9jb3N0IjowLjAwMDkzMiwidXBzdHJlYW1faW5mZXJlbmNlX3Byb21wdF9jb3N0IjowLjAwMDc2MiwidXBzdHJlYW1faW5mZXJlbmNlX2NvbXBsZXRpb25zX2Nvc3QiOjAuMDAwMTd9LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjAsImltYWdlX3Rva2VucyI6MCwiYXVkaW9fdG9rZW5zIjowfX19
+  recorded_at: Mon, 10 Aug 2026 23:04:28 GMT
+- request:
+    method: post
+    uri: https://openrouter.ai/api/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"anthropic/claude-haiku-4.5","messages":[{"role":"user","content":"What
+        is the weather in Berlin? Use the reasoning_weather tool."},{"role":"assistant","content":"","tool_calls":[{"id":"toolu_bdrk_01ADw53o3uvrGvccVaVYUX4G","type":"function","function":{"name":"reasoning_weather","arguments":"{\"city\":\"Berlin\"}"}}],"reasoning_details":[{"type":"reasoning.text","text":"The
+        user is asking for the weather in Berlin and has explicitly asked me to use
+        the reasoning_weather tool. I have all the required parameters:\n- city: \"Berlin\"\n\nI''ll
+        call the reasoning_weather function with Berlin as the city parameter.","format":"anthropic-claude-v1","index":0,"signature":"EpYDCkgIEBABGAIqQPBwNAKYol3GqZmOMgJ47iL0PGL8h9D4BPnZ6e0E6QUino6rUyvis94RUsMABAigW02bpEgryq/ub5QGe0F/678SDBgoyZx8itHIIcquORoMWHJs4abBUWA2JMmPIjD3/IT9rJxjQUtnJPSZ3iG1IFVv4cXTiuPr0Z0ZjtrAwcVI2K3L97CXiq0SHFyekU4q+wHylzpTGzPpuReOUZXDwaVTyU/hbGWyO2IPVFQhAX7NNufeB4KXpTk+XDhYh1Cpr242EiKPJS0YEgggMZA/QnB5vYLoej5vWQxeWWLymcPT8xKTJRtx9frwVvbRgfseAxj7iHr4kADge5/8rS21yY3PYHCMz1L6BS8MysPoKXlG24RHHkiYJJ1O+HmiAfRTC/8twJrJHTuDq83cOFgXLMkhcg6ZysQ7drHbIch5Pty7RyfGN19L3EeoxSWh2MUqDvvw635tzk/yMzCuEPqyfqEm1C5jrdZBqx7o9YeWHlT2YzA+ztuVJASi+iX0ES3qg6ODtVMUkevPS1bdvRgB"}]},{"role":"tool","content":"Current
+        weather in Berlin: 15°C, cloudy","tool_call_id":"toolu_bdrk_01ADw53o3uvrGvccVaVYUX4G"},{"role":"assistant","content":"The
+        current weather in Berlin is **15°C (59°F) and cloudy**. It''s a mild, overcast
+        day in Berlin."},{"role":"user","content":"Should I bring an umbrella? Answer
+        briefly."}],"stream":false,"tools":[{"type":"function","function":{"name":"reasoning_weather","description":"Gets
+        current weather for a city","parameters":{"type":"object","properties":{"city":{"type":"string","description":"City
+        name (e.g., Berlin)"}},"required":["city"],"additionalProperties":false,"strict":true}}}],"reasoning":{"max_tokens":2000}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 10 Aug 2026 23:04:29 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Generation-Id:
+      - gen-1786403068-ZFhUwi1vTv53CXqgGEEf
+      Access-Control-Expose-Headers:
+      - X-Generation-Id,X-Provider-Name,cf-ray
+      Set-Cookie:
+      - "<COOKIE>"
+      Permissions-Policy:
+      - payment=(self "https://checkout.stripe.com" "https://connect-js.stripe.com"
+        "https://js.stripe.com" "https://*.js.stripe.com" "https://hooks.stripe.com")
+      Referrer-Policy:
+      - no-referrer, strict-origin-when-cross-origin
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        CiAgICAgICAgIAoKICAgICAgICAgCgogICAgICAgICAKeyJpZCI6Imdlbi0xNzg2NDAzMDY4LVpGaFV3aTF2VHY1M0NYcWdHRUVmIiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwiY3JlYXRlZCI6MTc4NjQwMzA2OCwibW9kZWwiOiJhbnRocm9waWMvY2xhdWRlLWhhaWt1LTQuNSIsInByb3ZpZGVyIjoiQW1hem9uIEJlZHJvY2siLCJzeXN0ZW1fZmluZ2VycHJpbnQiOm51bGwsInNlcnZpY2VfdGllciI6bnVsbCwiY2hvaWNlcyI6W3siaW5kZXgiOjAsImxvZ3Byb2JzIjpudWxsLCJmaW5pc2hfcmVhc29uIjoic3RvcCIsIm5hdGl2ZV9maW5pc2hfcmVhc29uIjoiZW5kX3R1cm4iLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjoiWWVzLCBicmluZyBhbiB1bWJyZWxsYS4gVGhlIGNsb3VkeSBjb25kaXRpb25zIHN1Z2dlc3QgcmFpbiBpcyBwb3NzaWJsZSwgYW5kIGl0J3MgYmV0dGVyIHRvIGJlIHByZXBhcmVkLiIsInJlZnVzYWwiOm51bGwsInJlYXNvbmluZyI6IlRoZSB1c2VyIGlzIGFza2luZyBpZiB0aGV5IHNob3VsZCBicmluZyBhbiB1bWJyZWxsYSBiYXNlZCBvbiB0aGUgd2VhdGhlciBpbiBCZXJsaW4uIFRoZSB3ZWF0aGVyIHNob3dlZCBpdCdzIDE1wrBDIGFuZCBjbG91ZHkuIENsb3VkeSBjb25kaXRpb25zIHN1Z2dlc3QgdGhlcmUgbWlnaHQgYmUgcmFpbiwgc28gaXQgd291bGQgYmUgcmVhc29uYWJsZSB0byByZWNvbW1lbmQgYnJpbmdpbmcgYW4gdW1icmVsbGEgYXMgYSBwcmVjYXV0aW9uLiBJIHNob3VsZCBhbnN3ZXIgYnJpZWZseSBhcyByZXF1ZXN0ZWQuIiwicmVhc29uaW5nX2RldGFpbHMiOlt7InR5cGUiOiJyZWFzb25pbmcudGV4dCIsInRleHQiOiJUaGUgdXNlciBpcyBhc2tpbmcgaWYgdGhleSBzaG91bGQgYnJpbmcgYW4gdW1icmVsbGEgYmFzZWQgb24gdGhlIHdlYXRoZXIgaW4gQmVybGluLiBUaGUgd2VhdGhlciBzaG93ZWQgaXQncyAxNcKwQyBhbmQgY2xvdWR5LiBDbG91ZHkgY29uZGl0aW9ucyBzdWdnZXN0IHRoZXJlIG1pZ2h0IGJlIHJhaW4sIHNvIGl0IHdvdWxkIGJlIHJlYXNvbmFibGUgdG8gcmVjb21tZW5kIGJyaW5naW5nIGFuIHVtYnJlbGxhIGFzIGEgcHJlY2F1dGlvbi4gSSBzaG91bGQgYW5zd2VyIGJyaWVmbHkgYXMgcmVxdWVzdGVkLiIsImZvcm1hdCI6ImFudGhyb3BpYy1jbGF1ZGUtdjEiLCJpbmRleCI6MCwic2lnbmF0dXJlIjoiRXNvRENrZ0lFQkFCR0FJcVFGdXJLSCttU0RBNE9GUWFDQ1pxQllNVnRxUkROQ1I0U1I1ZTYzUnREQ3FhSmp2OE5oL0NzUElQdTgzNnV2VExvQmhicmpMQll2NGczMG1oOUZjem5sd1NEQm5JcVVJOFY4czd5b2xpK0JvTXkyalZ2YTBiVy84dHQrZE1JakQxZXoyUmozUkRjNzlJVUYwWS9QZWc0SmhXdDdSZ3N6WHhZV2k0U3QvRTc1SCtxWWM5MGhLTUErbS9rSUVsRDNjcXJ3SzV6Y0pEMUxvMEQyK05jZUMvMEM2WXFnRGgwNkhObkljNmR6OXZkMTYyN2J0NTZHTm8rYUpUZUZxSUJpaFI0WEJrSlhiLzNkd0tqV2VRQU5iTUhZNUdJa2c0bFpGN2c5c3dyeVdUcnFpZkxuVmd2emo5MTNicVpXWDdsZ3FVSTVicDhVaXU5ZExVL1ZmZTZXVjV0S3l5emNyUkNKOFdKQ090ZEVPN0ZuMzFsb0YyelZYMW1IVEI3c1pHVFVVemZoUTZNSjJkdXB5cHZXMER3bGlzOW1WeWRPTEhwbkJ5ekIxeStiYXppUFF3LzBValczTk9WSHNCWTZSdzRlZkdoSXQxbzhDM2hWUlJBN3M5MTlTNmY3ekFydDA3dTIralZrdDJ0RGZhZWRoY3pMOG9lektwQ3BJbEZ6aXVEaTdtZ0t6WlRHcW5FVE9VeXFvOEhNVnNCU20vS3F0cUVpTHhXS1VDWmVvRmh0MXQxWlFZOCtrZ0pOSFc5TWM4VjNUdnh1RGtrTms1OTdaYzgyYmZqeUY4WFk4WUFRPT0ifV19fV0sInVzYWdlIjp7InByb21wdF90b2tlbnMiOjc1MSwiY29tcGxldGlvbl90b2tlbnMiOjEwMCwidG90YWxfdG9rZW5zIjo4NTEsImNvc3QiOjAuMDAxMjUxLCJpc19ieW9rIjpmYWxzZSwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjAsImNhY2hlX3dyaXRlX3Rva2VucyI6MCwiYXVkaW9fdG9rZW5zIjowLCJ2aWRlb190b2tlbnMiOjB9LCJjb3N0X2RldGFpbHMiOnsidXBzdHJlYW1faW5mZXJlbmNlX2Nvc3QiOjAuMDAxMjUxLCJ1cHN0cmVhbV9pbmZlcmVuY2VfcHJvbXB0X2Nvc3QiOjAuMDAwNzUxLCJ1cHN0cmVhbV9pbmZlcmVuY2VfY29tcGxldGlvbnNfY29zdCI6MC4wMDA1fSwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjo3MywiaW1hZ2VfdG9rZW5zIjowLCJhdWRpb190b2tlbnMiOjB9fX0=
+  recorded_at: Mon, 10 Aug 2026 23:04:30 GMT
+recorded_with: VCR 6.4.0

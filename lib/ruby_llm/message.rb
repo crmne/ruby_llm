@@ -82,6 +82,11 @@ module RubyLLM
     # replay the turn exactly. +nil+ otherwise.
     attr_reader :raw_content # :nodoc:
 
+    # The provider-shaped reasoning payload of this assistant message, kept
+    # verbatim so later requests can replay the model's reasoning exactly.
+    # +nil+ when the provider returned none.
+    attr_reader :raw_reasoning # :nodoc:
+
     # The Chat this message belongs to, set when it is added to a
     # conversation. Backs #tool_results.
     attr_accessor :conversation # :nodoc:
@@ -106,6 +111,7 @@ module RubyLLM
       @citations = Array(options[:citations])
       @server_tool_calls = Array(options[:server_tool_calls])
       @raw_content = options[:raw_content]
+      @raw_reasoning = options[:raw_reasoning]
       @finish_reason = options[:finish_reason]
       self.ruby_llm_usage_entries = options[:usage_entries] if options[:usage_entries]
       @cache_until_here = options.fetch(:cache_until_here, false)
@@ -227,6 +233,7 @@ module RubyLLM
         citations: list_to_h(citations),
         server_tool_calls: list_to_h(server_tool_calls),
         raw_content: raw_content,
+        raw_reasoning: raw_reasoning,
         finish_reason: finish_reason,
         cache_until_here: cache_until_here? || nil
       }.merge(tokens.to_h).compact
