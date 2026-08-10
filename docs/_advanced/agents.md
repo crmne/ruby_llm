@@ -295,7 +295,8 @@ Delegated methods include:
 
 * `model`, `messages`, `tools`, `provider_options`, `headers`, `schema`
 * `cost` (v1.15+)
-* `ask`, `say`, `complete`
+* `ask`, `say`, `complete`, `complete?`, `ask_later`, `generate`, `run_tools`, `step`
+* `cancel!`, `cancelled?`, `approve!`, `deny!`, `awaiting_approval?`
 * `add_message`, `each`
 * `with_tools`, `with_tool_options`
 * `with_model`, `with_temperature`, `with_thinking`, `with_citations`, `with_context`

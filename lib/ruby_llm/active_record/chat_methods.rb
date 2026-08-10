@@ -61,6 +61,47 @@ module RubyLLM
         @chat&.cancelled? || self[:cancelled]
       end
 
+      # Records approval for +tool_call+ (a ToolCall, a tool call record, or
+      # an id) on the persisted tool call, so the next #complete executes it
+      # from any process. Returns +self+.
+      #
+      #   chat.approve!(params[:tool_call_id])
+      #   CompleteJob.perform_later(chat.id)
+      #
+      def approve!(tool_call)
+        record_tool_call_decision(tool_call, 'approved')
+      end
+
+      # Records denial for +tool_call+ (a ToolCall, a tool call record, or
+      # an id) on the persisted tool call. The next #complete appends a
+      # structured denial result instead of executing the tool. Returns
+      # +self+.
+      def deny!(tool_call)
+        record_tool_call_decision(tool_call, 'denied')
+      end
+
+      # Returns whether the conversation is parked on tool calls that
+      # require approval and have no recorded decision. See
+      # RubyLLM::Chat#awaiting_approval?.
+      def awaiting_approval?
+        to_llm.awaiting_approval?
+      end
+
+      # Returns the persisted tool call records that require approval and
+      # have no recorded decision, ready to render as approval cards. Pass
+      # a record (or its tool_call_id) to #approve! or #deny!.
+      #
+      #   chat.pending_approvals.each { |record| render record }
+      #
+      def pending_approvals
+        ids = to_llm.pending_approvals.map(&:id)
+        RubyLLM::ActiveRecord::ToolCall.where(
+          tool_call_id: ids,
+          message_type: self.class.message_class.constantize.polymorphic_name,
+          message_id: messages_association.select(:id)
+        )
+      end
+
       def messages_association # :nodoc:
         send(messages_association_name)
       end
@@ -287,6 +328,7 @@ module RubyLLM
       #   chat.complete
       #
       def ask_later(message = nil, with: nil)
+        to_llm.raise_if_pending_tool_calls!
         add_message(role: :user, content: message, attachments: with)
         self
       end
@@ -462,7 +504,28 @@ module RubyLLM
         )
         sync_messages(chat)
         chat.cancellation_checker = proc { consume_persisted_cancellation_request }
+        chat.approval_checker = proc { |tool_call| persisted_tool_call_approval(tool_call) }
         install_persistence_callbacks(chat)
+      end
+
+      def record_tool_call_decision(tool_call, decision)
+        id = tool_call.respond_to?(:tool_call_id) ? tool_call.tool_call_id : tool_call
+        id = id.id if id.respond_to?(:id) && !id.is_a?(String)
+        record = find_tool_call(id)
+        raise ArgumentError, "Unknown tool call: #{id.inspect}" unless record
+
+        record.update!(approval: decision)
+        self
+      end
+
+      def persisted_tool_call_approval(tool_call)
+        record = find_tool_call(tool_call.id)
+        return unless record&.has_attribute?(:approval)
+
+        case record.approval
+        when 'approved' then true
+        when 'denied' then false
+        end
       end
 
       def sync_messages(chat = @chat)

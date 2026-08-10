@@ -208,6 +208,6 @@ See the [Error Handling Guide]({% link _advanced/error-handling.md %}#debugging)
 ## Next Steps
 
 *   [Tool Parameters]({% link _core_features/tool-parameters.md %}) - Declare flat arguments, structured schemas, and provider-specific metadata.
-*   [Controlling Tool Execution]({% link _core_features/tool-execution.md %}) - Steer tool choice, call counts, concurrency, and callbacks.
+*   [Controlling Tool Execution]({% link _core_features/tool-execution.md %}) - Steer tool choice, call counts, approval, concurrency, and callbacks.
 *   [Chatting with AI Models]({% link _core_features/chat.md %}) - The conversational core that tools plug into.
 *   [Error Handling]({% link _advanced/error-handling.md %}) - Recover from failures across the whole stack.

@@ -613,6 +613,7 @@ module RubyLLM
                    :with_thinking, :with_citations, :with_caching, :with_context, :with_provider_options,
                    :with_headers, :with_schema, :with_fallbacks, :before_message, :after_message, :before_tool_call,
                    :after_tool_result, :before_fallback, :after_fallback, :each, :complete, :complete?, :ask_later,
-                   :cancel!, :cancelled?, :generate, :run_tools, :step, :add_message, :add_completion, :tokens, :cost
+                   :cancel!, :cancelled?, :approve!, :deny!, :awaiting_approval?, :pending_approvals, :generate,
+                   :run_tools, :step, :add_message, :add_completion, :tokens, :cost
   end
 end

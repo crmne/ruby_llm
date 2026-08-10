@@ -40,7 +40,7 @@ module RubyLLM
     POSITIONAL_PARAMETER_KINDS = %i[req opt rest].freeze # :nodoc:
 
     class << self
-      attr_reader :parameters_schema_definition # :nodoc:
+      attr_reader :parameters_schema_definition, :approval_resolver # :nodoc:
 
       # :call-seq:
       #   description(text) -> text
@@ -102,6 +102,41 @@ module RubyLLM
 
         @parameters_schema_definition = SchemaDefinition.new(schema:, block:)
         self
+      end
+
+      # Declares that this tool must be approved before it executes. The
+      # agentic loop parks the tool call until a decision is recorded with
+      # Chat#approve! or Chat#deny!, so Chat#complete returns cleanly and
+      # can be called again once the decision exists. In Rails the decision
+      # persists on the tool call record and survives process restarts.
+      #
+      #   class IssueRefund < RubyLLM::Tool
+      #     requires_approval
+      #
+      #     def execute(order_id:)
+      #       Refunds.issue!(order_id)
+      #     end
+      #   end
+      #
+      # Pass a block to resolve the decision yourself instead of using the
+      # recorded one. The block receives the ToolCall and returns +true+ to
+      # execute, +false+ to deny, or +nil+ while the decision is pending.
+      #
+      # The block never runs at class definition. The loop consults it
+      # whenever it needs the decision, which can be several times while
+      # the call is pending, including after a crashed job resumes, so
+      # write it as an idempotent read. If it also creates the approval
+      # request, make that a find-or-create.
+      #
+      #   requires_approval { |tool_call| Approvals.status(tool_call.id) }
+      #
+      def requires_approval(&resolver)
+        @requires_approval = true
+        @approval_resolver = resolver
+      end
+
+      def requires_approval? # :nodoc:
+        @requires_approval || false
       end
 
       # :call-seq:
@@ -170,6 +205,15 @@ module RubyLLM
     # Returns the tool description declared on the class with ::description.
     def description
       self.class.description
+    end
+
+    # Returns whether this tool was declared with ::requires_approval.
+    def requires_approval?
+      self.class.requires_approval?
+    end
+
+    def approval_resolver # :nodoc:
+      self.class.approval_resolver
     end
 
     def declared_parameters # :nodoc:

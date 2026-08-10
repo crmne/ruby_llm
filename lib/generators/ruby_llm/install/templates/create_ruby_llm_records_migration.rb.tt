@@ -42,6 +42,7 @@ class CreateRubyLlmRecords < ActiveRecord::Migration<%= migration_version %>
       t.string :tool_call_id, null: false
       t.string :name, null: false
       t.text :thought_signature
+      t.string :approval
 <% if postgresql? %>
       t.jsonb :arguments, default: {}
 <% elsif mysql? %>

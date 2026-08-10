@@ -138,6 +138,7 @@ class AddRubyLlmV20Columns < ActiveRecord::Migration<%= migration_version %>
       t.string :tool_call_id, null: false
       t.string :name, null: false
       t.text :thought_signature
+      t.string :approval
 <% if postgresql? %>
       t.jsonb :arguments, default: {}
 <% elsif mysql? %>
@@ -165,6 +166,7 @@ class AddRubyLlmV20Columns < ActiveRecord::Migration<%= migration_version %>
 
     add_column table, :result_type, :string unless column_exists?(table, :result_type)
     add_column table, :result_id, :<%= reference_type %> unless column_exists?(table, :result_id)
+    add_column table, :approval, :string unless column_exists?(table, :approval)
     backfill_tool_results
 
     add_index table, [ :message_type, :message_id ] unless index_exists?(table, [ :message_type, :message_id ])

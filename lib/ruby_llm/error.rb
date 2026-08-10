@@ -54,6 +54,12 @@ module RubyLLM
   # known mode nor the name of a registered tool.
   class InvalidToolChoiceError < StandardError; end
 
+  # Raised when a user message is staged while the last response still has
+  # unanswered tool calls. Providers reject such a transcript, so the chat
+  # refuses it up front: finish the round with #complete, recording
+  # #approve! or #deny! decisions for calls that require approval.
+  class PendingToolCallsError < StandardError; end
+
   # Raised when a requested model id is not in the model registry.
   class ModelNotFoundError < StandardError; end
 
