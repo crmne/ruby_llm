@@ -24,8 +24,8 @@ module RubyLLM
     end
 
     def self.build(text: nil, signature: nil) # :nodoc:
-      text = nil if text.is_a?(String) && text.empty?
       signature = nil if signature.is_a?(String) && signature.empty?
+      text = nil if text.is_a?(String) && text.empty? && signature.nil?
 
       return nil if text.nil? && signature.nil?
 

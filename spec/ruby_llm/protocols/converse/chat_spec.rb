@@ -536,6 +536,17 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
       expect(described_class.parse_thinking(blocks)).to eq([nil, 'sig'])
     end
 
+    it 'preserves omitted reasoning text as an empty string' do
+      blocks = [{ 'reasoningContent' => { 'reasoningText' => { 'text' => '', 'signature' => 'sig' } } }]
+
+      text, signature = described_class.parse_thinking(blocks)
+      thinking = RubyLLM::Thinking.build(text:, signature:)
+
+      expect(described_class.format_thinking_block(thinking)).to eq(
+        reasoningContent: { reasoningText: { text: '', signature: 'sig' } }
+      )
+    end
+
     it 'joins reasoning text across blocks and keeps the first signature' do
       blocks = [
         { 'reasoningContent' => { 'reasoningText' => { 'text' => 'one ' } } },

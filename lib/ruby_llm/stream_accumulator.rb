@@ -10,7 +10,7 @@ module RubyLLM
     def initialize
       @content = +''
       @citations = []
-      @thinking_text = +''
+      @thinking_text = nil
       @thinking_signature = nil
       @tool_calls = {}
       @input_tokens = nil
@@ -48,7 +48,7 @@ module RubyLLM
         content: content.empty? ? nil : content,
         citations: resolved_citations,
         thinking: Thinking.build(
-          text: @thinking_text.empty? ? nil : @thinking_text,
+          text: @thinking_text,
           signature: @thinking_signature
         ),
         tokens: Tokens.new(
@@ -187,14 +187,20 @@ module RubyLLM
     def append_text_with_thinking(text)
       content_chunk, thinking_chunk = extract_think_tags(text)
       @content << content_chunk
-      @thinking_text << thinking_chunk if thinking_chunk
+      return unless thinking_chunk
+
+      @thinking_text ||= +''
+      @thinking_text << thinking_chunk
     end
 
     def append_thinking_from_chunk(chunk)
       thinking = chunk.thinking
       return unless thinking
 
-      @thinking_text << thinking.text.to_s if thinking.text
+      unless thinking.text.nil?
+        @thinking_text ||= +''
+        @thinking_text << thinking.text.to_s
+      end
       @thinking_signature ||= thinking.signature # rubocop:disable Naming/MemoizedInstanceVariableName
     end
 
