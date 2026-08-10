@@ -716,8 +716,7 @@ RSpec.describe RubyLLM::Chat, :live do
       it "#{provider}/#{model} preserves strings returned from tools" do
         skip_unless_supports_functions(provider, model)
 
-        # No cassettes exist for these providers (skipped at recording time)
-        skip "#{provider} has no cassette for this example" if provider.in?(%i[deepseek gpustack bedrock])
+        skip "#{provider} has no cassette for this example" if provider == :gpustack
 
         chat = RubyLLM.chat(model: model, provider: provider)
                       .with_tools(ContentReturningTool)
