@@ -117,6 +117,29 @@ RSpec.describe RubyLLM::Chat, :live do
       end
     end
 
+    context 'with vertexai/gemini-2.5-flash' do
+      it 'returns grounding citations when search is enabled' do
+        response = RubyLLM.chat(model: 'gemini-2.5-flash', provider: :vertexai)
+                          .with_provider_options(tools: [{ google_search: {} }])
+                          .ask('What is the latest stable version of Ruby?')
+
+        expect(response.citations).not_to be_empty
+        expect(response.citations.first.url).to be_present
+      end
+    end
+
+    context 'with openrouter/perplexity/sonar' do
+      it 'returns search result citations' do
+        response = RubyLLM.chat(model: 'perplexity/sonar', provider: :openrouter, assume_model_exists: true)
+                          .ask('What is the Ruby programming language?')
+
+        expect(response.citations).not_to be_empty
+        expect(response.citations.first.url).to be_present
+      end
+    end
+
+    # Not covered: Bedrock warns that citations are unsupported, and xAI
+    # deprecated Live Search in favor of its Agent Tools API.
     context 'with a model that does not support citations' do
       it 'warns when citations are requested' do
         allow(RubyLLM.logger).to receive(:warn).and_call_original
