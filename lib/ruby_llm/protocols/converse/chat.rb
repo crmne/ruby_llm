@@ -346,8 +346,11 @@ module RubyLLM
           }
         end
 
+        NOVA_DEFAULT_REASONING_EFFORT = 'low'
+
         def format_reasoning_fields(thinking, model, max_output_tokens = nil)
           return nil unless thinking&.enabled?
+          return format_nova_reasoning_fields(thinking, model) if nova_model?(model)
 
           effort = thinking.effort.to_s
           budget = reasoning_budget(thinking, effort, model, max_output_tokens)
@@ -355,6 +358,25 @@ module RubyLLM
           return nil if effort.empty? || effort == 'none'
 
           { reasoning_effort: effort }
+        end
+
+        def nova_model?(model)
+          foundation_model_id(model&.id).start_with?('amazon.nova')
+        end
+
+        # Nova 2 takes reasoningConfig with an effort level instead of a token budget.
+        def format_nova_reasoning_fields(thinking, model)
+          if thinking.budget
+            RubyLLM.logger.debug do
+              "#{model.id} takes a reasoning effort, not a token budget. Ignoring the thinking budget."
+            end
+          end
+
+          effort = thinking.effort.to_s
+          return nil if effort == 'none'
+
+          effort = NOVA_DEFAULT_REASONING_EFFORT if effort.empty?
+          { reasoningConfig: { type: 'enabled', maxReasoningEffort: effort } }
         end
 
         def reasoning_budget(thinking, effort, model, max_output_tokens)

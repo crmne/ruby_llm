@@ -206,6 +206,47 @@ RSpec.describe RubyLLM::Chat, :live do
     end
   end
 
+  describe 'Bedrock Nova 2 reasoning' do
+    it 'renders reasoningConfig with the effort level' do
+      payload = RubyLLM.chat(model: 'amazon.nova-2-lite-v1:0', provider: :bedrock)
+                       .with_thinking(effort: :medium)
+                       .render
+
+      expect(payload[:additionalModelRequestFields]).to eq(
+        { reasoningConfig: { type: 'enabled', maxReasoningEffort: 'medium' } }
+      )
+    end
+
+    it 'ignores a token budget and enables the default effort' do
+      payload = RubyLLM.chat(model: 'amazon.nova-2-lite-v1:0', provider: :bedrock)
+                       .with_thinking(budget: 2048)
+                       .render
+
+      expect(payload[:additionalModelRequestFields]).to eq(
+        { reasoningConfig: { type: 'enabled', maxReasoningEffort: 'low' } }
+      )
+    end
+
+    it 'keeps the Claude budget shape for Claude models' do
+      payload = RubyLLM.chat(model: 'claude-haiku-4-5', provider: :bedrock)
+                       .with_thinking(budget: 2048)
+                       .render
+
+      expect(payload[:additionalModelRequestFields]).to eq(
+        { reasoning_config: { type: 'enabled', budget_tokens: 2048 } }
+      )
+    end
+
+    it 'returns reasoning content blocks' do
+      chat = RubyLLM.chat(model: 'amazon.nova-2-lite-v1:0', provider: :bedrock).with_thinking(effort: :low)
+
+      response = chat.ask('What is 15 * 23? Answer with just the number.')
+
+      expect(response.content).to include('345')
+      expect(response.thinking).to be_present
+    end
+  end
+
   describe 'OpenRouter reasoning_details round-trip' do
     class ReasoningWeather < RubyLLM::Tool # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
       description 'Gets current weather for a city'
