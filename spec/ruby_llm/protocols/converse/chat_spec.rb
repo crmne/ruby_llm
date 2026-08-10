@@ -454,7 +454,7 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
       target = Object.new
       target.extend(protocol)
       target.instance_variable_set(:@model, model)
-      target.send(:format_reasoning_fields, thinking)
+      target.send(:format_reasoning_fields, thinking, model)
     end
 
     it 'is nil when thinking is off' do
@@ -466,16 +466,18 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
       expect(reasoning_fields(RubyLLM::Thinking::Config.new(effort: :none))).to be_nil
     end
 
-    it 'nests the effort for models with embedded reasoning' do
-      allow(RubyLLM::Protocols::Converse).to receive(:reasoning_embedded?).and_return(true)
+    it 'maps effort to an advertised token budget' do
+      allow(RubyLLM::Protocols::Converse).to receive(:reasoning_budget_schema).and_return(
+        enum: { low: 1024, high: 8192 }, minimum: 1024, maximum: 8192
+      )
 
       expect(reasoning_fields(RubyLLM::Thinking::Config.new(effort: :high))).to eq(
-        reasoning_config: { type: 'enabled', reasoning_effort: 'high' }
+        reasoning_config: { type: 'enabled', budget_tokens: 8192 }
       )
     end
 
     it 'sends a flat effort otherwise' do
-      allow(RubyLLM::Protocols::Converse).to receive(:reasoning_embedded?).and_return(false)
+      allow(RubyLLM::Protocols::Converse).to receive(:reasoning_budget_schema).and_return(nil)
 
       expect(reasoning_fields(RubyLLM::Thinking::Config.new(effort: :low))).to eq(reasoning_effort: 'low')
     end
