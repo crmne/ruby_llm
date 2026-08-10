@@ -78,4 +78,13 @@ RSpec.describe RubyLLM::Embedding, :live do
       end
     end
   end
+
+  describe 'provider-reported cost' do
+    it 'openrouter/openai/text-embedding-3-small returns the exact cost the provider reported' do
+      embedding = RubyLLM.embed(test_text, model: 'openai/text-embedding-3-small', provider: :openrouter)
+
+      expect(embedding.tokens.reported_cost).to be_positive
+      expect(embedding.cost.total).to eq(embedding.tokens.reported_cost)
+    end
+  end
 end
