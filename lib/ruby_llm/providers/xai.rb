@@ -4,6 +4,7 @@ module RubyLLM
   module Providers
     # xAI API integration
     class XAI < Provider
+      protocol :responses, XAI::Responses
       protocol :chat_completions, ChatCompletions, batches: XAI::ChatCompletions::Batches
       files XAI::Files
 
@@ -26,6 +27,12 @@ module RubyLLM
         def configuration_requirements
           %i[xai_api_key]
         end
+      end
+
+      private
+
+      def batch_protocol
+        batch_protocol_for_name(:chat_completions)
       end
     end
   end

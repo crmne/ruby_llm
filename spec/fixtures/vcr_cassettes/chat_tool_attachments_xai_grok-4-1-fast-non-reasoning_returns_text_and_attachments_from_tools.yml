@@ -2,12 +2,12 @@
 http_interactions:
 - request:
     method: post
-    uri: https://api.x.ai/v1/chat/completions
+    uri: https://api.x.ai/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"grok-4.3","messages":[{"role":"user","content":"Use the file_fetch
-        tool, then tell me exactly what the fetched file says."}],"stream":false,"tools":[{"type":"function","function":{"name":"file_fetch","description":"Fetches
-        the requested file","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
+      string: '{"model":"grok-4.3","input":[{"role":"user","content":"Use the file_fetch
+        tool, then tell me exactly what the fetched file says."}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"file_fetch","description":"Fetches
+        the requested file","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}]}'
     headers:
       User-Agent:
       - Faraday v2.14.3
@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 03 Jul 2026 23:32:04 GMT
+      - Mon, 10 Aug 2026 22:31:35 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -40,59 +40,60 @@ http_interactions:
       - '10000000'
       X-Ratelimit-Remaining-Tokens:
       - '10000000'
-      X-Zero-Data-Retention:
-      - 'false'
       X-Ratelimit-Limit-Requests:
       - '1800'
       X-Ratelimit-Remaining-Requests:
       - '1800'
-      Content-Security-Policy-Report-Only:
-      - script-src 'unsafe-inline' 'unsafe-eval'; report-uri https://csp-reporting.cloudflare.com/cdn-cgi/script_monitor/report?m=xrnG5ITyqPbk7PCz.zqI9cf1sJfz.1XXONocYymOqRg-1783121522.7489014-1.0.1.1-qCblLGa221s46i3rqaIfkzrSQSvRkzI61_5I_T_37TCiuyLlRxe4Zww_8qmln57vvZQQ95F3ajSwzw2qQ.i0tsOAYoVhZX1BKil4CIP3e.mKIRpYN_3H0yGPSu4ncmwuKHln1l2KqS4bKMROrxYPKdybSsQzPQTJAHlZJYGigYw;
-        report-to cf-csp-endpoint
+      Cf-Cache-Status:
+      - DYNAMIC
       X-Request-Id:
       - "<X_REQUEST_ID>"
+      X-Zero-Data-Retention:
+      - 'false'
+      X-Data-Retention:
+      - general
       X-Metrics-Ttft-Ms:
-      - '401.5'
+      - '485.3'
       X-Metrics-Mean-Itl-Ms:
-      - '6.2'
+      - '10.4'
       X-Metrics-E2e-Ms:
-      - '2067.3'
+      - '4208.2'
       Traceparent:
-      - 00-09ebb353fb9129c9938a960559d94366-6d0f88910001764a-01
+      - 00-9701ad57ad772020c1e68a9763b1747a-4361458e000054f7-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
       - "*"
       Access-Control-Expose-Headers:
       - "*"
-      Cf-Cache-Status:
-      - DYNAMIC
-      Report-To:
-      - '{"group":"cf-csp-endpoint","max_age":86400,"endpoints":[{"url":"https://csp-reporting.cloudflare.com/cdn-cgi/script_monitor/report?m=xrnG5ITyqPbk7PCz.zqI9cf1sJfz.1XXONocYymOqRg-1783121522.7489014-1.0.1.1-qCblLGa221s46i3rqaIfkzrSQSvRkzI61_5I_T_37TCiuyLlRxe4Zww_8qmln57vvZQQ95F3ajSwzw2qQ.i0tsOAYoVhZX1BKil4CIP3e.mKIRpYN_3H0yGPSu4ncmwuKHln1l2KqS4bKMROrxYPKdybSsQzPQTJAHlZJYGigYw"}]}'
       Server:
       - cloudflare
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"3b4b9645-7e36-9e46-8fae-333716beeec8","object":"chat.completion","created":1783121523,"model":"grok-4.3","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning_content":"The
-        task is: \"Use the file_fetch tool, then tell me exactly what the fetched
-        file says.\"\n","tool_calls":[{"id":"call-2f5337c9-afae-4c50-96dc-0e898d7f16f8-0","function":{"name":"file_fetch","arguments":"{}"},"type":"function"}],"refusal":null},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":237,"completion_tokens":5,"total_tokens":494,"prompt_tokens_details":{"text_tokens":237,"audio_tokens":0,"image_tokens":0,"cached_tokens":128},"completion_tokens_details":{"reasoning_tokens":252,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":8043500},"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}'
-  recorded_at: Fri, 03 Jul 2026 23:32:04 GMT
+      string: '{"created_at":1786401091,"completed_at":1786401095,"id":"05ba502a-e6d7-9735-a500-7a9348407931","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_05ba502a-e6d7-9735-a500-7a9348407931","summary":[{"text":"The
+        user says: \"Use the file_fetch tool, then tell me exactly what the fetched
+        file says.\"\ninvoke tool file_fetch\n\n\n## Explanation\n\nThe instruction
+        to invoke file_fetch is followed directly because the query explicitly requires
+        using that tool as a prerequisite step before reporting any file content.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"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"},{"arguments":"{}","call_id":"call-fca4536f-0c00-405b-8fa5-08ec198ed232-0","name":"file_fetch","type":"function_call","id":"fc_05ba502a-e6d7-9735-a500-7a9348407931_0","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","description":"Fetches
+        the requested file","name":"file_fetch","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}],"top_p":0.95,"usage":{"input_tokens":284,"input_tokens_details":{"cached_tokens":192},"output_tokens":348,"output_tokens_details":{"reasoning_tokens":343},"total_tokens":632,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":10234000,"context_details":{"input_tokens":284,"output_tokens":348}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
+  recorded_at: Mon, 10 Aug 2026 22:31:35 GMT
 - request:
     method: post
-    uri: https://api.x.ai/v1/chat/completions
+    uri: https://api.x.ai/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"grok-4.3","messages":[{"role":"user","content":"Use the file_fetch
-        tool, then tell me exactly what the fetched file says."},{"role":"assistant","content":"","tool_calls":[{"id":"call-2f5337c9-afae-4c50-96dc-0e898d7f16f8-0","type":"function","function":{"name":"file_fetch","arguments":"{}"}}],"reasoning":"The
-        task is: \"Use the file_fetch tool, then tell me exactly what the fetched
-        file says.\"\n","reasoning_content":"The task is: \"Use the file_fetch tool,
-        then tell me exactly what the fetched file says.\"\n"},{"role":"tool","content":"Fetched
-        the file.","tool_call_id":"call-2f5337c9-afae-4c50-96dc-0e898d7f16f8-0"},{"role":"user","content":[{"type":"text","text":"Attachments
-        from tool call call-2f5337c9-afae-4c50-96dc-0e898d7f16f8-0:"},{"type":"text","text":"<file
-        name=''ruby.txt'' mime_type=''text/plain''>Ruby is the best.</file>"}]}],"stream":false,"tools":[{"type":"function","function":{"name":"file_fetch","description":"Fetches
-        the requested file","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
+      string: '{"model":"grok-4.3","input":[{"role":"user","content":"Use the file_fetch
+        tool, then tell me exactly what the fetched file says."},{"type":"reasoning","summary":[{"type":"summary_text","text":"The
+        user says: \"Use the file_fetch tool, then tell me exactly what the fetched
+        file says.\"\ninvoke tool file_fetch\n\n\n## Explanation\n\nThe instruction
+        to invoke file_fetch is followed directly because the query explicitly requires
+        using that tool as a prerequisite step before reporting any file content."}],"encrypted_content":"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"},{"type":"function_call","call_id":"call-fca4536f-0c00-405b-8fa5-08ec198ed232-0","name":"file_fetch","arguments":"{}"},{"type":"function_call_output","call_id":"call-fca4536f-0c00-405b-8fa5-08ec198ed232-0","output":"Fetched
+        the file."},{"role":"user","content":[{"type":"input_text","text":"Attachments
+        from tool call call-fca4536f-0c00-405b-8fa5-08ec198ed232-0:"},{"type":"input_text","text":"<file
+        name=''ruby.txt'' mime_type=''text/plain''>Ruby is the best.</file>"}]}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"file_fetch","description":"Fetches
+        the requested file","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}]}'
     headers:
       User-Agent:
       - Faraday v2.14.3
@@ -110,7 +111,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Fri, 03 Jul 2026 23:32:06 GMT
+      - Mon, 10 Aug 2026 22:31:36 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -125,8 +126,6 @@ http_interactions:
       - '10000000'
       X-Ratelimit-Remaining-Tokens:
       - '10000000'
-      X-Zero-Data-Retention:
-      - 'false'
       X-Ratelimit-Limit-Requests:
       - '1800'
       X-Ratelimit-Remaining-Requests:
@@ -135,14 +134,18 @@ http_interactions:
       - DYNAMIC
       X-Request-Id:
       - "<X_REQUEST_ID>"
+      X-Zero-Data-Retention:
+      - 'false'
+      X-Data-Retention:
+      - general
       X-Metrics-Ttft-Ms:
-      - '279.1'
+      - '272.3'
       X-Metrics-Mean-Itl-Ms:
-      - '5.7'
+      - '6.5'
       X-Metrics-E2e-Ms:
-      - '1270.0'
+      - '1049.8'
       Traceparent:
-      - 00-e25ee826cf577f913da85e4a172c7119-136da3130002fe4e-01
+      - 00-8a62701ab8e9bf7424b46120e2b74a0d-b9bd10470001ad33-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
@@ -155,8 +158,10 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"87bbf87b-2de2-9b1e-b746-1c8cfa7771f0","object":"chat.completion","created":1783121525,"model":"grok-4.3","choices":[{"index":0,"message":{"role":"assistant","content":"Ruby
-        is the best.","reasoning_content":"The user asked: \"Use the file_fetch tool,
-        then tell me exactly what the fetched file says.\"\n","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":308,"completion_tokens":5,"total_tokens":441,"prompt_tokens_details":{"text_tokens":308,"audio_tokens":0,"image_tokens":0,"cached_tokens":192},"completion_tokens_details":{"reasoning_tokens":128,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":5159000},"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}'
-  recorded_at: Fri, 03 Jul 2026 23:32:06 GMT
+      string: '{"created_at":1786401096,"completed_at":1786401096,"id":"d4e78e6f-decf-9080-b28b-355a21d60931","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_d4e78e6f-decf-9080-b28b-355a21d60931","summary":[{"text":"The
+        tool response is: \"Fetched the file.\" But then there''s an attachment: <file
+        name=''ruby.txt'' mime_type=''text/plain''>Ruby is the best.</file>\n","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"fG1r2fCOktEZC/6i/YyLq/raUKbsLtGvXAmlFcfSa9f0if9nYwe/PM6/lbK2a7FPRCRzM7ZuX3QDVgdtI3X759ZSzeK+S6ycWEK1Ho/WtVUVWxbd/lFewpEY7cuxWP4RyoefpQn0QeTQV4enV6Ym2GjsiQ0O0hIInPSI/wwScTHAxzRtpRfxoommb8WO08GuZWAFqsY9yB/1rgTl8B+jSNG7jkrL+X42rJBif+/W7vQ8hb5bWWCYz3Dp68vad+e7m4jaHio7i/PhWFymSLIbJcN9mHseAxdVkerL2eV+dytQ+FSbadXDHgoRfnB+b672S423R4+xlLyzIfA7oeiCJqFKaiUFwsQZ6/EVCipwfBk4ExbL9NsZWv5P/DzTT8QnFOej1dIBz/0MZYhe6qDWl9hcYB6cYVk6xpSDiBxhiTDG2htRmin42nqw9ShlXOUolGaVA9Y//8D2/z8rx/wqJh3gzWo0jIOuYisVG855I3Ah+/9WQOHqsKS+NfbQubTDeRFbXn1mp2QYqNvxGXWhyhyTQ8bqcVG0okH0FJLFVP8Hx4OrqIpb"},{"content":[{"type":"output_text","text":"Ruby
+        is the best.","logprobs":[],"annotations":[]}],"id":"msg_d4e78e6f-decf-9080-b28b-355a21d60931","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","description":"Fetches
+        the requested file","name":"file_fetch","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true},"strict":false}],"top_p":0.95,"usage":{"input_tokens":697,"input_tokens_details":{"cached_tokens":256},"output_tokens":100,"output_tokens_details":{"reasoning_tokens":95},"total_tokens":797,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":8524500,"context_details":{"input_tokens":697,"output_tokens":100}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
+  recorded_at: Mon, 10 Aug 2026 22:31:36 GMT
 recorded_with: VCR 6.4.0

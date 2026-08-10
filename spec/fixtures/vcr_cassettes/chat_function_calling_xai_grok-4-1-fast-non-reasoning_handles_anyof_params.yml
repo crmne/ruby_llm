@@ -2,17 +2,17 @@
 http_interactions:
 - request:
     method: post
-    uri: https://api.x.ai/v1/chat/completions
+    uri: https://api.x.ai/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"grok-4.3","messages":[{"role":"user","content":"Call the
-        any-of params tool for task \"Review PR\" with status \"pending\" and report
-        the result."}],"stream":false,"tools":[{"type":"function","function":{"name":"any_of_params","description":"Uses
+      string: '{"model":"grok-4.3","input":[{"role":"user","content":"Call the any-of
+        params tool for task \"Review PR\" with status \"pending\" and report the
+        result."}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"any_of_params","description":"Uses
         params DSL any_of support","parameters":{"type":"object","properties":{"task":{"type":"string","description":"Task
-        description"},"status":{"description":"Optional task status","anyOf":[{"type":"string","enum":["pending","done"]},{"type":"null"}]}},"required":["task","status"],"additionalProperties":false,"strict":true}}}]}'
+        description"},"status":{"description":"Optional task status","anyOf":[{"type":"string","enum":["pending","done"]},{"type":"null"}]}},"required":["task","status"],"additionalProperties":false,"strict":true},"strict":false}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.2
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sat, 13 Jun 2026 11:34:03 GMT
+      - Mon, 10 Aug 2026 22:31:26 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -42,8 +42,6 @@ http_interactions:
       - '10000000'
       X-Ratelimit-Remaining-Tokens:
       - '10000000'
-      X-Zero-Data-Retention:
-      - 'false'
       X-Ratelimit-Limit-Requests:
       - '1800'
       X-Ratelimit-Remaining-Requests:
@@ -52,14 +50,18 @@ http_interactions:
       - DYNAMIC
       X-Request-Id:
       - "<X_REQUEST_ID>"
+      X-Zero-Data-Retention:
+      - 'false'
+      X-Data-Retention:
+      - general
       X-Metrics-Ttft-Ms:
-      - '443.2'
+      - '664.7'
       X-Metrics-Mean-Itl-Ms:
-      - '6.5'
+      - '7.7'
       X-Metrics-E2e-Ms:
-      - '2032.8'
+      - '2371.6'
       Traceparent:
-      - 00-f6a29b7458689640422eb5b52b5f275d-b9ea5715000731ac-01
+      - 00-7e9feb97b8cda35b7f781c13ad067d90-dd5d54c000003dda-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
@@ -72,9 +74,11 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"f34b6a8c-e6da-9af0-9bc8-44809f4e1988","object":"chat.completion","created":1781350441,"model":"grok-4.3","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning_content":"The
-        task is: \"Call the any-of params tool for task \"Review PR\" with status
-        \"pending\" and report the result.\"\n","tool_calls":[{"id":"call-06b359c5-92c8-4709-9057-74ab2c8ff955-0","function":{"name":"any_of_params","arguments":"{\"task\":\"Review
-        PR\",\"status\":\"pending\"}"},"type":"function"}],"refusal":null},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":303,"completion_tokens":19,"total_tokens":541,"prompt_tokens_details":{"text_tokens":303,"audio_tokens":0,"image_tokens":0,"cached_tokens":128},"completion_tokens_details":{"reasoning_tokens":219,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":8393500},"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}'
-  recorded_at: Sat, 13 Jun 2026 11:34:03 GMT
+      string: '{"created_at":1786401085,"completed_at":1786401086,"id":"3db020fe-3a05-97a9-a1b7-4e72ef996e6b","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_3db020fe-3a05-97a9-a1b7-4e72ef996e6b","summary":[{"text":"The
+        user says: \"Call the any-of params tool for task \"Review PR\" with status
+        \"pending\" and report the result.\"\n","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"rdxHxq9gTy9qKJ8fSV3dNuQUrjKazXKMlY6De1ky1/E4BLGYQ2nua0sycHJlWwd+it+//cSyvpRiZ7XqfGNOON9RSDnDD55zYglCaPTaUJvr/q4gazu6InOIOe8OtTeJ1Rx3K3xSNhgXJBAB0aXG/5pBIB2P3gCY2aJwwgCQuJRGJuczyj0l/Bmxmt8Z5HdRZ5FoXIJXVURBu/AB5TAkAxJzXyncRZZn9N1WXVg0urXOTkcaF5jTKR4PdREqQgmLCrzE4ogWw8k9ap329ozNYquXuKEsGE0FaguaB4a7YSykbSJsuLnxYUy/KvqRA8dQYkdBcl5CPR4YsbNX4bJ0qqlS+ZE88V8EufSFfeHlfnXeiS8IGtguZw4GQmNqx6a4VJVza11mJgBdjrvfZlA8gntNeznBTVwI7AD47eTEfR52QApaKBKWx4NMV+F9yolYyBPLPLMja2m1bDtw0tdzFLFq+ACt8+W4cwgyjDf08A75QTrPmYxNbdHiYs8PGZ87K3JRdyhUw4LMSgzOhtEaPSVnqrRIO+6BX42pKeB/Tyhq1ocl4yOYrYxDEOKAgDN+ehCKApVJuORl+cE2r2G6O1oyLBLonpfugKRvdMhdkrPDVQFpM7UdfV6fiR4lahyLvNnH5toP6bLI0IMvw4yVaQNWbIkKYXJDVy+LYPoFdP2CkfpRhTGBZPhiWDGU7jW0k7V5nVOIpUf9TV5mbCBQBAiNjlOQ5F/As26GIUTls+4/ZAZuWdXUDPLMFrOUCjk6dfAueePY7WHzuV+v9XVtP5PUeGg0JRh30uwfeeoU2guuchoa5J5Dqbs7jf+MUuVzmKpxUn+apNsZEjDE1T/LRxr5NvDSAiqHwaTJPDZ13WkdEun6fDljNh1x43AinpwJVX3OfZsL4ioZaS3yf0jfDaNZ/nadWRr+9WWbZxgIGTM0n2thTldeYwfirBSv2OxYiLrn9phYFXmL7CqMvyaZFH/aCX991kKGAG/LIqZBUvjvpOI+Z9my2Krvw7l83NvDkARwtd0Z6oHkWcZlo+yqiwlW0nWAhDYivr69y8qaGabqAg7AWBvHoaScqe4UZI8A0Lr9F+8JhicrKK9SO+L94of46OvX4OqAWjgdYWHa+Ouw6+u3NZ41RIKtfzeL"},{"arguments":"{\"task\":\"Review
+        PR\",\"status\":\"pending\"}","call_id":"call-d623eaf2-f39c-4284-9d03-d3973c5a6a9e-0","name":"any_of_params","type":"function_call","id":"fc_3db020fe-3a05-97a9-a1b7-4e72ef996e6b_0","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","description":"Uses
+        params DSL any_of support","name":"any_of_params","parameters":{"type":"object","properties":{"task":{"type":"string","description":"Task
+        description"},"status":{"description":"Optional task status","anyOf":[{"type":"string","enum":["pending","done"]},{"type":"null"}]}},"required":["task","status"],"additionalProperties":false,"strict":true},"strict":false}],"top_p":0.95,"usage":{"input_tokens":350,"input_tokens_details":{"cached_tokens":192},"output_tokens":212,"output_tokens_details":{"reasoning_tokens":193},"total_tokens":562,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":7659000,"context_details":{"input_tokens":350,"output_tokens":212}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
+  recorded_at: Mon, 10 Aug 2026 22:31:26 GMT
 recorded_with: VCR 6.4.0

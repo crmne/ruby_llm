@@ -2,14 +2,14 @@
 http_interactions:
 - request:
     method: post
-    uri: https://api.x.ai/v1/chat/completions
+    uri: https://api.x.ai/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"grok-4.3","messages":[{"role":"user","content":"Generate
-        a person named Bob"}],"stream":false,"response_format":{"type":"json_schema","json_schema":{"name":"response","schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"integer"}},"required":["name","age"],"additionalProperties":false},"strict":true}}}'
+      string: '{"model":"grok-4.3","input":[{"role":"user","content":"Generate a person
+        named Bob"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"text":{"format":{"type":"json_schema","name":"response","schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"integer"}},"required":["name","age"],"additionalProperties":false},"strict":true}}}'
     headers:
       User-Agent:
-      - Faraday v2.14.2
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 08 Jun 2026 16:10:32 GMT
+      - Mon, 10 Aug 2026 22:29:35 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -39,8 +39,6 @@ http_interactions:
       - '10000000'
       X-Ratelimit-Remaining-Tokens:
       - '10000000'
-      X-Zero-Data-Retention:
-      - 'false'
       X-Ratelimit-Limit-Requests:
       - '1800'
       X-Ratelimit-Remaining-Requests:
@@ -49,14 +47,18 @@ http_interactions:
       - DYNAMIC
       X-Request-Id:
       - "<X_REQUEST_ID>"
+      X-Zero-Data-Retention:
+      - 'false'
+      X-Data-Retention:
+      - general
       X-Metrics-Ttft-Ms:
-      - '597.5'
+      - '524.2'
       X-Metrics-Mean-Itl-Ms:
-      - '4.0'
+      - '8.0'
       X-Metrics-E2e-Ms:
-      - '1758.6'
+      - '2966.4'
       Traceparent:
-      - 00-20208e0abb45a602c46ef6bffa088e79-01a4a66b0006f7d7-01
+      - 00-7633379495631c19ebbc8836ae8f7252-b3cdfc3b000143f5-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
@@ -69,23 +71,21 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"2a3c14cb-4d5b-9238-9900-765e5720485e","object":"chat.completion","created":1780935030,"model":"grok-4.3","choices":[{"index":0,"message":{"role":"assistant","content":"{\n  \"name\":
-        \"Bob\",\n  \"age\": 30\n}","reasoning_content":"The user says: \"Generate
-        a person named Bob\"\n","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":186,"completion_tokens":16,"total_tokens":452,"prompt_tokens_details":{"text_tokens":186,"audio_tokens":0,"image_tokens":0,"cached_tokens":128},"completion_tokens_details":{"reasoning_tokens":250,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":7631000},"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}'
-  recorded_at: Mon, 08 Jun 2026 16:10:32 GMT
+      string: '{"created_at":1786400973,"completed_at":1786400975,"id":"9dfec4cf-8b94-9f4f-bb53-5af26163cba0","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_9dfec4cf-8b94-9f4f-bb53-5af26163cba0","summary":[{"text":"The
+        user query is: \"Generate a person named Bob\"\n","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"eW7DIpirY1+fhD9kJBcAdMLLKECWgQ0C9MRphJiLitfWaK2zBQG5U90TiszTqLftQ1HQ9eQ6wgqA+9+YWTH2h+K56B4lmVym8JOp116ojhkMrK1VQJee5o/Vppe1lud3yQKTk4EkEh5Az11owGTVPWzGHaxiLoP+cMQIkaHv25SOrDw4NLhFQaKbB9J5odtcG4dglmvrbTLoXoAHytL5y13ykyyDA0urKdCTSznJ9YZIiJdEoRBthTMwe/zc6HKtx4pmFTU60sAIzNk56/ThIj8L19IIyoTTYzUaDfgAfo/rYO09nTHNE/mt7EMXlI01Vgq9mAZLg5bz7fCsMVmj7Y5XemBJNApDKv/1AVkL0G1oeOOYQoqjEIdXUviLx7GAgcTHB3ugp7LNOhLfHPnyRBkYvUKIhRj2a+T0geSIehJuosxHT7HkAxYAQZt2O4oQ6RfLerhN1Gt6vMycZBd082BPGPtjac7zIUdMwzS9p7koWqfUTswGG5xJLW9urRZDXbgFHh8iN4UGV9GHOlR2k5BeC5H+GYxJ4QY+KOEZk9tj151b1DsoVtvbZHTFdLishicPz7cuHpnZYKA0Yc1SLN3Wtf8KC0e2ojtD9K6+1s2z17Le0pi5mZU7at0OT0pvpLRiV0ejNjeszYkCCbCuk6DiSBK3A17MNHQu66r5z8pMJzWJZ5INirOLOZvu5JfzCjrDqjqpECaHSh3NxRWVcP1Kk0knQ9RfQe4vabxvX8yHFHRxjPV3zXinND6YDVUMR+RLO0Sp9yH8OkuV6nfK0E2mUQteQO0BhnhdVDdpXB7MTffndw74nrytSyXon5bDcmhtPlDku+8K4p1C47MX4CnmmeOoQrFu6hagaWKg2XyG+hv5rSpBD4DXoqJftFn5Yrl7/JSu3otQtSyAIWHRinxm/fmGxSyQds15TuAxz65uWThsPhLNZxNR/rUdUKj6vnyWzfLVkajBU46D5aqWF7b2+ahCJCKAnRxmRSX7HkAM3oRaihMKUnVkThd2uP14UQ7k/nKNga1xKcHRJKLaRg9upVfB/L5J+TFFIMO/TYcRpKaW5ZOmcqf4jI6X0X2YEQaWe1OCQpOXVcbueGINeBHXCDZdXYkQ98dpnibSoADYYDfX0tsRCS99Pw2gpZ7PrqdekSsbvMkc3V5smypIgcR9q0Ds4nzTxLsbQ3Cm3+CBRnmlffcfc/oQMOAKoLmmGY63p6qgpz8Tm3sKDAQ6khxr4cTwt4ga0Hc7AEvAAMu05wOd0swLQQDaZyYStfwQ5GvMG4vmcakAFbuyWsvg2mZ0hvMyyNNbUpcdO8rUsncJhTs+JsmYrPsdkeljscDl8KMRaf2lNxepb0jBR8kpYI13jTv/9ajDhYw0gZ6mcyXj3SOOnpUpyjyDjRPTy6FUxuU9iEyL1qFv91VjtK4BIZkiDo7jikgXxbAc1WZLhptgFxIiAYklJRqytffdboBtk7vIsq6/zdS8e1w4anATeFHq86G4gIzgmeyx/d6CRn0PwU98fDykk8/MUs3SFDBMppEm3Wlvx2m48iX5hEq8xvJzCn93k+KVDuiNrFir2QBs62Mhpvf1jbaSRT5ZvGSc378df+F70X/O8MJQQyFu4Gz3+ysY8ww42mE7K8wiS4rFMi+OZd/DEQ"},{"content":[{"type":"output_text","text":"{\"name\":\"Bob\",\"age\":30}","logprobs":[],"annotations":[]}],"id":"msg_9dfec4cf-8b94-9f4f-bb53-5af26163cba0","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"json_schema","schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"integer"}},"required":["name","age"],"additionalProperties":false}}},"tool_choice":"auto","tools":[],"top_p":0.95,"usage":{"input_tokens":248,"input_tokens_details":{"cached_tokens":192},"output_tokens":290,"output_tokens_details":{"reasoning_tokens":281},"total_tokens":538,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":8334000,"context_details":{"input_tokens":248,"output_tokens":290}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
+  recorded_at: Mon, 10 Aug 2026 22:29:35 GMT
 - request:
     method: post
-    uri: https://api.x.ai/v1/chat/completions
+    uri: https://api.x.ai/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"grok-4.3","messages":[{"role":"user","content":"Generate
-        a person named Bob"},{"role":"assistant","content":"{\"name\":\"Bob\",\"age\":30}","reasoning":"The
-        user says: \"Generate a person named Bob\"\n","reasoning_content":"The user
-        says: \"Generate a person named Bob\"\n"},{"role":"user","content":"Now just
-        tell me about Ruby"}],"stream":false}'
+      string: '{"model":"grok-4.3","input":[{"role":"user","content":"Generate a person
+        named Bob"},{"type":"reasoning","summary":[{"type":"summary_text","text":"The
+        user query is: \"Generate a person named Bob\"\n"}],"encrypted_content":"eW7DIpirY1+fhD9kJBcAdMLLKECWgQ0C9MRphJiLitfWaK2zBQG5U90TiszTqLftQ1HQ9eQ6wgqA+9+YWTH2h+K56B4lmVym8JOp116ojhkMrK1VQJee5o/Vppe1lud3yQKTk4EkEh5Az11owGTVPWzGHaxiLoP+cMQIkaHv25SOrDw4NLhFQaKbB9J5odtcG4dglmvrbTLoXoAHytL5y13ykyyDA0urKdCTSznJ9YZIiJdEoRBthTMwe/zc6HKtx4pmFTU60sAIzNk56/ThIj8L19IIyoTTYzUaDfgAfo/rYO09nTHNE/mt7EMXlI01Vgq9mAZLg5bz7fCsMVmj7Y5XemBJNApDKv/1AVkL0G1oeOOYQoqjEIdXUviLx7GAgcTHB3ugp7LNOhLfHPnyRBkYvUKIhRj2a+T0geSIehJuosxHT7HkAxYAQZt2O4oQ6RfLerhN1Gt6vMycZBd082BPGPtjac7zIUdMwzS9p7koWqfUTswGG5xJLW9urRZDXbgFHh8iN4UGV9GHOlR2k5BeC5H+GYxJ4QY+KOEZk9tj151b1DsoVtvbZHTFdLishicPz7cuHpnZYKA0Yc1SLN3Wtf8KC0e2ojtD9K6+1s2z17Le0pi5mZU7at0OT0pvpLRiV0ejNjeszYkCCbCuk6DiSBK3A17MNHQu66r5z8pMJzWJZ5INirOLOZvu5JfzCjrDqjqpECaHSh3NxRWVcP1Kk0knQ9RfQe4vabxvX8yHFHRxjPV3zXinND6YDVUMR+RLO0Sp9yH8OkuV6nfK0E2mUQteQO0BhnhdVDdpXB7MTffndw74nrytSyXon5bDcmhtPlDku+8K4p1C47MX4CnmmeOoQrFu6hagaWKg2XyG+hv5rSpBD4DXoqJftFn5Yrl7/JSu3otQtSyAIWHRinxm/fmGxSyQds15TuAxz65uWThsPhLNZxNR/rUdUKj6vnyWzfLVkajBU46D5aqWF7b2+ahCJCKAnRxmRSX7HkAM3oRaihMKUnVkThd2uP14UQ7k/nKNga1xKcHRJKLaRg9upVfB/L5J+TFFIMO/TYcRpKaW5ZOmcqf4jI6X0X2YEQaWe1OCQpOXVcbueGINeBHXCDZdXYkQ98dpnibSoADYYDfX0tsRCS99Pw2gpZ7PrqdekSsbvMkc3V5smypIgcR9q0Ds4nzTxLsbQ3Cm3+CBRnmlffcfc/oQMOAKoLmmGY63p6qgpz8Tm3sKDAQ6khxr4cTwt4ga0Hc7AEvAAMu05wOd0swLQQDaZyYStfwQ5GvMG4vmcakAFbuyWsvg2mZ0hvMyyNNbUpcdO8rUsncJhTs+JsmYrPsdkeljscDl8KMRaf2lNxepb0jBR8kpYI13jTv/9ajDhYw0gZ6mcyXj3SOOnpUpyjyDjRPTy6FUxuU9iEyL1qFv91VjtK4BIZkiDo7jikgXxbAc1WZLhptgFxIiAYklJRqytffdboBtk7vIsq6/zdS8e1w4anATeFHq86G4gIzgmeyx/d6CRn0PwU98fDykk8/MUs3SFDBMppEm3Wlvx2m48iX5hEq8xvJzCn93k+KVDuiNrFir2QBs62Mhpvf1jbaSRT5ZvGSc378df+F70X/O8MJQQyFu4Gz3+ysY8ww42mE7K8wiS4rFMi+OZd/DEQ"},{"role":"assistant","content":[{"type":"output_text","text":"{\"name\":\"Bob\",\"age\":30}"}]},{"role":"user","content":"Now
+        just tell me about Ruby"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
     headers:
       User-Agent:
-      - Faraday v2.14.2
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -100,7 +100,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 08 Jun 2026 16:10:36 GMT
+      - Mon, 10 Aug 2026 22:29:46 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -115,8 +115,6 @@ http_interactions:
       - '10000000'
       X-Ratelimit-Remaining-Tokens:
       - '10000000'
-      X-Zero-Data-Retention:
-      - 'false'
       X-Ratelimit-Limit-Requests:
       - '1800'
       X-Ratelimit-Remaining-Requests:
@@ -125,14 +123,18 @@ http_interactions:
       - DYNAMIC
       X-Request-Id:
       - "<X_REQUEST_ID>"
+      X-Zero-Data-Retention:
+      - 'false'
+      X-Data-Retention:
+      - general
       X-Metrics-Ttft-Ms:
-      - '185.7'
+      - '300.0'
       X-Metrics-Mean-Itl-Ms:
-      - '5.1'
+      - '9.1'
       X-Metrics-E2e-Ms:
-      - '4391.9'
+      - '11144.5'
       Traceparent:
-      - 00-31c144749f450c2578ff4d5395079005-88f2d5af00075271-01
+      - 00-ee360f137089df4e481d0660d0e4adc5-39728e4400006baa-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
@@ -145,7 +147,26 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        eyJpZCI6IjQ2MWI0M2RlLThkNjMtOTFkOC1hMmRjLTZlZTRkYmJiNTJiZSIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3ODA5MzUwMzIsIm1vZGVsIjoiZ3Jvay00LjMiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IntcIm5hbWVcIjpcIlJ1YnlcIixcImFnZVwiOjI4fSIsInJlYXNvbmluZ19jb250ZW50IjoiVGhlIHVzZXIgc2FpZDogXCJOb3cganVzdCB0ZWxsIG1lIGFib3V0IFJ1YnlcIlxuUnVieSBpcyBhIHByb2dyYW1taW5nIGxhbmd1YWdlIGFuZCBvcGVuLXNvdXJjZSBvYmplY3Qtb3JpZW50ZWQgc2NyaXB0aW5nIGxhbmd1YWdlLiBJdCdzIGtub3duIGZvciBpdHMgc2ltcGxpY2l0eSBhbmQgcmVhZGFiaWxpdHksIG9mdGVuIHVzZWQgZm9yIHdlYiBkZXZlbG9wbWVudCwgc2NyaXB0aW5nLCBhbmQgRGV2T3BzLiBDcmVhdGVkIGJ5IFl1a2loaXJvIE1hdHN1bW90byBpbiAxOTk1LCBpdCdzIHRoZSBiYXNpcyBmb3IgUmFpbHMgZnJhbWV3b3JrLiBcblxuIyMgRXhwbGFuYXRpb25cblxuVGhlIHJlc3BvbnNlIGJlZ2lucyBieSBpZGVudGlmeWluZyBSdWJ5IGFzIGEgZHluYW1pY2FsbHkgdHlwZWQgb2JqZWN0LW9yaWVudGVkIHNjcmlwdGluZyBsYW5ndWFnZSwgZGlyZWN0bHkgYWRkcmVzc2luZyB0aGUgcXVlcnnigJlzIHJlcXVlc3QgZm9yIOKAnGluZm9ybWF0aW9uIGFib3V0IFJ1YnnigJ0gaW4gYSBjb25jaXNlLCBzZWxmLWNvbnRhaW5lZCBtYW5uZXIuIiwicmVmdXNhbCI6bnVsbH0sImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjoxNTgsImNvbXBsZXRpb25fdG9rZW5zIjo5LCJ0b3RhbF90b2tlbnMiOjk0OCwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7InRleHRfdG9rZW5zIjoxNTgsImF1ZGlvX3Rva2VucyI6MCwiaW1hZ2VfdG9rZW5zIjowLCJjYWNoZWRfdG9rZW5zIjoxMjh9LCJjb21wbGV0aW9uX3Rva2Vuc19kZXRhaWxzIjp7InJlYXNvbmluZ190b2tlbnMiOjc4MSwiYXVkaW9fdG9rZW5zIjowLCJhY2NlcHRlZF9wcmVkaWN0aW9uX3Rva2VucyI6MCwicmVqZWN0ZWRfcHJlZGljdGlvbl90b2tlbnMiOjB9LCJudW1fc291cmNlc191c2VkIjowLCJjb3N0X2luX3VzZF90aWNrcyI6MjAzODEwMDB9LCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9lYjNjMDAzZmM2NmMxNGVkIiwic2VydmljZV90aWVyIjoiZGVmYXVsdCJ9
-  recorded_at: Mon, 08 Jun 2026 16:10:36 GMT
+      string: '{"created_at":1786400976,"completed_at":1786400986,"id":"c8e7a3ab-eaaf-93dd-acf8-b0986bb5d30c","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_c8e7a3ab-eaaf-93dd-acf8-b0986bb5d30c","summary":[{"text":"The
+        user says: \"Now just tell me about Ruby\"\nRuby is a dynamic, open-source
+        programming language with a focus on simplicity and productivity. It''s often
+        compared to Python but with a more functional and object-oriented approach.
+        Created by Yukihiro Matsumoto in 1995, it''s known for its elegant syntax,
+        readable code, and strong community support. Ruby is great for web development
+        ( Ruby on Rails is a popular framework), scripting, and building gems (plugins).
+        It''s cross-platform and has a large ecosystem of libraries. Confidence in
+        this being about the programming language: high, as \"Ruby\" capitalized often
+        refers to it in tech contexts. \n\n## Explanation\n\nThe response begins by
+        identifying Ruby as a dynamic 1995-created programming language emphasizing
+        simplicity, readability, and productivity, drawing direct parallels to Python
+        while highlighting its unique blend of functional and object-oriented paradigms.
+        This is established through core attributes such as its elegant syntax, strong
+        community ecosystem, and widespread use in web development via frameworks
+        like Ruby on Rails, which are standard references in 2023 programming literature.","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"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"},{"content":[{"type":"output_text","text":"Ruby
+        is a dynamic, reflective, object-oriented programming language known for its
+        simplicity and productivity. It was created by Yukihiro \"Matz\" Matsumoto
+        in the mid-1990s, with a focus on making programming enjoyable. Ruby powers
+        the Ruby on Rails web framework and emphasizes elegant syntax and developer
+        happiness.","logprobs":[],"annotations":[]}],"id":"msg_c8e7a3ab-eaaf-93dd-acf8-b0986bb5d30c","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[],"top_p":0.95,"usage":{"input_tokens":504,"input_tokens_details":{"cached_tokens":192},"output_tokens":1170,"output_tokens_details":{"reasoning_tokens":1109},"total_tokens":1674,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":33534000,"context_details":{"input_tokens":504,"output_tokens":1170}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
+  recorded_at: Mon, 10 Aug 2026 22:29:46 GMT
 recorded_with: VCR 6.4.0

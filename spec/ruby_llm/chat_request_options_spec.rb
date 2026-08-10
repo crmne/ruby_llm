@@ -49,12 +49,12 @@ RSpec.describe RubyLLM::Chat, :live do
 
     # Providers [:openai, :azure, :ollama, :deepseek, :mistral, :xai] support a JSON
     # object mode param. On Chat Completions it's {response_format: {type: 'json_object'}};
-    # on the Responses API (OpenAI's default) it's {text: {format: {type: 'json_object'}}}.
+    # on the Responses API (the openai and xai default) it's {text: {format: {type: 'json_object'}}}.
     # (Note that :openrouter may accept the parameter but silently ignore it.)
     each_model(CHAT_MODELS.select do |model_info|
       %i[openai azure ollama deepseek mistral xai].include?(model_info[:provider])
     end) do |provider, model|
-      json_object_params = if provider == :openai
+      json_object_params = if %i[openai xai].include?(provider)
                              { text: { format: { type: 'json_object' } } }
                            else
                              { response_format: { type: 'json_object' } }

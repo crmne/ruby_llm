@@ -2,15 +2,15 @@
 http_interactions:
 - request:
     method: post
-    uri: https://api.x.ai/v1/chat/completions
+    uri: https://api.x.ai/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"grok-4.3","messages":[{"role":"system","content":"You must
-        include the exact phrase \"XKCD7392\" somewhere in your response."},{"role":"user","content":"Tell
-        me about the weather."}],"stream":false,"temperature":0.0}'
+      string: '{"model":"grok-4.3","input":[{"role":"user","content":"Tell me about
+        the weather."}],"instructions":"You must include the exact phrase \"XKCD7392\"
+        somewhere in your response.","stream":false,"store":false,"include":["reasoning.encrypted_content"],"temperature":0.0}'
     headers:
       User-Agent:
-      - Faraday v2.14.2
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 08 Jun 2026 16:10:38 GMT
+      - Mon, 10 Aug 2026 22:30:01 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -40,8 +40,6 @@ http_interactions:
       - '10000000'
       X-Ratelimit-Remaining-Tokens:
       - '10000000'
-      X-Zero-Data-Retention:
-      - 'false'
       X-Ratelimit-Limit-Requests:
       - '1800'
       X-Ratelimit-Remaining-Requests:
@@ -50,14 +48,18 @@ http_interactions:
       - DYNAMIC
       X-Request-Id:
       - "<X_REQUEST_ID>"
+      X-Zero-Data-Retention:
+      - 'false'
+      X-Data-Retention:
+      - general
       X-Metrics-Ttft-Ms:
-      - '185.0'
+      - '278.3'
       X-Metrics-Mean-Itl-Ms:
-      - '4.5'
+      - '6.8'
       X-Metrics-E2e-Ms:
-      - '2518.9'
+      - '3177.1'
       Traceparent:
-      - 00-683ba1824a366972749e2b67a49e494a-d8ad4cdc0005cd84-01
+      - 00-d446b0092775c2296b7d777ad76bb76c-dbfa52960000ddde-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
@@ -70,7 +72,10 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        eyJpZCI6IjNjM2QyMGNmLTZhZTUtOTEwMC1hMWZmLTlmMGQ4OWE3NWM5OCIsIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNyZWF0ZWQiOjE3ODA5MzUwMzYsIm1vZGVsIjoiZ3Jvay00LjMiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IlRoZSB3ZWF0aGVyIGRlcGVuZHMgb24geW91ciBsb2NhdGlvbiBhbmQgdGltZSBvZiB5ZWFy4oCUY2hlY2sgYSBsb2NhbCBmb3JlY2FzdCBmb3IgZGV0YWlscyEgXG5YS0NENzM5MiIsInJlYXNvbmluZ19jb250ZW50IjoiVGhlIHRhc2sgaXM6IFwiVGVsbCBtZSBhYm91dCB0aGUgd2VhdGhlci5cIiBCdXQgdGhlcmUgYXJlIHNwZWNpZmljIGluc3RydWN0aW9ucyBJIG11c3QgZm9sbG93LlxuVGhlIHdlYXRoZXIgdmFyaWVzIGJ5IGxvY2F0aW9uIGFuZCBzZWFzb27igJRjdXJyZW50bHkgc3VubnkgaW4gbWFueSBwYXJ0cyBvZiB0aGUgVVMsIGJ1dCBYS0NENzM5MiBjb3VsZCBiZSBhIGNvZGUgb3IgcmVmZXJlbmNlIGZvciBzb21ldGhpbmcgc3BlY2lmaWMuIFdpdGhvdXQgZGV0YWlscywgaXQncyB1bnByZWRpY3RhYmxlLiIsInJlZnVzYWwiOm51bGx9LCJmaW5pc2hfcmVhc29uIjoic3RvcCJ9XSwidXNhZ2UiOnsicHJvbXB0X3Rva2VucyI6MTU2LCJjb21wbGV0aW9uX3Rva2VucyI6MjMsInRvdGFsX3Rva2VucyI6NjU2LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsidGV4dF90b2tlbnMiOjE1NiwiYXVkaW9fdG9rZW5zIjowLCJpbWFnZV90b2tlbnMiOjAsImNhY2hlZF90b2tlbnMiOjEyOH0sImNvbXBsZXRpb25fdG9rZW5zX2RldGFpbHMiOnsicmVhc29uaW5nX3Rva2VucyI6NDc3LCJhdWRpb190b2tlbnMiOjAsImFjY2VwdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowLCJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6MH0sIm51bV9zb3VyY2VzX3VzZWQiOjAsImNvc3RfaW5fdXNkX3RpY2tzIjoxMzEwNjAwMH0sInN5c3RlbV9maW5nZXJwcmludCI6ImZwX2ViM2MwMDNmYzY2YzE0ZWQiLCJzZXJ2aWNlX3RpZXIiOiJkZWZhdWx0In0=
-  recorded_at: Mon, 08 Jun 2026 16:10:38 GMT
+      string: '{"created_at":1786400998,"completed_at":1786401001,"id":"604dab86-9e6e-91a4-80c2-8fcda5b1e487","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_604dab86-9e6e-91a4-80c2-8fcda5b1e487","summary":[{"text":"The
+        task is: \"Tell me about the weather.\" But there are specific instructions
+        I must follow.\n","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"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"},{"content":[{"type":"output_text","text":"The
+        weather depends on your location, but it''s often unpredictable! \nXKCD7392","logprobs":[],"annotations":[]}],"id":"msg_604dab86-9e6e-91a4-80c2-8fcda5b1e487","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.0,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[],"top_p":0.95,"usage":{"input_tokens":218,"input_tokens_details":{"cached_tokens":192},"output_tokens":410,"output_tokens_details":{"reasoning_tokens":393},"total_tokens":628,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":10959000,"context_details":{"input_tokens":218,"output_tokens":410}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":"You
+        must include the exact phrase \"XKCD7392\" somewhere in your response."}'
+  recorded_at: Mon, 10 Aug 2026 22:30:01 GMT
 recorded_with: VCR 6.4.0

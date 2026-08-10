@@ -128,6 +128,7 @@ RSpec.describe RubyLLM::Chat do
 
     it 'raises for tool PDFs on providers without document support' do
       chat = chat_with_tool_attachment('grok-4-1-fast-non-reasoning', 'xai',
+                                       protocol: :chat_completions,
                                        attachment: File.expand_path('../fixtures/sample.pdf', __dir__))
 
       expect { chat.render }.to raise_error(RubyLLM::UnsupportedAttachmentError)

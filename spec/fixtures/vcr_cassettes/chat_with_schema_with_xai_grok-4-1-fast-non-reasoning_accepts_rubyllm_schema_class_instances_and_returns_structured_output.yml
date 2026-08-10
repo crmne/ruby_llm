@@ -2,14 +2,14 @@
 http_interactions:
 - request:
     method: post
-    uri: https://api.x.ai/v1/chat/completions
+    uri: https://api.x.ai/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"grok-4.3","messages":[{"role":"user","content":"Generate
-        a person named Alice who is 28 years old"}],"stream":false,"response_format":{"type":"json_schema","json_schema":{"name":"PersonSchemaClass","schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"number"}},"required":["name","age"],"additionalProperties":false},"strict":true}}}'
+      string: '{"model":"grok-4.3","input":[{"role":"user","content":"Generate a person
+        named Alice who is 28 years old"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"text":{"format":{"type":"json_schema","name":"PersonSchemaClass","schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"number"}},"required":["name","age"],"additionalProperties":false},"strict":true}}}'
     headers:
       User-Agent:
-      - Faraday v2.14.2
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 08 Jun 2026 16:10:39 GMT
+      - Mon, 10 Aug 2026 22:29:48 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -38,25 +38,27 @@ http_interactions:
       X-Ratelimit-Limit-Tokens:
       - '10000000'
       X-Ratelimit-Remaining-Tokens:
-      - '9997179'
-      X-Zero-Data-Retention:
-      - 'false'
+      - '9992949'
       X-Ratelimit-Limit-Requests:
       - '1800'
       X-Ratelimit-Remaining-Requests:
-      - '1795'
+      - '1789'
       Cf-Cache-Status:
       - DYNAMIC
       X-Request-Id:
       - "<X_REQUEST_ID>"
+      X-Zero-Data-Retention:
+      - 'false'
+      X-Data-Retention:
+      - general
       X-Metrics-Ttft-Ms:
-      - '577.6'
+      - '230.9'
       X-Metrics-Mean-Itl-Ms:
-      - '6.9'
+      - '5.6'
       X-Metrics-E2e-Ms:
-      - '2306.8'
+      - '1708.5'
       Traceparent:
-      - 00-04fa163e3a2264af4b5a2dbe484722e4-bc9b33a300004013-01
+      - 00-d7ec1a0934824d31197d42e1463697ea-8bf4e9bf00001874-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
@@ -69,7 +71,7 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"7aa33fae-b7b6-99ac-a62e-b071b01e80d5","object":"chat.completion","created":1780935037,"model":"grok-4.3","choices":[{"index":0,"message":{"role":"assistant","content":"{\"name\":\"Alice\",\"age\":28}","reasoning_content":"The
-        task is: \"Generate a person named Alice who is 28 years old\"\n","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":192,"completion_tokens":9,"total_tokens":423,"prompt_tokens_details":{"text_tokens":192,"audio_tokens":0,"image_tokens":0,"cached_tokens":128},"completion_tokens_details":{"reasoning_tokens":222,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":6831000},"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}'
-  recorded_at: Mon, 08 Jun 2026 16:10:39 GMT
+      string: '{"created_at":1786400987,"completed_at":1786400988,"id":"1086ae39-91b9-9782-905b-ce698736e784","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_1086ae39-91b9-9782-905b-ce698736e784","summary":[{"text":"The
+        user query is: \"Generate a person named Alice who is 28 years old\"\n","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"d2XlIWzUdLrlRb4f53uDxmH3W3sJIK88YxFEanVHNqfY0HN/ZiUb1uQne1KJTHNmP5XdfQUvvI3wZo/9QpOlCJw32whCdpZTGKmTq7VpykcdIFNHx/rf1MDJimt52b9VQV3QBVv+brJQ3m9wfFrnZwhcjFByb/jPuDalHcXDYijD47+EXCxS7idCrJtuZOqL4x81BU52X8FGVxB9KpQGT0I2RWeoGWo4UEZMyn+19oh1zRCchmHRLzzv+JZ/XOh8BVHbmmB+li0ATeplZGkfnta/shYQuUsLGd5I2HnhOZ08fWiJTwgWYxZX/Ln1iMVknJNIAxsOiUvvk6R23NsCF0hD6kdJbfW/hT9ovhsnhpqFsAfLouVs/lK+1CQbf537O9f95B31bXBxjh8Un8DHGP8m+XRboBX1MR/0/NWoaducswvR7pNVpyja9dHm+fGTZLAxPNQPU/jmIHV0SYDAhYEg2QrCyQ7kxF6WGt+gI4xfLfUZZxZgJaHwyu6ACUUDbbGIKNf5EAZOK+0RqGE7tALhxL3RPSu7KlARbTxUq81aYWqDshgHWkAg3K6+qQwKM2NlwxcBZ9QQ5mlULhY1yCAQlezjg6acJTcCKTKEClKV1CEebSPo8zWJzBHNeLFE9jNAOIDFI4d8v2JnjfTBoFUvUojlDkbCmAt5tzAbNqYkRUQz6Rk2uaNPt4psYsk9mv43CAVm286fpShbXYWs0avEc7l2TQFO2ei/N7J4XuK5IBknT5pdG1lmR/0KfP7i6FaYi22K0/hRYcEkCrU9pUaK6BUpEN7UB/T5XwhfbSySmGs6mYDGnxRaHZPxkI1HB72AwfAglspTDkhoK+YMEC5Ow2FjrWxtUNo4IrGvtCxHK+Yh4l3Zds4GDoP6diuYrbC9/O1ZY9mcoxfwT4mzctRYt1JJ2Cw51+2QNx/fm0bknTSoVj5//yw3z8jpjoggu7+0m+2SaCKDdtdeV1YDNNnqAl9lR9YFlr6hOgBUJLSWieYPStKls50g/c0HWQVnuO6T7VaeBNouMxfa/Y+d1xlVAXeU7U7CPuP8C8dzsqLeQrw0TQpxtnlcp701p52xLZoXDLhC9cGtIjo7x6Ohl5X2COStFjPCl/eBXbe5cAkw8CjVFEylBGdeD+Z1So/ed2BYVSsjYWPt6A8XBR0OYR6C8UnKn2zX+WycAUPNBWUTIT4GX4XVkHrxS86X+93Gi4Jp7dCL5/bDl48j7+ui1l0rU6CHKyo4r9q/6pohlmTOVFjMgQP1dWkiG4/As45VAEATrHdOgF9/ZbcPcikgj5tqS5rwlcfJc3w3vs1TJV3rB8/o5Pvp"},{"content":[{"type":"output_text","text":"{\"name\":\"Alice\",\"age\":28}","logprobs":[],"annotations":[]}],"id":"msg_1086ae39-91b9-9782-905b-ce698736e784","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"json_schema","schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"number"}},"required":["name","age"],"additionalProperties":false}}},"tool_choice":"auto","tools":[],"top_p":0.95,"usage":{"input_tokens":254,"input_tokens_details":{"cached_tokens":192},"output_tokens":222,"output_tokens_details":{"reasoning_tokens":213},"total_tokens":476,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":6709000,"context_details":{"input_tokens":254,"output_tokens":222}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
+  recorded_at: Mon, 10 Aug 2026 22:29:48 GMT
 recorded_with: VCR 6.4.0

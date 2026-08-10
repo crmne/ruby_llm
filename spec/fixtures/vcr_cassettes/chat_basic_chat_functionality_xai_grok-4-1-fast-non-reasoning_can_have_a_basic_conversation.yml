@@ -2,14 +2,14 @@
 http_interactions:
 - request:
     method: post
-    uri: https://api.x.ai/v1/chat/completions
+    uri: https://api.x.ai/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"grok-4.3","messages":[{"role":"user","content":"What''s 2
-        + 2?"}],"stream":false}'
+      string: '{"model":"grok-4.3","input":[{"role":"user","content":"What''s 2 +
+        2?"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
     headers:
       User-Agent:
-      - Faraday v2.14.2
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 08 Jun 2026 16:10:31 GMT
+      - Mon, 10 Aug 2026 22:29:51 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -39,8 +39,6 @@ http_interactions:
       - '10000000'
       X-Ratelimit-Remaining-Tokens:
       - '10000000'
-      X-Zero-Data-Retention:
-      - 'false'
       X-Ratelimit-Limit-Requests:
       - '1800'
       X-Ratelimit-Remaining-Requests:
@@ -49,14 +47,18 @@ http_interactions:
       - DYNAMIC
       X-Request-Id:
       - "<X_REQUEST_ID>"
+      X-Zero-Data-Retention:
+      - 'false'
+      X-Data-Retention:
+      - general
       X-Metrics-Ttft-Ms:
-      - '199.7'
+      - '222.0'
       X-Metrics-Mean-Itl-Ms:
-      - '5.1'
+      - '6.7'
       X-Metrics-E2e-Ms:
-      - '874.4'
+      - '1712.4'
       Traceparent:
-      - 00-cf8f7e1bbbe5c823888e249ed3a42411-00c4953f0002ad18-01
+      - 00-509329f45712d55ff85556e8f4e858f4-0feea8e70000265a-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
@@ -69,8 +71,8 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"90807bcd-2c53-997c-a49c-32249e695133","object":"chat.completion","created":1780935030,"model":"grok-4.3","choices":[{"index":0,"message":{"role":"assistant","content":"4","reasoning_content":"The
-        question is \"What''s 2 + 2?\" This is a straightforward math question. The
-        answer is 4.\n","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":137,"completion_tokens":1,"total_tokens":254,"prompt_tokens_details":{"text_tokens":137,"audio_tokens":0,"image_tokens":0,"cached_tokens":128},"completion_tokens_details":{"reasoning_tokens":116,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":3293500},"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}'
-  recorded_at: Mon, 08 Jun 2026 16:10:31 GMT
+      string: '{"created_at":1786400989,"completed_at":1786400991,"id":"42fd8d03-18a0-975d-94c1-f54ed1f7ce0b","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_42fd8d03-18a0-975d-94c1-f54ed1f7ce0b","summary":[{"text":"The
+        question is \"What''s 2 + 2?\" This is a simple math question. The answer
+        is 4.\n","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"0Oze7Cen03q2TG4J7vMaqloc1cBx8cvWp7rtMJMS37opt2uZrPytjT/L5yrZjkeXMgw2+otx09sFv44DFgQHNFxsudi4w043tzuCmWXgxFjObEjoG3BY/c2zEQtE/Hj8Qu1pVnioBNV5l3yzLuN7IZRr6Q/AG4xjwK6Bl+JxqnoxkgIrAX64hg1i+sDxNIOXu5AHmbQhdO/BLiR1XK+wxLSF3HI61iLeu9dIKOaaWPbgkgiXakHnRo0jLWMfA9dd3ebaquSrpU66wFe9S2MfrO/8cZWv72AEUnGqfksB8k6ZbvbGRIb7VaSStEuzpw8um8NhlkK0xEmGW4SmzaOt/LlIA56Ma1hBF/UZPhIyJZmbw+UXUhvQMDVIhugfM0uOstjfJUqAxG2ixgjVMDtPSU99mHwJRLdUldu1ht4YJn3AwVgMr6rBDsNoa9OlclpA7sqZG7J53d4pqkpaDVBHky1rDUutrl32GfpGAhWqteAYjE8vjs9CAfE+IPHILPIcPEUx5qOmqN5j92NxkAu0G7MJ7uSbji7fazry/SNyuXC4JjSGxjS3zKC8xtLn9DhRyowTNjk1d7mm+mxI6QUPf0F8FnhXYJDcDiicu6mxmh3K49KrZ6dR4YQL6J/a+gdx/GciKIdzU6To53xlI4yOP69yz0rMwZTQbCpCaLwumwpdAk1NVV/tlAatsSF9SAjEUtl7hTaVz9iOmX6Tuo1GP+UO2baJBr4hNa937LVKLfLRgGPHhky7c51CYMB7wNRrZO4mTWiFHbCbRmgIR6mYidg2SrEK7lI1GLvw8OGV5f3/EHFlv3r+CKT4ahZgkT2wlEPo54pgqWrVkMPGgvgG46Vk3qMaNLTsgb8z74v6yRO8go5Pyk/YMUILLJBL8PGhoIGOybOPNmi23kaaTj//sAaxmTZC/J0xXWKi7zoHDwzZh1lUPYgUPva90IkKXZ6e0nK/0Wrpo9A7lvLrF6521AZ4OqxB1qAvVfhf9qqPAxam80dwZ3ihJCbXTlU0OWmm18jXxjf0JUULSa+kRWDLeg0"},{"content":[{"type":"output_text","text":"**4**","logprobs":[],"annotations":[]}],"id":"msg_42fd8d03-18a0-975d-94c1-f54ed1f7ce0b","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[],"top_p":0.95,"usage":{"input_tokens":199,"input_tokens_details":{"cached_tokens":128},"output_tokens":184,"output_tokens_details":{"reasoning_tokens":181},"total_tokens":383,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":5743500,"context_details":{"input_tokens":199,"output_tokens":184}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
+  recorded_at: Mon, 10 Aug 2026 22:29:51 GMT
 recorded_with: VCR 6.4.0

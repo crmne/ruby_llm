@@ -4,7 +4,8 @@ module RubyLLM
   module Providers
     class XAI
       class ChatCompletions
-        # xAI native batch containers with chat completion requests.
+        # xAI native batch containers. Requests submit in Responses or Chat
+        # Completions shape; results always come back as chat completions.
         module Batches
           include RubyLLM::Batch::Helpers
 
@@ -48,12 +49,15 @@ module RubyLLM
           private
 
           def xai_batch_request(request)
+            payload = batch_payload(request)
             {
               batch_request_id: request[:custom_id],
-              batch_request: {
-                chat_get_completion: batch_payload(request)
-              }
+              batch_request: { batch_request_type(payload) => payload }
             }
+          end
+
+          def batch_request_type(payload)
+            payload.key?(:input) || payload.key?('input') ? :responses : :chat_get_completion
           end
 
           def parse_batch_response(data)

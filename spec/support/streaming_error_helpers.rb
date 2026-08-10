@@ -53,7 +53,7 @@ module StreamingErrorHelpers
       expected_error: RubyLLM::ServerError
     },
     xai: {
-      url: 'https://api.x.ai/v1/chat/completions',
+      url: 'https://api.x.ai/v1/responses',
       error_response: {
         error: {
           message: 'Service overloaded - please try again later',

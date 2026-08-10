@@ -2,14 +2,14 @@
 http_interactions:
 - request:
     method: post
-    uri: https://api.x.ai/v1/chat/completions
+    uri: https://api.x.ai/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"grok-4.3","messages":[{"role":"user","content":"Who is the
-        creator of the programming language Ruby?"}],"stream":false}'
+      string: '{"model":"grok-4.3","input":[{"role":"user","content":"Who is the creator
+        of the programming language Ruby?"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
     headers:
       User-Agent:
-      - Faraday v2.14.2
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 08 Jun 2026 16:10:33 GMT
+      - Mon, 10 Aug 2026 22:29:54 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -39,8 +39,6 @@ http_interactions:
       - '10000000'
       X-Ratelimit-Remaining-Tokens:
       - '10000000'
-      X-Zero-Data-Retention:
-      - 'false'
       X-Ratelimit-Limit-Requests:
       - '1800'
       X-Ratelimit-Remaining-Requests:
@@ -49,14 +47,18 @@ http_interactions:
       - DYNAMIC
       X-Request-Id:
       - "<X_REQUEST_ID>"
+      X-Zero-Data-Retention:
+      - 'false'
+      X-Data-Retention:
+      - general
       X-Metrics-Ttft-Ms:
-      - '212.5'
+      - '285.3'
       X-Metrics-Mean-Itl-Ms:
-      - '5.1'
+      - '7.7'
       X-Metrics-E2e-Ms:
-      - '1230.2'
+      - '2004.4'
       Traceparent:
-      - 00-b57d2e07fd87e499f7f2ff13165f960b-63e04bbf00076090-01
+      - 00-5582b5059d6edbefb7b364c9f4968d95-4b265320000031db-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
@@ -69,26 +71,31 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"42af69fb-dd02-99a2-b2ce-77d4335e47fb","object":"chat.completion","created":1780935032,"model":"grok-4.3","choices":[{"index":0,"message":{"role":"assistant","content":"Yukihiro
-        Matsumoto (also known as \"Matz\"). \n\nHe created Ruby in the mid-1990s while
-        working in Japan, with the first public release in 1995.","reasoning_content":"The
-        question is: \"Who is the creator of the programming language Ruby?\"\n","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":140,"completion_tokens":38,"total_tokens":322,"prompt_tokens_details":{"text_tokens":140,"audio_tokens":0,"image_tokens":0,"cached_tokens":128},"completion_tokens_details":{"reasoning_tokens":144,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":4956000},"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}'
-  recorded_at: Mon, 08 Jun 2026 16:10:33 GMT
+      string: '{"created_at":1786400993,"completed_at":1786400994,"id":"43b5f763-184f-937b-bedc-5076bcc2a865","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_43b5f763-184f-937b-bedc-5076bcc2a865","summary":[{"text":"The
+        question is: \"Who is the creator of the programming language Ruby?\"\n","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"tKdkUbIkdvfqVQTnqnzl9+qyr53m+yHsnWM6ROQjBYT5BQEEx78VVPGE6Xdkn8jdPo6kPK4A6SzZ1aemgTE0unawSG7MIoS57hixKhWRiIKBLD81mcg8EGNy5U1/VhWSSUZUBEGjQXAu0pPkle82M9ZCHHv1CepLtlakW1lpt85vftXlzZr1U8wabscwDuKyTUzrE2I7Q2ZVFJ9g+DBrkr+7YUtXHSof71BlIgS9GAL3mcrRPRLu8Q3fBV0RnzCkt8AnM47Ni3QJpQiMO1gf4ufoUj+P2+b0dx/xtR/cX8tnDD6/k9lLDqrWZkNvREKiveJhm6gWs/IOxJiLsHBfEVOJTulSrmXJG9b+Lf7oXVGemadr5hpJ38lkbub3PMnVuMCQ9tGbqu1dqAhhyf4jkWZiD7QgKLXFH/hc6cGoKC0bpIELVTuir6jdbQMq1xI3hqd9T+o7DtsjJ+X4kEawPFKptbv85bZ0TUHkZ4l2cUCHZwYl8GCETDrF6N0FywFrobE4jiM7jLvSMdab/rMOHEk+dVsYI8LqpTAq1JHJn51Y3emPJXeI1R+zvln2nVMRiTc7TwInhmiWHIr7qT0jjr1tp0e0bKC+sshi2iRFobTIBEbcf7kXO3ZiZ+MK50R/BBABjmyWQfS3m92bfKJbao3lWCyeF+hI69j/D3r3MBkojW/gbHPHW26O6C1egX0AcG3s0WgMx48Kgr8wAo4a6JJbfyyMdtW2V0g4pLBxCl+KJH2clEoWPctTzrB4lg"},{"content":[{"type":"output_text","text":"**Yukihiro
+        Matsumoto** (commonly known as **Matz**) is the creator of the Ruby programming
+        language.\n\nHe began developing Ruby in 1993 in Japan, with the first public
+        release in 1995. Ruby was designed as a \"language for humans,\" emphasizing
+        programmer happiness, simplicity, and productivity, drawing inspiration from
+        languages like Perl, Smalltalk, Eiffel, Ada, and Lisp.","logprobs":[],"annotations":[]}],"id":"msg_43b5f763-184f-937b-bedc-5076bcc2a865","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[],"top_p":0.95,"usage":{"input_tokens":202,"input_tokens_details":{"cached_tokens":128},"output_tokens":205,"output_tokens_details":{"reasoning_tokens":125},"total_tokens":407,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":6306000,"context_details":{"input_tokens":202,"output_tokens":205}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
+  recorded_at: Mon, 10 Aug 2026 22:29:54 GMT
 - request:
     method: post
-    uri: https://api.x.ai/v1/chat/completions
+    uri: https://api.x.ai/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"grok-4.3","messages":[{"role":"user","content":"Who is the
-        creator of the programming language Ruby?"},{"role":"assistant","content":"Yukihiro
-        Matsumoto (also known as \"Matz\"). \n\nHe created Ruby in the mid-1990s while
-        working in Japan, with the first public release in 1995.","reasoning":"The
-        question is: \"Who is the creator of the programming language Ruby?\"\n","reasoning_content":"The
-        question is: \"Who is the creator of the programming language Ruby?\"\n"},{"role":"user","content":"What
-        year did he create Ruby?"}],"stream":false}'
+      string: '{"model":"grok-4.3","input":[{"role":"user","content":"Who is the creator
+        of the programming language Ruby?"},{"type":"reasoning","summary":[{"type":"summary_text","text":"The
+        question is: \"Who is the creator of the programming language Ruby?\"\n"}],"encrypted_content":"tKdkUbIkdvfqVQTnqnzl9+qyr53m+yHsnWM6ROQjBYT5BQEEx78VVPGE6Xdkn8jdPo6kPK4A6SzZ1aemgTE0unawSG7MIoS57hixKhWRiIKBLD81mcg8EGNy5U1/VhWSSUZUBEGjQXAu0pPkle82M9ZCHHv1CepLtlakW1lpt85vftXlzZr1U8wabscwDuKyTUzrE2I7Q2ZVFJ9g+DBrkr+7YUtXHSof71BlIgS9GAL3mcrRPRLu8Q3fBV0RnzCkt8AnM47Ni3QJpQiMO1gf4ufoUj+P2+b0dx/xtR/cX8tnDD6/k9lLDqrWZkNvREKiveJhm6gWs/IOxJiLsHBfEVOJTulSrmXJG9b+Lf7oXVGemadr5hpJ38lkbub3PMnVuMCQ9tGbqu1dqAhhyf4jkWZiD7QgKLXFH/hc6cGoKC0bpIELVTuir6jdbQMq1xI3hqd9T+o7DtsjJ+X4kEawPFKptbv85bZ0TUHkZ4l2cUCHZwYl8GCETDrF6N0FywFrobE4jiM7jLvSMdab/rMOHEk+dVsYI8LqpTAq1JHJn51Y3emPJXeI1R+zvln2nVMRiTc7TwInhmiWHIr7qT0jjr1tp0e0bKC+sshi2iRFobTIBEbcf7kXO3ZiZ+MK50R/BBABjmyWQfS3m92bfKJbao3lWCyeF+hI69j/D3r3MBkojW/gbHPHW26O6C1egX0AcG3s0WgMx48Kgr8wAo4a6JJbfyyMdtW2V0g4pLBxCl+KJH2clEoWPctTzrB4lg"},{"role":"assistant","content":[{"type":"output_text","text":"**Yukihiro
+        Matsumoto** (commonly known as **Matz**) is the creator of the Ruby programming
+        language.\n\nHe began developing Ruby in 1993 in Japan, with the first public
+        release in 1995. Ruby was designed as a \"language for humans,\" emphasizing
+        programmer happiness, simplicity, and productivity, drawing inspiration from
+        languages like Perl, Smalltalk, Eiffel, Ada, and Lisp."}]},{"role":"user","content":"What
+        year did he create Ruby?"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
     headers:
       User-Agent:
-      - Faraday v2.14.2
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -103,7 +110,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 08 Jun 2026 16:10:36 GMT
+      - Mon, 10 Aug 2026 22:29:57 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -118,8 +125,6 @@ http_interactions:
       - '10000000'
       X-Ratelimit-Remaining-Tokens:
       - '10000000'
-      X-Zero-Data-Retention:
-      - 'false'
       X-Ratelimit-Limit-Requests:
       - '1800'
       X-Ratelimit-Remaining-Requests:
@@ -128,14 +133,18 @@ http_interactions:
       - DYNAMIC
       X-Request-Id:
       - "<X_REQUEST_ID>"
+      X-Zero-Data-Retention:
+      - 'false'
+      X-Data-Retention:
+      - general
       X-Metrics-Ttft-Ms:
-      - '278.4'
+      - '331.5'
       X-Metrics-Mean-Itl-Ms:
-      - '5.1'
+      - '7.6'
       X-Metrics-E2e-Ms:
-      - '2327.8'
+      - '2901.4'
       Traceparent:
-      - 00-63741a7a9ece3f25a4565c1765c73709-6ed88e3b0007eec3-01
+      - 00-e484a6666809fe107273f5378f29cb09-c967135b000022a2-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
@@ -148,10 +157,10 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"91aea38c-658d-985b-8aa1-97e5285b27e0","object":"chat.completion","created":1780935034,"model":"grok-4.3","choices":[{"index":0,"message":{"role":"assistant","content":"Yukihiro
-        Matsumoto began developing Ruby in **1993**, but the first public release
-        (version 0.95) came in **1995**. \n\nMost sources cite **1995** as the year
-        Ruby was created/released.","reasoning_content":"The user is asking: \"What
-        year did he create Ruby?\"\n","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":340,"completion_tokens":47,"total_tokens":716,"prompt_tokens_details":{"text_tokens":340,"audio_tokens":0,"image_tokens":0,"cached_tokens":128},"completion_tokens_details":{"reasoning_tokens":329,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":12306000},"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}'
-  recorded_at: Mon, 08 Jun 2026 16:10:36 GMT
+      string: '{"created_at":1786400995,"completed_at":1786400997,"id":"f9d8c59b-6c93-90b7-9140-1ef0af43f3be","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_f9d8c59b-6c93-90b7-9140-1ef0af43f3be","summary":[{"text":"The
+        user is asking: \"What year did he create Ruby?\"\n","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"Qic5xsIpd3gO1dN0e57D46yloSXDlEsUK+fZ5xc5SUyoQRbhHkQ7bixkjFVhqn+95ciAA9Z0UkvFhtKqm5csrHlN2/kO8TVu60iXupOZOLOF4ciTL2w+kBmyroC2zbRgICgfU/G5T3FmKGWrX13NBjjXdoIhcKfdSUgGIDK/omnD6QCKC65e3hitj63p/XS+7VztpFnI6sKiVFlLuSC2uJAqymn73sX3Auq7oPoVLiC5sz31KutevzVF1/NfJJ4pxEOZY2S9N2J/T0CwTG8mWoPNLX2uovabz8OnA0EV9wwpoFfj9eN9GtMV98mh1h3MS0AaWw07CRErsA6h1nBEP8bDkJS50c/O6fQKy+jYbg7eiXKEsZQq2qrYQcFmAcd5c8bMvvxtS1mIkJsdfX7zFu2Z2zlo/Rws5tY9uJ5ixi0VU8UpeDprNAOeKnQnGv4txcGNTTcd/1sB8QVCkqgQbp8udVq9+hyZ5UYeS3uLM1GZMxoHRHkduJp+wWKp6c6R0EI6NemlxrYA0yiR7KswLCj0ihsyejoXm/OyxmZGtUwBdW8eOtmYGOpYMW/uMzz0UffjKQX4MTz8xY+6NAsWIr6Es8G1Q+p4kOnFYSINRqAuIP41CGfuRzk3UM6m6WGg7C/ZjdSB9u41uRAqpM7LesoSZov3uxqFqP2w4b0HWkzVasAZuRSaiU8aRsyI05xy+XexeGUsYws3Dbl5IxYW4tUMzHZBGCU9XElTa2q0dTIvcKKv3PluMN4FQjFC4Jx7jWiPf9OS2kt4xlAd+3pxeXm2LoFDNVhV07yo5B8tF3CSnZ8Ldy8hbGJX2gzUXtMWDRA4VanaflVSXlA+YRptENY2hjB/kzfWfAqH7vF8lL/zEWbz6THiSjchqGoIp2fJ2h9YMlkQEvKW7xK7fXHc4kuZQqK807+l3zJQG4rzGIZhag8s3YqBUbLRJRjicD2M0F1YT58u5sX4pMKPY4UhedVkhfn/rrHhdV0IujO4VmabEPIE0pB/0/ZHJbpuMHIAdU722xtQ+UDhwCzm7URw6ds5ltghmCmBBiaYS+0mfbP7SRrGmI/cJRBSCtbHIWuAR1HI39kmwMUo8SdDsCXotZtO6VvPaCrv+QspbRWIHF8Jckmq2H73iqRy2osHkGg6JVLt2NFzbFti3RU/+SDZW98BnPuAf/HRhRxOkoxSgFh9qZ9tc6XFVvQ6a0G7mYqigtJwkerAxXIeKU+raKqtnom/PS+aGmnmT7cxdEF5bMc2F0Rz1ZACVWKZMqNnK2Mfw93d01UeVlWWw4TU1CyMILpM+PLDzshkMZwx6YHUbC7uhbdonVy6Fw+q1hrDKaXKQLSeA75EtlORuMEdWBwPhVsMu64jakRQr/iIpZdeuo3FDF50DhizSG7t4Q2sNXinSGOP0C7dkGAAGioHx0f7+SUjLCZtMoICgkp3RfCN80vbNM4gXQeoaihoLgNnuB7vUyZ1n9hK1a2mRIZRU7tggQU0NOi9XP29tZzdfGyaBjUgi/xjZTjOB/I2V0bfXMpDzw6zFymBI10tPEs7KQmWt0DdqGJAGN5DE8TZLfcVbW02pyvKiwUODhqGsVfKgXRQRJ7E4XSIvLlS/BfXNQAOTy9M"},{"content":[{"type":"output_text","text":"Yukihiro
+        Matsumoto began developing Ruby in **1993**. The first public release of the
+        language (version 0.95) came in **1995**. \n\nMost sources cite **1995** as
+        the year Ruby was created and released.","logprobs":[],"annotations":[]}],"id":"msg_f9d8c59b-6c93-90b7-9140-1ef0af43f3be","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[],"top_p":0.95,"usage":{"input_tokens":425,"input_tokens_details":{"cached_tokens":192},"output_tokens":322,"output_tokens_details":{"reasoning_tokens":273},"total_tokens":747,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":11346500,"context_details":{"input_tokens":425,"output_tokens":322}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
+  recorded_at: Mon, 10 Aug 2026 22:29:57 GMT
 recorded_with: VCR 6.4.0

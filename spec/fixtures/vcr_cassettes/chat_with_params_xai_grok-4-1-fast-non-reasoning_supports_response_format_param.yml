@@ -2,11 +2,11 @@
 http_interactions:
 - request:
     method: post
-    uri: https://api.x.ai/v1/chat/completions
+    uri: https://api.x.ai/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"grok-4.3","messages":[{"role":"user","content":"What is the
-        square root of 64? Answer with a JSON object with the key `result`."}],"stream":false,"response_format":{"type":"json_object"}}'
+      string: '{"model":"grok-4.3","input":[{"role":"user","content":"What is the
+        square root of 64? Answer with a JSON object with the key `result`."}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"text":{"format":{"type":"json_object"}}}'
     headers:
       User-Agent:
       - Faraday v2.14.3
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 10 Aug 2026 19:12:37 GMT
+      - Mon, 10 Aug 2026 22:29:29 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -52,13 +52,13 @@ http_interactions:
       X-Data-Retention:
       - general
       X-Metrics-Ttft-Ms:
-      - '209.8'
+      - '197.9'
       X-Metrics-Mean-Itl-Ms:
-      - '9.6'
+      - '7.2'
       X-Metrics-E2e-Ms:
-      - '2467.5'
+      - '2458.8'
       Traceparent:
-      - 00-e0cc38a04797908a96a1ac834da84179-eced75fa00009367-01
+      - 00-ff2fa405a58a0b9d2ade058b730bdf12-849ce2620000d732-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
@@ -71,8 +71,9 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"55481311-5be1-9906-95ca-37adae23dbf7","object":"chat.completion","created":1786389154,"model":"grok-4.3","choices":[{"index":0,"message":{"role":"assistant","content":"{\"result\":
-        8}","reasoning_content":"The task is: \"What is the square root of 64? Answer
-        with a JSON object with the key `result`.\"\n","refusal":null},"finish_reason":"stop"}],"usage":{"prompt_tokens":232,"completion_tokens":6,"total_tokens":451,"prompt_tokens_details":{"text_tokens":232,"audio_tokens":0,"image_tokens":0,"cached_tokens":192},"completion_tokens_details":{"reasoning_tokens":213,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":6359000},"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}'
-  recorded_at: Mon, 10 Aug 2026 19:12:37 GMT
+      string: '{"created_at":1786400967,"completed_at":1786400969,"id":"dc231162-95c5-938c-b524-60be6ccdbd44","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_dc231162-95c5-938c-b524-60be6ccdbd44","summary":[{"text":"The
+        task is: \"What is the square root of 64? Answer with a JSON object with the
+        key `result`.\"\n","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"iL0+bW+dYHZXJXsZpm/cNgeFdiNiXbYYQ+EncIpYjg5FK7QTxRU5aDYRpZsIThfCyBQ0j48m7iRBOoiIuWNx70Fb7sQWGTLxCNTYjFGdRqfQK6zTsvePAgFnjz61ehsn0rIWVpyqlPVppFjqLKoNMCtqXxAMBq0UQPRYbUy88/p0N07s6Nguq0DVNlUwCyEc5PLc/YVnPND4iXtT1JmNUd+SBDTUbNtDEgvenGHIDH+mBbBYTQS+ohB80jRAUsu+cjXmPYJgaxNJMQlKzjtLb5rkgAyzmGn1c620LnaSmaf1N+SpJYtR2c3nEGHBEguHQgi8bHfGaSkg2D6ND7m/uuZ9H1JzMx3FPqzgiE7Md1ME99QGIOyzjR5yTexOoKNubCxTYLVpMLPU2lMslcnJc0xgzjF6gx16NbIoz//MXUOQnlPdi+NPRX0c/MHvM1tuKCWXSf1SHN00+t8txLvX4woDLa7z+Y7KBiQYGpsiXBORtTBERnm5Vk+f0BOQKu5vez72fOEZ/4t+lu1IIMBqh5IJ5MBdgcZcoMoudse3kZhcumRuap6vpMqOfjxBdPf7fJjRJ8daNiHY+cduSmsMhimdc+uOnZ2qqtFlOf+K8Gu8OfLWD3a22Agq68UcsB3deM7zZHMpJRH1UNkcT6UKbprSREZh9KAaPRCj/a0FmZwAs9Zojp48bjH4wcOoamRjG+WuJn1hm/ggtni+lNOi9KLwZpHpXWL5YtaMgwwAsIl7z3UgerB/pzhgTnww5gfOVeMInXqa0iNJ8+w66xdiRU75kEq4x3OQYLltaX3r0GYsXKpZ9rJlamykFL/16gFazwTFzU1PIlt33xmHNVMzKS4lKNE7R9y+zQm2Nft3Q07bZQZiNpkJ+GpBQJRs54h+w2//XrWqNMC3qVfS3hSMoGWPYZSJZ2LlxLYFjlxUaEFLJiZBypaqEs5meSrs3Bv/7X4QqT3VLHZpLL+Vn8Br2od0DshBTxoiBj2Id/llrhuM13y5oQL4wFa4fnzU0OIYqvEIXa92fmrPoQtUCYua17y29zS/pvK2nPPjrjUX7hGcniW2cV2qbFLBmvfoEPSfoQDesGo2d94KvPGm8JouCmIteLcGPasrAcdYrEDycK5x2b1+Lzv61x8VzaoMZNRrijaQ49jx4E3UTMB70GuMS0KFkFqyqRB8jY3OJTvV/CqHFbXoXNW1VKZf9ctF1mKtDFVxujNqEkQCVGKo3M6ywZKTX2wvC719IlenDnDlgtegUXxcbi5w27I+sD4l/HD53lY5PUVVnXgPiUahSqnzSQFRS5hhrqWVHQYkJ5ghBfUg6ReuXDxGQIIAjVKzgFW2CLYcsWIhG4F54nQ07xDLdkbx2PHCL0s24OgvAj+MODR7vOlcIX3kYF7hE3KegiTe0xHs+oWIxK1Qp1tv80CJ8xNz/Lv/Fctbq36p5BG3Il97BhpGCEaWzPNX4qFnOfQ96A04YZ2EFOALv4wshvIja7MMJ0uKQstvafmFxTBqH7+sdT0TZtqjzzUzkICZgNdx2yhbLO6KVm+eOCAZeuKIrPa0XjuX2uItXBB/dDNUufLwbhnhUYnsLgWSbOvWC+ycxRdLHL07exbiETHGUGINda1DPb0Td87+AMqtDWWE57eFwGRMvtWB+dP3MyfFRF9NcsvA+1Jbrwe+VRd1oJIHzbX99ZPN0eVxbGZY2PfLa0h0O/XIbG+az3xxcbB8"},{"content":[{"type":"output_text","text":"{\n  \"result\":
+        8\n}","logprobs":[],"annotations":[]}],"id":"msg_dc231162-95c5-938c-b524-60be6ccdbd44","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"json_object"}},"tool_choice":"auto","tools":[],"top_p":0.95,"usage":{"input_tokens":232,"input_tokens_details":{"cached_tokens":192},"output_tokens":300,"output_tokens_details":{"reasoning_tokens":291},"total_tokens":532,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":8384000,"context_details":{"input_tokens":232,"output_tokens":300}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
+  recorded_at: Mon, 10 Aug 2026 22:29:29 GMT
 recorded_with: VCR 6.4.0

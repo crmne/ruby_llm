@@ -1,0 +1,153 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.x.ai/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"grok-4.3","input":[{"role":"user","content":"What is 2 +
+        2? Just the number."}],"stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 10 Aug 2026 22:27:24 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Strict-Transport-Security:
+      - max-age=31536000
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Ratelimit-Limit-Tokens:
+      - '10000000'
+      X-Ratelimit-Remaining-Tokens:
+      - '10000000'
+      X-Ratelimit-Limit-Requests:
+      - '1800'
+      X-Ratelimit-Remaining-Requests:
+      - '1800'
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      X-Zero-Data-Retention:
+      - 'false'
+      X-Data-Retention:
+      - general
+      X-Metrics-Ttft-Ms:
+      - '396.2'
+      X-Metrics-Mean-Itl-Ms:
+      - '6.0'
+      X-Metrics-E2e-Ms:
+      - '1021.9'
+      Traceparent:
+      - 00-4176fc5cee5a9874040e2096d2fc6502-f725b9cb00001837-01
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"created_at":1786400843,"completed_at":1786400844,"id":"92c1ce66-971b-9f7b-be5a-27ee1a60da1e","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_92c1ce66-971b-9f7b-be5a-27ee1a60da1e","summary":[{"text":"The
+        question is: \"What is 2 + 2? Just the number.\"\n","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"RDvMx+4BIgyPKayFhGQeWtIPRsoxOlzIceYlAmbicu8wIkpLEA2gg4C7NgWBkyTMmZomYT6AVBzUdKrMd438HY7SOzu4cT7DeBJCbUHg43YqRaKjIEkzgI5znUCV2HZ/T47HveAKvBMMXXDttzioKfJ8Vga0qJkiPEturTL1oXEJ9PJhZrxYN7+xsTzZDYSlLpTrGg3pC9xxWx8ZiHnIERyEuN4wtBqaCz+BXXIYW5NawUc1geLeP/D8arA1EXGy/PReBbDFBXuVx6k2I+AwRRwkNvQIVuDe28YPshZ4UrxE5zVcqOO6Ldn8GH+n9cQPOhpYUlKbSpaZGJgSCf9ipxlvRBPPWqOmei1OAv623gMKt8mfzR2szaWC/sEaapSDclTGvxNLG2mq7pKGlcfWY862gW6pn3rMPMfRIBZ4WnYmNUnnvCiTMVLYWuBK46MZ2gzIS1BN+i07CTe1VAP1Dw"},{"content":[{"type":"output_text","text":"4","logprobs":[],"annotations":[]}],"id":"msg_92c1ce66-971b-9f7b-be5a-27ee1a60da1e","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[],"top_p":0.95,"usage":{"input_tokens":204,"input_tokens_details":{"cached_tokens":128},"output_tokens":80,"output_tokens_details":{"reasoning_tokens":79},"total_tokens":284,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":3206000,"context_details":{"input_tokens":204,"output_tokens":80}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
+  recorded_at: Mon, 10 Aug 2026 22:27:24 GMT
+- request:
+    method: post
+    uri: https://api.x.ai/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"grok-4.3","input":[{"role":"user","content":"What is 2 +
+        2? Just the number."},{"type":"reasoning","summary":[{"type":"summary_text","text":"The
+        question is: \"What is 2 + 2? Just the number.\"\n"}],"encrypted_content":"RDvMx+4BIgyPKayFhGQeWtIPRsoxOlzIceYlAmbicu8wIkpLEA2gg4C7NgWBkyTMmZomYT6AVBzUdKrMd438HY7SOzu4cT7DeBJCbUHg43YqRaKjIEkzgI5znUCV2HZ/T47HveAKvBMMXXDttzioKfJ8Vga0qJkiPEturTL1oXEJ9PJhZrxYN7+xsTzZDYSlLpTrGg3pC9xxWx8ZiHnIERyEuN4wtBqaCz+BXXIYW5NawUc1geLeP/D8arA1EXGy/PReBbDFBXuVx6k2I+AwRRwkNvQIVuDe28YPshZ4UrxE5zVcqOO6Ldn8GH+n9cQPOhpYUlKbSpaZGJgSCf9ipxlvRBPPWqOmei1OAv623gMKt8mfzR2szaWC/sEaapSDclTGvxNLG2mq7pKGlcfWY862gW6pn3rMPMfRIBZ4WnYmNUnnvCiTMVLYWuBK46MZ2gzIS1BN+i07CTe1VAP1Dw"},{"role":"assistant","content":[{"type":"output_text","text":"4"}]},{"role":"user","content":"Now
+        multiply that by 3. Just the number."}],"stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 10 Aug 2026 22:27:25 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Strict-Transport-Security:
+      - max-age=31536000
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Ratelimit-Limit-Tokens:
+      - '10000000'
+      X-Ratelimit-Remaining-Tokens:
+      - '10000000'
+      X-Ratelimit-Limit-Requests:
+      - '1800'
+      X-Ratelimit-Remaining-Requests:
+      - '1800'
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      X-Zero-Data-Retention:
+      - 'false'
+      X-Data-Retention:
+      - general
+      X-Metrics-Ttft-Ms:
+      - '223.5'
+      X-Metrics-Mean-Itl-Ms:
+      - '7.8'
+      X-Metrics-E2e-Ms:
+      - '1035.9'
+      Traceparent:
+      - 00-74ca9e5475d3c44dd3b98a8be06943fb-e78363530000bfe0-01
+      Vary:
+      - origin, access-control-request-method, access-control-request-headers
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - "*"
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"created_at":1786400844,"completed_at":1786400845,"id":"1e2c483b-6974-9d87-a6e0-138d3958df19","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_1e2c483b-6974-9d87-a6e0-138d3958df19","summary":[{"text":"The
+        user says: \"Now multiply that by 3. Just the number.\"\n","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"zQ1vPeiMsz3v7vOPB4qgC8HE8cId45FVM++zbgFhQE8MlHOWMSFVMtF6uSFCdvunYNNbmHgznoIzasvbvNpPRXYhCuRkbCq9481ZNm052cYpKDy3iojhy9CQQ8DEgwKbdqOKivfC9z1vYC68ih7kVnvoSkuMhfB9MlEz9Sund1nxr4up/jrhH2B58oAanNXdRLAgUx0SKRCGs+v1Sl20cYjUh1E+VvnTh3VZLlANcFS3TCVXMO1kbjFmoMTyAvpmFGA3d/rMk7AlkBEMDrEr+HDUUfraw7aBmD70VV+nUa1Nexyqgko6RYrGAxNBpx18+q6zYyxUIvs3bAc17VLsufeOTEAPUYluEyThmeppm1869Wwp5cQUa/4Ouj+8TGEQCSkU2ifO5FaRBbDg2SeAC7bO8blwXmK/lnSPslLuHXPSUSOvlXLaIzOyVjsGDlFoiBfBqNR3TgdSjAjVK+G1CVYNq5fCoZqgdPVu0TYTt+MGbBvjB/kWKT/AlQ"},{"content":[{"type":"output_text","text":"12","logprobs":[],"annotations":[]}],"id":"msg_1e2c483b-6974-9d87-a6e0-138d3958df19","role":"assistant","type":"message","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[],"top_p":0.95,"usage":{"input_tokens":306,"input_tokens_details":{"cached_tokens":192},"output_tokens":88,"output_tokens_details":{"reasoning_tokens":87},"total_tokens":394,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":4009000,"context_details":{"input_tokens":306,"output_tokens":88}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
+  recorded_at: Mon, 10 Aug 2026 22:27:25 GMT
+recorded_with: VCR 6.4.0

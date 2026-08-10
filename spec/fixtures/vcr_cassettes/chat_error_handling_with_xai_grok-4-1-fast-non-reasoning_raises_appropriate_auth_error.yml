@@ -2,13 +2,13 @@
 http_interactions:
 - request:
     method: post
-    uri: https://api.x.ai/v1/chat/completions
+    uri: https://api.x.ai/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"grok-4.3","messages":[{"role":"user","content":"Hello"}],"stream":false}'
+      string: '{"model":"grok-4.3","input":[{"role":"user","content":"Hello"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
     headers:
       User-Agent:
-      - Faraday v2.14.2
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -23,11 +23,11 @@ http_interactions:
       message: Bad Request
     headers:
       Date:
-      - Mon, 08 Jun 2026 16:10:27 GMT
+      - Mon, 10 Aug 2026 22:29:26 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '147'
+      - '118'
       Connection:
       - keep-alive
       Strict-Transport-Security:
@@ -48,7 +48,7 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: UTF-8
-      string: '{"code":"Client specified an invalid argument","error":"Incorrect API
-        key provided: in***ey. You can obtain an API key from https://console.x.ai."}'
-  recorded_at: Mon, 08 Jun 2026 16:10:27 GMT
+      string: '{"code":"invalid-argument","error":"Incorrect API key provided. You
+        can obtain an API key from https://console.x.ai."}'
+  recorded_at: Mon, 10 Aug 2026 22:29:26 GMT
 recorded_with: VCR 6.4.0

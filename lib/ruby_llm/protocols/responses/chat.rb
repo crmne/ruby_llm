@@ -62,7 +62,7 @@ module RubyLLM
           Message.new(
             role: :assistant,
             content: content,
-            citations: parse_output_citations(output, content),
+            citations: parse_citations(data, output, content),
             thinking: Thinking.build(
               text: parse_reasoning_summary(output),
               signature: parse_reasoning_signature(output)
@@ -95,12 +95,29 @@ module RubyLLM
           end
         end
 
+        def parse_citations(data, output, content)
+          citations = parse_output_citations(output, content)
+          citations.any? ? citations : parse_root_citations(data)
+        end
+
         def parse_output_citations(output, content)
           annotations = output.select { |item| item['type'] == 'message' }.flat_map do |message|
             Array(message['content']).flat_map { |part| Array(part['annotations']) }
           end
 
           parse_annotations(annotations, content)
+        end
+
+        # Responses annotations carry url_citation fields inline rather than
+        # nested under a url_citation key like Chat Completions.
+        def parse_annotations(annotations, content)
+          super(Array(annotations).map { |annotation| normalize_annotation(annotation) }, content)
+        end
+
+        def normalize_annotation(annotation)
+          return annotation if annotation.key?('url_citation') || annotation['type'] != 'url_citation'
+
+          { 'url_citation' => annotation }
         end
 
         def reasoning_model?(model_id)

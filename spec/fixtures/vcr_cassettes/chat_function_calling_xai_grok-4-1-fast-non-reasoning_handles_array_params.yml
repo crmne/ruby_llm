@@ -2,16 +2,16 @@
 http_interactions:
 - request:
     method: post
-    uri: https://api.x.ai/v1/chat/completions
+    uri: https://api.x.ai/v1/responses
     body:
       encoding: UTF-8
-      string: '{"model":"grok-4.3","messages":[{"role":"user","content":"Call the
-        array params tool with tags [\"red\",\"blue\"] and tell me the combined tags."}],"stream":false,"tools":[{"type":"function","function":{"name":"array_params","description":"Uses
+      string: '{"model":"grok-4.3","input":[{"role":"user","content":"Call the array
+        params tool with tags [\"red\",\"blue\"] and tell me the combined tags."}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"array_params","description":"Uses
         params DSL array support","parameters":{"type":"object","properties":{"tags":{"type":"array","description":"List
-        of tags to combine","items":{"type":"string"}}},"required":["tags"],"additionalProperties":false,"strict":true}}}]}'
+        of tags to combine","items":{"type":"string"}}},"required":["tags"],"additionalProperties":false,"strict":true},"strict":false}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.2
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -26,7 +26,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Sat, 13 Jun 2026 11:33:59 GMT
+      - Mon, 10 Aug 2026 22:31:24 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -41,8 +41,6 @@ http_interactions:
       - '10000000'
       X-Ratelimit-Remaining-Tokens:
       - '10000000'
-      X-Zero-Data-Retention:
-      - 'false'
       X-Ratelimit-Limit-Requests:
       - '1800'
       X-Ratelimit-Remaining-Requests:
@@ -51,14 +49,18 @@ http_interactions:
       - DYNAMIC
       X-Request-Id:
       - "<X_REQUEST_ID>"
+      X-Zero-Data-Retention:
+      - 'false'
+      X-Data-Retention:
+      - general
       X-Metrics-Ttft-Ms:
-      - '318.0'
+      - '586.7'
       X-Metrics-Mean-Itl-Ms:
-      - '5.4'
+      - '9.9'
       X-Metrics-E2e-Ms:
-      - '2594.4'
+      - '3912.4'
       Traceparent:
-      - 00-84f3f2f3d00dc8f3db655bd50fa710b7-ec0ac93f000078c0-01
+      - 00-0accbcc42538dd3da6ee3611cebb37fe-1bd4996e0000371b-01
       Vary:
       - origin, access-control-request-method, access-control-request-headers
       Access-Control-Allow-Origin:
@@ -71,8 +73,10 @@ http_interactions:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"ae0d3c00-e47d-9386-84be-fcc1786f640f","object":"chat.completion","created":1781350437,"model":"grok-4.3","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning_content":"The
-        task is: \"Call the array params tool with tags [\"red\",\"blue\"] and tell
-        me the combined tags.\"\n","tool_calls":[{"id":"call-0e3ff74e-34b2-49e3-85d0-d3bcfa507ffd-0","function":{"name":"array_params","arguments":"{\"tags\":[\"red\",\"blue\"]}"},"type":"function"}],"refusal":null},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":270,"completion_tokens":14,"total_tokens":681,"prompt_tokens_details":{"text_tokens":270,"audio_tokens":0,"image_tokens":0,"cached_tokens":128},"completion_tokens_details":{"reasoning_tokens":397,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0,"cost_in_usd_ticks":12306000},"system_fingerprint":"fp_eb3c003fc66c14ed","service_tier":"default"}'
-  recorded_at: Sat, 13 Jun 2026 11:33:59 GMT
+      string: '{"created_at":1786401080,"completed_at":1786401084,"id":"46989468-41b3-92ef-84a7-0350d355b90a","max_output_tokens":null,"model":"grok-4.3","object":"response","output":[{"id":"rs_46989468-41b3-92ef-84a7-0350d355b90a","summary":[{"text":"The
+        user says: \"Call the array params tool with tags [\"red\",\"blue\"] and tell
+        me the combined tags.\"\n","type":"summary_text"}],"type":"reasoning","status":"completed","encrypted_content":"CAbavtvUlh81jTSHDEb673Cz61osOcH46/zngXDz9cDuekcIB/OBG6ucKvyOz/EKvUT2X9fNGQGxOLpQ457IPwMZzucCpnC0FEbbjmO67LmAXjTPErnewdObegS/zHde/B3YesM1JbKe9uB6A71qp+7ZZOOi8cuWCewxGxfeYlqPRUH5Qh3lggKIio9neQoQnvxIVumlUbN9Km7TCh87KQ/TLKpRuzGTbfs1qtj4qWZQao03mcyuIUJicdwf9D2vL1OxZ0RB/iVWNWKK/B92iW/9KaCxXjV9yS6XNxIho/XAucBlWuFWlzw1gIsB5tnF7DfyWI7K1m8D8aU+/c4vkma9Irm7SwtEDUUHj60kTOOBPuKGFlhyZ7QYSoli0Dn1zDrbGi5YqALI38eI/QFUU0HWLkmY1KjE5pDSKDCb05qNdpoacbHKIwpR09TqJnNve8Onn9KFxMTjfAbpFvdaW7xbD5GTj438iD/DXfhfijn3Il3cjcgNdE24YejybTELUjZGYJlYEf6oPUGSqizhp8sM97wvqQZ3fLH7EhSYSdMb/SNALFWfC+6dVunaWcfnTMSGYJ+ON43t/L+e4Jm6rIqwF6gWcxWz+Eum+Lg7KjjzrdnPbviG+0QHW1fH4/d6CpEWIF59zaDp2U3Q8IMpMqdchQpMV1iC2JcrygROjHzEw07UwOUM7ak27uxxlK7PakiF1T+4JblPDcPQjW1RNG6dU35ExKqKyL1vie/BLUXBmoI0n30B2fvZJsAAK6MWkPD76o9gCMd7zGCsVeWu1Pb4WdkRo6JOk0mKEnG8XxUcE2vs4rfk9rL4hkTXtOiSoB6wuKw6ED3dN2aiLV12gnSR+vvCSuoWJeods0wZMjQIYwaFNKPCkamWsJ5JQeUidGAcHEMnMfiNwOmWO/ouMkJhjHLxpuezF2KfmRzVcXRivzItu0Enf77tCuXSNAmmahWq5dxn6cC/87egp1SGUkvaxzFzqndXFnlplz7ugme08GBSu4LOu8RjSGG0h39XyvykdsFZVjoF0dwCPu2imxeW+9g/RSUEHnUJmuAx/SsIGMi8ShHGNknaeCx8vOcYAKPPXSLpOnklBMsZdiC7QSbM34AuJ9AFpJkP9GK7m19wa/SNdJgociX1GAfjDrOwxLi86no+WX2Oa4syWWLpcOfP7zGz+OWq6PDNb+LQEM4LerDYMsddRMScNdVWho6WPu4qj/qaEkZOq2PNxefgJ1VW/uQ+zKYyaw9O/8vRQqWzC0S7rAQ6Y23UUHdnrLWp85OLuDF53PDT0x/9xzudiJpBbQBk8nihAcXLMkXmZ1QGnGyusRXdTddmPx43w49jbuZ28z65F3NRB+b4P8mSF8p79PPq21nDcHpHgbrTrD4n1CAcjlAp615evSfbt8+UdVwiDwbM6PPpeqp7N9UKwhvS9IdIEl+dBCBv/YW6Y0hFhHgPClL8OIWPmCSoHXTGbZ1KY2VRAbLs4Waa01OP8lc0vASNSme8SHfJyuv7IKGXLzjgHl7HMm9oqPjZtoU48oAC8XfeAwQioMbZ7We63n2qk5oVd9BIODQyu6uWSDYFJIeItrhBkR7r1ALiHJ0kratQ/152B1FeSdN2sQpt7TzunCPU7GT90y9kiHYaJdoA1r61HoHEy0zEXmv14mFPpLQuRPy/q6QU0zQWXIjYL87WrT323uUkrnzuiIXi69s9mDMZxjobbj3bXtvYA29PssCLorJK95KAOEXZy3IXOuuSQ0R25ka1masX+kngYoHv7pprNLOOThmOOSQV8umqdyT36QtmKxsXZG/OXwtLOTusQk2Y/nRnB3PAyIw33ejG7Jaq7oWcX0QyY2ELfT46Bx8il0dU3a4"},{"arguments":"{\"tags\":[\"red\",\"blue\"]}","call_id":"call-eddfe0f3-f08e-4000-ba60-bddb5bce215d-0","name":"array_params","type":"function_call","id":"fc_46989468-41b3-92ef-84a7-0350d355b90a_0","status":"completed"}],"parallel_tool_calls":true,"previous_response_id":null,"reasoning":{"effort":"low","summary":"detailed"},"temperature":0.7,"text":{"format":{"type":"text"}},"tool_choice":"auto","tools":[{"type":"function","description":"Uses
+        params DSL array support","name":"array_params","parameters":{"type":"object","properties":{"tags":{"type":"array","description":"List
+        of tags to combine","items":{"type":"string"}}},"required":["tags"],"additionalProperties":false,"strict":true},"strict":false}],"top_p":0.95,"usage":{"input_tokens":317,"input_tokens_details":{"cached_tokens":192},"output_tokens":325,"output_tokens_details":{"reasoning_tokens":311},"total_tokens":642,"num_sources_used":0,"num_server_side_tools_used":0,"cost_in_usd_ticks":10071500,"context_details":{"input_tokens":317,"output_tokens":325}},"user":null,"incomplete_details":null,"status":"completed","store":false,"metadata":{"system_fingerprint":"fp_eb3c003fc66c14ed"},"background":false,"service_tier":"default","truncation":"disabled","top_logprobs":0,"presence_penalty":0.0,"frequency_penalty":0.0,"prompt_cache_key":null,"max_tool_calls":null,"safety_identifier":null,"error":null,"instructions":null}'
+  recorded_at: Mon, 10 Aug 2026 22:31:24 GMT
 recorded_with: VCR 6.4.0

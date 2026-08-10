@@ -96,6 +96,28 @@ RSpec.describe RubyLLM::Chat, :live do
       expect(payload[:tools]).to include({ file_search: { file_search_store_names: ['store'] } })
     end
 
+    it 'renders xAI Responses aliases with passthrough options' do
+      payload = RubyLLM.chat(model: 'grok-4.3', provider: :xai)
+                       .with_server_tools(:x_search, :code_execution,
+                                          web_search: { filters: { allowed_domains: ['ruby-lang.org'] } })
+                       .render
+
+      expect(payload[:input]).to be_an(Array)
+      expect(payload[:tools]).to include({ type: 'x_search' })
+      expect(payload[:tools]).to include({ type: 'code_execution' })
+      expect(payload[:tools]).to include({ type: 'web_search', filters: { allowed_domains: ['ruby-lang.org'] } })
+    end
+
+    it 'renders the xAI MCP alias with server options' do
+      payload = RubyLLM.chat(model: 'grok-4.3', provider: :xai)
+                       .with_server_tools(mcp: { server_url: 'https://mcp.example.com/mcp', server_label: 'example' })
+                       .render
+
+      expect(payload[:tools]).to include(
+        { type: 'mcp', server_url: 'https://mcp.example.com/mcp', server_label: 'example' }
+      )
+    end
+
     it 'renders OpenRouter aliases as openrouter-prefixed tools' do
       payload = RubyLLM.chat(model: 'openai/gpt-5.2', provider: :openrouter)
                        .with_server_tools(:web_search)
@@ -212,6 +234,42 @@ RSpec.describe RubyLLM::Chat, :live do
 
         expect(response.citations).not_to be_empty
         expect(response.tokens.server_tool_use).to include('web_search_requests')
+      end
+    end
+
+    context 'with xai/grok-4.3' do
+      let(:chat) { RubyLLM.chat(model: 'grok-4.3', provider: :xai).with_server_tools(:web_search) }
+
+      it 'searches, cites, and counts the sources it used' do
+        response = chat.ask('Search the web: what is the latest stable Ruby version? Cite your source.')
+
+        expect(response.server_tool_calls).not_to be_empty
+        expect(response.citations).not_to be_empty
+        expect(response.tokens.server_tool_use).to include('num_server_side_tools_used')
+        expect(response.raw_content).to be_an(Array)
+      end
+
+      it 'replays search turns so the conversation can continue' do
+        chat.ask('Search the web: what is the latest stable Ruby version?')
+        followup = chat.ask('Thanks. Now just say OK.')
+
+        expect(followup.content).to be_present
+      end
+    end
+  end
+
+  describe 'responses protocol dialects' do
+    context 'with xai/grok-4.3' do
+      it 'chats on the Responses endpoint by default' do
+        chat = RubyLLM.chat(model: 'grok-4.3', provider: :xai)
+        response = chat.ask('What is 2 + 2? Just the number.')
+
+        expect(response.raw.env.url.path).to end_with('/responses')
+        expect(response.content).to include('4')
+        expect(response.thinking).to be_present
+
+        followup = chat.ask('Now multiply that by 3. Just the number.')
+        expect(followup.content).to include('12')
       end
     end
   end
