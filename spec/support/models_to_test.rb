@@ -7,6 +7,10 @@ def filter_local_providers(models)
   SKIP_LOCAL_PROVIDER_TESTS ? models.reject { |model| LOCAL_PROVIDER_SLUGS.include?(model[:provider]) } : models
 end
 
+def each_model(models)
+  models.each { |model_info| yield model_info[:provider], model_info[:model], model_info }
+end
+
 chat_models = [
   { provider: :anthropic, model: 'claude-haiku-4-5' },
   { provider: :azure, model: 'grok-4-1-fast-non-reasoning' },

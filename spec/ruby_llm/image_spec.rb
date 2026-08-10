@@ -89,10 +89,7 @@ RSpec.describe RubyLLM::Image, :live do
   end
 
   describe 'basic functionality' do
-    IMAGE_GENERATION_MODELS.each do |model_info|
-      provider = model_info[:provider]
-      model = model_info[:model]
-
+    each_model(IMAGE_GENERATION_MODELS) do |provider, model, model_info|
       it "#{provider}/#{model} can paint images" do
         image = RubyLLM.paint('a siamese cat', model: model, provider: provider)
 

@@ -22,9 +22,7 @@ RSpec.describe RubyLLM::Chat, :live do # rubocop:disable RSpec/MultipleMemoizedH
   let(:image_url_no_ext) { 'https://httpbin.org/image/jpeg' }
 
   describe 'text models' do # rubocop:disable RSpec/MultipleMemoizedHelpers
-    CHAT_MODELS.each do |model_info|
-      model = model_info[:model]
-      provider = model_info[:provider]
+    each_model(CHAT_MODELS) do |provider, model|
       it "#{provider}/#{model} can understand text" do
         chat = RubyLLM.chat(model: model, provider: provider)
         response = chat.ask("What's in this file?", with: text_path)
@@ -58,9 +56,7 @@ RSpec.describe RubyLLM::Chat, :live do # rubocop:disable RSpec/MultipleMemoizedH
   end
 
   describe 'vision models' do # rubocop:disable RSpec/MultipleMemoizedHelpers
-    VISION_MODELS.each do |model_info|
-      model = model_info[:model]
-      provider = model_info[:provider]
+    each_model(VISION_MODELS) do |provider, model|
       it "#{provider}/#{model} can understand local images" do
         chat = RubyLLM.chat(model: model, provider: provider)
         response = chat.ask('What do you see in this image?', with: { image: image_path })
@@ -101,10 +97,7 @@ RSpec.describe RubyLLM::Chat, :live do # rubocop:disable RSpec/MultipleMemoizedH
   end
 
   describe 'video models' do # rubocop:disable RSpec/MultipleMemoizedHelpers
-    VIDEO_MODELS.each do |model_info|
-      provider = model_info[:provider]
-      model = model_info[:model]
-
+    each_model(VIDEO_MODELS) do |provider, model|
       it "#{provider}/#{model} can understand local videos" do
         chat = RubyLLM.chat(model: model, provider: provider)
         response = chat.ask('What do you see in this video?', with: { video: video_path })
@@ -130,9 +123,7 @@ RSpec.describe RubyLLM::Chat, :live do # rubocop:disable RSpec/MultipleMemoizedH
   end
 
   describe 'audio models' do # rubocop:disable RSpec/MultipleMemoizedHelpers
-    AUDIO_MODELS.each do |model_info|
-      model = model_info[:model]
-      provider = model_info[:provider]
+    each_model(AUDIO_MODELS) do |provider, model|
       it "#{provider}/#{model} can understand audio" do
         chat = RubyLLM.chat(model: model, provider: provider)
         response = chat.ask('What is being said?', with: { audio: audio_path })
@@ -159,9 +150,7 @@ RSpec.describe RubyLLM::Chat, :live do # rubocop:disable RSpec/MultipleMemoizedH
   end
 
   describe 'pdf models' do # rubocop:disable RSpec/MultipleMemoizedHelpers
-    PDF_MODELS.each do |model_info|
-      model = model_info[:model]
-      provider = model_info[:provider]
+    each_model(PDF_MODELS) do |provider, model|
       it "#{provider}/#{model} understands PDFs" do
         chat = RubyLLM.chat(model: model, provider: provider)
         response = chat.ask('Summarize this document', with: { pdf: pdf_path })
@@ -204,10 +193,7 @@ RSpec.describe RubyLLM::Chat, :live do # rubocop:disable RSpec/MultipleMemoizedH
   end
 
   describe 'document models' do # rubocop:disable RSpec/MultipleMemoizedHelpers
-    DOCUMENT_MODELS.each do |model_info|
-      model = model_info[:model]
-      provider = model_info[:provider]
-
+    each_model(DOCUMENT_MODELS) do |provider, model|
       it "#{provider}/#{model} understands DOCX documents" do
         chat = RubyLLM.chat(model: model, provider: provider)
         response = chat.ask('What is the project codename in this document? Answer with only the code.',
@@ -222,10 +208,7 @@ RSpec.describe RubyLLM::Chat, :live do # rubocop:disable RSpec/MultipleMemoizedH
   end
 
   describe 'spreadsheet models' do # rubocop:disable RSpec/MultipleMemoizedHelpers
-    SPREADSHEET_MODELS.each do |model_info|
-      model = model_info[:model]
-      provider = model_info[:provider]
-
+    each_model(SPREADSHEET_MODELS) do |provider, model|
       it "#{provider}/#{model} understands XLSX spreadsheets" do
         chat = RubyLLM.chat(model: model, provider: provider)
         response = chat.ask('What is the spreadsheet_code value in this spreadsheet? Answer with only the code.',

@@ -5,17 +5,8 @@ require 'spec_helper'
 RSpec.describe RubyLLM::Chat, :live do
   include StreamingErrorHelpers
 
-  def token_count_chat(model:, provider:)
-    chat = RubyLLM.chat(model: model, provider: provider).with_temperature(0.0)
-    return chat.with_provider_options(enable_thinking: false) if provider == :gpustack && model == 'qwen3'
-
-    chat
-  end
-
   describe 'streaming responses' do
-    CHAT_MODELS.each do |model_info|
-      model = model_info[:model]
-      provider = model_info[:provider]
+    each_model(CHAT_MODELS) do |provider, model|
       it "#{provider}/#{model} supports streaming responses" do
         chat = RubyLLM.chat(model: model, provider: provider)
         chunks = []
@@ -42,14 +33,14 @@ RSpec.describe RubyLLM::Chat, :live do
           skip 'GPUStack/Qwen3 reports different token counts for streaming vs non-streaming'
         end
 
-        chat = token_count_chat(model: model, provider: provider)
+        chat = basic_chat(model: model, provider: provider, temperature: 0.0)
         chunks = []
 
         stream_message = chat.ask('Count from 1 to 3') do |chunk|
           chunks << chunk
         end
 
-        chat = token_count_chat(model: model, provider: provider)
+        chat = basic_chat(model: model, provider: provider, temperature: 0.0)
         sync_message = chat.ask('Count from 1 to 3')
 
         expect(sync_message.tokens.input).to be_within(1).of(stream_message.tokens.input)
@@ -59,10 +50,7 @@ RSpec.describe RubyLLM::Chat, :live do
   end
 
   describe 'Error handling' do
-    CHAT_MODELS.each do |model_info|
-      model = model_info[:model]
-      provider = model_info[:provider]
-
+    each_model(CHAT_MODELS) do |provider, model|
       context "with #{provider}/#{model}" do
         let(:chat) { RubyLLM.chat(model: model, provider: provider) }
 

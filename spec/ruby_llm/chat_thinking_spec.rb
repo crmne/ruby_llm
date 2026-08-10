@@ -41,10 +41,7 @@ RSpec.describe RubyLLM::Chat, :live do
       expect(response.content.presence || response.thinking&.text).to be_present
     end
 
-    THINKING_MODELS.each do |model_info|
-      model = model_info[:model]
-      provider = model_info[:provider]
-
+    each_model(THINKING_MODELS) do |provider, model|
       it "#{provider}/#{model} returns thinking when available" do
         chat = chat_with_thinking(model: model, provider: provider)
         prompt = provider == :gpustack ? 'What is 5 + 3? Think briefly before answering.' : question

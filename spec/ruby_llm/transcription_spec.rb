@@ -6,10 +6,7 @@ RSpec.describe RubyLLM::Transcription, :live do
   let(:audio_path) { File.expand_path('../fixtures/ruby.wav', __dir__) }
 
   describe 'basic functionality' do
-    TRANSCRIPTION_MODELS.each do |config|
-      provider = config[:provider]
-      model = config[:model]
-
+    each_model(TRANSCRIPTION_MODELS) do |provider, model|
       it "#{provider}/#{model} can transcribe audio" do
         transcription = RubyLLM.transcribe(audio_path, model: model, provider: provider)
 

@@ -8,9 +8,7 @@ RSpec.describe RubyLLM::Embedding, :live do
   let(:test_dimensions) { 768 }
 
   describe 'basic functionality' do
-    EMBEDDING_MODELS.each do |config|
-      provider = config[:provider]
-      model = config[:model]
+    each_model(EMBEDDING_MODELS) do |provider, model|
       it "#{provider}/#{model} can handle a single text" do
         embedding = RubyLLM.embed(test_text, model: model, provider: provider)
         expect(embedding.vectors).to be_an(Array)

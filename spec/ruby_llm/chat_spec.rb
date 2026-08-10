@@ -3,13 +3,6 @@
 require 'spec_helper'
 
 RSpec.describe RubyLLM::Chat, :live do
-  def basic_chat(model:, provider:)
-    chat = RubyLLM.chat(model: model, provider: provider)
-    return chat.with_provider_options(enable_thinking: false) if provider == :gpustack && model == 'qwen3'
-
-    chat
-  end
-
   def total_input_tokens(message)
     message.tokens.input.to_i + message.tokens.cache_read.to_i + message.tokens.cache_write.to_i
   end
@@ -20,9 +13,7 @@ RSpec.describe RubyLLM::Chat, :live do
   end
 
   describe 'basic chat functionality' do
-    CHAT_MODELS.each do |model_info|
-      model = model_info[:model]
-      provider = model_info[:provider]
+    each_model(CHAT_MODELS) do |provider, model|
       it "#{provider}/#{model} can have a basic conversation" do
         chat = basic_chat(model: model, provider: provider)
         response = chat.ask("What's 2 + 2?")
@@ -73,8 +64,7 @@ RSpec.describe RubyLLM::Chat, :live do
           skip 'ollama/qwen3 includes thinking tags even with enable_thinking: false'
         end
 
-        chat = RubyLLM.chat(model: model, provider: provider).with_temperature(0.0)
-        chat = chat.with_provider_options(enable_thinking: false) if provider == :gpustack && model == 'qwen3'
+        chat = basic_chat(model: model, provider: provider, temperature: 0.0)
 
         # Use a distinctive and unusual instruction that wouldn't happen naturally
         chat.with_instructions 'You must include the exact phrase "XKCD7392" somewhere in your response.'

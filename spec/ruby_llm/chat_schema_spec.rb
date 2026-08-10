@@ -32,10 +32,7 @@ RSpec.describe RubyLLM::Chat, :live do
 
     # Test providers that support structured output with JSON schema
     # Note: Only test models that have json_schema support, not just json_object
-    STRUCTURED_OUTPUT_MODELS.each do |model_info|
-      model = model_info[:model]
-      provider = model_info[:provider]
-
+    each_model(STRUCTURED_OUTPUT_MODELS) do |provider, model|
       context "with #{provider}/#{model}" do
         let(:chat) { RubyLLM.chat(model: model, provider: provider) }
 

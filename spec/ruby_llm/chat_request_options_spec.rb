@@ -51,9 +51,9 @@ RSpec.describe RubyLLM::Chat, :live do
     # On Chat Completions it's {response_format: {type: 'json_object'}}; on the
     # Responses API (OpenAI's default) it's {text: {format: {type: 'json_object'}}}.
     # (Note that :openrouter may accept the parameter but silently ignore it.)
-    CHAT_MODELS.select { |model_info| %i[openai ollama deepseek].include?(model_info[:provider]) }.each do |model_info|
-      model = model_info[:model]
-      provider = model_info[:provider]
+    each_model(CHAT_MODELS.select do |model_info|
+      %i[openai ollama deepseek].include?(model_info[:provider])
+    end) do |provider, model|
       json_object_params = if provider == :openai
                              { text: { format: { type: 'json_object' } } }
                            else
@@ -73,9 +73,7 @@ RSpec.describe RubyLLM::Chat, :live do
 
     # Provider [:gemini] supports a {generationConfig: {responseMimeType: ..., responseSchema: ...} } param,
     # which can specify a JSON schema, requiring a deep_merge of params into the payload.
-    CHAT_MODELS.select { |model_info| model_info[:provider] == :gemini }.each do |model_info|
-      model = model_info[:model]
-      provider = model_info[:provider]
+    each_model(CHAT_MODELS.select { |model_info| model_info[:provider] == :gemini }) do |provider, model|
       it "#{provider}/#{model} supports responseSchema param" do
         chat = RubyLLM
                .chat(model: model, provider: provider)
@@ -97,9 +95,7 @@ RSpec.describe RubyLLM::Chat, :live do
     end
 
     # Provider [:anthropic] supports a service_tier param.
-    CHAT_MODELS.select { |model_info| model_info[:provider] == :anthropic }.each do |model_info|
-      model = model_info[:model]
-      provider = model_info[:provider]
+    each_model(CHAT_MODELS.select { |model_info| model_info[:provider] == :anthropic }) do |provider, model|
       it "#{provider}/#{model} supports service_tier param" do
         chat = RubyLLM
                .chat(model: model, provider: provider)
@@ -129,9 +125,9 @@ RSpec.describe RubyLLM::Chat, :live do
     # OpenRouter takes {top_k: ...} at the top level. The Bedrock Converse API takes model-specific
     # inference fields in additionalModelRequestFields, and Amazon Nova nests them under inferenceConfig
     # as {additionalModelRequestFields: {inferenceConfig: {topK: ...}}}.
-    CHAT_MODELS.select { |model_info| %i[openrouter bedrock].include?(model_info[:provider]) }.each do |model_info|
-      model = model_info[:model]
-      provider = model_info[:provider]
+    each_model(CHAT_MODELS.select do |model_info|
+      %i[openrouter bedrock].include?(model_info[:provider])
+    end) do |provider, model|
       top_k_params = if provider == :bedrock
                        { additionalModelRequestFields: { inferenceConfig: { topK: 5 } } }
                      else

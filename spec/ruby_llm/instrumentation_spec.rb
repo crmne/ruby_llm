@@ -2,20 +2,6 @@
 
 require 'spec_helper'
 
-class CaptureInstrumenter
-  attr_reader :events
-
-  def initialize
-    @events = []
-  end
-
-  def instrument(name, payload)
-    result = block_given? ? yield : nil
-    events << [name, payload.dup]
-    result
-  end
-end
-
 RSpec.describe RubyLLM::Instrumentation do
   include_context 'with configured RubyLLM'
 

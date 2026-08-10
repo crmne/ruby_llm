@@ -2,24 +2,10 @@
 
 require 'spec_helper'
 
-class WorkflowCaptureInstrumenter
-  attr_reader :events
-
-  def initialize
-    @events = []
-  end
-
-  def instrument(name, payload)
-    result = block_given? ? yield : nil
-    events << [name, payload.dup]
-    result
-  end
-end
-
 RSpec.describe RubyLLM::Workflow do
   include_context 'with configured RubyLLM'
 
-  let(:instrumenter) { WorkflowCaptureInstrumenter.new }
+  let(:instrumenter) { CaptureInstrumenter.new }
   let(:context) { RubyLLM.context { |config| config.instrumenter = instrumenter } }
 
   it 'adds workflow and step identity to every nested instrumentation event' do
