@@ -218,8 +218,9 @@ module RubyLLM
     # :attr_accessor: log_file
     #
     # Destination for the built-in logger, a path or an IO.
-    # Default: <tt>$stdout</tt>.
-    option :log_file, -> { $stdout }
+    # Defaults to the +RUBYLLM_LOG_FILE+ environment variable when set,
+    # <tt>$stdout</tt> otherwise.
+    option :log_file, -> { ENV.fetch('RUBYLLM_LOG_FILE', nil) || $stdout }
 
     ##
     # :attr_accessor: log_level
