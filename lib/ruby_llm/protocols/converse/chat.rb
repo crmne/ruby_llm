@@ -335,8 +335,43 @@ module RubyLLM
           return thinking.budget if thinking.budget.is_a?(Integer)
           return nil if effort.empty? || effort == 'none'
 
-          schema = Converse.reasoning_budget_schema(model)
+          schema = reasoning_budget_schema(model)
           schema && effort_budget_tokens(effort, schema, max_output_tokens)
+        end
+
+        # Bedrock only publishes Converse metadata for some regional entries, so use the
+        # schema from another entry for the same foundation model when needed.
+        def reasoning_budget_schema(model)
+          schema = budget_tokens_schema(model)
+          return schema if schema
+          return unless model
+
+          foundation_id = foundation_model_id(model.id)
+          RubyLLM.models.all.each do |candidate|
+            next unless candidate.provider == 'bedrock' && candidate.id != model.id
+            next unless foundation_model_id(candidate.id) == foundation_id
+
+            return schema if (schema = budget_tokens_schema(candidate))
+          end
+
+          nil
+        end
+
+        def budget_tokens_schema(model)
+          metadata = RubyLLM::Utils.deep_symbolize_keys(model&.metadata || {})
+          raw_schema = metadata.dig(:converse, :additionalRequestFieldsSchema)
+          return unless raw_schema.is_a?(String)
+
+          schema = JSON.parse(raw_schema, symbolize_names: true)
+          budget = schema.is_a?(Hash) ? schema.dig(:reasoningConfig, :budgetTokens) : nil
+          budget if budget.is_a?(Hash)
+        rescue JSON::ParserError
+          nil
+        end
+
+        def foundation_model_id(model_id)
+          prefixes = Providers::Bedrock::Models::REGION_PREFIXES.join('|')
+          model_id.to_s.sub(/\A(?:#{prefixes})\./, '')
         end
 
         # Models that take a budget reject reasoning_effort, so effort has to become a budget.

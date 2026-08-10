@@ -444,12 +444,12 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
   end
 
   describe '.format_reasoning_fields' do
-    let(:embedded_model) do
+    let(:model_without_budget) do
       instance_double(RubyLLM::Model, id: 'anthropic.claude-haiku-4-5', metadata: {},
                                       capabilities: ['reasoning'])
     end
 
-    def reasoning_fields(thinking, model: embedded_model)
+    def reasoning_fields(thinking, model: model_without_budget)
       protocol = described_class
       target = Object.new
       target.extend(protocol)
@@ -467,18 +467,24 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
     end
 
     it 'maps effort to an advertised token budget' do
-      allow(RubyLLM::Protocols::Converse).to receive(:reasoning_budget_schema).and_return(
-        enum: { low: 1024, high: 8192 }, minimum: 1024, maximum: 8192
+      model = instance_double(
+        RubyLLM::Model,
+        id: 'anthropic.claude-test',
+        metadata: {
+          converse: {
+            additionalRequestFieldsSchema: JSON.generate(
+              reasoningConfig: { budgetTokens: { enum: { low: 1024, high: 8192 }, minimum: 1024, maximum: 8192 } }
+            )
+          }
+        }
       )
 
-      expect(reasoning_fields(RubyLLM::Thinking::Config.new(effort: :high))).to eq(
+      expect(reasoning_fields(RubyLLM::Thinking::Config.new(effort: :high), model: model)).to eq(
         reasoning_config: { type: 'enabled', budget_tokens: 8192 }
       )
     end
 
     it 'sends a flat effort otherwise' do
-      allow(RubyLLM::Protocols::Converse).to receive(:reasoning_budget_schema).and_return(nil)
-
       expect(reasoning_fields(RubyLLM::Thinking::Config.new(effort: :low))).to eq(reasoning_effort: 'low')
     end
 
