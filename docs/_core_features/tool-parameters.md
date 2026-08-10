@@ -237,17 +237,18 @@ The Responses API defaults function tools to strict schema validation, forcing t
 To opt into [strict validation](https://platform.openai.com/docs/guides/function-calling#strict-mode) per tool:
 
 ```ruby
+class LookupParams < RubyLLM::Schema
+  string :sku, description: "Product SKU"
+
+  any_of :locale, description: "Country code" do
+    string
+    null
+  end
+end
+
 class Lookup < RubyLLM::Tool
   description "Performs catalog lookups"
-
-  parameters type: "object",
-    properties: {
-      sku: { type: "string", description: "Product SKU" },
-      locale: { type: %w[string null], description: "Country code" }
-    },
-    required: %w[sku locale],
-    additionalProperties: false
-
+  parameters LookupParams
   provider_options strict: true
 
   def execute(sku:, locale: nil)
