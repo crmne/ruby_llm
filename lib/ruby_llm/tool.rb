@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'ruby_llm/schema'
+require 'schematist'
 
 module RubyLLM
   class Parameter # :nodoc:
@@ -79,8 +79,8 @@ module RubyLLM
       end
 
       # Sets the JSON Schema for the tool's arguments. Accepts a schema hash,
-      # a RubyLLM::Schema class or instance, or a block written in the
-      # ruby_llm-schema DSL. Returns +self+.
+      # a Schematist::Schema class or instance, or a block written in the
+      # schematist DSL. Returns +self+.
       #
       #   class Scheduler < RubyLLM::Tool
       #     description "Books a meeting"
@@ -382,7 +382,7 @@ module RubyLLM
       end
 
       def build_from_block(&)
-        schema_class = RubyLLM::Schema.create(&)
+        schema_class = Schematist::Schema.create(&)
         extract_schema(schema_class.new.to_json_schema)
       end
 

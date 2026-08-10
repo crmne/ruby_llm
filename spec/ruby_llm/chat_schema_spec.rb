@@ -2,8 +2,8 @@
 
 require 'spec_helper'
 
-# Define a test schema class for testing RubyLLM::Schema instances
-class PersonSchemaClass < RubyLLM::Schema
+# Define a test schema class for testing Schematist::Schema instances
+class PersonSchemaClass < Schematist::Schema
   string :name
   number :age
 end
@@ -77,7 +77,7 @@ RSpec.describe RubyLLM::Chat, :live do
           expect(response2.content).to include('Ruby')
         end
 
-        it 'accepts RubyLLM::Schema class instances and returns structured output' do
+        it 'accepts Schematist::Schema class instances and returns structured output' do
           skip 'Model does not support structured output' unless chat.model.supports?(:structured_output)
 
           response = chat
@@ -94,8 +94,8 @@ RSpec.describe RubyLLM::Chat, :live do
     end
 
     describe 'schema name sanitization' do
-      it 'sanitizes :: from namespaced RubyLLM::Schema class names' do
-        namespaced_schema = stub_const('MyApp::Nested::TestSchema', Class.new(RubyLLM::Schema) do
+      it 'sanitizes :: from namespaced Schematist::Schema class names' do
+        namespaced_schema = stub_const('MyApp::Nested::TestSchema', Class.new(Schematist::Schema) do
           string :name
         end)
 

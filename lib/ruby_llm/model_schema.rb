@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-require 'ruby_llm/schema'
+require 'schematist'
 
 module RubyLLM
   # Validation schema for entries in the model registry. The registry
   # builder validates refreshed registries against it before publishing,
   # and the spec suite validates the bundled models.json.
-  class ModelSchema < Schema # :nodoc:
+  class ModelSchema < Schematist::Schema # :nodoc:
     CAPABILITIES = %w[
       streaming function_calling tool_choice parallel_tool_calls
       structured_output predicted_outputs

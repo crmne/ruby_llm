@@ -195,7 +195,7 @@ module RubyLLM
         def convert_schema_to_gemini(schema)
           return nil unless schema
 
-          # Extract inner schema if wrapper format (e.g., from RubyLLM::Schema.to_json_schema)
+          # Extract inner schema if wrapper format (e.g., from Schematist::Schema.to_json_schema)
           schema = schema[:schema] || schema
 
           GeminiSchema.new(schema).to_h

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'forwardable'
-require 'ruby_llm/schema'
+require 'schematist'
 
 module RubyLLM
   # An Agent is a reusable chat configuration defined as a class. Subclasses
@@ -232,7 +232,7 @@ module RubyLLM
 
       # Sets the structured output schema for chats this agent builds,
       # applied via Chat#with_schema. Accepts a schema class, a JSON schema
-      # hash, or a block. A plain block is built with the RubyLLM::Schema
+      # hash, or a block. A plain block is built with the Schematist::Schema
       # DSL; a lambda is evaluated when the chat is built. Called with no
       # arguments, returns the configured value.
       #
@@ -510,7 +510,7 @@ module RubyLLM
         return value unless value.is_a?(Proc)
         return evaluate(value, runtime) if value.lambda?
 
-        RubyLLM::Schema.create(&value)
+        Schematist::Schema.create(&value)
       end
 
       def apply_chat_options(chat)

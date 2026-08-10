@@ -110,7 +110,7 @@ RSpec.describe RubyLLM::Chat do
 
   describe '#with_schema' do
     it 'passes a non-hash schema through untouched' do
-      schema_class = RubyLLM::Schema.create { string :city }
+      schema_class = Schematist::Schema.create { string :city }
 
       chat.with_schema(schema_class)
 

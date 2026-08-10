@@ -41,7 +41,7 @@ RSpec.describe RubyLLM::Generators::SchemaGenerator, :generator, type: :generato
       expect(File.exist?('app/schemas/product_schema.rb')).to be true
 
       schema_class = File.read('app/schemas/product_schema.rb')
-      expect(schema_class).to include('class ProductSchema < RubyLLM::Schema')
+      expect(schema_class).to include('class ProductSchema < Schematist::Schema')
       expect(schema_class).not_to include('define do')
     end
   end
