@@ -2,7 +2,7 @@
 layout: default
 title: Upgrading
 nav_order: 4
-description: Upgrade guides for changes in data formats
+description: How to upgrade to RubyLLM 2.0, step by step, plus every breaking change explained.
 redirect_from:
   - /upgrading-to-1-7
   - /upgrading-to-1-7/
@@ -29,33 +29,42 @@ This guide focuses on upgrade-impacting changes: migrations, token semantics, de
 2.0 is currently in development
 {: .note }
 
-Upgrade one minor version at a time.
+Coming from 1.15 or earlier? Get to **1.16 first**, one minor version at a time, using the [1.16 upgrade guide](https://rubyllm.com/upgrading/); every older guide is in the version selector in the sidebar. This page covers only 1.16 to 2.0.
 {: .important }
-
-RubyLLM follows the same discipline as Rails itself: bump one release at a time, run that release's migrations, and clear any deprecations before moving on. If you're several versions behind, get to the **latest 1.x first** (each section below documents what changed and ships the generator for that step), then upgrade to 2.0. RubyLLM 2.0 carries a single `ruby_llm:upgrade` generator that always targets the current release - it does not bundle the older per-version generators.
-
-2.0 in one breath: a wave of new capabilities (batches, files, citations, prompt caching, speech, fallbacks, cancellation), one architecture for talking to providers (providers declare wire protocols), one name for every concept in the API, and a Rails integration where RubyLLM owns its own tables. The rest of this section unpacks each part.
 
 ## What's New in 2.0
 
+2.0 turns RubyLLM into a full framework. The 1.x line covered what you say to a model: chat, streaming, tools, structured output, embeddings, images, audio, extended thinking, agents, and thirteen providers behind one API. 2.0 owns what happens around the calls: the agentic loop as public API, tool approval, a per-attempt usage ledger, batches, durable execution, and Rails tables RubyLLM manages itself. One name for every concept, one architecture for every provider.
+
 ### New Capabilities
 
-* **Batch processing at half price.** Stage questions with `ask_later`, submit the chats with `RubyLLM.batch`, and collect the answers from any process. RubyLLM persists batch state internally in Rails. See [Batches]({% link _advanced/batches.md %}).
-* **Provider-managed files.** `RubyLLM.upload("manual.pdf")` uploads once so you can reuse the file across chats; large local attachments are promoted to provider files automatically (disable with `config.auto_upload_large_files = false`). See [Files]({% link _core_features/files.md %}).
+#### The Agentic Loop
+
 * **Drive the loop yourself.** New loop verbs on chats and agents: `generate` makes one model call, `run_tools` executes pending tool calls, `step` does whichever is next, `complete?` says when the conversation is settled. See [Agentic Workflows]({% link _advanced/agentic-workflows.md %}#driving-the-loop-yourself).
 * **Tool approval.** Declare `requires_approval` on a tool and the loop parks until `chat.approve!` or `chat.deny!` records a decision; in Rails the decision persists on the tool call record and survives restarts. See [Controlling Tool Execution]({% link _core_features/tool-execution.md %}#requiring-approval).
-* **Citations.** `chat.with_citations` makes attached documents and web sources citable, and every provider's native format is normalized into `RubyLLM::Citation` objects on `response.citations`. See [Citations]({% link _core_features/citations.md %}).
-* **Prompt caching.** `with_caching` turns on the provider's automatic prompt cache; `cache_until_here!` marks an explicit prefix boundary. See [Prompt Caching]({% link _core_features/prompt-caching.md %}).
-* **Text to speech.** `RubyLLM.speak("Hello!").save("hello.mp3")`. See [Text to Speech]({% link _core_features/text-to-speech.md %}).
 * **Model fallbacks.** `chat.with_fallbacks("backup-model")` retries the request on backup models when the primary fails. See [Model Fallbacks]({% link _advanced/error-handling.md %}#model-fallbacks).
 * **Chat cancellation.** `chat.cancel!` stops a run from another thread; in Rails the request travels through the database, so a stop button in the web process halts a background job mid-stream. See [Cancelling a Background Stream]({% link _advanced/rails-streaming.md %}#cancelling-a-background-stream).
-* **Transcript replacement.** `chat.messages = messages_for_model` shows the LLM a different transcript from your users: compaction, redaction, moderation. See [Replacing the LLM Transcript]({% link _core_features/chat.md %}#advanced-replacing-the-llm-transcript).
-* **Prompt templates.** ERB prompts live in `app/prompts` and render through `RubyLLM::Prompt`; agents pick theirs up by convention. See [Prompt Rendering]({% link _core_features/prompt-rendering.md %}).
+
+#### Accounting
+
+* **Cost and usage tracking.** Every provider attempt lands in a usage ledger with frozen decimal costs, so retries, failures, and cancellations are accounted for truthfully. See [Cost and Usage Tracking]({% link _core_features/cost-and-usage-tracking.md %}).
+* **Batch processing at half price.** Stage questions with `ask_later`, submit the chats with `RubyLLM.batch`, and collect the answers from any process. RubyLLM persists batch state internally in Rails. See [Batches]({% link _advanced/batches.md %}).
+* **Prompt caching.** `with_caching` turns on the provider's automatic prompt cache; `cache_until_here!` marks an explicit prefix boundary. See [Prompt Caching]({% link _core_features/prompt-caching.md %}).
+
+#### Content In, Content Out
+
+* **Provider-managed files.** `RubyLLM.upload("manual.pdf")` uploads once so you can reuse the file across chats; large local attachments are promoted to provider files automatically (disable with `config.auto_upload_large_files = false`). See [Files]({% link _core_features/files.md %}).
+* **Citations.** `chat.with_citations` makes attached documents and web sources citable, and every provider's native format is normalized into `RubyLLM::Citation` objects on `response.citations`. See [Citations]({% link _core_features/citations.md %}).
+* **Text to speech.** `RubyLLM.speak("Hello!").save("hello.mp3")`. See [Text to Speech]({% link _core_features/text-to-speech.md %}).
 * **Tools can return attachments.** Return an image or file from a tool and RubyLLM renders it to the model on every provider. See [Tools]({% link _core_features/tools.md %}).
+* **Transcript replacement.** `chat.messages = messages_for_model` shows the LLM a different transcript from your users: compaction, redaction, moderation. See [Replacing the LLM Transcript]({% link _core_features/chat.md %}#advanced-replacing-the-llm-transcript).
 * **Request hooks.** `chat.before_request { |payload| ... }` edits the wire payload just before it is sent - the 2.0 answer to raw content blocks. See [Request Hooks]({% link _core_features/chat-request-control.md %}#request-hooks).
 * **Finish reasons.** `response.finish_reason` tells you why generation stopped, normalized across providers, with predicates like `stopped?` and `max_tokens?`.
+
+#### Developer Experience
+
+* **Prompt templates.** ERB prompts live in `app/prompts` and render through `RubyLLM::Prompt`; agents pick theirs up by convention. See [Prompt Rendering]({% link _core_features/prompt-rendering.md %}).
 * **Instrumentation everywhere.** `paint`, `moderate`, and `transcribe` now emit `ActiveSupport::Notifications` events like chat and embed, and every one-shot API takes `metadata:` that flows into the event payload.
-* **Cost and usage tracking.** Every provider attempt lands in a usage ledger with frozen decimal costs, so retries, failures, and cancellations are accounted for truthfully. See [Cost and Usage Tracking]({% link _core_features/cost-and-usage-tracking.md %}).
 * **Output caps.** `with_max_output_tokens` bounds how much the model may generate.
 
 ### Provider Expansion
@@ -69,19 +78,106 @@ RubyLLM follows the same discipline as Rails itself: bump one release at a time,
 
 ## How to Upgrade
 
+The upgrade migration renames tables in place, backfills, and then removes legacy columns, and it has no `down`. Snapshot your database before you start, and rehearse the migration on a copy of production data.
+{: .warning }
+
+### 1. Finish what is in flight
+
+Complete or cancel conversations parked mid-tool-round before migrating. 2.0 adds a unique index on `tool_call_id`, and the migration renumbers duplicated historical ids; finished rounds keep their links (they join by primary key), but a round waiting on its tool results is simplest to close out beforehand.
+
+### 2. Bump the gem and run the generator
+
 ```bash
-# After bumping the gem to 2.0
+bundle update ruby_llm
 bin/rails generate ruby_llm:upgrade
 bin/rails db:migrate
 ```
 
-The generator adds a boolean `cancelled` column to chats, moves the existing model, tool-call, and batch tables under RubyLLM's `ruby_llm_` prefix, and creates the usage ledger. The chat keeps its model foreign key, renamed to `ruby_llm_model_id` and pointed at RubyLLM's internal model table; legacy message model references become provider/model strings. The migration backfills the ledger from your messages' token and cost columns, one succeeded entry per message that recorded usage, and then removes those columns from your messages table. It also normalizes tool-call links and adds citations, finish reasons, and prompt-cache boundaries to messages. It stops with an explicit error if an old and new version of the same supporting table both exist; reconcile those tables before retrying rather than allowing an ambiguous merge.
+The generated migration adds a boolean `cancelled` column to chats and citations, finish reasons, and prompt-cache boundaries to messages; moves the existing model, tool-call, and batch tables under RubyLLM's `ruby_llm_` prefix; converts model foreign keys into provider and model-id strings; renumbers duplicated `tool_call_id`s before adding the unique index; creates the usage ledger and backfills it from your messages' token and cost columns, one succeeded entry per message that recorded usage; and then removes those columns from your messages table. It stops with an explicit error if an old and a new version of the same supporting table both exist; reconcile those tables before retrying rather than allowing an ambiguous merge.
 
-**Cost and usage tracking moved out of the transcript.** A message can have several provider attempts after transport retries, while failed and cancelled attempts may have no message. Usage and cost calculations read the internal ledger; the upgrade migration backfills it from your existing message rows. Attempt costs are frozen in normalized decimal columns. See [Cost and Usage Tracking]({% link _core_features/cost-and-usage-tracking.md %}) and keep pricing current with a periodic `RubyLLM.models.refresh!`.
+### 3. Delete what RubyLLM now owns
 
-**Applications now own only chats and messages.** RubyLLM owns the supporting model, tool-call, usage, and batch records. After migrating, remove the old `Model`, `ToolCall`, and `Batch` files from `app/models`; their tables have been renamed in place, so do not add a second migration to drop them. Remove `config.model_registry_class` and any `acts_as_model`, `acts_as_tool_call`, or `acts_as_batch` declarations. Use `RubyLLM.models`, `message.tool_calls`, `message.tokens`, `chat.tokens`, `chat.cost`, `RubyLLM.batch`, and `RubyLLM::Batch.find` instead.
+Applications own only chats and messages in 2.0. Remove the old `Model`, `ToolCall`, and `Batch` files from `app/models`; their tables have been renamed in place, so do not add a second migration to drop them. Remove `config.model_registry_class` and any `acts_as_model`, `acts_as_tool_call`, or `acts_as_batch` declarations. Everything they provided reads through RubyLLM now: `RubyLLM.models`, `message.tool_calls`, `message.tokens`, `chat.tokens`, `chat.cost`, `RubyLLM.batch`, and `RubyLLM::Batch.find`.
 
-If you previously generated the Chat UI, update or regenerate its models controller and model views so they read `RubyLLM.models`, and its tool-call partial so it iterates `message.tool_calls.each_value`. The upgrade generator reports the exact generated files it detects. Review custom code that queries `Model`, `ToolCall`, or `Batch` directly before restarting the application.
+### 4. Fix the renames every app hits
+
+Grep for each pattern on the left; the sections below the table explain the reasoning where the change is more than mechanical.
+
+| Grep for | Change to |
+|---|---|
+| `input_tokens`, `output_tokens`, `cached_tokens`, `cache_creation_tokens`, `reasoning_tokens` | `tokens.input`, `tokens.output`, `tokens.cache_read`, `tokens.cache_write`, `tokens.thinking` on messages and responses; the message columns are gone and the ledger holds the counts |
+| `RubyLLM::Content`, `content_raw` | `content` is always a String; files live on `message.attachments`; raw payload edits go through `before_request` |
+| `create_user_message` | `ask_later` (stage and return self) or `add_message(role: :user, ...)` |
+| `on_new_message`, `on_end_message`, `on_tool_call`, `on_tool_result` | `before_message`, `after_message`, `before_tool_call`, `after_tool_result` |
+| `response.content` parsed as a Hash (structured output) | `response.parsed`; `content` is the JSON string |
+| `display_name`, `max_tokens`, `input_price_per_million`, `supports_vision?`, `supports_functions?`, `Model::Info` | `name`, `max_output_tokens`, `price(:input)`, `supports?(:vision)`, `supports?(:function_calling)`, `RubyLLM::Model` |
+| `with_params`, `params:` | `with_provider_options`, `provider_options:` |
+| `halt`, `Tool::Halt` | the loop verbs (`step`, `complete?`) or [`requires_approval`]({% link _core_features/tool-execution.md %}#requiring-approval) |
+| `with_tool(`, `with_tools(..., choice:` | `with_tools` for the set, `with_tool_options(choice:, calls:, concurrency:)` for the steering |
+| Tool `desc `, `param :`, `params do` | `description`, `parameter`, `parameters` |
+| `with_protocol` | `protocol:` on `chat`, `with_model`, or the agent `model` macro |
+
+### 5. Boot, run your suite, and fix the UI edges
+
+If you previously generated the Chat UI, update or regenerate its models controller and model views so they read `RubyLLM.models`, and its tool-call partial so it iterates `message.tool_calls.each_value` (the Hash is keyed by tool-call id, and the persisted records are `message.ruby_llm_tool_calls`). Rails' `dom_id` does not work on RubyLLM's internal tool-call records; build the id string yourself. The upgrade generator reports the exact generated files it detects.
+
+### 6. Verify the money before you trust it
+
+Cost and usage moved out of the transcript into a per-attempt ledger, and the migration backfilled it from your message rows. Before deleting any accounting of your own, reconcile: `chat.cost.total` and ledger sums (`SUM(total_cost)` on `ruby_llm_usage_entries`) should match what your old columns reported. Attempt costs are frozen decimals; keep pricing current for new attempts with a periodic `RubyLLM.models.refresh!`. See [Tokens and Costs]({% link _core_features/cost-and-usage-tracking.md %}).
+
+## When Your App Outgrew the Defaults
+
+The patterns below come from upgrading a production app that had grown its own model catalog, usage metering, and persisted formats on top of RubyLLM 1.x.
+
+### App concerns on the model catalog
+
+RubyLLM owns `ruby_llm_models` now, and the upgrade strips application columns from it. If your app decorated the old model table with its own concerns (availability toggles, a default flag, admin pricing overrides, slugs), move them to a settings table of your own that shadows the registry and re-syncs after every refresh:
+
+```ruby
+class ModelSetting < ApplicationRecord
+  def self.refresh!
+    RubyLLM.models.refresh!
+    sync!
+  end
+
+  def self.sync!
+    RubyLLM.models.each do |model|
+      find_or_initialize_by(model_id: model.id, provider: model.provider)
+        .update!(name: model.name, last_synced_at: Time.current)
+    end
+  end
+end
+```
+
+Your rows carry the app's opinions; RubyLLM's rows carry the catalog. The migration for this split copies your old columns out before the upgrade strips them, so write it first and rehearse it.
+
+### Your own usage ledger
+
+If you metered usage with your own events table and per-user counters, the internal ledger replaces all of it. Reach it through associations and sum in SQL:
+
+```ruby
+class User < ApplicationRecord
+  has_many :chats
+  has_many :ruby_llm_usages, through: :chats
+end
+
+user.ruby_llm_usages.sum(:total_cost)
+user.ruby_llm_usages.where("ruby_llm_usage_entries.created_at >= ?", period_start).sum(:total_cost)
+```
+
+Two things move with it: reconcile the ledger against your old totals before dropping your columns, and re-home any UI updates that hung off your old table's callbacks (a job-level `ensure` block is the usual landing spot), or those updates silently stop firing.
+
+### Text you persisted before 2.0
+
+Anything your app wrote to the database in a 1.x format needs a read path for old rows forever, not just through the migration. Parse the 2.0 format first and fall back:
+
+```ruby
+def search_sources(content)
+  RubyLLM::SearchResults.from_content(content)&.results || legacy_regex_parse(content)
+end
+```
+
+Pin the fallback with a test that feeds it a pre-2.0 row.
 
 ## Breaking Changes at a Glance
 
@@ -426,303 +522,6 @@ end
 
 For routing details and per-chat overrides, see [Choosing the Wire Protocol]({% link _core_features/chat-request-control.md %}#choosing-the-wire-protocol).
 
----
-# Upgrade to 1.15
+# Older Upgrade Guides
 
-## How to Upgrade
-
-No generator is required for the token and cost API changes in 1.15.
-
-If you use the Rails integration and already ran the v1.9 migration, no new columns are needed. The new `cache_read_tokens` and `cache_write_tokens` helpers use the existing `cached_tokens` and `cache_creation_tokens` columns.
-
-## Token Semantics Changed
-
-RubyLLM now normalizes prompt cache usage before exposing token counts. From 1.15 onward, `response.tokens.input` means standard input tokens. When a provider includes cache reads or cache writes in its raw prompt token total, RubyLLM subtracts those cache buckets and exposes them separately.
-
-Use the new cache names in new code:
-
-```ruby
-response.tokens.input
-response.tokens.output
-response.tokens.cache_read
-response.tokens.cache_write
-```
-
-RubyLLM 1.15 also retained the older top-level token helpers. RubyLLM 2.0 removes them; use the `tokens` value shown above.
-
-The still older `cached_tokens` and `cache_creation_tokens` aliases are removed as well.
-
-If your app stored or displayed provider raw prompt totals, reconstruct the request-side input activity by adding the normalized buckets:
-
-```ruby
-request_side_input_tokens =
-  response.tokens.input.to_i +
-  response.tokens.cache_read.to_i +
-  response.tokens.cache_write.to_i
-```
-
-For costs, prefer the new cost helpers instead of multiplying token totals yourself:
-
-```ruby
-response.cost.total
-chat.cost.total
-agent.cost.total
-```
-
-Cost helpers are available from 1.15 onward. They return `nil` for any cost bucket whose pricing is missing, and `cost.total` is also `nil` when a used bucket has incomplete pricing.
-
-`tokens.thinking` remains available from 1.10. From 1.15 onward, `tokens.output` is normalized as the billable output bucket. Do not add `tokens.thinking` to `tokens.output` yourself; RubyLLM includes thinking in output when the provider bills it as output, and exposes `cost.thinking` only for models with distinct reasoning-token pricing.
-
-See [Tokens and Costs]({% link _core_features/cost-and-usage-tracking.md %}#how-providers-are-normalized) for the provider comparison table and the exact normalized token semantics RubyLLM exposes.
-
-# Upgrade to 1.14
-
-## How to Upgrade
-
-```bash
-bin/rails generate ruby_llm:upgrade_to_v1_14
-bin/rails db:migrate
-```
-
-That's it! The generator:
-- Changes `thought_signature` on tool calls from `string` to `text`
-- Prevents thought signature truncation issues on MySQL/MariaDB
-
-## What's New in 1.14
-
-Among other features:
-
-- Safer Gemini thought signature persistence for Rails apps using ActiveRecord
-
-# Upgrade to 1.10
-
-## How to Upgrade
-
-```bash
-bin/rails generate ruby_llm:upgrade_to_v1_10
-bin/rails db:migrate
-```
-
-That's it! The generator:
-- Adds `thinking_text` and `thinking_signature` for storing extended thinking output
-- Adds `thinking_tokens` for tracking thinking token usage
-- Adds `thought_signature` to tool calls for Gemini 3 Pro function calling
-
-## What's New in 1.10
-
-Among other features:
-
-- Extended thinking support across providers with optional persistence
-- Thinking token tracking when providers report it
-
-# Upgrade to 1.9
-
-## How to Upgrade
-
-```bash
-bin/rails generate ruby_llm:upgrade_to_v1_9
-bin/rails db:migrate
-```
-
-That's it! The generator:
-- Adds the `cached_tokens` and `cache_creation_tokens` columns for tracking accessed cached tokens and created cache tokens respectively.
-- Adds the `content_raw` column for the Raw Content Blocks feature (replaced in 2.0 by the [`before_request` hook]({% link _core_features/chat-request-control.md %}#request-hooks))
-
-## What's New in 1.9
-
-Among other features:
-
-- Raw Content Blocks to pass provider-specific content verbatim to an LLM (replaced in 2.0 by the [`before_request` hook]({% link _core_features/chat-request-control.md %}#request-hooks)).
-- Cached token tracking to accurately track costs given cache hits
-
-# Upgrade to 1.7
-
-Upgrade to the DB-backed model registry for better data integrity and rich model metadata.
-
-## How to Upgrade
-
-### From 1.6 to 1.7 (2 commands)
-
-```bash
-bin/rails generate ruby_llm:upgrade_to_v1_7
-bin/rails db:migrate
-```
-
-That's it! The generator:
-- Creates the models table if needed
-- Automatically adds `config.use_new_acts_as = true` to your initializer
-- Automatically updates your existing models' `acts_as` declarations to the new version
-- Migrates your existing data to use foreign keys
-- Loads the models in the db
-- Preserves all your data (old string columns renamed to `model_id_string`)
-
-### Custom Model Names
-
-If you're using custom model names:
-
-```bash
-bin/rails generate ruby_llm:upgrade_to_v1_7 chat:Conversation message:ChatMessage tool_call:MyToolCall model:MyModel
-bin/rails db:migrate
-```
-
-### What happens without upgrading
-
-Your existing 1.6 app continues working without any changes. You'll see a deprecation warning on Rails boot:
-
-```
-!!! RubyLLM's legacy acts_as API is deprecated and will be removed in RubyLLM 2.0.0.
-```
-
-You can silence or raise RubyLLM deprecations while upgrading:
-
-```ruby
-RubyLLM.configure do |config|
-  config.deprecation_behavior = :silence # or :raise
-end
-```
-
-## What's New in 1.7
-
-Among other features, the DB-backed model registry replaces simple string fields with proper ActiveRecord associations. Additionally, the `acts_as` helpers have been redesigned with a more Rails-like API.
-
-### Available with DB-backed Model Registry
-{: .d-inline-block }
-
-v1.7.0+
-{: .label .label-green }
-
-**New Rails-like `acts_as` API**
-```ruby
-# New API uses Rails association names as primary parameters
-acts_as_chat messages: :messages, model: :model
-acts_as_message chat: :chat, tool_calls: :tool_calls, model: :model
-
-# vs Legacy API which required explicit class names
-acts_as_chat message_class: 'Message', tool_call_class: 'ToolCall'
-acts_as_message chat_class: 'Chat', chat_foreign_key: 'chat_id'
-```
-
-**Rich model metadata**
-```ruby
-chat.model.name              # => "GPT-4"
-chat.model.context_window    # => 128000
-chat.model.supports_vision   # => true
-chat.model.input_token_cost  # => 2.50
-```
-
-**Provider routing**
-```ruby
-Chat.create!(model: "{{ site.models.anthropic_current }}", provider: "bedrock")
-```
-
-**Model associations and queries**
-```ruby
-Chat.joins(:model).where(models: { provider: 'anthropic' })
-Model.select { |m| m.supports?(:function_calling) }  # Use delegated methods
-```
-
-**Model alias resolution**
-```ruby
-Chat.create!(model: "{{ site.models.default_chat }}", provider: "openrouter")  # Resolves to openai/{{ site.models.default_chat }} automatically
-```
-
-**Usage tracking**
-```ruby
-Model.joins(:chats).group(:id).order('COUNT(chats.id) DESC')
-```
-
-### Available without Model Registry
-{: .d-inline-block }
-
-Legacy mode
-{: .label .label-yellow }
-
-**Legacy `acts_as` API** - Still uses the old parameter style
-```ruby
-acts_as_chat message_class: 'Message', tool_call_class: 'ToolCall'
-acts_as_message chat_class: 'Chat', tool_call_class: 'ToolCall'
-```
-
-**Basic functionality** - All core RubyLLM features work
-```ruby
-chat.ask("Hello!")  # Works fine
-chat.model_id  # => "{{ site.models.openai_standard }}" (string only, no metadata)
-```
-
-**Limited to:**
-- String-based model IDs only
-- Default provider routing
-
-## If You Have Custom Model Names
-
-If you're using custom model names (e.g., `Conversation` instead of `Chat`), you may need to update your `acts_as` declarations to the new API:
-
-**Before (1.6):**
-```ruby
-class Conversation < ApplicationRecord
-  acts_as_chat message_class: 'ChatMessage', tool_call_class: 'AiToolCall'
-end
-
-class ChatMessage < ApplicationRecord
-  acts_as_message chat_class: 'Conversation', chat_foreign_key: 'conversation_id'
-end
-```
-
-**After (1.7):**
-```ruby
-class Conversation < ApplicationRecord
-  acts_as_chat messages: :chat_messages  # Association name
-end
-
-class ChatMessage < ApplicationRecord
-  acts_as_message chat: :conversation,  # Association name
-                  tool_calls: :ai_tool_calls
-end
-```
-
-The new API follows Rails association inference. Association names determine default foreign keys; class options only change the class name. For example, `tool_calls: :ai_tool_calls` uses `ai_tool_call_id`, while `tool_call_class: 'AiToolCall'` by itself still uses `tool_call_id`.
-
-## New Chat UI Generator
-
-### Instant Chat Interface
-{: .d-inline-block }
-
-v1.7.0+
-{: .label .label-green }
-
-Add a fully-functional chat UI to your Rails app with Turbo streaming:
-
-```bash
-# Default model names
-bin/rails generate ruby_llm:chat_ui
-
-# Or with custom model names (same as install generator)
-bin/rails generate ruby_llm:chat_ui chat:Conversation message:ChatMessage model:LLMModel
-```
-
-This creates:
-- Complete chat controller with streaming responses
-- Turbo-powered views with real-time updates
-- Styled chat interface (messages, input, model selector)
-- File attachment support
-- Token usage tracking
-- Copy-to-clipboard functionality
-
-The chat UI works with your existing Chat and Message models and includes:
-- Model selection dropdown
-- Real-time streaming responses
-- Markdown rendering
-- Code syntax highlighting
-- Responsive design
-
-## New Applications
-
-Fresh installs get the model registry automatically:
-
-```bash
-bin/rails generate ruby_llm:install
-bin/rails db:migrate
-
-# Optional: Add chat UI
-bin/rails generate ruby_llm:chat_ui
-```
+Every 1.x upgrade lives in the docs for its release. Use the version selector in the sidebar, or start from the [1.16 upgrade guide](https://rubyllm.com/upgrading/), and step through one minor version at a time, clearing deprecations before the next.
