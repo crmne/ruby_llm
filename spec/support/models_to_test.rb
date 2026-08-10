@@ -124,6 +124,7 @@ EMBEDDING_MODELS = [
 
 TRANSCRIPTION_MODELS = [
   { provider: :gemini, model: 'gemini-2.5-flash' },
+  { provider: :mistral, model: 'voxtral-mini-latest' },
   { provider: :openai, model: 'gpt-4o-transcribe-diarize' },
   { provider: :openai, model: 'whisper-1' },
   { provider: :vertexai, model: 'gemini-2.5-flash' }
