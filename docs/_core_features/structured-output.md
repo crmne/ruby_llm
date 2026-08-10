@@ -191,7 +191,7 @@ chat.with_schema(PersonSchema)
 person = chat.ask("Generate a person")
 
 # Remove the schema for free-form responses
-chat.without_schema
+chat.with_schema(nil)
 analysis = chat.ask("Tell me about this person's potential career paths")
 
 class CareerPlanSchema < RubyLLM::Schema

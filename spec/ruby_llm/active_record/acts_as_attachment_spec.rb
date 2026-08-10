@@ -3,9 +3,7 @@
 require 'rails_helper'
 require 'stringio'
 
-RSpec.describe RubyLLM::ActiveRecord::ActsAs do
-  include_context 'with configured RubyLLM'
-
+RSpec.describe RubyLLM::ActiveRecord::ActsAs, :live do
   let(:image_path) { File.expand_path('../../fixtures/ruby.png', __dir__) }
   let(:pdf_path) { File.expand_path('../../fixtures/sample.pdf', __dir__) }
   let(:model) { 'gpt-4.1-nano' }

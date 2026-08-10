@@ -138,6 +138,7 @@ class AddRubyLlmV20Columns < ActiveRecord::Migration<%= migration_version %>
       t.string :tool_call_id, null: false
       t.string :name, null: false
       t.text :thought_signature
+      t.string :approval
 <% if postgresql? %>
       t.jsonb :arguments, default: {}
 <% elsif mysql? %>
@@ -165,12 +166,27 @@ class AddRubyLlmV20Columns < ActiveRecord::Migration<%= migration_version %>
 
     add_column table, :result_type, :string unless column_exists?(table, :result_type)
     add_column table, :result_id, :<%= reference_type %> unless column_exists?(table, :result_id)
+    add_column table, :approval, :string unless column_exists?(table, :approval)
     backfill_tool_results
 
     add_index table, [ :message_type, :message_id ] unless index_exists?(table, [ :message_type, :message_id ])
     add_index table, [ :result_type, :result_id ] unless index_exists?(table, [ :result_type, :result_id ])
+    deduplicate_tool_call_ids unless index_exists?(table, :tool_call_id)
     add_index table, :tool_call_id, unique: true unless index_exists?(table, :tool_call_id)
     add_index table, :name unless index_exists?(table, :name)
+  end
+
+  # Provider tool-call ids are only unique within one request, so legacy data
+  # can repeat them across chats. The unique index needs them globally unique;
+  # renamed rows keep their result links, which join by primary key.
+  def deduplicate_tool_call_ids
+    tool_calls = migration_record(:ruby_llm_tool_calls)
+    duplicated = tool_calls.group(:tool_call_id).having("COUNT(*) > 1").pluck(:tool_call_id)
+    duplicated.each do |tool_call_id|
+      tool_calls.where(tool_call_id: tool_call_id).order(:id).offset(1).each do |record|
+        record.update!(tool_call_id: "#{tool_call_id}-migrated-#{record.id}")
+      end
+    end
   end
 
   def backfill_tool_results

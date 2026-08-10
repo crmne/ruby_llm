@@ -5,7 +5,7 @@ module RubyLLM
     class Bedrock
       # Cohere embedding models over Bedrock InvokeModel.
       class CohereEmbeddings < EmbeddingProtocol
-        # rubocop:disable Lint/UnusedMethodArgument, Metrics/ParameterLists
+        # rubocop:disable Lint/UnusedMethodArgument
         def embed(text, model:, dimensions:, task_type: nil, title: nil, provider_options: {})
           track_usage(:embedding) do
             payload = render_embedding_payload(text, model:, dimensions:, task_type:, provider_options:)
@@ -14,7 +14,7 @@ module RubyLLM
             parse_embedding_response(response, model:, text:)
           end
         end
-        # rubocop:enable Lint/UnusedMethodArgument, Metrics/ParameterLists
+        # rubocop:enable Lint/UnusedMethodArgument
 
         private
 

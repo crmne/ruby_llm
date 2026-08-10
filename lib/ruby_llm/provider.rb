@@ -32,6 +32,8 @@ module RubyLLM
   #
   # See the custom providers guide for the full walkthrough.
   class Provider
+    include Inspectable
+
     # The Configuration the provider was built with.
     attr_reader :config
 
@@ -103,7 +105,6 @@ module RubyLLM
       default_protocol
     end
 
-    # rubocop:disable Metrics/ParameterLists
     def complete(messages, tools:, temperature:, model:, provider_options: {}, headers: {}, schema: nil, # :nodoc:
                  max_output_tokens: nil, thinking: nil, citations: false, caching: nil, tool_prefs: nil,
                  protocol: nil, before_request: [], usage_recorder: nil, &)
@@ -125,9 +126,7 @@ module RubyLLM
         &
       )
     end
-    # rubocop:enable Metrics/ParameterLists
 
-    # rubocop:disable Metrics/ParameterLists
     def render(messages, tools:, temperature:, model:, provider_options: {}, schema: nil, thinking: nil, # :nodoc:
                max_output_tokens: nil, citations: false, caching: nil, tool_prefs: nil, protocol: nil,
                before_request: [])
@@ -146,7 +145,6 @@ module RubyLLM
         before_request: before_request
       )
     end
-    # rubocop:enable Metrics/ParameterLists
 
     def preprocess_message(message, model:, protocol: nil) # :nodoc:
       protocol_class = resolve_protocol(
@@ -195,14 +193,12 @@ module RubyLLM
       default_protocol.new(self).list_models
     end
 
-    # rubocop:disable Metrics/ParameterLists
     def embed(text, model:, dimensions:, task_type: nil, title: nil, provider_options: {}) # :nodoc:
       protocol = resolve_protocol(nil, model, operation: :embed)
       protocol.new(self, model).embed(
         text, model: model_id_for(model), dimensions:, task_type:, title:, provider_options:
       )
     end
-    # rubocop:enable Metrics/ParameterLists
 
     def moderate(input, model:, with: [], provider_options: {}) # :nodoc:
       protocol = resolve_protocol(nil, model, operation: :moderate)
@@ -211,14 +207,12 @@ module RubyLLM
       )
     end
 
-    # rubocop:disable Metrics/ParameterLists
     def paint(prompt, model:, size:, with: nil, mask: nil, provider_options: {}) # :nodoc:
       protocol = resolve_protocol(nil, model, operation: :paint)
       protocol.new(self, model).paint(
         prompt, model: model_id_for(model), size:, with:, mask:, provider_options:
       )
     end
-    # rubocop:enable Metrics/ParameterLists
 
     def speak(input, model:, voice:, format:, provider_options: {}) # :nodoc:
       protocol = resolve_protocol(nil, model, operation: :speak)
@@ -227,7 +221,6 @@ module RubyLLM
       )
     end
 
-    # rubocop:disable Metrics/ParameterLists
     def transcribe(audio_file, model:, language:, format: nil, speaker_names: nil, # :nodoc:
                    speaker_references: nil, provider_options: {}, prompt: nil, temperature: nil)
       protocol = resolve_protocol(nil, model, operation: :transcribe)
@@ -243,9 +236,7 @@ module RubyLLM
         temperature:
       )
     end
-    # rubocop:enable Metrics/ParameterLists
 
-    # rubocop:disable Metrics/ParameterLists
     def upload_file(file, filename: nil, purpose: nil, expires_in: nil, visibility: nil, # :nodoc:
                     display_name: nil, uri: nil, content_type: nil)
       ensure_files_supported!
@@ -254,7 +245,6 @@ module RubyLLM
 
       file_protocol.new(self).upload(file, **options)
     end
-    # rubocop:enable Metrics/ParameterLists
 
     def find_file(file_id) # :nodoc:
       ensure_files_supported!
@@ -544,6 +534,10 @@ module RubyLLM
 
       raise ConfigurationError,
             "#{name} provider is not configured. Add this to your initialization:\n\n#{config_block}"
+    end
+
+    def inspect_attributes # :nodoc:
+      { slug: slug }
     end
   end
 end

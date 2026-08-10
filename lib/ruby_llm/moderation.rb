@@ -10,6 +10,7 @@ module RubyLLM
   #   result.model     # => "omni-moderation-latest"
   #
   class Moderation
+    include Inspectable
     include Usage::Result
 
     # A Result is the verdict for a single moderated input. Providers return
@@ -77,7 +78,7 @@ module RubyLLM
     #   RubyLLM::Moderation.moderate("User message", model: "omni-moderation-latest")
     #   RubyLLM::Moderation.moderate("Caption", with: "screenshot.png", provider: "openai")
     #
-    def self.moderate(input = nil, # rubocop:disable Metrics/ParameterLists
+    def self.moderate(input = nil,
                       model: nil,
                       with: nil,
                       provider: nil,
@@ -151,6 +152,10 @@ module RubyLLM
       results.map(&:category_scores).reduce({}) do |merged, scores|
         merged.merge(scores) { |_category, left, right| [left, right].max }
       end
+    end
+
+    def inspect_attributes # :nodoc:
+      { id: id, model: model, flagged: flagged? }
     end
   end
 end

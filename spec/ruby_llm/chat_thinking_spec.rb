@@ -2,28 +2,14 @@
 
 require 'spec_helper'
 
-RSpec.describe RubyLLM::Chat do
-  include_context 'with configured RubyLLM'
-
+RSpec.describe RubyLLM::Chat, :live do
   describe '#with_thinking' do
-    it 'clears thinking with without_thinking' do
+    it 'clears thinking when both options are nil' do
       chat = RubyLLM.chat.with_thinking(effort: :low)
 
-      chat.without_thinking
+      chat.with_thinking(effort: nil)
 
       expect(chat.instance_variable_get(:@thinking)).to be_nil
-    end
-
-    it 'rejects nil, pointing to without_thinking' do
-      chat = RubyLLM.chat
-
-      expect { chat.with_thinking(nil) }.to raise_error(ArgumentError, /without_thinking/)
-    end
-
-    it 'requires thinking options' do
-      chat = RubyLLM.chat
-
-      expect { chat.with_thinking }.to raise_error(ArgumentError, /requires :effort or :budget/)
     end
   end
 
@@ -55,10 +41,7 @@ RSpec.describe RubyLLM::Chat do
       expect(response.content.presence || response.thinking&.text).to be_present
     end
 
-    THINKING_MODELS.each do |model_info|
-      model = model_info[:model]
-      provider = model_info[:provider]
-
+    each_model(THINKING_MODELS) do |provider, model|
       it "#{provider}/#{model} returns thinking when available" do
         chat = chat_with_thinking(model: model, provider: provider)
         prompt = provider == :gpustack ? 'What is 5 + 3? Think briefly before answering.' : question
@@ -107,6 +90,19 @@ RSpec.describe RubyLLM::Chat do
           end
         end
       end
+    end
+  end
+
+  describe 'Gemini token accounting' do
+    it 'correctly sums candidatesTokenCount and thoughtsTokenCount' do
+      chat = RubyLLM.chat(model: 'gemini-2.5-flash', provider: :gemini)
+      response = chat.ask('What is 2+2? Think step by step.')
+
+      raw_body = response.raw.body
+      candidates_tokens = raw_body.dig('usageMetadata', 'candidatesTokenCount') || 0
+      thoughts_tokens = raw_body.dig('usageMetadata', 'thoughtsTokenCount') || 0
+
+      expect(response.tokens.output).to eq(candidates_tokens + thoughts_tokens)
     end
   end
 end

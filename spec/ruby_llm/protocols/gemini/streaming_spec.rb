@@ -51,19 +51,4 @@ RSpec.describe RubyLLM::Protocols::Gemini::Streaming do
 
     expect(chunk.finish_reason).to eq('MAX_TOKENS')
   end
-
-  it 'correctly sums candidatesTokenCount and thoughtsTokenCount in streaming' do
-    chat = RubyLLM.chat(model: 'gemini-2.5-flash', provider: :gemini)
-
-    chunks = []
-    response = chat.ask('What is 2+2? Think step by step.') do |chunk|
-      chunks << chunk
-    end
-
-    # Get the final chunk with usage metadata
-    final_chunk = chunks.last
-
-    # Also verify against the complete message
-    expect(response.tokens.output).to eq(final_chunk.tokens.output) if final_chunk.tokens.output
-  end
 end

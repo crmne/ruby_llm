@@ -11,7 +11,7 @@ module RubyLLM
           "models/#{model}:batchEmbedContents"
         end
 
-        def render_embedding_payload(text, model:, dimensions:, task_type: nil, title: nil, provider_options: {}) # rubocop:disable Metrics/ParameterLists
+        def render_embedding_payload(text, model:, dimensions:, task_type: nil, title: nil, provider_options: {})
           requests = [text].flatten.map do |t|
             single_embedding_payload(t, model:, dimensions:, task_type:, title:)
           end

@@ -27,42 +27,17 @@ After reading this guide, you will know:
 *   How to install RubyLLM.
 *   How to perform minimal configuration.
 *   How to start a simple chat conversation.
-*   How to generate an image.
-*   How to create a text embedding.
+*   How to stream a response.
+*   How to generate an image and create a text embedding.
+*   How to add database-backed chats to a Rails app.
 
 ## Installation
 
-Add RubyLLM to your Gemfile:
+Add RubyLLM with bundler:
 
 ```ruby
 bundle add ruby_llm
 ```
-
-### Rails Quick Setup
-
-For Rails applications, you can use the generator to set up database-backed conversations:
-
-```bash
-bin/rails generate ruby_llm:install
-```
-
-This creates Chat and Message models with ActiveRecord persistence. Your conversations will be automatically saved to the database.
-
-### Adding a Chat UI
-
-After running the install generator, you can optionally add a ready-to-use chat interface:
-
-```bash
-bin/rails generate ruby_llm:chat_ui
-```
-
-This creates:
-- Controllers for managing chats and messages
-- Views with Turbo streaming for real-time updates
-- Background job for processing AI responses
-- Routes for the chat interface
-
-Then visit `http://localhost:3000/chats` to start chatting! See the [Rails Integration Guide]({% link _advanced/rails.md %}) for full details.
 
 ## Minimal Configuration
 
@@ -96,9 +71,21 @@ puts response.content
 
 RubyLLM handles the conversation history automatically. See the [Chatting with AI Models Guide]({% link _core_features/chat.md %}) for more details.
 
+## Streaming a Response
+
+Pass a block to `ask` and RubyLLM yields chunks as they arrive:
+
+```ruby
+chat.ask "Tell me a story about a Ruby programmer" do |chunk|
+  print chunk.content
+end
+```
+
+That is all streaming takes. See the [Streaming Guide]({% link _core_features/streaming.md %}) for streaming into web pages and background jobs.
+
 ## Generating an Image
 
-Generate images using models like DALL-E 3 via `RubyLLM.paint`.
+Generate images using models like GPT Image via `RubyLLM.paint`.
 
 ```ruby
 image = RubyLLM.paint("A photorealistic red panda coding Ruby")
@@ -131,6 +118,28 @@ puts "Model used: #{embedding.model}"
 ```
 
 Explore further in the [Embeddings Guide]({% link _core_features/embeddings.md %}).
+
+## Using It in Rails
+
+Want conversations saved to your database? One generator sets up Chat and Message models with ActiveRecord persistence:
+
+```bash
+bin/rails generate ruby_llm:install
+bin/rails db:migrate
+```
+
+```ruby
+chat = Chat.create!(model: "{{ site.models.default_chat }}")
+chat.ask "What's the best way to learn Rails?"
+```
+
+Every message persists automatically. Optionally, add a ready-to-use chat interface with Turbo streaming, controllers, and a background job:
+
+```bash
+bin/rails generate ruby_llm:chat_ui
+```
+
+Then visit `http://localhost:3000/chats` to start chatting. See the [Rails Integration Guide]({% link _advanced/rails.md %}) for full details.
 
 ## What's Next?
 

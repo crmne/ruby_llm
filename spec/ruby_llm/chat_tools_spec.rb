@@ -2,22 +2,20 @@
 
 require 'spec_helper'
 
-def skip_unless_supports_functions(provider, model)
-  return if RubyLLM::Provider.providers[provider]&.local?
+RSpec.describe RubyLLM::Chat, :live do
+  def skip_unless_supports_functions(provider, model)
+    return if RubyLLM::Provider.providers[provider]&.local?
 
-  model_info = RubyLLM.models.find(model)
-  skip "#{model} doesn't support function calling" unless model_info&.supports?(:function_calling)
-end
+    model_info = RubyLLM.models.find(model)
+    skip "#{model} doesn't support function calling" unless model_info&.supports?(:function_calling)
+  end
 
-def skip_unless_capable(provider, model, capability, message)
-  model_info = RubyLLM.models.find(model, provider)
-  skip message unless model_info&.supports?(capability)
-rescue RubyLLM::ModelNotFoundError
-  skip message
-end
-
-RSpec.describe RubyLLM::Chat do
-  include_context 'with configured RubyLLM'
+  def skip_unless_capable(provider, model, capability, message)
+    model_info = RubyLLM.models.find(model, provider)
+    skip message unless model_info&.supports?(capability)
+  rescue RubyLLM::ModelNotFoundError
+    skip message
+  end
 
   class Weather < RubyLLM::Tool # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
     description 'Gets current weather for a location'
@@ -67,6 +65,22 @@ RSpec.describe RubyLLM::Chat do
 
     def execute
       ['Fetched the file.', [RubyLLM::Attachment.new(File.expand_path('../fixtures/ruby.txt', __dir__))]]
+    end
+  end
+
+  class ImageFetchTool < RubyLLM::Tool # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
+    description 'Fetches the requested image'
+
+    def execute
+      ['Fetched the image.', [RubyLLM::Attachment.new(File.expand_path('../fixtures/ruby.png', __dir__))]]
+    end
+  end
+
+  class PdfFetchTool < RubyLLM::Tool # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
+    description 'Fetches the requested PDF report'
+
+    def execute
+      ['Fetched the report.', [RubyLLM::Attachment.new(File.expand_path('../fixtures/sample.pdf', __dir__))]]
     end
   end
 
@@ -209,9 +223,7 @@ RSpec.describe RubyLLM::Chat do
   end
 
   describe 'function calling' do
-    CHAT_MODELS.each do |model_info|
-      model = model_info[:model]
-      provider = model_info[:provider]
+    each_model(CHAT_MODELS) do |provider, model|
       it "#{provider}/#{model} can use tools" do
         skip_unless_supports_functions(provider, model)
 
@@ -263,13 +275,11 @@ RSpec.describe RubyLLM::Chat do
     end
 
     describe 'thought signatures' do
-      [
+      signature_models = [
         { provider: :gemini, model: 'gemini-3.1-pro-preview' },
         { provider: :vertexai, model: 'gemini-3.1-pro-preview' }
-      ].each do |model_info|
-        provider = model_info[:provider]
-        model = model_info[:model]
-
+      ]
+      each_model(signature_models) do |provider, model|
         it "#{provider}/#{model} includes thought signatures for tool calls" do
           skip_unless_supports_functions(provider, model)
 
@@ -287,18 +297,19 @@ RSpec.describe RubyLLM::Chat do
       end
     end
 
-    CHAT_MODELS.each do |model_info|
-      model = model_info[:model]
-      provider = model_info[:provider]
-      model = 'claude-sonnet-4-5' if provider == :bedrock # haiku can't do parallel tool calls
-      it "#{provider}/#{model} can use parallel tool calls" do
-        skip_unless_supports_functions(provider, model)
-        skip 'gpustack/qwen3 does not support parallel tool calls properly' if provider == :gpustack && model == 'qwen3'
+    each_model(CHAT_MODELS) do |provider, model|
+      # haiku can't do parallel tool calls
+      parallel_model = provider == :bedrock ? 'claude-sonnet-4-5' : model
+      it "#{provider}/#{parallel_model} can use parallel tool calls" do
+        skip_unless_supports_functions(provider, parallel_model)
+        if provider == :gpustack && parallel_model == 'qwen3'
+          skip 'gpustack/qwen3 does not support parallel tool calls properly'
+        end
 
-        chat = RubyLLM.chat(model: model, provider: provider)
+        chat = RubyLLM.chat(model: parallel_model, provider: provider)
                       .with_tools(Weather, BestLanguageToLearn)
         # Disable thinking mode for qwen models
-        chat = chat.with_provider_options(enable_thinking: false) if model == 'qwen3'
+        chat = chat.with_provider_options(enable_thinking: false) if parallel_model == 'qwen3'
 
         response = chat.ask("What's the weather in Berlin (52.5200, 13.4050) and what's the best language to learn?")
         expect(response.content).to include('15')
@@ -309,11 +320,7 @@ RSpec.describe RubyLLM::Chat do
         expect(chat.messages.count).to be >= 5
         expect(assistant_tool_call_messages(chat).sum { |message| message.tool_calls.size }).to be >= 2
       end
-    end
 
-    CHAT_MODELS.each do |model_info| # rubocop:disable Style/CombinableLoops
-      model = model_info[:model]
-      provider = model_info[:provider]
       it "#{provider}/#{model} can use tools in multi-turn conversations" do
         skip_unless_supports_functions(provider, model)
 
@@ -332,11 +339,7 @@ RSpec.describe RubyLLM::Chat do
         expect(response.content).to include('15')
         expect(response.content).to include('10')
       end
-    end
 
-    CHAT_MODELS.each do |model_info| # rubocop:disable Style/CombinableLoops
-      model = model_info[:model]
-      provider = model_info[:provider]
       it "#{provider}/#{model} can use tools without parameters" do
         skip_unless_supports_functions(provider, model)
 
@@ -347,11 +350,7 @@ RSpec.describe RubyLLM::Chat do
         response = chat.ask("What's the best language to learn?")
         expect(response.content).to include('Ruby')
       end
-    end
 
-    CHAT_MODELS.each do |model_info| # rubocop:disable Style/CombinableLoops
-      model = model_info[:model]
-      provider = model_info[:provider]
       it "#{provider}/#{model} can use tools without parameters in multi-turn streaming conversations" do
         skip_unless_supports_functions(provider, model)
         if provider == :gpustack && model == 'qwen3'
@@ -383,11 +382,7 @@ RSpec.describe RubyLLM::Chat do
         expect(chunks.first).to be_a(RubyLLM::Chunk)
         expect(response.content).to include('Ruby')
       end
-    end
 
-    CHAT_MODELS.each do |model_info| # rubocop:disable Style/CombinableLoops
-      model = model_info[:model]
-      provider = model_info[:provider]
       it "#{provider}/#{model} can use tools with multi-turn streaming conversations" do
         skip_unless_supports_functions(provider, model)
         if provider == :azure
@@ -422,11 +417,7 @@ RSpec.describe RubyLLM::Chat do
         expect(response.content).to include('15')
         expect(response.content).to include('10')
       end
-    end
 
-    CHAT_MODELS.each do |model_info| # rubocop:disable Style/CombinableLoops
-      model = model_info[:model]
-      provider = model_info[:provider]
       it "#{provider}/#{model} can handle multiple tool calls in a single response" do
         skip_unless_supports_functions(provider, model)
 
@@ -488,11 +479,7 @@ RSpec.describe RubyLLM::Chat do
 
         expect(extracted).to eq(type: 'ephemeral')
       end
-    end
 
-    CHAT_MODELS.each do |model_info| # rubocop:disable Style/CombinableLoops
-      model = model_info[:model]
-      provider = model_info[:provider]
       it "#{provider}/#{model} handles array params" do
         skip_unless_supports_functions(provider, model)
 
@@ -511,11 +498,7 @@ RSpec.describe RubyLLM::Chat do
         arguments = stringified_arguments(tool_call.arguments)
         expect(arguments['tags']).to match_array(%w[red blue])
       end
-    end
 
-    CHAT_MODELS.each do |model_info| # rubocop:disable Style/CombinableLoops
-      model = model_info[:model]
-      provider = model_info[:provider]
       it "#{provider}/#{model} handles anyOf params" do
         skip_unless_supports_functions(provider, model)
 
@@ -535,11 +518,7 @@ RSpec.describe RubyLLM::Chat do
         expect(arguments['task']).to eq('Review PR')
         expect(arguments['status']).to eq('pending')
       end
-    end
 
-    CHAT_MODELS.each do |model_info| # rubocop:disable Style/CombinableLoops
-      model = model_info[:model]
-      provider = model_info[:provider]
       it "#{provider}/#{model} handles object params" do
         skip_unless_supports_functions(provider, model)
 
@@ -690,9 +669,7 @@ RSpec.describe RubyLLM::Chat do
   end
 
   describe 'tool attachments' do
-    CHAT_MODELS.each do |model_info|
-      model = model_info[:model]
-      provider = model_info[:provider]
+    each_model(CHAT_MODELS) do |provider, model|
       it "#{provider}/#{model} returns text and attachments from tools" do
         skip_unless_supports_functions(provider, model)
         skip 'DeepSeek rejects tool attachments (no vision support)' if provider == :deepseek
@@ -712,15 +689,34 @@ RSpec.describe RubyLLM::Chat do
     end
   end
 
+  describe 'multimodal tool attachments' do
+    each_model(MULTIMODAL_TOOL_RESULT_MODELS) do |provider, model, model_info|
+      it "#{provider}/#{model} describes images returned from tools" do
+        chat = RubyLLM.chat(model: model, provider: provider).with_tools(ImageFetchTool)
+
+        response = chat.ask('Use the image_fetch tool, then describe exactly what the returned image shows.')
+
+        expect(response.content.downcase).to match(/ruby|gem|red/)
+      end
+
+      next if model_info[:pdf] == false
+
+      it "#{provider}/#{model} reads PDFs returned from tools" do
+        chat = RubyLLM.chat(model: model, provider: provider).with_tools(PdfFetchTool)
+
+        response = chat.ask('Use the pdf_fetch tool, then quote the first sentence of the returned PDF.')
+
+        expect(response.content).to match(/simple PDF file|Lorem ipsum/i)
+      end
+    end
+  end
+
   describe 'string tool results' do
-    CHAT_MODELS.each do |model_info|
-      model = model_info[:model]
-      provider = model_info[:provider]
+    each_model(CHAT_MODELS) do |provider, model|
       it "#{provider}/#{model} preserves strings returned from tools" do
         skip_unless_supports_functions(provider, model)
 
-        # No cassettes exist for these providers (skipped at recording time)
-        skip "#{provider} has no cassette for this example" if provider.in?(%i[deepseek gpustack bedrock])
+        skip "#{provider} has no cassette for this example" if provider == :gpustack
 
         chat = RubyLLM.chat(model: model, provider: provider)
                       .with_tools(ContentReturningTool)
@@ -736,10 +732,7 @@ RSpec.describe RubyLLM::Chat do
   end
 
   describe 'tool choice and calls control' do
-    CHAT_MODELS.each do |model_info|
-      model = model_info[:model]
-      provider = model_info[:provider]
-
+    each_model(CHAT_MODELS) do |provider, model|
       it "#{provider}/#{model} respects choice: :none" do
         skip_unless_supports_functions(provider, model)
 

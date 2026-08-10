@@ -216,5 +216,5 @@ Blank strings are treated as unset, so environment variables can be wired direct
 
 - [Custom Endpoints and Unlisted Models]({% link _reference/custom-endpoints.md %}) - work with models RubyLLM doesn't know about.
 - [Connection, Logging and Contexts]({% link _getting_started/configuration-connection.md %}) - timeouts, proxies, and per-tenant isolation.
-- [Configuration Reference]({% link _getting_started/configuration-reference.md %}) - the complete option list.
+- [Configuration]({% link _getting_started/configuration.md %}#full-reference) - the complete option list.
 - [Working with Models]({% link _reference/models.md %}) - discover, select, and refresh the model registry.

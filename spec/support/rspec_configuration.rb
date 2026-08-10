@@ -22,6 +22,9 @@ RSpec.configure do |config|
       example.run
     end
 
+    # Deliberate: a failing example must not keep its cassette. The missing file
+    # makes the failure visible at a glance, and the next run re-records against
+    # the live API instead of replaying a recording that may be hiding the bug.
     FileUtils.rm_f(cassette_path) if example.exception
   end
 

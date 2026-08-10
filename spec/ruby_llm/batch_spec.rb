@@ -2,9 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe RubyLLM::Batch do
-  include_context 'with configured RubyLLM'
-
+RSpec.describe RubyLLM::Batch, :live do
   let(:model) { 'claude-haiku-4-5' }
 
   def wait_for(batch)
@@ -113,7 +111,7 @@ RSpec.describe RubyLLM::Batch do
 
       expect(batch.messages).to eq([nil, message])
       expect(batch.tokens.to_h).to eq(input_tokens: 1, output_tokens: 1)
-      expect(batch.cost).to be_a(RubyLLM::Cost::Aggregate)
+      expect(batch.cost).to be_a(RubyLLM::Cost)
       expect(chats.first).not_to be_complete
       expect(chats.second.messages.last).to be(message)
 
@@ -140,6 +138,37 @@ RSpec.describe RubyLLM::Batch do
       collect.call # a redelivered poll re-collects the same batch
 
       expect(chat.messages.count(&:tool_call?)).to eq(1)
+    end
+  end
+
+  # Not covered live: Azure batches need a Global-Batch deployment on the test
+  # resource, and Bedrock/Vertex AI batches need real S3/GCS buckets and roles.
+  [
+    { provider: :gemini, model: 'gemini-2.5-flash' },
+    { provider: :mistral, model: 'mistral-small-latest' },
+    { provider: :openai, model: 'gpt-5-nano' },
+    { provider: :xai, model: 'grok-4-1-fast-non-reasoning' }
+  ].each do |model_info|
+    context "with #{model_info[:provider]}/#{model_info[:model]}" do
+      it 'answers staged chats and appends the answers to their conversations' do
+        chats = [
+          RubyLLM.chat(model: model_info[:model], provider: model_info[:provider])
+                 .ask_later('What is 2 + 2? Just the number.'),
+          RubyLLM.chat(model: model_info[:model], provider: model_info[:provider])
+                 .ask_later('Name the largest planet in our solar system. One word.')
+        ]
+
+        batch = RubyLLM.batch(chats)
+
+        expect(batch.id).to be_present
+
+        wait_for batch
+
+        expect(batch).to be_complete
+        expect(batch.messages.first.content).to include('4')
+        expect(batch.messages.second.content).to match(/jupiter/i)
+        expect(chats.second.messages.map(&:role)).to eq(%i[user assistant])
+      end
     end
   end
 

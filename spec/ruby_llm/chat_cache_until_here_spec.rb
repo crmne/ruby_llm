@@ -2,9 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe RubyLLM::Chat do
-  include_context 'with configured RubyLLM'
-
+RSpec.describe RubyLLM::Chat, :live do
   describe '#with_caching' do
     it 'stores provider prompt cache options on the chat' do
       chat = RubyLLM.chat.with_caching(key: 'repo:ruby_llm', retention: '24h')
@@ -51,17 +49,11 @@ RSpec.describe RubyLLM::Chat do
       expect { chat.render }.to raise_error(ArgumentError, /Anthropic prompt caching accepts :ttl/)
     end
 
-    it 'clears caching options with without_caching' do
+    it 'clears caching options with with_caching(nil)' do
       chat = RubyLLM.chat.with_caching(ttl: '1h')
 
-      expect(chat.without_caching).to eq(chat)
+      expect(chat.with_caching(nil)).to eq(chat)
       expect(chat.caching).to be_nil
-    end
-
-    it 'rejects nil, pointing to without_caching' do
-      chat = RubyLLM.chat
-
-      expect { chat.with_caching(nil) }.to raise_error(ArgumentError, /without_caching/)
     end
 
     it 'rejects combining nil with caching options' do
@@ -118,6 +110,35 @@ RSpec.describe RubyLLM::Chat do
 
     it 'raises when the chat has no messages' do
       expect { chat.cache_until_here! }.to raise_error(ArgumentError, 'No messages to cache')
+    end
+  end
+
+  describe 'prompt cache round-trip' do
+    cacheable_models = [
+      { provider: :anthropic, model: 'claude-haiku-4-5' },
+      { provider: :bedrock, model: 'claude-haiku-4-5' }
+    ]
+    # Haiku models require at least 4096 tokens for a cacheable prefix.
+    cacheable_instructions = <<~INSTRUCTIONS * 150
+      You are a meticulous release engineer for the RubyLLM project. Review every
+      change for backwards compatibility, provider wire-format drift, cassette
+      hygiene, and documentation accuracy before approving it for release.
+    INSTRUCTIONS
+
+    each_model(cacheable_models) do |provider, model|
+      it "#{provider}/#{model} writes then reads the prompt cache" do
+        write_chat = RubyLLM.chat(model: model, provider: provider)
+        write_chat.with_instructions(cacheable_instructions)
+        write_chat.cache_until_here!
+        first = write_chat.ask('Reply with exactly: OK')
+        expect(first.tokens.cache_write.to_i + first.tokens.cache_read.to_i).to be_positive
+
+        read_chat = RubyLLM.chat(model: model, provider: provider)
+        read_chat.with_instructions(cacheable_instructions)
+        read_chat.cache_until_here!
+        second = read_chat.ask('Reply with exactly: OK')
+        expect(second.tokens.cache_read).to be_positive
+      end
     end
   end
 end

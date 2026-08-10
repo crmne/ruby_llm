@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-ActiveRecord::Schema[7.1].define(version: 20_260_731_000_000) do
+ActiveRecord::Schema[7.1].define(version: 20_260_808_120_000) do
   create_table 'action_text_rich_texts', force: :cascade do |t|
     t.string 'name', null: false
     t.text 'body'
@@ -94,6 +94,7 @@ ActiveRecord::Schema[7.1].define(version: 20_260_731_000_000) do
     t.string 'tool_call_id', null: false
     t.string 'name', null: false
     t.text 'thought_signature'
+    t.string 'approval'
     t.json 'arguments', default: {}
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false

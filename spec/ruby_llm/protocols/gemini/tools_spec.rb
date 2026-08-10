@@ -6,7 +6,7 @@ RSpec.describe RubyLLM::Protocols::Gemini::Tools do
   include_context 'with configured RubyLLM'
 
   let(:test_obj) do
-    Object.new.tap { |obj| obj.extend(described_class) }
+    Object.new.tap { |obj| obj.extend(RubyLLM::Protocols::Gemini::Chat, described_class) }
   end
 
   describe '#extract_tool_calls' do
@@ -93,6 +93,54 @@ RSpec.describe RubyLLM::Protocols::Gemini::Tools do
                                }
                              }
                            ])
+    end
+
+    context 'with attachments' do
+      let(:image_path) { File.expand_path('../../../fixtures/ruby.png', __dir__) }
+
+      def format_for(model_id, attachments)
+        test_obj.instance_variable_set(:@model, RubyLLM.models.find(model_id))
+        message = RubyLLM::Message.new(role: :tool, content: 'Found it', attachments:, tool_call_id: 'uuid-123')
+        test_obj.format_tool_result(message)
+      end
+
+      it 'nests media inside functionResponse.parts for Gemini 3 models' do
+        result = format_for('gemini-3-flash-preview', image_path)
+
+        expect(result.length).to eq(1)
+        media_parts = result.first[:functionResponse][:parts]
+        expect(media_parts.length).to eq(1)
+        expect(media_parts.first[:inline_data][:mime_type]).to eq('image/png')
+      end
+
+      it 'keeps media as sibling parts for models before Gemini 3' do
+        result = format_for('gemini-2.5-flash', image_path)
+
+        expect(result.first[:functionResponse]).not_to have_key(:parts)
+        expect(result.last).to have_key(:inline_data)
+      end
+
+      it 'keeps text files as sibling text parts on Gemini 3 models' do
+        result = format_for('gemini-3-flash-preview', File.expand_path('../../../fixtures/ruby.txt', __dir__))
+
+        expect(result.first[:functionResponse]).not_to have_key(:parts)
+        expect(result.last).to have_key(:text)
+      end
+
+      it 'keeps provider-managed files as sibling parts on Gemini 3 models' do
+        uploaded = RubyLLM::UploadedFile.new(
+          id: 'files/abc123',
+          provider: 'gemini',
+          filename: 'ruby.png',
+          byte_size: 1234,
+          mime_type: 'image/png'
+        )
+
+        result = format_for('gemini-3-flash-preview', RubyLLM::Attachment.new(uploaded))
+
+        expect(result.first[:functionResponse]).not_to have_key(:parts)
+        expect(result.last).to have_key(:file_data)
+      end
     end
   end
 end

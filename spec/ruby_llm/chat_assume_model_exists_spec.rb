@@ -2,9 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe RubyLLM::Chat do
-  include_context 'with configured RubyLLM'
-
+RSpec.describe RubyLLM::Chat, :live do
   describe '#assume_model_exists' do
     let(:real_model) { 'gpt-4.1-nano' }
     let(:custom_model) { 'my-custom-model' }

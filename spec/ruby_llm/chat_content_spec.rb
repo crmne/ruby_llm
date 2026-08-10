@@ -2,9 +2,7 @@
 
 require 'spec_helper'
 require 'action_dispatch/http/upload'
-RSpec.describe RubyLLM::Chat do # rubocop:disable RSpec/MultipleMemoizedHelpers
-  include_context 'with configured RubyLLM'
-
+RSpec.describe RubyLLM::Chat, :live do # rubocop:disable RSpec/MultipleMemoizedHelpers
   let(:image_path) { File.expand_path('../fixtures/ruby.png', __dir__) }
   let(:video_path) { File.expand_path('../fixtures/ruby.mp4', __dir__) }
   let(:audio_path) { File.expand_path('../fixtures/ruby.wav', __dir__) }
@@ -24,14 +22,12 @@ RSpec.describe RubyLLM::Chat do # rubocop:disable RSpec/MultipleMemoizedHelpers
   let(:image_url_no_ext) { 'https://httpbin.org/image/jpeg' }
 
   describe 'text models' do # rubocop:disable RSpec/MultipleMemoizedHelpers
-    CHAT_MODELS.each do |model_info|
-      model = model_info[:model]
-      provider = model_info[:provider]
+    each_model(CHAT_MODELS) do |provider, model|
       it "#{provider}/#{model} can understand text" do
         chat = RubyLLM.chat(model: model, provider: provider)
         response = chat.ask("What's in this file?", with: text_path)
 
-        expect(response.content).to be_present
+        expect(response.content).to match(/ruby/i)
         expect(response.content).not_to include('RubyLLM::Content')
         expect(chat.messages.first.content).to eq("What's in this file?")
         expect(chat.messages.first.attachments.first.filename).to eq('ruby.txt')
@@ -39,7 +35,7 @@ RSpec.describe RubyLLM::Chat do # rubocop:disable RSpec/MultipleMemoizedHelpers
 
         response = chat.ask('and in this one?', with: xml_path)
 
-        expect(response.content).to be_present
+        expect(response.content).to match(/ruby/i)
         expect(response.content).not_to include('RubyLLM::Content')
         expect(chat.messages[2].content).to eq('and in this one?')
         expect(chat.messages[2].attachments.first.filename).to eq('ruby.xml')
@@ -50,7 +46,7 @@ RSpec.describe RubyLLM::Chat do # rubocop:disable RSpec/MultipleMemoizedHelpers
         chat = RubyLLM.chat(model: model, provider: provider)
         response = chat.ask("What's in this file?", with: text_url)
 
-        expect(response.content).to be_present
+        expect(response.content).to match(/ruby|license|copyright|bsd/i)
         expect(response.content).not_to include('RubyLLM::Content')
         expect(chat.messages.first.content).to eq("What's in this file?")
         expect(chat.messages.first.attachments.first.filename).to eq('license.txt')
@@ -60,14 +56,12 @@ RSpec.describe RubyLLM::Chat do # rubocop:disable RSpec/MultipleMemoizedHelpers
   end
 
   describe 'vision models' do # rubocop:disable RSpec/MultipleMemoizedHelpers
-    VISION_MODELS.each do |model_info|
-      model = model_info[:model]
-      provider = model_info[:provider]
+    each_model(VISION_MODELS) do |provider, model|
       it "#{provider}/#{model} can understand local images" do
         chat = RubyLLM.chat(model: model, provider: provider)
         response = chat.ask('What do you see in this image?', with: { image: image_path })
 
-        expect(response.content).to be_present
+        expect(response.content).to match(/ruby|gem|red|crystal|stone|logo/i)
         expect(response.content).not_to include('RubyLLM::Content')
         expect(chat.messages.first.content).to eq('What do you see in this image?')
         expect(chat.messages.first.attachments.first.filename).to eq('ruby.png')
@@ -78,7 +72,12 @@ RSpec.describe RubyLLM::Chat do # rubocop:disable RSpec/MultipleMemoizedHelpers
         chat = RubyLLM.chat(model: model, provider: provider)
         response = chat.ask('What do you see in this image?', with: image_url_no_ext)
 
-        expect(response.content).to be_present
+        if LOCAL_PROVIDER_SLUGS.include?(provider)
+          # Small local vision models cannot reliably describe the fetched image.
+          expect(response.content).to be_present
+        else
+          expect(response.content).to match(/coyote|jackal|canid|canine/i)
+        end
         expect(response.content).not_to include('RubyLLM::Content')
         expect(chat.messages.first.content).to eq('What do you see in this image?')
         expect(chat.messages.first.attachments.first.filename).to eq('jpeg')
@@ -103,15 +102,12 @@ RSpec.describe RubyLLM::Chat do # rubocop:disable RSpec/MultipleMemoizedHelpers
   end
 
   describe 'video models' do # rubocop:disable RSpec/MultipleMemoizedHelpers
-    VIDEO_MODELS.each do |model_info|
-      provider = model_info[:provider]
-      model = model_info[:model]
-
+    each_model(VIDEO_MODELS) do |provider, model|
       it "#{provider}/#{model} can understand local videos" do
         chat = RubyLLM.chat(model: model, provider: provider)
         response = chat.ask('What do you see in this video?', with: { video: video_path })
 
-        expect(response.content).to be_present
+        expect(response.content).to match(/beach|ocean|sand/i)
         expect(response.content).not_to include('RubyLLM::Content')
         expect(chat.messages.first.content).to eq('What do you see in this video?')
         expect(chat.messages.first.attachments.first.filename).to eq('ruby.mp4')
@@ -122,7 +118,7 @@ RSpec.describe RubyLLM::Chat do # rubocop:disable RSpec/MultipleMemoizedHelpers
         chat = RubyLLM.chat(model: model, provider: provider)
         response = chat.ask('What do you see in this video?', with: video_url)
 
-        expect(response.content).to be_present
+        expect(response.content).to match(/beach|ocean|sand/i)
         expect(response.content).not_to include('RubyLLM::Content')
         expect(chat.messages.first.content).to eq('What do you see in this video?')
         expect(chat.messages.first.attachments.first.filename).to eq('sample_640x360.mp4')
@@ -132,14 +128,12 @@ RSpec.describe RubyLLM::Chat do # rubocop:disable RSpec/MultipleMemoizedHelpers
   end
 
   describe 'audio models' do # rubocop:disable RSpec/MultipleMemoizedHelpers
-    AUDIO_MODELS.each do |model_info|
-      model = model_info[:model]
-      provider = model_info[:provider]
+    each_model(AUDIO_MODELS) do |provider, model|
       it "#{provider}/#{model} can understand audio" do
         chat = RubyLLM.chat(model: model, provider: provider)
         response = chat.ask('What is being said?', with: { audio: audio_path })
 
-        expect(response.content).to be_present
+        expect(response.content).to match(/ruby/i)
         expect(response.content).not_to include('RubyLLM::Content')
         expect(chat.messages.first.content).to eq('What is being said?')
         expect(chat.messages.first.attachments.first.filename).to eq('ruby.wav')
@@ -150,7 +144,7 @@ RSpec.describe RubyLLM::Chat do # rubocop:disable RSpec/MultipleMemoizedHelpers
         chat = RubyLLM.chat(model: model, provider: provider)
         response = chat.ask('What is being said?', with: { audio: mp3_path })
 
-        expect(response.content).to be_present
+        expect(response.content).to match(/ruby/i)
         expect(response.content).not_to include('RubyLLM::Content')
         expect(chat.messages.first.content).to eq('What is being said?')
         expect(chat.messages.first.attachments.first.filename).to eq('ruby.mp3')
@@ -161,26 +155,24 @@ RSpec.describe RubyLLM::Chat do # rubocop:disable RSpec/MultipleMemoizedHelpers
   end
 
   describe 'pdf models' do # rubocop:disable RSpec/MultipleMemoizedHelpers
-    PDF_MODELS.each do |model_info|
-      model = model_info[:model]
-      provider = model_info[:provider]
+    each_model(PDF_MODELS) do |provider, model|
       it "#{provider}/#{model} understands PDFs" do
         chat = RubyLLM.chat(model: model, provider: provider)
         response = chat.ask('Summarize this document', with: { pdf: pdf_path })
-        expect(response.content).not_to be_empty
+        expect(response.content).to match(/pdf|document|lorem|sample/i)
         expect(response.content).not_to include('RubyLLM::Content')
         expect(chat.messages.first.attachments.first.filename).to eq('sample.pdf')
         expect(chat.messages.first.attachments.first.mime_type).to eq('application/pdf')
 
         response = chat.ask 'go on'
-        expect(response.content).not_to be_empty
+        expect(response.content).to match(/pdf|document|lorem|sample/i)
       end
 
       it "#{provider}/#{model} handles multiple PDFs" do
         chat = RubyLLM.chat(model: model, provider: provider)
         # Using same file twice for testing
         response = chat.ask('Compare these documents', with: [pdf_path, pdf_url])
-        expect(response.content).not_to be_empty
+        expect(response.content).to match(/pdf|document|lorem|sample|identical/i)
         expect(response.content).not_to include('RubyLLM::Content')
         expect(chat.messages.first.attachments.first.filename).to eq('sample.pdf')
         expect(chat.messages.first.attachments.first.mime_type).to eq('application/pdf')
@@ -188,14 +180,14 @@ RSpec.describe RubyLLM::Chat do # rubocop:disable RSpec/MultipleMemoizedHelpers
         expect(chat.messages.first.attachments.second.mime_type).to eq('application/pdf')
 
         response = chat.ask 'go on'
-        expect(response.content).not_to be_empty
+        expect(response.content).to match(/pdf|document|lorem|sample|identical/i)
       end
 
       it "#{provider}/#{model} can handle array of mixed files with auto-detection" do
         chat = RubyLLM.chat(model: model, provider: provider)
         response = chat.ask('Analyze these files', with: [image_path, pdf_path])
 
-        expect(response.content).to be_present
+        expect(response.content).to match(/ruby|gem|logo/i)
         expect(chat.messages.first.content).to eq('Analyze these files')
         expect(chat.messages.first.attachments.first.filename).to eq('ruby.png')
         expect(chat.messages.first.attachments.first.mime_type).to eq('image/png')
@@ -206,10 +198,7 @@ RSpec.describe RubyLLM::Chat do # rubocop:disable RSpec/MultipleMemoizedHelpers
   end
 
   describe 'document models' do # rubocop:disable RSpec/MultipleMemoizedHelpers
-    DOCUMENT_MODELS.each do |model_info|
-      model = model_info[:model]
-      provider = model_info[:provider]
-
+    each_model(DOCUMENT_MODELS) do |provider, model|
       it "#{provider}/#{model} understands DOCX documents" do
         chat = RubyLLM.chat(model: model, provider: provider)
         response = chat.ask('What is the project codename in this document? Answer with only the code.',
@@ -224,10 +213,7 @@ RSpec.describe RubyLLM::Chat do # rubocop:disable RSpec/MultipleMemoizedHelpers
   end
 
   describe 'spreadsheet models' do # rubocop:disable RSpec/MultipleMemoizedHelpers
-    SPREADSHEET_MODELS.each do |model_info|
-      model = model_info[:model]
-      provider = model_info[:provider]
-
+    each_model(SPREADSHEET_MODELS) do |provider, model|
       it "#{provider}/#{model} understands XLSX spreadsheets" do
         chat = RubyLLM.chat(model: model, provider: provider)
         response = chat.ask('What is the spreadsheet_code value in this spreadsheet? Answer with only the code.',

@@ -10,6 +10,7 @@ module RubyLLM
   #   transcription.model  # => "whisper-1"
   #
   class Transcription
+    include Inspectable
     include Usage::Result
 
     # The transcribed text.
@@ -49,7 +50,7 @@ module RubyLLM
     def tokens
       return ruby_llm_usage_tokens unless ruby_llm_usage_entries.empty?
 
-      Tokens.build(input: @input_tokens, output: @output_tokens)
+      Tokens.new(input: @input_tokens, output: @output_tokens)
     end
 
     # Returns the transcription cost across every provider attempt.
@@ -93,7 +94,7 @@ module RubyLLM
     # and merges them into the rendered request as-is.
     #
     # Raises RubyLLM::ModelNotFoundError if +model:+ is not in the registry.
-    def self.transcribe(audio_file, # rubocop:disable Metrics/ParameterLists
+    def self.transcribe(audio_file,
                         model: nil,
                         language: nil,
                         provider: nil,
@@ -133,6 +134,10 @@ module RubyLLM
         event[:cost] = result.cost
         result
       end
+    end
+
+    def inspect_attributes # :nodoc:
+      { text: text, model: model, language: language, duration: duration }
     end
   end
 end

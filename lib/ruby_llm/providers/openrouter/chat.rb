@@ -12,7 +12,6 @@ module RubyLLM
 
         module_function
 
-        # rubocop:disable Metrics/ParameterLists
         def render_payload(messages, tools:, temperature:, model:, stream: false, max_output_tokens: nil, schema: nil,
                            thinking: nil, citations: false, caching: nil, tool_prefs: nil)
           payload = super
@@ -24,7 +23,6 @@ module RubyLLM
           payload[:cache_control] = prompt_cache_control(caching) if caching && !cache_boundaries?(messages)
           payload
         end
-        # rubocop:enable Metrics/ParameterLists
 
         def strip_schema_strict(payload)
           schema_def = payload.dig(:response_format, :json_schema, :schema)

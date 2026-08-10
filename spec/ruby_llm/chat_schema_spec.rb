@@ -8,9 +8,7 @@ class PersonSchemaClass < RubyLLM::Schema
   number :age
 end
 
-RSpec.describe RubyLLM::Chat do
-  include_context 'with configured RubyLLM'
-
+RSpec.describe RubyLLM::Chat, :live do
   describe '#with_schema' do
     let(:person_schema) do
       {
@@ -24,26 +22,17 @@ RSpec.describe RubyLLM::Chat do
       }
     end
 
-    it 'removes the schema with without_schema' do
+    it 'removes the schema with with_schema(nil)' do
       chat = RubyLLM.chat.with_schema(person_schema)
 
-      chat.without_schema
+      chat.with_schema(nil)
 
       expect(chat.schema).to be_nil
     end
 
-    it 'rejects nil, pointing to without_schema' do
-      chat = RubyLLM.chat
-
-      expect { chat.with_schema(nil) }.to raise_error(ArgumentError, /without_schema/)
-    end
-
     # Test providers that support structured output with JSON schema
     # Note: Only test models that have json_schema support, not just json_object
-    STRUCTURED_OUTPUT_MODELS.each do |model_info|
-      model = model_info[:model]
-      provider = model_info[:provider]
-
+    each_model(STRUCTURED_OUTPUT_MODELS) do |provider, model|
       context "with #{provider}/#{model}" do
         let(:chat) { RubyLLM.chat(model: model, provider: provider) }
 
@@ -81,7 +70,7 @@ RSpec.describe RubyLLM::Chat do
           expect(response1.parsed['age']).to be_a(Integer)
 
           # Remove schema and ask again - should get plain string
-          chat.without_schema
+          chat.with_schema(nil)
           response2 = chat.ask('Now just tell me about Ruby')
 
           expect(response2.content).to be_a(String)

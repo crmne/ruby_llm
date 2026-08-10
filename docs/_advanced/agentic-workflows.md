@@ -1,9 +1,11 @@
 ---
 layout: default
 title: Agentic Workflows
-nav_order: 3
-has_children: true
-description: Build workflow-oriented AI systems with plain Ruby orchestration, from routing and parallelization to RAG
+parent: "Agents"
+nav_order: 1
+description: Build workflow-oriented AI systems with plain Ruby orchestration, from routing and handoffs to parallelization
+redirect_from:
+  - /agent-handoffs/
 ---
 
 # {{ page.title }}
@@ -23,7 +25,7 @@ description: Build workflow-oriented AI systems with plain Ruby orchestration, f
 After reading this guide, you will know:
 
 * How to drive the agentic loop yourself, one move at a time.
-* How to run each turn as its own background job and resume elsewhere.
+* Why the loop is safe to interrupt and resume between moves.
 * How to implement common workflow patterns with plain Ruby classes.
 * How to compose sequential, routing, parallel, and fan-in workflows.
 * When to reach for an evaluator loop to iterate on output quality.
@@ -53,41 +55,9 @@ chat.messages.last.content      # => "It's 15°C and partly cloudy in Paris."
 
 `ask_later` stages the question without sending it, so `ask` is `ask_later` then `complete`.
 
-Because each `step` is a discrete move, you can persist the chat between steps and resume it elsewhere. Run one turn per background job, enforce a wall-clock budget, or pause for a deploy and pick up on another machine:
-
-```ruby
-class AgentTurnJob < ApplicationJob
-  def perform(chat_id)
-    chat = Chat.find(chat_id)
-    chat.step
-    AgentTurnJob.perform_later(chat_id) unless chat.complete?
-  end
-end
-```
-
 It is safe to interrupt the loop between moves. Each verb decides what to do next by reading the persisted messages, and `run_tools` skips tool calls that already have results. If a process dies after running one tool call of three, reloading the chat and calling `step` executes only the two remaining tool calls.
 
-On Rails 8.1 and later, [ActiveJob Continuations](https://api.rubyonrails.org/classes/ActiveJob/Continuable.html) builds on this to run agents that survive deploys. Checkpoint after each move; when the queue adapter interrupts the job during a restart, the job is requeued and the loop continues from the persisted messages:
-
-```ruby
-class AgentRunJob < ApplicationJob
-  include ActiveJob::Continuable
-
-  def perform(chat_id)
-    step :agent_loop do |job_step|
-      chat = Chat.find(chat_id)
-      until chat.complete?
-        chat.step
-        job_step.checkpoint!
-      end
-    end
-  end
-end
-```
-
-ActiveJob's `step` and the chat's `step` are unrelated methods. The job step wraps the whole loop, and each checkpoint marks a point where the job may be interrupted. The step does not need a cursor, because the persisted messages already record how far the loop has progressed.
-
-Interruption does not give you exactly-once execution. A job that dies after the model responds but before the message is saved repeats that model call when it resumes, and a job that dies after a tool runs but before its result is saved runs that tool again. Write tools so that running them twice is safe.
+That property is what makes agents durable: run every turn as a background job, survive deploys with ActiveJob Continuations, and park for days on a human approval. [Durable Agents]({% link _advanced/durable-agents.md %}) is the guide for all of it.
 
 [Batches]({% link _advanced/batches.md %}) are the same idea at scale: a batch is `generate` deferred for many chats at once, with `run_tools` run locally between rounds.
 
@@ -171,7 +141,61 @@ workflow = ModelRouterWorkflow.new
 response = workflow.call("Write a Ruby function to parse JSON")
 ```
 
-To hand the *same ongoing conversation* to a specialist instead of picking an agent up front, see [Agent Handoffs]({% link _advanced/agent-handoffs.md %}).
+### Agent Handoffs
+
+[Routing](#routing-workflow) picks an agent up front. A handoff goes further: it hands the *same ongoing conversation* to a different agent, so the specialist sees the full history and the user keeps one continuous thread. `Agent.find(chat_id)` is what makes this work. It loads a persisted chat and applies a different agent's instructions and tools at runtime, leaving the messages intact, so whichever agent takes over inherits the whole conversation.
+
+The simplest version is a single turn. Give a router an inline schema so it answers with the specialist to hand to, then let that specialist continue the persisted chat:
+
+```ruby
+class SupportRouter < RubyLLM::Agent
+  schema do
+    string :specialist, enum: %w[billing technical]
+  end
+  instructions "Pick the specialist best suited to the latest message."
+end
+
+SPECIALISTS = { "billing" => BillingAgent, "technical" => TechnicalAgent }
+
+def handle(chat_id, message)
+  specialist = SupportRouter.new.ask(message).content["specialist"]
+  SPECIALISTS.fetch(specialist).find(chat_id).ask(message)
+end
+```
+
+The router responds immediately with its choice (no tool round-trip), and the specialist takes over the same chat with full history. Outside Rails, pass the chat object with `SpecialistAgent.new(chat: chat)` instead of `find(chat_id)`.
+
+If you would rather the agent decide mid-conversation, give it a single handoff tool that returns the specialist to switch to. Drive the [loop](#driving-the-loop-yourself) a step at a time, and when a tool result names an agent, hand off:
+
+```ruby
+class Handoff < RubyLLM::Tool
+  description "Hand the conversation to the specialist who should answer next"
+  parameter :specialist, description: "billing or technical"
+  def execute(specialist:) = specialist
+end
+
+class SupportRouter < RubyLLM::Agent
+  chat_model Chat
+  instructions "Call handoff with the specialist who should take over."
+  tools Handoff
+end
+
+AGENTS = { "billing" => BillingAgent, "technical" => TechnicalAgent }
+
+agent = SupportRouter.find(chat_id)
+agent.ask_later(message)
+
+until agent.complete?
+  agent.step
+  last = agent.messages.reload.last
+  specialist = AGENTS[last.content] if last.role == "tool"
+  agent = specialist.find(chat_id) if specialist
+end
+```
+
+The handoff tool just returns the name; the orchestrator owns the routing, watching each tool result and swapping agents when one names a specialist. Because the routing lives in the loop and not in any agent, this extends to a multi-router for free: give the specialists the same `Handoff` tool and they can route onward, with every hop handled the same way.
+
+(A tool cannot reconfigure the chat it runs inside, since its `execute` never receives the chat, so the switch belongs in the loop, not in the tool.)
 
 ### Parallel Workflow
 
@@ -323,7 +347,6 @@ See the [Error Handling section in Tools]({% link _core_features/tools.md %}#err
 
 ## Next Steps
 
-* [Agent Handoffs]({% link _advanced/agent-handoffs.md %}) - Hand an ongoing conversation to a specialist agent.
 * [Retrieval-Augmented Generation (RAG)]({% link _advanced/rag.md %}) - Ground answers in your own documents.
 * [Agents]({% link _advanced/agents.md %}) - Define reusable agent classes.
 * [Tools]({% link _core_features/tools.md %}) - Add capabilities and external actions.

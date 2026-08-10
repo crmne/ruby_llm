@@ -77,8 +77,6 @@ module RubyLLM
       @model = model
     end
 
-    # rubocop:disable Metrics/ParameterLists
-
     def complete(messages, tools:, temperature:, provider_options: {}, headers: {}, schema: nil, thinking: nil,
                  max_output_tokens: nil, citations: false, caching: nil, tool_prefs: nil, before_request: [],
                  usage_recorder: nil, &)
@@ -120,14 +118,13 @@ module RubyLLM
       )
       apply_before_request_hooks(payload, before_request)
     end
-    # rubocop:enable Metrics/ParameterLists
 
     def list_models
       response = @connection.get models_url
       parse_list_models_response response, @provider.slug, @provider.capabilities
     end
 
-    def embed(text, model:, dimensions:, task_type: nil, title: nil, provider_options: {}) # rubocop:disable Metrics/ParameterLists
+    def embed(text, model:, dimensions:, task_type: nil, title: nil, provider_options: {})
       track_usage(:embedding) do
         payload = render_embedding_payload(text, model:, dimensions:, task_type:, title:, provider_options:)
         response = @connection.post(embedding_url(model:), payload, usage: @usage_tracker)
@@ -143,7 +140,7 @@ module RubyLLM
       end
     end
 
-    def paint(prompt, model:, size:, with: nil, mask: nil, provider_options: {}) # rubocop:disable Metrics/ParameterLists
+    def paint(prompt, model:, size:, with: nil, mask: nil, provider_options: {})
       track_usage(:image) do
         validate_paint_inputs!(with:, mask:)
         payload = render_image_payload(prompt, model:, size:, with:, mask:, provider_options:)
@@ -160,7 +157,7 @@ module RubyLLM
       end
     end
 
-    def transcribe(audio_file, model:, language:, format: nil, speaker_names: nil, # rubocop:disable Metrics/ParameterLists
+    def transcribe(audio_file, model:, language:, format: nil, speaker_names: nil,
                    speaker_references: nil, provider_options: {}, prompt: nil, temperature: nil)
       track_usage(:transcription) do
         file_part = build_audio_file_part(audio_file)

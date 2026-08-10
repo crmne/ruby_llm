@@ -7,6 +7,8 @@ RubyLLM.configure do |config|
   config.retry_interval_randomness = 0
 end
 
+# Specs tagged :live replay (or record) real provider APIs and get this context
+# automatically. Untagged specs that only need configured keys include it by name.
 RSpec.shared_context 'with configured RubyLLM' do
   before do
     RubyLLM.configure do |config|
@@ -43,4 +45,8 @@ RSpec.shared_context 'with configured RubyLLM' do
       config.xai_api_key = ENV.fetch('XAI_API_KEY', 'test')
     end
   end
+end
+
+RSpec.configure do |config|
+  config.include_context 'with configured RubyLLM', :live
 end

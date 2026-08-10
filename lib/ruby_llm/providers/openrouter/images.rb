@@ -13,7 +13,7 @@ module RubyLLM
           'chat/completions'
         end
 
-        def render_image_payload(prompt, model:, size:, with: nil, mask: nil, provider_options: {}) # rubocop:disable Lint/UnusedMethodArgument,Metrics/ParameterLists
+        def render_image_payload(prompt, model:, size:, with: nil, mask: nil, provider_options: {}) # rubocop:disable Lint/UnusedMethodArgument
           RubyLLM.logger.debug { "Ignoring size #{size}. OpenRouter image generation does not support size parameter." }
           {
             model: model,

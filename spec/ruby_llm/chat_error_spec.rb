@@ -16,13 +16,9 @@ RSpec::Matchers.define :look_like_json do
   end
 end
 
-RSpec.describe RubyLLM::Chat do
-  include_context 'with configured RubyLLM'
-
+RSpec.describe RubyLLM::Chat, :live do
   describe 'error handling' do
-    CHAT_MODELS.each do |model_info|
-      model = model_info[:model]
-      provider = model_info[:provider]
+    each_model(CHAT_MODELS) do |provider, model|
       context "with #{provider}/#{model}" do
         let(:chat) { RubyLLM.chat(model: model, provider: provider) }
 
@@ -55,9 +51,7 @@ RSpec.describe RubyLLM::Chat do
   end
 
   describe 'real error scenarios' do
-    CHAT_MODELS.each do |model_info|
-      model = model_info[:model]
-      provider = model_info[:provider]
+    each_model(CHAT_MODELS) do |provider, model|
       context "#{provider}/#{model}" do # rubocop:disable RSpec/ContextWording
         let(:chat) { RubyLLM.chat(model: model, provider: provider) }
 

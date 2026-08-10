@@ -37,35 +37,35 @@ chat = RubyLLM.chat
               .with_max_output_tokens(200)
 ```
 
-Calling a `with_*` method again replaces the setting. Every clearable setting has a matching `without_*` method that returns it to its default:
+Calling a `with_*` method again replaces the setting, and `nil` returns it to its default:
 
 ```ruby
 chat.with_temperature(0.2)
-chat.without_temperature
+chat.with_temperature(nil)
 
 chat.with_caching(ttl: "1h")
-chat.without_caching
+chat.with_caching(nil)
 
 chat.with_max_output_tokens(200)
-chat.without_max_output_tokens
+chat.with_max_output_tokens(nil)
 
 chat.with_headers("X-Custom-Feature" => "enabled")
-chat.without_headers
+chat.with_headers(nil)
 
 chat.with_thinking(effort: :high)
-chat.without_thinking
+chat.with_thinking(effort: nil)
 
 chat.with_tools(SearchDocs)
-chat.without_tools
+chat.with_tools(nil)
 
 chat.with_citations
-chat.without_citations
+chat.with_citations(false)
 
 chat.with_instructions "Be terse."
-chat.without_instructions
+chat.with_instructions(nil)
 ```
 
-The same pattern covers `with_schema`/`without_schema`, `with_fallbacks`/`without_fallbacks`, and `with_context`/`without_context`. Passing `nil` to a `with_*` method raises `ArgumentError` pointing at its `without_*` sibling.
+The same pattern covers `with_schema`, `with_fallbacks`, `with_provider_options`, and `with_context`.
 
 Methods with no arguments enable a feature with its default behavior, like provider-default prompt caching with `with_caching` or document citations with `with_citations`.
 

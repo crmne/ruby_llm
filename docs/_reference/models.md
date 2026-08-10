@@ -207,6 +207,6 @@ When you pass a provider, RubyLLM resolves aliases first. For Bedrock, it then a
 
 ## Next Steps
 
-*   [Model Costs]({% link _reference/model-costs.md %}) - turn token usage into a `RubyLLM::Cost` object and aggregate costs across messages.
+*   [Tokens and Costs]({% link _core_features/cost-and-usage-tracking.md %}) - turn token usage into a `RubyLLM::Cost` object and aggregate costs across messages.
 *   [Custom Endpoints and Unlisted Models]({% link _reference/custom-endpoints.md %}) - target OpenAI-compatible endpoints and use model IDs the registry doesn't list.
 *   [Available Models]({% link _reference/available-models.md %}) - browse every model currently registered with RubyLLM.

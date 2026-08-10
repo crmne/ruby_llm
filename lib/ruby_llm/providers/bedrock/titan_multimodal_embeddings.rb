@@ -5,7 +5,7 @@ module RubyLLM
     class Bedrock
       # Amazon Titan multimodal embedding models over Bedrock InvokeModel.
       class TitanMultimodalEmbeddings < EmbeddingProtocol
-        # rubocop:disable Lint/UnusedMethodArgument, Metrics/ParameterLists
+        # rubocop:disable Lint/UnusedMethodArgument
         def embed(text, model:, dimensions:, task_type: nil, title: nil, provider_options: {})
           track_usage(:embedding) do
             responses = [text].flatten.map do |value|
@@ -16,7 +16,7 @@ module RubyLLM
             parse_single_embedding_responses(responses, model:, text:)
           end
         end
-        # rubocop:enable Lint/UnusedMethodArgument, Metrics/ParameterLists
+        # rubocop:enable Lint/UnusedMethodArgument
 
         private
 

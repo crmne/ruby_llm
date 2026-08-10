@@ -7,6 +7,10 @@ def filter_local_providers(models)
   SKIP_LOCAL_PROVIDER_TESTS ? models.reject { |model| LOCAL_PROVIDER_SLUGS.include?(model[:provider]) } : models
 end
 
+def each_model(models)
+  models.each { |model_info| yield model_info[:provider], model_info[:model], model_info }
+end
+
 chat_models = [
   { provider: :anthropic, model: 'claude-haiku-4-5' },
   { provider: :azure, model: 'grok-4-1-fast-non-reasoning' },
@@ -32,12 +36,14 @@ structured_output_models = [
   { provider: :mistral, model: 'mistral-small-latest' },
   { provider: :openai, model: 'gpt-5-nano' },
   { provider: :openrouter, model: 'claude-haiku-4-5' },
+  { provider: :vertexai, model: 'gemini-3-flash-preview' },
   { provider: :xai, model: 'grok-4-1-fast-non-reasoning' }
 ]
 STRUCTURED_OUTPUT_MODELS = filter_local_providers(structured_output_models).freeze
 
 thinking_models = [
   { provider: :anthropic, model: 'claude-haiku-4-5' },
+  { provider: :azure, model: 'gpt-5-nano' },
   { provider: :bedrock, model: 'claude-haiku-4-5' },
   { provider: :deepseek, model: 'deepseek-reasoner' },
   { provider: :gemini, model: 'gemini-3-flash-preview' },
@@ -51,6 +57,20 @@ thinking_models = [
   { provider: :xai, model: 'grok-3-mini' }
 ].freeze
 THINKING_MODELS = filter_local_providers(thinking_models).freeze
+
+MULTIMODAL_TOOL_RESULT_MODELS = [
+  { provider: :anthropic, model: 'claude-haiku-4-5' },
+  { provider: :azure, model: 'grok-4-1-fast-non-reasoning', pdf: false },
+  { provider: :bedrock, model: 'claude-sonnet-4-5' },
+  { provider: :gemini, model: 'gemini-3-flash-preview' },
+  { provider: :gemini, model: 'gemini-2.5-flash' },
+  { provider: :mistral, model: 'mistral-small-latest', pdf: false },
+  { provider: :openai, model: 'gpt-5-nano' },
+  { provider: :openrouter, model: 'gemini-2.5-flash' },
+  { provider: :vertexai, model: 'gemini-3-flash-preview' },
+  { provider: :vertexai, model: 'gemini-2.5-flash' },
+  { provider: :xai, model: 'grok-4-1-fast-non-reasoning', pdf: false }
+].freeze
 
 PDF_MODELS = [
   { provider: :anthropic, model: 'claude-haiku-4-5' },
@@ -104,8 +124,17 @@ EMBEDDING_MODELS = [
   { provider: :vertexai, model: 'text-embedding-004' }
 ].freeze
 
+# Vertex AI TTS models (gemini-2.5-*-tts) 404 on the global and us-central1
+# endpoints, so speech is exercised through the Gemini API instead.
+SPEECH_MODELS = [
+  { provider: :gemini, model: 'gemini-2.5-flash-preview-tts' },
+  { provider: :mistral, model: 'voxtral-mini-tts-latest', voice: 'en_paul_neutral' },
+  { provider: :openai, model: 'gpt-4o-mini-tts' }
+].freeze
+
 TRANSCRIPTION_MODELS = [
   { provider: :gemini, model: 'gemini-2.5-flash' },
+  { provider: :mistral, model: 'voxtral-mini-latest' },
   { provider: :openai, model: 'gpt-4o-transcribe-diarize' },
   { provider: :openai, model: 'whisper-1' },
   { provider: :vertexai, model: 'gemini-2.5-flash' }
@@ -116,6 +145,7 @@ image_generation_models = [
   { provider: :gemini, model: 'imagen-4.0-generate-001', supports_size: false },
   { provider: :gemini, model: 'gemini-3.1-flash-lite-image', supports_size: false },
   { provider: :vertexai, model: 'gemini-3.1-flash-lite-image', supports_size: false },
-  { provider: :openrouter, model: 'google/gemini-2.5-flash-image', supports_size: false }
+  { provider: :openrouter, model: 'google/gemini-2.5-flash-image', supports_size: false },
+  { provider: :xai, model: 'grok-imagine-image', supports_size: false }
 ].freeze
 IMAGE_GENERATION_MODELS = filter_local_providers(image_generation_models).freeze

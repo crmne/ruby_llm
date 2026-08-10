@@ -40,7 +40,9 @@ module RubyLLM
         # Inline answers are correlated by the key we sent (the submission index);
         # Gemini also returns them in order, so we fall back to position.
         def batch_results(id)
-          inlined = @connection.get(batch_name(id)).body.dig('output', 'inlinedResponses', 'inlinedResponses') || []
+          body = @connection.get(batch_name(id)).body
+          inlined = body.dig('response', 'inlinedResponses', 'inlinedResponses') ||
+                    body.dig('output', 'inlinedResponses', 'inlinedResponses') || []
           inlined.each_with_index.map { |response, index| parse_inline_response(response, index) }
         end
 

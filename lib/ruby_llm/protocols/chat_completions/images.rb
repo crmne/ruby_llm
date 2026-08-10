@@ -14,7 +14,7 @@ module RubyLLM
           editing?(with, mask) ? 'images/edits' : 'images/generations'
         end
 
-        def render_image_payload(prompt, model:, size:, with: nil, mask: nil, provider_options: {}) # rubocop:disable Metrics/ParameterLists
+        def render_image_payload(prompt, model:, size:, with: nil, mask: nil, provider_options: {})
           return render_edit_payload(prompt, model:, with:, mask:, provider_options:) if editing?(with, mask)
 
           {

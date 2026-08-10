@@ -2,6 +2,7 @@
 layout: default
 title: Agents
 nav_order: 2
+has_children: true
 description: Define reusable AI assistants with class-based configuration, runtime context, and prompt conventions
 ---
 
@@ -294,11 +295,12 @@ Delegated methods include:
 
 * `model`, `messages`, `tools`, `provider_options`, `headers`, `schema`
 * `cost` (v1.15+)
-* `ask`, `say`, `complete`
+* `ask`, `say`, `complete`, `complete?`, `ask_later`, `generate`, `run_tools`, `step`
+* `cancel!`, `cancelled?`, `approve!`, `deny!`, `awaiting_approval?`
 * `add_message`, `each`
-* `with_tools`, `without_tools`, `with_tool_options`, `without_tool_options`
-* `with_model`, `with_temperature`, `without_temperature`, `with_thinking`, `without_thinking`, `with_citations`, `without_citations`, `with_context`, `without_context`
-* `with_caching`, `without_caching`, `with_provider_options`, `without_provider_options`, `with_headers`, `without_headers`, `with_schema`, `without_schema`, `with_fallbacks`, `without_fallbacks`
+* `with_tools`, `with_tool_options`
+* `with_model`, `with_temperature`, `with_thinking`, `with_citations`, `with_context`
+* `with_caching`, `with_provider_options`, `with_headers`, `with_schema`, `with_fallbacks`
 * `before_message`, `after_message`, `before_tool_call`, `after_tool_result`, `before_fallback`, `after_fallback`
 
 You can always access the wrapped chat object directly via `agent.chat`.
@@ -391,6 +393,10 @@ WorkAssistant.new.ask("Help me find docs about callbacks.")
 
 ## Next Steps
 
+* Compose agents with [Agentic Workflows]({% link _advanced/agentic-workflows.md %})
+* Run them as jobs that survive anything with [Durable Agents]({% link _advanced/durable-agents.md %})
+* Give them [Memory]({% link _advanced/memory.md %}) across conversations
+* Ground them in your documents with [RAG]({% link _advanced/rag.md %})
 * Learn about [Chat Basics]({% link _core_features/chat.md %})
 * Explore [Tools]({% link _core_features/tools.md %})
 * Review [Rails Integration]({% link _advanced/rails.md %})

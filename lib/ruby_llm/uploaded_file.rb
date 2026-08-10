@@ -78,7 +78,7 @@ module RubyLLM
         @connection = provider.connection
       end
 
-      def upload(file, filename: nil, purpose: nil, expires_in: nil, visibility: nil, # rubocop:disable Metrics/ParameterLists
+      def upload(file, filename: nil, purpose: nil, expires_in: nil, visibility: nil,
                  display_name: nil, uri: nil, content_type: nil)
         attachment = file_attachment(file, filename:)
         options = { purpose:, expires_in:, visibility:, display_name:, uri:, content_type: }.compact
@@ -120,12 +120,12 @@ module RubyLLM
         "#{file_info_url(file_id)}/content"
       end
 
-      # rubocop:disable Lint/UnusedMethodArgument, Metrics/ParameterLists
+      # rubocop:disable Lint/UnusedMethodArgument
       def render_upload_payload(attachment, purpose: nil, expires_in: nil, visibility: nil,
                                 display_name: nil, uri: nil, content_type: nil)
         { file: file_part(attachment) }
       end
-      # rubocop:enable Lint/UnusedMethodArgument, Metrics/ParameterLists
+      # rubocop:enable Lint/UnusedMethodArgument
 
       def multipart_payload(attachment, **fields)
         { file: file_part(attachment) }.merge(fields.compact)
@@ -200,7 +200,7 @@ module RubyLLM
     # The remaining keywords are provider-specific options: +visibility:+
     # (Mistral), +display_name:+ (Gemini), and +uri:+ and +content_type:+
     # (storage-backed providers such as Vertex AI and Bedrock).
-    def self.upload(file, provider: nil, context: nil, filename: nil, purpose: nil, expires_in: nil, # rubocop:disable Metrics/ParameterLists
+    def self.upload(file, provider: nil, context: nil, filename: nil, purpose: nil, expires_in: nil,
                     visibility: nil, display_name: nil, uri: nil, content_type: nil)
       options = { filename:, purpose:, expires_in:, visibility:, display_name:, uri:, content_type: }
                 .compact

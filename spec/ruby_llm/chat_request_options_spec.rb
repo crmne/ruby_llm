@@ -2,9 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe RubyLLM::Chat do
-  include_context 'with configured RubyLLM'
-
+RSpec.describe RubyLLM::Chat, :live do
   describe '#with_max_output_tokens' do
     {
       openai: { model: 'gpt-4.1-nano', key: :max_output_tokens },
@@ -24,31 +22,21 @@ RSpec.describe RubyLLM::Chat do
       expect(payload.dig(:generationConfig, :maxOutputTokens)).to eq(1234)
     end
 
-    it 'clears the limit with without_max_output_tokens' do
+    it 'clears the limit with with_max_output_tokens(nil)' do
       payload = RubyLLM.chat(model: 'gpt-4.1-nano', provider: :openai)
-                       .with_max_output_tokens(1234).without_max_output_tokens.render
+                       .with_max_output_tokens(1234).with_max_output_tokens(nil).render
 
       expect(payload).not_to have_key(:max_output_tokens)
-    end
-
-    it 'rejects nil, pointing to without_max_output_tokens' do
-      expect { RubyLLM.chat.with_max_output_tokens(nil) }.to raise_error(ArgumentError, /without_max_output_tokens/)
     end
   end
 
   describe 'with params' do
-    it 'clears provider options with without_provider_options' do
+    it 'clears provider options with with_provider_options(nil)' do
       chat = RubyLLM.chat.with_provider_options(max_tokens: 100)
 
-      chat.without_provider_options
+      chat.with_provider_options(nil)
 
       expect(chat.provider_options).to eq({})
-    end
-
-    it 'rejects nil, pointing to without_provider_options' do
-      chat = RubyLLM.chat
-
-      expect { chat.with_provider_options(nil) }.to raise_error(ArgumentError, /without_provider_options/)
     end
 
     it 'requires provider options' do
@@ -59,13 +47,13 @@ RSpec.describe RubyLLM::Chat do
 
     # Supported params vary by provider, and to lesser degree, by model.
 
-    # Providers [:openai, :ollama, :deepseek] support a JSON object mode param.
-    # On Chat Completions it's {response_format: {type: 'json_object'}}; on the
-    # Responses API (OpenAI's default) it's {text: {format: {type: 'json_object'}}}.
+    # Providers [:openai, :azure, :ollama, :deepseek, :mistral, :xai] support a JSON
+    # object mode param. On Chat Completions it's {response_format: {type: 'json_object'}};
+    # on the Responses API (OpenAI's default) it's {text: {format: {type: 'json_object'}}}.
     # (Note that :openrouter may accept the parameter but silently ignore it.)
-    CHAT_MODELS.select { |model_info| %i[openai ollama deepseek].include?(model_info[:provider]) }.each do |model_info|
-      model = model_info[:model]
-      provider = model_info[:provider]
+    each_model(CHAT_MODELS.select do |model_info|
+      %i[openai azure ollama deepseek mistral xai].include?(model_info[:provider])
+    end) do |provider, model|
       json_object_params = if provider == :openai
                              { text: { format: { type: 'json_object' } } }
                            else
@@ -83,11 +71,11 @@ RSpec.describe RubyLLM::Chat do
       end
     end
 
-    # Provider [:gemini] supports a {generationConfig: {responseMimeType: ..., responseSchema: ...} } param,
-    # which can specify a JSON schema, requiring a deep_merge of params into the payload.
-    CHAT_MODELS.select { |model_info| model_info[:provider] == :gemini }.each do |model_info|
-      model = model_info[:model]
-      provider = model_info[:provider]
+    # Providers [:gemini, :vertexai] support a {generationConfig: {responseMimeType: ..., responseSchema: ...} }
+    # param, which can specify a JSON schema, requiring a deep_merge of params into the payload.
+    each_model(CHAT_MODELS.select do |model_info|
+      %i[gemini vertexai].include?(model_info[:provider])
+    end) do |provider, model|
       it "#{provider}/#{model} supports responseSchema param" do
         chat = RubyLLM
                .chat(model: model, provider: provider)
@@ -108,10 +96,33 @@ RSpec.describe RubyLLM::Chat do
       end
     end
 
+    # Provider [:perplexity] supports {response_format: {type: 'json_schema', json_schema: {schema: ...}}}.
+    each_model(CHAT_MODELS.select { |model_info| model_info[:provider] == :perplexity }) do |provider, model|
+      it "#{provider}/#{model} supports json_schema response_format param" do
+        chat = RubyLLM
+               .chat(model: model, provider: provider)
+               .with_provider_options(
+                 response_format: {
+                   type: 'json_schema',
+                   json_schema: {
+                     schema: {
+                       type: 'object',
+                       properties: { result: { type: 'number' } },
+                       required: ['result']
+                     }
+                   }
+                 }
+               )
+
+        response = chat.ask('What is the square root of 64? Answer with a JSON object with the key `result`.')
+
+        json_response = JSON.parse(response.content)
+        expect(json_response).to eq({ 'result' => 8 })
+      end
+    end
+
     # Provider [:anthropic] supports a service_tier param.
-    CHAT_MODELS.select { |model_info| model_info[:provider] == :anthropic }.each do |model_info|
-      model = model_info[:model]
-      provider = model_info[:provider]
+    each_model(CHAT_MODELS.select { |model_info| model_info[:provider] == :anthropic }) do |provider, model|
       it "#{provider}/#{model} supports service_tier param" do
         chat = RubyLLM
                .chat(model: model, provider: provider)
@@ -141,9 +152,9 @@ RSpec.describe RubyLLM::Chat do
     # OpenRouter takes {top_k: ...} at the top level. The Bedrock Converse API takes model-specific
     # inference fields in additionalModelRequestFields, and Amazon Nova nests them under inferenceConfig
     # as {additionalModelRequestFields: {inferenceConfig: {topK: ...}}}.
-    CHAT_MODELS.select { |model_info| %i[openrouter bedrock].include?(model_info[:provider]) }.each do |model_info|
-      model = model_info[:model]
-      provider = model_info[:provider]
+    each_model(CHAT_MODELS.select do |model_info|
+      %i[openrouter bedrock].include?(model_info[:provider])
+    end) do |provider, model|
       top_k_params = if provider == :bedrock
                        { additionalModelRequestFields: { inferenceConfig: { topK: 5 } } }
                      else

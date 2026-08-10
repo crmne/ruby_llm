@@ -6,6 +6,7 @@ module RubyLLM
       # xAI's dialect of the Chat Completions API.
       class ChatCompletions < Protocols::ChatCompletions
         include XAI::Chat
+        include XAI::Images
         include XAI::Models
       end
     end

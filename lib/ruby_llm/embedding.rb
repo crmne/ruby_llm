@@ -10,6 +10,7 @@ module RubyLLM
   #   embedding.tokens.input    # => 8
   #
   class Embedding
+    include Inspectable
     include Usage::Result
 
     # The embedding vectors. A flat array of floats when a single text
@@ -30,7 +31,7 @@ module RubyLLM
     def tokens
       return ruby_llm_usage_tokens unless ruby_llm_usage_entries.empty?
 
-      Tokens.build(input: @input_tokens)
+      Tokens.new(input: @input_tokens)
     end
 
     # Returns the embedding cost across every provider attempt.
@@ -76,7 +77,7 @@ module RubyLLM
     # in the provider's request vocabulary and merges them into the
     # request as-is. +metadata:+ is not sent to the provider; it is
     # attached to the emitted +embedding.ruby_llm+ instrumentation event.
-    def self.embed(text, # rubocop:disable Metrics/ParameterLists
+    def self.embed(text,
                    model: nil,
                    provider: nil,
                    assume_model_exists: false,
@@ -127,6 +128,14 @@ module RubyLLM
 
     private_class_method def self.embedding_count(vectors) # :nodoc:
       vectors.first.is_a?(Array) ? vectors.size : 1
+    end
+
+    def inspect_attributes # :nodoc:
+      if vectors&.first.is_a?(Array)
+        { model: model, count: vectors.length, dimensions: vectors.first.length }
+      else
+        { model: model, dimensions: vectors&.length }
+      end
     end
   end
 end

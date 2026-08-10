@@ -22,6 +22,7 @@ module RubyLLM
   # A Chat is Enumerable over its messages.
   class Chat # rubocop:disable Metrics/ClassLength
     include Enumerable
+    include Inspectable
 
     # The Model the chat sends requests to.
     attr_reader :model
@@ -79,7 +80,8 @@ module RubyLLM
       @messages = []
       @usage_entries = []
       @tools = {}
-      reset_tools
+      @tool_prefs = { choice: nil, calls: nil }
+      @concurrency = normalize_tool_concurrency(@config.tool_concurrency)
       @provider_options = {}
       @headers = {}
       @schema = nil
@@ -91,6 +93,8 @@ module RubyLLM
       @callbacks = Hash.new { |callbacks, name| callbacks[name] = [] }
       @cancelled = false
       @cancellation_checker = nil
+      @tool_call_decisions = {}
+      @approval_checker = nil
     end
 
     # Adds +message+ to the conversation as a user message and runs the
@@ -118,7 +122,11 @@ module RubyLLM
     #   chats = tickets.map { |t| RubyLLM.chat.ask_later(t.body) }
     #   RubyLLM.batch(chats)
     #
+    # Raises PendingToolCallsError while the last response has unanswered
+    # tool calls: finish the round first, recording #approve! or #deny!
+    # decisions for calls that require approval.
     def ask_later(message = nil, with: nil)
+      raise_if_pending_tool_calls!
       add_message role: :user, content: message, attachments: with
       self
     end
@@ -139,9 +147,12 @@ module RubyLLM
     # Executes the tool calls pending in the latest response and appends
     # their result messages, without asking the model to respond. Tool
     # calls that already have results are skipped, so a chat reloaded
-    # mid-round resumes with only the remaining tools. Does nothing when
-    # no tool calls are pending. The chat is then ready for the next
-    # #generate, or the next batch round. Returns +self+.
+    # mid-round resumes with only the remaining tools. Calls whose tool
+    # was declared with Tool.requires_approval only execute once #approve!
+    # records a decision; denied calls receive a structured denial result,
+    # and undecided calls stay pending. Does nothing when no tool calls
+    # are pending. The chat is then ready for the next #generate, or the
+    # next batch round. Returns +self+.
     def run_tools
       raise_if_cancelled!
 
@@ -163,8 +174,13 @@ module RubyLLM
     # Runs the agentic loop until #complete? is +true+ and returns the last
     # non-system Message. Used after #ask_later; #ask stages a message and
     # calls #complete for you.
+    #
+    # When a pending tool call requires approval and no decision has been
+    # recorded, the loop parks instead of finishing: #complete returns
+    # cleanly with #awaiting_approval? true, and calling it again after
+    # #approve! or #deny! picks up exactly where it stopped.
     def complete(&)
-      step(&) until complete?
+      step(&) until complete? || awaiting_approval?
       last_non_system_message || messages.last
     end
 
@@ -177,6 +193,55 @@ module RubyLLM
       when :user, :tool then false
       else !last.tool_call?
       end
+    end
+
+    # Records approval for +tool_call+, a ToolCall or its id, so the next
+    # #complete or #run_tools executes it. Returns +self+.
+    #
+    #   chat.approve!(tool_call)
+    #   chat.complete
+    #
+    def approve!(tool_call)
+      record_tool_call_decision(tool_call, true)
+    end
+
+    # Records denial for +tool_call+, a ToolCall or its id. The next
+    # #complete or #run_tools appends a structured denial result instead
+    # of executing the tool, and the model continues from there. Returns
+    # +self+.
+    def deny!(tool_call)
+      record_tool_call_decision(tool_call, false)
+    end
+
+    # Returns whether the conversation can make no progress without an
+    # approval decision: every remaining pending tool call requires
+    # approval and has none recorded. While +true+, #complete returns
+    # without executing them; record decisions with #approve! or #deny!,
+    # then call #complete again. Tool calls that need no approval still
+    # execute before the loop parks.
+    #
+    # Consults each pending tool's approval resolver when one is declared,
+    # so resolvers must be idempotent reads.
+    def awaiting_approval?
+      response = pending_tool_response
+      return false unless response
+
+      pending = pending_tool_calls(response)
+      pending.any? && pending.all? { |_, tool_call| approval_pending?(tool_call) }
+    end
+
+    # Returns the tool calls from the latest response that require approval
+    # and have no recorded decision, as an array of ToolCall objects. Pairs
+    # with #approve! and #deny!.
+    #
+    #   chat.pending_approvals.each { |tool_call| puts tool_call.name }
+    #   chat.approve!(chat.pending_approvals.first)
+    #
+    def pending_approvals
+      response = pending_tool_response
+      return [] unless response
+
+      pending_tool_calls(response).values.select { |tool_call| approval_pending?(tool_call) }
     end
 
     # Cancels the current in-flight chat operation. The next cancellation
@@ -194,50 +259,36 @@ module RubyLLM
 
     # Sets the system instructions for the conversation, replacing any
     # existing system messages. With <tt>append: true</tt> the instructions
-    # are added alongside the existing ones. Returns +self+.
+    # are added alongside the existing ones. Pass +nil+ to remove all
+    # system instructions. Returns +self+.
     #
     #   chat.with_instructions "You are a helpful Ruby tutor."
     #   chat.with_instructions "Use exactly one short paragraph.", append: true
+    #   chat.with_instructions nil
     #
     def with_instructions(instructions, append: false)
-      raise ArgumentError, 'To remove instructions, use without_instructions' if instructions.nil?
-
-      without_instructions unless append
-      @messages << Message.new(role: :system, content: instructions)
-      self
-    end
-
-    # Removes all system instructions from the conversation. Returns +self+.
-    def without_instructions
-      @messages.reject! { |message| message.role == :system }
+      @messages.reject! { |message| message.role == :system } unless append
+      @messages << Message.new(role: :system, content: instructions) unless instructions.nil?
       self
     end
 
     # Registers +tools+, each a Tool class or instance, for the model to
     # call. Configure how the model uses them with #with_tool_options.
-    # Returns +self+.
+    # Pass +nil+ to remove all registered tools. Returns +self+.
     #
     #   chat.with_tools(Weather, Search)
     #   chat.with_tools(Weather).with_tool_options(choice: :required)
     #
-    # To replace the registered tools, clear them first with #without_tools.
+    # To replace the registered tools, clear them first:
     #
-    #   chat.without_tools.with_tools(NewTool)
+    #   chat.with_tools(nil).with_tools(NewTool)
     #
     def with_tools(*tools)
-      raise ArgumentError, 'To remove all tools, use without_tools' if tools == [nil]
-
+      @tools.clear if tools == [nil]
       tools.flatten.compact.each do |tool|
         tool_instance = tool.is_a?(Class) ? tool.new : tool
         @tools[tool_instance.name.to_sym] = tool_instance
       end
-      self
-    end
-
-    # Removes all registered tools, leaving the options set with
-    # #with_tool_options unchanged. Returns +self+.
-    def without_tools
-      @tools.clear
       self
     end
 
@@ -246,23 +297,23 @@ module RubyLLM
     # a Tool class. +calls:+ limits how many tool calls one response may
     # contain (+:many+ or +:one+). +concurrency:+ runs tool calls
     # concurrently: +true+ or +:threads+ for threads, +:fibers+ for fibers.
-    # A +nil+ option is left unchanged. Returns +self+.
+    # An omitted option is left unchanged; passing +nil+ explicitly resets
+    # that option (+concurrency: nil+ returns to the configured default).
+    # Returns +self+.
     #
     #   chat.with_tools(Weather, Search).with_tool_options(choice: :required)
     #   chat.with_tool_options(calls: :one, concurrency: :threads)
+    #   chat.with_tool_options(choice: nil)
     #
-    def with_tool_options(choice: nil, calls: nil, concurrency: nil)
-      update_tool_options(choice:, calls:)
-      @concurrency = normalize_tool_concurrency(concurrency) unless concurrency.nil?
-      self
-    end
-
-    # Resets the options set with #with_tool_options: +choice:+ and +calls:+
-    # return to unset, +concurrency:+ to the configured default. Returns
-    # +self+.
-    def without_tool_options
-      @tool_prefs = { choice: nil, calls: nil }
-      @concurrency = normalize_tool_concurrency(@config.tool_concurrency)
+    def with_tool_options(**options)
+      options.each do |option, value|
+        case option
+        when :choice then apply_tool_choice(value)
+        when :calls then @tool_prefs[:calls] = value.nil? ? nil : normalize_calls(value)
+        when :concurrency then @concurrency = normalize_tool_concurrency(value.nil? ? @config.tool_concurrency : value)
+        else raise ArgumentError, "Unknown tool option: #{option}. Valid options are: choice, calls, concurrency"
+        end
+      end
       self
     end
 
@@ -293,182 +344,109 @@ module RubyLLM
 
     # Sets fallback models to try, in order, when generation fails. +on:+
     # selects the error classes that trigger a fallback; the default covers
-    # transient provider and network errors. Returns +self+.
+    # transient provider and network errors. Pass +nil+ to remove all
+    # fallbacks and restore the default error classes. Returns +self+.
     #
     #   chat.with_fallbacks("gpt-4.1-mini", "claude-haiku-4-5")
+    #   chat.with_fallbacks(nil)
     #
     def with_fallbacks(*models, on: Fallback::DEFAULT_ERRORS)
       fallback_models = models.flatten.compact
-      raise ArgumentError, 'To remove fallbacks, use without_fallbacks' if fallback_models.empty?
-
       @fallbacks = fallback_models.map { |model| Fallback.build(model) }
-      @fallback_errors = Array(on).flatten.compact
+      @fallback_errors = fallback_models.empty? ? Fallback::DEFAULT_ERRORS : Array(on).flatten.compact
       self
     end
 
-    # Removes all fallback models and restores the default fallback error
-    # classes. Returns +self+.
-    def without_fallbacks
-      @fallbacks = []
-      @fallback_errors = Fallback::DEFAULT_ERRORS
-      self
-    end
-
-    # Sets the sampling temperature for subsequent requests. Returns +self+.
+    # Sets the sampling temperature for subsequent requests. Pass +nil+ to
+    # return to the model's default sampling behavior. Returns +self+.
     #
     #   chat.with_temperature(0.2)
     #
     def with_temperature(temperature)
-      raise ArgumentError, 'To clear the temperature, use without_temperature' if temperature.nil?
-
       @temperature = temperature
-      self
-    end
-
-    # Removes the temperature override, returning the chat to the model's
-    # default sampling behavior. Returns +self+.
-    def without_temperature
-      @temperature = nil
       self
     end
 
     # Caps the number of tokens the model may generate, mapping to each
     # provider's request field (+max_tokens+, +max_output_tokens+,
-    # +maxOutputTokens+, and so on). Returns +self+.
+    # +maxOutputTokens+, and so on). Pass +nil+ to remove the limit.
+    # Returns +self+.
     #
     #   chat.with_max_output_tokens(1000)
     #
     def with_max_output_tokens(max_output_tokens)
-      raise ArgumentError, 'To clear the limit, use without_max_output_tokens' if max_output_tokens.nil?
-
       @max_output_tokens = max_output_tokens
-      self
-    end
-
-    # Removes the output token limit, letting the provider use its default.
-    # Returns +self+.
-    def without_max_output_tokens
-      @max_output_tokens = nil
       self
     end
 
     # Configures extended thinking for models that support it, with
     # +effort:+ (+:low+, +:medium+, +:high+, or +:none+) and/or +budget:+
-    # (a token count). Returns +self+.
-    #
-    # Raises ArgumentError unless +effort:+ or +budget:+ is given.
+    # (a token count). With both +nil+, clears the configuration and
+    # returns to the model's default behavior. Returns +self+.
     #
     #   chat.with_thinking(effort: :high, budget: 8000)
     #   chat.with_thinking(budget: 10_000)
+    #   chat.with_thinking(effort: nil)
     #
-    def with_thinking(*args, effort: nil, budget: nil)
-      raise ArgumentError, 'To clear the thinking configuration, use without_thinking' if args == [nil]
-      raise ArgumentError, 'with_thinking accepts keyword options' unless args.empty?
-      raise ArgumentError, 'with_thinking requires :effort or :budget' unless effort || budget
-
-      @thinking = Thinking::Config.new(effort: effort, budget: budget)
-      self
-    end
-
-    # Clears the thinking configuration, returning to the model's default
-    # behavior. Returns +self+.
-    def without_thinking
-      @thinking = nil
+    def with_thinking(effort: nil, budget: nil)
+      @thinking = effort || budget ? Thinking::Config.new(effort: effort, budget: budget) : nil
       self
     end
 
     # Enables document citations, so the model backs its claims with quotes
-    # from attached files. Returns +self+.
+    # from attached files. Pass +false+ or +nil+ to disable. Returns +self+.
     #
     #   chat.with_citations
     #   response = chat.ask "Who created Ruby?", with: "facts.txt"
     #   response.citations.each { |citation| puts citation.cited_text }
     #
-    def with_citations
-      @citations = true
-      self
-    end
-
-    # Disables document citations. Returns +self+.
-    def without_citations
-      @citations = false
+    def with_citations(enabled = true)
+      @citations = enabled ? true : false
       self
     end
 
     # Enables provider prompt caching. With no arguments the provider's
     # default behavior applies; options such as +ttl:+ are passed through
-    # to providers that support them. Returns +self+.
+    # to providers that support them. Pass +nil+ to disable caching.
+    # Returns +self+.
     #
     #   chat.with_caching
     #   chat.with_caching(ttl: "1h")
+    #   chat.with_caching(nil)
     #
     def with_caching(options = {})
-      raise ArgumentError, 'To disable caching, use without_caching' if options.nil?
-
-      @caching = options.transform_keys(&:to_sym).freeze
-      self
-    end
-
-    # Disables prompt caching. Returns +self+.
-    def without_caching
-      @caching = nil
+      @caching = options&.transform_keys(&:to_sym)&.freeze
       self
     end
 
     # Rebinds the chat to +context+, a Context built with RubyLLM.context,
-    # so subsequent requests use its configuration. Returns +self+.
+    # so subsequent requests use its configuration. Pass +nil+ to return to
+    # the global RubyLLM.config. Returns +self+.
     def with_context(context)
-      raise ArgumentError, 'To return to the global configuration, use without_context' if context.nil?
-
       @context = context
-      @config = context.config
-      with_model(@model.id, provider: @provider.slug, protocol: @protocol, assume_model_exists: true)
-      self
-    end
-
-    # Removes the Context, returning the chat to the global RubyLLM.config.
-    # Returns +self+.
-    def without_context
-      @context = nil
-      @config = RubyLLM.config
+      @config = context&.config || RubyLLM.config
       with_model(@model.id, provider: @provider.slug, protocol: @protocol, assume_model_exists: true)
       self
     end
 
     # Sets options in the provider's request vocabulary, merged into the
     # request payload as-is and overriding RubyLLM's defaults. Replaces any
-    # previously set provider options. Returns +self+.
+    # previously set provider options; +nil+ clears them. Returns +self+.
     #
     #   chat.with_provider_options(max_output_tokens: 200)
     #
     def with_provider_options(provider_options)
-      raise ArgumentError, 'To clear provider options, use without_provider_options' if provider_options.nil?
-
       @provider_options = provider_options.to_h
       self
     end
 
-    # Removes all provider request options. Returns +self+.
-    def without_provider_options
-      @provider_options = {}
-      self
-    end
-
     # Sets extra HTTP headers sent with completion requests, replacing any
-    # previously set headers. Returns +self+.
+    # previously set headers; +nil+ clears them. Returns +self+.
     #
     #   chat.with_headers('anthropic-beta' => 'fine-grained-tool-streaming-2025-05-14')
     #
     def with_headers(headers)
-      raise ArgumentError, 'To clear headers, use without_headers' if headers.nil?
-
       @headers = headers.to_h
-      self
-    end
-
-    # Removes all extra HTTP headers. Returns +self+.
-    def without_headers
-      @headers = {}
       self
     end
 
@@ -485,22 +463,15 @@ module RubyLLM
     #   response = chat.ask("Generate a person named Alice who is 30 years old")
     #   response.parsed # => {"name" => "Alice", "age" => 30}
     #
+    # Pass +nil+ to remove the schema, returning the chat to plain text
+    # responses.
     def with_schema(schema)
-      raise ArgumentError, 'To remove the schema, use without_schema' if schema.nil?
-
       schema_instance = schema.is_a?(Class) ? schema.new : schema
 
       @schema = normalize_schema_payload(
         schema_instance.respond_to?(:to_json_schema) ? schema_instance.to_json_schema : schema_instance
       )
 
-      self
-    end
-
-    # Removes the structured output schema, returning the chat to plain
-    # text responses. Returns +self+.
-    def without_schema
-      @schema = nil
       self
     end
 
@@ -597,7 +568,7 @@ module RubyLLM
     end
 
     # Hooks installed by the Rails integration.
-    attr_writer :cancellation_checker, :usage_recorder # :nodoc:
+    attr_writer :cancellation_checker, :usage_recorder, :approval_checker # :nodoc:
 
     # Appends a message to the conversation and returns it as a Message.
     # Accepts a Message, an attribute Hash, or a record responding to
@@ -655,9 +626,18 @@ module RubyLLM
       )
     end
 
-    # Keeps the connection and config dumps out of pretty-printed output.
-    def pretty_print_instance_variables # :nodoc:
-      super - %i[@connection @config]
+    # Refuses to stage a user message onto an unfinished tool round, which
+    # providers reject. Called by #ask_later here and in the Rails
+    # integration before it persists anything.
+    def raise_if_pending_tool_calls! # :nodoc:
+      response = pending_tool_response
+      return unless response
+
+      names = pending_tool_calls(response).values.map(&:name).uniq
+      raise PendingToolCallsError,
+            "The last response has unanswered tool calls (#{names.join(', ')}). " \
+            'Run complete, recording approve! or deny! decisions for calls that ' \
+            'require approval, before asking again.'
     end
 
     private
@@ -945,14 +925,60 @@ module RubyLLM
     def execute_pending_tool_calls(response)
       raise_if_cancelled!
 
-      pending = pending_tool_calls(response)
+      executable, denied = partition_pending_tool_calls(pending_tool_calls(response))
+      deny_tool_calls(denied)
       if concurrency
-        handle_concurrent_tool_calls(pending)
+        handle_concurrent_tool_calls(executable)
       else
-        handle_sequential_tool_calls(pending)
+        handle_sequential_tool_calls(executable)
       end
 
       @tool_prefs[:choice] = nil if forced_tool_choice?
+    end
+
+    def partition_pending_tool_calls(pending)
+      executable = {}
+      denied = {}
+      pending.each do |id, tool_call|
+        tool = tools[tool_call.name.to_sym]
+        if tool&.requires_approval?
+          case tool_call_approval(tool, tool_call)
+          when true then executable[id] = tool_call
+          when false then denied[id] = tool_call
+          end
+        else
+          executable[id] = tool_call
+        end
+      end
+      [executable, denied]
+    end
+
+    def deny_tool_calls(tool_calls)
+      tool_calls.each_value do |tool_call|
+        raise_if_cancelled!
+        run_callbacks(:before_message)
+        add_tool_result_message(tool_call, { error: "The user denied the #{tool_call.name} tool call." })
+      end
+    end
+
+    def record_tool_call_decision(tool_call, decision)
+      id = tool_call.respond_to?(:id) ? tool_call.id : tool_call
+      @tool_call_decisions[id] = decision
+      self
+    end
+
+    def approval_pending?(tool_call)
+      tool = tools[tool_call.name.to_sym]
+      return false unless tool&.requires_approval?
+
+      tool_call_approval(tool, tool_call).nil?
+    end
+
+    def tool_call_approval(tool, tool_call)
+      return tool.approval_resolver.call(tool_call) if tool.approval_resolver
+      return @tool_call_decisions[tool_call.id] if @tool_call_decisions.key?(tool_call.id)
+
+      @approval_checker&.call(tool_call)
     end
 
     def handle_sequential_tool_calls(tool_calls)
@@ -1026,15 +1052,10 @@ module RubyLLM
       end
     end
 
-    def reset_tools
-      @tools.clear
-      @tool_prefs = { choice: nil, calls: nil }
-      @concurrency = normalize_tool_concurrency(@config.tool_concurrency)
-      self
-    end
-
-    def update_tool_options(choice:, calls:)
-      unless choice.nil?
+    def apply_tool_choice(choice)
+      if choice.nil?
+        @tool_prefs[:choice] = nil
+      else
         normalized_choice = normalize_tool_choice(choice)
         valid_tool_choices = %i[auto none required] + tools.keys
         unless valid_tool_choices.include?(normalized_choice)
@@ -1044,8 +1065,6 @@ module RubyLLM
 
         @tool_prefs[:choice] = normalized_choice
       end
-
-      @tool_prefs[:calls] = normalize_calls(calls) unless calls.nil?
     end
 
     def normalize_tool_concurrency(concurrency)
@@ -1105,6 +1124,20 @@ module RubyLLM
     def pending_tool_calls(response)
       answered = messages.filter_map { |message| message.tool_call_id if message.tool_result? }
       response.tool_calls.except(*answered)
+    end
+
+    def inspect_attributes # :nodoc:
+      {
+        model: model.id,
+        provider: provider.slug,
+        messages: messages.count,
+        tools: tools.keys,
+        awaiting_approval: awaiting_approval_names
+      }
+    end
+
+    def awaiting_approval_names
+      pending_approvals.map(&:name).uniq
     end
   end
 end

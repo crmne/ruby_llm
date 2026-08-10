@@ -59,12 +59,20 @@ module RubyLLM
              #{message_model_path}: #{acts_as_message_declaration}
           5. Remove config.model_registry_class from config/initializers/ruby_llm.rb, if present
           6. Review the generated Chat UI files listed below, if present
-          7. Restart your application server
+          7. Grep your app for the 1.x names and update them:
+               input_tokens, output_tokens, cached_tokens  ->  tokens.input / tokens.output / tokens.cache_read
+               RubyLLM::Content, content_raw               ->  String content plus message.attachments
+               create_user_message                         ->  ask_later or add_message
+               on_new_message, on_tool_call                ->  before_message, before_tool_call
+               halt, Tool::Halt                            ->  loop verbs or requires_approval
+               with_params, params:                        ->  with_provider_options, provider_options:
+          8. Restart your application server
 
           Generated UI files that reference the old records:
           #{generated_ui_paths.any? ? generated_ui_paths.join("\n  ") : '(none detected)'}
 
-          📚 See the v2.0 release notes for details on citations, finish reasons, prompt caching, cancellation, and batches support.
+          📚 The full upgrade guide, including the complete rename table:
+             https://rubyllm.com/upgrading/
 
         INSTRUCTIONS
       end

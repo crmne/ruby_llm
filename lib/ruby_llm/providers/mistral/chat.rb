@@ -37,7 +37,6 @@ module RubyLLM
           system_messages + other_messages
         end
 
-        # rubocop:disable Metrics/ParameterLists
         def render_payload(messages, tools:, temperature:, model:, stream: false, max_output_tokens: nil,
                            schema: nil, thinking: nil, citations: false, caching: nil, tool_prefs: nil)
           payload = super
@@ -47,7 +46,6 @@ module RubyLLM
           payload.merge!(prompt_cache_params(caching)) if caching
           payload
         end
-        # rubocop:enable Metrics/ParameterLists
 
         def prompt_cache_params(caching)
           options = prompt_cache_options(caching)

@@ -11,7 +11,6 @@ module RubyLLM
           'audio/transcriptions'
         end
 
-        # rubocop:disable Metrics/ParameterLists
         def render_transcription_payload(file_part, model:, language:, format: nil, speaker_names: nil,
                                          speaker_references: nil, provider_options: {}, prompt: nil,
                                          temperature: nil)
@@ -27,7 +26,6 @@ module RubyLLM
             known_speaker_references: encode_speaker_references(speaker_references)
           }.compact.merge(provider_options)
         end
-        # rubocop:enable Metrics/ParameterLists
 
         def encode_speaker_references(references)
           return nil unless references

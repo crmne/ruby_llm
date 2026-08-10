@@ -53,17 +53,17 @@ RSpec.describe RubyLLM::Chat do
   end
 
   describe 'wire formatting' do
-    def messages_with_tool_attachment
+    def messages_with_tool_attachment(path)
       [
         RubyLLM::Message.new(role: :user, content: 'Find the ruby logo'),
         RubyLLM::Message.new(role: :assistant, content: nil, tool_calls: { 'call_1' => tool_call }),
-        RubyLLM::Message.new(role: :tool, content: 'Found it', attachments: image_path, tool_call_id: 'call_1')
+        RubyLLM::Message.new(role: :tool, content: 'Found it', attachments: path, tool_call_id: 'call_1')
       ]
     end
 
-    def chat_with_tool_attachment(model, provider, protocol: nil)
+    def chat_with_tool_attachment(model, provider, protocol: nil, attachment: image_path)
       chat = RubyLLM.chat(model: model, provider: provider, protocol: protocol)
-      chat.messages = messages_with_tool_attachment
+      chat.messages = messages_with_tool_attachment(attachment)
       chat
     end
 
@@ -83,12 +83,20 @@ RSpec.describe RubyLLM::Chat do
       expect(tool_result[:content].last).to have_key(:image)
     end
 
-    it 'renders Gemini media parts alongside the function response' do
+    it 'renders Gemini media parts alongside the function response before Gemini 3' do
       chat = chat_with_tool_attachment('gemini-2.5-flash', 'gemini')
 
       parts = chat.render[:contents].last[:parts]
       expect(parts.first).to have_key(:functionResponse)
       expect(parts.last).to have_key(:inline_data)
+    end
+
+    it 'renders Gemini 3 media inside functionResponse.parts' do
+      chat = chat_with_tool_attachment('gemini-3-flash-preview', 'gemini')
+
+      parts = chat.render[:contents].last[:parts]
+      expect(parts.length).to eq(1)
+      expect(parts.first[:functionResponse][:parts].first).to have_key(:inline_data)
     end
 
     it 'splices a user item after Responses API tool results' do
@@ -114,6 +122,13 @@ RSpec.describe RubyLLM::Chat do
 
     it 'raises for file types a provider cannot take' do
       chat = chat_with_tool_attachment('deepseek-chat', 'deepseek')
+
+      expect { chat.render }.to raise_error(RubyLLM::UnsupportedAttachmentError)
+    end
+
+    it 'raises for tool PDFs on providers without document support' do
+      chat = chat_with_tool_attachment('grok-4-1-fast-non-reasoning', 'xai',
+                                       attachment: File.expand_path('../fixtures/sample.pdf', __dir__))
 
       expect { chat.render }.to raise_error(RubyLLM::UnsupportedAttachmentError)
     end

@@ -57,10 +57,15 @@ gh pr create --web
 ```bash
 overcommit --run
 
+# Fast unit-only run - skips specs tagged :live, needs no cassettes or API keys:
+bundle exec rspec --tag ~live
+
 # Re-recording VCR cassettes (requires API keys):
 rake vcr:record[openai,anthropic]  # Specific providers
 rake vcr:record[all]               # Everything
 ```
+
+Specs tagged `:live` talk to provider APIs through VCR cassettes; everything else is a plain unit test.
 
 Always check cassettes for leaked API keys before committing.
 

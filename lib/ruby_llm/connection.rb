@@ -9,6 +9,8 @@ require 'timeout'
 
 module RubyLLM
   class Connection # :nodoc:
+    include Inspectable
+
     attr_reader :provider, :connection, :config
 
     def self.basic(&)
@@ -54,11 +56,6 @@ module RubyLLM
           yield req if block_given?
         end
       end
-    end
-
-    # Keeps the config and Faraday internals out of pretty-printed output.
-    def pretty_print_instance_variables
-      super - %i[@config @connection]
     end
 
     private
@@ -142,6 +139,10 @@ module RubyLLM
     def set_usage_tracker(request, tracker)
       context = request.options.context ||= {}
       context[UsageMiddleware::CONTEXT_KEY] = tracker
+    end
+
+    def inspect_attributes # :nodoc:
+      { provider: @provider.slug }
     end
   end
 end
