@@ -23,7 +23,8 @@ module RubyLLM
     # provider-specific rate-limit headers are normalized into it here,
     # where the provider is known.
     def apply_retry_delay(response)
-      return unless response.status == 429
+      status = response.respond_to?(:status) ? response.status : response[:status]
+      return unless status == 429
 
       delay = @provider&.retry_delay(response)
       return unless delay
