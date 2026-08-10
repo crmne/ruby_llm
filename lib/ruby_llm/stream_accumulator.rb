@@ -19,6 +19,7 @@ module RubyLLM
       @cache_write_tokens = nil
       @thinking_tokens = nil
       @server_tool_use = nil
+      @reported_cost = nil
       @server_tool_calls = []
       @raw_content = nil
       @raw_reasoning = nil
@@ -59,7 +60,8 @@ module RubyLLM
           cache_read: @cache_read_tokens,
           cache_write: @cache_write_tokens,
           thinking: @thinking_tokens,
-          server_tool_use: @server_tool_use
+          server_tool_use: @server_tool_use,
+          reported_cost: @reported_cost
         ),
         server_tool_calls: @server_tool_calls,
         raw_content: @raw_content,
@@ -174,6 +176,7 @@ module RubyLLM
       @cache_write_tokens = tokens.cache_write if tokens.cache_write
       @thinking_tokens = tokens.thinking if tokens.thinking
       @server_tool_use = tokens.server_tool_use if tokens.server_tool_use
+      @reported_cost = tokens.reported_cost if tokens.reported_cost
     end
 
     def handle_chunk_content(chunk)

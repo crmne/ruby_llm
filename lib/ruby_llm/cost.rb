@@ -17,6 +17,10 @@ module RubyLLM
   # pricing for tokens that were used, the affected component and #total
   # return +nil+ instead of a false zero.
   #
+  # When the provider reports the exact cost of a call (OpenRouter does on
+  # every response), #total returns the reported amount instead of a
+  # registry-price estimate, even when registry pricing is missing.
+  #
   # Costs are computed when the object is built and frozen from then on.
   # ::aggregate and ::from_h return the same class, so a single call, a
   # whole chat, and a stored breakdown all read the same way.
@@ -47,7 +51,7 @@ module RubyLLM
           [component, missing.include?(component) || values.empty? ? nil : values.sum]
         end
 
-        new(amounts:, missing:, reported: costs.any?, complete:)
+        new(amounts:, missing:, reported: costs.any?, complete:, total: aggregate_total(costs))
       end
 
       # Rebuilds a cost from a stored breakdown Hash, as produced by #to_h
@@ -67,6 +71,11 @@ module RubyLLM
       end
 
       private
+
+      def aggregate_total(costs)
+        totals = costs.map(&:total)
+        totals.sum if totals.any? && totals.none?(&:nil?)
+      end
 
       def missing_recorded_components(amounts, tokens, total_recorded)
         return [] if total_recorded
@@ -91,13 +100,9 @@ module RubyLLM
         @missing = missing || []
         @reported = reported
       else
-        @tokens = tokens
-        @model = normalize_model(model)
-        @category = category.to_sym
-        @input_details = input_details
-        @amounts = COMPONENTS.to_h { |component| [component, amount_for(component)] }
-        @missing = COMPONENTS.select { |component| missing_component?(component) }
-        @reported = COMPONENTS.any? { |component| !tokens_for(component).nil? }
+        price_tokens(tokens, model, category, input_details)
+        total = reported_total if total.nil?
+        @reported ||= !total.nil?
       end
       @complete = complete
       @total = total
@@ -135,14 +140,15 @@ module RubyLLM
       @amounts[:thinking]
     end
 
-    # Returns the sum of all components in US dollars. Returns +nil+ when
-    # there is no token usage, or when pricing is missing for tokens that
-    # were used.
+    # Returns the sum of all components in US dollars, or the exact amount
+    # the provider reported when it reported one. Returns +nil+ when there
+    # is no token usage, or when pricing is missing for tokens that were
+    # used and the provider reported no cost.
     def total
       return nil unless @complete
       return nil unless tokens?
-      return nil if @missing.any?
       return @total unless @total.nil?
+      return nil if @missing.any?
 
       amounts = @amounts.values.compact
       return nil if amounts.empty?
@@ -172,6 +178,20 @@ module RubyLLM
     end
 
     private
+
+    def price_tokens(tokens, model, category, input_details)
+      @tokens = tokens
+      @model = normalize_model(model)
+      @category = category.to_sym
+      @input_details = input_details
+      @amounts = COMPONENTS.to_h { |component| [component, amount_for(component)] }
+      @missing = COMPONENTS.select { |component| missing_component?(component) }
+      @reported = COMPONENTS.any? { |component| !tokens_for(component).nil? }
+    end
+
+    def reported_total
+      @tokens.reported_cost if @tokens.respond_to?(:reported_cost)
+    end
 
     def missing_component?(component)
       return image_input_missing? if component == :input && detailed_image_input?

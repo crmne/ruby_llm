@@ -92,10 +92,15 @@ module RubyLLM
             cache_write_tokens: cache_write_tokens(usage),
             thinking_tokens: thinking_tokens,
             server_tool_use: server_tool_use(usage),
+            reported_cost: reported_cost(usage),
             finish_reason: finish_reason,
             model: data['model'],
             raw: raw
           )
+        end
+
+        def reported_cost(_usage)
+          nil
         end
 
         def server_tool_use(usage)

@@ -141,7 +141,8 @@ module RubyLLM
 
       @tokens ||= Tokens.new(
         input: raw_usage['input_tokens'],
-        output: raw_usage['output_tokens']
+        output: raw_usage['output_tokens'],
+        reported_cost: raw_usage['cost']
       )
     end
 

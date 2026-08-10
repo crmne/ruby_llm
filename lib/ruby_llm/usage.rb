@@ -218,7 +218,8 @@ module RubyLLM
           output: incoming.output.nil? ? existing.output : incoming.output,
           cache_read: incoming.cache_read.nil? ? existing.cache_read : incoming.cache_read,
           cache_write: incoming.cache_write.nil? ? existing.cache_write : incoming.cache_write,
-          thinking: incoming.thinking.nil? ? existing.thinking : incoming.thinking
+          thinking: incoming.thinking.nil? ? existing.thinking : incoming.thinking,
+          reported_cost: incoming.reported_cost.nil? ? existing.reported_cost : incoming.reported_cost
         )
       end
     end

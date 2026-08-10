@@ -39,6 +39,10 @@ module RubyLLM
           'auto' if model.include?('diarize')
         end
 
+        def reported_cost(_usage)
+          nil
+        end
+
         def default_response_format(model)
           'diarized_json' if model.include?('diarize')
         end
@@ -54,11 +58,12 @@ module RubyLLM
             text: data['text'],
             model: model,
             language: data['language'],
-            duration: data['duration'],
+            duration: data['duration'] || usage['seconds'],
             segments: data['segments'],
             words: data['words'],
             input_tokens: usage['input_tokens'] || usage['prompt_tokens'],
-            output_tokens: usage['output_tokens'] || usage['completion_tokens']
+            output_tokens: usage['output_tokens'] || usage['completion_tokens'],
+            reported_cost: reported_cost(usage)
           )
         end
       end

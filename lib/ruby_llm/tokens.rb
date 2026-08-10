@@ -41,14 +41,21 @@ module RubyLLM
     # in tokens.
     attr_reader :server_tool_use
 
+    # The exact cost of the call in US dollars as reported by the
+    # provider, or +nil+ if the provider does not report one. OpenRouter
+    # reports it on every response; most providers leave it +nil+. When
+    # present, Cost#total returns it instead of a registry-price estimate.
+    attr_reader :reported_cost
+
     def initialize(input: nil, output: nil, cache_read: nil, cache_write: nil, thinking: nil, # :nodoc:
-                   server_tool_use: nil)
+                   server_tool_use: nil, reported_cost: nil)
       @input = input
       @output = output
       @cache_read = cache_read
       @cache_write = cache_write
       @thinking = thinking
       @server_tool_use = server_tool_use
+      @reported_cost = reported_cost
     end
 
     # Sums token counts across provider attempts. A bucket remains +nil+ when
@@ -58,7 +65,7 @@ module RubyLLM
       return new if tokens.empty?
       return tokens.first if tokens.one?
 
-      values = %i[input output cache_read cache_write thinking].to_h do |component|
+      values = %i[input output cache_read cache_write thinking reported_cost].to_h do |component|
         reported = tokens.filter_map { |usage| usage.public_send(component) }
         [component, reported.empty? ? nil : reported.sum]
       end

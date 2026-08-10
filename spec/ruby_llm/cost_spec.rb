@@ -232,6 +232,62 @@ RSpec.describe RubyLLM::Cost do
     end
   end
 
+  describe 'provider-reported cost' do
+    it 'prefers the reported cost over the registry estimate' do
+      tokens = RubyLLM::Tokens.new(input: 1_000, output: 2_000, reported_cost: 0.0042)
+      cost = described_class.new(tokens:, model:)
+
+      expect(cost.input).to be_within(0.0000000001).of(0.001)
+      expect(cost.total).to eq(0.0042)
+    end
+
+    it 'returns the reported cost when registry pricing is missing' do
+      tokens = RubyLLM::Tokens.new(input: 10, output: 5, reported_cost: 0.0042)
+      cost = described_class.new(tokens:, model: nil)
+
+      expect(cost.input).to be_nil
+      expect(cost.total).to eq(0.0042)
+    end
+
+    it 'reports usage even when the provider returned only a cost' do
+      tokens = RubyLLM::Tokens.new(reported_cost: 0.0042)
+      cost = described_class.new(tokens:, model: nil)
+
+      expect(cost.tokens?).to be(true)
+      expect(cost.total).to eq(0.0042)
+    end
+
+    it 'estimates from the registry when no cost was reported' do
+      tokens = RubyLLM::Tokens.new(input: 1_000, output: 2_000)
+      cost = described_class.new(tokens:, model:)
+
+      expect(cost.total).to be_within(0.0000000001).of(0.005)
+    end
+
+    it 'sums reported costs across aggregated attempts' do
+      first = described_class.new(tokens: RubyLLM::Tokens.new(input: 10, reported_cost: 0.001), model: nil)
+      second = described_class.new(tokens: RubyLLM::Tokens.new(input: 20, reported_cost: 0.002), model: nil)
+      aggregate = described_class.aggregate([first, second])
+
+      expect(aggregate.total).to be_within(0.0000000001).of(0.003)
+    end
+
+    it 'mixes reported and estimated totals in an aggregate' do
+      reported = described_class.new(tokens: RubyLLM::Tokens.new(input: 10, reported_cost: 0.001), model: nil)
+      estimated = described_class.new(tokens: RubyLLM::Tokens.new(input: 1_000, output: 2_000), model:)
+      aggregate = described_class.aggregate([reported, estimated])
+
+      expect(aggregate.total).to be_within(0.0000000001).of(0.006)
+    end
+
+    it 'round-trips the reported total through to_h' do
+      tokens = RubyLLM::Tokens.new(input: 10, output: 5, reported_cost: 0.0042)
+      restored = described_class.from_h(described_class.new(tokens:, model: nil).to_h)
+
+      expect(restored.total).to eq(0.0042)
+    end
+  end
+
   describe '.aggregate' do
     it 'sums costs while preserving nil for missing pricing' do
       priced = described_class.new(tokens: RubyLLM::Tokens.new(input: 10), model:)

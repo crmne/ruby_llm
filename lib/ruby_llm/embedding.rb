@@ -21,17 +21,18 @@ module RubyLLM
     # The id of the model that produced the vectors, as a String.
     attr_reader :model
 
-    def initialize(vectors:, model:, input_tokens: nil) # :nodoc:
+    def initialize(vectors:, model:, input_tokens: nil, reported_cost: nil) # :nodoc:
       @vectors = vectors
       @model = model
       @input_tokens = input_tokens
+      @reported_cost = reported_cost
     end
 
     # Returns usage aggregated across every provider attempt.
     def tokens
       return ruby_llm_usage_tokens unless ruby_llm_usage_entries.empty?
 
-      Tokens.new(input: @input_tokens)
+      Tokens.new(input: @input_tokens, reported_cost: @reported_cost)
     end
 
     # Returns the embedding cost across every provider attempt.

@@ -104,7 +104,8 @@ module RubyLLM
         cache_read: options[:cache_read_tokens],
         cache_write: options[:cache_write_tokens],
         thinking: options[:thinking_tokens],
-        server_tool_use: options[:server_tool_use]
+        server_tool_use: options[:server_tool_use],
+        reported_cost: options[:reported_cost]
       )
       @raw = options[:raw]
       @thinking = options[:thinking]

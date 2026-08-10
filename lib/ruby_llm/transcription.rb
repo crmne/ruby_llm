@@ -44,13 +44,14 @@ module RubyLLM
       @words = attributes[:words]
       @input_tokens = attributes[:input_tokens]
       @output_tokens = attributes[:output_tokens]
+      @reported_cost = attributes[:reported_cost]
     end
 
     # Returns usage aggregated across every provider attempt.
     def tokens
       return ruby_llm_usage_tokens unless ruby_llm_usage_entries.empty?
 
-      Tokens.new(input: @input_tokens, output: @output_tokens)
+      Tokens.new(input: @input_tokens, output: @output_tokens, reported_cost: @reported_cost)
     end
 
     # Returns the transcription cost across every provider attempt.

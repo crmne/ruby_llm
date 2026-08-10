@@ -27,7 +27,11 @@ module RubyLLM
           vectors = data['data'].map { |d| d['embedding'] }
           vectors = vectors.first if vectors.length == 1 && !text.is_a?(Array)
 
-          Embedding.new(vectors:, model:, input_tokens:)
+          Embedding.new(vectors:, model:, input_tokens:, reported_cost: reported_cost(data['usage'] || {}))
+        end
+
+        def reported_cost(_usage)
+          nil
         end
       end
     end
