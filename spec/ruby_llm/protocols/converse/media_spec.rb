@@ -42,6 +42,52 @@ RSpec.describe RubyLLM::Protocols::Converse::Media do
       )
     end
 
+    it 'renders audio attachments as audio blocks' do
+      attachment = RubyLLM::Attachment.new(StringIO.new('wav bytes'), filename: 'clip.wav')
+
+      rendered = described_class.format_content('What is said?', [attachment])
+
+      expect(rendered.second).to eq(
+        audio: {
+          format: 'wav',
+          source: {
+            bytes: Base64.strict_encode64('wav bytes')
+          }
+        }
+      )
+    end
+
+    it 'renders video attachments as video blocks' do
+      attachment = RubyLLM::Attachment.new(StringIO.new('mp4 bytes'), filename: 'clip.mp4')
+
+      rendered = described_class.format_content('What is shown?', [attachment])
+
+      expect(rendered.second).to eq(
+        video: {
+          format: 'mp4',
+          source: {
+            bytes: Base64.strict_encode64('mp4 bytes')
+          }
+        }
+      )
+    end
+
+    it 'normalizes media formats to the names Bedrock accepts' do
+      mov = RubyLLM::Attachment.new(StringIO.new('mov bytes'), filename: 'clip.mov')
+      three_gp = RubyLLM::Attachment.new(StringIO.new('3gp bytes'), filename: 'clip.3gp')
+
+      expect(described_class.format_content(nil, [mov]).first[:video][:format]).to eq('mov')
+      expect(described_class.format_content(nil, [three_gp]).first[:video][:format]).to eq('three_gp')
+    end
+
+    it 'raises for audio formats Bedrock does not accept' do
+      attachment = RubyLLM::Attachment.new(StringIO.new('amr bytes'), filename: 'clip.amr')
+
+      expect do
+        described_class.format_content(nil, [attachment])
+      end.to raise_error(RubyLLM::UnsupportedAttachmentError)
+    end
+
     it 'keeps text file formats as text blocks' do
       %w[csv txt md html json].each do |extension|
         attachment = RubyLLM::Attachment.new(StringIO.new('notes'), filename: "notes.#{extension}")

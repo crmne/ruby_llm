@@ -25,6 +25,10 @@ module RubyLLM
           case attachment.type
           when :image
             format_image_attachment(attachment)
+          when :audio
+            format_audio_attachment(attachment)
+          when :video
+            format_video_attachment(attachment)
           when :pdf, :document
             format_document_attachment(attachment, used_document_names:, citations:)
           when :text
@@ -39,6 +43,19 @@ module RubyLLM
         end
 
         SUPPORTED_DOCUMENT_FORMATS = %w[pdf csv doc docx xls xlsx html txt md].freeze
+        SUPPORTED_AUDIO_FORMATS = %w[mp3 opus wav aac flac mp4 ogg mkv mka x-aac m4a mpeg mpga pcm webm].freeze
+        SUPPORTED_VIDEO_FORMATS = %w[mkv mov mp4 webm flv mpeg mpg wmv three_gp].freeze
+        AUDIO_FORMAT_ALIASES = {
+          'x-flac' => 'flac',
+          'x-m4a' => 'm4a'
+        }.freeze
+        VIDEO_FORMAT_ALIASES = {
+          'quicktime' => 'mov',
+          'x-matroska' => 'mkv',
+          'x-ms-wmv' => 'wmv',
+          '3gp' => 'three_gp',
+          '3gpp' => 'three_gp'
+        }.freeze
 
         def format_image_attachment(attachment)
           {
@@ -49,6 +66,36 @@ module RubyLLM
               }
             }
           }
+        end
+
+        def format_audio_attachment(attachment)
+          {
+            audio: {
+              format: media_format(attachment, AUDIO_FORMAT_ALIASES, SUPPORTED_AUDIO_FORMATS),
+              source: {
+                bytes: attachment.encoded
+              }
+            }
+          }
+        end
+
+        def format_video_attachment(attachment)
+          {
+            video: {
+              format: media_format(attachment, VIDEO_FORMAT_ALIASES, SUPPORTED_VIDEO_FORMATS),
+              source: {
+                bytes: attachment.encoded
+              }
+            }
+          }
+        end
+
+        def media_format(attachment, aliases, supported)
+          format = attachment.format.to_s
+          format = aliases.fetch(format, format)
+          raise UnsupportedAttachmentError, attachment.mime_type unless supported.include?(format)
+
+          format
         end
 
         def format_text_attachment(attachment)
