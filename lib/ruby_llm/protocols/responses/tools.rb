@@ -13,7 +13,8 @@ module RubyLLM
             type: 'function',
             name: tool.name,
             description: tool.description,
-            parameters: ChatCompletions::Tools.parameters_schema_for(tool)
+            parameters: ChatCompletions::Tools.parameters_schema_for(tool),
+            strict: false
           }
 
           return definition if tool.provider_options.empty?
