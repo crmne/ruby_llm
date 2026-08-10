@@ -71,13 +71,16 @@ module RubyLLM
 
         def parse_streaming_error(data)
           error_data = JSON.parse(data)
-          return unless error_data['type'] == 'error'
+          return unless error_data.is_a?(Hash) && error_data['type'] == 'error'
 
-          case error_data.dig('error', 'type')
+          error = error_data['error']
+          return [500, error.to_s] unless error.is_a?(Hash)
+
+          case error['type']
           when 'overloaded_error'
-            [529, error_data['error']['message']]
+            [529, error['message']]
           else
-            [500, error_data['error']['message']]
+            [500, error['message']]
           end
         end
       end

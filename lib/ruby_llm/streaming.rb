@@ -115,7 +115,8 @@ module RubyLLM
 
     def parse_streaming_error(data)
       error_data = JSON.parse(data)
-      [500, error_data['message'] || 'Unknown streaming error']
+      message = error_data.is_a?(Hash) ? error_data['message'] : error_data.to_s
+      [500, message || 'Unknown streaming error']
     rescue JSON::ParserError => e
       RubyLLM.logger.debug { "Failed to parse streaming error: #{e.message}" }
       [500, "Failed to parse error: #{data}"]

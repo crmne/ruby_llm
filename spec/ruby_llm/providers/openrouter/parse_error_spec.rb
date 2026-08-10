@@ -79,5 +79,43 @@ RSpec.describe RubyLLM::Providers::OpenRouter do # rubocop:disable RSpec/SpecFil
 
       expect(provider.parse_error(response)).to eq('Provider returned error')
     end
+
+    it 'handles a string error value' do
+      response = instance_double(Faraday::Response, body: { error: 'upstream 502' }.to_json)
+
+      expect(provider.parse_error(response)).to eq('upstream 502')
+    end
+
+    it 'joins messages from an array error value' do
+      response = instance_double(
+        Faraday::Response,
+        body: { error: [{ message: 'first failure' }, 'second failure'] }.to_json
+      )
+
+      expect(provider.parse_error(response)).to eq('first failure. second failure')
+    end
+
+    it 'ignores non-object metadata' do
+      response = instance_double(
+        Faraday::Response,
+        body: { error: { message: 'Provider returned error', metadata: 'raw text' } }.to_json
+      )
+
+      expect(provider.parse_error(response)).to eq('Provider returned error')
+    end
+
+    it 'handles a string error nested in metadata.raw' do
+      response = instance_double(
+        Faraday::Response,
+        body: {
+          error: {
+            message: 'Provider returned error',
+            metadata: { raw: { error: 'upstream detail' }.to_json }
+          }
+        }.to_json
+      )
+
+      expect(provider.parse_error(response)).to eq('Provider returned error - upstream detail')
+    end
   end
 end

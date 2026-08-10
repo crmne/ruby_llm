@@ -51,4 +51,30 @@ RSpec.describe RubyLLM::Protocols::Gemini::Streaming do
 
     expect(chunk.finish_reason).to eq('MAX_TOKENS')
   end
+
+  describe '#parse_streaming_error' do
+    it 'parses error objects' do
+      status, message = test_obj.send(
+        :parse_streaming_error,
+        { error: { code: 429, message: 'Quota exceeded' } }.to_json
+      )
+
+      expect(status).to eq(429)
+      expect(message).to eq('Quota exceeded')
+    end
+
+    it 'handles a body that parses to a bare JSON string' do
+      status, message = test_obj.send(:parse_streaming_error, '"model unavailable"')
+
+      expect(status).to be_nil
+      expect(message).to eq('model unavailable')
+    end
+
+    it 'handles a string error value' do
+      status, message = test_obj.send(:parse_streaming_error, { error: 'model unavailable' }.to_json)
+
+      expect(status).to be_nil
+      expect(message).to eq('model unavailable')
+    end
+  end
 end
