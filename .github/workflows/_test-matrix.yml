@@ -17,7 +17,10 @@ permissions:
 
 jobs:
   test:
-    name: Test (${{ matrix.ruby-version }} / ${{ matrix.rails-version }})
+    # No " / " in the name: GitHub joins the caller job id and this name with
+    # " / ", then splits on it to build the checks tree, so an inner slash
+    # hides everything before it (a bare "rails-7.1)" in the sidebar).
+    name: Test (${{ matrix.ruby-version }}, ${{ matrix.rails-version }})
     runs-on: ubuntu-latest
     env:
       BUNDLE_PATH: vendor/bundle
