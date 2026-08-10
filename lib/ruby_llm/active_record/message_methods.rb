@@ -26,6 +26,8 @@ module RubyLLM
           attachments: extract_attachments,
           thinking: thinking,
           citations: citations,
+          server_tool_calls: server_tool_calls,
+          raw_content: optional_column(:raw_content),
           usage_entries: entries,
           tool_calls: tool_calls,
           tool_call_id: parent_tool_call&.id,
@@ -57,6 +59,10 @@ module RubyLLM
 
       def citations
         Array(optional_column(:citations)).map { |citation| RubyLLM::Citation.from_h(citation) }
+      end
+
+      def server_tool_calls
+        Array(optional_column(:server_tool_calls)).map { |call| RubyLLM::ServerToolCall.from_h(call) }
       end
 
       def tokens

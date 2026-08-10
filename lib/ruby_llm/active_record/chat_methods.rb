@@ -210,7 +210,7 @@ module RubyLLM
       # RubyLLM::Chat. Each behaves exactly as documented on RubyLLM::Chat,
       # then returns the record so calls chain.
       CHAT_DELEGATES = %i[
-        with_tools with_tool_options with_fallbacks with_temperature
+        with_tools with_tool_options with_server_tools with_fallbacks with_temperature
         with_max_output_tokens with_thinking with_citations with_caching
         with_provider_options with_headers with_schema
         before_message after_message before_tool_call after_tool_result
@@ -619,6 +619,8 @@ module RubyLLM
         assign_supported_attribute(attrs, :thinking_text, message.thinking&.text)
         assign_supported_attribute(attrs, :thinking_signature, message.thinking&.signature)
         assign_supported_attribute(attrs, :citations, message.citations.map(&:to_h).presence)
+        assign_supported_attribute(attrs, :server_tool_calls, message.server_tool_calls.map(&:to_h).presence)
+        assign_supported_attribute(attrs, :raw_content, message.raw_content)
         assign_supported_attribute(attrs, :finish_reason, message.finish_reason)
         assign_supported_attribute(attrs, :cache_until_here, message.cache_until_here?)
         attrs

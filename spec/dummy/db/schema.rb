@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-ActiveRecord::Schema[7.1].define(version: 20_260_808_120_000) do
+ActiveRecord::Schema[7.1].define(version: 20_260_811_120_000) do
   create_table 'action_text_rich_texts', force: :cascade do |t|
     t.string 'name', null: false
     t.text 'body'
@@ -57,6 +57,8 @@ ActiveRecord::Schema[7.1].define(version: 20_260_808_120_000) do
     t.text 'thinking_text'
     t.json 'content_raw'
     t.json 'citations'
+    t.json 'server_tool_calls'
+    t.json 'raw_content'
     t.boolean 'cache_until_here', default: false, null: false
     t.string 'finish_reason'
     t.datetime 'created_at', null: false

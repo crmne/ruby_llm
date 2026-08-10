@@ -39,6 +39,12 @@ module RubyLLM
     # conversation is sent back to the provider.
     attr_reader :raw
 
+    def self.from_h(data) # :nodoc:
+      data = Utils.deep_symbolize_keys(data)
+      new(type: data[:type], name: data[:name], id: data[:id], input: data[:input],
+          result: data[:result], raw: data[:raw])
+    end
+
     def initialize(type:, raw:, name: nil, id: nil, input: nil, result: nil) # :nodoc:
       @type = type
       @name = name

@@ -8,6 +8,8 @@ class <%= create_migration_class_name(message_table_name) %> < ActiveRecord::Mig
       t.text :thinking_text
       t.text :thinking_signature
       t.json :citations
+      t.json :server_tool_calls
+      t.json :raw_content
       t.string :finish_reason
       t.timestamps
     end

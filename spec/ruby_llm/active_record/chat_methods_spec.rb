@@ -453,6 +453,31 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
 
       expect(attributes).to eq(role: :assistant, content: 'hi')
     end
+
+    it 'round-trips server tool calls and raw content through the row' do
+      raw_block = { 'type' => 'server_tool_use', 'id' => 'srvtoolu_1', 'name' => 'web_search',
+                    'input' => { 'query' => 'ruby' } }
+      chat = Chat.create!(model: model_id)
+      chat.send(:persist_new_message)
+
+      chat.send(
+        :persist_message_completion,
+        RubyLLM::Message.new(
+          role: :assistant, content: 'Found it.',
+          server_tool_calls: [RubyLLM::ServerToolCall.new(type: 'server_tool_use', name: 'web_search',
+                                                          id: 'srvtoolu_1', input: { 'query' => 'ruby' },
+                                                          raw: raw_block)],
+          raw_content: [raw_block, { 'type' => 'text', 'text' => 'Found it.' }],
+          finish_reason: 'end_turn'
+        )
+      )
+
+      record = chat.instance_variable_get(:@message)
+      restored = record.to_llm
+      expect(restored.server_tool_calls.first.type).to eq('server_tool_use')
+      expect(restored.server_tool_calls.first.raw).to eq(RubyLLM::Utils.deep_symbolize_keys(raw_block))
+      expect(restored.raw_content.length).to eq(2)
+    end
   end
 
   describe 'tool call approval read back from the row' do
