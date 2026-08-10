@@ -1,83 +1,100 @@
 # frozen_string_literal: true
 
-require 'time'
-
 module RubyLLM
   module Providers
     class GPUStack
-      # Models methods of the GPUStack API integration
+      # Models methods of the GPUStack API integration. GPUStack 2.x serves
+      # the plain OpenAI list format at /v1/models; categories arrive through
+      # per-category queries because the list response doesn't include them.
       module Models
-        module_function
+        CATEGORIES = %w[llm embedding image reranker speech_to_text text_to_speech unknown].freeze
 
         def models_url
-          'models'
+          'models?with_meta=true'
+        end
+
+        def list_models
+          models = {}
+          CATEGORIES.each do |category|
+            data = @connection.get("#{models_url}&categories=#{category}").body['data'] || []
+            data.each do |model|
+              entry = models[model['id']] ||= model.merge('categories' => [])
+              entry['categories'] << category
+            end
+          end
+          models.values.map { |model| build_model(model, @provider.slug) }
         end
 
         def parse_list_models_response(response, slug, _capabilities)
-          items = response.body['items'] || []
-          items.map do |model|
-            Model.new(
-              id: model['name'],
-              name: model['name'],
-              created_at: model['created_at'] ? Time.parse(model['created_at']) : nil,
-              provider: slug,
-              family: 'gpustack',
-              metadata: {
-                description: model['description'],
-                source: model['source'],
-                huggingface_repo_id: model['huggingface_repo_id'],
-                ollama_library_model_name: model['ollama_library_model_name'],
-                backend: model['backend'],
-                meta: model['meta'],
-                categories: model['categories']
-              },
-              context_window: model.dig('meta', 'n_ctx'),
-              max_output_tokens: model.dig('meta', 'n_ctx'),
-              capabilities: build_capabilities(model),
-              modalities: build_modalities(model),
-              pricing: {}
-            )
-          end
+          data = response.body['data'] || []
+          data.map { |model| build_model(model, slug) }
         end
 
         private
 
-        def build_capabilities(model) # rubocop:disable Metrics/PerceivedComplexity
-          capabilities = []
+        def build_model(model, slug)
+          meta = model['meta'] || {}
+          categories = model['categories'] || []
 
-          # Add streaming by default for LLM models
-          capabilities << 'streaming' if model['categories']&.include?('llm')
+          Model.new(
+            id: model['id'],
+            name: model['id'],
+            created_at: model['created'] ? Time.at(model['created']) : nil,
+            provider: slug,
+            family: 'gpustack',
+            context_window: context_window(meta),
+            max_output_tokens: context_window(meta),
+            capabilities: build_capabilities(categories, meta),
+            modalities: build_modalities(categories, meta),
+            pricing: {},
+            metadata: {
+              owned_by: model['owned_by'],
+              categories: categories,
+              meta: model['meta']
+            }
+          )
+        end
 
-          # Map GPUStack metadata to standard capabilities
-          capabilities << 'function_calling' if model.dig('meta', 'support_tool_calls')
-          capabilities << 'vision' if model.dig('meta', 'support_vision')
-          capabilities << 'reasoning' if model.dig('meta', 'support_reasoning')
+        def context_window(meta)
+          meta['n_ctx'] || meta['max_model_len']
+        end
 
-          # GPUStack models generally support structured output and json mode
-          capabilities << 'structured_output' if model['categories']&.include?('llm')
-          capabilities << 'json_mode' if model['categories']&.include?('llm')
+        def build_capabilities(categories, meta)
+          return [] unless categories.include?('llm')
 
+          capabilities = %w[streaming structured_output json_mode]
+          capabilities << 'function_calling' if meta['support_tool_calls']
+          capabilities << 'vision' if meta['support_vision']
+          capabilities << 'reasoning' if meta['support_reasoning']
           capabilities
         end
 
-        def build_modalities(model)
-          input_modalities = []
-          output_modalities = []
-
-          if model['categories']&.include?('llm')
-            input_modalities << 'text'
-            input_modalities << 'image' if model.dig('meta', 'support_vision')
-            input_modalities << 'audio' if model.dig('meta', 'support_audio')
-            output_modalities << 'text'
-          elsif model['categories']&.include?('embedding')
-            input_modalities << 'text'
-            output_modalities << 'embeddings'
-          end
-
+        def build_modalities(categories, meta)
           {
-            input: input_modalities,
-            output: output_modalities
+            input: input_modalities(categories, meta),
+            output: output_modalities(categories)
           }
+        end
+
+        def input_modalities(categories, meta)
+          inputs = []
+          inputs << 'text' if categories.intersect?(%w[llm embedding image reranker text_to_speech])
+          inputs << 'image' if categories.include?('llm') && meta['support_vision']
+          inputs << 'audio' if audio_input?(categories, meta)
+          inputs
+        end
+
+        def audio_input?(categories, meta)
+          categories.include?('speech_to_text') || (categories.include?('llm') && meta['support_audio'])
+        end
+
+        def output_modalities(categories)
+          outputs = []
+          outputs << 'text' if categories.intersect?(%w[llm speech_to_text reranker])
+          outputs << 'embeddings' if categories.include?('embedding')
+          outputs << 'image' if categories.include?('image')
+          outputs << 'audio' if categories.include?('text_to_speech')
+          outputs
         end
       end
     end

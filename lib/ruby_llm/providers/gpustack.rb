@@ -4,8 +4,10 @@ module RubyLLM
   module Providers
     # GPUStack API integration.
     class GPUStack < Provider
-      # GPUStack speaks Ollama's dialect with its own model catalog.
-      class ChatCompletions < Ollama::ChatCompletions
+      # GPUStack's dialect of the Chat Completions API.
+      class ChatCompletions < Protocols::ChatCompletions
+        include GPUStack::Chat
+        include GPUStack::Media
         include GPUStack::Models
       end
 
