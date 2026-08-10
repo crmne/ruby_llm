@@ -49,18 +49,18 @@ module RubyLLM
           content = nil if content && content.empty?
           content = '(no output)' if content.nil? && msg.attachments.empty?
 
-          parts = [{
-            functionResponse: {
+          function_response = {
+            name: function_name,
+            response: {
               name: function_name,
-              response: {
-                name: function_name,
-                content: Media.format_content(content)
-              }
+              content: Media.format_content(content)
             }
-          }]
+          }
 
-          msg.attachments.each { |attachment| parts << Media.format_content_attachment(attachment) }
-          parts
+          media_parts, sibling_parts = partition_tool_result_attachments(msg.attachments)
+          function_response[:parts] = media_parts if media_parts.any?
+
+          [{ functionResponse: function_response }, *sibling_parts]
         end
 
         def extract_tool_calls(data) # rubocop:disable Metrics/PerceivedComplexity
@@ -91,6 +91,21 @@ module RubyLLM
         end
 
         private
+
+        # functionResponse.parts only accepts inline bytes, and pre-Gemini 3 models reject it
+        def partition_tool_result_attachments(attachments)
+          return [[], []] if attachments.empty?
+
+          parts = attachments.map { |attachment| Media.format_content_attachment(attachment) }
+          return [[], parts] unless multimodal_function_responses_supported?(@model)
+
+          parts.partition { |part| part.key?(:inline_data) }
+        end
+
+        def multimodal_function_responses_supported?(model)
+          version = gemini_version(model)
+          version && version >= Gem::Version.new('3')
+        end
 
         def function_declaration_for(tool)
           parameters_schema = tool.parameters_schema ||

@@ -70,6 +70,22 @@ RSpec.describe RubyLLM::Chat do
     end
   end
 
+  class ImageFetchTool < RubyLLM::Tool # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
+    description 'Fetches the requested image'
+
+    def execute
+      ['Fetched the image.', [RubyLLM::Attachment.new(File.expand_path('../fixtures/ruby.png', __dir__))]]
+    end
+  end
+
+  class PdfFetchTool < RubyLLM::Tool # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
+    description 'Fetches the requested PDF report'
+
+    def execute
+      ['Fetched the report.', [RubyLLM::Attachment.new(File.expand_path('../fixtures/sample.pdf', __dir__))]]
+    end
+  end
+
   class ParamsTool < RubyLLM::Tool # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
     description 'Has provider-specific params'
     provider_options cache_control: { type: 'ephemeral' }
@@ -708,6 +724,31 @@ RSpec.describe RubyLLM::Chat do
         expect(tool_message.content).to eq('Fetched the file.')
         expect(tool_message.attachments.first.filename).to eq('ruby.txt')
         expect(response.content).to include('Ruby is the best')
+      end
+    end
+  end
+
+  describe 'multimodal tool attachments' do
+    MULTIMODAL_TOOL_RESULT_MODELS.each do |model_info|
+      model = model_info[:model]
+      provider = model_info[:provider]
+
+      it "#{provider}/#{model} describes images returned from tools" do
+        chat = RubyLLM.chat(model: model, provider: provider).with_tools(ImageFetchTool)
+
+        response = chat.ask('Use the image_fetch tool, then describe exactly what the returned image shows.')
+
+        expect(response.content.downcase).to match(/ruby|gem|red/)
+      end
+
+      next if model_info[:pdf] == false
+
+      it "#{provider}/#{model} reads PDFs returned from tools" do
+        chat = RubyLLM.chat(model: model, provider: provider).with_tools(PdfFetchTool)
+
+        response = chat.ask('Use the pdf_fetch tool, then quote the first sentence of the returned PDF.')
+
+        expect(response.content).to match(/simple PDF file|Lorem ipsum/i)
       end
     end
   end

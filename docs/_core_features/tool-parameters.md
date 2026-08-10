@@ -168,7 +168,7 @@ The rule underneath is by type, so every natural variation works: strings become
 
 Vision-capable models see the files: search tools can hand back the documents they found, chart tools their rendered graphs, browser tools their screenshots.
 
-RubyLLM renders tool attachments in each provider's shape. Anthropic and Bedrock Converse take them as native tool-result blocks; Gemini gets the media as parts alongside the function response; OpenAI tool results are text-only on the wire, so the files ride a user message spliced in right after the result. Providers that cannot take a file type at all (for example, images on DeepSeek) raise `UnsupportedAttachmentError` rather than silently dropping files.
+RubyLLM renders tool attachments in each provider's shape. Anthropic and Bedrock Converse take them as native tool-result blocks; Gemini 3 models take media inside the function response itself, while earlier Gemini models get it as parts alongside the response; OpenAI tool results are text-only on the wire, so the files ride a user message spliced in right after the result. Providers that cannot take a file type at all (for example, images on DeepSeek) raise `UnsupportedAttachmentError` rather than silently dropping files.
 
 ## Custom Initialization
 

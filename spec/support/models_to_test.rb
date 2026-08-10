@@ -52,6 +52,20 @@ thinking_models = [
 ].freeze
 THINKING_MODELS = filter_local_providers(thinking_models).freeze
 
+MULTIMODAL_TOOL_RESULT_MODELS = [
+  { provider: :anthropic, model: 'claude-haiku-4-5' },
+  { provider: :azure, model: 'grok-4-1-fast-non-reasoning', pdf: false },
+  { provider: :bedrock, model: 'claude-sonnet-4-5' },
+  { provider: :gemini, model: 'gemini-3-flash-preview' },
+  { provider: :gemini, model: 'gemini-2.5-flash' },
+  { provider: :mistral, model: 'mistral-small-latest', pdf: false },
+  { provider: :openai, model: 'gpt-5-nano' },
+  { provider: :openrouter, model: 'gemini-2.5-flash' },
+  { provider: :vertexai, model: 'gemini-3-flash-preview' },
+  { provider: :vertexai, model: 'gemini-2.5-flash' },
+  { provider: :xai, model: 'grok-4-1-fast-non-reasoning', pdf: false }
+].freeze
+
 PDF_MODELS = [
   { provider: :anthropic, model: 'claude-haiku-4-5' },
   { provider: :bedrock, model: 'claude-sonnet-4-5' },
