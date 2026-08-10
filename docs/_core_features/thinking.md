@@ -119,7 +119,7 @@ end
 
 - Claude uses budget-based or adaptive thinking depending on the model, and can return both text and signature.
 - Anthropic requires a thinking budget for older Claude models and effort-based adaptive thinking for newer models.
-- Bedrock thinking params are model-dependent; models may accept budget, effort, or provider-specific fields.
+- Bedrock thinking params are model-dependent. Claude models on Bedrock only take a token budget, so RubyLLM converts `effort` into the budget level the model advertises. Pass `budget` to set the exact number of tokens.
 - Gemini 2.5 uses a token budget; Gemini 3 uses effort levels.
 - OpenAI reasoning models accept `effort` but may not return thinking text or signatures.
 - Perplexity sonar reasoning models stream `<think>` blocks inside content; RubyLLM extracts them after the response completes.

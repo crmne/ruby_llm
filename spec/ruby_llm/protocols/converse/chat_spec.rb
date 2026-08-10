@@ -282,6 +282,106 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
       end
     end
 
+    context 'when thinking is configured' do
+      def bedrock_model(id, budget_schema)
+        schema = budget_schema ? { reasoningConfig: { budgetTokens: budget_schema } } : {}
+        instance_double(RubyLLM::Model,
+                        id: id,
+                        max_output_tokens: nil,
+                        metadata: { converse: { additionalRequestFieldsSchema: JSON.generate(schema) } })
+      end
+
+      let(:enumerated_budget_model) do
+        bedrock_model('us.anthropic.claude-sonnet-5',
+                      { type: 'enum', enum: { low: 1024, medium: 40_000, high: 63_999 },
+                        minimum: 1024, maximum: 63_999 })
+      end
+
+      let(:ranged_budget_model) do
+        bedrock_model('us.anthropic.claude-haiku-4-5-20251001-v1:0',
+                      { type: 'integer', default: 2048, minimum: 1024, maximum: 63_999 })
+      end
+
+      def thinking(effort: nil, budget: nil)
+        RubyLLM::Thinking::Config.new(effort: effort, budget: budget)
+      end
+
+      it 'maps effort onto the budget level the model names for it' do
+        payload = render_payload(model: enumerated_budget_model, thinking: thinking(effort: :medium))
+
+        expect(payload[:additionalModelRequestFields]).to eq(
+          reasoning_config: { type: 'enabled', budget_tokens: 40_000 }
+        )
+      end
+
+      it 'maps efforts the model does not enumerate onto its largest budget' do
+        payload = render_payload(model: enumerated_budget_model, thinking: thinking(effort: :xhigh))
+
+        expect(payload[:additionalModelRequestFields]).to eq(
+          reasoning_config: { type: 'enabled', budget_tokens: 63_999 }
+        )
+      end
+
+      it 'spreads effort across the range when the model does not enumerate budgets' do
+        payload = render_payload(model: ranged_budget_model, thinking: thinking(effort: :low))
+
+        expect(payload[:additionalModelRequestFields]).to eq(
+          reasoning_config: { type: 'enabled', budget_tokens: 1024 }
+        )
+      end
+
+      it 'keeps a derived budget under an explicit max_output_tokens' do
+        payload = render_payload(model: enumerated_budget_model, thinking: thinking(effort: :high),
+                                 max_output_tokens: 8000)
+
+        expect(payload[:additionalModelRequestFields]).to eq(
+          reasoning_config: { type: 'enabled', budget_tokens: 7999 }
+        )
+      end
+
+      it 'prefers an explicit budget over effort' do
+        payload = render_payload(model: enumerated_budget_model, thinking: thinking(effort: :high, budget: 5000))
+
+        expect(payload[:additionalModelRequestFields]).to eq(
+          reasoning_config: { type: 'enabled', budget_tokens: 5000 }
+        )
+      end
+
+      it 'sends an explicit budget without requiring an effort' do
+        payload = render_payload(model: enumerated_budget_model, thinking: thinking(budget: 5000))
+
+        expect(payload[:additionalModelRequestFields]).to eq(
+          reasoning_config: { type: 'enabled', budget_tokens: 5000 }
+        )
+      end
+
+      it 'maps effort for regional entries that carry no converse metadata of their own' do
+        model = instance_double(RubyLLM::Model,
+                                id: 'eu.anthropic.claude-sonnet-5',
+                                max_output_tokens: nil,
+                                metadata: {})
+
+        payload = render_payload(model: model, thinking: thinking(effort: :low))
+
+        expect(payload[:additionalModelRequestFields]).to eq(
+          reasoning_config: { type: 'enabled', budget_tokens: 1024 }
+        )
+      end
+
+      it 'sends reasoning_effort for models that do not advertise a budget' do
+        payload = render_payload(model: bedrock_model('openai.gpt-oss-120b-1:0', nil),
+                                 thinking: thinking(effort: :high))
+
+        expect(payload[:additionalModelRequestFields]).to eq(reasoning_effort: 'high')
+      end
+
+      it 'omits reasoning fields when effort is none' do
+        payload = render_payload(model: enumerated_budget_model, thinking: thinking(effort: :none))
+
+        expect(payload).not_to have_key(:additionalModelRequestFields)
+      end
+    end
+
     it 'does not send finish_reason back to the provider' do
       message = RubyLLM::Message.new(role: :assistant, content: 'Done', finish_reason: 'MAX_TOKENS')
 
@@ -344,17 +444,17 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
   end
 
   describe '.format_reasoning_fields' do
-    let(:embedded_model) do
+    let(:model_without_budget) do
       instance_double(RubyLLM::Model, id: 'anthropic.claude-haiku-4-5', metadata: {},
                                       capabilities: ['reasoning'])
     end
 
-    def reasoning_fields(thinking, model: embedded_model)
+    def reasoning_fields(thinking, model: model_without_budget)
       protocol = described_class
       target = Object.new
       target.extend(protocol)
       target.instance_variable_set(:@model, model)
-      target.send(:format_reasoning_fields, thinking)
+      target.send(:format_reasoning_fields, thinking, model)
     end
 
     it 'is nil when thinking is off' do
@@ -366,17 +466,25 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
       expect(reasoning_fields(RubyLLM::Thinking::Config.new(effort: :none))).to be_nil
     end
 
-    it 'nests the effort for models with embedded reasoning' do
-      allow(RubyLLM::Protocols::Converse).to receive(:reasoning_embedded?).and_return(true)
+    it 'maps effort to an advertised token budget' do
+      model = instance_double(
+        RubyLLM::Model,
+        id: 'anthropic.claude-test',
+        metadata: {
+          converse: {
+            additionalRequestFieldsSchema: JSON.generate(
+              reasoningConfig: { budgetTokens: { enum: { low: 1024, high: 8192 }, minimum: 1024, maximum: 8192 } }
+            )
+          }
+        }
+      )
 
-      expect(reasoning_fields(RubyLLM::Thinking::Config.new(effort: :high))).to eq(
-        reasoning_config: { type: 'enabled', reasoning_effort: 'high' }
+      expect(reasoning_fields(RubyLLM::Thinking::Config.new(effort: :high), model: model)).to eq(
+        reasoning_config: { type: 'enabled', budget_tokens: 8192 }
       )
     end
 
     it 'sends a flat effort otherwise' do
-      allow(RubyLLM::Protocols::Converse).to receive(:reasoning_embedded?).and_return(false)
-
       expect(reasoning_fields(RubyLLM::Thinking::Config.new(effort: :low))).to eq(reasoning_effort: 'low')
     end
 
