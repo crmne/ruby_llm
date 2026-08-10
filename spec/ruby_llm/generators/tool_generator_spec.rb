@@ -52,6 +52,7 @@ RSpec.describe RubyLLM::Generators::ToolGenerator, :generator, type: :generator 
       expect(tool_call_partial).to include('message: message')
       expect(tool_call_partial).to include('Weather Call')
       expect(tool_call_partial).to include('tool_call.arguments.map')
+      expect(tool_call_partial).to include('message_tool_call_<%= tool_call.id %>')
       expect(tool_call_partial).not_to include('render "messages/tool_calls/default"')
       expect(tool_call_partial).not_to include('<%%')
 
@@ -59,8 +60,20 @@ RSpec.describe RubyLLM::Generators::ToolGenerator, :generator, type: :generator 
       expect(tool_result_partial).to include('tool.tool_error_message')
       expect(tool_result_partial).to include('Weather Result')
       expect(tool_result_partial).to include('tool.content.presence || "(no output)"')
+      expect(tool_result_partial).to include('message_tool_result_<%= tool.id %>')
       expect(tool_result_partial).not_to include('render "messages/tool_results/default", tool: tool')
       expect(tool_result_partial).not_to include('<%%')
+    end
+  end
+
+  it 'uses the tool call id in Tailwind partials' do
+    within_test_app(app_path) do
+      output, status = run_rails_generate('ruby_llm:tool', 'Forecast', '--ui', 'tailwind')
+      expect(status.success?).to be(true), output
+
+      tool_call_partial = File.read('app/views/messages/tool_calls/_forecast.html.erb')
+      expect(tool_call_partial).to include('message_tool_call_<%= tool_call.id %>')
+      expect(tool_call_partial).not_to include('message_<%= message.id %>')
     end
   end
 end
