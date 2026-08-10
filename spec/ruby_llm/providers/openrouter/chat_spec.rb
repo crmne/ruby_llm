@@ -66,6 +66,43 @@ RSpec.describe RubyLLM::Providers::OpenRouter::Chat do
       expect(message.tokens.output).to eq(2393)
       expect(message.tokens.thinking).to eq(2185)
     end
+
+    it 'captures the reported cost from usage' do
+      response_body = {
+        'model' => 'meta-llama/llama-3.2-1b-instruct',
+        'choices' => [
+          { 'message' => { 'role' => 'assistant', 'content' => 'Hi!' } }
+        ],
+        'usage' => {
+          'prompt_tokens' => 13,
+          'completion_tokens' => 3,
+          'total_tokens' => 16,
+          'cost' => 9.54e-07,
+          'is_byok' => false,
+          'cost_details' => { 'upstream_inference_cost' => 9.54e-07 }
+        }
+      }
+
+      response = instance_double(Faraday::Response, body: response_body)
+      message = provider.send(:parse_completion_response, response)
+
+      expect(message.tokens.reported_cost).to eq(9.54e-07)
+      expect(message.cost.total).to eq(9.54e-07)
+    end
+
+    it 'adds the upstream inference cost to the OpenRouter fee on BYOK requests' do
+      usage = {
+        'cost' => 0.0001,
+        'is_byok' => true,
+        'cost_details' => { 'upstream_inference_cost' => 0.002 }
+      }
+
+      expect(provider.send(:reported_cost, usage)).to be_within(1e-12).of(0.0021)
+    end
+
+    it 'reports no cost when usage carries none' do
+      expect(provider.send(:reported_cost, {})).to be_nil
+    end
   end
 
   describe '#build_chunk' do
@@ -81,6 +118,24 @@ RSpec.describe RubyLLM::Providers::OpenRouter::Chat do
       )
 
       expect(chunk.finish_reason).to eq('tool_calls')
+    end
+
+    it 'captures the reported cost from the final usage chunk' do
+      chunk = provider.send(
+        :build_chunk,
+        {
+          'model' => 'openai/gpt-4.1-nano',
+          'choices' => [],
+          'usage' => {
+            'prompt_tokens' => 13,
+            'completion_tokens' => 3,
+            'cost' => 9.54e-07,
+            'is_byok' => false
+          }
+        }
+      )
+
+      expect(chunk.tokens.reported_cost).to eq(9.54e-07)
     end
   end
 

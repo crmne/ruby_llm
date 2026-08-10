@@ -116,6 +116,14 @@ module RubyLLM
           false
         end
 
+        def reported_cost(usage)
+          cost = usage['cost']
+          return nil unless cost
+
+          cost += usage.dig('cost_details', 'upstream_inference_cost').to_f if usage['is_byok']
+          cost
+        end
+
         def supports_provider_file_references?
           true
         end
