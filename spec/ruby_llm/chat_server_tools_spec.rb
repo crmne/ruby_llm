@@ -118,6 +118,15 @@ RSpec.describe RubyLLM::Chat, :live do
       )
     end
 
+    it 'renders DeepSeek aliases on the responses protocol' do
+      payload = RubyLLM.chat(model: 'deepseek-v4-flash', provider: :deepseek, protocol: :responses)
+                       .with_server_tools(:web_search, :apply_patch)
+                       .render
+
+      expect(payload[:tools]).to include({ type: 'web_search' })
+      expect(payload[:tools]).to include({ type: 'custom', name: 'apply_patch' })
+    end
+
     it 'renders OpenRouter aliases as openrouter-prefixed tools' do
       payload = RubyLLM.chat(model: 'openai/gpt-5.2', provider: :openrouter)
                        .with_server_tools(:web_search)
@@ -256,6 +265,21 @@ RSpec.describe RubyLLM::Chat, :live do
         expect(followup.content).to be_present
       end
     end
+
+    context 'with deepseek/deepseek-v4-flash' do
+      let(:chat) do
+        RubyLLM.chat(model: 'deepseek-v4-flash', provider: :deepseek, protocol: :responses)
+               .with_server_tools(:web_search)
+      end
+
+      it 'searches server-side and records the search turns' do
+        response = chat.ask('Search the web: what is the latest stable Ruby version? Cite your source.')
+
+        expect(response.server_tool_calls).not_to be_empty
+        expect(response.raw_content).to be_an(Array)
+        expect(response.content).to be_present
+      end
+    end
   end
 
   describe 'responses protocol dialects' do
@@ -270,6 +294,27 @@ RSpec.describe RubyLLM::Chat, :live do
 
         followup = chat.ask('Now multiply that by 3. Just the number.')
         expect(followup.content).to include('12')
+      end
+    end
+
+    context 'with deepseek/deepseek-v4-flash' do
+      let(:chat) { RubyLLM.chat(model: 'deepseek-v4-flash', provider: :deepseek, protocol: :responses) }
+
+      it 'chats with reasoning text on the opt-in Responses protocol' do
+        response = chat.ask('What is 2 + 2? Just the number.')
+
+        expect(response.raw.env.url.path).to end_with('/responses')
+        expect(response.content).to include('4')
+        expect(response.thinking&.text).to be_present
+      end
+
+      it 'streams reasoning deltas' do
+        chunks = []
+        response = chat.ask('What is 2 + 2? Just the number.') { |chunk| chunks << chunk }
+
+        expect(chunks).not_to be_empty
+        expect(chunks.any?(&:thinking)).to be true
+        expect(response.content).to include('4')
       end
     end
   end

@@ -10,6 +10,7 @@ module RubyLLM
       end
 
       protocol :chat_completions, ChatCompletions
+      protocol :responses, DeepSeek::Responses
 
       def api_base
         @config.deepseek_api_base || 'https://api.deepseek.com'
