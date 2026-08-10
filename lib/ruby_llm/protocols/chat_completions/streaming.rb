@@ -34,6 +34,7 @@ module RubyLLM
             cache_read_tokens: cache_read_tokens(usage),
             cache_write_tokens: cache_write_tokens(usage),
             thinking_tokens: thinking_tokens(usage),
+            server_tool_use: server_tool_use(usage),
             finish_reason: data.dig('choices', 0, 'finish_reason')
           )
         end

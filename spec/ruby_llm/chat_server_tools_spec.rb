@@ -96,6 +96,14 @@ RSpec.describe RubyLLM::Chat, :live do
       expect(payload[:tools]).to include({ file_search: { file_search_store_names: ['store'] } })
     end
 
+    it 'renders OpenRouter aliases as openrouter-prefixed tools' do
+      payload = RubyLLM.chat(model: 'openai/gpt-5.2', provider: :openrouter)
+                       .with_server_tools(:web_search)
+                       .render
+
+      expect(payload[:tools]).to include({ type: 'openrouter:web_search' })
+    end
+
     it 'raises for unknown aliases and lists the known ones' do
       chat = RubyLLM.chat(model: 'claude-haiku-4-5', provider: :anthropic).with_server_tools(:teleport)
 
@@ -193,6 +201,17 @@ RSpec.describe RubyLLM::Chat, :live do
 
         expect(response.server_tool_calls.map(&:type)).to include('google_search')
         expect(response.citations).not_to be_empty
+      end
+    end
+
+    context 'with openrouter/openai/gpt-5.2' do
+      let(:chat) { RubyLLM.chat(model: 'openai/gpt-5.2', provider: :openrouter).with_server_tools(:web_search) }
+
+      it 'searches transparently, returning citations and usage counters' do
+        response = chat.ask('Search the web: what is the latest stable Ruby version? Cite your source.')
+
+        expect(response.citations).not_to be_empty
+        expect(response.tokens.server_tool_use).to include('web_search_requests')
       end
     end
   end

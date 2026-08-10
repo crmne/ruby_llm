@@ -90,10 +90,15 @@ module RubyLLM
             cache_read_tokens: cache_read_tokens(usage),
             cache_write_tokens: cache_write_tokens(usage),
             thinking_tokens: thinking_tokens,
+            server_tool_use: server_tool_use(usage),
             finish_reason: finish_reason,
             model: data['model'],
             raw: raw
           )
+        end
+
+        def server_tool_use(usage)
+          usage['server_tool_use'] || usage['server_tool_use_details']
         end
 
         def no_completion_message_error(data, raw)

@@ -10,6 +10,19 @@ module RubyLLM
         include OpenRouter::Images
         include OpenRouter::Models
         include OpenRouter::Streaming
+
+        # OpenRouter runs its server tools transparently: results surface as
+        # citations and usage counters rather than discrete content blocks.
+        SERVER_TOOL_ALIASES = %i[
+          web_search web_fetch datetime image_generation apply_patch shell
+        ].to_h { |name| [name, { tool: { type: "openrouter:#{name}" } }] }.merge(
+          url_context: { tool: { type: 'openrouter:web_fetch' } },
+          code_execution: { tool: { type: 'openrouter:shell' } }
+        ).freeze
+
+        def server_tool_aliases
+          SERVER_TOOL_ALIASES
+        end
       end
 
       protocol :chat_completions, ChatCompletions

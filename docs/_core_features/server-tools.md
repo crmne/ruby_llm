@@ -55,16 +55,18 @@ chat.with_tools(Weather).with_server_tools(:web_search)
 
 The aliases map to each provider's current tool versions:
 
-| Alias | Anthropic | OpenAI (Responses) | Gemini |
-|-------|-----------|--------------------|--------|
-| `:web_search` | `web_search_20260318` | `web_search` | `google_search` |
-| `:web_fetch` / `:url_context` | `web_fetch_20260318` | not offered | `url_context` |
-| `:code_execution` | `code_execution_20260521` | `code_interpreter` | `code_execution` |
-| `:file_search` | not offered | `file_search` | `file_search` |
-| `:image_generation` | not offered | `image_generation` | not offered |
-| `:mcp` | `mcp_toolset` + `mcp_servers` | `mcp` | not offered |
+| Alias | Anthropic | OpenAI (Responses) | Gemini | OpenRouter |
+|-------|-----------|--------------------|--------|------------|
+| `:web_search` | `web_search_20260318` | `web_search` | `google_search` | `openrouter:web_search` |
+| `:web_fetch` / `:url_context` | `web_fetch_20260318` | not offered | `url_context` | `openrouter:web_fetch` |
+| `:code_execution` | `code_execution_20260521` | `code_interpreter` | `code_execution` | `openrouter:shell` |
+| `:file_search` | not offered | `file_search` | `file_search` | not offered |
+| `:image_generation` | not offered | `image_generation` | not offered | `openrouter:image_generation` |
+| `:mcp` | `mcp_toolset` + `mcp_servers` | `mcp` | not offered | not offered |
 
 Asking for an alias the provider does not define raises `RubyLLM::UnsupportedServerToolError` naming the aliases it does.
+
+OpenRouter runs its tools transparently: results surface as citations and usage counters rather than as `server_tool_calls` entries.
 
 ## Tool Options
 
