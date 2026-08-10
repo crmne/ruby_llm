@@ -174,6 +174,7 @@ RubyLLM.configure do |config|
   config.default_speech_model = String
   config.default_moderation_model = String
   config.default_transcription_model = String
+  config.default_ocr_model = String
 
   # Model Registry
   config.model_registry_file = String  # Writable registry cache; defaults to the OS user cache directory

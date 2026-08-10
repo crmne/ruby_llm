@@ -16,6 +16,7 @@ RSpec.shared_examples 'a protocol' do |family|
     'image' => %i[render_image_payload images_url parse_image_response],
     'speech' => %i[render_speech_payload speech_url parse_speech_response],
     'transcription' => %i[render_transcription_payload transcription_url parse_transcription_response],
+    'ocr' => %i[render_ocr_payload ocr_url parse_ocr_response],
     'token counting' => %i[render_count_tokens_payload count_tokens_url parse_count_tokens_response]
   }
   overridden = ->(seams) { seams.reject { |seam| family.instance_method(seam).owner == RubyLLM::Protocol } }

@@ -267,6 +267,11 @@ module RubyLLM
       )
     end
 
+    def ocr(file, model:, options: {}) # :nodoc:
+      protocol = resolve_protocol(nil, model, operation: :ocr)
+      protocol.new(self, model).ocr(file, model: model_id_for(model), options:)
+    end
+
     def upload_file(file, filename: nil, purpose: nil, expires_in: nil, visibility: nil, # :nodoc:
                     display_name: nil, uri: nil, content_type: nil)
       ensure_files_supported!

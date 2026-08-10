@@ -103,6 +103,13 @@ module RubyLLM
     option :default_transcription_model, 'whisper-1'
 
     ##
+    # :attr_accessor: default_ocr_model
+    #
+    # The model id used by RubyLLM.ocr when no model is given.
+    # Default: <tt>'mistral-ocr-latest'</tt>.
+    option :default_ocr_model, 'mistral-ocr-latest'
+
+    ##
     # :attr_accessor: model_registry_file
     #
     # Path of the writable JSON cache holding the model registry. Defaults

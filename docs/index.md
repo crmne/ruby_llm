@@ -162,6 +162,11 @@ speech.save "welcome.mp3"
 ```
 
 ```ruby
+# Extract document text as markdown
+RubyLLM.ocr "contract.pdf"
+```
+
+```ruby
 # Moderate content for safety
 RubyLLM.moderate "Check if this text is safe"
 ```
@@ -210,6 +215,7 @@ response = chat.with_schema(ProductSchema).ask "Analyze this product", with: "pr
 * **Vision:** Analyze images and videos
 * **Audio:** Transcribe speech with `RubyLLM.transcribe` and generate it with `RubyLLM.speak`
 * **Documents:** Extract from PDFs, CSVs, JSON, any file type
+* **OCR:** Turn documents into markdown with `RubyLLM.ocr`
 * **Image generation:** Create images with `RubyLLM.paint`
 * **Embeddings:** Generate embeddings with `RubyLLM.embed`
 * **Moderation:** Content safety with `RubyLLM.moderate`

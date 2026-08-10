@@ -10,7 +10,7 @@ module RubyLLM
   # Subclass Protocol, or a shipped subclass such as
   # RubyLLM::Protocols::ChatCompletions, to support a new wire format. Each
   # operation (chat, embeddings, moderation, image generation, speech,
-  # transcription, token counting, and model listing) is served by three
+  # transcription, OCR, token counting, and model listing) is served by three
   # kinds of seam method you override:
   #
   # - <tt>render_*</tt> serializes a RubyLLM request into the wire payload,
@@ -69,6 +69,7 @@ module RubyLLM
     abstract :render_image_payload, :images_url, :parse_image_response
     abstract :render_speech_payload, :speech_url, :parse_speech_response
     abstract :render_transcription_payload, :transcription_url, :parse_transcription_response
+    abstract :render_ocr_payload, :ocr_url, :parse_ocr_response
     abstract :render_count_tokens_payload, :count_tokens_url, :parse_count_tokens_response
     abstract :render_cache_payload, :render_cache_update_payload, :caches_url, :cache_url, :parse_cache_response
 
@@ -195,6 +196,16 @@ module RubyLLM
         response = @connection.post transcription_url, payload, usage: @usage_tracker
         parse_transcription_response(response, model:)
       end
+    end
+
+    def ocr(file, model:, options: {})
+      track_usage(:ocr) do
+        payload = render_ocr_payload(file, model:, options:)
+        response = @connection.post ocr_url, payload, usage: @usage_tracker
+        parse_ocr_response(response, model:)
+      end
+    rescue NotImplementedError
+      raise Error, "#{@provider.name} doesn't support OCR"
     end
 
     def cache_content(content, model:, ttl: nil, instructions: nil, with: nil)

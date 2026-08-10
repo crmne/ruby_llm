@@ -24,6 +24,7 @@ loader.inflector.inflect(
   'gpustack' => 'GPUStack',
   'llm' => 'LLM',
   'mistral' => 'Mistral',
+  'ocr' => 'OCR',
   'openai' => 'OpenAI',
   'openrouter' => 'OpenRouter',
   'pdf' => 'PDF',
@@ -68,6 +69,7 @@ loader.setup
 # - ::paint generates images (Image)
 # - ::embed turns text into vectors (Embedding)
 # - ::transcribe converts audio to text (Transcription)
+# - ::ocr extracts text from documents (OCR)
 # - ::speak converts text to audio (Speech)
 # - ::moderate screens content (Moderation)
 # - ::batch processes many chats at lower cost (Batch)
@@ -216,6 +218,16 @@ module RubyLLM
     #
     def transcribe(...)
       Transcription.transcribe(...)
+    end
+
+    # Extracts the text of a document or image and returns an OCR result.
+    # Arguments are forwarded to OCR.ocr.
+    #
+    #   ocr = RubyLLM.ocr("contract.pdf")
+    #   ocr.markdown
+    #
+    def ocr(...)
+      OCR.ocr(...)
     end
 
     # Uploads a file to a provider and returns an UploadedFile that can be
