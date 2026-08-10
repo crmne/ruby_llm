@@ -21,6 +21,20 @@ RSpec.describe RubyLLM::Protocols::Responses::Streaming do
     expect(chunk.thinking.text).to eq('hmm')
   end
 
+  it 'separates reasoning summary parts' do
+    accumulator = RubyLLM::StreamAccumulator.new
+    events = [
+      { 'type' => 'response.reasoning_summary_part.added', 'summary_index' => 0 },
+      { 'type' => 'response.reasoning_summary_text.delta', 'delta' => '**First summary**' },
+      { 'type' => 'response.reasoning_summary_part.added', 'summary_index' => 1 },
+      { 'type' => 'response.reasoning_summary_text.delta', 'delta' => '**Second summary**' }
+    ]
+
+    events.each { |event| accumulator.add(build_chunk(event)) }
+
+    expect(accumulator.to_message(nil).thinking.text).to eq("**First summary**\n\n**Second summary**")
+  end
+
   it 'accumulates a function call across item and argument events' do
     accumulator = RubyLLM::StreamAccumulator.new
 

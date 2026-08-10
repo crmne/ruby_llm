@@ -14,6 +14,8 @@ module RubyLLM
             chunk content: data['delta']
           when 'response.reasoning_summary_text.delta'
             chunk thinking: Thinking.build(text: data['delta'])
+          when 'response.reasoning_summary_part.added'
+            build_reasoning_summary_part_chunk(data)
           when 'response.output_text.annotation.added'
             chunk citations: parse_annotations([data['annotation']], nil)
           when 'response.output_item.added'
@@ -27,6 +29,12 @@ module RubyLLM
           else
             chunk
           end
+        end
+
+        def build_reasoning_summary_part_chunk(data)
+          return chunk unless data['summary_index'].positive?
+
+          chunk thinking: Thinking.build(text: "\n\n")
         end
 
         def build_item_added_chunk(data)
