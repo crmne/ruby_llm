@@ -122,6 +122,17 @@ VCR.configure do |config|
         interaction.request.body.gsub(/Signature=[0-9a-f]{64}/i, 'Signature=<AWS_SIGV4_SIGNATURE>')
     end
 
+    # Google resource names embed the numeric project id
+    if interaction.request.uri.include?('googleapis.com')
+      project_number = %r{projects/\d+}
+      interaction.request.uri = interaction.request.uri.gsub(project_number, 'projects/<GOOGLE_CLOUD_PROJECT>')
+      [interaction.request, interaction.response].each do |message|
+        next unless message.body&.valid_encoding?
+
+        message.body = message.body.gsub(project_number, 'projects/<GOOGLE_CLOUD_PROJECT>')
+      end
+    end
+
     if interaction.response.headers['Set-Cookie']
       interaction.response.headers['Set-Cookie'] = interaction.response.headers['Set-Cookie'].map { '<COOKIE>' }
     end

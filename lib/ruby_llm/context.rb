@@ -85,5 +85,11 @@ module RubyLLM
     def download(*args, **kwargs, &)
       UploadedFile.download(*args, **kwargs, context: self, &)
     end
+
+    # Creates a provider-side prompt cache using this context's
+    # configuration. Accepts the same arguments as RubyLLM.cache.
+    def cache(*args, **kwargs, &)
+      CachedContent.create(*args, **kwargs, context: self, &)
+    end
   end
 end

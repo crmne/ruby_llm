@@ -24,6 +24,19 @@ module RubyLLM
           count_tokens_request(messages, **options)
         end
 
+        def caches_url
+          "#{@provider.location_path}/cachedContents"
+        end
+
+        def cache_name(name)
+          name = name.name if name.is_a?(CachedContent)
+          name.to_s.include?('/') ? name.to_s : "#{caches_url}/#{name}"
+        end
+
+        def cache_model_name(model_id)
+          @provider.model_path(model_id)
+        end
+
         def images_url(with: nil, mask: nil) # rubocop:disable Lint/UnusedMethodArgument
           id = model_id(@model)
 

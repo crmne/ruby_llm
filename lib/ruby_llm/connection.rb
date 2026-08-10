@@ -58,6 +58,24 @@ module RubyLLM
       end
     end
 
+    def patch(url, payload, &)
+      instrument_request(:patch, url) do
+        @connection.patch url, payload do |req|
+          req.headers.merge! @provider.headers
+          yield req if block_given?
+        end
+      end
+    end
+
+    def delete(url, &)
+      instrument_request(:delete, url) do
+        @connection.delete url do |req|
+          req.headers.merge! @provider.headers
+          yield req if block_given?
+        end
+      end
+    end
+
     private
 
     def instrument_request(method, url)

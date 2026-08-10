@@ -448,11 +448,13 @@ module RubyLLM
 
     # Enables provider prompt caching. With no arguments the provider's
     # default behavior applies; options such as +ttl:+ are passed through
-    # to providers that support them. Pass +nil+ to disable caching.
-    # Returns +self+.
+    # to providers that support them. On Gemini, pass +id:+ with a
+    # CachedContent (or its name) from RubyLLM.cache to attach an explicit
+    # content cache. Pass +nil+ to disable caching. Returns +self+.
     #
     #   chat.with_caching
     #   chat.with_caching(ttl: "1h")
+    #   chat.with_caching(id: cache)
     #   chat.with_caching(nil)
     #
     def with_caching(options = {})

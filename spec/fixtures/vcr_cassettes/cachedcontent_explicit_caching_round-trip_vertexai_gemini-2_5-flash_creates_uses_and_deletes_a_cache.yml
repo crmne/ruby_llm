@@ -1,0 +1,1104 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://oauth2.googleapis.com/token
+    body:
+      encoding: ASCII-8BIT
+      string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Pragma:
+      - no-cache
+      Expires:
+      - Mon, 01 Jan 1990 00:00:00 GMT
+      Date:
+      - Mon, 10 Aug 2026 23:31:21 GMT
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      Content-Type:
+      - application/json; charset=utf-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "access_token": "<GOOGLE_ACCESS_TOKEN>",
+          "expires_in": 3599,
+          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/sqlservice.login",
+          "token_type": "Bearer",
+          "id_token": "<GOOGLE_ID_TOKEN>"
+        }
+  recorded_at: Mon, 10 Aug 2026 23:31:21 GMT
+- request:
+    method: post
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/cachedContents
+    body:
+      encoding: UTF-8
+      string: '{"model":"projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash","contents":[{"role":"user","parts":[{"text":"The
+        RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        The RubyLLM release engineering handbook describes cassette hygiene, provider
+        wire format drift, backwards compatibility checks, and documentation accuracy
+        reviews that every change must pass before release. The RubyLLM release engineering
+        handbook describes cassette hygiene, provider wire format drift, backwards
+        compatibility checks, and documentation accuracy reviews that every change
+        must pass before release. The RubyLLM release engineering handbook describes
+        cassette hygiene, provider wire format drift, backwards compatibility checks,
+        and documentation accuracy reviews that every change must pass before release.
+        "}]}],"ttl":"300s"}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Mon, 10 Aug 2026 23:31:23 GMT
+      Server:
+      - ESF
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "name": "projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/cachedContents/5254869783458873344",
+          "model": "projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash",
+          "createTime": "2026-08-10T23:31:23.004241Z",
+          "updateTime": "2026-08-10T23:31:23.004241Z",
+          "expireTime": "2026-08-10T23:36:22.953441Z",
+          "usageMetadata": {
+            "totalTokenCount": 9602
+          }
+        }
+  recorded_at: Mon, 10 Aug 2026 23:31:23 GMT
+- request:
+    method: post
+    uri: https://oauth2.googleapis.com/token
+    body:
+      encoding: ASCII-8BIT
+      string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 10 Aug 2026 23:31:24 GMT
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      Expires:
+      - Mon, 01 Jan 1990 00:00:00 GMT
+      Pragma:
+      - no-cache
+      Content-Type:
+      - application/json; charset=utf-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "access_token": "<GOOGLE_ACCESS_TOKEN>",
+          "expires_in": 3599,
+          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/cloud-platform openid https://www.googleapis.com/auth/userinfo.email",
+          "token_type": "Bearer",
+          "id_token": "<GOOGLE_ID_TOKEN>"
+        }
+  recorded_at: Mon, 10 Aug 2026 23:31:24 GMT
+- request:
+    method: post
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-2.5-flash:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"In one short sentence,
+        what does the cached handbook describe?"}]}],"generationConfig":{},"cachedContent":"projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/cachedContents/5254869783458873344"}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Mon, 10 Aug 2026 23:31:26 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "candidates": [
+            {
+              "content": {
+                "role": "model",
+                "parts": [
+                  {
+                    "text": "The RubyLLM release engineering handbook describes essential checks for every change before release, including cassette hygiene, provider wire format drift, backwards compatibility, and documentation accuracy."
+                  }
+                ]
+              },
+              "finishReason": "STOP",
+              "avgLogprobs": -0.735142707824707
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 9613,
+            "candidatesTokenCount": 32,
+            "totalTokenCount": 9680,
+            "cachedContentTokenCount": 9602,
+            "trafficType": "ON_DEMAND",
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 9613
+              }
+            ],
+            "candidatesTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 32
+              }
+            ],
+            "thoughtsTokenCount": 35
+          },
+          "modelVersion": "gemini-2.5-flash",
+          "createTime": "2026-08-10T23:31:25.149593Z",
+          "responseId": "TV96atmQCbKz-eQPtem8uQ0"
+        }
+  recorded_at: Mon, 10 Aug 2026 23:31:26 GMT
+- request:
+    method: delete
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/cachedContents/5254869783458873344
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Mon, 10 Aug 2026 23:31:26 GMT
+      Server:
+      - ESF
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: "{}\n"
+  recorded_at: Mon, 10 Aug 2026 23:31:26 GMT
+recorded_with: VCR 6.4.0

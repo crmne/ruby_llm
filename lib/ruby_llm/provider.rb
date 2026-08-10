@@ -276,6 +276,25 @@ module RubyLLM
       file_protocol.new(self).upload(file, **options)
     end
 
+    def cache_content(content, model:, ttl: nil, instructions: nil, with: nil) # :nodoc:
+      protocol = resolve_protocol(nil, model, operation: :cache)
+      protocol.new(self, model).cache_content(
+        content, model: model_id_for(model), ttl:, instructions:, with:
+      )
+    end
+
+    def find_cache(name) # :nodoc:
+      default_protocol.new(self).find_cache(name)
+    end
+
+    def delete_cache(name) # :nodoc:
+      default_protocol.new(self).delete_cache(name)
+    end
+
+    def extend_cache(name, ttl:) # :nodoc:
+      default_protocol.new(self).extend_cache(name, ttl:)
+    end
+
     def find_file(file_id) # :nodoc:
       ensure_files_supported!
       file_protocol.new(self).find(file_id)

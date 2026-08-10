@@ -122,6 +122,71 @@ RSpec.describe RubyLLM::Chat, :live do
     end
   end
 
+  describe 'Gemini explicit caching' do
+    it 'renders cachedContent when caching carries an id' do
+      chat = RubyLLM.chat(model: 'gemini-2.5-flash', provider: :gemini)
+                    .with_caching(id: 'cachedContents/abc123')
+                    .ask_later('Hello')
+
+      expect(chat.render[:cachedContent]).to eq('cachedContents/abc123')
+    end
+
+    it 'normalizes bare cache ids' do
+      chat = RubyLLM.chat(model: 'gemini-2.5-flash', provider: :gemini)
+                    .with_caching(id: 'abc123')
+                    .ask_later('Hello')
+
+      expect(chat.render[:cachedContent]).to eq('cachedContents/abc123')
+    end
+
+    it 'accepts a CachedContent as the id' do
+      cache = RubyLLM::CachedContent.new(name: 'cachedContents/abc123')
+      chat = RubyLLM.chat(model: 'gemini-2.5-flash', provider: :gemini)
+                    .with_caching(id: cache)
+                    .ask_later('Hello')
+
+      expect(chat.render[:cachedContent]).to eq('cachedContents/abc123')
+    end
+
+    it 'notes that Gemini caching is implicit when with_caching has no id' do
+      allow(RubyLLM.logger).to receive(:debug)
+
+      chat = RubyLLM.chat(model: 'gemini-2.5-flash', provider: :gemini)
+                    .with_caching(ttl: '1h')
+                    .ask_later('Hello')
+      payload = chat.render
+
+      expect(payload).not_to have_key(:cachedContent)
+      expect(RubyLLM.logger).to have_received(:debug).with(/implicit caching.*RubyLLM\.cache/m).once
+    end
+
+    it 'notes that Gemini ignores explicit cache boundaries' do
+      allow(RubyLLM.logger).to receive(:debug)
+
+      chat = RubyLLM.chat(model: 'gemini-2.5-flash', provider: :gemini)
+      chat.ask_later('Long context').cache_until_here!
+      chat.render
+
+      expect(RubyLLM.logger).to have_received(:debug).with(/implicit caching.*RubyLLM\.cache/m).once
+    end
+
+    it 'rejects the id option on Anthropic' do
+      chat = RubyLLM.chat(model: 'claude-haiku-4-5', provider: :anthropic)
+                    .with_caching(id: 'cachedContents/abc123')
+                    .ask_later('Hello')
+
+      expect { chat.render }.to raise_error(ArgumentError, /Anthropic prompt caching accepts :ttl, got :id/)
+    end
+
+    it 'rejects the id option on OpenAI' do
+      chat = RubyLLM.chat(model: 'gpt-4.1-nano', provider: :openai)
+                    .with_caching(id: 'cachedContents/abc123')
+                    .ask_later('Hello')
+
+      expect { chat.render }.to raise_error(ArgumentError, /prompt caching accepts :key, :ttl, and :mode, got :id/)
+    end
+  end
+
   describe '#cache_until_here!' do
     let(:chat) { RubyLLM.chat }
 

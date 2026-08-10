@@ -70,6 +70,7 @@ module RubyLLM
     abstract :render_speech_payload, :speech_url, :parse_speech_response
     abstract :render_transcription_payload, :transcription_url, :parse_transcription_response
     abstract :render_count_tokens_payload, :count_tokens_url, :parse_count_tokens_response
+    abstract :render_cache_payload, :render_cache_update_payload, :caches_url, :cache_url, :parse_cache_response
 
     def initialize(provider, model = nil)
       @provider = provider
@@ -194,6 +195,35 @@ module RubyLLM
         response = @connection.post transcription_url, payload, usage: @usage_tracker
         parse_transcription_response(response, model:)
       end
+    end
+
+    def cache_content(content, model:, ttl: nil, instructions: nil, with: nil)
+      payload = render_cache_payload(content, model:, ttl:, instructions:, attachments: Attachment.wrap(with))
+      response = @connection.post caches_url, payload
+      parse_cache_response(response.body)
+    rescue NotImplementedError
+      raise Error, "#{@provider.name} doesn't support explicit content caching"
+    end
+
+    def find_cache(name)
+      response = @connection.get cache_url(name)
+      parse_cache_response(response.body)
+    rescue NotImplementedError
+      raise Error, "#{@provider.name} doesn't support explicit content caching"
+    end
+
+    def delete_cache(name)
+      @connection.delete cache_url(name)
+      true
+    rescue NotImplementedError
+      raise Error, "#{@provider.name} doesn't support explicit content caching"
+    end
+
+    def extend_cache(name, ttl:)
+      response = @connection.patch cache_url(name), render_cache_update_payload(ttl:)
+      parse_cache_response(response.body)
+    rescue NotImplementedError
+      raise Error, "#{@provider.name} doesn't support explicit content caching"
     end
 
     def maybe_normalize_temperature(temperature, model)

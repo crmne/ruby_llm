@@ -72,6 +72,7 @@ loader.setup
 # - ::moderate screens content (Moderation)
 # - ::batch processes many chats at lower cost (Batch)
 # - ::upload manages provider files (UploadedFile)
+# - ::cache stores a reusable prompt prefix with a provider (CachedContent)
 #
 # == Rails
 #
@@ -234,6 +235,17 @@ module RubyLLM
     #
     def download(...)
       UploadedFile.download(...)
+    end
+
+    # Creates a provider-side prompt cache and returns a CachedContent
+    # that chats can attach with Chat#with_caching. Arguments are
+    # forwarded to CachedContent.create.
+    #
+    #   cache = RubyLLM.cache(big_document, model: 'gemini-2.5-flash', ttl: 3600)
+    #   chat = RubyLLM.chat(model: 'gemini-2.5-flash').with_caching(id: cache)
+    #
+    def cache(...)
+      CachedContent.create(...)
     end
 
     # Renders the ERB prompt template +name+ and returns the result as a

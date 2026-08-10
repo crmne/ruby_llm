@@ -42,9 +42,22 @@ module RubyLLM
             payload[:toolConfig] = build_tool_config(tool_prefs[:choice]) unless tool_prefs[:choice].nil?
           end
 
+          payload[:cachedContent] = cache_name(caching[:id]) if caching&.dig(:id)
+          maybe_log_implicit_caching_note(messages, caching)
+
           payload
         end
         # rubocop:enable Metrics/PerceivedComplexity,Lint/UnusedMethodArgument
+
+        def maybe_log_implicit_caching_note(messages, caching)
+          return unless (caching && !caching[:id]) || messages.any?(&:cache_until_here?)
+
+          RubyLLM.logger.debug(
+            'Gemini caches repeated prompt prefixes automatically (implicit caching). ' \
+            'For explicit caching, create a cache with RubyLLM.cache and attach it with ' \
+            'chat.with_caching(id: cache).'
+          )
+        end
 
         def warn_unsupported_citations(model)
           RubyLLM.logger.warn(

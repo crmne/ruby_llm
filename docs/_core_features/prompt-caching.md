@@ -25,6 +25,7 @@ After reading this guide, you will know:
 * How to turn on provider prompt caching with `with_caching`.
 * How to mark an exact prompt prefix with `cache_until_here!`.
 * How RubyLLM renders provider-native caching options.
+* How to create and attach a Gemini explicit cache with `RubyLLM.cache`.
 * How Rails persists explicit cache boundaries.
 
 ## Automatic Prompt Caching
@@ -47,6 +48,7 @@ RubyLLM renders the closest provider-native request:
 | OpenAI-compatible Chat Completions and Responses | Uses the provider's automatic prompt cache; `key:` becomes `prompt_cache_key`, and `ttl:` and `mode:` become `prompt_cache_options`. |
 | Mistral | Uses `key:` as the provider's `prompt_cache_key`. |
 | Bedrock Converse | Adds a `cachePoint` to the last cacheable message. |
+| Gemini and Vertex AI | Cache automatically; `id:` attaches an explicit cache created with `RubyLLM.cache` (see below). |
 | Other providers | Sends no extra caching fields unless the provider already caches automatically. |
 
 Prompt cache durations do not line up cleanly across providers, so RubyLLM does not alias them. Use the provider's own option name and value:
@@ -120,6 +122,56 @@ chat.with_instructions(large_policy_prompt).cache_until_here!
 chat.ask("Apply the policy to this request: #{request_text}")
 ```
 
+## Gemini Explicit Caching
+
+Gemini caches repeated prompt prefixes on its own, so most chats need no caching calls at all. When you want control over what is cached and how long it lives, create the cache yourself. Gemini models it as a resource: you store the stable content once, the API keeps it for a TTL, and each request references it by name.
+
+`RubyLLM.cache` creates the resource and returns a `RubyLLM::CachedContent`:
+
+```ruby
+cache = RubyLLM.cache(
+  File.read("handbook.md"),
+  model: 'gemini-2.5-flash',
+  instructions: "You are a meticulous release engineer.",
+  ttl: 3600
+)
+
+cache.name       # => "cachedContents/abc123"
+cache.tokens     # => 7809
+cache.expires_at # => 2026-08-11 12:34:56 UTC
+```
+
+Pass file attachments with `with:`, the same way `ask` accepts them:
+
+```ruby
+cache = RubyLLM.cache("Reference material:", model: 'gemini-2.5-flash', with: "manual.pdf")
+```
+
+The content must exceed the model's minimum cacheable size, 2,048 tokens for the gemini-2.5 family and 4,096 for newer Flash models, or Gemini rejects the cache. `ttl:` accepts seconds or a duration string such as `"300s"` and defaults to one hour.
+
+Attach the cache with `with_caching(id:)`, passing the `CachedContent` or its name:
+
+```ruby
+chat = RubyLLM.chat(model: 'gemini-2.5-flash').with_caching(id: cache)
+response = chat.ask("What does the handbook say about cassette hygiene?")
+response.tokens.cache_read # => 7809
+```
+
+The cache is the conversation's prefix. RubyLLM sends the chat's own messages unchanged, so compose them knowing the model already sees the cached content first. Gemini rejects requests that combine a cache with request-level system instructions or tools, so put instructions in the cache with `instructions:` and leave `with_instructions` and `with_tools` off the chat.
+
+`CachedContent` manages the rest of the lifecycle:
+
+```ruby
+cache.extend!(ttl: 7200) # sets expiry to two hours from now
+cache.delete!            # removes the cache before its TTL
+
+cache = RubyLLM::CachedContent.find("cachedContents/abc123", provider: :gemini)
+```
+
+Vertex AI supports the same lifecycle; pass `provider: :vertexai` to `RubyLLM.cache` and cache names become full `projects/.../cachedContents/...` resource paths.
+
+On Gemini, `with_caching` without `id:` and `cache_until_here!` boundaries change nothing on the wire. Implicit caching is already on, so RubyLLM logs a debug note pointing to `RubyLLM.cache` and sends the request as usual.
+
 ## Rails Persistence
 
 For persisted Rails chats, explicit cache boundaries are stored on messages with `cache_until_here` and replayed with conversation history:
@@ -136,4 +188,4 @@ Existing apps should run the latest upgrade generator after updating RubyLLM so 
 
 ## Dropping Down
 
-`with_caching` and `cache_until_here!` cover RubyLLM's prompt-caching API. Use `with_provider_options` only when you need another provider request option, and use a [`before_request` hook]({% link _core_features/chat-request-control.md %}#request-hooks) only when the rendered payload itself must be adjusted.
+`with_caching`, `cache_until_here!`, and `RubyLLM.cache` cover RubyLLM's prompt-caching API. Use `with_provider_options` only when you need another provider request option, and use a [`before_request` hook]({% link _core_features/chat-request-control.md %}#request-hooks) only when the rendered payload itself must be adjusted.

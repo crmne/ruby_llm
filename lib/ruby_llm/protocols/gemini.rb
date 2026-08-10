@@ -4,6 +4,7 @@ module RubyLLM
   module Protocols
     # The Google Gemini generateContent API.
     class Gemini < Protocol
+      include Gemini::Caches
       include Gemini::Chat
       include Gemini::Embeddings
       include Gemini::Images
