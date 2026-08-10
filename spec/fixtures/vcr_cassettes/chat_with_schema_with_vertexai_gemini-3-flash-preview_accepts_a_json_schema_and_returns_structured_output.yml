@@ -1,0 +1,145 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://oauth2.googleapis.com/token
+    body:
+      encoding: ASCII-8BIT
+      string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 10 Aug 2026 19:14:12 GMT
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      Expires:
+      - Mon, 01 Jan 1990 00:00:00 GMT
+      Pragma:
+      - no-cache
+      Content-Type:
+      - application/json; charset=utf-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "access_token": "<GOOGLE_ACCESS_TOKEN>",
+          "expires_in": 3599,
+          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/cloud-platform openid",
+          "token_type": "Bearer",
+          "id_token": "<GOOGLE_ID_TOKEN>"
+        }
+  recorded_at: Mon, 10 Aug 2026 19:14:12 GMT
+- request:
+    method: post
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-3-flash-preview:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"Generate a person named
+        John who is 30 years old"}]}],"generationConfig":{"responseMimeType":"application/json","responseJsonSchema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"integer"}},"required":["name","age"],"additionalProperties":false}}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Mon, 10 Aug 2026 19:14:22 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "candidates": [
+            {
+              "content": {
+                "role": "model",
+                "parts": [
+                  {
+                    "text": "{\"name\":\"John\",\"age\":30}",
+                    "thoughtSignature": "AY89a19X9KrZgHwaEC6zOmQNY4akeIEYGCCHIiPlHwNZQC3ibnvzaVCOUe6Ns2zZwDyDdDmNpWsDoRZFskx79VWyYoIhyRNqy4ki1NL3XAsQLkeVTrZPPnLUfY97U1vBtILmkbIW8taXeS5FDtKUpkCp/FDVVPYxSIv+1Z2+doFz3XzKpwHzttQtQJCHTtAws0b1mnasNuNVUz8jW5fMF3lIvMVOn/UGUjHoGRSaNV4nu0k/77PockSyONK199QKomlHjVs/i3yAyVHofIc+to+ibdfPbg593Lo8GGqjewLKeY+d+NEIgSqMZDUR7QMgWcaTLcPR8U6Y/9LYGXZyngW89LPepKhJaI5Ygi/k23mPfEZ1WcRJhDaa6t/Hn6PbluuJ5DlPtLWrdHJEGJry1fh0guvTJIgYieMiWa3lPeh6Iq2N3fIPrB2GzW//VcpASXhpX9H2FLpkzznlWz4TBm+61ukHBTUrn5xt1nBXtQWvXHCloC8YMDUe5DAsn9sG6zIYs7DJCWRG0+Io4eTpvJgNOcXJj3K9NlAPPjNee+RhQXLCsls/GK8tEdM7J4UNOwFNsZQzAJy7xNPaG6GeSrlasX6KSNAnBEWyIegIcXWT/pWpQlL+vayVvaLovMHx07y06CJQzQ1u+y8S7TCSHhT+gO3CXfYSmP4n9gznWZwJSrTHzsXwhtOhg9c+77ucD/NU1yZcdpLRlrF13DTFmKd5l6yLsrbfK6qHjJbt6N1gLKErq8FCyE0q9gdWyiJCkf0wDvWTiWpb3/5TXAWsndu5w5SiuwUdpURwIZ7WoM9vW9F4xyu2Hv9cqBO/WF/YcUyKGkGZL/z4Z1FYQw5jAnnLPjnGCE5kk01laOxkHXxyxak1vy5AVaqeQgwD5FLHoZ5TFuRXLMo8QPEkGGxo6+tDwYTkPjx6cbEZFAXDzxhn+e8dCY7HmUGx8QoO4A2bGiQzsM4t06fYcgJYQ2yBEGsrdZ/CuWVy9JhR4tLdu5qfzg5I9VVPcyf4NhBj6+vogDifezztcYkEYK2e+7URbpjPkftJL49TycAV5WKQv1zUyeJNcEWDQbQBVxHiixKet8u90cs95c388hXYQ3qx6jDvI78Fh68VeDvxq2h0ycfaBNlrL3PVaMcewfNjlYmdowjHtVxcw0MuGVejBm64H2mowL6T4NDqHFBxfJvkqZdv1cQJkQnjrGCxCMyx/nlCRu8cTUS+75U5BxNqqahrNSBaHCUnMPt9r2klpmWbqKa2QhJbArwH0iwhYSgS57xo0IuJDTRyRmQR323CbXQYe6L9khaYswo9CE8Wea/yDCCFyGtAufKJfOoGXLWghkLIeZvTXfWBi49aRss9edqCBI3dwY4awkGA2vNpx8HMOvwwZAd8LOQ/u6BgC6sK+Q5uwu71ucLvX1dNB5qtN0zJyo/69UC+yJFPYxNKCeKhfjoeMOYANcC92xERrx1Ti8EXfA=="
+                  }
+                ]
+              },
+              "finishReason": "STOP"
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 77,
+            "candidatesTokenCount": 10,
+            "totalTokenCount": 391,
+            "trafficType": "ON_DEMAND",
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 77
+              }
+            ],
+            "candidatesTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 10
+              }
+            ],
+            "thoughtsTokenCount": 304
+          },
+          "modelVersion": "gemini-3-flash-preview",
+          "createTime": "2026-08-10T19:14:12.926200Z",
+          "responseId": "BCN6avjDOJGqmPUPjO6cqQI"
+        }
+  recorded_at: Mon, 10 Aug 2026 19:14:22 GMT
+recorded_with: VCR 6.4.0

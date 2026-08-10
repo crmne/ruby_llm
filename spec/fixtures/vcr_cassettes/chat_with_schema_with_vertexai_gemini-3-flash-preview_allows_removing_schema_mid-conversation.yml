@@ -1,0 +1,231 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://oauth2.googleapis.com/token
+    body:
+      encoding: ASCII-8BIT
+      string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Expires:
+      - Mon, 01 Jan 1990 00:00:00 GMT
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      Pragma:
+      - no-cache
+      Date:
+      - Mon, 10 Aug 2026 19:14:24 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "access_token": "<GOOGLE_ACCESS_TOKEN>",
+          "expires_in": 3599,
+          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email openid",
+          "token_type": "Bearer",
+          "id_token": "<GOOGLE_ID_TOKEN>"
+        }
+  recorded_at: Mon, 10 Aug 2026 19:14:24 GMT
+- request:
+    method: post
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-3-flash-preview:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"Generate a person named
+        Bob"}]}],"generationConfig":{"responseMimeType":"application/json","responseJsonSchema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"integer"}},"required":["name","age"],"additionalProperties":false}}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Mon, 10 Aug 2026 19:14:27 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "candidates": [
+            {
+              "content": {
+                "role": "model",
+                "parts": [
+                  {
+                    "text": "{\"name\":\"Bob\",\"age\":30}",
+                    "thoughtSignature": "AY89a1/8kRDQn5JNfyEI6Z13yBNzzJy23UsWbuAgb8Mzh7+BIlVpkZ0nFdsTQpdKW1CiZ5eEniU93a2o7dQ6I1gOJcV3yScnwLvwzeTEtayN+59h2GvuUJrChRDXm8OvqU64+RK54Z1Zve/uWdUkuqTjTnrkK1c0eWDDobJQSwG6km0p3b87QPGYj0cZI0mBdXp1NeHTMhBvmKYciDNvtQoPhJPDDdp05vmiO8QD0h7s/Juq0hyADV4wox7/oY3HY16nPVX8RAPgroG1gedybXCVTnoidMAUwMxSv77e8R2FtoXk2SRDH0EEzxqu/q5GAW3+8GADV69mIkV8BF0NKr8blkuNgOyT9L4YHaM/Ez9XH0LBftQylRtUrjrhmHY51dfUtkxhRNSbczne6KjFJI08LvWqAUvMZKmtzOu6740cBhQKN3rV/5By1wblc32qoB5CPQ6/V9DgNv8yJy8KwRwJOGbv2i8DCZU348KKtpQsrpK7xcJvBht81dFvdhOOA34BQVU4MGx+fSlSj9QaptMo1C/vYuwUmuPMHXWYqRBGlDY0PbqphXb9WSzmIowHGa62eVYSNRTeAm3k9eAKbj4SBW4uUyv542Io9QbzHtJ/Y5rOd9xWwAGIFZUkoXlIbh44PG9xaq/SGEZxWLEFI9db+D2E0mJ0Jn1oTa16yD50lbdRehqxgp2n08Z8BNYZVTFqQAp/YkS0ffeGj6xas+joPw2LlfSqNzXv3KZm028biBDthmRLvYphoAoBHsY10SmmnaUgKJe1aMbiJhIPT1ZXCOb42vbNzFdEeJw5or/xATTbRBX7NDgu401PY90pL96WiCXJg3zTZXqXGBAzlJMGRhdXrAwpKJZy1JSedkImuSJhP+SBjeVAlH4pKBlfR4r4KUdOOrh5LUE4ofZiT7UjyKnkjM4bSlDJq1zPaYQVNdV9qaGhYp5thgDXxSZeidavaS5xSj2GhwnJMihLYmyVqNBf9y0SypxH4zkCwfCwMRDCSD/y6eTCubbtMYCrqZmc9jhuArytrsvgpyABSiWUwmAytRLzSBcJuB47cQCmUM7KMLSPW0T7gWBGUxJ1iL2wJdgmhDt0wUnIZrVSNPjTHHzGCwvHm/auuVIKVSi3Ov8tIx3BrTgPMDw7gxcqZiru3HTC3Ms+dWgi4ByAHFkN2UD+q/lmX+eT5B6P4uJuXBlwijr/nlJexluoM+34ipHDRCCzCJcxE0s="
+                  }
+                ]
+              },
+              "finishReason": "STOP"
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 70,
+            "candidatesTokenCount": 10,
+            "totalTokenCount": 346,
+            "trafficType": "ON_DEMAND",
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 70
+              }
+            ],
+            "candidatesTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 10
+              }
+            ],
+            "thoughtsTokenCount": 266
+          },
+          "modelVersion": "gemini-3-flash-preview",
+          "createTime": "2026-08-10T19:14:24.520128Z",
+          "responseId": "ECN6asDfH6SgmPUPg_a1gAs"
+        }
+  recorded_at: Mon, 10 Aug 2026 19:14:27 GMT
+- request:
+    method: post
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-3-flash-preview:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"Generate a person named
+        Bob"}]},{"role":"model","parts":[{"thought":true,"thoughtSignature":"AY89a1/8kRDQn5JNfyEI6Z13yBNzzJy23UsWbuAgb8Mzh7+BIlVpkZ0nFdsTQpdKW1CiZ5eEniU93a2o7dQ6I1gOJcV3yScnwLvwzeTEtayN+59h2GvuUJrChRDXm8OvqU64+RK54Z1Zve/uWdUkuqTjTnrkK1c0eWDDobJQSwG6km0p3b87QPGYj0cZI0mBdXp1NeHTMhBvmKYciDNvtQoPhJPDDdp05vmiO8QD0h7s/Juq0hyADV4wox7/oY3HY16nPVX8RAPgroG1gedybXCVTnoidMAUwMxSv77e8R2FtoXk2SRDH0EEzxqu/q5GAW3+8GADV69mIkV8BF0NKr8blkuNgOyT9L4YHaM/Ez9XH0LBftQylRtUrjrhmHY51dfUtkxhRNSbczne6KjFJI08LvWqAUvMZKmtzOu6740cBhQKN3rV/5By1wblc32qoB5CPQ6/V9DgNv8yJy8KwRwJOGbv2i8DCZU348KKtpQsrpK7xcJvBht81dFvdhOOA34BQVU4MGx+fSlSj9QaptMo1C/vYuwUmuPMHXWYqRBGlDY0PbqphXb9WSzmIowHGa62eVYSNRTeAm3k9eAKbj4SBW4uUyv542Io9QbzHtJ/Y5rOd9xWwAGIFZUkoXlIbh44PG9xaq/SGEZxWLEFI9db+D2E0mJ0Jn1oTa16yD50lbdRehqxgp2n08Z8BNYZVTFqQAp/YkS0ffeGj6xas+joPw2LlfSqNzXv3KZm028biBDthmRLvYphoAoBHsY10SmmnaUgKJe1aMbiJhIPT1ZXCOb42vbNzFdEeJw5or/xATTbRBX7NDgu401PY90pL96WiCXJg3zTZXqXGBAzlJMGRhdXrAwpKJZy1JSedkImuSJhP+SBjeVAlH4pKBlfR4r4KUdOOrh5LUE4ofZiT7UjyKnkjM4bSlDJq1zPaYQVNdV9qaGhYp5thgDXxSZeidavaS5xSj2GhwnJMihLYmyVqNBf9y0SypxH4zkCwfCwMRDCSD/y6eTCubbtMYCrqZmc9jhuArytrsvgpyABSiWUwmAytRLzSBcJuB47cQCmUM7KMLSPW0T7gWBGUxJ1iL2wJdgmhDt0wUnIZrVSNPjTHHzGCwvHm/auuVIKVSi3Ov8tIx3BrTgPMDw7gxcqZiru3HTC3Ms+dWgi4ByAHFkN2UD+q/lmX+eT5B6P4uJuXBlwijr/nlJexluoM+34ipHDRCCzCJcxE0s="},{"text":"{\"name\":\"Bob\",\"age\":30}"}]},{"role":"user","parts":[{"text":"Now
+        just tell me about Ruby"}]}],"generationConfig":{}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Mon, 10 Aug 2026 19:14:36 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "candidates": [
+            {
+              "content": {
+                "role": "model",
+                "parts": [
+                  {
+                    "text": "Ruby most commonly refers to one of two things:\n\n### 1. The Programming Language\nRuby is a dynamic, open-source programming language focused on simplicity and productivity. \n*   **Creator:** Yukihiro \"Matz\" Matsumoto (released in 1995).\n*   **Key Feature:** It has an elegant syntax that is intended to be natural to read and easy to write.\n*   **Usage:** It is most famous for **Ruby on Rails**, a powerful web framework used to build sites like GitHub, Airbnb, and Shopify.\n\n### 2. The Gemstone\nRuby is a pink to blood-red colored gemstone, a variety of the mineral corundum. \n*   **Value:** It is one of the four \"precious\" stones (alongside diamonds, emeralds, and sapphires).\n*   **Symbolism:** It represents passion, protection, and prosperity, and is the birthstone for July.\n\n***\n\n**If you meant a person profile for \"Ruby\" (like the Bob example):**\n`{\"name\": \"Ruby\", \"age\": 28, \"occupation\": \"Software Engineer\"}`",
+                    "thoughtSignature": "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"
+                  }
+                ]
+              },
+              "finishReason": "STOP"
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 21,
+            "candidatesTokenCount": 241,
+            "totalTokenCount": 1184,
+            "trafficType": "ON_DEMAND",
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 21
+              }
+            ],
+            "candidatesTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 241
+              }
+            ],
+            "thoughtsTokenCount": 922
+          },
+          "modelVersion": "gemini-3-flash-preview",
+          "createTime": "2026-08-10T19:14:27.554649Z",
+          "responseId": "EyN6apntId7TwOYPw7mWgA4"
+        }
+  recorded_at: Mon, 10 Aug 2026 19:14:37 GMT
+recorded_with: VCR 6.4.0

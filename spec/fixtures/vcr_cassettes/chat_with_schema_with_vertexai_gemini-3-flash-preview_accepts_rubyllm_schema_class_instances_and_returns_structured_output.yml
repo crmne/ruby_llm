@@ -1,0 +1,145 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://oauth2.googleapis.com/token
+    body:
+      encoding: ASCII-8BIT
+      string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 10 Aug 2026 19:14:38 GMT
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      Pragma:
+      - no-cache
+      Expires:
+      - Mon, 01 Jan 1990 00:00:00 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "access_token": "<GOOGLE_ACCESS_TOKEN>",
+          "expires_in": 3599,
+          "scope": "https://www.googleapis.com/auth/sqlservice.login https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/cloud-platform openid",
+          "token_type": "Bearer",
+          "id_token": "<GOOGLE_ID_TOKEN>"
+        }
+  recorded_at: Mon, 10 Aug 2026 19:14:38 GMT
+- request:
+    method: post
+    uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/gemini-3-flash-preview:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"Generate a person named
+        Alice who is 28 years old"}]}],"generationConfig":{"responseMimeType":"application/json","responseJsonSchema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"number"}},"required":["name","age"],"additionalProperties":false}}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Mon, 10 Aug 2026 19:14:41 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "candidates": [
+            {
+              "content": {
+                "role": "model",
+                "parts": [
+                  {
+                    "text": "{\"name\":\"Alice\",\"age\":28}",
+                    "thoughtSignature": "AY89a1+MUDbmAV9oIwzyQVmVrs3EiwvpsK7vFXfw+CJz62Ae3iq9ZKBe9gcglE6kERoG+bmOnJo5gl+RpShZPG1eryVnZ4rxfCCUbdLFjzOdwawvaae221zanVm5esyZbB6IhQ9iE4xGbh/vcXcgQnYzpTsVSZwCyZYi1vwT1L+S5l3TW2Tojh/AZSwiKUmgnW7fg5nf2H2RzZOpCeZni9gwbQzdb3mkacGHoi8AgchNEQXlFw2KkSokBEVKzs1TvSqOqlw21pCvV/98nShJi0iNoOBn27w8stRfgEMc6dAuy5N/UW3IIQFHkB/89tDCpfPhcEyxwYHMFYJHyjVzwS+887QwYgAJZibO6WVe76BlB4BQoMoNH4kjkyz3nBtXo/1mu9qqLCoerdUWV7SsllyOuc7vJ3c0qvJUMTPwMwofsQSmVrOPTpuV4GaxwHUzr8YI/BF0xmWrzBPGX1jbZJPhZn2u6Y3z0SrNmLGQMhQauSgoaeZPBMkdDqzHny33V65BYb/9dOsZdOPti118dsHqWxxlRiZoi5wmJe95Zq84S8MkB4zxFlAUqFmFhfih11OympCBe/I6K2BQs/v53sxeYEm421MztRHDLVdIsb5Hs/HLm69DdXbdrL/rBwx5qfiGN/QE7rpdYVIxbPeePYUaMOAlQesVhc0rDlENdrsYP7O3bcOpYH5Otks8IDV/e6wHJzmQl6QNHcxWnzuE7lSJNm49ThT6qRMTNItNMaxCMIfi9gPQnuZ4hycgPwNQuNsb7RQVNp70KE2FZlKlUNAzbiSGddBO6x2FKXLKThAUce1afyq8GfxFRNc410lCEQKQdn0OrfqLoYQNCs+t+8Jow/nM6kOCdg3tdYohJH53KseN/Nhh1c9AurF7jQhcyP1MkXD/aezYtC6+WEe4XxZ0CCfW2jqJcS1iEOwN/SEBaREgiTpUb7Sh/gk8EzC+dieAV3tT1Y0Vfmeqb8cnw/1Knb5mF69ybV8LUJ7fGnuSlfVoMGRoA9AWSPmBdWUO1X9GUdU2ZWS7JZOnxvsHrOtRzYLlk/0VXbtFLLw+SpxxLi64HFm2vhaNKhP+7voBR/Te/Wpqf1s5VjWtW1bd8N10rD8h7bfp03zh6qKoIbnkWBLz1/jJ2k92RVB4dTEx1ImK+mducHVu7dsGlcDLOc9V5I8UYlKVEPzrjWq7ROc6xqnxAtEf6ZtICqSVAnWnaS6ELO3Jf/Wj0jo="
+                  }
+                ]
+              },
+              "finishReason": "STOP"
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 77,
+            "candidatesTokenCount": 10,
+            "totalTokenCount": 366,
+            "trafficType": "ON_DEMAND",
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 77
+              }
+            ],
+            "candidatesTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 10
+              }
+            ],
+            "thoughtsTokenCount": 279
+          },
+          "modelVersion": "gemini-3-flash-preview",
+          "createTime": "2026-08-10T19:14:38.185088Z",
+          "responseId": "HiN6aoCmC6GAz_IP7uXM2Qw"
+        }
+  recorded_at: Mon, 10 Aug 2026 19:14:41 GMT
+recorded_with: VCR 6.4.0

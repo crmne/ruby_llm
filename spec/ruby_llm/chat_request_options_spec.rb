@@ -47,12 +47,12 @@ RSpec.describe RubyLLM::Chat, :live do
 
     # Supported params vary by provider, and to lesser degree, by model.
 
-    # Providers [:openai, :ollama, :deepseek] support a JSON object mode param.
-    # On Chat Completions it's {response_format: {type: 'json_object'}}; on the
-    # Responses API (OpenAI's default) it's {text: {format: {type: 'json_object'}}}.
+    # Providers [:openai, :azure, :ollama, :deepseek, :mistral, :xai] support a JSON
+    # object mode param. On Chat Completions it's {response_format: {type: 'json_object'}};
+    # on the Responses API (OpenAI's default) it's {text: {format: {type: 'json_object'}}}.
     # (Note that :openrouter may accept the parameter but silently ignore it.)
     each_model(CHAT_MODELS.select do |model_info|
-      %i[openai ollama deepseek].include?(model_info[:provider])
+      %i[openai azure ollama deepseek mistral xai].include?(model_info[:provider])
     end) do |provider, model|
       json_object_params = if provider == :openai
                              { text: { format: { type: 'json_object' } } }
@@ -71,9 +71,11 @@ RSpec.describe RubyLLM::Chat, :live do
       end
     end
 
-    # Provider [:gemini] supports a {generationConfig: {responseMimeType: ..., responseSchema: ...} } param,
-    # which can specify a JSON schema, requiring a deep_merge of params into the payload.
-    each_model(CHAT_MODELS.select { |model_info| model_info[:provider] == :gemini }) do |provider, model|
+    # Providers [:gemini, :vertexai] support a {generationConfig: {responseMimeType: ..., responseSchema: ...} }
+    # param, which can specify a JSON schema, requiring a deep_merge of params into the payload.
+    each_model(CHAT_MODELS.select do |model_info|
+      %i[gemini vertexai].include?(model_info[:provider])
+    end) do |provider, model|
       it "#{provider}/#{model} supports responseSchema param" do
         chat = RubyLLM
                .chat(model: model, provider: provider)
@@ -83,6 +85,31 @@ RSpec.describe RubyLLM::Chat, :live do
                    responseSchema: {
                      type: 'OBJECT',
                      properties: { result: { type: 'NUMBER' } }
+                   }
+                 }
+               )
+
+        response = chat.ask('What is the square root of 64? Answer with a JSON object with the key `result`.')
+
+        json_response = JSON.parse(response.content)
+        expect(json_response).to eq({ 'result' => 8 })
+      end
+    end
+
+    # Provider [:perplexity] supports {response_format: {type: 'json_schema', json_schema: {schema: ...}}}.
+    each_model(CHAT_MODELS.select { |model_info| model_info[:provider] == :perplexity }) do |provider, model|
+      it "#{provider}/#{model} supports json_schema response_format param" do
+        chat = RubyLLM
+               .chat(model: model, provider: provider)
+               .with_provider_options(
+                 response_format: {
+                   type: 'json_schema',
+                   json_schema: {
+                     schema: {
+                       type: 'object',
+                       properties: { result: { type: 'number' } },
+                       required: ['result']
+                     }
                    }
                  }
                )
