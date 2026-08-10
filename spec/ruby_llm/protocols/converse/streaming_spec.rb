@@ -41,7 +41,25 @@ RSpec.describe RubyLLM::Protocols::Converse::Streaming do
 
     chunk = streaming.send(:build_chunk, event)
 
+    expect(chunk.thinking.text).to eq('')
     expect(chunk.thinking.signature).to eq('thinking-signature')
+  end
+
+  it 'keeps redacted thinking distinct from omitted thinking' do
+    event = {
+      'contentBlockDelta' => {
+        'delta' => {
+          'reasoningContent' => {
+            'redactedContent' => 'redacted-thinking'
+          }
+        }
+      }
+    }
+
+    chunk = streaming.send(:build_chunk, event)
+
+    expect(chunk.thinking.text).to be_nil
+    expect(chunk.thinking.signature).to eq('redacted-thinking')
   end
 
   it 'preserves raw stopReason from messageStop events' do
@@ -99,6 +117,23 @@ RSpec.describe RubyLLM::Protocols::Converse::Streaming do
 
     expect(message.thinking.text).to eq('thinking text')
     expect(message.thinking.signature).to eq('thinking-signature')
+  end
+
+  it 'preserves omitted thinking through stream accumulation' do
+    accumulator = RubyLLM::StreamAccumulator.new
+    event = {
+      'contentBlockDelta' => {
+        'delta' => {
+          'reasoningContent' => {
+            'signature' => 'thinking-signature'
+          }
+        }
+      }
+    }
+
+    accumulator.add(streaming.send(:build_chunk, event))
+
+    expect(accumulator.to_message(nil).thinking.text).to eq('')
   end
 
   describe '#stream_url' do
@@ -221,7 +256,10 @@ RSpec.describe RubyLLM::Protocols::Converse::Streaming do
         }
       }
 
-      expect(streaming.send(:build_chunk, event).thinking.signature).to eq('sig')
+      thinking = streaming.send(:build_chunk, event).thinking
+
+      expect(thinking.text).to eq('')
+      expect(thinking.signature).to eq('sig')
     end
 
     it 'falls back to redacted content' do

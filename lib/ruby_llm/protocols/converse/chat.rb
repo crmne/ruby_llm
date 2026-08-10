@@ -458,16 +458,19 @@ module RubyLLM
         end
 
         def parse_thinking(content_blocks)
-          text = +''
+          text = nil
           signature = nil
 
           content_blocks.each do |block|
             chunk_text, chunk_signature = parse_reasoning_content_block(block)
-            text << chunk_text if chunk_text
+            if chunk_text
+              text ||= +''
+              text << chunk_text
+            end
             signature ||= chunk_signature
           end
 
-          [text.empty? ? nil : text, signature]
+          [text, signature]
         end
 
         def parse_reasoning_content_block(block)

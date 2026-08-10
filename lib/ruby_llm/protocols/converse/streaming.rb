@@ -221,7 +221,18 @@ module RubyLLM
           reasoning_content = normalized_delta(event)['reasoningContent'] || {}
 
           reasoning_text = reasoning_content['reasoningText'] || {}
-          reasoning_text['text'] || reasoning_content['text']
+          return reasoning_text['text'] if reasoning_text.key?('text')
+          return reasoning_content['text'] if reasoning_content.key?('text')
+          return '' if [reasoning_text, reasoning_content].any? { |block| block.key?('signature') }
+
+          extract_thinking_from_start(event)
+        end
+
+        def extract_thinking_from_start(event)
+          start = event.dig('contentBlockStart', 'start', 'reasoningContent') || {}
+          return unless start.key?('reasoningText')
+
+          start.dig('reasoningText', 'text').to_s
         end
 
         def extract_thinking_signature(event)
@@ -237,7 +248,7 @@ module RubyLLM
         def extract_signature_from_delta(event)
           reasoning_content = normalized_delta(event)['reasoningContent'] || {}
           reasoning_text = reasoning_content['reasoningText'] || {}
-          reasoning_text['signature'] || reasoning_content['signature']
+          reasoning_text['signature'] || reasoning_content['signature'] || reasoning_content['redactedContent']
         end
 
         def extract_signature_from_start(event)

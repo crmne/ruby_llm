@@ -428,7 +428,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
         :persist_message_completion,
         RubyLLM::Message.new(
           role: :tool, content: 'done', tool_call_id: call.id,
-          thinking: RubyLLM::Thinking.new(text: 'why', signature: 'sig'),
+          thinking: RubyLLM::Thinking.new(text: '', signature: 'sig'),
           citations: [RubyLLM::Citation.new(url: 'https://example.test')],
           finish_reason: 'stop'
         )
@@ -436,7 +436,7 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
 
       record = chat.instance_variable_get(:@message)
       expect(record.content).to eq('done')
-      expect(record.thinking_text).to eq('why')
+      expect(record.reload.to_llm.thinking.text).to eq('')
       expect(record.thinking_signature).to eq('sig')
       expect(record.finish_reason).to eq('stop')
       expect(record.citations.first.url).to eq('https://example.test')
