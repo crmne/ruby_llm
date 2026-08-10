@@ -105,6 +105,7 @@ module RubyLLM
           embedding3_small
           embedding_ada
         ].freeze
+        TRANSCRIPTION_FAMILIES = %w[whisper gpt4o_transcribe gpt4o_mini_transcribe].freeze
 
         def context_window_for(model_id)
           family = model_family(model_id)
@@ -145,6 +146,7 @@ module RubyLLM
           capabilities << 'structured_output' if supports_structured_output?(model_id)
           capabilities << 'vision' if supports_vision?(model_id)
           capabilities << 'reasoning' if model_id.match?(/o\d|gpt-5|codex/)
+          capabilities << 'transcription' if TRANSCRIPTION_FAMILIES.include?(model_family(model_id))
           # Web search models return url_citation annotations.
           capabilities << 'citations' if model_id.match?(/search-(?:preview|api)/)
           capabilities

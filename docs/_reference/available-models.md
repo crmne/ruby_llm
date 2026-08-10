@@ -2,7 +2,7 @@
 layout: default
 title: Available Models
 nav_order: 2
-description: Browse 1183 AI models across 11 remote providers. Updated 2026-07-15.
+description: Browse 1183 AI models across 11 remote providers. Updated 2026-08-10.
 redirect_from:
   - /guides/available-models
 ---
@@ -21,7 +21,7 @@ redirect_from:
 
 ---
 
-_Updated 2026-07-15. This page lists the latest refreshed registry, also available as raw JSON at [rubyllm.com/models.json](https://rubyllm.com/models.json). It covers remote providers only; models on local providers (Ollama, GPUStack) are discovered from your own servers when you refresh._
+_Updated 2026-08-10. This page lists the latest refreshed registry, also available as raw JSON at [rubyllm.com/models.json](https://rubyllm.com/models.json). It covers remote providers only; models on local providers (Ollama, GPUStack) are discovered from your own servers when you refresh._
 
 Your installed gem may bundle an older snapshot of the registry. Refresh it to get the latest models in your app too:
 
@@ -29,7 +29,7 @@ Your installed gem may bundle an older snapshot of the registry. Refresh it to g
 RubyLLM.models.refresh!
 ```
 
-See [the models guide]({% link _reference/models.md %}) for how refreshing works in plain Ruby and Rails.
+See [the models guide]({% link _advanced/models.md %}) for how refreshing works in plain Ruby and Rails.
 
 ## Models by Provider
 
@@ -582,30 +582,30 @@ See [the models guide]({% link _reference/models.md %}) for how refreshing works
 | deep-research-max-preview-04-2026 | gemini | In: -; Out: - | - | 131072 | 65536 | In: $0.08, Out: $0.30 |
 | deep-research-preview-04-2026 | gemini | In: -; Out: - | - | 131072 | 65536 | In: $0.08, Out: $0.30 |
 | deep-research-pro-preview-12-2025 | gemini | In: -; Out: - | function_calling, structured_output, vision, tool_choice | 131072 | 65536 | In: $0.08, Out: $0.30 |
-| gemini-2.0-flash | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, vision, tool_choice | 1048576 | 8192 | In: $0.10, Out: $0.40, Cache Read: $0.02 |
+| gemini-2.0-flash | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, vision, tool_choice, transcription | 1048576 | 8192 | In: $0.10, Out: $0.40, Cache Read: $0.02 |
 | gemini-2.0-flash-001 | gemini | In: -; Out: - | function_calling, structured_output, vision, tool_choice | 1048576 | 8192 | In: $0.10, Out: $0.40 |
-| gemini-2.0-flash-lite | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, vision, tool_choice | 1048576 | 8192 | In: $0.08, Out: $0.30 |
+| gemini-2.0-flash-lite | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, vision, tool_choice, transcription | 1048576 | 8192 | In: $0.08, Out: $0.30 |
 | gemini-2.0-flash-lite-001 | gemini | In: -; Out: - | vision | 1048576 | 8192 | In: $0.08, Out: $0.30 |
 | gemini-2.5-computer-use-preview-10-2025 | gemini | In: -; Out: - | function_calling, structured_output, vision, tool_choice | 131072 | 65536 | In: $0.08, Out: $0.30 |
-| gemini-2.5-flash | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache Read: $0.03 |
+| gemini-2.5-flash | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice, transcription | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache Read: $0.03 |
 | gemini-2.5-flash-native-audio-latest | gemini | In: -; Out: - | function_calling, structured_output, vision, tool_choice | 131072 | 8192 | In: $0.08, Out: $0.30 |
 | gemini-2.5-flash-preview-tts | gemini | In: text; Out: audio | - | 8192 | 16384 | In: $0.50, Out: $10.00 |
-| gemini-2.5-flash-lite | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice | 1048576 | 65536 | In: $0.10, Out: $0.40, Cache Read: $0.01 |
-| gemini-2.5-pro | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice | 1048576 | 65536 | In: $1.25, Out: $10.00, Cache Read: $0.12 |
+| gemini-2.5-flash-lite | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice, transcription | 1048576 | 65536 | In: $0.10, Out: $0.40, Cache Read: $0.01 |
+| gemini-2.5-pro | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice, transcription | 1048576 | 65536 | In: $1.25, Out: $10.00, Cache Read: $0.12 |
 | gemini-2.5-pro-preview-tts | gemini | In: text; Out: audio | - | 8192 | 16384 | In: $1.00, Out: $20.00 |
-| gemini-3-flash-preview | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice | 1048576 | 65536 | In: $0.50, Out: $3.00, Cache Read: $0.05 |
-| gemini-3-pro-preview | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice | 1048576 | 65536 | In: $2.00, Out: $12.00, Cache Read: $0.20 |
-| gemini-3.1-flash-lite | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice | 1048576 | 65536 | In: $0.25, Out: $1.50, Cache Read: $0.02 |
-| gemini-3.1-flash-lite-preview | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice | 1048576 | 65536 | In: $0.25, Out: $1.50, Cache Read: $0.02 |
+| gemini-3-flash-preview | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice, transcription | 1048576 | 65536 | In: $0.50, Out: $3.00, Cache Read: $0.05 |
+| gemini-3-pro-preview | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice, transcription | 1048576 | 65536 | In: $2.00, Out: $12.00, Cache Read: $0.20 |
+| gemini-3.1-flash-lite | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice, transcription | 1048576 | 65536 | In: $0.25, Out: $1.50, Cache Read: $0.02 |
+| gemini-3.1-flash-lite-preview | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice, transcription | 1048576 | 65536 | In: $0.25, Out: $1.50, Cache Read: $0.02 |
 | gemini-3.1-flash-tts-preview | gemini | In: -; Out: - | function_calling, structured_output, vision, tool_choice | 8192 | 16384 | In: $0.08, Out: $0.30 |
-| gemini-3.1-pro-preview | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice | 1048576 | 65536 | In: $2.00, Out: $12.00, Cache Read: $0.20 |
-| gemini-3.1-pro-preview-customtools | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice | 1048576 | 65536 | In: $2.00, Out: $12.00, Cache Read: $0.20 |
-| gemini-3.5-flash | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice | 1048576 | 65536 | In: $1.50, Out: $9.00, Cache Read: $0.15 |
+| gemini-3.1-pro-preview | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice, transcription | 1048576 | 65536 | In: $2.00, Out: $12.00, Cache Read: $0.20 |
+| gemini-3.1-pro-preview-customtools | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice, transcription | 1048576 | 65536 | In: $2.00, Out: $12.00, Cache Read: $0.20 |
+| gemini-3.5-flash | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice, transcription | 1048576 | 65536 | In: $1.50, Out: $9.00, Cache Read: $0.15 |
 | gemini-embedding-001 | gemini | In: text; Out: embeddings | - | 2048 | 1 | In: $0.15 |
 | gemini-embedding-2 | gemini | In: -; Out: - | function_calling, structured_output, vision, tool_choice | 8192 | 1 | - |
 | gemini-embedding-2-preview | gemini | In: -; Out: - | function_calling, structured_output, vision, tool_choice | 8192 | 1 | - |
-| gemini-flash-latest | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache Read: $0.08 |
-| gemini-flash-lite-latest | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice | 1048576 | 65536 | In: $0.10, Out: $0.40, Cache Read: $0.02 |
+| gemini-flash-latest | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice, transcription | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache Read: $0.08 |
+| gemini-flash-lite-latest | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice, transcription | 1048576 | 65536 | In: $0.10, Out: $0.40, Cache Read: $0.02 |
 | gemini-omni-flash-preview | gemini | In: -; Out: - | function_calling, structured_output, vision, tool_choice | 131072 | 65536 | In: $0.08, Out: $0.30 |
 | gemini-pro-latest | gemini | In: -; Out: - | function_calling, structured_output, vision, tool_choice | 1048576 | 65536 | In: $0.08, Out: $0.30 |
 | gemini-robotics-er-1.5-preview | gemini | In: -; Out: - | function_calling, structured_output, vision, tool_choice | 1048576 | 65536 | In: $0.08, Out: $0.30 |
@@ -766,16 +766,16 @@ See [the models guide]({% link _reference/models.md %}) for how refreshing works
 | gpt-4o-mini-2024-07-18 | openai | In: -; Out: - | function_calling, structured_output, vision, tool_choice, parallel_tool_calls | 128000 | 16384 | In: $0.15, Out: $0.60 |
 | gpt-4o-mini-search-preview | openai | In: -; Out: - | citations | 4096 | 16384 | In: $0.50, Out: $1.50 |
 | gpt-4o-mini-search-preview-2025-03-11 | openai | In: -; Out: - | citations | 4096 | 16384 | In: $0.50, Out: $1.50 |
-| gpt-4o-mini-transcribe | openai | In: -; Out: - | - | 16000 | 2000 | In: $1.25, Out: $5.00 |
-| gpt-4o-mini-transcribe-2025-03-20 | openai | In: -; Out: - | - | 16000 | 2000 | In: $1.25, Out: $5.00 |
-| gpt-4o-mini-transcribe-2025-12-15 | openai | In: -; Out: - | - | 16000 | 2000 | In: $1.25, Out: $5.00 |
+| gpt-4o-mini-transcribe | openai | In: -; Out: - | transcription | 16000 | 2000 | In: $1.25, Out: $5.00 |
+| gpt-4o-mini-transcribe-2025-03-20 | openai | In: -; Out: - | transcription | 16000 | 2000 | In: $1.25, Out: $5.00 |
+| gpt-4o-mini-transcribe-2025-12-15 | openai | In: -; Out: - | transcription | 16000 | 2000 | In: $1.25, Out: $5.00 |
 | gpt-4o-mini-tts | openai | In: -; Out: - | - | - | - | In: $0.60, Out: $12.00 |
 | gpt-4o-mini-tts-2025-03-20 | openai | In: -; Out: - | - | - | - | In: $0.60, Out: $12.00 |
 | gpt-4o-mini-tts-2025-12-15 | openai | In: -; Out: - | - | - | - | In: $0.60, Out: $12.00 |
 | gpt-4o-search-preview | openai | In: -; Out: - | vision, citations | 128000 | 16384 | In: $2.50, Out: $10.00 |
 | gpt-4o-search-preview-2025-03-11 | openai | In: -; Out: - | vision, citations | 128000 | 16384 | In: $2.50, Out: $10.00 |
-| gpt-4o-transcribe | openai | In: -; Out: - | - | 128000 | 16384 | In: $2.50, Out: $10.00 |
-| gpt-4o-transcribe-diarize | openai | In: -; Out: - | - | 128000 | 16384 | In: $2.50, Out: $10.00 |
+| gpt-4o-transcribe | openai | In: -; Out: - | transcription | 128000 | 16384 | In: $2.50, Out: $10.00 |
+| gpt-4o-transcribe-diarize | openai | In: -; Out: - | transcription | 128000 | 16384 | In: $2.50, Out: $10.00 |
 | gpt-5-2025-08-07 | openai | In: -; Out: - | function_calling, structured_output, vision, reasoning, tool_choice, parallel_tool_calls | 128000 | 400000 | In: $1.25, Out: $10.00, Cache Read: $0.12 |
 | gpt-5-mini-2025-08-07 | openai | In: -; Out: - | function_calling, structured_output, vision, reasoning, tool_choice, parallel_tool_calls | 128000 | 400000 | In: $0.25, Out: $2.00, Cache Read: $0.02 |
 | gpt-5-nano-2025-08-07 | openai | In: -; Out: - | function_calling, structured_output, vision, reasoning, tool_choice, parallel_tool_calls | 128000 | 400000 | In: $0.05, Out: $0.40, Cache Read: $0.01 |
@@ -838,7 +838,7 @@ See [the models guide]({% link _reference/models.md %}) for how refreshing works
 | tts-1-1106 | openai | In: -; Out: - | - | - | - | In: $15.00, Out: $15.00 |
 | tts-1-hd | openai | In: -; Out: - | - | - | - | In: $30.00, Out: $30.00 |
 | tts-1-hd-1106 | openai | In: -; Out: - | - | - | - | In: $30.00, Out: $30.00 |
-| whisper-1 | openai | In: -; Out: - | - | - | - | In: $0.01, Out: $0.01 |
+| whisper-1 | openai | In: -; Out: - | transcription | - | - | In: $0.01, Out: $0.01 |
 
 
 ### OpenRouter (338)
@@ -1218,21 +1218,21 @@ See [the models guide]({% link _reference/models.md %}) for how refreshing works
 | zai-org/glm-5-maas | vertexai | In: text; Out: text | function_calling, reasoning | 202752 | 131072 | In: $1.00, Out: $3.20, Cache Read: $0.10 |
 | openai/gpt-oss-120b-maas | vertexai | In: text; Out: text | function_calling, reasoning | 131072 | 32768 | In: $0.09, Out: $0.36 |
 | openai/gpt-oss-20b-maas | vertexai | In: text; Out: text | function_calling, reasoning | 131072 | 32768 | In: $0.07, Out: $0.25 |
-| gemini-2.0-flash | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, vision, streaming | 1048576 | 8192 | In: $0.10, Out: $0.40, Cache Read: $0.02 |
-| gemini-2.5-flash | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, reasoning, vision, streaming | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache Read: $0.08, Cache Write: $0.38 |
+| gemini-2.0-flash | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, vision, streaming, transcription | 1048576 | 8192 | In: $0.10, Out: $0.40, Cache Read: $0.02 |
+| gemini-2.5-flash | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, reasoning, vision, streaming, transcription | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache Read: $0.08, Cache Write: $0.38 |
 | gemini-2.5-flash-tts | vertexai | In: text; Out: audio | streaming | 32768 | 16384 | In: $0.50, Out: $10.00 |
-| gemini-2.5-flash-lite | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, reasoning, vision, streaming | 1048576 | 65536 | In: $0.10, Out: $0.40, Cache Read: $0.01 |
-| gemini-2.5-pro | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, reasoning, vision, streaming | 1048576 | 65536 | In: $1.25, Out: $10.00, Cache Read: $0.12 |
+| gemini-2.5-flash-lite | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, reasoning, vision, streaming, transcription | 1048576 | 65536 | In: $0.10, Out: $0.40, Cache Read: $0.01 |
+| gemini-2.5-pro | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, reasoning, vision, streaming, transcription | 1048576 | 65536 | In: $1.25, Out: $10.00, Cache Read: $0.12 |
 | gemini-2.5-pro-tts | vertexai | In: text; Out: audio | streaming | 32768 | 16384 | In: $1.00, Out: $20.00 |
-| gemini-3-flash-preview | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming | 1048576 | 65536 | In: $0.50, Out: $3.00, Cache Read: $0.05 |
-| gemini-3.1-flash-lite | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming | 1048576 | 65536 | In: $0.25, Out: $1.50, Cache Read: $0.02 |
-| gemini-3.1-flash-lite-preview | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming | 1048576 | 65536 | In: $0.25, Out: $1.50, Cache Read: $0.02 |
-| gemini-3.1-pro-preview | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming | 1048576 | 65536 | In: $2.00, Out: $12.00, Cache Read: $0.20 |
-| gemini-3.1-pro-preview-customtools | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision | 1048576 | 65536 | In: $2.00, Out: $12.00, Cache Read: $0.20 |
-| gemini-3.5-flash | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming | 1048576 | 65536 | In: $1.50, Out: $9.00, Cache Read: $0.15 |
+| gemini-3-flash-preview | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming, transcription | 1048576 | 65536 | In: $0.50, Out: $3.00, Cache Read: $0.05 |
+| gemini-3.1-flash-lite | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming, transcription | 1048576 | 65536 | In: $0.25, Out: $1.50, Cache Read: $0.02 |
+| gemini-3.1-flash-lite-preview | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming, transcription | 1048576 | 65536 | In: $0.25, Out: $1.50, Cache Read: $0.02 |
+| gemini-3.1-pro-preview | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming, transcription | 1048576 | 65536 | In: $2.00, Out: $12.00, Cache Read: $0.20 |
+| gemini-3.1-pro-preview-customtools | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, transcription | 1048576 | 65536 | In: $2.00, Out: $12.00, Cache Read: $0.20 |
+| gemini-3.5-flash | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming, transcription | 1048576 | 65536 | In: $1.50, Out: $9.00, Cache Read: $0.15 |
 | gemini-embedding-001 | vertexai | In: text; Out: embeddings | streaming | 2048 | 1 | In: $0.15 |
-| gemini-flash-latest | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, reasoning, vision | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache Read: $0.08, Cache Write: $0.38 |
-| gemini-flash-lite-latest | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, reasoning, vision | 1048576 | 65536 | In: $0.10, Out: $0.40, Cache Read: $0.02 |
+| gemini-flash-latest | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, reasoning, vision, transcription | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache Read: $0.08, Cache Write: $0.38 |
+| gemini-flash-lite-latest | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, reasoning, vision, transcription | 1048576 | 65536 | In: $0.10, Out: $0.40, Cache Read: $0.02 |
 | moonshotai/kimi-k2-thinking-maas | vertexai | In: text; Out: text | function_calling, structured_output, reasoning | 262144 | 262144 | In: $0.60, Out: $2.50 |
 | meta/llama-3.3-70b-instruct-maas | vertexai | In: text; Out: text | function_calling, structured_output | 128000 | 8192 | In: $0.72, Out: $0.72 |
 | meta/llama-4-maverick-17b-128e-instruct-maas | vertexai | In: text, image; Out: text | function_calling, structured_output, vision | 524288 | 8192 | In: $0.35, Out: $1.15 |
@@ -1546,26 +1546,26 @@ See [the models guide]({% link _reference/models.md %}) for how refreshing works
 | deepseek-v4-flash | deepseek | In: text; Out: text | function_calling, structured_output, reasoning, tool_choice | 1000000 | 384000 | In: $0.14, Out: $0.28, Cache Read: $0.00 |
 | deepseek-v4-pro | deepseek | In: text; Out: text | function_calling, structured_output, reasoning, tool_choice | 1000000 | 384000 | In: $0.44, Out: $0.87, Cache Read: $0.00 |
 | deep-research-pro-preview-12-2025 | gemini | In: -; Out: - | function_calling, structured_output, vision, tool_choice | 131072 | 65536 | In: $0.08, Out: $0.30 |
-| gemini-2.0-flash | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, vision, tool_choice | 1048576 | 8192 | In: $0.10, Out: $0.40, Cache Read: $0.02 |
+| gemini-2.0-flash | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, vision, tool_choice, transcription | 1048576 | 8192 | In: $0.10, Out: $0.40, Cache Read: $0.02 |
 | gemini-2.0-flash-001 | gemini | In: -; Out: - | function_calling, structured_output, vision, tool_choice | 1048576 | 8192 | In: $0.10, Out: $0.40 |
-| gemini-2.0-flash-lite | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, vision, tool_choice | 1048576 | 8192 | In: $0.08, Out: $0.30 |
+| gemini-2.0-flash-lite | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, vision, tool_choice, transcription | 1048576 | 8192 | In: $0.08, Out: $0.30 |
 | gemini-2.5-computer-use-preview-10-2025 | gemini | In: -; Out: - | function_calling, structured_output, vision, tool_choice | 131072 | 65536 | In: $0.08, Out: $0.30 |
-| gemini-2.5-flash | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache Read: $0.03 |
+| gemini-2.5-flash | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice, transcription | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache Read: $0.03 |
 | gemini-2.5-flash-native-audio-latest | gemini | In: -; Out: - | function_calling, structured_output, vision, tool_choice | 131072 | 8192 | In: $0.08, Out: $0.30 |
-| gemini-2.5-flash-lite | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice | 1048576 | 65536 | In: $0.10, Out: $0.40, Cache Read: $0.01 |
-| gemini-2.5-pro | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice | 1048576 | 65536 | In: $1.25, Out: $10.00, Cache Read: $0.12 |
-| gemini-3-flash-preview | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice | 1048576 | 65536 | In: $0.50, Out: $3.00, Cache Read: $0.05 |
-| gemini-3-pro-preview | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice | 1048576 | 65536 | In: $2.00, Out: $12.00, Cache Read: $0.20 |
-| gemini-3.1-flash-lite | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice | 1048576 | 65536 | In: $0.25, Out: $1.50, Cache Read: $0.02 |
-| gemini-3.1-flash-lite-preview | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice | 1048576 | 65536 | In: $0.25, Out: $1.50, Cache Read: $0.02 |
+| gemini-2.5-flash-lite | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice, transcription | 1048576 | 65536 | In: $0.10, Out: $0.40, Cache Read: $0.01 |
+| gemini-2.5-pro | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice, transcription | 1048576 | 65536 | In: $1.25, Out: $10.00, Cache Read: $0.12 |
+| gemini-3-flash-preview | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice, transcription | 1048576 | 65536 | In: $0.50, Out: $3.00, Cache Read: $0.05 |
+| gemini-3-pro-preview | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice, transcription | 1048576 | 65536 | In: $2.00, Out: $12.00, Cache Read: $0.20 |
+| gemini-3.1-flash-lite | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice, transcription | 1048576 | 65536 | In: $0.25, Out: $1.50, Cache Read: $0.02 |
+| gemini-3.1-flash-lite-preview | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice, transcription | 1048576 | 65536 | In: $0.25, Out: $1.50, Cache Read: $0.02 |
 | gemini-3.1-flash-tts-preview | gemini | In: -; Out: - | function_calling, structured_output, vision, tool_choice | 8192 | 16384 | In: $0.08, Out: $0.30 |
-| gemini-3.1-pro-preview | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice | 1048576 | 65536 | In: $2.00, Out: $12.00, Cache Read: $0.20 |
-| gemini-3.1-pro-preview-customtools | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice | 1048576 | 65536 | In: $2.00, Out: $12.00, Cache Read: $0.20 |
-| gemini-3.5-flash | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice | 1048576 | 65536 | In: $1.50, Out: $9.00, Cache Read: $0.15 |
+| gemini-3.1-pro-preview | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice, transcription | 1048576 | 65536 | In: $2.00, Out: $12.00, Cache Read: $0.20 |
+| gemini-3.1-pro-preview-customtools | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice, transcription | 1048576 | 65536 | In: $2.00, Out: $12.00, Cache Read: $0.20 |
+| gemini-3.5-flash | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice, transcription | 1048576 | 65536 | In: $1.50, Out: $9.00, Cache Read: $0.15 |
 | gemini-embedding-2 | gemini | In: -; Out: - | function_calling, structured_output, vision, tool_choice | 8192 | 1 | - |
 | gemini-embedding-2-preview | gemini | In: -; Out: - | function_calling, structured_output, vision, tool_choice | 8192 | 1 | - |
-| gemini-flash-latest | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache Read: $0.08 |
-| gemini-flash-lite-latest | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice | 1048576 | 65536 | In: $0.10, Out: $0.40, Cache Read: $0.02 |
+| gemini-flash-latest | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice, transcription | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache Read: $0.08 |
+| gemini-flash-lite-latest | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice, transcription | 1048576 | 65536 | In: $0.10, Out: $0.40, Cache Read: $0.02 |
 | gemini-omni-flash-preview | gemini | In: -; Out: - | function_calling, structured_output, vision, tool_choice | 131072 | 65536 | In: $0.08, Out: $0.30 |
 | gemini-pro-latest | gemini | In: -; Out: - | function_calling, structured_output, vision, tool_choice | 1048576 | 65536 | In: $0.08, Out: $0.30 |
 | gemini-robotics-er-1.5-preview | gemini | In: -; Out: - | function_calling, structured_output, vision, tool_choice | 1048576 | 65536 | In: $0.08, Out: $0.30 |
@@ -1964,18 +1964,18 @@ See [the models guide]({% link _reference/models.md %}) for how refreshing works
 | zai-org/glm-5-maas | vertexai | In: text; Out: text | function_calling, reasoning | 202752 | 131072 | In: $1.00, Out: $3.20, Cache Read: $0.10 |
 | openai/gpt-oss-120b-maas | vertexai | In: text; Out: text | function_calling, reasoning | 131072 | 32768 | In: $0.09, Out: $0.36 |
 | openai/gpt-oss-20b-maas | vertexai | In: text; Out: text | function_calling, reasoning | 131072 | 32768 | In: $0.07, Out: $0.25 |
-| gemini-2.0-flash | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, vision, streaming | 1048576 | 8192 | In: $0.10, Out: $0.40, Cache Read: $0.02 |
-| gemini-2.5-flash | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, reasoning, vision, streaming | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache Read: $0.08, Cache Write: $0.38 |
-| gemini-2.5-flash-lite | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, reasoning, vision, streaming | 1048576 | 65536 | In: $0.10, Out: $0.40, Cache Read: $0.01 |
-| gemini-2.5-pro | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, reasoning, vision, streaming | 1048576 | 65536 | In: $1.25, Out: $10.00, Cache Read: $0.12 |
-| gemini-3-flash-preview | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming | 1048576 | 65536 | In: $0.50, Out: $3.00, Cache Read: $0.05 |
-| gemini-3.1-flash-lite | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming | 1048576 | 65536 | In: $0.25, Out: $1.50, Cache Read: $0.02 |
-| gemini-3.1-flash-lite-preview | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming | 1048576 | 65536 | In: $0.25, Out: $1.50, Cache Read: $0.02 |
-| gemini-3.1-pro-preview | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming | 1048576 | 65536 | In: $2.00, Out: $12.00, Cache Read: $0.20 |
-| gemini-3.1-pro-preview-customtools | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision | 1048576 | 65536 | In: $2.00, Out: $12.00, Cache Read: $0.20 |
-| gemini-3.5-flash | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming | 1048576 | 65536 | In: $1.50, Out: $9.00, Cache Read: $0.15 |
-| gemini-flash-latest | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, reasoning, vision | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache Read: $0.08, Cache Write: $0.38 |
-| gemini-flash-lite-latest | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, reasoning, vision | 1048576 | 65536 | In: $0.10, Out: $0.40, Cache Read: $0.02 |
+| gemini-2.0-flash | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, vision, streaming, transcription | 1048576 | 8192 | In: $0.10, Out: $0.40, Cache Read: $0.02 |
+| gemini-2.5-flash | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, reasoning, vision, streaming, transcription | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache Read: $0.08, Cache Write: $0.38 |
+| gemini-2.5-flash-lite | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, reasoning, vision, streaming, transcription | 1048576 | 65536 | In: $0.10, Out: $0.40, Cache Read: $0.01 |
+| gemini-2.5-pro | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, reasoning, vision, streaming, transcription | 1048576 | 65536 | In: $1.25, Out: $10.00, Cache Read: $0.12 |
+| gemini-3-flash-preview | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming, transcription | 1048576 | 65536 | In: $0.50, Out: $3.00, Cache Read: $0.05 |
+| gemini-3.1-flash-lite | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming, transcription | 1048576 | 65536 | In: $0.25, Out: $1.50, Cache Read: $0.02 |
+| gemini-3.1-flash-lite-preview | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming, transcription | 1048576 | 65536 | In: $0.25, Out: $1.50, Cache Read: $0.02 |
+| gemini-3.1-pro-preview | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming, transcription | 1048576 | 65536 | In: $2.00, Out: $12.00, Cache Read: $0.20 |
+| gemini-3.1-pro-preview-customtools | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, transcription | 1048576 | 65536 | In: $2.00, Out: $12.00, Cache Read: $0.20 |
+| gemini-3.5-flash | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming, transcription | 1048576 | 65536 | In: $1.50, Out: $9.00, Cache Read: $0.15 |
+| gemini-flash-latest | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, reasoning, vision, transcription | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache Read: $0.08, Cache Write: $0.38 |
+| gemini-flash-lite-latest | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, reasoning, vision, transcription | 1048576 | 65536 | In: $0.10, Out: $0.40, Cache Read: $0.02 |
 | moonshotai/kimi-k2-thinking-maas | vertexai | In: text; Out: text | function_calling, structured_output, reasoning | 262144 | 262144 | In: $0.60, Out: $2.50 |
 | meta/llama-3.3-70b-instruct-maas | vertexai | In: text; Out: text | function_calling, structured_output | 128000 | 8192 | In: $0.72, Out: $0.72 |
 | meta/llama-4-maverick-17b-128e-instruct-maas | vertexai | In: text, image; Out: text | function_calling, structured_output, vision | 524288 | 8192 | In: $0.35, Out: $1.15 |
@@ -2136,26 +2136,26 @@ See [the models guide]({% link _reference/models.md %}) for how refreshing works
 | deepseek-v4-flash | deepseek | In: text; Out: text | function_calling, structured_output, reasoning, tool_choice | 1000000 | 384000 | In: $0.14, Out: $0.28, Cache Read: $0.00 |
 | deepseek-v4-pro | deepseek | In: text; Out: text | function_calling, structured_output, reasoning, tool_choice | 1000000 | 384000 | In: $0.44, Out: $0.87, Cache Read: $0.00 |
 | deep-research-pro-preview-12-2025 | gemini | In: -; Out: - | function_calling, structured_output, vision, tool_choice | 131072 | 65536 | In: $0.08, Out: $0.30 |
-| gemini-2.0-flash | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, vision, tool_choice | 1048576 | 8192 | In: $0.10, Out: $0.40, Cache Read: $0.02 |
+| gemini-2.0-flash | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, vision, tool_choice, transcription | 1048576 | 8192 | In: $0.10, Out: $0.40, Cache Read: $0.02 |
 | gemini-2.0-flash-001 | gemini | In: -; Out: - | function_calling, structured_output, vision, tool_choice | 1048576 | 8192 | In: $0.10, Out: $0.40 |
-| gemini-2.0-flash-lite | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, vision, tool_choice | 1048576 | 8192 | In: $0.08, Out: $0.30 |
+| gemini-2.0-flash-lite | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, vision, tool_choice, transcription | 1048576 | 8192 | In: $0.08, Out: $0.30 |
 | gemini-2.5-computer-use-preview-10-2025 | gemini | In: -; Out: - | function_calling, structured_output, vision, tool_choice | 131072 | 65536 | In: $0.08, Out: $0.30 |
-| gemini-2.5-flash | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache Read: $0.03 |
+| gemini-2.5-flash | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice, transcription | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache Read: $0.03 |
 | gemini-2.5-flash-native-audio-latest | gemini | In: -; Out: - | function_calling, structured_output, vision, tool_choice | 131072 | 8192 | In: $0.08, Out: $0.30 |
-| gemini-2.5-flash-lite | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice | 1048576 | 65536 | In: $0.10, Out: $0.40, Cache Read: $0.01 |
-| gemini-2.5-pro | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice | 1048576 | 65536 | In: $1.25, Out: $10.00, Cache Read: $0.12 |
-| gemini-3-flash-preview | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice | 1048576 | 65536 | In: $0.50, Out: $3.00, Cache Read: $0.05 |
-| gemini-3-pro-preview | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice | 1048576 | 65536 | In: $2.00, Out: $12.00, Cache Read: $0.20 |
-| gemini-3.1-flash-lite | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice | 1048576 | 65536 | In: $0.25, Out: $1.50, Cache Read: $0.02 |
-| gemini-3.1-flash-lite-preview | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice | 1048576 | 65536 | In: $0.25, Out: $1.50, Cache Read: $0.02 |
+| gemini-2.5-flash-lite | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice, transcription | 1048576 | 65536 | In: $0.10, Out: $0.40, Cache Read: $0.01 |
+| gemini-2.5-pro | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice, transcription | 1048576 | 65536 | In: $1.25, Out: $10.00, Cache Read: $0.12 |
+| gemini-3-flash-preview | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice, transcription | 1048576 | 65536 | In: $0.50, Out: $3.00, Cache Read: $0.05 |
+| gemini-3-pro-preview | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice, transcription | 1048576 | 65536 | In: $2.00, Out: $12.00, Cache Read: $0.20 |
+| gemini-3.1-flash-lite | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice, transcription | 1048576 | 65536 | In: $0.25, Out: $1.50, Cache Read: $0.02 |
+| gemini-3.1-flash-lite-preview | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice, transcription | 1048576 | 65536 | In: $0.25, Out: $1.50, Cache Read: $0.02 |
 | gemini-3.1-flash-tts-preview | gemini | In: -; Out: - | function_calling, structured_output, vision, tool_choice | 8192 | 16384 | In: $0.08, Out: $0.30 |
-| gemini-3.1-pro-preview | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice | 1048576 | 65536 | In: $2.00, Out: $12.00, Cache Read: $0.20 |
-| gemini-3.1-pro-preview-customtools | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice | 1048576 | 65536 | In: $2.00, Out: $12.00, Cache Read: $0.20 |
-| gemini-3.5-flash | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice | 1048576 | 65536 | In: $1.50, Out: $9.00, Cache Read: $0.15 |
+| gemini-3.1-pro-preview | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice, transcription | 1048576 | 65536 | In: $2.00, Out: $12.00, Cache Read: $0.20 |
+| gemini-3.1-pro-preview-customtools | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice, transcription | 1048576 | 65536 | In: $2.00, Out: $12.00, Cache Read: $0.20 |
+| gemini-3.5-flash | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice, transcription | 1048576 | 65536 | In: $1.50, Out: $9.00, Cache Read: $0.15 |
 | gemini-embedding-2 | gemini | In: -; Out: - | function_calling, structured_output, vision, tool_choice | 8192 | 1 | - |
 | gemini-embedding-2-preview | gemini | In: -; Out: - | function_calling, structured_output, vision, tool_choice | 8192 | 1 | - |
-| gemini-flash-latest | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache Read: $0.08 |
-| gemini-flash-lite-latest | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice | 1048576 | 65536 | In: $0.10, Out: $0.40, Cache Read: $0.02 |
+| gemini-flash-latest | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice, transcription | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache Read: $0.08 |
+| gemini-flash-lite-latest | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice, transcription | 1048576 | 65536 | In: $0.10, Out: $0.40, Cache Read: $0.02 |
 | gemini-omni-flash-preview | gemini | In: -; Out: - | function_calling, structured_output, vision, tool_choice | 131072 | 65536 | In: $0.08, Out: $0.30 |
 | gemini-pro-latest | gemini | In: -; Out: - | function_calling, structured_output, vision, tool_choice | 1048576 | 65536 | In: $0.08, Out: $0.30 |
 | gemini-robotics-er-1.5-preview | gemini | In: -; Out: - | function_calling, structured_output, vision, tool_choice | 1048576 | 65536 | In: $0.08, Out: $0.30 |
@@ -2506,13 +2506,13 @@ See [the models guide]({% link _reference/models.md %}) for how refreshing works
 | deepseek-ai/deepseek-v3.1-maas | vertexai | In: text, pdf; Out: text | function_calling, structured_output, reasoning, vision | 163840 | 32768 | In: $0.60, Out: $1.70 |
 | deepseek-ai/deepseek-v3.2-maas | vertexai | In: text, pdf; Out: text | function_calling, structured_output, reasoning, vision | 163840 | 65536 | In: $0.56, Out: $1.68, Cache Read: $0.06 |
 | zai-org/glm-4.7-maas | vertexai | In: text, pdf; Out: text | function_calling, structured_output, reasoning, vision | 200000 | 128000 | In: $0.60, Out: $2.20 |
-| gemini-2.0-flash | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, vision, streaming | 1048576 | 8192 | In: $0.10, Out: $0.40, Cache Read: $0.02 |
-| gemini-3-flash-preview | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming | 1048576 | 65536 | In: $0.50, Out: $3.00, Cache Read: $0.05 |
-| gemini-3.1-flash-lite | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming | 1048576 | 65536 | In: $0.25, Out: $1.50, Cache Read: $0.02 |
-| gemini-3.1-flash-lite-preview | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming | 1048576 | 65536 | In: $0.25, Out: $1.50, Cache Read: $0.02 |
-| gemini-3.1-pro-preview | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming | 1048576 | 65536 | In: $2.00, Out: $12.00, Cache Read: $0.20 |
-| gemini-3.1-pro-preview-customtools | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision | 1048576 | 65536 | In: $2.00, Out: $12.00, Cache Read: $0.20 |
-| gemini-3.5-flash | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming | 1048576 | 65536 | In: $1.50, Out: $9.00, Cache Read: $0.15 |
+| gemini-2.0-flash | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, vision, streaming, transcription | 1048576 | 8192 | In: $0.10, Out: $0.40, Cache Read: $0.02 |
+| gemini-3-flash-preview | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming, transcription | 1048576 | 65536 | In: $0.50, Out: $3.00, Cache Read: $0.05 |
+| gemini-3.1-flash-lite | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming, transcription | 1048576 | 65536 | In: $0.25, Out: $1.50, Cache Read: $0.02 |
+| gemini-3.1-flash-lite-preview | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming, transcription | 1048576 | 65536 | In: $0.25, Out: $1.50, Cache Read: $0.02 |
+| gemini-3.1-pro-preview | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming, transcription | 1048576 | 65536 | In: $2.00, Out: $12.00, Cache Read: $0.20 |
+| gemini-3.1-pro-preview-customtools | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, transcription | 1048576 | 65536 | In: $2.00, Out: $12.00, Cache Read: $0.20 |
+| gemini-3.5-flash | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming, transcription | 1048576 | 65536 | In: $1.50, Out: $9.00, Cache Read: $0.15 |
 | moonshotai/kimi-k2-thinking-maas | vertexai | In: text; Out: text | function_calling, structured_output, reasoning | 262144 | 262144 | In: $0.60, Out: $2.50 |
 | meta/llama-3.3-70b-instruct-maas | vertexai | In: text; Out: text | function_calling, structured_output | 128000 | 8192 | In: $0.72, Out: $0.72 |
 | meta/llama-4-maverick-17b-128e-instruct-maas | vertexai | In: text, image; Out: text | function_calling, structured_output, vision | 524288 | 8192 | In: $0.35, Out: $1.15 |
@@ -3018,17 +3018,17 @@ See [the models guide]({% link _reference/models.md %}) for how refreshing works
 | claude-sonnet-4-5 | vertexai | In: text, image, pdf; Out: text | function_calling, reasoning, vision, streaming | 200000 | 64000 | In: $3.00, Out: $15.00, Cache Read: $0.30, Cache Write: $3.75 |
 | claude-sonnet-4-6 | vertexai | In: text, image, pdf; Out: text | function_calling, reasoning, vision, streaming | 1000000 | 128000 | In: $3.00, Out: $15.00, Cache Read: $0.30, Cache Write: $3.75 |
 | claude-sonnet-5 | vertexai | In: text, image, pdf; Out: text | function_calling, reasoning, vision, streaming | 1000000 | 128000 | In: $2.00, Out: $10.00, Cache Read: $0.20, Cache Write: $2.50 |
-| gemini-2.0-flash | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, vision, streaming | 1048576 | 8192 | In: $0.10, Out: $0.40, Cache Read: $0.02 |
-| gemini-2.5-flash | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, reasoning, vision, streaming | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache Read: $0.08, Cache Write: $0.38 |
+| gemini-2.0-flash | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, vision, streaming, transcription | 1048576 | 8192 | In: $0.10, Out: $0.40, Cache Read: $0.02 |
+| gemini-2.5-flash | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, reasoning, vision, streaming, transcription | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache Read: $0.08, Cache Write: $0.38 |
 | gemini-2.5-flash-tts | vertexai | In: text; Out: audio | streaming | 32768 | 16384 | In: $0.50, Out: $10.00 |
-| gemini-2.5-flash-lite | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, reasoning, vision, streaming | 1048576 | 65536 | In: $0.10, Out: $0.40, Cache Read: $0.01 |
-| gemini-2.5-pro | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, reasoning, vision, streaming | 1048576 | 65536 | In: $1.25, Out: $10.00, Cache Read: $0.12 |
+| gemini-2.5-flash-lite | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, reasoning, vision, streaming, transcription | 1048576 | 65536 | In: $0.10, Out: $0.40, Cache Read: $0.01 |
+| gemini-2.5-pro | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, reasoning, vision, streaming, transcription | 1048576 | 65536 | In: $1.25, Out: $10.00, Cache Read: $0.12 |
 | gemini-2.5-pro-tts | vertexai | In: text; Out: audio | streaming | 32768 | 16384 | In: $1.00, Out: $20.00 |
-| gemini-3-flash-preview | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming | 1048576 | 65536 | In: $0.50, Out: $3.00, Cache Read: $0.05 |
-| gemini-3.1-flash-lite | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming | 1048576 | 65536 | In: $0.25, Out: $1.50, Cache Read: $0.02 |
-| gemini-3.1-flash-lite-preview | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming | 1048576 | 65536 | In: $0.25, Out: $1.50, Cache Read: $0.02 |
-| gemini-3.1-pro-preview | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming | 1048576 | 65536 | In: $2.00, Out: $12.00, Cache Read: $0.20 |
-| gemini-3.5-flash | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming | 1048576 | 65536 | In: $1.50, Out: $9.00, Cache Read: $0.15 |
+| gemini-3-flash-preview | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming, transcription | 1048576 | 65536 | In: $0.50, Out: $3.00, Cache Read: $0.05 |
+| gemini-3.1-flash-lite | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming, transcription | 1048576 | 65536 | In: $0.25, Out: $1.50, Cache Read: $0.02 |
+| gemini-3.1-flash-lite-preview | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming, transcription | 1048576 | 65536 | In: $0.25, Out: $1.50, Cache Read: $0.02 |
+| gemini-3.1-pro-preview | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming, transcription | 1048576 | 65536 | In: $2.00, Out: $12.00, Cache Read: $0.20 |
+| gemini-3.5-flash | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming, transcription | 1048576 | 65536 | In: $1.50, Out: $9.00, Cache Read: $0.15 |
 | gemini-embedding-001 | vertexai | In: text; Out: embeddings | streaming | 2048 | 1 | In: $0.15 |
 | gemini-3.1-flash-image-preview | vertexai | In: text, image, pdf; Out: text, image | reasoning, vision, streaming | 65536 | 65536 | In: $0.50, Out: $60.00 |
 | claude-fable-5 | vertexai | In: -; Out: - | streaming, function_calling | - | - | - |
@@ -3249,20 +3249,20 @@ Models that can process images:
 | amazon.titan-embed-image-v1 | bedrock | In: text, image; Out: embeddings | function_calling | - | - | - |
 | amazon.titan-embed-image-v1:0 | bedrock | In: text, image; Out: embeddings | function_calling | - | - | - |
 | writer.palmyra-vision-7b | bedrock | In: text, image; Out: text | streaming, function_calling | - | 4096 | - |
-| gemini-2.0-flash | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, vision, tool_choice | 1048576 | 8192 | In: $0.10, Out: $0.40, Cache Read: $0.02 |
-| gemini-2.0-flash-lite | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, vision, tool_choice | 1048576 | 8192 | In: $0.08, Out: $0.30 |
-| gemini-2.5-flash | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache Read: $0.03 |
-| gemini-2.5-flash-lite | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice | 1048576 | 65536 | In: $0.10, Out: $0.40, Cache Read: $0.01 |
-| gemini-2.5-pro | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice | 1048576 | 65536 | In: $1.25, Out: $10.00, Cache Read: $0.12 |
-| gemini-3-flash-preview | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice | 1048576 | 65536 | In: $0.50, Out: $3.00, Cache Read: $0.05 |
-| gemini-3-pro-preview | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice | 1048576 | 65536 | In: $2.00, Out: $12.00, Cache Read: $0.20 |
-| gemini-3.1-flash-lite | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice | 1048576 | 65536 | In: $0.25, Out: $1.50, Cache Read: $0.02 |
-| gemini-3.1-flash-lite-preview | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice | 1048576 | 65536 | In: $0.25, Out: $1.50, Cache Read: $0.02 |
-| gemini-3.1-pro-preview | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice | 1048576 | 65536 | In: $2.00, Out: $12.00, Cache Read: $0.20 |
-| gemini-3.1-pro-preview-customtools | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice | 1048576 | 65536 | In: $2.00, Out: $12.00, Cache Read: $0.20 |
-| gemini-3.5-flash | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice | 1048576 | 65536 | In: $1.50, Out: $9.00, Cache Read: $0.15 |
-| gemini-flash-latest | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache Read: $0.08 |
-| gemini-flash-lite-latest | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice | 1048576 | 65536 | In: $0.10, Out: $0.40, Cache Read: $0.02 |
+| gemini-2.0-flash | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, vision, tool_choice, transcription | 1048576 | 8192 | In: $0.10, Out: $0.40, Cache Read: $0.02 |
+| gemini-2.0-flash-lite | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, vision, tool_choice, transcription | 1048576 | 8192 | In: $0.08, Out: $0.30 |
+| gemini-2.5-flash | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice, transcription | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache Read: $0.03 |
+| gemini-2.5-flash-lite | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice, transcription | 1048576 | 65536 | In: $0.10, Out: $0.40, Cache Read: $0.01 |
+| gemini-2.5-pro | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice, transcription | 1048576 | 65536 | In: $1.25, Out: $10.00, Cache Read: $0.12 |
+| gemini-3-flash-preview | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice, transcription | 1048576 | 65536 | In: $0.50, Out: $3.00, Cache Read: $0.05 |
+| gemini-3-pro-preview | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice, transcription | 1048576 | 65536 | In: $2.00, Out: $12.00, Cache Read: $0.20 |
+| gemini-3.1-flash-lite | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice, transcription | 1048576 | 65536 | In: $0.25, Out: $1.50, Cache Read: $0.02 |
+| gemini-3.1-flash-lite-preview | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice, transcription | 1048576 | 65536 | In: $0.25, Out: $1.50, Cache Read: $0.02 |
+| gemini-3.1-pro-preview | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice, transcription | 1048576 | 65536 | In: $2.00, Out: $12.00, Cache Read: $0.20 |
+| gemini-3.1-pro-preview-customtools | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice, transcription | 1048576 | 65536 | In: $2.00, Out: $12.00, Cache Read: $0.20 |
+| gemini-3.5-flash | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice, transcription | 1048576 | 65536 | In: $1.50, Out: $9.00, Cache Read: $0.15 |
+| gemini-flash-latest | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice, transcription | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache Read: $0.08 |
+| gemini-flash-lite-latest | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice, transcription | 1048576 | 65536 | In: $0.10, Out: $0.40, Cache Read: $0.02 |
 | gemma-4-26b-a4b-it | gemini | In: text, image; Out: text | function_calling, structured_output, reasoning, vision, tool_choice | 262144 | 32768 | In: $0.08, Out: $0.30 |
 | gemma-4-31b-it | gemini | In: text, image; Out: text | function_calling, structured_output, reasoning, vision, tool_choice | 262144 | 32768 | In: $0.08, Out: $0.30 |
 | gemini-2.5-flash-image | gemini | In: text, image; Out: text, image | reasoning, vision | 32768 | 32768 | In: $0.30, Out: $30.00, Cache Read: $0.08 |
@@ -3507,18 +3507,18 @@ Models that can process images:
 | claude-sonnet-4-5 | vertexai | In: text, image, pdf; Out: text | function_calling, reasoning, vision, streaming | 200000 | 64000 | In: $3.00, Out: $15.00, Cache Read: $0.30, Cache Write: $3.75 |
 | claude-sonnet-4-6 | vertexai | In: text, image, pdf; Out: text | function_calling, reasoning, vision, streaming | 1000000 | 128000 | In: $3.00, Out: $15.00, Cache Read: $0.30, Cache Write: $3.75 |
 | claude-sonnet-5 | vertexai | In: text, image, pdf; Out: text | function_calling, reasoning, vision, streaming | 1000000 | 128000 | In: $2.00, Out: $10.00, Cache Read: $0.20, Cache Write: $2.50 |
-| gemini-2.0-flash | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, vision, streaming | 1048576 | 8192 | In: $0.10, Out: $0.40, Cache Read: $0.02 |
-| gemini-2.5-flash | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, reasoning, vision, streaming | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache Read: $0.08, Cache Write: $0.38 |
-| gemini-2.5-flash-lite | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, reasoning, vision, streaming | 1048576 | 65536 | In: $0.10, Out: $0.40, Cache Read: $0.01 |
-| gemini-2.5-pro | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, reasoning, vision, streaming | 1048576 | 65536 | In: $1.25, Out: $10.00, Cache Read: $0.12 |
-| gemini-3-flash-preview | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming | 1048576 | 65536 | In: $0.50, Out: $3.00, Cache Read: $0.05 |
-| gemini-3.1-flash-lite | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming | 1048576 | 65536 | In: $0.25, Out: $1.50, Cache Read: $0.02 |
-| gemini-3.1-flash-lite-preview | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming | 1048576 | 65536 | In: $0.25, Out: $1.50, Cache Read: $0.02 |
-| gemini-3.1-pro-preview | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming | 1048576 | 65536 | In: $2.00, Out: $12.00, Cache Read: $0.20 |
-| gemini-3.1-pro-preview-customtools | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision | 1048576 | 65536 | In: $2.00, Out: $12.00, Cache Read: $0.20 |
-| gemini-3.5-flash | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming | 1048576 | 65536 | In: $1.50, Out: $9.00, Cache Read: $0.15 |
-| gemini-flash-latest | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, reasoning, vision | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache Read: $0.08, Cache Write: $0.38 |
-| gemini-flash-lite-latest | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, reasoning, vision | 1048576 | 65536 | In: $0.10, Out: $0.40, Cache Read: $0.02 |
+| gemini-2.0-flash | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, vision, streaming, transcription | 1048576 | 8192 | In: $0.10, Out: $0.40, Cache Read: $0.02 |
+| gemini-2.5-flash | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, reasoning, vision, streaming, transcription | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache Read: $0.08, Cache Write: $0.38 |
+| gemini-2.5-flash-lite | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, reasoning, vision, streaming, transcription | 1048576 | 65536 | In: $0.10, Out: $0.40, Cache Read: $0.01 |
+| gemini-2.5-pro | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, reasoning, vision, streaming, transcription | 1048576 | 65536 | In: $1.25, Out: $10.00, Cache Read: $0.12 |
+| gemini-3-flash-preview | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming, transcription | 1048576 | 65536 | In: $0.50, Out: $3.00, Cache Read: $0.05 |
+| gemini-3.1-flash-lite | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming, transcription | 1048576 | 65536 | In: $0.25, Out: $1.50, Cache Read: $0.02 |
+| gemini-3.1-flash-lite-preview | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming, transcription | 1048576 | 65536 | In: $0.25, Out: $1.50, Cache Read: $0.02 |
+| gemini-3.1-pro-preview | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming, transcription | 1048576 | 65536 | In: $2.00, Out: $12.00, Cache Read: $0.20 |
+| gemini-3.1-pro-preview-customtools | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, transcription | 1048576 | 65536 | In: $2.00, Out: $12.00, Cache Read: $0.20 |
+| gemini-3.5-flash | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming, transcription | 1048576 | 65536 | In: $1.50, Out: $9.00, Cache Read: $0.15 |
+| gemini-flash-latest | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, reasoning, vision, transcription | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache Read: $0.08, Cache Write: $0.38 |
+| gemini-flash-lite-latest | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, reasoning, vision, transcription | 1048576 | 65536 | In: $0.10, Out: $0.40, Cache Read: $0.02 |
 | meta/llama-4-maverick-17b-128e-instruct-maas | vertexai | In: text, image; Out: text | function_calling, structured_output, vision | 524288 | 8192 | In: $0.35, Out: $1.15 |
 | gemini-3.1-flash-image-preview | vertexai | In: text, image, pdf; Out: text, image | reasoning, vision, streaming | 65536 | 65536 | In: $0.50, Out: $60.00 |
 | grok-4.20-0309-non-reasoning | xai | In: text, image, pdf; Out: text | function_calling, structured_output, vision, streaming | 1000000 | 30000 | In: $1.25, Out: $2.50, Cache Read: $0.20 |
@@ -3541,20 +3541,20 @@ Models that can process audio:
 | amazon.nova-2-sonic-v1:0 | bedrock | In: audio; Out: audio, text | streaming, function_calling | - | - | - |
 | mistral.voxtral-mini-3b-2507 | bedrock | In: audio, text; Out: text | function_calling, structured_output, streaming | 128000 | 4096 | In: $0.04, Out: $0.04 |
 | mistral.voxtral-small-24b-2507 | bedrock | In: text, audio; Out: text | function_calling, structured_output, streaming | 32000 | 8192 | In: $0.15, Out: $0.35 |
-| gemini-2.0-flash | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, vision, tool_choice | 1048576 | 8192 | In: $0.10, Out: $0.40, Cache Read: $0.02 |
-| gemini-2.0-flash-lite | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, vision, tool_choice | 1048576 | 8192 | In: $0.08, Out: $0.30 |
-| gemini-2.5-flash | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache Read: $0.03 |
-| gemini-2.5-flash-lite | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice | 1048576 | 65536 | In: $0.10, Out: $0.40, Cache Read: $0.01 |
-| gemini-2.5-pro | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice | 1048576 | 65536 | In: $1.25, Out: $10.00, Cache Read: $0.12 |
-| gemini-3-flash-preview | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice | 1048576 | 65536 | In: $0.50, Out: $3.00, Cache Read: $0.05 |
-| gemini-3-pro-preview | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice | 1048576 | 65536 | In: $2.00, Out: $12.00, Cache Read: $0.20 |
-| gemini-3.1-flash-lite | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice | 1048576 | 65536 | In: $0.25, Out: $1.50, Cache Read: $0.02 |
-| gemini-3.1-flash-lite-preview | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice | 1048576 | 65536 | In: $0.25, Out: $1.50, Cache Read: $0.02 |
-| gemini-3.1-pro-preview | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice | 1048576 | 65536 | In: $2.00, Out: $12.00, Cache Read: $0.20 |
-| gemini-3.1-pro-preview-customtools | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice | 1048576 | 65536 | In: $2.00, Out: $12.00, Cache Read: $0.20 |
-| gemini-3.5-flash | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice | 1048576 | 65536 | In: $1.50, Out: $9.00, Cache Read: $0.15 |
-| gemini-flash-latest | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache Read: $0.08 |
-| gemini-flash-lite-latest | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice | 1048576 | 65536 | In: $0.10, Out: $0.40, Cache Read: $0.02 |
+| gemini-2.0-flash | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, vision, tool_choice, transcription | 1048576 | 8192 | In: $0.10, Out: $0.40, Cache Read: $0.02 |
+| gemini-2.0-flash-lite | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, vision, tool_choice, transcription | 1048576 | 8192 | In: $0.08, Out: $0.30 |
+| gemini-2.5-flash | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice, transcription | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache Read: $0.03 |
+| gemini-2.5-flash-lite | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice, transcription | 1048576 | 65536 | In: $0.10, Out: $0.40, Cache Read: $0.01 |
+| gemini-2.5-pro | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice, transcription | 1048576 | 65536 | In: $1.25, Out: $10.00, Cache Read: $0.12 |
+| gemini-3-flash-preview | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice, transcription | 1048576 | 65536 | In: $0.50, Out: $3.00, Cache Read: $0.05 |
+| gemini-3-pro-preview | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice, transcription | 1048576 | 65536 | In: $2.00, Out: $12.00, Cache Read: $0.20 |
+| gemini-3.1-flash-lite | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice, transcription | 1048576 | 65536 | In: $0.25, Out: $1.50, Cache Read: $0.02 |
+| gemini-3.1-flash-lite-preview | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice, transcription | 1048576 | 65536 | In: $0.25, Out: $1.50, Cache Read: $0.02 |
+| gemini-3.1-pro-preview | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice, transcription | 1048576 | 65536 | In: $2.00, Out: $12.00, Cache Read: $0.20 |
+| gemini-3.1-pro-preview-customtools | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice, transcription | 1048576 | 65536 | In: $2.00, Out: $12.00, Cache Read: $0.20 |
+| gemini-3.5-flash | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice, transcription | 1048576 | 65536 | In: $1.50, Out: $9.00, Cache Read: $0.15 |
+| gemini-flash-latest | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice, transcription | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache Read: $0.08 |
+| gemini-flash-lite-latest | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice, transcription | 1048576 | 65536 | In: $0.10, Out: $0.40, Cache Read: $0.02 |
 | openrouter/auto | openrouter | In: text, image, audio, pdf, video; Out: text, image | function_calling, structured_output, reasoning, vision, streaming, predicted_outputs | 2000000 | 2000000 | - |
 | openai/gpt-audio | openrouter | In: text, audio; Out: text, audio | function_calling, structured_output, streaming | 128000 | 16384 | In: $2.50, Out: $10.00 |
 | openai/gpt-audio-mini | openrouter | In: text, audio; Out: text, audio | function_calling, structured_output, streaming | 128000 | 16384 | In: $0.60, Out: $2.40 |
@@ -3575,18 +3575,18 @@ Models that can process audio:
 | xiaomi/mimo-v2.5 | openrouter | In: text, image, audio, video; Out: text | function_calling, structured_output, reasoning, vision, streaming, predicted_outputs | 32000 | 131072 | In: $0.10, Out: $0.28 |
 | nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free | openrouter | In: text, image, video, audio; Out: text | function_calling, reasoning, vision, streaming | 256000 | 65536 | - |
 | mistralai/voxtral-small-24b-2507 | openrouter | In: text, audio, pdf; Out: text | function_calling, structured_output, vision, streaming | 32000 | 32000 | In: $0.10, Out: $0.30, Cache Read: $0.01 |
-| gemini-2.0-flash | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, vision, streaming | 1048576 | 8192 | In: $0.10, Out: $0.40, Cache Read: $0.02 |
-| gemini-2.5-flash | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, reasoning, vision, streaming | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache Read: $0.08, Cache Write: $0.38 |
-| gemini-2.5-flash-lite | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, reasoning, vision, streaming | 1048576 | 65536 | In: $0.10, Out: $0.40, Cache Read: $0.01 |
-| gemini-2.5-pro | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, reasoning, vision, streaming | 1048576 | 65536 | In: $1.25, Out: $10.00, Cache Read: $0.12 |
-| gemini-3-flash-preview | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming | 1048576 | 65536 | In: $0.50, Out: $3.00, Cache Read: $0.05 |
-| gemini-3.1-flash-lite | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming | 1048576 | 65536 | In: $0.25, Out: $1.50, Cache Read: $0.02 |
-| gemini-3.1-flash-lite-preview | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming | 1048576 | 65536 | In: $0.25, Out: $1.50, Cache Read: $0.02 |
-| gemini-3.1-pro-preview | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming | 1048576 | 65536 | In: $2.00, Out: $12.00, Cache Read: $0.20 |
-| gemini-3.1-pro-preview-customtools | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision | 1048576 | 65536 | In: $2.00, Out: $12.00, Cache Read: $0.20 |
-| gemini-3.5-flash | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming | 1048576 | 65536 | In: $1.50, Out: $9.00, Cache Read: $0.15 |
-| gemini-flash-latest | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, reasoning, vision | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache Read: $0.08, Cache Write: $0.38 |
-| gemini-flash-lite-latest | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, reasoning, vision | 1048576 | 65536 | In: $0.10, Out: $0.40, Cache Read: $0.02 |
+| gemini-2.0-flash | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, vision, streaming, transcription | 1048576 | 8192 | In: $0.10, Out: $0.40, Cache Read: $0.02 |
+| gemini-2.5-flash | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, reasoning, vision, streaming, transcription | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache Read: $0.08, Cache Write: $0.38 |
+| gemini-2.5-flash-lite | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, reasoning, vision, streaming, transcription | 1048576 | 65536 | In: $0.10, Out: $0.40, Cache Read: $0.01 |
+| gemini-2.5-pro | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, reasoning, vision, streaming, transcription | 1048576 | 65536 | In: $1.25, Out: $10.00, Cache Read: $0.12 |
+| gemini-3-flash-preview | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming, transcription | 1048576 | 65536 | In: $0.50, Out: $3.00, Cache Read: $0.05 |
+| gemini-3.1-flash-lite | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming, transcription | 1048576 | 65536 | In: $0.25, Out: $1.50, Cache Read: $0.02 |
+| gemini-3.1-flash-lite-preview | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming, transcription | 1048576 | 65536 | In: $0.25, Out: $1.50, Cache Read: $0.02 |
+| gemini-3.1-pro-preview | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming, transcription | 1048576 | 65536 | In: $2.00, Out: $12.00, Cache Read: $0.20 |
+| gemini-3.1-pro-preview-customtools | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, transcription | 1048576 | 65536 | In: $2.00, Out: $12.00, Cache Read: $0.20 |
+| gemini-3.5-flash | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming, transcription | 1048576 | 65536 | In: $1.50, Out: $9.00, Cache Read: $0.15 |
+| gemini-flash-latest | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, reasoning, vision, transcription | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache Read: $0.08, Cache Write: $0.38 |
+| gemini-flash-lite-latest | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, reasoning, vision, transcription | 1048576 | 65536 | In: $0.10, Out: $0.40, Cache Read: $0.02 |
 
 
 ### PDF Models (229)
@@ -3670,20 +3670,20 @@ Models that can process PDF documents:
 | us.anthropic.claude-sonnet-5 | bedrock | In: text, image, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming | 1000000 | 128000 | In: $2.00, Out: $10.00, Cache Read: $0.20, Cache Write: $2.50 |
 | openai.gpt-5.4 | bedrock | In: text, image, pdf; Out: text | function_calling, structured_output, reasoning, vision | 272000 | 128000 | In: $2.75, Out: $16.50, Cache Read: $0.28 |
 | openai.gpt-5.5 | bedrock | In: text, image, pdf; Out: text | function_calling, structured_output, reasoning, vision | 272000 | 128000 | In: $5.50, Out: $33.00, Cache Read: $0.55 |
-| gemini-2.0-flash | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, vision, tool_choice | 1048576 | 8192 | In: $0.10, Out: $0.40, Cache Read: $0.02 |
-| gemini-2.0-flash-lite | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, vision, tool_choice | 1048576 | 8192 | In: $0.08, Out: $0.30 |
-| gemini-2.5-flash | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache Read: $0.03 |
-| gemini-2.5-flash-lite | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice | 1048576 | 65536 | In: $0.10, Out: $0.40, Cache Read: $0.01 |
-| gemini-2.5-pro | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice | 1048576 | 65536 | In: $1.25, Out: $10.00, Cache Read: $0.12 |
-| gemini-3-flash-preview | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice | 1048576 | 65536 | In: $0.50, Out: $3.00, Cache Read: $0.05 |
-| gemini-3-pro-preview | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice | 1048576 | 65536 | In: $2.00, Out: $12.00, Cache Read: $0.20 |
-| gemini-3.1-flash-lite | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice | 1048576 | 65536 | In: $0.25, Out: $1.50, Cache Read: $0.02 |
-| gemini-3.1-flash-lite-preview | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice | 1048576 | 65536 | In: $0.25, Out: $1.50, Cache Read: $0.02 |
-| gemini-3.1-pro-preview | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice | 1048576 | 65536 | In: $2.00, Out: $12.00, Cache Read: $0.20 |
-| gemini-3.1-pro-preview-customtools | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice | 1048576 | 65536 | In: $2.00, Out: $12.00, Cache Read: $0.20 |
-| gemini-3.5-flash | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice | 1048576 | 65536 | In: $1.50, Out: $9.00, Cache Read: $0.15 |
-| gemini-flash-latest | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache Read: $0.08 |
-| gemini-flash-lite-latest | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice | 1048576 | 65536 | In: $0.10, Out: $0.40, Cache Read: $0.02 |
+| gemini-2.0-flash | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, vision, tool_choice, transcription | 1048576 | 8192 | In: $0.10, Out: $0.40, Cache Read: $0.02 |
+| gemini-2.0-flash-lite | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, vision, tool_choice, transcription | 1048576 | 8192 | In: $0.08, Out: $0.30 |
+| gemini-2.5-flash | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice, transcription | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache Read: $0.03 |
+| gemini-2.5-flash-lite | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice, transcription | 1048576 | 65536 | In: $0.10, Out: $0.40, Cache Read: $0.01 |
+| gemini-2.5-pro | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice, transcription | 1048576 | 65536 | In: $1.25, Out: $10.00, Cache Read: $0.12 |
+| gemini-3-flash-preview | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice, transcription | 1048576 | 65536 | In: $0.50, Out: $3.00, Cache Read: $0.05 |
+| gemini-3-pro-preview | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice, transcription | 1048576 | 65536 | In: $2.00, Out: $12.00, Cache Read: $0.20 |
+| gemini-3.1-flash-lite | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice, transcription | 1048576 | 65536 | In: $0.25, Out: $1.50, Cache Read: $0.02 |
+| gemini-3.1-flash-lite-preview | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice, transcription | 1048576 | 65536 | In: $0.25, Out: $1.50, Cache Read: $0.02 |
+| gemini-3.1-pro-preview | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice, transcription | 1048576 | 65536 | In: $2.00, Out: $12.00, Cache Read: $0.20 |
+| gemini-3.1-pro-preview-customtools | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice, transcription | 1048576 | 65536 | In: $2.00, Out: $12.00, Cache Read: $0.20 |
+| gemini-3.5-flash | gemini | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice, transcription | 1048576 | 65536 | In: $1.50, Out: $9.00, Cache Read: $0.15 |
+| gemini-flash-latest | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice, transcription | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache Read: $0.08 |
+| gemini-flash-lite-latest | gemini | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, reasoning, vision, tool_choice, transcription | 1048576 | 65536 | In: $0.10, Out: $0.40, Cache Read: $0.02 |
 | gemini-3.1-flash-image-preview | gemini | In: text, image, pdf; Out: text, image | reasoning, vision | 65536 | 65536 | In: $0.50, Out: $60.00 |
 | gpt-4.1 | openai | In: text, image, pdf; Out: text | function_calling, structured_output, vision, tool_choice, parallel_tool_calls | 1047576 | 32768 | In: $2.00, Out: $8.00, Cache Read: $0.50 |
 | gpt-4.1-mini | openai | In: text, image, pdf; Out: text | function_calling, structured_output, vision, tool_choice, parallel_tool_calls | 1047576 | 32768 | In: $0.40, Out: $1.60, Cache Read: $0.10 |
@@ -3803,18 +3803,18 @@ Models that can process PDF documents:
 | deepseek-ai/deepseek-v3.1-maas | vertexai | In: text, pdf; Out: text | function_calling, structured_output, reasoning, vision | 163840 | 32768 | In: $0.60, Out: $1.70 |
 | deepseek-ai/deepseek-v3.2-maas | vertexai | In: text, pdf; Out: text | function_calling, structured_output, reasoning, vision | 163840 | 65536 | In: $0.56, Out: $1.68, Cache Read: $0.06 |
 | zai-org/glm-4.7-maas | vertexai | In: text, pdf; Out: text | function_calling, structured_output, reasoning, vision | 200000 | 128000 | In: $0.60, Out: $2.20 |
-| gemini-2.0-flash | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, vision, streaming | 1048576 | 8192 | In: $0.10, Out: $0.40, Cache Read: $0.02 |
-| gemini-2.5-flash | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, reasoning, vision, streaming | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache Read: $0.08, Cache Write: $0.38 |
-| gemini-2.5-flash-lite | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, reasoning, vision, streaming | 1048576 | 65536 | In: $0.10, Out: $0.40, Cache Read: $0.01 |
-| gemini-2.5-pro | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, reasoning, vision, streaming | 1048576 | 65536 | In: $1.25, Out: $10.00, Cache Read: $0.12 |
-| gemini-3-flash-preview | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming | 1048576 | 65536 | In: $0.50, Out: $3.00, Cache Read: $0.05 |
-| gemini-3.1-flash-lite | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming | 1048576 | 65536 | In: $0.25, Out: $1.50, Cache Read: $0.02 |
-| gemini-3.1-flash-lite-preview | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming | 1048576 | 65536 | In: $0.25, Out: $1.50, Cache Read: $0.02 |
-| gemini-3.1-pro-preview | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming | 1048576 | 65536 | In: $2.00, Out: $12.00, Cache Read: $0.20 |
-| gemini-3.1-pro-preview-customtools | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision | 1048576 | 65536 | In: $2.00, Out: $12.00, Cache Read: $0.20 |
-| gemini-3.5-flash | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming | 1048576 | 65536 | In: $1.50, Out: $9.00, Cache Read: $0.15 |
-| gemini-flash-latest | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, reasoning, vision | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache Read: $0.08, Cache Write: $0.38 |
-| gemini-flash-lite-latest | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, reasoning, vision | 1048576 | 65536 | In: $0.10, Out: $0.40, Cache Read: $0.02 |
+| gemini-2.0-flash | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, structured_output, vision, streaming, transcription | 1048576 | 8192 | In: $0.10, Out: $0.40, Cache Read: $0.02 |
+| gemini-2.5-flash | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, reasoning, vision, streaming, transcription | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache Read: $0.08, Cache Write: $0.38 |
+| gemini-2.5-flash-lite | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, reasoning, vision, streaming, transcription | 1048576 | 65536 | In: $0.10, Out: $0.40, Cache Read: $0.01 |
+| gemini-2.5-pro | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, reasoning, vision, streaming, transcription | 1048576 | 65536 | In: $1.25, Out: $10.00, Cache Read: $0.12 |
+| gemini-3-flash-preview | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming, transcription | 1048576 | 65536 | In: $0.50, Out: $3.00, Cache Read: $0.05 |
+| gemini-3.1-flash-lite | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming, transcription | 1048576 | 65536 | In: $0.25, Out: $1.50, Cache Read: $0.02 |
+| gemini-3.1-flash-lite-preview | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming, transcription | 1048576 | 65536 | In: $0.25, Out: $1.50, Cache Read: $0.02 |
+| gemini-3.1-pro-preview | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming, transcription | 1048576 | 65536 | In: $2.00, Out: $12.00, Cache Read: $0.20 |
+| gemini-3.1-pro-preview-customtools | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, transcription | 1048576 | 65536 | In: $2.00, Out: $12.00, Cache Read: $0.20 |
+| gemini-3.5-flash | vertexai | In: text, image, video, audio, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming, transcription | 1048576 | 65536 | In: $1.50, Out: $9.00, Cache Read: $0.15 |
+| gemini-flash-latest | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, reasoning, vision, transcription | 1048576 | 65536 | In: $0.30, Out: $2.50, Cache Read: $0.08, Cache Write: $0.38 |
+| gemini-flash-lite-latest | vertexai | In: text, image, audio, video, pdf; Out: text | function_calling, reasoning, vision, transcription | 1048576 | 65536 | In: $0.10, Out: $0.40, Cache Read: $0.02 |
 | gemini-3.1-flash-image-preview | vertexai | In: text, image, pdf; Out: text, image | reasoning, vision, streaming | 65536 | 65536 | In: $0.50, Out: $60.00 |
 | grok-4.20-0309-non-reasoning | xai | In: text, image, pdf; Out: text | function_calling, structured_output, vision, streaming | 1000000 | 30000 | In: $1.25, Out: $2.50, Cache Read: $0.20 |
 | grok-4.20-0309-reasoning | xai | In: text, image, pdf; Out: text | function_calling, structured_output, reasoning, vision, streaming | 1000000 | 30000 | In: $1.25, Out: $2.50, Cache Read: $0.20 |

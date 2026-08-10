@@ -346,7 +346,7 @@ module RubyLLM
 
       def models_dev_model_attributes(model_data, provider_slug, provider_key) # :nodoc:
         modalities = normalize_models_dev_modalities(model_data[:modalities])
-        capabilities = models_dev_capabilities(model_data, modalities)
+        capabilities = models_dev_capabilities(model_data, modalities, provider_slug)
 
         created_date = [model_data[:release_date], model_data[:last_updated]]
                        .find { |value| !value.to_s.strip.empty? }
@@ -378,14 +378,22 @@ module RubyLLM
         id&.split('@')&.first
       end
 
-      def models_dev_capabilities(model_data, modalities) # :nodoc:
+      def models_dev_capabilities(model_data, modalities, provider_slug) # :nodoc:
         capabilities = []
         capabilities << 'function_calling' if model_data[:tool_call]
         capabilities << 'structured_output' if model_data[:structured_output]
         capabilities << 'reasoning' if model_data[:reasoning] || model_data[:reasoning_options]
         capabilities << 'vision' if modalities[:input].intersect?(%w[image video pdf])
         capabilities << 'video' if modalities[:input].include?('video')
+        capabilities << 'transcription' if transcription_capability?(model_data, modalities, provider_slug)
         capabilities.uniq
+      end
+
+      def transcription_capability?(model_data, modalities, provider_slug) # :nodoc:
+        return false unless %w[gemini vertexai].include?(provider_slug)
+        return false if model_data[:id].to_s.include?('embedding')
+
+        modalities[:input].include?('audio') && modalities[:output].include?('text')
       end
 
       def models_dev_pricing(cost) # :nodoc:
