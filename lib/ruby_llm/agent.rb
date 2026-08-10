@@ -170,17 +170,18 @@ module RubyLLM
         end
       end
 
-      # Sets the thinking effort or budget for chats this agent builds,
-      # applied via Chat#with_thinking. Called with no arguments, returns
-      # the configured value.
+      # Sets the thinking effort, budget, or display for chats this agent
+      # builds, applied via Chat#with_thinking. Called with no arguments,
+      # returns the configured value.
       #
       #   thinking effort: :low
       #   thinking budget: 10_000
+      #   thinking display: :summarized
       #
-      def thinking(effort: nil, budget: nil)
-        return @thinking if effort.nil? && budget.nil?
+      def thinking(effort: nil, budget: nil, display: nil)
+        return @thinking if effort.nil? && budget.nil? && display.nil?
 
-        @thinking = { effort: effort, budget: budget }
+        @thinking = { effort: effort, budget: budget, display: display }
       end
 
       # Enables or disables citations for chats this agent builds, applied

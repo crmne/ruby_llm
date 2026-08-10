@@ -46,15 +46,16 @@ module RubyLLM
 
   class Thinking
     class Config # :nodoc: all
-      attr_reader :effort, :budget
+      attr_reader :effort, :budget, :display
 
-      def initialize(effort: nil, budget: nil)
+      def initialize(effort: nil, budget: nil, display: nil)
         @effort = effort.is_a?(Symbol) ? effort.to_s : effort
         @budget = budget
+        @display = display.is_a?(Symbol) ? display.to_s : display
       end
 
       def enabled?
-        !effort.nil? || !budget.nil?
+        !effort.nil? || !budget.nil? || !display.nil?
       end
     end
   end

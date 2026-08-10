@@ -23,7 +23,7 @@ RSpec.describe RubyLLM::Agent do
       expect(agent_class.model).to eq(model: 'gpt-4.1-nano', provider: :openai)
       expect(agent_class.temperature).to eq(0.4)
       expect(agent_class.max_output_tokens).to eq(128)
-      expect(agent_class.thinking).to eq(effort: :low, budget: nil)
+      expect(agent_class.thinking).to eq(effort: :low, budget: nil, display: nil)
       expect(agent_class.citations).to be(true)
       expect(agent_class.caching).to eq(ttl: '1h')
       expect(agent_class.provider_options).to eq(top_p: 0.9)

@@ -11,6 +11,48 @@ RSpec.describe RubyLLM::Chat, :live do
 
       expect(chat.instance_variable_get(:@thinking)).to be_nil
     end
+
+    it 'renders the display option inside the Anthropic thinking config' do
+      payload = RubyLLM.chat(model: 'claude-sonnet-5', provider: :anthropic)
+                       .with_thinking(effort: :high, display: :summarized)
+                       .render
+
+      expect(payload[:thinking]).to eq({ type: 'adaptive', display: 'summarized' })
+      expect(payload.dig(:output_config, :effort)).to eq('high')
+    end
+
+    it 'renders display alone as adaptive thinking with the default effort' do
+      payload = RubyLLM.chat(model: 'claude-sonnet-5', provider: :anthropic)
+                       .with_thinking(display: :summarized)
+                       .render
+
+      expect(payload[:thinking]).to eq({ type: 'adaptive', display: 'summarized' })
+      expect(payload[:output_config]).to be_nil
+    end
+
+    it 'passes provider-specific effort tiers through untouched' do
+      payload = RubyLLM.chat(model: 'gpt-5.2', provider: :openai)
+                       .with_thinking(effort: :xhigh)
+                       .render
+
+      expect(payload.dig(:reasoning, :effort)).to eq('xhigh')
+    end
+  end
+
+  describe 'thinking display' do
+    context 'with anthropic/claude-sonnet-5' do
+      it 'returns readable thinking with display summarized' do
+        chat = RubyLLM.chat(model: 'claude-sonnet-5', provider: :anthropic)
+                      .with_thinking(display: :summarized)
+
+        response = chat.ask(
+          'A farmer has chickens and rabbits, 35 heads and 94 legs. How many of each? Reason step by step.'
+        )
+
+        expect(response.content).to include('23').and include('12')
+        expect(response.thinking&.signature).to be_present
+      end
+    end
   end
 
   context 'with extended thinking' do

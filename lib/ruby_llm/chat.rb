@@ -414,16 +414,23 @@ module RubyLLM
     end
 
     # Configures extended thinking for models that support it, with
-    # +effort:+ (+:low+, +:medium+, +:high+, or +:none+) and/or +budget:+
-    # (a token count). With both +nil+, clears the configuration and
-    # returns to the model's default behavior. Returns +self+.
+    # +effort:+ (+:low+, +:medium+, +:high+, +:none+, or a
+    # provider-specific tier such as +:minimal+, +:xhigh+, or +:max+,
+    # passed through as-is), +budget:+ (a token count), and +display:+
+    # (+:summarized+ or +:omitted+, controlling whether providers that
+    # support it return readable thinking text). With all +nil+, clears
+    # the configuration and returns to the model's default behavior.
+    # Returns +self+.
     #
     #   chat.with_thinking(effort: :high, budget: 8000)
     #   chat.with_thinking(budget: 10_000)
+    #   chat.with_thinking(display: :summarized)
     #   chat.with_thinking(effort: nil)
     #
-    def with_thinking(effort: nil, budget: nil)
-      @thinking = effort || budget ? Thinking::Config.new(effort: effort, budget: budget) : nil
+    def with_thinking(effort: nil, budget: nil, display: nil)
+      @thinking = if effort || budget || display
+                    Thinking::Config.new(effort: effort, budget: budget, display: display)
+                  end
       self
     end
 

@@ -392,6 +392,10 @@ module RubyLLM
           effort = resolve_effort(thinking)
           return nil if effort == 'none'
 
+          apply_thinking_display(base_thinking_payload(thinking, model, effort), thinking)
+        end
+
+        def base_thinking_payload(thinking, model, effort)
           budget = resolve_budget(thinking)
           if budget
             return enabled_thinking_payload(budget) if model.reasoning_option('budget_tokens')
@@ -399,10 +403,16 @@ module RubyLLM
             raise ArgumentError, "Anthropic thinking budget is not supported for #{model.id}"
           end
 
-          raise ArgumentError, 'Anthropic adaptive thinking requires an effort' if effort.nil?
-          return adaptive_thinking_payload(effort) if model.reasoning_option('effort')
+          unless model.reasoning_option('effort')
+            raise ArgumentError, "Anthropic thinking effort is not supported for #{model.id}"
+          end
 
-          raise ArgumentError, "Anthropic thinking effort is not supported for #{model.id}"
+          adaptive_thinking_payload(effort)
+        end
+
+        def apply_thinking_display(payload, thinking)
+          payload[:thinking] = payload[:thinking].merge(display: thinking.display) if thinking.display
+          payload
         end
 
         def enabled_thinking_payload(budget)
@@ -415,10 +425,9 @@ module RubyLLM
         end
 
         def adaptive_thinking_payload(effort)
-          {
-            thinking: { type: 'adaptive' },
-            output_config: { effort: effort }
-          }
+          payload = { thinking: { type: 'adaptive' } }
+          payload[:output_config] = { effort: effort } if effort
+          payload
         end
 
         def resolve_effort(thinking)
