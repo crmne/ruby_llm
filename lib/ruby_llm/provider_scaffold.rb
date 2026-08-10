@@ -161,6 +161,8 @@ module RubyLLM
 
     def update_core_registration
       path = file_path('lib/ruby_llm.rb')
+      return unless File.exist?(path)
+
       insert_sorted_line(path, "  '#{slug}' => '#{class_name}',", /^\s+'[^']+' => '[^']+',?$/)
       insert_sorted_line(
         path,

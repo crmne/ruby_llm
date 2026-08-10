@@ -198,6 +198,17 @@ RSpec.describe RubyLLM::ProviderScaffold do
     end
   end
 
+  describe 'core wiring when the core files are missing' do
+    it 'writes the provider without touching files that are not there' do
+      result = described_class.new(
+        'Acme', mode: :core, destination: dir, models_dev_provider: 'acme'
+      ).generate!
+
+      expect(result.written).to include('lib/ruby_llm/providers/acme.rb')
+      expect(result.updated).to be_empty
+    end
+  end
+
   describe 'existing files' do
     it 'skips them unless asked to overwrite' do
       described_class.new('Acme', mode: :gem, destination: dir).generate!
