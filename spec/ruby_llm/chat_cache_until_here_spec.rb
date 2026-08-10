@@ -64,21 +64,61 @@ RSpec.describe RubyLLM::Chat, :live do
 
     it 'renders OpenAI prompt cache controls as request params' do
       chat = RubyLLM.chat(model: 'gpt-4.1-nano')
+                    .with_caching(key: 'repo:ruby_llm', ttl: '30m', mode: 'implicit')
+                    .ask_later('Hello')
+
+      payload = chat.render
+
+      expect(payload[:prompt_cache_key]).to eq('repo:ruby_llm')
+      expect(payload[:prompt_cache_options]).to eq(mode: 'implicit', ttl: '30m')
+    end
+
+    it 'translates deprecated retention: into prompt_cache_options' do
+      allow(RubyLLM.logger).to receive(:warn)
+
+      chat = RubyLLM.chat(model: 'gpt-4.1-nano')
                     .with_caching(key: 'repo:ruby_llm', retention: '24h')
                     .ask_later('Hello')
 
       payload = chat.render
 
       expect(payload[:prompt_cache_key]).to eq('repo:ruby_llm')
-      expect(payload[:prompt_cache_retention]).to eq('24h')
+      expect(payload[:prompt_cache_options]).to eq(ttl: '24h')
+      expect(RubyLLM.logger).to have_received(:warn).with(/retention: is deprecated/)
     end
 
     it 'rejects OpenAI caching options it cannot render' do
       chat = RubyLLM.chat(model: 'gpt-4.1-nano')
-                    .with_caching(ttl: '1h')
+                    .with_caching(scope: 'user')
                     .ask_later('Hello')
 
-      expect { chat.render }.to raise_error(ArgumentError, /Responses prompt caching accepts :key and :retention/)
+      expect { chat.render }.to raise_error(ArgumentError, /Responses prompt caching accepts :key, :ttl, and :mode/)
+    end
+
+    it 'renders explicit breakpoints for OpenAI cache boundaries' do
+      chat = RubyLLM.chat(model: 'gpt-4.1-nano')
+      chat.ask_later('Long context').cache_until_here!
+
+      payload = chat.render
+
+      expect(payload[:input].last[:content]).to eq(
+        [{ type: 'input_text', text: 'Long context', prompt_cache_breakpoint: { mode: 'explicit' } }]
+      )
+      expect(payload[:prompt_cache_options]).to eq(mode: 'explicit')
+    end
+
+    it 'sends cache-bounded instructions as input items on Responses' do
+      chat = RubyLLM.chat(model: 'gpt-4.1-nano')
+      chat.with_instructions('Stable instructions').cache_until_here!
+      chat.ask_later('Hello')
+
+      payload = chat.render
+
+      expect(payload[:instructions]).to be_nil
+      expect(payload[:input].first).to eq(
+        role: 'system',
+        content: [{ type: 'input_text', text: 'Stable instructions', prompt_cache_breakpoint: { mode: 'explicit' } }]
+      )
     end
   end
 
@@ -139,6 +179,19 @@ RSpec.describe RubyLLM::Chat, :live do
         second = read_chat.ask('Reply with exactly: OK')
         expect(second.tokens.cache_read).to be_positive
       end
+    end
+
+    it 'openai/gpt-5.2 reuses the prompt cache with a shared key' do
+      ask_with_shared_key = lambda do
+        chat = RubyLLM.chat(model: 'gpt-5.2', provider: :openai).with_caching(key: 'rubyllm-test')
+        chat.with_instructions(cacheable_instructions)
+        chat.ask('Reply with exactly: OK')
+      end
+
+      ask_with_shared_key.call
+      second = ask_with_shared_key.call
+
+      expect(second.tokens.cache_read.to_i + second.tokens.cache_write.to_i).to be_positive
     end
   end
 end

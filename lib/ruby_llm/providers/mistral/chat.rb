@@ -47,6 +47,10 @@ module RubyLLM
           payload
         end
 
+        def openai_prompt_caching?
+          false
+        end
+
         def prompt_cache_params(caching)
           options = prompt_cache_options(caching)
 

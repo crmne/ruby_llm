@@ -44,7 +44,7 @@ RubyLLM renders the closest provider-native request:
 | --- | --- |
 | Anthropic | Adds top-level `cache_control`. |
 | OpenRouter | Adds top-level `cache_control` when no explicit boundary is marked. |
-| OpenAI-compatible Chat Completions and Responses | Uses the provider's automatic prompt cache; `key:` and `retention:` become request parameters when supported. |
+| OpenAI-compatible Chat Completions and Responses | Uses the provider's automatic prompt cache; `key:` becomes `prompt_cache_key`, and `ttl:` and `mode:` become `prompt_cache_options`. |
 | Mistral | Uses `key:` as the provider's `prompt_cache_key`. |
 | Bedrock Converse | Adds a `cachePoint` to the last cacheable message. |
 | Other providers | Sends no extra caching fields unless the provider already caches automatically. |
@@ -52,15 +52,15 @@ RubyLLM renders the closest provider-native request:
 Prompt cache durations do not line up cleanly across providers, so RubyLLM does not alias them. Use the provider's own option name and value:
 
 ```ruby
-chat = RubyLLM.chat(model: 'gpt-5.4').with_caching(
+chat = RubyLLM.chat(model: 'gpt-5.6').with_caching(
   key: "repo:#{repository.cache_key}",
-  retention: "24h"
+  ttl: "30m"
 )
 
 chat = RubyLLM.chat(model: '{{ site.models.anthropic_latest }}').with_caching(ttl: "1h")
 ```
 
-OpenAI-compatible Chat Completions and Responses accept `key:` and `retention:` when the provider supports those request fields. Mistral accepts `key:`. Anthropic, OpenRouter, and Bedrock Converse accept `ttl:`.
+OpenAI-compatible Chat Completions and Responses accept `key:`, `ttl:`, and `mode:` (`"implicit"` or `"explicit"`). The old `retention:` option is deprecated; RubyLLM translates it into `prompt_cache_options` and logs a warning. Mistral accepts `key:`. Anthropic, OpenRouter, and Bedrock Converse accept `ttl:`.
 
 If you switch to a provider that needs different caching options, call `with_caching` again. It replaces the previous cache policy:
 
@@ -109,7 +109,8 @@ RubyLLM translates message boundaries at render time:
 | Anthropic | Adds `cache_control` to the final content block. |
 | OpenRouter | Adds `cache_control` to the final content block. |
 | Bedrock Converse | Appends a `cachePoint` block. |
-| OpenAI, Azure OpenAI, and others | Ignore explicit boundaries when the provider has no boundary concept. |
+| OpenAI and Azure OpenAI | Add `prompt_cache_breakpoint` to the final content part and set `prompt_cache_options` mode to `explicit`. |
+| Others | Ignore explicit boundaries when the provider has no boundary concept. |
 
 Configure the TTL once and use explicit boundaries for the stable chunks:
 

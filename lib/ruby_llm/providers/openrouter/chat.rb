@@ -109,6 +109,10 @@ module RubyLLM
           messages.any?(&:cache_until_here?)
         end
 
+        def openai_prompt_caching?
+          false
+        end
+
         def supports_provider_file_references?
           true
         end

@@ -11,7 +11,8 @@ module RubyLLM
 
         OPENAI_INLINE_FILE_LIMIT = 50 * 1024 * 1024
         OPENAI_FILE_UPLOAD_LIMIT = 512 * 1024 * 1024
-        PROMPT_CACHE_OPTIONS = %i[key retention].freeze
+        PROMPT_CACHE_OPTIONS = %i[key ttl mode retention].freeze
+        CACHE_BREAKPOINT_ROLES = %i[user system].freeze
 
         module_function
 
@@ -43,6 +44,7 @@ module RubyLLM
           effort = resolve_effort(thinking)
           payload[:reasoning] = { effort: effort } if effort
           payload.merge!(prompt_cache_params(caching)) if caching
+          force_explicit_cache_mode(payload) if cache_boundaries?(messages)
 
           payload
         end
@@ -107,11 +109,39 @@ module RubyLLM
 
         def prompt_cache_params(caching)
           options = prompt_cache_options(caching)
+          cache_options = build_prompt_cache_options(options)
 
           {}.tap do |params|
             params[:prompt_cache_key] = options[:key] if options[:key]
-            params[:prompt_cache_retention] = options[:retention] if options[:retention]
+            params[:prompt_cache_options] = cache_options unless cache_options.empty?
           end
+        end
+
+        def build_prompt_cache_options(options)
+          ttl = options[:ttl] || retention_ttl(options[:retention])
+
+          {}.tap do |cache_options|
+            cache_options[:mode] = options[:mode] if options[:mode]
+            cache_options[:ttl] = ttl if ttl
+          end
+        end
+
+        def retention_ttl(retention)
+          return unless retention
+
+          RubyLLM.logger.warn(
+            'with_caching retention: is deprecated; OpenAI replaced prompt_cache_retention ' \
+            'with prompt_cache_options. Use ttl: instead.'
+          )
+          retention
+        end
+
+        def force_explicit_cache_mode(payload)
+          payload[:prompt_cache_options] = { mode: 'explicit' }.merge(payload[:prompt_cache_options] || {})
+        end
+
+        def cache_boundaries?(messages)
+          messages.any? { |msg| msg.cache_until_here? && CACHE_BREAKPOINT_ROLES.include?(msg.role) }
         end
 
         def prompt_cache_options(caching)
@@ -120,7 +150,7 @@ module RubyLLM
           return options if unsupported.empty?
 
           raise ArgumentError,
-                "Responses prompt caching accepts :key and :retention, got #{format_cache_option_keys(unsupported)}"
+                "Responses prompt caching accepts :key, :ttl, and :mode, got #{format_cache_option_keys(unsupported)}"
         end
 
         def format_cache_option_keys(keys)
@@ -128,13 +158,16 @@ module RubyLLM
         end
 
         def parse_usage(usage)
-          cached = usage.dig('input_tokens_details', 'cached_tokens')
+          details = usage['input_tokens_details'] || usage['prompt_tokens_details'] || {}
+          cached = details['cached_tokens']
+          cache_writes = details['cache_write_tokens']
           input = usage['input_tokens']
 
           {
-            input_tokens: input && [input.to_i - cached.to_i, 0].max,
+            input_tokens: input && [input.to_i - cached.to_i - cache_writes.to_i, 0].max,
             output_tokens: usage['output_tokens'],
             cache_read_tokens: cached,
+            cache_write_tokens: cache_writes,
             thinking_tokens: usage.dig('output_tokens_details', 'reasoning_tokens')
           }
         end
@@ -148,8 +181,11 @@ module RubyLLM
           }
         end
 
+        # System messages marked as cache boundaries ride along as input
+        # items, because the +instructions+ parameter is a plain string and
+        # cannot carry a breakpoint marker.
         def format_instructions(messages)
-          instructions = messages.select { |msg| msg.role == :system }.map do |msg|
+          instructions = messages.select { |msg| msg.role == :system && !msg.cache_until_here? }.map do |msg|
             msg.content.to_s
           end
 
@@ -157,17 +193,35 @@ module RubyLLM
         end
 
         def format_input(messages)
-          messages.reject { |msg| msg.role == :system }.flat_map { |msg| format_item(msg) }
+          messages.reject { |msg| msg.role == :system && !msg.cache_until_here? }.flat_map { |msg| format_item(msg) }
         end
 
         def format_item(msg)
           case msg.role
+          when :system
+            inject_cache_breakpoint({ role: 'system', content: format_content(msg.content, msg.attachments) })
           when :tool
             format_tool_items(msg)
           when :assistant
             format_assistant_items(msg)
           else
-            { role: 'user', content: format_content(msg.content, msg.attachments) }
+            item = { role: 'user', content: format_content(msg.content, msg.attachments) }
+            msg.cache_until_here? ? inject_cache_breakpoint(item) : item
+          end
+        end
+
+        def inject_cache_breakpoint(item)
+          parts = cache_breakpoint_parts(item[:content])
+          return item unless parts&.last.is_a?(Hash)
+
+          parts[-1] = parts.last.merge(prompt_cache_breakpoint: { mode: 'explicit' })
+          item.merge(content: parts)
+        end
+
+        def cache_breakpoint_parts(content)
+          case content
+          when Array then content.dup
+          when String then [{ type: 'input_text', text: content }] unless content.empty?
           end
         end
 

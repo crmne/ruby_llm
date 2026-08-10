@@ -112,11 +112,53 @@ RSpec.describe RubyLLM::Protocols::Responses::Chat do
     it 'renders prompt cache params for any Responses-compatible provider' do
       payload = render_payload(
         [RubyLLM::Message.new(role: :user, content: 'hi')],
-        caching: { key: 'repo:ruby_llm', retention: '24h' }
+        caching: { key: 'repo:ruby_llm', ttl: '30m' }
       )
 
       expect(payload[:prompt_cache_key]).to eq('repo:ruby_llm')
-      expect(payload[:prompt_cache_retention]).to eq('24h')
+      expect(payload[:prompt_cache_options]).to eq(ttl: '30m')
+    end
+
+    it 'translates deprecated retention into a prompt cache ttl' do
+      allow(RubyLLM.logger).to receive(:warn)
+
+      payload = render_payload(
+        [RubyLLM::Message.new(role: :user, content: 'hi')],
+        caching: { retention: '24h' }
+      )
+
+      expect(payload[:prompt_cache_options]).to eq(ttl: '24h')
+      expect(RubyLLM.logger).to have_received(:warn).with(/retention: is deprecated/)
+    end
+
+    it 'marks cache boundaries with explicit breakpoint parts' do
+      messages = [
+        RubyLLM::Message.new(role: :user, content: 'Long context').cache_until_here!,
+        RubyLLM::Message.new(role: :user, content: 'hi')
+      ]
+
+      payload = render_payload(messages)
+
+      expect(payload[:input].first[:content]).to eq(
+        [{ type: 'input_text', text: 'Long context', prompt_cache_breakpoint: { mode: 'explicit' } }]
+      )
+      expect(payload[:input].last).to eq(role: 'user', content: 'hi')
+      expect(payload[:prompt_cache_options]).to eq(mode: 'explicit')
+    end
+
+    it 'sends cache-bounded system messages as input items' do
+      messages = [
+        RubyLLM::Message.new(role: :system, content: 'Stable instructions').cache_until_here!,
+        RubyLLM::Message.new(role: :user, content: 'hi')
+      ]
+
+      payload = render_payload(messages)
+
+      expect(payload[:instructions]).to be_nil
+      expect(payload[:input].first).to eq(
+        role: 'system',
+        content: [{ type: 'input_text', text: 'Stable instructions', prompt_cache_breakpoint: { mode: 'explicit' } }]
+      )
     end
   end
 
@@ -210,6 +252,20 @@ RSpec.describe RubyLLM::Protocols::Responses::Chat do
       expect(message.tokens.output).to eq(7)
       expect(message.tokens.cache_read).to eq(4)
       expect(message.tokens.thinking).to eq(3)
+    end
+
+    it 'maps cache write tokens for models that bill cache writes' do
+      response = response_with([], usage: {
+                                 'input_tokens' => 2048,
+                                 'output_tokens' => 7,
+                                 'input_tokens_details' => { 'cached_tokens' => 1920, 'cache_write_tokens' => 100 }
+                               })
+
+      message = protocol.send(:parse_completion_response, response)
+
+      expect(message.tokens.input).to eq(28)
+      expect(message.tokens.cache_read).to eq(1920)
+      expect(message.tokens.cache_write).to eq(100)
     end
 
     it 'does not synthesize finish_reason for completed function calls' do

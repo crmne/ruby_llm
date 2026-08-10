@@ -33,6 +33,34 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Chat do
       expect(message.tokens.cache_write).to eq(0)
     end
 
+    it 'captures cache write tokens for models that bill cache writes' do
+      response_body = {
+        'model' => 'gpt-5.6',
+        'choices' => [
+          {
+            'message' => {
+              'role' => 'assistant',
+              'content' => 'Hello!'
+            }
+          }
+        ],
+        'usage' => {
+          'prompt_tokens' => 2048,
+          'completion_tokens' => 4,
+          'prompt_tokens_details' => { 'cached_tokens' => 1920, 'cache_write_tokens' => 100 }
+        }
+      }
+
+      response = instance_double(Faraday::Response, body: response_body)
+      allow(described_class).to receive(:parse_tool_calls).and_return(nil)
+
+      message = described_class.parse_completion_body(response_body, raw: response)
+
+      expect(message.tokens.cache_read).to eq(1920)
+      expect(message.tokens.cache_write).to eq(100)
+      expect(message.tokens.input).to eq(28)
+    end
+
     it 'preserves raw finish reasons' do
       response_body = {
         'model' => 'gpt-4.1-nano',
@@ -310,11 +338,11 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Chat do
         temperature: nil,
         model: model,
         stream: false,
-        caching: { key: 'repo:ruby_llm', retention: '24h' }
+        caching: { key: 'repo:ruby_llm', ttl: '30m' }
       )
 
       expect(payload[:prompt_cache_key]).to eq('repo:ruby_llm')
-      expect(payload[:prompt_cache_retention]).to eq('24h')
+      expect(payload[:prompt_cache_options]).to eq(ttl: '30m')
     end
 
     context 'with schema' do
@@ -537,15 +565,37 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Chat do
 
   describe 'prompt caching' do
     it 'renders the supported cache options' do
-      expect(described_class.prompt_cache_params({ key: 'abc', retention: '24h' })).to eq(
-        prompt_cache_key: 'abc', prompt_cache_retention: '24h'
+      expect(described_class.prompt_cache_params({ key: 'abc', ttl: '30m', mode: 'explicit' })).to eq(
+        prompt_cache_key: 'abc', prompt_cache_options: { mode: 'explicit', ttl: '30m' }
       )
     end
 
-    it 'rejects options it cannot render' do
-      expect { described_class.prompt_cache_params({ ttl: '5m', scope: 'user' }) }.to raise_error(
-        ArgumentError, /accepts :key and :retention, got :ttl, :scope/
+    it 'translates deprecated retention into a prompt cache ttl' do
+      allow(RubyLLM.logger).to receive(:warn)
+
+      expect(described_class.prompt_cache_params({ retention: '24h' })).to eq(
+        prompt_cache_options: { ttl: '24h' }
       )
+      expect(RubyLLM.logger).to have_received(:warn).with(/retention: is deprecated/)
+    end
+
+    it 'rejects options it cannot render' do
+      expect { described_class.prompt_cache_params({ scope: 'user' }) }.to raise_error(
+        ArgumentError, /accepts :key, :ttl, and :mode, got :scope/
+      )
+    end
+
+    it 'marks cache boundaries with explicit breakpoint parts' do
+      protocol = RubyLLM::Protocols::ChatCompletions.allocate
+      message = RubyLLM::Message.new(role: :user, content: 'Long context').cache_until_here!
+      model = instance_double(RubyLLM::Model, id: 'gpt-5.6')
+
+      payload = protocol.send(:render_payload, [message], tools: {}, temperature: nil, model: model, stream: false)
+
+      expect(payload[:messages].first[:content]).to eq(
+        [{ type: 'text', text: 'Long context', prompt_cache_breakpoint: { mode: 'explicit' } }]
+      )
+      expect(payload[:prompt_cache_options]).to eq(mode: 'explicit')
     end
   end
 

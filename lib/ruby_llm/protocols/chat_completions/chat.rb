@@ -7,7 +7,7 @@ module RubyLLM
       module Chat
         OPENAI_INLINE_FILE_LIMIT = 50 * 1024 * 1024
         OPENAI_FILE_UPLOAD_LIMIT = 512 * 1024 * 1024
-        PROMPT_CACHE_OPTIONS = %i[key retention].freeze
+        PROMPT_CACHE_OPTIONS = %i[key ttl mode retention].freeze
 
         def completion_url
           'chat/completions'
@@ -53,7 +53,7 @@ module RubyLLM
           payload[:reasoning_effort] = effort if effort
 
           payload[:stream_options] = { include_usage: true } if stream
-          payload.merge!(prompt_cache_params(caching)) if caching
+          apply_prompt_cache_params(payload, messages, caching)
           payload
         end
         # rubocop:enable Metrics/PerceivedComplexity
@@ -141,7 +141,9 @@ module RubyLLM
         end
 
         def cache_write_tokens(usage)
-          usage.dig('prompt_tokens_details', 'cache_write_tokens') || 0
+          usage.dig('prompt_tokens_details', 'cache_write_tokens') ||
+            usage.dig('input_tokens_details', 'cache_write_tokens') ||
+            0
         end
 
         def thinking_tokens(usage)
@@ -202,13 +204,52 @@ module RubyLLM
           end
         end
 
+        def apply_prompt_cache_params(payload, messages, caching)
+          return unless openai_prompt_caching?
+
+          payload.merge!(prompt_cache_params(caching)) if caching
+          force_explicit_cache_mode(payload) if cache_boundaries?(messages)
+        end
+
+        def openai_prompt_caching?
+          true
+        end
+
         def prompt_cache_params(caching)
           options = prompt_cache_options(caching)
+          cache_options = build_prompt_cache_options(options)
 
           {}.tap do |params|
             params[:prompt_cache_key] = options[:key] if options[:key]
-            params[:prompt_cache_retention] = options[:retention] if options[:retention]
+            params[:prompt_cache_options] = cache_options unless cache_options.empty?
           end
+        end
+
+        def build_prompt_cache_options(options)
+          ttl = options[:ttl] || retention_ttl(options[:retention])
+
+          {}.tap do |cache_options|
+            cache_options[:mode] = options[:mode] if options[:mode]
+            cache_options[:ttl] = ttl if ttl
+          end
+        end
+
+        def retention_ttl(retention)
+          return unless retention
+
+          RubyLLM.logger.warn(
+            'with_caching retention: is deprecated; OpenAI replaced prompt_cache_retention ' \
+            'with prompt_cache_options. Use ttl: instead.'
+          )
+          retention
+        end
+
+        def force_explicit_cache_mode(payload)
+          payload[:prompt_cache_options] = { mode: 'explicit' }.merge(payload[:prompt_cache_options] || {})
+        end
+
+        def cache_boundaries?(messages)
+          messages.any?(&:cache_until_here?)
         end
 
         def prompt_cache_options(caching)
@@ -217,7 +258,7 @@ module RubyLLM
           return options if unsupported.empty?
 
           raise ArgumentError,
-                'Chat Completions prompt caching accepts :key and :retention, ' \
+                'Chat Completions prompt caching accepts :key, :ttl, and :mode, ' \
                 "got #{format_cache_option_keys(unsupported)}"
         end
 
@@ -254,8 +295,24 @@ module RubyLLM
         def format_message_content(msg, **)
           content = format_content(msg.content, msg.tool_result? ? [] : msg.attachments)
           return '' if content.nil? && thinking_only_assistant_message?(msg)
+          return inject_cache_breakpoint(content) if msg.cache_until_here? && openai_prompt_caching?
 
           content
+        end
+
+        def inject_cache_breakpoint(content)
+          parts = cache_breakpoint_parts(content)
+          return content unless parts&.last.is_a?(Hash)
+
+          parts[-1] = parts.last.merge(prompt_cache_breakpoint: { mode: 'explicit' })
+          parts
+        end
+
+        def cache_breakpoint_parts(content)
+          case content
+          when Array then content.dup
+          when String then [Media.format_text(content)] unless content.empty?
+          end
         end
 
         def thinking_only_assistant_message?(msg)
