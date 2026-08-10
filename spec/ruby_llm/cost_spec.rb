@@ -252,4 +252,99 @@ RSpec.describe RubyLLM::Cost do
       expect(aggregate.total).to be_within(0.0000000001).of(0.006)
     end
   end
+
+  describe 'incomplete aggregates' do
+    it 'reports no total when one attempt is still unpriced' do
+      cost = described_class.aggregate([described_class.new(tokens: RubyLLM::Tokens.new(input: 10), model:)],
+                                       complete: false)
+
+      expect(cost.input).to be_within(0.0000000001).of(0.00001)
+      expect(cost.total).to be_nil
+    end
+  end
+
+  describe 'model resolution' do
+    it 'prices against a model looked up by id' do
+      cost = described_class.new(tokens: RubyLLM::Tokens.new(input: 1_000_000), model: 'gpt-4.1-nano')
+
+      expect(cost.input).to be_positive
+    end
+
+    it 'prices against anything that converts to a model' do
+      wrapper = Struct.new(:to_llm).new(model)
+
+      expect(described_class.new(tokens: RubyLLM::Tokens.new(input: 1_000), model: wrapper).input).to eq(0.001)
+    end
+
+    it 'reports nothing for a model id it cannot find' do
+      cost = described_class.new(tokens: RubyLLM::Tokens.new(input: 1_000), model: 'no-such-model-12345')
+
+      expect(cost.input).to be_nil
+      expect(cost.total).to be_nil
+    end
+
+    it 'reports nothing for a value that is not a model at all' do
+      expect(described_class.new(tokens: RubyLLM::Tokens.new(input: 1_000), model: 42).input).to be_nil
+    end
+  end
+
+  describe 'non-text pricing categories' do
+    let(:audio_model) do
+      RubyLLM::Model.new(
+        id: 'audio-model',
+        name: 'Audio Model',
+        provider: 'openai',
+        pricing: { audio_tokens: { standard: { input_per_million: 4.0, output_per_million: 8.0 } } }
+      )
+    end
+
+    it 'prices a named category' do
+      cost = described_class.new(
+        tokens: RubyLLM::Tokens.new(input: 1_000_000, output: 1_000_000),
+        model: audio_model, category: :audio_tokens
+      )
+
+      expect(cost.input).to eq(4.0)
+      expect(cost.output).to eq(8.0)
+    end
+
+    it 'reports nothing for a category the pricing does not know' do
+      cost = described_class.new(
+        tokens: RubyLLM::Tokens.new(input: 1_000), model: audio_model, category: :video_tokens
+      )
+
+      expect(cost.input).to be_nil
+    end
+  end
+
+  describe '#to_h' do
+    it 'omits the components that were never priced' do
+      cost = described_class.new(tokens: RubyLLM::Tokens.new(input: 1_000), model:)
+
+      expect(cost.to_h.keys).to contain_exactly(:input, :total)
+    end
+  end
+
+  describe '.from_h edge cases' do
+    it 'reports nothing when the stored breakdown is empty' do
+      cost = described_class.from_h({})
+
+      expect(cost.total).to be_nil
+      expect(cost.tokens?).to be(false)
+    end
+
+    it 'trusts a recorded total even when components are missing' do
+      cost = described_class.from_h({ 'total' => 0.005 })
+
+      expect(cost.total).to eq(0.005)
+      expect(cost.tokens?).to be(true)
+    end
+
+    it 'flags components that had tokens but no recorded cost' do
+      cost = described_class.from_h({ 'input' => 0.001 }, tokens: RubyLLM::Tokens.new(input: 10, output: 5))
+
+      expect(cost.missing?(:output)).to be(true)
+      expect(cost.total).to be_nil
+    end
+  end
 end

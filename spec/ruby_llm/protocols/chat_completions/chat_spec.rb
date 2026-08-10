@@ -398,4 +398,192 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Chat do
       end
     end
   end
+
+  describe 'citations' do
+    it 'reads url_citation annotations and slices the cited span out of the content' do
+      citations = described_class.extract_citations(
+        {
+          'annotations' => [
+            { 'url_citation' => { 'url' => 'https://a.example', 'title' => 'A', 'start_index' => 0,
+                                  'end_index' => 5 } },
+            { 'type' => 'other' }
+          ]
+        },
+        {},
+        'Hello world'
+      )
+
+      expect(citations.length).to eq(1)
+      expect(citations.first.url).to eq('https://a.example')
+      expect(citations.first.text).to eq('Hello')
+    end
+
+    it 'leaves the cited text nil when the annotation carries no offsets' do
+      citations = described_class.extract_citations(
+        { 'annotations' => [{ 'url_citation' => { 'url' => 'https://a.example' } }] }, {}, 'Hello'
+      )
+
+      expect(citations.first.text).to be_nil
+    end
+
+    it 'falls back to root search results' do
+      citations = described_class.extract_citations(
+        {},
+        { 'search_results' => [
+          { 'url' => 'https://a.example', 'title' => 'A', 'snippet' => 'excerpt' },
+          'not a result'
+        ] },
+        nil
+      )
+
+      expect(citations.length).to eq(1)
+      expect(citations.first.cited_text).to eq('excerpt')
+      expect(citations.first.source_index).to eq(0)
+    end
+
+    it 'falls back to a root citation URL list' do
+      citations = described_class.extract_citations({}, { 'citations' => ['https://a.example', 42] }, nil)
+
+      expect(citations.map(&:url)).to eq(['https://a.example'])
+    end
+
+    it 'is empty when the response carries none' do
+      expect(described_class.extract_citations({}, {}, nil)).to eq([])
+    end
+  end
+
+  describe '.parse_completion_body error and usage handling' do
+    it 'raises the error the provider reported' do
+      body = { 'error' => { 'message' => 'model overloaded' } }
+      response = instance_double(Faraday::Response, body: body)
+
+      expect { described_class.parse_completion_body(body, raw: response) }.to raise_error(
+        RubyLLM::Error, 'model overloaded'
+      )
+    end
+
+    it 'is nil when the response carries no message' do
+      expect(described_class.parse_completion_body({ 'choices' => [] }, raw: nil)).to be_nil
+    end
+
+    it 'derives generated tokens from the total when the provider omits them' do
+      body = {
+        'choices' => [{ 'message' => { 'role' => 'assistant', 'content' => 'Hi' } }],
+        'usage' => { 'prompt_tokens' => 10, 'completion_tokens' => 2, 'total_tokens' => 14 }
+      }
+      allow(described_class).to receive(:parse_tool_calls).and_return(nil)
+
+      message = described_class.parse_completion_body(body, raw: nil)
+
+      expect(message.tokens.output).to eq(4)
+    end
+  end
+
+  describe 'thinking round-trips' do
+    it 'reads reasoning out of the alternate field names' do
+      expect(described_class.extract_thinking_text({ 'reasoning' => 'why' })).to eq('why')
+      expect(described_class.extract_thinking_text({ 'thinking' => 'why' })).to eq('why')
+      expect(described_class.extract_thinking_text({ 'reasoning_content' => 42 })).to be_nil
+      expect(described_class.extract_thinking_signature({ 'signature' => 'sig' })).to eq('sig')
+      expect(described_class.extract_thinking_signature({ 'reasoning_signature' => 42 })).to be_nil
+    end
+
+    it 'splits inline think tags out of the content' do
+      expect(described_class.extract_content_and_thinking('<think>why</think>answer')).to eq(%w[answer why])
+      expect(described_class.extract_content_and_thinking('<think>why</think>')).to eq([nil, 'why'])
+      expect(described_class.extract_content_and_thinking('plain')).to eq(['plain', nil])
+    end
+
+    it 'leaves a content shape it does not understand alone' do
+      expect(described_class.extract_content_and_thinking(nil)).to eq([nil, nil])
+    end
+
+    it 'reads thinking out of structured content blocks' do
+      content = [
+        { 'type' => 'thinking', 'thinking' => 'first ' },
+        { 'type' => 'thinking', 'thinking' => [{ 'type' => 'text', 'text' => 'second' }] },
+        { 'type' => 'thinking', 'text' => ' third' },
+        { 'type' => 'text', 'text' => 'answer' }
+      ]
+
+      expect(described_class.extract_content_and_thinking(content)).to eq(['answer', 'first second third'])
+    end
+
+    it 'sends assistant thinking back under every field name providers accept' do
+      message = RubyLLM::Message.new(
+        role: :assistant, content: 'done', thinking: RubyLLM::Thinking.new(text: 'why', signature: 'sig')
+      )
+
+      expect(described_class.format_thinking(message)).to eq(
+        reasoning: 'why', reasoning_content: 'why', reasoning_signature: 'sig'
+      )
+    end
+
+    it 'sends nothing for a user message or one without thinking' do
+      expect(described_class.format_thinking(RubyLLM::Message.new(role: :user, content: 'hi'))).to eq({})
+      expect(described_class.format_thinking(RubyLLM::Message.new(role: :assistant, content: 'hi'))).to eq({})
+    end
+
+    it 'sends only the signature when that is all the model returned' do
+      message = RubyLLM::Message.new(
+        role: :assistant, content: 'done', thinking: RubyLLM::Thinking.new(signature: 'sig')
+      )
+
+      expect(described_class.format_thinking(message)).to eq(reasoning_signature: 'sig')
+    end
+  end
+
+  describe 'prompt caching' do
+    it 'renders the supported cache options' do
+      expect(described_class.prompt_cache_params({ key: 'abc', retention: '24h' })).to eq(
+        prompt_cache_key: 'abc', prompt_cache_retention: '24h'
+      )
+    end
+
+    it 'rejects options it cannot render' do
+      expect { described_class.prompt_cache_params({ ttl: '5m', scope: 'user' }) }.to raise_error(
+        ArgumentError, /accepts :key and :retention, got :ttl, :scope/
+      )
+    end
+  end
+
+  describe '.warn_unsupported_citations' do
+    it 'warns when citations are asked of a model without them' do
+      allow(RubyLLM.logger).to receive(:warn)
+      allow(described_class).to receive(:format_messages).and_return([])
+      model = instance_double(RubyLLM::Model, id: 'gpt-4.1-nano', supports?: false)
+
+      described_class.render_payload(
+        [RubyLLM::Message.new(role: :user, content: 'Hi')],
+        tools: {}, temperature: nil, model: model, citations: true
+      )
+
+      expect(RubyLLM.logger).to have_received(:warn).with(/does not support citations/)
+    end
+  end
+
+  describe 'tool preferences' do
+    it 'renders tool choice and parallel tool calls' do
+      protocol = Object.new
+      protocol.extend(RubyLLM::Protocols::ChatCompletions::Tools)
+      protocol.extend(RubyLLM::Protocols::ChatCompletions::Media)
+      protocol.extend(described_class)
+      model = instance_double(RubyLLM::Model, id: 'gpt-4.1-nano', supports?: true)
+      tool = instance_double(
+        RubyLLM::Tool, name: 'lookup', description: 'Looks up', parameters_schema: nil,
+                       declared_parameters: {}, provider_options: {}
+      )
+
+      payload = protocol.send(
+        :render_payload,
+        [RubyLLM::Message.new(role: :user, content: 'Hi')],
+        tools: { 'lookup' => tool }, temperature: nil, model: model,
+        tool_prefs: { choice: :required, calls: :one }
+      )
+
+      expect(payload[:tools].first[:function][:name]).to eq('lookup')
+      expect(payload[:tool_choice]).to eq(:required)
+      expect(payload[:parallel_tool_calls]).to be(false)
+    end
+  end
 end

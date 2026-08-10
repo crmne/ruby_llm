@@ -102,5 +102,82 @@ RSpec.describe RubyLLM::ErrorMiddleware do
         described_class.parse_error(provider: provider, response: response)
       end.to raise_error(RubyLLM::BadRequestError)
     end
+
+    it 'returns the message for a successful response instead of raising' do
+      response = Struct.new(:status, :body).new(200, '{}')
+      provider = instance_double(RubyLLM::Provider, parse_error: nil)
+
+      expect(described_class.parse_error(provider: provider, response: response)).to be_nil
+    end
+
+    it 'raises the base error for a status it does not map' do
+      response = Struct.new(:status, :body).new(418, '{"error":{"message":"teapot"}}')
+      provider = instance_double(RubyLLM::Provider, parse_error: 'teapot')
+
+      expect do
+        described_class.parse_error(provider: provider, response: response)
+      end.to raise_error(RubyLLM::Error, 'teapot')
+    end
+
+    it 'maps 402 to PaymentRequiredError' do
+      response = Struct.new(:status, :body).new(402, '{}')
+      provider = instance_double(RubyLLM::Provider, parse_error: 'out of credit')
+
+      expect do
+        described_class.parse_error(provider: provider, response: response)
+      end.to raise_error(RubyLLM::PaymentRequiredError)
+    end
+
+    it 'maps 403 to ForbiddenError' do
+      response = Struct.new(:status, :body).new(403, '{}')
+      provider = instance_double(RubyLLM::Provider, parse_error: 'nope')
+
+      expect do
+        described_class.parse_error(provider: provider, response: response)
+      end.to raise_error(RubyLLM::ForbiddenError)
+    end
+
+    it 'maps 529 to OverloadedError' do
+      response = Struct.new(:status, :body).new(529, '{}')
+      provider = instance_double(RubyLLM::Provider, parse_error: 'overloaded')
+
+      expect do
+        described_class.parse_error(provider: provider, response: response)
+      end.to raise_error(RubyLLM::OverloadedError)
+    end
+
+    it 'treats an empty message as neither rate limited nor over the context window' do
+      response = Struct.new(:status, :body).new(429, '{}')
+      provider = instance_double(RubyLLM::Provider, parse_error: nil)
+
+      expect do
+        described_class.parse_error(provider: provider, response: response)
+      end.to raise_error(RubyLLM::RateLimitError)
+    end
+
+    it 'works without a provider to parse the body' do
+      response = Struct.new(:status, :body).new(500, '{}')
+
+      expect do
+        described_class.parse_error(provider: nil, response: response)
+      end.to raise_error(RubyLLM::ServerError)
+    end
+  end
+
+  describe '#call with a hash-like response' do
+    it 'reads a stored streaming error out of a hash-like response' do
+      stored = Struct.new(:status, :body).new(403, '{"error":{"message":"denied"}}')
+      response = { streaming_error_response: stored }
+      response.define_singleton_method(:on_complete) do |&block|
+        block.call(self)
+        self
+      end
+      app = ->(_env) { response }
+      provider = instance_double(RubyLLM::Provider, parse_error: 'denied')
+
+      middleware = described_class.new(app, provider: provider)
+
+      expect { middleware.call({}) }.to raise_error(RubyLLM::ForbiddenError, 'denied')
+    end
   end
 end

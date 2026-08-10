@@ -204,4 +204,141 @@ RSpec.describe RubyLLM::Tool do
       )
     end
   end
+
+  describe '.split_result' do
+    it 'stringifies a result that is neither text nor structured data' do
+      expect(described_class.split_result(42)).to eq(['42', []])
+    end
+
+    it 'serializes structured results as JSON' do
+      expect(described_class.split_result({ ok: true })).to eq(['{"ok":true}', []])
+      expect(described_class.split_result([1, 2])).to eq(['[1,2]', []])
+    end
+
+    it 'splits an attachment out of a mixed result' do
+      attachment = RubyLLM::Attachment.new(StringIO.new('bytes'), filename: 'a.txt')
+
+      expect(described_class.split_result(['here it is', attachment])).to eq(['here it is', [attachment]])
+    end
+
+    it 'returns a lone attachment with empty text' do
+      attachment = RubyLLM::Attachment.new(StringIO.new('bytes'), filename: 'a.txt')
+
+      expect(described_class.split_result(attachment)).to eq(['', [attachment]])
+    end
+
+    it 'rejects a mixed result carrying anything but text and attachments' do
+      attachment = RubyLLM::Attachment.new(StringIO.new('bytes'), filename: 'a.txt')
+
+      expect { described_class.split_result([attachment, 42]) }.to raise_error(
+        ArgumentError, /can only contain Strings and RubyLLM::Attachments/
+      )
+    end
+  end
+
+  describe '#execute' do
+    it 'tells subclasses to implement it' do
+      stub_const('AbstractTool', Class.new(described_class))
+
+      expect { AbstractTool.new.execute }.to raise_error(NotImplementedError, /must implement #execute/)
+    end
+  end
+
+  describe '#normalize_args' do
+    let(:tool) do
+      stub_const('NormalizingTool', Class.new(described_class) do
+        def execute(**) = 'ok'
+      end)
+      NormalizingTool.new
+    end
+
+    it 'treats missing arguments as none' do
+      expect(tool.send(:normalize_args, nil)).to eq({})
+    end
+
+    it 'symbolizes string keys' do
+      expect(tool.send(:normalize_args, { 'city' => 'Rome' })).to eq(city: 'Rome')
+    end
+
+    it 'discards arguments that are not a hash' do
+      expect(tool.send(:normalize_args, 'Rome')).to eq({})
+    end
+  end
+
+  describe RubyLLM::Tool::SchemaDefinition do
+    describe '.from_parameters' do
+      it 'returns nothing without parameters' do
+        expect(described_class.from_parameters(nil)).to be_nil
+        expect(described_class.from_parameters({})).to be_nil
+      end
+
+      it 'gives array parameters a default item type' do
+        parameters = { tags: RubyLLM::Parameter.new(:tags, type: 'array') }
+
+        expect(described_class.from_parameters(parameters).json_schema['properties']['tags']).to eq(
+          'type' => 'array', 'items' => { 'type' => 'string' }
+        )
+      end
+    end
+
+    describe '.map_type' do
+      {
+        'integer' => 'integer',
+        'int' => 'integer',
+        'number' => 'number',
+        'float' => 'number',
+        'double' => 'number',
+        'boolean' => 'boolean',
+        'array' => 'array',
+        'object' => 'object',
+        'anything else' => 'string'
+      }.each do |declared, expected|
+        it "maps #{declared} to #{expected}" do
+          expect(described_class.map_type(declared)).to eq(expected)
+        end
+      end
+    end
+
+    describe '#json_schema' do
+      it 'returns nothing when neither a schema nor a block was given' do
+        expect(described_class.new.json_schema).to be_nil
+      end
+
+      it 'unwraps a schema object that knows how to describe itself' do
+        schema = Class.new do
+          def to_json_schema = { schema: { type: 'object', properties: { a: { type: 'string' } } } }
+        end.new
+
+        expect(described_class.new(schema: schema).json_schema).to eq(
+          'type' => 'object', 'properties' => { 'a' => { 'type' => 'string' } }
+        )
+      end
+
+      it 'instantiates a schema class' do
+        schema_class = Class.new do
+          def to_json_schema = { 'schema' => { 'type' => 'object' } }
+        end
+
+        expect(described_class.new(schema: schema_class).json_schema).to eq('type' => 'object')
+      end
+
+      it 'returns nothing for a schema it cannot read' do
+        expect(described_class.new(schema: 42).json_schema).to be_nil
+      end
+
+      it 'builds from a block' do
+        definition = described_class.new(block: proc { string :city })
+
+        expect(definition.json_schema['properties']).to have_key('city')
+      end
+    end
+
+    describe '#present?' do
+      it 'is true only with a schema or a block' do
+        expect(described_class.new).not_to be_present
+        expect(described_class.new(schema: { type: 'object' })).to be_present
+        expect(described_class.new(block: proc {})).to be_present
+      end
+    end
+  end
 end

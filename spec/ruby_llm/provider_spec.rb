@@ -390,4 +390,110 @@ RSpec.describe RubyLLM::Provider do
       end
     end
   end
+
+  describe 'base implementations' do
+    let(:bare_provider) do
+      Class.new(described_class) do
+        def self.slug = 'bare'
+        def self.configured?(_config) = true
+
+        def api_base = 'https://bare.example.test'
+      end.new(RubyLLM::Configuration.new)
+    end
+
+    it 'requires subclasses to name an API base' do
+      expect { Class.new(described_class).allocate.api_base }.to raise_error(NotImplementedError)
+    end
+
+    it 'sends no headers by default' do
+      expect(bare_provider.headers).to eq({})
+    end
+
+    it 'reports no capabilities module and no configuration requirements' do
+      expect(bare_provider.capabilities).to be_nil
+      expect(bare_provider.configuration_requirements).to eq([])
+      expect(described_class.configuration_options).to eq([])
+    end
+
+    it 'is remote and does not assume models exist' do
+      expect(bare_provider).not_to be_local
+      expect(bare_provider).not_to be_assume_models_exist
+      expect(bare_provider).to be_configured
+    end
+
+    it 'names itself from the class' do
+      expect(RubyLLM::Providers::OpenAI.new(config_for(:openai)).name).to eq('OpenAI')
+      expect(RubyLLM::Providers::OpenAI.new(config_for(:openai)).slug).to eq('openai')
+    end
+  end
+
+  describe 'providers without file support' do
+    let(:provider) { RubyLLM::Providers::DeepSeek.new(config_for(:deepseek)) }
+
+    it 'refuses every file operation' do
+      expect { provider.upload_file('file.txt') }.to raise_error(RubyLLM::Error, /doesn't support file uploads/)
+      expect { provider.find_file('id') }.to raise_error(RubyLLM::Error, /doesn't support file uploads/)
+      expect { provider.download_file('id') }.to raise_error(RubyLLM::Error, /doesn't support file uploads/)
+      expect { provider.list_file_uris('uri') }.to raise_error(RubyLLM::Error, /doesn't support file uploads/)
+    end
+  end
+
+  describe '#parse_error body shapes' do
+    let(:provider) { RubyLLM::Providers::OpenAI.new(config_for(:openai)) }
+
+    def response_for(body)
+      Struct.new(:body).new(body)
+    end
+
+    it 'is nil for a body with nothing in it' do
+      expect(provider.parse_error(response_for(nil))).to be_nil
+      expect(provider.parse_error(response_for(''))).to be_nil
+    end
+
+    it 'reads a string error field' do
+      expect(provider.parse_error(response_for({ 'error' => 'flat error' }))).to eq('flat error')
+    end
+
+    it 'reads the first string among the usual message fields' do
+      expect(provider.parse_error(response_for({ 'error' => { 'message' => 'nested' } }))).to eq('nested')
+      expect(provider.parse_error(response_for({ 'message' => 'top level' }))).to eq('top level')
+      expect(provider.parse_error(response_for({ 'detail' => 'detail field' }))).to eq('detail field')
+    end
+
+    it 'joins a list of errors' do
+      body = [{ 'error' => 'first' }, { 'error' => { 'message' => 'second' } }]
+
+      expect(provider.parse_error(response_for(body))).to eq('first. second')
+    end
+
+    it 'passes a body it cannot interpret through' do
+      expect(provider.parse_error(response_for(42))).to eq(42)
+    end
+
+    it 'parses a JSON string body' do
+      expect(provider.parse_error(response_for('{"error":{"message":"parsed"}}'))).to eq('parsed')
+    end
+
+    it 'keeps an unparseable string body as text' do
+      expect(provider.parse_error(response_for('plain text failure'))).to eq('plain text failure')
+    end
+  end
+
+  describe 'provider registry partitions' do
+    it 'splits providers into local and remote' do
+      expect(described_class.local_providers.keys).to contain_exactly(:ollama, :gpustack)
+      expect(described_class.remote_providers.keys).not_to include(:ollama, :gpustack)
+      expect(described_class.local_providers.keys + described_class.remote_providers.keys).to match_array(
+        described_class.providers.keys
+      )
+    end
+
+    it 'lists only providers the configuration can reach' do
+      config = config_for(:openai)
+
+      expect(described_class.configured_providers(config)).to include(RubyLLM::Providers::OpenAI)
+      expect(described_class.configured_remote_providers(config)).to include(RubyLLM::Providers::OpenAI)
+      expect(described_class.configured_remote_providers(config)).not_to include(RubyLLM::Providers::Ollama)
+    end
+  end
 end

@@ -209,6 +209,74 @@ RSpec.describe RubyLLM::UploadedFile::Protocol do
         uri: 'https://generativelanguage.googleapis.com/v1beta/files/abc'
       )
     end
+
+    it 'prefixes a bare file id with the collection name' do
+      expect(protocol.send(:file_info_url, 'abc')).to eq('files/abc')
+      expect(protocol.send(:file_info_url, 'files/abc')).to eq('files/abc')
+    end
+
+    it 'points uploads at the resumable upload host' do
+      expect(protocol.send(:gemini_upload_url)).to eq(
+        'https://generativelanguage.googleapis.com/upload/v1beta/files'
+      )
+    end
+
+    it 'uploads in two steps and returns the stored file' do
+      connection = instance_double(Faraday::Connection)
+      allow(RubyLLM::Connection).to receive(:basic).and_return(connection)
+      allow(connection).to receive(:url_prefix=)
+      allow(connection).to receive(:post) do |url, &block|
+        request = Struct.new(:headers, :body, keyword_init: false).new({}, nil)
+        block.call(request)
+        if url == protocol.send(:gemini_upload_url)
+          Struct.new(:headers, :body).new({ 'x-goog-upload-url' => 'https://upload.example/session' }, {})
+        else
+          Struct.new(:headers, :body).new({}, { 'file' => { 'name' => 'files/abc', 'displayName' => 'ruby.txt' } })
+        end
+      end
+
+      file = protocol.upload(fixture_path)
+
+      expect(file.id).to eq('files/abc')
+      expect(file.filename).to eq('ruby.txt')
+    end
+
+    it 'raises when Gemini does not hand back an upload URL' do
+      connection = instance_double(Faraday::Connection)
+      allow(RubyLLM::Connection).to receive(:basic).and_return(connection)
+      allow(connection).to receive(:url_prefix=)
+      allow(connection).to receive(:post) do |_url, &block|
+        block.call(Struct.new(:headers, :body).new({}, nil))
+        Struct.new(:headers, :body).new({}, {})
+      end
+
+      expect { protocol.upload(fixture_path) }.to raise_error(RubyLLM::Error, 'gemini did not return an upload URL')
+    end
+
+    it 'refuses to download a file with no download URI' do
+      allow(protocol).to receive(:find).and_return(
+        RubyLLM::UploadedFile.new(id: 'files/abc', provider: 'gemini', metadata: {})
+      )
+
+      expect { protocol.download('files/abc') }.to raise_error(RubyLLM::Error, 'gemini file has no download URI')
+    end
+
+    it 'downloads the bytes from the URI the file carries' do
+      allow(protocol).to receive(:find).and_return(
+        RubyLLM::UploadedFile.new(
+          id: 'files/abc', provider: 'gemini', metadata: { 'downloadUri' => 'https://files.example/abc' }
+        )
+      )
+      connection = instance_double(Faraday::Connection)
+      allow(RubyLLM::Connection).to receive(:basic).and_return(connection)
+      allow(connection).to receive(:url_prefix=)
+      allow(connection).to receive(:get) do |_url, &block|
+        block.call(Struct.new(:headers).new({}))
+        Struct.new(:body).new('bytes')
+      end
+
+      expect(protocol.download('files/abc')).to eq('bytes')
+    end
   end
 
   describe RubyLLM::Providers::Bedrock::Files do
@@ -304,6 +372,105 @@ RSpec.describe RubyLLM::UploadedFile::Protocol do
       allow(protocol).to receive(:require).with('google/cloud/storage').and_raise(LoadError)
 
       expect { protocol.send(:storage) }.to raise_error(RubyLLM::Error, /google-cloud-storage/)
+    end
+  end
+
+  describe 'the shared protocol' do
+    let(:provider) do
+      RubyLLM::Providers::OpenAI.new(RubyLLM::Configuration.new.tap { |config| config.openai_api_key = 'test' })
+    end
+    let(:protocol) { RubyLLM::Protocols::OpenAI::Files.new(provider) }
+    let(:connection) { instance_double(RubyLLM::Connection) }
+
+    before { protocol.instance_variable_set(:@connection, connection) }
+
+    it 'finds a file by id' do
+      allow(connection).to receive(:get).with('files/file_123').and_return(
+        Struct.new(:body).new({ 'id' => 'file_123', 'filename' => 'batch.jsonl' })
+      )
+
+      expect(protocol.find('file_123').filename).to eq('batch.jsonl')
+    end
+
+    it 'downloads file content' do
+      allow(connection).to receive(:get) do |url, &block|
+        request = Struct.new(:headers).new({})
+        block&.call(request)
+        expect(url).to eq('files/file_123/content')
+        Struct.new(:body).new('contents')
+      end
+
+      expect(protocol.download('file_123')).to eq('contents')
+    end
+
+    it 'refuses to list files for providers without listing' do
+      expect { protocol.list_uris('gs://bucket') }.to raise_error(
+        RubyLLM::Error, "openai doesn't support file listing"
+      )
+    end
+
+    it 'rewraps an attachment when a new filename is given' do
+      attachment = RubyLLM::Attachment.new(fixture_path)
+
+      expect(protocol.send(:file_attachment, attachment)).to equal(attachment)
+      expect(protocol.send(:file_attachment, attachment, filename: 'renamed.txt').filename).to eq('renamed.txt')
+    end
+
+    it 'reads a timestamp in every shape providers send' do
+      expect(protocol.send(:timestamp, nil)).to be_nil
+      expect(protocol.send(:timestamp, 0)).to eq(Time.at(0))
+      expect(protocol.send(:timestamp, '2025-01-01T00:00:00Z')).to eq(Time.utc(2025, 1, 1))
+    end
+
+    it 'sizes a file from disk or from its content' do
+      expect(protocol.send(:file_size, RubyLLM::Attachment.new(fixture_path))).to eq(File.size(fixture_path))
+      expect(protocol.send(:file_size, RubyLLM::Attachment.new(StringIO.new('12345'), filename: 'a.txt'))).to eq(5)
+    end
+
+    describe '#file_part_source' do
+      it 'passes a path through as a string' do
+        expect(protocol.send(:file_part_source, RubyLLM::Attachment.new(fixture_path))).to eq(fixture_path)
+      end
+
+      it 'rewinds an IO source' do
+        io = StringIO.new('bytes')
+        io.read
+
+        expect(protocol.send(:file_part_source, RubyLLM::Attachment.new(io, filename: 'a.txt')).read).to eq('bytes')
+      end
+
+      it 'wraps loaded content in an IO' do
+        attachment = RubyLLM::Attachment.new(
+          RubyLLM::UploadedFile.new(id: 'file_1', filename: 'a.txt', provider: 'openai')
+        )
+        allow(attachment).to receive(:content).and_return('bytes')
+
+        expect(protocol.send(:file_part_source, attachment).read).to eq('bytes')
+      end
+    end
+
+    describe '#with_file_body' do
+      it 'streams a path from disk' do
+        body = protocol.send(:with_file_body, RubyLLM::Attachment.new(fixture_path), &:read)
+
+        expect(body).to include('Ruby')
+      end
+
+      it 'rewinds an IO before yielding it' do
+        io = StringIO.new('bytes')
+        io.read
+
+        expect(protocol.send(:with_file_body, RubyLLM::Attachment.new(io, filename: 'a.txt'), &:read)).to eq('bytes')
+      end
+
+      it 'wraps loaded content in an IO' do
+        attachment = RubyLLM::Attachment.new(
+          RubyLLM::UploadedFile.new(id: 'file_1', filename: 'a.txt', provider: 'openai')
+        )
+        allow(attachment).to receive_messages(content: 'bytes', io_like?: false)
+
+        expect(protocol.send(:with_file_body, attachment, &:read)).to eq('bytes')
+      end
     end
   end
 end

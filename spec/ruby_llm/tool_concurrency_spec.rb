@@ -114,4 +114,30 @@ RSpec.describe RubyLLM::ToolConcurrency do
 
     expect(Array.new(2) { observed_contexts.pop }).to all(eq(workflow_context))
   end
+
+  it 'does nothing for an unknown concurrency mode' do
+    expect(described_class.run(:processes, tool_calls) { |tool_call| tool_call }).to be_nil
+  end
+
+  it 'runs without a Rails executor' do
+    stub_rails_executor(nil)
+
+    expect(described_class.run(:threads, tool_calls) { |tool_call| tool_call }).to eq(
+      [%i[first first], %i[second second]]
+    )
+  end
+
+  it 'raises the first error a threaded tool call produced' do
+    expect do
+      described_class.run(:threads, tool_calls) { |_tool_call| raise ArgumentError, 'tool blew up' }
+    end.to raise_error(ArgumentError, 'tool blew up')
+  end
+
+  it 'explains how to install async when the gem is missing' do
+    allow(described_class).to receive(:require).with('async').and_raise(LoadError)
+
+    expect { described_class.run(:fibers, tool_calls) { |tool_call| tool_call } }.to raise_error(
+      LoadError, /The 'async' gem is required/
+    )
+  end
 end

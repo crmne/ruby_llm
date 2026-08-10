@@ -154,4 +154,67 @@ RSpec.describe RubyLLM::ProviderScaffold do
     )
     expect(status.success?).to be(true), output
   end
+
+  describe 'option handling' do
+    it 'rejects a mode it does not support' do
+      expect { described_class.new('Acme', mode: :plugin, destination: dir) }.to raise_error(
+        ArgumentError, /unsupported mode: :plugin\. Expected one of: core, gem/
+      )
+    end
+
+    it 'rejects a dialect it does not support' do
+      expect { described_class.new('Acme', mode: :gem, dialect: :grpc, destination: dir) }.to raise_error(
+        ArgumentError, /unsupported dialect: :grpc/
+      )
+    end
+
+    it 'keeps a name that is already a class name' do
+      expect(described_class.new('OpenAI', mode: :gem, destination: dir).class_name).to eq('OpenAI')
+    end
+
+    it 'fills in the defaults the CLI does not pass' do
+      scaffold = described_class.new('Acme', mode: :gem, destination: dir)
+
+      expect(scaffold.api_base).to eq('https://api.example.com/v1')
+      expect(scaffold.model).to eq('example-chat-model')
+      expect(scaffold.api_key_env).to eq('ACME_API_KEY')
+      expect(scaffold.api_base_env).to eq('ACME_API_BASE')
+      expect(scaffold.gem_name).to eq('ruby_llm-acme')
+      expect(scaffold.github_owner).to eq('your-github-org')
+      expect(scaffold.models_dev_provider).to be_nil
+    end
+
+    it 'treats a blank models.dev provider as none' do
+      expect(described_class.new('Acme', mode: :core, models_dev_provider: '  ', destination: dir)
+        .models_dev_provider).to be_nil
+    end
+
+    it 'reads every spelling of a truthy dynamic-models flag' do
+      %w[true 1 yes on].each do |value|
+        expect(described_class.new('Acme', mode: :gem, dynamic_models: value, destination: dir)).to be_dynamic_models
+      end
+
+      expect(described_class.new('Acme', mode: :gem, dynamic_models: 'no', destination: dir)).not_to be_dynamic_models
+    end
+  end
+
+  describe 'existing files' do
+    it 'skips them unless asked to overwrite' do
+      described_class.new('Acme', mode: :gem, destination: dir).generate!
+
+      result = described_class.new('Acme', mode: :gem, destination: dir).generate!
+
+      expect(result.written).to be_empty
+      expect(result.skipped).not_to be_empty
+    end
+
+    it 'overwrites them with force' do
+      described_class.new('Acme', mode: :gem, destination: dir).generate!
+
+      result = described_class.new('Acme', mode: :gem, destination: dir, force: true).generate!
+
+      expect(result.skipped).to be_empty
+      expect(result.written).not_to be_empty
+    end
+  end
 end

@@ -56,4 +56,49 @@ RSpec.describe RubyLLM::ActiveRecord::Model do # rubocop:disable RSpec/SpecFileP
     expect(RubyLLM::ActiveRecord.const_defined?(:Record, false)).to be(false)
     expect(record_class.superclass).to eq(ActiveRecord::Base)
   end
+
+  it 'reports nothing when the table is missing' do
+    allow(described_class).to receive(:table_exists?).and_return(false)
+
+    expect(described_class.read).to eq([])
+  end
+
+  it 'falls back to an empty registry when reading blows up' do
+    allow(described_class).to receive(:all).and_raise(ActiveRecord::StatementInvalid, 'no such column')
+    allow(RubyLLM.logger).to receive(:debug)
+
+    expect(described_class.read).to eq([])
+  end
+
+  it 'describes itself by table name' do
+    expect(described_class.description).to eq('database:ruby_llm_models')
+  end
+
+  it 'refreshes through the public registry' do
+    allow(RubyLLM.models).to receive(:refresh!)
+
+    described_class.refresh!
+
+    expect(RubyLLM.models).to have_received(:refresh!)
+  end
+
+  it 'builds an unsaved record from a public model' do
+    record = described_class.from_llm(model_info)
+
+    expect(record).not_to be_persisted
+    expect(record.model_id).to eq('test-model')
+  end
+
+  it 'defaults the JSON columns when the row leaves them null' do
+    record = described_class.new(
+      model_id: 'sparse-model', name: 'Sparse', provider: 'openai',
+      modalities: nil, pricing: nil, metadata: nil
+    )
+
+    model = record.to_llm
+
+    expect(model.modalities.input).to eq([])
+    expect(model.pricing.to_h).to eq({})
+    expect(model.metadata).to eq({})
+  end
 end

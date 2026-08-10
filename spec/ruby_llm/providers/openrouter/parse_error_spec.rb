@@ -49,5 +49,35 @@ RSpec.describe RubyLLM::Providers::OpenRouter do # rubocop:disable RSpec/SpecFil
 
       expect(provider.parse_error(response)).to eq('Provider returned error')
     end
+
+    it 'joins a list of errors' do
+      response = instance_double(
+        Faraday::Response,
+        body: [
+          { 'error' => { 'message' => 'first' } },
+          { 'error' => { 'message' => 'second' } }
+        ]
+      )
+
+      expect(provider.parse_error(response)).to eq('first. second')
+    end
+
+    it 'passes a body it cannot interpret through' do
+      expect(provider.parse_error(instance_double(Faraday::Response, body: 42))).to eq(42)
+    end
+
+    it 'is nil for an empty body' do
+      expect(provider.parse_error(instance_double(Faraday::Response, body: nil))).to be_nil
+      expect(provider.parse_error(instance_double(Faraday::Response, body: ''))).to be_nil
+    end
+
+    it 'ignores a raw payload that is not a JSON object' do
+      response = instance_double(
+        Faraday::Response,
+        body: { 'error' => { 'message' => 'Provider returned error', 'metadata' => { 'raw' => 'not json' } } }
+      )
+
+      expect(provider.parse_error(response)).to eq('Provider returned error')
+    end
   end
 end

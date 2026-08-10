@@ -124,4 +124,175 @@ RSpec.describe RubyLLM::StreamAccumulator do
       expect(message.finish_reason).to eq('tool_use')
     end
   end
+
+  describe 'think tags' do
+    def stream(*texts)
+      accumulator = described_class.new
+      texts.each { |text| accumulator.add(RubyLLM::Chunk.new(role: :assistant, content: text)) }
+      accumulator.to_message(nil)
+    end
+
+    it 'splits inline think tags into thinking and content' do
+      message = stream('<think>reasoning</think>answer')
+
+      expect(message.content).to eq('answer')
+      expect(message.thinking.text).to eq('reasoning')
+    end
+
+    it 'carries an unterminated think block across chunks' do
+      message = stream('<think>first ', 'second</think>done')
+
+      expect(message.content).to eq('done')
+      expect(message.thinking.text).to eq('first second')
+    end
+
+    it 'holds back a tag that straddles a chunk boundary' do
+      message = stream('before <thi', 'nk>hidden</think> after')
+
+      expect(message.content).to eq('before  after')
+      expect(message.thinking.text).to eq('hidden')
+    end
+
+    it 'holds back a closing tag that straddles a chunk boundary' do
+      message = stream('<think>hidden</thi', 'nk>visible')
+
+      expect(message.content).to eq('visible')
+      expect(message.thinking.text).to eq('hidden')
+    end
+
+    it 'leaves plain text untouched' do
+      message = stream('just text')
+
+      expect(message.content).to eq('just text')
+      expect(message.thinking).to be_nil
+    end
+  end
+
+  describe 'thinking deltas' do
+    it 'keeps the first signature and joins the text' do
+      accumulator = described_class.new
+      accumulator.add(
+        RubyLLM::Chunk.new(role: :assistant, content: nil, thinking: RubyLLM::Thinking.new(text: 'one '))
+      )
+      accumulator.add(
+        RubyLLM::Chunk.new(role: :assistant, content: nil, thinking: RubyLLM::Thinking.new(signature: 'sig-1'))
+      )
+      accumulator.add(
+        RubyLLM::Chunk.new(role: :assistant, content: nil, thinking: RubyLLM::Thinking.new(text: 'two',
+                                                                                           signature: 'sig-2'))
+      )
+
+      message = accumulator.to_message(nil)
+
+      expect(message.thinking.text).to eq('one two')
+      expect(message.thinking.signature).to eq('sig-1')
+    end
+  end
+
+  describe 'tool call fragments' do
+    it 'gives an id-less tool call a generated id' do
+      accumulator = described_class.new
+      accumulator.add(
+        RubyLLM::Chunk.new(
+          role: :assistant, content: nil,
+          tool_calls: { 0 => RubyLLM::ToolCall.new(id: '', name: 'weather', arguments: '') }
+        )
+      )
+
+      expect(accumulator.tool_calls.values.first.id).to match(/\A[0-9a-f-]{36}\z/)
+    end
+
+    it 'ignores a fragment for a tool call it never saw start' do
+      accumulator = described_class.new
+      accumulator.add(
+        RubyLLM::Chunk.new(
+          role: :assistant, content: nil,
+          tool_calls: { 3 => RubyLLM::ToolCall.new(id: nil, name: nil, arguments: '{}') }
+        )
+      )
+
+      expect(accumulator.tool_calls).to be_empty
+    end
+
+    it 'treats a nil argument fragment as empty' do
+      accumulator = described_class.new
+      accumulator.add(
+        RubyLLM::Chunk.new(
+          role: :assistant, content: nil,
+          tool_calls: { 0 => RubyLLM::ToolCall.new(id: 'call_1', name: 'weather', arguments: +'{"a":') }
+        )
+      )
+      accumulator.add(
+        RubyLLM::Chunk.new(
+          role: :assistant, content: nil,
+          tool_calls: { 0 => RubyLLM::ToolCall.new(id: nil, name: nil, arguments: nil) }
+        )
+      )
+      accumulator.add(
+        RubyLLM::Chunk.new(
+          role: :assistant, content: nil,
+          tool_calls: { 0 => RubyLLM::ToolCall.new(id: nil, name: nil, arguments: '1}') }
+        )
+      )
+
+      expect(accumulator.to_message(nil).tool_calls['call_1'].arguments).to eq('a' => 1)
+    end
+
+    it 'adopts a thought signature that arrives with a later fragment' do
+      accumulator = described_class.new
+      accumulator.add(
+        RubyLLM::Chunk.new(
+          role: :assistant, content: nil,
+          tool_calls: { 0 => RubyLLM::ToolCall.new(id: 'call_1', name: 'weather', arguments: +'{}') }
+        )
+      )
+      accumulator.add(
+        RubyLLM::Chunk.new(
+          role: :assistant, content: nil,
+          tool_calls: { 0 => RubyLLM::ToolCall.new(id: nil, name: nil, arguments: '', thought_signature: 'sig') }
+        )
+      )
+
+      expect(accumulator.to_message(nil).tool_calls['call_1'].thought_signature).to eq('sig')
+    end
+
+    it 'keeps hash arguments as they arrived' do
+      accumulator = described_class.new
+      accumulator.add(
+        RubyLLM::Chunk.new(
+          role: :assistant, content: nil,
+          tool_calls: { 0 => RubyLLM::ToolCall.new(id: 'call_1', name: 'weather', arguments: { 'city' => 'Rome' }) }
+        )
+      )
+
+      expect(accumulator.to_message(nil).tool_calls['call_1'].arguments).to eq('city' => 'Rome')
+    end
+  end
+
+  describe 'debug logging' do
+    it 'logs each chunk when stream debugging is on' do
+      allow(RubyLLM.config).to receive(:log_stream_debug).and_return(true)
+      allow(RubyLLM.logger).to receive(:debug)
+      accumulator = described_class.new
+
+      accumulator.add(
+        RubyLLM::Chunk.new(
+          role: :assistant, content: nil,
+          tool_calls: { 0 => RubyLLM::ToolCall.new(id: 'call_1', name: 'weather', arguments: '{}') }
+        )
+      )
+
+      expect(RubyLLM.logger).to have_received(:debug).at_least(:once)
+    end
+  end
+
+  describe 'citation spans' do
+    it 'leaves a citation alone when the span falls outside the content' do
+      accumulator = described_class.new
+      citation = RubyLLM::Citation.new(url: 'https://example.test', start_index: 100, end_index: 200)
+      accumulator.add(RubyLLM::Chunk.new(role: :assistant, content: 'short', citations: [citation]))
+
+      expect(accumulator.to_message(nil).citations.first.text).to be_nil
+    end
+  end
 end

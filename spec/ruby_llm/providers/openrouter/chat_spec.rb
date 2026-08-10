@@ -231,4 +231,114 @@ RSpec.describe RubyLLM::Providers::OpenRouter::Chat do
       end.to raise_error(ArgumentError, /OpenRouter prompt caching accepts :ttl/)
     end
   end
+
+  describe '#build_reasoning' do
+    it 'is nil when thinking is off' do
+      expect(provider.send(:build_reasoning, nil)).to be_nil
+      expect(provider.send(:build_reasoning, RubyLLM::Thinking::Config.new)).to be_nil
+    end
+
+    it 'sends the effort' do
+      expect(provider.send(:build_reasoning, RubyLLM::Thinking::Config.new(effort: :high))).to eq(effort: 'high')
+    end
+
+    it 'sends the budget as max_tokens' do
+      expect(provider.send(:build_reasoning, RubyLLM::Thinking::Config.new(budget: 2048))).to eq(max_tokens: 2048)
+    end
+
+    it 'falls back to just enabling reasoning' do
+      config = Struct.new(:enabled?).new(true)
+
+      expect(provider.send(:build_reasoning, config)).to eq(enabled: true)
+    end
+  end
+
+  describe '#format_thinking' do
+    it 'is empty for a user message or one without thinking' do
+      expect(provider.send(:format_thinking, RubyLLM::Message.new(role: :user, content: 'hi'))).to eq({})
+      expect(provider.send(:format_thinking, RubyLLM::Message.new(role: :assistant, content: 'hi'))).to eq({})
+    end
+
+    it 'sends reasoning text with its signature' do
+      message = RubyLLM::Message.new(
+        role: :assistant, content: 'done', thinking: RubyLLM::Thinking.new(text: 'why', signature: 'sig')
+      )
+
+      expect(provider.send(:format_thinking, message)).to eq(
+        reasoning_details: [{ type: 'reasoning.text', text: 'why', signature: 'sig' }]
+      )
+    end
+
+    it 'sends a signature-only block as encrypted reasoning' do
+      message = RubyLLM::Message.new(
+        role: :assistant, content: 'done', thinking: RubyLLM::Thinking.new(signature: 'sig')
+      )
+
+      expect(provider.send(:format_thinking, message)).to eq(
+        reasoning_details: [{ type: 'reasoning.encrypted', data: 'sig' }]
+      )
+    end
+  end
+
+  describe 'reasoning details on the way back' do
+    it 'joins reasoning text and summary details' do
+      message_data = {
+        'reasoning_details' => [
+          { 'type' => 'reasoning.text', 'text' => 'first ' },
+          { 'type' => 'reasoning.summary', 'summary' => 'second' },
+          { 'type' => 'reasoning.encrypted', 'data' => 'blob' }
+        ]
+      }
+
+      expect(provider.send(:extract_thinking_text, message_data)).to eq('first second')
+    end
+
+    it 'is nil when the response carries no reasoning details' do
+      expect(provider.send(:extract_thinking_text, {})).to be_nil
+      expect(provider.send(:extract_thinking_signature, {})).to be_nil
+    end
+
+    it 'is nil when the details carry no text' do
+      expect(provider.send(:extract_thinking_text, { 'reasoning_details' => [] })).to be_nil
+    end
+
+    it 'prefers an explicit signature over encrypted data' do
+      message_data = {
+        'reasoning_details' => [
+          { 'type' => 'reasoning.encrypted', 'data' => 'blob' },
+          { 'type' => 'reasoning.text', 'signature' => 'sig' }
+        ]
+      }
+
+      expect(provider.send(:extract_thinking_signature, message_data)).to eq('sig')
+    end
+
+    it 'falls back to encrypted data' do
+      message_data = { 'reasoning_details' => [{ 'type' => 'reasoning.encrypted', 'data' => 'blob' }] }
+
+      expect(provider.send(:extract_thinking_signature, message_data)).to eq('blob')
+    end
+  end
+
+  describe '#inject_cache_control' do
+    it 'wraps plain text content in a cacheable block' do
+      expect(provider.send(:inject_cache_control, 'hello')).to eq(
+        [{ type: 'text', text: 'hello', cache_control: { type: 'ephemeral' } }]
+      )
+    end
+
+    it 'leaves empty content alone' do
+      expect(provider.send(:inject_cache_control, [])).to eq([])
+    end
+
+    it 'leaves a block that already carries cache_control alone' do
+      blocks = [{ type: 'text', text: 'hello', cache_control: { type: 'ephemeral' } }]
+
+      expect(provider.send(:inject_cache_control, blocks)).to eq(blocks)
+    end
+
+    it 'leaves a trailing block it cannot annotate alone' do
+      expect(provider.send(:inject_cache_control, ['plain'])).to eq(['plain'])
+    end
+  end
 end

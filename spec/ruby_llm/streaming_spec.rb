@@ -123,4 +123,67 @@ RSpec.describe RubyLLM::Streaming do
       end
     end
   end
+
+  it 'logs each chunk when stream debugging is on' do
+    allow(RubyLLM.config).to receive(:log_stream_debug).and_return(true)
+    allow(RubyLLM.logger).to receive(:debug)
+    handler = test_obj.send(:handle_stream) { |_chunk| nil }
+
+    handler.call("data: {\"x\":1}\n\n", 0, env)
+
+    expect(RubyLLM.logger).to have_received(:debug).at_least(:once)
+  end
+
+  it 'raises the error an SSE error event carries' do
+    handler = test_obj.send(:handle_stream) { |_chunk| nil }
+
+    expect do
+      handler.call("event: error\ndata: {\"error\":{\"message\":\"Rate limit exceeded\"}}\n\n", 0, env)
+    end.to raise_error(RubyLLM::ServerError, /Rate limit exceeded/)
+  end
+
+  it 'ignores an error event that is not valid JSON' do
+    allow(RubyLLM.logger).to receive(:debug)
+    handler = test_obj.send(:handle_stream) { |_chunk| nil }
+
+    expect { handler.call("event: error\ndata: broken\n\n", 0, env) }.not_to raise_error
+    expect(RubyLLM.logger).to have_received(:debug)
+  end
+
+  it 'ignores a data chunk that is not valid JSON' do
+    allow(RubyLLM.logger).to receive(:debug)
+    handler = test_obj.send(:handle_stream) { |_chunk| nil }
+
+    expect { handler.call("data: {broken\n\n", 0, env) }.not_to raise_error
+    expect(RubyLLM.logger).to have_received(:debug)
+  end
+
+  it 'stops at the DONE sentinel without yielding' do
+    yielded = []
+    handler = test_obj.send(:handle_stream) { |chunk| yielded << chunk }
+
+    handler.call("data: [DONE]\n\n", 0, env)
+
+    expect(yielded).to eq([])
+  end
+
+  it 'accumulates a failed response body until it parses' do
+    allow(RubyLLM.logger).to receive(:debug)
+    failed_env = Faraday::Env.from(status: 500)
+    handler = test_obj.send(:handle_stream) { |_chunk| nil }
+
+    expect { handler.call('{"error":{"message":', 0, failed_env) }.not_to raise_error
+    expect do
+      handler.call('"Rate limit exceeded"}}', 0, failed_env)
+    end.to raise_error(RubyLLM::ServerError, /Rate limit exceeded/)
+  end
+
+  it 'reports an unknown streaming error when the payload names none' do
+    allow(RubyLLM.logger).to receive(:debug)
+    handler = test_obj.send(:handle_stream) { |_chunk| nil }
+
+    expect do
+      handler.call("data: {\"error\":{}}\n\n", 0, env)
+    end.to raise_error(RubyLLM::Error)
+  end
 end

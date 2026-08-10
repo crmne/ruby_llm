@@ -86,4 +86,81 @@ RSpec.describe RubyLLM::Protocols::Gemini::Media do
       expect(message.attachments).to eq(attachments)
     end
   end
+
+  describe '#build_response_content part shapes' do
+    let(:provider) { RubyLLM::Protocols::Gemini.allocate }
+
+    it 'joins text parts and reports no attachments' do
+      text, attachments = provider.build_response_content([{ 'text' => 'one ' }, { 'text' => 'two' }])
+
+      expect(text).to eq('one two')
+      expect(attachments).to be_empty
+    end
+
+    it 'ignores parts it does not recognize' do
+      expect(provider.build_response_content([{ 'functionCall' => {} }])).to eq([nil, []])
+    end
+
+    it 'builds an attachment from a fileData part' do
+      text, attachments = provider.build_response_content(
+        [{ 'fileData' => { 'fileUri' => 'https://files.example/report', 'mimeType' => 'application/pdf' } }]
+      )
+
+      expect(text).to be_nil
+      expect(attachments.first.filename).to eq('gemini_attachment_1.pdf')
+    end
+
+    it 'prefers the filename the response carries' do
+      _text, attachments = provider.build_response_content(
+        [{ 'fileData' => { 'fileUri' => 'https://files.example/x', 'filename' => 'report.pdf' } }]
+      )
+
+      expect(attachments.first.filename).to eq('report.pdf')
+    end
+
+    it 'skips a fileData part with no URI' do
+      expect(provider.build_response_content([{ 'fileData' => {} }])).to eq([nil, []])
+    end
+
+    it 'skips an inlineData part with no data' do
+      expect(provider.build_response_content([{ 'inlineData' => { 'mimeType' => 'image/png' } }])).to eq([nil, []])
+    end
+  end
+
+  describe '#attachment_filename' do
+    let(:provider) { RubyLLM::Protocols::Gemini.allocate }
+
+    it 'falls back to an extensionless name without a mime type' do
+      expect(provider.attachment_filename(nil, 0)).to eq('gemini_attachment_1')
+    end
+
+    it 'normalizes the extensions Gemini reports' do
+      expect(provider.attachment_filename('image/jpeg', 0)).to eq('gemini_attachment_1.jpg')
+      expect(provider.attachment_filename('text/plain', 1)).to eq('gemini_attachment_2.txt')
+      expect(provider.attachment_filename('image/svg+xml', 2)).to eq('gemini_attachment_3.svg.xml')
+    end
+  end
+
+  describe '.format_content without text' do
+    it 'sends attachments without any text' do
+      attachment = RubyLLM::Attachment.new(StringIO.new('pdf bytes'), filename: 'proposal.pdf')
+
+      parts = described_class.format_content(nil, [attachment])
+
+      expect(parts.length).to eq(1)
+      expect(parts.first).to have_key(:inline_data)
+    end
+  end
+
+  describe '.format_file_data' do
+    it 'falls back to the provider file id when there is no URI' do
+      file = RubyLLM::UploadedFile.new(
+        id: 'file_1', provider: 'gemini', filename: 'clip.mp4', mime_type: 'video/mp4'
+      )
+
+      expect(described_class.format_file_data(RubyLLM::Attachment.new(file))).to eq(
+        file_data: { mime_type: 'video/mp4', file_uri: 'file_1' }
+      )
+    end
+  end
 end

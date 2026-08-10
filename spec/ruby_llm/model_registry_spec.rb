@@ -228,4 +228,118 @@ RSpec.describe RubyLLM::ModelRegistry do
       expect(registry.all.map(&:id)).to eq(['new-model'])
     end
   end
+
+  describe 'RubyLLM::ModelRegistry::FileStore paths and ETags' do
+    it 'requires a path' do
+      expect { RubyLLM::ModelRegistry::FileStore.new('') }.to raise_error(
+        RubyLLM::ModelRegistryError, 'A model registry file path is required'
+      )
+    end
+
+    it 'accepts anything that names a path' do
+      Tempfile.create(['models', '.json']) do |file|
+        expect(RubyLLM::ModelRegistry::FileStore.new(file).path).to eq(file.path)
+      end
+    end
+
+    describe '#etag' do
+      it 'is nil when the registry file does not exist' do
+        Dir.mktmpdir do |dir|
+          expect(RubyLLM::ModelRegistry::FileStore.new(File.join(dir, 'models.json')).etag).to be_nil
+        end
+      end
+
+      it 'is nil when the etag file is empty' do
+        Dir.mktmpdir do |dir|
+          path = File.join(dir, 'models.json')
+          File.write(path, '[]')
+          File.write("#{path}.etag", "\n")
+
+          expect(RubyLLM::ModelRegistry::FileStore.new(path).etag).to be_nil
+        end
+      end
+
+      it 'reports an unreadable etag file' do
+        Dir.mktmpdir do |dir|
+          path = File.join(dir, 'models.json')
+          File.write(path, '[]')
+          allow(File).to receive(:read).with("#{path}.etag").and_raise(Errno::EACCES)
+
+          expect { RubyLLM::ModelRegistry::FileStore.new(path).etag }.to raise_error(
+            RubyLLM::ModelRegistryError, /Could not read the model registry ETag/
+          )
+        end
+      end
+    end
+  end
+
+  describe '.models_from_data validation' do
+    it 'refuses anything but an array' do
+      expect { described_class.models_from_data({}) }.to raise_error(
+        RubyLLM::ModelRegistryError, 'Model registry must be a JSON array'
+      )
+    end
+
+    it 'names the source in the error' do
+      expect { described_class.models_from_data({}, source: '/tmp/models.json') }.to raise_error(
+        RubyLLM::ModelRegistryError, 'Model registry in /tmp/models.json must be a JSON array'
+      )
+    end
+
+    it 'passes Model values through untouched' do
+      model = RubyLLM::Model.new(id: 'a', name: 'A', provider: 'openai')
+
+      expect(described_class.models_from_data([model]).first).to equal(model)
+    end
+  end
+
+  describe '.read' do
+    it 'reports an unreadable registry file' do
+      allow(File).to receive(:read).with('/tmp/models.json').and_raise(Errno::EACCES)
+
+      expect { described_class.read('/tmp/models.json') }.to raise_error(
+        RubyLLM::ModelRegistryError, %r{Could not read the model registry from /tmp/models.json}
+      )
+    end
+  end
+
+  describe 'RubyLLM::ModelRegistry::PublishedSource failures' do
+    it 'raises when the published catalog is empty' do
+      source = RubyLLM::ModelRegistry::PublishedSource.new('https://example.test/models.json')
+      connection = instance_double(Faraday::Connection)
+      allow(RubyLLM::Connection).to receive(:basic).and_return(connection)
+      allow(connection).to receive(:get).and_return(
+        Struct.new(:status, :body, :headers).new(200, [], {})
+      )
+
+      expect { source.fetch }.to raise_error(RubyLLM::ModelRegistryError, 'Published model registry is empty')
+    end
+
+    it 'wraps a transport failure' do
+      source = RubyLLM::ModelRegistry::PublishedSource.new('https://example.test/models.json')
+      connection = instance_double(Faraday::Connection)
+      allow(RubyLLM::Connection).to receive(:basic).and_return(connection)
+      allow(connection).to receive(:get).and_raise(Faraday::ConnectionFailed, 'no route')
+
+      expect { source.fetch }.to raise_error(
+        RubyLLM::ModelRegistryError, %r{Could not refresh the model registry from https://example.test/models.json}
+      )
+    end
+
+    it 'keeps the requested etag when the catalog has not changed' do
+      source = RubyLLM::ModelRegistry::PublishedSource.new('https://example.test/models.json')
+      connection = instance_double(Faraday::Connection)
+      allow(RubyLLM::Connection).to receive(:basic).and_return(connection)
+      allow(connection).to receive(:get) do |_url, &block|
+        request = Struct.new(:headers).new({})
+        block.call(request)
+        Struct.new(:status, :body, :headers).new(304, nil, {})
+      end
+
+      result = source.fetch(etag: 'etag-1')
+
+      expect(result.not_modified).to be(true)
+      expect(result.etag).to eq('etag-1')
+    end
+  end
 end

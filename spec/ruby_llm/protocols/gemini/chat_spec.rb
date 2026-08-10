@@ -546,6 +546,282 @@ RSpec.describe RubyLLM::Protocols::Gemini::Chat do
     end
   end
 
+  describe '#warn_unsupported_citations' do
+    it 'warns when citations are asked of a model that does not support them' do
+      model = instance_double(RubyLLM::Model, id: 'gemini-2.5-flash', supports?: false, metadata: {}, family: nil)
+      allow(RubyLLM.logger).to receive(:warn)
+
+      test_obj.send(
+        :render_payload, [], tools: [], temperature: nil, model: model, citations: true
+      )
+
+      expect(RubyLLM.logger).to have_received(:warn).with(/does not support citations/)
+    end
+  end
+
+  describe '#build_thinking_config' do
+    it 'sends the effort level when one is set' do
+      thinking = RubyLLM::Thinking::Config.new(effort: :high)
+
+      expect(test_obj.send(:build_thinking_config, nil, thinking)).to eq(
+        includeThoughts: true, thinkingLevel: 'high'
+      )
+    end
+
+    it 'sends a numeric budget when one is set' do
+      thinking = RubyLLM::Thinking::Config.new(budget: 1024)
+
+      expect(test_obj.send(:build_thinking_config, nil, thinking)).to eq(
+        includeThoughts: true, thinkingBudget: 1024
+      )
+    end
+  end
+
+  describe '#format_role' do
+    it 'maps assistant to model and the rest to user' do
+      expect(test_obj.send(:format_role, :assistant)).to eq('model')
+      expect(test_obj.send(:format_role, :system)).to eq('user')
+      expect(test_obj.send(:format_role, :tool)).to eq('user')
+      expect(test_obj.send(:format_role, :user)).to eq('user')
+    end
+  end
+
+  describe '#format_system_instruction' do
+    it 'skips empty system messages' do
+      messages = [RubyLLM::Message.new(role: :system, content: '')]
+
+      expect(test_obj.send(:format_system_instruction, messages)).to be_nil
+    end
+  end
+
+  describe '#build_thought_part' do
+    it 'omits the fields the provider did not send' do
+      expect(test_obj.send(:build_thought_part, RubyLLM::Thinking.new(text: 'why'))).to eq(
+        thought: true, text: 'why'
+      )
+      expect(test_obj.send(:build_thought_part, RubyLLM::Thinking.new(signature: 'sig'))).to eq(
+        thought: true, thoughtSignature: 'sig'
+      )
+    end
+  end
+
+  describe '#extract_citations' do
+    it 'returns nothing without grounding metadata' do
+      expect(test_obj.send(:extract_citations, {}, 'text')).to eq([])
+    end
+
+    it 'cites every grounding chunk when there are no supports' do
+      data = {
+        'candidates' => [
+          {
+            'groundingMetadata' => {
+              'groundingChunks' => [
+                { 'web' => { 'uri' => 'https://a.example', 'title' => 'A' } },
+                { 'retrievedContext' => { 'uri' => 'https://b.example', 'title' => 'B' } },
+                { 'unknown' => {} },
+                'not a chunk'
+              ]
+            }
+          }
+        ]
+      }
+
+      citations = test_obj.send(:extract_citations, data, 'text')
+
+      expect(citations.map(&:url)).to eq(['https://a.example', 'https://b.example'])
+      expect(citations.map(&:source_index)).to eq([0, 1])
+    end
+
+    it 'anchors supports to character offsets in the response text' do
+      data = {
+        'candidates' => [
+          {
+            'groundingMetadata' => {
+              'groundingChunks' => [{ 'web' => { 'uri' => 'https://a.example', 'title' => 'A' } }],
+              'groundingSupports' => [
+                { 'segment' => { 'endIndex' => 4, 'text' => 'Café' }, 'groundingChunkIndices' => [0, 9] }
+              ]
+            }
+          }
+        ]
+      }
+
+      citations = test_obj.send(:extract_citations, data, 'Café is French')
+
+      expect(citations.length).to eq(1)
+      expect(citations.first.start_index).to eq(0)
+      expect(citations.first.end_index).to eq(4)
+    end
+
+    it 'leaves offsets nil when the support carries no segment' do
+      data = {
+        'candidates' => [
+          {
+            'groundingMetadata' => {
+              'groundingChunks' => [{ 'web' => { 'uri' => 'https://a.example' } }],
+              'groundingSupports' => [{ 'groundingChunkIndices' => [0] }]
+            }
+          }
+        ]
+      }
+
+      citation = test_obj.send(:extract_citations, data, 'text').first
+
+      expect(citation.start_index).to be_nil
+      expect(citation.end_index).to be_nil
+    end
+  end
+
+  describe '#parse_content' do
+    it 'returns empty content for a response with no candidate' do
+      expect(test_obj.send(:parse_content, {})).to eq(['', []])
+    end
+
+    it 'returns empty content for a candidate with no parts' do
+      expect(test_obj.send(:parse_content, { 'candidates' => [{ 'content' => {} }] })).to eq(['', []])
+    end
+  end
+
+  describe '#extract_thought_signature' do
+    it 'reads the signature off a function call part' do
+      parts = [{ 'functionCall' => { 'thought_signature' => 'sig' } }]
+
+      expect(test_obj.send(:extract_thought_signature, parts)).to eq('sig')
+    end
+
+    it 'returns nil when no part carries one' do
+      expect(test_obj.send(:extract_thought_signature, [{ 'text' => 'hi' }])).to be_nil
+    end
+  end
+
+  describe '#gemini_version' do
+    it 'is nil without a model' do
+      expect(test_obj.send(:gemini_version, nil)).to be_nil
+    end
+
+    it 'is nil when nothing in the model names a version' do
+      model = instance_double(RubyLLM::Model, id: 'gemini-flash', family: nil, metadata: {})
+
+      expect(test_obj.send(:gemini_version, model)).to be_nil
+    end
+
+    it 'falls back to the model metadata' do
+      model = instance_double(RubyLLM::Model, id: 'gemini-flash', family: nil, metadata: { version: '2.5' })
+
+      expect(test_obj.send(:gemini_version, model)).to eq(Gem::Version.new('2.5'))
+    end
+  end
+
+  describe '#extract_version' do
+    it 'is nil for text without a version' do
+      expect(test_obj.send(:extract_version, nil)).to be_nil
+      expect(test_obj.send(:extract_version, 'flash')).to be_nil
+    end
+  end
+
+  describe RubyLLM::Protocols::Gemini::Chat::GeminiSchema do
+    def convert(schema)
+      described_class.new(schema).to_h
+    end
+
+    it 'returns nothing for a nil schema' do
+      expect(convert(nil)).to be_nil
+    end
+
+    it 'falls back to a string schema for a non-object node' do
+      expect(convert({ type: 'object', properties: { name: 'nonsense' } })[:properties][:name]).to eq(type: 'STRING')
+    end
+
+    it 'reads definitions from the legacy definitions key' do
+      schema = {
+        type: 'object',
+        definitions: { Name: { type: 'string' } },
+        properties: { name: { '$ref' => '#/definitions/Name' } }
+      }
+
+      expect(convert(schema)[:properties][:name]).to eq(type: 'STRING')
+    end
+
+    it 'merges definitions found at more than one level' do
+      schema = {
+        type: 'object',
+        '$defs' => { Outer: { type: 'string' } },
+        properties: {
+          nested: {
+            type: 'object',
+            definitions: { Inner: { type: 'integer' } },
+            properties: {
+              outer: { '$ref' => '#/$defs/Outer' },
+              inner: { '$ref' => '#/$defs/Inner' }
+            }
+          }
+        }
+      }
+
+      nested = convert(schema)[:properties][:nested][:properties]
+
+      expect(nested[:outer]).to eq(type: 'STRING')
+      expect(nested[:inner]).to eq(type: 'INTEGER')
+    end
+
+    it 'ignores an empty definitions block' do
+      expect(convert({ type: 'object', '$defs' => nil, properties: {} })[:type]).to eq('OBJECT')
+    end
+
+    it 'falls back to a string schema for an unresolvable reference' do
+      schema = { type: 'object', properties: { name: { '$ref' => '#/$defs/Missing' } } }
+
+      expect(convert(schema)[:properties][:name]).to eq(type: 'STRING')
+    end
+
+    it 'stops at a self-referential definition' do
+      schema = {
+        type: 'object',
+        '$defs' => {
+          Node: {
+            type: 'object',
+            properties: { child: { '$ref' => '#/$defs/Node' } }
+          }
+        },
+        properties: { root: { '$ref' => '#/$defs/Node' } }
+      }
+
+      root = convert(schema)[:properties][:root]
+
+      expect(root[:type]).to eq('OBJECT')
+      expect(root[:properties][:child]).to eq(type: 'STRING')
+    end
+
+    it 'handles a reference that names no path' do
+      schema = { type: 'object', properties: { name: { '$ref' => '' } } }
+
+      expect(convert(schema)[:properties][:name]).to eq(type: 'STRING')
+    end
+
+    it 'stops walking a definition path through a non-object' do
+      schema = {
+        type: 'object',
+        '$defs' => { Name: { type: 'string' } },
+        properties: { name: { '$ref' => '#/$defs/Name/deeper' } }
+      }
+
+      expect(convert(schema)[:properties][:name]).to eq(type: 'STRING')
+    end
+
+    it 'keeps the sibling keys of an anyOf' do
+      schema = {
+        type: 'object',
+        properties: {
+          name: { description: 'a name', anyOf: [{ type: 'string' }, { type: 'null' }] }
+        }
+      }
+
+      expect(convert(schema)[:properties][:name]).to eq(
+        type: 'STRING', nullable: true, description: 'a name'
+      )
+    end
+  end
+
   describe '#parse_completion_response' do
     it 'preserves raw finishReason' do
       response = instance_double(

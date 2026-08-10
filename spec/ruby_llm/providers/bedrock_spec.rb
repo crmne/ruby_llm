@@ -198,4 +198,71 @@ RSpec.describe RubyLLM::Providers::Bedrock do
       )
     end
   end
+
+  describe 'SigV4 canonicalization' do
+    let(:signer) { described_class.allocate }
+
+    it 'sorts and encodes the query string' do
+      expect(signer.send(:canonical_query_string, 'b=2&a=1&c=hello world')).to eq('a=1&b=2&c=hello%20world')
+    end
+
+    it 'treats a missing query string as empty' do
+      expect(signer.send(:canonical_query_string, nil)).to eq('')
+      expect(signer.send(:canonical_query_string, '')).to eq('')
+    end
+
+    it 'treats a missing path as the root' do
+      expect(signer.send(:canonical_uri, nil)).to eq('/')
+      expect(signer.send(:canonical_uri, '')).to eq('/')
+    end
+
+    it 'prefixes a relative path with a slash' do
+      expect(signer.send(:canonical_uri, 'foundation-models')).to eq('/foundation-models')
+    end
+
+    it 'leaves the unreserved tilde unescaped' do
+      expect(signer.send(:uri_encode, 'a~b c')).to eq('a~b%20c')
+    end
+  end
+
+  describe 'signed requests' do
+    let(:provider) { described_class.new(bedrock_config(api_key: 'key', secret_key: 'secret')) }
+
+    it 'signs a GET through a bare connection' do
+      connection = instance_double(Faraday::Connection)
+      allow(connection).to receive(:url_prefix=)
+      allow(RubyLLM::Connection).to receive(:basic).and_return(connection)
+      headers = {}
+      allow(connection).to receive(:get) do |url, _payload, &block|
+        request = Struct.new(:headers).new(headers)
+        block.call(request)
+        expect(url).to eq('/foundation-models')
+        Struct.new(:body).new({})
+      end
+
+      provider.send(:signed_get, 'https://bedrock.us-east-1.amazonaws.com', '/foundation-models')
+
+      expect(headers['Authorization']).to match(/\AAWS4-HMAC-SHA256 Credential=key/)
+      expect(connection).to have_received(:url_prefix=).with('https://bedrock.us-east-1.amazonaws.com')
+    end
+
+    it 'signs a POST over the serialized payload' do
+      connection = instance_double(Faraday::Connection)
+      allow(connection).to receive(:url_prefix=)
+      allow(RubyLLM::Connection).to receive(:basic).and_return(connection)
+      captured = {}
+      allow(connection).to receive(:post) do |_url, payload, &block|
+        request = Struct.new(:headers).new({})
+        block.call(request)
+        captured[:payload] = payload
+        captured[:headers] = request.headers
+        Struct.new(:body).new({})
+      end
+
+      provider.send(:signed_post, 'https://bedrock.us-east-1.amazonaws.com', '/batch', { key: 'value' })
+
+      expect(captured[:payload]).to eq(key: 'value')
+      expect(captured[:headers]['Content-Type']).to eq('application/json')
+    end
+  end
 end

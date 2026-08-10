@@ -139,4 +139,74 @@ RSpec.describe RubyLLM::Providers::VertexAI::Gemini::Batches do
       expect(message.content).to eq('Jupiter')
     end
   end
+
+  describe '#find_batch and #cancel_batch' do
+    let(:job) do
+      {
+        'name' => 'projects/test/locations/us-central1/batchPredictionJobs/1',
+        'state' => 'JOB_STATE_SUCCEEDED',
+        'completionStats' => { 'successfulCount' => 2 },
+        'model' => 'projects/test/locations/us-central1/publishers/google/models/gemini-2.5-flash'
+      }
+    end
+
+    it 'reads a job by bare id' do
+      allow(connection).to receive(:get)
+        .with('projects/test/locations/us-central1/batchPredictionJobs/1')
+        .and_return(Struct.new(:body).new(job))
+
+      expect(protocol.find_batch('1')).to include(
+        id: job['name'], status: 'JOB_STATE_SUCCEEDED', completed: true,
+        request_counts: { 'successfulCount' => 2 }, model: job['model']
+      )
+    end
+
+    it 'reads a job by full resource name' do
+      allow(connection).to receive(:get).with(job['name']).and_return(Struct.new(:body).new(job))
+
+      expect(protocol.find_batch(job['name'])[:id]).to eq(job['name'])
+    end
+
+    it 'reports a running job as incomplete' do
+      allow(connection).to receive(:get).and_return(
+        Struct.new(:body).new(job.merge('state' => 'JOB_STATE_RUNNING'))
+      )
+
+      expect(protocol.find_batch('1')[:completed]).to be(false)
+    end
+
+    it 'cancels a job and reads it back' do
+      allow(connection).to receive(:post)
+        .with('projects/test/locations/us-central1/batchPredictionJobs/1:cancel', {})
+      allow(connection).to receive(:get).and_return(Struct.new(:body).new(job))
+
+      expect(protocol.cancel_batch('1')[:id]).to eq(job['name'])
+      expect(connection).to have_received(:post)
+    end
+  end
+
+  describe '#batch_results over the output shards' do
+    it 'reads every JSONL shard the job wrote' do
+      job = {
+        'outputInfo' => { 'gcsOutputDirectory' => 'gs://ruby-llm-batches/test/output' },
+        'state' => 'JOB_STATE_SUCCEEDED'
+      }
+      allow(connection).to receive(:get).and_return(Struct.new(:body).new(job))
+      allow(provider).to receive(:list_file_uris).with('gs://ruby-llm-batches/test/output').and_return(
+        ['gs://ruby-llm-batches/test/output/predictions.jsonl', 'gs://ruby-llm-batches/test/output/manifest.txt']
+      )
+      row = {
+        'response' => {
+          'candidates' => [{ 'content' => { 'parts' => [{ 'text' => 'Hello' }] } }],
+          'modelVersion' => 'gemini-2.5-flash'
+        }
+      }
+      allow(provider).to receive(:download_file).and_return("\n#{row.to_json}\n")
+
+      results = protocol.batch_results('1')
+
+      expect(results.length).to eq(1)
+      expect(results.first.last.content).to eq('Hello')
+    end
+  end
 end

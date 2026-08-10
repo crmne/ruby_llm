@@ -348,4 +348,79 @@ RSpec.describe RubyLLM::Providers::VertexAI do
       expect(Google::Auth).to have_received(:get_application_default).with(expected_scopes)
     end
   end
+
+  describe '#protocol_for across publishers' do
+    let(:location) { 'global' }
+
+    def protocol_for(model_id)
+      provider.protocol_for(instance_double(RubyLLM::Model, id: model_id))
+    end
+
+    it 'routes publisher-prefixed MaaS ids through the OpenAI-compatible endpoint' do
+      expect(protocol_for('meta/llama-4-maverick-maas')).to eq(described_class::ChatCompletions)
+    end
+
+    it 'routes Claude through the Anthropic dialect' do
+      expect(protocol_for('claude-haiku-4-5')).to eq(described_class::Anthropic)
+    end
+
+    it 'routes Mistral through the Mistral dialect' do
+      expect(protocol_for('mistral-small-2503')).to eq(described_class::Mistral)
+    end
+
+    it 'routes everything else through Gemini' do
+      expect(protocol_for('gemini-2.5-flash')).to eq(described_class::Gemini)
+    end
+  end
+
+  describe 'batch protocol routing' do
+    let(:location) { 'global' }
+
+    it 'refuses a submission that mixes models' do
+      requests = [{ model: 'gemini-2.5-flash' }, { model: 'claude-haiku-4-5' }]
+
+      expect { provider.send(:batch_protocol_for, requests) }.to raise_error(
+        RubyLLM::Error, 'vertexai batch requests must use one model per submission'
+      )
+    end
+
+    it 'refuses a model with no batch support' do
+      expect { provider.send(:batch_protocol_for, [{ model: 'mistral-small-2503' }]) }.to raise_error(
+        RubyLLM::Error, /currently support Gemini, Anthropic, and MaaS chat models/
+      )
+    end
+
+    it 'picks the protocol from the submitted model' do
+      expect(provider.send(:batch_protocol_for, [{ model: 'gemini-2.5-flash' }])).to be_truthy
+      expect(provider.send(:batch_protocol_for, [{ model: 'claude-haiku-4-5' }])).to be_truthy
+      expect(provider.send(:batch_protocol_for, [{ model: 'meta/llama-4-maverick-maas' }])).to be_truthy
+    end
+
+    it 'reads the protocol back out of a batch model path' do
+      expect(
+        provider.send(:batch_protocol_for_model_path, 'publishers/google/models/gemini-2.5-flash')
+      ).to be_truthy
+      expect(
+        provider.send(:batch_protocol_for_model_path, 'projects/p/locations/l/publishers/anthropic/models/claude')
+      ).to be_truthy
+      expect(
+        provider.send(:batch_protocol_for_model_path, 'publishers/meta/models/llama-4-maverick-maas')
+      ).to be_truthy
+      expect(provider.send(:batch_protocol_for_model_path, 'publishers/mistralai/models/mistral-small')).to be_nil
+      expect(provider.send(:batch_protocol_for_model_path, nil)).to be_nil
+    end
+  end
+
+  describe '#model_path' do
+    let(:location) { 'global' }
+
+    it 'builds the fully qualified publisher model path' do
+      expect(provider.model_path('gemini-2.5-flash')).to eq(
+        'projects/test-project/locations/global/publishers/google/models/gemini-2.5-flash'
+      )
+      expect(provider.model_path('claude-haiku-4-5', publisher: 'anthropic')).to eq(
+        'projects/test-project/locations/global/publishers/anthropic/models/claude-haiku-4-5'
+      )
+    end
+  end
 end

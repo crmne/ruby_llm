@@ -127,4 +127,93 @@ RSpec.describe RubyLLM::Providers::Mistral::Chat do
       )
     end
   end
+
+  describe '#build_thinking_blocks' do
+    it 'is empty without thinking' do
+      expect(provider.send(:build_thinking_blocks, nil)).to eq([])
+      expect(provider.send(:build_thinking_blocks, RubyLLM::Thinking.new)).to eq([])
+    end
+
+    it 'wraps thinking text in a text block' do
+      thinking = RubyLLM::Thinking.new(text: 'why', signature: 'sig')
+
+      expect(provider.send(:build_thinking_blocks, thinking)).to eq(
+        [{ type: 'thinking', thinking: [{ type: 'text', text: 'why' }], signature: 'sig' }]
+      )
+    end
+
+    it 'sends a signature-only block' do
+      expect(provider.send(:build_thinking_blocks, RubyLLM::Thinking.new(signature: 'sig'))).to eq(
+        [{ type: 'thinking', signature: 'sig' }]
+      )
+    end
+  end
+
+  describe '#append_formatted_content' do
+    it 'concatenates a list of parts' do
+      blocks = []
+      provider.send(:append_formatted_content, blocks, [{ type: 'text', text: 'hi' }])
+
+      expect(blocks).to eq([{ type: 'text', text: 'hi' }])
+    end
+
+    it 'wraps plain text' do
+      blocks = []
+      provider.send(:append_formatted_content, blocks, 'hi')
+
+      expect(blocks).to eq([{ type: 'text', text: 'hi' }])
+    end
+
+    it 'leaves the blocks alone for empty content' do
+      blocks = []
+      provider.send(:append_formatted_content, blocks, nil)
+
+      expect(blocks).to eq([])
+    end
+  end
+
+  describe '#reasoning_effort_for' do
+    it 'passes high and none through and defaults everything else to high' do
+      expect(provider.send(:reasoning_effort_for, RubyLLM::Thinking::Config.new(effort: :high))).to eq('high')
+      expect(provider.send(:reasoning_effort_for, RubyLLM::Thinking::Config.new(effort: :none))).to eq('none')
+      expect(provider.send(:reasoning_effort_for, RubyLLM::Thinking::Config.new(effort: :low))).to eq('high')
+      expect(provider.send(:reasoning_effort_for, Object.new)).to eq('high')
+    end
+  end
+
+  describe '#prompt_cache_params' do
+    it 'renders only the cache key' do
+      expect(provider.send(:prompt_cache_params, { key: 'abc' })).to eq(prompt_cache_key: 'abc')
+    end
+
+    it 'rejects options Mistral cannot render' do
+      expect { provider.send(:prompt_cache_params, { ttl: '1h' }) }.to raise_error(
+        ArgumentError, 'Mistral prompt caching accepts :key, got :ttl'
+      )
+    end
+  end
+
+  describe '#normalize_required_tool_choice' do
+    it 'leaves a multi-tool request on the any mode' do
+      payload = {
+        tool_choice: 'any',
+        tools: [
+          { type: 'function', function: { name: 'weather' } },
+          { type: 'function', function: { name: 'time' } }
+        ]
+      }
+
+      provider.send(:normalize_required_tool_choice, payload)
+
+      expect(payload[:tool_choice]).to eq('any')
+    end
+
+    it 'leaves the payload alone when the single tool has no name' do
+      payload = { tool_choice: 'any', tools: [{ type: 'function', function: {} }] }
+
+      provider.send(:normalize_required_tool_choice, payload)
+
+      expect(payload[:tool_choice]).to eq('any')
+    end
+  end
 end

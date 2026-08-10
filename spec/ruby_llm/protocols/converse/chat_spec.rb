@@ -291,4 +291,202 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
       expect(payload[:messages].first[:content]).to eq([{ text: 'Done' }])
     end
   end
+
+  describe '.format_tool_config' do
+    def tool(name: 'lookup', description: 'Looks things up', schema: nil, provider_options: {})
+      instance_double(
+        RubyLLM::Tool,
+        name: name, description: description, parameters_schema: schema,
+        declared_parameters: {}, provider_options: provider_options
+      )
+    end
+
+    it 'is nil without tools' do
+      expect(described_class.format_tool_config({}, nil)).to be_nil
+    end
+
+    it 'renders a tool spec with a default input schema' do
+      config = described_class.format_tool_config({ 'lookup' => tool }, nil)
+
+      expect(config[:tools].first[:toolSpec]).to include(name: 'lookup', description: 'Looks things up')
+      expect(config[:tools].first[:toolSpec][:inputSchema][:json]).to include('type' => 'object')
+      expect(config).not_to have_key(:toolChoice)
+    end
+
+    it 'leaves toolChoice alone when the request states no preference' do
+      config = described_class.format_tool_config({ 'lookup' => tool }, { choice: nil })
+
+      expect(config).not_to have_key(:toolChoice)
+    end
+
+    it 'maps every tool choice Bedrock understands' do
+      expect(described_class.format_tool_config({ 'lookup' => tool }, { choice: :auto })[:toolChoice]).to eq(auto: {})
+      expect(described_class.format_tool_config({ 'lookup' => tool },
+                                                { choice: :required })[:toolChoice]).to eq(any: {})
+      expect(described_class.format_tool_config({ 'lookup' => tool }, { choice: 'lookup' })[:toolChoice]).to eq(
+        tool: { name: 'lookup' }
+      )
+    end
+
+    it 'omits toolChoice when the request asks for no tool' do
+      config = described_class.format_tool_config({ 'lookup' => tool }, { choice: :none })
+
+      expect(config).not_to have_key(:toolChoice)
+    end
+
+    it 'merges the tool provider options into the spec' do
+      config = described_class.format_tool_config(
+        { 'lookup' => tool(provider_options: { cachePoint: { type: 'default' } }) }, nil
+      )
+
+      expect(config[:tools].first).to include(cachePoint: { type: 'default' })
+    end
+  end
+
+  describe '.format_reasoning_fields' do
+    let(:embedded_model) do
+      instance_double(RubyLLM::Model, id: 'anthropic.claude-haiku-4-5', metadata: {},
+                                      capabilities: ['reasoning'])
+    end
+
+    def reasoning_fields(thinking, model: embedded_model)
+      protocol = described_class
+      target = Object.new
+      target.extend(protocol)
+      target.instance_variable_set(:@model, model)
+      target.send(:format_reasoning_fields, thinking)
+    end
+
+    it 'is nil when thinking is off' do
+      expect(reasoning_fields(nil)).to be_nil
+      expect(reasoning_fields(RubyLLM::Thinking::Config.new)).to be_nil
+    end
+
+    it 'is nil for an explicit none effort' do
+      expect(reasoning_fields(RubyLLM::Thinking::Config.new(effort: :none))).to be_nil
+    end
+
+    it 'nests the effort for models with embedded reasoning' do
+      allow(RubyLLM::Protocols::Converse).to receive(:reasoning_embedded?).and_return(true)
+
+      expect(reasoning_fields(RubyLLM::Thinking::Config.new(effort: :high))).to eq(
+        reasoning_config: { type: 'enabled', reasoning_effort: 'high' }
+      )
+    end
+
+    it 'sends a flat effort otherwise' do
+      allow(RubyLLM::Protocols::Converse).to receive(:reasoning_embedded?).and_return(false)
+
+      expect(reasoning_fields(RubyLLM::Thinking::Config.new(effort: :low))).to eq(reasoning_effort: 'low')
+    end
+
+    it 'falls back to a token budget' do
+      expect(reasoning_fields(RubyLLM::Thinking::Config.new(budget: 2048))).to eq(
+        reasoning_config: { type: 'enabled', budget_tokens: 2048 }
+      )
+    end
+  end
+
+  describe '.format_thinking_block' do
+    it 'is nil without thinking' do
+      expect(described_class.format_thinking_block(nil)).to be_nil
+    end
+
+    it 'sends reasoning text with its signature' do
+      thinking = RubyLLM::Thinking.new(text: 'because', signature: 'sig')
+
+      expect(described_class.format_thinking_block(thinking)).to eq(
+        reasoningContent: { reasoningText: { text: 'because', signature: 'sig' } }
+      )
+    end
+
+    it 'omits a missing signature' do
+      expect(described_class.format_thinking_block(RubyLLM::Thinking.new(text: 'because'))).to eq(
+        reasoningContent: { reasoningText: { text: 'because' } }
+      )
+    end
+
+    it 'sends a signature-only block as redacted content' do
+      expect(described_class.format_thinking_block(RubyLLM::Thinking.new(signature: 'sig'))).to eq(
+        reasoningContent: { redactedContent: 'sig' }
+      )
+    end
+  end
+
+  describe '.parse_thinking' do
+    it 'is empty when no block carries reasoning' do
+      expect(described_class.parse_thinking([{ 'text' => 'hi' }])).to eq([nil, nil])
+    end
+
+    it 'ignores a reasoningContent block that is not a hash' do
+      expect(described_class.parse_thinking([{ 'reasoningContent' => 'nope' }])).to eq([nil, nil])
+    end
+
+    it 'reads redacted content as the signature' do
+      blocks = [{ 'reasoningContent' => { 'redactedContent' => 'sig' } }]
+
+      expect(described_class.parse_thinking(blocks)).to eq([nil, 'sig'])
+    end
+
+    it 'joins reasoning text across blocks and keeps the first signature' do
+      blocks = [
+        { 'reasoningContent' => { 'reasoningText' => { 'text' => 'one ' } } },
+        { 'reasoningContent' => { 'reasoningText' => { 'text' => 'two', 'signature' => 'sig' } } }
+      ]
+
+      expect(described_class.parse_thinking(blocks)).to eq(['one two', 'sig'])
+    end
+  end
+
+  describe '.format_messages' do
+    it 'groups consecutive tool results into one user message' do
+      call_a = RubyLLM::ToolCall.new(id: 'call_a', name: 'lookup', arguments: {})
+      call_b = RubyLLM::ToolCall.new(id: 'call_b', name: 'lookup', arguments: {})
+      messages = [
+        RubyLLM::Message.new(role: :assistant, content: '',
+                             tool_calls: { 'call_a' => call_a, 'call_b' => call_b }),
+        RubyLLM::Message.new(role: :tool, content: 'first', tool_call_id: 'call_a'),
+        RubyLLM::Message.new(role: :tool, content: 'second', tool_call_id: 'call_b'),
+        RubyLLM::Message.new(role: :user, content: 'thanks')
+      ]
+
+      rendered = described_class.format_messages(messages)
+
+      expect(rendered.map { |message| message[:role] }).to eq(%w[assistant user user])
+      expect(rendered[1][:content].length).to eq(2)
+    end
+
+    it 'drops a message that renders to nothing' do
+      messages = [RubyLLM::Message.new(role: :user, content: '')]
+
+      expect(described_class.format_messages(messages)).to eq([])
+    end
+
+    it 'closes with the trailing tool results' do
+      call = RubyLLM::ToolCall.new(id: 'call_a', name: 'lookup', arguments: {})
+      messages = [
+        RubyLLM::Message.new(role: :assistant, content: '', tool_calls: { 'call_a' => call }),
+        RubyLLM::Message.new(role: :tool, content: 'result', tool_call_id: 'call_a')
+      ]
+
+      rendered = described_class.format_messages(messages)
+
+      expect(rendered.last[:role]).to eq('user')
+      expect(rendered.last[:content].first[:toolResult][:toolUseId]).to eq('call_a')
+    end
+  end
+
+  describe '.warn_unsupported_citations' do
+    it 'warns when a Bedrock request asks for citations' do
+      allow(RubyLLM.logger).to receive(:warn)
+      model = instance_double(RubyLLM::Model, id: 'anthropic.claude-haiku-4-5', max_output_tokens: nil, metadata: {})
+
+      described_class.render_payload(
+        [RubyLLM::Message.new(role: :user, content: 'Hi')],
+        tools: {}, temperature: nil, model: model, citations: true
+      )
+
+      expect(RubyLLM.logger).to have_received(:warn)
+    end
+  end
 end

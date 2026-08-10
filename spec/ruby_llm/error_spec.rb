@@ -104,4 +104,35 @@ RSpec.describe RubyLLM::Error do
       )
     end
   end
+
+  describe 'default messages' do
+    {
+      RubyLLM::BadRequestError => 'Invalid request - please check your input',
+      RubyLLM::ForbiddenError => 'Forbidden - you do not have permission to access this resource',
+      RubyLLM::ContextLengthExceededError => 'Context length exceeded',
+      RubyLLM::OverloadedError => 'Service overloaded - please try again later',
+      RubyLLM::PaymentRequiredError => 'Payment required - please top up your account',
+      RubyLLM::RateLimitError => 'Rate limit exceeded - please wait a moment',
+      RubyLLM::ServerError => 'API server error - please try again',
+      RubyLLM::ServiceUnavailableError => 'API server unavailable - please try again later',
+      RubyLLM::UnauthorizedError => 'Invalid API key - check your credentials'
+    }.each do |error_class, message|
+      it "explains #{error_class} when the provider says nothing" do
+        expect(error_class.default_message).to eq(message)
+        expect(error_class.new.message).to eq(message)
+      end
+    end
+  end
+
+  describe 'RubyLLM::UnsupportedAttachmentError messages' do
+    it 'names the type when there is one' do
+      expect(RubyLLM::UnsupportedAttachmentError.new('application/zip').message).to start_with(
+        'Unsupported attachment type: application/zip.'
+      )
+    end
+
+    it 'still guides without a type' do
+      expect(RubyLLM::UnsupportedAttachmentError.new.message).to start_with('Unsupported attachment type.')
+    end
+  end
 end

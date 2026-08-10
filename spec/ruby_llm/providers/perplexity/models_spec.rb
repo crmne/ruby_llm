@@ -35,4 +35,36 @@ RSpec.describe RubyLLM::Providers::Perplexity::Models do
       expect(reasoning.capabilities).to contain_exactly('citations', 'vision', 'reasoning')
     end
   end
+
+  describe 'error parsing' do
+    subject(:provider) do
+      RubyLLM::Providers::Perplexity.new(
+        RubyLLM::Configuration.new.tap { |config| config.perplexity_api_key = 'test' }
+      )
+    end
+
+    def response_for(body)
+      Struct.new(:body).new(body)
+    end
+
+    it 'reads the title out of the HTML Perplexity returns for auth failures' do
+      html = "<html>\n<head><title>401 Authorization Required</title></head>\n</html>"
+
+      expect(provider.parse_error(response_for(html))).to eq('Authorization Required')
+    end
+
+    it 'falls back to the shared parser for HTML without a title match' do
+      html = '<html><title></title>no title here</html>'
+
+      expect(provider.parse_error(response_for(html))).to eq(html)
+    end
+
+    it 'falls back to the shared parser for JSON errors' do
+      expect(provider.parse_error(response_for({ 'error' => { 'message' => 'bad request' } }))).to eq('bad request')
+    end
+
+    it 'is nil for an empty body' do
+      expect(provider.parse_error(response_for(nil))).to be_nil
+    end
+  end
 end

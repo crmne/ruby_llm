@@ -90,4 +90,56 @@ RSpec.describe RubyLLM::Providers::XAI::ChatCompletions::Batches do
       expect(message.model).to eq('grok-4.3')
     end
   end
+
+  describe '#parse_batch_response state shapes' do
+    it 'reads the xAI state block' do
+      data = { 'batch_id' => 'batch_1', 'state' => { 'num_requests' => 2, 'num_pending' => 0 } }
+
+      expect(protocol.send(:parse_batch_response, data)).to eq(
+        id: 'batch_1', status: 'processing', completed: true,
+        request_counts: { 'num_requests' => 2, 'num_pending' => 0 }
+      )
+    end
+
+    it 'reports a state carrying an error as failed and still running' do
+      data = { 'id' => 'batch_1', 'state' => { 'num_requests' => 2, 'num_pending' => 1, 'error' => 'boom' } }
+
+      expect(protocol.send(:parse_batch_response, data)).to include(status: 'failed', completed: false)
+    end
+
+    it 'falls back to a plain status field' do
+      expect(protocol.send(:parse_batch_response, { 'id' => 'batch_1', 'status' => 'queued' })).to include(
+        status: 'queued', completed: false
+      )
+    end
+  end
+
+  describe '#parse_batch_result response shapes' do
+    it 'reads a result nested directly under response' do
+      result = {
+        'custom_id' => '3',
+        'response' => {
+          'chat_get_completion' => {
+            'model' => 'grok-4.3',
+            'choices' => [{ 'message' => { 'role' => 'assistant', 'content' => 'Hi' } }]
+          }
+        }
+      }
+
+      index, message = protocol.send(:parse_batch_result, result)
+
+      expect(index).to eq(3)
+      expect(message.content).to eq('Hi')
+    end
+
+    it 'warns and returns no message for a failed row' do
+      allow(RubyLLM.logger).to receive(:warn)
+
+      index, message = protocol.send(:parse_batch_result, { 'batch_request_id' => '4', 'error' => 'rate limited' })
+
+      expect(index).to eq(4)
+      expect(message).to be_nil
+      expect(RubyLLM.logger).to have_received(:warn).with('Batch request 4 failed: rate limited')
+    end
+  end
 end

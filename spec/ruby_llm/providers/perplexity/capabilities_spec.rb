@@ -1,0 +1,62 @@
+# frozen_string_literal: true
+
+require 'spec_helper'
+
+RSpec.describe RubyLLM::Providers::Perplexity::Capabilities do
+  describe '.model_family' do
+    {
+      'sonar' => :sonar,
+      'sonar-pro' => :sonar_pro,
+      'sonar-reasoning' => :sonar_reasoning,
+      'sonar-reasoning-pro' => :sonar_reasoning_pro,
+      'sonar-deep-research' => :sonar_deep_research,
+      'sonar-experimental' => :unknown
+    }.each do |model_id, expected|
+      it "groups #{model_id} under #{expected}" do
+        expect(described_class.model_family(model_id)).to eq(expected)
+      end
+    end
+  end
+
+  describe '.context_window_for' do
+    it 'gives sonar-pro the larger window' do
+      expect(described_class.context_window_for('sonar-pro')).to eq(200_000)
+      expect(described_class.context_window_for('sonar')).to eq(128_000)
+    end
+  end
+
+  describe '.max_tokens_for' do
+    it 'gives the pro tiers the larger output budget' do
+      expect(described_class.max_tokens_for('sonar-pro')).to eq(8_192)
+      expect(described_class.max_tokens_for('sonar-reasoning-pro')).to eq(8_192)
+      expect(described_class.max_tokens_for('sonar')).to eq(4_096)
+    end
+  end
+
+  describe '.critical_capabilities_for' do
+    it 'claims citations everywhere and reasoning where it applies' do
+      expect(described_class.critical_capabilities_for('sonar')).to eq(%w[citations vision])
+      expect(described_class.critical_capabilities_for('sonar-deep-research')).to eq(%w[citations reasoning])
+    end
+  end
+
+  describe '.pricing_for' do
+    it 'adds a reasoning tier for deep research' do
+      expect(described_class.pricing_for('sonar-deep-research')).to eq(
+        text_tokens: {
+          standard: {
+            input_per_million: 2.0,
+            output_per_million: 8.0,
+            reasoning_output_per_million: 3.0
+          }
+        }
+      )
+    end
+
+    it 'falls back to the sonar rates for unknown models' do
+      expect(described_class.pricing_for('sonar-experimental')).to eq(
+        text_tokens: { standard: { input_per_million: 1.0, output_per_million: 1.0 } }
+      )
+    end
+  end
+end

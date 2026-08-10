@@ -431,4 +431,170 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
       expect(message.tokens.cache_write).to eq(7)
     end
   end
+
+  describe '.build_thinking_block' do
+    let(:protocol) { RubyLLM::Protocols::Anthropic.allocate }
+
+    it 'is nil without thinking' do
+      expect(protocol.send(:build_thinking_block, nil)).to be_nil
+    end
+
+    it 'sends thinking text with its signature' do
+      thinking = RubyLLM::Thinking.new(text: 'why', signature: 'sig')
+
+      expect(protocol.send(:build_thinking_block, thinking)).to eq(
+        type: 'thinking', thinking: 'why', signature: 'sig'
+      )
+    end
+
+    it 'omits a missing signature' do
+      expect(protocol.send(:build_thinking_block, RubyLLM::Thinking.new(text: 'why'))).to eq(
+        type: 'thinking', thinking: 'why'
+      )
+    end
+
+    it 'sends a signature-only block as redacted thinking' do
+      expect(protocol.send(:build_thinking_block, RubyLLM::Thinking.new(signature: 'sig'))).to eq(
+        type: 'redacted_thinking', data: 'sig'
+      )
+    end
+  end
+
+  describe '.prepend_thinking_block' do
+    let(:protocol) { RubyLLM::Protocols::Anthropic.allocate }
+
+    it 'leaves the blocks alone when thinking is off' do
+      blocks = [{ type: 'text', text: 'hi' }]
+      message = RubyLLM::Message.new(role: :assistant, content: 'hi',
+                                     thinking: RubyLLM::Thinking.new(text: 'why'))
+
+      expect(protocol.send(:prepend_thinking_block, blocks, message, false)).to eq(blocks)
+    end
+
+    it 'puts the thinking block first when thinking is on' do
+      blocks = [{ type: 'text', text: 'hi' }]
+      message = RubyLLM::Message.new(role: :assistant, content: 'hi',
+                                     thinking: RubyLLM::Thinking.new(text: 'why'))
+
+      result = protocol.send(:prepend_thinking_block, blocks, message, true)
+
+      expect(result.first[:type]).to eq('thinking')
+    end
+
+    it 'leaves the blocks alone when the message has no thinking' do
+      blocks = [{ type: 'text', text: 'hi' }]
+      message = RubyLLM::Message.new(role: :assistant, content: 'hi')
+
+      expect(protocol.send(:prepend_thinking_block, blocks, message, true)).to eq(blocks)
+    end
+  end
+
+  describe '.inject_cache_control' do
+    let(:protocol) { RubyLLM::Protocols::Anthropic.allocate }
+
+    it 'leaves empty blocks alone' do
+      expect(protocol.send(:inject_cache_control, [])).to eq([])
+    end
+
+    it 'leaves a block that already carries cache_control alone' do
+      blocks = [{ type: 'text', text: 'hi', cache_control: { type: 'ephemeral' } }]
+
+      expect(protocol.send(:inject_cache_control, blocks)).to eq(blocks)
+    end
+
+    it 'leaves a trailing block it cannot annotate alone' do
+      expect(protocol.send(:inject_cache_control, ['plain'])).to eq(['plain'])
+    end
+
+    it 'annotates the trailing block' do
+      blocks = [{ type: 'text', text: 'hi' }]
+
+      expect(protocol.send(:inject_cache_control, blocks).last[:cache_control]).to eq(type: 'ephemeral')
+    end
+  end
+
+  describe '.extract_thinking_signature' do
+    let(:protocol) { RubyLLM::Protocols::Anthropic.allocate }
+
+    it 'reads the data field off a redacted thinking block' do
+      blocks = [{ 'type' => 'redacted_thinking', 'data' => 'blob' }]
+
+      expect(protocol.send(:extract_thinking_signature, blocks)).to eq('blob')
+    end
+
+    it 'is nil when no block carries thinking' do
+      expect(protocol.send(:extract_thinking_signature, [{ 'type' => 'text' }])).to be_nil
+      expect(protocol.send(:extract_thinking_content, [{ 'type' => 'text' }])).to be_nil
+    end
+
+    it 'falls back to the text field of a thinking block' do
+      blocks = [{ 'type' => 'thinking', 'text' => 'why' }]
+
+      expect(protocol.send(:extract_thinking_content, blocks)).to eq('why')
+    end
+  end
+
+  describe '.build_thinking_payload' do
+    let(:protocol) { RubyLLM::Protocols::Anthropic.allocate }
+
+    def model_with(option)
+      instance_double(RubyLLM::Model, id: 'claude-opus-4-5').tap do |model|
+        allow(model).to receive(:reasoning_option) { |name| name == option }
+      end
+    end
+
+    it 'is nil when thinking is off or explicitly none' do
+      expect(protocol.send(:build_thinking_payload, nil, model_with('effort'))).to be_nil
+      expect(
+        protocol.send(:build_thinking_payload, RubyLLM::Thinking::Config.new(effort: :none), model_with('effort'))
+      ).to be_nil
+    end
+
+    it 'refuses a budget the model does not support' do
+      expect do
+        protocol.send(:build_thinking_payload, RubyLLM::Thinking::Config.new(budget: 1024), model_with('effort'))
+      end.to raise_error(ArgumentError, /thinking budget is not supported/)
+    end
+
+    it 'refuses an effort the model does not support' do
+      expect do
+        protocol.send(
+          :build_thinking_payload, RubyLLM::Thinking::Config.new(effort: :high), model_with('budget_tokens')
+        )
+      end.to raise_error(ArgumentError, /thinking effort is not supported/)
+    end
+  end
+
+  describe '.warn_unsupported_citations' do
+    it 'warns when citations are asked of a model without them' do
+      allow(RubyLLM.logger).to receive(:warn)
+      protocol = RubyLLM::Protocols::Anthropic.allocate
+      model = instance_double(
+        RubyLLM::Model, id: 'claude-3-haiku', supports?: false, reasoning_option: nil, max_output_tokens: 4096
+      )
+
+      protocol.send(
+        :render_payload, [RubyLLM::Message.new(role: :user, content: 'Hi')],
+        tools: {}, temperature: nil, model: model, citations: true
+      )
+
+      expect(RubyLLM.logger).to have_received(:warn).with(/does not support citations/)
+    end
+  end
+
+  describe 'provider-managed file support' do
+    let(:protocol) { RubyLLM::Protocols::Anthropic.allocate }
+
+    it 'accepts images, PDFs and text files' do
+      expect(protocol.send(:provider_file_upload_limit)).to be_positive
+      expect(
+        protocol.send(:provider_file_attachable?,
+                      RubyLLM::Attachment.new(StringIO.new('x'), filename: 'a.pdf'))
+      ).to be(true)
+      expect(
+        protocol.send(:provider_file_attachable?,
+                      RubyLLM::Attachment.new(StringIO.new('x'), filename: 'a.docx'))
+      ).to be(false)
+    end
+  end
 end

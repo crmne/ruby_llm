@@ -61,4 +61,60 @@ RSpec.describe RubyLLM::Protocol do
     expect(chat_protocols).not_to be_empty
     expect(overrides.map(&:name)).to be_empty
   end
+
+  describe 'abstract methods' do
+    it 'tells subclasses what they must implement' do
+      bare = Class.new(described_class).allocate
+
+      expect { bare.render_payload }.to raise_error(NotImplementedError, /must implement #render_payload/)
+      expect { bare.completion_url }.to raise_error(NotImplementedError, /must implement #completion_url/)
+      expect { bare.send(:parse_completion_body, {}, raw: nil) }.to raise_error(
+        NotImplementedError, /must implement #parse_completion_body/
+      )
+    end
+  end
+
+  describe 'provider file defaults' do
+    let(:protocol) do
+      config = RubyLLM::Configuration.new.tap { |c| c.openai_api_key = 'test' }
+      Class.new(described_class).new(RubyLLM::Providers::OpenAI.new(config))
+    end
+
+    it 'never uploads attachments on its own' do
+      expect(protocol.send(:supports_provider_file_references?)).to be(false)
+      expect(protocol.send(:provider_file_attachable?, nil)).to be(false)
+      expect(protocol.send(:provider_file_upload_options, nil)).to eq({})
+      expect(protocol.send(:provider_file_upload_limit)).to be_nil
+      expect(protocol.send(:default_large_file_upload_threshold)).to eq(Float::INFINITY)
+      expect(protocol.send(:auto_upload_large_files?)).to be(false)
+    end
+
+    it 'accepts any file size when the provider states no limit' do
+      attachment = RubyLLM::Attachment.new(StringIO.new('x' * 10), filename: 'a.txt')
+
+      expect { protocol.send(:ensure_provider_file_size!, attachment) }.not_to raise_error
+    end
+
+    it 'formats sizes for its error messages' do
+      expect(protocol.send(:format_bytes, nil)).to eq('unknown size')
+      expect(protocol.send(:format_bytes, 1024 * 1024 * 3)).to eq('3.0 MB')
+    end
+  end
+
+  describe '#validate_paint_inputs!' do
+    let(:protocol) do
+      config = RubyLLM::Configuration.new.tap { |c| c.openai_api_key = 'test' }
+      Class.new(described_class).new(RubyLLM::Providers::OpenAI.new(config))
+    end
+
+    it 'accepts a plain prompt' do
+      expect { protocol.send(:validate_paint_inputs!, with: nil, mask: nil) }.not_to raise_error
+    end
+
+    it 'refuses image references the protocol cannot send' do
+      expect { protocol.send(:validate_paint_inputs!, with: 'ref.png', mask: nil) }.to raise_error(
+        RubyLLM::UnsupportedAttachmentError, /image reference/
+      )
+    end
+  end
 end
