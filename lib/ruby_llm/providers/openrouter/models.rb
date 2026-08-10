@@ -3,8 +3,35 @@
 module RubyLLM
   module Providers
     class OpenRouter
-      # Models methods of the OpenRouter API integration
+      # Models methods of the OpenRouter API integration. Chat models come
+      # from the main catalog; embedding, speech, transcription, and image
+      # models live in separate catalogs that are merged in.
       module Models
+        CATALOG_URLS = [
+          'models',
+          'embeddings/models',
+          'models?output_modalities=speech',
+          'models?output_modalities=transcription',
+          'images/models'
+        ].freeze
+
+        OUTPUT_MODALITY_MAP = {
+          'speech' => 'audio',
+          'transcription' => 'text'
+        }.freeze
+
+        CAPABILITY_BY_OUTPUT_MODALITY = {
+          'speech' => 'speech_generation',
+          'transcription' => 'transcription',
+          'image' => 'image_generation'
+        }.freeze
+
+        def list_models
+          CATALOG_URLS.flat_map do |url|
+            parse_list_models_response @connection.get(url), @provider.slug, @provider.capabilities
+          end.uniq(&:id)
+        end
+
         module_function
 
         def models_url
@@ -13,9 +40,10 @@ module RubyLLM
 
         def parse_list_models_response(response, slug, _capabilities)
           Array(response.body['data']).map do |model_data| # rubocop:disable Metrics/BlockLength
+            output_modalities = Array(model_data.dig('architecture', 'output_modalities'))
             modalities = {
               input: Array(model_data.dig('architecture', 'input_modalities')),
-              output: Array(model_data.dig('architecture', 'output_modalities'))
+              output: output_modalities.map { |modality| OUTPUT_MODALITY_MAP.fetch(modality, modality) }.uniq
             }
 
             pricing = { text_tokens: { standard: {} } }
@@ -32,7 +60,8 @@ module RubyLLM
               pricing[:text_tokens][:standard][target_key] = value * 1_000_000 if value.positive?
             end
 
-            capabilities = supported_parameters_to_capabilities(model_data['supported_parameters'])
+            capabilities = supported_parameters_to_capabilities(model_data['supported_parameters']) |
+                           output_modalities.filter_map { |modality| CAPABILITY_BY_OUTPUT_MODALITY[modality] }
 
             Model.new(
               id: model_data['id'],

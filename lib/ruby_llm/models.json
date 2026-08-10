@@ -33677,6 +33677,194 @@
     }
   },
   {
+    "id": "baai/bge-base-en-v1.5",
+    "name": "BAAI: bge-base-en-v1.5",
+    "provider": "openrouter",
+    "family": "baai",
+    "created_at": "2025-11-18 02:10:37 UTC",
+    "context_window": 512,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "embeddings"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "structured_output"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.005
+        }
+      }
+    },
+    "metadata": {
+      "description": "The bge-base-en-v1.5 embedding model converts English sentences and paragraphs into 768-dimensional dense vectors, delivering efficient, high-quality semantic embeddings optimized for retrieval, semantic search, and document-matching workflows. This version (v1.5) features...",
+      "architecture": {
+        "modality": "text->embeddings",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "embeddings"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 512,
+        "max_completion_tokens": null,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "frequency_penalty",
+        "max_tokens",
+        "min_p",
+        "presence_penalty",
+        "repetition_penalty",
+        "response_format",
+        "seed",
+        "stop",
+        "temperature",
+        "top_k",
+        "top_p"
+      ]
+    }
+  },
+  {
+    "id": "baai/bge-large-en-v1.5",
+    "name": "BAAI: bge-large-en-v1.5",
+    "provider": "openrouter",
+    "family": "baai",
+    "created_at": "2025-11-18 01:58:07 UTC",
+    "context_window": 512,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "embeddings"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "structured_output"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.01
+        }
+      }
+    },
+    "metadata": {
+      "description": "The bge-large-en-v1.5 embedding model maps English sentences, paragraphs, and documents into a 1024-dimensional dense vector space, delivering high-fidelity semantic embeddings optimized for semantic search, document retrieval, and downstream NLP tasks...",
+      "architecture": {
+        "modality": "text->embeddings",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "embeddings"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 512,
+        "max_completion_tokens": null,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "frequency_penalty",
+        "max_tokens",
+        "min_p",
+        "presence_penalty",
+        "repetition_penalty",
+        "response_format",
+        "seed",
+        "stop",
+        "temperature",
+        "top_k",
+        "top_p"
+      ]
+    }
+  },
+  {
+    "id": "baai/bge-m3",
+    "name": "BAAI: bge-m3",
+    "provider": "openrouter",
+    "family": "baai",
+    "created_at": "2025-11-18 00:06:12 UTC",
+    "context_window": 8194,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "embeddings"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "structured_output",
+      "predicted_outputs"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.01
+        }
+      }
+    },
+    "metadata": {
+      "description": "The bge-m3 embedding model encodes sentences, paragraphs, and long documents into a 1024-dimensional dense vector space, delivering high-quality semantic embeddings optimized for multilingual retrieval, semantic search, and large-context applications.",
+      "architecture": {
+        "modality": "text->embeddings",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "embeddings"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 8192,
+        "max_completion_tokens": null,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "frequency_penalty",
+        "logit_bias",
+        "max_tokens",
+        "min_p",
+        "presence_penalty",
+        "repetition_penalty",
+        "response_format",
+        "seed",
+        "stop",
+        "temperature",
+        "top_k",
+        "top_p"
+      ]
+    }
+  },
+  {
     "id": "baidu/ernie-4.5-vl-424b-a47b",
     "name": "ERNIE 4.5 VL 424B A47B ",
     "provider": "openrouter",
@@ -33756,6 +33944,302 @@
         "output": 16000
       },
       "knowledge": "2025-03-31"
+    }
+  },
+  {
+    "id": "black-forest-labs/flux.2-flex",
+    "name": "Black Forest Labs: FLUX.2 Flex",
+    "provider": "openrouter",
+    "family": "black-forest-labs",
+    "created_at": "2025-11-25 04:46:27 UTC",
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "image"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "image_generation"
+    ],
+    "pricing": {},
+    "metadata": {
+      "description": "FLUX.2 [flex] excels at rendering complex text, typography, and fine details, and supports multi-reference editing in the same unified architecture. Pricing is as follows, [per the docs](https://bfl.ai/pricing?category=flux.2): We charge $0.06...",
+      "architecture": {
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "image"
+        ]
+      },
+      "top_provider": null,
+      "per_request_limits": null,
+      "supported_parameters": {
+        "aspect_ratio": {
+          "type": "enum",
+          "values": [
+            "1:1",
+            "4:3",
+            "3:4",
+            "3:2",
+            "2:3",
+            "16:9",
+            "9:16",
+            "21:9",
+            "auto"
+          ]
+        },
+        "output_format": {
+          "type": "enum",
+          "values": [
+            "png",
+            "jpeg"
+          ]
+        },
+        "n": {
+          "type": "range",
+          "min": 1,
+          "max": 1
+        },
+        "input_references": {
+          "type": "range",
+          "min": 0,
+          "max": 8
+        },
+        "seed": {
+          "type": "boolean"
+        }
+      }
+    }
+  },
+  {
+    "id": "black-forest-labs/flux.2-klein-4b",
+    "name": "Black Forest Labs: FLUX.2 Klein 4B",
+    "provider": "openrouter",
+    "family": "black-forest-labs",
+    "created_at": "2026-01-14 22:20:28 UTC",
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "image"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "image_generation"
+    ],
+    "pricing": {},
+    "metadata": {
+      "description": "FLUX.2 [klein] 4B is the fastest and most cost-effective model in the FLUX.2 family, optimized for high-throughput use cases while maintaining excellent image quality. Pricing is based on the output...",
+      "architecture": {
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "image"
+        ]
+      },
+      "top_provider": null,
+      "per_request_limits": null,
+      "supported_parameters": {
+        "aspect_ratio": {
+          "type": "enum",
+          "values": [
+            "1:1",
+            "4:3",
+            "3:4",
+            "3:2",
+            "2:3",
+            "16:9",
+            "9:16",
+            "21:9",
+            "auto"
+          ]
+        },
+        "output_format": {
+          "type": "enum",
+          "values": [
+            "png",
+            "jpeg"
+          ]
+        },
+        "n": {
+          "type": "range",
+          "min": 1,
+          "max": 1
+        },
+        "input_references": {
+          "type": "range",
+          "min": 0,
+          "max": 4
+        },
+        "seed": {
+          "type": "boolean"
+        }
+      }
+    }
+  },
+  {
+    "id": "black-forest-labs/flux.2-max",
+    "name": "Black Forest Labs: FLUX.2 Max",
+    "provider": "openrouter",
+    "family": "black-forest-labs",
+    "created_at": "2025-12-16 03:59:30 UTC",
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "image"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "image_generation"
+    ],
+    "pricing": {},
+    "metadata": {
+      "description": "FLUX.2 [max] is the new top-tier image model from Black Forest Labs, pushing image quality, prompt understanding, and editing consistency to the highest level yet. Pricing is as follows, [per...",
+      "architecture": {
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "image"
+        ]
+      },
+      "top_provider": null,
+      "per_request_limits": null,
+      "supported_parameters": {
+        "aspect_ratio": {
+          "type": "enum",
+          "values": [
+            "1:1",
+            "4:3",
+            "3:4",
+            "3:2",
+            "2:3",
+            "16:9",
+            "9:16",
+            "21:9",
+            "auto"
+          ]
+        },
+        "output_format": {
+          "type": "enum",
+          "values": [
+            "png",
+            "jpeg"
+          ]
+        },
+        "n": {
+          "type": "range",
+          "min": 1,
+          "max": 1
+        },
+        "input_references": {
+          "type": "range",
+          "min": 0,
+          "max": 8
+        },
+        "seed": {
+          "type": "boolean"
+        }
+      }
+    }
+  },
+  {
+    "id": "black-forest-labs/flux.2-pro",
+    "name": "Black Forest Labs: FLUX.2 Pro",
+    "provider": "openrouter",
+    "family": "black-forest-labs",
+    "created_at": "2025-11-25 00:24:34 UTC",
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "image"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "image_generation"
+    ],
+    "pricing": {},
+    "metadata": {
+      "description": "A high-end image generation and editing model focused on frontier-level visual quality and reliability. It delivers strong prompt adherence, stable lighting, sharp textures, and consistent character/style reproduction across multi-reference inputs....",
+      "architecture": {
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "image"
+        ]
+      },
+      "top_provider": null,
+      "per_request_limits": null,
+      "supported_parameters": {
+        "aspect_ratio": {
+          "type": "enum",
+          "values": [
+            "1:1",
+            "4:3",
+            "3:4",
+            "3:2",
+            "2:3",
+            "16:9",
+            "9:16",
+            "21:9",
+            "auto"
+          ]
+        },
+        "output_format": {
+          "type": "enum",
+          "values": [
+            "png",
+            "jpeg"
+          ]
+        },
+        "n": {
+          "type": "range",
+          "min": 1,
+          "max": 1
+        },
+        "input_references": {
+          "type": "range",
+          "min": 0,
+          "max": 8
+        },
+        "seed": {
+          "type": "boolean"
+        }
+      }
     }
   },
   {
@@ -34119,6 +34603,90 @@
     }
   },
   {
+    "id": "bytedance-seed/seedream-4.5",
+    "name": "ByteDance Seed: Seedream 4.5",
+    "provider": "openrouter",
+    "family": "bytedance-seed",
+    "created_at": "2025-12-23 19:51:46 UTC",
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "image",
+        "text"
+      ],
+      "output": [
+        "image"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "image_generation"
+    ],
+    "pricing": {},
+    "metadata": {
+      "description": "Seedream 4.5 is the latest in-house image generation model developed by ByteDance. Compared with Seedream 4.0, it delivers comprehensive improvements, especially in editing consistency, including better preservation of subject details,...",
+      "architecture": {
+        "input_modalities": [
+          "image",
+          "text"
+        ],
+        "output_modalities": [
+          "image"
+        ]
+      },
+      "top_provider": null,
+      "per_request_limits": null,
+      "supported_parameters": {
+        "resolution": {
+          "type": "enum",
+          "values": [
+            "1K",
+            "2K",
+            "4K"
+          ]
+        },
+        "aspect_ratio": {
+          "type": "enum",
+          "values": [
+            "1:1",
+            "1:2",
+            "2:1",
+            "2:3",
+            "3:2",
+            "3:4",
+            "4:3",
+            "4:5",
+            "5:4",
+            "9:16",
+            "16:9",
+            "9:19.5",
+            "19.5:9",
+            "9:20",
+            "20:9",
+            "9:21",
+            "21:9",
+            "auto"
+          ]
+        },
+        "n": {
+          "type": "range",
+          "min": 1,
+          "max": 10
+        },
+        "input_references": {
+          "type": "range",
+          "min": 0,
+          "max": 14
+        },
+        "seed": {
+          "type": "boolean"
+        }
+      }
+    }
+  },
+  {
     "id": "bytedance/ui-tars-1.5-7b",
     "name": "UI-TARS 7B ",
     "provider": "openrouter",
@@ -34202,6 +34770,71 @@
         "output": 2048
       },
       "knowledge": "2025-01-31"
+    }
+  },
+  {
+    "id": "canopylabs/orpheus-3b-0.1-ft",
+    "name": "Canopy Labs: Orpheus 3B",
+    "provider": "openrouter",
+    "family": "canopylabs",
+    "created_at": "2026-04-23 22:26:08 UTC",
+    "context_window": 4096,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "audio"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "structured_output",
+      "predicted_outputs",
+      "speech_generation"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 7.0
+        }
+      }
+    },
+    "metadata": {
+      "description": "Orpheus 3B is an English text-to-speech model from Canopy Labs, fine-tuned for natural prosody and expressive delivery. It offers 7 preset voices and is suited for narration, voice assistants, and...",
+      "architecture": {
+        "modality": "text->speech",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "speech"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 4096,
+        "max_completion_tokens": null,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "frequency_penalty",
+        "logit_bias",
+        "max_tokens",
+        "min_p",
+        "presence_penalty",
+        "repetition_penalty",
+        "response_format",
+        "seed",
+        "stop",
+        "temperature",
+        "top_k",
+        "top_p"
+      ]
     }
   },
   {
@@ -34741,6 +35374,106 @@
         "context": 128000,
         "output": 128000
       }
+    }
+  },
+  {
+    "id": "deepgram/aura-2",
+    "name": "Deepgram: Aura-2",
+    "provider": "openrouter",
+    "family": "deepgram",
+    "created_at": "2026-07-16 21:26:07 UTC",
+    "context_window": 0,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "audio"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "speech_generation"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 30.0
+        }
+      }
+    },
+    "metadata": {
+      "description": "Aura-2 is a multilingual text-to-speech model from Deepgram. It supports Deepgram’s canonical Aura-2 voice catalog for speech synthesis across multiple languages.",
+      "architecture": {
+        "modality": "text->speech",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "speech"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 0,
+        "max_completion_tokens": null,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": []
+    }
+  },
+  {
+    "id": "deepgram/nova-3",
+    "name": "Deepgram: Nova-3",
+    "provider": "openrouter",
+    "family": "deepgram",
+    "created_at": "2026-07-15 00:36:01 UTC",
+    "context_window": 0,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "audio"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "transcription"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 4300.0
+        }
+      }
+    },
+    "metadata": {
+      "description": "Deepgram Nova-3 general-purpose speech-to-text model with monolingual and multilingual transcription support.",
+      "architecture": {
+        "modality": "audio->transcription",
+        "input_modalities": [
+          "audio"
+        ],
+        "output_modalities": [
+          "transcription"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 0,
+        "max_completion_tokens": null,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": []
     }
   },
   {
@@ -35760,6 +36493,307 @@
         "output": 384000
       },
       "knowledge": "2025-05"
+    }
+  },
+  {
+    "id": "fish-audio/s1",
+    "name": "Fish Audio: S1",
+    "provider": "openrouter",
+    "family": "fish-audio",
+    "created_at": "2026-07-29 19:35:34 UTC",
+    "context_window": 0,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "audio"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "speech_generation"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 15.0
+        }
+      }
+    },
+    "metadata": {
+      "description": "S1 is a multilingual text-to-speech model from Fish Audio. It is suited for voice applications that need broad emotional expression, using parenthetical controls to guide speaking style across its supported...",
+      "architecture": {
+        "modality": "text->speech",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "speech"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 0,
+        "max_completion_tokens": null,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": []
+    }
+  },
+  {
+    "id": "fish-audio/s2-pro",
+    "name": "Fish Audio: S2 Pro",
+    "provider": "openrouter",
+    "family": "fish-audio",
+    "created_at": "2026-07-29 19:35:34 UTC",
+    "context_window": 0,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "audio"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "speech_generation"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 15.0
+        }
+      }
+    },
+    "metadata": {
+      "description": "S2 Pro is a multilingual text-to-speech model from Fish Audio. It is suited for expressive narration and multi-speaker dialogue, with natural-language controls for speaking style and emotion.",
+      "architecture": {
+        "modality": "text->speech",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "speech"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 0,
+        "max_completion_tokens": null,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": []
+    }
+  },
+  {
+    "id": "fish-audio/s2.1-pro",
+    "name": "Fish Audio: S2.1 Pro",
+    "provider": "openrouter",
+    "family": "fish-audio",
+    "created_at": "2026-07-29 19:35:32 UTC",
+    "context_window": 0,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "audio"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "speech_generation"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 15.0
+        }
+      }
+    },
+    "metadata": {
+      "description": "S2.1 Pro is a production-oriented text-to-speech model from Fish Audio. It is suited for multilingual voice applications, expressive narration, and dialogue synthesis, with open-ended natural-language controls for speaking style and...",
+      "architecture": {
+        "modality": "text->speech",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "speech"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 0,
+        "max_completion_tokens": null,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": []
+    }
+  },
+  {
+    "id": "fish-audio/s2.1-pro-free:free",
+    "name": "Fish Audio: S2.1 Pro Free (free)",
+    "provider": "openrouter",
+    "family": "fish-audio",
+    "created_at": "2026-07-29 19:35:33 UTC",
+    "context_window": 0,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "audio"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "speech_generation"
+    ],
+    "pricing": {},
+    "metadata": {
+      "description": "S2.1 Pro Free is the no-cost variant of Fish Audio S2.1 Pro, intended for testing, prototyping, and low-volume applications. It provides the same synthesis capabilities without production latency or availability...",
+      "architecture": {
+        "modality": "text->speech",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "speech"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 0,
+        "max_completion_tokens": null,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": []
+    }
+  },
+  {
+    "id": "fish-audio/transcribe-1",
+    "name": "Fish Audio: Transcribe 1",
+    "provider": "openrouter",
+    "family": "fish-audio",
+    "created_at": "2026-07-29 19:35:35 UTC",
+    "context_window": 0,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "audio"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "transcription"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 100.0
+        }
+      }
+    },
+    "metadata": {
+      "description": "Transcribe 1 is a speech-to-text model from Fish Audio. It is suited for audio transcription with automatic language detection and can return timestamped word-level segments when alignment details are requested.",
+      "architecture": {
+        "modality": "audio->transcription",
+        "input_modalities": [
+          "audio"
+        ],
+        "output_modalities": [
+          "transcription"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 0,
+        "max_completion_tokens": null,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": []
+    }
+  },
+  {
+    "id": "google/chirp-3",
+    "name": "Google: Chirp 3",
+    "provider": "openrouter",
+    "family": "google",
+    "created_at": "2026-05-05 16:16:23 UTC",
+    "context_window": 0,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "audio"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "structured_output",
+      "transcription"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 16000.0
+        }
+      }
+    },
+    "metadata": {
+      "description": "Chirp 3 is Google's latest multilingual speech-to-text model. It offers enhanced transcription accuracy across 24 GA languages and 77+ preview languages, with support for automatic language detection, automatic punctuation, and...",
+      "architecture": {
+        "modality": "audio->transcription",
+        "input_modalities": [
+          "audio"
+        ],
+        "output_modalities": [
+          "transcription"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 0,
+        "max_completion_tokens": null,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "max_tokens",
+        "response_format",
+        "seed",
+        "temperature",
+        "top_p"
+      ]
     }
   },
   {
@@ -37233,6 +38267,64 @@
     }
   },
   {
+    "id": "google/gemini-3.1-flash-tts-preview",
+    "name": "Google: Gemini 3.1 Flash TTS Preview",
+    "provider": "openrouter",
+    "family": "google",
+    "created_at": "2026-04-24 02:55:08 UTC",
+    "context_window": 32768,
+    "max_output_tokens": 16384,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "audio"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "structured_output",
+      "speech_generation"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 1.0,
+          "output_per_million": 20.0
+        }
+      }
+    },
+    "metadata": {
+      "description": "Gemini 3.1 Flash TTS Preview is a text-to-speech model from Google, and a substantial generational step up from Gemini 2.5 Flash TTS. It takes text input and produces audio output...",
+      "architecture": {
+        "modality": "text->speech",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "speech"
+        ],
+        "tokenizer": "Gemini",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 32768,
+        "max_completion_tokens": 16384,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "max_tokens",
+        "response_format",
+        "seed",
+        "temperature",
+        "top_p"
+      ]
+    }
+  },
+  {
     "id": "google/gemini-3.1-pro-preview",
     "name": "Gemini 3.1 Pro Preview",
     "provider": "openrouter",
@@ -37583,6 +38675,190 @@
         "output": 65536
       },
       "knowledge": "2025-01"
+    }
+  },
+  {
+    "id": "google/gemini-embedding-001",
+    "name": "Google: Gemini Embedding 001",
+    "provider": "openrouter",
+    "family": "google",
+    "created_at": "2025-10-31 20:43:30 UTC",
+    "context_window": 20000,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "embeddings"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "structured_output"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.15
+        }
+      }
+    },
+    "metadata": {
+      "description": "gemini-embedding-001 provides a unified cutting edge experience across domains, including science, legal, finance, and coding. This embedding model has consistently held a top spot on the Massive Text Embedding Benchmark...",
+      "architecture": {
+        "modality": "text->embeddings",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "embeddings"
+        ],
+        "tokenizer": "Gemini",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 20000,
+        "max_completion_tokens": null,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "max_tokens",
+        "response_format",
+        "seed",
+        "temperature",
+        "top_p"
+      ]
+    }
+  },
+  {
+    "id": "google/gemini-embedding-2",
+    "name": "Google: Gemini Embedding 2",
+    "provider": "openrouter",
+    "family": "google",
+    "created_at": "2026-05-20 15:15:35 UTC",
+    "context_window": 8192,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "file",
+        "audio",
+        "video"
+      ],
+      "output": [
+        "embeddings"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "structured_output"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.19999999999999998
+        }
+      }
+    },
+    "metadata": {
+      "description": "Gemini Embedding 2 is Google's first multimodal embedding model. We currently support mapping text and images into a unified vector space for semantic search and retrieval-augmented generation (RAG). It supports...",
+      "architecture": {
+        "modality": "text+image+file+audio+video->embeddings",
+        "input_modalities": [
+          "text",
+          "image",
+          "file",
+          "audio",
+          "video"
+        ],
+        "output_modalities": [
+          "embeddings"
+        ],
+        "tokenizer": "Gemini",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 8192,
+        "max_completion_tokens": null,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "max_tokens",
+        "response_format",
+        "seed",
+        "temperature",
+        "top_p"
+      ]
+    }
+  },
+  {
+    "id": "google/gemini-embedding-2-preview",
+    "name": "Google: Gemini Embedding 2 Preview",
+    "provider": "openrouter",
+    "family": "google",
+    "created_at": "2026-04-17 14:34:25 UTC",
+    "context_window": 8192,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "file",
+        "audio",
+        "video"
+      ],
+      "output": [
+        "embeddings"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "structured_output"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.19999999999999998
+        }
+      }
+    },
+    "metadata": {
+      "description": "Gemini Embedding 2 Preview is Google's first multimodal embedding model. We currently support mapping text and images into a unified vector space for semantic search and retrieval-augmented generation (RAG). It...",
+      "architecture": {
+        "modality": "text+image+file+audio+video->embeddings",
+        "input_modalities": [
+          "text",
+          "image",
+          "file",
+          "audio",
+          "video"
+        ],
+        "output_modalities": [
+          "embeddings"
+        ],
+        "tokenizer": "Gemini",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 8192,
+        "max_completion_tokens": null,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "max_tokens",
+        "response_format",
+        "seed",
+        "temperature",
+        "top_p"
+      ]
     }
   },
   {
@@ -38590,6 +39866,71 @@
     }
   },
   {
+    "id": "hexgrad/kokoro-82m",
+    "name": "hexgrad: Kokoro 82M",
+    "provider": "openrouter",
+    "family": "hexgrad",
+    "created_at": "2026-04-23 22:26:07 UTC",
+    "context_window": 4096,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "audio"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "structured_output",
+      "predicted_outputs",
+      "speech_generation"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.62
+        }
+      }
+    },
+    "metadata": {
+      "description": "Kokoro 82M is a lightweight, open-weight text-to-speech model from hexgrad. It converts text to speech across 8 languages (American and British English, Spanish, French, Hindi, Italian, Japanese, Portuguese, and Chinese)...",
+      "architecture": {
+        "modality": "text->speech",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "speech"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 4096,
+        "max_completion_tokens": null,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "frequency_penalty",
+        "logit_bias",
+        "max_tokens",
+        "min_p",
+        "presence_penalty",
+        "repetition_penalty",
+        "response_format",
+        "seed",
+        "stop",
+        "temperature",
+        "top_k",
+        "top_p"
+      ]
+    }
+  },
+  {
     "id": "ibm-granite/granite-4.0-h-micro",
     "name": "Granite 4.0 Micro",
     "provider": "openrouter",
@@ -39241,6 +40582,390 @@
         "output": 1024
       },
       "knowledge": "2024-10-31"
+    }
+  },
+  {
+    "id": "intfloat/e5-base-v2",
+    "name": "Intfloat: E5-Base-v2",
+    "provider": "openrouter",
+    "family": "intfloat",
+    "created_at": "2025-11-18 02:33:12 UTC",
+    "context_window": 512,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "embeddings"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "structured_output"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.005
+        }
+      }
+    },
+    "metadata": {
+      "description": "The e5-base-v2 embedding model encodes English sentences and paragraphs into a 768-dimensional dense vector space, producing efficient and high-quality semantic embeddings optimized for tasks such as semantic search, similarity scoring,...",
+      "architecture": {
+        "modality": "text->embeddings",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "embeddings"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 512,
+        "max_completion_tokens": null,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "frequency_penalty",
+        "max_tokens",
+        "min_p",
+        "presence_penalty",
+        "repetition_penalty",
+        "response_format",
+        "seed",
+        "stop",
+        "temperature",
+        "top_k",
+        "top_p"
+      ]
+    }
+  },
+  {
+    "id": "intfloat/e5-large-v2",
+    "name": "Intfloat: E5-Large-v2",
+    "provider": "openrouter",
+    "family": "intfloat",
+    "created_at": "2025-11-18 02:37:12 UTC",
+    "context_window": 512,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "embeddings"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "structured_output"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.01
+        }
+      }
+    },
+    "metadata": {
+      "description": "The e5-large-v2 embedding model maps English sentences, paragraphs, and documents into a 1024-dimensional dense vector space, delivering high-accuracy semantic embeddings optimized for retrieval, semantic search, reranking, and similarity-scoring tasks.",
+      "architecture": {
+        "modality": "text->embeddings",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "embeddings"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 512,
+        "max_completion_tokens": null,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "frequency_penalty",
+        "max_tokens",
+        "min_p",
+        "presence_penalty",
+        "repetition_penalty",
+        "response_format",
+        "seed",
+        "stop",
+        "temperature",
+        "top_k",
+        "top_p"
+      ]
+    }
+  },
+  {
+    "id": "intfloat/multilingual-e5-large",
+    "name": "Intfloat: Multilingual-E5-Large",
+    "provider": "openrouter",
+    "family": "intfloat",
+    "created_at": "2025-11-18 02:30:47 UTC",
+    "context_window": 512,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "embeddings"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "structured_output"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.01
+        }
+      }
+    },
+    "metadata": {
+      "description": "The multilingual-e5-large embedding model encodes sentences, paragraphs, and documents across over 90 languages into a 1024-dimensional dense vector space, delivering robust semantic embeddings optimized for multilingual retrieval, cross-language similarity, and...",
+      "architecture": {
+        "modality": "text->embeddings",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "embeddings"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 512,
+        "max_completion_tokens": null,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "frequency_penalty",
+        "max_tokens",
+        "min_p",
+        "presence_penalty",
+        "repetition_penalty",
+        "response_format",
+        "seed",
+        "stop",
+        "temperature",
+        "top_k",
+        "top_p"
+      ]
+    }
+  },
+  {
+    "id": "krea/krea-2-large",
+    "name": "Krea: Krea 2 Large",
+    "provider": "openrouter",
+    "family": "krea",
+    "created_at": "2026-07-20 19:15:31 UTC",
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "image"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "image_generation"
+    ],
+    "pricing": {},
+    "metadata": {
+      "description": "Krea 2 Large is Krea's high-capability image generation model, more than twice the size of Krea 2 Medium. Its lighter post-training gives images a rawer, more textured, and flexible character,...",
+      "architecture": {
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "image"
+        ]
+      },
+      "top_provider": null,
+      "per_request_limits": null,
+      "supported_parameters": {
+        "resolution": {
+          "type": "enum",
+          "values": [
+            "1K"
+          ]
+        },
+        "aspect_ratio": {
+          "type": "enum",
+          "values": [
+            "1:1",
+            "4:3",
+            "3:2",
+            "16:9",
+            "4:5",
+            "2:3",
+            "9:16"
+          ]
+        },
+        "input_references": {
+          "type": "range",
+          "min": 0,
+          "max": 1
+        },
+        "seed": {
+          "type": "boolean"
+        }
+      }
+    }
+  },
+  {
+    "id": "krea/krea-2-medium",
+    "name": "Krea: Krea 2 Medium",
+    "provider": "openrouter",
+    "family": "krea",
+    "created_at": "2026-07-20 19:15:28 UTC",
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "image"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "image_generation"
+    ],
+    "pricing": {},
+    "metadata": {
+      "description": "Krea 2 Medium is Krea's balanced, cost-efficient image generation model and a practical starting point for a broad range of use cases. Its extensive post-training supports stable, consistent generations, with...",
+      "architecture": {
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "image"
+        ]
+      },
+      "top_provider": null,
+      "per_request_limits": null,
+      "supported_parameters": {
+        "resolution": {
+          "type": "enum",
+          "values": [
+            "1K"
+          ]
+        },
+        "aspect_ratio": {
+          "type": "enum",
+          "values": [
+            "1:1",
+            "4:3",
+            "3:2",
+            "16:9",
+            "4:5",
+            "2:3",
+            "9:16"
+          ]
+        },
+        "input_references": {
+          "type": "range",
+          "min": 0,
+          "max": 1
+        },
+        "seed": {
+          "type": "boolean"
+        }
+      }
+    }
+  },
+  {
+    "id": "krea/krea-2-medium-turbo",
+    "name": "Krea: Krea 2 Medium Turbo",
+    "provider": "openrouter",
+    "family": "krea",
+    "created_at": "2026-07-20 19:15:23 UTC",
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "image"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "image_generation"
+    ],
+    "pricing": {},
+    "metadata": {
+      "description": "Krea 2 Medium Turbo is a distilled, speed-focused variant of Krea 2 Medium from Krea. It is designed for rapid iteration and graphic design exploration where fast generation is the...",
+      "architecture": {
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "image"
+        ]
+      },
+      "top_provider": null,
+      "per_request_limits": null,
+      "supported_parameters": {
+        "resolution": {
+          "type": "enum",
+          "values": [
+            "1K"
+          ]
+        },
+        "aspect_ratio": {
+          "type": "enum",
+          "values": [
+            "1:1",
+            "4:3",
+            "3:2",
+            "16:9",
+            "4:5",
+            "2:3",
+            "9:16"
+          ]
+        },
+        "input_references": {
+          "type": "range",
+          "min": 0,
+          "max": 1
+        },
+        "seed": {
+          "type": "boolean"
+        }
+      }
     }
   },
   {
@@ -40612,6 +42337,297 @@
     }
   },
   {
+    "id": "microsoft/mai-image-2.5",
+    "name": "Microsoft: MAI-Image-2.5",
+    "provider": "openrouter",
+    "family": "microsoft",
+    "created_at": "2026-06-02 18:28:16 UTC",
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "image"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "image_generation"
+    ],
+    "pricing": {},
+    "metadata": {
+      "description": "Microsoft's MAI-Image-2.5 is a high-quality image generation model available via Azure AI Foundry. It produces photorealistic and artistic images from text prompts with support for various aspect ratios.",
+      "architecture": {
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "image"
+        ]
+      },
+      "top_provider": null,
+      "per_request_limits": null,
+      "supported_parameters": {
+        "aspect_ratio": {
+          "type": "enum",
+          "values": [
+            "1:1",
+            "4:3",
+            "3:4",
+            "16:9",
+            "9:16",
+            "3:2",
+            "2:3",
+            "auto"
+          ]
+        },
+        "n": {
+          "type": "range",
+          "min": 1,
+          "max": 1
+        },
+        "input_references": {
+          "type": "range",
+          "min": 0,
+          "max": 1
+        }
+      }
+    }
+  },
+  {
+    "id": "microsoft/mai-image-2.5-pro",
+    "name": "Microsoft: MAI-Image-2.5 Pro",
+    "provider": "openrouter",
+    "family": "microsoft",
+    "created_at": "2026-07-23 17:28:21 UTC",
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "image"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "image_generation"
+    ],
+    "pricing": {},
+    "metadata": {
+      "description": "Microsoft's MAI-Image-2.5 is a high-quality image generation model available via Azure AI Foundry. It produces photorealistic and artistic images from text prompts with support for various aspect ratios.",
+      "architecture": {
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "image"
+        ]
+      },
+      "top_provider": null,
+      "per_request_limits": null,
+      "supported_parameters": {
+        "aspect_ratio": {
+          "type": "enum",
+          "values": [
+            "1:1",
+            "4:3",
+            "3:4",
+            "16:9",
+            "9:16",
+            "3:2",
+            "2:3",
+            "auto"
+          ]
+        },
+        "n": {
+          "type": "range",
+          "min": 1,
+          "max": 1
+        },
+        "input_references": {
+          "type": "range",
+          "min": 0,
+          "max": 1
+        }
+      }
+    }
+  },
+  {
+    "id": "microsoft/mai-transcribe-1.5",
+    "name": "Microsoft: MAI-Transcribe 1.5",
+    "provider": "openrouter",
+    "family": "microsoft",
+    "created_at": "2026-06-02 18:31:35 UTC",
+    "context_window": 0,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "audio"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "transcription"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 360000.0
+        }
+      }
+    },
+    "metadata": {
+      "description": "MAI-Transcribe 1.5 is a multilingual speech-to-text model from Microsoft AI. It is suited for captions, call transcription, subtitling, accessibility, and other voice-enabled applications, with reliable transcription across 43 languages, diverse...",
+      "architecture": {
+        "modality": "audio->transcription",
+        "input_modalities": [
+          "audio"
+        ],
+        "output_modalities": [
+          "transcription"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 0,
+        "max_completion_tokens": null,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "max_completion_tokens",
+        "max_tokens",
+        "temperature",
+        "top_p"
+      ]
+    }
+  },
+  {
+    "id": "microsoft/mai-voice-2",
+    "name": "Microsoft: MAI-Voice-2",
+    "provider": "openrouter",
+    "family": "microsoft",
+    "created_at": "2026-06-02 18:31:37 UTC",
+    "context_window": 0,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "audio"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "speech_generation"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 22.0
+        }
+      }
+    },
+    "metadata": {
+      "description": "MAI-Voice-2 is an expressive text-to-speech model from Microsoft. It is suited for conversational assistants, media narration, accessibility, education, and other long-form voice applications. It supports 15 languages across 18 locales,...",
+      "architecture": {
+        "modality": "text->speech",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "speech"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 0,
+        "max_completion_tokens": null,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "max_completion_tokens",
+        "max_tokens",
+        "temperature",
+        "top_p"
+      ]
+    }
+  },
+  {
+    "id": "microsoft/mai-voice-2-flash",
+    "name": "Microsoft: MAI-Voice-2-Flash",
+    "provider": "openrouter",
+    "family": "microsoft",
+    "created_at": "2026-07-23 15:54:40 UTC",
+    "context_window": 0,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "audio"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "speech_generation"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 15.0
+        }
+      }
+    },
+    "metadata": {
+      "description": "MAI-Voice-2-Flash is a low-latency text-to-speech model from Microsoft for voice agents, assistants, call centers, accessibility, narration, and other interactive applications. It generates expressive 24 kHz mono speech across 15 languages...",
+      "architecture": {
+        "modality": "text->speech",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "speech"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 0,
+        "max_completion_tokens": null,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "max_completion_tokens",
+        "max_tokens",
+        "temperature",
+        "top_p"
+      ]
+    }
+  },
+  {
     "id": "microsoft/phi-4",
     "name": "Phi 4",
     "provider": "openrouter",
@@ -41448,6 +43464,114 @@
     }
   },
   {
+    "id": "minimax/speech-2.8-hd",
+    "name": "MiniMax: Speech 2.8 HD",
+    "provider": "openrouter",
+    "family": "minimax",
+    "created_at": "2026-07-16 01:06:41 UTC",
+    "context_window": 0,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "audio"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "speech_generation"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 100.0
+        }
+      }
+    },
+    "metadata": {
+      "description": "MiniMax Speech 2.8 HD is a text-to-speech model from MiniMax. It is suited for applications that generate spoken audio from text and accepts arbitrary MiniMax voice IDs.",
+      "architecture": {
+        "modality": "text->speech",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "speech"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 0,
+        "max_completion_tokens": null,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "max_tokens",
+        "temperature",
+        "top_p"
+      ]
+    }
+  },
+  {
+    "id": "minimax/speech-2.8-turbo",
+    "name": "MiniMax: Speech 2.8 Turbo",
+    "provider": "openrouter",
+    "family": "minimax",
+    "created_at": "2026-07-16 01:06:40 UTC",
+    "context_window": 0,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "audio"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "speech_generation"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 60.0
+        }
+      }
+    },
+    "metadata": {
+      "description": "MiniMax Speech 2.8 Turbo is a text-to-speech model from MiniMax. It is suited for applications that generate spoken audio from text and accepts arbitrary MiniMax voice IDs.",
+      "architecture": {
+        "modality": "text->speech",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "speech"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 0,
+        "max_completion_tokens": null,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "max_tokens",
+        "temperature",
+        "top_p"
+      ]
+    }
+  },
+  {
     "id": "mistralai/codestral-2508",
     "name": "Codestral 2508",
     "provider": "openrouter",
@@ -41529,6 +43653,66 @@
         "output": 256000
       },
       "knowledge": "2025-03-31"
+    }
+  },
+  {
+    "id": "mistralai/codestral-embed-2505",
+    "name": "Mistral: Codestral Embed 2505",
+    "provider": "openrouter",
+    "family": "mistralai",
+    "created_at": "2025-10-30 22:47:40 UTC",
+    "context_window": 8192,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "embeddings"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "structured_output"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.15
+        }
+      }
+    },
+    "metadata": {
+      "description": "Mistral Codestral Embed is specially designed for code, perfect for embedding code databases, repositories, and powering coding assistants with state-of-the-art retrieval.",
+      "architecture": {
+        "modality": "text->embeddings",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "embeddings"
+        ],
+        "tokenizer": "Mistral",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 8192,
+        "max_completion_tokens": null,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "frequency_penalty",
+        "max_tokens",
+        "presence_penalty",
+        "response_format",
+        "seed",
+        "stop",
+        "structured_outputs",
+        "temperature",
+        "top_p"
+      ]
     }
   },
   {
@@ -41872,6 +44056,66 @@
         "context": 262144,
         "output": 262144
       }
+    }
+  },
+  {
+    "id": "mistralai/mistral-embed-2312",
+    "name": "Mistral: Mistral Embed 2312",
+    "provider": "openrouter",
+    "family": "mistralai",
+    "created_at": "2025-10-31 21:03:42 UTC",
+    "context_window": 8192,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "embeddings"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "structured_output"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.09999999999999999
+        }
+      }
+    },
+    "metadata": {
+      "description": "Mistral Embed is a specialized embedding model for text data, optimized for semantic search and RAG applications. Developed by Mistral AI in late 2023, it produces 1024-dimensional vectors that effectively...",
+      "architecture": {
+        "modality": "text->embeddings",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "embeddings"
+        ],
+        "tokenizer": "Mistral",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 8192,
+        "max_completion_tokens": null,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "frequency_penalty",
+        "max_tokens",
+        "presence_penalty",
+        "response_format",
+        "seed",
+        "stop",
+        "structured_outputs",
+        "temperature",
+        "top_p"
+      ]
     }
   },
   {
@@ -42997,6 +45241,128 @@
         "output": 65536
       },
       "knowledge": "2024-01-31"
+    }
+  },
+  {
+    "id": "mistralai/voxtral-mini-transcribe",
+    "name": "Mistral: Voxtral Mini Transcribe",
+    "provider": "openrouter",
+    "family": "mistralai",
+    "created_at": "2026-05-15 20:30:24 UTC",
+    "context_window": 0,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "audio"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "structured_output",
+      "transcription"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 3000.0
+        }
+      }
+    },
+    "metadata": {
+      "description": "Voxtral Mini Transcribe is Mistral's speech-to-text model, derived from the Voxtral Mini family. It accepts audio input and returns transcribed text via the standard transcription API. Suited for transcribing meetings,...",
+      "architecture": {
+        "modality": "audio->transcription",
+        "input_modalities": [
+          "audio"
+        ],
+        "output_modalities": [
+          "transcription"
+        ],
+        "tokenizer": "Mistral",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 0,
+        "max_completion_tokens": null,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "frequency_penalty",
+        "max_tokens",
+        "presence_penalty",
+        "response_format",
+        "seed",
+        "stop",
+        "structured_outputs",
+        "temperature",
+        "top_p"
+      ]
+    }
+  },
+  {
+    "id": "mistralai/voxtral-mini-tts-2603",
+    "name": "Mistral: Voxtral Mini TTS",
+    "provider": "openrouter",
+    "family": "mistralai",
+    "created_at": "2026-04-19 04:02:17 UTC",
+    "context_window": 4096,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "audio"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "structured_output",
+      "speech_generation"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 16.0
+        }
+      }
+    },
+    "metadata": {
+      "description": "Voxtral Mini TTS is Mistral's text-to-speech model featuring zero-shot voice cloning and multilingual support. It converts text input into natural-sounding audio output.",
+      "architecture": {
+        "modality": "text->speech",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "speech"
+        ],
+        "tokenizer": "Mistral",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 4096,
+        "max_completion_tokens": null,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "frequency_penalty",
+        "max_tokens",
+        "presence_penalty",
+        "response_format",
+        "seed",
+        "stop",
+        "structured_outputs",
+        "temperature",
+        "top_p"
+      ]
     }
   },
   {
@@ -44327,6 +46693,104 @@
     }
   },
   {
+    "id": "nvidia/llama-nemotron-embed-vl-1b-v2:free",
+    "name": "NVIDIA: Llama Nemotron Embed VL 1B V2 (free)",
+    "provider": "openrouter",
+    "family": "nvidia",
+    "created_at": "2026-02-25 18:43:37 UTC",
+    "context_window": 131072,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "embeddings"
+      ]
+    },
+    "capabilities": [
+      "streaming"
+    ],
+    "pricing": {},
+    "metadata": {
+      "description": "The Llama Nemotron Embed VL 1B V2 embedding model is optimized for multimodal question-answering retrieval. The model can embed 'documents' in the form of image, text, or image and text...",
+      "architecture": {
+        "modality": "text+image->embeddings",
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "embeddings"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 131072,
+        "max_completion_tokens": null,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "max_tokens",
+        "seed",
+        "temperature",
+        "top_p"
+      ]
+    }
+  },
+  {
+    "id": "nvidia/nemotron-3-embed-1b:free",
+    "name": "NVIDIA: Nemotron 3 Embed 1B (free)",
+    "provider": "openrouter",
+    "family": "nvidia",
+    "created_at": "2026-07-16 12:01:34 UTC",
+    "context_window": 32768,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "embeddings"
+      ]
+    },
+    "capabilities": [
+      "streaming"
+    ],
+    "pricing": {},
+    "metadata": {
+      "description": "NVIDIA Nemotron 3 Embed 1B is an open text embedding model from NVIDIA, optimized for high-throughput, low-latency retrieval. It is suited for enterprise search, RAG, code retrieval, and agentic retrieval...",
+      "architecture": {
+        "modality": "text->embeddings",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "embeddings"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 32768,
+        "max_completion_tokens": null,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "max_tokens",
+        "seed",
+        "temperature",
+        "top_p"
+      ]
+    }
+  },
+  {
     "id": "nvidia/nemotron-3-nano-30b-a3b",
     "name": "Nemotron 3 Nano 30B A3B",
     "provider": "openrouter",
@@ -45140,6 +47604,68 @@
         "context": 128000,
         "output": 128000
       }
+    }
+  },
+  {
+    "id": "nvidia/parakeet-tdt-0.6b-v3",
+    "name": "NVIDIA: Parakeet TDT 0.6B v3",
+    "provider": "openrouter",
+    "family": "nvidia",
+    "created_at": "2026-05-27 02:18:55 UTC",
+    "context_window": 0,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "audio"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "predicted_outputs",
+      "transcription"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 1500.0
+        }
+      }
+    },
+    "metadata": {
+      "description": "Parakeet TDT 0.6B v3 is NVIDIA's 600M-parameter multilingual speech-to-text model built on the FastConformer-TDT architecture. Trained on the Granary dataset (670,000+ hours of audio), it supports automatic language detection across...",
+      "architecture": {
+        "modality": "audio->transcription",
+        "input_modalities": [
+          "audio"
+        ],
+        "output_modalities": [
+          "transcription"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 0,
+        "max_completion_tokens": null,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "frequency_penalty",
+        "logit_bias",
+        "max_tokens",
+        "min_p",
+        "presence_penalty",
+        "repetition_penalty",
+        "stop",
+        "temperature",
+        "top_k",
+        "top_p"
+      ]
     }
   },
   {
@@ -46582,6 +49108,71 @@
     }
   },
   {
+    "id": "openai/gpt-4o-mini-transcribe",
+    "name": "OpenAI: GPT-4o Mini Transcribe",
+    "provider": "openrouter",
+    "family": "openai",
+    "created_at": "2026-05-01 17:55:51 UTC",
+    "context_window": 128000,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "audio"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "structured_output",
+      "transcription"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 1.25,
+          "output_per_million": 5.0
+        }
+      }
+    },
+    "metadata": {
+      "description": "GPT-4o Mini Transcribe is OpenAI's smaller, cost-efficient speech-to-text model built on GPT-4o Mini audio capabilities. It's priced per token (input and output), making it suitable for high-volume transcription workflows that...",
+      "architecture": {
+        "modality": "audio->transcription",
+        "input_modalities": [
+          "audio"
+        ],
+        "output_modalities": [
+          "transcription"
+        ],
+        "tokenizer": "GPT",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 128000,
+        "max_completion_tokens": null,
+        "is_moderated": true
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "frequency_penalty",
+        "logit_bias",
+        "logprobs",
+        "max_tokens",
+        "presence_penalty",
+        "response_format",
+        "seed",
+        "stop",
+        "structured_outputs",
+        "temperature",
+        "top_logprobs",
+        "top_p"
+      ]
+    }
+  },
+  {
     "id": "openai/gpt-4o-search-preview",
     "name": "GPT-4o Search Preview",
     "provider": "openrouter",
@@ -46650,6 +49241,71 @@
         "output": 16384
       },
       "knowledge": "2023-10-31"
+    }
+  },
+  {
+    "id": "openai/gpt-4o-transcribe",
+    "name": "OpenAI: GPT-4o Transcribe",
+    "provider": "openrouter",
+    "family": "openai",
+    "created_at": "2026-04-27 23:34:55 UTC",
+    "context_window": 128000,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "audio"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "structured_output",
+      "transcription"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 2.5,
+          "output_per_million": 10.0
+        }
+      }
+    },
+    "metadata": {
+      "description": "GPT-4o Transcribe is OpenAI's high-quality speech-to-text model built on GPT-4o audio capabilities. It's priced per token (input and output), making it suitable for workflows that benefit from token-level billing transparency.",
+      "architecture": {
+        "modality": "audio->transcription",
+        "input_modalities": [
+          "audio"
+        ],
+        "output_modalities": [
+          "transcription"
+        ],
+        "tokenizer": "GPT",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 128000,
+        "max_completion_tokens": null,
+        "is_moderated": true
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "frequency_penalty",
+        "logit_bias",
+        "logprobs",
+        "max_tokens",
+        "presence_penalty",
+        "response_format",
+        "seed",
+        "stop",
+        "structured_outputs",
+        "temperature",
+        "top_logprobs",
+        "top_p"
+      ]
     }
   },
   {
@@ -49332,6 +51988,253 @@
     }
   },
   {
+    "id": "openai/gpt-image-1",
+    "name": "OpenAI: GPT Image 1",
+    "provider": "openrouter",
+    "family": "openai",
+    "created_at": "2026-06-24 01:31:53 UTC",
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "image"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "image_generation"
+    ],
+    "pricing": {},
+    "metadata": {
+      "description": "OpenAI's GPT Image 1 generates and edits images via the dedicated Images API. Features accurate text rendering, transparent backgrounds, and up to 16 reference images for edits.",
+      "architecture": {
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "image"
+        ]
+      },
+      "top_provider": null,
+      "per_request_limits": null,
+      "supported_parameters": {
+        "aspect_ratio": {
+          "type": "enum",
+          "values": [
+            "1:1",
+            "3:2",
+            "2:3",
+            "auto"
+          ]
+        },
+        "quality": {
+          "type": "enum",
+          "values": [
+            "auto",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        "background": {
+          "type": "enum",
+          "values": [
+            "auto",
+            "transparent",
+            "opaque"
+          ]
+        },
+        "n": {
+          "type": "range",
+          "min": 1,
+          "max": 10
+        },
+        "input_references": {
+          "type": "range",
+          "min": 0,
+          "max": 16
+        },
+        "output_compression": {
+          "type": "range",
+          "min": 0,
+          "max": 100
+        }
+      }
+    }
+  },
+  {
+    "id": "openai/gpt-image-1-mini",
+    "name": "OpenAI: GPT Image 1 Mini",
+    "provider": "openrouter",
+    "family": "openai",
+    "created_at": "2026-06-24 01:31:53 UTC",
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "image"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "image_generation"
+    ],
+    "pricing": {},
+    "metadata": {
+      "description": "A cost-efficient variant of GPT Image 1 for high-quality image generation at reduced latency and cost via OpenAI's dedicated Images API.",
+      "architecture": {
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "image"
+        ]
+      },
+      "top_provider": null,
+      "per_request_limits": null,
+      "supported_parameters": {
+        "aspect_ratio": {
+          "type": "enum",
+          "values": [
+            "1:1",
+            "3:2",
+            "2:3",
+            "auto"
+          ]
+        },
+        "quality": {
+          "type": "enum",
+          "values": [
+            "auto",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        "background": {
+          "type": "enum",
+          "values": [
+            "auto",
+            "transparent",
+            "opaque"
+          ]
+        },
+        "n": {
+          "type": "range",
+          "min": 1,
+          "max": 10
+        },
+        "input_references": {
+          "type": "range",
+          "min": 0,
+          "max": 16
+        },
+        "output_compression": {
+          "type": "range",
+          "min": 0,
+          "max": 100
+        }
+      }
+    }
+  },
+  {
+    "id": "openai/gpt-image-2",
+    "name": "OpenAI: GPT Image 2",
+    "provider": "openrouter",
+    "family": "openai",
+    "created_at": "2026-06-24 01:31:54 UTC",
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "image"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "image_generation"
+    ],
+    "pricing": {},
+    "metadata": {
+      "description": "OpenAI's latest image generation model. Supports high-fidelity image generation and editing via the dedicated Images API.",
+      "architecture": {
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "image"
+        ]
+      },
+      "top_provider": null,
+      "per_request_limits": null,
+      "supported_parameters": {
+        "aspect_ratio": {
+          "type": "enum",
+          "values": [
+            "1:1",
+            "3:2",
+            "2:3",
+            "4:3",
+            "3:4",
+            "16:9",
+            "9:16",
+            "21:9",
+            "auto"
+          ]
+        },
+        "quality": {
+          "type": "enum",
+          "values": [
+            "auto",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        "background": {
+          "type": "enum",
+          "values": [
+            "auto",
+            "opaque"
+          ]
+        },
+        "n": {
+          "type": "range",
+          "min": 1,
+          "max": 10
+        },
+        "input_references": {
+          "type": "range",
+          "min": 0,
+          "max": 16
+        },
+        "output_compression": {
+          "type": "range",
+          "min": 0,
+          "max": 100
+        }
+      }
+    }
+  },
+  {
     "id": "openai/gpt-oss-120b",
     "name": "GPT OSS 120B",
     "provider": "openrouter",
@@ -49789,6 +52692,70 @@
         "context": 131072,
         "output": 65536
       }
+    }
+  },
+  {
+    "id": "openai/gpt-transcribe",
+    "name": "OpenAI: GPT Transcribe",
+    "provider": "openrouter",
+    "family": "openai",
+    "created_at": "2026-08-05 23:51:37 UTC",
+    "context_window": 0,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "audio"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "structured_output",
+      "transcription"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 4500.0
+        }
+      }
+    },
+    "metadata": {
+      "description": "GPT Transcribe is a high-accuracy speech-to-text model from OpenAI. It is suited for recorded audio, streamed file transcription, and committed Realtime turns, with free-form context, keyword hints, and multiple language...",
+      "architecture": {
+        "modality": "audio->transcription",
+        "input_modalities": [
+          "audio"
+        ],
+        "output_modalities": [
+          "transcription"
+        ],
+        "tokenizer": "GPT",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 0,
+        "max_completion_tokens": null,
+        "is_moderated": true
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "frequency_penalty",
+        "logit_bias",
+        "logprobs",
+        "max_tokens",
+        "presence_penalty",
+        "response_format",
+        "seed",
+        "stop",
+        "structured_outputs",
+        "temperature",
+        "top_logprobs",
+        "top_p"
+      ]
     }
   },
   {
@@ -50706,6 +53673,384 @@
     }
   },
   {
+    "id": "openai/text-embedding-3-large",
+    "name": "OpenAI: Text Embedding 3 Large",
+    "provider": "openrouter",
+    "family": "openai",
+    "created_at": "2025-10-30 22:21:06 UTC",
+    "context_window": 8192,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "embeddings"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "structured_output"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.13
+        }
+      }
+    },
+    "metadata": {
+      "description": "text-embedding-3-large is OpenAI's most capable embedding model for both english and non-english tasks. Embeddings are a numerical representation of text that can be used to measure the relatedness between two...",
+      "architecture": {
+        "modality": "text->embeddings",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "embeddings"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 8192,
+        "max_completion_tokens": null,
+        "is_moderated": true
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "frequency_penalty",
+        "logit_bias",
+        "logprobs",
+        "max_completion_tokens",
+        "max_tokens",
+        "presence_penalty",
+        "response_format",
+        "seed",
+        "stop",
+        "structured_outputs",
+        "temperature",
+        "top_logprobs",
+        "top_p"
+      ]
+    }
+  },
+  {
+    "id": "openai/text-embedding-3-small",
+    "name": "OpenAI: Text Embedding 3 Small",
+    "provider": "openrouter",
+    "family": "openai",
+    "created_at": "2025-10-30 20:50:55 UTC",
+    "context_window": 8192,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "embeddings"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "structured_output"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.02
+        }
+      }
+    },
+    "metadata": {
+      "description": "text-embedding-3-small is OpenAI's improved, more performant version of the ada embedding model. Embeddings are a numerical representation of text that can be used to measure the relatedness between two pieces...",
+      "architecture": {
+        "modality": "text->embeddings",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "embeddings"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 8192,
+        "max_completion_tokens": null,
+        "is_moderated": true
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "frequency_penalty",
+        "logit_bias",
+        "logprobs",
+        "max_completion_tokens",
+        "max_tokens",
+        "presence_penalty",
+        "response_format",
+        "seed",
+        "stop",
+        "structured_outputs",
+        "temperature",
+        "top_logprobs",
+        "top_p"
+      ]
+    }
+  },
+  {
+    "id": "openai/text-embedding-ada-002",
+    "name": "OpenAI: Text Embedding Ada 002",
+    "provider": "openrouter",
+    "family": "openai",
+    "created_at": "2025-10-30 23:09:58 UTC",
+    "context_window": 8192,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "embeddings"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "structured_output"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.09999999999999999
+        }
+      }
+    },
+    "metadata": {
+      "description": "text-embedding-ada-002 is OpenAI's legacy text embedding model.",
+      "architecture": {
+        "modality": "text->embeddings",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "embeddings"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 8192,
+        "max_completion_tokens": null,
+        "is_moderated": true
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "frequency_penalty",
+        "logit_bias",
+        "logprobs",
+        "max_tokens",
+        "presence_penalty",
+        "response_format",
+        "seed",
+        "stop",
+        "structured_outputs",
+        "temperature",
+        "top_logprobs",
+        "top_p"
+      ]
+    }
+  },
+  {
+    "id": "openai/whisper-1",
+    "name": "OpenAI: Whisper 1",
+    "provider": "openrouter",
+    "family": "openai",
+    "created_at": "2026-04-27 23:35:05 UTC",
+    "context_window": 0,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "audio"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "structured_output",
+      "transcription"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 6000.0
+        }
+      }
+    },
+    "metadata": {
+      "description": "Whisper is OpenAI's open-source automatic speech recognition model, available via API as `whisper-1`. It supports transcription and translation across 50+ languages from audio files up to 25 MB. Accepts formats...",
+      "architecture": {
+        "modality": "audio->transcription",
+        "input_modalities": [
+          "audio"
+        ],
+        "output_modalities": [
+          "transcription"
+        ],
+        "tokenizer": "GPT",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 0,
+        "max_completion_tokens": null,
+        "is_moderated": true
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "frequency_penalty",
+        "logit_bias",
+        "logprobs",
+        "max_tokens",
+        "presence_penalty",
+        "response_format",
+        "seed",
+        "stop",
+        "structured_outputs",
+        "temperature",
+        "top_logprobs",
+        "top_p"
+      ]
+    }
+  },
+  {
+    "id": "openai/whisper-large-v3",
+    "name": "OpenAI: Whisper Large V3",
+    "provider": "openrouter",
+    "family": "openai",
+    "created_at": "2026-05-01 13:31:06 UTC",
+    "context_window": 0,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "audio"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "structured_output",
+      "predicted_outputs",
+      "transcription"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 1500.0
+        }
+      }
+    },
+    "metadata": {
+      "description": "Whisper Large V3 is OpenAI's open-source automatic speech recognition model offering both audio transcription and translation. It supports 99+ languages and accepts common audio formats including mp3, mp4, wav, webm,...",
+      "architecture": {
+        "modality": "audio->transcription",
+        "input_modalities": [
+          "audio"
+        ],
+        "output_modalities": [
+          "transcription"
+        ],
+        "tokenizer": "GPT",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 0,
+        "max_completion_tokens": null,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "frequency_penalty",
+        "logit_bias",
+        "max_tokens",
+        "min_p",
+        "presence_penalty",
+        "repetition_penalty",
+        "response_format",
+        "seed",
+        "stop",
+        "temperature",
+        "top_k",
+        "top_p"
+      ]
+    }
+  },
+  {
+    "id": "openai/whisper-large-v3-turbo",
+    "name": "OpenAI: Whisper Large V3 Turbo",
+    "provider": "openrouter",
+    "family": "openai",
+    "created_at": "2026-05-01 13:31:06 UTC",
+    "context_window": 0,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "audio"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "structured_output",
+      "transcription"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 40000.0
+        }
+      }
+    },
+    "metadata": {
+      "description": "Whisper Large V3 Turbo is an optimized version of OpenAI's Whisper Large V3 speech recognition model, designed for speed and cost efficiency. It supports transcription across 99+ languages with a...",
+      "architecture": {
+        "modality": "audio->transcription",
+        "input_modalities": [
+          "audio"
+        ],
+        "output_modalities": [
+          "transcription"
+        ],
+        "tokenizer": "GPT",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 0,
+        "max_completion_tokens": null,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "max_tokens",
+        "response_format",
+        "seed",
+        "stop",
+        "temperature",
+        "top_p"
+      ]
+    }
+  },
+  {
     "id": "openrouter/auto",
     "name": "Auto Router",
     "provider": "openrouter",
@@ -51119,6 +54464,120 @@
         "context": 32768,
         "output": 8192
       }
+    }
+  },
+  {
+    "id": "perplexity/pplx-embed-v1-0.6b",
+    "name": "Perplexity: Embed V1 0.6B",
+    "provider": "openrouter",
+    "family": "perplexity",
+    "created_at": "2026-03-16 01:34:28 UTC",
+    "context_window": 32000,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "embeddings"
+      ]
+    },
+    "capabilities": [
+      "streaming"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.004
+        }
+      }
+    },
+    "metadata": {
+      "description": "pplx-embed-v1-0.6B is one of Perplexity's state-of-the-art text embedding models built for real-world, web-scale retrieval. pplx-embed-v1 is optimized for standard dense text retrieval with the 0.6B parameter model targeting lightweight, low-latency...",
+      "architecture": {
+        "modality": "text->embeddings",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "embeddings"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 32000,
+        "max_completion_tokens": null,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "frequency_penalty",
+        "max_tokens",
+        "presence_penalty",
+        "temperature",
+        "top_k",
+        "top_p",
+        "web_search_options"
+      ]
+    }
+  },
+  {
+    "id": "perplexity/pplx-embed-v1-4b",
+    "name": "Perplexity: Embed V1 4B",
+    "provider": "openrouter",
+    "family": "perplexity",
+    "created_at": "2026-03-16 01:42:52 UTC",
+    "context_window": 32000,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "embeddings"
+      ]
+    },
+    "capabilities": [
+      "streaming"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.03
+        }
+      }
+    },
+    "metadata": {
+      "description": "pplx-embed-v1 -4B is one of Perplexity's state-of-the-art text embedding models built for real-world, web-scale retrieval. pplx-embed-v1 is optimized for standard dense text retrieval with the 4B parameter model maximizing retrieval...",
+      "architecture": {
+        "modality": "text->embeddings",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "embeddings"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 32000,
+        "max_completion_tokens": null,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "frequency_penalty",
+        "max_tokens",
+        "presence_penalty",
+        "temperature",
+        "top_k",
+        "top_p",
+        "web_search_options"
+      ]
     }
   },
   {
@@ -52047,6 +55506,278 @@
         "output": 32768
       },
       "knowledge": "2024-06-30"
+    }
+  },
+  {
+    "id": "qwen/qwen-audio-3.0-tts-flash",
+    "name": "Qwen: Qwen-Audio-3.0-TTS Flash",
+    "provider": "openrouter",
+    "family": "qwen",
+    "created_at": "2026-07-23 14:33:27 UTC",
+    "context_window": 0,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "audio"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "structured_output",
+      "speech_generation"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 15.0
+        }
+      }
+    },
+    "metadata": {
+      "description": "Qwen-Audio-3.0-TTS Flash is Alibaba's fast, cost-efficient text-to-speech model, generating spoken audio from text via the DashScope Speech Synthesizer API.",
+      "architecture": {
+        "modality": "text->speech",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "speech"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 0,
+        "max_completion_tokens": null,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "max_tokens",
+        "presence_penalty",
+        "response_format",
+        "seed",
+        "temperature",
+        "top_p"
+      ]
+    }
+  },
+  {
+    "id": "qwen/qwen-audio-3.0-tts-plus",
+    "name": "Qwen: Qwen-Audio-3.0-TTS Plus",
+    "provider": "openrouter",
+    "family": "qwen",
+    "created_at": "2026-07-23 14:33:27 UTC",
+    "context_window": 0,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "audio"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "structured_output",
+      "speech_generation"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 20.0
+        }
+      }
+    },
+    "metadata": {
+      "description": "Qwen-Audio-3.0-TTS Plus is Alibaba's higher-quality text-to-speech model, generating spoken audio from text via the DashScope Speech Synthesizer API.",
+      "architecture": {
+        "modality": "text->speech",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "speech"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 0,
+        "max_completion_tokens": null,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "max_tokens",
+        "presence_penalty",
+        "response_format",
+        "seed",
+        "temperature",
+        "top_p"
+      ]
+    }
+  },
+  {
+    "id": "qwen/qwen-image-3",
+    "name": "Qwen: Qwen Image 3",
+    "provider": "openrouter",
+    "family": "qwen",
+    "created_at": "2026-08-05 01:49:08 UTC",
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "image"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "image_generation"
+    ],
+    "pricing": {},
+    "metadata": {
+      "description": "Qwen Image 3 is a unified image generation and editing model from Qwen. It supports precise rendering of text and details as small as 10px, along with a richer world...",
+      "architecture": {
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "image"
+        ]
+      },
+      "top_provider": null,
+      "per_request_limits": null,
+      "supported_parameters": {
+        "resolution": {
+          "type": "enum",
+          "values": [
+            "1K",
+            "2K"
+          ]
+        },
+        "aspect_ratio": {
+          "type": "enum",
+          "values": [
+            "1:1",
+            "1:2",
+            "1:4",
+            "2:1",
+            "2:3",
+            "3:2",
+            "3:4",
+            "4:1",
+            "4:3",
+            "4:5",
+            "5:4",
+            "9:16",
+            "16:9"
+          ]
+        },
+        "n": {
+          "type": "range",
+          "min": 1,
+          "max": 6
+        },
+        "input_references": {
+          "type": "range",
+          "min": 0,
+          "max": 4
+        },
+        "seed": {
+          "type": "boolean"
+        }
+      }
+    }
+  },
+  {
+    "id": "qwen/qwen-image-3-pro",
+    "name": "Qwen: Qwen Image 3 Pro",
+    "provider": "openrouter",
+    "family": "qwen",
+    "created_at": "2026-08-05 01:49:08 UTC",
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "image"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "image_generation"
+    ],
+    "pricing": {},
+    "metadata": {
+      "description": "Qwen Image 3 Pro is an image generation and editing model from Qwen. It supports precise rendering of text and details as small as 10px, along with richer world knowledge...",
+      "architecture": {
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "image"
+        ]
+      },
+      "top_provider": null,
+      "per_request_limits": null,
+      "supported_parameters": {
+        "resolution": {
+          "type": "enum",
+          "values": [
+            "1K",
+            "2K"
+          ]
+        },
+        "aspect_ratio": {
+          "type": "enum",
+          "values": [
+            "1:1",
+            "1:2",
+            "1:4",
+            "2:1",
+            "2:3",
+            "3:2",
+            "3:4",
+            "4:1",
+            "4:3",
+            "4:5",
+            "5:4",
+            "9:16",
+            "16:9"
+          ]
+        },
+        "n": {
+          "type": "range",
+          "min": 1,
+          "max": 6
+        },
+        "input_references": {
+          "type": "range",
+          "min": 0,
+          "max": 4
+        },
+        "seed": {
+          "type": "boolean"
+        }
+      }
     }
   },
   {
@@ -53179,6 +56910,64 @@
     }
   },
   {
+    "id": "qwen/qwen3-asr-flash-2026-02-10",
+    "name": "Qwen: Qwen3 ASR Flash",
+    "provider": "openrouter",
+    "family": "qwen",
+    "created_at": "2026-05-14 04:26:16 UTC",
+    "context_window": 0,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "audio"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "structured_output",
+      "transcription"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 35.0
+        }
+      }
+    },
+    "metadata": {
+      "description": "Qwen3-ASR-Flash is Alibaba's automatic speech recognition service, built on the Qwen3-Omni foundation and trained on tens of millions of hours of multimodal speech data. The model handles 11 languages —...",
+      "architecture": {
+        "modality": "audio->transcription",
+        "input_modalities": [
+          "audio"
+        ],
+        "output_modalities": [
+          "transcription"
+        ],
+        "tokenizer": "Qwen3",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 0,
+        "max_completion_tokens": null,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "max_tokens",
+        "presence_penalty",
+        "response_format",
+        "seed",
+        "temperature",
+        "top_p"
+      ]
+    }
+  },
+  {
     "id": "qwen/qwen3-coder",
     "name": "Qwen3 Coder 480B A35B",
     "provider": "openrouter",
@@ -53664,6 +57453,134 @@
         "output": 262000
       },
       "knowledge": "2025-06-30"
+    }
+  },
+  {
+    "id": "qwen/qwen3-embedding-4b",
+    "name": "Qwen: Qwen3 Embedding 4B",
+    "provider": "openrouter",
+    "family": "qwen",
+    "created_at": "2025-10-28 14:48:42 UTC",
+    "context_window": 32768,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "embeddings"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "structured_output"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.02
+        }
+      }
+    },
+    "metadata": {
+      "description": "The Qwen3 Embedding model series is the latest proprietary model of the Qwen family, specifically designed for text embedding and ranking tasks. This series inherits the exceptional multilingual capabilities, long-text...",
+      "architecture": {
+        "modality": "text->embeddings",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "embeddings"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 32768,
+        "max_completion_tokens": null,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "frequency_penalty",
+        "max_tokens",
+        "min_p",
+        "presence_penalty",
+        "repetition_penalty",
+        "response_format",
+        "seed",
+        "stop",
+        "temperature",
+        "top_k",
+        "top_p"
+      ]
+    }
+  },
+  {
+    "id": "qwen/qwen3-embedding-8b",
+    "name": "Qwen: Qwen3 Embedding 8B",
+    "provider": "openrouter",
+    "family": "qwen",
+    "created_at": "2025-10-28 19:43:42 UTC",
+    "context_window": 32768,
+    "max_output_tokens": 32000,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "embeddings"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "structured_output",
+      "predicted_outputs"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.01
+        }
+      }
+    },
+    "metadata": {
+      "description": "The Qwen3 Embedding model series is the latest proprietary model of the Qwen family, specifically designed for text embedding and ranking tasks. This series inherits the exceptional multilingual capabilities, long-text...",
+      "architecture": {
+        "modality": "text->embeddings",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "embeddings"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 32000,
+        "max_completion_tokens": 32000,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "frequency_penalty",
+        "logit_bias",
+        "logprobs",
+        "max_tokens",
+        "min_p",
+        "presence_penalty",
+        "repetition_penalty",
+        "response_format",
+        "seed",
+        "stop",
+        "temperature",
+        "top_k",
+        "top_logprobs",
+        "top_p"
+      ]
     }
   },
   {
@@ -56156,6 +60073,677 @@
     }
   },
   {
+    "id": "recraft/recraft-v3",
+    "name": "Recraft: Recraft V3",
+    "provider": "openrouter",
+    "family": "recraft",
+    "created_at": "2026-05-07 20:23:53 UTC",
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "image"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "image_generation"
+    ],
+    "pricing": {},
+    "metadata": {
+      "description": "Recraft V3 is an image generation model from Recraft. It supports text and image inputs with image output at ~1K resolution across multiple aspect ratios. Supports the following `image_config` parameters:...",
+      "architecture": {
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "image"
+        ]
+      },
+      "top_provider": null,
+      "per_request_limits": null,
+      "supported_parameters": {
+        "aspect_ratio": {
+          "type": "enum",
+          "values": [
+            "1:1",
+            "4:3",
+            "3:4",
+            "16:9",
+            "9:16",
+            "auto"
+          ]
+        },
+        "n": {
+          "type": "range",
+          "min": 1,
+          "max": 6
+        },
+        "input_references": {
+          "type": "range",
+          "min": 0,
+          "max": 1
+        }
+      }
+    }
+  },
+  {
+    "id": "recraft/recraft-v4",
+    "name": "Recraft: Recraft V4",
+    "provider": "openrouter",
+    "family": "recraft",
+    "created_at": "2026-05-07 20:23:57 UTC",
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "image"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "image_generation"
+    ],
+    "pricing": {},
+    "metadata": {
+      "description": "Recraft V4 is an image generation model from Recraft. It supports text and image inputs with image output at ~1K resolution across multiple aspect ratios. It delivers stronger compositional judgment,...",
+      "architecture": {
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "image"
+        ]
+      },
+      "top_provider": null,
+      "per_request_limits": null,
+      "supported_parameters": {
+        "aspect_ratio": {
+          "type": "enum",
+          "values": [
+            "1:1",
+            "4:3",
+            "3:4",
+            "16:9",
+            "9:16",
+            "auto"
+          ]
+        },
+        "n": {
+          "type": "range",
+          "min": 1,
+          "max": 6
+        },
+        "input_references": {
+          "type": "range",
+          "min": 0,
+          "max": 1
+        }
+      }
+    }
+  },
+  {
+    "id": "recraft/recraft-v4-pro",
+    "name": "Recraft: Recraft V4 Pro",
+    "provider": "openrouter",
+    "family": "recraft",
+    "created_at": "2026-05-07 20:24:01 UTC",
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "image"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "image_generation"
+    ],
+    "pricing": {},
+    "metadata": {
+      "description": "Recraft V4 Pro is an image generation model from Recraft. It supports text and image inputs with image output at ~2K resolution across multiple aspect ratios, double the resolution of...",
+      "architecture": {
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "image"
+        ]
+      },
+      "top_provider": null,
+      "per_request_limits": null,
+      "supported_parameters": {
+        "aspect_ratio": {
+          "type": "enum",
+          "values": [
+            "1:1",
+            "4:3",
+            "3:4",
+            "16:9",
+            "9:16",
+            "auto"
+          ]
+        },
+        "n": {
+          "type": "range",
+          "min": 1,
+          "max": 6
+        },
+        "input_references": {
+          "type": "range",
+          "min": 0,
+          "max": 1
+        }
+      }
+    }
+  },
+  {
+    "id": "recraft/recraft-v4-pro-vector",
+    "name": "Recraft: Recraft V4 Pro Vector",
+    "provider": "openrouter",
+    "family": "recraft",
+    "created_at": "2026-05-13 21:22:14 UTC",
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "image"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "image_generation"
+    ],
+    "pricing": {},
+    "metadata": {
+      "description": "Recraft V4 Pro Vector is the vector (SVG) variant of Recraft V4 Pro. It supports text and image inputs and produces vector image output across multiple aspect ratios at the...",
+      "architecture": {
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "image"
+        ]
+      },
+      "top_provider": null,
+      "per_request_limits": null,
+      "supported_parameters": {
+        "aspect_ratio": {
+          "type": "enum",
+          "values": [
+            "1:1",
+            "4:3",
+            "3:4",
+            "16:9",
+            "9:16",
+            "auto"
+          ]
+        },
+        "n": {
+          "type": "range",
+          "min": 1,
+          "max": 6
+        },
+        "input_references": {
+          "type": "range",
+          "min": 0,
+          "max": 1
+        }
+      }
+    }
+  },
+  {
+    "id": "recraft/recraft-v4-vector",
+    "name": "Recraft: Recraft V4 Vector",
+    "provider": "openrouter",
+    "family": "recraft",
+    "created_at": "2026-05-13 21:22:13 UTC",
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "image"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "image_generation"
+    ],
+    "pricing": {},
+    "metadata": {
+      "description": "Recraft V4 Vector is the vector (SVG) variant of Recraft V4. It supports text and image inputs and produces vector image output across multiple aspect ratios. Compared to the raster...",
+      "architecture": {
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "image"
+        ]
+      },
+      "top_provider": null,
+      "per_request_limits": null,
+      "supported_parameters": {
+        "aspect_ratio": {
+          "type": "enum",
+          "values": [
+            "1:1",
+            "4:3",
+            "3:4",
+            "16:9",
+            "9:16",
+            "auto"
+          ]
+        },
+        "n": {
+          "type": "range",
+          "min": 1,
+          "max": 6
+        },
+        "input_references": {
+          "type": "range",
+          "min": 0,
+          "max": 1
+        }
+      }
+    }
+  },
+  {
+    "id": "recraft/recraft-v4.1",
+    "name": "Recraft: Recraft V4.1",
+    "provider": "openrouter",
+    "family": "recraft",
+    "created_at": "2026-05-13 21:23:01 UTC",
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "image"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "image_generation"
+    ],
+    "pricing": {},
+    "metadata": {
+      "description": "Recraft V4.1 is an image generation model from Recraft tuned for high aesthetics. It supports text and image inputs with image output at ~1K resolution across multiple aspect ratios, with...",
+      "architecture": {
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "image"
+        ]
+      },
+      "top_provider": null,
+      "per_request_limits": null,
+      "supported_parameters": {
+        "aspect_ratio": {
+          "type": "enum",
+          "values": [
+            "1:1",
+            "4:3",
+            "3:4",
+            "16:9",
+            "9:16",
+            "auto"
+          ]
+        },
+        "n": {
+          "type": "range",
+          "min": 1,
+          "max": 6
+        },
+        "input_references": {
+          "type": "range",
+          "min": 0,
+          "max": 1
+        }
+      }
+    }
+  },
+  {
+    "id": "recraft/recraft-v4.1-pro",
+    "name": "Recraft: Recraft V4.1 Pro",
+    "provider": "openrouter",
+    "family": "recraft",
+    "created_at": "2026-05-13 21:23:04 UTC",
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "image"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "image_generation"
+    ],
+    "pricing": {},
+    "metadata": {
+      "description": "Recraft V4.1 Pro is an image generation model from Recraft tuned for high aesthetics. It supports text and image inputs with image output at ~2K resolution across multiple aspect ratios...",
+      "architecture": {
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "image"
+        ]
+      },
+      "top_provider": null,
+      "per_request_limits": null,
+      "supported_parameters": {
+        "aspect_ratio": {
+          "type": "enum",
+          "values": [
+            "1:1",
+            "4:3",
+            "3:4",
+            "16:9",
+            "9:16",
+            "auto"
+          ]
+        },
+        "n": {
+          "type": "range",
+          "min": 1,
+          "max": 6
+        },
+        "input_references": {
+          "type": "range",
+          "min": 0,
+          "max": 1
+        }
+      }
+    }
+  },
+  {
+    "id": "recraft/recraft-v4.1-pro-vector",
+    "name": "Recraft: Recraft V4.1 Pro Vector",
+    "provider": "openrouter",
+    "family": "recraft",
+    "created_at": "2026-05-13 21:23:15 UTC",
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "image"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "image_generation"
+    ],
+    "pricing": {},
+    "metadata": {
+      "description": "Recraft V4.1 Pro Vector is the vector (SVG) variant of Recraft V4.1 Pro, tuned for high aesthetics. It supports text and image inputs and produces higher-resolution SVG image output across...",
+      "architecture": {
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "image"
+        ]
+      },
+      "top_provider": null,
+      "per_request_limits": null,
+      "supported_parameters": {
+        "aspect_ratio": {
+          "type": "enum",
+          "values": [
+            "1:1",
+            "4:3",
+            "3:4",
+            "16:9",
+            "9:16",
+            "auto"
+          ]
+        },
+        "n": {
+          "type": "range",
+          "min": 1,
+          "max": 6
+        },
+        "input_references": {
+          "type": "range",
+          "min": 0,
+          "max": 1
+        }
+      }
+    }
+  },
+  {
+    "id": "recraft/recraft-v4.1-utility",
+    "name": "Recraft: Recraft V4.1 Utility",
+    "provider": "openrouter",
+    "family": "recraft",
+    "created_at": "2026-05-13 21:23:07 UTC",
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "image"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "image_generation"
+    ],
+    "pricing": {},
+    "metadata": {
+      "description": "Recraft V4.1 Utility is a general-purpose image generation model from Recraft. It supports text and image inputs with image output at ~1K resolution across multiple aspect ratios, with typical generation...",
+      "architecture": {
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "image"
+        ]
+      },
+      "top_provider": null,
+      "per_request_limits": null,
+      "supported_parameters": {
+        "aspect_ratio": {
+          "type": "enum",
+          "values": [
+            "1:1",
+            "4:3",
+            "3:4",
+            "16:9",
+            "9:16",
+            "auto"
+          ]
+        },
+        "n": {
+          "type": "range",
+          "min": 1,
+          "max": 6
+        },
+        "input_references": {
+          "type": "range",
+          "min": 0,
+          "max": 1
+        }
+      }
+    }
+  },
+  {
+    "id": "recraft/recraft-v4.1-utility-pro",
+    "name": "Recraft: Recraft V4.1 Utility Pro",
+    "provider": "openrouter",
+    "family": "recraft",
+    "created_at": "2026-05-13 21:23:09 UTC",
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "image"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "image_generation"
+    ],
+    "pricing": {},
+    "metadata": {
+      "description": "Recraft V4.1 Utility Pro is a general-purpose image generation model from Recraft. It supports text and image inputs with image output at ~2K resolution across multiple aspect ratios — double...",
+      "architecture": {
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "image"
+        ]
+      },
+      "top_provider": null,
+      "per_request_limits": null,
+      "supported_parameters": {
+        "aspect_ratio": {
+          "type": "enum",
+          "values": [
+            "1:1",
+            "4:3",
+            "3:4",
+            "16:9",
+            "9:16",
+            "auto"
+          ]
+        },
+        "n": {
+          "type": "range",
+          "min": 1,
+          "max": 6
+        },
+        "input_references": {
+          "type": "range",
+          "min": 0,
+          "max": 1
+        }
+      }
+    }
+  },
+  {
+    "id": "recraft/recraft-v4.1-vector",
+    "name": "Recraft: Recraft V4.1 Vector",
+    "provider": "openrouter",
+    "family": "recraft",
+    "created_at": "2026-05-13 21:23:12 UTC",
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "image"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "image_generation"
+    ],
+    "pricing": {},
+    "metadata": {
+      "description": "Recraft V4.1 Vector is the vector (SVG) variant of Recraft V4.1, tuned for high aesthetics. It supports text and image inputs and produces SVG image output across multiple aspect ratios,...",
+      "architecture": {
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "image"
+        ]
+      },
+      "top_provider": null,
+      "per_request_limits": null,
+      "supported_parameters": {
+        "aspect_ratio": {
+          "type": "enum",
+          "values": [
+            "1:1",
+            "4:3",
+            "3:4",
+            "16:9",
+            "9:16",
+            "auto"
+          ]
+        },
+        "n": {
+          "type": "range",
+          "min": 1,
+          "max": 6
+        },
+        "input_references": {
+          "type": "range",
+          "min": 0,
+          "max": 1
+        }
+      }
+    }
+  },
+  {
     "id": "rekaai/reka-edge",
     "name": "Reka Edge",
     "provider": "openrouter",
@@ -56875,6 +61463,696 @@
         "output": 16384
       },
       "knowledge": "2023-12-31"
+    }
+  },
+  {
+    "id": "sentence-transformers/all-minilm-l12-v2",
+    "name": "Sentence Transformers: all-MiniLM-L12-v2",
+    "provider": "openrouter",
+    "family": "sentence-transformers",
+    "created_at": "2025-11-18 02:15:55 UTC",
+    "context_window": 512,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "embeddings"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "structured_output"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.005
+        }
+      }
+    },
+    "metadata": {
+      "description": "The all-MiniLM-L12-v2 embedding model maps sentences and short paragraphs into a 384-dimensional dense vector space, producing efficient and high-quality semantic embeddings optimized for tasks such as semantic search, clustering, and...",
+      "architecture": {
+        "modality": "text->embeddings",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "embeddings"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 512,
+        "max_completion_tokens": null,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "frequency_penalty",
+        "max_tokens",
+        "min_p",
+        "presence_penalty",
+        "repetition_penalty",
+        "response_format",
+        "seed",
+        "stop",
+        "temperature",
+        "top_k",
+        "top_p"
+      ]
+    }
+  },
+  {
+    "id": "sentence-transformers/all-minilm-l6-v2",
+    "name": "Sentence Transformers: all-MiniLM-L6-v2",
+    "provider": "openrouter",
+    "family": "sentence-transformers",
+    "created_at": "2025-11-17 23:12:56 UTC",
+    "context_window": 512,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "embeddings"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "structured_output"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.005
+        }
+      }
+    },
+    "metadata": {
+      "description": "The all-MiniLM-L6-v2 embedding model maps sentences and short paragraphs into a 384-dimensional dense vector space, enabling high-quality semantic representations that are ideal for downstream tasks such as information retrieval, clustering,...",
+      "architecture": {
+        "modality": "text->embeddings",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "embeddings"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 512,
+        "max_completion_tokens": null,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "frequency_penalty",
+        "max_tokens",
+        "min_p",
+        "presence_penalty",
+        "repetition_penalty",
+        "response_format",
+        "seed",
+        "stop",
+        "temperature",
+        "top_k",
+        "top_p"
+      ]
+    }
+  },
+  {
+    "id": "sentence-transformers/all-mpnet-base-v2",
+    "name": "Sentence Transformers: all-mpnet-base-v2",
+    "provider": "openrouter",
+    "family": "sentence-transformers",
+    "created_at": "2025-11-17 23:23:50 UTC",
+    "context_window": 512,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "embeddings"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "structured_output"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.005
+        }
+      }
+    },
+    "metadata": {
+      "description": "The all-mpnet-base-v2 embedding model encodes sentences and short paragraphs into a 768-dimensional dense vector space, providing high-fidelity semantic embeddings well suited for tasks like information retrieval, clustering, similarity scoring, and...",
+      "architecture": {
+        "modality": "text->embeddings",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "embeddings"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 512,
+        "max_completion_tokens": null,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "frequency_penalty",
+        "max_tokens",
+        "min_p",
+        "presence_penalty",
+        "repetition_penalty",
+        "response_format",
+        "seed",
+        "stop",
+        "temperature",
+        "top_k",
+        "top_p"
+      ]
+    }
+  },
+  {
+    "id": "sentence-transformers/multi-qa-mpnet-base-dot-v1",
+    "name": "Sentence Transformers: multi-qa-mpnet-base-dot-v1",
+    "provider": "openrouter",
+    "family": "sentence-transformers",
+    "created_at": "2025-11-18 02:02:19 UTC",
+    "context_window": 512,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "embeddings"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "structured_output"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.005
+        }
+      }
+    },
+    "metadata": {
+      "description": "The multi-qa-mpnet-base-dot-v1 embedding model transforms sentences and short paragraphs into a 768-dimensional dense vector space, generating high-quality semantic embeddings optimized for question-and-answer retrieval, semantic search, and similarity-scoring across diverse content.",
+      "architecture": {
+        "modality": "text->embeddings",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "embeddings"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 512,
+        "max_completion_tokens": null,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "frequency_penalty",
+        "max_tokens",
+        "min_p",
+        "presence_penalty",
+        "repetition_penalty",
+        "response_format",
+        "seed",
+        "stop",
+        "temperature",
+        "top_k",
+        "top_p"
+      ]
+    }
+  },
+  {
+    "id": "sentence-transformers/paraphrase-minilm-l6-v2",
+    "name": "Sentence Transformers: paraphrase-MiniLM-L6-v2",
+    "provider": "openrouter",
+    "family": "sentence-transformers",
+    "created_at": "2025-11-18 02:20:54 UTC",
+    "context_window": 512,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "embeddings"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "structured_output"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.005
+        }
+      }
+    },
+    "metadata": {
+      "description": "The paraphrase-MiniLM-L6-v2 embedding model converts sentences and short paragraphs into a 384-dimensional dense vector space, producing high-quality semantic embeddings optimized for paraphrase detection, semantic similarity scoring, clustering, and lightweight retrieval...",
+      "architecture": {
+        "modality": "text->embeddings",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "embeddings"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 512,
+        "max_completion_tokens": null,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "frequency_penalty",
+        "max_tokens",
+        "min_p",
+        "presence_penalty",
+        "repetition_penalty",
+        "response_format",
+        "seed",
+        "stop",
+        "temperature",
+        "top_k",
+        "top_p"
+      ]
+    }
+  },
+  {
+    "id": "sesame/csm-1b",
+    "name": "Sesame: CSM 1B",
+    "provider": "openrouter",
+    "family": "sesame",
+    "created_at": "2026-04-23 22:26:08 UTC",
+    "context_window": 4096,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "audio"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "structured_output",
+      "speech_generation"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 7.0
+        }
+      }
+    },
+    "metadata": {
+      "description": "CSM 1B is a conversational speech model from Sesame. It accepts text input and produces English speech output, with voice options spanning conversational and read-speech styles. At 1B parameters, it...",
+      "architecture": {
+        "modality": "text->speech",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "speech"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 4096,
+        "max_completion_tokens": null,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "frequency_penalty",
+        "max_tokens",
+        "min_p",
+        "presence_penalty",
+        "repetition_penalty",
+        "response_format",
+        "seed",
+        "stop",
+        "temperature",
+        "top_k",
+        "top_p"
+      ]
+    }
+  },
+  {
+    "id": "sourceful/riverflow-v2-fast",
+    "name": "Sourceful: Riverflow V2 Fast",
+    "provider": "openrouter",
+    "family": "sourceful",
+    "created_at": "2026-02-02 16:57:03 UTC",
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "image"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "image_generation"
+    ],
+    "pricing": {},
+    "metadata": {
+      "description": "Riverflow V2 Fast is the fastest variant of Sourceful's Riverflow 2.0 lineup, best for production deployments and latency-critical workflows. The Riverflow 2.0 series represents SOTA performance on image generation and...",
+      "architecture": {
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "image"
+        ]
+      },
+      "top_provider": null,
+      "per_request_limits": null,
+      "supported_parameters": {
+        "resolution": {
+          "type": "enum",
+          "values": [
+            "1K",
+            "2K",
+            "4K"
+          ]
+        },
+        "aspect_ratio": {
+          "type": "enum",
+          "values": [
+            "1:1",
+            "4:3",
+            "3:4",
+            "3:2",
+            "2:3",
+            "16:9",
+            "9:16",
+            "21:9",
+            "auto"
+          ]
+        },
+        "n": {
+          "type": "range",
+          "min": 1,
+          "max": 1
+        },
+        "input_references": {
+          "type": "range",
+          "min": 0,
+          "max": 4
+        }
+      }
+    }
+  },
+  {
+    "id": "sourceful/riverflow-v2-pro",
+    "name": "Sourceful: Riverflow V2 Pro",
+    "provider": "openrouter",
+    "family": "sourceful",
+    "created_at": "2026-02-02 16:57:07 UTC",
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "image"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "image_generation"
+    ],
+    "pricing": {},
+    "metadata": {
+      "description": "Riverflow V2 Pro is the most powerful variant of Sourceful's Riverflow 2.0 lineup, best for top-tier control and perfect text rendering. The Riverflow 2.0 series represents SOTA performance on image...",
+      "architecture": {
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "image"
+        ]
+      },
+      "top_provider": null,
+      "per_request_limits": null,
+      "supported_parameters": {
+        "resolution": {
+          "type": "enum",
+          "values": [
+            "1K",
+            "2K",
+            "4K"
+          ]
+        },
+        "aspect_ratio": {
+          "type": "enum",
+          "values": [
+            "1:1",
+            "4:3",
+            "3:4",
+            "3:2",
+            "2:3",
+            "16:9",
+            "9:16",
+            "21:9",
+            "auto"
+          ]
+        },
+        "n": {
+          "type": "range",
+          "min": 1,
+          "max": 1
+        },
+        "input_references": {
+          "type": "range",
+          "min": 0,
+          "max": 10
+        }
+      }
+    }
+  },
+  {
+    "id": "sourceful/riverflow-v2.5-fast",
+    "name": "Sourceful: Riverflow V2.5 Fast",
+    "provider": "openrouter",
+    "family": "sourceful",
+    "created_at": "2026-06-04 14:56:23 UTC",
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "image"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "image_generation"
+    ],
+    "pricing": {},
+    "metadata": {
+      "description": "Riverflow V2.5 Fast is the speed-optimized variant of Sourceful's Riverflow 2.5 lineup, best for production deployments and latency-critical workflows. The Riverflow 2.5 series is a unified text-to-image and image-to-image family...",
+      "architecture": {
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "image"
+        ]
+      },
+      "top_provider": null,
+      "per_request_limits": null,
+      "supported_parameters": {
+        "resolution": {
+          "type": "enum",
+          "values": [
+            "1K",
+            "2K"
+          ]
+        },
+        "aspect_ratio": {
+          "type": "enum",
+          "values": [
+            "1:1",
+            "4:3",
+            "3:4",
+            "3:2",
+            "2:3",
+            "16:9",
+            "9:16",
+            "21:9",
+            "auto"
+          ]
+        },
+        "output_format": {
+          "type": "enum",
+          "values": [
+            "jpeg"
+          ]
+        },
+        "background": {
+          "type": "enum",
+          "values": [
+            "auto",
+            "transparent",
+            "opaque"
+          ]
+        },
+        "n": {
+          "type": "range",
+          "min": 1,
+          "max": 1
+        },
+        "input_references": {
+          "type": "range",
+          "min": 0,
+          "max": 4
+        }
+      }
+    }
+  },
+  {
+    "id": "sourceful/riverflow-v2.5-pro",
+    "name": "Sourceful: Riverflow V2.5 Pro",
+    "provider": "openrouter",
+    "family": "sourceful",
+    "created_at": "2026-06-04 14:56:31 UTC",
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "image"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "image_generation"
+    ],
+    "pricing": {},
+    "metadata": {
+      "description": "Riverflow V2.5 Pro is the most powerful variant of Sourceful's Riverflow 2.5 lineup, best for top-tier control and quality-sensitive outputs. The Riverflow 2.5 series is a unified text-to-image and image-to-image...",
+      "architecture": {
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "image"
+        ]
+      },
+      "top_provider": null,
+      "per_request_limits": null,
+      "supported_parameters": {
+        "resolution": {
+          "type": "enum",
+          "values": [
+            "1K",
+            "2K",
+            "4K"
+          ]
+        },
+        "aspect_ratio": {
+          "type": "enum",
+          "values": [
+            "1:1",
+            "4:3",
+            "3:4",
+            "3:2",
+            "2:3",
+            "16:9",
+            "9:16",
+            "21:9",
+            "auto"
+          ]
+        },
+        "output_format": {
+          "type": "enum",
+          "values": [
+            "png",
+            "jpeg",
+            "webp"
+          ]
+        },
+        "background": {
+          "type": "enum",
+          "values": [
+            "auto",
+            "transparent",
+            "opaque"
+          ]
+        },
+        "n": {
+          "type": "range",
+          "min": 1,
+          "max": 1
+        },
+        "input_references": {
+          "type": "range",
+          "min": 0,
+          "max": 10
+        }
+      }
     }
   },
   {
@@ -57636,6 +62914,130 @@
     }
   },
   {
+    "id": "thenlper/gte-base",
+    "name": "Thenlper: GTE-Base",
+    "provider": "openrouter",
+    "family": "thenlper",
+    "created_at": "2025-11-18 02:43:40 UTC",
+    "context_window": 512,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "embeddings"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "structured_output"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.005
+        }
+      }
+    },
+    "metadata": {
+      "description": "The gte-base embedding model encodes English sentences and paragraphs into a 768-dimensional dense vector space, delivering efficient and effective semantic embeddings optimized for textual similarity, semantic search, and clustering applications.",
+      "architecture": {
+        "modality": "text->embeddings",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "embeddings"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 512,
+        "max_completion_tokens": null,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "frequency_penalty",
+        "max_tokens",
+        "min_p",
+        "presence_penalty",
+        "repetition_penalty",
+        "response_format",
+        "seed",
+        "stop",
+        "temperature",
+        "top_k",
+        "top_p"
+      ]
+    }
+  },
+  {
+    "id": "thenlper/gte-large",
+    "name": "Thenlper: GTE-Large",
+    "provider": "openrouter",
+    "family": "thenlper",
+    "created_at": "2025-11-18 02:40:55 UTC",
+    "context_window": 512,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "embeddings"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "structured_output"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.01
+        }
+      }
+    },
+    "metadata": {
+      "description": "The gte-large embedding model converts English sentences, paragraphs and moderate-length documents into a 1024-dimensional dense vector space, delivering high-quality semantic embeddings optimized for information retrieval, semantic textual similarity, reranking and...",
+      "architecture": {
+        "modality": "text->embeddings",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "embeddings"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 512,
+        "max_completion_tokens": null,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "frequency_penalty",
+        "max_tokens",
+        "min_p",
+        "presence_penalty",
+        "repetition_penalty",
+        "response_format",
+        "seed",
+        "stop",
+        "temperature",
+        "top_k",
+        "top_p"
+      ]
+    }
+  },
+  {
     "id": "undi95/remm-slerp-l2-13b",
     "name": "ReMM SLERP 13B",
     "provider": "openrouter",
@@ -57796,6 +63198,204 @@
         "context": 128000,
         "output": 128000
       }
+    }
+  },
+  {
+    "id": "voyageai/voyage-4",
+    "name": "VoyageAI by MongoDB: voyage-4",
+    "provider": "openrouter",
+    "family": "voyageai",
+    "created_at": "2026-07-27 21:43:46 UTC",
+    "context_window": 32000,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "embeddings"
+      ]
+    },
+    "capabilities": [
+      "streaming"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.06
+        }
+      }
+    },
+    "metadata": {
+      "description": "voyage-4 is a general-purpose (including multilingual) embedding model optimized for retrieval/search and AI applications. voyage-4 supports embeddings in 2048, 1024, 512, and 256 dimensions, with multiple quantization options. Learn more...",
+      "architecture": {
+        "modality": "text->embeddings",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "embeddings"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 32000,
+        "max_completion_tokens": null,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": []
+    }
+  },
+  {
+    "id": "voyageai/voyage-4-large",
+    "name": "VoyageAI by MongoDB: voyage-4-large",
+    "provider": "openrouter",
+    "family": "voyageai",
+    "created_at": "2026-07-27 21:43:44 UTC",
+    "context_window": 32000,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "embeddings"
+      ]
+    },
+    "capabilities": [
+      "streaming"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.12
+        }
+      }
+    },
+    "metadata": {
+      "description": "voyage-4-large is a state-of-the-art general-purpose and multilingual embedding optimized for retrieval quality. Enabled by Matryoshka learning and quantization-aware training, voyage-4-large supports embeddings in 2048, 1024, 512, and 256 dimensions, with...",
+      "architecture": {
+        "modality": "text->embeddings",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "embeddings"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 32000,
+        "max_completion_tokens": null,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": []
+    }
+  },
+  {
+    "id": "voyageai/voyage-4-lite",
+    "name": "VoyageAI by MongoDB: voyage-4-lite",
+    "provider": "openrouter",
+    "family": "voyageai",
+    "created_at": "2026-07-27 21:43:47 UTC",
+    "context_window": 32000,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "embeddings"
+      ]
+    },
+    "capabilities": [
+      "streaming"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.02
+        }
+      }
+    },
+    "metadata": {
+      "description": "voyage-4-lite is a lightweight, general-purpose embedding model optimized for low latency and cost. Enabled by Matryoshka learning and quantization-aware training, voyage-4-lite supports embeddings in 2048, 1024, 512, and 256 dimensions,...",
+      "architecture": {
+        "modality": "text->embeddings",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "embeddings"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 32000,
+        "max_completion_tokens": null,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": []
+    }
+  },
+  {
+    "id": "voyageai/voyage-multimodal-3.5",
+    "name": "VoyageAI by MongoDB: voyage-multimodal-3.5",
+    "provider": "openrouter",
+    "family": "voyageai",
+    "created_at": "2026-07-27 21:43:49 UTC",
+    "context_window": 32000,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "embeddings"
+      ]
+    },
+    "capabilities": [
+      "streaming"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.12
+        }
+      }
+    },
+    "metadata": {
+      "description": "voyage-multimodal-3.5 is a state-of-the-art multimodal embedding model capable of vectorizing not only text, images, and video individually, but also content that interleaves all three modalities. It delivers excellent performance for...",
+      "architecture": {
+        "modality": "text+image->embeddings",
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "embeddings"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 32000,
+        "max_completion_tokens": null,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": []
     }
   },
   {
@@ -58255,6 +63855,206 @@
         "context": 256000,
         "output": 256000
       }
+    }
+  },
+  {
+    "id": "x-ai/grok-imagine-image-quality",
+    "name": "SpaceXAI: Grok Imagine Image Quality",
+    "provider": "openrouter",
+    "family": "x-ai",
+    "created_at": "2026-05-18 15:19:44 UTC",
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "image"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "image_generation"
+    ],
+    "pricing": {},
+    "metadata": {
+      "description": "Grok Imagine Image Quality is SpaceXAI's fast, high-fidelity image generation and editing model. It accepts text prompts and optional reference images, producing photorealistic outputs at 1K or 2K across a...",
+      "architecture": {
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "image"
+        ]
+      },
+      "top_provider": null,
+      "per_request_limits": null,
+      "supported_parameters": {
+        "resolution": {
+          "type": "enum",
+          "values": [
+            "1K",
+            "2K"
+          ]
+        },
+        "aspect_ratio": {
+          "type": "enum",
+          "values": [
+            "1:1",
+            "3:4",
+            "4:3",
+            "9:16",
+            "16:9",
+            "2:3",
+            "3:2",
+            "9:19.5",
+            "19.5:9",
+            "9:20",
+            "20:9",
+            "1:2",
+            "2:1",
+            "auto"
+          ]
+        },
+        "n": {
+          "type": "range",
+          "min": 1,
+          "max": 1
+        },
+        "input_references": {
+          "type": "range",
+          "min": 0,
+          "max": 3
+        }
+      }
+    }
+  },
+  {
+    "id": "x-ai/grok-stt-1.0",
+    "name": "SpaceXAI: Grok STT 1.0",
+    "provider": "openrouter",
+    "family": "x-ai",
+    "created_at": "2026-07-23 14:30:14 UTC",
+    "context_window": 0,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "audio"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "structured_output",
+      "transcription"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 100000.0
+        }
+      }
+    },
+    "metadata": {
+      "description": "Grok STT is SpaceXAI's speech-to-text model, available via the REST /v1/stt endpoint. It supports transcription with word-level timestamps, optional speaker diarization, and multichannel audio.",
+      "architecture": {
+        "modality": "audio->transcription",
+        "input_modalities": [
+          "audio"
+        ],
+        "output_modalities": [
+          "transcription"
+        ],
+        "tokenizer": "Grok",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 0,
+        "max_completion_tokens": null,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "frequency_penalty",
+        "logprobs",
+        "max_tokens",
+        "presence_penalty",
+        "response_format",
+        "seed",
+        "stop",
+        "temperature",
+        "top_logprobs",
+        "top_p"
+      ]
+    }
+  },
+  {
+    "id": "x-ai/grok-voice-tts-1.0",
+    "name": "SpaceXAI: Grok Voice TTS 1.0",
+    "provider": "openrouter",
+    "family": "x-ai",
+    "created_at": "2026-05-15 00:37:36 UTC",
+    "context_window": 15000,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "audio"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "structured_output",
+      "speech_generation"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 15.0
+        }
+      }
+    },
+    "metadata": {
+      "description": "Grok Voice TTS 1.0 is a text-to-speech model from SpaceXAI. It converts text into spoken audio across 20+ languages with automatic language detection, and offers five built-in voices (Eve, Ara,...",
+      "architecture": {
+        "modality": "text->speech",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "speech"
+        ],
+        "tokenizer": "Grok",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 15000,
+        "max_completion_tokens": null,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "frequency_penalty",
+        "logprobs",
+        "max_tokens",
+        "presence_penalty",
+        "response_format",
+        "seed",
+        "stop",
+        "temperature",
+        "top_logprobs",
+        "top_p"
+      ]
     }
   },
   {
@@ -59558,6 +65358,132 @@
         "context": 202752,
         "output": 131072
       }
+    }
+  },
+  {
+    "id": "zyphra/zonos-v0.1-hybrid",
+    "name": "Zyphra: Zonos v0.1 Hybrid",
+    "provider": "openrouter",
+    "family": "zyphra",
+    "created_at": "2026-04-23 22:26:09 UTC",
+    "context_window": 4096,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "audio"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "structured_output",
+      "speech_generation"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 7.0
+        }
+      }
+    },
+    "metadata": {
+      "description": "Zonos v0.1 Hybrid is a text-to-speech model from Zyphra built on a hybrid architecture. It produces English speech output with coverage across American and British accents in male and female...",
+      "architecture": {
+        "modality": "text->speech",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "speech"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 4096,
+        "max_completion_tokens": null,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "frequency_penalty",
+        "max_tokens",
+        "min_p",
+        "presence_penalty",
+        "repetition_penalty",
+        "response_format",
+        "seed",
+        "stop",
+        "temperature",
+        "top_k",
+        "top_p"
+      ]
+    }
+  },
+  {
+    "id": "zyphra/zonos-v0.1-transformer",
+    "name": "Zyphra: Zonos v0.1 Transformer",
+    "provider": "openrouter",
+    "family": "zyphra",
+    "created_at": "2026-04-23 22:26:10 UTC",
+    "context_window": 4096,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "audio"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "structured_output",
+      "speech_generation"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 7.0
+        }
+      }
+    },
+    "metadata": {
+      "description": "Zonos v0.1 Transformer is a text-to-speech model from Zyphra built on a pure transformer architecture. It offers the same American and British English voice coverage as the Hybrid variant, and...",
+      "architecture": {
+        "modality": "text->speech",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "speech"
+        ],
+        "tokenizer": "Other",
+        "instruct_type": null
+      },
+      "top_provider": {
+        "context_length": 4096,
+        "max_completion_tokens": null,
+        "is_moderated": false
+      },
+      "per_request_limits": null,
+      "supported_parameters": [
+        "frequency_penalty",
+        "max_tokens",
+        "min_p",
+        "presence_penalty",
+        "repetition_penalty",
+        "response_format",
+        "seed",
+        "stop",
+        "temperature",
+        "top_k",
+        "top_p"
+      ]
     }
   },
   {
