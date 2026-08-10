@@ -1,0 +1,87 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.anthropic.com/v1/messages
+    body:
+      encoding: UTF-8
+      string: '{"model":"claude-haiku-4-5-20251001","messages":[{"role":"user","content":[{"type":"text","text":"Use
+        code execution to compute 123456789 * 987654321 and report the exact product."}]}],"stream":false,"max_tokens":64000,"tools":[{"type":"code_execution_20260521","name":"code_execution"}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      X-Api-Key:
+      - "<ANTHROPIC_API_KEY>"
+      Anthropic-Version:
+      - '2023-06-01'
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 10 Aug 2026 21:55:14 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Anthropic-Ratelimit-Input-Tokens-Limit:
+      - '10000000'
+      Anthropic-Ratelimit-Input-Tokens-Remaining:
+      - '9998000'
+      Anthropic-Ratelimit-Input-Tokens-Reset:
+      - '2026-08-10T21:55:14Z'
+      Anthropic-Ratelimit-Output-Tokens-Limit:
+      - '2000000'
+      Anthropic-Ratelimit-Output-Tokens-Remaining:
+      - '2000000'
+      Anthropic-Ratelimit-Output-Tokens-Reset:
+      - '2026-08-10T21:55:14Z'
+      Anthropic-Ratelimit-Requests-Limit:
+      - '10000'
+      Anthropic-Ratelimit-Requests-Remaining:
+      - '9999'
+      Anthropic-Ratelimit-Requests-Reset:
+      - '2026-08-10T21:55:11Z'
+      Anthropic-Ratelimit-Tokens-Limit:
+      - '12000000'
+      Anthropic-Ratelimit-Tokens-Remaining:
+      - '11998000'
+      Anthropic-Ratelimit-Tokens-Reset:
+      - '2026-08-10T21:55:14Z'
+      Request-Id:
+      - "<REQUEST_ID>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Anthropic-Organization-Id:
+      - "<ANTHROPIC_ORGANIZATION_ID>"
+      Anthropic-Workspace-Id:
+      - wrkspc_01MZW3YzUeytZsFc9LHFxP78
+      Traceresponse:
+      - 00-44989cb40d6e7cb1b989a5eedc429772-77178d7c6ab8a34b-01
+      Server:
+      - cloudflare
+      Vary:
+      - Accept-Encoding
+      Cf-Cache-Status:
+      - DYNAMIC
+      X-Robots-Tag:
+      - none
+      Content-Security-Policy:
+      - default-src 'none'; frame-ancestors 'none'
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJtb2RlbCI6ImNsYXVkZS1oYWlrdS00LTUtMjAyNTEwMDEiLCJpZCI6Im1zZ18wMTFDZHVwN1F6ZWtTYWpTVW1WNUxiWmoiLCJ0eXBlIjoibWVzc2FnZSIsInJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjpbeyJ0eXBlIjoic2VydmVyX3Rvb2xfdXNlIiwiaWQiOiJzcnZ0b29sdV8wMVZWY2pKVUZSTkZ6OEdaY0ZCemdHRWUiLCJuYW1lIjoiYmFzaF9jb2RlX2V4ZWN1dGlvbiIsImlucHV0Ijp7ImNvbW1hbmQiOiJweXRob24zIC1jIFwicHJpbnQoMTIzNDU2Nzg5ICogOTg3NjU0MzIxKVwiIn19LHsidHlwZSI6ImJhc2hfY29kZV9leGVjdXRpb25fdG9vbF9yZXN1bHQiLCJ0b29sX3VzZV9pZCI6InNydnRvb2x1XzAxVlZjakpVRlJORno4R1pjRkJ6Z0dFZSIsImNvbnRlbnQiOnsidHlwZSI6ImJhc2hfY29kZV9leGVjdXRpb25fcmVzdWx0Iiwic3Rkb3V0IjoiMTIxOTMyNjMxMTEyNjM1MjY5XG4iLCJzdGRlcnIiOiIiLCJyZXR1cm5fY29kZSI6MCwiY29udGVudCI6W119fSx7InR5cGUiOiJ0ZXh0IiwidGV4dCI6IlRoZSBleGFjdCBwcm9kdWN0IG9mICoqMTIzNDU2Nzg5IMOXIDk4NzY1NDMyMSoqIGlzICoqMTIxOTMyNjMxMTEyNjM1MjY5KiouIn1dLCJjb250YWluZXIiOnsiaWQiOiJjb250YWluZXJfMDFKQ3ZTTnE5RUNBcnlxRXhZTG5XQ25OIiwiZXhwaXJlc19hdCI6IjIwMjYtMDgtMTBUMjI6NTU6MTQuMTg4Mjk2WiJ9LCJzdG9wX3JlYXNvbiI6ImVuZF90dXJuIiwic3RvcF9zZXF1ZW5jZSI6bnVsbCwic3RvcF9kZXRhaWxzIjpudWxsLCJ1c2FnZSI6eyJpbnB1dF90b2tlbnMiOjQ2MjYsImNhY2hlX2NyZWF0aW9uX2lucHV0X3Rva2VucyI6MCwiY2FjaGVfcmVhZF9pbnB1dF90b2tlbnMiOjAsImNhY2hlX2NyZWF0aW9uIjp7ImVwaGVtZXJhbF81bV9pbnB1dF90b2tlbnMiOjAsImVwaGVtZXJhbF8xaF9pbnB1dF90b2tlbnMiOjB9LCJvdXRwdXRfdG9rZW5zIjoxMDAsInNlcnZpY2VfdGllciI6InN0YW5kYXJkIiwiaW5mZXJlbmNlX2dlbyI6Im5vdF9hdmFpbGFibGUiLCJzZXJ2ZXJfdG9vbF91c2UiOnsid2ViX3NlYXJjaF9yZXF1ZXN0cyI6MCwid2ViX2ZldGNoX3JlcXVlc3RzIjowfX19
+  recorded_at: Mon, 10 Aug 2026 21:55:14 GMT
+recorded_with: VCR 6.4.0

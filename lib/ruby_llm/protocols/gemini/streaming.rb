@@ -13,6 +13,7 @@ module RubyLLM
 
         def build_chunk(data)
           parts = data.dig('candidates', 0, 'content', 'parts') || []
+          track_stream_parts(data, parts)
 
           Chunk.new(
             role: :assistant,
@@ -28,11 +29,41 @@ module RubyLLM
             cache_read_tokens: data.dig('usageMetadata', 'cachedContentTokenCount'),
             thinking_tokens: data.dig('usageMetadata', 'thoughtsTokenCount'),
             finish_reason: data.dig('candidates', 0, 'finishReason'),
-            tool_calls: extract_tool_calls(data)
+            tool_calls: extract_tool_calls(data),
+            **stream_end_fields(data)
           )
         end
 
         private
+
+        # Accumulates streamed parts so code-execution turns can be replayed
+        # verbatim, mirroring the non-streaming path.
+        def track_stream_parts(data, parts)
+          @stream_parts = (@stream_parts || []).concat(parts)
+          @saw_server_part = true if parts.any? { |part| server_tool_part?(part) }
+          metadata_calls = metadata_server_tool_calls(data)
+          @stream_metadata_calls = metadata_calls if metadata_calls.any?
+        end
+
+        def stream_end_fields(data)
+          return {} unless data.dig('candidates', 0, 'finishReason')
+
+          part_calls = @stream_parts.to_a.select { |part| server_tool_part?(part) }.map do |part|
+            ServerToolCall.new(
+              type: part.key?('executableCode') ? 'executable_code' : 'code_execution_result',
+              input: part['executableCode'],
+              result: part['codeExecutionResult'],
+              raw: part
+            )
+          end
+          calls = part_calls + @stream_metadata_calls.to_a
+          return {} if calls.empty?
+
+          {
+            server_tool_calls: calls,
+            raw_content: @saw_server_part ? @stream_parts : nil
+          }
+        end
 
         def extract_text_content(parts)
           text_parts = parts.reject { |p| p['thought'] }

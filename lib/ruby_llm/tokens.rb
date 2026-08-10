@@ -35,12 +35,20 @@ module RubyLLM
     # does not report them.
     attr_reader :thinking
 
-    def initialize(input: nil, output: nil, cache_read: nil, cache_write: nil, thinking: nil) # :nodoc:
+    # The provider's server-tool usage counters as a Hash, such as
+    # <tt>{"web_search_requests" => 2}</tt>, or +nil+ if the provider did
+    # not report any. Counters are provider-shaped and billed per use, not
+    # in tokens.
+    attr_reader :server_tool_use
+
+    def initialize(input: nil, output: nil, cache_read: nil, cache_write: nil, thinking: nil, # :nodoc:
+                   server_tool_use: nil)
       @input = input
       @output = output
       @cache_read = cache_read
       @cache_write = cache_write
       @thinking = thinking
+      @server_tool_use = server_tool_use
     end
 
     # Sums token counts across provider attempts. A bucket remains +nil+ when
@@ -54,8 +62,18 @@ module RubyLLM
         reported = tokens.filter_map { |usage| usage.public_send(component) }
         [component, reported.empty? ? nil : reported.sum]
       end
-      new(**values)
+      new(**values, server_tool_use: aggregate_server_tool_use(tokens))
     end
+
+    def self.aggregate_server_tool_use(tokens) # :nodoc:
+      reported = tokens.filter_map(&:server_tool_use)
+      return nil if reported.empty?
+
+      reported.each_with_object({}) do |counters, total|
+        counters.each { |tool, count| total[tool] = total.fetch(tool, 0) + count.to_i }
+      end
+    end
+    private_class_method :aggregate_server_tool_use
 
     # Returns the counts as a hash with keys +:input_tokens+,
     # +:output_tokens+, +:cache_read_tokens+, +:cache_write_tokens+, and
@@ -70,7 +88,8 @@ module RubyLLM
         output_tokens: output,
         cache_read_tokens: cache_read,
         cache_write_tokens: cache_write,
-        thinking_tokens: thinking
+        thinking_tokens: thinking,
+        server_tool_use: server_tool_use
       }.compact
     end
 

@@ -53,6 +53,7 @@ module RubyLLM
 
           output = data['output'] || []
           content = parse_output_text(output)
+          server_tool_calls = parse_server_tool_items(output)
 
           finish_reason = data.dig('incomplete_details', 'reason')
 
@@ -65,11 +66,31 @@ module RubyLLM
               signature: parse_reasoning_signature(output)
             ),
             tool_calls: parse_function_calls(output, response: raw, finish_reason: finish_reason),
+            server_tool_calls: server_tool_calls,
+            raw_content: server_tool_calls.any? ? output : nil,
             model: data['model'],
             raw: raw,
             finish_reason: finish_reason,
             **parse_usage(data['usage'] || {})
           )
+        end
+
+        CLIENT_OUTPUT_ITEM_TYPES = %w[message reasoning function_call].freeze
+
+        # Output items beyond text, reasoning, and function calls record
+        # provider-executed tool steps (web_search_call, code_interpreter_call,
+        # and whatever OpenAI ships next). They are kept raw and replayed.
+        def parse_server_tool_items(output)
+          output.reject { |item| CLIENT_OUTPUT_ITEM_TYPES.include?(item['type']) }.map do |item|
+            ServerToolCall.new(
+              type: item['type'],
+              name: item['name'],
+              id: item['id'],
+              input: item['action'] || item['arguments'] || item['code'],
+              result: item['result'] || item['results'] || item['outputs'] || item['output'],
+              raw: item
+            )
+          end
         end
 
         def parse_output_citations(output, content)
@@ -169,6 +190,10 @@ module RubyLLM
         end
 
         def format_assistant_items(msg)
+          # Turns that used server tools replay their output items verbatim,
+          # reasoning and tool results included, as stateless chaining expects.
+          return msg.raw_content if msg.raw_content
+
           items = []
           items << format_reasoning_item(msg.thinking) if msg.thinking&.signature
           items << { role: 'assistant', content: format_output_content(msg) } unless empty_content?(msg.content)

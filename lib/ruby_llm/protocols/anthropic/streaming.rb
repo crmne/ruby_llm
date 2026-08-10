@@ -21,6 +21,7 @@ module RubyLLM
 
         def build_chunk(data)
           delta_type = data.dig('delta', 'type')
+          track_stream_blocks(data, delta_type)
 
           Chunk.new(
             role: :assistant,
@@ -35,9 +36,74 @@ module RubyLLM
             output_tokens: extract_output_tokens(data),
             cache_read_tokens: extract_cache_read_tokens(data),
             cache_write_tokens: extract_cache_write_tokens(data),
+            server_tool_use: extract_server_tool_use(data),
             tool_calls: extract_tool_calls(data),
-            finish_reason: data.dig('delta', 'stop_reason')
+            finish_reason: data.dig('delta', 'stop_reason'),
+            **stream_end_fields(data)
           )
+        end
+
+        def extract_server_tool_use(data)
+          data.dig('message', 'usage', 'server_tool_use') || data.dig('usage', 'server_tool_use')
+        end
+
+        # Reconstructs the response's content blocks from stream events so
+        # turns that used server tools can be replayed verbatim, exactly as
+        # the non-streaming path does with the response body.
+        def track_stream_blocks(data, delta_type)
+          case data['type']
+          when 'content_block_start' then track_stream_block_start(data)
+          when 'content_block_delta' then track_stream_block_delta(data, delta_type)
+          when 'content_block_stop' then finalize_stream_block(data['index'])
+          end
+        end
+
+        def track_stream_block_start(data)
+          block = Utils.deep_dup(data['content_block'] || {})
+          @stream_blocks ||= {}
+          @stream_blocks[data['index']] = block
+          @saw_server_block = true if server_tool_block?(block)
+          return unless block['type'].to_s.end_with?('tool_use')
+
+          @stream_block_json ||= {}
+          @stream_block_json[data['index']] = +''
+        end
+
+        def track_stream_block_delta(data, delta_type)
+          block = @stream_blocks&.dig(data['index'])
+          return unless block
+
+          case delta_type
+          when 'text_delta' then block['text'] = block['text'].to_s + data.dig('delta', 'text').to_s
+          when 'thinking_delta' then block['thinking'] = block['thinking'].to_s + data.dig('delta', 'thinking').to_s
+          when 'signature_delta' then block['signature'] = data.dig('delta', 'signature')
+          when 'input_json_delta' then @stream_block_json&.dig(data['index'])&.<< data.dig('delta', 'partial_json').to_s
+          when 'citations_delta' then (block['citations'] ||= []) << data.dig('delta', 'citation')
+          end
+        end
+
+        def finalize_stream_block(index)
+          json = @stream_block_json&.dig(index)
+          block = @stream_blocks&.dig(index)
+          return unless json && block
+
+          block['input'] = json.empty? ? block['input'] || {} : parse_stream_block_input(json, block)
+        end
+
+        def parse_stream_block_input(json, block)
+          JSON.parse(json)
+        rescue JSON::ParserError
+          block['input'] || {}
+        end
+
+        def stream_end_fields(data)
+          return {} unless data['type'] == 'message_stop' && @saw_server_block
+
+          blocks = @stream_blocks.sort.map { |_index, block| block }
+          {
+            server_tool_calls: extract_server_tool_calls(blocks),
+            raw_content: blocks
+          }
         end
 
         def extract_content_delta(data, delta_type)

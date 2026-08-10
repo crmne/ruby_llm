@@ -79,10 +79,12 @@ module RubyLLM
 
     def complete(messages, tools:, temperature:, provider_options: {}, headers: {}, schema: nil, thinking: nil,
                  max_output_tokens: nil, citations: false, caching: nil, tool_prefs: nil, before_request: [],
-                 usage_recorder: nil, &)
+                 usage_recorder: nil, server_tools: [], &)
+      resolution = resolve_server_tools_for_request(server_tools)
+      headers = resolution.headers.merge(headers) if resolution
       payload = render(
         messages, tools:, tool_prefs:, temperature:, max_output_tokens:, provider_options:, schema:, thinking:,
-                  citations:, caching:, before_request:, stream: block_given?
+                  citations:, caching:, before_request:, server_tools:, stream: block_given?
       )
 
       track_usage(:chat, on_finish: usage_recorder) do
@@ -99,7 +101,7 @@ module RubyLLM
 
     def render(messages, tools:, temperature:, provider_options: {}, schema: nil, thinking: nil,
                max_output_tokens: nil, citations: false, caching: nil, tool_prefs: nil, before_request: [],
-               stream: false)
+               stream: false, server_tools: [])
       payload = Utils.deep_merge(
         render_payload(
           messages,
@@ -116,7 +118,15 @@ module RubyLLM
         ),
         provider_options
       )
+      payload = apply_server_tools(payload, server_tools)
       apply_before_request_hooks(payload, before_request)
+    end
+
+    # The alias table mapping portable server tool names to this protocol's
+    # wire format. Protocols with server-tool support override this;
+    # +nil+ means the protocol has no server-tool support at all.
+    def server_tool_aliases
+      nil
     end
 
     def list_models
@@ -189,6 +199,34 @@ module RubyLLM
     end
 
     private
+
+    def resolve_server_tools_for_request(entries)
+      return nil if entries.nil? || entries.empty?
+
+      aliases = server_tool_aliases
+      unless aliases
+        raise UnsupportedServerToolError,
+              "#{@provider.name} has no server-tool support through RubyLLM yet. " \
+              'Request options in the provider vocabulary can be set with with_provider_options.'
+      end
+
+      ServerTools.resolve(entries, aliases: aliases, owner: @provider.name)
+    end
+
+    def apply_server_tools(payload, entries)
+      resolution = resolve_server_tools_for_request(entries)
+      return payload unless resolution
+
+      payload = Utils.deep_merge(payload, resolution.payload) unless resolution.payload.empty?
+      merge_server_tool_entries(payload, resolution.tools) if resolution.tools.any?
+      payload
+    end
+
+    # Server tools join function tools in the payload's tools array. The
+    # entry shape comes from the alias table or the caller's raw Hash.
+    def merge_server_tool_entries(payload, entries)
+      payload[:tools] = Array(payload[:tools]) + entries
+    end
 
     def track_usage(operation, on_finish: nil)
       @usage_tracker = Usage::Tracker.new(

@@ -112,6 +112,20 @@ module RubyLLM
         @tool_options = block_given? ? block : options
       end
 
+      # Enables provider-executed tools for chats this agent builds, applied
+      # via Chat#with_server_tools. Accepts the same aliases, options, and
+      # raw Hashes; a block defers evaluation until the chat is built.
+      # Called with no arguments, returns the declared entries.
+      #
+      #   server_tools :web_search
+      #   server_tools web_search: { allowed_domains: ["ruby-lang.org"] }
+      #
+      def server_tools(*tools, **tools_with_options, &block)
+        return @server_tools || [] if tools.empty? && tools_with_options.empty? && !block_given?
+
+        @server_tools = block_given? ? block : ServerTools.normalize(tools, tools_with_options)
+      end
+
       # Sets system instructions for chats this agent builds. Accepts a
       # string, a block evaluated when the chat is built, or keyword locals
       # for the agent's conventional prompt template (for a WorkAssistant
@@ -446,6 +460,9 @@ module RubyLLM
 
         options = evaluate(tool_options, runtime)
         chat.with_tool_options(**options) if options && !options.empty?
+
+        server_tools_to_apply = Array(evaluate(server_tools, runtime)).compact
+        chat.with_server_tools(*server_tools_to_apply) if server_tools_to_apply.any?
       end
 
       def apply_passthrough_options(chat)

@@ -18,6 +18,9 @@ module RubyLLM
       @cache_read_tokens = nil
       @cache_write_tokens = nil
       @thinking_tokens = nil
+      @server_tool_use = nil
+      @server_tool_calls = []
+      @raw_content = nil
       @finish_reason = nil
       @inside_think_tag = false
       @pending_think_tag = +''
@@ -32,6 +35,8 @@ module RubyLLM
       handle_chunk_content(chunk)
       accumulate_citations(chunk.citations)
       append_thinking_from_chunk(chunk)
+      @server_tool_calls.concat(chunk.server_tool_calls)
+      @raw_content = chunk.raw_content if chunk.raw_content
       @finish_reason = chunk.finish_reason if chunk.finish_reason
       count_tokens chunk
       RubyLLM.logger.debug { inspect } if RubyLLM.config.log_stream_debug
@@ -51,8 +56,11 @@ module RubyLLM
           output: @output_tokens,
           cache_read: @cache_read_tokens,
           cache_write: @cache_write_tokens,
-          thinking: @thinking_tokens
+          thinking: @thinking_tokens,
+          server_tool_use: @server_tool_use
         ),
+        server_tool_calls: @server_tool_calls,
+        raw_content: @raw_content,
         finish_reason: @finish_reason,
         model: model,
         tool_calls: tool_calls_from_stream(response),
@@ -162,6 +170,7 @@ module RubyLLM
       @cache_read_tokens = tokens.cache_read if tokens.cache_read
       @cache_write_tokens = tokens.cache_write if tokens.cache_write
       @thinking_tokens = tokens.thinking if tokens.thinking
+      @server_tool_use = tokens.server_tool_use if tokens.server_tool_use
     end
 
     def handle_chunk_content(chunk)

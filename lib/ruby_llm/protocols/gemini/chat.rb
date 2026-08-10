@@ -103,7 +103,9 @@ module RubyLLM
         end
 
         def format_parts(msg)
-          if msg.tool_call?
+          if msg.role == :assistant && msg.raw_content
+            msg.raw_content
+          elsif msg.tool_call?
             format_tool_call(msg)
           elsif msg.tool_result?
             format_tool_result(msg)
@@ -143,6 +145,8 @@ module RubyLLM
               signature: extract_thought_signature(parts)
             ),
             tool_calls: tool_calls,
+            server_tool_calls: extract_server_tool_calls(data, parts),
+            raw_content: parts.any? { |part| server_tool_part?(part) } ? parts : nil,
             input_tokens: input_tokens(data),
             output_tokens: calculate_output_tokens(data),
             cache_read_tokens: data.dig('usageMetadata', 'cachedContentTokenCount'),
@@ -182,6 +186,41 @@ module RubyLLM
           return ['', []] unless non_thought_parts.any?
 
           build_response_content(non_thought_parts)
+        end
+
+        # Code execution runs come back as parts inside the model turn and
+        # must be replayed in history; search and URL fetches come back as
+        # response-level metadata.
+        def server_tool_part?(part)
+          part.key?('executableCode') || part.key?('codeExecutionResult')
+        end
+
+        def extract_server_tool_calls(data, parts)
+          calls = parts.select { |part| server_tool_part?(part) }.map do |part|
+            ServerToolCall.new(
+              type: part.key?('executableCode') ? 'executable_code' : 'code_execution_result',
+              input: part['executableCode'],
+              result: part['codeExecutionResult'],
+              raw: part
+            )
+          end
+          calls.concat(metadata_server_tool_calls(data))
+          calls
+        end
+
+        def metadata_server_tool_calls(data)
+          candidate = data.dig('candidates', 0) || {}
+          calls = []
+
+          queries = candidate.dig('groundingMetadata', 'webSearchQueries')
+          if queries&.any?
+            calls << ServerToolCall.new(type: 'google_search', input: { 'queries' => queries },
+                                        raw: { 'webSearchQueries' => queries })
+          end
+
+          url_metadata = candidate['urlContextMetadata']
+          calls << ServerToolCall.new(type: 'url_context', result: url_metadata, raw: url_metadata) if url_metadata
+          calls
         end
 
         # Normalizes grounding metadata (Google Search grounding) into citations.

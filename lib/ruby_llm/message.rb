@@ -72,6 +72,16 @@ module RubyLLM
     # <tt>"MAX_TOKENS"</tt>.
     attr_reader :finish_reason
 
+    # The provider-executed tool steps in this response, as an array of
+    # ServerToolCall objects. Empty unless the chat enabled tools with
+    # Chat#with_server_tools and the model used one.
+    attr_reader :server_tool_calls
+
+    # The provider-shaped content blocks of this assistant message, kept
+    # verbatim when the response used server tools so later requests can
+    # replay the turn exactly. +nil+ otherwise.
+    attr_reader :raw_content # :nodoc:
+
     # The Chat this message belongs to, set when it is added to a
     # conversation. Backs #tool_results.
     attr_accessor :conversation # :nodoc:
@@ -88,11 +98,14 @@ module RubyLLM
         output: options[:output_tokens],
         cache_read: options[:cache_read_tokens],
         cache_write: options[:cache_write_tokens],
-        thinking: options[:thinking_tokens]
+        thinking: options[:thinking_tokens],
+        server_tool_use: options[:server_tool_use]
       )
       @raw = options[:raw]
       @thinking = options[:thinking]
       @citations = Array(options[:citations])
+      @server_tool_calls = Array(options[:server_tool_calls])
+      @raw_content = options[:raw_content]
       @finish_reason = options[:finish_reason]
       self.ruby_llm_usage_entries = options[:usage_entries] if options[:usage_entries]
       @cache_until_here = options.fetch(:cache_until_here, false)
@@ -212,6 +225,8 @@ module RubyLLM
         thinking: thinking&.text,
         thinking_signature: thinking&.signature,
         citations: list_to_h(citations),
+        server_tool_calls: list_to_h(server_tool_calls),
+        raw_content: raw_content,
         finish_reason: finish_reason,
         cache_until_here: cache_until_here? || nil
       }.merge(tokens.to_h).compact

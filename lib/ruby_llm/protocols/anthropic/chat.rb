@@ -131,9 +131,32 @@ module RubyLLM
           thinking_content = extract_thinking_content(content_blocks)
           thinking_signature = extract_thinking_signature(content_blocks)
           tool_use_blocks = Tools.find_tool_uses(content_blocks)
+          server_tool_calls = extract_server_tool_calls(content_blocks)
 
           build_message(data, content: text_content, citations:, thinking: thinking_content,
-                              thinking_signature:, tool_use_blocks:, raw:)
+                              thinking_signature:, tool_use_blocks:, server_tool_calls:,
+                              raw_content: server_tool_calls.any? ? content_blocks : nil, raw:)
+        end
+
+        # Any block that is not text, thinking, or a function tool_use is a
+        # provider-executed tool step. Matching by shape rather than by an
+        # allowlist keeps tools Anthropic ships later flowing through.
+        def server_tool_block?(block)
+          type = block['type'].to_s
+          type == 'server_tool_use' || type == 'mcp_tool_use' || type.end_with?('_tool_result')
+        end
+
+        def extract_server_tool_calls(blocks)
+          blocks.select { |block| server_tool_block?(block) }.map do |block|
+            ServerToolCall.new(
+              type: block['type'],
+              name: block['name'],
+              id: block['id'] || block['tool_use_id'],
+              input: block['input'],
+              result: block['content'],
+              raw: block
+            )
+          end
         end
 
         def extract_text_and_citations(blocks)
@@ -189,7 +212,8 @@ module RubyLLM
           thinking_block&.dig('signature') || thinking_block&.dig('data')
         end
 
-        def build_message(data, content:, citations:, thinking:, thinking_signature:, tool_use_blocks:, raw:)
+        def build_message(data, content:, citations:, thinking:, thinking_signature:, tool_use_blocks:, raw:,
+                          server_tool_calls: [], raw_content: nil)
           usage = data['usage'] || {}
           thinking_tokens = usage.dig('output_tokens_details', 'thinking_tokens') ||
                             usage.dig('output_tokens_details', 'reasoning_tokens') ||
@@ -202,11 +226,14 @@ module RubyLLM
             citations: citations,
             thinking: Thinking.build(text: thinking, signature: thinking_signature),
             tool_calls: Tools.parse_tool_calls(tool_use_blocks),
+            server_tool_calls: server_tool_calls,
+            raw_content: raw_content,
             input_tokens: usage['input_tokens'],
             output_tokens: usage['output_tokens'],
             cache_read_tokens: extract_cache_read_tokens(data),
             cache_write_tokens: extract_cache_write_tokens(data),
             thinking_tokens: thinking_tokens,
+            server_tool_use: usage['server_tool_use'],
             finish_reason: data['stop_reason'],
             model: data['model'],
             raw: raw
@@ -216,13 +243,25 @@ module RubyLLM
         def format_message(msg, thinking: nil, citations: false, caching: nil)
           thinking_enabled = thinking&.enabled?
 
-          if msg.tool_call?
+          if msg.role == :assistant && msg.raw_content
+            format_raw_assistant_message(msg, caching:)
+          elsif msg.tool_call?
             format_tool_call_with_thinking(msg, thinking_enabled, caching:)
           elsif msg.tool_result?
             Tools.format_tool_result(msg)
           else
             format_basic_message_with_thinking(msg, thinking_enabled, citations: citations, caching:)
           end
+        end
+
+        # Turns that used server tools replay their provider-shaped blocks
+        # verbatim: the API requires the tool_use/result blocks and their
+        # citations back exactly as returned.
+        def format_raw_assistant_message(msg, caching: nil)
+          blocks = msg.raw_content.dup
+          inject_cache_control(blocks, caching:) if msg.cache_until_here?
+
+          { role: 'assistant', content: blocks }
         end
 
         def format_basic_message_with_thinking(msg, thinking_enabled, citations: false, caching: nil)

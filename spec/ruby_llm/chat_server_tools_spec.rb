@@ -1,0 +1,226 @@
+# frozen_string_literal: true
+
+require 'spec_helper'
+
+RSpec.describe RubyLLM::Chat, :live do
+  describe '#with_server_tools' do
+    it 'normalizes symbols, keywords, and raw hashes' do
+      chat = RubyLLM.chat.with_server_tools(:web_search, { type: 'custom_tool' }, code_execution: { max_uses: 1 })
+
+      expect(chat.server_tools).to eq(
+        [
+          { name: :web_search, options: {} },
+          { raw: { type: 'custom_tool' } },
+          { name: :code_execution, options: { max_uses: 1 } }
+        ]
+      )
+    end
+
+    it 'accumulates across calls and clears with nil' do
+      chat = RubyLLM.chat.with_server_tools(:web_search).with_server_tools(:code_execution)
+
+      expect(chat.server_tools.length).to eq(2)
+
+      chat.with_server_tools(nil)
+
+      expect(chat.server_tools).to be_empty
+    end
+
+    it 'rejects entries that are neither symbols nor hashes' do
+      expect { RubyLLM.chat.with_server_tools(42) }.to raise_error(ArgumentError, /Symbols or Hashes/)
+    end
+  end
+
+  describe 'request rendering' do
+    it 'renders Anthropic aliases into versioned tool entries' do
+      payload = RubyLLM.chat(model: 'claude-haiku-4-5', provider: :anthropic)
+                       .with_server_tools(:web_search, web_fetch: { max_uses: 2 })
+                       .render
+
+      expect(payload[:tools]).to include(
+        { type: 'web_search_20260318', name: 'web_search', allowed_callers: ['direct'] }
+      )
+      expect(payload[:tools]).to include(
+        { type: 'web_fetch_20260318', name: 'web_fetch', allowed_callers: ['direct'], max_uses: 2 }
+      )
+    end
+
+    it 'passes raw tool hashes through verbatim' do
+      raw_tool = { type: 'web_search_20250305', name: 'web_search', max_uses: 1 }
+      payload = RubyLLM.chat(model: 'claude-haiku-4-5', provider: :anthropic)
+                       .with_server_tools(raw_tool)
+                       .render
+
+      expect(payload[:tools]).to include(raw_tool)
+    end
+
+    it 'keeps function tools alongside server tools' do
+      weather = Class.new(RubyLLM::Tool) do
+        def self.name = 'Weather'
+        description 'Looks up weather'
+
+        def execute(**) = 'sunny'
+      end
+      payload = RubyLLM.chat(model: 'claude-haiku-4-5', provider: :anthropic)
+                       .with_tools(weather)
+                       .with_server_tools(:web_search)
+                       .render
+
+      expect(payload[:tools].length).to eq(2)
+    end
+
+    it 'expands the Anthropic MCP alias into servers, toolset, and beta header' do
+      payload = RubyLLM.chat(model: 'claude-haiku-4-5', provider: :anthropic)
+                       .with_server_tools(mcp: { url: 'https://mcp.example.com', name: 'example' })
+                       .render
+
+      expect(payload[:mcp_servers]).to eq([{ type: 'url', name: 'example', url: 'https://mcp.example.com' }])
+      expect(payload[:tools]).to include({ type: 'mcp_toolset', mcp_server_name: 'example' })
+    end
+
+    it 'renders OpenAI Responses aliases' do
+      payload = RubyLLM.chat(model: 'gpt-5.2', provider: :openai)
+                       .with_server_tools(:web_search, :code_execution)
+                       .render
+
+      expect(payload[:tools]).to include({ type: 'web_search' })
+      expect(payload[:tools]).to include({ type: 'code_interpreter', container: { type: 'auto' } })
+    end
+
+    it 'renders Gemini aliases with options nested inside the tool key' do
+      payload = RubyLLM.chat(model: 'gemini-3.5-flash', provider: :gemini)
+                       .with_server_tools(:web_search, file_search: { file_search_store_names: ['store'] })
+                       .render
+
+      expect(payload[:tools]).to include({ google_search: {} })
+      expect(payload[:tools]).to include({ file_search: { file_search_store_names: ['store'] } })
+    end
+
+    it 'raises for unknown aliases and lists the known ones' do
+      chat = RubyLLM.chat(model: 'claude-haiku-4-5', provider: :anthropic).with_server_tools(:teleport)
+
+      expect { chat.render }.to raise_error(RubyLLM::UnsupportedServerToolError, /:web_search/)
+    end
+
+    it 'raises for providers without server-tool support' do
+      chat = RubyLLM.chat(model: 'deepseek-v4-flash', provider: :deepseek).with_server_tools(:web_search)
+
+      expect { chat.render }.to raise_error(RubyLLM::UnsupportedServerToolError, /with_provider_options/)
+    end
+  end
+
+  describe 'pause_turn merging' do
+    it 'merges continuation segments into one message' do
+      protocol = RubyLLM::Protocols::Anthropic.new(RubyLLM::Providers::Anthropic.new(RubyLLM.config))
+      paused = RubyLLM::Message.new(
+        role: :assistant, content: 'Searching. ', finish_reason: 'pause_turn',
+        raw_content: [{ 'type' => 'server_tool_use', 'id' => 'srvtoolu_1', 'name' => 'web_search',
+                        'input' => { 'query' => 'ruby' } }],
+        server_tool_calls: [RubyLLM::ServerToolCall.new(type: 'server_tool_use', raw: {})],
+        input_tokens: 10, output_tokens: 5
+      )
+      final = RubyLLM::Message.new(
+        role: :assistant, content: 'Done.', finish_reason: 'end_turn',
+        raw_content: [{ 'type' => 'text', 'text' => 'Done.' }],
+        input_tokens: 20, output_tokens: 7, model: 'claude-haiku-4-5'
+      )
+
+      merged = protocol.send(:merge_turn_segments, [paused, final])
+
+      expect(merged.content).to eq('Searching. Done.')
+      expect(merged.finish_reason).to eq('end_turn')
+      expect(merged.raw_content.length).to eq(2)
+      expect(merged.server_tool_calls.length).to eq(1)
+      expect(merged.tokens.input).to eq(30)
+      expect(merged.tokens.output).to eq(12)
+    end
+  end
+
+  describe 'web search' do
+    context 'with anthropic/claude-haiku-4-5' do
+      let(:chat) { RubyLLM.chat(model: 'claude-haiku-4-5', provider: :anthropic).with_server_tools(:web_search) }
+
+      it 'searches, cites, and reports tool usage' do
+        response = chat.ask('Search the web: what is the latest stable Ruby version? Cite your source.')
+
+        expect(response.server_tool_calls).not_to be_empty
+        expect(response.server_tool_calls.map(&:type)).to include('server_tool_use')
+        expect(response.server_tool_calls.map(&:type)).to include('web_search_tool_result')
+        expect(response.citations).not_to be_empty
+        expect(response.tokens.server_tool_use).to include('web_search_requests')
+        expect(response.raw_content).to be_an(Array)
+      end
+
+      it 'replays search turns so the conversation can continue' do
+        chat.ask('Search the web: what is the latest stable Ruby version?')
+        followup = chat.ask('Thanks. Now just say OK.')
+
+        expect(followup.content).to be_present
+      end
+
+      it 'streams search turns and reconstructs them' do
+        chunks = []
+        response = chat.ask('Search the web: what is the latest stable Ruby version?') { |chunk| chunks << chunk }
+
+        expect(chunks).not_to be_empty
+        expect(response.server_tool_calls.map(&:type)).to include('server_tool_use')
+        expect(response.raw_content).to be_an(Array)
+
+        followup = chat.ask('Thanks. Now just say OK.')
+        expect(followup.content).to be_present
+      end
+    end
+
+    context 'with openai/gpt-5.2' do
+      let(:chat) { RubyLLM.chat(model: 'gpt-5.2', provider: :openai).with_server_tools(:web_search) }
+
+      it 'searches and records the tool call items' do
+        response = chat.ask('Search the web: what is the latest stable Ruby version? Cite your source.')
+
+        expect(response.server_tool_calls.map(&:type)).to include('web_search_call')
+        expect(response.raw_content).to be_an(Array)
+
+        followup = chat.ask('Thanks. Now just say OK.')
+        expect(followup.content).to be_present
+      end
+    end
+
+    context 'with gemini/gemini-3.5-flash' do
+      let(:chat) { RubyLLM.chat(model: 'gemini-3.5-flash', provider: :gemini).with_server_tools(:web_search) }
+
+      it 'grounds the answer and exposes the queries it ran' do
+        response = chat.ask('Search the web: what is the latest stable Ruby version? Cite your source.')
+
+        expect(response.server_tool_calls.map(&:type)).to include('google_search')
+        expect(response.citations).not_to be_empty
+      end
+    end
+  end
+
+  describe 'code execution' do
+    context 'with anthropic/claude-haiku-4-5' do
+      let(:chat) { RubyLLM.chat(model: 'claude-haiku-4-5', provider: :anthropic).with_server_tools(:code_execution) }
+
+      it 'runs code server-side and returns the result blocks' do
+        response = chat.ask('Use code execution to compute 123456789 * 987654321 and report the exact product.')
+
+        expect(response.server_tool_calls).not_to be_empty
+        expect(response.content).to include('121932631112635269')
+      end
+    end
+
+    context 'with gemini/gemini-3.5-flash' do
+      let(:chat) { RubyLLM.chat(model: 'gemini-3.5-flash', provider: :gemini).with_server_tools(:code_execution) }
+
+      it 'runs code server-side and replays the turn' do
+        response = chat.ask('Use code execution to compute 123456789 * 987654321 and report the exact product.')
+
+        expect(response.server_tool_calls.map(&:type)).to include('executable_code')
+        expect(response.content).to include('121932631112635269')
+
+        followup = chat.ask('Thanks. Now just say OK.')
+        expect(followup.content).to be_present
+      end
+    end
+  end
+end

@@ -1,0 +1,194 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"Use code execution to
+        compute 123456789 * 987654321 and report the exact product."}]}],"generationConfig":{},"tools":[{"code_execution":{}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      X-Goog-Api-Key:
+      - "<GEMINI_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      X-Gemini-Service-Tier:
+      - standard
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Mon, 10 Aug 2026 21:55:17 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Server-Timing:
+      - gfet4t7; dur=2080
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "candidates": [
+            {
+              "content": {
+                "parts": [
+                  {
+                    "executableCode": {
+                      "language": "PYTHON",
+                      "code": "num1 = 123456789\nnum2 = 987654321\nproduct = num1 * num2\nprint(f\"Product: {product}\")\n",
+                      "id": "9eoj5gt3"
+                    },
+                    "thoughtSignature": "EsEBCr4BARFNMg+hrKZxScU73/fgVpsmhsvOdVxRMeN+Tj2oILbXAOvNN1HFOSPFunF5/4fqMhJcg0+fVk9wjMWs0XDdOk0mDP6K2vY+ywwUVw9O7ulaWHsF6dlwl1YW9rH6EZ48lva58wiHkxK+57P7xlOvpQjVPjGh4Izaj1kyl4un09N3OsJ9SV3jmr6J9xT42WmIxzF5l2xz/k/BPA4yqZk7ig1QhGuygFaSYNf55avxe7hdzPrmC+MZ6xRI+op7uQ=="
+                  },
+                  {
+                    "codeExecutionResult": {
+                      "outcome": "OUTCOME_OK",
+                      "output": "Product: 121932631112635269\n",
+                      "id": "9eoj5gt3"
+                    }
+                  },
+                  {
+                    "text": "The exact product of $123456789 \\times 987654321$ is **$121,932,631,112,635,269$** (or $121932631112635269$).",
+                    "thoughtSignature": "EncKdQERTTIPZeuzTNjmguFZYnYDkqkBGIRRXNb8/1SxZtn9G71riH/XyRAXR+IDL2svQrqaX6qJ/03kQWBrQ+Bop7Ft5Q/pvLlQex8oxlSMWTDKyLVbMBrdeQb7YVFynG5hohBfG+zoi5ADORF7kFvjGUxyMB1RZQ=="
+                  }
+                ],
+                "role": "model"
+              },
+              "finishReason": "STOP",
+              "index": 0
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 80,
+            "candidatesTokenCount": 136,
+            "totalTokenCount": 452,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 80
+              }
+            ],
+            "toolUsePromptTokenCount": 159,
+            "toolUsePromptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 159
+              }
+            ],
+            "thoughtsTokenCount": 77,
+            "serviceTier": "standard"
+          },
+          "modelVersion": "gemini-3.5-flash",
+          "responseId": "w0h6ausj36OewQ-8sOOhCA"
+        }
+  recorded_at: Mon, 10 Aug 2026 21:55:17 GMT
+- request:
+    method: post
+    uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"Use code execution to
+        compute 123456789 * 987654321 and report the exact product."}]},{"role":"model","parts":[{"executableCode":{"language":"PYTHON","code":"num1
+        = 123456789\nnum2 = 987654321\nproduct = num1 * num2\nprint(f\"Product: {product}\")\n","id":"9eoj5gt3"},"thoughtSignature":"EsEBCr4BARFNMg+hrKZxScU73/fgVpsmhsvOdVxRMeN+Tj2oILbXAOvNN1HFOSPFunF5/4fqMhJcg0+fVk9wjMWs0XDdOk0mDP6K2vY+ywwUVw9O7ulaWHsF6dlwl1YW9rH6EZ48lva58wiHkxK+57P7xlOvpQjVPjGh4Izaj1kyl4un09N3OsJ9SV3jmr6J9xT42WmIxzF5l2xz/k/BPA4yqZk7ig1QhGuygFaSYNf55avxe7hdzPrmC+MZ6xRI+op7uQ=="},{"codeExecutionResult":{"outcome":"OUTCOME_OK","output":"Product:
+        121932631112635269\n","id":"9eoj5gt3"}},{"text":"The exact product of $123456789
+        \\times 987654321$ is **$121,932,631,112,635,269$** (or $121932631112635269$).","thoughtSignature":"EncKdQERTTIPZeuzTNjmguFZYnYDkqkBGIRRXNb8/1SxZtn9G71riH/XyRAXR+IDL2svQrqaX6qJ/03kQWBrQ+Bop7Ft5Q/pvLlQex8oxlSMWTDKyLVbMBrdeQb7YVFynG5hohBfG+zoi5ADORF7kFvjGUxyMB1RZQ=="}]},{"role":"user","parts":[{"text":"Thanks.
+        Now just say OK."}]}],"generationConfig":{},"tools":[{"code_execution":{}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      X-Goog-Api-Key:
+      - "<GEMINI_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      X-Gemini-Service-Tier:
+      - standard
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Mon, 10 Aug 2026 21:55:17 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Server-Timing:
+      - gfet4t7; dur=889
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "candidates": [
+            {
+              "content": {
+                "parts": [
+                  {
+                    "text": "OK.",
+                    "thoughtSignature": "EjQKMgERTTIPfzAY6I5rdky6TwgyB/7trF5n9/8vOXtf04GyREKH6ItuDpguvfVLypy/Ukwe"
+                  }
+                ],
+                "role": "model"
+              },
+              "finishReason": "STOP",
+              "index": 0
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 196,
+            "candidatesTokenCount": 2,
+            "totalTokenCount": 198,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 196
+              }
+            ],
+            "serviceTier": "standard"
+          },
+          "modelVersion": "gemini-3.5-flash",
+          "responseId": "xUh6atunB-XGkdUP_be34AM"
+        }
+  recorded_at: Mon, 10 Aug 2026 21:55:17 GMT
+recorded_with: VCR 6.4.0

@@ -1,0 +1,215 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent
+    body:
+      encoding: UTF-8
+      string: '{"contents":[{"role":"user","parts":[{"text":"Search the web: what
+        is the latest stable Ruby version? Cite your source."}]}],"generationConfig":{},"tools":[{"google_search":{}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      X-Goog-Api-Key:
+      - "<GEMINI_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      X-Gemini-Service-Tier:
+      - standard
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Mon, 10 Aug 2026 21:55:10 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Server-Timing:
+      - gfet4t7; dur=8562
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "candidates": [
+            {
+              "content": {
+                "parts": [
+                  {
+                    "text": "The latest stable version of Ruby is **4.0.6**, which was released on **July 14, 2026**. \n\nAdditionally, the Ruby core team continues to maintain older stable branches, which currently have the following latest patch releases:\n* **Ruby 3.4.10** (released June 30, 2026)\n* **Ruby 3.3.12** (released July 16, 2026)\n\n*(Note: The Ruby 3.2 branch officially reached its End-of-Life (EOL) on March 31, 2026, and is no longer receiving security updates.)*\n\n### Sources:\n* **Official Ruby Downloads Page**: [ruby-lang.org/en/downloads](https://www.ruby-lang.org/en/downloads/)\n* **Ruby Release History**: [ruby-lang.org/en/downloads/releases](https://www.ruby-lang.org/en/downloads/releases/)\n* **Ruby GitHub Repository**: [github.com/ruby/ruby](https://github.com/ruby/ruby)",
+                    "thoughtSignature": "Eq8KCqwKARFNMg+doOtUOEo2cfhePat8gXlwlBWREZD1yEFBWxRiokhc1P9XSmLBM6HuSL84Fn4AN/JefGeyaPP3mFYH+erkJLpaK4EAwED0pG2GsCfo5dFxPCYFmHmrDPeTMGKmsnFjZJM7HD2MXMDuF4Dhn0bfGBAkOz5yozAmAEKvwEb2xEMFfsW9taopgaBIfQqcAET9lauRIVzdCAMgkSIp2+9IczMps9xQDwDTTV7giIUKHiGM8udMcYstkpBj8PqRY7Qae6f2Bwxw7nzkBjUMOUTnPaMOWSGS8KxLI4ok1ySC84TvEq7nz9/6j7kqRxB+WdajtHUI1YyqR/AC2A3v29YTDI3NukEchtxDhaawyLzvMVyL5ojYQUoaMu0vdxZKBjwBRZBNyiLYft8KzShqh7by7XLl92z020+kdejWfeAAJNlNNGxB73o72AdnAUZ0xOyZ7URth0ffiw+vSTtNii0paFDkZKkAhwhVN3vDDtZkJCSWA5d3uogJYL7l5xqrVeC4VDrOeiNTgJ3XTgqA3LAnx3+GBDI9UL9gEZ/yfqkrrSHXtZuGAlASfaV1VGHHd8Vxabq5MyLdB6HSDWfV97eWCyTZslRQ06htJLEBpStPvZ4Bzx46eJv7eau1MTO8MeN2EGINVYnuyMdOSk4thR9oxrHV0xLx23ILcWJiqLSPUyjuzQoHVVAeZV/84hHYpgQfGgVaD9gPd277CAJilCGBmtOJuwBG4lxyDFItZMRu5QkhY4XNOVeWEsy/s3659H1DsjXk1N4xKkjHoLGczkrz6EANUnUodcDbFeHBGCoFGmPcmbwmfiSFdK/OkcQoIMDpAB2Ruf+0loujRzXLGo5qAzqZpqRd2dFxNwKZm4MlDysuBTy3roWwUf4cVEWEw6a0Kc0Wveyc3Zb4SyKCijIz4c3+HeY51rpsBKZtwO6EnWaL7IfpSR7JmmKjnk6G2hmPcoLhG+6DkryXLu2rh6d/TWw//+3pPvPvHvcMui60KnCOmbZsmTJiE77plk6YLBFbA3QqM1o7dnBBzVJj8AWBU6io/cjESDTiYLuJlGatngIFif7jiccE9c4YlAjMKfDsJMnIFB1Xifnky0BTfxDiUtRa+gzUefCgAqc6PEKxcrWBRdcv0Rlb5WSaZgEKCZL+ap82rOQPiNLDAHzdBGYscBoQNuKG2WCMy0y2UO3P7Qa5CT2Qery5XhuAjQo2yLPtDNa6eBPX46uBXpCnjWz1wta69zHME2EAQS4JcnSyOjza34loZzAZX9+bfE9bA8QiQZVLtRFQTHtW6PCVDrn5exCEQMucA5F2puRMrfpBbBTwEsNdzcOtckqFy+5a5rVOAZ/wVNvsH5a37A6f/b/nZIZsb65nIceOR+2GTvgvdnvMH1sAsB8rx00F9UrNuhrlveqDEA6e2V8Df3u48lcaD0JMN3gbNV7M2tJ0GaDSNdt8LxklIKNljirG6MzE0RA8SDY7W1pzCQ18HSXAVORruCxR4m4Nsh45WvyTd+YLA0pewNtePvbdPSqqOJr1E+7pT+8QzRZ9RvHPd+zg6vCZuk9+CzSpEyBgtBFs2aZgwvdE+lQpbDmlUunat6hcC5XsL5l74SuSMcHWytan4Ntv7csWzMBUpgfQrGnYK/H5ovVzjNVJ6N+/Wq2tHu4MwQ4HFxSKVQAC4FDaQxZbaTa4Oe6sbiEg9Pbb0KzGWRFVpM7wohzmWVa+mTIpa6g1Lh4v3x3ydZr3ZryYMJZGsGKqPUsL6I1BiKzz0w=="
+                  }
+                ],
+                "role": "model"
+              },
+              "finishReason": "STOP",
+              "index": 0,
+              "groundingMetadata": {
+                "searchEntryPoint": {
+                  "renderedContent": "\u003cstyle\u003e\n.container {\n  align-items: center;\n  border-radius: 8px;\n  display: flex;\n  font-family: Google Sans, Roboto, sans-serif;\n  font-size: 14px;\n  line-height: 20px;\n  padding: 8px 12px;\n}\n.chip {\n  display: inline-block;\n  border: solid 1px;\n  border-radius: 16px;\n  min-width: 14px;\n  padding: 5px 16px;\n  text-align: center;\n  user-select: none;\n  margin: 0 8px;\n  -webkit-tap-highlight-color: transparent;\n}\n.carousel {\n  overflow: auto;\n  scrollbar-width: none;\n  white-space: nowrap;\n  margin-right: -12px;\n}\n.headline {\n  display: flex;\n  margin-right: 4px;\n}\n.gradient-container {\n  position: relative;\n}\n.gradient {\n  position: absolute;\n  transform: translate(3px, -9px);\n  height: 36px;\n  width: 9px;\n}\n@media (prefers-color-scheme: light) {\n  .container {\n    background-color: #fafafa;\n    box-shadow: 0 0 0 1px #0000000f;\n  }\n  .headline-label {\n    color: #1f1f1f;\n  }\n  .chip {\n    background-color: #ffffff;\n    border-color: #d2d2d2;\n    color: #5e5e5e;\n    text-decoration: none;\n  }\n  .chip:hover {\n    background-color: #f2f2f2;\n  }\n  .chip:focus {\n    background-color: #f2f2f2;\n  }\n  .chip:active {\n    background-color: #d8d8d8;\n    border-color: #b6b6b6;\n  }\n  .logo-dark {\n    display: none;\n  }\n  .gradient {\n    background: linear-gradient(90deg, #fafafa 15%, #fafafa00 100%);\n  }\n}\n@media (prefers-color-scheme: dark) {\n  .container {\n    background-color: #1f1f1f;\n    box-shadow: 0 0 0 1px #ffffff26;\n  }\n  .headline-label {\n    color: #fff;\n  }\n  .chip {\n    background-color: #2c2c2c;\n    border-color: #3c4043;\n    color: #fff;\n    text-decoration: none;\n  }\n  .chip:hover {\n    background-color: #353536;\n  }\n  .chip:focus {\n    background-color: #353536;\n  }\n  .chip:active {\n    background-color: #464849;\n    border-color: #53575b;\n  }\n  .logo-light {\n    display: none;\n  }\n  .gradient {\n    background: linear-gradient(90deg, #1f1f1f 15%, #1f1f1f00 100%);\n  }\n}\n\u003c/style\u003e\n\u003cdiv class=\"container\"\u003e\n  \u003cdiv class=\"headline\"\u003e\n    \u003csvg class=\"logo-light\" width=\"18\" height=\"18\" viewBox=\"9 9 35 35\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"\u003e\n      \u003cpath fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M42.8622 27.0064C42.8622 25.7839 42.7525 24.6084 42.5487 23.4799H26.3109V30.1568H35.5897C35.1821 32.3041 33.9596 34.1222 32.1258 35.3448V39.6864H37.7213C40.9814 36.677 42.8622 32.2571 42.8622 27.0064V27.0064Z\" fill=\"#4285F4\"/\u003e\n      \u003cpath fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M26.3109 43.8555C30.9659 43.8555 34.8687 42.3195 37.7213 39.6863L32.1258 35.3447C30.5898 36.3792 28.6306 37.0061 26.3109 37.0061C21.8282 37.0061 18.0195 33.9811 16.6559 29.906H10.9194V34.3573C13.7563 39.9841 19.5712 43.8555 26.3109 43.8555V43.8555Z\" fill=\"#34A853\"/\u003e\n      \u003cpath fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M16.6559 29.8904C16.3111 28.8559 16.1074 27.7588 16.1074 26.6146C16.1074 25.4704 16.3111 24.3733 16.6559 23.3388V18.8875H10.9194C9.74388 21.2072 9.06992 23.8247 9.06992 26.6146C9.06992 29.4045 9.74388 32.022 10.9194 34.3417L15.3864 30.8621L16.6559 29.8904V29.8904Z\" fill=\"#FBBC05\"/\u003e\n      \u003cpath fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M26.3109 16.2386C28.85 16.2386 31.107 17.1164 32.9095 18.8091L37.8466 13.8719C34.853 11.082 30.9659 9.3736 26.3109 9.3736C19.5712 9.3736 13.7563 13.245 10.9194 18.8875L16.6559 23.3388C18.0195 19.2636 21.8282 16.2386 26.3109 16.2386V16.2386Z\" fill=\"#EA4335\"/\u003e\n    \u003c/svg\u003e\n    \u003csvg class=\"logo-dark\" width=\"18\" height=\"18\" viewBox=\"0 0 48 48\" xmlns=\"http://www.w3.org/2000/svg\"\u003e\n      \u003ccircle cx=\"24\" cy=\"23\" fill=\"#FFF\" r=\"22\"/\u003e\n      \u003cpath d=\"M33.76 34.26c2.75-2.56 4.49-6.37 4.49-11.26 0-.89-.08-1.84-.29-3H24.01v5.99h8.03c-.4 2.02-1.5 3.56-3.07 4.56v.75l3.91 2.97h.88z\" fill=\"#4285F4\"/\u003e\n      \u003cpath d=\"M15.58 25.77A8.845 8.845 0 0 0 24 31.86c1.92 0 3.62-.46 4.97-1.31l4.79 3.71C31.14 36.7 27.65 38 24 38c-5.93 0-11.01-3.4-13.45-8.36l.17-1.01 4.06-2.85h.8z\" fill=\"#34A853\"/\u003e\n      \u003cpath d=\"M15.59 20.21a8.864 8.864 0 0 0 0 5.58l-5.03 3.86c-.98-2-1.53-4.25-1.53-6.64 0-2.39.55-4.64 1.53-6.64l1-.22 3.81 2.98.22 1.08z\" fill=\"#FBBC05\"/\u003e\n      \u003cpath d=\"M24 14.14c2.11 0 4.02.75 5.52 1.98l4.36-4.36C31.22 9.43 27.81 8 24 8c-5.93 0-11.01 3.4-13.45 8.36l5.03 3.85A8.86 8.86 0 0 1 24 14.14z\" fill=\"#EA4335\"/\u003e\n    \u003c/svg\u003e\n    \u003cdiv class=\"gradient-container\"\u003e\u003cdiv class=\"gradient\"\u003e\u003c/div\u003e\u003c/div\u003e\n  \u003c/div\u003e\n  \u003cdiv class=\"carousel\"\u003e\n\u003ca class=\"chip\" href=\"https://www.google.com/search?q=ruby+4.0.6+release+date&client=app-vertex-grounding&safesearch=active\"\u003eruby 4.0.6 release date\u003c/a\u003e\n\u003ca class=\"chip\" href=\"https://www.google.com/search?q=ruby+lang+downloads+stable+version&client=app-vertex-grounding&safesearch=active\"\u003eruby lang downloads stable version\u003c/a\u003e\n\u003ca class=\"chip\" href=\"https://www.google.com/search?q=%22Ruby+4.0.0%22+release+date+OR+site:ruby-lang.org&client=app-vertex-grounding&safesearch=active\"\u003e&quot;Ruby 4.0.0&quot; release date OR site:ruby-lang.org\u003c/a\u003e\n\u003ca class=\"chip\" href=\"https://www.google.com/search?q=latest+stable+Ruby+version&client=app-vertex-grounding&safesearch=active\"\u003elatest stable Ruby version\u003c/a\u003e\n  \u003c/div\u003e\n\u003c/div\u003e"
+                },
+                "groundingChunks": [
+                  {
+                    "web": {
+                      "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFv02b0wNrxgBNDjcSU1u6N3W3SahZAlJEiASy3aMU3suNbIZQlodhEwcpP39X0GqD51Sa9ZiNQx9lP9vGs6H_Q_H48rPKjxGcwrRAqtMb8Ncz0l1sQ883uTp1Ik0Y=",
+                      "title": "ruby-lang.org"
+                    }
+                  },
+                  {
+                    "web": {
+                      "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHFdpInc23CkkU4tiZRcSjb8HR2iKWljQyEdF6jqWtXR87vkZdLIxp3Ls5mXB5B9MIfrN48EkFNfFd0Y2KB_xvbnQfkwzv5syLg7TpUp5JAFfVrzue7I7L_aw04UHKVU2qCGEJkegjrfJscVEZIQ0HfeUUK5O_SCg==",
+                      "title": "ruby-lang.org"
+                    }
+                  },
+                  {
+                    "web": {
+                      "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFRV7r36ZtbmkpvhNhujfwJoUf0-FCiwJEGgHY7ZQNuZnV93rU7AtmhizYaaF1LBwdqR-3mrr5E8WhLEC67a-njvSfEAF1uN2MbnANPwLPJ02V_xtHiTmKIRooxuvWlfQfGelskaQY=",
+                      "title": "ruby-lang.org"
+                    }
+                  },
+                  {
+                    "web": {
+                      "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH3ZVbycUo7EvUhPHl5GEJowTbl-xZiaqUw3HdK6y6y3zNr26iwPza0gx_ErkLP7cI8f2obAX1nexZyubhWRtqp2PDBwTG-Y5_yJkG4yW0hwQucZhep29JKyg==",
+                      "title": "eosl.date"
+                    }
+                  },
+                  {
+                    "web": {
+                      "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFuPEgCP5agtj34Ig76b0TJrs2yYjCye0hKTa_9xIM0Ss1qAch6vt6b4alWFtDCsPlB7T-a3WRAU1giv2IsftX8e-bhr8VDJRDS3oVtcfBzvSltHYyHaR0xE-b4",
+                      "title": "github.com"
+                    }
+                  },
+                  {
+                    "web": {
+                      "uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFBaq3y-JDa74rsNTXhoxA0mJ-akYLaEGLEK-EiKYthJ1Ti5_RXov9qCBvNXA7ndA_haeHcUbR1kL69B5tCwdUPwrLX7CScM4MRdmU_gLkfl7N3",
+                      "title": "github.com"
+                    }
+                  }
+                ],
+                "groundingSupports": [
+                  {
+                    "segment": {
+                      "endIndex": 87,
+                      "text": "The latest stable version of Ruby is **4.0.6**, which was released on **July 14, 2026**"
+                    },
+                    "groundingChunkIndices": [
+                      0,
+                      1
+                    ]
+                  },
+                  {
+                    "segment": {
+                      "startIndex": 91,
+                      "endIndex": 269,
+                      "text": "Additionally, the Ruby core team continues to maintain older stable branches, which currently have the following latest patch releases:\n* **Ruby 3.4.10** (released June 30, 2026)"
+                    },
+                    "groundingChunkIndices": [
+                      2
+                    ]
+                  },
+                  {
+                    "segment": {
+                      "startIndex": 91,
+                      "endIndex": 312,
+                      "text": "Additionally, the Ruby core team continues to maintain older stable branches, which currently have the following latest patch releases:\n* **Ruby 3.4.10** (released June 30, 2026)\n* **Ruby 3.3.12** (released July 16, 2026)"
+                    },
+                    "groundingChunkIndices": [
+                      2
+                    ]
+                  },
+                  {
+                    "segment": {
+                      "startIndex": 314,
+                      "endIndex": 445,
+                      "text": "*(Note: The Ruby 3.2 branch officially reached its End-of-Life (EOL) on March 31, 2026, and is no longer receiving security updates"
+                    },
+                    "groundingChunkIndices": [
+                      3
+                    ]
+                  },
+                  {
+                    "segment": {
+                      "startIndex": 450,
+                      "endIndex": 568,
+                      "text": "### Sources:\n* **Official Ruby Downloads Page**: [ruby-lang.org/en/downloads](https://www.ruby-lang.org/en/downloads/)"
+                    },
+                    "groundingChunkIndices": [
+                      0
+                    ]
+                  },
+                  {
+                    "segment": {
+                      "startIndex": 450,
+                      "endIndex": 684,
+                      "text": "### Sources:\n* **Official Ruby Downloads Page**: [ruby-lang.org/en/downloads](https://www.ruby-lang.org/en/downloads/)\n* **Ruby Release History**: [ruby-lang.org/en/downloads/releases](https://www.ruby-lang.org/en/downloads/releases/)"
+                    },
+                    "groundingChunkIndices": [
+                      2
+                    ]
+                  },
+                  {
+                    "segment": {
+                      "startIndex": 450,
+                      "endIndex": 767,
+                      "text": "### Sources:\n* **Official Ruby Downloads Page**: [ruby-lang.org/en/downloads](https://www.ruby-lang.org/en/downloads/)\n* **Ruby Release History**: [ruby-lang.org/en/downloads/releases](https://www.ruby-lang.org/en/downloads/releases/)\n* **Ruby GitHub Repository**: [github.com/ruby/ruby](https://github.com/ruby/ruby)"
+                    },
+                    "groundingChunkIndices": [
+                      4,
+                      5
+                    ]
+                  }
+                ],
+                "webSearchQueries": [
+                  "ruby 4.0.6 release date",
+                  "ruby lang downloads stable version",
+                  "\"Ruby 4.0.0\" release date OR site:ruby-lang.org",
+                  "latest stable Ruby version"
+                ]
+              }
+            }
+          ],
+          "usageMetadata": {
+            "promptTokenCount": 379,
+            "candidatesTokenCount": 308,
+            "totalTokenCount": 1487,
+            "cachedContentTokenCount": 123,
+            "promptTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 379
+              }
+            ],
+            "cacheTokensDetails": [
+              {
+                "modality": "TEXT",
+                "tokenCount": 123
+              }
+            ],
+            "thoughtsTokenCount": 800,
+            "serviceTier": "standard"
+          },
+          "modelVersion": "gemini-3.5-flash",
+          "responseId": "tkh6asGPGczknsEP0ZOHsQg"
+        }
+  recorded_at: Mon, 10 Aug 2026 21:55:10 GMT
+recorded_with: VCR 6.4.0
