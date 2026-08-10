@@ -5,6 +5,39 @@ require 'spec_helper'
 RSpec.describe RubyLLM::Protocols::ChatCompletions::Streaming do
   let(:protocol) { RubyLLM::Protocols::ChatCompletions.allocate }
 
+  it 'splits thinking chunk deltas from content deltas' do
+    thinking_chunk = protocol.send(
+      :build_chunk,
+      {
+        'model' => 'mistral-small-latest',
+        'choices' => [
+          {
+            'delta' => {
+              'content' => [
+                { 'type' => 'thinking', 'thinking' => [{ 'type' => 'text', 'text' => 'pondering' }], 'closed' => true },
+                { 'type' => 'text', 'text' => 'Four' }
+              ]
+            }
+          }
+        ]
+      }
+    )
+
+    expect(thinking_chunk.thinking.text).to eq('pondering')
+    expect(thinking_chunk.content).to eq('Four')
+
+    text_chunk = protocol.send(
+      :build_chunk,
+      {
+        'model' => 'mistral-small-latest',
+        'choices' => [{ 'delta' => { 'content' => ' and more' } }]
+      }
+    )
+
+    expect(text_chunk.thinking).to be_nil
+    expect(text_chunk.content).to eq(' and more')
+  end
+
   it 'preserves raw finish reasons on chunks' do
     chunk = protocol.send(
       :build_chunk,

@@ -127,6 +127,7 @@ module RubyLLM
           effort = thinking.respond_to?(:effort) ? thinking.effort : nil
           return effort if %w[high none].include?(effort)
 
+          RubyLLM.logger.debug { "Mistral reasoning_effort accepts high or none; coercing #{effort} to high" } if effort
           'high'
         end
 

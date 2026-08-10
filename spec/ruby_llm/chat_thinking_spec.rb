@@ -93,6 +93,41 @@ RSpec.describe RubyLLM::Chat, :live do
     end
   end
 
+  describe 'Mistral hybrid reasoning' do
+    let(:chat) { RubyLLM.chat(model: 'mistral-small-latest', provider: :mistral).with_thinking(effort: :high) }
+
+    it 'separates thinking from final content' do
+      response = chat.ask('What is 12 * 12? Answer with just the number.')
+
+      expect(response.thinking&.text).to be_present
+      expect(response.content).to be_present
+      expect(response.content).not_to include(response.thinking.text)
+    end
+
+    it 'replays thinking chunks across turns' do
+      chat.ask('What is 12 * 12? Answer with just the number.')
+
+      response = chat.ask('Now add 10 to that. Answer with just the number.')
+
+      expect(response.content).to be_present
+      expect(response.thinking&.text).to be_present
+    end
+
+    it 'streams thinking separately from content' do
+      thinking_parts = []
+      content_parts = []
+
+      response = chat.ask('What is 12 * 12? Answer with just the number.') do |chunk|
+        thinking_parts << chunk.thinking.text if chunk.thinking&.text
+        content_parts << chunk.content if chunk.content.present?
+      end
+
+      expect(thinking_parts.join).to eq(response.thinking&.text)
+      expect(content_parts.join).to eq(response.content)
+      expect(response.content).to be_present
+    end
+  end
+
   describe 'Gemini token accounting' do
     it 'correctly sums candidatesTokenCount and thoughtsTokenCount' do
       chat = RubyLLM.chat(model: 'gemini-2.5-flash', provider: :gemini)

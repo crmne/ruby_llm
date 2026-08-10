@@ -179,6 +179,14 @@ RSpec.describe RubyLLM::Providers::Mistral::Chat do
       expect(provider.send(:reasoning_effort_for, RubyLLM::Thinking::Config.new(effort: :low))).to eq('high')
       expect(provider.send(:reasoning_effort_for, Object.new)).to eq('high')
     end
+
+    it 'logs a debug note when coercing an unsupported effort' do
+      allow(RubyLLM.logger).to receive(:debug)
+
+      provider.send(:reasoning_effort_for, RubyLLM::Thinking::Config.new(effort: :medium))
+
+      expect(RubyLLM.logger).to have_received(:debug)
+    end
   end
 
   describe '#prompt_cache_params' do

@@ -1,0 +1,111 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.mistral.ai/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"mistral-small-latest","messages":[{"role":"user","content":"What
+        is 12 * 12? Answer with just the number."}],"stream":true,"reasoning_effort":"high"}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 10 Aug 2026 22:19:05 GMT
+      Content-Type:
+      - text/event-stream; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Mistral-Correlation-Id:
+      - '019fedc2-0e6b-7a95-a274-e0e1abf515c1'
+      X-Kong-Request-Id:
+      - '019fedc2-0e6b-7a95-a274-e0e1abf515c1'
+      X-Max-Retry-Attempts-Reached:
+      - 'false'
+      X-Envoy-Upstream-Service-Time:
+      - '229'
+      Server:
+      - cloudflare
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Kong-Upstream-Latency:
+      - '230'
+      X-Kong-Proxy-Latency:
+      - '19'
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Content-Type-Options:
+      - nosniff
+      Cf-Cache-Status:
+      - DYNAMIC
+      Strict-Transport-Security:
+      - max-age=15552000; includeSubDomains; preload
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: UTF-8
+      string: |+
+        data: {"id":"7c73c2fee68647478fb40e7068c362c9","object":"chat.completion.chunk","created":1786400345,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"role":"assistant","content":""},"finish_reason":null}]}
+
+        data: {"id":"7c73c2fee68647478fb40e7068c362c9","object":"chat.completion.chunk","created":1786400345,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":""},"finish_reason":null}],"p":"abcdefghijklmnopqrstuvwxy"}
+
+        data: {"id":"7c73c2fee68647478fb40e7068c362c9","object":"chat.completion.chunk","created":1786400345,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":[{"type":"thinking","thinking":[{"type":"text","text":"The"}]}]},"finish_reason":null}],"p":"abcdefghijklmnopqrstuvwxyz"}
+
+        data: {"id":"7c73c2fee68647478fb40e7068c362c9","object":"chat.completion.chunk","created":1786400345,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":[{"type":"thinking","thinking":[{"type":"text","text":" user is asking for"}],"closed":true}]},"finish_reason":null}],"p":"abcdefghijklmnopqrstuvwxyz01234567"}
+
+        data: {"id":"7c73c2fee68647478fb40e7068c362c9","object":"chat.completion.chunk","created":1786400345,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":[{"type":"thinking","thinking":[{"type":"text","text":" the product"}],"closed":true}]},"finish_reason":null}],"p":"abcdefghijklmnopqrstuvwxyz"}
+
+        data: {"id":"7c73c2fee68647478fb40e7068c362c9","object":"chat.completion.chunk","created":1786400345,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":[{"type":"thinking","thinking":[{"type":"text","text":" of 12"}],"closed":true}]},"finish_reason":null}],"p":"abcdefghijklmnopqrstuvwx"}
+
+        data: {"id":"7c73c2fee68647478fb40e7068c362c9","object":"chat.completion.chunk","created":1786400345,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":[{"type":"thinking","thinking":[{"type":"text","text":" multiplied by 1"}],"closed":true}]},"finish_reason":null}],"p":"abcdefghijklmnopqrstuvwxyz01234567"}
+
+        data: {"id":"7c73c2fee68647478fb40e7068c362c9","object":"chat.completion.chunk","created":1786400345,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":[{"type":"thinking","thinking":[{"type":"text","text":"2. I know"}],"closed":true}]},"finish_reason":null}],"p":"abcdefghijklmnopqrstuvwx"}
+
+        data: {"id":"7c73c2fee68647478fb40e7068c362c9","object":"chat.completion.chunk","created":1786400345,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":[{"type":"thinking","thinking":[{"type":"text","text":" that 12"}],"closed":true}]},"finish_reason":null}],"p":"abcdefghijklmnopqrstuvw"}
+
+        data: {"id":"7c73c2fee68647478fb40e7068c362c9","object":"chat.completion.chunk","created":1786400345,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":[{"type":"thinking","thinking":[{"type":"text","text":" times 12"}],"closed":true}]},"finish_reason":null}],"p":"abcdefghijklmnopqrstuvwxyz0123456789"}
+
+        data: {"id":"7c73c2fee68647478fb40e7068c362c9","object":"chat.completion.chunk","created":1786400345,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":[{"type":"thinking","thinking":[{"type":"text","text":" is a basic"}],"closed":true}]},"finish_reason":null}],"p":"abcdefghijklmno"}
+
+        data: {"id":"7c73c2fee68647478fb40e7068c362c9","object":"chat.completion.chunk","created":1786400345,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":[{"type":"thinking","thinking":[{"type":"text","text":" multiplication fact. Let"}],"closed":true}]},"finish_reason":null}],"p":"abcdefghijklmnopqrstuv"}
+
+        data: {"id":"7c73c2fee68647478fb40e7068c362c9","object":"chat.completion.chunk","created":1786400345,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":[{"type":"thinking","thinking":[{"type":"text","text":" me calculate it"}],"closed":true}]},"finish_reason":null}],"p":"abcde"}
+
+        data: {"id":"7c73c2fee68647478fb40e7068c362c9","object":"chat.completion.chunk","created":1786400345,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":[{"type":"thinking","thinking":[{"type":"text","text":":\n\n12 *"}],"closed":true}]},"finish_reason":null}],"p":"abc"}
+
+        data: {"id":"7c73c2fee68647478fb40e7068c362c9","object":"chat.completion.chunk","created":1786400345,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":[{"type":"thinking","thinking":[{"type":"text","text":" 12 ="}],"closed":true}]},"finish_reason":null}],"p":"abcd"}
+
+        data: {"id":"7c73c2fee68647478fb40e7068c362c9","object":"chat.completion.chunk","created":1786400345,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":[{"type":"thinking","thinking":[{"type":"text","text":" 14"}],"closed":true}]},"finish_reason":null}],"p":"abcdefghijklmnopqrstuv"}
+
+        data: {"id":"7c73c2fee68647478fb40e7068c362c9","object":"chat.completion.chunk","created":1786400345,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":[{"type":"thinking","thinking":[{"type":"text","text":"4\n\n"}],"closed":true}]},"finish_reason":null}],"p":"abcdefghijklmnopqrs"}
+
+        data: {"id":"7c73c2fee68647478fb40e7068c362c9","object":"chat.completion.chunk","created":1786400345,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":[{"type":"thinking","thinking":[{"type":"text","text":"So, the answer"}],"closed":true}]},"finish_reason":null}],"p":"abcdef"}
+
+        data: {"id":"7c73c2fee68647478fb40e7068c362c9","object":"chat.completion.chunk","created":1786400345,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":[{"type":"thinking","thinking":[{"type":"text","text":" is 14"}],"closed":true}]},"finish_reason":null}],"p":"abcdefghijk"}
+
+        data: {"id":"7c73c2fee68647478fb40e7068c362c9","object":"chat.completion.chunk","created":1786400345,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":[{"type":"thinking","thinking":[{"type":"text","text":"4."}],"closed":true},{"type":"text","text":"1"}]},"finish_reason":null}],"p":"abcdefghijklmnopqrstu"}
+
+        data: {"id":"7c73c2fee68647478fb40e7068c362c9","object":"chat.completion.chunk","created":1786400345,"model":"mistral-small-latest","choices":[{"index":0,"delta":{"content":"44"},"finish_reason":"stop"}],"usage":{"prompt_tokens":31,"total_tokens":97,"completion_tokens":66,"prompt_tokens_details":{"cached_tokens":0},"service_tier":"standard"},"p":"ab"}
+
+        data: [DONE]
+
+  recorded_at: Mon, 10 Aug 2026 22:19:06 GMT
+recorded_with: VCR 6.4.0
+...
