@@ -164,6 +164,20 @@ RSpec.describe RubyLLM::Image, :live do
       end
     end
 
+    context 'with openrouter reference images' do
+      it 'openrouter/google/gemini-3.1-flash-lite-image edits images passed via with:' do
+        image = RubyLLM.paint(prompt, with: image_path,
+                                      model: 'google/gemini-3.1-flash-lite-image', provider: :openrouter)
+
+        expect(image.base64?).to be(true)
+        expect(image.mime_type).to include('image')
+        expect(image.tokens.reported_cost).to be_positive
+        expect(image.cost.total).to eq(image.tokens.reported_cost)
+
+        save_and_verify_image image
+      end
+    end
+
     context 'with remote URLs' do
       it 'rejects edits with a URL having invalid content type' do
         expect do

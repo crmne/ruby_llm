@@ -4,64 +4,55 @@ module RubyLLM
   module Providers
     class OpenRouter
       # Image generation methods for the OpenRouter API integration.
-      # OpenRouter uses the chat completions endpoint for image generation
-      # instead of a dedicated images endpoint.
+      # OpenRouter has a unified images endpoint that generates and edits
+      # images across providers and reports the exact cost of each call.
       module Images
         module_function
 
         def images_url(with: nil, mask: nil) # rubocop:disable Lint/UnusedMethodArgument
-          'chat/completions'
+          'images'
         end
 
         def render_image_payload(prompt, model:, size:, with: nil, mask: nil, provider_options: {}) # rubocop:disable Lint/UnusedMethodArgument
-          RubyLLM.logger.debug { "Ignoring size #{size}. OpenRouter image generation does not support size parameter." }
-          {
-            model: model,
-            messages: [
-              {
-                role: 'user',
-                content: prompt
-              }
-            ],
-            modalities: %w[image text]
-          }.merge(provider_options)
+          RubyLLM.logger.debug { "Ignoring size #{size}. Use aspect_ratio/resolution provider options instead." }
+          payload = { model: model, prompt: prompt }
+          references = build_input_references(with)
+          payload[:input_references] = references if references.any?
+          payload.merge(provider_options)
+        end
+
+        def build_input_references(with)
+          Attachment.wrap(with).map do |attachment|
+            raise UnsupportedAttachmentError, attachment.mime_type unless attachment.image?
+
+            Protocols::ChatCompletions::Media.format_image(attachment)
+          end
+        end
+
+        def validate_paint_inputs!(with:, mask:) # rubocop:disable Lint/UnusedMethodArgument
+          raise UnsupportedAttachmentError, 'image mask' unless mask.nil?
         end
 
         def parse_image_response(response, model:)
           data = response.body
-          message = data.dig('choices', 0, 'message')
+          image_data = Array(data['data']).first
 
-          unless message&.key?('images') && message['images']&.any?
-            raise Error, 'Unexpected response format from OpenRouter image generation API'
-          end
+          raise Error, 'Unexpected response format from OpenRouter image API' unless image_data
 
-          image_data = message['images'].first
-          image_url = image_data.dig('image_url', 'url') || image_data['url']
-
-          raise Error, 'No image URL found in OpenRouter response' unless image_url
-
-          build_image_from_url(image_url, model)
+          Image.new(
+            data: image_data['b64_json'],
+            mime_type: image_data['media_type'] || 'image/png',
+            model: model,
+            usage: image_usage(data['usage'] || {})
+          )
         end
 
-        def build_image_from_url(image_url, model)
-          if image_url.start_with?('data:')
-            # Parse data URL format: data:image/png;base64,<data>
-            match = image_url.match(/^data:([^;]+);base64,(.+)$/)
-            raise Error, 'Invalid data URL format from OpenRouter' unless match
-
-            Image.new(
-              data: match[2],
-              mime_type: match[1],
-              model: model
-            )
-          else
-            # Regular URL
-            Image.new(
-              url: image_url,
-              mime_type: 'image/png',
-              model: model
-            )
-          end
+        def image_usage(usage)
+          {
+            'input_tokens' => usage['prompt_tokens'],
+            'output_tokens' => usage['completion_tokens'],
+            'cost' => reported_cost(usage)
+          }.compact
         end
       end
     end
