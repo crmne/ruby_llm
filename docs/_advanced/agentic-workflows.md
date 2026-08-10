@@ -25,7 +25,7 @@ redirect_from:
 After reading this guide, you will know:
 
 * How to drive the agentic loop yourself, one move at a time.
-* How to run each turn as its own background job and resume elsewhere.
+* Why the loop is safe to interrupt and resume between moves.
 * How to implement common workflow patterns with plain Ruby classes.
 * How to compose sequential, routing, parallel, and fan-in workflows.
 * When to reach for an evaluator loop to iterate on output quality.
@@ -55,41 +55,9 @@ chat.messages.last.content      # => "It's 15°C and partly cloudy in Paris."
 
 `ask_later` stages the question without sending it, so `ask` is `ask_later` then `complete`.
 
-Because each `step` is a discrete move, you can persist the chat between steps and resume it elsewhere. Run one turn per background job, enforce a wall-clock budget, or pause for a deploy and pick up on another machine:
-
-```ruby
-class AgentTurnJob < ApplicationJob
-  def perform(chat_id)
-    chat = Chat.find(chat_id)
-    chat.step
-    AgentTurnJob.perform_later(chat_id) unless chat.complete?
-  end
-end
-```
-
 It is safe to interrupt the loop between moves. Each verb decides what to do next by reading the persisted messages, and `run_tools` skips tool calls that already have results. If a process dies after running one tool call of three, reloading the chat and calling `step` executes only the two remaining tool calls.
 
-On Rails 8.1 and later, [ActiveJob Continuations](https://api.rubyonrails.org/classes/ActiveJob/Continuable.html) builds on this to run agents that survive deploys. Checkpoint after each move; when the queue adapter interrupts the job during a restart, the job is requeued and the loop continues from the persisted messages:
-
-```ruby
-class AgentRunJob < ApplicationJob
-  include ActiveJob::Continuable
-
-  def perform(chat_id)
-    step :agent_loop do |job_step|
-      chat = Chat.find(chat_id)
-      until chat.complete?
-        chat.step
-        job_step.checkpoint!
-      end
-    end
-  end
-end
-```
-
-ActiveJob's `step` and the chat's `step` are unrelated methods. The job step wraps the whole loop, and each checkpoint marks a point where the job may be interrupted. The step does not need a cursor, because the persisted messages already record how far the loop has progressed.
-
-Interruption does not give you exactly-once execution. A job that dies after the model responds but before the message is saved repeats that model call when it resumes, and a job that dies after a tool runs but before its result is saved runs that tool again. Write tools so that running them twice is safe.
+That property is what makes agents durable: run every turn as a background job, survive deploys with ActiveJob Continuations, and park for days on a human approval. [Durable Agents]({% link _advanced/durable-agents.md %}) is the guide for all of it.
 
 [Batches]({% link _advanced/batches.md %}) are the same idea at scale: a batch is `generate` deferred for many chats at once, with `run_tools` run locally between rounds.
 

@@ -393,6 +393,10 @@ WorkAssistant.new.ask("Help me find docs about callbacks.")
 
 ## Next Steps
 
+* Compose agents with [Agentic Workflows]({% link _advanced/agentic-workflows.md %})
+* Run them as jobs that survive anything with [Durable Agents]({% link _advanced/durable-agents.md %})
+* Give them [Memory]({% link _advanced/memory.md %}) across conversations
+* Ground them in your documents with [RAG]({% link _advanced/rag.md %})
 * Learn about [Chat Basics]({% link _core_features/chat.md %})
 * Explore [Tools]({% link _core_features/tools.md %})
 * Review [Rails Integration]({% link _advanced/rails.md %})

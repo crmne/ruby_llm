@@ -185,6 +185,8 @@ end
 
 Write approval-gated tools so running them twice is safe. A tool execution can die after its side effect succeeds but before the result is persisted, and a retry will run it again.
 
+[Durable Agents]({% link _advanced/durable-agents.md %}) covers the full lifecycle this parking builds on: turns as jobs, deploys, and cancellation.
+
 ## Concurrent Tool Execution
 
 When a model returns multiple tool calls in one response, RubyLLM executes them sequentially by default. For I/O-bound tools, opt in to concurrent execution:

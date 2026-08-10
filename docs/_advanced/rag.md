@@ -110,6 +110,7 @@ response = agent.ask("What is our refund policy?").content
 ## Next Steps
 
 * [Embeddings]({% link _core_features/embeddings.md %}) - Turn text into vectors for similarity search.
+* [Memory]({% link _advanced/memory.md %}) - The same pattern over memories the agent writes itself.
 * [Agentic Workflows]({% link _advanced/agentic-workflows.md %}) - Compose retrieval into larger orchestrations.
 * [Tools]({% link _core_features/tools.md %}) - Build the retrieval tool and other capabilities.
 * [Agents]({% link _advanced/agents.md %}) - Define the answering agent class.
