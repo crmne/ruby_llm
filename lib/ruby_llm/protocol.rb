@@ -10,8 +10,8 @@ module RubyLLM
   # Subclass Protocol, or a shipped subclass such as
   # RubyLLM::Protocols::ChatCompletions, to support a new wire format. Each
   # operation (chat, embeddings, moderation, image generation, speech,
-  # transcription, and model listing) is served by three kinds of seam method
-  # you override:
+  # transcription, token counting, and model listing) is served by three
+  # kinds of seam method you override:
   #
   # - <tt>render_*</tt> serializes a RubyLLM request into the wire payload,
   #   such as +render_payload+ for chat or +render_embedding_payload+.
@@ -69,6 +69,7 @@ module RubyLLM
     abstract :render_image_payload, :images_url, :parse_image_response
     abstract :render_speech_payload, :speech_url, :parse_speech_response
     abstract :render_transcription_payload, :transcription_url, :parse_transcription_response
+    abstract :render_count_tokens_payload, :count_tokens_url, :parse_count_tokens_response
 
     def initialize(provider, model = nil)
       @provider = provider
@@ -127,6 +128,22 @@ module RubyLLM
     # +nil+ means the protocol has no server-tool support at all.
     def server_tool_aliases
       nil
+    end
+
+    def count_tokens(messages, tools:, tool_prefs: nil, thinking: nil, schema: nil, citations: false, caching: nil)
+      payload = render_count_tokens_payload(
+        messages,
+        tools: tools,
+        tool_prefs: tool_prefs,
+        model: model,
+        schema: schema,
+        thinking: thinking,
+        citations: citations,
+        caching: caching
+      )
+      parse_count_tokens_response post_count_tokens(payload)
+    rescue NotImplementedError
+      raise Error, "#{@provider.name} doesn't support token counting"
     end
 
     def list_models
@@ -321,6 +338,10 @@ module RubyLLM
         mime_type,
         File.basename(expanded_path)
       )
+    end
+
+    def post_count_tokens(payload)
+      @connection.post count_tokens_url, payload
     end
 
     def sync_response(payload, additional_headers = {})

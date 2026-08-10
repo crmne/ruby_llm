@@ -54,6 +54,34 @@ module RubyLLM
           )
         end
 
+        def count_tokens_url
+          "models/#{@model.id}:countTokens"
+        end
+
+        def render_count_tokens_payload(messages, model:, **options)
+          request = count_tokens_request(messages, model: model, **options)
+          { generateContentRequest: request.merge(model: "models/#{model.id}") }
+        end
+
+        def count_tokens_request(messages, tools:, model:, tool_prefs: nil, thinking: nil, schema: nil,
+                                 citations: false, caching: nil)
+          render_payload(
+            messages,
+            tools: tools,
+            tool_prefs: tool_prefs,
+            temperature: nil,
+            model: model,
+            schema: schema,
+            thinking: thinking,
+            citations: citations,
+            caching: caching
+          ).slice(:contents, :systemInstruction, :tools)
+        end
+
+        def parse_count_tokens_response(response)
+          response.body['totalTokens']
+        end
+
         def build_thinking_config(_model, thinking)
           config = { includeThoughts: true }
 

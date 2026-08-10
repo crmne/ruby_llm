@@ -15,6 +15,10 @@ module RubyLLM
         parse_completion_response(response)
       end
 
+      def post_count_tokens(payload)
+        signed_post(count_tokens_url, payload)
+      end
+
       def signed_post(url, payload, additional_headers = {})
         body = JSON.generate(payload)
 

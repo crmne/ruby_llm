@@ -16,6 +16,14 @@ module RubyLLM
           "#{@provider.model_path(@model.id)}:streamGenerateContent?alt=sse"
         end
 
+        def count_tokens_url
+          "#{@provider.model_path(@model.id)}:countTokens"
+        end
+
+        def render_count_tokens_payload(messages, **options)
+          count_tokens_request(messages, **options)
+        end
+
         def images_url(with: nil, mask: nil) # rubocop:disable Lint/UnusedMethodArgument
           id = model_id(@model)
 

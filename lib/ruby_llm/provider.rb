@@ -162,6 +162,20 @@ module RubyLLM
       )
     end
 
+    def count_tokens(messages, model:, tools: {}, tool_prefs: nil, thinking: nil, schema: nil, # :nodoc:
+                     citations: false, caching: nil, protocol: nil)
+      protocol_class = resolve_protocol(protocol, model, tools:, schema:, thinking:, tool_prefs:, citations:)
+      protocol_class.new(self, model).count_tokens(
+        messages,
+        tools: tools,
+        tool_prefs: tool_prefs,
+        thinking: thinking,
+        schema: schema,
+        citations: citations,
+        caching: caching
+      )
+    end
+
     def preprocess_message(message, model:, protocol: nil) # :nodoc:
       protocol_class = resolve_protocol(
         protocol,

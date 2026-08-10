@@ -584,6 +584,37 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
     end
   end
 
+  describe '.render_count_tokens_payload' do
+    let(:model) do
+      instance_double(RubyLLM::Model,
+                      id: 'anthropic.claude-haiku-4-5-20251001-v1:0',
+                      max_output_tokens: nil,
+                      metadata: {})
+    end
+
+    it 'wraps the converse request without inferenceConfig' do
+      messages = [
+        RubyLLM::Message.new(role: :system, content: 'Be terse.'),
+        RubyLLM::Message.new(role: :user, content: 'Hello')
+      ]
+
+      payload = described_class.render_count_tokens_payload(messages, tools: {}, model: model)
+
+      request = payload.dig(:input, :converse)
+      expect(request[:messages]).to eq([{ role: 'user', content: [{ text: 'Hello' }] }])
+      expect(request[:system]).to eq([{ text: 'Be terse.' }])
+      expect(request).not_to have_key(:inferenceConfig)
+    end
+  end
+
+  describe '.parse_count_tokens_response' do
+    it 'reads inputTokens' do
+      response = instance_double(Faraday::Response, body: { 'inputTokens' => 42 })
+
+      expect(described_class.parse_count_tokens_response(response)).to eq(42)
+    end
+  end
+
   describe '.warn_unsupported_citations' do
     it 'warns when a Bedrock request asks for citations' do
       allow(RubyLLM.logger).to receive(:warn)

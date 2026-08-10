@@ -621,6 +621,32 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
     end
   end
 
+  describe '.render_count_tokens_payload' do
+    it 'keeps the messages request shape without max_tokens or stream' do
+      model = RubyLLM::Model.new(id: 'claude-haiku-4-5', provider: 'anthropic')
+      messages = [
+        RubyLLM::Message.new(role: :system, content: 'Be terse.'),
+        RubyLLM::Message.new(role: :user, content: 'Hello')
+      ]
+
+      payload = described_class.render_count_tokens_payload(messages, tools: {}, model: model)
+
+      expect(payload[:model]).to eq('claude-haiku-4-5')
+      expect(payload[:messages]).to eq([{ role: 'user', content: [{ type: 'text', text: 'Hello' }] }])
+      expect(payload[:system]).to eq([{ type: 'text', text: 'Be terse.' }])
+      expect(payload).not_to have_key(:max_tokens)
+      expect(payload).not_to have_key(:stream)
+    end
+  end
+
+  describe '.parse_count_tokens_response' do
+    it 'reads input_tokens' do
+      response = instance_double(Faraday::Response, body: { 'input_tokens' => 42 })
+
+      expect(described_class.parse_count_tokens_response(response)).to eq(42)
+    end
+  end
+
   describe 'provider-managed file support' do
     let(:protocol) { RubyLLM::Protocols::Anthropic.allocate }
 

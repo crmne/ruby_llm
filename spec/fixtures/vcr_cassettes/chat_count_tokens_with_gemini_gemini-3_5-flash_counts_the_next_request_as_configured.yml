@@ -1,0 +1,121 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:countTokens
+    body:
+      encoding: UTF-8
+      string: '{"generateContentRequest":{"contents":[{"role":"user","parts":[{"text":"What
+        is the capital of France?"}]}],"model":"models/gemini-3.5-flash"}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      X-Goog-Api-Key:
+      - "<GEMINI_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Mon, 10 Aug 2026 22:19:46 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Server-Timing:
+      - gfet4t7; dur=48
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "totalTokens": 8,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 8
+            }
+          ]
+        }
+  recorded_at: Mon, 10 Aug 2026 22:19:46 GMT
+- request:
+    method: post
+    uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:countTokens
+    body:
+      encoding: UTF-8
+      string: '{"generateContentRequest":{"contents":[{"role":"user","parts":[{"text":"What
+        is the capital of France?"}]}],"systemInstruction":{"parts":[{"text":"Be terse."}]},"tools":[{"functionDeclarations":[{"name":"counting_weather","description":"Gets
+        current weather for a city","parameters":{"type":"OBJECT","properties":{"city":{"type":"STRING","description":"City
+        name"}},"required":["city"]}}]}],"model":"models/gemini-3.5-flash"}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      X-Goog-Api-Key:
+      - "<GEMINI_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Vary:
+      - Origin
+      - Referer
+      - X-Origin
+      Date:
+      - Mon, 10 Aug 2026 22:19:46 GMT
+      Server:
+      - scaffolding on HTTPServer2
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Server-Timing:
+      - gfet4t7; dur=60
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "totalTokens": 61,
+          "promptTokensDetails": [
+            {
+              "modality": "TEXT",
+              "tokenCount": 61
+            }
+          ]
+        }
+  recorded_at: Mon, 10 Aug 2026 22:19:46 GMT
+recorded_with: VCR 6.4.0

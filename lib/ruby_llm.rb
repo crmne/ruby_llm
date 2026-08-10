@@ -144,6 +144,16 @@ module RubyLLM
       Chat.new(...)
     end
 
+    # Counts the tokens +text+ would consume as a single user message,
+    # without requesting a completion. Builds a minimal Chat and delegates
+    # to Chat#count_tokens. Returns an Integer.
+    #
+    #   RubyLLM.count_tokens("What is the capital of France?", model: 'claude-haiku-4-5')
+    #
+    def count_tokens(text, model: nil, provider: nil)
+      chat(model: model, provider: provider).count_tokens(text)
+    end
+
     # Submits +chats+ staged with Chat#ask_later as a provider-side batch
     # and returns a Batch. Look up an existing batch with Batch.find.
     #

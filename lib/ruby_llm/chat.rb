@@ -595,6 +595,31 @@ module RubyLLM
       Cost.aggregate(usage_entries.map(&:cost), complete: usage_entries.all?(&:usage_available?))
     end
 
+    # Counts the tokens the chat's next request would consume as currently
+    # configured, including instructions, tools, thinking, and attachments.
+    # Pass +message+ to include it as a staged user message without
+    # mutating the chat. Returns an Integer.
+    #
+    #   chat.with_instructions("Be terse.").with_tools(Weather)
+    #   chat.count_tokens("What's the weather in Berlin?")
+    #
+    # Raises Error when the provider has no token counting endpoint.
+    def count_tokens(message = nil)
+      request_messages = messages.dup
+      request_messages << coerce_message(role: :user, content: message) unless message.nil?
+      @provider.count_tokens(
+        request_messages,
+        model: @model,
+        tools: @tools,
+        tool_prefs: @tool_prefs,
+        thinking: @thinking,
+        schema: @schema,
+        citations: @citations,
+        caching: @caching,
+        protocol: @protocol
+      )
+    end
+
     # Replaces the conversation with +new_messages+, coercing each element
     # into a Message. Accepts Message objects, attribute Hashes, and
     # records responding to +to_llm+.

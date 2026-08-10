@@ -9,6 +9,7 @@ module RubyLLM
       module Chat
         BEDROCK_INLINE_DOCUMENT_LIMIT = 4_500_000
         PROMPT_CACHE_OPTIONS = %i[ttl].freeze
+        COUNT_TOKENS_KEYS = %i[messages system toolConfig additionalModelRequestFields].freeze
 
         module_function
 
@@ -57,6 +58,31 @@ module RubyLLM
           RubyLLM.logger.warn(
             "RubyLLM does not support citations on Bedrock yet. Ignoring with_citations for #{model.id}."
           )
+        end
+
+        def count_tokens_url
+          "/model/#{escape_model_id(@model.id)}/count-tokens"
+        end
+
+        def render_count_tokens_payload(messages, tools:, model:, tool_prefs: nil, thinking: nil, schema: nil,
+                                        citations: false, caching: nil)
+          request = render_payload(
+            messages,
+            tools: tools,
+            tool_prefs: tool_prefs,
+            temperature: nil,
+            model: model,
+            schema: schema,
+            thinking: thinking,
+            citations: citations,
+            caching: caching
+          ).slice(*COUNT_TOKENS_KEYS)
+
+          { input: { converse: request } }
+        end
+
+        def parse_count_tokens_response(response)
+          response.body['inputTokens']
         end
 
         def supports_provider_file_references?

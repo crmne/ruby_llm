@@ -510,6 +510,32 @@ RSpec.describe RubyLLM::Protocols::Gemini::Chat do
     end
   end
 
+  describe '#render_count_tokens_payload' do
+    it 'wraps the request in generateContentRequest without generationConfig' do
+      model = instance_double(RubyLLM::Model, id: 'gemini-2.5-flash', family: nil, metadata: {})
+      messages = [
+        RubyLLM::Message.new(role: :system, content: 'Be terse.'),
+        RubyLLM::Message.new(role: :user, content: 'Hello')
+      ]
+
+      payload = test_obj.send(:render_count_tokens_payload, messages, tools: {}, model: model)
+
+      request = payload[:generateContentRequest]
+      expect(request[:model]).to eq('models/gemini-2.5-flash')
+      expect(request[:contents]).to eq([{ role: 'user', parts: [{ text: 'Hello' }] }])
+      expect(request[:systemInstruction]).to eq(parts: [{ text: 'Be terse.' }])
+      expect(request).not_to have_key(:generationConfig)
+    end
+  end
+
+  describe '#parse_count_tokens_response' do
+    it 'reads totalTokens' do
+      response = instance_double(Faraday::Response, body: { 'totalTokens' => 42 })
+
+      expect(test_obj.send(:parse_count_tokens_response, response)).to eq(42)
+    end
+  end
+
   describe '#format_messages' do
     it 'groups consecutive tool responses into a single user message with multiple function responses' do
       messages = [
