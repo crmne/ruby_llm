@@ -652,6 +652,8 @@ module RubyLLM
     end
 
     def coerce_message(message_or_attributes)
+      raise ArgumentError, 'Message cannot be nil' if message_or_attributes.nil?
+
       message = if message_or_attributes.respond_to?(:to_llm)
                   message_or_attributes.to_llm
                 else

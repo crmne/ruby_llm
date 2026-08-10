@@ -88,4 +88,40 @@ RSpec.describe RubyLLM::Chat, :live do
       end
     end
   end
+
+  describe 'responses without a completion message' do
+    let(:chat) { RubyLLM.chat(model: 'deepseek-chat', provider: :deepseek) }
+
+    it 'raises a RubyLLM::Error instead of an obscure NoMethodError' do
+      stub_request(:post, 'https://api.deepseek.com/chat/completions').to_return(
+        status: 200,
+        body: { choices: [] }.to_json,
+        headers: { 'Content-Type' => 'application/json' }
+      )
+
+      expect { chat.ask('Hello') }.to raise_error(RubyLLM::Error, 'Provider returned no completion message') do |e|
+        expect(e.response).to be_present
+      end
+    end
+
+    it 'surfaces the finish_reason when the provider gives one' do
+      stub_request(:post, 'https://api.deepseek.com/chat/completions').to_return(
+        status: 200,
+        body: { choices: [{ finish_reason: 'content_filter' }] }.to_json,
+        headers: { 'Content-Type' => 'application/json' }
+      )
+
+      expect { chat.ask('Hello') }.to raise_error(
+        RubyLLM::Error, 'Provider returned no completion message (finish_reason: content_filter)'
+      )
+    end
+  end
+
+  describe '#add_message with nil' do
+    it 'raises ArgumentError instead of an obscure NoMethodError' do
+      chat = RubyLLM.chat
+
+      expect { chat.add_message(nil) }.to raise_error(ArgumentError, 'Message cannot be nil')
+    end
+  end
 end

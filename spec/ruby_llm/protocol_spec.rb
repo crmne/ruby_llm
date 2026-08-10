@@ -33,6 +33,22 @@ RSpec.describe RubyLLM::Protocol do
       expect(protocol.send(:parse_completion_response, response))
         .to eq([{ 'text' => 'hello' }, response])
     end
+
+    it 'raises RubyLLM::Error when the protocol finds no completion message in the body' do
+      messageless_protocol_class = Class.new(described_class) do
+        private
+
+        def parse_completion_body(_data, raw:) # rubocop:disable Lint/UnusedMethodArgument
+          nil
+        end
+      end
+      protocol = messageless_protocol_class.allocate
+      response = instance_double(Faraday::Response, body: { 'choices' => [] })
+
+      expect do
+        protocol.send(:parse_completion_response, response)
+      end.to raise_error(RubyLLM::Error, 'Provider returned no completion message')
+    end
   end
 
   it 'owns completion response parsing for every registered chat protocol' do
