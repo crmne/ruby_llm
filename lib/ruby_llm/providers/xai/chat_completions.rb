@@ -8,6 +8,8 @@ module RubyLLM
         include XAI::Chat
         include XAI::Images
         include XAI::Models
+        include XAI::Speech
+        include XAI::Transcription
       end
     end
   end

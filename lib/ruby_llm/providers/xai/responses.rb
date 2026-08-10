@@ -9,6 +9,8 @@ module RubyLLM
       class Responses < Protocols::Responses
         include XAI::Images
         include XAI::Models
+        include XAI::Speech
+        include XAI::Transcription
 
         SERVER_TOOL_ALIASES = {
           web_search: { tool: { type: 'web_search' } },

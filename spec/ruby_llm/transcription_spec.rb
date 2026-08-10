@@ -22,6 +22,14 @@ RSpec.describe RubyLLM::Transcription, :live do
       end
     end
 
+    it 'xai/grok-stt labels words with speakers when speaker names are given' do
+      transcription = RubyLLM.transcribe(audio_path, model: 'grok-stt', provider: :xai, speaker_names: ['Speaker'])
+
+      expect(transcription.text).to match(/ruby/i)
+      expect(transcription.words).to be_an(Array)
+      expect(transcription.words.first).to have_key('speaker')
+    end
+
     it 'validates model existence' do
       expect do
         RubyLLM.transcribe(audio_path, model: 'invalid-transcription-model')

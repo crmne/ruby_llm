@@ -129,7 +129,8 @@ EMBEDDING_MODELS = [
 SPEECH_MODELS = [
   { provider: :gemini, model: 'gemini-2.5-flash-preview-tts' },
   { provider: :mistral, model: 'voxtral-mini-tts-latest', voice: 'en_paul_neutral' },
-  { provider: :openai, model: 'gpt-4o-mini-tts' }
+  { provider: :openai, model: 'gpt-4o-mini-tts' },
+  { provider: :xai, model: 'grok-tts' }
 ].freeze
 
 TRANSCRIPTION_MODELS = [
@@ -137,7 +138,8 @@ TRANSCRIPTION_MODELS = [
   { provider: :mistral, model: 'voxtral-mini-latest' },
   { provider: :openai, model: 'gpt-4o-transcribe-diarize' },
   { provider: :openai, model: 'whisper-1' },
-  { provider: :vertexai, model: 'gemini-2.5-flash' }
+  { provider: :vertexai, model: 'gemini-2.5-flash' },
+  { provider: :xai, model: 'grok-stt' }
 ].freeze
 
 image_generation_models = [
