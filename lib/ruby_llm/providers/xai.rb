@@ -14,8 +14,7 @@ module RubyLLM
 
       def headers
         {
-          'Authorization' => "Bearer #{@config.xai_api_key}",
-          'Content-Type' => 'application/json'
+          'Authorization' => "Bearer #{@config.xai_api_key}"
         }
       end
 
