@@ -30,6 +30,15 @@ RSpec.describe RubyLLM::Transcription, :live do
       expect(transcription.words.first).to have_key('speaker')
     end
 
+    it 'mistral/voxtral-mini-latest labels segments with speakers when speaker names are given' do
+      transcription = RubyLLM.transcribe(audio_path, model: 'voxtral-mini-latest', provider: :mistral,
+                                                     speaker_names: ['Speaker'])
+
+      expect(transcription.text).to match(/ruby/i)
+      expect(transcription.segments).to be_an(Array)
+      expect(transcription.segments.first).to have_key('speaker_id')
+    end
+
     it 'validates model existence' do
       expect do
         RubyLLM.transcribe(audio_path, model: 'invalid-transcription-model')

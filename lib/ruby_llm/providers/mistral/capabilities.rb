@@ -78,6 +78,21 @@ module RubyLLM
               input: ['text'],
               output: ['embeddings']
             }
+          when /voxtral.*tts/
+            {
+              input: ['text'],
+              output: ['audio']
+            }
+          when /voxtral.*transcribe/
+            {
+              input: ['audio'],
+              output: ['text']
+            }
+          when /voxtral/
+            {
+              input: %w[text audio],
+              output: ['text']
+            }
           else
             {
               input: ['text'],

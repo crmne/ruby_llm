@@ -112,7 +112,8 @@ VIDEO_MODELS = [
 
 AUDIO_MODELS = [
   { provider: :openai, model: 'gpt-audio-mini' },
-  { provider: :gemini, model: 'gemini-2.5-flash' }
+  { provider: :gemini, model: 'gemini-2.5-flash' },
+  { provider: :mistral, model: 'voxtral-small-latest' }
 ].freeze
 
 EMBEDDING_MODELS = [

@@ -11,6 +11,7 @@ module RubyLLM
         include Mistral::Models
         include Mistral::OCR
         include Mistral::Speech
+        include Mistral::Transcription
       end
     end
   end

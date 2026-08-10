@@ -109,6 +109,24 @@ RSpec.describe RubyLLM::Providers::Mistral::Capabilities do
       )
     end
 
+    it 'gives voxtral chat models audio input' do
+      expect(described_class.modalities_for('voxtral-small-latest')).to eq(
+        input: %w[text audio], output: ['text']
+      )
+    end
+
+    it 'gives voxtral transcribe models audio in, text out' do
+      expect(described_class.modalities_for('voxtral-mini-transcribe-realtime-2602')).to eq(
+        input: ['audio'], output: ['text']
+      )
+    end
+
+    it 'gives voxtral tts models an audio output' do
+      expect(described_class.modalities_for('voxtral-mini-tts-latest')).to eq(
+        input: ['text'], output: ['audio']
+      )
+    end
+
     it 'defaults to text in, text out' do
       expect(described_class.modalities_for('mistral-large-latest')).to eq(
         input: ['text'], output: ['text']
