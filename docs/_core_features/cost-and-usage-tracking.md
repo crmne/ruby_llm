@@ -123,6 +123,8 @@ puts cost.thinking
 puts cost.total
 ```
 
+When a model publishes a long-context tier, `cost_for` uses those rates once the prompt exceeds the registry threshold. Prompt size is `input + cache_read + cache_write`. Below that threshold—or when the model has no long-context tier—standard rates apply. Batch rates remain unused by `cost_for`; see [Batches]({% link _advanced/batches.md %}).
+
 Most applications use the shorter helpers on messages, chats, and agents: `response.cost.total`, `chat.cost.total`, `agent.cost.total`.
 
 To combine several cost objects yourself, use `RubyLLM::Cost.aggregate`:

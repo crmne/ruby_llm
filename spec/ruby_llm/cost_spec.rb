@@ -132,6 +132,72 @@ RSpec.describe RubyLLM::Cost do
       expect(cost.total).to eq(0.012)
     end
 
+    it 'uses long-context rates when the prompt exceeds the model threshold' do
+      long_context_model = RubyLLM::Model.new(
+        id: 'gpt-5.6-sol',
+        name: 'GPT-5.6 Sol',
+        provider: 'openai',
+        pricing: {
+          text_tokens: {
+            standard: {
+              input_per_million: 5.0,
+              output_per_million: 30.0,
+              cache_read_input_per_million: 0.5
+            },
+            long_context: {
+              input_per_million: 10.0,
+              output_per_million: 45.0,
+              cache_read_input_per_million: 1.0
+            },
+            long_context_threshold: 272_000
+          }
+        }
+      )
+
+      short = described_class.new(
+        tokens: RubyLLM::Tokens.new(input: 100_000, output: 10_000),
+        model: long_context_model
+      )
+      long = described_class.new(
+        tokens: RubyLLM::Tokens.new(input: 500_000, output: 10_000),
+        model: long_context_model
+      )
+
+      expect(short.total).to be_within(0.0000000001).of(0.8)
+      expect(long.total).to be_within(0.0000000001).of(5.45)
+    end
+
+    it 'counts cache tokens toward the long-context prompt threshold' do
+      long_context_model = RubyLLM::Model.new(
+        id: 'gpt-5.6-sol',
+        name: 'GPT-5.6 Sol',
+        provider: 'openai',
+        pricing: {
+          text_tokens: {
+            standard: {
+              input_per_million: 5.0,
+              output_per_million: 30.0,
+              cache_read_input_per_million: 0.5
+            },
+            long_context: {
+              input_per_million: 10.0,
+              output_per_million: 45.0,
+              cache_read_input_per_million: 1.0
+            },
+            long_context_threshold: 272_000
+          }
+        }
+      )
+      cost = described_class.new(
+        tokens: RubyLLM::Tokens.new(input: 100_000, output: 1_000, cache_read: 200_000),
+        model: long_context_model
+      )
+
+      expect(cost.input).to be_within(0.0000000001).of(1.0)
+      expect(cost.cache_read).to be_within(0.0000000001).of(0.2)
+      expect(cost.output).to be_within(0.0000000001).of(0.045)
+    end
+
     it 'returns nil when pricing is missing for tokens that were used' do
       incomplete_model = RubyLLM::Model.new(
         id: 'incomplete-model',

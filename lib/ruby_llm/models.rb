@@ -405,9 +405,24 @@ module RubyLLM
         }.compact
 
         pricing = {}
-        pricing[:text_tokens] = { standard: text_standard } if text_standard.any?
+        text_tokens = models_dev_text_tokens_pricing(text_standard, cost)
+        pricing[:text_tokens] = text_tokens if text_tokens
         pricing[:audio_tokens] = { standard: audio_standard } if audio_standard.any?
         pricing
+      end
+
+      def models_dev_text_tokens_pricing(text_standard, cost) # :nodoc:
+        long_context, threshold = Model::PricingCategory.long_context_from_cost(cost)
+
+        return nil if text_standard.empty? && long_context.nil?
+
+        text_tokens = {}
+        text_tokens[:standard] = text_standard if text_standard.any?
+        if long_context
+          text_tokens[:long_context] = long_context
+          text_tokens[:long_context_threshold] = threshold if threshold
+        end
+        text_tokens
       end
 
       def models_dev_metadata(model_data, provider_key) # :nodoc:

@@ -3,11 +3,11 @@
 module RubyLLM
   class Model
     # A PricingTier holds the prices a model charges within one billing tier,
-    # standard or batch. Each price is in USD per one million tokens. Prices
-    # missing from the registry read as +nil+. A zero price means the usage
-    # is free.
+    # such as standard, batch, or long_context. Each price is in USD per one
+    # million tokens. Prices missing from the registry read as +nil+. A zero
+    # price means the usage is free.
     #
-    # Instances come from PricingCategory#standard and PricingCategory#batch:
+    # Instances come from PricingCategory#standard, #batch, and #long_context:
     #
     #   model = RubyLLM.models.find "claude-sonnet-4-6"
     #   tier  = model.pricing.text_tokens.standard

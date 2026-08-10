@@ -214,17 +214,37 @@ module RubyLLM
 
     def price_for(component)
       case component
-      when :input
-        image_cost? ? text_pricing.input : category_pricing.input
-      when :output
-        image_cost? ? (image_pricing.output || text_pricing.output) : category_pricing.output
-      when :cache_read
-        text_pricing.cache_read_input
-      when :cache_write
-        text_pricing.cache_write_input
-      when :thinking
-        text_pricing.reasoning_output
+      when :input then input_price
+      when :output then output_price
+      when :cache_read then text_price(:cache_read_input_per_million, text_pricing.cache_read_input)
+      when :cache_write then text_price(:cache_write_input_per_million, text_pricing.cache_write_input)
+      when :thinking then text_price(:reasoning_output_per_million, text_pricing.reasoning_output)
       end
+    end
+
+    def input_price
+      return text_price(:input_per_million, text_pricing.input) if @category == :text_tokens || image_cost?
+
+      category_pricing.input
+    end
+
+    def output_price
+      return image_pricing.output || text_price(:output_per_million, text_pricing.output) if image_cost?
+      return text_price(:output_per_million, text_pricing.output) if @category == :text_tokens
+
+      category_pricing.output
+    end
+
+    def text_price(attribute, standard_price)
+      applicable_text_tier&.public_send(attribute) || standard_price
+    end
+
+    def applicable_text_tier
+      text_pricing.tier_for(prompt_tokens)
+    end
+
+    def prompt_tokens
+      tokens_for(:input).to_i + tokens_for(:cache_read).to_i + tokens_for(:cache_write).to_i
     end
 
     def text_pricing
@@ -270,9 +290,10 @@ module RubyLLM
     end
 
     def image_input_parts
+      text_input_price = applicable_text_tier&.input_per_million || text_pricing.input
       [
-        [:text, input_detail('text_tokens'), text_pricing.input],
-        [:image, input_detail('image_tokens'), image_pricing.input || text_pricing.input]
+        [:text, input_detail('text_tokens'), text_input_price],
+        [:image, input_detail('image_tokens'), image_pricing.input || text_input_price]
       ]
     end
 
@@ -281,10 +302,11 @@ module RubyLLM
     end
 
     def thinking_priced_separately?
-      reasoning_price = text_pricing.reasoning_output
+      tier = applicable_text_tier
+      reasoning_price = tier&.reasoning_output_per_million || text_pricing.reasoning_output
       return false unless reasoning_price
 
-      output_price = text_pricing.output
+      output_price = tier&.output_per_million || text_pricing.output
       output_price.nil? || reasoning_price != output_price
     end
 
