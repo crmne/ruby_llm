@@ -77,7 +77,7 @@ module RubyLLM
     #   RubyLLM::Moderation.moderate("User message", model: "omni-moderation-latest")
     #   RubyLLM::Moderation.moderate("Caption", with: "screenshot.png", provider: "openai")
     #
-    def self.moderate(input = nil, # rubocop:disable Metrics/ParameterLists
+    def self.moderate(input = nil,
                       model: nil,
                       with: nil,
                       provider: nil,

@@ -93,7 +93,7 @@ module RubyLLM
     # and merges them into the rendered request as-is.
     #
     # Raises RubyLLM::ModelNotFoundError if +model:+ is not in the registry.
-    def self.transcribe(audio_file, # rubocop:disable Metrics/ParameterLists
+    def self.transcribe(audio_file,
                         model: nil,
                         language: nil,
                         provider: nil,

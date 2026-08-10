@@ -7,7 +7,7 @@ module RubyLLM
       module Transcription
         DEFAULT_PROMPT = 'Transcribe the provided audio and respond with only the transcript text.'
 
-        # rubocop:disable Metrics/ParameterLists, Lint/UnusedMethodArgument
+        # rubocop:disable  Lint/UnusedMethodArgument
         def transcribe(audio_file, model:, language:, format: nil, speaker_names: nil,
                        speaker_references: nil, provider_options: {}, prompt: nil, temperature: nil)
           track_usage(:transcription) do
@@ -18,7 +18,7 @@ module RubyLLM
             parse_transcription_response(response, model:)
           end
         end
-        # rubocop:enable Metrics/ParameterLists, Lint/UnusedMethodArgument
+        # rubocop:enable  Lint/UnusedMethodArgument
 
         private
 
@@ -26,7 +26,6 @@ module RubyLLM
           "models/#{model}:generateContent"
         end
 
-        # rubocop:disable Metrics/ParameterLists
         def render_transcription_payload(attachment, language:, format: nil, provider_options: {}, prompt: nil,
                                          temperature: nil)
           prompt = build_prompt(prompt, language)
@@ -49,7 +48,6 @@ module RubyLLM
 
           Utils.deep_merge(payload, provider_options)
         end
-        # rubocop:enable Metrics/ParameterLists
 
         def build_generation_config(format:, temperature:)
           config = { responseMimeType: format || 'text/plain' }

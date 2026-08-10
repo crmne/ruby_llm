@@ -76,7 +76,7 @@ module RubyLLM
     # in the provider's request vocabulary and merges them into the
     # request as-is. +metadata:+ is not sent to the provider; it is
     # attached to the emitted +embedding.ruby_llm+ instrumentation event.
-    def self.embed(text, # rubocop:disable Metrics/ParameterLists
+    def self.embed(text,
                    model: nil,
                    provider: nil,
                    assume_model_exists: false,

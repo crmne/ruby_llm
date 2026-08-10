@@ -60,7 +60,7 @@ module RubyLLM
     #                 model: "gemini-2.5-flash-preview-tts", provider: :gemini
     #
     # Raises RubyLLM::ModelNotFoundError if +model:+ is not in the registry.
-    def self.speak(input, # rubocop:disable Metrics/ParameterLists
+    def self.speak(input,
                    model: nil,
                    provider: nil,
                    assume_model_exists: false,

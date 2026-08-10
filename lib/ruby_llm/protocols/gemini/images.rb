@@ -11,7 +11,7 @@ module RubyLLM
           "models/#{id}:#{image_endpoint_action(id)}"
         end
 
-        def render_image_payload(prompt, model:, size:, with: nil, mask: nil, provider_options: {}) # rubocop:disable Lint/UnusedMethodArgument,Metrics/ParameterLists
+        def render_image_payload(prompt, model:, size:, with: nil, mask: nil, provider_options: {}) # rubocop:disable Lint/UnusedMethodArgument
           RubyLLM.logger.debug { "Ignoring size #{size}. Gemini does not support image size customization." }
           @model = model
           payload = if gemini_image_model?(model)

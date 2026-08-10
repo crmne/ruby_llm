@@ -16,7 +16,6 @@ module RubyLLM
           'v1/messages'
         end
 
-        # rubocop:disable Metrics/ParameterLists
         def render_payload(messages, tools:, temperature:, model:, stream: false, max_output_tokens: nil,
                            schema: nil, thinking: nil, citations: false, caching: nil, tool_prefs: nil)
           warn_unsupported_citations(model) if citations && !model.supports?(:citations)
@@ -31,7 +30,6 @@ module RubyLLM
             payload[:cache_control] = prompt_cache_control(caching) if caching && !explicit_boundaries
           end
         end
-        # rubocop:enable Metrics/ParameterLists
 
         def warn_unsupported_citations(model)
           RubyLLM.logger.warn(
@@ -56,7 +54,7 @@ module RubyLLM
           end
         end
 
-        def build_base_payload(chat_messages, model, stream, thinking, citations: false, caching: nil) # rubocop:disable Metrics/ParameterLists
+        def build_base_payload(chat_messages, model, stream, thinking, citations: false, caching: nil)
           payload = {
             model: model.id,
             messages: chat_messages.map do |msg|
@@ -71,7 +69,7 @@ module RubyLLM
           payload
         end
 
-        def add_optional_fields(payload, system_content:, tools:, tool_prefs:, temperature:, schema: nil) # rubocop:disable Metrics/ParameterLists
+        def add_optional_fields(payload, system_content:, tools:, tool_prefs:, temperature:, schema: nil)
           if tools.any?
             payload[:tools] = tools.values.map { |t| Tools.function_for(t) }
             unless tool_prefs[:choice].nil? && tool_prefs[:calls].nil?
@@ -114,8 +112,8 @@ module RubyLLM
           thinking_signature = extract_thinking_signature(content_blocks)
           tool_use_blocks = Tools.find_tool_uses(content_blocks)
 
-          build_message(data, text_content, citations, thinking_content, thinking_signature, tool_use_blocks,
-                        raw)
+          build_message(data, content: text_content, citations:, thinking: thinking_content,
+                              thinking_signature:, tool_use_blocks:, raw:)
         end
 
         def extract_text_and_citations(blocks)
@@ -171,7 +169,7 @@ module RubyLLM
           thinking_block&.dig('signature') || thinking_block&.dig('data')
         end
 
-        def build_message(data, content, citations, thinking, thinking_signature, tool_use_blocks, raw) # rubocop:disable Metrics/ParameterLists
+        def build_message(data, content:, citations:, thinking:, thinking_signature:, tool_use_blocks:, raw:)
           usage = data['usage'] || {}
           thinking_tokens = usage.dig('output_tokens_details', 'thinking_tokens') ||
                             usage.dig('output_tokens_details', 'reasoning_tokens') ||

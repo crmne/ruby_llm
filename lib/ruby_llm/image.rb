@@ -51,7 +51,7 @@ module RubyLLM
     #     with: "logo.png"
     #   )
     #
-    def self.paint(prompt, # rubocop:disable Metrics/ParameterLists
+    def self.paint(prompt,
                    model: nil,
                    provider: nil,
                    assume_model_exists: false,
@@ -90,7 +90,7 @@ module RubyLLM
     end
 
     # :stopdoc:
-    def initialize(url: nil, data: nil, mime_type: nil, revised_prompt: nil, model: nil, usage: {}) # rubocop:disable Metrics/ParameterLists
+    def initialize(url: nil, data: nil, mime_type: nil, revised_prompt: nil, model: nil, usage: {})
       @url = url
       @data = data
       @mime_type = mime_type

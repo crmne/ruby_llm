@@ -9,7 +9,7 @@ module RubyLLM
 
         private
 
-        # rubocop:disable Lint/UnusedMethodArgument, Metrics/ParameterLists
+        # rubocop:disable Lint/UnusedMethodArgument
         def render_upload_payload(attachment, purpose: nil, expires_in: nil, visibility: nil,
                                   display_name: nil, uri: nil, content_type: nil)
           unless purpose
@@ -19,7 +19,7 @@ module RubyLLM
 
           multipart_payload(attachment, purpose:, expires_after: expires_after(expires_in))
         end
-        # rubocop:enable Lint/UnusedMethodArgument, Metrics/ParameterLists
+        # rubocop:enable Lint/UnusedMethodArgument
 
         def expires_after(expires_in)
           { anchor: 'created_at', seconds: expires_in } if expires_in

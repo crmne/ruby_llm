@@ -5,7 +5,7 @@ module RubyLLM
     class Gemini
       # Gemini Files API.
       class Files < UploadedFile::Protocol
-        # rubocop:disable Lint/UnusedMethodArgument, Metrics/ParameterLists
+        # rubocop:disable Lint/UnusedMethodArgument
         def upload(file, filename: nil, display_name: nil, purpose: nil, expires_in: nil,
                    visibility: nil, uri: nil, content_type: nil)
           attachment = file_attachment(file, filename:)
@@ -13,7 +13,7 @@ module RubyLLM
           response = upload_file_bytes(upload_url, attachment)
           parse_file_response(response.body.fetch('file'))
         end
-        # rubocop:enable Lint/UnusedMethodArgument, Metrics/ParameterLists
+        # rubocop:enable Lint/UnusedMethodArgument
 
         def download(file_id)
           file = find(file_id)

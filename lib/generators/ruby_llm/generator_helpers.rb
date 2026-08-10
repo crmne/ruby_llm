@@ -176,7 +176,6 @@ module RubyLLM
 
       private
 
-      # rubocop:disable Metrics/ParameterLists
       def add_association_params(params, default_assoc, table_name, model_name,
                                  owner_table:, owner_model_name:, plural: false)
         assoc = plural ? table_name.to_sym : table_name.singularize.to_sym
@@ -188,7 +187,6 @@ module RubyLLM
         params << "#{default_assoc.to_s.singularize}_class: '#{model_name}'" if model_name != assoc.to_s.classify
         params << "#{default_assoc}_foreign_key: :#{foreign_key}" if foreign_key != default_foreign_key
       end
-      # rubocop:enable Metrics/ParameterLists
 
       def collection_association?(default_assoc, plural)
         plural || default_assoc.to_s.pluralize == default_assoc.to_s

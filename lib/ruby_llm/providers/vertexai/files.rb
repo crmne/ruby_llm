@@ -5,7 +5,7 @@ module RubyLLM
     class VertexAI
       # Google Cloud Storage-backed files for Vertex AI batch input and output.
       class Files < UploadedFile::Protocol
-        # rubocop:disable Lint/UnusedMethodArgument, Metrics/ParameterLists
+        # rubocop:disable Lint/UnusedMethodArgument
         def upload(file, uri: nil, filename: nil, content_type: nil, purpose: nil, expires_in: nil,
                    visibility: nil, display_name: nil)
           attachment = file_attachment(file, filename:)
@@ -25,7 +25,7 @@ module RubyLLM
             mime_type: content_type || file_content_type(attachment)
           )
         end
-        # rubocop:enable Lint/UnusedMethodArgument, Metrics/ParameterLists
+        # rubocop:enable Lint/UnusedMethodArgument
 
         def find(file_id)
           bucket_name, key = parse_gcs_uri(file_id)
