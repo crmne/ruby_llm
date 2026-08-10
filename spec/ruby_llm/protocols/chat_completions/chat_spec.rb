@@ -462,8 +462,10 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Chat do
       )
     end
 
-    it 'is nil when the response carries no message' do
-      expect(described_class.parse_completion_body({ 'choices' => [] }, raw: nil)).to be_nil
+    it 'raises when the response carries no message' do
+      expect { described_class.parse_completion_body({ 'choices' => [] }, raw: nil) }.to raise_error(
+        RubyLLM::Error, /Provider returned no completion message/
+      )
     end
 
     it 'derives generated tokens from the total when the provider omits them' do
