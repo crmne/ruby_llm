@@ -196,8 +196,18 @@ module RubyLLM
       end
     end
 
-    def maybe_normalize_temperature(temperature, _model)
-      temperature
+    def maybe_normalize_temperature(temperature, model)
+      drop_unsupported_temperature(temperature, model)
+    end
+
+    # Newer model generations reject sampling parameters outright; the
+    # registry records that as temperature: false in model metadata.
+    def drop_unsupported_temperature(temperature, model)
+      return temperature if temperature.nil?
+      return temperature unless model.metadata[:temperature] == false
+
+      RubyLLM.logger.debug { "#{model.id} does not accept a temperature parameter, removing" }
+      nil
     end
 
     def parse_error(response)

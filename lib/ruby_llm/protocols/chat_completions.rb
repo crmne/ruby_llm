@@ -16,7 +16,7 @@ module RubyLLM
       include ChatCompletions::Transcription
 
       def maybe_normalize_temperature(temperature, model)
-        Temperature.normalize(temperature, model.id)
+        Temperature.normalize(drop_unsupported_temperature(temperature, model), model.id)
       end
     end
   end
