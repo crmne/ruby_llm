@@ -2,8 +2,20 @@
 
 require 'spec_helper'
 
-RSpec.describe RubyLLM::Speech do
-  include_context 'with configured RubyLLM'
+RSpec.describe RubyLLM::Speech, :live do
+  describe 'basic functionality' do
+    each_model(SPEECH_MODELS) do |provider, model, model_info|
+      it "#{provider}/#{model} can speak" do
+        speech = RubyLLM.speak('Ruby is a programming language designed for developer happiness.',
+                               model: model, provider: provider, voice: model_info[:voice])
+
+        expect(speech.data).to be_a(String)
+        expect(speech.data.bytesize).to be > 1000
+        expect(speech.model).to eq(model)
+        expect(speech.mime_type).to start_with('audio/')
+      end
+    end
+  end
 
   describe '.speak' do
     it 'uses the configured default speech model' do

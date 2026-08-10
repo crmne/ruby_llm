@@ -9,6 +9,7 @@ module RubyLLM
         include Mistral::Embeddings
         include Mistral::Media
         include Mistral::Models
+        include Mistral::Speech
       end
     end
   end

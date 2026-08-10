@@ -124,6 +124,14 @@ EMBEDDING_MODELS = [
   { provider: :vertexai, model: 'text-embedding-004' }
 ].freeze
 
+# Vertex AI TTS models (gemini-2.5-*-tts) 404 on the global and us-central1
+# endpoints, so speech is exercised through the Gemini API instead.
+SPEECH_MODELS = [
+  { provider: :gemini, model: 'gemini-2.5-flash-preview-tts' },
+  { provider: :mistral, model: 'voxtral-mini-tts-latest', voice: 'en_paul_neutral' },
+  { provider: :openai, model: 'gpt-4o-mini-tts' }
+].freeze
+
 TRANSCRIPTION_MODELS = [
   { provider: :gemini, model: 'gemini-2.5-flash' },
   { provider: :mistral, model: 'voxtral-mini-latest' },
