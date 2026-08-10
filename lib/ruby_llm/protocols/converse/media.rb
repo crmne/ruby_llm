@@ -7,26 +7,32 @@ module RubyLLM
       module Media
         module_function
 
-        def format_content(content, attachments = [], used_document_names: nil)
+        def format_content(content, attachments = [], used_document_names: nil, citations: false)
           used_document_names ||= {}
           blocks = []
           blocks << { text: content } unless content.nil? || content.empty?
           attachments.each do |attachment|
-            blocks << format_attachment(attachment, used_document_names:)
+            blocks << format_attachment(attachment, used_document_names:, citations:)
           end
           blocks
         end
 
-        def format_attachment(attachment, used_document_names:)
-          return format_provider_file_attachment(attachment, used_document_names:) if attachment.provider_file?
+        def format_attachment(attachment, used_document_names:, citations: false)
+          if attachment.provider_file?
+            return format_provider_file_attachment(attachment, used_document_names:, citations:)
+          end
 
           case attachment.type
           when :image
             format_image_attachment(attachment)
           when :pdf, :document
-            format_document_attachment(attachment, used_document_names:)
+            format_document_attachment(attachment, used_document_names:, citations:)
           when :text
-            format_text_attachment(attachment)
+            if citations
+              format_text_document_attachment(attachment, used_document_names:)
+            else
+              format_text_attachment(attachment)
+            end
           else
             raise UnsupportedAttachmentError, attachment.mime_type
           end
@@ -49,38 +55,53 @@ module RubyLLM
           { text: attachment.for_llm }
         end
 
-        def format_document_attachment(attachment, used_document_names:)
+        def format_document_attachment(attachment, used_document_names:, citations: false)
           format = document_format(attachment)
 
           raise UnsupportedAttachmentError, attachment.mime_type unless supported_document_format?(attachment)
 
           document_name = unique_document_name(sanitize_document_name(attachment.filename), used_document_names)
+          document = {
+            format: format,
+            name: document_name,
+            source: {
+              bytes: attachment.encoded
+            }
+          }
+          document[:citations] = { enabled: true } if citations
+          { document: document }
+        end
+
+        # Text attachments become citable documents when citations are
+        # enabled. Bedrock rejects text-format documents sent as bytes when
+        # citations are on, so the text rides in the source's text member.
+        def format_text_document_attachment(attachment, used_document_names:)
+          document_name = unique_document_name(sanitize_document_name(attachment.filename), used_document_names)
           {
             document: {
-              format: format,
+              format: 'txt',
               name: document_name,
-              source: {
-                bytes: attachment.encoded
-              }
+              source: { text: attachment.content },
+              citations: { enabled: true }
             }
           }
         end
 
-        def format_provider_file_attachment(attachment, used_document_names:)
+        def format_provider_file_attachment(attachment, used_document_names:, citations: false)
           raise UnsupportedAttachmentError, attachment.mime_type unless supported_document_format?(attachment)
 
           document_name = unique_document_name(sanitize_document_name(attachment.filename), used_document_names)
-          {
-            document: {
-              format: document_format(attachment),
-              name: document_name,
-              source: {
-                s3Location: {
-                  uri: attachment.provider_file_uri || attachment.provider_file_id
-                }
+          document = {
+            format: document_format(attachment),
+            name: document_name,
+            source: {
+              s3Location: {
+                uri: attachment.provider_file_uri || attachment.provider_file_id
               }
             }
           }
+          document[:citations] = { enabled: true } if citations
+          { document: document }
         end
 
         def supported_document_format?(attachment)

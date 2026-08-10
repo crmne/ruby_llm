@@ -26,14 +26,13 @@ module RubyLLM
         # rubocop:disable Lint/UnusedMethodArgument
         def render_payload(messages, tools:, temperature:, model:, stream: false, max_output_tokens: nil,
                            schema: nil, thinking: nil, citations: false, caching: nil, tool_prefs: nil)
-          warn_unsupported_citations(model) if citations
           tool_prefs ||= {}
           @used_document_names = {}
           system_messages, chat_messages = messages.partition { |msg| msg.role == :system }
           prompt_cache_options(caching)
           automatic_cache_target = automatic_cache_target(system_messages, chat_messages, caching)
           payload = {
-            messages: format_messages(chat_messages, caching:, automatic_cache_target:)
+            messages: format_messages(chat_messages, caching:, automatic_cache_target:, citations:)
           }
 
           system_blocks = format_system(system_messages, caching:, automatic_cache_target:)
@@ -53,12 +52,6 @@ module RubyLLM
           payload
         end
         # rubocop:enable Lint/UnusedMethodArgument
-
-        def warn_unsupported_citations(model)
-          RubyLLM.logger.warn(
-            "RubyLLM does not support citations on Bedrock yet. Ignoring with_citations for #{model.id}."
-          )
-        end
 
         def count_tokens_url
           "/model/#{escape_model_id(@model.id)}/count-tokens"
@@ -101,10 +94,12 @@ module RubyLLM
           content_blocks = data.dig('output', 'message', 'content') || []
           usage = data['usage'] || {}
           thinking_text, thinking_signature = parse_thinking(content_blocks)
+          text_content, citations = extract_text_and_citations(content_blocks)
 
           Message.new(
             role: :assistant,
-            content: parse_text_content(content_blocks),
+            content: text_content,
+            citations: citations,
             thinking: Thinking.build(text: thinking_text, signature: thinking_signature),
             tool_calls: parse_tool_calls(content_blocks),
             input_tokens: input_tokens(usage),
@@ -130,7 +125,7 @@ module RubyLLM
           usage['reasoningTokens'] || usage.dig('outputTokensDetails', 'reasoningTokens')
         end
 
-        def format_messages(messages, caching: nil, automatic_cache_target: nil)
+        def format_messages(messages, caching: nil, automatic_cache_target: nil, citations: false)
           rendered = []
           tool_result_blocks = []
 
@@ -145,7 +140,7 @@ module RubyLLM
               tool_result_blocks = []
             end
 
-            message = format_non_tool_message(msg, caching:, automatic_cache_target:)
+            message = format_non_tool_message(msg, caching:, automatic_cache_target:, citations:)
             rendered << message if message
           end
 
@@ -153,8 +148,8 @@ module RubyLLM
           rendered
         end
 
-        def format_non_tool_message(msg, caching: nil, automatic_cache_target: nil)
-          content = format_message_content(msg, caching:, automatic_cache_target:)
+        def format_non_tool_message(msg, caching: nil, automatic_cache_target: nil, citations: false)
+          content = format_message_content(msg, caching:, automatic_cache_target:, citations:)
           return nil if content.empty?
 
           {
@@ -163,8 +158,8 @@ module RubyLLM
           }
         end
 
-        def format_message_content(msg, caching: nil, automatic_cache_target: nil)
-          blocks = format_structured_message_content(msg)
+        def format_message_content(msg, caching: nil, automatic_cache_target: nil, citations: false)
+          blocks = format_structured_message_content(msg, citations:)
 
           if msg.tool_call?
             msg.tool_calls.each_value do |tool_call|
@@ -182,13 +177,15 @@ module RubyLLM
           blocks
         end
 
-        def format_structured_message_content(msg)
+        def format_structured_message_content(msg, citations: false)
           blocks = []
 
           thinking_block = format_thinking_block(msg.thinking)
           blocks << thinking_block if msg.role == :assistant && thinking_block
 
-          blocks.concat(Media.format_content(msg.content, msg.attachments, used_document_names: @used_document_names))
+          blocks.concat(
+            Media.format_content(msg.content, msg.attachments, used_document_names: @used_document_names, citations:)
+          )
 
           blocks
         end
@@ -203,8 +200,22 @@ module RubyLLM
         end
 
         def format_tool_result_content(msg)
+          search_results = RubyLLM::SearchResults.from_content(msg.content)
+          return search_results.results.map { |result| search_result_block(result) } if search_results
+
           blocks = Media.format_content(msg.content, msg.attachments, used_document_names: @used_document_names)
           blocks.empty? ? [text_tool_result_block(nil)] : blocks
+        end
+
+        def search_result_block(result)
+          {
+            searchResult: {
+              source: result[:url] || result[:title],
+              title: result[:title],
+              content: [{ text: result[:text] }],
+              citations: { enabled: true }
+            }
+          }
         end
 
         def text_tool_result_block(text)
@@ -474,9 +485,73 @@ module RubyLLM
           end
         end
 
-        def parse_text_content(content_blocks)
-          text = content_blocks.filter_map { |block| block['text'] if block['text'].is_a?(String) }.join
-          text.empty? ? nil : text
+        def extract_text_and_citations(content_blocks)
+          text = +''
+          citations = []
+
+          content_blocks.each do |block|
+            if block['text'].is_a?(String)
+              text << block['text']
+            elsif block['citationsContent'].is_a?(Hash)
+              append_citations_content(block['citationsContent'], text, citations)
+            end
+          end
+
+          [text.empty? ? nil : text, citations]
+        end
+
+        # A citationsContent block replaces the text block for a cited span:
+        # the generated text lives in its content member, and each citation
+        # points back at the source document or search result.
+        def append_citations_content(citations_content, text, citations)
+          block_text = joined_text(citations_content['content'])
+          span = {}
+          unless block_text.empty?
+            span = { text: block_text, start_index: text.length, end_index: text.length + block_text.length }
+          end
+
+          Array(citations_content['citations']).each do |citation|
+            citations << parse_citation(citation, **span)
+          end
+          text << block_text
+        end
+
+        def parse_citation(data, text: nil, start_index: nil, end_index: nil)
+          location = data['location'] || {}
+          page = location['documentPage'] || {}
+          end_page = page['end']
+          cited_text = joined_text(data['sourceContent'])
+
+          Citation.new(
+            url: citation_url(data, location),
+            title: data['title'],
+            cited_text: cited_text.empty? ? nil : cited_text,
+            text: text,
+            start_index: start_index,
+            end_index: end_index,
+            source_index: citation_source_index(location),
+            start_page: page['start'],
+            end_page: end_page && (end_page - 1)
+          )
+        end
+
+        def joined_text(parts)
+          Array(parts).filter_map { |part| part['text'] if part.is_a?(Hash) }.join
+        end
+
+        # Search result citations carry the developer-provided source string.
+        def citation_url(data, location)
+          url = location.dig('web', 'url') || data['source']
+          url if url&.match?(%r{\Ahttps?://})
+        end
+
+        def citation_source_index(location)
+          %w[documentChar documentPage documentChunk].each do |key|
+            index = location.dig(key, 'documentIndex')
+            return index if index
+          end
+
+          location.dig('searchResultLocation', 'searchResultIndex')
         end
 
         def parse_thinking(content_blocks)

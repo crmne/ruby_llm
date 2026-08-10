@@ -84,6 +84,54 @@ RSpec.describe RubyLLM::Chat, :live do
       end
     end
 
+    context 'with bedrock/claude-haiku-4-5' do
+      let(:chat) { RubyLLM.chat(model: 'claude-haiku-4-5', provider: :bedrock).with_citations }
+
+      it 'cites text documents in responses' do
+        response = chat.ask('Who created Ruby and when? Use the document.', with: facts_path)
+
+        expect(response.citations).not_to be_empty
+        citation = response.citations.first
+        expect(citation.cited_text).to be_present
+        expect(citation.title).to eq('facts')
+        expect(citation.source_index).to eq(0)
+        expect(response.content[citation.start_index...citation.end_index]).to eq(citation.text)
+      end
+
+      it 'cites PDF documents with page numbers' do
+        response = chat.ask('What does the document say? Use the document.', with: pdf_path)
+
+        expect(response.citations).not_to be_empty
+        citation = response.citations.first
+        expect(citation.cited_text).to be_present
+        expect(citation.start_page).to be >= 1
+      end
+
+      it 'cites tool results returned as search results' do
+        chat = RubyLLM.chat(model: 'claude-haiku-4-5', provider: :bedrock).with_tools(KnowledgeBase)
+
+        response = chat.ask('Who created Ruby? Search the knowledge base first and cite your sources.')
+
+        expect(response.citations).not_to be_empty
+        citation = response.citations.first
+        expect(citation.url).to eq('https://example.com/ruby-facts')
+        expect(citation.title).to eq('Ruby Facts')
+        expect(citation.cited_text).to be_present
+        expect(response.content[citation.start_index...citation.end_index]).to eq(citation.text)
+      end
+
+      it 'streams citations' do
+        chunks = []
+        response = chat.ask('Who created Ruby? Use the document.', with: facts_path) do |chunk|
+          chunks << chunk
+        end
+
+        expect(chunks.any? { |chunk| chunk.citations.any? }).to be true
+        expect(response.citations).not_to be_empty
+        expect(response.citations.first.cited_text).to be_present
+      end
+    end
+
     context 'with perplexity/sonar' do
       it 'returns search result citations' do
         response = RubyLLM.chat(model: 'sonar', provider: :perplexity)
@@ -138,8 +186,7 @@ RSpec.describe RubyLLM::Chat, :live do
       end
     end
 
-    # Not covered: Bedrock warns that citations are unsupported, and xAI
-    # deprecated Live Search in favor of its Agent Tools API.
+    # Not covered: xAI deprecated Live Search in favor of its Agent Tools API.
     context 'with a model that does not support citations' do
       it 'warns when citations are requested' do
         allow(RubyLLM.logger).to receive(:warn).and_call_original

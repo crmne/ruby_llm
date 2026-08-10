@@ -140,6 +140,7 @@ module RubyLLM
             role: :assistant,
             model: event['modelId'] || @model&.id,
             content: extract_content_delta(event),
+            citations: extract_citations_delta(event),
             thinking: Thinking.build(
               text: extract_thinking_delta(event),
               signature: extract_thinking_signature(event)
@@ -215,6 +216,16 @@ module RubyLLM
 
         def extract_content_delta(event)
           normalized_delta(event)['text']
+        end
+
+        # The cited span itself streams as ordinary text deltas; the citation
+        # delta carries the source. The final message resolves the span text
+        # from the accumulated content when indices are known.
+        def extract_citations_delta(event)
+          citation = normalized_delta(event)['citation']
+          return nil unless citation.is_a?(Hash)
+
+          [Chat.parse_citation(citation)]
         end
 
         def extract_thinking_delta(event)

@@ -626,17 +626,99 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
     end
   end
 
-  describe '.warn_unsupported_citations' do
-    it 'warns when a Bedrock request asks for citations' do
-      allow(RubyLLM.logger).to receive(:warn)
-      model = instance_double(RubyLLM::Model, id: 'anthropic.claude-haiku-4-5', max_output_tokens: nil, metadata: {})
+  describe 'citations' do
+    it 'parses citationsContent blocks into citations with response spans' do
+      response_body = {
+        'output' => {
+          'message' => {
+            'content' => [
+              {
+                'citationsContent' => {
+                  'citations' => [
+                    {
+                      'location' => { 'documentChar' => { 'documentIndex' => 0, 'start' => 0, 'end' => 73 } },
+                      'sourceContent' => [{ 'text' => 'Matz created Ruby in 1993. ' }],
+                      'title' => 'facts'
+                    }
+                  ],
+                  'content' => [{ 'text' => 'Ruby was created by Matz.' }]
+                }
+              },
+              { 'text' => ' It was released publicly in 1995.' }
+            ]
+          }
+        },
+        'usage' => {}
+      }
 
-      described_class.render_payload(
-        [RubyLLM::Message.new(role: :user, content: 'Hi')],
-        tools: {}, temperature: nil, model: model, citations: true
+      response = instance_double(Faraday::Response, body: response_body)
+      message = described_class.parse_completion_body(response_body, raw: response)
+
+      expect(message.content).to eq('Ruby was created by Matz. It was released publicly in 1995.')
+      citation = message.citations.first
+      expect(citation.title).to eq('facts')
+      expect(citation.cited_text).to eq('Matz created Ruby in 1993. ')
+      expect(citation.source_index).to eq(0)
+      expect(message.content[citation.start_index...citation.end_index]).to eq(citation.text)
+    end
+
+    it 'converts exclusive documentPage ends to inclusive 1-indexed pages' do
+      citation = described_class.parse_citation(
+        {
+          'location' => { 'documentPage' => { 'documentIndex' => 0, 'start' => 1, 'end' => 2 } },
+          'sourceContent' => [{ 'text' => 'Sample PDF' }],
+          'title' => 'sample'
+        }
       )
 
-      expect(RubyLLM.logger).to have_received(:warn)
+      expect(citation.start_page).to eq(1)
+      expect(citation.end_page).to eq(1)
+    end
+
+    it 'reads search result citations with their developer-provided source' do
+      citation = described_class.parse_citation(
+        {
+          'location' => { 'searchResultLocation' => { 'searchResultIndex' => 0, 'start' => 0, 'end' => 1 } },
+          'source' => 'https://example.com/ruby-facts',
+          'sourceContent' => [{ 'text' => 'Matz created Ruby.' }],
+          'title' => 'Ruby Facts'
+        }
+      )
+
+      expect(citation.url).to eq('https://example.com/ruby-facts')
+      expect(citation.title).to eq('Ruby Facts')
+      expect(citation.source_index).to eq(0)
+    end
+
+    it 'reads web locations from grounded citations' do
+      citation = described_class.parse_citation(
+        { 'location' => { 'web' => { 'url' => 'https://ruby-lang.org', 'domain' => 'ruby-lang.org' } } }
+      )
+
+      expect(citation.url).to eq('https://ruby-lang.org')
+      expect(citation.cited_text).to be_nil
+    end
+
+    it 'renders SearchResults tool output as citable searchResult blocks' do
+      results = RubyLLM::SearchResults.new(
+        title: 'Ruby Facts',
+        url: 'https://example.com/ruby-facts',
+        text: 'Matz created Ruby in 1993.'
+      )
+      msg = instance_double(RubyLLM::Message, content: results.to_json, attachments: [])
+
+      expect(described_class.format_tool_result_content(msg)).to eq(
+        [
+          {
+            searchResult: {
+              source: 'https://example.com/ruby-facts',
+              title: 'Ruby Facts',
+              content: [{ text: 'Matz created Ruby in 1993.' }],
+              citations: { enabled: true }
+            }
+          }
+        ]
+      )
     end
   end
 end
