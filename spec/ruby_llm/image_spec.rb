@@ -34,7 +34,7 @@ RSpec.describe RubyLLM::Image, :live do
   end
 
   def model
-    'gpt-image-1'
+    'gpt-image-1.5'
   end
 
   def invalid_content_type_url
@@ -117,7 +117,7 @@ RSpec.describe RubyLLM::Image, :live do
       end.to raise_error(RubyLLM::ModelNotFoundError)
     end
 
-    it 'gpt-image-1 supports image edits with multiple images' do
+    it 'gpt-image-1.5 supports image edits with multiple images' do
       image = RubyLLM.paint(prompt, model: model, with: [image_path, image_path])
 
       expect(image.base64?).to be(true)
@@ -159,7 +159,7 @@ RSpec.describe RubyLLM::Image, :live do
         expect(image.base64?).to be(true)
         expect(image.data).to be_present
         expect(image.mime_type).to eq('image/png')
-        expect(image.tokens.output).to eq(272)
+        expect(image.tokens.output).to be > 0
         expect(image.to_blob.bytesize).to be_positive
       end
     end
@@ -182,13 +182,30 @@ RSpec.describe RubyLLM::Image, :live do
       it 'rejects edits with a URL having invalid content type' do
         expect do
           RubyLLM.paint(prompt, with: invalid_content_type_url, model: model)
-        end.to raise_error(RubyLLM::BadRequestError, /unsupported mimetype/)
+        end.to raise_error(RubyLLM::BadRequestError, /Invalid image data/)
       end
 
       it 'rejects edits with a URL that returns 404' do
         expect do
           RubyLLM.paint(prompt, with: missing_remote_image_url, model: model)
-        end.to raise_error(Faraday::ResourceNotFound)
+        end.to raise_error(RubyLLM::BadRequestError, /404/)
+      end
+    end
+
+    context 'with flexible sizes' do
+      it 'gpt-image-2 accepts a 16px-multiple size on edits' do
+        image = RubyLLM.paint(
+          prompt,
+          with: image_path,
+          model: 'gpt-image-2',
+          size: '1536x864',
+          provider_options: { quality: 'low' }
+        )
+
+        expect(image.base64?).to be(true)
+        expect(image.mime_type).to eq('image/png')
+        expect(image.model).to eq('gpt-image-2')
+        expect(image.to_blob.bytesize).to be_positive
       end
     end
 

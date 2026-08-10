@@ -15,7 +15,7 @@ module RubyLLM
         end
 
         def render_image_payload(prompt, model:, size:, with: nil, mask: nil, provider_options: {})
-          return render_edit_payload(prompt, model:, with:, mask:, provider_options:) if editing?(with, mask)
+          return render_edit_payload(prompt, model:, size:, with:, mask:, provider_options:) if editing?(with, mask)
 
           {
             model: model,
@@ -47,15 +47,43 @@ module RubyLLM
           raise ArgumentError, 'with: is required when mask: is provided' if mask && !attachments?(with)
         end
 
-        def render_edit_payload(prompt, model:, with:, mask:, provider_options:)
-          payload = {
-            model: model,
-            prompt: prompt,
-            image: build_upload_parts(with),
-            n: 1
-          }
-          payload[:mask] = build_upload_part(mask) if mask
+        def render_edit_payload(prompt, model:, size:, with:, mask:, provider_options:)
+          payload = { model: model, prompt: prompt, n: 1 }
+          if json_image_references?(model)
+            payload[:images] = build_image_references(with)
+            payload[:mask] = build_image_reference(mask) if mask
+            payload[:size] = size if flexible_size?(model) && size
+          else
+            payload[:image] = build_upload_parts(with)
+            payload[:mask] = build_upload_part(mask) if mask
+          end
           payload.merge(provider_options)
+        end
+
+        def json_image_references?(model)
+          model.match?(/\A(gpt-image|chatgpt-image)/)
+        end
+
+        def flexible_size?(model)
+          model.include?('gpt-image-2')
+        end
+
+        def build_image_references(sources)
+          Array(sources).filter_map do |source|
+            next if blank_attachment?(source)
+
+            build_image_reference(source)
+          end
+        end
+
+        def build_image_reference(source)
+          attachment = Attachment.new(source)
+          return { file_id: attachment.provider_file_id } if attachment.provider_file?
+          return { image_url: attachment.source.to_s } if attachment.url?
+
+          raise UnsupportedAttachmentError, attachment.mime_type unless attachment.image?
+
+          { image_url: attachment.for_llm }
         end
 
         def build_upload_parts(sources)
