@@ -1,0 +1,474 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://rubyllm.services.ai.azure.com/openai/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-5-nano","input":[{"role":"user","content":"What''s the
+        weather at 52.5200, 13.4050?"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true},"strict":false}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Api-Key:
+      - "<AZURE_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Length:
+      - '5975'
+      Content-Type:
+      - application/json
+      X-Ms-Aoai-Configured-Data-Retention-Days:
+      - '30'
+      Skip-Error-Remapping:
+      - 'true'
+      X-Ms-Is-Spilled-Over:
+      - 'false'
+      X-Ratelimit-Key:
+      - gpt-5-nano
+      X-Ratelimit-Remaining-Requests:
+      - '249'
+      X-Ratelimit-Reset-Requests:
+      - '0'
+      X-Ratelimit-Limit-Requests:
+      - '250'
+      X-Ratelimit-Renewalperiod-Requests:
+      - '60'
+      X-Ratelimit-Abusepenalty-Active:
+      - 'False'
+      X-Ratelimit-Remaining-Tokens:
+      - '249991'
+      X-Ratelimit-Reset-Tokens:
+      - '0'
+      X-Ratelimit-Limit-Tokens:
+      - '250000'
+      X-Ratelimit-Renewalperiod-Tokens:
+      - '60'
+      Azureai-Fe-Is-Streaming:
+      - 'False'
+      Azureai-Fe-Requested-Service-Tier:
+      - paygo
+      Azureai-Fe-Requested-Zone:
+      - default
+      X-Ms-Served-Model:
+      - gpt-5-nano-2025-08-07
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Apim-Request-Id:
+      - a4eb10f6-0942-462c-bd5c-a0d9c3016ebe
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Region:
+      - West Europe
+      Date:
+      - Mon, 10 Aug 2026 23:05:12 GMT
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "id": "resp_0c72dd5d6a844da2016a7a59263a248195abc33be44250d336",
+          "object": "response",
+          "created_at": 1786403110,
+          "status": "completed",
+          "background": false,
+          "completed_at": 1786403113,
+          "content_filters": [
+            {
+              "blocked": false,
+              "source_type": "prompt",
+              "content_filter_raw": [],
+              "content_filter_results": {
+                "hate": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "sexual": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "violence": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "self_harm": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "jailbreak": {
+                  "detected": false,
+                  "filtered": false
+                }
+              },
+              "content_filter_offsets": {
+                "start_offset": 0,
+                "end_offset": 72,
+                "check_offset": 0
+              }
+            },
+            {
+              "blocked": false,
+              "source_type": "completion",
+              "content_filter_raw": [],
+              "content_filter_results": {
+                "protected_material_text": {
+                  "detected": false,
+                  "filtered": false
+                },
+                "protected_material_code": {
+                  "detected": false,
+                  "filtered": false
+                },
+                "hate": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "sexual": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "violence": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "self_harm": {
+                  "filtered": false,
+                  "severity": "safe"
+                }
+              },
+              "content_filter_offsets": {
+                "start_offset": 0,
+                "end_offset": 879,
+                "check_offset": 0
+              }
+            }
+          ],
+          "error": null,
+          "frequency_penalty": 0.0,
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
+          "model": "gpt-5-nano",
+          "moderation": null,
+          "output": [
+            {
+              "id": "rs_0c72dd5d6a844da2016a7a5926f974819582f6d69bba3c151d",
+              "type": "reasoning",
+              "content": [],
+              "encrypted_content": "gAAAAABqelkpIauejQh8J-eZLdJsmfMrj_EefKer3vLGPOp6joQrnGqAWrXocdiBZc8qMlaBH2Ty-aSw30cbXEu8zCOcrqWdewUm3imTntuq-KSlXQCcw1pbh9VlZLOWkjF0fPWOexPeYlMOt0aIbN-7Lk7WyvWbxsRtOZ5_d4rLopSQH55YPQYdz60NPr4L9HJxkkoZZAXxKbhLeQ58B52iZkEMQNN3MJZVMRLBFrGztYE9aYIE2Ctecl4l7tvT42f23Q0HJE1HoD__oT_XpY0oHOzbcmn72LncA4vQ7TAPka3pulCW9YLTq7SbGPJ2wLMwk1g-SFODsk0rpfxrCbZ1VGeXJ5AZ2xRHgD5zhnJm3jsOMKAtkNJGrR2BFnh6pioPSAaKW1G1E_MHVLdE2-lp_72kIbOJG9FGgpPl_W82YLnFr7zrK4wNgc-7Vb3DeRGjpBF_6WsrjjodW0BHwhHQiV8siDVWInPnri7G6iltmKmD_J1kBzNm0K-ePa3AfvH0Tc6ks0CD_IU-saKeJ-rjyzKGVLOUN5qSdbFjAxQ-649QAUAuGlcFLnxRVWC5K9QpIgnH-SUogUsN6gUwalsAYh0buZGaV_79UUhhg69_Ffx1vxLNa1oPtCzwgmIONwhFXzNe2VqG5p3E1H9JZhBwx4RPysbG8kG1048RthTEqkUml2C4wgwv06t1X-oDc2sheJpc8-CTJ3v5tvYqBTcJUT0tFhDHGQzvbTb2zePDpZU0yfL4-DdcyzR9w4N-Vo-rWPNUSMRbc4fHP1V40AS_nvRpRSq7vrQlh4zN9WMni06vEzq-ybiLk364Dj2-D0W8sJRGfhEhC1oIEVTHBwoU6h4QRihUCzj125xPHmNCdMVvC7lFcqrv7l42DlBge8PPdoQ-3hGfVU8Z7YG3dcIDGypadE2Q9o4t5X814MBnmvXM2HWtl0HSKiBvLX2lD_4Vlu_fAAOXp2nQfbD6ROE4LMHoLhDWMw9aGgB7mpT5kKvSfn5ViUjCEukDOHElNmp_EQ9ftt4JbJgBc72jof9kYFHShw7iujSz12o10vr94hhihzBVGe3OkyYtrUzdBqJ5S46aM74OAH3f2WOMnK3XzyT1vrqDBbMgRAAqZwXVHG-HvE2tf-r1m7cJlfVtKb2SMgzcoOFY6weyORRtPumUwO_iAUHd2XCJy5RfzFtsU0fjG-I8KD_VpZDv7MSFSvz2tOj5Gx34CJuVOAEIA3SnUQnOE8Xe_Iy5-YA1KolsHwT8tqAMrw1abnm-h7t-lfAltI2KaLjNuBKvA4mPTQPTRn-izl4i7QS5dpW4jRrohhD8ilfHcJWH48yjGTpdZmhMOHWWXCThERFtBfzGDWmL8i5VzNBMmP7jrj7GTKCr0IvY0SJ-wfbRZHnF-HCcipvWBJg746aZEkApV_pW-LSyGboVegkZvC1abaszpzvB5RWSYg57hteZ7nivxXby_X-SO3t-TGX8_-c-NiZALAn3_xp2MLW4LcW7mtP5lHwDSLj4FnQb1J_GdkJ_25wZdcK16n5pGF5kjyYPP39MUwd1QJYpXaWlMF6LDOQKM52mQ0d90DG_Mnm-zmUaMZbOFqUpc2dZ96XEkMu-UIy9RcMntW8zFO8P3w_z_MBMmYtpbV0DuYIcci-eGd31MRUr_GQRNqJ2sEGEU_lMbNGXvQRja4SJDPko0SSckoyCj9x__jLBFUDuG4BMEvm_fR5v7gWp18wynwoLMIS3JVErV87qEVnxVT3iYND4a2Gllp3pprsrBgeY1chD-fR-RYLCwARzB5owXIUgxkD_AN7NrOYwtgjm6C8zILxozBfhGgqRwOAXIDLGc-7l9wKmALGboRn891c4CotAp7wUbAplaDrPCVeLwdWadHcfZnweUiOcY63ewKdCQCBl94dfNoY9l0sO_1cd_NmHDzx7TXDr5rp5A3mtIoX7hBBfvVxzPUOE-U9uTC_hLPPNCt_UeENCFXpb6GpvCRiIgENk0lEUqf0mjzuwJMuSId3I5j8yLE9pNcMkvqa7st38cMUBRjMDxvdjyfgEKJjk",
+              "summary": []
+            },
+            {
+              "id": "fc_0c72dd5d6a844da2016a7a592800308195a192610f74a72c1e",
+              "type": "function_call",
+              "status": "completed",
+              "arguments": "{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}",
+              "call_id": "call_bItARu6RPBt6KNhluw78yHmf",
+              "name": "weather"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": "in_memory",
+          "reasoning": {
+            "context": "current_turn",
+            "effort": "medium",
+            "mode": "standard",
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": false,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tools": [
+            {
+              "type": "function",
+              "description": "Gets current weather for a location",
+              "name": "weather",
+              "parameters": {
+                "type": "object",
+                "properties": {
+                  "latitude": {
+                    "type": "string",
+                    "description": "Latitude (e.g., 52.5200)"
+                  },
+                  "longitude": {
+                    "type": "string",
+                    "description": "Longitude (e.g., 13.4050)"
+                  }
+                },
+                "required": [
+                  "latitude",
+                  "longitude"
+                ],
+                "additionalProperties": false,
+                "strict": true
+              },
+              "strict": false
+            }
+          ],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 85,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens": 219,
+            "output_tokens_details": {
+              "reasoning_tokens": 128
+            },
+            "total_tokens": 304
+          },
+          "user": null,
+          "metadata": {}
+        }
+  recorded_at: Mon, 10 Aug 2026 23:05:13 GMT
+- request:
+    method: post
+    uri: https://rubyllm.services.ai.azure.com/openai/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-5-nano","input":[{"role":"user","content":"What''s the
+        weather at 52.5200, 13.4050?"},{"type":"reasoning","summary":[],"encrypted_content":"gAAAAABqelkpIauejQh8J-eZLdJsmfMrj_EefKer3vLGPOp6joQrnGqAWrXocdiBZc8qMlaBH2Ty-aSw30cbXEu8zCOcrqWdewUm3imTntuq-KSlXQCcw1pbh9VlZLOWkjF0fPWOexPeYlMOt0aIbN-7Lk7WyvWbxsRtOZ5_d4rLopSQH55YPQYdz60NPr4L9HJxkkoZZAXxKbhLeQ58B52iZkEMQNN3MJZVMRLBFrGztYE9aYIE2Ctecl4l7tvT42f23Q0HJE1HoD__oT_XpY0oHOzbcmn72LncA4vQ7TAPka3pulCW9YLTq7SbGPJ2wLMwk1g-SFODsk0rpfxrCbZ1VGeXJ5AZ2xRHgD5zhnJm3jsOMKAtkNJGrR2BFnh6pioPSAaKW1G1E_MHVLdE2-lp_72kIbOJG9FGgpPl_W82YLnFr7zrK4wNgc-7Vb3DeRGjpBF_6WsrjjodW0BHwhHQiV8siDVWInPnri7G6iltmKmD_J1kBzNm0K-ePa3AfvH0Tc6ks0CD_IU-saKeJ-rjyzKGVLOUN5qSdbFjAxQ-649QAUAuGlcFLnxRVWC5K9QpIgnH-SUogUsN6gUwalsAYh0buZGaV_79UUhhg69_Ffx1vxLNa1oPtCzwgmIONwhFXzNe2VqG5p3E1H9JZhBwx4RPysbG8kG1048RthTEqkUml2C4wgwv06t1X-oDc2sheJpc8-CTJ3v5tvYqBTcJUT0tFhDHGQzvbTb2zePDpZU0yfL4-DdcyzR9w4N-Vo-rWPNUSMRbc4fHP1V40AS_nvRpRSq7vrQlh4zN9WMni06vEzq-ybiLk364Dj2-D0W8sJRGfhEhC1oIEVTHBwoU6h4QRihUCzj125xPHmNCdMVvC7lFcqrv7l42DlBge8PPdoQ-3hGfVU8Z7YG3dcIDGypadE2Q9o4t5X814MBnmvXM2HWtl0HSKiBvLX2lD_4Vlu_fAAOXp2nQfbD6ROE4LMHoLhDWMw9aGgB7mpT5kKvSfn5ViUjCEukDOHElNmp_EQ9ftt4JbJgBc72jof9kYFHShw7iujSz12o10vr94hhihzBVGe3OkyYtrUzdBqJ5S46aM74OAH3f2WOMnK3XzyT1vrqDBbMgRAAqZwXVHG-HvE2tf-r1m7cJlfVtKb2SMgzcoOFY6weyORRtPumUwO_iAUHd2XCJy5RfzFtsU0fjG-I8KD_VpZDv7MSFSvz2tOj5Gx34CJuVOAEIA3SnUQnOE8Xe_Iy5-YA1KolsHwT8tqAMrw1abnm-h7t-lfAltI2KaLjNuBKvA4mPTQPTRn-izl4i7QS5dpW4jRrohhD8ilfHcJWH48yjGTpdZmhMOHWWXCThERFtBfzGDWmL8i5VzNBMmP7jrj7GTKCr0IvY0SJ-wfbRZHnF-HCcipvWBJg746aZEkApV_pW-LSyGboVegkZvC1abaszpzvB5RWSYg57hteZ7nivxXby_X-SO3t-TGX8_-c-NiZALAn3_xp2MLW4LcW7mtP5lHwDSLj4FnQb1J_GdkJ_25wZdcK16n5pGF5kjyYPP39MUwd1QJYpXaWlMF6LDOQKM52mQ0d90DG_Mnm-zmUaMZbOFqUpc2dZ96XEkMu-UIy9RcMntW8zFO8P3w_z_MBMmYtpbV0DuYIcci-eGd31MRUr_GQRNqJ2sEGEU_lMbNGXvQRja4SJDPko0SSckoyCj9x__jLBFUDuG4BMEvm_fR5v7gWp18wynwoLMIS3JVErV87qEVnxVT3iYND4a2Gllp3pprsrBgeY1chD-fR-RYLCwARzB5owXIUgxkD_AN7NrOYwtgjm6C8zILxozBfhGgqRwOAXIDLGc-7l9wKmALGboRn891c4CotAp7wUbAplaDrPCVeLwdWadHcfZnweUiOcY63ewKdCQCBl94dfNoY9l0sO_1cd_NmHDzx7TXDr5rp5A3mtIoX7hBBfvVxzPUOE-U9uTC_hLPPNCt_UeENCFXpb6GpvCRiIgENk0lEUqf0mjzuwJMuSId3I5j8yLE9pNcMkvqa7st38cMUBRjMDxvdjyfgEKJjk"},{"type":"function_call","call_id":"call_bItARu6RPBt6KNhluw78yHmf","name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"},{"type":"function_call_output","call_id":"call_bItARu6RPBt6KNhluw78yHmf","output":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true},"strict":false}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Api-Key:
+      - "<AZURE_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Length:
+      - '5619'
+      Content-Type:
+      - application/json
+      X-Ms-Aoai-Configured-Data-Retention-Days:
+      - '30'
+      Skip-Error-Remapping:
+      - 'true'
+      X-Ms-Is-Spilled-Over:
+      - 'false'
+      X-Ratelimit-Key:
+      - gpt-5-nano
+      X-Ratelimit-Remaining-Requests:
+      - '249'
+      X-Ratelimit-Reset-Requests:
+      - '0'
+      X-Ratelimit-Limit-Requests:
+      - '250'
+      X-Ratelimit-Renewalperiod-Requests:
+      - '60'
+      X-Ratelimit-Abusepenalty-Active:
+      - 'False'
+      X-Ratelimit-Remaining-Tokens:
+      - '249757'
+      X-Ratelimit-Reset-Tokens:
+      - '0'
+      X-Ratelimit-Limit-Tokens:
+      - '250000'
+      X-Ratelimit-Renewalperiod-Tokens:
+      - '60'
+      Azureai-Fe-Is-Streaming:
+      - 'False'
+      Azureai-Fe-Requested-Service-Tier:
+      - paygo
+      Azureai-Fe-Requested-Zone:
+      - default
+      X-Ms-Served-Model:
+      - gpt-5-nano-2025-08-07
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Apim-Request-Id:
+      - d5f35b3c-d5fe-474c-a481-44baa3d3df1c
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Region:
+      - West Europe
+      Date:
+      - Mon, 10 Aug 2026 23:05:18 GMT
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "id": "resp_09dc6fbdc0ab9fc3016a7a592972bc81908e0ee6baa50851e3",
+          "object": "response",
+          "created_at": 1786403113,
+          "status": "completed",
+          "background": false,
+          "completed_at": 1786403119,
+          "content_filters": [
+            {
+              "blocked": false,
+              "source_type": "completion",
+              "content_filter_raw": [],
+              "content_filter_results": {
+                "protected_material_code": {
+                  "detected": false,
+                  "filtered": false
+                },
+                "protected_material_text": {
+                  "detected": false,
+                  "filtered": false
+                },
+                "hate": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "sexual": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "violence": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "self_harm": {
+                  "filtered": false,
+                  "severity": "safe"
+                }
+              },
+              "content_filter_offsets": {
+                "start_offset": 0,
+                "end_offset": 1076,
+                "check_offset": 0
+              }
+            }
+          ],
+          "error": null,
+          "frequency_penalty": 0.0,
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
+          "model": "gpt-5-nano",
+          "moderation": null,
+          "output": [
+            {
+              "id": "rs_09dc6fbdc0ab9fc3016a7a592a5e888190a0da6e859b19bd68",
+              "type": "reasoning",
+              "content": [],
+              "encrypted_content": "gAAAAABqelkvZ_6QdqG-i2jZwJLHtscvjdQcOr_giOM-5831mt2eIWKacDyFDROeZWlvuZefWnc4gwLAs3UTFjfmT3rD-Oik9iOZDGbHm9iuQICK1PoVsdsAU880dOugAXut7xyE0sh3tZx2_re6VUJha7HSEhpBkDOyl0wzJshRoYf_zPMSBmKac8fZYxXweV-IuihEZ7IxBy5t1B5-XTm-rRabEK-t9yWOqGtPXLiWmQiKjwpDgSRlCIQQ4Ky_ONS2ZoZCgqET2oib3R7lajJ6j4z1UH-9sX63L6d6NrRWUFOMIjYYeBH6Y9ksDNvQ1sgqnqzD6tJkK6cgbNScnvzn_z9XZnYh6-XvoiiZnSbM0mGhLMA6MUS8bwG_A0bwNuSXrEzPMTioxnaTXayCKM9eFh4UVavAGRBs6CRU4ELlJpnmmTpAyp8KAtSoi5aKYhbfoXli61IKmRTXYrGCv6rqYSUODnDZzm8qlb-WOFMuuJQBh9szxYJ2fz9LYB8oMjh6Cgg4H1KMlUh8U-MJn5O0K5NFs64uU6_AcrzJo1GZncBvuJOcwwnyDwqwafMrp-NNQzZgzNZIXz_6Quaje3Hav92qHvcbhtt_PsAH7UAf7pbw8UedLbHpitdnxB3-Hn8CiOg5azGgibYhmMOPRtbZVAZuAfscZWQG2Qr9DryHt9C82G__fBFqH875OAhnIrRzTMYQyyFsLDaoFC4ktl4y78nX2SfKrFBVPFCpbtMN-Z_K3jyPz0fy8UBztLWQlU21CSDlXmi0WhXUwukUTRAWWVwHse8kHIbgdo22fHtDYXv1T-liVay4XaE5zxgNGepL1OK9obJpu5sZRshCVkJyWn7azDtaFvx-gkr-aZWpQ04b2aqv5zoQvF5JY9h8OBSca4Z06VkQrqkbpj7Mox9K8YhYkFzWg_2G605aLy-7v4R-JSinIaOEKdf0dqkJBBzgn8Vng4BF5_7anOOWaGeUgRjsmBtyeebYP-W60nqfF7Jmuv81vn3GBx-jQUz4ZhqOIRfX4gqVb-Dv3sAGLfLKrxTZj-O8VYYrHIcY0A93wV_pznSZMxZOB74K8vyfnx7E5n33a0gtExn5ytbYvJxqjpb44bH6Msac6c3dTTOzvpw_5DtFjJP8Ie5JQv2Hgm86TjKFmljFp3iFTLLBz14ArbgFVQm1PhYojcHGgl2thYS5hfoM7pRtBJWSMrbOdQIeSBa-9eMUuYtcVKHU2bZqzoBrZx802aNWMnHTR-UMxWQW3kV-_WLPc_UaG27PpnEapaTZjQk0iCtVKT4paYfUoV4SinIDBVPIaOPigEXKUZRAYtAEHjFfA-uK7SY-RkYLzKYjgXU-z4m9NuBffJuQGFPPcYHdj-UXQz9ERYBLcZ1jfBzwHOIarIq5NjuvCHZLGWH1lAvxGq0fbP7H9qzO0uFoD09ecvWsWmxJ2pvIXQXdOJFtmuc1tsHMYtAqIYrOoAnX1OAn4y2q3Il7EicE2impm9eACJPy-Ecyb486XrYlwdXiZ-5dTsNT5ZXUrquZPd-Bsz3o37qV9B9uLQaw54evijAxnlunRZKonICAhnkAsqqz1e6nI3GxtBYapXkd0c3nD45c2JioHfnao6s2SKrsdLRieXA-aAyov9UzNcr43vFDXLOg1o-6qNUZMK6cLF-9WEMKhzI-tCYdhmjG8uXh9_41fGYXD6pflkrn0ZKk8x4sVxprNsCb7xOnM7PFi4mR46b_8BIj9aG3eDIT99d9jaTmTcd9SXzSsgVYmHsU5NQKGYkut9QE_DvEazvEA_gjD-Fj8C4eTAuoBkSbTTbSZOr4zxD_PoY2V8cUSSlBf5k-WokL9_M7H4Tk794256-xcFvL4oRxvPBQGP1kWBKoNSa5Q_lygX9N6miNo-qdo5Eb54_ZWORyam8dFP6FE90qEiqKVz7bBQZhHkwGzLieuqn8p2Sah1OQRUcAefPQU0ehUqm0lxbdml6c6qfECLE9FzLgpbSYsUO7JoGOtv-f9w7bBtcEBQB00wPPip4-eUPkCd5VJAJ_xBzihBQICjQUizxokfXIj913F_mBJSvLlco1EMm-RVC00UZaz7hmi7AhZZqBqNS222iknHu0WclilKB2cVgOn9eIJcdb0ZJkd5wwhCBAUJXzPHsHEdiYOvjRxqiGTUgzK0jif99DX6CpeE_WfX8qrLvO4nRX59FkUCkxapGxFPoylEhlTThctShlnKPJn9cF_y2_CEXqCWh0bk-uP2DQCnAKaCqEe6L1Koxrvl8Is3vCPBRV99r5eUHPAPwasCJhb9znt8DTEj8Sz8c3",
+              "summary": []
+            },
+            {
+              "id": "msg_09dc6fbdc0ab9fc3016a7a592ec9b081909ef091185186be42",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "Current weather at 52.5200, 13.4050: 15\u00b0C, wind 10 km/h. (Berlin)"
+                }
+              ],
+              "role": "assistant"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": "in_memory",
+          "reasoning": {
+            "context": "current_turn",
+            "effort": "medium",
+            "mode": "standard",
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": false,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tools": [
+            {
+              "type": "function",
+              "description": "Gets current weather for a location",
+              "name": "weather",
+              "parameters": {
+                "type": "object",
+                "properties": {
+                  "latitude": {
+                    "type": "string",
+                    "description": "Latitude (e.g., 52.5200)"
+                  },
+                  "longitude": {
+                    "type": "string",
+                    "description": "Longitude (e.g., 13.4050)"
+                  }
+                },
+                "required": [
+                  "latitude",
+                  "longitude"
+                ],
+                "additionalProperties": false,
+                "strict": true
+              },
+              "strict": false
+            }
+          ],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 336,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens": 295,
+            "output_tokens_details": {
+              "reasoning_tokens": 256
+            },
+            "total_tokens": 631
+          },
+          "user": null,
+          "metadata": {}
+        }
+  recorded_at: Mon, 10 Aug 2026 23:05:19 GMT
+recorded_with: VCR 6.4.0

@@ -1,0 +1,114 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://rubyllm.services.ai.azure.com/openai/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-5-nano","input":[{"role":"user","content":"What is 2
+        + 2? Just the number."}],"stream":true,"store":false,"include":["reasoning.encrypted_content"]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Api-Key:
+      - "<AZURE_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - text/event-stream; charset=utf-8
+      X-Ms-Aoai-Configured-Data-Retention-Days:
+      - '30'
+      X-Ms-Is-Spilled-Over:
+      - 'false'
+      X-Ratelimit-Key:
+      - gpt-5-nano
+      X-Ratelimit-Remaining-Requests:
+      - '249'
+      X-Ratelimit-Reset-Requests:
+      - '0'
+      X-Ratelimit-Limit-Requests:
+      - '250'
+      X-Ratelimit-Renewalperiod-Requests:
+      - '60'
+      X-Ratelimit-Abusepenalty-Active:
+      - 'False'
+      X-Ratelimit-Remaining-Tokens:
+      - '249993'
+      X-Ratelimit-Reset-Tokens:
+      - '0'
+      X-Ratelimit-Limit-Tokens:
+      - '250000'
+      X-Ratelimit-Renewalperiod-Tokens:
+      - '60'
+      Azureai-Fe-Is-Streaming:
+      - 'True'
+      Azureai-Fe-Requested-Service-Tier:
+      - paygo
+      Azureai-Fe-Requested-Zone:
+      - default
+      Skip-Error-Remapping:
+      - 'true'
+      X-Ms-Served-Model:
+      - gpt-5-nano-2025-08-07
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Apim-Request-Id:
+      - 64d8b68d-64fd-49d8-8179-7f632bf92e57
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Region:
+      - West Europe
+      Date:
+      - Mon, 10 Aug 2026 23:04:57 GMT
+    body:
+      encoding: UTF-8
+      string: |+
+        event: response.created
+        data: {"type":"response.created","response":{"id":"resp_09ea4a896a22154e016a7a59194f108190a6c0dd12dc5360ad","object":"response","created_at":1786403097,"status":"in_progress","background":false,"completed_at":null,"content_filters":null,"error":null,"frequency_penalty":0.0,"incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"model":"gpt-5-nano","moderation":null,"output":[],"parallel_tool_calls":true,"presence_penalty":0.0,"previous_response_id":null,"prompt_cache_key":null,"prompt_cache_retention":"in_memory","reasoning":{"context":"current_turn","effort":"medium","mode":"standard","summary":null},"safety_identifier":null,"service_tier":"auto","store":false,"temperature":1.0,"text":{"format":{"type":"text"},"verbosity":"medium"},"tool_choice":"auto","tools":[],"top_logprobs":0,"top_p":1.0,"truncation":"disabled","usage":null,"user":null,"metadata":{}},"sequence_number":0}
+
+        event: response.in_progress
+        data: {"type":"response.in_progress","response":{"id":"resp_09ea4a896a22154e016a7a59194f108190a6c0dd12dc5360ad","object":"response","created_at":1786403097,"status":"in_progress","background":false,"completed_at":null,"content_filters":null,"error":null,"frequency_penalty":0.0,"incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"model":"gpt-5-nano","moderation":null,"output":[],"parallel_tool_calls":true,"presence_penalty":0.0,"previous_response_id":null,"prompt_cache_key":null,"prompt_cache_retention":"in_memory","reasoning":{"context":"current_turn","effort":"medium","mode":"standard","summary":null},"safety_identifier":null,"service_tier":"auto","store":false,"temperature":1.0,"text":{"format":{"type":"text"},"verbosity":"medium"},"tool_choice":"auto","tools":[],"top_logprobs":0,"top_p":1.0,"truncation":"disabled","usage":null,"user":null,"metadata":{}},"sequence_number":1}
+
+        event: response.output_item.added
+        data: {"type":"response.output_item.added","item":{"id":"rs_09ea4a896a22154e016a7a5919e74c8190afe24a735de1a7de","type":"reasoning","content":[],"encrypted_content":"gAAAAABqelkZ3i7gpfWhhZ-SN1M4WL8BWSeZpRM5zacFqHmwvkl7xADIgLz-t5VqlGCKypJiv5yitpUPlJZS3OkwgOP9kQC6s9qkwDV7MA0e73y2Xb1QDtguiVhRMzIREjxEW_tu7EWzij1l62K8zrVixtWExnob-2WbFp49JlhSVNubpYP61tcUwoGHAyChyxGk0nOUJbMlhm_IY_Ku3-4w1omeT-ON1_soSWba_AO_yTlBTOwSlk6HDDhY-5ter6BsrsOsjdJzLR0_cXXdoV5_qqIvJtd36i4jGitouSr30PzQeNac4Q8vHj_CsDosUacaz8QKJEa7Vg23uv_VnTbPtY0PqaeTQunNxh6YgPUXpRgqnD2XubGqixYVhRNA5MGLh3YIXT3W9SVVPbD0FMpdzGHSpS5RniStJm0w2YhXkRoOFWSNp8kjziLdJHD1NdhQT6UZS3mTxPqhAFzIRXa-r9vSIZSORdXN-ZIrrWCZQgqxwm8mlXZyasAfZAsCpUaSC8J7r-ctWejFdHYksNNfbBUyMqn7JSgKgDTEHDZ2f7RtCQ1FY-CoTQYihuP9_JPx7roa_UAMCbiQrJYTJmkfp1JH3xBy_rEyFxMz-WOW5zgGcPlWCs8aSkr-tqREHzpABPacMPuMXTd1MvdLxcWPVJwrJ_zzqKkr6HGRYOA1Vn4TKCBzdMiou3c_UlOQf4WFmxWaGWyY5zTDbdqX05OEJgyBbC5n-HBKGbPtcbPn6TKf15jEI5WEFXlKcJdkg6XoNecQ_rsueDN_VqoSXE3ldEreinIlQPLrrpFvhJ8MZiDWbphF8wgBq7RdTHl0fR_7PBuCgMaR1JBEnFnqzgECqDsm1CttXF4lEpf3JGVQHpRl5CapICspI5z5jg6I02XLkM18vJnC","summary":[]},"output_index":0,"sequence_number":2}
+
+        event: response.output_item.done
+        data: {"type":"response.output_item.done","item":{"id":"rs_09ea4a896a22154e016a7a5919e74c8190afe24a735de1a7de","type":"reasoning","content":[],"encrypted_content":"gAAAAABqelkaLfruUwPWy_3eCWI40qRwbeyIChup5TwE0zPQTuvBeXIVEAwSMs_dYGtKGVNTnL26zJAnri4G_B0IlZT0U2KyZZOFyxfft5D7Jx0pYH0xi95yFh0QGBuUY6L_pLg7ftD_Efq6r1WGHc-0-vHd9UotYIsj21Yh5uqiT9jOqd5R1mRN33xeJ_iGeBfN55eZAwu4x4eji9w3FwWZ9RYWimy7mju3LmtMoY_wDy6tMKNGfddhssJdBTNsOnL6fFIdan-cvojMJbHmZY5pBFWQZKU08ei03en_R5c0E8ST_SLG_g5OegTG7DCluDeelDpniETQjbI05cXvlNNaztS-MDJb4mStl3aJQZPFKD4BrFPpTU1JEhy3FPsvOJqI2lJ-wmdXEpT2w6KoWr191-5pBYlkQVSi5MgbimqAToikbKRz9IiH70jFuEjniJDvSwH5as36rzwLnjpUoGo54FtQyb-1NYvKQbG-PH0H3kvlXwxkfSpCm4-mDnUc-I0hUvFGinQ6kLpTJPOekrFEx6WyYDZ0hh3eIpbcg3fz7oagTQjZqQ6z50jYIgH_S_GJxpalmeXDKvKT80ezMfnkbFP9vSlDCAJ-CJekr2fV85PPjl1H7rMmsfez-jFbK_sAe9LDdEHfhX9_QTWl8cOKEMnYRJl_qSzYyB93pedULKuH0E97b7hvmUBcOGSOF_75eRPzfmeV7AOslLAtFU5e6yMO9gyYaIPyjdsM_eH-c7Q4fA7-mNrCQOm6wVILq8LyYPqV6GbvhYgNefYrfBjsita7F8yoEkZx8V6V6Qt30YAaEq_nVDOkoj5w8cIq18aaqKgWFubBIbTI7FAaQqYOnq0fXcJOWfKe09ZnRoPjLIg505tTLZeYrnrlJQyBk-o7fb2m_Bb18obcBiRTnOnJcsfwW4CU6C_i2pH0j3GTcoXv4HDfK5cbDiwCMjymGG1zfCnSXT9BkJ9C_qI9TFINMu-KlKOxqfgsQxJ7Htsv5J_eyIKW9LLkwT8OnCj--iU99B256j6vqat189Fr8IuiBwZYMD-lXzaEe-W_klXoss08pBhaVeP8qOkPUTlrzy8bM5Q9vvNE3h3BWSdVc4Ov7sx3IDQl3tFuoYnZd2LKydZ0u1r0EzROKYCgd1Hh0qpMs6DQqeahD4zi6L8VzcyUSmKDo9e85vQPxtVfE2Vob9filXyCvtYz3nPdcQ83TMCGETQqKwS3Ps6U-2_9mGUzmpct_CdBHjiO9JM5shv3QXmTxw3n7UHsE9aiP_ePqQgq_jCZrjJK","summary":[]},"output_index":0,"sequence_number":3}
+
+        event: response.output_item.added
+        data: {"type":"response.output_item.added","item":{"id":"msg_09ea4a896a22154e016a7a591a6804819089c54820810057ef","type":"message","status":"in_progress","content":[],"role":"assistant"},"output_index":1,"sequence_number":4}
+
+        event: response.content_part.added
+        data: {"type":"response.content_part.added","content_index":0,"item_id":"msg_09ea4a896a22154e016a7a591a6804819089c54820810057ef","output_index":1,"part":{"type":"output_text","annotations":[],"logprobs":[],"text":""},"sequence_number":5}
+
+        event: response.output_text.delta
+        data: {"type":"response.output_text.delta","content_index":0,"delta":"4","item_id":"msg_09ea4a896a22154e016a7a591a6804819089c54820810057ef","logprobs":[],"obfuscation":"rJZfz8wnanJhsx5","output_index":1,"sequence_number":6}
+
+        event: response.output_text.done
+        data: {"type":"response.output_text.done","content_index":0,"item_id":"msg_09ea4a896a22154e016a7a591a6804819089c54820810057ef","logprobs":[],"output_index":1,"sequence_number":7,"text":"4"}
+
+        event: response.content_part.done
+        data: {"type":"response.content_part.done","content_index":0,"item_id":"msg_09ea4a896a22154e016a7a591a6804819089c54820810057ef","output_index":1,"part":{"type":"output_text","annotations":[],"logprobs":[],"text":"4"},"sequence_number":8}
+
+        event: response.output_item.done
+        data: {"type":"response.output_item.done","item":{"id":"msg_09ea4a896a22154e016a7a591a6804819089c54820810057ef","type":"message","status":"completed","content":[{"type":"output_text","annotations":[],"logprobs":[],"text":"4"}],"role":"assistant"},"output_index":1,"sequence_number":9}
+
+        event: response.completed
+        data: {"type":"response.completed","response":{"id":"resp_09ea4a896a22154e016a7a59194f108190a6c0dd12dc5360ad","object":"response","created_at":1786403097,"status":"completed","background":false,"completed_at":1786403098,"content_filters":[{"blocked":false,"source_type":"prompt","content_filter_raw":[],"content_filter_results":{"hate":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"},"self_harm":{"filtered":false,"severity":"safe"},"jailbreak":{"detected":false,"filtered":false}},"content_filter_offsets":{"start_offset":0,"end_offset":1164,"check_offset":0}},{"blocked":false,"source_type":"completion","content_filter_raw":[],"content_filter_results":{"protected_material_code":{"detected":false,"filtered":false},"protected_material_text":{"detected":false,"filtered":false},"hate":{"filtered":false,"severity":"safe"},"sexual":{"filtered":false,"severity":"safe"},"violence":{"filtered":false,"severity":"safe"},"self_harm":{"filtered":false,"severity":"safe"}},"content_filter_offsets":{"start_offset":0,"end_offset":262,"check_offset":0}}],"error":null,"frequency_penalty":0.0,"incomplete_details":null,"instructions":null,"max_output_tokens":null,"max_tool_calls":null,"model":"gpt-5-nano","moderation":null,"output":[{"id":"rs_09ea4a896a22154e016a7a5919e74c8190afe24a735de1a7de","type":"reasoning","content":[],"encrypted_content":"gAAAAABqelkaGnAzZh1eo0VxZiFzP3Kr_JH0JNQ3MGNTME356nLp4maAfKR2n7P6EHdcJiW64ejGRdvjk_imnRyZvvSecw4dFaKskCP9ib_PYzWJcxMm0GHr9K2DwI0NsDQimR6QfnP0P049M4oBqjfDIR0Ha49-Dsr26UCxme0mkzRP4yfjpAyip4NPugC9Paa05ELJ385iPpTGIOngi_PnuRx_wOpQ5Qf8E0mJYpR2ShejC4c-kiYAnOkV7EjfcQPmHP375FCP7THAarQx6mC6VismZCEyDUIM_4ajvexdn9v8wUrvf71bnUFdXM31sr_sEOw5fdOrYftLmUvGwt_bjZgxzYmdxeKnRzPNGAWY8t73dd7E-0tTpSAlthGR3VvBGoYBifrDO-Hc4m0cjQJDZs4arej2YLiy5-A1n58zMHBaOZumbkpFprSZokkko7odqtUkb-sVq5LvOq4lqBSCk7IAOf_bs-9D1H3_-gbm57CCjGp4rKEemkz8QEhorK5XlNPpU46ALc4qihw4z3PGFv1eamwlcPhiPLXtVEpGTj7Ej333oBG87fPy10RkLlA4gD8S1YlxrQMCKy2-BlffujMMdTjG05Qr601VAEy98vYXLN55UGF-jGB4dpJG4pci6PpN-WkIHXoyjgMMvjmjTCd7-aNxG-ziOcpb-mM2rttjWgFLWTo-nnUwCG9-aeMmc1Rs5CeaB9rnGv_xY7MJscNAq2YDLrUjXeQUOTs4XU3-ZygnN48KSQvCTUQOC_SINUlwJL2tXySQTt7USoCwufqAo0nR73GZeHvZsxD5gqYFXEzWEhkcxdLLxkVQkX-LLfIZGGYNl1nMoTD2VDYVS8hJVMdnkJAde5IPA5imRA6IAtyr7ceACKTKKpoUfrzPDcwY4bDgsE-g_5f6w_wUaGtzwbn0nLr7MIpCYwowwoldO44urxr6zeMm2romTLTf1nGgT_uNTPLKYQxstVLoOlXgzwYZ7hdMo5ZEcNffWXW8AJkJyusHnOqCmEWwejSABWPITLt2vEAQfgDaD4azbJqMACgTIq3RI-gB60Gdi2PsN29coZ_mY3OaQ9VVTD35AnpVaOyrMac6Xtl8V3p8fRTO0pHBfHMiw1F0wY4LVs4jnMVAs5z6R7EhOSK-U_Kcc5WmeDUwpnoT25oDUP89TdiviXs_kXWUxguI-K3rSJQlWJkwg8hdgNMvuiPmeqHFbZpLJnUOcFjqMYPNt1hwxZFi5IvylSuqt0Ne_yfjFgzhr4aECKx3gMz3Kn_z2ohxyVmxTbTT","summary":[]},{"id":"msg_09ea4a896a22154e016a7a591a6804819089c54820810057ef","type":"message","status":"completed","content":[{"type":"output_text","annotations":[],"logprobs":[],"text":"4"}],"role":"assistant"}],"parallel_tool_calls":true,"presence_penalty":0.0,"previous_response_id":null,"prompt_cache_key":null,"prompt_cache_retention":"in_memory","reasoning":{"context":"current_turn","effort":"medium","mode":"standard","summary":null},"safety_identifier":null,"service_tier":"default","store":false,"temperature":1.0,"text":{"format":{"type":"text"},"verbosity":"medium"},"tool_choice":"auto","tools":[],"top_logprobs":0,"top_p":1.0,"truncation":"disabled","usage":{"input_tokens":18,"input_tokens_details":{"cached_tokens":0},"output_tokens":78,"output_tokens_details":{"reasoning_tokens":64},"total_tokens":96},"user":null,"metadata":{}},"sequence_number":10}
+
+  recorded_at: Mon, 10 Aug 2026 23:04:58 GMT
+recorded_with: VCR 6.4.0
+...

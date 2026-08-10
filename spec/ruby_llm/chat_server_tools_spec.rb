@@ -127,6 +127,22 @@ RSpec.describe RubyLLM::Chat, :live do
       expect(payload[:tools]).to include({ type: 'custom', name: 'apply_patch' })
     end
 
+    it 'renders Azure Responses aliases, which lack web_search' do
+      payload = RubyLLM.chat(model: 'gpt-5-nano', provider: :azure, protocol: :responses)
+                       .with_server_tools(:code_execution)
+                       .render
+
+      expect(payload[:input]).to be_an(Array)
+      expect(payload[:tools]).to include({ type: 'code_interpreter', container: { type: 'auto' } })
+    end
+
+    it 'raises for web_search on Azure, which does not offer it' do
+      chat = RubyLLM.chat(model: 'gpt-5-nano', provider: :azure, protocol: :responses)
+                    .with_server_tools(:web_search)
+
+      expect { chat.render }.to raise_error(RubyLLM::UnsupportedServerToolError, /:code_interpreter/)
+    end
+
     it 'renders OpenRouter aliases as openrouter-prefixed tools' do
       payload = RubyLLM.chat(model: 'openai/gpt-5.2', provider: :openrouter)
                        .with_server_tools(:web_search)
@@ -294,6 +310,46 @@ RSpec.describe RubyLLM::Chat, :live do
 
         followup = chat.ask('Now multiply that by 3. Just the number.')
         expect(followup.content).to include('12')
+      end
+    end
+
+    context 'with azure/gpt-5-nano' do
+      let(:chat) { RubyLLM.chat(model: 'gpt-5-nano', provider: :azure, protocol: :responses) }
+
+      it 'chats on the openai/v1 responses endpoint' do
+        response = chat.ask('What is 2 + 2? Just the number.')
+
+        expect(response.raw.env.url.path).to end_with('/openai/v1/responses')
+        expect(response.content).to include('4')
+        expect(response.thinking&.signature).to be_present
+
+        followup = chat.ask('Now multiply that by 3. Just the number.')
+        expect(followup.content).to include('12')
+      end
+
+      it 'streams responses' do
+        chunks = []
+        response = chat.ask('What is 2 + 2? Just the number.') { |chunk| chunks << chunk }
+
+        expect(chunks).not_to be_empty
+        expect(response.content).to include('4')
+      end
+
+      it 'round-trips tool calls' do
+        weather = Class.new(RubyLLM::Tool) do
+          def self.name = 'Weather'
+          description 'Gets current weather for a location'
+          parameter :latitude, description: 'Latitude (e.g., 52.5200)'
+          parameter :longitude, description: 'Longitude (e.g., 13.4050)'
+
+          def execute(latitude:, longitude:)
+            "Current weather at #{latitude}, #{longitude}: 15°C, Wind: 10 km/h"
+          end
+        end
+
+        response = chat.with_tools(weather).ask("What's the weather at 52.5200, 13.4050?")
+
+        expect(response.content).to include('15')
       end
     end
 

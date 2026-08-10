@@ -8,10 +8,19 @@ module RubyLLM
       DEFAULT_MODELS_API_VERSION = 'preview'
 
       protocol :chat_completions, Azure::ChatCompletions, batches: Azure::ChatCompletions::Batches
+      protocol :responses, Azure::Responses
       files Azure::Files
 
       def api_base
         @config.azure_api_base
+      end
+
+      # Deployments named after gpt-5.4+ models need the Responses API for
+      # tool use, so they route there automatically. Deployment names often
+      # differ from model ids, so the routing stays conservative; an explicit
+      # protocol: or the azure_protocol configuration option overrides it.
+      def protocol_for(model, **)
+        model.id.match?(/gpt-5\.[4-9]|gpt-5\d/) ? protocols[:responses] : super
       end
 
       def headers

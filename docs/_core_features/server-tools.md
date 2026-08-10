@@ -55,20 +55,20 @@ chat.with_tools(Weather).with_server_tools(:web_search)
 
 The aliases map to each provider's current tool versions:
 
-| Alias | Anthropic | OpenAI (Responses) | Gemini | xAI | DeepSeek (Responses) | OpenRouter |
-|-------|-----------|--------------------|--------|-----|----------------------|------------|
-| `:web_search` | `web_search_20260318` | `web_search` | `google_search` | `web_search` | `web_search` | `openrouter:web_search` |
-| `:web_fetch` / `:url_context` | `web_fetch_20260318` | not offered | `url_context` | not offered | not offered | `openrouter:web_fetch` |
-| `:x_search` | not offered | not offered | not offered | `x_search` | not offered | not offered |
-| `:code_execution` | `code_execution_20260521` | `code_interpreter` | `code_execution` | `code_execution` | not offered | `openrouter:shell` |
-| `:file_search` | not offered | `file_search` | `file_search` | `file_search` | not offered | not offered |
-| `:image_generation` | not offered | `image_generation` | not offered | `image_generation` | not offered | `openrouter:image_generation` |
-| `:apply_patch` | not offered | not offered | not offered | not offered | `custom` (`apply_patch`) | not offered |
-| `:mcp` | `mcp_toolset` + `mcp_servers` | `mcp` | not offered | `mcp` | not offered | not offered |
+| Alias | Anthropic | OpenAI (Responses) | Azure (Responses) | Gemini | xAI | DeepSeek (Responses) | OpenRouter |
+|-------|-----------|--------------------|-------------------|--------|-----|----------------------|------------|
+| `:web_search` | `web_search_20260318` | `web_search` | not offered | `google_search` | `web_search` | `web_search` | `openrouter:web_search` |
+| `:web_fetch` / `:url_context` | `web_fetch_20260318` | not offered | not offered | `url_context` | not offered | not offered | `openrouter:web_fetch` |
+| `:x_search` | not offered | not offered | not offered | not offered | `x_search` | not offered | not offered |
+| `:code_execution` | `code_execution_20260521` | `code_interpreter` | `code_interpreter` | `code_execution` | `code_execution` | not offered | `openrouter:shell` |
+| `:file_search` | not offered | `file_search` | `file_search` | `file_search` | `file_search` | not offered | not offered |
+| `:image_generation` | not offered | `image_generation` | `image_generation` | not offered | `image_generation` | not offered | `openrouter:image_generation` |
+| `:apply_patch` | not offered | not offered | not offered | not offered | not offered | `custom` (`apply_patch`) | not offered |
+| `:mcp` | `mcp_toolset` + `mcp_servers` | `mcp` | `mcp` | not offered | `mcp` | not offered | not offered |
 
 Asking for an alias the provider does not define raises `RubyLLM::UnsupportedServerToolError` naming the aliases it does.
 
-xAI serves server tools on its Responses API, the default protocol for Grok models. DeepSeek serves them on its opt-in Responses API, so pass `protocol: :responses` when creating the chat.
+xAI serves server tools on its Responses API, the default protocol for Grok models. DeepSeek serves them on its opt-in Responses API, so pass `protocol: :responses` when creating the chat. The same goes for Azure: deployments named after gpt-5.4+ models route to its Responses API automatically, everything else needs `protocol: :responses`.
 
 OpenRouter runs its tools transparently: results surface as citations and usage counters rather than as `server_tool_calls` entries.
 

@@ -1,0 +1,492 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://rubyllm.services.ai.azure.com/openai/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-5-nano","input":[{"role":"user","content":"What is 2
+        + 2? Just the number."}],"stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Api-Key:
+      - "<AZURE_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Length:
+      - '5160'
+      Content-Type:
+      - application/json
+      X-Ms-Aoai-Configured-Data-Retention-Days:
+      - '30'
+      Skip-Error-Remapping:
+      - 'true'
+      X-Ms-Is-Spilled-Over:
+      - 'false'
+      X-Ratelimit-Key:
+      - gpt-5-nano
+      X-Ratelimit-Remaining-Requests:
+      - '249'
+      X-Ratelimit-Reset-Requests:
+      - '0'
+      X-Ratelimit-Limit-Requests:
+      - '250'
+      X-Ratelimit-Renewalperiod-Requests:
+      - '60'
+      X-Ratelimit-Abusepenalty-Active:
+      - 'False'
+      X-Ratelimit-Remaining-Tokens:
+      - '249993'
+      X-Ratelimit-Reset-Tokens:
+      - '0'
+      X-Ratelimit-Limit-Tokens:
+      - '250000'
+      X-Ratelimit-Renewalperiod-Tokens:
+      - '60'
+      Azureai-Fe-Is-Streaming:
+      - 'False'
+      Azureai-Fe-Requested-Service-Tier:
+      - paygo
+      Azureai-Fe-Requested-Zone:
+      - default
+      X-Ms-Served-Model:
+      - gpt-5-nano-2025-08-07
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Apim-Request-Id:
+      - 80162434-5b7f-4e62-9205-3d00d1097fd2
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Region:
+      - West Europe
+      Date:
+      - Mon, 10 Aug 2026 23:04:55 GMT
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "id": "resp_0ed191372f965fb3016a7a591607d08193a170a2d7bc1c6de1",
+          "object": "response",
+          "created_at": 1786403094,
+          "status": "completed",
+          "background": false,
+          "completed_at": 1786403095,
+          "content_filters": [
+            {
+              "blocked": false,
+              "source_type": "prompt",
+              "content_filter_raw": [],
+              "content_filter_results": {
+                "hate": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "sexual": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "violence": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "self_harm": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "jailbreak": {
+                  "detected": false,
+                  "filtered": false
+                }
+              },
+              "content_filter_offsets": {
+                "start_offset": 0,
+                "end_offset": 1164,
+                "check_offset": 0
+              }
+            },
+            {
+              "blocked": false,
+              "source_type": "completion",
+              "content_filter_raw": [],
+              "content_filter_results": {
+                "protected_material_text": {
+                  "detected": false,
+                  "filtered": false
+                },
+                "protected_material_code": {
+                  "detected": false,
+                  "filtered": false
+                },
+                "hate": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "sexual": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "violence": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "self_harm": {
+                  "filtered": false,
+                  "severity": "safe"
+                }
+              },
+              "content_filter_offsets": {
+                "start_offset": 0,
+                "end_offset": 371,
+                "check_offset": 0
+              }
+            }
+          ],
+          "error": null,
+          "frequency_penalty": 0.0,
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
+          "model": "gpt-5-nano",
+          "moderation": null,
+          "output": [
+            {
+              "id": "rs_0ed191372f965fb3016a7a591686508193897ef7461077a66f",
+              "type": "reasoning",
+              "content": [],
+              "encrypted_content": "gAAAAABqelkXbdcdQyWgcS2ogQnCKNwi-p2BtyiOK05Fbd0ZYgX_FrqbpiqrFD9LuSZzqp7jlyaCh79EQ0GHwI7QMso5-z90F_55lcLg5qgyov7hNWl2XrhavtF4RjH1TkTtur-4-vc6CX7q8ZwA-jG7_qd_KihCX7yK7CSsMeOl0tpm0zDpfwPx0Bs-ha9Qor0Tz5q_X2j40fH6sc5dxdNewxFcWjFcpCJxwaE893K-nVjXgGbUwtsM__Fu6w3W_FVJEQPQTk9maBKk033ikFvrxZ9jZ_fptS34O9KQs6cwdVyFueZ9eFGveFwjvtvyoHDvo5UYElNAyUJKay_R7gLyKi-HteHfzE3EKRxWaNnhnIYdZZAsL8Jd4uuW3R8aYtx8qyZwYsK0qRvxiNR6bLliHPs93bElZSVFV7jK3ozB9MxpXTZ2G16qKWsfBfH9nbuhg8zsNYzTD_Pok4urn5IYyrtkYgV_qm6dlq2lFX7NdZBUI2i5AK73huabGh-MJMGiGigsyT7kJltSvS7JwelOrjaJHHXu51tRwfI0_MnSPO6kMF-2dTWSCAKKy1P9vqyW_BOzBMNaVGKlRj322gdKa-GG8jtGYJFZVUpH_sWDNXbN0ZV1k6OIhFjVCHPwD_n4dhRra7Eb5KjjFLxaCR4z2GDrnnTikWHKET6uhuySf4GvKPiEKtbWstfcC-eqV7Ox6VlTQnWK1jdqDCn6-HWKUNLA2OJl7MDcN-RVSQYs1ZwxF9CjBg0TkbovYEFd4SjAaKuqo-OaM03mAQ8OEaXeCei3s_zL-6hk_NX9Mx04IEj8EseQZAYhXyQCPWoL1cKr7pHLN6w7u4i9UW0ib_qu6vK2wyY6vZ0WtX4UNjzrlrQMuiPx1gI29NkArZj4JF1VZraiCD_MGao1jjvwO6NbL3LsVwLoVas3iaJWg3-N120Sc_QDu378R6H4DCsioPxDh4iGzJafu8MsgFsMfnizFw-bH76OA1A_4BfIx6QFVK6t2Ii0GV7eajgeIsefvrVe9XwitH3ZiuIEXpKBUzh6plIjS7ilp8spcku1zFM6i0Lj-OeynmJPC07DUfubmGg7DjPGSSIbn3NqZuq8p4oQZaa_vaaUktIfrMYE_oA6vUQs1NjAqE1hi1JJIpbWIC6yGcTREJodCUOc-2ior06DDSPw_UxpO2dVdkTCvX101REI4EFRLrAJyVVdxQ7EJVGbRn1fd1-C7tdJFTO5pezy8t6d4lQ3Em63m63TS_KA89d9B6xg-IM9jkxz9XhiyBRv_aLrVawMY73FikYIR8HlzNiNV8Vxb1_HN5E_8wpuhNgp94N8TD_QYQ8b2gyucEdCSGF_lo4SsjEaddQLlUmk3hYIYe_MHD3H82xAThOYMM7EYSCHWu_xu7zqokmzQsHdB4QO711khwCroL0XD6Ck2e0kC0YfUA==",
+              "summary": []
+            },
+            {
+              "id": "msg_0ed191372f965fb3016a7a591709fc8193b0570a425c28e7f0",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "4"
+                }
+              ],
+              "role": "assistant"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": "in_memory",
+          "reasoning": {
+            "context": "current_turn",
+            "effort": "medium",
+            "mode": "standard",
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": false,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tool_usage": {
+            "image_gen": {
+              "input_tokens": 0,
+              "input_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "output_tokens": 0,
+              "output_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "total_tokens": 0
+            },
+            "web_search": {
+              "num_requests": 0
+            }
+          },
+          "tools": [],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 18,
+            "input_tokens_details": {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0
+            },
+            "output_tokens": 109,
+            "output_tokens_details": {
+              "reasoning_tokens": 64
+            },
+            "total_tokens": 127
+          },
+          "user": null,
+          "metadata": {}
+        }
+  recorded_at: Mon, 10 Aug 2026 23:04:55 GMT
+- request:
+    method: post
+    uri: https://rubyllm.services.ai.azure.com/openai/v1/responses
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-5-nano","input":[{"role":"user","content":"What is 2
+        + 2? Just the number."},{"type":"reasoning","summary":[],"encrypted_content":"gAAAAABqelkXbdcdQyWgcS2ogQnCKNwi-p2BtyiOK05Fbd0ZYgX_FrqbpiqrFD9LuSZzqp7jlyaCh79EQ0GHwI7QMso5-z90F_55lcLg5qgyov7hNWl2XrhavtF4RjH1TkTtur-4-vc6CX7q8ZwA-jG7_qd_KihCX7yK7CSsMeOl0tpm0zDpfwPx0Bs-ha9Qor0Tz5q_X2j40fH6sc5dxdNewxFcWjFcpCJxwaE893K-nVjXgGbUwtsM__Fu6w3W_FVJEQPQTk9maBKk033ikFvrxZ9jZ_fptS34O9KQs6cwdVyFueZ9eFGveFwjvtvyoHDvo5UYElNAyUJKay_R7gLyKi-HteHfzE3EKRxWaNnhnIYdZZAsL8Jd4uuW3R8aYtx8qyZwYsK0qRvxiNR6bLliHPs93bElZSVFV7jK3ozB9MxpXTZ2G16qKWsfBfH9nbuhg8zsNYzTD_Pok4urn5IYyrtkYgV_qm6dlq2lFX7NdZBUI2i5AK73huabGh-MJMGiGigsyT7kJltSvS7JwelOrjaJHHXu51tRwfI0_MnSPO6kMF-2dTWSCAKKy1P9vqyW_BOzBMNaVGKlRj322gdKa-GG8jtGYJFZVUpH_sWDNXbN0ZV1k6OIhFjVCHPwD_n4dhRra7Eb5KjjFLxaCR4z2GDrnnTikWHKET6uhuySf4GvKPiEKtbWstfcC-eqV7Ox6VlTQnWK1jdqDCn6-HWKUNLA2OJl7MDcN-RVSQYs1ZwxF9CjBg0TkbovYEFd4SjAaKuqo-OaM03mAQ8OEaXeCei3s_zL-6hk_NX9Mx04IEj8EseQZAYhXyQCPWoL1cKr7pHLN6w7u4i9UW0ib_qu6vK2wyY6vZ0WtX4UNjzrlrQMuiPx1gI29NkArZj4JF1VZraiCD_MGao1jjvwO6NbL3LsVwLoVas3iaJWg3-N120Sc_QDu378R6H4DCsioPxDh4iGzJafu8MsgFsMfnizFw-bH76OA1A_4BfIx6QFVK6t2Ii0GV7eajgeIsefvrVe9XwitH3ZiuIEXpKBUzh6plIjS7ilp8spcku1zFM6i0Lj-OeynmJPC07DUfubmGg7DjPGSSIbn3NqZuq8p4oQZaa_vaaUktIfrMYE_oA6vUQs1NjAqE1hi1JJIpbWIC6yGcTREJodCUOc-2ior06DDSPw_UxpO2dVdkTCvX101REI4EFRLrAJyVVdxQ7EJVGbRn1fd1-C7tdJFTO5pezy8t6d4lQ3Em63m63TS_KA89d9B6xg-IM9jkxz9XhiyBRv_aLrVawMY73FikYIR8HlzNiNV8Vxb1_HN5E_8wpuhNgp94N8TD_QYQ8b2gyucEdCSGF_lo4SsjEaddQLlUmk3hYIYe_MHD3H82xAThOYMM7EYSCHWu_xu7zqokmzQsHdB4QO711khwCroL0XD6Ck2e0kC0YfUA=="},{"role":"assistant","content":[{"type":"output_text","text":"4"}]},{"role":"user","content":"Now
+        multiply that by 3. Just the number."}],"stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Api-Key:
+      - "<AZURE_API_KEY>"
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Length:
+      - '5354'
+      Content-Type:
+      - application/json
+      X-Ms-Aoai-Configured-Data-Retention-Days:
+      - '30'
+      Skip-Error-Remapping:
+      - 'true'
+      X-Ms-Is-Spilled-Over:
+      - 'false'
+      X-Ratelimit-Key:
+      - gpt-5-nano
+      X-Ratelimit-Remaining-Requests:
+      - '249'
+      X-Ratelimit-Reset-Requests:
+      - '0'
+      X-Ratelimit-Limit-Requests:
+      - '250'
+      X-Ratelimit-Renewalperiod-Requests:
+      - '60'
+      X-Ratelimit-Abusepenalty-Active:
+      - 'False'
+      X-Ratelimit-Remaining-Tokens:
+      - '249982'
+      X-Ratelimit-Reset-Tokens:
+      - '0'
+      X-Ratelimit-Limit-Tokens:
+      - '250000'
+      X-Ratelimit-Renewalperiod-Tokens:
+      - '60'
+      Azureai-Fe-Is-Streaming:
+      - 'False'
+      Azureai-Fe-Requested-Service-Tier:
+      - paygo
+      Azureai-Fe-Requested-Zone:
+      - default
+      X-Ms-Served-Model:
+      - gpt-5-nano-2025-08-07
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Apim-Request-Id:
+      - 468ac56b-3763-4a47-9482-ae8a0c607c76
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Ms-Region:
+      - West Europe
+      Date:
+      - Mon, 10 Aug 2026 23:04:56 GMT
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "id": "resp_00403d8f576a12fc016a7a591768ac8196b8d276bdfac27fda",
+          "object": "response",
+          "created_at": 1786403095,
+          "status": "completed",
+          "background": false,
+          "completed_at": 1786403097,
+          "content_filters": [
+            {
+              "blocked": false,
+              "source_type": "prompt",
+              "content_filter_raw": [],
+              "content_filter_results": {
+                "hate": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "sexual": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "violence": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "self_harm": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "jailbreak": {
+                  "detected": false,
+                  "filtered": false
+                }
+              },
+              "content_filter_offsets": {
+                "start_offset": 0,
+                "end_offset": 1276,
+                "check_offset": 0
+              }
+            },
+            {
+              "blocked": false,
+              "source_type": "completion",
+              "content_filter_raw": [],
+              "content_filter_results": {
+                "protected_material_text": {
+                  "detected": false,
+                  "filtered": false
+                },
+                "protected_material_code": {
+                  "detected": false,
+                  "filtered": false
+                },
+                "hate": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "sexual": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "violence": {
+                  "filtered": false,
+                  "severity": "safe"
+                },
+                "self_harm": {
+                  "filtered": false,
+                  "severity": "safe"
+                }
+              },
+              "content_filter_offsets": {
+                "start_offset": 0,
+                "end_offset": 523,
+                "check_offset": 0
+              }
+            }
+          ],
+          "error": null,
+          "frequency_penalty": 0.0,
+          "incomplete_details": null,
+          "instructions": null,
+          "max_output_tokens": null,
+          "max_tool_calls": null,
+          "model": "gpt-5-nano",
+          "moderation": null,
+          "output": [
+            {
+              "id": "rs_00403d8f576a12fc016a7a5917eef08196b2145f274f778f95",
+              "type": "reasoning",
+              "content": [],
+              "encrypted_content": "gAAAAABqelkZ2Scfd8zv7iZMwbdjFUYKh-eXKDLRIDsyD_j3L8hGMkMGRRVK2dDn3-xO6yarNWAObcQEq1KH554AadvfC6VW3nx7HPE1FFrKpjg6xFpeoxkinIyv-khN0cGcnh1nGC8DYxwM2-X46wp3CdD-X-24vRm8hz1oas6qtyVHFtEka6TckOgIiYWIj3wX-o4Ii-ItRh9KQNC-0pca74s4_Ah7GFDKxwLKVnTUOJzvSFRF40k85Om7iVVMARWKOOsJJvx6vOBoJRQUyixJcSJbkEhqcIGUPgtpvw3ZqmxEKA94EtSArK52F6MO6V39XlTR7z8F37DdwFbWAbvxYBd-_NmrjrL2Nak1zPWHBBGts8tE9tTamSFYlnVZuf5b5Y1dV8qyv2yUXmHbl6UknuTuzvSgdsXTV6Md_psUJXfR0zyMY4R6p3okLhBR7_AFUDdMPTD0bSybg_rLmCh_3uXKZVIX8Wkrm7mhroEE6imwkm0X3U-No742fXKSrHf4JQ4T3wWmKzL7c_rTGVt9SDIYzauTt1qiFJ4cRLa52dew6F2QQIoUHEsz7IVV9i63cShQO0CQ_O0YqMLxnHdkOi0J-7iF5teCEXBgQujyNBlVBT_OuIIPE25LH62ngYExrRv2HRotyYnq_sLNZiO6rpff22CfUbqZg-CQAaxrrJAZFT-7IUiF3QgEM1eF2x99xv42DIJbhPOHaSicE0Dpvqg1kP8-8lIK-B-AFSlKlUd8dVMlQF9WvS-m9k-f7C8R1vp3lTJ6bGoRJjy6xUROuPcKNVfgeu474i60Y4GHFgbe-aanLMKZaVADsmRkHroLpdks_9j95TxO88tWswBnVf2f72eCSEI_-QQqbC27mbc37kxSUwVvfSl6sIROAwbYz8up03Rfyc6Hk_ZlK6DbIKvUMNe3vwcXJpfa0wBMF-kItiHfpgW3iVL0lExz7fFam0Ar0s5XkzsQxjAKq6YDC2kDq4SuQJ7Jc0Ys_x42NxE2kQPRHhKyaUI6iZYNeBYKrAkMIN1bZ69VCekcxyd7-e5fcvc03_kresmb0DMLRWvsHVcwGJDQ0PE05tARaMm65b4rVRmn_OEmiiCU_h4b9cU9T3plfp04dlpHJubSdch2PGardnCXSn8s1xZ6a6SgySggQiF5TtQJTTQ-IAwaOdIyun_r3eF4paGJdDFyF5NaNuIRVuMvpFmCMThM1EOceXh7u_MLwHPdjwSssQZJjO_S2sY6B-xoKbasA8UM7c6gKolg2IcQU7RAESo49F_9mlIdl4yHYbBg_ddddTG41FzTEzE0Z_ikQZAt1X-6JC8AJJfZTiYkXFyuoE-dmE1xr3-pA8ZTMlb4-LUJVgFszQ1xZNEt8ScvW98Kf3y6_7phL7R8Ig3_lGt2iEJLvVmMYGAfy_EDkHRfTw9LpXDm7cfAgamIPIFNAnpPPtkZ5Y_YQcUOCFwslAfw6oPjeTmzxezJakU9EJkWcO3Wq1gcNoPn1ktPiLOZ_qWzYzY59gq3HdMeVFKxMnmaiRFpbbhN9oYC-mmrGqaqWH_FXo8NfWGC20pN102dg2FRcOlUtoxfemDZd1KAXOQk9ZhhBvl_YJ8eZffPuTJXOvH4mu7YixAfDsXAQw==",
+              "summary": []
+            },
+            {
+              "id": "msg_00403d8f576a12fc016a7a5918de28819680b546091136353d",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "12"
+                }
+              ],
+              "role": "assistant"
+            }
+          ],
+          "parallel_tool_calls": true,
+          "presence_penalty": 0.0,
+          "previous_response_id": null,
+          "prompt_cache_key": null,
+          "prompt_cache_retention": "in_memory",
+          "reasoning": {
+            "context": "current_turn",
+            "effort": "medium",
+            "mode": "standard",
+            "summary": null
+          },
+          "safety_identifier": null,
+          "service_tier": "default",
+          "store": false,
+          "temperature": 1.0,
+          "text": {
+            "format": {
+              "type": "text"
+            },
+            "verbosity": "medium"
+          },
+          "tool_choice": "auto",
+          "tool_usage": {
+            "image_gen": {
+              "input_tokens": 0,
+              "input_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "output_tokens": 0,
+              "output_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "total_tokens": 0
+            },
+            "web_search": {
+              "num_requests": 0
+            }
+          },
+          "tools": [],
+          "top_logprobs": 0,
+          "top_p": 1.0,
+          "truncation": "disabled",
+          "usage": {
+            "input_tokens": 40,
+            "input_tokens_details": {
+              "cache_write_tokens": 0,
+              "cached_tokens": 0
+            },
+            "output_tokens": 155,
+            "output_tokens_details": {
+              "reasoning_tokens": 128
+            },
+            "total_tokens": 195
+          },
+          "user": null,
+          "metadata": {}
+        }
+  recorded_at: Mon, 10 Aug 2026 23:04:57 GMT
+recorded_with: VCR 6.4.0
