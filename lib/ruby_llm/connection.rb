@@ -26,11 +26,11 @@ module RubyLLM
       end
     end
 
-    def initialize(provider, config)
+    def initialize(provider, config, api_base: nil)
       @provider = provider
       @config = config
 
-      @connection = Faraday.new(provider.api_base) do |faraday|
+      @connection = Faraday.new(api_base || provider.api_base) do |faraday|
         setup_timeout(faraday)
         setup_logging(faraday)
         setup_retry(faraday)

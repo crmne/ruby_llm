@@ -154,10 +154,16 @@ RSpec.describe RubyLLM::Providers::Bedrock do
         .to raise_error(RubyLLM::Error, /Bedrock embeddings are not supported/)
     end
 
-    it 'keeps chat routing on Converse' do
-      model = instance_double(RubyLLM::Model, id: 'anthropic.claude-haiku')
+    it 'keeps chat routing on Converse for versioned ids' do
+      model = instance_double(RubyLLM::Model, id: 'anthropic.claude-3-5-haiku-20241022-v1:0')
 
       expect(provider.protocol_for(model)).to eq(RubyLLM::Protocols::Converse)
+    end
+
+    it 'routes un-versioned anthropic ids to Mantle' do
+      model = instance_double(RubyLLM::Model, id: 'anthropic.claude-opus-5')
+
+      expect(provider.protocol_for(model)).to eq(RubyLLM::Providers::Bedrock::Mantle)
     end
   end
 

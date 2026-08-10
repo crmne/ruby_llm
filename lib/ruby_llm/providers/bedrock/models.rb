@@ -55,9 +55,17 @@ module RubyLLM
           normalize_inference_profile_id(model_id, inference_types, @config.bedrock_region)
         end
 
+        # Un-versioned anthropic ids are served by the bedrock-mantle
+        # endpoint under exactly that id; Converse ids carry a date or :N
+        # version suffix.
+        def mantle_model_id?(model_id)
+          model_id.start_with?('anthropic.') && !model_id.include?(':') && !model_id.match?(/\d{8}/)
+        end
+
         def resolve_registry_id(model_id, models, config)
           region = config.bedrock_region.to_s
           return model_id if region.empty?
+          return model_id if mantle_model_id?(model_id)
 
           candidate_id = with_region_prefix(model_id, region)
           return model_id if candidate_id == model_id

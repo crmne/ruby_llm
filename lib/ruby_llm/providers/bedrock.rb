@@ -8,6 +8,7 @@ module RubyLLM
       include Bedrock::Models
 
       protocol :converse, Protocols::Converse, batches: Protocols::Converse::Batches
+      protocol :mantle, Bedrock::Mantle
       protocol :titan_text_embeddings, Bedrock::TitanTextEmbeddings
       protocol :titan_multimodal_embeddings, Bedrock::TitanMultimodalEmbeddings
       protocol :cohere_embeddings, Bedrock::CohereEmbeddings
@@ -19,8 +20,24 @@ module RubyLLM
 
       def protocol_for(model, operation: nil, **)
         return embedding_protocol_for(model_id_for(model)) if operation == :embed
+        return protocols[:mantle] if mantle_model?(model_id_for(model))
 
         super
+      end
+
+      # Claude generations from Opus 4.7 onward are served by the
+      # bedrock-mantle endpoint under un-versioned ids such as
+      # anthropic.claude-sonnet-5.
+      def mantle_model?(model_id)
+        Models.mantle_model_id?(model_id)
+      end
+
+      def mantle_api_base
+        @config.bedrock_mantle_api_base || "https://bedrock-mantle.#{bedrock_region}.api.aws"
+      end
+
+      def mantle_connection
+        @mantle_connection ||= Connection.new(self, @config, api_base: mantle_api_base)
       end
 
       def api_base
@@ -58,6 +75,7 @@ module RubyLLM
             bedrock_session_token
             bedrock_credential_provider
             bedrock_api_base
+            bedrock_mantle_api_base
             bedrock_batch_s3_uri
             bedrock_batch_role_arn
           ]
