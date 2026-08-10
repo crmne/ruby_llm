@@ -54,14 +54,34 @@ module RubyLLM
       private
 
       def parse_error_part_message(part)
-        message = part.dig('error', 'message')
-        raw = try_parse_json(part.dig('error', 'metadata', 'raw'))
+        return error_message(part) unless part.is_a?(Hash)
+
+        error = part['error']
+        message = error_message(error)
+        metadata = error['metadata'] if error.is_a?(Hash)
+        return message unless metadata.is_a?(Hash)
+
+        raw = try_parse_json(metadata['raw'])
         return message unless raw.is_a?(Hash)
 
-        raw_message = raw.dig('error', 'message')
+        raw_message = error_message(raw['error'])
         return [message, raw_message].compact.join(' - ') if raw_message
 
         message
+      end
+
+      def error_message(value)
+        case value
+        when Hash
+          value['message']
+        when Array
+          messages = value.filter_map { |part| error_message(part) }
+          messages.join('. ') unless messages.empty?
+        when nil
+          nil
+        else
+          value.to_s
+        end
       end
     end
   end
