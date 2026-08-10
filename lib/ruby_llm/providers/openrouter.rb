@@ -9,6 +9,7 @@ module RubyLLM
         include OpenRouter::Chat
         include OpenRouter::Images
         include OpenRouter::Models
+        include OpenRouter::Speech
         include OpenRouter::Streaming
 
         # OpenRouter runs its server tools transparently: results surface as

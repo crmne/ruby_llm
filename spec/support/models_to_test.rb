@@ -131,6 +131,7 @@ SPEECH_MODELS = [
   { provider: :gemini, model: 'gemini-2.5-flash-preview-tts' },
   { provider: :mistral, model: 'voxtral-mini-tts-latest', voice: 'en_paul_neutral' },
   { provider: :openai, model: 'gpt-4o-mini-tts' },
+  { provider: :openrouter, model: 'hexgrad/kokoro-82m', voice: 'af_bella' },
   { provider: :xai, model: 'grok-tts' }
 ].freeze
 
@@ -139,6 +140,7 @@ TRANSCRIPTION_MODELS = [
   { provider: :mistral, model: 'voxtral-mini-latest' },
   { provider: :openai, model: 'gpt-4o-transcribe-diarize' },
   { provider: :openai, model: 'whisper-1' },
+  { provider: :openrouter, model: 'openai/gpt-4o-mini-transcribe' },
   { provider: :vertexai, model: 'gemini-2.5-flash' },
   { provider: :xai, model: 'grok-stt' }
 ].freeze
