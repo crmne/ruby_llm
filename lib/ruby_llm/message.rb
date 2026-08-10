@@ -82,7 +82,7 @@ module RubyLLM
       @attachments = Attachment.wrap(options[:attachments])
       @model = options[:model]
       @tool_call_id = options[:tool_call_id]
-      @tokens = options[:tokens] || Tokens.build(
+      @tokens = options[:tokens] || Tokens.new(
         input: options[:input_tokens],
         output: options[:output_tokens],
         cache_read: options[:cache_read_tokens],

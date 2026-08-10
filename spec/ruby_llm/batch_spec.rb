@@ -113,7 +113,7 @@ RSpec.describe RubyLLM::Batch do
 
       expect(batch.messages).to eq([nil, message])
       expect(batch.tokens.to_h).to eq(input_tokens: 1, output_tokens: 1)
-      expect(batch.cost).to be_a(RubyLLM::Cost::Aggregate)
+      expect(batch.cost).to be_a(RubyLLM::Cost)
       expect(chats.first).not_to be_complete
       expect(chats.second.messages.last).to be(message)
 

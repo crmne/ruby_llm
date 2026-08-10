@@ -26,7 +26,7 @@ module RubyLLM
         end
 
         def embedding_attempt_tokens(responses)
-          responses.map { |response| Tokens.build(input: response.body['inputTextTokenCount']) }
+          responses.map { |response| Tokens.new(input: response.body['inputTextTokenCount']) }
         end
 
         def deep_merge_provider_options(payload, provider_options)

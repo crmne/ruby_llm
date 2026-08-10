@@ -30,7 +30,7 @@ module RubyLLM
     def tokens
       return ruby_llm_usage_tokens unless ruby_llm_usage_entries.empty?
 
-      Tokens.build(input: @input_tokens)
+      Tokens.new(input: @input_tokens)
     end
 
     # Returns the embedding cost across every provider attempt.

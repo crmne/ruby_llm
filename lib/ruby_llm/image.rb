@@ -138,7 +138,7 @@ module RubyLLM
     def tokens
       return ruby_llm_usage_tokens unless ruby_llm_usage_entries.empty?
 
-      @tokens ||= Tokens.build(
+      @tokens ||= Tokens.new(
         input: raw_usage['input_tokens'],
         output: raw_usage['output_tokens']
       )

@@ -16,7 +16,7 @@ module RubyLLM
       scope :chronological, -> { order(created_at: :asc, id: :asc) }
 
       def tokens
-        RubyLLM::Tokens.build(
+        RubyLLM::Tokens.new(
           input: input_tokens,
           output: output_tokens,
           cache_read: cache_read_tokens,

@@ -46,7 +46,7 @@ module RubyLLM
           text: @thinking_text.empty? ? nil : @thinking_text,
           signature: @thinking_signature
         ),
-        tokens: Tokens.build(
+        tokens: Tokens.new(
           input: @input_tokens,
           output: @output_tokens,
           cache_read: @cache_read_tokens,

@@ -153,7 +153,7 @@ RSpec.describe RubyLLM::Chat do
 
       expect(chat.tokens).to be_a(RubyLLM::Tokens)
       expect(chat.tokens.to_h).to be_empty
-      expect(chat.cost).to be_a(RubyLLM::Cost::Aggregate)
+      expect(chat.cost).to be_a(RubyLLM::Cost)
       expect(chat.cost.total).to be_nil
     end
 

@@ -243,7 +243,7 @@ RSpec.describe RubyLLM::Instrumentation do
       audio_bytes: 11
     )
     expect(payload[:tokens]).to be_a(RubyLLM::Tokens)
-    expect(payload[:cost]).to be_a(RubyLLM::Cost::Aggregate)
+    expect(payload[:cost]).to be_a(RubyLLM::Cost)
     expect(payload).not_to have_key(:operation)
   end
 end
