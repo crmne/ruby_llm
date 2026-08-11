@@ -3,7 +3,7 @@
 require 'dotenv/load'
 require 'ruby_llm'
 require 'json'
-require 'json-schema'
+require 'json_schemer'
 require 'fileutils'
 
 desc 'Update models, docs, and aliases'
@@ -112,8 +112,14 @@ end
 
 def validate_models!(models)
   models_data = JSON.parse(RubyLLM::ModelRegistry.pretty_json(models.all))
-
-  validation_errors = JSON::Validator.fully_validate(RubyLLM::ModelSchema.json_schema, models_data, list: true)
+  registry_schema = {
+    '$schema' => 'https://json-schema.org/draft/2020-12/schema',
+    'type' => 'array',
+    'items' => RubyLLM::ModelSchema.json_schema
+  }
+  validation_errors = JSONSchemer.schema(registry_schema).validate(models_data).map do |error|
+    "#{error['data_pointer']}: #{error['error']}"
+  end
 
   unless validation_errors.empty?
     # Save failed models for inspection

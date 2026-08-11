@@ -9,7 +9,12 @@ RSpec.describe RubyLLM::Models do
   it 'validates that models.json conforms to the schema' do
     models_data = JSON.parse(File.read(models_json_path))
 
-    registry = JSONSchemer.schema({ 'type' => 'array', 'items' => RubyLLM::ModelSchema.json_schema })
+    registry_schema = {
+      '$schema' => 'https://json-schema.org/draft/2020-12/schema',
+      'type' => 'array',
+      'items' => RubyLLM::ModelSchema.json_schema
+    }
+    registry = JSONSchemer.schema(registry_schema)
     validation_errors = registry.validate(models_data).map { |error| "#{error['data_pointer']}: #{error['error']}" }
 
     expect(validation_errors).to be_empty,
