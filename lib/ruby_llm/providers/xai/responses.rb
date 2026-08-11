@@ -11,6 +11,7 @@ module RubyLLM
         include XAI::Models
         include XAI::Speech
         include XAI::Transcription
+        include XAI::Videos
 
         SERVER_TOOL_ALIASES = {
           web_search: { tool: { type: 'web_search' } },

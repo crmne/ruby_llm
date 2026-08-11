@@ -150,7 +150,9 @@ TRANSCRIPTION_MODELS = [
 
 VIDEO_GENERATION_MODELS = [
   { provider: :gemini, model: 'veo-3.1-lite-generate-preview',
-    provider_options: { parameters: { durationSeconds: 4 } } }
+    provider_options: { parameters: { durationSeconds: 4 } } },
+  { provider: :xai, model: 'grok-imagine-video',
+    provider_options: { duration: 1, resolution: '480p' } }
 ].freeze
 
 image_generation_models = [
