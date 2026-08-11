@@ -12,6 +12,10 @@ module RubyLLM
 
         module_function
 
+        def format_content(content, attachments = [])
+          OpenRouter::Media.format_content(content, attachments)
+        end
+
         def render_payload(messages, tools:, temperature:, model:, stream: false, max_output_tokens: nil, schema: nil,
                            thinking: nil, citations: false, caching: nil, tool_prefs: nil)
           payload = super
