@@ -148,7 +148,10 @@ TRANSCRIPTION_MODELS = [
   { provider: :xai, model: 'grok-stt' }
 ].freeze
 
-VIDEO_GENERATION_MODELS = [].freeze
+VIDEO_GENERATION_MODELS = [
+  { provider: :gemini, model: 'veo-3.1-lite-generate-preview',
+    provider_options: { parameters: { durationSeconds: 4 } } }
+].freeze
 
 image_generation_models = [
   { provider: :openai, model: 'gpt-image-1', supports_size: false },
