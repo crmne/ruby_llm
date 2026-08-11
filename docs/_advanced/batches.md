@@ -28,13 +28,14 @@ After reading this guide, you will know:
 * How to submit chats as a batch with `RubyLLM.batch`
 * How to check on a batch and collect its messages, from any process
 * How to handle tool calls in batched conversations
+* How to batch embeddings with `embed_later`
 * How to persist batch results with ActiveRecord
 
 ## What are Batches?
 
 Providers process batched requests asynchronously on their own hardware schedule (usually within an hour; processing ends within 24, and anything still unfinished comes back expired) and charge half price for the privilege. Batches are the right tool whenever nobody is waiting on the answer: nightly classification runs, bulk summarization, evaluations, backfills.
 
-A batch in RubyLLM is an array of chats, each ending on an unanswered question. Everything in the request (model, instructions, history, schemas, temperature, attachments) rides along, so there is nothing new to learn about building requests. The one exception is `with_headers`: batch APIs have no per-request HTTP headers, so custom headers set on a chat don't apply to batched requests.
+A batch in RubyLLM is an array of chats, each ending on an unanswered question. Everything in the request (model, instructions, history, schemas, temperature, attachments) rides along, so there is nothing new to learn about building requests. The one exception is `with_headers`: batch APIs have no per-request HTTP headers, so custom headers set on a chat don't apply to batched requests. Embeddings batch too; see [Batching Embeddings](#batching-embeddings).
 
 ## Staging Questions
 
@@ -162,6 +163,36 @@ def execute(id:)
 end
 ```
 
+## Batching Embeddings
+
+Embeddings batch too, on OpenAI. `RubyLLM.embed_later` is `RubyLLM.embed` without the waiting: it stages a text and returns a `RubyLLM::EmbeddingRequest` instead of contacting the provider. Submit an array of staged requests with `RubyLLM.batch`:
+
+```ruby
+requests = documents.map do |doc|
+  RubyLLM.embed_later(doc.text, model: "text-embedding-3-small")
+end
+
+batch = RubyLLM.batch(requests)
+```
+
+`embed_later` takes `model:`, `provider:`, and `dimensions:`, with the same defaults as `embed`. Each request carries its own dimensions, but OpenAI batch jobs are model-scoped, so every request in a batch must use one embedding model.
+
+Poll with `refresh` as usual. Once processing ends, `results` returns the embeddings in submission order and fills in each request's `result`:
+
+```ruby
+sleep 60 until batch.refresh.complete?
+
+batch.results.first.vectors # => [0.018, -0.027, ...]
+
+documents.zip(requests).each do |doc, request|
+  doc.update!(embedding: request.result.vectors)
+end
+```
+
+Failed slots are `nil` in `results`, and their requests keep a `nil` result; resubmit them in a fresh batch or embed them synchronously with `RubyLLM.embed`.
+
+A batch takes chats or embedding requests, not both; mixing them raises `ArgumentError`. Embedding batches are OpenAI-only for now.
+
 ## Rails Integration
 
 Batch results flow through the same callbacks as synchronous responses, so `acts_as_chat` persistence works unchanged. `ask_later`, `run_tools`, and `complete?` all work on your records, so staged questions and collected answers land in the database with their usage entries attached.
@@ -199,7 +230,7 @@ Tools work the same way they do for plain chats. Because the records carry the w
 ## Provider Notes
 
 * **Anthropic:** up to 100,000 requests or 256 MB per batch. Mixed models in one batch are supported. Request validation is asynchronous: a malformed request comes back as a failed result after the batch ends, not as a submission error. Results stay downloadable for 29 days.
-* **OpenAI:** uses the file-backed Batch API. RubyLLM supports Responses and Chat Completions payloads, and enforces OpenAI's one-model-per-file rule. Provider files are also available through `RubyLLM.upload` and `RubyLLM.download`.
+* **OpenAI:** uses the file-backed Batch API. RubyLLM supports Responses, Chat Completions, and embeddings payloads, and enforces OpenAI's one-model-per-file rule. Provider files are also available through `RubyLLM.upload` and `RubyLLM.download`.
 * **Azure OpenAI / Foundry:** uses the OpenAI-style file-backed batch workflow under `/openai/v1`. Your Azure deployment must be a batch-capable deployment type. Provider files are also available through `RubyLLM.upload` and `RubyLLM.download`.
 * **Mistral:** uses inline batch jobs for Chat Completions. One model per batch is required. Mistral provider files are available through `RubyLLM.upload` and `RubyLLM.download`.
 * **Gemini:** uses inline `generateContent` batches. One model per batch is required.

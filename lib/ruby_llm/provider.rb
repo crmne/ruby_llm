@@ -230,6 +230,11 @@ module RubyLLM
       )
     end
 
+    def render_embedding(text, model:, dimensions: nil) # :nodoc:
+      protocol = resolve_protocol(nil, model, operation: :embed)
+      protocol.new(self, model).render_embedding(text, model: model_id_for(model), dimensions:)
+    end
+
     def moderate(input, model:, with: [], provider_options: {}) # :nodoc:
       protocol = resolve_protocol(nil, model, operation: :moderate)
       protocol.new(self, model).moderate(
@@ -451,8 +456,8 @@ module RubyLLM
         @protocols ||= {}
       end
 
-      def batch_protocol(name, batches) # :nodoc:
-        batch_protocols[name.to_sym] = Class.new(protocols.fetch(name.to_sym)) { include batches }
+      def batch_protocol(name, batches, protocol: name) # :nodoc:
+        batch_protocols[name.to_sym] = Class.new(protocols.fetch(protocol.to_sym)) { include batches }
       end
 
       def batch_protocols # :nodoc:

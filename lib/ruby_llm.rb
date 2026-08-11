@@ -157,8 +157,10 @@ module RubyLLM
       chat(model: model, provider: provider).count_tokens(text)
     end
 
-    # Submits +chats+ staged with Chat#ask_later as a provider-side batch
-    # and returns a Batch. Look up an existing batch with Batch.find.
+    # Submits requests staged with Chat#ask_later or ::embed_later as a
+    # provider-side batch and returns a Batch. A batch takes chats or
+    # embedding requests, not both. Look up an existing batch with
+    # Batch.find.
     #
     #   chats = documents.map do |doc|
     #     RubyLLM.chat(model: 'claude-haiku-4-5').ask_later(doc.text)
@@ -178,6 +180,18 @@ module RubyLLM
     #
     def embed(...)
       Embedding.embed(...)
+    end
+
+    # Stages a text for embedding without contacting the provider, and
+    # returns an EmbeddingRequest. Submit an array of staged requests as a
+    # provider-side batch with ::batch; once the batch completes, each
+    # request's EmbeddingRequest#result holds its Embedding.
+    #
+    #   requests = texts.map { |text| RubyLLM.embed_later(text) }
+    #   batch = RubyLLM.batch(requests)
+    #
+    def embed_later(text, model: nil, provider: nil, dimensions: nil)
+      EmbeddingRequest.new(text, model:, provider:, dimensions:)
     end
 
     # Checks text or image attachments against the provider's moderation model and returns a

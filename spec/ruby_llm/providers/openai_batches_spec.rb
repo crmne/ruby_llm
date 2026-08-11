@@ -9,8 +9,8 @@ RSpec.describe RubyLLM::Providers::OpenAI do
 
   describe '#batch_protocol_name_for' do
     it 'reads a Responses payload' do
-      expect(provider.send(:batch_protocol_name_for, { input: 'hi' })).to eq(:responses)
-      expect(provider.send(:batch_protocol_name_for, { 'input' => 'hi' })).to eq(:responses)
+      expect(provider.send(:batch_protocol_name_for, { input: [{ role: 'user', content: 'hi' }] })).to eq(:responses)
+      expect(provider.send(:batch_protocol_name_for, { 'input' => [{ 'role' => 'user' }] })).to eq(:responses)
     end
 
     it 'reads a Chat Completions payload' do
@@ -18,9 +18,16 @@ RSpec.describe RubyLLM::Providers::OpenAI do
       expect(provider.send(:batch_protocol_name_for, { 'messages' => [] })).to eq(:chat_completions)
     end
 
+    it 'reads an embeddings payload' do
+      expect(provider.send(:batch_protocol_name_for, { model: 'text-embedding-3-small', input: 'hi' }))
+        .to eq(:embeddings)
+      expect(provider.send(:batch_protocol_name_for, { 'model' => 'text-embedding-3-small', 'input' => %w[hi ho] }))
+        .to eq(:embeddings)
+    end
+
     it 'refuses a payload it cannot route' do
       expect { provider.send(:batch_protocol_name_for, { prompt: 'hi' }) }.to raise_error(
-        RubyLLM::Error, 'openai batch requests only support chat or responses payloads'
+        RubyLLM::Error, 'openai batch requests only support chat, responses, or embedding payloads'
       )
     end
   end
@@ -29,15 +36,18 @@ RSpec.describe RubyLLM::Providers::OpenAI do
     it 'routes both spellings of each batch endpoint' do
       responses = provider.send(:batch_protocol_for_name, :responses)
       chat_completions = provider.send(:batch_protocol_for_name, :chat_completions)
+      embeddings = provider.send(:batch_protocol_for_name, :embeddings)
 
       expect(provider.send(:batch_protocol_for_endpoint, '/v1/responses')).to eq(responses)
       expect(provider.send(:batch_protocol_for_endpoint, 'responses')).to eq(responses)
       expect(provider.send(:batch_protocol_for_endpoint, '/v1/chat/completions')).to eq(chat_completions)
       expect(provider.send(:batch_protocol_for_endpoint, 'chat/completions')).to eq(chat_completions)
+      expect(provider.send(:batch_protocol_for_endpoint, '/v1/embeddings')).to eq(embeddings)
+      expect(provider.send(:batch_protocol_for_endpoint, 'embeddings')).to eq(embeddings)
     end
 
     it 'is nil for an endpoint it does not know' do
-      expect(provider.send(:batch_protocol_for_endpoint, '/v1/embeddings')).to be_nil
+      expect(provider.send(:batch_protocol_for_endpoint, '/v1/moderations')).to be_nil
       expect(provider.send(:batch_protocol_for_endpoint, nil)).to be_nil
     end
   end
@@ -46,7 +56,7 @@ RSpec.describe RubyLLM::Providers::OpenAI do
     it 'falls back to the default protocol when the endpoint is unknown' do
       connection = instance_double(RubyLLM::Connection)
       allow(connection).to receive(:get).with('batches/batch_1').and_return(
-        Struct.new(:body).new({ 'endpoint' => '/v1/embeddings' })
+        Struct.new(:body).new({ 'endpoint' => '/v1/moderations' })
       )
       provider.instance_variable_set(:@connection, connection)
 

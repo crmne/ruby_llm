@@ -33,6 +33,15 @@ RSpec.describe RubyLLM::Batch, :live do
       expect { RubyLLM.batch(chats) }.to raise_error(ArgumentError, /one provider/)
     end
 
+    it 'rejects mixing chats with embedding requests' do
+      items = [
+        RubyLLM.chat(model: 'gpt-5-nano').ask_later('Hi'),
+        RubyLLM.embed_later('Hi', model: 'text-embedding-3-small')
+      ]
+
+      expect { RubyLLM.batch(items) }.to raise_error(ArgumentError, /chats or embedding requests/)
+    end
+
     it 'rejects mixed models for model-scoped providers' do
       chats = [
         RubyLLM.chat(model: 'gpt-5-nano').ask_later('Hi'),
@@ -141,6 +150,25 @@ RSpec.describe RubyLLM::Batch, :live do
     end
   end
 
+  describe '#results' do
+    it 'hydrates embeddings into their staged requests and leaves failed slots nil' do
+      requests = [
+        RubyLLM.embed_later('This one fails', model: 'text-embedding-3-small'),
+        RubyLLM.embed_later('This one succeeds', model: 'text-embedding-3-small')
+      ]
+      provider = requests.first.provider
+      embedding = RubyLLM::Embedding.new(vectors: [0.1, 0.2], model: 'text-embedding-3-small', input_tokens: 3)
+      allow(provider).to receive(:batch_results).and_return([[1, embedding]])
+
+      batch = described_class.new(provider:, requests:, id: 'batch_test', status: 'completed', completed: true)
+
+      expect(batch.results).to eq([nil, embedding])
+      expect(requests.first.result).to be_nil
+      expect(requests.second.result).to be(embedding)
+      expect(batch.tokens.input).to eq(3)
+    end
+  end
+
   # Not covered live: Azure batches need a Global-Batch deployment on the test
   # resource, and Bedrock/Vertex AI batches need real S3/GCS buckets and roles.
   [
@@ -169,6 +197,27 @@ RSpec.describe RubyLLM::Batch, :live do
         expect(batch.messages.second.content).to match(/jupiter/i)
         expect(chats.second.messages.map(&:role)).to eq(%i[user assistant])
       end
+    end
+  end
+
+  context 'with openai/text-embedding-3-small embeddings' do
+    it 'embeds staged texts and hydrates each request result' do
+      requests = [
+        RubyLLM.embed_later('Ruby is a programmer best friend', model: 'text-embedding-3-small'),
+        RubyLLM.embed_later('Batches come back within a day', model: 'text-embedding-3-small', dimensions: 256)
+      ]
+
+      batch = RubyLLM.batch(requests)
+
+      expect(batch.id).to be_present
+
+      wait_for batch
+
+      expect(batch).to be_complete
+      expect(batch.results.first.vectors.length).to eq(1536)
+      expect(batch.results.second.vectors.length).to eq(256)
+      expect(requests.first.result).to be(batch.results.first)
+      expect(requests.first.result.tokens.input).to be_positive
     end
   end
 

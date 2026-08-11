@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 
 module RubyLLM
-  # A Batch is a provider-side batch of chat completions: chats awaiting a
-  # response go in together, answers come back at batch prices, typically
-  # within hours. Persist the id, pick the batch back up from any process,
-  # and collect the messages once processing ends.
+  # A Batch is a provider-side batch of requests: chats awaiting a
+  # response (or texts awaiting embeddings) go in together, answers come
+  # back at batch prices, typically within hours. Persist the id, pick the
+  # batch back up from any process, and collect the results once
+  # processing ends.
   #
   #   chats = documents.map do |doc|
   #     RubyLLM.chat(model: "claude-haiku-4-5").ask_later(doc.text)
@@ -32,14 +33,18 @@ module RubyLLM
     attr_reader :request_counts
 
     # The submitted Chat objects in order, or +nil+ when the batch was
-    # loaded by id via ::find.
+    # loaded by id via ::find or holds embedding requests.
     attr_reader :chats
 
+    # The submitted EmbeddingRequest objects in order, or +nil+ when the
+    # batch was loaded by id via ::find or holds chats.
+    attr_reader :requests
+
     class << self
-      # Submits +chats+ to their shared provider as a batch and returns a
-      # new Batch. Accepts a single Chat or an array. Every chat must be
-      # awaiting the model (see Chat#ask_later), and all must use the same
-      # provider.
+      # Submits chats or embedding requests to their shared provider as a
+      # batch and returns a new Batch. Accepts a single Chat or an array.
+      # Every chat must be awaiting the model (see Chat#ask_later), and all
+      # requests must use the same provider.
       #
       #   chats = tickets.map do |ticket|
       #     RubyLLM.chat(model: "claude-haiku-4-5").ask_later(ticket.body)
@@ -47,23 +52,14 @@ module RubyLLM
       #   batch = RubyLLM::Batch.submit(chats)
       #   batch.status # => "in_progress"
       #
-      # Raises ArgumentError if +chats+ is empty, mixes providers, or
-      # includes a chat that is not awaiting the model.
+      # Raises ArgumentError if the batch is empty, mixes providers, mixes
+      # chats with embedding requests, or includes a chat that is not
+      # awaiting the model.
       def submit(chats)
-        records, chats = normalize_chats(chats)
+        records = wrap_records(chats)
+        return submit_embeddings(records) if records.any?(EmbeddingRequest)
 
-        provider = shared_provider(chats)
-        payload = { provider: provider.slug, provider_class: provider.class.display_name, requests: chats.size }
-        RubyLLM.instrument('batch.ruby_llm', payload, config: provider.config) do |event|
-          requests = chats.each_with_index.map do |chat, index|
-            { custom_id: index.to_s, model: chat.model.id, payload: chat.render }
-          end
-          store = provider.config.batch_store
-          batch = new(provider:, chats:, store:, **provider.create_batch(requests))
-          store&.persist(batch, records)
-          event[:batch_id] = batch.id
-          batch
-        end
+        submit_chats(records)
       end
 
       # Returns a Batch reflecting the provider's current state for +id+.
@@ -92,8 +88,48 @@ module RubyLLM
 
       private
 
-      def normalize_chats(chats)
-        records = chats.is_a?(Chat) ? [chats] : Array(chats)
+      def submit_chats(records)
+        chats = normalize_chats(records)
+
+        provider = shared_provider(chats)
+        payload = { provider: provider.slug, provider_class: provider.class.display_name, requests: chats.size }
+        RubyLLM.instrument('batch.ruby_llm', payload, config: provider.config) do |event|
+          requests = chats.each_with_index.map do |chat, index|
+            { custom_id: index.to_s, model: chat.model.id, payload: chat.render }
+          end
+          store = provider.config.batch_store
+          batch = new(provider:, chats:, store:, **provider.create_batch(requests))
+          store&.persist(batch, records)
+          event[:batch_id] = batch.id
+          batch
+        end
+      end
+
+      def submit_embeddings(requests)
+        unless requests.all?(EmbeddingRequest)
+          raise ArgumentError, 'A batch takes chats or embedding requests, not both'
+        end
+
+        provider = shared_provider(requests)
+        payload = { provider: provider.slug, provider_class: provider.class.display_name, requests: requests.size }
+        RubyLLM.instrument('batch.ruby_llm', payload, config: provider.config) do |event|
+          lines = requests.each_with_index.map do |request, index|
+            { custom_id: index.to_s, model: request.model.id, payload: request.render }
+          end
+          batch = new(provider:, requests:, store: provider.config.batch_store, **provider.create_batch(lines))
+          event[:batch_id] = batch.id
+          batch
+        end
+      end
+
+      def wrap_records(records)
+        case records
+        when Chat, EmbeddingRequest then [records]
+        else Array(records)
+        end
+      end
+
+      def normalize_chats(records)
         normalized = records.map { |chat| chat.respond_to?(:to_llm) ? chat.to_llm : chat }
         raise ArgumentError, 'Cannot submit an empty batch' if normalized.empty?
 
@@ -102,7 +138,7 @@ module RubyLLM
                 'Every chat in a batch must be awaiting the model; stage one with ask_later, or run_tools first'
         end
 
-        [records, normalized]
+        normalized
       end
 
       def awaiting_model?(chat)
@@ -120,9 +156,10 @@ module RubyLLM
       end
     end
 
-    def initialize(provider:, chats: nil, batch_protocol: nil, store: nil, **attributes) # :nodoc:
+    def initialize(provider:, chats: nil, requests: nil, batch_protocol: nil, store: nil, **attributes) # :nodoc:
       @provider = provider
       @chats = chats
+      @requests = requests
       @batch_protocol = batch_protocol
       @store = store
       apply(attributes)
@@ -161,9 +198,11 @@ module RubyLLM
     end
 
     # Returns the answers in submission order, +nil+ where a request
-    # failed, each also appended to its chat. Fetches results from the
-    # provider; cached once #complete? is true, so collecting early
-    # keeps reading fresh.
+    # failed. In a chat batch the answers are Messages, each also appended
+    # to its chat; in an embeddings batch they are Embeddings, each also
+    # hydrated into its request's EmbeddingRequest#result. Fetches results
+    # from the provider; cached once #complete? is true, so collecting
+    # early keeps reading fresh.
     #
     #   batch.messages.each do |message|
     #     puts message.content
@@ -172,10 +211,12 @@ module RubyLLM
     def messages
       return @messages if @messages
 
-      collected = collect_messages
+      collected = collect_results
       @messages = collected if @completed
       collected
     end
+
+    alias results messages
 
     # Returns token usage aggregated across the batch's collected responses.
     def tokens
@@ -201,16 +242,24 @@ module RubyLLM
       @batch_protocol = attributes[:batch_protocol] if attributes[:batch_protocol]
     end
 
-    def collect_messages
+    def collect_results
       results = @provider.batch_results(id, batch_protocol: @batch_protocol)
-      messages = Array.new(chats&.size || (results.map(&:first).max.to_i + 1))
+      slots = Array.new(chats&.size || requests&.size || (results.map(&:first).max.to_i + 1))
 
-      results.each do |index, message|
-        messages[index] = message
-        add_answer(chats&.[](index), message)
+      results.each do |index, result|
+        slots[index] = result
+        deliver(index, result)
       end
 
-      messages
+      slots
+    end
+
+    def deliver(index, result)
+      if requests
+        requests[index]&.result = result if result
+      else
+        add_answer(chats&.[](index), result)
+      end
     end
 
     def add_answer(chat, message)
@@ -263,7 +312,7 @@ module RubyLLM
     end
 
     def inspect_attributes # :nodoc:
-      { id: id, status: status, chats: chats&.count }
+      { id: id, status: status, chats: chats&.count, requests: requests&.count }
     end
   end
 end

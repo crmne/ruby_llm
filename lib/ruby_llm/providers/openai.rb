@@ -6,6 +6,7 @@ module RubyLLM
     class OpenAI < Provider
       protocol :responses, Protocols::Responses, batches: Protocols::Responses::Batches
       protocol :chat_completions, Protocols::ChatCompletions, batches: Protocols::ChatCompletions::Batches
+      batch_protocol :embeddings, Protocols::ChatCompletions::EmbeddingBatches, protocol: :chat_completions
       files Protocols::OpenAI::Files
 
       RATE_LIMIT_RESET_HEADERS = %w[x-ratelimit-reset-requests x-ratelimit-reset-tokens].freeze
@@ -91,10 +92,18 @@ module RubyLLM
       end
 
       def batch_protocol_name_for(payload)
-        return :responses if payload.key?(:input) || payload.key?('input')
+        input = payload[:input] || payload['input']
+        return :embeddings if embeddings_input?(input)
+        return :responses if input
         return :chat_completions if payload.key?(:messages) || payload.key?('messages')
 
-        raise Error, 'openai batch requests only support chat or responses payloads'
+        raise Error, 'openai batch requests only support chat, responses, or embedding payloads'
+      end
+
+      # Responses payloads carry the conversation as an array of message hashes
+      # under :input; embedding payloads put the text itself there.
+      def embeddings_input?(input)
+        input.is_a?(String) || (input.is_a?(Array) && !input.empty? && input.all?(String))
       end
 
       def batch_protocol_for_stored_batch(id)
@@ -108,6 +117,8 @@ module RubyLLM
           batch_protocol_for_name(:responses)
         when 'v1/chat/completions', 'chat/completions'
           batch_protocol_for_name(:chat_completions)
+        when 'v1/embeddings', 'embeddings'
+          batch_protocol_for_name(:embeddings)
         end
       end
     end

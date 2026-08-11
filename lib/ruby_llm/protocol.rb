@@ -170,6 +170,10 @@ module RubyLLM
       end
     end
 
+    def render_embedding(text, model:, dimensions: nil, task_type: nil, title: nil, provider_options: {}) # :nodoc:
+      render_embedding_payload(text, model:, dimensions:, task_type:, title:, provider_options:)
+    end
+
     def moderate(input, model:, with: [], provider_options: {})
       track_usage(:moderation) do
         payload = render_moderation_payload(input, model:, with: Attachment.wrap(with), provider_options:)

@@ -1,0 +1,945 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.openai.com/v1/files
+    body:
+      encoding: UTF-8
+      string: "-------------RubyMultipartPost-978d1860b30aaa6d027c9e45cc48e886\r\nContent-Disposition:
+        form-data; name=\"file\"; filename=\"ruby_llm_batch.jsonl\"\r\nContent-Length:
+        298\r\nContent-Type: application/jsonl\r\nContent-Transfer-Encoding: binary\r\n\r\n{\"custom_id\":\"0\",\"method\":\"POST\",\"url\":\"/v1/embeddings\",\"body\":{\"model\":\"text-embedding-3-small\",\"input\":\"Ruby
+        is a programmer best friend\"}}\n{\"custom_id\":\"1\",\"method\":\"POST\",\"url\":\"/v1/embeddings\",\"body\":{\"model\":\"text-embedding-3-small\",\"input\":\"Batches
+        come back within a day\",\"dimensions\":256}}\r\n-------------RubyMultipartPost-978d1860b30aaa6d027c9e45cc48e886\r\nContent-Disposition:
+        form-data; name=\"purpose\"\r\n\r\nbatch\r\n-------------RubyMultipartPost-978d1860b30aaa6d027c9e45cc48e886--\r\n"
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - multipart/form-data; boundary=-----------RubyMultipartPost-978d1860b30aaa6d027c9e45cc48e886
+      Content-Length:
+      - '723'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 11 Aug 2026 00:06:45 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Server:
+      - cloudflare
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Openai-Processing-Ms:
+      - '357'
+      Openai-Version:
+      - '2020-10-01'
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Openai-Proxy-Wasm:
+      - v0.1
+      Cf-Cache-Status:
+      - DYNAMIC
+      Access-Control-Expose-Headers:
+      - CF-Ray
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Set-Cookie:
+      - "<COOKIE>"
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+          "object": "file",
+          "id": "file-BR9PHYAJFYs4iq6wXsy8iQ",
+          "purpose": "batch",
+          "filename": "ruby_llm_batch.jsonl",
+          "bytes": 298,
+          "created_at": 1786406804,
+          "expires_at": 1788998804,
+          "status": "processed",
+          "status_details": null
+        }
+  recorded_at: Tue, 11 Aug 2026 00:06:45 GMT
+- request:
+    method: post
+    uri: https://api.openai.com/v1/batches
+    body:
+      encoding: UTF-8
+      string: '{"input_file_id":"file-BR9PHYAJFYs4iq6wXsy8iQ","endpoint":"/v1/embeddings","completion_window":"24h"}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 11 Aug 2026 00:06:46 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Server:
+      - cloudflare
+      Openai-Version:
+      - '2020-10-01'
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Openai-Processing-Ms:
+      - '731'
+      X-Openai-Proxy-Wasm:
+      - v0.1
+      Access-Control-Expose-Headers:
+      - CF-Ray
+      - X-Request-ID
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "id": "batch_6a7a67957098819098773e154442d379",
+          "object": "batch",
+          "endpoint": "/v1/embeddings",
+          "model": null,
+          "errors": null,
+          "input_file_id": "file-BR9PHYAJFYs4iq6wXsy8iQ",
+          "completion_window": "24h",
+          "status": "validating",
+          "output_file_id": null,
+          "error_file_id": null,
+          "created_at": 1786406805,
+          "in_progress_at": null,
+          "expires_at": 1786493205,
+          "finalizing_at": null,
+          "completed_at": null,
+          "failed_at": null,
+          "expired_at": null,
+          "cancelling_at": null,
+          "cancelled_at": null,
+          "request_counts": {
+            "total": 0,
+            "completed": 0,
+            "failed": 0
+          },
+          "usage": {
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "total_tokens": 0,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "metadata": null
+        }
+  recorded_at: Tue, 11 Aug 2026 00:06:46 GMT
+- request:
+    method: get
+    uri: https://api.openai.com/v1/batches/batch_6a7a67957098819098773e154442d379
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 11 Aug 2026 00:06:46 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Server:
+      - cloudflare
+      Openai-Version:
+      - '2020-10-01'
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Openai-Processing-Ms:
+      - '16'
+      X-Openai-Proxy-Wasm:
+      - v0.1
+      Access-Control-Expose-Headers:
+      - CF-Ray
+      - X-Request-ID
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "id": "batch_6a7a67957098819098773e154442d379",
+          "object": "batch",
+          "endpoint": "/v1/embeddings",
+          "model": null,
+          "errors": null,
+          "input_file_id": "file-BR9PHYAJFYs4iq6wXsy8iQ",
+          "completion_window": "24h",
+          "status": "validating",
+          "output_file_id": null,
+          "error_file_id": null,
+          "created_at": 1786406805,
+          "in_progress_at": null,
+          "expires_at": 1786493205,
+          "finalizing_at": null,
+          "completed_at": null,
+          "failed_at": null,
+          "expired_at": null,
+          "cancelling_at": null,
+          "cancelled_at": null,
+          "request_counts": {
+            "total": 0,
+            "completed": 0,
+            "failed": 0
+          },
+          "usage": {
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "total_tokens": 0,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "metadata": null
+        }
+  recorded_at: Tue, 11 Aug 2026 00:06:46 GMT
+- request:
+    method: get
+    uri: https://api.openai.com/v1/batches/batch_6a7a67957098819098773e154442d379
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 11 Aug 2026 00:07:01 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Server:
+      - cloudflare
+      Openai-Version:
+      - '2020-10-01'
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Openai-Processing-Ms:
+      - '28'
+      X-Openai-Proxy-Wasm:
+      - v0.1
+      Access-Control-Expose-Headers:
+      - CF-Ray
+      - X-Request-ID
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "id": "batch_6a7a67957098819098773e154442d379",
+          "object": "batch",
+          "endpoint": "/v1/embeddings",
+          "model": null,
+          "errors": null,
+          "input_file_id": "file-BR9PHYAJFYs4iq6wXsy8iQ",
+          "completion_window": "24h",
+          "status": "validating",
+          "output_file_id": null,
+          "error_file_id": null,
+          "created_at": 1786406805,
+          "in_progress_at": null,
+          "expires_at": 1786493205,
+          "finalizing_at": null,
+          "completed_at": null,
+          "failed_at": null,
+          "expired_at": null,
+          "cancelling_at": null,
+          "cancelled_at": null,
+          "request_counts": {
+            "total": 0,
+            "completed": 0,
+            "failed": 0
+          },
+          "usage": {
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "total_tokens": 0,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "metadata": null
+        }
+  recorded_at: Tue, 11 Aug 2026 00:07:01 GMT
+- request:
+    method: get
+    uri: https://api.openai.com/v1/batches/batch_6a7a67957098819098773e154442d379
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 11 Aug 2026 00:07:16 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Server:
+      - cloudflare
+      Openai-Version:
+      - '2020-10-01'
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Openai-Processing-Ms:
+      - '15'
+      X-Openai-Proxy-Wasm:
+      - v0.1
+      Access-Control-Expose-Headers:
+      - CF-Ray
+      - X-Request-ID
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "id": "batch_6a7a67957098819098773e154442d379",
+          "object": "batch",
+          "endpoint": "/v1/embeddings",
+          "model": null,
+          "errors": null,
+          "input_file_id": "file-BR9PHYAJFYs4iq6wXsy8iQ",
+          "completion_window": "24h",
+          "status": "validating",
+          "output_file_id": null,
+          "error_file_id": null,
+          "created_at": 1786406805,
+          "in_progress_at": null,
+          "expires_at": 1786493205,
+          "finalizing_at": null,
+          "completed_at": null,
+          "failed_at": null,
+          "expired_at": null,
+          "cancelling_at": null,
+          "cancelled_at": null,
+          "request_counts": {
+            "total": 0,
+            "completed": 0,
+            "failed": 0
+          },
+          "usage": {
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "total_tokens": 0,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "metadata": null
+        }
+  recorded_at: Tue, 11 Aug 2026 00:07:16 GMT
+- request:
+    method: get
+    uri: https://api.openai.com/v1/batches/batch_6a7a67957098819098773e154442d379
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 11 Aug 2026 00:07:32 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Server:
+      - cloudflare
+      Openai-Version:
+      - '2020-10-01'
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Openai-Processing-Ms:
+      - '17'
+      X-Openai-Proxy-Wasm:
+      - v0.1
+      Access-Control-Expose-Headers:
+      - CF-Ray
+      - X-Request-ID
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "id": "batch_6a7a67957098819098773e154442d379",
+          "object": "batch",
+          "endpoint": "/v1/embeddings",
+          "model": null,
+          "errors": null,
+          "input_file_id": "file-BR9PHYAJFYs4iq6wXsy8iQ",
+          "completion_window": "24h",
+          "status": "validating",
+          "output_file_id": null,
+          "error_file_id": null,
+          "created_at": 1786406805,
+          "in_progress_at": null,
+          "expires_at": 1786493205,
+          "finalizing_at": null,
+          "completed_at": null,
+          "failed_at": null,
+          "expired_at": null,
+          "cancelling_at": null,
+          "cancelled_at": null,
+          "request_counts": {
+            "total": 0,
+            "completed": 0,
+            "failed": 0
+          },
+          "usage": {
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "total_tokens": 0,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "metadata": null
+        }
+  recorded_at: Tue, 11 Aug 2026 00:07:32 GMT
+- request:
+    method: get
+    uri: https://api.openai.com/v1/batches/batch_6a7a67957098819098773e154442d379
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 11 Aug 2026 00:07:47 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Server:
+      - cloudflare
+      Openai-Version:
+      - '2020-10-01'
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Openai-Processing-Ms:
+      - '16'
+      X-Openai-Proxy-Wasm:
+      - v0.1
+      Access-Control-Expose-Headers:
+      - CF-Ray
+      - X-Request-ID
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "id": "batch_6a7a67957098819098773e154442d379",
+          "object": "batch",
+          "endpoint": "/v1/embeddings",
+          "model": "text-embedding-3-small",
+          "errors": null,
+          "input_file_id": "file-BR9PHYAJFYs4iq6wXsy8iQ",
+          "completion_window": "24h",
+          "status": "validating",
+          "output_file_id": null,
+          "error_file_id": null,
+          "created_at": 1786406805,
+          "in_progress_at": null,
+          "expires_at": 1786493205,
+          "finalizing_at": null,
+          "completed_at": null,
+          "failed_at": null,
+          "expired_at": null,
+          "cancelling_at": null,
+          "cancelled_at": null,
+          "request_counts": {
+            "total": 0,
+            "completed": 0,
+            "failed": 0
+          },
+          "usage": {
+            "input_tokens": 0,
+            "output_tokens": 0,
+            "total_tokens": 0,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "metadata": null
+        }
+  recorded_at: Tue, 11 Aug 2026 00:07:47 GMT
+- request:
+    method: get
+    uri: https://api.openai.com/v1/batches/batch_6a7a67957098819098773e154442d379
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 11 Aug 2026 00:08:02 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Server:
+      - cloudflare
+      Openai-Version:
+      - '2020-10-01'
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Openai-Processing-Ms:
+      - '21'
+      X-Openai-Proxy-Wasm:
+      - v0.1
+      Access-Control-Expose-Headers:
+      - CF-Ray
+      - X-Request-ID
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "id": "batch_6a7a67957098819098773e154442d379",
+          "object": "batch",
+          "endpoint": "/v1/embeddings",
+          "model": "text-embedding-3-small",
+          "errors": null,
+          "input_file_id": "file-BR9PHYAJFYs4iq6wXsy8iQ",
+          "completion_window": "24h",
+          "status": "completed",
+          "output_file_id": "file-FDcAKd1anc4Pwmg1i8EuJS",
+          "error_file_id": null,
+          "created_at": 1786406805,
+          "in_progress_at": 1786406867,
+          "expires_at": 1786493205,
+          "finalizing_at": 1786406871,
+          "completed_at": 1786406873,
+          "failed_at": null,
+          "expired_at": null,
+          "cancelling_at": null,
+          "cancelled_at": null,
+          "request_counts": {
+            "total": 2,
+            "completed": 2,
+            "failed": 0
+          },
+          "usage": {
+            "input_tokens": 13,
+            "output_tokens": 0,
+            "total_tokens": 13,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "metadata": null
+        }
+  recorded_at: Tue, 11 Aug 2026 00:08:02 GMT
+- request:
+    method: get
+    uri: https://api.openai.com/v1/batches/batch_6a7a67957098819098773e154442d379
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 11 Aug 2026 00:08:02 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Server:
+      - cloudflare
+      Openai-Version:
+      - '2020-10-01'
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Openai-Processing-Ms:
+      - '16'
+      X-Openai-Proxy-Wasm:
+      - v0.1
+      Access-Control-Expose-Headers:
+      - CF-Ray
+      - X-Request-ID
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        {
+          "id": "batch_6a7a67957098819098773e154442d379",
+          "object": "batch",
+          "endpoint": "/v1/embeddings",
+          "model": "text-embedding-3-small",
+          "errors": null,
+          "input_file_id": "file-BR9PHYAJFYs4iq6wXsy8iQ",
+          "completion_window": "24h",
+          "status": "completed",
+          "output_file_id": "file-FDcAKd1anc4Pwmg1i8EuJS",
+          "error_file_id": null,
+          "created_at": 1786406805,
+          "in_progress_at": 1786406867,
+          "expires_at": 1786493205,
+          "finalizing_at": 1786406871,
+          "completed_at": 1786406873,
+          "failed_at": null,
+          "expired_at": null,
+          "cancelling_at": null,
+          "cancelled_at": null,
+          "request_counts": {
+            "total": 2,
+            "completed": 2,
+            "failed": 0
+          },
+          "usage": {
+            "input_tokens": 13,
+            "output_tokens": 0,
+            "total_tokens": 13,
+            "input_tokens_details": {
+              "cached_tokens": 0
+            },
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "metadata": null
+        }
+  recorded_at: Tue, 11 Aug 2026 00:08:02 GMT
+- request:
+    method: get
+    uri: https://api.openai.com/v1/files/file-FDcAKd1anc4Pwmg1i8EuJS/content
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Accept:
+      - application/octet-stream
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 11 Aug 2026 00:08:03 GMT
+      Content-Type:
+      - application/octet-stream
+      Content-Length:
+      - '36460'
+      Connection:
+      - keep-alive
+      Server:
+      - cloudflare
+      Content-Disposition:
+      - attachment; filename="batch_6a7a67957098819098773e154442d379_output.jsonl"
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Openai-Processing-Ms:
+      - '417'
+      Openai-Version:
+      - '2020-10-01'
+      Openai-Organization:
+      - "<OPENAI_ORGANIZATION>"
+      Openai-Project:
+      - "<OPENAI_PROJECT>"
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Openai-Proxy-Wasm:
+      - v0.1
+      Cf-Cache-Status:
+      - DYNAMIC
+      Access-Control-Expose-Headers:
+      - CF-Ray
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      Set-Cookie:
+      - "<COOKIE>"
+      Cf-Ray:
+      - "<CF_RAY>"
+      Alt-Svc:
+      - h3=":443"; ma=86400
+    body:
+      encoding: UTF-8
+      string: |
+        {"id": "batch_req_6a7a67d85f408190a0d34e668500a965", "custom_id": "0", "response": {"status_code": 200, "request_id": "d0667d39-4d6d-49aa-bb1f-3a18eb1eb589", "body": {"object": "list", "data": [{"object": "embedding", "embedding": [-0.048309326171875, -0.0187225341796875, -0.0355224609375, 0.0209503173828125, 0.044708251953125, -0.0556640625, 0.007537841796875, 0.037353515625, -0.026336669921875, -0.01226043701171875, -0.01611328125, -0.0233612060546875, 0.0253143310546875, -0.0191802978515625, -0.004398345947265625, 0.0214691162109375, -0.0208892822265625, 0.00389862060546875, -0.0013179779052734375, 0.023040771484375, 0.03533935546875, -0.00762939453125, 0.0272674560546875, -0.014129638671875, 0.048065185546875, 0.001644134521484375, 0.0146484375, 0.021514892578125, 0.033782958984375, -0.015899658203125, 0.003818511962890625, -0.0494384765625, 0.02178955078125, 0.007160186767578125, 0.01471710205078125, 0.020416259765625, 0.04962158203125, -0.0261383056640625, 0.039398193359375, 0.0382080078125, -0.005634307861328125, -0.024017333984375, 0.049713134765625, 0.024383544921875, 0.018951416015625, -0.007251739501953125, -0.01239776611328125, -0.00659942626953125, 0.029937744140625, 0.044525146484375, -0.0187530517578125, 0.01503753662109375, -0.0396728515625, 0.0687255859375, -0.0200347900390625, -0.0218353271484375, -0.01526641845703125, 0.011627197265625, 0.0019121170043945312, -0.026275634765625, 0.0161590576171875, -0.0082855224609375, -0.02252197265625, 0.0279083251953125, -0.052734375, 0.0100555419921875, -0.055206298828125, -0.021881103515625, -0.0077667236328125, -0.024749755859375, 0.039215087890625, -0.00023043155670166016, 0.0088043212890625, 0.0189971923828125, 0.04949951171875, -0.0251922607421875, 0.027618408203125, 0.03314208984375, 0.026275634765625, -0.007221221923828125, 0.0209503173828125, 0.0024929046630859375, 0.0182037353515625, -0.050140380859375, -0.0413818359375, -0.035247802734375, -0.017852783203125, -0.04180908203125, 0.0271148681640625, -0.002010345458984375, -0.041107177734375, 0.032806396484375, -0.01043701171875, 0.0281829833984375, 0.009521484375, -0.007175445556640625, -0.0233001708984375, 0.0233001708984375, -0.0041961669921875, 0.006664276123046875, 0.01371002197265625, -0.00010406970977783203, -0.0253143310546875, -0.0261993408203125, 0.050323486328125, 0.01261138916015625, 0.0285186767578125, 0.005069732666015625, -0.023834228515625, 0.002506256103515625, -0.11004638671875, -0.0267486572265625, 0.01129913330078125, -0.06280517578125, -0.0300140380859375, -0.0037899017333984375, 0.0176849365234375, -0.0016460418701171875, 0.0239715576171875, -0.045928955078125, -0.0093231201171875, -0.0283966064453125, -0.032867431640625, -0.0382080078125, -0.027435302734375, -0.04656982421875, -0.00748443603515625, -0.0072784423828125, 0.0112152099609375, -0.017578125, 0.0030517578125, -0.0194244384765625, 0.015045166015625, 0.022369384765625, 0.0136566162109375, -0.01490020751953125, -0.0223236083984375, -0.061370849609375, 0.002685546875, 0.040557861328125, 0.0011091232299804688, -0.01629638671875, -0.023590087890625, -0.012451171875, -0.0287933349609375, 0.023406982421875, -0.04248046875, 0.028961181640625, -0.0268707275390625, -0.0283050537109375, -0.014373779296875, -0.01261138916015625, -0.01482391357421875, 0.005512237548828125, 0.009918212890625, -0.0104217529296875, -0.007404327392578125, 0.006744384765625, -0.0006737709045410156, -0.032806396484375, -0.0167694091796875, 0.0237579345703125, -0.04168701171875, -0.007625579833984375, 0.0012083053588867188, -0.0418701171875, -0.035186767578125, 0.046875, -0.016204833984375, 0.01064300537109375, 0.016815185546875, -0.0037555694580078125, -0.0496826171875, 0.0145111083984375, 0.0369873046875, -0.04351806640625, 0.06878662109375, -0.0145263671875, -0.0120391845703125, -0.0059051513671875, 0.0016756057739257812, 0.0268707275390625, 0.04498291015625, -0.03656005859375, -0.01253509521484375, -0.05804443359375, -0.006397247314453125, -0.002685546875, -0.00033545494079589844, -0.014801025390625, -0.01306915283203125, 0.07275390625, 0.0183258056640625, 0.04901123046875, 0.045806884765625, -0.0219879150390625, 0.04132080078125, -0.0290069580078125, -0.0428466796875, -0.002788543701171875, -0.006134033203125, 0.01519775390625, 0.0235748291015625, -0.02154541015625, -0.01995849609375, -0.012054443359375, -0.0111541748046875, 0.03033447265625, -0.03369140625, -0.018798828125, 0.0221710205078125, -0.000598907470703125, -0.0037250518798828125, -0.0221710205078125, 0.0193023681640625, -0.00933074951171875, 0.05059814453125, 0.021484375, -0.004962921142578125, -0.00946044921875, -0.0265960693359375, 0.0447998046875, 0.0909423828125, 0.00341033935546875, 0.01300811767578125, 0.040496826171875, 0.063232421875, -0.0129241943359375, 0.050994873046875, 0.01317596435546875, 0.037933349609375, -0.0015039443969726562, -0.018798828125, -0.04217529296875, 0.01349639892578125, 0.0032711029052734375, -0.020477294921875, 0.02325439453125, 0.000293731689453125, -0.049896240234375, -0.01537322998046875, -0.031280517578125, 0.0187225341796875, 0.0182342529296875, -0.0103302001953125, -0.0263519287109375, -0.0176239013671875, 0.0210723876953125, -0.0179290771484375, -0.0005893707275390625, 0.018218994140625, 0.03094482421875, 0.03125, -0.0305328369140625, -0.0303497314453125, -0.0308837890625, -0.0067138671875, 0.035400390625, 0.06353759765625, -0.03851318359375, -0.0458984375, -0.0537109375, -0.0186767578125, -0.004581451416015625, 0.01529693603515625, -0.0025157928466796875, -0.0167083740234375, 0.0325927734375, 0.0254364013671875, 0.006450653076171875, 0.043548583984375, -0.014892578125, 0.076904296875, 0.01114654541015625, -0.00035190582275390625, -0.055816650390625, 0.026824951171875, 0.0244903564453125, -0.0180816650390625, -0.0221710205078125, -0.0304718017578125, 0.0293731689453125, 0.01200103759765625, 0.0044403076171875, 0.022430419921875, 0.00634765625, -0.0184783935546875, 0.041473388671875, 0.0628662109375, 0.015655517578125, -0.01474761962890625, 0.003635406494140625, 0.0294189453125, -0.0010890960693359375, 0.0080413818359375, -0.0313720703125, 0.1014404296875, -0.03900146484375, -0.0055084228515625, 0.03173828125, 0.02880859375, 0.0262451171875, 0.0162811279296875, -0.0252227783203125, -0.0300445556640625, 0.0010318756103515625, 0.0154266357421875, -0.05767822265625, -0.00479888916015625, 0.008544921875, -0.03790283203125, 0.00928497314453125, -0.032928466796875, -0.041839599609375, -0.047760009765625, -0.06353759765625, -0.00826263427734375, -0.0015058517456054688, -0.006435394287109375, -0.018646240234375, 0.0037479400634765625, -0.033477783203125, 0.01445770263671875, 0.00635528564453125, -0.01406097412109375, -0.01052093505859375, 0.03338623046875, -0.021484375, 0.0280609130859375, 0.0173797607421875, -0.01129150390625, -0.04632568359375, 0.0021877288818359375, 0.060150146484375, 0.0070343017578125, -0.0440673828125, -0.003223419189453125, -0.01126861572265625, 0.0006861686706542969, 0.0189971923828125, 0.01149749755859375, -0.057220458984375, -0.04425048828125, -0.0306243896484375, -0.0158843994140625, 0.007518768310546875, 0.0283203125, 0.01218414306640625, -0.023193359375, 0.0307159423828125, -0.03302001953125, 0.0221710205078125, 0.00574493408203125, -0.0017595291137695312, -0.007843017578125, -0.05096435546875, 0.021240234375, -0.0227508544921875, -0.050201416015625, 0.03302001953125, -0.057159423828125, -0.0118865966796875, -0.053375244140625, -0.002452850341796875, 0.006771087646484375, 0.053192138671875, -0.04058837890625, -0.018157958984375, 0.0024566650390625, 0.0159454345703125, -0.034088134765625, 0.0246429443359375, 0.0144500732421875, -0.01739501953125, -0.014373779296875, -0.01088714599609375, -0.0233306884765625, 0.002685546875, 0.055908203125, 0.0379638671875, -0.01995849609375, 0.0357666015625, 0.051300048828125, -0.01055908203125, 0.045806884765625, -0.0213165283203125, -0.00543975830078125, -0.0274505615234375, -0.020721435546875, 0.002445220947265625, 0.0302734375, -0.00513458251953125, 0.0136566162109375, -0.020263671875, -0.009307861328125, -0.031158447265625, -0.0014190673828125, -0.004962921142578125, -0.003498077392578125, -0.0215606689453125, 0.01081085205078125, -0.03546142578125, 0.01080322265625, 0.0007028579711914062, -0.0101470947265625, 0.036407470703125, -0.0166473388671875, 0.042327880859375, -0.00628662109375, 0.0036678314208984375, -0.006317138671875, -0.0236663818359375, 0.0465087890625, 0.0229949951171875, -0.035400390625, -0.0445556640625, -0.030853271484375, -0.04046630859375, -0.044769287109375, 0.041656494140625, 0.01050567626953125, -0.05120849609375, -0.0005292892456054688, -0.05767822265625, 0.06072998046875, 0.0247955322265625, 0.033905029296875, -0.037872314453125, -0.0367431640625, -0.019439697265625, 0.034881591796875, 0.0234375, 0.00527191162109375, -0.023406982421875, 0.036590576171875, -0.0283203125, 0.0087127685546875, 0.00031375885009765625, 0.0080108642578125, 0.0212860107421875, -0.0200958251953125, 0.0066070556640625, -0.04150390625, 0.005092620849609375, -0.0574951171875, -0.0269622802734375, -0.0282440185546875, -0.053741455078125, -0.016448974609375, -0.0025615692138671875, 0.004344940185546875, -0.046112060546875, 0.01218414306640625, 0.036376953125, 0.00511932373046875, -0.0233306884765625, 0.0228424072265625, 0.01479339599609375, 0.0202789306640625, -0.01226806640625, 0.011749267578125, 0.04058837890625, -0.06072998046875, -0.00914764404296875, 0.02203369140625, -0.056488037109375, -0.0193634033203125, 0.045379638671875, 0.00662994384765625, 0.0008754730224609375, -0.00528717041015625, 0.0305633544921875, -0.02642822265625, 0.00394439697265625, -0.046173095703125, 0.00634765625, -0.0299530029296875, -0.026763916015625, -0.026947021484375, -0.0217742919921875, -0.0211181640625, 0.00881195068359375, 0.032623291015625, -0.00966644287109375, -0.041412353515625, -0.019775390625, -0.0029048919677734375, 0.006099700927734375, 0.01355743408203125, 0.0124053955078125, 0.0087432861328125, 0.0078277587890625, 0.027130126953125, -0.0193023681640625, 0.003971099853515625, 0.019073486328125, -0.00728607177734375, -0.0117034912109375, 0.0141754150390625, -0.039215087890625, 0.00397491455078125, -0.03125, 0.006961822509765625, 0.0280303955078125, -0.0166015625, -0.026031494140625, 0.00803375244140625, -0.03057861328125, -0.0222930908203125, 0.039398193359375, 0.028076171875, -0.0290679931640625, 0.0279541015625, 0.01010894775390625, -0.0108642578125, -0.00885009765625, 0.004955291748046875, 0.03912353515625, -0.021148681640625, 0.007152557373046875, -0.004901885986328125, -0.002315521240234375, 0.0235443115234375, -0.0273284912109375, 0.01523590087890625, 0.0105743408203125, 0.003238677978515625, 0.022796630859375, 0.0172882080078125, -0.0198211669921875, 0.0416259765625, 0.004756927490234375, 0.01529693603515625, 0.00638580322265625, 0.00173187255859375, -0.01041412353515625, -0.043975830078125, -0.00116729736328125, 0.0030765533447265625, -0.00751495361328125, -0.0259857177734375, 0.01468658447265625, -0.0083465576171875, 0.02337646484375, -0.02166748046875, 0.0034732818603515625, -0.0294952392578125, -0.0291748046875, 0.0235137939453125, -0.01248931884765625, 0.047576904296875, -0.0166778564453125, 0.002208709716796875, -0.04296875, 0.034393310546875, -0.044708251953125, 0.01166534423828125, 0.0018987655639648438, -0.044891357421875, 0.038909912109375, -0.0308380126953125, 0.0016775131225585938, 0.0271453857421875, -0.00887298583984375, 0.003337860107421875, 0.03643798828125, 0.022308349609375, -0.041046142578125, -0.006687164306640625, -0.021484375, 0.0279693603515625, 0.007656097412109375, -0.0148162841796875, -0.047760009765625, -0.002727508544921875, -0.023895263671875, 0.0099639892578125, 0.0022945404052734375, 0.0138092041015625, 0.0168609619140625, -0.004169464111328125, -0.0189208984375, -0.045806884765625, 0.032623291015625, -0.0587158203125, -0.032989501953125, -0.0020503997802734375, -0.041412353515625, -0.022491455078125, 0.007419586181640625, -0.00882720947265625, 0.03594970703125, 0.01354217529296875, 0.01483154296875, -0.0210723876953125, 0.0170745849609375, -0.0247650146484375, -4.178285598754883e-05, -0.048370361328125, 0.0215606689453125, 0.0092620849609375, -0.0100555419921875, 0.0055999755859375, -0.010223388671875, 0.0146484375, -0.0325927734375, -0.0027027130126953125, -0.018096923828125, -0.0194091796875, 0.00444793701171875, -0.00013625621795654297, 0.0195770263671875, 0.0210113525390625, -0.0400390625, -0.0019359588623046875, 0.0154266357421875, -0.00823974609375, -0.0155792236328125, 0.007171630859375, -0.011383056640625, -0.022735595703125, 0.01264190673828125, -0.0264892578125, -0.0184783935546875, 0.0455322265625, 0.0276641845703125, 0.0080108642578125, 0.01006317138671875, 0.0126495361328125, -0.01242828369140625, 0.0055084228515625, -0.01538848876953125, -0.0013875961303710938, -0.036590576171875, 0.048858642578125, 0.01477813720703125, -0.01390838623046875, -0.01279449462890625, 0.03564453125, -0.0265350341796875, 0.0258026123046875, 0.041290283203125, -0.04595947265625, -0.0030231475830078125, 0.00873565673828125, -0.0303955078125, -0.0256195068359375, 0.01528167724609375, -0.00904083251953125, -0.01305389404296875, -0.0202789306640625, -0.027557373046875, 0.003780364990234375, 0.0015106201171875, 0.012939453125, -0.01312255859375, 0.0015106201171875, 0.005092620849609375, 0.0299072265625, 0.00846099853515625, -0.0247802734375, 0.006481170654296875, -0.00931549072265625, 0.019378662109375, -0.0192718505859375, 0.016357421875, 0.03253173828125, 0.048370361328125, 0.013641357421875, -0.02337646484375, -0.0022792816162109375, 0.0207061767578125, 0.053741455078125, -0.0268402099609375, 0.0176239013671875, -0.0343017578125, -0.002849578857421875, 0.0103302001953125, -0.012603759765625, 0.0230712890625, -0.017333984375, 0.005275726318359375, -0.02349853515625, -0.0027980804443359375, 0.032867431640625, -0.003536224365234375, -0.016571044921875, 0.006805419921875, 0.037353515625, -0.0160980224609375, -0.0258026123046875, 0.0038127899169921875, 0.04150390625, -0.01537322998046875, 0.050445556640625, -0.00920867919921875, 0.0229339599609375, -0.019500732421875, -0.040191650390625, -0.10809326171875, 0.021240234375, 0.027008056640625, -0.030059814453125, -0.0027618408203125, -0.04559326171875, -0.0418701171875, -0.030853271484375, -0.048187255859375, -0.007537841796875, 0.00830841064453125, -0.0426025390625, 0.009246826171875, -0.01076507568359375, 0.00043487548828125, -0.050506591796875, -0.0275421142578125, -0.011932373046875, -0.023101806640625, 0.0146636962890625, -0.038848876953125, -0.056365966796875, 0.038330078125, -0.045257568359375, -0.024322509765625, 0.021636962890625, -0.0021514892578125, -0.0245361328125, -0.004528045654296875, -0.045013427734375, 0.00333404541015625, 0.00896453857421875, 0.01497650146484375, -0.005859375, -0.016143798828125, 0.038604736328125, -0.005474090576171875, -0.039459228515625, -0.010986328125, -0.050994873046875, -0.0609130859375, 0.0377197265625, -0.0308837890625, 0.00811767578125, 0.01340484619140625, -0.00688934326171875, 0.01067352294921875, 0.01509857177734375, 0.034423828125, 0.00858306884765625, 0.037933349609375, 0.002513885498046875, 0.01428985595703125, -0.0038909912109375, 0.0020656585693359375, -0.02093505859375, -0.02838134765625, -0.044097900390625, 0.01074981689453125, -0.01611328125, 0.0863037109375, -0.0254669189453125, 0.037109375, 0.00574493408203125, -0.0007853507995605469, 0.04022216796875, -0.0092010498046875, 0.0028858184814453125, -0.032958984375, 0.00836181640625, -0.007843017578125, 0.01520538330078125, -0.002704620361328125, -0.037017822265625, -0.0276641845703125, 0.0343017578125, 0.0307159423828125, -0.026947021484375, -0.0303802490234375, 0.004482269287109375, 0.004032135009765625, -0.0013580322265625, -0.0191650390625, -0.0117034912109375, 0.0225982666015625, -0.032470703125, -0.02996826171875, 0.01284027099609375, -0.0296630859375, -0.0078887939453125, -0.0188751220703125, -0.01285552978515625, -0.0258941650390625, -0.033447265625, -0.0269622802734375, 0.0382080078125, 0.001560211181640625, -0.021331787109375, -0.0609130859375, -0.04278564453125, -0.007511138916015625, 0.00992584228515625, 0.0166778564453125, 0.03350830078125, 0.0169525146484375, -0.0152435302734375, -0.01483154296875, 0.039642333984375, 0.006542205810546875, -0.0323486328125, 0.0183563232421875, -0.0303497314453125, -0.00786590576171875, -0.00695037841796875, 0.052215576171875, -0.0063018798828125, 0.0316162109375, -0.005268096923828125, -0.0037250518798828125, -0.0227813720703125, 0.02093505859375, 0.042022705078125, 0.041168212890625, 0.0215606689453125, 0.005992889404296875, 0.041473388671875, -0.0038604736328125, 0.029205322265625, 0.023681640625, 0.004940032958984375, 0.0118408203125, 0.01322174072265625, 0.00429534912109375, -0.00969696044921875, 0.01073455810546875, -0.0012645721435546875, 0.0670166015625, -0.0022716522216796875, 0.005329132080078125, -0.0180511474609375, 0.0177001953125, -0.06005859375, -0.026580810546875, 0.00574493408203125, -0.0297088623046875, -0.012939453125, -0.0138702392578125, -0.0265655517578125, -0.0063323974609375, 0.031707763671875, -0.004852294921875, -0.01374053955078125, -0.01383209228515625, 0.0171966552734375, -0.0128936767578125, 0.0295257568359375, 0.00032639503479003906, -0.0128631591796875, 0.0140533447265625, -0.0159759521484375, 0.0149078369140625, -0.015045166015625, 0.0022907257080078125, 0.0007066726684570312, -0.011810302734375, -0.0308380126953125, 0.0216217041015625, -0.0115966796875, -0.002780914306640625, 0.00946807861328125, 0.00986480712890625, -0.01160430908203125, 0.0265350341796875, -0.01641845703125, 0.01018524169921875, -0.015899658203125, -0.00044608116149902344, -0.033355712890625, -0.0162200927734375, 0.0094146728515625, -0.0099639892578125, 0.0162353515625, -0.0261688232421875, -0.01538848876953125, 0.034820556640625, 0.0018749237060546875, 0.007282257080078125, 0.0123748779296875, 0.042694091796875, 0.02325439453125, 0.006572723388671875, 0.0199127197265625, -0.0270843505859375, -0.01508331298828125, -0.0284271240234375, 0.0188446044921875, -0.0242919921875, -0.0161590576171875, 0.046630859375, -0.00225067138671875, -0.0004968643188476562, 0.0149688720703125, -0.006351470947265625, 0.0160064697265625, 0.0055389404296875, -0.003021240234375, 0.032684326171875, -0.006359100341796875, -0.0197296142578125, 0.0012350082397460938, -0.04266357421875, -0.0165252685546875, -0.03497314453125, 0.0325927734375, -0.003143310546875, -0.0189666748046875, -0.0185546875, 0.024749755859375, -0.006145477294921875, -0.005218505859375, 0.034820556640625, -0.0077972412109375, -0.0301666259765625, -0.01763916015625, 0.015045166015625, 0.04962158203125, 0.003688812255859375, 0.0131072998046875, 0.002899169921875, 0.0294647216796875, -0.005336761474609375, 0.029052734375, 0.021575927734375, 0.00444793701171875, -0.003986358642578125, 0.045989990234375, -0.06634521484375, -0.004913330078125, 0.0052947998046875, 0.0183563232421875, 0.023040771484375, -0.0156402587890625, -0.01282501220703125, 0.0004336833953857422, -0.011444091796875, 0.044219970703125, -0.0283966064453125, 0.0022220611572265625, -0.00965118408203125, -0.04095458984375, 0.035858154296875, 0.033203125, -0.045654296875, 0.02239990234375, -0.06304931640625, 0.01154327392578125, 0.0167999267578125, -0.01226806640625, 0.00635528564453125, 0.085693359375, 0.024658203125, -0.019256591796875, -0.025482177734375, 0.0184783935546875, -0.007610321044921875, -0.019927978515625, -0.01702880859375, 0.013641357421875, 0.035888671875, -0.0231475830078125, -0.00907135009765625, -0.006450653076171875, 0.01401519775390625, 0.00395965576171875, 0.01416778564453125, 0.0303802490234375, 0.0024776458740234375, 0.0288543701171875, 0.00859832763671875, -0.0247039794921875, -0.00838470458984375, 0.057830810546875, 0.07501220703125, -0.01346588134765625, -0.0144500732421875, -0.02362060546875, -0.005764007568359375, 0.005069732666015625, 0.0255584716796875, -0.0266265869140625, 0.058013916015625, -0.004703521728515625, 0.0233306884765625, -0.0292205810546875, 0.012054443359375, 0.015472412109375, 0.030914306640625, -0.03594970703125, 0.0205078125, 0.0095672607421875, 0.03155517578125, -0.037078857421875, 0.006053924560546875, 0.0223388671875, 0.0188751220703125, 0.0115203857421875, 0.0095672607421875, 0.047576904296875, -0.0107574462890625, -0.0204925537109375, -0.0091400146484375, -0.0018596649169921875, 0.000225067138671875, 0.0239105224609375, 0.01523590087890625, -0.0163726806640625, 0.0304412841796875, -0.0026836395263671875, 0.0169219970703125, -0.00817108154296875, 0.005825042724609375, 0.0023899078369140625, 0.01092529296875, -0.0142974853515625, -0.0159454345703125, 0.0245361328125, -0.029022216796875, -0.009033203125, 0.01267242431640625, 0.01374053955078125, 0.0251617431640625, 0.00273895263671875, 0.0015707015991210938, -0.0216827392578125, 0.033416748046875, -0.0226593017578125, 0.044281005859375, 0.004558563232421875, -0.0269622802734375, 0.0107269287109375, 0.0081024169921875, -0.0092926025390625, -0.0224761962890625, 0.006748199462890625, 0.060394287109375, -0.0037708282470703125, 0.0032672882080078125, -0.027008056640625, -0.0158843994140625, 0.0255279541015625, 0.024383544921875, 0.051300048828125, 0.0012445449829101562, -0.0288848876953125, -0.0115966796875, 0.01617431640625, -0.016326904296875, 0.01218414306640625, 0.0031566619873046875, -0.0157470703125, -0.0061798095703125, -0.010528564453125, 0.0008592605590820312, 0.00756072998046875, -0.04461669921875, 0.0246429443359375, -0.01383209228515625, -0.026947021484375, 0.0255889892578125, 0.02899169921875, -0.0163726806640625, 0.033355712890625, -0.006927490234375, 0.04046630859375, 0.007518768310546875, 0.0066375732421875, 0.0294342041015625, -0.038604736328125, -0.0007081031799316406, 0.0014429092407226562, 0.007579803466796875, 0.01230621337890625, 0.0081787109375, -0.003231048583984375, -0.010528564453125, -0.0360107421875, -0.00726318359375, 0.0185089111328125, -0.0133056640625, 0.0264892578125, 0.015838623046875, -0.00684356689453125, -0.004467010498046875, -0.01009368896484375, -0.02935791015625, 0.01067352294921875, 0.0206451416015625, -0.0012483596801757812, 0.00836944580078125, 0.0433349609375, 0.037933349609375, 0.0209503173828125, -0.00574493408203125, -0.01407623291015625, 0.0240020751953125, 0.0025997161865234375, 0.028564453125, -0.00928497314453125, 0.0089569091796875, 0.0268402099609375, -0.00782012939453125, -0.0016803741455078125, -0.0111846923828125, -0.003753662109375, 0.0233612060546875, -0.0147552490234375, 0.0013723373413085938, 0.004734039306640625, -0.0035858154296875, 0.025299072265625, -0.003093719482421875, 0.020050048828125, 0.01508331298828125, 0.00011485815048217773, -0.00921630859375, -0.0214385986328125, -0.029266357421875, -0.020416259765625, 0.001674652099609375, -0.0194549560546875, 0.05072021484375, 0.01384735107421875, 0.01409149169921875, 0.0007343292236328125, -0.02886962890625, 0.00856781005859375, 0.032623291015625, -0.016632080078125, -0.0001010894775390625, -0.00957489013671875, 0.0189666748046875, -0.0017995834350585938, 0.0018768310546875, 0.00861358642578125, 0.00652313232421875, 0.03472900390625, -0.01605224609375, 0.00026702880859375, 0.1055908203125, -0.0146484375, -0.007083892822265625, 0.02960205078125, -0.0162811279296875, 0.0227203369140625, -0.0267181396484375, 0.01219940185546875, 0.0180816650390625, 0.0005292892456054688, -0.00014138221740722656, -0.01593017578125, -0.00848388671875, 0.01316070556640625, -0.03192138671875, 0.0108795166015625, 0.01446533203125, 0.02606201171875, -0.0035724639892578125, 0.0172271728515625, 0.0013790130615234375, -0.001739501953125, -0.0035419464111328125, 0.003536224365234375, -0.0165557861328125, -0.0206451416015625, 0.00537109375, -0.0255584716796875, 0.0301971435546875, 0.036712646484375, 0.03558349609375, -0.002025604248046875, 0.00983428955078125, 0.0499267578125, -0.033416748046875, 0.006404876708984375, -0.0174407958984375, -0.033447265625, 0.00521087646484375, -0.020294189453125, 0.006778717041015625, -0.01158905029296875, 0.021209716796875, 0.013916015625, 0.0018100738525390625, -0.004817962646484375, 0.0244598388671875, -0.032928466796875, 0.0118560791015625, 0.00852203369140625, 0.0195159912109375, -0.00833892822265625, 0.0266265869140625, 0.0117645263671875, -0.0078277587890625, -0.025848388671875, 0.0092926025390625, 0.0227813720703125, 0.0168609619140625, -0.004665374755859375, -0.007564544677734375, -0.0253143310546875, 0.03179931640625, -0.01070404052734375, -0.01094818115234375, 0.0046844482421875, -0.00780487060546875, -0.0026454925537109375, -0.0095062255859375, 0.048980712890625, 0.004741668701171875, 0.010345458984375, 0.00963592529296875, -0.0262298583984375, 0.056976318359375, 0.0226287841796875, 0.0264739990234375, -0.03851318359375, 0.0164642333984375, -0.02618408203125, 0.016143798828125, -0.0028476715087890625, 0.00624847412109375, 0.017425537109375, 0.01064300537109375, 0.0251312255859375, 0.01096343994140625, 0.0288848876953125, 0.021484375, 0.011932373046875, 0.0253753662109375, -0.002166748046875, 0.004283905029296875, -0.01361083984375, 0.01471710205078125, -0.0198822021484375, 0.0032444000244140625, 0.035430908203125, -0.00960540771484375, 0.00298309326171875, -0.01354217529296875, -0.01241302490234375, -0.001873016357421875, 0.0202484130859375, -0.017059326171875, -0.007663726806640625, 0.0222930908203125, 0.007720947265625, 0.0229034423828125, 0.004978179931640625, -0.01537322998046875, -0.02337646484375, 0.006740570068359375, -0.00791168212890625, 0.02020263671875, 0.02374267578125, -0.0252685546875, -0.0244903564453125, -0.0207061767578125, -0.02337646484375, 0.0061798095703125, -0.0007033348083496094, -0.024627685546875, -0.0287017822265625, 0.01004791259765625, 0.046539306640625, 0.0321044921875, 0.03729248046875, 0.02532958984375, 0.002597808837890625, 0.0176239013671875, -0.0228118896484375, 0.037139892578125, -0.0003857612609863281, 0.0168914794921875, -0.0158843994140625, 0.02783203125, 0.03253173828125, 0.0126953125, -0.00799560546875, -0.033599853515625, 0.03173828125, 0.0184783935546875, -0.0266265869140625, 0.00537872314453125, 0.005115509033203125, 0.0208740234375, 0.00814056396484375, -0.021728515625, 0.0157012939453125, -0.0306854248046875, 0.0330810546875, -0.03387451171875, 0.03399658203125, 0.0032596588134765625, 0.006954193115234375, 0.0148162841796875, -0.0316162109375, -0.0235748291015625, -0.0191802978515625, 0.031585693359375, 0.0013332366943359375, 0.031646728515625, -0.03839111328125, -0.005382537841796875, -0.0151214599609375, -0.001461029052734375, 0.0178985595703125, -0.004405975341796875, 0.013946533203125, 0.01250457763671875, -0.017059326171875, -0.0119171142578125, 0.00748443603515625, 0.01526641845703125, -0.04254150390625, 0.0108489990234375, -0.008575439453125, 0.033111572265625, 0.0262603759765625, -0.0408935546875, -0.023040771484375, 0.004756927490234375, 0.0072479248046875, 0.00026106834411621094, 0.037872314453125, -0.01148223876953125, -0.013458251953125, -0.0162506103515625, -0.0146484375, 0.01291656494140625, 0.042877197265625, 0.0043182373046875, 0.0031414031982421875, -0.0215301513671875, 0.016754150390625, -0.0207977294921875, -0.00833892822265625, -0.00601959228515625, 0.00438690185546875, -0.02288818359375, -0.0204925537109375, 0.0204925537109375, 0.0136566162109375, -0.005218505859375, -0.045623779296875, 0.0095062255859375, 0.0228118896484375, -0.006114959716796875, -0.0240325927734375, 0.0089874267578125, 0.0284576416015625, -0.01085662841796875, -0.004261016845703125, 0.03515625, 0.0288543701171875, -0.0218658447265625, 0.01517486572265625, -0.041839599609375, -0.0066680908203125, -0.02239990234375, -0.03515625, -0.0210113525390625, -0.018524169921875, 0.0155029296875, 0.0247955322265625, -0.0404052734375, -0.00911712646484375, 0.0002880096435546875, 0.01482391357421875, 0.041595458984375, 0.031219482421875, -0.0214080810546875, -0.041229248046875, 0.031951904296875, -0.01384735107421875, -0.017333984375, -0.03460693359375, -0.0016632080078125, -0.002368927001953125, -0.033447265625, 0.0052947998046875, 0.005306243896484375, 0.0164337158203125, -0.0012454986572265625, 0.01419830322265625, 0.009307861328125, -0.02386474609375, 0.0093841552734375, -0.002445220947265625, -0.0222930908203125, 0.01137542724609375, -0.01245880126953125, -0.006305694580078125, 0.01299285888671875, -0.0195770263671875, -0.00531005859375, -0.00362396240234375, 0.042877197265625, -0.0223541259765625, 0.0018863677978515625, -0.00782012939453125, 0.0270233154296875, -0.01096343994140625, 0.0182647705078125, -0.0067138671875, 0.01235198974609375, 0.005275726318359375, 0.00962066650390625, -0.0080108642578125, -0.04937744140625, 0.01480865478515625, -0.024505615234375, -0.0289764404296875, 0.01052093505859375, 0.057403564453125, 0.00400543212890625, 0.022186279296875, 0.00798797607421875, -0.0296173095703125, 0.0014390945434570312, -0.00910186767578125, -0.0447998046875, -0.00585174560546875, -0.0416259765625, 0.0029468536376953125, -0.050872802734375, 0.0277862548828125, 0.01910400390625, -0.01180267333984375, 0.014862060546875, -0.01056671142578125, -0.012176513671875, 0.03125, 0.0003345012664794922, -0.01316070556640625, -0.0169219970703125, -0.0007834434509277344, -0.034820556640625, 0.0257110595703125, 0.0285186767578125, -0.0040130615234375, 0.042633056640625, -0.0179595947265625, 0.02752685546875, 0.05517578125, -0.00348663330078125, 0.007678985595703125, -0.01715087890625, 0.01374053955078125, 0.018829345703125, 0.0030345916748046875, -0.0063018798828125, 0.0104217529296875, 0.03509521484375, 0.005290985107421875, 0.041290283203125, 0.0032958984375, -0.0247039794921875, 0.017425537109375, 0.013427734375, 0.01137542724609375, -0.0032672882080078125, 0.0117950439453125, -0.0180816650390625, -0.0293426513671875, -0.01416015625, -0.0233154296875, 0.05419921875, 0.0279998779296875, -0.0008358955383300781, 0.024078369140625, 0.045623779296875, -0.02252197265625, 0.047515869140625, -0.00027251243591308594, 0.01309967041015625, 0.03009033203125, 0.01284027099609375, -0.0216064453125, -0.032928466796875, 0.007720947265625, -0.0092926025390625, -0.00787353515625, 0.01515960693359375, 0.0284423828125, 0.015289306640625, 0.004913330078125, 0.0031871795654296875, 0.00400543212890625, -0.0288848876953125, 0.0018587112426757812, -0.003173828125, -0.0185699462890625, -0.0246124267578125, 0.0009379386901855469, -0.012908935546875, -0.0158843994140625, -0.0089111328125, 0.0259857177734375, 0.021514892578125, -0.0003879070281982422, -0.00965118408203125, -0.02655029296875, -0.0033893585205078125, 0.00972747802734375, -0.0128631591796875, 0.005046844482421875, 0.0236968994140625, -0.020172119140625, -0.0205535888671875, -0.0028533935546875, -0.031768798828125, 0.006061553955078125, -0.02081298828125, -0.042144775390625, -0.038543701171875, 0.017120361328125, -0.0218505859375, -0.026641845703125, -9.131431579589844e-05, 0.0010080337524414062, 0.016693115234375, 0.0028171539306640625, 0.0011835098266601562, 0.0185394287109375, -0.0298309326171875, -0.01537322998046875, -0.011444091796875], "index": 0}], "model": "text-embedding-3-small", "usage": {"prompt_tokens": 6, "total_tokens": 6}}}, "error": null}
+        {"id": "batch_req_6a7a67d858048190bd344d8b6bfab98e", "custom_id": "1", "response": {"status_code": 200, "request_id": "a6c1d045-9eb5-4436-8425-bff6c042ce7e", "body": {"object": "list", "data": [{"object": "embedding", "embedding": [-0.0924072265625, -0.028778076171875, 0.04931640625, -0.0014171600341796875, 0.0029449462890625, -0.026031494140625, 0.0919189453125, -0.009674072265625, 0.0007257461547851562, -0.030487060546875, 0.06207275390625, -0.0760498046875, -0.113037109375, -0.0289764404296875, 0.043853759765625, 0.0266876220703125, -0.07293701171875, 0.012664794921875, -0.1707763671875, -0.002101898193359375, -0.00556182861328125, -0.021484375, -0.02838134765625, -0.06011962890625, -0.030242919921875, -0.0013380050659179688, -0.05108642578125, -0.007598876953125, 0.01175689697265625, -0.09832763671875, -0.022247314453125, -0.074951171875, -0.1121826171875, -0.09136962890625, 0.033233642578125, 0.07550048828125, 0.09716796875, 0.091552734375, -0.006954193115234375, 0.040252685546875, -0.03466796875, -0.12432861328125, -0.0182037353515625, -0.0291900634765625, -0.0283966064453125, 0.07757568359375, 0.025177001953125, -0.01122283935546875, 0.10198974609375, 0.1556396484375, -0.05279541015625, 0.08697509765625, -0.100830078125, 0.023162841796875, 0.05413818359375, -0.0268096923828125, 0.0061798095703125, 0.10113525390625, 0.052154541015625, -0.0267333984375, 0.01137542724609375, -0.03607177734375, -0.007965087890625, -0.10504150390625, 0.005279541015625, 0.0113983154296875, -0.0101165771484375, 0.03546142578125, 0.08135986328125, 0.040618896484375, -0.042083740234375, -0.00872039794921875, -0.02294921875, -0.0863037109375, -0.060272216796875, 0.03009033203125, 0.0159454345703125, 0.059906005859375, 0.05975341796875, 0.04559326171875, 0.0086669921875, -0.03265380859375, -0.040130615234375, 0.031890869140625, -0.034820556640625, -0.0831298828125, -0.07958984375, 0.051727294921875, -0.0074462890625, -0.04681396484375, 0.035369873046875, 0.07293701171875, -0.062408447265625, 0.056396484375, 0.049896240234375, 0.031463623046875, -0.030364990234375, -0.006931304931640625, 0.0116119384765625, 0.06964111328125, 0.11865234375, -0.028564453125, 0.023223876953125, -0.002017974853515625, 0.0070037841796875, -0.0740966796875, -0.1038818359375, -0.0307769775390625, -0.08660888671875, -0.08978271484375, -0.10009765625, -0.1488037109375, -0.0102691650390625, -0.061767578125, -0.03509521484375, -0.002971649169921875, 0.08984375, 0.0489501953125, -0.04022216796875, 0.00901031494140625, -0.05511474609375, 0.07867431640625, -0.07806396484375, -0.03857421875, -0.1163330078125, -0.017730712890625, 0.0811767578125, -0.0767822265625, -0.049896240234375, -0.0614013671875, 0.03863525390625, -0.0253448486328125, 0.15234375, -0.00531005859375, -0.06280517578125, -0.043365478515625, -0.010162353515625, 0.0222015380859375, -0.0565185546875, -0.025054931640625, -0.0205535888671875, -0.006381988525390625, 0.0156402587890625, 0.037750244140625, -0.0266571044921875, 0.0841064453125, -0.09674072265625, -0.0210418701171875, 0.03619384765625, 0.0421142578125, -0.1417236328125, 0.098876953125, -0.0208587646484375, 0.043701171875, 0.076416015625, -0.0435791015625, 0.01617431640625, 0.0743408203125, -0.0211029052734375, 0.042205810546875, -0.0655517578125, -0.0009183883666992188, 0.03680419921875, -0.006526947021484375, -0.032073974609375, 0.029205322265625, -0.06707763671875, -0.032623291015625, -0.09320068359375, -0.0938720703125, 0.10418701171875, 0.099365234375, 0.0009016990661621094, -0.10870361328125, 0.0176544189453125, -0.041229248046875, -0.06427001953125, -0.052001953125, 0.04498291015625, -0.09857177734375, 0.07952880859375, 0.04547119140625, 0.01053619384765625, -0.08563232421875, 0.017242431640625, -0.0693359375, -0.0236968994140625, -0.0079803466796875, -0.1160888671875, 0.061309814453125, -0.0244903564453125, -0.0206756591796875, -0.053009033203125, 0.044708251953125, 0.023590087890625, -0.1905517578125, 0.033538818359375, -0.0621337890625, 0.10589599609375, 0.0003046989440917969, -0.066162109375, 0.049163818359375, -0.033538818359375, 0.036376953125, 0.03497314453125, -0.06341552734375, -0.0188140869140625, -0.039642333984375, 0.0311126708984375, -0.023101806640625, 0.11004638671875, 0.07550048828125, -0.0665283203125, -0.04779052734375, -0.139404296875, -0.06573486328125, -0.1329345703125, 0.1097412109375, -0.047821044921875, -0.07635498046875, 0.003932952880859375, -0.012603759765625, 0.055389404296875, 0.11346435546875, -0.0237884521484375, 0.0960693359375, 0.029022216796875, 0.028564453125, 0.02960205078125, -0.086669921875, -0.017852783203125, 0.055267333984375, 0.0019989013671875, -0.055389404296875, 0.07012939453125, 0.06842041015625, 0.0404052734375, -0.07952880859375, -0.034698486328125, -0.0762939453125, -0.0087890625, 0.01458740234375, 0.019775390625, 0.09271240234375, -0.007755279541015625, -0.03448486328125, -0.0941162109375, -0.057861328125, -0.0146331787109375, -0.0267181396484375, 0.038116455078125, -0.035858154296875, -0.0260009765625, -0.148193359375, 0.00101470947265625, -0.01409912109375], "index": 0}], "model": "text-embedding-3-small", "usage": {"prompt_tokens": 7, "total_tokens": 7}}}, "error": null}
+  recorded_at: Tue, 11 Aug 2026 00:08:03 GMT
+recorded_with: VCR 6.4.0

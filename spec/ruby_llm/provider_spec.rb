@@ -369,13 +369,15 @@ RSpec.describe RubyLLM::Provider do
     end
 
     it 'routes OpenAI batches by rendered payload shape' do
-      expect(provider.send(:batch_protocol_for, [{ payload: { input: 'hi' } }]))
+      expect(provider.send(:batch_protocol_for, [{ payload: { input: [{ role: 'user', content: 'hi' }] } }]))
         .to be < RubyLLM::Protocols::Responses
       expect(provider.send(:batch_protocol_for, [{ payload: { messages: [] } }]))
         .to be < RubyLLM::Protocols::ChatCompletions
+      expect(provider.send(:batch_protocol_for, [{ payload: { model: 'text-embedding-3-small', input: 'hi' } }]))
+        .to be < RubyLLM::Protocols::ChatCompletions::EmbeddingBatches
       expect do
         provider.send(:batch_protocol_for, [
-                        { payload: { input: 'hi' } },
+                        { payload: { input: [{ role: 'user', content: 'hi' }] } },
                         { payload: { messages: [] } }
                       ])
       end.to raise_error(RubyLLM::Error, /one endpoint/)
