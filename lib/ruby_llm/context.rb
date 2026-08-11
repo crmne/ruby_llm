@@ -56,6 +56,18 @@ module RubyLLM
       Image.paint(*args, **kwargs, context: self, &)
     end
 
+    # Generates a video using this context's configuration, blocking
+    # until it is ready. Accepts the same arguments as RubyLLM.animate.
+    def animate(*args, **kwargs, &)
+      Video.animate(*args, **kwargs, context: self, &)
+    end
+
+    # Submits a video generation job using this context's configuration.
+    # Accepts the same arguments as RubyLLM.animate_later.
+    def animate_later(*args, **kwargs, &)
+      VideoJob.animate_later(*args, **kwargs, context: self, &)
+    end
+
     # Runs content moderation using this context's configuration.
     # Accepts the same arguments as RubyLLM.moderate.
     def moderate(*args, **kwargs, &)

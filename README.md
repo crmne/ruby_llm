@@ -71,6 +71,11 @@ RubyLLM.paint "a sunset over mountains in watercolor style"
 ```
 
 ```ruby
+# Generate videos
+RubyLLM.animate "a paper boat sailing down a rainy gutter"
+```
+
+```ruby
 # Create embeddings
 RubyLLM.embed "Ruby is elegant and expressive"
 ```
@@ -142,6 +147,7 @@ response = chat.with_schema(ProductSchema).ask "Analyze this product", with: "pr
 * **Documents:** Extract from PDFs, CSVs, JSON, any file type
 * **OCR:** Turn documents into markdown with `RubyLLM.ocr`
 * **Image generation:** Create images with `RubyLLM.paint`
+* **Video generation:** Create videos with `RubyLLM.animate`
 * **Embeddings:** Generate embeddings with `RubyLLM.embed`
 * **Moderation:** Content safety with `RubyLLM.moderate`
 * **Tools:** Let AI call your Ruby methods

@@ -14,6 +14,7 @@ RSpec.shared_examples 'a protocol' do |family|
     'embeddings' => %i[render_embedding_payload embedding_url parse_embedding_response],
     'moderation' => %i[render_moderation_payload moderation_url parse_moderation_response],
     'image' => %i[render_image_payload images_url parse_image_response],
+    'video' => %i[render_video_payload video_url parse_video_job video_job_url parse_video_job_status download_video],
     'speech' => %i[render_speech_payload speech_url parse_speech_response],
     'transcription' => %i[render_transcription_payload transcription_url parse_transcription_response],
     'ocr' => %i[render_ocr_payload ocr_url parse_ocr_response],

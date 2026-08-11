@@ -249,6 +249,13 @@ module RubyLLM
       )
     end
 
+    def animate_later(prompt, model:, with: nil, provider_options: {}) # :nodoc:
+      protocol = resolve_protocol(nil, model, operation: :animate)
+      protocol.new(self, model).animate_later(
+        prompt, model: model_id_for(model), with:, provider_options:
+      )
+    end
+
     def speak(input, model:, voice:, format:, provider_options: {}) # :nodoc:
       protocol = resolve_protocol(nil, model, operation: :speak)
       protocol.new(self, model).speak(

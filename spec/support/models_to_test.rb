@@ -148,6 +148,8 @@ TRANSCRIPTION_MODELS = [
   { provider: :xai, model: 'grok-stt' }
 ].freeze
 
+VIDEO_GENERATION_MODELS = [].freeze
+
 image_generation_models = [
   { provider: :openai, model: 'gpt-image-1', supports_size: false },
   { provider: :gemini, model: 'imagen-4.0-generate-001', supports_size: false },

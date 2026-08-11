@@ -67,6 +67,7 @@ loader.setup
 # == Beyond chat
 #
 # - ::paint generates images (Image)
+# - ::animate generates videos (Video)
 # - ::embed turns text into vectors (Embedding)
 # - ::transcribe converts audio to text (Transcription)
 # - ::ocr extracts text from documents (OCR)
@@ -212,6 +213,29 @@ module RubyLLM
     #
     def paint(...)
       Image.paint(...)
+    end
+
+    # Generates a video from a text prompt, blocks until the provider
+    # finishes rendering it, and returns a Video. Arguments are forwarded
+    # to Video.animate.
+    #
+    #   video = RubyLLM.animate("a paper boat sailing down a rainy gutter")
+    #   video.save("boat.mp4")
+    #
+    def animate(...)
+      Video.animate(...)
+    end
+
+    # Submits a video generation job and returns a VideoJob immediately,
+    # without waiting for the result. Arguments are forwarded to
+    # VideoJob.animate_later.
+    #
+    #   job = RubyLLM.animate_later("a paper boat sailing down a gutter")
+    #   job.refresh! until job.done?
+    #   job.video.save("boat.mp4")
+    #
+    def animate_later(...)
+      VideoJob.animate_later(...)
     end
 
     # Synthesizes speech from text and returns a Speech. Arguments are

@@ -170,6 +170,8 @@ RubyLLM emits these events:
 *   `tool_call.ruby_llm` - tool name, arguments, and result
 *   `embedding.ruby_llm` - embedding model, input, result, token usage, and vector dimensions
 *   `image.ruby_llm` - image generation model, prompt, size, and result
+*   `video.ruby_llm` - one blocking video generation, including the wait for the job and the resulting video
+*   `video_job.ruby_llm` - one video job submission with model, prompt, and the provider's job id
 *   `moderation.ruby_llm` - moderation model, input, result, and flagged status
 *   `speech.ruby_llm` - speech generation model, input, voice, format, and audio byte size
 *   `transcription.ruby_llm` - transcription model, language, result, and token usage

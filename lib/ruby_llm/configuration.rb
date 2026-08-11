@@ -109,6 +109,26 @@ module RubyLLM
     # Default: <tt>'mistral-ocr-latest'</tt>.
     option :default_ocr_model, 'mistral-ocr-latest'
 
+    # :attr_accessor: default_video_model
+    #
+    # The model id used by RubyLLM.animate when no model is given.
+    # Default: <tt>'grok-imagine-video'</tt>.
+    option :default_video_model, 'grok-imagine-video'
+
+    ##
+    # :attr_accessor: video_generation_timeout
+    #
+    # Seconds RubyLLM.animate waits for a video job to finish before
+    # raising an error. Default: 600.
+    option :video_generation_timeout, 600
+
+    ##
+    # :attr_accessor: video_generation_poll_interval
+    #
+    # Seconds between status polls while RubyLLM.animate waits for a
+    # video job. Default: 5.
+    option :video_generation_poll_interval, 5
+
     ##
     # :attr_accessor: model_registry_file
     #

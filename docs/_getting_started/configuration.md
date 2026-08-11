@@ -68,6 +68,7 @@ RubyLLM.configure do |config|
   config.default_model = '{{ site.models.anthropic_current }}'           # For RubyLLM.chat
   config.default_embedding_model = '{{ site.models.embedding_large }}'  # For RubyLLM.embed
   config.default_image_model = 'dall-e-3'              # For RubyLLM.paint
+  config.default_video_model = 'grok-imagine-video'    # For RubyLLM.animate
   config.default_speech_model = '{{ site.models.default_speech }}'       # For RubyLLM.speak
 end
 ```
@@ -76,6 +77,7 @@ Defaults if not configured:
 - Chat: `{{ site.models.default_chat }}`
 - Embeddings: `{{ site.models.default_embedding }}`
 - Images: `{{ site.models.default_image }}`
+- Videos: `grok-imagine-video`
 - Speech: `{{ site.models.default_speech }}`
 
 ## Rails Integration
@@ -171,6 +173,7 @@ RubyLLM.configure do |config|
   config.default_model = String
   config.default_embedding_model = String
   config.default_image_model = String
+  config.default_video_model = String
   config.default_speech_model = String
   config.default_moderation_model = String
   config.default_transcription_model = String
@@ -181,6 +184,8 @@ RubyLLM.configure do |config|
 
   # Connection Settings
   config.request_timeout = Integer
+  config.video_generation_timeout = Integer
+  config.video_generation_poll_interval = Integer
   config.max_retries = Integer
   config.retry_interval = Float
   config.retry_backoff_factor = Integer

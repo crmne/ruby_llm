@@ -9,9 +9,9 @@ module RubyLLM
   #
   # Subclass Protocol, or a shipped subclass such as
   # RubyLLM::Protocols::ChatCompletions, to support a new wire format. Each
-  # operation (chat, embeddings, moderation, image generation, speech,
-  # transcription, OCR, token counting, and model listing) is served by three
-  # kinds of seam method you override:
+  # operation (chat, embeddings, moderation, image generation, video
+  # generation, speech, transcription, OCR, reranking, token counting, and
+  # model listing) is served by three kinds of seam method you override:
   #
   # - <tt>render_*</tt> serializes a RubyLLM request into the wire payload,
   #   such as +render_payload+ for chat or +render_embedding_payload+.
@@ -67,6 +67,8 @@ module RubyLLM
     abstract :render_embedding_payload, :embedding_url, :parse_embedding_response
     abstract :render_moderation_payload, :moderation_url, :parse_moderation_response
     abstract :render_image_payload, :images_url, :parse_image_response
+    abstract :render_video_payload, :video_url, :parse_video_job
+    abstract :video_job_url, :parse_video_job_status, :download_video
     abstract :render_speech_payload, :speech_url, :parse_speech_response
     abstract :render_transcription_payload, :transcription_url, :parse_transcription_response
     abstract :render_ocr_payload, :ocr_url, :parse_ocr_response
@@ -189,6 +191,23 @@ module RubyLLM
         response = @connection.post images_url(with:, mask:), payload, usage: @usage_tracker
         parse_image_response(response, model:)
       end
+    end
+
+    # Video generation is asynchronous on every provider: this submits the
+    # job and returns a VideoJob, whose #refresh! and #video poll and
+    # download through this protocol instance.
+    def animate_later(prompt, model:, with: nil, provider_options: {})
+      attachments = Attachment.wrap(with)
+      validate_animate_inputs!(with: attachments)
+      payload = render_video_payload(prompt, model:, with: attachments, provider_options:)
+      response = @connection.post video_url, payload
+      parse_video_job(response, model:)
+    rescue NotImplementedError
+      raise Error, "#{@provider.name} doesn't support video generation"
+    end
+
+    def refresh_video_job(job)
+      parse_video_job_status @connection.get(video_job_url(job)), job: job
     end
 
     def speak(input, model:, voice:, format:, provider_options: {})
@@ -404,6 +423,12 @@ module RubyLLM
       return if with.nil? && mask.nil?
 
       raise UnsupportedAttachmentError, 'image reference'
+    end
+
+    def validate_animate_inputs!(with:)
+      return if with.empty?
+
+      raise UnsupportedAttachmentError, 'video reference image'
     end
 
     def build_audio_file_part(file_path)

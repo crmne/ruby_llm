@@ -34,6 +34,8 @@ component :domain, in: %w[
   lib/ruby_llm/usage.rb
   lib/ruby_llm/uploaded_file.rb
   lib/ruby_llm/uploaded_file/**/*.rb
+  lib/ruby_llm/video.rb
+  lib/ruby_llm/video_job.rb
   lib/ruby_llm/workflow.rb
 ]
 
