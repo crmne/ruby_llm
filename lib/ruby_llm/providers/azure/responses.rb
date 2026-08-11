@@ -8,6 +8,8 @@ module RubyLLM
       # deployment name, as on Chat Completions. Azure offers no web_search
       # server tool and rejects the user_data file upload purpose.
       class Responses < Protocols::Responses
+        include Azure::Videos
+
         SERVER_TOOL_ALIASES = Protocols::Responses::SERVER_TOOL_ALIASES.except(:web_search).freeze
 
         def completion_url
