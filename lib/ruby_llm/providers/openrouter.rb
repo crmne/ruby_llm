@@ -12,6 +12,7 @@ module RubyLLM
         include OpenRouter::Speech
         include OpenRouter::Streaming
         include Protocols::ChatCompletions::Rerank
+        include OpenRouter::Videos
 
         # OpenRouter runs its server tools transparently: results surface as
         # citations and usage counters rather than discrete content blocks.
