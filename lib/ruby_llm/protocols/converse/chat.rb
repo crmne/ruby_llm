@@ -102,6 +102,7 @@ module RubyLLM
             citations: citations,
             thinking: Thinking.build(text: thinking_text, signature: thinking_signature),
             tool_calls: parse_tool_calls(content_blocks),
+            server_tool_calls: extract_server_tool_calls(content_blocks),
             input_tokens: input_tokens(usage),
             output_tokens: usage['outputTokens'],
             cache_read_tokens: usage['cacheReadInputTokens'],
@@ -587,6 +588,7 @@ module RubyLLM
           content_blocks.each do |block|
             tool_use = block['toolUse']
             next unless tool_use
+            next if server_tool_use?(tool_use)
 
             tool_call_id = tool_use['toolUseId']
             tool_calls[tool_call_id] = ToolCall.new(
@@ -597,6 +599,34 @@ module RubyLLM
           end
 
           tool_calls.empty? ? nil : tool_calls
+        end
+
+        # Provider-executed tool steps come back with a distinguishing type,
+        # such as server_tool_use; function calls carry no type or the plain
+        # tool_use type.
+        def server_tool_use?(tool_use)
+          type = tool_use['type']
+          !type.nil? && type != 'tool_use'
+        end
+
+        def server_tool_result?(tool_result)
+          type = tool_result['type']
+          !type.nil? && type != 'tool_result'
+        end
+
+        def extract_server_tool_calls(content_blocks)
+          content_blocks.filter_map do |block|
+            tool_use = block['toolUse']
+            tool_result = block['toolResult']
+
+            if tool_use && server_tool_use?(tool_use)
+              ServerToolCall.new(type: tool_use['type'], name: tool_use['name'], id: tool_use['toolUseId'],
+                                 input: tool_use['input'], raw: block)
+            elsif tool_result && server_tool_result?(tool_result)
+              ServerToolCall.new(type: tool_result['type'], id: tool_result['toolUseId'],
+                                 result: tool_result['content'], raw: block)
+            end
+          end
         end
 
         def default_input_schema

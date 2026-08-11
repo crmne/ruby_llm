@@ -146,6 +146,7 @@ module RubyLLM
               signature: extract_thinking_signature(event)
             ),
             tool_calls: extract_tool_calls(event),
+            server_tool_calls: extract_server_tool_call_events(event),
             input_tokens: extract_input_tokens(metadata_usage, usage),
             output_tokens: extract_output_tokens(metadata_usage, usage),
             cache_read_tokens: extract_cache_read_tokens(metadata_usage, usage),
@@ -292,6 +293,11 @@ module RubyLLM
           tool_use = event.dig('contentBlockStart', 'start', 'toolUse') || event.dig('start', 'toolUse')
           return nil unless tool_use
 
+          if Chat.server_tool_use?(tool_use)
+            remember_server_tool_block(event)
+            return nil
+          end
+
           tool_use_id = tool_use['toolUseId']
           {
             tool_use_id => ToolCall.new(
@@ -303,10 +309,51 @@ module RubyLLM
         end
 
         def extract_tool_call_delta(event)
+          return nil if server_tool_block_event?(event)
+
           input = normalized_delta(event).dig('toolUse', 'input')
           return nil unless input
 
           { nil => ToolCall.new(id: nil, name: nil, arguments: input) }
+        end
+
+        # Server-executed tool steps stream as typed toolUse and toolResult
+        # block starts. Their input deltas are not function-call arguments,
+        # so the block index is remembered and its deltas skipped.
+        def extract_server_tool_call_events(event)
+          start = event.dig('contentBlockStart', 'start') || event['start']
+          return [] unless start.is_a?(Hash)
+
+          tool_use = start['toolUse']
+          tool_result = start['toolResult']
+          if tool_use && Chat.server_tool_use?(tool_use)
+            [ServerToolCall.new(type: tool_use['type'], name: tool_use['name'], id: tool_use['toolUseId'],
+                                input: tool_use['input'], raw: start)]
+          elsif tool_result && Chat.server_tool_result?(tool_result)
+            [ServerToolCall.new(type: tool_result['type'], id: tool_result['toolUseId'],
+                                result: tool_result['content'], raw: start)]
+          else
+            []
+          end
+        end
+
+        def remember_server_tool_block(event)
+          index = event_block_index(event)
+          return if index.nil?
+
+          @server_tool_block_indices ||= {}
+          @server_tool_block_indices[index] = true
+        end
+
+        def server_tool_block_event?(event)
+          index = event_block_index(event)
+          !index.nil? && @server_tool_block_indices&.key?(index)
+        end
+
+        def event_block_index(event)
+          event['contentBlockIndex'] ||
+            event.dig('contentBlockStart', 'contentBlockIndex') ||
+            event.dig('contentBlockDelta', 'contentBlockIndex')
         end
 
         def normalized_delta(event)

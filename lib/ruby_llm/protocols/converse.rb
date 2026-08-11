@@ -8,7 +8,27 @@ module RubyLLM
       include Converse::Media
       include Converse::Streaming
 
+      # Nova 2 models execute built-in tools server-side when the request
+      # names them as system tools.
+      SERVER_TOOL_ALIASES = {
+        web_search: lambda { |options|
+          { tool: { systemTool: { name: 'nova_grounding' }.merge(Utils.deep_symbolize_keys(options)) } }
+        }
+      }.freeze
+
+      def server_tool_aliases
+        SERVER_TOOL_ALIASES
+      end
+
       private
+
+      # Converse carries tools under toolConfig.tools rather than a
+      # top-level tools array.
+      def merge_server_tool_entries(payload, entries)
+        tool_config = payload[:toolConfig] ||= {}
+        tool_config[:tools] = Array(tool_config[:tools]) + entries
+        payload
+      end
 
       def sync_response(payload, additional_headers = {})
         response = signed_post(completion_url, payload, additional_headers)

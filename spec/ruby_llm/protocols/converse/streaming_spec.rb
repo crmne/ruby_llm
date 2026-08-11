@@ -45,6 +45,50 @@ RSpec.describe RubyLLM::Protocols::Converse::Streaming do
     expect(chunk.thinking.signature).to eq('thinking-signature')
   end
 
+  it 'parses citation deltas into citations' do
+    event = {
+      'contentBlockIndex' => 3,
+      'delta' => {
+        'citation' => {
+          'location' => { 'web' => { 'url' => 'https://ruby-lang.org', 'domain' => 'ruby-lang.org' } }
+        }
+      }
+    }
+
+    chunk = streaming.send(:build_chunk, event)
+
+    expect(chunk.citations.first.url).to eq('https://ruby-lang.org')
+  end
+
+  it 'reports server tool starts without treating them as function calls' do
+    start_event = {
+      'contentBlockIndex' => 0,
+      'start' => {
+        'toolUse' => { 'name' => 'nova_grounding', 'toolUseId' => 'tooluse_1', 'type' => 'server_tool_use' }
+      }
+    }
+    delta_event = {
+      'contentBlockIndex' => 0,
+      'delta' => { 'toolUse' => { 'input' => '{"query":"ruby"}' } }
+    }
+    result_event = {
+      'contentBlockIndex' => 1,
+      'start' => {
+        'toolResult' => { 'status' => 'success', 'toolUseId' => 'tooluse_1', 'type' => 'nova_grounding_result' }
+      }
+    }
+
+    start_chunk = streaming.send(:build_chunk, start_event)
+    delta_chunk = streaming.send(:build_chunk, delta_event)
+    result_chunk = streaming.send(:build_chunk, result_event)
+
+    expect(start_chunk.tool_calls).to be_nil
+    expect(start_chunk.server_tool_calls.map(&:type)).to eq(['server_tool_use'])
+    expect(start_chunk.server_tool_calls.first.name).to eq('nova_grounding')
+    expect(delta_chunk.tool_calls).to be_nil
+    expect(result_chunk.server_tool_calls.map(&:type)).to eq(['nova_grounding_result'])
+  end
+
   it 'keeps redacted thinking distinct from omitted thinking' do
     event = {
       'contentBlockDelta' => {

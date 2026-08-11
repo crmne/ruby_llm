@@ -78,6 +78,29 @@ RSpec.describe RubyLLM::Chat, :live do
       expect(payload[:tools]).to include({ type: 'mcp_toolset', mcp_server_name: 'example' })
     end
 
+    it 'renders the Bedrock web_search alias as the Nova grounding system tool' do
+      payload = RubyLLM.chat(model: 'amazon.nova-2-lite-v1:0', provider: :bedrock)
+                       .with_server_tools(:web_search)
+                       .render
+
+      expect(payload.dig(:toolConfig, :tools)).to include({ systemTool: { name: 'nova_grounding' } })
+    end
+
+    it 'keeps Bedrock function tools alongside the grounding tool' do
+      weather = Class.new(RubyLLM::Tool) do
+        def self.name = 'Weather'
+        description 'Looks up weather'
+
+        def execute(**) = 'sunny'
+      end
+      payload = RubyLLM.chat(model: 'amazon.nova-2-lite-v1:0', provider: :bedrock)
+                       .with_tools(weather)
+                       .with_server_tools(:web_search)
+                       .render
+
+      expect(payload.dig(:toolConfig, :tools).length).to eq(2)
+    end
+
     it 'renders OpenAI Responses aliases' do
       payload = RubyLLM.chat(model: 'gpt-5.2', provider: :openai)
                        .with_server_tools(:web_search, :code_execution)
@@ -279,6 +302,34 @@ RSpec.describe RubyLLM::Chat, :live do
         followup = chat.ask('Thanks. Now just say OK.')
 
         expect(followup.content).to be_present
+      end
+    end
+
+    context 'with bedrock/amazon.nova-2-lite-v1:0' do
+      let(:chat) do
+        RubyLLM.chat(model: 'amazon.nova-2-lite-v1:0', provider: :bedrock).with_server_tools(:web_search)
+      end
+
+      it 'grounds the answer with web citations' do
+        response = chat.ask('Search the web: what is the latest stable Ruby version? Cite your source.')
+
+        expect(response.server_tool_calls.map(&:type)).to include('server_tool_use')
+        expect(response.server_tool_calls.map(&:type)).to include('nova_grounding_result')
+        expect(response.citations).not_to be_empty
+        expect(response.citations.first.url).to be_present
+        expect(response.content).to be_present
+      end
+
+      it 'streams grounded turns' do
+        chunks = []
+        response = chat.ask('Search the web: what is the latest stable Ruby version? Cite your source.') do |chunk|
+          chunks << chunk
+        end
+
+        expect(chunks.any? { |chunk| chunk.server_tool_calls.any? }).to be true
+        expect(response.server_tool_calls.map(&:type)).to include('server_tool_use')
+        expect(response.citations).not_to be_empty
+        expect(response.content).to be_present
       end
     end
 

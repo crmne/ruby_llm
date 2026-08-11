@@ -699,6 +699,61 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
       expect(citation.cited_text).to be_nil
     end
 
+    it 'parses grounded turns into server tool calls and web citations' do
+      response_body = {
+        'output' => {
+          'message' => {
+            'content' => [
+              {
+                'toolUse' => {
+                  'input' => { 'query' => 'latest ruby' },
+                  'name' => 'nova_grounding',
+                  'toolUseId' => 'tooluse_1',
+                  'type' => 'server_tool_use'
+                }
+              },
+              {
+                'toolResult' => {
+                  'content' => [{ 'text' => '[HIDDEN]' }],
+                  'status' => 'success',
+                  'toolUseId' => 'tooluse_1',
+                  'type' => 'nova_grounding_result'
+                }
+              },
+              { 'text' => 'Ruby 4.0.6 is the latest stable version' },
+              {
+                'citationsContent' => {
+                  'citations' => [
+                    { 'location' => { 'web' => { 'url' => 'https://ruby-lang.org', 'domain' => 'ruby-lang.org' } } }
+                  ]
+                }
+              },
+              { 'text' => '.' }
+            ]
+          }
+        },
+        'usage' => {}
+      }
+
+      response = instance_double(Faraday::Response, body: response_body)
+      message = described_class.parse_completion_body(response_body, raw: response)
+
+      expect(message.tool_calls).to be_nil
+      expect(message.server_tool_calls.map(&:type)).to eq(%w[server_tool_use nova_grounding_result])
+      expect(message.server_tool_calls.first.name).to eq('nova_grounding')
+      expect(message.content).to eq('Ruby 4.0.6 is the latest stable version.')
+      expect(message.citations.first.url).to eq('https://ruby-lang.org')
+    end
+
+    it 'keeps toolUse blocks with the plain tool_use type as function calls' do
+      blocks = [
+        { 'toolUse' => { 'toolUseId' => 'tooluse_1', 'name' => 'weather', 'input' => {}, 'type' => 'tool_use' } }
+      ]
+
+      expect(described_class.parse_tool_calls(blocks)).to have_key('tooluse_1')
+      expect(described_class.extract_server_tool_calls(blocks)).to be_empty
+    end
+
     it 'renders SearchResults tool output as citable searchResult blocks' do
       results = RubyLLM::SearchResults.new(
         title: 'Ruby Facts',
