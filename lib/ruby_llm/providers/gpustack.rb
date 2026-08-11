@@ -9,6 +9,7 @@ module RubyLLM
         include GPUStack::Chat
         include GPUStack::Media
         include GPUStack::Models
+        include Protocols::ChatCompletions::Rerank
       end
 
       protocol :chat_completions, ChatCompletions

@@ -47,7 +47,7 @@ module RubyLLM
 
     # One physical provider request attempt and its accounting facts.
     class Entry
-      OPERATIONS = %i[chat embedding moderation image speech transcription ocr].freeze
+      OPERATIONS = %i[chat embedding moderation image speech transcription ocr rerank].freeze
       STATUSES = %i[pending succeeded failed cancelled].freeze
 
       attr_reader :operation, :provider, :model, :status, :tokens, :cost
@@ -112,7 +112,8 @@ module RubyLLM
         image: :images,
         speech: :audio_tokens,
         transcription: :audio_tokens,
-        ocr: :text_tokens
+        ocr: :text_tokens,
+        rerank: :embeddings
       }.freeze
 
       attr_reader :entries

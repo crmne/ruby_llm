@@ -12,6 +12,7 @@ module RubyLLM
           'embeddings/models',
           'models?output_modalities=speech',
           'models?output_modalities=transcription',
+          'models?output_modalities=rerank',
           'images/models'
         ].freeze
 

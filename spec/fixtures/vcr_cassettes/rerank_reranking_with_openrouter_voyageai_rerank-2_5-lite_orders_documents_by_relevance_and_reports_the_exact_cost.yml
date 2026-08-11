@@ -1,0 +1,62 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://openrouter.ai/api/v1/rerank
+    body:
+      encoding: UTF-8
+      string: '{"model":"voyageai/rerank-2.5-lite","query":"what is ruby","documents":["Paris
+        is the capital of France","Ruby is a programming language created by Matz"]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Http-Referer:
+      - https://rubyllm.com
+      X-Openrouter-Title:
+      - RubyLLM
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 11 Aug 2026 00:09:43 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - X-Generation-Id,X-Provider-Name,cf-ray
+      Set-Cookie:
+      - "<COOKIE>"
+      Permissions-Policy:
+      - payment=(self "https://checkout.stripe.com" "https://connect-js.stripe.com"
+        "https://js.stripe.com" "https://*.js.stripe.com" "https://hooks.stripe.com")
+      Referrer-Policy:
+      - no-referrer, strict-origin-when-cross-origin
+      X-Content-Type-Options:
+      - nosniff
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - "<CF_RAY>"
+    body:
+      encoding: ASCII-8BIT
+      string: '{"model":"rerank-2.5-lite","results":[{"index":1,"relevance_score":0.828125,"document":{"text":"Ruby
+        is a programming language created by Matz"}},{"index":0,"relevance_score":0.306640625,"document":{"text":"Paris
+        is the capital of France"}}],"usage":{"total_tokens":17,"cost":3.4e-7},"provider":"VoyageAI
+        by MongoDB","id":"gen-rerank-1786406983-r7Duwy1aOVyb5oX9zh66"}'
+  recorded_at: Tue, 11 Aug 2026 00:09:43 GMT
+recorded_with: VCR 6.4.0

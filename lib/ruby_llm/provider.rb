@@ -272,6 +272,11 @@ module RubyLLM
       protocol.new(self, model).ocr(file, model: model_id_for(model), options:)
     end
 
+    def rerank(query, documents, model:, top_n: nil, provider_options: {}) # :nodoc:
+      protocol = resolve_protocol(nil, model, operation: :rerank)
+      protocol.new(self, model).rerank(query, documents, model: model_id_for(model), top_n:, provider_options:)
+    end
+
     def upload_file(file, filename: nil, purpose: nil, expires_in: nil, visibility: nil, # :nodoc:
                     display_name: nil, uri: nil, content_type: nil)
       ensure_files_supported!

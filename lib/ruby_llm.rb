@@ -230,6 +230,17 @@ module RubyLLM
       OCR.ocr(...)
     end
 
+    # Ranks documents by relevance to a query on providers with a rerank
+    # endpoint. Arguments are forwarded to Rerank.rerank.
+    #
+    #   rerank = RubyLLM.rerank("what is ruby", docs,
+    #                           model: "voyageai/rerank-2.5-lite", provider: :openrouter)
+    #   rerank.results.first.document
+    #
+    def rerank(...)
+      Rerank.rerank(...)
+    end
+
     # Uploads a file to a provider and returns an UploadedFile that can be
     # reused across chats. Arguments are forwarded to UploadedFile.upload.
     #

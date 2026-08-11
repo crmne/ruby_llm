@@ -70,6 +70,7 @@ module RubyLLM
     abstract :render_speech_payload, :speech_url, :parse_speech_response
     abstract :render_transcription_payload, :transcription_url, :parse_transcription_response
     abstract :render_ocr_payload, :ocr_url, :parse_ocr_response
+    abstract :render_rerank_payload, :rerank_url, :parse_rerank_response
     abstract :render_count_tokens_payload, :count_tokens_url, :parse_count_tokens_response
     abstract :render_cache_payload, :render_cache_update_payload, :caches_url, :cache_url, :parse_cache_response
 
@@ -221,6 +222,16 @@ module RubyLLM
       end
     rescue NotImplementedError
       raise Error, "#{@provider.name} doesn't support OCR"
+    end
+
+    def rerank(query, documents, model:, top_n: nil, provider_options: {})
+      track_usage(:rerank) do
+        payload = render_rerank_payload(query, documents, model:, top_n:, provider_options:)
+        response = @connection.post rerank_url, payload, usage: @usage_tracker
+        parse_rerank_response(response, model:)
+      end
+    rescue NotImplementedError
+      raise Error, "#{@provider.name} doesn't support reranking"
     end
 
     def cache_content(content, model:, ttl: nil, instructions: nil, with: nil)
