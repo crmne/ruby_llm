@@ -83,10 +83,10 @@ module RubyLLM
       additional_properties true
     end
 
-    # The bare JSON Schema hash for one model entry. Validate a registry by
-    # passing <tt>list: true</tt> to the validator.
+    # The Draft 2020-12 JSON Schema document for one model entry. Wrap it in an
+    # array schema to validate a whole registry.
     def self.json_schema
-      new.to_json_schema[:schema]
+      new.to_json_schema
     end
   end
 end

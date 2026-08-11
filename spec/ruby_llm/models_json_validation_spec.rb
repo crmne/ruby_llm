@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-require 'json-schema'
+require 'json_schemer'
 
 RSpec.describe RubyLLM::Models do
   let(:models_json_path) { described_class.bundled_registry_file }
@@ -9,10 +9,11 @@ RSpec.describe RubyLLM::Models do
   it 'validates that models.json conforms to the schema' do
     models_data = JSON.parse(File.read(models_json_path))
 
-    validation_errors = JSON::Validator.fully_validate(RubyLLM::ModelSchema.json_schema, models_data, list: true)
+    registry = JSONSchemer.schema({ 'type' => 'array', 'items' => RubyLLM::ModelSchema.json_schema })
+    validation_errors = registry.validate(models_data).map { |error| "#{error['data_pointer']}: #{error['error']}" }
 
     expect(validation_errors).to be_empty,
-                                 "models.json has validation errors:\n#{validation_errors.join("\n")}"
+                                 "models.json has validation errors:\n#{validation_errors.first(20).join("\n")}"
   end
 
   it 'validates that all capabilities are arrays' do
