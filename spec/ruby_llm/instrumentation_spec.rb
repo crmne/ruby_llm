@@ -259,7 +259,8 @@ RSpec.describe RubyLLM::Instrumentation do
 
       expect(result).to eq(embedding)
       expect(provider).to have_received(:embed)
-        .with('hello', model: model, dimensions: nil, task_type: nil, title: nil, provider_options: provider_options)
+        .with('hello', model: model, dimensions: nil, task_type: nil, title: nil, with: nil,
+                       provider_options: provider_options)
       _event_name, payload = instrumenter.events.last
       expect(payload[:provider_options]).to eq(provider_options)
       expect(payload[:metadata]).to eq(metadata)

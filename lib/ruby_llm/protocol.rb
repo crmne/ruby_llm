@@ -153,9 +153,17 @@ module RubyLLM
       parse_list_models_response response, @provider.slug, @provider.capabilities
     end
 
-    def embed(text, model:, dimensions:, task_type: nil, title: nil, provider_options: {})
+    def embed(text, model:, dimensions:, task_type: nil, title: nil, with: nil, provider_options: {})
+      attachments = Attachment.wrap(with)
+      raise UnsupportedAttachmentError, attachments.first.mime_type if attachments.any? && !supports_embedding_media?
+
       track_usage(:embedding) do
-        payload = render_embedding_payload(text, model:, dimensions:, task_type:, title:, provider_options:)
+        payload = if attachments.any?
+                    render_embedding_payload(text, model:, dimensions:, task_type:, title:, with: attachments,
+                                                   provider_options:)
+                  else
+                    render_embedding_payload(text, model:, dimensions:, task_type:, title:, provider_options:)
+                  end
         response = @connection.post(embedding_url(model:), payload, usage: @usage_tracker)
         parse_embedding_response(response, model:, text:)
       end
@@ -196,6 +204,13 @@ module RubyLLM
         response = @connection.post transcription_url, payload, usage: @usage_tracker
         parse_transcription_response(response, model:)
       end
+    end
+
+    # Whether the protocol can embed media attachments alongside text.
+    # Protocols that support multimodal embeddings override this and accept
+    # a +with:+ array of Attachments in render_embedding_payload.
+    def supports_embedding_media?
+      false
     end
 
     def ocr(file, model:, options: {})

@@ -13,6 +13,11 @@ module RubyLLM
           "/model/#{model}/invoke"
         end
 
+        def ensure_no_embedding_media!(with)
+          attachments = Attachment.wrap(with)
+          raise UnsupportedAttachmentError, attachments.first.mime_type if attachments.any?
+        end
+
         def parse_single_embedding_responses(responses, model:, text:)
           vectors = responses.map { |response| extract_embedding(response.body) }
           input_tokens = Tokens.aggregate(embedding_attempt_tokens(responses)).input

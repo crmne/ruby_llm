@@ -320,7 +320,8 @@ RSpec.describe RubyLLM::Provider do
         .with(provider, routed_model)
         .exactly(5).times
       expect(protocol).to have_received(:embed)
-        .with('hello', model: routed_model.id, dimensions: nil, task_type: nil, title: nil, provider_options: {})
+        .with('hello', model: routed_model.id, dimensions: nil, task_type: nil, title: nil, with: nil,
+                       provider_options: {})
       expect(protocol).to have_received(:moderate).with('hello', model: routed_model.id, with: [],
                                                                  provider_options: {})
       expect(protocol).to have_received(:paint).with(

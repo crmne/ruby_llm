@@ -62,6 +62,9 @@ module RubyLLM
     #                 provider: :vertexai,
     #                 task_type: "RETRIEVAL_DOCUMENT",
     #                 title: "RubyLLM docs"
+    #   RubyLLM.embed "The Ruby logo",
+    #                 model: "gemini-embedding-2",
+    #                 with: "logo.png"
     #
     # +model:+ selects the embedding model and defaults to the
     # configured +default_embedding_model+. +provider:+ forces a specific
@@ -74,7 +77,11 @@ module RubyLLM
     # <tt>"RETRIEVAL_DOCUMENT"</tt>, while Bedrock Cohere takes an input
     # type such as <tt>"search_document"</tt>. +title:+ labels the
     # document on Vertex AI and Gemini retrieval tasks. Providers that
-    # have no task concept ignore both. +provider_options:+ takes options
+    # have no task concept ignore both. +with:+ passes one or more media
+    # attachments (images, audio, video, PDFs) to embed alongside the
+    # text on multimodal embedding models such as Gemini's
+    # gemini-embedding-2; providers without multimodal embeddings raise
+    # UnsupportedAttachmentError. +provider_options:+ takes options
     # in the provider's request vocabulary and merges them into the
     # request as-is. +metadata:+ is not sent to the provider; it is
     # attached to the emitted +embedding.ruby_llm+ instrumentation event.
@@ -86,6 +93,7 @@ module RubyLLM
                    dimensions: nil,
                    task_type: nil,
                    title: nil,
+                   with: nil,
                    provider_options: {},
                    metadata: nil)
       config = context&.config || RubyLLM.config
@@ -104,6 +112,7 @@ module RubyLLM
         dimensions: dimensions,
         task_type: task_type,
         title: title,
+        attachment_count: Attachment.wrap(with).size,
         provider_options: provider_options,
         metadata: metadata,
         tokens: empty_tokens,
@@ -111,7 +120,7 @@ module RubyLLM
       }
 
       RubyLLM.instrument('embedding.ruby_llm', payload, config: config) do |event|
-        result = provider_instance.embed(text, model:, dimensions:, task_type:, title:, provider_options:)
+        result = provider_instance.embed(text, model:, dimensions:, task_type:, title:, with:, provider_options:)
         event[:result] = result
         event[:response_model] = result.model
         event[:tokens] = result.tokens

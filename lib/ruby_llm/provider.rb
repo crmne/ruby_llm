@@ -223,10 +223,10 @@ module RubyLLM
       default_protocol.new(self).list_models
     end
 
-    def embed(text, model:, dimensions:, task_type: nil, title: nil, provider_options: {}) # :nodoc:
+    def embed(text, model:, dimensions:, task_type: nil, title: nil, with: nil, provider_options: {}) # :nodoc:
       protocol = resolve_protocol(nil, model, operation: :embed)
       protocol.new(self, model).embed(
-        text, model: model_id_for(model), dimensions:, task_type:, title:, provider_options:
+        text, model: model_id_for(model), dimensions:, task_type:, title:, with:, provider_options:
       )
     end
 

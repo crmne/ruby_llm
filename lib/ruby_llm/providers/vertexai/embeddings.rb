@@ -11,6 +11,10 @@ module RubyLLM
           "#{@provider.model_path(model)}:predict"
         end
 
+        def supports_embedding_media?
+          false
+        end
+
         # rubocop:disable Lint/UnusedMethodArgument
         def render_embedding_payload(text, model:, dimensions:, task_type: nil, title: nil, provider_options: {})
           instances = [text].flatten.map do |t|

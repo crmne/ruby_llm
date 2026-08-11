@@ -59,6 +59,39 @@ RSpec.describe RubyLLM::Embedding, :live do
     end
   end
 
+  describe 'multimodal embeddings' do
+    let(:image_path) { File.expand_path('../fixtures/ruby.png', __dir__) }
+
+    it 'gemini/gemini-embedding-2 embeds text with custom dimensions' do
+      embedding = RubyLLM.embed(test_text, model: 'gemini-embedding-2', provider: :gemini,
+                                           dimensions: test_dimensions)
+      expect(embedding.vectors).to be_an(Array)
+      expect(embedding.vectors.length).to eq(test_dimensions)
+      expect(embedding.vectors.first).to be_a(Float)
+      expect(embedding.model).to eq('gemini-embedding-2')
+    end
+
+    it 'gemini/gemini-embedding-2 embeds an image alongside text' do
+      embedding = RubyLLM.embed('The Ruby logo', model: 'gemini-embedding-2', provider: :gemini,
+                                                 with: image_path, dimensions: test_dimensions)
+      expect(embedding.vectors).to be_an(Array)
+      expect(embedding.vectors.length).to eq(test_dimensions)
+      expect(embedding.vectors.first).to be_a(Float)
+    end
+
+    it 'raises UnsupportedAttachmentError on providers without multimodal embeddings' do
+      expect do
+        RubyLLM.embed(test_text, model: 'text-embedding-3-small', provider: :openai, with: image_path)
+      end.to raise_error(RubyLLM::UnsupportedAttachmentError)
+    end
+
+    it 'rejects attachments alongside multiple texts' do
+      expect do
+        RubyLLM.embed(test_texts, model: 'gemini-embedding-2', provider: :gemini, with: image_path)
+      end.to raise_error(ArgumentError, /one text at a time/)
+    end
+  end
+
   describe 'Perplexity int8 embeddings' do
     it 'perplexity/pplx-embed-v1-0.6b decodes a single text into int8 vectors' do
       embedding = RubyLLM.embed(test_text, model: 'pplx-embed-v1-0.6b', provider: :perplexity)
