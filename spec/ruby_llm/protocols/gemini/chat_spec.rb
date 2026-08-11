@@ -16,7 +16,7 @@ RSpec.describe RubyLLM::Protocols::Gemini::Chat do
 
   describe '#convert_schema_to_gemini' do
     it 'extracts inner schema from wrapper format' do
-      # Simulate what RubyLLM::Schema.to_json_schema returns
+      # Simulate what Schematist::Schema.to_json_schema returns
       schema = {
         name: 'PersonSchema',
         schema: {

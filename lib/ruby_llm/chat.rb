@@ -494,10 +494,10 @@ module RubyLLM
     end
 
     # Sets the schema for structured output. Accepts a JSON Schema Hash, a
-    # RubyLLM::Schema class or instance, or any object responding to
+    # Schematist::Schema class or instance, or any object responding to
     # +to_json_schema+. Returns +self+.
     #
-    #   class PersonSchema < RubyLLM::Schema
+    #   class PersonSchema < Schematist::Schema
     #     string :name
     #     integer :age
     #   end
@@ -745,7 +745,12 @@ module RubyLLM
     end
 
     def extract_schema_definition(schema)
-      RubyLLM::Utils.deep_dup(schema[:schema] || schema)
+      definition = RubyLLM::Utils.deep_dup(schema[:schema] || schema)
+      return definition unless definition.is_a?(Hash)
+
+      # A bare JSON Schema document carries keys providers have no use for: the name is
+      # lifted into the envelope, and $schema describes the dialect, not the shape.
+      definition.except(:$schema, :title)
     end
 
     def extract_schema_strict(schema, schema_def)
@@ -757,7 +762,7 @@ module RubyLLM
 
     def build_schema_payload(schema, schema_def, strict)
       {
-        name: sanitize_schema_name(schema[:name] || 'response'),
+        name: sanitize_schema_name(schema[:name] || schema[:title] || 'response'),
         schema: schema_def,
         strict: strict.nil? || strict,
         description: schema[:description]

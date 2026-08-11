@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-require 'ruby_llm/schema'
+require 'schematist'
 
 module RubyLLM
   # Validation schema for entries in the model registry. The registry
   # builder validates refreshed registries against it before publishing,
   # and the spec suite validates the bundled models.json.
-  class ModelSchema < Schema # :nodoc:
+  class ModelSchema < Schematist::Schema # :nodoc:
     CAPABILITIES = %w[
       streaming function_calling tool_choice parallel_tool_calls
       structured_output predicted_outputs
@@ -83,10 +83,10 @@ module RubyLLM
       additional_properties true
     end
 
-    # The bare JSON Schema hash for one model entry. Validate a registry by
-    # passing <tt>list: true</tt> to the validator.
+    # The Draft 2020-12 JSON Schema document for one model entry. Wrap it in an
+    # array schema to validate a whole registry.
     def self.json_schema
-      new.to_json_schema[:schema]
+      new.to_json_schema
     end
   end
 end
