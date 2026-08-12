@@ -28,6 +28,12 @@ RSpec.describe RubyLLM::Provider do
         custom: 'https://deepseek-proxy.example.com',
         default: 'https://api.deepseek.com'
       },
+      elevenlabs: {
+        provider: RubyLLM::Providers::ElevenLabs,
+        key: :elevenlabs_api_base,
+        custom: 'https://api.eu.residency.elevenlabs.io',
+        default: 'https://api.elevenlabs.io'
+      },
       gemini: {
         provider: RubyLLM::Providers::Gemini,
         key: :gemini_api_base,
@@ -97,6 +103,8 @@ RSpec.describe RubyLLM::Provider do
         config.bedrock_region = 'us-east-1'
       when :deepseek
         config.deepseek_api_key = 'deepseek-key'
+      when :elevenlabs
+        config.elevenlabs_api_key = 'elevenlabs-key'
       when :gemini
         config.gemini_api_key = 'gemini-key'
       when :gpustack

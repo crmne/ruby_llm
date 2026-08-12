@@ -23,6 +23,7 @@ RSpec.shared_context 'with configured RubyLLM' do
       config.bedrock_batch_s3_uri = ENV.fetch('BEDROCK_BATCH_S3_URI', 's3://ruby-llm-test/batches')
       config.deepseek_api_base = ENV.fetch('DEEPSEEK_API_BASE', nil)
       config.deepseek_api_key = ENV.fetch('DEEPSEEK_API_KEY', 'test')
+      config.elevenlabs_api_key = ENV.fetch('ELEVENLABS_API_KEY', 'test')
       config.gemini_api_key = ENV.fetch('GEMINI_API_KEY', 'test')
       config.gpustack_api_base = ENV.fetch('GPUSTACK_API_BASE', 'http://localhost:11444/v1')
       config.gpustack_api_key = ENV.fetch('GPUSTACK_API_KEY', nil)
