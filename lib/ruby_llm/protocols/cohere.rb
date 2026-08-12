@@ -6,6 +6,7 @@ module RubyLLM
     # the platforms that serve Command, Embed, Rerank, and Transcribe models.
     class Cohere < Protocol
       include Cohere::Chat
+      include Cohere::Embeddings
       include Cohere::Media
       include Cohere::Streaming
       include Cohere::Tools

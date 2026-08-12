@@ -130,7 +130,18 @@ embedding = RubyLLM.embed(
 )
 ```
 
-Bedrock's Cohere models map `task_type:` to their `input_type` field, so pass values like `search_document`, `search_query`, or `classification`. Cohere has no title concept, so `title:` is ignored there.
+Cohere, on its own API and on Bedrock, maps `task_type:` to its `input_type` field, so pass values like `search_document`, `search_query`, `classification`, or `clustering`. `search_document` is the default. Cohere has no title concept, so `title:` is ignored there.
+
+Cohere's `embed-v4.0` embeds text and images into one vector. Pass the images with `with:`:
+
+```ruby
+embedding = RubyLLM.embed(
+  "a red gemstone on a white background",
+  model: "embed-v4.0",
+  provider: :cohere,
+  with: "gem.png"
+)
+```
 
 Providers that have no task concept, such as OpenAI, ignore both `task_type:` and `title:`.
 
