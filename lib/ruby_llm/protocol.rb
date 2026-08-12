@@ -85,12 +85,12 @@ module RubyLLM
 
     def complete(messages, tools:, temperature:, provider_options: {}, headers: {}, schema: nil, thinking: nil,
                  max_output_tokens: nil, citations: false, caching: nil, tool_prefs: nil, before_request: [],
-                 usage_recorder: nil, server_tools: [], safety_identifier: nil, &)
+                 usage_recorder: nil, server_tools: [], end_user: nil, &)
       resolution = resolve_server_tools_for_request(server_tools)
       headers = resolution.headers.merge(headers) if resolution
       payload = render(
         messages, tools:, tool_prefs:, temperature:, max_output_tokens:, provider_options:, schema:, thinking:,
-                  citations:, caching:, safety_identifier:, before_request:, server_tools:, stream: block_given?
+                  citations:, caching:, end_user:, before_request:, server_tools:, stream: block_given?
       )
 
       track_usage(:chat, on_finish: usage_recorder) do
@@ -109,7 +109,7 @@ module RubyLLM
 
     def render(messages, tools:, temperature:, provider_options: {}, schema: nil, thinking: nil,
                max_output_tokens: nil, citations: false, caching: nil, tool_prefs: nil, before_request: [],
-               stream: false, server_tools: [], safety_identifier: nil)
+               stream: false, server_tools: [], end_user: nil)
       payload = render_payload(
         messages,
         tools: tools,
@@ -123,7 +123,7 @@ module RubyLLM
         citations: citations,
         caching: caching
       )
-      payload = apply_safety_identifier(payload, safety_identifier) if safety_identifier
+      payload = apply_end_user(payload, end_user) if end_user
       payload = Utils.deep_merge(payload, provider_options)
       payload = apply_server_tools(payload, server_tools)
       apply_before_request_hooks(payload, before_request)
@@ -136,11 +136,11 @@ module RubyLLM
     # providers with no equivalent field simply omit it. Protocols whose
     # API accepts one override this.
     #
-    #   def apply_safety_identifier(payload, identifier)
+    #   def apply_end_user(payload, identifier)
     #     payload.merge(safety_identifier: identifier)
     #   end
     #
-    def apply_safety_identifier(payload, identifier)
+    def apply_end_user(payload, identifier)
       RubyLLM.logger.debug do
         "#{@provider.name} has no safety identifier parameter, dropping #{identifier}"
       end

@@ -125,7 +125,7 @@ module RubyLLM
           payload[:output_config] = payload.fetch(:output_config, {}).merge(build_output_config(schema)) if schema
         end
 
-        def apply_safety_identifier(payload, identifier)
+        def apply_end_user(payload, identifier)
           Utils.deep_merge(payload, { metadata: { user_id: identifier } })
         end
 

@@ -16,7 +16,7 @@ module RubyLLM
           SERVER_TOOL_ALIASES
         end
 
-        def apply_safety_identifier(payload, identifier)
+        def apply_end_user(payload, identifier)
           payload.merge(user_id: identifier)
         end
 

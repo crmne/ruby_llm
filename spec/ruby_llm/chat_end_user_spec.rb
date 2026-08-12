@@ -7,29 +7,29 @@ RSpec.describe RubyLLM::Chat do
 
   def render_with_identifier(model:, provider:, protocol: nil, identifier: 'user-123')
     RubyLLM.chat(model: model, provider: provider, protocol: protocol)
-           .with_safety_identifier(identifier)
+           .with_end_user(identifier)
            .ask_later('Hello')
            .render
   end
 
-  describe '#with_safety_identifier' do
+  describe '#with_end_user' do
     it 'returns self and remembers the identifier' do
       chat = RubyLLM.chat(model: 'gpt-4.1-nano', provider: :openai)
 
-      expect(chat.with_safety_identifier('user-123')).to be(chat)
-      expect(chat.safety_identifier).to eq('user-123')
+      expect(chat.with_end_user('user-123')).to be(chat)
+      expect(chat.end_user).to eq('user-123')
     end
 
-    it 'aliases with_user_id' do
-      chat = RubyLLM.chat(model: 'gpt-4.1-nano', provider: :openai).with_user_id('user-123')
+    it 'aliases with_end_user' do
+      chat = RubyLLM.chat(model: 'gpt-4.1-nano', provider: :openai).with_end_user('user-123')
 
-      expect(chat.safety_identifier).to eq('user-123')
+      expect(chat.end_user).to eq('user-123')
     end
 
     it 'clears the identifier when given nil' do
-      chat = RubyLLM.chat(model: 'gpt-4.1-nano', provider: :openai).with_safety_identifier('user-123')
+      chat = RubyLLM.chat(model: 'gpt-4.1-nano', provider: :openai).with_end_user('user-123')
 
-      expect(chat.with_safety_identifier(nil).safety_identifier).to be_nil
+      expect(chat.with_end_user(nil).end_user).to be_nil
     end
 
     it 'sends nothing when no identifier is set' do
@@ -78,7 +78,7 @@ RSpec.describe RubyLLM::Chat do
 
     it 'lets provider options override the mapped value' do
       payload = RubyLLM.chat(model: 'gpt-4.1-nano', provider: :openai)
-                       .with_safety_identifier('user-123')
+                       .with_end_user('user-123')
                        .with_provider_options(safety_identifier: 'override')
                        .ask_later('Hello')
                        .render

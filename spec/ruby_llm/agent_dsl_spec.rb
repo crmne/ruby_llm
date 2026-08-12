@@ -16,7 +16,7 @@ RSpec.describe RubyLLM::Agent do
         caching ttl: '1h'
         provider_options top_p: 0.9
         headers 'X-Test' => '1'
-        safety_identifier 'tenant-42'
+        end_user 'tenant-42'
       end
     end
 
@@ -29,7 +29,7 @@ RSpec.describe RubyLLM::Agent do
       expect(agent_class.caching).to eq(ttl: '1h')
       expect(agent_class.provider_options).to eq(top_p: 0.9)
       expect(agent_class.headers).to eq('X-Test' => '1')
-      expect(agent_class.safety_identifier).to eq('tenant-42')
+      expect(agent_class.end_user).to eq('tenant-42')
     end
 
     it 'defaults the collection macros to empty' do
@@ -42,7 +42,7 @@ RSpec.describe RubyLLM::Agent do
       expect(bare.caching).to be_nil
       expect(bare.provider_options).to eq({})
       expect(bare.headers).to eq({})
-      expect(bare.safety_identifier).to be_nil
+      expect(bare.end_user).to be_nil
       expect(bare.context).to be_nil
       expect(bare.chat_model).to be_nil
     end
@@ -65,7 +65,7 @@ RSpec.describe RubyLLM::Agent do
       expect(chat.instance_variable_get(:@provider_options)).to eq(top_p: 0.9)
       expect(chat.instance_variable_get(:@headers)).to eq('X-Test' => '1')
       expect(chat.instance_variable_get(:@thinking).effort).to eq('low')
-      expect(chat.safety_identifier).to eq('tenant-42')
+      expect(chat.end_user).to eq('tenant-42')
     end
 
     it 'binds a configured context to the chat it builds' do
@@ -137,10 +137,10 @@ RSpec.describe RubyLLM::Agent do
         model 'gpt-4.1-nano', provider: :openai
         inputs :tenant
 
-        safety_identifier { "tenant-#{tenant}" }
+        end_user { "tenant-#{tenant}" }
       end
 
-      expect(agent.chat(tenant: 'acme').safety_identifier).to eq('tenant-acme')
+      expect(agent.chat(tenant: 'acme').end_user).to eq('tenant-acme')
     end
 
     it 'leaves the chat alone when a block returns nothing' do

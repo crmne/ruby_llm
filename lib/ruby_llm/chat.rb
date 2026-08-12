@@ -56,9 +56,9 @@ module RubyLLM
     # The prompt caching options set with #with_caching, or +nil+.
     attr_reader :caching
 
-    # The opaque per-user identifier set with #with_safety_identifier, or
+    # The opaque per-user identifier set with #with_end_user, or
     # +nil+.
-    attr_reader :safety_identifier
+    attr_reader :end_user
 
     # The Fallback models tried in order when generation fails.
     attr_reader :fallbacks
@@ -97,7 +97,7 @@ module RubyLLM
       @thinking = nil
       @citations = false
       @caching = nil
-      @safety_identifier = nil
+      @end_user = nil
       @fallbacks = []
       @fallback_errors = Fallback::DEFAULT_ERRORS
       @callbacks = Hash.new { |callbacks, name| callbacks[name] = [] }
@@ -474,16 +474,14 @@ module RubyLLM
     # without an equivalent field omit it. Pass +nil+ to remove it.
     # Returns +self+.
     #
-    #   chat.with_safety_identifier("user-123").ask "Hello"
+    #   chat.with_end_user("user-123").ask "Hello"
     #
     # The value is sent as given, so use an opaque id such as a hash of
     # your user id, never personal data.
-    def with_safety_identifier(safety_identifier)
-      @safety_identifier = safety_identifier
+    def with_end_user(end_user)
+      @end_user = end_user
       self
     end
-
-    alias with_user_id with_safety_identifier
 
     # Rebinds the chat to +context+, a Context built with RubyLLM.context,
     # so subsequent requests use its configuration. Pass +nil+ to return to
@@ -713,7 +711,7 @@ module RubyLLM
         thinking: @thinking,
         citations: @citations,
         caching: @caching,
-        safety_identifier: @safety_identifier,
+        end_user: @end_user,
         protocol: @protocol,
         before_request: @callbacks[:before_request]
       )
@@ -975,7 +973,7 @@ module RubyLLM
         thinking: @thinking,
         citations: @citations,
         caching: @caching,
-        safety_identifier: @safety_identifier,
+        end_user: @end_user,
         protocol: @protocol,
         before_request: @callbacks[:before_request],
         usage_recorder: usage_recorder,

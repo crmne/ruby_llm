@@ -12,7 +12,7 @@ module RubyLLM
 
         module_function
 
-        def apply_safety_identifier(payload, identifier)
+        def apply_end_user(payload, identifier)
           payload.merge(user: identifier)
         end
 
