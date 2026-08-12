@@ -14,22 +14,25 @@ module RubyLLM
           editing?(with, mask) ? 'images/edits' : 'images/generations'
         end
 
-        def render_image_payload(prompt, model:, size:, with: nil, mask: nil, provider_options: {})
-          return render_edit_payload(prompt, model:, with:, provider_options:) if editing?(with, mask)
+        def render_image_payload(prompt, model:, size:, n: nil, with: nil, mask: nil, provider_options: {})
+          return render_edit_payload(prompt, model:, n:, with:, provider_options:) if editing?(with, mask)
 
           RubyLLM.logger.debug { "Ignoring size #{size}. xAI image generation does not support a size parameter." }
-          {
-            model: model,
-            prompt: prompt
-          }.merge(provider_options)
+          payload = { model: model, prompt: prompt }
+          payload[:n] = n if n
+
+          payload.merge(provider_options)
         end
 
-        def render_edit_payload(prompt, model:, with:, provider_options:)
-          {
+        def render_edit_payload(prompt, model:, with:, provider_options:, n: nil)
+          payload = {
             model: model,
             prompt: prompt,
             images: image_references(with)
-          }.merge(provider_options)
+          }
+          payload[:n] = n if n
+
+          payload.merge(provider_options)
         end
 
         def image_references(sources)
@@ -51,18 +54,24 @@ module RubyLLM
         end
 
         def parse_image_response(response, model:)
+          parse_image_responses(response, model:).first
+        end
+
+        def parse_image_responses(response, model:)
           data = response.body
-          image_data = Array(data['data']).first
+          entries = Array(data['data'])
 
-          raise Error, 'Unexpected response format from xAI image API' unless image_data
+          raise Error, 'Unexpected response format from xAI image API' if entries.empty?
 
-          Image.new(
-            url: image_data['url'],
-            data: image_data['b64_json'],
-            mime_type: image_data['mime_type'] || 'image/png',
-            model: model,
-            usage: data['usage'] || {}
-          )
+          entries.map.with_index do |image_data, index|
+            Image.new(
+              url: image_data['url'],
+              data: image_data['b64_json'],
+              mime_type: image_data['mime_type'] || 'image/png',
+              model: model,
+              usage: index.zero? ? (data['usage'] || {}) : {}
+            )
+          end
         end
 
         def validate_paint_inputs!(with:, mask:) # rubocop:disable Lint/UnusedMethodArgument

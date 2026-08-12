@@ -11,23 +11,27 @@ module RubyLLM
           "models/#{id}:#{image_endpoint_action(id)}"
         end
 
-        def render_image_payload(prompt, model:, size:, with: nil, mask: nil, provider_options: {}) # rubocop:disable Lint/UnusedMethodArgument
+        def render_image_payload(prompt, model:, size:, n: nil, with: nil, mask: nil, provider_options: {}) # rubocop:disable Lint/UnusedMethodArgument
           RubyLLM.logger.debug { "Ignoring size #{size}. Gemini does not support image size customization." }
           @model = model
           payload = if gemini_image_model?(model)
-                      render_gemini_image_payload(prompt, with:)
+                      render_gemini_image_payload(prompt, with:, n:)
                     else
-                      render_imagen_payload(prompt)
+                      render_imagen_payload(prompt, n:)
                     end
 
           Utils.deep_merge(payload, provider_options)
         end
 
         def parse_image_response(response, model:)
-          data = response.body
-          return parse_gemini_image_response(data, model:) if gemini_image_model?(model)
+          parse_image_responses(response, model:).first
+        end
 
-          parse_imagen_response(data, model:)
+        def parse_image_responses(response, model:)
+          data = response.body
+          return parse_gemini_image_responses(data, model:) if gemini_image_model?(model)
+
+          parse_imagen_responses(data, model:)
         end
 
         private
@@ -44,7 +48,7 @@ module RubyLLM
           raise UnsupportedAttachmentError, 'image reference'
         end
 
-        def render_imagen_payload(prompt)
+        def render_imagen_payload(prompt, n: nil)
           {
             instances: [
               {
@@ -52,12 +56,15 @@ module RubyLLM
               }
             ],
             parameters: {
-              sampleCount: 1
+              sampleCount: n || 1
             }
           }
         end
 
-        def render_gemini_image_payload(prompt, with:)
+        def render_gemini_image_payload(prompt, with:, n: nil)
+          generation_config = { responseModalities: %w[TEXT IMAGE] }
+          generation_config[:candidateCount] = n if n && n > 1
+
           {
             contents: [
               {
@@ -65,41 +72,43 @@ module RubyLLM
                 parts: Media.format_content(prompt, image_attachments(with))
               }
             ],
-            generationConfig: {
-              responseModalities: %w[TEXT IMAGE]
-            }
+            generationConfig: generation_config
           }
         end
 
-        def parse_imagen_response(data, model:)
-          image_data = data['predictions']&.first
-          unless image_data&.key?('bytesBase64Encoded')
-            raise Error, 'Unexpected response format from Gemini image generation API'
+        def parse_imagen_responses(data, model:)
+          predictions = Array(data['predictions']).select { |prediction| prediction['bytesBase64Encoded'] }
+          raise Error, 'Unexpected response format from Gemini image generation API' if predictions.empty?
+
+          predictions.map do |image_data|
+            Image.new(
+              data: image_data['bytesBase64Encoded'],
+              mime_type: image_data['mimeType'] || 'image/png',
+              model: model
+            )
           end
-
-          Image.new(
-            data: image_data['bytesBase64Encoded'],
-            mime_type: image_data['mimeType'] || 'image/png',
-            model: model
-          )
         end
 
-        def parse_gemini_image_response(data, model:)
-          image_data = gemini_image_part(data)
-          raise Error, 'Unexpected response format from Gemini image generation API' unless image_data
+        def parse_gemini_image_responses(data, model:)
+          parts = gemini_image_parts(data)
+          raise Error, 'Unexpected response format from Gemini image generation API' if parts.empty?
 
-          Image.new(
-            data: image_data['data'],
-            mime_type: image_data['mimeType'] || 'image/png',
-            model: data['modelVersion'] || model,
-            usage: gemini_image_usage(data)
-          )
+          parts.map.with_index do |image_data, index|
+            Image.new(
+              data: image_data['data'],
+              mime_type: image_data['mimeType'] || 'image/png',
+              model: data['modelVersion'] || model,
+              usage: index.zero? ? gemini_image_usage(data) : {}
+            )
+          end
         end
 
-        def gemini_image_part(data)
-          parts = data.dig('candidates', 0, 'content', 'parts') || []
-          parts.filter_map { |part| part['inlineData'] }.find do |inline_data|
-            image_mime_type?(inline_data['mimeType']) && inline_data['data']
+        def gemini_image_parts(data)
+          Array(data['candidates']).filter_map do |candidate|
+            parts = candidate.dig('content', 'parts') || []
+            parts.filter_map { |part| part['inlineData'] }.find do |inline_data|
+              image_mime_type?(inline_data['mimeType']) && inline_data['data']
+            end
           end
         end
 

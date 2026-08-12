@@ -242,10 +242,10 @@ module RubyLLM
       )
     end
 
-    def paint(prompt, model:, size:, with: nil, mask: nil, provider_options: {}) # :nodoc:
+    def paint(prompt, model:, size:, n: nil, with: nil, mask: nil, provider_options: {}) # :nodoc:
       protocol = resolve_protocol(nil, model, operation: :paint)
       protocol.new(self, model).paint(
-        prompt, model: model_id_for(model), size:, with:, mask:, provider_options:
+        prompt, model: model_id_for(model), size:, n:, with:, mask:, provider_options:
       )
     end
 

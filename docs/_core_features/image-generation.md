@@ -24,6 +24,7 @@ redirect_from:
 After reading this guide, you will know:
 
 *   How to generate images from text prompts.
+*   How to generate several images from one prompt in a single request.
 *   How to edit existing images with source images and masks.
 *   How to select different image generation models.
 *   How to specify image sizes (for supported models).
@@ -62,6 +63,23 @@ puts "Model Used: #{image.model}"
 ```
 
 The `paint` method abstracts the differences between provider APIs.
+
+## Generating Several Images at Once
+
+Pass `n:` to get several images from one request, which is cheaper and faster than repeating the call. RubyLLM returns an array when `n` is greater than 1, and a single image otherwise:
+
+```ruby
+images = RubyLLM.paint("a siamese cat", model: "imagen-4.0-generate-001", n: 4)
+
+images.each_with_index do |image, index|
+  image.save("cat-#{index}.png")
+end
+```
+
+`n:` maps to each provider's own parameter: `n` on OpenAI and xAI, `sampleCount` on Imagen, and `candidateCount` on Gemini image models. Providers that generate one image per request, such as OpenRouter, ignore it and return a single image.
+
+The call is billed once, and the usage lands on the first image, so `images.sum { |image| image.cost.total }` is the cost of the request.
+{: .note }
 
 ## Token Usage and Costs
 

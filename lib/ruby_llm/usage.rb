@@ -158,19 +158,22 @@ module RubyLLM
       end
 
       def succeed(result)
+        # A request that produced several results, like a multi-image
+        # generation, is billed once: the first result carries the call.
+        billed = result.is_a?(Array) ? result.first : result
         pending = @pending.dup
         if pending.empty?
-          attach_to_result(result)
+          attach_to_result(billed)
           return result
         end
 
-        tokens = result.respond_to?(:tokens) ? result.tokens : Tokens.new
-        cost = result.cost if result.respond_to?(:cost)
+        tokens = billed.respond_to?(:tokens) ? billed.tokens : Tokens.new
+        cost = billed.cost if billed.respond_to?(:cost)
         pending[0...-1].each do |entry|
           finish(entry, status: :succeeded, tokens: Tokens.new)
         end
         finish(pending.last, status: :succeeded, tokens:, cost:)
-        attach_to_result(result)
+        attach_to_result(billed)
         result
       end
 
@@ -211,7 +214,7 @@ module RubyLLM
       end
 
       def attach_to_result(result)
-        result.ruby_llm_usage_entries = entries
+        result&.ruby_llm_usage_entries = entries
       end
 
       def merge_stream_tokens(existing, incoming)

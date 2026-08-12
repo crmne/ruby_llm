@@ -54,6 +54,13 @@ RSpec/SpecFilePathFormat:
     OpenRouter: openrouter
     VertexAI: vertexai
 
+Naming/MethodParameterName:
+  inherit_mode:
+    merge:
+      - AllowedNames
+  AllowedNames:
+    - n # the image count, named after the provider parameter
+
 Style/OptionalBooleanParameter:
   AllowedMethods:
     - with_citations

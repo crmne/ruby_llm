@@ -14,31 +14,37 @@ module RubyLLM
           editing?(with, mask) ? 'images/edits' : 'images/generations'
         end
 
-        def render_image_payload(prompt, model:, size:, with: nil, mask: nil, provider_options: {})
-          return render_edit_payload(prompt, model:, size:, with:, mask:, provider_options:) if editing?(with, mask)
+        def render_image_payload(prompt, model:, size:, n: nil, with: nil, mask: nil, provider_options: {})
+          return render_edit_payload(prompt, model:, size:, n:, with:, mask:, provider_options:) if editing?(with, mask)
 
           {
             model: model,
             prompt: prompt,
-            n: 1,
+            n: n || 1,
             size: size
           }.merge(provider_options)
         end
 
         def parse_image_response(response, model:)
+          parse_image_responses(response, model:).first
+        end
+
+        def parse_image_responses(response, model:)
           data = response.body
-          image_data = Array(data['data']).first
+          entries = Array(data['data'])
 
-          raise Error, 'Unexpected response format from OpenAI image API' unless image_data
+          raise Error, 'Unexpected response format from OpenAI image API' if entries.empty?
 
-          Image.new(
-            url: image_data['url'],
-            mime_type: 'image/png', # DALL-E typically returns PNGs
-            revised_prompt: image_data['revised_prompt'],
-            model: model,
-            data: image_data['b64_json'],
-            usage: data['usage'] || {}
-          )
+          entries.map.with_index do |image_data, index|
+            Image.new(
+              url: image_data['url'],
+              mime_type: 'image/png', # DALL-E typically returns PNGs
+              revised_prompt: image_data['revised_prompt'],
+              model: model,
+              data: image_data['b64_json'],
+              usage: index.zero? ? (data['usage'] || {}) : {}
+            )
+          end
         end
 
         def validate_paint_inputs!(with:, mask:)
@@ -47,8 +53,8 @@ module RubyLLM
           raise ArgumentError, 'with: is required when mask: is provided' if mask && !attachments?(with)
         end
 
-        def render_edit_payload(prompt, model:, size:, with:, mask:, provider_options:)
-          payload = { model: model, prompt: prompt, n: 1 }
+        def render_edit_payload(prompt, model:, size:, with:, mask:, provider_options:, n: nil)
+          payload = { model: model, prompt: prompt, n: n || 1 }
           if json_image_references?(model)
             payload[:images] = build_image_references(with)
             payload[:mask] = build_image_reference(mask) if mask

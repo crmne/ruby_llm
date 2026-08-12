@@ -344,6 +344,7 @@ RSpec.describe RubyLLM::Provider do
         'hello',
         model: routed_model.id,
         size: '1024x1024',
+        n: nil,
         with: nil,
         mask: nil,
         provider_options: {}

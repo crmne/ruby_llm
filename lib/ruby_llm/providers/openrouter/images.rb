@@ -13,8 +13,9 @@ module RubyLLM
           'images'
         end
 
-        def render_image_payload(prompt, model:, size:, with: nil, mask: nil, provider_options: {}) # rubocop:disable Lint/UnusedMethodArgument
+        def render_image_payload(prompt, model:, size:, n: nil, with: nil, mask: nil, provider_options: {}) # rubocop:disable Lint/UnusedMethodArgument
           RubyLLM.logger.debug { "Ignoring size #{size}. Use aspect_ratio/resolution provider options instead." }
+          RubyLLM.logger.debug { "Ignoring n #{n}. OpenRouter generates one image per request." } if n && n > 1
           payload = { model: model, prompt: prompt }
           references = build_input_references(with)
           payload[:input_references] = references if references.any?
@@ -31,6 +32,11 @@ module RubyLLM
 
         def validate_paint_inputs!(with:, mask:) # rubocop:disable Lint/UnusedMethodArgument
           raise UnsupportedAttachmentError, 'image mask' unless mask.nil?
+        end
+
+        # OpenRouter's images endpoint returns one image per request.
+        def parse_image_responses(response, model:)
+          [parse_image_response(response, model:)]
         end
 
         def parse_image_response(response, model:)

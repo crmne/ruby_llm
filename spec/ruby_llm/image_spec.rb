@@ -111,6 +111,14 @@ RSpec.describe RubyLLM::Image, :live do
       end
     end
 
+    it 'gemini/imagen-4.0-generate-001 paints several images in one request' do
+      images = RubyLLM.paint('a siamese cat', model: 'imagen-4.0-generate-001', provider: :gemini, n: 2)
+
+      expect(images.length).to eq(2)
+      expect(images.map(&:mime_type)).to all(include('image'))
+      images.each { |image| save_and_verify_image image }
+    end
+
     it 'validates model existence' do
       expect do
         RubyLLM.paint('a cat', model: 'invalid-model')

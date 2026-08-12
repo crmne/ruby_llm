@@ -24,6 +24,18 @@ RSpec.describe RubyLLM::Protocols::Gemini::Images do
       )
     end
 
+    it 'asks Imagen for several samples in one request' do
+      payload = protocol.render_image_payload('a cat', model: 'imagen-4.0-generate-001', size: '1024x1024', n: 4)
+
+      expect(payload.dig(:parameters, :sampleCount)).to eq(4)
+    end
+
+    it 'asks Gemini image models for several candidates in one request' do
+      payload = protocol.render_image_payload('a cat', model: 'gemini-2.5-flash-image', size: '1024x1024', n: 3)
+
+      expect(payload.dig(:generationConfig, :candidateCount)).to eq(3)
+    end
+
     it 'uses generateContent for Gemini image models' do
       payload = protocol.render_image_payload('a cat', model: 'gemini-2.5-flash-image', size: '1792x1024')
 
@@ -138,6 +150,21 @@ RSpec.describe RubyLLM::Protocols::Gemini::Images do
       expect(image.model).to eq('gemini-2.5-flash-image-preview')
       expect(image.tokens.input).to eq(7)
       expect(image.tokens.output).to eq(9)
+    end
+
+    it 'returns every Imagen sample the request generated' do
+      response = double(
+        body: {
+          'predictions' => [
+            { 'bytesBase64Encoded' => 'first-image' },
+            { 'bytesBase64Encoded' => 'second-image' }
+          ]
+        }
+      )
+
+      images = protocol.parse_image_responses(response, model: 'imagen-4.0-generate-001')
+
+      expect(images.map(&:data)).to eq(%w[first-image second-image])
     end
 
     it 'raises when Gemini generateContent returns no image' do

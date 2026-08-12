@@ -192,15 +192,25 @@ module RubyLLM
       raise Error, "#{@provider.name} doesn't support moderation"
     end
 
-    def paint(prompt, model:, size:, with: nil, mask: nil, provider_options: {})
+    def paint(prompt, model:, size:, n: nil, with: nil, mask: nil, provider_options: {})
       track_usage(:image) do
         validate_paint_inputs!(with:, mask:)
-        payload = render_image_payload(prompt, model:, size:, with:, mask:, provider_options:)
+        payload = render_image_payload(prompt, model:, size:, n:, with:, mask:, provider_options:)
         response = @connection.post images_url(with:, mask:), payload, usage: @usage_tracker
-        parse_image_response(response, model:)
+        images = parse_image_responses(response, model:)
+        n.nil? || n <= 1 ? images.first : images
       end
     rescue NotImplementedError
       raise Error, "#{@provider.name} doesn't support image generation"
+    end
+
+    # Returns every Image in an image generation response, as an Array. The
+    # default asks for the one image parse_image_response reads; protocols
+    # whose API can return several images per request override it. Only the
+    # first image carries the call's usage, so summing across the array
+    # gives the cost of the call.
+    def parse_image_responses(response, model:)
+      Array(parse_image_response(response, model:))
     end
 
     # Video generation is asynchronous on every provider: this submits the

@@ -278,6 +278,7 @@ RSpec.describe RubyLLM::Instrumentation do
         'draw this',
         model: model,
         size: '1024x1024',
+        n: nil,
         with: nil,
         mask: nil,
         provider_options: provider_options
