@@ -94,7 +94,17 @@ module RubyLLM
     # +provider_options:+ takes options in the provider's request vocabulary
     # and merges them into the rendered request as-is.
     #
-    # Raises RubyLLM::ModelNotFoundError if +model:+ is not in the registry.
+    # Given a block, the transcript streams: each TranscriptionChunk is
+    # yielded as it arrives and the completed Transcription is still
+    # returned.
+    #
+    #   transcription = RubyLLM.transcribe("meeting.wav", model: "gpt-4o-transcribe") do |chunk|
+    #     print chunk.delta
+    #   end
+    #
+    # Raises RubyLLM::ModelNotFoundError if +model:+ is not in the registry,
+    # and RubyLLM::Error when a block is given to a provider that does not
+    # stream transcriptions.
     def self.transcribe(audio_file,
                         model: nil,
                         language: nil,
@@ -107,7 +117,8 @@ module RubyLLM
                         speaker_names: nil,
                         speaker_references: nil,
                         provider_options: {},
-                        metadata: nil)
+                        metadata: nil,
+                        &block)
       config = context&.config || RubyLLM.config
       model ||= config.default_transcription_model
       model, provider_instance = Models.resolve(model, provider: provider, assume_model_exists: assume_model_exists,
@@ -128,7 +139,7 @@ module RubyLLM
       RubyLLM.instrument('transcription.ruby_llm', payload, config: config) do |event|
         result = provider_instance.transcribe(audio_file, model:, language:, format:, speaker_names:,
                                                           speaker_references:, provider_options:, prompt:,
-                                                          temperature:)
+                                                          temperature:, &block)
         event[:result] = result
         event[:response_model] = result.model
         event[:tokens] = result.tokens

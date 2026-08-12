@@ -264,7 +264,7 @@ module RubyLLM
     end
 
     def transcribe(audio_file, model:, language:, format: nil, speaker_names: nil, # :nodoc:
-                   speaker_references: nil, provider_options: {}, prompt: nil, temperature: nil)
+                   speaker_references: nil, provider_options: {}, prompt: nil, temperature: nil, &)
       protocol = resolve_protocol(nil, model, operation: :transcribe)
       protocol.new(self, model).transcribe(
         audio_file,
@@ -275,7 +275,8 @@ module RubyLLM
         speaker_references:,
         provider_options:,
         prompt:,
-        temperature:
+        temperature:,
+        &
       )
     end
 

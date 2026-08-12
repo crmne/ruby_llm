@@ -249,10 +249,15 @@ module RubyLLM
     end
 
     # Transcribes an audio file and returns a Transcription. Arguments are
-    # forwarded to Transcription.transcribe.
+    # forwarded to Transcription.transcribe. Given a block, the transcript
+    # streams as TranscriptionChunk objects.
     #
     #   transcription = RubyLLM.transcribe("meeting.wav")
     #   transcription.text
+    #
+    #   RubyLLM.transcribe("meeting.wav", model: "gpt-4o-transcribe") do |chunk|
+    #     print chunk.delta
+    #   end
     #
     def transcribe(...)
       Transcription.transcribe(...)

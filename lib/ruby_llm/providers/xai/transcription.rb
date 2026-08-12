@@ -14,6 +14,11 @@ module RubyLLM
           'stt'
         end
 
+        # The xAI Voice API returns the whole transcript at once.
+        def stream_transcription(*, **, &)
+          raise_transcription_streaming_unsupported
+        end
+
         # rubocop:disable Lint/UnusedMethodArgument
         def render_transcription_payload(file_part, model:, language:, format: nil, speaker_names: nil,
                                          speaker_references: nil, provider_options: {}, prompt: nil,

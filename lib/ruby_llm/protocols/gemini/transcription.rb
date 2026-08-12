@@ -10,6 +10,8 @@ module RubyLLM
         # rubocop:disable  Lint/UnusedMethodArgument
         def transcribe(audio_file, model:, language:, format: nil, speaker_names: nil,
                        speaker_references: nil, provider_options: {}, prompt: nil, temperature: nil)
+          raise_transcription_streaming_unsupported if block_given?
+
           track_usage(:transcription) do
             attachment = Attachment.new(audio_file)
             payload = render_transcription_payload(attachment, language:, format:, provider_options:, prompt:,

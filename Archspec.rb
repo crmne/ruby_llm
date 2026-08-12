@@ -31,6 +31,7 @@ component :domain, in: %w[
   lib/ruby_llm/tool_call.rb
   lib/ruby_llm/tool_concurrency.rb
   lib/ruby_llm/transcription.rb
+  lib/ruby_llm/transcription_chunk.rb
   lib/ruby_llm/usage.rb
   lib/ruby_llm/uploaded_file.rb
   lib/ruby_llm/uploaded_file/**/*.rb

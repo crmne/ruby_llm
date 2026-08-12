@@ -10,12 +10,26 @@ module RubyLLM
 
     def stream_response(payload, additional_headers = {}, &block)
       accumulator = StreamAccumulator.new
-      on_data = handle_stream do |chunk|
+
+      response = stream_events(stream_url, payload, additional_headers) do |data|
+        chunk = build_chunk(data)
         accumulator.add chunk
         block.call chunk
       end
 
-      response = @connection.post stream_url, payload, usage: @usage_tracker do |req|
+      message = accumulator.to_message(response)
+      RubyLLM.logger.debug { "Stream completed: #{message.content}" }
+      message
+    end
+
+    # Posts +payload+ to +url+ as a server-sent event stream, yielding each
+    # parsed event Hash. Returns the Faraday response.
+    def stream_events(url, payload, additional_headers = {}, &block)
+      on_data = build_on_data_handler do |data|
+        block.call(data) if data.is_a?(Hash)
+      end
+
+      @connection.post url, payload, usage: @usage_tracker do |req|
         req.headers = additional_headers.merge(req.headers) unless additional_headers.empty?
         if faraday_1?
           req.options[:on_data] = on_data
@@ -23,10 +37,6 @@ module RubyLLM
           req.options.on_data = on_data
         end
       end
-
-      message = accumulator.to_message(response)
-      RubyLLM.logger.debug { "Stream completed: #{message.content}" }
-      message
     end
 
     def handle_stream(&block)

@@ -39,6 +39,43 @@ RSpec.describe RubyLLM::Transcription, :live do
       expect(transcription.segments.first).to have_key('speaker_id')
     end
 
+    it 'openai/gpt-4o-transcribe streams text deltas and returns the final transcription' do
+      chunks = []
+
+      transcription = RubyLLM.transcribe(audio_path, model: 'gpt-4o-transcribe', provider: :openai) do |chunk|
+        chunks << chunk
+      end
+
+      expect(chunks).not_to be_empty
+      expect(chunks.first).to be_a(RubyLLM::TranscriptionChunk)
+      expect(chunks.filter_map(&:delta).join).to match(/ruby/i)
+      expect(chunks.last).to be_done
+      expect(transcription.text).to match(/ruby/i)
+      expect(transcription.model).to eq('gpt-4o-transcribe')
+    end
+
+    it 'openai/gpt-4o-transcribe-diarize streams segments labelled with speakers' do
+      chunks = []
+
+      transcription = RubyLLM.transcribe(audio_path, model: 'gpt-4o-transcribe-diarize', provider: :openai) do |chunk|
+        chunks << chunk
+      end
+
+      segments = chunks.select(&:segment?)
+      expect(segments).not_to be_empty
+      expect(segments.first.segment).to have_key('speaker')
+      expect(transcription.text).to match(/ruby/i)
+      expect(transcription.segments).to eq(segments.map(&:segment))
+    end
+
+    it 'raises for providers that do not stream transcriptions' do
+      [[:gemini, 'gemini-2.5-flash'], [:mistral, 'voxtral-mini-latest'], [:xai, 'grok-stt']].each do |provider, model|
+        expect do
+          RubyLLM.transcribe(audio_path, model: model, provider: provider) { |chunk| chunk }
+        end.to raise_error(RubyLLM::Error, /doesn't support streaming transcription/)
+      end
+    end
+
     it 'validates model existence' do
       expect do
         RubyLLM.transcribe(audio_path, model: 'invalid-transcription-model')

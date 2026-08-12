@@ -219,15 +219,29 @@ module RubyLLM
     end
 
     def transcribe(audio_file, model:, language:, format: nil, speaker_names: nil,
-                   speaker_references: nil, provider_options: {}, prompt: nil, temperature: nil)
+                   speaker_references: nil, provider_options: {}, prompt: nil, temperature: nil, &block)
+      streaming = block_given?
       track_usage(:transcription) do
         file_part = build_audio_file_part(audio_file)
         payload = render_transcription_payload(file_part, model:, language:, format:, speaker_names:,
                                                           speaker_references:, provider_options:, prompt:,
                                                           temperature:)
+        next stream_transcription(payload, model:, &block) if streaming
+
         response = @connection.post transcription_url, payload, usage: @usage_tracker
         parse_transcription_response(response, model:)
       end
+    end
+
+    # Streams a transcription, yielding TranscriptionChunk objects and
+    # returning the final Transcription. Protocols whose provider streams
+    # transcriptions override this.
+    def stream_transcription(*, **, &)
+      raise_transcription_streaming_unsupported
+    end
+
+    def raise_transcription_streaming_unsupported # :nodoc:
+      raise Error, "#{@provider.name} doesn't support streaming transcription"
     end
 
     # Whether the protocol can embed media attachments alongside text.

@@ -28,6 +28,7 @@ After reading this guide, you will know:
 *   How to identify different speakers with diarization.
 *   How to improve accuracy with language hints and prompts.
 *   How to access segments and timestamps.
+*   How to stream a transcript as it is produced.
 
 ## Basic Transcription
 
@@ -157,6 +158,42 @@ RubyLLM.transcribe(
 ```
 
 > **Note:** Gemini models currently return plain text transcripts without segment metadata. Use OpenAI's diarization models when you need speaker labels or timestamps.
+
+## Streaming Transcripts
+
+Pass a block to stream the transcript as the model produces it. RubyLLM yields a `RubyLLM::TranscriptionChunk` for every event and still returns the completed `RubyLLM::Transcription`:
+
+```ruby
+transcription = RubyLLM.transcribe("meeting.wav", model: "gpt-4o-transcribe") do |chunk|
+  print chunk.delta if chunk.delta?
+end
+
+puts transcription.text
+```
+
+Each chunk reports its provider event `type`, and the predicates tell you which fields are filled in:
+
+| Type | Predicate | What it carries |
+| :--- | :--- | :--- |
+| `transcript.text.delta` | `chunk.delta?` | `chunk.delta`, the text just transcribed |
+| `transcript.text.segment` | `chunk.segment?` | `chunk.segment`, a Hash with `text`, `speaker`, `start`, and `end` |
+| `transcript.text.done` | `chunk.done?` | `chunk.text`, the complete transcript |
+
+`chunk.raw` holds the parsed provider event when you need a field RubyLLM does not normalize.
+
+Diarization models stream segments instead of deltas, which is how you get speaker labels in real time:
+
+```ruby
+transcription = RubyLLM.transcribe("team-meeting.wav", model: "gpt-4o-transcribe-diarize") do |chunk|
+  next unless chunk.segment?
+
+  puts "#{chunk.segment['speaker']}: #{chunk.segment['text']}"
+end
+
+transcription.segments.size
+```
+
+Streaming is available on OpenAI's `gpt-4o-transcribe` family (and on Azure and OpenAI-compatible providers that proxy it). Whisper does not stream. Passing a block to a provider that does not stream transcriptions raises `RubyLLM::Error`.
 
 ## Improving Accuracy with Prompts
 
