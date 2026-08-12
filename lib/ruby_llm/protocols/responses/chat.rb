@@ -358,7 +358,7 @@ module RubyLLM
         end
 
         def provider_file_attachable?(attachment)
-          attachment.pdf?
+          attachment.pdf? || attachment.document?
         end
 
         def provider_file_upload_options(_attachment)

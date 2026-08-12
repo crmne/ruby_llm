@@ -38,9 +38,10 @@ module RubyLLM
           }
         end
 
+        # The Responses API extracts text from documents, presentations, and
+        # spreadsheets as well as PDFs, so every document attachment rides
+        # along as a native input_file.
         def format_document(document)
-          raise UnsupportedAttachmentError, document.mime_type unless document.pdf?
-
           {
             type: 'input_file',
             filename: document.filename,

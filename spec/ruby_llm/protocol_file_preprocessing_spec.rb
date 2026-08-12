@@ -64,6 +64,24 @@ RSpec.describe RubyLLM::Protocol do
     expect(processed.attachments.first.provider_file_id).to eq('file_123')
   end
 
+  it 'uploads oversized Responses documents beyond PDFs' do
+    provider = RubyLLM::Providers::OpenAI.new(RubyLLM.config)
+    protocol = RubyLLM::Protocols::Responses.new(provider, model)
+    attachment = RubyLLM::Attachment.new(StringIO.new('docx bytes'), filename: 'large.docx')
+    allow(attachment).to receive(:byte_size).and_return(60 * 1024 * 1024)
+    uploaded = RubyLLM::UploadedFile.new(
+      id: 'file_456',
+      provider: 'openai',
+      filename: 'large.docx',
+      mime_type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+    )
+    allow(provider).to receive(:upload_file).with(attachment, purpose: 'user_data').and_return(uploaded)
+
+    message = RubyLLM::Message.new(role: :user, content: 'Summarize this', attachments: [attachment])
+
+    expect(protocol.preprocess_message(message).attachments.first.provider_file_id).to eq('file_456')
+  end
+
   it 'raises before uploading files above the provider file limit' do
     provider = RubyLLM::Providers::OpenRouter.new(RubyLLM.config)
     protocol = RubyLLM::Providers::OpenRouter::ChatCompletions.new(provider, model)

@@ -129,6 +129,20 @@ puts response.content
 Be mindful of provider-specific limits. Large PDFs may be uploaded through the provider Files API when the selected provider supports stored file references in chat. The document still has to fit the model's context and modality limits.
 {: .note }
 
+### Working with Office Documents
+
+Word documents, presentations, and spreadsheets attach the same way. Providers that read them natively (OpenAI on the Responses API, Bedrock, Mistral) extract the text themselves:
+
+```ruby
+chat = RubyLLM.chat(model: '{{ site.models.openai_current }}')
+
+response = chat.ask "What is the project codename in this document?", with: "brief.docx"
+response = chat.ask "Which region had the highest revenue?", with: "sales.xlsx"
+```
+
+Providers without native document support raise `RubyLLM::UnsupportedAttachmentError`. Convert those files to PDF or text first.
+{: .note }
+
 ### Automatic File Type Detection
 
 RubyLLM automatically detects file types based on extensions and content, so you can pass files directly without specifying the type:

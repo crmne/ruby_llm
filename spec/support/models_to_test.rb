@@ -104,11 +104,13 @@ PDF_MODELS = [
 DOCUMENT_MODELS = [
   { provider: :bedrock, model: 'claude-sonnet-4-5' },
   { provider: :mistral, model: 'mistral-small-latest' },
+  { provider: :openai, model: 'gpt-5-nano' },
   { provider: :perplexity, model: 'sonar-pro' }
 ].freeze
 
 SPREADSHEET_MODELS = [
-  { provider: :bedrock, model: 'claude-sonnet-4-5' }
+  { provider: :bedrock, model: 'claude-sonnet-4-5' },
+  { provider: :openai, model: 'gpt-5-nano' }
 ].freeze
 
 vision_models = [
