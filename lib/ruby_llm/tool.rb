@@ -38,6 +38,8 @@ module RubyLLM
   # structure.
   class Tool
     POSITIONAL_PARAMETER_KINDS = %i[req opt rest].freeze # :nodoc:
+    KEYWORD_PARAMETER_KINDS = %i[keyreq key].freeze # :nodoc:
+    TOOL_CALL_KEYWORD = :tool_call # :nodoc:
 
     class << self
       attr_reader :parameters_schema_definition, :approval_resolver # :nodoc:
@@ -239,12 +241,13 @@ module RubyLLM
       end
     end
 
-    def call(args) # :nodoc:
+    def call(args, tool_call: nil) # :nodoc:
       normalized_args = normalize_args(args)
       validation_error = validate_keyword_arguments(normalized_args)
       return { error: "Invalid tool arguments: #{validation_error}" } if validation_error
 
       RubyLLM.logger.debug { "Tool #{name} called with: #{normalized_args.inspect}" }
+      normalized_args[TOOL_CALL_KEYWORD] = tool_call if execute_accepts_tool_call?
       result = execute(**normalized_args)
       RubyLLM.logger.debug { "Tool #{name} returned: #{result.inspect}" }
       result
@@ -255,6 +258,16 @@ module RubyLLM
     # NotImplementedError. The return value is sent back to the model.
     # Return a Hash like <tt>{ error: "..." }</tt> to report a recoverable
     # failure.
+    #
+    # Declare an optional +tool_call:+ keyword to receive the ToolCall being
+    # executed. The keyword is reserved: it never appears in the tool's
+    # argument schema and is filled in by RubyLLM, not by the model.
+    #
+    #   def execute(query:, tool_call: nil)
+    #     AuditLog.create!(tool_call_id: tool_call&.id)
+    #     Search.run(query)
+    #   end
+    #
     def execute(...)
       raise NotImplementedError, 'Subclasses must implement #execute'
     end
@@ -285,8 +298,14 @@ module RubyLLM
       nil
     end
 
+    def execute_accepts_tool_call? # :nodoc:
+      method(:execute).parameters.any? do |kind, name|
+        name == TOOL_CALL_KEYWORD && KEYWORD_PARAMETER_KINDS.include?(kind)
+      end
+    end
+
     def execute_keyword_signature # :nodoc:
-      keyword_signature = method(:execute).parameters
+      keyword_signature = method(:execute).parameters.reject { |_, name| name == TOOL_CALL_KEYWORD }
       required_keywords = keyword_signature.filter_map { |kind, name| name if kind == :keyreq }
       optional_keywords = keyword_signature.filter_map { |kind, name| name if kind == :key }
       accepts_extra_keywords = keyword_signature.any? { |kind, _| kind == :keyrest }

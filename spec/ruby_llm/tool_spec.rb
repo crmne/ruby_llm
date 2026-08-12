@@ -146,6 +146,67 @@ RSpec.describe RubyLLM::Tool do
 
       expect(result).to eq([{ legacy: true }])
     end
+
+    context 'with a tool_call keyword' do
+      let(:tool_call) { RubyLLM::ToolCall.new(id: 'call_1', name: 'audited', arguments: { 'query' => 'ruby' }) }
+
+      it 'passes the current ToolCall to tools that declare tool_call:' do
+        stub_const('AuditedTool', Class.new(described_class) do
+          def execute(query:, tool_call: nil)
+            { query: query, tool_call_id: tool_call&.id }
+          end
+        end)
+
+        result = AuditedTool.new.call({ 'query' => 'ruby' }, tool_call: tool_call)
+
+        expect(result).to eq(query: 'ruby', tool_call_id: 'call_1')
+      end
+
+      it 'does not pass the ToolCall to tools that do not declare it' do
+        stub_const('PlainTool', Class.new(described_class) do
+          def execute(query:)
+            query
+          end
+        end)
+
+        expect(PlainTool.new.call({ 'query' => 'ruby' }, tool_call: tool_call)).to eq('ruby')
+      end
+
+      it 'stays callable without a tool call' do
+        stub_const('StandaloneTool', Class.new(described_class) do
+          def execute(query:, tool_call: nil)
+            [query, tool_call]
+          end
+        end)
+
+        expect(StandaloneTool.new.call({ 'query' => 'ruby' })).to eq(['ruby', nil])
+      end
+
+      it 'rejects tool_call as a model-provided argument' do
+        stub_const('GuardedTool', Class.new(described_class) do
+          def execute(query:, tool_call: nil)
+            [query, tool_call]
+          end
+        end)
+
+        result = GuardedTool.new.call({ 'query' => 'ruby', 'tool_call' => 'spoofed' }, tool_call: tool_call)
+
+        expect(result).to eq({ error: 'Invalid tool arguments: unknown keyword: tool_call' })
+      end
+
+      it 'keeps tool_call out of the inferred argument schema' do
+        stub_const('InferredAuditedTool', Class.new(described_class) do
+          def execute(query:, tool_call: nil)
+            [query, tool_call]
+          end
+        end)
+
+        schema = InferredAuditedTool.new.parameters_schema
+
+        expect(schema['properties'].keys).to eq(['query'])
+        expect(schema['required']).to eq(['query'])
+      end
+    end
   end
 
   describe '#parameters_schema' do

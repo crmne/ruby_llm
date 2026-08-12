@@ -26,6 +26,7 @@ After reading this guide, you will know:
 * How to limit how many tool calls appear in one assistant response.
 * How to require a human decision before a tool executes.
 * How to run multiple tool calls concurrently for I/O-bound work.
+* How to access the executing tool call from inside a tool.
 * What happens when a model does not support function calling.
 * How to observe tool calls and results with callbacks.
 * How to cap tool usage to prevent runaway loops.
@@ -241,6 +242,24 @@ chat_record.with_tools(Weather, StockPrice).with_tool_options(concurrency: :fibe
 
 With concurrency enabled, tool results are added back to the conversation as each tool finishes. RubyLLM waits
 for all tool results before asking the model for the next response.
+
+## Accessing the Current Tool Call
+
+A tool sometimes needs to know which invocation triggered it, for example to attribute an audit log entry or an outbound API call to the exact tool call. Declare an optional `tool_call:` keyword on `execute` and RubyLLM fills it with the executing `ToolCall`:
+
+```ruby
+class SearchTool < RubyLLM::Tool
+  description "Searches the knowledge base"
+  parameter :query, description: "Search query"
+
+  def execute(query:, tool_call: nil)
+    AuditLog.create!(tool_call_id: tool_call&.id, tool_name: tool_call&.name)
+    KnowledgeBase.search(query)
+  end
+end
+```
+
+The keyword is reserved: it never appears in the tool's argument schema, the model cannot set it, and tools that don't declare it are called exactly as before. Because the identity arrives as a method argument rather than thread-local state, it stays correct under [concurrent tool execution](#concurrent-tool-execution).
 
 ## Model Compatibility
 

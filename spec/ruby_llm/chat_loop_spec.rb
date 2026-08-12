@@ -208,6 +208,24 @@ RSpec.describe RubyLLM::Chat do
 
       expect { chat.run_tools }.not_to(change { chat.messages.size })
     end
+
+    it 'passes the executing ToolCall to tools that declare tool_call:' do
+      stub_const('AttributedEchoTool', Class.new(RubyLLM::Tool) do
+        description 'Echoes the given text'
+        parameter :text, description: 'Text to echo'
+
+        def execute(text:, tool_call: nil)
+          "#{text} via #{tool_call.id}"
+        end
+      end)
+      chat = described_class.new(model: 'claude-haiku-4-5').with_tools(AttributedEchoTool)
+      chat.ask_later('Echo "hello" back to me.')
+      chat.add_message tool_call_message(name: 'attributed_echo')
+
+      chat.run_tools
+
+      expect(chat.messages.last.content).to eq('hello via call_1')
+    end
   end
 
   describe '#step' do
