@@ -213,6 +213,11 @@ RSpec.describe RubyLLM::Model do
       video = described_class.new(data.merge(modalities: { input: %w[text], output: %w[video] }))
       expect(video.type).to eq('video')
     end
+
+    it 'returns rerank for rerank output models' do
+      reranker = described_class.new(data.merge(modalities: { input: %w[text], output: %w[rerank] }))
+      expect(reranker.type).to eq('rerank')
+    end
   end
 
   describe '#label' do

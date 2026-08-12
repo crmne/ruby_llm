@@ -30,7 +30,7 @@ module RubyLLM
       'xai' => 'xai'
     }.freeze
     MODELS_DEV_INPUT_MODALITIES = %w[text image audio pdf video file].freeze # :nodoc:
-    MODELS_DEV_OUTPUT_MODALITIES = %w[text image audio video embeddings moderation].freeze # :nodoc:
+    MODELS_DEV_OUTPUT_MODALITIES = %w[text image audio video embeddings moderation rerank].freeze # :nodoc:
     MODELS_DEV_AUTHORITY_CAPABILITIES = %w[function_calling structured_output reasoning vision].freeze # :nodoc:
     # First-party providers outrank the aggregators that resell their models.
     PROVIDER_PREFERENCE = %w[

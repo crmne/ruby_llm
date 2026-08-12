@@ -69,10 +69,17 @@ jobs:
 
           if ! bundle exec ruby -Ilib -e '
             require "ruby_llm"
-            require "json-schema"
+            require "json_schemer"
             data = JSON.parse(File.read(ARGV.fetch(0)))
-            errors = JSON::Validator.fully_validate(RubyLLM::ModelSchema.json_schema, data, list: true)
-            abort(errors.first(5).join("\n")) unless errors.empty?
+            registry_schema = {
+              "$schema" => "https://json-schema.org/draft/2020-12/schema",
+              "type" => "array",
+              "items" => RubyLLM::ModelSchema.json_schema
+            }
+            errors = JSONSchemer.schema(registry_schema).validate(data).first(5).map do |error|
+              "#{error["data_pointer"]}: #{error["error"]}"
+            end
+            abort(errors.join("\n")) unless errors.empty?
           ' "$registry"; then
             cp lib/ruby_llm/models.json "$registry"
           fi

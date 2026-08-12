@@ -89,6 +89,18 @@ RSpec.describe RubyLLM::Providers::OpenRouter::Models do
       expect(model.created_at).to be_nil
       expect(model.capabilities).to be_empty
     end
+
+    it 'preserves the rerank output modality' do
+      response = response_for(
+        'id' => 'voyageai/rerank-2.5-lite',
+        'architecture' => { 'input_modalities' => ['text'], 'output_modalities' => ['rerank'] }
+      )
+
+      model = parser.parse_list_models_response(response, 'openrouter', nil).first
+
+      expect(model.modalities.to_h).to eq(input: ['text'], output: ['rerank'])
+      expect(model.type).to eq('rerank')
+    end
   end
 
   describe '#supported_parameters_to_capabilities' do

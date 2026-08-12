@@ -153,7 +153,7 @@ module RubyLLM
 
     # Returns the model's primary function, inferred from its output
     # modalities: <tt>"chat"</tt>, <tt>"embedding"</tt>, <tt>"moderation"</tt>,
-    # <tt>"image"</tt>, <tt>"audio"</tt>, or <tt>"video"</tt>.
+    # <tt>"image"</tt>, <tt>"audio"</tt>, <tt>"video"</tt>, or <tt>"rerank"</tt>.
     def type
       output = modalities.output
       return 'embedding' if output.include?('embeddings')
@@ -161,6 +161,7 @@ module RubyLLM
       return 'image' if output.include?('image')
       return 'audio' if output.include?('audio')
       return 'video' if output.include?('video')
+      return 'rerank' if output.include?('rerank')
 
       'chat'
     end
