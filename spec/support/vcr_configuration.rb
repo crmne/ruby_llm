@@ -101,8 +101,9 @@ VCR.configure do |config|
         interaction.request.headers['Authorization'].map do |value|
           case value
           when /\AAWS4-HMAC-SHA256 /i
-            'AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request, ' \
-            'SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>'
+            service = value[%r{/\d{8}/[^/]+/([^/]+)/aws4_request}, 1] || 'bedrock'
+            "AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/#{service}/aws4_request, " \
+              'SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>'
           when /\ABearer /i
             'Bearer <AUTH_TOKEN>'
           else

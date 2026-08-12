@@ -52,7 +52,20 @@ RSpec.describe RubyLLM::Providers::Bedrock::Mantle do
     end
   end
 
-  describe 'live coverage', skip: 'Bedrock account has no Claude 4.7+/5 model access enabled yet' do
+  describe 'signed requests', :live do
+    it 'reaches the mantle endpoint with bedrock-mantle credentials' do
+      url = 'v1/models'
+      headers = provider.sign_headers('GET', url, '', base_url: provider.mantle_api_base,
+                                                      service: described_class::SIGNING_SERVICE)
+
+      response = provider.mantle_connection.get(url) { |req| req.headers.merge!(headers) }
+
+      expect(response.body['data']).to be_an(Array)
+      expect(response.body['data'].map { |model| model['id'] }).to include(a_string_including('anthropic.claude'))
+    end
+  end
+
+  describe 'chat', skip: 'Claude on the mantle endpoint requires an AWS Sales agreement for this account' do
     it 'chats with the newest Claude generation' do
       chat = RubyLLM.chat(model: 'anthropic.claude-sonnet-5', provider: :bedrock, assume_model_exists: true)
       response = chat.ask('Say OK and nothing else.')
