@@ -23,6 +23,7 @@ loader.inflector.inflect(
   'deepseek' => 'DeepSeek',
   'gpustack' => 'GPUStack',
   'llm' => 'LLM',
+  'minimax' => 'MiniMax',
   'mistral' => 'Mistral',
   'ocr' => 'OCR',
   'openai' => 'OpenAI',
@@ -375,6 +376,7 @@ RubyLLM::Provider.register :bedrock, RubyLLM::Providers::Bedrock
 RubyLLM::Provider.register :deepseek, RubyLLM::Providers::DeepSeek
 RubyLLM::Provider.register :gemini, RubyLLM::Providers::Gemini
 RubyLLM::Provider.register :gpustack, RubyLLM::Providers::GPUStack
+RubyLLM::Provider.register :minimax, RubyLLM::Providers::MiniMax
 RubyLLM::Provider.register :mistral, RubyLLM::Providers::Mistral
 RubyLLM::Provider.register :ollama, RubyLLM::Providers::Ollama
 RubyLLM::Provider.register :openai, RubyLLM::Providers::OpenAI
