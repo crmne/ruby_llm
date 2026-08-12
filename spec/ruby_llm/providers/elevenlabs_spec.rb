@@ -54,6 +54,8 @@ RSpec.describe RubyLLM::Providers::ElevenLabs do
   end
 
   describe 'audio', :live do
+    let(:audio_path) { File.expand_path('../fixtures/ruby.wav', __dir__) }
+
     before do
       if VCR.current_cassette&.recording? && ENV.fetch('ELEVENLABS_API_KEY', nil).nil?
         skip 'Set ELEVENLABS_API_KEY to record the ElevenLabs cassettes'
@@ -85,6 +87,28 @@ RSpec.describe RubyLLM::Providers::ElevenLabs do
       expect(speech.data.bytesize).to be > 1000
       expect(speech.voice).to eq('21m00Tcm4TlvDq8ikWAM')
       expect(speech.format).to eq('wav')
+    end
+
+    it 'transcribes audio with scribe_v2' do
+      transcription = RubyLLM.transcribe(audio_path, model: 'scribe_v2', provider: :elevenlabs)
+
+      expect(transcription.text).to match(/ruby/i)
+      expect(transcription.model).to eq('scribe_v2')
+      expect(transcription.language).to eq('en')
+    end
+
+    it 'labels words with speakers when speaker names are given' do
+      transcription = RubyLLM.transcribe(
+        audio_path,
+        model: 'scribe_v2',
+        provider: :elevenlabs,
+        language: 'en',
+        speaker_names: ['Speaker']
+      )
+
+      expect(transcription.text).to match(/ruby/i)
+      expect(transcription.words).to be_an(Array)
+      expect(transcription.words.first).to have_key('speaker_id')
     end
 
     it 'lists the speech models' do
