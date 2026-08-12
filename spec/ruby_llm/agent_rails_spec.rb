@@ -114,6 +114,19 @@ RSpec.describe RubyLLM::Agent do
     expect(runtime_chat.messages.first.content).to eq('chat-class: Chat')
   end
 
+  it 'picks the model with a block when creating a Rails chat' do
+    agent_class = Class.new(RubyLLM::Agent) do
+      chat_model Chat
+      inputs :quality
+      model { quality == :high ? 'gpt-4.1-mini' : 'gpt-4.1-nano' }
+    end
+
+    stub_const('SpecDynamicModelAgent', agent_class)
+
+    expect(SpecDynamicModelAgent.create!(quality: :high).model_id).to eq('gpt-4.1-mini')
+    expect(SpecDynamicModelAgent.create!(quality: :low).model_id).to eq('gpt-4.1-nano')
+  end
+
   it 'finds a Rails chat and applies runtime instructions without persisting them' do
     prompt_dir = write_prompt(
       'spec_runtime_agent',

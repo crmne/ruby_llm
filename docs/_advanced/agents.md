@@ -203,6 +203,22 @@ end
 
 Important: values that depend on runtime `chat` must be lazy (blocks/lambdas), not eager class-load expressions.
 
+### Choosing the model at runtime
+
+`model` takes a block too, so an agent can route work to a cheaper or larger model based on its inputs:
+
+```ruby
+class CardAgent < RubyLLM::Agent
+  inputs :card
+  model { card.special_type? ? "gpt-4.1-mini" : "gpt-4.1-nano" }
+  instructions "You are helpful."
+end
+
+CardAgent.chat(card: card)
+```
+
+Options stay alongside the block: `model(provider: :openai) { ... }`. The model block runs before the chat exists, so it reads `inputs` but not `chat`.
+
 ## Prompt Management and Conventions
 
 Agents have prompt conventions built in. They use the same `app/prompts` templates as [Prompt Rendering]({% link _core_features/prompt-rendering.md %}), with class-based lookup layered on top.

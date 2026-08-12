@@ -78,16 +78,22 @@ module RubyLLM
 
       # Sets the model used by chats this agent builds. Extra +options+ are
       # forwarded to RubyLLM.chat, including +provider:+ to disambiguate the
-      # model and +protocol:+ to override its wire protocol. Called with no
-      # arguments, returns the configured chat keywords.
+      # model and +protocol:+ to override its wire protocol. A block picks
+      # the model when the chat is built, with the declared ::inputs
+      # available as methods. Called with no arguments, returns the
+      # configured chat keywords.
       #
       #   model "gpt-5-nano"
       #   model "gpt-5.4", provider: :openai, protocol: :responses
+      #   model { quality == :high ? "gpt-5.4" : "gpt-5-nano" }
       #
-      def model(model_id = nil, **options)
-        return @chat_kwargs || {} if model_id.nil? && options.empty?
+      # The block runs before the chat exists, so it can read inputs but not
+      # +chat+.
+      def model(model_id = nil, **options, &block)
+        return @chat_kwargs || {} if model_id.nil? && options.empty? && !block_given?
 
-        options[:model] = model_id unless model_id.nil?
+        model_value = block || model_id
+        options[:model] = model_value unless model_value.nil?
         @chat_kwargs = options
       end
 
@@ -366,6 +372,13 @@ module RubyLLM
         @chat_kwargs || {}
       end
 
+      def resolved_chat_kwargs(inputs: {}) # :nodoc:
+        kwargs = chat_kwargs
+        return kwargs unless kwargs[:model].is_a?(Proc)
+
+        kwargs.merge(model: evaluate(kwargs[:model], runtime_context(chat: nil, inputs: inputs)))
+      end
+
       # Builds a Chat configured with this agent's declarations and returns
       # it. Keywords matching declared ::inputs become runtime inputs; the
       # rest are forwarded to RubyLLM.chat.
@@ -375,7 +388,7 @@ module RubyLLM
       #
       def chat(**kwargs)
         input_values, chat_options = partition_inputs(kwargs)
-        chat = RubyLLM.chat(**chat_kwargs, **chat_options)
+        chat = RubyLLM.chat(**resolved_chat_kwargs(inputs: input_values), **chat_options)
         apply_configuration(chat, input_values:, persist_instructions: true)
         chat
       end
@@ -508,7 +521,9 @@ module RubyLLM
         raise ArgumentError, 'chat_model must be configured to use create/create!' unless resolved_chat_model
 
         input_values, chat_options = partition_inputs(kwargs)
-        record = resolved_chat_model.public_send(method_name, **chat_kwargs, **chat_options)
+        record = resolved_chat_model.public_send(
+          method_name, **resolved_chat_kwargs(inputs: input_values), **chat_options
+        )
         apply_configuration(record, input_values:, persist_instructions: true) if record
         record
       end
@@ -687,9 +702,9 @@ module RubyLLM
     #
     def initialize(chat: nil, inputs: nil, persist_instructions: true, **kwargs)
       input_values, chat_options = self.class.partition_inputs(kwargs)
-      @chat = chat || RubyLLM.chat(**self.class.chat_kwargs, **chat_options)
-      self.class.apply_configuration(@chat, input_values: input_values.merge(inputs || {}),
-                                            persist_instructions:)
+      input_values = input_values.merge(inputs || {})
+      @chat = chat || RubyLLM.chat(**self.class.resolved_chat_kwargs(inputs: input_values), **chat_options)
+      self.class.apply_configuration(@chat, input_values:, persist_instructions:)
     end
 
     # The wrapped Chat, or the chat record in Rails mode.

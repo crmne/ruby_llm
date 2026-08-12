@@ -94,6 +94,40 @@ RSpec.describe RubyLLM::Agent do
       expect(chat.instance_variable_get(:@headers)).to eq('X-Tenant' => 'acme')
     end
 
+    it 'picks the model when the chat is built' do
+      agent = Class.new(described_class) do
+        inputs :quality
+
+        model { quality == :high ? 'gpt-4.1-mini' : 'gpt-4.1-nano' }
+      end
+
+      expect(agent.chat(quality: :high).model.id).to eq('gpt-4.1-mini')
+      expect(agent.chat(quality: :low).model.id).to eq('gpt-4.1-nano')
+    end
+
+    it 'keeps the model options alongside a model block' do
+      agent = Class.new(described_class) do
+        inputs :quality
+
+        model(provider: :openai) { quality == :high ? 'gpt-4.1-mini' : 'gpt-4.1-nano' }
+      end
+
+      expect(agent.model[:provider]).to eq(:openai)
+      expect(agent.model[:model]).to be_a(Proc)
+      expect(agent.chat(quality: :high).model.id).to eq('gpt-4.1-mini')
+    end
+
+    it 'picks the model for agent instances too' do
+      agent = Class.new(described_class) do
+        inputs :quality
+
+        model { quality == :high ? 'gpt-4.1-mini' : 'gpt-4.1-nano' }
+      end
+
+      expect(agent.new(quality: :high).model.id).to eq('gpt-4.1-mini')
+      expect(agent.new(inputs: { quality: :low }).model.id).to eq('gpt-4.1-nano')
+    end
+
     it 'leaves the chat alone when a block returns nothing' do
       agent = Class.new(described_class) do
         model 'gpt-4.1-nano', provider: :openai
