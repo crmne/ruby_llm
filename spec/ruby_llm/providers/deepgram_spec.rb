@@ -46,6 +46,52 @@ RSpec.describe RubyLLM::Providers::Deepgram do
     end
   end
 
+  describe 'the transcription requests it sends' do
+    let(:audio_path) { File.expand_path('../../fixtures/ruby.wav', __dir__) }
+    let(:listen_response) do
+      {
+        'metadata' => { 'duration' => 2.5 },
+        'results' => { 'channels' => [{ 'alternatives' => [{ 'transcript' => 'Ruby.' }] }] }
+      }
+    end
+
+    it 'uploads a local file as raw audio bytes under its own content type' do
+      stub = stub_request(:post, %r{https://api\.deepgram\.com/v1/listen})
+             .with(headers: { 'Content-Type' => 'audio/wav' }, body: File.binread(audio_path))
+             .to_return(status: 200, body: listen_response.to_json,
+                        headers: { 'Content-Type' => 'application/json' })
+
+      RubyLLM.transcribe(audio_path, model: 'nova-3', provider: :deepgram)
+
+      expect(stub).to have_been_requested
+    end
+
+    it 'hands a remote url to Deepgram as JSON rather than downloading it' do
+      stub = stub_request(:post, %r{https://api\.deepgram\.com/v1/listen})
+             .with(headers: { 'Content-Type' => 'application/json' },
+                   body: { url: 'https://dpgr.am/spacewalk.wav' })
+             .to_return(status: 200, body: listen_response.to_json,
+                        headers: { 'Content-Type' => 'application/json' })
+
+      RubyLLM.transcribe('https://dpgr.am/spacewalk.wav', model: 'nova-3', provider: :deepgram)
+
+      expect(stub).to have_been_requested
+    end
+
+    it 'carries the transcription options in the query string' do
+      stub = stub_request(:post, 'https://api.deepgram.com/v1/listen')
+             .with(query: { model: 'nova-3', language: 'en', smart_format: 'true', utterances: 'true',
+                            diarize_model: 'latest' })
+             .to_return(status: 200, body: listen_response.to_json,
+                        headers: { 'Content-Type' => 'application/json' })
+
+      RubyLLM.transcribe(audio_path, model: 'nova-3', provider: :deepgram, language: 'en',
+                                     speaker_names: ['Speaker'])
+
+      expect(stub).to have_been_requested
+    end
+  end
+
   describe 'operations Deepgram has no endpoint for' do
     it 'refuses to chat' do
       chat = RubyLLM.chat(model: 'nova-3', provider: :deepgram)
@@ -68,13 +114,50 @@ RSpec.describe RubyLLM::Providers::Deepgram do
     it 'has no chat model to fall back on' do
       expect { RubyLLM.chat(provider: :deepgram) }.to raise_error(RubyLLM::ModelNotFoundError)
     end
+
+    it 'refuses to stream a transcription' do
+      expect do
+        RubyLLM.transcribe('spec/fixtures/ruby.wav', model: 'nova-3', provider: :deepgram) { |chunk| chunk }
+      end.to raise_error(RubyLLM::Error, "Deepgram doesn't support streaming transcription")
+    end
   end
 
-  describe 'models', :live do
+  describe 'audio', :live do
+    let(:audio_path) { File.expand_path('../../fixtures/ruby.wav', __dir__) }
+
     before do
       if VCR.current_cassette&.recording? && ENV.fetch('DEEPGRAM_API_KEY', nil).nil?
         skip 'Set DEEPGRAM_API_KEY to record the Deepgram cassettes'
       end
+    end
+
+    it 'transcribes a local file with nova-3' do
+      transcription = RubyLLM.transcribe(audio_path, model: 'nova-3', provider: :deepgram)
+
+      expect(transcription.text).to match(/ruby/i)
+      expect(transcription.model).to eq('nova-3')
+      expect(transcription.duration).to be > 0
+      expect(transcription.words).to be_an(Array)
+    end
+
+    it 'transcribes audio Deepgram fetches from a url' do
+      transcription = RubyLLM.transcribe('https://dpgr.am/spacewalk.wav', model: 'nova-3', provider: :deepgram)
+
+      expect(transcription.text).to be_a(String)
+      expect(transcription.segments).to be_an(Array)
+    end
+
+    it 'labels words with speakers when speaker names are given' do
+      transcription = RubyLLM.transcribe(
+        audio_path,
+        model: 'nova-3',
+        provider: :deepgram,
+        language: 'en',
+        speaker_names: ['Speaker']
+      )
+
+      expect(transcription.text).to match(/ruby/i)
+      expect(transcription.words.first).to have_key('speaker')
     end
 
     it 'lists the listening and speaking models' do

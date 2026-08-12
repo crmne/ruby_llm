@@ -70,6 +70,17 @@ RubyLLM.transcribe(
 
 # Scribe v2 (ElevenLabs, 90+ languages with word timestamps)
 RubyLLM.transcribe("interview.mp3", model: "scribe_v2", provider: :elevenlabs)
+
+# Nova-3 (Deepgram, fast batch transcription with diarization)
+RubyLLM.transcribe("interview.mp3", model: "nova-3", provider: :deepgram)
+```
+
+Deepgram also serves specialized Nova models such as `nova-3-medical` and `nova-2-phonecall`, and hosts Whisper as `whisper-tiny` through `whisper-large`. Its Flux generation is WebSocket only, on `/v2/listen`, so it is out of reach of `RubyLLM.transcribe`.
+
+Deepgram can fetch the audio itself. Pass a URL and RubyLLM sends the pointer instead of uploading the bytes:
+
+```ruby
+RubyLLM.transcribe("https://dpgr.am/spacewalk.wav", model: "nova-3", provider: :deepgram)
 ```
 
 Configure the default globally:
@@ -115,7 +126,7 @@ ElevenLabs uses `format:` to choose the timestamp granularity, either `word` or 
 RubyLLM.transcribe("interview.mp3", model: "scribe_v2", provider: :elevenlabs, format: "character")
 ```
 
-When you omit `format:`, OpenAI's diarization models default to `diarized_json`, Gemini defaults to `text/plain`, and other OpenAI models use the API's default.
+When you omit `format:`, OpenAI's diarization models default to `diarized_json`, Gemini defaults to `text/plain`, and other OpenAI models use the API's default. Deepgram has no response format parameter and ignores `format:`.
 
 ## Speaker Diarization
 
@@ -154,7 +165,20 @@ transcription = RubyLLM.transcribe(
 # Bob: Happy to be here.
 ```
 
-Speaker references accept file paths, URLs, IO objects, or ActiveStorage attachments. Only OpenAI's diarization models use the names and the reference clips themselves. Mistral and ElevenLabs read `speaker_names:` as a request to diarize: Mistral turns on segment-level speaker ids, and ElevenLabs turns on diarization and caps the speaker count at the number of names you gave.
+Speaker references accept file paths, URLs, IO objects, or ActiveStorage attachments. Only OpenAI's diarization models use the names and the reference clips themselves. Mistral, ElevenLabs, and Deepgram read `speaker_names:` as a request to diarize: Mistral turns on segment-level speaker ids, ElevenLabs turns on diarization and caps the speaker count at the number of names you gave, and Deepgram runs its current diarizer, which numbers each word and utterance.
+
+```ruby
+transcription = RubyLLM.transcribe(
+  "team-meeting.wav",
+  model: "nova-3",
+  provider: :deepgram,
+  speaker_names: ["Alice", "Bob"]
+)
+
+transcription.segments.each do |utterance|
+  puts "#{utterance['speaker']}: #{utterance['transcript']}"
+end
+```
 
 ```ruby
 transcription = RubyLLM.transcribe(
@@ -305,6 +329,39 @@ RubyLLM.transcribe(
   provider_options: { keyterms: ["RubyLLM", "Zeitwerk"], tag_audio_events: true }
 )
 ```
+
+Deepgram returns word timestamps and timed utterances on every transcription. RubyLLM asks for smart formatting and utterances by default, so the transcript comes back punctuated and split into segments:
+
+```ruby
+transcription = RubyLLM.transcribe("interview.mp3", model: "nova-3", provider: :deepgram)
+
+puts transcription.duration
+
+transcription.segments.each do |utterance|
+  puts "#{utterance['start']}s - #{utterance['end']}s: #{utterance['transcript']}"
+end
+
+transcription.words.each do |word|
+  puts "#{word['start']}s - #{word['end']}s: #{word['punctuated_word']}"
+end
+```
+
+Deepgram reports `transcription.language` only when you ask it to detect one. Every Deepgram option is a query parameter, and `provider_options:` joins the query, so this turns on language detection along with paragraph grouping and key terms:
+
+```ruby
+RubyLLM.transcribe(
+  "developer-talk.mp3",
+  model: "nova-3",
+  provider: :deepgram,
+  provider_options: {
+    detect_language: true,
+    paragraphs: true,
+    keyterm: ["RubyLLM", "Zeitwerk"]
+  }
+)
+```
+
+The same hash turns RubyLLM's defaults back off, with `smart_format: false` or `utterances: false`.
 
 ## Handling Longer Files
 
