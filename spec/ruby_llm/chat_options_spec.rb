@@ -72,6 +72,17 @@ RSpec.describe RubyLLM::Chat do
         RubyLLM::InvalidToolChoiceError, /Invalid tool choice: missing/
       )
     end
+
+    it 'names an unregistered tool class the way the tool itself would' do
+      stub_const('Support::LookupTool', Class.new(RubyLLM::Tool) do
+        def execute(query:) = query
+      end)
+      chat.with_tools(lookup_tool)
+
+      expect { chat.with_tool_options(choice: Support::LookupTool) }.to raise_error(
+        RubyLLM::InvalidToolChoiceError, /Invalid tool choice: Support::LookupTool/
+      )
+    end
   end
 
   describe '#add_message' do

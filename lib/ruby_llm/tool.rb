@@ -44,6 +44,18 @@ module RubyLLM
     class << self
       attr_reader :parameters_schema_definition, :approval_resolver # :nodoc:
 
+      # Returns the name the model calls this tool by, derived from the class
+      # name: underscored, reduced to ASCII, with a trailing "_tool" removed.
+      # Override this method to choose a different name.
+      #
+      #   WeatherLookup.tool_name  # => "weather_lookup"
+      #
+      def tool_name
+        normalized = name.to_s.dup.force_encoding('UTF-8').unicode_normalize(:nfkd)
+        ascii_name = normalized.encode('ASCII', replace: '').gsub(/[^a-zA-Z0-9_-]/, '-')
+        Utils.underscore(ascii_name).delete_suffix('_tool')
+      end
+
       # :call-seq:
       #   description(text) -> text
       #   description -> string or nil
@@ -191,17 +203,13 @@ module RubyLLM
       end
     end
 
-    # Returns the name the model calls this tool by, derived from the class
-    # name: underscored, reduced to ASCII, with a trailing "_tool" removed.
-    # Override this method to choose a different name.
+    # Returns the name the model calls this tool by, delegating to
+    # ::tool_name. Override either one to choose a different name.
     #
     #   WeatherLookup.new.name  # => "weather_lookup"
     #
     def name
-      klass_name = self.class.name
-      normalized = klass_name.to_s.dup.force_encoding('UTF-8').unicode_normalize(:nfkd)
-      ascii_name = normalized.encode('ASCII', replace: '').gsub(/[^a-zA-Z0-9_-]/, '-')
-      Utils.underscore(ascii_name).delete_suffix('_tool')
+      self.class.tool_name
     end
 
     # Returns the tool description declared on the class with ::description.

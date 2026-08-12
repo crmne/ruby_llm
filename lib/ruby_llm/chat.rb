@@ -1178,12 +1178,9 @@ module RubyLLM
     def tool_name_for_choice_class(tool_class)
       matched_tool_name = tools.find { |_name, tool| tool.is_a?(tool_class) }&.first
       return matched_tool_name if matched_tool_name
+      return tool_class.tool_name.to_sym if tool_class.respond_to?(:tool_name)
 
-      classify_tool_name(tool_class.name)
-    end
-
-    def classify_tool_name(class_name)
-      Utils.underscore(class_name.split('::').last).delete_suffix('_tool').to_sym
+      tool_class.name.to_s.to_sym
     end
 
     def forced_tool_choice?

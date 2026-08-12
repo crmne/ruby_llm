@@ -35,10 +35,44 @@ RSpec.describe RubyLLM::Tool do
     end
   end
 
+  describe '.tool_name' do
+    it 'derives the model-facing name without instantiating the tool' do
+      stub_const('SampleTool', Class.new(described_class))
+
+      expect(SampleTool.tool_name).to eq('sample')
+    end
+
+    it 'is what the instance name delegates to' do
+      stub_const('OverriddenNameTool', Class.new(described_class) do
+        def self.tool_name = 'weather'
+      end)
+
+      expect(OverriddenNameTool.new.name).to eq('weather')
+    end
+
+    it 'follows a class name override' do
+      stub_const('ClassNameTool', Class.new(described_class) do
+        def self.name = 'Weather'
+      end)
+
+      expect(ClassNameTool.tool_name).to eq('weather')
+      expect(ClassNameTool.new.name).to eq('weather')
+    end
+  end
+
   describe '#name' do
     it 'converts class name to snake_case and removes _tool suffix' do
       stub_const('SampleTool', Class.new(described_class))
       expect(SampleTool.new.name).to eq('sample')
+    end
+
+    it 'keeps an instance-level override working' do
+      stub_const('InstanceNamedTool', Class.new(described_class) do
+        def name = 'custom'
+      end)
+
+      expect(InstanceNamedTool.new.name).to eq('custom')
+      expect(InstanceNamedTool.tool_name).to eq('instance_named')
     end
 
     # rubocop:disable Naming/AsciiIdentifiers

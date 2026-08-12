@@ -69,15 +69,17 @@ end
 3.  **`execute` Method:** The instance method containing your Ruby code. RubyLLM v1.15+ infers simple keyword parameters from this signature when no explicit parameter schema is declared.
 4.  **Parameter declarations:** Optional. Use `parameter` for simple descriptions and types, or `parameters` for nested objects, arrays, enums, and full JSON Schema control.
 
-> The tool's class name is automatically converted to a snake_case name used in the API call (e.g., `WeatherLookup` becomes `weather_lookup`). This is how the LLM would call it. You can override this by defining a `name` method in your tool class:
+> The tool's class name is automatically converted to a snake_case name used in the API call (e.g., `WeatherLookup` becomes `weather_lookup`). This is how the LLM would call it. You can override this by defining `tool_name` on the class:
 >
 > ```ruby
 > class WeatherLookup < RubyLLM::Tool
->   def name
+>   def self.tool_name
 >     "Weather"
 >   end
 > end
 > ```
+>
+> `WeatherLookup.tool_name` reads the model-facing name without instantiating the tool, which is useful when you select tool classes by name before building them. The instance method `#name` delegates to it, so overriding `name` on the instance still works.
 {: .note }
 
 > If a model attempts to call a tool that doesn't exist (sometimes called "tool hallucination"), RubyLLM handles this gracefully by:
