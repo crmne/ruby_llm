@@ -74,6 +74,26 @@ RSpec.describe RubyLLM::Protocol do
     end
   end
 
+  describe 'operations a protocol does not implement' do
+    let(:protocol) do
+      config = RubyLLM::Configuration.new.tap { |c| c.openai_api_key = 'test' }
+      Class.new(described_class).new(RubyLLM::Providers::OpenAI.new(config))
+    end
+
+    it 'names the provider and the operation instead of leaking NotImplementedError' do
+      expect { protocol.render([], tools: {}, temperature: nil) }
+        .to raise_error(RubyLLM::Error, "OpenAI doesn't support chat")
+      expect { protocol.complete([], tools: {}, temperature: nil) }
+        .to raise_error(RubyLLM::Error, "OpenAI doesn't support chat")
+      expect { protocol.embed('hi', model: 'x', dimensions: nil) }
+        .to raise_error(RubyLLM::Error, "OpenAI doesn't support embeddings")
+      expect { protocol.moderate('hi', model: 'x') }
+        .to raise_error(RubyLLM::Error, "OpenAI doesn't support moderation")
+      expect { protocol.paint('a ruby', model: 'x', size: nil) }
+        .to raise_error(RubyLLM::Error, "OpenAI doesn't support image generation")
+    end
+  end
+
   describe 'provider file defaults' do
     let(:protocol) do
       config = RubyLLM::Configuration.new.tap { |c| c.openai_api_key = 'test' }

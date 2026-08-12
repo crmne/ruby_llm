@@ -103,6 +103,8 @@ module RubyLLM
           sync_response payload, headers
         end
       end
+    rescue NotImplementedError
+      raise Error, "#{@provider.name} doesn't support chat"
     end
 
     def render(messages, tools:, temperature:, provider_options: {}, schema: nil, thinking: nil,
@@ -126,6 +128,8 @@ module RubyLLM
       )
       payload = apply_server_tools(payload, server_tools)
       apply_before_request_hooks(payload, before_request)
+    rescue NotImplementedError
+      raise Error, "#{@provider.name} doesn't support chat"
     end
 
     # The alias table mapping portable server tool names to this protocol's
@@ -170,6 +174,8 @@ module RubyLLM
         response = @connection.post(embedding_url(model:), payload, usage: @usage_tracker)
         parse_embedding_response(response, model:, text:)
       end
+    rescue NotImplementedError
+      raise Error, "#{@provider.name} doesn't support embeddings"
     end
 
     def render_embedding(text, model:, dimensions: nil, task_type: nil, title: nil, provider_options: {}) # :nodoc:
@@ -182,6 +188,8 @@ module RubyLLM
         response = @connection.post moderation_url, payload, usage: @usage_tracker
         parse_moderation_response(response, model:)
       end
+    rescue NotImplementedError
+      raise Error, "#{@provider.name} doesn't support moderation"
     end
 
     def paint(prompt, model:, size:, with: nil, mask: nil, provider_options: {})
@@ -191,6 +199,8 @@ module RubyLLM
         response = @connection.post images_url(with:, mask:), payload, usage: @usage_tracker
         parse_image_response(response, model:)
       end
+    rescue NotImplementedError
+      raise Error, "#{@provider.name} doesn't support image generation"
     end
 
     # Video generation is asynchronous on every provider: this submits the
