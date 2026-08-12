@@ -72,7 +72,7 @@ Methods with no arguments enable a feature with its default behavior, like provi
 
 ## Identifying End Users
 
-Providers offer a per-user identifier so they can attribute abuse to one of your users instead of your whole account. `with_end_user` (aliased as `with_user_id`) sets it once and RubyLLM maps it to whatever the provider calls it:
+Providers offer a per-user identifier so they can attribute abuse to one of your users instead of your whole account. `with_end_user` sets it once and RubyLLM maps it to whatever the provider calls it:
 
 ```ruby
 chat = RubyLLM.chat.with_end_user("user-#{current_user.id}")
@@ -81,7 +81,7 @@ chat.ask "Hello"
 
 | Provider | Request field |
 |:---------|:--------------|
-| OpenAI, Azure | `end_user` |
+| OpenAI, Azure | `safety_identifier` |
 | Anthropic | `metadata.user_id` |
 | DeepSeek | `user_id` |
 | OpenRouter | `user` |
