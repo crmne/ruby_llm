@@ -54,7 +54,7 @@ RSpec.describe RubyLLM::Providers::ElevenLabs do
   end
 
   describe 'audio', :live do
-    let(:audio_path) { File.expand_path('../fixtures/ruby.wav', __dir__) }
+    let(:audio_path) { File.expand_path('../../fixtures/ruby.wav', __dir__) }
 
     before do
       if VCR.current_cassette&.recording? && ENV.fetch('ELEVENLABS_API_KEY', nil).nil?
