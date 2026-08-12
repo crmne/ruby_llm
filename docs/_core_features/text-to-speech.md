@@ -79,6 +79,18 @@ RubyLLM.speak(
 
 ElevenLabs offers `eleven_v3` for the most expressive delivery, `eleven_multilingual_v2` for the highest audio fidelity, and `eleven_flash_v2_5` when latency matters more than nuance.
 
+Deepgram names the voice inside the model id, so `aura-2-thalia-en` is the Thalia voice of Aura 2:
+
+```ruby
+RubyLLM.speak(
+  "The first move is what sets everything in motion.",
+  model: "aura-2-thalia-en",
+  provider: :deepgram
+)
+```
+
+Deepgram also runs a Flux generation for voice agents, but Flux only speaks over WebSockets on `/v2/speak`. RubyLLM talks to the REST endpoints, so use the Aura models here.
+
 Configure the default globally:
 
 ```ruby
@@ -116,6 +128,20 @@ RubyLLM.speak(
 ```
 
 That id is George, the default voice RubyLLM uses when you omit `voice:`.
+
+Deepgram has no separate voice parameter, so `voice:` swaps the voice segment of the model id:
+
+```ruby
+RubyLLM.speak(
+  "Welcome back.",
+  model: "aura-2-thalia-en",
+  provider: :deepgram,
+  voice: "zeus"
+)
+# requests model=aura-2-zeus-en
+```
+
+Aura 2 English voices include `thalia`, `asteria`, `luna`, `apollo`, `orion`, and `zeus`. Pass a whole model id such as `aura-2-celeste-es` as the `voice:` to reach the voices in other languages, and call `RubyLLM.models.refresh!` to pull the full catalog into the registry.
 
 ## Formats
 
@@ -159,6 +185,18 @@ RubyLLM.speak("Ship it.", model: "eleven_v3", provider: :elevenlabs, format: "pc
 
 Either way `speech.format` reports the container you actually got, so `pcm_24000` comes back as `"pcm"`.
 
+Deepgram splits the output into an encoding and a container. RubyLLM maps `aac`, `alaw`, `flac`, `mp3`, `mulaw`, `opus`, `pcm`, and `wav` onto that pair, and sends anything else through as the encoding:
+
+```ruby
+RubyLLM.speak("Ship it.", model: "aura-2-thalia-en", provider: :deepgram, format: "wav")
+# requests encoding=linear16&container=wav
+
+RubyLLM.speak("Ship it.", model: "aura-2-thalia-en", provider: :deepgram, format: "pcm")
+# requests encoding=linear16&container=none
+```
+
+RubyLLM always names the encoding, so Deepgram returns `mp3` when you omit `format:` rather than falling back to its own default.
+
 ## Style
 
 `RubyLLM.speak` keeps the options every provider understands as keywords: `model:`, `voice:`, and `format:`. Provider-specific speech controls go in `provider_options:`, a hash of options in the provider's own request vocabulary that RubyLLM merges into the request as-is. OpenAI supports `instructions:` and `speed:`:
@@ -184,6 +222,17 @@ RubyLLM.speak(
     voice_settings: { stability: 0.4, similarity_boost: 0.8, speed: 1.1 },
     language_code: "en"
   }
+)
+```
+
+Deepgram carries its options in the query string rather than the request body, so `provider_options:` joins the query:
+
+```ruby
+RubyLLM.speak(
+  "The build is green.",
+  model: "aura-2-thalia-en",
+  provider: :deepgram,
+  provider_options: { sample_rate: 48_000, speed: 1.1 }
 )
 ```
 

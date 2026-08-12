@@ -92,6 +92,21 @@ RSpec.describe RubyLLM::Providers::Deepgram do
     end
   end
 
+  describe 'the speech requests it sends' do
+    it 'speaks the text through the query-configured model and encoding' do
+      stub = stub_request(:post, 'https://api.deepgram.com/v1/speak')
+             .with(query: { model: 'aura-2-zeus-en', encoding: 'linear16', container: 'wav' },
+                   body: { text: 'Ship it.' })
+             .to_return(status: 200, body: 'audio bytes', headers: { 'Content-Type' => 'audio/wav' })
+
+      speech = RubyLLM.speak('Ship it.', model: 'aura-2-thalia-en', provider: :deepgram, voice: 'zeus',
+                                         format: 'wav')
+
+      expect(stub).to have_been_requested
+      expect(speech.to_blob).to eq('audio bytes')
+    end
+  end
+
   describe 'operations Deepgram has no endpoint for' do
     it 'refuses to chat' do
       chat = RubyLLM.chat(model: 'nova-3', provider: :deepgram)
@@ -158,6 +173,34 @@ RSpec.describe RubyLLM::Providers::Deepgram do
 
       expect(transcription.text).to match(/ruby/i)
       expect(transcription.words.first).to have_key('speaker')
+    end
+
+    it 'speaks text with aura-2' do
+      speech = RubyLLM.speak(
+        'Ruby is a programming language designed for developer happiness.',
+        model: 'aura-2-thalia-en',
+        provider: :deepgram
+      )
+
+      expect(speech.data.bytesize).to be > 1000
+      expect(speech.model).to eq('aura-2-thalia-en')
+      expect(speech.voice).to eq('thalia')
+      expect(speech.mime_type).to eq('audio/mpeg')
+    end
+
+    it 'swaps the voice inside the model id and honors the format' do
+      speech = RubyLLM.speak(
+        'Save this as a WAV file.',
+        model: 'aura-2-thalia-en',
+        provider: :deepgram,
+        voice: 'zeus',
+        format: 'wav'
+      )
+
+      expect(speech.data.bytesize).to be > 1000
+      expect(speech.model).to eq('aura-2-zeus-en')
+      expect(speech.voice).to eq('zeus')
+      expect(speech.format).to eq('wav')
     end
 
     it 'lists the listening and speaking models' do
