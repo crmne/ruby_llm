@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe RubyLLM::Providers::Bedrock::EmbeddingProtocol do
+RSpec.describe RubyLLM::Protocols::InvokeModel do
   let(:config) { RubyLLM::Configuration.new }
   let(:connection) { instance_double(RubyLLM::Connection) }
   let(:provider) do
@@ -14,7 +14,7 @@ RSpec.describe RubyLLM::Providers::Bedrock::EmbeddingProtocol do
     )
   end
 
-  describe RubyLLM::Providers::Bedrock::TitanTextEmbeddings do
+  describe RubyLLM::Protocols::InvokeModel::TitanTextEmbeddings do
     subject(:protocol) { described_class.new(provider) }
 
     it 'renders Titan text embedding payloads' do
@@ -51,7 +51,7 @@ RSpec.describe RubyLLM::Providers::Bedrock::EmbeddingProtocol do
     end
   end
 
-  describe RubyLLM::Providers::Bedrock::TitanMultimodalEmbeddings do
+  describe RubyLLM::Protocols::InvokeModel::TitanMultimodalEmbeddings do
     subject(:protocol) { described_class.new(provider) }
 
     it 'renders Titan multimodal embedding payloads' do
@@ -75,7 +75,7 @@ RSpec.describe RubyLLM::Providers::Bedrock::EmbeddingProtocol do
     end
   end
 
-  describe RubyLLM::Providers::Bedrock::CohereEmbeddings do
+  describe RubyLLM::Protocols::InvokeModel::CohereEmbeddings do
     subject(:protocol) { described_class.new(provider) }
 
     it 'renders Cohere v4 embedding payloads with Bedrock-specific options' do

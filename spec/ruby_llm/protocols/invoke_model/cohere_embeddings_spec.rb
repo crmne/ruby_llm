@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe RubyLLM::Providers::Bedrock::CohereEmbeddings do
+RSpec.describe RubyLLM::Protocols::InvokeModel::CohereEmbeddings do
   include_context 'with configured RubyLLM'
 
   let(:provider) { RubyLLM::Providers::Bedrock.new(RubyLLM.config) }

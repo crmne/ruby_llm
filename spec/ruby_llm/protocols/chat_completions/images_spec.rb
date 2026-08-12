@@ -11,14 +11,14 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Images do
     end
 
     it 'asks for as many images as requested' do
-      payload = described_class.render_image_payload('a cat', model: 'gpt-image-1', size: '1024x1024', n: 4)
+      payload = described_class.render_image_payload('a cat', model: 'gpt-image-1', size: '1024x1024', count: 4)
 
       expect(payload[:n]).to eq(4)
     end
 
     it 'carries the count into edit requests' do
       payload = described_class.render_image_payload(
-        'make it green', model: 'gpt-image-1', size: '1024x1024', n: 2,
+        'make it green', model: 'gpt-image-1', size: '1024x1024', count: 2,
                          with: 'https://example.com/logo.png'
       )
 

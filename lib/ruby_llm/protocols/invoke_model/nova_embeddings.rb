@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 module RubyLLM
-  module Providers
-    class Bedrock
+  module Protocols
+    class InvokeModel
       # Amazon Nova multimodal embedding models over Bedrock InvokeModel.
-      class NovaEmbeddings < EmbeddingProtocol
+      class NovaEmbeddings < InvokeModel
         DEFAULT_EMBEDDING_PURPOSE = 'GENERIC_INDEX'
 
         # rubocop:disable Lint/UnusedMethodArgument

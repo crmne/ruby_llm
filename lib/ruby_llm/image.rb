@@ -37,7 +37,7 @@ module RubyLLM
     # +default_image_model+. +provider:+ forces a specific provider, and
     # +assume_model_exists:+ skips the registry lookup, which is useful
     # for custom endpoints. +size:+ requests dimensions on models that
-    # support it. +n:+ asks for several images in one request, returning
+    # support it. +count:+ asks for several images in one request, returning
     # an Array of Images instead of one. +with:+ passes one or more source
     # images for editing, and +mask:+ constrains which parts of the image
     # may change. +provider_options:+ takes options in the provider's
@@ -47,7 +47,7 @@ module RubyLLM
     #
     #   image = RubyLLM.paint("A small watercolor robot", model: "gpt-image-1")
     #
-    #   images = RubyLLM.paint("A small watercolor robot", n: 4)
+    #   images = RubyLLM.paint("A small watercolor robot", count: 4)
     #   images.each_with_index { |image, i| image.save("robot-#{i}.png") }
     #
     #   RubyLLM.paint(
@@ -57,13 +57,13 @@ module RubyLLM
     #   )
     #
     # Providers that cannot generate several images in one request ignore
-    # +n:+ and return a single Image.
+    # +count:+ and return a single Image.
     def self.paint(prompt,
                    model: nil,
                    provider: nil,
                    assume_model_exists: false,
                    size: '1024x1024',
-                   n: nil,
+                   count: nil,
                    context: nil,
                    with: nil,
                    mask: nil,
@@ -81,7 +81,7 @@ module RubyLLM
         model_info: model,
         prompt: prompt,
         size: size,
-        n: n,
+        count: count,
         provider_options: provider_options,
         metadata: metadata,
         tokens: empty_tokens,
@@ -89,7 +89,7 @@ module RubyLLM
       }
 
       RubyLLM.instrument('image.ruby_llm', payload, config: config) do |event|
-        result = provider_instance.paint(prompt, model:, size:, n:, with:, mask:, provider_options:)
+        result = provider_instance.paint(prompt, model:, size:, count:, with:, mask:, provider_options:)
         images = Utils.to_safe_array(result)
         event[:result] = result
         event[:response_model] = images.first&.model

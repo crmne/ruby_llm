@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 module RubyLLM
-  module Providers
-    class Bedrock
-      # Amazon Titan text embedding models over Bedrock InvokeModel.
-      class TitanTextEmbeddings < EmbeddingProtocol
+  module Protocols
+    class InvokeModel
+      # Amazon Titan multimodal embedding models over Bedrock InvokeModel.
+      class TitanMultimodalEmbeddings < InvokeModel
         # rubocop:disable Lint/UnusedMethodArgument
         def embed(text, model:, dimensions:, task_type: nil, title: nil, with: nil, provider_options: {})
           ensure_no_embedding_media!(with)
@@ -22,14 +22,11 @@ module RubyLLM
         private
 
         def render_embedding_payload(text, dimensions:, provider_options:)
-          deep_merge_provider_options(
-            {
-              inputText: text.to_s,
-              dimensions: dimensions,
-              normalize: true
-            }.compact,
-            provider_options
-          )
+          payload = {}
+          payload[:inputText] = text.to_s unless text.nil? || text.to_s.empty?
+          payload[:embeddingConfig] = { outputEmbeddingLength: dimensions } if dimensions
+
+          deep_merge_provider_options(payload, provider_options)
         end
       end
     end

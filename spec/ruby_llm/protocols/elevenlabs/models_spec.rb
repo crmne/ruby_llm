@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe RubyLLM::Providers::ElevenLabs::Models do
+RSpec.describe RubyLLM::Protocols::ElevenLabs::Models do
   let(:capabilities) { RubyLLM::Providers::ElevenLabs::Capabilities }
 
   describe '.models_url' do

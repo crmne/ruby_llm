@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe RubyLLM::Providers::ElevenLabs::Speech do
+RSpec.describe RubyLLM::Protocols::ElevenLabs::Speech do
   let(:protocol) { Object.new.extend(described_class) }
 
   describe '#speech_url' do

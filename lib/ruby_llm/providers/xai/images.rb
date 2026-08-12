@@ -14,23 +14,23 @@ module RubyLLM
           editing?(with, mask) ? 'images/edits' : 'images/generations'
         end
 
-        def render_image_payload(prompt, model:, size:, n: nil, with: nil, mask: nil, provider_options: {})
-          return render_edit_payload(prompt, model:, n:, with:, provider_options:) if editing?(with, mask)
+        def render_image_payload(prompt, model:, size:, count: nil, with: nil, mask: nil, provider_options: {})
+          return render_edit_payload(prompt, model:, count:, with:, provider_options:) if editing?(with, mask)
 
           RubyLLM.logger.debug { "Ignoring size #{size}. xAI image generation does not support a size parameter." }
           payload = { model: model, prompt: prompt }
-          payload[:n] = n if n
+          payload[:n] = count if count
 
           payload.merge(provider_options)
         end
 
-        def render_edit_payload(prompt, model:, with:, provider_options:, n: nil)
+        def render_edit_payload(prompt, model:, with:, provider_options:, count: nil)
           payload = {
             model: model,
             prompt: prompt,
             images: image_references(with)
           }
-          payload[:n] = n if n
+          payload[:n] = count if count
 
           payload.merge(provider_options)
         end

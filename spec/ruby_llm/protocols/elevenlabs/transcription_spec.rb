@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe RubyLLM::Providers::ElevenLabs::Transcription do
+RSpec.describe RubyLLM::Protocols::ElevenLabs::Transcription do
   let(:protocol) { Object.new.extend(described_class) }
   let(:file_part) { instance_double(Faraday::Multipart::FilePart) }
 

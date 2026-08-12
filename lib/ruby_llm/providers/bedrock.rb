@@ -9,10 +9,10 @@ module RubyLLM
 
       protocol :converse, Protocols::Converse, batches: Protocols::Converse::Batches
       protocol :mantle, Bedrock::Mantle
-      protocol :titan_text_embeddings, Bedrock::TitanTextEmbeddings
-      protocol :titan_multimodal_embeddings, Bedrock::TitanMultimodalEmbeddings
-      protocol :cohere_embeddings, Bedrock::CohereEmbeddings
-      protocol :nova_embeddings, Bedrock::NovaEmbeddings
+      protocol :titan_text_embeddings, Protocols::InvokeModel::TitanTextEmbeddings
+      protocol :titan_multimodal_embeddings, Protocols::InvokeModel::TitanMultimodalEmbeddings
+      protocol :cohere_embeddings, Protocols::InvokeModel::CohereEmbeddings
+      protocol :nova_embeddings, Protocols::InvokeModel::NovaEmbeddings
       files Bedrock::Files
 
       def self.resolve_registry_id(model_id, models)

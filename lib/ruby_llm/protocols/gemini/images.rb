@@ -11,13 +11,13 @@ module RubyLLM
           "models/#{id}:#{image_endpoint_action(id)}"
         end
 
-        def render_image_payload(prompt, model:, size:, n: nil, with: nil, mask: nil, provider_options: {}) # rubocop:disable Lint/UnusedMethodArgument
+        def render_image_payload(prompt, model:, size:, count: nil, with: nil, mask: nil, provider_options: {}) # rubocop:disable Lint/UnusedMethodArgument
           RubyLLM.logger.debug { "Ignoring size #{size}. Gemini does not support image size customization." }
           @model = model
           payload = if gemini_image_model?(model)
-                      render_gemini_image_payload(prompt, with:, n:)
+                      render_gemini_image_payload(prompt, with:, count:)
                     else
-                      render_imagen_payload(prompt, n:)
+                      render_imagen_payload(prompt, count:)
                     end
 
           Utils.deep_merge(payload, provider_options)
@@ -48,7 +48,7 @@ module RubyLLM
           raise UnsupportedAttachmentError, 'image reference'
         end
 
-        def render_imagen_payload(prompt, n: nil)
+        def render_imagen_payload(prompt, count: nil)
           {
             instances: [
               {
@@ -56,14 +56,14 @@ module RubyLLM
               }
             ],
             parameters: {
-              sampleCount: n || 1
+              sampleCount: count || 1
             }
           }
         end
 
-        def render_gemini_image_payload(prompt, with:, n: nil)
+        def render_gemini_image_payload(prompt, with:, count: nil)
           generation_config = { responseModalities: %w[TEXT IMAGE] }
-          generation_config[:candidateCount] = n if n && n > 1
+          generation_config[:candidateCount] = count if count && count > 1
 
           {
             contents: [

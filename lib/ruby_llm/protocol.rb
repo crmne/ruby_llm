@@ -207,13 +207,13 @@ module RubyLLM
       raise Error, "#{@provider.name} doesn't support moderation"
     end
 
-    def paint(prompt, model:, size:, n: nil, with: nil, mask: nil, provider_options: {})
+    def paint(prompt, model:, size:, count: nil, with: nil, mask: nil, provider_options: {})
       track_usage(:image) do
         validate_paint_inputs!(with:, mask:)
-        payload = render_image_payload(prompt, model:, size:, n:, with:, mask:, provider_options:)
+        payload = render_image_payload(prompt, model:, size:, count:, with:, mask:, provider_options:)
         response = @connection.post images_url(with:, mask:), payload, usage: @usage_tracker
         images = parse_image_responses(response, model:)
-        n.nil? || n <= 1 ? images.first : images
+        count.nil? || count <= 1 ? images.first : images
       end
     rescue NotImplementedError
       raise Error, "#{@provider.name} doesn't support image generation"

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module RubyLLM
-  module Providers
+  module Protocols
     class ElevenLabs
       # Transcription dialect for the ElevenLabs speech-to-text API. The
       # request is multipart with the model id in the form, and giving

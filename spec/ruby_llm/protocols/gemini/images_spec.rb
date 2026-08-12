@@ -25,13 +25,13 @@ RSpec.describe RubyLLM::Protocols::Gemini::Images do
     end
 
     it 'asks Imagen for several samples in one request' do
-      payload = protocol.render_image_payload('a cat', model: 'imagen-4.0-generate-001', size: '1024x1024', n: 4)
+      payload = protocol.render_image_payload('a cat', model: 'imagen-4.0-generate-001', size: '1024x1024', count: 4)
 
       expect(payload.dig(:parameters, :sampleCount)).to eq(4)
     end
 
     it 'asks Gemini image models for several candidates in one request' do
-      payload = protocol.render_image_payload('a cat', model: 'gemini-2.5-flash-image', size: '1024x1024', n: 3)
+      payload = protocol.render_image_payload('a cat', model: 'gemini-2.5-flash-image', size: '1024x1024', count: 3)
 
       expect(payload.dig(:generationConfig, :candidateCount)).to eq(3)
     end

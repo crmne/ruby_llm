@@ -14,13 +14,14 @@ module RubyLLM
           editing?(with, mask) ? 'images/edits' : 'images/generations'
         end
 
-        def render_image_payload(prompt, model:, size:, n: nil, with: nil, mask: nil, provider_options: {})
-          return render_edit_payload(prompt, model:, size:, n:, with:, mask:, provider_options:) if editing?(with, mask)
+        def render_image_payload(prompt, model:, size:, count: nil, with: nil, mask: nil, provider_options: {})
+          return render_edit_payload(prompt, model:, size:, count:, with:, mask:, provider_options:) if editing?(with,
+                                                                                                                 mask)
 
           {
             model: model,
             prompt: prompt,
-            n: n || 1,
+            n: count || 1,
             size: size
           }.merge(provider_options)
         end
@@ -53,8 +54,8 @@ module RubyLLM
           raise ArgumentError, 'with: is required when mask: is provided' if mask && !attachments?(with)
         end
 
-        def render_edit_payload(prompt, model:, size:, with:, mask:, provider_options:, n: nil)
-          payload = { model: model, prompt: prompt, n: n || 1 }
+        def render_edit_payload(prompt, model:, size:, with:, mask:, provider_options:, count: nil)
+          payload = { model: model, prompt: prompt, n: count || 1 }
           if json_image_references?(model)
             payload[:images] = build_image_references(with)
             payload[:mask] = build_image_reference(mask) if mask

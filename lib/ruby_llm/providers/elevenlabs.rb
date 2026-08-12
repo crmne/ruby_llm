@@ -7,7 +7,7 @@ module RubyLLM
     # embeddings, and image generation have no ElevenLabs endpoint and
     # raise NotImplementedError.
     class ElevenLabs < Provider
-      protocol :audio, ElevenLabs::Audio
+      protocol :elevenlabs, Protocols::ElevenLabs
 
       def api_base
         @config.elevenlabs_api_base || 'https://api.elevenlabs.io'

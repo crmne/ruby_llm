@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module RubyLLM
-  module Providers
+  module Protocols
     class ElevenLabs
       # Speech dialect for the ElevenLabs text-to-speech API. The voice id
       # is a path segment and the container is an output_format query

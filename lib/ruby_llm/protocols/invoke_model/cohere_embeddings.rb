@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 module RubyLLM
-  module Providers
-    class Bedrock
+  module Protocols
+    class InvokeModel
       # Cohere embedding models over Bedrock InvokeModel.
-      class CohereEmbeddings < EmbeddingProtocol
+      class CohereEmbeddings < InvokeModel
         # rubocop:disable Lint/UnusedMethodArgument
         def embed(text, model:, dimensions:, task_type: nil, title: nil, with: nil, provider_options: {})
           ensure_no_embedding_media!(with)

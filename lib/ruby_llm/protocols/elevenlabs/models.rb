@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module RubyLLM
-  module Providers
+  module Protocols
     class ElevenLabs
       # Model catalog for ElevenLabs. GET v1/models returns a bare array of
       # the speech synthesis models and leaves out the Scribe transcription

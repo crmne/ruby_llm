@@ -127,7 +127,7 @@ RSpec.describe RubyLLM::Providers::Bedrock do
         model = instance_double(RubyLLM::Model, id: id)
 
         expect(provider.protocol_for(model, operation: :embed))
-          .to eq(RubyLLM::Providers::Bedrock::TitanTextEmbeddings)
+          .to eq(RubyLLM::Protocols::InvokeModel::TitanTextEmbeddings)
       end
     end
 
@@ -135,7 +135,7 @@ RSpec.describe RubyLLM::Providers::Bedrock do
       model = instance_double(RubyLLM::Model, id: 'amazon.titan-embed-image-v1')
 
       expect(provider.protocol_for(model, operation: :embed))
-        .to eq(RubyLLM::Providers::Bedrock::TitanMultimodalEmbeddings)
+        .to eq(RubyLLM::Protocols::InvokeModel::TitanMultimodalEmbeddings)
     end
 
     it 'routes Cohere embedding models to the Cohere embedding protocol' do
@@ -143,7 +143,7 @@ RSpec.describe RubyLLM::Providers::Bedrock do
         model = instance_double(RubyLLM::Model, id: id)
 
         expect(provider.protocol_for(model, operation: :embed))
-          .to eq(RubyLLM::Providers::Bedrock::CohereEmbeddings)
+          .to eq(RubyLLM::Protocols::InvokeModel::CohereEmbeddings)
       end
     end
 
@@ -152,7 +152,7 @@ RSpec.describe RubyLLM::Providers::Bedrock do
         model = instance_double(RubyLLM::Model, id: id)
 
         expect(provider.protocol_for(model, operation: :embed))
-          .to eq(RubyLLM::Providers::Bedrock::NovaEmbeddings)
+          .to eq(RubyLLM::Protocols::InvokeModel::NovaEmbeddings)
       end
     end
 

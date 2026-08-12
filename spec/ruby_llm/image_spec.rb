@@ -112,7 +112,7 @@ RSpec.describe RubyLLM::Image, :live do
     end
 
     it 'gemini/imagen-4.0-generate-001 paints several images in one request' do
-      images = RubyLLM.paint('a siamese cat', model: 'imagen-4.0-generate-001', provider: :gemini, n: 2)
+      images = RubyLLM.paint('a siamese cat', model: 'imagen-4.0-generate-001', provider: :gemini, count: 2)
 
       expect(images.length).to eq(2)
       expect(images.map(&:mime_type)).to all(include('image'))

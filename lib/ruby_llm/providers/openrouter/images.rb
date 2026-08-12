@@ -13,9 +13,13 @@ module RubyLLM
           'images'
         end
 
-        def render_image_payload(prompt, model:, size:, n: nil, with: nil, mask: nil, provider_options: {}) # rubocop:disable Lint/UnusedMethodArgument
+        def render_image_payload(prompt, model:, size:, count: nil, with: nil, mask: nil, provider_options: {}) # rubocop:disable Lint/UnusedMethodArgument
           RubyLLM.logger.debug { "Ignoring size #{size}. Use aspect_ratio/resolution provider options instead." }
-          RubyLLM.logger.debug { "Ignoring n #{n}. OpenRouter generates one image per request." } if n && n > 1
+          if count && count > 1
+            RubyLLM.logger.debug do
+              "Ignoring count #{count}. OpenRouter generates one image per request."
+            end
+          end
           payload = { model: model, prompt: prompt }
           references = build_input_references(with)
           payload[:input_references] = references if references.any?

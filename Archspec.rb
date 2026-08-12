@@ -81,9 +81,19 @@ component :protocols,
           in: 'lib/ruby_llm/protocols/**/*.rb',
           namespace: 'RubyLLM::Protocols'
 
-# The five wire-protocol family classes themselves (not their helper modules),
-# so the shared wire contract can be enforced on them alone.
-component :protocol_families, in: 'lib/ruby_llm/protocols/*.rb'
+# The wire-protocol family classes that speak chat (not their helper modules),
+# so the shared chat contract can be enforced on them alone. Families that
+# serve other operations, such as ElevenLabs audio and AWS InvokeModel
+# embeddings, implement their own seams and are listed out. Add a new chat
+# family here so the build holds it to the contract.
+component :chat_protocol_families, in: %w[
+  lib/ruby_llm/protocols/anthropic.rb
+  lib/ruby_llm/protocols/chat_completions.rb
+  lib/ruby_llm/protocols/cohere.rb
+  lib/ruby_llm/protocols/converse.rb
+  lib/ruby_llm/protocols/gemini.rb
+  lib/ruby_llm/protocols/responses.rb
+]
 
 # Concrete provider adapters: auth, API bases, provider-specific dialect modules,
 # model catalogs, and provider-owned cloud plumbing.
@@ -126,7 +136,7 @@ protocol_contract.cannot_reference_constants 'RubyLLM::Providers'
 # The chat wire contract every protocol family implements. The Protocol base
 # declares these abstract with define_method, invisible to static analysis, so
 # must_implement is real here: a family that forgets a seam fails the build.
-protocol_families.must_implement :render_payload, :completion_url, :parse_completion_body
+chat_protocol_families.must_implement :render_payload, :completion_url, :parse_completion_body
 
 # Wire serialization is render_*, deserialization is parse_*. The non-idiomatic
 # serialize_/to_wire_ forms have no place in a protocol.
@@ -134,8 +144,16 @@ protocols.method_names.matching(/\A(serialize|deserialize|to_wire|from_wire)_/)
          .forbidden(because: 'serialize with render_*, deserialize with parse_*')
 
 # Protocols render and parse provider wire formats. They may create domain
-# objects, but should not reach into concrete provider adapters.
+# objects, but should not reach into concrete provider adapters. A protocol
+# that needs something only the provider knows, such as a signed request or
+# an API base, asks its @provider for it rather than naming the class.
 protocols.cannot_reference_constants 'RubyLLM::Providers'
+
+# A wire format is a protocol, wherever it is spoken. Providers may subclass a
+# protocol family to adjust endpoints or quirks, but subclassing the bare
+# Protocol means defining a new wire format inside an adapter, which belongs
+# under RubyLLM::Protocols instead.
+providers.cannot_reference_constants 'RubyLLM::Protocol'
 
 # The plain-Ruby library must never reach into the Rails integration; this is
 # what keeps `require "ruby_llm"` free of ActiveRecord. Support is a leaf layer
