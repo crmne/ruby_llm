@@ -28,6 +28,12 @@ RSpec.describe RubyLLM::Provider do
         custom: 'https://cohere-proxy.example.com',
         default: 'https://api.cohere.com'
       },
+      deepgram: {
+        provider: RubyLLM::Providers::Deepgram,
+        key: :deepgram_api_base,
+        custom: 'https://deepgram-proxy.example.com',
+        default: 'https://api.deepgram.com'
+      },
       deepseek: {
         provider: RubyLLM::Providers::DeepSeek,
         key: :deepseek_api_base,
@@ -109,6 +115,8 @@ RSpec.describe RubyLLM::Provider do
         config.bedrock_region = 'us-east-1'
       when :cohere
         config.cohere_api_key = 'cohere-key'
+      when :deepgram
+        config.deepgram_api_key = 'deepgram-key'
       when :deepseek
         config.deepseek_api_key = 'deepseek-key'
       when :elevenlabs

@@ -54,6 +54,10 @@ RubyLLM.configure do |config|
   config.cohere_api_key = ENV['COHERE_API_KEY']
   config.cohere_api_base = ENV['COHERE_API_BASE'] # optional custom Cohere endpoint
 
+  # Deepgram
+  config.deepgram_api_key = ENV['DEEPGRAM_API_KEY'] # Speech only: RubyLLM.speak and RubyLLM.transcribe
+  config.deepgram_api_base = ENV['DEEPGRAM_API_BASE'] # Optional, for self-hosted deployments
+
   # DeepSeek
   config.deepseek_api_key = ENV['DEEPSEEK_API_KEY']
   config.deepseek_api_base = ENV['DEEPSEEK_API_BASE'] # Available in v1.13.0+ (optional custom DeepSeek endpoint)

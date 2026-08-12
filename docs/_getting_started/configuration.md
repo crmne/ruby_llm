@@ -126,6 +126,10 @@ RubyLLM.configure do |config|
   config.cohere_api_key = String
   config.cohere_api_base = String
 
+  # Deepgram
+  config.deepgram_api_key = String
+  config.deepgram_api_base = String
+
   # DeepSeek
   config.deepseek_api_key = String
   config.deepseek_api_base = String  # v1.13.0+
