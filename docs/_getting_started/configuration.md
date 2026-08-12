@@ -122,6 +122,10 @@ RubyLLM.configure do |config|
   config.bedrock_credential_provider = Object # Aws::CredentialProvider
   config.bedrock_api_base = String  # v1.16+
 
+  # Cohere
+  config.cohere_api_key = String
+  config.cohere_api_base = String
+
   # DeepSeek
   config.deepseek_api_key = String
   config.deepseek_api_base = String  # v1.13.0+

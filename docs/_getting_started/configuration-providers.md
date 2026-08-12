@@ -50,6 +50,10 @@ RubyLLM.configure do |config|
   # config.bedrock_credential_provider = Aws::InstanceProfileCredentials.new # Optional Aws::CredentialProvider
   config.bedrock_api_base = ENV['BEDROCK_API_BASE'] # v1.16+ (optional custom Bedrock endpoint)
 
+  # Cohere
+  config.cohere_api_key = ENV['COHERE_API_KEY']
+  config.cohere_api_base = ENV['COHERE_API_BASE'] # optional custom Cohere endpoint
+
   # DeepSeek
   config.deepseek_api_key = ENV['DEEPSEEK_API_KEY']
   config.deepseek_api_base = ENV['DEEPSEEK_API_BASE'] # Available in v1.13.0+ (optional custom DeepSeek endpoint)

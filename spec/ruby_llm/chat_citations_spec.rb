@@ -186,6 +186,39 @@ RSpec.describe RubyLLM::Chat, :live do
       end
     end
 
+    context 'with cohere/command-a-plus-05-2026', if: provider_recorded?(:cohere) do
+      let(:chat) { RubyLLM.chat(model: 'command-a-plus-05-2026', provider: :cohere).with_citations }
+
+      it 'cites text documents in responses' do
+        response = chat.ask('Who created Ruby and when? Use the document.', with: facts_path)
+
+        expect(response.citations).not_to be_empty
+        citation = response.citations.first
+        expect(citation.cited_text).to be_present
+        expect(citation.title).to eq('facts.txt')
+        expect(citation.source_index).to eq(0)
+        expect(response.content[citation.start_index...citation.end_index]).to eq(citation.text)
+      end
+
+      it 'cites tool results returned as search results' do
+        response = RubyLLM.chat(model: 'command-a-plus-05-2026', provider: :cohere)
+                          .with_tools(KnowledgeBase)
+                          .ask('Who created Ruby? Search the knowledge base first and cite your sources.')
+
+        expect(response.citations).not_to be_empty
+        expect(response.citations.first.cited_text).to be_present
+      end
+
+      it 'streams citations' do
+        chunks = []
+        response = chat.ask('Who created Ruby? Use the document.', with: facts_path) { |chunk| chunks << chunk }
+
+        expect(chunks.flat_map(&:citations)).not_to be_empty
+        citation = response.citations.first
+        expect(response.content[citation.start_index...citation.end_index]).to eq(citation.text)
+      end
+    end
+
     # Not covered: xAI deprecated Live Search in favor of its Agent Tools API.
     context 'with a model that does not support citations' do
       it 'warns when citations are requested' do

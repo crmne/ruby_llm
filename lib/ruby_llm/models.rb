@@ -23,6 +23,7 @@ module RubyLLM
       'google' => 'gemini',
       'google-vertex' => 'vertexai',
       'amazon-bedrock' => 'bedrock',
+      'cohere' => 'cohere',
       'deepseek' => 'deepseek',
       'mistral' => 'mistral',
       'openrouter' => 'openrouter',
@@ -39,6 +40,7 @@ module RubyLLM
       gemini
       deepseek
       mistral
+      cohere
       perplexity
       xai
       vertexai

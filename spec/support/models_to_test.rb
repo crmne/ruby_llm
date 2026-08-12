@@ -3,8 +3,25 @@
 SKIP_LOCAL_PROVIDER_TESTS = ENV['SKIP_LOCAL_PROVIDER_TESTS'].to_s.match?(/\A(1|true|yes)\z/i)
 LOCAL_PROVIDER_SLUGS = %i[ollama gpustack].freeze
 
+# Providers with no recorded cassettes yet. Their rows join the live matrix
+# only when a key is present to record against, so the suite stays green
+# without one.
+UNRECORDED_PROVIDER_KEYS = { cohere: 'COHERE_API_KEY' }.freeze
+
 def filter_local_providers(models)
-  SKIP_LOCAL_PROVIDER_TESTS ? models.reject { |model| LOCAL_PROVIDER_SLUGS.include?(model[:provider]) } : models
+  models = models.reject { |model| LOCAL_PROVIDER_SLUGS.include?(model[:provider]) } if SKIP_LOCAL_PROVIDER_TESTS
+  filter_unrecorded_providers(models)
+end
+
+def filter_unrecorded_providers(models)
+  models.select { |model| provider_recorded?(model[:provider]) }
+end
+
+# Whether a provider's live examples can run: either cassettes exist for it, or
+# a key is configured to record them with.
+def provider_recorded?(provider)
+  key = UNRECORDED_PROVIDER_KEYS[provider]
+  key.nil? || !ENV[key].to_s.empty?
 end
 
 def each_model(models)
@@ -15,6 +32,7 @@ chat_models = [
   { provider: :anthropic, model: 'claude-haiku-4-5' },
   { provider: :azure, model: 'grok-4-1-fast-non-reasoning' },
   { provider: :bedrock, model: 'amazon.nova-2-lite-v1:0' },
+  { provider: :cohere, model: 'command-a-plus-05-2026' },
   { provider: :deepseek, model: 'deepseek-chat' },
   { provider: :gemini, model: 'gemini-2.5-flash' },
   { provider: :gpustack, model: 'qwen3' },
@@ -32,6 +50,7 @@ structured_output_models = [
   { provider: :anthropic, model: 'claude-haiku-4-5' },
   { provider: :azure, model: 'grok-4-1-fast-non-reasoning' },
   { provider: :bedrock, model: 'claude-haiku-4-5' },
+  { provider: :cohere, model: 'command-a-plus-05-2026' },
   { provider: :gemini, model: 'gemini-3-flash-preview' },
   { provider: :mistral, model: 'mistral-small-latest' },
   { provider: :openai, model: 'gpt-5-nano' },
@@ -45,6 +64,7 @@ thinking_models = [
   { provider: :anthropic, model: 'claude-haiku-4-5' },
   { provider: :azure, model: 'gpt-5-nano' },
   { provider: :bedrock, model: 'claude-haiku-4-5' },
+  { provider: :cohere, model: 'command-a-reasoning-08-2025' },
   { provider: :deepseek, model: 'deepseek-reasoner' },
   { provider: :gemini, model: 'gemini-3-flash-preview' },
   { provider: :gpustack, model: 'qwen3' },
@@ -95,6 +115,7 @@ vision_models = [
   { provider: :anthropic, model: 'claude-haiku-4-5' },
   { provider: :azure, model: 'grok-4-1-fast-non-reasoning' },
   { provider: :bedrock, model: 'claude-sonnet-4-5' },
+  { provider: :cohere, model: 'command-a-plus-05-2026' },
   { provider: :gemini, model: 'gemini-2.5-flash' },
   { provider: :mistral, model: 'pixtral-12b' },
   { provider: :ollama, model: 'granite3.2-vision' },
@@ -118,7 +139,7 @@ AUDIO_MODELS = [
   { provider: :mistral, model: 'voxtral-small-latest' }
 ].freeze
 
-EMBEDDING_MODELS = [
+embedding_models = [
   { provider: :azure, model: 'Cohere-embed-v3-english' },
   { provider: :bedrock, model: 'amazon.titan-embed-text-v2:0' },
   { provider: :gemini, model: 'gemini-embedding-001' },
@@ -127,6 +148,7 @@ EMBEDDING_MODELS = [
   { provider: :openrouter, model: 'openai/text-embedding-3-small' },
   { provider: :vertexai, model: 'text-embedding-004' }
 ].freeze
+EMBEDDING_MODELS = filter_unrecorded_providers(embedding_models).freeze
 
 # Vertex AI TTS models (gemini-2.5-*-tts) 404 on the global and us-central1
 # endpoints, so speech is exercised through the Gemini API instead.
@@ -138,7 +160,7 @@ SPEECH_MODELS = [
   { provider: :xai, model: 'grok-tts' }
 ].freeze
 
-TRANSCRIPTION_MODELS = [
+transcription_models = [
   { provider: :gemini, model: 'gemini-2.5-flash' },
   { provider: :mistral, model: 'voxtral-mini-latest' },
   { provider: :openai, model: 'gpt-4o-transcribe-diarize' },
@@ -147,6 +169,7 @@ TRANSCRIPTION_MODELS = [
   { provider: :vertexai, model: 'gemini-2.5-flash' },
   { provider: :xai, model: 'grok-stt' }
 ].freeze
+TRANSCRIPTION_MODELS = filter_unrecorded_providers(transcription_models).freeze
 
 VIDEO_GENERATION_MODELS = [
   { provider: :gemini, model: 'veo-3.1-lite-generate-preview',

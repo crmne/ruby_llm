@@ -19892,6 +19892,772 @@
     }
   },
   {
+    "id": "c4ai-aya-expanse-32b",
+    "name": "Aya Expanse 32B",
+    "provider": "cohere",
+    "family": "aya",
+    "created_at": "2024-10-24 00:00:00 UTC",
+    "context_window": 128000,
+    "max_output_tokens": 4000,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.5,
+          "output_per_million": 1.5
+        }
+      }
+    },
+    "metadata": {
+      "endpoints": [
+        "chat"
+      ]
+    }
+  },
+  {
+    "id": "c4ai-aya-vision-32b",
+    "name": "Aya Vision 32B",
+    "provider": "cohere",
+    "family": "aya",
+    "created_at": "2025-03-04 00:00:00 UTC",
+    "context_window": 16000,
+    "max_output_tokens": 4000,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "vision"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.5,
+          "output_per_million": 1.5
+        }
+      }
+    },
+    "metadata": {
+      "endpoints": [
+        "chat"
+      ]
+    }
+  },
+  {
+    "id": "cohere-transcribe-03-2026",
+    "name": "Cohere Transcribe",
+    "provider": "cohere",
+    "family": "transcribe",
+    "created_at": "2026-03-01 00:00:00 UTC",
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "audio"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "transcription"
+    ],
+    "pricing": {},
+    "metadata": {
+      "endpoints": [
+        "transcribe"
+      ]
+    }
+  },
+  {
+    "id": "command-a-03-2025",
+    "name": "Command A",
+    "provider": "cohere",
+    "family": "command-a",
+    "created_at": "2025-03-13 00:00:00 UTC",
+    "context_window": 256000,
+    "max_output_tokens": 8000,
+    "knowledge_cutoff": "2024-06-01",
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "tool_choice",
+      "structured_output",
+      "citations"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 2.5,
+          "output_per_million": 10.0
+        }
+      }
+    },
+    "metadata": {
+      "endpoints": [
+        "chat"
+      ]
+    }
+  },
+  {
+    "id": "command-a-plus-05-2026",
+    "name": "Command A+",
+    "provider": "cohere",
+    "family": "command-a-plus",
+    "created_at": "2026-05-20 00:00:00 UTC",
+    "context_window": 128000,
+    "max_output_tokens": 64000,
+    "knowledge_cutoff": "2025-04-01",
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "tool_choice",
+      "structured_output",
+      "citations",
+      "vision",
+      "reasoning"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 2.5,
+          "output_per_million": 10.0
+        }
+      }
+    },
+    "metadata": {
+      "endpoints": [
+        "chat"
+      ]
+    }
+  },
+  {
+    "id": "command-a-reasoning-08-2025",
+    "name": "Command A Reasoning",
+    "provider": "cohere",
+    "family": "command-a",
+    "created_at": "2025-08-21 00:00:00 UTC",
+    "context_window": 256000,
+    "max_output_tokens": 32000,
+    "knowledge_cutoff": "2024-06-01",
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "tool_choice",
+      "structured_output",
+      "citations",
+      "reasoning"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 2.5,
+          "output_per_million": 10.0
+        }
+      }
+    },
+    "metadata": {
+      "endpoints": [
+        "chat"
+      ]
+    }
+  },
+  {
+    "id": "command-a-translate-08-2025",
+    "name": "Command A Translate",
+    "provider": "cohere",
+    "family": "command-a",
+    "created_at": "2025-08-28 00:00:00 UTC",
+    "context_window": 8000,
+    "max_output_tokens": 8000,
+    "knowledge_cutoff": "2024-06-01",
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 2.5,
+          "output_per_million": 10.0
+        }
+      }
+    },
+    "metadata": {
+      "endpoints": [
+        "chat"
+      ]
+    }
+  },
+  {
+    "id": "command-a-vision-07-2025",
+    "name": "Command A Vision",
+    "provider": "cohere",
+    "family": "command-a",
+    "created_at": "2025-07-31 00:00:00 UTC",
+    "context_window": 128000,
+    "max_output_tokens": 8000,
+    "knowledge_cutoff": "2024-06-01",
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "tool_choice",
+      "structured_output",
+      "citations",
+      "vision"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 2.5,
+          "output_per_million": 10.0
+        }
+      }
+    },
+    "metadata": {
+      "endpoints": [
+        "chat"
+      ]
+    }
+  },
+  {
+    "id": "command-r-08-2024",
+    "name": "Command R 08-2024",
+    "provider": "cohere",
+    "family": "command-r",
+    "created_at": "2024-08-30 00:00:00 UTC",
+    "context_window": 128000,
+    "max_output_tokens": 4000,
+    "knowledge_cutoff": "2024-06-01",
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "tool_choice",
+      "structured_output",
+      "citations"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.15,
+          "output_per_million": 0.6
+        }
+      }
+    },
+    "metadata": {
+      "endpoints": [
+        "chat"
+      ]
+    }
+  },
+  {
+    "id": "command-r-plus-08-2024",
+    "name": "Command R+ 08-2024",
+    "provider": "cohere",
+    "family": "command-r-plus",
+    "created_at": "2024-08-30 00:00:00 UTC",
+    "context_window": 128000,
+    "max_output_tokens": 4000,
+    "knowledge_cutoff": "2024-06-01",
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "tool_choice",
+      "structured_output",
+      "citations"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 2.5,
+          "output_per_million": 10.0
+        }
+      }
+    },
+    "metadata": {
+      "endpoints": [
+        "chat"
+      ]
+    }
+  },
+  {
+    "id": "command-r7b-12-2024",
+    "name": "Command R7B 12-2024",
+    "provider": "cohere",
+    "family": "command",
+    "created_at": "2024-12-02 00:00:00 UTC",
+    "context_window": 128000,
+    "max_output_tokens": 4000,
+    "knowledge_cutoff": "2024-06-01",
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "tool_choice",
+      "structured_output",
+      "citations"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.0375,
+          "output_per_million": 0.15
+        }
+      }
+    },
+    "metadata": {
+      "endpoints": [
+        "chat"
+      ]
+    }
+  },
+  {
+    "id": "embed-english-light-v3.0",
+    "name": "Embed English Light v3.0",
+    "provider": "cohere",
+    "family": "embed",
+    "created_at": null,
+    "context_window": 512,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "embeddings"
+      ]
+    },
+    "capabilities": [],
+    "pricing": {},
+    "metadata": {
+      "endpoints": [
+        "embed"
+      ]
+    }
+  },
+  {
+    "id": "embed-english-v3.0",
+    "name": "Embed English v3.0",
+    "provider": "cohere",
+    "family": "embed",
+    "created_at": null,
+    "context_window": 512,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "embeddings"
+      ]
+    },
+    "capabilities": [],
+    "pricing": {},
+    "metadata": {
+      "endpoints": [
+        "embed"
+      ]
+    }
+  },
+  {
+    "id": "embed-multilingual-light-v3.0",
+    "name": "Embed Multilingual Light v3.0",
+    "provider": "cohere",
+    "family": "embed",
+    "created_at": null,
+    "context_window": 512,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "embeddings"
+      ]
+    },
+    "capabilities": [],
+    "pricing": {},
+    "metadata": {
+      "endpoints": [
+        "embed"
+      ]
+    }
+  },
+  {
+    "id": "embed-multilingual-v3.0",
+    "name": "Embed Multilingual v3.0",
+    "provider": "cohere",
+    "family": "embed",
+    "created_at": null,
+    "context_window": 512,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "embeddings"
+      ]
+    },
+    "capabilities": [],
+    "pricing": {},
+    "metadata": {
+      "endpoints": [
+        "embed"
+      ]
+    }
+  },
+  {
+    "id": "embed-v4.0",
+    "name": "Embed v4.0",
+    "provider": "cohere",
+    "family": "embed",
+    "created_at": null,
+    "context_window": 128000,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "embeddings"
+      ]
+    },
+    "capabilities": [],
+    "pricing": {},
+    "metadata": {
+      "endpoints": [
+        "embed"
+      ]
+    }
+  },
+  {
+    "id": "rerank-english-v3.0",
+    "name": "Rerank English v3.0",
+    "provider": "cohere",
+    "family": "rerank",
+    "created_at": null,
+    "context_window": 4096,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "rerank"
+      ]
+    },
+    "capabilities": [],
+    "pricing": {},
+    "metadata": {
+      "endpoints": [
+        "rerank"
+      ]
+    }
+  },
+  {
+    "id": "rerank-multilingual-v3.0",
+    "name": "Rerank Multilingual v3.0",
+    "provider": "cohere",
+    "family": "rerank",
+    "created_at": null,
+    "context_window": 4096,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "rerank"
+      ]
+    },
+    "capabilities": [],
+    "pricing": {},
+    "metadata": {
+      "endpoints": [
+        "rerank"
+      ]
+    }
+  },
+  {
+    "id": "rerank-v3.5",
+    "name": "Rerank v3.5",
+    "provider": "cohere",
+    "family": "rerank",
+    "created_at": null,
+    "context_window": 4096,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "rerank"
+      ]
+    },
+    "capabilities": [],
+    "pricing": {},
+    "metadata": {
+      "endpoints": [
+        "rerank"
+      ]
+    }
+  },
+  {
+    "id": "rerank-v4.0-fast",
+    "name": "Rerank v4.0 Fast",
+    "provider": "cohere",
+    "family": "rerank",
+    "created_at": null,
+    "context_window": 32000,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "rerank"
+      ]
+    },
+    "capabilities": [],
+    "pricing": {},
+    "metadata": {
+      "endpoints": [
+        "rerank"
+      ]
+    }
+  },
+  {
+    "id": "rerank-v4.0-pro",
+    "name": "Rerank v4.0 Pro",
+    "provider": "cohere",
+    "family": "rerank",
+    "created_at": null,
+    "context_window": 32000,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "rerank"
+      ]
+    },
+    "capabilities": [],
+    "pricing": {},
+    "metadata": {
+      "endpoints": [
+        "rerank"
+      ]
+    }
+  },
+  {
+    "id": "tiny-aya-earth",
+    "name": "Tiny Aya Earth",
+    "provider": "cohere",
+    "family": "aya",
+    "created_at": null,
+    "context_window": 8000,
+    "max_output_tokens": 8000,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming"
+    ],
+    "pricing": {},
+    "metadata": {
+      "endpoints": [
+        "chat"
+      ]
+    }
+  },
+  {
+    "id": "tiny-aya-fire",
+    "name": "Tiny Aya Fire",
+    "provider": "cohere",
+    "family": "aya",
+    "created_at": null,
+    "context_window": 8000,
+    "max_output_tokens": 8000,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming"
+    ],
+    "pricing": {},
+    "metadata": {
+      "endpoints": [
+        "chat"
+      ]
+    }
+  },
+  {
+    "id": "tiny-aya-global",
+    "name": "Tiny Aya Global",
+    "provider": "cohere",
+    "family": "aya",
+    "created_at": null,
+    "context_window": 8000,
+    "max_output_tokens": 8000,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming"
+    ],
+    "pricing": {},
+    "metadata": {
+      "endpoints": [
+        "chat"
+      ]
+    }
+  },
+  {
+    "id": "tiny-aya-water",
+    "name": "Tiny Aya Water",
+    "provider": "cohere",
+    "family": "aya",
+    "created_at": null,
+    "context_window": 8000,
+    "max_output_tokens": 8000,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming"
+    ],
+    "pricing": {},
+    "metadata": {
+      "endpoints": [
+        "chat"
+      ]
+    }
+  },
+  {
     "id": "deepseek-chat",
     "name": "DeepSeek Chat",
     "provider": "deepseek",

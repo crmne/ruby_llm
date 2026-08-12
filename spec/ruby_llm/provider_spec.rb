@@ -22,6 +22,12 @@ RSpec.describe RubyLLM::Provider do
         custom: 'https://bedrock-proxy.example.com',
         default: 'https://bedrock-runtime.us-east-1.amazonaws.com'
       },
+      cohere: {
+        provider: RubyLLM::Providers::Cohere,
+        key: :cohere_api_base,
+        custom: 'https://cohere-proxy.example.com',
+        default: 'https://api.cohere.com'
+      },
       deepseek: {
         provider: RubyLLM::Providers::DeepSeek,
         key: :deepseek_api_base,
@@ -101,6 +107,8 @@ RSpec.describe RubyLLM::Provider do
         config.bedrock_api_key = 'bedrock-key'
         config.bedrock_secret_key = 'bedrock-secret'
         config.bedrock_region = 'us-east-1'
+      when :cohere
+        config.cohere_api_key = 'cohere-key'
       when :deepseek
         config.deepseek_api_key = 'deepseek-key'
       when :elevenlabs

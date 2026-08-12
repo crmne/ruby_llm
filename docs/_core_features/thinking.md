@@ -124,6 +124,7 @@ end
 - OpenAI reasoning models accept `effort` but may not return thinking text or signatures.
 - Perplexity sonar reasoning models stream `<think>` blocks inside content; RubyLLM extracts them after the response completes.
 - Mistral Magistral models always think and ignore `with_thinking` params. Non-magistral models warn if you pass them.
+- Cohere reasoning models think by default. `with_thinking(budget:)` caps the thinking tokens, and `with_thinking(effort: :none)` turns the default off. Cohere returns thinking text but no signature, and reports no separate thinking token count.
 - Ollama and GPUStack local-model thinking controls vary by backend and model. RubyLLM does not translate them; pass backend params explicitly with `with_provider_options`.
 - Anthropic and Ollama integrations currently do not report thinking token counts.
 

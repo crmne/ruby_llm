@@ -74,7 +74,7 @@ response.citations.first.end_page   # => 5
 ```
 
 {: .note }
-Document citations are currently supported by Anthropic. RubyLLM checks the [model registry]({% link _reference/models.md %}) and logs a warning when you request citations from a model that can't return them. Citations from search and grounding are always parsed regardless (see below).
+Document citations are currently supported by Anthropic and Cohere. RubyLLM checks the [model registry]({% link _reference/models.md %}) and logs a warning when you request citations from a model that can't return them. Citations from search and grounding are always parsed regardless (see below).
 
 ## Citing Tool Results (RAG)
 
@@ -227,6 +227,7 @@ Without the column, everything still works - citations just aren't persisted.
 - **Gemini / Vertex AI** return grounding metadata when the `google_search` tool is enabled. RubyLLM converts grounding byte offsets to character offsets for you.
 - **Perplexity** returns its search results on every response; `cited_text` carries the result snippet when available.
 - **xAI** returns a list of cited URLs when live search is enabled via `with_provider_options`.
+- **Cohere** cites the documents you attach with `with_citations`, and the search results your tools return, with quoted snippets and exact response spans.
 - **Bedrock, DeepSeek, Mistral, Ollama, GPUStack** don't currently surface citations through RubyLLM.
 
 ## Next Steps

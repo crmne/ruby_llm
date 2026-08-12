@@ -21,9 +21,9 @@ module RubyLLM
     # The valid message roles: +:system+, +:user+, +:assistant+, and +:tool+.
     ROLES = %i[system user assistant tool].freeze
 
-    STOPPED_FINISH_REASONS = %w[stop end_turn stop_sequence].freeze
+    STOPPED_FINISH_REASONS = %w[stop end_turn stop_sequence complete].freeze
     MAX_TOKENS_FINISH_REASONS = %w[length max_tokens max_output_tokens model_context_window_exceeded].freeze
-    TOOL_CALL_FINISH_REASONS = %w[tool_calls tool_use function_call].freeze
+    TOOL_CALL_FINISH_REASONS = %w[tool_calls tool_use function_call tool_call].freeze
     CONTENT_FILTERED_FINISH_REASONS = %w[
       blocklist content_filter content_filtered guardrail_intervened image_recitation image_safety
       model_armor prohibited_content recitation safety spii

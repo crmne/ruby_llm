@@ -25,6 +25,7 @@ VCR.configure do |config|
   config.filter_sensitive_data('<AWS_REGION>') { ENV.fetch('AWS_REGION', 'us-west-2') }
   config.filter_sensitive_data('<AWS_SECRET_ACCESS_KEY>') { ENV.fetch('AWS_SECRET_ACCESS_KEY', nil) }
   config.filter_sensitive_data('<AWS_SESSION_TOKEN>') { ENV.fetch('AWS_SESSION_TOKEN', nil) }
+  config.filter_sensitive_data('<COHERE_API_KEY>') { ENV.fetch('COHERE_API_KEY', nil) }
   config.filter_sensitive_data('<DEEPSEEK_API_KEY>') { ENV.fetch('DEEPSEEK_API_KEY', nil) }
   config.filter_sensitive_data('<ELEVENLABS_API_KEY>') { ENV.fetch('ELEVENLABS_API_KEY', nil) }
   config.filter_sensitive_data('<GEMINI_API_KEY>') { ENV.fetch('GEMINI_API_KEY', nil) }
