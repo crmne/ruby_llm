@@ -275,7 +275,7 @@ module RubyLLM
       track_usage(:rerank) do
         payload = render_rerank_payload(query, documents, model:, top_n:, provider_options:)
         response = @connection.post rerank_url, payload, usage: @usage_tracker
-        parse_rerank_response(response, model:)
+        parse_rerank_response(response, model:, documents:)
       end
     rescue NotImplementedError
       raise Error, "#{@provider.name} doesn't support reranking"

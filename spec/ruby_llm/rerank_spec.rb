@@ -23,6 +23,31 @@ RSpec.describe RubyLLM::Rerank, :live do
   end
 
   describe 'reranking' do
+    context 'with cohere/rerank-v3.5', if: provider_recorded?(:cohere) do
+      it 'orders documents by relevance and resolves them from the request' do
+        rerank = RubyLLM.rerank(
+          'What is the capital of the United States?',
+          ['Carson City is the capital city of the American state of Nevada.',
+           'Washington, D.C. is the capital of the United States. It is a federal district.'],
+          model: 'rerank-v3.5', provider: :cohere
+        )
+
+        expect(rerank.results.first.document).to include('Washington')
+        expect(rerank.results.first.score).to be > rerank.results.last.score
+        expect(rerank.results.map(&:index)).to contain_exactly(0, 1)
+      end
+
+      it 'limits results with top_n' do
+        rerank = RubyLLM.rerank(
+          'ruby',
+          ['Ruby is a programming language', 'Paris is in France', 'Rails is a Ruby framework'],
+          model: 'rerank-v3.5', provider: :cohere, top_n: 2
+        )
+
+        expect(rerank.results.length).to eq(2)
+      end
+    end
+
     context 'with openrouter/voyageai/rerank-2.5-lite' do
       it 'orders documents by relevance and reports the exact cost' do
         rerank = RubyLLM.rerank(

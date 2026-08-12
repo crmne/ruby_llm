@@ -8,6 +8,7 @@ module RubyLLM
       include Cohere::Chat
       include Cohere::Embeddings
       include Cohere::Media
+      include Cohere::Rerank
       include Cohere::Streaming
       include Cohere::Tools
     end
