@@ -69,7 +69,15 @@ RubyLLM.speak(
   model: "{{ site.models.speech_google }}",
   provider: :gemini
 )
+
+RubyLLM.speak(
+  "The first move is what sets everything in motion.",
+  model: "eleven_v3",
+  provider: :elevenlabs
+)
 ```
+
+ElevenLabs offers `eleven_v3` for the most expressive delivery, `eleven_multilingual_v2` for the highest audio fidelity, and `eleven_flash_v2_5` when latency matters more than nuance.
 
 Configure the default globally:
 
@@ -95,6 +103,19 @@ RubyLLM.speak(
 ```
 
 OpenAI voices include `alloy`, `ash`, `ballad`, `coral`, `echo`, `fable`, `onyx`, `nova`, `sage`, `shimmer`, `verse`, `marin`, and `cedar`. Gemini supports its own voice set, including `Kore`, `Puck`, `Zephyr`, and `Sadachbia`.
+
+ElevenLabs identifies voices by id rather than by name, so pass the voice id from your ElevenLabs voice library:
+
+```ruby
+RubyLLM.speak(
+  "Welcome back.",
+  model: "eleven_v3",
+  provider: :elevenlabs,
+  voice: "JBFqnCBsd6RMkjVDRZzb"
+)
+```
+
+That id is George, the default voice RubyLLM uses when you omit `voice:`.
 
 ## Formats
 
@@ -126,6 +147,18 @@ Convert PCM with a tool like ffmpeg when you need a container format:
 ffmpeg -f s16le -ar 24000 -ac 1 -i out.pcm out.wav
 ```
 
+ElevenLabs picks a sample rate and bitrate along with the container. RubyLLM maps `mp3`, `opus`, `pcm`, `wav`, `ulaw`, and `alaw` onto sensible ElevenLabs defaults, and passes anything else through unchanged so you can name an exact output format:
+
+```ruby
+RubyLLM.speak("Ship it.", model: "eleven_v3", provider: :elevenlabs, format: "mp3")
+# requests output_format=mp3_44100_128
+
+RubyLLM.speak("Ship it.", model: "eleven_v3", provider: :elevenlabs, format: "pcm_24000")
+# requests output_format=pcm_24000
+```
+
+Either way `speech.format` reports the container you actually got, so `pcm_24000` comes back as `"pcm"`.
+
 ## Style
 
 `RubyLLM.speak` keeps the options every provider understands as keywords: `model:`, `voice:`, and `format:`. Provider-specific speech controls go in `provider_options:`, a hash of options in the provider's own request vocabulary that RubyLLM merges into the request as-is. OpenAI supports `instructions:` and `speed:`:
@@ -136,6 +169,20 @@ RubyLLM.speak(
   provider_options: {
     instructions: "Speak with calm confidence.",
     speed: 1.1
+  }
+)
+```
+
+ElevenLabs takes `voice_settings` and a `language_code`:
+
+```ruby
+RubyLLM.speak(
+  "The build is green.",
+  model: "eleven_v3",
+  provider: :elevenlabs,
+  provider_options: {
+    voice_settings: { stability: 0.4, similarity_boost: 0.8, speed: 1.1 },
+    language_code: "en"
   }
 )
 ```

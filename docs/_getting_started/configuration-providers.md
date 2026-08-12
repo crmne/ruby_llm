@@ -54,6 +54,10 @@ RubyLLM.configure do |config|
   config.deepseek_api_key = ENV['DEEPSEEK_API_KEY']
   config.deepseek_api_base = ENV['DEEPSEEK_API_BASE'] # Available in v1.13.0+ (optional custom DeepSeek endpoint)
 
+  # ElevenLabs
+  config.elevenlabs_api_key = ENV['ELEVENLABS_API_KEY'] # Speech only: RubyLLM.speak and RubyLLM.transcribe
+  config.elevenlabs_api_base = ENV['ELEVENLABS_API_BASE'] # Optional, for the regional residency endpoints
+
   # Gemini
   config.gemini_api_key = ENV['GEMINI_API_KEY']
   config.gemini_api_base = ENV['GEMINI_API_BASE'] # Available in v1.9.0+ (optional API version override)

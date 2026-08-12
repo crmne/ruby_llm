@@ -67,6 +67,9 @@ RubyLLM.transcribe(
   model: "gemini-2.5-flash",
   prompt: "Return only the verbatim transcript."
 )
+
+# Scribe v2 (ElevenLabs, 90+ languages with word timestamps)
+RubyLLM.transcribe("interview.mp3", model: "scribe_v2", provider: :elevenlabs)
 ```
 
 Configure the default globally:
@@ -104,6 +107,12 @@ Gemini takes a MIME type:
 
 ```ruby
 RubyLLM.transcribe("lecture.wav", model: "gemini-2.5-flash", format: "application/json")
+```
+
+ElevenLabs uses `format:` to choose the timestamp granularity, either `word` or `character`:
+
+```ruby
+RubyLLM.transcribe("interview.mp3", model: "scribe_v2", provider: :elevenlabs, format: "character")
 ```
 
 When you omit `format:`, OpenAI's diarization models default to `diarized_json`, Gemini defaults to `text/plain`, and other OpenAI models use the API's default.
@@ -145,7 +154,20 @@ transcription = RubyLLM.transcribe(
 # Bob: Happy to be here.
 ```
 
-Speaker references accept file paths, URLs, IO objects, or ActiveStorage attachments. Only OpenAI's diarization models use speaker names and references today; other providers ignore them.
+Speaker references accept file paths, URLs, IO objects, or ActiveStorage attachments. Only OpenAI's diarization models use the names and the reference clips themselves. Mistral and ElevenLabs read `speaker_names:` as a request to diarize: Mistral turns on segment-level speaker ids, and ElevenLabs turns on diarization and caps the speaker count at the number of names you gave.
+
+```ruby
+transcription = RubyLLM.transcribe(
+  "team-meeting.wav",
+  model: "scribe_v2",
+  provider: :elevenlabs,
+  speaker_names: ["Alice", "Bob"]
+)
+
+transcription.words.each do |word|
+  puts "#{word['speaker_id']}: #{word['text']} (#{word['start']}s)"
+end
+```
 
 OpenAI's diarization models also send `chunking_strategy: "auto"` by default. Override it in OpenAI's own request shape through `provider_options:`:
 
@@ -258,6 +280,30 @@ transcription = RubyLLM.transcribe(
 transcription.words.each do |word|
   puts "#{word['start']}s - #{word['end']}s: #{word['word']}"
 end
+```
+
+ElevenLabs returns word timestamps on every transcription, along with the audio duration and the detected language:
+
+```ruby
+transcription = RubyLLM.transcribe("interview.mp3", model: "scribe_v2", provider: :elevenlabs)
+
+puts transcription.language  # => "en"
+puts transcription.duration  # => 10.5
+
+transcription.words.each do |word|
+  puts "#{word['start']}s - #{word['end']}s: #{word['text']} (#{word['type']})"
+end
+```
+
+Options ElevenLabs supports but RubyLLM has no keyword for, such as `keyterms`, `tag_audio_events`, and `entity_redaction`, go through `provider_options:`:
+
+```ruby
+RubyLLM.transcribe(
+  "developer-talk.mp3",
+  model: "scribe_v2",
+  provider: :elevenlabs,
+  provider_options: { keyterms: ["RubyLLM", "Zeitwerk"], tag_audio_events: true }
+)
 ```
 
 ## Handling Longer Files

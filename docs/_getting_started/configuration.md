@@ -126,6 +126,10 @@ RubyLLM.configure do |config|
   config.deepseek_api_key = String
   config.deepseek_api_base = String  # v1.13.0+
 
+  # ElevenLabs
+  config.elevenlabs_api_key = String
+  config.elevenlabs_api_base = String
+
   # Gemini
   config.gemini_api_key = String
   config.gemini_api_base = String  # v1.9.0+
