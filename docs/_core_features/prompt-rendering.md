@@ -122,6 +122,33 @@ RubyLLM.render_prompt("work_assistant/instructions.txt.erb", display_name: "Ada"
 
 RubyLLM prompt templates use `.txt.erb`.
 
+## Prompts in Engines
+
+`RubyLLM::Prompt.roots` is the ordered list of directories searched for prompt files, the same way `ActionView` searches view paths. The application's `app/prompts` is always first, so a gem or Rails engine can ship its own prompts by appending its directory in an initializer:
+
+```ruby
+# my_engine/lib/my_engine/engine.rb
+module MyEngine
+  class Engine < ::Rails::Engine
+    initializer "my_engine.prompts" do
+      RubyLLM::Prompt.roots << MyEngine::Engine.root.join("app/prompts")
+    end
+  end
+end
+```
+
+An agent shipped by the engine then finds its prompt in the engine:
+
+```text
+my_engine/app/prompts/my_engine/chat_agent/instructions.txt.erb
+```
+
+Because the application root is searched first, a host app overrides any engine prompt by creating a file at the same relative path:
+
+```text
+app/prompts/my_engine/chat_agent/instructions.txt.erb
+```
+
 ## Missing Prompts
 
 If RubyLLM cannot find the prompt file, it raises `RubyLLM::PromptNotFoundError`:

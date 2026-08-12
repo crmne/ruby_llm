@@ -57,6 +57,55 @@ RSpec.describe RubyLLM::Prompt do
     end
   end
 
+  describe '.roots' do
+    let(:engine_tmpdir) { Dir.mktmpdir }
+    let(:engine_dir) { Pathname.new(engine_tmpdir).join('app/prompts') }
+
+    before do
+      engine_dir.mkpath
+      described_class.roots << engine_dir
+    end
+
+    after do
+      described_class.instance_variable_set(:@roots, nil)
+      FileUtils.rm_rf(engine_tmpdir)
+    end
+
+    def create_engine_prompt(name, content)
+      path = engine_dir.join("#{name}.txt.erb")
+      path.dirname.mkpath
+      path.write(content)
+    end
+
+    it 'keeps the application root first' do
+      expect(described_class.roots.first).to eq(prompt_dir)
+      expect(described_class.roots.to_a).to eq([prompt_dir, engine_dir])
+    end
+
+    it 'resolves a prompt from an engine root when the application does not ship it' do
+      create_engine_prompt('engine_agent/instructions', 'Engine prompt for <%= name %>.')
+      expect(described_class.render('engine_agent/instructions', name: 'Ava')).to eq('Engine prompt for Ava.')
+    end
+
+    it 'prefers the application prompt over an engine prompt at the same path' do
+      create_prompt('engine_agent/instructions', 'Application override.')
+      create_engine_prompt('engine_agent/instructions', 'Engine default.')
+      expect(described_class.render('engine_agent/instructions')).to eq('Application override.')
+    end
+
+    it 'resolves #path to the engine file when only the engine ships it' do
+      create_engine_prompt('engine_agent/instructions', 'Engine default.')
+      prompt = described_class.new('engine_agent/instructions')
+      expect(prompt.path).to eq(engine_dir.join('engine_agent/instructions.txt.erb'))
+    end
+
+    it 'falls back to the application path when no root has the file' do
+      prompt = described_class.new('missing')
+      expect(prompt.path).to eq(prompt_dir.join('missing.txt.erb'))
+      expect { prompt.render }.to raise_error(RubyLLM::PromptNotFoundError, /missing\.txt\.erb/)
+    end
+  end
+
   describe 'RubyLLM.render_prompt' do
     it 'renders a prompt with locals through the top-level entrypoint' do
       create_prompt('friend', 'Hello, <%= name %>!')

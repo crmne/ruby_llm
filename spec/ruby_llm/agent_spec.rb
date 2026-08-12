@@ -171,6 +171,30 @@ RSpec.describe RubyLLM::Agent, :live do
     end
   end
 
+  it 'loads the conventional instructions prompt from a registered engine root' do
+    with_prompt_root do
+      engine_tmpdir = Dir.mktmpdir
+      engine_root = Pathname.new(engine_tmpdir).join('app/prompts')
+      path = engine_root.join('spec_engine_prompt_agent/instructions.txt.erb')
+      path.dirname.mkpath
+      path.write('Shipped by the engine')
+      RubyLLM::Prompt.roots << engine_root
+
+      agent_class = Class.new(RubyLLM::Agent) do
+        model 'gpt-4.1-nano'
+      end
+      stub_const('SpecEnginePromptAgent', agent_class)
+
+      chat = SpecEnginePromptAgent.chat
+
+      expect(chat.messages.first.role).to eq(:system)
+      expect(chat.messages.first.content).to eq('Shipped by the engine')
+    ensure
+      RubyLLM::Prompt.instance_variable_set(:@roots, nil)
+      FileUtils.rm_rf(engine_tmpdir) if engine_tmpdir
+    end
+  end
+
   it 'does not load a conventional prompt implicitly for anonymous agents' do
     with_prompt_root do |prompt_root|
       path = prompt_root.join('agent/instructions.txt.erb')
