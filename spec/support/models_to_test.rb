@@ -162,6 +162,7 @@ SPEECH_MODELS = [
 ].freeze
 
 transcription_models = [
+  { provider: :cohere, model: 'cohere-transcribe-03-2026' },
   { provider: :gemini, model: 'gemini-2.5-flash' },
   { provider: :mistral, model: 'voxtral-mini-latest' },
   { provider: :openai, model: 'gpt-4o-transcribe-diarize' },

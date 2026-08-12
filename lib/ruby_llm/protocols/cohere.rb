@@ -11,6 +11,7 @@ module RubyLLM
       include Cohere::Rerank
       include Cohere::Streaming
       include Cohere::Tools
+      include Cohere::Transcription
     end
   end
 end
