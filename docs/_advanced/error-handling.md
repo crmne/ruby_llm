@@ -245,6 +245,25 @@ When building [Tools]({% link _core_features/tools.md %}), you need to decide ho
 
 Distinguishing between these helps the LLM work effectively with recoverable issues while ensuring critical application failures are handled appropriately.
 
+## Agent-Level Handlers
+
+When you use [Agents]({% link _advanced/agents.md %}), `rescue_from` moves error handling out of every call site and into the agent class:
+
+```ruby
+class ApplicationAgent < RubyLLM::Agent
+  rescue_from RubyLLM::RateLimitError, Faraday::TimeoutError, with: :handle_transient
+
+  private
+
+  def handle_transient(error)
+    StatsD.increment("llm.api_error", tags: ["type:transient"])
+    raise
+  end
+end
+```
+
+Handlers cover the agent's chat operations (`ask`, `say`, `ask_later`, `complete`, `generate`, `run_tools`, `step`), run on the agent instance, and follow `ActiveSupport::Rescuable` semantics. See [Handling Errors with `rescue_from`]({% link _advanced/agents.md %}#handling-errors-with-rescue_from).
+
 ## Automatic Retries
 
 RubyLLM automatically retries requests that fail due to transient network or server issues using Faraday's retry middleware.

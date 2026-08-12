@@ -48,11 +48,16 @@ module RubyLLM
       :@headers => {},
       :@input_names => [],
       :@fallbacks => [],
-      :@fallback_options => {}
+      :@fallback_options => {},
+      :@rescue_handlers => []
     }.freeze
     # Simple value options: a class-level getter/setter macro whose value the
     # agent forwards to the matching Chat#with_* when it builds its chat.
     PASSTHROUGH_OPTIONS = %i[temperature max_output_tokens].freeze
+
+    # The chat operations an agent instance runs through its ::rescue_from
+    # handlers. Every other Chat method is delegated untouched.
+    GUARDED_OPERATIONS = %i[ask say ask_later complete generate run_tools step].freeze
 
     COPIED_INHERITED_CONFIG = (%i[
       @instructions
@@ -62,7 +67,8 @@ module RubyLLM
       @context
       @chat_model
     ] + PASSTHROUGH_OPTIONS.map { |option| :"@#{option}" }).freeze
-    private_constant :DUPED_INHERITED_CONFIG, :COPIED_INHERITED_CONFIG, :PASSTHROUGH_OPTIONS
+    private_constant :DUPED_INHERITED_CONFIG, :COPIED_INHERITED_CONFIG, :PASSTHROUGH_OPTIONS,
+                     :GUARDED_OPERATIONS
 
     class << self
       def inherited(subclass) # :nodoc:
@@ -305,6 +311,57 @@ module RubyLLM
         @input_names = names.flatten.map(&:to_sym)
       end
 
+      # Registers a handler for exceptions raised by the chat operations of
+      # this agent's instances: #ask, #say, #ask_later, #complete,
+      # #generate, #run_tools, and #step. Name the handler with +with:+ or
+      # pass a block; either runs on the agent instance, so the agent's
+      # #chat, inputs, and class name are available for instrumentation.
+      #
+      #   class ApplicationAgent < RubyLLM::Agent
+      #     rescue_from RubyLLM::RateLimitError, Faraday::TimeoutError, with: :handle_transient
+      #     rescue_from RubyLLM::BadRequestError do |error|
+      #       error_tracker.notify(error)
+      #       raise
+      #     end
+      #
+      #     private
+      #
+      #     def handle_transient(error)
+      #       metrics.increment("llm.api_error", type: "transient")
+      #       raise
+      #     end
+      #   end
+      #
+      # Handlers are searched in reverse declaration order, so the last
+      # matching one wins. Re-raise inside a handler to let the caller see
+      # the exception; otherwise the handler's return value becomes the
+      # operation's return value. Exceptions no handler matches are
+      # re-raised. Subclasses inherit the handlers declared when they are
+      # defined.
+      #
+      # Exception classes may be named as Strings, which defers constant
+      # lookup until an exception is raised.
+      def rescue_from(*exception_classes, with: nil, &block)
+        raise ArgumentError, 'rescue_from needs a handler: pass with: or a block' unless with || block
+        raise ArgumentError, 'rescue_from takes with: or a block, not both' if with && block
+
+        exception_classes.flatten.each do |exception_class|
+          rescue_handlers << [rescue_handler_key(exception_class), with || block]
+        end
+      end
+
+      def rescue_handlers # :nodoc:
+        @rescue_handlers ||= []
+      end
+
+      def rescue_handler_for(exception) # :nodoc:
+        rescue_handlers.reverse_each do |class_name, handler|
+          exception_class = rescue_handler_class(class_name)
+          return handler if exception_class && exception.is_a?(exception_class)
+        end
+        nil
+      end
+
       def chat_kwargs # :nodoc:
         @chat_kwargs || {}
       end
@@ -421,6 +478,20 @@ module RubyLLM
       end
 
       private
+
+      def rescue_handler_key(exception_class)
+        case exception_class
+        when Module then exception_class.name
+        when String then exception_class
+        else raise ArgumentError, "#{exception_class.inspect} is not an exception class or its name"
+        end
+      end
+
+      def rescue_handler_class(class_name)
+        Object.const_get(class_name)
+      rescue NameError
+        nil
+      end
 
       def copy_inherited_config_to(subclass)
         DUPED_INHERITED_CONFIG.each do |ivar, default|
@@ -626,12 +697,47 @@ module RubyLLM
 
     # Agent instances delegate the Chat API to the wrapped #chat. Each
     # delegated method behaves exactly as documented on Chat.
-    def_delegators :chat, :model, :messages, :tools, :provider_options, :headers, :schema, :caching, :ask, :say,
+    def_delegators :chat, :model, :messages, :tools, :provider_options, :headers, :schema, :caching,
                    :with_tools, :with_tool_options, :with_model, :with_temperature, :with_max_output_tokens,
                    :with_thinking, :with_citations, :with_caching, :with_context, :with_provider_options,
                    :with_headers, :with_schema, :with_fallbacks, :before_message, :after_message, :before_tool_call,
-                   :after_tool_result, :before_fallback, :after_fallback, :each, :complete, :complete?, :ask_later,
-                   :cancel!, :cancelled?, :approve!, :deny!, :awaiting_approval?, :pending_approvals, :generate,
-                   :run_tools, :step, :add_message, :add_completion, :tokens, :cost
+                   :after_tool_result, :before_fallback, :after_fallback, :each, :complete?,
+                   :cancel!, :cancelled?, :approve!, :deny!, :awaiting_approval?, :pending_approvals,
+                   :add_message, :add_completion, :tokens, :cost
+
+    ##
+    # :method: ask
+    # :call-seq: ask(message = nil, with: nil, &block)
+    #
+    # Delegates to Chat#ask, routing exceptions through the handlers
+    # declared with ::rescue_from.
+
+    ##
+    # :method: complete
+    # :call-seq: complete(&block)
+    #
+    # Delegates to Chat#complete, routing exceptions through the handlers
+    # declared with ::rescue_from.
+
+    GUARDED_OPERATIONS.each do |operation|
+      define_method(operation) do |*args, **kwargs, &block|
+        chat.public_send(operation, *args, **kwargs, &block)
+      rescue StandardError => e
+        rescue_with_handler(e)
+      end
+    end
+
+    # Runs the ::rescue_from handler matching +exception+ and returns its
+    # value, or re-raises when no handler matches. The chat operations call
+    # this for you.
+    def rescue_with_handler(exception)
+      handler = self.class.rescue_handler_for(exception)
+      raise exception unless handler
+
+      return instance_exec(exception, &handler) unless handler.is_a?(Symbol)
+
+      handler_method = method(handler)
+      handler_method.arity.zero? ? handler_method.call : handler_method.call(exception)
+    end
   end
 end

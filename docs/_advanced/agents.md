@@ -27,6 +27,7 @@ After reading this guide, you will know:
 * How runtime context works (`chat`, `inputs`, and lazy evaluation)
 * How prompt conventions work in `app/prompts`
 * Which methods are available on agent instances
+* How to handle errors for a whole agent with `rescue_from`
 
 ## What Are Agents?
 
@@ -304,6 +305,53 @@ Delegated methods include:
 * `before_message`, `after_message`, `before_tool_call`, `after_tool_result`, `before_fallback`, `after_fallback`
 
 You can always access the wrapped chat object directly via `agent.chat`.
+
+## Handling Errors with `rescue_from`
+
+`rescue_from` declares how an agent handles exceptions raised by its chat operations: `ask`, `say`, `ask_later`, `complete`, `generate`, `run_tools`, and `step`.
+
+```ruby
+class ApplicationAgent < RubyLLM::Agent
+  rescue_from RubyLLM::RateLimitError, RubyLLM::ServerError, with: :handle_transient
+  rescue_from RubyLLM::BadRequestError, with: :handle_bad_request
+
+  private
+
+  def handle_transient(error)
+    StatsD.increment("llm.api_error", tags: ["type:transient"])
+    Rails.logger.error("#{error.class}: #{error.message}")
+    raise # re-raise after instrumenting
+  end
+
+  def handle_bad_request(error)
+    StatsD.increment("llm.api_error", tags: ["type:bad_request"])
+    Sentry.capture_exception(error) # this one is a bug in our pipeline
+    raise
+  end
+end
+```
+
+Handlers run on the agent instance, so `self`, the agent's inputs, and `agent.chat` are available for instrumentation. Pass a block instead of `with:` when the handler is a one-liner:
+
+```ruby
+class SummaryAgent < ApplicationAgent
+  rescue_from RubyLLM::RateLimitError do |error|
+    Rails.logger.warn("#{self.class.name} rate limited: #{error.message}")
+    nil
+  end
+end
+```
+
+The semantics match `ActiveSupport::Rescuable`:
+
+* Handlers are searched in reverse declaration order, so the last matching handler wins and a subclass can override an inherited one.
+* Exception classes may be given as strings (`rescue_from "MyGem::Error"`), which defers constant lookup until an exception is raised.
+* Re-raise inside the handler to let the caller see the exception. Without a `raise`, the exception is swallowed and the handler's return value becomes the operation's return value.
+* Exceptions that no handler matches are re-raised with their original backtrace.
+
+Subclasses inherit the handlers declared when they are defined, so an `ApplicationAgent` base class is the usual place for shared error policy.
+
+Handlers apply to agent instances. `WorkAssistant.chat` returns a plain `RubyLLM::Chat`, which is not wrapped, so use `WorkAssistant.new` when you want the agent's error handling.
 
 ## Rails-Backed Agents
 
