@@ -91,4 +91,33 @@ RSpec.describe RubyLLM::Providers::Azure::Responses do
       expect(provider.send(:resolve_protocol, nil, model)).to eq(described_class)
     end
   end
+
+  describe 'a GPT-5.6 deployment', :live do
+    include_context 'with configured RubyLLM'
+
+    # rubocop:disable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
+    class AzureWeather < RubyLLM::Tool
+      description 'Gets current weather for a city'
+      parameter :city, description: 'City name'
+
+      def execute(city:)
+        "Current weather in #{city}: 15C, wind 10 km/h"
+      end
+    end
+    # rubocop:enable Lint/ConstantDefinitionInBlock,RSpec/LeakyConstantDeclaration
+
+    let(:chat) { RubyLLM.chat(model: 'gpt-5.6-luna', provider: :azure, assume_model_exists: true) }
+
+    it 'routes to Responses without being asked' do
+      response = chat.ask('Say OK and nothing else.')
+
+      expect(response.content).to include('OK')
+    end
+
+    it 'calls tools, which this model generation rejects on Chat Completions' do
+      response = chat.with_tools(AzureWeather).ask("What's the weather in Berlin? Use the tool.")
+
+      expect(response.content).to include('15')
+    end
+  end
 end
