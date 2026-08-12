@@ -79,6 +79,7 @@ module RubyLLM
           when 'signature_delta' then block['signature'] = data.dig('delta', 'signature')
           when 'input_json_delta' then @stream_block_json&.dig(data['index'])&.<< data.dig('delta', 'partial_json').to_s
           when 'citations_delta' then (block['citations'] ||= []) << data.dig('delta', 'citation')
+          when 'compaction_delta' then block['summary'] = Array(block['summary']) + Array(data.dig('delta', 'summary'))
           end
         end
 

@@ -167,7 +167,8 @@ module RubyLLM
         # allowlist keeps tools Anthropic ships later flowing through.
         def server_tool_block?(block)
           type = block['type'].to_s
-          type == 'server_tool_use' || type == 'mcp_tool_use' || type.end_with?('_tool_result')
+          type == 'server_tool_use' || type == 'mcp_tool_use' || type == 'compaction' ||
+            type.end_with?('_tool_result')
         end
 
         def extract_server_tool_calls(blocks)
@@ -177,7 +178,7 @@ module RubyLLM
               name: block['name'],
               id: block['id'] || block['tool_use_id'],
               input: block['input'],
-              result: block['content'],
+              result: block['summary'] || block['content'],
               raw: block
             )
           end
