@@ -16,6 +16,10 @@ module RubyLLM
           SERVER_TOOL_ALIASES
         end
 
+        def apply_safety_identifier(payload, identifier)
+          payload.merge(user_id: identifier)
+        end
+
         def build_chunk(data)
           return chunk(thinking: Thinking.build(text: data['delta'])) if data['type'] == 'response.reasoning_text.delta'
 

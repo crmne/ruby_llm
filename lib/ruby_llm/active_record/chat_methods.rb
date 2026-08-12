@@ -212,6 +212,7 @@ module RubyLLM
       CHAT_DELEGATES = %i[
         with_tools with_tool_options with_server_tools with_fallbacks with_temperature
         with_max_output_tokens with_thinking with_citations with_caching
+        with_safety_identifier with_user_id
         with_provider_options with_headers with_schema
         before_message after_message before_tool_call after_tool_result
         before_fallback after_fallback

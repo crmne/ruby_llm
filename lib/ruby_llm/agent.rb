@@ -63,6 +63,7 @@ module RubyLLM
       @instructions
       @thinking
       @citations
+      @safety_identifier
       @schema
       @context
       @chat_model
@@ -194,6 +195,20 @@ module RubyLLM
         return @thinking if effort.nil? && budget.nil? && display.nil?
 
         @thinking = { effort: effort, budget: budget, display: display }
+      end
+
+      # Sets the safety identifier for chats this agent builds, applied via
+      # Chat#with_safety_identifier. A block defers evaluation until the
+      # chat is built, so the id can come from the agent's inputs. Called
+      # with no arguments, returns the configured value.
+      #
+      #   safety_identifier "tenant-42"
+      #   safety_identifier { workspace.public_id }
+      #
+      def safety_identifier(value = nil, &block)
+        return @safety_identifier if value.nil? && !block_given?
+
+        @safety_identifier = block || value
       end
 
       # Enables or disables citations for chats this agent builds, applied
@@ -483,6 +498,7 @@ module RubyLLM
         apply_passthrough_options(chat)
         apply_thinking(chat)
         apply_citations(chat)
+        apply_safety_identifier(chat, runtime)
         apply_caching(chat, runtime)
         apply_provider_options(chat, runtime)
         apply_headers(chat, runtime)
@@ -565,6 +581,11 @@ module RubyLLM
 
       def apply_citations(chat)
         chat.with_citations(citations) unless citations.nil?
+      end
+
+      def apply_safety_identifier(chat, runtime)
+        value = evaluate(safety_identifier, runtime)
+        chat.with_safety_identifier(value) unless value.nil?
       end
 
       def apply_caching(chat, runtime)
@@ -714,7 +735,8 @@ module RubyLLM
     # delegated method behaves exactly as documented on Chat.
     def_delegators :chat, :model, :messages, :tools, :provider_options, :headers, :schema, :caching,
                    :with_tools, :with_tool_options, :with_model, :with_temperature, :with_max_output_tokens,
-                   :with_thinking, :with_citations, :with_caching, :with_context, :with_provider_options,
+                   :with_thinking, :with_citations, :with_safety_identifier, :with_user_id,
+                   :with_caching, :with_context, :with_provider_options,
                    :with_headers, :with_schema, :with_fallbacks, :before_message, :after_message, :before_tool_call,
                    :after_tool_result, :before_fallback, :after_fallback, :each, :complete?,
                    :cancel!, :cancelled?, :approve!, :deny!, :awaiting_approval?, :pending_approvals,

@@ -12,6 +12,10 @@ module RubyLLM
 
         module_function
 
+        def apply_safety_identifier(payload, identifier)
+          payload.merge(user: identifier)
+        end
+
         def format_content(content, attachments = [])
           OpenRouter::Media.format_content(content, attachments)
         end

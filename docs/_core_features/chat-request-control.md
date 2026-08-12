@@ -22,6 +22,7 @@ description: Reach provider-specific features with custom parameters, wire proto
 
 After reading this guide, you will know:
 
+* How to identify end users to a provider's abuse tooling with `with_safety_identifier`.
 * How to pass options in the provider's request vocabulary with `with_provider_options`.
 * How to choose the wire protocol a provider speaks.
 * How to modify the final request payload with `before_request`.
@@ -68,6 +69,35 @@ chat.with_instructions(nil)
 The same pattern covers `with_schema`, `with_fallbacks`, `with_provider_options`, and `with_context`.
 
 Methods with no arguments enable a feature with its default behavior, like provider-default prompt caching with `with_caching` or document citations with `with_citations`.
+
+## Identifying End Users
+
+Providers offer a per-user identifier so they can attribute abuse to one of your users instead of your whole account. `with_safety_identifier` (aliased as `with_user_id`) sets it once and RubyLLM maps it to whatever the provider calls it:
+
+```ruby
+chat = RubyLLM.chat.with_safety_identifier("user-#{current_user.id}")
+chat.ask "Hello"
+```
+
+| Provider | Request field |
+|:---------|:--------------|
+| OpenAI, Azure | `safety_identifier` |
+| Anthropic | `metadata.user_id` |
+| DeepSeek | `user_id` |
+| OpenRouter | `user` |
+| Everything else | omitted |
+
+The value goes to the provider as given, so send an opaque id such as a hash or a UUID, never an email address or any other personal data. Providers without an equivalent field drop it and log the decision at debug level, so the same code works across every model.
+{: .warning }
+
+Agents declare it with the matching `safety_identifier` macro, which also takes a block:
+
+```ruby
+class SupportAgent < RubyLLM::Agent
+  inputs :account
+  safety_identifier { account.public_id }
+end
+```
 
 ## Provider Options
 

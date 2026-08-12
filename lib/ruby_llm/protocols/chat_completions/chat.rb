@@ -344,6 +344,15 @@ module RubyLLM
           thinking.respond_to?(:effort) ? thinking.effort : thinking
         end
 
+        # safety_identifier is an OpenAI parameter; the other services on
+        # this wire format reject or ignore it, so only OpenAI's own
+        # endpoints receive it.
+        def apply_safety_identifier(payload, identifier)
+          return super unless %w[openai azure].include?(@provider.slug)
+
+          payload.merge(safety_identifier: identifier)
+        end
+
         def supports_provider_file_references?
           @provider.slug == 'openai'
         end

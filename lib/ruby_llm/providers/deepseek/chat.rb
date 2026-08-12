@@ -21,6 +21,10 @@ module RubyLLM
           payload
         end
 
+        def apply_safety_identifier(payload, identifier)
+          payload.merge(user_id: identifier)
+        end
+
         def configure_thinking_payload(payload, thinking)
           return unless thinking&.enabled?
 

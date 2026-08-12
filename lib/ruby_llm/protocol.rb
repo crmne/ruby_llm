@@ -85,12 +85,12 @@ module RubyLLM
 
     def complete(messages, tools:, temperature:, provider_options: {}, headers: {}, schema: nil, thinking: nil,
                  max_output_tokens: nil, citations: false, caching: nil, tool_prefs: nil, before_request: [],
-                 usage_recorder: nil, server_tools: [], &)
+                 usage_recorder: nil, server_tools: [], safety_identifier: nil, &)
       resolution = resolve_server_tools_for_request(server_tools)
       headers = resolution.headers.merge(headers) if resolution
       payload = render(
         messages, tools:, tool_prefs:, temperature:, max_output_tokens:, provider_options:, schema:, thinking:,
-                  citations:, caching:, before_request:, server_tools:, stream: block_given?
+                  citations:, caching:, safety_identifier:, before_request:, server_tools:, stream: block_given?
       )
 
       track_usage(:chat, on_finish: usage_recorder) do
@@ -109,27 +109,42 @@ module RubyLLM
 
     def render(messages, tools:, temperature:, provider_options: {}, schema: nil, thinking: nil,
                max_output_tokens: nil, citations: false, caching: nil, tool_prefs: nil, before_request: [],
-               stream: false, server_tools: [])
-      payload = Utils.deep_merge(
-        render_payload(
-          messages,
-          tools: tools,
-          tool_prefs: tool_prefs,
-          temperature: maybe_normalize_temperature(temperature, model),
-          max_output_tokens: max_output_tokens,
-          model: model,
-          stream: stream,
-          schema: schema,
-          thinking: thinking,
-          citations: citations,
-          caching: caching
-        ),
-        provider_options
+               stream: false, server_tools: [], safety_identifier: nil)
+      payload = render_payload(
+        messages,
+        tools: tools,
+        tool_prefs: tool_prefs,
+        temperature: maybe_normalize_temperature(temperature, model),
+        max_output_tokens: max_output_tokens,
+        model: model,
+        stream: stream,
+        schema: schema,
+        thinking: thinking,
+        citations: citations,
+        caching: caching
       )
+      payload = apply_safety_identifier(payload, safety_identifier) if safety_identifier
+      payload = Utils.deep_merge(payload, provider_options)
       payload = apply_server_tools(payload, server_tools)
       apply_before_request_hooks(payload, before_request)
     rescue NotImplementedError
       raise Error, "#{@provider.name} doesn't support chat"
+    end
+
+    # Writes the chat's safety identifier into the request payload and
+    # returns it. The default drops the value with a debug log, so
+    # providers with no equivalent field simply omit it. Protocols whose
+    # API accepts one override this.
+    #
+    #   def apply_safety_identifier(payload, identifier)
+    #     payload.merge(safety_identifier: identifier)
+    #   end
+    #
+    def apply_safety_identifier(payload, identifier)
+      RubyLLM.logger.debug do
+        "#{@provider.name} has no safety identifier parameter, dropping #{identifier}"
+      end
+      payload
     end
 
     # The alias table mapping portable server tool names to this protocol's
