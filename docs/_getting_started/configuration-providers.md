@@ -49,6 +49,7 @@ RubyLLM.configure do |config|
   config.bedrock_session_token = ENV['AWS_SESSION_TOKEN'] # For temporary credentials
   # config.bedrock_credential_provider = Aws::InstanceProfileCredentials.new # Optional Aws::CredentialProvider
   config.bedrock_api_base = ENV['BEDROCK_API_BASE'] # v1.16+ (optional custom Bedrock endpoint)
+  config.bedrock_mantle_api_base = ENV['BEDROCK_MANTLE_API_BASE'] # optional custom bedrock-mantle endpoint
 
   # Cohere
   config.cohere_api_key = ENV['COHERE_API_KEY']
@@ -164,6 +165,12 @@ end
 ```
 
 `bedrock_credential_provider` can be any object that responds to `#credentials`, including `Aws::AssumeRoleCredentials` and `Aws::SharedCredentials`. When it is set, RubyLLM uses it instead of `bedrock_api_key`, `bedrock_secret_key`, and `bedrock_session_token`.
+
+## Bedrock Converse and Mantle Endpoints
+
+Bedrock has two runtime endpoints, and RubyLLM picks one from the model ID. Un-versioned IDs such as `anthropic.claude-sonnet-5` and `openai.gpt-oss-20b` go to `bedrock-mantle`, where Claude speaks the Anthropic Messages API and the rest of the catalog speaks one of the two OpenAI surfaces, Responses or Chat Completions. Dated, versioned, and region-prefixed IDs such as `anthropic.claude-haiku-4-5-20251001-v1:0` and `us.amazon.nova-2-lite-v1:0` go to Converse on `bedrock-runtime`.
+
+Both endpoints use your Bedrock credentials and region, so a single configuration covers them. `bedrock_api_base` overrides the Converse endpoint and `bedrock_mantle_api_base` overrides the mantle one. See [Model Resolution]({% link _reference/model-resolution.md %}) for the full routing table.
 
 ## OpenAI Organization & Project Headers
 

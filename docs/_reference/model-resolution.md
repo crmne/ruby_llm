@@ -124,6 +124,26 @@ chat.model.id  # => "us.anthropic.claude-haiku-4-5-20251001-v1:0"  (region prefi
 
 RubyLLM only applies the prefix when a matching regional model exists in the registry, and normalizes the inference-profile form from the model's metadata. See [Custom Endpoints and Unlisted Models]({% link _reference/custom-endpoints.md %}) for routing the same model through a different provider.
 
+### Bedrock Converse and Mantle Endpoints
+
+Bedrock serves models through two endpoints, and the model ID decides which one RubyLLM uses:
+
+| Model ID | Endpoint | Wire format |
+| --- | --- | --- |
+| `anthropic.claude-sonnet-5` | `bedrock-mantle` | Anthropic Messages |
+| `openai.gpt-oss-20b`, `google.gemma-4-31b` | `bedrock-mantle` | OpenAI Responses |
+| `qwen.qwen3-coder-next`, `zai.glm-5` | `bedrock-mantle` | OpenAI Chat Completions |
+| `anthropic.claude-haiku-4-5-20251001-v1:0` | `bedrock-runtime` | Converse |
+| `us.anthropic.claude-sonnet-5`, `eu.amazon.nova-2-lite-v1:0` | `bedrock-runtime` | Converse |
+
+An un-versioned `vendor.model` ID, one with no `:` version suffix, no date stamp, and no region prefix, is served by the mantle endpoint. Claude models speak the Anthropic Messages API there. The rest of the catalog speaks one of the two OpenAI surfaces: the Gemma 4 and GPT-OSS models answer on Responses, and everything else answers on Chat Completions. Dated, versioned, and region-prefixed IDs keep going to Converse. Both endpoints use the same AWS credentials and are signed with SigV4, so nothing changes in your configuration.
+
+Point `bedrock_mantle_api_base` at a different host to override the mantle endpoint, the same way `bedrock_api_base` overrides the Converse one.
+
+```ruby
+RubyLLM.chat(model: 'openai.gpt-oss-20b', provider: :bedrock).ask('Hello')
+```
+
 ## Models the Registry Doesn't List
 
 New releases, custom fine-tunes, and private deployments won't be in the registry. Set `assume_model_exists: true` to skip the registry lookup and use the name as-is. You must name a provider, since there is no registry entry to infer one from:
