@@ -6,7 +6,7 @@ LOCAL_PROVIDER_SLUGS = %i[ollama gpustack].freeze
 # Providers with no recorded cassettes yet. Their rows join the live matrix
 # only when a key is present to record against, so the suite stays green
 # without one.
-UNRECORDED_PROVIDER_KEYS = { cohere: 'COHERE_API_KEY', deepgram: 'DEEPGRAM_API_KEY' }.freeze
+UNRECORDED_PROVIDER_KEYS = { cohere: 'COHERE_API_KEY' }.freeze
 
 def filter_local_providers(models)
   models = models.reject { |model| LOCAL_PROVIDER_SLUGS.include?(model[:provider]) } if SKIP_LOCAL_PROVIDER_TESTS
@@ -159,7 +159,10 @@ EMBEDDING_MODELS = filter_unrecorded_providers(embedding_models).freeze
 # Vertex AI TTS models (gemini-2.5-*-tts) 404 on the global and us-central1
 # endpoints, so speech is exercised through the Gemini API instead.
 speech_models = [
-  { provider: :deepgram, model: 'aura-2-thalia-en', voice: 'zeus' },
+  # Deepgram names the voice inside the model id, so the row carries no
+  # voice: asking for one would speak a different model than the row names.
+  # Protocols::Deepgram::Speech specs cover that substitution.
+  { provider: :deepgram, model: 'aura-2-thalia-en' },
   { provider: :gemini, model: 'gemini-2.5-flash-preview-tts' },
   { provider: :mistral, model: 'voxtral-mini-tts-latest', voice: 'en_paul_neutral' },
   { provider: :openai, model: 'gpt-4o-mini-tts' },
