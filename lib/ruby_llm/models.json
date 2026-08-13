@@ -11106,6 +11106,67 @@
     }
   },
   {
+    "id": "anthropic.claude-haiku-4-5",
+    "name": "Claude Haiku 4.5",
+    "provider": "bedrock",
+    "family": "claude-haiku",
+    "created_at": "2025-10-15 00:00:00 UTC",
+    "context_window": 200000,
+    "max_output_tokens": 64000,
+    "knowledge_cutoff": "2025-02-28",
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "pdf"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "structured_output",
+      "reasoning",
+      "vision"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 1,
+          "output_per_million": 5,
+          "cache_read_input_per_million": 0.1,
+          "cache_write_input_per_million": 1.25
+        }
+      }
+    },
+    "metadata": {
+      "source": "models.dev",
+      "provider_id": "amazon-bedrock",
+      "open_weights": false,
+      "attachment": true,
+      "temperature": true,
+      "last_updated": "2025-10-15",
+      "reasoning_options": [
+        {
+          "type": "budget_tokens",
+          "min": 1024
+        }
+      ],
+      "cost": {
+        "input": 1,
+        "output": 5,
+        "cache_read": 0.1,
+        "cache_write": 1.25
+      },
+      "limit": {
+        "context": 200000,
+        "output": 64000
+      },
+      "knowledge": "2025-02-28"
+    }
+  },
+  {
     "id": "anthropic.claude-haiku-4-5-20251001-v1:0",
     "name": "Claude Haiku 4.5",
     "provider": "bedrock",
@@ -12420,6 +12481,42 @@
         "output": 81920
       },
       "knowledge": "2024-07"
+    }
+  },
+  {
+    "id": "deepseek.v3.1",
+    "name": "DeepSeek-V3.1",
+    "provider": "bedrock",
+    "family": "deepseek",
+    "created_at": "2025-08-21 00:00:00 UTC",
+    "context_window": 163840,
+    "max_output_tokens": 81920,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "structured_output",
+      "reasoning",
+      "streaming"
+    ],
+    "metadata": {
+      "source": "models.dev",
+      "provider_id": "amazon-bedrock",
+      "open_weights": true,
+      "attachment": false,
+      "temperature": true,
+      "last_updated": "2025-08-21",
+      "limit": {
+        "context": 163840,
+        "output": 81920
+      }
     }
   },
   {
@@ -13894,6 +13991,116 @@
         "context": 128000,
         "output": 4096
       }
+    }
+  },
+  {
+    "id": "google.gemma-4-26b-a4b",
+    "name": "Gemma 4 26B A4B IT",
+    "provider": "bedrock",
+    "family": "gemma",
+    "created_at": "2026-04-02 00:00:00 UTC",
+    "context_window": 262144,
+    "max_output_tokens": 32768,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "structured_output",
+      "reasoning",
+      "vision",
+      "streaming"
+    ],
+    "metadata": {
+      "source": "models.dev",
+      "provider_id": "amazon-bedrock",
+      "open_weights": true,
+      "attachment": true,
+      "temperature": true,
+      "last_updated": "2026-04-02",
+      "limit": {
+        "context": 262144,
+        "output": 32768
+      }
+    }
+  },
+  {
+    "id": "google.gemma-4-31b",
+    "name": "Gemma 4 31B IT",
+    "provider": "bedrock",
+    "family": "gemma",
+    "created_at": "2026-04-02 00:00:00 UTC",
+    "context_window": 262144,
+    "max_output_tokens": 32768,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "structured_output",
+      "reasoning",
+      "vision",
+      "streaming"
+    ],
+    "metadata": {
+      "source": "models.dev",
+      "provider_id": "amazon-bedrock",
+      "open_weights": true,
+      "attachment": true,
+      "temperature": true,
+      "last_updated": "2026-04-02",
+      "limit": {
+        "context": 262144,
+        "output": 32768
+      }
+    }
+  },
+  {
+    "id": "google.gemma-4-e2b",
+    "name": "Gemma 4 E2B IT",
+    "provider": "bedrock",
+    "family": "gemma",
+    "created_at": "2026-04-02 00:00:00 UTC",
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "structured_output",
+      "reasoning",
+      "vision",
+      "streaming"
+    ],
+    "metadata": {
+      "source": "models.dev",
+      "provider_id": "amazon-bedrock",
+      "open_weights": true,
+      "attachment": true,
+      "temperature": true,
+      "last_updated": "2026-04-02"
     }
   },
   {
@@ -15863,6 +16070,56 @@
     }
   },
   {
+    "id": "moonshotai.kimi-k2-thinking",
+    "name": "Kimi K2 Thinking",
+    "provider": "bedrock",
+    "family": "kimi-thinking",
+    "created_at": "2025-12-02 00:00:00 UTC",
+    "context_window": 262143,
+    "max_output_tokens": 16000,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "structured_output",
+      "reasoning",
+      "streaming"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.6,
+          "output_per_million": 2.5
+        }
+      }
+    },
+    "metadata": {
+      "source": "models.dev",
+      "provider_id": "amazon-bedrock",
+      "open_weights": true,
+      "attachment": false,
+      "temperature": true,
+      "last_updated": "2025-12-02",
+      "interleaved": true,
+      "reasoning_options": [],
+      "cost": {
+        "input": 0.6,
+        "output": 2.5
+      },
+      "limit": {
+        "context": 262143,
+        "output": 16000
+      }
+    }
+  },
+  {
     "id": "moonshotai.kimi-k2.5",
     "name": "Kimi K2.5",
     "provider": "bedrock",
@@ -16268,6 +16525,71 @@
     }
   },
   {
+    "id": "openai.gpt-5.4-2026-03-05",
+    "name": "GPT-5.4 (2026-03-05)",
+    "provider": "bedrock",
+    "family": "gpt",
+    "created_at": "2026-03-05 00:00:00 UTC",
+    "context_window": 272000,
+    "max_output_tokens": 128000,
+    "knowledge_cutoff": "2025-08-31",
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "pdf"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "structured_output",
+      "reasoning",
+      "vision"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 2.75,
+          "output_per_million": 16.5,
+          "cache_read_input_per_million": 0.275
+        }
+      }
+    },
+    "metadata": {
+      "source": "models.dev",
+      "provider_id": "amazon-bedrock",
+      "open_weights": false,
+      "attachment": true,
+      "temperature": false,
+      "last_updated": "2026-06-01",
+      "reasoning_options": [
+        {
+          "type": "effort",
+          "values": [
+            "none",
+            "low",
+            "medium",
+            "high",
+            "xhigh"
+          ]
+        }
+      ],
+      "cost": {
+        "input": 2.75,
+        "output": 16.5,
+        "cache_read": 0.275
+      },
+      "limit": {
+        "context": 272000,
+        "output": 128000
+      },
+      "knowledge": "2025-08-31"
+    }
+  },
+  {
     "id": "openai.gpt-5.5",
     "name": "GPT-5.5",
     "provider": "bedrock",
@@ -16330,6 +16652,194 @@
         "output": 128000
       },
       "knowledge": "2025-12-01"
+    }
+  },
+  {
+    "id": "openai.gpt-5.6-luna",
+    "name": "GPT-5.6 Luna",
+    "provider": "bedrock",
+    "family": "gpt-luna",
+    "created_at": "2026-07-09 00:00:00 UTC",
+    "context_window": 1050000,
+    "max_output_tokens": 128000,
+    "knowledge_cutoff": "2026-02-16",
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "pdf"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "structured_output",
+      "reasoning",
+      "vision"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.22,
+          "output_per_million": 1.32,
+          "cache_read_input_per_million": 0.022,
+          "cache_write_input_per_million": 0.275
+        },
+        "long_context": {
+          "input_per_million": 0.44,
+          "output_per_million": 1.98,
+          "cache_read_input_per_million": 0.044,
+          "cache_write_input_per_million": 0.55
+        },
+        "long_context_threshold": 272000
+      }
+    },
+    "metadata": {
+      "source": "models.dev",
+      "provider_id": "amazon-bedrock",
+      "open_weights": false,
+      "attachment": true,
+      "temperature": false,
+      "last_updated": "2026-07-09",
+      "reasoning_options": [
+        {
+          "type": "effort",
+          "values": [
+            "none",
+            "low",
+            "medium",
+            "high",
+            "xhigh",
+            "max"
+          ]
+        }
+      ],
+      "cost": {
+        "input": 0.22,
+        "output": 1.32,
+        "cache_read": 0.022,
+        "cache_write": 0.275,
+        "tiers": [
+          {
+            "input": 0.44,
+            "output": 1.98,
+            "cache_read": 0.044,
+            "cache_write": 0.55,
+            "tier": {
+              "type": "context",
+              "size": 272000
+            }
+          }
+        ],
+        "context_over_200k": {
+          "input": 0.44,
+          "output": 1.98,
+          "cache_read": 0.044,
+          "cache_write": 0.55
+        }
+      },
+      "limit": {
+        "context": 1050000,
+        "input": 922000,
+        "output": 128000
+      },
+      "knowledge": "2026-02-16"
+    }
+  },
+  {
+    "id": "openai.gpt-5.6-terra",
+    "name": "GPT-5.6 Terra",
+    "provider": "bedrock",
+    "family": "gpt-terra",
+    "created_at": "2026-07-09 00:00:00 UTC",
+    "context_window": 1050000,
+    "max_output_tokens": 128000,
+    "knowledge_cutoff": "2026-02-16",
+    "modalities": {
+      "input": [
+        "text",
+        "image",
+        "pdf"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "structured_output",
+      "reasoning",
+      "vision"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 2.2,
+          "output_per_million": 13.2,
+          "cache_read_input_per_million": 0.22,
+          "cache_write_input_per_million": 2.75
+        },
+        "long_context": {
+          "input_per_million": 4.4,
+          "output_per_million": 19.8,
+          "cache_read_input_per_million": 0.44,
+          "cache_write_input_per_million": 5.5
+        },
+        "long_context_threshold": 272000
+      }
+    },
+    "metadata": {
+      "source": "models.dev",
+      "provider_id": "amazon-bedrock",
+      "open_weights": false,
+      "attachment": true,
+      "temperature": false,
+      "last_updated": "2026-07-09",
+      "reasoning_options": [
+        {
+          "type": "effort",
+          "values": [
+            "none",
+            "low",
+            "medium",
+            "high",
+            "xhigh",
+            "max"
+          ]
+        }
+      ],
+      "cost": {
+        "input": 2.2,
+        "output": 13.2,
+        "cache_read": 0.22,
+        "cache_write": 2.75,
+        "tiers": [
+          {
+            "input": 4.4,
+            "output": 19.8,
+            "cache_read": 0.44,
+            "cache_write": 5.5,
+            "tier": {
+              "type": "context",
+              "size": 272000
+            }
+          }
+        ],
+        "context_over_200k": {
+          "input": 4.4,
+          "output": 19.8,
+          "cache_read": 0.44,
+          "cache_write": 5.5
+        }
+      },
+      "limit": {
+        "context": 1050000,
+        "input": 922000,
+        "output": 128000
+      },
+      "knowledge": "2026-02-16"
     }
   },
   {
@@ -16729,6 +17239,54 @@
     }
   },
   {
+    "id": "qwen.qwen3-235b-a22b-2507",
+    "name": "Qwen3 235B A22B 2507",
+    "provider": "bedrock",
+    "family": "qwen",
+    "created_at": "2025-09-18 00:00:00 UTC",
+    "context_window": 262144,
+    "max_output_tokens": 131072,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "structured_output",
+      "streaming"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.22,
+          "output_per_million": 0.88
+        }
+      }
+    },
+    "metadata": {
+      "source": "models.dev",
+      "provider_id": "amazon-bedrock",
+      "open_weights": true,
+      "attachment": false,
+      "temperature": true,
+      "last_updated": "2025-09-18",
+      "cost": {
+        "input": 0.22,
+        "output": 0.88
+      },
+      "limit": {
+        "context": 262144,
+        "output": 131072
+      },
+      "knowledge": "2024-04"
+    }
+  },
+  {
     "id": "qwen.qwen3-235b-a22b-2507-v1:0",
     "name": "Qwen3 235B A22B 2507",
     "provider": "bedrock",
@@ -16788,6 +17346,56 @@
       "limit": {
         "context": 262144,
         "output": 131072
+      },
+      "knowledge": "2024-04"
+    }
+  },
+  {
+    "id": "qwen.qwen3-32b",
+    "name": "Qwen3 32B (dense)",
+    "provider": "bedrock",
+    "family": "qwen",
+    "created_at": "2025-09-18 00:00:00 UTC",
+    "context_window": 16384,
+    "max_output_tokens": 16384,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "structured_output",
+      "reasoning",
+      "streaming"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.15,
+          "output_per_million": 0.6
+        }
+      }
+    },
+    "metadata": {
+      "source": "models.dev",
+      "provider_id": "amazon-bedrock",
+      "open_weights": true,
+      "attachment": false,
+      "temperature": true,
+      "last_updated": "2025-09-18",
+      "reasoning_options": [],
+      "cost": {
+        "input": 0.15,
+        "output": 0.6
+      },
+      "limit": {
+        "context": 16384,
+        "output": 16384
       },
       "knowledge": "2024-04"
     }
@@ -16861,6 +17469,54 @@
     }
   },
   {
+    "id": "qwen.qwen3-coder-30b-a3b-instruct",
+    "name": "Qwen3 Coder 30B A3B Instruct",
+    "provider": "bedrock",
+    "family": "qwen",
+    "created_at": "2025-09-18 00:00:00 UTC",
+    "context_window": 262144,
+    "max_output_tokens": 131072,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "structured_output",
+      "streaming"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.15,
+          "output_per_million": 0.6
+        }
+      }
+    },
+    "metadata": {
+      "source": "models.dev",
+      "provider_id": "amazon-bedrock",
+      "open_weights": false,
+      "attachment": false,
+      "temperature": true,
+      "last_updated": "2025-09-18",
+      "cost": {
+        "input": 0.15,
+        "output": 0.6
+      },
+      "limit": {
+        "context": 262144,
+        "output": 131072
+      },
+      "knowledge": "2024-04"
+    }
+  },
+  {
     "id": "qwen.qwen3-coder-30b-a3b-v1:0",
     "name": "Qwen3 Coder 30B A3B Instruct",
     "provider": "bedrock",
@@ -16920,6 +17576,54 @@
       "limit": {
         "context": 262144,
         "output": 131072
+      },
+      "knowledge": "2024-04"
+    }
+  },
+  {
+    "id": "qwen.qwen3-coder-480b-a35b-instruct",
+    "name": "Qwen3 Coder 480B A35B Instruct",
+    "provider": "bedrock",
+    "family": "qwen",
+    "created_at": "2025-09-18 00:00:00 UTC",
+    "context_window": 131072,
+    "max_output_tokens": 65536,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "structured_output",
+      "streaming"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.22,
+          "output_per_million": 1.8
+        }
+      }
+    },
+    "metadata": {
+      "source": "models.dev",
+      "provider_id": "amazon-bedrock",
+      "open_weights": true,
+      "attachment": false,
+      "temperature": true,
+      "last_updated": "2025-09-18",
+      "cost": {
+        "input": 0.22,
+        "output": 1.8
+      },
+      "limit": {
+        "context": 131072,
+        "output": 65536
       },
       "knowledge": "2024-04"
     }
@@ -17102,6 +17806,53 @@
     }
   },
   {
+    "id": "qwen.qwen3-next-80b-a3b-instruct",
+    "name": "Qwen/Qwen3-Next-80B-A3B-Instruct",
+    "provider": "bedrock",
+    "family": "qwen",
+    "created_at": "2025-09-18 00:00:00 UTC",
+    "context_window": 262000,
+    "max_output_tokens": 262000,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "structured_output",
+      "streaming"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.14,
+          "output_per_million": 1.4
+        }
+      }
+    },
+    "metadata": {
+      "source": "models.dev",
+      "provider_id": "amazon-bedrock",
+      "open_weights": false,
+      "attachment": false,
+      "temperature": true,
+      "last_updated": "2025-11-25",
+      "cost": {
+        "input": 0.14,
+        "output": 1.4
+      },
+      "limit": {
+        "context": 262000,
+        "output": 262000
+      }
+    }
+  },
+  {
     "id": "qwen.qwen3-vl-235b-a22b",
     "name": "Qwen/Qwen3-VL-235B-A22B-Instruct",
     "provider": "bedrock",
@@ -17157,6 +17908,55 @@
         ],
         "userVideoTypesSupported": []
       },
+      "source": "models.dev",
+      "provider_id": "amazon-bedrock",
+      "open_weights": false,
+      "attachment": true,
+      "temperature": true,
+      "last_updated": "2025-11-25",
+      "cost": {
+        "input": 0.3,
+        "output": 1.5
+      },
+      "limit": {
+        "context": 262000,
+        "output": 262000
+      }
+    }
+  },
+  {
+    "id": "qwen.qwen3-vl-235b-a22b-instruct",
+    "name": "Qwen/Qwen3-VL-235B-A22B-Instruct",
+    "provider": "bedrock",
+    "family": "qwen",
+    "created_at": "2025-10-04 00:00:00 UTC",
+    "context_window": 262000,
+    "max_output_tokens": 262000,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "structured_output",
+      "vision",
+      "streaming"
+    ],
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.3,
+          "output_per_million": 1.5
+        }
+      }
+    },
+    "metadata": {
       "source": "models.dev",
       "provider_id": "amazon-bedrock",
       "open_weights": false,
@@ -19679,6 +20479,55 @@
       "limit": {
         "context": 1000000,
         "output": 131072
+      }
+    }
+  },
+  {
+    "id": "zai.glm-4.6",
+    "name": "GLM-4.6",
+    "provider": "bedrock",
+    "family": "glm",
+    "created_at": "2025-09-30 00:00:00 UTC",
+    "context_window": 204800,
+    "max_output_tokens": 131072,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "function_calling",
+      "structured_output",
+      "reasoning",
+      "streaming"
+    ],
+    "metadata": {
+      "source": "models.dev",
+      "provider_id": "amazon-bedrock",
+      "open_weights": true,
+      "attachment": false,
+      "temperature": true,
+      "last_updated": "2025-09-30",
+      "limit": {
+        "context": 204800,
+        "output": 131072
+      },
+      "cost": {
+        "input": 0.6,
+        "output": 2.2
+      },
+      "knowledge": "2025-04"
+    },
+    "pricing": {
+      "text_tokens": {
+        "standard": {
+          "input_per_million": 0.6,
+          "output_per_million": 2.2
+        }
       }
     }
   },
