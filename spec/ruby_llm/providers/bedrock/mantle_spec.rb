@@ -44,6 +44,24 @@ RSpec.describe RubyLLM::Providers::Bedrock::Mantle do
       end
     end
 
+    it 'keeps bare ids the mantle catalog does not list on Converse' do
+      %w[
+        moonshot.kimi-k2-thinking
+        qwen.qwen3-next-80b-a3b
+        qwen.qwen3-vl-235b-a22b
+        openai.gpt-5.5
+      ].each do |id|
+        model = RubyLLM::Model.default(id, 'bedrock')
+        expect(provider.protocol_for(model)).to eq(RubyLLM::Protocols::Converse)
+      end
+    end
+
+    it 'reads the id shape for models the registry does not list at all' do
+      model = RubyLLM::Model.default('vendor.unlisted-model', 'bedrock')
+
+      expect(provider.protocol_for(model)).to eq(described_class::ChatCompletions)
+    end
+
     it 'keeps dated, versioned, and region-prefixed ids on Converse' do
       %w[
         anthropic.claude-sonnet-4-5-20250929-v1:0
@@ -65,6 +83,52 @@ RSpec.describe RubyLLM::Providers::Bedrock::Mantle do
 
       expect(provider.protocol_for(model, operation: :embed))
         .to eq(RubyLLM::Protocols::InvokeModel::CohereEmbeddings)
+    end
+  end
+
+  describe 'the model catalog' do
+    let(:catalog) do
+      instance_double(
+        Faraday::Response,
+        body: { 'data' => [{ 'id' => 'openai.gpt-oss-20b', 'created' => 1_764_460_800 }] }
+      )
+    end
+
+    it 'tags every model the mantle catalog lists' do
+      models = RubyLLM::Providers::Bedrock::Models.parse_mantle_models_response(catalog, 'bedrock')
+
+      expect(models.map(&:id)).to eq(['openai.gpt-oss-20b'])
+      expect(models.first.metadata[:endpoint]).to eq('mantle')
+      expect(models.first.created_at).to eq(Time.at(1_764_460_800).utc)
+    end
+
+    it 'tags models both catalogs list without dropping their Converse metadata' do
+      converse = RubyLLM::Model.new(id: 'openai.gpt-oss-20b', name: 'gpt-oss-20b', provider: 'bedrock',
+                                    metadata: { inference_types: ['ON_DEMAND'] })
+      mantle = RubyLLM::Providers::Bedrock::Models.parse_mantle_models_response(catalog, 'bedrock')
+
+      merged = RubyLLM::Providers::Bedrock::Models.merge_mantle_models([converse], mantle)
+
+      expect(merged.map(&:id)).to eq(['openai.gpt-oss-20b'])
+      expect(merged.first.metadata).to include(endpoint: 'mantle', inference_types: ['ON_DEMAND'])
+      expect(merged.first.name).to eq('gpt-oss-20b')
+    end
+
+    it 'keeps Converse-only models untagged' do
+      converse = RubyLLM::Model.new(id: 'moonshot.kimi-k2-thinking', name: 'Kimi K2 Thinking', provider: 'bedrock')
+
+      merged = RubyLLM::Providers::Bedrock::Models.merge_mantle_models([converse], [])
+
+      expect(merged.first.metadata).not_to have_key(:endpoint)
+    end
+
+    it 'tags the bundled registry entry for every model mantle serves' do
+      tagged = RubyLLM.models.all.select do |model|
+        model.provider == 'bedrock' && model.metadata[:endpoint] == 'mantle'
+      end
+
+      expect(tagged.size).to eq(47)
+      expect(tagged.map(&:id)).to include('openai.gpt-oss-20b', 'anthropic.claude-haiku-4-5', 'zai.glm-5')
     end
   end
 

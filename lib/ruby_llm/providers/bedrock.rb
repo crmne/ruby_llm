@@ -33,7 +33,7 @@ module RubyLLM
       # openai.gpt-oss-20b are served by the bedrock-mantle endpoint rather
       # than by Converse.
       def mantle_model?(model_id)
-        Models.mantle_model_id?(model_id)
+        Models.mantle_model?(model_id, RubyLLM.models)
       end
 
       def mantle_api_base
@@ -62,12 +62,18 @@ module RubyLLM
 
         return body if body.is_a?(String)
 
-        body['message'] || body['Message'] || body['error'] || body['__type'] || super
+        body['message'] || body['Message'] || nested_error_message(body) || body['__type'] || super
+      end
+
+      # bedrock-mantle nests code, message, and type under "error" rather
+      # than answering with a bare string.
+      def nested_error_message(body)
+        error = body['error']
+        error.is_a?(Hash) ? error['message'] || error : error
       end
 
       def list_models
-        response = signed_get(models_api_base, models_url)
-        parse_list_models_response(response, slug, capabilities)
+        merge_mantle_models(list_converse_models, list_mantle_models)
       end
 
       class << self
@@ -128,6 +134,15 @@ module RubyLLM
         else
           'bedrock_credential_provider or bedrock_api_key + bedrock_secret_key'
         end
+      end
+
+      def list_converse_models
+        parse_list_models_response(signed_get(models_api_base, models_url), slug, capabilities)
+      end
+
+      def list_mantle_models
+        response = signed_get(mantle_api_base, mantle_models_url, service: Bedrock::Mantle::SIGNING_SERVICE)
+        parse_mantle_models_response(response, slug)
       end
 
       def mantle_protocol_for(model_id)

@@ -62,8 +62,8 @@ module RubyLLM
           }.compact
         end
 
-        def signed_get(base_url, url)
-          signed_request(:get, base_url, url)
+        def signed_get(base_url, url, service: 'bedrock')
+          signed_request(:get, base_url, url, service:)
         end
 
         def signed_post(base_url, url, payload)
@@ -76,6 +76,7 @@ module RubyLLM
         def signed_request(method, base_url, url, **options)
           body = options.fetch(:body, '')
           payload = options[:payload]
+          service = options.fetch(:service, 'bedrock')
           conn = Connection.basic do |f|
             f.request :json
             f.response :json
@@ -86,7 +87,7 @@ module RubyLLM
           conn.url_prefix = base_url
 
           conn.public_send(method, url, payload) do |req|
-            req.headers.merge!(sign_headers(method.to_s.upcase, url, body, base_url:))
+            req.headers.merge!(sign_headers(method.to_s.upcase, url, body, base_url:, service:))
           end
         end
 

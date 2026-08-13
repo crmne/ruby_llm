@@ -168,7 +168,7 @@ end
 
 ## Bedrock Converse and Mantle Endpoints
 
-Bedrock has two runtime endpoints, and RubyLLM picks one from the model ID. Un-versioned IDs such as `anthropic.claude-sonnet-5` and `openai.gpt-oss-20b` go to `bedrock-mantle`, where Claude speaks the Anthropic Messages API and the rest of the catalog speaks one of the two OpenAI surfaces, Responses or Chat Completions. Dated, versioned, and region-prefixed IDs such as `anthropic.claude-haiku-4-5-20251001-v1:0` and `us.amazon.nova-2-lite-v1:0` go to Converse on `bedrock-runtime`.
+Bedrock has two runtime endpoints, and the registry records which one serves each model. Models such as `anthropic.claude-sonnet-5` and `openai.gpt-oss-20b` go to `bedrock-mantle`, where Claude speaks the Anthropic Messages API and the rest of the catalog speaks one of the two OpenAI surfaces, Responses or Chat Completions. Dated, versioned, and region-prefixed IDs such as `anthropic.claude-haiku-4-5-20251001-v1:0` and `us.amazon.nova-2-lite-v1:0` go to Converse on `bedrock-runtime`.
 
 Both endpoints use your Bedrock credentials and region, so a single configuration covers them. `bedrock_api_base` overrides the Converse endpoint and `bedrock_mantle_api_base` overrides the mantle one. See [Model Resolution]({% link _reference/model-resolution.md %}) for the full routing table.
 
