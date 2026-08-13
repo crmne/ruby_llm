@@ -141,9 +141,7 @@ RSpec.describe RubyLLM::Providers::Deepgram do
     let(:audio_path) { File.expand_path('../../fixtures/ruby.wav', __dir__) }
 
     before do
-      if VCR.current_cassette&.recording? && ENV.fetch('DEEPGRAM_API_KEY', nil).nil?
-        skip 'Set DEEPGRAM_API_KEY to record the Deepgram cassettes'
-      end
+      skip_without_cassette_or_key('DEEPGRAM_API_KEY')
     end
 
     it 'transcribes a local file with nova-3' do

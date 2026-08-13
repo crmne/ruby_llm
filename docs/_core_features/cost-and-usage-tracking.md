@@ -113,6 +113,12 @@ chat.ask "Tell me about Ruby's history."
 chat.count_tokens # => 1204, everything the next request would carry
 ```
 
+When you want to measure a bare string rather than a configured chat, `RubyLLM.count_tokens` builds a throwaway chat for you:
+
+```ruby
+RubyLLM.count_tokens("What is the capital of France?", model: "claude-haiku-4-5") # => 14
+```
+
 This is the provider's own tokenizer over the real payload, not an estimate, which is why it needs a provider that offers a counting endpoint. Anthropic, Bedrock, Gemini, and Vertex AI do. The rest raise rather than guess:
 
 ```ruby

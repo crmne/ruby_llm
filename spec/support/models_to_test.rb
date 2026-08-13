@@ -6,7 +6,7 @@ LOCAL_PROVIDER_SLUGS = %i[ollama gpustack].freeze
 # Providers with no recorded cassettes yet. Their rows join the live matrix
 # only when a key is present to record against, so the suite stays green
 # without one.
-UNRECORDED_PROVIDER_KEYS = { cohere: 'COHERE_API_KEY' }.freeze
+UNRECORDED_PROVIDER_KEYS = {}.freeze
 
 def filter_local_providers(models)
   models = models.reject { |model| LOCAL_PROVIDER_SLUGS.include?(model[:provider]) } if SKIP_LOCAL_PROVIDER_TESTS
@@ -26,6 +26,20 @@ end
 
 def each_model(models)
   models.each { |model_info| yield model_info[:provider], model_info[:model], model_info }
+end
+
+# Skips an example that can neither replay nor record: no cassette on disk
+# and no key to make one with. Checking the cassette rather than VCR's
+# recording? matters in CI, where record: :none makes recording? false for
+# every example, so a recording-only guard never fires and the example
+# fails on the missing cassette instead of skipping.
+def skip_without_cassette_or_key(env_key)
+  return unless ENV.fetch(env_key, nil).to_s.empty?
+
+  cassette = VCR.current_cassette
+  return if cassette && File.exist?(cassette.file)
+
+  skip "Set #{env_key} to record this cassette"
 end
 
 chat_models = [

@@ -56,11 +56,7 @@ RSpec.describe RubyLLM::Providers::ElevenLabs do
   describe 'audio', :live do
     let(:audio_path) { File.expand_path('../../fixtures/ruby.wav', __dir__) }
 
-    before do
-      if VCR.current_cassette&.recording? && ENV.fetch('ELEVENLABS_API_KEY', nil).nil?
-        skip 'Set ELEVENLABS_API_KEY to record the ElevenLabs cassettes'
-      end
-    end
+    before { skip_without_cassette_or_key('ELEVENLABS_API_KEY') }
 
     it 'speaks text with eleven_v3' do
       speech = RubyLLM.speak(

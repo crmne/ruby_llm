@@ -13,9 +13,10 @@ Gem::Specification.new do |spec|
                        'Rails: switch models without rewriting your code, then scale from a single call to ' \
                        'production agents, RAG, and workflows. Features chat (text, images, audio, PDFs), ' \
                        'image generation, embeddings, tools (function calling), structured output, Rails ' \
-                       'integration, and streaming. Works with OpenAI, Anthropic, Google Gemini, AWS Bedrock, ' \
-                       'DeepSeek, Mistral, Ollama (local models), OpenRouter, Perplexity, GPUStack, and any ' \
-                       'OpenAI-compatible API. Minimal dependencies - just Faraday, Zeitwerk, and Marcel.'
+                       'integration, and streaming. Works with OpenAI, Azure, Anthropic, Google Gemini, ' \
+                       'Vertex AI, AWS Bedrock, xAI, Cohere, DeepSeek, Mistral, Perplexity, OpenRouter, ' \
+                       'ElevenLabs, Deepgram, Ollama and GPUStack (local models), and any OpenAI-compatible ' \
+                       'API. Minimal dependencies - just Faraday, Zeitwerk, and Marcel.'
 
   spec.homepage      = 'https://rubyllm.com'
   spec.license       = 'MIT'
@@ -32,22 +33,15 @@ Gem::Specification.new do |spec|
 
   # Post-install message for upgrading users
   spec.post_install_message = <<~MESSAGE
-    RubyLLM 1.15 upgrade note:
+    RubyLLM 2.0
 
-      Token accounting is now normalized across providers. `input_tokens` means
-      standard input tokens; prompt cache reads and writes are exposed separately
-      as `cache_read_tokens` and `cache_write_tokens`.
+      2.0 renames several APIs and changes what message content returns. Coming
+      from 1.x? Read the upgrade guide before you boot:
 
-      Need request-side input activity?
-        input_tokens + cache_read_tokens + cache_write_tokens
-
-      New cost helpers:
-        response.cost.total
-        chat.cost.total
-        agent.cost.total
-
-      Upgrading from RubyLLM < 1.15? Read the full upgrade guide:
         https://rubyllm.com/upgrading/
+
+      The Rails migration renames tables in place and has no `down`, so snapshot
+      your database and rehearse on a copy of production data.
   MESSAGE
 
   # Use Dir.glob to list all files within the lib directory

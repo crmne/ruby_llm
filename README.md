@@ -149,18 +149,22 @@ response = chat.with_schema(ProductSchema).ask "Analyze this product", with: "pr
 * **Image generation:** Create images with `RubyLLM.paint`
 * **Video generation:** Create videos with `RubyLLM.animate`
 * **Embeddings:** Generate embeddings with `RubyLLM.embed`
+* **Reranking:** Order retrieval candidates by relevance with `RubyLLM.rerank`
 * **Moderation:** Content safety with `RubyLLM.moderate`
 * **Tools:** Let AI call your Ruby methods
+* **Server tools:** Web search, code execution, and MCP connectors with `with_server_tools`
 * **Agents:** Reusable assistants with `RubyLLM::Agent`
 * **Structured output:** JSON schemas that just work
 * **Streaming:** Real-time responses with blocks
 * **Rails:** ActiveRecord integration with `acts_as_chat`
 * **Async:** Fiber-based concurrency
-* **Model registry:** 800+ models with capability detection and pricing
+* **Model registry:** 1400+ models with capability detection and pricing
 * **Extended thinking:** Control, view, and persist model deliberation
 * **Citations:** Normalized source citations from documents, search, and grounding
 * **Batches:** Provider-side batch processing at half price with `RubyLLM.batch`
-* **Providers:** OpenAI, xAI, Anthropic, Gemini, VertexAI, Bedrock, Cohere, DeepSeek, Mistral, Ollama, Ollama Cloud, OpenRouter, Perplexity, GPUStack, and any OpenAI-compatible API
+* **Compaction:** Let providers condense long conversations with `with_compaction`
+* **Token counting:** Price a request before you send it with `count_tokens`
+* **Providers:** OpenAI, Azure, xAI, Anthropic, Gemini, VertexAI, Bedrock, Cohere, DeepSeek, Mistral, Ollama, Ollama Cloud, OpenRouter, Perplexity, GPUStack, ElevenLabs, Deepgram, and any OpenAI-compatible API
 
 ## Installation
 
