@@ -99,16 +99,21 @@ module RubyLLM
 
       private
 
+      # Providers hand back whatever their error body holds, which is not
+      # always a String: bedrock-mantle nests code, message, and type in a
+      # Hash. Match on the rendered text so any shape classifies.
       def context_length_exceeded?(message)
-        return false if message.to_s.empty?
+        text = message.to_s
+        return false if text.empty?
 
-        CONTEXT_LENGTH_PATTERNS.any? { |pattern| message.match?(pattern) }
+        CONTEXT_LENGTH_PATTERNS.any? { |pattern| text.match?(pattern) }
       end
 
       def rate_limited?(message)
-        return false if message.to_s.empty?
+        text = message.to_s
+        return false if text.empty?
 
-        RATE_LIMIT_PATTERNS.any? { |pattern| message.match?(pattern) }
+        RATE_LIMIT_PATTERNS.any? { |pattern| text.match?(pattern) }
       end
     end
   end

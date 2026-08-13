@@ -29,6 +29,43 @@ RSpec.describe RubyLLM::ErrorMiddleware do
     end
   end
 
+  describe '.parse_error with a non-string error body' do
+    def provider_returning(message)
+      instance_double(RubyLLM::Provider).tap do |provider|
+        allow(provider).to receive(:parse_error).and_return(message)
+      end
+    end
+
+    # bedrock-mantle answers a bad request with the whole error object, not
+    # a string, and every 400 used to die classifying it.
+    it 'classifies a non-string error body' do
+      response = Faraday::Env.from(status: 400, body: {})
+      error = { 'code' => 'validation_error', 'message' => 'Invalid input', 'type' => 'invalid_request_error' }
+
+      expect do
+        described_class.parse_error(provider: provider_returning(error), response: response)
+      end.to raise_error(RubyLLM::BadRequestError)
+    end
+
+    it 'still spots a context length message inside a non-string error body' do
+      response = Faraday::Env.from(status: 400, body: {})
+      error = { 'message' => 'This request exceeds the maximum context length for the model' }
+
+      expect do
+        described_class.parse_error(provider: provider_returning(error), response: response)
+      end.to raise_error(RubyLLM::ContextLengthExceededError)
+    end
+
+    it 'still spots a rate limit message inside a non-string error body' do
+      response = Faraday::Env.from(status: 429, body: {})
+
+      expect do
+        described_class.parse_error(provider: provider_returning({ 'message' => 'rate limit reached' }),
+                                    response: response)
+      end.to raise_error(RubyLLM::RateLimitError)
+    end
+  end
+
   describe 'retry delay normalization' do
     def middleware_for(provider, env)
       app_response = instance_double(Faraday::Response)
