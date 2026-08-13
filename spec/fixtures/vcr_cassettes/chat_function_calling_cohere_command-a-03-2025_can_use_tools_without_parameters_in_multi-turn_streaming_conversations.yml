@@ -1,0 +1,406 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.cohere.com/v2/chat
+    body:
+      encoding: UTF-8
+      string: '{"model":"command-a-03-2025","messages":[{"role":"system","content":[{"type":"text","text":"You
+        must use tools whenever possible."}]},{"role":"user","content":[{"type":"text","text":"What''s
+        the best language to learn?"}]}],"stream":true,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Expose-Headers:
+      - X-Debug-Trace-ID
+      Cache-Control:
+      - no-cache, no-store, no-transform, must-revalidate, private, max-age=0
+      Content-Type:
+      - text/event-stream
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Pragma:
+      - no-cache
+      Vary:
+      - Origin
+      X-Accel-Expires:
+      - '0'
+      X-Debug-Trace-Id:
+      - fb891facd1cb0136c2f25c7827ebb162
+      Date:
+      - Thu, 13 Aug 2026 11:17:06 GMT
+      X-Envoy-Upstream-Service-Time:
+      - '141'
+      Server:
+      - envoy
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |+
+        event: message-start
+        data: {"id":"d5576672-a472-485f-89a3-dac4e4cb8072","type":"message-start","delta":{"message":{"role":"assistant","content":[],"tool_plan":"","tool_calls":[],"citations":[]}}}
+
+        event: tool-plan-delta
+        data: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":"I"}}}
+
+        event: tool-plan-delta
+        data: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":" will"}}}
+
+        event: tool-plan-delta
+        data: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":" use"}}}
+
+        event: tool-plan-delta
+        data: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":" the"}}}
+
+        event: tool-plan-delta
+        data: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":" best"}}}
+
+        event: tool-plan-delta
+        data: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":"_"}}}
+
+        event: tool-plan-delta
+        data: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":"language"}}}
+
+        event: tool-plan-delta
+        data: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":"_"}}}
+
+        event: tool-plan-delta
+        data: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":"to"}}}
+
+        event: tool-plan-delta
+        data: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":"_"}}}
+
+        event: tool-plan-delta
+        data: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":"learn"}}}
+
+        event: tool-plan-delta
+        data: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":" tool"}}}
+
+        event: tool-plan-delta
+        data: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":" to"}}}
+
+        event: tool-plan-delta
+        data: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":" find"}}}
+
+        event: tool-plan-delta
+        data: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":" the"}}}
+
+        event: tool-plan-delta
+        data: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":" best"}}}
+
+        event: tool-plan-delta
+        data: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":" language"}}}
+
+        event: tool-plan-delta
+        data: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":" to"}}}
+
+        event: tool-plan-delta
+        data: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":" learn"}}}
+
+        event: tool-plan-delta
+        data: {"type":"tool-plan-delta","delta":{"message":{"tool_plan":"."}}}
+
+        event: tool-call-start
+        data: {"type":"tool-call-start","index":0,"delta":{"message":{"tool_calls":{"id":"best_language_to_learn_wf0rc70sqj7v","type":"function","function":{"name":"best_language_to_learn","arguments":""}}}}}
+
+        event: tool-call-end
+        data: {"type":"tool-call-end","index":0}
+
+        event: message-end
+        data: {"type":"message-end","delta":{"finish_reason":"TOOL_CALL","usage":{"billed_units":{"input_tokens":44,"output_tokens":28},"tokens":{"input_tokens":1476,"output_tokens":58},"cached_tokens":1376}}}
+
+        data: [DONE]
+
+  recorded_at: Thu, 13 Aug 2026 11:17:06 GMT
+- request:
+    method: post
+    uri: https://api.cohere.com/v2/chat
+    body:
+      encoding: UTF-8
+      string: '{"model":"command-a-03-2025","messages":[{"role":"system","content":[{"type":"text","text":"You
+        must use tools whenever possible."}]},{"role":"user","content":[{"type":"text","text":"What''s
+        the best language to learn?"}]},{"role":"assistant","content":[{"type":"text","text":""}],"tool_calls":[{"id":"best_language_to_learn_wf0rc70sqj7v","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","tool_call_id":"best_language_to_learn_wf0rc70sqj7v","content":"Ruby"}],"stream":true,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Expose-Headers:
+      - X-Debug-Trace-ID
+      Cache-Control:
+      - no-cache, no-store, no-transform, must-revalidate, private, max-age=0
+      Content-Type:
+      - text/event-stream
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Pragma:
+      - no-cache
+      Vary:
+      - Origin
+      X-Accel-Expires:
+      - '0'
+      X-Debug-Trace-Id:
+      - 5f9d12a6b22087ad9fec307e90d1e55a
+      Date:
+      - Thu, 13 Aug 2026 11:17:07 GMT
+      X-Envoy-Upstream-Service-Time:
+      - '8'
+      Server:
+      - envoy
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |+
+        event: message-start
+        data: {"id":"9c4c845f-5c20-4496-bcae-57679db57df9","type":"message-start","delta":{"message":{"role":"assistant","content":[],"tool_plan":"","tool_calls":[],"citations":[]}}}
+
+        event: content-start
+        data: {"type":"content-start","index":0,"delta":{"message":{"content":{"type":"text","text":""}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"Ruby"}}}}
+
+        event: citation-start
+        data: {"type":"citation-start","index":0,"delta":{"message":{"citations":{"start":0,"end":4,"text":"Ruby","sources":[{"type":"tool","id":"best_language_to_learn_wf0rc70sqj7v:0","tool_output":{"content":"Ruby"}}],"type":"TEXT_CONTENT"}}}}
+
+        event: citation-end
+        data: {"type":"citation-end","index":0}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" is"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" the"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" best"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" language"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" to"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" learn"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"."}}}}
+
+        event: content-end
+        data: {"type":"content-end","index":0}
+
+        event: message-end
+        data: {"type":"message-end","delta":{"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":47,"output_tokens":8},"tokens":{"input_tokens":1563,"output_tokens":22},"cached_tokens":1376}}}
+
+        data: [DONE]
+
+  recorded_at: Thu, 13 Aug 2026 11:17:07 GMT
+- request:
+    method: post
+    uri: https://api.cohere.com/v2/chat
+    body:
+      encoding: UTF-8
+      string: '{"model":"command-a-03-2025","messages":[{"role":"system","content":[{"type":"text","text":"You
+        must use tools whenever possible."}]},{"role":"user","content":[{"type":"text","text":"What''s
+        the best language to learn?"}]},{"role":"assistant","content":[{"type":"text","text":""}],"tool_calls":[{"id":"best_language_to_learn_wf0rc70sqj7v","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","tool_call_id":"best_language_to_learn_wf0rc70sqj7v","content":"Ruby"},{"role":"assistant","content":[{"type":"text","text":"Ruby
+        is the best language to learn."}]},{"role":"user","content":[{"type":"text","text":"Tell
+        me again: what''s the best language to learn?"}]}],"stream":true,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Expose-Headers:
+      - X-Debug-Trace-ID
+      Cache-Control:
+      - no-cache, no-store, no-transform, must-revalidate, private, max-age=0
+      Content-Type:
+      - text/event-stream
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Pragma:
+      - no-cache
+      Vary:
+      - Origin
+      X-Accel-Expires:
+      - '0'
+      X-Debug-Trace-Id:
+      - f8dfbc8f33ce0d86df85d2f7c95766f3
+      Date:
+      - Thu, 13 Aug 2026 11:17:07 GMT
+      X-Envoy-Upstream-Service-Time:
+      - '5'
+      Server:
+      - envoy
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |+
+        event: message-start
+        data: {"id":"a7e48140-56c7-47e1-930a-26a8987e7d47","type":"message-start","delta":{"message":{"role":"assistant","content":[],"tool_plan":"","tool_calls":[],"citations":[]}}}
+
+        event: tool-call-start
+        data: {"type":"tool-call-start","index":0,"delta":{"message":{"tool_calls":{"id":"best_language_to_learn_wgdyg5frjc39","type":"function","function":{"name":"best_language_to_learn","arguments":""}}}}}
+
+        event: tool-call-end
+        data: {"type":"tool-call-end","index":0}
+
+        event: message-end
+        data: {"type":"message-end","delta":{"finish_reason":"TOOL_CALL","usage":{"billed_units":{"input_tokens":68,"output_tokens":8},"tokens":{"input_tokens":1591,"output_tokens":38},"cached_tokens":992}}}
+
+        data: [DONE]
+
+  recorded_at: Thu, 13 Aug 2026 11:17:08 GMT
+- request:
+    method: post
+    uri: https://api.cohere.com/v2/chat
+    body:
+      encoding: UTF-8
+      string: '{"model":"command-a-03-2025","messages":[{"role":"system","content":[{"type":"text","text":"You
+        must use tools whenever possible."}]},{"role":"user","content":[{"type":"text","text":"What''s
+        the best language to learn?"}]},{"role":"assistant","content":[{"type":"text","text":""}],"tool_calls":[{"id":"best_language_to_learn_wf0rc70sqj7v","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","tool_call_id":"best_language_to_learn_wf0rc70sqj7v","content":"Ruby"},{"role":"assistant","content":[{"type":"text","text":"Ruby
+        is the best language to learn."}]},{"role":"user","content":[{"type":"text","text":"Tell
+        me again: what''s the best language to learn?"}]},{"role":"assistant","content":[{"type":"text","text":""}],"tool_calls":[{"id":"best_language_to_learn_wgdyg5frjc39","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","tool_call_id":"best_language_to_learn_wgdyg5frjc39","content":"Ruby"}],"stream":true,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Expose-Headers:
+      - X-Debug-Trace-ID
+      Cache-Control:
+      - no-cache, no-store, no-transform, must-revalidate, private, max-age=0
+      Content-Type:
+      - text/event-stream
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Pragma:
+      - no-cache
+      Vary:
+      - Origin
+      X-Accel-Expires:
+      - '0'
+      X-Debug-Trace-Id:
+      - a52d628684edbafc0b1032444a1be517
+      Date:
+      - Thu, 13 Aug 2026 11:17:08 GMT
+      X-Envoy-Upstream-Service-Time:
+      - '8'
+      Server:
+      - envoy
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |+
+        event: message-start
+        data: {"id":"6b407ee8-88db-4896-81c4-320722cb006a","type":"message-start","delta":{"message":{"role":"assistant","content":[],"tool_plan":"","tool_calls":[],"citations":[]}}}
+
+        event: content-start
+        data: {"type":"content-start","index":0,"delta":{"message":{"content":{"type":"text","text":""}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"Ruby"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" is"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" the"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" best"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" language"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" to"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":" learn"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"text":"."}}}}
+
+        event: content-end
+        data: {"type":"content-end","index":0}
+
+        event: message-end
+        data: {"type":"message-end","delta":{"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":71,"output_tokens":8},"tokens":{"input_tokens":1678,"output_tokens":11},"cached_tokens":1440}}}
+
+        data: [DONE]
+
+  recorded_at: Thu, 13 Aug 2026 11:17:08 GMT
+recorded_with: VCR 6.4.0
+...

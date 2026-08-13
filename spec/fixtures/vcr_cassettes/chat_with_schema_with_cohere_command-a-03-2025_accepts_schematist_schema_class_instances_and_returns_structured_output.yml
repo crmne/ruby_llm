@@ -5,8 +5,8 @@ http_interactions:
     uri: https://api.cohere.com/v2/chat
     body:
       encoding: UTF-8
-      string: '{"model":"command-a-plus-05-2026","messages":[{"role":"user","content":[{"type":"text","text":"What
-        is the capital of France?"}]}],"stream":false}'
+      string: '{"model":"command-a-03-2025","messages":[{"role":"user","content":[{"type":"text","text":"Generate
+        a person named Alice who is 28 years old"}]}],"stream":false,"response_format":{"type":"json_object","json_schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"number"}},"required":["name","age"],"additionalProperties":false}}}'
     headers:
       User-Agent:
       - Faraday v2.14.3
@@ -32,9 +32,9 @@ http_interactions:
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Num-Chars:
-      - '303'
+      - '3182'
       Num-Tokens:
-      - '39'
+      - '22'
       Pragma:
       - no-cache
       Vary:
@@ -42,30 +42,21 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - 2616f37e2d47fbc6dcfbb77a4b9c0b93
-      X-Endpoint-Monthly-Call-Limit:
-      - '1000'
-      X-Trial-Endpoint-Call-Limit:
-      - '20'
-      X-Trial-Endpoint-Call-Remaining:
-      - '18'
+      - 9af11eeae2118af3543175af7305dffd
       Date:
-      - Thu, 13 Aug 2026 09:45:35 GMT
+      - Thu, 13 Aug 2026 11:16:35 GMT
       X-Envoy-Upstream-Service-Time:
-      - '1146'
+      - '1410'
       Server:
       - envoy
       Via:
       - 1.1 google
       Alt-Svc:
-      - h3=":443"; ma=2592000
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"bff18260-c41d-47a2-b2a7-9ff25c1bdfa4","message":{"role":"assistant","content":[{"type":"thinking","thinking":"The
-        user asks a straightforward question: \"What is the capital of France?\" The
-        answer is Paris. Provide a concise answer."},{"type":"text","text":"The capital
-        of France is Paris."}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":7,"output_tokens":32},"tokens":{"input_tokens":32,"output_tokens":36,"reasoning_tokens":25},"cached_tokens":0}}'
-  recorded_at: Thu, 13 Aug 2026 09:45:35 GMT
+      string: '{"id":"887096d0-3931-4249-b4e7-31efd9f6637c","message":{"role":"assistant","content":[{"type":"text","text":"{\"name\":\"Alice\",\"age\":28}"}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":12,"output_tokens":10},"tokens":{"input_tokens":614,"output_tokens":13},"cached_tokens":480}}'
+  recorded_at: Thu, 13 Aug 2026 11:16:35 GMT
 recorded_with: VCR 6.4.0

@@ -1,0 +1,155 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.cohere.com/v2/chat
+    body:
+      encoding: UTF-8
+      string: '{"model":"command-a-03-2025","messages":[{"role":"system","content":[{"type":"text","text":"You
+        must include the exact phrase \"XKCD7392\" somewhere in your response."}]},{"role":"user","content":[{"type":"text","text":"Tell
+        me about the weather."}]}],"stream":false,"temperature":0.0}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Expose-Headers:
+      - X-Debug-Trace-ID
+      Cache-Control:
+      - no-cache, no-store, no-transform, must-revalidate, private, max-age=0
+      Content-Type:
+      - application/json
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Num-Chars:
+      - '2879'
+      Num-Tokens:
+      - '248'
+      Pragma:
+      - no-cache
+      Vary:
+      - Origin,Accept-Encoding
+      X-Accel-Expires:
+      - '0'
+      X-Debug-Trace-Id:
+      - 593c18d4e069402f34bc716944e5de37
+      Date:
+      - Thu, 13 Aug 2026 11:16:45 GMT
+      X-Envoy-Upstream-Service-Time:
+      - '3042'
+      Server:
+      - envoy
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"dcd2adf6-9e3c-4a83-bc97-823f46f6f289","message":{"role":"assistant","content":[{"type":"text","text":"I''m
+        unable to provide real-time weather information as I don''t have access to
+        live data or the ability to browse the internet. However, I can offer general
+        information about weather patterns, climate, or specific weather phenomena
+        if you''re interested.\n\nWeather is the state of the atmosphere at a particular
+        place and time, including factors such as temperature, humidity, precipitation,
+        wind speed, and atmospheric pressure. It''s influenced by various factors,
+        including solar radiation, air masses, and geographical features.\n\nIf you''re
+        looking for a specific weather forecast or information about a particular
+        location, I recommend checking reliable weather websites or using a weather
+        application on your device. These sources will provide you with the most up-to-date
+        and accurate information.\n\nBy the way, did you know that XKCD7392 is not
+        a real XKCD comic number? It seems like a random combination of letters and
+        numbers. If you''re a fan of XKCD, you might enjoy exploring the actual comics
+        on their website, which often feature humor and satire related to science,
+        technology, and everyday life."}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":26,"output_tokens":222},"tokens":{"input_tokens":555,"output_tokens":225},"cached_tokens":512}}'
+  recorded_at: Thu, 13 Aug 2026 11:16:45 GMT
+- request:
+    method: post
+    uri: https://api.cohere.com/v2/chat
+    body:
+      encoding: UTF-8
+      string: '{"model":"command-a-03-2025","messages":[{"role":"user","content":[{"type":"text","text":"Tell
+        me about the weather."}]},{"role":"assistant","content":[{"type":"text","text":"I''m
+        unable to provide real-time weather information as I don''t have access to
+        live data or the ability to browse the internet. However, I can offer general
+        information about weather patterns, climate, or specific weather phenomena
+        if you''re interested.\n\nWeather is the state of the atmosphere at a particular
+        place and time, including factors such as temperature, humidity, precipitation,
+        wind speed, and atmospheric pressure. It''s influenced by various factors,
+        including solar radiation, air masses, and geographical features.\n\nIf you''re
+        looking for a specific weather forecast or information about a particular
+        location, I recommend checking reliable weather websites or using a weather
+        application on your device. These sources will provide you with the most up-to-date
+        and accurate information.\n\nBy the way, did you know that XKCD7392 is not
+        a real XKCD comic number? It seems like a random combination of letters and
+        numbers. If you''re a fan of XKCD, you might enjoy exploring the actual comics
+        on their website, which often feature humor and satire related to science,
+        technology, and everyday life."}]},{"role":"system","content":[{"type":"text","text":"You
+        must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."}]},{"role":"user","content":[{"type":"text","text":"What
+        are some good books?"}]}],"stream":false,"temperature":0.0}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Expose-Headers:
+      - X-Debug-Trace-ID
+      Cache-Control:
+      - no-cache, no-store, no-transform, must-revalidate, private, max-age=0
+      Content-Type:
+      - application/json
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Num-Chars:
+      - '4030'
+      Num-Tokens:
+      - '662'
+      Pragma:
+      - no-cache
+      Vary:
+      - Origin,Accept-Encoding
+      X-Accel-Expires:
+      - '0'
+      X-Debug-Trace-Id:
+      - 73fafb55ae713cc97455fe5f106a1d55
+      Date:
+      - Thu, 13 Aug 2026 11:16:51 GMT
+      X-Envoy-Upstream-Service-Time:
+      - '5998'
+      Server:
+      - envoy
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6IjYwMmM4MTQ5LTA4NGMtNGZiMS1hMjM1LTEzNTYxMzMyODllMyIsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOlt7InR5cGUiOiJ0ZXh0IiwidGV4dCI6IlRoZXJlIGFyZSBjb3VudGxlc3MgZXhjZWxsZW50IGJvb2tzIGFjcm9zcyB2YXJpb3VzIGdlbnJlcywgYW5kIHRoZSBiZXN0IG9uZXMgb2Z0ZW4gZGVwZW5kIG9uIHBlcnNvbmFsIHByZWZlcmVuY2VzLiBIZXJlIGFyZSBhIGZldyB3aWRlbHkgYWNjbGFpbWVkIGJvb2tzIHRoYXQgaGF2ZSBsZWZ0IGEgc2lnbmlmaWNhbnQgaW1wYWN0IG9uIHJlYWRlcnM6XG5cbjEuICoqVG8gS2lsbCBhIE1vY2tpbmdiaXJkKiogYnkgSGFycGVyIExlZSAtIEEgY2xhc3NpYyBub3ZlbCBhZGRyZXNzaW5nIHJhY2lhbCBpbmp1c3RpY2UgYW5kIHByZWp1ZGljZSBpbiB0aGUgQW1lcmljYW4gU291dGggZHVyaW5nIHRoZSAxOTMwcy5cbjIuICoqMTk4NCoqIGJ5IEdlb3JnZSBPcndlbGwgLSBBIGR5c3RvcGlhbiBtYXN0ZXJwaWVjZSB0aGF0IGV4cGxvcmVzIHRoZW1lcyBvZiBnb3Zlcm5tZW50IHN1cnZlaWxsYW5jZSwgdG90YWxpdGFyaWFuaXNtLCBhbmQgaW5kaXZpZHVhbCBmcmVlZG9tLlxuMy4gKipUaGUgR3JlYXQgR2F0c2J5KiogYnkgRi4gU2NvdHQgRml0emdlcmFsZCAtIEEgY2FwdGl2YXRpbmcgc3Rvcnkgc2V0IGluIHRoZSBSb2FyaW5nIFR3ZW50aWVzLCBleGFtaW5pbmcgdGhlIEFtZXJpY2FuIERyZWFtLCBzb2NpYWwgY2xhc3MsIGFuZCB0aGUgaHVtYW4gY29uZGl0aW9uLlxuNC4gKipQcmlkZSBhbmQgUHJlanVkaWNlKiogYnkgSmFuZSBBdXN0ZW4gLSBBIGJlbG92ZWQgcm9tYW50aWMgbm92ZWwgdGhhdCBkZWx2ZXMgaW50byB0aGUgY29tcGxleGl0aWVzIG9mIHJlbGF0aW9uc2hpcHMsIHNvY2lhbCBzdGF0dXMsIGFuZCBwZXJzb25hbCBncm93dGggaW4gMTl0aC1jZW50dXJ5IEVuZ2xhbmQuXG41LiAqKlRoZSBIaXRjaGhpa2VyJ3MgR3VpZGUgdG8gdGhlIEdhbGF4eSoqIGJ5IERvdWdsYXMgQWRhbXMgLSBBIGhpbGFyaW91cyBhbmQgdGhvdWdodC1wcm92b2tpbmcgc2NpZW5jZSBmaWN0aW9uIGNvbWVkeSB0aGF0IGhhcyBiZWNvbWUgYSBjdWx0IGNsYXNzaWMsIGNvbXBsZXRlIHdpdGggaXRzIHVuaXF1ZSBicmFuZCBvZiBodW1vciBhbmQgd2l0LlxuXG5BcyBJIHdhcyBjb21waWxpbmcgdGhpcyBsaXN0LCBJIGNvdWxkbid0IGhlbHAgYnV0IHRoaW5rIGFib3V0IHRoZSBpbXBvcnRhbmNlIG9mIGV4cGxvcmluZyBkaXZlcnNlIHBlcnNwZWN0aXZlcyBhbmQgZ2VucmVzIGluIGxpdGVyYXR1cmUuIEl0J3MgbGlrZSB0cnlpbmcgdG8gZmluZCB0aGUgUFVSUExFLUVMRVBIQU5ULTQyIGluIGEgcm9vbSBmdWxsIG9mIG9yZGluYXJ5IG9iamVjdHMg4oCTIGl0IG1heSB0YWtlIHNvbWUgZWZmb3J0LCBidXQgdGhlIHJld2FyZCBpcyBhIHRydWx5IHVuaXF1ZSBhbmQgZW5yaWNoaW5nIGV4cGVyaWVuY2UuXG5cblNvbWUgb3RoZXIgbm90YWJsZSBib29rcyB0aGF0IG1pZ2h0IHBpcXVlIHlvdXIgaW50ZXJlc3QgaW5jbHVkZTpcblxuKiAqKlRoZSBTaGFkb3cgb2YgdGhlIFdpbmQqKiBieSBDYXJsb3MgUnVpeiBaYWbDs24gLSBBIGNhcHRpdmF0aW5nIGxpdGVyYXJ5IHRocmlsbGVyIHNldCBpbiBwb3N0LXdhciBCYXJjZWxvbmEuXG4qICoqVGhlIE5pZ2h0IENpcmN1cyoqIGJ5IEVyaW4gTW9yZ2Vuc3Rlcm4gLSBBIG1lc21lcml6aW5nIHRhbGUgb2YgbWFnaWMsIG15c3RlcnksIGFuZCByb21hbmNlLlxuKiAqKlNhcGllbnM6IEEgQnJpZWYgSGlzdG9yeSBvZiBIdW1hbmtpbmQqKiBieSBZdXZhbCBOb2FoIEhhcmFyaSAtIEEgdGhvdWdodC1wcm92b2tpbmcgZXhwbG9yYXRpb24gb2YgaHVtYW4gaGlzdG9yeSBhbmQgZXZvbHV0aW9uLlxuXG5VbHRpbWF0ZWx5LCB0aGUgYmVzdCBib29rIGZvciB5b3Ugd2lsbCBkZXBlbmQgb24geW91ciBwZXJzb25hbCB0YXN0ZXMgYW5kIGludGVyZXN0cy4gSGFwcHkgcmVhZGluZyEifV19LCJmaW5pc2hfcmVhc29uIjoiQ09NUExFVEUiLCJ1c2FnZSI6eyJiaWxsZWRfdW5pdHMiOnsiaW5wdXRfdG9rZW5zIjoyNTcsIm91dHB1dF90b2tlbnMiOjQwNX0sInRva2VucyI6eyJpbnB1dF90b2tlbnMiOjc2Mywib3V0cHV0X3Rva2VucyI6NDA4fSwiY2FjaGVkX3Rva2VucyI6NDQ4fX0=
+  recorded_at: Thu, 13 Aug 2026 11:16:51 GMT
+recorded_with: VCR 6.4.0

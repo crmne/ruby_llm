@@ -26,8 +26,6 @@ http_interactions:
       - GitHub.com
       Content-Type:
       - text/plain; charset=utf-8
-      X-Origin-Cache:
-      - HIT
       Last-Modified:
       - Thu, 06 Aug 2026 00:46:59 GMT
       Access-Control-Allow-Origin:
@@ -35,13 +33,13 @@ http_interactions:
       Etag:
       - W/"6a73d983-9c6"
       Expires:
-      - Thu, 13 Aug 2026 09:39:22 GMT
+      - Thu, 13 Aug 2026 11:25:01 GMT
       Cache-Control:
       - max-age=600
       X-Proxy-Cache:
       - MISS
       X-Github-Request-Id:
-      - 3C32:543BF:1CCC482:1D0948F:6A7D8E72
+      - A04C:675A8:22C3E6:2310AD:6A7DA735
       X-Github-Edge-Region:
       - fra
       Accept-Ranges:
@@ -49,21 +47,21 @@ http_interactions:
       Age:
       - '0'
       Date:
-      - Thu, 13 Aug 2026 09:46:38 GMT
+      - Thu, 13 Aug 2026 11:15:01 GMT
       Via:
       - 1.1 varnish
       X-Served-By:
-      - cache-ber1080027-BER
+      - cache-ber1080037-BER
       X-Cache:
-      - HIT
+      - MISS
       X-Cache-Hits:
       - '0'
       X-Timer:
-      - S1786614399.733975,VS0,VE111
+      - S1786619702.696408,VS0,VE118
       Vary:
       - Accept-Encoding
       X-Fastly-Request-Id:
-      - 15199d2ab494ebe17ec07a386c5862a6ce1bd24a
+      - 1ea46d4aedd85525222208478d69f2dfb334c04e
     body:
       encoding: ASCII-8BIT
       string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
@@ -99,13 +97,13 @@ http_interactions:
         \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
         WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
         FOR A PARTICULAR\n     PURPOSE.\n"
-  recorded_at: Thu, 13 Aug 2026 09:46:38 GMT
+  recorded_at: Thu, 13 Aug 2026 11:15:01 GMT
 - request:
     method: post
     uri: https://api.cohere.com/v2/chat
     body:
       encoding: UTF-8
-      string: '{"model":"command-a-plus-05-2026","messages":[{"role":"user","content":[{"type":"text","text":"What''s
+      string: '{"model":"command-a-03-2025","messages":[{"role":"user","content":[{"type":"text","text":"What''s
         in this file?"},{"type":"text","text":"<file name=''license.txt'' mime_type=''text/plain''>Ruby
         is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
         can redistribute it and/or modify it under either the terms of the\n2-clause
@@ -165,9 +163,9 @@ http_interactions:
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Num-Chars:
-      - '2850'
+      - '5156'
       Num-Tokens:
-      - '945'
+      - '996'
       Pragma:
       - no-cache
       Vary:
@@ -175,17 +173,11 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - 914890a2386d5d568e0a8e2324bd7658
-      X-Endpoint-Monthly-Call-Limit:
-      - '1000'
-      X-Trial-Endpoint-Call-Limit:
-      - '20'
-      X-Trial-Endpoint-Call-Remaining:
-      - '8'
+      - 382f3c7ff22d70496a15b9ac1b587100
       Date:
-      - Thu, 13 Aug 2026 09:46:41 GMT
+      - Thu, 13 Aug 2026 11:15:14 GMT
       X-Envoy-Upstream-Service-Time:
-      - '2662'
+      - '12602'
       Server:
       - envoy
       Via:
@@ -197,6 +189,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJpZCI6ImUyZDgwNTI2LWM1ZjItNDlmNi1hN2RkLTljNGQ5YTI0ZGQ2YyIsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOlt7InR5cGUiOiJ0aGlua2luZyIsInRoaW5raW5nIjoiVGhlIHVzZXIgYXNrczogXCJXaGF0J3MgaW4gdGhpcyBmaWxlP1wiIGFuZCBwcm92aWRlcyBhIGZpbGUgc25pcHBldCB3aXRoIFx1MDAzY2ZpbGUgbmFtZT0nbGljZW5zZS50eHQnIG1pbWVfdHlwZT0ndGV4dC9wbGFpbidcdTAwM2UuLi4gY29udGVudCAuLi5cdTAwM2MvZmlsZVx1MDAzZS4gVGhlIGNvbnRlbnQgaXMgdGhlIFJ1YnkgbGljZW5zZSAoQlNETCkuIFRoZSBhbnN3ZXIgc2hvdWxkIHN1bW1hcml6ZSB0aGUgY29udGVudDogaXQncyBhIGxpY2Vuc2UgZmlsZSBmb3IgUnVieSwgZGVzY3JpYmluZyB0ZXJtcyBmb3IgcmVkaXN0cmlidXRpb24sIG1vZGlmaWNhdGlvbiwgZGlzdHJpYnV0aW9uLCBldGMuIFNob3VsZCBub3QgdmlvbGF0ZSBwb2xpY3kuIEl0J3MgZmluZS5cblxuV2Ugc2hvdWxkIHJlc3BvbmQgd2l0aCBhIGRlc2NyaXB0aW9uOiBUaGUgZmlsZSBpcyBhIGxpY2Vuc2UgdGV4dCBmb3IgUnVieSwgY29weXJpZ2h0ZWQgYnkgWXVraWhpcm8gTWF0c3Vtb3RvLCBvdXRsaW5lcyByZWRpc3RyaWJ1dGlvbiBhbmQgbW9kaWZpY2F0aW9uIHRlcm1zLCByZWZlcmVuY2luZyBCU0RMLCBhbmQgaW5jbHVkZXMgY29uZGl0aW9ucyBmb3IgY29weWluZywgbW9kaWZ5aW5nLCBkaXN0cmlidXRpbmcsIGV0Yy4gQWxzbyBtZW50aW9ucyBvdGhlciBmaWxlcyBsaWtlIExFR0FMIGZvciBub24tYXV0aG9yIGZpbGVzLCBhbmQgZGlzY2xhaW1lcnMuXG5cbldlIGNhbiBhbHNvIG5vdGUgaXQncyBhIHBsYWluIHRleHQgZmlsZSBuYW1lZCBsaWNlbnNlLnR4dC4gUHJvdmlkZSBhIGNvbmNpc2Ugc3VtbWFyeS5cblxuVGh1cyBhbnN3ZXI6IEl0J3MgdGhlIFJ1YnkgbGljZW5zZSB0ZXh0LCBkZXNjcmliaW5nIHRoZSB0ZXJtcyB1bmRlciB3aGljaCBSdWJ5IGNhbiBiZSByZWRpc3RyaWJ1dGVkIGFuZCBtb2RpZmllZCwgZXRjLlxuXG5XZSBzaG91bGQgbm90IGluY2x1ZGUgdGhlIGVudGlyZSBsaWNlbnNlIHZlcmJhdGltIHVubGVzcyBuZWVkZWQsIGJ1dCB3ZSBjYW4gc3VtbWFyaXplLiBUaGUgdXNlciBhc2tlZCBcIldoYXQncyBpbiB0aGlzIGZpbGU/XCIgU28gYSBzdW1tYXJ5IGlzIGFwcHJvcHJpYXRlLlxuXG5UaHVzIHJlc3BvbmQgd2l0aCBhIGRlc2NyaXB0aW9uLiJ9LHsidHlwZSI6InRleHQiLCJ0ZXh0IjoiVGhlIGZpbGUgYGxpY2Vuc2UudHh0YCBjb250YWlucyB0aGUgUnVieSBsaWNlbnNlIHRleHQuIEl0IGlzIGEgcGxhaW7igJF0ZXh0IChVVEbigJE4KSBkb2N1bWVudCB0aGF0OlxuXG4qIFN0YXRlcyB0aGF0IFJ1YnkgaXMgY29weXJpZ2h0ZWQgZnJlZSBzb2Z0d2FyZSBieSBZdWtpaGlyb+KAr01hdHN1bW90by5cbiogT2ZmZXJzIHR3byBsaWNlbnNpbmcgb3B0aW9uczpcbiAgKiBUaGUgMuKAkWNsYXVzZSBCU0RMIChyZWZlcmVuY2VkIGluIGEgc2VwYXJhdGUgZmlsZSBgQlNETGApLCAqKm9yKipcbiAgKiBUaGUgY3VzdG9tIHRlcm1zIGxpc3RlZCBpbiB0aGUgZmlsZSBpdHNlbGYuXG4qIE91dGxpbmVzIHRoZSBjb25kaXRpb25zIGZvcjpcbiAgKiBNYWtpbmcgYW5kIGRpc3RyaWJ1dGluZyB2ZXJiYXRpbSBjb3BpZXMsXG4gICogTW9kaWZ5aW5nIHRoZSBzb2Z0d2FyZSAod2l0aCBzZXZlcmFsIG9wdGlvbnMgZm9yIGhhbmRsaW5nIHRoZSBjaGFuZ2VzKSxcbiAgKiBEaXN0cmlidXRpbmcgdGhlIHNvZnR3YXJlIGluIGJpbmFyeS9vYmplY3QgZm9ybSxcbiAgKiBJbmNvcnBvcmF0aW5nIHBhcnRzIG9mIFJ1YnkgaW50byBvdGhlciBzb2Z0d2FyZSxcbiAgKiBIYW5kbGluZyBub27igJFhdXRob3IgZmlsZXMgKHNlZSBgTEVHQUxgKSxcbiAgKiBPd25lcnNoaXAgb2Ygc2NyaXB0cyBhbmQgbGlicmFyeSBmaWxlcyBnZW5lcmF0ZWQgYnkgUnVieSxcbiAgKiBEaXNjbGFpbWluZyBhbGwgd2FycmFudGllcy5cbiogUmVmZXJlbmNlcyBhZGRpdGlvbmFsIGZpbGVzIChgQlNETGAsIGBMRUdBTGApIGZvciBtb3JlIGRldGFpbHMgb24gc3BlY2lmaWMgY29tcG9uZW50cyBhbmQgdGhlaXIgY29weWluZyBjb25kaXRpb25zLlxuXG5JbiBzaG9ydCwgYGxpY2Vuc2UudHh0YCBpcyB0aGUgUnVieSBsaWNlbnNlIHRoYXQgZGVmaW5lcyBob3cgdGhlIHNvZnR3YXJlIG1heSBiZSB1c2VkLCBjb3BpZWQsIG1vZGlmaWVkLCBhbmQgcmVkaXN0cmlidXRlZC4ifV19LCJmaW5pc2hfcmVhc29uIjoiQ09NUExFVEUiLCJ1c2FnZSI6eyJiaWxsZWRfdW5pdHMiOnsiaW5wdXRfdG9rZW5zIjo1MjAsIm91dHB1dF90b2tlbnMiOjQyNX0sInRva2VucyI6eyJpbnB1dF90b2tlbnMiOjU0NCwib3V0cHV0X3Rva2VucyI6NDI5LCJyZWFzb25pbmdfdG9rZW5zIjoyMTV9LCJjYWNoZWRfdG9rZW5zIjowfX0=
-  recorded_at: Thu, 13 Aug 2026 09:46:41 GMT
+        eyJpZCI6ImNlM2VlMTY5LWY3NmEtNGRhNy05ZGFmLWM4OTBkOTY4MzdkMSIsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOlt7InR5cGUiOiJ0ZXh0IiwidGV4dCI6IlRoZSBmaWxlIGBsaWNlbnNlLnR4dGAgY29udGFpbnMgdGhlIGxpY2Vuc2luZyB0ZXJtcyBmb3IgUnVieSwgYSBwcm9ncmFtbWluZyBsYW5ndWFnZSBjcmVhdGVkIGJ5IFl1a2loaXJvIE1hdHN1bW90byAoYWxzbyBrbm93biBhcyBNYXR6KS4gVGhlIGxpY2Vuc2UgaXMgYSBjdXN0b20gb25lLCBhbGxvd2luZyBmb3IgcmVkaXN0cmlidXRpb24gYW5kIG1vZGlmaWNhdGlvbiB1bmRlciBzcGVjaWZpYyBjb25kaXRpb25zLiBIZXJl4oCZcyBhIGJyZWFrZG93biBvZiB0aGUga2V5IHBvaW50czpcblxuMS4gKipDb3B5cmlnaHQgTm90aWNlKio6IFJ1YnkgaXMgY29weXJpZ2h0ZWQgZnJlZSBzb2Z0d2FyZSBieSBZdWtpaGlybyBNYXRzdW1vdG8uXG5cbjIuICoqUmVkaXN0cmlidXRpb24gYW5kIE1vZGlmaWNhdGlvbioqOlxuICAgLSBZb3UgY2FuIHJlZGlzdHJpYnV0ZSB0aGUgc29mdHdhcmUgYW5kL29yIG1vZGlmeSBpdCB1bmRlciB0aGUgdGVybXMgb2YgdGhlIDItY2xhdXNlIEJTREwgKEJlcmtlbGV5IFNvZnR3YXJlIERpc3RyaWJ1dGlvbiBMaWNlbnNlKSBvciB0aGUgY29uZGl0aW9ucyBzcGVjaWZpZWQgaW4gdGhlIGZpbGUuXG5cbjMuICoqQ29uZGl0aW9ucyBmb3IgTW9kaWZpY2F0aW9uIGFuZCBSZWRpc3RyaWJ1dGlvbioqOlxuICAgLSAqKk1vZGlmaWNhdGlvbioqOlxuICAgICAtIFBsYWNlIG1vZGlmaWNhdGlvbnMgaW4gdGhlIFB1YmxpYyBEb21haW4gb3IgbWFrZSB0aGVtIEZyZWVseSBBdmFpbGFibGUuXG4gICAgIC0gVXNlIG1vZGlmaWVkIHNvZnR3YXJlIG9ubHkgd2l0aGluIHlvdXIgY29ycG9yYXRpb24gb3Igb3JnYW5pemF0aW9uLlxuICAgICAtIEdpdmUgbm9uLXN0YW5kYXJkIGJpbmFyaWVzIG5vbi1zdGFuZGFyZCBuYW1lcyB3aXRoIGluc3RydWN0aW9ucyBvbiB3aGVyZSB0byBnZXQgdGhlIG9yaWdpbmFsIGRpc3RyaWJ1dGlvbi5cbiAgICAgLSBNYWtlIG90aGVyIGRpc3RyaWJ1dGlvbiBhcnJhbmdlbWVudHMgd2l0aCB0aGUgYXV0aG9yLlxuICAgLSAqKkRpc3RyaWJ1dGlvbiBpbiBPYmplY3QgQ29kZSBvciBCaW5hcnkgRm9ybSoqOlxuICAgICAtIERpc3RyaWJ1dGUgYmluYXJpZXMgYW5kIGxpYnJhcnkgZmlsZXMgd2l0aCBpbnN0cnVjdGlvbnMgb24gd2hlcmUgdG8gZ2V0IHRoZSBvcmlnaW5hbCBkaXN0cmlidXRpb24uXG4gICAgIC0gQWNjb21wYW55IHRoZSBkaXN0cmlidXRpb24gd2l0aCB0aGUgbWFjaGluZS1yZWFkYWJsZSBzb3VyY2Ugb2YgdGhlIHNvZnR3YXJlLlxuICAgICAtIEdpdmUgbm9uLXN0YW5kYXJkIGJpbmFyaWVzIG5vbi1zdGFuZGFyZCBuYW1lcyB3aXRoIGluc3RydWN0aW9ucyBvbiB3aGVyZSB0byBnZXQgdGhlIG9yaWdpbmFsIGRpc3RyaWJ1dGlvbi5cbiAgICAgLSBNYWtlIG90aGVyIGRpc3RyaWJ1dGlvbiBhcnJhbmdlbWVudHMgd2l0aCB0aGUgYXV0aG9yLlxuXG40LiAqKkluY2x1c2lvbiBpbiBPdGhlciBTb2Z0d2FyZSoqOlxuICAgLSBZb3UgbWF5IG1vZGlmeSBhbmQgaW5jbHVkZSBwYXJ0cyBvZiB0aGUgc29mdHdhcmUgaW50byBhbnkgb3RoZXIgc29mdHdhcmUsIHBvc3NpYmx5IGNvbW1lcmNpYWwuIEhvd2V2ZXIsIHNvbWUgZmlsZXMgaW4gdGhlIGRpc3RyaWJ1dGlvbiBhcmUgbm90IHdyaXR0ZW4gYnkgdGhlIGF1dGhvciBhbmQgYXJlIG5vdCB1bmRlciB0aGVzZSB0ZXJtcy4gUmVmZXIgdG8gdGhlIGBMRUdBTGAgZmlsZSBmb3IgZGV0YWlscyBvbiB0aG9zZSBmaWxlcyBhbmQgdGhlaXIgY29weWluZyBjb25kaXRpb25zLlxuXG41LiAqKk93bmVyc2hpcCBvZiBHZW5lcmF0ZWQgU2NyaXB0cyBhbmQgTGlicmFyeSBGaWxlcyoqOlxuICAgLSBTY3JpcHRzIGFuZCBsaWJyYXJ5IGZpbGVzIGdlbmVyYXRlZCBhcyBpbnB1dCB0byBvciBvdXRwdXQgZnJvbSB0aGUgc29mdHdhcmUgZG8gbm90IGF1dG9tYXRpY2FsbHkgZmFsbCB1bmRlciB0aGUgY29weXJpZ2h0IG9mIHRoZSBzb2Z0d2FyZS4gVGhleSBiZWxvbmcgdG8gd2hvbWV2ZXIgZ2VuZXJhdGVkIHRoZW0gYW5kIG1heSBiZSBzb2xkIGNvbW1lcmNpYWxseSBvciBhZ2dyZWdhdGVkIHdpdGggdGhpcyBzb2Z0d2FyZS5cblxuNi4gKipEaXNjbGFpbWVyIG9mIFdhcnJhbnR5Kio6XG4gICAtIFRoZSBzb2Z0d2FyZSBpcyBwcm92aWRlZCBcIkFTIElTXCIgd2l0aG91dCBhbnkgZXhwcmVzcyBvciBpbXBsaWVkIHdhcnJhbnRpZXMsIGluY2x1ZGluZyB0aGUgaW1wbGllZCB3YXJyYW50aWVzIG9mIG1lcmNoYW50YWJpbGl0eSBhbmQgZml0bmVzcyBmb3IgYSBwYXJ0aWN1bGFyIHB1cnBvc2UuXG5cblRoaXMgbGljZW5zZSBpcyBxdWl0ZSBwZXJtaXNzaXZlLCBhbGxvd2luZyBmb3IgYSB3aWRlIHJhbmdlIG9mIHVzZXMsIG1vZGlmaWNhdGlvbnMsIGFuZCByZWRpc3RyaWJ1dGlvbnMsIHByb3ZpZGVkIHRoYXQgY2VydGFpbiBjb25kaXRpb25zIGFyZSBtZXQuIEl0IGFsc28gaW5jbHVkZXMgYSBzdHJvbmcgZGlzY2xhaW1lciBvZiB3YXJyYW50eSwgdHlwaWNhbCBvZiBtYW55IG9wZW4tc291cmNlIGxpY2Vuc2VzLiJ9XX0sImZpbmlzaF9yZWFzb24iOiJDT01QTEVURSIsInVzYWdlIjp7ImJpbGxlZF91bml0cyI6eyJpbnB1dF90b2tlbnMiOjUxOCwib3V0cHV0X3Rva2VucyI6NDc4fSwidG9rZW5zIjp7ImlucHV0X3Rva2VucyI6MTAxMywib3V0cHV0X3Rva2VucyI6NDgxfSwiY2FjaGVkX3Rva2VucyI6NDY0fX0=
+  recorded_at: Thu, 13 Aug 2026 11:15:14 GMT
 recorded_with: VCR 6.4.0

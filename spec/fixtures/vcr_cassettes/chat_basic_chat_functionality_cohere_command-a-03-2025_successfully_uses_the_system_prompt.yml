@@ -1,0 +1,70 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.cohere.com/v2/chat
+    body:
+      encoding: UTF-8
+      string: '{"model":"command-a-03-2025","messages":[{"role":"system","content":[{"type":"text","text":"You
+        must include the exact phrase \"XKCD7392\" somewhere in your response."}]},{"role":"user","content":[{"type":"text","text":"Tell
+        me about the weather."}]}],"stream":false,"temperature":0.0}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Expose-Headers:
+      - X-Debug-Trace-ID
+      Cache-Control:
+      - no-cache, no-store, no-transform, must-revalidate, private, max-age=0
+      Content-Type:
+      - application/json
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Num-Chars:
+      - '2879'
+      Num-Tokens:
+      - '128'
+      Pragma:
+      - no-cache
+      Vary:
+      - Origin,Accept-Encoding
+      X-Accel-Expires:
+      - '0'
+      X-Debug-Trace-Id:
+      - 8c5848e0866d6361df616e159e72e5e9
+      Date:
+      - Thu, 13 Aug 2026 11:16:42 GMT
+      X-Envoy-Upstream-Service-Time:
+      - '1667'
+      Server:
+      - envoy
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"620bd525-b048-4fdc-a8c0-b48069a4d873","message":{"role":"assistant","content":[{"type":"text","text":"I''m
+        unable to provide real-time weather information as I don''t have access to
+        live data. However, I can offer general information about weather patterns
+        and phenomena if you''re interested. By the way, did you know that XKCD7392
+        is not a real XKCD comic number? If you''re looking for weather updates, I
+        recommend checking a reliable weather website or using a weather app on your
+        device. Let me know if you''d like me to elaborate on any specific weather-related
+        topics!"}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":26,"output_tokens":102},"tokens":{"input_tokens":555,"output_tokens":105},"cached_tokens":480}}'
+  recorded_at: Thu, 13 Aug 2026 11:16:42 GMT
+recorded_with: VCR 6.4.0

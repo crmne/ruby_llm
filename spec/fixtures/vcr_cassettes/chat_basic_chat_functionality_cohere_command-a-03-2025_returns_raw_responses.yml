@@ -1,0 +1,63 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.cohere.com/v2/chat
+    body:
+      encoding: UTF-8
+      string: '{"model":"command-a-03-2025","messages":[{"role":"user","content":[{"type":"text","text":"What
+        is the capital of France?"}]}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Expose-Headers:
+      - X-Debug-Trace-ID
+      Cache-Control:
+      - no-cache, no-store, no-transform, must-revalidate, private, max-age=0
+      Content-Type:
+      - application/json
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Num-Chars:
+      - '2608'
+      Num-Tokens:
+      - '57'
+      Pragma:
+      - no-cache
+      Vary:
+      - Origin,Accept-Encoding
+      X-Accel-Expires:
+      - '0'
+      X-Debug-Trace-Id:
+      - 12da9d8b0e6b6b078ed536fd59f4715a
+      Date:
+      - Thu, 13 Aug 2026 11:16:37 GMT
+      X-Envoy-Upstream-Service-Time:
+      - '848'
+      Server:
+      - envoy
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6IjVlM2JjYzE3LWY2YmYtNGZiZC1iN2I1LTE2ZmUwMWQxOWUwYSIsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOlt7InR5cGUiOiJ0ZXh0IiwidGV4dCI6IlRoZSBjYXBpdGFsIG9mIEZyYW5jZSBpcyAqKlBhcmlzKiouIEl0IGlzIHRoZSBjb3VudHJ5J3MgbGFyZ2VzdCBjaXR5IGFuZCBtYWluIGN1bHR1cmFsLCBjb21tZXJjaWFsLCBhbmQgYWRtaW5pc3RyYXRpdmUgY2VudGVyLiBQYXJpcyBpcyBmYW1vdXMgZm9yIGxhbmRtYXJrcyBzdWNoIGFzIHRoZSBFaWZmZWwgVG93ZXIsIExvdXZyZSBNdXNldW0sIE5vdHJlLURhbWUgQ2F0aGVkcmFsLCBhbmQgdGhlIENoYW1wcy3DiWx5c8OpZXMuIn1dfSwiZmluaXNoX3JlYXNvbiI6IkNPTVBMRVRFIiwidXNhZ2UiOnsiYmlsbGVkX3VuaXRzIjp7ImlucHV0X3Rva2VucyI6Nywib3V0cHV0X3Rva2VucyI6NTB9LCJ0b2tlbnMiOnsiaW5wdXRfdG9rZW5zIjo1MDIsIm91dHB1dF90b2tlbnMiOjUzfSwiY2FjaGVkX3Rva2VucyI6NDQ4fX0=
+  recorded_at: Thu, 13 Aug 2026 11:16:37 GMT
+recorded_with: VCR 6.4.0

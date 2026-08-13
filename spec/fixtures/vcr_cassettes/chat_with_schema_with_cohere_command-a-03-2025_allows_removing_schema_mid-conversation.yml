@@ -1,0 +1,148 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.cohere.com/v2/chat
+    body:
+      encoding: UTF-8
+      string: '{"model":"command-a-03-2025","messages":[{"role":"user","content":[{"type":"text","text":"Generate
+        a person named Bob"}]}],"stream":false,"response_format":{"type":"json_object","json_schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"integer"}},"required":["name","age"],"additionalProperties":false}}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Expose-Headers:
+      - X-Debug-Trace-ID
+      Cache-Control:
+      - no-cache, no-store, no-transform, must-revalidate, private, max-age=0
+      Content-Type:
+      - application/json
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Num-Chars:
+      - '3161'
+      Num-Tokens:
+      - '15'
+      Pragma:
+      - no-cache
+      Vary:
+      - Origin,Accept-Encoding
+      X-Accel-Expires:
+      - '0'
+      X-Debug-Trace-Id:
+      - 83dfafa8a6493000c0a06bdfae417b29
+      Date:
+      - Thu, 13 Aug 2026 11:16:23 GMT
+      X-Envoy-Upstream-Service-Time:
+      - '487'
+      Server:
+      - envoy
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"816428ae-7cac-4906-853a-7904a31eb9fc","message":{"role":"assistant","content":[{"type":"text","text":"{\"name\":\"Bob\",\"age\":30}"}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":5,"output_tokens":10},"tokens":{"input_tokens":607,"output_tokens":13},"cached_tokens":480}}'
+  recorded_at: Thu, 13 Aug 2026 11:16:23 GMT
+- request:
+    method: post
+    uri: https://api.cohere.com/v2/chat
+    body:
+      encoding: UTF-8
+      string: '{"model":"command-a-03-2025","messages":[{"role":"user","content":[{"type":"text","text":"Generate
+        a person named Bob"}]},{"role":"assistant","content":[{"type":"text","text":"{\"name\":\"Bob\",\"age\":30}"}]},{"role":"user","content":[{"type":"text","text":"Now
+        just tell me about Ruby"}]}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Expose-Headers:
+      - X-Debug-Trace-ID
+      Cache-Control:
+      - no-cache, no-store, no-transform, must-revalidate, private, max-age=0
+      Content-Type:
+      - application/json
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Num-Chars:
+      - '2808'
+      Num-Tokens:
+      - '428'
+      Pragma:
+      - no-cache
+      Vary:
+      - Origin,Accept-Encoding
+      X-Accel-Expires:
+      - '0'
+      X-Debug-Trace-Id:
+      - ba25409b6e245f8f8ffb6cc1b3383319
+      Date:
+      - Thu, 13 Aug 2026 11:16:33 GMT
+      X-Envoy-Upstream-Service-Time:
+      - '9297'
+      Server:
+      - envoy
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"0c6faf7b-219c-4e26-8545-fe59c1b1e207","message":{"role":"assistant","content":[{"type":"text","text":"**Ruby**
+        is a dynamic, open-source programming language known for its simplicity and
+        productivity. Created by Yukihiro \"Matz\" Matsumoto in the mid-1990s, Ruby
+        was designed with the philosophy of making programming fun and efficient.
+        Here are some key features and aspects of Ruby:\n\n1. **Syntax**: Ruby has
+        a clean and readable syntax, often described as \"intuitive\" and \"natural.\"
+        It emphasizes developer happiness and reduces the need for boilerplate code.\n\n2.
+        **Dynamic Typing**: Ruby is dynamically typed, meaning you don''t need to
+        declare variable types explicitly. This allows for more flexibility in coding.\n\n3.
+        **Object-Oriented**: Everything in Ruby is an object, including primitive
+        data types like integers and booleans. This makes it a pure object-oriented
+        language.\n\n4. **Mixins and Modules**: Ruby supports mixins through modules,
+        allowing you to include reusable code across classes without using inheritance.\n\n5.
+        **Ruby on Rails**: Ruby gained widespread popularity due to the **Ruby on
+        Rails** framework, a web development framework that simplifies database interactions,
+        routing, and web page generation.\n\n6. **Community and Ecosystem**: Ruby
+        has a vibrant community and a rich ecosystem of libraries (gems) available
+        via RubyGems, making it easy to add functionality to your projects.\n\n7.
+        **Metaprogramming**: Ruby supports metaprogramming, allowing developers to
+        write code that writes or manipulates other code at runtime, enabling powerful
+        and flexible solutions.\n\n8. **Cross-Platform**: Ruby runs on multiple platforms,
+        including Windows, macOS, and Linux, making it versatile for different environments.\n\n9.
+        **Philosophy**: Ruby''s motto, \"Matz is nice and so we are nice,\" reflects
+        its community-driven and developer-friendly ethos.\n\nRuby is widely used
+        for web development, scripting, automation, and building command-line tools.
+        Its focus on developer happiness and productivity continues to make it a beloved
+        language in the programming world."}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":21,"output_tokens":407},"tokens":{"input_tokens":524,"output_tokens":410},"cached_tokens":448}}'
+  recorded_at: Thu, 13 Aug 2026 11:16:33 GMT
+recorded_with: VCR 6.4.0

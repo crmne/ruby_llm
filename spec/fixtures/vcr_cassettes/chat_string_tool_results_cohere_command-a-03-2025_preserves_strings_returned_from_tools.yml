@@ -1,0 +1,131 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.cohere.com/v2/chat
+    body:
+      encoding: UTF-8
+      string: '{"model":"command-a-03-2025","messages":[{"role":"user","content":[{"type":"text","text":"Process
+        this query: test data"}]}],"stream":false,"tools":[{"type":"function","function":{"name":"content_returning","description":"Returns
+        a processed string result","parameters":{"type":"object","properties":{"query":{"type":"string","description":"Query
+        to process"}},"required":["query"],"additionalProperties":false}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Expose-Headers:
+      - X-Debug-Trace-ID
+      Cache-Control:
+      - no-cache, no-store, no-transform, must-revalidate, private, max-age=0
+      Content-Type:
+      - application/json
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Num-Chars:
+      - '6825'
+      Num-Tokens:
+      - '64'
+      Pragma:
+      - no-cache
+      Vary:
+      - Origin,Accept-Encoding
+      X-Accel-Expires:
+      - '0'
+      X-Debug-Trace-Id:
+      - 3afdb1558730a830f756c2433a64c2e7
+      Date:
+      - Thu, 13 Aug 2026 11:17:24 GMT
+      X-Envoy-Upstream-Service-Time:
+      - '857'
+      Server:
+      - envoy
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"cde4f04c-49f5-4a5c-9832-a37fba56c65a","message":{"role":"assistant","tool_plan":"I
+        will process the query using the content_returning tool.","tool_calls":[{"id":"content_returning_y4eas468mk3s","type":"function","function":{"name":"content_returning","arguments":"{\"query\":\"test
+        data\"}"}}]},"finish_reason":"TOOL_CALL","usage":{"billed_units":{"input_tokens":43,"output_tokens":21},"tokens":{"input_tokens":1446,"output_tokens":51},"cached_tokens":112}}'
+  recorded_at: Thu, 13 Aug 2026 11:17:24 GMT
+- request:
+    method: post
+    uri: https://api.cohere.com/v2/chat
+    body:
+      encoding: UTF-8
+      string: '{"model":"command-a-03-2025","messages":[{"role":"user","content":[{"type":"text","text":"Process
+        this query: test data"}]},{"role":"assistant","content":[{"type":"text","text":""}],"tool_calls":[{"id":"content_returning_y4eas468mk3s","type":"function","function":{"name":"content_returning","arguments":"{\"query\":\"test
+        data\"}"}}]},{"role":"tool","tool_call_id":"content_returning_y4eas468mk3s","content":"Processed:
+        test data"}],"stream":false,"tools":[{"type":"function","function":{"name":"content_returning","description":"Returns
+        a processed string result","parameters":{"type":"object","properties":{"query":{"type":"string","description":"Query
+        to process"}},"required":["query"],"additionalProperties":false}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Expose-Headers:
+      - X-Debug-Trace-ID
+      Cache-Control:
+      - no-cache, no-store, no-transform, must-revalidate, private, max-age=0
+      Content-Type:
+      - application/json
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Num-Chars:
+      - '7305'
+      Num-Tokens:
+      - '54'
+      Pragma:
+      - no-cache
+      Vary:
+      - Origin,Accept-Encoding
+      X-Accel-Expires:
+      - '0'
+      X-Debug-Trace-Id:
+      - 6fc18e06101c8346561ac8b359ffcf52
+      Date:
+      - Thu, 13 Aug 2026 11:17:26 GMT
+      X-Envoy-Upstream-Service-Time:
+      - '1924'
+      Server:
+      - envoy
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"e51bf22c-d086-4c30-bc92-677341295c03","message":{"role":"assistant","content":[{"type":"text","text":"Processed:
+        test data"}],"citations":[{"start":0,"end":20,"text":"Processed: test data","sources":[{"type":"tool","id":"content_returning_y4eas468mk3s:0","tool_output":{"content":"Processed:
+        test data"}}],"type":"TEXT_CONTENT"}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":50,"output_tokens":4},"tokens":{"input_tokens":1537,"output_tokens":18},"cached_tokens":1408}}'
+  recorded_at: Thu, 13 Aug 2026 11:17:26 GMT
+recorded_with: VCR 6.4.0

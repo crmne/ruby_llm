@@ -1,0 +1,133 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.cohere.com/v2/chat
+    body:
+      encoding: UTF-8
+      string: '{"model":"command-a-03-2025","messages":[{"role":"user","content":[{"type":"text","text":"Who
+        is the creator of the programming language Ruby?"}]}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Expose-Headers:
+      - X-Debug-Trace-ID
+      Cache-Control:
+      - no-cache, no-store, no-transform, must-revalidate, private, max-age=0
+      Content-Type:
+      - application/json
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Num-Chars:
+      - '2630'
+      Num-Tokens:
+      - '114'
+      Pragma:
+      - no-cache
+      Vary:
+      - Origin,Accept-Encoding
+      X-Accel-Expires:
+      - '0'
+      X-Debug-Trace-Id:
+      - b7d3f3ab0c5a4946d4d92736686e42ce
+      Date:
+      - Thu, 13 Aug 2026 11:16:39 GMT
+      X-Envoy-Upstream-Service-Time:
+      - '2084'
+      Server:
+      - envoy
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6IjY4ZWIzODMyLTMwNjktNGYyZC1hZTQxLTA3NDZlM2Y0OWMxYiIsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOlt7InR5cGUiOiJ0ZXh0IiwidGV4dCI6IlRoZSBjcmVhdG9yIG9mIHRoZSBSdWJ5IHByb2dyYW1taW5nIGxhbmd1YWdlIGlzICoqWXVraWhpcm8gXCJNYXR6XCIgTWF0c3Vtb3RvKiogKOadvuacrCDooYzlvJgpLiBIZSBiZWdhbiB3b3JraW5nIG9uIFJ1YnkgaW4gMTk5MyBhbmQgcmVsZWFzZWQgaXQgdG8gdGhlIHB1YmxpYyBpbiAxOTk1LiBNYXRzdW1vdG8gZGVzaWduZWQgUnVieSB3aXRoIHRoZSBnb2FsIG9mIGNyZWF0aW5nIGEgbGFuZ3VhZ2UgdGhhdCBiYWxhbmNlZCBmdW5jdGlvbmFsIHByb2dyYW1taW5nIHdpdGggaW1wZXJhdGl2ZSBwcm9ncmFtbWluZywgYW5kIGhlIGVtcGhhc2l6ZWQgcHJvZHVjdGl2aXR5IGFuZCBlbmpveW1lbnQgZm9yIGRldmVsb3BlcnMuIFJ1YnkgaXMga25vd24gZm9yIGl0cyBzaW1wbGljaXR5LCBmbGV4aWJpbGl0eSwgYW5kIHJlYWRhYmlsaXR5LCBhbmQgaXQgaGFzIGJlY29tZSBwYXJ0aWN1bGFybHkgcG9wdWxhciBmb3Igd2ViIGRldmVsb3BtZW50LCBlc3BlY2lhbGx5IHRocm91Z2ggdGhlIFJ1Ynkgb24gUmFpbHMgZnJhbWV3b3JrLiJ9XX0sImZpbmlzaF9yZWFzb24iOiJDT01QTEVURSIsInVzYWdlIjp7ImJpbGxlZF91bml0cyI6eyJpbnB1dF90b2tlbnMiOjEwLCJvdXRwdXRfdG9rZW5zIjoxMDR9LCJ0b2tlbnMiOnsiaW5wdXRfdG9rZW5zIjo1MDUsIm91dHB1dF90b2tlbnMiOjEwN30sImNhY2hlZF90b2tlbnMiOjQ0OH19
+  recorded_at: Thu, 13 Aug 2026 11:16:39 GMT
+- request:
+    method: post
+    uri: https://api.cohere.com/v2/chat
+    body:
+      encoding: UTF-8
+      string: '{"model":"command-a-03-2025","messages":[{"role":"user","content":[{"type":"text","text":"Who
+        is the creator of the programming language Ruby?"}]},{"role":"assistant","content":[{"type":"text","text":"The
+        creator of the Ruby programming language is **Yukihiro \"Matz\" Matsumoto**
+        (松本 行弘). He began working on Ruby in 1993 and released it to the public in
+        1995. Matsumoto designed Ruby with the goal of creating a language that balanced
+        functional programming with imperative programming, and he emphasized productivity
+        and enjoyment for developers. Ruby is known for its simplicity, flexibility,
+        and readability, and it has become particularly popular for web development,
+        especially through the Ruby on Rails framework."}]},{"role":"user","content":[{"type":"text","text":"What
+        year did he create Ruby?"}]}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Expose-Headers:
+      - X-Debug-Trace-ID
+      Cache-Control:
+      - no-cache, no-store, no-transform, must-revalidate, private, max-age=0
+      Content-Type:
+      - application/json
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Num-Chars:
+      - '3330'
+      Num-Tokens:
+      - '172'
+      Pragma:
+      - no-cache
+      Vary:
+      - Origin,Accept-Encoding
+      X-Accel-Expires:
+      - '0'
+      X-Debug-Trace-Id:
+      - c5742d108a86235b7e0c2d3a51c071a1
+      Date:
+      - Thu, 13 Aug 2026 11:16:40 GMT
+      X-Envoy-Upstream-Service-Time:
+      - '868'
+      Server:
+      - envoy
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"46752333-4b62-4ac6-abe7-efc50c056c67","message":{"role":"assistant","content":[{"type":"text","text":"Yukihiro
+        Matsumoto began working on Ruby in **1993** and released it to the public
+        in **1995**. So, while development started in 1993, the official public release
+        year is 1995."}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":121,"output_tokens":51},"tokens":{"input_tokens":624,"output_tokens":54},"cached_tokens":448}}'
+  recorded_at: Thu, 13 Aug 2026 11:16:40 GMT
+recorded_with: VCR 6.4.0

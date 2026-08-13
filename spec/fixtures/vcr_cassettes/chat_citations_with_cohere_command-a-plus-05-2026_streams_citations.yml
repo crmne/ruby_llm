@@ -42,17 +42,11 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - 6bf2d69b12ab5421a6af030f8505aee7
-      X-Endpoint-Monthly-Call-Limit:
-      - '1000'
-      X-Trial-Endpoint-Call-Limit:
-      - '20'
-      X-Trial-Endpoint-Call-Remaining:
-      - '12'
+      - d4c663ab3b0c86bd19c7a45e13b37dff
       Date:
-      - Thu, 13 Aug 2026 10:16:33 GMT
+      - Thu, 13 Aug 2026 11:14:57 GMT
       X-Envoy-Upstream-Service-Time:
-      - '20'
+      - '21'
       Server:
       - envoy
       Via:
@@ -65,7 +59,7 @@ http_interactions:
       encoding: UTF-8
       string: |+
         event: message-start
-        data: {"id":"9d212b6d-474a-4bfb-80e7-4c3bc6221a68","type":"message-start","delta":{"message":{"role":"assistant","content":[],"tool_plan":"","tool_calls":[],"citations":[]}}}
+        data: {"id":"dd27c8d3-34cf-419f-8d3a-0d1247feafc3","type":"message-start","delta":{"message":{"role":"assistant","content":[],"tool_plan":"","tool_calls":[],"citations":[]}}}
 
         event: content-start
         data: {"type":"content-start","index":0,"delta":{"message":{"content":{"type":"thinking","thinking":""}}}}
@@ -125,9 +119,6 @@ http_interactions:
         data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" can"}}}}
 
         event: content-delta
-        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" now"}}}}
-
-        event: content-delta
         data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" directly"}}}}
 
         event: content-delta
@@ -161,10 +152,10 @@ http_interactions:
         data: {"type":"content-start","index":1,"delta":{"message":{"content":{"type":"text","text":""}}}}
 
         event: content-delta
-        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":"Based"}}}}
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":"According"}}}}
 
         event: content-delta
-        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" on"}}}}
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" to"}}}}
 
         event: content-delta
         data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" the"}}}}
@@ -188,7 +179,10 @@ http_interactions:
         data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" by"}}}}
 
         event: content-delta
-        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" Y"}}}}
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" **"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":"Y"}}}}
 
         event: content-delta
         data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":"uk"}}}}
@@ -200,10 +194,13 @@ http_interactions:
         data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" Matsumoto"}}}}
 
         event: citation-start
-        data: {"type":"citation-start","index":0,"delta":{"message":{"citations":{"start":43,"end":61,"text":"Yukihiro Matsumoto","sources":[{"type":"document","id":"doc:0","document":{"id":"doc:0","text":"The Ruby programming language was created by Yukihiro Matsumoto in 1993. Ruby was designed to make programmers happy and productive. Ruby on Rails is a popular web framework built with Ruby. RubyLLM is a Ruby library for working with large language models.\n","title":"facts.txt"}}],"type":"TEXT_CONTENT","content_index":1}}}}
+        data: {"type":"citation-start","index":0,"delta":{"message":{"citations":{"start":49,"end":67,"text":"Yukihiro Matsumoto","sources":[{"type":"document","id":"doc:0","document":{"id":"doc:0","text":"The Ruby programming language was created by Yukihiro Matsumoto in 1993. Ruby was designed to make programmers happy and productive. Ruby on Rails is a popular web framework built with Ruby. RubyLLM is a Ruby library for working with large language models.\n","title":"facts.txt"}}],"type":"TEXT_CONTENT","content_index":1}}}}
 
         event: citation-end
         data: {"type":"citation-end","index":0}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":"**"}}}}
 
         event: content-delta
         data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" in"}}}}
@@ -221,7 +218,7 @@ http_interactions:
         data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":"."}}}}
 
         event: citation-start
-        data: {"type":"citation-start","index":1,"delta":{"message":{"citations":{"start":65,"end":70,"text":"1993.","sources":[{"type":"document","id":"doc:0","document":{"id":"doc:0","text":"The Ruby programming language was created by Yukihiro Matsumoto in 1993. Ruby was designed to make programmers happy and productive. Ruby on Rails is a popular web framework built with Ruby. RubyLLM is a Ruby library for working with large language models.\n","title":"facts.txt"}}],"type":"TEXT_CONTENT","content_index":1}}}}
+        data: {"type":"citation-start","index":1,"delta":{"message":{"citations":{"start":73,"end":78,"text":"1993.","sources":[{"type":"document","id":"doc:0","document":{"id":"doc:0","text":"The Ruby programming language was created by Yukihiro Matsumoto in 1993. Ruby was designed to make programmers happy and productive. Ruby on Rails is a popular web framework built with Ruby. RubyLLM is a Ruby library for working with large language models.\n","title":"facts.txt"}}],"type":"TEXT_CONTENT","content_index":1}}}}
 
         event: citation-end
         data: {"type":"citation-end","index":1}
@@ -233,70 +230,52 @@ http_interactions:
         data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" document"}}}}
 
         event: content-delta
-        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" states"}}}}
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" also"}}}}
 
         event: content-delta
-        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":":"}}}}
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" mentions"}}}}
 
         event: content-delta
-        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" \""}}}}
-
-        event: content-delta
-        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":"The"}}}}
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" that"}}}}
 
         event: content-delta
         data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" Ruby"}}}}
 
         event: content-delta
-        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" programming"}}}}
-
-        event: content-delta
-        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" language"}}}}
-
-        event: content-delta
         data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" was"}}}}
 
         event: content-delta
-        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" created"}}}}
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" designed"}}}}
 
         event: content-delta
-        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" by"}}}}
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" to"}}}}
 
         event: content-delta
-        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" Yuk"}}}}
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" make"}}}}
 
         event: content-delta
-        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":"ihiro"}}}}
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" programmers"}}}}
 
         event: content-delta
-        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" Matsumoto"}}}}
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" happy"}}}}
 
         event: content-delta
-        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" in"}}}}
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" and"}}}}
 
         event: content-delta
-        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" 1"}}}}
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" productive"}}}}
 
         event: content-delta
-        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":"993"}}}}
-
-        event: content-delta
-        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":".\""}}}}
-
-        event: citation-start
-        data: {"type":"citation-start","index":2,"delta":{"message":{"citations":{"start":92,"end":166,"text":"\"The Ruby programming language was created by Yukihiro Matsumoto in 1993.\"","sources":[{"type":"document","id":"doc:0","document":{"id":"doc:0","text":"The Ruby programming language was created by Yukihiro Matsumoto in 1993. Ruby was designed to make programmers happy and productive. Ruby on Rails is a popular web framework built with Ruby. RubyLLM is a Ruby library for working with large language models.\n","title":"facts.txt"}}],"type":"TEXT_CONTENT","content_index":1}}}}
-
-        event: citation-end
-        data: {"type":"citation-end","index":2}
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":"."}}}}
 
         event: content-end
         data: {"type":"content-end","index":1}
 
         event: message-end
-        data: {"type":"message-end","delta":{"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":65,"output_tokens":66},"tokens":{"input_tokens":508,"output_tokens":99,"reasoning_tokens":29},"cached_tokens":144}}}
+        data: {"type":"message-end","delta":{"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":65,"output_tokens":63},"tokens":{"input_tokens":508,"output_tokens":86,"reasoning_tokens":28},"cached_tokens":144}}}
 
         data: [DONE]
 
-  recorded_at: Thu, 13 Aug 2026 10:16:33 GMT
+  recorded_at: Thu, 13 Aug 2026 11:14:58 GMT
 recorded_with: VCR 6.4.0
 ...

@@ -1,0 +1,130 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.cohere.com/v2/chat
+    body:
+      encoding: UTF-8
+      string: '{"model":"command-a-03-2025","messages":[{"role":"user","content":[{"type":"text","text":"Use
+        the file_fetch tool, then tell me exactly what the fetched file says."}]}],"stream":false,"tools":[{"type":"function","function":{"name":"file_fetch","description":"Fetches
+        the requested file","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Expose-Headers:
+      - X-Debug-Trace-ID
+      Cache-Control:
+      - no-cache, no-store, no-transform, must-revalidate, private, max-age=0
+      Content-Type:
+      - application/json
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Num-Chars:
+      - '6786'
+      Num-Tokens:
+      - '72'
+      Pragma:
+      - no-cache
+      Vary:
+      - Origin,Accept-Encoding
+      X-Accel-Expires:
+      - '0'
+      X-Debug-Trace-Id:
+      - f0c00ad84e0a3dcd5b3ea7341d6872e3
+      Date:
+      - Thu, 13 Aug 2026 11:17:22 GMT
+      X-Envoy-Upstream-Service-Time:
+      - '830'
+      Server:
+      - envoy
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"a6aa9050-3609-460b-b977-39504e4dd6a3","message":{"role":"assistant","tool_plan":"I
+        will use the file_fetch tool to retrieve the file, and then I will tell the
+        user exactly what the fetched file says.","tool_calls":[{"id":"file_fetch_j27k4t2ndrek","type":"function","function":{"name":"file_fetch","arguments":"{}"}}]},"finish_reason":"TOOL_CALL","usage":{"billed_units":{"input_tokens":41,"output_tokens":31},"tokens":{"input_tokens":1439,"output_tokens":61},"cached_tokens":112}}'
+  recorded_at: Thu, 13 Aug 2026 11:17:22 GMT
+- request:
+    method: post
+    uri: https://api.cohere.com/v2/chat
+    body:
+      encoding: UTF-8
+      string: '{"model":"command-a-03-2025","messages":[{"role":"user","content":[{"type":"text","text":"Use
+        the file_fetch tool, then tell me exactly what the fetched file says."}]},{"role":"assistant","content":[{"type":"text","text":""}],"tool_calls":[{"id":"file_fetch_j27k4t2ndrek","type":"function","function":{"name":"file_fetch","arguments":"{}"}}]},{"role":"tool","tool_call_id":"file_fetch_j27k4t2ndrek","content":[{"type":"text","text":"Fetched
+        the file."},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
+        is the best.</file>"}]}],"stream":false,"tools":[{"type":"function","function":{"name":"file_fetch","description":"Fetches
+        the requested file","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Expose-Headers:
+      - X-Debug-Trace-ID
+      Cache-Control:
+      - no-cache, no-store, no-transform, must-revalidate, private, max-age=0
+      Content-Type:
+      - application/json
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Num-Chars:
+      - '7339'
+      Num-Tokens:
+      - '83'
+      Pragma:
+      - no-cache
+      Vary:
+      - Origin,Accept-Encoding
+      X-Accel-Expires:
+      - '0'
+      X-Debug-Trace-Id:
+      - 076ed8c57a613cde00880911f580b6ef
+      Date:
+      - Thu, 13 Aug 2026 11:17:23 GMT
+      X-Envoy-Upstream-Service-Time:
+      - '419'
+      Server:
+      - envoy
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"6baf6777-374f-48d9-983a-38de37cb670c","message":{"role":"assistant","content":[{"type":"text","text":"The
+        file says: \"Ruby is the best.\""}],"citations":[{"start":15,"end":34,"text":"\"Ruby
+        is the best.\"","sources":[{"type":"tool","id":"file_fetch_j27k4t2ndrek:1","tool_output":{"content":"\u003cfile
+        name=''ruby.txt'' mime_type=''text/plain''\u003eRuby is the best.\u003c/file\u003e"}}],"type":"TEXT_CONTENT"}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":73,"output_tokens":10},"tokens":{"input_tokens":1555,"output_tokens":22},"cached_tokens":992}}'
+  recorded_at: Thu, 13 Aug 2026 11:17:23 GMT
+recorded_with: VCR 6.4.0

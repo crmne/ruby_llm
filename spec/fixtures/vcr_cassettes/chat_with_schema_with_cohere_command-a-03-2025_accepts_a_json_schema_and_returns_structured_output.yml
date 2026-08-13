@@ -5,8 +5,8 @@ http_interactions:
     uri: https://api.cohere.com/v2/chat
     body:
       encoding: UTF-8
-      string: '{"model":"command-a-plus-05-2026","messages":[{"role":"user","content":[{"type":"text","text":"What''s
-        2 + 2?"}]}],"stream":false}'
+      string: '{"model":"command-a-03-2025","messages":[{"role":"user","content":[{"type":"text","text":"Generate
+        a person named John who is 30 years old"}]}],"stream":false,"response_format":{"type":"json_object","json_schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"integer"}},"required":["name","age"],"additionalProperties":false}}}'
     headers:
       User-Agent:
       - Faraday v2.14.3
@@ -32,9 +32,9 @@ http_interactions:
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Num-Chars:
-      - '286'
+      - '3182'
       Num-Tokens:
-      - '44'
+      - '22'
       Pragma:
       - no-cache
       Vary:
@@ -42,17 +42,11 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - c2c9b008f2c55ecbfa1cf688cdf86f28
-      X-Endpoint-Monthly-Call-Limit:
-      - '1000'
-      X-Trial-Endpoint-Call-Limit:
-      - '20'
-      X-Trial-Endpoint-Call-Remaining:
-      - '19'
+      - 24270028b7705e5089fca8b29e1f71f1
       Date:
-      - Thu, 13 Aug 2026 09:45:33 GMT
+      - Thu, 13 Aug 2026 11:16:23 GMT
       X-Envoy-Upstream-Service-Time:
-      - '180'
+      - '321'
       Server:
       - envoy
       Via:
@@ -63,7 +57,6 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: !binary |-
-        eyJpZCI6IjcwM2UxMzZmLTc2NWQtNGRmMy04NmZjLTE2OWNiODg4NzljZiIsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOlt7InR5cGUiOiJ0aGlua2luZyIsInRoaW5raW5nIjoiVGhlIHVzZXIgYXNrcyBcIldoYXQncyAyICsgMj9cIiBJdCdzIGEgc2ltcGxlIG1hdGggcXVlc3Rpb24uIFRoZSBhbnN3ZXIgaXMgNC4gUHJvdmlkZSBhIGNvbmNpc2UgYW5zd2VyLiJ9LHsidHlwZSI6InRleHQiLCJ0ZXh0IjoiMuKAryvigK8yIGVxdWFscyAqKjQqKi4ifV19LCJmaW5pc2hfcmVhc29uIjoiQ09NUExFVEUiLCJ1c2FnZSI6eyJiaWxsZWRfdW5pdHMiOnsiaW5wdXRfdG9rZW5zIjo3LCJvdXRwdXRfdG9rZW5zIjozN30sInRva2VucyI6eyJpbnB1dF90b2tlbnMiOjMyLCJvdXRwdXRfdG9rZW5zIjo0MSwicmVhc29uaW5nX3Rva2VucyI6Mjh9LCJjYWNoZWRfdG9rZW5zIjowfX0=
-  recorded_at: Thu, 13 Aug 2026 09:45:34 GMT
+      string: '{"id":"4a894e68-e7ed-4de2-8ac8-512d9038a414","message":{"role":"assistant","content":[{"type":"text","text":"{\"name\":\"John\",\"age\":30}"}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":12,"output_tokens":10},"tokens":{"input_tokens":614,"output_tokens":13},"cached_tokens":480}}'
+  recorded_at: Thu, 13 Aug 2026 11:16:23 GMT
 recorded_with: VCR 6.4.0

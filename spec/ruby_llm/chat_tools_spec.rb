@@ -777,6 +777,7 @@ RSpec.describe RubyLLM::Chat, :live do
         skip_unless_supports_functions(provider, model)
 
         skip_unless_capable(provider, model, :tool_choice, "#{provider} doesn't support tool choice")
+        skip 'Cohere tool choice selects a mode, not a tool' if provider == :cohere
 
         chat = RubyLLM.chat(model: model, provider: provider)
                       .with_tools(Weather).with_tool_options(choice: :weather)

@@ -5,7 +5,7 @@ http_interactions:
     uri: https://api.cohere.com/v2/chat
     body:
       encoding: UTF-8
-      string: '{"model":"command-a-plus-05-2026","messages":[{"role":"user","content":[{"type":"text","text":"Call
+      string: '{"model":"command-a-03-2025","messages":[{"role":"user","content":[{"type":"text","text":"Call
         the array params tool with tags [\"red\",\"blue\"] and tell me the combined
         tags."}]}],"stream":false,"tools":[{"type":"function","function":{"name":"array_params","description":"Uses
         params DSL array support","parameters":{"$schema":"https://json-schema.org/draft/2020-12/schema","title":"Schema","type":"object","properties":{"tags":{"type":"array","description":"List
@@ -35,9 +35,9 @@ http_interactions:
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Num-Chars:
-      - '1377'
+      - '6980'
       Num-Tokens:
-      - '170'
+      - '125'
       Pragma:
       - no-cache
       Vary:
@@ -45,32 +45,23 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - f2a03d95d622e94cbe328d361f5fd4f4
-      X-Endpoint-Monthly-Call-Limit:
-      - '1000'
-      X-Trial-Endpoint-Call-Limit:
-      - '20'
-      X-Trial-Endpoint-Call-Remaining:
-      - '5'
+      - 22633c77b280a2538d7c603d89a51858
       Date:
-      - Thu, 13 Aug 2026 10:05:53 GMT
+      - Thu, 13 Aug 2026 11:17:18 GMT
       X-Envoy-Upstream-Service-Time:
-      - '371'
+      - '1313'
       Server:
       - envoy
       Via:
       - 1.1 google
       Alt-Svc:
-      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      - h3=":443"; ma=2592000
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"1710cf82-7bc6-418a-8361-b51c63c8844c","message":{"role":"assistant","content":[{"type":"thinking","thinking":"The
-        user wants me to call the array_params tool with tags [\"red\",\"blue\"] and
-        then tell them the combined tags. Let me check the function definition:\n\n-
-        Function name: array_params\n- Required parameter: tags (array of strings)\n-
-        The user provided the exact value: [\"red\",\"blue\"]\n\nI have all the required
-        parameters, so I can proceed with the function call."}],"tool_calls":[{"id":"array_params_9x9vwdj5zwcg","type":"function","function":{"name":"array_params","arguments":"{\"tags\":[\"red\",\"blue\"]}"}}]},"finish_reason":"TOOL_CALL","usage":{"billed_units":{"input_tokens":83,"output_tokens":87},"tokens":{"input_tokens":305,"output_tokens":114,"reasoning_tokens":78},"cached_tokens":144}}'
-  recorded_at: Thu, 13 Aug 2026 10:05:53 GMT
+      string: '{"id":"0f89eb25-da35-4a0d-a0c3-069d77f5f3e1","message":{"role":"assistant","tool_plan":"I
+        will use the array_params tool with the tags \"red\" and \"blue\" to find
+        the combined tags.","tool_calls":[{"id":"array_params_4v3jaghe9b4b","type":"function","function":{"name":"array_params","arguments":"{\"tags\":[\"red\",\"blue\"]}"}}]},"finish_reason":"TOOL_CALL","usage":{"billed_units":{"input_tokens":91,"output_tokens":34},"tokens":{"input_tokens":1500,"output_tokens":66},"cached_tokens":992}}'
+  recorded_at: Thu, 13 Aug 2026 11:17:18 GMT
 recorded_with: VCR 6.4.0
