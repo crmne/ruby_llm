@@ -6,8 +6,7 @@ LOCAL_PROVIDER_SLUGS = %i[ollama gpustack].freeze
 # Providers with no recorded cassettes yet. Their rows join the live matrix
 # only when a key is present to record against, so the suite stays green
 # without one.
-UNRECORDED_PROVIDER_KEYS = { cohere: 'COHERE_API_KEY', deepgram: 'DEEPGRAM_API_KEY',
-                             ollama_cloud: 'OLLAMA_CLOUD_API_KEY' }.freeze
+UNRECORDED_PROVIDER_KEYS = { cohere: 'COHERE_API_KEY', deepgram: 'DEEPGRAM_API_KEY' }.freeze
 
 def filter_local_providers(models)
   models = models.reject { |model| LOCAL_PROVIDER_SLUGS.include?(model[:provider]) } if SKIP_LOCAL_PROVIDER_TESTS
