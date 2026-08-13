@@ -27,6 +27,7 @@ After reading this guide, you will know:
 
 * How to read input, output, cache, and thinking token counts from a response.
 * How to read per-turn and per-conversation costs.
+* How to count a request's tokens before you send it.
 * How RubyLLM normalizes token buckets across providers.
 * How the internal usage ledger accounts for retries, fallbacks, and cancellations.
 * How to price token usage yourself with `cost_for` and `Cost.aggregate`.
@@ -85,6 +86,42 @@ response = chat.ask "Explain Ractors."
 response.tokens.reported_cost # exact request cost in USD, nil on providers that report none
 response.cost.total           # equals the reported cost when one is present
 ```
+
+## Counting Tokens Before You Send
+
+Everything above reports what a request cost after it ran. `chat.count_tokens` answers the same question before it does, which is what you need to enforce a context budget, or to bill a user for input they have not submitted yet:
+
+```ruby
+chat = RubyLLM.chat(model: "claude-sonnet-5")
+           .with_instructions(system_prompt)
+           .with_tools(Weather)
+
+chat.count_tokens("Summarize the attached contract.") # => 9412
+```
+
+The count covers the whole request the chat would send as currently configured: instructions, tools, thinking configuration, and attachments, not only the message. Passing a message stages it for the count without adding it to the conversation, so the chat is unchanged afterwards:
+
+```ruby
+chat.count_tokens("What's the weather in Berlin?")
+chat.messages.size # => 0
+```
+
+Call it with no argument to count the conversation as it stands:
+
+```ruby
+chat.ask "Tell me about Ruby's history."
+chat.count_tokens # => 1204, everything the next request would carry
+```
+
+This is the provider's own tokenizer over the real payload, not an estimate, which is why it needs a provider that offers a counting endpoint. Anthropic, Bedrock, Gemini, and Vertex AI do. The rest raise rather than guess:
+
+```ruby
+RubyLLM.chat(model: "deepseek-chat").count_tokens("hi")
+# => RubyLLM::Error: DeepSeek doesn't support token counting
+```
+
+A guessed token count is worse than no count, because you would size a budget against it. Rescue `RubyLLM::Error` if your code runs across providers that differ here.
+{: .note }
 
 ## How Providers Are Normalized
 

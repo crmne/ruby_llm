@@ -44,12 +44,14 @@ Coming from 1.15 or earlier? Get to **1.16 first**, one minor version at a time,
 * **Tool approval.** Declare `requires_approval` on a tool and the loop parks until `chat.approve!` or `chat.deny!` records a decision; in Rails the decision persists on the tool call record and survives restarts. See [Controlling Tool Execution]({% link _core_features/tool-execution.md %}#requiring-approval).
 * **Model fallbacks.** `chat.with_fallbacks("backup-model")` retries the request on backup models when the primary fails. See [Model Fallbacks]({% link _advanced/error-handling.md %}#model-fallbacks).
 * **Chat cancellation.** `chat.cancel!` stops a run from another thread; in Rails the request travels through the database, so a stop button in the web process halts a background job mid-stream. See [Cancelling a Background Stream]({% link _advanced/rails-streaming.md %}#cancelling-a-background-stream).
+* **Server tools.** `chat.with_server_tools(:web_search, :code_execution)` turns on the tools that run on the provider's own servers, with one portable name per capability across every provider that offers it. Raw provider definitions pass through untouched, so a tool shipped after this release works without a gem upgrade. See [Server Tools]({% link _core_features/server-tools.md %}).
 
 #### Accounting
 
 * **Cost and usage tracking.** Every provider attempt lands in a usage ledger with frozen decimal costs, so retries, failures, and cancellations are accounted for truthfully. See [Cost and Usage Tracking]({% link _core_features/cost-and-usage-tracking.md %}).
 * **Batch processing at half price.** Stage questions with `ask_later`, submit the chats with `RubyLLM.batch`, and collect the answers from any process. RubyLLM persists batch state internally in Rails. See [Batches]({% link _advanced/batches.md %}).
 * **Prompt caching.** `with_caching` turns on the provider's automatic prompt cache; `cache_until_here!` marks an explicit prefix boundary. See [Prompt Caching]({% link _core_features/prompt-caching.md %}).
+* **Token counting before you send.** `chat.count_tokens("...")` runs the provider's tokenizer over the request the chat would send, instructions and tools included, so you can enforce a context budget up front. See [Counting Tokens Before You Send]({% link _core_features/cost-and-usage-tracking.md %}#counting-tokens-before-you-send).
 
 #### Content In, Content Out
 
@@ -58,6 +60,7 @@ Coming from 1.15 or earlier? Get to **1.16 first**, one minor version at a time,
 * **Text to speech.** `RubyLLM.speak("Hello!").save("hello.mp3")`. See [Text to Speech]({% link _core_features/text-to-speech.md %}).
 * **Tools can return attachments.** Return an image or file from a tool and RubyLLM renders it to the model on every provider. See [Tools]({% link _core_features/tools.md %}).
 * **Transcript replacement.** `chat.messages = messages_for_model` shows the LLM a different transcript from your users: compaction, redaction, moderation. See [Replacing the LLM Transcript]({% link _core_features/chat.md %}#advanced-replacing-the-llm-transcript).
+* **Provider-side compaction.** `chat.with_compaction(at: 100_000)` hands the summarizing to providers that condense a long conversation themselves, instead of you assembling a summary prompt. See [Compacting Long Conversations]({% link _core_features/chat-request-control.md %}#compacting-long-conversations).
 * **Request hooks.** `chat.before_request { |payload| ... }` edits the wire payload just before it is sent - the 2.0 answer to raw content blocks. See [Request Hooks]({% link _core_features/chat-request-control.md %}#request-hooks).
 * **Finish reasons.** `response.finish_reason` tells you why generation stopped, normalized across providers, with predicates like `stopped?` and `max_tokens?`.
 
@@ -66,13 +69,22 @@ Coming from 1.15 or earlier? Get to **1.16 first**, one minor version at a time,
 * **Prompt templates.** ERB prompts live in `app/prompts` and render through `RubyLLM::Prompt`; agents pick theirs up by convention. See [Prompt Rendering]({% link _core_features/prompt-rendering.md %}).
 * **Instrumentation everywhere.** `paint`, `moderate`, and `transcribe` now emit `ActiveSupport::Notifications` events like chat and embed, and every one-shot API takes `metadata:` that flows into the event payload.
 * **Output caps.** `with_max_output_tokens` bounds how much the model may generate.
+* **End-user identification.** `chat.with_end_user("user-42")` passes an opaque per-user id to the provider's abuse tooling, mapped to whatever each one calls it. See [Identifying End Users]({% link _core_features/chat-request-control.md %}#identifying-end-users).
+
+#### New Verbs
+
+* **`RubyLLM.animate`** generates video, hiding the submit-poll-download dance every provider makes you do. `animate_later` returns a job you can poll from anywhere. See [Video Generation]({% link _core_features/video-generation.md %}).
+* **`RubyLLM.ocr`** reads a document and returns markdown, per page or joined. See [Document OCR]({% link _core_features/ocr.md %}).
+* **`RubyLLM.rerank`** orders candidate documents by relevance to a query, the second stage of a retrieval pipeline. See [Reranking]({% link _core_features/rerank.md %}).
+* **Sparse embeddings.** `embedding.sparse_vectors` surfaces the token-to-weight map that sparse-capable models return beside the dense vector, for hybrid retrieval. See [Sparse Vectors]({% link _core_features/embeddings.md %}#sparse-vectors).
 
 ### Provider Expansion
 
+* **Four new providers.** **Cohere** brings its native v2 API for chat, embeddings, reranking, and transcription. **Ollama Cloud** runs the Ollama catalog without the local server. **ElevenLabs** and **Deepgram** bring dedicated speech and transcription. Seventeen providers ship in the box.
 * **OpenAI defaults to the Responses API**, unlocking reasoning models with tools and extended thinking together. Details in [Providers and Protocols Split](#providers-and-protocols-split).
 * **Vertex AI covers its full catalog**: Gemini, plus the Anthropic and Mistral models it hosts, each over its native protocol.
 * **Gemini image models work in `paint`**, and `RubyLLM.moderate` accepts image inputs.
-* **Bedrock** authenticates through AWS SDK credential providers (IAM roles, assume-role flows, rotating credentials) and accepts application inference profile ARNs as model ids.
+* **Bedrock** authenticates through AWS SDK credential providers (IAM roles, assume-role flows, rotating credentials) and accepts application inference profile ARNs as model ids. It also reaches AWS's newer `bedrock-mantle` endpoint, which serves each vendor's models over that vendor's own API rather than Converse, and routes to it from the catalog.
 * **The model registry is published** at [rubyllm.com/models.json](https://rubyllm.com/models.json), and `RubyLLM.models.refresh!` now persists what it fetches.
 * **A provider generator** scaffolds a complete provider gem, specs and CI included: `ruby_llm provider-gem Acme --api-base https://api.acme.ai/v1`. See [Custom Providers]({% link _reference/custom-providers.md %}).
 

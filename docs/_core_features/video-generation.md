@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Video Generation
-nav_order: 4
+nav_order: 6
 description: Generate short video clips from text prompts and reference images with Veo, Grok Imagine, and Sora
 ---
 

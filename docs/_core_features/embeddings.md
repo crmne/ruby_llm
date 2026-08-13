@@ -279,6 +279,7 @@ This covers storing and searching embeddings. To turn that store into a retrieva
 
 Now that you understand embeddings, you might want to explore:
 
+*   [Reranking]({% link _core_features/rerank.md %}) to order your candidates by relevance before you use them.
 *   [Retrieval-Augmented Generation (RAG)]({% link _advanced/rag.md %}) to ground answers in your own documents.
 *   [Chatting with AI Models]({% link _core_features/chat.md %}) for interactive conversations.
 *   [Using Tools]({% link _core_features/tools.md %}) to extend AI capabilities.

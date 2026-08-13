@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Audio Transcription
-nav_order: 5
+nav_order: 7
 description: Convert speech to text with support for multiple languages and speaker diarization
 redirect_from:
   - /guides/audio-transcription
