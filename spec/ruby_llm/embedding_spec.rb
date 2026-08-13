@@ -8,7 +8,7 @@ RSpec.describe RubyLLM::Embedding, :live do
   let(:test_dimensions) { 768 }
 
   describe 'basic functionality' do
-    each_model(EMBEDDING_MODELS) do |provider, model|
+    each_model(EMBEDDING_MODELS) do |provider, model, model_info|
       it "#{provider}/#{model} can handle a single text" do
         embedding = RubyLLM.embed(test_text, model: model, provider: provider)
         expect(embedding.vectors).to be_an(Array)
@@ -19,13 +19,12 @@ RSpec.describe RubyLLM::Embedding, :live do
       end
 
       it "#{provider}/#{model} can handle a single text with custom dimensions" do
-        skip 'Mistral does not support custom dimensions' if provider == :mistral
-        skip 'Azure Cohere embeddings do not support custom dimensions' if provider == :azure
-        skip 'Bedrock Titan only supports dimensions of 256, 512, or 1024' if provider == :bedrock
+        dimensions = model_info.fetch(:dimensions, test_dimensions)
+        skip "#{model} only returns its native dimensions" unless dimensions
 
-        embedding = RubyLLM.embed(test_text, model: model, provider: provider, dimensions: test_dimensions)
+        embedding = RubyLLM.embed(test_text, model: model, provider: provider, dimensions: dimensions)
         expect(embedding.vectors).to be_an(Array)
-        expect(embedding.vectors.length).to eq(test_dimensions)
+        expect(embedding.vectors.length).to eq(dimensions)
       end
 
       it "#{provider}/#{model} can handle multiple texts" do
@@ -38,14 +37,13 @@ RSpec.describe RubyLLM::Embedding, :live do
       end
 
       it "#{provider}/#{model} can handle multiple texts with custom dimensions" do
-        skip 'Mistral does not support custom dimensions' if provider == :mistral
-        skip 'Azure Cohere embeddings do not support custom dimensions' if provider == :azure
-        skip 'Bedrock Titan only supports dimensions of 256, 512, or 1024' if provider == :bedrock
+        dimensions = model_info.fetch(:dimensions, test_dimensions)
+        skip "#{model} only returns its native dimensions" unless dimensions
 
-        embeddings = RubyLLM.embed(test_texts, model: model, provider: provider, dimensions: test_dimensions)
+        embeddings = RubyLLM.embed(test_texts, model: model, provider: provider, dimensions: dimensions)
         expect(embeddings.vectors).to be_an(Array)
         embeddings.vectors.each do |vector|
-          expect(vector.length).to eq(test_dimensions)
+          expect(vector.length).to eq(dimensions)
         end
       end
 

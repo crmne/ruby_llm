@@ -1,0 +1,141 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.cohere.com/v2/chat
+    body:
+      encoding: UTF-8
+      string: '{"model":"command-a-plus-05-2026","messages":[{"role":"user","content":[{"type":"text","text":"What''s
+        in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
+        is the best.</file>"}]}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Expose-Headers:
+      - X-Debug-Trace-ID
+      Cache-Control:
+      - no-cache, no-store, no-transform, must-revalidate, private, max-age=0
+      Content-Type:
+      - application/json
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Num-Chars:
+      - '362'
+      Num-Tokens:
+      - '135'
+      Pragma:
+      - no-cache
+      Vary:
+      - Origin,Accept-Encoding
+      X-Accel-Expires:
+      - '0'
+      X-Debug-Trace-Id:
+      - fd757f8228ad177dadf19a4924226d76
+      X-Endpoint-Monthly-Call-Limit:
+      - '1000'
+      X-Trial-Endpoint-Call-Limit:
+      - '20'
+      X-Trial-Endpoint-Call-Remaining:
+      - '8'
+      Date:
+      - Thu, 13 Aug 2026 09:46:36 GMT
+      X-Envoy-Upstream-Service-Time:
+      - '564'
+      Server:
+      - envoy
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImIyZjljODc5LTkwM2EtNDI1YS1iNzI1LWU5NDE2NTIzNDNlNyIsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOlt7InR5cGUiOiJ0aGlua2luZyIsInRoaW5raW5nIjoiVGhlIHVzZXIgYXNrczogXCJXaGF0J3MgaW4gdGhpcyBmaWxlP1x1MDAzY2ZpbGUgbmFtZT0ncnVieS50eHQnIG1pbWVfdHlwZT0ndGV4dC9wbGFpbidcdTAwM2VSdWJ5IGlzIHRoZSBiZXN0Llx1MDAzYy9maWxlXHUwMDNlXCIgVGhleSBhcmUgcHJvdmlkaW5nIGEgZmlsZSByZWZlcmVuY2Ugd2l0aCBjb250ZW50IFwiUnVieSBpcyB0aGUgYmVzdC5cIiBUaGUgdXNlciB3YW50cyB0byBrbm93IHdoYXQncyBpbiB0aGUgZmlsZS4gV2UgY2FuIHJlc3BvbmQgdGhhdCB0aGUgZmlsZSBjb250YWlucyB0aGUgdGV4dCBcIlJ1YnkgaXMgdGhlIGJlc3QuXCIgUG9zc2libHkgYWxzbyBtZW50aW9uIHRoZSBmaWxlIG5hbWUgYW5kIHR5cGUuIFRoZXJlJ3Mgbm8gcG9saWN5IHZpb2xhdGlvbi4gUHJvdmlkZSBhbnN3ZXIuIn0seyJ0eXBlIjoidGV4dCIsInRleHQiOiJUaGUgZmlsZSAqKnJ1YnkudHh0KiogKGEgcGxhaW7igJF0ZXh0IGZpbGUpIGNvbnRhaW5zIHRoZSBmb2xsb3dpbmcgdGV4dDpcblxuYGBgXG5SdWJ5IGlzIHRoZSBiZXN0LlxuYGBgIn1dfSwiZmluaXNoX3JlYXNvbiI6IkNPTVBMRVRFIiwidXNhZ2UiOnsiYmlsbGVkX3VuaXRzIjp7ImlucHV0X3Rva2VucyI6MjUsIm91dHB1dF90b2tlbnMiOjExMH0sInRva2VucyI6eyJpbnB1dF90b2tlbnMiOjQ5LCJvdXRwdXRfdG9rZW5zIjoxMTQsInJlYXNvbmluZ190b2tlbnMiOjg1fSwiY2FjaGVkX3Rva2VucyI6MH19
+  recorded_at: Thu, 13 Aug 2026 09:46:36 GMT
+- request:
+    method: post
+    uri: https://api.cohere.com/v2/chat
+    body:
+      encoding: UTF-8
+      string: '{"model":"command-a-plus-05-2026","messages":[{"role":"user","content":[{"type":"text","text":"What''s
+        in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
+        is the best.</file>"}]},{"role":"assistant","content":[{"type":"text","text":"The
+        file **ruby.txt** (a plain‑text file) contains the following text:\n\n```\nRuby
+        is the best.\n```"}]},{"role":"user","content":[{"type":"text","text":"and
+        in this one?"},{"type":"text","text":"<file name=''ruby.xml'' mime_type=''application/xml''><truism>Ruby
+        is the best</truism></file>"}]}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Expose-Headers:
+      - X-Debug-Trace-ID
+      Cache-Control:
+      - no-cache, no-store, no-transform, must-revalidate, private, max-age=0
+      Content-Type:
+      - application/json
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Num-Chars:
+      - '736'
+      Num-Tokens:
+      - '384'
+      Pragma:
+      - no-cache
+      Vary:
+      - Origin,Accept-Encoding
+      X-Accel-Expires:
+      - '0'
+      X-Debug-Trace-Id:
+      - 1b6546d58f61b1d5d01aff9e5c212df1
+      X-Endpoint-Monthly-Call-Limit:
+      - '1000'
+      X-Trial-Endpoint-Call-Limit:
+      - '20'
+      X-Trial-Endpoint-Call-Remaining:
+      - '7'
+      Date:
+      - Thu, 13 Aug 2026 09:46:38 GMT
+      X-Envoy-Upstream-Service-Time:
+      - '1639'
+      Server:
+      - envoy
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6Ijk3YTQxYTdjLWMyYmQtNGY0My05YTRmLTMxYTBmMDE4ZDExZCIsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOlt7InR5cGUiOiJ0aGlua2luZyIsInRoaW5raW5nIjoiVGhlIHVzZXIgYXNrczogXCJhbmQgaW4gdGhpcyBvbmU/XHUwMDNjZmlsZSBuYW1lPSdydWJ5LnhtbCcgbWltZV90eXBlPSdhcHBsaWNhdGlvbi94bWwnXHUwMDNlXHUwMDNjdHJ1aXNtXHUwMDNlUnVieSBpcyB0aGUgYmVzdFx1MDAzYy90cnVpc21cdTAwM2VcdTAwM2MvZmlsZVx1MDAzZVwiXG5cbldlIG5lZWQgdG8gcmVzcG9uZCB3aXRoIHRoZSBjb250ZW50IG9mIHRoZSBmaWxlLiBUaGUgZmlsZSBpcyBYTUwgd2l0aCBhIHJvb3QgZWxlbWVudCBcdTAwM2N0cnVpc21cdTAwM2UgY29udGFpbmluZyB0ZXh0IFwiUnVieSBpcyB0aGUgYmVzdFwiLiBTbyB3ZSBzaG91bGQgb3V0cHV0IHRoZSBjb250ZW50LiBQb3NzaWJseSB3ZSBzaG91bGQgcGFyc2UgdGhlIFhNTCBhbmQgc2hvdyB0aGUgY29udGVudC4gVGhlIGNvbnRlbnQgaXMgXCJSdWJ5IGlzIHRoZSBiZXN0XCIuIFdlIGNhbiByZXNwb25kIHdpdGggc29tZXRoaW5nIGxpa2U6XG5cblRoZSBmaWxlIHJ1YnkueG1sIGNvbnRhaW5zIGEgcm9vdCBlbGVtZW50IFx1MDAzY3RydWlzbVx1MDAzZSB3aXRoIHRoZSB0ZXh0IFwiUnVieSBpcyB0aGUgYmVzdFwiLiBPciB3ZSBjYW4gc2hvdyB0aGUgWE1MIGNvbnRlbnQuXG5cbldlIHNob3VsZCByZXNwb25kIHdpdGggdGhlIGNvbnRlbnQgb2YgdGhlIGZpbGUuIFRoZSBmaWxlIGlzIFhNTCwgc28gd2UgY2FuIHNob3cgdGhlIFhNTCByZXByZXNlbnRhdGlvbi4gQnV0IHRoZSB1c2VyIGxpa2VseSB3YW50cyB0byBrbm93IHdoYXQncyBpbiB0aGUgZmlsZS4gU28gd2UgY2FuIHNheTpcblxuVGhlIGZpbGUgcnVieS54bWwgY29udGFpbnM6XG5cblx1MDAzY3RydWlzbVx1MDAzZVJ1YnkgaXMgdGhlIGJlc3RcdTAwM2MvdHJ1aXNtXHUwMDNlXG5cbk9yIHdlIGNhbiBwYXJzZSBhbmQgc2hvdyB0aGUgaW5uZXIgdGV4dDogXCJSdWJ5IGlzIHRoZSBiZXN0XCIuXG5cblRodXMgYW5zd2VyOiBUaGUgZmlsZSBjb250YWlucyBhbiBYTUwgZG9jdW1lbnQgd2l0aCBhIHNpbmdsZSBlbGVtZW50IFx1MDAzY3RydWlzbVx1MDAzZSB3aG9zZSB0ZXh0IGNvbnRlbnQgaXMgXCJSdWJ5IGlzIHRoZSBiZXN0XCIuIFBvc3NpYmx5IGFsc28gbWVudGlvbiB0aGUgZmlsZSBuYW1lIGFuZCB0eXBlLlxuXG5XZSBzaG91bGQgYmUgY29uY2lzZS4ifSx7InR5cGUiOiJ0ZXh0IiwidGV4dCI6IlRoZSAqKnJ1YnkueG1sKiogZmlsZSBpcyBhbiBYTUwgZG9jdW1lbnQgdGhhdCBjb250YWlucyBhIHNpbmdsZSByb290IGVsZW1lbnQgY2FsbGVkIGBcdTAwM2N0cnVpc21cdTAwM2VgLiBJbnNpZGUgdGhhdCBlbGVtZW50IGlzIHRoZSB0ZXh0ICoq4oCcUnVieSBpcyB0aGUgYmVzdOKAnSoqLlxuXG5JbiBvdGhlciB3b3JkcywgdGhlIGZpbGXigJlzIGNvbnRlbnQgKGlnbm9yaW5nIHRoZSBYTUwgbWFya3VwKSBpczpcblxuYGBgXG5SdWJ5IGlzIHRoZSBiZXN0XG5gYGAifV19LCJmaW5pc2hfcmVhc29uIjoiQ09NUExFVEUiLCJ1c2FnZSI6eyJiaWxsZWRfdW5pdHMiOnsiaW5wdXRfdG9rZW5zIjo4MSwib3V0cHV0X3Rva2VucyI6MzAzfSwidG9rZW5zIjp7ImlucHV0X3Rva2VucyI6MTE0LCJvdXRwdXRfdG9rZW5zIjozMDcsInJlYXNvbmluZ190b2tlbnMiOjI0NH0sImNhY2hlZF90b2tlbnMiOjE2fX0=
+  recorded_at: Thu, 13 Aug 2026 09:46:38 GMT
+recorded_with: VCR 6.4.0

@@ -1,0 +1,64 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.cohere.com/v2/rerank
+    body:
+      encoding: UTF-8
+      string: '{"model":"rerank-v3.5","query":"ruby","documents":["Ruby is a programming
+        language","Paris is in France","Rails is a Ruby framework"],"top_n":2}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Expose-Headers:
+      - X-Debug-Trace-ID
+      Cache-Control:
+      - no-cache, no-store, no-transform, must-revalidate, private, max-age=0
+      Content-Type:
+      - application/json
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Pragma:
+      - no-cache
+      Vary:
+      - Origin,Accept-Encoding
+      X-Accel-Expires:
+      - '0'
+      X-Debug-Trace-Id:
+      - d87f3da1e8506168a5a9cdd51526b450
+      X-Endpoint-Monthly-Call-Limit:
+      - '1000'
+      X-Trial-Endpoint-Call-Limit:
+      - '10'
+      X-Trial-Endpoint-Call-Remaining:
+      - '8'
+      Date:
+      - Thu, 13 Aug 2026 09:40:56 GMT
+      X-Envoy-Upstream-Service-Time:
+      - '56'
+      Server:
+      - envoy
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"9ca94863-3776-45e7-92fc-42a927df30cd","results":[{"index":0,"relevance_score":0.75809944},{"index":2,"relevance_score":0.5515985}],"meta":{"api_version":{"version":"2"},"billed_units":{"search_units":1}}}'
+  recorded_at: Thu, 13 Aug 2026 09:40:56 GMT
+recorded_with: VCR 6.4.0

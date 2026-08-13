@@ -1,0 +1,140 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.cohere.com/v2/chat
+    body:
+      encoding: UTF-8
+      string: '{"model":"command-a-plus-05-2026","messages":[{"role":"user","content":[{"type":"text","text":"Who
+        is the creator of the programming language Ruby?"}]}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Expose-Headers:
+      - X-Debug-Trace-ID
+      Cache-Control:
+      - no-cache, no-store, no-transform, must-revalidate, private, max-age=0
+      Content-Type:
+      - application/json
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Num-Chars:
+      - '325'
+      Num-Tokens:
+      - '113'
+      Pragma:
+      - no-cache
+      Vary:
+      - Origin,Accept-Encoding
+      X-Accel-Expires:
+      - '0'
+      X-Debug-Trace-Id:
+      - e29f68e712ed14ae16c096019f0b4269
+      X-Endpoint-Monthly-Call-Limit:
+      - '1000'
+      X-Trial-Endpoint-Call-Limit:
+      - '20'
+      X-Trial-Endpoint-Call-Remaining:
+      - '17'
+      Date:
+      - Thu, 13 Aug 2026 09:45:36 GMT
+      X-Envoy-Upstream-Service-Time:
+      - '505'
+      Server:
+      - envoy
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6IjM3Nzg1NWQyLTUzNWEtNGY2MC04NTg3LTM3YTQzNTljMzc2MCIsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOlt7InR5cGUiOiJ0aGlua2luZyIsInRoaW5raW5nIjoiVGhlIHVzZXIgYXNrczogXCJXaG8gaXMgdGhlIGNyZWF0b3Igb2YgdGhlIHByb2dyYW1taW5nIGxhbmd1YWdlIFJ1Ynk/XCIgVGhlIGFuc3dlcjogUnVieSB3YXMgY3JlYXRlZCBieSBZdWtpaGlybyBNYXRzdW1vdG8sIGFsc28ga25vd24gYXMgXCJNYXR6XCIuIEhlIGNyZWF0ZWQgaXQgaW4gMTk5MyB3aGlsZSB3b3JraW5nIGF0IGEgSmFwYW5lc2Ugc29mdHdhcmUgY29tcGFueS4gU28gYW5zd2VyIHRoYXQuIn0seyJ0eXBlIjoidGV4dCIsInRleHQiOiJSdWJ5IHdhcyBjcmVhdGVkIGJ5ICoqWXVraWhpcm8gTWF0c3Vtb3RvKiosIG9mdGVuIHJlZmVycmVkIHRvIGFzIOKAnE1hdHou4oCdIEhlIGRldmVsb3BlZCB0aGUgbGFuZ3VhZ2UgaW4gMTk5MyB3aGlsZSB3b3JraW5nIGF0IGEgSmFwYW5lc2Ugc29mdHdhcmUgY29tcGFueSwgYWltaW5nIHRvIGJsZW5kIHRoZSBiZXN0IGZlYXR1cmVzIG9mIGV4aXN0aW5nIGxhbmd1YWdlcyBhbmQgY3JlYXRlIGEgbW9yZSBlbmpveWFibGUgcHJvZ3JhbW1pbmcgZXhwZXJpZW5jZS4ifV19LCJmaW5pc2hfcmVhc29uIjoiQ09NUExFVEUiLCJ1c2FnZSI6eyJiaWxsZWRfdW5pdHMiOnsiaW5wdXRfdG9rZW5zIjoxMCwib3V0cHV0X3Rva2VucyI6MTAzfSwidG9rZW5zIjp7ImlucHV0X3Rva2VucyI6MzUsIm91dHB1dF90b2tlbnMiOjEwNywicmVhc29uaW5nX3Rva2VucyI6NTJ9LCJjYWNoZWRfdG9rZW5zIjowfX0=
+  recorded_at: Thu, 13 Aug 2026 09:45:36 GMT
+- request:
+    method: post
+    uri: https://api.cohere.com/v2/chat
+    body:
+      encoding: UTF-8
+      string: '{"model":"command-a-plus-05-2026","messages":[{"role":"user","content":[{"type":"text","text":"Who
+        is the creator of the programming language Ruby?"}]},{"role":"assistant","content":[{"type":"text","text":"Ruby
+        was created by **Yukihiro Matsumoto**, often referred to as “Matz.” He developed
+        the language in 1993 while working at a Japanese software company, aiming
+        to blend the best features of existing languages and create a more enjoyable
+        programming experience."}]},{"role":"user","content":[{"type":"text","text":"What
+        year did he create Ruby?"}]}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Expose-Headers:
+      - X-Debug-Trace-ID
+      Cache-Control:
+      - no-cache, no-store, no-transform, must-revalidate, private, max-age=0
+      Content-Type:
+      - application/json
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Num-Chars:
+      - '785'
+      Num-Tokens:
+      - '148'
+      Pragma:
+      - no-cache
+      Vary:
+      - Origin,Accept-Encoding
+      X-Accel-Expires:
+      - '0'
+      X-Debug-Trace-Id:
+      - '0816ab44a7dc32c83e119aa6e14c323b'
+      X-Endpoint-Monthly-Call-Limit:
+      - '1000'
+      X-Trial-Endpoint-Call-Limit:
+      - '20'
+      X-Trial-Endpoint-Call-Remaining:
+      - '16'
+      Date:
+      - Thu, 13 Aug 2026 09:45:37 GMT
+      X-Envoy-Upstream-Service-Time:
+      - '358'
+      Server:
+      - envoy
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6Ijc0MzJhZjQ4LWEwZmEtNGQ5Yy04N2Q0LTEyMWQyYWVjZTNmMiIsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOlt7InR5cGUiOiJ0aGlua2luZyIsInRoaW5raW5nIjoiVGhlIHVzZXIgYXNrczogXCJXaGF0IHllYXIgZGlkIGhlIGNyZWF0ZSBSdWJ5P1wiIFdlIGFscmVhZHkga25vdyBmcm9tIHByZXZpb3VzIGFuc3dlciB0aGF0IFJ1Ynkgd2FzIGNyZWF0ZWQgaW4gMTk5My4gU28gYW5zd2VyOiAxOTkzLiBQcm92aWRlIGJyaWVmIGNvbnRleHQuIn0seyJ0eXBlIjoidGV4dCIsInRleHQiOiJZdWtpaGlybyBNYXRzdW1vdG8gY3JlYXRlZCBSdWJ5IGluICoqMTk5MyoqLiBIZSBhbm5vdW5jZWQgdGhlIGxhbmd1YWdlIHB1YmxpY2x5IHRoYXQgeWVhciB3aGlsZSB3b3JraW5nIGF0IGEgSmFwYW5lc2Ugc29mdHdhcmUgY29tcGFueSwgYW5kIGl0IGhhcyBzaW5jZSBldm9sdmVkIGludG8gYSB3aWRlbHkgdXNlZCwgb2JqZWN04oCRb3JpZW50ZWQgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UuIn1dfSwiZmluaXNoX3JlYXNvbiI6IkNPTVBMRVRFIiwidXNhZ2UiOnsiYmlsbGVkX3VuaXRzIjp7ImlucHV0X3Rva2VucyI6NjgsIm91dHB1dF90b2tlbnMiOjgwfSwidG9rZW5zIjp7ImlucHV0X3Rva2VucyI6MTAzLCJvdXRwdXRfdG9rZW5zIjo4NCwicmVhc29uaW5nX3Rva2VucyI6Mzh9LCJjYWNoZWRfdG9rZW5zIjowfX0=
+  recorded_at: Thu, 13 Aug 2026 09:45:37 GMT
+recorded_with: VCR 6.4.0

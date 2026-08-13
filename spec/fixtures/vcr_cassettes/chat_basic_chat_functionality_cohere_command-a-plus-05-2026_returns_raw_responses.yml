@@ -1,0 +1,71 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.cohere.com/v2/chat
+    body:
+      encoding: UTF-8
+      string: '{"model":"command-a-plus-05-2026","messages":[{"role":"user","content":[{"type":"text","text":"What
+        is the capital of France?"}]}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Expose-Headers:
+      - X-Debug-Trace-ID
+      Cache-Control:
+      - no-cache, no-store, no-transform, must-revalidate, private, max-age=0
+      Content-Type:
+      - application/json
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Num-Chars:
+      - '303'
+      Num-Tokens:
+      - '39'
+      Pragma:
+      - no-cache
+      Vary:
+      - Origin,Accept-Encoding
+      X-Accel-Expires:
+      - '0'
+      X-Debug-Trace-Id:
+      - 2616f37e2d47fbc6dcfbb77a4b9c0b93
+      X-Endpoint-Monthly-Call-Limit:
+      - '1000'
+      X-Trial-Endpoint-Call-Limit:
+      - '20'
+      X-Trial-Endpoint-Call-Remaining:
+      - '18'
+      Date:
+      - Thu, 13 Aug 2026 09:45:35 GMT
+      X-Envoy-Upstream-Service-Time:
+      - '1146'
+      Server:
+      - envoy
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"bff18260-c41d-47a2-b2a7-9ff25c1bdfa4","message":{"role":"assistant","content":[{"type":"thinking","thinking":"The
+        user asks a straightforward question: \"What is the capital of France?\" The
+        answer is Paris. Provide a concise answer."},{"type":"text","text":"The capital
+        of France is Paris."}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":7,"output_tokens":32},"tokens":{"input_tokens":32,"output_tokens":36,"reasoning_tokens":25},"cached_tokens":0}}'
+  recorded_at: Thu, 13 Aug 2026 09:45:35 GMT
+recorded_with: VCR 6.4.0

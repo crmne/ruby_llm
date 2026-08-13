@@ -1,0 +1,141 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.cohere.com/v2/chat
+    body:
+      encoding: UTF-8
+      string: '{"model":"command-a-plus-05-2026","messages":[{"role":"user","content":[{"type":"text","text":"Generate
+        a person named Bob"}]}],"stream":false,"response_format":{"type":"json_object","json_schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"integer"}},"required":["name","age"],"additionalProperties":false}}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Expose-Headers:
+      - X-Debug-Trace-ID
+      Cache-Control:
+      - no-cache, no-store, no-transform, must-revalidate, private, max-age=0
+      Content-Type:
+      - application/json
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Num-Chars:
+      - '655'
+      Num-Tokens:
+      - '146'
+      Pragma:
+      - no-cache
+      Vary:
+      - Origin,Accept-Encoding
+      X-Accel-Expires:
+      - '0'
+      X-Debug-Trace-Id:
+      - ebae5b4bcc1eeffa928b8623b8ecf04e
+      X-Endpoint-Monthly-Call-Limit:
+      - '1000'
+      X-Trial-Endpoint-Call-Limit:
+      - '20'
+      X-Trial-Endpoint-Call-Remaining:
+      - '11'
+      Date:
+      - Thu, 13 Aug 2026 09:45:47 GMT
+      X-Envoy-Upstream-Service-Time:
+      - '579'
+      Server:
+      - envoy
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"19f522fc-f390-4644-9d05-1bdf7611780d","message":{"role":"assistant","content":[{"type":"thinking","thinking":"The
+        user wants to generate a person named Bob. The schema requires name (string)
+        and age (integer). The user only gave name \"Bob\". We need to provide an
+        age as well. We can choose a reasonable age, e.g., 30. The output must be
+        a JSON object directly, no code fences. Must match schema exactly: {\"type\":\"object\",\"properties\":{\"name\":{\"type\":\"string\"},\"age\":{\"type\":\"integer\"}},\"required\":[\"name\",\"age\"],\"additionalProperties\":false}.
+        So we output something like {\"name\":\"Bob\",\"age\":30}. Ensure no extra
+        whitespace? It''s fine. Ensure no extra keys. Provide only JSON."},{"type":"text","text":"{\"name\":\"Bob\",\"age\":30}"}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":5,"output_tokens":141},"tokens":{"input_tokens":101,"output_tokens":145,"reasoning_tokens":132},"cached_tokens":0}}'
+  recorded_at: Thu, 13 Aug 2026 09:45:47 GMT
+- request:
+    method: post
+    uri: https://api.cohere.com/v2/chat
+    body:
+      encoding: UTF-8
+      string: '{"model":"command-a-plus-05-2026","messages":[{"role":"user","content":[{"type":"text","text":"Generate
+        a person named Bob"}]},{"role":"assistant","content":[{"type":"text","text":"{\"name\":\"Bob\",\"age\":30}"}]},{"role":"user","content":[{"type":"text","text":"Now
+        just tell me about Ruby"}]}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Expose-Headers:
+      - X-Debug-Trace-ID
+      Cache-Control:
+      - no-cache, no-store, no-transform, must-revalidate, private, max-age=0
+      Content-Type:
+      - application/json
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Num-Chars:
+      - '521'
+      Num-Tokens:
+      - '639'
+      Pragma:
+      - no-cache
+      Vary:
+      - Origin,Accept-Encoding
+      X-Accel-Expires:
+      - '0'
+      X-Debug-Trace-Id:
+      - 5837cc94a014eb2176b195f4dd20eec2
+      X-Endpoint-Monthly-Call-Limit:
+      - '1000'
+      X-Trial-Endpoint-Call-Limit:
+      - '20'
+      X-Trial-Endpoint-Call-Remaining:
+      - '10'
+      Date:
+      - Thu, 13 Aug 2026 09:45:50 GMT
+      X-Envoy-Upstream-Service-Time:
+      - '3006'
+      Server:
+      - envoy
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImI4Y2IwNDI5LTZiNDYtNDMyYi05MjY0LWYxNzAwMTEwZDlmMCIsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOlt7InR5cGUiOiJ0aGlua2luZyIsInRoaW5raW5nIjoiVGhlIHVzZXIgYXNrczogXCJOb3cganVzdCB0ZWxsIG1lIGFib3V0IFJ1YnlcIi4gVGhleSBwcmV2aW91c2x5IGFza2VkIHRvIGdlbmVyYXRlIGEgcGVyc29uIG5hbWVkIEJvYiwgYW5kIHRoZSBhc3Npc3RhbnQgcmVzcG9uZGVkIHdpdGggSlNPTi4gTm93IHRoZXkgYXNrIHRvIFwidGVsbCBtZSBhYm91dCBSdWJ5XCIuIExpa2VseSB0aGV5IHdhbnQgYSBkZXNjcmlwdGlvbiBvZiBSdWJ5LCB0aGUgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UuIFRoZXJlJ3Mgbm8gY29uZmxpY3Qgd2l0aCBwb2xpY3kuIFdlIGNhbiBwcm92aWRlIGEgZGVzY3JpcHRpb24gb2YgUnVieTogaXRzIGhpc3RvcnksIGZlYXR1cmVzLCB1c2FnZSwgZXRjLiBUaGVyZSdzIG5vIHJlcXVlc3QgZm9yIGRpc2FsbG93ZWQgY29udGVudC4gU28gd2UgY2FuIGNvbXBseS4gUHJvdmlkZSBhIGNvbmNpc2Ugb3ZlcnZpZXcuIn0seyJ0eXBlIjoidGV4dCIsInRleHQiOiJSdWJ5IGlzIGEgZHluYW1pYywgb2JqZWN04oCRb3JpZW50ZWQgcHJvZ3JhbW1pbmcgbGFuZ3VhZ2UgdGhhdCB3YXMgY3JlYXRlZCBpbiB0aGUgbWlk4oCRMTk5MHMgYnkgWXVraWhpcm8g4oCcTWF0euKAnSBNYXRzdW1vdG8uIEl04oCZcyBrbm93biBmb3IgaXRzIGVsZWdhbnQgc3ludGF4LCB3aGljaCBpcyBkZXNpZ25lZCB0byBiZSByZWFkYWJsZSBhbmQgZXhwcmVzc2l2ZSwgb2Z0ZW4gYWxsb3dpbmcgZGV2ZWxvcGVycyB0byB3cml0ZSBjb2RlIHRoYXQgcmVhZHMgYWxtb3N0IGxpa2UgcGxhaW4gRW5nbGlzaC5cblxuIyMjIEtleSBGZWF0dXJlc1xuLSAqKk9iamVjdOKAkW9yaWVudGVkOioqIEV2ZXJ5dGhpbmcgaW4gUnVieSBpcyBhbiBvYmplY3QsIGluY2x1ZGluZyBiYXNpYyBkYXRhIHR5cGVzIGxpa2UgaW50ZWdlcnMgYW5kIHN0cmluZ3MuXG4tICoqRHluYW1pYyB0eXBpbmc6KiogVmFyaWFibGVzIGRvbuKAmXQgaGF2ZSBmaXhlZCB0eXBlczsgdGhlaXIgdHlwZSBpcyBkZXRlcm1pbmVkIGF0IHJ1bnRpbWUuXG4tICoqUmljaCBzdGFuZGFyZCBsaWJyYXJ5OioqIEluY2x1ZGVzIHBvd2VyZnVsIHRvb2xzIGZvciB3b3JraW5nIHdpdGggc3RyaW5ncywgYXJyYXlzLCBoYXNoZXMsIGFuZCBtb3JlLlxuLSAqKkJsb2NrcyBhbmQgbGFtYmRhczoqKiBGaXJzdOKAkWNsYXNzIHN1cHBvcnQgZm9yIGFub255bW91cyBmdW5jdGlvbnMsIGVuYWJsaW5nIGZ1bmN0aW9uYWwgcHJvZ3JhbW1pbmcgcGF0dGVybnMuXG4tICoqTWV0YXByb2dyYW1taW5nOioqIFJ1YnkgbGV0cyB5b3UgbW9kaWZ5IGl0cyBvd24gc3RydWN0dXJlIGFuZCBiZWhhdmlvciBhdCBydW50aW1lLCB3aGljaCBpcyB1c2VmdWwgZm9yIERTTHMgKERvbWFpbiBTcGVjaWZpYyBMYW5ndWFnZXMpLlxuLSAqKkNvbnZlbnRpb24gb3ZlciBjb25maWd1cmF0aW9uOioqIFJ1Ynkgb24gUmFpbHMsIHRoZSBtb3N0IGZhbW91cyBSdWJ5IGZyYW1ld29yaywgZW1waGFzaXplcyBzZW5zaWJsZSBkZWZhdWx0cyBhbmQgY29udmVudGlvbnMgdG8gcmVkdWNlIGJvaWxlcnBsYXRlIGNvZGUuXG5cbiMjIyBDb21tb24gVXNlc1xuLSAqKldlYiBkZXZlbG9wbWVudDoqKiBSdWJ5IG9uIFJhaWxzIChvZnRlbiBqdXN0IGNhbGxlZCBSYWlscykgaXMgYSBwb3B1bGFyIGZyYW1ld29yayBmb3IgYnVpbGRpbmcgd2ViIGFwcGxpY2F0aW9ucy5cbi0gKipBdXRvbWF0aW9uIGFuZCBzY3JpcHRpbmc6KiogSXRzIGNsZWFuIHN5bnRheCBtYWtlcyBpdCBnb29kIGZvciB3cml0aW5nIHNtYWxsIHV0aWxpdGllcyBhbmQgc2NyaXB0cy5cbi0gKipUZXN0aW5nIGFuZCBwcm90b3R5cGluZzoqKiBUaGUgbGFuZ3VhZ2XigJlzIGV4cHJlc3NpdmVuZXNzIHNwZWVkcyB1cCB3cml0aW5nIHRlc3RzIGFuZCBwcm9vZuKAkW9m4oCRY29uY2VwdCBjb2RlLlxuLSAqKkNvbW1hbmTigJFsaW5lIHRvb2xzOioqIE1hbnkgQ0xJIHV0aWxpdGllcyBhcmUgd3JpdHRlbiBpbiBSdWJ5IGJlY2F1c2Ugb2YgaXRzIGVhc3kgc3RyaW5nIG1hbmlwdWxhdGlvbi5cblxuIyMjIEhpc3RvcnkgXHUwMDI2IEVjb3N5c3RlbVxuLSAqKkNyZWF0ZWQ6KiogMTk5NSBieSBZdWtpaGlybyBNYXRzdW1vdG8sIHdobyB3YW50ZWQgYSBsYW5ndWFnZSB0aGF0IGNvbWJpbmVkIHRoZSBiZXN0IHBhcnRzIG9mIGhpcyBmYXZvcml0ZSBsYW5ndWFnZXMgKFBlcmwsIFNtYWxsdGFsaywgTGlzcCwgYW5kIFB5dGhvbikuXG4tICoqUG9wdWxhcml0eToqKiBHYWluZWQgc2lnbmlmaWNhbnQgdHJhY3Rpb24gaW4gdGhlIGVhcmx5IDIwMDBzIHRoYW5rcyB0byBSYWlscywgd2hpY2ggbWFkZSB3ZWIgZGV2ZWxvcG1lbnQgZmFzdGVyIGFuZCBtb3JlIGVuam95YWJsZS5cbi0gKipDb21tdW5pdHk6KiogQSB2aWJyYW50IGNvbW11bml0eSBjb250cmlidXRlcyBnZW1zIChSdWJ54oCZcyBwYWNrYWdlIG1hbmFnZXIpIHRoYXQgZXh0ZW5kIGZ1bmN0aW9uYWxpdHkgZm9yIGV2ZXJ5dGhpbmcgZnJvbSBkYXRhYmFzZSBhY2Nlc3MgdG8gbWFjaGluZSBsZWFybmluZy5cblxuIyMjIEV4YW1wbGUgQ29kZVxuSGVyZeKAmXMgYSBzaW1wbGUg4oCcSGVsbG8sIFdvcmxkIeKAnSBwcm9ncmFtIGluIFJ1Ynk6XG5cbmBgYHJ1YnlcbnB1dHMgXCJIZWxsbywgV29ybGQhXCJcbmBgYFxuXG5BbmQgYSBzbGlnaHRseSBtb3JlIGludm9sdmVkIGV4YW1wbGUgc2hvd2luZyBSdWJ54oCZcyBlbGVnYW5jZTpcblxuYGBgcnVieVxuIyBEZWZpbmUgYSBjbGFzcyB3aXRoIGEgbWV0aG9kIHRoYXQgZ3JlZXRzIGEgbmFtZVxuY2xhc3MgR3JlZXRlclxuICBkZWYgaW5pdGlhbGl6ZShuYW1lKVxuICAgIEBuYW1lID0gbmFtZVxuICBlbmRcblxuICBkZWYgZ3JlZXRcbiAgICBcIkhlbGxvLCAje0BuYW1lfSFcIlxuICBlbmRcbmVuZFxuXG4jIFVzZSBpdFxuZ3JlZXRlciA9IEdyZWV0ZXIubmV3KFwiUnVieVwiKVxucHV0cyBncmVldGVyLmdyZWV0ICAgIyA9XHUwMDNlIEhlbGxvLCBSdWJ5IVxuYGBgXG5cblJ1YnnigJlzIGRlc2lnbiBwaGlsb3NvcGh5IGVtcGhhc2l6ZXMgZGV2ZWxvcGVyIGhhcHBpbmVzcyBhbmQgcHJvZHVjdGl2aXR5LCBtYWtpbmcgaXQgYSBmYXZvcml0ZSBmb3IgbWFueSBkZXZlbG9wZXJzLCBlc3BlY2lhbGx5IHRob3NlIHdobyBhcHByZWNpYXRlIHJlYWRhYmxlLCBleHByZXNzaXZlIGNvZGUuIn1dfSwiZmluaXNoX3JlYXNvbiI6IkNPTVBMRVRFIiwidXNhZ2UiOnsiYmlsbGVkX3VuaXRzIjp7ImlucHV0X3Rva2VucyI6MjAsIm91dHB1dF90b2tlbnMiOjYxOX0sInRva2VucyI6eyJpbnB1dF90b2tlbnMiOjU1LCJvdXRwdXRfdG9rZW5zIjo2MjMsInJlYXNvbmluZ190b2tlbnMiOjkxfSwiY2FjaGVkX3Rva2VucyI6MH19
+  recorded_at: Thu, 13 Aug 2026 09:45:50 GMT
+recorded_with: VCR 6.4.0

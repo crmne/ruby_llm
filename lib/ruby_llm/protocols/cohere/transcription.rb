@@ -13,16 +13,18 @@ module RubyLLM
           'v2/audio/transcriptions'
         end
 
+        # Cohere parses the multipart body as it streams, so every form field
+        # has to be written before the file part or the request is rejected as
+        # missing them. The file goes in last, after provider options.
         # rubocop:disable Lint/UnusedMethodArgument
         def render_transcription_payload(file_part, model:, language:, format: nil, speaker_names: nil,
                                          speaker_references: nil, provider_options: {}, prompt: nil,
                                          temperature: nil)
           {
             model: model,
-            file: file_part,
             language: language || DEFAULT_LANGUAGE,
             temperature: temperature
-          }.compact.merge(provider_options)
+          }.compact.merge(provider_options).merge(file: file_part)
         end
         # rubocop:enable Lint/UnusedMethodArgument
 

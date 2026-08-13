@@ -143,12 +143,14 @@ AUDIO_MODELS = [
   { provider: :mistral, model: 'voxtral-small-latest' }
 ].freeze
 
+# dimensions: the size to request from a model that accepts one, or nil for
+# models that only return their native size.
 embedding_models = [
-  { provider: :azure, model: 'Cohere-embed-v3-english' },
-  { provider: :bedrock, model: 'amazon.titan-embed-text-v2:0' },
-  { provider: :cohere, model: 'embed-v4.0' },
+  { provider: :azure, model: 'Cohere-embed-v3-english', dimensions: nil },
+  { provider: :bedrock, model: 'amazon.titan-embed-text-v2:0', dimensions: 1024 },
+  { provider: :cohere, model: 'embed-v4.0', dimensions: 1024 },
   { provider: :gemini, model: 'gemini-embedding-001' },
-  { provider: :mistral, model: 'mistral-embed' },
+  { provider: :mistral, model: 'mistral-embed', dimensions: nil },
   { provider: :openai, model: 'text-embedding-3-small' },
   { provider: :openrouter, model: 'openai/text-embedding-3-small' },
   { provider: :vertexai, model: 'text-embedding-004' }

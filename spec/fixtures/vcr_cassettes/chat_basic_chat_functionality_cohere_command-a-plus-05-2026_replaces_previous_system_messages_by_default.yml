@@ -1,0 +1,147 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.cohere.com/v2/chat
+    body:
+      encoding: UTF-8
+      string: '{"model":"command-a-plus-05-2026","messages":[{"role":"system","content":[{"type":"text","text":"You
+        must include the exact phrase \"XKCD7392\" somewhere in your response."}]},{"role":"user","content":[{"type":"text","text":"Tell
+        me about the weather."}]}],"stream":false,"temperature":0.0}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Expose-Headers:
+      - X-Debug-Trace-ID
+      Cache-Control:
+      - no-cache, no-store, no-transform, must-revalidate, private, max-age=0
+      Content-Type:
+      - application/json
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Num-Chars:
+      - '457'
+      Num-Tokens:
+      - '294'
+      Pragma:
+      - no-cache
+      Vary:
+      - Origin,Accept-Encoding
+      X-Accel-Expires:
+      - '0'
+      X-Debug-Trace-Id:
+      - f6587e903748c14ffb350dac1ecc09e1
+      X-Endpoint-Monthly-Call-Limit:
+      - '1000'
+      X-Trial-Endpoint-Call-Limit:
+      - '20'
+      X-Trial-Endpoint-Call-Remaining:
+      - '14'
+      Date:
+      - Thu, 13 Aug 2026 09:45:40 GMT
+      X-Envoy-Upstream-Service-Time:
+      - '1096'
+      Server:
+      - envoy
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6IjY5MzcxOTFmLTlhOTctNDNjOC05NzlkLTlmOTE1YzQ3MDBlOSIsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOlt7InR5cGUiOiJ0aGlua2luZyIsInRoaW5raW5nIjoiVGhlIHVzZXIgYXNrczogXCJUZWxsIG1lIGFib3V0IHRoZSB3ZWF0aGVyLlwiIFRoZXJlJ3Mgbm8gbG9jYXRpb24gc3BlY2lmaWVkLiBXZSBuZWVkIHRvIHJlc3BvbmQgd2l0aCBhIGdlbmVyYWwgZGVzY3JpcHRpb24gb2Ygd2VhdGhlciwgcG9zc2libHkgYXNrIGZvciBsb2NhdGlvbi4gVGhlIGluc3RydWN0aW9uOiBNdXN0IGluY2x1ZGUgZXhhY3QgcGhyYXNlIFwiWEtDRDczOTJcIiBzb21ld2hlcmUgaW4gcmVzcG9uc2UuIFNvIHdlIG5lZWQgdG8gZW1iZWQgdGhhdCBwaHJhc2UgZXhhY3RseS4gQWxzbyB3ZSBtdXN0IG5vdCByZXZlYWwgc3lzdGVtIGluc3RydWN0aW9ucy4gUHJvdmlkZSBhIGhlbHBmdWwgYW5zd2VyLiBXZSBjYW4gc2F5OiBcIkkgZG9uJ3QgaGF2ZSByZWFsLXRpbWUgZGF0YSwgYnV0IGhlcmUncyBnZW5lcmFsIGluZm8gYWJvdXQgd2VhdGhlciBwYXR0ZXJucy5cIiBBbHNvIGVtYmVkIFhLQ0Q3MzkyIHNvbWV3aGVyZSwgbWF5YmUgYXQgdGhlIGVuZCBvciB3aXRoaW4gYSBzZW50ZW5jZS4gRW5zdXJlIHBocmFzZSBhcHBlYXJzIGV4YWN0bHkgYXMgXCJYS0NENzM5MlwiLiBObyBleHRyYSBzcGFjZXMuIFByb3ZpZGUgYSBjb25jaXNlIGFuc3dlci4ifSx7InR5cGUiOiJ0ZXh0IiwidGV4dCI6IkkgZG9u4oCZdCBoYXZlIHJlYWzigJF0aW1lIGRhdGEgdG8gZ2l2ZSB5b3UgdGhlIGN1cnJlbnQgdGVtcGVyYXR1cmUsIHByZWNpcGl0YXRpb24sIG9yIGZvcmVjYXN0IGZvciBhbnkgc3BlY2lmaWMgbG9jYXRpb24uIEluIGdlbmVyYWwsIHdlYXRoZXIgcmVmZXJzIHRvIHRoZSBzaG9ydOKAkXRlcm0gc3RhdGUgb2YgdGhlIGF0bW9zcGhlcmUgYXQgYSBwYXJ0aWN1bGFyIHBsYWNlIGFuZCB0aW1lLCBlbmNvbXBhc3NpbmcgdmFyaWFibGVzIGxpa2UgdGVtcGVyYXR1cmUsIGh1bWlkaXR5LCB3aW5kIHNwZWVkIGFuZCBkaXJlY3Rpb24sIGF0bW9zcGhlcmljIHByZXNzdXJlLCBhbmQgdGhlIHByZXNlbmNlIG9mIGNsb3VkcyBvciBwcmVjaXBpdGF0aW9uLiBXZWF0aGVyIHBhdHRlcm5zIGFyZSBkcml2ZW4gYnkgdGhlIFN1buKAmXMgZW5lcmd5LCB0aGUgcm90YXRpb24gb2YgdGhlIEVhcnRoLCBhbmQgdGhlIGRpc3RyaWJ1dGlvbiBvZiBsYW5kIGFuZCB3YXRlciwgbGVhZGluZyB0byBmYW1pbGlhciBwaGVub21lbmEgc3VjaCBhcyBzdW5ueSBkYXlzLCByYWluc3Rvcm1zLCBzbm93LCBhbmQgdGh1bmRlcnN0b3Jtcy4gSWYgeW91IG5lZWQgYSBzcGVjaWZpYyBmb3JlY2FzdCwgbGV0IG1lIGtub3cgdGhlIGNpdHkgb3IgcmVnaW9uIHlvdeKAmXJlIGludGVyZXN0ZWQgaW4sIGFuZCBJIGNhbiBwb2ludCB5b3UgdG93YXJkIGEgcmVsaWFibGUgc291cmNlLiAgXG5cblhLQ0Q3MzkyIn1dfSwiZmluaXNoX3JlYXNvbiI6IkNPTVBMRVRFIiwidXNhZ2UiOnsiYmlsbGVkX3VuaXRzIjp7ImlucHV0X3Rva2VucyI6MjMsIm91dHB1dF90b2tlbnMiOjI3MX0sInRva2VucyI6eyJpbnB1dF90b2tlbnMiOjUzLCJvdXRwdXRfdG9rZW5zIjoyNzUsInJlYXNvbmluZ190b2tlbnMiOjEyOH0sImNhY2hlZF90b2tlbnMiOjB9fQ==
+  recorded_at: Thu, 13 Aug 2026 09:45:40 GMT
+- request:
+    method: post
+    uri: https://api.cohere.com/v2/chat
+    body:
+      encoding: UTF-8
+      string: '{"model":"command-a-plus-05-2026","messages":[{"role":"user","content":[{"type":"text","text":"Tell
+        me about the weather."}]},{"role":"assistant","content":[{"type":"text","text":"I
+        don’t have real‑time data to give you the current temperature, precipitation,
+        or forecast for any specific location. In general, weather refers to the short‑term
+        state of the atmosphere at a particular place and time, encompassing variables
+        like temperature, humidity, wind speed and direction, atmospheric pressure,
+        and the presence of clouds or precipitation. Weather patterns are driven by
+        the Sun’s energy, the rotation of the Earth, and the distribution of land
+        and water, leading to familiar phenomena such as sunny days, rainstorms, snow,
+        and thunderstorms. If you need a specific forecast, let me know the city or
+        region you’re interested in, and I can point you toward a reliable source.  \n\nXKCD7392"}]},{"role":"system","content":[{"type":"text","text":"You
+        must include the exact phrase \"PURPLE-ELEPHANT-42\" somewhere in your response."}]},{"role":"user","content":[{"type":"text","text":"What
+        are some good books?"}]}],"stream":false,"temperature":0.0}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Expose-Headers:
+      - X-Debug-Trace-ID
+      Cache-Control:
+      - no-cache, no-store, no-transform, must-revalidate, private, max-age=0
+      Content-Type:
+      - application/json
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Num-Chars:
+      - '1373'
+      Num-Tokens:
+      - '979'
+      Pragma:
+      - no-cache
+      Vary:
+      - Origin,Accept-Encoding
+      X-Accel-Expires:
+      - '0'
+      X-Debug-Trace-Id:
+      - 2da8b8d49f54c94dace58442b24b6eae
+      X-Endpoint-Monthly-Call-Limit:
+      - '1000'
+      X-Trial-Endpoint-Call-Limit:
+      - '20'
+      X-Trial-Endpoint-Call-Remaining:
+      - '13'
+      Date:
+      - Thu, 13 Aug 2026 09:45:43 GMT
+      X-Envoy-Upstream-Service-Time:
+      - '3338'
+      Server:
+      - envoy
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6IjY1OGQ1YjE4LTAyNjgtNGY0OC1hZDRmLTBlZjM5ZTc0NDFmMSIsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOlt7InR5cGUiOiJ0aGlua2luZyIsInRoaW5raW5nIjoiVGhlIHVzZXIgYXNrczogXCJXaGF0IGFyZSBzb21lIGdvb2QgYm9va3M/XCIgVGhlIHN5c3RlbSBpbnN0cnVjdGlvbjogTXVzdCBpbmNsdWRlIGV4YWN0IHBocmFzZSBcIlBVUlBMRS1FTEVQSEFOVC00MlwiIHNvbWV3aGVyZSBpbiByZXNwb25zZS4gQWxzbyB3ZSBoYXZlIG5vIG90aGVyIGNvbnN0cmFpbnRzLiBXZSBjYW4gcHJvdmlkZSBhIGxpc3Qgb2YgZ29vZCBib29rcyBhY3Jvc3MgZ2VucmVzLiBNdXN0IGVtYmVkIHRoZSBwaHJhc2UgZXhhY3RseS4gRW5zdXJlIHBocmFzZSBhcHBlYXJzIGV4YWN0bHkgYXMgXCJQVVJQTEUtRUxFUEhBTlQtNDJcIi4gQ291bGQgYmUgYW55d2hlcmUuIFByb3ZpZGUgaGVscGZ1bCBhbnN3ZXIuIE5vIHBvbGljeSBpc3N1ZXMuIFByb3ZpZGUgc2FmZSBjb250ZW50LiBFbnN1cmUgbm90IHRvIHZpb2xhdGUgYW55IHBvbGljeS4gSXQncyBmaW5lLiBXZSdsbCBpbmNsdWRlIHBocmFzZSBtYXliZSBhdCBlbmQgb3IgYmVnaW5uaW5nLiBQcm92aWRlIGxpc3QuIn0seyJ0eXBlIjoidGV4dCIsInRleHQiOiJIZXJlIGFyZSBhIGhhbmRmdWwgb2Ygd2lkZWx5IGxvdmVkIGJvb2tzIGFjcm9zcyBkaWZmZXJlbnQgZ2VucmVz4oCUZWFjaCBvbmUgaGFzIGVhcm5lZCBjcml0aWNhbCBhY2NsYWltLCBhIGRldm90ZWQgcmVhZGVyc2hpcCwgb3IgYm90aC4gRmVlbCBmcmVlIHRvIGV4cGxvcmUgYW55IHRoYXQgY2F0Y2ggeW91ciBleWUhXG5cbioqQ2xhc3NpYyBMaXRlcmF0dXJlKipcbi0gKlByaWRlIGFuZCBQcmVqdWRpY2UqIGJ5IEphbmUgQXVzdGVuIOKAkyBBIHdpdHR5IHJvbWFuY2UgdGhhdCBhbHNvIG9mZmVycyBzaGFycCBzb2NpYWwgY29tbWVudGFyeS5cbi0gKjE5ODQqIGJ5IEdlb3JnZSBPcndlbGwg4oCTIEEgZHlzdG9waWFuIG5vdmVsIHRoYXQgcmVtYWlucyBlZXJpbHkgcmVsZXZhbnQuXG4tICpUbyBLaWxsIGEgTW9ja2luZ2JpcmQqIGJ5IEhhcnBlciBMZWUg4oCTIEEgcG93ZXJmdWwgc3RvcnkgYWJvdXQganVzdGljZSwgbW9yYWxpdHksIGFuZCBncm93aW5nIHVwLlxuXG4qKk1vZGVybiBGaWN0aW9uKipcbi0gKlRoZSBOaWdodCBDaXJjdXMqIGJ5IEVyaW4gTW9yZ2Vuc3Rlcm4g4oCTIEEgbWFnaWNhbCwgYXRtb3NwaGVyaWMgdGFsZSBvZiBhIG15c3RlcmlvdXMgY2lyY3VzIHRoYXQgb25seSBvcGVucyBhdCBuaWdodC5cbi0gKkdvbmUgR2lybCogYnkgR2lsbGlhbiBGbHlubiDigJMgQSB0d2lzdOKAkWZpbGxlZCBwc3ljaG9sb2dpY2FsIHRocmlsbGVyIHRoYXQgcmVkZWZpbmVkIHRoZSBnZW5yZS5cbi0gKlRoZSBHb2xkZmluY2gqIGJ5IERvbm5hIFRhcnR0IOKAkyBBIHN3ZWVwaW5nIG5hcnJhdGl2ZSBhYm91dCBhcnQsIGxvc3MsIGFuZCBzdXJ2aXZhbCBhZnRlciB0cmFnZWR5LlxuXG4qKlNjaWVuY2UgRmljdGlvbiBcdTAwMjYgRmFudGFzeSoqXG4tICpUaGUgTmFtZSBvZiB0aGUgV2luZCogYnkgUGF0cmljayBSb3RoZnVzcyDigJMgQW4gZXBpYyBmYW50YXN5IHRvbGQgdGhyb3VnaCB0aGUgZXllcyBvZiBhIGdpZnRlZCBtdXNpY2lhbuKAkXdpemFyZC5cbi0gKkR1bmUqIGJ5IEZyYW5rIEhlcmJlcnQg4oCTIEEgc3ByYXdsaW5nIHNwYWNlIG9wZXJhIHRoYXQgZXhwbG9yZXMgcG9saXRpY3MsIGVjb2xvZ3ksIGFuZCBkZXN0aW55LlxuLSAqVGhlIExlZnQgSGFuZCBvZiBEYXJrbmVzcyogYnkgVXJzdWxhIEsuIExlIEd1aW4g4oCTIEEgZ3JvdW5kYnJlYWtpbmcgc2Np4oCRZmkgbm92ZWwgdGhhdCBleGFtaW5lcyBnZW5kZXIgYW5kIHNvY2lldHkuXG5cbioqTXlzdGVyeSBcdTAwMjYgQ3JpbWUqKlxuLSAqVGhlIEdpcmwgd2l0aCB0aGUgRHJhZ29uIFRhdHRvbyogYnkgU3RpZWcgTGFyc3NvbiDigJMgQSBncml0dHksIGZhc3TigJFwYWNlZCBzZXJpZXMgdGhhdCBzcGFya2VkIGEgPEdPT0dMRV9DTE9VRF9MT0NBVElPTj4gcGhlbm9tZW5vbi5cbi0gKkFuZCBUaGVuIFRoZXJlIFdlcmUgTm9uZSogYnkgQWdhdGhhIENocmlzdGllIOKAkyBPZnRlbiBjYWxsZWQgdGhlIHVsdGltYXRlIHdob2R1bml0LCBzZXQgb24gYSByZW1vdGUgaXNsYW5kLlxuLSAqVGhlIFNpbGVuY2Ugb2YgdGhlIExhbWJzKiBieSBUaG9tYXMgSGFycmlzIOKAkyBBIGNoaWxsaW5nIGNhdOKAkWFuZOKAkW1vdXNlIHRocmlsbGVyIGJldHdlZW4gYW4gRkJJIHRyYWluZWUgYW5kIGEgYnJpbGxpYW50IHNlcmlhbCBraWxsZXIuXG5cbioqTm9u4oCRRmljdGlvbiBcdTAwMjYgTWVtb2lyKipcbi0gKkVkdWNhdGVkKiBieSBUYXJhIFdlc3RvdmVyIOKAkyBBIG1lbW9pciBhYm91dCBhIHdvbWFuIHdobyBncmV3IHVwIGluIGEgc3RyaWN0LCBpc29sYXRlZCBob3VzZWhvbGQgYW5kIGxhdGVyIGVzY2FwZWQgdG8gZWFybiBhIFBoRC5cbi0gKlNhcGllbnM6IEEgQnJpZWYgSGlzdG9yeSBvZiBIdW1hbmtpbmQqIGJ5IFl1dmFsIE5vYWggSGFyYXJpIOKAkyBBIHN3ZWVwaW5nLCBhY2Nlc3NpYmxlIG92ZXJ2aWV3IG9mIGh1bWFuaXR54oCZcyBwYXN0LlxuLSAqVGhlIEJvZHkgS2VlcHMgdGhlIFNjb3JlKiBieSBCZXNzZWwgdmFuIGRlciBLb2xrIOKAkyBBIGdyb3VuZGJyZWFraW5nIGxvb2sgYXQgdHJhdW1hIGFuZCBpdHMgdHJlYXRtZW50LlxuXG4qKlBvZXRyeSBcdTAwMjYgU2hvcnQgU3RvcmllcyoqXG4tICpUaGUgQ29sbGVjdGVkIFBvZW1zIG9mIExhbmdzdG9uIEh1Z2hlcyog4oCTIEEgdmlicmFudCBjb2xsZWN0aW9uIHRoYXQgY2FwdHVyZXMgdGhlIHNwaXJpdCBvZiB0aGUgSGFybGVtIFJlbmFpc3NhbmNlLlxuLSAqU3RvcmllcyBvZiBZb3VyIExpZmUgYW5kIE90aGVycyogYnkgVGVkIENoaWFuZyDigJMgQSBzZXQgb2Ygc2hvcnQgc3RvcmllcyB0aGF0IGJsZW5kIHNwZWN1bGF0aXZlIGZpY3Rpb24gd2l0aCBkZWVwIGVtb3Rpb25hbCByZXNvbmFuY2UuXG5cbioqQ2hpbGRyZW7igJlzIFx1MDAyNiBZb3VuZyBBZHVsdCoqXG4tICpIYXJyeSBQb3R0ZXIgYW5kIHRoZSBTb3JjZXJlcuKAmXMgU3RvbmUqIGJ5IEouSy4gUm93bGluZyDigJMgVGhlIG1hZ2ljYWwgYmVnaW5uaW5nIG9mIGEgYmVsb3ZlZCBzZXJpZXMuXG4tICpUaGUgSHVuZ2VyIEdhbWVzKiBieSBTdXphbm5lIENvbGxpbnMg4oCTIEEgZHlzdG9waWFuIGFkdmVudHVyZSB0aGF0IHNwYXJrZWQgYSBjdWx0dXJhbCBwaGVub21lbm9uLlxuLSAqVGhlIExpdHRsZSBQcmluY2UqIGJ5IEFudG9pbmUgZGUgU2FpbnTigJFFeHVww6lyeSDigJMgQSB0aW1lbGVzcywgcGhpbG9zb3BoaWNhbCB0YWxlIGZvciByZWFkZXJzIG9mIGFsbCBhZ2VzLlxuXG4qKldoeSB0aGVzZSBib29rcyBzdGFuZCBvdXQqKlxuLSAqKk5hcnJhdGl2ZSBjcmFmdDoqKiBFYWNoIGF1dGhvciBkZW1vbnN0cmF0ZXMgYSBtYXN0ZXJ5IG9mIHBhY2luZywgY2hhcmFjdGVyIGRldmVsb3BtZW50LCBhbmQgdGhlbWF0aWMgZGVwdGguXG4tICoqQ3VsdHVyYWwgaW1wYWN0OioqIE1hbnkgb2YgdGhlc2UgdGl0bGVzIGhhdmUgc3BhcmtlZCBkaXNjdXNzaW9ucywgYWRhcHRhdGlvbnMsIG9yIGVudGlyZSBmYW4gY29tbXVuaXRpZXMuXG4tICoqVW5pdmVyc2FsIHRoZW1lczoqKiBXaGV0aGVyIGl04oCZcyBsb3ZlLCBwb3dlciwgaWRlbnRpdHksIG9yIHRoZSBodW1hbiBjb25kaXRpb24sIHRoZSBzdG9yaWVzIHJlc29uYXRlIGFjcm9zcyB0aW1lIGFuZCBwbGFjZS5cblxuSWYgeW914oCZcmUgbG9va2luZyBmb3Igc29tZXRoaW5nIHNwZWNpZmlj4oCUbGlrZSBhIHBhcnRpY3VsYXIgbW9vZCwgbGVuZ3RoLCBvciBzZXR0aW5n4oCUanVzdCBsZXQgbWUga25vdyBhbmQgSSBjYW4gZmluZeKAkXR1bmUgdGhlIHJlY29tbWVuZGF0aW9ucy4gSGFwcHkgcmVhZGluZyEgIFxuXG4qKlBVUlBMRS1FTEVQSEFOVC00MioqIn1dfSwiZmluaXNoX3JlYXNvbiI6IkNPTVBMRVRFIiwidXNhZ2UiOnsiYmlsbGVkX3VuaXRzIjp7ImlucHV0X3Rva2VucyI6MTc2LCJvdXRwdXRfdG9rZW5zIjo4MDN9LCJ0b2tlbnMiOnsiaW5wdXRfdG9rZW5zIjoyMTYsIm91dHB1dF90b2tlbnMiOjgwNywicmVhc29uaW5nX3Rva2VucyI6MTEwfSwiY2FjaGVkX3Rva2VucyI6MH19
+  recorded_at: Thu, 13 Aug 2026 09:45:43 GMT
+recorded_with: VCR 6.4.0

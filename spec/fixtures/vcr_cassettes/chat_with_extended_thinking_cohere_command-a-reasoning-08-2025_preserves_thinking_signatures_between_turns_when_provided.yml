@@ -1,0 +1,146 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.cohere.com/v2/chat
+    body:
+      encoding: UTF-8
+      string: '{"model":"command-a-reasoning-08-2025","messages":[{"role":"user","content":[{"type":"text","text":"What
+        is 5 + 3?"}]}],"stream":false,"thinking":{"type":"enabled"}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Expose-Headers:
+      - X-Debug-Trace-ID
+      Cache-Control:
+      - no-cache, no-store, no-transform, must-revalidate, private, max-age=0
+      Content-Type:
+      - application/json
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Num-Chars:
+      - '6601'
+      Num-Tokens:
+      - '58'
+      Pragma:
+      - no-cache
+      Vary:
+      - Origin,Accept-Encoding
+      X-Accel-Expires:
+      - '0'
+      X-Debug-Trace-Id:
+      - f17e55d7b2d950baabeee51155988bc4
+      X-Endpoint-Monthly-Call-Limit:
+      - '1000'
+      X-Trial-Endpoint-Call-Limit:
+      - '20'
+      X-Trial-Endpoint-Call-Remaining:
+      - '6'
+      Date:
+      - Thu, 13 Aug 2026 09:46:30 GMT
+      X-Envoy-Upstream-Service-Time:
+      - '413'
+      Server:
+      - envoy
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"1f2df0b3-2ab7-4651-8d4b-65454bc1ba59","message":{"role":"assistant","content":[{"type":"thinking","thinking":"The
+        user is asking for the sum of 5 and 3. Since this is a straightforward arithmetic
+        problem, I don''t need to use any tools. I can calculate the result directly."},{"type":"text","text":"The
+        sum of 5 and 3 is 8."}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":8,"output_tokens":50},"tokens":{"input_tokens":1394,"output_tokens":55,"reasoning_tokens":38},"cached_tokens":1360}}'
+  recorded_at: Thu, 13 Aug 2026 09:46:30 GMT
+- request:
+    method: post
+    uri: https://api.cohere.com/v2/chat
+    body:
+      encoding: UTF-8
+      string: '{"model":"command-a-reasoning-08-2025","messages":[{"role":"user","content":[{"type":"text","text":"What
+        is 5 + 3?"}]},{"role":"assistant","content":[{"type":"text","text":"The sum
+        of 5 and 3 is 8."}]},{"role":"user","content":[{"type":"text","text":"Now
+        multiply that by 2"}]}],"stream":false,"thinking":{"type":"enabled"}}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Expose-Headers:
+      - X-Debug-Trace-ID
+      Cache-Control:
+      - no-cache, no-store, no-transform, must-revalidate, private, max-age=0
+      Content-Type:
+      - application/json
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Num-Chars:
+      - '6876'
+      Num-Tokens:
+      - '173'
+      Pragma:
+      - no-cache
+      Vary:
+      - Origin,Accept-Encoding
+      X-Accel-Expires:
+      - '0'
+      X-Debug-Trace-Id:
+      - 26fb377a5972b19ca6f136b607502a60
+      X-Endpoint-Monthly-Call-Limit:
+      - '1000'
+      X-Trial-Endpoint-Call-Limit:
+      - '20'
+      X-Trial-Endpoint-Call-Remaining:
+      - '5'
+      Date:
+      - Thu, 13 Aug 2026 09:46:31 GMT
+      X-Envoy-Upstream-Service-Time:
+      - '1324'
+      Server:
+      - envoy
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"4b50020f-b3c1-43ef-b852-67c26dfba9a1","message":{"role":"assistant","content":[{"type":"thinking","thinking":"Okay,
+        the user first asked, \"What is 5 + 3?\" and I responded with the sum, which
+        is 8. Now they''re asking to multiply that result by 2. Let me make sure I
+        understand the flow here.\n\nFirst, I need to confirm the previous answer.
+        5 plus 3 is definitely 8. Then, multiplying 8 by 2 should give 16. I don''t
+        see any complications here since the numbers are straightforward. The user
+        might be testing basic arithmetic or just needs a quick calculation. Either
+        way, providing the correct result directly is the best approach. No tool calls
+        are needed here because it''s a simple math operation that I can handle internally."},{"type":"text","text":"16"}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":26,"output_tokens":147},"tokens":{"input_tokens":1431,"output_tokens":152,"reasoning_tokens":145},"cached_tokens":1392}}'
+  recorded_at: Thu, 13 Aug 2026 09:46:31 GMT
+recorded_with: VCR 6.4.0

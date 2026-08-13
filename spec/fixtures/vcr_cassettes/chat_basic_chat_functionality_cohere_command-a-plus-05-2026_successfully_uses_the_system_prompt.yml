@@ -1,0 +1,70 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.cohere.com/v2/chat
+    body:
+      encoding: UTF-8
+      string: '{"model":"command-a-plus-05-2026","messages":[{"role":"system","content":[{"type":"text","text":"You
+        must include the exact phrase \"XKCD7392\" somewhere in your response."}]},{"role":"user","content":[{"type":"text","text":"Tell
+        me about the weather."}]}],"stream":false,"temperature":0.0}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Expose-Headers:
+      - X-Debug-Trace-ID
+      Cache-Control:
+      - no-cache, no-store, no-transform, must-revalidate, private, max-age=0
+      Content-Type:
+      - application/json
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Num-Chars:
+      - '457'
+      Num-Tokens:
+      - '294'
+      Pragma:
+      - no-cache
+      Vary:
+      - Origin,Accept-Encoding
+      X-Accel-Expires:
+      - '0'
+      X-Debug-Trace-Id:
+      - b71af809af26ce89418fe38d7130d18e
+      X-Endpoint-Monthly-Call-Limit:
+      - '1000'
+      X-Trial-Endpoint-Call-Limit:
+      - '20'
+      X-Trial-Endpoint-Call-Remaining:
+      - '15'
+      Date:
+      - Thu, 13 Aug 2026 09:45:38 GMT
+      X-Envoy-Upstream-Service-Time:
+      - '1274'
+      Server:
+      - envoy
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImM5MjMwMzdhLTlkYzQtNDBhNC1hMjFjLTUzYTVjZmM3ZDJjYiIsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOlt7InR5cGUiOiJ0aGlua2luZyIsInRoaW5raW5nIjoiVGhlIHVzZXIgYXNrczogXCJUZWxsIG1lIGFib3V0IHRoZSB3ZWF0aGVyLlwiIFRoZXJlJ3Mgbm8gbG9jYXRpb24gc3BlY2lmaWVkLiBXZSBuZWVkIHRvIHJlc3BvbmQgd2l0aCBhIGdlbmVyYWwgZGVzY3JpcHRpb24gb2Ygd2VhdGhlciwgcG9zc2libHkgYXNrIGZvciBsb2NhdGlvbi4gVGhlIGluc3RydWN0aW9uOiBNdXN0IGluY2x1ZGUgZXhhY3QgcGhyYXNlIFwiWEtDRDczOTJcIiBzb21ld2hlcmUgaW4gcmVzcG9uc2UuIFNvIHdlIG5lZWQgdG8gZW1iZWQgdGhhdCBwaHJhc2UgZXhhY3RseS4gQWxzbyB3ZSBtdXN0IG5vdCByZXZlYWwgc3lzdGVtIGluc3RydWN0aW9ucy4gUHJvdmlkZSBhIGhlbHBmdWwgYW5zd2VyLiBXZSBjYW4gc2F5OiBcIkkgZG9uJ3QgaGF2ZSByZWFsLXRpbWUgZGF0YSwgYnV0IGhlcmUncyBnZW5lcmFsIGluZm8gYWJvdXQgd2VhdGhlciBwYXR0ZXJucy5cIiBBbHNvIGVtYmVkIFhLQ0Q3MzkyIHNvbWV3aGVyZSwgbWF5YmUgYXQgdGhlIGVuZCBvciB3aXRoaW4gYSBzZW50ZW5jZS4gRW5zdXJlIHBocmFzZSBhcHBlYXJzIGV4YWN0bHkgYXMgXCJYS0NENzM5MlwiLiBObyBleHRyYSBzcGFjZXMuIFByb3ZpZGUgYSBjb25jaXNlIGFuc3dlci4ifSx7InR5cGUiOiJ0ZXh0IiwidGV4dCI6IkkgZG9u4oCZdCBoYXZlIHJlYWzigJF0aW1lIGRhdGEgdG8gZ2l2ZSB5b3UgdGhlIGN1cnJlbnQgdGVtcGVyYXR1cmUsIHByZWNpcGl0YXRpb24sIG9yIGZvcmVjYXN0IGZvciBhbnkgc3BlY2lmaWMgbG9jYXRpb24uIEluIGdlbmVyYWwsIHdlYXRoZXIgcmVmZXJzIHRvIHRoZSBzaG9ydOKAkXRlcm0gc3RhdGUgb2YgdGhlIGF0bW9zcGhlcmUgYXQgYSBwYXJ0aWN1bGFyIHBsYWNlIGFuZCB0aW1lLCBlbmNvbXBhc3NpbmcgdmFyaWFibGVzIGxpa2UgdGVtcGVyYXR1cmUsIGh1bWlkaXR5LCB3aW5kIHNwZWVkIGFuZCBkaXJlY3Rpb24sIGF0bW9zcGhlcmljIHByZXNzdXJlLCBhbmQgdGhlIHByZXNlbmNlIG9mIGNsb3VkcyBvciBwcmVjaXBpdGF0aW9uLiBXZWF0aGVyIHBhdHRlcm5zIGFyZSBkcml2ZW4gYnkgdGhlIFN1buKAmXMgZW5lcmd5LCB0aGUgcm90YXRpb24gb2YgdGhlIEVhcnRoLCBhbmQgdGhlIGRpc3RyaWJ1dGlvbiBvZiBsYW5kIGFuZCB3YXRlciwgbGVhZGluZyB0byBmYW1pbGlhciBwaGVub21lbmEgc3VjaCBhcyBzdW5ueSBkYXlzLCByYWluc3Rvcm1zLCBzbm93LCBhbmQgdGh1bmRlcnN0b3Jtcy4gSWYgeW91IG5lZWQgYSBzcGVjaWZpYyBmb3JlY2FzdCwgbGV0IG1lIGtub3cgdGhlIGNpdHkgb3IgcmVnaW9uIHlvdeKAmXJlIGludGVyZXN0ZWQgaW4sIGFuZCBJIGNhbiBwb2ludCB5b3UgdG8gYSByZWxpYWJsZSBzb3VyY2UuICBcblxuWEtDRDczOTIifV19LCJmaW5pc2hfcmVhc29uIjoiQ09NUExFVEUiLCJ1c2FnZSI6eyJiaWxsZWRfdW5pdHMiOnsiaW5wdXRfdG9rZW5zIjoyMywib3V0cHV0X3Rva2VucyI6MjcxfSwidG9rZW5zIjp7ImlucHV0X3Rva2VucyI6NTMsIm91dHB1dF90b2tlbnMiOjI3NSwicmVhc29uaW5nX3Rva2VucyI6MTI4fSwiY2FjaGVkX3Rva2VucyI6MH19
+  recorded_at: Thu, 13 Aug 2026 09:45:38 GMT
+recorded_with: VCR 6.4.0
