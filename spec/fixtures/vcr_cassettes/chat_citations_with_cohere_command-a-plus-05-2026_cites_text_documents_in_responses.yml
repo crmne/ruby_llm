@@ -1,0 +1,84 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.cohere.com/v2/chat
+    body:
+      encoding: UTF-8
+      string: '{"model":"command-a-plus-05-2026","messages":[{"role":"user","content":[{"type":"text","text":"Who
+        created Ruby and when? Use the document."}]}],"stream":false,"documents":[{"id":"doc:0","data":{"title":"facts.txt","text":"The
+        Ruby programming language was created by Yukihiro Matsumoto in 1993. Ruby
+        was designed to make programmers happy and productive. Ruby on Rails is a
+        popular web framework built with Ruby. RubyLLM is a Ruby library for working
+        with large language models.\n"}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Expose-Headers:
+      - X-Debug-Trace-ID
+      Cache-Control:
+      - no-cache, no-store, no-transform, must-revalidate, private, max-age=0
+      Content-Type:
+      - application/json
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Num-Chars:
+      - '2465'
+      Num-Tokens:
+      - '113'
+      Pragma:
+      - no-cache
+      Vary:
+      - Origin,Accept-Encoding
+      X-Accel-Expires:
+      - '0'
+      X-Debug-Trace-Id:
+      - add21cfbadfc6178333dfef2c614fd47
+      X-Endpoint-Monthly-Call-Limit:
+      - '1000'
+      X-Trial-Endpoint-Call-Limit:
+      - '20'
+      X-Trial-Endpoint-Call-Remaining:
+      - '15'
+      Date:
+      - Thu, 13 Aug 2026 10:16:31 GMT
+      X-Envoy-Upstream-Service-Time:
+      - '295'
+      Server:
+      - envoy
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"5d1527af-1bb5-4125-ad46-7d24068f5528","message":{"role":"assistant","content":[{"type":"thinking","thinking":"The
+        document clearly states that Ruby was created by Yukihiro Matsumoto in 1993.
+        I can now provide a direct answer to the user''s question."},{"type":"text","text":"According
+        to the document, Ruby was created by Yukihiro Matsumoto in 1993."}],"citations":[{"start":47,"end":65,"text":"Yukihiro
+        Matsumoto","sources":[{"type":"document","id":"doc:0","document":{"id":"doc:0","text":"The
+        Ruby programming language was created by Yukihiro Matsumoto in 1993. Ruby
+        was designed to make programmers happy and productive. Ruby on Rails is a
+        popular web framework built with Ruby. RubyLLM is a Ruby library for working
+        with large language models.\n","title":"facts.txt"}}],"type":"TEXT_CONTENT","content_index":1},{"start":69,"end":74,"text":"1993.","sources":[{"type":"document","id":"doc:0","document":{"id":"doc:0","text":"The
+        Ruby programming language was created by Yukihiro Matsumoto in 1993. Ruby
+        was designed to make programmers happy and productive. Ruby on Rails is a
+        popular web framework built with Ruby. RubyLLM is a Ruby library for working
+        with large language models.\n","title":"facts.txt"}}],"type":"TEXT_CONTENT","content_index":1}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":67,"output_tokens":46},"tokens":{"input_tokens":510,"output_tokens":70,"reasoning_tokens":29},"cached_tokens":144}}'
+  recorded_at: Thu, 13 Aug 2026 10:16:31 GMT
+recorded_with: VCR 6.4.0

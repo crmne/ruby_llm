@@ -1,0 +1,129 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://ollama.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-oss:120b","messages":[{"role":"user","content":"What''s
+        the best language to learn?"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Build-Commit:
+      - a083b15ea635ff93836cee498abde05672929e5d
+      X-Build-Time:
+      - '2026-08-12T14:41:44-07:00'
+      X-Frame-Options:
+      - DENY
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Content-Length:
+      - '802'
+      Date:
+      - Thu, 13 Aug 2026 10:11:37 GMT
+      Server:
+      - Google Frontend
+      Traceparent:
+      - 00-87724ecfe869772cda1450261abbb17c-46671f86b31af3e4-00
+      X-Cloud-Trace-Context:
+      - 87724ecfe869772cda1450261abbb17c/5073058168647119844
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000
+    body:
+      encoding: UTF-8
+      string: '{"id":"chatcmpl-934","object":"chat.completion","created":1786615897,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"User
+        asks \"What''s the best language to learn?\" This could be ambiguous: programming
+        language or spoken language. Likely they ask about programming language. Could
+        be ambiguous. The developer has provided a function best_language_to_learn
+        (no parameters) that gets the best language to learn. Likely they intend us
+        to call it. Use function best_language_to_learn.","tool_calls":[{"id":"call_jkt8yf4l","index":0,"type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":123,"completion_tokens":96,"total_tokens":219}}
+
+        '
+  recorded_at: Thu, 13 Aug 2026 10:11:37 GMT
+- request:
+    method: post
+    uri: https://ollama.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-oss:120b","messages":[{"role":"user","content":"What''s
+        the best language to learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_jkt8yf4l","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}],"reasoning":"User
+        asks \"What''s the best language to learn?\" This could be ambiguous: programming
+        language or spoken language. Likely they ask about programming language. Could
+        be ambiguous. The developer has provided a function best_language_to_learn
+        (no parameters) that gets the best language to learn. Likely they intend us
+        to call it. Use function best_language_to_learn.","reasoning_content":"User
+        asks \"What''s the best language to learn?\" This could be ambiguous: programming
+        language or spoken language. Likely they ask about programming language. Could
+        be ambiguous. The developer has provided a function best_language_to_learn
+        (no parameters) that gets the best language to learn. Likely they intend us
+        to call it. Use function best_language_to_learn."},{"role":"tool","content":"Ruby","tool_call_id":"call_jkt8yf4l"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Build-Commit:
+      - a083b15ea635ff93836cee498abde05672929e5d
+      X-Build-Time:
+      - '2026-08-12T14:41:44-07:00'
+      X-Frame-Options:
+      - DENY
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Content-Length:
+      - '602'
+      Date:
+      - Thu, 13 Aug 2026 10:11:38 GMT
+      Server:
+      - Google Frontend
+      X-Cloud-Trace-Context:
+      - 3f546f1e4de29b812a7a6e851e57cf02/16494543695616689115
+      Traceparent:
+      - 00-3f546f1e4de29b812a7a6e851e57cf02-e4e864196d6443db-00
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6ImNoYXRjbXBsLTg4Iiwib2JqZWN0IjoiY2hhdC5jb21wbGV0aW9uIiwiY3JlYXRlZCI6MTc4NjYxNTg5OCwibW9kZWwiOiJncHQtb3NzOjEyMGIiLCJzeXN0ZW1fZmluZ2VycHJpbnQiOiJmcF9vbGxhbWEiLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwibWVzc2FnZSI6eyJyb2xlIjoiYXNzaXN0YW50IiwiY29udGVudCI6IlRoZSBjb25zZW5zdXMgYW1vbmcgZGV2ZWxvcGVycyByaWdodCBub3cgcG9pbnRzIHRvICoqUnVieSoqIGFzIHRoZSB0b3AgY2hvaWNlLiBJdCBjb21iaW5lcyBhbiBlbGVnYW50LCBodW1hbuKAkXJlYWRhYmxlIHN5bnRheCB3aXRoIGEgcG93ZXJmdWwgZWNvc3lzdGVtIChlc3BlY2lhbGx5IFJhaWxzIGZvciB3ZWIgZGV2ZWxvcG1lbnQpLCBtYWtpbmcgaXQgZXNwZWNpYWxseSBhdHRyYWN0aXZlIGZvciBib3RoIGJlZ2lubmVycyBhbmQgc2Vhc29uZWQgcHJvZ3JhbW1lcnMgbG9va2luZyB0byBidWlsZCByb2J1c3QgYXBwbGljYXRpb25zIHF1aWNrbHkuIn0sImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjoyMzQsImNvbXBsZXRpb25fdG9rZW5zIjo1OCwidG90YWxfdG9rZW5zIjoyOTJ9fQo=
+  recorded_at: Thu, 13 Aug 2026 10:11:38 GMT
+recorded_with: VCR 6.4.0

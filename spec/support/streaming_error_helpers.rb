@@ -150,6 +150,15 @@ module StreamingErrorHelpers
       chunk_status: 500,
       expected_error: RubyLLM::ServerError
     },
+    cohere: {
+      url: 'https://api.cohere.com/v2/chat',
+      error_response: {
+        id: '04b1d243-9671-4333-9dac-b6c746947671',
+        message: 'Service overloaded - please try again later'
+      },
+      chunk_status: 500,
+      expected_error: RubyLLM::ServerError
+    },
     mistral: {
       url: 'https://api.mistral.ai/v1/chat/completions',
       error_response: {

@@ -1,0 +1,302 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.cohere.com/v2/chat
+    body:
+      encoding: UTF-8
+      string: '{"model":"command-a-plus-05-2026","messages":[{"role":"user","content":[{"type":"text","text":"Who
+        created Ruby? Use the document."}]}],"stream":true,"documents":[{"id":"doc:0","data":{"title":"facts.txt","text":"The
+        Ruby programming language was created by Yukihiro Matsumoto in 1993. Ruby
+        was designed to make programmers happy and productive. Ruby on Rails is a
+        popular web framework built with Ruby. RubyLLM is a Ruby library for working
+        with large language models.\n"}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Expose-Headers:
+      - X-Debug-Trace-ID
+      Cache-Control:
+      - no-cache, no-store, no-transform, must-revalidate, private, max-age=0
+      Content-Type:
+      - text/event-stream
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Pragma:
+      - no-cache
+      Vary:
+      - Origin
+      X-Accel-Expires:
+      - '0'
+      X-Debug-Trace-Id:
+      - 6bf2d69b12ab5421a6af030f8505aee7
+      X-Endpoint-Monthly-Call-Limit:
+      - '1000'
+      X-Trial-Endpoint-Call-Limit:
+      - '20'
+      X-Trial-Endpoint-Call-Remaining:
+      - '12'
+      Date:
+      - Thu, 13 Aug 2026 10:16:33 GMT
+      X-Envoy-Upstream-Service-Time:
+      - '20'
+      Server:
+      - envoy
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |+
+        event: message-start
+        data: {"id":"9d212b6d-474a-4bfb-80e7-4c3bc6221a68","type":"message-start","delta":{"message":{"role":"assistant","content":[],"tool_plan":"","tool_calls":[],"citations":[]}}}
+
+        event: content-start
+        data: {"type":"content-start","index":0,"delta":{"message":{"content":{"type":"thinking","thinking":""}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"The"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" document"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" clearly"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" states"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" that"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" Ruby"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" was"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" created"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" by"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" Yuk"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"ihiro"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" Matsumoto"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" in"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" 1"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"993"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"."}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" I"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" can"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" now"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" directly"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" answer"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" the"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" user's"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" question"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" using"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" this"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" information"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"."}}}}
+
+        event: content-end
+        data: {"type":"content-end","index":0}
+
+        event: content-start
+        data: {"type":"content-start","index":1,"delta":{"message":{"content":{"type":"text","text":""}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":"Based"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" on"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" the"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" document"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":","}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" Ruby"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" was"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" created"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" by"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" Y"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":"uk"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":"ihiro"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" Matsumoto"}}}}
+
+        event: citation-start
+        data: {"type":"citation-start","index":0,"delta":{"message":{"citations":{"start":43,"end":61,"text":"Yukihiro Matsumoto","sources":[{"type":"document","id":"doc:0","document":{"id":"doc:0","text":"The Ruby programming language was created by Yukihiro Matsumoto in 1993. Ruby was designed to make programmers happy and productive. Ruby on Rails is a popular web framework built with Ruby. RubyLLM is a Ruby library for working with large language models.\n","title":"facts.txt"}}],"type":"TEXT_CONTENT","content_index":1}}}}
+
+        event: citation-end
+        data: {"type":"citation-end","index":0}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" in"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" "}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":"1"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":"993"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":"."}}}}
+
+        event: citation-start
+        data: {"type":"citation-start","index":1,"delta":{"message":{"citations":{"start":65,"end":70,"text":"1993.","sources":[{"type":"document","id":"doc:0","document":{"id":"doc:0","text":"The Ruby programming language was created by Yukihiro Matsumoto in 1993. Ruby was designed to make programmers happy and productive. Ruby on Rails is a popular web framework built with Ruby. RubyLLM is a Ruby library for working with large language models.\n","title":"facts.txt"}}],"type":"TEXT_CONTENT","content_index":1}}}}
+
+        event: citation-end
+        data: {"type":"citation-end","index":1}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" The"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" document"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" states"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":":"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" \""}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":"The"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" Ruby"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" programming"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" language"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" was"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" created"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" by"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" Yuk"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":"ihiro"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" Matsumoto"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" in"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" 1"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":"993"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":".\""}}}}
+
+        event: citation-start
+        data: {"type":"citation-start","index":2,"delta":{"message":{"citations":{"start":92,"end":166,"text":"\"The Ruby programming language was created by Yukihiro Matsumoto in 1993.\"","sources":[{"type":"document","id":"doc:0","document":{"id":"doc:0","text":"The Ruby programming language was created by Yukihiro Matsumoto in 1993. Ruby was designed to make programmers happy and productive. Ruby on Rails is a popular web framework built with Ruby. RubyLLM is a Ruby library for working with large language models.\n","title":"facts.txt"}}],"type":"TEXT_CONTENT","content_index":1}}}}
+
+        event: citation-end
+        data: {"type":"citation-end","index":2}
+
+        event: content-end
+        data: {"type":"content-end","index":1}
+
+        event: message-end
+        data: {"type":"message-end","delta":{"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":65,"output_tokens":66},"tokens":{"input_tokens":508,"output_tokens":99,"reasoning_tokens":29},"cached_tokens":144}}}
+
+        data: [DONE]
+
+  recorded_at: Thu, 13 Aug 2026 10:16:33 GMT
+recorded_with: VCR 6.4.0
+...

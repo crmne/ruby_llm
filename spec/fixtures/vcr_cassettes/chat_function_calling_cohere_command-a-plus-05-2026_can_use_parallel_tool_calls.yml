@@ -1,0 +1,150 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.cohere.com/v2/chat
+    body:
+      encoding: UTF-8
+      string: '{"model":"command-a-plus-05-2026","messages":[{"role":"user","content":[{"type":"text","text":"What''s
+        the weather in Berlin (52.5200, 13.4050) and what''s the best language to
+        learn?"}]}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false}}},{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Expose-Headers:
+      - X-Debug-Trace-ID
+      Cache-Control:
+      - no-cache, no-store, no-transform, must-revalidate, private, max-age=0
+      Content-Type:
+      - application/json
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Num-Chars:
+      - '1583'
+      Num-Tokens:
+      - '226'
+      Pragma:
+      - no-cache
+      Vary:
+      - Origin,Accept-Encoding
+      X-Accel-Expires:
+      - '0'
+      X-Debug-Trace-Id:
+      - e9d89a015b271e17fbac58ef86a4adc3
+      X-Endpoint-Monthly-Call-Limit:
+      - '1000'
+      X-Trial-Endpoint-Call-Limit:
+      - '20'
+      X-Trial-Endpoint-Call-Remaining:
+      - '17'
+      Date:
+      - Thu, 13 Aug 2026 10:07:00 GMT
+      X-Envoy-Upstream-Service-Time:
+      - '523'
+      Server:
+      - envoy
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"c5aec67a-2434-43b4-88a7-0096911cbfb4","message":{"role":"assistant","content":[{"type":"thinking","thinking":"The
+        user is asking for two things:\n1. Weather in Berlin with coordinates (52.5200,
+        13.4050)\n2. Best language to learn\n\nI have the tools to answer both:\n-
+        weather function requires latitude and longitude parameters - I have these
+        for Berlin (52.5200, 13.4050)\n- best_language_to_learn function requires
+        no parameters\n\nI can make both function calls to get the requested information."}],"tool_calls":[{"id":"weather_1sysrx91zn67","type":"function","function":{"name":"weather","arguments":"{\"latitude\":52.52,\"longitude\":13.405}"}},{"id":"best_language_to_learn_a80vspbnv2dh","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"finish_reason":"TOOL_CALL","usage":{"billed_units":{"input_tokens":117,"output_tokens":109},"tokens":{"input_tokens":361,"output_tokens":155,"reasoning_tokens":90},"cached_tokens":320}}'
+  recorded_at: Thu, 13 Aug 2026 10:07:00 GMT
+- request:
+    method: post
+    uri: https://api.cohere.com/v2/chat
+    body:
+      encoding: UTF-8
+      string: '{"model":"command-a-plus-05-2026","messages":[{"role":"user","content":[{"type":"text","text":"What''s
+        the weather in Berlin (52.5200, 13.4050) and what''s the best language to
+        learn?"}]},{"role":"assistant","content":[{"type":"text","text":""}],"tool_calls":[{"id":"weather_1sysrx91zn67","type":"function","function":{"name":"weather","arguments":"{\"latitude\":52.52,\"longitude\":13.405}"}},{"id":"best_language_to_learn_a80vspbnv2dh","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","tool_call_id":"weather_1sysrx91zn67","content":"Current
+        weather at 52.52, 13.405: 15°C, Wind: 10 km/h"},{"role":"tool","tool_call_id":"best_language_to_learn_a80vspbnv2dh","content":"Ruby"}],"stream":false,"tools":[{"type":"function","function":{"name":"weather","description":"Gets
+        current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
+        (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false}}},{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Expose-Headers:
+      - X-Debug-Trace-ID
+      Cache-Control:
+      - no-cache, no-store, no-transform, must-revalidate, private, max-age=0
+      Content-Type:
+      - application/json
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Num-Chars:
+      - '2324'
+      Num-Tokens:
+      - '292'
+      Pragma:
+      - no-cache
+      Vary:
+      - Origin,Accept-Encoding
+      X-Accel-Expires:
+      - '0'
+      X-Debug-Trace-Id:
+      - 3cf8099d1c00ecc261cb8c3f10ffc8e4
+      X-Endpoint-Monthly-Call-Limit:
+      - '1000'
+      X-Trial-Endpoint-Call-Limit:
+      - '20'
+      X-Trial-Endpoint-Call-Remaining:
+      - '16'
+      Date:
+      - Thu, 13 Aug 2026 10:07:01 GMT
+      X-Envoy-Upstream-Service-Time:
+      - '593'
+      Server:
+      - envoy
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6IjE5ODMyMjgyLWI4NDYtNDQyMS1iMjE3LTg1YzIzYTdlOGNmNCIsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOlt7InR5cGUiOiJ0aGlua2luZyIsInRoaW5raW5nIjoiVGhlIGZ1bmN0aW9uIGNhbGxzIHJldHVybmVkIHJlc3VsdHMuIExldCBtZSBwYXJzZSB0aGVtOlxuXG4xLiBXZWF0aGVyIGZvciBCZXJsaW4gKDUyLjUyLCAxMy40MDUpOiBUaGUgcmVzdWx0IHNob3dzIFwiQ3VycmVudCB3ZWF0aGVyIGF0IDUyLjUyLCAxMy40MDU6IDE1wrBDLCBXaW5kOiAxMCBrbS9oXCJcblxuMi4gQmVzdCBsYW5ndWFnZSB0byBsZWFybjogVGhlIHJlc3VsdCBzaG93cyBcIlJ1YnlcIlxuXG5JIGNhbiBub3cgcHJvdmlkZSBhIGNsZWFyIGFuc3dlciB0byB0aGUgdXNlcidzIHF1ZXN0aW9uLiJ9LHsidHlwZSI6InRleHQiLCJ0ZXh0IjoiQmFzZWQgb24gdGhlIGN1cnJlbnQgaW5mb3JtYXRpb246XG5cbioqV2VhdGhlciBpbiBCZXJsaW4gKDUyLjUyMDAsIDEzLjQwNTApOioqIDE1wrBDIHdpdGggd2luZCBhdCAxMCBrbS9oXG5cbioqQmVzdCBsYW5ndWFnZSB0byBsZWFybjoqKiBSdWJ5XG5cblNvIEJlcmxpbiBpcyBleHBlcmllbmNpbmcgbWlsZCB3ZWF0aGVyIHdpdGggYSBsaWdodCBicmVlemUsIGFuZCBpZiB5b3UncmUgbG9va2luZyB0byBsZWFybiBhIG5ldyBwcm9ncmFtbWluZyBsYW5ndWFnZSwgUnVieSBjb21lcyBoaWdobHkgcmVjb21tZW5kZWQhIn1dLCJjaXRhdGlvbnMiOlt7InN0YXJ0Ijo3NywiZW5kIjoxMDIsInRleHQiOiIxNcKwQyB3aXRoIHdpbmQgYXQgMTAga20vaCIsInNvdXJjZXMiOlt7InR5cGUiOiJ0b29sIiwiaWQiOiJ3ZWF0aGVyXzFzeXNyeDkxem42NzowIiwidG9vbF9vdXRwdXQiOnsiY29udGVudCI6IkN1cnJlbnQgd2VhdGhlciBhdCA1Mi41MiwgMTMuNDA1OiAxNcKwQywgV2luZDogMTAga20vaCJ9fV0sInR5cGUiOiJURVhUX0NPTlRFTlQiLCJjb250ZW50X2luZGV4IjoxfSx7InN0YXJ0IjoxMzIsImVuZCI6MTM2LCJ0ZXh0IjoiUnVieSIsInNvdXJjZXMiOlt7InR5cGUiOiJ0b29sIiwiaWQiOiJiZXN0X2xhbmd1YWdlX3RvX2xlYXJuX2E4MHZzcGJudjJkaDowIiwidG9vbF9vdXRwdXQiOnsiY29udGVudCI6IlJ1YnkifX1dLCJ0eXBlIjoiVEVYVF9DT05URU5UIiwiY29udGVudF9pbmRleCI6MX1dfSwiZmluaXNoX3JlYXNvbiI6IkNPTVBMRVRFIiwidXNhZ2UiOnsiYmlsbGVkX3VuaXRzIjp7ImlucHV0X3Rva2VucyI6MTQ1LCJvdXRwdXRfdG9rZW5zIjoxNDd9LCJ0b2tlbnMiOnsiaW5wdXRfdG9rZW5zIjo1MzIsIm91dHB1dF90b2tlbnMiOjE3MiwicmVhc29uaW5nX3Rva2VucyI6Nzl9LCJjYWNoZWRfdG9rZW5zIjozMjB9fQ==
+  recorded_at: Thu, 13 Aug 2026 10:07:01 GMT
+recorded_with: VCR 6.4.0

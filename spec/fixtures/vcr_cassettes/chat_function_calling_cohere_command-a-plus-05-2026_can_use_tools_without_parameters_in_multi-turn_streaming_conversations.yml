@@ -1,0 +1,1600 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.cohere.com/v2/chat
+    body:
+      encoding: UTF-8
+      string: '{"model":"command-a-plus-05-2026","messages":[{"role":"system","content":[{"type":"text","text":"You
+        must use tools whenever possible."}]},{"role":"user","content":[{"type":"text","text":"What''s
+        the best language to learn?"}]}],"stream":true,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Expose-Headers:
+      - X-Debug-Trace-ID
+      Cache-Control:
+      - no-cache, no-store, no-transform, must-revalidate, private, max-age=0
+      Content-Type:
+      - text/event-stream
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Pragma:
+      - no-cache
+      Vary:
+      - Origin
+      X-Accel-Expires:
+      - '0'
+      X-Debug-Trace-Id:
+      - 06ae2aab65cb2f446c694b6728c23ec7
+      X-Endpoint-Monthly-Call-Limit:
+      - '1000'
+      X-Trial-Endpoint-Call-Limit:
+      - '20'
+      X-Trial-Endpoint-Call-Remaining:
+      - '9'
+      Date:
+      - Thu, 13 Aug 2026 10:07:12 GMT
+      X-Envoy-Upstream-Service-Time:
+      - '43'
+      Server:
+      - envoy
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |+
+        event: message-start
+        data: {"id":"56d0cfbb-df6a-4b30-aa08-e2017e63c349","type":"message-start","delta":{"message":{"role":"assistant","content":[],"tool_plan":"","tool_calls":[],"citations":[]}}}
+
+        event: content-start
+        data: {"type":"content-start","index":0,"delta":{"message":{"content":{"type":"thinking","thinking":""}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"The"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" user"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" is"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" asking"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" \""}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"What's"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" the"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" best"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" language"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" to"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" learn"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"?\""}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" and"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" I"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" have"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" a"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" tool"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" called"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" \""}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"best"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"_language"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"_to"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"_learn"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"\""}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" that"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" can"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" get"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" the"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" best"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" language"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" to"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" learn"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"."}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" The"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" tool"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" has"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" no"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" required"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" parameters"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":","}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" so"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" I"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" can"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" call"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" it"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" directly"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"."}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"\n\nAccording"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" to"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" the"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" policies"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":","}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" I"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" must"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" use"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" tools"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" whenever"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" possible"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":","}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" and"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" this"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" is"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" a"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" perfect"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" case"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" where"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" I"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" have"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" a"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" relevant"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" tool"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" available"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" for"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" the"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" exact"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" question"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" the"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" user"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" is"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" asking"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"."}}}}
+
+        event: content-end
+        data: {"type":"content-end","index":0}
+
+        event: tool-call-start
+        data: {"type":"tool-call-start","index":0,"delta":{"message":{"tool_calls":{"id":"best_language_to_learn_whr6dgszbdv7","type":"function","function":{"name":"best_language_to_learn","arguments":""}}}}}
+
+        event: tool-call-end
+        data: {"type":"tool-call-end","index":0}
+
+        event: message-end
+        data: {"type":"message-end","delta":{"finish_reason":"TOOL_CALL","usage":{"billed_units":{"input_tokens":40,"output_tokens":86},"tokens":{"input_tokens":255,"output_tokens":111,"reasoning_tokens":81},"cached_tokens":208}}}
+
+        data: [DONE]
+
+  recorded_at: Thu, 13 Aug 2026 10:07:12 GMT
+- request:
+    method: post
+    uri: https://api.cohere.com/v2/chat
+    body:
+      encoding: UTF-8
+      string: '{"model":"command-a-plus-05-2026","messages":[{"role":"system","content":[{"type":"text","text":"You
+        must use tools whenever possible."}]},{"role":"user","content":[{"type":"text","text":"What''s
+        the best language to learn?"}]},{"role":"assistant","content":[{"type":"text","text":""}],"tool_calls":[{"id":"best_language_to_learn_whr6dgszbdv7","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","tool_call_id":"best_language_to_learn_whr6dgszbdv7","content":"Ruby"}],"stream":true,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Expose-Headers:
+      - X-Debug-Trace-ID
+      Cache-Control:
+      - no-cache, no-store, no-transform, must-revalidate, private, max-age=0
+      Content-Type:
+      - text/event-stream
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Pragma:
+      - no-cache
+      Vary:
+      - Origin
+      X-Accel-Expires:
+      - '0'
+      X-Debug-Trace-Id:
+      - 6903bbb378fe303048945f4136172b16
+      X-Endpoint-Monthly-Call-Limit:
+      - '1000'
+      X-Trial-Endpoint-Call-Limit:
+      - '20'
+      X-Trial-Endpoint-Call-Remaining:
+      - '8'
+      Date:
+      - Thu, 13 Aug 2026 10:07:12 GMT
+      X-Envoy-Upstream-Service-Time:
+      - '13'
+      Server:
+      - envoy
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |+
+        event: message-start
+        data: {"id":"406979b4-9a56-48db-9642-80f6993ed42c","type":"message-start","delta":{"message":{"role":"assistant","content":[],"tool_plan":"","tool_calls":[],"citations":[]}}}
+
+        event: content-start
+        data: {"type":"content-start","index":0,"delta":{"message":{"content":{"type":"thinking","thinking":""}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"The"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" function"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" returned"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" a"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" result"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" that"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" shows"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" the"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" best"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" language"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" to"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" learn"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" is"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" Ruby"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"."}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" The"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" result"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" is"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" formatted"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" as"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" a"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" JSON"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" string"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" containing"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" an"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" array"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" with"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" one"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" object"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" that"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" has"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" a"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" \""}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"content"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"\""}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" field"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" with"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" \""}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"Ruby"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"\""}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" as"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" the"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" value"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"."}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"\n\nI"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" should"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" provide"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" a"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" clear"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" response"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" to"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" the"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" user"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" about"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" the"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" best"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" language"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" to"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" learn"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" based"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" on"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" this"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" function"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" result"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"."}}}}
+
+        event: content-end
+        data: {"type":"content-end","index":0}
+
+        event: content-start
+        data: {"type":"content-start","index":1,"delta":{"message":{"content":{"type":"text","text":""}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":"Based"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" on"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" the"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" function"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" result"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":","}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" the"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" best"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" language"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" to"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" learn"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" is"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" **"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":"R"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":"uby"}}}}
+
+        event: citation-start
+        data: {"type":"citation-start","index":0,"delta":{"message":{"citations":{"start":62,"end":66,"text":"Ruby","sources":[{"type":"tool","id":"best_language_to_learn_whr6dgszbdv7:0","tool_output":{"content":"Ruby"}}],"type":"TEXT_CONTENT","content_index":1}}}}
+
+        event: citation-end
+        data: {"type":"citation-end","index":0}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":"**."}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":"\n\nRuby"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" is"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" a"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" versatile"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" programming"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" language"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" known"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" for"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" its"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" elegant"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" syntax"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" and"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" readability"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":"."}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" It's"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" particularly"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" popular"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" for"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" web"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" development"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" ("}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":"especially"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" with"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" the"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" Ruby"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" on"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" Rails"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" framework"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":"),"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" but"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" can"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" be"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" used"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" for"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" a"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" wide"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" range"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" of"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" applications"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" including"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" command"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":"-line"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" tools"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":","}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" scripting"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":","}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" and"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" more"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":"."}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" Its"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" philosophy"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" emphasizes"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" developer"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" happiness"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" and"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" productivity"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":","}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" making"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" it"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" a"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" great"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" choice"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" for"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" both"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" beginners"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" and"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" experienced"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" programmers"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" looking"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" to"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" expand"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" their"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" skill"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" set"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":"."}}}}
+
+        event: content-end
+        data: {"type":"content-end","index":1}
+
+        event: message-end
+        data: {"type":"message-end","delta":{"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":43,"output_tokens":155},"tokens":{"input_tokens":332,"output_tokens":170,"reasoning_tokens":65},"cached_tokens":144}}}
+
+        data: [DONE]
+
+  recorded_at: Thu, 13 Aug 2026 10:07:13 GMT
+- request:
+    method: post
+    uri: https://api.cohere.com/v2/chat
+    body:
+      encoding: UTF-8
+      string: '{"model":"command-a-plus-05-2026","messages":[{"role":"system","content":[{"type":"text","text":"You
+        must use tools whenever possible."}]},{"role":"user","content":[{"type":"text","text":"What''s
+        the best language to learn?"}]},{"role":"assistant","content":[{"type":"text","text":""}],"tool_calls":[{"id":"best_language_to_learn_whr6dgszbdv7","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","tool_call_id":"best_language_to_learn_whr6dgszbdv7","content":"Ruby"},{"role":"assistant","content":[{"type":"text","text":"Based
+        on the function result, the best language to learn is **Ruby**.\n\nRuby is
+        a versatile programming language known for its elegant syntax and readability.
+        It''s particularly popular for web development (especially with the Ruby on
+        Rails framework), but can be used for a wide range of applications including
+        command-line tools, scripting, and more. Its philosophy emphasizes developer
+        happiness and productivity, making it a great choice for both beginners and
+        experienced programmers looking to expand their skill set."}]},{"role":"user","content":[{"type":"text","text":"Tell
+        me again: what''s the best language to learn?"}]}],"stream":true,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Expose-Headers:
+      - X-Debug-Trace-ID
+      Cache-Control:
+      - no-cache, no-store, no-transform, must-revalidate, private, max-age=0
+      Content-Type:
+      - text/event-stream
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Pragma:
+      - no-cache
+      Vary:
+      - Origin
+      X-Accel-Expires:
+      - '0'
+      X-Debug-Trace-Id:
+      - f2e6d4b8f877ed89401c8a021c5b716d
+      X-Endpoint-Monthly-Call-Limit:
+      - '1000'
+      X-Trial-Endpoint-Call-Limit:
+      - '20'
+      X-Trial-Endpoint-Call-Remaining:
+      - '7'
+      Date:
+      - Thu, 13 Aug 2026 10:07:13 GMT
+      X-Envoy-Upstream-Service-Time:
+      - '11'
+      Server:
+      - envoy
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |+
+        event: message-start
+        data: {"id":"3448f51e-52f8-4c6d-9546-069bba4807f0","type":"message-start","delta":{"message":{"role":"assistant","content":[],"tool_plan":"","tool_calls":[],"citations":[]}}}
+
+        event: content-start
+        data: {"type":"content-start","index":0,"delta":{"message":{"content":{"type":"thinking","thinking":""}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"The"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" user"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" is"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" asking"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" again"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" for"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" the"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" best"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" language"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" to"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" learn"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"."}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" I"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" should"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" use"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" the"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" function"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" again"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" to"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" get"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" the"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" answer"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":","}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" as"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" the"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" instructions"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" say"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" to"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" use"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" tools"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" whenever"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" possible"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"."}}}}
+
+        event: content-end
+        data: {"type":"content-end","index":0}
+
+        event: tool-call-start
+        data: {"type":"tool-call-start","index":0,"delta":{"message":{"tool_calls":{"id":"best_language_to_learn_11546mg7dcnp","type":"function","function":{"name":"best_language_to_learn","arguments":""}}}}}
+
+        event: tool-call-end
+        data: {"type":"tool-call-end","index":0}
+
+        event: message-end
+        data: {"type":"message-end","delta":{"finish_reason":"TOOL_CALL","usage":{"billed_units":{"input_tokens":145,"output_tokens":38},"tokens":{"input_tokens":443,"output_tokens":63,"reasoning_tokens":33},"cached_tokens":208}}}
+
+        data: [DONE]
+
+  recorded_at: Thu, 13 Aug 2026 10:07:14 GMT
+- request:
+    method: post
+    uri: https://api.cohere.com/v2/chat
+    body:
+      encoding: UTF-8
+      string: '{"model":"command-a-plus-05-2026","messages":[{"role":"system","content":[{"type":"text","text":"You
+        must use tools whenever possible."}]},{"role":"user","content":[{"type":"text","text":"What''s
+        the best language to learn?"}]},{"role":"assistant","content":[{"type":"text","text":""}],"tool_calls":[{"id":"best_language_to_learn_whr6dgszbdv7","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","tool_call_id":"best_language_to_learn_whr6dgszbdv7","content":"Ruby"},{"role":"assistant","content":[{"type":"text","text":"Based
+        on the function result, the best language to learn is **Ruby**.\n\nRuby is
+        a versatile programming language known for its elegant syntax and readability.
+        It''s particularly popular for web development (especially with the Ruby on
+        Rails framework), but can be used for a wide range of applications including
+        command-line tools, scripting, and more. Its philosophy emphasizes developer
+        happiness and productivity, making it a great choice for both beginners and
+        experienced programmers looking to expand their skill set."}]},{"role":"user","content":[{"type":"text","text":"Tell
+        me again: what''s the best language to learn?"}]},{"role":"assistant","content":[{"type":"text","text":""}],"tool_calls":[{"id":"best_language_to_learn_11546mg7dcnp","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","tool_call_id":"best_language_to_learn_11546mg7dcnp","content":"Ruby"}],"stream":true,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Expose-Headers:
+      - X-Debug-Trace-ID
+      Cache-Control:
+      - no-cache, no-store, no-transform, must-revalidate, private, max-age=0
+      Content-Type:
+      - text/event-stream
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Pragma:
+      - no-cache
+      Vary:
+      - Origin
+      X-Accel-Expires:
+      - '0'
+      X-Debug-Trace-Id:
+      - 8866424e4b9ee89a1f17404b6050f2f5
+      X-Endpoint-Monthly-Call-Limit:
+      - '1000'
+      X-Trial-Endpoint-Call-Limit:
+      - '20'
+      X-Trial-Endpoint-Call-Remaining:
+      - '6'
+      Date:
+      - Thu, 13 Aug 2026 10:07:14 GMT
+      X-Envoy-Upstream-Service-Time:
+      - '6'
+      Server:
+      - envoy
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |+
+        event: message-start
+        data: {"id":"1d28c9ac-f353-4502-9114-68b32377e8db","type":"message-start","delta":{"message":{"role":"assistant","content":[],"tool_plan":"","tool_calls":[],"citations":[]}}}
+
+        event: content-start
+        data: {"type":"content-start","index":0,"delta":{"message":{"content":{"type":"thinking","thinking":""}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"The"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" user"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" is"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" asking"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" again"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" what"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" the"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" best"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" language"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" to"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" learn"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" is"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"."}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" I"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" just"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" called"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" the"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" function"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" and"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" got"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" \""}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"Ruby"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"\""}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" as"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" the"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" result"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"."}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" I"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" should"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" provide"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" the"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" answer"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" again"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":","}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" perhaps"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" with"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" a"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" bit"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" more"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" detail"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" or"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" a"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" different"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" perspective"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" since"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" they're"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" asking"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":" again"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":0,"delta":{"message":{"content":{"thinking":"."}}}}
+
+        event: content-end
+        data: {"type":"content-end","index":0}
+
+        event: content-start
+        data: {"type":"content-start","index":1,"delta":{"message":{"content":{"type":"text","text":""}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":"Based"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" on"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" the"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" function"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" call"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":","}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" the"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" best"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" language"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" to"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" learn"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" is"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" **"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":"R"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":"uby"}}}}
+
+        event: citation-start
+        data: {"type":"citation-start","index":0,"delta":{"message":{"citations":{"start":60,"end":64,"text":"Ruby","sources":[{"type":"tool","id":"best_language_to_learn_11546mg7dcnp:0","tool_output":{"content":"Ruby"}}],"type":"TEXT_CONTENT","content_index":1}}}}
+
+        event: citation-end
+        data: {"type":"citation-end","index":0}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":"**."}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":"\n\nRuby"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" is"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" a"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" dynamic"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":","}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" object"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":"-oriented"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" programming"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" language"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" known"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" for"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" its"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" elegant"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" syntax"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" and"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" readability"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":"."}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" It's"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" particularly"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" popular"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" for"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" web"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" development"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" ("}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":"especially"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" with"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" Ruby"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" on"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" Rails"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":"),"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" but"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" can"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" be"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" used"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" for"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" a"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" wide"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" range"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" of"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" applications"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" including"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" automation"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":","}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" scripting"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":","}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" and"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" building"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" command"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":"-line"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" tools"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":"."}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" Its"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" philosophy"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" emphasizes"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" developer"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" happiness"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" and"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" productivity"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":","}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" making"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" it"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" a"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" great"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" choice"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" for"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" both"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" beginners"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" and"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" experienced"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" programmers"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" looking"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" to"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" expand"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" their"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" skill"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":" set"}}}}
+
+        event: content-delta
+        data: {"type":"content-delta","index":1,"delta":{"message":{"content":{"text":"."}}}}
+
+        event: content-end
+        data: {"type":"content-end","index":1}
+
+        event: message-end
+        data: {"type":"message-end","delta":{"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":148,"output_tokens":141},"tokens":{"input_tokens":520,"output_tokens":156,"reasoning_tokens":49},"cached_tokens":288}}}
+
+        data: [DONE]
+
+  recorded_at: Thu, 13 Aug 2026 10:07:15 GMT
+recorded_with: VCR 6.4.0
+...

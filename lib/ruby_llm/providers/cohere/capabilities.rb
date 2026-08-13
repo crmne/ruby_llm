@@ -84,11 +84,24 @@ module RubyLLM
             model_id.start_with?('north-')
         end
 
+        # Cohere is retiring tool_choice: the Command R models and
+        # command-a-03-2025 take it, while everything since answers
+        # "tool_choice is not supported for this model". New models are
+        # assumed not to take it until one is confirmed to.
+        TOOL_CHOICE_MODELS = %w[
+          command-a-03-2025
+          command-r-08-2024
+          command-r-plus-08-2024
+          command-r7b-12-2024
+        ].freeze
+
         # Tool use, structured output, and citations are Command features; the
-        # Aya research models reach the Chat endpoint without them.
+        # Aya research models reach the Chat endpoint without them, and so
+        # does the vision model, which answers "tool use is not supported by
+        # the provided model".
         def supports_tools?(model_id)
           chat?(model_id) && !model_id.start_with?('c4ai-aya', 'tiny-aya') &&
-            model_id != 'command-a-translate-08-2025'
+            !%w[command-a-translate-08-2025 command-a-vision-07-2025].include?(model_id)
         end
 
         def context_window_for(model_id)
@@ -124,8 +137,8 @@ module RubyLLM
 
         def chat_capabilities(model_id)
           capabilities = ['streaming']
-          capabilities.push('function_calling', 'tool_choice', 'structured_output', 'citations') if
-            supports_tools?(model_id)
+          capabilities.push('function_calling', 'structured_output', 'citations') if supports_tools?(model_id)
+          capabilities << 'tool_choice' if TOOL_CHOICE_MODELS.include?(model_id)
           capabilities << 'vision' if supports_vision?(model_id)
           capabilities << 'reasoning' if supports_reasoning?(model_id)
           capabilities

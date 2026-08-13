@@ -86,11 +86,13 @@ module RubyLLM
           }
         end
 
+        # Cohere returns tool_plan alongside tool calls, and RubyLLM surfaces
+        # it as thinking, but the newer models reject it on the way back in.
+        # It is optional in a request, so the plan stays out of the history.
         def format_assistant_message(msg)
           message = { role: 'assistant' }
           content = Media.format_content(msg.content, msg.attachments)
           message[:content] = content unless content.empty?
-          message[:tool_plan] = msg.thinking.text if msg.tool_call? && msg.thinking&.text
           message[:tool_calls] = Tools.format_tool_calls(msg.tool_calls) if msg.tool_call?
           message
         end

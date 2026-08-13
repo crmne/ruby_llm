@@ -1,0 +1,54 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.cohere.com/v2/chat
+    body:
+      encoding: UTF-8
+      string: '{"model":"command-a-plus-05-2026","messages":[{"role":"user","content":[{"type":"text","text":"Hello"}]}],"stream":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 401
+      message: Unauthorized
+    headers:
+      Cache-Control:
+      - no-cache, no-store, no-transform, must-revalidate, private, max-age=0
+      Content-Type:
+      - application/json
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Pragma:
+      - no-cache
+      Vary:
+      - Origin,Accept-Encoding
+      X-Accel-Expires:
+      - '0'
+      Date:
+      - Thu, 13 Aug 2026 10:16:34 GMT
+      X-Envoy-Upstream-Service-Time:
+      - '1'
+      Server:
+      - envoy
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"5f8aedb5-b4e3-478a-a491-fc306b480bf3","message":"Incorrect API
+        key provided: ***********. You can find your API key at https://dashboard.cohere.com/api-keys."}'
+  recorded_at: Thu, 13 Aug 2026 10:16:34 GMT
+recorded_with: VCR 6.4.0

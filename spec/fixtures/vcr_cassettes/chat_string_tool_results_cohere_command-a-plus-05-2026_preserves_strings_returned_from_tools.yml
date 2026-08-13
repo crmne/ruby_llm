@@ -1,0 +1,151 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.cohere.com/v2/chat
+    body:
+      encoding: UTF-8
+      string: '{"model":"command-a-plus-05-2026","messages":[{"role":"user","content":[{"type":"text","text":"Process
+        this query: test data"}]}],"stream":false,"tools":[{"type":"function","function":{"name":"content_returning","description":"Returns
+        a processed string result","parameters":{"type":"object","properties":{"query":{"type":"string","description":"Query
+        to process"}},"required":["query"],"additionalProperties":false}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Expose-Headers:
+      - X-Debug-Trace-ID
+      Cache-Control:
+      - no-cache, no-store, no-transform, must-revalidate, private, max-age=0
+      Content-Type:
+      - application/json
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Num-Chars:
+      - '1222'
+      Num-Tokens:
+      - '115'
+      Pragma:
+      - no-cache
+      Vary:
+      - Origin,Accept-Encoding
+      X-Accel-Expires:
+      - '0'
+      X-Debug-Trace-Id:
+      - dfdf4f39826f673099789271765257f7
+      X-Endpoint-Monthly-Call-Limit:
+      - '1000'
+      X-Trial-Endpoint-Call-Limit:
+      - '20'
+      X-Trial-Endpoint-Call-Remaining:
+      - '17'
+      Date:
+      - Thu, 13 Aug 2026 10:08:38 GMT
+      X-Envoy-Upstream-Service-Time:
+      - '349'
+      Server:
+      - envoy
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"8143cddb-9e04-40c0-b6ea-4146aea367b9","message":{"role":"assistant","content":[{"type":"thinking","thinking":"The
+        user has provided a query \"test data\" and wants me to process it. I have
+        access to a function called \"content_returning\" that can process queries.
+        The function requires a \"query\" parameter, which the user has provided as
+        \"test data\". I should use this function to process the query."}],"tool_calls":[{"id":"content_returning_m92asxeaycvf","type":"function","function":{"name":"content_returning","arguments":"{\"query\":\"test
+        data\"}"}}]},"finish_reason":"TOOL_CALL","usage":{"billed_units":{"input_tokens":43,"output_tokens":72},"tokens":{"input_tokens":259,"output_tokens":97,"reasoning_tokens":63},"cached_tokens":144}}'
+  recorded_at: Thu, 13 Aug 2026 10:08:38 GMT
+- request:
+    method: post
+    uri: https://api.cohere.com/v2/chat
+    body:
+      encoding: UTF-8
+      string: '{"model":"command-a-plus-05-2026","messages":[{"role":"user","content":[{"type":"text","text":"Process
+        this query: test data"}]},{"role":"assistant","content":[{"type":"text","text":""}],"tool_calls":[{"id":"content_returning_m92asxeaycvf","type":"function","function":{"name":"content_returning","arguments":"{\"query\":\"test
+        data\"}"}}]},{"role":"tool","tool_call_id":"content_returning_m92asxeaycvf","content":"Processed:
+        test data"}],"stream":false,"tools":[{"type":"function","function":{"name":"content_returning","description":"Returns
+        a processed string result","parameters":{"type":"object","properties":{"query":{"type":"string","description":"Query
+        to process"}},"required":["query"],"additionalProperties":false}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Expose-Headers:
+      - X-Debug-Trace-ID
+      Cache-Control:
+      - no-cache, no-store, no-transform, must-revalidate, private, max-age=0
+      Content-Type:
+      - application/json
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Num-Chars:
+      - '1702'
+      Num-Tokens:
+      - '115'
+      Pragma:
+      - no-cache
+      Vary:
+      - Origin,Accept-Encoding
+      X-Accel-Expires:
+      - '0'
+      X-Debug-Trace-Id:
+      - b5eaca2fb48d5cd34c003e150e924b69
+      X-Endpoint-Monthly-Call-Limit:
+      - '1000'
+      X-Trial-Endpoint-Call-Limit:
+      - '20'
+      X-Trial-Endpoint-Call-Remaining:
+      - '16'
+      Date:
+      - Thu, 13 Aug 2026 10:08:39 GMT
+      X-Envoy-Upstream-Service-Time:
+      - '327'
+      Server:
+      - envoy
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"a0004add-3dab-449f-b1c8-9610abdcd0ec","message":{"role":"assistant","content":[{"type":"thinking","thinking":"The
+        function returned a result indicating it processed the query \"test data\"
+        and returned \"Processed: test data\". This seems to be a simple processing
+        function that just adds \"Processed: \" to the input. I should report this
+        result to the user."},{"type":"text","text":"The query has been processed.
+        The result shows: \"Processed: test data\""}],"citations":[{"start":48,"end":70,"text":"\"Processed:
+        test data\"","sources":[{"type":"tool","id":"content_returning_m92asxeaycvf:0","tool_output":{"content":"Processed:
+        test data"}}],"type":"TEXT_CONTENT","content_index":1}]},"finish_reason":"COMPLETE","usage":{"billed_units":{"input_tokens":49,"output_tokens":66},"tokens":{"input_tokens":343,"output_tokens":79,"reasoning_tokens":50},"cached_tokens":144}}'
+  recorded_at: Thu, 13 Aug 2026 10:08:39 GMT
+recorded_with: VCR 6.4.0

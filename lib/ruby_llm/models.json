@@ -19893,10 +19893,10 @@
   },
   {
     "id": "c4ai-aya-expanse-32b",
-    "name": "Aya Expanse 32B",
+    "name": "C4ai Aya Expanse 32b",
     "provider": "cohere",
     "family": "aya",
-    "created_at": "2024-10-24 00:00:00 UTC",
+    "created_at": "2024-10-23 22:00:00 UTC",
     "context_window": 128000,
     "max_output_tokens": 4000,
     "knowledge_cutoff": null,
@@ -19921,17 +19921,22 @@
     },
     "metadata": {
       "endpoints": [
+        "generate",
         "chat"
-      ]
+      ],
+      "default_endpoints": [],
+      "features": [],
+      "finetuned": false,
+      "tokenizer_url": "https://storage.googleapis.com/cohere-public/tokenizers/c4ai-aya-expanse-32b.json"
     }
   },
   {
     "id": "c4ai-aya-vision-32b",
-    "name": "Aya Vision 32B",
+    "name": "C4ai Aya Vision 32b",
     "provider": "cohere",
     "family": "aya",
-    "created_at": "2025-03-04 00:00:00 UTC",
-    "context_window": 16000,
+    "created_at": "2025-03-03 23:00:00 UTC",
+    "context_window": 16384,
     "max_output_tokens": 4000,
     "knowledge_cutoff": null,
     "modalities": {
@@ -19958,16 +19963,24 @@
     "metadata": {
       "endpoints": [
         "chat"
-      ]
+      ],
+      "default_endpoints": [],
+      "features": [
+        "logprobs",
+        "vision",
+        "citations"
+      ],
+      "finetuned": false,
+      "tokenizer_url": "https://storage.googleapis.com/cohere-public/tokenizers/c4ai-aya-vision-32b.json"
     }
   },
   {
     "id": "cohere-transcribe-03-2026",
-    "name": "Cohere Transcribe",
+    "name": "Cohere Transcribe 03 2026",
     "provider": "cohere",
     "family": "transcribe",
-    "created_at": "2026-03-01 00:00:00 UTC",
-    "context_window": null,
+    "created_at": "2026-02-28 23:00:00 UTC",
+    "context_window": 32768,
     "max_output_tokens": null,
     "knowledge_cutoff": null,
     "modalities": {
@@ -19984,19 +19997,23 @@
     "pricing": {},
     "metadata": {
       "endpoints": [
-        "transcribe"
-      ]
+        "transcriptions"
+      ],
+      "default_endpoints": [],
+      "features": [],
+      "finetuned": false,
+      "tokenizer_url": "https://storage.googleapis.com/cohere-public/tokenizers/cohere-transcribe-03-2026.json"
     }
   },
   {
     "id": "command-a-03-2025",
-    "name": "Command A",
+    "name": "Command A 03 2025",
     "provider": "cohere",
     "family": "command-a",
-    "created_at": "2025-03-13 00:00:00 UTC",
-    "context_window": 256000,
+    "created_at": "2025-03-12 23:00:00 UTC",
+    "context_window": 288000,
     "max_output_tokens": 8000,
-    "knowledge_cutoff": "2024-06-01",
+    "knowledge_cutoff": null,
     "modalities": {
       "input": [
         "text"
@@ -20008,9 +20025,9 @@
     "capabilities": [
       "streaming",
       "function_calling",
-      "tool_choice",
       "structured_output",
-      "citations"
+      "citations",
+      "tool_choice"
     ],
     "pricing": {
       "text_tokens": {
@@ -20023,18 +20040,33 @@
     "metadata": {
       "endpoints": [
         "chat"
-      ]
+      ],
+      "default_endpoints": [
+        "chat",
+        "generate"
+      ],
+      "features": [
+        "json_mode",
+        "json_schema",
+        "strict_tools",
+        "safety_modes",
+        "tools",
+        "tool_choice",
+        "citations"
+      ],
+      "finetuned": false,
+      "tokenizer_url": "https://storage.googleapis.com/cohere-public/tokenizers/command-a-03-2025.json"
     }
   },
   {
     "id": "command-a-plus-05-2026",
-    "name": "Command A+",
+    "name": "Command A Plus 05 2026",
     "provider": "cohere",
     "family": "command-a-plus",
-    "created_at": "2026-05-20 00:00:00 UTC",
-    "context_window": 128000,
+    "created_at": "2026-05-19 22:00:00 UTC",
+    "context_window": 436000,
     "max_output_tokens": 64000,
-    "knowledge_cutoff": "2025-04-01",
+    "knowledge_cutoff": null,
     "modalities": {
       "input": [
         "text",
@@ -20047,7 +20079,6 @@
     "capabilities": [
       "streaming",
       "function_calling",
-      "tool_choice",
       "structured_output",
       "citations",
       "vision",
@@ -20063,19 +20094,35 @@
     },
     "metadata": {
       "endpoints": [
+        "generate",
         "chat"
-      ]
+      ],
+      "default_endpoints": [],
+      "features": [
+        "logprobs",
+        "json_mode",
+        "json_schema",
+        "strict_tools",
+        "safety_modes",
+        "tools",
+        "reasoning",
+        "vision",
+        "tool_images",
+        "citations"
+      ],
+      "finetuned": false,
+      "tokenizer_url": "https://storage.googleapis.com/cohere-public/tokenizers/command-a-plus-05-2026.json"
     }
   },
   {
     "id": "command-a-reasoning-08-2025",
-    "name": "Command A Reasoning",
+    "name": "Command A Reasoning 08 2025",
     "provider": "cohere",
     "family": "command-a",
-    "created_at": "2025-08-21 00:00:00 UTC",
-    "context_window": 256000,
+    "created_at": "2025-08-20 22:00:00 UTC",
+    "context_window": 288768,
     "max_output_tokens": 32000,
-    "knowledge_cutoff": "2024-06-01",
+    "knowledge_cutoff": null,
     "modalities": {
       "input": [
         "text"
@@ -20087,7 +20134,6 @@
     "capabilities": [
       "streaming",
       "function_calling",
-      "tool_choice",
       "structured_output",
       "citations",
       "reasoning"
@@ -20103,18 +20149,30 @@
     "metadata": {
       "endpoints": [
         "chat"
-      ]
+      ],
+      "default_endpoints": [],
+      "features": [
+        "json_mode",
+        "json_schema",
+        "strict_tools",
+        "safety_modes",
+        "tools",
+        "reasoning",
+        "citations"
+      ],
+      "finetuned": false,
+      "tokenizer_url": "https://storage.googleapis.com/cohere-public/tokenizers/command-a-reasoning-08-2025.json"
     }
   },
   {
     "id": "command-a-translate-08-2025",
-    "name": "Command A Translate",
+    "name": "Command A Translate 08 2025",
     "provider": "cohere",
     "family": "command-a",
-    "created_at": "2025-08-28 00:00:00 UTC",
-    "context_window": 8000,
+    "created_at": "2025-08-27 22:00:00 UTC",
+    "context_window": 8992,
     "max_output_tokens": 8000,
-    "knowledge_cutoff": "2024-06-01",
+    "knowledge_cutoff": null,
     "modalities": {
       "input": [
         "text"
@@ -20137,18 +20195,29 @@
     "metadata": {
       "endpoints": [
         "chat"
-      ]
+      ],
+      "default_endpoints": [],
+      "features": [
+        "json_mode",
+        "json_schema",
+        "safety_modes",
+        "tools",
+        "tool_choice",
+        "citations"
+      ],
+      "finetuned": false,
+      "tokenizer_url": "https://storage.googleapis.com/cohere-public/tokenizers/command-a-translate-08-2025.json"
     }
   },
   {
     "id": "command-a-vision-07-2025",
-    "name": "Command A Vision",
+    "name": "Command A Vision 07 2025",
     "provider": "cohere",
     "family": "command-a",
-    "created_at": "2025-07-31 00:00:00 UTC",
+    "created_at": "2025-07-30 22:00:00 UTC",
     "context_window": 128000,
     "max_output_tokens": 8000,
-    "knowledge_cutoff": "2024-06-01",
+    "knowledge_cutoff": null,
     "modalities": {
       "input": [
         "text",
@@ -20160,10 +20229,6 @@
     },
     "capabilities": [
       "streaming",
-      "function_calling",
-      "tool_choice",
-      "structured_output",
-      "citations",
       "vision"
     ],
     "pricing": {
@@ -20177,18 +20242,30 @@
     "metadata": {
       "endpoints": [
         "chat"
-      ]
+      ],
+      "default_endpoints": [],
+      "features": [
+        "vision",
+        "logprobs",
+        "json_mode",
+        "json_schema",
+        "strict_tools",
+        "safety_modes",
+        "citations"
+      ],
+      "finetuned": false,
+      "tokenizer_url": "https://storage.googleapis.com/cohere-public/tokenizers/command-a-vision-07-2025.json"
     }
   },
   {
     "id": "command-r-08-2024",
-    "name": "Command R 08-2024",
+    "name": "Command R 08 2024",
     "provider": "cohere",
     "family": "command-r",
-    "created_at": "2024-08-30 00:00:00 UTC",
+    "created_at": "2024-08-29 22:00:00 UTC",
     "context_window": 128000,
     "max_output_tokens": 4000,
-    "knowledge_cutoff": "2024-06-01",
+    "knowledge_cutoff": null,
     "modalities": {
       "input": [
         "text"
@@ -20200,9 +20277,9 @@
     "capabilities": [
       "streaming",
       "function_calling",
-      "tool_choice",
       "structured_output",
-      "citations"
+      "citations",
+      "tool_choice"
     ],
     "pricing": {
       "text_tokens": {
@@ -20214,19 +20291,34 @@
     },
     "metadata": {
       "endpoints": [
-        "chat"
-      ]
+        "generate",
+        "chat",
+        "summarize"
+      ],
+      "default_endpoints": [],
+      "features": [
+        "logprobs",
+        "json_mode",
+        "json_schema",
+        "strict_tools",
+        "safety_modes",
+        "tools",
+        "tool_choice",
+        "citations"
+      ],
+      "finetuned": false,
+      "tokenizer_url": "https://storage.googleapis.com/cohere-public/tokenizers/command-r-08-2024.json"
     }
   },
   {
     "id": "command-r-plus-08-2024",
-    "name": "Command R+ 08-2024",
+    "name": "Command R Plus 08 2024",
     "provider": "cohere",
     "family": "command-r-plus",
-    "created_at": "2024-08-30 00:00:00 UTC",
+    "created_at": "2024-08-29 22:00:00 UTC",
     "context_window": 128000,
     "max_output_tokens": 4000,
-    "knowledge_cutoff": "2024-06-01",
+    "knowledge_cutoff": null,
     "modalities": {
       "input": [
         "text"
@@ -20238,9 +20330,9 @@
     "capabilities": [
       "streaming",
       "function_calling",
-      "tool_choice",
       "structured_output",
-      "citations"
+      "citations",
+      "tool_choice"
     ],
     "pricing": {
       "text_tokens": {
@@ -20252,19 +20344,34 @@
     },
     "metadata": {
       "endpoints": [
-        "chat"
-      ]
+        "generate",
+        "chat",
+        "summarize"
+      ],
+      "default_endpoints": [],
+      "features": [
+        "logprobs",
+        "json_mode",
+        "json_schema",
+        "strict_tools",
+        "safety_modes",
+        "tools",
+        "tool_choice",
+        "citations"
+      ],
+      "finetuned": false,
+      "tokenizer_url": "https://storage.googleapis.com/cohere-public/tokenizers/command-r-plus-08-2024.json"
     }
   },
   {
     "id": "command-r7b-12-2024",
-    "name": "Command R7B 12-2024",
+    "name": "Command R7b 12 2024",
     "provider": "cohere",
     "family": "command",
-    "created_at": "2024-12-02 00:00:00 UTC",
-    "context_window": 128000,
+    "created_at": "2024-12-01 23:00:00 UTC",
+    "context_window": 132000,
     "max_output_tokens": 4000,
-    "knowledge_cutoff": "2024-06-01",
+    "knowledge_cutoff": null,
     "modalities": {
       "input": [
         "text"
@@ -20276,9 +20383,9 @@
     "capabilities": [
       "streaming",
       "function_calling",
-      "tool_choice",
       "structured_output",
-      "citations"
+      "citations",
+      "tool_choice"
     ],
     "pricing": {
       "text_tokens": {
@@ -20290,8 +20397,66 @@
     },
     "metadata": {
       "endpoints": [
+        "generate",
         "chat"
+      ],
+      "default_endpoints": [],
+      "features": [
+        "logprobs",
+        "json_mode",
+        "json_schema",
+        "strict_tools",
+        "safety_modes",
+        "tools",
+        "tool_choice",
+        "citations"
+      ],
+      "finetuned": false,
+      "tokenizer_url": "https://storage.googleapis.com/cohere-public/tokenizers/command-r7b-12-2024.json"
+    }
+  },
+  {
+    "id": "command-r7b-arabic-02-2025",
+    "name": "Command R7b Arabic 02 2025",
+    "provider": "cohere",
+    "family": "command",
+    "created_at": null,
+    "context_window": 128000,
+    "max_output_tokens": 4000,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
       ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "citations"
+    ],
+    "pricing": {},
+    "metadata": {
+      "endpoints": [
+        "generate",
+        "chat"
+      ],
+      "default_endpoints": [],
+      "features": [
+        "logprobs",
+        "json_mode",
+        "json_schema",
+        "strict_tools",
+        "safety_modes",
+        "tools",
+        "tool_choice",
+        "citations"
+      ],
+      "finetuned": false,
+      "tokenizer_url": "https://storage.googleapis.com/cohere-public/tokenizers/command-r7b-arabic-02-2025.json"
     }
   },
   {
@@ -20317,7 +20482,40 @@
     "metadata": {
       "endpoints": [
         "embed"
+      ],
+      "default_endpoints": [],
+      "features": [],
+      "finetuned": false,
+      "tokenizer_url": "https://storage.googleapis.com/cohere-public/tokenizers/embed-english-light-v3.0.json"
+    }
+  },
+  {
+    "id": "embed-english-light-v3.0-image",
+    "name": "Embed English Light v3.0 Image",
+    "provider": "cohere",
+    "family": "embed",
+    "created_at": null,
+    "context_window": 0,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "embeddings"
       ]
+    },
+    "capabilities": [],
+    "pricing": {},
+    "metadata": {
+      "endpoints": [
+        "embed_image"
+      ],
+      "default_endpoints": [],
+      "features": [],
+      "finetuned": false
     }
   },
   {
@@ -20343,7 +20541,40 @@
     "metadata": {
       "endpoints": [
         "embed"
+      ],
+      "default_endpoints": [],
+      "features": [],
+      "finetuned": false,
+      "tokenizer_url": "https://storage.googleapis.com/cohere-public/tokenizers/embed-english-v3.0.json"
+    }
+  },
+  {
+    "id": "embed-english-v3.0-image",
+    "name": "Embed English v3.0 Image",
+    "provider": "cohere",
+    "family": "embed",
+    "created_at": null,
+    "context_window": 0,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "embeddings"
       ]
+    },
+    "capabilities": [],
+    "pricing": {},
+    "metadata": {
+      "endpoints": [
+        "embed_image"
+      ],
+      "default_endpoints": [],
+      "features": [],
+      "finetuned": false
     }
   },
   {
@@ -20369,7 +20600,40 @@
     "metadata": {
       "endpoints": [
         "embed"
+      ],
+      "default_endpoints": [],
+      "features": [],
+      "finetuned": false,
+      "tokenizer_url": "https://storage.googleapis.com/cohere-public/tokenizers/embed-multilingual-light-v3.0.json"
+    }
+  },
+  {
+    "id": "embed-multilingual-light-v3.0-image",
+    "name": "Embed Multilingual Light v3.0 Image",
+    "provider": "cohere",
+    "family": "embed",
+    "created_at": null,
+    "context_window": 0,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "embeddings"
       ]
+    },
+    "capabilities": [],
+    "pricing": {},
+    "metadata": {
+      "endpoints": [
+        "embed_image"
+      ],
+      "default_endpoints": [],
+      "features": [],
+      "finetuned": false
     }
   },
   {
@@ -20395,7 +20659,40 @@
     "metadata": {
       "endpoints": [
         "embed"
+      ],
+      "default_endpoints": [],
+      "features": [],
+      "finetuned": false,
+      "tokenizer_url": "https://storage.googleapis.com/cohere-public/tokenizers/embed-multilingual-v3.0.json"
+    }
+  },
+  {
+    "id": "embed-multilingual-v3.0-image",
+    "name": "Embed Multilingual v3.0 Image",
+    "provider": "cohere",
+    "family": "embed",
+    "created_at": null,
+    "context_window": 0,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "embeddings"
       ]
+    },
+    "capabilities": [],
+    "pricing": {},
+    "metadata": {
+      "endpoints": [
+        "embed_image"
+      ],
+      "default_endpoints": [],
+      "features": [],
+      "finetuned": false
     }
   },
   {
@@ -20404,7 +20701,7 @@
     "provider": "cohere",
     "family": "embed",
     "created_at": null,
-    "context_window": 128000,
+    "context_window": 8192,
     "max_output_tokens": null,
     "knowledge_cutoff": null,
     "modalities": {
@@ -20421,7 +20718,53 @@
     "metadata": {
       "endpoints": [
         "embed"
+      ],
+      "default_endpoints": [],
+      "features": [],
+      "finetuned": false,
+      "tokenizer_url": "https://storage.googleapis.com/cohere-public/tokenizers/embed-v4.0.json"
+    }
+  },
+  {
+    "id": "north-mini-code-1-0",
+    "name": "North Mini Code 1 0",
+    "provider": "cohere",
+    "family": "command",
+    "created_at": null,
+    "context_window": 436000,
+    "max_output_tokens": 4000,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text"
+      ],
+      "output": [
+        "text"
       ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "structured_output",
+      "citations",
+      "reasoning"
+    ],
+    "pricing": {},
+    "metadata": {
+      "endpoints": [
+        "generate",
+        "chat"
+      ],
+      "default_endpoints": [],
+      "features": [
+        "logprobs",
+        "strict_tools",
+        "safety_modes",
+        "tools",
+        "reasoning"
+      ],
+      "finetuned": false,
+      "tokenizer_url": "https://storage.googleapis.com/cohere-public/tokenizers/north-mini-code-1-0.json"
     }
   },
   {
@@ -20446,7 +20789,11 @@
     "metadata": {
       "endpoints": [
         "rerank"
-      ]
+      ],
+      "default_endpoints": [],
+      "features": [],
+      "finetuned": false,
+      "tokenizer_url": "https://storage.googleapis.com/cohere-public/tokenizers/rerank-english-v3.0.json"
     }
   },
   {
@@ -20471,7 +20818,11 @@
     "metadata": {
       "endpoints": [
         "rerank"
-      ]
+      ],
+      "default_endpoints": [],
+      "features": [],
+      "finetuned": false,
+      "tokenizer_url": "https://storage.googleapis.com/cohere-public/tokenizers/rerank-multilingual-v3.0.json"
     }
   },
   {
@@ -20496,7 +20847,13 @@
     "metadata": {
       "endpoints": [
         "rerank"
-      ]
+      ],
+      "default_endpoints": [
+        "rerank"
+      ],
+      "features": [],
+      "finetuned": false,
+      "tokenizer_url": "https://storage.googleapis.com/cohere-public/tokenizers/rerank-v3.5.json"
     }
   },
   {
@@ -20505,7 +20862,7 @@
     "provider": "cohere",
     "family": "rerank",
     "created_at": null,
-    "context_window": 32000,
+    "context_window": 32768,
     "max_output_tokens": null,
     "knowledge_cutoff": null,
     "modalities": {
@@ -20521,7 +20878,11 @@
     "metadata": {
       "endpoints": [
         "rerank"
-      ]
+      ],
+      "default_endpoints": [],
+      "features": [],
+      "finetuned": false,
+      "tokenizer_url": "https://storage.googleapis.com/cohere-public/tokenizers/rerank-v4.0-fast.json"
     }
   },
   {
@@ -20530,7 +20891,7 @@
     "provider": "cohere",
     "family": "rerank",
     "created_at": null,
-    "context_window": 32000,
+    "context_window": 32768,
     "max_output_tokens": null,
     "knowledge_cutoff": null,
     "modalities": {
@@ -20546,7 +20907,11 @@
     "metadata": {
       "endpoints": [
         "rerank"
-      ]
+      ],
+      "default_endpoints": [],
+      "features": [],
+      "finetuned": false,
+      "tokenizer_url": "https://storage.googleapis.com/cohere-public/tokenizers/rerank-v4.0-pro.json"
     }
   },
   {
@@ -20555,8 +20920,8 @@
     "provider": "cohere",
     "family": "aya",
     "created_at": null,
-    "context_window": 8000,
-    "max_output_tokens": 8000,
+    "context_window": 8192,
+    "max_output_tokens": 4000,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -20572,8 +20937,19 @@
     "pricing": {},
     "metadata": {
       "endpoints": [
+        "generate",
         "chat"
-      ]
+      ],
+      "default_endpoints": [],
+      "features": [
+        "logprobs",
+        "safety_modes",
+        "tools",
+        "tool_choice",
+        "citations"
+      ],
+      "finetuned": false,
+      "tokenizer_url": "https://storage.googleapis.com/cohere-public/tokenizers/tiny-aya-earth.json"
     }
   },
   {
@@ -20582,8 +20958,8 @@
     "provider": "cohere",
     "family": "aya",
     "created_at": null,
-    "context_window": 8000,
-    "max_output_tokens": 8000,
+    "context_window": 8192,
+    "max_output_tokens": 4000,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -20599,8 +20975,19 @@
     "pricing": {},
     "metadata": {
       "endpoints": [
+        "generate",
         "chat"
-      ]
+      ],
+      "default_endpoints": [],
+      "features": [
+        "logprobs",
+        "safety_modes",
+        "tools",
+        "tool_choice",
+        "citations"
+      ],
+      "finetuned": false,
+      "tokenizer_url": "https://storage.googleapis.com/cohere-public/tokenizers/tiny-aya-fire.json"
     }
   },
   {
@@ -20609,8 +20996,8 @@
     "provider": "cohere",
     "family": "aya",
     "created_at": null,
-    "context_window": 8000,
-    "max_output_tokens": 8000,
+    "context_window": 8192,
+    "max_output_tokens": 4000,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -20626,8 +21013,19 @@
     "pricing": {},
     "metadata": {
       "endpoints": [
+        "generate",
         "chat"
-      ]
+      ],
+      "default_endpoints": [],
+      "features": [
+        "logprobs",
+        "safety_modes",
+        "tools",
+        "tool_choice",
+        "citations"
+      ],
+      "finetuned": false,
+      "tokenizer_url": "https://storage.googleapis.com/cohere-public/tokenizers/tiny-aya-global.json"
     }
   },
   {
@@ -20636,8 +21034,8 @@
     "provider": "cohere",
     "family": "aya",
     "created_at": null,
-    "context_window": 8000,
-    "max_output_tokens": 8000,
+    "context_window": 8192,
+    "max_output_tokens": 4000,
     "knowledge_cutoff": null,
     "modalities": {
       "input": [
@@ -20653,8 +21051,19 @@
     "pricing": {},
     "metadata": {
       "endpoints": [
+        "generate",
         "chat"
-      ]
+      ],
+      "default_endpoints": [],
+      "features": [
+        "logprobs",
+        "safety_modes",
+        "tools",
+        "tool_choice",
+        "citations"
+      ],
+      "finetuned": false,
+      "tokenizer_url": "https://storage.googleapis.com/cohere-public/tokenizers/tiny-aya-water.json"
     }
   },
   {
@@ -22988,7 +23397,13 @@
           "input_per_million": 1.25,
           "output_per_million": 10,
           "cache_read_input_per_million": 0.125
-        }
+        },
+        "long_context": {
+          "input_per_million": 2.5,
+          "output_per_million": 15,
+          "cache_read_input_per_million": 0.25
+        },
+        "long_context_threshold": 200000
       }
     },
     "metadata": {
@@ -23303,7 +23718,13 @@
           "input_per_million": 2,
           "output_per_million": 12,
           "cache_read_input_per_million": 0.2
-        }
+        },
+        "long_context": {
+          "input_per_million": 4,
+          "output_per_million": 18,
+          "cache_read_input_per_million": 0.4
+        },
+        "long_context_threshold": 200000
       }
     },
     "metadata": {
@@ -23734,7 +24155,13 @@
           "input_per_million": 2,
           "output_per_million": 12,
           "cache_read_input_per_million": 0.2
-        }
+        },
+        "long_context": {
+          "input_per_million": 4,
+          "output_per_million": 18,
+          "cache_read_input_per_million": 0.4
+        },
+        "long_context_threshold": 200000
       }
     },
     "metadata": {
@@ -23825,7 +24252,13 @@
           "input_per_million": 2,
           "output_per_million": 12,
           "cache_read_input_per_million": 0.2
-        }
+        },
+        "long_context": {
+          "input_per_million": 4,
+          "output_per_million": 18,
+          "cache_read_input_per_million": 0.4
+        },
+        "long_context_threshold": 200000
       }
     },
     "metadata": {
@@ -27639,6 +28072,510 @@
     }
   },
   {
+    "id": "deepseek-v4-flash:0731",
+    "name": "deepseek-v4-flash:0731",
+    "provider": "ollama_cloud",
+    "family": "ollama",
+    "created_at": "2026-07-31 15:00:00 UTC",
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "vision"
+    ],
+    "pricing": {},
+    "metadata": {
+      "owned_by": "ollama"
+    }
+  },
+  {
+    "id": "deepseek-v4-flash:preview",
+    "name": "deepseek-v4-flash:preview",
+    "provider": "ollama_cloud",
+    "family": "ollama",
+    "created_at": "2026-04-24 00:00:00 UTC",
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "vision"
+    ],
+    "pricing": {},
+    "metadata": {
+      "owned_by": "ollama"
+    }
+  },
+  {
+    "id": "deepseek-v4-pro",
+    "name": "deepseek-v4-pro",
+    "provider": "ollama_cloud",
+    "family": "ollama",
+    "created_at": "2026-04-24 00:00:00 UTC",
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "vision"
+    ],
+    "pricing": {},
+    "metadata": {
+      "owned_by": "ollama"
+    }
+  },
+  {
+    "id": "gemma4:31b",
+    "name": "gemma4:31b",
+    "provider": "ollama_cloud",
+    "family": "ollama",
+    "created_at": "2026-04-02 17:00:00 UTC",
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "vision"
+    ],
+    "pricing": {},
+    "metadata": {
+      "owned_by": "ollama"
+    }
+  },
+  {
+    "id": "glm-5.1",
+    "name": "glm-5.1",
+    "provider": "ollama_cloud",
+    "family": "ollama",
+    "created_at": "2026-04-07 15:00:00 UTC",
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "vision"
+    ],
+    "pricing": {},
+    "metadata": {
+      "owned_by": "ollama"
+    }
+  },
+  {
+    "id": "glm-5.2",
+    "name": "glm-5.2",
+    "provider": "ollama_cloud",
+    "family": "ollama",
+    "created_at": "2026-06-16 15:00:00 UTC",
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "vision"
+    ],
+    "pricing": {},
+    "metadata": {
+      "owned_by": "ollama"
+    }
+  },
+  {
+    "id": "gpt-oss:120b",
+    "name": "gpt-oss:120b",
+    "provider": "ollama_cloud",
+    "family": "ollama",
+    "created_at": "2025-08-05 00:00:00 UTC",
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "vision"
+    ],
+    "pricing": {},
+    "metadata": {
+      "owned_by": "ollama"
+    }
+  },
+  {
+    "id": "gpt-oss:20b",
+    "name": "gpt-oss:20b",
+    "provider": "ollama_cloud",
+    "family": "ollama",
+    "created_at": "2025-08-05 00:00:00 UTC",
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "vision"
+    ],
+    "pricing": {},
+    "metadata": {
+      "owned_by": "ollama"
+    }
+  },
+  {
+    "id": "kimi-k2.6",
+    "name": "kimi-k2.6",
+    "provider": "ollama_cloud",
+    "family": "ollama",
+    "created_at": "2026-04-20 00:00:00 UTC",
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "vision"
+    ],
+    "pricing": {},
+    "metadata": {
+      "owned_by": "ollama"
+    }
+  },
+  {
+    "id": "kimi-k2.7-code",
+    "name": "kimi-k2.7-code",
+    "provider": "ollama_cloud",
+    "family": "ollama",
+    "created_at": "2026-06-12 00:00:00 UTC",
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "vision"
+    ],
+    "pricing": {},
+    "metadata": {
+      "owned_by": "ollama"
+    }
+  },
+  {
+    "id": "kimi-k3",
+    "name": "kimi-k3",
+    "provider": "ollama_cloud",
+    "family": "ollama",
+    "created_at": "2026-07-27 15:00:00 UTC",
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "vision"
+    ],
+    "pricing": {},
+    "metadata": {
+      "owned_by": "ollama"
+    }
+  },
+  {
+    "id": "minimax-m2.7",
+    "name": "minimax-m2.7",
+    "provider": "ollama_cloud",
+    "family": "ollama",
+    "created_at": "2026-03-18 00:00:00 UTC",
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "vision"
+    ],
+    "pricing": {},
+    "metadata": {
+      "owned_by": "ollama"
+    }
+  },
+  {
+    "id": "minimax-m3",
+    "name": "minimax-m3",
+    "provider": "ollama_cloud",
+    "family": "ollama",
+    "created_at": "2026-06-01 00:00:00 UTC",
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "vision"
+    ],
+    "pricing": {},
+    "metadata": {
+      "owned_by": "ollama"
+    }
+  },
+  {
+    "id": "mistral-large-3:675b",
+    "name": "mistral-large-3:675b",
+    "provider": "ollama_cloud",
+    "family": "ollama",
+    "created_at": "2025-12-02 00:00:00 UTC",
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "vision"
+    ],
+    "pricing": {},
+    "metadata": {
+      "owned_by": "ollama"
+    }
+  },
+  {
+    "id": "nemotron-3-nano:30b",
+    "name": "nemotron-3-nano:30b",
+    "provider": "ollama_cloud",
+    "family": "ollama",
+    "created_at": "2025-12-15 00:00:00 UTC",
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "vision"
+    ],
+    "pricing": {},
+    "metadata": {
+      "owned_by": "ollama"
+    }
+  },
+  {
+    "id": "nemotron-3-super",
+    "name": "nemotron-3-super",
+    "provider": "ollama_cloud",
+    "family": "ollama",
+    "created_at": "2026-03-11 00:00:00 UTC",
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "vision"
+    ],
+    "pricing": {},
+    "metadata": {
+      "owned_by": "ollama"
+    }
+  },
+  {
+    "id": "nemotron-3-ultra",
+    "name": "nemotron-3-ultra",
+    "provider": "ollama_cloud",
+    "family": "ollama",
+    "created_at": "2026-06-04 00:00:00 UTC",
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "vision"
+    ],
+    "pricing": {},
+    "metadata": {
+      "owned_by": "ollama"
+    }
+  },
+  {
+    "id": "qwen3.5:397b",
+    "name": "qwen3.5:397b",
+    "provider": "ollama_cloud",
+    "family": "ollama",
+    "created_at": "2026-02-16 00:00:00 UTC",
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "text"
+      ]
+    },
+    "capabilities": [
+      "streaming",
+      "function_calling",
+      "vision"
+    ],
+    "pricing": {},
+    "metadata": {
+      "owned_by": "ollama"
+    }
+  },
+  {
     "id": "babbage-002",
     "name": "babbage-002",
     "provider": "openai",
@@ -30560,7 +31497,13 @@
           "input_per_million": 2.5,
           "output_per_million": 15,
           "cache_read_input_per_million": 0.25
-        }
+        },
+        "long_context": {
+          "input_per_million": 5,
+          "output_per_million": 22.5,
+          "cache_read_input_per_million": 0.5
+        },
+        "long_context_threshold": 272000
       }
     },
     "metadata": {
@@ -30886,7 +31829,12 @@
         "standard": {
           "input_per_million": 30,
           "output_per_million": 180
-        }
+        },
+        "long_context": {
+          "input_per_million": 60,
+          "output_per_million": 270
+        },
+        "long_context_threshold": 272000
       }
     },
     "metadata": {
@@ -31002,7 +31950,13 @@
           "input_per_million": 5,
           "output_per_million": 30,
           "cache_read_input_per_million": 0.5
-        }
+        },
+        "long_context": {
+          "input_per_million": 10,
+          "output_per_million": 45,
+          "cache_read_input_per_million": 1
+        },
+        "long_context_threshold": 272000
       }
     },
     "metadata": {
@@ -31122,7 +32076,12 @@
         "standard": {
           "input_per_million": 30,
           "output_per_million": 180
-        }
+        },
+        "long_context": {
+          "input_per_million": 60,
+          "output_per_million": 270
+        },
+        "long_context_threshold": 272000
       }
     },
     "metadata": {
@@ -34508,7 +35467,14 @@
           "output_per_million": 25,
           "cache_read_input_per_million": 0.5,
           "cache_write_input_per_million": 6.25
-        }
+        },
+        "long_context": {
+          "input_per_million": 10,
+          "output_per_million": 37.5,
+          "cache_read_input_per_million": 1,
+          "cache_write_input_per_million": 12.5
+        },
+        "long_context_threshold": 200000
       }
     },
     "metadata": {
@@ -34636,7 +35602,14 @@
           "output_per_million": 25,
           "cache_read_input_per_million": 0.5,
           "cache_write_input_per_million": 6.25
-        }
+        },
+        "long_context": {
+          "input_per_million": 10,
+          "output_per_million": 37.5,
+          "cache_read_input_per_million": 1,
+          "cache_write_input_per_million": 12.5
+        },
+        "long_context_threshold": 200000
       }
     },
     "metadata": {
@@ -35058,7 +36031,14 @@
           "output_per_million": 15,
           "cache_read_input_per_million": 0.3,
           "cache_write_input_per_million": 3.75
-        }
+        },
+        "long_context": {
+          "input_per_million": 6,
+          "output_per_million": 22.5,
+          "cache_read_input_per_million": 0.6,
+          "cache_write_input_per_million": 7.5
+        },
+        "long_context_threshold": 200000
       }
     },
     "metadata": {
@@ -35173,7 +36153,14 @@
           "output_per_million": 15,
           "cache_read_input_per_million": 0.3,
           "cache_write_input_per_million": 3.75
-        }
+        },
+        "long_context": {
+          "input_per_million": 6,
+          "output_per_million": 22.5,
+          "cache_read_input_per_million": 0.6,
+          "cache_write_input_per_million": 7.5
+        },
+        "long_context_threshold": 200000
       }
     },
     "metadata": {
@@ -35290,7 +36277,14 @@
           "output_per_million": 15,
           "cache_read_input_per_million": 0.3,
           "cache_write_input_per_million": 3.75
-        }
+        },
+        "long_context": {
+          "input_per_million": 6,
+          "output_per_million": 22.5,
+          "cache_read_input_per_million": 0.6,
+          "cache_write_input_per_million": 7.5
+        },
+        "long_context_threshold": 200000
       }
     },
     "metadata": {
@@ -40487,7 +41481,13 @@
           "cache_read_input_per_million": 0.2,
           "cache_write_input_per_million": 0.375,
           "reasoning_output_per_million": 12
-        }
+        },
+        "long_context": {
+          "input_per_million": 4,
+          "output_per_million": 18,
+          "cache_read_input_per_million": 0.4
+        },
+        "long_context_threshold": 200000
       }
     },
     "metadata": {
@@ -40611,7 +41611,13 @@
           "cache_read_input_per_million": 0.2,
           "cache_write_input_per_million": 0.375,
           "reasoning_output_per_million": 12
-        }
+        },
+        "long_context": {
+          "input_per_million": 4,
+          "output_per_million": 18,
+          "cache_read_input_per_million": 0.4
+        },
+        "long_context_threshold": 200000
       }
     },
     "metadata": {
@@ -65810,7 +66816,13 @@
           "input_per_million": 1.25,
           "output_per_million": 2.5,
           "cache_read_input_per_million": 0.2
-        }
+        },
+        "long_context": {
+          "input_per_million": 2.5,
+          "output_per_million": 5,
+          "cache_read_input_per_million": 0.4
+        },
+        "long_context_threshold": 200000
       }
     },
     "metadata": {
@@ -66061,6 +67073,51 @@
     }
   },
   {
+    "id": "x-ai/grok-imagine-video",
+    "name": "Grok Imagine Video",
+    "provider": "openrouter",
+    "family": "grok",
+    "created_at": null,
+    "context_window": null,
+    "max_output_tokens": null,
+    "knowledge_cutoff": null,
+    "modalities": {
+      "input": [
+        "text",
+        "image"
+      ],
+      "output": [
+        "video"
+      ]
+    },
+    "capabilities": [],
+    "pricing": {},
+    "metadata": {
+      "description": "Grok Imagine Video generates short clips from text or image prompts through OpenRouter's asynchronous video API.",
+      "supported_resolutions": [
+        "480p",
+        "720p"
+      ],
+      "supported_durations": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ]
+    }
+  },
+  {
     "id": "x-ai/grok-stt-1.0",
     "name": "SpaceXAI: Grok STT 1.0",
     "provider": "openrouter",
@@ -66181,51 +67238,6 @@
         "temperature",
         "top_logprobs",
         "top_p"
-      ]
-    }
-  },
-  {
-    "id": "x-ai/grok-imagine-video",
-    "name": "Grok Imagine Video",
-    "provider": "openrouter",
-    "family": "grok",
-    "created_at": null,
-    "context_window": null,
-    "max_output_tokens": null,
-    "knowledge_cutoff": null,
-    "modalities": {
-      "input": [
-        "text",
-        "image"
-      ],
-      "output": [
-        "video"
-      ]
-    },
-    "capabilities": [],
-    "pricing": {},
-    "metadata": {
-      "description": "Grok Imagine Video generates short clips from text or image prompts through OpenRouter's asynchronous video API.",
-      "supported_resolutions": [
-        "480p",
-        "720p"
-      ],
-      "supported_durations": [
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7,
-        8,
-        9,
-        10,
-        11,
-        12,
-        13,
-        14,
-        15
       ]
     }
   },
@@ -69353,7 +70365,14 @@
           "output_per_million": 25,
           "cache_read_input_per_million": 0.5,
           "cache_write_input_per_million": 6.25
-        }
+        },
+        "long_context": {
+          "input_per_million": 10,
+          "output_per_million": 37.5,
+          "cache_read_input_per_million": 1,
+          "cache_write_input_per_million": 12.5
+        },
+        "long_context_threshold": 200000
       }
     },
     "metadata": {
@@ -69481,7 +70500,14 @@
           "output_per_million": 25,
           "cache_read_input_per_million": 0.5,
           "cache_write_input_per_million": 6.25
-        }
+        },
+        "long_context": {
+          "input_per_million": 10,
+          "output_per_million": 37.5,
+          "cache_read_input_per_million": 1,
+          "cache_write_input_per_million": 12.5
+        },
+        "long_context_threshold": 200000
       }
     },
     "metadata": {
@@ -69606,7 +70632,14 @@
           "output_per_million": 25,
           "cache_read_input_per_million": 0.5,
           "cache_write_input_per_million": 6.25
-        }
+        },
+        "long_context": {
+          "input_per_million": 10,
+          "output_per_million": 37.5,
+          "cache_read_input_per_million": 1,
+          "cache_write_input_per_million": 12.5
+        },
+        "long_context_threshold": 200000
       }
     },
     "metadata": {
@@ -69892,7 +70925,14 @@
           "output_per_million": 15,
           "cache_read_input_per_million": 0.3,
           "cache_write_input_per_million": 3.75
-        }
+        },
+        "long_context": {
+          "input_per_million": 6,
+          "output_per_million": 22.5,
+          "cache_read_input_per_million": 0.6,
+          "cache_write_input_per_million": 7.5
+        },
+        "long_context_threshold": 200000
       }
     },
     "metadata": {
@@ -70854,7 +71894,13 @@
           "input_per_million": 1.25,
           "output_per_million": 10,
           "cache_read_input_per_million": 0.125
-        }
+        },
+        "long_context": {
+          "input_per_million": 2.5,
+          "output_per_million": 15,
+          "cache_read_input_per_million": 0.25
+        },
+        "long_context_threshold": 200000
       }
     },
     "metadata": {
@@ -71429,7 +72475,13 @@
           "input_per_million": 2,
           "output_per_million": 12,
           "cache_read_input_per_million": 0.2
-        }
+        },
+        "long_context": {
+          "input_per_million": 4,
+          "output_per_million": 18,
+          "cache_read_input_per_million": 0.4
+        },
+        "long_context_threshold": 200000
       }
     },
     "metadata": {
@@ -71516,7 +72568,13 @@
           "input_per_million": 2,
           "output_per_million": 12,
           "cache_read_input_per_million": 0.2
-        }
+        },
+        "long_context": {
+          "input_per_million": 4,
+          "output_per_million": 18,
+          "cache_read_input_per_million": 0.4
+        },
+        "long_context_threshold": 200000
       }
     },
     "metadata": {
@@ -72601,7 +73659,13 @@
           "input_per_million": 1.25,
           "output_per_million": 2.5,
           "cache_read_input_per_million": 0.2
-        }
+        },
+        "long_context": {
+          "input_per_million": 2.5,
+          "output_per_million": 5,
+          "cache_read_input_per_million": 0.4
+        },
+        "long_context_threshold": 200000
       }
     },
     "metadata": {
@@ -72672,7 +73736,13 @@
           "input_per_million": 1.25,
           "output_per_million": 2.5,
           "cache_read_input_per_million": 0.2
-        }
+        },
+        "long_context": {
+          "input_per_million": 2.5,
+          "output_per_million": 5,
+          "cache_read_input_per_million": 0.4
+        },
+        "long_context_threshold": 200000
       }
     },
     "metadata": {
@@ -72743,7 +73813,13 @@
           "input_per_million": 1.25,
           "output_per_million": 2.5,
           "cache_read_input_per_million": 0.2
-        }
+        },
+        "long_context": {
+          "input_per_million": 2.5,
+          "output_per_million": 5,
+          "cache_read_input_per_million": 0.4
+        },
+        "long_context_threshold": 200000
       }
     },
     "metadata": {
@@ -72825,7 +73901,13 @@
           "input_per_million": 1.25,
           "output_per_million": 2.5,
           "cache_read_input_per_million": 0.2
-        }
+        },
+        "long_context": {
+          "input_per_million": 2.5,
+          "output_per_million": 5,
+          "cache_read_input_per_million": 0.4
+        },
+        "long_context_threshold": 200000
       }
     },
     "metadata": {
@@ -72907,7 +73989,13 @@
           "input_per_million": 1,
           "output_per_million": 2,
           "cache_read_input_per_million": 0.2
-        }
+        },
+        "long_context": {
+          "input_per_million": 2,
+          "output_per_million": 4,
+          "cache_read_input_per_million": 0.4
+        },
+        "long_context_threshold": 200000
       }
     },
     "metadata": {

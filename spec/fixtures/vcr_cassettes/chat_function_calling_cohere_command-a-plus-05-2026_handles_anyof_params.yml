@@ -1,0 +1,77 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.cohere.com/v2/chat
+    body:
+      encoding: UTF-8
+      string: '{"model":"command-a-plus-05-2026","messages":[{"role":"user","content":[{"type":"text","text":"Call
+        the any-of params tool for task \"Review PR\" with status \"pending\" and
+        report the result."}]}],"stream":false,"tools":[{"type":"function","function":{"name":"any_of_params","description":"Uses
+        params DSL any_of support","parameters":{"$schema":"https://json-schema.org/draft/2020-12/schema","title":"Schema","type":"object","properties":{"task":{"type":"string","description":"Task
+        description"},"status":{"description":"Optional task status","anyOf":[{"type":"string","enum":["pending","done"]},{"type":"null"}]}},"required":["task","status"],"additionalProperties":false}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Expose-Headers:
+      - X-Debug-Trace-ID
+      Cache-Control:
+      - no-cache, no-store, no-transform, must-revalidate, private, max-age=0
+      Content-Type:
+      - application/json
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Num-Chars:
+      - '1494'
+      Num-Tokens:
+      - '210'
+      Pragma:
+      - no-cache
+      Vary:
+      - Origin,Accept-Encoding
+      X-Accel-Expires:
+      - '0'
+      X-Debug-Trace-Id:
+      - b1653100399507c56f99e5ad054bf5ed
+      X-Endpoint-Monthly-Call-Limit:
+      - '1000'
+      X-Trial-Endpoint-Call-Limit:
+      - '20'
+      X-Trial-Endpoint-Call-Remaining:
+      - '4'
+      Date:
+      - Thu, 13 Aug 2026 10:05:53 GMT
+      X-Envoy-Upstream-Service-Time:
+      - '529'
+      Server:
+      - envoy
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"525842c7-d328-49a2-8227-1171a1fe655a","message":{"role":"assistant","content":[{"type":"thinking","thinking":"The
+        user is asking me to call the any_of_params function with specific parameters:\n-
+        task: \"Review PR\"\n- status: \"pending\"\n\nLooking at the function definition:\n-
+        task is required and should be a string\n- status is required and can be either
+        \"pending\", \"done\", or null\n- The user provided \"pending\" which is valid\n\nI
+        have all the required parameters, so I can proceed with the function call."}],"tool_calls":[{"id":"any_of_params_aqecp7dxx5k5","type":"function","function":{"name":"any_of_params","arguments":"{\"task\":\"Review
+        PR\",\"status\":\"pending\"}"}}]},"finish_reason":"TOOL_CALL","usage":{"billed_units":{"input_tokens":108,"output_tokens":102},"tokens":{"input_tokens":338,"output_tokens":129,"reasoning_tokens":89},"cached_tokens":144}}'
+  recorded_at: Thu, 13 Aug 2026 10:05:53 GMT
+recorded_with: VCR 6.4.0

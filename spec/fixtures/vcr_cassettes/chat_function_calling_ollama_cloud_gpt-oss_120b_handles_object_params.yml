@@ -1,0 +1,66 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://ollama.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-oss:120b","messages":[{"role":"user","content":"Call
+        the object params tool with window start 2025-01-01 and end 2025-01-02 and
+        include the result."}],"stream":false,"tools":[{"type":"function","function":{"name":"object_params","description":"Uses
+        params DSL object support","parameters":{"$schema":"https://json-schema.org/draft/2020-12/schema","title":"Schema","type":"object","properties":{"window":{"type":"object","properties":{"start":{"type":"string","description":"ISO
+        start"},"end":{"type":"string","description":"ISO end"}},"required":["start","end"],"additionalProperties":false,"description":"Time
+        window to schedule"}},"required":["window"],"additionalProperties":false}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Build-Commit:
+      - a083b15ea635ff93836cee498abde05672929e5d
+      X-Build-Time:
+      - '2026-08-12T14:41:44-07:00'
+      X-Frame-Options:
+      - DENY
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Content-Length:
+      - '802'
+      Date:
+      - Thu, 13 Aug 2026 10:12:01 GMT
+      Server:
+      - Google Frontend
+      Traceparent:
+      - 00-30b005a47f89f37cf252df319455b4e4-6afd56cd27d65da3-00
+      X-Cloud-Trace-Context:
+      - 30b005a47f89f37cf252df319455b4e4/7709413576264801699
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000
+    body:
+      encoding: UTF-8
+      string: '{"id":"chatcmpl-328","object":"chat.completion","created":1786615921,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"The
+        user wants us to \"Call the object params tool with window start 2025-01-01
+        and end 2025-01-02 and include the result.\"\n\nWe have a function \"functions.object_params\"
+        which takes a param \"window\" of type Record\u003cstring, any\u003e. We need
+        to pass window with start and end dates. So we call it.\n\n","tool_calls":[{"id":"call_yeij1nl1","index":0,"type":"function","function":{"name":"object_params","arguments":"{\"window\":{\"end\":\"2025-01-02\",\"start\":\"2025-01-01\"}}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":159,"completion_tokens":126,"total_tokens":285}}
+
+        '
+  recorded_at: Thu, 13 Aug 2026 10:12:01 GMT
+recorded_with: VCR 6.4.0

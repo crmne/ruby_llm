@@ -1,0 +1,81 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.cohere.com/v2/chat
+    body:
+      encoding: UTF-8
+      string: '{"model":"command-a-plus-05-2026","messages":[{"role":"user","content":[{"type":"text","text":"Call
+        the object params tool with window start 2025-01-01 and end 2025-01-02 and
+        include the result."}]}],"stream":false,"tools":[{"type":"function","function":{"name":"object_params","description":"Uses
+        params DSL object support","parameters":{"$schema":"https://json-schema.org/draft/2020-12/schema","title":"Schema","type":"object","properties":{"window":{"type":"object","properties":{"start":{"type":"string","description":"ISO
+        start"},"end":{"type":"string","description":"ISO end"}},"required":["start","end"],"additionalProperties":false,"description":"Time
+        window to schedule"}},"required":["window"],"additionalProperties":false}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Expose-Headers:
+      - X-Debug-Trace-ID
+      Cache-Control:
+      - no-cache, no-store, no-transform, must-revalidate, private, max-age=0
+      Content-Type:
+      - application/json
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Num-Chars:
+      - '1559'
+      Num-Tokens:
+      - '292'
+      Pragma:
+      - no-cache
+      Vary:
+      - Origin,Accept-Encoding
+      X-Accel-Expires:
+      - '0'
+      X-Debug-Trace-Id:
+      - 996fa8e24474ffb1b26ad3b5f4978069
+      X-Endpoint-Monthly-Call-Limit:
+      - '1000'
+      X-Trial-Endpoint-Call-Limit:
+      - '20'
+      X-Trial-Endpoint-Call-Remaining:
+      - '3'
+      Date:
+      - Thu, 13 Aug 2026 10:05:54 GMT
+      X-Envoy-Upstream-Service-Time:
+      - '688'
+      Server:
+      - envoy
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":"8b19f80d-a1b0-414a-b0b0-8a179e71a653","message":{"role":"assistant","content":[{"type":"thinking","thinking":"The
+        user wants me to call the object_params function with specific parameters:\n-
+        window.start: \"2025-01-01\" \n- window.end: \"2025-01-02\"\n\nLooking at
+        the function schema:\n- The function is called \"object_params\"\n- It requires
+        a \"window\" parameter which is an object\n- The window object requires \"start\"
+        and \"end\" parameters of type string\n- The description mentions these should
+        be ISO dates\n\nThe user provided the exact values in the format \"2025-01-01\"
+        which appears to be ISO date format (YYYY-MM-DD), so I can use these values
+        directly.\n\nI have all the required parameters, so I can proceed with the
+        function call."}],"tool_calls":[{"id":"object_params_pntrrh8p1vwd","type":"function","function":{"name":"object_params","arguments":"{\"window\":{\"start\":\"2025-01-01\",\"end\":\"2025-01-02\"}}"}}]},"finish_reason":"TOOL_CALL","usage":{"billed_units":{"input_tokens":122,"output_tokens":170},"tokens":{"input_tokens":355,"output_tokens":199,"reasoning_tokens":147},"cached_tokens":144}}'
+  recorded_at: Thu, 13 Aug 2026 10:05:54 GMT
+recorded_with: VCR 6.4.0

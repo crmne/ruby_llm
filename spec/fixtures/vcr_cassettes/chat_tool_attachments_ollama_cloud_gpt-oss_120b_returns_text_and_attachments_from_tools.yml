@@ -1,0 +1,135 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://ollama.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-oss:120b","messages":[{"role":"user","content":"Use the
+        file_fetch tool, then tell me exactly what the fetched file says."}],"stream":false,"tools":[{"type":"function","function":{"name":"file_fetch","description":"Fetches
+        the requested file","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Build-Commit:
+      - a083b15ea635ff93836cee498abde05672929e5d
+      X-Build-Time:
+      - '2026-08-12T14:41:44-07:00'
+      X-Frame-Options:
+      - DENY
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Content-Length:
+      - '797'
+      Date:
+      - Thu, 13 Aug 2026 10:12:03 GMT
+      Server:
+      - Google Frontend
+      X-Cloud-Trace-Context:
+      - 52e94f60de2faec92262274b62d283af/11955942135590221641
+      Traceparent:
+      - 00-52e94f60de2faec92262274b62d283af-a5ec0a06eafaf749-00
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+    body:
+      encoding: UTF-8
+      string: '{"id":"chatcmpl-132","object":"chat.completion","created":1786615923,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"We
+        need to fetch file. But we need to know the path? The user didn''t specify
+        a file. Possibly they expect us to fetch default? There''s no file name. Maybe
+        there is a hidden file. Perhaps need to list files? There''s no list command.
+        Possibly the interface expects file_fetch with no args? The tool signature
+        is file_fetch = () =\u003e any, no parameters. So just call it.","tool_calls":[{"id":"call_x6ns8n2g","index":0,"type":"function","function":{"name":"file_fetch","arguments":"{}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":128,"completion_tokens":101,"total_tokens":229}}
+
+        '
+  recorded_at: Thu, 13 Aug 2026 10:12:03 GMT
+- request:
+    method: post
+    uri: https://ollama.com/v1/chat/completions
+    body:
+      encoding: UTF-8
+      string: '{"model":"gpt-oss:120b","messages":[{"role":"user","content":"Use the
+        file_fetch tool, then tell me exactly what the fetched file says."},{"role":"assistant","content":"","tool_calls":[{"id":"call_x6ns8n2g","type":"function","function":{"name":"file_fetch","arguments":"{}"}}],"reasoning":"We
+        need to fetch file. But we need to know the path? The user didn''t specify
+        a file. Possibly they expect us to fetch default? There''s no file name. Maybe
+        there is a hidden file. Perhaps need to list files? There''s no list command.
+        Possibly the interface expects file_fetch with no args? The tool signature
+        is file_fetch = () => any, no parameters. So just call it.","reasoning_content":"We
+        need to fetch file. But we need to know the path? The user didn''t specify
+        a file. Possibly they expect us to fetch default? There''s no file name. Maybe
+        there is a hidden file. Perhaps need to list files? There''s no list command.
+        Possibly the interface expects file_fetch with no args? The tool signature
+        is file_fetch = () => any, no parameters. So just call it."},{"role":"tool","content":"Fetched
+        the file.","tool_call_id":"call_x6ns8n2g"},{"role":"user","content":[{"type":"text","text":"Attachments
+        from tool call call_x6ns8n2g:"},{"type":"text","text":"<file name=''ruby.txt''
+        mime_type=''text/plain''>Ruby is the best.</file>"}]}],"stream":false,"tools":[{"type":"function","function":{"name":"file_fetch","description":"Fetches
+        the requested file","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
+    headers:
+      User-Agent:
+      - Faraday v2.14.3
+      Authorization:
+      - Bearer <AUTH_TOKEN>
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Set-Cookie:
+      - "<COOKIE>"
+      X-Build-Commit:
+      - a083b15ea635ff93836cee498abde05672929e5d
+      X-Build-Time:
+      - '2026-08-12T14:41:44-07:00'
+      X-Frame-Options:
+      - DENY
+      X-Request-Id:
+      - "<X_REQUEST_ID>"
+      Content-Length:
+      - '424'
+      Date:
+      - Thu, 13 Aug 2026 10:12:05 GMT
+      Server:
+      - Google Frontend
+      X-Cloud-Trace-Context:
+      - fd5f29f4022443fa83daf61268cec158/12897612128739240846
+      Traceparent:
+      - 00-fd5f29f4022443fa83daf61268cec158-b2fd85e58845ab8e-00
+      Via:
+      - 1.1 google
+      Alt-Svc:
+      - h3=":443"; ma=2592000
+    body:
+      encoding: UTF-8
+      string: '{"id":"chatcmpl-77","object":"chat.completion","created":1786615925,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        file contains the following text:\n\n```\nRuby is the best.\n```","reasoning":"The
+        user wants the content exactly. Provide the text."},"finish_reason":"stop"}],"usage":{"prompt_tokens":194,"completion_tokens":36,"total_tokens":230}}
+
+        '
+  recorded_at: Thu, 13 Aug 2026 10:12:05 GMT
+recorded_with: VCR 6.4.0
