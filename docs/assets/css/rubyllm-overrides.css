@@ -1443,13 +1443,20 @@ html:has(.VPHome) .VPNavBar > .wrapper > .container > .content > .content-body {
   transform: translateY(-3px);
 }
 
+/* Five to a row, wrapping. Flex rather than grid so a partial last row centres
+   itself instead of hanging off the left, whatever the provider count is. */
 .VPHome .vp-doc .provider-icons {
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 44px 30px;
   align-items: center;
   width: min(1120px, 100%);
   margin: 58px auto 0;
+}
+
+.VPHome .vp-doc .provider-icons > .provider-logo {
+  flex: 0 0 calc((100% - 4 * 30px) / 5);
 }
 
 .VPHome .vp-doc .provider-logo {
@@ -1493,16 +1500,24 @@ html:has(.VPHome) .VPNavBar > .wrapper > .container > .content > .content-body {
   max-height: none;
 }
 
+/* Ollama Cloud ships no lockup of its own, so the row pairs Ollama's mark and
+   wordmark with the product word, sized to sit with the wordmarks beside it. */
+.VPHome .vp-doc .provider-logo .logo-suffix {
+  margin-left: -2px;
+
+  /* The anchor is a link, so currentcolor here would be the brand red. */
+  color: var(--vp-c-text-1);
+  font-size: 19px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  opacity: 0.7;
+}
+
 .VPHome .vp-doc .provider-logo[href*="gpustack"] .logo-wide {
   height: 28px;
 }
 
-/* When the count leaves a single logo alone on the last row, centre it rather
-   than letting it sit against the left edge. Keyed off the remainder, not a
-   fixed index, so adding a provider cannot knock the rows out of line. */
-.VPHome .vp-doc .provider-logo:last-of-type:nth-of-type(5n + 1) {
-  grid-column: 3;
-}
 
 .home-love-section {
   position: relative;
@@ -2043,16 +2058,8 @@ html:has(.VPHome) .VPNavBar > .wrapper > .container > .content > .content-body {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
-  .VPHome .vp-doc .provider-icons {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
-  .VPHome .vp-doc .provider-logo:last-of-type:nth-of-type(5n + 1) {
-    grid-column: auto;
-  }
-
-  .VPHome .vp-doc .provider-logo:last-of-type:nth-of-type(3n + 1) {
-    grid-column: 2;
+  .VPHome .vp-doc .provider-icons > .provider-logo {
+    flex: 0 0 calc((100% - 2 * 30px) / 3);
   }
 
 }
@@ -2495,15 +2502,12 @@ html:has(.VPHome) .VPNavBar > .wrapper > .container > .content > .content-body {
   }
 
   .VPHome .vp-doc .provider-icons {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 20px 18px;
     margin-top: 22px;
   }
 
-  .VPHome .vp-doc .provider-logo,
-  .VPHome .vp-doc .provider-logo:last-of-type:nth-of-type(5n + 1),
-  .VPHome .vp-doc .provider-logo:last-of-type:nth-of-type(3n + 1) {
-    grid-column: auto;
+  .VPHome .vp-doc .provider-icons > .provider-logo {
+    flex: 0 0 calc((100% - 2 * 18px) / 3);
   }
 
   /* Shrink the mark + wordmark pairs so they fit three-up without overflowing
