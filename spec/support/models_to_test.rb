@@ -173,7 +173,7 @@ SPEECH_MODELS = filter_unrecorded_providers(speech_models).freeze
 
 transcription_models = [
   { provider: :cohere, model: 'cohere-transcribe-03-2026' },
-  { provider: :deepgram, model: 'nova-3' },
+  { provider: :deepgram, model: 'nova-3-general' },
   { provider: :gemini, model: 'gemini-2.5-flash' },
   { provider: :mistral, model: 'voxtral-mini-latest' },
   { provider: :openai, model: 'gpt-4o-transcribe-diarize' },

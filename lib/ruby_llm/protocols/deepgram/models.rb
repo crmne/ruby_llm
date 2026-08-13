@@ -18,8 +18,23 @@ module RubyLLM
           body = response.body || {}
 
           %w[stt tts].flat_map do |group|
-            Array(body[group]).map { |data| build_model(data, slug, capabilities) }
+            Array(body[group]).group_by { |data| data['canonical_name'] || data['name'] }
+                              .map { |_, rows| build_model(merge_language_rows(rows), slug, capabilities) }
           end
+        end
+
+        # Deepgram lists a model once per language it was trained on, so
+        # nova-3-general arrives 146 times with a different language and
+        # version each time. One model answers to that id, so the rows
+        # collapse into it, carrying every language between them. Fields
+        # the rows disagree on describe a single language rather than the
+        # model, and are left out.
+        def merge_language_rows(rows)
+          merged = rows.first.merge('languages' => rows.flat_map { |row| Array(row['languages']) }.uniq.sort)
+          %w[version architecture].each do |key|
+            merged.delete(key) unless rows.map { |row| row[key] }.uniq.one?
+          end
+          merged
         end
 
         def build_model(data, slug, capabilities)

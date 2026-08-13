@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: https://api.deepgram.com/v1/listen?model=nova-3&smart_format=true&utterances=true
+    uri: https://api.deepgram.com/v1/listen?language=en&model=nova-3-general&smart_format=true&utterances=true
     body:
       encoding: ASCII-8BIT
       string: !binary |-
@@ -35,17 +35,17 @@ http_interactions:
       Access-Control-Expose-Headers:
       - dg-model-name,dg-model-uuid,dg-additional-model-uuids,dg-char-count,dg-request-id,dg-project-id,dg-error,dg-breaks-applied,dg-pronunciations-applied,dg-pronunciation-warnings
       Dg-Request-Id:
-      - '019ffacd-2fb2-7642-aa7f-d9feffc63107'
+      - '019ffae3-18d5-7803-a4bc-b74cdc47bd1c'
       Transfer-Encoding:
       - chunked
       Date:
-      - Thu, 13 Aug 2026 11:06:19 GMT
+      - Thu, 13 Aug 2026 11:30:16 GMT
     body:
       encoding: ASCII-8BIT
-      string: '{"metadata":{"transaction_key":"deprecated","request_id":"019ffacd-2fb2-7642-aa7f-d9feffc63107","sha256":"dd38e82b1e32e3ef335763b55fa4fa686b053d5d529eb5916cb845903fa4a306","created":"2026-08-13T11:06:19.772Z","duration":3.6999376,"channels":1,"models":["2187e11a-3532-4498-b076-81fa530bdd49"],"model_info":{"2187e11a-3532-4498-b076-81fa530bdd49":{"name":"general-nova-3","version":"2025-07-31.0","arch":"nova-3"}}},"results":{"channels":[{"alternatives":[{"transcript":"Ruby
+      string: '{"metadata":{"transaction_key":"deprecated","request_id":"019ffae3-18d5-7803-a4bc-b74cdc47bd1c","sha256":"dd38e82b1e32e3ef335763b55fa4fa686b053d5d529eb5916cb845903fa4a306","created":"2026-08-13T11:30:16.083Z","duration":3.6999376,"channels":1,"models":["2187e11a-3532-4498-b076-81fa530bdd49"],"model_info":{"2187e11a-3532-4498-b076-81fa530bdd49":{"name":"general-nova-3","version":"2025-07-31.0","arch":"nova-3"}}},"results":{"channels":[{"alternatives":[{"transcript":"Ruby
         is a programming language designed for developer happiness.","confidence":0.99902344,"words":[{"word":"ruby","start":0.16,"end":0.56,"confidence":0.9140625,"punctuated_word":"Ruby"},{"word":"is","start":0.56,"end":0.88,"confidence":0.9970703,"punctuated_word":"is"},{"word":"a","start":0.88,"end":1.04,"confidence":1.0,"punctuated_word":"a"},{"word":"programming","start":1.04,"end":1.4399999,"confidence":0.99902344,"punctuated_word":"programming"},{"word":"language","start":1.4399999,"end":1.8399999,"confidence":1.0,"punctuated_word":"language"},{"word":"designed","start":1.8399999,"end":2.32,"confidence":0.99902344,"punctuated_word":"designed"},{"word":"for","start":2.32,"end":2.48,"confidence":1.0,"punctuated_word":"for"},{"word":"developer","start":2.48,"end":2.96,"confidence":0.99902344,"punctuated_word":"developer"},{"word":"happiness","start":2.96,"end":3.52,"confidence":0.9980469,"punctuated_word":"happiness."}],"paragraphs":{"transcript":"\nRuby
         is a programming language designed for developer happiness.","paragraphs":[{"sentences":[{"text":"Ruby
         is a programming language designed for developer happiness.","start":0.16,"end":3.52}],"num_words":9,"start":0.16,"end":3.52}]}}]}],"utterances":[{"start":0.16,"end":3.52,"confidence":0.9895833,"channel":0,"transcript":"Ruby
-        is a programming language designed for developer happiness.","words":[{"word":"ruby","start":0.16,"end":0.56,"confidence":0.9140625,"punctuated_word":"Ruby"},{"word":"is","start":0.56,"end":0.88,"confidence":0.9970703,"punctuated_word":"is"},{"word":"a","start":0.88,"end":1.04,"confidence":1.0,"punctuated_word":"a"},{"word":"programming","start":1.04,"end":1.4399999,"confidence":0.99902344,"punctuated_word":"programming"},{"word":"language","start":1.4399999,"end":1.8399999,"confidence":1.0,"punctuated_word":"language"},{"word":"designed","start":1.8399999,"end":2.32,"confidence":0.99902344,"punctuated_word":"designed"},{"word":"for","start":2.32,"end":2.48,"confidence":1.0,"punctuated_word":"for"},{"word":"developer","start":2.48,"end":2.96,"confidence":0.99902344,"punctuated_word":"developer"},{"word":"happiness","start":2.96,"end":3.52,"confidence":0.9980469,"punctuated_word":"happiness."}],"id":"339156ae-d057-4560-8e2c-6d4c5672a8bb"}]}}'
-  recorded_at: Thu, 13 Aug 2026 11:06:19 GMT
+        is a programming language designed for developer happiness.","words":[{"word":"ruby","start":0.16,"end":0.56,"confidence":0.9140625,"punctuated_word":"Ruby"},{"word":"is","start":0.56,"end":0.88,"confidence":0.9970703,"punctuated_word":"is"},{"word":"a","start":0.88,"end":1.04,"confidence":1.0,"punctuated_word":"a"},{"word":"programming","start":1.04,"end":1.4399999,"confidence":0.99902344,"punctuated_word":"programming"},{"word":"language","start":1.4399999,"end":1.8399999,"confidence":1.0,"punctuated_word":"language"},{"word":"designed","start":1.8399999,"end":2.32,"confidence":0.99902344,"punctuated_word":"designed"},{"word":"for","start":2.32,"end":2.48,"confidence":1.0,"punctuated_word":"for"},{"word":"developer","start":2.48,"end":2.96,"confidence":0.99902344,"punctuated_word":"developer"},{"word":"happiness","start":2.96,"end":3.52,"confidence":0.9980469,"punctuated_word":"happiness."}],"id":"6ec02b25-bc71-48d1-9a0e-1472a483c950"}]}}'
+  recorded_at: Thu, 13 Aug 2026 11:30:16 GMT
 recorded_with: VCR 6.4.0

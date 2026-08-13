@@ -498,6 +498,7 @@ def generate_aliases # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComple
 
   add_xai_aliases(aliases, models['xai'])
   add_vertexai_aliases(aliases, models)
+  add_deepgram_aliases(aliases, models['deepgram'])
 
   sorted_aliases = aliases.sort.to_h
   File.write(RubyLLM::Aliases.aliases_file, JSON.pretty_generate(sorted_aliases))
@@ -659,5 +660,21 @@ def find_best_bedrock_model(anthropic_model, bedrock_models) # rubocop:disable M
 
     has_context_priority = model.include?('k') ? -1 : 0
     [has_context_priority, context_priority, version_priority]
+  end
+end
+
+# Deepgram's catalog names the default tier in full, as nova-3-general, while
+# its docs and the listen endpoint also answer to the bare nova-3. The short
+# form becomes an alias so both spellings resolve.
+def add_deepgram_aliases(aliases, deepgram_models)
+  models = Array(deepgram_models)
+
+  models.each do |model|
+    next unless model.end_with?('-general')
+
+    short = model.delete_suffix('-general')
+    next if models.include?(short)
+
+    aliases[short] = { 'deepgram' => model }
   end
 end

@@ -80,7 +80,7 @@ RSpec.describe RubyLLM::Providers::Deepgram do
 
     it 'carries the transcription options in the query string' do
       stub = stub_request(:post, 'https://api.deepgram.com/v1/listen')
-             .with(query: { model: 'nova-3', language: 'en', smart_format: 'true', utterances: 'true',
+             .with(query: { model: 'nova-3-general', language: 'en', smart_format: 'true', utterances: 'true',
                             diarize_model: 'latest' })
              .to_return(status: 200, body: listen_response.to_json,
                         headers: { 'Content-Type' => 'application/json' })
@@ -150,7 +150,7 @@ RSpec.describe RubyLLM::Providers::Deepgram do
       transcription = RubyLLM.transcribe(audio_path, model: 'nova-3', provider: :deepgram)
 
       expect(transcription.text).to match(/ruby/i)
-      expect(transcription.model).to eq('nova-3')
+      expect(transcription.model).to eq('nova-3-general')
       expect(transcription.duration).to be > 0
       expect(transcription.words).to be_an(Array)
     end
@@ -206,8 +206,9 @@ RSpec.describe RubyLLM::Providers::Deepgram do
     it 'lists the listening and speaking models' do
       models = provider.list_models
 
-      expect(models.map(&:id)).to include('nova-3', 'aura-2-thalia-en')
-      expect(models.find { |model| model.id == 'nova-3' }.capabilities).to eq(['transcription'])
+      expect(models.map(&:id)).to include('nova-3-general', 'aura-2-thalia-en')
+      expect(models.map(&:id)).to eq(models.map(&:id).uniq)
+      expect(models.find { |model| model.id == 'nova-3-general' }.capabilities).to eq(['transcription'])
     end
   end
 end
