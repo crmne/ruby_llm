@@ -218,6 +218,7 @@ Scan the table for anything your app uses, then read its section below.
 | `model.price(:cached_input)`, `cost.cache_creation` | `model.price(:cache_read)`, `cost.cache_write` |
 | `with_model("gpt-5", assume_exists: true)` | `assume_model_exists:` |
 | Tool `desc` / `param` / `params` | `description` / `parameter` / `parameters` |
+| Tool `provider_params` and `params_schema` readers | `provider_options` and `parameters_schema` |
 | `response.model_id` | `response.model` |
 | `Error.new(response, "msg")` | `Error.new("msg", response: response)` |
 | `with_protocol(:responses)` | `protocol:` keyword on `chat`, `with_model`, agent `model` |
