@@ -23,6 +23,7 @@ description: Reach provider-specific features with custom parameters, wire proto
 After reading this guide, you will know:
 
 * How to identify end users to a provider's abuse tooling with `with_end_user`.
+* How to keep long conversations inside the context window with `with_compaction`.
 * How to pass options in the provider's request vocabulary with `with_provider_options`.
 * How to choose the wire protocol a provider speaks.
 * How to modify the final request payload with `before_request`.
@@ -96,6 +97,49 @@ Agents declare it with the matching `end_user` macro, which also takes a block:
 class SupportAgent < RubyLLM::Agent
   inputs :account
   end_user { account.public_id }
+end
+```
+
+## Compacting Long Conversations
+
+A conversation that runs long enough overflows the model's context window and the provider starts rejecting requests. Several providers can handle that themselves: once the conversation crosses a token threshold, the provider condenses the earlier turns and carries on. `with_compaction` turns it on:
+
+```ruby
+chat = RubyLLM.chat(model: "claude-sonnet-4-6").with_compaction
+chat.ask "Let's go through the whole migration plan."
+```
+
+With no arguments the provider's own defaults apply. Three provider-neutral options tune it:
+
+```ruby
+chat.with_compaction(at: 50_000)
+chat.with_compaction(at: 100_000, instructions: "Keep every decision and open question.")
+chat.with_compaction(at: 50_000, pause_after: true)
+chat.with_compaction(nil)
+```
+
+`at:` is the input-token count that triggers compaction, `instructions:` steers the summary the provider writes, and `pause_after:` ends the turn once compaction runs instead of continuing straight into the answer. `nil` turns compaction back off. Each provider maps what it supports:
+
+| Provider | Request field | `at:` | `instructions:` and `pause_after:` |
+|:---------|:--------------|:------|:-----------------------------------|
+| Anthropic, Bedrock (Mantle) | `context_management.edits[].trigger.value` | yes, minimum 50,000 | yes |
+| OpenAI, Azure (Responses) | `context_management[].compact_threshold` | yes | dropped |
+| OpenRouter | `plugins[]` entry `context-compression` | dropped | dropped |
+| Everything else | omitted | | |
+
+Providers with nothing equivalent drop the request and log the decision at debug level, so the same code runs against every model. Compaction is also newer than most models: Anthropic serves it on Claude Sonnet 4.6, Opus 4.6 and later, and the 5 series, and OpenAI on GPT-5.2 and later.
+
+What happens at the threshold is not the same everywhere. Anthropic and OpenAI summarize the compacted span and return an opaque block in its place, which RubyLLM keeps on the message and replays on every later request, so the model still knows what was decided. OpenRouter's `context-compression` plugin drops messages from the middle of the conversation rather than summarizing them, and it triggers at the model's own context limit rather than at a threshold you pick.
+{: .warning }
+
+Compacting is not free: the provider runs the model an extra time to write the summary, and that generation is billed. RubyLLM reports the whole bill, so `response.tokens.input` on a turn that compacted counts the summarization pass as well as the answer.
+
+Agents declare it with the matching `compaction` macro:
+
+```ruby
+class ResearchAgent < RubyLLM::Agent
+  model "claude-sonnet-4-6"
+  compaction at: 50_000
 end
 ```
 

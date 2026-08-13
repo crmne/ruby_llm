@@ -9,6 +9,9 @@ module RubyLLM
         ANTHROPIC_FILE_UPLOAD_LIMIT = 500 * 1024 * 1024
         CACHE_CONTROL_TYPE = 'ephemeral'
         PROMPT_CACHE_OPTIONS = %i[ttl].freeze
+        BETA_HEADER = 'anthropic-beta'
+        COMPACTION_BETA = 'compact-2026-01-12'
+        COMPACTION_EDIT_TYPE = 'compact_20260112'
         COUNT_TOKENS_KEYS = %i[model messages system tools tool_choice thinking].freeze
 
         module_function
@@ -129,6 +132,32 @@ module RubyLLM
           Utils.deep_merge(payload, { metadata: { user_id: identifier } })
         end
 
+        # Anthropic compacts through a context_management edit. Omitting the
+        # trigger leaves the API on its own default threshold; the API
+        # rejects an explicit one below its minimum, so RubyLLM passes the
+        # value through rather than second-guessing it.
+        def apply_compaction(payload, compaction)
+          Utils.deep_merge(payload, { context_management: { edits: [compaction_edit(compaction)] } })
+        end
+
+        def compaction_edit(compaction)
+          edit = { type: COMPACTION_EDIT_TYPE }
+          edit[:trigger] = { type: 'input_tokens', value: compaction[:at] } if compaction[:at]
+          edit[:instructions] = compaction[:instructions] if compaction[:instructions]
+          edit[:pause_after_compaction] = true if compaction[:pause_after]
+          edit
+        end
+
+        def apply_compaction_headers(headers, _compaction)
+          headers.merge(BETA_HEADER => join_betas(headers[BETA_HEADER], COMPACTION_BETA))
+        end
+
+        # Anthropic takes several betas as one comma-separated header, so an
+        # added beta joins whatever a server tool or with_headers already set.
+        def join_betas(existing, beta)
+          (existing.to_s.split(',').map(&:strip).reject(&:empty?) + [beta]).uniq.join(',')
+        end
+
         def supports_provider_file_references?
           true
         end
@@ -182,7 +211,7 @@ module RubyLLM
               name: block['name'],
               id: block['id'] || block['tool_use_id'],
               input: block['input'],
-              result: block['summary'] || block['content'],
+              result: block['content'],
               raw: block
             )
           end
@@ -243,7 +272,7 @@ module RubyLLM
 
         def build_message(data, content:, citations:, thinking:, thinking_signature:, tool_use_blocks:, raw:,
                           server_tool_calls: [], raw_content: nil)
-          usage = data['usage'] || {}
+          usage = aggregate_usage(data['usage'])
           thinking_tokens = usage.dig('output_tokens_details', 'thinking_tokens') ||
                             usage.dig('output_tokens_details', 'reasoning_tokens') ||
                             usage['thinking_tokens'] ||

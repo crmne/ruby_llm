@@ -85,12 +85,14 @@ module RubyLLM
 
     def complete(messages, tools:, temperature:, provider_options: {}, headers: {}, schema: nil, thinking: nil,
                  max_output_tokens: nil, citations: false, caching: nil, tool_prefs: nil, before_request: [],
-                 usage_recorder: nil, server_tools: [], end_user: nil, &)
+                 usage_recorder: nil, server_tools: [], compaction: nil, end_user: nil, &)
       resolution = resolve_server_tools_for_request(server_tools)
       headers = resolution.headers.merge(headers) if resolution
+      headers = apply_compaction_headers(headers, compaction) if compaction
       payload = render(
         messages, tools:, tool_prefs:, temperature:, max_output_tokens:, provider_options:, schema:, thinking:,
-                  citations:, caching:, end_user:, before_request:, server_tools:, stream: block_given?
+                  citations:, caching:, compaction:, end_user:, before_request:, server_tools:,
+                  stream: block_given?
       )
 
       track_usage(:chat, on_finish: usage_recorder) do
@@ -109,7 +111,7 @@ module RubyLLM
 
     def render(messages, tools:, temperature:, provider_options: {}, schema: nil, thinking: nil,
                max_output_tokens: nil, citations: false, caching: nil, tool_prefs: nil, before_request: [],
-               stream: false, server_tools: [], end_user: nil)
+               stream: false, server_tools: [], compaction: nil, end_user: nil)
       payload = render_payload(
         messages,
         tools: tools,
@@ -124,6 +126,7 @@ module RubyLLM
         caching: caching
       )
       payload = apply_end_user(payload, end_user) if end_user
+      payload = apply_compaction(payload, compaction) if compaction
       payload = Utils.deep_merge(payload, provider_options)
       payload = apply_server_tools(payload, server_tools)
       apply_before_request_hooks(payload, before_request)
@@ -145,6 +148,32 @@ module RubyLLM
         "#{@provider.name} has no safety identifier parameter, dropping #{identifier}"
       end
       payload
+    end
+
+    # Writes the chat's context compaction options into the request payload
+    # and returns it. +compaction+ is the provider-neutral Hash from
+    # Chat#with_compaction, whose keys are Chat::COMPACTION_OPTIONS. The
+    # default drops it with a debug log, so providers that manage context
+    # themselves simply ignore the request. Protocols whose API compacts
+    # server-side override this, mapping the options they support and
+    # logging the ones they do not.
+    #
+    #   def apply_compaction(payload, compaction)
+    #     payload.merge(context_management: [{ type: 'compaction' }])
+    #   end
+    #
+    def apply_compaction(payload, compaction)
+      RubyLLM.logger.debug do
+        "#{@provider.name} has no context compaction parameter, dropping #{compaction.inspect}"
+      end
+      payload
+    end
+
+    # Returns the completion request's HTTP headers with anything context
+    # compaction requires added. The default changes nothing; protocols that
+    # gate compaction behind a beta header override this.
+    def apply_compaction_headers(headers, _compaction)
+      headers
     end
 
     # The alias table mapping portable server tool names to this protocol's

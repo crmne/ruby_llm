@@ -77,6 +77,33 @@ module RubyLLM
           )
         end
 
+        # context_management is an OpenAI parameter that only OpenAI's own
+        # endpoints serve; the other services on this wire format reject it.
+        COMPACTION_PROVIDERS = %w[openai azure].freeze
+        COMPACTION_IGNORED_OPTIONS = %i[instructions pause_after].freeze
+
+        # OpenAI names the threshold compact_threshold and takes the entries
+        # as a flat array, where Anthropic nests a trigger object under
+        # context_management.edits. It writes the summary itself, so there is
+        # nothing to steer with instructions and no pausing to opt into.
+        def apply_compaction(payload, compaction)
+          return super unless COMPACTION_PROVIDERS.include?(@provider.slug)
+
+          warn_ignored_compaction_options(compaction)
+          entry = { type: 'compaction' }
+          entry[:compact_threshold] = compaction[:at] if compaction[:at]
+          payload.merge(context_management: [entry])
+        end
+
+        def warn_ignored_compaction_options(compaction)
+          ignored = compaction.keys & COMPACTION_IGNORED_OPTIONS
+          return if ignored.empty?
+
+          RubyLLM.logger.debug do
+            "#{@provider.name} compaction takes no #{ignored.join(', ')}, dropping"
+          end
+        end
+
         CLIENT_OUTPUT_ITEM_TYPES = %w[message reasoning function_call].freeze
 
         # Output items beyond text, reasoning, and function calls record
@@ -89,10 +116,19 @@ module RubyLLM
               name: item['name'],
               id: item['id'],
               input: item['action'] || item['arguments'] || item['code'],
-              result: item['result'] || item['results'] || item['outputs'] || item['output'],
+              result: server_tool_result(item),
               raw: item
             )
           end
+        end
+
+        # Result payloads differ by item type; compaction items carry an
+        # opaque encrypted_content instead of a readable result.
+        SERVER_TOOL_RESULT_KEYS = %w[result results outputs output encrypted_content].freeze
+
+        def server_tool_result(item)
+          key = SERVER_TOOL_RESULT_KEYS.find { |candidate| item[candidate] }
+          item[key] if key
         end
 
         def parse_citations(data, output, content)

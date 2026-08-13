@@ -44,6 +44,7 @@ module RubyLLM
       :@tools => [],
       :@tool_options => {},
       :@caching => nil,
+      :@compaction => nil,
       :@provider_options => {},
       :@headers => {},
       :@input_names => [],
@@ -195,6 +196,19 @@ module RubyLLM
         return @thinking if effort.nil? && budget.nil? && display.nil?
 
         @thinking = { effort: effort, budget: budget, display: display }
+      end
+
+      # Sets context compaction options for chats this agent builds, applied
+      # via Chat#with_compaction. Called with no arguments, returns the
+      # configured value; pass +true+ for the provider's own defaults.
+      #
+      #   compaction true
+      #   compaction at: 50_000
+      #
+      def compaction(options = nil)
+        return @compaction if options.nil?
+
+        @compaction = options == true ? {} : options
       end
 
       # Sets the safety identifier for chats this agent builds, applied via
@@ -500,6 +514,7 @@ module RubyLLM
         apply_citations(chat)
         apply_end_user(chat, runtime)
         apply_caching(chat, runtime)
+        apply_compaction(chat)
         apply_provider_options(chat, runtime)
         apply_headers(chat, runtime)
         apply_schema(chat, runtime)
@@ -591,6 +606,10 @@ module RubyLLM
       def apply_caching(chat, runtime)
         value = evaluate(caching, runtime)
         chat.with_caching(**value) if value
+      end
+
+      def apply_compaction(chat)
+        chat.with_compaction(**compaction) if compaction
       end
 
       def apply_provider_options(chat, runtime)
@@ -733,9 +752,9 @@ module RubyLLM
 
     # Agent instances delegate the Chat API to the wrapped #chat. Each
     # delegated method behaves exactly as documented on Chat.
-    def_delegators :chat, :model, :messages, :tools, :provider_options, :headers, :schema, :caching,
+    def_delegators :chat, :model, :messages, :tools, :provider_options, :headers, :schema, :caching, :compaction,
                    :with_tools, :with_tool_options, :with_model, :with_temperature, :with_max_output_tokens,
-                   :with_thinking, :with_citations, :with_end_user,
+                   :with_thinking, :with_citations, :with_end_user, :with_compaction,
                    :with_caching, :with_context, :with_provider_options,
                    :with_headers, :with_schema, :with_fallbacks, :before_message, :after_message, :before_tool_call,
                    :after_tool_result, :before_fallback, :after_fallback, :each, :complete?,

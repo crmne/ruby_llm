@@ -95,6 +95,7 @@ For example, `model` maps to `RubyLLM.chat(model:, provider:, ...)`, `tools` map
 * `thinking` (see [Thinking]({% link _core_features/thinking.md %}))
 * `citations` (see [Citations]({% link _core_features/citations.md %}))
 * `end_user` (see [Request Control]({% link _core_features/chat-request-control.md %}#identifying-end-users))
+* `compaction` (see [Request Control]({% link _core_features/chat-request-control.md %}#compacting-long-conversations))
 * `provider_options` (see [Request Control]({% link _core_features/chat-request-control.md %}))
 * `headers` (see [Chat Basics]({% link _core_features/chat.md %}))
 * `schema` (see [Chat Basics]({% link _core_features/chat.md %}))
@@ -317,7 +318,7 @@ Delegated methods include:
 * `cancel!`, `cancelled?`, `approve!`, `deny!`, `awaiting_approval?`
 * `add_message`, `each`
 * `with_tools`, `with_tool_options`
-* `with_model`, `with_temperature`, `with_thinking`, `with_citations`, `with_end_user`, `with_context`
+* `with_model`, `with_temperature`, `with_thinking`, `with_citations`, `with_end_user`, `with_compaction`, `with_context`
 * `with_caching`, `with_provider_options`, `with_headers`, `with_schema`, `with_fallbacks`
 * `before_message`, `after_message`, `before_tool_call`, `after_tool_result`, `before_fallback`, `after_fallback`
 

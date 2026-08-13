@@ -24,6 +24,9 @@ module RubyLLM
     include Enumerable
     include Inspectable
 
+    # The provider-neutral options #with_compaction accepts.
+    COMPACTION_OPTIONS = %i[at instructions pause_after].freeze
+
     # The Model the chat sends requests to.
     attr_reader :model
 
@@ -55,6 +58,9 @@ module RubyLLM
 
     # The prompt caching options set with #with_caching, or +nil+.
     attr_reader :caching
+
+    # The context compaction options set with #with_compaction, or +nil+.
+    attr_reader :compaction
 
     # The opaque per-user identifier set with #with_end_user, or
     # +nil+.
@@ -97,6 +103,7 @@ module RubyLLM
       @thinking = nil
       @citations = false
       @caching = nil
+      @compaction = nil
       @end_user = nil
       @fallbacks = []
       @fallback_errors = Fallback::DEFAULT_ERRORS
@@ -467,6 +474,35 @@ module RubyLLM
       self
     end
 
+    # Enables provider-side context compaction, so a long conversation keeps
+    # going instead of overflowing the context window. The provider condenses
+    # the earlier turns itself and returns a block that RubyLLM replays on
+    # later requests. With no arguments the provider's own defaults apply.
+    # The options are provider-neutral:
+    #
+    # +at+:: the input-token count that triggers compaction.
+    # +instructions+:: a custom prompt for the summary the provider writes.
+    # +pause_after+:: end the turn once compaction runs, instead of
+    #                 continuing straight into the answer.
+    #
+    # Each provider maps what it supports and drops the rest with a debug
+    # log, so the same call works everywhere. Pass +nil+ to disable.
+    # Returns +self+.
+    #
+    #   chat.with_compaction
+    #   chat.with_compaction(at: 50_000)
+    #   chat.with_compaction(at: 100_000, instructions: "Keep every decision.")
+    #   chat.with_compaction(nil)
+    #
+    # What a provider does when the threshold is crossed differs. Anthropic
+    # and OpenAI summarize the compacted span into an opaque block that
+    # replaces it; OpenRouter drops messages from the middle of the
+    # conversation instead, and has no threshold of its own.
+    def with_compaction(options = {})
+      @compaction = normalize_compaction(options)
+      self
+    end
+
     # Identifies the end user behind the conversation for the provider's
     # abuse tooling, mapping to each provider's own field
     # (+safety_identifier+ on OpenAI, <tt>metadata.user_id</tt> on
@@ -711,6 +747,7 @@ module RubyLLM
         thinking: @thinking,
         citations: @citations,
         caching: @caching,
+        compaction: @compaction,
         end_user: @end_user,
         protocol: @protocol,
         before_request: @callbacks[:before_request]
@@ -732,6 +769,23 @@ module RubyLLM
     end
 
     private
+
+    def normalize_compaction(options)
+      return nil if options.nil?
+
+      compaction = options.to_h.transform_keys(&:to_sym)
+      unsupported = compaction.keys - COMPACTION_OPTIONS
+      return compaction.freeze if unsupported.empty?
+
+      raise ArgumentError,
+            "with_compaction accepts #{format_option_keys(COMPACTION_OPTIONS)}, " \
+            "got #{format_option_keys(unsupported)}. Provider-specific settings " \
+            'go through with_provider_options.'
+    end
+
+    def format_option_keys(keys)
+      keys.map { |key| ":#{key}" }.join(', ')
+    end
 
     def message_list(new_messages)
       return [] if new_messages.nil?
@@ -973,6 +1027,7 @@ module RubyLLM
         thinking: @thinking,
         citations: @citations,
         caching: @caching,
+        compaction: @compaction,
         end_user: @end_user,
         protocol: @protocol,
         before_request: @callbacks[:before_request],

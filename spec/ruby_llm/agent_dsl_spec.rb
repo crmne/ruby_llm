@@ -17,6 +17,7 @@ RSpec.describe RubyLLM::Agent do
         provider_options top_p: 0.9
         headers 'X-Test' => '1'
         end_user 'tenant-42'
+        compaction at: 50_000
       end
     end
 
@@ -30,6 +31,7 @@ RSpec.describe RubyLLM::Agent do
       expect(agent_class.provider_options).to eq(top_p: 0.9)
       expect(agent_class.headers).to eq('X-Test' => '1')
       expect(agent_class.end_user).to eq('tenant-42')
+      expect(agent_class.compaction).to eq(at: 50_000)
     end
 
     it 'defaults the collection macros to empty' do
@@ -43,6 +45,7 @@ RSpec.describe RubyLLM::Agent do
       expect(bare.provider_options).to eq({})
       expect(bare.headers).to eq({})
       expect(bare.end_user).to be_nil
+      expect(bare.compaction).to be_nil
       expect(bare.context).to be_nil
       expect(bare.chat_model).to be_nil
     end
@@ -66,6 +69,7 @@ RSpec.describe RubyLLM::Agent do
       expect(chat.instance_variable_get(:@headers)).to eq('X-Test' => '1')
       expect(chat.instance_variable_get(:@thinking).effort).to eq('low')
       expect(chat.end_user).to eq('tenant-42')
+      expect(chat.compaction).to eq(at: 50_000)
     end
 
     it 'binds a configured context to the chat it builds' do

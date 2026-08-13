@@ -32,27 +32,53 @@ module RubyLLM
           data.dig('message', 'model')
         end
 
+        ITERATION_TOKEN_KEYS = %w[
+          input_tokens output_tokens cache_read_input_tokens cache_creation_input_tokens
+        ].freeze
+
         def extract_input_tokens(data)
-          data.dig('message', 'usage', 'input_tokens')
+          message_usage(data)['input_tokens']
         end
 
         def extract_output_tokens(data)
-          data.dig('message', 'usage', 'output_tokens') || data.dig('usage', 'output_tokens')
+          message_usage(data)['output_tokens'] || delta_usage(data)['output_tokens']
         end
 
         def extract_cache_read_tokens(data)
-          data.dig('message', 'usage', 'cache_read_input_tokens') || data.dig('usage', 'cache_read_input_tokens')
+          message_usage(data)['cache_read_input_tokens'] || delta_usage(data)['cache_read_input_tokens']
         end
 
         def extract_cache_write_tokens(data)
-          direct = data.dig('message', 'usage',
-                            'cache_creation_input_tokens') || data.dig('usage', 'cache_creation_input_tokens')
+          direct = message_usage(data)['cache_creation_input_tokens'] ||
+                   delta_usage(data)['cache_creation_input_tokens']
           return direct if direct
 
-          breakdown = data.dig('message', 'usage', 'cache_creation') || data.dig('usage', 'cache_creation')
+          breakdown = message_usage(data)['cache_creation'] || delta_usage(data)['cache_creation']
           return unless breakdown.is_a?(Hash)
 
           breakdown.values.compact.sum
+        end
+
+        def message_usage(data)
+          aggregate_usage(data.dig('message', 'usage'))
+        end
+
+        def delta_usage(data)
+          aggregate_usage(data['usage'])
+        end
+
+        # A compacted turn runs the model more than once, and the top-level
+        # counts cover only the final iteration. Everything billed is in
+        # usage.iterations, so their sum is what the request cost.
+        def aggregate_usage(usage)
+          return {} unless usage.is_a?(Hash)
+
+          iterations = usage['iterations']
+          return usage unless iterations.is_a?(Array) && !iterations.empty?
+
+          usage.merge(ITERATION_TOKEN_KEYS.to_h do |key|
+            [key, iterations.sum { |iteration| iteration[key].to_i }]
+          end)
         end
       end
     end

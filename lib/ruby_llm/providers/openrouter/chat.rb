@@ -9,11 +9,30 @@ module RubyLLM
         OPENROUTER_FILE_UPLOAD_LIMIT = 100 * 1024 * 1024
         CACHE_CONTROL_TYPE = 'ephemeral'
         PROMPT_CACHE_OPTIONS = %i[ttl].freeze
+        COMPACTION_PLUGIN_ID = 'context-compression'
 
         module_function
 
         def apply_end_user(payload, identifier)
           payload.merge(user: identifier)
+        end
+
+        # OpenRouter compacts through its context-compression plugin, which
+        # drops messages from the middle of the conversation once the prompt
+        # would overflow the model's context window. It summarizes nothing
+        # and takes no threshold of its own, so the portable options have
+        # nowhere to go.
+        def apply_compaction(payload, compaction)
+          log_ignored_compaction_options(compaction)
+          payload.merge(plugins: Array(payload[:plugins]) + [{ id: COMPACTION_PLUGIN_ID }])
+        end
+
+        def log_ignored_compaction_options(compaction)
+          return if compaction.empty?
+
+          RubyLLM.logger.debug do
+            "#{@provider.name} compresses context at the model's own limit, dropping #{compaction.inspect}"
+          end
         end
 
         def format_content(content, attachments = [])
