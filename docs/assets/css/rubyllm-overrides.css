@@ -1522,6 +1522,14 @@ html:has(.VPHome) .VPNavBar > .wrapper > .container > .content > .content-body {
   color: #fff;
 }
 
+/* Some providers' marks are a single black shape rather than a coloured one,
+   which all but disappears against the dark background. The theme flips the
+   wordmarks for this reason but matches them on filename, so the marks are
+   tagged in the markup and flipped the same way. */
+.dark .VPHome .vp-doc .provider-logo .logo-mono {
+  filter: brightness(0) invert(1) saturate(0.8);
+}
+
 .VPHome .vp-doc .provider-logo[href*="gpustack"] .logo-wide {
   height: 28px;
 }
