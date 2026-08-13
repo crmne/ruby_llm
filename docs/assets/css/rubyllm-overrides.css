@@ -1502,17 +1502,24 @@ html:has(.VPHome) .VPNavBar > .wrapper > .container > .content > .content-body {
 
 /* Ollama Cloud ships no lockup of its own, so the row pairs Ollama's mark and
    wordmark with the product word, sized to sit with the wordmarks beside it. */
-/* Ollama Cloud ships no lockup of its own. Setting the whole name rather than
-   bolting a word onto Ollama's wordmark keeps it in one typeface instead of
-   showing the seam. The anchor is a link, so currentcolor would be brand red. */
+/* Ollama has no wordmark that also covers Ollama Cloud, so both are set here
+   rather than pairing one custom face with a typed word beside it.
+   The wordmark images render black and are inverted to white for dark mode,
+   both at 0.7, so this matches that exactly instead of using a text token,
+   which is a softer grey and reads dimmer than the logos around it. The
+   anchor is a link, so currentcolor would be brand red. */
 .VPHome .vp-doc .provider-logo .logo-wordmark {
-  color: var(--vp-c-text-1);
+  color: #000;
   font-size: 21px;
   font-weight: 600;
   line-height: 1;
   letter-spacing: -0.02em;
   white-space: nowrap;
   opacity: 0.7;
+}
+
+.dark .VPHome .vp-doc .provider-logo .logo-wordmark {
+  color: #fff;
 }
 
 .VPHome .vp-doc .provider-logo[href*="gpustack"] .logo-wide {
