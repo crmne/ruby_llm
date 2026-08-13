@@ -18,11 +18,18 @@ module RubyLLM
     # embedded.
     attr_reader :vectors
 
+    # The sparse vectors, for models that return one beside the dense
+    # vector, as a Hash mapping token id to weight. Shaped like #vectors:
+    # one Hash for a single text, an array of them for an array of texts.
+    # +nil+ on models that return only dense vectors.
+    attr_reader :sparse_vectors
+
     # The id of the model that produced the vectors, as a String.
     attr_reader :model
 
-    def initialize(vectors:, model:, input_tokens: nil, reported_cost: nil) # :nodoc:
+    def initialize(vectors:, model:, sparse_vectors: nil, input_tokens: nil, reported_cost: nil) # :nodoc:
       @vectors = vectors
+      @sparse_vectors = sparse_vectors
       @model = model
       @input_tokens = input_tokens
       @reported_cost = reported_cost

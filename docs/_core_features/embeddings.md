@@ -177,6 +177,18 @@ puts embedding.vectors.first.length # => 1536
 puts embedding.model  # => "{{ site.models.embedding_small }}"
 ```
 
+### Sparse Vectors
+
+Some models return a sparse vector beside the dense one, so you can run hybrid retrieval that combines semantic similarity with exact term matching. `sparse_vectors` holds it as a Hash mapping token id to weight, shaped like `vectors`: one Hash for a single text, an array of them for an array of texts.
+
+```ruby
+embedding = RubyLLM.embed("Ruby is a programmer's best friend", model: "bge-m3")
+
+embedding.sparse_vectors # => { 1037 => 0.25, 2003 => 0.5 }
+```
+
+Sparse output is a de-facto extension rather than part of the OpenAI embeddings spec, so whether you get one depends on the model and the server hosting it. RubyLLM reads it from either `lexical_weights` or `sparse_embedding`, the two spellings in use. Where there is none, `sparse_vectors` is `nil`, which is what every hosted provider returns today.
+
 ## Using Embedding Results
 
 A primary use case for embeddings is measuring the semantic similarity between texts. Cosine similarity is a common metric.
