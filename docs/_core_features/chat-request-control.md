@@ -7,18 +7,9 @@ description: Reach provider-specific features with custom parameters, wire proto
 ---
 
 # {{ page.title }}
-{: .no_toc }
 
 {{ page.description }}
 {: .fs-6 .fw-300 }
-
-## Table of contents
-{: .no_toc .text-delta }
-
-1. TOC
-{:toc}
-
----
 
 After reading this guide, you will know:
 
@@ -165,11 +156,6 @@ Available options vary by provider and model. Always consult the provider's docu
 {: .warning }
 
 ## Choosing the Wire Protocol
-{: .d-inline-block }
-
-v2.0+
-{: .label .label-green }
-
 Some providers speak more than one wire protocol. OpenAI defaults to the Responses API and routes audio models to Chat Completions; Azure defaults to Chat Completions and routes deployments named after gpt-5.4+ models to the Responses API; Vertex AI speaks Gemini for Google models, Anthropic for Claude, Mistral for Mistral, and Chat Completions for the publisher-prefixed MaaS models. RubyLLM picks the right protocol per request:
 
 ```ruby

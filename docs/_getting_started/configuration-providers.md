@@ -7,18 +7,9 @@ description: Per-provider API keys, organization headers, Bedrock and Vertex AI 
 ---
 
 # {{ page.title }}
-{: .no_toc }
 
 {{ page.description }}
 {: .fs-6 .fw-300 }
-
-## Table of contents
-{: .no_toc .text-delta }
-
-1. TOC
-{:toc}
-
----
 
 After reading this guide, you will know:
 
@@ -35,7 +26,7 @@ Configure API keys only for the providers you use. RubyLLM won't complain about 
 RubyLLM.configure do |config|
   # Anthropic
   config.anthropic_api_key = ENV['ANTHROPIC_API_KEY']
-  config.anthropic_api_base = ENV['ANTHROPIC_API_BASE'] # Available in v1.13.0+ (optional custom Anthropic endpoint)
+  config.anthropic_api_base = ENV['ANTHROPIC_API_BASE'] # optional custom Anthropic endpoint
 
   # Azure
   config.azure_api_base = ENV['AZURE_API_BASE'] # Microsoft Foundry project endpoint
@@ -48,7 +39,7 @@ RubyLLM.configure do |config|
   config.bedrock_region = ENV['AWS_REGION'] # Required for Bedrock
   config.bedrock_session_token = ENV['AWS_SESSION_TOKEN'] # For temporary credentials
   # config.bedrock_credential_provider = Aws::InstanceProfileCredentials.new # Optional Aws::CredentialProvider
-  config.bedrock_api_base = ENV['BEDROCK_API_BASE'] # v1.16+ (optional custom Bedrock endpoint)
+  config.bedrock_api_base = ENV['BEDROCK_API_BASE'] # optional custom Bedrock endpoint
   config.bedrock_mantle_api_base = ENV['BEDROCK_MANTLE_API_BASE'] # optional custom bedrock-mantle endpoint
 
   # Cohere
@@ -61,7 +52,7 @@ RubyLLM.configure do |config|
 
   # DeepSeek
   config.deepseek_api_key = ENV['DEEPSEEK_API_KEY']
-  config.deepseek_api_base = ENV['DEEPSEEK_API_BASE'] # Available in v1.13.0+ (optional custom DeepSeek endpoint)
+  config.deepseek_api_base = ENV['DEEPSEEK_API_BASE'] # optional custom DeepSeek endpoint
 
   # ElevenLabs
   config.elevenlabs_api_key = ENV['ELEVENLABS_API_KEY'] # Speech only: RubyLLM.speak and RubyLLM.transcribe
@@ -69,7 +60,7 @@ RubyLLM.configure do |config|
 
   # Gemini
   config.gemini_api_key = ENV['GEMINI_API_KEY']
-  config.gemini_api_base = ENV['GEMINI_API_BASE'] # Available in v1.9.0+ (optional API version override)
+  config.gemini_api_base = ENV['GEMINI_API_BASE'] # optional API version override
 
   # GPUStack
   config.gpustack_api_base = ENV['GPUSTACK_API_BASE']
@@ -77,11 +68,11 @@ RubyLLM.configure do |config|
 
   # Mistral
   config.mistral_api_key = ENV['MISTRAL_API_KEY']
-  config.mistral_api_base = ENV['MISTRAL_API_BASE'] # v1.16+ (optional custom Mistral endpoint)
+  config.mistral_api_base = ENV['MISTRAL_API_BASE'] # optional custom Mistral endpoint
 
   # Ollama
   config.ollama_api_base = 'http://localhost:11434/v1'
-  config.ollama_api_key = ENV['OLLAMA_API_KEY'] # Available in v1.13.0+ (optional for authenticated/remote Ollama endpoints)
+  config.ollama_api_key = ENV['OLLAMA_API_KEY'] # optional for authenticated/remote Ollama endpoints
 
   # Ollama Cloud
   config.ollama_cloud_api_key = ENV['OLLAMA_CLOUD_API_KEY'] # Key from ollama.com/settings/keys
@@ -93,23 +84,23 @@ RubyLLM.configure do |config|
 
   # OpenRouter
   config.openrouter_api_key = ENV['OPENROUTER_API_KEY']
-  config.openrouter_api_base = ENV['OPENROUTER_API_BASE'] # Available in v1.13.0+ (optional custom OpenRouter endpoint)
+  config.openrouter_api_base = ENV['OPENROUTER_API_BASE'] # optional custom OpenRouter endpoint
   config.openrouter_app_url = 'https://myapp.com' # Optional app attribution for OpenRouter rankings
   config.openrouter_app_name = 'My App' # Optional app display name in OpenRouter rankings
 
   # Perplexity
   config.perplexity_api_key = ENV['PERPLEXITY_API_KEY']
-  config.perplexity_api_base = ENV['PERPLEXITY_API_BASE'] # v1.16+ (optional custom Perplexity endpoint)
+  config.perplexity_api_base = ENV['PERPLEXITY_API_BASE'] # optional custom Perplexity endpoint
 
   # Vertex AI
-  config.vertexai_project_id = ENV['GOOGLE_CLOUD_PROJECT'] # Available in v1.7.0+
+  config.vertexai_project_id = ENV['GOOGLE_CLOUD_PROJECT']
   config.vertexai_location = ENV['GOOGLE_CLOUD_LOCATION']
   config.vertexai_service_account_key = ENV['VERTEXAI_SERVICE_ACCOUNT_KEY'] # Optional: service account JSON key
-  config.vertexai_api_base = ENV['VERTEXAI_API_BASE'] # v1.16+ (optional custom Vertex AI endpoint)
+  config.vertexai_api_base = ENV['VERTEXAI_API_BASE'] # optional custom Vertex AI endpoint
 
   # xAI
-  config.xai_api_key = ENV['XAI_API_KEY'] # Available in v1.11.0+
-  config.xai_api_base = ENV['XAI_API_BASE'] # v1.16+ (optional custom xAI endpoint)
+  config.xai_api_key = ENV['XAI_API_KEY']
+  config.xai_api_base = ENV['XAI_API_BASE'] # optional custom xAI endpoint
 end
 ```
 
@@ -243,7 +234,7 @@ Some models are only available on specific API versions. For example, `gemini-1.
 
 ### Provider-Specific API Base URLs
 
-Every provider exposes a provider-specific `*_api_base` setting in v1.16+. Use these when routing a native provider API through a proxy, gateway, private network endpoint, or compatible service:
+Every provider exposes a provider-specific `*_api_base` setting. Use these when routing a native provider API through a proxy, gateway, private network endpoint, or compatible service:
 
 ```ruby
 RubyLLM.configure do |config|

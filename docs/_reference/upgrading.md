@@ -9,16 +9,9 @@ redirect_from:
 ---
 
 # {{ page.title }}
-{: .no_toc }
 
 {{ page.description }}
 {: .fs-6 .fw-300 }
-
-## Table of contents
-{: .no_toc .text-delta }
-
-1. TOC
-{:toc}
 
 This guide focuses on upgrade-impacting changes: migrations, token semantics, deprecations, and compatibility notes. It is not a complete changelog. For every feature, fix, and patch note, see the [GitHub releases](https://github.com/crmne/ruby_llm/releases).
 {: .note }

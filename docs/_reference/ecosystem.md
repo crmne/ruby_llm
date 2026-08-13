@@ -6,21 +6,12 @@ description: Extend RubyLLM with MCP servers, structured schemas, instrumentatio
 ---
 
 # {{ page.title }}
-{: .no_toc }
 
 {{ page.description }}
 {: .fs-6 .fw-300 }
 
 > Ecosystem projects are maintained by their respective authors. We list projects for discoverability, but we cannot guarantee the quality, security, maintenance status, or fitness of every listed project.
 {: .note }
-
-## Table of contents
-{: .no_toc .text-delta }
-
-1. TOC
-{:toc}
-
----
 
 After reading this guide, you will know:
 

@@ -7,18 +7,9 @@ description: Scaffold chats, a chat UI, agents, tools, and schemas with RubyLLM'
 ---
 
 # {{ page.title }}
-{: .no_toc }
 
 {{ page.description }}
 {: .fs-6 .fw-300 }
-
-## Table of contents
-{: .no_toc .text-delta }
-
-1. TOC
-{:toc}
-
----
 
 After reading this guide, you will know:
 
@@ -46,13 +37,13 @@ The generator:
 - Installs ActiveStorage for file attachments
 - Configures the database model registry
 - Creates an initializer with sensible defaults
-- Creates conventional AI app directories (`v1.14.0+`)
+- Creates conventional AI app directories
 
 After running the generator:
 
 ```bash
 bin/rails db:migrate
-bin/rails ruby_llm:load_models # v1.13+
+bin/rails ruby_llm:load_models
 ```
 
 Your Rails app is now AI-ready!

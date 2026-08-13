@@ -1,13 +1,23 @@
 title: RubyLLM
 description: 'RubyLLM: a delightful Ruby AI framework for every major provider. Switch models without rewriting your code. Agents, Tools, RAG, Agentic Workflows, at home in Rails.'
+tagline: Build AI features the Ruby way
 url: https://rubyllm.com
 baseurl: /
 lang: en-US
 locale: en_US
+timezone: Europe/Berlin
 repository: crmne/ruby_llm
-remote_theme: just-the-docs/just-the-docs
 
-# Collections for organizing content
+theme: jekyll-vitepress-theme
+
+markdown: kramdown
+kramdown:
+  input: GFM
+  syntax_highlighter_opts:
+    block:
+      line_numbers: false
+permalink: pretty
+
 collections:
   getting_started:
     permalink: "/:name/"
@@ -23,54 +33,168 @@ collections:
     output: true
 
 # Configure Just the Docs collections
-just_the_docs:
-  collections:
-    getting_started:
-      name: Start Here
-      nav_fold: false
-    core_features:
-      name: Core Features
-      nav_fold: false
-    advanced:
-      name: Building Real Apps
-      nav_fold: false
-    reference:
-      name: Reference
-      nav_fold: false
 
-# Set default layout for collections
 defaults:
   - scope:
       path: ""
-      type: "getting_started"
     values:
-      layout: "default"
-      seo:
-        type: "WebPage"
+      layout: default
+      jekyll_vitepress:
+        auto_title: false
   - scope:
       path: ""
-      type: "core_features"
+      type: getting_started
     values:
-      layout: "default"
-      seo:
-        type: "WebPage"
+      layout: default
   - scope:
       path: ""
-      type: "advanced"
+      type: core_features
     values:
-      layout: "default"
-      seo:
-        type: "WebPage"
+      layout: default
   - scope:
       path: ""
-      type: "reference"
+      type: advanced
     values:
-      layout: "default"
-      seo:
-        type: "WebPage"
+      layout: default
+  - scope:
+      path: ""
+      type: reference
+    values:
+      layout: default
 
-logo: "/assets/images/logotype.svg"
-favicon_ico: "/assets/images/logo.svg"
+jekyll_vitepress:
+  branding:
+    site_title: false
+    logo:
+      default: "/assets/images/logotype.svg"
+      light: "/assets/images/logotype.svg"
+      dark: "/assets/images/logotype_dark.svg"
+      alt: RubyLLM
+      width: 150
+      height: 32
+  typography:
+    body_font_family: "'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI',
+      sans-serif"
+    code_font_family: "'IBM Plex Mono', ui-monospace, monospace"
+    google_fonts_url: "https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,900;1,300;1,400;1,500;1,600;1,700;1,900&family=Lora:wght@400;500;600;700&display=swap"
+  syntax:
+    light_theme: rubyllm.light
+    dark_theme: rubyllm.dark
+  tokens:
+    light:
+      "--vp-c-brand-1": "#B30000"
+      "--vp-c-brand-2": "#C9271E"
+      "--vp-c-brand-3": "#9D0006"
+      "--vp-c-brand-soft": rgba(201, 39, 30, 0.14)
+      "--vp-c-bg": "#f7f3f1"
+      "--vp-c-bg-alt": "#F3ECE7"
+      "--vp-c-bg-soft": "#F3ECE7"
+      "--vp-c-bg-elv": "#FAF9F7"
+      "--vp-c-border": "#E0D9D5"
+      "--vp-c-text-1": "#2C2926"
+      "--vp-c-text-2": "#5C5353"
+      "--vp-c-text-3": "#796B67"
+      "--vp-c-default-1": "#F3ECE7"
+      "--vp-c-default-2": "#E0D9D5"
+      "--vp-c-default-3": "#D7CDC7"
+      "--vp-c-divider": "#E0D9D5"
+      "--vp-c-gutter": "#E0D9D5"
+      "--vp-nav-logo-height": 32px
+      "--vp-home-hero-name-color": var(--vp-c-brand-1)
+      "--vp-home-hero-name-background": 'linear-gradient(120deg, #e24a2f 28%, #9f1406
+        78%)'
+    dark:
+      "--vp-c-brand-1": "#FF433D"
+      "--vp-c-brand-2": "#D52E2A"
+      "--vp-c-brand-3": "#C9271E"
+      "--vp-c-brand-soft": rgba(255, 67, 61, 0.18)
+      "--vp-c-bg": "#1B1B1A"
+      "--vp-c-bg-alt": "#181817"
+      "--vp-c-bg-soft": "#232323"
+      "--vp-c-bg-elv": "#232323"
+      "--vp-c-border": "#30302F"
+      "--vp-c-text-1": "#D3CECA"
+      "--vp-c-text-2": "#9D9995"
+      "--vp-c-text-3": "#7E7975"
+      "--vp-c-default-1": "#232323"
+      "--vp-c-default-2": "#2B2928"
+      "--vp-c-default-3": "#30302F"
+      "--vp-c-divider": "#30302F"
+      "--vp-c-gutter": "#30302F"
+      "--vp-nav-logo-height": 32px
+      "--vp-home-hero-name-color": var(--vp-c-brand-1)
+      "--vp-home-hero-name-background": 'linear-gradient(120deg, #ff433d 28%, #c9271e
+        76%)'
+  github_star:
+    enabled: true
+    repository: crmne/ruby_llm
+    text: Star
+    show_count: true
+  gem_downloads:
+    enabled: true
+    name: ruby_llm
+    text: Gem downloads
+    url: https://clickgems.clickhouse.com/dashboard/ruby_llm
+    label: View RubyLLM gem downloads
+    show_count: true
+  github_trending:
+    enabled: true
+    text: GitHub trending
+    value: "#1 repo of the day"
+    url: https://trendshift.io/repositories/13640
+    label: View RubyLLM GitHub trending history
+  github_sponsor:
+    enabled: true
+    user: crmne
+    text: Support
+    label: Support RubyLLM on GitHub Sponsors
+  footer:
+    # The homepage draws its own footer in _includes/home.html, and this one
+    # renders on the homepage only, so enabling it would print both.
+    enabled: false
+    show_on_docs: false
+    message: >-
+      Brought to you by <a href="https://paolino.me" target="_blank" rel="noreferrer">Carmine Paolino</a>, maker of
+    copyright: >-
+      <span class="footer-brand-links"><a class="footer-chatwithwork-link" href="https://chatwithwork.com" target="_blank" rel="noreferrer"><img class="footer-chatwithwork-logo" src="https://chatwithwork.com/logotype.svg" alt="Chat with Work"></a></span><br><span class="footer-built-with">Docs built with <a href="https://jekyll-vitepress.dev" target="_blank" rel="noreferrer">Jekyll VitePress</a>.</span>
+  doc_footer:
+    enabled: true
+    previous_label: Previous page
+    next_label: Next page
+  last_updated:
+    enabled: true
+    text: Last updated
+    format: "%-d %b %Y, %H:%M"
+  labels:
+    outline: On this page
+    sidebar_menu: Menu
+    return_to_top: Return to top
+    skip_to_content: Skip to content
+    appearance_menu: Appearance
+    switch_to_dark: Switch to dark theme
+    switch_to_light: Switch to light theme
+  behavior:
+    scroll_offset: 134
+  edit_link:
+    enabled: true
+    pattern: https://github.com/crmne/ruby-llm-docs/edit/main/:path
+    text: Edit page on Github
+
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-og-image
+  - jekyll-redirect-from
+  - jekyll-ai-visible-content
+  - jekyll-vitepress-theme
+
+
+exclude:
+  - bin
+  - vendor
+  - Gemfile
+  - Gemfile.lock
+  - README.md
 
 twitter:
   username: paolino
@@ -82,57 +206,6 @@ social:
     - https://github.com/crmne/ruby_llm
     - https://rubygems.org/gems/ruby_llm
     - https://github.com/sponsors/crmne
-
-search_enabled: true
-search:
-  heading_level: 2
-  previews: 3
-  preview_words_before: 5
-  preview_words_after: 10
-  tokenizer_separator: /[\s/]+/
-  rel_url: true
-  button: false
-
-nav_external_links:
-  - title: GitHub
-    url: https://github.com/crmne/ruby_llm
-    hide_icon: false
-  - title: Changelog
-    url: https://github.com/crmne/ruby_llm/releases
-    hide_icon: false
-  - title: Blog
-    url: https://paolino.me
-    hide_icon: false
-
-last_edit_timestamp: true
-
-enable_copy_code_button: true
-
-heading_anchors: true
-
-# Base URL for raw markdown source files (used by "Copy page Markdown" button)
-markdown_source_base_url: "https://raw.githubusercontent.com/crmne/ruby_llm/main/docs"
-
-color_scheme: light
-
-callouts:
-  new:
-    title: New
-    color: green
-  warning:
-    title: Warning
-    color: yellow
-  note:
-    title: Note
-    color: blue
-
-plugins:
-  - jekyll-remote-theme
-  - jekyll-seo-tag
-  - jekyll-sitemap
-  - jekyll-og-image
-  - jekyll-redirect-from
-  - jekyll-ai-visible-content
 
 author:
   type: Organization
@@ -227,12 +300,6 @@ ai_visible_content:
     max_examples: 5
 
 # Jekyll uses Dart Sass; suppress deprecations emitted by upstream theme styles.
-sass:
-  quiet_deps: true
-  silence_deprecations:
-    - import
-    - global-builtin
-    - color-functions
 
 og_image:
   output_dir: "assets/images/og"
@@ -268,6 +335,7 @@ og_image:
 # Model variables for documentation
 # These are used throughout the docs to ensure consistency
 # and make it easy to update model names in one place
+
 models:
   # Default models for basic examples
   default_chat: "gpt-5-nano"

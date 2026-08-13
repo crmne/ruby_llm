@@ -7,18 +7,9 @@ description: Define reusable AI assistants with class-based configuration, runti
 ---
 
 # {{ page.title }}
-{: .no_toc }
 
 {{ page.description }}
 {: .fs-6 .fw-300 }
-
-## Table of contents
-{: .no_toc .text-delta }
-
-1. TOC
-{:toc}
-
----
 
 After reading this guide, you will know:
 
@@ -303,8 +294,8 @@ You can still instantiate and use an agent instance directly:
 agent = WorkAssistant.new
 response = agent.ask("Hello")
 
-response.cost.total # v1.15+
-agent.cost.total    # v1.15+
+response.cost.total
+agent.cost.total
 ```
 
 Agent instances delegate the full `RubyLLM::Chat` instance API to the underlying chat object
@@ -313,7 +304,7 @@ Agent instances delegate the full `RubyLLM::Chat` instance API to the underlying
 Delegated methods include:
 
 * `model`, `messages`, `tools`, `provider_options`, `headers`, `schema`
-* `cost` (v1.15+)
+* `cost`
 * `ask`, `say`, `complete`, `complete?`, `ask_later`, `generate`, `run_tools`, `step`
 * `cancel!`, `cancelled?`, `approve!`, `deny!`, `awaiting_approval?`
 * `add_message`, `each`

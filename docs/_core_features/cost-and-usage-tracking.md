@@ -10,18 +10,9 @@ redirect_from:
 ---
 
 # {{ page.title }}
-{: .no_toc }
 
 {{ page.description }}
 {: .fs-6 .fw-300 }
-
-## Table of contents
-{: .no_toc .text-delta }
-
-1. TOC
-{:toc}
-
----
 
 After reading this guide, you will know:
 
@@ -42,9 +33,9 @@ response = chat.ask "Explain the Ruby Global Interpreter Lock (GIL)."
 
 input_tokens = response.tokens.input   # Standard input tokens
 output_tokens = response.tokens.output # Billable output tokens
-cache_read_tokens = response.tokens.cache_read # Tokens served from the provider's prompt cache - v1.15+
-cache_write_tokens = response.tokens.cache_write # Tokens written to cache - v1.15+
-thinking_tokens = response.tokens.thinking # Thinking tokens when providers report them - v1.10.0+
+cache_read_tokens = response.tokens.cache_read # Tokens served from the provider's prompt cache
+cache_write_tokens = response.tokens.cache_write # Tokens written to cache
+thinking_tokens = response.tokens.thinking # Thinking tokens when providers report them
 request_side_input_tokens = input_tokens.to_i + cache_read_tokens.to_i + cache_write_tokens.to_i
 
 puts "Input Tokens: #{input_tokens}"
@@ -73,7 +64,7 @@ transcription.tokens.output
 transcription.cost.total
 ```
 
-Cost helpers are available from v1.15+. RubyLLM uses token usage from the provider and pricing from the model registry. If the registry is missing pricing for tokens that were used, the affected cost and `cost.total` return `nil` instead of pretending the cost was zero. These helpers cover token-priced conversation usage; provider-specific add-ons such as search-query charges are left to the provider's raw usage payload.
+RubyLLM uses token usage from the provider and pricing from the model registry. If the registry is missing pricing for tokens that were used, the affected cost and `cost.total` return `nil` instead of pretending the cost was zero. These helpers cover token-priced conversation usage; provider-specific add-ons such as search-query charges are left to the provider's raw usage payload.
 
 ### Provider-Reported Costs
 

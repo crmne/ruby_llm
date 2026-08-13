@@ -16,8 +16,9 @@ site="$docs/_site"
 versions="$docs/_data/versions.yml"
 latest="$(ruby -ryaml -e 'puts YAML.load_file(ARGV[0])["latest"]' "$versions")"
 
-# The committed versions.yml with local URLs (next at /, the latest 1.x at /v1/) and a given `current`.
-local_versions() { # <out> <current>
+# The committed versions.yml with local URLs (next at /, the latest 1.x at /v1/)
+# and a given `current`, named by item id.
+local_versions() { # <out> <current-id>
   ruby -ryaml -e '
     d = YAML.load_file(ARGV[0]); latest = d["latest"]
     d["items"].each { |i| i["url"] = "/" if i["id"] == "next"; i["url"] = "/v1/" if i["id"] == latest }
@@ -40,8 +41,11 @@ rm -rf "$onex"
 echo "==> Building API docs (RDoc) -> /api/"
 "$docs/bin/build-api.sh" "$site/api"
 
-# Serve live; versions come from a temp data dir so the committed versions.yml stays untouched.
-mkdir -p "$docs/_data_serve"
+# Serve live from a temp data dir so the committed versions.yml stays untouched.
+# It shadows _data wholesale, so every other data file has to come along or the
+# theme loses the sidebar and nav it builds from them.
+rm -rf "$docs/_data_serve"
+cp -a "$docs/_data" "$docs/_data_serve"
 local_versions "$docs/_data_serve/versions.yml" next
 serve_cfg="$docs/_config_serve.yml"
 printf "data_dir: _data_serve\nkeep_files: ['.git', '.svn', 'v1', 'api']\n" > "$serve_cfg"

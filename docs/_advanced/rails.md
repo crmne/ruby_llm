@@ -9,18 +9,9 @@ redirect_from:
 ---
 
 # {{ page.title }}
-{: .no_toc }
 
 {{ page.description }}
 {: .fs-6 .fw-300 }
-
-## Table of contents
-{: .no_toc .text-delta }
-
-1. TOC
-{:toc}
-
----
 
 After reading this guide, you will know:
 
@@ -75,7 +66,7 @@ Then migrate and load the model registry:
 
 ```bash
 bin/rails db:migrate
-bin/rails ruby_llm:load_models # v1.13+
+bin/rails ruby_llm:load_models
 ```
 
 Your Rails app is now AI-ready. For everything the generators create, including the chat UI, conventional directory structure, and generator options, see [Generators and App Conventions]({% link _advanced/rails-generators.md %}).

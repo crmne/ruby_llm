@@ -7,18 +7,9 @@ description: Timeouts, retries, proxies, logging, the model registry file, and i
 ---
 
 # {{ page.title }}
-{: .no_toc }
 
 {{ page.description }}
 {: .fs-6 .fw-300 }
-
-## Table of contents
-{: .no_toc .text-delta }
-
-1. TOC
-{:toc}
-
----
 
 After reading this guide, you will know:
 
@@ -144,8 +135,7 @@ Use these options when you need deeper troubleshooting or safer handling of larg
 RubyLLM.configure do |config|
   config.log_stream_debug = true
 
-  # Available in v1.13.0+
-  config.log_regexp_timeout = 1.5
+    config.log_regexp_timeout = 1.5
 end
 ```
 
@@ -155,7 +145,6 @@ end
 - Can also be enabled with `RUBYLLM_STREAM_DEBUG=true`
 
 `log_regexp_timeout` notes:
-- Available in `v1.13.0+`
 - Applies to regex filters used in request/response debug logging
 - Supported on Ruby `3.2+` (uses `Regexp.timeout`)
 - On Ruby `<3.2`, RubyLLM warns if set and continues without timeout

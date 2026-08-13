@@ -7,18 +7,9 @@ description: Route models through different providers, use per-tenant contexts, 
 ---
 
 # {{ page.title }}
-{: .no_toc }
 
 {{ page.description }}
 {: .fs-6 .fw-300 }
-
-## Table of contents
-{: .no_toc .text-delta }
-
-1. TOC
-{:toc}
-
----
 
 After reading this guide, you will know:
 
@@ -49,7 +40,7 @@ chat.ask("Hello!")
 
 Use different API keys per chat in multi-tenant applications:
 
-**With DB-backed model registry (default in v1.7.0+):**
+**With DB-backed model registry:**
 
 ```ruby
 custom_context = RubyLLM.context do |config|

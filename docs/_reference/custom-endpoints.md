@@ -7,18 +7,9 @@ description: Target OpenAI-compatible endpoints and use model IDs the registry d
 ---
 
 # {{ page.title }}
-{: .no_toc }
 
 {{ page.description }}
 {: .fs-6 .fw-300 }
-
-## Table of contents
-{: .no_toc .text-delta }
-
-1. TOC
-{:toc}
-
----
 
 After reading this guide, you will know:
 
@@ -29,8 +20,6 @@ After reading this guide, you will know:
 *   What you stay responsible for when bypassing registry validation.
 
 ## Connecting to Custom Endpoints & Using Unlisted Models
-{: .d-inline-block }
-
 Sometimes you need to interact with models or endpoints not covered by the standard registry, such as:
 
 *   Azure OpenAI Service endpoints.

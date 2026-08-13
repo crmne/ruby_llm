@@ -8,18 +8,9 @@ redirect_from:
 ---
 
 # {{ page.title }}
-{: .no_toc }
 
 {{ page.description }}
 {: .fs-6 .fw-300 }
-
-## Table of contents
-{: .no_toc .text-delta }
-
-1. TOC
-{:toc}
-
----
 
 _Updated 2026-08-10. This page lists the latest refreshed registry, also available as raw JSON at [rubyllm.com/models.json](https://rubyllm.com/models.json). It covers remote providers only; models on local providers (Ollama, GPUStack) are discovered from your own servers when you refresh._
 
@@ -29,7 +20,7 @@ Your installed gem may bundle an older snapshot of the registry. Refresh it to g
 RubyLLM.models.refresh!
 ```
 
-See [the models guide]({% link _advanced/models.md %}) for how refreshing works in plain Ruby and Rails.
+See [the models guide]({{ "/models/" | relative_url }}) for how refreshing works in plain Ruby and Rails.
 
 ## Models by Provider
 

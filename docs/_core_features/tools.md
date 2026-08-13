@@ -9,18 +9,9 @@ redirect_from:
 ---
 
 # {{ page.title }}
-{: .no_toc }
 
 {{ page.description }}
 {: .fs-6 .fw-300 }
-
-## Table of contents
-{: .no_toc .text-delta }
-
-1. TOC
-{:toc}
-
----
 
 After reading this guide, you will know:
 
@@ -66,7 +57,7 @@ end
 
 1.  **Inheritance:** Must inherit from `RubyLLM::Tool`.
 2.  **`description`:** A class method defining what the tool does. Crucial for the AI model to understand its purpose. Keep it clear and concise.
-3.  **`execute` Method:** The instance method containing your Ruby code. RubyLLM v1.15+ infers simple keyword parameters from this signature when no explicit parameter schema is declared.
+3.  **`execute` Method:** The instance method containing your Ruby code. RubyLLM infers simple keyword parameters from this signature when no explicit parameter schema is declared.
 4.  **Parameter declarations:** Optional. Use `parameter` for simple descriptions and types, or `parameters` for nested objects, arrays, enums, and full JSON Schema control.
 
 > The tool's class name is automatically converted to a snake_case name used in the API call (e.g., `WeatherLookup` becomes `weather_lookup`). This is how the LLM would call it. You can override this by defining `tool_name` on the class:

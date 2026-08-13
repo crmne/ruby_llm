@@ -7,18 +7,9 @@ description: Hook into the chat lifecycle with additive callbacks for UI updates
 ---
 
 # {{ page.title }}
-{: .no_toc }
 
 {{ page.description }}
 {: .fs-6 .fw-300 }
-
-## Table of contents
-{: .no_toc .text-delta }
-
-1. TOC
-{:toc}
-
----
 
 After reading this guide, you will know:
 
@@ -35,7 +26,7 @@ You can register blocks to be called when certain events occur during the chat l
 
 ### Available Event Handlers
 
-RubyLLM provides two callback styles. The `on_*` handlers replace any previously registered handler for the same event, which is useful when you want to override behavior. The Rails-style `before_*` and `after_*` callbacks are additive, so multiple registrations for the same event all run. Additive callbacks are available from v1.15+.
+RubyLLM provides two callback styles. The `on_*` handlers replace any previously registered handler for the same event, which is useful when you want to override behavior. The Rails-style `before_*` and `after_*` callbacks are additive, so multiple registrations for the same event all run.
 
 ```ruby
 chat = RubyLLM.chat

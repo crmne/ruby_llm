@@ -168,8 +168,9 @@ def status(provider_sym)
 end
 
 # The generated page renders inside the frozen 1.x site build; the /next
-# build replaces it with a redirect stub (docs/bin/build-versions.sh).
-# Liquid links must therefore target the 1.x docs tree.
+# build replaces it with a redirect stub (docs/bin/build-versions.sh). The two
+# trees file the models guide under different collections, so link it by URL
+# rather than with a {% link %} tag, which resolves against one tree only.
 def generate_models_markdown
   models = RubyLLM.models.all
   total_models = models.count
@@ -208,7 +209,7 @@ def generate_models_markdown
     RubyLLM.models.refresh!
     ```
 
-    See [the models guide]({% link _advanced/models.md %}) for how refreshing works in plain Ruby and Rails.
+    See [the models guide]({{ "/models/" | relative_url }}) for how refreshing works in plain Ruby and Rails.
 
     ## Models by Provider
 

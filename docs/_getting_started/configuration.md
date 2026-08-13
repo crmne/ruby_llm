@@ -9,18 +9,9 @@ redirect_from:
 ---
 
 # {{ page.title }}
-{: .no_toc }
 
 {{ page.description }}
 {: .fs-6 .fw-300 }
-
-## Table of contents
-{: .no_toc .text-delta }
-
-1. TOC
-{:toc}
-
----
 
 After reading this guide, you will know:
 
@@ -89,8 +80,8 @@ For Rails applications, create an initializer:
 RubyLLM.configure do |config|
   config.openai_api_key = Rails.application.credentials.openai_api_key
   config.anthropic_api_key = Rails.application.credentials.anthropic_api_key
-  config.anthropic_api_base = ENV['ANTHROPIC_API_BASE'] # Available in v1.13.0+ (optional custom Anthropic endpoint)
-  config.ollama_api_key = ENV['OLLAMA_API_KEY'] # Available in v1.13.0+ (optional for remote/authenticated Ollama)
+  config.anthropic_api_base = ENV['ANTHROPIC_API_BASE'] # optional custom Anthropic endpoint
+  config.ollama_api_key = ENV['OLLAMA_API_KEY'] # optional for remote/authenticated Ollama
 
   config.logger = Rails.logger
 
@@ -107,12 +98,12 @@ Here's a complete reference of all configuration options:
 RubyLLM.configure do |config|
   # Anthropic
   config.anthropic_api_key = String
-  config.anthropic_api_base = String  # v1.13.0+
+  config.anthropic_api_base = String
 
   # Azure
-  config.azure_api_base = String  # v1.12.0+
-  config.azure_api_key = String  # v1.12.0+
-  config.azure_ai_auth_token = String  # v1.12.0+
+  config.azure_api_base = String
+  config.azure_api_key = String
+  config.azure_ai_auth_token = String
 
   # Bedrock
   config.bedrock_api_key = String
@@ -120,7 +111,7 @@ RubyLLM.configure do |config|
   config.bedrock_region = String
   config.bedrock_session_token = String
   config.bedrock_credential_provider = Object # Aws::CredentialProvider
-  config.bedrock_api_base = String  # v1.16+
+  config.bedrock_api_base = String
 
   # Cohere
   config.cohere_api_key = String
@@ -132,7 +123,7 @@ RubyLLM.configure do |config|
 
   # DeepSeek
   config.deepseek_api_key = String
-  config.deepseek_api_base = String  # v1.13.0+
+  config.deepseek_api_base = String
 
   # ElevenLabs
   config.elevenlabs_api_key = String
@@ -140,7 +131,7 @@ RubyLLM.configure do |config|
 
   # Gemini
   config.gemini_api_key = String
-  config.gemini_api_base = String  # v1.9.0+
+  config.gemini_api_base = String
 
   # GPUStack
   config.gpustack_api_base = String
@@ -148,11 +139,11 @@ RubyLLM.configure do |config|
 
   # Mistral
   config.mistral_api_key = String
-  config.mistral_api_base = String  # v1.16+
+  config.mistral_api_base = String
 
   # Ollama
   config.ollama_api_base = String
-  config.ollama_api_key = String  # v1.13.0+
+  config.ollama_api_key = String
 
   # Ollama Cloud
   config.ollama_cloud_api_key = String
@@ -167,23 +158,23 @@ RubyLLM.configure do |config|
 
   # OpenRouter
   config.openrouter_api_key = String
-  config.openrouter_api_base = String  # v1.13.0+
+  config.openrouter_api_base = String
   config.openrouter_app_url = String   # App attribution URL sent as HTTP-Referer
   config.openrouter_app_name = String  # App attribution name sent as X-OpenRouter-Title
 
   # Perplexity
   config.perplexity_api_key = String
-  config.perplexity_api_base = String  # v1.16+
+  config.perplexity_api_base = String
 
   # Vertex AI
   config.vertexai_project_id = String  # GCP project ID
   config.vertexai_location = String     # e.g., 'us-central1'
   config.vertexai_service_account_key = String # Optional: service account JSON key (ADC used when unset)
-  config.vertexai_api_base = String  # v1.16+
+  config.vertexai_api_base = String
 
   # xAI
   config.xai_api_key = String
-  config.xai_api_base = String  # v1.16+
+  config.xai_api_base = String
 
   # Default Models
   config.default_model = String
@@ -217,7 +208,7 @@ RubyLLM.configure do |config|
   config.log_file = String
   config.log_level = Symbol
   config.log_stream_debug = Boolean
-  config.log_regexp_timeout = Numeric  # v1.13.0+ (Ruby 3.2+ support)
+  config.log_regexp_timeout = Numeric  # Ruby 3.2+ support
 end
 ```
 

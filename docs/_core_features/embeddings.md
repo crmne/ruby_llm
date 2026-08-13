@@ -8,18 +8,9 @@ redirect_from:
 ---
 
 # {{ page.title }}
-{: .no_toc }
 
 {{ page.description }}
 {: .fs-6 .fw-300 }
-
-## Table of contents
-{: .no_toc .text-delta }
-
-1. TOC
-{:toc}
-
----
 
 After reading this guide, you will know:
 
@@ -189,7 +180,7 @@ embedding.sparse_vectors # => { 1037 => 0.25, 2003 => 0.5 }
 
 Sparse output is a de-facto extension rather than part of the OpenAI embeddings spec, so whether you get one depends on the model and the server hosting it. RubyLLM reads it from either `lexical_weights` or `sparse_embedding`, the two spellings in use. Where there is none, `sparse_vectors` is `nil`, which is what every hosted provider returns today.
 
-## Using Embedding Results
+## Measuring Similarity
 
 A primary use case for embeddings is measuring the semantic similarity between texts. Cosine similarity is a common metric.
 

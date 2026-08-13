@@ -1,0 +1,407 @@
+{% assign home_hero = page.hero %}
+{% assign home_features = page.features %}
+{% assign home_body = include.content | strip %}
+{% assign theme = site.jekyll_vitepress %}
+{% assign github_star_config = theme.github_star %}
+{% assign github_star_enabled = false %}
+{% assign github_star_repository = nil %}
+{% assign github_star_text = 'Star' %}
+{% assign github_star_show_count = true %}
+{% if github_star_config and github_star_config != false %}
+  {% assign github_star_repository = github_star_config.repository | default: github_star_config.repo %}
+  {% if github_star_config.text %}
+    {% assign github_star_text = github_star_config.text %}
+  {% endif %}
+  {% if github_star_config.show_count == false %}
+    {% assign github_star_show_count = false %}
+  {% endif %}
+  {% if github_star_config.enabled != false and github_star_repository %}
+    {% assign github_star_enabled = true %}
+  {% endif %}
+{% endif %}
+{% assign github_star_url = nil %}
+{% if github_star_enabled %}
+  {% assign github_star_url = 'https://github.com/' | append: github_star_repository %}
+{% endif %}
+{% assign gem_downloads_config = theme.gem_downloads %}
+{% assign gem_downloads_enabled = false %}
+{% assign gem_downloads_gem = nil %}
+{% if gem_downloads_config and gem_downloads_config != false %}
+  {% assign gem_downloads_gem = gem_downloads_config.name | default: gem_downloads_config.gem %}
+  {% if gem_downloads_config.enabled != false and gem_downloads_gem %}
+    {% assign gem_downloads_enabled = true %}
+  {% endif %}
+{% endif %}
+{% assign github_trending_config = theme.github_trending %}
+{% assign github_trending_enabled = false %}
+{% assign github_trending_text = 'GitHub trending' %}
+{% assign github_trending_value = nil %}
+{% assign github_trending_url = nil %}
+{% assign github_trending_label = 'View GitHub trending history' %}
+{% if github_trending_config and github_trending_config != false %}
+  {% assign github_trending_url = github_trending_config.url %}
+  {% if github_trending_config.text %}
+    {% assign github_trending_text = github_trending_config.text %}
+  {% endif %}
+  {% if github_trending_config.value %}
+    {% assign github_trending_value = github_trending_config.value %}
+  {% endif %}
+  {% if github_trending_config.label %}
+    {% assign github_trending_label = github_trending_config.label %}
+  {% endif %}
+  {% if github_trending_config.enabled != false and github_trending_url %}
+    {% assign github_trending_enabled = true %}
+  {% endif %}
+{% endif %}
+
+<div class="VPHome">
+  {% if home_hero %}
+    {% assign hero_image = home_hero.image %}
+    <div class="VPHero{% if hero_image %} has-image{% endif %}">
+      <div class="container">
+        <div class="main">
+          {% if home_hero.logo %}
+            {% assign hero_logo = home_hero.logo %}
+            {% assign hero_logo_alt = hero_logo.alt | default: home_hero.name | default: site.title %}
+            {% assign hero_logo_width = hero_logo.width | default: 560 %}
+            {% assign hero_logo_height = hero_logo.height | default: 160 %}
+            {% assign hero_logo_light = hero_logo.light %}
+            {% assign hero_logo_dark = hero_logo.dark %}
+            {% assign hero_logo_src = nil %}
+            {% if hero_logo.src %}
+              {% assign hero_logo_src = hero_logo.src %}
+            {% elsif hero_logo.path %}
+              {% assign hero_logo_src = hero_logo.path %}
+            {% elsif hero_logo_light == nil and hero_logo_dark == nil %}
+              {% assign hero_logo_src = hero_logo %}
+            {% endif %}
+            <div class="hero-logo-cluster">
+              <div class="hero-logo">
+                {% if hero_logo_light and hero_logo_dark %}
+                  {% assign hero_logo_light_external = false %}
+                  {% if hero_logo_light contains '://' or hero_logo_light contains 'data:' %}
+                    {% assign hero_logo_light_external = true %}
+                  {% endif %}
+                  {% assign hero_logo_dark_external = false %}
+                  {% if hero_logo_dark contains '://' or hero_logo_dark contains 'data:' %}
+                    {% assign hero_logo_dark_external = true %}
+                  {% endif %}
+                  <img class="VPImage hero-logo-image light" src="{% if hero_logo_light_external %}{{ hero_logo_light }}{% else %}{{ hero_logo_light | relative_url }}{% endif %}" alt="{{ hero_logo_alt | escape }}" width="{{ hero_logo_width }}" height="{{ hero_logo_height }}">
+                  <img class="VPImage hero-logo-image dark" src="{% if hero_logo_dark_external %}{{ hero_logo_dark }}{% else %}{{ hero_logo_dark | relative_url }}{% endif %}" alt="{{ hero_logo_alt | escape }}" width="{{ hero_logo_width }}" height="{{ hero_logo_height }}">
+                {% elsif hero_logo_light %}
+                  {% assign hero_logo_light_external = false %}
+                  {% if hero_logo_light contains '://' or hero_logo_light contains 'data:' %}
+                    {% assign hero_logo_light_external = true %}
+                  {% endif %}
+                  <img class="VPImage hero-logo-image" src="{% if hero_logo_light_external %}{{ hero_logo_light }}{% else %}{{ hero_logo_light | relative_url }}{% endif %}" alt="{{ hero_logo_alt | escape }}" width="{{ hero_logo_width }}" height="{{ hero_logo_height }}">
+                {% elsif hero_logo_dark %}
+                  {% assign hero_logo_dark_external = false %}
+                  {% if hero_logo_dark contains '://' or hero_logo_dark contains 'data:' %}
+                    {% assign hero_logo_dark_external = true %}
+                  {% endif %}
+                  <img class="VPImage hero-logo-image" src="{% if hero_logo_dark_external %}{{ hero_logo_dark }}{% else %}{{ hero_logo_dark | relative_url }}{% endif %}" alt="{{ hero_logo_alt | escape }}" width="{{ hero_logo_width }}" height="{{ hero_logo_height }}">
+                {% elsif hero_logo_src %}
+                  {% assign hero_logo_src_external = false %}
+                  {% if hero_logo_src contains '://' or hero_logo_src contains 'data:' %}
+                    {% assign hero_logo_src_external = true %}
+                  {% endif %}
+                  <img class="VPImage hero-logo-image" src="{% if hero_logo_src_external %}{{ hero_logo_src }}{% else %}{{ hero_logo_src | relative_url }}{% endif %}" alt="{{ hero_logo_alt | escape }}" width="{{ hero_logo_width }}" height="{{ hero_logo_height }}">
+                {% endif %}
+              </div>
+            </div>
+          {% endif %}
+
+          {% if home_hero.name or home_hero.text %}
+            <h1 class="heading">
+              {% if home_hero.name %}
+                <span class="name clip">{{ home_hero.name }}</span>
+              {% endif %}
+              {% if home_hero.text %}
+                <span class="text">{{ home_hero.text }}</span>
+              {% endif %}
+            </h1>
+          {% endif %}
+
+          {% if home_hero.tagline %}
+            <p class="tagline">{{ home_hero.tagline }}</p>
+          {% endif %}
+
+          {% assign home_hero_actions_count = 0 %}
+          {% if home_hero.actions %}
+            {% assign home_hero_actions_count = home_hero.actions.size %}
+          {% endif %}
+          {% if home_hero_actions_count > 0 or github_star_enabled %}
+            <div class="actions home-hero-actions">
+              {% if home_hero_actions_count > 0 %}
+                {% for action in home_hero.actions %}
+                {% assign action_href = action.link | default: '#' | append: '' %}
+                {% assign action_external = false %}
+                {% assign action_href_parts = action_href | split: '://' %}
+                {% assign action_mailto = action_href | slice: 0, 7 %}
+                {% assign action_tel = action_href | slice: 0, 4 %}
+                {% if action_href_parts.size > 1 or action_mailto == 'mailto:' or action_tel == 'tel:' %}
+                  {% assign action_external = true %}
+                {% endif %}
+                {% assign action_target = action.target %}
+                {% assign action_rel = action.rel %}
+                {% if action_external %}
+                  {% if action_target == nil or action_target == '' %}
+                    {% assign action_target = '_blank' %}
+                  {% endif %}
+                  {% if action_rel == nil or action_rel == '' %}
+                    {% assign action_rel = 'noreferrer' %}
+                  {% endif %}
+                {% endif %}
+                <div class="action">
+                  <a
+                    class="VPButton medium {{ action.theme | default: 'brand' }}{% if action.class %} {{ action.class }}{% endif %}"
+                    href="{% if action_external %}{{ action_href }}{% else %}{{ action_href | relative_url }}{% endif %}"
+                    {% if action_target %}target="{{ action_target }}"{% endif %}
+                    {% if action_rel %}rel="{{ action_rel }}"{% endif %}
+                  >
+                    {{ action.text }}
+                  </a>
+                </div>
+                {% endfor %}
+              {% endif %}
+              {% if github_star_enabled %}
+                <div class="action home-hero-metric-action">
+                  <a class="VPButton medium alt VPMetricButton home-hero-metric-button home-hero-star-link" href="{{ github_star_url }}" aria-label="Star {{ github_star_repository }} on GitHub" target="_blank" rel="noreferrer noopener" data-github-star-repo="{{ github_star_repository | escape }}" data-github-star-show-count="{{ github_star_show_count }}">
+                    <span class="VPMetricButtonIcon vpi-social-github" aria-hidden="true"></span>
+                    <span>{{ github_star_text }}</span>
+                    <span class="home-hero-star-count VPMetricButtonCount" data-vp-github-star-count aria-hidden="true"{% unless github_star_show_count %} hidden{% endunless %}>{% if github_star_show_count %}...{% endif %}</span>
+                  </a>
+                </div>
+              {% endif %}
+            </div>
+          {% endif %}
+
+          {% if gem_downloads_enabled or github_trending_enabled %}
+            <div class="home-hero-badges" aria-label="Project badges">
+              {% if gem_downloads_enabled %}
+                {% include rubygems_downloads_button.html %}
+              {% endif %}
+              {% if github_trending_enabled %}
+                <a class="home-hero-badge home-hero-trending-badge" href="{{ github_trending_url }}" aria-label="{{ github_trending_label | escape }}{% if github_trending_value %}: {{ github_trending_value | escape }}{% endif %}" target="_blank" rel="noreferrer noopener">
+                  <span class="home-hero-badge-label home-hero-trending-badge-label">
+                    <span class="home-hero-badge-icon home-hero-trending-icon" aria-hidden="true">
+                      <svg viewBox="0 0 16 16" focusable="false">
+                        <path d="M9.4 1.3a.75.75 0 0 0-1.24-.18L2.7 6.74a.75.75 0 0 0 .54 1.26h3.1l-1.18 6.68a.75.75 0 0 0 1.28.64l6.86-7.55A.75.75 0 0 0 12.75 6H9.62l.4-4.2a.75.75 0 0 0-.62-.5Z"></path>
+                      </svg>
+                    </span>
+                    <span>{{ github_trending_text }}</span>
+                  </span>
+                  {% if github_trending_value %}
+                    <strong class="home-hero-badge-value home-hero-trending-value">{{ github_trending_value }}</strong>
+                  {% endif %}
+                </a>
+              {% endif %}
+            </div>
+          {% endif %}
+        </div>
+
+        {% if hero_image %}
+          <div class="image">
+            <div class="image-container">
+              <div class="image-bg"></div>
+              {% assign hero_alt = hero_image.alt | default: home_hero.name | default: site.title %}
+              {% assign hero_width = hero_image.width | default: 320 %}
+              {% assign hero_height = hero_image.height | default: 320 %}
+              {% assign hero_light = hero_image.light %}
+              {% assign hero_dark = hero_image.dark %}
+              {% assign hero_src = nil %}
+              {% if hero_image.src %}
+                {% assign hero_src = hero_image.src %}
+              {% elsif hero_image.path %}
+                {% assign hero_src = hero_image.path %}
+              {% elsif hero_light == nil and hero_dark == nil %}
+                {% assign hero_src = hero_image %}
+              {% endif %}
+
+              {% if hero_light and hero_dark %}
+                {% assign hero_light_external = false %}
+                {% if hero_light contains '://' or hero_light contains 'data:' %}
+                  {% assign hero_light_external = true %}
+                {% endif %}
+                {% assign hero_dark_external = false %}
+                {% if hero_dark contains '://' or hero_dark contains 'data:' %}
+                  {% assign hero_dark_external = true %}
+                {% endif %}
+                <img class="VPImage image-src light" src="{% if hero_light_external %}{{ hero_light }}{% else %}{{ hero_light | relative_url }}{% endif %}" alt="{{ hero_alt | escape }}" width="{{ hero_width }}" height="{{ hero_height }}">
+                <img class="VPImage image-src dark" src="{% if hero_dark_external %}{{ hero_dark }}{% else %}{{ hero_dark | relative_url }}{% endif %}" alt="{{ hero_alt | escape }}" width="{{ hero_width }}" height="{{ hero_height }}">
+              {% elsif hero_light %}
+                {% assign hero_light_external = false %}
+                {% if hero_light contains '://' or hero_light contains 'data:' %}
+                  {% assign hero_light_external = true %}
+                {% endif %}
+                <img class="VPImage image-src" src="{% if hero_light_external %}{{ hero_light }}{% else %}{{ hero_light | relative_url }}{% endif %}" alt="{{ hero_alt | escape }}" width="{{ hero_width }}" height="{{ hero_height }}">
+              {% elsif hero_dark %}
+                {% assign hero_dark_external = false %}
+                {% if hero_dark contains '://' or hero_dark contains 'data:' %}
+                  {% assign hero_dark_external = true %}
+                {% endif %}
+                <img class="VPImage image-src" src="{% if hero_dark_external %}{{ hero_dark }}{% else %}{{ hero_dark | relative_url }}{% endif %}" alt="{{ hero_alt | escape }}" width="{{ hero_width }}" height="{{ hero_height }}">
+              {% elsif hero_src %}
+                {% assign hero_src_external = false %}
+                {% if hero_src contains '://' or hero_src contains 'data:' %}
+                  {% assign hero_src_external = true %}
+                {% endif %}
+                <img class="VPImage image-src" src="{% if hero_src_external %}{{ hero_src }}{% else %}{{ hero_src | relative_url }}{% endif %}" alt="{{ hero_alt | escape }}" width="{{ hero_width }}" height="{{ hero_height }}">
+              {% endif %}
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  {% endif %}
+
+  {% if home_features and home_features.size > 0 %}
+    {% assign feature_count = home_features.size %}
+    {% assign feature_mod = feature_count | modulo: 3 %}
+    {% assign feature_grid = '' %}
+    {% if feature_count == 2 %}
+      {% assign feature_grid = 'grid-2' %}
+    {% elsif feature_count == 3 %}
+      {% assign feature_grid = 'grid-3' %}
+    {% elsif feature_count > 3 and feature_mod == 0 %}
+      {% assign feature_grid = 'grid-6' %}
+    {% elsif feature_count > 3 %}
+      {% assign feature_grid = 'grid-4' %}
+    {% endif %}
+
+    <div class="VPFeatures VPHomeFeatures">
+      <div class="container">
+        <div class="items">
+          {% for feature in home_features %}
+            <div class="item{% if feature_grid %} {{ feature_grid }}{% endif %}">
+              {% capture feature_body %}
+                <article class="box">
+                  {% if feature.icon %}
+                    {% assign feature_icon = feature.icon %}
+                    {% assign icon_is_object = false %}
+                    {% if feature_icon.src or feature_icon.path or feature_icon.light or feature_icon.dark %}
+                      {% assign icon_is_object = true %}
+                    {% endif %}
+
+                    {% if icon_is_object %}
+                      {% assign icon_alt = feature_icon.alt | default: feature.title %}
+                      {% assign icon_width = feature_icon.width | default: 48 %}
+                      {% assign icon_height = feature_icon.height | default: 48 %}
+                      {% assign icon_wrap = feature_icon.wrap %}
+                      {% assign icon_light = feature_icon.light %}
+                      {% assign icon_dark = feature_icon.dark %}
+                      {% assign icon_src = nil %}
+                      {% if feature_icon.src %}
+                        {% assign icon_src = feature_icon.src %}
+                      {% elsif feature_icon.path %}
+                        {% assign icon_src = feature_icon.path %}
+                      {% elsif icon_light == nil and icon_dark == nil %}
+                        {% assign icon_src = feature_icon %}
+                      {% endif %}
+
+                      {% capture icon_images %}
+                        {% if icon_light and icon_dark %}
+                          {% assign icon_light_external = false %}
+                          {% if icon_light contains '://' or icon_light contains 'data:' %}
+                            {% assign icon_light_external = true %}
+                          {% endif %}
+                          {% assign icon_dark_external = false %}
+                          {% if icon_dark contains '://' or icon_dark contains 'data:' %}
+                            {% assign icon_dark_external = true %}
+                          {% endif %}
+                          <img class="VPImage{% if icon_wrap %} icon-image{% endif %} light" src="{% if icon_light_external %}{{ icon_light }}{% else %}{{ icon_light | relative_url }}{% endif %}" alt="{{ icon_alt | escape }}" width="{{ icon_width }}" height="{{ icon_height }}">
+                          <img class="VPImage{% if icon_wrap %} icon-image{% endif %} dark" src="{% if icon_dark_external %}{{ icon_dark }}{% else %}{{ icon_dark | relative_url }}{% endif %}" alt="{{ icon_alt | escape }}" width="{{ icon_width }}" height="{{ icon_height }}">
+                        {% elsif icon_light %}
+                          {% assign icon_light_external = false %}
+                          {% if icon_light contains '://' or icon_light contains 'data:' %}
+                            {% assign icon_light_external = true %}
+                          {% endif %}
+                          <img class="VPImage{% if icon_wrap %} icon-image{% endif %}" src="{% if icon_light_external %}{{ icon_light }}{% else %}{{ icon_light | relative_url }}{% endif %}" alt="{{ icon_alt | escape }}" width="{{ icon_width }}" height="{{ icon_height }}">
+                        {% elsif icon_dark %}
+                          {% assign icon_dark_external = false %}
+                          {% if icon_dark contains '://' or icon_dark contains 'data:' %}
+                            {% assign icon_dark_external = true %}
+                          {% endif %}
+                          <img class="VPImage{% if icon_wrap %} icon-image{% endif %}" src="{% if icon_dark_external %}{{ icon_dark }}{% else %}{{ icon_dark | relative_url }}{% endif %}" alt="{{ icon_alt | escape }}" width="{{ icon_width }}" height="{{ icon_height }}">
+                        {% elsif icon_src %}
+                          {% assign icon_src_external = false %}
+                          {% if icon_src contains '://' or icon_src contains 'data:' %}
+                            {% assign icon_src_external = true %}
+                          {% endif %}
+                          <img class="VPImage{% if icon_wrap %} icon-image{% endif %}" src="{% if icon_src_external %}{{ icon_src }}{% else %}{{ icon_src | relative_url }}{% endif %}" alt="{{ icon_alt | escape }}" width="{{ icon_width }}" height="{{ icon_height }}">
+                        {% endif %}
+                      {% endcapture %}
+
+                      {% if icon_wrap %}
+                        <div class="icon">{{ icon_images }}</div>
+                      {% else %}
+                        {{ icon_images }}
+                      {% endif %}
+                    {% else %}
+                      <div class="icon">{{ feature_icon }}</div>
+                    {% endif %}
+                  {% endif %}
+
+                  <h2 class="title">{{ feature.title }}</h2>
+                  {% if feature.details %}
+                    <p class="details">{{ feature.details | markdownify | remove: '<p>' | remove: '</p>' }}</p>
+                  {% endif %}
+                  {% if feature.link_text %}
+                    <div class="link-text">
+                      <p class="link-text-value">{{ feature.link_text }} <span class="vpi-arrow-right link-text-icon"></span></p>
+                    </div>
+                  {% endif %}
+                </article>
+              {% endcapture %}
+
+              {% if feature.link %}
+                {% assign feature_href = feature.link | append: '' %}
+                {% assign feature_external = false %}
+                {% assign feature_href_parts = feature_href | split: '://' %}
+                {% assign feature_mailto = feature_href | slice: 0, 7 %}
+                {% assign feature_tel = feature_href | slice: 0, 4 %}
+                {% if feature_href_parts.size > 1 or feature_mailto == 'mailto:' or feature_tel == 'tel:' %}
+                  {% assign feature_external = true %}
+                {% endif %}
+                {% assign feature_target = feature.target %}
+                {% assign feature_rel = feature.rel %}
+                {% if feature_external %}
+                  {% if feature_target == nil or feature_target == '' %}
+                    {% assign feature_target = '_blank' %}
+                  {% endif %}
+                  {% if feature_rel == nil or feature_rel == '' %}
+                    {% assign feature_rel = 'noreferrer' %}
+                  {% endif %}
+                {% endif %}
+                <a
+                  class="VPFeature link"
+                  href="{% if feature_external %}{{ feature_href }}{% else %}{{ feature_href | relative_url }}{% endif %}"
+                  {% if feature_target %}target="{{ feature_target }}"{% endif %}
+                  {% if feature_rel %}rel="{{ feature_rel }}"{% endif %}
+                >
+                  {{ feature_body }}
+                </a>
+              {% else %}
+                <div class="VPFeature">
+                  {{ feature_body }}
+                </div>
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
+  {% if home_body != '' %}
+    {% if page.markdown_styles == false %}
+      {{ include.content }}
+    {% else %}
+      <div class="VPHomeContent">
+        <div class="vp-doc container">
+          {{ include.content }}
+        </div>
+      </div>
+    {% endif %}
+  {% endif %}
+</div>

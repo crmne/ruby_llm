@@ -6,7 +6,6 @@ description: RDoc documentation for every public RubyLLM class and method
 ---
 
 # {{ page.title }}
-{: .no_toc }
 
 The full RDoc documentation for every public class and method in this
 version of RubyLLM.

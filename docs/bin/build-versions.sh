@@ -22,6 +22,8 @@ next_src="$(mktemp -d)"; onex_src="$(mktemp -d)"
 next_out="$(mktemp -d)"; onex_out="$(mktemp -d)"
 trap 'rm -rf "$next_src" "$onex_src" "$next_out" "$onex_out"' EXIT
 
+# Names the item to mark current, by id. Both the theme and version_select.html
+# resolve it to that item's title for the button label.
 set_current() { ruby -ryaml -e 'f=ARGV[0]; d=YAML.load_file(f); d["current"]=ARGV[1]; File.write(f, YAML.dump(d))' "$1" "$2"; }
 
 echo "==> Building current docs (2.0 dev) -> /next/"

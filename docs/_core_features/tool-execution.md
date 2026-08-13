@@ -7,18 +7,9 @@ description: Steer which tools the model uses, how many calls it makes, whether 
 ---
 
 # {{ page.title }}
-{: .no_toc }
 
 {{ page.description }}
 {: .fs-6 .fw-300 }
-
-## Table of contents
-{: .no_toc .text-delta }
-
-1. TOC
-{:toc}
-
----
 
 After reading this guide, you will know:
 
@@ -100,9 +91,6 @@ If `calls` is not provided, RubyLLM uses provider/model defaults, which are usua
 {: .note }
 
 ## Requiring Approval
-
-New in 2.0
-{: .label .label-green }
 
 Some tools should not run without a human decision: issuing refunds, deleting records, sending email. Declare them with `requires_approval` and the agentic loop parks the tool call until a decision is recorded:
 
@@ -267,7 +255,7 @@ RubyLLM will attempt to use tools with any model. If the model doesn't support f
 
 ## Monitoring Tool Calls with Callbacks
 
-You can monitor tool execution using additive callbacks to track when tools are called and what they return. Available from v1.15+.
+You can monitor tool execution using additive callbacks to track when tools are called and what they return.
 
 ```ruby
 chat = RubyLLM.chat(model: '{{ site.models.openai_tools }}')

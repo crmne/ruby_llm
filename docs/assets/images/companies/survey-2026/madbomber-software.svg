@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" width="400" height="200">
+  <!-- Background -->
+  <rect width="400" height="200" fill="#1a1a1a" rx="10"></rect>
+  
+  <!-- Bomb graphic -->
+  <g transform="translate(200, 70)">
+    <!-- Fuse -->
+    <path d="M 15 -25 Q 20 -30, 25 -28" stroke="#8B4513" stroke-width="2" fill="none"></path>
+    <!-- Spark -->
+    <g transform="translate(25, -28)">
+      <path d="M 0 0 L 3 -3 L 1 -4 L 4 -6 L 2 -7 L 5 -9" stroke="#FF6B35" stroke-width="1.5" fill="none"></path>
+      <circle cx="5" cy="-9" r="2" fill="#FFA500">
+        <animate attributeName="r" values="2;3;2" dur="0.5s" repeatCount="indefinite"></animate>
+        <animate attributeName="opacity" values="1;0.6;1" dur="0.5s" repeatCount="indefinite"></animate>
+      </circle>
+    </g>
+    <!-- Bomb body -->
+    <circle cx="0" cy="0" r="25" fill="#2a2a2a"></circle>
+    <circle cx="0" cy="0" r="23" fill="#3a3a3a"></circle>
+    <!-- Highlight -->
+    <ellipse cx="-5" cy="-8" rx="8" ry="10" fill="#555" opacity="0.6"></ellipse>
+  </g>
+  
+  <!-- Text -->
+  <g transform="translate(200, 130)">
+    <!-- MadBomber -->
+    <text x="0" y="0" font-family="Arial Black, sans-serif" font-size="32" font-weight="900" text-anchor="middle" fill="#FF6B35">
+      MadBomber
+    </text>
+    <!-- Software -->
+    <text x="0" y="30" font-family="Arial, sans-serif" font-size="18" text-anchor="middle" fill="#888">
+      SOFTWARE
+    </text>
+  </g>
+  
+  <!-- Border accent -->
+  <rect x="5" y="5" width="390" height="190" fill="none" stroke="#FF6B35" stroke-width="1" rx="8" opacity="0.3"></rect>
+</svg>

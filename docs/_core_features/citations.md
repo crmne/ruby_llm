@@ -9,21 +9,9 @@ redirect_from:
 ---
 
 # {{ page.title }}
-{: .d-inline-block .no_toc }
-
-New in 2.0
-{: .label .label-green }
 
 {{ page.description }}
 {: .fs-6 .fw-300 }
-
-## Table of contents
-{: .no_toc .text-delta }
-
-1. TOC
-{:toc}
-
----
 
 After reading this guide, you will know:
 

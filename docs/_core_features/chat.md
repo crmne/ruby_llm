@@ -9,18 +9,9 @@ redirect_from:
 ---
 
 # {{ page.title }}
-{: .no_toc }
 
 {{ page.description }}
 {: .fs-6 .fw-300 }
-
-## Table of contents
-{: .no_toc .text-delta }
-
-1. TOC
-{:toc}
-
----
 
 After reading this guide, you will know:
 
@@ -46,8 +37,8 @@ puts response.content
 
 puts "Model Used: #{response.model}"
 puts "Tokens Used: #{response.tokens.input} input, #{response.tokens.output} output"
-puts "Cache Reads: #{response.tokens.cache_read}" # v1.15+
-puts "Cache Writes: #{response.tokens.cache_write}" # v1.15+
+puts "Cache Reads: #{response.tokens.cache_read}"
+puts "Cache Writes: #{response.tokens.cache_write}"
 ```
 
 The `ask` method adds your message to the conversation history with the `:user` role, sends the entire conversation history to the AI provider, and returns a `RubyLLM::Message` object containing the assistant's response.
