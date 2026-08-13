@@ -26,6 +26,7 @@ module RubyLLM
       'cohere' => 'cohere',
       'deepseek' => 'deepseek',
       'mistral' => 'mistral',
+      'ollama-cloud' => 'ollama_cloud',
       'openrouter' => 'openrouter',
       'perplexity' => 'perplexity',
       'xai' => 'xai'
@@ -47,6 +48,7 @@ module RubyLLM
       bedrock
       openrouter
       azure
+      ollama_cloud
       ollama
       gpustack
     ].freeze # :nodoc:

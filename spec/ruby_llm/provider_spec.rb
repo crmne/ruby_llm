@@ -68,6 +68,12 @@ RSpec.describe RubyLLM::Provider do
         key: :ollama_api_base,
         custom: 'https://ollama.example.com/v1'
       },
+      ollama_cloud: {
+        provider: RubyLLM::Providers::OllamaCloud,
+        key: :ollama_cloud_api_base,
+        custom: 'https://ollama-proxy.example.com/v1',
+        default: 'https://ollama.com/v1'
+      },
       openai: {
         provider: RubyLLM::Providers::OpenAI,
         key: :openai_api_base,
@@ -131,6 +137,8 @@ RSpec.describe RubyLLM::Provider do
       when :ollama
         config.ollama_api_base = 'https://ollama.example.com/v1'
         config.ollama_api_key = 'ollama-key'
+      when :ollama_cloud
+        config.ollama_cloud_api_key = 'ollama-cloud-key'
       when :openai
         config.openai_api_key = 'openai-key'
       when :openrouter

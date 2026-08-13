@@ -9,6 +9,10 @@ module RubyLLM
           'models'
         end
 
+        def model_capabilities
+          %w[streaming function_calling structured_output vision]
+        end
+
         def parse_list_models_response(response, slug, _capabilities)
           data = response.body['data'] || []
           data.map do |model|
@@ -22,7 +26,7 @@ module RubyLLM
                 input: %w[text image],
                 output: %w[text]
               },
-              capabilities: %w[streaming function_calling structured_output vision],
+              capabilities: model_capabilities,
               pricing: {},
               metadata: {
                 owned_by: model['owned_by']

@@ -82,6 +82,10 @@ RubyLLM.configure do |config|
   config.ollama_api_base = 'http://localhost:11434/v1'
   config.ollama_api_key = ENV['OLLAMA_API_KEY'] # Available in v1.13.0+ (optional for authenticated/remote Ollama endpoints)
 
+  # Ollama Cloud
+  config.ollama_cloud_api_key = ENV['OLLAMA_CLOUD_API_KEY'] # Key from ollama.com/settings/keys
+  config.ollama_cloud_api_base = ENV['OLLAMA_CLOUD_API_BASE'] # Optional, defaults to https://ollama.com/v1
+
   # OpenAI
   config.openai_api_key = ENV['OPENAI_API_KEY']
   config.openai_api_base = ENV['OPENAI_API_BASE'] # Optional custom OpenAI-compatible endpoint
@@ -113,18 +117,38 @@ end
 
 ## Ollama Cloud
 
-Ollama Cloud uses the existing Ollama provider against its remote OpenAI-compatible endpoint:
+Ollama Cloud runs the large open models on Ollama's servers. It speaks the same wire format as local Ollama, but it lives at `https://ollama.com/v1` and requires a key, so it is a separate provider:
 
 ```ruby
 RubyLLM.configure do |config|
-  config.ollama_api_base = 'https://ollama.com/v1'
-  config.ollama_api_key = ENV['OLLAMA_API_KEY']
+  config.ollama_cloud_api_key = ENV['OLLAMA_CLOUD_API_KEY'] # ollama.com/settings/keys
 end
 
-RubyLLM.chat(model: 'gpt-oss:120b', provider: :ollama).ask('Hello from Ollama Cloud')
+RubyLLM.chat(model: 'gpt-oss:120b', provider: :ollama_cloud).ask('Hello from Ollama Cloud')
 ```
 
-Use the model name returned by Ollama Cloud without the local `-cloud` suffix. You only need a separate custom provider when the service’s host, authentication, or wire format actually differs.
+Because `:ollama` and `:ollama_cloud` are separate providers, you can point one at your own machine and the other at the hosted service in the same process:
+
+```ruby
+RubyLLM.configure do |config|
+  config.ollama_api_base = 'http://localhost:11434/v1'
+  config.ollama_cloud_api_key = ENV['OLLAMA_CLOUD_API_KEY']
+end
+
+RubyLLM.chat(model: 'qwen3', provider: :ollama)              # your GPU
+RubyLLM.chat(model: 'gpt-oss:120b', provider: :ollama_cloud) # Ollama's GPUs
+```
+
+Model names differ between the two. Locally, cloud models carry a `-cloud` suffix (`gpt-oss:120b-cloud`) because your Ollama offloads them; the hosted API serves the plain name (`gpt-oss:120b`). Use the plain name with `:ollama_cloud`.
+
+Ollama retires cloud models regularly, so the shipped registry lags what the service serves today. RubyLLM accepts any model ID you give `:ollama_cloud` without a registry entry, and `refresh!` pulls the live catalog:
+
+```ruby
+RubyLLM.models.refresh!
+RubyLLM.models.by_provider(:ollama_cloud).map(&:id)
+```
+
+Ollama Cloud does not support [structured output]({% link _core_features/structured-output.md %}); use local Ollama or another provider when you need a schema.
 
 ## Bedrock Credential Providers
 

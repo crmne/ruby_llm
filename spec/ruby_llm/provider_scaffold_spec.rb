@@ -15,11 +15,11 @@ RSpec.describe RubyLLM::ProviderScaffold do
   describe '#generate!' do
     it 'generates a standalone provider gem that boots' do
       result = described_class.new(
-        'OllamaCloud',
+        'AcmeCloud',
         mode: :gem,
         destination: dir,
-        api_base: 'https://ollama.com/v1',
-        model: 'gpt-oss-120b',
+        api_base: 'https://api.acmecloud.example/v1',
+        model: 'acme-large',
         github_owner: 'crmne'
       ).generate!
 
@@ -30,23 +30,23 @@ RSpec.describe RubyLLM::ProviderScaffold do
         '.flayignore',
         '.github/workflows/ci.yml',
         '.github/workflows/release.yml',
-        'lib/ruby_llm/ollama_cloud.rb',
-        'lib/ruby_llm/providers/ollama_cloud.rb',
+        'lib/ruby_llm/acme_cloud.rb',
+        'lib/ruby_llm/providers/acme_cloud.rb',
         'spec/ruby_llm/chat_spec.rb',
         'spec/ruby_llm/chat_streaming_spec.rb',
         'spec/ruby_llm/models_spec.rb'
       )
       expect(File.executable?(File.join(dir, 'bin/setup'))).to be(true)
 
-      provider = File.read(File.join(dir, 'lib/ruby_llm/providers/ollama_cloud.rb'))
-      expect(provider).to include('class OllamaCloud < Provider')
+      provider = File.read(File.join(dir, 'lib/ruby_llm/providers/acme_cloud.rb'))
+      expect(provider).to include('class AcmeCloud < Provider')
       expect(provider).to include('protocol :chat_completions, ChatCompletions')
       expect(provider).to include('def assume_models_exist?')
 
-      gemspec = File.read(File.join(dir, 'ruby_llm-ollama-cloud.gemspec'))
+      gemspec = File.read(File.join(dir, 'ruby_llm-acme-cloud.gemspec'))
       expect(gemspec).to include("spec.add_dependency 'ruby_llm', '>= 2.0'")
 
-      provider_spec = File.read(File.join(dir, 'spec/ruby_llm/providers/ollama_cloud_spec.rb'))
+      provider_spec = File.read(File.join(dir, 'spec/ruby_llm/providers/acme_cloud_spec.rb'))
       expect(provider_spec).to include('include(chat_completions: described_class::ChatCompletions)')
 
       ci = File.read(File.join(dir, '.github/workflows/ci.yml'))
@@ -61,23 +61,23 @@ RSpec.describe RubyLLM::ProviderScaffold do
       create_core_fixture
 
       result = described_class.new(
-        'OllamaCloud',
+        'AcmeCloud',
         mode: :core,
         destination: dir,
-        api_base: 'https://ollama.com/v1',
-        model: 'gpt-oss-120b',
-        api_key_env: 'OLLAMA_CLOUD_API_KEY',
-        api_base_env: 'OLLAMA_CLOUD_API_BASE',
+        api_base: 'https://api.acmecloud.example/v1',
+        model: 'acme-large',
+        api_key_env: 'ACME_CLOUD_API_KEY',
+        api_base_env: 'ACME_CLOUD_API_BASE',
         dialect: :ollama,
-        models_dev_provider: 'ollama-cloud',
+        models_dev_provider: 'acme-cloud',
         dynamic_models: true
       ).generate!
 
       expect(result.written).to include(
-        'lib/ruby_llm/providers/ollama_cloud.rb',
-        'lib/ruby_llm/providers/ollama_cloud/capabilities.rb',
-        'spec/ruby_llm/providers/ollama_cloud_spec.rb',
-        'spec/ruby_llm/providers/ollama_cloud/capabilities_spec.rb'
+        'lib/ruby_llm/providers/acme_cloud.rb',
+        'lib/ruby_llm/providers/acme_cloud/capabilities.rb',
+        'spec/ruby_llm/providers/acme_cloud_spec.rb',
+        'spec/ruby_llm/providers/acme_cloud/capabilities_spec.rb'
       )
       expect(result.updated).to include(
         'lib/ruby_llm.rb',
@@ -87,19 +87,19 @@ RSpec.describe RubyLLM::ProviderScaffold do
         'lib/ruby_llm/models.rb'
       )
 
-      provider = File.read(File.join(dir, 'lib/ruby_llm/providers/ollama_cloud.rb'))
+      provider = File.read(File.join(dir, 'lib/ruby_llm/providers/acme_cloud.rb'))
       expect(provider).to include('class ChatCompletions < Ollama::ChatCompletions')
       expect(provider).to include('def assume_models_exist?')
 
-      provider_spec = File.read(File.join(dir, 'spec/ruby_llm/providers/ollama_cloud_spec.rb'))
+      provider_spec = File.read(File.join(dir, 'spec/ruby_llm/providers/acme_cloud_spec.rb'))
       expect(provider_spec).to include('include(chat_completions: described_class::ChatCompletions)')
 
       entrypoint = File.read(File.join(dir, 'lib/ruby_llm.rb'))
-      expect(entrypoint).to include("'ollama_cloud' => 'OllamaCloud',")
-      expect(entrypoint).to include('RubyLLM::Provider.register :ollama_cloud, RubyLLM::Providers::OllamaCloud')
+      expect(entrypoint).to include("'acme_cloud' => 'AcmeCloud',")
+      expect(entrypoint).to include('RubyLLM::Provider.register :acme_cloud, RubyLLM::Providers::AcmeCloud')
 
       models = File.read(File.join(dir, 'lib/ruby_llm/models.rb'))
-      expect(models).to include("'ollama-cloud' => 'ollama_cloud',")
+      expect(models).to include("'acme-cloud' => 'acme_cloud',")
     end
 
     it 'rejects names that could escape the destination' do
@@ -128,16 +128,16 @@ RSpec.describe RubyLLM::ProviderScaffold do
 
   def assert_generated_gem_boots
     script = <<~RUBY
-      require 'ruby_llm/ollama_cloud'
+      require 'ruby_llm/acme_cloud'
 
       RubyLLM.configure do |config|
-        config.ollama_cloud_api_key = 'test'
-        config.ollama_cloud_api_base = 'https://ollama.com/v1'
+        config.acme_cloud_api_key = 'test'
+        config.acme_cloud_api_base = 'https://api.acmecloud.example/v1'
       end
 
-      model, provider = RubyLLM::Models.resolve('gpt-oss-120b', provider: :ollama_cloud)
-      raise "bad model: \#{model.inspect}" unless model.id == 'gpt-oss-120b'
-      raise "bad provider: \#{provider.inspect}" unless provider.is_a?(RubyLLM::Providers::OllamaCloud)
+      model, provider = RubyLLM::Models.resolve('acme-large', provider: :acme_cloud)
+      raise "bad model: \#{model.inspect}" unless model.id == 'acme-large'
+      raise "bad provider: \#{provider.inspect}" unless provider.is_a?(RubyLLM::Providers::AcmeCloud)
     RUBY
 
     env = {}

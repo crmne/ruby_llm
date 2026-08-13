@@ -154,6 +154,10 @@ RubyLLM.configure do |config|
   config.ollama_api_base = String
   config.ollama_api_key = String  # v1.13.0+
 
+  # Ollama Cloud
+  config.ollama_cloud_api_key = String
+  config.ollama_cloud_api_base = String
+
   # OpenAI
   config.openai_api_key = String
   config.openai_api_base = String
