@@ -1497,8 +1497,11 @@ html:has(.VPHome) .VPNavBar > .wrapper > .container > .content > .content-body {
   height: 28px;
 }
 
-.VPHome .vp-doc .provider-logo:nth-of-type(11) {
-  grid-column: 2;
+/* When the count leaves a single logo alone on the last row, centre it rather
+   than letting it sit against the left edge. Keyed off the remainder, not a
+   fixed index, so adding a provider cannot knock the rows out of line. */
+.VPHome .vp-doc .provider-logo:last-of-type:nth-of-type(5n + 1) {
+  grid-column: 3;
 }
 
 .home-love-section {
@@ -2044,11 +2047,11 @@ html:has(.VPHome) .VPNavBar > .wrapper > .container > .content > .content-body {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
-  .VPHome .vp-doc .provider-logo:nth-of-type(11) {
+  .VPHome .vp-doc .provider-logo:last-of-type:nth-of-type(5n + 1) {
     grid-column: auto;
   }
 
-  .VPHome .vp-doc .provider-logo:nth-of-type(13) {
+  .VPHome .vp-doc .provider-logo:last-of-type:nth-of-type(3n + 1) {
     grid-column: 2;
   }
 
@@ -2498,8 +2501,8 @@ html:has(.VPHome) .VPNavBar > .wrapper > .container > .content > .content-body {
   }
 
   .VPHome .vp-doc .provider-logo,
-  .VPHome .vp-doc .provider-logo:nth-of-type(11),
-  .VPHome .vp-doc .provider-logo:nth-of-type(13) {
+  .VPHome .vp-doc .provider-logo:last-of-type:nth-of-type(5n + 1),
+  .VPHome .vp-doc .provider-logo:last-of-type:nth-of-type(3n + 1) {
     grid-column: auto;
   }
 
