@@ -2,28 +2,69 @@
 
 require 'spec_helper'
 
+class BedrockMantleWeather < RubyLLM::Tool
+  description 'Get the current weather for a city'
+  parameter :city, description: 'City name'
+
+  def execute(city:)
+    "The weather in #{city} is 15 degrees Celsius."
+  end
+end
+
 RSpec.describe RubyLLM::Providers::Bedrock::Mantle do
   include_context 'with configured RubyLLM'
 
   let(:provider) { RubyLLM::Providers::Bedrock.new(RubyLLM.config) }
 
   describe 'protocol routing' do
-    it 'routes un-versioned anthropic ids to mantle' do
+    it 'routes un-versioned anthropic ids to the Anthropic Messages protocol' do
       %w[anthropic.claude-sonnet-5 anthropic.claude-opus-4-7 anthropic.claude-fable-5].each do |id|
         model = RubyLLM::Model.default(id, 'bedrock')
-        expect(provider.protocol_for(model)).to eq(described_class)
+        expect(provider.protocol_for(model)).to eq(described_class::Anthropic)
       end
     end
 
-    it 'keeps dated and versioned ids on Converse' do
+    it 'routes the models mantle serves on v1/responses to the Responses protocol' do
+      %w[openai.gpt-oss-20b openai.gpt-oss-120b google.gemma-4-31b].each do |id|
+        model = RubyLLM::Model.default(id, 'bedrock')
+        expect(provider.protocol_for(model)).to eq(described_class::Responses)
+      end
+    end
+
+    it 'routes the rest of the non-Claude catalog to the Chat Completions protocol' do
+      %w[
+        nvidia.nemotron-nano-9b-v2
+        qwen.qwen3-coder-next
+        deepseek.v3.2
+        zai.glm-4.6
+        mistral.voxtral-mini-3b-2507
+      ].each do |id|
+        model = RubyLLM::Model.default(id, 'bedrock')
+        expect(provider.protocol_for(model)).to eq(described_class::ChatCompletions)
+      end
+    end
+
+    it 'keeps dated, versioned, and region-prefixed ids on Converse' do
       %w[
         anthropic.claude-sonnet-4-5-20250929-v1:0
         us.anthropic.claude-sonnet-5
+        eu.anthropic.claude-opus-4-8
+        au.anthropic.claude-sonnet-5
+        jp.anthropic.claude-opus-4-7
+        global.anthropic.claude-fable-5
         amazon.nova-2-lite-v1:0
+        meta.llama3-70b-instruct-v1:0
       ].each do |id|
         model = RubyLLM::Model.default(id, 'bedrock')
         expect(provider.protocol_for(model)).to eq(RubyLLM::Protocols::Converse)
       end
+    end
+
+    it 'leaves embedding routing alone' do
+      model = RubyLLM::Model.default('cohere.embed-english-v3', 'bedrock')
+
+      expect(provider.protocol_for(model, operation: :embed))
+        .to eq(RubyLLM::Protocols::InvokeModel::CohereEmbeddings)
     end
   end
 
@@ -35,6 +76,29 @@ RSpec.describe RubyLLM::Providers::Bedrock::Mantle do
 
       expect(payload[:model]).to eq('anthropic.claude-fable-5')
       expect(payload[:messages].first[:role]).to eq('user')
+    end
+
+    it 'renders a Responses payload against the mantle endpoint' do
+      chat = RubyLLM.chat(model: 'openai.gpt-oss-20b', provider: :bedrock, assume_model_exists: true)
+      chat.ask_later('Say OK.')
+      payload = chat.render
+
+      expect(payload[:model]).to eq('openai.gpt-oss-20b')
+      expect(payload[:input].first[:role]).to eq('user')
+    end
+
+    it 'points each protocol at its own mantle path' do
+      expect(described_class::Anthropic.allocate.completion_url).to eq('anthropic/v1/messages')
+      expect(described_class::Responses.allocate.completion_url).to eq('v1/responses')
+      expect(described_class::ChatCompletions.allocate.completion_url).to eq('v1/chat/completions')
+    end
+
+    it 'sends anthropic-version only on the Anthropic protocol' do
+      anthropic = described_class::Anthropic.new(provider)
+      responses = described_class::Responses.new(provider)
+
+      expect(anthropic.send(:mantle_headers, 'anthropic/v1/messages', '{}')).to include('anthropic-version')
+      expect(responses.send(:mantle_headers, 'v1/responses', '{}')).not_to include('anthropic-version')
     end
 
     it 'signs for the bedrock-mantle service' do
@@ -71,6 +135,33 @@ RSpec.describe RubyLLM::Providers::Bedrock::Mantle do
       response = chat.ask('Say OK and nothing else.')
 
       expect(response.content).to be_present
+    end
+  end
+
+  describe 'responses chat', :live do
+    let(:chat) { RubyLLM.chat(model: 'openai.gpt-oss-20b', provider: :bedrock) }
+
+    it 'chats through the Responses surface' do
+      response = chat.ask('Say OK and nothing else.')
+
+      expect(response.content).to include('OK')
+      expect(response.tokens.input).to be_positive
+      expect(response.tokens.output).to be_positive
+    end
+
+    it 'streams through the Responses surface' do
+      chunks = []
+      response = chat.ask('Count from 1 to 5.') { |chunk| chunks << chunk }
+
+      expect(chunks).not_to be_empty
+      expect(chunks.filter_map(&:content).join).not_to be_empty
+      expect(response.content).to include('5')
+    end
+
+    it 'calls tools through the Responses surface' do
+      response = chat.with_tools(BedrockMantleWeather).ask("What's the weather in Berlin? Use the weather tool.")
+
+      expect(response.content).to include('15')
     end
   end
 end

@@ -8,7 +8,9 @@ module RubyLLM
       include Bedrock::Models
 
       protocol :converse, Protocols::Converse, batches: Protocols::Converse::Batches
-      protocol :mantle, Bedrock::Mantle
+      protocol :mantle_anthropic, Bedrock::Mantle::Anthropic
+      protocol :mantle_responses, Bedrock::Mantle::Responses
+      protocol :mantle_chat_completions, Bedrock::Mantle::ChatCompletions
       protocol :titan_text_embeddings, Protocols::InvokeModel::TitanTextEmbeddings
       protocol :titan_multimodal_embeddings, Protocols::InvokeModel::TitanMultimodalEmbeddings
       protocol :cohere_embeddings, Protocols::InvokeModel::CohereEmbeddings
@@ -20,15 +22,16 @@ module RubyLLM
       end
 
       def protocol_for(model, operation: nil, **)
-        return embedding_protocol_for(model_id_for(model)) if operation == :embed
-        return protocols[:mantle] if mantle_model?(model_id_for(model))
+        model_id = model_id_for(model)
+        return embedding_protocol_for(model_id) if operation == :embed
+        return mantle_protocol_for(model_id) if mantle_model?(model_id)
 
         super
       end
 
-      # Claude generations from Opus 4.7 onward are served by the
-      # bedrock-mantle endpoint under un-versioned ids such as
-      # anthropic.claude-sonnet-5.
+      # Un-versioned ids such as anthropic.claude-sonnet-5 and
+      # openai.gpt-oss-20b are served by the bedrock-mantle endpoint rather
+      # than by Converse.
       def mantle_model?(model_id)
         Models.mantle_model_id?(model_id)
       end
@@ -125,6 +128,13 @@ module RubyLLM
         else
           'bedrock_credential_provider or bedrock_api_key + bedrock_secret_key'
         end
+      end
+
+      def mantle_protocol_for(model_id)
+        return protocols[:mantle_anthropic] if model_id.start_with?('anthropic.')
+        return protocols[:mantle_responses] if Bedrock::Mantle::RESPONSES_MODELS.include?(model_id)
+
+        protocols[:mantle_chat_completions]
       end
 
       def embedding_protocol_for(model_id)

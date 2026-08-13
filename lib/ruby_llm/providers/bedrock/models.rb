@@ -7,7 +7,7 @@ module RubyLLM
       module Models
         module_function
 
-        REGION_PREFIXES = %w[global us eu ap sa ca me af il].freeze
+        REGION_PREFIXES = %w[global us eu ap sa ca me af il au jp].freeze
 
         def models_api_base
           @config.bedrock_api_base || "https://bedrock.#{bedrock_region}.amazonaws.com"
@@ -55,11 +55,14 @@ module RubyLLM
           normalize_inference_profile_id(model_id, inference_types, @config.bedrock_region)
         end
 
-        # Un-versioned anthropic ids are served by the bedrock-mantle
-        # endpoint under exactly that id; Converse ids carry a date or :N
-        # version suffix.
+        # The bedrock-mantle endpoint serves bare vendor.model ids under
+        # exactly that id. Converse ids carry a date or :N version suffix, a
+        # cross-region inference prefix, or both.
         def mantle_model_id?(model_id)
-          model_id.start_with?('anthropic.') && !model_id.include?(':') && !model_id.match?(/\d{8}/)
+          return false if model_id.include?(':') || model_id.match?(/\d{8}/)
+          return false if region_prefixed?(model_id)
+
+          model_id.include?('.')
         end
 
         def resolve_registry_id(model_id, models, config)

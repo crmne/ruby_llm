@@ -172,7 +172,13 @@ RSpec.describe RubyLLM::Providers::Bedrock do
     it 'routes un-versioned anthropic ids to Mantle' do
       model = instance_double(RubyLLM::Model, id: 'anthropic.claude-opus-5')
 
-      expect(provider.protocol_for(model)).to eq(RubyLLM::Providers::Bedrock::Mantle)
+      expect(provider.protocol_for(model)).to eq(RubyLLM::Providers::Bedrock::Mantle::Anthropic)
+    end
+
+    it 'routes un-versioned non-anthropic ids to Mantle Responses' do
+      model = instance_double(RubyLLM::Model, id: 'openai.gpt-oss-20b')
+
+      expect(provider.protocol_for(model)).to eq(RubyLLM::Providers::Bedrock::Mantle::Responses)
     end
   end
 
