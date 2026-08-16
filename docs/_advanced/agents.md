@@ -311,7 +311,7 @@ Delegated methods include:
 * `with_tools`, `with_tool_options`
 * `with_model`, `with_temperature`, `with_thinking`, `with_citations`, `with_end_user`, `with_compaction`, `with_context`
 * `with_caching`, `with_provider_options`, `with_headers`, `with_schema`, `with_fallbacks`
-* `before_message`, `after_message`, `before_tool_call`, `after_tool_result`, `before_fallback`, `after_fallback`
+* `before_request`, `before_message`, `after_message`, `before_tool_call`, `after_tool_result`, `before_fallback`, `after_fallback`
 
 You can always access the wrapped chat object directly via `agent.chat`.
 

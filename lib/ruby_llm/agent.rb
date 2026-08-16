@@ -756,8 +756,8 @@ module RubyLLM
                    :with_tools, :with_tool_options, :with_model, :with_temperature, :with_max_output_tokens,
                    :with_thinking, :with_citations, :with_end_user, :with_compaction,
                    :with_caching, :with_context, :with_provider_options,
-                   :with_headers, :with_schema, :with_fallbacks, :before_message, :after_message, :before_tool_call,
-                   :after_tool_result, :before_fallback, :after_fallback, :each, :complete?,
+                   :with_headers, :with_schema, :with_fallbacks, :before_request, :before_message, :after_message,
+                   :before_tool_call, :after_tool_result, :before_fallback, :after_fallback, :each, :complete?,
                    :cancel!, :cancelled?, :approve!, :deny!, :awaiting_approval?, :pending_approvals,
                    :add_message, :add_completion, :tokens, :cost
 

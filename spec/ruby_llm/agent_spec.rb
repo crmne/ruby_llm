@@ -358,6 +358,11 @@ RSpec.describe RubyLLM::Agent, :live do
         @events = []
       end
 
+      def before_request(&)
+        @events << :before_request
+        self
+      end
+
       def before_message(&)
         @events << :before_message
         self
@@ -391,6 +396,7 @@ RSpec.describe RubyLLM::Agent, :live do
 
     agent = Class.new(described_class).new(chat: fake_chat)
 
+    expect(agent.before_request { :ok }).to eq(fake_chat)
     expect(agent.before_message { :ok }).to eq(fake_chat)
     expect(agent.after_message { :ok }).to eq(fake_chat)
     expect(agent.before_tool_call { :ok }).to eq(fake_chat)
@@ -398,6 +404,7 @@ RSpec.describe RubyLLM::Agent, :live do
     expect(agent.before_fallback { :ok }).to eq(fake_chat)
     expect(agent.after_fallback { :ok }).to eq(fake_chat)
     expect(fake_chat.events).to eq(%i[
+                                     before_request
                                      before_message
                                      after_message
                                      before_tool_call
