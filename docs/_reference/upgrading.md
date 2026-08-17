@@ -298,7 +298,7 @@ chat.with_instructions("...", append: true)    # add another system message
 
 ### Agent Schema Blocks
 
-Agent `schema` blocks are always the Schema DSL. A bare `schema do ... end` block is always interpreted as a [RubyLLM::Schema]({% link _core_features/structured-output.md %}). For a schema computed from the agent's inputs at runtime, pass a lambda:
+Agent `schema` blocks are always the Schema DSL. A bare `schema do ... end` block is always interpreted as a [Schematist schema]({% link _core_features/structured-output.md %}). For a schema computed from the agent's inputs at runtime, pass a lambda:
 
 ```ruby
 schema do                                            # Schema DSL - static shape

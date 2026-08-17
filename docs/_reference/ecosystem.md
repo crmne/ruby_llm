@@ -15,7 +15,7 @@ description: Extend RubyLLM with MCP servers, structured schemas, instrumentatio
 
 After reading this guide, you will know:
 
-* How `RubyLLM::Schema` simplifies structured data definition for AI applications
+* How `Schematist` simplifies structured data definition for AI applications
 * What the Model Context Protocol (MCP) is and how `RubyLLM::MCP` brings it to Ruby
 * How `RubyLLM::Instrumentation` exposes RubyLLM events through ActiveSupport notifications
 * How `RubyLLM::Monitoring` provides dashboards and alerts for RubyLLM activity
@@ -25,13 +25,13 @@ After reading this guide, you will know:
 * How `RubyLLM::Contract` adds runtime contracts, model-escalating retries, and regression evals on top of RubyLLM
 * Where to find community projects and how to contribute your own
 
-## RubyLLM::Schema
+## Schematist
 
 **Ruby DSL for JSON Schema Creation**
 
-[`RubyLLM::Schema`](https://github.com/danielfriis/ruby_llm-schema) provides a clean, Rails-inspired DSL for creating JSON schemas. It's designed specifically for defining structured data schemas for LLM function calling and structured outputs.
+[`Schematist`](https://github.com/crmne/schematist), formerly known as `RubyLLM::Schema`, provides a clean, Rails-inspired DSL for creating JSON schemas. It's designed specifically for defining structured data schemas for LLM function calling and structured outputs, and it ships with RubyLLM as a dependency.
 
-### Why Use RubyLLM::Schema?
+### Why Use Schematist?
 
 When working with LLMs, you often need to define precise data structures for:
 
@@ -40,7 +40,7 @@ When working with LLMs, you often need to define precise data structures for:
 - Data validation schemas
 - API response formats
 
-`RubyLLM::Schema` makes this easy with a familiar Ruby syntax.
+`Schematist` makes this easy with a familiar Ruby syntax.
 
 ### Key Features
 
@@ -52,11 +52,13 @@ When working with LLMs, you often need to define precise data structures for:
 
 ### Installation
 
+Schematist is already available in any application using RubyLLM. For standalone use:
+
 ```bash
-gem install ruby_llm-schema
+gem install schematist
 ```
 
-For detailed documentation and examples, visit the [RubyLLM::Schema repository](https://github.com/danielfriis/ruby_llm-schema).
+For detailed documentation and examples, visit the [Schematist repository](https://github.com/crmne/schematist).
 
 ---
 
@@ -293,7 +295,7 @@ LLMs can return JSON that looks correct - valid shape, right types, right fields
 ### Key Features
 
 - Class-based DSL: `prompt`, `output_schema`, `validate`, `retry_policy`, `max_cost`
-- Schema validation via [`RubyLLM::Schema`](https://github.com/danielfriis/ruby_llm-schema) with client-side verification
+- Schema validation via [`Schematist`](https://github.com/crmne/schematist) with client-side verification
 - Model escalation on validation failure and pre-flight refusal on cost limits
 - LLM-as-judge checks and a regression eval framework with frozen datasets and baselines
 - Pipeline composition with fail-fast and per-step models
@@ -416,7 +418,7 @@ Structured output gets you JSON in the right shape, but it doesn't guarantee the
 - Schema inferred automatically from `attr_accessor` or ActiveModel attributes
 - ActiveModel validations run on every response; errors are sent back to the LLM on retry
 - Works with every provider `ruby_llm` supports — same code for OpenAI, Anthropic, Gemini, and more
-- Integrates with `RubyLLM::Schema` for explicit schema control
+- Integrates with `Schematist` for explicit schema control
 
 ### Installation
 

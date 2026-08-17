@@ -199,7 +199,7 @@ chat.ask("Compare these", with: project.documents)
 Structured output is stored as JSON text in the application message content:
 
 ```ruby
-class PersonSchema < RubyLLM::Schema
+class PersonSchema < Schematist::Schema
   string :name
   integer :age
 end

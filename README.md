@@ -128,7 +128,7 @@ WeatherAssistant.new.ask "What's the weather in Berlin?"
 
 ```ruby
 # Get structured output
-class ProductSchema < RubyLLM::Schema
+class ProductSchema < Schematist::Schema
   string :name
   number :price
   array :features do

@@ -14,7 +14,7 @@ description: Get AI responses that match an exact JSON schema with required fiel
 After reading this guide, you will know:
 
 * How JSON mode differs from schema-validated structured output.
-* How to define a schema with `RubyLLM::Schema`.
+* How to define a schema with `Schematist::Schema`.
 * How to provide a manual JSON Schema and name it.
 * How to build complex nested object and array schemas.
 * Which providers support structured output and how to add or remove a schema mid-conversation.
@@ -30,7 +30,7 @@ JSON mode (using `with_provider_options(response_format: { type: 'json_object' }
 chat = RubyLLM.chat.with_provider_options(response_format: { type: 'json_object' })
 response = chat.ask("List 3 programming languages with their year created. Return as JSON.")
 
-class LanguagesSchema < RubyLLM::Schema
+class LanguagesSchema < Schematist::Schema
   array :languages do
     object do
       string :name
@@ -44,18 +44,12 @@ response = chat.ask("List 3 programming languages with their year created")
 # Always returns: {"languages" => [{"name" => "...", "year" => ...}, ...]}
 ```
 
-### Using RubyLLM::Schema (Recommended)
+### Using Schematist (Recommended)
 
-The easiest way to define schemas is with the [RubyLLM::Schema](https://github.com/danielfriis/ruby_llm-schema) gem:
+The easiest way to define schemas is with [Schematist](https://github.com/crmne/schematist), formerly known as `RubyLLM::Schema`. It ships with RubyLLM as a dependency, so there is nothing to add to your Gemfile:
 
 ```ruby
-# First, add to your Gemfile:
-# gem 'ruby_llm-schema'
-#
-# Then in your code:
-require 'ruby_llm/schema'
-
-class PersonSchema < RubyLLM::Schema
+class PersonSchema < Schematist::Schema
   string :name, description: "Person's full name"
   integer :age, description: "Person's age in years"
   string :city, required: false, description: "City where they live"
@@ -68,12 +62,12 @@ puts response.parsed # => {"name" => "Alice", "age" => 30}
 puts response.content # => '{"name":"Alice","age":30}'
 ```
 
-RubyLLM::Schema classes automatically use their class name (e.g., `PersonSchema`) as the schema name in API requests, which can help the model better understand the expected output structure.
+Schematist schema classes automatically use their class name (e.g., `PersonSchema`) as the schema name in API requests, which can help the model better understand the expected output structure.
 {: .note }
 
 ### Using Manual JSON Schemas
 
-If you prefer not to use RubyLLM::Schema, you can provide a JSON Schema directly:
+If you prefer not to use Schematist, you can provide a JSON Schema directly:
 
 ```ruby
 person_schema = {
@@ -97,7 +91,7 @@ puts response.parsed
 # => {"name" => "Bob", "age" => 25, "hobbies" => ["Ruby programming", "Open source"]}
 ```
 
-**OpenAI Requirement:** When using manual JSON schemas with OpenAI, you must include `additionalProperties: false` in your schema objects. RubyLLM::Schema handles this automatically.
+**OpenAI Requirement:** When using manual JSON schemas with OpenAI, you must include `additionalProperties: false` in your schema objects. Schematist handles this automatically.
 {: .warning }
 
 #### Custom Schema Names
@@ -131,7 +125,7 @@ Custom schema names are useful for:
 Structured output supports complex nested objects and arrays:
 
 ```ruby
-class CompanySchema < RubyLLM::Schema
+class CompanySchema < Schematist::Schema
   string :name, description: "Company name"
 
   array :employees do
@@ -185,7 +179,7 @@ person = chat.ask("Generate a person")
 chat.with_schema(nil)
 analysis = chat.ask("Tell me about this person's potential career paths")
 
-class CareerPlanSchema < RubyLLM::Schema
+class CareerPlanSchema < Schematist::Schema
   string :title
   array :steps, of: :string
   integer :years_required

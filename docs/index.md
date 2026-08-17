@@ -195,7 +195,7 @@ chat.with_tools(Weather).ask "What's the weather in Berlin?"
       <div class="home-step-code home-code-grid home-code-grid--bare" markdown="1">
 
 ```ruby
-class ProductSchema < RubyLLM::Schema
+class ProductSchema < Schematist::Schema
   string :name
   number :price
   array :features do
@@ -553,7 +553,7 @@ bin/rails generate ruby_llm:schema Product
       <p>RubyLLM made the future of Ruby and AI feel easier, more accessible, and completely within reach.</p>
     </article>
     <article class="home-love-card" data-love-card hidden>
-      <header><img src="{{ '/assets/images/home/testimonials/people/daniel-friis.webp' | relative_url }}" alt="Daniel Friis"><strong>Daniel Friis</strong><small>Creator, RubyLLM::Schema</small></header>
+      <header><img src="{{ '/assets/images/home/testimonials/people/daniel-friis.webp' | relative_url }}" alt="Daniel Friis"><strong>Daniel Friis</strong><small>Creator, Schematist</small></header>
       <p>Foundational tooling for working with AI in Ruby and Rails applications.</p>
     </article>
     <article class="home-love-card" data-love-card hidden>

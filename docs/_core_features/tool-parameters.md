@@ -95,7 +95,7 @@ class Scheduler < RubyLLM::Tool
 end
 ```
 
-RubyLLM bundles the DSL through [`ruby_llm-schema`](https://github.com/danielfriis/ruby_llm-schema), so every project has the same schema builders out of the box.
+RubyLLM bundles the DSL through [`schematist`](https://github.com/crmne/schematist), so every project has the same schema builders out of the box.
 
 ### Supplying JSON Schema Manually
 
@@ -228,7 +228,7 @@ The Responses API defaults function tools to strict schema validation, forcing t
 To opt into [strict validation](https://platform.openai.com/docs/guides/function-calling#strict-mode) per tool:
 
 ```ruby
-class LookupParams < RubyLLM::Schema
+class LookupParams < Schematist::Schema
   string :sku, description: "Product SKU"
 
   any_of :locale, description: "Country code" do
