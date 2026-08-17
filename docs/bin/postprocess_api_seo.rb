@@ -33,7 +33,7 @@ output_dir.glob('**/*.html').sort.each do |path|
                 "#{site_root}/api/#{relative_path}"
               end
   robots = redirect ? 'noindex,follow' : default_robots
-  title = CGI.unescapeHTML(html[%r{<title>(.*?)</title>}mi, 1].to_s.gsub(/<[^>]*>/, '')).strip
+  title = CGI.unescapeHTML(html[%r{<title>(.*?)</title>}mi, 1].to_s).gsub(/<[^>]*>/, '').strip
   description = CGI.unescapeHTML(html[/<meta\s+name="description"\s+content="([^"]*)"/mi, 1].to_s).strip
 
   html.sub!(/<link\s+rel="canonical"\s+href="[^"]*">/i, '')
@@ -71,7 +71,7 @@ output_dir.glob('**/*.html').sort.each do |path|
         }
       ]
     }
-    metadata << %(<script type="application/ld+json">#{JSON.generate(graph)}</script>)
+    metadata << %(<script type="application/ld+json">#{JSON.generate(graph, script_safe: true)}</script>)
     api_urls << canonical
   end
 
