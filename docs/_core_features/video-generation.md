@@ -100,6 +100,7 @@ These providers generate video through RubyLLM:
 | xAI | `grok-imagine-video`, `grok-imagine-video-1.5` | Clips up to 15 seconds, priced per second |
 | OpenRouter | `x-ai/grok-imagine-video`, `google/veo-3.1-lite`, `openai/sora-2-pro`, and the rest of its video catalog | One API across many video models |
 | Azure OpenAI | Sora deployments such as `sora-2` | Uses your deployment name as the model id |
+| MiniMax | `MiniMax-H3`, `MiniMax-Hailuo-2.3`, `MiniMax-Hailuo-2.3-Fast`, `MiniMax-Hailuo-02`, `T2V-01-Director`, `T2V-01` | Clips of 4 to 15 seconds, priced per second |
 
 Refer to the [Working with Models Guide]({% link _reference/models.md %}) for finding and filtering models, and [Model Resolution]({% link _reference/model-resolution.md %}) for how a model name and provider resolve.
 
@@ -129,6 +130,22 @@ RubyLLM.animate(
   provider: :azure,
   provider_options: { width: 480, height: 480, n_seconds: 5 }
 )
+
+# MiniMax takes the resolution, duration, and aspect ratio of the clip
+RubyLLM.animate(
+  "A calm ocean wave at sunset",
+  model: "MiniMax-H3",
+  provider_options: { duration: 10, ratio: "16:9" }
+)
+```
+
+MiniMax serves one host per region, and both of its video API versions follow the host you configure:
+
+```ruby
+RubyLLM.configure do |config|
+  config.minimax_api_key = ENV["MINIMAX_API_KEY"]
+  config.minimax_api_base = "https://api.minimaxi.com/v1"
+end
 ```
 
 > Video generation is priced per second of output on most providers, and resolution multiplies the rate. Check your provider's pricing page before rendering long or high-resolution clips.

@@ -57,6 +57,12 @@ RSpec.describe RubyLLM::Provider do
         key: :gpustack_api_base,
         custom: 'https://gpustack.example.com/v1'
       },
+      minimax: {
+        provider: RubyLLM::Providers::MiniMax,
+        key: :minimax_api_base,
+        custom: 'https://api.minimaxi.com/v1',
+        default: 'https://api.minimax.io/v1'
+      },
       mistral: {
         provider: RubyLLM::Providers::Mistral,
         key: :mistral_api_base,
@@ -132,6 +138,8 @@ RSpec.describe RubyLLM::Provider do
       when :gpustack
         config.gpustack_api_base = 'https://gpustack.example.com/v1'
         config.gpustack_api_key = 'gpustack-key'
+      when :minimax
+        config.minimax_api_key = 'minimax-key'
       when :mistral
         config.mistral_api_key = 'mistral-key'
       when :ollama

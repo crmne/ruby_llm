@@ -137,6 +137,10 @@ RubyLLM.configure do |config|
   config.gpustack_api_base = String
   config.gpustack_api_key = String
 
+  # MiniMax
+  config.minimax_api_key = String
+  config.minimax_api_base = String # Regional host, defaults to the global one
+
   # Mistral
   config.mistral_api_key = String
   config.mistral_api_base = String
