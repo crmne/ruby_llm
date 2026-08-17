@@ -125,45 +125,24 @@ RSpec.describe RubyLLM::StreamAccumulator do
     end
   end
 
-  describe 'think tags' do
+  describe 'content accumulation' do
     def stream(*texts)
       accumulator = described_class.new
       texts.each { |text| accumulator.add(RubyLLM::Chunk.new(role: :assistant, content: text)) }
       accumulator.to_message(nil)
     end
 
-    it 'splits inline think tags into thinking and content' do
-      message = stream('<think>reasoning</think>answer')
-
-      expect(message.content).to eq('answer')
-      expect(message.thinking.text).to eq('reasoning')
-    end
-
-    it 'carries an unterminated think block across chunks' do
-      message = stream('<think>first ', 'second</think>done')
-
-      expect(message.content).to eq('done')
-      expect(message.thinking.text).to eq('first second')
-    end
-
-    it 'holds back a tag that straddles a chunk boundary' do
-      message = stream('before <thi', 'nk>hidden</think> after')
-
-      expect(message.content).to eq('before  after')
-      expect(message.thinking.text).to eq('hidden')
-    end
-
-    it 'holds back a closing tag that straddles a chunk boundary' do
-      message = stream('<think>hidden</thi', 'nk>visible')
-
-      expect(message.content).to eq('visible')
-      expect(message.thinking.text).to eq('hidden')
-    end
-
-    it 'leaves plain text untouched' do
-      message = stream('just text')
+    it 'joins chunks in the order they arrived' do
+      message = stream('just ', 'text')
 
       expect(message.content).to eq('just text')
+      expect(message.thinking).to be_nil
+    end
+
+    it 'leaves markup in the content alone' do
+      message = stream('<think>reasoning</think>answer')
+
+      expect(message.content).to eq('<think>reasoning</think>answer')
       expect(message.thinking).to be_nil
     end
   end

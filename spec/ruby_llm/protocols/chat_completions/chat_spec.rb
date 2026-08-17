@@ -518,10 +518,10 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Chat do
       expect(described_class.extract_thinking_signature({ 'reasoning_signature' => 42 })).to be_nil
     end
 
-    it 'splits inline think tags out of the content' do
-      expect(described_class.extract_content_and_thinking('<think>why</think>answer')).to eq(%w[answer why])
-      expect(described_class.extract_content_and_thinking('<think>why</think>')).to eq([nil, 'why'])
+    it 'hands string content back untouched, markup and all' do
       expect(described_class.extract_content_and_thinking('plain')).to eq(['plain', nil])
+      expect(described_class.extract_content_and_thinking('<think>why</think>answer'))
+        .to eq(['<think>why</think>answer', nil])
     end
 
     it 'leaves a content shape it does not understand alone' do

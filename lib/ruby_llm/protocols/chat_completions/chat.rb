@@ -403,7 +403,6 @@ module RubyLLM
         end
 
         def extract_content_and_thinking(content)
-          return extract_think_tag_content(content) if content.is_a?(String)
           return [content, nil] unless content.is_a?(Array)
 
           text = extract_text_from_blocks(content)
@@ -435,15 +434,6 @@ module RubyLLM
           end
 
           block['text'] if block['text'].is_a?(String)
-        end
-
-        def extract_think_tag_content(text)
-          return [text, nil] unless text.include?('<think>')
-
-          thinking = text.scan(%r{<think>(.*?)</think>}m).join
-          content = text.gsub(%r{<think>.*?</think>}m, '').strip
-
-          [content.empty? ? nil : content, thinking.empty? ? nil : thinking]
         end
       end
     end

@@ -24,8 +24,6 @@ module RubyLLM
       @raw_content = nil
       @raw_reasoning = nil
       @finish_reason = nil
-      @inside_think_tag = false
-      @pending_think_tag = +''
       @latest_tool_call_id = nil
       @tool_call_ids_by_index = {}
     end
@@ -183,20 +181,7 @@ module RubyLLM
       return accumulate_tool_calls(chunk.tool_calls) if chunk.tool_call?
 
       content_text = chunk.content || ''
-      if content_text.is_a?(String)
-        append_text_with_thinking(content_text)
-      else
-        @content << content_text.to_s
-      end
-    end
-
-    def append_text_with_thinking(text)
-      content_chunk, thinking_chunk = extract_think_tags(text)
-      @content << content_chunk
-      return unless thinking_chunk
-
-      @thinking_text ||= +''
-      @thinking_text << thinking_chunk
+      @content << (content_text.is_a?(String) ? content_text : content_text.to_s)
     end
 
     def append_thinking_from_chunk(chunk)
@@ -208,62 +193,6 @@ module RubyLLM
         @thinking_text << thinking.text.to_s
       end
       @thinking_signature ||= thinking.signature # rubocop:disable Naming/MemoizedInstanceVariableName
-    end
-
-    def extract_think_tags(text)
-      start_tag = '<think>'
-      end_tag = '</think>'
-      remaining = @pending_think_tag + text
-      @pending_think_tag = +''
-
-      output = +''
-      thinking = +''
-
-      until remaining.empty?
-        remaining = if @inside_think_tag
-                      consume_think_content(remaining, end_tag, thinking)
-                    else
-                      consume_non_think_content(remaining, start_tag, output)
-                    end
-      end
-
-      [output, thinking.empty? ? nil : thinking]
-    end
-
-    def consume_think_content(remaining, end_tag, thinking)
-      end_index = remaining.index(end_tag)
-      if end_index
-        thinking << remaining.slice(0, end_index)
-        @inside_think_tag = false
-        remaining.slice((end_index + end_tag.length)..) || +''
-      else
-        suffix_len = longest_suffix_prefix(remaining, end_tag)
-        thinking << remaining.slice(0, remaining.length - suffix_len)
-        @pending_think_tag = remaining.slice(-suffix_len, suffix_len)
-        +''
-      end
-    end
-
-    def consume_non_think_content(remaining, start_tag, output)
-      start_index = remaining.index(start_tag)
-      if start_index
-        output << remaining.slice(0, start_index)
-        @inside_think_tag = true
-        remaining.slice((start_index + start_tag.length)..) || +''
-      else
-        suffix_len = longest_suffix_prefix(remaining, start_tag)
-        output << remaining.slice(0, remaining.length - suffix_len)
-        @pending_think_tag = remaining.slice(-suffix_len, suffix_len)
-        +''
-      end
-    end
-
-    def longest_suffix_prefix(text, tag)
-      max = [text.length, tag.length - 1].min
-      max.downto(1) do |len|
-        return len if text.end_with?(tag[0, len])
-      end
-      0
     end
   end
 end
