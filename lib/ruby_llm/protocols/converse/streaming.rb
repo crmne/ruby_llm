@@ -103,7 +103,7 @@ module RubyLLM
           message, eof = decoder.decode_chunk(raw_chunk)
 
           while message
-            event = decode_event_payload(message.payload.read)
+            event = decode_event(message)
             if event && RubyLLM.config.log_stream_debug
               RubyLLM.logger.debug do
                 "Bedrock stream event keys: #{event.keys}"
@@ -116,6 +116,31 @@ module RubyLLM
           end
 
           events
+        end
+
+        # ConverseStream delivers modeled errors as a frame after the 200, with
+        # the type in the frame headers and a bare message as the payload. Rewrap
+        # it under the exception name so raise_stream_error classifies it instead
+        # of the frame passing for an empty chunk.
+        def decode_event(message)
+          exception_type = stream_exception_type(message)
+          payload = message.payload.read
+          event = decode_event_payload(payload)
+          return event unless exception_type
+
+          { exception_type => event || { 'message' => payload.to_s } }
+        end
+
+        def stream_exception_type(message)
+          headers = message.headers
+          return nil unless event_header(headers, ':message-type') == 'exception'
+
+          event_header(headers, ':exception-type') || 'streamingException'
+        end
+
+        def event_header(headers, name)
+          header = headers[name]
+          header.respond_to?(:value) ? header.value : header
         end
 
         def decode_event_payload(payload)

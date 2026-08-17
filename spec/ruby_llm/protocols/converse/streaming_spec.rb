@@ -278,10 +278,16 @@ RSpec.describe RubyLLM::Protocols::Converse::Streaming do
   end
 
   describe '#decode_events' do
-    it 'logs the event keys when stream debugging is on' do
+    def frame_decoder(payload, headers: {})
+      frame = Struct.new(:headers, :payload).new(headers, StringIO.new(payload))
+      frames = [[frame, true]]
       decoder = Object.new
-      frames = [[Struct.new(:payload).new(StringIO.new({ 'messageStop' => {} }.to_json)), true]]
       decoder.define_singleton_method(:decode_chunk) { |_chunk = nil| frames.shift }
+      decoder
+    end
+
+    it 'logs the event keys when stream debugging is on' do
+      decoder = frame_decoder({ 'messageStop' => {} }.to_json)
       allow(RubyLLM.config).to receive(:log_stream_debug).and_return(true)
       allow(RubyLLM.logger).to receive(:debug)
 
@@ -289,6 +295,46 @@ RSpec.describe RubyLLM::Protocols::Converse::Streaming do
 
       expect(events).to eq([{ 'messageStop' => {} }])
       expect(RubyLLM.logger).to have_received(:debug)
+    end
+
+    # ConverseStream reports modeled errors after the 200, with the type in the
+    # frame headers and a bare message as the payload.
+    it 'rewraps an exception frame under its exception type' do
+      decoder = frame_decoder(
+        { 'message' => 'Too many requests' }.to_json,
+        headers: { ':message-type' => 'exception', ':exception-type' => 'throttlingException' }
+      )
+
+      events = streaming.send(:decode_events, decoder, 'frame')
+
+      expect(events).to eq([{ 'throttlingException' => { 'message' => 'Too many requests' } }])
+    end
+
+    it 'reads header values that wrap their string' do
+      header = Struct.new(:value)
+      decoder = frame_decoder(
+        { 'message' => 'Bad input' }.to_json,
+        headers: {
+          ':message-type' => header.new('exception'),
+          ':exception-type' => header.new('validationException')
+        }
+      )
+
+      events = streaming.send(:decode_events, decoder, 'frame')
+
+      expect(events).to eq([{ 'validationException' => { 'message' => 'Bad input' } }])
+    end
+
+    it 'keeps an unparseable exception payload as its message' do
+      allow(RubyLLM.logger).to receive(:debug)
+      decoder = frame_decoder(
+        'not json',
+        headers: { ':message-type' => 'exception', ':exception-type' => 'throttlingException' }
+      )
+
+      events = streaming.send(:decode_events, decoder, 'frame')
+
+      expect(events).to eq([{ 'throttlingException' => { 'message' => 'not json' } }])
     end
   end
 
