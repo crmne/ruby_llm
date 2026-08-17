@@ -8,11 +8,7 @@ module RubyLLM
     class MiniMax < Provider
       DEFAULT_API_BASE = 'https://api.minimax.io/v1'
 
-      class VideoGeneration < Protocol
-        include MiniMax::Videos
-      end
-
-      protocol :video_generation, VideoGeneration
+      protocol :minimax, Protocols::MiniMax
 
       def api_base
         @config.minimax_api_base || DEFAULT_API_BASE

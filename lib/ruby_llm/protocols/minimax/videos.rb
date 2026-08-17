@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module RubyLLM
-  module Providers
+  module Protocols
     class MiniMax
       # MiniMax asynchronous video generation. The v2 endpoint takes a
       # multimodal content array and reports a hosted URL on the finished

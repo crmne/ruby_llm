@@ -2,13 +2,13 @@
 
 require 'spec_helper'
 
-RSpec.describe RubyLLM::Providers::MiniMax::Videos do # rubocop:disable RSpec/SpecFilePathFormat
+RSpec.describe RubyLLM::Protocols::MiniMax::Videos do
   let(:config) do
     RubyLLM::Configuration.new.tap { |c| c.minimax_api_key = 'test' }
   end
   let(:provider) { RubyLLM::Providers::MiniMax.new(config) }
-  let(:v2_protocol) { RubyLLM::Providers::MiniMax::VideoGeneration.new(provider, 'MiniMax-H3') }
-  let(:v1_protocol) { RubyLLM::Providers::MiniMax::VideoGeneration.new(provider, 'MiniMax-Hailuo-2.3') }
+  let(:v2_protocol) { RubyLLM::Protocols::MiniMax.new(provider, 'MiniMax-H3') }
+  let(:v1_protocol) { RubyLLM::Protocols::MiniMax.new(provider, 'MiniMax-Hailuo-2.3') }
 
   describe '#video_url' do
     it 'submits the v2 catalog to the v2 endpoint' do
@@ -21,7 +21,7 @@ RSpec.describe RubyLLM::Providers::MiniMax::Videos do # rubocop:disable RSpec/Sp
 
     it 'routes the whole catalog to one of the two endpoints' do
       urls = described_class::MODELS.map do |model|
-        RubyLLM::Providers::MiniMax::VideoGeneration.new(provider, model).video_url
+        RubyLLM::Protocols::MiniMax.new(provider, model).video_url
       end
 
       expect(urls.uniq).to contain_exactly(
