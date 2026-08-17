@@ -81,8 +81,8 @@ class CreateRubyLlmRecords < ActiveRecord::Migration<%= migration_version %>
       t.index [ :chat_type, :chat_id ]
       t.index [ :message_type, :message_id ]
       t.index :status
-      t.check_constraint "operation IN ('chat', 'embedding', 'moderation', 'image', 'speech', 'transcription')"
-      t.check_constraint "status IN ('pending', 'succeeded', 'failed', 'cancelled')"
+      t.check_constraint "operation IN (<%= usage_operations_sql %>)"
+      t.check_constraint "status IN (<%= usage_statuses_sql %>)"
     end
 
     create_table :ruby_llm_batches do |t|

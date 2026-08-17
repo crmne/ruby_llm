@@ -81,6 +81,16 @@ RSpec.describe RubyLLM::Generators::InstallGenerator, :generator, type: :generat
       end
     end
 
+    it 'constrains the usage ledger to the operations and statuses RubyLLM records' do
+      within_test_app(app_path) do
+        content = File.read(Dir.glob('db/migrate/*create_ruby_llm_records.rb').first)
+
+        expect(content).to include('create_table :ruby_llm_usages')
+        RubyLLM::Usage::Entry::OPERATIONS.each { |operation| expect(content).to include("'#{operation}'") }
+        RubyLLM::Usage::Entry::STATUSES.each { |status| expect(content).to include("'#{status}'") }
+      end
+    end
+
     it 'adds finish_reason to message storage' do
       within_test_app(app_path) do
         migration = Dir.glob('db/migrate/*create_messages.rb').first

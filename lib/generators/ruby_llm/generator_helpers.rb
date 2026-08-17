@@ -51,6 +51,9 @@ module RubyLLM
       # resource, and they are reached through the :model association.
       def model_resource_name = table_name_for(model_model_name)
       def model_variable_name = variable_name_for(model_model_name)
+
+      def usage_operations_sql = sql_string_list(::RubyLLM::Usage::Entry::OPERATIONS)
+      def usage_statuses_sql = sql_string_list(::RubyLLM::Usage::Entry::STATUSES)
       def tool_call_variable_name = 'tool_call'
 
       def chat_controller_class_name
@@ -208,6 +211,10 @@ module RubyLLM
         return "#{association_name}_id" unless collection_association
 
         "#{owner_model_name.demodulize.underscore}_id"
+      end
+
+      def sql_string_list(values)
+        values.map { |value| "'#{value}'" }.join(', ')
       end
 
       # Convert namespaced model names to proper table names
