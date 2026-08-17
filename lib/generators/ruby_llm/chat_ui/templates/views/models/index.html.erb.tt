@@ -10,10 +10,10 @@
 </p>
 
 <p>
-  <%%= button_to "Refresh <%= model_model_name.pluralize %>", refresh_<%= model_table_name %>_path, method: :post %>
+  <%%= button_to "Refresh <%= model_model_name.pluralize %>", refresh_<%= model_resource_name %>_path, method: :post %>
 </p>
 
-<div id="<%= model_table_name %>">
+<div id="<%= model_resource_name %>">
   <%% if @<%= model_variable_name.pluralize %>.any? %>
     <table>
       <thead>

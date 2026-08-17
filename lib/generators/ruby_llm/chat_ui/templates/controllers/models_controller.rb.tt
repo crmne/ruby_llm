@@ -1,6 +1,6 @@
 class <%= model_controller_class_name %> < ApplicationController
   def index
-    @<%= model_table_name %> = available_chat_models
+    @<%= model_resource_name %> = available_chat_models
   end
 
   def show
@@ -9,6 +9,6 @@ class <%= model_controller_class_name %> < ApplicationController
 
   def refresh
     RubyLLM.models.refresh!
-    redirect_to <%= model_table_name %>_path, notice: "<%= model_model_name.pluralize %> refreshed successfully"
+    redirect_to <%= model_resource_name %>_path, notice: "<%= model_model_name.pluralize %> refreshed successfully"
   end
 end

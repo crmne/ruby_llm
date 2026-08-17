@@ -75,6 +75,13 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
     tool_results_default = File.read(File.join(base_path, 'messages/tool_results/_default.html.erb'))
     expect(tool_results_default).to include('tool.tool_error_message')
     expect(tool_results_default).to include('message_tool_result_<%= tool.id %>')
+    # RubyLLM owns the models table, so the association is always :model no
+    # matter what the app calls its chat class or the models UI resource.
+    chat_show = File.read(File.join(base_path, 'chats/show.html.erb'))
+    expect(chat_show).to include('.model&.label || default_model_display_name')
+    chat_partial = File.read(File.join(base_path, 'chats/_chat.html.erb'))
+    expect(chat_partial).to include('.model&.label || default_model_display_name')
+
     chat_form = File.read(File.join(base_path, 'chats/_form.html.erb'))
     expect(chat_form).to include('@chat_models.map')
     expect(chat_form).to include('[model.label, [model.provider, model.id].join(":")]')

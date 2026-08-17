@@ -46,7 +46,10 @@ module RubyLLM
         "#{chat_model_name.deconstantize}::Model"
       end
 
-      def model_table_name = table_name_for(model_model_name)
+      # Routes, view paths and DOM ids for the models UI. Deliberately not a
+      # table name: models live in ruby_llm_models whatever the app calls this
+      # resource, and they are reached through the :model association.
+      def model_resource_name = table_name_for(model_model_name)
       def model_variable_name = variable_name_for(model_model_name)
       def tool_call_variable_name = 'tool_call'
 

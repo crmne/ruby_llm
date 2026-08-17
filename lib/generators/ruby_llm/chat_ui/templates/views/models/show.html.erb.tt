@@ -13,5 +13,5 @@
 
 <p>
   <%%= link_to "Start chat with this model", new_<%= chat_variable_name %>_path(model: [@<%= model_variable_name %>.provider, @<%= model_variable_name %>.id].join(":")) %> |
-  <%%= link_to "All models", <%= model_table_name %>_path %>
+  <%%= link_to "All models", <%= model_resource_name %>_path %>
 </p>

@@ -8,7 +8,7 @@
   <div class="flex justify-between items-center">
     <h1 class="font-bold text-4xl"><%= chat_model_name.pluralize %></h1>
     <div class="flex items-center gap-2">
-      <%%= link_to "<%= model_model_name.pluralize %>", <%= model_table_name %>_path, class: "rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 text-gray-900 block font-medium" %>
+      <%%= link_to "<%= model_model_name.pluralize %>", <%= model_resource_name %>_path, class: "rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 text-gray-900 block font-medium" %>
       <%%= link_to "New <%= chat_table_name.singularize.humanize.downcase %>", new_<%= chat_variable_name %>_path, class: "rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white block font-medium" %>
     </div>
   </div>

@@ -141,7 +141,7 @@ module RubyLLM
           route routes_content
         else
           model_routes = <<~ROUTES.strip
-            resources :#{model_table_name}, only: [ :index, :show ] do
+            resources :#{model_resource_name}, only: [ :index, :show ] do
               collection do
                 post :refresh
               end
