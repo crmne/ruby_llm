@@ -101,4 +101,4 @@ Interruption never gives you exactly-once execution. A job that dies after the m
 * [Agentic Workflows]({% link _advanced/agentic-workflows.md %}) - The loop verbs these jobs drive, and multi-agent patterns.
 * [Controlling Tool Execution]({% link _core_features/tool-execution.md %}) - Approval, tool choice, and concurrency.
 * [Persistence with acts_as]({% link _advanced/rails-persistence.md %}) - The transcript persistence durability builds on.
-* [Batches]({% link _advanced/batches.md %}) - Deferred generation for many chats at half price.
+* [Batches]({% link _advanced/batches.md %}) - Deferred provider-side generation for many chats, with provider-specific pricing.

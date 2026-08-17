@@ -80,7 +80,7 @@ response.cost.total           # equals the reported cost when one is present
 
 ## Counting Tokens Before You Send
 
-Everything above reports what a request cost after it ran. `chat.count_tokens` answers the same question before it does, which is what you need to enforce a context budget, or to bill a user for input they have not submitted yet:
+Everything above reports usage after a request ran. `chat.count_tokens` asks the provider how many input tokens the next request would carry before sending it, which is what you need to enforce a context budget or meter user input before submission:
 
 ```ruby
 chat = RubyLLM.chat(model: "claude-sonnet-5")

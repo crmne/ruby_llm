@@ -161,9 +161,9 @@ response = chat.with_schema(ProductSchema).ask "Analyze this product", with: "pr
 * **Model registry:** 1400+ models with capability detection and pricing
 * **Extended thinking:** Control, view, and persist model deliberation
 * **Citations:** Normalized source citations from documents, search, and grounding
-* **Batches:** Provider-side batch processing at half price with `RubyLLM.batch`
+* **Batches:** Provider-side batch processing with provider-specific discounts via `RubyLLM.batch`
 * **Compaction:** Let providers condense long conversations with `with_compaction`
-* **Token counting:** Price a request before you send it with `count_tokens`
+* **Token counting:** Count a request before you send it with `count_tokens`
 * **Providers:** OpenAI, Azure, xAI, Anthropic, Gemini, VertexAI, Bedrock, Cohere, DeepSeek, Mistral, Ollama, Ollama Cloud, OpenRouter, Perplexity, GPUStack, ElevenLabs, Deepgram, and any OpenAI-compatible API
 
 ## Installation

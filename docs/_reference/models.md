@@ -148,7 +148,7 @@ claude3_sonnet_family = RubyLLM.models.by_family('claude3_sonnet')
 
 # Chain filters and use Enumerable methods
 openai_vision_models = RubyLLM.models.by_provider(:openai)
-                                   .select(&:supports_vision?)
+                                   .select { |model| model.supports?(:vision) }
 
 puts "Found #{openai_vision_models.count} OpenAI vision models."
 ```

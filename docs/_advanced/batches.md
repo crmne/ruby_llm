@@ -2,7 +2,7 @@
 layout: default
 title: Batches
 nav_order: 4
-description: Answer thousands of chats at half price with provider-side batch processing
+description: Process thousands of chats asynchronously through provider-side batch APIs
 ---
 
 # {{ page.title }}
@@ -21,7 +21,7 @@ After reading this guide, you will know:
 
 ## What are Batches?
 
-Providers process batched requests asynchronously on their own hardware schedule (usually within an hour; processing ends within 24, and anything still unfinished comes back expired) and charge half price for the privilege. Batches are the right tool whenever nobody is waiting on the answer: nightly classification runs, bulk summarization, evaluations, backfills.
+Providers process batched requests asynchronously on their own schedule, usually at a discount from their interactive APIs. Several supported providers price batch inference at 50% of standard rates and target a 24-hour turnaround, but pricing, deadlines, and expiration behavior are provider-specific and can change. Batches are the right tool whenever nobody is waiting on the answer: nightly classification runs, bulk summarization, evaluations, and backfills.
 
 A batch in RubyLLM is an array of chats, each ending on an unanswered question. Everything in the request (model, instructions, history, schemas, temperature, attachments) rides along, so there is nothing new to learn about building requests. The one exception is `with_headers`: batch APIs have no per-request HTTP headers, so custom headers set on a chat don't apply to batched requests. Embeddings batch too; see [Batching Embeddings](#batching-embeddings).
 
@@ -103,14 +103,14 @@ chats.first.messages.map(&:role) # => [:system, :user, :assistant]
 chats.first.ask "Shorter, please."
 ```
 
-Requests can fail individually (or expire at the 24-hour deadline) without failing the batch. Failed slots are `nil` in `messages` (details go to the log), and their chats stay awaiting a response; resubmit them in a fresh batch or finish them synchronously with `complete`.
+Requests can fail or expire individually without failing the whole batch. Failed slots are `nil` in `messages` (details go to the log), and their chats stay awaiting a response; resubmit them in a fresh batch or finish them synchronously with `complete`.
 
 Batch results arrive as JSONL rather than individual HTTP responses, so `message.raw` on a batch message is the provider result body hash, not a Faraday response with `status` or `headers`.
 
 You can stop a running batch with `batch.cancel`; already-processed requests still return results.
 
 {: .note }
-Token usage on batch results is billed at half the standard rates. `message.cost` doesn't know about batch pricing yet and reports standard rates.
+Providers apply their own batch rates. `message.cost` does not account for a batch discount yet and reports the registry's standard interactive rate, so use your provider's invoice or batch pricing when reconciling spend.
 
 ## Tools in Batches
 

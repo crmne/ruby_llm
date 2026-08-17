@@ -62,7 +62,7 @@ response.citations.first.end_page   # => 5
 ```
 
 {: .note }
-Document citations are currently supported by Anthropic and Cohere. RubyLLM checks the [model registry]({% link _reference/models.md %}) and logs a warning when you request citations from a model that can't return them. Citations from search and grounding are always parsed regardless (see below).
+Document citations are currently supported by Anthropic, Cohere, and Claude models through Bedrock Converse. RubyLLM checks the [model registry]({% link _reference/models.md %}) and logs a warning when you request citations from a model that can't return them. Citations from search and grounding are always parsed regardless (see below).
 
 ## Citing Tool Results (RAG)
 

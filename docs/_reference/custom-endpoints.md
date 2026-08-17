@@ -90,7 +90,7 @@ image = RubyLLM.paint(
 
 *   **`provider:` is Mandatory:** You must tell RubyLLM which API format to use (`ArgumentError` otherwise).
 *   **No Validation:** RubyLLM won't check the registry for the model ID.
-*   **Capability Assumptions:** Capability checks (like `supports_functions?`) are bypassed by assuming `true`. You are responsible for ensuring the model supports the features you use.
+*   **Capability Assumptions:** Capability checks (such as `model.supports?(:function_calling)`) return `true`. You are responsible for ensuring the model supports the features you use.
 *   **Your Responsibility:** Ensure the model ID is correct for the target endpoint.
 *   **Warning Log:** A warning is logged indicating validation was skipped.
 

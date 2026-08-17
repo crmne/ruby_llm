@@ -103,7 +103,7 @@ When using the [Rails Integration]({% link _advanced/rails.md %}), system messag
 
 ## Working with Different Models
 
-RubyLLM supports over 600 models from various providers. While `RubyLLM.chat` uses your configured default model, you can specify different models:
+RubyLLM's published registry covers more than 1,400 models, and local models are discovered when you refresh it. While `RubyLLM.chat` uses your configured default model, you can specify a different model:
 
 ```ruby
 chat_claude = RubyLLM.chat(model: '{{ site.models.anthropic_current }}')

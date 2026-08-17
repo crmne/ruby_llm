@@ -36,6 +36,7 @@ RubyLLM::Error                    # Base error class for provider-operation issu
     RubyLLM::ContextLengthExceededError # Context/token limits exceeded (provider-specific)
     RubyLLM::ToolCallParseError   # Provider returned malformed tool-call arguments
     RubyLLM::UnsupportedAttachmentError # Attachment cannot be sent to this provider/model
+    RubyLLM::UnsupportedServerToolError # Provider/protocol does not define this server tool
     RubyLLM::RateLimitError       # 429: Rate limit exceeded
     RubyLLM::ServerError          # 500: Provider server error
     RubyLLM::ServiceUnavailableError # 502/503/504: Service unavailable
@@ -47,6 +48,9 @@ RubyLLM::PromptNotFoundError  # Prompt file not found
 RubyLLM::ModelNotFoundError   # Requested model ID not found in registry
 RubyLLM::InvalidRoleError     # Invalid role symbol used for a message
 RubyLLM::InvalidToolChoiceError # Invalid tool choice option
+RubyLLM::PendingToolCallsError # A new question was staged before pending tools finished
+RubyLLM::ModelRegistryError   # Model registry could not be fetched, parsed, or persisted
+RubyLLM::CancelledError       # An in-flight chat operation was cancelled
 ```
 
 ## Basic Error Handling
@@ -142,7 +146,7 @@ rescue RubyLLM::Error => e
 end
 ```
 
-Your block will execute for chunks received *before* the error. The final return value of `ask` when an error occurs during streaming might be unpredictable (often `nil`), so rely on the rescued exception for error handling.
+Your block will execute for chunks received *before* the error. Because `ask` raises, it does not return a final response in this case; handle the exception and any partial content you accumulated.
 
 ## Model Fallbacks
 

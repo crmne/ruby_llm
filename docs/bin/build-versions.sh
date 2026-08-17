@@ -41,10 +41,11 @@ set_current "$next_src/_data/versions.yml" next
 ( cd "$next_src" && BUNDLE_GEMFILE="$gemfile" bundle exec jekyll build --baseurl "$BASE/next" -d "$next_out" --quiet )
 
 echo "==> Building API docs (RDoc) -> /next/api/"
-"$docs/bin/build-api.sh" "$next_out/api"
+SITE_BASE_URL="https://rubyllm.com${BASE}/next" "$docs/bin/build-api.sh" "$next_out/api"
 
 echo "==> Building 1.x docs (frozen @ $ONE_X_REF) -> /"
 git -C "$repo_root" archive "$ONE_X_REF" docs/ | tar -x -C "$onex_src"
+"$docs/bin/prepare_one_x_docs.rb" "$onex_src/docs"
 cp "$docs/_includes/version_select.html" "$onex_src/docs/_includes/"
 mkdir -p "$onex_src/docs/_data"
 cp "$versions" "$onex_src/docs/_data/versions.yml"

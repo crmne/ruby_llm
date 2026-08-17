@@ -9,14 +9,6 @@
 <meta name="apple-mobile-web-app-title" content="{{ site.title | default: 'RubyLLM' }}">
 <link rel="manifest" href="{{ '/assets/images/favicon/site.webmanifest' | relative_url }}">
 
-{%- comment -%}
-  The theme writes the description, canonical, Open Graph, and Twitter tags
-  itself, so jekyll-seo-tag would only duplicate them. Its structured data has
-  no equivalent, and that is what ai_json_ld emits from the ai_visible_content
-  entity.
-{%- endcomment -%}
-{% ai_json_ld %}
-
 <!-- Privacy-friendly analytics by Plausible -->
 <script async src="https://stats.paolino.me/js/pa-tE3lTn5_7BdIgwydtq7WJ.js"></script>
 <script>

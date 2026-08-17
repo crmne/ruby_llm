@@ -2,7 +2,7 @@
 layout: default
 title: Instrumentation and Observability
 nav_order: 6
-description: Observe RubyLLM requests, chats, tool calls, embeddings, and model refreshes
+description: Observe RubyLLM model operations, provider attempts, tool calls, workflows, batches, and model refreshes
 redirect_from:
   - /guides/instrumentation
 ---
@@ -157,6 +157,7 @@ RubyLLM emits these events:
 *   `workflow_step.ruby_llm` - one named code region within a workflow
 *   `request.ruby_llm` - HTTP request metadata such as provider, method, URL, and status
 *   `usage.ruby_llm` - one finished provider attempt, including retries and cancellations, with status, tokens, and cost
+*   `batch.ruby_llm` - one batch submission operation
 *   `chat.ruby_llm` - chat completion metadata including model, provider, messages, response, and token usage
 *   `tool_call.ruby_llm` - tool name, arguments, and result
 *   `embedding.ruby_llm` - embedding model, input, result, token usage, and vector dimensions
@@ -164,11 +165,13 @@ RubyLLM emits these events:
 *   `video.ruby_llm` - one blocking video generation, including the wait for the job and the resulting video
 *   `video_job.ruby_llm` - one video job submission with model, prompt, and the provider's job id
 *   `moderation.ruby_llm` - moderation model, input, result, and flagged status
+*   `ocr.ruby_llm` - OCR model, options, and extracted document result
+*   `rerank.ruby_llm` - reranking model, query, document count, result, token usage, and cost
 *   `speech.ruby_llm` - speech generation model, input, voice, format, and audio byte size
 *   `transcription.ruby_llm` - transcription model, language, result, and token usage
 *   `models.refresh.ruby_llm` - model registry refresh metadata
 
-Every model operation event (`chat`, `embedding`, `image`, `moderation`, `speech`, and `transcription`) includes `payload[:tokens]` and `payload[:cost]`. Both value objects are always present; their individual fields may be `nil` when the provider did not report usage or RubyLLM could not price it.
+Operations that expose normalized usage (`chat`, `embedding`, `image`, `moderation`, `rerank`, `speech`, and `transcription`) include `payload[:tokens]` and `payload[:cost]`. Both value objects are always present; their individual fields may be `nil` when the provider did not report usage or RubyLLM could not price it. Batch, OCR, and video events expose their operation-specific result and lifecycle fields instead.
 
 ### Usage Events
 

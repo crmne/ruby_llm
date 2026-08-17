@@ -42,7 +42,7 @@ Coming from 1.15 or earlier? Get to **1.16 first**, one minor version at a time,
 #### Accounting
 
 * **Cost and usage tracking.** Every provider attempt lands in a usage ledger with frozen decimal costs, so retries, failures, and cancellations are accounted for truthfully. See [Cost and Usage Tracking]({% link _core_features/cost-and-usage-tracking.md %}).
-* **Batch processing at half price.** Stage questions with `ask_later`, submit the chats with `RubyLLM.batch`, and collect the answers from any process. RubyLLM persists batch state internally in Rails. See [Batches]({% link _advanced/batches.md %}).
+* **Provider-side batch processing.** Stage questions with `ask_later`, submit the chats with `RubyLLM.batch`, and collect the answers from any process. RubyLLM persists batch state internally in Rails, while each provider sets its own batch pricing. See [Batches]({% link _advanced/batches.md %}).
 * **Prompt caching.** `with_caching` turns on the provider's automatic prompt cache; `cache_until_here!` marks an explicit prefix boundary. See [Prompt Caching]({% link _core_features/prompt-caching.md %}).
 * **Token counting before you send.** `chat.count_tokens("...")` runs the provider's tokenizer over the request the chat would send, instructions and tools included, so you can enforce a context budget up front. See [Counting Tokens Before You Send]({% link _core_features/cost-and-usage-tracking.md %}#counting-tokens-before-you-send).
 
@@ -51,7 +51,7 @@ Coming from 1.15 or earlier? Get to **1.16 first**, one minor version at a time,
 * **Provider-managed files.** `RubyLLM.upload("manual.pdf")` uploads once so you can reuse the file across chats; large local attachments are promoted to provider files automatically (disable with `config.auto_upload_large_files = false`). See [Files]({% link _core_features/files.md %}).
 * **Citations.** `chat.with_citations` makes attached documents and web sources citable, and every provider's native format is normalized into `RubyLLM::Citation` objects on `response.citations`. See [Citations]({% link _core_features/citations.md %}).
 * **Text to speech.** `RubyLLM.speak("Hello!").save("hello.mp3")`. See [Text to Speech]({% link _core_features/text-to-speech.md %}).
-* **Tools can return attachments.** Return an image or file from a tool and RubyLLM renders it to the model on every provider. See [Tools]({% link _core_features/tools.md %}).
+* **Tools can return attachments.** Return an image or file from a tool and RubyLLM renders it through each provider's supported file path, raising `UnsupportedAttachmentError` when the selected model cannot accept it. See [Tools]({% link _core_features/tools.md %}).
 * **Transcript replacement.** `chat.messages = messages_for_model` shows the LLM a different transcript from your users: compaction, redaction, moderation. See [Replacing the LLM Transcript]({% link _core_features/chat.md %}#advanced-replacing-the-llm-transcript).
 * **Provider-side compaction.** `chat.with_compaction(at: 100_000)` hands the summarizing to providers that condense a long conversation themselves, instead of you assembling a summary prompt. See [Compacting Long Conversations]({% link _core_features/chat-request-control.md %}#compacting-long-conversations).
 * **Request hooks.** `chat.before_request { |payload| ... }` edits the wire payload just before it is sent - the 2.0 answer to raw content blocks. See [Request Hooks]({% link _core_features/chat-request-control.md %}#request-hooks).
@@ -59,8 +59,8 @@ Coming from 1.15 or earlier? Get to **1.16 first**, one minor version at a time,
 
 #### Developer Experience
 
-* **Prompt templates.** ERB prompts live in `app/prompts` and render through `RubyLLM::Prompt`; agents pick theirs up by convention. See [Prompt Rendering]({% link _core_features/prompt-rendering.md %}).
-* **Instrumentation everywhere.** `paint`, `moderate`, and `transcribe` now emit `ActiveSupport::Notifications` events like chat and embed, and every one-shot API takes `metadata:` that flows into the event payload.
+* **Prompt templates.** ERB prompts live in `app/prompts`, render with `RubyLLM.render_prompt`, and are picked up by agents through convention. See [Prompt Rendering]({% link _core_features/prompt-rendering.md %}).
+* **Instrumentation across model operations.** `paint`, `moderate`, and `transcribe` now emit `ActiveSupport::Notifications` events like chat and embed, and one-shot model APIs take `metadata:` that flows into the event payload.
 * **Output caps.** `with_max_output_tokens` bounds how much the model may generate.
 * **End-user identification.** `chat.with_end_user("user-42")` passes an opaque per-user id to the provider's abuse tooling, mapped to whatever each one calls it. See [Identifying End Users]({% link _core_features/chat-request-control.md %}#identifying-end-users).
 
@@ -98,7 +98,7 @@ bin/rails generate ruby_llm:upgrade
 bin/rails db:migrate
 ```
 
-The generated migration adds a boolean `cancelled` column to chats and citations, finish reasons, and prompt-cache boundaries to messages; moves the existing model, tool-call, and batch tables under RubyLLM's `ruby_llm_` prefix; converts model foreign keys into provider and model-id strings; renumbers duplicated `tool_call_id`s before adding the unique index; creates the usage ledger and backfills it from your messages' token and cost columns, one succeeded entry per message that recorded usage; and then removes those columns from your messages table. It stops with an explicit error if an old and a new version of the same supporting table both exist; reconcile those tables before retrying rather than allowing an ambiguous merge.
+The generated migration adds a boolean `cancelled` column to chats and citations, finish reasons, and prompt-cache boundaries to messages; moves the existing model, tool-call, and batch tables under RubyLLM's `ruby_llm_` prefix; keeps the chat's model reference under the `ruby_llm_model_id` name while converting message-level model references into provider and model-id strings; renumbers duplicated `tool_call_id`s before adding the unique index; creates the usage ledger and backfills it from your messages' token and cost columns, one succeeded entry per message that recorded usage; and then removes those columns from your messages table. It stops with an explicit error if an old and a new version of the same supporting table both exist; reconcile those tables before retrying rather than allowing an ambiguous merge.
 
 ### 3. Delete what RubyLLM now owns
 

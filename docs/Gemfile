@@ -9,14 +9,14 @@ gem 'webrick'
 gem 'jekyll-vitepress-theme'
 gem 'just-the-docs'
 
+# The frozen 1.x docs still use jekyll-seo-tag in their archived layout. Keep
+# it installed outside :jekyll_plugins so the current theme-native docs do not
+# auto-load it.
+gem 'jekyll-seo-tag'
+
 # GitHub Pages plugins
 group :jekyll_plugins do
   gem 'jekyll-remote-theme'
-  gem 'jekyll-seo-tag'
-  gem 'jekyll-sitemap'
   gem 'jekyll-og-image'
   gem 'jekyll-redirect-from'
-  gem 'jekyll-ai-visible-content',
-      git: 'https://github.com/crmne/jekyll-ai-visible-content.git',
-      branch: 'include-custom-collections-in-llms'
 end
