@@ -17,6 +17,21 @@ RSpec.describe RubyLLM::Utils do
     end
   end
 
+  describe '.underscore' do
+    it 'separates words and keeps acronyms together' do
+      expect(described_class.underscore('MyTool')).to eq('my_tool')
+      expect(described_class.underscore('HTTPProxyTool')).to eq('http_proxy_tool')
+      expect(described_class.underscore('XMLHttpRequest')).to eq('xml_http_request')
+      expect(described_class.underscore('Tool2Name')).to eq('tool2_name')
+    end
+
+    it 'stays fast on a long run of capitals' do
+      name = 'A' * 100_000
+
+      expect { Timeout.timeout(5) { described_class.underscore(name) } }.not_to raise_error
+    end
+  end
+
   describe '.to_safe_array' do
     it 'returns the same array instance when the input is already an array' do
       items = [1, 2, 3]
