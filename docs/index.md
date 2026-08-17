@@ -2,7 +2,7 @@
 layout: home
 title: RubyLLM
 nav_order: 1
-description: 'RubyLLM: a delightful Ruby AI framework for every major provider. Switch models without rewriting your code. Agents, Tools, RAG, Agentic Workflows, at home in Rails.'
+description: 'RubyLLM is the Ruby-native AI framework. One beautiful, consistent API across every provider, from a one-line chat call to tools, agents, RAG, and Rails apps.'
 permalink: /
 redirect_from:
   - /guides/
@@ -14,44 +14,34 @@ hero:
     width: 320
     height: 110
   text: 'Build AI features <span class="home-hero-highlight">the Ruby way</span>'
-  tagline: 'A <em>delightful</em> Ruby AI framework that feels at home in Rails. Switch models without rewriting your code, then scale to production with everything from Chats and Tools to Agents, RAG, and Workflows.'
+  tagline: 'RubyLLM is the <em class="home-hero-tagline-highlight">Ruby-native AI framework</em>. One beautiful, consistent API across every provider, from your first line to production.'
   actions:
     - theme: brand
       class: home-button--guides
-      text: Read the guides
+      text: Get started
       link: /getting-started/
 ---
 
 <section id="demo" class="home-section home-demo-section">
   <div class="home-section-inner">
-    <div class="home-demo-frame" data-demo-video>
-      <img class="home-demo-poster" src="{{ '/assets/images/home/demo-poster-figma.png' | relative_url }}" alt="" aria-hidden="true">
-      <pre class="home-demo-terminal" aria-hidden="true"><code>Compile initial Tailwind build
-        run rails tailwindcss:build from "."
-=> tailwindcss v4.2.0
+    <div class="home-hero-install home-code-grid home-code-grid--bare" markdown="1">
 
-Done in 30ms
-        <span class="term-green">run</span> bundle install --quiet
-        <span class="term-green">run</span> bundle binstubs kamal
-        <span class="term-green">run</span> bundle exec kamal init
-Created configuration file in config/deploy.yml
-Created .kamal/secrets file
-Created sample hooks in .kamal/hooks
-        <span class="term-red">force</span> .kamal/secrets
-        <span class="term-red">force</span> config/deploy.yml
-        <span class="term-green">rails</span> solid_cache:install solid_queue:install solid_cable:install
-        <span class="term-green">create</span> config/cache.yml
-        <span class="term-green">create</span> db/cache_schema.rb
-        <span class="term-green">gsub</span> config/environments/production.rb
-        <span class="term-green">create</span> config/queue.yml
-        <span class="term-green">create</span> config/recurring.yml
-        <span class="term-green">create</span> db/queue_schema.rb
-        <span class="term-green">create</span> bin/jobs
-        <span class="term-green">create</span> config/environments/production.rb
-        <span class="term-green">create</span> db/cable_schema.rb
-        <span class="term-red">force</span> config/cable.yml
+```sh
+bundle add ruby_llm
+```
+{: .home-code-card }
+
+</div>
+
+    <div class="home-demo-frame" data-demo-video>
+      <pre class="home-demo-terminal" aria-hidden="true"><code><span class="term-green">$</span> irb -r ruby_llm
+<span class="term-green">&gt;&gt;</span> chat = RubyLLM.chat
+<span class="term-green">&gt;&gt;</span> chat.ask "What can you do?"
+=&gt; "Chat with every major model, stream replies, call your
+   Ruby code as tools, return structured output, read images
+   and PDFs, transcribe, speak, paint... Want the full tour?"
 ~ <span class="term-cursor"></span></code></pre>
-      <button class="home-play-button" type="button" aria-label="RubyLLM demo, coming soon">
+      <button class="home-play-button" type="button" aria-label="RubyLLM full tour, coming soon">
         <span aria-hidden="true"></span>
       </button>
       <p class="home-demo-soon" role="status">Coming soon</p>
@@ -62,9 +52,9 @@ Created sample hooks in .kamal/hooks
 
 <section class="home-section home-band home-models-section">
   <div class="home-section-inner">
-    <h2 class="home-heading">A single interface for all providers</h2>
+    <h2 class="home-heading">17 providers built in. Add your own.</h2>
     <p class="home-lead">
-      Integrate with 17 major providers and all OpenAI-compatible ones. Use local models through Ollama and GPUStack. Without changing your code.
+      Move between hosted and local models without rewriting your application. Connect an OpenAI-compatible endpoint directly, or scaffold a complete provider gem with specs and CI.
     </p>
 
     <div class="provider-icons" aria-label="Supported AI providers">
@@ -91,7 +81,7 @@ Created sample hooks in .kamal/hooks
 {% capture model_switcher_code %}
 ```ruby
 chat = RubyLLM.chat(model: "claude-opus-4-7")
-chat.say "Hello!"
+chat.ask "Hello!"
 ```
 {: .home-code-card .home-model-switcher-code data-title="Anthropic" data-model-switcher-code="true" }
 {% endcapture %}
@@ -99,74 +89,89 @@ chat.say "Hello!"
     </div>
 
     <p class="home-small-note home-models-note">
-      All with a comprehensive, refreshable
-      <a href="{{ '/available-models/' | relative_url }}">model registry</a>,
-      so you can
-      <a href="{{ '/chat/' | relative_url }}#tracking-token-usage">track costs.</a>
+      Browse a refreshable registry of more than 1,400
+      <a href="{{ '/available-models/' | relative_url }}">models</a>,
+      <a href="{% link _core_features/cost-and-usage-tracking.md %}">track usage and costs</a>,
+      or
+      <a href="{% link _reference/custom-providers.md %}#generate-the-starting-point">generate a provider gem</a>
+      for the service you need next.
     </p>
   </div>
 </section>
 
 <section id="code-examples" class="home-section home-code-section">
   <div class="home-section-inner">
-    <h2 class="home-heading">Talk is cheap, show me the code</h2>
+    <h2 class="home-heading">Start with one line. Keep the same API as you grow.</h2>
+    <p class="home-lead">
+      Every capability is a small step from the previous one, and nothing gets rewritten in between.
+    </p>
   </div>
 
-  <div class="home-code-grid" markdown="1">
+  <div class="home-steps">
+    <div class="home-step">
+      <div class="home-step-text">
+        <h3 class="home-step-title">Just ask</h3>
+        <p class="home-step-desc">One method call, a plain answer back. No client objects, no configuration ceremony, no response envelope to unwrap.</p>
+        <a class="home-step-link" href="{% link _core_features/chat.md %}">Chat guide</a>
+      </div>
+      <div class="home-step-code home-code-grid home-code-grid--bare" markdown="1">
 
 ```ruby
 RubyLLM.chat.ask "What's the best way to learn Ruby?"
 ```
-{: .home-code-card data-title="Just ask questions" data-href="{% link _core_features/chat.md %}#starting-a-conversation" data-doc-title="Starting a Conversation" }
+{: .home-code-card }
+
+</div>
+    </div>
+
+    <div class="home-step">
+      <div class="home-step-text">
+        <h3 class="home-step-title">Attach anything</h3>
+        <p class="home-step-desc">Pass a file with <code>with:</code> and RubyLLM works out types, encoding, and provider formats. Images, audio, video, PDFs, even code.</p>
+        <a class="home-step-link" href="{% link _core_features/attachments.md %}">Attachments guide</a>
+      </div>
+      <div class="home-step-code home-code-grid home-code-grid--bare" markdown="1">
 
 ```ruby
 chat = RubyLLM.chat
 chat.ask "What's in this image?", with: "ruby_conf.jpg"
-chat.ask "What's happening in this video?", with: "video.mp4"
 chat.ask "Describe this meeting", with: "meeting.wav"
 chat.ask "Summarize this document", with: "contract.pdf"
-chat.ask "Explain this code", with: "app.rb"
 ```
-{: .home-code-card data-title="Analyze any file type" data-href="{% link _core_features/attachments.md %}#attaching-files" data-doc-title="Multi-modal Conversations" }
+{: .home-code-card }
+
+</div>
+    </div>
+
+    <div class="home-step">
+      <div class="home-step-text">
+        <h3 class="home-step-title">Stream responses</h3>
+        <p class="home-step-desc">Add a block and chunks arrive as the model generates them. The same block drives a terminal script or a Turbo Stream.</p>
+        <a class="home-step-link" href="{% link _core_features/streaming.md %}">Streaming guide</a>
+      </div>
+      <div class="home-step-code home-code-grid home-code-grid--bare" markdown="1">
 
 ```ruby
-chat = RubyLLM.chat
-chat.ask "Analyze these files", with: ["diagram.png", "report.pdf", "notes.txt"]
-```
-{: .home-code-card data-title="Multiple files at once" data-href="{% link _core_features/attachments.md %}#automatic-file-type-detection" data-doc-title="Automatic File Type Detection" }
-
-```ruby
-chat = RubyLLM.chat
 chat.ask "Tell me a story about Ruby" do |chunk|
   print chunk.content
 end
 ```
-{: .home-code-card data-title="Stream responses" data-href="{% link _core_features/streaming.md %}" data-doc-title="Stream responses" }
+{: .home-code-card }
+
+</div>
+    </div>
+
+    <div class="home-step">
+      <div class="home-step-text">
+        <h3 class="home-step-title">Give the model tools</h3>
+        <p class="home-step-desc">A tool is a plain Ruby class: describe it, implement <code>execute</code>, and the model calls your code when it needs to. The agentic loop is handled for you.</p>
+        <a class="home-step-link" href="{% link _core_features/tools.md %}">Tools guide</a>
+      </div>
+      <div class="home-step-code home-code-grid home-code-grid--bare" markdown="1">
 
 ```ruby
-RubyLLM.paint "a sunset over mountains in watercolor style"
-```
-{: .home-code-card data-title="Generate images" data-href="{% link _core_features/image-generation.md %}" data-doc-title="Image generation" }
-
-```ruby
-RubyLLM.embed "Ruby is elegant and expressive"
-```
-{: .home-code-card data-title="Create embeddings" data-href="{% link _core_features/embeddings.md %}" data-doc-title="Embeddings" }
-
-```ruby
-RubyLLM.transcribe "meeting.wav"
-```
-{: .home-code-card data-title="Transcribe audio to text" data-href="{% link _core_features/audio-transcription.md %}" data-doc-title="Audio transcription" }
-
-```ruby
-RubyLLM.moderate "Check if this text is safe"
-```
-{: .home-code-card data-title="Moderate content for safety" data-href="{% link _core_features/moderation.md %}" data-doc-title="Moderation" }
-
-```ruby
-chat = RubyLLM.chat
 class Weather < RubyLLM::Tool
-  desc "Get current weather"
+  description "Get current weather"
 
   def execute(latitude:, longitude:)
     url = "https://api.open-meteo.com/v1/forecast?latitude=#{latitude}&longitude=#{longitude}&current=temperature_2m,wind_speed_10m"
@@ -174,20 +179,20 @@ class Weather < RubyLLM::Tool
   end
 end
 
-chat.with_tool(Weather).ask "What's the weather in Berlin?"
+chat.with_tools(Weather).ask "What's the weather in Berlin?"
 ```
-{: .home-code-card data-title="Let AI use your code" data-href="{% link _core_features/tools.md %}" data-doc-title="Tools" }
+{: .home-code-card }
 
-```ruby
-class WeatherAssistant < RubyLLM::Agent
-  model "gpt-5-nano"
-  instructions "Be concise and always use tools for weather."
-  tools Weather
-end
+</div>
+    </div>
 
-WeatherAssistant.new.ask "What's the weather in Berlin?"
-```
-{: .home-code-card data-title="Define an agent with instructions + tools" data-href="{% link _advanced/agents.md %}#defining-an-agent" data-doc-title="Defining an Agent" }
+    <div class="home-step">
+      <div class="home-step-text">
+        <h3 class="home-step-title">Get structured output</h3>
+        <p class="home-step-desc">Declare the shape as a Ruby schema and responses come back as validated data, not prose you have to parse.</p>
+        <a class="home-step-link" href="{% link _core_features/structured-output.md %}">Structured output guide</a>
+      </div>
+      <div class="home-step-code home-code-grid home-code-grid--bare" markdown="1">
 
 ```ruby
 class ProductSchema < RubyLLM::Schema
@@ -198,68 +203,180 @@ class ProductSchema < RubyLLM::Schema
   end
 end
 
-chat = RubyLLM.chat
 response = chat.with_schema(ProductSchema).ask "Analyze this product", with: "product.txt"
 ```
-{: .home-code-card data-title="Get structured output" data-href="{% link _core_features/structured-output.md %}#getting-structured-output" data-doc-title="Getting Structured Output" }
+{: .home-code-card }
 
-  </div>
+</div>
+    </div>
 
-  <div class="home-code-cta">
-    <p>Plus
-      <a href="{% link _advanced/rag.md %}">RAG</a>,
-      <a href="{% link _advanced/agentic-workflows.md %}">agentic workflows</a>,
-      <a href="{% link _advanced/durable-agents.md %}">durable agents</a>,
-      <a href="{% link _advanced/memory.md %}">memory</a>,
-      <a href="{% link _core_features/server-tools.md %}">server tools</a>,
-      <a href="{% link _advanced/batches.md %}">batches</a>,
-      <a href="{% link _core_features/citations.md %}">citations</a>,
-      <a href="{% link _core_features/rerank.md %}">reranking</a>,
-      <a href="{% link _advanced/async.md %}">Fiber support</a>,
-      <a href="{% link _core_features/thinking.md %}">extended thinking</a>,
-      <a href="{% link _core_features/prompt-caching.md %}">prompt caching</a>,
-      <a href="{% link _getting_started/configuration-providers.md %}#openai-compatible-apis">custom endpoints</a>,
-      <a href="{% link _getting_started/configuration-connection.md %}#contexts-isolated-configurations">multi-tenant contexts</a>,
-      <a href="{% link _reference/ecosystem.md %}#rubyllmmcp">MCP</a>,
-      <a href="{% link _reference/ecosystem.md %}#rubyllminstrumentation">instrumentation</a>,
-      <a href="{% link _reference/ecosystem.md %}#rubyllmmonitoring">monitoring</a>,
-      <a href="{% link _advanced/error-handling.md %}">error handling</a>,
-      and much more.
-    </p>
-    <div class="home-code-cta-actions">
-      <a class="home-button home-button--solid home-button--guides" href="{% link _getting_started/getting-started.md %}">Read the guides</a>
+    <div class="home-step">
+      <div class="home-step-text">
+        <h3 class="home-step-title">Compose agents</h3>
+        <p class="home-step-desc">Bundle model, instructions, and tools into a class you can instantiate, test, and reuse anywhere in your app.</p>
+        <a class="home-step-link" href="{% link _advanced/agents.md %}">Agents guide</a>
+      </div>
+      <div class="home-step-code home-code-grid home-code-grid--bare" markdown="1">
+
+```ruby
+class WeatherAssistant < RubyLLM::Agent
+  model "gpt-5-nano"
+  instructions "Be concise and always use tools for weather."
+  tools Weather
+end
+
+WeatherAssistant.new.ask "What's the weather in Berlin?"
+```
+{: .home-code-card }
+
+</div>
     </div>
   </div>
 </section>
 
-<section id="rails-integration" class="home-section home-band home-rails-section">
+<section id="complete" class="home-section home-band home-complete-section">
   <div class="home-section-inner">
-    <h2 class="home-heading">Feels at home in Rails</h2>
+    <h2 class="home-heading">Everything you'd expect from a complete framework</h2>
     <p class="home-lead">
-      Persist chats with ActiveRecord, generate a Hotwire chat UI, all without learning a new interface.
+      The capabilities Rubyists asked for, built in and documented.
     </p>
   </div>
 
-  <div class="home-code-grid home-rails-code-grid" markdown="1">
+  <div class="home-code-grid home-code-grid--columns" markdown="1">
 
-```sh
-bundle add ruby_llm
-bin/rails generate ruby_llm:install
-bin/rails db:migrate
-bin/rails ruby_llm:load_models
-```
-{: .home-code-card data-title="Install the Rails integration" data-href="{% link _advanced/rails.md %}#setting-up-your-rails-application" data-doc-title="Setting Up Your Rails Application" }
+```ruby
+class IssueRefund < RubyLLM::Tool
+  description "Issues a refund for an order"
+  requires_approval
 
-```sh
-bin/rails generate ruby_llm:chat_ui # http://localhost:3000/chats
+  def execute(order_id:) = Refunds.issue!(order_id)
+end
 ```
-{: .home-code-card data-title="Add the optional chat UI" data-href="{% link _advanced/rails-generators.md %}#adding-a-chat-ui" data-doc-title="Generating a Chat UI" }
+{: .home-code-card data-title="Require human approval" data-href="{% link _core_features/tool-execution.md %}#requiring-approval" data-doc-title="Requiring Approval" }
+
+```ruby
+chats = documents.map do |doc|
+  RubyLLM.chat(model: "claude-haiku-4-5")
+    .with_instructions("Summarize in one paragraph.")
+    .ask_later(doc.text)
+end
+
+batch = RubyLLM.batch(chats)
+```
+{: .home-code-card data-title="Cut costs with batches" data-href="{% link _advanced/batches.md %}" data-doc-title="Batches" }
+
+```ruby
+chat = RubyLLM.chat.with_caching
+chat.with_instructions "You are a careful code reviewer."
+chat.ask "Review this diff", with: "large_diff.patch"
+```
+{: .home-code-card data-title="Cache repeated prompts" data-href="{% link _core_features/prompt-caching.md %}" data-doc-title="Prompt Caching" }
+
+```ruby
+response = RubyLLM.chat
+  .with_server_tools(:web_search)
+  .ask "What's the latest stable Ruby? Cite sources."
+
+response.citations
+```
+{: .home-code-card data-title="Search the web with citations" data-href="{% link _core_features/server-tools.md %}" data-doc-title="Server Tools" }
+
+```ruby
+documents = ["Ruby is expressive", "Python uses indentation"]
+embeddings = RubyLLM.embed(documents)
+ranked = RubyLLM.rerank("Ruby language", documents, model: "rerank-v3.5")
+```
+{: .home-code-card data-title="Build RAG and retrieval pipelines" data-href="{% link _advanced/rag.md %}" data-doc-title="RAG" }
+
+```ruby
+response = chat.ask "Explain embeddings"
+response.tokens.output
+response.cost.total
+```
+{: .home-code-card data-title="Track usage and costs" data-href="{% link _core_features/cost-and-usage-tracking.md %}" data-doc-title="Cost and Usage Tracking" }
+
+```ruby
+transcript = RubyLLM.transcribe "meeting.wav"
+RubyLLM.speak(transcript.text).save "summary.mp3"
+```
+{: .home-code-card data-title="Understand and generate speech" data-href="{% link _core_features/text-to-speech.md %}" data-doc-title="Text to speech" }
+
+```ruby
+document = RubyLLM.ocr "scanned-contract.pdf"
+puts document.markdown
+```
+{: .home-code-card data-title="Turn documents into Markdown" data-href="{% link _core_features/ocr.md %}" data-doc-title="Document OCR" }
+
+```ruby
+RubyLLM.paint "a sunset over mountains in watercolor style"
+RubyLLM.animate "a paper boat sailing down a rainy gutter"
+```
+{: .home-code-card data-title="Generate images and video" data-href="{% link _core_features/video-generation.md %}" data-doc-title="Video generation" }
+
+```ruby
+RubyLLM.moderate("Some user-generated content").flagged?
+```
+{: .home-code-card data-title="Moderate user content" data-href="{% link _core_features/moderation.md %}" data-doc-title="Moderation" }
+
+  </div>
+
+  <div class="home-code-cta">
+    <p>Then take it to production with
+      <a href="{% link _advanced/agentic-workflows.md %}">agentic workflows</a>,
+      <a href="{% link _advanced/durable-agents.md %}">durable agents</a>,
+      <a href="{% link _advanced/memory.md %}">memory</a>,
+      <a href="{% link _reference/ecosystem.md %}#rubyllmmcp">MCP</a>,
+      <a href="{% link _getting_started/configuration-connection.md %}#contexts-isolated-configurations">multi-tenant contexts</a>,
+      <a href="{% link _reference/ecosystem.md %}#rubyllminstrumentation">instrumentation</a>,
+      <a href="{% link _reference/ecosystem.md %}#rubyllmmonitoring">monitoring</a>, and
+      <a href="{% link _advanced/error-handling.md %}">predictable error handling</a>.
+    </p>
+    <div class="home-code-cta-actions">
+      <a class="home-button home-button--solid home-button--guides" href="{% link _getting_started/getting-started.md %}">Build your first feature</a>
+    </div>
+  </div>
+</section>
+
+<section id="rails-integration" class="home-section home-rails-section">
+  <div class="home-section-inner">
+    <h2 class="home-heading">Feels at home in Rails</h2>
+    <p class="home-lead">
+      Persist complete conversations with Active Record, stream through Hotwire, and generate a working chat UI without introducing a second application architecture. Watch a complete AI chat go up in two minutes.
+    </p>
+
+    <div class="home-demo-frame home-rails-demo-frame" data-demo-video>
+      <pre class="home-demo-terminal" aria-hidden="true"><code><span class="term-green">$</span> bundle add ruby_llm
+<span class="term-green">$</span> bin/rails generate ruby_llm:install
+<span class="term-green">$</span> bin/rails db:migrate
+<span class="term-green">$</span> bin/rails generate ruby_llm:chat_ui
+
+<span class="term-green">create</span>  app/models/chat.rb
+<span class="term-green">create</span>  app/models/message.rb
+<span class="term-green">create</span>  app/controllers/chats_controller.rb
+<span class="term-green">create</span>  app/views/chats/show.html.erb
+<span class="term-green">create</span>  app/jobs/chat_response_job.rb
+
+<span class="term-green">$</span> bin/rails server
+=> Booting Puma
+=> Rails application starting on http://localhost:3000
+~ <span class="term-cursor"></span></code></pre>
+      <video class="home-demo-video" preload="metadata" playsinline>
+        <source src="https://github.com/user-attachments/assets/65422091-9338-47da-a303-92b918bd1345" type="video/mp4">
+      </video>
+      <button class="home-play-button" type="button" aria-label="Play the two-minute RubyLLM Rails demo">
+        <span aria-hidden="true"></span>
+      </button>
+      <img class="home-demo-avatar" src="{{ '/assets/images/founder/carmine.jpg' | relative_url }}" alt="" aria-hidden="true">
+    </div>
+  </div>
+
+  <div class="home-code-grid home-code-grid--columns home-rails-code-grid" markdown="1">
 
 ```ruby
 chat = Chat.create! model: "claude-opus-4-7"
 chat.ask "What's in this file?", with: "report.pdf"
 ```
-{: .home-code-card data-title="Persist chats with ActiveRecord" data-href="{% link _advanced/rails-persistence.md %}#two-application-models" data-doc-title="Core Models and acts_as Methods" }
+{: .home-code-card data-title="Persist chats with Active Record" data-href="{% link _advanced/rails-persistence.md %}#two-application-models" data-doc-title="Core Models and acts_as Methods" }
 
 ```sh
 bin/rails generate ruby_llm:agent Support
@@ -271,13 +388,12 @@ bin/rails generate ruby_llm:schema Product
   </div>
 
   <div class="home-code-cta">
-    <p>Plus
+    <p>RubyLLM follows Rails conventions with
       <a href="{% link _advanced/rails-generators.md %}#conventional-directory-structure">conventional directory structures</a>,
-      <a href="{% link _advanced/rails-generators.md %}#setting-up-activestorage">ActiveStorage support</a>,
-      <a href="{% link _advanced/rails-persistence.md %}#attachments-and-structured-output">attachment support</a>,
-      <a href="{% link _advanced/rails-streaming.md %}#streaming-responses-with-hotwireturbo">Hotwire/Turbo streaming</a>,
-      <a href="{% link _advanced/agents.md %}#prompt-management-and-conventions">prompt management</a>,
-      and more.
+      <a href="{% link _advanced/rails-generators.md %}#setting-up-activestorage">Active Storage attachments</a>,
+      <a href="{% link _advanced/rails-streaming.md %}#streaming-responses-with-hotwireturbo">Hotwire and Turbo streaming</a>,
+      <a href="{% link _advanced/agents.md %}#prompt-management-and-conventions">ERB prompt templates</a>, and
+      <a href="{% link _advanced/durable-agents.md %}">durable execution across jobs and deploys</a>.
     </p>
     <div class="home-code-cta-actions">
       <a class="home-button home-button--solid home-button--rails" href="{% link _advanced/rails.md %}">Read the Rails guide</a>
@@ -287,9 +403,9 @@ bin/rails generate ruby_llm:schema Product
 
 <section class="home-section home-band home-companies-section">
   <div class="home-section-inner">
-    <h2 class="home-heading">You're already using RubyLLM</h2>
+    <h2 class="home-heading">Built with RubyLLM</h2>
     <p class="home-lead">
-      Trusted by hundreds of companies, serving millions of users
+      From independent products to established Rails teams, RubyLLM is already shipping in production.
     </p>
 
     <div class="home-company-logos" aria-label="Companies using RubyLLM">
@@ -329,28 +445,16 @@ bin/rails generate ruby_llm:schema Product
   </div>
 </section>
 
-<section class="home-section home-band home-love-section" data-love-carousel>
+<section class="home-section home-love-section" data-love-carousel>
   <div class="home-section-inner">
-    <h2 class="home-heading">Wall of Love</h2>
+    <h2 class="home-heading">Why Rubyists choose RubyLLM</h2>
   </div>
 
   <div class="home-love-stage">
     <div class="home-love-grid">
     <article class="home-love-card" data-love-card>
-      <header><img src="{{ '/assets/images/home/testimonials/people/marc-kohlbrugge.webp' | relative_url }}" alt="Marc Köhlbrugge"><strong>Marc Köhlbrugge</strong><small>Founder/CEO, Startup Jobs</small></header>
-      <p>Ruby-esque DSL and the right level of abstraction: composable, flexible on architecture, opinionated on lower-level implementation.</p>
-    </article>
-    <article class="home-love-card" data-love-card>
       <header><img src="{{ '/assets/images/home/testimonials/people/jorge-manrubia.webp' | relative_url }}" alt="Jorge Manrubia"><strong>Jorge Manrubia</strong><small>Principal Programmer, 37signals</small></header>
       <p>We are using OpenAI API using the fantastic RubyLLM gem from @paolino.</p>
-    </article>
-    <article class="home-love-card" data-love-card>
-      <header><img src="{{ '/assets/images/home/testimonials/people/kieran-klaassen.webp' | relative_url }}" alt="Kieran Klaassen"><strong>Kieran Klaassen</strong><small>Founder, Cora</small></header>
-      <p>Love deleting code when adding a library, and love the thought that goes into the gem.</p>
-    </article>
-    <article class="home-love-card" data-love-card>
-      <header><img src="{{ '/assets/images/home/testimonials/people/elvinas-predkelis.webp' | relative_url }}" alt="Elvinas Predkelis"><strong>Elvinas Predkelis</strong><small>CEO, Primevise</small></header>
-      <p>RubyLLM is pretty much the devise of this generation. Adding it to any application is pretty much a no-brainer.</p>
     </article>
     <article class="home-love-card" data-love-card>
       <header><img src="{{ '/assets/images/home/testimonials/people/nick-warwick.webp' | relative_url }}" alt="Nick Warwick"><strong>Nick Warwick</strong><small>Founding Engineer, Nodal Networks</small></header>
@@ -361,32 +465,52 @@ bin/rails generate ruby_llm:schema Product
       <p>It feels natural. At Yuma, serving over 100,000 end users, our unified AI interface had accumulated so much cruft. RubyLLM is so much nicer than all of that.</p>
     </article>
     <article class="home-love-card" data-love-card>
+      <header><img src="{{ '/assets/images/home/testimonials/people/aaron-snyder.webp' | relative_url }}" alt="Aaron Snyder"><strong>Aaron Snyder</strong><small>CTO / Co-founder, Corepilot</small></header>
+      <p>We got our proof of concept up in one day and the first beta in about a week. Really impressive.</p>
+    </article>
+    <article class="home-love-card" data-love-card>
+      <header><img src="{{ '/assets/images/home/testimonials/people/joe-leo.webp' | relative_url }}" alt="Joe Leo"><strong>Joe Leo</strong><small>Founder/CEO, Def Method</small></header>
+      <p>Most tools add layers. This one removes them. It keeps the mental load low.</p>
+    </article>
+    <article class="home-love-card" data-love-card>
+      <header><img src="{{ '/assets/images/home/testimonials/people/cole-robertson.webp' | relative_url }}" alt="Cole Robertson"><strong>Cole Robertson</strong><small>Co-founder and CTO, dScribe AI</small></header>
+      <p>The speed of development and the closest thing to the AI SDK in JavaScript land. Easiest Rails integration.</p>
+    </article>
+    <article class="home-love-card" data-love-card>
+      <header><img src="{{ '/assets/images/home/testimonials/people/philippe-lehoux.webp' | relative_url }}" alt="Philippe Lehoux"><strong>Philippe Lehoux</strong><small>CEO, Missive</small></header>
+      <p>Multi-provider support. Agentic loop support. Can we sponsor?</p>
+    </article>
+    <article class="home-love-card" data-love-card>
+      <header><img src="{{ '/assets/images/home/testimonials/people/hamid-siddiqui.webp' | relative_url }}" alt="Hamid Siddiqui"><strong>Hamid Siddiqui</strong><small>Founder, ReelMoney</small></header>
+      <p>I replaced my internal provider implementation with RubyLLM and it just worked nicely. Deleted a lot of code.</p>
+    </article>
+    <article class="home-love-card" data-love-card>
+      <header><img src="{{ '/assets/images/home/testimonials/people/marc-kohlbrugge.webp' | relative_url }}" alt="Marc Köhlbrugge"><strong>Marc Köhlbrugge</strong><small>Founder/CEO, Startup Jobs</small></header>
+      <p>Ruby-esque DSL and the right level of abstraction: composable, flexible on architecture, opinionated on lower-level implementation.</p>
+    </article>
+    <article class="home-love-card" data-love-card hidden>
+      <header><img src="{{ '/assets/images/home/testimonials/people/kieran-klaassen.webp' | relative_url }}" alt="Kieran Klaassen"><strong>Kieran Klaassen</strong><small>Founder, Cora</small></header>
+      <p>Love deleting code when adding a library, and love the thought that goes into the gem.</p>
+    </article>
+    <article class="home-love-card" data-love-card hidden>
+      <header><img src="{{ '/assets/images/home/testimonials/people/elvinas-predkelis.webp' | relative_url }}" alt="Elvinas Predkelis"><strong>Elvinas Predkelis</strong><small>CEO, Primevise</small></header>
+      <p>RubyLLM is pretty much the devise of this generation. Adding it to any application is pretty much a no-brainer.</p>
+    </article>
+    <article class="home-love-card" data-love-card hidden>
       <header><img src="{{ '/assets/images/home/testimonials/people/axel-grubba.webp' | relative_url }}" alt="Axel Grubba"><strong>Axel Grubba</strong><small>Founder, Crevio</small></header>
       <p>Love how Ruby-like it feels. The DSL is incredibly intuitive and follows all the conventions I would expect.</p>
     </article>
-    <article class="home-love-card" data-love-card>
+    <article class="home-love-card" data-love-card hidden>
       <header><img src="{{ '/assets/images/home/testimonials/people/luis-ezcurdia.webp' | relative_url }}" alt="Luis Ezcurdia"><strong>Luis Ezcurdia</strong><small>Software Engineer</small></header>
       <p>RubyLLM is awesome, easy and intuitive. You should try it, even if you don’t work with Ruby.</p>
     </article>
-    <article class="home-love-card" data-love-card>
+    <article class="home-love-card" data-love-card hidden>
       <header><img src="{{ '/assets/images/home/testimonials/people/chris-sonnier.webp' | relative_url }}" alt="Chris Sonnier"><strong>Chris Sonnier</strong><small>Ruby/Rails Engineer</small></header>
       <p>If you can find a better Ruby AI library than RubyLLM, I will only write JavaScript for the rest of the year!</p>
     </article>
     <article class="home-love-card" data-love-card hidden>
-      <header><img src="{{ '/assets/images/home/testimonials/people/joe-leo.webp' | relative_url }}" alt="Joe Leo"><strong>Joe Leo</strong><small>Founder/CEO, Def Method</small></header>
-      <p>Most tools add layers. This one removes them. It keeps the mental load low.</p>
-    </article>
-    <article class="home-love-card" data-love-card hidden>
       <header><img src="{{ '/assets/images/home/testimonials/people/mauro-eldritch.webp' | relative_url }}" alt="Mauro Eldritch"><strong>Mauro Eldritch</strong><small>Founder, BCA LTD</small></header>
       <p>We built our own quick and dirty wrapper, then your project came up and rocked it.</p>
-    </article>
-    <article class="home-love-card" data-love-card hidden>
-      <header><img src="{{ '/assets/images/home/testimonials/people/hamid-siddiqui.webp' | relative_url }}" alt="Hamid Siddiqui"><strong>Hamid Siddiqui</strong><small>Founder, ReelMoney</small></header>
-      <p>I replaced my internal provider implementation with RubyLLM and it just worked nicely. Deleted a lot of code.</p>
-    </article>
-    <article class="home-love-card" data-love-card hidden>
-      <header><img src="{{ '/assets/images/home/testimonials/people/philippe-lehoux.webp' | relative_url }}" alt="Philippe Lehoux"><strong>Philippe Lehoux</strong><small>CEO, Missive</small></header>
-      <p>Multi-provider support. Agentic loop support. Can we sponsor?</p>
     </article>
     <article class="home-love-card" data-love-card hidden>
       <header><img src="{{ '/assets/images/home/testimonials/people/ruslan-leteyski.webp' | relative_url }}" alt="Ruslan Leteyski"><strong>Ruslan Leteyski</strong><small>CEO, Zipchat</small></header>
@@ -395,14 +519,6 @@ bin/rails generate ruby_llm:schema Product
     <article class="home-love-card" data-love-card hidden>
       <header><img src="{{ '/assets/images/home/testimonials/people/jonathan-satovsky.webp' | relative_url }}" alt="Jonathan Satovsky"><strong>Jonathan Satovsky</strong><small>CEO, FinDash</small></header>
       <p>When a tool removes noise instead of adding it, you get to stay focused on the real work.</p>
-    </article>
-    <article class="home-love-card" data-love-card hidden>
-      <header><img src="{{ '/assets/images/home/testimonials/people/aaron-snyder.webp' | relative_url }}" alt="Aaron Snyder"><strong>Aaron Snyder</strong><small>CTO / Co-founder, Corepilot</small></header>
-      <p>We got our proof of concept up in one day and the first beta in about a week. Really impressive.</p>
-    </article>
-    <article class="home-love-card" data-love-card hidden>
-      <header><img src="{{ '/assets/images/home/testimonials/people/cole-robertson.webp' | relative_url }}" alt="Cole Robertson"><strong>Cole Robertson</strong><small>Co-founder and CTO, dScribe AI</small></header>
-      <p>The speed of development and the closest thing to the AI SDK in JavaScript land. Easiest Rails integration.</p>
     </article>
     <article class="home-love-card" data-love-card hidden>
       <header><img src="{{ '/assets/images/home/testimonials/people/rich-chetwynd.webp' | relative_url }}" alt="Rich Chetwynd"><strong>Rich Chetwynd</strong><small>Generalist, Bunny Inc</small></header>
@@ -458,9 +574,18 @@ bin/rails generate ruby_llm:schema Product
   </p>
 </section>
 
-<section class="home-section home-ready-section">
+<section class="home-section home-band home-ready-section">
   <div class="home-section-inner">
-    <h2 class="home-heading">Ready to try it?</h2>
+    <h2 class="home-heading">Start with one line of Ruby</h2>
+
+    <div class="home-code-grid home-code-grid--bare home-ready-code" markdown="1">
+
+```ruby
+RubyLLM.chat.ask "Hello, Ruby!"
+```
+{: .home-code-card }
+
+</div>
 
     <div class="home-ready-actions">
       <a class="home-button home-button--solid home-button--gem" href="{{ '/getting-started/' | relative_url }}#installation">Install the gem</a>
