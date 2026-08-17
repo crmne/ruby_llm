@@ -18,7 +18,7 @@ module RubyLLM
     # The text staged for embedding.
     attr_reader :text
 
-    # The Model::Info of the embedding model the request targets.
+    # The Model of the embedding model the request targets.
     attr_reader :model
 
     # The requested vector size, or +nil+ for the model's default.

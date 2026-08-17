@@ -262,17 +262,18 @@ module RubyLLM
     # :attr_accessor: log_level
     #
     # Severity of the built-in logger. Defaults to <tt>Logger::DEBUG</tt>
-    # when the +RUBYLLM_DEBUG+ environment variable is set,
+    # when the +RUBYLLM_DEBUG+ environment variable says yes
+    # (<tt>true</tt>, <tt>1</tt>, <tt>yes</tt>, or <tt>on</tt>),
     # <tt>Logger::INFO</tt> otherwise.
-    option :log_level, -> { ENV['RUBYLLM_DEBUG'] ? Logger::DEBUG : Logger::INFO }
+    option :log_level, -> { env_says_yes?('RUBYLLM_DEBUG') ? Logger::DEBUG : Logger::INFO }
 
     ##
     # :attr_accessor: log_stream_debug
     #
-    # Whether raw streaming chunks are logged. Defaults to +true+ when
-    # the +RUBYLLM_STREAM_DEBUG+ environment variable is <tt>'true'</tt>,
-    # +false+ otherwise.
-    option :log_stream_debug, -> { ENV['RUBYLLM_STREAM_DEBUG'] == 'true' }
+    # Whether raw streaming chunks are logged. Defaults to +true+ when the
+    # +RUBYLLM_STREAM_DEBUG+ environment variable says yes, +false+
+    # otherwise.
+    option :log_stream_debug, -> { env_says_yes?('RUBYLLM_STREAM_DEBUG') }
 
     ##
     # :attr_accessor: log_regexp_timeout
@@ -300,6 +301,15 @@ module RubyLLM
         RubyLLM.logger.warn("log_regexp_timeout is not supported on Ruby #{RUBY_VERSION}")
       end
       @log_regexp_timeout = value
+    end
+
+    private
+
+    # Whether the +name+ environment variable is set to something that means
+    # yes, so that <tt>RUBYLLM_DEBUG=false</tt> reads as off rather than as
+    # merely set.
+    def env_says_yes?(name)
+      %w[true 1 yes on].include?(ENV[name].to_s.strip.downcase)
     end
   end
 end

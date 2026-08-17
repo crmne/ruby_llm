@@ -572,7 +572,7 @@ module RubyLLM
     # Returns a new Models registry containing only models from +provider+.
     # Accepts a symbol or a string.
     #
-    #   RubyLLM.models.by_provider(:openai).select(&:supports_vision?)
+    #   RubyLLM.models.by_provider(:openai).select { |model| model.supports?(:vision) }
     #
     def by_provider(provider)
       self.class.new(all.select { |m| m.provider == provider.to_s })
