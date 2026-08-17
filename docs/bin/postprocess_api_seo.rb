@@ -19,6 +19,11 @@ def inject_head(html, content)
   html.sub(/<head>/i, "<head>\n#{content}")
 end
 
+# Escapes the characters that would let a value close the ld+json block early.
+def json_ld(graph)
+  JSON.generate(graph).gsub(/[<>&\u2028\u2029]/) { |char| format('\\u%04x', char.ord) }
+end
+
 # rubocop:disable Metrics/BlockLength
 output_dir.glob('**/*.html').sort.each do |path|
   relative_path = path.relative_path_from(output_dir).to_s
@@ -33,7 +38,7 @@ output_dir.glob('**/*.html').sort.each do |path|
                 "#{site_root}/api/#{relative_path}"
               end
   robots = redirect ? 'noindex,follow' : default_robots
-  title = CGI.unescapeHTML(html[%r{<title>(.*?)</title>}mi, 1].to_s).gsub(/<[^>]*>/, '').strip
+  title = CGI.unescapeHTML(html[%r{<title>(.*?)</title>}mi, 1].to_s).strip
   description = CGI.unescapeHTML(html[/<meta\s+name="description"\s+content="([^"]*)"/mi, 1].to_s).strip
 
   html.sub!(/<link\s+rel="canonical"\s+href="[^"]*">/i, '')
@@ -71,7 +76,7 @@ output_dir.glob('**/*.html').sort.each do |path|
         }
       ]
     }
-    metadata << %(<script type="application/ld+json">#{JSON.generate(graph, script_safe: true)}</script>)
+    metadata << %(<script type="application/ld+json">#{json_ld(graph)}</script>)
     api_urls << canonical
   end
 
