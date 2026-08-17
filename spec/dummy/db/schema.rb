@@ -105,7 +105,7 @@ ActiveRecord::Schema[7.1].define(version: 20_260_811_120_000) do
     t.index ['tool_call_id'], name: 'index_ruby_llm_tool_calls_on_tool_call_id', unique: true
   end
 
-  create_table 'ruby_llm_usage_entries', force: :cascade do |t|
+  create_table 'ruby_llm_usages', force: :cascade do |t|
     t.string 'chat_type', null: false
     t.integer 'chat_id', null: false
     t.string 'message_type'
@@ -127,9 +127,9 @@ ActiveRecord::Schema[7.1].define(version: 20_260_811_120_000) do
     t.decimal 'total_cost', precision: 16, scale: 10
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
-    t.index %w[chat_type chat_id], name: 'index_ruby_llm_usage_entries_on_chat'
-    t.index %w[message_type message_id], name: 'index_ruby_llm_usage_entries_on_message'
-    t.index ['status'], name: 'index_ruby_llm_usage_entries_on_status'
+    t.index %w[chat_type chat_id], name: 'index_ruby_llm_usages_on_chat'
+    t.index %w[message_type message_id], name: 'index_ruby_llm_usages_on_message'
+    t.index ['status'], name: 'index_ruby_llm_usages_on_status'
   end
 
   create_table 'ruby_llm_batches', force: :cascade do |t|

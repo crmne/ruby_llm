@@ -240,9 +240,9 @@ class AddRubyLlmV20Columns < ActiveRecord::Migration<%= migration_version %>
   end
 
   def create_usage_entries
-    return if table_exists?(:ruby_llm_usage_entries)
+    return if table_exists?(:ruby_llm_usages)
 
-    create_table :ruby_llm_usage_entries do |t|
+    create_table :ruby_llm_usages do |t|
       t.references :chat, polymorphic: true, null: false, type: :<%= reference_type %>, index: false
       t.references :message, polymorphic: true, type: :<%= reference_type %>, index: false
       t.string :operation, null: false
@@ -273,7 +273,7 @@ class AddRubyLlmV20Columns < ActiveRecord::Migration<%= migration_version %>
     present = LEGACY_TOKEN_COLUMNS.select { |column| column_exists?(:<%= message_table_name %>, column) }
     return if present.empty?
 
-    entries = migration_record(:ruby_llm_usage_entries)
+    entries = migration_record(:ruby_llm_usages)
     condition = present.map { |column| "#{column} IS NOT NULL" }.join(' OR ')
     migration_record(:<%= message_table_name %>).where(condition).find_each do |message|
       provider, model = message_model_identity(message)

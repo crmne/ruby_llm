@@ -45,7 +45,7 @@ RubyLLM owns four supporting tables under the `ruby_llm_` prefix:
 
 * `ruby_llm_models` for the model registry.
 * `ruby_llm_tool_calls` for provider tool requests and their result links.
-* `ruby_llm_usage_entries` for retry- and cancellation-safe cost and usage tracking.
+* `ruby_llm_usages` for retry- and cancellation-safe cost and usage tracking.
 * `ruby_llm_batches` for provider-side batch state.
 
 They are regular tables installed by migrations, not a Rails engine. Their record classes are implementation details; use the public RubyLLM APIs described below.
@@ -125,7 +125,7 @@ chat.cost.total           # includes retries and cancelled attempts
 
 An internal entry links to its resulting message when one exists. A failed retry or cancelled generation can remain linked only to the chat. Per-attempt details are available through `usage.ruby_llm` instrumentation rather than a second public usage API.
 
-Token buckets and cost components are numeric columns in `ruby_llm_usage_entries`; cost details are not stored as JSON. This freezes the price calculated when an attempt finishes and keeps the ledger suitable for database aggregation. Message token and cost columns from older RubyLLM versions remain readable as a compatibility fallback, but new installs do not add them.
+Token buckets and cost components are numeric columns in `ruby_llm_usages`; cost details are not stored as JSON. This freezes the price calculated when an attempt finishes and keeps the ledger suitable for database aggregation. Message token and cost columns from older RubyLLM versions remain readable as a compatibility fallback, but new installs do not add them.
 
 See [Cost and Usage Tracking]({% link _core_features/cost-and-usage-tracking.md %}) for entry statuses, incomplete totals, cancellation behavior, and instrumentation.
 

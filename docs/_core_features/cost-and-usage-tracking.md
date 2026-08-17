@@ -184,7 +184,7 @@ If pricing is incomplete for tokens that were used, the affected cost and `cost.
 
 ## Rails Persistence
 
-With `acts_as_chat`, RubyLLM writes finished attempts to `ruby_llm_usage_entries` immediately. This happens before the message callback, so cancellation cannot erase usage merely because no assistant message was saved.
+With `acts_as_chat`, RubyLLM writes finished attempts to `ruby_llm_usages` immediately. This happens before the message callback, so cancellation cannot erase usage merely because no assistant message was saved.
 
 ```ruby
 chat = Chat.find(params[:id])

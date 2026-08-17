@@ -128,7 +128,7 @@ If you previously generated the Chat UI, update or regenerate its models control
 
 ### 6. Verify the money before you trust it
 
-Cost and usage moved out of the transcript into a per-attempt ledger, and the migration backfilled it from your message rows. Before deleting any accounting of your own, reconcile: `chat.cost.total` and ledger sums (`SUM(total_cost)` on `ruby_llm_usage_entries`) should match what your old columns reported. Attempt costs are frozen decimals; keep pricing current for new attempts with a periodic `RubyLLM.models.refresh!`. See [Tokens and Costs]({% link _core_features/cost-and-usage-tracking.md %}).
+Cost and usage moved out of the transcript into a per-attempt ledger, and the migration backfilled it from your message rows. Before deleting any accounting of your own, reconcile: `chat.cost.total` and ledger sums (`SUM(total_cost)` on `ruby_llm_usages`) should match what your old columns reported. Attempt costs are frozen decimals; keep pricing current for new attempts with a periodic `RubyLLM.models.refresh!`. See [Tokens and Costs]({% link _core_features/cost-and-usage-tracking.md %}).
 
 ## When Your App Outgrew the Defaults
 
@@ -167,7 +167,7 @@ class User < ApplicationRecord
 end
 
 user.ruby_llm_usages.sum(:total_cost)
-user.ruby_llm_usages.where("ruby_llm_usage_entries.created_at >= ?", period_start).sum(:total_cost)
+user.ruby_llm_usages.where("ruby_llm_usages.created_at >= ?", period_start).sum(:total_cost)
 ```
 
 Two things move with it: reconcile the ledger against your old totals before dropping your columns, and re-home any UI updates that hung off your old table's callbacks (a job-level `ensure` block is the usual landing spot), or those updates silently stop firing.

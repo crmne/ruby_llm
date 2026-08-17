@@ -58,7 +58,7 @@ class CreateRubyLlmRecords < ActiveRecord::Migration<%= migration_version %>
       t.index :name
     end
 
-    create_table :ruby_llm_usage_entries do |t|
+    create_table :ruby_llm_usages do |t|
       t.references :chat, polymorphic: true, null: false, type: :<%= reference_type %>, index: false
       t.references :message, polymorphic: true, type: :<%= reference_type %>, index: false
       t.string :operation, null: false

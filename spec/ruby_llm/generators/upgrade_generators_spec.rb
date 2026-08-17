@@ -42,7 +42,7 @@ RSpec.describe 'RubyLLM upgrade generator', :generator, type: :generator do # ru
         expect(migration).to include('add_column :messages, :cache_until_here, :boolean')
         expect(migration).to include('create_table :ruby_llm_models')
         expect(migration).to include('create_table :ruby_llm_tool_calls')
-        expect(migration).to include('create_table :ruby_llm_usage_entries')
+        expect(migration).to include('create_table :ruby_llm_usages')
         expect(migration).to include('create_table :ruby_llm_batches')
       end
     end
@@ -160,11 +160,11 @@ RSpec.describe 'RubyLLM upgrade generator', :generator, type: :generator do # ru
           model_foreign_key = connection.foreign_keys(:chats).find { |key| key.column == 'ruby_llm_model_id' }
           ok &&= model_foreign_key&.to_table == 'ruby_llm_models'
 
-          entry = connection.select_one('SELECT * FROM ruby_llm_usage_entries')
+          entry = connection.select_one('SELECT * FROM ruby_llm_usages')
           message_columns = connection.columns(:messages).map(&:name)
           legacy_columns = %w[input_tokens output_tokens cache_read_tokens cache_write_tokens
                               thinking_tokens total_cost cost_details]
-          ok &&= connection.select_value('SELECT COUNT(*) FROM ruby_llm_usage_entries').to_i == 1 &&
+          ok &&= connection.select_value('SELECT COUNT(*) FROM ruby_llm_usages').to_i == 1 &&
                  entry['chat_type'] == 'Chat' && entry['chat_id'].to_i == 1 &&
                  entry['message_type'] == 'Message' && entry['message_id'].to_i == 1 &&
                  entry['operation'] == 'chat' && entry['status'] == 'succeeded' &&
