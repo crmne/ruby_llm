@@ -5,6 +5,8 @@ module RubyLLM
     class Mistral
       # Determines capabilities for Mistral models
       module Capabilities
+        VOXTRAL = 'voxtral'
+
         module_function
 
         def supports_streaming?(model_id)
@@ -66,6 +68,13 @@ module RubyLLM
           8192
         end
 
+        def voxtral_followed_by?(model_id, marker)
+          start = model_id.index(VOXTRAL)
+          return false unless start
+
+          !model_id.index(marker, start + VOXTRAL.length).nil?
+        end
+
         def modalities_for(model_id)
           case model_id
           when /pixtral/
@@ -78,49 +87,53 @@ module RubyLLM
               input: ['text'],
               output: ['embeddings']
             }
-          when /voxtral.*tts/
-            {
-              input: ['text'],
-              output: ['audio']
-            }
-          when /voxtral.*transcribe/
-            {
-              input: ['audio'],
-              output: ['text']
-            }
-          when /voxtral/
-            {
-              input: %w[text audio],
-              output: ['text']
-            }
           else
-            {
+            voxtral_modalities_for(model_id) || {
               input: ['text'],
               output: ['text']
             }
           end
         end
 
-        def capabilities_for(model_id) # rubocop:disable Metrics/PerceivedComplexity
-          case model_id
-          when /moderation/ then ['moderation']
-          when /voxtral.*transcribe/ then ['transcription']
-          when /ocr/ then ['vision']
+        def voxtral_modalities_for(model_id)
+          return unless model_id.include?(VOXTRAL)
+
+          if voxtral_followed_by?(model_id, 'tts')
+            {
+              input: ['text'],
+              output: ['audio']
+            }
+          elsif voxtral_followed_by?(model_id, 'transcribe')
+            {
+              input: ['audio'],
+              output: ['text']
+            }
           else
-            capabilities = []
-            capabilities << 'streaming' if supports_streaming?(model_id)
-            capabilities.push('function_calling', 'tool_choice', 'parallel_tool_calls') if supports_tools?(model_id)
-            capabilities << 'structured_output' if supports_json_mode?(model_id)
-            capabilities << 'vision' if supports_vision?(model_id)
-
-            capabilities << 'reasoning' if supports_reasoning?(model_id)
-            capabilities << 'batch' unless model_id.match?(/voxtral|ocr|embed|moderation/)
-            capabilities << 'fine_tuning' if model_id.match?(/mistral-(small|medium|large)|devstral/)
-            capabilities << 'distillation' if model_id.match?(/ministral/)
-            capabilities << 'predicted_outputs' if model_id.match?(/codestral/)
-
-            capabilities.uniq
+            {
+              input: %w[text audio],
+              output: ['text']
+            }
           end
+        end
+
+        def capabilities_for(model_id) # rubocop:disable Metrics/PerceivedComplexity
+          return ['moderation'] if model_id.match?(/moderation/)
+          return ['transcription'] if voxtral_followed_by?(model_id, 'transcribe')
+          return ['vision'] if model_id.match?(/ocr/)
+
+          capabilities = []
+          capabilities << 'streaming' if supports_streaming?(model_id)
+          capabilities.push('function_calling', 'tool_choice', 'parallel_tool_calls') if supports_tools?(model_id)
+          capabilities << 'structured_output' if supports_json_mode?(model_id)
+          capabilities << 'vision' if supports_vision?(model_id)
+
+          capabilities << 'reasoning' if supports_reasoning?(model_id)
+          capabilities << 'batch' unless model_id.match?(/voxtral|ocr|embed|moderation/)
+          capabilities << 'fine_tuning' if model_id.match?(/mistral-(small|medium|large)|devstral/)
+          capabilities << 'distillation' if model_id.match?(/ministral/)
+          capabilities << 'predicted_outputs' if model_id.match?(/codestral/)
+
+          capabilities.uniq
         end
 
         def pricing_for(_model_id)

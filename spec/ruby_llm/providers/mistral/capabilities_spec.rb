@@ -132,6 +132,12 @@ RSpec.describe RubyLLM::Providers::Mistral::Capabilities do
         input: ['text'], output: ['text']
       )
     end
+
+    it 'stays fast on a model id that repeats voxtral' do
+      model_id = "#{'voxtral' * 50_000}-nope"
+
+      expect { Timeout.timeout(5) { described_class.modalities_for(model_id) } }.not_to raise_error
+    end
   end
 
   describe '.capabilities_for' do
