@@ -1,5 +1,14 @@
 # frozen_string_literal: true
 
+require 'uri'
+
+def googleapis_host?(uri)
+  host = URI.parse(uri).host.to_s.downcase
+  host == 'googleapis.com' || host.end_with?('.googleapis.com')
+rescue URI::InvalidURIError
+  false
+end
+
 # VCR Configuration
 VCR.configure do |config|
   config.cassette_library_dir = 'spec/fixtures/vcr_cassettes'
@@ -128,7 +137,7 @@ VCR.configure do |config|
     end
 
     # Google resource names embed the numeric project id
-    if interaction.request.uri.include?('googleapis.com')
+    if googleapis_host?(interaction.request.uri)
       project_number = %r{projects/\d+}
       interaction.request.uri = interaction.request.uri.gsub(project_number, 'projects/<GOOGLE_CLOUD_PROJECT>')
       [interaction.request, interaction.response].each do |message|
