@@ -227,11 +227,12 @@ module RubyLLM
         end
 
         # Countries with their own residency-preserving profiles come before
-        # the broad geography, so Tokyo prefers jp. over apac.
+        # the broad geography, so Tokyo prefers jp. over apac. Some models
+        # ship with only a global. profile, so that is the last resort.
         def region_prefix_candidates(region)
           region = region.to_s
           specific = ('jp' if JP_REGIONS.include?(region)) || ('au' if AU_REGIONS.include?(region))
-          [specific, region_prefix(region)].compact
+          [specific, region_prefix(region), 'global'].compact
         end
 
         def region_prefixed?(model_id)

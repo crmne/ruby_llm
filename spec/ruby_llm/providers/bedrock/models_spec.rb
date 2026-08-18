@@ -176,13 +176,13 @@ RSpec.describe RubyLLM::Providers::Bedrock::Models do
 
   describe '#region_prefix_candidates' do
     it 'prefers country profiles where AWS serves them' do
-      expect(provider.send(:region_prefix_candidates, 'ap-northeast-1')).to eq(%w[jp apac])
-      expect(provider.send(:region_prefix_candidates, 'ap-southeast-2')).to eq(%w[au apac])
+      expect(provider.send(:region_prefix_candidates, 'ap-northeast-1')).to eq(%w[jp apac global])
+      expect(provider.send(:region_prefix_candidates, 'ap-southeast-2')).to eq(%w[au apac global])
     end
 
-    it 'uses the geography alone elsewhere' do
-      expect(provider.send(:region_prefix_candidates, 'ap-southeast-1')).to eq(['apac'])
-      expect(provider.send(:region_prefix_candidates, 'eu-west-1')).to eq(['eu'])
+    it 'falls back from the geography to global elsewhere' do
+      expect(provider.send(:region_prefix_candidates, 'ap-southeast-1')).to eq(%w[apac global])
+      expect(provider.send(:region_prefix_candidates, 'eu-west-1')).to eq(%w[eu global])
     end
   end
 
@@ -283,6 +283,22 @@ RSpec.describe RubyLLM::Providers::Bedrock::Models do
       expect(described_class.resolve_registry_id('meta.llama4-maverick-v1:0', models, config_for)).to eq(
         'us.meta.llama4-maverick-v1:0'
       )
+    end
+
+    it 'resolves to a global profile when that is all the registry carries' do
+      global_models = RubyLLM::Models.new(
+        [
+          RubyLLM::Model.new(
+            id: 'global.anthropic.claude-opus-4-5-20251101-v1:0',
+            provider: 'bedrock',
+            metadata: { inference_types: ['INFERENCE_PROFILE'] }
+          )
+        ]
+      )
+
+      expect(
+        described_class.resolve_registry_id('anthropic.claude-opus-4-5-20251101-v1:0', global_models, config_for)
+      ).to eq('global.anthropic.claude-opus-4-5-20251101-v1:0')
     end
 
     it 'resolves to a country profile the registry carries' do
