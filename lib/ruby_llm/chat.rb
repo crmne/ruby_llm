@@ -1102,6 +1102,8 @@ module RubyLLM
           when true then executable[id] = tool_call
           when false then denied[id] = tool_call
           end
+        elsif @tool_call_decisions[tool_call.id] == false
+          denied[id] = tool_call
         else
           executable[id] = tool_call
         end
