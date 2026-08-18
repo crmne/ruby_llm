@@ -467,11 +467,9 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
 
     it 'skips attributes the message table does not carry' do
       chat = Chat.create!(model: model_id)
-      chat.send(:persist_new_message)
-      record = chat.instance_variable_get(:@message)
-      allow(record).to receive(:has_attribute?).and_return(false)
+      allow(Message).to receive(:column_names).and_return(%w[role content])
 
-      attributes = chat.send(:completion_attributes, RubyLLM::Message.new(role: :assistant, content: 'hi'), 'hi')
+      attributes = chat.send(:message_attributes, RubyLLM::Message.new(role: :assistant, content: 'hi'))
 
       expect(attributes).to eq(role: :assistant, content: 'hi')
     end

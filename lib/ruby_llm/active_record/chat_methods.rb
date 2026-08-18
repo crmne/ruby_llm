@@ -257,10 +257,7 @@ module RubyLLM
       def add_message(message_or_attributes)
         llm_message = message_or_attributes.is_a?(RubyLLM::Message) ? message_or_attributes : RubyLLM::Message.new(message_or_attributes)
 
-        attrs = { role: llm_message.role, content: llm_message.content }
-        add_finish_reason_attribute(attrs, llm_message, messages_association.klass)
-        attrs[:cache_until_here] = llm_message.cache_until_here?
-        message_record = messages_association.create!(attrs)
+        message_record = messages_association.create!(message_attributes(llm_message))
 
         if llm_message.tool_call_id && (tool_call = find_tool_call(llm_message.tool_call_id))
           tool_call.update!(result: message_record)
@@ -269,7 +266,7 @@ module RubyLLM
         persist_content(message_record, llm_message.attachments) if llm_message.attachments.any?
         persist_tool_calls(llm_message.tool_calls, message_record:) if llm_message.tool_calls.present?
 
-        @chat.messages << llm_message if @chat
+        @chat&.add_message(llm_message)
 
         message_record
       end
@@ -606,7 +603,7 @@ module RubyLLM
         return unless message
 
         tool_call = find_tool_call(message.tool_call_id) if message.tool_call_id
-        attrs = completion_attributes(message, message.content)
+        attrs = message_attributes(message)
 
         transaction do
           @message.assign_attributes(attrs)
@@ -619,8 +616,8 @@ module RubyLLM
         end
       end
 
-      def completion_attributes(message, content_text)
-        attrs = { role: message.role, content: content_text }
+      def message_attributes(message)
+        attrs = { role: message.role, content: message.content }
         assign_supported_attribute(attrs, :thinking_text, message.thinking&.text)
         assign_supported_attribute(attrs, :thinking_signature, message.thinking&.signature)
         assign_supported_attribute(attrs, :citations, message.citations.map(&:to_h).presence)
@@ -633,7 +630,7 @@ module RubyLLM
       end
 
       def assign_supported_attribute(attributes, name, value)
-        attributes[name] = value if @message.has_attribute?(name)
+        attributes[name] = value if messages_association.klass.column_names.include?(name.to_s)
       end
 
       def persist_tool_calls(tool_calls, message_record: @message)
@@ -642,12 +639,6 @@ module RubyLLM
           attributes[:tool_call_id] = attributes.delete(:id)
           message_record.ruby_llm_tool_calls.create!(**attributes)
         end
-      end
-
-      def add_finish_reason_attribute(attributes, message, message_class)
-        return unless message_class.column_names.include?('finish_reason')
-
-        attributes[:finish_reason] = message.finish_reason
       end
 
       def find_tool_call(tool_call_id)
