@@ -51,6 +51,24 @@ RSpec.describe RubyLLM::Protocol do
     expect(attachment).not_to be_provider_file
   end
 
+  it 'replaces an upload past its retention window' do
+    provider = RubyLLM::Providers::Gemini.new(RubyLLM.config)
+    protocol = RubyLLM::Protocols::Gemini.new(provider, model)
+    attachment = RubyLLM::Attachment.new(StringIO.new('video bytes'), filename: 'clip.mp4')
+    allow(attachment).to receive(:byte_size).and_return(25 * 1024 * 1024)
+    expiring = RubyLLM::UploadedFile.new(id: 'files/old', provider: 'gemini', filename: 'clip.mp4',
+                                         mime_type: 'video/mp4', expires_at: Time.now + 30)
+    fresh = RubyLLM::UploadedFile.new(id: 'files/new', provider: 'gemini', filename: 'clip.mp4',
+                                      mime_type: 'video/mp4', expires_at: Time.now + (48 * 3600))
+    allow(provider).to receive(:upload_file).and_return(expiring, fresh)
+
+    message = RubyLLM::Message.new(role: :user, content: 'Watch this', attachments: [attachment])
+
+    expect(protocol.preprocess_message(message).attachments.first.provider_file_id).to eq('files/old')
+    expect(protocol.preprocess_message(message).attachments.first.provider_file_id).to eq('files/new')
+    expect(provider).to have_received(:upload_file).twice
+  end
+
   it 'uploads separately for each provider' do
     gemini = RubyLLM::Providers::Gemini.new(RubyLLM.config)
     openai = RubyLLM::Providers::OpenAI.new(RubyLLM.config)

@@ -468,9 +468,13 @@ module RubyLLM
 
     # Uploads are memoized per provider on the attachment itself, so a chat
     # that switches providers uploads once to each rather than replaying
-    # another provider's file reference.
+    # another provider's file reference. An upload past its provider
+    # retention window is replaced rather than reused.
     def provider_upload(attachment)
-      attachment.provider_uploads[@provider.slug] ||=
+      upload = attachment.provider_uploads[@provider.slug]
+      return upload if upload && !upload.expired?
+
+      attachment.provider_uploads[@provider.slug] =
         @provider.upload_file(attachment, **provider_file_upload_options(attachment))
     end
 

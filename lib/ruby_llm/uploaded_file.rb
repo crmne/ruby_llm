@@ -69,6 +69,15 @@ module RubyLLM
       @metadata = attributes[:metadata] || {}
     end
 
+    EXPIRY_MARGIN = 60 # seconds
+
+    # Returns +true+ once the provider's retention window for this file has
+    # passed or is about to; a file expiring within the next minute cannot
+    # safely serve a request. Files without a reported expiry never expire.
+    def expired?
+      !expires_at.nil? && expires_at <= Time.now + EXPIRY_MARGIN
+    end
+
     class Protocol # :nodoc:
       attr_reader :provider, :config, :connection
 
