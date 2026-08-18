@@ -5,7 +5,25 @@ module RubyLLM
     class Gemini
       # Models methods for the Gemini API integration
       module Models
-        module_function
+        def list_models
+          models = []
+          page_token = nil
+
+          loop do
+            response = @connection.get(models_url) do |req|
+              req.params = { pageSize: 1000 }
+              req.params[:pageToken] = page_token if page_token
+            end
+
+            models.concat(parse_list_models_response(response, @provider.slug, @provider.capabilities))
+            page_token = response.body['nextPageToken']
+            break unless page_token
+          end
+
+          models
+        end
+
+        private
 
         def models_url
           'models'

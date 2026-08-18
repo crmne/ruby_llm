@@ -3,7 +3,8 @@
 require 'spec_helper'
 
 RSpec.describe RubyLLM::Protocols::Anthropic::Models do
-  describe '.parse_list_models_response' do
+  describe '#parse_list_models_response' do
+    let(:parser) { Object.new.extend(described_class) }
     let(:response_class) { Struct.new(:body) }
 
     let(:response) do
@@ -22,7 +23,8 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Models do
     end
 
     it 'returns minimal provider metadata for models covered by models.dev' do
-      model = described_class.parse_list_models_response(
+      model = parser.send(
+        :parse_list_models_response,
         response,
         'anthropic',
         RubyLLM::Providers::Anthropic::Capabilities

@@ -7,7 +7,30 @@ module RubyLLM
     class Anthropic
       # Models methods of the Anthropic API integration
       module Models
-        module_function
+        ITERATION_TOKEN_KEYS = %w[
+          input_tokens output_tokens cache_read_input_tokens cache_creation_input_tokens
+        ].freeze
+
+        def list_models
+          models = []
+          after_id = nil
+
+          loop do
+            response = @connection.get(models_url) do |req|
+              req.params = { limit: 1000 }
+              req.params[:after_id] = after_id if after_id
+            end
+
+            models.concat(parse_list_models_response(response, @provider.slug, @provider.capabilities))
+            break unless response.body['has_more']
+
+            after_id = response.body['last_id']
+          end
+
+          models
+        end
+
+        private
 
         def models_url
           'v1/models'
@@ -31,10 +54,6 @@ module RubyLLM
         def extract_model_id(data)
           data.dig('message', 'model')
         end
-
-        ITERATION_TOKEN_KEYS = %w[
-          input_tokens output_tokens cache_read_input_tokens cache_creation_input_tokens
-        ].freeze
 
         def extract_input_tokens(data)
           message_usage(data)['input_tokens']
