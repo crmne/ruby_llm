@@ -50,12 +50,21 @@ module RubyLLM
         # Reconstructs the response's content blocks from stream events so
         # turns that used server tools can be replayed verbatim, exactly as
         # the non-streaming path does with the response body.
+        # Resetting on message_start matters for pause_turn continuations,
+        # which stream several messages through one protocol instance.
         def track_stream_blocks(data, delta_type)
           case data['type']
+          when 'message_start' then reset_stream_blocks
           when 'content_block_start' then track_stream_block_start(data)
           when 'content_block_delta' then track_stream_block_delta(data, delta_type)
           when 'content_block_stop' then finalize_stream_block(data['index'])
           end
+        end
+
+        def reset_stream_blocks
+          @stream_blocks = {}
+          @stream_block_json = {}
+          @saw_server_block = false
         end
 
         def track_stream_block_start(data)
