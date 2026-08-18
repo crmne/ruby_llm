@@ -77,12 +77,15 @@ module RubyLLM
           raise ToolCallParseError.new(response: response, finish_reason: finish_reason), cause: e
         end
 
-        def parse_tool_calls(tool_calls, parse_arguments: true, response: nil, finish_reason: nil)
+        # Streaming deltas key by index so id-less argument fragments find
+        # their call even when a delta batches or interleaves several calls;
+        # complete responses key by id, which tool results join on.
+        def parse_tool_calls(tool_calls, parse_arguments: true, response: nil, finish_reason: nil, stream_keys: false)
           return nil unless tool_calls&.any?
 
           tool_calls.to_h do |tc|
             [
-              tc['id'],
+              stream_keys ? tc['index'] || tc['id'] : tc['id'],
               ToolCall.new(
                 id: tc['id'],
                 name: tc.dig('function', 'name'),

@@ -181,6 +181,37 @@ RSpec.describe RubyLLM::StreamAccumulator do
       expect(accumulator.tool_calls.values.first.id).to match(/\A[0-9a-f-]{36}\z/)
     end
 
+    it 'keeps parallel id-less tool calls separate and keys them by their generated ids' do
+      accumulator = described_class.new
+      accumulator.add(
+        RubyLLM::Chunk.new(
+          role: :assistant, content: nil,
+          tool_calls: {
+            0 => RubyLLM::ToolCall.new(id: '', name: 'weather', arguments: '{}'),
+            1 => RubyLLM::ToolCall.new(id: '', name: 'news', arguments: '{}')
+          }
+        )
+      )
+
+      expect(accumulator.tool_calls.values.map(&:name)).to eq(%w[weather news])
+      expect(accumulator.tool_calls.keys).to eq(accumulator.tool_calls.values.map(&:id))
+    end
+
+    it 'keeps text arriving in the same chunk as a tool call' do
+      accumulator = described_class.new
+      accumulator.add(
+        RubyLLM::Chunk.new(
+          role: :assistant, content: 'Checking the weather.',
+          tool_calls: { 0 => RubyLLM::ToolCall.new(id: 'call_1', name: 'weather', arguments: '{}') }
+        )
+      )
+
+      message = accumulator.to_message(nil)
+
+      expect(message.content).to eq('Checking the weather.')
+      expect(message.tool_calls.keys).to eq(['call_1'])
+    end
+
     it 'ignores a fragment for a tool call it never saw start' do
       accumulator = described_class.new
       accumulator.add(

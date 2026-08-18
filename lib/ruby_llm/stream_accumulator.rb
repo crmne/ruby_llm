@@ -129,23 +129,22 @@ module RubyLLM
 
     def start_tool_call(stream_key, tool_call)
       tool_call_id = tool_call.id.empty? ? SecureRandom.uuid : tool_call.id
-      tool_call_key = tool_call.id
 
-      @tool_calls[tool_call_key] = ToolCall.new(
+      @tool_calls[tool_call_id] = ToolCall.new(
         id: tool_call_id,
         name: tool_call.name,
         arguments: initial_tool_call_arguments(tool_call),
         thought_signature: tool_call.thought_signature
       )
-      @tool_call_ids_by_index[stream_key] = tool_call_key unless stream_key.nil?
-      @latest_tool_call_id = tool_call_key
+      @tool_call_ids_by_index[stream_key] = tool_call_id unless stream_key.nil?
+      @latest_tool_call_id = tool_call_id
     end
 
     def initial_tool_call_arguments(tool_call)
       arguments = tool_call.arguments
       return +'' if arguments.nil? || (arguments.respond_to?(:empty?) && arguments.empty?)
 
-      arguments
+      arguments.dup
     end
 
     def append_tool_call_fragment(stream_key, tool_call)
@@ -178,7 +177,7 @@ module RubyLLM
     end
 
     def handle_chunk_content(chunk)
-      return accumulate_tool_calls(chunk.tool_calls) if chunk.tool_call?
+      accumulate_tool_calls(chunk.tool_calls) if chunk.tool_call?
 
       content_text = chunk.content || ''
       @content << (content_text.is_a?(String) ? content_text : content_text.to_s)

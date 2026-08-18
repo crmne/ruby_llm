@@ -28,7 +28,7 @@ module RubyLLM
               text: thinking_from_blocks || delta['reasoning_content'] || delta['reasoning'],
               signature: delta['reasoning_signature']
             ),
-            tool_calls: parse_tool_calls(delta['tool_calls'], parse_arguments: false),
+            tool_calls: parse_tool_calls(delta['tool_calls'], parse_arguments: false, stream_keys: true),
             input_tokens: input_tokens(usage),
             output_tokens: output_tokens(usage),
             cache_read_tokens: cache_read_tokens(usage),

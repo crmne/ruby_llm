@@ -22,7 +22,7 @@ module RubyLLM
               signature: extract_thinking_signature(delta)
             ),
             raw_reasoning: accumulate_raw_reasoning(delta['reasoning_details']),
-            tool_calls: parse_tool_calls(delta['tool_calls'], parse_arguments: false),
+            tool_calls: parse_tool_calls(delta['tool_calls'], parse_arguments: false, stream_keys: true),
             input_tokens: input_tokens(usage),
             output_tokens: output_tokens(usage),
             cache_read_tokens: cache_read_tokens(usage),
