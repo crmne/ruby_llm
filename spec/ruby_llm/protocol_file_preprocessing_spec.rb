@@ -31,6 +31,50 @@ RSpec.describe RubyLLM::Protocol do
     expect(processed.attachments.first.provider_file_id).to eq('files/abc')
   end
 
+  it 'uploads once per provider and keeps the original attachment in the message' do
+    provider = RubyLLM::Providers::Gemini.new(RubyLLM.config)
+    protocol = RubyLLM::Protocols::Gemini.new(provider, model)
+    attachment = RubyLLM::Attachment.new(StringIO.new('video bytes'), filename: 'clip.mp4')
+    allow(attachment).to receive(:byte_size).and_return(25 * 1024 * 1024)
+    uploaded = RubyLLM::UploadedFile.new(id: 'files/abc', provider: 'gemini', filename: 'clip.mp4',
+                                         mime_type: 'video/mp4', uri: 'https://example.test/files/abc')
+    allow(provider).to receive(:upload_file).and_return(uploaded)
+
+    message = RubyLLM::Message.new(role: :user, content: 'Watch this', attachments: [attachment])
+
+    first = protocol.preprocess_message(message)
+    second = protocol.preprocess_message(message)
+
+    expect(provider).to have_received(:upload_file).once
+    expect(second.attachments.first.provider_file_id).to eq(first.attachments.first.provider_file_id)
+    expect(message.attachments.first).to be(attachment)
+    expect(attachment).not_to be_provider_file
+  end
+
+  it 'uploads separately for each provider' do
+    gemini = RubyLLM::Providers::Gemini.new(RubyLLM.config)
+    openai = RubyLLM::Providers::OpenAI.new(RubyLLM.config)
+    attachment = RubyLLM::Attachment.new(StringIO.new('pdf bytes'), filename: 'report.pdf')
+    allow(attachment).to receive(:byte_size).and_return(60 * 1024 * 1024)
+    allow(gemini).to receive(:upload_file).and_return(
+      RubyLLM::UploadedFile.new(id: 'files/abc', provider: 'gemini', filename: 'report.pdf',
+                                mime_type: 'application/pdf', uri: 'https://example.test/files/abc')
+    )
+    allow(openai).to receive(:upload_file).and_return(
+      RubyLLM::UploadedFile.new(id: 'file_123', provider: 'openai', filename: 'report.pdf',
+                                mime_type: 'application/pdf')
+    )
+
+    message = RubyLLM::Message.new(role: :user, content: 'Summarize this', attachments: [attachment])
+
+    from_gemini = RubyLLM::Protocols::Gemini.new(gemini, model).preprocess_message(message)
+    from_openai = RubyLLM::Protocols::Responses.new(openai, model).preprocess_message(message)
+
+    expect(from_gemini.attachments.first.provider_file_id).to eq('files/abc')
+    expect(from_openai.attachments.first.provider_file_id).to eq('file_123')
+    expect(attachment.provider_uploads.keys).to contain_exactly('gemini', 'openai')
+  end
+
   it 'leaves small Gemini attachments inline' do
     provider = RubyLLM::Providers::Gemini.new(RubyLLM.config)
     protocol = RubyLLM::Protocols::Gemini.new(provider, model)

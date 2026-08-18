@@ -733,9 +733,8 @@ module RubyLLM
     # its next completion, with #before_request hooks applied. Useful for
     # inspecting and testing request output.
     def render
-      preprocess_attachments!
       @provider.render(
-        messages,
+        preprocessed_messages,
         tools: @tools,
         server_tools: @server_tools,
         tool_prefs: @tool_prefs,
@@ -1010,22 +1009,21 @@ module RubyLLM
       fallback_errors.any? { |error_class| error.is_a?(error_class) }
     end
 
-    # Preprocessing runs per request, not when messages are added: the
-    # provider can change through fallbacks or with_model, and reloaded
-    # Rails chats rebuild history from rows. History keeps the uploaded
-    # references, so later turns skip already-uploaded attachments.
-    def preprocess_attachments!
-      return unless @provider
+    # Preprocessing builds a per-request view of the conversation: the
+    # provider can change through fallbacks or with_model, so history keeps
+    # the original attachments while each provider's upload is memoized on
+    # them. Reloaded Rails chats rebuild history from rows and upload again.
+    def preprocessed_messages
+      return messages unless @provider
 
-      @messages = messages.map { |message| @provider.preprocess_message(message, model: @model, protocol: @protocol) }
+      messages.map { |message| @provider.preprocess_message(message, model: @model, protocol: @protocol) }
     end
 
     def provider_completion(usage_recorder:, stream_tracker: nil, &)
       raise_if_cancelled!
-      preprocess_attachments!
 
       @provider.complete(
-        messages,
+        preprocessed_messages,
         tools: @tools,
         server_tools: @server_tools,
         tool_prefs: @tool_prefs,
