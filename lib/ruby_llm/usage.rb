@@ -224,6 +224,7 @@ module RubyLLM
           cache_read: incoming.cache_read.nil? ? existing.cache_read : incoming.cache_read,
           cache_write: incoming.cache_write.nil? ? existing.cache_write : incoming.cache_write,
           thinking: incoming.thinking.nil? ? existing.thinking : incoming.thinking,
+          server_tool_use: incoming.server_tool_use.nil? ? existing.server_tool_use : incoming.server_tool_use,
           reported_cost: incoming.reported_cost.nil? ? existing.reported_cost : incoming.reported_cost
         )
       end
