@@ -166,6 +166,16 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       expect(chat.messages.where(role: 'system').pluck(:content)).to eq(['Be concise', 'Cite sources'])
     end
 
+    it 'does not duplicate an appended instruction on a chat not yet built' do
+      chat = Chat.create!(model: model_id)
+      chat.with_instructions('Be concise')
+
+      reloaded = Chat.find(chat.id)
+      reloaded.with_instructions('Cite sources', append: true)
+
+      expect(reloaded.to_llm.messages.map(&:content)).to eq(['Be concise', 'Cite sources'])
+    end
+
     it 'clears the persisted system messages when given nil' do
       chat = Chat.create!(model: model_id)
       chat.with_instructions('Be concise')
@@ -203,6 +213,18 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       chat.reload
 
       expect(chat.to_llm.messages.map(&:content)).to eq(['Answer in French'])
+    end
+
+    it 'appends to persisted instructions and keeps them through a reload' do
+      chat = Chat.create!(model: model_id)
+      chat.with_instructions('Be concise')
+      chat.with_runtime_instructions('Answer in French', append: true)
+
+      expect(chat.to_llm.messages.map(&:content)).to eq(['Be concise', 'Answer in French'])
+
+      chat.reload
+
+      expect(chat.to_llm.messages.map(&:content)).to eq(['Be concise', 'Answer in French'])
     end
 
     it 'drops them when given nil' do

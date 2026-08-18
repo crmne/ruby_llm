@@ -183,26 +183,30 @@ module RubyLLM
       #   chat.with_instructions "Use short bullet points.", append: true
       #
       def with_instructions(instructions, append: false)
+        to_llm
+
         if instructions.nil?
           clear_persisted_system_instructions
         else
           persist_system_instruction(instructions, append:)
         end
 
-        to_llm.with_instructions(instructions, append:)
+        @chat.with_instructions(instructions, append:)
         self
       end
 
       def with_runtime_instructions(instructions, append: false) # :nodoc:
+        to_llm
+
         if instructions.nil?
           @runtime_instructions = []
-          sync_messages if @chat
+          sync_messages
           return self
         end
 
         store_runtime_instruction(instructions, append:)
 
-        to_llm.with_instructions(instructions, append:)
+        @chat.with_instructions(instructions, append:)
         self
       end
 
@@ -581,18 +585,14 @@ module RubyLLM
 
       def store_runtime_instruction(instructions, append:)
         if append
-          runtime_instructions << instructions
+          runtime_instructions << [instructions, true]
         else
-          @runtime_instructions = [instructions]
+          @runtime_instructions = [[instructions, false]]
         end
       end
 
       def reapply_runtime_instructions(chat)
-        return if runtime_instructions.empty?
-
-        first, *rest = runtime_instructions
-        chat.with_instructions(first)
-        rest.each { |instruction| chat.with_instructions(instruction, append: true) }
+        runtime_instructions.each { |instructions, append| chat.with_instructions(instructions, append:) }
       end
 
       def persist_new_message
