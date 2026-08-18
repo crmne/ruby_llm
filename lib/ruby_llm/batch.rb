@@ -244,7 +244,7 @@ module RubyLLM
 
     def collect_results
       results = @provider.batch_results(id, batch_protocol: @batch_protocol)
-      slots = Array.new(chats&.size || requests&.size || (results.map(&:first).max.to_i + 1))
+      slots = Array.new(chats&.size || requests&.size || ((results.map(&:first).max || -1) + 1))
 
       results.each do |index, result|
         slots[index] = result
