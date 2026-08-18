@@ -15,6 +15,8 @@ module RubyLLM
 
     def self.basic(&)
       Faraday.new do |f|
+        f.options.timeout = RubyLLM.config.request_timeout
+        f.proxy = RubyLLM.config.http_proxy if RubyLLM.config.http_proxy
         f.response :logger,
                    RubyLLM.logger,
                    bodies: false,
