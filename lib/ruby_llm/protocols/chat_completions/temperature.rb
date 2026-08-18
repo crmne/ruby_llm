@@ -24,9 +24,9 @@ module RubyLLM
         end
 
         def forced_temperature_model?(model_id)
-          model_id.match?(/^o\d/) ||                          # o1, o3, o4-mini, etc.
-            model_id.match?(/^gpt-5(\.\d+)?(-\d{4})?$/) ||    # gpt-5, gpt-5.4, gpt-5.4-2026-03-05
-            model_id.match?(/^gpt-5(\.\d+)?-pro/)             # gpt-5-pro, gpt-5.4-pro
+          model_id.match?(/^o\d/) || # o1, o3, o4-mini, etc.
+            model_id.match?(/^gpt-5(\.\d+)?(-\d{4}(-\d{2}-\d{2})?)?$/) || # gpt-5, gpt-5.4, gpt-5.4-2026-03-05
+            model_id.match?(/^gpt-5(\.\d+)?-pro/) # gpt-5-pro, gpt-5.4-pro
         end
       end
     end
