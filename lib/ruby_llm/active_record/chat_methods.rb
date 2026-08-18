@@ -372,14 +372,14 @@ module RubyLLM
       # tool results, then re-raises the error.
       def complete(...)
         to_llm.complete(...)
-      rescue RubyLLM::CancelledError => e
+      rescue RubyLLM::CancelledError
         cleanup_failed_messages(reason: 'chat cancelled') if @message&.persisted? && @message.content.blank?
         cleanup_orphaned_tool_results
-        raise e
-      rescue RubyLLM::Error => e
+        raise
+      rescue RubyLLM::Error, Faraday::Error, Timeout::Error, Errno::ETIMEDOUT
         cleanup_failed_messages(reason: 'API call failed') if @message&.persisted? && @message.content.blank?
         cleanup_orphaned_tool_results
-        raise e
+        raise
       end
 
       private
