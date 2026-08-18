@@ -75,10 +75,15 @@ module RubyLLM
         end
       end
 
+      # The rescue can't name Google::Auth::AuthorizationError directly:
+      # when googleauth is missing, evaluating the constant would replace
+      # the helpful install error with a NameError.
       def headers
         initialize_authorizer unless @authorizer
         @authorizer.apply({})
-      rescue Google::Auth::AuthorizationError => e
+      rescue StandardError => e
+        raise unless defined?(Google::Auth::AuthorizationError) && e.is_a?(Google::Auth::AuthorizationError)
+
         raise UnauthorizedError, "Invalid Google Cloud credentials for Vertex AI: #{e.message}"
       end
 
