@@ -136,7 +136,10 @@ module RubyLLM
       def file_headers(_request); end
 
       def file_attachment(file, filename: nil)
-        file.is_a?(Attachment) && filename.nil? ? file : Attachment.new(file, filename:)
+        return file if file.is_a?(Attachment) && filename.nil?
+
+        file = file.source if file.is_a?(Attachment)
+        Attachment.new(file, filename:)
       end
 
       def file_part(attachment, content_type: nil)
