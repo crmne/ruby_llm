@@ -6,6 +6,12 @@ require 'json'
 
 module RubyLLM
   module Streaming # :nodoc: all
+    StreamState = Struct.new(:parser, :buffer) do
+      def initialize
+        super(EventStreamParser::Parser.new, +'')
+      end
+    end
+
     module_function
 
     def stream_response(payload, additional_headers = {}, &block)
@@ -51,18 +57,28 @@ module RubyLLM
       Faraday::VERSION.start_with?('1')
     end
 
+    # Parser state lives on the env so every retry attempt starts fresh;
+    # ErrorMiddleware clears it per attempt. Faraday v1 passes no env to
+    # on_data, so it falls back to one state for the whole request.
     def build_on_data_handler(&handler)
-      buffer = +''
-      parser = EventStreamParser::Parser.new
+      fallback_state = StreamState.new
 
       FaradayHandlers.build(
         faraday_v1: faraday_1?,
-        on_chunk: ->(chunk, env) { process_stream_chunk(chunk, parser, env, &handler) },
-        on_failed_response: ->(chunk, env) { handle_failed_response(chunk, buffer, env) }
+        on_chunk: ->(chunk, env) { process_stream_chunk(chunk, stream_state(env, fallback_state), env, &handler) },
+        on_failed_response: lambda { |chunk, env|
+          handle_failed_response(chunk, stream_state(env, fallback_state).buffer, env)
+        }
       )
     end
 
-    def process_stream_chunk(chunk, parser, env, &)
+    def stream_state(env, fallback_state)
+      return fallback_state unless env.respond_to?(:[]=)
+
+      env[:streaming_state] ||= StreamState.new
+    end
+
+    def process_stream_chunk(chunk, state, env, &)
       RubyLLM.logger.debug { "Received chunk: #{chunk}" } if RubyLLM.config.log_stream_debug
 
       if error_chunk?(chunk)
@@ -70,7 +86,7 @@ module RubyLLM
       elsif json_error_payload?(chunk)
         handle_json_error_chunk(chunk, env)
       else
-        handle_sse(chunk, parser, env, &)
+        handle_sse(chunk, state.parser, env, &)
       end
     end
 
@@ -87,8 +103,8 @@ module RubyLLM
     end
 
     def handle_error_chunk(chunk, env)
-      error_data = chunk.split("\n")[1].delete_prefix('data: ')
-      parse_error_from_json(error_data, env, 'Failed to parse error chunk')
+      error_data = chunk.split("\n")[1]&.delete_prefix('data: ')
+      parse_error_from_json(error_data, env, 'Failed to parse error chunk') if error_data
     end
 
     def handle_failed_response(chunk, buffer, env)
@@ -99,13 +115,19 @@ module RubyLLM
       RubyLLM.logger.debug { "Accumulating error chunk: #{chunk}" }
     end
 
+    # Marking the env once events flow lets the retry middleware know this
+    # stream already delivered chunks, so a mid-stream failure must not be
+    # retried into the same accumulator and user block.
     def handle_sse(chunk, parser, env)
       parser.feed(chunk) do |type, data|
         case type.to_sym
         when :error
           handle_error_event(data, env)
         else
-          yield handle_data(data, env) unless data == '[DONE]'
+          next if data == '[DONE]'
+
+          env[:streaming_started] = true if env.respond_to?(:[]=)
+          yield handle_data(data, env)
         end
       end
     end

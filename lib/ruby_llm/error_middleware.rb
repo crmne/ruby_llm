@@ -10,7 +10,12 @@ module RubyLLM
       @provider = options[:provider]
     end
 
+    # Sits directly above the adapter, inside the retry middleware, so this
+    # runs once per attempt: streaming state stored on the env by a previous
+    # attempt must not leak into the next one.
     def call(env)
+      env[:streaming_error_response] = nil
+      env[:streaming_state] = nil
       @app.call(env).on_complete do |response|
         apply_retry_delay(response)
         self.class.parse_error(provider: @provider, response: streaming_error_response(response))

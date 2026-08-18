@@ -121,7 +121,8 @@ module RubyLLM
         max_interval: @config.retry_max_interval,
         interval_randomness: @config.retry_interval_randomness,
         backoff_factor: @config.retry_backoff_factor,
-        methods: Faraday::Retry::Middleware::IDEMPOTENT_METHODS + [:post],
+        methods: Faraday::Retry::Middleware::IDEMPOTENT_METHODS,
+        retry_if: ->(env, _exception) { env[:method] == :post && !env[:streaming_started] },
         exceptions: retry_exceptions
       }
       faraday.use :llm_usage
