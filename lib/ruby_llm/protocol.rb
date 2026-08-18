@@ -280,6 +280,8 @@ module RubyLLM
         response = @connection.post speech_url(model:), payload, usage: @usage_tracker
         parse_speech_response(response, model:, voice:, format:)
       end
+    rescue NotImplementedError
+      raise Error, "#{@provider.name} doesn't support speech generation"
     end
 
     def transcribe(audio_file, model:, language:, format: nil, speaker_names: nil,
@@ -295,6 +297,8 @@ module RubyLLM
         response = @connection.post transcription_url, payload, usage: @usage_tracker
         parse_transcription_response(response, model:)
       end
+    rescue NotImplementedError
+      raise Error, "#{@provider.name} doesn't support transcription"
     end
 
     # Streams a transcription, yielding TranscriptionChunk objects and
