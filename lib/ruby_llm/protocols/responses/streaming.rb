@@ -24,8 +24,10 @@ module RubyLLM
             chunk tool_calls: { data['output_index'] => ToolCall.new(id: nil, name: nil, arguments: data['delta']) }
           when 'response.output_item.done'
             build_item_done_chunk(data)
-          when 'response.completed'
-            build_completed_chunk(data)
+          when 'response.completed', 'response.incomplete'
+            build_final_chunk(data)
+          when 'response.failed'
+            raise Error, data.dig('response', 'error', 'message')
           else
             chunk
           end
@@ -53,7 +55,7 @@ module RubyLLM
           chunk thinking: Thinking.build(text: nil, signature: item['encrypted_content'])
         end
 
-        def build_completed_chunk(data)
+        def build_final_chunk(data)
           response = data['response'] || {}
           output = response['output'] || []
           server_tool_calls = parse_server_tool_items(output)
