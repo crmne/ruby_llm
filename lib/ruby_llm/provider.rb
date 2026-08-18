@@ -502,7 +502,7 @@ module RubyLLM
       # Resolves +model_id+ to the id the registry stores it under for this
       # provider. Defaults to the id unchanged; providers whose catalog ids
       # differ from their request ids (Bedrock's region prefixes) override it.
-      def resolve_registry_id(model_id, _models)
+      def resolve_registry_id(model_id, _models, _config = nil)
         model_id
       end
 

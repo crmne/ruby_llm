@@ -174,14 +174,14 @@ module RubyLLM
           provider_class ||= Provider.resolve!(provider)
 
           model = begin
-            Models.find(model_id, provider)
+            Models.find(model_id, provider, config: config)
           rescue ModelNotFoundError
             nil
           end
 
           model ||= Model.default(model_id, provider_class.slug)
         else
-          model = Models.find model_id, provider
+          model = Models.find model_id, provider, config: config
           provider_class = Provider.resolve!(model.provider)
         end
         [model, provider_class.new(config)]
@@ -531,9 +531,9 @@ module RubyLLM
     #   RubyLLM.models.find 'gpt-5.4'
     #   RubyLLM.models.find 'claude-sonnet-4-6', :bedrock
     #
-    def find(model_id, provider = nil)
+    def find(model_id, provider = nil, config: nil)
       if provider
-        find_with_provider(model_id, provider)
+        find_with_provider(model_id, provider, config)
       else
         find_without_provider(model_id)
       end
@@ -669,19 +669,19 @@ module RubyLLM
       store.respond_to?(:description) ? store.description : store.class.name
     end
 
-    def find_with_provider(model_id, provider)
+    def find_with_provider(model_id, provider, config = nil)
       resolved_id = Aliases.resolve(model_id, provider)
-      resolved_id = resolve_provider_registry_id(resolved_id, provider)
+      resolved_id = resolve_provider_registry_id(resolved_id, provider, config)
       all.find { |m| m.id == resolved_id && m.provider == provider.to_s } ||
         all.find { |m| m.id == model_id && m.provider == provider.to_s } ||
         raise_model_not_found(model_id, provider: provider)
     end
 
-    def resolve_provider_registry_id(model_id, provider)
+    def resolve_provider_registry_id(model_id, provider, config = nil)
       provider_class = Provider.resolve(provider)
       return model_id unless provider_class
 
-      provider_class.resolve_registry_id(model_id, self)
+      provider_class.resolve_registry_id(model_id, self, config || RubyLLM.config)
     end
 
     # A name can be one provider's exact id and another's alias:

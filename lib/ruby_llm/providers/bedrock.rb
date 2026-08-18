@@ -17,8 +17,8 @@ module RubyLLM
       protocol :nova_embeddings, Protocols::InvokeModel::NovaEmbeddings
       files Bedrock::Files
 
-      def self.resolve_registry_id(model_id, models)
-        Models.resolve_registry_id(model_id, models, RubyLLM.config)
+      def self.resolve_registry_id(model_id, models, config = RubyLLM.config)
+        Models.resolve_registry_id(model_id, models, config)
       end
 
       def protocol_for(model, operation: nil, **)

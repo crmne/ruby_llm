@@ -431,15 +431,19 @@ module RubyLLM
       end
 
       def resolve_model_info
-        return RubyLLM.models.find(@pending_model_id, @pending_provider) unless assume_model_exists
+        return find_registered_model unless assume_model_exists
 
         raise ArgumentError, 'Provider must be specified if assume_model_exists is true' unless @pending_provider
 
         begin
-          RubyLLM.models.find(@pending_model_id, @pending_provider)
+          find_registered_model
         rescue RubyLLM::ModelNotFoundError
           RubyLLM::Model.default(@pending_model_id, @pending_provider)
         end
+      end
+
+      def find_registered_model
+        RubyLLM.models.find(@pending_model_id, @pending_provider, config: context&.config)
       end
 
       def find_or_create_model(model_info)

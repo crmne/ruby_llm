@@ -7,7 +7,7 @@ module RubyLLM
       module Models
         module_function
 
-        REGION_PREFIXES = %w[global us eu ap sa ca me af il au jp].freeze
+        REGION_PREFIXES = %w[global us-gov us eu apac ap sa ca me af il au jp].freeze
 
         MANTLE_ENDPOINT = 'mantle'
 
@@ -165,10 +165,15 @@ module RubyLLM
           end
         end
 
+        # Inference profile ids use geography prefixes, not region name
+        # segments: ap-* regions are apac., GovCloud is us-gov.
         def region_prefix(region)
-          prefix = region.to_s.split('-').first
-          prefix = '' if prefix.nil?
-          prefix.empty? ? 'us' : prefix
+          region = region.to_s
+          return 'us' if region.empty?
+          return 'us-gov' if region.start_with?('us-gov')
+
+          geography = region.split('-').first
+          geography == 'ap' ? 'apac' : geography
         end
 
         def region_prefixed?(model_id)
