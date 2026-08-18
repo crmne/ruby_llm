@@ -1,2 +1,2 @@
-<%% tool ||= local_assigns[:message] %>
+<%% tool ||= local_assigns[:<%= message_model_name.demodulize.underscore %>] %>
 <%%= render tool_result_partial(tool), tool: tool %>
