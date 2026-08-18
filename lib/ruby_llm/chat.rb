@@ -703,7 +703,6 @@ module RubyLLM
     #
     def add_message(message_or_attributes)
       message = coerce_message(message_or_attributes)
-      message = @provider.preprocess_message(message, model: @model, protocol: @protocol) if @provider
       messages << message
       message
     end
@@ -734,6 +733,7 @@ module RubyLLM
     # its next completion, with #before_request hooks applied. Useful for
     # inspecting and testing request output.
     def render
+      preprocess_attachments!
       @provider.render(
         messages,
         tools: @tools,
@@ -1010,8 +1010,19 @@ module RubyLLM
       fallback_errors.any? { |error_class| error.is_a?(error_class) }
     end
 
+    # Preprocessing runs per request, not when messages are added: the
+    # provider can change through fallbacks or with_model, and reloaded
+    # Rails chats rebuild history from rows. History keeps the uploaded
+    # references, so later turns skip already-uploaded attachments.
+    def preprocess_attachments!
+      return unless @provider
+
+      @messages = messages.map { |message| @provider.preprocess_message(message, model: @model, protocol: @protocol) }
+    end
+
     def provider_completion(usage_recorder:, stream_tracker: nil, &)
       raise_if_cancelled!
+      preprocess_attachments!
 
       @provider.complete(
         messages,

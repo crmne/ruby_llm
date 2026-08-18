@@ -96,6 +96,17 @@ RSpec.describe RubyLLM::Protocol do
     expect(provider).not_to have_received(:upload_file)
   end
 
+  it 'preprocesses at request time rather than when messages are added' do
+    chat = RubyLLM.chat(model: RubyLLM.config.default_model)
+    allow(chat.provider).to receive(:preprocess_message) { |message, **| message }
+
+    chat.add_message(role: :user, content: 'hi')
+    expect(chat.provider).not_to have_received(:preprocess_message)
+
+    chat.render
+    expect(chat.provider).to have_received(:preprocess_message)
+  end
+
   it 'does not auto-upload Vertex AI Claude attachments as Anthropic file IDs' do
     provider = RubyLLM::Providers::VertexAI.new(RubyLLM.config)
     protocol = RubyLLM::Providers::VertexAI::Anthropic.new(provider, model)
