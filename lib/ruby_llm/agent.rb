@@ -42,6 +42,7 @@ module RubyLLM
     DUPED_INHERITED_CONFIG = {
       :@chat_kwargs => {},
       :@tools => [],
+      :@server_tools => [],
       :@tool_options => {},
       :@caching => nil,
       :@compaction => nil,
