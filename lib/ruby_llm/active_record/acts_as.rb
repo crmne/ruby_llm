@@ -36,7 +36,7 @@ module RubyLLM
           self.message_class = (message_class || messages.to_s.classify).to_s
 
           has_many messages,
-                   -> { order(created_at: :asc) },
+                   -> { order(:created_at, :id) },
                    class_name: self.message_class,
                    foreign_key: messages_foreign_key,
                    dependent: :destroy
