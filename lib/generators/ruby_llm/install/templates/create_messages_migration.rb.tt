@@ -10,6 +10,7 @@ class <%= create_migration_class_name(message_table_name) %> < ActiveRecord::Mig
       t.json :citations
       t.json :server_tool_calls
       t.json :raw_content
+      t.json :raw_reasoning
       t.string :finish_reason
       t.timestamps
     end
