@@ -196,7 +196,7 @@ module RubyLLM
     #   response.cost.total
     #
     def cost(model: nil)
-      return ruby_llm_usage_cost unless ruby_llm_usage_entries.empty?
+      return ruby_llm_usage_cost if model.nil? && ruby_llm_usage_entries.any?
 
       Cost.new(tokens:, model: model || model_info)
     end
