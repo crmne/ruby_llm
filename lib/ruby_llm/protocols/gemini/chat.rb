@@ -192,7 +192,7 @@ module RubyLLM
             output_tokens: calculate_output_tokens(data),
             cache_read_tokens: data.dig('usageMetadata', 'cachedContentTokenCount'),
             thinking_tokens: data.dig('usageMetadata', 'thoughtsTokenCount'),
-            finish_reason: data.dig('candidates', 0, 'finishReason'),
+            finish_reason: data.dig('candidates', 0, 'finishReason') || data.dig('promptFeedback', 'blockReason'),
             model: data['modelVersion'] || @model&.id,
             raw: raw
           )
@@ -217,8 +217,6 @@ module RubyLLM
         def parse_content(data)
           candidate = data.dig('candidates', 0)
           return ['', []] unless candidate
-
-          return ['', []] if function_call?(candidate)
 
           parts = candidate.dig('content', 'parts')
           return ['', []] unless parts&.any?
@@ -334,11 +332,6 @@ module RubyLLM
           end
 
           nil
-        end
-
-        def function_call?(candidate)
-          parts = candidate.dig('content', 'parts')
-          parts&.any? { |p| p['functionCall'] }
         end
 
         def calculate_output_tokens(data)
