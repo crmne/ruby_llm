@@ -9,6 +9,9 @@ module RubyLLM
 
         REGION_PREFIXES = %w[global us-gov us eu apac ap sa ca me af il au jp].freeze
 
+        JP_REGIONS = %w[ap-northeast-1 ap-northeast-3].freeze
+        AU_REGIONS = %w[ap-southeast-2 ap-southeast-4].freeze
+
         MANTLE_ENDPOINT = 'mantle'
 
         def models_api_base
@@ -62,14 +65,36 @@ module RubyLLM
           Time.at(created).utc if created.is_a?(Numeric)
         end
 
-        def parse_list_models_response(response, slug, _capabilities)
+        def parse_list_models_response(response, slug, _capabilities, profile_ids: [])
           Array(response.body['modelSummaries']).map do |model_data|
-            create_model_info(model_data, slug)
+            create_model_info(model_data, slug, profile_ids:)
           end
         end
 
-        def create_model_info(model_data, slug, _capabilities = nil)
-          model_id = model_id_with_region(model_data['modelId'], model_data)
+        # The region's actual cross-region inference profile ids. Some
+        # geography prefixes cannot be synthesized from the region alone:
+        # Tokyo serves both apac. and jp. profiles.
+        def inference_profile_ids
+          ids = []
+          token = nil
+
+          loop do
+            url = +'/inference-profiles?maxResults=1000&typeEquals=SYSTEM_DEFINED'
+            url << "&nextToken=#{URI.encode_www_form_component(token)}" if token
+            body = signed_get(models_api_base, url).body
+            ids.concat(Array(body['inferenceProfileSummaries']).map { |summary| summary['inferenceProfileId'] })
+            token = body['nextToken']
+            break unless token
+          end
+
+          ids.compact
+        rescue StandardError => e
+          RubyLLM.logger.debug { "Error fetching Bedrock inference profiles: #{e.message}" }
+          []
+        end
+
+        def create_model_info(model_data, slug, _capabilities = nil, profile_ids: [])
+          model_id = model_id_with_region(model_data['modelId'], model_data, profile_ids)
           converse_data = model_data['converse'] || {}
 
           Model.new(
@@ -95,9 +120,20 @@ module RubyLLM
           )
         end
 
-        def model_id_with_region(model_id, model_data)
+        def model_id_with_region(model_id, model_data, profile_ids = [])
           inference_types = Array(model_data['inferenceTypesSupported'])
-          normalize_inference_profile_id(model_id, inference_types, @config.bedrock_region)
+          return model_id unless inference_profile_only?(inference_types)
+
+          listed_profile_id(model_id, profile_ids) || with_region_prefix(model_id, @config.bedrock_region)
+        end
+
+        def listed_profile_id(model_id, profile_ids)
+          candidates = profile_ids.select { |profile_id| profile_id.end_with?(".#{model_id}") }
+          preferred = region_prefix_candidates(@config.bedrock_region).filter_map do |prefix|
+            candidates.find { |profile_id| profile_id == "#{prefix}.#{model_id}" }
+          end.first
+
+          preferred || candidates.first
         end
 
         # Which endpoint serves a model is a fact about the catalogs, not
@@ -138,26 +174,40 @@ module RubyLLM
           return model_id if region.empty?
           return model_id if mantle_model_id?(model_id)
 
-          candidate_id = with_region_prefix(model_id, region)
-          return model_id if candidate_id == model_id
-
-          candidate = models.all.find { |m| m.provider == 'bedrock' && m.id == candidate_id }
+          candidate = registered_profile_candidate(model_id, models, region)
           return model_id unless candidate
 
           inference_types = Array(candidate.metadata[:inference_types] || candidate.metadata['inference_types'])
-          normalize_inference_profile_id(model_id, inference_types, region)
+          inference_profile_only?(inference_types) ? candidate.id : model_id
+        end
+
+        def registered_profile_candidate(model_id, models, region)
+          region_prefix_candidates(region).each do |prefix|
+            prefixed = prefixed_with(model_id, prefix)
+            next if prefixed == model_id
+
+            candidate = models.all.find { |m| m.provider == 'bedrock' && m.id == prefixed }
+            return candidate if candidate
+          end
+
+          nil
+        end
+
+        def inference_profile_only?(inference_types)
+          inference_types.include?('INFERENCE_PROFILE') && !inference_types.include?('ON_DEMAND')
         end
 
         def normalize_inference_profile_id(model_id, inference_types, region)
-          return model_id unless inference_types.include?('INFERENCE_PROFILE')
-          return model_id if inference_types.include?('ON_DEMAND')
+          return model_id unless inference_profile_only?(inference_types)
 
           with_region_prefix(model_id, region)
         end
 
         def with_region_prefix(model_id, region)
-          prefix = region_prefix(region)
+          prefixed_with(model_id, region_prefix(region))
+        end
 
+        def prefixed_with(model_id, prefix)
           if region_prefixed?(model_id)
             model_id.sub(/\A(?:#{REGION_PREFIXES.join('|')})\./, "#{prefix}.")
           else
@@ -174,6 +224,14 @@ module RubyLLM
 
           geography = region.split('-').first
           geography == 'ap' ? 'apac' : geography
+        end
+
+        # Countries with their own residency-preserving profiles come before
+        # the broad geography, so Tokyo prefers jp. over apac.
+        def region_prefix_candidates(region)
+          region = region.to_s
+          specific = ('jp' if JP_REGIONS.include?(region)) || ('au' if AU_REGIONS.include?(region))
+          [specific, region_prefix(region)].compact
         end
 
         def region_prefixed?(model_id)

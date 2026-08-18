@@ -137,7 +137,8 @@ module RubyLLM
       end
 
       def list_converse_models
-        parse_list_models_response(signed_get(models_api_base, models_url), slug, capabilities)
+        parse_list_models_response(signed_get(models_api_base, models_url), slug, capabilities,
+                                   profile_ids: inference_profile_ids)
       end
 
       def list_mantle_models

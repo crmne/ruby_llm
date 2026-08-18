@@ -155,6 +155,14 @@ RSpec.describe RubyLLM::Providers::Bedrock::Models do
       expect(provider.send(:region_prefix, 'eu-west-1')).to eq('eu')
     end
 
+    it 'maps ap regions to the apac geography' do
+      expect(provider.send(:region_prefix, 'ap-southeast-1')).to eq('apac')
+    end
+
+    it 'keeps the full us-gov prefix' do
+      expect(provider.send(:region_prefix, 'us-gov-west-1')).to eq('us-gov')
+    end
+
     it 'defaults to us when the region is blank' do
       expect(provider.send(:region_prefix, '')).to eq('us')
       expect(provider.send(:region_prefix, nil)).to eq('us')
@@ -163,6 +171,67 @@ RSpec.describe RubyLLM::Providers::Bedrock::Models do
     it 'rewrites an existing prefix rather than stacking one' do
       expect(provider.send(:with_region_prefix, 'us.anthropic.claude', 'eu-west-1')).to eq('eu.anthropic.claude')
       expect(provider.send(:with_region_prefix, 'anthropic.claude', 'eu-west-1')).to eq('eu.anthropic.claude')
+    end
+  end
+
+  describe '#region_prefix_candidates' do
+    it 'prefers country profiles where AWS serves them' do
+      expect(provider.send(:region_prefix_candidates, 'ap-northeast-1')).to eq(%w[jp apac])
+      expect(provider.send(:region_prefix_candidates, 'ap-southeast-2')).to eq(%w[au apac])
+    end
+
+    it 'uses the geography alone elsewhere' do
+      expect(provider.send(:region_prefix_candidates, 'ap-southeast-1')).to eq(['apac'])
+      expect(provider.send(:region_prefix_candidates, 'eu-west-1')).to eq(['eu'])
+    end
+  end
+
+  describe '#model_id_with_region' do
+    let(:model_data) { { 'inferenceTypesSupported' => ['INFERENCE_PROFILE'] } }
+
+    before { config.bedrock_region = 'ap-northeast-1' }
+
+    it 'uses the listed country profile over the geography one' do
+      profile_ids = ['apac.meta.llama4-v1:0', 'jp.meta.llama4-v1:0']
+
+      expect(provider.send(:model_id_with_region, 'meta.llama4-v1:0', model_data, profile_ids))
+        .to eq('jp.meta.llama4-v1:0')
+    end
+
+    it 'falls back to any listed profile for the model' do
+      expect(provider.send(:model_id_with_region, 'meta.llama4-v1:0', model_data, ['apac.meta.llama4-v1:0']))
+        .to eq('apac.meta.llama4-v1:0')
+    end
+
+    it 'synthesizes the geography prefix when no profile is listed' do
+      expect(provider.send(:model_id_with_region, 'meta.llama4-v1:0', model_data, []))
+        .to eq('apac.meta.llama4-v1:0')
+    end
+
+    it 'leaves on-demand models alone' do
+      on_demand = { 'inferenceTypesSupported' => %w[INFERENCE_PROFILE ON_DEMAND] }
+
+      expect(provider.send(:model_id_with_region, 'meta.llama4-v1:0', on_demand, [])).to eq('meta.llama4-v1:0')
+    end
+  end
+
+  describe '#inference_profile_ids' do
+    let(:lister) { RubyLLM::Providers::Bedrock.new(config) }
+    let(:page) { Struct.new(:body) }
+
+    it 'follows nextToken across pages' do
+      first = page.new({ 'inferenceProfileSummaries' => [{ 'inferenceProfileId' => 'us.a' }], 'nextToken' => 't' })
+      second = page.new({ 'inferenceProfileSummaries' => [{ 'inferenceProfileId' => 'us.b' }] })
+      allow(lister).to receive(:signed_get).and_return(first, second)
+
+      expect(lister.send(:inference_profile_ids)).to eq(%w[us.a us.b])
+      expect(lister).to have_received(:signed_get).with(anything, /nextToken=t/).once
+    end
+
+    it 'returns nothing when the listing fails' do
+      allow(lister).to receive(:signed_get).and_raise(StandardError, 'denied')
+
+      expect(lister.send(:inference_profile_ids)).to eq([])
     end
   end
 
@@ -214,6 +283,24 @@ RSpec.describe RubyLLM::Providers::Bedrock::Models do
       expect(described_class.resolve_registry_id('meta.llama4-maverick-v1:0', models, config_for)).to eq(
         'us.meta.llama4-maverick-v1:0'
       )
+    end
+
+    it 'resolves to a country profile the registry carries' do
+      jp_models = RubyLLM::Models.new(
+        [
+          RubyLLM::Model.new(
+            id: 'jp.meta.llama4-maverick-v1:0',
+            provider: 'bedrock',
+            metadata: { inference_types: ['INFERENCE_PROFILE'] }
+          )
+        ]
+      )
+
+      tokyo = config_for(region: 'ap-northeast-1')
+
+      expect(
+        described_class.resolve_registry_id('meta.llama4-maverick-v1:0', jp_models, tokyo)
+      ).to eq('jp.meta.llama4-maverick-v1:0')
     end
 
     it 'reads string-keyed inference types too' do
