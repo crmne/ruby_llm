@@ -1,5 +1,7 @@
 # Contributing to RubyLLM
 
+Working with a coding agent? [AGENTS.md](AGENTS.md) has the commands, architecture rules, and style conventions, and the repo ships a `contributing` skill in `.claude/skills/` with step-by-step recipes. Both are worth a read for humans too.
+
 ## Did you find a bug?
 
 * **Ensure the bug was not already reported** by searching on GitHub under [Issues](https://github.com/crmne/ruby_llm/issues).
