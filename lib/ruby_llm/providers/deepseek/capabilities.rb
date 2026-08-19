@@ -5,7 +5,16 @@ module RubyLLM
     class DeepSeek
       # Provider-level capability checks used outside the model registry.
       module Capabilities
+        extend CapabilityTable
+
         module_function
+
+        CAPABILITIES = {
+          'function_calling' => true,
+          'tool_choice' => true,
+          'structured_output' => /\Adeepseek-v4-/,
+          'reasoning' => /\Adeepseek-(?:v4-|reasoner\z)/
+        }.freeze
 
         DEFAULT_CONTEXT_WINDOW = 1_000_000
         DEFAULT_MAX_OUTPUT_TOKENS = 384_000
@@ -28,13 +37,7 @@ module RubyLLM
           DEFAULT_MAX_OUTPUT_TOKENS
         end
 
-        def critical_capabilities_for(model_id)
-          v4_model = model_id.start_with?('deepseek-v4-')
-          capabilities = %w[function_calling tool_choice]
-          capabilities << 'structured_output' if v4_model
-          capabilities << 'reasoning' if model_id == 'deepseek-reasoner' || v4_model
-          capabilities
-        end
+        def critical_capabilities_for(model_id) = supported_capabilities(model_id)
 
         def pricing_for(model_id)
           prices = model_id == 'deepseek-v4-pro' ? PRO_PRICES : DEFAULT_PRICES

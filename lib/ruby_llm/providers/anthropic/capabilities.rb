@@ -5,14 +5,17 @@ module RubyLLM
     class Anthropic
       # Provider-level capability checks used outside the model registry.
       module Capabilities
+        extend CapabilityTable
+
         module_function
 
-        # All current Claude models support citations except Haiku 3, and all
-        # support steering tool choice and parallel tool calls.
-        def critical_capabilities_for(model_id)
-          capabilities = model_id.include?('claude-3-haiku') ? [] : ['citations']
-          capabilities + %w[tool_choice parallel_tool_calls]
-        end
+        CAPABILITIES = {
+          'citations' => ->(model_id) { !model_id.include?('claude-3-haiku') },
+          'tool_choice' => true,
+          'parallel_tool_calls' => true
+        }.freeze
+
+        def critical_capabilities_for(model_id) = supported_capabilities(model_id)
       end
     end
   end

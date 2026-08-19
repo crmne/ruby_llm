@@ -99,6 +99,18 @@ RSpec.describe RubyLLM::Providers::OpenAI::Capabilities do
       expect(described_class.critical_capabilities_for('gpt-5')).to include('reasoning')
     end
 
+    it 'omits vision for the plain GPT-4 family' do
+      %w[gpt-4 gpt-4-0613 gpt-4-0314].each do |model_id|
+        expect(described_class.critical_capabilities_for(model_id)).not_to include('vision')
+      end
+    end
+
+    it 'keeps vision for the turbo, omni and 4.1 families' do
+      %w[gpt-4-turbo gpt-4o gpt-4o-mini gpt-4.1].each do |model_id|
+        expect(described_class.critical_capabilities_for(model_id)).to include('vision')
+      end
+    end
+
     it 'adds citations for the web-search models' do
       expect(described_class.critical_capabilities_for('gpt-4o-search-preview')).to include('citations')
     end

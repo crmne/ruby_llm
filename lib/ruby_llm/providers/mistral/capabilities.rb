@@ -5,30 +5,29 @@ module RubyLLM
     class Mistral
       # Determines capabilities for Mistral models
       module Capabilities
+        extend CapabilityTable
+
         VOXTRAL = 'voxtral'
 
-        module_function
-
-        def supports_streaming?(model_id)
-          !model_id.match?(/embed|moderation|ocr|transcriptions/)
-        end
-
-        def supports_tools?(model_id)
+        TOOL_MODELS = lambda { |model_id|
           !model_id.match?(/embed|moderation|ocr|voxtral|transcriptions|mistral-(tiny|small)-(2312|2402)/)
-        end
+        }
 
-        def supports_vision?(model_id)
-          model_id.match?(/pixtral|mistral-small-(2503|2506)|mistral-medium/)
-        end
+        CAPABILITIES = {
+          'streaming' => ->(model_id) { !model_id.match?(/embed|moderation|ocr|transcriptions/) },
+          'function_calling' => TOOL_MODELS,
+          'tool_choice' => TOOL_MODELS,
+          'parallel_tool_calls' => TOOL_MODELS,
+          'structured_output' => TOOL_MODELS,
+          'vision' => /pixtral|mistral-small-(2503|2506)|mistral-medium/,
+          'reasoning' => /magistral|\Amistral-(?:small-latest|medium-(?:3(?:[.-]5)?|latest))\z/,
+          'batch' => ->(model_id) { !model_id.match?(/voxtral|ocr|embed|moderation/) },
+          'fine_tuning' => /mistral-(small|medium|large)|devstral/,
+          'distillation' => /ministral/,
+          'predicted_outputs' => /codestral/
+        }.freeze
 
-        def supports_json_mode?(model_id)
-          !model_id.match?(/embed|moderation|ocr|voxtral|transcriptions/) && supports_tools?(model_id)
-        end
-
-        def supports_reasoning?(model_id)
-          model_id.match?(/magistral/) ||
-            model_id.match?(/\Amistral-(?:small-latest|medium-(?:3(?:[.-]5)?|latest))\z/)
-        end
+        module_function
 
         def format_display_name(model_id)
           case model_id
@@ -116,24 +115,12 @@ module RubyLLM
           end
         end
 
-        def capabilities_for(model_id) # rubocop:disable Metrics/PerceivedComplexity
+        def capabilities_for(model_id)
           return ['moderation'] if model_id.match?(/moderation/)
           return ['transcription'] if voxtral_followed_by?(model_id, 'transcribe')
           return ['vision'] if model_id.match?(/ocr/)
 
-          capabilities = []
-          capabilities << 'streaming' if supports_streaming?(model_id)
-          capabilities.push('function_calling', 'tool_choice', 'parallel_tool_calls') if supports_tools?(model_id)
-          capabilities << 'structured_output' if supports_json_mode?(model_id)
-          capabilities << 'vision' if supports_vision?(model_id)
-
-          capabilities << 'reasoning' if supports_reasoning?(model_id)
-          capabilities << 'batch' unless model_id.match?(/voxtral|ocr|embed|moderation/)
-          capabilities << 'fine_tuning' if model_id.match?(/mistral-(small|medium|large)|devstral/)
-          capabilities << 'distillation' if model_id.match?(/ministral/)
-          capabilities << 'predicted_outputs' if model_id.match?(/codestral/)
-
-          capabilities.uniq
+          supported_capabilities(model_id)
         end
 
         def pricing_for(_model_id)

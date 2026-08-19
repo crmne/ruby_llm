@@ -3,51 +3,43 @@
 require 'spec_helper'
 
 RSpec.describe RubyLLM::Providers::Mistral::Capabilities do
-  describe '.supports_streaming?' do
-    it 'excludes the non-conversational endpoints' do
-      expect(described_class.supports_streaming?('mistral-small-latest')).to be(true)
-      expect(described_class.supports_streaming?('mistral-embed')).to be(false)
-      expect(described_class.supports_streaming?('mistral-moderation-latest')).to be(false)
-      expect(described_class.supports_streaming?('mistral-ocr-latest')).to be(false)
-      expect(described_class.supports_streaming?('voxtral-mini-transcriptions')).to be(false)
+  describe '.supports?' do
+    it 'excludes the non-conversational endpoints from streaming' do
+      expect(described_class.supports?('mistral-small-latest', 'streaming')).to be(true)
+      expect(described_class.supports?('mistral-embed', 'streaming')).to be(false)
+      expect(described_class.supports?('mistral-moderation-latest', 'streaming')).to be(false)
+      expect(described_class.supports?('mistral-ocr-latest', 'streaming')).to be(false)
+      expect(described_class.supports?('voxtral-mini-transcriptions', 'streaming')).to be(false)
     end
-  end
 
-  describe '.supports_tools?' do
-    it 'excludes embeddings, audio and the retired tiny/small snapshots' do
-      expect(described_class.supports_tools?('mistral-large-latest')).to be(true)
-      expect(described_class.supports_tools?('mistral-embed')).to be(false)
-      expect(described_class.supports_tools?('voxtral-small-latest')).to be(false)
-      expect(described_class.supports_tools?('mistral-tiny-2312')).to be(false)
-      expect(described_class.supports_tools?('mistral-small-2402')).to be(false)
+    it 'excludes embeddings, audio and the retired tiny/small snapshots from tool use' do
+      expect(described_class.supports?('mistral-large-latest', 'function_calling')).to be(true)
+      expect(described_class.supports?('mistral-embed', 'function_calling')).to be(false)
+      expect(described_class.supports?('voxtral-small-latest', 'function_calling')).to be(false)
+      expect(described_class.supports?('mistral-tiny-2312', 'function_calling')).to be(false)
+      expect(described_class.supports?('mistral-small-2402', 'function_calling')).to be(false)
     end
-  end
 
-  describe '.supports_vision?' do
     it 'recognizes the multimodal families' do
-      expect(described_class.supports_vision?('pixtral-12b-latest')).to be(true)
-      expect(described_class.supports_vision?('mistral-small-2503')).to be(true)
-      expect(described_class.supports_vision?('mistral-small-2506')).to be(true)
-      expect(described_class.supports_vision?('mistral-medium-latest')).to be(true)
-      expect(described_class.supports_vision?('mistral-large-latest')).to be(false)
+      expect(described_class.supports?('pixtral-12b-latest', 'vision')).to be(true)
+      expect(described_class.supports?('mistral-small-2503', 'vision')).to be(true)
+      expect(described_class.supports?('mistral-small-2506', 'vision')).to be(true)
+      expect(described_class.supports?('mistral-medium-latest', 'vision')).to be(true)
+      expect(described_class.supports?('mistral-large-latest', 'vision')).to be(false)
     end
-  end
 
-  describe '.supports_json_mode?' do
-    it 'requires tool support on top of a conversational model' do
-      expect(described_class.supports_json_mode?('mistral-small-latest')).to be(true)
-      expect(described_class.supports_json_mode?('mistral-embed')).to be(false)
-      expect(described_class.supports_json_mode?('mistral-tiny-2312')).to be(false)
+    it 'requires tool support on top of a conversational model for structured output' do
+      expect(described_class.supports?('mistral-small-latest', 'structured_output')).to be(true)
+      expect(described_class.supports?('mistral-embed', 'structured_output')).to be(false)
+      expect(described_class.supports?('mistral-tiny-2312', 'structured_output')).to be(false)
     end
-  end
 
-  describe '.supports_reasoning?' do
     it 'recognizes native and adjustable reasoning models' do
-      expect(described_class.supports_reasoning?('magistral-small-latest')).to be(true)
-      expect(described_class.supports_reasoning?('mistral-small-latest')).to be(true)
-      expect(described_class.supports_reasoning?('mistral-medium-3-5')).to be(true)
-      expect(described_class.supports_reasoning?('mistral-medium-3.5')).to be(true)
-      expect(described_class.supports_reasoning?('pixtral-12b')).to be(false)
+      expect(described_class.supports?('magistral-small-latest', 'reasoning')).to be(true)
+      expect(described_class.supports?('mistral-small-latest', 'reasoning')).to be(true)
+      expect(described_class.supports?('mistral-medium-3-5', 'reasoning')).to be(true)
+      expect(described_class.supports?('mistral-medium-3.5', 'reasoning')).to be(true)
+      expect(described_class.supports?('pixtral-12b', 'reasoning')).to be(false)
     end
   end
 

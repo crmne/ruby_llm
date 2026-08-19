@@ -41,42 +41,38 @@ RSpec.describe RubyLLM::Providers::Gemini::Capabilities do
     end
   end
 
-  describe '.supports_vision?' do
-    it 'excludes the embedding and attributed-QA models' do
-      expect(described_class.supports_vision?('text-embedding-004')).to be(false)
-      expect(described_class.supports_vision?('embedding-001')).to be(false)
-      expect(described_class.supports_vision?('aqa')).to be(false)
+  describe '.supports?' do
+    it 'excludes the embedding and attributed-QA models from vision' do
+      expect(described_class.supports?('text-embedding-004', 'vision')).to be(false)
+      expect(described_class.supports?('embedding-001', 'vision')).to be(false)
+      expect(described_class.supports?('aqa', 'vision')).to be(false)
     end
 
-    it 'includes the generative families' do
-      expect(described_class.supports_vision?('gemini-2.5-flash')).to be(true)
-      expect(described_class.supports_vision?('imagen-3.0-generate-002')).to be(true)
-    end
-  end
-
-  describe '.supports_functions?' do
-    it 'excludes embeddings, imagen and the lite tiers' do
-      expect(described_class.supports_functions?('text-embedding-004')).to be(false)
-      expect(described_class.supports_functions?('aqa')).to be(false)
-      expect(described_class.supports_functions?('imagen-3.0-generate-002')).to be(false)
-      expect(described_class.supports_functions?('gemini-2.0-flash-lite')).to be(false)
+    it 'includes the generative families in vision' do
+      expect(described_class.supports?('gemini-2.5-flash', 'vision')).to be(true)
+      expect(described_class.supports?('imagen-3.0-generate-002', 'vision')).to be(true)
     end
 
-    it 'includes the generative families' do
-      expect(described_class.supports_functions?('gemini-2.5-flash')).to be(true)
-    end
-  end
-
-  describe '.supports_structured_output?' do
-    it 'excludes embeddings, imagen, the lite tier and the 2.5 pro preview' do
-      expect(described_class.supports_structured_output?('embedding-001')).to be(false)
-      expect(described_class.supports_structured_output?('imagen-3.0-generate-002')).to be(false)
-      expect(described_class.supports_structured_output?('gemini-2.0-flash-lite')).to be(false)
-      expect(described_class.supports_structured_output?('gemini-2.5-pro-exp-03-25')).to be(false)
+    it 'excludes embeddings, imagen and the lite tiers from function calling' do
+      expect(described_class.supports?('text-embedding-004', 'function_calling')).to be(false)
+      expect(described_class.supports?('aqa', 'function_calling')).to be(false)
+      expect(described_class.supports?('imagen-3.0-generate-002', 'function_calling')).to be(false)
+      expect(described_class.supports?('gemini-2.0-flash-lite', 'function_calling')).to be(false)
     end
 
-    it 'includes the generative families' do
-      expect(described_class.supports_structured_output?('gemini-2.5-flash')).to be(true)
+    it 'includes the generative families in function calling' do
+      expect(described_class.supports?('gemini-2.5-flash', 'function_calling')).to be(true)
+    end
+
+    it 'excludes embeddings, imagen, the lite tier and the 2.5 pro preview from structured output' do
+      expect(described_class.supports?('embedding-001', 'structured_output')).to be(false)
+      expect(described_class.supports?('imagen-3.0-generate-002', 'structured_output')).to be(false)
+      expect(described_class.supports?('gemini-2.0-flash-lite', 'structured_output')).to be(false)
+      expect(described_class.supports?('gemini-2.5-pro-exp-03-25', 'structured_output')).to be(false)
+    end
+
+    it 'includes the generative families in structured output' do
+      expect(described_class.supports?('gemini-2.5-flash', 'structured_output')).to be(true)
     end
   end
 

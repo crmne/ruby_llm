@@ -5,7 +5,15 @@ module RubyLLM
     class Perplexity
       # Provider-level capability checks and narrow registry fallbacks.
       module Capabilities
+        extend CapabilityTable
+
         module_function
+
+        CAPABILITIES = {
+          'citations' => true,
+          'vision' => /sonar(?:-pro|-reasoning(?:-pro)?)?$/,
+          'reasoning' => /reasoning|deep-research/
+        }.freeze
 
         PRICES = {
           sonar: { input: 1.0, output: 1.0 },
@@ -39,11 +47,7 @@ module RubyLLM
         def critical_capabilities_for(model_id)
           return [] if embedding_model?(model_id)
 
-          # Every Perplexity search model returns search result citations.
-          capabilities = ['citations']
-          capabilities << 'vision' if model_id.match?(/sonar(?:-pro|-reasoning(?:-pro)?)?$/)
-          capabilities << 'reasoning' if model_id.match?(/reasoning|deep-research/)
-          capabilities
+          supported_capabilities(model_id)
         end
 
         def pricing_for(model_id)
@@ -67,9 +71,6 @@ module RubyLLM
           else :unknown
           end
         end
-
-        module_function :embedding_model?, :context_window_for, :max_tokens_for, :critical_capabilities_for,
-                        :pricing_for, :model_family
       end
     end
   end

@@ -5,6 +5,8 @@ module RubyLLM
     class OpenAI
       # Provider-level capability checks and narrow registry fallbacks.
       module Capabilities
+        extend CapabilityTable
+
         module_function
 
         MODEL_PATTERNS = {
@@ -14,8 +16,8 @@ module RubyLLM
           gpt41: /^gpt-4\.1(?!-(?:mini|nano))/,
           gpt41_mini: /^gpt-4\.1-mini/,
           gpt41_nano: /^gpt-4\.1-nano/,
-          gpt4: /^gpt-4(?:-\d{6})?$/,
-          gpt4_turbo: /^gpt-4(?:\.5)?-(?:\d{6}-)?(preview|turbo)/,
+          gpt4: /^gpt-4(?:-\d{4})?$/,
+          gpt4_turbo: /^gpt-4(?:\.5)?-(?:\d{4}-)?(preview|turbo)/,
           gpt35_turbo: /^gpt-3\.5-turbo/,
           gpt4o: /^gpt-4o(?!-(?:mini|audio|realtime|transcribe|tts|search))/,
           gpt4o_audio: /^gpt-4o-(?:audio)/,
@@ -106,6 +108,28 @@ module RubyLLM
           embedding_ada
         ].freeze
         TRANSCRIPTION_FAMILIES = %w[whisper gpt4o_transcribe gpt4o_mini_transcribe].freeze
+        TOOL_FAMILIES = %w[
+          gpt5 gpt5_mini gpt5_nano gpt41 gpt41_mini gpt41_nano gpt4 gpt4_turbo gpt4o gpt4o_mini o1 o1_pro o3_mini
+        ].freeze
+        STRUCTURED_OUTPUT_FAMILIES = %w[
+          gpt5 gpt5_mini gpt5_nano gpt41 gpt41_mini gpt41_nano gpt4o gpt4o_mini o1 o1_pro o3_mini
+        ].freeze
+        VISION_FAMILIES = %w[
+          gpt_image gpt_image_mini gpt_image15 gpt5 gpt5_mini gpt5_nano gpt41 gpt41_mini gpt41_nano gpt4_turbo
+          gpt4o gpt4o_mini o1 o1_pro moderation gpt4o_search
+        ].freeze
+
+        CAPABILITIES = {
+          'function_calling' => TOOL_FAMILIES,
+          'tool_choice' => TOOL_FAMILIES,
+          'parallel_tool_calls' => TOOL_FAMILIES,
+          'structured_output' => STRUCTURED_OUTPUT_FAMILIES,
+          'vision' => VISION_FAMILIES,
+          'reasoning' => /o\d|gpt-5|codex/,
+          'transcription' => TRANSCRIPTION_FAMILIES,
+          # Web search models return url_citation annotations.
+          'citations' => /search-(?:preview|api)/
+        }.freeze
 
         def context_window_for(model_id)
           family = model_family(model_id)
@@ -140,17 +164,9 @@ module RubyLLM
           end
         end
 
-        def critical_capabilities_for(model_id)
-          capabilities = []
-          capabilities.push('function_calling', 'tool_choice', 'parallel_tool_calls') if supports_functions?(model_id)
-          capabilities << 'structured_output' if supports_structured_output?(model_id)
-          capabilities << 'vision' if supports_vision?(model_id)
-          capabilities << 'reasoning' if model_id.match?(/o\d|gpt-5|codex/)
-          capabilities << 'transcription' if TRANSCRIPTION_FAMILIES.include?(model_family(model_id))
-          # Web search models return url_citation annotations.
-          capabilities << 'citations' if model_id.match?(/search-(?:preview|api)/)
-          capabilities
-        end
+        def critical_capabilities_for(model_id) = supported_capabilities(model_id)
+
+        def capability_subject(model_id) = model_family(model_id)
 
         def pricing_for(model_id)
           return image_pricing_for(model_id) if image_model?(model_id)
@@ -172,37 +188,6 @@ module RubyLLM
           end
 
           'other'
-        end
-
-        def supports_vision?(model_id)
-          case model_family(model_id)
-          when 'gpt_image', 'gpt_image_mini', 'gpt_image15', 'gpt5', 'gpt5_mini', 'gpt5_nano', 'gpt41', 'gpt41_mini',
-               'gpt41_nano', 'gpt4', 'gpt4_turbo', 'gpt4o', 'gpt4o_mini', 'o1', 'o1_pro', 'moderation',
-               'gpt4o_search'
-            true
-          else
-            false
-          end
-        end
-
-        def supports_functions?(model_id)
-          case model_family(model_id)
-          when 'gpt5', 'gpt5_mini', 'gpt5_nano', 'gpt41', 'gpt41_mini', 'gpt41_nano', 'gpt4',
-               'gpt4_turbo', 'gpt4o', 'gpt4o_mini', 'o1', 'o1_pro', 'o3_mini'
-            true
-          else
-            false
-          end
-        end
-
-        def supports_structured_output?(model_id)
-          case model_family(model_id)
-          when 'gpt5', 'gpt5_mini', 'gpt5_nano', 'gpt41', 'gpt41_mini', 'gpt41_nano', 'gpt4o',
-               'gpt4o_mini', 'o1', 'o1_pro', 'o3_mini'
-            true
-          else
-            false
-          end
         end
 
         def input_price_for(model_id)

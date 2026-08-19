@@ -5,7 +5,24 @@ module RubyLLM
     class Gemini
       # Provider-level capability checks and narrow registry fallbacks.
       module Capabilities
+        extend CapabilityTable
+
         module_function
+
+        CHAT_MODELS = /gemini|pro|flash/
+        EMBEDDING_OR_AQA = /text-embedding|embedding-001|aqa/
+        NON_STRUCTURED = /#{EMBEDDING_OR_AQA}|imagen|gemini-2\.0-flash-lite|gemini-2\.5-pro-exp-03-25/
+
+        TOOL_MODELS = lambda { |model_id|
+          !model_id.match?(/#{EMBEDDING_OR_AQA}|flash-lite|imagen/) && model_id.match?(CHAT_MODELS)
+        }
+
+        CAPABILITIES = {
+          'function_calling' => TOOL_MODELS,
+          'tool_choice' => TOOL_MODELS,
+          'structured_output' => ->(model_id) { !model_id.match?(NON_STRUCTURED) && model_id.match?(CHAT_MODELS) },
+          'vision' => ->(model_id) { !model_id.match?(EMBEDDING_OR_AQA) && model_id.match?(/gemini|flash|pro|imagen/) }
+        }.freeze
 
         PRICES = {
           flash_2: { input: 0.10, output: 0.40 }, # rubocop:disable Naming/VariableNumber
@@ -47,16 +64,7 @@ module RubyLLM
           end
         end
 
-        def critical_capabilities_for(model_id)
-          capabilities = []
-          if supports_functions?(model_id)
-            capabilities << 'function_calling'
-            capabilities << 'tool_choice'
-          end
-          capabilities << 'structured_output' if supports_structured_output?(model_id)
-          capabilities << 'vision' if supports_vision?(model_id)
-          capabilities
-        end
+        def critical_capabilities_for(model_id) = supported_capabilities(model_id)
 
         def pricing_for(model_id)
           prices = PRICES.fetch(pricing_family(model_id), { input: 0.075, output: 0.30 })
@@ -68,26 +76,6 @@ module RubyLLM
               }
             }
           }
-        end
-
-        def supports_vision?(model_id)
-          return false if model_id.match?(/text-embedding|embedding-001|aqa/)
-
-          model_id.match?(/gemini|flash|pro|imagen/)
-        end
-
-        def supports_functions?(model_id)
-          return false if model_id.match?(/text-embedding|embedding-001|aqa|flash-lite|imagen|gemini-2\.0-flash-lite/)
-
-          model_id.match?(/gemini|pro|flash/)
-        end
-
-        def supports_structured_output?(model_id)
-          if model_id.match?(/text-embedding|embedding-001|aqa|imagen|gemini-2\.0-flash-lite|gemini-2\.5-pro-exp-03-25/)
-            return false
-          end
-
-          model_id.match?(/gemini|pro|flash/)
         end
 
         def pricing_family(model_id)
@@ -105,9 +93,6 @@ module RubyLLM
           else :base
           end
         end
-
-        module_function :context_window_for, :max_tokens_for, :critical_capabilities_for, :pricing_for,
-                        :supports_vision?, :supports_functions?, :supports_structured_output?, :pricing_family
       end
     end
   end
