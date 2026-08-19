@@ -8,7 +8,7 @@ http_interactions:
       string: '{"model":"gpt-oss:120b","messages":[{"role":"user","content":"Call
         the any-of params tool for task \"Review PR\" with status \"pending\" and
         report the result."}],"stream":false,"tools":[{"type":"function","function":{"name":"any_of_params","description":"Uses
-        params DSL any_of support","parameters":{"$schema":"https://json-schema.org/draft/2020-12/schema","title":"Schema","type":"object","properties":{"task":{"type":"string","description":"Task
+        params DSL any_of support","parameters":{"type":"object","properties":{"task":{"type":"string","description":"Task
         description"},"status":{"description":"Optional task status","anyOf":[{"type":"string","enum":["pending","done"]},{"type":"null"}]}},"required":["task","status"],"additionalProperties":false}}}]}'
     headers:
       User-Agent:
@@ -31,34 +31,33 @@ http_interactions:
       Set-Cookie:
       - "<COOKIE>"
       X-Build-Commit:
-      - a083b15ea635ff93836cee498abde05672929e5d
+      - dfd88388a9119aa961fcc4191eeda58e15bc9344
       X-Build-Time:
-      - '2026-08-12T14:41:44-07:00'
+      - '2026-08-18T23:03:55-07:00'
       X-Frame-Options:
       - DENY
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Content-Length:
-      - '590'
+      - '546'
       Date:
-      - Thu, 13 Aug 2026 10:11:59 GMT
+      - Wed, 19 Aug 2026 15:00:25 GMT
       Server:
       - Google Frontend
       Traceparent:
-      - 00-dff49e5d89ffda4a107a3ac6ffec9090-d5f88ca447883347-00
+      - 00-3430d4ddc8bef6f50487a4bd3a995569-c435e99350237215-00
       X-Cloud-Trace-Context:
-      - dff49e5d89ffda4a107a3ac6ffec9090/15418227961505526599
+      - 3430d4ddc8bef6f50487a4bd3a995569/14138463424113504789
       Via:
       - 1.1 google
       Alt-Svc:
-      - h3=":443"; ma=2592000
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-835","object":"chat.completion","created":1786615919,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"We
-        need to call the tool functions.any_of_params with task \"Review PR\" and
-        status \"pending\". Then report result.","tool_calls":[{"id":"call_4x68loiw","index":0,"type":"function","function":{"name":"any_of_params","arguments":"{\"task\":\"Review
-        PR\",\"status\":\"pending\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":162,"completion_tokens":62,"total_tokens":224}}
+      string: '{"id":"chatcmpl-266","object":"chat.completion","created":1787151625,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"We
+        need to call the any_of tool with task and status. Use function call.","tool_calls":[{"id":"call_gc1cl4fx","index":0,"type":"function","function":{"name":"any_of_params","arguments":"{\"task\":\"Review
+        PR\",\"status\":\"pending\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":162,"completion_tokens":54,"total_tokens":216}}
 
         '
-  recorded_at: Thu, 13 Aug 2026 10:11:59 GMT
+  recorded_at: Wed, 19 Aug 2026 15:00:25 GMT
 recorded_with: VCR 6.4.0

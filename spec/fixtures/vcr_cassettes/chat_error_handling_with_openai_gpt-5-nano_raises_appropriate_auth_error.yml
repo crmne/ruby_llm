@@ -8,7 +8,7 @@ http_interactions:
       string: '{"model":"gpt-5-nano","input":[{"role":"user","content":"Hello"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"]}'
     headers:
       User-Agent:
-      - Faraday v2.14.2
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -23,7 +23,7 @@ http_interactions:
       message: Unauthorized
     headers:
       Date:
-      - Thu, 11 Jun 2026 20:09:20 GMT
+      - Wed, 19 Aug 2026 14:34:13 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -50,7 +50,7 @@ http_interactions:
       - CF-Ray
       - X-Request-ID
       Openai-Processing-Ms:
-      - '20'
+      - '30'
       Openai-Version:
       - '2020-10-01'
       X-Request-Id:
@@ -68,5 +68,5 @@ http_interactions:
             "code": "invalid_api_key"
           }
         }
-  recorded_at: Thu, 11 Jun 2026 20:09:20 GMT
+  recorded_at: Wed, 19 Aug 2026 14:34:13 GMT
 recorded_with: VCR 6.4.0

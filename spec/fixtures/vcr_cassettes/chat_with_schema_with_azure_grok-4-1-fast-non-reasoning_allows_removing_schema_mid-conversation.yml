@@ -9,7 +9,7 @@ http_interactions:
         a person named Bob"}],"stream":false,"response_format":{"type":"json_schema","json_schema":{"name":"response","schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"integer"}},"required":["name","age"],"additionalProperties":false},"strict":true}}}'
     headers:
       User-Agent:
-      - Faraday v2.14.2
+      - Faraday v2.14.3
       Api-Key:
       - "<AZURE_API_KEY>"
       Content-Type:
@@ -35,75 +35,41 @@ http_interactions:
       - "*"
       Vary:
       - access-control-request-headers
-      Request-Context:
-      - appId=
-      X-Ms-Rai-Invoked:
-      - 'false'
-      Traceparent:
-      - 00-0df43ecffddd476498ffdc55d8cc85c9-493fc1c300133cc0-00
-      X-Request-Id:
-      - "<X_REQUEST_ID>"
-      X-Xai-Model-Address:
-      - http://localhost:9988
-      X-Ms-Client-Request-Id:
-      - 0df43ecf-fddd-4764-98ff-dc55d8cc85c9
-      Azureml-Model-Session:
-      - d20260601175039-cf414bb2
-      Azureai-Requested-Tier:
-      - default
-      Azureai-Processed-Tier:
-      - default
-      X-Ms-Is-Spilled-Over:
-      - 'false'
-      X-Ratelimit-Key:
-      - grok-4-1-fast-non-reasoning
-      X-Ratelimit-Remaining-Requests:
-      - '49'
-      X-Ratelimit-Reset-Requests:
-      - '1'
-      X-Ratelimit-Limit-Requests:
-      - '50'
-      X-Ratelimit-Renewalperiod-Requests:
-      - '60'
-      X-Ratelimit-Abusepenalty-Active:
-      - 'False'
-      X-Ratelimit-Remaining-Tokens:
-      - '49911'
-      X-Ratelimit-Reset-Tokens:
-      - '0'
-      X-Ratelimit-Limit-Tokens:
-      - '50000'
-      X-Ratelimit-Renewalperiod-Tokens:
-      - '60'
-      Azureai-Fe-Is-Streaming:
-      - 'False'
       Apim-Request-Id:
-      - 0df43ecf-fddd-4764-98ff-dc55d8cc85c9
+      - 96741f9a-d018-4bf1-ae14-af48f9670fe2
+      Traceparent:
+      - 00-6568e7359667b0753279b66999ff871c-c990d761000309ae-00
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
-      X-Ms-Deployment-Name:
-      - grok-4-1-fast-non-reasoning
       X-Content-Type-Options:
       - nosniff
       X-Ms-Region:
       - West Europe
+      Azureai-Requested-Tier:
+      - default
+      Azureai-Processed-Tier:
+      - default
+      Azureai-Fe-Is-Streaming:
+      - 'False'
+      Azureai-Fe-Offer-Type:
+      - paygo
       Date:
-      - Mon, 08 Jun 2026 18:45:41 GMT
+      - Wed, 19 Aug 2026 14:34:23 GMT
     body:
       encoding: UTF-8
-      string: '{"id":"528bc291-f677-4eab-86dd-99d81d44f0ca","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"{\"name\":\"Bob\",\"age\":42}"},"finish_reason":"stop","content_filter_results":{}}],"usage":{"prompt_tokens":78,"completion_tokens":9,"total_tokens":87,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":238,"audio_tokens":0,"text_tokens":78,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1780944342,"object":"chat.completion","prompt_filter_results":null}'
-  recorded_at: Mon, 08 Jun 2026 18:45:42 GMT
+      string: '{"id":"5efd6fd7-da96-43c1-a5a7-d17d70cdd66f","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"{\"name\":\"Bob\",\"age\":30}"},"finish_reason":"stop"}],"usage":{"prompt_tokens":78,"completion_tokens":9,"total_tokens":87,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":158,"audio_tokens":0,"text_tokens":78,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1787150063,"object":"chat.completion","prompt_filter_results":null}'
+  recorded_at: Wed, 19 Aug 2026 14:34:23 GMT
 - request:
     method: post
     uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
     body:
       encoding: UTF-8
       string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"user","content":"Generate
-        a person named Bob"},{"role":"assistant","content":"{\"name\":\"Bob\",\"age\":42}"},{"role":"user","content":"Now
+        a person named Bob"},{"role":"assistant","content":"{\"name\":\"Bob\",\"age\":30}"},{"role":"user","content":"Now
         just tell me about Ruby"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.2
+      - Faraday v2.14.3
       Api-Key:
       - "<AZURE_API_KEY>"
       Content-Type:
@@ -129,62 +95,28 @@ http_interactions:
       - "*"
       Vary:
       - access-control-request-headers
-      Request-Context:
-      - appId=
-      X-Ms-Rai-Invoked:
-      - 'false'
-      Traceparent:
-      - 00-1d2e7cc6bfb04af58d88b83319aa5fdf-6b7593b00015ec41-00
-      X-Request-Id:
-      - "<X_REQUEST_ID>"
-      X-Xai-Model-Address:
-      - http://localhost:9988
-      X-Ms-Client-Request-Id:
-      - 1d2e7cc6-bfb0-4af5-8d88-b83319aa5fdf
-      Azureml-Model-Session:
-      - d20260601175039-cf414bb2
-      Azureai-Requested-Tier:
-      - default
-      Azureai-Processed-Tier:
-      - default
-      X-Ms-Is-Spilled-Over:
-      - 'false'
-      X-Ratelimit-Key:
-      - grok-4-1-fast-non-reasoning
-      X-Ratelimit-Remaining-Requests:
-      - '47'
-      X-Ratelimit-Reset-Requests:
-      - '3'
-      X-Ratelimit-Limit-Requests:
-      - '50'
-      X-Ratelimit-Renewalperiod-Requests:
-      - '60'
-      X-Ratelimit-Abusepenalty-Active:
-      - 'False'
-      X-Ratelimit-Remaining-Tokens:
-      - '49940'
-      X-Ratelimit-Reset-Tokens:
-      - '0'
-      X-Ratelimit-Limit-Tokens:
-      - '50000'
-      X-Ratelimit-Renewalperiod-Tokens:
-      - '60'
-      Azureai-Fe-Is-Streaming:
-      - 'False'
       Apim-Request-Id:
-      - 1d2e7cc6-bfb0-4af5-8d88-b83319aa5fdf
+      - a747b667-39d4-4b48-9e8f-aa1b4b3a92f6
+      Traceparent:
+      - 00-ebb27d75254b526b96c5fd5f829f6b8a-5d753a85000366df-00
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
-      X-Ms-Deployment-Name:
-      - grok-4-1-fast-non-reasoning
       X-Content-Type-Options:
       - nosniff
       X-Ms-Region:
       - West Europe
+      Azureai-Requested-Tier:
+      - default
+      Azureai-Processed-Tier:
+      - default
+      Azureai-Fe-Is-Streaming:
+      - 'False'
+      Azureai-Fe-Offer-Type:
+      - paygo
       Date:
-      - Mon, 08 Jun 2026 18:45:42 GMT
+      - Wed, 19 Aug 2026 14:34:23 GMT
     body:
       encoding: UTF-8
-      string: '{"id":"b7604e0d-b8f3-4796-83dc-6a465e372b60","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"{\"name\":\"Ruby\",\"age\":28}"},"finish_reason":"stop","content_filter_results":{}}],"usage":{"prompt_tokens":31,"completion_tokens":9,"total_tokens":40,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":161,"audio_tokens":0,"text_tokens":31,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1780944342,"object":"chat.completion","prompt_filter_results":null}'
-  recorded_at: Mon, 08 Jun 2026 18:45:43 GMT
+      string: '{"id":"021234b3-a02b-452e-8c11-f8239c9cd187","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"{\"name\":\"Ruby\",\"age\":28}"},"finish_reason":"stop"}],"usage":{"prompt_tokens":31,"completion_tokens":9,"total_tokens":40,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":161,"audio_tokens":0,"text_tokens":31,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1787150063,"object":"chat.completion","prompt_filter_results":null}'
+  recorded_at: Wed, 19 Aug 2026 14:34:24 GMT
 recorded_with: VCR 6.4.0

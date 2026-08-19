@@ -8,7 +8,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Faraday v2.14.2
+      - Faraday v2.14.3
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -29,39 +29,41 @@ http_interactions:
       X-Origin-Cache:
       - HIT
       Last-Modified:
-      - Thu, 04 Jun 2026 23:49:36 GMT
+      - Thu, 06 Aug 2026 00:46:59 GMT
       Access-Control-Allow-Origin:
       - "*"
       Etag:
-      - W/"6a220f10-9c6"
+      - W/"6a73d983-9c6"
       Expires:
-      - Mon, 08 Jun 2026 16:20:31 GMT
+      - Wed, 19 Aug 2026 14:44:13 GMT
       Cache-Control:
       - max-age=600
       X-Proxy-Cache:
       - MISS
       X-Github-Request-Id:
-      - 8D16:192FC2:9BCB79:9D09A2:6A26E977
+      - E4A6:3D76A0:DD019:DE276:6A85BEE5
+      X-Github-Edge-Region:
+      - fra
       Accept-Ranges:
       - bytes
-      Age:
-      - '0'
       Date:
-      - Mon, 08 Jun 2026 17:08:11 GMT
+      - Wed, 19 Aug 2026 14:34:36 GMT
       Via:
       - 1.1 varnish
+      Age:
+      - '22'
       X-Served-By:
-      - cache-ber1080051-BER
+      - cache-ber1080042-BER
       X-Cache:
       - HIT
       X-Cache-Hits:
-      - '0'
+      - '3'
       X-Timer:
-      - S1780938491.285722,VS0,VE111
+      - S1787150076.135175,VS0,VE0
       Vary:
       - Accept-Encoding
       X-Fastly-Request-Id:
-      - 19bf5caf36c1b68a19e20764e52e3bd8989445a9
+      - b565ef1129cf9013dc9f9e449accd0db1b040a52
     body:
       encoding: ASCII-8BIT
       string: "Ruby is copyrighted free software by Yukihiro Matsumoto <matz@netlab.jp>.\nYou
@@ -97,7 +99,7 @@ http_interactions:
         \"AS IS\" AND WITHOUT ANY EXPRESS OR\n     IMPLIED WARRANTIES, INCLUDING,
         WITHOUT LIMITATION, THE IMPLIED\n     WARRANTIES OF MERCHANTABILITY AND FITNESS
         FOR A PARTICULAR\n     PURPOSE.\n"
-  recorded_at: Mon, 08 Jun 2026 17:08:11 GMT
+  recorded_at: Wed, 19 Aug 2026 14:34:36 GMT
 - request:
     method: post
     uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent
@@ -139,7 +141,7 @@ http_interactions:
         MERCHANTABILITY AND FITNESS FOR A PARTICULAR\n     PURPOSE.\n</file>"}]}],"generationConfig":{}}'
     headers:
       User-Agent:
-      - Faraday v2.14.2
+      - Faraday v2.14.3
       X-Goog-Api-Key:
       - "<GEMINI_API_KEY>"
       Content-Type:
@@ -162,7 +164,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 08 Jun 2026 17:08:15 GMT
+      - Wed, 19 Aug 2026 14:34:44 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -172,7 +174,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=3873
+      - gfet4t7; dur=7831
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -186,7 +188,7 @@ http_interactions:
               "content": {
                 "parts": [
                   {
-                    "text": "This file contains the **Ruby software license**.\n\nHere's a summary of its key points:\n\n*   **Copyright Holder:** Ruby is copyrighted free software by Yukihiro Matsumoto (matz).\n*   **Licensing Options:** You can redistribute and modify Ruby under either:\n    1.  The terms of the 2-clause BSDL (BSD License).\n    2.  The conditions outlined within this file.\n*   **Key Conditions for Redistribution/Modification (if not using BSDL):**\n    *   **Verbatim Copies:** You can make and give away exact copies of the source, provided you include all original copyright notices and disclaimers.\n    *   **Modifications:** You can modify the software if you do one of the following:\n        *   Place your modifications in the Public Domain or make them freely available.\n        *   Use the modified software only within your organization.\n        *   Give non-standard binaries non-standard names and provide instructions for getting the original software.\n        *   Make other distribution arrangements with the author.\n    *   **Object Code/Binary Distribution:** You can distribute the software in binary form if you do one of the following:\n        *   Distribute binaries with instructions on where to get the original source.\n        *   Accompany the distribution with the machine-readable source code.\n        *   Give non-standard binaries non-standard names and provide instructions for getting the original software.\n        *   Make other distribution arrangements with the author.\n    *   **Inclusion in Other Software:** You can modify and include parts of Ruby into other software (including commercial), but note that some files in the distribution may have different terms (refer to the `LEGAL` file).\n    *   **Generated Files:** Scripts and library files created by or used with Ruby do not automatically fall under Ruby's copyright; they belong to their generator, can be sold commercially, and aggregated with Ruby.\n*   **Disclaimer:** The software is provided \"AS IS\" without any express or implied warranties, including merchantability and fitness for a particular purpose."
+                    "text": "This file is a license agreement for the Ruby programming language.\n\nHere's a summary of its key points:\n\n1.  **Copyright & Author:** Ruby is copyrighted free software by Yukihiro Matsumoto (matz@netlab.jp).\n2.  **Dual License:** You can use, redistribute, and/or modify Ruby under either:\n    *   The terms of the 2-clause BSDL (BSD License), *OR*\n    *   The specific conditions outlined in this document.\n3.  **Verbatim Copies:** You can make and give away exact copies of the source code without restriction, provided you keep all original copyright notices and disclaimers.\n4.  **Modifications (Source Form):** If you modify the software, you must do at least one of the following:\n    *   Place your modifications in the Public Domain or make them freely available.\n    *   Use the modified software only within your organization.\n    *   Give non-standard binaries non-standard names, with instructions on how to get the original software.\n    *   Make other arrangements with the author.\n5.  **Distribution (Object Code/Binary Form):** If you distribute Ruby in binary form, you must do at least one of the following:\n    *   Distribute the binaries and library files with instructions on where to get the original source.\n    *   Accompany the distribution with the machine-readable source code.\n    *   Give non-standard binaries non-standard names, with instructions on how to get the original software.\n    *   Make other arrangements with the author.\n6.  **Inclusion in Other Software:** You can modify and include parts of Ruby into other software (including commercial), but be aware that some files in the Ruby distribution are not written by Matz and have different licensing terms (refer to the `LEGAL` file for details).\n7.  **Input/Output Files:** Scripts and library files generated by or supplied as input to Ruby do not automatically fall under Ruby's copyright; they belong to whoever generated them, can be sold commercially, and can be aggregated with Ruby.\n8.  **No Warranty:** The software is provided \"AS IS,\" without any express or implied warranties, including MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE."
                   }
                 ],
                 "role": "model"
@@ -197,19 +199,19 @@ http_interactions:
           ],
           "usageMetadata": {
             "promptTokenCount": 568,
-            "candidatesTokenCount": 441,
-            "totalTokenCount": 1293,
+            "candidatesTokenCount": 480,
+            "totalTokenCount": 2247,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
                 "tokenCount": 568
               }
             ],
-            "thoughtsTokenCount": 284,
+            "thoughtsTokenCount": 1199,
             "serviceTier": "standard"
           },
           "modelVersion": "gemini-2.5-flash",
-          "responseId": "-_YmasijILrTxN8P4qfbSQ"
+          "responseId": "_L6Faor4EfqYkdUPmsjOsAc"
         }
-  recorded_at: Mon, 08 Jun 2026 17:08:15 GMT
+  recorded_at: Wed, 19 Aug 2026 14:34:44 GMT
 recorded_with: VCR 6.4.0

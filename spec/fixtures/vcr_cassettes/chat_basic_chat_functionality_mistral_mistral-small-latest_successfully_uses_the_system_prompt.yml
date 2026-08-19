@@ -10,7 +10,7 @@ http_interactions:
         me about the weather."}],"stream":false,"temperature":0.0}'
     headers:
       User-Agent:
-      - Faraday v2.14.2
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -25,7 +25,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 08 Jun 2026 18:46:34 GMT
+      - Wed, 19 Aug 2026 14:35:15 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -33,48 +33,46 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '019ea88e-d2a2-7ffd-819b-f67b92f38656'
+      - 01a01a72-9f3e-791f-bcad-c7a8fe42fa49
       X-Kong-Request-Id:
-      - '019ea88e-d2a2-7ffd-819b-f67b92f38656'
+      - 01a01a72-9f3e-791f-bcad-c7a8fe42fa49
+      X-Max-Retry-Attempts-Reached:
+      - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '96912'
+      - '97903'
       X-Ratelimit-Tokens-Query-Cost:
-      - '112'
+      - '114'
       X-Ratelimit-Limit-Req-Minute:
       - '100'
       X-Ratelimit-Remaining-Req-Minute:
-      - '83'
+      - '95'
       X-Envoy-Upstream-Service-Time:
-      - '1996'
+      - '814'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '1996'
+      - '815'
       X-Kong-Proxy-Latency:
-      - '11'
-      Set-Cookie:
-      - "<COOKIE>"
-      - "<COOKIE>"
-      X-Content-Type-Options:
-      - nosniff
+      - '21'
       Cf-Cache-Status:
       - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
       Strict-Transport-Security:
       - max-age=15552000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"16a02bdcb3b34e0db0d26be1a9edf765","created":1780944394,"model":"mistral-small-latest","usage":{"prompt_tokens":43,"total_tokens":112,"completion_tokens":69,"prompt_tokens_details":{"cached_tokens":0}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
-        weather today is quite pleasant, with a mix of sun and clouds. The temperature
-        is moderate, and there''s a light breeze. It''s a great day to be outdoors!
-        Just remember, as the wise folks at XKCD7392 would say, \"Weather is just
-        nature''s way of keeping you on your toes.\""}}]}'
-  recorded_at: Mon, 08 Jun 2026 18:46:34 GMT
+      string: !binary |-
+        eyJpZCI6ImNhNWQxNzhmMGQyODRlOGI5ODBlMTM2ZjI2MjdjNWNhIiwiY3JlYXRlZCI6MTc4NzE1MDExNCwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsInVzYWdlIjp7InByb21wdF90b2tlbnMiOjQzLCJ0b3RhbF90b2tlbnMiOjExNCwiY29tcGxldGlvbl90b2tlbnMiOjcxLCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MH0sInNlcnZpY2VfdGllciI6InN0YW5kYXJkIn0sIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNob2ljZXMiOlt7ImluZGV4IjowLCJmaW5pc2hfcmVhc29uIjoic3RvcCIsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsInRvb2xfY2FsbHMiOm51bGwsImNvbnRlbnQiOiJUaGUgd2VhdGhlciB0b2RheSBpcyBxdWl0ZSBwbGVhc2FudCwgd2l0aCBhIG1peCBvZiBzdW4gYW5kIGNsb3Vkcy4gVGhlIHRlbXBlcmF0dXJlIGlzIG1vZGVyYXRlLCBtYWtpbmcgaXQgaWRlYWwgZm9yIG91dGRvb3IgYWN0aXZpdGllcy4gSG93ZXZlciwgZG9uJ3QgZm9yZ2V0IHRvIGNoZWNrIHRoZSBsb2NhbCBmb3JlY2FzdCBmb3IgYW55IHN1ZGRlbiBjaGFuZ2VzLiBBcyBSYW5kYWxsIE11bnJvZSBmcm9tIFhLQ0Qgd291bGQgc2F5LCBcIlhLQ0Q3MzkyXCIg4oCTIGFsd2F5cyBiZSBwcmVwYXJlZCBmb3IgdGhlIHVuZXhwZWN0ZWQhIn19XX0=
+  recorded_at: Wed, 19 Aug 2026 14:35:15 GMT
 recorded_with: VCR 6.4.0

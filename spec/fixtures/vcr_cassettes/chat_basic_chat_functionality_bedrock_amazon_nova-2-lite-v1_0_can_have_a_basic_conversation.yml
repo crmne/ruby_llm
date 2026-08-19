@@ -8,9 +8,9 @@ http_interactions:
       string: '{"messages":[{"role":"user","content":[{"text":"What''s 2 + 2?"}]}],"inferenceConfig":{}}'
     headers:
       User-Agent:
-      - Faraday v2.14.2
+      - Faraday v2.14.3
       X-Amz-Date:
-      - 20260608T184600Z
+      - 20260819T143437Z
       X-Amz-Content-Sha256:
       - c1f28bcaee1077b285985eb19952d44ca4723ecf1286b46c8a0fcab38095fd74
       Authorization:
@@ -28,18 +28,19 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 08 Jun 2026 18:46:01 GMT
+      - Wed, 19 Aug 2026 14:34:38 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '435'
+      - '352'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - d611e623-ae32-4524-a9ba-a2a52d51c3ad
+      - 8475a760-0ca0-4f0b-8e41-b657d7b35a70
     body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        eyJtZXRyaWNzIjp7ImxhdGVuY3lNcyI6Nzc4fSwib3V0cHV0Ijp7Im1lc3NhZ2UiOnsiY29udGVudCI6W3sidGV4dCI6IjIgKyAyIGVxdWFscyAqKjQqKi5cblxuVGhpcyBpcyBhIGJhc2ljIGFyaXRobWV0aWMgYWRkaXRpb246IHdoZW4geW91IGFkZCB0d28gdW5pdHMgdG8gYW5vdGhlciB0d28gdW5pdHMsIHRoZSB0b3RhbCBiZWNvbWVzIGZvdXIgdW5pdHMuIFxuXG4qKlNpbXBsZSBicmVha2Rvd246Kipcbi0gU3RhcnQgYXQgbnVtYmVyIDIuXG4tIEFkZCAyIG1vcmUg4oaSIDIgKyAyID0gNC5cblxu4pyFICoqQW5zd2VyOiA0KioifV0sInJvbGUiOiJhc3Npc3RhbnQifX0sInN0b3BSZWFzb24iOiJlbmRfdHVybiIsInVzYWdlIjp7ImlucHV0VG9rZW5zIjo1Mywib3V0cHV0VG9rZW5zIjo2Niwic2VydmVyVG9vbFVzYWdlIjp7fSwidG90YWxUb2tlbnMiOjExOX19
-  recorded_at: Mon, 08 Jun 2026 18:46:01 GMT
+      encoding: UTF-8
+      string: '{"metrics":{"latencyMs":538},"output":{"message":{"content":[{"text":"2
+        + 2 equals **4**.\n\nThis is a basic arithmetic addition:\n\n$$\n2 + 2 = 4\n$$
+        \n\nIt''s one of the fundamental principles of elementary mathematics."}],"role":"assistant"}},"stopReason":"end_turn","usage":{"inputTokens":53,"outputTokens":39,"serverToolUsage":{},"totalTokens":92}}'
+  recorded_at: Wed, 19 Aug 2026 14:34:38 GMT
 recorded_with: VCR 6.4.0

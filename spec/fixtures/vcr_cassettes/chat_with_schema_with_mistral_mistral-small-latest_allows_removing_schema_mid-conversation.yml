@@ -9,7 +9,7 @@ http_interactions:
         a person named Bob"}],"stream":false,"response_format":{"type":"json_schema","json_schema":{"name":"response","schema":{"type":"object","properties":{"name":{"type":"string"},"age":{"type":"integer"}},"required":["name","age"],"additionalProperties":false},"strict":true}}}'
     headers:
       User-Agent:
-      - Faraday v2.14.2
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 08 Jun 2026 18:45:54 GMT
+      - Wed, 19 Aug 2026 14:34:52 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -32,58 +32,59 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '019ea88e-3c83-7c14-8d4e-59e04be7defb'
+      - 01a01a72-45b1-7738-920c-e4e8540d3140
       X-Kong-Request-Id:
-      - '019ea88e-3c83-7c14-8d4e-59e04be7defb'
+      - 01a01a72-45b1-7738-920c-e4e8540d3140
+      X-Max-Retry-Attempts-Reached:
+      - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '99438'
+      - '98260'
       X-Ratelimit-Tokens-Query-Cost:
       - '22'
       X-Ratelimit-Limit-Req-Minute:
       - '100'
       X-Ratelimit-Remaining-Req-Minute:
-      - '94'
+      - '90'
       X-Envoy-Upstream-Service-Time:
-      - '208'
+      - '384'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '209'
+      - '385'
       X-Kong-Proxy-Latency:
-      - '20'
-      Set-Cookie:
-      - "<COOKIE>"
-      - "<COOKIE>"
-      X-Content-Type-Options:
-      - nosniff
+      - '30'
       Cf-Cache-Status:
       - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
       Strict-Transport-Security:
       - max-age=15552000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"a823cff67a224acbb226872af85367b3","created":1780944354,"model":"mistral-small-latest","usage":{"prompt_tokens":8,"total_tokens":22,"completion_tokens":14,"prompt_tokens_details":{"cached_tokens":0}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"{\"name\":
+      string: '{"id":"30a11e732c494a72b510c2bd3b25548b","created":1787150091,"model":"mistral-small-latest","usage":{"prompt_tokens":8,"total_tokens":22,"completion_tokens":14,"prompt_tokens_details":{"cached_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"{\"name\":
         \"Bob\", \"age\": 30}"}}]}'
-  recorded_at: Mon, 08 Jun 2026 18:45:54 GMT
+  recorded_at: Wed, 19 Aug 2026 14:34:52 GMT
 - request:
     method: post
     uri: https://api.mistral.ai/v1/chat/completions
     body:
       encoding: UTF-8
       string: '{"model":"mistral-small-latest","messages":[{"role":"user","content":"Generate
-        a person named Bob"},{"role":"assistant","content":"{\"name\":\"Bob\",\"age\":30}"},{"role":"user","content":"Now
-        just tell me about Ruby"}],"stream":false}'
+        a person named Bob"},{"role":"assistant","content":"{\"name\": \"Bob\", \"age\":
+        30}"},{"role":"user","content":"Now just tell me about Ruby"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.2
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -98,7 +99,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 08 Jun 2026 18:45:55 GMT
+      - Wed, 19 Aug 2026 14:34:54 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -106,55 +107,46 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '019ea88e-3dcd-78a1-95ea-4f0e7944ce47'
+      - 01a01a72-478b-74fa-8cac-486d12e1b36d
       X-Kong-Request-Id:
-      - '019ea88e-3dcd-78a1-95ea-4f0e7944ce47'
+      - 01a01a72-478b-74fa-8cac-486d12e1b36d
+      X-Max-Retry-Attempts-Reached:
+      - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '99232'
+      - '97976'
       X-Ratelimit-Tokens-Query-Cost:
-      - '206'
+      - '284'
       X-Ratelimit-Limit-Req-Minute:
       - '100'
       X-Ratelimit-Remaining-Req-Minute:
-      - '93'
+      - '89'
       X-Envoy-Upstream-Service-Time:
-      - '1148'
+      - '1862'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '1149'
+      - '1863'
       X-Kong-Proxy-Latency:
-      - '14'
-      Set-Cookie:
-      - "<COOKIE>"
-      - "<COOKIE>"
-      X-Content-Type-Options:
-      - nosniff
+      - '20'
       Cf-Cache-Status:
       - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
       Strict-Transport-Security:
       - max-age=15552000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"3ec5a1cdaff740cab6c9153476ca4e72","created":1780944354,"model":"mistral-small-latest","usage":{"prompt_tokens":39,"total_tokens":206,"completion_tokens":167,"prompt_tokens_details":{"cached_tokens":0}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"Ruby
-        is a dynamic, open-source programming language known for its simplicity and
-        productivity. Created by Yukihiro \"Matz\" Matsumoto in the mid-1990s, Ruby
-        emphasizes developer happiness and elegant syntax. It follows the principle
-        of \"least surprise,\" meaning it behaves in a way that''s intuitive for programmers.\n\nKey
-        features of Ruby include:\n- **Object-oriented**: Everything is an object,
-        even primitive types.\n- **Flexible syntax**: Supports multiple ways to solve
-        a problem.\n- **Metaprogramming**: Allows writing code that writes code.\n-
-        **Strong community**: Powers the popular Ruby on Rails web framework.\n\nRuby
-        is often used for web development, scripting, automation, and rapid prototyping.
-        Its clean and readable code makes it beginner-friendly while remaining powerful
-        for experienced developers."}}]}'
-  recorded_at: Mon, 08 Jun 2026 18:45:55 GMT
+      string: !binary |-
+        eyJpZCI6IjViNDZiNzc4ZmMyOTQ5ZGZiOWRhMzBiNzZiNzEyMDI3IiwiY3JlYXRlZCI6MTc4NzE1MDA5MiwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsInVzYWdlIjp7InByb21wdF90b2tlbnMiOjQyLCJ0b3RhbF90b2tlbnMiOjI4NCwiY29tcGxldGlvbl90b2tlbnMiOjI0MiwicHJvbXB0X3Rva2Vuc19kZXRhaWxzIjp7ImNhY2hlZF90b2tlbnMiOjB9LCJzZXJ2aWNlX3RpZXIiOiJzdGFuZGFyZCJ9LCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJjaG9pY2VzIjpbeyJpbmRleCI6MCwiZmluaXNoX3JlYXNvbiI6InN0b3AiLCJtZXNzYWdlIjp7InJvbGUiOiJhc3Npc3RhbnQiLCJ0b29sX2NhbGxzIjpudWxsLCJjb250ZW50IjoiUnVieSBpcyBhIGR5bmFtaWMsIG9wZW4tc291cmNlIHByb2dyYW1taW5nIGxhbmd1YWdlIGZvY3VzZWQgb24gc2ltcGxpY2l0eSBhbmQgcHJvZHVjdGl2aXR5LiBJdCB3YXMgY3JlYXRlZCBieSBZdWtpaGlybyBcIk1hdHpcIiBNYXRzdW1vdG8gaW4gdGhlIG1pZC0xOTkwcyBhbmQgaGFzIHNpbmNlIGdhaW5lZCBwb3B1bGFyaXR5IGZvciBpdHMgZWxlZ2FudCBzeW50YXggYW5kIGVhc2Ugb2YgdXNlLlxuXG4jIyMgKipLZXkgRmVhdHVyZXMgb2YgUnVieToqKlxuMS4gKipSZWFkYWJsZSBTeW50YXgqKiDigJMgUnVieeKAmXMgc3ludGF4IGlzIGRlc2lnbmVkIHRvIGJlIG5hdHVyYWwgYW5kIGludHVpdGl2ZSwgbWFraW5nIGl0IGJlZ2lubmVyLWZyaWVuZGx5LlxuMi4gKipPYmplY3QtT3JpZW50ZWQqKiDigJMgRXZlcnl0aGluZyBpbiBSdWJ5IGlzIGFuIG9iamVjdCwgaW5jbHVkaW5nIHByaW1pdGl2ZSB0eXBlcy5cbjMuICoqRmxleGlibGUgJiBEeW5hbWljKiog4oCTIFN1cHBvcnRzIG1ldGFwcm9ncmFtbWluZywgYWxsb3dpbmcgY29kZSB0byBtb2RpZnkgaXRzZWxmIGF0IHJ1bnRpbWUuXG40LiAqKlJpY2ggU3RhbmRhcmQgTGlicmFyeSoqIOKAkyBDb21lcyB3aXRoIG1hbnkgYnVpbHQtaW4gZnVuY3Rpb25zIGZvciB0YXNrcyBsaWtlIGZpbGUgaGFuZGxpbmcsIG5ldHdvcmtpbmcsIGFuZCBtb3JlLlxuNS4gKipDb21tdW5pdHkgJiBFY29zeXN0ZW0qKiDigJMgUG93ZXJzIHRoZSBSdWJ5IG9uIFJhaWxzIGZyYW1ld29yaywgd2lkZWx5IHVzZWQgZm9yIHdlYiBkZXZlbG9wbWVudC5cblxuIyMjICoqRXhhbXBsZSBDb2RlOioqXG5gYGBydWJ5XG4jIEEgc2ltcGxlIFJ1YnkgcHJvZ3JhbVxucHV0cyBcIkhlbGxvLCBSdWJ5IVwiXG5cbiMgRGVmaW5lIGEgbWV0aG9kXG5kZWYgZ3JlZXQobmFtZSlcbiAgcHV0cyBcIkhlbGxvLCAje25hbWV9IVwiXG5lbmRcblxuZ3JlZXQoXCJBbGljZVwiKSAgIyBPdXRwdXQ6IEhlbGxvLCBBbGljZSFcbmBgYFxuXG5Xb3VsZCB5b3UgbGlrZSBkZXRhaWxzIG9uIFJ1Ynkgb24gUmFpbHMgb3Igc3BlY2lmaWMgUnVieSBjb25jZXB0cz8ifX1dfQ==
+  recorded_at: Wed, 19 Aug 2026 14:34:54 GMT
 recorded_with: VCR 6.4.0

@@ -9,7 +9,7 @@ http_interactions:
         is 5 + 3?"}],"stream":false,"reasoning_effort":"high"}'
     headers:
       User-Agent:
-      - Faraday v2.14.2
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 08 Jun 2026 18:47:43 GMT
+      - Wed, 19 Aug 2026 14:37:21 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -32,49 +32,49 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '019ea88f-e636-74c7-9ef5-5aa867c4b146'
+      - 01a01a74-8e18-7531-99c6-0777096d7a9c
       X-Kong-Request-Id:
-      - '019ea88f-e636-74c7-9ef5-5aa867c4b146'
+      - 01a01a74-8e18-7531-99c6-0777096d7a9c
+      X-Max-Retry-Attempts-Reached:
+      - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '95939'
+      - '93621'
       X-Ratelimit-Tokens-Query-Cost:
-      - '70'
+      - '55'
       X-Ratelimit-Limit-Req-Minute:
       - '100'
       X-Ratelimit-Remaining-Req-Minute:
-      - '92'
+      - '98'
       X-Envoy-Upstream-Service-Time:
-      - '357'
+      - '488'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '358'
+      - '488'
       X-Kong-Proxy-Latency:
-      - '14'
-      Set-Cookie:
-      - "<COOKIE>"
-      - "<COOKIE>"
-      X-Content-Type-Options:
-      - nosniff
+      - '20'
       Cf-Cache-Status:
       - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
       Strict-Transport-Security:
       - max-age=15552000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"472c13971a1b460c85e57cbf807bf3c9","created":1780944463,"model":"mistral-small-latest","usage":{"prompt_tokens":23,"total_tokens":70,"completion_tokens":47,"prompt_tokens_details":{"cached_tokens":0}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":[{"type":"thinking","thinking":[{"type":"text","text":"The
-        user is asking for the result of the addition of 5 and 3. This is a straightforward
-        arithmetic operation. I know that 5 plus 3 equals 8."}],"closed":true},{"type":"text","text":"5
-        + 3 equals **8**."}]}}]}'
-  recorded_at: Mon, 08 Jun 2026 18:47:43 GMT
+      string: '{"id":"f9bf9107e8c746379e2d47bd3dd7013a","created":1787150241,"model":"mistral-small-latest","usage":{"prompt_tokens":23,"total_tokens":55,"completion_tokens":32,"prompt_tokens_details":{"cached_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":[{"type":"thinking","thinking":[{"type":"text","text":"The
+        user is asking for the sum of 5 and 3. This is a straightforward arithmetic
+        problem."}],"closed":true},{"type":"text","text":"5 + 3 equals 8."}]}}]}'
+  recorded_at: Wed, 19 Aug 2026 14:37:21 GMT
 - request:
     method: post
     uri: https://api.mistral.ai/v1/chat/completions
@@ -82,12 +82,12 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"mistral-small-latest","messages":[{"role":"user","content":"What
         is 5 + 3?"},{"role":"assistant","content":[{"type":"thinking","thinking":[{"type":"text","text":"The
-        user is asking for the result of the addition of 5 and 3. This is a straightforward
-        arithmetic operation. I know that 5 plus 3 equals 8."}]},{"type":"text","text":"5
-        + 3 equals **8**."}]},{"role":"user","content":"Now multiply that by 2"}],"stream":false,"reasoning_effort":"high"}'
+        user is asking for the sum of 5 and 3. This is a straightforward arithmetic
+        problem."}]},{"type":"text","text":"5 + 3 equals 8."}]},{"role":"user","content":"Now
+        multiply that by 2"}],"stream":false,"reasoning_effort":"high"}'
     headers:
       User-Agent:
-      - Faraday v2.14.2
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -102,7 +102,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 08 Jun 2026 18:47:44 GMT
+      - Wed, 19 Aug 2026 14:37:22 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -110,47 +110,46 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '019ea88f-e7fa-76fc-bda6-7c8cd72bda6b'
+      - 01a01a74-905c-7505-b7ea-c7d32b4f8c13
       X-Kong-Request-Id:
-      - '019ea88f-e7fa-76fc-bda6-7c8cd72bda6b'
+      - 01a01a74-905c-7505-b7ea-c7d32b4f8c13
+      X-Max-Retry-Attempts-Reached:
+      - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '95836'
+      - '93544'
       X-Ratelimit-Tokens-Query-Cost:
-      - '123'
+      - '107'
       X-Ratelimit-Limit-Req-Minute:
       - '100'
       X-Ratelimit-Remaining-Req-Minute:
-      - '91'
+      - '97'
       X-Envoy-Upstream-Service-Time:
-      - '375'
+      - '610'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '376'
+      - '611'
       X-Kong-Proxy-Latency:
-      - '9'
-      Set-Cookie:
-      - "<COOKIE>"
-      - "<COOKIE>"
-      X-Content-Type-Options:
-      - nosniff
+      - '24'
       Cf-Cache-Status:
       - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
       Strict-Transport-Security:
       - max-age=15552000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"4b04a0e2929945ca9e9f01ea13f783d6","created":1780944463,"model":"mistral-small-latest","usage":{"prompt_tokens":78,"total_tokens":123,"completion_tokens":45,"prompt_tokens_details":{"cached_tokens":0}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":[{"type":"thinking","thinking":[{"type":"text","text":"The
-        user wants me to multiply the previous result (which was 8) by 2. So, 8 multiplied
-        by 2 equals 16."}],"closed":true},{"type":"text","text":"8 multiplied by 2
-        equals **16**."}]}}]}'
-  recorded_at: Mon, 08 Jun 2026 18:47:44 GMT
+      string: !binary |-
+        eyJpZCI6ImQ0MzQzMjBjNTUyZjQ4MjNiM2NlOWI4OTMxMjI3OWU2IiwiY3JlYXRlZCI6MTc4NzE1MDI0MSwibW9kZWwiOiJtaXN0cmFsLXNtYWxsLWxhdGVzdCIsInVzYWdlIjp7InByb21wdF90b2tlbnMiOjYzLCJ0b3RhbF90b2tlbnMiOjEwNywiY29tcGxldGlvbl90b2tlbnMiOjQ0LCJwcm9tcHRfdG9rZW5zX2RldGFpbHMiOnsiY2FjaGVkX3Rva2VucyI6MH0sInNlcnZpY2VfdGllciI6InN0YW5kYXJkIn0sIm9iamVjdCI6ImNoYXQuY29tcGxldGlvbiIsImNob2ljZXMiOlt7ImluZGV4IjowLCJmaW5pc2hfcmVhc29uIjoic3RvcCIsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsInRvb2xfY2FsbHMiOm51bGwsImNvbnRlbnQiOlt7InR5cGUiOiJ0aGlua2luZyIsInRoaW5raW5nIjpbeyJ0eXBlIjoidGV4dCIsInRleHQiOiJUaGUgdXNlciB3YW50cyBtZSB0byBtdWx0aXBseSB0aGUgcHJldmlvdXMgcmVzdWx0ICh3aGljaCB3YXMgOCkgYnkgMi4gU28sIDggbXVsdGlwbGllZCBieSAyIGlzIDE2LiJ9XSwiY2xvc2VkIjp0cnVlfSx7InR5cGUiOiJ0ZXh0IiwidGV4dCI6Ijggw5cgMiBlcXVhbHMgMTYuIn1dfX1dfQ==
+  recorded_at: Wed, 19 Aug 2026 14:37:22 GMT
 recorded_with: VCR 6.4.0

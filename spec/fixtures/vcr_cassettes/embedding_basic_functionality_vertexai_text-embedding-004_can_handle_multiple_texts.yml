@@ -8,7 +8,7 @@ http_interactions:
       string: grant_type=refresh_token&refresh_token=<GOOGLE_REFRESH_TOKEN>&client_id=<GOOGLE_CLIENT_ID>&client_secret=<GOOGLE_CLIENT_SECRET>
     headers:
       User-Agent:
-      - Faraday v2.14.2
+      - Faraday v2.14.3
       Content-Type:
       - application/x-www-form-urlencoded
       Accept-Encoding:
@@ -20,14 +20,14 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Cache-Control:
-      - no-cache, no-store, max-age=0, must-revalidate
+      Expires:
+      - Mon, 01 Jan 1990 00:00:00 GMT
       Pragma:
       - no-cache
       Date:
-      - Mon, 08 Jun 2026 17:08:41 GMT
-      Expires:
-      - Mon, 01 Jan 1990 00:00:00 GMT
+      - Wed, 19 Aug 2026 14:34:42 GMT
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
       Content-Type:
       - application/json; charset=utf-8
       Vary:
@@ -52,11 +52,10 @@ http_interactions:
         {
           "access_token": "<GOOGLE_ACCESS_TOKEN>",
           "expires_in": 3599,
-          "scope": "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/sqlservice.login openid https://www.googleapis.com/auth/cloud-platform",
-          "token_type": "Bearer",
-          "id_token": "<GOOGLE_ID_TOKEN>"
+          "scope": "https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/webmasters",
+          "token_type": "Bearer"
         }
-  recorded_at: Mon, 08 Jun 2026 17:08:41 GMT
+  recorded_at: Wed, 19 Aug 2026 14:34:42 GMT
 - request:
     method: post
     uri: https://aiplatform.googleapis.com/v1beta1/projects/<GOOGLE_CLOUD_PROJECT>/locations/<GOOGLE_CLOUD_LOCATION>/publishers/google/models/text-embedding-004:predict
@@ -65,7 +64,7 @@ http_interactions:
       string: '{"instances":[{"content":"Ruby"},{"content":"Python"},{"content":"JavaScript"}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.2
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -86,7 +85,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 08 Jun 2026 17:08:52 GMT
+      - Wed, 19 Aug 2026 14:34:43 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -107,8 +106,8 @@ http_interactions:
             {
               "embeddings": {
                 "statistics": {
-                  "truncated": false,
-                  "token_count": 1
+                  "token_count": 1,
+                  "truncated": false
                 },
                 "values": [
                   -0.0071573383174836636,
@@ -2443,5 +2442,5 @@ http_interactions:
             "billableCharacterCount": 20
           }
         }
-  recorded_at: Mon, 08 Jun 2026 17:08:52 GMT
+  recorded_at: Wed, 19 Aug 2026 14:34:43 GMT
 recorded_with: VCR 6.4.0

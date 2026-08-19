@@ -26,7 +26,7 @@ http_interactions:
       message: OK
     headers:
       Content-Length:
-      - '2666'
+      - '2660'
       Content-Type:
       - application/json
       X-Ms-Aoai-Configured-Data-Retention-Days:
@@ -57,16 +57,14 @@ http_interactions:
       - '60'
       Azureai-Fe-Is-Streaming:
       - 'False'
-      Azureai-Fe-Requested-Service-Tier:
+      Azureai-Fe-Offer-Type:
       - paygo
-      Azureai-Fe-Requested-Zone:
-      - default
       X-Ms-Served-Model:
       - gpt-5.6-luna-2026-07-09
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Apim-Request-Id:
-      - 889d5d85-0265-4ea2-a6fa-95a621ac085f
+      - 5e9d58f8-bad4-4572-bea8-b8f300654bbc
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -74,17 +72,17 @@ http_interactions:
       X-Ms-Region:
       - West Europe
       Date:
-      - Wed, 12 Aug 2026 21:48:03 GMT
+      - Wed, 19 Aug 2026 14:34:22 GMT
     body:
       encoding: UTF-8
       string: |-
         {
-          "id": "resp_0b1640ef8985f672016a7cea127ef08197bb979d57fdfcf463",
+          "id": "resp_0205fd6e71c09328016a85beed364081909dd2c80fa298848c",
           "object": "response",
-          "created_at": 1786571282,
+          "created_at": 1787150061,
           "status": "completed",
           "background": false,
-          "completed_at": 1786571283,
+          "completed_at": 1787150063,
           "content_filters": [
             {
               "blocked": false,
@@ -108,11 +106,11 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "fc_0b1640ef8985f672016a7cea1382a881978e007e0b421fad17",
+              "id": "fc_0205fd6e71c09328016a85beee9acc81909f36b80d445eb7a5",
               "type": "function_call",
               "status": "completed",
               "arguments": "{\"city\":\"Berlin\"}",
-              "call_id": "call_M0L2hhc4LbIeaocGCK9GDNNg",
+              "call_id": "call_TRB1jnZxAdUJcnUg2vJEBejG",
               "name": "azure_weather"
             }
           ],
@@ -120,7 +118,7 @@ http_interactions:
           "presence_penalty": 0.0,
           "previous_response_id": null,
           "prompt_cache_key": null,
-          "prompt_cache_retention": "in_memory",
+          "prompt_cache_retention": "24h",
           "reasoning": {
             "context": "all_turns",
             "effort": "medium",
@@ -197,14 +195,14 @@ http_interactions:
           "user": null,
           "metadata": {}
         }
-  recorded_at: Wed, 12 Aug 2026 21:48:03 GMT
+  recorded_at: Wed, 19 Aug 2026 14:34:23 GMT
 - request:
     method: post
     uri: https://rubyllm.services.ai.azure.com/openai/v1/responses
     body:
       encoding: UTF-8
       string: '{"model":"gpt-5.6-luna","input":[{"role":"user","content":"What''s
-        the weather in Berlin? Use the tool."},{"type":"function_call","call_id":"call_M0L2hhc4LbIeaocGCK9GDNNg","name":"azure_weather","arguments":"{\"city\":\"Berlin\"}"},{"type":"function_call_output","call_id":"call_M0L2hhc4LbIeaocGCK9GDNNg","output":"Current
+        the weather in Berlin? Use the tool."},{"type":"function_call","call_id":"call_TRB1jnZxAdUJcnUg2vJEBejG","name":"azure_weather","arguments":"{\"city\":\"Berlin\"}"},{"type":"function_call_output","call_id":"call_TRB1jnZxAdUJcnUg2vJEBejG","output":"Current
         weather in Berlin: 15C, wind 10 km/h"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"azure_weather","description":"Gets
         current weather for a city","parameters":{"type":"object","properties":{"city":{"type":"string","description":"City
         name"}},"required":["city"],"additionalProperties":false,"strict":true},"strict":false}]}'
@@ -225,7 +223,7 @@ http_interactions:
       message: OK
     headers:
       Content-Length:
-      - '2827'
+      - '2554'
       Content-Type:
       - application/json
       X-Ms-Aoai-Configured-Data-Retention-Days:
@@ -256,16 +254,14 @@ http_interactions:
       - '60'
       Azureai-Fe-Is-Streaming:
       - 'False'
-      Azureai-Fe-Requested-Service-Tier:
+      Azureai-Fe-Offer-Type:
       - paygo
-      Azureai-Fe-Requested-Zone:
-      - default
       X-Ms-Served-Model:
       - gpt-5.6-luna-2026-07-09
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Apim-Request-Id:
-      - 4dfef430-7f27-47a1-a4b5-3daf8d7a898a
+      - 6b3c5aa7-0c5e-4dfe-b17d-5a3980c78385
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -273,30 +269,18 @@ http_interactions:
       X-Ms-Region:
       - West Europe
       Date:
-      - Wed, 12 Aug 2026 21:48:05 GMT
+      - Wed, 19 Aug 2026 14:34:25 GMT
     body:
       encoding: UTF-8
       string: |-
         {
-          "id": "resp_0966f2cefa7b1ad3016a7cea140e6c8193b302bc9070d22b53",
+          "id": "resp_09b52544ba1f4f41016a85beef58ec8196b7091695bc7ac0b4",
           "object": "response",
-          "created_at": 1786571284,
+          "created_at": 1787150063,
           "status": "completed",
           "background": false,
-          "completed_at": 1786571285,
-          "content_filters": [
-            {
-              "blocked": false,
-              "source_type": "prompt",
-              "content_filter_raw": [],
-              "content_filter_results": {},
-              "content_filter_offsets": {
-                "start_offset": 30,
-                "end_offset": 73,
-                "check_offset": 0
-              }
-            }
-          ],
+          "completed_at": 1787150065,
+          "content_filters": null,
           "error": null,
           "frequency_penalty": 0.0,
           "incomplete_details": null,
@@ -307,7 +291,7 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "msg_0966f2cefa7b1ad3016a7cea1518e8819391eaf5fa15ece219",
+              "id": "msg_09b52544ba1f4f41016a85bef0fd888196b6b4045f01ee1282",
               "type": "message",
               "status": "completed",
               "content": [
@@ -315,7 +299,7 @@ http_interactions:
                   "type": "output_text",
                   "annotations": [],
                   "logprobs": [],
-                  "text": "The current weather in Berlin is **15\u00b0C**, with wind at **10 km/h**."
+                  "text": "Berlin is currently **15\u00b0C** with winds around **10 km/h**."
                 }
               ],
               "phase": "final_answer",
@@ -326,7 +310,7 @@ http_interactions:
           "presence_penalty": 0.0,
           "previous_response_id": null,
           "prompt_cache_key": null,
-          "prompt_cache_retention": "in_memory",
+          "prompt_cache_retention": "24h",
           "reasoning": {
             "context": "all_turns",
             "effort": "medium",
@@ -394,14 +378,14 @@ http_interactions:
               "cache_write_tokens": 0,
               "cached_tokens": 0
             },
-            "output_tokens": 23,
+            "output_tokens": 20,
             "output_tokens_details": {
               "reasoning_tokens": 0
             },
-            "total_tokens": 123
+            "total_tokens": 120
           },
           "user": null,
           "metadata": {}
         }
-  recorded_at: Wed, 12 Aug 2026 21:48:05 GMT
+  recorded_at: Wed, 19 Aug 2026 14:34:25 GMT
 recorded_with: VCR 6.4.0

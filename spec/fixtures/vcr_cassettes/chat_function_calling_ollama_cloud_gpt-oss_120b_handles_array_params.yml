@@ -8,7 +8,7 @@ http_interactions:
       string: '{"model":"gpt-oss:120b","messages":[{"role":"user","content":"Call
         the array params tool with tags [\"red\",\"blue\"] and tell me the combined
         tags."}],"stream":false,"tools":[{"type":"function","function":{"name":"array_params","description":"Uses
-        params DSL array support","parameters":{"$schema":"https://json-schema.org/draft/2020-12/schema","title":"Schema","type":"object","properties":{"tags":{"type":"array","description":"List
+        params DSL array support","parameters":{"type":"object","properties":{"tags":{"type":"array","description":"List
         of tags to combine","items":{"type":"string"}}},"required":["tags"],"additionalProperties":false}}}]}'
     headers:
       User-Agent:
@@ -31,39 +31,35 @@ http_interactions:
       Set-Cookie:
       - "<COOKIE>"
       X-Build-Commit:
-      - a083b15ea635ff93836cee498abde05672929e5d
+      - dfd88388a9119aa961fcc4191eeda58e15bc9344
       X-Build-Time:
-      - '2026-08-12T14:41:44-07:00'
+      - '2026-08-18T23:03:55-07:00'
       X-Frame-Options:
       - DENY
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Content-Length:
-      - '1038'
+      - '771'
       Date:
-      - Thu, 13 Aug 2026 10:11:58 GMT
+      - Wed, 19 Aug 2026 14:51:58 GMT
       Server:
       - Google Frontend
-      Traceparent:
-      - 00-250e7b35337200cb35f7ea4c76ce0565-36b3b798477ec996-00
       X-Cloud-Trace-Context:
-      - 250e7b35337200cb35f7ea4c76ce0565/3941695963541719446
+      - e494d35c427096c6aeebf7907ef374b6/7292925060181917654
+      Traceparent:
+      - 00-e494d35c427096c6aeebf7907ef374b6-6535acb3e1afffd6-00
       Via:
       - 1.1 google
       Alt-Svc:
       - h3=":443"; ma=2592000
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-474","object":"chat.completion","created":1786615918,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"User
-        wants to \"Call the array params tool with tags [\"red\",\"blue\"] and tell
-        me the combined tags.\"\n\nWe have a function namespace called functions with
-        a function array_params that takes an object with tags as any[].\n\nWe need
-        to call the function with tags [\"red\",\"blue\"] and then output the combined
-        tags. Likely the function returns something? But we don''t know exactly what
-        the function does. They want the combined tags. Maybe the function concatenates
-        them? Could be returns something like \"red, blue\" or an array. We''ll just
-        call and see.\n\nWe''ll use the tool.","tool_calls":[{"id":"call_3517zk2e","index":0,"type":"function","function":{"name":"array_params","arguments":"{\"tags\":[\"red\",\"blue\"]}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":147,"completion_tokens":156,"total_tokens":303}}
+      string: '{"id":"chatcmpl-150","object":"chat.completion","created":1787151118,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"We
+        need to use the function \"array_params\" in the functions namespace. We have
+        to call with tags [\"red\",\"blue\"] and return combined tags. Likely the
+        tool will combine into a single array? The problem says \"tell me the combined
+        tags\". Probably the tool returns combined tags. So we need to call the function.","tool_calls":[{"id":"call_vdgq5cma","index":0,"type":"function","function":{"name":"array_params","arguments":"{\"tags\":[\"red\",\"blue\"]}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":147,"completion_tokens":103,"total_tokens":250}}
 
         '
-  recorded_at: Thu, 13 Aug 2026 10:11:58 GMT
+  recorded_at: Wed, 19 Aug 2026 14:51:58 GMT
 recorded_with: VCR 6.4.0

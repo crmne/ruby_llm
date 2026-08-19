@@ -8,7 +8,7 @@ http_interactions:
       string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"<MASSIVE_TEXT>"},{"role":"assistant","content":"<MASSIVE_TEXT>"},{"role":"user","content":"Hi"}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.2
+      - Faraday v2.14.3
       Api-Key:
       - "<AZURE_API_KEY>"
       Content-Type:
@@ -28,61 +28,31 @@ http_interactions:
       - application/json; charset=utf-8
       Retry-After:
       - '1'
-      Request-Context:
-      - appId=
-      X-Ms-Error-Code:
-      - RateLimitReached
-      X-Ratelimit-Type:
-      - Tokens
+      Apim-Request-Id:
+      - d3be1dcd-5e15-488e-b48f-a3066967d205
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
       Azureai-Requested-Tier:
       - default
       Azureai-Processed-Tier:
       - default
-      X-Ms-Is-Spilled-Over:
-      - 'false'
-      Azureai-Fe-Is-Streaming:
-      - 'False'
-      X-Ratelimit-Key:
-      - grok-4-1-fast-non-reasoning
-      X-Ratelimit-Remaining-Requests:
-      - '45'
-      X-Ratelimit-Reset-Requests:
-      - '5'
-      X-Ratelimit-Limit-Requests:
-      - '50'
-      X-Ratelimit-Renewalperiod-Requests:
-      - '60'
-      X-Ratelimit-Abusepenalty-Active:
-      - 'False'
-      X-Ratelimit-Remaining-Tokens:
-      - '0'
-      X-Ratelimit-Reset-Tokens:
-      - '0'
-      X-Ratelimit-Limit-Tokens:
-      - '50000'
-      X-Ratelimit-Renewalperiod-Tokens:
-      - '60'
-      Retry-After-Ms:
-      - '0'
-      X-Ms-Fe-Rate-Limit-Status:
-      - '429'
-      Apim-Request-Id:
-      - 46389dea-9199-4ae5-acbb-99a509437908
-      X-Ms-Deployment-Name:
-      - grok-4-1-fast-non-reasoning
-      Strict-Transport-Security:
-      - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
       - nosniff
+      Azureai-Fe-Is-Streaming:
+      - 'False'
+      Azureai-Fe-Offer-Type:
+      - paygo
       X-Ms-Region:
       - West Europe
+      Retry-After-Ms:
+      - '0'
       Date:
-      - Mon, 08 Jun 2026 18:45:43 GMT
+      - Wed, 19 Aug 2026 14:34:22 GMT
     body:
       encoding: UTF-8
       string: '{"error":{"code":"RateLimitReached","message":"Your requests to grok-4-1-fast-non-reasoning
         for grok-4-1-fast-non-reasoning in westeurope have exceeded rate limit.","details":"Your
         requests to grok-4-1-fast-non-reasoning for grok-4-1-fast-non-reasoning in
         westeurope have exceeded rate limit."}}'
-  recorded_at: Mon, 08 Jun 2026 18:45:44 GMT
+  recorded_at: Wed, 19 Aug 2026 14:34:22 GMT
 recorded_with: VCR 6.4.0

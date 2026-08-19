@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 10 Aug 2026 21:55:00 GMT
+      - Wed, 19 Aug 2026 14:34:29 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -48,7 +48,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '4901'
+      - '6913'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -60,11 +60,11 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '4999'
       X-Ratelimit-Remaining-Tokens:
-      - '996137'
+      - '996223'
       X-Ratelimit-Reset-Requests:
       - 12ms
       X-Ratelimit-Reset-Tokens:
-      - 231ms
+      - 226ms
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Set-Cookie:
@@ -75,15 +75,15 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_0a4e0aa867250331016a7a48aff67881a19443e429307aa9ee",
+          "id": "resp_0a4b29f86cea8812016a85beeea13c87d2b7893bc1ad3598a7",
           "object": "response",
-          "created_at": 1786398896,
+          "created_at": 1787150062,
           "status": "completed",
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1786398900,
+          "completed_at": 1787150069,
           "error": null,
           "frequency_penalty": 0.0,
           "incomplete_details": null,
@@ -94,20 +94,20 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "ws_0a4e0aa867250331016a7a48b1381c81a184eb6761cb7053ea",
+              "id": "ws_0a4b29f86cea8812016a85bef0ea8087d2a25ae52f20427c1d",
               "type": "web_search_call",
               "status": "completed",
               "action": {
                 "type": "search",
                 "queries": [
                   "latest stable Ruby version",
-                  "ruby latest stable version ruby-lang.org"
+                  "Ruby releases stable version latest ruby-lang.org"
                 ],
                 "query": "latest stable Ruby version"
               }
             },
             {
-              "id": "msg_0a4e0aa867250331016a7a48b47d0881a1a78b48fd9ffdf34e",
+              "id": "msg_0a4b29f86cea8812016a85bef4f60887d2b6c632e68fa7c43b",
               "type": "message",
               "status": "completed",
               "content": [
@@ -116,14 +116,14 @@ http_interactions:
                   "annotations": [
                     {
                       "type": "url_citation",
-                      "end_index": 142,
-                      "start_index": 66,
+                      "end_index": 138,
+                      "start_index": 62,
                       "title": "Download Ruby | Ruby",
                       "url": "https://www.ruby-lang.org/en/downloads/?utm_source=openai"
                     }
                   ],
                   "logprobs": [],
-                  "text": "The latest **stable** Ruby (CRuby/MRI) version is **Ruby 4.0.6**. ([ruby-lang.org](https://www.ruby-lang.org/en/downloads/?utm_source=openai))"
+                  "text": "The latest stable Ruby (MRI/CRuby) version is **Ruby 4.0.6**. ([ruby-lang.org](https://www.ruby-lang.org/en/downloads/?utm_source=openai))"
                 }
               ],
               "role": "assistant"
@@ -190,32 +190,32 @@ http_interactions:
           "top_p": 0.98,
           "truncation": "disabled",
           "usage": {
-            "input_tokens": 8706,
+            "input_tokens": 8614,
             "input_tokens_details": {
               "cache_write_tokens": 0,
               "cached_tokens": 0
             },
-            "output_tokens": 89,
+            "output_tokens": 95,
             "output_tokens_details": {
-              "reasoning_tokens": 47
+              "reasoning_tokens": 48
             },
-            "total_tokens": 8795
+            "total_tokens": 8709
           },
           "user": null,
           "metadata": {}
         }
-  recorded_at: Mon, 10 Aug 2026 21:55:01 GMT
+  recorded_at: Wed, 19 Aug 2026 14:34:29 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
       string: '{"model":"gpt-5.2","input":[{"role":"user","content":"Search the web:
-        what is the latest stable Ruby version? Cite your source."},{"id":"ws_0a4e0aa867250331016a7a48b1381c81a184eb6761cb7053ea","type":"web_search_call","status":"completed","action":{"type":"search","queries":["latest
-        stable Ruby version","ruby latest stable version ruby-lang.org"],"query":"latest
-        stable Ruby version"}},{"id":"msg_0a4e0aa867250331016a7a48b47d0881a1a78b48fd9ffdf34e","type":"message","status":"completed","content":[{"type":"output_text","annotations":[{"type":"url_citation","end_index":142,"start_index":66,"title":"Download
+        what is the latest stable Ruby version? Cite your source."},{"id":"ws_0a4b29f86cea8812016a85bef0ea8087d2a25ae52f20427c1d","type":"web_search_call","status":"completed","action":{"type":"search","queries":["latest
+        stable Ruby version","Ruby releases stable version latest ruby-lang.org"],"query":"latest
+        stable Ruby version"}},{"id":"msg_0a4b29f86cea8812016a85bef4f60887d2b6c632e68fa7c43b","type":"message","status":"completed","content":[{"type":"output_text","annotations":[{"type":"url_citation","end_index":138,"start_index":62,"title":"Download
         Ruby | Ruby","url":"https://www.ruby-lang.org/en/downloads/?utm_source=openai"}],"logprobs":[],"text":"The
-        latest **stable** Ruby (CRuby/MRI) version is **Ruby 4.0.6**. ([ruby-lang.org](https://www.ruby-lang.org/en/downloads/?utm_source=openai))"}],"role":"assistant"},{"role":"user","content":"Thanks.
+        latest stable Ruby (MRI/CRuby) version is **Ruby 4.0.6**. ([ruby-lang.org](https://www.ruby-lang.org/en/downloads/?utm_source=openai))"}],"role":"assistant"},{"role":"user","content":"Thanks.
         Now just say OK."}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"web_search"}]}'
     headers:
       User-Agent:
@@ -234,7 +234,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 10 Aug 2026 21:55:02 GMT
+      - Wed, 19 Aug 2026 14:34:30 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -258,7 +258,7 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '802'
+      - '748'
       Openai-Project:
       - "<OPENAI_PROJECT>"
       Openai-Version:
@@ -270,11 +270,11 @@ http_interactions:
       X-Ratelimit-Remaining-Requests:
       - '4999'
       X-Ratelimit-Remaining-Tokens:
-      - '999534'
+      - '1000000'
       X-Ratelimit-Reset-Requests:
       - 12ms
       X-Ratelimit-Reset-Tokens:
-      - 27ms
+      - 0s
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Set-Cookie:
@@ -285,15 +285,15 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_0a4e0aa867250331016a7a48b5335881a1ba6f1d7b78dd5999",
+          "id": "resp_0a4b29f86cea8812016a85bef5ca8487d29306a90b9e8f8015",
           "object": "response",
-          "created_at": 1786398901,
+          "created_at": 1787150069,
           "status": "completed",
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1786398901,
+          "completed_at": 1787150070,
           "error": null,
           "frequency_penalty": 0.0,
           "incomplete_details": null,
@@ -304,7 +304,7 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "msg_0a4e0aa867250331016a7a48b5ebbc81a1ba3ca89f49e7dc22",
+              "id": "msg_0a4b29f86cea8812016a85bef66b9887d2bf11d5df64b51d1b",
               "type": "message",
               "status": "completed",
               "content": [
@@ -379,7 +379,7 @@ http_interactions:
           "top_p": 0.98,
           "truncation": "disabled",
           "usage": {
-            "input_tokens": 4566,
+            "input_tokens": 4565,
             "input_tokens_details": {
               "cache_write_tokens": 0,
               "cached_tokens": 4352
@@ -388,10 +388,10 @@ http_interactions:
             "output_tokens_details": {
               "reasoning_tokens": 0
             },
-            "total_tokens": 4571
+            "total_tokens": 4570
           },
           "user": null,
           "metadata": {}
         }
-  recorded_at: Mon, 10 Aug 2026 21:55:02 GMT
+  recorded_at: Wed, 19 Aug 2026 14:34:30 GMT
 recorded_with: VCR 6.4.0

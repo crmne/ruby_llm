@@ -9,7 +9,7 @@ http_interactions:
         is the latest stable version of Ruby? Cite your sources."}],"stream":false,"web_search_options":{}}'
     headers:
       User-Agent:
-      - Faraday v2.14.2
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 10 Jun 2026 14:06:41 GMT
+      - Wed, 19 Aug 2026 14:34:46 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -48,9 +48,9 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '20593'
+      - '1669'
       Openai-Project:
-      - proj_61L3Oqt640dKU0CASS2iOj8Q
+      - "<OPENAI_PROJECT>"
       Openai-Version:
       - '2020-10-01'
       X-Openai-Proxy-Wasm:
@@ -77,61 +77,43 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |
         {
-          "id": "chatcmpl-15a062cd-6168-46e6-bd92-d5d40effd108",
+          "id": "chatcmpl-616dbad1-af54-4088-9764-d80acbbcf073",
           "object": "chat.completion",
-          "created": 1781100380,
+          "created": 1787150085,
           "model": "gpt-4o-mini-search-preview-2025-03-11",
           "choices": [
             {
               "index": 0,
               "message": {
                 "role": "assistant",
-                "content": "As of June 10, 2026, the latest stable version of Ruby is 4.0.5, released on May 19, 2026. ([ruby-lang.org](https://www.ruby-lang.org/?utm_source=openai)) This version is currently supported until March 31, 2029. ([eosl.date](https://eosl.date/eol/product/ruby/?utm_source=openai))\n\nRuby 4.0.5 is the most recent stable release, following the major Ruby 4.0 release on December 25, 2025. ([ruby-lang.org](https://www.ruby-lang.org/?utm_source=openai)) Prior to Ruby 4.0, the latest stable version was Ruby 3.4.9, released on March 11, 2026. ([eosl.date](https://eosl.date/eol/product/ruby/?utm_source=openai))\n\nFor more information on Ruby's release history and support status, you can refer to the official Ruby website. ([ruby-lang.org](https://www.ruby-lang.org/?utm_source=openai)) ",
+                "content": "As of August 19, 2026, the latest stable version of Ruby is 3.4.7, released on October 7, 2025. ([ruby-lang.org](https://www.ruby-lang.org/en/news/2025/10/07/ruby-3-4-7-released/?utm_source=openai)) Ruby 3.4 is currently in its normal maintenance phase, which typically lasts about two years. ([dev.to](https://dev.to/hsbt/is-your-ruby-version-still-supported-a-maintainers-guide-to-rubys-release-cycle-799?utm_source=openai)) The next stable version, Ruby 4.0, was released on December 25, 2025, and is also in its normal maintenance phase. ([dev.to](https://dev.to/hsbt/is-your-ruby-version-still-supported-a-maintainers-guide-to-rubys-release-cycle-799?utm_source=openai)) ",
                 "refusal": null,
                 "annotations": [
                   {
                     "type": "url_citation",
                     "url_citation": {
-                      "end_index": 154,
-                      "start_index": 91,
-                      "title": "Ruby Programming Language",
-                      "url": "https://www.ruby-lang.org/?utm_source=openai"
+                      "end_index": 198,
+                      "start_index": 96,
+                      "title": "Ruby 3.4.7 Released | Ruby",
+                      "url": "https://www.ruby-lang.org/en/news/2025/10/07/ruby-3-4-7-released/?utm_source=openai"
                     }
                   },
                   {
                     "type": "url_citation",
                     "url_citation": {
-                      "end_index": 281,
-                      "start_index": 213,
-                      "title": "Ruby End of Life (EOL) Dates and End of Support (EOS) Dates | 4.0.5 - May 2026 Release",
-                      "url": "https://eosl.date/eol/product/ruby/?utm_source=openai"
+                      "end_index": 426,
+                      "start_index": 293,
+                      "title": "Is Your Ruby Version Still Supported? A Maintainer's Guide to Ruby's Release Cycle - DEV Community",
+                      "url": "https://dev.to/hsbt/is-your-ruby-version-still-supported-a-maintainers-guide-to-rubys-release-cycle-799?utm_source=openai"
                     }
                   },
                   {
                     "type": "url_citation",
                     "url_citation": {
-                      "end_index": 451,
-                      "start_index": 388,
-                      "title": "Ruby Programming Language",
-                      "url": "https://www.ruby-lang.org/?utm_source=openai"
-                    }
-                  },
-                  {
-                    "type": "url_citation",
-                    "url_citation": {
-                      "end_index": 609,
-                      "start_index": 541,
-                      "title": "Ruby End of Life (EOL) Dates and End of Support (EOS) Dates | 4.0.5 - May 2026 Release",
-                      "url": "https://eosl.date/eol/product/ruby/?utm_source=openai"
-                    }
-                  },
-                  {
-                    "type": "url_citation",
-                    "url_citation": {
-                      "end_index": 785,
-                      "start_index": 722,
-                      "title": "Ruby Programming Language",
-                      "url": "https://www.ruby-lang.org/?utm_source=openai"
+                      "end_index": 675,
+                      "start_index": 542,
+                      "title": "Is Your Ruby Version Still Supported? A Maintainer's Guide to Ruby's Release Cycle - DEV Community",
+                      "url": "https://dev.to/hsbt/is-your-ruby-version-still-supported-a-maintainers-guide-to-rubys-release-cycle-799?utm_source=openai"
                     }
                   }
                 ]
@@ -141,8 +123,8 @@ http_interactions:
           ],
           "usage": {
             "prompt_tokens": 13,
-            "completion_tokens": 229,
-            "total_tokens": 242,
+            "completion_tokens": 197,
+            "total_tokens": 210,
             "prompt_tokens_details": {
               "cached_tokens": 0,
               "audio_tokens": 0
@@ -156,5 +138,5 @@ http_interactions:
           },
           "system_fingerprint": ""
         }
-  recorded_at: Wed, 10 Jun 2026 14:06:41 GMT
+  recorded_at: Wed, 19 Aug 2026 14:34:46 GMT
 recorded_with: VCR 6.4.0

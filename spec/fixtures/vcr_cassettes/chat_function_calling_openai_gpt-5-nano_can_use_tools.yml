@@ -9,10 +9,10 @@ http_interactions:
         weather in Berlin? (52.5200, 13.4050)"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
-        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}]}'
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true},"strict":false}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.2
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 11 Jun 2026 20:09:23 GMT
+      - Wed, 19 Aug 2026 14:34:25 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -51,9 +51,9 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '2349'
+      - '1950'
       Openai-Project:
-      - proj_61L3Oqt640dKU0CASS2iOj8Q
+      - "<OPENAI_PROJECT>"
       Openai-Version:
       - '2020-10-01'
       X-Ratelimit-Limit-Requests:
@@ -78,15 +78,15 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_044042210f8b7b67016a2b15f0f95c81a3997babd014e7b013",
+          "id": "resp_070b6a5867d3bddf016a85beef08e887d2b593adbe6c956754",
           "object": "response",
-          "created_at": 1781208560,
+          "created_at": 1787150063,
           "status": "completed",
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1781208563,
+          "completed_at": 1787150064,
           "error": null,
           "frequency_penalty": 0.0,
           "incomplete_details": null,
@@ -97,18 +97,18 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "rs_044042210f8b7b67016a2b15f14cf881a381c203066d789ed1",
+              "id": "rs_070b6a5867d3bddf016a85beef73dc87d28b71864b3a17b0a6",
               "type": "reasoning",
               "content": [],
-              "encrypted_content": "gAAAAABqKxXzu0CX0rjWwHqX8BufpLJZJaFuZsBib0xVhBJERG_S8SKITCa3WQujiAkN7R7tVdjsp0krMV_vNmLVwI0h01sq2NzsU6JGhcz0xu_JRKBIbhv2wfV1WDocG4zZwumRckuuvGIRZax57z-W0-eFr_n-uvXTo8lxHu0ULCFTq6Gr_wp-hyL1uDX95CXejhfPKxiP7qLJGpU-y1b8QLJnLhigXTBiBv0aDds1QVePnvvd8ZHlexGKFRmAJUQR1sZ-zhItBW9bsAIm4mHJaQKj44FInYd9lA9oT1U9OgvhBErzuzj7JhcTaG-7J4EKR8BcAkl3Jwem9YIN-hA8IKddFvGUl_KDlGrpNYgKgT2U7NCnyskkWOalEWaJa4rx5pohzKwMxAlCt2TFiYNcOgPy7-iS5eHkISdG6KGL80N2EZDp8Bumv0PHdxwNUrEcWOli3EbgwTs7Qe-4BB47mg7_ufflrgpM9waOrEclPdZQ1YJbvwRifT5zwA5-rpyhX5MrIoWicSj9qNFxfN4oJwKJEkEcVPZIXcpukaB5-tZHnEFku3Ucfi24UmtrBGAsRliWtFqNPEq9o9VJSUx4Ak4sJyY3LCH1pTXQvVsLShT06kKNU5sGnwRI3HIE5zxhN3rKPSjkPebY3TG9NmcEskREw010oyhwKOufytdg22Ya3pTJ7-a0gOqSlTrw9uinULzau0tgi2s3g4ZachVxOo29zehjdjfltM1_7v3voW49N0sDt2QjaEUjDYUf6hNVTJqhqnyHgLs6C0jrgYF0zUII5c-X41oHnaDfNINW1tJVHtQMGfHfJrfOt2BnHFnYbLT-yuezhzjqOH4UV0k35udLAcBLVJdKVhWqxjifQBugnqhWhv9pr7q3F99ovUoQ_G1uTJnPR9eNPCPPon5q1JQjQDvoQogkxnUXUNEeaQbftwWcuUUL0iYg7ee1m5eyAHCYqpa4JaQUPiDvtgiZYA7o-RhN-z6T7oT6QzigUfi0iwtCWl5679voYF1RJDOJs_Cjwd4txXCk60LK2UZdOicZsZivvnokXe8UAx_h9DVOTYkMMHA_aj1wmuVNNuYI3xrPoGNbE8JXE7n9Ayc1lsP1mZPiZkKSRjlym0PAJ44H_vWE_7RpHwfZ3DEBIEksmXuJi2XIL2XTALRjRraAC_OEg0t6or6ZfwmQqaRtjvAvQQWz60W6LVTaYI6TfTYHrrIeThV6LvZDQLZ613FwXHpxym9J8oXVHI_izXZsxVMb84_l1jKib6jRniQYpw8uob39J_-WnTS0Gyj38tr0ezoELQNY_LV8fMwBrTRqFe62DJMXhidIvCMsrBe6MZQoNkAVXSqTvFv8Z-zqMZjHeFD5fAdRqjsxosZe7iHZRAo879E7xJPsmdyelxZjHsU1o9LMpgjcDTTRhFbW2Xs4WDKzTimcIhEtZkz2RSd75pkJiDGjyIvUkN52c4ELC4kRoGG0jzM2XSycUyxH4DWjZJrCfk-oqPedU2x2VyYu6Zk7F5D7bsjjh_SXgABKRuuF2QkyJeEeBLqjjCt35TA1dVNpgaB6sDwSux4dUImnDMVR_K9fL6rsDEUTlqNu99iVV_FvR0e1e9NN93hLOSVglWvkAYksAMzrQDCn5kWnlR2vDXirR4bPJz45yue4CA7DKN1bJUAg_ie9vPCyJMIXBEwtRlsqE7z1bq0xbuCR5mN2psRtoFQjfRm4fwqKeqE3k_SPfzjAe8OjgSTgnkNngeXtIeA21y64Pk_X1CsZ718xGM62943oA3M_NocNZMDKqhlMIImA8kqbKo-Oi0rdkt44iD-VX3wuCQFeo6S_VAJsyOeMqHDvVvp6J2z8qGQNp6EaNJ7InOaeM1yxJ_F2n-gxhaI7jv_PdlBZ5lLywQaWQ90HOxhBpkKt3TgOwcwmqPakK5PtxLxNjQ6dBGnK0NqQaFfVoScnvsh4lwYt8b4zqX7LzstWlkZhGzNSgErBiKm3psfbS6zfV_PdCLqD2Kqyo6Y3BWQWqBSJMWOO3i-BRzVCnKaNtCHhyYGgCub5GniLR1-hwyUd-E4-oOjjiRktpfRzj8d56KEagwNez3Dz30Sya2GkT-oAjQ0JzMbx_RFKfekfS--jUqLiDrzweI9_DUXnS1sUKG9R6TE94BE6NzcYQkCGvP68fwjPlB-sYcd7Tl7wIuLpl2U3UV1SqbLjHIAUC_6g4ADt1l0MpYxHRNQZEKWr-JkmWauOBECLuqswXoHxgb7ItcupsNAcVeJ0ctSOd3XcV85n7RsE63TynSKvE1pmQ0g8LFBR3rbSSy74kQUM2DEHHNXzp4rylOB5BG77ilqJYdYLcl-Ag1Ui8-Lv4iDwfbsG6BNbnTu01UegN0Dq5__7f8ytXgB2-H-hjMR_0myWq-YCyD_G_9oZocye9Rei7ojbN4NXt-Z6MmSZiOxQcyLRoaKYlbn84OdZk3dT3vLmTY8UglWZ9DT5AT3hQOgEh-QDgIqwjt6Wm7D7mJtU",
+              "encrypted_content": "gAAAAABqhb7wzBfXJdHak0chuggX16oHlrR6wpq9Nzl-B0Egfca860vMqekkbYHJ0JZSVChmZBdstbdEVNl4uAAexT42zwsy5-f3oSc2BHkUgWtM7DZe9O_DLDwiF-Nrhp9UNO2OCzcDqxSIvFYAs2_C0aAWdyOL9B089JR-1p0qpbJqUrESQXFG8zFBrp07gayOuboeZ6-qbvkXsDx9VBgQAHDXW5aKfZXVG3AV0sW8Tkhi2jolm82kWuGLYHuh5d7m2q5dAfYdZoX2kU2bOfnUuqj6FMYSxGZDtbuYpAK5sA3x89tdW5yLqecvcgminC3HPUBaHdBwkwQMkNH3h_xqtqr9T1YC4L1Ss4Qssl3UTqCN61I8jbwK-U00bSnLb_rIraGGy9IWvsDv6f600Rzy5GTy_-OIwbRH3FQp5hVBzSwg4-FicOuembTC_BxJsej9FOLCegnxCrBQle9J9LagzpTMyZlQOkHGy9T_NQ_D8eMb4uSHu9jnMKExiayUnBydSPXjOEQD8wHKXZ8z56sJ7AmjaHyQt7xgM3sCW-vSE11iriY2kjLKQ5hbMZ8fiqWdqwqwpo3_zmsPBhkqwZJwZJijGsuQ5L_Xip5CoTT_sw2jiq7PNfxLdwNuDkUFQMTB9RCSdkhtxCtgO0WempAcnXO060HUm11ZwG-dVKlvyERD327WRQi5nIzE1of53urypJDG5aFOJvRlJvUhZq7FnWouimNr2jd_GDwwUK2eZJef29eW5IXltagOTVhomdl2WjcliZj3iaMYP6zwwdEZGmAaAEe4ZXMMbN24NEMFjbEsMkJL0EvO-6t11sSKKJuqw_7z8Xe9IDnYIjnaV7seRTC7kUUKkOMm_3UOjOIMyy-e06wPTUOZ9c9LeQ0CWuKH3JuSZWwc4BFsBa53_-0TCX5CvT3ZdZXZml_VliBc4JqEuiz3OCIrn1qt-YkERlVEakQZ_lYqbEd4Yl8oJ1hmwse5wEoglEE64A8nOBg-hSvp3VEim-OlGFWe6Jq3Uo-z7THNUbDAOsFrBqdtGPcXi0BtA6wjT6gHylQIyAwkYsyUcYHKuzJ1NusiJQC2I940bJIfSR9NG7g6E8cySwJRCNkW0uYNCAxweTGGTltCDBTUOGTw0KMZ1DWExIDQOtBjv49B-lhXd_hSzN3ZWulMEKfwVNL_CPFqFtxNieqamB201zpD1aCNMUX-FCptUewKKAMXsceS6UX87XXLojnFCHfJnJ6QZTd-qBc9vB9nlX9jZO7_4taPCawxQY9-7MNnthqX16PL13qOv25PwJgzLmEiN9vONOLLI1yNWrNzbUu2sxBkTaKbEg-gjYy0FM6qUOJBR6BsdTAcGNZygsMTI7dZ5MfFnKXWn0Ur6tXSUu0P9W8q_lgPz8jATj8vKEGWYjrOznB0lMvZcfQt85vGx44Wj_VASPM5OIyHI1v5kChLWVXi6GuPwSymUCSB7Qn8XSGHYncLw-NUX0tuIZx9YZqCTVqQGt-s5veKBvL6UcYiiNkNY7OYxAVmJuqRrhgA33sEjDih_NGV4GCRlvq28c0JqiXQmgznlw-xH4MPHSZzw1_IP0Flap5sN8nqpp1TOSM0gF4TzlGSo0OJrV1YbVOq1TWVGHBrPFHshBobjVos7L4Q6XmP4GQ56dFqgNrP-zwMxa4bXcK-Elgd2Jw_5VEENwJvMmm50pHNJJLkGu74CJgpspjAdd8hfk50B9-RGB_8usZin5w4BerjZV69Zlx-vZaX-6gbkE7XSy3Iglse-GzRlCe7qvLmtGe3fqjDmCYO-yBi1F3swPrg7b_z48rGe3edrAfpOsv3Up4D3HmyZNb0uSi6xpbn1DJ3XadDULXXlbJ9YaNbPFlzQ1qkA-Hj5srcpxTePHiKNpzHlwBFEBv52FksfKtOQPEKaprHvWRIimm0YAvKFdbqv07wBedU8CS4gOnOpSBFtp1rlTApYSLoQoueFtAfzu2NC47zKxj8rDgAZbzogIuLmuGZNmYYO8QRkCZ0cWo3lnVtc7meJyanWzuLu85xHxFCIZuKqw7PBBXJIVeFqGkLxAeDplhrNQw-aBvzIeTPSFLDgR4IfUAtgVZPtxhuq_C433SAPAOF_mscrbfB-FTVs1eScVOyQWJ1o8wFvx7leKcNO9YJ4JrxzQbOwJk1CVjehY7u3FeUnn6-0X0mxDxXkPabdGeY8SFaBg==",
               "summary": []
             },
             {
-              "id": "fc_044042210f8b7b67016a2b15f2ee7881a3918e70acc6decc3b",
+              "id": "fc_070b6a5867d3bddf016a85bef0ac3887d29ebf55abf1b738a6",
               "type": "function_call",
               "status": "completed",
               "arguments": "{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}",
-              "call_id": "call_ID0buE92wLmD0Cfe9syrhNU3",
+              "call_id": "call_R1nRm6zHHaYdJmzUTyHeErE1",
               "name": "weather"
             }
           ],
@@ -120,6 +120,7 @@ http_interactions:
           "reasoning": {
             "context": "current_turn",
             "effort": "medium",
+            "mode": "standard",
             "summary": null
           },
           "safety_identifier": null,
@@ -133,11 +134,30 @@ http_interactions:
             "verbosity": "medium"
           },
           "tool_choice": "auto",
+          "tool_usage": {
+            "image_gen": {
+              "input_tokens": 0,
+              "input_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "output_tokens": 0,
+              "output_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "total_tokens": 0
+            },
+            "web_search": {
+              "num_requests": 0
+            }
+          },
           "tools": [
             {
               "type": "function",
               "description": "Gets current weather for a location",
               "name": "weather",
+              "output_schema": null,
               "parameters": {
                 "type": "object",
                 "properties": {
@@ -157,7 +177,7 @@ http_interactions:
                 "additionalProperties": false,
                 "strict": true
               },
-              "strict": true
+              "strict": false
             }
           ],
           "top_logprobs": 0,
@@ -166,32 +186,33 @@ http_interactions:
           "usage": {
             "input_tokens": 87,
             "input_tokens_details": {
+              "cache_write_tokens": 0,
               "cached_tokens": 0
             },
-            "output_tokens": 279,
+            "output_tokens": 211,
             "output_tokens_details": {
-              "reasoning_tokens": 192
+              "reasoning_tokens": 128
             },
-            "total_tokens": 366
+            "total_tokens": 298
           },
           "user": null,
           "metadata": {}
         }
-  recorded_at: Thu, 11 Jun 2026 20:09:23 GMT
+  recorded_at: Wed, 19 Aug 2026 14:34:25 GMT
 - request:
     method: post
     uri: https://api.openai.com/v1/responses
     body:
       encoding: UTF-8
       string: '{"model":"gpt-5-nano","input":[{"role":"user","content":"What''s the
-        weather in Berlin? (52.5200, 13.4050)"},{"type":"reasoning","summary":[],"encrypted_content":"gAAAAABqKxXzu0CX0rjWwHqX8BufpLJZJaFuZsBib0xVhBJERG_S8SKITCa3WQujiAkN7R7tVdjsp0krMV_vNmLVwI0h01sq2NzsU6JGhcz0xu_JRKBIbhv2wfV1WDocG4zZwumRckuuvGIRZax57z-W0-eFr_n-uvXTo8lxHu0ULCFTq6Gr_wp-hyL1uDX95CXejhfPKxiP7qLJGpU-y1b8QLJnLhigXTBiBv0aDds1QVePnvvd8ZHlexGKFRmAJUQR1sZ-zhItBW9bsAIm4mHJaQKj44FInYd9lA9oT1U9OgvhBErzuzj7JhcTaG-7J4EKR8BcAkl3Jwem9YIN-hA8IKddFvGUl_KDlGrpNYgKgT2U7NCnyskkWOalEWaJa4rx5pohzKwMxAlCt2TFiYNcOgPy7-iS5eHkISdG6KGL80N2EZDp8Bumv0PHdxwNUrEcWOli3EbgwTs7Qe-4BB47mg7_ufflrgpM9waOrEclPdZQ1YJbvwRifT5zwA5-rpyhX5MrIoWicSj9qNFxfN4oJwKJEkEcVPZIXcpukaB5-tZHnEFku3Ucfi24UmtrBGAsRliWtFqNPEq9o9VJSUx4Ak4sJyY3LCH1pTXQvVsLShT06kKNU5sGnwRI3HIE5zxhN3rKPSjkPebY3TG9NmcEskREw010oyhwKOufytdg22Ya3pTJ7-a0gOqSlTrw9uinULzau0tgi2s3g4ZachVxOo29zehjdjfltM1_7v3voW49N0sDt2QjaEUjDYUf6hNVTJqhqnyHgLs6C0jrgYF0zUII5c-X41oHnaDfNINW1tJVHtQMGfHfJrfOt2BnHFnYbLT-yuezhzjqOH4UV0k35udLAcBLVJdKVhWqxjifQBugnqhWhv9pr7q3F99ovUoQ_G1uTJnPR9eNPCPPon5q1JQjQDvoQogkxnUXUNEeaQbftwWcuUUL0iYg7ee1m5eyAHCYqpa4JaQUPiDvtgiZYA7o-RhN-z6T7oT6QzigUfi0iwtCWl5679voYF1RJDOJs_Cjwd4txXCk60LK2UZdOicZsZivvnokXe8UAx_h9DVOTYkMMHA_aj1wmuVNNuYI3xrPoGNbE8JXE7n9Ayc1lsP1mZPiZkKSRjlym0PAJ44H_vWE_7RpHwfZ3DEBIEksmXuJi2XIL2XTALRjRraAC_OEg0t6or6ZfwmQqaRtjvAvQQWz60W6LVTaYI6TfTYHrrIeThV6LvZDQLZ613FwXHpxym9J8oXVHI_izXZsxVMb84_l1jKib6jRniQYpw8uob39J_-WnTS0Gyj38tr0ezoELQNY_LV8fMwBrTRqFe62DJMXhidIvCMsrBe6MZQoNkAVXSqTvFv8Z-zqMZjHeFD5fAdRqjsxosZe7iHZRAo879E7xJPsmdyelxZjHsU1o9LMpgjcDTTRhFbW2Xs4WDKzTimcIhEtZkz2RSd75pkJiDGjyIvUkN52c4ELC4kRoGG0jzM2XSycUyxH4DWjZJrCfk-oqPedU2x2VyYu6Zk7F5D7bsjjh_SXgABKRuuF2QkyJeEeBLqjjCt35TA1dVNpgaB6sDwSux4dUImnDMVR_K9fL6rsDEUTlqNu99iVV_FvR0e1e9NN93hLOSVglWvkAYksAMzrQDCn5kWnlR2vDXirR4bPJz45yue4CA7DKN1bJUAg_ie9vPCyJMIXBEwtRlsqE7z1bq0xbuCR5mN2psRtoFQjfRm4fwqKeqE3k_SPfzjAe8OjgSTgnkNngeXtIeA21y64Pk_X1CsZ718xGM62943oA3M_NocNZMDKqhlMIImA8kqbKo-Oi0rdkt44iD-VX3wuCQFeo6S_VAJsyOeMqHDvVvp6J2z8qGQNp6EaNJ7InOaeM1yxJ_F2n-gxhaI7jv_PdlBZ5lLywQaWQ90HOxhBpkKt3TgOwcwmqPakK5PtxLxNjQ6dBGnK0NqQaFfVoScnvsh4lwYt8b4zqX7LzstWlkZhGzNSgErBiKm3psfbS6zfV_PdCLqD2Kqyo6Y3BWQWqBSJMWOO3i-BRzVCnKaNtCHhyYGgCub5GniLR1-hwyUd-E4-oOjjiRktpfRzj8d56KEagwNez3Dz30Sya2GkT-oAjQ0JzMbx_RFKfekfS--jUqLiDrzweI9_DUXnS1sUKG9R6TE94BE6NzcYQkCGvP68fwjPlB-sYcd7Tl7wIuLpl2U3UV1SqbLjHIAUC_6g4ADt1l0MpYxHRNQZEKWr-JkmWauOBECLuqswXoHxgb7ItcupsNAcVeJ0ctSOd3XcV85n7RsE63TynSKvE1pmQ0g8LFBR3rbSSy74kQUM2DEHHNXzp4rylOB5BG77ilqJYdYLcl-Ag1Ui8-Lv4iDwfbsG6BNbnTu01UegN0Dq5__7f8ytXgB2-H-hjMR_0myWq-YCyD_G_9oZocye9Rei7ojbN4NXt-Z6MmSZiOxQcyLRoaKYlbn84OdZk3dT3vLmTY8UglWZ9DT5AT3hQOgEh-QDgIqwjt6Wm7D7mJtU"},{"type":"function_call","call_id":"call_ID0buE92wLmD0Cfe9syrhNU3","name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"},{"type":"function_call_output","call_id":"call_ID0buE92wLmD0Cfe9syrhNU3","output":"Current
+        weather in Berlin? (52.5200, 13.4050)"},{"type":"reasoning","summary":[],"encrypted_content":"gAAAAABqhb7wzBfXJdHak0chuggX16oHlrR6wpq9Nzl-B0Egfca860vMqekkbYHJ0JZSVChmZBdstbdEVNl4uAAexT42zwsy5-f3oSc2BHkUgWtM7DZe9O_DLDwiF-Nrhp9UNO2OCzcDqxSIvFYAs2_C0aAWdyOL9B089JR-1p0qpbJqUrESQXFG8zFBrp07gayOuboeZ6-qbvkXsDx9VBgQAHDXW5aKfZXVG3AV0sW8Tkhi2jolm82kWuGLYHuh5d7m2q5dAfYdZoX2kU2bOfnUuqj6FMYSxGZDtbuYpAK5sA3x89tdW5yLqecvcgminC3HPUBaHdBwkwQMkNH3h_xqtqr9T1YC4L1Ss4Qssl3UTqCN61I8jbwK-U00bSnLb_rIraGGy9IWvsDv6f600Rzy5GTy_-OIwbRH3FQp5hVBzSwg4-FicOuembTC_BxJsej9FOLCegnxCrBQle9J9LagzpTMyZlQOkHGy9T_NQ_D8eMb4uSHu9jnMKExiayUnBydSPXjOEQD8wHKXZ8z56sJ7AmjaHyQt7xgM3sCW-vSE11iriY2kjLKQ5hbMZ8fiqWdqwqwpo3_zmsPBhkqwZJwZJijGsuQ5L_Xip5CoTT_sw2jiq7PNfxLdwNuDkUFQMTB9RCSdkhtxCtgO0WempAcnXO060HUm11ZwG-dVKlvyERD327WRQi5nIzE1of53urypJDG5aFOJvRlJvUhZq7FnWouimNr2jd_GDwwUK2eZJef29eW5IXltagOTVhomdl2WjcliZj3iaMYP6zwwdEZGmAaAEe4ZXMMbN24NEMFjbEsMkJL0EvO-6t11sSKKJuqw_7z8Xe9IDnYIjnaV7seRTC7kUUKkOMm_3UOjOIMyy-e06wPTUOZ9c9LeQ0CWuKH3JuSZWwc4BFsBa53_-0TCX5CvT3ZdZXZml_VliBc4JqEuiz3OCIrn1qt-YkERlVEakQZ_lYqbEd4Yl8oJ1hmwse5wEoglEE64A8nOBg-hSvp3VEim-OlGFWe6Jq3Uo-z7THNUbDAOsFrBqdtGPcXi0BtA6wjT6gHylQIyAwkYsyUcYHKuzJ1NusiJQC2I940bJIfSR9NG7g6E8cySwJRCNkW0uYNCAxweTGGTltCDBTUOGTw0KMZ1DWExIDQOtBjv49B-lhXd_hSzN3ZWulMEKfwVNL_CPFqFtxNieqamB201zpD1aCNMUX-FCptUewKKAMXsceS6UX87XXLojnFCHfJnJ6QZTd-qBc9vB9nlX9jZO7_4taPCawxQY9-7MNnthqX16PL13qOv25PwJgzLmEiN9vONOLLI1yNWrNzbUu2sxBkTaKbEg-gjYy0FM6qUOJBR6BsdTAcGNZygsMTI7dZ5MfFnKXWn0Ur6tXSUu0P9W8q_lgPz8jATj8vKEGWYjrOznB0lMvZcfQt85vGx44Wj_VASPM5OIyHI1v5kChLWVXi6GuPwSymUCSB7Qn8XSGHYncLw-NUX0tuIZx9YZqCTVqQGt-s5veKBvL6UcYiiNkNY7OYxAVmJuqRrhgA33sEjDih_NGV4GCRlvq28c0JqiXQmgznlw-xH4MPHSZzw1_IP0Flap5sN8nqpp1TOSM0gF4TzlGSo0OJrV1YbVOq1TWVGHBrPFHshBobjVos7L4Q6XmP4GQ56dFqgNrP-zwMxa4bXcK-Elgd2Jw_5VEENwJvMmm50pHNJJLkGu74CJgpspjAdd8hfk50B9-RGB_8usZin5w4BerjZV69Zlx-vZaX-6gbkE7XSy3Iglse-GzRlCe7qvLmtGe3fqjDmCYO-yBi1F3swPrg7b_z48rGe3edrAfpOsv3Up4D3HmyZNb0uSi6xpbn1DJ3XadDULXXlbJ9YaNbPFlzQ1qkA-Hj5srcpxTePHiKNpzHlwBFEBv52FksfKtOQPEKaprHvWRIimm0YAvKFdbqv07wBedU8CS4gOnOpSBFtp1rlTApYSLoQoueFtAfzu2NC47zKxj8rDgAZbzogIuLmuGZNmYYO8QRkCZ0cWo3lnVtc7meJyanWzuLu85xHxFCIZuKqw7PBBXJIVeFqGkLxAeDplhrNQw-aBvzIeTPSFLDgR4IfUAtgVZPtxhuq_C433SAPAOF_mscrbfB-FTVs1eScVOyQWJ1o8wFvx7leKcNO9YJ4JrxzQbOwJk1CVjehY7u3FeUnn6-0X0mxDxXkPabdGeY8SFaBg=="},{"type":"function_call","call_id":"call_R1nRm6zHHaYdJmzUTyHeErE1","name":"weather","arguments":"{\"latitude\":\"52.5200\",\"longitude\":\"13.4050\"}"},{"type":"function_call_output","call_id":"call_R1nRm6zHHaYdJmzUTyHeErE1","output":"Current
         weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"weather","description":"Gets
         current weather for a location","parameters":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
-        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}]}'
+        13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true},"strict":false}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.2
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -206,7 +227,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 11 Jun 2026 20:09:25 GMT
+      - Wed, 19 Aug 2026 14:34:31 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -230,9 +251,9 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '2465'
+      - '6132'
       Openai-Project:
-      - proj_61L3Oqt640dKU0CASS2iOj8Q
+      - "<OPENAI_PROJECT>"
       Openai-Version:
       - '2020-10-01'
       X-Ratelimit-Limit-Requests:
@@ -257,15 +278,15 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_00604e9ac1772860016a2b15f37d288192ace67c11d45c5bab",
+          "id": "resp_0df408e97a3fbf95016a85bef1691887d2bce21752aa2ecfdc",
           "object": "response",
-          "created_at": 1781208563,
+          "created_at": 1787150065,
           "status": "completed",
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1781208565,
+          "completed_at": 1787150071,
           "error": null,
           "frequency_penalty": 0.0,
           "incomplete_details": null,
@@ -276,14 +297,14 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "rs_00604e9ac1772860016a2b15f41770819283731d16a7c11009",
+              "id": "rs_0df408e97a3fbf95016a85bef1f78887d2b2c2575b5f3140d3",
               "type": "reasoning",
               "content": [],
-              "encrypted_content": "gAAAAABqKxX1JOp3MtSZ4OLvSOBySYYUmAsMcLKcPRyF9cf2ZYmxWoFW3Zl4itsqqaBvPbQMOm-GjMn5VBV_YBo8g4dlg3Ekrfq6YnORO2NmNMd9UlKZWlPVzPWP8LtrzJeeNHU9hKXzUmviEIJ_wdyHo7GFISICzePyVvrjwvX7TuPascL8V-XQGXBtvH5qR6mwnKhOVR5f8uscfch7nezIPZMe2OrBjxPbEA1MaXBoVnZ5sQnwnFwUgoT6-t43k_p0YkyLuRLEmrFqKlEM8KX2JU-AeNAElkHHC2fsAa-U5_1DKI74eV9YRyRAOAiLhsVxijV_XJm0hq8VHrPngFVPIVQzwKMIOsLiquRS-iA8KcPWoEPPSjg1ZDW-JHuZCiDQVoJ3kowfIM5OuY4Z_RFh9V-M8wqwGAPd8q1E2I2j0LE075hO-Y3rGRyAMP4AH_XB_jkjgqN26fZT1Qejqhwnva2_vg6wHNfeyE0jt5lJtmANilhErqkm1Nxn_p7a-yckoLCok8n9cwXtU8_3MV_LwSrOwIz4KRc6AIP1K_o68CBWInckVFfAk9gknQXCs0Qk-Hl3O1nyZbyODlP6WOhkjVUHNacA-accSinwKausVsZcJVGLJ860oP062qVAXuyvQYRYDItg6zBAGru80VGDbkZtsZhdiHjSjC5sTTDsQKAV71Zg54WYmy0Zq3eQ3FgnHz02VlRI8HQkORswOrf4U0euI1lUFEH6ojU69ZJLFZ65jqlo72dO9wfB4ysNPLbzJ_uDD7OMHjyILCcOB2nbjJVTUNZQZ5mGuG_DjPczujJDwBfiod6eJxbtQaXE07PQnxBwBPNRAeQXjzS1gPPzex2tCbkE-PvmDvvkx9Q3DT6PVrUfydpDtApNdekVa5Pn-hKPx5Rxz6YFAl36kNm_vuU98QAOG_ffFm5VQ98uSTZJCnXdIaJN13PZa4_3sKOZe5Zut3zqYyElgmhg07BrXO2lf88Q6jbJfUp7A7Y1QpeHz34kpNEFm7KG4Feh5DimREebMjJ0z604NiVAASTqekMRn5m4gniW4NEshQK2RIqFrNsHne9eLa_iNq7gpHWf0bc8mpr44vWNLBPbF2qN5dIcrs4Ubd6d-tf7iSXkXacU_4D7XiJVWl5SRDTtNpDeyyBoJum8EOcAl9nDtCAntDwhkMRA_nsRAcoN-Y1AVcKsm-l-omSQWMYitOACKF-KbWA96aKEG-BGpxHMHfuT-S8kdDY74XZTN4Y0eglbhS1cmQ3r78IUIaPgjvJvehDugxQlmS30gHFJQfzkuJYJkrRLttyiCcOPsqifsWMNCx_ZuVWgVoh5V3CANRxFjtQtIr7bG5TeMK0ZsBgr5GnVCosv1soZZ2EMeEKFYO_NyBNuGDK642iRdLtXE33IXmmWnt6vZYnSpALKmlfW_ZbHLCFND6Yt0xgiJ42zUMPPeYKqaz7CfFE53Vcr0EZ9WlLFxjZSoiX1PzbFSgVwy2kPUDZywllr1nczKXH-suWZYZZ3Bj6phzvncsjhesTbG8RcWEo2jmFuZtFPzWXw1ck8ZiqrouZiLCOKFke-Xrp2xI4RyTtUXhnmEKqxq16923JrjQVp54eWwb6EqqjQt5h_4eM2dz7AqCyv6-qc-cOLNsrtB3BWfIfDAKoLREt1rr0AE-LWEExMc6hB8QcNHG0TCiBsRvqRpOlpy30OT4Hi9Sdp_tUJnyE5gPQGUlSXwbEiggxTQzew9DBQCSTLU59p0O35ssZEVuhrAB3bbgS0ra8uqcvpIJva65KXPV8YewrOk8SPRVzBvRN9aa59sj-mi9Lk_pEy5FEyenyTz4S6dNezGy1YGIOd0lI4hiME_cFY-4M8lkJKdcLimqGZ5sRKrcXgSp9VMot--YWdXFF3djQUR_ajFI8nccl849OMc72aSFLOF6tjCwcZBGMQpRRB_miQrWaDM1U75CZtZLsI4n_eLqQngmQx8AXIzViww-FvwIf984n-s65RQP5oRQz7lpI17vvgVi7ZLvVoWI0Z6_6SsqNC-tc6-aZXy9UWtJH9Z7Ui842Ll6k1FkPU0sOENJLJQuKeAR2mTE4vdp6wD-GnTRK22QZ-ALgBfvxhh8jEmDC6CBeAkeIUqe6ghJpry-CaJFSGzfTZOJU5a9cO8jbSZhWg4tHdFBLumfEnE6xEYY4kjm9cLz61_7SLOXPuiLnZXLK3mmctpCdvW_l2DcTy2kzygII=",
+              "encrypted_content": "gAAAAABqhb73eIohcRsZHJM0csLVr1haPTCfbqU9RpZo4THmoshVPIPH8P2oKPrjT4pdG7zsYtag_rIdD6ovOpDXrYr-0eyrqWgTJENTSAx63aWeKiyOapE5R679MFkSzSW_GJz1kzv0yQ6HEUK3YiTLhLCdUiQQ1BpSxaKgA43ctSsBS9y9nsYStqVxDzHgmaIEeyHktvi0QM__2tA7GcjZ58hyEK5n0k9ARIsxV4zk-vg5acqQ-od8xGlzQnSpPU3-YjfO0H5RK5Fic__6XzUOjLPoSfV7uFAw8GzfguUjn8ItmH1laZPj7zz8a7bdRhpbhaC67XNg80-UJNYUhdowKJhjJd22R-GEH0aMe9h6yGay3vlXIUzfZKbC5VU08aWdgkE0NG9dTRjcYthQMwxxf3ArCIMQv_d5-gr7GcGBlhB7koXtFVNdBV2dvUZatcTRwgtPUsKILjXM7naG3bS05v6s-1LeEnsde2gHAm6gXbBfwA-iArH26GhF5dbwML6fHcTu1iUfehtTfq4tDS44NdJ23Fvg8hOjM_ULtX2yIO-GKTFjbgkA7Rv6nezkHgdNMFhwQwqLOkJ1epDJbNNPOZWnZ9mnwj1WqtxsHHltLgnB8vCibDMwi8UOfqVH2M4mN6-lpymbPBWVqqWfWJrv9Nv_SCIQ2Q12yhT_1I812xf9VFGhkGBoUkofcKevD_OaYYRmG9An8FNU2tRmq8_2CUhRuIOBaYgF-QPyM40etPgioylwqCLNwW7NmKdNPjIIpYHO6yOO5vavOgTinxyV-7bIUJMzbLq6TXYHVRE6-B8W2JQwZVOKc1owVkxnLPxDOFp5Omed05_NHvUGRHOfoah3zydFSp2Rhk0CxJMZpd6DneR5NeVDzo7VPoM2PVVrGOY1IBv3Ic3Q4gFq8qR1KRA5POSmyre54ZPFuO24xXmkJ8gvF7A6A6gc28bez-fXNyE1U72yjZhs2D9rt7DcsDiFDDhCiDw56UHmLCZO1PMn1U44OOsCy_LimlfN6PGWGNJN6ZOgvJvZDrAqEok59GcKSBiqLn8V0f048Tk1Pbch-_KpnI1144s0O7TO9coG1Z24LQjNNh7xXkWqFkdGAGyZcXgJpKtBFFKXIQIliYEv5lXx4i5ppH2LU8TqK5K1GaTFDMq2LxXkac4oDFSvCPHq7dv_GobmsyJh5UmTjGFqHF3mbuYouRSqSy0GD5W1hLIKmTUjsm7wVzfbfwTUlQU0j_UyjnZGSPCR0eFgs_Q2rq9Mj8GEuo_YDpJbW-kb2FGrsBACzsUsddB7ttZAbYV5nIhq7rp9WM47KJalV78o0dD2MPYNO4Jy7wST0GB35tpPIZ-79Ss2Rb89qLxben-m-LWvoVhPMumaa39nChPQTJyCosIVBbqxvuiVM0CTLvFXFRabDJ6SSh7wdjItHCncz8UqNw4sl-qX7VRIBfbMEOm3qD0bZjZX1vGWGVLBFdt06yD_FxmTtuYt2Nf8AqSIXUUp7uzl49NMldXD8b7ENoy3kssOZzgOwWPlJ031puTeq-isCDrM-_qq8rGwkPKQDqETc4OMlDRSDQWMbPjQGgpI6zBjagINcKIIk_nNxWyHLv_LetAqnvni8fg2YRhXNHNvQoCBJNgQyWL-Bt_xxV6TucevQV11xcBOSe6GxxHQNrPbmyBk0s-aSNBEL2-u4uJIafIkf094zf67y8C0XY_oMPveWTHKYdrfjej2ZhoEBCrdsqjn74DDBc9QT7sojQgE4qcB72hpReWNbjTFmvoUjrlDB9LvwkLxVqo2gB1_f9Z9WK8TNFc-bUp6IBwZ4HMM0yNI9CckQ3LaAbAgBZg_g66jT-iu1lkwMNDQ9Brc8OG0ITMPDuv2BvpPlShc8eWxnRqt-pqn2g70IjbaHnxInGQFf4pxYgLuhMlwPxgc-8hV6A0MoiBCfZMyXY-skA3VtAB4aGNopOth7un_rY_gkJK2Tea2GmFHOA4grZr4FDlGplrEGLDU5RFBXUUZv9LZE6S9iyclhPF_jdmG7a-Ouuo6X-Yl9MwoYFf-m9y80HQ1lnD7J45Msts_P4F83SOiFA731QUbgAJJvn3APl0uStoqvQ88Jrh6khzgOtZstSafKMbsObOhnwhPEB7Dyd_URUmV8WFFGzYXI_5A6a4dcfljvR5vnPZ_to9q2f3bH8pnr3I6JdpAPh19LgrWJtXB9izdQCYH3847fWxpejIkRu1cM-uZzZ1dp7yxQEJeLmq7M5s0RVImWyvRXCii8SJF4wfZgO1oS9m_SDgtYtaUtFNxz2o27nGdzg706qYhov4rcrwzhmWvpAw5YlI6jPxExPxRGGm-cxgt93Ki8lH3ZNQ=",
               "summary": []
             },
             {
-              "id": "msg_00604e9ac1772860016a2b15f57bb88192936285bd8c19dd0b",
+              "id": "msg_0df408e97a3fbf95016a85bef5561887d29d8293233010f943",
               "type": "message",
               "status": "completed",
               "content": [
@@ -291,7 +312,7 @@ http_interactions:
                   "type": "output_text",
                   "annotations": [],
                   "logprobs": [],
-                  "text": "Current weather in Berlin (52.5200, 13.4050): 15\u00b0C, wind 10 km/h."
+                  "text": "Current weather in Berlin (52.5200, 13.4050): 15\u00b0C, wind 10 km/h. \n\nWant a full forecast or humidity/precipitation details?"
                 }
               ],
               "role": "assistant"
@@ -305,6 +326,7 @@ http_interactions:
           "reasoning": {
             "context": "current_turn",
             "effort": "medium",
+            "mode": "standard",
             "summary": null
           },
           "safety_identifier": null,
@@ -318,11 +340,30 @@ http_interactions:
             "verbosity": "medium"
           },
           "tool_choice": "auto",
+          "tool_usage": {
+            "image_gen": {
+              "input_tokens": 0,
+              "input_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "output_tokens": 0,
+              "output_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "total_tokens": 0
+            },
+            "web_search": {
+              "num_requests": 0
+            }
+          },
           "tools": [
             {
               "type": "function",
               "description": "Gets current weather for a location",
               "name": "weather",
+              "output_schema": null,
               "parameters": {
                 "type": "object",
                 "properties": {
@@ -342,25 +383,26 @@ http_interactions:
                 "additionalProperties": false,
                 "strict": true
               },
-              "strict": true
+              "strict": false
             }
           ],
           "top_logprobs": 0,
           "top_p": 1.0,
           "truncation": "disabled",
           "usage": {
-            "input_tokens": 398,
+            "input_tokens": 330,
             "input_tokens_details": {
+              "cache_write_tokens": 0,
               "cached_tokens": 0
             },
-            "output_tokens": 292,
+            "output_tokens": 259,
             "output_tokens_details": {
-              "reasoning_tokens": 256
+              "reasoning_tokens": 192
             },
-            "total_tokens": 690
+            "total_tokens": 589
           },
           "user": null,
           "metadata": {}
         }
-  recorded_at: Thu, 11 Jun 2026 20:09:25 GMT
+  recorded_at: Wed, 19 Aug 2026 14:34:31 GMT
 recorded_with: VCR 6.4.0

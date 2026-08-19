@@ -8,7 +8,7 @@ http_interactions:
       string: '{"model":"gpt-oss:120b","messages":[{"role":"user","content":"Call
         the object params tool with window start 2025-01-01 and end 2025-01-02 and
         include the result."}],"stream":false,"tools":[{"type":"function","function":{"name":"object_params","description":"Uses
-        params DSL object support","parameters":{"$schema":"https://json-schema.org/draft/2020-12/schema","title":"Schema","type":"object","properties":{"window":{"type":"object","properties":{"start":{"type":"string","description":"ISO
+        params DSL object support","parameters":{"type":"object","properties":{"window":{"type":"object","properties":{"start":{"type":"string","description":"ISO
         start"},"end":{"type":"string","description":"ISO end"}},"required":["start","end"],"additionalProperties":false,"description":"Time
         window to schedule"}},"required":["window"],"additionalProperties":false}}}]}'
     headers:
@@ -32,35 +32,35 @@ http_interactions:
       Set-Cookie:
       - "<COOKIE>"
       X-Build-Commit:
-      - a083b15ea635ff93836cee498abde05672929e5d
+      - dfd88388a9119aa961fcc4191eeda58e15bc9344
       X-Build-Time:
-      - '2026-08-12T14:41:44-07:00'
+      - '2026-08-18T23:03:55-07:00'
       X-Frame-Options:
       - DENY
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Content-Length:
-      - '802'
+      - '816'
       Date:
-      - Thu, 13 Aug 2026 10:12:01 GMT
+      - Wed, 19 Aug 2026 14:51:59 GMT
       Server:
       - Google Frontend
-      Traceparent:
-      - 00-30b005a47f89f37cf252df319455b4e4-6afd56cd27d65da3-00
       X-Cloud-Trace-Context:
-      - 30b005a47f89f37cf252df319455b4e4/7709413576264801699
+      - e1dbac69c0db0316f28ed44c42d7b953/15961884126657180940
+      Traceparent:
+      - 00-e1dbac69c0db0316f28ed44c42d7b953-dd84010b2358f50c-00
       Via:
       - 1.1 google
       Alt-Svc:
       - h3=":443"; ma=2592000
     body:
       encoding: UTF-8
-      string: '{"id":"chatcmpl-328","object":"chat.completion","created":1786615921,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"The
-        user wants us to \"Call the object params tool with window start 2025-01-01
-        and end 2025-01-02 and include the result.\"\n\nWe have a function \"functions.object_params\"
-        which takes a param \"window\" of type Record\u003cstring, any\u003e. We need
-        to pass window with start and end dates. So we call it.\n\n","tool_calls":[{"id":"call_yeij1nl1","index":0,"type":"function","function":{"name":"object_params","arguments":"{\"window\":{\"end\":\"2025-01-02\",\"start\":\"2025-01-01\"}}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":159,"completion_tokens":126,"total_tokens":285}}
+      string: '{"id":"chatcmpl-186","object":"chat.completion","created":1787151119,"model":"gpt-oss:120b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"","reasoning":"The
+        user wants to \"Call the object params tool with window start 2025-01-01 and
+        end 2025-01-02 and include the result.\"\n\nWe have a function \"object_params\"
+        that takes a window dict. We need to call it with window: {start: \"2025-01-01\",
+        end: \"2025-01-02\"}.\n\nWe then include the result. So need to call the function.","tool_calls":[{"id":"call_a2qehi7v","index":0,"type":"function","function":{"name":"object_params","arguments":"{\"window\":{\"end\":\"2025-01-02\",\"start\":\"2025-01-01\"}}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":159,"completion_tokens":143,"total_tokens":302}}
 
         '
-  recorded_at: Thu, 13 Aug 2026 10:12:01 GMT
+  recorded_at: Wed, 19 Aug 2026 14:51:59 GMT
 recorded_with: VCR 6.4.0

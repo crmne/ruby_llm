@@ -13,9 +13,9 @@ http_interactions:
         the best language to learn","inputSchema":{"json":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}}]}}'
     headers:
       User-Agent:
-      - Faraday v2.14.2
+      - Faraday v2.14.3
       X-Amz-Date:
-      - 20260608T184559Z
+      - 20260819T143522Z
       X-Amz-Content-Sha256:
       - ad7b8f69936d024afea8b77e86e1ce7d0877e695f4bfac28fa2a959d630f33bd
       Authorization:
@@ -33,7 +33,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 08 Jun 2026 18:46:01 GMT
+      - Wed, 19 Aug 2026 14:35:26 GMT
       Content-Type:
       - application/json
       Content-Length:
@@ -41,30 +41,30 @@ http_interactions:
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - b9e1e3a7-e71f-478f-89ea-a9bd52469387
+      - 87be3d05-4dbf-4cd2-8c54-337d3fab5b54
     body:
       encoding: UTF-8
-      string: '{"metrics":{"latencyMs":1685},"output":{"message":{"content":[{"toolUse":{"input":{"latitude":"52.5200","longitude":"13.4050"},"name":"weather","toolUseId":"tooluse_a5ttNDpWZm8sRpXv8nvd3X","type":"tool_use"}},{"toolUse":{"input":{},"name":"best_language_to_learn","toolUseId":"tooluse_C8rqceKgFFNYzr2olwJu6d","type":"tool_use"}}],"role":"assistant"}},"stopReason":"tool_use","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":701,"outputTokens":97,"serverToolUsage":{},"totalTokens":798}}'
-  recorded_at: Mon, 08 Jun 2026 18:46:01 GMT
+      string: '{"metrics":{"latencyMs":2724},"output":{"message":{"content":[{"toolUse":{"input":{"latitude":"52.5200","longitude":"13.4050"},"name":"weather","toolUseId":"tooluse_cqjo6jvCBSr6SGuk4qYWVG","type":"tool_use"}},{"toolUse":{"input":{},"name":"best_language_to_learn","toolUseId":"tooluse_IvALtxXMVmFaVpJ2Quvdww","type":"tool_use"}}],"role":"assistant"}},"stopReason":"tool_use","usage":{"cacheReadInputTokenCount":0,"cacheReadInputTokens":0,"cacheWriteInputTokenCount":0,"cacheWriteInputTokens":0,"inputTokens":701,"outputTokens":97,"serverToolUsage":{},"totalTokens":798}}'
+  recorded_at: Wed, 19 Aug 2026 14:35:26 GMT
 - request:
     method: post
     uri: https://bedrock-runtime.<AWS_REGION>.amazonaws.com/model/us.anthropic.claude-sonnet-4-5-20250929-v1:0/converse
     body:
       encoding: UTF-8
       string: '{"messages":[{"role":"user","content":[{"text":"What''s the weather
-        in Berlin (52.5200, 13.4050) and what''s the best language to learn?"}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_a5ttNDpWZm8sRpXv8nvd3X","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}},{"toolUse":{"toolUseId":"tooluse_C8rqceKgFFNYzr2olwJu6d","name":"best_language_to_learn","input":{}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_a5ttNDpWZm8sRpXv8nvd3X","content":[{"text":"Current
-        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}},{"toolResult":{"toolUseId":"tooluse_C8rqceKgFFNYzr2olwJu6d","content":[{"text":"Ruby"}]}}]}],"inferenceConfig":{},"toolConfig":{"tools":[{"toolSpec":{"name":"weather","description":"Gets
+        in Berlin (52.5200, 13.4050) and what''s the best language to learn?"}]},{"role":"assistant","content":[{"toolUse":{"toolUseId":"tooluse_cqjo6jvCBSr6SGuk4qYWVG","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}},{"toolUse":{"toolUseId":"tooluse_IvALtxXMVmFaVpJ2Quvdww","name":"best_language_to_learn","input":{}}}]},{"role":"user","content":[{"toolResult":{"toolUseId":"tooluse_cqjo6jvCBSr6SGuk4qYWVG","content":[{"text":"Current
+        weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}},{"toolResult":{"toolUseId":"tooluse_IvALtxXMVmFaVpJ2Quvdww","content":[{"text":"Ruby"}]}}]}],"inferenceConfig":{},"toolConfig":{"tools":[{"toolSpec":{"name":"weather","description":"Gets
         current weather for a location","inputSchema":{"json":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}},{"toolSpec":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","inputSchema":{"json":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}}]}}'
     headers:
       User-Agent:
-      - Faraday v2.14.2
+      - Faraday v2.14.3
       X-Amz-Date:
-      - 20260608T184601Z
+      - 20260819T143526Z
       X-Amz-Content-Sha256:
-      - c0e77bbc4203d86a18f57711894314a4912edf5d2f47f81d5e5bda0144a455a0
+      - 4916ff6199bdda479d6933da83909ab308a126ac7c9320d693b0d7a73585302c
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
@@ -80,18 +80,18 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 08 Jun 2026 18:46:04 GMT
+      - Wed, 19 Aug 2026 14:35:29 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '455'
+      - '464'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 7533372c-1965-479d-b26b-9f642a917ff7
+      - 789f7aaa-7d7c-4539-8fe0-ded650c62e02
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJtZXRyaWNzIjp7ImxhdGVuY3lNcyI6MjUyN30sIm91dHB1dCI6eyJtZXNzYWdlIjp7ImNvbnRlbnQiOlt7InRleHQiOiJUaGUgY3VycmVudCB3ZWF0aGVyIGluIEJlcmxpbiBpcyAqKjE1wrBDKiogd2l0aCB3aW5kcyBhdCAqKjEwIGttL2gqKi5cblxuQXMgZm9yIHRoZSBiZXN0IGxhbmd1YWdlIHRvIGxlYXJuLCB0aGUgYW5zd2VyIGlzICoqUnVieSoqISDwn5S08J+SjiJ9XSwicm9sZSI6ImFzc2lzdGFudCJ9fSwic3RvcFJlYXNvbiI6ImVuZF90dXJuIiwidXNhZ2UiOnsiY2FjaGVSZWFkSW5wdXRUb2tlbkNvdW50IjowLCJjYWNoZVJlYWRJbnB1dFRva2VucyI6MCwiY2FjaGVXcml0ZUlucHV0VG9rZW5Db3VudCI6MCwiY2FjaGVXcml0ZUlucHV0VG9rZW5zIjowLCJpbnB1dFRva2VucyI6ODkzLCJvdXRwdXRUb2tlbnMiOjQ2LCJzZXJ2ZXJUb29sVXNhZ2UiOnt9LCJ0b3RhbFRva2VucyI6OTM5fX0=
-  recorded_at: Mon, 08 Jun 2026 18:46:04 GMT
+        eyJtZXRyaWNzIjp7ImxhdGVuY3lNcyI6Mjk1Nn0sIm91dHB1dCI6eyJtZXNzYWdlIjp7ImNvbnRlbnQiOlt7InRleHQiOiJUaGUgY3VycmVudCB3ZWF0aGVyIGluIEJlcmxpbiAoNTIuNTIwMCwgMTMuNDA1MCkgaXMgKioxNcKwQyoqIHdpdGggd2luZCBhdCAqKjEwIGttL2gqKi5cblxuQXMgZm9yIHRoZSBiZXN0IGxhbmd1YWdlIHRvIGxlYXJuLCB0aGUgYW5zd2VyIGlzICoqUnVieSoqISJ9XSwicm9sZSI6ImFzc2lzdGFudCJ9fSwic3RvcFJlYXNvbiI6ImVuZF90dXJuIiwidXNhZ2UiOnsiY2FjaGVSZWFkSW5wdXRUb2tlbkNvdW50IjowLCJjYWNoZVJlYWRJbnB1dFRva2VucyI6MCwiY2FjaGVXcml0ZUlucHV0VG9rZW5Db3VudCI6MCwiY2FjaGVXcml0ZUlucHV0VG9rZW5zIjowLCJpbnB1dFRva2VucyI6ODkzLCJvdXRwdXRUb2tlbnMiOjUyLCJzZXJ2ZXJUb29sVXNhZ2UiOnt9LCJ0b3RhbFRva2VucyI6OTQ1fX0=
+  recorded_at: Wed, 19 Aug 2026 14:35:29 GMT
 recorded_with: VCR 6.4.0

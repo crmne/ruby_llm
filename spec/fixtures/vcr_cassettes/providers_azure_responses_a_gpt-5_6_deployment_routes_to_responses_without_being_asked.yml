@@ -24,7 +24,7 @@ http_interactions:
       message: OK
     headers:
       Content-Length:
-      - '2271'
+      - '2263'
       Content-Type:
       - application/json
       X-Ms-Aoai-Configured-Data-Retention-Days:
@@ -55,16 +55,14 @@ http_interactions:
       - '60'
       Azureai-Fe-Is-Streaming:
       - 'False'
-      Azureai-Fe-Requested-Service-Tier:
+      Azureai-Fe-Offer-Type:
       - paygo
-      Azureai-Fe-Requested-Zone:
-      - default
       X-Ms-Served-Model:
       - gpt-5.6-luna-2026-07-09
       X-Request-Id:
       - "<X_REQUEST_ID>"
       Apim-Request-Id:
-      - 37fdf066-162f-47f5-ac02-1762e9552f82
+      - e45a342d-c835-4299-87a0-b0b18d511d21
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Content-Type-Options:
@@ -72,17 +70,17 @@ http_interactions:
       X-Ms-Region:
       - West Europe
       Date:
-      - Wed, 12 Aug 2026 21:48:01 GMT
+      - Wed, 19 Aug 2026 14:34:20 GMT
     body:
       encoding: UTF-8
       string: |-
         {
-          "id": "resp_0d5f30abc02d195a016a7cea115f8881908d334e2275b4e9e3",
+          "id": "resp_07e9490a427586df016a85beea0bb08194b5d60b738cad4be3",
           "object": "response",
-          "created_at": 1786571281,
+          "created_at": 1787150058,
           "status": "completed",
           "background": false,
-          "completed_at": 1786571282,
+          "completed_at": 1787150060,
           "content_filters": [
             {
               "blocked": false,
@@ -90,8 +88,8 @@ http_interactions:
               "content_filter_raw": [],
               "content_filter_results": {},
               "content_filter_offsets": {
-                "start_offset": 775,
-                "end_offset": 799,
+                "start_offset": 0,
+                "end_offset": 802,
                 "check_offset": 0
               }
             }
@@ -106,7 +104,7 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "msg_0d5f30abc02d195a016a7cea1203d48190856e86f50c8a2038",
+              "id": "msg_07e9490a427586df016a85beecb4248194a70943c4f09fa1ab",
               "type": "message",
               "status": "completed",
               "content": [
@@ -125,7 +123,7 @@ http_interactions:
           "presence_penalty": 0.0,
           "previous_response_id": null,
           "prompt_cache_key": null,
-          "prompt_cache_retention": "in_memory",
+          "prompt_cache_retention": "24h",
           "reasoning": {
             "context": "all_turns",
             "effort": "medium",
@@ -180,5 +178,5 @@ http_interactions:
           "user": null,
           "metadata": {}
         }
-  recorded_at: Wed, 12 Aug 2026 21:48:02 GMT
+  recorded_at: Wed, 19 Aug 2026 14:34:20 GMT
 recorded_with: VCR 6.4.0

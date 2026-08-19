@@ -8,7 +8,7 @@ http_interactions:
       string: '{"model":"command-a-03-2025","messages":[{"role":"user","content":[{"type":"text","text":"Call
         the any-of params tool for task \"Review PR\" with status \"pending\" and
         report the result."}]}],"stream":false,"tools":[{"type":"function","function":{"name":"any_of_params","description":"Uses
-        params DSL any_of support","parameters":{"$schema":"https://json-schema.org/draft/2020-12/schema","title":"Schema","type":"object","properties":{"task":{"type":"string","description":"Task
+        params DSL any_of support","parameters":{"type":"object","properties":{"task":{"type":"string","description":"Task
         description"},"status":{"description":"Optional task status","anyOf":[{"type":"string","enum":["pending","done"]},{"type":"null"}]}},"required":["task","status"],"additionalProperties":false}}}]}'
     headers:
       User-Agent:
@@ -35,9 +35,9 @@ http_interactions:
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Num-Chars:
-      - '7097'
+      - '7019'
       Num-Tokens:
-      - '155'
+      - '126'
       Pragma:
       - no-cache
       Vary:
@@ -45,23 +45,23 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - 7861623adc67143f1d0c94b0f96aef77
+      - 71850b29bf3434f439df94a521f24d6b
       Date:
-      - Thu, 13 Aug 2026 11:17:20 GMT
+      - Wed, 19 Aug 2026 15:00:22 GMT
       X-Envoy-Upstream-Service-Time:
-      - '1895'
+      - '3282'
       Server:
       - envoy
       Via:
       - 1.1 google
       Alt-Svc:
-      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+      - h3=":443"; ma=2592000
       Transfer-Encoding:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"98c35457-d6d9-4752-b83a-5d82521e42e4","message":{"role":"assistant","tool_plan":"I
-        will call the any-of-params tool with the task \"Review PR\" and status \"pending\".","tool_calls":[{"id":"any_of_params_w0sbcevawp8b","type":"function","function":{"name":"any_of_params","arguments":"{\"task\":\"Review
-        PR\",\"status\":\"pending\"}"}}]},"finish_reason":"TOOL_CALL","usage":{"billed_units":{"input_tokens":118,"output_tokens":37},"tokens":{"input_tokens":1538,"output_tokens":69},"cached_tokens":992}}'
-  recorded_at: Thu, 13 Aug 2026 11:17:20 GMT
+      string: '{"id":"8791ff5a-a053-4fad-a5e7-94991aaccfda","message":{"role":"assistant","tool_plan":"I
+        will call the any-of params tool for task \"Review PR\" with status \"pending\".","tool_calls":[{"id":"any_of_params_rfgpkx4vy7gs","type":"function","function":{"name":"any_of_params","arguments":"{\"task\":\"Review
+        PR\",\"status\":\"pending\"}"}}]},"finish_reason":"TOOL_CALL","usage":{"billed_units":{"input_tokens":91,"output_tokens":35},"tokens":{"input_tokens":1508,"output_tokens":67},"cached_tokens":992}}'
+  recorded_at: Wed, 19 Aug 2026 15:00:22 GMT
 recorded_with: VCR 6.4.0

@@ -9,10 +9,10 @@ http_interactions:
         params tool for task \"Review PR\" with status \"pending\" and report the
         result."}],"stream":false,"store":false,"include":["reasoning.encrypted_content"],"tools":[{"type":"function","name":"any_of_params","description":"Uses
         params DSL any_of support","parameters":{"type":"object","properties":{"task":{"type":"string","description":"Task
-        description"},"status":{"description":"Optional task status","anyOf":[{"type":"string","enum":["pending","done"]},{"type":"null"}]}},"required":["task","status"],"additionalProperties":false,"strict":true}}]}'
+        description"},"status":{"description":"Optional task status","anyOf":[{"type":"string","enum":["pending","done"]},{"type":"null"}]}},"required":["task","status"],"additionalProperties":false},"strict":false}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.2
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 11 Jun 2026 20:10:54 GMT
+      - Wed, 19 Aug 2026 15:00:27 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -51,9 +51,9 @@ http_interactions:
       Openai-Organization:
       - "<OPENAI_ORGANIZATION>"
       Openai-Processing-Ms:
-      - '1952'
+      - '1793'
       Openai-Project:
-      - proj_61L3Oqt640dKU0CASS2iOj8Q
+      - "<OPENAI_PROJECT>"
       Openai-Version:
       - '2020-10-01'
       X-Ratelimit-Limit-Requests:
@@ -78,15 +78,15 @@ http_interactions:
       encoding: ASCII-8BIT
       string: |-
         {
-          "id": "resp_0241dd9de1f64d7b016a2b164c8c1c81a08273f301662c6872",
+          "id": "resp_01b3872abf64d716016a85c5098dc487d2bcf22bc3dcd5b358",
           "object": "response",
-          "created_at": 1781208652,
+          "created_at": 1787151625,
           "status": "completed",
           "background": false,
           "billing": {
             "payer": "developer"
           },
-          "completed_at": 1781208654,
+          "completed_at": 1787151627,
           "error": null,
           "frequency_penalty": 0.0,
           "incomplete_details": null,
@@ -97,18 +97,18 @@ http_interactions:
           "moderation": null,
           "output": [
             {
-              "id": "rs_0241dd9de1f64d7b016a2b164cdb0c81a0a5cb74a194635d92",
+              "id": "rs_01b3872abf64d716016a85c50a584c87d29248f0788033d0e0",
               "type": "reasoning",
               "content": [],
-              "encrypted_content": "gAAAAABqKxZOTPZXBkUgSOtFrcwFowzxIn6E9939NRr0ITR5ZEy78htAhBDbOmSPa8FdfHU3bViTLciT5x4cVoZB5466Rq1By1OMBcIeMYIsOdijjas98OGLquhWg1NxrL8womFcDNgzyqoWvnxZ-EgzQ73UaLgCb32MAKTaMuxnIVotdLn_VhSEoBOAtqAcbNq1WOrqobMROP1Lrom4FBs2HjEbgRFgVJdg9YjUMsHRW_beJ0rgCX4HI4ETTsyKdNGe41VglwjoDAy40VUBtJgUEIB_ckDX9IrAmrT0ZrV9Zn5Tb8mhNZraeuIn2c_Kw1mKdIHIbgQjSz2tSpleDKMj5CIaX_logXP87nNu2W4Lvwm19IsCXD8HMGCuNKRMdZ5WzUzet1NbhUqDVcu7if5IYvvq65sIJnO4vDE70D_NWqa3KV_McpLnfMbzwUOxdUkGecUnDE3NIbT1jmrTOexQP-2aA0jLiV3HGv8Kfu3KXgA8qUcM1pZH3BkriEkA3Hyn_MVrxR_W0w6OoAY7_wMXBi8TVqgDIyB7vzEkhGc-2oFX3O6Erl9ebmLLh89-ahK5QWR1jB6K5fDbwgNJyg1DGX6yJwZQj6JbNxqZVvA_3vev4noVTTTtBJ_8bSJY3ha0QCVHCM-03T8SfPAmbe-indyfy4VDC8XXW1yN2HjHUuoTihg3HJ58CqwxThTLc_zCCQq2PVZUMlltGifeZ4O19ga-5VppeeLDSv7mT-rgq0aHHgP9RF76bMO6WzXWABF8PTIAfUaaREtPFJskomvv5Y6kscmycmmAP7i2QCTxkex5iX4uX4pve3wXlwZ3Dkep6uoBxRRAWxQwU2mELIWSHxAdujCg3023ZXNAlhwwmFqIytOIISEFM-kLYG7JvKlpqlfPv6BLHPIDuCUw0JY-g0f5TUvapYE6gfLCCR_1WeuKi0ZrAOGQemxo7Cau7Y3WTVGytqma46wNIgPWGuggYFA8uB2Z_vaBr6-tqlj1wIWB-l8248kf96f9ktNAT9m-cO_3WfVDBwNhdcaD1wrRFV50zX_9y9RCskbwjPfTDd9LzXFFxkWhq33iJfBPIJ07oceI0aiBVsqE0h6RkC8fNGMNg8jB3kkN8MpvAOji5ksXUJ6OXX-x-TN31jvgsExhDlau-n0Zd5rXFD9F_ovfQ2WK7jt0tQSL6-PoF3jdP8ugv7LPGHaiJdg3zEThyA8sMwBoDRONzUbciadxcU-R5oR_3KtjPi97rioX4EQ2CISwyN50DV4ryVdaKcRuiI2w3UBL6DV2GcBXbGvR0qOMIRUTSGtXoprhQupalClCZtD11YS5KFCqJvnEKbjj96kwHjwGKlh6XJQcUVyo0izLZNVUcw95zfm92KN8Xbp5Ck8WZ-aAw6hVQh_EWVVtSpBJCmUc8yBF1cu7In0cnJy_wLLPW-hktKXgzW-90BNAp6Swfu9LuT__ffls7CU6vUY26ugLLTJfnHm3PSkEfZ9V86JkX7t3PMyReTjotFjJmxbpdSrZuWeFTW5qNgnwF6n0BtOVx3Dva7EfkCBxyOrbzMmWlprqo6fd-wyVO0V2bfNtHQ3NsEskmZ7LlcUmvW0zBCytupQMxSwbx86IJjZIedh3MMV3pX7yzQOEvm_kkmu-1fdVulV14YegdDjnoFLvyOKoWjF4-LeKaOs7JxB-zDULhatHxdq5nJN1ia26kkKweB8hXF9THr2nmbRrZNCat1hR-Ux9XOhNIBL6v4v-psiMWr-dyKBhLYuWKxMsfvB_xeCF5Hi-XwfP7UQIUYbaA8Vkd-VfgmitrotRxrfn39B-sOdXL59tVtgsHY2M4PDp3HYgHwAxRK8yh2b0rs8hmGb1zwtQ3-T4X7G7W3KL5xgO2cpg26tDTe8_qJVf9WzLzfPrv-0PxgT8EEoGGhURaph5Rh1oz09eFseElDaDx1cdiQ5PQkG-tR5hQBcMNKiOy16MTEtNTmzvlWIf89t8kKcWJ25vheEyiAh0U_RD1E25zmqY3sf8yGNOiN2odlWS127bFJUepGHFZOIaWgHP3pWQceWyUTr3M5mjLGPHzq98HkwAF_oIwUOn80wJ4SHpQhGhoMc=",
+              "encrypted_content": "gAAAAABqhcULMbLgnOvVr6Xx0T--gw8nR75A6wLWCG5JMpGp8l2A81-vCG5EaMFVfgkbJt6cdnShd5GOWKUCPO7mQq8uWOtc2pdw8taxF5NSrHrOdUx76yuiFO5_CYGApx5aJ31JQ9e1dxcosjnnsz06jn18672X4UgMZnLO--I1VTemW1dq588ZPQ-gCLQTJaSY6Qobqz6Ux6vv1OM2G9eiWcLJn4mM2l0n9_NHdHpvX5RfNe6MhlF8EjaUpEednJv7Mz-yotxpYheAHFTqXh0tIbtAKOU3KH-Wc4YkbjVEluH1FyUEMF3QQgZnIaQlXHmFIqt3fEiyu3Mcg7E-3CDhJz_GVT5Pyshqu2JvnWfVieq-Q4l3t1L-b7dx21S2F5CLLr3bMbUWahoJpEj6rjs53gx8JhSLHdUT-ETiQZ5hnQdccbc7sCbpcRoieu8_0OI0qtVL9cGtqLCDPthQsdhTZT4a77yVQFuFrPnioLn5fCRzlrsfUAjeFwuuhIvZjV2XriNpktSJtwIQQzgZ1tU3zg4LMMpJGX7ERYgU77wAiFnNGf9O3WjflI5t22YBR1WHprgdt7vbu3O3vuPMf_883oanjhRnO1Qz1A0KsVcoK1MktMXcRYkYuCBkCUbgbbov854FxwyHgY--BCcO63lCMpU4aA514fGPgynfvXN25Qais87BVqtvT2siliAuBYMsd-Fv02gjhigedN7Ec1zl6MDhmPwG_NoKFU4MDk8GojvFt1FSM0el7oNF3__4HZD4bTNrDc-g5F2LAX1TER2CvBmc2f5C31XPWflPwFmbybEiqyZgISqyJYt9cRxz-nMMHX8qUHOVzlbPj-ZHH8ikO6jg7YxbFKvUaSBKY-09EHjZ-LjVKxDlYtpsEytMiVkW_cci6GtSOxB6xCQ69Z2l5HDzmBmVJwRVJ28uAuIku_g4cA-UuA271vQNLVvg3xIuEVBRCan9h4mksEgybeO3x6ztqg8uUOvZs7hIjbdIGa34p5duaUs3SB1mO5Sap3Ju_uaEKhXupCc85K2xlq9cTD9KvUBYVrf0bf_lpeF7ChaQs1g207t5otIIJXJh3D2RzodzBCrL4Dd5UCyLXO1QtSl2DLoAqZIZKEZuVLDEQCn2ipsAV_8z9NAMkL6ALLDRUwpq0-bekij4_zINXXFG3pSsnHDTJSJWd5UpIp3TQJxJyNaZGKHEr6BOPm2W7rpnpOahsjO_X9zQLnxAVGA2YoWKIeCdzPOf0vfHYgI1KvExgsPgqwz1QLVCcYDPRVxRrFekxxnwpTpkP5l6wdAQNqjDu3DkIrfrXqBvSo19QJB44xpjeFIaCTJqWP11IUaAktnfDsXVWwWWIBWIsuesdxkku1bOD7XYvAlqKFys_vnuSqzt5Ny67sffMUwDoLw8xNNS8-Ytm0nssU7PmAU0Y1RyZM_zsSCSAyU5Yc7F6YlA_WgSGUvSJ1iDq_7lKBClPJ6LD5nwqNjBZZtwM-Qq96YSSy7i_6eoYojyd3_8YijYGEDTxqKZR5C-JloVt58Pimm2Wj5dYyDjbZKucuni4xjumzy7Io3Xy9p-rG2RT4gX1t6ppf4hhH1IO3jhiSCxsBp6OomPQLlQXtfYk2PDtPw2RBo6P0FBSxD_eid453VBvaPAePlIVAY2x7dIoqqPbJxCAuaGYMMw-5HceDMIRSrGOxp-Y52OsG6HVpjXtT9gXfCj7Qb_aPX5m7_enZw6k_7KGfbjRsX_1BAS9Js1B9-_WNIY9YkhF1xTYLybhh50E4xpCIqrGJaxgrCXxWeWxT4KTZcUg8pSWNSRIHvQC49-slvFl_7nEuOB0E0icuocqVmhHBIy4b34inp16mukN5KvLJgY0sa4H7UABh5_nUzgsqHXBeFnMpsNqcPkIhwURiDHlfEXXyXONON7jYx0GCuT4g53_we5nYzqr5BUezwd_nl5kQ==",
               "summary": []
             },
             {
-              "id": "fc_0241dd9de1f64d7b016a2b164e2a5081a097139c254bba3f6a",
+              "id": "fc_01b3872abf64d716016a85c50b1cc887d2b0b5d4e72f4823ac",
               "type": "function_call",
               "status": "completed",
               "arguments": "{\"task\":\"Review PR\",\"status\":\"pending\"}",
-              "call_id": "call_gdL8CX62wCsOig4I2cbxlkia",
+              "call_id": "call_kOBiPzBA6CTWsfnOuAROwbGc",
               "name": "any_of_params"
             }
           ],
@@ -120,6 +120,7 @@ http_interactions:
           "reasoning": {
             "context": "current_turn",
             "effort": "medium",
+            "mode": "standard",
             "summary": null
           },
           "safety_identifier": null,
@@ -133,11 +134,30 @@ http_interactions:
             "verbosity": "medium"
           },
           "tool_choice": "auto",
+          "tool_usage": {
+            "image_gen": {
+              "input_tokens": 0,
+              "input_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "output_tokens": 0,
+              "output_tokens_details": {
+                "image_tokens": 0,
+                "text_tokens": 0
+              },
+              "total_tokens": 0
+            },
+            "web_search": {
+              "num_requests": 0
+            }
+          },
           "tools": [
             {
               "type": "function",
               "description": "Uses params DSL any_of support",
               "name": "any_of_params",
+              "output_schema": null,
               "parameters": {
                 "type": "object",
                 "properties": {
@@ -165,10 +185,9 @@ http_interactions:
                   "task",
                   "status"
                 ],
-                "additionalProperties": false,
-                "strict": true
+                "additionalProperties": false
               },
-              "strict": true
+              "strict": false
             }
           ],
           "top_logprobs": 0,
@@ -177,16 +196,17 @@ http_interactions:
           "usage": {
             "input_tokens": 86,
             "input_tokens_details": {
+              "cache_write_tokens": 0,
               "cached_tokens": 0
             },
-            "output_tokens": 215,
+            "output_tokens": 145,
             "output_tokens_details": {
-              "reasoning_tokens": 128
+              "reasoning_tokens": 64
             },
-            "total_tokens": 301
+            "total_tokens": 231
           },
           "user": null,
           "metadata": {}
         }
-  recorded_at: Thu, 11 Jun 2026 20:10:54 GMT
+  recorded_at: Wed, 19 Aug 2026 15:00:27 GMT
 recorded_with: VCR 6.4.0

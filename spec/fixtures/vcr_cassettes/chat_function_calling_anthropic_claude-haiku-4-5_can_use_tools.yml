@@ -12,7 +12,7 @@ http_interactions:
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.2
+      - Faraday v2.14.3
       X-Api-Key:
       - "<ANTHROPIC_API_KEY>"
       Anthropic-Version:
@@ -29,7 +29,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 08 Jun 2026 18:45:35 GMT
+      - Wed, 19 Aug 2026 14:34:13 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -37,69 +37,69 @@ http_interactions:
       Connection:
       - keep-alive
       Anthropic-Ratelimit-Input-Tokens-Limit:
-      - '450000'
+      - '10000000'
       Anthropic-Ratelimit-Input-Tokens-Remaining:
-      - '450000'
+      - '10000000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-06-08T18:45:35Z'
+      - '2026-08-19T14:34:12Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
-      - '90000'
+      - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
-      - '90000'
+      - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-06-08T18:45:35Z'
+      - '2026-08-19T14:34:12Z'
       Anthropic-Ratelimit-Requests-Limit:
-      - '1000'
+      - '10000'
       Anthropic-Ratelimit-Requests-Remaining:
-      - '996'
+      - '9999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-06-08T18:45:35Z'
+      - '2026-08-19T14:34:11Z'
       Anthropic-Ratelimit-Tokens-Limit:
-      - '540000'
+      - '12000000'
       Anthropic-Ratelimit-Tokens-Remaining:
-      - '540000'
+      - '12000000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-06-08T18:45:35Z'
+      - '2026-08-19T14:34:12Z'
       Request-Id:
       - "<REQUEST_ID>"
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
+      Anthropic-Workspace-Id:
+      - wrkspc_01MZW3YzUeytZsFc9LHFxP78
       Traceresponse:
-      - 00-b327f9be7438484112acb3d40b976fc0-214cf955ad9cca44-01
+      - 00-7c32353650f87fc5df74acb7b4b06bc2-bc488261cab84eae-01
       Server:
       - cloudflare
       Vary:
       - Accept-Encoding
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
       Content-Security-Policy:
       - default-src 'none'; frame-ancestors 'none'
+      Cf-Cache-Status:
+      - DYNAMIC
       X-Robots-Tag:
       - none
       Cf-Ray:
       - "<CF_RAY>"
     body:
       encoding: ASCII-8BIT
-      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_01Rh3JPtZTNZ3oyWUMecnkVX","type":"message","role":"assistant","content":[{"type":"tool_use","id":"toolu_01KTUjVxu2FhDFYspqh8r7HT","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"},"caller":{"type":"direct"}}],"stop_reason":"tool_use","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":633,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":75,"service_tier":"standard","inference_geo":"not_available"}}'
-  recorded_at: Mon, 08 Jun 2026 18:45:35 GMT
+      string: '{"model":"claude-haiku-4-5-20251001","id":"msg_011CeCGmCbAyQmGiHPwNrvsc","type":"message","role":"assistant","content":[{"type":"tool_use","id":"toolu_01Ay5KzhmQYMK53svGLaAxfc","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"},"caller":{"type":"direct"}}],"stop_reason":"tool_use","stop_sequence":null,"stop_details":null,"usage":{"input_tokens":633,"cache_creation_input_tokens":0,"cache_read_input_tokens":0,"cache_creation":{"ephemeral_5m_input_tokens":0,"ephemeral_1h_input_tokens":0},"output_tokens":75,"service_tier":"standard","inference_geo":"not_available"}}'
+  recorded_at: Wed, 19 Aug 2026 14:34:13 GMT
 - request:
     method: post
     uri: https://api.anthropic.com/v1/messages
     body:
       encoding: UTF-8
       string: '{"model":"claude-haiku-4-5-20251001","messages":[{"role":"user","content":[{"type":"text","text":"What''s
-        the weather in Berlin? (52.5200, 13.4050)"}]},{"role":"assistant","content":[{"type":"tool_use","id":"toolu_01KTUjVxu2FhDFYspqh8r7HT","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01KTUjVxu2FhDFYspqh8r7HT","content":[{"type":"text","text":"Current
+        the weather in Berlin? (52.5200, 13.4050)"}]},{"role":"assistant","content":[{"type":"tool_use","id":"toolu_01Ay5KzhmQYMK53svGLaAxfc","name":"weather","input":{"latitude":"52.5200","longitude":"13.4050"}}]},{"role":"user","content":[{"type":"tool_result","tool_use_id":"toolu_01Ay5KzhmQYMK53svGLaAxfc","content":[{"type":"text","text":"Current
         weather at 52.5200, 13.4050: 15°C, Wind: 10 km/h"}]}]}],"stream":false,"max_tokens":64000,"tools":[{"name":"weather","description":"Gets
         current weather for a location","input_schema":{"type":"object","properties":{"latitude":{"type":"string","description":"Latitude
         (e.g., 52.5200)"},"longitude":{"type":"string","description":"Longitude (e.g.,
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.2
+      - Faraday v2.14.3
       X-Api-Key:
       - "<ANTHROPIC_API_KEY>"
       Anthropic-Version:
@@ -116,7 +116,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 08 Jun 2026 18:45:36 GMT
+      - Wed, 19 Aug 2026 14:34:14 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -124,47 +124,47 @@ http_interactions:
       Connection:
       - keep-alive
       Anthropic-Ratelimit-Input-Tokens-Limit:
-      - '450000'
+      - '10000000'
       Anthropic-Ratelimit-Input-Tokens-Remaining:
-      - '450000'
+      - '10000000'
       Anthropic-Ratelimit-Input-Tokens-Reset:
-      - '2026-06-08T18:45:36Z'
+      - '2026-08-19T14:34:13Z'
       Anthropic-Ratelimit-Output-Tokens-Limit:
-      - '90000'
+      - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Remaining:
-      - '90000'
+      - '2000000'
       Anthropic-Ratelimit-Output-Tokens-Reset:
-      - '2026-06-08T18:45:36Z'
+      - '2026-08-19T14:34:14Z'
       Anthropic-Ratelimit-Requests-Limit:
-      - '1000'
+      - '10000'
       Anthropic-Ratelimit-Requests-Remaining:
-      - '999'
+      - '9999'
       Anthropic-Ratelimit-Requests-Reset:
-      - '2026-06-08T18:45:36Z'
+      - '2026-08-19T14:34:13Z'
       Anthropic-Ratelimit-Tokens-Limit:
-      - '540000'
+      - '12000000'
       Anthropic-Ratelimit-Tokens-Remaining:
-      - '540000'
+      - '12000000'
       Anthropic-Ratelimit-Tokens-Reset:
-      - '2026-06-08T18:45:36Z'
+      - '2026-08-19T14:34:13Z'
       Request-Id:
       - "<REQUEST_ID>"
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       Anthropic-Organization-Id:
       - "<ANTHROPIC_ORGANIZATION_ID>"
+      Anthropic-Workspace-Id:
+      - wrkspc_01MZW3YzUeytZsFc9LHFxP78
       Traceresponse:
-      - 00-1ddbabb48f5095cebc25839411508711-c73b18b8add7a28d-01
+      - 00-b5974f66f618d7a86a040fd0a9ba6677-ec0de1605b0cc7d7-01
       Server:
       - cloudflare
       Vary:
       - Accept-Encoding
-      Cf-Cache-Status:
-      - DYNAMIC
-      Set-Cookie:
-      - "<COOKIE>"
       Content-Security-Policy:
       - default-src 'none'; frame-ancestors 'none'
+      Cf-Cache-Status:
+      - DYNAMIC
       X-Robots-Tag:
       - none
       Cf-Ray:
@@ -172,6 +172,6 @@ http_interactions:
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        eyJtb2RlbCI6ImNsYXVkZS1oYWlrdS00LTUtMjAyNTEwMDEiLCJpZCI6Im1zZ18wMTNzNU1GcDRHUHlSd05iR29wQVhHZHMiLCJ0eXBlIjoibWVzc2FnZSIsInJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjpbeyJ0eXBlIjoidGV4dCIsInRleHQiOiJUaGUgY3VycmVudCB3ZWF0aGVyIGluIEJlcmxpbiBpczpcbi0gKipUZW1wZXJhdHVyZToqKiAxNcKwQ1xuLSAqKldpbmQ6KiogMTAga20vaFxuXG5JdCdzIGEgbWlsZCBkYXkgd2l0aCBsaWdodCB3aW5kIGNvbmRpdGlvbnMhIn1dLCJzdG9wX3JlYXNvbiI6ImVuZF90dXJuIiwic3RvcF9zZXF1ZW5jZSI6bnVsbCwic3RvcF9kZXRhaWxzIjpudWxsLCJ1c2FnZSI6eyJpbnB1dF90b2tlbnMiOjc0OCwiY2FjaGVfY3JlYXRpb25faW5wdXRfdG9rZW5zIjowLCJjYWNoZV9yZWFkX2lucHV0X3Rva2VucyI6MCwiY2FjaGVfY3JlYXRpb24iOnsiZXBoZW1lcmFsXzVtX2lucHV0X3Rva2VucyI6MCwiZXBoZW1lcmFsXzFoX2lucHV0X3Rva2VucyI6MH0sIm91dHB1dF90b2tlbnMiOjQxLCJzZXJ2aWNlX3RpZXIiOiJzdGFuZGFyZCIsImluZmVyZW5jZV9nZW8iOiJub3RfYXZhaWxhYmxlIn19
-  recorded_at: Mon, 08 Jun 2026 18:45:36 GMT
+        eyJtb2RlbCI6ImNsYXVkZS1oYWlrdS00LTUtMjAyNTEwMDEiLCJpZCI6Im1zZ18wMTFDZUNHbUp5ZXF0UFZ4Tk1OQlR1WFIiLCJ0eXBlIjoibWVzc2FnZSIsInJvbGUiOiJhc3Npc3RhbnQiLCJjb250ZW50IjpbeyJ0eXBlIjoidGV4dCIsInRleHQiOiJUaGUgd2VhdGhlciBpbiBCZXJsaW4gaXMgY3VycmVudGx5OlxuLSAqKlRlbXBlcmF0dXJlKio6IDE1wrBDXG4tICoqV2luZCoqOiAxMCBrbS9oXG5cbkl0J3MgYSByZWxhdGl2ZWx5IGNvb2wgZGF5IHdpdGggbGlnaHQgd2luZHMuIFlvdSBtaWdodCB3YW50IHRvIGJyaW5nIGEgbGlnaHQgamFja2V0IGlmIHlvdSdyZSBoZWFkaW5nIG91dCEifV0sInN0b3BfcmVhc29uIjoiZW5kX3R1cm4iLCJzdG9wX3NlcXVlbmNlIjpudWxsLCJzdG9wX2RldGFpbHMiOm51bGwsInVzYWdlIjp7ImlucHV0X3Rva2VucyI6NzQ4LCJjYWNoZV9jcmVhdGlvbl9pbnB1dF90b2tlbnMiOjAsImNhY2hlX3JlYWRfaW5wdXRfdG9rZW5zIjowLCJjYWNoZV9jcmVhdGlvbiI6eyJlcGhlbWVyYWxfNW1faW5wdXRfdG9rZW5zIjowLCJlcGhlbWVyYWxfMWhfaW5wdXRfdG9rZW5zIjowfSwib3V0cHV0X3Rva2VucyI6NTUsInNlcnZpY2VfdGllciI6InN0YW5kYXJkIiwiaW5mZXJlbmNlX2dlbyI6Im5vdF9hdmFpbGFibGUifX0=
+  recorded_at: Wed, 19 Aug 2026 14:34:14 GMT
 recorded_with: VCR 6.4.0

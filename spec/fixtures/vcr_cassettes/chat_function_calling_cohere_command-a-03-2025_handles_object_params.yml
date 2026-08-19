@@ -8,7 +8,7 @@ http_interactions:
       string: '{"model":"command-a-03-2025","messages":[{"role":"user","content":[{"type":"text","text":"Call
         the object params tool with window start 2025-01-01 and end 2025-01-02 and
         include the result."}]}],"stream":false,"tools":[{"type":"function","function":{"name":"object_params","description":"Uses
-        params DSL object support","parameters":{"$schema":"https://json-schema.org/draft/2020-12/schema","title":"Schema","type":"object","properties":{"window":{"type":"object","properties":{"start":{"type":"string","description":"ISO
+        params DSL object support","parameters":{"type":"object","properties":{"window":{"type":"object","properties":{"start":{"type":"string","description":"ISO
         start"},"end":{"type":"string","description":"ISO end"}},"required":["start","end"],"additionalProperties":false,"description":"Time
         window to schedule"}},"required":["window"],"additionalProperties":false}}}]}'
     headers:
@@ -36,9 +36,9 @@ http_interactions:
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Num-Chars:
-      - '7162'
+      - '7084'
       Num-Tokens:
-      - '187'
+      - '179'
       Pragma:
       - no-cache
       Vary:
@@ -46,11 +46,11 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - 820ce237121d9a1ea91409d8b990b871
+      - f952c0d54ed3ff98061e7fa5c28e2a14
       Date:
-      - Thu, 13 Aug 2026 11:17:21 GMT
+      - Wed, 19 Aug 2026 14:51:55 GMT
       X-Envoy-Upstream-Service-Time:
-      - '955'
+      - '1061'
       Server:
       - envoy
       Via:
@@ -61,8 +61,8 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"3d00b8a7-b224-4b91-84ad-0643b65d51e7","message":{"role":"assistant","tool_plan":"I
-        will use the object_params tool to find the information the user is looking
-        for.","tool_calls":[{"id":"object_params_2bch2p5er2pa","type":"function","function":{"name":"object_params","arguments":"{\"window\":{\"start\":\"2025-01-01\",\"end\":\"2025-01-02\"}}"}}]},"finish_reason":"TOOL_CALL","usage":{"billed_units":{"input_tokens":137,"output_tokens":50},"tokens":{"input_tokens":1558,"output_tokens":84},"cached_tokens":992}}'
-  recorded_at: Thu, 13 Aug 2026 11:17:21 GMT
+      string: '{"id":"7832035a-cbe2-4a06-b987-cddfaf8fb29f","message":{"role":"assistant","tool_plan":"I
+        will call the object_params tool with the window start 2025-01-01 and end
+        2025-01-02.","tool_calls":[{"id":"object_params_fn525gkwm8nx","type":"function","function":{"name":"object_params","arguments":"{\"window\":{\"start\":\"2025-01-01\",\"end\":\"2025-01-02\"}}"}}]},"finish_reason":"TOOL_CALL","usage":{"billed_units":{"input_tokens":110,"output_tokens":69},"tokens":{"input_tokens":1528,"output_tokens":103},"cached_tokens":992}}'
+  recorded_at: Wed, 19 Aug 2026 14:51:55 GMT
 recorded_with: VCR 6.4.0

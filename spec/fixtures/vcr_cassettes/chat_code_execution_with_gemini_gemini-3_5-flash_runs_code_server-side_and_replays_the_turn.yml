@@ -32,7 +32,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 10 Aug 2026 21:55:17 GMT
+      - Wed, 19 Aug 2026 14:35:19 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -42,7 +42,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=2080
+      - gfet4t7; dur=1836
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -58,21 +58,21 @@ http_interactions:
                   {
                     "executableCode": {
                       "language": "PYTHON",
-                      "code": "num1 = 123456789\nnum2 = 987654321\nproduct = num1 * num2\nprint(f\"Product: {product}\")\n",
-                      "id": "9eoj5gt3"
+                      "code": "result = 123456789 * 987654321\nprint(f\"{result=}\")\n",
+                      "id": "call_46063"
                     },
-                    "thoughtSignature": "EsEBCr4BARFNMg+hrKZxScU73/fgVpsmhsvOdVxRMeN+Tj2oILbXAOvNN1HFOSPFunF5/4fqMhJcg0+fVk9wjMWs0XDdOk0mDP6K2vY+ywwUVw9O7ulaWHsF6dlwl1YW9rH6EZ48lva58wiHkxK+57P7xlOvpQjVPjGh4Izaj1kyl4un09N3OsJ9SV3jmr6J9xT42WmIxzF5l2xz/k/BPA4yqZk7ig1QhGuygFaSYNf55avxe7hdzPrmC+MZ6xRI+op7uQ=="
+                    "thoughtSignature": "EpMCCpACARFNMg/oQoWXnPZOpBLB2ccf8fCHkY0n//VBi6jelmhmTZF2+rp6o2vohtM5vwHqw4/qVF4+u9tXUs+TN9oV+lnOhGxr+7FDVvgzBLLExyx15dd4y9wK47r68NBhqL4ENuz2iK+uZJ8HTuErbegQhPC9ofoIUTuELVx1rBBvOkIlz0ERSLCUK9Sj7AfoEznTpWEYzZmEXE+5if1pBJ8FTrPu7EtL6jfPyZ2kzbo8PIOGBXJ+IVf8K+SpKPaTKeKFIHMsCrEukcOaEKdKZMvMWsHylkhH1kmSQLB/EJQ2qqWySfgz7gD68Af0FHGGiJ81Cv1w6Kob/64nFmplWSIoNHbQm4VdDat5QnN/jJnBC1Y="
                   },
                   {
                     "codeExecutionResult": {
                       "outcome": "OUTCOME_OK",
-                      "output": "Product: 121932631112635269\n",
-                      "id": "9eoj5gt3"
+                      "output": "result=121932631112635269\n",
+                      "id": "call_46063"
                     }
                   },
                   {
                     "text": "The exact product of $123456789 \\times 987654321$ is **$121,932,631,112,635,269$** (or $121932631112635269$).",
-                    "thoughtSignature": "EncKdQERTTIPZeuzTNjmguFZYnYDkqkBGIRRXNb8/1SxZtn9G71riH/XyRAXR+IDL2svQrqaX6qJ/03kQWBrQ+Bop7Ft5Q/pvLlQex8oxlSMWTDKyLVbMBrdeQb7YVFynG5hohBfG+zoi5ADORF7kFvjGUxyMB1RZQ=="
+                    "thoughtSignature": "Eq0BCqoBARFNMg9Nc7osEV7YmPJuIkr7cLeXnHD3ujwhkDV/4XgFPVb7gZQphyXRMkKh96M0F2N8a1LyWVIE9jzYGj7kGycMqbA0X6nwiWasCJXXyi8sHmcv80LF60NjdPHzuOp8X2YxaPygM5msZQuQxjgfgV3xJDa1Iv30D0gZY1Te9SQ7Nw/dH5h4I53HgZIIHRGNy1a+KoImDDluDQuN68aJbMlP3r/uSmQJLus="
                   }
                 ],
                 "role": "model"
@@ -82,39 +82,39 @@ http_interactions:
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 80,
-            "candidatesTokenCount": 136,
-            "totalTokenCount": 452,
+            "promptTokenCount": 85,
+            "candidatesTokenCount": 122,
+            "totalTokenCount": 443,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 80
+                "tokenCount": 85
               }
             ],
-            "toolUsePromptTokenCount": 159,
+            "toolUsePromptTokenCount": 149,
             "toolUsePromptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 159
+                "tokenCount": 149
               }
             ],
-            "thoughtsTokenCount": 77,
+            "thoughtsTokenCount": 87,
             "serviceTier": "standard"
           },
           "modelVersion": "gemini-3.5-flash",
-          "responseId": "w0h6ausj36OewQ-8sOOhCA"
+          "responseId": "Jb-Fao2XNfDFnsEPwdyAyAg"
         }
-  recorded_at: Mon, 10 Aug 2026 21:55:17 GMT
+  recorded_at: Wed, 19 Aug 2026 14:35:19 GMT
 - request:
     method: post
     uri: https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent
     body:
       encoding: UTF-8
       string: '{"contents":[{"role":"user","parts":[{"text":"Use code execution to
-        compute 123456789 * 987654321 and report the exact product."}]},{"role":"model","parts":[{"executableCode":{"language":"PYTHON","code":"num1
-        = 123456789\nnum2 = 987654321\nproduct = num1 * num2\nprint(f\"Product: {product}\")\n","id":"9eoj5gt3"},"thoughtSignature":"EsEBCr4BARFNMg+hrKZxScU73/fgVpsmhsvOdVxRMeN+Tj2oILbXAOvNN1HFOSPFunF5/4fqMhJcg0+fVk9wjMWs0XDdOk0mDP6K2vY+ywwUVw9O7ulaWHsF6dlwl1YW9rH6EZ48lva58wiHkxK+57P7xlOvpQjVPjGh4Izaj1kyl4un09N3OsJ9SV3jmr6J9xT42WmIxzF5l2xz/k/BPA4yqZk7ig1QhGuygFaSYNf55avxe7hdzPrmC+MZ6xRI+op7uQ=="},{"codeExecutionResult":{"outcome":"OUTCOME_OK","output":"Product:
-        121932631112635269\n","id":"9eoj5gt3"}},{"text":"The exact product of $123456789
-        \\times 987654321$ is **$121,932,631,112,635,269$** (or $121932631112635269$).","thoughtSignature":"EncKdQERTTIPZeuzTNjmguFZYnYDkqkBGIRRXNb8/1SxZtn9G71riH/XyRAXR+IDL2svQrqaX6qJ/03kQWBrQ+Bop7Ft5Q/pvLlQex8oxlSMWTDKyLVbMBrdeQb7YVFynG5hohBfG+zoi5ADORF7kFvjGUxyMB1RZQ=="}]},{"role":"user","parts":[{"text":"Thanks.
+        compute 123456789 * 987654321 and report the exact product."}]},{"role":"model","parts":[{"executableCode":{"language":"PYTHON","code":"result
+        = 123456789 * 987654321\nprint(f\"{result=}\")\n","id":"call_46063"},"thoughtSignature":"EpMCCpACARFNMg/oQoWXnPZOpBLB2ccf8fCHkY0n//VBi6jelmhmTZF2+rp6o2vohtM5vwHqw4/qVF4+u9tXUs+TN9oV+lnOhGxr+7FDVvgzBLLExyx15dd4y9wK47r68NBhqL4ENuz2iK+uZJ8HTuErbegQhPC9ofoIUTuELVx1rBBvOkIlz0ERSLCUK9Sj7AfoEznTpWEYzZmEXE+5if1pBJ8FTrPu7EtL6jfPyZ2kzbo8PIOGBXJ+IVf8K+SpKPaTKeKFIHMsCrEukcOaEKdKZMvMWsHylkhH1kmSQLB/EJQ2qqWySfgz7gD68Af0FHGGiJ81Cv1w6Kob/64nFmplWSIoNHbQm4VdDat5QnN/jJnBC1Y="},{"codeExecutionResult":{"outcome":"OUTCOME_OK","output":"result=121932631112635269\n","id":"call_46063"}},{"text":"The
+        exact product of $123456789 \\times 987654321$ is **$121,932,631,112,635,269$**
+        (or $121932631112635269$).","thoughtSignature":"Eq0BCqoBARFNMg9Nc7osEV7YmPJuIkr7cLeXnHD3ujwhkDV/4XgFPVb7gZQphyXRMkKh96M0F2N8a1LyWVIE9jzYGj7kGycMqbA0X6nwiWasCJXXyi8sHmcv80LF60NjdPHzuOp8X2YxaPygM5msZQuQxjgfgV3xJDa1Iv30D0gZY1Te9SQ7Nw/dH5h4I53HgZIIHRGNy1a+KoImDDluDQuN68aJbMlP3r/uSmQJLus="}]},{"role":"user","parts":[{"text":"Thanks.
         Now just say OK."}]}],"generationConfig":{},"tools":[{"code_execution":{}}]}'
     headers:
       User-Agent:
@@ -141,7 +141,7 @@ http_interactions:
       - Referer
       - X-Origin
       Date:
-      - Mon, 10 Aug 2026 21:55:17 GMT
+      - Wed, 19 Aug 2026 14:35:20 GMT
       Server:
       - scaffolding on HTTPServer2
       X-Xss-Protection:
@@ -151,7 +151,7 @@ http_interactions:
       X-Content-Type-Options:
       - nosniff
       Server-Timing:
-      - gfet4t7; dur=889
+      - gfet4t7; dur=1055
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
       Transfer-Encoding:
@@ -165,8 +165,8 @@ http_interactions:
               "content": {
                 "parts": [
                   {
-                    "text": "OK.",
-                    "thoughtSignature": "EjQKMgERTTIPfzAY6I5rdky6TwgyB/7trF5n9/8vOXtf04GyREKH6ItuDpguvfVLypy/Ukwe"
+                    "text": "OK",
+                    "thoughtSignature": "Es8BCswBARFNMg9Hsc4T0uZrev5nDv7SND+rrarZB74OauKimTp/ZhFDRdh3kmtwZWTSc8wUQXrZyLYJ+oh6xzQ4KnsmrxZqgOlN7p4KRGLebf+OdvmFBMUWB4H9R2IAJAGAjCt1SufwiEB5rN1r8fMUPQTI3xzEGiKeqBMw9OnBb05t6Vv47uQoHkHbnp4Y/tR08U3a9mElLMsuvb4pRsqHb4/AwrIPL5e5nx+k1MYdJrtBkvbEG+iibEi+rCH7e7X+tg6kvxDGSOfMCNxA+6ej"
                   }
                 ],
                 "role": "model"
@@ -176,19 +176,20 @@ http_interactions:
             }
           ],
           "usageMetadata": {
-            "promptTokenCount": 196,
-            "candidatesTokenCount": 2,
-            "totalTokenCount": 198,
+            "promptTokenCount": 206,
+            "candidatesTokenCount": 1,
+            "totalTokenCount": 235,
             "promptTokensDetails": [
               {
                 "modality": "TEXT",
-                "tokenCount": 196
+                "tokenCount": 206
               }
             ],
+            "thoughtsTokenCount": 28,
             "serviceTier": "standard"
           },
           "modelVersion": "gemini-3.5-flash",
-          "responseId": "xUh6atunB-XGkdUP_be34AM"
+          "responseId": "J7-Fas26LrWdnsEP0frX4As"
         }
-  recorded_at: Mon, 10 Aug 2026 21:55:17 GMT
+  recorded_at: Wed, 19 Aug 2026 14:35:20 GMT
 recorded_with: VCR 6.4.0

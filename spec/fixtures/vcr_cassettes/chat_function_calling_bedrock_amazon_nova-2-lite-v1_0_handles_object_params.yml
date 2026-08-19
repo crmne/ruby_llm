@@ -9,14 +9,14 @@ http_interactions:
         tool with window start 2025-01-01 and end 2025-01-02 and include the result."}]}],"inferenceConfig":{},"toolConfig":{"tools":[{"toolSpec":{"name":"object_params","description":"Uses
         params DSL object support","inputSchema":{"json":{"type":"object","properties":{"window":{"type":"object","properties":{"start":{"type":"string","description":"ISO
         start"},"end":{"type":"string","description":"ISO end"}},"required":["start","end"],"additionalProperties":false,"description":"Time
-        window to schedule"}},"required":["window"],"additionalProperties":false,"strict":true}}}}]}}'
+        window to schedule"}},"required":["window"],"additionalProperties":false}}}}]}}'
     headers:
       User-Agent:
-      - Faraday v2.14.2
+      - Faraday v2.14.3
       X-Amz-Date:
-      - 20260608T185037Z
+      - 20260819T145151Z
       X-Amz-Content-Sha256:
-      - e0a40faa10d292d9553b4103d2efcbf2224406e25de59decb08b505cd709e1ba
+      - 5ef4711275d33ef174f22de3252766c77db0ef21876dedd7e1f3d8655ffc7e54
       Authorization:
       - AWS4-HMAC-SHA256 Credential=<AWS_ACCESS_KEY_ID>/<DATE>/<AWS_REGION>/bedrock/aws4_request,
         SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=<AWS_SIGV4_SIGNATURE>
@@ -32,17 +32,17 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 08 Jun 2026 18:50:38 GMT
+      - Wed, 19 Aug 2026 14:51:53 GMT
       Content-Type:
       - application/json
       Content-Length:
-      - '337'
+      - '336'
       Connection:
       - keep-alive
       X-Amzn-Requestid:
-      - 884da29a-0333-457f-8473-5c9734e3dcad
+      - 430eea88-d785-4538-97b8-dfd94e045490
     body:
       encoding: UTF-8
-      string: '{"metrics":{"latencyMs":612},"output":{"message":{"content":[{"toolUse":{"input":{"window":{"start":"2025-01-01","end":"2025-01-02"}},"name":"object_params","toolUseId":"tooluse_d5mp7ptWqEZbtOx24QGmAo"}}],"role":"assistant"}},"stopReason":"tool_use","usage":{"inputTokens":1013,"outputTokens":45,"serverToolUsage":{},"totalTokens":1058}}'
-  recorded_at: Mon, 08 Jun 2026 18:50:38 GMT
+      string: '{"metrics":{"latencyMs":625},"output":{"message":{"content":[{"toolUse":{"input":{"window":{"start":"2025-01-01","end":"2025-01-02"}},"name":"object_params","toolUseId":"tooluse_c3ghz86qU4aCGH7Nr0Mx7U"}}],"role":"assistant"}},"stopReason":"tool_use","usage":{"inputTokens":994,"outputTokens":45,"serverToolUsage":{},"totalTokens":1039}}'
+  recorded_at: Wed, 19 Aug 2026 14:51:53 GMT
 recorded_with: VCR 6.4.0

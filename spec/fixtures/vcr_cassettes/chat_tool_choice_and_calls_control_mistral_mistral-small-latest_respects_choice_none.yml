@@ -12,7 +12,7 @@ http_interactions:
         13.4050)"}},"required":["latitude","longitude"],"additionalProperties":false,"strict":true}}}],"tool_choice":"none"}'
     headers:
       User-Agent:
-      - Faraday v2.14.2
+      - Faraday v2.14.3
       Authorization:
       - Bearer <AUTH_TOKEN>
       Content-Type:
@@ -27,7 +27,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 08 Jun 2026 18:51:52 GMT
+      - Wed, 19 Aug 2026 14:41:30 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
@@ -35,49 +35,50 @@ http_interactions:
       Connection:
       - keep-alive
       Mistral-Correlation-Id:
-      - '019ea893-b1a8-774c-8566-2e6ce16a4a88'
+      - 01a01a78-5779-7a4d-ba90-dee72c098696
       X-Kong-Request-Id:
-      - '019ea893-b1a8-774c-8566-2e6ce16a4a88'
+      - 01a01a78-5779-7a4d-ba90-dee72c098696
+      X-Max-Retry-Attempts-Reached:
+      - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '100000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '99391'
+      - '99344'
       X-Ratelimit-Tokens-Query-Cost:
-      - '156'
+      - '147'
       X-Ratelimit-Limit-Req-Minute:
       - '100'
       X-Ratelimit-Remaining-Req-Minute:
-      - '96'
+      - '97'
       X-Envoy-Upstream-Service-Time:
-      - '665'
+      - '1098'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '666'
+      - '1100'
       X-Kong-Proxy-Latency:
-      - '18'
-      Set-Cookie:
-      - "<COOKIE>"
-      - "<COOKIE>"
-      X-Content-Type-Options:
-      - nosniff
+      - '20'
       Cf-Cache-Status:
       - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
       Strict-Transport-Security:
       - max-age=15552000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"14c59eb8d46d4574b5f17f2372b4d2d1","created":1780944712,"model":"mistral-small-latest","usage":{"prompt_tokens":40,"total_tokens":156,"completion_tokens":116,"prompt_tokens_details":{"cached_tokens":0}},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"I
-        can''t provide real-time weather data, but you can check the current weather
-        in Berlin (coordinates: 52.5200, 13.4050) using a reliable weather service
-        like:\n\n- [Weather.com](https://weather.com)\n- [AccuWeather](https://www.accuweather.com)\n-
-        [OpenWeatherMap](https://openweathermap.org)\n- [Weather Underground](https://www.wunderground.com)\n\nWould
-        you like me to guide you on how to use one of these services?"}}]}'
-  recorded_at: Mon, 08 Jun 2026 18:51:52 GMT
+      string: '{"id":"4cd7319a135e4eb09c1911489037ce54","created":1787150489,"model":"mistral-small-latest","usage":{"prompt_tokens":40,"total_tokens":147,"completion_tokens":107,"prompt_tokens_details":{"cached_tokens":0},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"I
+        currently don''t have the ability to fetch real-time weather data. However,
+        you can easily check the current weather in Berlin by searching online or
+        using a weather app or website like [Weather.com](https://weather.com), [AccuWeather](https://www.accuweather.com),
+        or [OpenWeatherMap](https://openweathermap.org). Just enter the coordinates
+        **52.5200, 13.4050** or \"Berlin\" to get the latest updates."}}]}'
+  recorded_at: Wed, 19 Aug 2026 14:41:30 GMT
 recorded_with: VCR 6.4.0

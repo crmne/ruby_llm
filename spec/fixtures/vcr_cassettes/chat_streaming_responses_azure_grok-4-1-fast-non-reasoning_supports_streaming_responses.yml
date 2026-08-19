@@ -9,7 +9,7 @@ http_interactions:
         from 1 to 3"}],"stream":true,"stream_options":{"include_usage":true}}'
     headers:
       User-Agent:
-      - Faraday v2.14.2
+      - Faraday v2.14.3
       Api-Key:
       - "<AZURE_API_KEY>"
       Content-Type:
@@ -35,81 +35,51 @@ http_interactions:
       - "*"
       Vary:
       - access-control-request-headers
-      Request-Context:
-      - appId=
-      X-Ms-Rai-Invoked:
-      - 'false'
-      Traceparent:
-      - 00-8fd32cf6ba014918a1c0e11056ab4779-09e175730008a90a-00
-      X-Request-Id:
-      - "<X_REQUEST_ID>"
-      X-Xai-Model-Address:
-      - http://localhost:9988
-      X-Ms-Client-Request-Id:
-      - 8fd32cf6-ba01-4918-a1c0-e11056ab4779
-      Azureml-Model-Session:
-      - d20260601175039-cf414bb2
-      Azureai-Requested-Tier:
-      - default
-      Azureai-Processed-Tier:
-      - default
-      X-Ms-Is-Spilled-Over:
-      - 'false'
-      X-Ratelimit-Key:
-      - grok-4-1-fast-non-reasoning
-      X-Ratelimit-Remaining-Requests:
-      - '49'
-      X-Ratelimit-Reset-Requests:
-      - '1'
-      X-Ratelimit-Limit-Requests:
-      - '50'
-      X-Ratelimit-Renewalperiod-Requests:
-      - '60'
-      X-Ratelimit-Abusepenalty-Active:
-      - 'False'
-      X-Ratelimit-Remaining-Tokens:
-      - '49962'
-      X-Ratelimit-Reset-Tokens:
-      - '0'
-      X-Ratelimit-Limit-Tokens:
-      - '50000'
-      X-Ratelimit-Renewalperiod-Tokens:
-      - '60'
-      Azureai-Fe-Is-Streaming:
-      - 'False'
       Apim-Request-Id:
-      - 8fd32cf6-ba01-4918-a1c0-e11056ab4779
+      - 0d5cdc27-20d9-44b6-a6b9-3c983e10ae60
+      Traceparent:
+      - 00-7adbd9808ad273487b0b5549ed3eca66-c3a2b31c00055b22-00
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
-      X-Ms-Deployment-Name:
-      - grok-4-1-fast-non-reasoning
       X-Content-Type-Options:
       - nosniff
       X-Ms-Region:
       - West Europe
+      Azureai-Requested-Tier:
+      - default
+      Azureai-Processed-Tier:
+      - default
+      Azureai-Fe-Is-Streaming:
+      - 'False'
+      Azureai-Fe-Offer-Type:
+      - paygo
       Date:
-      - Mon, 08 Jun 2026 18:45:38 GMT
+      - Wed, 19 Aug 2026 14:34:14 GMT
     body:
       encoding: UTF-8
-      string: |
-        data: {"id":"b11195b7-23cc-45ce-be86-34235603e3d9","object":"chat.completion.chunk","created":1780944338,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":"1","role":"assistant"}}],"system_fingerprint":"fp_49c5j0a323"}
+      string: |+
+        data: {"id":"a4c12840-0156-4fad-9be6-cff6a42a5867","object":"chat.completion.chunk","created":1787150054,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":"1","role":"assistant"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
 
-        data: {"id":"b11195b7-23cc-45ce-be86-34235603e3d9","object":"chat.completion.chunk","created":1780944338,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":","}}],"system_fingerprint":"fp_49c5j0a323"}
+        data: {"id":"a4c12840-0156-4fad-9be6-cff6a42a5867","object":"chat.completion.chunk","created":1787150054,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":","}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
 
-        data: {"id":"b11195b7-23cc-45ce-be86-34235603e3d9","object":"chat.completion.chunk","created":1780944338,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":" "}}],"system_fingerprint":"fp_49c5j0a323"}
+        data: {"id":"a4c12840-0156-4fad-9be6-cff6a42a5867","object":"chat.completion.chunk","created":1787150054,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":" "}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
 
-        data: {"id":"b11195b7-23cc-45ce-be86-34235603e3d9","object":"chat.completion.chunk","created":1780944338,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":"2"}}],"system_fingerprint":"fp_49c5j0a323"}
+        data: {"id":"a4c12840-0156-4fad-9be6-cff6a42a5867","object":"chat.completion.chunk","created":1787150054,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":"2"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
 
-        data: {"id":"b11195b7-23cc-45ce-be86-34235603e3d9","object":"chat.completion.chunk","created":1780944338,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":","}}],"system_fingerprint":"fp_49c5j0a323"}
+        data: {"id":"a4c12840-0156-4fad-9be6-cff6a42a5867","object":"chat.completion.chunk","created":1787150054,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":","}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
 
-        data: {"id":"b11195b7-23cc-45ce-be86-34235603e3d9","object":"chat.completion.chunk","created":1780944338,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":" "}}],"system_fingerprint":"fp_49c5j0a323"}
+        data: {"id":"a4c12840-0156-4fad-9be6-cff6a42a5867","object":"chat.completion.chunk","created":1787150054,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":" "}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
 
-        data: {"id":"b11195b7-23cc-45ce-be86-34235603e3d9","object":"chat.completion.chunk","created":1780944338,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":"3"}}],"system_fingerprint":"fp_49c5j0a323"}
+        data: {"id":"a4c12840-0156-4fad-9be6-cff6a42a5867","object":"chat.completion.chunk","created":1787150054,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":"3"}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
 
-        data: {"id":"b11195b7-23cc-45ce-be86-34235603e3d9","object":"chat.completion.chunk","created":1780944338,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{},"finish_reason":"stop"}],"system_fingerprint":"fp_49c5j0a323"}
+        data: {"id":"a4c12840-0156-4fad-9be6-cff6a42a5867","object":"chat.completion.chunk","created":1787150054,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{"content":"."}}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
 
-        data: {"id": "b11195b7-23cc-45ce-be86-34235603e3d9", "object": "chat.completion.chunk", "created": 1780944338, "model": "grok-4-1-fast-non-reasoning", "choices": [], "usage": {"prompt_tokens": 7, "completion_tokens": 7, "total_tokens": 14, "prompt_tokens_details": {"text_tokens": 7, "audio_tokens": 0, "image_tokens": 0, "cached_tokens": 161}, "completion_tokens_details": {"reasoning_tokens": 0, "audio_tokens": 0, "accepted_prediction_tokens": 0, "rejected_prediction_tokens": 0}, "num_sources_used": 0, "cost_in_usd_ticks": 0}, "system_fingerprint": "fp_49c5j0a323"}
+        data: {"id":"a4c12840-0156-4fad-9be6-cff6a42a5867","object":"chat.completion.chunk","created":1787150054,"model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"delta":{},"finish_reason":"stop"}],"system_fingerprint":"fp_49c5j0a323","service_tier":"default"}
+
+        data: {"id": "a4c12840-0156-4fad-9be6-cff6a42a5867", "object": "chat.completion.chunk", "created": 1787150054, "model": "grok-4-1-fast-non-reasoning", "choices": [], "usage": {"prompt_tokens": 7, "completion_tokens": 8, "total_tokens": 15, "prompt_tokens_details": {"text_tokens": 7, "audio_tokens": 0, "image_tokens": 0, "cached_tokens": 161}, "completion_tokens_details": {"reasoning_tokens": 0, "audio_tokens": 0, "accepted_prediction_tokens": 0, "rejected_prediction_tokens": 0}, "num_sources_used": 0, "cost_in_usd_ticks": 0}, "system_fingerprint": "fp_49c5j0a323", "service_tier": "default"}
 
         data: [DONE]
-  recorded_at: Mon, 08 Jun 2026 18:45:38 GMT
+
+  recorded_at: Wed, 19 Aug 2026 14:34:14 GMT
 recorded_with: VCR 6.4.0
+...

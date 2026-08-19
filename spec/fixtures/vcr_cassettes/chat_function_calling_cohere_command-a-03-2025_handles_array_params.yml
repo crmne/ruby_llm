@@ -8,7 +8,7 @@ http_interactions:
       string: '{"model":"command-a-03-2025","messages":[{"role":"user","content":[{"type":"text","text":"Call
         the array params tool with tags [\"red\",\"blue\"] and tell me the combined
         tags."}]}],"stream":false,"tools":[{"type":"function","function":{"name":"array_params","description":"Uses
-        params DSL array support","parameters":{"$schema":"https://json-schema.org/draft/2020-12/schema","title":"Schema","type":"object","properties":{"tags":{"type":"array","description":"List
+        params DSL array support","parameters":{"type":"object","properties":{"tags":{"type":"array","description":"List
         of tags to combine","items":{"type":"string"}}},"required":["tags"],"additionalProperties":false}}}]}'
     headers:
       User-Agent:
@@ -35,9 +35,9 @@ http_interactions:
       Expires:
       - Thu, 01 Jan 1970 00:00:00 GMT
       Num-Chars:
-      - '6980'
+      - '6902'
       Num-Tokens:
-      - '125'
+      - '99'
       Pragma:
       - no-cache
       Vary:
@@ -45,11 +45,11 @@ http_interactions:
       X-Accel-Expires:
       - '0'
       X-Debug-Trace-Id:
-      - 22633c77b280a2538d7c603d89a51858
+      - 84013bf8467153e76b980f47a80f5b77
       Date:
-      - Thu, 13 Aug 2026 11:17:18 GMT
+      - Wed, 19 Aug 2026 14:51:54 GMT
       X-Envoy-Upstream-Service-Time:
-      - '1313'
+      - '758'
       Server:
       - envoy
       Via:
@@ -60,8 +60,8 @@ http_interactions:
       - chunked
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"0f89eb25-da35-4a0d-a0c3-069d77f5f3e1","message":{"role":"assistant","tool_plan":"I
-        will use the array_params tool with the tags \"red\" and \"blue\" to find
-        the combined tags.","tool_calls":[{"id":"array_params_4v3jaghe9b4b","type":"function","function":{"name":"array_params","arguments":"{\"tags\":[\"red\",\"blue\"]}"}}]},"finish_reason":"TOOL_CALL","usage":{"billed_units":{"input_tokens":91,"output_tokens":34},"tokens":{"input_tokens":1500,"output_tokens":66},"cached_tokens":992}}'
-  recorded_at: Thu, 13 Aug 2026 11:17:18 GMT
+      string: '{"id":"1b59b3cc-299b-4b89-ab90-0a9941d1629c","message":{"role":"assistant","tool_plan":"I
+        will call the array_params tool with the tags [\"red\",\"blue\"] and relay
+        the combined tags to the user.","tool_calls":[{"id":"array_params_38n7cm778sbs","type":"function","function":{"name":"array_params","arguments":"{\"tags\":[\"red\",\"blue\"]}"}}]},"finish_reason":"TOOL_CALL","usage":{"billed_units":{"input_tokens":64,"output_tokens":35},"tokens":{"input_tokens":1470,"output_tokens":67},"cached_tokens":704}}'
+  recorded_at: Wed, 19 Aug 2026 14:51:54 GMT
 recorded_with: VCR 6.4.0

@@ -10,7 +10,7 @@ http_interactions:
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.2
+      - Faraday v2.14.3
       Api-Key:
       - "<AZURE_API_KEY>"
       Content-Type:
@@ -36,75 +36,41 @@ http_interactions:
       - "*"
       Vary:
       - access-control-request-headers
-      Request-Context:
-      - appId=
-      X-Ms-Rai-Invoked:
-      - 'false'
-      Traceparent:
-      - 00-a7fa6027b0bf4788a762606ce61b0c0c-3e827f500007fc42-00
-      X-Request-Id:
-      - "<X_REQUEST_ID>"
-      X-Xai-Model-Address:
-      - http://localhost:9988
-      X-Ms-Client-Request-Id:
-      - a7fa6027-b0bf-4788-a762-606ce61b0c0c
-      Azureml-Model-Session:
-      - d20260601171731-6dffbbdc
-      Azureai-Requested-Tier:
-      - default
-      Azureai-Processed-Tier:
-      - default
-      X-Ms-Is-Spilled-Over:
-      - 'false'
-      X-Ratelimit-Key:
-      - grok-4-1-fast-non-reasoning
-      X-Ratelimit-Remaining-Requests:
-      - '49'
-      X-Ratelimit-Reset-Requests:
-      - '1'
-      X-Ratelimit-Limit-Requests:
-      - '50'
-      X-Ratelimit-Renewalperiod-Requests:
-      - '60'
-      X-Ratelimit-Abusepenalty-Active:
-      - 'False'
-      X-Ratelimit-Remaining-Tokens:
-      - '49911'
-      X-Ratelimit-Reset-Tokens:
-      - '0'
-      X-Ratelimit-Limit-Tokens:
-      - '50000'
-      X-Ratelimit-Renewalperiod-Tokens:
-      - '60'
-      Azureai-Fe-Is-Streaming:
-      - 'False'
       Apim-Request-Id:
-      - a7fa6027-b0bf-4788-a762-606ce61b0c0c
+      - 3ced3ada-62fb-4eb0-8c3c-b1db8538265d
+      Traceparent:
+      - 00-290daabf2118b9ea4756a9ccbfb4a743-f4b1e27400037fe2-00
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
-      X-Ms-Deployment-Name:
-      - grok-4-1-fast-non-reasoning
       X-Content-Type-Options:
       - nosniff
       X-Ms-Region:
       - West Europe
+      Azureai-Requested-Tier:
+      - default
+      Azureai-Processed-Tier:
+      - default
+      Azureai-Fe-Is-Streaming:
+      - 'False'
+      Azureai-Fe-Offer-Type:
+      - paygo
       Date:
-      - Sat, 13 Jun 2026 11:33:08 GMT
+      - Wed, 19 Aug 2026 14:35:09 GMT
     body:
       encoding: UTF-8
-      string: '{"id":"81fe9e77-0bb7-4c2a-9beb-520127c368ce","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"call_00767164","index":0,"type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"finish_reason":"tool_calls","content_filter_results":{}}],"usage":{"prompt_tokens":198,"completion_tokens":18,"total_tokens":216,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":314,"audio_tokens":0,"text_tokens":198,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1781350389,"object":"chat.completion","prompt_filter_results":null}'
-  recorded_at: Sat, 13 Jun 2026 11:33:09 GMT
+      string: '{"id":"1808246e-ecb1-4644-ba7d-aa6bde0957e2","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"call_85705297","index":0,"type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":198,"completion_tokens":18,"total_tokens":216,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":314,"audio_tokens":0,"text_tokens":198,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1787150110,"object":"chat.completion","prompt_filter_results":null}'
+  recorded_at: Wed, 19 Aug 2026 14:35:10 GMT
 - request:
     method: post
     uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
     body:
       encoding: UTF-8
       string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"user","content":"What''s
-        the best language to learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_00767164","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call_00767164"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
+        the best language to learn?"},{"role":"assistant","content":"","tool_calls":[{"id":"call_85705297","type":"function","function":{"name":"best_language_to_learn","arguments":"{}"}}]},{"role":"tool","content":"Ruby","tool_call_id":"call_85705297"}],"stream":false,"tools":[{"type":"function","function":{"name":"best_language_to_learn","description":"Gets
         the best language to learn","parameters":{"type":"object","properties":{},"required":[],"additionalProperties":false,"strict":true}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.2
+      - Faraday v2.14.3
       Api-Key:
       - "<AZURE_API_KEY>"
       Content-Type:
@@ -130,67 +96,29 @@ http_interactions:
       - "*"
       Vary:
       - access-control-request-headers
-      Request-Context:
-      - appId=
-      X-Ms-Rai-Invoked:
-      - 'false'
-      Traceparent:
-      - 00-91ae91d441324b94a54a06dd3b3cee32-86549cd500050b38-00
-      X-Request-Id:
-      - "<X_REQUEST_ID>"
-      X-Xai-Model-Address:
-      - http://localhost:9988
-      X-Ms-Client-Request-Id:
-      - 91ae91d4-4132-4b94-a54a-06dd3b3cee32
-      Azureml-Model-Session:
-      - d20260601171731-6dffbbdc
-      Azureai-Requested-Tier:
-      - default
-      Azureai-Processed-Tier:
-      - default
-      X-Ms-Is-Spilled-Over:
-      - 'false'
-      X-Ratelimit-Key:
-      - grok-4-1-fast-non-reasoning
-      X-Ratelimit-Remaining-Requests:
-      - '49'
-      X-Ratelimit-Reset-Requests:
-      - '1'
-      X-Ratelimit-Limit-Requests:
-      - '50'
-      X-Ratelimit-Renewalperiod-Requests:
-      - '60'
-      X-Ratelimit-Abusepenalty-Active:
-      - 'False'
-      X-Ratelimit-Remaining-Tokens:
-      - '49857'
-      X-Ratelimit-Reset-Tokens:
-      - '0'
-      X-Ratelimit-Limit-Tokens:
-      - '50000'
-      X-Ratelimit-Renewalperiod-Tokens:
-      - '60'
-      Azureai-Fe-Is-Streaming:
-      - 'False'
       Apim-Request-Id:
-      - 91ae91d4-4132-4b94-a54a-06dd3b3cee32
+      - 7df28f70-839f-4527-8cea-17faabc62cd1
+      Traceparent:
+      - 00-ada239fe20830adb715e01975b068c55-0f0677c60004db9d-00
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
-      X-Ms-Deployment-Name:
-      - grok-4-1-fast-non-reasoning
       X-Content-Type-Options:
       - nosniff
       X-Ms-Region:
       - West Europe
+      Azureai-Requested-Tier:
+      - default
+      Azureai-Processed-Tier:
+      - default
+      Azureai-Fe-Is-Streaming:
+      - 'False'
+      Azureai-Fe-Offer-Type:
+      - paygo
       Date:
-      - Sat, 13 Jun 2026 11:33:13 GMT
+      - Wed, 19 Aug 2026 14:35:11 GMT
     body:
-      encoding: UTF-8
-      string: '{"id":"b2d55fa0-506b-483e-b5d1-38f60a381956","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"**Ruby**
-        is the best language to learn! It''s elegant, beginner-friendly with its readable
-        syntax (inspired by natural language), and powers fun web apps like those
-        built with Ruby on Rails. Great for quick prototyping and has a vibrant community.
-        If you''re into web dev or scripting, start here over more verbose options
-        like Java. What''s your goal for learning?"},"finish_reason":"stop","content_filter_results":{}}],"usage":{"prompt_tokens":228,"completion_tokens":72,"total_tokens":300,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":366,"audio_tokens":0,"text_tokens":228,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1781350393,"object":"chat.completion","prompt_filter_results":null}'
-  recorded_at: Sat, 13 Jun 2026 11:33:14 GMT
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJpZCI6IjMyMWU1ZmFhLWFhMmItNDdlYy05MmNkLWJkODUyMmM1NGZlNiIsIm1vZGVsIjoiZ3Jvay00LTEtZmFzdC1ub24tcmVhc29uaW5nIiwiY2hvaWNlcyI6W3siaW5kZXgiOjAsIm1lc3NhZ2UiOnsicm9sZSI6ImFzc2lzdGFudCIsImNvbnRlbnQiOiIqKlJ1YnkqKiBpcyB0aGUgYmVzdCBsYW5ndWFnZSB0byBsZWFybiEgSXQncyBlbGVnYW50LCBiZWdpbm5lci1mcmllbmRseSwgYW5kIHBvd2VycyBmdW4gd2ViIGFwcHMgbGlrZSB0aG9zZSBidWlsdCB3aXRoIFJ1Ynkgb24gUmFpbHMuIFBlcmZlY3QgZm9yIHF1aWNrIHByb3RvdHlwaW5nIGFuZCBnZXR0aW5nIHJlYWwgcHJvamVjdHMgZG9uZSBmYXN0LiDwn5qAIn0sImZpbmlzaF9yZWFzb24iOiJzdG9wIn1dLCJ1c2FnZSI6eyJwcm9tcHRfdG9rZW5zIjoyMjgsImNvbXBsZXRpb25fdG9rZW5zIjo0MiwidG90YWxfdG9rZW5zIjoyNzAsImF1ZGlvX3Byb21wdF90b2tlbnMiOjAsInByb21wdF90b2tlbnNfZGV0YWlscyI6eyJjYWNoZWRfdG9rZW5zIjozNjYsImF1ZGlvX3Rva2VucyI6MCwidGV4dF90b2tlbnMiOjIyOCwiaW1hZ2VfdG9rZW5zIjowfSwiY29tcGxldGlvbl90b2tlbnNfZGV0YWlscyI6eyJyZWFzb25pbmdfdG9rZW5zIjowLCJhdWRpb190b2tlbnMiOjAsImFjY2VwdGVkX3ByZWRpY3Rpb25fdG9rZW5zIjowLCJyZWplY3RlZF9wcmVkaWN0aW9uX3Rva2VucyI6MH0sIm51bV9zb3VyY2VzX3VzZWQiOjB9LCJjcmVhdGVkIjoxNzg3MTUwMTExLCJvYmplY3QiOiJjaGF0LmNvbXBsZXRpb24iLCJwcm9tcHRfZmlsdGVyX3Jlc3VsdHMiOm51bGx9
+  recorded_at: Wed, 19 Aug 2026 14:35:11 GMT
 recorded_with: VCR 6.4.0

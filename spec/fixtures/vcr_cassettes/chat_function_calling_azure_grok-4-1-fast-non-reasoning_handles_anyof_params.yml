@@ -9,10 +9,10 @@ http_interactions:
         the any-of params tool for task \"Review PR\" with status \"pending\" and
         report the result."}],"stream":false,"tools":[{"type":"function","function":{"name":"any_of_params","description":"Uses
         params DSL any_of support","parameters":{"type":"object","properties":{"task":{"type":"string","description":"Task
-        description"},"status":{"description":"Optional task status","anyOf":[{"type":"string","enum":["pending","done"]},{"type":"null"}]}},"required":["task","status"],"additionalProperties":false,"strict":true}}}]}'
+        description"},"status":{"description":"Optional task status","anyOf":[{"type":"string","enum":["pending","done"]},{"type":"null"}]}},"required":["task","status"],"additionalProperties":false}}}]}'
     headers:
       User-Agent:
-      - Faraday v2.14.2
+      - Faraday v2.14.3
       Api-Key:
       - "<AZURE_API_KEY>"
       Content-Type:
@@ -38,63 +38,29 @@ http_interactions:
       - "*"
       Vary:
       - access-control-request-headers
-      Request-Context:
-      - appId=
-      X-Ms-Rai-Invoked:
-      - 'false'
-      Traceparent:
-      - 00-3dddf6e03fae4caa8948fa70a21df2d6-8d9fb7440005c4b0-00
-      X-Request-Id:
-      - "<X_REQUEST_ID>"
-      X-Xai-Model-Address:
-      - http://localhost:9988
-      X-Ms-Client-Request-Id:
-      - 3dddf6e0-3fae-4caa-8948-fa70a21df2d6
-      Azureml-Model-Session:
-      - d20260601171731-6dffbbdc
-      Azureai-Requested-Tier:
-      - default
-      Azureai-Processed-Tier:
-      - default
-      X-Ms-Is-Spilled-Over:
-      - 'false'
-      X-Ratelimit-Key:
-      - grok-4-1-fast-non-reasoning
-      X-Ratelimit-Remaining-Requests:
-      - '49'
-      X-Ratelimit-Reset-Requests:
-      - '1'
-      X-Ratelimit-Limit-Requests:
-      - '50'
-      X-Ratelimit-Renewalperiod-Requests:
-      - '60'
-      X-Ratelimit-Abusepenalty-Active:
-      - 'False'
-      X-Ratelimit-Remaining-Tokens:
-      - '49850'
-      X-Ratelimit-Reset-Tokens:
-      - '0'
-      X-Ratelimit-Limit-Tokens:
-      - '50000'
-      X-Ratelimit-Renewalperiod-Tokens:
-      - '60'
-      Azureai-Fe-Is-Streaming:
-      - 'False'
       Apim-Request-Id:
-      - 3dddf6e0-3fae-4caa-8948-fa70a21df2d6
+      - 9cc68dac-f5c4-46fa-9fee-e01c0c067551
+      Traceparent:
+      - 00-0fdbcb39ed0c854b3d8cd8537352e852-0f0677c60004fda3-00
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
-      X-Ms-Deployment-Name:
-      - grok-4-1-fast-non-reasoning
       X-Content-Type-Options:
       - nosniff
       X-Ms-Region:
       - West Europe
+      Azureai-Requested-Tier:
+      - default
+      Azureai-Processed-Tier:
+      - default
+      Azureai-Fe-Is-Streaming:
+      - 'False'
+      Azureai-Fe-Offer-Type:
+      - paygo
       Date:
-      - Sat, 13 Jun 2026 11:33:59 GMT
+      - Wed, 19 Aug 2026 15:00:16 GMT
     body:
       encoding: UTF-8
-      string: '{"id":"ed52e9de-d0d2-4ef3-a742-5e52cce064ab","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"call_54316713","index":0,"type":"function","function":{"name":"any_of_params","arguments":"{\"task\":\"Review
-        PR\",\"status\":\"pending\"}"}}]},"finish_reason":"tool_calls","content_filter_results":{}}],"usage":{"prompt_tokens":253,"completion_tokens":37,"total_tokens":290,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":314,"audio_tokens":0,"text_tokens":253,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1781350440,"object":"chat.completion","prompt_filter_results":null}'
-  recorded_at: Sat, 13 Jun 2026 11:34:00 GMT
+      string: '{"id":"d9b13297-4796-435a-b73c-a396fd12b170","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"","tool_calls":[{"id":"call_17835087","index":0,"type":"function","function":{"name":"any_of_params","arguments":"{\"task\":\"Review
+        PR\",\"status\":\"pending\"}"}}]},"finish_reason":"tool_calls"}],"usage":{"prompt_tokens":249,"completion_tokens":37,"total_tokens":286,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":158,"audio_tokens":0,"text_tokens":249,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1787151616,"object":"chat.completion","prompt_filter_results":null}'
+  recorded_at: Wed, 19 Aug 2026 15:00:17 GMT
 recorded_with: VCR 6.4.0

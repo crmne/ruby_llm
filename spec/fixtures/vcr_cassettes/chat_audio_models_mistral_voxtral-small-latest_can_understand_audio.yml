@@ -24,66 +24,75 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Mon, 10 Aug 2026 23:43:53 GMT
+      - Wed, 19 Aug 2026 14:37:06 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Set-Cookie:
-      - "<COOKIE>"
       Mistral-Correlation-Id:
-      - '019fee0f-ae15-7073-94f4-d0a2deebb520'
+      - 01a01a74-4d76-7b95-8306-78f1997dc1ee
       X-Kong-Request-Id:
-      - '019fee0f-ae15-7073-94f4-d0a2deebb520'
+      - 01a01a74-4d76-7b95-8306-78f1997dc1ee
       X-Max-Retry-Attempts-Reached:
       - 'false'
       X-Ratelimit-Limit-Tokens-Minute:
       - '200000'
       X-Ratelimit-Remaining-Tokens-Minute:
-      - '199885'
+      - '199743'
       X-Ratelimit-Tokens-Query-Cost:
-      - '101'
+      - '257'
       X-Ratelimit-Limit-Audio-Seconds-Minute:
       - '2000'
       X-Ratelimit-Remaining-Audio-Seconds-Minute:
-      - '1996'
+      - '1997'
       X-Ratelimit-Audio-Seconds-Query-Cost:
       - '3'
       X-Ratelimit-Limit-Req-Minute:
       - '360'
       X-Ratelimit-Remaining-Req-Minute:
-      - '358'
+      - '359'
       X-Envoy-Upstream-Service-Time:
-      - '905'
+      - '2004'
       Server:
       - cloudflare
       Access-Control-Allow-Origin:
       - "*"
       X-Kong-Upstream-Latency:
-      - '916'
+      - '2027'
       X-Kong-Proxy-Latency:
-      - '21'
-      X-Content-Type-Options:
-      - nosniff
+      - '27'
       Cf-Cache-Status:
       - DYNAMIC
+      Set-Cookie:
+      - "<COOKIE>"
       Strict-Transport-Security:
       - max-age=15552000; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
       Cf-Ray:
       - "<CF_RAY>"
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
-      string: '{"id":"e5774ecab6414977beee31d25580f715","created":1786405433,"model":"voxtral-small-latest","usage":{"prompt_audio_seconds":3,"prompt_tokens":9,"total_tokens":476,"completion_tokens":92,"prompt_tokens_details":{"cached_tokens":0,"audio_tokens":375},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
+      string: '{"id":"8f5e8c9b0c6c4f4a930e27f54ab8d92f","created":1787150225,"model":"voxtral-small-latest","usage":{"prompt_audio_seconds":3,"prompt_tokens":9,"total_tokens":632,"completion_tokens":248,"prompt_tokens_details":{"cached_tokens":0,"audio_tokens":375},"service_tier":"standard"},"object":"chat.completion","choices":[{"index":0,"finish_reason":"stop","message":{"role":"assistant","tool_calls":null,"content":"The
         statement \"Ruby is a programming language designed for developer happiness\"
-        is expressing that Ruby, a programming language, is created with the goal
-        of making developers happy and satisfied while using it. This could mean that
-        Ruby is designed to be easy to learn, use, and enjoy, with features that make
-        coding more pleasant and productive. The phrase \"designed for developer happiness\"
-        is a way to highlight the user-friendly and enjoyable aspects of the Ruby
-        programming language."}}]}'
-  recorded_at: Mon, 10 Aug 2026 23:43:53 GMT
+        is a concise way of describing the philosophy and goals behind the Ruby programming
+        language. Here''s a breakdown of what it means:\n\n1. **Ruby is a programming
+        language**: Ruby is a high-level, interpreted programming language that was
+        created by Yukihiro \"Matz\" Matsumoto in the mid-1990s. It is known for its
+        elegant syntax and readability.\n\n2. **Designed for developer happiness**:
+        This phrase encapsulates the core philosophy of Ruby. Matz, the creator of
+        Ruby, has often emphasized that he designed the language to make programmers
+        happy. This means that Ruby aims to be:\n   - **Easy to learn and use**: Ruby
+        has a simple and intuitive syntax that is easy to read and write.\n   - **Productive**:
+        Ruby allows developers to write code quickly and efficiently, with a focus
+        on reducing boilerplate and increasing productivity.\n   - **Pleasant to work
+        with**: Ruby encourages good programming practices and provides tools and
+        features that make coding enjoyable.\n\nIn summary, the statement highlights
+        that Ruby is not just a tool for writing software, but also a language that
+        prioritizes the well-being and satisfaction of its users."}}]}'
+  recorded_at: Wed, 19 Aug 2026 14:37:06 GMT
 recorded_with: VCR 6.4.0

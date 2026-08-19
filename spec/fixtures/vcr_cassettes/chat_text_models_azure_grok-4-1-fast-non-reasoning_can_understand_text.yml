@@ -10,7 +10,7 @@ http_interactions:
         is the best.</file>"}]}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.2
+      - Faraday v2.14.3
       Api-Key:
       - "<AZURE_API_KEY>"
       Content-Type:
@@ -36,65 +36,31 @@ http_interactions:
       - "*"
       Vary:
       - access-control-request-headers
-      Request-Context:
-      - appId=
-      X-Ms-Rai-Invoked:
-      - 'false'
-      Traceparent:
-      - 00-dd522983f91e4b5aa49e0232bcd7983c-1e40aeae00155175-00
-      X-Request-Id:
-      - "<X_REQUEST_ID>"
-      X-Xai-Model-Address:
-      - http://localhost:9988
-      X-Ms-Client-Request-Id:
-      - dd522983-f91e-4b5a-a49e-0232bcd7983c
-      Azureml-Model-Session:
-      - d20260601175039-cf414bb2
-      Azureai-Requested-Tier:
-      - default
-      Azureai-Processed-Tier:
-      - default
-      X-Ms-Is-Spilled-Over:
-      - 'false'
-      X-Ratelimit-Key:
-      - grok-4-1-fast-non-reasoning
-      X-Ratelimit-Remaining-Requests:
-      - '48'
-      X-Ratelimit-Reset-Requests:
-      - '2'
-      X-Ratelimit-Limit-Requests:
-      - '50'
-      X-Ratelimit-Renewalperiod-Requests:
-      - '60'
-      X-Ratelimit-Abusepenalty-Active:
-      - 'False'
-      X-Ratelimit-Remaining-Tokens:
-      - '49917'
-      X-Ratelimit-Reset-Tokens:
-      - '0'
-      X-Ratelimit-Limit-Tokens:
-      - '50000'
-      X-Ratelimit-Renewalperiod-Tokens:
-      - '60'
-      Azureai-Fe-Is-Streaming:
-      - 'False'
       Apim-Request-Id:
-      - dd522983-f91e-4b5a-a49e-0232bcd7983c
+      - 9a848e55-a592-426a-9e1d-f54a86b1ca9d
+      Traceparent:
+      - 00-96c613645542a46fc33365423abccb08-75740d91000471d4-00
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
-      X-Ms-Deployment-Name:
-      - grok-4-1-fast-non-reasoning
       X-Content-Type-Options:
       - nosniff
       X-Ms-Region:
       - West Europe
+      Azureai-Requested-Tier:
+      - default
+      Azureai-Processed-Tier:
+      - default
+      Azureai-Fe-Is-Streaming:
+      - 'False'
+      Azureai-Fe-Offer-Type:
+      - paygo
       Date:
-      - Mon, 08 Jun 2026 18:45:41 GMT
+      - Wed, 19 Aug 2026 14:34:18 GMT
     body:
       encoding: UTF-8
-      string: '{"id":"a23b3c6e-af17-4741-b8b1-47b8c7cccd8d","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"The
-        file `ruby.txt` contains the text: \"Ruby is the best.\""},"finish_reason":"stop","content_filter_results":{}}],"usage":{"prompt_tokens":24,"completion_tokens":16,"total_tokens":40,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":162,"audio_tokens":0,"text_tokens":24,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1780944341,"object":"chat.completion","prompt_filter_results":null}'
-  recorded_at: Mon, 08 Jun 2026 18:45:42 GMT
+      string: '{"id":"5dabc62d-3899-479b-adf1-7dbcd664fca0","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        file \"ruby.txt\" contains the text: \"Ruby is the best.\""},"finish_reason":"stop"}],"usage":{"prompt_tokens":24,"completion_tokens":16,"total_tokens":40,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":161,"audio_tokens":0,"text_tokens":24,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1787150058,"object":"chat.completion","prompt_filter_results":null}'
+  recorded_at: Wed, 19 Aug 2026 14:34:18 GMT
 - request:
     method: post
     uri: https://rubyllm.services.ai.azure.com/models/chat/completions?api-version=2024-05-01-preview
@@ -102,13 +68,13 @@ http_interactions:
       encoding: UTF-8
       string: '{"model":"grok-4-1-fast-non-reasoning","messages":[{"role":"user","content":[{"type":"text","text":"What''s
         in this file?"},{"type":"text","text":"<file name=''ruby.txt'' mime_type=''text/plain''>Ruby
-        is the best.</file>"}]},{"role":"assistant","content":"The file `ruby.txt`
+        is the best.</file>"}]},{"role":"assistant","content":"The file \"ruby.txt\"
         contains the text: \"Ruby is the best.\""},{"role":"user","content":[{"type":"text","text":"and
         in this one?"},{"type":"text","text":"<file name=''ruby.xml'' mime_type=''application/xml''><truism>Ruby
         is the best</truism></file>"}]}],"stream":false}'
     headers:
       User-Agent:
-      - Faraday v2.14.2
+      - Faraday v2.14.3
       Api-Key:
       - "<AZURE_API_KEY>"
       Content-Type:
@@ -134,63 +100,29 @@ http_interactions:
       - "*"
       Vary:
       - access-control-request-headers
-      Request-Context:
-      - appId=
-      X-Ms-Rai-Invoked:
-      - 'false'
-      Traceparent:
-      - 00-a4aec434f69a4848855611a82a979fb8-6b7593b00015ec2b-00
-      X-Request-Id:
-      - "<X_REQUEST_ID>"
-      X-Xai-Model-Address:
-      - http://localhost:9988
-      X-Ms-Client-Request-Id:
-      - a4aec434-f69a-4848-8556-11a82a979fb8
-      Azureml-Model-Session:
-      - d20260601175039-cf414bb2
-      Azureai-Requested-Tier:
-      - default
-      Azureai-Processed-Tier:
-      - default
-      X-Ms-Is-Spilled-Over:
-      - 'false'
-      X-Ratelimit-Key:
-      - grok-4-1-fast-non-reasoning
-      X-Ratelimit-Remaining-Requests:
-      - '48'
-      X-Ratelimit-Reset-Requests:
-      - '2'
-      X-Ratelimit-Limit-Requests:
-      - '50'
-      X-Ratelimit-Renewalperiod-Requests:
-      - '60'
-      X-Ratelimit-Abusepenalty-Active:
-      - 'False'
-      X-Ratelimit-Remaining-Tokens:
-      - '49871'
-      X-Ratelimit-Reset-Tokens:
-      - '0'
-      X-Ratelimit-Limit-Tokens:
-      - '50000'
-      X-Ratelimit-Renewalperiod-Tokens:
-      - '60'
-      Azureai-Fe-Is-Streaming:
-      - 'False'
       Apim-Request-Id:
-      - a4aec434-f69a-4848-8556-11a82a979fb8
+      - c68facd8-0bff-4131-b99f-481bbacc0ebb
+      Traceparent:
+      - 00-6a223beb66e732a4d29ffa610658b8a9-f4b1e27400037f22-00
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
-      X-Ms-Deployment-Name:
-      - grok-4-1-fast-non-reasoning
       X-Content-Type-Options:
       - nosniff
       X-Ms-Region:
       - West Europe
+      Azureai-Requested-Tier:
+      - default
+      Azureai-Processed-Tier:
+      - default
+      Azureai-Fe-Is-Streaming:
+      - 'False'
+      Azureai-Fe-Offer-Type:
+      - paygo
       Date:
-      - Mon, 08 Jun 2026 18:45:42 GMT
+      - Wed, 19 Aug 2026 14:34:18 GMT
     body:
       encoding: UTF-8
-      string: '{"id":"4cc25d41-8c96-44f8-91b2-d8e4caeef5a8","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"The
-        file `ruby.xml` contains the XML: `<truism>Ruby is the best</truism>`"},"finish_reason":"stop","content_filter_results":{}}],"usage":{"prompt_tokens":81,"completion_tokens":22,"total_tokens":103,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":192,"audio_tokens":0,"text_tokens":81,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1780944342,"object":"chat.completion","prompt_filter_results":null}'
-  recorded_at: Mon, 08 Jun 2026 18:45:42 GMT
+      string: '{"id":"86edd9dd-6ad1-44ee-86ce-0ec3ee0749eb","model":"grok-4-1-fast-non-reasoning","choices":[{"index":0,"message":{"role":"assistant","content":"The
+        file \"ruby.xml\" contains the XML: `<truism>Ruby is the best</truism>`"},"finish_reason":"stop"}],"usage":{"prompt_tokens":81,"completion_tokens":22,"total_tokens":103,"audio_prompt_tokens":0,"prompt_tokens_details":{"cached_tokens":192,"audio_tokens":0,"text_tokens":81,"image_tokens":0},"completion_tokens_details":{"reasoning_tokens":0,"audio_tokens":0,"accepted_prediction_tokens":0,"rejected_prediction_tokens":0},"num_sources_used":0},"created":1787150058,"object":"chat.completion","prompt_filter_results":null}'
+  recorded_at: Wed, 19 Aug 2026 14:34:19 GMT
 recorded_with: VCR 6.4.0
