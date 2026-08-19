@@ -75,7 +75,6 @@ RSpec.describe 'RubyLLM upgrade generator', :generator, type: :generator do # ru
               t.bigint :message_id, null: false
               t.string :tool_call_id, null: false
               t.string :name, null: false
-              t.text :thought_signature
               t.json :arguments
               t.timestamps
             end
@@ -159,6 +158,7 @@ RSpec.describe 'RubyLLM upgrade generator', :generator, type: :generator do # ru
                !connection.table_exists?(:batches)
           model_foreign_key = connection.foreign_keys(:chats).find { |key| key.column == 'ruby_llm_model_id' }
           ok &&= model_foreign_key&.to_table == 'ruby_llm_models'
+          ok &&= connection.columns(:ruby_llm_tool_calls).map(&:name).include?('thought_signature')
 
           entry = connection.select_one('SELECT * FROM ruby_llm_usages')
           message_columns = connection.columns(:messages).map(&:name)

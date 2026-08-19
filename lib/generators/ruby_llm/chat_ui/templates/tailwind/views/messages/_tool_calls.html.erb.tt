@@ -1,4 +1,6 @@
 <%% message = local_assigns[:<%= message_model_name.demodulize.underscore %>] || tool_calls %>
-<%% message.<%= tool_call_variable_name.pluralize %>.each_value do |tool_call| %>
-  <%%= render tool_call_partial(tool_call), message: message, tool_call: tool_call %>
-<%% end %>
+<div id="<%= message_variable_name %>_<%%= message.id %>">
+  <%% message.<%= tool_call_variable_name.pluralize %>.each_value do |tool_call| %>
+    <%%= render tool_call_partial(tool_call), message: message, tool_call: tool_call %>
+  <%% end %>
+</div>

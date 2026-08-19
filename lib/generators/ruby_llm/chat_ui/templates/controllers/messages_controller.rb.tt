@@ -10,6 +10,14 @@ class <%= message_controller_class_name %> < ApplicationController
         format.turbo_stream
         format.html { redirect_to @<%= chat_variable_name %> }
       end
+    else
+      @<%= message_variable_name %> = @<%= chat_variable_name %>.<%= message_table_name %>.build
+      @<%= message_variable_name %>.errors.add(:content, "can't be blank")
+
+      respond_to do |format|
+        format.turbo_stream { render :create, status: <%= unprocessable_content_status.inspect %> }
+        format.html { render "<%= chat_model_name.underscore.pluralize %>/show", status: <%= unprocessable_content_status.inspect %> }
+      end
     end
   end
 

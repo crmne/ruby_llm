@@ -171,6 +171,8 @@ class AddRubyLlmV20Columns < ActiveRecord::Migration<%= migration_version %>
 
     add_column table, :result_type, :string unless column_exists?(table, :result_type)
     add_column table, :result_id, :<%= reference_type %> unless column_exists?(table, :result_id)
+    add_column table, :thought_signature, :text unless column_exists?(table, :thought_signature)
+    change_column table, :thought_signature, :text if column_exists?(table, :thought_signature, :string)
     add_column table, :approval, :string unless column_exists?(table, :approval)
     backfill_tool_results
 

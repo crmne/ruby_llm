@@ -1,8 +1,11 @@
 <%% tool_call_error = tool_call.tool_error_message %>
 <%% if tool_call_error.present? %>
-  <%%= render "messages/error", message: message, title: "Tool Call Error", error_message: tool_call_error %>
+  <%%= render "<%= message_model_name.underscore.pluralize %>/error",
+    <%= message_model_name.demodulize.underscore %>: message,
+    title: "Tool Call Error",
+    error_message: tool_call_error %>
 <%% else %>
-  <div id="message_tool_call_<%%= tool_call.id %>" class="w-full sm:w-auto my-5 space-y-3 rounded-md px-3 py-2 bg-gray-50 border border-gray-200">
+  <div id="<%= message_variable_name %>_tool_call_<%%= tool_call.id %>" class="w-full sm:w-auto my-5 space-y-3 rounded-md px-3 py-2 bg-gray-50 border border-gray-200">
     <div>
       <span class="inline-block rounded px-2 py-0.5 text-xs font-medium bg-gray-200 text-gray-700">
         <%= tool_display_name %> Call

@@ -60,9 +60,20 @@ RSpec.describe RubyLLM::Generators::ToolGenerator, :generator, type: :generator 
       expect(tool_result_partial).to include('tool.tool_error_message')
       expect(tool_result_partial).to include('Weather Result')
       expect(tool_result_partial).to include('tool.content.presence || "(no output)"')
-      expect(tool_result_partial).to include('message_tool_result_<%= tool.id %>')
+      expect(tool_result_partial).to include('<div id="message_<%= tool.id %>"')
       expect(tool_result_partial).not_to include('render "messages/tool_results/default", tool: tool')
       expect(tool_result_partial).not_to include('<%%')
+    end
+  end
+
+  it 'names partials after the tool name when the class already ends in Tool' do
+    within_test_app(app_path) do
+      output, status = run_rails_generate('ruby_llm:tool', 'StockLookupTool')
+      expect(status.success?).to be(true), output
+
+      expect(File.read('app/tools/stock_lookup_tool.rb')).to include('class StockLookupTool < RubyLLM::Tool')
+      expect(File.exist?('app/views/messages/tool_calls/_stock_lookup.html.erb')).to be true
+      expect(File.exist?('app/views/messages/tool_results/_stock_lookup.html.erb')).to be true
     end
   end
 

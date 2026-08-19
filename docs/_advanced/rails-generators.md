@@ -131,6 +131,12 @@ What each generator creates:
 - `ruby_llm:tool`: `app/tools/weather_tool.rb` plus tool-specific chat UI partials under `app/views/messages/tool_calls` and `app/views/messages/tool_results`
 - `ruby_llm:schema`: `app/schemas/product_schema.rb`
 
+If your chat UI uses a custom message model, pass the same mapping you gave `ruby_llm:chat_ui` so the partials land where the UI looks for them:
+
+```bash
+bin/rails generate ruby_llm:tool Weather message:ChatMessage
+```
+
 ## Chat UI View Conventions
 
 The generated chat UI follows one convention: each message partial uses the local that matches its partial name.

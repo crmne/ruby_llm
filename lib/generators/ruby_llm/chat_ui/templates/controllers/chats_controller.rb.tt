@@ -19,6 +19,13 @@ class <%= chat_controller_class_name %> < ApplicationController
       <%= chat_job_class_name %>.perform_later(@<%= chat_variable_name %>.id, prompt)
 
       redirect_to @<%= chat_variable_name %>, notice: "<%= chat_model_name.humanize %> was successfully created."
+    else
+      @<%= chat_variable_name %> = <%= chat_model_name %>.new
+      @<%= chat_variable_name %>.errors.add(:prompt, "can't be blank")
+      @selected_model = params.dig(:<%= chat_variable_name %>, :model)
+      @chat_models = available_chat_models
+
+      render :new, status: <%= unprocessable_content_status.inspect %>
     end
   end
 

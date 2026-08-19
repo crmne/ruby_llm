@@ -118,6 +118,14 @@ module RubyLLM
         "[#{Rails::VERSION::MAJOR}.#{Rails::VERSION::MINOR}]"
       end
 
+      # Rack 3.1 renamed the 422 symbol and Rails mirrors the rename from 7.2 on.
+      def unprocessable_content_status
+        constants = ::ActionDispatch::Constants
+        return :unprocessable_entity unless constants.const_defined?(:UNPROCESSABLE_CONTENT)
+
+        constants::UNPROCESSABLE_CONTENT
+      end
+
       def reference_type
         Rails.application.config.generators.options.dig(:active_record, :primary_key_type) || :bigint
       end

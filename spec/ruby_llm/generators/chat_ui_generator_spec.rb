@@ -70,11 +70,13 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
     tool_calls_partial = File.read(File.join(base_path, 'messages/_tool_calls.html.erb'))
     expect(tool_calls_partial).to include('message: message, tool_call: tool_call')
     expect(tool_calls_partial).to include('local_assigns[:message]')
+    expect(tool_calls_partial).to include('message_<%= message.id %>">')
     tool_calls_default = File.read(File.join(base_path, 'messages/tool_calls/_default.html.erb'))
     expect(tool_calls_default).to include('message_tool_call_<%= tool_call.id %>')
     tool_results_default = File.read(File.join(base_path, 'messages/tool_results/_default.html.erb'))
     expect(tool_results_default).to include('tool.tool_error_message')
-    expect(tool_results_default).to include('message_tool_result_<%= tool.id %>')
+    expect(tool_results_default).to include('message_<%= tool.id %>')
+    expect(tool_results_default).not_to include('message_tool_result_<%= tool.id %>')
     # RubyLLM owns the models table, so the association is always :model no
     # matter what the app calls its chat class or the models UI resource.
     chat_show = File.read(File.join(base_path, 'chats/show.html.erb'))
@@ -184,7 +186,9 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         'prompt = params.dig(:chat, :prompt)',
         'if prompt.present?',
         'provider, model = params.dig(:chat, :model).to_s.split(":", 2)',
-        '@chat = Chat.create!(model: model.presence, provider: provider.presence)'
+        '@chat = Chat.create!(model: model.presence, provider: provider.presence)',
+        '@chat.errors.add(:prompt, "can\'t be blank")',
+        'render :new, status:'
       ],
       messages_controller_path: 'app/controllers/messages_controller.rb',
       messages_controller_expectations: [
@@ -193,7 +197,10 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         'content = params.dig(:message, :content)',
         'if content.present?',
         'ChatResponseJob.perform_later',
-        'format.turbo_stream'
+        'format.turbo_stream',
+        '@message = @chat.messages.build',
+        '@message.errors.add(:content, "can\'t be blank")',
+        'render "chats/show", status:'
       ],
       models_controller_path: 'app/controllers/models_controller.rb',
       models_controller_expectations: [
@@ -258,7 +265,9 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         'prompt = params.dig(:llm_chat, :prompt)',
         'if prompt.present?',
         'provider, model = params.dig(:llm_chat, :model).to_s.split(":", 2)',
-        '@llm_chat = Llm::Chat.create!(model: model.presence, provider: provider.presence)'
+        '@llm_chat = Llm::Chat.create!(model: model.presence, provider: provider.presence)',
+        '@llm_chat.errors.add(:prompt, "can\'t be blank")',
+        'render :new, status:'
       ],
       messages_controller_path: 'app/controllers/llm/messages_controller.rb',
       messages_controller_expectations: [
@@ -267,7 +276,10 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
         'content = params.dig(:llm_message, :content)',
         'if content.present?',
         'LlmChatResponseJob.perform_later',
-        'format.turbo_stream'
+        'format.turbo_stream',
+        '@llm_message = @llm_chat.llm_messages.build',
+        '@llm_message.errors.add(:content, "can\'t be blank")',
+        'render "llm/chats/show", status:'
       ],
       models_controller_path: 'app/controllers/llm/models_controller.rb',
       models_controller_expectations: [
