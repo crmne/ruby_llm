@@ -2,7 +2,7 @@
 layout: default
 title: Moderation
 nav_order: 10
-description: Identify potentially harmful content in text using AI moderation models before sending to LLMs
+description: Screen text and images for harmful content before it reaches your models
 redirect_from:
   - /guides/moderation
 ---
@@ -94,13 +94,14 @@ result = RubyLLM::Moderation.moderate("Your content here")
 result = RubyLLM.moderate(
   "User message",
   model: "omni-moderation-latest",
-  provider: "openai"
+  provider: :openai
 )
 
 # Using assume_model_exists for custom models
 result = RubyLLM.moderate(
   "Content to check",
-  provider: "openai",
+  model: "my-moderation-model",
+  provider: :openai,
   assume_model_exists: true
 )
 
@@ -109,13 +110,13 @@ result = RubyLLM.moderate(
   "Check this image and caption",
   with: "https://example.com/image.png",
   model: "omni-moderation-latest",
-  provider: "openai"
+  provider: :openai
 )
 
 result = RubyLLM.moderate(
   with: ["screenshot.png", "another-image.png"],
   model: "omni-moderation-latest",
-  provider: "openai"
+  provider: :openai
 )
 ```
 
@@ -124,7 +125,7 @@ Image moderation accepts image attachments. Other file types raise
 
 ## Choosing Models
 
-By default, RubyLLM uses OpenAI's `omni-moderation-latest`, but moderation is not OpenAI-only. Any provider that ships a moderation model works the same way - for example, Mistral's `mistral-moderation-latest`:
+By default, RubyLLM uses OpenAI's `omni-moderation-latest`, but moderation is not OpenAI-only. Any provider that ships a moderation model works the same way - for example, Mistral's `mistral-moderation-2603`:
 
 ```ruby
 result = RubyLLM.moderate(
@@ -133,7 +134,7 @@ result = RubyLLM.moderate(
 )
 result = RubyLLM.moderate(
   "Content to moderate",
-  model: "mistral-moderation-latest"
+  model: "mistral-moderation-2603"
 )
 
 RubyLLM.configure do |config|
@@ -201,8 +202,10 @@ puts "Action: #{assessment[:action]}"
 Handle moderation errors gracefully:
 
 ```ruby
+content = "User content"
+
 begin
-  result = RubyLLM.moderate("User content")
+  result = RubyLLM.moderate(content)
 
   if result.flagged?
     handle_unsafe_content(result)
@@ -237,12 +240,12 @@ RubyLLM.configure do |config|
 end
 ```
 
-To moderate through Mistral instead, configure its key and set the default model to `mistral-moderation-latest`:
+To moderate through Mistral instead, configure its key and set the default model to `mistral-moderation-2603`:
 
 ```ruby
 RubyLLM.configure do |config|
   config.mistral_api_key = ENV['MISTRAL_API_KEY']
-  config.default_moderation_model = "mistral-moderation-latest"
+  config.default_moderation_model = "mistral-moderation-2603"
 end
 ```
 
@@ -252,13 +255,6 @@ For more details about OpenAI's moderation capabilities and policies, see the [O
 {: .note }
 
 ## Best Practices
-
-### Content Safety Strategy
-
-- **Always moderate user-generated content** before sending to LLMs
-- **Handle false positives gracefully** with human review processes
-- **Log moderation decisions** for auditing and improvement
-- **Provide clear feedback** to users about content policies
 
 ### Performance Considerations
 
@@ -335,4 +331,7 @@ class ModerationJob < ApplicationJob
 end
 ```
 
-This allows you to build robust content safety systems that protect both your application and your users while maintaining a good user experience.
+## Next Steps
+
+* [Chat]({% link _core_features/chat.md %}) - moderate user input before sending it to a model.
+* [Error Handling]({% link _advanced/error-handling.md %}) - handle moderation failures gracefully.

@@ -191,12 +191,12 @@ app/prompts/work_assistant/instructions.txt.erb
 
 If the file exists, it is used as the agent's system instructions. If it does not exist and the agent has no `instructions` macro, the agent starts without system instructions.
 
-Call `instructions` with no arguments when the file is required and should raise `RubyLLM::PromptNotFoundError` if missing:
+Reference the prompt explicitly when the file is required; RubyLLM then raises `RubyLLM::PromptNotFoundError` if it is missing:
 
 ```ruby
 class WorkAssistant < RubyLLM::Agent
   chat_model Chat
-  instructions
+  instructions { prompt("instructions") }
 end
 ```
 

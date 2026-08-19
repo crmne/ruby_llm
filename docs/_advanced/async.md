@@ -20,8 +20,6 @@ After reading this guide, you will know:
 * How to use async-job for background processing
 * How to handle rate limits with semaphores
 
-For a deeper dive into Async, Threads, and why Async Ruby is perfect for LLM applications, including benchmarks and architectural comparisons, check out my blog post: [Async Ruby is the Future of AI Apps (And It's Already Here)](https://paolino.me/async-ruby-is-the-future/)
-
 ## Why Async for LLMs?
 
 LLM operations are unique - they take 5-60 seconds and spend 99% of that time waiting for tokens to stream back. Using traditional thread-based job queues (Sidekiq, GoodJob, SolidQueue) for LLM operations creates a problem:
@@ -45,7 +43,7 @@ Async solves this by using fibers instead of threads:
 
 ## How RubyLLM Works with Async
 
-The beautiful part: RubyLLM automatically becomes non-blocking when used in an async context. No configuration needed.
+RubyLLM becomes non-blocking in an async context. No configuration needed.
 
 ```ruby
 require 'async'
@@ -99,24 +97,18 @@ results.each do |result|
 end
 ```
 
-### Batch Embeddings
+### Concurrent Embeddings
 
 Generate embeddings efficiently:
 
 ```ruby
 def generate_embeddings(texts, batch_size: 100)
   Async do
-    embeddings = []
-
-    texts.each_slice(batch_size) do |batch|
-      task = Async do
-        response = RubyLLM.embed(batch)
-        response.vectors
-      end
-      embeddings.concat(task.wait)
+    tasks = texts.each_slice(batch_size).map do |batch|
+      Async { RubyLLM.embed(batch).vectors }
     end
 
-    texts.zip(embeddings)
+    texts.zip(tasks.flat_map(&:wait))
   end.result
 end
 
@@ -126,6 +118,8 @@ pairs.each do |text, embedding|
   puts "#{text}: #{embedding[0..5]}..." # Show first 6 dimensions
 end
 ```
+
+For discounted provider-side batches, see [Batching Embeddings]({% link _advanced/batches.md %}#batching-embeddings).
 
 ### Parallel Analysis
 
@@ -156,11 +150,11 @@ puts "Sentiment: #{result[:sentiment]}"
 
 ## Background Processing with `Async::Job`
 
-The real power comes from using `Async::Job` for background processing. Unlike traditional thread-based job processors that get blocked during long LLM operations, `Async::Job` uses fibers to handle thousands of concurrent jobs efficiently.
+Use `Async::Job` for background processing. Unlike thread-based processors that block during long LLM operations, it uses fibers to handle thousands of concurrent jobs.
 
 ### Setup with Falcon (Recommended)
 
-Falcon is a Ruby application server built on fibers. With Falcon, async just works™.
+Falcon is a Ruby application server built on fibers. With Falcon, async works out of the box.
 
 ```ruby
 # Gemfile
@@ -184,7 +178,7 @@ Rails.application.configure do
 end
 ```
 
-That's it. Start your server with `bin/dev` and enjoy concurrent job processing. Your jobs now run concurrently without any additional infrastructure. One process, thousands of concurrent LLM operations.
+Start your server with `bin/dev`. One process, thousands of concurrent LLM operations, no extra infrastructure.
 
 ### Note on Puma
 
@@ -215,7 +209,7 @@ redis: redis-server
 async_job: bundle exec async-job-adapter-active_job-server
 ```
 
-Then just run `bin/dev` to start everything.
+Then run `bin/dev` to start everything.
 
 **Option 2: Separate terminals**
 ```bash
@@ -233,7 +227,7 @@ This setup requires more infrastructure but still delivers the concurrency benef
 
 ### Your Jobs Work Unchanged
 
-Here's the key insight: you don't need to modify your jobs at all. `Async::Job` runs each job inside an async context automatically:
+You don't need to modify your jobs. `Async::Job` runs each job inside an async context automatically:
 
 ```ruby
 class DocumentAnalyzerJob < ApplicationJob
@@ -313,16 +307,10 @@ results = processor.process_items(items)
 
 The semaphore ensures only 5 requests run concurrently, preventing rate limit errors while still maintaining high throughput.
 
-## Summary
+For benchmarks and architectural comparisons, read [Async Ruby is the Future of AI Apps](https://paolino.me/async-ruby-is-the-future/).
 
-Key takeaways:
+## Next Steps
 
-- LLM operations are perfect for async (99% waiting for I/O)
-- RubyLLM automatically works with async - no configuration needed
-- Use async-job for LLM background jobs without changing your job code
-- Use semaphores to manage rate limits
-- Keep thread-based processors for CPU-intensive work
-
-The combination of RubyLLM and async Ruby gives you the ability to handle thousands of concurrent AI conversations on modest hardware - something that would require massive infrastructure with traditional thread-based approaches.
-
-Ready to dive deeper? Read the full architectural comparison: [Async Ruby is the Future of AI Apps](https://paolino.me/async-ruby-is-the-future/)
+* [Batches]({% link _advanced/batches.md %}) - Provider-side batching at a discount when nobody is waiting.
+* [Streaming Responses]({% link _core_features/streaming.md %})
+* [Rails Integration]({% link _advanced/rails.md %})

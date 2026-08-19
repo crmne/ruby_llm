@@ -18,8 +18,6 @@ After reading this guide, you will know:
 * How to combine reranking with embeddings in a retrieval pipeline.
 * What reranking costs and how to handle providers that do not offer it.
 
----
-
 ## Reranking Documents
 
 `RubyLLM.rerank` takes a query and an array of documents, and returns them ordered by how well each one answers the query:
@@ -117,7 +115,7 @@ Reranking is the second stage of a pipeline whose first stage is embeddings. Ret
 class Article < ApplicationRecord
   def self.search(query, limit: 5)
     query_vector = RubyLLM.embed(query).vectors
-    candidates   = nearest_neighbors(query_vector, limit: 50)
+    candidates   = nearest_neighbors(:embedding, query_vector, distance: :cosine).limit(50).to_a
 
     rerank = RubyLLM.rerank(query, candidates.map(&:body), model: "rerank-v3.5", top_n: limit)
     rerank.results.map { |result| candidates[result.index] }

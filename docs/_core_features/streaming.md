@@ -24,13 +24,13 @@ After reading this guide, you will know:
 
 ## Basic Streaming
 
-To stream responses, simply provide a block to the `ask` method on a `Chat` object.
+To stream responses, provide a block to the `ask` method on a `Chat` object.
 
 ```ruby
 chat = RubyLLM.chat
 
 puts "Assistant:"
-chat.ask "Write a short story about a adventurous ruby gem." do |chunk|
+chat.ask "Write a short story about an adventurous ruby gem." do |chunk|
   print chunk.content # Print content fragment immediately
 end
 # => (Output appears incrementally) Once upon a time, in the vast digital...
@@ -48,8 +48,8 @@ Key attributes of a `Chunk`:
 *   `chunk.role`: Always `:assistant` for streamed response chunks.
 *   `chunk.model`: The model generating the response (usually present).
 *   `chunk.tool_calls`: A hash containing partial or complete tool call information if the model is invoking a [Tool]({% link _core_features/tools.md %}). The arguments might be streamed incrementally.
-*   `chunk.tokens.input`: Standard input tokens for the request (often `nil` until the final chunk). From v1.15 onward, cache reads and writes are exposed separately as `chunk.tokens.cache_read` and `chunk.tokens.cache_write` when providers report them.
-*   `chunk.tokens.output`: Cumulative billable output tokens *up to this chunk* (behavior varies by provider, often only accurate in the final chunk). From v1.15 onward, this includes thinking/reasoning tokens when the provider bills them as output.
+*   `chunk.tokens.input`: Standard input tokens for the request (often `nil` until the final chunk). Cache reads and writes are exposed separately as `chunk.tokens.cache_read` and `chunk.tokens.cache_write` when providers report them.
+*   `chunk.tokens.output`: Cumulative billable output tokens *up to this chunk* (behavior varies by provider, often only accurate in the final chunk). Includes thinking/reasoning tokens when the provider bills them as output.
 *   `chunk.thinking`: Optional thinking output when providers stream it.
 *   `chunk.finish_reason`: Provider-reported reason the model stopped, usually only present on the final chunk. Chunks also support finish-reason predicates such as `chunk.max_tokens?`, `chunk.content_filtered?`, `chunk.tool_call_stop?`, and `chunk.stopped?`.
 
@@ -138,41 +138,6 @@ end
 
 See [Streaming with Hotwire/Turbo]({% link _advanced/rails-streaming.md %}) for more detailed examples.
 
-## Cancelling a Stream
-
-Call `cancel!` to stop the current in-flight chat operation. RubyLLM checks for cancellation before model requests, before tool execution, and while streaming chunks. When cancellation is observed, it raises `RubyLLM::CancelledError` and clears the cancellation flag so the chat can be reused.
-
-```ruby
-chat = RubyLLM.chat
-
-begin
-  chat.ask("Write a long report") do |chunk|
-    print chunk.content
-    chat.cancel! if should_stop?
-  end
-rescue RubyLLM::CancelledError
-  puts "Generation cancelled"
-end
-```
-
-With `acts_as_chat`, `cancel!` stores the request in the chat record's `cancelled` column. That lets a controller stop a generation running in a background job:
-
-```ruby
-# app/controllers/chats_controller.rb
-def cancel
-  Chat.find(params[:id]).cancel!
-  head :no_content
-end
-
-# app/jobs/chat_stream_job.rb
-def perform(chat_id)
-  chat = Chat.find(chat_id)
-  chat.complete { |chunk| broadcast(chunk) }
-rescue RubyLLM::CancelledError
-  # Optionally broadcast a cancelled state.
-end
-```
-
 ### Sinatra with Server-Sent Events (SSE)
 
 SSE is a natural fit for streaming text responses.
@@ -197,6 +162,41 @@ get '/stream_chat' do
       out.close
     end
   end
+end
+```
+
+## Cancelling a Stream
+
+Call `cancel!` to stop the current in-flight chat operation. RubyLLM checks for cancellation before model requests, before tool execution, and while streaming chunks. When cancellation is observed, it raises `RubyLLM::CancelledError` and clears the cancellation flag so the chat can be reused.
+
+```ruby
+chat = RubyLLM.chat
+
+begin
+  chat.ask("Write a long report") do |chunk|
+    print chunk.content
+    chat.cancel! if should_stop?
+  end
+rescue RubyLLM::CancelledError
+  puts "Generation cancelled"
+end
+```
+
+With `acts_as_chat`, `cancel!` records the cancellation in the chat record's `cancelled` column. That lets a controller stop a generation running in a background job:
+
+```ruby
+# app/controllers/chats_controller.rb
+def cancel
+  Chat.find(params[:id]).cancel!
+  head :no_content
+end
+
+# app/jobs/chat_stream_job.rb
+def perform(chat_id)
+  chat = Chat.find(chat_id)
+  chat.complete { |chunk| broadcast(chunk) }
+rescue RubyLLM::CancelledError
+  # Optionally broadcast a cancelled state.
 end
 ```
 

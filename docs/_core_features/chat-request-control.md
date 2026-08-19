@@ -79,8 +79,10 @@ chat.ask "Hello"
 | OpenRouter | `user` |
 | Everything else | omitted |
 
-The value goes to the provider as given, so send an opaque id such as a hash or a UUID, never an email address or any other personal data. Providers without an equivalent field drop it and log the decision at debug level, so the same code works across every model.
+The value goes to the provider as given, so send an opaque id such as a hash or a UUID, never an email address or any other personal data.
 {: .warning }
+
+Providers without an equivalent field drop it and log the decision at debug level, so the same code works across every model.
 
 Agents declare it with the matching `end_user` macro, which also takes a block:
 
@@ -149,13 +151,11 @@ chat = RubyLLM.chat(model: 'qwen3', provider: :ollama)
               .with_provider_options(response_format: { type: 'json_object' })
 ```
 
-**With great power comes great responsibility:** The `with_provider_options` method can override any part of the request payload, including critical parameters like model, max_tokens, or tools. Use it carefully to avoid unintended behavior. Always verify that your overrides are compatible with the provider's API. To debug and see the exact request being sent, set the environment variable `RUBYLLM_DEBUG=true`.
-{: .warning }
-
-Available options vary by provider and model. Always consult the provider's documentation for supported fields. RubyLLM passes these options through without validation, so incorrect options may cause API errors. Options from `with_provider_options` take precedence over RubyLLM's defaults, allowing you to override any aspect of the request payload.
+`with_provider_options` can override any part of the request payload, including the model, token limits, and tools, and RubyLLM passes it through without validation. Available options vary by provider and model, so consult the provider's documentation before overriding anything. To see the exact request being sent, set `RUBYLLM_DEBUG=true`.
 {: .warning }
 
 ## Choosing the Wire Protocol
+
 Some providers speak more than one wire protocol. OpenAI defaults to the Responses API and routes audio models to Chat Completions; Azure defaults to Chat Completions and routes deployments named after gpt-5.4+ models to the Responses API; Vertex AI speaks Gemini for Google models, Anthropic for Claude, Mistral for Mistral, and Chat Completions for the publisher-prefixed MaaS models. RubyLLM picks the right protocol per request:
 
 ```ruby
@@ -209,6 +209,15 @@ end
 
 Providers that do not understand these extra fields silently ignore them, so you can reuse the same tools across models.
 See the [Tool Provider Parameters]({% link _core_features/tool-parameters.md %}#provider-specific-parameters) section for more detail.
+
+### Inspecting the Payload
+
+To see the exact request a chat would send, without sending it, call `render`. It returns the payload with all formatting, `with_provider_options` merging, and `before_request` hooks applied, which makes it handy in tests:
+
+```ruby
+payload = chat.with_provider_options(service_tier: "flex").render
+payload[:service_tier] # => "flex"
+```
 
 ## Custom HTTP Headers
 

@@ -2,7 +2,7 @@
 layout: default
 title: Image Generation
 nav_order: 5
-description: Generate images from text descriptions using AI models like DALL-E 3 and Imagen
+description: Generate and edit images from text prompts with GPT Image, Imagen, and Grok
 redirect_from:
   - /guides/image-generation
 ---
@@ -19,10 +19,8 @@ After reading this guide, you will know:
 *   How to edit existing images with source images and masks.
 *   How to select different image generation models.
 *   How to specify image sizes (for supported models).
-*   How to access and save generated image data (URL or Base64).
 *   How to inspect token usage and calculate image costs.
-*   How to integrate image generation with Rails Active Storage.
-*   Tips for writing effective image prompts.
+*   How to access and save generated image data (URL or Base64), including with Rails Active Storage.
 *   How to handle errors during image generation.
 
 ## Basic Image Generation
@@ -165,17 +163,23 @@ Some models, like DALL-E 3, allow you to specify the desired image dimensions vi
 
 ```ruby
 # Standard square (1024x1024 - default for DALL-E 3)
-image_square = RubyLLM.paint("a fluffy white cat", size: "1024x1024")
+image_square = RubyLLM.paint(
+  "a fluffy white cat",
+  model: "{{ site.models.image_dalle }}",
+  size: "1024x1024"
+)
 
 # Wide landscape (1792x1024 for DALL-E 3)
 image_landscape = RubyLLM.paint(
   "a panoramic mountain landscape at dawn",
+  model: "{{ site.models.image_dalle }}",
   size: "1792x1024"
 )
 
 # Tall portrait (1024x1792 for DALL-E 3)
 image_portrait = RubyLLM.paint(
   "a knight standing before a castle gate",
+  model: "{{ site.models.image_dalle }}",
   size: "1024x1792"
 )
 ```
@@ -283,16 +287,6 @@ image3 = RubyLLM.paint(
 )
 ```
 
-**Tips for Better Prompts:**
-
-*   **Subject:** Be specific (e.g., "red panda" vs. "animal").
-*   **Action/Setting:** Describe what's happening and where (e.g., "coding on a laptop in a cozy library").
-*   **Style:** Specify artistic style ("photorealistic", "watercolor", "pixel art", "impressionist painting", "3D render").
-*   **Details:** Add adjectives ("fluffy", "ancient", "glowing", "minimalist").
-*   **Composition:** Mention framing ("close-up", "wide angle", "overhead shot").
-*   **Lighting:** Describe the light ("soft morning light", "dramatic sunset", "neon glow").
-*   **Mood:** Convey the feeling ("serene", "chaotic", "mysterious").
-
 ## Error Handling
 
 Image generation can fail due to content policy violations, rate limits, or API issues:
@@ -313,12 +307,7 @@ See the [Error Handling Guide]({% link _advanced/error-handling.md %}) for compr
 
 ## Content Safety
 
-AI image generation services have content safety filters. Prompts requesting harmful, explicit, or otherwise prohibited content will usually result in a `BadRequestError`. Avoid generating:
-
-*   Violent or hateful imagery.
-*   Sexually explicit content.
-*   Images of real people (especially public figures without consent, though policies vary).
-*   Direct copies of copyrighted characters or artwork.
+AI image generation services have content safety filters. Prompts requesting harmful, explicit, or copyrighted content usually raise a `BadRequestError`.
 
 ## Performance Considerations
 

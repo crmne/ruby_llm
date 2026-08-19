@@ -49,12 +49,9 @@ puts "Model used: #{embeddings.model}"
 puts "Total input tokens: #{embeddings.tokens.input}"
 ```
 
-> Batching multiple texts is generally more performant and cost-effective than making individual requests for each text.
-{: .note }
-
 ## Choosing Models
 
-By default, RubyLLM uses a capable default embedding model (like OpenAI's `{{ site.models.embedding_small }}`), but you can specify a different one using the `model:` argument.
+By default, RubyLLM uses OpenAI's `{{ site.models.embedding_small }}`, but you can specify a different one using the `model:` argument.
 
 ```ruby
 embedding_large = RubyLLM.embed(
@@ -163,7 +160,7 @@ embedding = RubyLLM.embed("Example text")
 puts embedding.vectors.class  # => Array
 puts embedding.vectors.first.class  # => Float
 
-puts embedding.vectors.first.length # => 1536
+puts embedding.vectors.length # => 1536
 
 puts embedding.model  # => "{{ site.models.embedding_small }}"
 ```
@@ -173,7 +170,7 @@ puts embedding.model  # => "{{ site.models.embedding_small }}"
 Some models return a sparse vector beside the dense one, so you can run hybrid retrieval that combines semantic similarity with exact term matching. `sparse_vectors` holds it as a Hash mapping token id to weight, shaped like `vectors`: one Hash for a single text, an array of them for an array of texts.
 
 ```ruby
-embedding = RubyLLM.embed("Ruby is a programmer's best friend", model: "bge-m3")
+embedding = RubyLLM.embed("Ruby is a programmer's best friend", model: "bge-m3", provider: :gpustack, assume_model_exists: true)
 
 embedding.sparse_vectors # => { 1037 => 0.25, 2003 => 0.5 }
 ```

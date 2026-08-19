@@ -2,7 +2,7 @@
 layout: default
 title: Error Handling
 nav_order: 7
-description: Learn how to handle errors gracefully when working with AI providers
+description: Rescue provider errors, fall back to other models, and let automatic retries absorb transient failures
 redirect_from:
   - /guides/error-handling
 ---
@@ -55,19 +55,19 @@ RubyLLM::CancelledError       # An in-flight chat operation was cancelled
 
 ## Basic Error Handling
 
-The fundamental way to handle errors is using Ruby's `begin`/`rescue` block. Catching the base `RubyLLM::Error` will handle most provider-operation issues.
+Catch the base `RubyLLM::Error` to handle most provider-operation issues.
 
 ```ruby
 begin
   chat = RubyLLM.chat
   response = chat.ask "Translate 'hello' to French."
   puts response.content
-rescue RubyLLM::Error => e
-  puts "An API error occurred: #{e.message}"
-  # logger.error "RubyLLM API Error: #{e.class} - #{e.message}"
 rescue RubyLLM::ConfigurationError => e
   puts "Configuration missing: #{e.message}"
   # Abort or prompt for configuration
+rescue RubyLLM::Error => e
+  puts "An API error occurred: #{e.message}"
+  # logger.error "RubyLLM API Error: #{e.class} - #{e.message}"
 end
 ```
 
@@ -133,8 +133,6 @@ begin
   chat.ask "Generate a very long story..." do |chunk|
     print chunk.content
     accumulated_content << chunk.content
-    # Simulate an error occurring mid-stream (e.g., network drop)
-    # In a real scenario, the error would be raised by the underlying HTTP request
   end
   puts "\nStream completed successfully."
 rescue RubyLLM::RateLimitError
@@ -238,8 +236,6 @@ When building [Tools]({% link _core_features/tools.md %}), you need to decide ho
     end
     ```
 
-Distinguishing between these helps the LLM work effectively with recoverable issues while ensuring critical application failures are handled appropriately.
-
 ## Agent-Level Handlers
 
 When you use [Agents]({% link _advanced/agents.md %}), `rescue_from` moves error handling out of every call site and into the agent class:
@@ -293,14 +289,6 @@ export RUBYLLM_DEBUG=true
 ```
 
 This will cause RubyLLM to log detailed information about API requests and responses, including headers and bodies (with sensitive data like API keys filtered), which can be invaluable for troubleshooting.
-
-## Best Practices
-
-*   **Be Specific:** Rescue specific error classes whenever possible for tailored recovery logic.
-*   **Log Errors:** Always log errors, including relevant context (model used, input data if safe) for debugging. Consider using the `response` attribute on `RubyLLM::Error` for more details.
-*   **User Feedback:** Provide clear, user-friendly feedback when an AI operation fails. Avoid exposing raw API error messages directly.
-*   **Fallbacks:** Consider fallback mechanisms (e.g., trying a different model, using cached data, providing a default response) if the AI service is critical to your application's function.
-*   **Monitor:** Track the frequency of different error types in production to identify recurring issues with providers or your implementation.
 
 ## Next Steps
 

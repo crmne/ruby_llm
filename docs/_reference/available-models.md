@@ -2,6 +2,7 @@
 layout: default
 title: Available Models
 nav_order: 2
+llms: false
 description: Browse 1184 AI models across 11 remote providers. Updated 2026-08-10.
 redirect_from:
   - /guides/available-models

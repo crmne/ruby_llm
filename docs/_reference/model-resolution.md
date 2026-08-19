@@ -24,9 +24,9 @@ After reading this guide, you will know:
 Every entry point that takes a `model:` argument runs the same resolution. `RubyLLM.chat`, `RubyLLM.embed`, and `RubyLLM.paint` all hand the name to the registry, which returns two things: a `RubyLLM::Model` describing the model, and the provider instance that will serve it.
 
 ```ruby
-chat = RubyLLM.chat(model: "claude-sonnet-4-5")
-chat.model.id        # => "claude-sonnet-4-5-20250929"  (resolved from the alias)
-chat.model.provider  # => "anthropic"                   (inferred from the registry)
+chat = RubyLLM.chat(model: "claude-opus-4")
+chat.model.id        # => "claude-opus-4-20250514"  (resolved from the alias)
+chat.model.provider  # => "anthropic"               (inferred from the registry)
 ```
 
 You gave a name; RubyLLM resolved it to a concrete model and chose a provider. The rest of this guide is the procedure behind that.
@@ -61,8 +61,8 @@ An alias is a stable, friendly name that maps to a provider's exact, versioned m
 When you name a provider, RubyLLM uses that provider's entry. Without a provider, it uses the first entry listed for the alias:
 
 ```ruby
-RubyLLM.chat(model: "claude-haiku-4-5")                   # resolves to anthropic's claude-haiku-4-5-20251001
-RubyLLM.chat(model: "claude-haiku-4-5", provider: :bedrock) # resolves to us.anthropic.claude-haiku-4-5-20251001-v1:0
+RubyLLM.chat(model: "claude-haiku-4-5")                     # resolves to anthropic
+RubyLLM.chat(model: "claude-haiku-4-5", provider: :bedrock) # resolves to anthropic.claude-haiku-4-5-20251001-v1:0
 ```
 
 A name that isn't in the alias table is passed through unchanged, so exact model IDs always work.
@@ -75,20 +75,20 @@ Provider preference puts first-party providers ahead of the aggregators that res
 
 | Rank | Providers |
 | --- | --- |
-| First-party | `openai`, `anthropic`, `gemini`, `deepseek`, `mistral`, `perplexity`, `xai` |
+| First-party | `openai`, `anthropic`, `gemini`, `deepseek`, `mistral`, `cohere`, `perplexity`, `xai` |
 | Cloud platforms | `vertexai`, `bedrock` |
 | Aggregators and local | `openrouter`, `azure`, `ollama_cloud`, `ollama`, `gpustack` |
 
-Preference decides the winner even when another provider has a more literal match. `claude-3-5-haiku` is an exact ID on Vertex AI and an alias on Anthropic, but Anthropic outranks Vertex AI, so a bare `claude-3-5-haiku` resolves to Anthropic:
+Preference decides the winner even when another provider has a more literal match. `claude-opus-4` is an exact ID on Vertex AI and an alias on Anthropic, but Anthropic outranks Vertex AI, so a bare `claude-opus-4` resolves to Anthropic:
 
 ```ruby
-RubyLLM.chat(model: "claude-3-5-haiku").model.provider  # => "anthropic"
+RubyLLM.chat(model: "claude-opus-4").model.provider  # => "anthropic"
 ```
 
 To pin a different provider, name it:
 
 ```ruby
-RubyLLM.chat(model: "claude-3-5-haiku", provider: :vertexai)
+RubyLLM.chat(model: "claude-opus-4", provider: :vertexai)
 ```
 
 > Provider preference only breaks ties between providers that both carry the model. It never makes RubyLLM use a provider you haven't configured a key for, because a chat still needs that provider's credentials to run.
@@ -125,7 +125,7 @@ Bedrock serves models through two endpoints, and the model ID decides which one 
 | `openai.gpt-oss-20b`, `google.gemma-4-31b` | `bedrock-mantle` | OpenAI Responses |
 | `qwen.qwen3-coder-next`, `zai.glm-5` | `bedrock-mantle` | OpenAI Chat Completions |
 | `anthropic.claude-haiku-4-5-20251001-v1:0` | `bedrock-runtime` | Converse |
-| `us.anthropic.claude-sonnet-5`, `eu.amazon.nova-2-lite-v1:0` | `bedrock-runtime` | Converse |
+| `us.anthropic.claude-sonnet-5`, `us.amazon.nova-2-lite-v1:0` | `bedrock-runtime` | Converse |
 
 RubyLLM refreshes both catalogs, so the registry records which endpoint serves each model and routing reads that record rather than guessing from the ID. The two catalogs overlap and disagree: mantle spells some Converse models differently (`qwen.qwen3-next-80b-a3b-instruct` against Converse's `qwen.qwen3-next-80b-a3b`) and lists models Converse has never heard of.
 

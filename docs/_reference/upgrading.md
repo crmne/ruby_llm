@@ -83,7 +83,7 @@ Coming from 1.15 or earlier? Get to **1.16 first**, one minor version at a time,
 
 ## How to Upgrade
 
-The upgrade migration renames tables in place, backfills, and then removes legacy columns, and it has no `down`. Snapshot your database before you start, and rehearse the migration on a copy of production data.
+The upgrade migration renames tables in place, backfills, and then removes legacy columns, and its `down` refuses to run. Snapshot your database before you start, and rehearse the migration on a copy of production data.
 {: .warning }
 
 ### 1. Finish what is in flight
@@ -98,11 +98,19 @@ bin/rails generate ruby_llm:upgrade
 bin/rails db:migrate
 ```
 
-The generated migration adds a boolean `cancelled` column to chats and citations, finish reasons, and prompt-cache boundaries to messages; moves the existing model, tool-call, and batch tables under RubyLLM's `ruby_llm_` prefix; keeps the chat's model reference under the `ruby_llm_model_id` name while converting message-level model references into provider and model-id strings; renumbers duplicated `tool_call_id`s before adding the unique index; creates the usage ledger and backfills it from your messages' token and cost columns, one succeeded entry per message that recorded usage; and then removes those columns from your messages table. It stops with an explicit error if an old and a new version of the same supporting table both exist; reconcile those tables before retrying rather than allowing an ambiguous merge.
+The generated migration:
+
+* adds a boolean `cancelled` column to chats, and citations, finish reasons, and prompt-cache boundaries to messages;
+* moves the existing model, tool-call, and batch tables under RubyLLM's `ruby_llm_` prefix;
+* keeps the chat's model reference under the `ruby_llm_model_id` name while converting message-level model references into provider and model-id strings;
+* renumbers duplicated `tool_call_id`s before adding the unique index;
+* creates the usage ledger, backfills it from your messages' token and cost columns (one succeeded entry per message that recorded usage), and then removes those columns from your messages table.
+
+It stops with an explicit error if an old and a new version of the same supporting table both exist; reconcile those tables before retrying rather than allowing an ambiguous merge.
 
 ### 3. Delete what RubyLLM now owns
 
-Applications own only chats and messages in 2.0. Remove the old `Model`, `ToolCall`, and `Batch` files from `app/models`; their tables have been renamed in place, so do not add a second migration to drop them. Remove `config.model_registry_class` and any `acts_as_model`, `acts_as_tool_call`, or `acts_as_batch` declarations. Everything they provided reads through RubyLLM now: `RubyLLM.models`, `message.tool_calls`, `message.tokens`, `chat.tokens`, `chat.cost`, `RubyLLM.batch`, and `RubyLLM::Batch.find`.
+Applications own only chats and messages in 2.0. Remove the old `Model`, `ToolCall`, and `Batch` files from `app/models`; their tables have been renamed in place, so do not add a second migration to drop them. Remove `config.model_registry_class` and any `acts_as_model`, `acts_as_tool_call`, or `acts_as_batch` declarations. Also strip the removed keywords from the two macros that stay: `acts_as_chat` keeps only `messages:`, `message_class:`, and `messages_foreign_key:`, and `acts_as_message` keeps `chat:`, `chat_class:`, `chat_foreign_key:`, and `touch_chat:`. A leftover `model:` or `tool_calls:` option raises `ArgumentError` on boot. Everything they provided reads through RubyLLM now: `RubyLLM.models`, `message.tool_calls`, `message.tokens`, `chat.tokens`, `chat.cost`, `RubyLLM.batch`, and `RubyLLM::Batch.find`.
 
 ### 4. Fix the renames every app hits
 
@@ -120,7 +128,6 @@ Grep for each pattern on the left; the sections below the table explain the reas
 | `halt`, `Tool::Halt` | the loop verbs (`step`, `complete?`) or [`requires_approval`]({% link _core_features/tool-execution.md %}#requiring-approval) |
 | `with_tool(`, `with_tools(..., choice:` | `with_tools` for the set, `with_tool_options(choice:, calls:, concurrency:)` for the steering |
 | Tool `desc `, `param :`, `params do` | `description`, `parameter`, `parameters` |
-| `with_protocol` | `protocol:` on `chat`, `with_model`, or the agent `model` macro |
 
 ### 5. Boot, run your suite, and fix the UI edges
 
@@ -178,7 +185,7 @@ Anything your app wrote to the database in a 1.x format needs a read path for ol
 
 ```ruby
 def search_sources(content)
-  RubyLLM::SearchResults.from_content(content)&.results || legacy_regex_parse(content)
+  parse_v2_sources(content) || legacy_regex_parse(content)
 end
 ```
 
@@ -208,15 +215,14 @@ Scan the table for anything your app uses, then read its section below.
 | `on_tool_call`, `on_tool_result` | `before_tool_call`, `after_tool_result` |
 | `with_instructions(text, replace: true)` | `with_instructions(text)` replaces by default |
 | `schema do ... end` sniffing blocks | Schema DSL always; lambdas for dynamic schemas |
-| `model.price(:cached_input)`, `cost.cache_creation` | `model.price(:cache_read)`, `cost.cache_write` |
+| `model.cached_input_price_per_million`, `cost.cache_creation` | `model.price(:cache_read)`, `cost.cache_write` |
 | `with_model("gpt-5", assume_exists: true)` | `assume_model_exists:` |
 | Tool `desc` / `param` / `params` | `description` / `parameter` / `parameters` |
 | Tool `provider_params` and `params_schema` readers | `provider_options` and `parameters_schema` |
 | `response.model_id` | `response.model` |
 | `Error.new(response, "msg")` | `Error.new("msg", response: response)` |
-| `with_protocol(:responses)` | `protocol:` keyword on `chat`, `with_model`, agent `model` |
 | `with_tool(Weather)` | `with_tools(Weather)` |
-| `with_tools(W, choice: :required, calls: 3)` | `with_tools(W).with_tool_options(choice: :required, calls: 3)` |
+| `with_tools(W, choice: :required, calls: :one)` | `with_tools(W).with_tool_options(choice: :required, calls: :one)` |
 | `create_user_message(content)` | `ask_later(content)` or `add_message(...)` |
 | `with_params(...)`, `params:`, tool `with_params` | `with_provider_options(...)`, `provider_options:` |
 | `transcribe(audio, response_format: "srt")` | `transcribe(audio, format: "srt")` |
@@ -273,7 +279,7 @@ The `reasoning` synonyms are gone with them: `message.reasoning_tokens`, `tokens
 
 ### Legacy acts_as API
 
-The legacy `acts_as` API and `config.use_new_acts_as` are gone. The association-based `acts_as` (the default since 1.7) is now the only API. **Remove `config.use_new_acts_as` from your initializer** - the option no longer exists, and an app that still sets it raises `NoMethodError` on boot. If you were still on the legacy API (`use_new_acts_as = false`), migrate your models to the association-based API (see [Upgrade to 1.7](#upgrade-to-17)) while on the latest 1.x, before upgrading.
+The legacy `acts_as` API and `config.use_new_acts_as` are gone. The association-based `acts_as` (the default since 1.7) is now the only API. **Remove `config.use_new_acts_as` from your initializer** - the option no longer exists, and an app that still sets it raises `NoMethodError` on boot. If you were still on the legacy API (`use_new_acts_as = false`), migrate your models to the association-based API (see the [1.16 upgrade guide](https://rubyllm.com/upgrading/)) while on the latest 1.x, before upgrading.
 
 ### Chat Callbacks
 
@@ -371,11 +377,10 @@ Two hierarchy notes: `UnsupportedAttachmentError` now inherits from `RubyLLM::Er
 
 ### Protocol Joins Model Selection
 
-Protocol is part of model selection. A model is identified by its name, provider, and wire protocol, so `protocol:` joins `provider:` as a keyword of `RubyLLM.chat`, `with_model`, and the agent `model` macro. The standalone `with_protocol` / `without_protocol` methods are gone:
+Protocol is part of model selection, new in 2.0. A model is identified by its name, provider, and wire protocol, so `protocol:` joins `provider:` as a keyword of `RubyLLM.chat`, `with_model`, and the agent `model` macro:
 
 ```ruby
-RubyLLM.chat(model: 'gpt-5.4').with_protocol(:responses)   # before
-RubyLLM.chat(model: 'gpt-5.4', protocol: :responses)       # now
+RubyLLM.chat(model: 'gpt-5.4', protocol: :chat_completions)
 
 chat.with_model('gpt-5.4', protocol: :chat_completions)    # override on an existing chat
 
@@ -397,8 +402,8 @@ chat.with_tools(Weather)                                 # now
 chat.with_tools(Search, Calculator, replace: true)       # before
 chat.with_tools(nil).with_tools(Search, Calculator)      # now
 
-chat.with_tools(Weather, choice: :required, calls: 3)    # before
-chat.with_tools(Weather).with_tool_options(choice: :required, calls: 3)  # now
+chat.with_tools(Weather, choice: :required, calls: :one)    # before
+chat.with_tools(Weather).with_tool_options(choice: :required, calls: :one)  # now
 ```
 
 `with_tools(nil)` clears the set; passing `nil` options to `with_tool_options` resets choice, call limit, and concurrency. On agents the same split applies: the `tools` macro declares the set, the new `tool_options` macro carries `choice:` / `calls:` / `concurrency:` (previously `tools choice: :required` silently wiped the toolset).
@@ -447,8 +452,8 @@ Options in the provider's request vocabulary that RubyLLM does not abstract go t
 chat.with_params(service_tier: "flex")              # before
 chat.with_provider_options(service_tier: "flex")    # now (reader: chat.provider_options)
 
-RubyLLM.embed(text, params: { dimensions: 512 })            # before
-RubyLLM.embed(text, provider_options: { dimensions: 512 })  # now - same on paint,
+RubyLLM.paint(prompt, params: { quality: "hd" })            # before
+RubyLLM.paint(prompt, provider_options: { quality: "hd" })  # now - same on embed,
                                                             # transcribe, moderate
 
 class Weather < RubyLLM::Tool

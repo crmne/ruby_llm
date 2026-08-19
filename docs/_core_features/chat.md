@@ -17,7 +17,6 @@ After reading this guide, you will know:
 
 * How to start and continue conversations with AI models.
 * How to guide AI behavior with system prompts.
-* How to render reusable prompt templates.
 * How to select and work with different models and providers.
 * How to control response creativity with temperature.
 * How to read the raw provider response.
@@ -96,7 +95,7 @@ chat.with_instructions(nil)
 
 System prompts are added to the conversation as messages with the `:system` role and are sent with every request to the AI provider. This ensures the model always considers your instructions when generating responses.
 
-Plain chats do not have a class name, so they do not infer a prompt path. For reusable instructions stored in `app/prompts`, render a template with [Prompt Rendering]({% link _core_features/prompt-rendering.md %}) and pass the result to `with_instructions`.
+For reusable instructions stored in `app/prompts`, render a template with [Prompt Rendering]({% link _core_features/prompt-rendering.md %}) and pass the result to `with_instructions`.
 
 When using the [Rails Integration]({% link _advanced/rails.md %}), system messages are persisted in your database along with user and assistant messages, maintaining the full conversation context.
 {: .note }
@@ -208,8 +207,7 @@ This page covers the core `Chat` interface. Each facet of a conversation has its
 * [Prompt Rendering]({% link _core_features/prompt-rendering.md %}) - render reusable ERB templates from `app/prompts`.
 * [Prompt Caching]({% link _core_features/prompt-caching.md %}) - reuse stable prompt prefixes automatically or with explicit boundaries.
 * [Advanced Request Control]({% link _core_features/chat-request-control.md %}) - provider-specific parameters, wire protocols, raw content blocks, and custom headers.
-* [Tokens and Costs]({% link _core_features/cost-and-usage-tracking.md %}) - read per-turn and per-conversation token counts and costs.
-* [Cost and Usage Tracking]({% link _core_features/cost-and-usage-tracking.md %}) - account for retries, cancellations, and provider attempts.
+* [Tokens and Costs]({% link _core_features/cost-and-usage-tracking.md %}) - read per-turn and per-conversation token counts and costs, including retries, cancellations, and provider attempts.
 * [Chat Event Handlers]({% link _core_features/chat-callbacks.md %}) - hook into the chat lifecycle for UI updates, logging, and analytics.
 
 ## Next Steps

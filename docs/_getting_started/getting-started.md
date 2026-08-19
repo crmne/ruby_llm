@@ -26,7 +26,7 @@ After reading this guide, you will know:
 
 Add RubyLLM with bundler:
 
-```ruby
+```sh
 bundle add ruby_llm
 ```
 
@@ -84,7 +84,7 @@ image = RubyLLM.paint("A photorealistic red panda coding Ruby")
 # Access the image URL (or Base64 data depending on provider)
 if image.url
   puts image.url
-  # => "https://oaidalleapiprodscus.blob.core.windows.net/..."
+  # => "https://..."
 else
   puts "Image data received (Base64)."
 end

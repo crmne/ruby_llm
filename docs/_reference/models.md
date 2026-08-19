@@ -41,15 +41,13 @@ The registry stores crucial information about each model, including:
 *   **`price(:output)`**: Cost in USD per 1 million output tokens.
 *   **`price(:cache_read)`**: Cost in USD per 1 million cache read tokens, when available.
 *   **`price(:cache_write)`**: Cost in USD per 1 million cache write tokens, when available.
-*   **`family`**: A broader classification (e.g., `gpt4o`).
+*   **`family`**: A broader classification (e.g., `claude-sonnet`).
 
 This registry allows RubyLLM to validate models, route requests correctly, provide capability information, and offer convenient filtering.
 
 You can see the full list of currently registered models in the [Available Models Guide]({% link _reference/available-models.md %}).
 
 ## Refreshing the Registry
-
-**For Application Developers:**
 
 Refresh models everywhere with one call:
 
@@ -61,7 +59,7 @@ The call has the same meaning in every environment. It replaces the in-memory re
 
 RubyLLM does not refresh automatically. Network access and provider credentials remain explicit application concerns, and a missing-model lookup never triggers network I/O.
 
-**How refresh! Works:**
+### How refresh! Works
 
 The `refresh!` method performs the following steps:
 
@@ -78,15 +76,13 @@ chat_models = RubyLLM.models.refresh!.chat_models
 
 The published registry is generated from provider APIs and [models.dev](https://models.dev). A failed refresh raises `RubyLLM::ModelRegistryError` and leaves the previously loaded registry available.
 
-**Local Provider Models:**
+### Local Provider Models
 
 By default, `refresh!` includes models from local providers like Ollama and GPUStack if they're configured. To exclude local providers and only fetch from remote APIs:
 
 ```ruby
 RubyLLM.models.refresh!(remote_only: true)
 ```
-
-This is useful when you want to refresh only cloud-based models without querying local model servers.
 
 ### Cache Location
 
@@ -143,8 +139,8 @@ embedding_models = RubyLLM.models.embedding_models
 
 openai_models = RubyLLM.models.by_provider(:openai) # or 'openai'
 
-# Filter by model family (e.g., all Claude 3 Sonnet variants)
-claude3_sonnet_family = RubyLLM.models.by_family('claude3_sonnet')
+# Filter by model family (e.g., all Claude Sonnet variants)
+claude_sonnet_family = RubyLLM.models.by_family('claude-sonnet')
 
 # Chain filters and use Enumerable methods
 openai_vision_models = RubyLLM.models.by_provider(:openai)
@@ -160,13 +156,9 @@ Use `find` to get a `RubyLLM::Model` object containing details about a specific 
 ```ruby
 model_info = RubyLLM.models.find('{{ site.models.openai_tools }}')
 
-if model_info
-  puts "Model: #{model_info.name}"
-  puts "Provider: #{model_info.provider}"
-  puts "Context Window: #{model_info.context_window} tokens"
-else
-  puts "Model not found."
-end
+puts "Model: #{model_info.name}"
+puts "Provider: #{model_info.provider}"
+puts "Context Window: #{model_info.context_window} tokens"
 
 # Find raises ModelNotFoundError if the ID is unknown
 # RubyLLM.models.find('no-such-model-exists') # => raises ModelNotFoundError
@@ -177,9 +169,9 @@ end
 RubyLLM uses aliases (defined in `lib/ruby_llm/aliases.json`) for convenience, mapping common names to specific versions.
 
 ```ruby
-# '{{ site.models.anthropic_current }}' might resolve to 'claude-3-5-sonnet-20241022'
-chat = RubyLLM.chat(model: '{{ site.models.anthropic_current }}')
-puts chat.model.id # => "claude-3-5-sonnet-20241022" (or latest version)
+# 'claude-opus-4' maps to the dated release ID
+chat = RubyLLM.chat(model: 'claude-opus-4')
+puts chat.model.id # => "claude-opus-4-20250514"
 ```
 
 When you call `find` without a provider, RubyLLM resolves the alias and then picks the most preferred provider that carries the model (first-party providers before aggregators). See [Model Resolution]({% link _reference/model-resolution.md %}) for the full procedure.

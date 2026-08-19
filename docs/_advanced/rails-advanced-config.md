@@ -40,8 +40,6 @@ chat.ask("Hello!")
 
 Use different API keys per chat in multi-tenant applications:
 
-**With DB-backed model registry:**
-
 ```ruby
 custom_context = RubyLLM.context do |config|
   config.openai_api_key = 'sk-customer-specific-key'
@@ -100,8 +98,7 @@ Like context, `assume_model_exists` is not persisted.
 ```ruby
 # When switching to another dynamic model later
 chat = Chat.find(chat_id)
-chat.assume_model_exists = true
-chat.with_model('another-experimental-model', provider: 'openrouter')
+chat.with_model('another-experimental-model', provider: 'openrouter', assume_model_exists: true)
 ```
 
 ## Working with Prompt Caching

@@ -15,15 +15,9 @@ description: Extend RubyLLM with MCP servers, structured schemas, instrumentatio
 
 After reading this guide, you will know:
 
-* How `Schematist` simplifies structured data definition for AI applications
-* What the Model Context Protocol (MCP) is and how `RubyLLM::MCP` brings it to Ruby
-* How `RubyLLM::Instrumentation` exposes RubyLLM events through ActiveSupport notifications
-* How `RubyLLM::Monitoring` provides dashboards and alerts for RubyLLM activity
-* How `RubyLLM::RedCandle` enables local model execution from Ruby
-* How OpenTelemetry instrumentation for RubyLLM provides observability into your LLM applications
-* How to test application code by stubbing responses with `RubyLLM::Test`
-* How `RubyLLM::Contract` adds runtime contracts, model-escalating retries, and regression evals on top of RubyLLM
-* Where to find community projects and how to contribute your own
+* Which community gems extend RubyLLM with MCP, schemas, testing, evals, observability, and more.
+* What each project does and when to reach for it.
+* Where to find community projects and how to contribute your own.
 
 ## Schematist
 
@@ -337,7 +331,7 @@ but it also restores the filtered response server-side.
 gem install ruby_llm-top_secret
 ```
 
-## Usage
+### Usage
 
 ```ruby
 RubyLLM::TopSecret.with_filtering do
@@ -400,7 +394,7 @@ gem install ruby_llm-test
 
 **Structured, Validated Outputs with Automatic Retry**
 
-[`RubyLLM::Instructor`](https://github.com/washu/ruby_llm-instructor) returns fully-hydrated, validated Ruby objects from LLM calls. Define a plain Ruby class or ActiveModel, pass it as `response_model`, and get back an instance of that class — with validation errors automatically fed back to the LLM for retry.
+[`RubyLLM::Instructor`](https://github.com/washu/ruby_llm-instructor) returns fully-hydrated, validated Ruby objects from LLM calls. Define a plain Ruby class or ActiveModel, pass it as `response_model`, and get back an instance of that class, with validation errors automatically fed back to the LLM for retry.
 
 ### Why Use RubyLLM::Instructor?
 
@@ -414,10 +408,10 @@ Structured output gets you JSON in the right shape, but it doesn't guarantee the
 
 ### Key Features
 
-- Duck-typed response models — no base class or mixin required
+- Duck-typed response models, no base class or mixin required
 - Schema inferred automatically from `attr_accessor` or ActiveModel attributes
 - ActiveModel validations run on every response; errors are sent back to the LLM on retry
-- Works with every provider `ruby_llm` supports — same code for OpenAI, Anthropic, Gemini, and more
+- Works with every provider `ruby_llm` supports: same code for OpenAI, Anthropic, Gemini, and more
 - Integrates with `Schematist` for explicit schema control
 
 ### Installation
@@ -434,7 +428,7 @@ For detailed documentation and examples, visit the [RubyLLM::Instructor reposito
 
 **Local-First, Versioned Prompt Storage and Rendering**
 
-[`RubyLLM::Registry`](https://github.com/washu/ruby_llm-registry) treats prompts as immutable, semantically versioned artifacts stored outside your application code — with label resolution, ERB rendering, and revision diffing.
+[`RubyLLM::Registry`](https://github.com/washu/ruby_llm-registry) treats prompts as immutable, semantically versioned artifacts stored outside your application code, with label resolution, ERB rendering, and revision diffing.
 
 ### Why Use RubyLLM::Registry?
 
@@ -470,14 +464,14 @@ For detailed documentation and examples, visit the [RubyLLM::Registry repository
 
 **Local, Model-Aware Token Counting and Truncation**
 
-[`RubyLLM::Tokenizer`](https://github.com/washu/ruby_llm-tokenizer) maps model identifiers (`gpt-4o`, `llama-3`, `mistral`, …) to the correct tokenizer and counts, analyzes, or truncates text against a model's context window — entirely locally, without an API call.
+[`RubyLLM::Tokenizer`](https://github.com/washu/ruby_llm-tokenizer) maps model identifiers (`gpt-4o`, `llama-3`, `mistral`, …) to the correct tokenizer and counts, analyzes, or truncates text against a model's context window, entirely locally, without an API call.
 
 ### Why Use RubyLLM::Tokenizer?
 
 Token counts drive cost, context-window budgeting, and chunking decisions, but each model family uses a different tokenizer. You often need to:
 
 - Count tokens before sending a request, to estimate cost or enforce budgets
-- Truncate logs, documents, or chat history to fit a context window — keeping the newest or oldest content
+- Truncate logs, documents, or chat history to fit a context window, keeping the newest or oldest content
 - Inspect exactly how a model tokenizes a string when debugging prompts
 
 `RubyLLM::Tokenizer` does all of this with the right tokenizer for each model, selected automatically.
@@ -488,8 +482,8 @@ Token counts drive cost, context-window budgeting, and chunking decisions, but e
 - Automatic model-to-tokenizer mapping for major model families
 - `count`, `analyze` (ids, tokens, encoding), and `truncate` APIs
 - Context-window truncation with `:truncate_left` / `:truncate_right` overflow strategies
-- Streaming/`Enumerable` input support — truncate huge files without materializing them
-- No Rust toolchain required — cross-compiled binaries inherited from upstream gems
+- Streaming/`Enumerable` input support: truncate huge files without materializing them
+- No Rust toolchain required: cross-compiled binaries inherited from upstream gems
 
 ### Installation
 
@@ -505,7 +499,7 @@ For detailed documentation and examples, visit the [RubyLLM::Tokenizer repositor
 
 **Embeddable, In-Process Quantized Vector Search**
 
-[`RubyLLM::Turbovec`](https://github.com/washu/ruby_llm-turbovec) is a native Rust extension (built with `magnus` and `rb-sys`) that wraps the [`turbovec`](https://crates.io/crates/turbovec) crate, providing fast quantized vector search inside your Ruby process — no external vector database required.
+[`RubyLLM::Turbovec`](https://github.com/washu/ruby_llm-turbovec) is a native Rust extension (built with `magnus` and `rb-sys`) that wraps the [`turbovec`](https://crates.io/crates/turbovec) crate, providing fast quantized vector search inside your Ruby process, no external vector database required.
 
 ### Why Use RubyLLM::Turbovec?
 
@@ -538,10 +532,6 @@ Requires a Rust toolchain, as the native extension compiles during installation.
 For detailed documentation and examples, visit the [RubyLLM::Turbovec repository](https://github.com/washu/ruby_llm-turbovec).
 
 ---
-
-
-
-
 
 ## Community Projects
 

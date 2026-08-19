@@ -18,13 +18,9 @@ After reading this guide, you will know:
 *   How to wire a background job to `complete` and broadcast each chunk.
 *   How to handle out-of-order message delivery from Action Cable.
 
-The default persistence flow is built for real-time UIs. Because RubyLLM creates the assistant message on the first streamed chunk, you get a stable DOM target to append tokens into. This guide assembles a controller, a model, a background job, and views into a complete streaming chat, then covers the ordering quirks of Action Cable.
+The default persistence flow is built for real-time UIs. Because RubyLLM creates the assistant message before streaming starts, you get a stable DOM target to append tokens into. This guide assembles a controller, a model, a background job, and views into a complete streaming chat, then covers the ordering quirks of Action Cable.
 
-## Streaming Responses with Hotwire/Turbo
-
-The default persistence flow is designed to work seamlessly with streaming and Turbo Streams for real-time UI updates.
-
-### Instant User Messages
+## Instant User Messages
 
 Show user messages immediately for better UX:
 
@@ -48,7 +44,7 @@ end
 
 The `add_message` method provides instant feedback while processing continues in the background.
 
-### Full Streaming Implementation
+## Full Streaming Implementation
 
 Complete example with background jobs and Turbo Streams:
 
@@ -89,6 +85,8 @@ class ChatStreamJob < ApplicationJob
 end
 ```
 
+The `broadcast_append_chunk` helper lives in your app model rather than in RubyLLM, so streaming behavior stays explicit and customizable.
+
 ```erb
 <%# app/views/chats/show.html.erb %>
 <%= turbo_stream_from "chat_#{@chat.id}" %>
@@ -111,14 +109,7 @@ end
 </div>
 ```
 
-This helper intentionally lives in your app model (via generator) rather than core RubyLLM methods, so streaming behavior stays explicit and customizable.
-
-This implementation provides:
-- Real-time UI updates during generation
-- Background processing to prevent timeouts
-- Automatic persistence of all messages and tool calls
-
-### Cancelling a Background Stream
+## Cancelling a Background Stream
 
 `acts_as_chat` stores cancellation requests on the chat record. A stop button can call `cancel!` from the web process while the background job is streaming. The job observes the request, clears it, and raises `RubyLLM::CancelledError`.
 
@@ -146,7 +137,7 @@ class ChatStreamJob < ApplicationJob
 end
 ```
 
-### Message Ordering Issues
+## Message Ordering Issues
 
 Action Cable processes messages concurrently, which can cause out-of-order delivery:
 
@@ -156,7 +147,6 @@ Use Stimulus to maintain chronological order:
 
 ```javascript
 // app/javascript/controllers/message_ordering_controller.js
-// Note: This is an example implementation. Test thoroughly before production use.
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {

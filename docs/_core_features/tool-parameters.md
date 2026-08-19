@@ -52,7 +52,7 @@ Ruby method signatures do not expose reliable JSON Schema types or descriptions,
 
 ### Using the `parameter` Helper for Simple Tools
 
-If your tool just needs a few scalar arguments with descriptions or non-string types, use the `parameter` helper. RubyLLM translates these declarations into JSON Schema under the hood.
+If your tool needs a few scalar arguments with descriptions or non-string types, use the `parameter` helper. RubyLLM translates these declarations into JSON Schema under the hood.
 
 ```ruby
 class Distance < RubyLLM::Tool
@@ -166,7 +166,7 @@ RubyLLM renders tool attachments in each provider's shape. Anthropic and Bedrock
 Tools can have custom initialization:
 
 ```ruby
-class DocumentSearch < RubyLLM::Tool
+class DatabaseSearch < RubyLLM::Tool
   description "Searches documents by relevance"
 
   parameter :query,
@@ -186,7 +186,7 @@ class DocumentSearch < RubyLLM::Tool
   end
 end
 
-search_tool = DocumentSearch.new(MyDatabase)
+search_tool = DatabaseSearch.new(MyDatabase)
 chat.with_tools(search_tool)
 ```
 
@@ -219,11 +219,11 @@ end
 
 Provider metadata is passed through verbatim. Turn on `RUBYLLM_DEBUG=true` if you want to inspect the final payload while experimenting.
 
-Pass `nil` to `provider_options` to clear provider-specific tool options.
+Pass an empty Hash (`provider_options({})`) to clear provider-specific tool options.
 
 ### Strict Mode on the OpenAI Responses API
 
-The Responses API defaults function tools to strict schema validation, forcing the model to emit **every** property on each call. RubyLLM sends `strict: false` so tools keep the Chat Completions behavior: parameters not in `required` can simply be omitted.
+The Responses API defaults function tools to strict schema validation, forcing the model to emit **every** property on each call. RubyLLM sends `strict: false` so tools keep the Chat Completions behavior: parameters not in `required` can be omitted.
 
 To opt into [strict validation](https://platform.openai.com/docs/guides/function-calling#strict-mode) per tool:
 

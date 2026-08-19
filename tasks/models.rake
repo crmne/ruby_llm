@@ -182,6 +182,7 @@ def generate_models_markdown
     layout: default
     title: Available Models
     nav_order: 2
+    llms: false
     description: Browse #{total_models} AI models across #{provider_count} remote providers. Updated #{updated_on}.
     redirect_from:
       - /guides/available-models

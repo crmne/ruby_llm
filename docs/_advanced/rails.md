@@ -3,7 +3,7 @@ layout: default
 title: Rails Integration
 nav_order: 1
 has_children: true
-description: Rails + AI made simple. Persist chats with ActiveRecord. Stream with Hotwire. Deploy with confidence.
+description: Persist chats with ActiveRecord, stream with Hotwire, deploy with confidence.
 redirect_from:
   - /guides/rails
 ---
@@ -25,7 +25,7 @@ RubyLLM treats Rails as a first-class home. Chats and messages become ActiveReco
 
 ## Understanding the Persistence Flow
 
-Before diving into setup, it's important to understand how RubyLLM handles message persistence in Rails. This design influences model validations and real-time UI updates.
+How RubyLLM persists messages shapes your model validations and your real-time UI updates.
 
 ### How It Works
 
@@ -35,8 +35,8 @@ When calling `chat_record.ask("What is the capital of France?")`, RubyLLM:
 2. **Calls the `complete` method**, which:
    - Makes the API call to the AI provider
    - Creates an empty assistant message:
-     - **With streaming**: On receiving the first chunk
-     - **Without streaming**: Before the API call
+     - **With streaming**: Before the request is sent, so the record exists when the first chunk arrives
+     - **Without streaming**: After the provider responds, right before the content is saved
    - Processes the response:
      - **Success**: Updates the assistant message with content and metadata
      - **Failure**: Automatically destroys the empty assistant message
@@ -45,13 +45,13 @@ When calling `chat_record.ask("What is the capital of France?")`, RubyLLM:
 
 This approach optimizes for real-time experiences:
 
-1. **Streaming optimized**: Creates DOM target on first chunk for immediate UI updates
+1. **Streaming optimized**: Creates the DOM target before the first chunk arrives, so UI updates start immediately
 2. **Turbo Streams ready**: Works with `after_create_commit` for real-time broadcasting
 3. **Clean rollback**: Automatic cleanup on failure prevents orphaned records
 
 ### Content Validation Implications
 
-You cannot use `validates :content, presence: true` on your `Message` model. The flow creates an empty assistant message before content arrives. See [Customizing the Persistence Flow]({% link _advanced/rails-persistence.md %}#customizing-the-persistence-flow) for an alternative approach.
+You cannot use `validates :content, presence: true` on your `Message` model. The flow creates an empty assistant message before content arrives, and a valid assistant message can contain tool calls without text.
 {: .warning }
 
 ## Setting Up Your Rails Application
@@ -81,7 +81,6 @@ RubyLLM.configure do |config|
   config.openai_api_key = ENV['OPENAI_API_KEY']
   config.anthropic_api_key = ENV['ANTHROPIC_API_KEY']
   config.gemini_api_key = ENV['GEMINI_API_KEY']
-
 end
 ```
 

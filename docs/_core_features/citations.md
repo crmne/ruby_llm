@@ -66,7 +66,7 @@ Document citations are currently supported by Anthropic, Cohere, and Claude mode
 
 ## Citing Tool Results (RAG)
 
-When your tools fetch documents, e.g. from a vector store, Google Drive, a wiki, return them as `RubyLLM::SearchResults` and the model can cite them:
+When your tools fetch documents from a vector store, Google Drive, or a wiki, return them as `RubyLLM::SearchResults` and the model can cite them:
 
 ```ruby
 class KnowledgeBase < RubyLLM::Tool
@@ -90,7 +90,7 @@ response.citations.first.url        # => the doc.link you provided
 response.citations.first.cited_text # => the quoted passage
 ```
 
-A single result reads even simpler: `RubyLLM::SearchResults.new(title: "Q4 Report", url: report_url, text: report_text)`.
+For a single result, pass keywords directly: `RubyLLM::SearchResults.new(title: "Q4 Report", url: report_url, text: report_text)`.
 
 `SearchResults` serializes into the tool message as JSON with a `search_results` key. On Anthropic that shape becomes native citable search result blocks, including after the conversation is reloaded from the database. Other providers receive the same results as JSON text, so your tools stay provider-agnostic. A tool that returns the `{"search_results": [...]}` shape directly gets the same treatment; the class is just the convenient way to build and validate it.
 
@@ -148,8 +148,8 @@ markdown = response.content.dup
 response.citations.reverse.each do |citation|
   next unless citation.end_index
 
-  marker = sources.index(citation.url)&.+(1)
-  markdown.insert(citation.end_index, "[^#{marker}]") if marker
+  index = sources.index(citation.url)
+  markdown.insert(citation.end_index, "[^#{index + 1}]") if index
 end
 
 footnotes = sources.map.with_index(1) { |url, i| "[^#{i}]: #{url}" }
@@ -216,7 +216,8 @@ Without the column, everything still works - citations just aren't persisted.
 - **Perplexity** returns its search results on every response; `cited_text` carries the result snippet when available.
 - **xAI** returns a list of cited URLs when live search is enabled via `with_provider_options`.
 - **Cohere** cites the documents you attach with `with_citations`, and the search results your tools return, with quoted snippets and exact response spans.
-- **Bedrock, DeepSeek, Mistral, Ollama, GPUStack** don't currently surface citations through RubyLLM.
+- **Bedrock** supports document citations for Claude models through the Converse protocol.
+- **DeepSeek, Mistral, Ollama, GPUStack** don't currently surface citations through RubyLLM.
 
 ## Next Steps
 

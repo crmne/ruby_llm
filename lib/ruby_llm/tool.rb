@@ -230,11 +230,14 @@ module RubyLLM
       self.class.declared_parameters
     end
 
-    def provider_options # :nodoc:
+    # Returns the provider-specific tool metadata declared on the class.
+    def provider_options
       self.class.provider_options
     end
 
-    def parameters_schema # :nodoc:
+    # Returns the JSON Schema for the tool's arguments, whether declared
+    # explicitly or inferred from the +execute+ signature.
+    def parameters_schema
       return @parameters_schema if defined?(@parameters_schema)
 
       @parameters_schema = begin

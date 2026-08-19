@@ -67,7 +67,7 @@ Valid values:
 
 ### "Parallel" Tool Calling (`calls`)
 
-> Providers usually call this **parallel tool calling**. We call it `calls` because "parallel" can be misleading: tools are not executed in parallel unless RubyLLM is configured to run them concurrently. `calls` describes the actual behavior directly: `:many` means multiple tool calls in one assistant response, `:one` means one tool call in one assistant response.
+> Providers usually call this **parallel tool calling**. We call it `calls` because "parallel" can be misleading: tools are not executed in parallel unless RubyLLM is configured to run them concurrently.
 {: .note }
 
 Use `calls` to control how many tool calls the model may return in a single assistant response.
@@ -89,6 +89,15 @@ If `calls` is not provided, RubyLLM uses provider/model defaults, which are usua
 
 > Tool choice and call-count controls are provider/model dependent.
 {: .note }
+
+### Clearing Tools and Options
+
+Call `with_tools(nil)` to clear the attached tool list. It leaves the options set with `with_tool_options` in place; pass `nil` options to reset `choice`, `calls`, and `concurrency`:
+
+```ruby
+chat.with_tools(nil)       # forget the tools, keep the options
+chat.with_tool_options(choice: nil, calls: nil, concurrency: nil) # reset all three
+```
 
 ## Requiring Approval
 
@@ -128,7 +137,7 @@ chat.complete # appends the denial result and asks the model to respond
 
 Tool calls that need no approval still run before the loop parks, so a response mixing safe and protected calls makes as much progress as it can.
 
-If you [drive the loop yourself]({% link _advanced/agentic-workflows.md %}#driving-the-loop-yourself), park the same way `complete` does: `step until chat.complete? || chat.awaiting_approval?`.
+If you [drive the loop yourself]({% link _advanced/agentic-workflows.md %}#driving-the-loop-yourself), park the same way `complete` does: `chat.step until chat.complete? || chat.awaiting_approval?`.
 
 A parked round has to finish before the conversation moves on. Asking a new question while tool calls are unanswered raises `RubyLLM::PendingToolCallsError` instead of sending the provider a transcript it would reject; record the decisions and call `complete`, then ask away. The chat also shows what it is waiting for: `chat.inspect` includes `awaiting_approval: ["issue_refund"]` while parked.
 
@@ -213,13 +222,6 @@ Override it per chat when needed:
 chat.with_tool_options(concurrency: false)
 ```
 
-Call `with_tools(nil)` to clear the attached tool list. It leaves the options set with `with_tool_options` in place; pass `nil` options to reset `choice`, `calls`, and `concurrency`:
-
-```ruby
-chat.with_tools(nil)       # forget the tools, keep the options
-chat.with_tool_options(choice: nil, calls: nil, concurrency: nil) # reset all three
-```
-
 Rails chat records use the same setting and override:
 
 ```ruby
@@ -283,26 +285,20 @@ These callbacks are useful for:
 
 ### Example: Limiting Tool Calls
 
-To prevent excessive API usage or infinite loops, you can use callbacks to limit tool calls:
+To cap a runaway loop, give the loop a step budget instead of raising inside a callback:
 
 ```ruby
-call_count = 0
-max_calls = 10
-
 chat = RubyLLM.chat(model: '{{ site.models.openai_tools }}')
-      .with_tools(Weather)
-      .before_tool_call do |tool_call|
-        call_count += 1
-        if call_count > max_calls
-          raise "Tool call limit exceeded (#{max_calls} calls)"
-        end
-      end
+              .with_tools(Weather)
+              .ask_later("Check weather for every major city...")
 
-chat.ask("Check weather for every major city...")
+10.times do
+  chat.step
+  break if chat.complete?
+end
 ```
 
-> Raising an exception in `before_tool_call` breaks the conversation flow - the LLM expects a tool response after requesting a tool call. This can leave the chat in an inconsistent state. Consider using better models or clearer tool descriptions to prevent loops instead of hard limits.
-{: .warning }
+When the budget runs out the transcript is still valid, and calling `step` again resumes where it stopped. See [Driving the Loop Yourself]({% link _advanced/agentic-workflows.md %}#driving-the-loop-yourself).
 
 ## Next Steps
 

@@ -46,7 +46,7 @@ class Weather < RubyLLM::Tool
     url = "https://api.open-meteo.com/v1/forecast?latitude=#{latitude}&longitude=#{longitude}&current=temperature_2m,wind_speed_10m"
 
     response = Faraday.get(url)
-    data = JSON.parse(response.body)
+    JSON.parse(response.body)
   rescue => e
     { error: e.message }
   end
@@ -60,7 +60,7 @@ end
 3.  **`execute` Method:** The instance method containing your Ruby code. RubyLLM infers simple keyword parameters from this signature when no explicit parameter schema is declared.
 4.  **Parameter declarations:** Optional. Use `parameter` for simple descriptions and types, or `parameters` for nested objects, arrays, enums, and full JSON Schema control.
 
-> The tool's class name is automatically converted to a snake_case name used in the API call (e.g., `WeatherLookup` becomes `weather_lookup`). This is how the LLM would call it. You can override this by defining `tool_name` on the class:
+> The tool's class name is automatically converted to a snake_case name used in the API call, with a trailing `Tool` dropped (e.g., `WeatherLookup` becomes `weather_lookup` and `WeatherTool` becomes `weather`). This is how the LLM would call it. You can override this by defining `tool_name` on the class:
 >
 > ```ruby
 > class WeatherLookup < RubyLLM::Tool
@@ -83,12 +83,6 @@ end
 {: .note }
 
 ## Declaring Parameters
-
-RubyLLM ships with three complementary approaches to telling the model what arguments a tool accepts:
-
-*   **Signature inference** for simple flat arguments.
-*   The **`parameter` helper** for quick, flat argument lists.
-*   The **`parameters` DSL** for expressive, structured inputs.
 
 The simplest case needs nothing extra. When a tool has no `parameter` or `parameters` declaration, RubyLLM builds a JSON Schema from the `execute` keyword arguments:
 
@@ -137,17 +131,17 @@ For controlling which tools the model may use, how many calls it can make in one
 When you `ask` a question that the model determines requires a tool:
 
 1.  **User Query:** Your message is sent to the model.
-2.  **Model Decision:** The model analyzes the query and its available tools (based on their descriptions). It decides the `WeatherLookup` tool is needed and extracts the latitude and longitude.
-3.  **Tool Call Request:** The model responds *not* with text, but with a special message indicating a tool call, including the tool name (`weather_lookup`) and arguments (`{ latitude: 52.52, longitude: 13.40 }`).
-4.  **RubyLLM Execution:** RubyLLM receives this tool call request. It finds the registered `WeatherLookup` tool and calls its `execute(latitude: 52.52, longitude: 13.40)` method.
-5.  **Tool Result:** Your `execute` method runs (calling the weather API) and returns a result string.
+2.  **Model Decision:** The model analyzes the query and its available tools (based on their descriptions). It decides the `Weather` tool is needed and extracts the latitude and longitude.
+3.  **Tool Call Request:** The model responds *not* with text, but with a special message indicating a tool call, including the tool name (`weather`) and arguments (`{ latitude: 52.52, longitude: 13.40 }`).
+4.  **RubyLLM Execution:** RubyLLM receives this tool call request. It finds the registered `Weather` tool and calls its `execute(latitude: 52.52, longitude: 13.40)` method.
+5.  **Tool Result:** Your `execute` method runs (calling the weather API) and returns its result.
 6.  **Result Sent Back:** RubyLLM sends this result back to the AI model in a new message with the `:tool` role.
 7.  **Final Response Generation:** The model receives the tool result and uses it to generate a natural language response to your original query.
 8.  **Final Response Returned:** RubyLLM returns the final `RubyLLM::Message` object containing the text generated in step 7.
 
 This entire multi-step process happens behind the scenes within a single `chat.ask` call when a tool is invoked.
 
-For full control over the loop the tool execution flow runs (running each turn as its own job, setting an iteration budget, or stopping and resuming elsewhere), see [Driving the Loop Yourself]({% link _advanced/agentic-workflows.md %}#driving-the-loop-yourself).
+For full control over this loop (running each turn as its own job, setting an iteration budget, or stopping and resuming elsewhere), see [Driving the Loop Yourself]({% link _advanced/agentic-workflows.md %}#driving-the-loop-yourself).
 
 ## Error Handling in Tools
 

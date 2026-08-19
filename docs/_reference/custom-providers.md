@@ -22,13 +22,6 @@ After reading this guide, you will know:
 
 RubyLLM separates two concerns that other libraries tangle together. A **provider** knows *where* to talk and *who* you are: its host, its authentication headers, the configuration it needs, and its model catalog. A **protocol** knows *how* to talk to a family of APIs: rendering request payloads, parsing responses, streaming chunks, and naming the endpoints involved.
 
-```ruby
-# lib/ruby_llm/protocol.rb
-# A protocol knows how to talk to a family of APIs: rendering payloads,
-# parsing responses, streaming chunks, and the endpoints involved.
-# Providers know where to talk and who they are.
-```
-
 This split is the whole reason RubyLLM scales across services. One wire format serves many hosts - the OpenAI Chat Completions dialect is reused by Ollama, Perplexity, and DeepSeek, each with its own host and auth. One host can serve many wire formats - Vertex AI is a single provider that speaks Gemini, Anthropic, Mistral, and Chat Completions, picking one per model.
 
 So before you write anything, decide which case you are in:
@@ -176,14 +169,14 @@ For the Chat Completions family, the seams you override most often are:
 | `completion_url` | The (relative) endpoint path for completions |
 | `stream_url` | The streaming endpoint (defaults to `completion_url`) |
 | `render_payload` | Build the request body from messages, tools, temperature, etc. |
-| `parse_completion_response` | Turn a response into a `RubyLLM::Message` |
+| `parse_completion_body` | Turn a parsed response body into a `RubyLLM::Message` |
 | `build_chunk` | Turn one SSE event into a `RubyLLM::Chunk` |
 | `format_role` / `format_content` | Shape a message's role and content |
 
-The smallest real dialect changes only message shaping. DeepSeek, for example, overrides just `format_role` and `format_content` to disable attachments its API rejects:
+The smallest dialect changes shape only messages. DeepSeek, for example, overrides `format_role` and `format_content` to disable attachments its API rejects:
 
 ```ruby
-# lib/ruby_llm/providers/deepseek/chat.rb
+# lib/ruby_llm/providers/deepseek/chat.rb (excerpt)
 module RubyLLM
   module Providers
     class DeepSeek
@@ -194,9 +187,10 @@ module RubyLLM
           role.to_s
         end
 
-        def format_content(content)
+        def format_content(content, attachments = [])
           Protocols::ChatCompletions::Media.format_content(
             content,
+            attachments,
             document_attachments: :none,
             image_attachments: false,
             audio_attachments: false
@@ -228,7 +222,7 @@ module Chat
 end
 ```
 
-For a genuinely new wire format (not a Chat Completions variant), subclass `RubyLLM::Protocol` directly and implement the seams the base operations call - `render_payload`, `completion_url`, `parse_completion_response`, and, for streaming, `stream_url` and `build_chunk`. Study `RubyLLM::Protocols::Anthropic` and `RubyLLM::Protocols::Gemini` as worked examples of non-OpenAI dialects.
+For a genuinely new wire format (not a Chat Completions variant), subclass `RubyLLM::Protocol` directly and implement the seams the base operations call - `render_payload`, `completion_url`, `parse_completion_body`, and, for streaming, `stream_url` and `build_chunk`. Study `RubyLLM::Protocols::Anthropic` and `RubyLLM::Protocols::Gemini` as worked examples of non-OpenAI dialects.
 
 > A protocol instance is constructed against a live provider with `protocol_class.new(provider, model)`. Inside a protocol you have `provider`, `config`, `connection`, and `model` available - the protocol borrows the provider's Faraday connection, so you never build HTTP yourself.
 {: .note }

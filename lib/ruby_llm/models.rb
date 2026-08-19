@@ -685,7 +685,7 @@ module RubyLLM
     end
 
     # A name can be one provider's exact id and another's alias:
-    # claude-3-5-haiku is exact on vertexai, an alias on anthropic.
+    # claude-opus-4 is exact on vertexai, an alias on anthropic.
     # Provider preference settles it, not the kind of match.
     def find_without_provider(model_id)
       resolved_id = Aliases.resolve(model_id)

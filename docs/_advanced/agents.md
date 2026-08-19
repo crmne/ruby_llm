@@ -194,7 +194,8 @@ class WorkAssistant < RubyLLM::Agent
 end
 ```
 
-Important: values that depend on runtime `chat` must be lazy (blocks/lambdas), not eager class-load expressions.
+Values that depend on runtime `chat` must be lazy (blocks or lambdas), not eager class-load expressions.
+{: .important }
 
 ### Choosing the model at runtime
 
@@ -402,28 +403,7 @@ chat = WorkAssistant.new(chat: chat_record)
 chat.ask("Hello")
 ```
 
-## When to Use Agents vs `RubyLLM.chat`
-
-Use `RubyLLM.chat` for one-off, inline conversations:
-
-```ruby
-chat = RubyLLM.chat(model: "{{ site.models.default_chat }}")
-chat.with_instructions "Explain this clearly."
-```
-
-Use agents when you want named, reusable behavior:
-
-```ruby
-class WorkAssistant < RubyLLM::Agent
-  model "{{ site.models.default_chat }}"
-  instructions "You are a helpful assistant."
-  tools SearchDocs, LookupAccount
-end
-```
-
-Think of `RubyLLM.chat` as ad-hoc and `RubyLLM::Agent` as reusable application architecture.
-
-## Agent vs `Chat#with_*`
+## When to Use an Agent
 
 These two styles are equivalent in capability, but optimized for different contexts.
 

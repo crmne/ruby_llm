@@ -13,10 +13,10 @@ description: Let the provider run tools for you. Web search, code execution, and
 
 After reading this guide, you will know:
 
-* How to enable provider-executed tools with `with_server_tools`
-* How to pass tool options and use tools RubyLLM has no alias for
-* How to read tool results, citations, and billing counters from responses
-* How server tool turns persist and replay in Rails apps
+* How to enable provider-executed tools with `with_server_tools`.
+* How to pass tool options and use tools RubyLLM has no alias for.
+* How to read tool results, citations, and billing counters from responses.
+* How server tool turns persist and replay in Rails apps.
 
 ## What are Server Tools?
 
@@ -29,7 +29,7 @@ Provider-specific tool charges can apply on top of token costs.
 Enable server tools with `with_server_tools`. Portable aliases cover the common tools on every supported provider:
 
 ```ruby
-chat = RubyLLM.chat(model: "claude-sonnet-5")
+chat = RubyLLM.chat(model: "{{ site.models.anthropic_server_tools }}")
               .with_server_tools(:web_search)
 
 response = chat.ask "What is the latest stable Ruby version? Cite your source."
@@ -54,12 +54,12 @@ The aliases map to each provider's current tool versions:
 | `:code_execution` | `code_execution_20260521` | `code_interpreter` | `code_interpreter` | `code_execution` | `code_execution` | not offered | `openrouter:shell` | not offered |
 | `:file_search` | not offered | `file_search` | `file_search` | `file_search` | `file_search` | not offered | not offered | not offered |
 | `:image_generation` | not offered | `image_generation` | `image_generation` | not offered | `image_generation` | not offered | `openrouter:image_generation` | not offered |
-| `:apply_patch` | not offered | not offered | not offered | not offered | not offered | `custom` (`apply_patch`) | not offered | not offered |
+| `:apply_patch` | not offered | not offered | not offered | not offered | not offered | `custom` (`apply_patch`) | `openrouter:apply_patch` | not offered |
 | `:mcp` | `mcp_toolset` + `mcp_servers` | `mcp` | `mcp` | not offered | `mcp` | not offered | not offered | not offered |
 
 Asking for an alias the provider does not define raises `RubyLLM::UnsupportedServerToolError` naming the aliases it does.
 
-xAI serves server tools on its Responses API, the default protocol for Grok models. DeepSeek serves them on its opt-in Responses API, so pass `protocol: :responses` when creating the chat. The same goes for Azure: deployments named after gpt-5.4+ models route to its Responses API automatically, everything else needs `protocol: :responses`.
+xAI serves server tools on its Responses API, the default protocol for Grok models. DeepSeek serves them on its opt-in Responses API, so pass `protocol: :responses` when creating the chat. The same goes for Azure: deployments named after gpt-5.4+ models route to its Responses API automatically; everything else needs `protocol: :responses`.
 
 Bedrock's `:web_search` alias targets the `nova_grounding` system tool and requires a Nova 2 model.
 
@@ -119,7 +119,7 @@ Anthropic sometimes pauses a long tool-using turn with a `pause_turn` stop reaso
 The `:mcp` alias connects a remote MCP server on providers that support the connector:
 
 ```ruby
-chat = RubyLLM.chat(model: "claude-sonnet-5")
+chat = RubyLLM.chat(model: "{{ site.models.anthropic_server_tools }}")
               .with_server_tools(mcp: { url: "https://mcp.example.com", name: "example" })
 ```
 
@@ -131,7 +131,7 @@ Chats built with `acts_as_chat` accept `with_server_tools` like any other chat s
 
 ```ruby
 class ResearchAgent < RubyLLM::Agent
-  model "claude-sonnet-5"
+  model "{{ site.models.anthropic_server_tools }}"
   server_tools :web_search
 end
 ```

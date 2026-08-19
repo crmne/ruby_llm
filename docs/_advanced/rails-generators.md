@@ -23,7 +23,7 @@ RubyLLM's Rails generators take you from an empty app to a working chat in two c
 
 ## Quick Setup with Generator
 
-The easiest way to get started is using the provided Rails generator:
+Run the install generator:
 
 ```bash
 bin/rails generate ruby_llm:install
@@ -47,6 +47,25 @@ bin/rails ruby_llm:load_models
 ```
 
 Your Rails app is now AI-ready!
+
+### Install Generator Options
+
+The generator uses Rails-like syntax for custom model names:
+
+```bash
+# Default - creates the application Chat and Message models
+bin/rails generate ruby_llm:install
+
+bin/rails generate ruby_llm:install chat:Conversation message:ChatMessage
+bin/rails generate ruby_llm:install chat:Discussion message:DiscussionMessage
+
+# Skip ActiveStorage if you don't need file attachments
+bin/rails generate ruby_llm:install --skip-active-storage
+```
+
+The `name:ClassName` syntax follows Rails conventions - specify only what you want to customize.
+
+For most apps, keep the default behavior (install ActiveStorage) so file attachments work out of the box. Use `--skip-active-storage` only when you're sure you won't send files to models.
 
 ## Adding a Chat UI
 
@@ -72,7 +91,7 @@ bin/rails generate ruby_llm:chat_ui chat:Conversation message:ChatMessage
 
 ## Conventional Directory Structure
 
-RubyLLM's Rails generators now establish a default app structure:
+RubyLLM's Rails generators establish a default app structure:
 
 ```text
 app/
@@ -142,7 +161,7 @@ app/views/messages/
 
 Locals passed to those partials:
 
-- `messages/tool_calls/_your_tool.html.erb` receives `tool_calls` and `tool_call`
+- `messages/tool_calls/_your_tool.html.erb` receives `message` and `tool_call`
 - `messages/tool_results/_your_tool.html.erb` receives `tool`
 
 `ruby_llm:tool` creates `_your_tool.html.erb` files with the correct names so custom rendering hooks up automatically.
@@ -152,25 +171,6 @@ Using fixed locals keeps the templates dumb and predictable.
 Turbo Stream templates used by the generated chat UI:
 
 - `messages/create.turbo_stream.erb` resets the message form for `MessagesController#create`.
-
-### Generator Options
-
-The generator uses Rails-like syntax for custom model names:
-
-```bash
-# Default - creates the application Chat and Message models
-bin/rails generate ruby_llm:install
-
-bin/rails generate ruby_llm:install chat:Conversation message:ChatMessage
-bin/rails generate ruby_llm:install chat:Discussion message:DiscussionMessage
-
-# Skip ActiveStorage if you don't need file attachments
-bin/rails generate ruby_llm:install --skip-active-storage
-```
-
-The `name:ClassName` syntax follows Rails conventions - specify only what you want to customize.
-
-For most apps, keep the default behavior (install ActiveStorage) so file attachments work out of the box. Use `--skip-active-storage` only when you're sure you won't send files to models.
 
 ## Setting Up ActiveStorage
 

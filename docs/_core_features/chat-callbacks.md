@@ -14,29 +14,27 @@ description: Hook into the chat lifecycle with additive callbacks for UI updates
 After reading this guide, you will know:
 
 * Which lifecycle events you can register handlers for.
-* How the `before_*` and `after_*` callbacks differ from the older `on_*` handlers.
+* Why callbacks are additive and what replaced the 1.x `on_*` handlers.
 * How chat callbacks differ from retry- and cancellation-safe usage instrumentation.
 * How to observe tool calls and tool results as they happen.
 * How to observe model fallback attempts.
 * When callbacks fire for streaming versus non-streaming requests.
 
-## Chat Event Handlers
-
 You can register blocks to be called when certain events occur during the chat lifecycle. This is particularly useful for UI updates, logging, analytics, or building real-time chat interfaces.
 
-### Available Event Handlers
+## Available Event Handlers
 
-RubyLLM provides two callback styles. The `on_*` handlers replace any previously registered handler for the same event, which is useful when you want to override behavior. The Rails-style `before_*` and `after_*` callbacks are additive, so multiple registrations for the same event all run.
+Callbacks are Rails-style and additive: register as many blocks as you like for the same event and they all run, alongside RubyLLM's own bookkeeping such as the Rails persistence callbacks.
 
 ```ruby
 chat = RubyLLM.chat
 
-# Called at first chunk received from the assistant
+# Called before each assistant response or tool result is appended
 chat.before_message do
   print "Assistant > "
 end
 
-# Called after the complete assistant message (including tool calls/results) is received
+# Called after each assistant response or tool result message is appended
 chat.after_message do |message|
   puts "Response complete!"
   if message.tokens.output
@@ -78,7 +76,7 @@ Fallback callbacks run around each fallback attempt. `before_fallback` fires aft
 
 `after_message` observes transcript changes. It cannot observe a cancelled attempt that produces no message. Subscribe to `usage.ruby_llm` when you need cost and usage events; it fires once per physical provider attempt, including retries and cancellations. See [Cost and Usage Tracking]({% link _core_features/cost-and-usage-tracking.md %}).
 
-Each callback is additive - register as many as you like, and they run alongside RubyLLM's own bookkeeping (such as the Rails persistence callbacks). The older replacing handlers (`on_new_message`, `on_end_message`, `on_tool_call`, `on_tool_result`) were removed in 2.0.
+The 1.x handlers (`on_new_message`, `on_end_message`, `on_tool_call`, `on_tool_result`), which replaced each other on re-registration, were removed in 2.0.
 
 ## Next Steps
 

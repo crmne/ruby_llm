@@ -63,7 +63,7 @@ RubyLLM.configure do |config|
 end
 ```
 
-When a provider reports how long to wait through rate-limit headers -- the standard `Retry-After`, or OpenAI's `x-ratelimit-reset-requests` and `x-ratelimit-reset-tokens` -- retries wait that long instead of the backoff interval. If the requested wait exceeds `retry_max_interval`, the request fails immediately with `RubyLLM::RateLimitError` rather than sleeping.
+When a provider reports how long to wait through rate-limit headers (the standard `Retry-After`, or OpenAI's `x-ratelimit-reset-requests` and `x-ratelimit-reset-tokens`), retries wait that long instead of the backoff interval. If the requested wait exceeds `retry_max_interval`, the request fails immediately with `RubyLLM::RateLimitError` rather than sleeping.
 
 Example for high-latency connections:
 
@@ -116,13 +116,7 @@ Log levels:
 - Defaults to `$stdout`
 - Can also be set with `RUBYLLM_LOG_FILE=/path/to/file.log`
 
-You can also enable debug logging conditionally from an environment variable:
-
-```ruby
-RubyLLM.configure do |config|
-  config.log_level = :debug if ENV['RUBYLLM_DEBUG'] == 'true'
-end
-```
+Debug logging is also enabled automatically when the `RUBYLLM_DEBUG=true` environment variable is set. No configuration change is needed.
 
 > Setting `config.logger` overrides `log_file` and `log_level` settings.
 {: .note }
@@ -134,8 +128,7 @@ Use these options when you need deeper troubleshooting or safer handling of larg
 ```ruby
 RubyLLM.configure do |config|
   config.log_stream_debug = true
-
-    config.log_regexp_timeout = 1.5
+  config.log_regexp_timeout = 1.5
 end
 ```
 

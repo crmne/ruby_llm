@@ -22,7 +22,7 @@ After reading this guide, you will know:
 
 ## Quick Start
 
-The simplest configuration just sets your API keys:
+The simplest configuration sets your API keys and nothing else:
 
 ```ruby
 RubyLLM.configure do |config|
@@ -52,7 +52,7 @@ Each provider has its own key (and sometimes region or project settings). For th
 
 ## Default Models
 
-Set defaults for the convenience methods (`RubyLLM.chat`, `RubyLLM.embed`, `RubyLLM.paint`):
+Set defaults for the convenience methods (`RubyLLM.chat`, `RubyLLM.embed`, `RubyLLM.paint`, `RubyLLM.animate`, `RubyLLM.speak`):
 
 ```ruby
 RubyLLM.configure do |config|
@@ -65,7 +65,7 @@ end
 ```
 
 Defaults if not configured:
-- Chat: `{{ site.models.default_chat }}`
+- Chat: `gpt-5.4`
 - Embeddings: `{{ site.models.default_embedding }}`
 - Images: `{{ site.models.default_image }}`
 - Videos: `grok-imagine-video`
@@ -112,6 +112,7 @@ RubyLLM.configure do |config|
   config.bedrock_session_token = String
   config.bedrock_credential_provider = Object # Aws::CredentialProvider
   config.bedrock_api_base = String
+  config.bedrock_mantle_api_base = String
 
   # Cohere
   config.cohere_api_key = String
@@ -155,6 +156,7 @@ RubyLLM.configure do |config|
   config.openai_organization_id = String
   config.openai_project_id = String
   config.openai_use_system_role = Boolean
+  config.openai_protocol = Symbol # Every provider exposes <provider>_protocol
 
   # OpenRouter
   config.openrouter_api_key = String
@@ -188,6 +190,7 @@ RubyLLM.configure do |config|
 
   # Model Registry
   config.model_registry_file = String  # Writable registry cache; defaults to the OS user cache directory
+  config.model_registry_store = Object # Responds to read, optionally write(registry)
 
   # Connection Settings
   config.request_timeout = Integer
@@ -197,9 +200,11 @@ RubyLLM.configure do |config|
   config.retry_interval = Float
   config.retry_backoff_factor = Integer
   config.retry_interval_randomness = Float
+  config.retry_max_interval = Integer
   config.http_proxy = String
   config.faraday_adapter = Symbol # Defaults to :net_http
   config.auto_upload_large_files = Boolean
+  config.tool_concurrency = false # true/:threads or :fibers
 
   # Logging
   config.logger = Logger

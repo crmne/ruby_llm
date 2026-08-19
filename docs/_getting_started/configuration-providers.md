@@ -217,8 +217,6 @@ RubyLLM.configure do |config|
 end
 ```
 
-By default, RubyLLM uses the 'developer' role (matching OpenAI's current API). Set `openai_use_system_role` to true for compatibility with servers that still expect 'system'.
-
 ### Gemini API Versions
 
 Gemini offers two API versions: `v1` (stable) and `v1beta` (early access). RubyLLM defaults to `v1beta` for access to the latest features, but you can switch to `v1` to support older models:

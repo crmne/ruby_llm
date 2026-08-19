@@ -194,7 +194,8 @@ RubyLLM.transcribe(
 )
 ```
 
-> **Note:** Gemini models currently return plain text transcripts without segment metadata. Use OpenAI's diarization models when you need speaker labels or timestamps.
+> Gemini models currently return plain text transcripts without segment metadata. Use OpenAI's diarization models when you need speaker labels or timestamps.
+{: .note }
 
 ## Streaming Transcripts
 
@@ -364,7 +365,7 @@ RubyLLM.configure do |config|
 end
 ```
 
-The API supports files up to 25 MB. For larger files, use compressed formats (MP3, M4A) or split into chunks.
+OpenAI accepts audio files up to 25 MB. For larger files, use compressed formats (MP3, M4A), split the audio into chunks, or use a provider with higher limits.
 
 ## Error Handling
 
@@ -374,7 +375,7 @@ begin
   puts transcription.text
 rescue RubyLLM::BadRequestError => e
   puts "Invalid request: #{e.message}"
-rescue RubyLLM::TimeoutError => e
+rescue Faraday::TimeoutError => e
   puts "Transcription timed out: #{e.message}"
 rescue RubyLLM::Error => e
   puts "Transcription failed: #{e.message}"

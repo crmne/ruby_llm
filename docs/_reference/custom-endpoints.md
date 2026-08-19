@@ -19,14 +19,14 @@ After reading this guide, you will know:
 *   What capability checks RubyLLM skips when you assume a model exists.
 *   What you stay responsible for when bypassing registry validation.
 
-## Connecting to Custom Endpoints & Using Unlisted Models
 Sometimes you need to interact with models or endpoints not covered by the standard registry, such as:
 
-*   Azure OpenAI Service endpoints.
 *   API Proxies & Gateways (LiteLLM, Fastly AI Accelerator).
-*   Self-Hosted/Local Models (LM Studio, Ollama via OpenAI adapter).
+*   Self-hosted or local models (LM Studio, vLLM).
 *   Brand-new model releases.
 *   Custom fine-tunes or deployments with unique names.
+
+Azure has a first-class provider: configure `azure_api_base` and use `provider: :azure` instead. See the [Provider Setup and Custom Endpoints Guide]({% link _getting_started/configuration-providers.md %}).
 
 RubyLLM offers two mechanisms for these cases.
 
@@ -37,8 +37,8 @@ If you need to target an endpoint that uses the **OpenAI API format** but has a 
 ```ruby
 # config/initializers/ruby_llm.rb
 RubyLLM.configure do |config|
-  config.openai_api_key = ENV['AZURE_OPENAI_KEY'] # Key for your endpoint
-  config.openai_api_base = "https://YOUR_AZURE_RESOURCE.openai.azure.com" # Your endpoint
+  config.openai_api_key = ENV['GATEWAY_API_KEY'] # Key for your endpoint
+  config.openai_api_base = "https://ai-gateway.internal.example.com/v1" # Your endpoint
 end
 ```
 
@@ -51,7 +51,7 @@ end
 To use a model identifier not listed in RubyLLM's registry, use the `assume_model_exists: true` flag. This tells RubyLLM to bypass its validation check.
 
 ```ruby
-# Assumes openai_api_base is configured for your Azure endpoint
+# Assumes openai_api_base points at your gateway
 chat = RubyLLM.chat(
   model: 'my-company-secure-gpt4o', # Your custom deployment name
   provider: :openai,                # MUST specify provider
@@ -62,7 +62,7 @@ puts response.content
 
 # You can also use it in .with_model
 chat.with_model(
-  'gpt-5-alpha',
+  'my-experimental-model',
   provider: :openai,                # MUST specify provider
   assume_model_exists: true
 )
@@ -90,7 +90,7 @@ image = RubyLLM.paint(
 
 *   **`provider:` is Mandatory:** You must tell RubyLLM which API format to use (`ArgumentError` otherwise).
 *   **No Validation:** RubyLLM won't check the registry for the model ID.
-*   **Capability Assumptions:** Capability checks (such as `model.supports?(:function_calling)`) return `true`. You are responsible for ensuring the model supports the features you use.
+*   **Capability Assumptions:** The model is assumed to support `function_calling`, `streaming`, `vision`, and `structured_output`; checks outside that set return `false`. You are responsible for ensuring the model supports the features you use.
 *   **Your Responsibility:** Ensure the model ID is correct for the target endpoint.
 *   **Warning Log:** A warning is logged indicating validation was skipped.
 

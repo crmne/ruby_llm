@@ -72,11 +72,11 @@ chat.ask("What happens in this video?", with: file)
 
 ## Large Chat Attachments
 
-When `config.auto_upload_large_files` is true, RubyLLM uploads oversized local attachments before storing the message and replaces them with a provider-managed file reference. The original chat message then contains the provider file ID or URI instead of inline bytes.
+Automatic uploads are on by default. Set `config.auto_upload_large_files` to `false` to keep attachments inline:
 
 ```ruby
 RubyLLM.configure do |config|
-  config.auto_upload_large_files = true
+  config.auto_upload_large_files = false
 end
 ```
 

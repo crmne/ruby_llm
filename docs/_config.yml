@@ -87,10 +87,11 @@ jekyll_vitepress:
     full: true
     details: >-
       The canonical docs cover installation, configuration, providers, core
-      features, agents, Rails integration, and the complete reference. The
-      [API reference Markdown index](https://rubyllm.com/next/api/index.md),
-      [source](https://github.com/crmne/ruby_llm), and
-      [RubyGems package](https://rubygems.org/gems/ruby_llm) are also available.
+      features, agents, Rails integration, and the complete reference. Also
+      available: the [API reference Markdown index](https://rubyllm.com/api/index.md),
+      the live [model registry as JSON](https://rubyllm.com/models.json),
+      the [source](https://github.com/crmne/ruby_llm), and the
+      [RubyGems package](https://rubygems.org/gems/ruby_llm).
   branding:
     site_title: false
     logo:
@@ -288,12 +289,13 @@ models:
   openai_vision: "gpt-5.4"
   openai_tools: "gpt-5.4"
   openai_mini: "gpt-5-mini"
-  openai_audio: "gpt-4o-audio-preview"
+  openai_audio: "gpt-4o-audio-preview-2025-06-03"
   openai_speech: "gpt-4o-mini-tts"
   openai_legacy: "gpt-3.5-turbo" # schema unsupported
   openai_standard: "gpt-5.4"
 
   # Anthropic models
+  anthropic_server_tools: "claude-sonnet-5"
   anthropic_latest: "claude-sonnet-4-6"
   anthropic_current: "claude-sonnet-4-6"
   anthropic_newest: "claude-sonnet-4-6"
@@ -326,6 +328,6 @@ models:
   best_for_creative: "claude-opus-4-6"
   best_for_factual: "gemini-3.1-pro-preview"
   best_for_vision: "gpt-5.4"
-  best_for_audio: "gpt-4o-audio-preview"
+  best_for_audio: "gpt-4o-audio-preview-2025-06-03"
   best_for_tools: "gpt-5.4"
   best_for_budget: "gemini-3-flash-preview"

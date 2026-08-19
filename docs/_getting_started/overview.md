@@ -22,7 +22,7 @@ After reading this guide, you will know:
 
 ## Core Components
 
-RubyLLM consists of several core components that work together to provide its functionality. Understanding these components will help you use the framework more effectively.
+RubyLLM is built from a few core components. This section introduces each one.
 
 ### Chat
 
@@ -46,14 +46,15 @@ Messages can include various types of content depending on the model's capabilit
 
 ### Tools
 
-Tools allow AI models to call Ruby code during conversations. This powerful feature enables AI assistants to perform calculations, fetch data, or interact with external systems.
+Tools let AI models call Ruby code during conversations to perform calculations, fetch data, or interact with external systems.
 
 ```ruby
-class Calculator < RubyLLM::Tool
-  description "Performs basic arithmetic"
+class Weather < RubyLLM::Tool
+  description "Gets current temperature for coordinates"
 
-  def execute(expression:)
-    { result: eval(expression) }
+  def execute(latitude:, longitude:)
+    url = "https://api.open-meteo.com/v1/forecast?latitude=#{latitude}&longitude=#{longitude}&current=temperature_2m"
+    JSON.parse(Faraday.get(url).body)
   end
 end
 ```
@@ -103,7 +104,7 @@ The framework treats all AI providers equally. Whether you're using OpenAI, Anth
 
 ### Progressive Disclosure
 
-Simple things should be simple, and complex things should be possible. Basic chat requires just one line of code, but the framework supports advanced features like streaming, tool calling, and structured output when you need them.
+Simple things should be simple, and complex things should be possible. Basic chat is one line of code, but the framework supports advanced features like streaming, tool calling, and structured output when you need them.
 
 ```ruby
 response = RubyLLM.chat.ask("Hello")
@@ -120,13 +121,11 @@ The framework follows Ruby idioms and conventions. Method names are descriptive,
 
 ### Minimal Dependencies
 
-RubyLLM depends only on essential gems: Faraday for HTTP, Zeitwerk for autoloading, and Marcel for file type detection. This keeps the framework lightweight and reduces potential conflicts in your application.
+RubyLLM keeps its dependency list short: Faraday for HTTP, Zeitwerk for autoloading, Marcel for file type detection, Schematist for schemas, and a few small support gems for streaming and retries. This keeps the framework lightweight and reduces potential conflicts in your application.
 
 ## How Providers Work
 
 Understanding how providers and protocols fit together helps you make better use of RubyLLM and create your own.
-
-A **provider** (`RubyLLM::Provider`) knows where to talk and who it is: its host (`api_base`), its authentication `headers`, its `configuration_options`, and its model catalog. A **protocol** (`RubyLLM::Protocol`) knows how to talk: rendering payloads, parsing responses, and streaming chunks for a family of APIs. A provider declares the protocols it speaks and selects one per request.
 
 ### Provider Detection
 
@@ -159,7 +158,7 @@ Different models have different capabilities. Some support vision, others suppor
 
 ```ruby
 model_info = RubyLLM.models.find("{{ site.models.openai_tools }}")
-model_info.capabilities          # => ["function_calling", "streaming", "vision", "structured_output", ...]
+model_info.capabilities          # => ["function_calling", "structured_output", "reasoning", "vision", ...]
 model_info.supports?(:vision)    # => true
 model_info.supports?(:function_calling)  # => true
 ```
@@ -183,7 +182,7 @@ conversation = Conversation.create!(model: "{{ site.models.default_chat }}")
 response = conversation.ask("How can I help you today?")
 ```
 
-The Rails integration handles persistence, associations, and even real-time updates through Action Cable, making it easy to build AI-powered Rails applications.
+The Rails integration handles persistence, associations, and real-time updates through Action Cable.
 
 ## Next Steps
 

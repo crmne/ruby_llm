@@ -30,7 +30,7 @@ Extended Thinking gives supported models more time and a larger computation budg
 Use `with_thinking` to control models that support thinking. Some models think by default, so `with_thinking` is for tuning (or disabling) rather than turning it on.
 
 ```ruby
-chat = RubyLLM.chat(model: 'claude-opus-4.5')
+chat = RubyLLM.chat(model: 'claude-opus-4-5')
   .with_thinking(effort: :high, budget: 8000)
 
 response = chat.ask("What is 15 * 23?")
@@ -40,7 +40,7 @@ response.thinking&.signature
 response.content
 ```
 
-`with_thinking` requires at least one of `effort` or `budget`:
+Pass `effort`, `budget`, or both:
 
 ```ruby
 chat.with_thinking(effort: :low)
@@ -60,12 +60,21 @@ Use `effort` to pick a qualitative depth (`:low`, `:medium`, `:high`) and `budge
 
 RubyLLM sends `effort` and `budget` exactly as provided. Check your provider's docs for supported values.
 
+### Display
+
+Some providers let you choose how much of the thinking comes back with the response. Pass `display:` and RubyLLM forwards the value in the provider's request shape:
+
+```ruby
+chat.with_thinking(effort: :high, display: :summarized)  # a summary of the thinking
+chat.with_thinking(effort: :high, display: :omitted)     # think, but return no thinking text
+```
+
 ## Streaming with Thinking
 
 Thinking content is delivered alongside normal content in streaming chunks:
 
 ```ruby
-chat = RubyLLM.chat(model: 'claude-opus-4.5')
+chat = RubyLLM.chat(model: 'claude-opus-4-5')
   .with_thinking(effort: :medium)
 
 chat.ask("Solve this step by step: What is 127 * 43?") do |chunk|
@@ -90,12 +99,18 @@ response.thinking&.text
 response.tokens.thinking
 ```
 
-`thinking_tokens` is usually a breakdown of generated output work. From v1.15 onward, RubyLLM normalizes `output_tokens` as the billable output bucket, so you should not add `thinking_tokens` to `output_tokens` for cost calculations. When a model has distinct reasoning-token pricing, the cost is exposed separately as `response.cost.thinking`.
+`tokens.thinking` reports reasoning work separately. `tokens.output` is already the billable output bucket, so do not add `tokens.thinking` to it when calculating costs. When a model has distinct reasoning-token pricing, the cost is exposed separately as `response.cost.thinking`.
 
 ### Upgrading Existing Installations
 
-For 1.10 upgrades, consider using the [upgrade guide]({% link _reference/upgrading.md %}#upgrade-to-110) to run the generator.
-If you prefer manual migrations, add the content columns to your message table. RubyLLM's install or upgrade migration creates the internal tool-call and usage tables:
+Run the upgrade generator:
+
+```bash
+rails generate ruby_llm:upgrade
+rails db:migrate
+```
+
+Or add the content columns manually:
 
 ```ruby
 class AddThinkingToMessages < ActiveRecord::Migration[7.1]
@@ -108,8 +123,7 @@ end
 
 ## Provider Notes
 
-- Claude uses budget-based or adaptive thinking depending on the model, and can return both text and signature.
-- Anthropic requires a thinking budget for older Claude models and effort-based adaptive thinking for newer models.
+- Anthropic uses a token budget for older Claude models and adaptive, effort-based thinking for newer ones. Claude can return both thinking text and a signature.
 - Bedrock thinking params are model-dependent. Claude models on Bedrock only take a token budget, so RubyLLM converts `effort` into the budget level the model advertises. Pass `budget` to set the exact number of tokens.
 - Gemini 2.5 uses a token budget; Gemini 3 uses effort levels.
 - OpenAI reasoning models accept `effort` but may not return thinking text or signatures.

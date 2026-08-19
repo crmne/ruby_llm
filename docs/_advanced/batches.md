@@ -19,7 +19,7 @@ After reading this guide, you will know:
 * How to batch embeddings with `embed_later`
 * How to persist batch results with ActiveRecord
 
-## What are Batches?
+## What Are Batches?
 
 Providers process batched requests asynchronously on their own schedule, usually at a discount from their interactive APIs. Several supported providers price batch inference at 50% of standard rates and target a 24-hour turnaround, but pricing, deadlines, and expiration behavior are provider-specific and can change. Batches are the right tool whenever nobody is waiting on the answer: nightly classification runs, bulk summarization, evaluations, and backfills.
 

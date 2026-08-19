@@ -23,11 +23,11 @@ After reading this guide, you will know:
 
 When building applications, you often need AI responses in a specific format for parsing and processing. RubyLLM provides two approaches: JSON mode for valid JSON output, and structured output for guaranteed schema compliance.
 
-JSON mode (using `with_provider_options(response_format: { type: 'json_object' })`) guarantees valid JSON but not any specific structure. Structured output (`with_schema`) guarantees the response matches your exact schema with required fields and types. Use structured output when you need predictable, validated responses.
+JSON mode (using `with_provider_options(text: { format: { type: 'json_object' } })` on OpenAI's default Responses protocol) guarantees valid JSON but not any specific structure. Structured output (`with_schema`) guarantees the response matches your exact schema with required fields and types. Use structured output when you need predictable, validated responses.
 {: .note }
 
 ```ruby
-chat = RubyLLM.chat.with_provider_options(response_format: { type: 'json_object' })
+chat = RubyLLM.chat.with_provider_options(text: { format: { type: 'json_object' } })
 response = chat.ask("List 3 programming languages with their year created. Return as JSON.")
 
 class LanguagesSchema < Schematist::Schema
@@ -116,10 +116,6 @@ chat = RubyLLM.chat
 response = chat.with_schema(person_schema).ask("Generate a person")
 ```
 
-Custom schema names are useful for:
-- **Influencing model behavior** - Descriptive names can help the model better understand the expected output structure
-- **Debugging and logging** - Identifying which schema was used in API requests
-
 ### Complex Nested Schemas
 
 Structured output supports complex nested objects and arrays:
@@ -155,7 +151,7 @@ end
 Not all models support structured output. Currently supported:
 - **OpenAI**: GPT-4o, GPT-4o-mini, and newer models
 - **Anthropic**: Claude 4.5+ models (Haiku, Sonnet, Opus)
-- **Gemini**: Gemini 1.5 Pro/Flash and newer
+- **Gemini**: Gemini 2.0 and newer models
 
 Models that don't support structured output:
 

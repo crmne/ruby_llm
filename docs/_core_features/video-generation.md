@@ -98,7 +98,7 @@ These providers generate video through RubyLLM:
 | --- | --- | --- |
 | Gemini | `veo-3.1-generate-preview`, `veo-3.1-fast-generate-preview`, `veo-3.1-lite-generate-preview` | 4, 6, or 8 second clips with audio |
 | xAI | `grok-imagine-video`, `grok-imagine-video-1.5` | Clips up to 15 seconds, priced per second |
-| OpenRouter | `x-ai/grok-imagine-video`, `google/veo-3.1-lite`, `openai/sora-2-pro`, and the rest of its video catalog | One API across many video models |
+| OpenRouter | `x-ai/grok-imagine-video` and the rest of its video catalog (after `RubyLLM.models.refresh!`) | One API across many video models |
 | Azure OpenAI | Sora deployments such as `sora-2` | Uses your deployment name as the model id |
 
 Refer to the [Working with Models Guide]({% link _reference/models.md %}) for finding and filtering models, and [Model Resolution]({% link _reference/model-resolution.md %}) for how a model name and provider resolve.
@@ -216,7 +216,7 @@ RubyLLM.animate_later("A cat", model: "claude-sonnet-4-6")
 
 See the [Error Handling Guide]({% link _advanced/error-handling.md %}) for comprehensive error handling strategies.
 
-## What's Next?
+## Next Steps
 
 *   [Image Generation]({% link _core_features/image-generation.md %}) - Generate the still images you can animate.
 *   [Attachments]({% link _core_features/attachments.md %}) - Everything `with:` accepts across RubyLLM.

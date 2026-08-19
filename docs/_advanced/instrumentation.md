@@ -9,7 +9,7 @@ redirect_from:
 
 # {{ page.title }}
 
-{{ page.description }}.
+{{ page.description }}
 {: .fs-6 .fw-300 }
 
 After reading this guide, you will know:

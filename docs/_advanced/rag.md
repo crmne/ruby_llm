@@ -27,11 +27,14 @@ RAG is often just one step in a larger [workflow]({% link _advanced/agentic-work
 # Gemfile
 gem 'neighbor'
 gem 'ruby_llm'
+```
 
-# Generate migration for pgvector
+```bash
 bin/rails generate neighbor:vector
 bin/rails db:migrate
+```
 
+```ruby
 class CreateDocuments < ActiveRecord::Migration[7.1]
   def change
     create_table :documents do |t|
@@ -95,7 +98,7 @@ class SupportWithDocsAgent < RubyLLM::Agent
 end
 
 agent = SupportWithDocsAgent.new
-response = agent.ask("What is our refund policy?").content
+agent.ask("What is our refund policy?").content
 ```
 
 ## Next Steps

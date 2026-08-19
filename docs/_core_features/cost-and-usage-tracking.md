@@ -31,16 +31,14 @@ Token counts always live on a `RubyLLM::Tokens` value, and costs always live on 
 ```ruby
 response = chat.ask "Explain the Ruby Global Interpreter Lock (GIL)."
 
-input_tokens = response.tokens.input   # Standard input tokens
-output_tokens = response.tokens.output # Billable output tokens
-cache_read_tokens = response.tokens.cache_read # Tokens served from the provider's prompt cache
-cache_write_tokens = response.tokens.cache_write # Tokens written to cache
-thinking_tokens = response.tokens.thinking # Thinking tokens when providers report them
-request_side_input_tokens = input_tokens.to_i + cache_read_tokens.to_i + cache_write_tokens.to_i
+input_tokens = response.tokens.input
+output_tokens = response.tokens.output
+cache_read_tokens = response.tokens.cache_read
+cache_write_tokens = response.tokens.cache_write
+thinking_tokens = response.tokens.thinking
 
 puts "Input Tokens: #{input_tokens}"
 puts "Output Tokens: #{output_tokens}"
-puts "Request-side Input Tokens: #{request_side_input_tokens}"
 
 puts "Input Cost: $#{format('%.6f', response.cost.input)}" if response.cost.input
 puts "Output Cost: $#{format('%.6f', response.cost.output)}" if response.cost.output
@@ -122,7 +120,7 @@ A guessed token count is worse than no count, because you would size a budget ag
 
 ## How Providers Are Normalized
 
-RubyLLM handles provider token differences for you. From v1.15 onward, `tokens.input` means the standard input bucket used for pricing. Cache activity is exposed separately as `tokens.cache_read` and `tokens.cache_write`, even when the provider includes those tokens in a raw prompt total.
+RubyLLM handles provider token differences for you. `tokens.input` means the standard input bucket used for pricing. Cache activity is exposed separately as `tokens.cache_read` and `tokens.cache_write`, even when the provider includes those tokens in a raw prompt total.
 
 | Provider | Raw provider usage | RubyLLM exposes |
 | --- | --- | --- |
@@ -169,7 +167,7 @@ puts cost.thinking
 puts cost.total
 ```
 
-When a model publishes a long-context tier, `cost_for` uses those rates once the prompt exceeds the registry threshold. Prompt size is `input + cache_read + cache_write`. Below that threshold—or when the model has no long-context tier—standard rates apply. Batch rates remain unused by `cost_for`; see [Batches]({% link _advanced/batches.md %}).
+When a model publishes a long-context tier, `cost_for` uses those rates once the prompt exceeds the registry threshold. Prompt size is `input + cache_read + cache_write`. Below that threshold, or when the model has no long-context tier, standard rates apply. Batch rates remain unused by `cost_for`; see [Batches]({% link _advanced/batches.md %}).
 
 Most applications use the shorter helpers on messages, chats, and agents: `response.cost.total`, `chat.cost.total`, `agent.cost.total`.
 
@@ -196,7 +194,7 @@ chat.tokens.input
 chat.cost.total
 ```
 
-The ledger is internal to RubyLLM; your application still owns only its Chat and Message models. Token buckets and cost components use normalized numeric columns rather than a JSON blob. Each usage row freezes its cost in normalized decimal columns at completion, so a later `RubyLLM.models.refresh!` that changes registry pricing leaves recorded usage untouched. The upgrade migration moves token counts and frozen costs from pre-2.0 message columns into the ledger and removes those columns, so old and new rows read through the same path.
+The ledger is internal to RubyLLM; your application still owns only its Chat and Message models. Each usage row records the operation, provider, model, status, token buckets, cost components, and timestamps in normalized numeric columns, so ordinary SQL sums and period queries work directly against `ruby_llm_usages`. Costs are frozen at completion, so a later `RubyLLM.models.refresh!` that changes registry pricing leaves recorded usage untouched. The upgrade migration moves token counts and frozen costs from pre-2.0 message columns into the ledger and removes those columns, so old and new rows read through the same path.
 
 ## Keeping Registry Pricing Fresh
 
@@ -240,23 +238,6 @@ The payload contains `operation`, `provider`, `model`, `status`, `tokens`, and `
 `status` is `succeeded`, `failed`, or `cancelled`. `tokens` and `cost` use the same value objects returned by responses. They are always present; individual fields are `nil` when the provider did not report enough information. A failed or cancelled attempt may contain the token counts observed before it stopped.
 
 Instrumentation is an observer, not the source of truth for a persisted Rails chat. RubyLLM maintains the internal ledger and emits the same normalized facts for applications that need them elsewhere.
-
-## What RubyLLM Stores
-
-The internal entry deliberately remains a small tracking fact:
-
-| Field | Why it belongs |
-|:------|:---------------|
-| Chat reference | Preserves attempts that never produced a message. |
-| Optional message reference | Several retries can contribute to one response; cancellation may contribute to none. |
-| Operation | Supports chat and one-shot APIs with the same mechanism. |
-| Provider and model | Preserve the actual route and pricing identity used by each attempt. |
-| Status | Distinguishes succeeded, failed, and cancelled attempts. |
-| Token buckets | Preserve provider-independent quantities used for pricing. |
-| Cost components and total | Freeze historical pricing and allow ordinary database sums. |
-| Rails timestamps | Order attempts and support period queries. |
-
-Content, attachments, tool arguments, raw provider payloads, finish reasons, request timings, and exceptions do not belong in the usage ledger. They already have homes in messages or instrumentation.
 
 ## Next Steps
 

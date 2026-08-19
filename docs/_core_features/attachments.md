@@ -43,6 +43,8 @@ response = chat.ask "Compare the user interfaces in these two screenshots.", wit
 puts response.content
 ```
 
+RubyLLM automatically handles image encoding and formatting for each provider's API. Local images are read and encoded as needed, while URLs are passed directly when supported by the provider.
+
 ### Working with Videos
 
 You can also analyze video files or URLs with video-capable models. RubyLLM will automatically detect video files and handle them appropriately.
@@ -65,8 +67,6 @@ Only Google Gemini and VertexAI models currently support video input.
 
 Large video files may be uploaded through the provider Files API when the selected provider supports stored file references in chat.
 {: .note }
-
-RubyLLM automatically handles image encoding and formatting for each provider's API. Local images are read and encoded as needed, while URLs are passed directly when supported by the provider.
 
 ### Working with Audio
 
@@ -102,7 +102,7 @@ puts response.content
 
 ### Working with PDFs
 
-PDF support allows models to analyze complex documents including reports, manuals, and research papers. Currently, Claude 3+ and Gemini models offer the best PDF support.
+PDF support allows models to analyze complex documents including reports, manuals, and research papers. Claude and Gemini models offer the best PDF support.
 
 ```ruby
 chat = RubyLLM.chat(model: '{{ site.models.anthropic_newest }}')

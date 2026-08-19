@@ -21,7 +21,7 @@ After reading this guide, you will know:
 * How to compose sequential, routing, parallel, and fan-in workflows.
 * When to reach for an evaluator loop to iterate on output quality.
 
-A workflow is just orchestration code that coordinates one or more agents. In practice, this is often a small Ruby class with a single public method, plus a loop you control. Before you build a multi-agent workflow, it helps to understand how a single agent's turn-by-turn loop runs, so you can pause it, persist it, and resume it on demand.
+A workflow is orchestration code that coordinates one or more agents. In practice, this is often a small Ruby class with a single public method, plus a loop you control. Before you build a multi-agent workflow, it helps to understand how a single agent's turn-by-turn loop runs, so you can pause it, persist it, and resume it on demand.
 
 When you want to see the whole operation as one unit in your observability stack, wrap that Ruby code with `RubyLLM.workflow` and mark meaningful regions with `workflow.step`. These wrappers only add correlation to [instrumentation]({% link _advanced/instrumentation.md %}#workflows-and-steps); they do not introduce a workflow DSL or take over execution.
 
@@ -35,7 +35,7 @@ When you want to see the whole operation as one unit in your observability stack
 * `complete` steps until done. This is what `ask` calls, and it returns the final response.
 * `complete?` is true when the model answered without calling a tool.
 
-So the agentic loop is just `step` until `complete?`:
+So the agentic loop is `step` until `complete?`:
 
 ```ruby
 chat = RubyLLM.chat.with_tools(Weather).ask_later("What's the weather in Paris?")
@@ -54,7 +54,7 @@ That property is what makes agents durable: run every turn as a background job, 
 
 ## Workflow Patterns
 
-With the loop in hand, you can compose agents into larger systems. Each pattern below is a small, plain Ruby class - no framework, just orchestration.
+With the loop in hand, you can compose agents into larger systems. Each pattern below is a small, plain Ruby class - no framework, only orchestration.
 
 ### Sequential Workflow
 
@@ -179,12 +179,13 @@ agent.ask_later(message)
 until agent.complete?
   agent.step
   last = agent.messages.reload.last
-  specialist = AGENTS[last.content] if last.role == "tool"
-  agent = specialist.find(chat_id) if specialist
+  if last.role == "tool" && (specialist = AGENTS[last.content])
+    agent = specialist.find(chat_id)
+  end
 end
 ```
 
-The handoff tool just returns the name; the orchestrator owns the routing, watching each tool result and swapping agents when one names a specialist. Because the routing lives in the loop and not in any agent, this extends to a multi-router for free: give the specialists the same `Handoff` tool and they can route onward, with every hop handled the same way.
+The handoff tool only returns the name; the orchestrator owns the routing, watching each tool result and swapping agents when one names a specialist. Because the routing lives in the loop and not in any agent, this extends to a multi-router for free: give the specialists the same `Handoff` tool and they can route onward, with every hop handled the same way.
 
 (A tool cannot reconfigure the chat it runs inside, since its `execute` never receives the chat, so the switch belongs in the loop, not in the tool.)
 
@@ -324,11 +325,11 @@ final = workflow.call("Write a concise onboarding email for a new API customer")
 
 ## Retrieval-Augmented Generation
 
-RAG is often just one step in a larger workflow: retrieve relevant context, then answer with that context. See [Retrieval-Augmented Generation (RAG)]({% link _advanced/rag.md %}) for the full pattern.
+RAG is often a single step in a larger workflow: retrieve relevant context, then answer with that context. See [Retrieval-Augmented Generation (RAG)]({% link _advanced/rag.md %}) for the full pattern.
 
 ## Error Handling
 
-For robust error handling in workflow code, leverage the patterns from the Tools guide:
+For robust error handling in workflow code, use the patterns from the Tools guide:
 
 * Return `{ error: "description" }` for recoverable errors the LLM might fix
 * Raise exceptions for unrecoverable errors (missing config, service down)
