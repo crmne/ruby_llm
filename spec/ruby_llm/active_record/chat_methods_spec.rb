@@ -306,6 +306,23 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       expect(chat.run_tools).to eq(chat)
       expect(chat).to be_complete
     end
+
+    it 'forwards count_tokens and returns the count' do
+      chat = Chat.create!(model: model_id)
+      llm = chat.to_llm
+      allow(llm).to receive(:count_tokens).and_return(42)
+
+      expect(chat.count_tokens('Summarize this contract.')).to eq(42)
+      expect(llm).to have_received(:count_tokens).with('Summarize this contract.')
+    end
+
+    it 'renders the payload with before_request hooks applied' do
+      chat = Chat.create!(model: model_id)
+      chat.before_request { |payload| payload[:metadata] = { user_id: 'u-1' } }
+      chat.ask_later('Hello')
+
+      expect(chat.render[:metadata]).to eq({ user_id: 'u-1' })
+    end
   end
 
   describe '#complete failure handling' do
