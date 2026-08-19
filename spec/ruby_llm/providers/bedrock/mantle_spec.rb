@@ -127,7 +127,7 @@ RSpec.describe RubyLLM::Providers::Bedrock::Mantle do
         model.provider == 'bedrock' && model.metadata[:endpoint] == 'mantle'
       end
 
-      expect(tagged.size).to eq(47)
+      expect(tagged.size).to eq(48)
       expect(tagged.map(&:id)).to include('openai.gpt-oss-20b', 'anthropic.claude-haiku-4-5', 'zai.glm-5')
     end
   end

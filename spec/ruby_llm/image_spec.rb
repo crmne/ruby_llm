@@ -111,8 +111,8 @@ RSpec.describe RubyLLM::Image, :live do
       end
     end
 
-    it 'gemini/imagen-4.0-generate-001 paints several images in one request' do
-      images = RubyLLM.paint('a siamese cat', model: 'imagen-4.0-generate-001', provider: :gemini, count: 2)
+    it 'openai/gpt-image-1.5 paints several images in one request' do
+      images = RubyLLM.paint('a siamese cat', model: 'gpt-image-1.5', provider: :openai, count: 2)
 
       expect(images.length).to eq(2)
       expect(images.map(&:mime_type)).to all(include('image'))

@@ -201,15 +201,12 @@ TRANSCRIPTION_MODELS = filter_unrecorded_providers(transcription_models).freeze
 VIDEO_GENERATION_MODELS = [
   { provider: :gemini, model: 'veo-3.1-lite-generate-preview',
     provider_options: { parameters: { durationSeconds: 4 } } },
-  { provider: :openrouter, model: 'x-ai/grok-imagine-video',
-    provider_options: { duration: 1, resolution: '480p' } },
   { provider: :xai, model: 'grok-imagine-video',
     provider_options: { duration: 1, resolution: '480p' } }
 ].freeze
 
 image_generation_models = [
   { provider: :openai, model: 'gpt-image-1', supports_size: false },
-  { provider: :gemini, model: 'imagen-4.0-generate-001', supports_size: false },
   { provider: :gemini, model: 'gemini-3.1-flash-lite-image', supports_size: false },
   { provider: :vertexai, model: 'gemini-3.1-flash-lite-image', supports_size: false },
   { provider: :openrouter, model: 'google/gemini-3.1-flash-lite-image', supports_size: false },

@@ -104,15 +104,15 @@ RSpec.describe RubyLLM::Models do
 
   describe '#find' do
     it 'prioritizes exact matches over aliases' do
-      chat_model = RubyLLM.chat(model: 'gemini-2.0-flash')
-      expect(chat_model.model.id).to eq('gemini-2.0-flash')
+      chat_model = RubyLLM.chat(model: 'gemini-2.5-flash')
+      expect(chat_model.model.id).to eq('gemini-2.5-flash')
 
-      chat_model = RubyLLM.chat(model: 'gemini-2.0-flash', provider: 'gemini')
-      expect(chat_model.model.id).to eq('gemini-2.0-flash')
+      chat_model = RubyLLM.chat(model: 'gemini-2.5-flash', provider: 'gemini')
+      expect(chat_model.model.id).to eq('gemini-2.5-flash')
 
       # Only use alias when exact match isn't found
-      chat_model = RubyLLM.chat(model: 'claude-3-5-haiku')
-      expect(chat_model.model.id).to eq('claude-3-5-haiku')
+      chat_model = RubyLLM.chat(model: 'gemini-flash')
+      expect(chat_model.model.id).to eq('gemini-flash-latest')
     end
 
     it 'prefers the first-party provider when an aggregator serves the same name' do
