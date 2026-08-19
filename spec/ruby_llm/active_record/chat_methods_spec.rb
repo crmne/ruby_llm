@@ -434,6 +434,17 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       expect(Message.find_by(id: placeholder.id)).to be_present
     end
 
+    it 'keeps a placeholder that already carries attachments' do
+      chat = Chat.create!(model: model_id)
+      chat.send(:persist_new_message)
+      placeholder = chat.instance_variable_get(:@message)
+      placeholder.attachments.attach(io: StringIO.new('image'), filename: 'cat.png', content_type: 'image/png')
+
+      chat.send(:persist_new_message)
+
+      expect(Message.find_by(id: placeholder.id)).to be_present
+    end
+
     it 'does nothing when the round produced no message' do
       chat = Chat.create!(model: model_id)
 

@@ -109,7 +109,7 @@ module RubyLLM
       end
 
       def tool_error_message
-        payload_error_message(content)
+        payload_error_message(extract_content)
       end
 
       private

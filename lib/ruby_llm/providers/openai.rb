@@ -46,7 +46,7 @@ module RubyLLM
       end
 
       def batch_results(id, batch_protocol: nil)
-        super(id, batch_protocol: batch_protocol || batch_protocol_for_stored_batch(id))
+        super(id, batch_protocol: resolve_batch_protocol(batch_protocol) || batch_protocol_for_stored_batch(id))
       end
 
       class << self

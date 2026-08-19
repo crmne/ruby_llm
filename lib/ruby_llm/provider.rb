@@ -215,9 +215,13 @@ module RubyLLM
     end
 
     def batch_results(id, batch_protocol: nil) # :nodoc:
-      protocol = batch_protocol || self.batch_protocol
+      protocol = resolve_batch_protocol(batch_protocol) || self.batch_protocol
       ensure_batches_supported!(protocol)
       protocol.new(self).batch_results(id)
+    end
+
+    def batch_protocol_name(protocol) # :nodoc:
+      self.class.batch_protocols.key(protocol)&.to_s
     end
 
     def files? # :nodoc:
@@ -564,6 +568,12 @@ module RubyLLM
 
     def batch_protocol_for_name(name)
       self.class.batch_protocols[name.to_sym]
+    end
+
+    def resolve_batch_protocol(protocol)
+      return protocol if protocol.is_a?(Module)
+
+      protocol && batch_protocol_for_name(protocol)
     end
 
     def file_protocol

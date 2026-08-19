@@ -22,6 +22,9 @@ module RubyLLM
       include AttachmentHelpers
 
       CANCELLATION_POLL_INTERVAL = 1.0
+      COMPLETION_ERRORS = [
+        RubyLLM::CancelledError, RubyLLM::Error, Faraday::Error, Timeout::Error, Errno::ETIMEDOUT
+      ].freeze
 
       included do
         before_save :resolve_model
@@ -340,6 +343,9 @@ module RubyLLM
       # RubyLLM::Chat#generate.
       def generate(...)
         to_llm.generate(...)
+      rescue *COMPLETION_ERRORS => e
+        cleanup_after_failure(e)
+        raise
       end
 
       # Executes the pending tool calls and persists their results without
@@ -357,6 +363,9 @@ module RubyLLM
       #
       def step(...)
         to_llm.step(...)
+      rescue *COMPLETION_ERRORS => e
+        cleanup_after_failure(e)
+        raise
       end
 
       # Returns whether the conversation has no pending work, neither a
@@ -372,13 +381,8 @@ module RubyLLM
       # tool results, then re-raises the error.
       def complete(...)
         to_llm.complete(...)
-      rescue RubyLLM::CancelledError
-        cleanup_failed_messages(reason: 'chat cancelled') if @message&.persisted? && @message.content.blank?
-        cleanup_orphaned_tool_results
-        raise
-      rescue RubyLLM::Error, Faraday::Error, Timeout::Error, Errno::ETIMEDOUT
-        cleanup_failed_messages(reason: 'API call failed') if @message&.persisted? && @message.content.blank?
-        cleanup_orphaned_tool_results
+      rescue *COMPLETION_ERRORS => e
+        cleanup_after_failure(e)
         raise
       end
 
@@ -465,6 +469,12 @@ module RubyLLM
         end
       end
 
+      def cleanup_after_failure(error)
+        reason = error.is_a?(RubyLLM::CancelledError) ? 'chat cancelled' : 'API call failed'
+        cleanup_failed_messages(reason:) if blank_placeholder?
+        cleanup_orphaned_tool_results
+      end
+
       def cleanup_failed_messages(reason:)
         RubyLLM.logger.warn "RubyLLM: #{reason}, destroying message: #{@message.id}"
         @message.destroy
@@ -472,7 +482,7 @@ module RubyLLM
 
       def cleanup_orphaned_tool_results # rubocop:disable Metrics/PerceivedComplexity
         messages_association.reload
-        last = eager_load_messages.max_by(&:id)
+        last = eager_load_messages.last
 
         return unless last&.tool_call? || last&.tool_result?
 
@@ -593,10 +603,17 @@ module RubyLLM
       end
 
       def persist_new_message
-        @message.destroy if @message&.persisted? && @message.content.blank? && !@message.ruby_llm_tool_calls.exists?
+        @message.destroy if blank_placeholder?
 
         attrs = { role: :assistant, content: '' }
         @message = messages_association.create!(attrs)
+      end
+
+      def blank_placeholder?
+        return false unless @message&.persisted? && @message.content.blank?
+        return false if @message.respond_to?(:attachments) && @message.attachments.attached?
+
+        !@message.ruby_llm_tool_calls.exists?
       end
 
       def persist_message_completion(message)

@@ -160,7 +160,7 @@ module RubyLLM
       @provider = provider
       @chats = chats
       @requests = requests
-      @batch_protocol = batch_protocol
+      @batch_protocol = protocol_name(batch_protocol)
       @store = store
       apply(attributes)
     end
@@ -239,7 +239,13 @@ module RubyLLM
       @status = attributes.fetch(:status)
       @completed = attributes.fetch(:completed)
       @request_counts = attributes[:request_counts]
-      @batch_protocol = attributes[:batch_protocol] if attributes[:batch_protocol]
+      @batch_protocol = protocol_name(attributes[:batch_protocol]) if attributes[:batch_protocol]
+    end
+
+    def protocol_name(protocol)
+      return if protocol.nil?
+
+      protocol.is_a?(Module) ? @provider.batch_protocol_name(protocol) : protocol.to_s
     end
 
     def collect_results
