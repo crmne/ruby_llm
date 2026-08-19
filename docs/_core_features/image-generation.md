@@ -55,7 +55,7 @@ The `paint` method abstracts the differences between provider APIs.
 
 ## Generating Several Images at Once
 
-Pass `count:` to get several images from one request, which is cheaper and faster than repeating the call. RubyLLM returns an array when `count` is greater than 1, and a single image otherwise:
+Pass `count:` to get several images from one request, which is cheaper and faster than repeating the call. RubyLLM returns an array when the request comes back with several images, and a single image otherwise:
 
 ```ruby
 images = RubyLLM.paint("a siamese cat", model: "imagen-4.0-generate-001", count: 4)

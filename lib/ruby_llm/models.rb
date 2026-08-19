@@ -638,9 +638,18 @@ module RubyLLM
     def merge_discovered_models(published, remote_only:)
       provider_fetch = self.class.fetch_provider_models(remote_only: remote_only)
       self.class.log_provider_fetch(provider_fetch)
-      failed_providers = provider_fetch[:failed].map { |failure| failure[:slug] }
-      preserved_models = all.select { |model| failed_providers.include?(model.provider) }
+      preserved = preserved_providers(provider_fetch, published)
+      preserved_models = all.select { |model| preserved.include?(model.provider) }
       self.class.merge_models(provider_fetch[:models] + preserved_models, published)
+    end
+
+    # A provider that answered replaces its own models and the published
+    # catalog replaces what it covers. Everything else survives the refresh,
+    # including the local providers a remote_only run never asks.
+    def preserved_providers(provider_fetch, published)
+      failed = provider_fetch[:failed].map { |failure| failure[:slug] }
+      covered = provider_fetch[:fetched_providers] + published.map(&:provider)
+      failed | (all.map(&:provider).uniq - covered)
     end
 
     def persist_registry!(models, etag:)

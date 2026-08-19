@@ -295,6 +295,14 @@ module RubyLLM
       super.reject { |ivar| ivar.to_s.match?(/(_id|_key|_secret|_token|_credential_provider)$/) }
     end
 
+    # Object#inspect reads the instance variable table directly, so
+    # credentials only stay out of console and log output when #inspect is
+    # built from the redacted #instance_variables.
+    def inspect # :nodoc:
+      attributes = instance_variables.map { |ivar| "#{ivar}=#{instance_variable_get(ivar).inspect}" }
+      "#<#{self.class.name} #{attributes.join(', ')}>"
+    end
+
     remove_method :log_regexp_timeout=
     def log_regexp_timeout=(value) # :nodoc:
       if value && !Regexp.respond_to?(:timeout)

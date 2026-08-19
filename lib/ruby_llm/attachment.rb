@@ -79,9 +79,9 @@ module RubyLLM
       @source.is_a?(UploadedFile)
     end
 
-    # Files this attachment has been auto-uploaded to, keyed by provider
-    # slug. Kept on the attachment so request-time preprocessing uploads
-    # once per provider while history keeps the original source.
+    # Files this attachment has been auto-uploaded to, keyed by provider and
+    # credentials. Kept on the attachment so request-time preprocessing
+    # uploads once per account while history keeps the original source.
     def provider_uploads # :nodoc:
       @provider_uploads ||= {}
     end

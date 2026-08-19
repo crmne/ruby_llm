@@ -243,16 +243,24 @@ module RubyLLM
     end
 
     def input_price
-      return text_price(:input_per_million, text_pricing.input) if @category == :text_tokens || image_cost?
+      return text_input_price if @category == :text_tokens || image_cost?
 
-      category_pricing.input
+      category_pricing.input || text_input_price
     end
 
     def output_price
-      return image_pricing.output || text_price(:output_per_million, text_pricing.output) if image_cost?
-      return text_price(:output_per_million, text_pricing.output) if @category == :text_tokens
+      return image_pricing.output || text_output_price if image_cost?
+      return text_output_price if @category == :text_tokens
 
-      category_pricing.output
+      category_pricing.output || text_output_price
+    end
+
+    def text_input_price
+      text_price(:input_per_million, text_pricing.input)
+    end
+
+    def text_output_price
+      text_price(:output_per_million, text_pricing.output)
     end
 
     def text_price(attribute, standard_price)

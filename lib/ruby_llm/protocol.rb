@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'digest'
+
 module RubyLLM
   # A Protocol knows how to talk to a family of provider APIs: rendering
   # request payloads, parsing responses, streaming chunks, and naming the
@@ -242,7 +244,7 @@ module RubyLLM
         payload = render_image_payload(prompt, model:, size:, count:, with:, mask:, provider_options:)
         response = @connection.post images_url(with:, mask:), payload, usage: @usage_tracker
         images = parse_image_responses(response, model:)
-        count.nil? || count <= 1 ? images.first : images
+        images.size <= 1 ? images.first : images
       end
     rescue NotImplementedError
       raise Error, "#{@provider.name} doesn't support image generation"
@@ -471,11 +473,21 @@ module RubyLLM
     # another provider's file reference. An upload past its provider
     # retention window is replaced rather than reused.
     def provider_upload(attachment)
-      upload = attachment.provider_uploads[@provider.slug]
+      scope = provider_upload_scope
+      upload = attachment.provider_uploads[scope]
       return upload if upload && !upload.expired?
 
-      attachment.provider_uploads[@provider.slug] =
+      attachment.provider_uploads[scope] =
         @provider.upload_file(attachment, **provider_file_upload_options(attachment))
+    end
+
+    # A file id belongs to the account that uploaded it, so the memo is keyed
+    # by the credentials in play as well as the provider: a chat moved to
+    # another Context uploads again instead of replaying a foreign id. The
+    # credentials themselves are hashed so the attachment never carries them.
+    def provider_upload_scope
+      credentials = @provider.class.configuration_options.map { |option| @config.public_send(option) }
+      "#{@provider.slug}:#{Digest::SHA256.hexdigest(credentials.join("\0"))}"
     end
 
     def upload_large_attachment?(attachment)
@@ -525,19 +537,21 @@ module RubyLLM
       raise UnsupportedAttachmentError, 'video reference image'
     end
 
-    def build_audio_file_part(file_path)
+    def build_audio_file_part(audio_file)
       require 'faraday/multipart'
-      require 'marcel'
-      require 'pathname'
 
-      expanded_path = File.expand_path(file_path)
-      mime_type = Marcel::MimeType.for(Pathname.new(expanded_path))
+      attachment = audio_file.is_a?(Attachment) ? audio_file : Attachment.new(audio_file)
+      body = attachment.path? ? File.expand_path(attachment.source) : StringIO.new(attachment.content)
 
-      Faraday::Multipart::FilePart.new(
-        expanded_path,
-        mime_type,
-        File.basename(expanded_path)
-      )
+      Faraday::Multipart::FilePart.new(body, attachment.mime_type, audio_file_name(attachment))
+    end
+
+    # Providers reject audio whose filename carries no extension, which a URL
+    # or an IO often has none of, so the detected format supplies one.
+    def audio_file_name(attachment)
+      name = attachment.filename.to_s
+      name = 'audio' if name.empty?
+      attachment.extension ? name : "#{name}.#{attachment.format}"
     end
 
     def post_count_tokens(payload)
