@@ -5,6 +5,9 @@ module RubyLLM
     class VertexAI
       # Google Cloud Storage-backed files for Vertex AI batch input and output.
       class Files < UploadedFile::Protocol
+        # GCS object names allow spaces and other characters URI() rejects.
+        GCS_URI = %r{\Ags://([^/]+)/?(.*)\z}m
+
         # rubocop:disable Lint/UnusedMethodArgument
         def upload(file, uri: nil, filename: nil, content_type: nil, purpose: nil, expires_in: nil,
                    visibility: nil, display_name: nil)
@@ -88,10 +91,10 @@ module RubyLLM
         end
 
         def parse_gcs_uri(uri)
-          parsed = URI(uri)
-          raise ArgumentError, "Expected a gs:// URI, got: #{uri}" unless parsed.scheme == 'gs'
+          match = GCS_URI.match(uri.to_s)
+          raise ArgumentError, "Expected a gs:// URI, got: #{uri}" unless match
 
-          [parsed.host, parsed.path.delete_prefix('/')]
+          [match[1], match[2]]
         end
       end
     end

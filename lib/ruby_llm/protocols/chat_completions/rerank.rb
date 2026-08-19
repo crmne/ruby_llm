@@ -41,10 +41,14 @@ module RubyLLM
 
             RubyLLM::Rerank::Result.new(
               index: index,
-              document: result.dig('document', 'text') || result['document'] || (index && documents[index]),
+              document: rerank_document(result['document']) || (index && documents[index]),
               score: result['relevance_score']
             )
           end
+        end
+
+        def rerank_document(document)
+          document.is_a?(Hash) ? document['text'] : document
         end
       end
     end

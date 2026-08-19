@@ -120,6 +120,17 @@ RSpec.describe RubyLLM::Chat do
       expect(followup[:content].last[:type]).to eq('image_url')
     end
 
+    it 'keeps parallel Chat Completions tool results consecutive' do
+      second_call = RubyLLM::ToolCall.new(id: 'call_2', name: 'drive_search', arguments: {})
+      chat = chat_with_tool_attachment('gpt-5-nano', 'openai', protocol: :chat_completions)
+      chat.messages[1] = RubyLLM::Message.new(role: :assistant, content: nil,
+                                              tool_calls: { 'call_1' => tool_call, 'call_2' => second_call })
+      chat.messages << RubyLLM::Message.new(role: :tool, content: 'Found it too', tool_call_id: 'call_2')
+
+      roles = chat.render[:messages].map { |message| message[:role] }
+      expect(roles).to eq(%w[user assistant tool tool user])
+    end
+
     it 'raises for file types a provider cannot take' do
       chat = chat_with_tool_attachment('deepseek-chat', 'deepseek')
 

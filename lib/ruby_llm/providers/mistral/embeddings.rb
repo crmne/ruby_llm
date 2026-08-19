@@ -15,8 +15,9 @@ module RubyLLM
         def render_embedding_payload(text, model:, dimensions:, task_type: nil, title: nil, provider_options: {})
           {
             model: model,
-            input: text
-          }.merge(provider_options)
+            input: text,
+            output_dimension: dimensions
+          }.compact.merge(provider_options)
         end
         # rubocop:enable Lint/UnusedMethodArgument
 

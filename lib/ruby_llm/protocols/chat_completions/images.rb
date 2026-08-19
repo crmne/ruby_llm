@@ -61,7 +61,7 @@ module RubyLLM
             payload[:mask] = build_image_reference(mask) if mask
             payload[:size] = size if flexible_size?(model) && size
           else
-            payload[:image] = build_upload_parts(with)
+            payload[:image] = single_upload_part(build_upload_parts(with))
             payload[:mask] = build_upload_part(mask) if mask
           end
           payload.merge(provider_options)
@@ -99,6 +99,12 @@ module RubyLLM
 
             build_upload_part(source)
           end
+        end
+
+        # Retries only rewind upload parts at the top level of the payload,
+        # so a lone image rides there instead of inside an array.
+        def single_upload_part(parts)
+          parts.one? ? parts.first : parts
         end
 
         def build_upload_part(source)

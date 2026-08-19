@@ -59,6 +59,14 @@ module RubyLLM
 
       private
 
+      def sync_response(payload, additional_headers = {})
+        super(payload, apply_files_beta(additional_headers, payload))
+      end
+
+      def stream_response(payload, additional_headers = {}, &)
+        super(payload, apply_files_beta(additional_headers, payload), &)
+      end
+
       def merge_turn_segments(segments)
         return segments.first if segments.one?
 

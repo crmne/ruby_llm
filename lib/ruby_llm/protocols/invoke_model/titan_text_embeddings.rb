@@ -10,7 +10,7 @@ module RubyLLM
           ensure_no_embedding_media!(with)
           track_usage(:embedding) do
             responses = [text].flatten.map do |value|
-              payload = render_embedding_payload(value, dimensions:, provider_options:)
+              payload = render_embedding_payload(value, model:, dimensions:, provider_options:)
               signed_post(embedding_url(model:), payload).tap { |response| record_embedding_attempt(response) }
             end
 
@@ -21,15 +21,23 @@ module RubyLLM
 
         private
 
-        def render_embedding_payload(text, dimensions:, provider_options:)
-          deep_merge_provider_options(
-            {
-              inputText: text.to_s,
-              dimensions: dimensions,
-              normalize: true
-            }.compact,
-            provider_options
-          )
+        # The G1 and V1 models take inputText alone; Bedrock rejects the V2
+        # tuning keys as extraneous.
+        def render_embedding_payload(text, model:, dimensions:, provider_options:)
+          payload = { inputText: text.to_s }
+
+          if titan_v2?(model)
+            payload[:dimensions] = dimensions if dimensions
+            payload[:normalize] = true
+          elsif dimensions
+            raise Error, "#{model} does not support custom dimensions"
+          end
+
+          deep_merge_provider_options(payload, provider_options)
+        end
+
+        def titan_v2?(model)
+          model.to_s.include?('titan-embed-text-v2')
         end
       end
     end

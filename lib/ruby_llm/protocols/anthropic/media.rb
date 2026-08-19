@@ -9,7 +9,7 @@ module RubyLLM
 
         def format_content(content, attachments = [], citations: false)
           parts = []
-          parts << format_text(content) if content
+          parts << format_text(content) unless content.nil? || content.empty?
 
           attachments.each do |attachment|
             if attachment.provider_file?

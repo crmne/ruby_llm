@@ -87,6 +87,47 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
     end
   end
 
+  describe '.format_messages' do
+    it 'drops a turn that rendered no content blocks' do
+      messages = [
+        RubyLLM::Message.new(role: :user, content: 'Hello'),
+        RubyLLM::Message.new(role: :assistant, content: ''),
+        RubyLLM::Message.new(role: :user, content: 'Still there?')
+      ]
+
+      expect(described_class.format_messages(messages)).to eq(
+        [
+          { role: 'user', content: [{ type: 'text', text: 'Hello' }] },
+          { role: 'user', content: [{ type: 'text', text: 'Still there?' }] }
+        ]
+      )
+    end
+
+    it 'adds cache_control to a tool result marked as a cache boundary' do
+      message = RubyLLM::Message.new(role: :tool, content: 'result', tool_call_id: 'tool_1').cache_until_here!
+
+      rendered = described_class.format_messages([message], caching: { ttl: '1h' })
+
+      expect(rendered.first[:content].last[:cache_control]).to eq(type: 'ephemeral', ttl: '1h')
+    end
+  end
+
+  describe '.apply_files_beta' do
+    it 'adds the Files API beta when a message references an uploaded file' do
+      file = RubyLLM::UploadedFile.new(id: 'file_123', filename: 'proposal.pdf', mime_type: 'application/pdf')
+      message = RubyLLM::Message.new(role: :user, content: 'Summarize this', attachments: [file])
+      payload = { messages: described_class.format_messages([message]) }
+
+      expect(described_class.apply_files_beta({}, payload)).to eq('anthropic-beta' => 'files-api-2025-04-14')
+    end
+
+    it 'leaves the headers alone without a file reference' do
+      payload = { messages: [{ role: 'user', content: [{ type: 'text', text: 'Hello' }] }] }
+
+      expect(described_class.apply_files_beta({}, payload)).to eq({})
+    end
+  end
+
   describe '.format_message' do
     it 'formats attachments before tool calls' do
       text_path = File.expand_path('../../../fixtures/ruby.txt', __dir__)

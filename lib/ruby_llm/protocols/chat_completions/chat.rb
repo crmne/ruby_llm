@@ -27,7 +27,7 @@ module RubyLLM
           }
 
           payload[:temperature] = temperature unless temperature.nil?
-          payload[:max_tokens] = max_output_tokens unless max_output_tokens.nil?
+          payload[max_output_tokens_field(model)] = max_output_tokens unless max_output_tokens.nil?
           if tools.any?
             payload[:tools] = tools.map { |_, tool| tool_for(tool) }
             payload[:tool_choice] = build_tool_choice(tool_prefs[:choice]) unless tool_prefs[:choice].nil?
@@ -57,6 +57,13 @@ module RubyLLM
           payload
         end
         # rubocop:enable Metrics/PerceivedComplexity
+
+        # OpenAI and Azure reject max_tokens on their reasoning models.
+        def max_output_tokens_field(model)
+          return :max_tokens unless %w[openai azure].include?(@provider.slug)
+
+          model.id.match?(/^o\d|^gpt-5/) ? :max_completion_tokens : :max_tokens
+        end
 
         def warn_unsupported_citations(model)
           RubyLLM.logger.warn(
@@ -273,20 +280,31 @@ module RubyLLM
         end
 
         def format_messages(messages, caching: nil)
-          messages_for_provider(messages).flat_map do |msg|
-            formatted = {
-              role: format_role(msg.role),
-              content: format_message_content(msg, caching: caching),
-              tool_calls: format_tool_calls(msg.tool_calls),
-              tool_call_id: msg.tool_call_id
-            }.compact.merge(format_thinking(msg))
+          messages_for_provider(messages)
+            .chunk_while { |previous, current| previous.tool_result? && current.tool_result? }
+            .flat_map { |group| format_message_group(group, caching: caching) }
+        end
 
-            msg.tool_result? && msg.attachments.any? ? [formatted, tool_attachment_message(msg)] : [formatted]
-          end
+        # An assistant turn's tool results must stay consecutive, so the
+        # attachment carriers of a parallel round follow the whole run.
+        def format_message_group(group, caching: nil)
+          formatted = group.map { |msg| format_message(msg, caching: caching) }
+          carriers = group.select { |msg| msg.tool_result? && msg.attachments.any? }
+
+          formatted + carriers.map { |msg| tool_attachment_message(msg) }
+        end
+
+        def format_message(msg, caching: nil)
+          {
+            role: format_role(msg.role),
+            content: format_message_content(msg, caching: caching),
+            tool_calls: format_tool_calls(msg.tool_calls),
+            tool_call_id: msg.tool_call_id
+          }.compact.merge(format_thinking(msg))
         end
 
         # Chat Completions tool messages are text-only on the wire, so tool
-        # attachments ride a user message spliced in right after the result.
+        # attachments ride a user message spliced in after the results.
         def tool_attachment_message(msg)
           parts = [Media.format_text("Attachments from tool call #{msg.tool_call_id}:")]
           parts.concat(format_content(nil, msg.attachments))

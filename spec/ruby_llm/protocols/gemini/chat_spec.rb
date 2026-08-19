@@ -562,6 +562,28 @@ RSpec.describe RubyLLM::Protocols::Gemini::Chat do
       expect(tool_response[:parts][1][:functionResponse][:name]).to eq('best_language_to_learn')
     end
 
+    it 'restores call order when results of the same tool finish out of order' do
+      messages = [
+        RubyLLM::Message.new(role: :user, content: 'Question?'),
+        RubyLLM::Message.new(
+          role: :assistant,
+          content: '',
+          tool_calls: {
+            'call_1' => RubyLLM::ToolCall.new(id: 'call_1', name: 'weather', arguments: { city: 'Berlin' }),
+            'call_2' => RubyLLM::ToolCall.new(id: 'call_2', name: 'weather', arguments: { city: 'Paris' })
+          }
+        ),
+        RubyLLM::Message.new(role: :tool, content: 'Paris is sunny', tool_call_id: 'call_2'),
+        RubyLLM::Message.new(role: :tool, content: 'Berlin is rainy', tool_call_id: 'call_1')
+      ]
+
+      parts = test_obj.send(:format_messages, messages).last[:parts]
+
+      expect(parts.map { |part| part[:functionResponse][:response][:content] }).to eq(
+        [[{ text: 'Berlin is rainy' }], [{ text: 'Paris is sunny' }]]
+      )
+    end
+
     it 'does not send finish_reason back to the provider' do
       messages = [RubyLLM::Message.new(role: :assistant, content: 'Done', finish_reason: 'max_tokens')]
 
@@ -816,6 +838,33 @@ RSpec.describe RubyLLM::Protocols::Gemini::Chat do
 
       expect(root[:type]).to eq('OBJECT')
       expect(root[:properties][:child]).to eq(type: 'STRING')
+    end
+
+    it 'stops at a self-referential definition reached from sibling properties' do
+      schema = {
+        type: 'object',
+        '$defs' => {
+          Node: {
+            type: 'object',
+            properties: { left: { '$ref' => '#/$defs/Node' }, right: { '$ref' => '#/$defs/Node' } }
+          }
+        },
+        properties: { root: { '$ref' => '#/$defs/Node' } }
+      }
+
+      root = convert(schema)[:properties][:root]
+
+      expect(root[:properties]).to eq(left: { type: 'STRING' }, right: { type: 'STRING' })
+    end
+
+    it 'keeps a property literally named definitions' do
+      schema = {
+        type: 'object',
+        properties: { word: { type: 'string' }, definitions: { type: 'array', items: { type: 'string' } } },
+        required: %w[word definitions]
+      }
+
+      expect(convert(schema)[:properties][:definitions]).to eq(type: 'ARRAY', items: { type: 'STRING' })
     end
 
     it 'handles a reference that names no path' do

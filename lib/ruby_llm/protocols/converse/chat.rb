@@ -87,7 +87,8 @@ module RubyLLM
         end
 
         def provider_file_attachable?(attachment)
-          attachment.pdf? || attachment.document? || attachment.text?
+          (attachment.pdf? || attachment.document? || attachment.text?) &&
+            Media.supported_document_format?(attachment)
         end
 
         def parse_completion_body(data, raw:)

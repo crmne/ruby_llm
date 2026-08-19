@@ -234,19 +234,22 @@ module RubyLLM
           }
         end
 
-        # System messages marked as cache boundaries ride along as input
-        # items, because the +instructions+ parameter is a plain string and
-        # cannot carry a breakpoint marker.
+        # System messages marked as cache boundaries, or carrying attachments,
+        # ride along as input items, because the +instructions+ parameter is a
+        # plain string and cannot carry a breakpoint marker or a file.
         def format_instructions(messages)
-          instructions = messages.select { |msg| msg.role == :system && !msg.cache_until_here? }.map do |msg|
-            msg.content.to_s
-          end
+          instructions = messages.select { |msg| msg.role == :system && !system_input_item?(msg) }
+                                 .map { |msg| msg.content.to_s }
 
           instructions.empty? ? nil : instructions.join("\n\n")
         end
 
         def format_input(messages)
-          messages.reject { |msg| msg.role == :system && !msg.cache_until_here? }.flat_map { |msg| format_item(msg) }
+          messages.reject { |msg| msg.role == :system && !system_input_item?(msg) }.flat_map { |msg| format_item(msg) }
+        end
+
+        def system_input_item?(msg)
+          msg.role == :system && (msg.cache_until_here? || msg.attachments.any?)
         end
 
         def format_item(msg)

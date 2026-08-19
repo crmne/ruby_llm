@@ -54,6 +54,12 @@ RSpec.describe RubyLLM::Providers::Azure::ChatCompletions do
       ).to eq('embeddings?api-version=2025-01-01')
     end
 
+    it 'defaults the api-version on a deployment base that does not pin one' do
+      protocol = protocol_for('https://res.openai.azure.com/openai/deployments/ada')
+
+      expect(protocol.azure_endpoint(:embeddings)).to eq('embeddings?api-version=2024-05-01-preview')
+    end
+
     it 'resolves embeddings against the host root for a resource base' do
       protocol = protocol_for('https://res.services.ai.azure.com')
 

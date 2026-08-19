@@ -48,7 +48,9 @@ module RubyLLM
 
         def embeddings_endpoint(parts)
           case parts[:mode]
-          when :deployment_base, :openai_v1_base
+          when :deployment_base
+            with_api_version('embeddings', parts[:version] || Azure::DEFAULT_EMBEDDINGS_API_VERSION)
+          when :openai_v1_base
             with_api_version('embeddings', parts[:version])
           else
             "#{parts[:root]}/openai/v1/embeddings"

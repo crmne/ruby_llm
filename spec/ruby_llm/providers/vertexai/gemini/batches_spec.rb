@@ -138,6 +138,12 @@ RSpec.describe RubyLLM::Providers::VertexAI::Gemini::Batches do
       expect(index).to eq(1)
       expect(message.content).to eq('Jupiter')
     end
+
+    it 'reports a failed row whose status is a plain string' do
+      line = { 'request' => { 'labels' => { 'ruby_llm_batch_id' => '1' } }, 'status' => 'Internal error occurred' }
+
+      expect(protocol.send(:parse_vertex_batch_result, line, 0)).to eq([1, nil])
+    end
   end
 
   describe '#find_batch and #cancel_batch' do

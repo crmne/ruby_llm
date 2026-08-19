@@ -19,6 +19,13 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Media do
       expect(document_block[:source][:data]).to be_present
     end
 
+    it 'skips empty content rather than rendering an empty text block' do
+      attachments = RubyLLM::Attachment.wrap(pdf_path)
+
+      expect(described_class.format_content('', attachments).map { |block| block[:type] }).to eq(['document'])
+      expect(described_class.format_content('')).to eq([])
+    end
+
     it 'raises an actionable error for unsupported Office documents' do
       attachment = RubyLLM::Attachment.new(StringIO.new('docx bytes'), filename: 'proposal.docx')
 

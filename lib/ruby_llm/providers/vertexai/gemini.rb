@@ -43,6 +43,10 @@ module RubyLLM
           "#{@provider.model_path(id)}:#{image_endpoint_action(id)}"
         end
 
+        def speech_url(model:)
+          "#{@provider.model_path(model)}:generateContent"
+        end
+
         private
 
         def transcription_url(model)

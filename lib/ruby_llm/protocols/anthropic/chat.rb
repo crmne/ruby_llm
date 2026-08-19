@@ -101,6 +101,7 @@ module RubyLLM
           messages.each do |msg|
             if msg.tool_result?
               tool_result_blocks << Tools.format_tool_result_block(msg)
+              inject_cache_control(tool_result_blocks, caching:) if msg.cache_until_here?
               next
             end
 
@@ -109,7 +110,8 @@ module RubyLLM
               tool_result_blocks = []
             end
 
-            rendered << format_message(msg, thinking:, citations:, caching:)
+            formatted = format_message(msg, thinking:, citations:, caching:)
+            rendered << formatted unless formatted[:content].empty?
           end
 
           rendered << { role: 'user', content: tool_result_blocks } unless tool_result_blocks.empty?
@@ -150,6 +152,20 @@ module RubyLLM
 
         def apply_compaction_headers(headers, _compaction)
           headers.merge(BETA_HEADER => join_betas(headers[BETA_HEADER], COMPACTION_BETA))
+        end
+
+        # The Files API is still a beta, so a request that references an
+        # uploaded file has to carry its beta header too.
+        def apply_files_beta(headers, payload)
+          return headers unless provider_file_source?(payload)
+
+          headers.merge(BETA_HEADER => join_betas(headers[BETA_HEADER], Files::BETA_HEADER))
+        end
+
+        def provider_file_source?(payload)
+          blocks = Array(payload[:messages]).flat_map { |message| Array(message[:content]) }
+          blocks.concat(Array(payload[:system]))
+          blocks.any? { |block| block.is_a?(Hash) && block[:source].is_a?(Hash) && block[:source][:type] == 'file' }
         end
 
         # Anthropic takes several betas as one comma-separated header, so an

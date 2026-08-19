@@ -19,6 +19,10 @@ module RubyLLM
             'anthropic/v1/messages/count_tokens'
           end
 
+          def supports_provider_file_references?
+            false
+          end
+
           private
 
           def post_count_tokens(payload)

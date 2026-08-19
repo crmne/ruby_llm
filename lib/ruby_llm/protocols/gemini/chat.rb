@@ -123,9 +123,9 @@ module RubyLLM
         private
 
         def format_system_instruction(messages)
-          parts = messages.select { |msg| msg.role == :system }.filter_map do |msg|
+          parts = messages.select { |msg| msg.role == :system }.flat_map do |msg|
             text = msg.content.to_s
-            { text: text } unless text.empty?
+            Media.format_content(text.empty? ? nil : text, msg.attachments)
           end
 
           { parts: parts } if parts.any?
@@ -433,17 +433,29 @@ module RubyLLM
           end
 
           def collect_tool_parts
-            parts = []
+            results = []
             index = @index
 
             while tool_message?(@messages[index])
-              tool_message = @messages[index]
-              tool_name = @tool_call_names.delete(tool_message.tool_call_id)
-              parts.concat(format_tool_result(tool_message, tool_name))
+              results << @messages[index]
               index += 1
             end
 
+            parts = in_call_order(results).flat_map do |tool_message|
+              format_tool_result(tool_message, @tool_call_names.delete(tool_message.tool_call_id))
+            end
+
             [parts, index]
+          end
+
+          # functionResponse parts carry no call id, so Gemini pairs them with
+          # the functionCall parts by position. Results that arrived out of
+          # call order have to be put back in it.
+          def in_call_order(tool_messages)
+            order = @tool_call_names.keys
+            tool_messages.sort_by.with_index do |tool_message, index|
+              [order.index(tool_message.tool_call_id) || order.size, index]
+            end
           end
 
           def build_tool_response(parts)
@@ -486,20 +498,19 @@ module RubyLLM
 
           attr_reader :definitions
 
-          def symbolize_and_extract_definitions(value)
+          # Inside a properties or definitions map the keys are caller-chosen
+          # names, so a property literally named "definitions" is a schema,
+          # not a definitions block.
+          def symbolize_and_extract_definitions(value, names: false)
             case value
             when Hash
               value.each_with_object({}) do |(key, val), hash|
-                key_sym = begin
-                  key.to_sym
-                rescue StandardError
-                  key
-                end
+                key_sym = symbolize_key(key)
 
-                if definition_key?(key_sym)
+                if !names && definition_key?(key_sym)
                   merge_definitions(val)
                 else
-                  hash[key_sym] = symbolize_and_extract_definitions(val)
+                  hash[key_sym] = symbolize_and_extract_definitions(val, names: !names && key_sym == :properties)
                 end
               end
             when Array
@@ -509,6 +520,12 @@ module RubyLLM
             end
           end
 
+          def symbolize_key(key)
+            key.to_sym
+          rescue StandardError
+            key
+          end
+
           def definition_key?(key)
             %i[$defs definitions].include?(key)
           end
@@ -516,7 +533,7 @@ module RubyLLM
           def merge_definitions(raw_defs)
             return unless raw_defs
 
-            symbolized = symbolize_and_extract_definitions(raw_defs)
+            symbolized = symbolize_and_extract_definitions(raw_defs, names: true)
             @definitions = if definitions.empty?
                              symbolized
                            else
@@ -571,11 +588,8 @@ module RubyLLM
             return unless referenced
 
             overrides = schema.except(:$ref)
-            visited_refs.add(ref)
             merged = RubyLLM::Utils.deep_merge(referenced, overrides)
-            convert(merged, visited_refs)
-          ensure
-            visited_refs.delete(ref)
+            convert(merged, visited_refs | [ref])
           end
 
           def lookup_definition(ref) # rubocop:disable Metrics/PerceivedComplexity

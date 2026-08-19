@@ -13,30 +13,6 @@ module RubyLLM
           role.to_s
         end
 
-        def format_messages(messages, **)
-          messages_for_provider(messages).flat_map do |msg|
-            formatted = {
-              role: format_role(msg.role),
-              content: format_content_with_thinking(msg),
-              tool_calls: Protocols::ChatCompletions::Tools.format_tool_calls(msg.tool_calls),
-              tool_call_id: msg.tool_call_id
-            }.compact
-
-            msg.tool_result? && msg.attachments.any? ? [formatted, tool_attachment_message(msg)] : [formatted]
-          end
-        end
-
-        def tool_attachment_message(msg)
-          parts = [Protocols::ChatCompletions::Media.format_text("Attachments from tool call #{msg.tool_call_id}:")]
-          parts.concat(Mistral::Media.format_content(nil, msg.attachments))
-          { role: 'user', content: parts }
-        end
-
-        def messages_for_provider(messages)
-          system_messages, other_messages = messages.partition { |msg| msg.role == :system }
-          system_messages + other_messages
-        end
-
         def render_payload(messages, tools:, temperature:, model:, stream: false, max_output_tokens: nil,
                            schema: nil, thinking: nil, citations: false, caching: nil, tool_prefs: nil)
           payload = super
@@ -89,14 +65,20 @@ module RubyLLM
           }
         end
 
-        def format_content_with_thinking(msg)
-          formatted_content = Mistral::Media.format_content(msg.content, msg.tool_result? ? [] : msg.attachments)
+        # Mistral carries reasoning in content blocks, not in the top-level
+        # reasoning fields the rest of the Chat Completions family uses.
+        def format_message_content(msg, **)
+          formatted_content = super
           return formatted_content unless msg.role == :assistant && msg.thinking
 
           content_blocks = build_thinking_blocks(msg.thinking)
           append_formatted_content(content_blocks, formatted_content)
 
           content_blocks
+        end
+
+        def format_thinking(_msg)
+          {}
         end
 
         def warn_on_unsupported_thinking(model, thinking)
@@ -162,7 +144,7 @@ module RubyLLM
         def append_formatted_content(content_blocks, formatted_content)
           if formatted_content.is_a?(Array)
             content_blocks.concat(formatted_content)
-          elsif formatted_content
+          elsif formatted_content && !formatted_content.empty?
             content_blocks << { type: 'text', text: formatted_content }
           end
         end

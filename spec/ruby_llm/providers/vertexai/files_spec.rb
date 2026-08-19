@@ -57,6 +57,17 @@ RSpec.describe RubyLLM::Providers::VertexAI::Files do
       )
     end
 
+    it 'keeps spaces and non-ASCII in the object name' do
+      allow(bucket).to receive(:create_file)
+
+      file = files.upload(StringIO.new('x'), filename: 'Q3 übersicht.pdf')
+
+      expect(file.uri).to end_with('/Q3 übersicht.pdf')
+      expect(bucket).to have_received(:create_file).with(
+        instance_of(StringIO), %r{/Q3 übersicht\.pdf\z}, content_type: 'application/pdf'
+      )
+    end
+
     it 'requires a configured bucket prefix' do
       config.vertexai_batch_gcs_uri = nil
 

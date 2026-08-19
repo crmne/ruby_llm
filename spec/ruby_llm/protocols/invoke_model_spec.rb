@@ -21,6 +21,7 @@ RSpec.describe RubyLLM::Protocols::InvokeModel do
       payload = protocol.send(
         :render_embedding_payload,
         'Ruby',
+        model: 'amazon.titan-embed-text-v2:0',
         dimensions: 256,
         provider_options: { embeddingTypes: ['float'] }
       )
@@ -31,6 +32,21 @@ RSpec.describe RubyLLM::Protocols::InvokeModel do
         normalize: true,
         embeddingTypes: ['float']
       )
+    end
+
+    it 'omits the V2 tuning keys for G1 and V1 models' do
+      %w[amazon.titan-embed-g1-text-02 amazon.titan-embed-text-v1].each do |model|
+        payload = protocol.send(:render_embedding_payload, 'Ruby', model:, dimensions: nil, provider_options: {})
+
+        expect(payload).to eq(inputText: 'Ruby')
+      end
+    end
+
+    it 'rejects custom dimensions on G1 and V1 models' do
+      expect do
+        protocol.send(:render_embedding_payload, 'Ruby', model: 'amazon.titan-embed-text-v1',
+                                                         dimensions: 256, provider_options: {})
+      end.to raise_error(RubyLLM::Error, /does not support custom dimensions/)
     end
 
     it 'parses Titan typed embedding responses' do

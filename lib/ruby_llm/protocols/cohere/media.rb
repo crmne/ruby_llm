@@ -5,6 +5,10 @@ module RubyLLM
     class Cohere
       # Handles formatting of media content for the Cohere v2 API
       module Media
+        # Cohere resolves a remote image by its extension and rejects a URL
+        # without one, so those are inlined from the bytes already fetched.
+        URL_IMAGE_EXTENSIONS = %w[png jpeg jpg gif webp].freeze
+
         module_function
 
         # Cohere user messages accept only text and image_url blocks. Text
@@ -38,8 +42,14 @@ module RubyLLM
         def format_image(image)
           {
             type: 'image_url',
-            image_url: { url: image.url? ? image.source.to_s : "data:#{image.mime_type};base64,#{image.encoded}" }
+            image_url: { url: image_source(image) }
           }
+        end
+
+        def image_source(image)
+          return image.source.to_s if image.url? && URL_IMAGE_EXTENSIONS.include?(image.extension)
+
+          "data:#{image.mime_type};base64,#{image.encoded}"
         end
 
         # Text attachments across the conversation become the request's

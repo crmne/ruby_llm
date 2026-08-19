@@ -29,6 +29,15 @@ RSpec.describe RubyLLM::Protocols::Cohere::Media do
       )
     end
 
+    it 'inlines a remote image whose URL carries no extension' do
+      remote = instance_double(RubyLLM::Attachment, url?: true, extension: '', mime_type: 'image/jpeg',
+                                                    encoded: 'QUJD')
+
+      expect(described_class.format_image(remote)).to eq(
+        { type: 'image_url', image_url: { url: 'data:image/jpeg;base64,QUJD' } }
+      )
+    end
+
     it 'inlines text attachments' do
       blocks = described_class.format_content('Who created Ruby?', [text_file])
 

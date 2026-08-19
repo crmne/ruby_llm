@@ -5,13 +5,16 @@ module RubyLLM
     class Gemini
       # Gemini Files API.
       class Files < UploadedFile::Protocol
+        PROCESSING_POLL_INTERVAL = 2
+        PROCESSING_TIMEOUT = 600
+
         # rubocop:disable Lint/UnusedMethodArgument
         def upload(file, filename: nil, display_name: nil, purpose: nil, expires_in: nil,
                    visibility: nil, uri: nil, content_type: nil)
           attachment = file_attachment(file, filename:)
           upload_url = start_resumable_upload(attachment, display_name: display_name || attachment.filename)
           response = upload_file_bytes(upload_url, attachment)
-          parse_file_response(response.body.fetch('file'))
+          await_active(parse_file_response(response.body.fetch('file')))
         end
         # rubocop:enable Lint/UnusedMethodArgument
 
@@ -26,6 +29,23 @@ module RubyLLM
         end
 
         private
+
+        # Gemini rejects a file reference until processing finishes, which
+        # for video takes far longer than the upload itself.
+        def await_active(file)
+          deadline = Time.now + PROCESSING_TIMEOUT
+
+          while file.status == 'PROCESSING'
+            raise Error, "gemini is still processing #{file.id}" if Time.now >= deadline
+
+            sleep PROCESSING_POLL_INTERVAL
+            file = find(file.id)
+          end
+
+          raise Error, "gemini failed to process #{file.id}" if file.status == 'FAILED'
+
+          file
+        end
 
         def file_info_url(file_id)
           gemini_file_name(file_id)

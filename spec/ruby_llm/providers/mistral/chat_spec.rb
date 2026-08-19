@@ -89,12 +89,53 @@ RSpec.describe RubyLLM::Providers::Mistral::Chat do
     end
   end
 
-  describe '#format_content_with_thinking' do
+  describe '#format_messages' do
+    it 'keeps parallel tool results consecutive and moves attachment carriers after the run' do
+      attachment = RubyLLM::Attachment.new(StringIO.new('png bytes'), filename: 'chart.png')
+      payload = render_payload(
+        model_id: 'mistral-small-latest',
+        messages: [
+          RubyLLM::Message.new(role: :user, content: 'Chart it'),
+          RubyLLM::Message.new(
+            role: :assistant,
+            content: nil,
+            tool_calls: {
+              'call_1' => RubyLLM::ToolCall.new(id: 'call_1', name: 'chart', arguments: {}),
+              'call_2' => RubyLLM::ToolCall.new(id: 'call_2', name: 'chart', arguments: {})
+            }
+          ),
+          RubyLLM::Message.new(role: :tool, content: 'first', attachments: [attachment], tool_call_id: 'call_1'),
+          RubyLLM::Message.new(role: :tool, content: 'second', tool_call_id: 'call_2')
+        ]
+      )
+
+      expect(payload[:messages].map { |message| message[:role] }).to eq(%w[user assistant tool tool user])
+      expect(payload[:messages].last[:content].last[:type]).to eq('image_url')
+    end
+
+    it 'renders thinking as content blocks without top-level reasoning fields' do
+      payload = render_payload(
+        model_id: 'magistral-small-latest',
+        messages: [
+          RubyLLM::Message.new(
+            role: :assistant,
+            content: 'Done',
+            thinking: RubyLLM::Thinking.new(text: 'why', signature: 'sig')
+          )
+        ]
+      )
+
+      expect(payload[:messages].first[:content].first[:type]).to eq('thinking')
+      expect(payload[:messages].first).not_to have_key(:reasoning_content)
+    end
+  end
+
+  describe '#format_message_content' do
     it 'formats arbitrary document attachments with Mistral document_url parts' do
       attachment = RubyLLM::Attachment.new(StringIO.new('docx bytes'), filename: 'proposal.docx')
       message = RubyLLM::Message.new(role: :user, content: 'Summarize this file', attachments: [attachment])
 
-      formatted = provider.send(:format_content_with_thinking, message)
+      formatted = provider.send(:format_message_content, message)
 
       expect(formatted.second).to eq(
         type: 'document_url',
@@ -167,6 +208,7 @@ RSpec.describe RubyLLM::Providers::Mistral::Chat do
     it 'leaves the blocks alone for empty content' do
       blocks = []
       provider.send(:append_formatted_content, blocks, nil)
+      provider.send(:append_formatted_content, blocks, '')
 
       expect(blocks).to eq([])
     end

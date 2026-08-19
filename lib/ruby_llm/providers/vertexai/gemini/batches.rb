@@ -23,9 +23,18 @@ module RubyLLM
               body = line['response']
               [index, parse_completion_body(body, raw: body)]
             else
-              batch_failure(index, line.dig('status', 'message'))
+              batch_failure(index, vertex_batch_status_message(line))
               [index, nil]
             end
+          end
+
+          # Gemini prediction rows carry status as a plain string, empty on
+          # success and the error text on failure.
+          def vertex_batch_status_message(line)
+            status = line['status']
+            message = status.is_a?(Hash) ? status['message'] : status
+
+            message.to_s.empty? ? batch_error_message(line) : message
           end
         end
       end

@@ -776,4 +776,14 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
       )
     end
   end
+
+  describe '.provider_file_attachable?' do
+    it 'only uploads text formats the S3 document renderer accepts' do
+      accepted = RubyLLM::Attachment.new(StringIO.new('notes'), filename: 'notes.txt')
+      rejected = RubyLLM::Attachment.new(StringIO.new('{}'), filename: 'notes.json')
+
+      expect(described_class.provider_file_attachable?(accepted)).to be(true)
+      expect(described_class.provider_file_attachable?(rejected)).to be(false)
+    end
+  end
 end
