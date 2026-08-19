@@ -4,10 +4,21 @@ module RubyLLM
   module Utils # :nodoc:
     UNDERSCORE_BOUNDARY = /(?<=[a-z\d])(?=[A-Z])|(?<=[A-Z])(?=[A-Z][a-z])/
 
+    # Keys a JSON Schema document carries for its own sake: $schema names the
+    # dialect and title names the document, neither of which describes the shape
+    # a provider is being asked to produce.
+    SCHEMA_METADATA_KEYS = %w[$schema title].freeze
+
     module_function
 
     def hash_get(hash, key)
       hash[key.to_sym] || hash[key.to_s]
+    end
+
+    def strip_schema_metadata(schema)
+      return schema unless schema.is_a?(Hash)
+
+      schema.reject { |key, _| SCHEMA_METADATA_KEYS.include?(key.to_s) }
     end
 
     # Acronym-aware underscoring: 'HTTPProxyTool' -> 'http_proxy_tool'.

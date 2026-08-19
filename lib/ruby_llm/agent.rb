@@ -409,6 +409,10 @@ module RubyLLM
         kwargs.merge(model: evaluate(kwargs[:model], runtime_context(chat: nil, inputs: inputs)))
       end
 
+      def build_chat(inputs:, options:) # :nodoc:
+        (context || RubyLLM).chat(**resolved_chat_kwargs(inputs:), **options)
+      end
+
       # Builds a Chat configured with this agent's declarations and returns
       # it. Keywords matching declared ::inputs become runtime inputs; the
       # rest are forwarded to RubyLLM.chat.
@@ -418,7 +422,7 @@ module RubyLLM
       #
       def chat(**kwargs)
         input_values, chat_options = partition_inputs(kwargs)
-        chat = RubyLLM.chat(**resolved_chat_kwargs(inputs: input_values), **chat_options)
+        chat = build_chat(inputs: input_values, options: chat_options)
         apply_configuration(chat, input_values:, persist_instructions: true)
         chat
       end
@@ -475,6 +479,7 @@ module RubyLLM
         record = chat_or_id.is_a?(resolved_chat_model) ? chat_or_id : resolved_chat_model.find(chat_or_id)
         apply_assume_model_exists(record)
         apply_protocol(record)
+        apply_context(record)
         runtime = runtime_context(chat: record, inputs: input_values)
         instructions_value = resolved_instructions_value(record, runtime, inputs: input_values)
         return record if instructions_value.nil?
@@ -526,13 +531,15 @@ module RubyLLM
 
       def rescue_handler_key(exception_class)
         case exception_class
-        when Module then exception_class.name
+        when Module then exception_class.name || exception_class
         when String then exception_class
         else raise ArgumentError, "#{exception_class.inspect} is not an exception class or its name"
         end
       end
 
       def rescue_handler_class(class_name)
+        return class_name if class_name.is_a?(Module)
+
         Object.const_get(class_name)
       rescue NameError
         nil
@@ -744,7 +751,7 @@ module RubyLLM
     def initialize(chat: nil, inputs: nil, persist_instructions: true, **kwargs)
       input_values, chat_options = self.class.partition_inputs(kwargs)
       input_values = input_values.merge(inputs || {})
-      @chat = chat || RubyLLM.chat(**self.class.resolved_chat_kwargs(inputs: input_values), **chat_options)
+      @chat = chat || self.class.build_chat(inputs: input_values, options: chat_options)
       self.class.apply_configuration(@chat, input_values:, persist_instructions:)
     end
 
@@ -754,7 +761,8 @@ module RubyLLM
     # Agent instances delegate the Chat API to the wrapped #chat. Each
     # delegated method behaves exactly as documented on Chat.
     def_delegators :chat, :model, :messages, :tools, :provider_options, :headers, :schema, :caching, :compaction,
-                   :with_tools, :with_tool_options, :with_model, :with_temperature, :with_max_output_tokens,
+                   :with_instructions, :with_tools, :with_server_tools, :with_tool_options, :with_model,
+                   :with_temperature, :with_max_output_tokens,
                    :with_thinking, :with_citations, :with_end_user, :with_compaction,
                    :with_caching, :with_context, :with_provider_options,
                    :with_headers, :with_schema, :with_fallbacks, :before_request, :before_message, :after_message,

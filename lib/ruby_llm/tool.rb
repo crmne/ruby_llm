@@ -41,8 +41,32 @@ module RubyLLM
     KEYWORD_PARAMETER_KINDS = %i[keyreq key].freeze # :nodoc:
     TOOL_CALL_KEYWORD = :tool_call # :nodoc:
 
+    DUPED_INHERITED_CONFIG = {
+      :@declared_parameters => {},
+      :@provider_options => {}
+    }.freeze
+    COPIED_INHERITED_CONFIG = %i[
+      @description
+      @parameters_schema_definition
+      @requires_approval
+      @approval_resolver
+    ].freeze
+    private_constant :DUPED_INHERITED_CONFIG, :COPIED_INHERITED_CONFIG
+
     class << self
       attr_reader :parameters_schema_definition, :approval_resolver # :nodoc:
+
+      def inherited(subclass) # :nodoc:
+        super
+        DUPED_INHERITED_CONFIG.each do |ivar, default|
+          value = instance_variable_defined?(ivar) ? instance_variable_get(ivar) : default
+          subclass.instance_variable_set(ivar, value.dup)
+        end
+
+        COPIED_INHERITED_CONFIG.each do |ivar|
+          subclass.instance_variable_set(ivar, instance_variable_get(ivar))
+        end
+      end
 
       # Returns the name the model calls this tool by, derived from the class
       # name: underscored, reduced to ASCII, with a trailing "_tool" removed.
@@ -389,7 +413,9 @@ module RubyLLM
       end
 
       def json_schema
-        @json_schema ||= RubyLLM::Utils.deep_stringify_keys(resolve_schema)
+        @json_schema ||= RubyLLM::Utils.strip_schema_metadata(
+          RubyLLM::Utils.deep_stringify_keys(resolve_schema)
+        )
       end
 
       private

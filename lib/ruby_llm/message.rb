@@ -227,7 +227,7 @@ module RubyLLM
         content: content,
         attachments: list_to_h(attachments),
         model: model,
-        tool_calls: tool_calls,
+        tool_calls: tool_calls&.transform_values(&:to_h),
         tool_call_id: tool_call_id,
         thinking: thinking&.text,
         thinking_signature: thinking&.signature,

@@ -667,7 +667,7 @@ module RubyLLM
       request_messages = messages.dup
       request_messages << coerce_message(role: :user, content: message) unless message.nil?
       @provider.count_tokens(
-        request_messages,
+        preprocessed_messages(request_messages),
         model: @model,
         tools: @tools,
         tool_prefs: @tool_prefs,
@@ -741,7 +741,7 @@ module RubyLLM
         temperature: @temperature,
         max_output_tokens: @max_output_tokens,
         model: @model,
-        provider_options: @provider_options,
+        provider_options: Utils.deep_dup(@provider_options),
         schema: @schema,
         thinking: @thinking,
         citations: @citations,
@@ -821,11 +821,7 @@ module RubyLLM
 
     def extract_schema_definition(schema)
       definition = RubyLLM::Utils.deep_dup(schema[:schema] || schema)
-      return definition unless definition.is_a?(Hash)
-
-      # A bare JSON Schema document carries keys providers have no use for: the name is
-      # lifted into the envelope, and $schema describes the dialect, not the shape.
-      definition.except(:$schema, :title)
+      RubyLLM::Utils.strip_schema_metadata(definition)
     end
 
     def extract_schema_strict(schema, schema_def)
@@ -938,9 +934,9 @@ module RubyLLM
           finish_fallback(active_fallback, response: result)
           return result
         rescue StandardError => e
+          finish_fallback(active_fallback, fallback_error: e)
           raise e unless fallback_error?(e)
 
-          finish_fallback(active_fallback, fallback_error: e)
           active_fallback, attempt = fallback_to_next_model!(
             fallback_queue,
             error: e,
@@ -956,18 +952,25 @@ module RubyLLM
       original_model = @model
       original_provider = @provider
       original_connection = @connection
+      original_protocol = @protocol
 
       yield
     ensure
       @model = original_model
       @provider = original_provider
       @connection = original_connection
+      @protocol = original_protocol
     end
 
     def switch_to_fallback_model(fallback)
-      return with_resolved_model(fallback.model) if fallback.model
-
-      with_model(fallback.id, provider: fallback.provider, protocol: @protocol)
+      from_provider = @provider.slug
+      if fallback.model
+        with_resolved_model(fallback.model)
+      else
+        with_model(fallback.id, provider: fallback.provider, protocol: @protocol)
+      end
+      @protocol = nil unless @provider.slug == from_provider
+      self
     end
 
     def with_resolved_model(model)
@@ -1013,10 +1016,10 @@ module RubyLLM
     # provider can change through fallbacks or with_model, so history keeps
     # the original attachments while each provider's upload is memoized on
     # them. Reloaded Rails chats rebuild history from rows and upload again.
-    def preprocessed_messages
-      return messages unless @provider
+    def preprocessed_messages(list = messages)
+      return list unless @provider
 
-      messages.map { |message| @provider.preprocess_message(message, model: @model, protocol: @protocol) }
+      list.map { |message| @provider.preprocess_message(message, model: @model, protocol: @protocol) }
     end
 
     def provider_completion(usage_recorder:, stream_tracker: nil, &)
@@ -1030,7 +1033,7 @@ module RubyLLM
         temperature: @temperature,
         max_output_tokens: @max_output_tokens,
         model: @model,
-        provider_options: @provider_options,
+        provider_options: Utils.deep_dup(@provider_options),
         headers: @headers,
         schema: @schema,
         thinking: @thinking,
@@ -1107,10 +1110,10 @@ module RubyLLM
       pending.each do |id, tool_call|
         tool = tools[tool_call.name.to_sym]
         if tool&.requires_approval?
-          case tool_call_approval(tool, tool_call)
-          when true then executable[id] = tool_call
-          when false then denied[id] = tool_call
-          end
+          decision = tool_call_approval(tool, tool_call)
+          next if decision.nil?
+
+          (decision ? executable : denied)[id] = tool_call
         elsif @tool_call_decisions[tool_call.id] == false
           denied[id] = tool_call
         else

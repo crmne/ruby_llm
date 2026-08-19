@@ -219,6 +219,40 @@ RSpec.describe RubyLLM::Chat do
     expect(after_events.first).not_to be_failed
   end
 
+  it 'runs fallback callbacks when the attempt fails with a non-fallback error' do
+    chat = described_class.new(model: 'primary-model').with_fallbacks('fallback-model')
+    allow(primary_provider).to receive(:complete)
+      .and_raise(RubyLLM::ServerError.new('primary failed'))
+    allow(fallback_provider).to receive(:complete)
+      .and_raise(RubyLLM::BadRequestError.new('bad request'))
+    after_events = []
+    chat.after_fallback { |event| after_events << event }
+
+    chat.ask_later('Hello')
+
+    expect { chat.generate }.to raise_error(RubyLLM::BadRequestError)
+    expect(after_events.size).to eq(1)
+    expect(after_events.first).to be_failed
+    expect(after_events.first.fallback_error).to be_a(RubyLLM::BadRequestError)
+  end
+
+  it 'drops an explicit protocol override when the fallback changes provider' do
+    chat = described_class.new(model: 'primary-model', protocol: :responses).with_fallbacks('fallback-model')
+    allow(primary_provider).to receive(:complete)
+      .and_raise(RubyLLM::ServerError.new('primary failed'))
+    fallback_protocol = :unset
+    allow(fallback_provider).to receive(:complete) do |_messages, **kwargs|
+      fallback_protocol = kwargs[:protocol]
+      RubyLLM::Message.new(role: :assistant, content: 'ok')
+    end
+
+    chat.ask_later('Hello')
+    chat.generate
+
+    expect(fallback_protocol).to be_nil
+    expect(chat.instance_variable_get(:@protocol)).to eq(:responses)
+  end
+
   it 'starts a new streaming message lifecycle when fallback follows yielded chunks' do
     chat = described_class.new(model: 'primary-model').with_fallbacks('fallback-model')
     allow(primary_provider).to receive(:complete) do |_messages, **_kwargs, &block|

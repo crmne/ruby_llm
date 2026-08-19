@@ -298,6 +298,26 @@ RSpec.describe RubyLLM::Tool do
         'strict' => true
       )
     end
+
+    it 'drops the schema dialect and auto-generated title providers have no use for' do
+      stub_const('SchemaMetadataTool', Class.new(described_class) do
+        parameters do
+          object :window, description: 'Time window to schedule' do
+            string :start, description: 'ISO start'
+          end
+        end
+
+        def execute(window:)
+          window
+        end
+      end)
+
+      schema = SchemaMetadataTool.new.parameters_schema
+
+      expect(schema).not_to include('$schema', 'title')
+      expect(schema.dig('properties', 'window', 'description')).to eq('Time window to schedule')
+      expect(schema['required']).to eq(['window'])
+    end
   end
 
   describe '.split_result' do

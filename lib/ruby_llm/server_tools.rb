@@ -21,7 +21,7 @@ module RubyLLM
       def add(spec, options)
         entry = spec.is_a?(Proc) ? spec.call(options || {}) : merge_tool_options(spec, options)
         @tools << entry[:tool] if entry[:tool]
-        @payload = Utils.deep_merge(@payload, entry[:payload]) if entry[:payload]
+        merge_payload(entry[:payload]) if entry[:payload]
         merge_headers(entry[:headers]) if entry[:headers]
         self
       end
@@ -38,6 +38,16 @@ module RubyLLM
 
         { tool: Utils.deep_merge(spec.fetch(:tool, spec), Utils.deep_symbolize_keys(options)) }
           .merge(spec.slice(:payload, :headers))
+      end
+
+      # Payload arrays accumulate: every entry contributes its own MCP server.
+      def merge_payload(payload)
+        @payload = @payload.merge(payload) do |_key, current, addition|
+          next current | addition if current.is_a?(Array) && addition.is_a?(Array)
+          next Utils.deep_merge(current, addition) if current.is_a?(Hash) && addition.is_a?(Hash)
+
+          addition
+        end
       end
 
       # Anthropic-style beta headers combine as comma-separated values.

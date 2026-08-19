@@ -42,7 +42,7 @@ module RubyLLM
 
       parsed = JSON.parse(content)
       entries = parsed[KEY]
-      return unless entries.is_a?(Array) && entries.any?
+      return unless entries.is_a?(Array) && entries.any? && entries.all?(Hash)
 
       new(*entries)
     rescue JSON::ParserError, ArgumentError
