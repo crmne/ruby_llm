@@ -221,7 +221,7 @@ module RubyLLM
         with_max_output_tokens with_thinking with_citations with_caching
         with_end_user with_compaction
         with_provider_options with_headers with_schema
-        before_message after_message before_tool_call after_tool_result
+        before_request before_message after_message before_tool_call after_tool_result
         before_fallback after_fallback
       ].freeze
 
@@ -310,6 +310,27 @@ module RubyLLM
       def cost
         records = ruby_llm_usages.to_a
         RubyLLM::Cost.aggregate(records.map(&:cost), complete: records.all?(&:usage_available?))
+      end
+
+      # Returns the number of input tokens the next request would carry,
+      # counted by the provider over the persisted conversation. Pass a
+      # message to count it alongside that history without persisting it.
+      # See RubyLLM::Chat#count_tokens.
+      #
+      #   chat.count_tokens "Summarize this contract."
+      #
+      def count_tokens(...)
+        to_llm.count_tokens(...)
+      end
+
+      # Returns the request payload this chat would send to the provider for
+      # its next completion, with #before_request hooks applied. See
+      # RubyLLM::Chat#render.
+      #
+      #   chat.render[:messages]
+      #
+      def render(...)
+        to_llm.render(...)
       end
 
       # Persists +message+ as a user message, then runs the completion loop

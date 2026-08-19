@@ -414,6 +414,24 @@ RSpec.describe RubyLLM::Agent, :live do
                                    ])
   end
 
+  it 'delegates count_tokens and render to the underlying chat' do
+    fake_chat = Class.new do
+      def count_tokens(message = nil)
+        message ? 42 : 7
+      end
+
+      def render
+        { messages: [] }
+      end
+    end.new
+
+    agent = Class.new(described_class).new(chat: fake_chat)
+
+    expect(agent.count_tokens('Hello')).to eq(42)
+    expect(agent.count_tokens).to eq(7)
+    expect(agent.render).to eq({ messages: [] })
+  end
+
   it 'delegates cancellation to the underlying chat' do
     fake_chat = Class.new do
       def initialize
