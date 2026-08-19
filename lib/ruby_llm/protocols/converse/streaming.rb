@@ -21,11 +21,12 @@ module RubyLLM
           accumulator = StreamAccumulator.new
           decoder = event_stream_decoder
           body = JSON.generate(payload)
+          progress = {}
 
           faraday_v1 = Faraday::VERSION.start_with?('1')
           on_data = RubyLLM::Streaming::FaradayHandlers.build(
             faraday_v1: faraday_v1,
-            on_chunk: ->(chunk, _env) { parse_stream_chunk(decoder, chunk, accumulator, &block) },
+            on_chunk: ->(chunk, _env) { parse_stream_chunk(decoder, chunk, accumulator, progress, &block) },
             on_failed_response: ->(chunk, env) { handle_failed_stream(chunk, env) }
           )
 
@@ -33,6 +34,7 @@ module RubyLLM
             req.headers.merge!(@provider.sign_headers('POST', stream_url, body))
             req.headers.merge!(additional_headers) unless additional_headers.empty?
             req.headers['Accept'] = 'application/vnd.amazon.eventstream'
+            (req.options.context ||= {})[RubyLLM::Streaming::PROGRESS_KEY] = progress
 
             if faraday_v1
               req.options[:on_data] = on_data
@@ -63,7 +65,7 @@ module RubyLLM
           RubyLLM.logger.debug { "Failed Bedrock stream error chunk: #{chunk}" }
         end
 
-        def parse_stream_chunk(decoder, raw_chunk, accumulator)
+        def parse_stream_chunk(decoder, raw_chunk, accumulator, progress)
           handle_non_eventstream_error_chunk(raw_chunk)
 
           decode_events(decoder, raw_chunk).each do |event|
@@ -71,6 +73,7 @@ module RubyLLM
             next unless chunk
 
             accumulator.add(chunk)
+            progress[:started] = true
             yield chunk
           end
         end

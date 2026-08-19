@@ -249,6 +249,29 @@ RSpec.describe RubyLLM::Protocols::Converse::Streaming do
     end
   end
 
+  describe '#parse_stream_chunk' do
+    it 'marks stream progress once a chunk reaches the block' do
+      progress = {}
+      event = { 'contentBlockDelta' => { 'delta' => { 'text' => 'hi' } } }
+      allow(streaming).to receive(:decode_events).and_return([event])
+
+      streaming.send(:parse_stream_chunk, :decoder, 'frame', RubyLLM::StreamAccumulator.new, progress) { |_chunk| nil }
+
+      expect(progress[:started]).to be(true)
+    end
+
+    it 'leaves stream progress unmarked when the first frame is an error' do
+      progress = {}
+      event = { 'throttlingException' => { 'message' => 'slow down' } }
+      allow(streaming).to receive(:decode_events).and_return([event])
+
+      expect do
+        streaming.send(:parse_stream_chunk, :decoder, 'frame', RubyLLM::StreamAccumulator.new, progress) { |_c| nil }
+      end.to raise_error(RubyLLM::RateLimitError)
+      expect(progress).to be_empty
+    end
+  end
+
   describe '#handle_failed_stream' do
     it 'ignores a chunk that is not valid JSON' do
       expect { streaming.send(:handle_failed_stream, 'not json', {}) }.not_to raise_error
@@ -413,8 +436,11 @@ RSpec.describe RubyLLM::Protocols::Converse::Streaming do
     # request, by faking @connection/@provider/req just enough to run the block.
     let(:captured_on_data) do
       captured = nil
+      context = nil
       request_options = Object.new
       request_options.define_singleton_method(:on_data=) { |proc| captured = proc }
+      request_options.define_singleton_method(:context) { context }
+      request_options.define_singleton_method(:context=) { |value| context = value }
       req = Object.new
       req.define_singleton_method(:headers) { {} }
       req.define_singleton_method(:options) { request_options }
@@ -446,7 +472,7 @@ RSpec.describe RubyLLM::Protocols::Converse::Streaming do
     it 'parses the chunk when env is nil (status not yet known)' do
       captured_on_data.call('event-frame', 11, nil)
 
-      expect(streaming).to have_received(:parse_stream_chunk).with(:decoder, 'event-frame', anything)
+      expect(streaming).to have_received(:parse_stream_chunk).with(:decoder, 'event-frame', anything, anything)
       expect(streaming).not_to have_received(:handle_failed_stream)
     end
 
@@ -454,7 +480,7 @@ RSpec.describe RubyLLM::Protocols::Converse::Streaming do
       env = Struct.new(:status).new(200)
       captured_on_data.call('event-frame', 11, env)
 
-      expect(streaming).to have_received(:parse_stream_chunk).with(:decoder, 'event-frame', anything)
+      expect(streaming).to have_received(:parse_stream_chunk).with(:decoder, 'event-frame', anything, anything)
       expect(streaming).not_to have_received(:handle_failed_stream)
     end
 

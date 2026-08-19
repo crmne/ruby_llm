@@ -41,7 +41,11 @@ RSpec.describe RubyLLM::Connection do
       retry_handler = connection.builder.handlers.find { |handler| handler.klass == Faraday::Retry::Middleware }
       retry_options = retry_handler.instance_variable_get(:@args).first
 
-      expect(retry_options[:retry_if].call({ method: :post, streaming_started: true }, nil)).to be(false)
+      request = Faraday::RequestOptions.from(
+        context: { RubyLLM::Streaming::PROGRESS_KEY => { started: true } }
+      )
+
+      expect(retry_options[:retry_if].call({ method: :post, request: request }, nil)).to be(false)
     end
 
     it 'caps retry delays at retry_max_interval' do

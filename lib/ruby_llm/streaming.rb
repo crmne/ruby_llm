@@ -6,6 +6,8 @@ require 'json'
 
 module RubyLLM
   module Streaming # :nodoc: all
+    PROGRESS_KEY = :ruby_llm_stream_progress
+
     StreamState = Struct.new(:parser, :buffer) do
       def initialize
         super(EventStreamParser::Parser.new, +'')
@@ -31,12 +33,14 @@ module RubyLLM
     # Posts +payload+ to +url+ as a server-sent event stream, yielding each
     # parsed event Hash. Returns the Faraday response.
     def stream_events(url, payload, additional_headers = {}, &block)
-      on_data = build_on_data_handler do |data|
+      progress = {}
+      on_data = build_on_data_handler(progress) do |data|
         block.call(data) if data.is_a?(Hash)
       end
 
       @connection.post url, payload, usage: @usage_tracker do |req|
         req.headers = additional_headers.merge(req.headers) unless additional_headers.empty?
+        (req.options.context ||= {})[PROGRESS_KEY] = progress
         if faraday_1?
           req.options[:on_data] = on_data
         else
@@ -60,12 +64,14 @@ module RubyLLM
     # Parser state lives on the env so every retry attempt starts fresh;
     # ErrorMiddleware clears it per attempt. Faraday v1 passes no env to
     # on_data, so it falls back to one state for the whole request.
-    def build_on_data_handler(&handler)
+    def build_on_data_handler(progress = {}, &handler)
       fallback_state = StreamState.new
 
       FaradayHandlers.build(
         faraday_v1: faraday_1?,
-        on_chunk: ->(chunk, env) { process_stream_chunk(chunk, stream_state(env, fallback_state), env, &handler) },
+        on_chunk: lambda { |chunk, env|
+          process_stream_chunk(chunk, stream_state(env, fallback_state), env, progress, &handler)
+        },
         on_failed_response: lambda { |chunk, env|
           handle_failed_response(chunk, stream_state(env, fallback_state).buffer, env)
         }
@@ -78,7 +84,7 @@ module RubyLLM
       env[:streaming_state] ||= StreamState.new
     end
 
-    def process_stream_chunk(chunk, state, env, &)
+    def process_stream_chunk(chunk, state, env, progress, &)
       RubyLLM.logger.debug { "Received chunk: #{chunk}" } if RubyLLM.config.log_stream_debug
 
       if error_chunk?(chunk)
@@ -86,12 +92,15 @@ module RubyLLM
       elsif json_error_payload?(chunk)
         handle_json_error_chunk(chunk, env)
       else
-        handle_sse(chunk, state.parser, env, &)
+        handle_sse(chunk, state.parser, env, progress, &)
       end
     end
 
+    # An error event split across network reads reaches here in pieces, so only
+    # a whole one takes this shortcut; the rest go to the parser, which buffers
+    # them until the event is complete.
     def error_chunk?(chunk)
-      chunk.start_with?('event: error')
+      chunk.start_with?('event: error') && chunk.end_with?("\n\n")
     end
 
     def json_error_payload?(chunk)
@@ -115,10 +124,11 @@ module RubyLLM
       RubyLLM.logger.debug { "Accumulating error chunk: #{chunk}" }
     end
 
-    # Marking the env once events flow lets the retry middleware know this
-    # stream already delivered chunks, so a mid-stream failure must not be
-    # retried into the same accumulator and user block.
-    def handle_sse(chunk, parser, env)
+    # Marking progress just before a chunk reaches the user lets the retry
+    # middleware know this stream already delivered, so a mid-stream failure
+    # must not be retried into the same accumulator and user block. An error
+    # event raises out of handle_data first, leaving the stream retriable.
+    def handle_sse(chunk, parser, env, progress)
       parser.feed(chunk) do |type, data|
         case type.to_sym
         when :error
@@ -126,8 +136,9 @@ module RubyLLM
         else
           next if data == '[DONE]'
 
-          env[:streaming_started] = true if env.respond_to?(:[]=)
-          yield handle_data(data, env)
+          parsed = handle_data(data, env)
+          progress[:started] = true
+          yield parsed
         end
       end
     end
@@ -171,7 +182,7 @@ module RubyLLM
     def build_stream_error_response(parsed_data, env, status)
       error_status = failed_http_status(env) || status || 500
 
-      if faraday_1?
+      if faraday_1? || env.nil?
         Struct.new(:body, :status).new(parsed_data, error_status)
       else
         env.merge(body: parsed_data, status: error_status)

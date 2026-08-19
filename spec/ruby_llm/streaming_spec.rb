@@ -146,6 +146,37 @@ RSpec.describe RubyLLM::Streaming do
     expect(RubyLLM.logger).to have_received(:debug).at_least(:once)
   end
 
+  it 'marks stream progress only once a chunk is delivered' do
+    progress = {}
+    handler = test_obj.send(:build_on_data_handler, progress) { |_data| nil }
+
+    expect do
+      handler.call("data: {\"error\":{\"message\":\"Rate limit exceeded\"}}\n\n", 0, env)
+    end.to raise_error(RubyLLM::ServerError)
+    expect(progress).to be_empty
+
+    handler.call("data: {\"x\":\"ok\"}\n\n", 0, env)
+
+    expect(progress[:started]).to be(true)
+  end
+
+  it 'raises the provider error when a stream error arrives with a nil env' do
+    handler = test_obj.send(:handle_stream) { |_chunk| nil }
+
+    expect do
+      handler.call("data: {\"error\":{\"message\":\"Rate limit exceeded\"}}\n\n", 0, nil)
+    end.to raise_error(RubyLLM::ServerError, /Rate limit exceeded/)
+  end
+
+  it 'raises an error event that arrives split across reads' do
+    handler = test_obj.send(:handle_stream) { |_chunk| nil }
+
+    expect { handler.call("event: error\ndata: {\"error\":{\"mes", 0, env) }.not_to raise_error
+    expect do
+      handler.call("sage\":\"Rate limit exceeded\"}}\n\n", 0, env)
+    end.to raise_error(RubyLLM::ServerError, /Rate limit exceeded/)
+  end
+
   it 'raises the error an SSE error event carries' do
     handler = test_obj.send(:handle_stream) { |_chunk| nil }
 

@@ -87,9 +87,9 @@ module RubyLLM
         url: url
       }
 
-      RubyLLM.instrument('request.ruby_llm', payload, config: @config) do
+      RubyLLM.instrument('request.ruby_llm', payload, config: @config) do |event|
         response = yield
-        payload[:status] = response.status if response.respond_to?(:status)
+        event[:status] = response.status if response.respond_to?(:status)
         response
       end
     end
@@ -124,10 +124,14 @@ module RubyLLM
         interval_randomness: @config.retry_interval_randomness,
         backoff_factor: @config.retry_backoff_factor,
         methods: Faraday::Retry::Middleware::IDEMPOTENT_METHODS,
-        retry_if: ->(env, _exception) { env[:method] == :post && !env[:streaming_started] },
+        retry_if: ->(env, _exception) { env[:method] == :post && !stream_delivered?(env) },
         exceptions: retry_exceptions
       }
       faraday.use :llm_usage
+    end
+
+    def stream_delivered?(env)
+      env[:request]&.context&.dig(Streaming::PROGRESS_KEY, :started)
     end
 
     def setup_middleware(faraday)
