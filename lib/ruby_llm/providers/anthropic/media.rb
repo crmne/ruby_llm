@@ -8,7 +8,14 @@ module RubyLLM
         module_function
 
         def format_content(content) # rubocop:disable Metrics/PerceivedComplexity
-          return content.value if content.is_a?(RubyLLM::Content::Raw)
+          if content.is_a?(RubyLLM::Content::Raw)
+            value = content.value
+            # Parsed structured-output hashes (no :type key) are replayed as the
+            # JSON text the model produced; provider-typed raw blocks pass through.
+            return [format_text(value.to_json)] if value.is_a?(Hash) && !value.key?(:type) && !value.key?('type')
+
+            return value
+          end
           return [format_text(content.to_json)] if content.is_a?(Hash) || content.is_a?(Array)
           return [format_text(content)] unless content.is_a?(RubyLLM::Content)
 

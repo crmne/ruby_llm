@@ -19,6 +19,28 @@ RSpec.describe RubyLLM::Providers::Anthropic::Media do
       expect(document_block[:source][:data]).to be_present
     end
 
+    it 'serializes a raw structured-output Hash into a JSON text block' do
+      content = RubyLLM::Content::Raw.new({ 'name' => 'Sophie' })
+
+      blocks = described_class.format_content(content)
+
+      expect(blocks).to eq([{ type: 'text', text: '{"name":"Sophie"}' }])
+    end
+
+    it 'passes through a raw provider-typed block Hash verbatim' do
+      raw_block = { type: 'text', text: 'hello', cache_control: { type: 'ephemeral' } }
+      content = RubyLLM::Content::Raw.new(raw_block)
+
+      expect(described_class.format_content(content)).to eq(raw_block)
+    end
+
+    it 'passes through raw block Arrays verbatim' do
+      raw_blocks = [{ type: 'text', text: 'hello' }]
+      content = RubyLLM::Content::Raw.new(raw_blocks)
+
+      expect(described_class.format_content(content)).to eq(raw_blocks)
+    end
+
     it 'raises an actionable error for unsupported Office documents' do
       content = RubyLLM::Content.new('Summarize this file')
       content.add_attachment(StringIO.new('docx bytes'), filename: 'proposal.docx')
