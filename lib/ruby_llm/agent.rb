@@ -32,8 +32,10 @@ module RubyLLM
   #
   #   WorkAssistant.chat(workspace: workspace)
   #
-  # Agent instances delegate the Chat API (#ask, #complete, #with_tools, and
-  # so on) to the wrapped chat, which is available via #chat. Agents are
+  # Agent instances delegate Chat's conversation API (#ask, #complete,
+  # #with_tools, and so on) to the wrapped chat, which is available via
+  # #chat. Direct transcript replacement stays on the wrapped chat because
+  # Rails-backed chat models own their message association. Agents are
   # enumerable over their messages.
   class Agent
     extend Forwardable
@@ -58,8 +60,27 @@ module RubyLLM
     PASSTHROUGH_OPTIONS = %i[temperature max_output_tokens].freeze
 
     # The chat operations an agent instance runs through its ::rescue_from
-    # handlers. Every other Chat method is delegated untouched.
-    GUARDED_OPERATIONS = %i[ask say ask_later complete generate run_tools step].freeze
+    # handlers. Remaining delegated methods pass through untouched.
+    GUARDED_OPERATIONS = %i[ask say ask_later complete generate run_tools step count_tokens].freeze
+
+    # Chat methods that return the wrapped chat so calls can be chained there.
+    CHAINABLE_CHAT_DELEGATES = %i[
+      with_instructions with_tools with_server_tools with_tool_options with_model
+      with_temperature with_max_output_tokens with_thinking with_citations
+      with_end_user with_compaction with_caching with_context with_provider_options
+      with_headers with_schema with_fallbacks
+      before_request before_message after_message before_tool_call after_tool_result
+      before_fallback after_fallback
+      cancel! approve! deny! cache_until_here!
+    ].freeze
+
+    # Chat values and operations whose return values pass through unchanged.
+    PASSTHROUGH_CHAT_DELEGATES = %i[
+      model provider messages tools server_tools provider_options headers schema concurrency
+      caching compaction end_user fallbacks
+      each complete? cancelled? awaiting_approval? pending_approvals
+      add_message add_completion tokens cost render
+    ].freeze
 
     COPIED_INHERITED_CONFIG = (%i[
       @instructions
@@ -71,7 +92,7 @@ module RubyLLM
       @chat_model
     ] + PASSTHROUGH_OPTIONS.map { |option| :"@#{option}" }).freeze
     private_constant :DUPED_INHERITED_CONFIG, :COPIED_INHERITED_CONFIG, :PASSTHROUGH_OPTIONS,
-                     :GUARDED_OPERATIONS
+                     :GUARDED_OPERATIONS, :CHAINABLE_CHAT_DELEGATES, :PASSTHROUGH_CHAT_DELEGATES
 
     class << self
       def inherited(subclass) # :nodoc:
@@ -758,17 +779,9 @@ module RubyLLM
     # The wrapped Chat, or the chat record in Rails mode.
     attr_reader :chat
 
-    # Agent instances delegate the Chat API to the wrapped #chat. Each
-    # delegated method behaves exactly as documented on Chat.
-    def_delegators :chat, :model, :messages, :tools, :provider_options, :headers, :schema, :caching, :compaction,
-                   :with_instructions, :with_tools, :with_server_tools, :with_tool_options, :with_model,
-                   :with_temperature, :with_max_output_tokens,
-                   :with_thinking, :with_citations, :with_end_user, :with_compaction,
-                   :with_caching, :with_context, :with_provider_options,
-                   :with_headers, :with_schema, :with_fallbacks, :before_request, :before_message, :after_message,
-                   :before_tool_call, :after_tool_result, :before_fallback, :after_fallback, :each, :complete?,
-                   :cancel!, :cancelled?, :approve!, :deny!, :awaiting_approval?, :pending_approvals,
-                   :add_message, :add_completion, :tokens, :cost, :count_tokens, :render
+    # Agent instances delegate the Chat conversation API to the wrapped
+    # #chat without adapting its return values.
+    def_delegators :chat, *CHAINABLE_CHAT_DELEGATES, *PASSTHROUGH_CHAT_DELEGATES
 
     ##
     # :method: ask

@@ -341,6 +341,54 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
 
       expect(chat.render[:metadata]).to eq({ user_id: 'u-1' })
     end
+
+    it 'forwards Chat configuration values' do
+      chat = Chat.create!(model: model_id)
+                 .with_server_tools(:web_search)
+                 .with_tool_options(concurrency: :fibers)
+                 .with_caching(ttl: '1h')
+                 .with_compaction(at: 50_000)
+                 .with_end_user('customer-42')
+                 .with_fallbacks('gpt-4.1-mini')
+                 .with_headers('X-Trace' => 'abc')
+                 .with_provider_options(reasoning_effort: 'low')
+
+      expect(chat.server_tools).to eq(chat.to_llm.server_tools)
+      expect(chat.concurrency).to eq(:fibers)
+      expect(chat.caching).to eq(ttl: '1h')
+      expect(chat.compaction).to eq(at: 50_000)
+      expect(chat.end_user).to eq('customer-42')
+      expect(chat.fallbacks).to eq(chat.to_llm.fallbacks)
+      expect(chat.headers).to eq('X-Trace' => 'abc')
+      expect(chat.provider_options).to eq(reasoning_effort: 'low')
+    end
+
+    it 'persists completions added out of band' do
+      chat = Chat.create!(model: model_id)
+      response = RubyLLM::Message.new(role: :assistant, content: 'Batch response')
+
+      expect(chat.add_completion(response)).to be(response)
+      expect(chat.messages.reload.last.content).to eq('Batch response')
+    end
+
+    it 'is enumerable over persisted messages' do
+      chat = Chat.create!(model: model_id)
+      chat.add_message(role: :user, content: 'First')
+      chat.add_message(role: :assistant, content: 'Second')
+
+      expect(chat.map(&:content)).to eq(%w[First Second])
+    end
+
+    it 'classifies every method defined on Chat' do
+      integration_methods = %i[
+        approval_checker= cancellation_checker= fallback_errors raise_if_pending_tool_calls!
+        tool_prefs usage_entries usage_entries= usage_recorder=
+      ]
+
+      missing_methods = RubyLLM::Chat.public_instance_methods(false) - Chat.public_instance_methods
+
+      expect(missing_methods).to match_array(integration_methods)
+    end
   end
 
   describe '#complete failure handling' do

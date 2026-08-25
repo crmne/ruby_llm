@@ -118,7 +118,7 @@ RSpec.describe RubyLLM::Agent do
     end
 
     it 'guards every chat operation that talks to the provider' do
-      %i[ask say ask_later complete generate run_tools step].each do |operation|
+      %i[ask say ask_later complete generate run_tools step count_tokens].each do |operation|
         agent = agent_raising(rate_limit, on: operation) do
           rescue_from RubyLLM::RateLimitError, with: :handle
 

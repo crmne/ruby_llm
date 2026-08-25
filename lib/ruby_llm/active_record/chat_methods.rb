@@ -19,6 +19,7 @@ module RubyLLM
     #
     module ChatMethods
       extend ActiveSupport::Concern
+      include Enumerable
       include AttachmentHelpers
 
       CANCELLATION_POLL_INTERVAL = 1.0
@@ -216,7 +217,7 @@ module RubyLLM
       # Chat configuration and callback methods forwarded to the underlying
       # RubyLLM::Chat. Each behaves exactly as documented on RubyLLM::Chat,
       # then returns the record so calls chain.
-      CHAT_DELEGATES = %i[
+      CHAINABLE_CHAT_DELEGATES = %i[
         with_tools with_tool_options with_server_tools with_fallbacks with_temperature
         with_max_output_tokens with_thinking with_citations with_caching
         with_end_user with_compaction
@@ -225,12 +226,48 @@ module RubyLLM
         before_fallback after_fallback
       ].freeze
 
-      CHAT_DELEGATES.each do |name|
+      CHAINABLE_CHAT_DELEGATES.each do |name|
         define_method(name) do |*args, **kwargs, &block|
           to_llm.public_send(name, *args, **kwargs, &block)
           self
         end
       end
+
+      # Chat values and operations whose return values pass through unchanged.
+      #
+      # The public methods behave as documented on RubyLLM::Chat.
+
+      ##
+      # :method: count_tokens
+      # :call-seq: count_tokens(message = nil)
+      #
+      # Returns the number of input tokens the next request would carry,
+      # counted by the provider over the persisted conversation.
+
+      ##
+      # :method: each
+      # :call-seq: each(&block)
+      #
+      # Yields each message in the conversation. Returns an Enumerator without a block.
+
+      ##
+      # :method: render
+      # :call-seq: render
+      #
+      # Returns the next request payload with #before_request hooks applied.
+
+      PASSTHROUGH_CHAT_DELEGATES = %i[
+        caching compaction concurrency end_user fallbacks headers provider_options schema server_tools tools
+        add_completion count_tokens each render
+      ].freeze
+
+      PASSTHROUGH_CHAT_DELEGATES.each do |name|
+        define_method(name) do |*args, **kwargs, &block|
+          to_llm.public_send(name, *args, **kwargs, &block)
+        end
+      end
+
+      private_constant :CHAINABLE_CHAT_DELEGATES, :PASSTHROUGH_CHAT_DELEGATES
 
       # Switches the chat to +model_name+, resolving and saving the model
       # record and updating the underlying chat. Falls back to the configured
@@ -310,27 +347,6 @@ module RubyLLM
       def cost
         records = ruby_llm_usages.to_a
         RubyLLM::Cost.aggregate(records.map(&:cost), complete: records.all?(&:usage_available?))
-      end
-
-      # Returns the number of input tokens the next request would carry,
-      # counted by the provider over the persisted conversation. Pass a
-      # message to count it alongside that history without persisting it.
-      # See RubyLLM::Chat#count_tokens.
-      #
-      #   chat.count_tokens "Summarize this contract."
-      #
-      def count_tokens(...)
-        to_llm.count_tokens(...)
-      end
-
-      # Returns the request payload this chat would send to the provider for
-      # its next completion, with #before_request hooks applied. See
-      # RubyLLM::Chat#render.
-      #
-      #   chat.render[:messages]
-      #
-      def render(...)
-        to_llm.render(...)
       end
 
       # Persists +message+ as a user message, then runs the completion loop

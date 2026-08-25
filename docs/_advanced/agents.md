@@ -299,17 +299,19 @@ response.cost.total
 agent.cost.total
 ```
 
-Agent instances delegate the full `RubyLLM::Chat` instance API to the underlying chat object
-(or to `to_llm` when using a Rails-backed chat model).
+Agent instances delegate the conversation API from `RubyLLM::Chat` to the wrapped chat object.
+Direct transcript replacement with `messages=` stays on the wrapped chat because Rails-backed chat
+models own their message association.
 
 Delegated methods include:
 
-* `model`, `messages`, `tools`, `provider_options`, `headers`, `schema`
-* `cost`
+* `model`, `provider`, `messages`, `tools`, `server_tools`, `provider_options`, `headers`, `schema`
+* `concurrency`, `caching`, `compaction`, `end_user`, `fallbacks`
+* `tokens`, `cost`, `count_tokens`, `render`
 * `ask`, `say`, `complete`, `complete?`, `ask_later`, `generate`, `run_tools`, `step`
-* `cancel!`, `cancelled?`, `approve!`, `deny!`, `awaiting_approval?`
+* `cancel!`, `cancelled?`, `approve!`, `deny!`, `awaiting_approval?`, `pending_approvals`
 * `add_message`, `each`
-* `with_tools`, `with_tool_options`
+* `cache_until_here!`, `with_tools`, `with_server_tools`, `with_tool_options`
 * `with_model`, `with_temperature`, `with_thinking`, `with_citations`, `with_end_user`, `with_compaction`, `with_context`
 * `with_caching`, `with_provider_options`, `with_headers`, `with_schema`, `with_fallbacks`
 * `before_request`, `before_message`, `after_message`, `before_tool_call`, `after_tool_result`, `before_fallback`, `after_fallback`
@@ -318,7 +320,7 @@ You can always access the wrapped chat object directly via `agent.chat`.
 
 ## Handling Errors with `rescue_from`
 
-`rescue_from` declares how an agent handles exceptions raised by its chat operations: `ask`, `say`, `ask_later`, `complete`, `generate`, `run_tools`, and `step`.
+`rescue_from` declares how an agent handles exceptions raised by its chat operations: `ask`, `say`, `ask_later`, `complete`, `generate`, `run_tools`, `step`, and `count_tokens`.
 
 ```ruby
 class ApplicationAgent < RubyLLM::Agent
