@@ -46,11 +46,10 @@ module RubyLLM
                           .merge(provider_options).compact
         end
 
-        # rubocop:disable Lint/UnusedMethodArgument
+        # rubocop:disable-next Lint/UnusedMethodArgument
         def render_speech_payload(input, model:, voice: nil, format: nil, provider_options: {})
           { text: input }
         end
-        # rubocop:enable Lint/UnusedMethodArgument
 
         def parse_speech_response(response, model:, voice:, format:)
           RubyLLM::Speech.new(

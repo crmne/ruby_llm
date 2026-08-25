@@ -12,13 +12,12 @@ RSpec.describe RubyLLM::Batch do # rubocop:disable RSpec/SpecFilePathFormat
     expect(RubyLLM::ActiveRecord.const_defined?(:BatchStore, false)).to be(false)
   end
 
-  # rubocop:disable RSpec/AnyInstance
+  # rubocop:disable-next RSpec/AnyInstance
   def stub_anthropic_batch(create:, find:, results:)
     allow_any_instance_of(RubyLLM::Providers::Anthropic).to receive(:create_batch).and_return(create)
     allow_any_instance_of(RubyLLM::Providers::Anthropic).to receive(:find_batch).and_return(find)
     allow_any_instance_of(RubyLLM::Providers::Anthropic).to receive(:batch_results).and_return(results)
   end
-  # rubocop:enable RSpec/AnyInstance
 
   def answer(content)
     RubyLLM::Message.new(role: :assistant, content: content, input_tokens: 5, output_tokens: 1, model: model)

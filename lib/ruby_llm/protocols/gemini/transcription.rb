@@ -7,7 +7,7 @@ module RubyLLM
       module Transcription
         DEFAULT_PROMPT = 'Transcribe the provided audio and respond with only the transcript text.'
 
-        # rubocop:disable  Lint/UnusedMethodArgument
+        # rubocop:disable-next  Lint/UnusedMethodArgument
         def transcribe(audio_file, model:, language:, format: nil, speaker_names: nil,
                        speaker_references: nil, provider_options: {}, prompt: nil, temperature: nil)
           raise_transcription_streaming_unsupported if block_given?
@@ -20,7 +20,6 @@ module RubyLLM
             parse_transcription_response(response, model:)
           end
         end
-        # rubocop:enable  Lint/UnusedMethodArgument
 
         private
 

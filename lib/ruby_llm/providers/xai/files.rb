@@ -7,12 +7,11 @@ module RubyLLM
       class Files < UploadedFile::Protocol
         private
 
-        # rubocop:disable Lint/UnusedMethodArgument
+        # rubocop:disable-next Lint/UnusedMethodArgument
         def render_upload_payload(attachment, purpose: nil, expires_in: nil, visibility: nil,
                                   display_name: nil, uri: nil, content_type: nil)
           multipart_payload(attachment, expires_after: expires_in, purpose:)
         end
-        # rubocop:enable Lint/UnusedMethodArgument
 
         def parse_file_response(data)
           uploaded_file(

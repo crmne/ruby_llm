@@ -18,7 +18,7 @@ module RubyLLM
           "models/#{@model.id}:generateContent"
         end
 
-        # rubocop:disable Metrics/PerceivedComplexity,Lint/UnusedMethodArgument
+        # rubocop:disable-next Metrics/PerceivedComplexity,Lint/UnusedMethodArgument
         def render_payload(messages, tools:, temperature:, model:, stream: false, max_output_tokens: nil, schema: nil,
                            thinking: nil, citations: false, caching: nil, tool_prefs: nil)
           warn_unsupported_citations(model) if citations && !model.supports?(:citations)
@@ -47,7 +47,6 @@ module RubyLLM
 
           payload
         end
-        # rubocop:enable Metrics/PerceivedComplexity,Lint/UnusedMethodArgument
 
         def maybe_log_implicit_caching_note(messages, caching)
           return unless (caching && !caching[:id]) || messages.any?(&:cache_until_here?)

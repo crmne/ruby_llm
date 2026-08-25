@@ -11,7 +11,7 @@ module RubyLLM
           azure_endpoint(:embeddings)
         end
 
-        # rubocop:disable Lint/UnusedMethodArgument
+        # rubocop:disable-next Lint/UnusedMethodArgument
         def render_embedding_payload(text, model:, dimensions:, task_type: nil, title: nil, provider_options: {})
           {
             model: model,
@@ -19,7 +19,6 @@ module RubyLLM
             dimensions: dimensions
           }.compact.merge(provider_options)
         end
-        # rubocop:enable Lint/UnusedMethodArgument
       end
     end
   end

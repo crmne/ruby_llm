@@ -8,7 +8,7 @@ module RubyLLM
         # GCS object names allow spaces and other characters URI() rejects.
         GCS_URI = %r{\Ags://([^/]+)/?(.*)\z}m
 
-        # rubocop:disable Lint/UnusedMethodArgument
+        # rubocop:disable-next Lint/UnusedMethodArgument
         def upload(file, uri: nil, filename: nil, content_type: nil, purpose: nil, expires_in: nil,
                    visibility: nil, display_name: nil)
           attachment = file_attachment(file, filename:)
@@ -28,7 +28,6 @@ module RubyLLM
             mime_type: content_type || file_content_type(attachment)
           )
         end
-        # rubocop:enable Lint/UnusedMethodArgument
 
         def find(file_id)
           bucket_name, key = parse_gcs_uri(file_id)

@@ -416,13 +416,12 @@ RSpec.describe RubyLLM::Generators::ChatUIGenerator, :generator, type: :generato
       end
 
       if config[:extra_view_example]
-        # rubocop:disable RSpec/NoExpectationExample
+        # rubocop:disable-next RSpec/NoExpectationExample
         it config[:extra_view_example] do
           within_test_app(app_path) do
             instance_exec(&config[:extra_view_assertions])
           end
         end
-        # rubocop:enable RSpec/NoExpectationExample
       end
 
       it config[:functionality_example] do

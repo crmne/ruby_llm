@@ -22,7 +22,7 @@ module RubyLLM
         # it deprecates does not.
         DIARIZE_MODEL = 'latest'
 
-        # rubocop:disable Lint/UnusedMethodArgument
+        # rubocop:disable-next Lint/UnusedMethodArgument
         def transcribe(audio_file, model:, language:, format: nil, speaker_names: nil,
                        speaker_references: nil, provider_options: {}, prompt: nil, temperature: nil)
           raise_transcription_streaming_unsupported if block_given?
@@ -35,7 +35,6 @@ module RubyLLM
             parse_transcription_response(response, model:)
           end
         end
-        # rubocop:enable Lint/UnusedMethodArgument
 
         def transcription_url(model:, language: nil, speaker_names: nil, provider_options: {})
           "v1/listen?#{URI.encode_www_form(transcription_params(model:, language:, speaker_names:,

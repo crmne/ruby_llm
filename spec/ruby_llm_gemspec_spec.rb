@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-# rubocop:disable RSpec/DescribeClass
+# rubocop:disable-next RSpec/DescribeClass
 RSpec.describe 'ruby_llm.gemspec' do
   subject(:gemspec) { Gem::Specification.load(File.expand_path('../ruby_llm.gemspec', __dir__)) }
 
@@ -18,4 +18,3 @@ RSpec.describe 'ruby_llm.gemspec' do
     expect(runtime_dependency('faraday-retry').requirement.to_s).to eq('>= 1')
   end
 end
-# rubocop:enable RSpec/DescribeClass

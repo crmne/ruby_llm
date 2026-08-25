@@ -8,7 +8,7 @@ module RubyLLM
         PROCESSING_POLL_INTERVAL = 2
         PROCESSING_TIMEOUT = 600
 
-        # rubocop:disable Lint/UnusedMethodArgument
+        # rubocop:disable-next Lint/UnusedMethodArgument
         def upload(file, filename: nil, display_name: nil, purpose: nil, expires_in: nil,
                    visibility: nil, uri: nil, content_type: nil)
           attachment = file_attachment(file, filename:)
@@ -16,7 +16,6 @@ module RubyLLM
           response = upload_file_bytes(upload_url, attachment)
           await_active(parse_file_response(response.body.fetch('file')))
         end
-        # rubocop:enable Lint/UnusedMethodArgument
 
         def download(file_id)
           file = find(file_id)

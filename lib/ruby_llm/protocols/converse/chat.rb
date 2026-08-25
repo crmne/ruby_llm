@@ -23,7 +23,7 @@ module RubyLLM
           model_id.to_s.gsub('/', '%2F')
         end
 
-        # rubocop:disable Lint/UnusedMethodArgument
+        # rubocop:disable-next Lint/UnusedMethodArgument
         def render_payload(messages, tools:, temperature:, model:, stream: false, max_output_tokens: nil,
                            schema: nil, thinking: nil, citations: false, caching: nil, tool_prefs: nil)
           tool_prefs ||= {}
@@ -51,7 +51,6 @@ module RubyLLM
 
           payload
         end
-        # rubocop:enable Lint/UnusedMethodArgument
 
         def count_tokens_url
           "/model/#{escape_model_id(@model.id)}/count-tokens"

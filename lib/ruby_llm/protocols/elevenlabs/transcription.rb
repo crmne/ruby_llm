@@ -8,7 +8,7 @@ module RubyLLM
       # speaker names turns on diarization and caps the speaker count at
       # the number of names.
       module Transcription
-        # rubocop:disable Lint/UnusedMethodArgument
+        # rubocop:disable-next Lint/UnusedMethodArgument
         def render_transcription_payload(file_part, model:, language:, format: nil, speaker_names: nil,
                                          speaker_references: nil, provider_options: {}, prompt: nil,
                                          temperature: nil)
@@ -27,7 +27,6 @@ module RubyLLM
 
           payload.merge(provider_options)
         end
-        # rubocop:enable Lint/UnusedMethodArgument
 
         def transcription_url
           'v1/speech-to-text'

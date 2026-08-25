@@ -13,7 +13,7 @@ module RubyLLM
           'v2/embed'
         end
 
-        # rubocop:disable Lint/UnusedMethodArgument
+        # rubocop:disable-next Lint/UnusedMethodArgument
         def render_embedding_payload(text, model:, dimensions:, task_type: nil, title: nil, with: [],
                                      provider_options: {})
           payload = {
@@ -26,7 +26,6 @@ module RubyLLM
           payload.merge!(embedding_inputs(text, with))
           Utils.deep_merge(payload, provider_options)
         end
-        # rubocop:enable Lint/UnusedMethodArgument
 
         def supports_embedding_media?
           true

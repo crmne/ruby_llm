@@ -199,7 +199,7 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs, :live do
       end
     end
 
-    # rubocop:disable Lint/ConstantDefinitionInBlock, RSpec/LeakyConstantDeclaration
+    # rubocop:disable-next Lint/ConstantDefinitionInBlock, RSpec/LeakyConstantDeclaration
     module Support
       class Conversation < ActiveRecord::Base
         self.table_name = 'support_conversations'
@@ -213,7 +213,6 @@ RSpec.describe RubyLLM::ActiveRecord::ActsAs, :live do
                         chat_foreign_key: :conversation_id
       end
     end
-    # rubocop:enable Lint/ConstantDefinitionInBlock, RSpec/LeakyConstantDeclaration
 
     it 'uses polymorphic internal rows without extra application models' do
       chat = Support::Conversation.create!(model: model)

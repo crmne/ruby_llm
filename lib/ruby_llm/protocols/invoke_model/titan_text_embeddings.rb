@@ -5,7 +5,7 @@ module RubyLLM
     class InvokeModel
       # Amazon Titan text embedding models over Bedrock InvokeModel.
       class TitanTextEmbeddings < InvokeModel
-        # rubocop:disable Lint/UnusedMethodArgument
+        # rubocop:disable-next Lint/UnusedMethodArgument
         def embed(text, model:, dimensions:, task_type: nil, title: nil, with: nil, provider_options: {})
           ensure_no_embedding_media!(with)
           track_usage(:embedding) do
@@ -17,7 +17,6 @@ module RubyLLM
             parse_single_embedding_responses(responses, model:, text:)
           end
         end
-        # rubocop:enable Lint/UnusedMethodArgument
 
         private
 

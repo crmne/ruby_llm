@@ -15,7 +15,7 @@ module RubyLLM
           raise_transcription_streaming_unsupported
         end
 
-        # rubocop:disable Lint/UnusedMethodArgument
+        # rubocop:disable-next Lint/UnusedMethodArgument
         def render_transcription_payload(file_part, model:, language:, format: nil, speaker_names: nil,
                                          speaker_references: nil, provider_options: {}, prompt: nil,
                                          temperature: nil)
@@ -32,7 +32,6 @@ module RubyLLM
           end
           payload.merge(provider_options)
         end
-        # rubocop:enable Lint/UnusedMethodArgument
       end
     end
   end

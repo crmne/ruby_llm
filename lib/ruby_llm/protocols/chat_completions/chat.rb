@@ -15,7 +15,7 @@ module RubyLLM
 
         module_function
 
-        # rubocop:disable Metrics/PerceivedComplexity
+        # rubocop:disable-next Metrics/PerceivedComplexity
         def render_payload(messages, tools:, temperature:, model:, stream: false, max_output_tokens: nil, schema: nil,
                            thinking: nil, citations: false, caching: nil, tool_prefs: nil)
           warn_unsupported_citations(model) if citations && !model.supports?(:citations)
@@ -56,7 +56,6 @@ module RubyLLM
           apply_prompt_cache_params(payload, messages, caching)
           payload
         end
-        # rubocop:enable Metrics/PerceivedComplexity
 
         # OpenAI and Azure reject max_tokens on their reasoning models.
         def max_output_tokens_field(model)

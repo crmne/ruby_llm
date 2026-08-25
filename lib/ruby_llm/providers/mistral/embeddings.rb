@@ -11,7 +11,7 @@ module RubyLLM
           'embeddings'
         end
 
-        # rubocop:disable Lint/UnusedMethodArgument
+        # rubocop:disable-next Lint/UnusedMethodArgument
         def render_embedding_payload(text, model:, dimensions:, task_type: nil, title: nil, provider_options: {})
           {
             model: model,
@@ -19,7 +19,6 @@ module RubyLLM
             output_dimension: dimensions
           }.compact.merge(provider_options)
         end
-        # rubocop:enable Lint/UnusedMethodArgument
 
         def parse_embedding_response(response, model:, text:)
           data = response.body
