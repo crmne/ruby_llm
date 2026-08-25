@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
+require 'aws-eventstream'
 
 RSpec.describe RubyLLM::Protocols::Converse::Streaming do
   let(:streaming) do
@@ -270,6 +271,30 @@ RSpec.describe RubyLLM::Protocols::Converse::Streaming do
       end.to raise_error(RubyLLM::RateLimitError)
       expect(progress).to be_empty
     end
+
+    # Real binary frames, prelude lengths and CRCs included, through the real
+    # decoder: a mid-stream failure must not pass for the end of the stream.
+    it 'fails a stream whose deltas are followed by an error frame' do
+      chunk = encoded_frame({ ':message-type' => 'event', ':event-type' => 'contentBlockDelta' },
+                            '{"contentBlockIndex":0,"delta":{"text":"partial"}}') +
+              encoded_frame({ ':message-type' => 'error', ':error-code' => 'ModelStreamErrorException',
+                              ':error-message' => 'stream failed' }, '')
+      yielded = []
+
+      expect do
+        streaming.send(:parse_stream_chunk, Aws::EventStream::Decoder.new, chunk,
+                       RubyLLM::StreamAccumulator.new, {}) { |received| yielded << received.content }
+      end.to raise_error(RubyLLM::ServerError, /ModelStreamErrorException: stream failed/)
+      expect(yielded).to eq(['partial'])
+    end
+
+    def encoded_frame(headers, payload)
+      message = Aws::EventStream::Message.new(
+        headers: headers.transform_values { |value| Aws::EventStream::HeaderValue.new(value:, type: 'string') },
+        payload: StringIO.new(payload)
+      )
+      Aws::EventStream::Encoder.new.encode_message(message)
+    end
   end
 
   describe '#handle_failed_stream' do
@@ -283,6 +308,16 @@ RSpec.describe RubyLLM::Protocols::Converse::Streaming do
       expect do
         streaming.send(:handle_failed_stream, '{"message":"denied"}', env)
       end.to raise_error(RubyLLM::ForbiddenError, /denied/)
+    end
+
+    it 'raises the parsed error when the body arrives across two reads' do
+      env = Faraday::Env.from(status: 403)
+      body = '{"message":"The security token is invalid."}'
+      streaming.send(:handle_failed_stream, body[0, 20], env)
+
+      expect do
+        streaming.send(:handle_failed_stream, body[20..], env)
+      end.to raise_error(RubyLLM::ForbiddenError, /The security token is invalid/)
     end
   end
 
@@ -346,6 +381,33 @@ RSpec.describe RubyLLM::Protocols::Converse::Streaming do
       events = streaming.send(:decode_events, decoder, 'frame')
 
       expect(events).to eq([{ 'validationException' => { 'message' => 'Bad input' } }])
+    end
+
+    # Failures the API does not model arrive as an error frame with an empty
+    # payload, which used to decode to nothing and end the stream clean.
+    it 'rewraps an error frame under its code and message headers' do
+      decoder = frame_decoder(
+        '',
+        headers: { ':message-type' => 'error', ':error-code' => 'InternalStreamException',
+                   ':error-message' => 'connection reset' }
+      )
+
+      events = streaming.send(:decode_events, decoder, 'frame')
+
+      expect(events).to eq(
+        [{ 'type' => 'error', 'error' => { 'message' => 'InternalStreamException: connection reset' } }]
+      )
+      expect { streaming.send(:build_chunk, events.first) }
+        .to raise_error(RubyLLM::ServerError, /InternalStreamException: connection reset/)
+    end
+
+    it 'still raises for an error frame that names nothing' do
+      decoder = frame_decoder('', headers: { ':message-type' => 'error' })
+
+      events = streaming.send(:decode_events, decoder, 'frame')
+
+      expect { streaming.send(:build_chunk, events.first) }
+        .to raise_error(RubyLLM::ServerError, /Bedrock streaming error/)
     end
 
     it 'keeps an unparseable exception payload as its message' do

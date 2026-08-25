@@ -57,12 +57,19 @@ module RubyLLM
                 'Please add it to your Gemfile: gem "aws-eventstream"'
         end
 
+        # The error body arrives in as many reads as the adapter hands out, so
+        # it accumulates on the env, which ErrorMiddleware clears per attempt.
         def handle_failed_stream(chunk, env)
-          data = JSON.parse(chunk)
-          error_response = env.merge(body: data)
+          buffer = failed_stream_buffer(env)
+          buffer << chunk
+          error_response = env.merge(body: JSON.parse(buffer))
           ErrorMiddleware.parse_error(provider: self, response: error_response)
         rescue JSON::ParserError
-          RubyLLM.logger.debug { "Failed Bedrock stream error chunk: #{chunk}" }
+          RubyLLM.logger.debug { "Accumulating Bedrock stream error chunk: #{chunk}" }
+        end
+
+        def failed_stream_buffer(env)
+          (env[:streaming_state] ||= RubyLLM::Streaming::StreamState.new).buffer
         end
 
         def parse_stream_chunk(decoder, raw_chunk, accumulator, progress)
@@ -126,12 +133,27 @@ module RubyLLM
         # it under the exception name so raise_stream_error classifies it instead
         # of the frame passing for an empty chunk.
         def decode_event(message)
+          return decode_error_frame(message.headers) if stream_error_frame?(message)
+
           exception_type = stream_exception_type(message)
           payload = message.payload.read
           event = decode_event_payload(payload)
           return event unless exception_type
 
           { exception_type => event || { 'message' => payload.to_s } }
+        end
+
+        # Failures the API does not model arrive as an error frame instead,
+        # with the code and message in the headers and nothing in the payload.
+        def stream_error_frame?(message)
+          event_header(message.headers, ':message-type') == 'error'
+        end
+
+        def decode_error_frame(headers)
+          detail = [event_header(headers, ':error-code'), event_header(headers, ':error-message')].compact.join(': ')
+          event = { 'type' => 'error' }
+          event['error'] = { 'message' => detail } unless detail.empty?
+          event
         end
 
         def stream_exception_type(message)
