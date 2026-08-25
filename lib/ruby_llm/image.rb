@@ -62,7 +62,7 @@ module RubyLLM
                    model: nil,
                    provider: nil,
                    assume_model_exists: false,
-                   size: '1024x1024',
+                   size: nil,
                    count: nil,
                    context: nil,
                    with: nil,

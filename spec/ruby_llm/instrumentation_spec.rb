@@ -277,7 +277,7 @@ RSpec.describe RubyLLM::Instrumentation do
       expect(provider).to have_received(:paint).with(
         'draw this',
         model: model,
-        size: '1024x1024',
+        size: nil,
         count: nil,
         with: nil,
         mask: nil,

@@ -2,7 +2,7 @@
 layout: default
 title: Image Generation
 nav_order: 5
-description: Generate and edit images from text prompts with GPT Image, Imagen, and Grok
+description: Generate and edit images from text prompts with GPT Image, Gemini, and Grok
 redirect_from:
   - /guides/image-generation
 ---
@@ -36,7 +36,7 @@ if image.url
   # => "https://oaidalleapiprodscus.blob.core.windows.net/..."
 end
 
-# For models returning Base64 data (like Imagen):
+# For models returning Base64 data:
 if image.base64?
   puts "MIME Type: #{image.mime_type}" # => "image/png" or similar
   puts "Data size: ~#{image.data.length} bytes"
@@ -58,14 +58,14 @@ The `paint` method abstracts the differences between provider APIs.
 Pass `count:` to get several images from one request, which is cheaper and faster than repeating the call. RubyLLM returns an array when the request comes back with several images, and a single image otherwise:
 
 ```ruby
-images = RubyLLM.paint("a siamese cat", model: "imagen-4.0-generate-001", count: 4)
+images = RubyLLM.paint("a siamese cat", model: "gpt-image-1.5", count: 4)
 
 images.each_with_index do |image, index|
   image.save("cat-#{index}.png")
 end
 ```
 
-`count:` maps to each provider's own parameter: `n` on OpenAI and xAI, `sampleCount` on Imagen, and `candidateCount` on Gemini image models. Providers that generate one image per request, such as OpenRouter, ignore it and return a single image.
+`count:` maps to each provider's own parameter: `n` on OpenAI and xAI, and `candidateCount` on Gemini image models. Providers that generate one image per request, such as OpenRouter, ignore it and return a single image.
 
 The call is billed once, and the usage lands on the first image, so `images.sum { |image| image.cost.total }` is the cost of the request.
 {: .note }
@@ -128,12 +128,12 @@ image = RubyLLM.paint(
 By default, RubyLLM uses the model specified in `config.default_image_model`, but you can specify a different one.
 
 ```ruby
-image_dalle = RubyLLM.paint(
+image_openai = RubyLLM.paint(
   "Impressionist painting of a Parisian cafe",
   model: "{{ site.models.image_openai }}"
 )
 
-image_imagen = RubyLLM.paint(
+image_google = RubyLLM.paint(
   "Cyberpunk city street at night, raining, neon signs",
   model: "{{ site.models.image_google }}"
 )
@@ -159,28 +159,28 @@ Refer to the [Working with Models Guide]({% link _reference/models.md %}) and th
 
 ## Image Sizes
 
-Ask for the dimensions you want with the `size:` argument. It defaults to `"1024x1024"`, and every provider that can size an image gets the value you pass.
+Ask for the dimensions you want with the `size:` argument. Every provider that can size an image gets the value you pass. Leave it unset and RubyLLM sends no size at all, so the model returns whatever shape it prefers.
 
 ```ruby
-# Standard square (1024x1024 - default for DALL-E 3)
+# Standard square
 image_square = RubyLLM.paint(
   "a fluffy white cat",
   model: "{{ site.models.image_dalle }}",
   size: "1024x1024"
 )
 
-# Wide landscape (1792x1024 for DALL-E 3)
+# Wide landscape
 image_landscape = RubyLLM.paint(
   "a panoramic mountain landscape at dawn",
   model: "{{ site.models.image_dalle }}",
-  size: "1792x1024"
+  size: "1536x1024"
 )
 
-# Tall portrait (1024x1792 for DALL-E 3)
+# Tall portrait
 image_portrait = RubyLLM.paint(
   "a knight standing before a castle gate",
   model: "{{ site.models.image_dalle }}",
-  size: "1024x1792"
+  size: "1024x1536"
 )
 ```
 
@@ -194,7 +194,7 @@ image = RubyLLM.paint(
 )
 ```
 
-> Not every model accepts every size. The provider rejects a size it does not support, so check its documentation or the [Available Models Guide]({% link _reference/available-models.md %}) for what each one takes. Imagen models ignore `size:` and log a debug message.
+> Not every model accepts every size. The provider rejects a size it does not support, so check its documentation or the [Available Models Guide]({% link _reference/available-models.md %}) for what each one takes. Pass `size: nil` to let the model choose its own shape.
 {: .note }
 
 ## Working with Generated Images
@@ -204,7 +204,7 @@ The `RubyLLM::Image` object provides access to the generated image data and meta
 ### Accessing Image Data
 
 *   `image.url`: Returns the URL for providers like OpenAI. `nil` otherwise.
-*   `image.data`: Returns the Base64-encoded image data string for providers like Google (Imagen). `nil` otherwise.
+*   `image.data`: Returns the Base64-encoded image data string for providers like Google. `nil` otherwise.
 *   `image.mime_type`: Returns the MIME type (e.g., `"image/png"`, `"image/jpeg"`).
 *   `image.base64?`: Returns `true` if the image data is Base64-encoded, `false` otherwise.
 
