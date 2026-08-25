@@ -20,16 +20,22 @@ module RubyLLM
               name: model_id,
               provider: slug,
               created_at: model_data['created'] ? Time.at(model_data['created']) : nil,
-              context_window: capabilities.context_window_for(model_id),
-              max_output_tokens: capabilities.max_tokens_for(model_id),
-              capabilities: capabilities.critical_capabilities_for(model_id),
-              pricing: capabilities.pricing_for(model_id),
-              metadata: {
-                object: model_data['object'],
-                owned_by: model_data['owned_by']
-              }
+              context_window: capabilities&.context_window_for(model_id),
+              max_output_tokens: capabilities&.max_tokens_for(model_id),
+              capabilities: capabilities&.critical_capabilities_for(model_id) || [],
+              pricing: capabilities&.pricing_for(model_id) || {},
+              metadata: model_metadata(model_data)
             )
           end
+        end
+
+        def model_metadata(model_data)
+          metadata = {
+            object: model_data['object'],
+            owned_by: model_data['owned_by']
+          }
+          metadata[:shutdown_date] = model_data['shutdown_date'] if model_data['shutdown_date']
+          metadata
         end
       end
     end

@@ -85,6 +85,29 @@ RSpec.describe RubyLLM::Protocols::ChatCompletions::Models do
       )
     end
 
+    it 'keeps the retirement date the provider reports' do
+      model = parse_models(
+        {
+          'data' => [
+            {
+              'id' => 'gpt-5-codex',
+              'created' => 1_741_110_403,
+              'object' => 'model',
+              'owned_by' => 'system',
+              'shutdown_date' => '2026-07-23'
+            }
+          ]
+        },
+        capabilities
+      ).first
+
+      expect(model.metadata).to eq(object: 'model', owned_by: 'system', shutdown_date: '2026-07-23')
+    end
+
+    it 'omits the retirement date for providers that do not report one' do
+      expect(parsed_model('gpt-3.5-turbo-0125', capabilities).metadata).not_to have_key(:shutdown_date)
+    end
+
     it 'restores only critical capabilities to moderation models' do
       model = parsed_model('omni-moderation-latest', capabilities)
 
