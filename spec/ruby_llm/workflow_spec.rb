@@ -104,6 +104,22 @@ RSpec.describe RubyLLM::Workflow do
     expect(event_payload('resumed.ruby_llm')).not_to have_key(:workflow_parent_id)
   end
 
+  it 'recomputes parent links each time a workflow runs' do
+    reusable = described_class.new('Reusable', id: 'reusable', config: context.config)
+
+    context.workflow('Outer', id: 'outer') do |outer|
+      outer.step('Nested', id: 'nested') { reusable.run { :nested } }
+    end
+    reusable.run { :top_level }
+
+    events = instrumenter.events.filter_map do |name, payload|
+      payload if name == 'workflow.ruby_llm' && payload[:workflow_id] == 'reusable'
+    end
+    expect(events.first).to include(workflow_parent_id: 'outer', workflow_parent_step_id: 'nested')
+    expect(events.last).not_to have_key(:workflow_parent_id)
+    expect(events.last).not_to have_key(:workflow_parent_step_id)
+  end
+
   it 'restores the previous instrumentation context after errors' do
     expect do
       context.workflow('Failing', id: 'failing-1') do |workflow|

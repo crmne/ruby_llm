@@ -61,11 +61,13 @@ module RubyLLM
 
     def link_parent
       current = Instrumentation.current_workflow
-      return unless current && current[:workflow_id] != id
-
       context = workflow_context.dup
-      context[:workflow_parent_id] = current[:workflow_id]
-      context[:workflow_parent_step_id] = current[:workflow_step_id] if current[:workflow_step_id]
+      context.delete(:workflow_parent_id)
+      context.delete(:workflow_parent_step_id)
+      if current && current[:workflow_id] != id
+        context[:workflow_parent_id] = current[:workflow_id]
+        context[:workflow_parent_step_id] = current[:workflow_step_id] if current[:workflow_step_id]
+      end
       @workflow_context = context.freeze
     end
 
