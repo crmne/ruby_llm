@@ -77,7 +77,7 @@ module RubyLLM
           body = options.fetch(:body, '')
           payload = options[:payload]
           service = options.fetch(:service, 'bedrock')
-          conn = Connection.basic do |f|
+          conn = Connection.basic(@config) do |f|
             f.request :json
             f.response :json
             f.adapter :net_http

@@ -804,7 +804,7 @@ module RubyLLM
                   message_or_attributes
                 end
 
-      message = Message.new(message) unless message.is_a?(Message)
+      message = Message.new(message.merge(config: @config)) unless message.is_a?(Message)
       message.conversation = self
       message
     end

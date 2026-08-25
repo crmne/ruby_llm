@@ -95,7 +95,8 @@ module RubyLLM
       @role = options.fetch(:role).to_sym
       @tool_calls = options[:tool_calls]
       @content = normalize_content(options.fetch(:content))
-      @attachments = Attachment.wrap(options[:attachments])
+      @config = options[:config]
+      @attachments = Attachment.wrap(options[:attachments], config: @config)
       @model = options[:model]
       @tool_call_id = options[:tool_call_id]
       @tokens = options[:tokens] || Tokens.new(
@@ -131,7 +132,8 @@ module RubyLLM
     end
 
     def with_attachments(attachments) # :nodoc:
-      dup.tap { |message| message.instance_variable_set(:@attachments, Attachment.wrap(attachments)) }
+      wrapped = Attachment.wrap(attachments, config: @config)
+      dup.tap { |message| message.instance_variable_set(:@attachments, wrapped) }
     end
 
     # Returns +true+ if the assistant requested one or more tool calls,

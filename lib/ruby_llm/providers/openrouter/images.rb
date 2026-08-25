@@ -27,7 +27,7 @@ module RubyLLM
         end
 
         def build_input_references(with)
-          Attachment.wrap(with).map do |attachment|
+          Attachment.wrap(with, config: @config).map do |attachment|
             raise UnsupportedAttachmentError, attachment.mime_type unless attachment.image?
 
             Protocols::ChatCompletions::Media.format_image(attachment)

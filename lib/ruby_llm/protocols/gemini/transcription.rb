@@ -13,7 +13,7 @@ module RubyLLM
           raise_transcription_streaming_unsupported if block_given?
 
           track_usage(:transcription) do
-            attachment = Attachment.new(audio_file)
+            attachment = Attachment.new(audio_file, config: @config)
             payload = render_transcription_payload(attachment, language:, format:, provider_options:, prompt:,
                                                                temperature:)
             response = @connection.post(transcription_url(model), payload, usage: @usage_tracker)

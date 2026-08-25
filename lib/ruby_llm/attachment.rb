@@ -17,6 +17,8 @@ module RubyLLM
   #   RubyLLM::Attachment.new(doc.download_path)
   #
   class Attachment
+    include Inspectable
+
     # The underlying source: a URI, Pathname, IO-like object, ActiveStorage
     # object, or UploadedFile.
     attr_reader :source
@@ -43,15 +45,15 @@ module RubyLLM
     ].freeze
     # :startdoc:
 
-    def self.wrap(sources) # :nodoc:
+    def self.wrap(sources, config: nil) # :nodoc:
       case sources
       when nil then []
-      when Hash then sources.values.flat_map { |group| wrap(group) }
+      when Hash then sources.values.flat_map { |group| wrap(group, config:) }
       else
         Utils.to_safe_array(sources).filter_map do |source|
           next if source.nil? || (source.is_a?(String) && source.strip.empty?)
 
-          source.is_a?(Attachment) ? source : new(source)
+          source.is_a?(Attachment) ? source : new(source, config:)
         end
       end
     end
@@ -63,12 +65,19 @@ module RubyLLM
     #   RubyLLM::Attachment.new("diagram.png")
     #   RubyLLM::Attachment.new(StringIO.new(data), filename: "report.pdf")
     #
-    def initialize(source, filename: nil)
+    # +config:+ is the Configuration a URL source is downloaded with, and
+    # defaults to the global one.
+    def initialize(source, filename: nil, config: nil)
+      @config = config
       @source = source
       @source = source_type_cast
       @filename = filename || source_filename
 
       determine_mime_type
+    end
+
+    def config # :nodoc:
+      @config || RubyLLM.config
     end
 
     def url? # :nodoc:
@@ -271,7 +280,7 @@ module RubyLLM
     end
 
     def fetch_content
-      response = Connection.basic.get @source.to_s
+      response = Connection.basic(config).get @source.to_s
       @content = response.body
     end
 
@@ -345,6 +354,10 @@ module RubyLLM
     def source_is_a?(class_name)
       klass = RubyLLM::Utils.safe_constantize(class_name)
       klass ? @source.is_a?(klass) : false
+    end
+
+    def inspect_attributes # :nodoc:
+      { filename: filename, mime_type: mime_type, source: @source }
     end
   end
 end

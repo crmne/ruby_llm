@@ -100,6 +100,15 @@ module RubyLLM
     end
 
     # :stopdoc:
+
+    # Set by the protocol that generated the image, so a Context's
+    # connection settings reach #to_blob.
+    attr_writer :config
+
+    def config
+      @config || RubyLLM.config
+    end
+
     def initialize(url: nil, data: nil, mime_type: nil, revised_prompt: nil, model: nil, usage: {})
       @url = url
       @data = data
@@ -124,7 +133,7 @@ module RubyLLM
       if base64?
         Base64.decode64 @data
       else
-        response = Connection.basic.get @url
+        response = Connection.basic(config).get @url
         response.body
       end
     end

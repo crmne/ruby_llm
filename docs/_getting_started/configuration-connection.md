@@ -65,6 +65,8 @@ end
 
 When a provider reports how long to wait through rate-limit headers (the standard `Retry-After`, or OpenAI's `x-ratelimit-reset-requests` and `x-ratelimit-reset-tokens`), retries wait that long instead of the backoff interval. If the requested wait exceeds `retry_max_interval`, the request fails immediately with `RubyLLM::RateLimitError` rather than sleeping.
 
+These settings cover requests you can safely repeat. Requests that create something on the provider's side, such as submitting a batch, starting a video generation job, uploading a file, or creating a content cache, are sent once and raise on failure, because a retry after a lost response would create a second job.
+
 Example for high-latency connections:
 
 ```ruby
@@ -171,6 +173,20 @@ response = ctx_chat.ask("Process this with another provider...")
 regular_chat = RubyLLM.chat  # Still uses production OpenAI
 ```
 
+### Beyond Chat
+
+A context offers the same entry points as the top-level `RubyLLM` module, so the rest of the API runs under its configuration too:
+
+```ruby
+image = ctx.paint("a paper boat sailing down a rainy gutter")
+image.save("boat.png")
+
+embedding = ctx.embed("Ruby is a joy to write")
+transcript = ctx.transcribe("interview.mp3")
+```
+
+`paint`, `animate`, `animate_later`, `embed`, `moderate`, `speak`, `transcribe`, `upload`, `download`, and `cache` all use the context's keys, endpoints, and connection settings. So do the downloads RubyLLM performs on your behalf: fetching a URL attachment for a chat, or reading `image.to_blob` and `video.to_blob` from a provider's hosted file, goes through the context's `http_proxy` and `request_timeout` rather than the global ones.
+
 ### Multi-Tenant Applications
 
 ```ruby
@@ -197,6 +213,7 @@ tenant_b_service = TenantService.new(tenant_b)
 
 - **Inheritance**: Contexts start with a copy of global configuration
 - **Isolation**: Changes don't affect global `RubyLLM.config`
+- **Coverage**: Every entry point the context exposes uses it, chat and non-chat alike, including the file downloads those calls make
 - **Thread Safety**: Each context is independent and thread-safe
 
 ## Next Steps

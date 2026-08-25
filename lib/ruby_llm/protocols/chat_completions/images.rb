@@ -84,7 +84,7 @@ module RubyLLM
         end
 
         def build_image_reference(source)
-          attachment = Attachment.new(source)
+          attachment = Attachment.new(source, config: @config)
           return { file_id: attachment.provider_file_id } if attachment.provider_file?
           return { image_url: attachment.source.to_s } if attachment.url?
 
@@ -108,7 +108,7 @@ module RubyLLM
         end
 
         def build_upload_part(source)
-          attachment = Attachment.new(source)
+          attachment = Attachment.new(source, config: @config)
           raise UnsupportedAttachmentError, attachment.mime_type unless attachment.image?
 
           Faraday::UploadIO.new(StringIO.new(attachment.content), attachment.mime_type, attachment.filename)

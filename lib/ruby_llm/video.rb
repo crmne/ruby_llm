@@ -81,6 +81,14 @@ module RubyLLM
       end
     end
 
+    # Set by the protocol that generated the video, so a Context's
+    # connection settings reach #to_blob.
+    attr_writer :config # :nodoc:
+
+    def config # :nodoc:
+      @config || RubyLLM.config
+    end
+
     def initialize(url: nil, data: nil, mime_type: nil, model: nil, duration: nil, raw: nil) # :nodoc:
       @url = url
       @data = data
@@ -96,7 +104,7 @@ module RubyLLM
     #   File.binwrite("clip.mp4", video.to_blob)
     #
     def to_blob
-      data || Connection.basic.get(url).body
+      data || Connection.basic(config).get(url).body
     end
 
     # Writes the binary video to +path+, expanding it first. Returns

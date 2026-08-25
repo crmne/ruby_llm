@@ -124,7 +124,7 @@ module RubyLLM
         end
 
         def image_attachments(sources)
-          Attachment.wrap(sources).each do |attachment|
+          Attachment.wrap(sources, config: @config).each do |attachment|
             raise UnsupportedAttachmentError, attachment.mime_type unless attachment.image?
           end
         end

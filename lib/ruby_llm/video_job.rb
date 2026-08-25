@@ -133,7 +133,7 @@ module RubyLLM
       raise Error, "Video generation failed: #{error}" if failed?
       return unless completed?
 
-      @video ||= @protocol.download_video(self)
+      @video ||= @protocol.download_video(self).tap { |video| video.config = @protocol.config }
     end
 
     private

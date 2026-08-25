@@ -14,7 +14,7 @@ module RubyLLM
         end
 
         def render_ocr_payload(file, model:, options: {})
-          attachment = file.is_a?(Attachment) ? file : Attachment.new(file)
+          attachment = file.is_a?(Attachment) ? file : Attachment.new(file, config: @config)
 
           {
             model: model,

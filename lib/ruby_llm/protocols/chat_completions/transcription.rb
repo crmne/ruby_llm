@@ -31,7 +31,7 @@ module RubyLLM
           return nil unless references
 
           references.map do |ref|
-            Attachment.new(ref).for_llm
+            Attachment.new(ref, config: @config).for_llm
           end
         end
 
