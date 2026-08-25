@@ -162,6 +162,7 @@ module RubyLLM
       @requests = requests
       @batch_protocol = protocol_name(batch_protocol)
       @store = store
+      @delivered = {}
       apply(attributes)
     end
 
@@ -260,9 +261,15 @@ module RubyLLM
       slots
     end
 
+    # Collecting early keeps reading fresh, so a result already delivered
+    # comes back on every later poll: hand each one over once.
     def deliver(index, result)
+      return unless result
+      return if @delivered[index]
+
+      @delivered[index] = true
       if requests
-        requests[index]&.result = result if result
+        requests[index]&.result = result
       else
         add_answer(chats&.[](index), result)
       end

@@ -117,6 +117,24 @@ RSpec.describe RubyLLM::Batch do
     end
   end
 
+  describe '#messages' do
+    it 'delivers an answer once even when the chat stages another question' do
+      chat = RubyLLM.chat(model: 'claude-haiku-4-5').ask_later('First question')
+      provider = chat.provider
+      answer = RubyLLM::Message.new(role: :assistant, content: 'First answer', input_tokens: 1, output_tokens: 1)
+      allow(provider).to receive(:batch_results).and_return([[0, answer]])
+      batch = described_class.new(
+        provider:, chats: [chat], id: 'msgbatch_123', status: 'in_progress', completed: false
+      )
+
+      batch.messages
+      chat.ask_later('Second question')
+
+      expect { batch.messages }.not_to change(chat, :messages)
+      expect(chat.messages.map(&:role)).to eq(%i[user assistant user])
+    end
+  end
+
   describe '#inspect' do
     it 'shows the id, status and chat count' do
       batch = described_class.new(
