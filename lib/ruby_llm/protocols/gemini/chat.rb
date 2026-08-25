@@ -550,7 +550,7 @@ module RubyLLM
               return resolved if resolved
             end
 
-            schema = normalize_any_of(schema)
+            schema = normalize_type_union(normalize_any_of(schema))
 
             result = case schema[:type].to_s
                      when 'object'
@@ -633,6 +633,19 @@ module RubyLLM
 
           def schema_type(option)
             (option[:type] || option['type']).to_s.downcase
+          end
+
+          # Gemini's Schema.type is a scalar enum, so a JSON Schema type union
+          # has to collapse to one type plus nullable.
+          def normalize_type_union(schema)
+            types = schema[:type]
+            return schema unless types.is_a?(Array)
+
+            nulls, concrete = types.partition { |type| type.to_s.downcase == 'null' }
+
+            schema.merge(type: concrete.first || 'string').tap do |normalized|
+              normalized[:nullable] = true if nulls.any?
+            end
           end
 
           def build_object(schema, visited_refs)

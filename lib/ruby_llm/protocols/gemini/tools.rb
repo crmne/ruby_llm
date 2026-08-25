@@ -139,9 +139,9 @@ module RubyLLM
 
         def convert_property(property_schema) # rubocop:disable Metrics/PerceivedComplexity
           normalized_schema = normalize_any_of_schema(property_schema)
-          working_schema = normalized_schema || property_schema
+          working_schema = normalize_type_array(normalized_schema || property_schema)
 
-          type = param_type_for_gemini(working_schema['type'])
+          type = param_type_for_gemini(schema_type(working_schema))
 
           property = {
             type: type
@@ -195,6 +195,21 @@ module RubyLLM
             RubyLLM::Utils.deep_dup(non_null_entries.first)
           else
             { 'type' => 'string', 'nullable' => true }
+          end
+        end
+
+        # Gemini's Schema.type is a scalar enum, so a JSON Schema type union
+        # has to collapse to one type plus nullable.
+        def normalize_type_array(schema)
+          types = schema_type(schema)
+          return schema unless types.is_a?(Array)
+
+          nulls, concrete = types.partition { |type| type.to_s.downcase == 'null' }
+
+          RubyLLM::Utils.deep_dup(schema).tap do |normalized|
+            normalized.delete(:type)
+            normalized['type'] = concrete.first || 'string'
+            normalized['nullable'] = true if nulls.any?
           end
         end
 

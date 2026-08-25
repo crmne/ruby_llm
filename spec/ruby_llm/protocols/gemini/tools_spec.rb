@@ -246,6 +246,42 @@ RSpec.describe RubyLLM::Protocols::Gemini::Tools do
     end
   end
 
+  describe 'type union parameters' do
+    def converted(property)
+      test_obj.send(
+        :convert_tool_schema_to_gemini,
+        { 'type' => 'object', 'properties' => { 'value' => property } }
+      )[:properties]['value']
+    end
+
+    it 'keeps the declared type and marks the union nullable' do
+      expect(converted({ 'type' => %w[integer null] })).to include(type: 'INTEGER', nullable: true)
+      expect(converted({ type: %i[integer null] })).to include(type: 'INTEGER', nullable: true)
+    end
+
+    it 'takes the first branch of a multi-type union' do
+      expect(converted({ 'type' => %w[number string] })).to include(type: 'NUMBER')
+      expect(converted({ 'type' => %w[number string] })).not_to have_key(:nullable)
+    end
+
+    it 'keeps the items of a nullable array' do
+      expect(converted({ 'type' => %w[array null], 'items' => { 'type' => 'integer' } })).to include(
+        type: 'ARRAY', nullable: true, items: { type: 'INTEGER' }
+      )
+    end
+
+    it 'keeps the properties of a nullable object' do
+      expect(
+        converted({ 'type' => %w[object null], 'properties' => { 'a' => { 'type' => 'integer' } },
+                    'required' => ['a'] })
+      ).to include(type: 'OBJECT', nullable: true, properties: { 'a' => { type: 'INTEGER' } }, required: ['a'])
+    end
+
+    it 'falls back to a nullable string for a null-only union' do
+      expect(converted({ 'type' => ['null'] })).to include(type: 'STRING', nullable: true)
+    end
+  end
+
   describe '#build_tool_config' do
     it 'maps every tool choice Gemini understands' do
       expect(test_obj.send(:build_tool_config, :auto)).to eq(

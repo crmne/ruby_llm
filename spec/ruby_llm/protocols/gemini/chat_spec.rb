@@ -895,6 +895,44 @@ RSpec.describe RubyLLM::Protocols::Gemini::Chat do
         type: 'STRING', nullable: true, description: 'a name'
       )
     end
+
+    def converted_property(property)
+      convert({ type: 'object', properties: { value: property } })[:properties][:value]
+    end
+
+    it 'keeps the declared type of a nullable union' do
+      expect(converted_property({ type: %w[integer null] })).to eq(type: 'INTEGER', nullable: true)
+    end
+
+    it 'takes the first branch of a multi-type union' do
+      expect(converted_property({ type: %w[number string] })).to eq(type: 'NUMBER')
+    end
+
+    it 'keeps the items of a nullable array union' do
+      expect(converted_property({ type: %w[array null], items: { type: 'integer' } })).to eq(
+        type: 'ARRAY', items: { type: 'INTEGER' }, nullable: true
+      )
+    end
+
+    it 'keeps the properties of a nullable object union' do
+      expect(
+        converted_property({ type: %w[object null], properties: { a: { type: 'integer' } }, required: ['a'] })
+      ).to eq(type: 'OBJECT', properties: { a: { type: 'INTEGER' } }, required: ['a'], nullable: true)
+    end
+
+    it 'falls back to a nullable string for a null-only union' do
+      expect(converted_property({ type: ['null'] })).to eq(type: 'STRING', nullable: true)
+    end
+
+    it 'normalizes a union reached through a reference' do
+      schema = {
+        type: 'object',
+        '$defs' => { Aged: { type: %w[integer null], description: 'via ref' } },
+        properties: { age: { '$ref' => '#/$defs/Aged' } }
+      }
+
+      expect(convert(schema)[:properties][:age]).to eq(type: 'INTEGER', nullable: true, description: 'via ref')
+    end
   end
 
   describe '#parse_completion_response' do
