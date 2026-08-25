@@ -158,7 +158,10 @@ end
 
 def status(provider_sym)
   provider_class = RubyLLM::Provider.providers[provider_sym]
-  if provider_class.local?
+  failure = Array(RubyLLM::Models.last_provider_failures).find { |f| f[:slug].to_s == provider_sym.to_s }
+  if failure
+    " (FAILED: #{failure[:error].class} - kept existing)"
+  elsif provider_class.local?
     ' (LOCAL - SKIP)'
   elsif provider_class.configured?(RubyLLM.config)
     ' (OK)'
