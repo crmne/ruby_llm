@@ -392,7 +392,7 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
       { type: 'budget_tokens', min: 1024 }
     end
 
-    it 'sends manual thinking with budget_tokens for budget-only Claude models' do
+    it 'sends a budget as enabled thinking' do
       payload = render_payload(
         model_id: 'claude-sonnet-4-5',
         thinking: RubyLLM::Thinking::Config.new(budget: 2048),
@@ -403,40 +403,71 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
       expect(payload).not_to have_key(:output_config)
     end
 
-    it 'sends adaptive thinking with effort for effort-only Claude models' do
+    it 'sends effort as output_config without a thinking type' do
       payload = render_payload(
         model_id: 'claude-opus-4-7',
         thinking: RubyLLM::Thinking::Config.new(effort: :xhigh),
         reasoning_options: [effort_option(:low, :medium, :high, :xhigh, :max)]
       )
 
-      expect(payload[:thinking]).to eq(type: 'adaptive')
+      expect(payload).not_to have_key(:thinking)
       expect(payload[:output_config]).to eq(effort: 'xhigh')
     end
 
-    it 'sends adaptive thinking with effort for Claude models that support both thinking options' do
+    it 'sends effort the registry does not advertise' do
       payload = render_payload(
-        model_id: 'claude-opus-4-6',
+        model_id: 'claude-sonnet-4-5',
         thinking: RubyLLM::Thinking::Config.new(effort: :medium),
-        reasoning_options: [effort_option(:low, :medium, :high, :max), budget_option]
+        reasoning_options: [budget_option]
       )
 
-      expect(payload[:thinking]).to eq(type: 'adaptive')
+      expect(payload).not_to have_key(:thinking)
       expect(payload[:output_config]).to eq(effort: 'medium')
     end
 
-    it 'sends manual thinking with budget for Claude models that support both thinking options' do
+    it 'sends a budget the registry does not advertise' do
       payload = render_payload(
-        model_id: 'claude-sonnet-4-6',
-        thinking: RubyLLM::Thinking::Config.new(budget: 4096),
-        reasoning_options: [effort_option(:low, :medium, :high, :max), budget_option]
+        model_id: 'claude-opus-4-7',
+        thinking: RubyLLM::Thinking::Config.new(budget: 2048),
+        reasoning_options: [effort_option(:low, :medium, :high, :xhigh, :max)]
+      )
+
+      expect(payload[:thinking]).to eq(type: 'enabled', budget_tokens: 2048)
+    end
+
+    it 'sends effort and budget side by side' do
+      payload = render_payload(
+        model_id: 'claude-opus-4-5',
+        thinking: RubyLLM::Thinking::Config.new(effort: :high, budget: 4096),
+        reasoning_options: [effort_option(:low, :medium, :high), budget_option]
       )
 
       expect(payload[:thinking]).to eq(type: 'enabled', budget_tokens: 4096)
-      expect(payload).not_to have_key(:output_config)
+      expect(payload[:output_config]).to eq(effort: 'high')
     end
 
-    it 'merges adaptive thinking effort with schema output_config' do
+    it 'asks for adaptive thinking when a display is set without a budget' do
+      payload = render_payload(
+        model_id: 'claude-opus-4-7',
+        thinking: RubyLLM::Thinking::Config.new(effort: :high, display: :summarized),
+        reasoning_options: [effort_option(:low, :medium, :high, :xhigh, :max)]
+      )
+
+      expect(payload[:thinking]).to eq(type: 'adaptive', display: 'summarized')
+      expect(payload[:output_config]).to eq(effort: 'high')
+    end
+
+    it 'carries a display on enabled thinking when a budget is set' do
+      payload = render_payload(
+        model_id: 'claude-sonnet-4-6',
+        thinking: RubyLLM::Thinking::Config.new(budget: 4096, display: :summarized),
+        reasoning_options: [effort_option(:low, :medium, :high, :max), budget_option]
+      )
+
+      expect(payload[:thinking]).to eq(type: 'enabled', budget_tokens: 4096, display: 'summarized')
+    end
+
+    it 'merges thinking effort with schema output_config' do
       schema = {
         name: 'response',
         schema: { type: 'object', properties: { name: { type: 'string' } } }
@@ -449,7 +480,6 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
         reasoning_options: [effort_option(:low, :medium, :high, :xhigh, :max)]
       )
 
-      expect(payload[:thinking]).to eq(type: 'adaptive')
       expect(payload[:output_config]).to eq(
         effort: 'high',
         format: { type: 'json_schema', schema: { type: 'object', properties: { name: { type: 'string' } } } }
@@ -465,26 +495,6 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
 
       expect(payload).not_to have_key(:thinking)
       expect(payload).not_to have_key(:output_config)
-    end
-
-    it 'raises when a budget is used with effort-only Claude models' do
-      expect do
-        render_payload(
-          model_id: 'claude-opus-4-7',
-          thinking: RubyLLM::Thinking::Config.new(budget: 2048),
-          reasoning_options: [effort_option(:low, :medium, :high, :xhigh, :max)]
-        )
-      end.to raise_error(ArgumentError, /budget is not supported/)
-    end
-
-    it 'raises when effort is used with budget-only Claude models' do
-      expect do
-        render_payload(
-          model_id: 'claude-sonnet-4-5',
-          thinking: RubyLLM::Thinking::Config.new(effort: :medium),
-          reasoning_options: [budget_option]
-        )
-      end.to raise_error(ArgumentError, /effort is not supported/)
     end
   end
 
@@ -617,31 +627,27 @@ RSpec.describe RubyLLM::Protocols::Anthropic::Chat do
   describe '.build_thinking_payload' do
     let(:protocol) { RubyLLM::Protocols::Anthropic.allocate }
 
-    def model_with(option)
-      instance_double(RubyLLM::Model, id: 'claude-opus-4-5').tap do |model|
-        allow(model).to receive(:reasoning_option) { |name| name == option }
-      end
-    end
-
     it 'is nil when thinking is off or explicitly none' do
-      expect(protocol.send(:build_thinking_payload, nil, model_with('effort'))).to be_nil
-      expect(
-        protocol.send(:build_thinking_payload, RubyLLM::Thinking::Config.new(effort: :none), model_with('effort'))
-      ).to be_nil
+      expect(protocol.send(:build_thinking_payload, nil)).to be_nil
+      expect(protocol.send(:build_thinking_payload, RubyLLM::Thinking::Config.new(effort: :none))).to be_nil
     end
 
-    it 'refuses a budget the model does not support' do
-      expect do
-        protocol.send(:build_thinking_payload, RubyLLM::Thinking::Config.new(budget: 1024), model_with('effort'))
-      end.to raise_error(ArgumentError, /thinking budget is not supported/)
+    it 'keeps effort out of the thinking type' do
+      expect(protocol.send(:build_thinking_payload, RubyLLM::Thinking::Config.new(effort: :high))).to eq(
+        output_config: { effort: 'high' }
+      )
     end
 
-    it 'refuses an effort the model does not support' do
-      expect do
-        protocol.send(
-          :build_thinking_payload, RubyLLM::Thinking::Config.new(effort: :high), model_with('budget_tokens')
-        )
-      end.to raise_error(ArgumentError, /thinking effort is not supported/)
+    it 'keeps a budget out of output_config' do
+      expect(protocol.send(:build_thinking_payload, RubyLLM::Thinking::Config.new(budget: 1024))).to eq(
+        thinking: { type: 'enabled', budget_tokens: 1024 }
+      )
+    end
+
+    it 'asks for adaptive thinking to carry a display without a budget' do
+      expect(protocol.send(:build_thinking_payload, RubyLLM::Thinking::Config.new(display: :summarized))).to eq(
+        thinking: { type: 'adaptive', display: 'summarized' }
+      )
     end
   end
 

@@ -58,7 +58,7 @@ chat.with_thinking(effort: nil)
 
 Use `effort` to pick a qualitative depth (`:low`, `:medium`, `:high`) and `budget` for models that accept a token cap.
 
-RubyLLM sends `effort` and `budget` exactly as provided. Check your provider's docs for supported values.
+RubyLLM sends `effort` and `budget` exactly as provided, and never rewrites a value to one the registry believes a model takes. Check your provider's docs for supported values. When a model does not accept the value you picked, the request fails with the provider's own error, which names the parameter and usually lists the values it takes.
 
 ### Display
 
@@ -74,8 +74,8 @@ chat.with_thinking(effort: :high, display: :omitted)     # think, but return no 
 Thinking content is delivered alongside normal content in streaming chunks:
 
 ```ruby
-chat = RubyLLM.chat(model: 'claude-opus-4-5')
-  .with_thinking(effort: :medium)
+chat = RubyLLM.chat(model: 'claude-opus-5')
+  .with_thinking(effort: :medium, display: :summarized)
 
 chat.ask("Solve this step by step: What is 127 * 43?") do |chunk|
   print chunk.thinking&.text
@@ -123,13 +123,14 @@ end
 
 ## Provider Notes
 
-- Anthropic uses a token budget for older Claude models and adaptive, effort-based thinking for newer ones. Claude can return both thinking text and a signature.
+- Anthropic sends each option to its own Claude parameter. `budget` becomes a thinking budget, `effort` becomes Claude's effort setting, and `display` asks for adaptive thinking, where the model decides how much to think. Which of the three a Claude model accepts changes with the generation, and Anthropic names the parameter to use instead in its error. Newer Claude models keep their thinking text hidden, so pass `display: :summarized` when you want to read it.
 - Bedrock thinking params are model-dependent. Claude models on Bedrock only take a token budget, so RubyLLM converts `effort` into the budget level the model advertises. Pass `budget` to set the exact number of tokens.
 - Gemini 2.5 uses a token budget; Gemini 3 uses effort levels.
 - OpenAI reasoning models accept `effort` but may not return thinking text or signatures.
 - Perplexity sonar reasoning models fold their reasoning into the answer text and return no separate thinking.
-- Mistral Magistral models always think and ignore `with_thinking` params. Non-magistral models warn if you pass them.
-- Cohere reasoning models think by default. `with_thinking(budget:)` caps the thinking tokens, and `with_thinking(effort: :none)` turns the default off. Cohere returns thinking text but no signature, and reports no separate thinking token count.
+- Mistral sends `effort` as `reasoning_effort` for every model. Its reasoning models take `high` and `none`, and models without reasoning reject the parameter. Mistral has no thinking budget, so `budget` has no effect.
+- DeepSeek accepts a wider range of effort levels than most providers and has no thinking budget. Its error lists the levels a model takes.
+- Cohere reasoning models think by default. `with_thinking(budget:)` caps the thinking tokens, and `with_thinking(effort: :none)` turns the default off. Models without reasoning reject the request. Cohere returns thinking text but no signature, and reports no separate thinking token count.
 - Ollama and GPUStack local-model thinking controls vary by backend and model. RubyLLM does not translate them; pass backend params explicitly with `with_provider_options`.
 - Anthropic and Ollama integrations currently do not report thinking token counts.
 

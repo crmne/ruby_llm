@@ -201,14 +201,10 @@ RSpec.describe RubyLLM::Chat, :live do
       )
     end
 
-    it 'ignores a token budget and enables the default effort' do
-      payload = RubyLLM.chat(model: 'amazon.nova-2-lite-v1:0', provider: :bedrock)
-                       .with_thinking(budget: 2048)
-                       .render
+    it 'refuses a token budget instead of dropping it' do
+      chat = RubyLLM.chat(model: 'amazon.nova-2-lite-v1:0', provider: :bedrock).with_thinking(budget: 2048)
 
-      expect(payload[:additionalModelRequestFields]).to eq(
-        { reasoningConfig: { type: 'enabled', maxReasoningEffort: 'low' } }
-      )
+      expect { chat.render }.to raise_error(ArgumentError, /takes a reasoning effort, not a token budget/)
     end
 
     it 'keeps the Claude budget shape for Claude models' do

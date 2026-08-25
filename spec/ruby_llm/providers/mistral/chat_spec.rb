@@ -47,27 +47,26 @@ RSpec.describe RubyLLM::Providers::Mistral::Chat do
       end.to raise_error(ArgumentError, /Mistral prompt caching accepts :key/)
     end
 
-    it 'enables prompt-mode reasoning for native Magistral models' do
+    it 'sends reasoning_effort for Magistral models' do
       payload = render_payload(
         model_id: 'magistral-small-latest',
-        thinking: RubyLLM::Thinking::Config.new(effort: :medium)
-      )
-
-      expect(payload[:prompt_mode]).to eq('reasoning')
-      expect(payload).not_to have_key(:reasoning_effort)
-    end
-
-    it 'uses reasoning_effort for adjustable-reasoning Mistral models' do
-      payload = render_payload(
-        model_id: 'mistral-small-latest',
-        thinking: RubyLLM::Thinking::Config.new(effort: :medium)
+        thinking: RubyLLM::Thinking::Config.new(effort: :high)
       )
 
       expect(payload[:reasoning_effort]).to eq('high')
       expect(payload).not_to have_key(:prompt_mode)
     end
 
-    it 'keeps explicit none effort for adjustable-reasoning models' do
+    it 'sends the effort the caller asked for rather than a supported one' do
+      payload = render_payload(
+        model_id: 'mistral-medium-latest',
+        thinking: RubyLLM::Thinking::Config.new(effort: :medium)
+      )
+
+      expect(payload[:reasoning_effort]).to eq('medium')
+    end
+
+    it 'keeps explicit none effort' do
       payload = render_payload(
         model_id: 'mistral-small-latest',
         thinking: RubyLLM::Thinking::Config.new(effort: :none)
@@ -76,13 +75,18 @@ RSpec.describe RubyLLM::Providers::Mistral::Chat do
       expect(payload[:reasoning_effort]).to eq('none')
     end
 
-    it 'does not send unsupported thinking settings to other Mistral models' do
-      allow(RubyLLM.logger).to receive(:warn)
-
+    it 'sends reasoning_effort without checking the model id' do
       payload = render_payload(
         model_id: 'pixtral-12b',
         thinking: RubyLLM::Thinking::Config.new(effort: :medium)
       )
+
+      expect(payload[:reasoning_effort]).to eq('medium')
+      expect(payload).not_to have_key(:prompt_mode)
+    end
+
+    it 'omits reasoning_effort when no thinking is configured' do
+      payload = render_payload(model_id: 'mistral-small-latest')
 
       expect(payload).not_to have_key(:reasoning_effort)
       expect(payload).not_to have_key(:prompt_mode)
@@ -214,20 +218,16 @@ RSpec.describe RubyLLM::Providers::Mistral::Chat do
     end
   end
 
-  describe '#reasoning_effort_for' do
-    it 'passes high and none through and defaults everything else to high' do
-      expect(provider.send(:reasoning_effort_for, RubyLLM::Thinking::Config.new(effort: :high))).to eq('high')
-      expect(provider.send(:reasoning_effort_for, RubyLLM::Thinking::Config.new(effort: :none))).to eq('none')
-      expect(provider.send(:reasoning_effort_for, RubyLLM::Thinking::Config.new(effort: :low))).to eq('high')
-      expect(provider.send(:reasoning_effort_for, Object.new)).to eq('high')
-    end
+  describe 'reasoning effort' do
+    it 'leaves every effort the caller picks untouched' do
+      %w[high none low medium xhigh].each do |effort|
+        payload = render_payload(
+          model_id: 'magistral-medium-latest',
+          thinking: RubyLLM::Thinking::Config.new(effort: effort)
+        )
 
-    it 'logs a debug note when coercing an unsupported effort' do
-      allow(RubyLLM.logger).to receive(:debug)
-
-      provider.send(:reasoning_effort_for, RubyLLM::Thinking::Config.new(effort: :medium))
-
-      expect(RubyLLM.logger).to have_received(:debug)
+        expect(payload[:reasoning_effort]).to eq(effort)
+      end
     end
   end
 

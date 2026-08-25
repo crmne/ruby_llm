@@ -24,7 +24,7 @@ module RubyLLM
 
           add_optional_fields(payload, messages, temperature:, max_output_tokens:, citations:, schema:)
           add_tools(payload, tools, tool_prefs || {})
-          add_thinking(payload, thinking, model)
+          add_thinking(payload, thinking)
           payload
         end
 
@@ -62,11 +62,9 @@ module RubyLLM
 
         # Reasoning is on by default for models that support it, so an
         # explicit disable is as meaningful as an explicit enable.
-        def add_thinking(payload, thinking, model)
+        def add_thinking(payload, thinking)
           return unless thinking&.enabled?
           return payload[:thinking] = { type: 'disabled' } if thinking.effort.to_s == 'none'
-
-          raise ArgumentError, "#{model.id} does not support thinking" unless model.supports?(:reasoning)
 
           payload[:thinking] = { type: 'enabled', token_budget: thinking.budget }.compact
         end

@@ -87,14 +87,14 @@ RSpec.describe RubyLLM::Protocols::Cohere::Chat do
       expect(payload[:thinking]).to eq(type: 'disabled')
     end
 
-    it 'refuses thinking on models that do not reason' do
-      expect do
-        protocol.send(
-          :render_payload, [user('Hi')],
-          tools: {}, temperature: nil, model: RubyLLM.models.find('command-a-03-2025'),
-          thinking: RubyLLM::Thinking::Config.new(budget: 500)
-        )
-      end.to raise_error(ArgumentError, /does not support thinking/)
+    it 'sends thinking on models the registry does not list as reasoning models' do
+      payload = protocol.send(
+        :render_payload, [user('Hi')],
+        tools: {}, temperature: nil, model: RubyLLM.models.find('command-a-03-2025'),
+        thinking: RubyLLM::Thinking::Config.new(budget: 500)
+      )
+
+      expect(payload[:thinking]).to eq(type: 'enabled', token_budget: 500)
     end
 
     it 'lifts text attachments into documents when citations are on' do

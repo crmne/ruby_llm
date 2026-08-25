@@ -5,7 +5,7 @@ module RubyLLM
   # response. Instances appear on Message#thinking, and on Chunk#thinking
   # while streaming, when the model exposes its thinking.
   #
-  #   chat = RubyLLM.chat(model: 'claude-opus-4.5').with_thinking(effort: :high)
+  #   chat = RubyLLM.chat(model: 'claude-opus-5').with_thinking(display: :summarized)
   #   response = chat.ask "What is 15 * 23?"
   #   response.thinking&.text
   #   response.thinking&.signature

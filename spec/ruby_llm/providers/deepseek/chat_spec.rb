@@ -36,14 +36,16 @@ RSpec.describe RubyLLM::Providers::DeepSeek::Chat do
       expect(payload[:reasoning_effort]).to eq('max')
     end
 
-    it 'coerces medium effort to high with a debug note' do
-      allow(RubyLLM.logger).to receive(:debug)
-
-      payload = render_payload(thinking: RubyLLM::Thinking::Config.new(effort: :medium))
-
-      expect(payload[:thinking]).to eq(type: 'enabled')
-      expect(payload[:reasoning_effort]).to eq('high')
-      expect(RubyLLM.logger).to have_received(:debug)
+    it 'sends efforts outside the common tiers unchanged' do
+      expect(render_payload(thinking: RubyLLM::Thinking::Config.new(effort: :medium))).to include(
+        thinking: { type: 'enabled' }, reasoning_effort: 'medium'
+      )
+      expect(render_payload(thinking: RubyLLM::Thinking::Config.new(effort: :minimal))).to include(
+        reasoning_effort: 'minimal'
+      )
+      expect(render_payload(thinking: RubyLLM::Thinking::Config.new(effort: :xhigh))).to include(
+        reasoning_effort: 'xhigh'
+      )
     end
 
     it 'ignores thinking budgets with a debug note' do

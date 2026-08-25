@@ -5,8 +5,6 @@ module RubyLLM
     class DeepSeek
       # Chat methods of the DeepSeek API integration
       module Chat
-        REASONING_EFFORTS = %w[low high max].freeze
-
         module_function
 
         def format_role(role)
@@ -37,17 +35,7 @@ module RubyLLM
             payload[:thinking] = { type: 'disabled' }
           else
             payload[:thinking] = { type: 'enabled' }
-            effort = reasoning_effort_for(thinking.effort)
-            payload[:reasoning_effort] = effort if effort
           end
-        end
-
-        def reasoning_effort_for(effort)
-          return nil unless effort
-          return effort if REASONING_EFFORTS.include?(effort)
-
-          RubyLLM.logger.debug { "DeepSeek reasoning_effort accepts low, high, or max; coercing #{effort} to high" }
-          'high'
         end
 
         def degrade_schema_payload(payload)

@@ -17,7 +17,6 @@ module RubyLLM
                            schema: nil, thinking: nil, citations: false, caching: nil, tool_prefs: nil)
           payload = super
           payload.delete(:stream_options)
-          configure_thinking_payload(payload, model, thinking)
           normalize_required_tool_choice(payload)
           payload.merge!(prompt_cache_params(caching)) if caching
           payload
@@ -79,50 +78,6 @@ module RubyLLM
 
         def format_thinking(_msg)
           {}
-        end
-
-        def warn_on_unsupported_thinking(model, thinking)
-          return unless thinking&.enabled?
-          return if native_reasoning_model?(model.id) || adjustable_reasoning_model?(model.id)
-
-          RubyLLM.logger.warn(
-            'Mistral thinking is only supported on Magistral and adjustable-reasoning models. ' \
-            "Ignoring thinking settings for #{model.id}."
-          )
-        end
-
-        def configure_thinking_payload(payload, model, thinking)
-          return unless thinking&.enabled?
-
-          if native_reasoning_model?(model.id)
-            configure_native_reasoning_payload(payload, thinking)
-          elsif adjustable_reasoning_model?(model.id)
-            payload[:reasoning_effort] = reasoning_effort_for(thinking)
-          else
-            payload.delete(:reasoning_effort)
-            warn_on_unsupported_thinking(model, thinking)
-          end
-        end
-
-        def configure_native_reasoning_payload(payload, thinking)
-          payload.delete(:reasoning_effort)
-          payload[:prompt_mode] = thinking.effort == 'none' ? nil : 'reasoning'
-        end
-
-        def reasoning_effort_for(thinking)
-          effort = thinking.respond_to?(:effort) ? thinking.effort : nil
-          return effort if %w[high none].include?(effort)
-
-          RubyLLM.logger.debug { "Mistral reasoning_effort accepts high or none; coercing #{effort} to high" } if effort
-          'high'
-        end
-
-        def native_reasoning_model?(model_id)
-          model_id.to_s.include?('magistral')
-        end
-
-        def adjustable_reasoning_model?(model_id)
-          model_id.to_s.match?(/\Amistral-(?:small-latest|medium-(?:3(?:[.-]5)?|latest))\z/)
         end
 
         def build_thinking_blocks(thinking)

@@ -89,7 +89,7 @@ module RubyLLM
             max_tokens: model.max_output_tokens || 4096
           }
 
-          add_thinking_fields(payload, thinking, model)
+          add_thinking_fields(payload, thinking)
 
           payload
         end
@@ -450,8 +450,8 @@ module RubyLLM
           end
         end
 
-        def add_thinking_fields(payload, thinking, model)
-          thinking_payload = build_thinking_payload(thinking, model)
+        def add_thinking_fields(payload, thinking)
+          thinking_payload = build_thinking_payload(thinking)
           return unless thinking_payload
 
           payload[:thinking] = thinking_payload[:thinking] if thinking_payload[:thinking]
@@ -460,57 +460,37 @@ module RubyLLM
           payload[:output_config] = payload.fetch(:output_config, {}).merge(thinking_payload[:output_config])
         end
 
-        def build_thinking_payload(thinking, model)
+        def build_thinking_payload(thinking)
           return nil unless thinking&.enabled?
 
           effort = resolve_effort(thinking)
           return nil if effort == 'none'
 
-          apply_thinking_display(base_thinking_payload(thinking, model, effort), thinking)
-        end
-
-        def base_thinking_payload(thinking, model, effort)
-          budget = resolve_budget(thinking)
-          if budget
-            return enabled_thinking_payload(budget) if model.reasoning_option('budget_tokens')
-
-            raise ArgumentError, "Anthropic thinking budget is not supported for #{model.id}"
-          end
-
-          unless model.reasoning_option('effort')
-            raise ArgumentError, "Anthropic thinking effort is not supported for #{model.id}"
-          end
-
-          adaptive_thinking_payload(effort)
-        end
-
-        def apply_thinking_display(payload, thinking)
-          payload[:thinking] = payload[:thinking].merge(display: thinking.display) if thinking.display
-          payload
-        end
-
-        def enabled_thinking_payload(budget)
-          {
-            thinking: {
-              type: 'enabled',
-              budget_tokens: budget
-            }
-          }
-        end
-
-        def adaptive_thinking_payload(effort)
-          payload = { thinking: { type: 'adaptive' } }
+          payload = {}
+          mode = thinking_mode(thinking)
+          payload[:thinking] = mode if mode
           payload[:output_config] = { effort: effort } if effort
           payload
+        end
+
+        # The thinking block is where a budget and a display setting live, and
+        # adaptive is the only type Anthropic accepts without a budget. Effort
+        # is a separate parameter, so it never picks a type.
+        def thinking_mode(thinking)
+          return nil unless thinking.budget || thinking.display
+
+          mode = if thinking.budget
+                   { type: 'enabled', budget_tokens: thinking.budget }
+                 else
+                   { type: 'adaptive' }
+                 end
+          mode[:display] = thinking.display if thinking.display
+          mode
         end
 
         def resolve_effort(thinking)
           effort = thinking.effort.to_s
           effort.empty? ? nil : effort
-        end
-
-        def resolve_budget(thinking)
-          thinking.budget
         end
       end
     end
