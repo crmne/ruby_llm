@@ -21,7 +21,7 @@ module RubyLLM
                                         input_file_id: upload_batch_file(requests),
                                         endpoint: batch_endpoint,
                                         completion_window: '24h'
-                                      })
+                                      }, idempotent: false)
 
           parse_batch_response(response.body)
         end

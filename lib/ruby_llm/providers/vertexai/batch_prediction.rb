@@ -27,7 +27,7 @@ module RubyLLM
                                 uri: input_uri, filename: 'input.jsonl', content_type: 'application/jsonl')
 
           response = @connection.post("#{@provider.location_path}/batchPredictionJobs",
-                                      vertex_batch_job(model, input_uri, output_uri))
+                                      vertex_batch_job(model, input_uri, output_uri), idempotent: false)
 
           parse_batch_response(response.body)
         end

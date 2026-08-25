@@ -10,11 +10,12 @@ module RubyLLM
           include RubyLLM::Batch::Helpers
 
           def create_batch(requests)
-            batch = @connection.post('batches', { name: "ruby_llm_#{SecureRandom.hex(8)}" }).body
+            batch = @connection.post('batches', { name: "ruby_llm_#{SecureRandom.hex(8)}" },
+                                     idempotent: false).body
             id = batch['batch_id'] || batch['id']
             @connection.post("batches/#{id}/requests", {
                                batch_requests: requests.map { |request| xai_batch_request(request) }
-                             })
+                             }, idempotent: false)
 
             find_batch(id)
           end

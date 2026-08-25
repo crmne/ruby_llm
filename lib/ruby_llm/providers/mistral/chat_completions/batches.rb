@@ -17,7 +17,7 @@ module RubyLLM
                                           endpoint: '/v1/chat/completions',
                                           model: model,
                                           requests: requests.map { |request| mistral_batch_request(request) }
-                                        })
+                                        }, idempotent: false)
 
             parse_batch_response(response.body)
           end

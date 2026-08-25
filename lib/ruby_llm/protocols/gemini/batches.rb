@@ -23,7 +23,7 @@ module RubyLLM
                                             }
                                           }
                                         }
-                                      })
+                                      }, idempotent: false)
 
           parse_batch_response(response.body)
         end

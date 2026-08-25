@@ -91,7 +91,8 @@ module RubyLLM
                  display_name: nil, uri: nil, content_type: nil)
         attachment = file_attachment(file, filename:)
         options = { purpose:, expires_in:, visibility:, display_name:, uri:, content_type: }.compact
-        response = @connection.post(files_url, render_upload_payload(attachment, **options)) do |request|
+        response = @connection.post(files_url, render_upload_payload(attachment, **options),
+                                    idempotent: false) do |request|
           request.headers.delete('Content-Type')
           upload_headers(request)
         end
@@ -147,7 +148,7 @@ module RubyLLM
         return file if file.is_a?(Attachment) && filename.nil?
 
         file = file.source if file.is_a?(Attachment)
-        Attachment.new(file, filename:)
+        Attachment.new(file, filename:, config:)
       end
 
       def file_part(attachment, content_type: nil)

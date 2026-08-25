@@ -72,7 +72,8 @@ RSpec.describe RubyLLM::Providers::VertexAI::Anthropic::Batches do
 
       expect(connection).to have_received(:post).with(
         'projects/test/locations/us-central1/batchPredictionJobs',
-        include(model: 'projects/test/locations/us-central1/publishers/anthropic/models/claude-haiku-4-5')
+        include(model: 'projects/test/locations/us-central1/publishers/anthropic/models/claude-haiku-4-5'),
+        idempotent: false
       )
     end
 

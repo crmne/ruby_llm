@@ -269,6 +269,8 @@ Retries are attempted for:
 
 `RubyLLM::ContextLengthExceededError` is not retried.
 
+Requests that create something on the provider's side are never retried: batch submissions, video generation jobs, file uploads, and content caches. When such a request reaches the provider but its response is lost, retrying would create a second job you still pay for, so RubyLLM raises the error and lets you decide whether to submit again.
+
 You can configure retry behavior via `RubyLLM.configure`:
 
 ```ruby

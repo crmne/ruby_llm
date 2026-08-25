@@ -10,7 +10,7 @@ module RubyLLM
 
         def create_batch(requests)
           requests = requests.map { |request| { custom_id: request[:custom_id], params: request[:payload] } }
-          response = @connection.post batches_url, { requests: requests }
+          response = @connection.post batches_url, { requests: requests }, idempotent: false
           parse_batch_response response.body
         end
 

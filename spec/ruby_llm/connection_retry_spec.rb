@@ -48,6 +48,16 @@ RSpec.describe RubyLLM::Connection do
       expect(retry_options[:retry_if].call({ method: :post, request: request }, nil)).to be(false)
     end
 
+    it 'does not retry a POST the caller marked non-idempotent' do
+      connection = described_class.new(provider, config).connection
+      retry_handler = connection.builder.handlers.find { |handler| handler.klass == Faraday::Retry::Middleware }
+      retry_options = retry_handler.instance_variable_get(:@args).first
+
+      request = Faraday::RequestOptions.from(context: { RubyLLM::Connection::IDEMPOTENT_KEY => false })
+
+      expect(retry_options[:retry_if].call({ method: :post, request: request }, nil)).to be(false)
+    end
+
     it 'caps retry delays at retry_max_interval' do
       connection = described_class.new(provider, config).connection
       retry_handler = connection.builder.handlers.find { |handler| handler.klass == Faraday::Retry::Middleware }
@@ -94,6 +104,54 @@ RSpec.describe RubyLLM::Connection do
              )
 
       expect { provider.connection.post('chat/completions', {}) }.to raise_error(RubyLLM::RateLimitError)
+      expect(stub).to have_been_requested.once
+    end
+
+    it 'retries a chat completion that fails with a server error' do
+      stub = stub_request(:post, 'https://api.openai.com/v1/chat/completions')
+             .to_return(
+               { status: 500, body: '{"error":{"message":"Internal server error"}}' },
+               { status: 200, headers: { 'Content-Type' => 'application/json' }, body: '{}' }
+             )
+
+      response = provider.connection.post('chat/completions', {})
+
+      expect(response.status).to eq(200)
+      expect(stub).to have_been_requested.twice
+    end
+  end
+
+  describe 'job-creating requests' do
+    let(:config) do
+      RubyLLM::Configuration.new.tap do |c|
+        c.anthropic_api_key = 'test-key'
+        c.max_retries = 3
+        c.retry_interval = 0
+        c.retry_interval_randomness = 0
+      end
+    end
+
+    let(:provider) { RubyLLM::Providers::Anthropic.new(config) }
+    let(:requests) { [{ custom_id: 'ruby_llm_0', payload: { model: 'claude-haiku-4-5', messages: [] } }] }
+    let(:created_batch) do
+      { status: 200,
+        headers: { 'Content-Type' => 'application/json' },
+        body: '{"id":"msgbatch_01","processing_status":"in_progress"}' }
+    end
+
+    it 'submits a batch once when the first attempt fails with a server error' do
+      stub = stub_request(:post, 'https://api.anthropic.com/v1/messages/batches')
+             .to_return({ status: 500, body: '{"error":{"message":"Internal server error"}}' }, created_batch)
+
+      expect { provider.create_batch(requests) }.to raise_error(RubyLLM::ServerError)
+      expect(stub).to have_been_requested.once
+    end
+
+    it 'submits a batch once when the first attempt times out' do
+      stub = stub_request(:post, 'https://api.anthropic.com/v1/messages/batches')
+             .to_timeout.then.to_return(created_batch)
+
+      expect { provider.create_batch(requests) }.to raise_error(Faraday::ConnectionFailed)
       expect(stub).to have_been_requested.once
     end
   end

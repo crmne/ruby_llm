@@ -107,7 +107,8 @@ RSpec.describe RubyLLM::Providers::VertexAI::Gemini::Batches do
             )
           ),
           outputConfig: include(predictionsFormat: 'jsonl')
-        )
+        ),
+        idempotent: false
       )
     end
   end

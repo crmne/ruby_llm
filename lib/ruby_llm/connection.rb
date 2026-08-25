@@ -11,12 +11,14 @@ module RubyLLM
   class Connection # :nodoc:
     include Inspectable
 
+    IDEMPOTENT_KEY = :ruby_llm_idempotent
+
     attr_reader :provider, :connection, :config
 
-    def self.basic(&)
+    def self.basic(config = RubyLLM.config, &)
       Faraday.new do |f|
-        f.options.timeout = RubyLLM.config.request_timeout
-        f.proxy = RubyLLM.config.http_proxy if RubyLLM.config.http_proxy
+        f.options.timeout = config.request_timeout
+        f.proxy = config.http_proxy if config.http_proxy
         f.response :logger,
                    RubyLLM.logger,
                    bodies: false,
@@ -41,11 +43,12 @@ module RubyLLM
       end
     end
 
-    def post(url, payload, usage: nil, &)
+    def post(url, payload, usage: nil, idempotent: true, &)
       instrument_request(:post, url) do
         @connection.post url, payload do |req|
           req.headers.merge! @provider.headers
           set_usage_tracker(req, usage) if usage
+          mark_non_idempotent(req) unless idempotent
           yield req if block_given?
         end
       end
@@ -124,7 +127,9 @@ module RubyLLM
         interval_randomness: @config.retry_interval_randomness,
         backoff_factor: @config.retry_backoff_factor,
         methods: Faraday::Retry::Middleware::IDEMPOTENT_METHODS,
-        retry_if: ->(env, _exception) { env[:method] == :post && !stream_delivered?(env) },
+        retry_if: lambda { |env, _exception|
+          env[:method] == :post && idempotent?(env) && !stream_delivered?(env)
+        },
         exceptions: retry_exceptions
       }
       faraday.use :llm_usage
@@ -132,6 +137,10 @@ module RubyLLM
 
     def stream_delivered?(env)
       env[:request]&.context&.dig(Streaming::PROGRESS_KEY, :started)
+    end
+
+    def idempotent?(env)
+      env[:request]&.context&.dig(IDEMPOTENT_KEY) != false
     end
 
     def setup_middleware(faraday)
@@ -165,6 +174,13 @@ module RubyLLM
     def set_usage_tracker(request, tracker)
       context = request.options.context ||= {}
       context[UsageMiddleware::CONTEXT_KEY] = tracker
+    end
+
+    # A request that creates server-side state cannot be replayed: a retry
+    # after a lost response submits the job a second time.
+    def mark_non_idempotent(request)
+      context = request.options.context ||= {}
+      context[IDEMPOTENT_KEY] = false
     end
 
     def inspect_attributes # :nodoc:
