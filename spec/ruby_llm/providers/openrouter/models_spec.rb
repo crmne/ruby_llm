@@ -83,11 +83,42 @@ RSpec.describe RubyLLM::Providers::OpenRouter::Models do
       )
     end
 
+    it 'keeps the cache write price so cached prompts are costed' do
+      response = response_for(
+        'id' => 'anthropic/claude-opus-5:batch',
+        'pricing' => {
+          'prompt' => '0.0000025',
+          'completion' => '0.0000125',
+          'input_cache_read' => '0.00000025',
+          'input_cache_write' => '0.000003125'
+        }
+      )
+
+      model = parser.parse_list_models_response(response, 'openrouter', nil).first
+
+      expect(model.price(:cache_write)).to eq(3.125)
+      expect(model.price(:cache_read)).to eq(0.25)
+    end
+
+    it 'keeps the lifecycle dates OpenRouter reports' do
+      response = response_for(
+        'id' => 'z-ai/glm-4.5',
+        'knowledge_cutoff' => '2024-12-31',
+        'expiration_date' => '2026-12-31'
+      )
+
+      model = parser.parse_list_models_response(response, 'openrouter', nil).first
+
+      expect(model.knowledge_cutoff).to eq(Date.new(2024, 12, 31))
+      expect(model.metadata[:expiration_date]).to eq('2026-12-31')
+    end
+
     it 'leaves created_at nil when OpenRouter omits the timestamp' do
       model = parser.parse_list_models_response(response_for('id' => 'vendor/model'), 'openrouter', nil).first
 
       expect(model.created_at).to be_nil
       expect(model.capabilities).to be_empty
+      expect(model.knowledge_cutoff).to be_nil
     end
 
     it 'preserves the rerank output modality' do

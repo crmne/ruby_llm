@@ -53,6 +53,7 @@ module RubyLLM
               prompt: :input_per_million,
               completion: :output_per_million,
               input_cache_read: :cache_read_input_per_million,
+              input_cache_write: :cache_write_input_per_million,
               internal_reasoning: :reasoning_output_per_million
             }
 
@@ -72,6 +73,7 @@ module RubyLLM
               created_at: model_data['created'] ? Time.at(model_data['created']) : nil,
               context_window: model_data['context_length'],
               max_output_tokens: model_data.dig('top_provider', 'max_completion_tokens'),
+              knowledge_cutoff: model_data['knowledge_cutoff'],
               modalities: modalities,
               capabilities: capabilities,
               pricing: pricing,
@@ -80,7 +82,8 @@ module RubyLLM
                 architecture: model_data['architecture'],
                 top_provider: model_data['top_provider'],
                 per_request_limits: model_data['per_request_limits'],
-                supported_parameters: model_data['supported_parameters']
+                supported_parameters: model_data['supported_parameters'],
+                expiration_date: model_data['expiration_date']
               }
             )
           end
