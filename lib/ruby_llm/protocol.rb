@@ -118,7 +118,7 @@ module RubyLLM
         messages,
         tools: tools,
         tool_prefs: tool_prefs,
-        temperature: maybe_normalize_temperature(temperature, model),
+        temperature: temperature,
         max_output_tokens: max_output_tokens,
         model: model,
         stream: stream,
@@ -207,7 +207,7 @@ module RubyLLM
     end
 
     def embed(text, model:, dimensions:, task_type: nil, title: nil, with: nil, provider_options: {})
-      attachments = Attachment.wrap(with)
+      attachments = Attachment.wrap(with, config: @config)
       raise UnsupportedAttachmentError, attachments.first.mime_type if attachments.any? && !supports_embedding_media?
 
       track_usage(:embedding) do
@@ -230,7 +230,8 @@ module RubyLLM
 
     def moderate(input, model:, with: [], provider_options: {})
       track_usage(:moderation) do
-        payload = render_moderation_payload(input, model:, with: Attachment.wrap(with), provider_options:)
+        payload = render_moderation_payload(input, model:, with: Attachment.wrap(with, config: @config),
+                                                   provider_options:)
         response = @connection.post moderation_url, payload, usage: @usage_tracker
         parse_moderation_response(response, model:)
       end
@@ -244,6 +245,7 @@ module RubyLLM
         payload = render_image_payload(prompt, model:, size:, count:, with:, mask:, provider_options:)
         response = @connection.post images_url(with:, mask:), payload, usage: @usage_tracker
         images = parse_image_responses(response, model:)
+        images.each { |image| image.config = @config }
         images.size <= 1 ? images.first : images
       end
     rescue NotImplementedError
@@ -263,10 +265,10 @@ module RubyLLM
     # job and returns a VideoJob, whose #refresh! and #video poll and
     # download through this protocol instance.
     def animate_later(prompt, model:, with: nil, provider_options: {})
-      attachments = Attachment.wrap(with)
+      attachments = Attachment.wrap(with, config: @config)
       validate_animate_inputs!(with: attachments)
       payload = render_video_payload(prompt, model:, with: attachments, provider_options:)
-      response = @connection.post video_url, payload
+      response = @connection.post video_url, payload, idempotent: false
       parse_video_job(response, model:)
     rescue NotImplementedError
       raise Error, "#{@provider.name} doesn't support video generation"
@@ -342,8 +344,9 @@ module RubyLLM
     end
 
     def cache_content(content, model:, ttl: nil, instructions: nil, with: nil)
-      payload = render_cache_payload(content, model:, ttl:, instructions:, attachments: Attachment.wrap(with))
-      response = @connection.post caches_url, payload
+      payload = render_cache_payload(content, model:, ttl:, instructions:,
+                                              attachments: Attachment.wrap(with, config: @config))
+      response = @connection.post caches_url, payload, idempotent: false
       parse_cache_response(response.body)
     rescue NotImplementedError
       raise Error, "#{@provider.name} doesn't support explicit content caching"
@@ -368,20 +371,6 @@ module RubyLLM
       parse_cache_response(response.body)
     rescue NotImplementedError
       raise Error, "#{@provider.name} doesn't support explicit content caching"
-    end
-
-    def maybe_normalize_temperature(temperature, model)
-      drop_unsupported_temperature(temperature, model)
-    end
-
-    # Newer model generations reject sampling parameters outright; the
-    # registry records that as temperature: false in model metadata.
-    def drop_unsupported_temperature(temperature, model)
-      return temperature if temperature.nil?
-      return temperature unless model.metadata[:temperature] == false
-
-      RubyLLM.logger.debug { "#{model.id} does not accept a temperature parameter, removing" }
-      nil
     end
 
     def parse_error(response)
@@ -465,7 +454,7 @@ module RubyLLM
       return attachment unless upload_large_attachment?(attachment)
 
       ensure_provider_file_size!(attachment)
-      Attachment.new(provider_upload(attachment))
+      Attachment.new(provider_upload(attachment), config: @config)
     end
 
     # Uploads are memoized per provider on the attachment itself, so a chat
@@ -540,7 +529,7 @@ module RubyLLM
     def build_audio_file_part(audio_file)
       require 'faraday/multipart'
 
-      attachment = audio_file.is_a?(Attachment) ? audio_file : Attachment.new(audio_file)
+      attachment = audio_file.is_a?(Attachment) ? audio_file : Attachment.new(audio_file, config: @config)
       body = attachment.path? ? File.expand_path(attachment.source) : StringIO.new(attachment.content)
 
       Faraday::Multipart::FilePart.new(body, attachment.mime_type, audio_file_name(attachment))

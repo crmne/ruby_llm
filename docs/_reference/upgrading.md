@@ -227,6 +227,7 @@ Scan the table for anything your app uses, then read its section below.
 | `with_params(...)`, `params:`, tool `with_params` | `with_provider_options(...)`, `provider_options:` |
 | `transcribe(audio, response_format: "srt")` | `transcribe(audio, format: "srt")` |
 | `Moderation#results` raw hashes | Typed `Moderation::Result` objects |
+| Temperature rewritten to `1.0` or dropped for some models | The temperature you set is the temperature sent |
 
 ## Breaking Changes in Detail
 
@@ -491,6 +492,12 @@ RubyLLM.transcribe("talk.wav", model: "gemini-2.5-flash",
 RubyLLM.embed(chunks, model: "gemini-embedding-001",
               task_type: "RETRIEVAL_DOCUMENT", title: "Handbook")
 ```
+
+### Temperature Goes Out As You Set It
+
+RubyLLM 1.x rewrote the temperature to `1.0` for OpenAI reasoning models, dropped it for search preview models, and dropped it for anything the model registry marked as refusing sampling parameters. Those rules disagreed with the providers often enough to hide real errors and to override values models would have honored.
+
+2.0 sends what you set. RubyLLM still sends no temperature until you set one, so nothing changes for chats that leave it alone. If you set a temperature a model rejects, you now get the provider's `RubyLLM::BadRequestError` instead of a silently altered request. Drop the `with_temperature` call for those models and let them use their own default.
 
 ### Typed Results
 

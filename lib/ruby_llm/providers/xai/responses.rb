@@ -5,7 +5,7 @@ module RubyLLM
     class XAI
       # xAI's dialect of the OpenAI Responses API, the primary protocol for
       # Grok models. Every Grok model reasons and returns encrypted reasoning,
-      # temperature stays supported, and usage counts agentic tool activity.
+      # and usage counts agentic tool activity.
       class Responses < Protocols::Responses
         include XAI::Images
         include XAI::Models
@@ -32,10 +32,6 @@ module RubyLLM
 
         def reasoning_model?(_model_id)
           true
-        end
-
-        def maybe_normalize_temperature(temperature, _model)
-          temperature
         end
 
         USD_PER_TICK = 1e-10

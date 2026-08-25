@@ -308,6 +308,49 @@ RSpec.describe RubyLLM::Chat do
 
       expect(chat.instance_variable_get(:@temperature)).to be_nil
     end
+
+    it 'omits temperature when you never set one' do
+      payload = described_class.new(model: 'gpt-4.1-nano', provider: :openai).render
+
+      expect(payload).not_to have_key(:temperature)
+    end
+
+    it 'sends the temperature you set to Chat Completions untouched' do
+      payload = described_class.new(model: 'gpt-5.4', provider: :openai, protocol: :chat_completions)
+                               .with_temperature(0.2)
+                               .render
+
+      expect(payload[:temperature]).to eq(0.2)
+    end
+
+    it 'sends the temperature you set to the Responses API untouched' do
+      payload = described_class.new(model: 'gpt-5.4', provider: :openai)
+                               .with_temperature(0.2)
+                               .render
+
+      expect(payload[:temperature]).to eq(0.2)
+      expect(payload[:include]).to eq(['reasoning.encrypted_content'])
+    end
+
+    it 'sends the temperature you set even when the registry marks the model as rejecting it' do
+      model = RubyLLM.models.find('claude-sonnet-5', :anthropic)
+      expect(model.metadata[:temperature]).to be(false)
+
+      payload = described_class.new(model: 'claude-sonnet-5', provider: :anthropic)
+                               .with_temperature(0.5)
+                               .render
+
+      expect(payload[:temperature]).to eq(0.5)
+    end
+
+    it 'sends the temperature you set to search models' do
+      payload = described_class.new(model: 'gpt-4o-search-preview', provider: :openai,
+                                    protocol: :chat_completions)
+                               .with_temperature(0.7)
+                               .render
+
+      expect(payload[:temperature]).to eq(0.7)
+    end
   end
 
   describe 'protocol override' do

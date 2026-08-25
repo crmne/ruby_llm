@@ -25,7 +25,7 @@ RSpec.describe RubyLLM::Chat, :live do
       end
 
       it "#{provider}/#{model} reports consistent token counts compared to non-streaming" do
-        model = 'gpt-4.1-nano' if provider == :openai # gpt-5 sets temperature to 1.0
+        model = 'gpt-4.1-nano' if provider == :openai # gpt-5 rejects the temperature this example sets
         skip 'Perplexity reports different token counts for streaming vs non-streaming' if provider == :perplexity
         skip 'Azure reports different token counts for streaming vs non-streaming' if provider == :azure
         skip 'xAI reports different token counts for streaming vs non-streaming' if provider == :xai

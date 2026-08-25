@@ -37,22 +37,6 @@ RSpec.describe RubyLLM::Chat, :live do
 
       expect(payload.dig(:reasoning, :effort)).to eq('xhigh')
     end
-
-    it 'drops temperature for models the registry marks as rejecting it' do
-      payload = RubyLLM.chat(model: 'claude-sonnet-5', provider: :anthropic)
-                       .with_temperature(0.5)
-                       .render
-
-      expect(payload).not_to have_key(:temperature)
-    end
-
-    it 'keeps temperature for models that accept it' do
-      payload = RubyLLM.chat(model: 'claude-haiku-4-5', provider: :anthropic)
-                       .with_temperature(0.5)
-                       .render
-
-      expect(payload[:temperature]).to eq(0.5)
-    end
   end
 
   describe 'thinking display' do

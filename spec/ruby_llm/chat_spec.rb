@@ -45,7 +45,7 @@ RSpec.describe RubyLLM::Chat, :live do
       end
 
       it "#{provider}/#{model} successfully uses the system prompt" do
-        chat = RubyLLM.chat(model: model, provider: provider).with_temperature(0.0)
+        chat = RubyLLM.chat(model: model, provider: provider)
 
         # Use a distinctive and unusual instruction that wouldn't happen naturally
         chat.with_instructions 'You must include the exact phrase "XKCD7392" somewhere in your response.'
@@ -64,7 +64,7 @@ RSpec.describe RubyLLM::Chat, :live do
           skip 'ollama/qwen3 includes thinking tags even with enable_thinking: false'
         end
 
-        chat = basic_chat(model: model, provider: provider, temperature: 0.0)
+        chat = basic_chat(model: model, provider: provider)
 
         # Use a distinctive and unusual instruction that wouldn't happen naturally
         chat.with_instructions 'You must include the exact phrase "XKCD7392" somewhere in your response.'
@@ -87,7 +87,7 @@ RSpec.describe RubyLLM::Chat, :live do
       next if [first[:provider], second[:provider]] == %i[azure bedrock]
 
       it "between #{first[:provider]}/#{first[:model]} and #{second[:provider]}/#{second[:model]}" do
-        chat = RubyLLM.chat(model: first[:model], provider: first[:provider]).with_temperature(0.0)
+        chat = RubyLLM.chat(model: first[:model], provider: first[:provider])
         response = chat.ask('Reply with exactly: FOUR')
 
         expect(response.content).to match(/four/i)

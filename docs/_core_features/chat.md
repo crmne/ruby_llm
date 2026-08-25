@@ -149,6 +149,10 @@ The `with_temperature` method returns the chat instance, allowing you to chain m
 chat.with_temperature(nil)
 ```
 
+RubyLLM sends the value you set, unchanged. Until you set one, no temperature goes on the wire at all and the model uses its own default.
+
+Not every model accepts one. Reasoning models such as OpenAI's `o` series and `gpt-5-nano`, the OpenAI search preview models, and newer Claude models such as `claude-sonnet-5` reject the parameter or restrict it to a single value, and the list differs from model to model even inside one family. Set a temperature a model rejects and the provider answers with an error, which RubyLLM raises as [`RubyLLM::BadRequestError`]({% link _advanced/error-handling.md %}). RubyLLM does not rewrite or drop your value to hide that error. When a model rejects the parameter, leave it unset and let the model use its default.
+
 For provider-specific request options, wire protocols, raw content blocks, and custom HTTP headers, see [Advanced Request Control]({% link _core_features/chat-request-control.md %}). For local ERB prompt templates, see [Prompt Rendering]({% link _core_features/prompt-rendering.md %}). For provider-side prompt reuse, see [Prompt Caching]({% link _core_features/prompt-caching.md %}).
 
 ## Raw Responses
