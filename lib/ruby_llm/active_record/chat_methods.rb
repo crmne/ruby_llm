@@ -452,10 +452,9 @@ module RubyLLM
       end
 
       def find_or_create_model(model_info)
-        RubyLLM::ActiveRecord::Model.find_or_create_by!(
-          model_id: model_info.id,
-          provider: model_info.provider
-        ) do |record|
+        attributes = { model_id: model_info.id, provider: model_info.provider }
+
+        RubyLLM::ActiveRecord::Model.find_or_create_by!(attributes) do |record|
           record.name = model_info.name || model_info.id
           record.family = model_info.family
           record.model_created_at = model_info.created_at
@@ -467,6 +466,9 @@ module RubyLLM
           record.pricing = model_info.pricing.to_h
           record.metadata = model_info.metadata || {}
         end
+      rescue ::ActiveRecord::RecordInvalid, ::ActiveRecord::RecordNotUnique
+        # Another process can insert the row between the lookup and the insert.
+        RubyLLM::ActiveRecord::Model.find_by(attributes) || raise
       end
 
       def cleanup_after_failure(error)

@@ -124,6 +124,24 @@ RSpec.describe RubyLLM::ActiveRecord::ChatMethods do
       expect(chat.model_id).to eq('made-up-deployment')
     end
 
+    it 'reuses a model row another process inserted after the lookup missed' do
+      relation = RubyLLM::ActiveRecord::Model.all
+      allow(RubyLLM::ActiveRecord::Model).to receive(:all).and_return(relation)
+      misses = 0
+      allow(relation).to receive(:find_by).and_wrap_original do |original, *args|
+        if args.first == { model_id: model_id, provider: 'openai' } && (misses += 1) == 1
+          nil
+        else
+          original.call(*args)
+        end
+      end
+
+      chat = Chat.create!(model: model_id)
+
+      expect(chat.model_id).to eq(model_id)
+      expect(RubyLLM::ActiveRecord::Model.where(model_id: model_id, provider: 'openai').count).to eq(1)
+    end
+
     it 'requires a provider when assuming the model exists' do
       chat = Chat.new(model: model_id)
       chat.assume_model_exists = true
