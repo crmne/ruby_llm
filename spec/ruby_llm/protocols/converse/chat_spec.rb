@@ -314,12 +314,9 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
         )
       end
 
-      it 'maps efforts the model does not enumerate onto its largest budget' do
-        payload = render_payload(model: enumerated_budget_model, thinking: thinking(effort: :xhigh))
-
-        expect(payload[:additionalModelRequestFields]).to eq(
-          reasoning_config: { type: 'enabled', budget_tokens: 63_999 }
-        )
+      it 'refuses an effort the model does not name instead of buying its largest budget' do
+        expect { render_payload(model: enumerated_budget_model, thinking: thinking(effort: :xhigh)) }
+          .to raise_error(ArgumentError, /no reasoning budget for effort "xhigh".*low, medium, high/m)
       end
 
       it 'spreads effort across the range when the model does not enumerate budgets' do
@@ -336,6 +333,31 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
 
         expect(payload[:additionalModelRequestFields]).to eq(
           reasoning_config: { type: 'enabled', budget_tokens: 7999 }
+        )
+      end
+
+      it 'refuses a max_output_tokens that leaves no room for the smallest budget' do
+        expect do
+          render_payload(model: enumerated_budget_model, thinking: thinking(effort: :high), max_output_tokens: 500)
+        end.to raise_error(ArgumentError, /at least 1024 tokens.*max_output_tokens: 500.*room for 499/m)
+      end
+
+      it 'still clamps under max_output_tokens when the model states no minimum' do
+        model = bedrock_model('us.anthropic.claude-sonnet-5', { type: 'enum', enum: { low: 1024, high: 8192 } })
+
+        payload = render_payload(model: model, thinking: thinking(effort: :low), max_output_tokens: 500)
+
+        expect(payload[:additionalModelRequestFields]).to eq(
+          reasoning_config: { type: 'enabled', budget_tokens: 499 }
+        )
+      end
+
+      it 'leaves a budget the caller chose alone' do
+        payload = render_payload(model: enumerated_budget_model, thinking: thinking(budget: 40_000),
+                                 max_output_tokens: 500)
+
+        expect(payload[:additionalModelRequestFields]).to eq(
+          reasoning_config: { type: 'enabled', budget_tokens: 40_000 }
         )
       end
 
@@ -373,6 +395,37 @@ RSpec.describe RubyLLM::Protocols::Converse::Chat do
                                  thinking: thinking(effort: :high))
 
         expect(payload[:additionalModelRequestFields]).to eq(reasoning_effort: 'high')
+      end
+
+      it 'reads the model out of an inference profile ARN' do
+        model = instance_double(RubyLLM::Model, max_output_tokens: nil, metadata: {},
+                                                id: 'arn:aws:bedrock:us-west-2:123456789012:' \
+                                                    'inference-profile/us.amazon.nova-2-lite-v1:0')
+
+        payload = render_payload(model: model, thinking: thinking(effort: :low))
+
+        expect(payload[:additionalModelRequestFields]).to eq(
+          reasoningConfig: { type: 'enabled', maxReasoningEffort: 'low' }
+        )
+      end
+
+      it 'maps effort onto a budget for a Claude model reached through an inference profile ARN' do
+        model = instance_double(RubyLLM::Model, max_output_tokens: nil, metadata: {},
+                                                id: 'arn:aws:bedrock:us-west-2:123456789012:' \
+                                                    'inference-profile/us.anthropic.claude-sonnet-5')
+
+        payload = render_payload(model: model, thinking: thinking(effort: :low))
+
+        expect(payload[:additionalModelRequestFields]).to eq(
+          reasoning_config: { type: 'enabled', budget_tokens: 1024 }
+        )
+      end
+
+      it 'refuses a token budget on a model that takes an effort' do
+        model = bedrock_model('us.amazon.nova-2-lite-v1:0', nil)
+
+        expect { render_payload(model: model, thinking: thinking(budget: 20_000)) }
+          .to raise_error(ArgumentError, /takes a reasoning effort, not a token budget of 20000/)
       end
 
       it 'omits reasoning fields when effort is none' do

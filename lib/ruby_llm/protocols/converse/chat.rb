@@ -10,6 +10,8 @@ module RubyLLM
         BEDROCK_INLINE_DOCUMENT_LIMIT = 4_500_000
         PROMPT_CACHE_OPTIONS = %i[ttl].freeze
         COUNT_TOKENS_KEYS = %i[messages system toolConfig additionalModelRequestFields].freeze
+        RANGED_EFFORTS = %w[low medium high].freeze
+        MINIMUM_BUDGET_TOKENS = 1
 
         module_function
 
@@ -376,12 +378,13 @@ module RubyLLM
           foundation_model_id(model&.id).start_with?('amazon.nova')
         end
 
-        # Nova 2 takes reasoningConfig with an effort level instead of a token budget.
+        # Nova 2 takes reasoningConfig with an effort level instead of a token budget,
+        # and rejects an enabled reasoningConfig that names no effort.
         def format_nova_reasoning_fields(thinking, model)
           if thinking.budget
-            RubyLLM.logger.debug do
-              "#{model.id} takes a reasoning effort, not a token budget. Ignoring the thinking budget."
-            end
+            raise ArgumentError,
+                  "#{model&.id} takes a reasoning effort, not a token budget of #{thinking.budget}. " \
+                  'Pass with_thinking(effort:) instead.'
           end
 
           effort = thinking.effort.to_s
@@ -396,7 +399,7 @@ module RubyLLM
           return nil if effort.empty? || effort == 'none'
 
           schema = reasoning_budget_schema(model)
-          schema && effort_budget_tokens(effort, schema, max_output_tokens)
+          schema && effort_budget_tokens(effort, schema, model, max_output_tokens)
         end
 
         # Bedrock only publishes Converse metadata for some regional entries, so use the
@@ -429,22 +432,33 @@ module RubyLLM
           nil
         end
 
+        # Inference profile and foundation model ARNs name the model in their last segment.
         def foundation_model_id(model_id)
           prefixes = Providers::Bedrock::Models::REGION_PREFIXES.join('|')
-          model_id.to_s.sub(/\A(?:#{prefixes})\./, '')
+          model_id.to_s.rpartition('/').last.sub(/\A(?:#{prefixes})\./, '')
         end
 
         # Models that take a budget reject reasoning_effort, so effort has to become a budget.
         # Bedrock names the levels of an enumerated budget after the efforts they stand for;
         # otherwise the effort spans the range the schema allows.
-        def effort_budget_tokens(effort, schema, max_output_tokens)
-          minimum = schema[:minimum]
+        def effort_budget_tokens(effort, schema, model, max_output_tokens)
           budget = enumerated_budget(effort, schema) || ranged_budget(effort, schema)
           return nil unless budget
 
-          # Bedrock rejects a budget that leaves no room for the answer.
-          budget = max_output_tokens - 1 if max_output_tokens && budget >= max_output_tokens
-          minimum.is_a?(Integer) ? [budget, minimum].max : budget
+          minimum = schema[:minimum].is_a?(Integer) ? schema[:minimum] : MINIMUM_BUDGET_TOKENS
+          return [budget, minimum].max unless max_output_tokens
+
+          budget.clamp(minimum, budget_ceiling(model, minimum, max_output_tokens))
+        end
+
+        # Bedrock rejects a budget that leaves no room for the answer.
+        def budget_ceiling(model, minimum, max_output_tokens)
+          ceiling = max_output_tokens - 1
+          return ceiling if minimum <= ceiling
+
+          raise ArgumentError, "#{model&.id} reasons on a budget of at least #{minimum} tokens, and " \
+                               "max_output_tokens: #{max_output_tokens} leaves room for #{ceiling}. " \
+                               "Raise max_output_tokens above #{minimum} or turn thinking off."
         end
 
         def enumerated_budget(effort, schema)
@@ -461,8 +475,16 @@ module RubyLLM
           case effort
           when 'low' then minimum
           when 'medium' then minimum + ((maximum - minimum) / 2)
-          else maximum
+          when 'high' then maximum
+          else raise ArgumentError, unknown_effort_message(effort, schema)
           end
+        end
+
+        def unknown_effort_message(effort, schema)
+          levels = schema[:enum].is_a?(Hash) ? schema[:enum].keys.map(&:to_s) : []
+          levels |= RANGED_EFFORTS
+          "Bedrock has no reasoning budget for effort #{effort.inspect}. " \
+            "Use #{levels.join(', ')}, or pass an explicit budget."
         end
 
         def format_thinking_block(thinking)
